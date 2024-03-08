@@ -1,133 +1,113 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601151DFDE
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 16:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0077F17745
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 16:15:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709914429; cv=none; b=qLTWfZ/yFnuIj1mI70CG+FRJ9K/wQVm3RTt+CmAHrA6asUbHrNpMXT3MYgc3o5XKpHYmrCgrSfgWGTna3G1S27MdT0DVGDfhqIrDmynRSNxgjp/5zI0+wst3vqrGs3KkjW6IBenFyyaydDKPsCFCiHxYExD4XukXpnGwEY5hJJc=
+	t=1709914524; cv=none; b=VSmAIn0tuJhlkjcTiZ1R6P4MqJxzedQ3mcjokbPH9/fe7b/e4F8yR3g3su8QfZEMLZEs+nIHlWl5sRcdUz1711yZ93upIGoAOdOpLcs+xJ6kTLysE3oVbI6a1dfqxMP4aQE61Y+ETrHMsm5SrRBYmjesvcHZE0nKzDqBI5EbSJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709914429; c=relaxed/simple;
-	bh=xFXNTaYMYVNmUW76ZgUXZ2MBi9mD/wQdLPlc2vFGbpQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tRXluQtd7JoyZt3i5v72dHVnWPt/B4FiHSi2A3RLTFXYbcR8H+/yNYCYFeH2PT0BFu1BNZSpwvp8P9oSgVhI+Ra3xnWwb5A+Fk72Uxs5OGYsMFhEiXQe7vbiqPL0swJ7fEz76+nOq98f9dULpo5aDiVpPkLX1DUH/2b1oUzy8fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bZXePI5D; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709914524; c=relaxed/simple;
+	bh=M42i678o3pwp2Sj5jyZjV0pPJ93DqU3IQGy4zrL2+ic=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TxBhnsDTJJmW8voku+uv/MVK7B1cZh+h8bfBRovgiqgHYigvCsZdIHc8uSJIv6K8wrg6cj9/+JgsYInj39gbTZLMtbZZcnh7CQszdZiM92JhtcCqHT/8wp+Nk/X+pRbHVApCF6XYA5EMCRfrPKlegN646eFiRrA2unfpB1OXN0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dAf3EruD; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bZXePI5D"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-41316512055so8395105e9.2
-        for <git@vger.kernel.org>; Fri, 08 Mar 2024 08:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709914426; x=1710519226; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JpQqd3qY/F87CkyM2csekeUXyRJ5A+Q0jl0VW/B0MvU=;
-        b=bZXePI5DnW0z3g2cJaGD41sKCZGX5PsdwuXieM0JbkrtcOk+Z90RxhqKfB0LxPtKo+
-         wSwTWGW4pR46wwV56YGhqmK6HvmiyNwC4krZPnveW2nZX54DyQfiBi6LRcQ6PA6keLXh
-         94KwQn1jmViBsM03dXLW64naHEUJa0c73qRMmkgmuuCh8dRqmZpPvaX0wNU9MWX4JSGq
-         0L7BLOvJN5+uVptCC35pygDWVkwucZIw7EtkgziDXNWNITpSGeIwFiKXQa5cvORSGI/y
-         T8qwr3RM3soeQWcUbntBDS9J4AveRKRqU07wv7QTCEPWylJBB5yscfC3ZLKmIfaXW6nF
-         yytw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709914426; x=1710519226;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JpQqd3qY/F87CkyM2csekeUXyRJ5A+Q0jl0VW/B0MvU=;
-        b=NtpqHRaLZKdAA9rSazum1S2cWH85xDsw6IabH6uZ/Zlci0ULSKKtR11r3bVCSMvpT2
-         Ig+qJkDwoQEqTBes6rtCfxpzM0LHevva9N1rKtsz7rybGWfc8LFFz3V8pFs75AwoyRyU
-         cukU+DAe/q64m1WmSaiJdFx0NZcZUiYEfydE63ODAwqfFwsrxtyL/e/6oWDUCSoYTQra
-         N9AzkWabII+jqSZJQXvwiQt1PNaChGgHfBz/KMZqB6ToplPeU7uY97KUks1m5owFRuVn
-         kEfC+NRJcbj4S8pBLUuwfIFwLL9oWHZVkdJcnVDYri9Hd+khLKBLEsnWQomdAw12AKTR
-         8NFA==
-X-Gm-Message-State: AOJu0YzeNSJ4KH45np4SJgE2BgL+UjuoPemMmfXtKM5/JVDXwN3q0guK
-	+r4U0Q0wQlCeuao6QzIMBIdakRIIG88RvaF0pCy7ZY3PuoVEWbzL
-X-Google-Smtp-Source: AGHT+IH87+o8iNQ8Dm/jmeVcR9RykxoSxGamIHF3pmy7/DwTz42zno5mtwYyW8yUPLzhlTETZ7fjMw==
-X-Received: by 2002:a05:600c:3515:b0:412:eff3:8497 with SMTP id h21-20020a05600c351500b00412eff38497mr7669463wmq.1.1709914425358;
-        Fri, 08 Mar 2024 08:13:45 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6ca:8b01:80a6:cae7:d811:7244? ([2a0a:ef40:6ca:8b01:80a6:cae7:d811:7244])
-        by smtp.gmail.com with ESMTPSA id m8-20020a05600c4f4800b00413177c3f1dsm2657390wmq.18.2024.03.08.08.13.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Mar 2024 08:13:45 -0800 (PST)
-Message-ID: <48b2d5b1-a59f-44c3-94ba-e7f81913b7f5@gmail.com>
-Date: Fri, 8 Mar 2024 16:13:44 +0000
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dAf3EruD"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 52492305D0;
+	Fri,  8 Mar 2024 11:15:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=M42i678o3pwp2Sj5jyZjV0pPJ93DqU3IQGy4zr
+	L2+ic=; b=dAf3EruDxVFdsBfZL6Zl7jqDZEjh0N4oBJq0QHeP0tzfS4pLFzvyTb
+	F2dRt1/nftE7Df5s3hDOjhYC/5T95vNdKjqWCsSPxm9dJg92FlV6BLvTpz219wpq
+	kKQ32x8db61ETZggglnYUF6kbebD/408KdMG/4G/K1IeOGGPSGrDA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AD58305CE;
+	Fri,  8 Mar 2024 11:15:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5C9C305CD;
+	Fri,  8 Mar 2024 11:15:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 4/4] checkout: cleanup --conflict=<style> parsing
+In-Reply-To: <317bb7a70d023278087f4370b843d7f28f9ee2f6.1709907271.git.gitgitgadget@gmail.com>
+	(Phillip Wood via GitGitGadget's message of "Fri, 08 Mar 2024 14:14:30
+	+0000")
+References: <pull.1684.git.1709907270.gitgitgadget@gmail.com>
+	<317bb7a70d023278087f4370b843d7f28f9ee2f6.1709907271.git.gitgitgadget@gmail.com>
+Date: Fri, 08 Mar 2024 08:15:14 -0800
+Message-ID: <xmqq1q8khf8t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/4] merge options: add a conflict style member
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
- Elijah Newren <newren@gmail.com>
-References: <pull.1684.git.1709907270.gitgitgadget@gmail.com>
- <c0d7bafd43823ef9df5a73bc80b90cf003988bc9.1709907271.git.gitgitgadget@gmail.com>
- <xmqqle6shgkw.fsf@gitster.g>
-In-Reply-To: <xmqqle6shgkw.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0D24CF7E-DD67-11EE-8798-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi Junio
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On 08/03/2024 15:46, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> diff --git a/merge-ll.c b/merge-ll.c
->> index 6570707297d..bf1077ae092 100644
->> --- a/merge-ll.c
->> +++ b/merge-ll.c
->> ..
->> -#define LL_MERGE_OPTIONS_INIT {0}
->> +#define LL_MERGE_OPTIONS_INIT { .conflict_style = -1 }
-> 
-> Makes sense, and this obviously makes the previous step worth doing.
-> 
-> It looks quite wrong that low-level merge options definition is
-> hosted in a file whose name is merge low-level.  Is it too late to
-> rename the file to fix this, by the way?
+> @@ -91,7 +91,8 @@ struct checkout_opts {
+>  	int new_branch_log;
+>  	enum branch_track track;
+>  	struct diff_options diff_options;
+> -	char *conflict_style;
+> +	char *conflict_style_name;
+> +	int conflict_style;
 
-I agree it is confusing, Elijah renamed it from ll-merge.c relatively
-recently 6723899932e (merge-ll: rename from ll-merge, 2023-05-16). It
-looks like the idea was to group it with the other merge* files:
+Does the conflict_style_name need to be a member of this struct?
 
-     merge-ll: rename from ll-merge
-     
-     A long term (but rather minor) pet-peeve of mine was the name
-     ll-merge.[ch].  I thought it made it harder to realize what stuff was
-     related to merging when I was working on the merge machinery and trying
-     to improve it.
-     
-     Further, back in d1cbe1e6d8a ("hash-ll.h: split out of hash.h to remove
-     dependency on repository.h", 2023-04-22), we have split the portions of
-     hash.h that do not depend upon repository.h into a "hash-ll.h" (due to
-     the recommendation to use "ll" for "low-level" in its name[1], but which
-     I used as a suffix precisely because of my distaste for "ll-merge").
-     When we discussed adding additional "*-ll.h" files, a request was made
-     that we use "ll" consistently as either a prefix or a suffix.  Since it
-     is already in use as both a prefix and a suffix, the only way to do so
-     is to rename some files.
-     
-     Besides my distaste for the ll-merge.[ch] name, let me also note that
-     the files
-       ll-fsmonitor.h, ll-hash.h, ll-merge.h, ll-object-store.h, ll-read-cache.h
-     would have essentially nothing to do with each other and make no sense
-     to group.  But giving them the common "ll-" prefix would group them.  Using
-     "-ll" as a suffix thus seems just much more logical to me.  Rename
-     ll-merge.[ch] to merge-ll.[ch] to achieve this consistency, and to
-     ensure we get a more logical grouping of files.
-     
-     [1] https://lore.kernel.org/git/kl6lsfcu1g8w.fsf@chooglen-macbookpro.roam.corp.google.com/
+> @@ -1628,7 +1635,7 @@ static struct option *add_common_options(struct checkout_opts *opts,
+>  			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
+>  		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
+>  		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
+> -		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
+> +		OPT_STRING(0, "conflict", &opts->conflict_style_name, N_("style"),
+>  			   N_("conflict style (merge, diff3, or zdiff3)")),
+>  		OPT_END()
+>  	};
 
+Ah, the options[] definition is not in the same scope as where the
+parse_options() is called, and that is the reason why we need to
+carry the extra member that we do not need after we are done with
+parsing (we use "int conflict_style") in the struct.  Otherwise we
+would have just received OPT_STRING() into a local variable, called
+parse_options(), and post-processed the string into
+opts->conflict_style.
 
-Best Wishes
+Yucky.  I do not care much about wasted 8 bytes in the structure,
+but I find it disturbing that those functions called later with this
+struct has to know that conflict_style_name is a useless member and
+they are supposed to use conflict_style exclusively.
 
-Phillip
+We could use OPT_CALLBACK() to accept the incoming string, parse it
+and store it in opts->conflict_style and that would be a way to
+avoid the extra member.
+
+> +		opts->conflict_style =
+> +			parse_conflict_style(opts->conflict_style_name);
+
+When I saw the change to xdiff-interface in an earlier step, I
+thought parse_conflict_style() was a potentially confusing name.
+You can imagine a function that is fed a file with conflict markers
+and say "ah, this uses diff3 style with common ancestor version" vs
+"this uses merge style with only two sides" to have such a name.
+
+parse_conflict_style_name() that takes a name and returns
+conflict_style enumeration constant would not risk such a confusion,
+I guess.
+
+Thanks.
