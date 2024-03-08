@@ -1,107 +1,111 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709E35FDAD
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 21:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6AF5FDCC
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 21:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709932815; cv=none; b=IBU8P23zzS2xrTPqpRDaiauulHw+RwwB0dQMiqIZEhXyOqzTvHltDn1NK4QYJGXkWbr13h2+J1Yk36ojqae+B65fGvrIh/N7/D5xUq1VcFeDoxB5vy3Hr7HJijAmPMEW7sD4+uCFTEz0qQ57OmQpPWo74RUBDvV7eY6Wpj8kPsg=
+	t=1709932844; cv=none; b=ThQYCBSYdYpfMDZsNiGHmL+DfF3mrj+CNXeC4CK1ySuWy6bgwL+Bm5Voj52oqZrzoPOwgyXBf7bonxKVGcPT8AGKPLncTeSH51pQ/67chy+APLKGtfFMWk0uTLK75ZD2KDpDUnbOXy14brGT34AlmPsfzoHfYITF0RrGCoDHMt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709932815; c=relaxed/simple;
-	bh=cP3lm3shVWrkpSrUji0nCqAMlkf/hqKkz5+tsIon5TM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4a33QJE+VEZ1xukneNTyg/5gPt4MLhmdjQK1NCVCu+K02v84W3XHODGzo3A0UJmwjjXD11Xf/nj5z69FqBvAoq7Q3xzMrgKEHdFPhnvXKtwBq7alqZ5EhjLsGayErD6WpUJQkZqdRSla65aX2Lbx4geGaI0l4xu73lx7g+DXPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RnjvaAwV; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RnjvaAwV"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5C7F33B15D;
-	Fri,  8 Mar 2024 16:20:08 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=cP3lm3shVWrkpSrUji0nCqAMl
-	kf/hqKkz5+tsIon5TM=; b=RnjvaAwVXTJiEQzJ/i4uCV8+Xv9AAIR7q16VThEhS
-	fAHeJxDDA5tVxjkexoU/c2as1cDaYeubn/PvrP3WsYV+h9CcbAUOIdLTRcqIjAwU
-	Vu+tdku/PyX2Nno3zzxdXZA+LTcLy9vsyyWJAKP7G5nX4xBv9bAWylTXnZbNW8vU
-	e4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 546873B15C;
-	Fri,  8 Mar 2024 16:20:08 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4419A3B159;
-	Fri,  8 Mar 2024 16:20:03 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Kyle Lippincott <spectral@google.com>
-Subject: [PATCH 1/2] setup: detect to be in $GIT_DIR with a new helper
-Date: Fri,  8 Mar 2024 13:19:56 -0800
-Message-ID: <20240308211957.3758770-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.44.0-165-ge09f1254c5
-In-Reply-To: <20240308211957.3758770-1-gitster@pobox.com>
-References: <xmqqv85zqniu.fsf@gitster.g>
- <20240308211957.3758770-1-gitster@pobox.com>
+	s=arc-20240116; t=1709932844; c=relaxed/simple;
+	bh=5P6ICMeaAbri39zqZg87ua5pOXsaWCkrnwV3q87B/jg=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ipTltd5aclY/quIUHNkbWnRI+w3DU7VOp8TCB0CEBZcJSVmccaSd1zy2oicQ9U0C/+wPsPMVLVLjyCQlB2goK/mq9qO1JobKHWUwI0IqnHjTlK79FIyNKSgKSXQkacx3mid3duY1Id+45/G2bTxHtRElLtKdzvD+mPtNqUU4/PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 428LKJ5B555498
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 8 Mar 2024 21:20:20 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Angelo Dureghello'" <angelo@kernel-space.org>
+Cc: <git@vger.kernel.org>, "'Patrick Steinhardt'" <ps@pks.im>
+References: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org> <Zetw0I0NHgABR_PX@tapette.crustytoothpaste.net>
+In-Reply-To: <Zetw0I0NHgABR_PX@tapette.crustytoothpaste.net>
+Subject: RE: [BUG] cannot git clone with includeif onbranch
+Date: Fri, 8 Mar 2024 16:20:14 -0500
+Organization: Nexbridge Inc.
+Message-ID: <0a9601da719e$6cc85250$4658f6f0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- A0CE40C8-DD91-11EE-BB8C-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHH0Ksfq+HtFGOeMOMj96aDSmNkZwIl39lLsUJro1A=
 
-Earlier, 45bb9162 (setup: allow cwd=3D.git w/ bareRepository=3Dexplicit,
-2024-01-20) loosened the "safe.bareRepository=3Dexplicit" to allow Git
-operations inside ".git/" directory in the root level of a working
-tree of a non-bare repository.  It used the fact that the $GIT_DIR
-you discover has ".git" as the last path component, if you descended
-into ".git" of a non-bare repository.
+On Friday, March 8, 2024 3:11 PM, brian m. carlson wrote:
+>On 2024-03-08 at 19:25:52, Angelo Dureghello wrote:
+>> Hi,
+>>
+>> below the bug report, not totally sure this is a bug btw.
+>>
+>> ---
+>>
+>> Thank you for filling out a Git bug report!
+>> Please answer the following questions to help us understand your =
+issue.
+>>
+>> What did you do before the bug happened? (Steps to reproduce your
+>> issue)
+>>
+>> Perform a git clone https with includeif onbranch in the .gitconfig
+>>
+>> Create a .gitconfig
+>> with
+>> [includeIf "onbranch:wip/pippo/**"]
+>>         path =3D ~/.gitconfig.pippo.inc
+>>
+>> git clone https://github.com/analogdevicesinc/no-OS.git
+>>
+>> Cloning into 'no-OS'...
+>> BUG: refs.c:2083: reference backend is unknown
+>> error: git-remote-https died of signal 6
+>
+>Thanks for the report.
+>
+>I can definitely confirm this with a local Git 2.44.0 built out of my =
+working tree.  It seems to trigger as long as there's a `path` entry
+>whether the path exists or not.  It _doesn't_ seem to trigger with a =
+`gitdir` check, but does trigger for `onbranch`.  v2.43.0 is not
+>affected.
+>
+>I do definitely think this is a bug.  First of all, we should not =
+trigger BUG conditions, even if the user has done something naughty, so =
+we
+>should fix it for that reason.  Second of all, this seems like a =
+completely reasonable thing to want to do, and considering it triggers =
+for
+>existing files, and that it worked just fine in v2.43.0, I don't see a =
+reason we shouldn't have this work.
+>
+>A bisection[0] leads us to 0fcc285c5e ("refs: refactor logic to look up =
+storage backends", 2023-12-29).  I've CCed the author of that
+>commit, who hopefully can provide some more helpful context.
+>
+>I have some guesses about what's going on here, but I haven't poked =
+further into the situation, so I'll refrain from speculating for now.
+>
+>[0] git bisect run sh -c 'make -j12 && cd $TMPDIR && rm -fr no-OS && =
+PATH=3D"$HOME/checkouts/git/bin-wrappers:$PATH" git clone
+>https://github.com/analogdevicesinc/no-OS.git; RET=3D$?; [ "$RET" -eq =
+128 ] && RET=3D1; exit $RET'
 
-Let's move the logic into a separate helper function.  We can
-enhance this to detect the case where we are inside $GIT_DIR of a
-secondary worktree (where "ends with .git" trick does not work) in
-the next commit.
+I was wondering whether this should only work on a clone with -b =
+wip/pippo/... argument, although it should not fail the clone, just not =
+apply the path. I can see how it would be somewhat confusing if the =
+global config defaults to master and remote only serves up main - or =
+vise-versa.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- setup.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/setup.c b/setup.c
-index a09b7b87ec..3081be4970 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1231,6 +1231,11 @@ static const char *allowed_bare_repo_to_string(
- 	return NULL;
- }
-=20
-+static int is_repo_with_working_tree(const char *path)
-+{
-+	return ends_with_path_components(path, ".git");
-+}
-+
- /*
-  * We cannot decide in this function whether we are in the work tree or
-  * not, since the config can only be read _after_ this function was call=
-ed.
-@@ -1360,7 +1365,7 @@ static enum discovery_result setup_git_directory_ge=
-ntly_1(struct strbuf *dir,
- 		if (is_git_directory(dir->buf)) {
- 			trace2_data_string("setup", NULL, "implicit-bare-repository", dir->bu=
-f);
- 			if (get_allowed_bare_repo() =3D=3D ALLOWED_BARE_REPO_EXPLICIT &&
--			    !ends_with_path_components(dir->buf, ".git"))
-+			    !is_repo_with_working_tree(dir->buf))
- 				return GIT_DIR_DISALLOWED_BARE;
- 			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report))
- 				return GIT_DIR_INVALID_OWNERSHIP;
---=20
-2.44.0-165-ge09f1254c5
+--Randall
 
