@@ -1,92 +1,98 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBA13C32
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 18:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BE558AC5
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 19:11:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709922650; cv=none; b=hGcGCrJvYjsBOot93BORJDKYcsysKl8DIcR966OgsizthGhvCoUF3XyXP0nje6yLqiz0ZcA45zwRK2B6V4di3Lp7YqBctEaAr+ejTEoS7fk6FQwcpyKtpX3ro85i/kqhnV1typXe2X/gJSSPlkmxhTKxtFjxThb7Z7injeYQ9zY=
+	t=1709925101; cv=none; b=Sbcz4qp88cg4clYIpPeciQTNG13J9LWItFbds7nnHFbDpdotYTRXax7oZZqDtppR7aVhCmraUqCU8i8rKdJt4hLv0Gx8mPvTin/VpU2HSCLHc2BCEu0WbmcPw0Fgc4k65ym92cYXnaef0kh4kt+ljtOZBUBfaqruyilHVeq2zgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709922650; c=relaxed/simple;
-	bh=NUZbcfmfiRXtPIMpXhEKRNhGmIEwOX6IfNRAt+iKQdw=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:
-	 Subject:Content-Type; b=bNAlvMo/xhXIW9vwUNvmRDvuFcWExBbyG79t3z9teMyD9+HUtFTnQt+2NzaDl+2oePHa7+MoK+IKt8pav7om1PckjQGOQ/Ff9fWrqU1iSqQOUO9HTh8Lzlj0ewZUfMf/h6jzVT485gf9eRCNZ1Jqau0Nfko9fjBFEf5mxu3vWpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=XJR+rjUq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3MZgutQ; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709925101; c=relaxed/simple;
+	bh=98HkI2eOKIlxPiu2OunBWAFwth6Bf655wRuixty/Ets=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=G7sc+/WFBZcsh6hyFIq2HfDGs91ONtF+KbUZkOAkEApA7cvnEgcP6+pTqpjuy3lyj7by18AplTIyMCvcRsi8ZkO0eoXrFkc4SCnMZcdVngOJQMwPbDp0bSzx6YLfgxQyCT1zeFZ0g7RMvhAVPPynxwvz+U1T94xrmRDwmlQ7V+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I4esVYoV; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="XJR+rjUq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3MZgutQ"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E60DC11400DB
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 13:30:46 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 08 Mar 2024 13:30:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1709922646; x=1710009046; bh=sssF3s1ooD
-	rcv5kqdt0lZmH/R2u/5khBWakKVKxSJ6w=; b=XJR+rjUqvM/t/KlVaWJtbtaQlS
-	5sltoJNRySU0oxzyCU5iAP6IpqkQStwUZuRsTnaAV/cXH3mnViwtXEtcgUaQ1voD
-	odwYIEzQP8UDsAIZsfUXC5cCNN9L2Q0PF36d3DVsfDte/xAGut8OJbIopBOwHMpR
-	IeRVhkmMvx4xPOfPhF9lj7sZOpAVjpLhpUzaEC0VEKtsI/8xBsYaHsfLbthM98dK
-	e91w3RHO6hpOxnSheu4tNdn/ojCo9sW1br7pcB7s7QHK34r2rxKyMoSfod8kW3jf
-	qL8yVpRZKTBkXnv+bxIZ0APZSgv7X5LBm1uDmMhh9RyNJ6XIZADazkhoDOSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709922646; x=1710009046; bh=sssF3s1ooDrcv5kqdt0lZmH/R2u/
-	5khBWakKVKxSJ6w=; b=T3MZgutQIrLvKhPXV2bdGQUHORGoeVKo7E4IPNgxcWGs
-	lfAGyWqoSPZ8zYTZccZvY5efgF9o4U+x1KpgwInAlSWsbuizAngzYYj4CgF0sYzk
-	Gz9U2BbXS6oGdV0RrYVIk9V7OEhrGwtmLvr559ZO0i7654YNMuGMvQikZGpUINNC
-	LIBJHd1w42vXLGLJl9bxonWjW98khEAsTlE4qMzTplfT9/DvPiiNvXNnQ8EdypGe
-	NrhEtVBQM08ebhUdgb1D2E97/BjmboEzYmOvtxWgyWL5CcUZKqp5BNPMfuZF2e8w
-	OEKGyEl2z+iYS9ffGaOMZwumlkMv6Sl2GM24PwNebw==
-X-ME-Sender: <xms:VlnrZeGIROCSlOJ-5vzcnCve45lP3RHaI82WKne-uqA3G9v26BFR-Dw>
-    <xme:VlnrZfWJiqWQJZL1ogwtmQkOqvXoZAdGNQrt75oa9Ndt9fmlqjNwj-QQD8liCxvTP
-    BnaYnIBGXi4bOh-Dg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrieehgdduudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
-    ertderredtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcu
-    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhephf
-    eutdfgleeugfeljeefudeugeetheelleegkefhfeffteegkefgveeiuedtheffnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhh
-    gruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:VlnrZYIzK49pJSqV_cb4gYezhPhVHfXAQqbpP4F3GsLvhLEx7b4vJQ>
-    <xmx:VlnrZYEmZ0JgGOVYtU4gW5q14i7Gt5eATupJXk5AWBQaFNuXNOtfiw>
-    <xmx:VlnrZUUPs4tghwE97c4ccI3l3zAk9qwHBw_fNxnbIVxpmcfCy5U0Mg>
-    <xmx:VlnrZdd-pqFfvJp2CK4Xrf0-KLLKtyL18nBgLayR05HXyy4jAEQ2Sw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 9A9BC15A0096; Fri,  8 Mar 2024 13:30:46 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I4esVYoV"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dc693399655so4528553276.1
+        for <git@vger.kernel.org>; Fri, 08 Mar 2024 11:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1709925099; x=1710529899; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YJgvZcMuDiIYDocNRbK9GZ4HK6/VSXcPBf6QKI/ptZg=;
+        b=I4esVYoVHpIs2VWCOsWExXN31R+2uFcrcCOiPq/OAuApWF7/a+RIcZt78v6+SUQRIh
+         YUg3KcpJQcswJWsg8H+6Cd61NYZHSanVxFlpPLiWcPMXRVLuOHt4pK3Ua27c7tDoCWup
+         Mo4oYEUehRtvUUx0Kp7ayP+2t+Tejk9vCylOkflyOCZAqLzlq9LObqvygl0A55shiM7E
+         Qu3wOqCjIWWXihzno4WK+kdVB48Kk3JELintjdfgVivk04VpshCRBNoJlohhNB4aqm0N
+         Ow8cIcDyK2YgXfPAHK8NRMcWaYSDVqYuoN9EwQd4hKoMd1FG43XjVdcA/c8Dd4PxpTMF
+         Rzyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709925099; x=1710529899;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YJgvZcMuDiIYDocNRbK9GZ4HK6/VSXcPBf6QKI/ptZg=;
+        b=BNb4tjUwcO+BZ/hKPdVjPuu0khraE9EvWXZ4xYzdU0kzSV4QhKLFUepG/qQqnlaZKn
+         iaPYNfxGttytCYU+aO1Xi0KSn2wtTDgW/czROLb7nrDtPB8XyUt2CtQDgEWe+o/wH++o
+         BU5Weyc0T6QbdXyq3MJejLgkVZWLTprPjxjDUXZ9qxZEX+EZlYxJTgPDjF9L9uQB2/vB
+         19hpYfu/FksdcyHks/gmJQCkVLQYdZfbLagtuyIj9TNqzYCyLxSOslj60wA9G8UOCRwI
+         JLsSNbKoVLZc1/KTmKSLOwHOWTi3OHMKkpvgLWaL4ZXDArNU4Q6APJwb9LTAja8lvvxn
+         /5Mw==
+X-Gm-Message-State: AOJu0YxjjdJY2x/KxHtUR5InRsYMBF0dDP6WmJRDu42rC/SibM7Eie2W
+	Vhh9cmWAmAgOnSBa0bA/iDSSnOBjSfx5MJwvnzJqxUyxL6nccVT4CQvnve49Q0hA6N+B4Y90MQp
+	BoQ==
+X-Google-Smtp-Source: AGHT+IHhQyIspBTHft7q/D2855+EOqe9RA3xTs1ahAH7pJtEkYU+PjTXr6wOUIZTE/L86vZhN5lhl1l0xyY=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:154d:b0:dcf:411d:67b9 with SMTP id
+ r13-20020a056902154d00b00dcf411d67b9mr5571687ybu.5.1709925099066; Fri, 08 Mar
+ 2024 11:11:39 -0800 (PST)
+Date: Fri, 08 Mar 2024 11:11:37 -0800
+In-Reply-To: <xmqqsf1a7wse.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Message-Id: <108afd9c-e158-4366-853e-3a384c77a452@app.fastmail.com>
-In-Reply-To: 
- <f405a0140b5655bc66a0a7a603517a421d7669cf.1709841147.git.code@khaugsbakk.name>
-References: <cover.1709841147.git.code@khaugsbakk.name>
- <f405a0140b5655bc66a0a7a603517a421d7669cf.1709841147.git.code@khaugsbakk.name>
-Date: Fri, 08 Mar 2024 19:30:24 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] format-patch: teach `--header-cmd`
-Content-Type: text/plain
+Mime-Version: 1.0
+References: <xmqqjzmpm9b8.fsf@gitster.g> <owlyil264yew.fsf@fine.c.googlers.com>
+ <xmqq1q8ubtg6.fsf@gitster.g> <xmqqsf1a7wse.fsf@gitster.g>
+Message-ID: <owlycys44jyu.fsf@fine.c.googlers.com>
+Subject: Re: What's cooking in git.git (Feb 2024, #09; Tue, 27)
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Mar 7, 2024, at 20:59, Kristoffer Haugsbakk wrote:
-> +test_expect_success '--header-cmd with no output works' '
-> +	write_script cmd <<-\EOF &&
-> +	exit 0
-> +	EOF
-> +	git format-patch --header-cmd=./cmd --stdout main..side
-> +'
+Junio C Hamano <gitster@pobox.com> writes:
 
-This can be simplified to `--header-cmd=true`.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> Doh, please wait for my v6 reroll (will send to the list in the next
+>>> half hour) to clean up the commit messages. Thanks.
+>>
+>> If we had communication gap and the topic was prematurely merged and
+>> was caught within a day or two, I would be a bit more sympathetic,
+>> but given that this was merged more than a week ago,
+
+Doh, I didn't realize this when I posted my message in this thread.
+
+>> that's totally
+>> unacceptable.
+
+Completely understandable. In the future I will check "how long has the
+topic been in 'next'?" before asking to replace it with a newer
+revision.
+
+>> If you have improvements, please do so as incremental patches on
+>> top.  I'll hold the topic in 'next' until we are ready.
+>
+> Well, I changed my mind.  As we haven't rewound the tip of 'next'
+> post release, let's eject what is in 'next' and queue the latest,
+> pretending that the earlier round weren't in 'next' at all.
+>
+> Thanks.
+
+Ah I see --- thanks for stating for the record (and not leaving any room
+for me to get confused). Much appreciated.
