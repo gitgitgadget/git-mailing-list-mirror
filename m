@@ -1,127 +1,107 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EC05FBA3
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 22:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E679D15CB
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 22:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709936684; cv=none; b=LpoDr4hnM3Oc/MqKZEjnzZhJFvGvLj7ztHB2iPU1FCkLfLYpOqjHT/Lja7++EDq9AGn0U16QWi/UH54CkQPEPb17j/Tahc8hyiKor84vxolxrQhBr67zNj/oTWl5HdGXsziyM6owAZ+TobnRu2KYRsy4GvmIzj3dbFxIa4IEPcU=
+	t=1709937021; cv=none; b=q2WtV1ERsGT6lw0nowAHc/6BvE7bi1NLMF4zm58M1jR6xcYKcgOn3t6DSZs6LDx25jYlV36cLct3nh+xLiGMwYQhdiHcvAdnNIPT0d6J9oTgw9kgvYMnNQiY8s1RzBu+cZSeO/6MDlBbjdZulM8XyJhu5OVVvUEBqwWWX4F9zIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709936684; c=relaxed/simple;
-	bh=PeyYEvRP/bEJR7/07MtDrXn3XkM+OIjRigF5WAz6kMY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CRwofZ23WNgEpDt0xksmWAHTc40N25uZIhREFt06gDSENtqKaEf/kJg9Nund1IAgDmgBjyOs/xeibgoN6jYlmbdPo+6ah1438Cgr9UE53adY9Eylfc869Fxvwsv1CTYSfsuaJo+1y0UFus9mRY+YCUIbyP/UVrqG78Oq/SBpIpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DM4FQcPY; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709937021; c=relaxed/simple;
+	bh=PCwSfdlH5TirLceOPr+sQ0p1Yr/5Yk55CdCgaxnbDe4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jy73lhKumVpIVqQvxv5QtjJ+lllQ5LUIv8W9dB6/mLjoUHFZhIfclrYBStiZHzhus5IkpvpbB1rUtYU0wTftpa0flKNZZK/o1LjdiaIHk3xEy5NbChxImWBaGz49Z8d903yeblaiLTaSJ+fEMQiDqzdMf4dvIHaoZg1mGz+XNTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QfVF4Ohw; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DM4FQcPY"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-513173e8191so1911137e87.1
-        for <git@vger.kernel.org>; Fri, 08 Mar 2024 14:24:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709936681; x=1710541481; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lgLOEwxfYrYwQECddkt7kbBFRVMqwoDifSSs4rZNVuA=;
-        b=DM4FQcPY7O7bqSaa9Di2qim86PWvPmZqrNkmdZB/WpXG2Oh1vjO9deMJDG0KnipaXR
-         8n/HKKA8lF2j7+mDYgu+9L9Emi1bqX0Oe7ST3SHgMDcHLVJtW9xassZFoeOx+qcB/jCQ
-         Oge6qh4rYb0Ip/DgK3R2YJIIDKmneFPx0V9ciiJmjpTIPstmyONV+7dDsEtnn3cSW4VK
-         77vCWmjSQTyP9FEVJ44RjYCNdVfdlL5+jX8ZxqIiR03UDfMCSEgB5mYXMbjwSCvmYBx4
-         LZ0Gm1ABkFdfjI4WL8Rc3Vuj1xRbFB68pc5Z1gv7lpDQeZq+v1bkm3yXV1wd2UJ7vkUw
-         BGCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709936681; x=1710541481;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lgLOEwxfYrYwQECddkt7kbBFRVMqwoDifSSs4rZNVuA=;
-        b=G80v732/bmLW81gfUUg0GQCe7HmQLTYE54jnkOpYIKFMl7hPOAg5NCljHcr4jpoKwt
-         OKVwJlEi919OONbN14OfbMGq7WqyIFVU2OYOLAbLnLou3MpG19Yg+AMd5faifIUYlFUG
-         iWJpe5ZJ3sqrWoJKuA1qrMUIXO7lJ3+O3VGIT8STPy5zesZhaoK3lm9Ja4uIgK/rFUmt
-         CPspnLsrm3xKau9IeQ39aZBjBufID+lyC4NbPRuklcQ+hmNiRzQloYI7bMlwhqw1NtTf
-         jfWJDb4+lMbqhTXuz4rNtJPYCbckVtrF6UK6N3mB7AUVzDQ98GP0slwfUKcst0/vQo8F
-         ovbQ==
-X-Gm-Message-State: AOJu0YzUmd4hUj9WPSx/4NaFysVTjDWLRJH0ff9aKc/pA4VTPenSWGKb
-	B83jkm4K4Yq/EVYKi3eYqyZUvuO5JkBJO51sTepXGLeRqe6tnvmP
-X-Google-Smtp-Source: AGHT+IGz8Ti4zz3ZFpDU9OEXJABCFI7Q9CMRCheu5Ey4R/bFq7WcbOculJQ5SBWqDJ6OMsgYOD6yRg==
-X-Received: by 2002:ac2:43cc:0:b0:512:f59f:15d3 with SMTP id u12-20020ac243cc000000b00512f59f15d3mr180014lfl.20.1709936680857;
-        Fri, 08 Mar 2024 14:24:40 -0800 (PST)
-Received: from localhost (94-21-23-218.pool.digikabel.hu. [94.21.23.218])
-        by smtp.gmail.com with ESMTPSA id hq31-20020a1709073f1f00b00a45c09107d6sm226557ejc.29.2024.03.08.14.24.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Mar 2024 14:24:40 -0800 (PST)
-Date: Fri, 8 Mar 2024 23:24:39 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-	Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v4 2/2] index-pack: --fsck-objects to take an optional
- argument for fsck msgs
-Message-ID: <20240308222439.GB1908@szeder.dev>
-References: <pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
- <pull.1658.v4.git.git.1706751483.gitgitgadget@gmail.com>
- <f29ab9136fb4c23c5700a73731a5e220f92b7c30.1706751483.git.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QfVF4Ohw"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 576131E2E22;
+	Fri,  8 Mar 2024 17:30:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PCwSfdlH5TirLceOPr+sQ0p1Yr/5Yk55CdCgax
+	nbDe4=; b=QfVF4Ohwrfs3mt/ZuNZrvv3Cp6ti+04iKTnVbSB5OOrirXSw5O8MGK
+	I+RcxjR3Zav3WPwHjm8NJopBTelpybsS+O9zNGxeUCDTQMjBTPUwsPfDYN5X3kSl
+	Zw+6BpvgYEbGGEOOVGxyebfCyVLr5Eo5B2XV7LzdtYzw/bLRaT9SM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E24D1E2E21;
+	Fri,  8 Mar 2024 17:30:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A05B81E2E20;
+	Fri,  8 Mar 2024 17:30:12 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH 2/2] setup: make bareRepository=explicit work in GIT_DIR
+ of a secondary worktree
+In-Reply-To: <20240308211957.3758770-3-gitster@pobox.com> (Junio C. Hamano's
+	message of "Fri, 8 Mar 2024 13:19:57 -0800")
+References: <xmqqv85zqniu.fsf@gitster.g>
+	<20240308211957.3758770-1-gitster@pobox.com>
+	<20240308211957.3758770-3-gitster@pobox.com>
+Date: Fri, 08 Mar 2024 14:30:11 -0800
+Message-ID: <xmqqil1wfjbg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f29ab9136fb4c23c5700a73731a5e220f92b7c30.1706751483.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6DCAF7F2-DD9B-11EE-8DF9-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thu, Feb 01, 2024 at 01:38:02AM +0000, John Cai via GitGitGadget wrote:
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index 496fffa0f8a..a58f91035d1 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -441,8 +441,7 @@ test_expect_success 'index-pack with --strict' '
->  	)
->  '
->  
-> -test_expect_success 'index-pack with --strict downgrading fsck msgs' '
-> -	test_when_finished rm -rf strict &&
-> +test_expect_success 'setup for --strict and --fsck-objects downgrading fsck msgs' '
->  	git init strict &&
->  	(
->  		cd strict &&
-> @@ -457,12 +456,32 @@ test_expect_success 'index-pack with --strict downgrading fsck msgs' '
->  
->  		EOF
->  		git hash-object --literally -t commit -w --stdin <commit >commit_list &&
-> -		PACK=$(git pack-objects test <commit_list) &&
-> -		test_must_fail git index-pack --strict "test-$PACK.pack" &&
-> -		git index-pack --strict="missingEmail=ignore" "test-$PACK.pack"
-> +		git pack-objects test <commit_list >pack-name
->  	)
->  '
->  
-> +test_with_bad_commit () {
-> +	must_fail_arg="$1" &&
-> +	must_pass_arg="$2" &&
-> +	(
-> +		cd strict &&
-> +		test_expect_fail git index-pack "$must_fail_arg" "test-$(cat pack-name).pack"
+Junio C Hamano <gitster@pobox.com> writes:
 
-There is no such command as 'test_expect_fail', resulting in:
+> In the previous commit, we created a helper function to house the
+> logic that checks if a directory that looks like a bare repository
+> is actually a part of a non-bare repository.  Extend the helper
+> function to also check if the apparent bare-repository is a $GIT_DIR
+> of a secondary worktree, by checking three things:
+>
+>  * The path to the $GIT_DIR must be a subdirectory of
+>    ".git/worktrees/", which is the primary worktree [*].
+>
+>  * Such $GIT_DIR must have file "gitdir", that records the path of
+>    the ".git" file that is at the root level of the secondary
+>    worktree.
+>
+>  * That ".git" file in turn points back at the $GIT_DIR we are
+>    inspecting.
+>
+> The latter two points are merely for checking sanity.  The security
+> lies in the first requirement.
+>
+> Remember that a tree object with an entry whose pathname component
+> is ".git" is forbidden at various levels (fsck, object transfer and
+> checkout), so malicious projects cannot cause users to clone and
+> checkout a crafted ".git" directory in a shell directory that
+> pretends to be a working tree with that ".git" thing at its root
+> level.  That is where 45bb9162 (setup: allow cwd=.git w/
+> bareRepository=explicit, 2024-01-20) draws its security guarantee
+> from.  And the solution for secondary worktrees in this commit draws
+> its security guarantee from the same place.
 
-  expecting success of 5300.34 'index-pack with --strict downgrading fsck msgs':
-          test_with_bad_commit --strict --strict="missingEmail=ignore"
+I wrote the "[*]" mark but forgot to add a footnote with an
+additional information for it.  Something like this was what I had
+in mind to write there:
 
-  + test_with_bad_commit --strict --strict=missingEmail=ignore
-  + must_fail_arg=--strict
-  + must_pass_arg=--strict=missingEmail=ignore
-  + cd strict
-  + cat pack-name
-  + test_expect_fail git index-pack --strict test-e4e1649155bf444fbd9cd85e376628d6eaf3d3bd.pack
-  ./t5300-pack-object.sh: 468: eval: test_expect_fail: not found
-  + cat pack-name
-  + git index-pack --strict=missingEmail=ignore test-e4e1649155bf444fbd9cd85e376628d6eaf3d3bd.pack
-  e4e1649155bf444fbd9cd85e376628d6eaf3d3bd
+[Footnote]
 
-  ok 34 - index-pack with --strict downgrading fsck msgs
-
-The missing command should fail the test, but it doesn't, because the
-&&-chain is broken on this line as well.
-
+ * This does not help folks who create a new worktree out of a bare
+   repository, because in their set-up, there won't be "/.git/" in
+   front of "worktrees" directory.  It is fundamentally impossible
+   to lift this limitation, as long as safe.bareRepository is
+   considered to be a meaningful security measure.  The security of
+   both the loosening for a secondary worktree's GIT_DIR as well as
+   the loosening for the GIT_DIR of the primary worktree, hinge on
+   the fact that ".git/" directory is impossible to create as
+   payload to be cloned.
