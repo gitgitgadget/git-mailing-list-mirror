@@ -1,63 +1,63 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E361BDF4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C383FB9F
 	for <git@vger.kernel.org>; Sat,  9 Mar 2024 14:10:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709993403; cv=none; b=Go2BSMklof6DSCVgB1FYzcoaRSMvBGz2Qm4SuYX45uJxK9Ozvgamz90ejm5R6dAbUrh0UQwHxj38BIkisomNphbV2NLvupAyK8SF5S7TePiWa9AY5O7+r0ojrf+i4zifIKkrE8hqD/IafLpLsWh1JErnJVCM4GkpJUnJndY0cvA=
+	t=1709993404; cv=none; b=eu2N/tfw7PmFqOd/hZ8Tbp2w4l1bfmeVBTDyShzeoKMB6mJuwqgBuKPl1zHOFftLCBrFFSOvkOerhFHRiQtHpb+bhMs09Ee+sN1R9eBQAzbinKOdpUpLCDrSC4KQ5b6arJDAdbS6nIcpsvC1LNJ76Bu3qlwPm167PZsFmhZxxSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709993403; c=relaxed/simple;
-	bh=OgtvMbwLgvKkeTlhEzE6OKj8nbECKsAfZ1ktwgRsrnU=;
+	s=arc-20240116; t=1709993404; c=relaxed/simple;
+	bh=AcC5u0CLkdWbvgPTiNVUVMXUJnVHgXaUCe3xSbA3aEU=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=odhvCPQpsNqIqvp7BOECZrueEQMYuOu1UqSP2gS433fFP5mXrvfgQo4rdn7vfKD5EGsW8SgLQEY2Zt/xn5MO2xdwweNryqfVOXzbjFmBMVt7NnyezDLHF6q2NIKMJmP3XethzISnoTGyngaNHcAy9FJIGiEsKoMeAdGXyqzK9zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CC2+hxPe; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:To:Cc; b=PScKp3hGHRStxdXysdVy/izBF9QElci4GTt0h6daHoJ9rkYbteAFaS5hHRNFFX7hxMKtB8ImNR/O6b/xJ0BdZcXNeCRPdD+2z9kaiL6jwO62baEQMUdXltDdoC1I83dtO5uS+dT1EtOEjqEFbmlCn/K+duTj7UoRrOIN6Kvg1Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DJIveOdA; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CC2+hxPe"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33e76d653b5so1557718f8f.3
-        for <git@vger.kernel.org>; Sat, 09 Mar 2024 06:10:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DJIveOdA"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33e122c8598so1721595f8f.1
+        for <git@vger.kernel.org>; Sat, 09 Mar 2024 06:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709993400; x=1710598200; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709993401; x=1710598201; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e2eZuCOnsVQaHxWHlTqlvxvLjjlHCjEtEdBvI92A0cM=;
-        b=CC2+hxPeqbz/XOeWc9FpcbxBCsNPMI0KjMmSb+5wAVW5B5PqB21sux5PjaIPkjIHMF
-         jWjuZzYmtEFEP9Gy3xhC+nVFFK/JAH1tSjHTZZB7KiAek01cw/jqEm5iQ1Ra5SrnRzMW
-         +0ciEKsGZT2gKodQIDBoXV2zdkvACh9ODMRzWkHgMkH5iqQ+YdctWhZt+LlIFZLttnnL
-         Anv5yLywqCg2djVfUbm86Tqhc4qwsV/vXlnLYY6hFiBkC09mNlFmSlIUqwW17XAlXwwZ
-         kc004eEbP9fQ92fOLTIK/IG8hVYcsOCNcdNGG508nQUvXNBnDUSPeQgZsdb3hC8xRVvX
-         v8Kw==
+        bh=Fr9R9PlfGVK0QEl+2r1YdUuMptAs1gVr7g+Y5rhvAyM=;
+        b=DJIveOdAFB3islNLuUh+lzu7WIa/c9nqEStRStT8Bl/OqONJybg7U/UMJc2CI4dZQV
+         BEZIRnqPhU+mMoQWBoGl/L8mKbX2ExR2JdHViEcr9JImVQWCsa3R+j5qzAQ6NTfDhA4u
+         Y0zhcTsQbcuLACHzIPJbJH+jz0ZN12yjUXthUXVE0oNf24oPl5y5WmUOXKd+U6L/766k
+         /6cRF+1RB+f0B8BrO/+wxrRYoWBolFbNz7rOFypm5Shin0TJaKf4xcGsoM4U3cUSnu64
+         /EwXNGW23a3o9ZL+Qx8COtVOjb+SRsDAG/ZI4AKv57zHiS3+j39abI1+MQ/Gizk9lcqt
+         yQEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709993400; x=1710598200;
+        d=1e100.net; s=20230601; t=1709993401; x=1710598201;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=e2eZuCOnsVQaHxWHlTqlvxvLjjlHCjEtEdBvI92A0cM=;
-        b=OmPzJQs35+J5Ra+0DR3/zZRBgk/G47ZG7D1MM5BgpcwBOsRMq3S55ZXuiSNFMA/thS
-         eBrxEXZX/j7joI4S37BOhMEz/NR9QqI2FJTXvRWBrizuQEbCAV6NYe3lWc98RAPfaj9a
-         fi2pCU4v6PqqifFOcvGGAV0uRHoivBToEkfvl6LiPkgutUI5loVJdcruYLuBffzrpvAj
-         fQHuOV4+ksob9y9B6ML1jwlCabT6ZQHCXTSvApFsq62AtNFmuAkOyjHWKv60uOSYPSGl
-         4yZwJfZxgEHNLG3BxWnmAuo1IvIresVGba7d/0x8HgM/RGbIe9C6P/yqRTxLOaPrXDRk
-         x2Ug==
-X-Gm-Message-State: AOJu0YwAXsBKUyZl2yyx/cfVN6QCjYUsXMw/5Kj8wcmK9mPp7+fgKfHU
-	hZb/P0++aVM9xWvfcOfecBPEQDG4Iihp6ybCB8DvJY4SShIK/UbT2Ssi2718
-X-Google-Smtp-Source: AGHT+IHxFKWYzQp8+RKzVLnCvNIwDXLlgx6jJWQVw+ZoJV/Vp++swrOeV+Q+RCOU7fB4eEv6IPnedQ==
-X-Received: by 2002:a05:6000:b0e:b0:33e:8771:c58b with SMTP id dj14-20020a0560000b0e00b0033e8771c58bmr627133wrb.62.1709993399676;
-        Sat, 09 Mar 2024 06:09:59 -0800 (PST)
+        bh=Fr9R9PlfGVK0QEl+2r1YdUuMptAs1gVr7g+Y5rhvAyM=;
+        b=TC/SLv+7vAGiXRCYg6vAQCuncD2r56xOhudH9OIct2SLuAGyjfqPotjE5ggg9nheN8
+         sZPnrY+EH0BxkW0gQKb0k60aIAe5abIj1mjUCooEB1MhjRMCjMndvgCorrHITl0CS1Mv
+         wA1kd01O3SNwFyLIp0pQidmTj6bvnPyIgh16TGK9AqmJ9isqLAMh9D6X3aLopWbHoKzd
+         6V2NmFlMlepgp3EWGO+b9XU2FrbyPPIsEiCdujrIN5qWoPK6amNx8weztVkAK65zS22T
+         mTQmcn9yCSFJvqGrNkZwH71Kz4BgkcvZI5mzoqUURe8uihmsqm6tCB4TUPS9iqMZEgx+
+         p+Aw==
+X-Gm-Message-State: AOJu0YxnI+lD+/ye7Mw+ri71Jtv4MqJ97qytyOpeNflGIBv8Pz4ejVm6
+	otnahmLSPy4ejZB6EgXhiA9r5e4Grf9bWF0xxPb/qfS9hklPVsuGHPF1bXso
+X-Google-Smtp-Source: AGHT+IFr7tpUFGiueebyZAx/Y+QIQm1MtunjSly9TGqQMvsm6wAD10hzXCY35PZQZ4YPUTY5SAWtvg==
+X-Received: by 2002:a5d:584a:0:b0:33e:cc6:e6b5 with SMTP id i10-20020a5d584a000000b0033e0cc6e6b5mr1658085wrf.23.1709993401097;
+        Sat, 09 Mar 2024 06:10:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h6-20020adffa86000000b0033e7a499deasm1904275wrr.109.2024.03.09.06.09.59
+        by smtp.gmail.com with ESMTPSA id c17-20020a5d5291000000b0033d2ae84fafsm1918914wrv.52.2024.03.09.06.09.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Mar 2024 06:09:59 -0800 (PST)
-Message-ID: <533df4c6659439d0a241a8b2e329c88d475d4136.1709993397.git.gitgitgadget@gmail.com>
+        Sat, 09 Mar 2024 06:10:00 -0800 (PST)
+Message-ID: <50fe1a26515c06afec5ac7fb723727e1365a14fc.1709993397.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1686.git.1709993397.gitgitgadget@gmail.com>
 References: <pull.1686.git.1709993397.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 09 Mar 2024 14:09:56 +0000
-Subject: [PATCH 1/2] merge-recursive: prepare for `merge_submodule()` to
- report errors
+Date: Sat, 09 Mar 2024 14:09:57 +0000
+Subject: [PATCH 2/2] merge-ort/merge-recursive: do report errors in
+ `merge_submodule()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,48 +76,112 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `merge_submodule()` function returns an integer that indicates
-whether the merge was clean (returning 1) or unclean (returning 0).
+In 24876ebf68b (commit-reach(repo_in_merge_bases_many): report missing
+commits, 2024-02-28), I taught `merge_submodule()` to handle errors
+reported by `repo_in_merge_bases_many()`.
 
-Like the version in `merge-ort.c`, the version in `merge-recursive.c`
-does not report any errors (such as repository corruption) by returning
--1 as of time of writing, even if the callers in `merge-ort.c` are
-prepared for exactly such errors.
+However, those errors were not passed through to the callers. That was
+unintentional, and this commit remedies that.
 
-However, we want to teach (both variants of) the `merge_submodule()`
-function that trick: to report errors by returning -1. Therefore,
-prepare the caller in `merge-recursive.c` to handle that scenario.
+Note that `find_first_merges()` can now also return -1 (because it
+passes through that return value from `repo_in_merge_bases()`), and this
+commit also adds the forgotten handling for that scenario.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ merge-ort.c       | 5 +++++
+ merge-recursive.c | 8 ++++++++
+ 2 files changed, 13 insertions(+)
 
+diff --git a/merge-ort.c b/merge-ort.c
+index 033c4348e2d..5d36c04f509 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1819,6 +1819,7 @@ static int merge_submodule(struct merge_options *opt,
+ 			 _("Failed to merge submodule %s "
+ 			   "(repository corrupt)"),
+ 			 path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (ret2 > 0)
+@@ -1829,6 +1830,7 @@ static int merge_submodule(struct merge_options *opt,
+ 			 _("Failed to merge submodule %s "
+ 			   "(repository corrupt)"),
+ 			 path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (!ret2) {
+@@ -1848,6 +1850,7 @@ static int merge_submodule(struct merge_options *opt,
+ 			 _("Failed to merge submodule %s "
+ 			   "(repository corrupt)"),
+ 			 path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (ret2 > 0) {
+@@ -1866,6 +1869,7 @@ static int merge_submodule(struct merge_options *opt,
+ 			 _("Failed to merge submodule %s "
+ 			   "(repository corrupt)"),
+ 			 path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (ret2 > 0) {
+@@ -1899,6 +1903,7 @@ static int merge_submodule(struct merge_options *opt,
+ 			 _("Failed to merge submodule %s "
+ 			   "(repository corrupt)"),
+ 			 path);
++		ret = -1;
+ 		break;
+ 	case 0:
+ 		path_msg(opt, CONFLICT_SUBMODULE_FAILED_TO_MERGE, 0,
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 32e9d6665de..f3132a9ecae 100644
+index f3132a9ecae..fc772c2b113 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1426,13 +1426,14 @@ static int merge_mode_and_contents(struct merge_options *opt,
- 			/* FIXME: bug, what if modes didn't match? */
- 			result->clean = (merge_status == 0);
- 		} else if (S_ISGITLINK(a->mode)) {
--			result->clean = merge_submodule(opt, &result->blob.oid,
--							o->path,
--							&o->oid,
--							&a->oid,
--							&b->oid);
--			if (result->clean < 0)
-+			int clean = merge_submodule(opt, &result->blob.oid,
-+						    o->path,
-+						    &o->oid,
-+						    &a->oid,
-+						    &b->oid);
-+			if (clean < 0)
- 				return -1;
-+			result->clean = clean;
- 		} else if (S_ISLNK(a->mode)) {
- 			switch (opt->recursive_variant) {
- 			case MERGE_VARIANT_NORMAL:
+@@ -1246,12 +1246,14 @@ static int merge_submodule(struct merge_options *opt,
+ 	ret2 = repo_in_merge_bases(&subrepo, commit_base, commit_a);
+ 	if (ret2 < 0) {
+ 		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (ret2 > 0)
+ 		ret2 = repo_in_merge_bases(&subrepo, commit_base, commit_b);
+ 	if (ret2 < 0) {
+ 		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (!ret2) {
+@@ -1263,6 +1265,7 @@ static int merge_submodule(struct merge_options *opt,
+ 	ret2 = repo_in_merge_bases(&subrepo, commit_a, commit_b);
+ 	if (ret2 < 0) {
+ 		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (ret2) {
+@@ -1281,6 +1284,7 @@ static int merge_submodule(struct merge_options *opt,
+ 	ret2 = repo_in_merge_bases(&subrepo, commit_b, commit_a);
+ 	if (ret2 < 0) {
+ 		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
++		ret = -1;
+ 		goto cleanup;
+ 	}
+ 	if (ret2) {
+@@ -1312,6 +1316,10 @@ static int merge_submodule(struct merge_options *opt,
+ 	parent_count = find_first_merges(&subrepo, &merges, path,
+ 					 commit_a, commit_b);
+ 	switch (parent_count) {
++	case -1:
++		output(opt, 1,_("Failed to merge submodule %s (repository corrupt)"), path);
++		ret = -1;
++		break;
+ 	case 0:
+ 		output(opt, 1, _("Failed to merge submodule %s (merge following commits not found)"), path);
+ 		break;
 -- 
 gitgitgadget
-
