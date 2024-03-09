@@ -1,88 +1,128 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-175.mta0.migadu.com (out-175.mta0.migadu.com [91.218.175.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B836C111E
-	for <git@vger.kernel.org>; Sat,  9 Mar 2024 18:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693DD481A7
+	for <git@vger.kernel.org>; Sat,  9 Mar 2024 18:20:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710007264; cv=none; b=Kv2xazAHU5JrBsOnfPOd5ktlxkHkHkLd+05IBHZzh9ikxv+4Ol3+qCIwRfsL8Mz73hicl3u6ONrlLoeQSl+nHwNeQy84hC1JVDXGj3vgPIP6ZGv3jqIG3eVea77y4TUBJHJFyw0+uVfI3Ejq6HWytlH45g0bpKztLdmMAo+9OqE=
+	t=1710008451; cv=none; b=O8D/L9aoKhR0C9aAb5uAXKTEi1kJMUY/4/790rCKgef3rJzE12AnofNbXmvAAoMjnqH7PDZHixhJiv/tYXHFCjqzfRa6U7lYgNzHHm0jk8308vItGhjOJLpTZWq82mHnIlnab6KBe0s78p03LrhNdzXjJTeGcxn7AgOb7aC9/q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710007264; c=relaxed/simple;
-	bh=mHFdchMh5TWrRBpbaX/gAJcWwHhkEId6m4W3H1w1IsE=;
-	h=Subject:To:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=AxDOoMRvnkXUkqO63zhHsW+xTFsUEqe3TPUspS44spKKKvbb/CfUNo1mt2vyVAoLXuD+KESjfGmtW0CeY42R1TxhATdKucW5wwhzMb5d9EztCcjDjYtLntXxq55e//RbYqJ71BOVKyVh7L/0c6ea9ItBlYFLB0Eh+pbte9KUeyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G5GRgLke; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710008451; c=relaxed/simple;
+	bh=y50Vs0KDYO8NAz0sV7QkG+fSUe6ewd8Pwj1kgSniyJU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=vBt2woncUAVnUabG+CeIMgkabcKHCwdK7mYmBXbmAlgNyzyNlaGF1jvd4wg9ELzyKeTafmaM4/XQrCXqgIc9DlTl9MZsaLKN/JGol/NO7C0vzCxxLdICl0zO0KzXcHVpe3ebE5+3C+zdr6hwt8ADkwCtzt6LLAgsY7hxNhBlT+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=K7/wxi96; arc=none smtp.client-ip=91.218.175.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G5GRgLke"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-787edfea5adso122602185a.2
-        for <git@vger.kernel.org>; Sat, 09 Mar 2024 10:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710007261; x=1710612061; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/9qlkx9hyi40VtZmZ3WfhZtkWQG+OSc+iWSU3hVvcdo=;
-        b=G5GRgLkeyP/cFXwQdL29k/1H9QBOImyu8HjaUDj0nTDqlcexh6ZCRVvSrUUz2QqVHw
-         HXqUKCeiAZn9BmB7dt+2t4Q9Qe6FgMrUOglZsa8ch16SpM9tqDss/0fY8Jmj50hK12HL
-         zaCzcGFsJbulB5ZZJnD6CpZu7jtP5f/7eiYaKYpcOBBbhPOiz/MIcsHK2gCzrGmDfybp
-         A/WoUJafXnUephNuqo4IqBLyHizIlNuYcYTEacol6Gp6Oeyc0A9araqmTkXtTKNKl8eg
-         usGgxZKYr14YaQM+/rDW4ujFr2vPUOV00e29i6rk0rLy5Ceu0SLTEG2lVKgX53zEt9py
-         lNIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710007261; x=1710612061;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/9qlkx9hyi40VtZmZ3WfhZtkWQG+OSc+iWSU3hVvcdo=;
-        b=aWhLoQe3rHqRshF7aZvmqF7SCUi7iKngKF6OB9kLivpdmqjaAwJ5zI2vMD29xdODUL
-         W/fDHZO6fv90uR/p7uZHcnAThDJvFjSWGnRl1fjaysY71PYq/I3eKfG0bO7e7+4PDv0e
-         8RGqdPduc1zoCuVxF9P/CcmKLpwd8RRzxHiRcUIapXlJhBgiytl0Yhe9H3KNFu5xXQ12
-         cesMqnubLYwWDa/6NN9nfo1GyPNbhu8PMCnZMo0TFMEkCbea78Rjv1H7ZVjCer9gavD0
-         HiFD7aas9MFQ7TjaOJpi1w0r8IA+OK4FRp9U+/2dG9f7huMF0PfxKJ8xZY4Q1FrvA4vK
-         VAYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXYrA4i33OkO/CJskOZysnfu4ZVHflWLAg4FbPLjYAuUQyvMC5YAO9eXue/Zpj2BT5C0qIdxaqdTfBoMpgBsGMNoMXI
-X-Gm-Message-State: AOJu0YxLa2nwdZJTt94Bqt1XLeCNtaPmcXz63xDuv6ZXwrnjpcUs1Tax
-	n+IU4nYH2SbrWHg+MuUTLxdq8U2OFFdHLBNNXJYkgGmR3ot6Yb83aeDukkI5
-X-Google-Smtp-Source: AGHT+IGyQgnf/0Z4pNT+eP0DYYKqjIwDFIs/1uBxvHVuMbzZjG3Isz0JGvJylrL3fCfwK5oYOM7KjQ==
-X-Received: by 2002:a05:620a:5793:b0:788:33c5:b7b7 with SMTP id wk19-20020a05620a579300b0078833c5b7b7mr2867624qkn.26.1710007261383;
-        Sat, 09 Mar 2024 10:01:01 -0800 (PST)
-Received: from ?IPv6:2606:6d00:11:ff90:b1b9:ff9c:b8e:3049? ([2606:6d00:11:ff90:b1b9:ff9c:b8e:3049])
-        by smtp.gmail.com with ESMTPSA id xx23-20020a05620a5d9700b007881e40ce0bsm1125472qkn.83.2024.03.09.10.01.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Mar 2024 10:01:01 -0800 (PST)
-Subject: Re: [PATCH] sequencer: allow disabling conflict advice
-To: phillip.wood@dunelm.org.uk,
- Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
- <3df4790a-7ee1-4c72-a3da-ba8a48d546b8@gmail.com>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <d83c271b-04c1-f3fc-d922-76f73ac2031a@gmail.com>
-Date: Sat, 9 Mar 2024 13:01:00 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="K7/wxi96"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
+	s=key1; t=1710008445;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=B9kapIwhlzPp8J9XuFO/P/JATRYI5kTjK4NZ11dLEXE=;
+	b=K7/wxi96ftdW/+lzmgZ7C5h8806LDxs0BRJEmuE6Cn6FSJLnhMHafgJqRZFQWGaBKNLPqf
+	dAvGKumQNMZqJyHFjdYSAbhkd3EEqsVDIEyyT8nwUp/L2uELnP9u5EN3H5jWfjuZQxS2Y8
+	90iEyFYK3zOnPPAieELBAhO1SAvOrdcF824C0/df+Jq5a21xbFS4NLBuAy1M7+MsdwS1bV
+	1IWHbby2tcktFIGApLOI2e3MOy9PHkgxHmYwBeDdMxTpDuzDbpWtarK1y0I7yAPREOD6Nu
+	qyPh5p80cEDSduD7d8LwHWZDddDaOmvHUkZMmiLNVDhQrpfUWnw1SHAHWQz8Zw==
+From: Ignacio Encinas <ignacio@iencinas.com>
+To: git@vger.kernel.org
+Cc: Ignacio Encinas <ignacio@iencinas.com>
+Subject: [PATCH v2 0/1] Add hostname condition to includeIf
+Date: Sat,  9 Mar 2024 19:18:27 +0100
+Message-ID: <20240309181828.45496-1-ignacio@iencinas.com>
+In-Reply-To: <20240307205006.467443-1-ignacio@iencinas.com>
+References: <20240307205006.467443-1-ignacio@iencinas.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <3df4790a-7ee1-4c72-a3da-ba8a48d546b8@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-Hi Phillip,
+Extend includeIf to take hostname into account. Motivating request can
+be found here [1].
 
-Le 2024-03-04 à 05:12, Phillip Wood a écrit :
-> Hi Philippe
-> 
-> On 02/03/2024 16:18, Philippe Blain via GitGitGadget wrote:
-> 
-> It would also be good to update the "rebase --apply" implementation to respect this advice config to be consistent with "rebase --merge".
-Yes, this is a good idea. This would take care of 'git am' at the same time
-since both are implemented in builtin/am.c::die_user_resolve.
+[1] https://github.com/gitgitgadget/git/issues/1665
 
-Thanks,
-Philippe.
+Changes since v1:
+* Add blank line between declarations and code in `include_by_branch`.
+* Rewrite "echo"s used in tests to make them more readable. 
+
+  config: learn the "hostname:" includeIf condition
+
+ Documentation/config.txt  |  9 +++++++++
+ config.c                  | 17 ++++++++++++++++
+ t/t1305-config-include.sh | 42 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+)
+
+Range-diff against v1:
+1:  10a9bca68753 ! 1:  cf175154109e config: learn the "hostname:" includeIf condition
+    @@ config.c: static int include_by_branch(const char *cond, size_t cond_len)
+     +	int ret;
+     +	char my_host[HOST_NAME_MAX + 1];
+     +	struct strbuf pattern = STRBUF_INIT;
+    ++
+     +	if (xgethostname(my_host, sizeof(my_host)))
+     +		return 0;
+     +
+    @@ t/t1305-config-include.sh: test_expect_success 'include cycles are detected' '
+      '
+      
+     +test_expect_success 'conditional include, hostname' '
+    -+	echo "[includeIf \"hostname:$(hostname)a\"]path=bar12" >>.git/config &&
+    -+	echo "[test]twelve=12" >.git/bar12 &&
+    ++	cat >>.git/config <<-EOF &&
+    ++	[includeIf "hostname:$(hostname)a"]
+    ++		path = bar12
+    ++	EOF
+    ++	cat >>.git/bar12 <<-EOF &&
+    ++	[test]
+    ++		twelve=12
+    ++	EOF
+    ++
+     +	test_must_fail git config test.twelve &&
+     +
+    -+	echo "[includeIf \"hostname:$(hostname)\"]path=bar12" >>.git/config &&
+    ++	cat >>.git/config <<-EOF &&
+    ++	[includeIf "hostname:$(hostname)"]
+    ++		path = bar12
+    ++	EOF
+     +	echo 12 >expect &&
+     +	git config test.twelve >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+     +test_expect_success 'conditional include, hostname, wildcard' '
+    -+	echo "[includeIf \"hostname:$(hostname)a*\"]path=bar13" >>.git/config &&
+    -+	echo "[test]thirteen=13" >.git/bar13 &&
+    ++	cat >>.git/config <<-EOF &&
+    ++	[includeIf "hostname:$(hostname)a*"]
+    ++		path = bar13
+    ++	EOF
+    ++	cat >>.git/bar13 <<-EOF &&
+    ++	[test]
+    ++		thirteen = 13
+    ++	EOF
+    ++
+     +	test_must_fail git config test.thirteen &&
+     +
+    -+	echo "[includeIf \"hostname:$(hostname)*\"]path=bar13" >>.git/config &&
+    ++	cat >>.git/config <<-EOF &&
+    ++	[includeIf "hostname:$(hostname)*"]
+    ++		path = bar13
+    ++	EOF
+     +	echo 13 >expect &&
+     +	git config test.thirteen >actual &&
+     +	test_cmp expect actual
+
+base-commit: e09f1254c54329773904fe25d7c545a1fb4fa920
+-- 
+2.44.0
+
