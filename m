@@ -1,161 +1,105 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C54F286BD
-	for <git@vger.kernel.org>; Sat,  9 Mar 2024 18:58:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2D747A7D
+	for <git@vger.kernel.org>; Sat,  9 Mar 2024 19:15:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710010730; cv=none; b=VQS1+7peD8SnGeNKIgAf1U62qMefy7OJ60ucgaeC6AiHC7xmODZpXrvN6D3ixcnvJwOs/ODPf4wuc+Hl7m5kyrP6vKGY2Zi+xuteT94R+U6CNFmv4dsQtjojUpTEN6qv9CU+Y0w7+vqFKDV3AZtnSH6xqXksmTDTZLocV6Zdpc0=
+	t=1710011721; cv=none; b=u12KIoNKOmj7OIED5N/mIUDEMKHzT/bPR3/op8O8/99Si54nBEfi4Epm/jcbyNegp7ia0/beErMf+yY2Yu7dvCUqOM5cFqzfz/70tJJuZYUSVy4Sxs6CuQDEjBfmWwoKgf1SerN4ac3Oe8egFhh73N+GH8QNOK7oHehz1HdcP9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710010730; c=relaxed/simple;
-	bh=UdbQdienkfgYKR4YY7RW7LMOt+Xcjgrw9tsDSbKm0Jk=;
-	h=Subject:From:To:Cc:References:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=Fvn1v/BqT0owNtjysMauFcQI9QX5PnzcFtCqFj00FV+hmMihWTbfUs0ED6fD25/MJFKlPRZF3hvjXwADTGZ12OspMoFa7lr542YQ2I6PygfYjX4A/Y+7SSFBnBlh41D4+bsDJ0bTCad6n/qtT1u1ILS2dbgzbK1WZeXYUHU3ZhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F4qUuZo6; arc=none smtp.client-ip=209.85.222.181
+	s=arc-20240116; t=1710011721; c=relaxed/simple;
+	bh=wiTuF8ihD75U8lYT5+Z92TUTGTL+CrVEti5vg0uHOSg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E4JEtZIh0sAO31zfrWRKUCy+N193kcbj5fgXyVQNq+1/ku/iZqwhFHMJH4WsotOLUFZxReFla3AMknQ2mdVAVZmVtGBKIqJgCvhyRFUb/TT/gvw66s99yL4MA2chHwDsZLeRWS2G0T5mByuEHk63tXGHduN5vCcVrLzj0vHl5cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RX7yum/N; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F4qUuZo6"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-788598094c4so71469385a.0
-        for <git@vger.kernel.org>; Sat, 09 Mar 2024 10:58:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RX7yum/N"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d422b6253cso17162131fa.2
+        for <git@vger.kernel.org>; Sat, 09 Mar 2024 11:15:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710010727; x=1710615527; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U3Lnfqyh5A8aV58akF9fifa4erK4qab5yLCeYI5E9lA=;
-        b=F4qUuZo6jYemt3ocL4fbFcHwOpbL1NIIclZMTVQ+HxH7OeMPcjwxL3yGSx3RFxlgdF
-         TGMAeEKfPbSPT3eqh5rfeh9RFBxxk8SmmpqORlIfvXQC4HyV9LqftJrJInijcpgWqCGy
-         xsD2elJt+WmgPVs1UpEXhqKEfy/GJ2aTsWvRyrpEOxCEfpmx8fP4NoU/YkOSsOKRiBIm
-         0krmQlTYa0Yw1R2hL73bqH6S9aWxL8ZgIkMHYtsYLhOe3Gh0AI07wwZj/DepzRGL5Bkl
-         XC77Fj3Qt6TNsbjkO/7amdDuOPu+ZrAqVck2DeQBdda1TqQbPeAzGEH51J5fwrFzFMb/
-         hwKQ==
+        d=gmail.com; s=20230601; t=1710011717; x=1710616517; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=oIpz12pbgjjet7fGvuXOmPIjt48iYKHOFPTgAnTAwzM=;
+        b=RX7yum/NVyTpYnltaXH29l9bbspi05FaLycdVV59bSe92ZkwDeSyYRmi/sgPnA+Wyn
+         i4QWVgUhmbu3QM/7XsEhHl+NyvlB76QuC9wibPVcG8eNQCz9Z9pyLV+UTpMIEr6tIpv2
+         UgrRKx54LSCLLY7Mp3RpvJOPd0tAXKw+r1k077hucosJg8HwZziD1zjsgAO/uMdc9bRt
+         NCFMptmaLpIdA6ymImq3HzlpOJ5HFZKPAFBes8O9Logyz1NbAXXHAUjHiJOzPa49Ad5V
+         dyJoEhzh5jfDwivDp3rx8tmJ+Z7Yugq0ebaZ6ATitHV0umznxclNElpOGH/7FzBvmf8l
+         Th7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710010727; x=1710615527;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U3Lnfqyh5A8aV58akF9fifa4erK4qab5yLCeYI5E9lA=;
-        b=fZW1vhgnRGO53pvpqmH/CCS1vzHMHIHkeNu/bHFV6ki8bxZd7N92lRdSza0ePMNctu
-         xEyvLYY8mOP6rceXbPSb2KLUjMmDz9znysDhXiwVBbdzkXHebdU+g2W+wAPsb2D3EkGu
-         D6aZX8W9HgnUuug4l9OJkk2R4Yt90WSmfYk5CFT52kFvKguzq96Zls/620s7hlu7CkM/
-         pkbb5JHGWoRXvt4cyhtFRFB4sEn450raIaiv0pJAMlfwuZSnhevuNU95+qZqz2bVP5J2
-         cYnepbkF0z2Y7Jq7/4STUNkabE4tr+WtHowiM3t8exCsSuNFj3DcSKbGbaVwCtnxciHf
-         Ec6A==
-X-Gm-Message-State: AOJu0Yx6Lsdbt6gGHfbbQCOYistEEkQZSfKlv51DWaWJ8H1xhhDjym6E
-	fhb/9zKh0cNUbnNkRELsrikS8dNMEBudP2QO6bobVqN10gLZxpXf
-X-Google-Smtp-Source: AGHT+IFdzlOu+wRk6DQn2zGNW6++zb301DUBIWn6lU2Ncwb4YFpkmVlrrNvPV5KOQR5BIwzlegF9AQ==
-X-Received: by 2002:a05:620a:b41:b0:788:5240:8696 with SMTP id x1-20020a05620a0b4100b0078852408696mr2324645qkg.12.1710010727417;
-        Sat, 09 Mar 2024 10:58:47 -0800 (PST)
-Received: from ?IPv6:2606:6d00:11:ff90:b1b9:ff9c:b8e:3049? ([2606:6d00:11:ff90:b1b9:ff9c:b8e:3049])
-        by smtp.gmail.com with ESMTPSA id b23-20020a05620a127700b007885cd1c058sm1141702qkl.103.2024.03.09.10.58.46
+        d=1e100.net; s=20230601; t=1710011717; x=1710616517;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oIpz12pbgjjet7fGvuXOmPIjt48iYKHOFPTgAnTAwzM=;
+        b=UmZSUG53F3g9nksOF2WAe7k12Dm5ArXJv57XaiTSCiZMOpKI+I6T7n6b1zpjOxn/k6
+         u+6F47ky/6AgOFpvZ/B4H7ybrdrqgsFYWVKL1Picf3nDmPH4dREfqdRP+oqnMCI8pP6m
+         sBUJISxQu8oT9iW6SZDhBJVm77UpERLzE0jbF6VfazG/jcaCTMZb5zy427byllh+wpdn
+         0vm/mtrJ+A0a5rUsKxbAz21QK4js6E7B1hQ+uAJPbWxeQd0Pgo7BzOTBbHMfJC1Hk0JY
+         QF5Uwfo8mWqbpggHlUrvXjPKZO8T36WkOBbiiexu+0RtpSdkmCbf6iC+e8hqW5TBaV5f
+         XFnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/dmBI4Yne3VXqRMEfgZ5BK/EFSSq7YqqoJA+nTdmfFDBw85fY/RGkUl3xde0EYiDtbxMDuV626Xg3E43z76sO2jBs
+X-Gm-Message-State: AOJu0YwXX6+ANJKt7dStQJrBGYnUw90OciQEbjGOZ7/zONdDj9TcKVj/
+	ISEmBu2kHPjllmlV+3QVo+XUtCNGWBZFUyLQi3csgAMvVJnJq/oA
+X-Google-Smtp-Source: AGHT+IG0pr8AGB28kgCgcsllTzAzRt4ciuLJn0lGk/0SVwIGSiP/SHCr8w0RPJ+ggsTpwhUQx4PpOA==
+X-Received: by 2002:a05:6512:3488:b0:513:1cb1:fd9b with SMTP id v8-20020a056512348800b005131cb1fd9bmr1253480lfr.18.1710011717391;
+        Sat, 09 Mar 2024 11:15:17 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6a5:fd01:d2c6:37ff:fef6:7b1? ([2a0a:ef40:6a5:fd01:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id j20-20020a05600c191400b00412f016a151sm3412944wmq.9.2024.03.09.11.15.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Mar 2024 10:58:46 -0800 (PST)
-Subject: Re: [PATCH] sequencer: allow disabling conflict advice
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
- Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
- <xmqqwmqiudna.fsf@gitster.g> <6ef490d2-ce0a-f8bd-8079-6b4ef3e37eda@gmail.com>
-Message-ID: <570a8736-5552-6279-4aea-8acdf8af50df@gmail.com>
-Date: Sat, 9 Mar 2024 13:58:45 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        Sat, 09 Mar 2024 11:15:17 -0800 (PST)
+Message-ID: <b52a8678-a13f-455b-a817-2df2b4fab795@gmail.com>
+Date: Sat, 9 Mar 2024 19:15:16 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <6ef490d2-ce0a-f8bd-8079-6b4ef3e37eda@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer: allow disabling conflict advice
+Content-Language: en-US
+To: Philippe Blain <levraiphilippeblain@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
+ <3df4790a-7ee1-4c72-a3da-ba8a48d546b8@gmail.com>
+ <6a31efcc-c6c2-4729-80b9-eecff4ec9e31@gmail.com> <xmqqy1axq3t1.fsf@gitster.g>
+ <12c84208-23a7-5ba7-18a9-822d9a8f66fa@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <12c84208-23a7-5ba7-18a9-822d9a8f66fa@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Le 2024-03-09 à 12:22, Philippe Blain a écrit :
-> Hi Junio,
-> 
-> Le 2024-03-03 à 17:57, Junio C Hamano a écrit :
->> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>>  	if (msg) {
->>> -		advise("%s\n", msg);
->>> +		advise_if_enabled(ADVICE_SEQUENCER_CONFLICT, "%s\n", msg);
->>>  		/*
->>>  		 * A conflict has occurred but the porcelain
->>>  		 * (typically rebase --interactive) wants to take care
->>
->> This hunk is good.  The block removes the CHERRY_PICK_HEAD after
->> giving this advice and then returns.
->>
->>> @@ -480,22 +480,25 @@ static void print_advice(struct repository *r, int show_hint,
->>>  
->>>  	if (show_hint) {
->>>  		if (opts->no_commit)
->>> -			advise(_("after resolving the conflicts, mark the corrected paths\n"
->>> -				 "with 'git add <paths>' or 'git rm <paths>'"));
->>> +			advise_if_enabled(ADVICE_SEQUENCER_CONFLICT,
->>> +					  _("after resolving the conflicts, mark the corrected paths\n"
->>> +					    "with 'git add <paths>' or 'git rm <paths>'"));
->>>  		else if (opts->action == REPLAY_PICK)
->>> -			advise(_("After resolving the conflicts, mark them with\n"
->>> -				 "\"git add/rm <pathspec>\", then run\n"
->>> -				 "\"git cherry-pick --continue\".\n"
->>> -				 "You can instead skip this commit with \"git cherry-pick --skip\".\n"
->>> -				 "To abort and get back to the state before \"git cherry-pick\",\n"
->>> -				 "run \"git cherry-pick --abort\"."));
->>> +			advise_if_enabled(ADVICE_SEQUENCER_CONFLICT,
->>> +					  _("After resolving the conflicts, mark them with\n"
->>> +					    "\"git add/rm <pathspec>\", then run\n"
->>> +					    "\"git cherry-pick --continue\".\n"
->>> +					    "You can instead skip this commit with \"git cherry-pick --skip\".\n"
->>> +					    "To abort and get back to the state before \"git cherry-pick\",\n"
->>> +					    "run \"git cherry-pick --abort\"."));
->>>  		else if (opts->action == REPLAY_REVERT)
->>> -			advise(_("After resolving the conflicts, mark them with\n"
->>> -				 "\"git add/rm <pathspec>\", then run\n"
->>> -				 "\"git revert --continue\".\n"
->>> -				 "You can instead skip this commit with \"git revert --skip\".\n"
->>> -				 "To abort and get back to the state before \"git revert\",\n"
->>> -				 "run \"git revert --abort\"."));
->>> +			advise_if_enabled(ADVICE_SEQUENCER_CONFLICT,
->>> +					  _("After resolving the conflicts, mark them with\n"
->>> +					    "\"git add/rm <pathspec>\", then run\n"
->>> +					    "\"git revert --continue\".\n"
->>> +					    "You can instead skip this commit with \"git revert --skip\".\n"
->>> +					    "To abort and get back to the state before \"git revert\",\n"
->>> +					    "run \"git revert --abort\"."));
->>>  		else
->>>  			BUG("unexpected pick action in print_advice()");
->>>  	}
->>
->> This hunk can be improved.  If I were doing this patch, I probably
->> would have just done
->>
->> -	if (show_hint) {
->> +	if (show_hint && advice_enabled(ADVICE_SEQUENCER_CONFLICT)) {
->>
->> and nothing else, and doing so would keep the block easier to extend
->> and maintain in the future.
->>
->> Because the block is all about "show_hint", we have code to print
->> advice messages and nothing else in it currently, and more
->> importantly, we will not add anything other than code to print
->> advice messages in it.  Because of that, skipping everything when
->> ADVICE_SEQUENCER_CONFLICT is not enabled will not cause problems
->> (unlike the earlier hunk---which will break if we added "&&
->> advice_enabled()" to "if (msg)").  That way, when somebody teaches
->> this code a new kind of opts->action, they do not have to say
->> "advice_if_enabled(ADVICE_SEQUENCER_CONFLICT()"; they can just use
->> "advise()".
-> 
-> That's true and makes the changes simpler, thank you for the suggestion.
-> I'll do that in v2.
+Hi Philippe
 
-Thinking about this more and looking at the code, using 'advice_enabled' in the condition
-instead of using 'advise_if_enabled' for each message has a side effect:
-the text "hint: Disable this message with "git config advice.sequencerConflict false"
-will not appear, which I find less user friendly...
+On 09/03/2024 17:53, Philippe Blain wrote:
+> Le 2024-03-04 à 12:56, Junio C Hamano a écrit :
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> ... So we probably do need a new config variable but
+>>> I think it should have a generic name - not be sequencer specific so
+>>> we can extend its scope in the future to "git merge", "git am -3",
+>>> "git stash" etc.
+>>
+>> A very good point.  Thanks for your careful thinking.
+> 
+> OK, I agree we can make the new advice more generic, but I'm lacking
+> inspiration for the name. Maybe 'advice.mergeConflicted' ?
+> Or 'advice.resolveConflictedMerge' ? though this is close to the existing
+> 'resolveConflict'...
+> Maybe just 'advice.mergeConflict' ?
 
-Philippe.
+'advice.mergeConflict' sounds good to me
+
+Best Wishes
+
+Phillip
+
