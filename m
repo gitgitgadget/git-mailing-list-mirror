@@ -1,62 +1,62 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4A39FC6
-	for <git@vger.kernel.org>; Sun, 10 Mar 2024 19:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EFA39FC5
+	for <git@vger.kernel.org>; Sun, 10 Mar 2024 19:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710097836; cv=none; b=ae68J+tKuaCwOz1jKklWnSUOc3yR/HLKIb0hvMt0KPFIML54ct1yF7ZPHLJupz14ZL8SIu3LAXpXMDknpdpZBjUCE23fNYz+zRzSP/0ua9lMq2gGWpPCiLQ54dCw6hKUQxg8nYeZ47RC+6wLxKuXgLNHpq7b83USJX88zqszfeY=
+	t=1710097837; cv=none; b=q90WyAnVfyAY8M0u6rB7hYtv6XXku/cDI67E+bEzviZHS4up7k4LKyjjxrW8wB4anJRXrPCPmHig5DSauP6npuy9AZ2VfgCYrKNpv+cYh7EbIRaNV+UFMbuvTtLrlue6Re1zn5oeSJBWUZzGZ16cVoP6DSPaWz3Iu72LvJwdYZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710097836; c=relaxed/simple;
-	bh=s8rsLfJ0It10V/qP3mN+GKVVFkpCsROWXbJxOt3hkOc=;
+	s=arc-20240116; t=1710097837; c=relaxed/simple;
+	bh=KidVfI2IkhVGVmsFjX0KdeWxickZi9XilN8IgcX6gg8=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=l2aareehsjaGbJMbcdnO1aE6/Kd16LevffL1XGRuo/lQbAZIwb/wb9JJ9IPmhmr1am+4uRm5Q7HQfe95k+Sm9QlIDifL1Jw3Kz0aCXXQk8gVkHnfu0Z7PFZh06TOYmsuE25k2G82KfhJC31lcv7oyyUhLBEKZIv6JITgkBNdbCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lFVCxKNQ; arc=none smtp.client-ip=209.85.221.42
+	 Content-Type:To:Cc; b=KH93FSBD3UEYJ6cKeGdyYqE8c4pQY+4p9uuKdNblNfmzPCe9e4jp3xymQDeR5Eg/tCX4UENdXwHaa/uwmk3UBSJor/hzGbReLaZDqXJjb7LwKDW9o1i/l/09McMEWUyLHZNapBiwVfBuJ1X5EITH3DrZmlFfQH+VfhIIp0r1mMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYltzYcM; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lFVCxKNQ"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33e93514a6aso301150f8f.1
-        for <git@vger.kernel.org>; Sun, 10 Mar 2024 12:10:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYltzYcM"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4132ab0eea9so489105e9.1
+        for <git@vger.kernel.org>; Sun, 10 Mar 2024 12:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710097832; x=1710702632; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710097834; x=1710702634; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=791zlujvpnIKZ7sWFnggdeQ38j2Ml+BtSpVAUgB3EpM=;
-        b=lFVCxKNQkijEPTmBljKnEzX6cA9XB89ojp1PMVb1/Wp+iwEX57YLimXN+Gn/+ogH11
-         nUUsjsBgipIgqAwuWPNZQ2Cvq4gWXUSK8FnrN46JMrx0Hv0Y/lvI61Wg4Kr8Sl0n2PZl
-         8dRymlfH0hZkWTdybv89Q7rAvXEPZzaEpe7MA1eeKtN3/k8EY0QGxQ4rN7LuMAkpyr6D
-         D0lJuAkdho0ry4DTJGOSHOcy3kpgxPUBW4VDZQL+TRTc1PMXGO/avg945MaPRk6D1CN1
-         qCccTSxgXVq7w8qFp8m0f8MnQWUIycOvQI6HSOxMgXlGaH1/h0Pi2CaTqLaTa+Y+LCWo
-         Txrw==
+        bh=s20xuP5bGQ37kPqFLC2kcQ3WEp9FWkSn9bpExYJE0IE=;
+        b=HYltzYcMocs0KrvCiQ4ckHYxdfPQHtpA6XlIMWcMrocqJ1AqoNr5pTvBlTwDvj/hjN
+         4cL/G/Wvl+gpRrMAjTnSxA161x/+xdvpIycPI1Y3rRVECqQ65TeSSaOGQGHcV88dAbVS
+         EwXephXeheW1RCnGd9xK3tCKqUfw20AudZ4NZ8t0VlJp2xgdHxQTn2sO3SQAem6AnjeH
+         7IrTW4gYFs0zM7M+rihGM50kbKrn8RY9D3mEe9kAl0sA758zrAr6k52Oi+BmAfTD0gaU
+         P0sFlSMZvx7flU0Sh19bw+gzFRAYAuqAYKkqj/DazWfv4RB+QKaaC3uCdq1lrmPCO3dw
+         gsCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710097832; x=1710702632;
+        d=1e100.net; s=20230601; t=1710097834; x=1710702634;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=791zlujvpnIKZ7sWFnggdeQ38j2Ml+BtSpVAUgB3EpM=;
-        b=SOQBTTl3b4Gt+dn58DiDKEx/oAWHvOjrs6QZUViF2rANmAtPUxQvzxpd7dwtBIo3hK
-         ulR6ffGYU7nb5Rm5cVpupBY5LucfOTSiB+xTMYYDNxlggP9eM6aYk4gwkoi2/RU/2sjs
-         1OD8qn5IQ5GINDDk4+3TCd4SdIYboEngBRyCFxl4AXctKhV1+n0bWloenoFUOT1hLCP1
-         mg3V3lIoNrW11ydhaRJ1DPaDJQ8iFHRmyrPoGe/34qsu0l/c323yhFYUn8IsefTs0NkB
-         V7icSGUgY5UVS9Dxu6YnPYa9yF9nW4uEso/8ULIaH5eZSwNOktqpLXpa909atH+YjzNc
-         42VA==
-X-Gm-Message-State: AOJu0YxHDrCTdSMP9xM5sBRd3Oe0abOs2PoawF3GSK7KmxBXS4J1E1Lr
-	v9of9I8s4IJq6Amg0Ijl+c3g2Vq5b9HHIsEdcR96RUWDO5iLpi4BDJukl95M
-X-Google-Smtp-Source: AGHT+IFHQBg0N3wvP1lI80V5LQf2R6a2kbk8llxg7ObwuzlW73OTW7pL1zUypFxYuMpTlz9v03F3xw==
-X-Received: by 2002:adf:fc46:0:b0:33e:745a:d98e with SMTP id e6-20020adffc46000000b0033e745ad98emr3200525wrs.23.1710097832056;
-        Sun, 10 Mar 2024 12:10:32 -0700 (PDT)
+        bh=s20xuP5bGQ37kPqFLC2kcQ3WEp9FWkSn9bpExYJE0IE=;
+        b=IshG1eQDsLnKgGGvVySBUdU5K3WI3e6OzORl9dqMZWGVUkTK98S2p/mUZY7grbsudB
+         hti+bX59IB2lOWBIvb/Cz/ns8iW/hMWrbjsn8lp4lcPhPu7LfvWZRqwgDyEYv+d5hlpS
+         wRiAuzAUbT+6F1c22nnULsDSp+0M8H8678lHDqw3eWOg2MwUrdcmFthjMz75LBER5ALp
+         4eNM/Hx6Q5ZugTvoxWLFAeEAPsJUMF5rTNi79Cl9TEDZeM4UIu/t7D2VGHwsfuHn4JPp
+         glnpbU2iIMlezeCYPBzcmuaMsqtOumSFUNAdBUy3Ux9oxplQo4s5XOR6JfHTRqNVgrdX
+         qM1g==
+X-Gm-Message-State: AOJu0YwKzWjK4HNILuvfzSURfj96ApRAjDPfyAuCYlQYHt8xP5Fi5BZ3
+	SgkS0Ttu0E2UT4LQYIKl1raCfxfSu4R2XJQGm4Ww0CgbzVW3Hz9207EdPK8J
+X-Google-Smtp-Source: AGHT+IEddbfei5SEe+XT9LT1inWp4N81MQWUKZlA4fJSdKHMO831cLqCppO0DDNH5sfjY0jkcGr46A==
+X-Received: by 2002:a05:600c:4fd4:b0:413:16c3:b99f with SMTP id o20-20020a05600c4fd400b0041316c3b99fmr3653600wmq.16.1710097833595;
+        Sun, 10 Mar 2024 12:10:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y9-20020a056000108900b0033e206a0a7asm4557560wrw.26.2024.03.10.12.10.31
+        by smtp.gmail.com with ESMTPSA id q14-20020a05600c46ce00b00412b4dca795sm6552319wmo.7.2024.03.10.12.10.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Mar 2024 12:10:31 -0700 (PDT)
-Message-ID: <908b45b8a4c3ac7e1846e9cf323bb4ace7140dc1.1710097830.git.gitgitgadget@gmail.com>
+        Sun, 10 Mar 2024 12:10:32 -0700 (PDT)
+Message-ID: <df95ca4b720a86ad5c80e1a8a8cefe9abd0275b2.1710097830.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1687.git.1710097830.gitgitgadget@gmail.com>
 References: <pull.1687.git.1710097830.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 10 Mar 2024 19:10:25 +0000
-Subject: [PATCH 1/6] doc: git-init: format verbatim parts
+Date: Sun, 10 Mar 2024 19:10:26 +0000
+Subject: [PATCH 2/6] doc: git-init: format placeholders
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,96 +72,55 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Verbatim parts are all formatted as `fixed font`.
+With the new doc format conventions, we use _<placeholders>_.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/git-init.txt | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ Documentation/git-init.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index e8dc645bb59..7ff7d8e7ee0 100644
+index 7ff7d8e7ee0..e8fe72861dc 100644
 --- a/Documentation/git-init.txt
 +++ b/Documentation/git-init.txt
-@@ -33,10 +33,10 @@ If the object storage directory is specified via the
- are created underneath; otherwise, the default `$GIT_DIR/objects`
- directory is used.
+@@ -60,7 +60,7 @@ include::object-format-disclaimer.txt[]
  
--Running 'git init' in an existing repository is safe. It will not
-+Running `git init` in an existing repository is safe. It will not
- overwrite things that are already there. The primary reason for
--rerunning 'git init' is to pick up newly added templates (or to move
--the repository to another place if --separate-git-dir is given).
-+rerunning `git init` is to pick up newly added templates (or to move
-+the repository to another place if `--separate-git-dir` is given).
+ --ref-format=<format>::
  
- OPTIONS
- -------
-@@ -53,8 +53,8 @@ current working directory.
- 
- --object-format=<format>::
- 
--Specify the given object format (hash algorithm) for the repository.  The valid
--values are 'sha1' and (if enabled) 'sha256'.  'sha1' is the default.
-+Specify the given object _<format>_ (hash algorithm) for the repository.  The valid
-+values are `sha1` and (if enabled) `sha256`.  `sha1` is the default.
+-Specify the given ref storage format for the repository. The valid values are:
++Specify the given ref storage _<format>_ for the repository. The valid values are:
  +
- include::object-format-disclaimer.txt[]
+ include::ref-storage-format.txt[]
  
-@@ -90,12 +90,12 @@ customized via the `init.defaultBranch` configuration variable).
+@@ -81,7 +81,7 @@ If this is a reinitialization, the repository will be moved to the specified pat
+ -b <branch-name>::
+ --initial-branch=<branch-name>::
  
- Specify that the Git repository is to be shared amongst several users.  This
- allows users belonging to the same group to push into that
--repository.  When specified, the config variable "core.sharedRepository" is
-+repository.  When specified, the config variable `core.sharedRepository` is
- set so that files and directories under `$GIT_DIR` are created with the
- requested permissions.  When not specified, Git will use permissions reported
--by umask(2).
-+by `umask(2)`.
- +
--The option can have the following values, defaulting to 'group' if no value
-+The option can have the following values, defaulting to `group` if no value
- is given:
- +
- --
-@@ -109,21 +109,21 @@ specified.
- Make the repository group-writable, (and g+sx, since the git group may not be
- the primary group of all users). This is used to loosen the permissions of an
- otherwise safe umask(2) value. Note that the umask still applies to the other
--permission bits (e.g. if umask is '0022', using 'group' will not remove read
--privileges from other (non-group) users). See '0xxx' for how to exactly specify
-+permission bits (e.g. if umask is `0022`, using `group` will not remove read
-+privileges from other (non-group) users). See `0xxx` for how to exactly specify
- the repository permissions.
- 
- 'all' (or 'world' or 'everybody')::
- 
--Same as 'group', but make the repository readable by all users.
-+Same as `group`, but make the repository readable by all users.
+-Use the specified name for the initial branch in the newly created
++Use _<branch-name>_ for the initial branch in the newly created
+ repository.  If not specified, fall back to the default name (currently
+ `master`, but this is subject to change in the future; the name can be
+ customized via the `init.defaultBranch` configuration variable).
+@@ -119,8 +119,8 @@ Same as `group`, but make the repository readable by all users.
  
  '<perm>'::
  
- '<perm>' is a 3-digit octal number prefixed with `0` and each file
--will have mode '<perm>'. '<perm>' will override users' umask(2)
--value (and not only loosen permissions as 'group' and 'all'
--do). '0640' will create a repository which is group-readable, but
--not group-writable or accessible to others. '0660' will create a repo
-+will have mode '<perm>'. '<perm>' will override users'`umask(2)`
-+value (and not only loosen permissions as `group` and `all`
-+do). `0640` will create a repository which is group-readable, but
-+not group-writable or accessible to others. `0660` will create a repo
- that is readable and writable to the current user and group, but
- inaccessible to others (directories and executable files get their
- `x` bit from the `r` bit for corresponding classes of users).
-@@ -172,7 +172,7 @@ $ git add .     <2>
- $ git commit    <3>
- ----------------
- +
--<1> Create a /path/to/my/codebase/.git directory.
-+<1> Create a `/path/to/my/codebase/.git` directory.
- <2> Add all existing files to the index.
- <3> Record the pristine state as the first commit in the history.
+-'<perm>' is a 3-digit octal number prefixed with `0` and each file
+-will have mode '<perm>'. '<perm>' will override users'`umask(2)`
++_<perm>_ is a 3-digit octal number prefixed with `0` and each file
++will have mode _<perm>_. _<perm>_ will override users'`umask(2)`
+ value (and not only loosen permissions as `group` and `all`
+ do). `0640` will create a repository which is group-readable, but
+ not group-writable or accessible to others. `0660` will create a repo
+@@ -133,7 +133,7 @@ By default, the configuration flag `receive.denyNonFastForwards` is enabled
+ in shared repositories, so that you cannot force a non fast-forwarding push
+ into it.
  
+-If you provide a 'directory', the command is run inside it. If this directory
++If you provide a _<directory>_, the command is run inside it. If this directory
+ does not exist, it will be created.
+ 
+ TEMPLATE DIRECTORY
 -- 
 gitgitgadget
 
