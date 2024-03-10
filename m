@@ -1,63 +1,58 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33B039FFB
-	for <git@vger.kernel.org>; Sun, 10 Mar 2024 19:51:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647413207
+	for <git@vger.kernel.org>; Sun, 10 Mar 2024 20:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710100268; cv=none; b=pzuRXVBf7tZu++L/IKkWnStMfsP6behb0cz/j61H/X/0zJrRLygeiYI2UEUCLAEWgEctQTJZl2i3+4T83fu2Jms4nqX6gDiLeoDCVekt9yhfk1/dqv0RwjV3H7RSWOshpmRX07qslW4BEaghZF+/GU3INJ3N0EaG/F+Wwr8I6W4=
+	t=1710101102; cv=none; b=n+R1WeIvQOz3cA6kbLDcnAhN9hPihTEzHULl1OWHcXyBpHQ5rGNUpH/dz+/2J1tLhAbkKbejxo32c/kWNH4Arrj2TAA/djOvWqbnL8XvWXNUJdGItdGk92siJzajtAQVI/ozlP4s9ckP0yWRae3huNiJa0Q/2TNSonXeyFJZHPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710100268; c=relaxed/simple;
-	bh=HwfZG9+f+f8xWFjKofMvu7W5eBzLvusj6BzCqq606Hk=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LaLE5s8bt4TpRvkYCmkxpTAgCw2qfr4ptBqQcLJdeJIouGKgCOn2jaAdw9eTCJ1IdNzdDCk9LjvZZ8Jn+JOipxEUyMKbdlm3feWLO7A9cWGvqOnsmRHL+diTfYH2n55Y3r2u6vogYXM0LLr13qwEdO6qMyi13Q5G6FG8pWBD2+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pmtu/jeW; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1710101102; c=relaxed/simple;
+	bh=TVydEBoMUOLwZYeIa/WxXcynVkvJnWi84PFfmot5lxY=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=rGCEDkYDhol/E8UiI/NU0AR8XDOU9hZL0drgftH+GNnu37rrmZX8tzP97E8Q2J/aLoRQ+Z2K5kWbgcgyyKpfRihbaoIzbREhRkRR82MBkcCF/PAMp5crGpROEjg1JNPQakGdlmefMrHf3w3Z88bsiGqJxKFQrDfPgRLSr+u3kYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bkqju63x; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pmtu/jeW"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-413183f5e11so12230575e9.1
-        for <git@vger.kernel.org>; Sun, 10 Mar 2024 12:51:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bkqju63x"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-33e95b68b3eso388035f8f.1
+        for <git@vger.kernel.org>; Sun, 10 Mar 2024 13:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710100265; x=1710705065; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710101098; x=1710705898; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eMMhZXEN7/UeGlAG6QJrSY2gv7WD9Gwue3qCSxGVX7c=;
-        b=Pmtu/jeWnesmUnp51syUoTi0Z0YYnkWZhx93VFlvtA6YPWImRg9I3UdaKEaXRyuP6a
-         bmrhvkXENOLFm+xz/ojHmwSvsoJAoDJmTBMBcZ+8i05cRq9Q+9VZzp1CGTHs2oEt1YSj
-         Z8j77yxhgi7/eeNxpHDanLB8rmNZ7pKy70BY09bNrCgcP5qqQTg57kK7zUc5WxZSLqOI
-         obWftmRVzsvcoVWy/r6BkG0vBo52tPD393/CBO261ZlSmYEcJCSFhz9ZolQN/Hbw+DXU
-         pSPdJpQ5WCMpbJ4l+VPGCdCzkN4xw+ZBlQSOl1g5hxu5x5IFzNRIaQA+TDAeYJnR6yLI
-         3cTQ==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=RmaYbiLe6TwNl83HXDyn/fl9ZsvrIdTHeX1qXdfzVtw=;
+        b=bkqju63xU/TTmwthI1dEHPEM1ExSCFK6S4C5ELtqGYiZylBFpMtmfjHMf9NMKO15jQ
+         bVq39SOzAhTJ+iW2S8stpNs2Aemcznn5okyM8fnejJDeL+zeODZRsxS3cvsI6YnpVw6y
+         gXQS+yWMruHN1AmIRemGw6Q0e/cInuz62P3DjBpkiihMTejE+THFFMxp32oSZ9A33VL5
+         2Jiuk/WTxqFf+8ZOn8O5rKC9jQmrt2aJphM8xIcb2/B6Ov+zJQCj0ZQ8YHb1tOu8U+mZ
+         8nLg47T+QyTlaOJhjgozu58Msh1yhWYgaA1TiVC2g4kO4pkKtMc4s+DNsgkBpCys+z51
+         CF/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710100265; x=1710705065;
+        d=1e100.net; s=20230601; t=1710101098; x=1710705898;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eMMhZXEN7/UeGlAG6QJrSY2gv7WD9Gwue3qCSxGVX7c=;
-        b=HjoTEzsxdjeeSdhlCPGeTohpUNH3hvtgPJKpxHjMsmeIJty3+tiOMCq9gj7BMd0Q9H
-         f2CpstfOuZZZARq9zQh34UYjfrPI6NuVGElm3Y/XTLEvOKy6WeaY8xqlfJ6kxLimFKUm
-         9xPZNRi/PoichK7iO+6WZNOM+RPxW73offoqOadwfn9WpbEcOBrgJvP3pIk6MMHPuemr
-         LYLwcrQgiQh7t5V233e1XMdD+6rEyuHiKvu4CVEfSiVupDEJxI2l73jqD1JkhnRgQ+zF
-         YyDmD2ZXCLib6QVFizhyTFSFS5QqagUKrRqd4W4QBjp3WCuTY4G/cjrAUOvDIl/m9rLb
-         Zo1w==
-X-Gm-Message-State: AOJu0YzbckidrRUD4LV4piT8ZPilq+5ubtmUuBBz51u6MmmehsNBsCb4
-	6px/b/t82zBChiGLyBhBFUDnXgmegKuqQIAAGT0uNbHUvEErDfFgsq1vnSVz
-X-Google-Smtp-Source: AGHT+IFKz25ObLA5Y8Rt20NgtF4sUMuroNl0PTV7bApqRcAkKf4coLkQ7ytanmGVM6x7BMxeqO9weQ==
-X-Received: by 2002:a05:600c:4f04:b0:412:eeb6:b27 with SMTP id l4-20020a05600c4f0400b00412eeb60b27mr3741592wmq.17.1710100264756;
-        Sun, 10 Mar 2024 12:51:04 -0700 (PDT)
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RmaYbiLe6TwNl83HXDyn/fl9ZsvrIdTHeX1qXdfzVtw=;
+        b=eZqIsH61ML24aW00C/5Axqn2MYIFg2fC1ofBlY+X8rNuIzEdvqn+YZwNW5Ji/RiaOD
+         2MqpttwSSh5VpGRvnKGn6IXqacqDuL2T0LfIPbQ6a6k2yxA7NyxzM3lBxMStWWyDmHRF
+         y8irhOaKMWWEZLNc/yK95c0wfspnboTkXfObW+xomyQ8UBs2aeOYLhuN3psGNCom471c
+         57OewYkqH1bD9lbBkpVpoAyDBwCGsXot2YwNCo4ulLpxJBA5ayv/vZZQpUF916U3C45s
+         b9bLW0hGb5/SuKPejWBtS+WXGGUdwTPk2K+d0ypes/Gi1zHSlpj/u4FN38gIRIzJasTQ
+         CdCQ==
+X-Gm-Message-State: AOJu0YwxoYFBrNk1K7f79zE8K3vhQ20g4SyeDQu9SxjbjLy6oyD/0c42
+	w4pXjiVtuEHb1wOak5FEKUd+8fxaCuQfhn+153v53grBgTX/mp1k2VXcpreV
+X-Google-Smtp-Source: AGHT+IE2VWQeBIi8dK40TFpLPNY6rhwc4+v2PMMwPQSNhGhhGMdcO3C5TekbooW/J5whZxOVF059hg==
+X-Received: by 2002:a05:6000:24c:b0:33e:1efa:962b with SMTP id m12-20020a056000024c00b0033e1efa962bmr3167841wrz.60.1710101097984;
+        Sun, 10 Mar 2024 13:04:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h15-20020a05600c350f00b004131d2307e7sm6631961wmq.12.2024.03.10.12.51.03
+        by smtp.gmail.com with ESMTPSA id co15-20020a0560000a0f00b0033e42ab5114sm1471552wrb.2.2024.03.10.13.04.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Mar 2024 12:51:03 -0700 (PDT)
-Message-ID: <3235542cc6f77779cca1aeff65236e16b0a15d76.1710100261.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
-References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
-	<pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
+        Sun, 10 Mar 2024 13:04:57 -0700 (PDT)
+Message-ID: <pull.1688.git.1710101097072.gitgitgadget@gmail.com>
 From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 10 Mar 2024 19:51:01 +0000
-Subject: [PATCH v2 2/2] builtin/am: allow disabling conflict advice
+Date: Sun, 10 Mar 2024 20:04:56 +0000
+Subject: [PATCH] ci(github): make Windows test artifacts name unique
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,103 +63,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    ZheNing Hu <adlternative@gmail.com>,
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Victoria Dye <vdye@github.com>,
     Philippe Blain <levraiphilippeblain@gmail.com>,
     Philippe Blain <levraiphilippeblain@gmail.com>
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-When 'git am' or 'git rebase --apply' encounter a conflict, they show a
-message instructing the user how to continue the operation. This message
-can't be disabled.
+If several jobs in the windows-test or vs-test matrices fail, the
+upload-artifact action in each job tries to upload the test directories
+of the failed tests as "failed-tests-windows.zip", which fails for all
+jobs except the one which finishes first with the following error:
 
-Use ADVICE_MERGE_CONFLICT introduced in the previous commit to allow
-disabling it. Update the tests accordingly, as the advice output is now
-on stderr instead of stdout. In t4150, redirect stdout to 'out' and
-stderr to 'err', since this is less confusing. In t4254, as we are
-testing a specific failure mode of 'git am', simply disable the advice.
+    Error: Failed to CreateArtifact: Received non-retryable error:
+    Failed request: (409) Conflict: an artifact with this name
+    already exists on the workflow run
+
+Make the artifacts name unique by using the 'matrix.nr' token, and
+disambiguate the vs-test artifacts from the windows-test ones.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- builtin/am.c          | 14 +++++++++-----
- t/t4150-am.sh         |  8 ++++----
- t/t4254-am-corrupt.sh |  2 +-
- 3 files changed, 14 insertions(+), 10 deletions(-)
+    ci(github): make Windows test artifacts name unique
+    
+    I noticed this while working on another series and thought it deserved a
+    quick fix.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index d1990d7edcb..0e97b827e4b 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1150,19 +1150,23 @@ static const char *msgnum(const struct am_state *state)
- static void NORETURN die_user_resolve(const struct am_state *state)
- {
- 	if (state->resolvemsg) {
--		printf_ln("%s", state->resolvemsg);
-+		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", state->resolvemsg);
- 	} else {
- 		const char *cmdline = state->interactive ? "git am -i" : "git am";
-+		struct strbuf sb = STRBUF_INIT;
- 
--		printf_ln(_("When you have resolved this problem, run \"%s --continue\"."), cmdline);
--		printf_ln(_("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
-+		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\"."), cmdline);
-+		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
- 
- 		if (advice_enabled(ADVICE_AM_WORK_DIR) &&
- 		    is_empty_or_missing_file(am_path(state, "patch")) &&
- 		    !repo_index_has_changes(the_repository, NULL, NULL))
--			printf_ln(_("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
-+			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
- 
--		printf_ln(_("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
-+		strbuf_addf(&sb, _("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
-+
-+		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", sb.buf);
-+		strbuf_release(&sb);
- 	}
- 
- 	exit(128);
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 3b125762694..5e2b6c80eae 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -1224,8 +1224,8 @@ test_expect_success 'record as an empty commit when meeting e-mail message that
- 
- test_expect_success 'skip an empty patch in the middle of an am session' '
- 	git checkout empty-commit^ &&
--	test_must_fail git am empty-commit.patch >err &&
--	grep "Patch is empty." err &&
-+	test_must_fail git am empty-commit.patch >out 2>err &&
-+	grep "Patch is empty." out &&
- 	grep "To record the empty patch as an empty commit, run \"git am --allow-empty\"." err &&
- 	git am --skip &&
- 	test_path_is_missing .git/rebase-apply &&
-@@ -1236,8 +1236,8 @@ test_expect_success 'skip an empty patch in the middle of an am session' '
- 
- test_expect_success 'record an empty patch as an empty commit in the middle of an am session' '
- 	git checkout empty-commit^ &&
--	test_must_fail git am empty-commit.patch >err &&
--	grep "Patch is empty." err &&
-+	test_must_fail git am empty-commit.patch >out 2>err &&
-+	grep "Patch is empty." out &&
- 	grep "To record the empty patch as an empty commit, run \"git am --allow-empty\"." err &&
- 	git am --allow-empty >output &&
- 	grep "No changes - recorded it as an empty commit." output &&
-diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
-index 45f1d4f95e5..661feb60709 100755
---- a/t/t4254-am-corrupt.sh
-+++ b/t/t4254-am-corrupt.sh
-@@ -59,7 +59,7 @@ test_expect_success setup '
- # Also, it had the unwanted side-effect of deleting f.
- test_expect_success 'try to apply corrupted patch' '
- 	test_when_finished "git am --abort" &&
--	test_must_fail git -c advice.amWorkDir=false am bad-patch.diff 2>actual &&
-+	test_must_fail git -c advice.amWorkDir=false -c advice.mergeConflict=false am bad-patch.diff 2>actual &&
- 	echo "error: git diff header lacks filename information (line 4)" >expected &&
- 	test_path_is_file f &&
- 	test_cmp expected actual
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1688%2Fphil-blain%2Fci-unique-windows-artifacts-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1688/phil-blain/ci-unique-windows-artifacts-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1688
+
+ .github/workflows/main.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 683a2d633ed..3428773b096 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -159,7 +159,7 @@ jobs:
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       uses: actions/upload-artifact@v4
+       with:
+-        name: failed-tests-windows
++        name: failed-tests-windows-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+   vs-build:
+     name: win+VS build
+@@ -250,7 +250,7 @@ jobs:
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       uses: actions/upload-artifact@v4
+       with:
+-        name: failed-tests-windows
++        name: failed-tests-windows-vs-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+   regular:
+     name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
+
+base-commit: e09f1254c54329773904fe25d7c545a1fb4fa920
 -- 
 gitgitgadget
