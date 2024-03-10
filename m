@@ -1,106 +1,125 @@
-Received: from out-175.mta1.migadu.com (out-175.mta1.migadu.com [95.215.58.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0973036AE1
-	for <git@vger.kernel.org>; Sun, 10 Mar 2024 18:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A366E16FF49
+	for <git@vger.kernel.org>; Sun, 10 Mar 2024 18:46:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710096384; cv=none; b=q1O3EQiuZk4pS4s7ZptgrmktJRDLsX3tEe8M7uCBfJ/w5bPxGSmOTEU9lXIIpspp4akMeeSwbjGekLIyFsVAszC167AUuFcmQAYrGbaOeCmlweL571O0v/w4Y+equRpKqFJ8XoCzQWb/ueCf4z8yeB90Ap/MudRqLZn1Sn2jTFw=
+	t=1710096416; cv=none; b=Ji0Wt+GuewgXhDDTv3uALTaqneLH3bJGQ1LAZr2Zo6ulU2nCCm/JPse3uTBuzU6csf0IhVCS1T6VAJW0pL63IVG6wl37oOLCdwRA9aGU6DO67T72RoskbHCsX6Z7piL4tlbx8UqqDjK0J4Q20u903B0P4z61DUzmf+X3n1YIOeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710096384; c=relaxed/simple;
-	bh=CrBDsCyibbmbQtLHyhf2ZnCsojupH7+WxGMmNhKPP7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K4QiZXtJ1JRdtMa65flePLbBhadR1JScfpETB2RpJ6Ov4g7Zz5IXSor3xLnmustEZ68VEfubSMXJqwlkS3IM7prRbLL2O5WwAIZNDivOVpr00BgMSHXHHWfwhYGTW2KnOtwrwDueZov8mzqDX6P/3LbKOEZgNSstX8RxIKbfjKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=ZW+3Vb1V; arc=none smtp.client-ip=95.215.58.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
+	s=arc-20240116; t=1710096416; c=relaxed/simple;
+	bh=SzNCLh4fpLj1kqi96wF/fB5ulD9FYGYQ9UE170BNx48=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Vw70vFG3Rp767r+1jJoH960LDDQcdX3kNmUcnWim8Docn3H1oRUdsl3IIfrMaz0LmfXo7+7CtwDx4nKo2U0FmXprEAO2nVyJd2K02MfHtXoqOM0Xu4MCR4YN1pSuqxCuvQRbJ+r7DXGjo8/rU8H1sotkKWEQzRfgQLtMyVR/UpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DX8O8svg; arc=none smtp.client-ip=209.85.160.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="ZW+3Vb1V"
-Message-ID: <9fb02065-12d2-4c92-b1a5-74c06125c692@iencinas.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
-	s=key1; t=1710096378;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gtpq6Qgn573nMgRFkZcIQZJ5Mt8u407FB66gHoWi9Lk=;
-	b=ZW+3Vb1VoLw+MNBEdG8MVPoJfGOaOJZKrKSAxwyyoMqnE8t+E2I+IkLGQmIuMz5hRGamcF
-	l/BFu6oVly7VbpCofdCYLK2zUM6nOIF9TlcRhDjD79qAUTC/7IwBVVgir4He+ujTydXRy8
-	1XH/TnCeMqzvCr7HqQMcVOCJEp5XRX+VjEgqx9cSyaYTjBzHp8c3Mwdyg1wceZqzmoQcvU
-	OhmBw6pa6e+tFhrr9PfNv2j3xwCBpx97UubN1xzeE/CUPAI+e5e2IN2ptoK1Xgx6KpiVXz
-	9AAIgm5iLb3rRbcVmrg1TuEip0VY7lrQ33zbseKzOjxYUQPE4B/ExYdaFq0IXg==
-Date: Sun, 10 Mar 2024 19:46:14 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DX8O8svg"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-2210865d962so1408941fac.3
+        for <git@vger.kernel.org>; Sun, 10 Mar 2024 11:46:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710096413; x=1710701213; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Lf50On5Q8kVDh2nH5HGOaiSs8kN6Dz9QZuqmFdVrO2M=;
+        b=DX8O8svg2cbB3B+Lgid3WfGgOFHl/WhMTMqbEVeiiz7EH3WhiVPIkMyD9N7+KVPl69
+         k6Ig4JYNrXc20kWTCzrK/k85Z01OfTEJono98nbE/z4pwPUFD3j8bQqkDS6g3Gj++IVq
+         AA7MlhVFHrI/+n5X72RWAFuOr43vM64R1LeUyDu9D82tbjgJIBkg7hyyBDkBHtyl0Me6
+         JOzjDXN+1HkuO5+zTY2NgAwh2ObNxk0bgjB+kNMGTaCqG5lXxfOiOSJBs0aIviqWOSmC
+         sRp0SAqavBqAl+/ZmLeG8Zoy60Mo+W5pXq2vydmViTMtbvN3s++ljxt2wFqwAiXJI0hh
+         ISIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710096413; x=1710701213;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Lf50On5Q8kVDh2nH5HGOaiSs8kN6Dz9QZuqmFdVrO2M=;
+        b=TCrCj/RUxYm4QZygiJm8FgdR6DgpBzRRaBil2fdRV/b42OnHyjAgM4zC1yGT49uWxA
+         wUMUQpbvJ0A3HA4hIrr4CpRsrByKHknzLYaFqs3FLQB0WFJiWofIrvnvvlQTtKajM1mp
+         XS4j9mEk+pg5QO1Qc+ZRSVH7YFjEknce5/Rir/Cdp+9fPwS1pifJoLXVZnViS6grhISQ
+         57k0sMr4uO7uGIoh1xGnDuRsi2y0AvUONFsGD7CVP2X2e3AmYpNmh1nbz1KwsyF8TJT5
+         pOrJoShazzNuk19PoC7OsU5cDIJ07ZcDM27ruI84YzkgxIoW0unIJKBVqehVyAkFd1wi
+         MvFg==
+X-Gm-Message-State: AOJu0YwwHCltRPx61rVw8Pd/ituH7r0XBI6rf1emUqyD5RK0pX8KRsDK
+	j3LqpIvAj58YD5ZwdAZaapGZmpJ893ft5bFkpqmn1aupb34oZnVh3ta+k3s9V+4=
+X-Google-Smtp-Source: AGHT+IHFGw++U7xlwN6IegvmZ/33uLV3ExnDBTRJeyn3Kp7SM9tsWkAILDXPOhSACE/dwotbDFG9XQ==
+X-Received: by 2002:a05:6870:2189:b0:21f:f8a9:e892 with SMTP id l9-20020a056870218900b0021ff8a9e892mr5495554oae.53.1710096412731;
+        Sun, 10 Mar 2024 11:46:52 -0700 (PDT)
+Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id l8-20020a0568302b0800b006e4c97ec1f4sm742131otv.69.2024.03.10.11.46.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Mar 2024 11:46:52 -0700 (PDT)
+From: Brian Lyles <brianmlyles@gmail.com>
+To: git@vger.kernel.org
+Cc: Brian Lyles <brianmlyles@gmail.com>,
+	newren@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood123@gmail.com,
+	gitster@pobox.com
+Subject: [PATCH v3 0/7] cherry-pick: add `--empty` for more robust redundant commit handling
+Date: Sun, 10 Mar 2024 13:41:59 -0500
+Message-ID: <20240310184602.539656-1-brianmlyles@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20240307205006.467443-1-ignacio@iencinas.com>
- <20240309181828.45496-1-ignacio@iencinas.com>
- <20240309181828.45496-2-ignacio@iencinas.com> <xmqqy1aqvx9n.fsf@gitster.g>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ignacio Encinas Rubio <ignacio@iencinas.com>
-In-Reply-To: <xmqqy1aqvx9n.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
+The ultimate goal of this series is to allow git-cherry-pick(1) to
+automatically drop redundant commits. The mechanism chosen is an
+`--empty` option that provides the same flexibility as the `--empty`
+options for git-rebase(1) and git-am(1).
 
+Some secondary goals are to improve the consistency in the values and
+documentation for this option across the three commands.
 
-On 10/3/24 17:59, Junio C Hamano wrote:
-> Ignacio Encinas <ignacio@iencinas.com> writes:
-> 
->> +test_expect_success 'conditional include, hostname' '
->> +	cat >>.git/config <<-EOF &&
->> +	[includeIf "hostname:$(hostname)a"]
-> 
-> This unconditionally runs the $(hostname) command assuming it exists
-> everywhere, but
-> 
->     $ git grep '$(hostname' t/
->     t/t6500-gc.sh:	hostname=$(hostname || echo unknown) &&
-> 
-> tells us that we should be prepared to meet a platform where such a
-> command does not exist.
+See "Does extending `--empty` to git-cherry-pick make sense?" [1] for
+some context for why this option is desired in git-cherry-pick(1).
 
-Oops, it didn't even cross my mind. Thanks for the catch!
+[1]: https://lore.kernel.org/git/CAHPHrSevBdQF0BisR8VK=jM=wj1dTUYEVrv31gLerAzL9=Cd8Q@mail.gmail.com
 
-> I have a feeling that it is better done with a test prerequisite
-> than hardcoded "unknown", as xgethostname() at C level may come up
-> with some random string but it is not guaranteed to be "unknown".
+Along the way, I (with some help from Elijah and Phillip) found a few
+other things in the docs and related sequencer code to clean up.
 
-I agree. Not being able to query the current hostname defeats the
-purpose of the tests.
+The primary difference from v2 of this patch is that I no longer make
+any attempt to change the behavior of `--keep-redundant-commits`
+implying `--allow-empty`, and the new `--empty=keep` will likewise also
+imply `--allow-empty`. See "Re: [PATCH v2 8/8] cherry-pick: add
+`--empty` for more robust redundant commit handling" [2] and the
+previous messages in that thread for more context. Patch 6/8 from v2 is
+dropped entirely, with some adjustments to the ultimate patch in this
+series as well.
 
-> Perhaps have one instance of this before these added tests
-> 
-> 	test_lazy_prereq WORKING_HOSTNAME '
-> 		hostname >/dev/null 2>&1
-> 	'
-> 
-> and then start them with
-> 
-> 	test_expect_success WORKING_HOSTNAME 'hostname: includeIf' '
-> 		...
-> 	'
- 
-Thanks for providing an example. 
+[2]: https://lore.kernel.org/git/xmqqttltu7zs.fsf@gitster.g/
 
-> or something?  Others may think of a better way to make sure this
-> test does not cause false failures on platforms only because they
-> lack working hostname(1) but have a working gethostname(2) and their
-> xgethostname() may be working fine.
+Brian Lyles (7):
+  docs: address inaccurate `--empty` default with `--exec`
+  docs: clean up `--empty` formatting in git-rebase(1) and git-am(1)
+  rebase: update `--empty=ask` to `--empty=stop`
+  sequencer: treat error reading HEAD as unborn branch
+  sequencer: do not require `allow_empty` for redundant commit options
+  cherry-pick: enforce `--keep-redundant-commits` incompatibility
+  cherry-pick: add `--empty` for more robust redundant commit handling
 
-I can't think of any room for improvement other than integrating
-hostname (or a custom hostname) into git and using it in the tests, but
-I doubt it is worth it.
+ Documentation/git-am.txt          | 20 ++++++----
+ Documentation/git-cherry-pick.txt | 30 +++++++++++----
+ Documentation/git-rebase.txt      | 26 ++++++++-----
+ builtin/rebase.c                  | 16 +++++---
+ builtin/revert.c                  | 38 +++++++++++++++++-
+ sequencer.c                       | 64 ++++++++++++++++---------------
+ t/t3424-rebase-empty.sh           | 55 ++++++++++++++++++++++++--
+ t/t3501-revert-cherry-pick.sh     | 14 +++++--
+ t/t3505-cherry-pick-empty.sh      | 51 +++++++++++++++++++++++-
+ t/t3510-cherry-pick-sequence.sh   | 32 ++++++++++++++++
+ 10 files changed, 279 insertions(+), 67 deletions(-)
 
-> Thanks.
+-- 
+2.43.0
 
-Thank you. I will wait a couple of days to post the v3 to see if anyone 
-has a suggestion.
