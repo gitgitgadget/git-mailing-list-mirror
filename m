@@ -1,98 +1,169 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC887381AA
-	for <git@vger.kernel.org>; Sun, 10 Mar 2024 16:26:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32FB2B9DA
+	for <git@vger.kernel.org>; Sun, 10 Mar 2024 16:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710087983; cv=none; b=NOHdwv5mUOj1FnEZPQVbOWzxVLrZSIS1USW+5xSO4vv2Ju2f3d6V4McATNpxZ0mUy2CHziRiZLpPGZLrU24Fe0wBwQrvxFtHdrAg7R1uE9bVUm90gPCY5j2SU+0T2NyT+GEE83a31KlWCs2ibNAm8sl1vgDr84yIUIfI2wvAJio=
+	t=1710088959; cv=none; b=AVTWZ7+NOQqzMVnT8czE8VrutBw1i9bJCFVNkYuCHuvyC4MTMs4Autemp/GP6o7aCJah+wzIwed1DztSKZ2tp9nrFkI9G+mumcxf61zVcDMwd8BOAjAL+m7c8k4dwDUkMBRf/YWGij61dOnm88lGt4BoFsPmdKVhBcu4AwOBZKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710087983; c=relaxed/simple;
-	bh=zUXe1w8NAwfYSiT1CvjpKOOdPUDi3B0nUUOYtPnT02s=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=V6aIzfZd148lR5OdUWtBsEISnNy0zVHeJFECcjJUhCDeHJvdcs9F7JsRFxVmP5J0HS3n7UTW4WkoODXAWY2eHns7fG0M4jFv6paoE31aHAI8AK6T3RdVajlRJ3tCdhwtfbK1ZOtS5WvJ1pm985ajLraf1Wz2ZUXdQDXFYZAzfaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vyrw5v0V; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710088959; c=relaxed/simple;
+	bh=Oz2XrdbvBSrHbqXCu5Av/r+FoonK6MXBnXStLKQHTqw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c04+zK++ImTwFlrlA7X2VLxGmuGB8+ahpE3Jt8c4+iqTB1/M6/z2bQ6LEL6qaYSs+lJu4KfXLduv3vI4uv7lvtwsDSXynT+KdKyF8z3XqE8Jt/JuTzf8ZwDESNyE8E0MKb6fA806FSTX1xfrHGvNWojMOsMOY14b4esHWzk2meA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lvfeX7Ei; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yOU9A+o3; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lvfeX7Ei; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yOU9A+o3; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vyrw5v0V"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-41312232c7aso17305325e9.0
-        for <git@vger.kernel.org>; Sun, 10 Mar 2024 09:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710087979; x=1710692779; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O+NdgHfpt9gSebBp103LpD0Cj741iTXZae504yMMWqU=;
-        b=Vyrw5v0VjgApzJsglkSt+H8u/Z5WVdjRbYsDdtSM4v+nlQHJhEQiV+6tVpbka2udOU
-         DV/oJefjuAhfwEs2SibN7R35iWFhJKdtdLanwqwX+rQGnQ3QiX2d9HQUD/+uB5v7hQnE
-         MTpervPEw3Fl6MAqi34edc2eS2BD/2bVcE6ETamJFuLOKGrOCHBmKkvaQARWuH+1YdiE
-         6cPvUBXLADn/cckrKkoUh1bLp4qmbHuHqtP813RKDQNZCloSn0QLFLUY89KFZQBFtDLX
-         ZQq3G/ozpQYmTA0rQhgCZaSjfnKiSQ280Ri4ryB4HoJQDnTGnbcJ48iGx2rZta/NETbv
-         ZXaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710087979; x=1710692779;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O+NdgHfpt9gSebBp103LpD0Cj741iTXZae504yMMWqU=;
-        b=v8cEFGNpadgMBbFoUtIbk8tnUOCMpesqbf5s4TNe62Yu5z9uGJ3IdmUq7SC4ZtRcMn
-         XAdyPSye7PV8VIhl4Qp9nOVia2fdmS01l1YgKtfZrF8QDWagESP+WEcgdbBawMuYJh0e
-         P6t8l55lLrjqggfX0UEY6ayN8rRT1m0HE3r9cZkHWhIZo4PvfYX3rrmNRhzeJ8E9d4XG
-         w+KdgaBk+8m7+o72mjDr8QkRXYytW/JGks763VmuDHpot/ryWp384uPFFBbho1Fl9XbS
-         gtRuWu0eTaapyh+WgzdaVIRTtEYiEhLnsP6YUb2GKkoR1EGnIa4Rh7AISDNAiGKXvK+9
-         jXxw==
-X-Gm-Message-State: AOJu0Yzdz+yYeA7OB0Dn+UJZWamtBY7pf2UPO8pVodqxNgJnQQ8CffTf
-	LavdRLjPMTIOnEpolXBPnwo6lIJSzGgE6juSfMQ5QkemCJjZMOTC9dMSfrcys2guN0CD
-X-Google-Smtp-Source: AGHT+IF8nAF9eRqJUnwxLi+MZ12oS/6RYb0L6vrZcPg7zRQ2vMs4p3vxtPNKeWT5gK0WOqwkp8/Z3g==
-X-Received: by 2002:a05:600c:4fce:b0:412:dda8:fbc2 with SMTP id o14-20020a05600c4fce00b00412dda8fbc2mr4008491wmq.16.1710087978682;
-        Sun, 10 Mar 2024 09:26:18 -0700 (PDT)
-Received: from localhost.localdomain (cust-west-par-46-193-56-47.cust.wifirst.net. [46.193.56.47])
-        by smtp.gmail.com with ESMTPSA id f15-20020a05600c154f00b004131f8b622bsm5712067wmg.14.2024.03.10.09.26.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Mar 2024 09:26:18 -0700 (PDT)
-From: Aryan Gupta <garyan447@gmail.com>
-To: git@vger.kernel.org
-Cc: Aryan Gupta <garyan447@gmail.com>
-Subject: [GSoC][PATCH 1/1] add zero count optimization in ewah_bitmap.c
-Date: Sun, 10 Mar 2024 17:26:14 +0100
-Message-Id: <20240310162614.62691-2-garyan447@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240310162614.62691-1-garyan447@gmail.com>
-References: <20240310162614.62691-1-garyan447@gmail.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lvfeX7Ei";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yOU9A+o3";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lvfeX7Ei";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yOU9A+o3"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id C482020ED3;
+	Sun, 10 Mar 2024 16:42:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1710088955; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
+	b=lvfeX7Eia3etpc8b/0M0j9WwiwK/plT87y1XVUz5Fr+XkY2uOL+Y/DNWyefpZYHUJL7g4u
+	uTJNK4tSPATjcbFa/Evs66LRU0Z42NVbgL17EO3s+XzS8V3pbI/Rg8n0+3CW3b0ObvC7Z0
+	wdFAXpFfc+63aac6Awe3tdKbO8MMIgI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1710088955;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
+	b=yOU9A+o3IP9QymWw6ciNFAJP7pY1ioiWlWo56bWdLN9TMOYKszGRC7vtSHWkZCQCLl+R1B
+	Dg+Ac1NP9tLuZvBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1710088955; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
+	b=lvfeX7Eia3etpc8b/0M0j9WwiwK/plT87y1XVUz5Fr+XkY2uOL+Y/DNWyefpZYHUJL7g4u
+	uTJNK4tSPATjcbFa/Evs66LRU0Z42NVbgL17EO3s+XzS8V3pbI/Rg8n0+3CW3b0ObvC7Z0
+	wdFAXpFfc+63aac6Awe3tdKbO8MMIgI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1710088955;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
+	b=yOU9A+o3IP9QymWw6ciNFAJP7pY1ioiWlWo56bWdLN9TMOYKszGRC7vtSHWkZCQCLl+R1B
+	Dg+Ac1NP9tLuZvBw==
+Date: Sun, 10 Mar 2024 17:42:34 +0100
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+Cc: git@vger.kernel.org
+Subject: Re: unintelligible error fatal: empty ident name (for <>) not allowed
+Message-ID: <20240310164234.GG23839@kitsune.suse.cz>
+References: <20240310151533.GF23839@kitsune.suse.cz>
+ <20240310160338.GA7953@tb-raspi4>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="rwEMma7ioTxnRzrJ"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240310160338.GA7953@tb-raspi4>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: -1.30
+X-Spamd-Result: default: False [-1.30 / 50.00];
+	 ARC_NA(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[web.de];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 MIME_GOOD(-0.10)[multipart/mixed,text/plain,text/x-patch];
+	 HAS_ATTACHMENT(0.00)[];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 RCPT_COUNT_TWO(0.00)[2];
+	 FREEMAIL_TO(0.00)[web.de];
+	 RCVD_COUNT_ZERO(0.00)[0];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+,1:+,2:+];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 BAYES_HAM(-0.00)[13.77%]
+X-Spam-Flag: NO
+
+
+--rwEMma7ioTxnRzrJ
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-Signed-off-by: Aryan Gupta <garyan447@gmail.com>
----
- ewah/ewah_bitmap.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+On Sun, Mar 10, 2024 at 05:03:38PM +0100, Torsten Bögershausen wrote:
+> On Sun, Mar 10, 2024 at 04:15:33PM +0100, Michal Suchánek wrote:
+> > git version 2.44.0
+> >
+> > git am -3
+> > ../linux-6.8~rc1/debian/patches/rk3588/dw-hdmi-rockchip-avoid-tmds-spam.patch
+> > Applying: dw-hdmi-rockchip: avoid spamming 'use tmds mode' in dmesg
+> > fatal: empty ident name (for <>) not allowed
+> >
+> >
+> > What's wrong with that patch, specifically?
+> >
+> > Can you tell?
+> 
+> The message seems to come from ident.c
+> 
+> Is there any chance to get a copy of that very file ?
 
-diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-index 8785cbc54a..9056829572 100644
---- a/ewah/ewah_bitmap.c
-+++ b/ewah/ewah_bitmap.c
-@@ -257,10 +257,11 @@ void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), vo
- 		for (k = 0; k < rlw_get_literal_words(word); ++k) {
- 			int c;
- 
--			/* todo: zero count optimization */
--			for (c = 0; c < BITS_IN_EWORD; ++c, ++pos) {
--				if ((self->buffer[pointer] & ((eword_t)1 << c)) != 0)
--					callback(pos, payload);
-+			if(self->buffer[pointer]) {
-+				for (c = 0; c < BITS_IN_EWORD; ++c, ++pos) {
-+					if (((eword_t)1 << c) != 0)
-+						callback(pos, payload);
-+				}
- 			}
- 
- 			++pointer;
--- 
-2.25.1
+Sure, I can get a file that reproduces the problem.
 
+> Or more details ?
+
+I would like to know more details as well.
+
+When gcc gives an error it tells me exactly on what line and what
+character the error is, giving the errorneous text in question.
+
+Here I have absolutely no idea what the problem is.
+
+Thanks
+
+Michal
+
+--rwEMma7ioTxnRzrJ
+Content-Type: text/x-patch; charset=us-ascii
+Content-Disposition: attachment; filename="dw-hdmi-rockchip-avoid-tmds-spam.patch"
+
+From f3b68d2a91d3f443a8b86173c9cac01897075b84
+Author: Lukas F. Hartmann <lukas@mntre.com>
+Date:   Tue Mar 5 21:07:08 2024 +0100
+Subject: dw-hdmi-rockchip: avoid spamming 'use tmds mode' in dmesg
+
+diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+index dd154855a38a..b10a70870a10 100644
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -737,7 +737,7 @@ static void hdmi_select_link_config(struct rockchip_hdmi *hdmi,
+ 	hdmi->link_cfg.rate_per_lane = max_rate_per_lane;
+ 
+ 	if (!max_frl_rate || (tmdsclk < HDMI20_MAX_RATE && mode.clock < HDMI20_MAX_RATE)) {
+-		dev_info(hdmi->dev, "use tmds mode\n");
++		//dev_info(hdmi->dev, "use tmds mode\n");
+ 		hdmi->link_cfg.frl_mode = false;
+ 		return;
+ 	}
+
+--rwEMma7ioTxnRzrJ--
