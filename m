@@ -1,56 +1,56 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73FA3A1D8
-	for <git@vger.kernel.org>; Sun, 10 Mar 2024 18:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0F3A28B
+	for <git@vger.kernel.org>; Sun, 10 Mar 2024 18:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710096424; cv=none; b=HwYkNXnCYt69zjdMhx8RMAQ6YmRwe7r+XS04rEo6efUcfT78EL532KONrV1uqxz/m/jWjq0FiVBp7jELCiyFEJyuo+z+79TeD34E0/l+2RaBob8A/xZdK0yMRuFlsRVK7sgRqXPYTzSZ7KRl9xmAzvFzgMKAUkkx0tpnHkA/mvs=
+	t=1710096425; cv=none; b=ROpMorI6O7jrNPGeLd27F2J1luexv+y/OBEgUle63G8FPKgTQNgHGR20Dvgfqat32rbkABvRYqewuIB/kNByU7GLvAjQPvMeT3ZEV1gytR9nY2hZPBMgpIW7tyzSnuhXzMDonwEipO5Ll1b22MbRPBK+X2pceb/qYJ5zyKEaQu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710096424; c=relaxed/simple;
-	bh=JSFJHgTKmfLQZaoxc5yPCru3x4J9zY312NMCxjjWUfQ=;
+	s=arc-20240116; t=1710096425; c=relaxed/simple;
+	bh=ULNyA2bK+bCi0P36K5Jmp9lCmTWnajWAqSj+TyN7rwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmbzoMqOq3iVgF4i6vinpj+lEl7zWB9rZqsJaUc0DXLEWkkZLbs3APU7q2xVz2YXRmGv3o4IGwRjlVql6YRTUA+4suKfp6NQ8IOJx0j9rnxa5dtrRrf2PMllG+joPl1UZ2qmiZF5HKkDgK/8kNoL3VCgT6S3ELhsDrN8HFhctmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KNdaTLTo; arc=none smtp.client-ip=209.85.210.46
+	 MIME-Version; b=SoM8p2qf17wUIl2Uee4iG0a6asYfZiamVekXOZKdm50/BrcONuHw6kTN7TmHKWaxvJSSoqSXjCxsOP2NiHnobXbeXIzYzXcvAOEWgOcYsg6MOPx2ICD8HBwQh9q8dXc3O6Ylzpb6b9A6XRK/9DK+PPaNhJu6iblSilfDtq0XKNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSnIYX62; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KNdaTLTo"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6dc8b280155so2740301a34.0
-        for <git@vger.kernel.org>; Sun, 10 Mar 2024 11:47:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSnIYX62"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5a1bf69a3a5so1073430eaf.2
+        for <git@vger.kernel.org>; Sun, 10 Mar 2024 11:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710096421; x=1710701221; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710096422; x=1710701222; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nNOUqu/cpZskM2xrPuxfX/dbhHGmKYMp44oiqsoxYRo=;
-        b=KNdaTLTod6bCcdRHDbXJx26x9fo1JnamcM5YyA+bywENKvC8CDPzmlXuSidI8cd/ia
-         Ngd55QZLyqa3NkDqrclHkW0CXwl13AgwU214JfiJ7L4UHV/S4DqCfOgZbk8GPgdsEYs4
-         TbHtVolNSVxcNwZgiiHB/KR9jCPlUpJ0bAjvP0a2M9KZiO8XTNnT1n65P5cIlYSFQxYc
-         Q59ohmsgWow68uf0jqMg2Ah64mwDR/7MuOQlbaOfaD2HjBOv01mPINf7efpl0gmyoPbr
-         pTXNkpTv6WImeAqvJf01pJiH/1mYYF1P/fb8HCijcN/794rlAIHc+sNsG9oqFwCt1Qj5
-         3sFA==
+        bh=dJhceFjtT9Km7ojna7zOap76xqTPIXL1ycKUvSghO7w=;
+        b=VSnIYX62G8Qryu1eIsDjy3jp473J/l6Mbdlvg0+58wvg9m3hH6BBd9jjybYniQTO+r
+         lpD5AuQ7VBEBT0YwX6NLFkoBXtAXeU1DyzpTKwW1KYemNZgj5Vzyxn3XHyUkoulLB5dJ
+         yRHhb9s34tBxuR/2Dm7yOGW+uUL/Nhnx4lWSm4wTEn6QVM5flyNIGXNE5dMv/T/il4kn
+         9EtPiNAPLi+4I0KBNsjGEYz1cC5I/qa01cEWMm/Br/oowvfCzfBKoqYrrBr1WChYi2Oi
+         vFj/D0BhYUZ/W3RzED4gcJ27UcDrLQbIulDZZtlPUYkMt4N1BxkwhcFwZHKBtqCQfOHl
+         lUtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710096421; x=1710701221;
+        d=1e100.net; s=20230601; t=1710096422; x=1710701222;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nNOUqu/cpZskM2xrPuxfX/dbhHGmKYMp44oiqsoxYRo=;
-        b=xBKVscuh+mHBXBw2/yytXpcIUEZV6nAq/pXzf0u57MnEUmB1JrvBPkgVMDjSQ6tgxH
-         MPxay/Lo0GPFZqpXdh+4W4CPdEOIYHrZFszCtZ+/lsoSg6bgWJ7ACfWRo2FHqkoKSQl4
-         UWozGdowuh/MRvhOgc4hHilT7xo8XIKyS7Np/NXyPjiyj+r/EENpvz0UkHPINL7tvhEU
-         +YnORcte6we6xyGoHIOgYh9NGg1EXWZ9IIr/yOm2aqxonbmimX9HHthkvn9/2hghDAjI
-         huHLT4brEekLZuwwmOmPBQjJoSoArQMuGVRactVTB+cGh6aMgBXIJUbba8VPogp2nGaU
-         Kx0g==
-X-Gm-Message-State: AOJu0YzJvROpim8rxcyRVB4/MVoeNF+0ujnnBtz2LR7pUMvg0PYkcTlH
-	9nXL7Dlq/4gqLZA3FNvh3HN67GidWTYZmgq1dWJV0YMdJPkyil2hxhJ2SGb61kM=
-X-Google-Smtp-Source: AGHT+IF/HJcgL205cUKgAM+h0wWasT8eFcqiHXRspKV/e2POEMYGTvE2ucMwoc81hJuyivixLO3EZg==
-X-Received: by 2002:a9d:67c8:0:b0:6e5:2dc9:11e1 with SMTP id c8-20020a9d67c8000000b006e52dc911e1mr830676otn.6.1710096420915;
-        Sun, 10 Mar 2024 11:47:00 -0700 (PDT)
+        bh=dJhceFjtT9Km7ojna7zOap76xqTPIXL1ycKUvSghO7w=;
+        b=n38p14lDRmI00evThd6KWmVExHULYowgMxvmJcAgSRTIPa2Av5bDP5bDaiQq2706ih
+         WbYz7EFncdXgDWEOH8seMKNxmHtLWD9v4cXX/Ozp5cnrZjBtEkKc3DmSJTrK055wtT4M
+         ipxOFBuN1TZPd4BIH+14BvJNRDnMzqn9uNmZk/JFGeG6YC8H/ejvyAwthsqxfosTAb3f
+         B3pcYpCMayeRHiakEac5bHKal+2dLNaQIRdZzFouRCn55rerwwi3izSUL3rDXcRpDuEG
+         0wrgaTVwzShA/z49v7oxVBvVDv8K/NR2CCq/LspCTaxu6BVHVbJdGpXqCpGPGS+cVR8e
+         iSMw==
+X-Gm-Message-State: AOJu0YwjteOXjKR/Xq3CNzgja67fdY2V91bxc1ijcqLvfXnAxiyRFU5D
+	D14vu9pYkRekze0RxxDqYqtqyhH1rDfkRj4CEhM61ZWJI9EPBbvPueWD5JPBSIo=
+X-Google-Smtp-Source: AGHT+IHZ88xkJVUVveXWJwP3NBUQ2LdMb1FQiyW/90p1YJru9ujYErHPZLcI7XyuffZlspCT3maZNw==
+X-Received: by 2002:a05:6830:f8b:b0:6e5:24f5:32fa with SMTP id ez11-20020a0568300f8b00b006e524f532famr3254057otb.15.1710096422536;
+        Sun, 10 Mar 2024 11:47:02 -0700 (PDT)
 Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
-        by smtp.gmail.com with ESMTPSA id l8-20020a0568302b0800b006e4c97ec1f4sm742131otv.69.2024.03.10.11.46.59
+        by smtp.gmail.com with ESMTPSA id l8-20020a0568302b0800b006e4c97ec1f4sm742131otv.69.2024.03.10.11.47.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Mar 2024 11:47:00 -0700 (PDT)
+        Sun, 10 Mar 2024 11:47:01 -0700 (PDT)
 From: Brian Lyles <brianmlyles@gmail.com>
 To: git@vger.kernel.org
 Cc: Brian Lyles <brianmlyles@gmail.com>,
@@ -58,9 +58,9 @@ Cc: Brian Lyles <brianmlyles@gmail.com>,
 	me@ttaylorr.com,
 	phillip.wood123@gmail.com,
 	gitster@pobox.com
-Subject: [PATCH v3 5/7] sequencer: do not require `allow_empty` for redundant commit options
-Date: Sun, 10 Mar 2024 13:42:04 -0500
-Message-ID: <20240310184602.539656-6-brianmlyles@gmail.com>
+Subject: [PATCH v3 6/7] cherry-pick: enforce `--keep-redundant-commits` incompatibility
+Date: Sun, 10 Mar 2024 13:42:05 -0500
+Message-ID: <20240310184602.539656-7-brianmlyles@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
 References: <20240119060721.3734775-2-brianmlyles@gmail.com>
@@ -72,83 +72,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A consumer of the sequencer that wishes to take advantage of either the
-`keep_redundant_commits` or `drop_redundant_commits` feature must also
-specify `allow_empty`. However, these refer to two distinct types of
-empty commits:
+When `--keep-redundant-commits` was added in  b27cfb0d8d
+(git-cherry-pick: Add keep-redundant-commits option, 2012-04-20), it was
+not marked as incompatible with the various operations needed to
+continue or exit a cherry-pick (`--continue`, `--skip`, `--abort`, and
+`--quit`).
 
-- `allow_empty` refers specifically to commits which start empty
-- `keep_redundant_commits` refers specifically to commits that do not
-  start empty, but become empty due to the content already existing in
-  the target history
-
-Conceptually, there is no reason that the behavior for handling one of
-these should be entangled with the other. It is particularly unintuitive
-to require `allow_empty` in order for `drop_redundant_commits` to have
-an effect: in order to prevent redundant commits automatically,
-initially-empty commits would need to be kept automatically as well.
-
-Instead, rewrite the `allow_empty()` logic to remove the over-arching
-requirement that `allow_empty` be specified in order to reach any of the
-keep/drop behaviors. Only if the commit was originally empty will
-`allow_empty` have an effect.
-
-Note that no behavioral changes should result from this commit -- it
-merely sets the stage for future commits. In one such future commit, an
-`--empty` option will be added to git-cherry-pick(1), meaning that
-`drop_redundant_commits` will be used by that command.
+Enforce this incompatibility via `verify_opt_compatible` like we do for
+the other various options.
 
 Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
 ---
- sequencer.c | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index a62ce244c1..8dce175f2e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1726,34 +1726,25 @@ static int allow_empty(struct repository *r,
- 	int index_unchanged, originally_empty;
- 
- 	/*
--	 * Four cases:
-+	 * For a commit that is initially empty, allow_empty determines if it
-+	 * should be kept or not
- 	 *
--	 * (1) we do not allow empty at all and error out.
--	 *
--	 * (2) we allow ones that were initially empty, and
--	 *     just drop the ones that become empty
--	 *
--	 * (3) we allow ones that were initially empty, but
--	 *     halt for the ones that become empty;
--	 *
--	 * (4) we allow both.
-+	 * For a commit that becomes empty, keep_redundant_commits and
-+	 * drop_redundant_commits determine whether the commit should be kept or
-+	 * dropped. If neither is specified, halt.
- 	 */
--	if (!opts->allow_empty)
--		return 0; /* let "git commit" barf as necessary */
--
- 	index_unchanged = is_index_unchanged(r);
- 	if (index_unchanged < 0)
- 		return index_unchanged;
- 	if (!index_unchanged)
- 		return 0; /* we do not have to say --allow-empty */
- 
--	if (opts->keep_redundant_commits)
--		return 1;
--
- 	originally_empty = is_original_commit_empty(commit);
- 	if (originally_empty < 0)
- 		return originally_empty;
- 	if (originally_empty)
-+		return opts->allow_empty;
-+	else if (opts->keep_redundant_commits)
- 		return 1;
- 	else if (opts->drop_redundant_commits)
- 		return 2;
+Differences from v2:
+
+- New tests are added to t3505-cherry-pick-empty.sh instead of a new
+  test file
+
+ builtin/revert.c             |  1 +
+ t/t3505-cherry-pick-empty.sh | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 89821bab95..a1936ef70e 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -167,6 +167,7 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 				"--ff", opts->allow_ff,
+ 				"--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
+ 				"--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
++				"--keep-redundant-commits", opts->keep_redundant_commits,
+ 				NULL);
+ 	}
+
+diff --git a/t/t3505-cherry-pick-empty.sh b/t/t3505-cherry-pick-empty.sh
+index eba3c38d5a..61f91aaa0a 100755
+--- a/t/t3505-cherry-pick-empty.sh
++++ b/t/t3505-cherry-pick-empty.sh
+@@ -99,4 +99,18 @@ test_expect_success 'cherry-pick a no-op with --keep-redundant' '
+ 	test_cmp expect actual
+ '
+
++test_expect_success '--keep-redundant-commits is incompatible with operations' '
++	test_must_fail git cherry-pick HEAD 2>output &&
++	test_grep "The previous cherry-pick is now empty" output &&
++	test_must_fail git cherry-pick --keep-redundant-commits --continue 2>output &&
++	test_grep "fatal: cherry-pick: --keep-redundant-commits cannot be used with --continue" output &&
++	test_must_fail git cherry-pick --keep-redundant-commits --skip 2>output &&
++	test_grep "fatal: cherry-pick: --keep-redundant-commits cannot be used with --skip" output &&
++	test_must_fail git cherry-pick --keep-redundant-commits --abort 2>output &&
++	test_grep "fatal: cherry-pick: --keep-redundant-commits cannot be used with --abort" output &&
++	test_must_fail git cherry-pick --keep-redundant-commits --quit 2>output &&
++	test_grep "fatal: cherry-pick: --keep-redundant-commits cannot be used with --quit" output &&
++	git cherry-pick --abort
++'
++
+ test_done
 -- 
 2.43.0
 
