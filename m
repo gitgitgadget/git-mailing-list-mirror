@@ -1,169 +1,99 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32FB2B9DA
-	for <git@vger.kernel.org>; Sun, 10 Mar 2024 16:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8493F1D6BD
+	for <git@vger.kernel.org>; Sun, 10 Mar 2024 16:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710088959; cv=none; b=AVTWZ7+NOQqzMVnT8czE8VrutBw1i9bJCFVNkYuCHuvyC4MTMs4Autemp/GP6o7aCJah+wzIwed1DztSKZ2tp9nrFkI9G+mumcxf61zVcDMwd8BOAjAL+m7c8k4dwDUkMBRf/YWGij61dOnm88lGt4BoFsPmdKVhBcu4AwOBZKM=
+	t=1710089945; cv=none; b=IttFPtXrqIypBWKr6zUCN0TX3G2S1m+WDDDOZeYlnw4m4NR56Cp1xy8UiMPwaziwet3PftoqQ4fR0uFQ1A55LnHPilL7NopW3789ZWG4GVdXF7UV7zIxxRKQSkmBHRRdzpEovFVsHBfzTqrjmTCtqOMbqMID5axkR9L9EL3auYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710088959; c=relaxed/simple;
-	bh=Oz2XrdbvBSrHbqXCu5Av/r+FoonK6MXBnXStLKQHTqw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c04+zK++ImTwFlrlA7X2VLxGmuGB8+ahpE3Jt8c4+iqTB1/M6/z2bQ6LEL6qaYSs+lJu4KfXLduv3vI4uv7lvtwsDSXynT+KdKyF8z3XqE8Jt/JuTzf8ZwDESNyE8E0MKb6fA806FSTX1xfrHGvNWojMOsMOY14b4esHWzk2meA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lvfeX7Ei; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yOU9A+o3; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lvfeX7Ei; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yOU9A+o3; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1710089945; c=relaxed/simple;
+	bh=aZ/Z9PmZEKz19xnX4qmvkRIEfTYKR2H67XF7f6ehqh0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YaG6NY+rBFbas/UfeRg0UBW3+ScClR9rR1dNA7HaCXii7j2X6wUAML1299CHs/zFaxs+cg37Oc/4wkthX0H9iYpvHMvCqcHn5TD4UTFuQ/qTLPm+vpnV0nHQhuMtmyzI+yPAjQ4B7pWqd05tQkzrZZHUeF3sZ43hZPqsLWm8G8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=i+W7olFX; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lvfeX7Ei";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yOU9A+o3";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lvfeX7Ei";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yOU9A+o3"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i+W7olFX"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A3201F3D2F;
+	Sun, 10 Mar 2024 12:59:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=aZ/Z9PmZEKz19xnX4qmvkRIEfTYKR2H67XF7f6
+	ehqh0=; b=i+W7olFX/z7X3/Xmv36ghsGFd6Z3D11GGvu5iiuRT9w0mgA54bJUrX
+	gwgaDM92jv8VXSvaopjDcYzNlTTLEpqRDGvN09eADvkBUCWFbYOg/cxYP6UtEUQ5
+	g/31onBTFmq4Cy5hMrpqTbq0MNTUGpF8vrsJVNmAxa4MSuUYVzLHU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 228BE1F3D2E;
+	Sun, 10 Mar 2024 12:59:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id C482020ED3;
-	Sun, 10 Mar 2024 16:42:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1710088955; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
-	b=lvfeX7Eia3etpc8b/0M0j9WwiwK/plT87y1XVUz5Fr+XkY2uOL+Y/DNWyefpZYHUJL7g4u
-	uTJNK4tSPATjcbFa/Evs66LRU0Z42NVbgL17EO3s+XzS8V3pbI/Rg8n0+3CW3b0ObvC7Z0
-	wdFAXpFfc+63aac6Awe3tdKbO8MMIgI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1710088955;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
-	b=yOU9A+o3IP9QymWw6ciNFAJP7pY1ioiWlWo56bWdLN9TMOYKszGRC7vtSHWkZCQCLl+R1B
-	Dg+Ac1NP9tLuZvBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1710088955; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
-	b=lvfeX7Eia3etpc8b/0M0j9WwiwK/plT87y1XVUz5Fr+XkY2uOL+Y/DNWyefpZYHUJL7g4u
-	uTJNK4tSPATjcbFa/Evs66LRU0Z42NVbgL17EO3s+XzS8V3pbI/Rg8n0+3CW3b0ObvC7Z0
-	wdFAXpFfc+63aac6Awe3tdKbO8MMIgI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1710088955;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bhaEGJlPp+TEIpl5Gfc82RQVKWecVvGcm66YoXOEjZ0=;
-	b=yOU9A+o3IP9QymWw6ciNFAJP7pY1ioiWlWo56bWdLN9TMOYKszGRC7vtSHWkZCQCLl+R1B
-	Dg+Ac1NP9tLuZvBw==
-Date: Sun, 10 Mar 2024 17:42:34 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 921CE1F3D2D;
+	Sun, 10 Mar 2024 12:59:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ignacio Encinas <ignacio@iencinas.com>
 Cc: git@vger.kernel.org
-Subject: Re: unintelligible error fatal: empty ident name (for <>) not allowed
-Message-ID: <20240310164234.GG23839@kitsune.suse.cz>
-References: <20240310151533.GF23839@kitsune.suse.cz>
- <20240310160338.GA7953@tb-raspi4>
+Subject: Re: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
+In-Reply-To: <20240309181828.45496-2-ignacio@iencinas.com> (Ignacio Encinas's
+	message of "Sat, 9 Mar 2024 19:18:28 +0100")
+References: <20240307205006.467443-1-ignacio@iencinas.com>
+	<20240309181828.45496-1-ignacio@iencinas.com>
+	<20240309181828.45496-2-ignacio@iencinas.com>
+Date: Sun, 10 Mar 2024 09:59:00 -0700
+Message-ID: <xmqqy1aqvx9n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="rwEMma7ioTxnRzrJ"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240310160338.GA7953@tb-raspi4>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spam-Level: 
-X-Spam-Score: -1.30
-X-Spamd-Result: default: False [-1.30 / 50.00];
-	 ARC_NA(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[web.de];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 MIME_GOOD(-0.10)[multipart/mixed,text/plain,text/x-patch];
-	 HAS_ATTACHMENT(0.00)[];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 NEURAL_HAM_SHORT(-0.20)[-1.000];
-	 RCPT_COUNT_TWO(0.00)[2];
-	 FREEMAIL_TO(0.00)[web.de];
-	 RCVD_COUNT_ZERO(0.00)[0];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+,1:+,2:+];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 BAYES_HAM(-0.00)[13.77%]
-X-Spam-Flag: NO
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7E8B2282-DEFF-11EE-9DCE-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+
+Ignacio Encinas <ignacio@iencinas.com> writes:
+
+> +test_expect_success 'conditional include, hostname' '
+> +	cat >>.git/config <<-EOF &&
+> +	[includeIf "hostname:$(hostname)a"]
+
+This unconditionally runs the $(hostname) command assuming it exists
+everywhere, but
+
+    $ git grep '$(hostname' t/
+    t/t6500-gc.sh:	hostname=$(hostname || echo unknown) &&
+
+tells us that we should be prepared to meet a platform where such a
+command does not exist.
+
+I have a feeling that it is better done with a test prerequisite
+than hardcoded "unknown", as xgethostname() at C level may come up
+with some random string but it is not guaranteed to be "unknown".
+
+Perhaps have one instance of this before these added tests
+
+	test_lazy_prereq WORKING_HOSTNAME '
+		hostname >/dev/null 2>&1
+	'
+
+and then start them with
+
+	test_expect_success WORKING_HOSTNAME 'hostname: includeIf' '
+		...
+	'
+
+or something?  Others may think of a better way to make sure this
+test does not cause false failures on platforms only because they
+lack working hostname(1) but have a working gethostname(2) and their
+xgethostname() may be working fine.
+
+Thanks.
 
 
---rwEMma7ioTxnRzrJ
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-
-On Sun, Mar 10, 2024 at 05:03:38PM +0100, Torsten Bögershausen wrote:
-> On Sun, Mar 10, 2024 at 04:15:33PM +0100, Michal Suchánek wrote:
-> > git version 2.44.0
-> >
-> > git am -3
-> > ../linux-6.8~rc1/debian/patches/rk3588/dw-hdmi-rockchip-avoid-tmds-spam.patch
-> > Applying: dw-hdmi-rockchip: avoid spamming 'use tmds mode' in dmesg
-> > fatal: empty ident name (for <>) not allowed
-> >
-> >
-> > What's wrong with that patch, specifically?
-> >
-> > Can you tell?
-> 
-> The message seems to come from ident.c
-> 
-> Is there any chance to get a copy of that very file ?
-
-Sure, I can get a file that reproduces the problem.
-
-> Or more details ?
-
-I would like to know more details as well.
-
-When gcc gives an error it tells me exactly on what line and what
-character the error is, giving the errorneous text in question.
-
-Here I have absolutely no idea what the problem is.
-
-Thanks
-
-Michal
-
---rwEMma7ioTxnRzrJ
-Content-Type: text/x-patch; charset=us-ascii
-Content-Disposition: attachment; filename="dw-hdmi-rockchip-avoid-tmds-spam.patch"
-
-From f3b68d2a91d3f443a8b86173c9cac01897075b84
-Author: Lukas F. Hartmann <lukas@mntre.com>
-Date:   Tue Mar 5 21:07:08 2024 +0100
-Subject: dw-hdmi-rockchip: avoid spamming 'use tmds mode' in dmesg
-
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-index dd154855a38a..b10a70870a10 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-@@ -737,7 +737,7 @@ static void hdmi_select_link_config(struct rockchip_hdmi *hdmi,
- 	hdmi->link_cfg.rate_per_lane = max_rate_per_lane;
- 
- 	if (!max_frl_rate || (tmdsclk < HDMI20_MAX_RATE && mode.clock < HDMI20_MAX_RATE)) {
--		dev_info(hdmi->dev, "use tmds mode\n");
-+		//dev_info(hdmi->dev, "use tmds mode\n");
- 		hdmi->link_cfg.frl_mode = false;
- 		return;
- 	}
-
---rwEMma7ioTxnRzrJ--
