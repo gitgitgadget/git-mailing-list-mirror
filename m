@@ -1,97 +1,80 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315054207B
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 16:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABE147F58
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 16:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710173693; cv=none; b=ffatcbMGkgLpEgLLlug2+9fPXW6QWa/Dv9kUAYwaecvtkOt4OcKP9WGAotWN4QNpvTJkH7b4rg8YpRSGZG1IUIKxa/4CKyXZis/vc3vIJWG2pUxNo/7NLUNV9GPqGbQ7gL1fgQhbhe6aRtBMMnp21wZLdygg8S1UYt8HaUS80zw=
+	t=1710173841; cv=none; b=AdjydM4aahrmuS4dm0O0KL0JeMSmE3CzjoezexNq77msA9nCe6fXUQdhBL8ZX6QUkNsx3OMLr/tZGstREoA9F/x3twS6Nnj70ZUefOKDEoqG30CvH33ZOKWv+IziOHDi0p8b3RnjdiOF4w8TpH1qU9GN1kebyXnC+HCX7C5TUA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710173693; c=relaxed/simple;
-	bh=ueLV2OnTwGhTqQpMEbovaL39aTIDbO4B4w5RAqobDSU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GzNV0pcgvoAMvRNnyGRIQj82OZsfee07iQ1+OUPxZ7rMHbuCfqsznWE9NH9/LWly3w6H8v7S1c/BLtXjr47sCd+erofioSei/rH5yr7OR8m2YQpQ7XlOiNhDH9HUtlGGmZoPnRrLiUEahpvFkoUiVnPEVBoXVne89ee3Yf/z2XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Okxx0jHS; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710173841; c=relaxed/simple;
+	bh=CEQhewU20shcuVPBiQV9ws1n+p1t6OhdKb3X/maSwWQ=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=U463Es1FE5HP+Sx83MJmO6cyje2dRPUp4Tl3t3NonMrWJyAGpq4uUWn5m9c8Ttv1XOBxy0dP6OXSYRQMAz9GbFKgIAAp7hJzAiA6Bn5YXYEuevPADGqgR5037+NEqAoMwHGOj0akOnNw8tjtPkTHm+BfKiGGS1vW3L3Y9/Abipo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=kRrsMmzQ; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Okxx0jHS"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B1FB22C9CF;
-	Mon, 11 Mar 2024 12:14:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ueLV2OnTwGhTqQpMEbovaL39aTIDbO4B4w5RAq
-	obDSU=; b=Okxx0jHSQlzVU8KEAq+1IS1kuheC1/UBRrHxYO0QpKGUTCdJfrseFK
-	HXO45lf1E6ANSkGXfbU7Wt7vgd5wpZEtzGFd+JegW1S4DtPT+i+nwycyKcf2/r8o
-	N0mCPzzHnkc+Zm6E/FacG3XnQKcXER0HOt5McC8q0Vi2uYS8Wp2hg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AB2862C9CE;
-	Mon, 11 Mar 2024 12:14:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 51ED72C9CD;
-	Mon, 11 Mar 2024 12:14:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aryan Gupta <garyan447@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSoC][PATCH 1/1] add zero count optimization in ewah_bitmap.c
-In-Reply-To: <20240310162614.62691-2-garyan447@gmail.com> (Aryan Gupta's
-	message of "Sun, 10 Mar 2024 17:26:14 +0100")
-References: <20240310162614.62691-1-garyan447@gmail.com>
-	<20240310162614.62691-2-garyan447@gmail.com>
-Date: Mon, 11 Mar 2024 09:14:46 -0700
-Message-ID: <xmqqzfv4u4nd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="kRrsMmzQ"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7B7D5F6A-DFC2-11EE-AF08-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710173834;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GozNhggyliMazGCd59VDRpoi1TkzRzQuc9wt2PoH73s=;
+	b=kRrsMmzQqX9EDkf7cxVBKw2xnbY3cp+hOmphu5DwGEqi2C/xOI5hvuUw6FsR7oskXxQ+2H
+	X3f9PvPRHaQANdSH9hM1T5ysVXZVMhCGlvHpNU+eDqhmDd1TDeDycFhgdsAoMkHG6k4b4O
+	9zjLSGncwfPNP8snuA/MrhbI+oKU8wmRDr2S+vhrjEf9mweM63TnfOJjRIXvRVtrV4C1EC
+	zr/tkD8nJ4xrwV9dil5ODJGN/Ba2SbttmmzJOETpbzabjC1Q2VZ3OPizmcFpAz/YuZcuBN
+	zkli1br6Vkd7eQlYG1x+Yw3gg2P5GlwSGdIiEiSEt08gIxcrHIM5y1fFvxBZbg==
+Date: Mon, 11 Mar 2024 17:17:13 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, rsbecker@nexbridge.com, Ralph Seichter
+ <github@seichter.de>
+Subject: Re: [PATCH v2] config: add --comment option to add a comment
+In-Reply-To: <xmqqy1apudvv.fsf@gitster.g>
+References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
+ <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+ <xmqqy1apudvv.fsf@gitster.g>
+Message-ID: <5eff951e815e2fdab3834c4aa4160ed8@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Aryan Gupta <garyan447@gmail.com> writes:
+On 2024-03-11 13:55, Junio C Hamano wrote:
+> "Ralph Seichter via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Ralph Seichter <github@seichter.de>
+>> 
+>> Introduce the ability to append comments to modifications
+>> made using git-config. Example usage:
+>> 
+>>   git config --comment "changed via script" \
+>>     --add safe.directory /home/alice/repo.git
+>> 
+>> based on the proposed patch, the output produced is:
+>> 
+>>   [safe]
+>>     directory = /home/alice/repo.git #changed via script
+> 
+> For readability, you probably would want to have a SP before the
+> given string, i.e.,
+> 
+> 	variable = "value" # message comes here
 
-> Signed-off-by: Aryan Gupta <garyan447@gmail.com>
-> ---
->  ewah/ewah_bitmap.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-> index 8785cbc54a..9056829572 100644
-> --- a/ewah/ewah_bitmap.c
-> +++ b/ewah/ewah_bitmap.c
-> @@ -257,10 +257,11 @@ void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), vo
->  		for (k = 0; k < rlw_get_literal_words(word); ++k) {
->  			int c;
->  
-> -			/* todo: zero count optimization */
-> -			for (c = 0; c < BITS_IN_EWORD; ++c, ++pos) {
-> -				if ((self->buffer[pointer] & ((eword_t)1 << c)) != 0)
-> -					callback(pos, payload);
-> +			if(self->buffer[pointer]) {
-> +				for (c = 0; c < BITS_IN_EWORD; ++c, ++pos) {
-> +					if (((eword_t)1 << c) != 0)
-> +						callback(pos, payload);
-> +				}
->  			}
-
-When self->buffer[pointer] (let's call it the eword) is zero, both
-your rewritten version and the original version does the same thing
-and will not call the callback at all, but in all other cases,
-doesn't your rewrite change the behavior?
-
-Imagine the eword is 01.  The original starts the loop with c==0,
-notices that the LSB is on by masking the eword in the bitmap with
-((eword_t)1<<c), and calls the callback function.  Your version
-notices that the eword is not zero and enters the loop.  Because
-((eword_t)1<<c) for all values of c between 0 and BITS_IN_EWORD are
-by definition not zero, you end up calling the callback function for
-every bit in the word, whether it is on in the eword, no?
+Let me interject...  Perhaps also a tab character before the "# 
+comment",
+instead of a space character.  That would result in even better 
+readability.
