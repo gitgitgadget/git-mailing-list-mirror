@@ -1,72 +1,72 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A515658AA9
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 23:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B0258AA9
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 23:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710199205; cv=none; b=t+oQzhVS60hPzIt6GTKYBhFOpWSXkZf87AWweeCebFoYDLeXyx2Ot/l41DMlqxqsHBbdryeGzFdYb14We2xNICu36SYY4VYqi9QK/ybeAb38tYfG3V6IaGyWRcN3SviBlzccpboFuHOsUMHLjgC8X6FzRdVCxQvDLo61y35lV6g=
+	t=1710199215; cv=none; b=ViVIsdw+Rtgh/DobWGFZQOWG8ayPoGFdKw4KzoKT+MdCGht4qV1ZH0xwn2ZAdqaB3y6QdTO3o69cWkGjqYSL+1GIbmtTAJcpzu74ajaqWroZle7cW06jppEZtOTfDyolhMRmI8WycxOgaNLMe5PfNf6Tu21yzwhV/3+BvbvvjKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710199205; c=relaxed/simple;
-	bh=dovxGGcPiToLltauT/LmSFqcwZY1D/hyUauqZVW/IiA=;
+	s=arc-20240116; t=1710199215; c=relaxed/simple;
+	bh=aPiscuJmMZABC1T3xa5T2YcQ6xY9G4PR9yrtxbBS/Hg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XdAyK2qYkjKS/XttvWm5Y+wvazUpb55lxyvkDS2kY+YBQVI+bWzN3mHodOc6PNiACYVYVsbKvHOBt8G5r9DSmbM7iq9gaS0IORq0ImDYmQnWbHRhycQt3mYGSePrba8/tblaeXxChV72hpyzokCq4Brl03NXx58tLwXcQ7rhfhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c+wj2cB8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SU0f9jBb; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=NSmuBoynn9dLXTQBdl4j9YghuG7np4lBACYjL5zw82TGEz9pRyEWFG01ORpEFMwdujE/VSwiowDUL1ahenEJnc4bGyZypY0m63dtUO32lRazo6hxawjtaTNgJKMpxv2ujk5xJYJdMjrUZ4zauz4Iga84duubOeKtADsfcQzmPmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k4ak8QqL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TMTLojlQ; arc=none smtp.client-ip=66.111.4.28
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c+wj2cB8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SU0f9jBb"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id BC2BC11400FC;
-	Mon, 11 Mar 2024 19:20:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k4ak8QqL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TMTLojlQ"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7D24E5C0081;
+	Mon, 11 Mar 2024 19:20:11 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 11 Mar 2024 19:20:02 -0400
+  by compute2.internal (MEProxy); Mon, 11 Mar 2024 19:20:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1710199202; x=1710285602; bh=wUagLtFGct
-	ncaTkCnLw3Vbf04184theDsZ1T4I01h0E=; b=c+wj2cB8FmMMIvQQ7H2Rs+PrQ+
-	hr7TQxTMYIDG0C4pr9Fj+BypNYLI3qVdSki5ts01OLKFnQsM3zVc5q9qhick2LkK
-	G0EZLrbFdAmiJhJdvdaT4kktqpN7akLlWFAwvpm0s057A4FeyWul3yq+XEG1g4m5
-	goOajyXyti1CZIit4RVcnoe1Dnij6+rzqIz2xjHXb5rWHLWzrk0uK+jlmXwRdfIj
-	/HVQuB8JgmZyVW2MGwJsEjp8ZB9LqZvIbpQuyn0Lv+BPGF7q77EoFOBkfvNr6ue6
-	0y+72jbLm5KycoXxGRLGnyZzwSW51F9EKyuSpZwLIvchExwVvra04WD38+9Q==
+	:subject:to:to; s=fm1; t=1710199211; x=1710285611; bh=c3dyHd9+Q0
+	0EtaO/HocbpfDGdxukrLaMR4ncgukUPw0=; b=k4ak8QqLNFcKqLI9uEln/1mUBN
+	0zOS+qQwWMbG4+XL49t8AxapCI5VtyxRDBJI5qrD94oib+PJjBcSQpH8u2epAqbS
+	d9ao+XUBhtFnnFV7kV2+4XmtUKfFPa9MUuKTQN70xirslgoyIpuLXv3nk06lCpdL
+	bO/whcF58kfZ8M46qyt1BCRWkpuYcSrzxYRMCPno9ETtp4a0wg6d14uD7yEHDkIQ
+	dLPuVceYu4WvWaM++oFIZhc8p1blmBP5kTVTUZXPUUNzcyrNOdDOm1y8r3QHoFNv
+	ZlQwIdx6ZaqmGy+8y50s+xU6PEzmWPLbXWHJt7416vLtRrlxKV/BGk4EuqZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1710199202; x=1710285602; bh=wUagLtFGctncaTkCnLw3Vbf04184
-	theDsZ1T4I01h0E=; b=SU0f9jBb1d8mc7/EBpCzzSxtsoRAib7yI02MQwIYLz5l
-	uAwLAcLp7YawGN6NRgopGcUdhyZT3SMPMCarrLpa25b9tIx/BZYqHX+FQl5+rk5o
-	yo01vslNJES/GZBu2OIeD/kMbNO7Vw3okwwvgL06pAxrvgSbaaBR9CCQXMfxvl+L
-	ycLKfC0UXgavzlvPacExiO/b2WRMPOZsMlCODhv0kGA+IVX5vagKu3DGoRD5wGwb
-	OYGx+hh9HR61mNaURL65xe+Fxzk8qYm17tPla4gAK66Z4LYeyy6scpziJTbf8x3Y
-	ubSu2PzuPVNQ2DsLirgOACK8LYUgvX2LSikufRJHCg==
-X-ME-Sender: <xms:opHvZZRdPSFGJIRDIaH5LaL1fO3RR5EdA_hSi_YRBQX_SqQM51QgnA>
-    <xme:opHvZSzsmS0WbANZwRYLv64B6Cly5ek5m1PQL21Y6iH-D0sO_cLzeXDgXjfD7J0Lb
-    Ly8esiUQiE9Aa1PzA>
-X-ME-Received: <xmr:opHvZe1uqYylCtZn9VfjnvfLuQAeiAhhgevX_tW-yeppOzfrQptFNVj1dp3hMpD3Dqv16GfyS_Sp3bV5C8XbY1h0XTvb7SsnsX2SLvLK84fxnQ>
+	fm1; t=1710199211; x=1710285611; bh=c3dyHd9+Q00EtaO/HocbpfDGdxuk
+	rLaMR4ncgukUPw0=; b=TMTLojlQyRoi+NlWZgXDQoeEWlPYDkLJrSpj1I/r5dDI
+	DG5XjyBKye2RMOGSaq2KdXK5CyGrRwbL0uD3fa0kbkjnX69hyctwSTX8qTeA8O+s
+	c/OvdwNNowmxvf9WPHRA6WigYcDYV82o8LHkjDwkqgDxcnWyUF8VAq6DicpV3HRq
+	rg0B7Ez+isv5K8yccd6LITxkrxcFCMDw6do3/20vYFWXMQlyz/XqtlKtUYwQr63V
+	THSteff+kZaOVhD5xWMfsxux5hEIPlYcYxDhuMz3eL1tbuc5zG30M67MPDCYh1y5
+	V0pw5VWL1OtBow51tvWM6MaT/tdRdTj+5QfFETGa+g==
+X-ME-Sender: <xms:q5HvZfQxQBYrybMQkkdq2NOSoWkwFGmpWqDOJeXE9GjcB1wTr7Waqw>
+    <xme:q5HvZQyZHBMJanuF8v6QT2-E6ppS30Zyl9gWMoyJC7zf-WQCC8FVZADHMKIdbWV_V
+    hu7ZouI8ON5GGckFQ>
+X-ME-Received: <xmr:q5HvZU1KHksl7IrCg9eBcXy2cwAZSx2zYjIQTqLogFtf9AFhiqTz47VALuFpoWnN6Np2TOq0Uy-T_73lvSQ2mbuVVXBKYFqV2bkmeaKytR7mPg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedvgddutdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:opHvZRCVLCvzRNXRiDJlYKBlE_8go6l7XgwfIQeRE190GfNLLHm2eg>
-    <xmx:opHvZSic6_bDNPf5BdL3keCaUG_1q0t68P8Etyro_4FJfIM_2Kl0Gw>
-    <xmx:opHvZVoJZPZUOI3XfUBo5Eu839iSiapxLzSGhn7Ayp5q83vABa-ArQ>
-    <xmx:opHvZdVPzX1HVUkhPjSZexpLut1T9DjKQ4FadYl9SVA62yBnZB4I1A>
+X-ME-Proxy: <xmx:q5HvZfA8hrwxfbQrKBczDll9Ca9LrmXw1OsB3iHi_tOBQTLtecUFUA>
+    <xmx:q5HvZYhWa2lUs6KUKWcP0vjp1-DamY0noNaLsu5eO3pVPGXpO3pjLQ>
+    <xmx:q5HvZTqkuIiWhPL9IQguvY-IBWnrN6QGii8GiPsLOES6ZeWFiL0pjw>
+    <xmx:q5HvZSYbTPX04wiJhCDLg5NYh85Y1iKMgBbXXL00gISksy7czwFGVQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Mar 2024 19:20:00 -0400 (EDT)
+ 11 Mar 2024 19:20:09 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6a03ee05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Mar 2024 23:15:21 +0000 (UTC)
-Date: Tue, 12 Mar 2024 00:19:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 346399c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Mar 2024 23:15:31 +0000 (UTC)
+Date: Tue, 12 Mar 2024 00:20:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -74,9 +74,8 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	=?iso-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 02/13] builtin/config: move "fixed-value" option to
- correct group
-Message-ID: <54e536394a0d88449c327b47ebbc6943a34001b8.1710198711.git.ps@pks.im>
+Subject: [PATCH v2 03/13] builtin/config: use `OPT_CMDMODE()` to specify modes
+Message-ID: <49d190ac2456bf3823885f9e8877c307dc4a12bd.1710198711.git.ps@pks.im>
 References: <cover.1709724089.git.ps@pks.im>
  <cover.1710198711.git.ps@pks.im>
 Precedence: bulk
@@ -86,80 +85,165 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oVaX8BuSVsFG8z1C"
+	protocol="application/pgp-signature"; boundary="Vo9Vq+7/qktUCNW2"
 Content-Disposition: inline
 In-Reply-To: <cover.1710198711.git.ps@pks.im>
 
 
---oVaX8BuSVsFG8z1C
+--Vo9Vq+7/qktUCNW2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `--fixed-value` option can be used to alter how the value-pattern
-parameter is interpreted for the various submodes of git-config(1). But
-while it is an option, it is currently listed as part of the submodes
-group the command, which is wrong.
+The git-config(1) command has various different modes which are
+accessible via e.g. `--get-urlmatch` or `--unset-all`. These modes are
+declared with `OPT_BIT()`, which causes two minor issues:
 
-Move the option to the "Other" group, which hosts the various options
-known to git-config(1).
+  - The respective modes also have a negated form `--no-get-urlmatch`,
+    which is unintended.
+
+  - We have to manually handle exclusiveness of the modes.
+
+Switch these options to instead use `OPT_CMDMODE()`, which is made
+exactly for this usecase. Remove the now-unneeded check that only a
+single mode is given, which is now handled by the parse-options
+interface.
+
+While at it, format optional placeholders for arguments to conform to
+our style guidelines by using `[<placeholder>]`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/config.c  | 32 ++++++++++++++------------------
+ t/t1300-config.sh | 13 +++++++++++++
+ 2 files changed, 27 insertions(+), 18 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 6eb6aff917..fcd6190f12 100644
+index fcd6190f12..a293161be4 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -642,7 +642,6 @@ static struct option builtin_config_options[] =3D {
- 	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-n=
+@@ -631,20 +631,20 @@ static struct option builtin_config_options[] =3D {
+ 	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
+ven config file")),
+ 	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
+config from given blob object")),
+ 	OPT_GROUP(N_("Action")),
+-	OPT_BIT(0, "get", &actions, N_("get value: name [value-pattern]"), ACTION=
+_GET),
+-	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-pattern]")=
+, ACTION_GET_ALL),
+-	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-regex =
+[value-pattern]"), ACTION_GET_REGEXP),
+-	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the URL: =
+section[.var] URL"), ACTION_GET_URLMATCH),
+-	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variables: n=
+ame value [value-pattern]"), ACTION_REPLACE_ALL),
+-	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACTION_=
+ADD),
+-	OPT_BIT(0, "unset", &actions, N_("remove a variable: name [value-pattern]=
+"), ACTION_UNSET),
+-	OPT_BIT(0, "unset-all", &actions, N_("remove all matches: name [value-pat=
+tern]"), ACTION_UNSET_ALL),
+-	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-n=
 ame"), ACTION_RENAME_SECTION),
- 	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTI=
+-	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTI=
 ON_REMOVE_SECTION),
- 	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
--	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when com=
-paring values to 'value-pattern'")),
- 	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
- 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [de=
+-	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
+-	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
+-	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [de=
 fault]"), ACTION_GET_COLOR),
- 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [s=
+-	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [s=
 tdout-is-tty]"), ACTION_GET_COLORBOOL),
-@@ -661,6 +660,7 @@ static struct option builtin_config_options[] =3D {
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
- standard input, blob, command line)")),
- 	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
-, local, global, system, command)")),
- 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
- default value when missing entry")),
-+	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when com=
-paring values to 'value-pattern'")),
- 	OPT_END(),
- };
++	OPT_CMDMODE(0, "get", &actions, N_("get value: name [<value-pattern>]"), =
+ACTION_GET),
++	OPT_CMDMODE(0, "get-all", &actions, N_("get all values: key [<value-patte=
+rn>]"), ACTION_GET_ALL),
++	OPT_CMDMODE(0, "get-regexp", &actions, N_("get values for regexp: name-re=
+gex [<value-pattern>]"), ACTION_GET_REGEXP),
++	OPT_CMDMODE(0, "get-urlmatch", &actions, N_("get value specific for the U=
+RL: section[.var] URL"), ACTION_GET_URLMATCH),
++	OPT_CMDMODE(0, "replace-all", &actions, N_("replace all matching variable=
+s: name value [<value-pattern>]"), ACTION_REPLACE_ALL),
++	OPT_CMDMODE(0, "add", &actions, N_("add a new variable: name value"), ACT=
+ION_ADD),
++	OPT_CMDMODE(0, "unset", &actions, N_("remove a variable: name [<value-pat=
+tern>]"), ACTION_UNSET),
++	OPT_CMDMODE(0, "unset-all", &actions, N_("remove all matches: name [<valu=
+e-pattern>]"), ACTION_UNSET_ALL),
++	OPT_CMDMODE(0, "rename-section", &actions, N_("rename section: old-name n=
+ew-name"), ACTION_RENAME_SECTION),
++	OPT_CMDMODE(0, "remove-section", &actions, N_("remove a section: name"), =
+ACTION_REMOVE_SECTION),
++	OPT_CMDMODE('l', "list", &actions, N_("list all"), ACTION_LIST),
++	OPT_CMDMODE('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
++	OPT_CMDMODE(0, "get-color", &actions, N_("find the color configured: slot=
+ [<default>]"), ACTION_GET_COLOR),
++	OPT_CMDMODE(0, "get-colorbool", &actions, N_("find the color setting: slo=
+t [<stdout-is-tty>]"), ACTION_GET_COLORBOOL),
+ 	OPT_GROUP(N_("Type")),
+ 	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
+"), option_parse_type),
+ 	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
+, TYPE_BOOL),
+@@ -767,10 +767,6 @@ int cmd_config(int argc, const char **argv, const char=
+ *prefix)
+ 		usage_builtin_config();
+ 	}
 =20
+-	if (HAS_MULTI_BITS(actions)) {
+-		error(_("only one action at a time"));
+-		usage_builtin_config();
+-	}
+ 	if (actions =3D=3D 0)
+ 		switch (argc) {
+ 		case 1: actions =3D ACTION_GET; break;
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 31c3878687..2d1bc1e27e 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2612,4 +2612,17 @@ test_expect_success 'includeIf.hasconfig:remote.*.ur=
+l forbids remote url in such
+ 	grep "fatal: remote URLs cannot be configured in file directly or indirec=
+tly included by includeIf.hasconfig:remote.*.url" err
+ '
+=20
++test_expect_success 'negated mode causes failure' '
++	test_must_fail git config --no-get 2>err &&
++	grep "unknown option \`no-get${SQ}" err
++'
++
++test_expect_success 'specifying multiple modes causes failure' '
++	cat >expect <<-EOF &&
++	error: options ${SQ}--get-all${SQ} and ${SQ}--get${SQ} cannot be used tog=
+ether
++	EOF
++	test_must_fail git config --get --get-all 2>err &&
++	test_cmp expect err
++'
++
+ test_done
 --=20
 2.44.0
 
 
---oVaX8BuSVsFG8z1C
+--Vo9Vq+7/qktUCNW2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXvkZkACgkQVbJhu7ck
-PpSyag/9GtIrhNYKQRUIY+IRMKF2G1YJjIqmp2TbupZ/JELTQfJziWUjrITcJ7PY
-EM5bmSaIF94LmebXTIYo7fxk7O8u7Smwi1nUHOtXREslQMLQWwjMluPRCA1qHk6J
-dbHYlLDS4FCJOyWGMnUZHLjVVEAOExb3F5xQqA1GXUyegc499UEASNTQtLWQlCUz
-PPajMyNZ+jVaGoSs1hBDKeXUDbmEeg9ijCdwZu5XBMB8rutWhPuPwA03xzQbWT4Y
-ykm0ZXZFTcCbIMv5uZa3uIeJI38H00070w5SddRpASA4iASXnvxw1YWvQwPaCstK
-JVgJK34UpFJaobqftiE7TdmSkL0MY9mq56QlDrdIkrB70ZFwvhaioF4KDmX9+BhB
-viMM2KqSKUVuJndpXw2Z23LIGFZPrBkTzlrDyqWtTzuYLv8bWqVKGYL3zdXhVlgt
-Iql7ZdqDyBHNmel45wjRjxtmiu4o/1r/GK4z1dXmsdLMIOxKlIDhjg5z6MXZJJOz
-MSATaRjCwcxbXoe/pxZCeajp5nJORPks+OV9ZmnvDxE0CIklPuFqk7JPebQirUT/
-rpTJyu7N964X46K5GMvQ12BgrIJ/zR7QvdSD+RwMtgEjtI2X9NTYjqvApZYtF8Kg
-rWSS8abmO9Pb0eyMKyFcdnO7e02XPXvNBrCh9ezjx6Vsepeck0A=
-=oJHs
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXvkaMACgkQVbJhu7ck
+PpRTDhAAqVrVpPAnWfmJNDFyw0Ejy4LjFL3Nszp9+rpAR10Ql+yzuSIaCr9EE1XO
+igMhYnNVin1e3TWsz3zCKXapKDHYlfeEY/sSKZ59hRa5vQyQGH0YEC9r2gQLAuhL
+DigPySL58ILafDc3weEsYJVyaVLwvvMPYp7OCdlqYtW7vSd5n9tCO/+VooO8++wh
+ThyzcXIRrhaLY8ZAZEP+Vd+ynhWpbH1wrJVSeUpySRJcSUnpQnxXJYXV0uLXV3LE
+WIDQbU8rceyg9u0O0SBqm/LYlKBtiOqUBIPl3tV//Lr3UjmMAZsW0QIKwz2qUkE5
+8VDc9Z9ocOW7k4fKluMDWRjTAEvivaLcemE4+OdZPsO2jnT9ROFRt3ja10s5Mj8d
+IejnW3yLUqJuH3XEBFzjqdatkH9V/ngwcvFRVSwt81k0l6N61XgPY1rLCc4VNHF0
+Pu7RDHptxMzJk3ETU7oZNMZJsVdjBH0C3pHL8JQFN3/kQDmjrAb3/RaX2jIfGKz/
+USwETamUpLtxDY+iW5HDvIkiTRQn+bwRHP+CxCNLeb6pUoZ0VqPnCqsmjbfXrvgu
+YraFdYZVaD8+TsGN5d3IvQzZwZj3lWsgZyfEQubIv8x7AAw5y38+PPrcL+CcvKdx
+NEfRI0UwtH4EobctBtN75MOmDu5kWjLwmeDVWcAOc0CAj/RWDZE=
+=+HXj
 -----END PGP SIGNATURE-----
 
---oVaX8BuSVsFG8z1C--
+--Vo9Vq+7/qktUCNW2--
