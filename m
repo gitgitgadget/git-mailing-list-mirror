@@ -1,72 +1,72 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BF259B63
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 23:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390C85B5B3
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 23:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710199235; cv=none; b=tDceRmZF2+xXD65iLJxwuhHezuwpQ7HB+UoKglvCt6DUDGKwGHMyTa7JMOVjWDj6u6q2Xl8T2zL+iLBtKP2DRSUUcjd9mMomPx2mnwpDMcLw9PiEZS+x0Ny+nkbGAf9jyzOftCW1rfDsN1WC2hMMjU9cfy8MV9jv+xQb4FoWgMo=
+	t=1710199247; cv=none; b=FLr7xqYJEyYQQ2in30I07MgInrLEqlF1BdltrxGEN1bGi/p17NgOVUYgedqM0biLQdqfvLTKTXnHc/jldT+vVpGJTbCAf2jxmP3jtn2hKIhKA+fUB3LgqZ10hpCoxfvjJAXkGNrN0TXm7zRB7HITperefiuIsO2oxdzq5moofAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710199235; c=relaxed/simple;
-	bh=sk0bv6hM/HrL97KLDG/tVGBAI9e8vvQWJxi2WJMJK64=;
+	s=arc-20240116; t=1710199247; c=relaxed/simple;
+	bh=6MDvBqvd/sOP/uS6VR5/vJpS9Uv4r7F0oc2DHsudeto=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N3kHUCzDSSbO+PUMW/juqM439EsyjvM+vDcXtfpbUaOpkflVdsnKdzpw63poNal9eU03B2c2UU6Z7TQW7Gpgud8dgMZUax5Yw7ATXT9cEborkOlQBEpqoItNV4HoSGWorGfcmn8MBNi7xJgnO68Qx635QbegM+idZje5vixcSw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H2XK0D4V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AnIegKpg; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=bZktpGU8E+q7VzT8vxHyX7Y9scIgeODQTW4KuzDW1cNxlZUwqRGmFxML/EybvESa9fBG1YddtEa9vQgsFXyN7hOtIQmqgK6n2gs05TO5XvZ0z1N8Tqe9BpUPOjDjYIIVApI6M9NXNgZVmqoJhxCBBKJDfXCWtJQfO9mpXxFAXg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jpGZ0inr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cx8pUbKn; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H2XK0D4V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AnIegKpg"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jpGZ0inr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cx8pUbKn"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id B30C41140112;
-	Mon, 11 Mar 2024 19:20:32 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 527E9114012B;
+	Mon, 11 Mar 2024 19:20:44 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 11 Mar 2024 19:20:32 -0400
+  by compute4.internal (MEProxy); Mon, 11 Mar 2024 19:20:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1710199232; x=1710285632; bh=tPUe1XXeGy
-	OLvRkQ0iOxVGftEHKbztg4B81C38/6mk8=; b=H2XK0D4VXw0B7xzSGfjvqEyott
-	RyrlYovxc2oE+TL6xSAyr2/mzdO1E+okcdapMTC25hiq7sbNFFAa9kR70sPbkGqu
-	1s+imR2suhAE00VzCDN3bPgSpX+VhTIxc9a70s7bbX5GyBj/jPGwx0brIrQcKtJ4
-	dGlWdL/63lZPElpzryrsq1ANjYL4zsNIqS5Z8Oy5zJbSvH2AeQJB1ahhzW1JXcWw
-	FWcxzFTG53jnVD1xG59UrVy0xZjrzqgf4jhLZC1WhkdDPc8M/FM8cnpBCXnjzjnk
-	sFH+SZ5JN6HcnosHrdUs5DXEZZ/7bP93RUIRCL5pt3PSEXThwld4CCYA/esw==
+	:subject:to:to; s=fm1; t=1710199244; x=1710285644; bh=NlaDI6nrBQ
+	Ac9jNE/0X019aJHmmkeryDYWnWOQpybiI=; b=jpGZ0inrrzPDzxVI6+fICBIh6h
+	BVQE7fekYMEh2fWatpFAi+AEGJ0qaozvArrm1klE0J+lg4pBlcJYuz1v2pqFA0Ls
+	Psu9bvM24gXRitVdXHfisXP34nAavAXi0r8D869usVxvDFgpZhu+7H8Cea+lTlGQ
+	DigQwdpr/Y+B8VyRYGR07j5wbwKqGW+5taZug/EM6lgPOicJ+l3BF24mDPTzYLoY
+	AtxwP2l33JOIB9fO2ozYygmp7sjmv5r9k8x17GPYXwuoGebd8old5qB+DGptp5r8
+	XbzVH4itNDvxVqTJM8jy43W4L6wMHkfn27Ko3fFchahULxpBVg64AP2UoiBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1710199232; x=1710285632; bh=tPUe1XXeGyOLvRkQ0iOxVGftEHKb
-	ztg4B81C38/6mk8=; b=AnIegKpg/wKsRd7/XpDontkUFbxW1vdupnSVIsBLX2xf
-	5RMu5q4OmjRqZ8PpyXUK0rZ74cdzL0tHd4BOU5bcM0qHn+0zjFBz2BTAH3KHOxlD
-	+hEd538DjnGU0D70AUFdWP14NyQzkJCsCi89c0LYWh59ikGcXGC306CnUoYdolKU
-	Hm26SqHTXeRj12d6oQUY0FN2oHndNGgTKjskQ3V5H2kNKsJ+QBJ4c36zNDnzNM9v
-	3k8ZX+wA0xzUuleRlCCD1QPF3wGzpFLJRpUakwtNPkZ5f7BFsGL6+3jZQyov6bfM
-	58sFhnQm28xlkHs7O2QirCsdWAW+ZweCaE9vynHYHw==
-X-ME-Sender: <xms:wJHvZc6REHU5_xxwBBP0i_McE_bEetpCgBFcOd9l39ZtxDtV7rB4Dg>
-    <xme:wJHvZd5E6xCihNWlIEWEmUieeP4HYAq4fGeZupqn24OnxNmNw_SmBzyL0fC4-TN_c
-    fQlQydEW4vCCmECRw>
-X-ME-Received: <xmr:wJHvZbceFIylWCXtzx4p4HpMvMOaRND2w2bX6WZpEAHuTyf84akOFBvXS-BDjAxaKYAE2HEPnd03s_M6k2GKBwnhVnLBg-W83u8aQ9zLJxNS2g>
+	fm1; t=1710199244; x=1710285644; bh=NlaDI6nrBQAc9jNE/0X019aJHmmk
+	eryDYWnWOQpybiI=; b=Cx8pUbKnum/9He/DQnj8nXw9M2g93Nm5M2FYzSAK1RB0
+	F07JD28ijT6pSuBgWDxdqGURaaqDE1JKh3+gjJ8i2AIQMx7dmtIeYiuUVCtyC7To
+	dDYkuw12hQRxH0ds6I7VEoh5FOK7JbfRV7ekryxlzLPv92Tv1so+VlVaWTsrzP31
+	8k1X5GB7f5ipWGq6PZbtP/3XgHt+1NZG1Vfuxfz7eK5W6aD2f7Ln6tDTUgNCXH78
+	RZP92dYcmznnELtmJJ3brxEg5CeMfaHyN/rIdF1Lefcq6RcX/plBtaICPta64Nmf
+	r7oXWNLpkxGiwlAdVQnTnbRupuVAYZvc9Z8kY3RW5g==
+X-ME-Sender: <xms:zJHvZQOLITJO5wfNSvF-T43UxEoFOU7PC9i1YoN4NBqWUayGid9dQg>
+    <xme:zJHvZW_-5oPPXfZJGB215Y_8UMeveyZmNQflew8slJreT4YDOgk6NGnz1N3IaJXJO
+    Umq-DzYMUkGupIcYQ>
+X-ME-Received: <xmr:zJHvZXRnpnl-DDlLHTKDogVbHgDXsSvOV0CnfSYuT1u0YxEY2jrkpgnycahXeJw8pj_UM0oj1zUNKkC-AeRAdnda2CZ0uUbW1DAbzxnN-bHIzQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedvgddutdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:wJHvZRLqwP9ni1yEB20ctav8N7adP7cCu7FddG8V03bpLAlcT3K3iQ>
-    <xmx:wJHvZQKaS9h3HY69LAiYC7QMgHM9_A4URSllRwJiDgP3zVkrxtrY7A>
-    <xmx:wJHvZSz7TDvvDq-zUgYIWnSOl-3xSADw4-hZiw3kpAvLXLlSlx2M5w>
-    <xmx:wJHvZY8GHtekRS1POYK4FRo5zYVjVwo7iyKvXdxaaIzd8ij8tjN2Cg>
+X-ME-Proxy: <xmx:zJHvZYuwn4hE_c43uCgE7OsgNEX9JRHapnrT2jslMsEGeRQrDZSvvw>
+    <xmx:zJHvZYfRAitNoZwzH3Nc3Tq_0_bEuy-YxKE13cJxPIy3a0MJOGalkg>
+    <xmx:zJHvZc0czZPILInRKRhyHX2QQVxloKe162bBYrI0Zcv3-iovk8HWJQ>
+    <xmx:zJHvZQS3Y8Z41v3c0TjpegKPxSgtJ274U8nI4YbxY-g87lV34gKHhw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Mar 2024 19:20:31 -0400 (EDT)
+ 11 Mar 2024 19:20:42 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c66cbc26 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Mar 2024 23:15:52 +0000 (UTC)
-Date: Tue, 12 Mar 2024 00:20:24 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 001e941f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Mar 2024 23:16:03 +0000 (UTC)
+Date: Tue, 12 Mar 2024 00:20:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -74,8 +74,8 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	=?iso-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 05/13] builtin/config: pull out function to handle `--null`
-Message-ID: <283a199578cfe252204839c55ff83bd23fe2cd9e.1710198711.git.ps@pks.im>
+Subject: [PATCH v2 06/13] builtin/config: introduce "list" subcommand
+Message-ID: <53401299fa1f51954834e2507a2282cf60b02f20.1710198711.git.ps@pks.im>
 References: <cover.1709724089.git.ps@pks.im>
  <cover.1710198711.git.ps@pks.im>
 Precedence: bulk
@@ -85,80 +85,797 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6X9FCUtno+jDY1LQ"
+	protocol="application/pgp-signature"; boundary="Oji7emZ3mylMocod"
 Content-Disposition: inline
 In-Reply-To: <cover.1710198711.git.ps@pks.im>
 
 
---6X9FCUtno+jDY1LQ
+--Oji7emZ3mylMocod
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Pull out function to handle the `--null` option, which we are about to
-reuse in subsequent commits.
+While git-config(1) has several modes, those modes are not exposed with
+subcommands but instead by specifying e.g. `--unset` or `--list`. This
+user interface is not really in line with how our more modern commands
+work, where it is a lot more customary to say e.g. `git remote list`.
+Furthermore, to add to the confusion, git-config(1) also allows the user
+to request modes implicitly by just specifying the correct number of
+arguments. Thus, `git config foo.bar` will retrieve the value of
+"foo.bar" while `git config foo.bar baz` will set it to "baz".
+
+Overall, this makes for a confusing interface that could really use a
+makeover. It hurts discoverability of what you can do with git-config(1)
+and is comparatively easy to get wrong. Converting the command to have
+subcommands instead would go a long way to help address these issues.
+
+One concern in this context is backwards compatibility. Luckily, we can
+introduce subcommands without breaking backwards compatibility at all.
+This is because all the implicit modes of git-config(1) require that the
+first argument is a properly formatted config key. And as config keys
+_must_ have a dot in their name, any value without a dot would have been
+discarded by git-config(1) previous to this change. Thus, given that
+none of the subcommands do have a dot, they are unambiguous.
+
+Introduce the first such new subcommand, which is "git config list". To
+retain backwards compatibility we only conditionally use subcommands and
+will fall back to the old syntax in case no subcommand was detected.
+This should help to transition to the new-style syntax until we
+eventually deprecate and remove the old-style syntax.
+
+Note that the way we handle this we're duplicating some functionality
+across old and new syntax. While this isn't pretty, it helps us to
+ensure that there really is no change in behaviour for the old syntax.
+
+Amend tests such that we run them both with old and new style syntax.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ Documentation/git-config.txt |  26 +++++---
+ builtin/config.c             |  90 ++++++++++++++++++++++++----
+ t/t1300-config.sh            | 111 +++++++++++++++++++++--------------
+ 3 files changed, 163 insertions(+), 64 deletions(-)
 
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index dff39093b5..976ba26757 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -9,6 +9,7 @@ git-config - Get and set repository or global options
+ SYNOPSIS
+ --------
+ [verse]
++'git config list' [<file-option>] [<display-option>] [--includes]
+ 'git config' [<file-option>] [--type=3D<type>] [--fixed-value] [--show-ori=
+gin] [--show-scope] [-z|--null] <name> [<value> [<value-pattern>]]
+ 'git config' [<file-option>] [--type=3D<type>] --add <name> <value>
+ 'git config' [<file-option>] [--type=3D<type>] [--fixed-value] --replace-a=
+ll <name> <value> [<value-pattern>]
+@@ -20,7 +21,6 @@ SYNOPSIS
+ 'git config' [<file-option>] [--fixed-value] --unset-all <name> [<value-pa=
+ttern>]
+ 'git config' [<file-option>] --rename-section <old-name> <new-name>
+ 'git config' [<file-option>] --remove-section <name>
+-'git config' [<file-option>] [--show-origin] [--show-scope] [-z|--null] [-=
+-name-only] -l | --list
+ 'git config' [<file-option>] --get-color <name> [<default>]
+ 'git config' [<file-option>] --get-colorbool <name> [<stdout-is-tty>]
+ 'git config' [<file-option>] -e | --edit
+@@ -74,6 +74,12 @@ On success, the command returns the exit code 0.
+ A list of all available configuration variables can be obtained using the
+ `git help --config` command.
+=20
++COMMANDS
++--------
++
++list::
++	List all variables set in config file, along with their values.
++
+ [[OPTIONS]]
+ OPTIONS
+ -------
+@@ -178,10 +184,6 @@ See also <<FILES>>.
+ --unset-all::
+ 	Remove all lines matching the key from config file.
+=20
+--l::
+---list::
+-	List all variables set in config file, along with their values.
+-
+ --fixed-value::
+ 	When used with the `value-pattern` argument, treat `value-pattern` as
+ 	an exact string instead of a regular expression. This will restrict
+@@ -236,7 +238,7 @@ Valid `<type>`'s include:
+ 	contain line breaks.
+=20
+ --name-only::
+-	Output only the names of config variables for `--list` or
++	Output only the names of config variables for `list` or
+ 	`--get-regexp`.
+=20
+ --show-origin::
+@@ -287,10 +289,20 @@ Valid `<type>`'s include:
+   When using `--get`, and the requested variable is not found, behave as if
+   <value> were the value assigned to the that variable.
+=20
++DEPRECATED MODES
++----------------
++
++The following modes have been deprecated in favor of subcommands. It is
++recommended to migrate to the new syntax.
++
++-l::
++--list::
++	Replaced by `git config list`.
++
+ CONFIGURATION
+ -------------
+ `pager.config` is only respected when listing configuration, i.e., when
+-using `--list` or any of the `--get-*` which may return multiple results.
++using `list` or any of the `--get-*` which may return multiple results.
+ The default is to use a pager.
+=20
+ [[FILES]]
 diff --git a/builtin/config.c b/builtin/config.c
-index 693df32526..ce2d3fecd4 100644
+index ce2d3fecd4..ee7ac9381e 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -697,6 +697,14 @@ static void handle_config_location(const char *prefix)
+@@ -16,10 +16,16 @@
+ #include "worktree.h"
+=20
+ static const char *const builtin_config_usage[] =3D {
++	N_("git config list [<file-option>] [<display-option>] [--includes]"),
+ 	N_("git config [<options>]"),
+ 	NULL
+ };
+=20
++static const char *const builtin_config_list_usage[] =3D {
++	N_("git config list [<file-option>] [<display-option>] [--includes]"),
++	NULL
++};
++
+ static char *key;
+ static regex_t *key_regexp;
+ static const char *value_pattern;
+@@ -33,6 +39,7 @@ static char delim =3D '=3D';
+ static char key_delim =3D ' ';
+ static char term =3D '\n';
+=20
++static parse_opt_subcommand_fn *subcommand;
+ static int use_global_config, use_system_config, use_local_config;
+ static int use_worktree_config;
+ static struct git_config_source given_config_source;
+@@ -705,14 +712,24 @@ static void handle_nul(void) {
  	}
  }
 =20
-+static void handle_nul(void) {
-+	if (end_nul) {
-+		term =3D '\0';
-+		delim =3D '\n';
-+		key_delim =3D '\n';
-+	}
-+}
++#define CONFIG_LOCATION_OPTIONS \
++	OPT_GROUP(N_("Config file location")), \
++	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")), \
++	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")), \
++	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file"))=
+, \
++	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config=
+ file")), \
++	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
+ven config file")), \
++	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
+config from given blob object"))
++
++#define CONFIG_DISPLAY_OPTIONS \
++	OPT_GROUP(N_("Display options")), \
++	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")), \
++	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")), \
++	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
+ standard input, blob, command line)")), \
++	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
+, local, global, system, command)"))
 +
  static struct option builtin_config_options[] =3D {
- 	OPT_GROUP(N_("Config file location")),
- 	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
-@@ -758,12 +766,7 @@ int cmd_config(int argc, const char **argv, const char=
- *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
+-	OPT_GROUP(N_("Config file location")),
+-	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
+-	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
+-	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
+-	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config=
+ file")),
+-	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
+ven config file")),
+-	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
+config from given blob object")),
++	CONFIG_LOCATION_OPTIONS,
+ 	OPT_GROUP(N_("Action")),
+ 	OPT_CMDMODE(0, "get", &actions, N_("get value: name [<value-pattern>]"), =
+ACTION_GET),
+ 	OPT_CMDMODE(0, "get-all", &actions, N_("get all values: key [<value-patte=
+rn>]"), ACTION_GET_ALL),
+@@ -736,14 +753,11 @@ static struct option builtin_config_options[] =3D {
+ 	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
+"), TYPE_BOOL_OR_STR),
+ 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
+ry name)"), TYPE_PATH),
+ 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
+, TYPE_EXPIRY_DATE),
++	CONFIG_DISPLAY_OPTIONS,
+ 	OPT_GROUP(N_("Other")),
+-	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")),
+-	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+-	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direct=
+ives on lookup")),
+-	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
+ standard input, blob, command line)")),
+-	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
+, local, global, system, command)")),
+ 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
+ default value when missing entry")),
+ 	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when com=
+paring values to 'value-pattern'")),
++	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direct=
+ives on lookup")),
+ 	OPT_END(),
+ };
 =20
- 	handle_config_location(prefix);
--
--	if (end_nul) {
--		term =3D '\0';
--		delim =3D '\n';
--		key_delim =3D '\n';
--	}
+@@ -752,6 +766,42 @@ static NORETURN void usage_builtin_config(void)
+ 	usage_with_options(builtin_config_usage, builtin_config_options);
+ }
+=20
++static int cmd_config_list(int argc, const char **argv, const char *prefix)
++{
++	struct option opts[] =3D {
++		CONFIG_LOCATION_OPTIONS,
++		CONFIG_DISPLAY_OPTIONS,
++		OPT_GROUP(N_("Other")),
++		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
+tives on lookup")),
++		OPT_END(),
++	};
++
++	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_list_usag=
+e, 0);
++	check_argc(argc, 0, 0);
++
++	handle_config_location(prefix);
 +	handle_nul();
++
++	setup_auto_pager("config", 1);
++
++	if (config_with_options(show_all_config, NULL,
++				&given_config_source, the_repository,
++				&config_options) < 0) {
++		if (given_config_source.file)
++			die_errno(_("unable to read config file '%s'"),
++				  given_config_source.file);
++		else
++			die(_("error processing config file(s)"));
++	}
++
++	return 0;
++}
++
++static struct option builtin_subcommand_options[] =3D {
++	OPT_SUBCOMMAND("list", &subcommand, cmd_config_list),
++	OPT_END(),
++};
++
+ int cmd_config(int argc, const char **argv, const char *prefix)
+ {
+ 	char *value =3D NULL;
+@@ -761,6 +811,22 @@ int cmd_config(int argc, const char **argv, const char=
+ *prefix)
 =20
- 	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
- 		error(_("--get-color and variable type are incoherent"));
+ 	given_config_source.file =3D xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
+=20
++	/*
++	 * This is somewhat hacky: we first parse the command line while
++	 * keeping all args intact in order to determine whether a subcommand
++	 * has been specified. If so, we re-parse it a second time, but this
++	 * time we drop KEEP_ARGV0. This is so that we don't munge the command
++	 * line in case no subcommand was given, which would otherwise confuse
++	 * us when parsing the implicit modes.
++	 */
++	argc =3D parse_options(argc, argv, prefix, builtin_subcommand_options, bu=
+iltin_config_usage,
++			     PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_NO_INTERNAL_HELP|PARSE_OPT=
+_KEEP_ARGV0|PARSE_OPT_KEEP_UNKNOWN_OPT);
++	if (subcommand) {
++		argc =3D parse_options(argc, argv, prefix, builtin_subcommand_options, b=
+uiltin_config_usage,
++		       PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_NO_INTERNAL_HELP|PARSE_OP=
+T_KEEP_UNKNOWN_OPT);
++		return subcommand(argc, argv, prefix);
++	}
++
+ 	argc =3D parse_options(argc, argv, prefix, builtin_config_options,
+ 			     builtin_config_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 2d1bc1e27e..720f0ee929 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -11,6 +11,21 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
++for mode in legacy subcommands
++do
++
++case "$mode" in
++legacy)
++	mode_prefix=3D"--"
++	;;
++subcommands)
++	mode_prefix=3D""
++	;;
++*)
++	echo "unknown mode $mode" >&2
++	exit 1;;
++esac
++
+ test_expect_success 'clear default config' '
+ 	rm -f .git/config
+ '
+@@ -350,11 +365,11 @@ version.1.2.3eX.alpha=3Dbeta
+ EOF
+=20
+ test_expect_success 'working --list' '
+-	git config --list > output &&
++	git config ${mode_prefix}list > output &&
+ 	test_cmp expect output
+ '
+ test_expect_success '--list without repo produces empty output' '
+-	git --git-dir=3Dnonexistent config --list >output &&
++	git --git-dir=3Dnonexistent config ${mode_prefix}list >output &&
+ 	test_must_be_empty output
+ '
+=20
+@@ -366,7 +381,7 @@ version.1.2.3eX.alpha
+ EOF
+=20
+ test_expect_success '--name-only --list' '
+-	git config --name-only --list >output &&
++	git config ${mode_prefix}list --name-only >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -504,17 +519,17 @@ ein.bahn=3Dstrasse
+ EOF
+=20
+ test_expect_success 'alternative GIT_CONFIG' '
+-	GIT_CONFIG=3Dother-config git config --list >output &&
++	GIT_CONFIG=3Dother-config git config ${mode_prefix}list >output &&
+ 	test_cmp expect output
+ '
+=20
+ test_expect_success 'alternative GIT_CONFIG (--file)' '
+-	git config --file other-config --list >output &&
++	git config ${mode_prefix}list --file other-config >output &&
+ 	test_cmp expect output
+ '
+=20
+ test_expect_success 'alternative GIT_CONFIG (--file=3D-)' '
+-	git config --file - --list <other-config >output &&
++	git config ${mode_prefix}list --file - <other-config >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -527,6 +542,7 @@ test_expect_success 'editing stdin is an error' '
+ '
+=20
+ test_expect_success 'refer config from subdirectory' '
++	test_when_finished "rm -r x" &&
+ 	mkdir x &&
+ 	test_cmp_config -C x strasse --file=3D../other-config --get ein.bahn
+ '
+@@ -737,7 +753,7 @@ test_expect_success 'line number is reported correctly'=
+ '
+ '
+=20
+ test_expect_success 'invalid stdin config' '
+-	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
++	echo "[broken" | test_must_fail git config ${mode_prefix}list --file - >o=
+utput 2>&1 &&
+ 	test_grep "bad config line 1 in standard input" output
+ '
+=20
+@@ -1029,7 +1045,7 @@ section.quotecont=3Dcont;inued
+ EOF
+=20
+ test_expect_success 'value continued on next line' '
+-	git config --list > result &&
++	git config ${mode_prefix}list > result &&
+ 	test_cmp expect result
+ '
+=20
+@@ -1053,7 +1069,7 @@ Qsection.sub=3Dsection.val4
+ Qsection.sub=3Dsection.val5Q
+ EOF
+ test_expect_success '--null --list' '
+-	git config --null --list >result.raw &&
++	git config ${mode_prefix}list --null >result.raw &&
+ 	nul_to_q <result.raw >result &&
+ 	echo >>result &&
+ 	test_cmp expect result
+@@ -1072,6 +1088,7 @@ test_expect_success 'inner whitespace kept verbatim' '
+ '
+=20
+ test_expect_success SYMLINKS 'symlinked configuration' '
++	test_when_finished "rm myconfig" &&
+ 	ln -s notyet myconfig &&
+ 	git config --file=3Dmyconfig test.frotz nitfol &&
+ 	test -h myconfig &&
+@@ -1092,10 +1109,11 @@ test_expect_success SYMLINKS 'symlinked configurati=
+on' '
+ '
+=20
+ test_expect_success SYMLINKS 'symlink to nonexistent configuration' '
++	test_when_finished "rm linktonada linktolinktonada" &&
+ 	ln -s doesnotexist linktonada &&
+ 	ln -s linktonada linktolinktonada &&
+-	test_must_fail git config --file=3Dlinktonada --list &&
+-	test_must_fail git config --file=3Dlinktolinktonada --list
++	test_must_fail git config ${mode_prefix}list --file=3Dlinktonada &&
++	test_must_fail git config ${mode_prefix}list --file=3Dlinktolinktonada
+ '
+=20
+ test_expect_success 'check split_cmdline return' '
+@@ -1352,7 +1370,7 @@ do
+ done
+=20
+ test_expect_success 'git -c is not confused by empty environment' '
+-	GIT_CONFIG_PARAMETERS=3D"" git -c x.one=3D1 config --list
++	GIT_CONFIG_PARAMETERS=3D"" git -c x.one=3D1 config ${mode_prefix}list
+ '
+=20
+ test_expect_success 'GIT_CONFIG_PARAMETERS handles old-style entries' '
+@@ -1543,31 +1561,31 @@ test_expect_success 'git config ignores pairs with =
+empty count' '
+ '
+=20
+ test_expect_success 'git config fails with invalid count' '
+-	test_must_fail env GIT_CONFIG_COUNT=3D10a git config --list 2>error &&
++	test_must_fail env GIT_CONFIG_COUNT=3D10a git config ${mode_prefix}list 2=
+>error &&
+ 	test_grep "bogus count" error &&
+-	test_must_fail env GIT_CONFIG_COUNT=3D9999999999999999 git config --list =
+2>error &&
++	test_must_fail env GIT_CONFIG_COUNT=3D9999999999999999 git config ${mode_=
+prefix}list 2>error &&
+ 	test_grep "too many entries" error
+ '
+=20
+ test_expect_success 'git config fails with missing config key' '
+ 	test_must_fail env GIT_CONFIG_COUNT=3D1 GIT_CONFIG_VALUE_0=3D"value" \
+-		git config --list 2>error &&
++		git config ${mode_prefix}list 2>error &&
+ 	test_grep "missing config key" error
+ '
+=20
+ test_expect_success 'git config fails with missing config value' '
+ 	test_must_fail env GIT_CONFIG_COUNT=3D1 GIT_CONFIG_KEY_0=3D"pair.one" \
+-		git config --list 2>error &&
++		git config ${mode_prefix}list 2>error &&
+ 	test_grep "missing config value" error
+ '
+=20
+ test_expect_success 'git config fails with invalid config pair key' '
+ 	test_must_fail env GIT_CONFIG_COUNT=3D1 \
+ 		GIT_CONFIG_KEY_0=3D GIT_CONFIG_VALUE_0=3Dvalue \
+-		git config --list &&
++		git config ${mode_prefix}list &&
+ 	test_must_fail env GIT_CONFIG_COUNT=3D1 \
+ 		GIT_CONFIG_KEY_0=3Dmissing-section GIT_CONFIG_VALUE_0=3Dvalue \
+-		git config --list
++		git config ${mode_prefix}list
+ '
+=20
+ test_expect_success 'environment overrides config file' '
+@@ -1607,7 +1625,7 @@ test_expect_success 'git config --edit works' '
+ 	git config -f tmp test.value no &&
+ 	echo test.value=3Dyes >expect &&
+ 	GIT_EDITOR=3D"echo [test]value=3Dyes >" git config -f tmp --edit &&
+-	git config -f tmp --list >actual &&
++	git config ${mode_prefix}list -f tmp >actual &&
+ 	test_cmp expect actual
+ '
+=20
+@@ -1616,7 +1634,7 @@ test_expect_success 'git config --edit respects core.=
+editor' '
+ 	echo test.value=3Dyes >expect &&
+ 	test_config core.editor "echo [test]value=3Dyes >" &&
+ 	git config -f tmp --edit &&
+-	git config -f tmp --list >actual &&
++	git config ${mode_prefix}list -f tmp >actual &&
+ 	test_cmp expect actual
+ '
+=20
+@@ -1967,7 +1985,7 @@ test_expect_success '--show-origin with --list' '
+ 	command line:	user.cmdline=3Dtrue
+ 	EOF
+ 	GIT_CONFIG_COUNT=3D1 GIT_CONFIG_KEY_0=3Duser.environ GIT_CONFIG_VALUE_0=
+=3Dtrue\
+-		git -c user.cmdline=3Dtrue config --list --show-origin >output &&
++		git -c user.cmdline=3Dtrue config ${mode_prefix}list --show-origin >outp=
+ut &&
+ 	test_cmp expect output
+ '
+=20
+@@ -1984,7 +2002,7 @@ test_expect_success '--show-origin with --list --null=
+' '
+ 	includeQcommand line:Quser.cmdline
+ 	trueQ
+ 	EOF
+-	git -c user.cmdline=3Dtrue config --null --list --show-origin >output.raw=
+ &&
++	git -c user.cmdline=3Dtrue config ${mode_prefix}list --null --show-origin=
+ >output.raw &&
+ 	nul_to_q <output.raw >output &&
+ 	# The here-doc above adds a newline that the --null output would not
+ 	# include. Add it here to make the two comparable.
+@@ -1998,7 +2016,7 @@ test_expect_success '--show-origin with single file' '
+ 	file:.git/config	user.override=3Dlocal
+ 	file:.git/config	include.path=3D../include/relative.include
+ 	EOF
+-	git config --local --list --show-origin >output &&
++	git config ${mode_prefix}list --local --show-origin >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2036,7 +2054,7 @@ test_expect_success !MINGW '--show-origin escape spec=
+ial file name characters' '
+ 	cat >expect <<-\EOF &&
+ 	file:"file\" (dq) and spaces.conf"	user.custom=3Dtrue
+ 	EOF
+-	git config --file "$WEIRDLY_NAMED_FILE" --show-origin --list >output &&
++	git config ${mode_prefix}list --file "$WEIRDLY_NAMED_FILE" --show-origin =
+>output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2044,7 +2062,7 @@ test_expect_success '--show-origin stdin' '
+ 	cat >expect <<-\EOF &&
+ 	standard input:	user.custom=3Dtrue
+ 	EOF
+-	git config --file - --show-origin --list <"$CUSTOM_CONFIG_FILE" >output &&
++	git config ${mode_prefix}list --file - --show-origin <"$CUSTOM_CONFIG_FIL=
+E" >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2071,7 +2089,7 @@ test_expect_success '--show-origin blob' '
+ 		cat >expect <<-EOF &&
+ 		blob:$blob	user.custom=3Dtrue
+ 		EOF
+-		git config --blob=3D$blob --show-origin --list >output &&
++		git config ${mode_prefix}list --blob=3D$blob --show-origin >output &&
+ 		test_cmp expect output
+ 	)
+ '
+@@ -2087,7 +2105,7 @@ test_expect_success '--show-origin blob ref' '
+ 		cp "$CUSTOM_CONFIG_FILE" custom.conf &&
+ 		git add custom.conf &&
+ 		git commit -m "new config file" &&
+-		git config --blob=3Dmain:custom.conf --show-origin --list >output &&
++		git config ${mode_prefix}list --blob=3Dmain:custom.conf --show-origin >o=
+utput &&
+ 		test_cmp expect output
+ 	)
+ '
+@@ -2113,13 +2131,14 @@ test_expect_success '--show-scope with --list' '
+ 	worktree	user.worktree=3Dtrue
+ 	command	user.cmdline=3Dtrue
+ 	EOF
++	test_when_finished "git worktree remove wt1" &&
+ 	git worktree add wt1 &&
+ 	# We need these to test for worktree scope, but outside of this
+ 	# test, this is just noise
+ 	test_config core.repositoryformatversion 1 &&
+ 	test_config extensions.worktreeConfig true &&
+ 	git config --worktree user.worktree true &&
+-	git -c user.cmdline=3Dtrue config --list --show-scope >output &&
++	git -c user.cmdline=3Dtrue config ${mode_prefix}list --show-scope >output=
+ &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2128,7 +2147,7 @@ test_expect_success !MINGW '--show-scope with --blob'=
+ '
+ 	cat >expect <<-EOF &&
+ 	command	user.custom=3Dtrue
+ 	EOF
+-	git config --blob=3D$blob --show-scope --list >output &&
++	git config ${mode_prefix}list --blob=3D$blob --show-scope >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2138,7 +2157,7 @@ test_expect_success '--show-scope with --local' '
+ 	local	user.override=3Dlocal
+ 	local	include.path=3D../include/relative.include
+ 	EOF
+-	git config --local --list --show-scope >output &&
++	git config ${mode_prefix}list --local --show-scope >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2162,7 +2181,7 @@ test_expect_success '--show-scope with --show-origin'=
+ '
+ 	local	file:.git/../include/relative.include	user.relative=3Dinclude
+ 	command	command line:	user.cmdline=3Dtrue
+ 	EOF
+-	git -c user.cmdline=3Dtrue config --list --show-origin --show-scope >outp=
+ut &&
++	git -c user.cmdline=3Dtrue config ${mode_prefix}list --show-origin --show=
+-scope >output &&
+ 	test_cmp expect output
+ '
+=20
+@@ -2203,7 +2222,7 @@ test_expect_success 'override global and system confi=
+g' '
+ 	global	home.config=3Dtrue
+ 	local	local.config=3Dtrue
+ 	EOF
+-	git config --show-scope --list >output &&
++	git config ${mode_prefix}list --show-scope >output &&
+ 	test_cmp expect output &&
+=20
+ 	cat >expect <<-EOF &&
+@@ -2212,20 +2231,20 @@ test_expect_success 'override global and system con=
+fig' '
+ 	local	local.config=3Dtrue
+ 	EOF
+ 	GIT_CONFIG_NOSYSTEM=3Dfalse GIT_CONFIG_SYSTEM=3Dcustom-system-config GIT_=
+CONFIG_GLOBAL=3Dcustom-global-config \
+-		git config --show-scope --list >output &&
++		git config ${mode_prefix}list --show-scope >output &&
+ 	test_cmp expect output &&
+=20
+ 	cat >expect <<-EOF &&
+ 	local	local.config=3Dtrue
+ 	EOF
+ 	GIT_CONFIG_NOSYSTEM=3Dfalse GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_GLOB=
+AL=3D/dev/null \
+-		git config --show-scope --list >output &&
++		git config ${mode_prefix}list --show-scope >output &&
+ 	test_cmp expect output
+ '
+=20
+ test_expect_success 'override global and system config with missing file' '
+-	test_must_fail env GIT_CONFIG_GLOBAL=3Ddoes-not-exist GIT_CONFIG_SYSTEM=
+=3D/dev/null git config --global --list &&
+-	test_must_fail env GIT_CONFIG_GLOBAL=3D/dev/null GIT_CONFIG_SYSTEM=3Ddoes=
+-not-exist git config --system --list &&
++	test_must_fail env GIT_CONFIG_GLOBAL=3Ddoes-not-exist GIT_CONFIG_SYSTEM=
+=3D/dev/null git config ${mode_prefix}list --global &&
++	test_must_fail env GIT_CONFIG_GLOBAL=3D/dev/null GIT_CONFIG_SYSTEM=3Ddoes=
+-not-exist git config ${mode_prefix}list --system &&
+ 	GIT_CONFIG_GLOBAL=3Ddoes-not-exist GIT_CONFIG_SYSTEM=3Ddoes-not-exist git=
+ version
+ '
+=20
+@@ -2352,7 +2371,7 @@ test_expect_success 'set all config with value-patter=
+n' '
+ 	# no match =3D> add new entry
+ 	cp initial config &&
+ 	git config --file=3Dconfig abc.key two a+ &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-\EOF &&
+ 	abc.key=3Done
+ 	abc.key=3Dtwo
+@@ -2365,7 +2384,7 @@ test_expect_success 'set all config with value-patter=
+n' '
+=20
+ 	# multiple values, no match =3D> add
+ 	git config --file=3Dconfig abc.key three a+ &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-\EOF &&
+ 	abc.key=3Done
+ 	abc.key=3Dtwo
+@@ -2375,7 +2394,7 @@ test_expect_success 'set all config with value-patter=
+n' '
+=20
+ 	# single match =3D> replace
+ 	git config --file=3Dconfig abc.key four h+ &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-\EOF &&
+ 	abc.key=3Done
+ 	abc.key=3Dtwo
+@@ -2390,7 +2409,7 @@ test_expect_success '--replace-all and value-pattern'=
+ '
+ 	git config --file=3Dconfig --add abc.key two &&
+ 	git config --file=3Dconfig --add abc.key three &&
+ 	git config --file=3Dconfig --replace-all abc.key four "o+" &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-\EOF &&
+ 	abc.key=3Dfour
+ 	abc.key=3Dthree
+@@ -2408,7 +2427,7 @@ test_expect_success 'refuse --fixed-value for incompa=
+tible actions' '
+ 	test_must_fail git config --file=3Dconfig --fixed-value --get-urlmatch de=
+v.null bogus &&
+ 	test_must_fail git config --file=3Dconfig --fixed-value --rename-section =
+dev null &&
+ 	test_must_fail git config --file=3Dconfig --fixed-value --remove-section =
+dev &&
+-	test_must_fail git config --file=3Dconfig --fixed-value --list &&
++	test_must_fail git config ${mode_prefix}list --file=3Dconfig --fixed-valu=
+e &&
+ 	test_must_fail git config --file=3Dconfig --fixed-value --get-color dev.n=
+ull &&
+ 	test_must_fail git config --file=3Dconfig --fixed-value --get-colorbool d=
+ev.null &&
+=20
+@@ -2429,7 +2448,7 @@ test_expect_success '--fixed-value uses exact string =
+matching' '
+=20
+ 	cp initial config &&
+ 	git config --file=3Dconfig fixed.test bogus "$META" &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-EOF &&
+ 	fixed.test=3D$META
+ 	fixed.test=3Dbogus
+@@ -2438,7 +2457,7 @@ test_expect_success '--fixed-value uses exact string =
+matching' '
+=20
+ 	cp initial config &&
+ 	git config --file=3Dconfig --fixed-value fixed.test bogus "$META" &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-\EOF &&
+ 	fixed.test=3Dbogus
+ 	EOF
+@@ -2456,7 +2475,7 @@ test_expect_success '--fixed-value uses exact string =
+matching' '
+=20
+ 	cp initial config &&
+ 	git config --file=3Dconfig --replace-all fixed.test bogus "$META" &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-EOF &&
+ 	fixed.test=3D$META
+ 	fixed.test=3Dbogus
+@@ -2464,7 +2483,7 @@ test_expect_success '--fixed-value uses exact string =
+matching' '
+ 	test_cmp expect actual &&
+=20
+ 	git config --file=3Dconfig --fixed-value --replace-all fixed.test bogus "=
+$META" &&
+-	git config --file=3Dconfig --list >actual &&
++	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-EOF &&
+ 	fixed.test=3Dbogus
+ 	fixed.test=3Dbogus
+@@ -2625,4 +2644,6 @@ test_expect_success 'specifying multiple modes causes=
+ failure' '
+ 	test_cmp expect err
+ '
+=20
++done
++
+ test_done
 --=20
 2.44.0
 
 
---6X9FCUtno+jDY1LQ
+--Oji7emZ3mylMocod
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXvkbcACgkQVbJhu7ck
-PpRmQw/9HQwFPhaEmeiQSa9thscD+8J7O+Vr1cbhq+ZO9Auwc1QWS8ofx1q7xxMt
-9rSLUNMfDwjAp0KQyrZCnej9JdoU329XJ9xbOYhK+M4ijtxmpAaunpDVLoPQG4Lj
-Pk7wOufKuCOJRXPcN/mGIoB2wgUyJ7o3yZ50onzM4ghAZYFBuXxy3q+Vu03VV703
-aw9XIuSJDAKX7St/lYN6/nwmATjlYcnHVpislTZlthrWQbqJChrK3wHFWM4oxtex
-xnhJWMMNDGfPm1t4JnvU2rJIDaks/f0aBSw7KEjIhMPOu2FBMRNvsi7IgNrArmaN
-zxwN9pqF1DNgIUgrHnEvuA7VbZ+/U7ywZPoFZFM5nOSFRU1sJO6DpFUf+zHRerzc
-b9FCzkCC8TCxSofa2mPgs4S2y+DiA3ieiFZBihTOrdRIgKkwJNE9yWNoU6zoxcfq
-7TJK9G6ShPCMymB98axghHFJMK6asDw6d/zj5GoWJgyIS3c6Ccjk/XI7YKKW7/2K
-1jFku7hCYO4CqtF3tS6bmpIoldr3dB/naLouq3DOljrHeLesHziL2NJJ2jy7poyn
-fR8FLpO+xIY+rT5jqQhF27iy5ErEusq/mIdBXMqn4LAsn366qH/rhXq40H7UxIMP
-qJE30noSUUaF163J/g5PokctRAi3yYEyq+oPv36Ozo/BCSZTZl8=
-=EJOP
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXvkcIACgkQVbJhu7ck
+PpRxaRAAnk349DrPoFVwngr6vE5yV3jU8KQNcNd67ROFEX0GKSasbepUY3itipwS
+vkUKAuFZ7+t37c9qGlA8IMQtoqjYFD/IXxERJqNwPOYyTMj10w4Zj5yIT1BlpiLi
+DwF9BbJdJDKMhzXristblAvSHWxPKcuoTRJLs6gpaEm31S1o+lKWwGwjgRLgS2vy
+efEvV5VYaT1m546nFRa4iNhoNkTON3jVn7CV3FAnzHYuIy49e9fG77+CbTwIIgGQ
+elXVqDLjuMLEYULnRFZaTm7qTV8wt6O7+m5D/WmcXw3xhtABQ8eRtkmtuV5/NcAG
+g+WutKOKFGPAR6ztYTNlwm5y1krse0lPyhFb8iPm2ErJm7rA1FP6HAHM8TddTRqN
+pklIGT++PRo0MYNNHhA60p4sJlHyph/qAYmzIJERr81ysD/A70zYocQDnfa+cmKT
+s2OpCj8TpCUgtufWSpRpKsuQ9EWnVR76Yh0/U2C6VcDW1njf4Le0Kxz7j1huDKM0
+j0yYLdxGhZGzNUGHlE6+frPnYs7rQYzXDrgsIsxcZ91D/YmnI0U6k0qwM37gAvh9
+KA3EX8Fh3x0qkrRdBcWhTN+MNC+Zs6cXo5Si1PEZ6h8voxWewSZYwBY1uYgviicG
+l6A2Lii3agwJMlxPDV3Am/+T0gInJjPKEZNUMBMWYHRUHmr959A=
+=9PCF
 -----END PGP SIGNATURE-----
 
---6X9FCUtno+jDY1LQ--
+--Oji7emZ3mylMocod--
