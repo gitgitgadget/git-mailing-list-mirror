@@ -1,39 +1,55 @@
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C756B6A
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:47:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DAC56B6A
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710193661; cv=none; b=MLMqLZ2r9AUq+vUwA7Xl6f6zKB2GHE+w+qxzbFM2aCE3MFnvBsf/DuSMxH14AYpxPH/ngjdRO+RSIBzgXukg4ofV9M4cAnU6gdKOBSTYkUZGmBkx+ujQKq1B2rFbobUGxLi6/O5hGEL+WJgw9GMvX9S4RHz8nDvmD0Fvu7AZXAY=
+	t=1710194063; cv=none; b=S6HAMhA/YPzFkCg0kr3ekpkiWUkkPNyar9OE3nVEpUCbFbOMol5EfBk6r2qsCmt561muBl2VYMsIwqveicYQwvIpXZZoYfTm8I0cCECqw3wFSXJHiKYGkTlsNILX8+xw5mORph/MOq/mQbwTaesgfA9/LcXdVauMeioY9Gvhvag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710193661; c=relaxed/simple;
-	bh=xEYWllW8G7d5UN1yoUMjwr/zGo8fXarZt4ba3/BxP+0=;
-	h=From:To:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=EdkKSF2CaN7MLVw88Vk1zHtm7/MRyU7iT73GIMgD8rTnrIJteckmW+UUgbODdruafZK1VtGw6NpgKIkCHwARww+7GaDS+G2zyXE7j+p90b5+6iOZJpaL7M2ZDx2HRHjvvmyz+1TCM62ZikNKu8JHEQFipbZQlmnpwKsWz+/cTuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=O5Ca48Yk; arc=none smtp.client-ip=202.61.206.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	s=arc-20240116; t=1710194063; c=relaxed/simple;
+	bh=jLgVPgr2U4Ej4HrFrrhVCxWsQX2H0AZsXoT3KJYRYNg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t3xcmBqAsj4tEwU3+NNnSTiTAHyFOxQqR7OC+1fnrdE4j3wEUfzuGl+Ij0aR7LURhq54vf/MCI6qSGyjQgS8jRlsOjmEzcbqw9ioF0+YF6rqWuTbpicOCZbS2JgGCej+gxg1ZNJgWNKAoKFRsHZ3/p6UtNCe49YH86Zv4PzEud8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YC2/wgbv; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="O5Ca48Yk"
-Received: from localhost (ip-109-42-178-223.web.vodafone.de [109.42.178.223])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42BLlarV032209
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 22:47:37 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1710193657; bh=xEYWllW8G7d5UN1yoUMjwr/zGo8fXarZt4ba3/BxP+0=;
-	h=From:To:Subject:In-Reply-To:Date:References;
-	b=O5Ca48YkO3H+nhVxSlSESdIscNGukqH8Rr4OJfp4KIVkdEk0232fsgFiTt0vuR6ET
-	 2IoZlkmloWIBKJrzHYV7MkXUxGc/Ei5+rEi62wzCmiclwQVFS8KNwjjGpq9bPFVdqj
-	 Lnk4YnGU+WL2u7NB1KLkRwvJ3MQ/3Rsb+pxeuSgM=
-From: Dirk Gouders <dirk@gouders.net>
-To: git@vger.kernel.org
-Subject: [PATCH 5/5] MyFirstObjectWalk: add stderr to pipe processing
-In-Reply-To: <cover.1710192973.git.dirk@gouders.net>
-Date: Mon, 11 Mar 2024 22:00:12 +0100
-Message-ID: <a2d30eff217e560873c49fe45116c784dc12fd32.1710192973.git.dirk@gouders.net>
-References: <cover.1710192973.git.dirk@gouders.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YC2/wgbv"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DF6282F13C;
+	Mon, 11 Mar 2024 17:54:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=jLgVPgr2U4Ej4HrFrrhVCxWsQX2H0AZsXoT3KJ
+	YRYNg=; b=YC2/wgbvRv+tf8WxQK+1juREJlUOhsvvdweEK/x0Wlo6CQJUCjLmvQ
+	wL0wAOLmxI9O0XVmKN8RxUQrzqQzVPWLGkHxWgGT71r1JEzYok8Wxh6ckDQkntkG
+	3ZlaTSt9Ay28n+twKnwyH/aytEGEK5eV3YaCyH9Qp+aIDdxO0OW+k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D731C2F13B;
+	Mon, 11 Mar 2024 17:54:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8246B2F138;
+	Mon, 11 Mar 2024 17:54:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>,
+  Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 1/3] t1006: update 'run_tests' to test generic object
+ specifiers
+In-Reply-To: <765d7240311e145b43bbe40f00436f3854a4a177.1710183362.git.gitgitgadget@gmail.com>
+	(Victoria Dye via GitGitGadget's message of "Mon, 11 Mar 2024 18:56:00
+	+0000")
+References: <pull.1689.git.1710183362.gitgitgadget@gmail.com>
+	<765d7240311e145b43bbe40f00436f3854a4a177.1710183362.git.gitgitgadget@gmail.com>
+Date: Mon, 11 Mar 2024 14:54:15 -0700
+Message-ID: <xmqqle6oo2ns.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,42 +57,57 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E87A01FC-DFF1-11EE-8A7E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-In the last chapter of this document, pipes are used in commands to
-filter out the first/last trace messages.  But according to git(1),
-trace messages are sent to stderr if GIT_TRACE is set to '1', so those
-commands do not produce the described results.
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Fix this by using the operator '|&' to additionally connect stderr to
-stdin of the latter command.
+> From: Victoria Dye <vdye@github.com>
+>
+> Update the 'run_tests' test wrapper so that the first argument may refer to
+> any specifier that uniquely identifies an object (e.g. a ref name,
+> '<OID>:<path>', '<OID>^{<type>}', etc.), rather than only a full object ID.
+> Also, add a test that uses a non-OID identifier, ensuring appropriate
+> parsing in 'cat-file'.
+>
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t1006-cat-file.sh | 46 +++++++++++++++++++++++----------------------
+>  1 file changed, 24 insertions(+), 22 deletions(-)
+>
+> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+> index e0c6482797e..ac1f754ee32 100755
+> --- a/t/t1006-cat-file.sh
+> +++ b/t/t1006-cat-file.sh
+> @@ -112,65 +112,66 @@ strlen () {
+>  
+>  run_tests () {
+>      type=$1
+> -    sha1=$2
+> +    object_name=$2
+> +    oid=$(git rev-parse --verify $object_name)
+>      size=$3
+>      content=$4
+>      pretty_content=$5
+>  
+> -    batch_output="$sha1 $type $size
+> +    batch_output="$oid $type $size
+>  $content"
 
-Signed-off-by: Dirk Gouders <dirk@gouders.net>
----
- Documentation/MyFirstObjectWalk.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+As "object_name" is now allowed to be any name in the 'extended
+SHA-1' syntax (cf. Documentation/revisions.txt), you should be a bit
+more careful in quoting.
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index 981dbf917b..b96724c4d7 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -847,7 +847,7 @@ those lines without having to recompile.
- With only that change, run again (but save yourself some scrollback):
- 
- ----
--$ GIT_TRACE=1 ./bin-wrappers/git walken | head -n 10
-+$ GIT_TRACE=1 ./bin-wrappers/git walken |& head -n 10
- ----
- 
- Take a look at the top commit with `git show` and the object ID you printed; it
-@@ -875,7 +875,7 @@ of the first handful:
- 
- ----
- $ make
--$ GIT_TRACE=1 ./bin-wrappers git walken | tail -n 10
-+$ GIT_TRACE=1 ./bin-wrappers git walken |& tail -n 10
- ----
- 
- The last commit object given should have the same OID as the one we saw at the
--- 
-2.43.0
+	oid=$(git rev-parse --verify "$object_name")
 
+>      test_expect_success "$type exists" '
+> -	git cat-file -e $sha1
+> +	git cat-file -e $object_name
+>      '
+
+Likewise.  You may not currently use a path with SP in it to name a
+tree object, e.g., "HEAD:Read Me.txt", but protecting against such a
+pathname is a cheap investment for futureproofing.
+
+Looking good otherwise.  Thanks.
