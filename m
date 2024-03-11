@@ -1,76 +1,79 @@
-Received: from ra.horus-it.com (ra.horus-it.com [65.108.3.114])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4726254BFE
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 19:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.108.3.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40945732B
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 19:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710183888; cv=none; b=tfK6mPXpIpg3xmPWno21zuJ2FdXRsZssYGd4PJ+JH+bZuS89o9exE1fAPHD2tkbofCanZ36H1o/7o0uhurWQMKcbnBxre+Nf+4JX8uq6p0bM08aE9T59ggNy56CxvzXeJ3AVnfDGur68Gc0d6yUpZlsffHJj2cXBTYAtBAL0GEo=
+	t=1710184649; cv=none; b=GU9Q1BaI2wlBjp4NJawRU6BiF7jPJCdqkBtcoxCmWF8xDLumPlgVR+FCO3n15Vln/S0/mcHGnpz6s6R1j5Qh0MWXUmN3S6dXiK5ZQ3RjslKbOqfm7HNuHPM3hI/lhXeD6GVisdd7sjqcLWkPVz+cWpf0sjbS/wMEHlba7Q6jyDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710183888; c=relaxed/simple;
-	bh=Ii2C6BFl89d1B/SxaVicJQps577hFFypF+udcq1KrxA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GAgtObL37KybTVhp84zXBslfYJZR+6VNwZBgLTljEpg2kmh+Sk1UlFhzYT1kSom8AOFy6FkBsoooEUy3hN475D1PAPgnV0yPVQpF1paf1xdZi7+IdKRUkLBcGS+U/dan2pN3SgprBVCle+OswafVr71SlyPJ7kb3U89R/YKnoEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de; spf=pass smtp.mailfrom=seichter.de; dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b=fvITXVoE; arc=none smtp.client-ip=65.108.3.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seichter.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b="fvITXVoE"
-Received: from localhost (localhost [127.0.0.1])
-	by ra.horus-it.com (Postfix) with ESMTP id 6886BBE006F;
-	Mon, 11 Mar 2024 20:04:41 +0100 (CET)
-X-Virus-Scanned: at horus-it.com
-Received: from [IPV6:2003:e2:d73d:4900:956c:99cf:bf79:af42] (p200300e2d73d4900956c99cfbf79af42.dip0.t-ipconnect.de [IPv6:2003:e2:d73d:4900:956c:99cf:bf79:af42])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
-	(Client CN "Ralph Seichter", Issuer "HORUS-IT Ralph Seichter - Primary Client CA" (verified OK))
-	by ra.horus-it.com (Postfix) with ESMTPSA id 151EBBE003A;
-	Mon, 11 Mar 2024 20:04:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seichter.de; s=k23;
-	t=1710183881; bh=Ii2C6BFl89d1B/SxaVicJQps577hFFypF+udcq1KrxA=;
-	h=Message-ID:Date:User-Agent:Subject:Content-Language:To:References:
-	 From:In-Reply-To:Content-Type;
-	b=fvITXVoE96/suHHIhQwJMZgoyEbLWaJEDq3cjzOjGjoMYmbOQA3H2ZzCLZL8U8MER
-	 Nl2pescODh5JmJt1H8Jj+Q0yCcilqi1LOMh3KwWRng4VdXsXW+jMJSQz7xxKy9Aq8+
-	 MXvd1eaEpJQsfdnTrKg08pPJnr8FzPv4sRrXdegX6FsvaHnFMMVXKsWdYec/hOgVDm
-	 /tTsA5ULNZfED0vl9CT2XiRMOzm/lp1qeW0QiwY5mj2T2sQvmfm6zUDIL0QTUtCdUm
-	 lqivErNU89IhXqbWkhCVPfIuEGGhhM/GFyFCyHpPq8SJZ93MlwbYae9byap0G6gu9X
-	 m9yF1pbwQeChg==
-Message-ID: <e645729b-a605-43b7-83fa-18fdec282b42@seichter.de>
-Date: Mon, 11 Mar 2024 20:04:42 +0100
+	s=arc-20240116; t=1710184649; c=relaxed/simple;
+	bh=O/XlhN1T7uo9ADyrkIUy1H498ZEIFrg4zfhmMWPO9V0=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T/rlaMOBG1KZz1uPJFzkDXeiZioPRUqgRTeRx6tl1v3qatoDkqwzmibj3jyt9WjYbIZkq2GBT9vEp1dy/ohPuM0/Ewknyyo3Re+u3XlUUTNAG11c+2uN4yMTV9kKuSjS/tADLZos9ZqTg2YQ/+IOnPA6DLKrU6aqUNCIwgSIC98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 42BJHAVr1238332
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Mar 2024 19:17:11 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Ralph Seichter'" <github@seichter.de>,
+        "'Dragan Simic'" <dsimic@manjaro.org>
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Ralph Seichter via GitGitGadget'" <gitgitgadget@gmail.com>,
+        <git@vger.kernel.org>
+References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com> <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com> <xmqqy1apudvv.fsf@gitster.g> <5eff951e815e2fdab3834c4aa4160ed8@manjaro.org> <ba6d65ca-8ae2-4d93-a5a5-e0b60768c302@seichter.de> <265e5b2d352c34dfe0625904b3356000@manjaro.org> <277b3187-f793-4782-aa18-50bc15febe9a@seichter.de>
+In-Reply-To: <277b3187-f793-4782-aa18-50bc15febe9a@seichter.de>
+Subject: RE: [PATCH v2] config: add --comment option to add a comment
+Date: Mon, 11 Mar 2024 15:17:05 -0400
+Organization: Nexbridge Inc.
+Message-ID: <0b9a01da73e8$b7cd8f80$2768ae80$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] config: add --comment option to add a comment
-Content-Language: en-GB
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, rsbecker@nexbridge.com
-References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
- <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
- <xmqqy1apudvv.fsf@gitster.g>
- <9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de>
- <52cbdb9d1cbdb254dfdac467711becbf@manjaro.org>
-From: Ralph Seichter <github@seichter.de>
-In-Reply-To: <52cbdb9d1cbdb254dfdac467711becbf@manjaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQFlUIbffV0Kx6ugRLQuqCoXSigUjAIBeUnZAda4N5oBcGPiHAGhABIFAYNf9/gBy8wZUrHLaSXw
 
-* Dragan Simic:
+On Monday, March 11, 2024 2:57 PM, Ralph Seichter wrote:
+>Subject: Re: [PATCH v2] config: add --comment option to add a comment
+>
+>* Dragan Simic:
+>
+> > I mean, perhaps the whole thing with the tab characters may not be  =
+> the right example, but I just wanted to point out that the
+>more  > major an open-source project is, the more discussion is often  =
+> required.
+>
+>Oh, I have no qualms discussing things, but over the last 40+ years, =
+nothing good has ever come from debating the pros and cons of
+>tabs and spaces. At least that's my personal experience.
 
- > Perhaps that should be documented, so the users know what to expect
- > and how to ensure extra spacing, if they desire so.
+My take would be that all whitespace is ignored, but if you want a tab =
+or other character in a value, be explicit about it:
 
-Yup, better to be explicit than implicit. By the way: When it comes to
-my proposed patch, I am having small difficulties finding a balance
-between documenting things thoroughly and being accused of producing
-walls of text. ;-)
+	variable =3D "value\ts" # comment
 
--Ralph
+where all whitespace and comments are dropped from the parse to be =
+functionally equivalent to
+
+variable=3Dvalue(TAB)s
+
+when processing. Implicit quoting arbitrary whitespace can be =
+interpreted in an ambiguous way. That's basically what the C parser =
+does.
+
+--Randall
+
 
