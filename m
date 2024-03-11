@@ -1,143 +1,83 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4610A38F87
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 17:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8068B3C46B
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 17:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710176446; cv=none; b=G5YJ0KDLDBkru6jenzAfjruSC4ONOTudLdTeRbAfBKTjrpJzRZ/C1qQXNYjIxo9ms445ANvQq4/PUOvEpQbttNXdVR5dXRvimMiIdv3lPXgagTHAqO1b4XaL1d2CGdXh2e4uDjRZo9whkiGWzcafjJqGd2wsm8x+7I2hnxmQ2zs=
+	t=1710176747; cv=none; b=m1Q113vz8iX7i6/yp4Lgk2wCO7R7NIHM8ge0vW8jYJoJHYcihO3adIz7artF/FOQc3k6QIXhIoTukiZNgi9+3/fwbNXSPa4yiewWkW85g47scQbGrwfgY9CBX7q22dkdKkz/KyX+gE6a09EJPJv1sLo2IbvYIy/hUPusfTKqC4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710176446; c=relaxed/simple;
-	bh=mgPr23YbXwQGChmeKHE24ik/tOjnQaDvN4EXdhCRHtc=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=LDlnfNDtBxhuwEbfs3Icvgfg6zBsMiN1l9JwFeD+OoyDqN0CLkSSBDnyDPIo0Z4M40WeoNXJtPgy0jOjh2RhAZZdroyOY3jtTjbhTt9NE84u3kkLawK66Mn+ArenI+sB4nV8xh0lajs8I3vhiJOrsF3DD66FHm7uI2hPBirk5Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=YeHGCN8W; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710176747; c=relaxed/simple;
+	bh=UvYnvNCFH4DPRWR/HLgJaL1CJiT1Va1Rhm8PzmaMFFM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KgMy5nOGSBQ6r7Fn9xNg7hSML6U4OTRkZXZbu2t5zWAjNvFy6kNGhyZlRwgE3Qjc3UO+QLvC0XWZwNp70PcoZipXbSVn2Z5/kblImSWuhaFzcmtGqY5FmjH8xidlyIdJzE/l3A/fn3LxKMr3P0I2WWNKh2R8n7AHY/BlI4O/UsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IddavwKJ; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="YeHGCN8W"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IddavwKJ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0EEA025C69;
+	Mon, 11 Mar 2024 13:05:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=UvYnvNCFH4DP
+	RWR/HLgJaL1CJiT1Va1Rhm8PzmaMFFM=; b=IddavwKJ48Dp3Iim/inPG3eXx+Tt
+	f7lk3GfXjn92xEoEIpygz/LgJaKD2+IFlT4GyD7kRe6SFsE0FpPWTQZamg9pWGJv
+	7KDDcj3Kt33xdvmWJj9GQ8FEUWO3YjX8jHxZ257b5ovw0yiJL/dK3s/+dPjabQog
+	x6WEoPPJYAWzHdQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 076A525C68;
+	Mon, 11 Mar 2024 13:05:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8A24525C66;
+	Mon, 11 Mar 2024 13:05:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 6/6] doc: git-clone: format placeholders
+In-Reply-To: <9a949d98a3ec8b7730b5a6b66e8ef8bb62cd06aa.1710097830.git.gitgitgadget@gmail.com>
+	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Sun,
+ 10 Mar 2024
+	19:10:30 +0000")
+References: <pull.1687.git.1710097830.gitgitgadget@gmail.com>
+	<9a949d98a3ec8b7730b5a6b66e8ef8bb62cd06aa.1710097830.git.gitgitgadget@gmail.com>
+Date: Mon, 11 Mar 2024 10:05:39 -0700
+Message-ID: <xmqqbk7ku2ak.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710176440;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=A5/fVL+gwJk+Ki93KHiS4tmmEZV+QQ9oAVkPjwYcySs=;
-	b=YeHGCN8WXsnRDJmwmdxBAOCh8VyaccLKWA3cFQPP923sw000/0BAR/5Ur/YY+QsUxHT6RQ
-	+7PxEtNz9TzlwK1aBUJpFgOPK+PM5/qb4kgGYVE44Vsf62VCjPeYAUGmpiR+xIm3fYeqX3
-	dxExq6QTAVKLnFOwohZb2KdYj8OnMO4Jdf4QWA8hjIy5U8vWaWfsFsZgy/XdWyRI6X1W0I
-	8zzT4yQgXbRvUGDc7fxGwewBiIXhJgUNACRDajOKI8vF/RwvtO87TdxXOoAyRIB3+rUFY9
-	amup5JBJKlcfkwg/elXB9DxGHl12dPCGn/yM1fOzdYAYIQwXeoCzzNyNh0w3YA==
-Date: Mon, 11 Mar 2024 18:00:40 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: rsbecker@nexbridge.com
-Cc: 'Junio C Hamano' <gitster@pobox.com>, 'Ralph Seichter via GitGitGadget'
- <gitgitgadget@gmail.com>, git@vger.kernel.org, 'Ralph Seichter'
- <github@seichter.de>
-Subject: Re: [PATCH v2] config: add --comment option to add a comment
-In-Reply-To: <0b8701da73d3$fa0f2080$ee2d6180$@nexbridge.com>
-References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
- <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
- <xmqqy1apudvv.fsf@gitster.g> <5eff951e815e2fdab3834c4aa4160ed8@manjaro.org>
- <0b8701da73d3$fa0f2080$ee2d6180$@nexbridge.com>
-Message-ID: <e7fe2e229f0b5c76fdec1d789bfecd6e@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 975B0CB2-DFC9-11EE-8BDC-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-03-11 17:48, rsbecker@nexbridge.com wrote:
-> On Monday, March 11, 2024 12:17 PM, Dragan Simic wrote:
->> Subject: Re: [PATCH v2] config: add --comment option to add a comment
->> 
->> On 2024-03-11 13:55, Junio C Hamano wrote:
->>> "Ralph Seichter via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>> 
->>>> From: Ralph Seichter <github@seichter.de>
->>>> 
->>>> Introduce the ability to append comments to modifications made using
->>>> git-config. Example usage:
->>>> 
->>>>   git config --comment "changed via script" \
->>>>     --add safe.directory /home/alice/repo.git
->>>> 
->>>> based on the proposed patch, the output produced is:
->>>> 
->>>>   [safe]
->>>>     directory = /home/alice/repo.git #changed via script
->>> 
->>> For readability, you probably would want to have a SP before the 
->>> given
->>> string, i.e.,
->>> 
->>> 	variable = "value" # message comes here
->> 
->> Let me interject...  Perhaps also a tab character before the "# 
->> comment",
-> instead of a space character.  That would result in even better
->> readability.
-> 
-> Does adding a tab following data change the parse semantics of 
-> .gitconfig?
-> My naïve understanding is that .gitconfig follows a basic rule of 
-> leading
-> tab within a section, followed by text. Is there a formal syntax 
-> description
-> of what valid input is? The value does not need to be quoted, so what 
-> does
-> the following actually resolve to:
-> 
-> (TAB)variable = value(TAB)# comment.
-> 
-> Does variable mean value or value(TAB)? Obviously TABS should be 
-> correctly
-> be interpreted as whitespace to be ignored. However, what about:
-> 
-> (TAB)variable = value(TAB)s(TAB) # comment.
-> 
-> Does that mean value(TAB)s, value(TAB)s(TAB), value s, value s(TAB), 
-> values?
+"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It should mean "value(TAB)s", according to git-config(1).
+>  --bare::
+>  	Make a 'bare' Git repository.  That is, instead of
+> -	creating `<directory>` and placing the administrative
+> -	files in `<directory>/.git`, make the `<directory>`
+> +	creating _<directory>_ and placing the administrative
+> +	files in `<directory>/.git`, make the _<directory>_
 
-> The definition according to git-config is
-> 
-> "The syntax is fairly flexible and permissive; whitespaces are mostly
-> ignored. The # and ; characters begin comments to the end of line, 
-> blank
-> lines are ignored."
+It is hard to decide what the right thing to do is to the earlier
+one on this line, isn't it?  It is not fully verbatim, even though
+its "/.git" part is.
 
-I believe these two quotations from git-config(1) should make it more 
-clear:
+Everything else in this entire series looked good to my cursory
+read, but I'd appreciate extra sets of eyes, of course.
 
-     A line that defines a value can be continued to the next line by 
-ending
-     it with a \; the backslash and the end-of-line are stripped. Leading
-     whitespaces after name =, the remainder of the line after the first
-     comment character # or ;, and trailing whitespaces of the line are
-     discarded unless they are enclosed in double quotes.  Internal
-     whitespaces within the value are retained verbatim.
+Thanks for working on this topic.
 
-     The following escape sequences (beside \" and \\) are recognized: \n
-     for newline character (NL), \t for horizontal tabulation (HT, TAB) 
-and
-     \b for backspace (BS). Other char escape sequences (including octal
-     escape sequences) are invalid.
-
-To me, all that indicates that trailing tab characters are stripped, 
-but...
-
-> "Mostly" does not make me comfortable that this is formally allowed or
-> disallowed or ignored. I would suggest that this change needs to 
-> formalize
-> the grammar on that documentation page for clarity.
-
-... I do agree that it should be clarified further in the man page.
