@@ -1,105 +1,164 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1677543AAB
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900D843AAB
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710192967; cv=none; b=K3fQrSbYtYzAcdoMFvmlR90579botsr84T9vOQ5Vp5DrixNkE0aJeY4/trAJZ7t7elOy/DysK0wagg/EfHHMljkMFLWvxHkC1KtlFZLrOcueWvKOSaoVq2PTAiORwlE3KZoTYTL4lbLKqlaAdtEYxO4jBpiMmnMtSCCfhDrhUYw=
+	t=1710193179; cv=none; b=qu3axNa/IsiL61w1vmCyeZLbqvf0VihuVsX3a1zBrFizr0nYd3rM4vqox1ehK7O9ijMY8k967IfX48DbP6V0v2cOyTCyRR3UFAe/QNvHmVytMFZPtPW29fRikd/RqIoBW9fj+wL/NFtcv1337J/StV/WGy5Z+Mj1VM9Y/r8HBcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710192967; c=relaxed/simple;
-	bh=xWsWDpFdPQF9PG8JeZvhsLe2VGbkioh9o1Q1ElPHwn8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rfp1E347XXIEWZgigTvoc5SAc5lF+TKuVt/RsQcoQ2NnrNHaFaq4FmqvLq4p3ldbq3mxC/oDfqZCSAketrtEN87LCOWF7w55ZcWZvrFB51puyWRT55D8jdsWgIamQIEg/3ip7BYa7UexqkC7YI9hZMmcbink7iHWg44lQ5dbDYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yokpMZm+; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yokpMZm+"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id DA9475B3D3;
-	Mon, 11 Mar 2024 21:35:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1710192957;
-	bh=xWsWDpFdPQF9PG8JeZvhsLe2VGbkioh9o1Q1ElPHwn8=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=yokpMZm+Y24HcYxe4n9JyZe2D4V5BCTwXahfFbpMcAW4RphlNjdY/tT+1EIoMY0dZ
-	 MKpARF7X9KWmHGl5RhfgUCmhru++oiAQ9STAqdEgFZVUUDoaTzX7h5Iei6nCglZjOQ
-	 GJfjhICM/rh9boLDO6jRP4M47sOUDgZDijaQRJl5QY1rpbKSueyEbszofsTVeIVdd7
-	 Lw/zHkM4/gS4bJzu9dd0cc2Gka4HNS4S00oP1Guvo3v9nW7yXdyTQZif/TUt7iDxdl
-	 Vhu1Xn9MLAm4uWF5qS7Bj+9TCK29jFUpadEpmwixXOUjMyjSIsOB0YYdYgojv7M3pQ
-	 XElWDA1X1likJEhTLB3Erm74xm04TNV6avq1Qm843MtalH+kMwFK4X1p2G76Ig7aKB
-	 s8KSjrRBea/3DkHxSkfApJ3tjPFxJ2Rttk1YfidDvSWoGJMHFRS+Y0vh+UO4Wo6FJx
-	 QrQruA4sttT7q2s5SqXQ6O/S4v4vkdIo3pJ22pQanYshURRhkhj
-Date: Mon, 11 Mar 2024 21:35:56 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Philemon GIRAUD <philemon.giraud@metrologic.group>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git bug report CDPATH completion
-Message-ID: <Ze95PCbwn9IE99Kb@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Philemon GIRAUD <philemon.giraud@metrologic.group>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <AM6PR10MB28087CFD43779194563F558492242@AM6PR10MB2808.EURPRD10.PROD.OUTLOOK.COM>
+	s=arc-20240116; t=1710193179; c=relaxed/simple;
+	bh=8kQTIy7aTZlhuMWulhDYxtGLUNyZUEjDughHoQMD0Rw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hM1uUsdVQzmMkyzhJ4lmwfjvFC8McNjy9StfLaIxpeETvuzII1Ld1E67aDEXr9NaprVTkwUVz6iGuZDpZohUqReK6xgkvGzB3F4TPMnYZ+kpd6SM2oXrm6q0eInScAt5aFDagVtJ8fATyxfHYDK2881H9qeSd+c0N52CDUS1Xio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+From: Sam James <sam@gentoo.org>
+To: git@vger.kernel.org
+Cc: Sam James <sam@gentoo.org>
+Subject: [PATCH v3 0/2] diff: copies-harder support
+Date: Mon, 11 Mar 2024 21:38:52 +0000
+Message-ID: <20240311213928.1872437-1-sam@gentoo.org>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="r6mTRG/ha1OY6ORt"
-Content-Disposition: inline
-In-Reply-To: <AM6PR10MB28087CFD43779194563F558492242@AM6PR10MB2808.EURPRD10.PROD.OUTLOOK.COM>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Transfer-Encoding: 8bit
 
+range-diff:
+```
+1:  4ad89a3f1a ! 1:  879565c99a diff: implement config.diff.renames=copies-harder
+    @@ Commit message
+         This allows specifying that 'git log -p', 'git diff', etc should always act
+         as if '-C --find-copies-harder' was passed.
 
---r6mTRG/ha1OY6ORt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    -    I've found this especially useful for certain types of repository (like
+    +    It has proven this especially useful for certain types of repository (like
+         Gentoo's ebuild repositories) because files are often copies of a previous
+    -    version.
+    +    version:
+    +
+    +    Suppose a directory 'sys-devel/gcc' contains recipes for building
+    +    GCC, with one file for each supported upstream branch:
+    +      gcc-13.x.build.recipe
+    +      gcc-12.x.build.recipe
+    +      gcc-11.x.build.recipe
+    +      gcc-10.x.build.recipe
+    +
+    +    gcc-13.x.build.recipe was started as a copy of gcc-12.x.build.recipe
+    +    (which was started as a copy of gcc-11.x.build.recipe, etc.). Previous versions
+    +    are kept around to support parallel installation of multiple versions.
+    +
+    +    Being able to easily observe the diff relative to other recipes within the
+    +    directory has been a quality of life improvement for such repo layouts.
 
-On 2024-03-11 at 14:24:24, Philemon GIRAUD wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
+         Signed-off-by: Sam James <sam@gentoo.org>
 
-Hey,
+    @@ Documentation/config/diff.txt: diff.renames::
+      	rename detection is disabled. If set to "true", basic rename
+      	detection is enabled.  If set to "copies" or "copy", Git will
+     -	detect copies, as well.  Defaults to true.  Note that this
+    -+	detect copies, as well.  If set to "copies-harder", Git will try harder
+    -+	to detect copies.  Defaults to true.  Note that this
+    - 	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
+    - 	linkgit:git-log[1], and not lower level commands such as
+    +-	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
+    +-	linkgit:git-log[1], and not lower level commands such as
+    ++	detect copies, as well.  If set to "copies-harder", Git will spend extra
+    ++	cycles to find more copies even in unmodified paths, see
+    ++	'--find-copies-harder' in linkgit:git-diff[1]. Defaults to true.
+    ++	Note that this affects only 'git diff' Porcelain like linkgit:git-diff[1]
+    ++	and linkgit:git-log[1], and not lower level commands such as
+      	linkgit:git-diff-files[1].
+    +
+    + diff.suppressBlankEmpty::
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> This bug is about the "git bash" that comes with git for windows
-> I added "export CDPATH=3D.:/c/some/path" to my .bashrc
->=20
-> What did you expect to happen? (Expected behavior)
-> Given that the folder "/c/some/path/myfolder" exists,
-> I expected to type (from any directory) "cd myf<TAB>" add that the autoco=
-mplete would complete to "cd myfolder"
+      ## Documentation/config/status.txt ##
+     @@ Documentation/config/status.txt: status.renames::
+    @@ Documentation/config/status.txt: status.renames::
+      	linkgit:git-commit[1] .  If set to "false", rename detection is
+      	disabled. If set to "true", basic rename detection is enabled.
+     -	If set to "copies" or "copy", Git will detect copies, as well.
+    -+	If set to "copies" or "copy", Git will detect copies, as well.  If
+    -+	set to "copies-harder", Git will try harder to detect copies.
+    ++	If set to "copies" or "copy", Git will detect copies, as well.  If set
+    ++	to "copies-harder", Git will spend extra cycles to find more copies even
+    ++	in unmodified paths, see '--find-copies-harder' in linkgit:git-diff[1].
+      	Defaults to the value of diff.renames.
 
-This mailing list is for the Git project, which deals only with source
-distributions of Git and doesn't distribute any associated software
-(outside of contrib), such as bash.  You're reporting a problem with Git
-for Windows, which should be reported to
-https://github.com/git-for-windows/git/issues/.  Do be sure to search
-first in case this has already been reported.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+      status.showStash::
+    @@ diff.c: int git_config_rename(const char *var, const char *value)
+     +	if (!strcasecmp(value, "copies-harder"))
+     +		return DIFF_DETECT_COPY_HARDER;
+      	if (!strcasecmp(value, "copies") || !strcasecmp(value, "copy"))
+    --		return  DIFF_DETECT_COPY;
+    -+		return DIFF_DETECT_COPY;
+    -+
+    + 		return  DIFF_DETECT_COPY;
+      	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
+    - }
+    -
+     @@ diff.c: void diff_setup_done(struct diff_options *options)
+      	else
+      		options->flags.diff_from_contents = 0;
 
---r6mTRG/ha1OY6ORt
-Content-Type: application/pgp-signature; name="signature.asc"
+     -	if (options->flags.find_copies_harder)
+     +	/* Just fold this in as it makes the patch-to-git smaller */
+    -+	if (options->flags.find_copies_harder || options->detect_rename == DIFF_DETECT_COPY_HARDER) {
+    ++	if (options->flags.find_copies_harder ||
+    ++	    options->detect_rename == DIFF_DETECT_COPY_HARDER) {
+     +		options->flags.find_copies_harder = 1;
+      		options->detect_rename = DIFF_DETECT_COPY;
+     +	}
+    @@ diff.c: static int diff_opt_find_copies(const struct option *opt,
+      		return error(_("invalid argument to %s"), opt->long_name);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+     -	if (options->detect_rename == DIFF_DETECT_COPY)
+    -+	if (options->detect_rename == DIFF_DETECT_COPY || options->detect_rename == DIFF_DETECT_COPY_HARDER)
+    ++	if (options->detect_rename == DIFF_DETECT_COPY ||
+    ++	    options->detect_rename == DIFF_DETECT_COPY_HARDER)
+      		options->flags.find_copies_harder = 1;
+      	else
+      		options->detect_rename = DIFF_DETECT_COPY;
+    @@ diffcore-rename.c: static int find_identical_files(struct hashmap *srcs,
+      		/* Give higher scores to sources that haven't been used already */
+      		score = !source->rename_used;
+     -		if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY)
+    -+		if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY && options->detect_rename != DIFF_DETECT_COPY_HARDER)
+    ++		if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY &&
+    ++		    options->detect_rename != DIFF_DETECT_COPY_HARDER)
+      			continue;
+      		score += basename_same(source, target);
+      		if (score > best_score) {
+    @@ diffcore-rename.c: void diffcore_rename_extended(struct diff_options *options,
+      	info.setup = 0;
+      	assert(!dir_rename_count || strmap_empty(dir_rename_count));
+     -	want_copies = (detect_rename == DIFF_DETECT_COPY);
+    -+	want_copies = (detect_rename == DIFF_DETECT_COPY || detect_rename == DIFF_DETECT_COPY_HARDER);
+    ++	want_copies = (detect_rename == DIFF_DETECT_COPY ||
+    ++		       detect_rename == DIFF_DETECT_COPY_HARDER);
+      	if (dirs_removed && (break_idx || want_copies))
+      		BUG("dirs_removed incompatible with break/copy detection");
+      	if (break_idx && relevant_sources)
+-:  ---------- > 2:  eda1e07ac2 diff: whitespace cleanup
+```
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZe95OwAKCRB8DEliiIei
-gZHXAP93rh8d3PmiTEZp5CYaOjlGrz5v2tHGjTqDPN+4Zr9Z3wEA3UfNu8LWqbf+
-TsZMaLa/C3XXxKSuClg3LkYiINv4iQ4=
-=QDDp
------END PGP SIGNATURE-----
+Sam James (2):
+  diff: implement config.diff.renames=copies-harder
+  diff: whitespace cleanup
 
---r6mTRG/ha1OY6ORt--
+ Documentation/config/diff.txt   |  8 +++++---
+ Documentation/config/status.txt |  4 +++-
+ diff.c                          | 14 +++++++++++---
+ diff.h                          |  1 +
+ diffcore-rename.c               |  6 ++++--
+ merge-ort.c                     |  2 +-
+ merge-recursive.c               |  2 +-
+ 7 files changed, 26 insertions(+), 11 deletions(-)
+
+-- 
+2.44.0
+
