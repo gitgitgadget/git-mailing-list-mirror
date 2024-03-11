@@ -1,117 +1,169 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F52107A6
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 10:29:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD7A3984A
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 10:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710152980; cv=none; b=iJ1p7M6MTilcm7Gpbr7bhbuPk+X+p/F2SmxAbDkdZzJwgPoupoA+MB4cHUtyevfDOj7JzTEgJmACSOtxS1A3UClvPW5wBuj1V9+1/ycGTPx1JfgZQtMmwoCgll0r29EdUC42r5K2ATDi0gDBfpMz3t3T8C5L9ViF6CNsdbHScME=
+	t=1710154465; cv=none; b=ivJATyHdxj6l5BYkG0TxjN2TPB5GHvg19LPhLat/ApUDyHCcBFWgpMaTTryLP7zG+RW5LO8qz9ap2v90H/3kvPPl+gC2frwSDcRf1GWmi/WO15H6XygmbPOSeRpCw/BkkBHJ//C+4sB3tgE2xztxRelxrVYkP1l1oc09Bw38ats=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710152980; c=relaxed/simple;
-	bh=khXFiOrpPrVYrnsH0bXgn52W2wYtuNTCspiF06W/C2g=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=J6UWzp1XvWYYrDkzHQLGQss2jAfvzsJpSfMlyzQsA6Q+rr+39srK1uUA4lHTVWxSyzRiU55mF0tI+HsiZ+cCoWbhfIz/R3YwbtexFitMA95t0lV3i0YXGsbDd9MvZGKLX6/5KZ1E/TSc4MSHU8vyWAFkuSaZEHBtUJUQ/lFQduY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=PkSTjwdy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HelwT41y; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1710154465; c=relaxed/simple;
+	bh=6vg2/ewPZn1CQYkOvCJ0yIuEjKfIpoNismAvDRNbsi8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DrS0EMyJOg1P5bCLL9l/8g+qIem4gbBsRnLVkaRvZC0h/XIDRSMVkDTihNw9zVpxoS0LRltsW8Xz7FMJK5/wrhvbxbZRAhQQ80lyLUYbrtkWe5qa0RLr6zU/+eOvmz34pMZB9ka0OGPL/PmgJs3r25fql55GaKYqrsCSVF57bJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iAaKc6XC; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PkSTjwdy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HelwT41y"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E2BC011400D1;
-	Mon, 11 Mar 2024 06:29:36 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Mon, 11 Mar 2024 06:29:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1710152976; x=1710239376; bh=K3xRLU8u0ZqaTxMVYUlytQXiIZrURsAE
-	cDaaSQw5dxE=; b=PkSTjwdy9EM6T9ZVpj/TxKhcr8l3R5iwftDRJkM5YUooG+Yg
-	i7p3zdwNL2yQQkDCIG2gAD5vN9gscisenBve69FV7NLb9AuZNYi+/CybdJu09hXu
-	oojFcQAvQvRZPo4UXcXdoT4mjah4lxxaHLzjWbwLrrr54xAQPnmxZRMyvLVprXIT
-	bxRj3IiivxQnL345o01n0D9ZpQrQr2t3PVZr+Zjx4MRQi/zwfOUNRFQ5Ot9L5uX7
-	/xg3ruLX2CrRBKKRxW1fookUplTpXv6H3MaJTkbROzJZtUpekL7+zb2qImwDBcRc
-	fB3yRONtJ8CkUSD4zGSqjnTkH+kEdrRj92/Krw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710152976; x=
-	1710239376; bh=K3xRLU8u0ZqaTxMVYUlytQXiIZrURsAEcDaaSQw5dxE=; b=H
-	elwT41yTjgTRmq+0tJIq+oLcsmRGlPhDpMncMUCr7OkRABBgNJFbuXIEe6dy9+hD
-	/hbnfSy70a4aSpTpjVqyGkTdSgS/IO+eOgqtBQfqwiZBafXOOCB4MROljcUIcx1N
-	SKus5rYL/7tMdNY/crSb8C7RCBDBvxQu925laXvyHBZGkrkH5dM4z/n/2ZwqIRS1
-	rgiQTPO4oi1iVp9iNUMU1DggOrhA/5C8wwH0+GQj51/mKcnuS5yRLPJ5CJAK/rSo
-	fbzNNRG1PHw11PKFP5C8TyW9Lo9wup/a/2QG6ra3LHEMIzdNd4dIelQIsYu3h6LL
-	26h0q9DOyGrioZn2fDLNw==
-X-ME-Sender: <xms:EN3uZQC9PUHVy1q5yf19JIqV-p2M_UlBkQnY8BzUaXx3DyQ7KlrPxa8>
-    <xme:EN3uZSiVDcNqkWZHWMStr5G8nDfQncRowQ97U6Zd83PkPWIADUZp1HxlSZXri7DFZ
-    -haspO8Z3n_TlFaWQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedugdduiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdekudevtdfhleeuveehffehvdevieeu
-    ieehheduheevgeeuteetuddutdefleeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:EN3uZTnKCmkOGFZ9FysKSCu8CKiSYzhavzZ74L9JNjm3MziCCeKS9w>
-    <xmx:EN3uZWy8toor3yon52DE0jCZopcVdAFUru2w-BEqcQ0Enu3nRdGg3g>
-    <xmx:EN3uZVQG69TgKzEi-sl9PIBLkv7rNYpb8G77x-ax7ay43LDhai0SjQ>
-    <xmx:EN3uZUFilFuSec_Vx7ySHDTg6SL-GuKC8dXskpNixsHPmrreUo9tCA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 4BFBE15A0092; Mon, 11 Mar 2024 06:29:36 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iAaKc6XC"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41312232c7aso20625465e9.0
+        for <git@vger.kernel.org>; Mon, 11 Mar 2024 03:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710154462; x=1710759262; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=paHRc8NCrYLs5Er66X6+HQ/GyihWG7scScMi+WuCDPQ=;
+        b=iAaKc6XChogl36PZQkA3SQrg5cNdI+eYugqNRzheFaoc81le6O394i4jB490IFRr/x
+         L/UdFMD5bPEwM5tzc6Hes2aBYpf6fREoHyPFiFNb44KWtg4khhQpo169/U69vXvSPOGO
+         vmqpJoQ+zS1Ki5n0tom+b9XjhjT1gcoeMLH/dvVpZqbimp5im8zYMHJvCvj/Yfx2wuKY
+         sOrCqLBKZ67/vLLM9EC1Rxua/AuhhBuwsaLi7sKF+fyL+UtlA0sdfOwLSwxRd2sBA6uN
+         fNmVBs/uXhHddbm8pWDRuAHYPMKjvohMcDpQm52Gyd3hzkWuTnHaEhY6O62VcVK1j4KS
+         aYlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710154462; x=1710759262;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=paHRc8NCrYLs5Er66X6+HQ/GyihWG7scScMi+WuCDPQ=;
+        b=tTn4RIWWIr7VrDI3N90MMbWahW5jolmlAeqoRbgq6f5+X1mai3wFbDGqFA/nE5/hyr
+         HRyMCeL6PbvRhBQQ8MCUwttE4lxL24IZnj0UIOyIotna7G1TWO+kZ7ZF9z3dIrsq6m0w
+         3QIj07BTwJiikeFvcct0kOUxwroSZZ35UyN3+MWwkFhYXvKMvCWidMiOhlDmBP4cJ6jf
+         Wcxtol6p/7pyrYqh9kw6y6q3Rvk+4MWsJx3hCMXe/GShJaMFxx1A6M/JrgqI4EeXc+9H
+         hdG3HwuQEZ2eRI2Ke43m3y10fJSe51CvWSRR+kMTW/ZUdxL/nW4VJ2bxevBHlOoFbT7b
+         gzoA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBhowf5Hk4uOj2T1jU5OxPdhQ54ZaFFIXM0RrWbTjRySdTJo+lgZ700T0cMZgjR2YxYwcAp0w/xMd7oEPoXWfYuBBz
+X-Gm-Message-State: AOJu0Yx7aPCqFgrpDnUJaksParR7Muz7fbmCkuXuG2LXFq22OOFfMFSM
+	kdiuvjU6jIRtBh+08JRHOSOti9hFNa4CXcgousfI8z+RwGXl/tBd
+X-Google-Smtp-Source: AGHT+IERnmT9VkZOBrGpKrlIf2Kt+jJ94tF5/0YSUQ3hKkdaak5tTn620k4XX4QCHdSh1ahEfm/xHw==
+X-Received: by 2002:a05:600c:1c07:b0:412:eddd:12c1 with SMTP id j7-20020a05600c1c0700b00412eddd12c1mr5483207wms.14.1710154461752;
+        Mon, 11 Mar 2024 03:54:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443? ([2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443])
+        by smtp.gmail.com with ESMTPSA id v13-20020a05600c444d00b00413101235b0sm8790721wmn.2.2024.03.11.03.54.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Mar 2024 03:54:21 -0700 (PDT)
+Message-ID: <f06dcfad-e4b8-4cb7-8728-f5fb018f7be0@gmail.com>
+Date: Mon, 11 Mar 2024 10:54:18 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <15049e66-09b8-4baf-887d-e9118b9cd175@app.fastmail.com>
-In-Reply-To: 
- <a2ce6fd24c270fcc89439cd7d119c701dd262ec5.1710100261.git.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] builtin/am: allow disabling conflict advice
+To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ ZheNing Hu <adlternative@gmail.com>,
+ Philippe Blain <levraiphilippeblain@gmail.com>
 References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
  <pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
- <a2ce6fd24c270fcc89439cd7d119c701dd262ec5.1710100261.git.gitgitgadget@gmail.com>
-Date: Mon, 11 Mar 2024 11:29:11 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Josh Soref" <gitgitgadget@gmail.com>
-Cc: "Elijah Newren" <newren@gmail.com>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "ZheNing Hu" <adlternative@gmail.com>,
- "Philippe Blain" <levraiphilippeblain@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] sequencer: allow disabling conflict advice
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+ <3235542cc6f77779cca1aeff65236e16b0a15d76.1710100261.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <3235542cc6f77779cca1aeff65236e16b0a15d76.1710100261.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 Hi Philippe
 
-On Sun, Mar 10, 2024, at 20:51, Philippe Blain via GitGitGadget wrote:
-> diff --git a/Documentation/config/advice.txt
-> b/Documentation/config/advice.txt
-> index c7ea70f2e2e..a1178284b23 100644
-> --- a/Documentation/config/advice.txt
-> +++ b/Documentation/config/advice.txt
-> @@ -56,6 +56,8 @@ advice.*::
->  		Advice on how to set your identity configuration when
->  		your information is guessed from the system username and
->  		domain name.
-> +	mergeConflict::
-> +		Advice shown when various commands stop because of conflicts.
+On 10/03/2024 19:51, Philippe Blain via GitGitGadget wrote:
+> diff --git a/builtin/am.c b/builtin/am.c
+> index d1990d7edcb..0e97b827e4b 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1150,19 +1150,23 @@ static const char *msgnum(const struct am_state *state)
+>   static void NORETURN die_user_resolve(const struct am_state *state)
+>   {
+>   	if (state->resolvemsg) {
+> -		printf_ln("%s", state->resolvemsg);
+> +		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", state->resolvemsg);
+>   	} else {
+>   		const char *cmdline = state->interactive ? "git am -i" : "git am";
+> +		struct strbuf sb = STRBUF_INIT;
+>   
+> -		printf_ln(_("When you have resolved this problem, run \"%s --continue\"."), cmdline);
+> -		printf_ln(_("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
+> +		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\"."), cmdline);
+> +		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
 
-Given that topic kh/branch-ref-syntax-advice is in `next`, maybe this
-should be changed to =E2=80=9CShown when=E2=80=9D?[1]
+I think you need to append "\n" to the message strings here (and below) 
+to match the behavior of printf_ln().
 
-=F0=9F=94=97 1: https://lore.kernel.org/git/7017ff3fff773412e8c472d8e59a=
-132b0e8faae7.1709670287.git.code@khaugsbakk.name/
+Apart from that both patches look good to me, thanks for re-rolling. It 
+is a bit surprising that we don't need to update any rebase tests. I 
+haven't checked but I guess either we're not testing this advice when 
+rebasing or we're using a grep expression that is vague enough not to be 
+affected.
 
->  	nestedTag::
->  		Advice shown if a user attempts to recursively tag a tag object.
->  	pushAlreadyExists::
+Best Wishes
+
+Phillip
+
+>   		if (advice_enabled(ADVICE_AM_WORK_DIR) &&
+>   		    is_empty_or_missing_file(am_path(state, "patch")) &&
+>   		    !repo_index_has_changes(the_repository, NULL, NULL))
+> -			printf_ln(_("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
+> +			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
+>   
+> -		printf_ln(_("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
+> +		strbuf_addf(&sb, _("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
+> +
+> +		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", sb.buf);
+> +		strbuf_release(&sb);
+>   	}message instructing the user how to continue the operation. This message
+>   
+>   	exit(128);
+> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+> index 3b125762694..5e2b6c80eae 100755
+> --- a/t/t4150-am.sh
+> +++ b/t/t4150-am.sh
+> @@ -1224,8 +1224,8 @@ test_expect_success 'record as an empty commit when meeting e-mail message that
+>   
+>   test_expect_success 'skip an empty patch in the middle of an am session' '
+>   	git checkout empty-commit^ &&
+> -	test_must_fail git am empty-commit.patch >err &&
+> -	grep "Patch is empty." err &&
+> +	test_must_fail git am empty-commit.patch >out 2>err &&
+> +	grep "Patch is empty." out &&
+>   	grep "To record the empty patch as an empty commit, run \"git am --allow-empty\"." err &&
+>   	git am --skip &&
+>   	test_path_is_missing .git/rebase-apply &&
+> @@ -1236,8 +1236,8 @@ test_expect_success 'skip an empty patch in the middle of an am session' '
+>   
+>   test_expect_success 'record an empty patch as an empty commit in the middle of an am session' '
+>   	git checkout empty-commit^ &&
+> -	test_must_fail git am empty-commit.patch >err &&
+> -	grep "Patch is empty." err &&
+> +	test_must_fail git am empty-commit.patch >out 2>err &&
+> +	grep "Patch is empty." out &&
+>   	grep "To record the empty patch as an empty commit, run \"git am --allow-empty\"." err &&
+>   	git am --allow-empty >output &&
+>   	grep "No changes - recorded it as an empty commit." output &&
+> diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
+> index 45f1d4f95e5..661feb60709 100755
+> --- a/t/t4254-am-corrupt.sh
+> +++ b/t/t4254-am-corrupt.sh
+> @@ -59,7 +59,7 @@ test_expect_success setup '
+>   # Also, it had the unwanted side-effect of deleting f.
+>   test_expect_success 'try to apply corrupted patch' '
+>   	test_when_finished "git am --abort" &&
+> -	test_must_fail git -c advice.amWorkDir=false am bad-patch.diff 2>actual &&
+> +	test_must_fail git -c advice.amWorkDir=false -c advice.mergeConflict=false am bad-patch.diff 2>actual &&
+>   	echo "error: git diff header lacks filename information (line 4)" >expected &&
+>   	test_path_is_file f &&
+>   	test_cmp expected actual
