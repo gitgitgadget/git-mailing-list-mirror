@@ -1,113 +1,177 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA76054BE8
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 17:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A9A53E1E
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 17:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710179379; cv=none; b=W/tfBP7/Wodvjs978oftTkS2OGIatRR11ojYm3kuP+pZzPVQj8j03owg4nDglGOqR92ojK41PR+6mlVZ7xBJhkmeRaYqYyxikTOsuI+JLCDKJSrAFgEjzKzuBLzESgZKna5iOANCsxyyDtNELTq+TDbZhrvUvdlKCy88O5Sgbzs=
+	t=1710179547; cv=none; b=t4s5OCc9KC32gWIUvXpbjSWBayRGi7uu7ekjVgfioNvD/oc9iZv9Ei8tVzF2i73iXoTA610adGFcv5aVtEnuGdEsSLgxfGHPQZUFoLpKQBatsp87u0daIYZroMOQVh+OniPlcrO04jhtjAf+o89Mz8InB60vQluvRYrkpL378ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710179379; c=relaxed/simple;
-	bh=/NsRTnMWSGASwYxN1EfcGwsjuTgbggZqVsGYdj851d4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XLDLPjZgypQ35Fa6lAOd3juoLRT89tqfP+eEddTFnQsw6Ek8hwa5m00ZKhks/ATmaTr4/gu8MteXtL4/y5THTHXMf/K+BzdHie/gQxibJgvR9/zQ9UhZp8VGOtLft8Fj7bqg9ymo9rBiz4biEgUCR5p7O4fa4NjgFT6kqZNq0TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C8cGTiKU; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710179547; c=relaxed/simple;
+	bh=4F0KojLgaFVp1ABiHgAZsa4lqaVAstvNHDqF7KQSnuY=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=c+HVIfoUBhf1Er/YrFfgrTYaZZq+N4o4TFA53E42nPlXUn97LzPSl2tHu4aXVPKX2g/eZVaXgQEXg5sqRoNy0JDu7lpqgRJjtVJjIJ+Czqu/yw76gVk+FtModUa8vrCfA+n2w70og09Sf8yX/SRoktPgvPFGk8fMmM5qoPFiODc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=DdoE5lce; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C8cGTiKU"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 262292D58E;
-	Mon, 11 Mar 2024 13:49:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/NsRTnMWSGASwYxN1EfcGwsjuTgbggZqVsGYdj
-	851d4=; b=C8cGTiKUkpk4Jb61e19Oc81T5gohaecj1OVYmoYlmwjaADawrK73BN
-	lOzAsd/uHaMdTuOtCM2VkaSX7TtKcQAqULFSIx2ddLbt+f/Axuo3QAFVckPdNVut
-	wUxX0AIt7pUlhrrSWNkMDfRdN7IpmnIYDa6+a26Z64tg5fd5/tgWU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D6ED2D58D;
-	Mon, 11 Mar 2024 13:49:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B88CA2D58A;
-	Mon, 11 Mar 2024 13:49:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: phillip.wood123@gmail.com
-Cc: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  ZheNing Hu <adlternative@gmail.com>,
-  Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 2/2] builtin/am: allow disabling conflict advice
-In-Reply-To: <xmqq5xxsu1z5.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	11 Mar 2024 10:12:30 -0700")
-References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
-	<pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
-	<3235542cc6f77779cca1aeff65236e16b0a15d76.1710100261.git.gitgitgadget@gmail.com>
-	<f06dcfad-e4b8-4cb7-8728-f5fb018f7be0@gmail.com>
-	<xmqq5xxsu1z5.fsf@gitster.g>
-Date: Mon, 11 Mar 2024 10:49:32 -0700
-Message-ID: <xmqq1q8gsloz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="DdoE5lce"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B8439196-DFCF-11EE-9669-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710179542;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Pwf/FJHPMuZjEen50e5lZ228qiflOPnaCJ0TYOjg3sQ=;
+	b=DdoE5lcewRJNhtJJb/BE+LBmBBDSX52nc6xHrYfHYZ9WnFD2RqW8ZnApeCPDKcbw5dzo2i
+	TCFvUJABmq2YzMqn2p7w25eQE6hbNSEEibns7w8PWO+FcxbzYJ7h8rgDurqqRBpCsnc99u
+	RTHPLytZ4C3VdSOHhIA1giKzvNkf1PQnbLNToXTLWThORO0EKqSin0BBcWm3asQ3EhCAvz
+	41OCI+IS/rI/ihL3gMNOXvLQCJ1eGYgFP6LW2O8Ze/nV2FlscyMNK+Rn8xx4/Hs7heaz6L
+	D0Sr2riHUw0b028yVX4zsAJpqD1JvaKuut6ie0HANZ7m2yNKxUpM1ZLijSMEcQ==
+Date: Mon, 11 Mar 2024 18:52:21 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: rsbecker@nexbridge.com
+Cc: 'Junio C Hamano' <gitster@pobox.com>, 'Ralph Seichter via GitGitGadget'
+ <gitgitgadget@gmail.com>, git@vger.kernel.org, 'Ralph Seichter'
+ <github@seichter.de>
+Subject: Re: [PATCH v2] config: add --comment option to add a comment
+In-Reply-To: <e7fe2e229f0b5c76fdec1d789bfecd6e@manjaro.org>
+References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
+ <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+ <xmqqy1apudvv.fsf@gitster.g> <5eff951e815e2fdab3834c4aa4160ed8@manjaro.org>
+ <0b8701da73d3$fa0f2080$ee2d6180$@nexbridge.com>
+ <e7fe2e229f0b5c76fdec1d789bfecd6e@manjaro.org>
+Message-ID: <0f3a39ab1eeb28201b474afb7fd92c89@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2024-03-11 18:00, Dragan Simic wrote:
+> On 2024-03-11 17:48, rsbecker@nexbridge.com wrote:
+>> On Monday, March 11, 2024 12:17 PM, Dragan Simic wrote:
+>>> Subject: Re: [PATCH v2] config: add --comment option to add a comment
+>>> 
+>>> On 2024-03-11 13:55, Junio C Hamano wrote:
+>>>> "Ralph Seichter via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>> 
+>>>>> From: Ralph Seichter <github@seichter.de>
+>>>>> 
+>>>>> Introduce the ability to append comments to modifications made 
+>>>>> using
+>>>>> git-config. Example usage:
+>>>>> 
+>>>>>   git config --comment "changed via script" \
+>>>>>     --add safe.directory /home/alice/repo.git
+>>>>> 
+>>>>> based on the proposed patch, the output produced is:
+>>>>> 
+>>>>>   [safe]
+>>>>>     directory = /home/alice/repo.git #changed via script
+>>>> 
+>>>> For readability, you probably would want to have a SP before the 
+>>>> given
+>>>> string, i.e.,
+>>>> 
+>>>> 	variable = "value" # message comes here
+>>> 
+>>> Let me interject...  Perhaps also a tab character before the "# 
+>>> comment",
+>> instead of a space character.  That would result in even better
+>>> readability.
+>> 
+>> Does adding a tab following data change the parse semantics of 
+>> .gitconfig?
+>> My naïve understanding is that .gitconfig follows a basic rule of 
+>> leading
+>> tab within a section, followed by text. Is there a formal syntax 
+>> description
+>> of what valid input is? The value does not need to be quoted, so what 
+>> does
+>> the following actually resolve to:
+>> 
+>> (TAB)variable = value(TAB)# comment.
+>> 
+>> Does variable mean value or value(TAB)? Obviously TABS should be 
+>> correctly
+>> be interpreted as whitespace to be ignored. However, what about:
+>> 
+>> (TAB)variable = value(TAB)s(TAB) # comment.
+>> 
+>> Does that mean value(TAB)s, value(TAB)s(TAB), value s, value s(TAB), 
+>> values?
+> 
+> It should mean "value(TAB)s", according to git-config(1).
 
->> I think you need to append "\n" to the message strings here (and
->> below) to match the behavior of printf_ln().
->
-> Good eyes.  You'll get the final "\n" but the line breaks inside the
-> paragraph you give to advise*() functions are your responsibility.
-> Even though advice.c:vadvise() handles multi-line message better
-> (unlike usage.c:vreportf() that is used for error() and die()) by
-> giving a line header for each line of the message, we do not wrap
-> lines at runtime.
+Hmm, after having a look at config.c and doing some testing, 
+git-config(1)
+seems to be wrong when it says that "internal whitespaces within the 
+value
+are retained verbatim".
 
-Perhaps something like this.
+Here's an example...  I placed the following into ~/.gitconfig:
 
-The overly long lines are getting a bit annoying but I do not
-offhand think of a good way to shorten them.
+   [test]
+	  blah = huh	uh
 
-Also, having to assemble the message in a buffer and emit them all
-once with ("%s" % sb.buf) is a highly annoying pattern.  Perhaps
-given enough examples, somebody will come up with a simpler API to
-do the same thing, but that is not in the scope of this series.
+There's a tab character between "huh" and "uh".  Though, running
 
- builtin/am.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+   git config --get test.blah
 
-diff --git i/builtin/am.c w/builtin/am.c
-index 0e97b827e4..227036d732 100644
---- i/builtin/am.c
-+++ w/builtin/am.c
-@@ -1155,14 +1155,13 @@ static void NORETURN die_user_resolve(const struct am_state *state)
- 		const char *cmdline = state->interactive ? "git am -i" : "git am";
- 		struct strbuf sb = STRBUF_INIT;
- 
--		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\"."), cmdline);
--		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
-+		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\".\n"), cmdline);
-+		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead.\n"), cmdline);
- 
- 		if (advice_enabled(ADVICE_AM_WORK_DIR) &&
- 		    is_empty_or_missing_file(am_path(state, "patch")) &&
- 		    !repo_index_has_changes(the_repository, NULL, NULL))
--			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
--
-+			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\".\n"), cmdline);
- 		strbuf_addf(&sb, _("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
- 
- 		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", sb.buf);
+produces
+
+   huh uh
+
+which contains a space character, not a tab.  That's expected according 
+to
+config.c, but not according to git-config(1).
+
+Should we correct the wording in git-config(1) accordingly?
+
+>> The definition according to git-config is
+>> 
+>> "The syntax is fairly flexible and permissive; whitespaces are mostly
+>> ignored. The # and ; characters begin comments to the end of line, 
+>> blank
+>> lines are ignored."
+> 
+> I believe these two quotations from git-config(1) should make it more 
+> clear:
+> 
+>     A line that defines a value can be continued to the next line by 
+> ending
+>     it with a \; the backslash and the end-of-line are stripped. 
+> Leading
+>     whitespaces after name =, the remainder of the line after the first
+>     comment character # or ;, and trailing whitespaces of the line are
+>     discarded unless they are enclosed in double quotes.  Internal
+>     whitespaces within the value are retained verbatim.
+> 
+>     The following escape sequences (beside \" and \\) are recognized: 
+> \n
+>     for newline character (NL), \t for horizontal tabulation (HT, TAB) 
+> and
+>     \b for backspace (BS). Other char escape sequences (including octal
+>     escape sequences) are invalid.
+> 
+> To me, all that indicates that trailing tab characters are stripped, 
+> but...
+
+After some testing, I can confirm that any tabs (or spaces, or mixes) 
+between
+the value and the "#" character do get ignored.
+
+>> "Mostly" does not make me comfortable that this is formally allowed or
+>> disallowed or ignored. I would suggest that this change needs to 
+>> formalize
+>> the grammar on that documentation page for clarity.
+> 
+> ... I do agree that it should be clarified further in the man page.
