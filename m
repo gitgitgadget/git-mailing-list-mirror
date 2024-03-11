@@ -1,144 +1,106 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB055786B
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 22:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C090E58217
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 22:30:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710195316; cv=none; b=Ox1GO6ICD+R+kNWK7EqIrkjXY+Ax7kRhJvC7CDb25CtLSVEIZbYfiboL4mqusDck6V4FmxhF68OP/CE4N/RHwSQaQy3tCM2DQ3WwckRfAIsMPRyF3ZhEYtrK3lQMcSyzWJ7YmgXb92id3OTYKSZnevw29RmCgcvL05N61awz4ag=
+	t=1710196214; cv=none; b=r/4TzKe3qejcd3tJqtjPOfSK1CMVK3DICLYsFoDsc1oeX6Qy7xq2Sm+P0yol/wrXiH12qESPtp7+87B4QtFJusAUvaj3kuGj07V6lPL4lj9fBi9UMap1c+njDARNgU2DFtaxfdA7XjQP4Me1+uMZY6rfc84q97Ge1xwttJzqNVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710195316; c=relaxed/simple;
-	bh=ajXOE9fVX7OgTGnNi2rWEqOvV/rlExQzxA++t3aRNz0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NhA8kM0vSFO1NP6NK6gtmVGtH0jjTsjpRiFAD+AdWJszTsqTUdQs67JOU6OMWHvHkuAlDIKXcgm0f+NbwK9zxFAbEsz2LEB1btaIMksHfwImPQdwjt67LVCrzL7rIQyDGIZP6sOKjetqf04MVxtturiL4CAAjzbnFoJKWmhTd/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nHjPUyOl; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710196214; c=relaxed/simple;
+	bh=2FB7gqGUwOAZZXdTFF27wSI8JGhbs0mUR/Vfy9+uSZI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Wmt6vqSrQ+rxz1F9PiAAen3TWwG6+69ygYurrBnG4nQzSx7q62sm2KmeVsmPHKHpx2Yoe4HFNRF3cxOpGQsSwgKuw5tCJR+hRfFfHPMlCPt1kcMFfmlu9r83Cpc5ikapNPL58aq3z/SSFOupCKJp8cSdcTQm9TnGMVZyrYLmVaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNJhoH5t; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nHjPUyOl"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 051741FF1E1;
-	Mon, 11 Mar 2024 18:15:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ajXOE9fVX7OgTGnNi2rWEqOvV/rlExQzxA++t3
-	aRNz0=; b=nHjPUyOl4OQiWKLstRBwKI/UcdF6bAZmBm69mnOVCuUOZhisEnawhL
-	NlKtg4Pn6liFcKJKtzkFeDgwJbO52QQD0LAA/10kr3toiIMz2K07N588ycvbKzAc
-	uiLonmF+GreY++O99IZkvlxSLoLQDjNWW3rLpIGvWwibMY9Z+qnD4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC8AB1FF1DF;
-	Mon, 11 Mar 2024 18:15:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 111C01FF1DE;
-	Mon, 11 Mar 2024 18:15:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>,
-  Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 2/3] cat-file: add %(objectmode) atom
-In-Reply-To: <b836bc64ddc06069d1722ae89ca049e9dfce7eec.1710183362.git.gitgitgadget@gmail.com>
-	(Victoria Dye via GitGitGadget's message of "Mon, 11 Mar 2024 18:56:01
-	+0000")
-References: <pull.1689.git.1710183362.gitgitgadget@gmail.com>
-	<b836bc64ddc06069d1722ae89ca049e9dfce7eec.1710183362.git.gitgitgadget@gmail.com>
-Date: Mon, 11 Mar 2024 15:15:05 -0700
-Message-ID: <xmqq34swo1p2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNJhoH5t"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d23114b19dso66410031fa.3
+        for <git@vger.kernel.org>; Mon, 11 Mar 2024 15:30:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710196211; x=1710801011; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pF5JVqV0DUNMUh7lcuotZt/vSsEdgAShbCPsAe2xXUk=;
+        b=PNJhoH5t6AoFnaz48BYCqTDkrFJUOWw+11nL3dDnzpTzW1dAMPgOb1DExHOxlwSWaC
+         ZNjBc/qVQonCgUxWJA7Wv1ikPoO9eUHoSSggB5OHNUoMlC6iTaRNywwATvWajFN714xQ
+         VqYcVTF0yfVnHkxCRlxeL5vE0gciocr0y1DLcqkAGN/AZjFDjvkj2o0rkAiwvUE7LzcY
+         YDQ+M1U28XPMxdGDKSeHVHgEvqUHXkmDR0t6HpoSqBMA/JvPwSe1YR8j8cul1PGxNif6
+         t1/js4eTl7MPvFxk890GUu0LxySBqZY1EzRqFxYcK9bJeaQMc3iCvT8/OESji+qBmO/X
+         tWIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710196211; x=1710801011;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pF5JVqV0DUNMUh7lcuotZt/vSsEdgAShbCPsAe2xXUk=;
+        b=P1jg64VILm0dF2mSCcCfkWE1WRrrhcj6YOD3eh3h5e++4FiNcndiDlXrBtVl5towwd
+         KyimEnnG/6KtUZIAPSw6DdfZ+e9706IjupiidUn7RfcFnpJO1S/ls4y05jCVN8gaxWRQ
+         cK4RciVoZDfhUABVEcSqvqb/6kSKpT2K8rG5WOVduPQ0X84o7Qpks8p2T+3e+ytyjzEk
+         GD6U/cxupjHTFntRIHf46hwG3FYQTgYSb0McmCvghiU9RhsPivjFMBaPO/AkjvWHtP4P
+         q3zsIabqkJry5W8S2/B6czpLMjPuhyEojqXQl48XKhCvrNEAPYhwJrvqyT1jqPXi/xNo
+         S5ig==
+X-Forwarded-Encrypted: i=1; AJvYcCWy5mzHRyZTkojx2lz0zzUhk2GSW8qT0wsvlqZG6oinJbfC1Zgk7RbMePvaE9kwPypAtdWwVVUxqTS35ZmwWvD9CdV5
+X-Gm-Message-State: AOJu0Yym1aHECAr20S03hX60v0N1XAe0Lvwy0zikwOhvl4XglOLz0WF5
+	wpEaeb50YRX6Z2DGWnyFiz7qfXb5X1yaESSnOVakc8tx0MsuyJana80r3mEOLFaKtvfoPbq56Lu
+	row9LKlBz0WLwJNHYxtXowA16DR8=
+X-Google-Smtp-Source: AGHT+IF2JWG+1R7a9Lq1K9CeZTQx2iKM2xtUwcVu17Rvbds4/FDK03wUx5RslHg5W7Mw13sPku1MfYbkxVAqgOPXLFw=
+X-Received: by 2002:a2e:9ed9:0:b0:2d3:3305:c37d with SMTP id
+ h25-20020a2e9ed9000000b002d33305c37dmr1198854ljk.2.1710196210307; Mon, 11 Mar
+ 2024 15:30:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D14BC008-DFF4-11EE-A7B3-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240310162614.62691-1-garyan447@gmail.com> <xmqqedcgvjik.fsf@gitster.g>
+In-Reply-To: <xmqqedcgvjik.fsf@gitster.g>
+From: Aryan Gupta <garyan447@gmail.com>
+Date: Mon, 11 Mar 2024 23:29:59 +0100
+Message-ID: <CAMbn=B5m7oeSy0tmChLRs=HKqAp7043s244jEKVFNayAxmcdUQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 0/1] add zero count optimization in ewah_bitmap.c
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Mar 11, 2024 at 5:08=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Aryan Gupta <garyan447@gmail.com> writes:
+>
+> > Hey everyone
+> >
+> > I hope you are doing great. I came across a "todo" in the code base
+> > which was based on zero count optimization. I tried to fix do it but
+> > I am not sure if this was the required this or not.
+>
+> Do you mean that you are not sure if the improvement you made is
+> what Vicent Marti meant by "zero count optimization" when e1273106
+> (ewah: compressed bitmap implementation, 2013-11-14) was written?
+>
+Yes.
+> Unfortunatelly, "what is "zero count optimization" in computer
+> programming?" does not produce great hits, and you are probably
+> better off to ask who wrote that comment (Cc'ed).
+>
+Sure.
+> A few general pieces of advice:
+>
+>  * We usually don't do a cover letter for a single patch (instead we
+>    write extra explanation after the three-dash line).
+>
+>  * An optimization patch usually is expected to come with
+>    performance measurement, just like a bugfix patch is expected to
+>    come with tests that show existing breakages that change the
+>    behaviour for the better with the fix.
+>
+>  * Pay attention to coding style, as deviating from existing style
+>    distracts reviewers and causes them to miss obvious bugs.
+>
+> Thanks.
 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index bbf851138ec..73bd78c0b63 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -272,6 +272,7 @@ struct expand_data {
->  	struct object_id oid;
->  	enum object_type type;
->  	unsigned long size;
-> +	unsigned short mode;
->  	off_t disk_size;
-
-We are not saving the storage used in this structure by using
-"unsigned short" due to alignment, so I got curious where the choice
-came from, but I do not think of any sensible explanation.
-
-Let's to be consistent with the remainder of the system, like how
-the mode is stored in the in-core index (ce_mode) and in the in-core
-tree entry (name_entry.mode) and use "unsigned int" instead here.
-
-> +#define EXPAND_DATA_INIT  { .mode = S_IFINVALID }
-
-Thanks for knowing about and choosing to use the INVALID thing (I
-would have naively chosen 0 without looking around enough and made
-things inconsistent).
-
-> +	} else if (is_atom("objectmode", atom, len)) {
-> +		if (!data->mark_query && !(S_IFINVALID == data->mode))
-> +			strbuf_addf(sb, "%06o", data->mode);
-
-Nit.  I think
-
-		if (!data->mark_query && data->mode != S_IFINVALID)
-
-would be a more common way to write the same thing.
-
-> @@ -766,7 +772,7 @@ static int batch_objects(struct batch_options *opt)
->  {
->  	struct strbuf input = STRBUF_INIT;
->  	struct strbuf output = STRBUF_INIT;
-> -	struct expand_data data;
-> +	struct expand_data data = EXPAND_DATA_INIT;
->  	int save_warning;
->  	int retval = 0;
->  
-> @@ -775,7 +781,6 @@ static int batch_objects(struct batch_options *opt)
->  	 * object_info to be handed to oid_object_info_extended for each
->  	 * object.
->  	 */
-> -	memset(&data, 0, sizeof(data));
-
-Nice to see this go with the _INIT thing.
-
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index ac1f754ee32..6f25cc20ec6 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -114,9 +114,10 @@ run_tests () {
->      type=$1
->      object_name=$2
->      oid=$(git rev-parse --verify $object_name)
-> -    size=$3
-> -    content=$4
-> -    pretty_content=$5
-> +    mode=$3
-> +    size=$4
-> +    content=$5
-> +    pretty_content=$6
->  
->      batch_output="$oid $type $size
->  $content"
-
-I wonder if appending $mode as an optional thing at the end would
-have made the patch less noisy?  After all, the expectation above
-that does not have $mode, and the tests that are expected to produce
-output that match the expectation, do not have to change.  And the
-existing invocation of run_tests that do not care about $mode do not
-have to change.
-
-But I guess if the damage is only with the above 7-lines (which
-would become just 1 if we made mode the $6 last tthing), it is not a
-huge deal either way?
+Okay will take care of this. Thanks a lot.
