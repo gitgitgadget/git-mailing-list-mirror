@@ -1,39 +1,38 @@
 Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F19256B6A
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A041CD3A
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710193486; cv=none; b=fZrL5Eoazf38t1KMu9W4Kb936ozXi3POBnpuvqCRjGrDKgasmXYKjjUMT7yd4JNC+jdfGx+d7xYTygtGcJaKw0mSR8HEkQnnjUbGU//FVwYlZ9CDCm+N+oaq9qQlvihiYOjAIoB6tAOzJnRX5KN2Dw9whpx69JEntH2IJ/FaEFo=
+	t=1710193534; cv=none; b=C/MhlhEjLgKc0MJmFkCgS87uTDQUq96L8CHjWHtygxTKoq0r1ZsvWq9CDdgqH/tPvWTTSfZKoopLcuHcfeUVz6ER6hzYStWQj1yTB9osbShDPopZBA8EFgVsGHrinHivMUMuJkxRBUYqYuUiDa5fF0L6SmFWEwe3f8vpu4nKpfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710193486; c=relaxed/simple;
-	bh=we4uyQZ6kvJ5QQsS3BkDzuy1zXqa9AZS2V4Hqpzn7tk=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=mE7R+eJAAawisCNO6K1nHiwtURJcIz0AoyIGKifnpmKbh93dTbDcMpNLNwmBMI737zDA23urD81tk2Cj5vL3d5Fc3g1vCpbqVJZSIK2BONNLq1cdsYOPO5oTMs9BvMjfpSierrMqNxPe3sLEpcX9zj1sRWVR+/nC6LvHQybEUig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=mEQWswkE; arc=none smtp.client-ip=202.61.206.94
+	s=arc-20240116; t=1710193534; c=relaxed/simple;
+	bh=DubbNUQKdlz/m2hwc0qzBsOrVzz98jd57+UvAxMLqLU=;
+	h=From:To:Subject:In-Reply-To:Date:Message-ID:References:
+	 MIME-Version:Content-Type; b=inFytNFfvyI+etg0+MUTKrjUFzoSj7Tr8vw4d5ZpUJN8LbmcUl5/Lg8HVXgg9Bbz4do0SjuLHOZWg5rGk9SVxRyJUcOvyRnb2bznq86+QR6SW9OR0GjAxh/hBH/Cnop1GcMuoe2/ZIHI7KuKYdhwIN3p0xHNd4ewxjs8cx7Vc8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=VqJINhqA; arc=none smtp.client-ip=202.61.206.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="mEQWswkE"
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="VqJINhqA"
 Received: from localhost (ip-109-42-178-223.web.vodafone.de [109.42.178.223])
 	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42BLieA2032023
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Mon, 11 Mar 2024 22:44:40 +0100
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42BLjTsH032067
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 22:45:29 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1710193480; bh=we4uyQZ6kvJ5QQsS3BkDzuy1zXqa9AZS2V4Hqpzn7tk=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:References;
-	b=mEQWswkEf5k3KHGaSIKRdvboFhD6KPkfHsXWRSbViuPTdUiUtF/Udahe0bAvkA/Tc
-	 +NlzvT4JcXLAxNv7VHGG+PDJl+ArxOheE8l9pn22angmOvm6VfUSj7ZZYv/B0WDY5p
-	 moA+oRyj0oqLnztdnqvkntJ8sl1UFd6ECODOgbeI=
+	t=1710193529; bh=DubbNUQKdlz/m2hwc0qzBsOrVzz98jd57+UvAxMLqLU=;
+	h=From:To:Subject:In-Reply-To:Date:References;
+	b=VqJINhqAaXyvR57yS7iP1iRUA/27yIwHC117K4Zq5aBdSlmj2Px8IHqaHmodPx1nH
+	 iG7FZsxKOP0VIRTDhbeLwBVUxJkAhuPkyzCO89+LAp6HUhpiVZin3ABH0M5CO4l+xq
+	 X/Lw7yx+tvwRi4kndXnjGSvLz5AeD+N1oBp5dTcA=
 From: Dirk Gouders <dirk@gouders.net>
 To: git@vger.kernel.org
-Cc: Glen Choo <glencbz@gmail.com>
-Subject: [PATCH 1/5] MyFirstObjectWalk: use additional arg in config_fn_t
+Subject: [PATCH 2/5] MyFirstObjectWalk: fix misspelled "builtins/"
 In-Reply-To: <cover.1710192973.git.dirk@gouders.net>
-Date: Mon, 11 Mar 2024 11:11:11 +0100
-Message-ID: <15b74566e07a39902556cd620e5cd6df1da3c7df.1710192973.git.dirk@gouders.net>
+Date: Mon, 11 Mar 2024 11:26:35 +0100
+Message-ID: <c1ac70584006f5a7906acf7ffbb88bfb11ca2c95.1710192973.git.dirk@gouders.net>
 References: <cover.1710192973.git.dirk@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,56 +42,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Commit a4e7e317 (config: add ctx arg to config_fn_t) added a fourth
-argument to config_fn_t but did not change relevant function calls
-in Documentation/MyFirstObjectWalk.txt.
+pack-objects.c resides in builtin/ (not builtins/).
 
-Fix those calls and the example git_walken_config() to use
-that additional argument.
+Fix the misspelled directory name.
 
-Fixes: a4e7e317 (config: add ctx arg to config_fn_t)
-Cc: Glen Choo <glencbz@gmail.com>
 Signed-off-by: Dirk Gouders <dirk@gouders.net>
 ---
- Documentation/MyFirstObjectWalk.txt | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ Documentation/MyFirstObjectWalk.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index c68cdb11b9..cceac2df95 100644
+index cceac2df95..c33d22ae99 100644
 --- a/Documentation/MyFirstObjectWalk.txt
 +++ b/Documentation/MyFirstObjectWalk.txt
-@@ -210,13 +210,14 @@ We'll also need to include the `config.h` header:
+@@ -525,7 +525,7 @@ about each one.
  
- ...
- 
--static int git_walken_config(const char *var, const char *value, void *cb)
-+static int git_walken_config(const char *var, const char *value,
-+			     const struct config_context *ctx, void *cb)
- {
- 	/*
- 	 * For now, we don't have any custom configuration, so fall back to
- 	 * the default config.
- 	 */
--	return git_default_config(var, value, cb);
-+	return git_default_config(var, value, ctx, cb);
- }
- ----
- 
-@@ -389,10 +390,11 @@ modifying `rev_info.grep_filter`, which is a `struct grep_opt`.
- First some setup. Add `grep_config()` to `git_walken_config()`:
- 
- ----
--static int git_walken_config(const char *var, const char *value, void *cb)
-+static int git_walken_config(const char *var, const char *value,
-+			     const struct config_context *ctx, void *cb)
- {
--	grep_config(var, value, cb);
--	return git_default_config(var, value, cb);
-+	grep_config(var, value, ctx, cb);
-+	return git_default_config(var, value, ctx, cb);
- }
- ----
- 
+ We can base our work on an example. `git pack-objects` prepares all kinds of
+ objects for packing into a bitmap or packfile. The work we are interested in
+-resides in `builtins/pack-objects.c:get_object_list()`; examination of that
++resides in `builtin/pack-objects.c:get_object_list()`; examination of that
+ function shows that the all-object walk is being performed by
+ `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
+ functions reside in `list-objects.c`; examining the source shows that, despite
 -- 
 2.43.0
 
