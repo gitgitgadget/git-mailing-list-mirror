@@ -1,107 +1,73 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18AD54FB7
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 18:34:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31D959173
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 18:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710182078; cv=none; b=tmhH9oav1kH7f6hOez8sfGKiy87at4nh7FMGfsETI0Xvzf14pq2K6tzY8PMJSAoCkcTRrVrxfJLJ+Ujx8pb0VecB6bi3J49Lrn4eDwrbezDbGRYLxx0Rr7/OtWUmqhxA4rrx932qcrrYS//FQ+43KPPC0J6KzlhUJDMOftp5G/g=
+	t=1710183015; cv=none; b=B+1NN5brS4U90adZLTTot8ls8iaJcM+OjTKqExH5b4eO/+mAKnOjzIequiR5hu1Ly4lryBdxfuTwtJS5Ki5Oz+FDEZkEOd2Nnr5CdACLL1L1+MjL3uJzLpXXeBg48TbITM8OXxqmI9+FCK3dbjhqy4EkfrWDZXjkP/NaezInqjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710182078; c=relaxed/simple;
-	bh=n8T9GfshtVo3q3h7zB33DJQ7rNeekLSXjMMmkS0V91s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mQ1b1IclRTgcHtmMM2CKLsf4mhbADPwtrNrgj0ek96qoEAhxkfJTii9EYh1Mmzx0cQYTv0miny0kDMXZjJldsGrkmjcxQNvzrJJAw+39+KeOfWGoGznhwOEBJHhfNeoNn9yTxH5AqXBLR2aMUBikXxHeledXHlEk6GM5wooL1NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Bd8xznC7; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1710183015; c=relaxed/simple;
+	bh=nR6plZCEL6LPbvmxzq3OaWmAhlrT9/V7zx+vl+azuNI=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=FQQnp1aaDUnn1Fbmc0yWGNxHXQtVpFMuoqn86QOVpruqIPgg3jzpyJab+WfsimfUdOm+4+/NiMjulxcJbdW93ypzZ8LqeKJZnHkmzWfzj+mhlVXXRDbTQ0u/xFrpIZaNez99s05oDPkCxxKQPXP3QaBoR0Ed7O7tfNjpH+l7gHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=IPjtFdod; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Bd8xznC7"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6e4d48a5823so2463801b3a.1
-        for <git@vger.kernel.org>; Mon, 11 Mar 2024 11:34:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710182076; x=1710786876; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=snsNGpJZr0czhCrWikI/peor1bqZ6NVLmQ4W8zfNbv0=;
-        b=Bd8xznC7uV9uD9aO3uVt7WqjwL8DJ/yuztL7Cv236yrVOwNiT+TnEFO/WmtTqcCHGF
-         oGEpLoabvV/q8WVkwDXVQupboPX667frdmG72KxQQr3yi96CNhwU4JL0l2VXjTA9T3v1
-         7G64BQyHZd4YT3M9rj+51uJtI6c40KbfIOlpQdipn7uehagpTujw6OKJBvKLny8XhnmK
-         sVVQfYUXMx6we0W5qXKlM3t3qg3ABNZpDDJw86j6EcwIk6QwqXVekUyGooFMKpCdVLmd
-         HIxLBS6nxDxByexLqCAT7Ifhc+0KVXcebQAhym5DmMn6yZaxjH2WTqbIPZCACrZHYF6b
-         J/dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710182076; x=1710786876;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=snsNGpJZr0czhCrWikI/peor1bqZ6NVLmQ4W8zfNbv0=;
-        b=vueMqNsIFEvgsQUwt9Y1rmxyKBB2HAMCLJp7kIE4ICkRua4ADQPzLI5shVBJHUF54J
-         eWssYBfn7Wo2xGTXEIg0LeZH9phn/qT2Axidw3NQgM471mo/E+QncNGUV1nktb+6Zp/V
-         nQxd27D7/ueezSz2vAMYVWkPotqJtZolVs2OEjJB6gOxEGnsNEUdDv/mKgkQCSuKA/AB
-         sOYtSBgpCiDAv2LvBIYHIAh8lh8g4QG/e4Q/rEvI5i30wG1dIxLt7EeJSr86tsolstHO
-         k2b0/EHX8mqHb8vg8TNVFa99HVaME+F8Gb2bTvbRmVUw9UP19DrgyT6JYYuPJKAHGzCy
-         Lu0A==
-X-Gm-Message-State: AOJu0Ywsu+kU79dIl/UhRaMc++IYiwb6M1FFUIrnpWCHR3+/taaxTXtk
-	ROyOzmt3M8KxcaL2ZiOJoucyNDsltYRBogYL5sCIZYFhSlWaLlj+SHED7dIZYXKziyNsm46t3BG
-	dvA==
-X-Google-Smtp-Source: AGHT+IF3rFuhLl9cRknYWEZROT9XxRFVz/d9X5tT6b2UCpHEm2R19Dy7s9QUnmrYoGr363zsFlQMOw==
-X-Received: by 2002:a05:6a20:a105:b0:1a3:1469:38cc with SMTP id q5-20020a056a20a10500b001a3146938ccmr4050215pzk.16.1710182075881;
-        Mon, 11 Mar 2024 11:34:35 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:ee9a:b4b8:1c56:1478])
-        by smtp.gmail.com with ESMTPSA id n4-20020aa78a44000000b006e64ee44f51sm4696128pfa.71.2024.03.11.11.34.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Mar 2024 11:34:35 -0700 (PDT)
-Date: Mon, 11 Mar 2024 11:34:23 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/7] refs/reftable: reload correct stack when creating
- reflog iter
-Message-ID: <Ze9Or6vctPJGOV_l@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1709640322.git.ps@pks.im>
- <b0414221ecad1920c84f4ab498e55edec57f06b6.1709640322.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="IPjtFdod"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b0414221ecad1920c84f4ab498e55edec57f06b6.1709640322.git.ps@pks.im>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710183007;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RhlNQP51J/sZVXkQSs5dKM2tVO6FrvopbrNHWO4/8yA=;
+	b=IPjtFdodGii1ADlWi6W1F939KYfqIreBvm65On2AOZI5+x33fnkZ07ZWffB7ZXBlqeWNF9
+	hz9V3X2jw/c7xEbxirOjkS9606ym1SA71GplkJ6Zi8uRZYUcO8Wxvord9JEYdUHIibO/7G
+	GhV/ZGjC379YM68dd6KuF1ouOkXiZ2VbAOHiPZMmqf9ow3FgSEnCnHnX/SUXyLUerlrFhJ
+	8QZJNo7w4ZwuZ+UDvuENYWsp45UhnaN0r14wFnDSB2TOnpHBn7KyVaTBppBKb6zZ3mpqcF
+	w2y0pVsSsdJlmTKRpjqlf+dFPfmNJ7+dz002A4ppQjT91lxwqmNGiXjahGXeIA==
+Date: Mon, 11 Mar 2024 19:50:07 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Ralph Seichter <github@seichter.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Ralph Seichter via GitGitGadget
+ <gitgitgadget@gmail.com>, git@vger.kernel.org, rsbecker@nexbridge.com
+Subject: Re: [PATCH v2] config: add --comment option to add a comment
+In-Reply-To: <ba6d65ca-8ae2-4d93-a5a5-e0b60768c302@seichter.de>
+References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
+ <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+ <xmqqy1apudvv.fsf@gitster.g> <5eff951e815e2fdab3834c4aa4160ed8@manjaro.org>
+ <ba6d65ca-8ae2-4d93-a5a5-e0b60768c302@seichter.de>
+Message-ID: <265e5b2d352c34dfe0625904b3356000@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 2024.03.05 13:10, Patrick Steinhardt wrote:
-> When creating a new reflog iterator, we first have to reload the stack
-> that the iterator is being created. This is done so that any concurrent
-> writes to the stack are reflected. But `reflog_iterator_for_stack()`
-> always reloads the main stack, which is wrong.
+On 2024-03-11 19:23, Ralph Seichter wrote:
+> * Dragan Simic:
 > 
-> Fix this and reload the correct stack.
+>> Let me interject... Perhaps also a tab character before the "#
+>> comment", instead of a space character. That would result in even
+>> better readability.
 > 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/reftable-backend.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 249a618b5a..f04be942ac 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1682,7 +1682,7 @@ static struct reftable_reflog_iterator *reflog_iterator_for_stack(struct reftabl
->  	if (ret)
->  		goto done;
->  
-> -	ret = reftable_stack_reload(refs->main_stack);
-> +	ret = reftable_stack_reload(stack);
->  	if (ret < 0)
->  		goto done;
->  
-> -- 
-> 2.44.0
-> 
+> I'd rather not open /that/ can of worms. Tabs versus spaces, tab size,
+> and so forth, are too much matters of personal taste for me to want to
+> spend any time discussing.
 
-Is it possible to write a test to demonstrate the bug that was fixed
-here, or is it too much of a race condition to reliably trigger?
+I see, but please note that everyone should be prepared to spend some
+time discussing even seemingly unrelated things when contributing to
+a major open-source project.
+
+I mean, perhaps the whole thing with the tab characters may not be
+the right example, but I just wanted to point out that the more major
+an open-source project is, the more discussion is often required.
