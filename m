@@ -1,215 +1,171 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8C5628
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 02:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC622747F
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 05:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710124348; cv=none; b=VcwUeyzLvBZvxTFxiprAfP3lLLAHqrd/gT/au1ANJ0nwfjTl6TJis3KvIjOI3fOKFTCG1OAWPyB+SJJUdSB5lVLR7Gwh0SlAZJd/Gnbhx5hQej6mBuAsbcqeYATofEbfvhTLAw1TqQ+irRwH0m2BlVBdQZqNDbOUE/8Zjs2fYnQ=
+	t=1710134297; cv=none; b=jvfLAzNr3gxV0ViAc74XjW8Xc55IW7fr+W+R9iJ/iypB8vb5ipQCuxcVjRK/OeKMWwk6g2Lk7k/Fb07m+IZdniGoCNIL7zDDImlbNvN6xUrOiY7SLzqNst6l2akLyGbEHARx2WSQwqvevkk3dWcaadA0vEqwat4K9AC6MigY8y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710124348; c=relaxed/simple;
-	bh=knyyyXpqeCFbO9NGoFJ1kYmtxJrXLs2zB2iqtpzFpuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=jTWZ9xO5xmermtV8XzpNdLpnTanH0O9g6ZQrh0pU68L+M7h9FWVDdXNa3R2oTHG1zOSw7D+EMe7UClfzVZ/x4ZpfmpA3OfslKU12+AN3TdwKK9DWFGSphoKqtUNT/WFLHk0VLgHS00hq7/Ye9UmLAwpIdXZryaKq1TH6nqot2Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=who-t.net; spf=pass smtp.mailfrom=who-t.net; dkim=pass (2048-bit key) header.d=who-t.net header.i=@who-t.net header.b=dZ/sJCZF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HfcMRD5T; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=who-t.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=who-t.net
+	s=arc-20240116; t=1710134297; c=relaxed/simple;
+	bh=BVYCOFXKbHlgqrjfFGxvb9x0EWtVa+wvllJG2bVcDiM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iI8Wxa0siG+oBakZ8e/TLfPFXGmmKnYCr6X1O8QH/j8qHl4NwZoGyl5uPtIGqY+16jUIY0Mmd79rF4WWCM0zYOCr2O0BqttYnaeH/IpC5ffpy3NOZyRsjtDWiyO5/lv+0GvHJ+hm+L7lnIdSbOCppKNIJTeBZ/IY7G5DCG/Vd7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tCaz5/d1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dHgsXTyH; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=who-t.net header.i=@who-t.net header.b="dZ/sJCZF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HfcMRD5T"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 277D1114008C;
-	Sun, 10 Mar 2024 22:32:25 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Sun, 10 Mar 2024 22:32:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=who-t.net; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1710124345; x=1710210745; bh=T2GAG895754ybzvIyXbZQbLaZ8TPrp3g
-	opy8LwSYeLs=; b=dZ/sJCZFPCADbSZpR0uhDeztNbro23HpSpBP7cx2WHMH6PR6
-	LKqLacFG0a7u3lUOSkjFdrDL4ORapHnbIMeEr9cnRzBHsAAoCIrDZR9Pl4+am93F
-	QOX8btaFEFvmMh7m3ID6G7UVafbyCBDrEydIHhWjYTWnatzK/diHss77/E8OfOp+
-	VtlV1nlvBDvL0JgYYGIx7H3FFbJoFVBcH4OgNd5O9wp9t/t5NuDMZ9hULuz/8+w5
-	ktcMCzyVbF2HKq58QjD2WK/Liy5nwXpm3+yChsw3KmuOGUNDMAuKqAknwgbskpzp
-	Pp1VM0I4ehE6KBtvA5JI2ab0mu9zTHY8Rfi43Q==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tCaz5/d1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dHgsXTyH"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 7324C1380090;
+	Mon, 11 Mar 2024 01:18:12 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 11 Mar 2024 01:18:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1710134292; x=1710220692; bh=TQpRIMdbgz
+	nLXN4a1GfCyOcNSvoctwKAmkwYfAB2JT8=; b=tCaz5/d1GGd3SgIoOzMpDKdhvS
+	kLxru9GxWZ8Vp1j0odHRdcTiKS0PFs4xswkAEfISNgrzvIHv4ymPdxSeDN4vyFv+
+	E0VeCotD5u3yywq+hC8joYKJx/v38+VJot6ocejjn52MYFxZbX5UFwMeCELiFoCK
+	nD73cUCOaqqnus56TtEMlBIeGleZs+fygUrn+M0Okr5EIJK9eTqlPRWSTbeLspIf
+	sbqc5cSNgy72e3zZqXNixo0gp1LH2W7WCvZaWNS4R2mikqrwkARSaWmHh1emf9iq
+	ErnkzHdsQ1ll85SAEu0ZE29//XTJSUPT+5VELW9+107k+0HCWgFx/4q99B3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1710124345; x=1710210745; bh=T2GAG895754ybzvIyXbZQbLaZ8TPrp3gopy
-	8LwSYeLs=; b=HfcMRD5Tb/aX6yDpq7GUXNKHQCikx8kV3ivlkLgcJi+07HIevGh
-	uJU2q0Fnd5DfGQ+kRbhO8IQW7EpHIz7xDcfRO76fPJutQcSXTwXeV+GZbGUSVFg3
-	uMzK584bsZRNsKiwStAM2l/obbEPgkPlHxd6S7F38+VBXsR3x6DsVzVInFXTdEH5
-	jrFo1LMIxbZgy1TuQGlb7OwC+dOQZnyJh+H7A4puzmU3v4BKOqUueNUjAmLojSJi
-	LJrdqwLdy+fRGcg2cMCY72Wf8ge5Q9bA3FFabuSPIXjrTgH8S77qCkmlcYjW5aAC
-	rzswLdYLubjjpzfUbaWdB5Q4NgDdmkCkISg==
-X-ME-Sender: <xms:OG3uZZUOneRagqtSMhAvbDzup-VVT-hgj08TgXYZ-23pn2YddqrfsQ>
-    <xme:OG3uZZkvS2HGxhIFDjn7_lLRZwijV-8pbJP3Y1K_oVetoZFfdVpvAQB0xwXf-FwXM
-    A_kFfr3lgMMHFlajYc>
-X-ME-Received: <xmr:OG3uZVYSM4AXCk0CApCjrRUoNjMGqGE3U8sjw5ByMLcmgVLa3ZrvnGIxoim0wuo4hnDJcb1KGCUL0cmfrUaJL-ab6rjIayoykSpi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedtgdeglecutefuodetggdotefrodftvf
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1710134292; x=1710220692; bh=TQpRIMdbgznLXN4a1GfCyOcNSvoc
+	twKAmkwYfAB2JT8=; b=dHgsXTyHKd3WpJYSrKTStujIoEZewAF0yZFLd/qICHl9
+	om6KdXJQ2l6kf/QpFURR799VM9dqQX/WPvB+Osfnswx9CoaD8/NJTI0y1+BWlMbZ
+	3627JjJKWqEW7EGytpkRmn9Nuo1HtZtlRg/oB5JBA5FT78oJ5iNejp/rICwIfwML
+	p0mPsTZz+MfadolOkerprCRur5NU8eSJ265r3Wsj69FBG6dTRbHp57w4mqc4maeC
+	mrO8dbivVWC0SyGgljKqWBHYgz/bsiKZ6wWW5J5jEWX/I8laxDw1vzsIm5r2+p8+
+	JygUj4gOxrlmp2hAPwlxUyEZ2c6ENYlyroWwpu9swg==
+X-ME-Sender: <xms:FJTuZf8-8lr6EY5l1dscpCYjSyybtQ4CPBkiyY2U5KtGL9PusK9p0A>
+    <xme:FJTuZbsIyNpF_O3uJrAZcZLwRh8P1sddpQZITayyOsbI_DljUmA2eTT2H0jdV-JBo
+    0XRczq8vZk2P_NHCQ>
+X-ME-Received: <xmr:FJTuZdARyAzs3LWD-SmUap0vNWAk9z2kzHewV8wrQFdA0Ukla0gJFtyhc-tt1cEa_8VwJZyNShMX7bXw9ZRiN6snSxFvTi2zVA79_gWOOWj3vQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedtgdekvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfggtggusehttdertddttddvnecuhfhrohhmpefrvghtvghrucfj
-    uhhtthgvrhgvrhcuoehpvghtvghrrdhhuhhtthgvrhgvrhesfihhohdqthdrnhgvtheqne
-    cuggftrfgrthhtvghrnhephfeggefhleejheeltdfgkeehudejfeefleeuvdfgfedvteet
-    ieegteevjeefffelnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpvghtvghrrdhhuhhtthgv
-    rhgvrhesfihhohdqthdrnhgvth
-X-ME-Proxy: <xmx:OG3uZcV-YzhZeY665u0q14Jm_nFh_pZorfJGdxD5f9aLejMkP6o8Ug>
-    <xmx:OG3uZTm8IVYezC6gaJNv78ONnZAVSpYYk4u-Mwfd8aM4D1ZbSua9_Q>
-    <xmx:OG3uZZf26m7jsbs57XlV7BLW3D0ffsathqDmkJeYrgjl3vVfJaDCKg>
-    <xmx:OW3uZYy3SGayL9H6XwQCfw7VRPqkO-7uJ4mITvtTqzU5vrV5S9szsA>
-Feedback-ID: i7ce144cd:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 10 Mar 2024 22:32:23 -0400 (EDT)
-Date: Mon, 11 Mar 2024 12:32:17 +1000
-From: Peter Hutterer <peter.hutterer@who-t.net>
-To: git@vger.kernel.org
-Cc: David Heidelberg <david@ixit.cz>
-Subject: [PATCH] diff: add diff.srcprefix and diff.dstprefix option support
-Message-ID: <20240311023217.GA2345739@quokka>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:FJTuZbfh00GG88uWpt5Ux4IqZRA49tT9nfAMMLA9Ez2PrGc3X49XBw>
+    <xmx:FJTuZUNJ-WbD0cbk9tObNT-yrt020LAHu45zdD5mdstk2JnsSk_SQQ>
+    <xmx:FJTuZdn_oPT7ZFQ6ELzqzzJ5PG_CXNsIV1AgT1BpnHvaHpkCu8mDuw>
+    <xmx:FJTuZdYbHQs4nBtF9Q6bbWgLw0Dn7OZZyZ74sIb3BEjvVARWnUOpag>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Mar 2024 01:18:11 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ff91243b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Mar 2024 05:13:33 +0000 (UTC)
+Date: Mon, 11 Mar 2024 06:18:06 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] reftable/block: fix binary search over restart
+ counter
+Message-ID: <Ze6UDkipgNsDVCwf@tanuki>
+References: <a4312698cceab5f2438c9dd34465da21d719e256.1709825186.git.ps@pks.im>
+ <cover.1709843663.git.ps@pks.im>
+ <370b608f9007abe9c0562d76894e2475d19867a1.1709843663.git.ps@pks.im>
+ <xmqq7cidk4e4.fsf@gitster.g>
+ <xmqq34t1k12p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="89LvlXqT8VTETYaT"
+Content-Disposition: inline
+In-Reply-To: <xmqq34t1k12p.fsf@gitster.g>
+
+
+--89LvlXqT8VTETYaT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The git option equivalent to --src-prefix and --dst-prefix.
-Both of these are of lower precedence than the diff.noprefix and
-diff.mnemonicprefix option.
+On Thu, Mar 07, 2024 at 04:40:46PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> >> The consequence is that `binsearch()` essentially always returns 0,
+> >> indicacting to us that we must start searching right at the beginning =
+of
+> >> the block. This works by chance because we now always do a linear scan
+> >> from the start of the block, and thus we would still end up finding the
+> >> desired record. But needless to say, this makes the optimization quite
+> >> useless.
+>=20
+> >> Fix this bug by returning whether the current key is smaller than the
+> >> searched key. As the current behaviour was correct it is not possible =
+to
+> >> write a test. Furthermore it is also not really possible to demonstrate
+> >> in a benchmark that this fix speeds up seeking records.
+> >
+> > This is an amusing bug. =20
+>=20
+> Having said all that.
+>=20
+> I have to wonder if it is the custom implementation of binsearch()
+> the reftable/basic.c file has, not this particular comparison
+> callback.  It makes an unusual expectation on the comparison
+> function, unlike bsearch(3) whose compar(a,b) is expected to return
+> an answer with the same sign as "a - b".
+>=20
+> I just checked the binary search loops we have in the core part of
+> the system, like the one in hash-lookup.c (which takes advantage of
+> the random and uniform nature of hashed values to converge faster
+> than log2) and ones in builtin/pack-objects.c (both of which are
+> absolute bog-standard).  Luckily, we do not use such an unusual
+> convention (well, we avoid overhead of compar callbacks to begin
+> with, so it is a bit of apples-to-oranges comparison).
 
-Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
----
-As David already mentioned [1] my main motivation here is to use
-a prefix of "./" because that is patch -p1 compatible *and* supports
-double-click highlighting of the file path in most terminals.
+Very true, this behaviour cought me by surprise, as well, and I do think
+it's quite easy to get wrong. Now I would've understood if `binsearch()`
+were able to handle and forward errors to the caller by passing -1. And
+I almost thought that was the case because `restart_key_less()` can
+indeed fail, and it would return a negative value if so. But that error
+return code is then not taken as an indicator of failure, but instead
+will cause us to treat the current value as smaller than the comparison
+key.
 
-The current approach of a/ and b/ fail at the latter and diff.noprefix
-fails at the former.
+But we do know to bubble the error up via the pasesd-in args by setting
+`args->error =3D -1`. Funny thing though: I just now noticed that we check
+for `args.error` _before_ we call `binsearch()`. Oops.
 
-[1] https://lore.kernel.org/git/f80aaf4a-ffea-48e6-b279-c3b7a6a53996@ixit.cz/
+I will send a follow-up patch that addresses these issues.
 
- Documentation/config/diff.txt |  6 ++++++
- diff.c                        | 18 ++++++++++++++++++
- diff.h                        |  1 +
- t/t4013-diff-various.sh       | 20 ++++++++++++++++++++
- 4 files changed, 45 insertions(+)
+Patrick
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index 6c7e09a1ef5e..888632955b30 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -111,6 +111,12 @@ diff.mnemonicPrefix::
- diff.noprefix::
- 	If set, 'git diff' does not show any source or destination prefix.
- 
-+diff.srcprefix::
-+	If set, 'git diff' uses this source prefix.
-+
-+diff.dstprefix::
-+	If set, 'git diff' uses this destination prefix.
-+
- diff.relative::
- 	If set to 'true', 'git diff' does not show changes outside of the directory
- 	and show pathnames relative to the current directory.
-diff --git a/diff.c b/diff.c
-index e50def45383e..52a476737def 100644
---- a/diff.c
-+++ b/diff.c
-@@ -62,6 +62,8 @@ static const char *diff_order_file_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
- static int diff_no_prefix;
-+static const char *diff_src_prefix;
-+static const char *diff_dst_prefix;
- static int diff_relative;
- static int diff_stat_name_width;
- static int diff_stat_graph_width;
-@@ -408,6 +410,12 @@ int git_diff_ui_config(const char *var, const char *value,
- 		diff_no_prefix = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.srcprefix")) {
-+		return git_config_string(&diff_src_prefix, var, value);
-+	}
-+	if (!strcmp(var, "diff.dstprefix")) {
-+		return git_config_string(&diff_dst_prefix, var, value);
-+	}
- 	if (!strcmp(var, "diff.relative")) {
- 		diff_relative = git_config_bool(var, value);
- 		return 0;
-@@ -3429,6 +3437,14 @@ void diff_set_default_prefix(struct diff_options *options)
- 	options->b_prefix = "b/";
- }
- 
-+void diff_set_custom_prefix(struct diff_options *options, const char *src_prefix, const char *dst_prefix)
-+{
-+	if (src_prefix)
-+		options->a_prefix = src_prefix;
-+	if (dst_prefix)
-+		options->b_prefix = dst_prefix;
-+}
-+
- struct userdiff_driver *get_textconv(struct repository *r,
- 				     struct diff_filespec *one)
- {
-@@ -4736,6 +4752,8 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 		diff_set_noprefix(options);
- 	} else if (!diff_mnemonic_prefix) {
- 		diff_set_default_prefix(options);
-+		if (diff_src_prefix || diff_dst_prefix)
-+			diff_set_custom_prefix(options, diff_src_prefix, diff_dst_prefix);
- 	}
- 
- 	options->color_moved = diff_color_moved_default;
-diff --git a/diff.h b/diff.h
-index 66bd8aeb2936..ab4dd5ec70f3 100644
---- a/diff.h
-+++ b/diff.h
-@@ -499,6 +499,7 @@ void diff_tree_combined_merge(const struct commit *commit, struct rev_info *rev)
- void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const char *b);
- void diff_set_noprefix(struct diff_options *options);
- void diff_set_default_prefix(struct diff_options *options);
-+void diff_set_custom_prefix(struct diff_options *options, const char *src_prefix, const char *dst_prefix);
- 
- int diff_can_quit_early(struct diff_options *);
- 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 1e3b2dbea484..86834186fdba 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -663,6 +663,26 @@ test_expect_success 'diff --default-prefix overrides diff.mnemonicprefix' '
- 	check_prefix actual a/file0 b/file0
- '
- 
-+test_expect_success 'diff respects diff.srcprefix' '
-+	git -c diff.srcprefix=x/ diff >actual &&
-+	check_prefix actual x/file0 b/file0
-+'
-+
-+test_expect_success 'diff respects diff.dstprefix' '
-+	git -c diff.dstprefix=y/ diff >actual &&
-+	check_prefix actual a/file0 y/file0
-+'
-+
-+test_expect_success 'diff src/dstprefix ignored with diff.noprefix' '
-+	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff >actual &&
-+	check_prefix actual file0 file0
-+'
-+
-+test_expect_success 'diff src/dstprefix ignored with diff.mnemonicprefix' '
-+	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix diff >actual &&
-+	check_prefix actual i/file0 w/file0
-+'
-+
- test_expect_success 'diff --no-renames cannot be abbreviated' '
- 	test_expect_code 129 git diff --no-rename >actual 2>error &&
- 	test_must_be_empty actual &&
--- 
-2.44.0
+--89LvlXqT8VTETYaT
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXulA0ACgkQVbJhu7ck
+PpQc7Q//UUA1P6UVTvjo1iyOVDZMI31q+Uz6j0Wba2Hk7sJrUzH5/XSQMB4sUiz9
+uFsh/yW+mwlkbTVTWv6idd3DT587WIhDaEQqkZbxLj3/RyTAp1xWC5oL13DtxO+H
+Vpq7dhNmd50DMWBxbXZ8DKuNCvVEDLU3FIjPGZIDKJRwu+fwug+PLV2cM17CSCL4
+DnKBUP0sYEyv3cLkz21A8BO5UbtFQxqBx/KSPKUAAkEqN7tyen3f2RQfw/AxKUoC
+Qor0YFbpVvxgnjLtwTlzvul+1IVZSdh7LKTHNFtoR6hMQu6VdAD4vhwXMCzX3cvh
+7YzNIv2iVhKLBj1s17LZBN9Sj1Wonae1pBdQcUvH0OkNyycsm0i/ccGqiRcoc9bw
+LjpwgENLJz687Ut2Uo65maTEIV5WxKioPiRNkbZN8CtRj9wW1STryspv2UlNvB1l
+si+ZOnVU9PnbKiaHNmdfUnqbYt8KKF4OZDqOJ9B1H/0lPFsM6l+qcJw/eEBZ43s0
+S64LhzHpd4huEXBsBOcPM70hZ6atTeLOsFciZBThu7s+C2glUE6eHC5IX+/iGawp
+5K8hs4vsdoJ9iEfkA+zNHekDz0VnliNa+nDkp5pcg9xSeApAR2YvwhBdORAaBpJQ
+9JpBdQRPCsIv07L34MRzJi0BofXcdDPbiQSXV4/vXfQ1bMIcYqY=
+=WCse
+-----END PGP SIGNATURE-----
+
+--89LvlXqT8VTETYaT--
