@@ -1,83 +1,131 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8876E56B62
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C2056B63
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 21:29:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710190979; cv=none; b=W1UqkeEP3gXnZFjvuBgsaYYZurFY1+nuUSS5Vp+W40l31w9RwbfolynUW1TnbZNgTlZjUl9/EBsOo5BWaAhCKPpj2h8zFIgFR+rAjHuAZN54orvZfX6ahElyZgHSTk+Qe6Zm280bmoJYmAYUol4NVRTWmRSJc6VwpNjad2jcWLA=
+	t=1710192601; cv=none; b=csBPaMpQjj6QnBunOo3+YtHA4DC7/FNGkHAafjUj7e48sUQ7gAgsAgmsDbte3z/lX6uQqejdutBZEs4Z7pUKY4dcO9n3r9ZQn811H6iKEXDrzKuU31Mcq6B2q/2Xz8Ps8S2oDjd9QGBgR8hWlszxDZTg3JZAykzKmYzcD4bBOsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710190979; c=relaxed/simple;
-	bh=JJn2kkEd9meoV4rr0n4qPQ15+XdQyWSQuxgsILqqEO4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=roY21Oxzud7tDAGeX4DCHRp8y6Al9yHsaqj3cvcZMj1Y6sIw/3P7+9imR7JeTo06xYN5pcUqYdsRBGRMyu/N71lE9yys1tb7YEwANxOr72CQ9GXpbn9eOQ023HAnsKqal9XefyQLzCyUaZylLHnblZ3l4LTGQnP+6svyC46drMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P1DbqY+e; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710192601; c=relaxed/simple;
+	bh=shfoRAOpYtdske9BtOe29+G6liAlD5WpFiZnVck/47w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=VHjRssbdCUEmIAtOB4T/zni7mYP3RW5Rd6GjLTkOC6aCcTq48SBt0BEVU5hGoSTBLw7hY1XGNNeU5D/p/MLe6UhygRDFnPXl0813ROXH6UNd/glDy+7hhFWpNcYCvhakBLKtXRod51Bj7AdHMN2oSTxHm+GgLmfQpIgLz9Azt5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZHLkxFV2; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P1DbqY+e"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id EF65C2EAE0;
-	Mon, 11 Mar 2024 17:02:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JJn2kkEd9meoV4rr0n4qPQ15+XdQyWSQuxgsIL
-	qqEO4=; b=P1DbqY+ekufawtf0K12V1zZqqAP5tjy0z3Kkvo92ywxtX9QAYCIb9o
-	quVcyJR/OY1TobhfKBTSv/VmXtnPxhI8lV/FlxagKc77WnIVunDuamlSIy6kIS91
-	xl1ouopXece95pFJWqkonPFH8SHZhSCxp77qzCFgWwSl8ChQ/8TO8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E7F3E2EADF;
-	Mon, 11 Mar 2024 17:02:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 460EE2EADE;
-	Mon, 11 Mar 2024 17:02:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kyle Lippincott <spectral@google.com>
-Cc: git@vger.kernel.org,  Kyle Meyer <kyle@kyleam.com>
-Subject: Re: [PATCH v2] setup: notice more types of implicit bare repositories
-In-Reply-To: <CAO_smVhAp4V1pb7LQV7yvhs98JVrtDgW5LzjzyJHupGuGSA+sg@mail.gmail.com>
-	(Kyle Lippincott's message of "Mon, 11 Mar 2024 12:23:08 -0700")
-References: <xmqqv85zqniu.fsf@gitster.g>
-	<20240308211957.3758770-1-gitster@pobox.com>
-	<xmqq5xxv0ywi.fsf_-_@gitster.g>
-	<CAO_smVhAp4V1pb7LQV7yvhs98JVrtDgW5LzjzyJHupGuGSA+sg@mail.gmail.com>
-Date: Mon, 11 Mar 2024 14:02:52 -0700
-Message-ID: <xmqqsf0wpjlv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHLkxFV2"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-56759dc7ea6so6358409a12.1
+        for <git@vger.kernel.org>; Mon, 11 Mar 2024 14:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710192598; x=1710797398; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=D6qDOY6Dl1pLKRRNkkwdD/Bxfm2kQQlCaqyXmbYMTAk=;
+        b=ZHLkxFV26CQ2/yICx5187A1Enu/IqTgPB5TmlDcg05Y449fXBtur3wZmfsmqEzZfl2
+         6W1qFY6jbi0bJsqTT4GzKQpPuk5CWPHpJAArAISpmJ54xK1CTZBzxEIN6qsuUo5IJTx/
+         7hr+IXdoEoZY20hZwqEsYcijCajdjHOJEk9josUHuZtmktJxqCwaF8Ru+u+MWF1NyH8v
+         ddknrhqUr8Z+WMmGKCJLyT8dZIxUTStHCA5C1mXuMZ9P5/NSObJwKA9YSF/UQfdWXcQl
+         YX2WWc9zxQmGBGEsuU1zjN48q9tkYMa5UWaJLKuCJEAB8i8Z+Vby4K95Jyv2tQtEfYH4
+         pz6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710192598; x=1710797398;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D6qDOY6Dl1pLKRRNkkwdD/Bxfm2kQQlCaqyXmbYMTAk=;
+        b=ntHDIMelegP8BuiwQj7vxW4pcaOt5ajdqMulmez7u+61GiVYFoEd35+ek37MC5oYFu
+         sxZTpZmS+5KrvM983iMTIh6O4Ap0UErzCZIwArCmfn7TCgYfunIXNGynV5d3FLLVBsBE
+         Go0AjvthTO7YG/IycXPQX3bSVsGophjUo0+IojY4nz6nO7DhQkW6iir5i8KR10zEKcOn
+         Ro7RWXKs02HKz+5QgP3GUgca9tX4/ZCwEMERN3gXesphWzH18hELGSVs++io5v4OKbfY
+         pa1TRMmsvlMdzCEi3vcgueGsM2YSEMMEsflJ0qe7Yb9gyeodNrEgZHARS3C4JBixS9yS
+         yXyw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvuSLWC8LNcXMcXoJjfyYQUmaEYRf26WxA+8SWmWKfCSVGRvq3gBYeP4eTGvw6KMkTrbx+QCe6NMYGQRk2RPW2eM1x
+X-Gm-Message-State: AOJu0YzPkKwSvDugnvIWmPM50+dxrosEgYuwyovvI63M+301L0ichZmo
+	TgnJNaYjs2riZMfi0uEBPBHT+bv47pWfyMA0CLWM//Qk0SaIwAOg5Ym7kAua
+X-Google-Smtp-Source: AGHT+IFZWc4lwbKvKYAhYM95/Z6m9lZpDgdaLfzZ2yN0nNyEZkdPR/Xn0Kwx5WwqGF5qyUGAjhtJmw==
+X-Received: by 2002:a17:906:99cc:b0:a46:3755:e995 with SMTP id s12-20020a17090699cc00b00a463755e995mr1390237ejn.44.1710192597623;
+        Mon, 11 Mar 2024 14:29:57 -0700 (PDT)
+Received: from ?IPV6:2a04:cec0:103f:4e2b:599c:222:2133:41a7? ([2a04:cec0:103f:4e2b:599c:222:2133:41a7])
+        by smtp.googlemail.com with ESMTPSA id lr1-20020a170906fb8100b00a442e2940fdsm3235824ejb.179.2024.03.11.14.29.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Mar 2024 14:29:56 -0700 (PDT)
+Message-ID: <53ea3745-205b-40c0-a4c5-9be26d9b88bf@gmail.com>
+Date: Mon, 11 Mar 2024 22:29:53 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BAB80220-DFEA-11EE-8418-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] format-patch: teach `--header-cmd`
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+References: <cover.1709841147.git.code@khaugsbakk.name>
+ <f405a0140b5655bc66a0a7a603517a421d7669cf.1709841147.git.code@khaugsbakk.name>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+Content-Language: fr
+In-Reply-To: <f405a0140b5655bc66a0a7a603517a421d7669cf.1709841147.git.code@khaugsbakk.name>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Kyle Lippincott <spectral@google.com> writes:
+Le 07/03/2024 à 20:59, Kristoffer Haugsbakk a écrit :
+>  
+> +format.headerCmd::
+> +	Command to run for each patch that should output RFC 2822 email
+> +	headers. Has access to some information per patch via
+> +	environment variables. See linkgit:git-format-patch[1].
+> +
+>  format.to::
+>  format.cc::
+>  	Additional recipients to include in a patch to be submitted
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index 728bb3821c1..41c344902e9 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -303,6 +303,32 @@ feeding the result to `git send-email`.
+>  	`Cc:`, and custom) headers added so far from config or command
+>  	line.
+>  
+> +--[no-]header-cmd=<cmd>::
+> +	Run _<cmd>_ for each patch. _<cmd>_ should output valid RFC 2822
+> +	email headers. This can also be configured with
+> +	the configuration variable `format.headerCmd`. Can be turned off
+> +	with `--no-header-cmd`. This works independently of
+> +	`--[no-]add-header`.
+> ++
+> +_<cmd>_ has access to these environment variables:
+> ++
+> +	GIT_FP_HEADER_CMD_VERSION
 
->> into a bare repository in unexpected places, but often gets in the
->> way of users who need valid accesses too the repository.
->
-> nit: 'to', not 'too'
-> ...
->>  - A submodule worktree (whose name is $hame) has its $GIT_DIR
->
-> nit: '$name', not '$hame'
-> ...
->> Helped-by: Kyle Lippincott <spectral@google.com>
->> Helped-by: Kyle Meyer <kyle@kyleam.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  setup.c                         | 28 +++++++++++++++++++++++++++-
->>  t/t0035-safe-bare-repository.sh | 26 ++++++++++++++++++++++----
->>  2 files changed, 49 insertions(+), 5 deletions(-)
->
-> Looks good, thanks!
+Better use a nested description list like this:
 
-Thanks.
+GIT_FP_HEADER_CMD_VERSION;;
+  The version of this API. Currently `1`. _<cmd>_ may return exit code
+  `2` in order to signal that it does not support the given version.
+
+> ++
+> +The version of this API. Currently `1`. _<cmd>_ may return exit code
+> +`2` in order to signal that it does not support the given version.
+> ++
+> +	GIT_FP_HEADER_CMD_HASH
+> ++
+> +The hash of the commit corresponding to the current patch. Not set if
+> +the current patch is the cover letter.
+> ++
+> +	GIT_FP_HEADER_CMD_COUNT
+> ++
+> +The current patch count. Increments for each patch.
+> ++
+> +`git format-patch` will error out if _<cmd>_ returns a non-zero exit
+> +code.
+> +
+>  --[no-]cover-letter::
+>  	In addition to the patches, generate a cover letter file
+>  	containing the branch description, shortlog and the overall diffstat.  You can
+
+
+Overall, thank you for correctly marking up placeholders and options.
+
