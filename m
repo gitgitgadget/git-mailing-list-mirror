@@ -1,63 +1,64 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4971354F9D
-	for <git@vger.kernel.org>; Mon, 11 Mar 2024 19:32:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E0140847
+	for <git@vger.kernel.org>; Mon, 11 Mar 2024 19:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710185524; cv=none; b=TCPgLyFNU58vhXOtli7u1jXHRXu3WBdP8c8Ktxmgtoxd1m6Iudim3BwZPuujNZoLu29ws98NOLTXWjkINTAAc9F9XJyEeqSNbhcYadV6qDv28E6caFX6fNwxSX4LF/wzjkLMgJlZT/kE+G0npfF3U1b7mzqUG+H26zq6psXOB/c=
+	t=1710186014; cv=none; b=bzVi7EINmP/zag1QDbuQaFF0LEIDMI17xI/2501QsHYmBamtkzYNZ5A2CoFK1t/po/1Gm81qWm+WDHVlsXJwQ5On49W94NrMz3gxEfBH6slND3V9ZnUp546nPIbNK6pT4/IciXxvy39/So10tsxMmBcMd793f+pTSMR0AoFCwf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710185524; c=relaxed/simple;
-	bh=Lo14lUtNlnIKe5btKEuYXPZpHdamtACCV7bfsZRra/s=;
+	s=arc-20240116; t=1710186014; c=relaxed/simple;
+	bh=3DSMxZi8Q/fcMLQnPgPFio/g7Mqsc2bT7Jxc5U4wYuw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gMX7D8NkblKaUIVT84DfqnDduhPZ/NnqDnGLt2bbBtw9StNrj/33M2COhRYzl/I/uTIveJDX1BRrLjaZydBefGU30vexC48J+dtMUca3w3moO7ivWvZnlfT0jIjwjV4LnAJd4jn6np+cWIdQdPAVqh/YLdsGzsGIIIhvmWvkb+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=e4CM9CTm; arc=none smtp.client-ip=209.85.216.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=TDkXEF3wSQOr9iV4hKoQPc9Y4h9ZAab9s2nDie3ls72yiAx1zt3NSKmCRsL5PBaPgylIHuPRhy4tnDvs+YqNxe1DRP+1fG9GgXtG3J/sm3B3I/eeoViCgUDguu8YRcRU4dN+7g/JzGhZlgWwC5DN7PAMgxpUbAulnHjW/fj4g78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1rDT2PQj; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="e4CM9CTm"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-29bfc3ca816so976350a91.0
-        for <git@vger.kernel.org>; Mon, 11 Mar 2024 12:32:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1rDT2PQj"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1dd922cbcc7so11563295ad.2
+        for <git@vger.kernel.org>; Mon, 11 Mar 2024 12:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710185522; x=1710790322; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1710186012; x=1710790812; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Cj6lDMYOQoSRDv7xtTt9JU3zeYhEK7oF/Yk1qM5PtlM=;
-        b=e4CM9CTmNnowkxaR8tK6Sn7y4qxyWtxCTpMCjyRevTTnyF8oj6aFuYavwB6Ep3Yh4B
-         eIvWl6G+D2xFqgD0AfRLSVW0k0kGnPRi8HGNAHmgMxtnzMA5pa/fnpsvfW8XnHoh0rDJ
-         LnxZGHcEgayKxJw4U8FepTes55szUYY7FgaqN7yBeZT3HuZDBi8hg4S8P+7k5kKfLBKW
-         GAH47G4qODpQFY5sSBzrTgryTgnzgrR6cPUcI1KeMOePS6Q7wEzuBFQdyXgzvqUZy9H5
-         odLLiK0Ozfnh6cNI+imfZfftQl6IBJ7rnK/NhLUPxIlH3mw6uVRcTdXuzmLWtko6C4G1
-         YOUw==
+        bh=TYvMJ1ol2QvgyQMQVgFONSM5fRABOAzxotBwnD+wBRk=;
+        b=1rDT2PQjWyObkjFZh4DRnncoPg3xwJQ7UVto7v5yNoEghgfHVg222+asye3nwXYQMw
+         eB3CBQnj3sSUZVr9sYdIf3c16N0rfg8Ya5zK5HgSqTU4clCsPShSRv6Y6Z/cOh5v6EfS
+         7XWLBNjYlQ3rp+rX3FFoq43aXFzWEX1DWneWz3pph6HwBb+4+uFb6iNuS2vlViH4hwk3
+         v3leTIsmoY7Dl4nYpfAfkRBTXn1ff+6spW3xV6jwAm5/SGKvE1Bm/abIP8EIokPmC63l
+         OqBLqDNP1Os7pBRNC+f6ecVNY+AMiFYpvPTquVVnWOmdOtrN9C2Wdkl8PIFHnMwKPG7x
+         LIUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710185522; x=1710790322;
+        d=1e100.net; s=20230601; t=1710186012; x=1710790812;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cj6lDMYOQoSRDv7xtTt9JU3zeYhEK7oF/Yk1qM5PtlM=;
-        b=mGqnig+Mu20f71icmB3m/GAxoxBqF9iZe6/igZdRGL13I/N9YzBXYfHTlNXrDWqQqv
-         dYaW3TXq1DRwQW8e1divE1GOzNbGCUais7HSRwLdyv8l7bRiDAUupIo3kqHvsz8GSY41
-         uPyYW50fur3CM7n/+VWJ2lMyMdiWrbU3/vB3SZMGR0vx8AfuuEHZRn5UojA4A6dQhNWk
-         VjI/HeFKP8UcehU37eDumcM09p5qE04XhfyRSqmRJPho27Kz04rH9aabNoVyJDkJO5bg
-         HXdWD+cWx1en78wWHmIec6IFQRKk+9Q/Z3oXpLRaBJKi8c3EPFs8kRewpoI/ByMQL6Bz
-         /wYw==
-X-Gm-Message-State: AOJu0YzyLTOctGqPw4oFYd9ICAO3Hnolxv6HM1UAQBaBQ0e7Il/on+O+
-	aX0AnVaLuWCbXXoqxucY+rjJaIdb/2kc2suD9lJYDG9hMPX1D1GDLrr1rq/vjg==
-X-Google-Smtp-Source: AGHT+IEjx1blLFyy0Njg6nJ9PWbIMlXnXdgFSPfGNrgZSmZ3ZGzjliZZb04v4KusE6+7UAwfJM9ifA==
-X-Received: by 2002:a17:90b:2204:b0:29b:a149:2ff6 with SMTP id kw4-20020a17090b220400b0029ba1492ff6mr6617375pjb.38.1710185522247;
-        Mon, 11 Mar 2024 12:32:02 -0700 (PDT)
+        bh=TYvMJ1ol2QvgyQMQVgFONSM5fRABOAzxotBwnD+wBRk=;
+        b=Vx3asSu2DbodPZx3RUwyVB5uRISJRTta1m1WThaScP9DuR/b1+5tRcUeC2VtEcMxYM
+         eTAUviz+8RgxLuPXmynEuQn90q3F5H8Hn0i0DqIrHWmjXqlFPrAljQa8VR3HxF3mKQJO
+         /eLYROabHI3ov9OWowojdAfTbMkJ7FgcmuPHjPKKRVzpL+MwmGJQfBQ05zfJiQs3s38o
+         yvjsVOAYRvxeVd0q+GnwT5VHQE1MoenNXShPZGZVXgRVUBLtmfHBPk8Ny+gdYbEHB3z9
+         SIx1dvdjafNqVttzJMlQhwqgyA8er9CGqAb2/EMRY6YKW2WEe+FXlvTW7EuyuFqeg3AU
+         FkCw==
+X-Gm-Message-State: AOJu0YyNRZOBP2+9ATmbfZzzBM4d5GNvo6O3HuIs0ns5AzbjzujEBIPn
+	3EFonl/3tVF0b584d5GpDznQAdRK395lZRYeUhpPkvEjjryrqU6FR9T9ArbiIIbRXGi8nuaiLqB
+	Y5Q==
+X-Google-Smtp-Source: AGHT+IEBFP8Q5jo2HNCVhXwXR+elBEKPBiHkWZaXUrNpnZe21EJlXcZXLK/zJ8vgCGyeQntByepzNQ==
+X-Received: by 2002:a17:902:c949:b0:1dd:96ca:e1ae with SMTP id i9-20020a170902c94900b001dd96cae1aemr5829660pla.69.1710186011595;
+        Mon, 11 Mar 2024 12:40:11 -0700 (PDT)
 Received: from google.com ([2620:15c:2d3:204:ee9a:b4b8:1c56:1478])
-        by smtp.gmail.com with ESMTPSA id x8-20020a17090a1f8800b002992f49922csm4996389pja.25.2024.03.11.12.32.01
+        by smtp.gmail.com with ESMTPSA id mm14-20020a1709030a0e00b001dcb063349csm5086350plb.150.2024.03.11.12.40.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Mar 2024 12:32:01 -0700 (PDT)
-Date: Mon, 11 Mar 2024 12:31:57 -0700
+        Mon, 11 Mar 2024 12:40:11 -0700 (PDT)
+Date: Mon, 11 Mar 2024 12:40:06 -0700
 From: Josh Steadmon <steadmon@google.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 6/7] reftable/record: use scratch buffer when decoding
  records
-Message-ID: <Ze9cLWCZoBqcfr2B@google.com>
+Message-ID: <Ze9eFkJqu4cqePPU@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
 	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <cover.1709640322.git.ps@pks.im>
@@ -105,36 +106,13 @@ On 2024.03.05 13:11, Patrick Steinhardt wrote:
 >  reftable/record_test.c | 57 ++++++++++++++++++++++++++----------------
 >  5 files changed, 68 insertions(+), 52 deletions(-)
 
-[snip]
+At first glance I was feeling somewhat negatively about this change, as
+keeping persistent scratch space buffers means that either the owners
+or the users of the scratch space need to be more careful about making
+sure it's reset and that they're not accumulating cruft in between
+various calls.
 
-> diff --git a/reftable/record.c b/reftable/record.c
-> index 7c86877586..060244337f 100644
-> --- a/reftable/record.c
-> +++ b/reftable/record.c
-> @@ -374,7 +374,7 @@ static int reftable_ref_record_encode(const void *rec, struct string_view s,
->  
->  static int reftable_ref_record_decode(void *rec, struct strbuf key,
->  				      uint8_t val_type, struct string_view in,
-> -				      int hash_size)
-> +				      int hash_size, struct strbuf *scratch)
->  {
->  	struct reftable_ref_record *r = rec;
->  	struct string_view start = in;
-> @@ -425,13 +425,12 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
->  		break;
->  
->  	case REFTABLE_REF_SYMREF: {
-> -		struct strbuf dest = STRBUF_INIT;
-> -		int n = decode_string(&dest, in);
-> +		int n = decode_string(scratch, in);
->  		if (n < 0) {
->  			return -1;
->  		}
->  		string_view_consume(&in, n);
-> -		r->value.symref = dest.buf;
-> +		r->value.symref = strbuf_detach(scratch, NULL);
->  	} break;
-
-I had to dig into this to convince myself that we aren't leaking memory
-here, but IIUC this gets cleaned up eventually by
-reftable_ref_record_release(), right?
+However, it appears we already have similar scratch space usage in the
+sideband and cat-file code, so I guess we are OK with the pattern in
+general, and we can rely on tests to make sure things are good in
+practice.
