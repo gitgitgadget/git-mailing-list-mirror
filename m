@@ -1,54 +1,55 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B841428E4
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 20:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9A71386A8
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 20:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710275973; cv=none; b=L4oVdGrjVzHQwL1nk+Xu/b5QSbsBCYtuuRADKHz+ncEiy5/DOn52fOMJdjb8Es8bTeoXxExSXz+BJ+M5whizaSrTDpFWoZ0lvnCCjdMouZ1a6Ux58CcI8vS6FrCZ25X6bc4kmUwlqAB8aaUTKV6Aqlt+Ta7hF3c2wfpB7wnnDKE=
+	t=1710276317; cv=none; b=pCf8ACeY7PkEVLJbfA6wYwd/veUHXJ4sOuiwL+puILCXeXEnn/PUpACjPgKMp22ntqVGlZFROv3htpvzsU496bjbdqk71wYZR8TsVq/y+JIyFlYC0e0QjxA/3WiKgAhwTXMnSRZIZURPrQft4Ctb2VLpAzjhHZr3aQyI9BNnE9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710275973; c=relaxed/simple;
-	bh=GVuy8Fc+AakjQvAlU7dyvr5L22HSGSz1j8tqmvuBmjw=;
+	s=arc-20240116; t=1710276317; c=relaxed/simple;
+	bh=/fIJOmvH0hYQdqGiG6U4BZybCPZIfd0aG5WCvFbSmAo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sYKghDbbGf5tbJXch0FkIKd9QgD/l/EGyfWyfmumzPNkxd79MYi5Gej+sZR2sGkfnY6LJOoAG4mHqFQ3Cvtnn1JhKDRO0WDDpueTzFYWF7am7R1tV/+ecE4sp6dLrpqPga4Z6iG69mp5dExGVA8PN0pBiPH/yUFTBUPT3hhPQuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=B4Ckj/D2; arc=none smtp.client-ip=209.85.208.44
+	 To:Cc:Content-Type; b=f7wd4hNF8jhlbniLYJCRPJifF6QrIJQvbCBgSB4MMZ7Xw+l79FSSu4jlSSoSTcjL4WXKZRaLkmsMbyBxcDuB7Vm1PkMSv5WoEqtsLlDHgXAlWPjXEZUqTbsQKBlbLLtuTcpu7be25ZeQZQCwRWhc0rAYeSSsEgIEoZ6+rWJCh/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1yeGpieQ; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="B4Ckj/D2"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-56838e00367so432781a12.0
-        for <git@vger.kernel.org>; Tue, 12 Mar 2024 13:39:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1yeGpieQ"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a450bedffdfso50267566b.3
+        for <git@vger.kernel.org>; Tue, 12 Mar 2024 13:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710275970; x=1710880770; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1710276314; x=1710881114; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6a2fcz4Ufe9DqVqFC9ksiNoc73ezB4/d3HYkh10rL3E=;
-        b=B4Ckj/D2iyRQ275lpPe8VLDJN6+xV+5UVewbskUVkbkwmtmgu4QQdl98XfwkVwC/sO
-         7Y+QSrktgfGEohqjQILk4eriaP0PgMmTu57PxtPVIZxn8vjXw5DBukR/9V0FPziIza1O
-         7pJH6tOhSEWr4F/qshQoe0UfCxgbgsN57JV6SnxfJZARzQB8Dt4q+rHkx2UdNzRsWFCT
-         DN4Jkqh7tabiaIS3yd7teM5WC08pKucxBngEt00jt4iiNo+JHQSpTYZ1E0Ow9zf1iyEd
-         rYrE+g8Phi+3aMJgs7OouiOQtXVVEayFi2ZD4Sih2Sw2uw5YkCGG6Xe/lSSyq5VyJxRm
-         AqsQ==
+        bh=e8gTAjnLTJBUA50BDFGpH/UFkKgJCUYRV0Ajr3iMCg8=;
+        b=1yeGpieQ1UscfBYQrcBN+cjuKYFDPDBMfsBSQBHdD0vjPx6ZG4OUG6D/sjxhUNUgX2
+         3kzB/bawNnMjA8BCTfqY2V1b5fYwUZdIZqZqfZNm9+AaYjY24U4v2CRsed8drcUM4z77
+         K33atBGD2sXfMtjUdSj+JGZBWXFSX9lywqf3IDDXzlpThxLX9p/D71PK932MVej1d7zl
+         ve8+f94YifgVRRdoEyBS1pBXIwy/Z/vf7g29qD8nDhKKA3SHF3Na2UhaPQaAkX1UwSwB
+         Ya3xgHfLIU4GXKBNlyFllWTjI7+kZWG5XkLRc+IcZOcISxnlvEnnVoqUOwzwgps7FLlK
+         osPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710275970; x=1710880770;
+        d=1e100.net; s=20230601; t=1710276314; x=1710881114;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6a2fcz4Ufe9DqVqFC9ksiNoc73ezB4/d3HYkh10rL3E=;
-        b=pFTTv6nFjLAiUryNtyWz6O0obFkAJbNe0nrPIqE2Lh2LdE98K06XwE49y1ZGj/U9da
-         v2DA9txnJSvk1Gvj9TxY6qMhiKAb1p/YoQ3SNJLcsWogCd4IUgwQeQ9VVuCZs7s9GsGa
-         /qQ0gPpKt2+DrzLWgPKSYRX1BZrrIvcEAX8YvJ0mjnameJFP9ZOiUnNdQq2sRip1gUWw
-         0MOQ7C4RRdofxizzgeQKqkRhFvmFIzJvl8GmnlZZUPJy3/CzsFSCCjRwH++5ouOULEe+
-         hmp/NZ8qWX5xiyt3xNcm18U4gbOy82QQDXxkenhxei+oJ/vYjcy5VVrjrYn+VcRFvrcE
-         DxIA==
-X-Gm-Message-State: AOJu0YyM7CGV+2oI3hzIZU89jHeNUbGNmt9zp0cc1tfb4I1zLRlDrMij
-	sVh7xoymx7ah1TtSApbI0tmDaMm409S0zKrLUo5CL2rSO9VYL/jAheVguW372oPdzIM/cCdoe0v
-	+zTaZxLVJELLNfBHBOvJ/hcoAdPuf/N4NRzdg
-X-Google-Smtp-Source: AGHT+IHHtgL290HcV2lcHzo7MTmIrg6Err76qM1cwcEz09XHuN1v8J7+GhGKBxEobyPJk1duycOPIvBkWKS2dwM0s1Q=
-X-Received: by 2002:a17:907:a642:b0:a46:4d76:106b with SMTP id
- vu2-20020a170907a64200b00a464d76106bmr1081026ejc.34.1710275969882; Tue, 12
- Mar 2024 13:39:29 -0700 (PDT)
+        bh=e8gTAjnLTJBUA50BDFGpH/UFkKgJCUYRV0Ajr3iMCg8=;
+        b=WY2JSAQ0AQER8VqmBau5oCEqpaX3sk7u+oNzpqGRgYXlTKPjFNcAHisYCwb3RGqfBr
+         TYe/oiZH0FArdPoGO7C7r1OhVB5D4BBeTLhfzWC52WXrUxrhrDGZu3zEUUXOwJGjh9hh
+         Dkr+4if8OZofdt9u40Iud5gKSjP9UoRRpwnW1iE68r0yhxMUgOPImjWR84NKSiJYUKqK
+         TqDf1eSy+vtxEpeq4c8P1yynMKqmBT4I6Fn9VDIDp2IT89VMtZ6SOJPTEtSMlhIXTiON
+         PTqZgeMiT8ZRkxWT7lUHiGXi0Q9bfRlv1xdCK7b8NHzH7Tjr1E0JTNK3+eVX1MohQGEh
+         X95g==
+X-Forwarded-Encrypted: i=1; AJvYcCVfcl5TatHMNDEd9jDm+9Yx5al9LnLLMOLgLops52bvrczvF+pUpjfMYkn5dL0TO15EfAeUjtMDidSUSAtmSEgEBAX7
+X-Gm-Message-State: AOJu0YzmSpNSGg66uEkI8mZXFfJ1kWr429DDAfIczN4hZjp3JISJbC4q
+	UjleHGnxM7+4ZwtmSe5rzFk0UAPhT9LPjpqKS6YSzGJXEVFZ7UaTOPeakshrpt6Ce0FD4oaj9N3
+	wI5MRO0TxZT41LO1DD9JIX+6iWFeyffzwlG1n
+X-Google-Smtp-Source: AGHT+IHwtnd30dfc78MlmrnnaJtFU43letlahXYlHpLj1iPo7Yk2V3uwUHC6LEfzyhCXekCrCX5pauZ69rVTVKuVPFw=
+X-Received: by 2002:a17:906:a384:b0:a3e:c738:afa2 with SMTP id
+ k4-20020a170906a38400b00a3ec738afa2mr959517ejz.76.1710276314489; Tue, 12 Mar
+ 2024 13:45:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,37 +57,36 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240305012112.1598053-2-atneya@google.com> <20240305012112.1598053-3-atneya@google.com>
- <CAPig+cQvyScjiWe1ghFrv9B=v2+JxkkErdCyYFSA_8dTrWu60g@mail.gmail.com>
-In-Reply-To: <CAPig+cQvyScjiWe1ghFrv9B=v2+JxkkErdCyYFSA_8dTrWu60g@mail.gmail.com>
+ <10042df8-5d06-47cd-9202-ea6965f50784@gmail.com> <xmqqttljs3he.fsf@gitster.g>
+In-Reply-To: <xmqqttljs3he.fsf@gitster.g>
 From: Atneya Nair <atneya@google.com>
-Date: Tue, 12 Mar 2024 13:38:52 -0700
-Message-ID: <CA+D9mTEJFh3t_OrrNFD=EZHQO_EXa0__r5=_mqOqNfyh_uoq_w@mail.gmail.com>
+Date: Tue, 12 Mar 2024 13:44:37 -0700
+Message-ID: <CA+D9mTFLehceHtO+_3w4pCW+XKNx1FjxJv_qR+sfwR94kPJMVw@mail.gmail.com>
 Subject: Re: [RFC PATCH 1/3] Make read_gitfile and resolve_gitfile thread safe
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jeffhost@microsoft.com, 
-	me@ttaylorr.com, nasamuffin@google.com
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <avila.jn@gmail.com>, 
+	git@vger.kernel.org, jeffhost@microsoft.com, me@ttaylorr.com, 
+	nasamuffin@google.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 4, 2024 at 8:29=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
+On Wed, Mar 6, 2024 at 8:57=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
 
-> Style: Declare `resolved_gitdir_buf` along with `ret` and `gitdir`,
-> then have a blank line before the actual code.
-
-Thanks for the detailed style feedback.
-
+> >> +    if (!path) die(_("Unexpected null from realpath '%s'"), dir);
+> >
+> > In fact, this is not a null path, but an empty path (null is not part o=
+f
+> > the string).
+> > By the way, shouldn't this be an internal bug instead of a message to
+> > the user?
 >
-> >         } else if (err =3D=3D READ_GITFILE_ERR_NOT_A_REPO) {
-> > -               if (!(backlink =3D infer_backlink(realdotgit.buf))) {
-> > +               if (!(backlink.buf =3D infer_backlink(realdotgit.buf)))=
- {
+> Unless the strbuf instance the result_buf pointer points at is
+> corrupt, its .buf member should *NEVER* be NULL.  Testing for NULL
+> is meaningless, unless you are manually futzing with the members of
+> strbuf (you shouldn't).
 >
-> Don't do this. Never modify the internal state of strbuf directly;
-> consider the state read-only. Modifications should only be made via
-> the API. You'll need to rewrite this code a bit to make it work
-> correctly with the changes proposed by this patch.
+> Thanks for carefully reading.
+>
 
-Good catch, I should've paid more attention in the refactoring.
-
-Fixed all of the discussed notes in v2.
+Thanks for pointing this out, I fixed this issue in v2.
