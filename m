@@ -1,138 +1,112 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6AA1869
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 02:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799048821
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 02:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710209066; cv=none; b=SEv+taWGL13BM4qiY5vPlyeBncjz7EAvf5smJU4NazaXqD2oMQVOFf4f+SfuQgOwEdmPydCkgIbfEf2rVsrn0pLW728A7bfSwG0GryBc7giMNcSjVkQFK3p6d1/gw27YzDaPJ0cUJga8szA/G0FdKBoGk9N8+oJb9fs4jdVxXSA=
+	t=1710210344; cv=none; b=qvNP2H/1hKEIf2J0ytF6W/AeV8hHR+qqeSLiL62X1ktX33OuhkKQAkemwz17Z2x4v99bWPk4uE67erl9HxOH7oXhAOM3s2miB1j6Atf49y9onaH55LNTXbMShazzjdn7ZSAoslBMa2LEMNiDRLDGDlK92s8mPDHjsMLgracXuY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710209066; c=relaxed/simple;
-	bh=ijRpHg76rHvSrFIuGUQsbEn0Fme7EHIXM1bIL2B9+OM=;
-	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
-	 Content-Type; b=ZxqBp1hlNjydXCdxzlnlNwUBLla1IlrSSZ3ERcy8yIKW4rW/Xfde2S/sOJBMgm0SXDiFXwyT9DIbLfS5zAl/6VGonJskzXqTk0BIYDlZsDkelvg5RY/WPpIkytxsS3lJegC+5dGbKQj2vYHiQbqBDAOoM87AGHAWxR+QBWqDA78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HCYIK35k; arc=none smtp.client-ip=209.85.167.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710210344; c=relaxed/simple;
+	bh=1Ln4pU7QWBrJRF/5k5AjcwhPfJDHlrvazPI9JYMAUSc=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=S0deqRo4+3oSCXMWlRtyQI+/U1OZMYyQvpr+8VQd3zvbGVS+CEbFWGoI+8lyUg2tssoYN9rcx+rm0I4RnJypXz1cMnUiPm/Q/jlpzZUtl2pNheVlEqYf0F5TWxiJvNJxZuAQWKoMee0hE2N0u2dvJf6cfmwMA3/1uaDlIpKDE0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=aFzW4HP1; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HCYIK35k"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3c23245ddfbso1396016b6e.2
-        for <git@vger.kernel.org>; Mon, 11 Mar 2024 19:04:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710209064; x=1710813864; darn=vger.kernel.org;
-        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=o36gZfPpzZLfKWrWa5KcJnRugsXSxLrS+Ozulg54GMM=;
-        b=HCYIK35kGj97o5AMulroqmEP/cqJHqYFI7sxFvhOzGg951QJAILe8kWVfmOpFS3+Lx
-         n95lXe0vZe26PrhPafIccuwaf+7FZwok6XiCvsa0cG8vQllm7RsJAxImLrPeEnGb8yIp
-         bythF5XzYDu/aoSA+4t4+3ilEFmjdZ0EGqLoycnP96WLzhH/nb2Z1ikCqmDi9C1LpfYX
-         QEkyshioZopH6CE9wMQmWEFKnyucbuTHYtXK+45BP4A5rQzazX0qay+EXnKoyl7iCRMr
-         CcWzMv6PhJw1rXEZ8J2LR3lIpRFISAXLQGuAKyxWmS5ALj9DIiYUc8aWv8ZC9ovxdeWH
-         AMVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710209064; x=1710813864;
-        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
-         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o36gZfPpzZLfKWrWa5KcJnRugsXSxLrS+Ozulg54GMM=;
-        b=t+k2WQccgEsE2MX5St+bNzyxHAHAczc/MtDOxrrVZ88dU7G4dXokbcOfRA2u0TzNMp
-         P74NMpgK3JsfIpluJ569nKR4eJLD5yO0tfSOdsW39dvhEwSs/aVVStDtaCq8/kzLeyQd
-         qPMq0SyAzKXH8zHcmlJqp3RuIFCPnmenyknjDeWs8yzls4+aGZHx2PdbinUTnhxXdYvD
-         bbeuCI1O7I9P+yoWG4jWBvMQIpTKD+odrIunGU0K9xSjwf2fRkwu98L0iTv5ZZ1hGWua
-         C7JVMtZw+TRUCf3c5dXxdUZaWkUiQmTpFeVozWpbRazKx+I9bBAEZ5PylLyPhHXHSGRN
-         hkoA==
-X-Gm-Message-State: AOJu0Yy1rhrvoplQ/URKc45FzDN6CWIltMKEK3a4+6MIn8d4JlWCtnbg
-	MS9baNYaKi+QKLbGQKmf9e2PwA3VAj3znbTpQrp6Uymcz8uNpyK+SgnAFHHY
-X-Google-Smtp-Source: AGHT+IF0QLJ9N5eijLlvN8DxjOEXWUWZpKqqZNa0xaxdmEY3eqlZvgXjiA6DV1xWxr1kwmr7/QgOQw==
-X-Received: by 2002:a54:4884:0:b0:3c1:db9c:543b with SMTP id r4-20020a544884000000b003c1db9c543bmr6978777oic.16.1710209063532;
-        Mon, 11 Mar 2024 19:04:23 -0700 (PDT)
-Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
-        by smtp.gmail.com with ESMTPSA id t23-20020a0568080b3700b003c23faf3800sm895302oij.53.2024.03.11.19.04.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Mar 2024 19:04:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="aFzW4HP1"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Brian Lyles" <brianmlyles@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-In-Reply-To: <xmqqh6hcu2tg.fsf@gitster.g>
-Cc: <git@vger.kernel.org>, <newren@gmail.com>, 
-	<me@ttaylorr.com>, <phillip.wood123@gmail.com>, 
-	"Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 4/7] sequencer: treat error reading HEAD as unborn branch
-Message-ID: <17bbe214bab8dc40.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Date: Tue, 12 Mar 2024 02:04:22 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710210337;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SbgDnLQhPLalSUvdHLddLABUQ6I3vJaAbfsQjvDvR8k=;
+	b=aFzW4HP1krdMC2gRTXSyWRSV4+BeLuOhmb7nT9ippiybzbBCrP6dmngCPmv41CXDzpTaeU
+	s2k/1V/IDRMoS9koAWQ/qMlzOpZ/NVQ0h5s4h3sHGxj323G6TjYEpSq9BCvPXKn2tn4ybd
+	TB9yftJkMn/Lh6T+3I4yN417gvcKGtvljCZPYwKl43o3Y1sgeLiUf9obJviSczfABTYp/o
+	tzFM/1S+fCve2SoJAQU9a9Y9RRjFI7+C9a3kHKY6kNjjRJf8QjsNFDI5qaquNBK7RC5O4c
+	srByFB9W2f3uw8HZ1FrDLy28XtQ/LgV3irDeE/5Ud27vYybjhv18MgAO1oUPdA==
+Date: Tue, 12 Mar 2024 03:25:37 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, rsbecker@nexbridge.com, Ralph Seichter
+ <github@seichter.de>
+Subject: Re: [PATCH v2] config: add --comment option to add a comment
+In-Reply-To: <xmqqzfv4pmrn.fsf@gitster.g>
+References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
+ <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+ <xmqqy1apudvv.fsf@gitster.g> <5eff951e815e2fdab3834c4aa4160ed8@manjaro.org>
+ <xmqqr0ggsmmw.fsf@gitster.g> <dd818f1709834ca6cb9050fb4ad0f4ea@manjaro.org>
+ <xmqqzfv4pmrn.fsf@gitster.g>
+Message-ID: <5413ccb588807965c5e54d579db1d741@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Hi Junio,
+On 2024-03-11 20:54, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>>>> Let me interject...  Perhaps also a tab character before the "#
+>>>> comment",
+>>>> instead of a space character.  That would result in even better
+>>>> readability.
+>>> Depends on your screen width ;-)
+>> 
+>> Ah, screens are pretty wide these days. :)
+>> 
+>>> If you were trying to tell me that SP or no SP is merely a personal
+>>> preference with the comment, I think you succeeded in doing so.
+>> 
+>> Huh, that wasn't my intention.  IMHO, a space character between "#"
+>> and the actual comment is pretty much mandatory.
+> 
+> Ah, OK, you were talking about the gap after the value before the
+> "#" that introduces the comment, but I somehow mistook it as a
+> comment about the whitespace after '#'.
 
-On Mon, Mar 11, 2024 at 11:54=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Yes, that's what I was talking about.  I'm sorry if the way I wrote it
+initially wasn't clear enough.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
->> It is not a good code hygiene to assume that a failure to read HEAD
->> always means we are on an unborn branch, even if that is the most
->> likely cause of the failure.  We may instead want to positively
->> determine that we are on an unborn state, by seeing if the HEAD is a
->> symbolic ref that points at a ref in refs/heads/* hierarchy, and
->> that ref does not exist.
->=20
-> I suspect that you are almost there.
->=20
-> +	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
-> +		/*
-> +		 * Treat an error reading HEAD as an unborn branch.
-> +		 */
->=20
-> After we see this error, if we make a call to resolve_ref_unsafe()
-> with RESOLVE_REF_NO_RECURSE, the call should return the branch that
-> we are on but is not yet born, and &oid will get the null_oid.  I am
-> not sure if there is a way to combine the two calls into one, but
-> because the failure case (i.e. doing anything on an unborn branch)
-> is a rare case that happens only once before actually giving birth
-> to a new branch, it probably is not worth spending extra brain
-> cycles on it and just use a simple and stupid "when resolving fails,
-> see if we are in a rare salvageable case with extra code" approach.
+> The gap after the value, I do not have a strong opinion either way
+> between SP and HT, except that I agree there should be something
+> there for readability.
 
-If I'm understanding you correctly, it sounds like you're hinting at
-something like this:
+I'd vote for a space character after "#", because that's pretty much
+the de facto standard.  I don't remember seeing tabs used there.
 
-	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
-		/*
-		 * Check to see if this is an unborn branch
-		 */
-		if (resolve_ref_unsafe("HEAD", RESOLVE_REF_NO_RECURSE, &head_oid, NULL)
-			&& is_null_oid(&head_oid)) {
-			head_tree_oid =3D the_hash_algo->empty_tree;
-		} else {
-			return error(_("could not resolve HEAD commit"));
-		}
-	} else {
-		...
-	}
+> Given that other places where we do insert comments, like in the log
+> message editor during "git commit -e", we always give a single space
+> after the comment character, I tend to agree that a space after '#'
+> is pretty much mandatory.  It is a non starter to tell users that
+> they should add their own SP at the beginning if they want to use
+> such a common style, i.e.
+> 
+> 	git commit --comment=' here is my message' ;# BAD
 
-This does in fact seem to have the same effect as the original patch in
-this case. If this is in line with what you are looking for, I can
-include this in v4. The commit message would be adjusted slightly to be:
+I'd agree with that.  Requiring the users to include a leading space
+would make things inconistent.
 
-	sequencer: handle unborn branch with `--allow-empty`
+> With a simple rule like "Unless your message begins with '#', the
+> message is prepended by '# ' (pound, followed by a SP), but when
+> your message begins with '#', the string is used as is", those who
+> want to use their own style can use whatever style they want, e.g.
+> 
+> 	git commit --comment='#I do not want SP there'
+> 	git commit --comment='#^II want a HT there instead'
+> 
+> and that would be a much more preferrable design, i.e. making the
+> common things easy, while leaving unusual things possible.
 
-	When using git-cherry-pick(1) with `--allow-empty` while on an
-	unborn branch, an error is thrown. This is inconsistent with the
-	same cherry-pick when `--allow-empty` is not specified.
-
-	Detect unborn branches in `is_index_unchanged`. When on an unborn
-	branch, use the `empty_tree` as the tree to compare against.
-
-	...
-
-Do these changes look good?
-
---=20
-Thank you,
-Brian Lyles
+Agreed.  That would be nice.
