@@ -1,145 +1,137 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915E969974
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 08:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7D76FAE
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 08:14:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710230729; cv=none; b=VBmJxiE1kyv8ZCggSRiLHoDbhZIeA+EYM1pR2VCWwev6yR7zAn9HHmVpgjQzinownmSspu4NTHGnTERCpLxIuRulgN90Mg64Ld1Fdg2aid2Bma1XYkKWSwBqxwRxPyhdGLTwiawkT8kUviDhIhRVHFZJBJm7eDzRz6ZTIq/PGzc=
+	t=1710231245; cv=none; b=giHKHsHr8kfWCND7m6xHJOmXXcZtsNB33F3XuXakeYLEQcurYSK9GuqLYUaEIp76FsXD7iK7+HVB2aiYjUJE+82N74d8Ktjtt3W0YhdkD5fE5qQ3Ft3BajtefVavC9EBEXDEHYJ7bGS0ItBDfeuqcvvGgjRpcHrSPiWuJHmhCws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710230729; c=relaxed/simple;
-	bh=SOCRCn6kJKC/gpb9ixlCKaFradSVxqIW0pQhlhqFb1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YPDbNcUFnOYpCz2Ax4EfxNHFIAnMu4ESIUw7qWaG3we0RRIahVX74a99IYzdSpc11r7KADY5PzfaTrkcnpLYmVvE92839yBlGnauwB5k8q/uMOTwkIDyqv76cNTp4vttw5q5po1QRnoOAyWBc7HiKi756v/sdRxJ6QhJQrF4DZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 15070 invoked by uid 109); 12 Mar 2024 08:05:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 08:05:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27518 invoked by uid 111); 12 Mar 2024 08:05:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 04:05:30 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Mar 2024 04:05:25 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH 11/15] find multi-byte comment chars in unterminated
- buffers
-Message-ID: <20240312080525.GB47852@coredump.intra.peff.net>
-References: <20240307091407.GA2072522@coredump.intra.peff.net>
- <20240307092638.GK2080210@coredump.intra.peff.net>
- <3f823e48-572c-4e19-ab76-e6d7cab9461f@web.de>
+	s=arc-20240116; t=1710231245; c=relaxed/simple;
+	bh=C9LcMbc17n9gjdOqw8ZUs1RGDAhY4cytY0WZy3X1Lqo=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=cxUC04CSzOI58UTPAPbTGnnzu0s1D2C+2DdF//K+3T7SWafaX+NtrCZVCGpBbTgFbt9vl7XNrfhT3YNu8SpcKSeZVuz0gagIUUgAKz9YuTn4ePIVnZtF6UZYKg4Ex/eDxn+yOWpud7oGospB7HYn8vy0I3q4rVLpXxPzVxnJliI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=MBjDgmsp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cEsFjx8o; arc=none smtp.client-ip=64.147.123.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="MBjDgmsp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cEsFjx8o"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id E5A83180006D;
+	Tue, 12 Mar 2024 04:14:01 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 12 Mar 2024 04:14:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1710231241; x=1710317641; bh=dN1EXzmcKip642AG8tUFaKw4rKLCuEUg
+	Dv6AaEfWoEs=; b=MBjDgmspJp7D2Z0LBuNbPJc7g7wJIyn4yvRNHcb2th9NbRot
+	+ffYmeJhUMznVjEs4XxrkpH7xUeXeCV1hCFE4pvR+OvARvq5r2qUhH/ZM0ttAYdS
+	jT41qx8+9AcJuCgMbMwNQRTb0e2x3XBnaKJBoIPY8SjTFtcNE/Tvu9vemN3tA+8q
+	u49/G5XUNjiBBlfbpLM8ec225gr0OTOkWGXiXEPCmsMoVVY05VTr68mqtfOaS+hd
+	YiHbZ9G+XjbzGNd3ZVRvKvVonTvQIn8w0JSGcFE/Kld4Pl5pBYmy4DiOz0CeOj8f
+	W3wNzHfz8WKpWDhE+SAynqsDHRflppesjJghUw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710231241; x=
+	1710317641; bh=dN1EXzmcKip642AG8tUFaKw4rKLCuEUgDv6AaEfWoEs=; b=c
+	EsFjx8o6QNJfa01tq9jqqrB/rWi/Tnh+TM/D9neRUJE8yjlMSOetB/r8liEYS6c8
+	S1yTSg3ES36j77HiLqPfBneut+j7ggvQwaIA5iCKKNx09v5buoInpFTKyKa3GQpa
+	OzXzmuNlfuWDkOnmh7Ymx5pBoLL4rGe7TxRj5CRjCZHeQbSwUZmao7FCzeKXi+VY
+	PJtbdyE+zGpgXW8gFzT+YO/ynBCUQ/RsuKzSC6HxlmLKMiU2+QkP1BDMEokCiYgH
+	14QPJnnDZOWiKzxVf7AfwupVL/V4PZ48kHJUEtl47RcSXk8xLk7o2N9DkQ+VhPF7
+	JsEzTd0WdPK578L+aJruQ==
+X-ME-Sender: <xms:yQ7wZaWghGScFiuBeawl5-Q-H2S90DbcLoxspM-ykq-b5jWl6VQoYQI>
+    <xme:yQ7wZWnA3mp6w5UIGVYCEA3fZ3I9hsHvk1qI8ACgi_DpBdm3jW20_KsykVp3I2Rat
+    AXJ3KNMmMRZp38ZCQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedvgdduudekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:yQ7wZeaa4gdblbSHeUttxGsNWKPyrqsnCzSt-SdtoRuzY946nlqDpw>
+    <xmx:yQ7wZRUEknd4b1DgW3u9dK9nzQOz_Z2VQ8LLcbOl7fui9xba5M2UVw>
+    <xmx:yQ7wZUlfdk6wS5BhhthkWxzZ8gaL4NMu80yOeXw4CUg44de97z0Ahw>
+    <xmx:yQ7wZWfENGgHIPj71_HlbBeF0B68H6yTmt-RyUPkCoBb7sWi0ly7_g>
+    <xmx:yQ7wZZysyHt2a9iMH_QTbwGLfQnaLvOCG3BXfU7LkYzKfUxXJJwS9xQuKYc>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 2F57315A0092; Tue, 12 Mar 2024 04:14:01 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3f823e48-572c-4e19-ab76-e6d7cab9461f@web.de>
+Message-Id: <d677ed9c-0f93-4fb9-a878-62711f9d6fdf@app.fastmail.com>
+In-Reply-To: <53ea3745-205b-40c0-a4c5-9be26d9b88bf@gmail.com>
+References: <cover.1709841147.git.code@khaugsbakk.name>
+ <f405a0140b5655bc66a0a7a603517a421d7669cf.1709841147.git.code@khaugsbakk.name>
+ <53ea3745-205b-40c0-a4c5-9be26d9b88bf@gmail.com>
+Date: Tue, 12 Mar 2024 09:13:40 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] format-patch: teach `--header-cmd`
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 07, 2024 at 08:42:22PM +0100, René Scharfe wrote:
+On Mon, Mar 11, 2024, at 22:29, Jean-No=C3=ABl Avila wrote:
+>> +--[no-]header-cmd=3D<cmd>::
+>> +	Run _<cmd>_ for each patch. _<cmd>_ should output valid RFC 2822
+>> +	email headers. This can also be configured with
+>> +	the configuration variable `format.headerCmd`. Can be turned off
+>> +	with `--no-header-cmd`. This works independently of
+>> +	`--[no-]add-header`.
+>> ++
+>> +_<cmd>_ has access to these environment variables:
+>> ++
+>> +	GIT_FP_HEADER_CMD_VERSION
+>
+> Better use a nested description list like this:
+>
+> GIT_FP_HEADER_CMD_VERSION;;
+>   The version of this API. Currently `1`. _<cmd>_ may return exit code
+>   `2` in order to signal that it does not support the given version.
+>
 
-> > Arguably starts_with() and this new function should both be inlined,
-> > like we do for skip_prefix(), but I think that's out of scope for this
-> > series.
-> 
-> Inlining would allow the compiler to unroll the loop for string
-> constants.  I doubt it would do that for variables, as in the code
-> below.
-> 
-> Inlining the strlen()+memcmp() version above might allow the compiler
-> to push the strlen() call out of a loop.
-> 
-> Would any of that improve performance noticeably?  For the call sites
-> below I doubt it.  But it would probably increase the object text size.
+Thanks, I=E2=80=99ll do that in the next version.
 
-Good point. With non-constant prefixes in these cases, it probably
-wouldn't buy much. There are a lot of other cases with actual string
-constants. A compiler in theory could turn starts_with(str, "foo") into
-a few instructions. But it's not even clear that it's in very many hot
-paths. It would definitely be something we'd have to measure.
+>> ++
+>> +The version of this API. Currently `1`. _<cmd>_ may return exit code
+>> +`2` in order to signal that it does not support the given version.
+>> ++
+>> +	GIT_FP_HEADER_CMD_HASH
+>> ++
+>> +The hash of the commit corresponding to the current patch. Not set if
+>> +the current patch is the cover letter.
+>> ++
+>> +	GIT_FP_HEADER_CMD_COUNT
+>> ++
+>> +The current patch count. Increments for each patch.
+>> ++
+>> +`git format-patch` will error out if _<cmd>_ returns a non-zero exit
+>> +code.
+>> +
+>>  --[no-]cover-letter::
+>>  	In addition to the patches, generate a cover letter file
+>>  	containing the branch description, shortlog and the overall diffsta=
+t.  You can
+>
+>
+> Overall, thank you for correctly marking up placeholders and options.
 
-> > And it's possible I was simply too dumb to figure out xstrncmpz() here.
-> > I'm waiting for René to show up and tell me how to do it. ;)
-> 
-> Nah, it's not a good fit, as it requires the two strings to have the
-> same length.
+Thanks for reviewing!
 
-Thanks for confirming I wasn't missing anything. :)
-
-> > @@ -2562,7 +2562,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
-> >  	/* left-trim */
-> >  	bol += strspn(bol, " \t");
-> >
-> > -	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
-> > +	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
-> 
-> If the strspn() call is safe (which it is, as the caller expects the
-> string to be NUL-terminated) then you could use starts_with() here and
-> avoid the length calculation.  But that would also match
-> comment_line_str values that contain LF, which the _mem version does not
-> and that's better.
-
-I try not to read too much into the use of string functions on what
-otherwise appears to be an unterminated buffer. While in Git it is quite
-often terminated at allocation time (coming from a strbuf, etc) I feel
-like I've fixed a number of out-of-bounds reads simply due to sloppy
-practices. And even if something is correct today, it is easy for it to
-change, since the assumption is made far away from allocation.
-
-So I dunno. Like you said, fewer computations is fewer opportunity to
-mess things up. I don't like the idea of introducing a new hand-grenade
-that might blow up later, but maybe if it's right next to a strspn()
-call that's already a problem, it's not materially making anything
-worse.
-
-> > +int starts_with_mem(const char *str, size_t len, const char *prefix)
-> > +{
-> > +	const char *end = str + len;
-> > +	for (; ; str++, prefix++) {
-> > +		if (!*prefix)
-> > +			return 1;
-> > +		else if (str == end || *str != *prefix)
-> > +			return 0;
-> > +	}
-> > +}
-> 
-> So this checks whether a length-limited string has a prefix given as a
-> NUL-terminated string.  I'd have called it mem_starts_with() and have
-> expected starts_with_mem() to check a NUL-terminated string for a
-> length-limited prefix (think !strncmp(str, prefix, prefixlen)).
-
-I was going for consistency with skip_prefix_mem() and strip_suffix_mem().
-To be fair, I probably also named those ones, but I think it's pretty
-established. We've never needed the length-limited prefix variant yet,
-so I don't know that we're squatting on anything too valuable.
-
-> > @@ -882,7 +882,7 @@ static size_t find_trailer_block_start(const char *buf, size_t len)
-> >
-> >  	/* The first paragraph is the title and cannot be trailers */
-> >  	for (s = buf; s < buf + len; s = next_line(s)) {
-> > -		if (s[0] == comment_line_char)
-> > +		if (starts_with_mem(s, buf + len - s, comment_line_str))
-> >  			continue;
-> >  		if (is_blank_line(s))
-> 
-> Another case where starts_with() would be safe to use, as
-> is_blank_line() expects (and gets) a NUL-terminated string, but it would
-> allow matching comment_line_str values that contain LF.
-
-Hmm. Yes, it is a NUL-terminated string always, but the caller has told
-us not to look past end_of_log_message(). I suspect that if there is no
-newline in comment_line_str() it's probably impossible to go past "len"
-(just because the end of the log surely ends with either a NUL or a
-newline). But it feels iffy to me. I dunno.
-
--Peff
+--
+Kristoffer Haugsbakk
