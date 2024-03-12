@@ -1,73 +1,83 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from ra.horus-it.com (ra.horus-it.com [65.108.3.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A942B2D7
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 05:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD1B5A104
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 06:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.108.3.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710221123; cv=none; b=ZQthSuIHXB6S78YnwdRMz32qfKL+boY7LITwyZPteOl9Q2dqeyB8zVNDCuzXpmhUbXPN+6BHwZMA8v8qygTnLLdv20Wbs9UF2NDAs/ReoxRv3XMrGlLAsBv6hETwtL7qzZgSfmZrhxRDl5a/BJOX3hldUak6nKZURSd/sPdHe7A=
+	t=1710224381; cv=none; b=S4J99ZQp8v4J811rC5W5d+BysqHKhYfBdZgYcKiv4qgQojU01XfDHMf9ZrvpcFRCyjQw+mhPilU6vsx2DOuJPMBniWlv5PDADyw3gglAhWR6TM2LzrHY2Yeys2PDCVcKhpIT0kGXlSukJ3RzLohGdff5gEnE57dmuBF4cNL6oHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710221123; c=relaxed/simple;
-	bh=5hw5jN5rN24yu8BUmTVMP3TunwonVuXJvA0SkT0M0rw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MGFCj0ejKdLp/Ln31cFeocy35KYnsETHALbvgzAJsNaZJSm9R56rl786/Z7/gPm4f1+WzikUh3dHPrw8k3Kzave44AHGU6Zf6g/yVM2ZZXyeG3ivP8ho0hs23q/2WD9Ul3mp4BOkqGayTRUvDx6SouXEVuSqQ2nqGMTyUniAT8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MBErJ7Ms; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710224381; c=relaxed/simple;
+	bh=S7XcUk/YKPAjxN37uD+DLL3ZnPRNA13zojbIZ0/01cE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jzmp+waKQDEOlNNEFzoPvN86tckKBbWvESVuF8syGhFqH3/WpB5O59WbtYObVt7NTcDBVdREv8px4BT8qXw88+0fMx7uRqSidkOI5LnjPQ/9SuW7CwERdlFdmhaLkweQlrAdiCqcQEIBRFsX8whAf4Cw1EVDb5t23NZUiAXn9t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de; spf=pass smtp.mailfrom=seichter.de; dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b=K/WmY/w0; arc=none smtp.client-ip=65.108.3.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seichter.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MBErJ7Ms"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 68EE62AC37;
-	Tue, 12 Mar 2024 01:25:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5hw5jN5rN24yu8BUmTVMP3TunwonVuXJvA0SkT
-	0M0rw=; b=MBErJ7Ms4YjPy++xQpOmscOPhb+IDTOxpEg/qa/DQDsSb5xveGa2pM
-	j4INpSvkFfZwTFk7KXZ2EM/BR/d6my16prUO+om8Cmi4Cnco8tUNoQGotzNVyQ49
-	UFn7NvzO21DeKVcU4CHUEdDzUPexvpTrO1TWxBvEG81NpUpcTgS4M=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 54CC52AC36;
-	Tue, 12 Mar 2024 01:25:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E57842AC35;
-	Tue, 12 Mar 2024 01:25:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Richard Quadling <rquadling@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Using git-prompt.sh is wrapping text to early in Bash.
-In-Reply-To: <CAKUjMCUEmrC8XfVKC4AkCzDyqWziPjDh5EiNmx02xQF=SVBVzQ@mail.gmail.com>
-	(Richard Quadling's message of "Mon, 11 Mar 2024 13:34:14 +0000")
-References: <CAKUjMCUEmrC8XfVKC4AkCzDyqWziPjDh5EiNmx02xQF=SVBVzQ@mail.gmail.com>
-Date: Mon, 11 Mar 2024 22:25:16 -0700
-Message-ID: <xmqqsf0wkon7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b="K/WmY/w0"
+Received: from localhost (localhost [127.0.0.1])
+	by ra.horus-it.com (Postfix) with ESMTP id C5233BE003E;
+	Tue, 12 Mar 2024 07:19:28 +0100 (CET)
+X-Virus-Scanned: at horus-it.com
+Received: from [IPV6:2003:e2:d73d:4900:1d67:1a9c:26c0:95ad] (p200300e2d73d49001d671a9c26c095ad.dip0.t-ipconnect.de [IPv6:2003:e2:d73d:4900:1d67:1a9c:26c0:95ad])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384
+	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+	(Client CN "Ralph Seichter", Issuer "HORUS-IT Ralph Seichter - Primary Client CA" (verified OK))
+	by ra.horus-it.com (Postfix) with ESMTPSA id 6DF9EBE002A;
+	Tue, 12 Mar 2024 07:19:28 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seichter.de; s=k23;
+	t=1710224368; bh=ZSSkc7ewfdxjP66ODzlSXkGg5XlXN2uORjWwTXnkE0M=;
+	h=Message-ID:Date:User-Agent:Subject:From:To:References:
+	 Content-Language:In-Reply-To:Content-Type;
+	b=K/WmY/w0UXp3squyIP5P79QflcU7FDpKuJ59zczrL9wEtN6EsEJRwHJzO27t4QpDV
+	 dKjEHUBNV7eqDy1btSStmMsbWlFBbfv4ww3MfVAcL4m4hhbCbybmBMcj9lhG0P0u66
+	 rmExcpSdtEt4vE2rWYWfSA31/aXZfM9+AXey539RHYl0xLnMZMQi+tHxpn7Hk+U9JC
+	 HgI5St940aubIT+fj1vlKiFhr2J6coxRMHHioAAoqWneuHMkgREVuAlqtTyjrUJMo/
+	 OiCA+owxGHmwXxqaEDCXGDjwLpgj4E/nxxjoTTjPI7p70+bpluXTKCzpvs1o33HffJ
+	 cCCWLbbMIdHtQ==
+Message-ID: <cf21edb2-7681-42a9-8b58-beca5d04c179@seichter.de>
+Date: Tue, 12 Mar 2024 07:19:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E9BC4388-E030-11EE-88F6-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] config: add --comment option to add a comment
+From: Ralph Seichter <github@seichter.de>
+To: Junio C Hamano <gitster@pobox.com>,
+ Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, rsbecker@nexbridge.com
+References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
+ <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+ <xmqqy1apudvv.fsf@gitster.g>
+ <9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de>
+Content-Language: en-GB
+In-Reply-To: <9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Richard Quadling <rquadling@gmail.com> writes:
+* Ralph Seichter:
 
-> This is my first attempt to supply a patch to git considering it
-> pretty much never fails me!
->
-> If there is anything else needed, I hope I can provide it.
+ > LF is a more interesting question. I haven't yet tried actively
+ > introducing a linefeed. Does strbuf_addf() have any related
+ > filtering logic?
 
-Thanks and welcome to the Git development community.
+I have now tried several times to inject a LF into a comment string,
+and did not manage to break the resulting config file. For example,
 
-Documentation/SubmittingPatches is your friend to see what are
-expected in a patch, covering how to pick a title of a patch, how
-the changes are explained (and why it is so important to do so),
-what's the procedure to "sign-it-off", etc.
+   ./git config --comment "foo\012bar" --add section.key value
 
-Thanks.
+leads to this entry:
+
+   [section]
+       key = value #foo\012bar
+
+Variable expansion with LF="\012" and --comment "foo${LF}bar" did not
+introduce a linefeed either. Have you guys perhaps managed to create
+an invalid config file?
+
+-Ralph
