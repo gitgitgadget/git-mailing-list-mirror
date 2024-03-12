@@ -1,83 +1,106 @@
-Received: from ra.horus-it.com (ra.horus-it.com [65.108.3.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD1B5A104
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 06:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.108.3.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BEB44366
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 06:37:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710224381; cv=none; b=S4J99ZQp8v4J811rC5W5d+BysqHKhYfBdZgYcKiv4qgQojU01XfDHMf9ZrvpcFRCyjQw+mhPilU6vsx2DOuJPMBniWlv5PDADyw3gglAhWR6TM2LzrHY2Yeys2PDCVcKhpIT0kGXlSukJ3RzLohGdff5gEnE57dmuBF4cNL6oHw=
+	t=1710225477; cv=none; b=IapJT3vNefyW9NhkV10/cHjzHZHmsuVq9vCjuoXZV4sTEqYvxlU7qOycrf1IO4myCI7KoOcubyO10d731l18sKgCAe2laEE2CL/ehy6l+Ue/dW34S1juFuhYXT/PYz9KL9nmY+2BAf+ZaZCV+FH7f4RDjrUwXS+s/jrIuSFw4Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710224381; c=relaxed/simple;
-	bh=S7XcUk/YKPAjxN37uD+DLL3ZnPRNA13zojbIZ0/01cE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jzmp+waKQDEOlNNEFzoPvN86tckKBbWvESVuF8syGhFqH3/WpB5O59WbtYObVt7NTcDBVdREv8px4BT8qXw88+0fMx7uRqSidkOI5LnjPQ/9SuW7CwERdlFdmhaLkweQlrAdiCqcQEIBRFsX8whAf4Cw1EVDb5t23NZUiAXn9t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de; spf=pass smtp.mailfrom=seichter.de; dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b=K/WmY/w0; arc=none smtp.client-ip=65.108.3.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seichter.de
+	s=arc-20240116; t=1710225477; c=relaxed/simple;
+	bh=/QkKPnv4Xd6PdJSaJw+umSWzHLkIdXK5S7gtZuDMV4Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PJ5lTm4CxVsMRFk00UwBNfLfvlwP6yoPiKyBYgnNX+4iB47yAB+XU5AAIash0x5n8QGk5SJwTVOz/tSt7axhl9E6oKqXby0LIGvuzvek3OjY6uTVXCRF/a4MsR9QlvwvWDlfVHL6L9nHLHveg8F6kP6IHNUeyGc6bg1kbmPh5e4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DdArZofp; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b="K/WmY/w0"
-Received: from localhost (localhost [127.0.0.1])
-	by ra.horus-it.com (Postfix) with ESMTP id C5233BE003E;
-	Tue, 12 Mar 2024 07:19:28 +0100 (CET)
-X-Virus-Scanned: at horus-it.com
-Received: from [IPV6:2003:e2:d73d:4900:1d67:1a9c:26c0:95ad] (p200300e2d73d49001d671a9c26c095ad.dip0.t-ipconnect.de [IPv6:2003:e2:d73d:4900:1d67:1a9c:26c0:95ad])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
-	(Client CN "Ralph Seichter", Issuer "HORUS-IT Ralph Seichter - Primary Client CA" (verified OK))
-	by ra.horus-it.com (Postfix) with ESMTPSA id 6DF9EBE002A;
-	Tue, 12 Mar 2024 07:19:28 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seichter.de; s=k23;
-	t=1710224368; bh=ZSSkc7ewfdxjP66ODzlSXkGg5XlXN2uORjWwTXnkE0M=;
-	h=Message-ID:Date:User-Agent:Subject:From:To:References:
-	 Content-Language:In-Reply-To:Content-Type;
-	b=K/WmY/w0UXp3squyIP5P79QflcU7FDpKuJ59zczrL9wEtN6EsEJRwHJzO27t4QpDV
-	 dKjEHUBNV7eqDy1btSStmMsbWlFBbfv4ww3MfVAcL4m4hhbCbybmBMcj9lhG0P0u66
-	 rmExcpSdtEt4vE2rWYWfSA31/aXZfM9+AXey539RHYl0xLnMZMQi+tHxpn7Hk+U9JC
-	 HgI5St940aubIT+fj1vlKiFhr2J6coxRMHHioAAoqWneuHMkgREVuAlqtTyjrUJMo/
-	 OiCA+owxGHmwXxqaEDCXGDjwLpgj4E/nxxjoTTjPI7p70+bpluXTKCzpvs1o33HffJ
-	 cCCWLbbMIdHtQ==
-Message-ID: <cf21edb2-7681-42a9-8b58-beca5d04c179@seichter.de>
-Date: Tue, 12 Mar 2024 07:19:26 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdArZofp"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a462a1b7754so206318566b.2
+        for <git@vger.kernel.org>; Mon, 11 Mar 2024 23:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710225474; x=1710830274; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bUXnq748yGQ9U4UPxd9w+cyqGJ2Q5pSjJY+QXhdtyHU=;
+        b=DdArZofpBQP4CTW8gN7RGKGm3VaQUXi7mbQm6HkVXlG7xvXN67hhd5msT0kI3q4Dih
+         7ieblfoobeqxkR7Rr9Dzc+PnyVnE3Exmi4mYWdeQpDwScwaTiPWEi9w/yghznkDI1ogh
+         ibpZFLZvbY6YtW1V30pGPp9QdVrQ4aGBgEnPnLLO6UG6LrHfgY0ro+Oz1PwyP/ouS2Fq
+         Lnk2nfLPjEd9zhgDi6JfaftNwjeZZ7POu8SbNZwZ2eKZ/rOvClF6deB/NwPidI2jJTPM
+         PbrMyhJTAkfxp43F0kA4bXjrzLdSbd7cA9yD8vceN/T6exixwkdQ3KkrZmfK/LNtD3rN
+         MOwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710225474; x=1710830274;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bUXnq748yGQ9U4UPxd9w+cyqGJ2Q5pSjJY+QXhdtyHU=;
+        b=XAeXgx+h7GJb/4iJDKsOHQqYsP0te+m05k43FIl9qddsB5eqmu2KlgCBsDnp9DpATo
+         OtRDa4Jgp+sISQVugLLlcPMEmZ1uK5OyQ23bmtWRY96JkjFmf1YewGrq3c5woKCTOdow
+         u5gRP7DJAHbA7pCg9xduIA5gu7rEJqYqKx3qbdbcs/tEbJ4Bm34DcNYRaTodKuZ9FxMa
+         oO+7MAlxn54+Qg5+dM2BhcIARjprcbgtSrfRQQi5nufFTQQjVH+jFRV3JYWXQFVe9HlR
+         NKdoMmzywPxPf02WptNq5vQk3QCV9GZRHQZyXf0verb5MNgXhohCtdvVmztQbCRV1pz7
+         zFdg==
+X-Forwarded-Encrypted: i=1; AJvYcCWM/3kPSyoxpG9FSssb/rmV6dV/NJN6nXF97CysgOa+vNHMPlNty1BqLN0ZKpDSwz1XTBk8QPo/GeysD0jkrrkVDvC/
+X-Gm-Message-State: AOJu0YycgphHgwabBGy5/hEipXkdWAZ9hOEsWIl1so4afT2I6wnc0uHO
+	a9OmLCibhdVUZ8BrD5PHkBDTOOgiPQ8H8wC1xNsBTw+sQ7SKsb96i6IVW4Khu2VkkRHBGzl8CfR
+	dHUJwBFXB6JavePqcHg246DgsyPc=
+X-Google-Smtp-Source: AGHT+IE9V3oTscnDnzo085SpREXsKXVWcL6IJEtz6gn1Jttcsq0eAd2d0KaBJb7m8VsrObc8Z3svz+tcwK/vsqqfuag=
+X-Received: by 2002:a17:906:7f1a:b0:a45:2e21:c779 with SMTP id
+ d26-20020a1709067f1a00b00a452e21c779mr5238157ejr.4.1710225474120; Mon, 11 Mar
+ 2024 23:37:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] config: add --comment option to add a comment
-From: Ralph Seichter <github@seichter.de>
-To: Junio C Hamano <gitster@pobox.com>,
- Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, rsbecker@nexbridge.com
 References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
- <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
- <xmqqy1apudvv.fsf@gitster.g>
- <9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de>
-Content-Language: en-GB
-In-Reply-To: <9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com> <xmqqy1apudvv.fsf@gitster.g>
+ <9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de> <cf21edb2-7681-42a9-8b58-beca5d04c179@seichter.de>
+In-Reply-To: <cf21edb2-7681-42a9-8b58-beca5d04c179@seichter.de>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Mon, 11 Mar 2024 23:37:42 -0700
+Message-ID: <CAPx1Gvd4FjCTSn4oUWNDtLS2G4V3yrddggafX0WHfHEdojtCNQ@mail.gmail.com>
+Subject: Re: [PATCH v2] config: add --comment option to add a comment
+To: Ralph Seichter <github@seichter.de>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, rsbecker@nexbridge.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Ralph Seichter:
+On Mon, Mar 11, 2024 at 11:22=E2=80=AFPM Ralph Seichter <github@seichter.de=
+> wrote:
+> I have now tried several times to inject a LF into a comment string ...
+> Variable expansion with LF=3D"\012" ...
 
- > LF is a more interesting question. I haven't yet tried actively
- > introducing a linefeed. Does strbuf_addf() have any related
- > filtering logic?
+You must use a literal line feed, e.g.:
 
-I have now tried several times to inject a LF into a comment string,
-and did not manage to break the resulting config file. For example,
+    LF=3D'
+    '
 
-   ./git config --comment "foo\012bar" --add section.key value
+(a single quoted newline) or, in a shell that supports this syntax:
 
-leads to this entry:
+    LF=3D$'\012'
 
-   [section]
-       key = value #foo\012bar
+(note $ and single quote: double quotes here do not work)
+to get the line-feed into the shell variable.  You can also capture
+the output of a program that emits the line-feed, but these are the direct
+assignment methods.
 
-Variable expansion with LF="\012" and --comment "foo${LF}bar" did not
-introduce a linefeed either. Have you guys perhaps managed to create
-an invalid config file?
+For instance:
 
--Ralph
+    $ LF=3D$'\012'
+    $ echo "foo${LF}bar"
+    foo
+    bar
+    $
+
+Lacking such capabilities, it's easy enough to use the printf shell
+command to produce special characters as output (which you can
+then capture, but various shells may also have Special Rules about
+such captured output, so the direct assignment method is better, in
+my opinion).
+
+Chris
