@@ -1,28 +1,28 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5740B7A136
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C474B7A708
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710235053; cv=none; b=MxSk3SKSyqgSNEHkc5f7C9bnJQmcenRiO/KHX4lRzNVJkcemoY9A1NMZjh7k82s4R35477s558JT2CgOyw5uq2PjhPvScyRruhcocD4WPQwA8MWY04tD0b5MkrprypP0aFF0drOQB/Ly0Hh/MkZS9L3FjngFSJjzIQtA2Nxp3jY=
+	t=1710235055; cv=none; b=pqGPuIb64vINzQWzwXPpGusAqZhGvY79W4JMRRFvX2BplM86PykX+Q0epJdvrEHLTwcOrWNGFCM+gEJYq2Httg5rj7aLiY92UPN1gM/8Pt7ThCcjAVKywO7pJjcbymUBHQcXVhbIz2KkO0fB2LbL5OlJSQyj2ECnSld8lOPxXKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710235053; c=relaxed/simple;
-	bh=z+iLir8QHzqA0DiGFu4DAzWjfVXx1lLy93MDzqtVGuk=;
+	s=arc-20240116; t=1710235055; c=relaxed/simple;
+	bh=XKWG8SylCDu/gK/bDOp/I8Z5kb4I+7RptMC+l7rtG3I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hp3NxwJ1S0Kmh5VoNWeTKhxB/Wsm8bUtoG+vxU0InhoOI/WiLoTJ1hLibZnlAyOkVmtW3T//dmX+A7dnmv85Vlwhsr7/Nust6i0KZHj9C9mwHE9JQkmLSPHjIUiZIpZZR1AlBswhLP4iJQnj9kWVdCjrEqciw+kQo3+aOORwYTU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=WvB1m0upuisXZHodP8SF1WjJ3lN4l+2FbVxWX1EaM2s/ApKeYMk5ohmfVNqUFrjtMre+3Md41xhj5Mo/7DQOJXulTucdJ3NyIWG5lgbmsNyGP3olxttWDVFU4i9l8fTS79tU/NAcL5Rfze9WIOWFajCqyP8OF2q9iS4rONmbtz8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17576 invoked by uid 109); 12 Mar 2024 09:17:31 -0000
+Received: (qmail 17597 invoked by uid 109); 12 Mar 2024 09:17:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 09:17:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 09:17:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28063 invoked by uid 111); 12 Mar 2024 09:17:35 -0000
+Received: (qmail 28072 invoked by uid 111); 12 Mar 2024 09:17:37 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 05:17:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 05:17:37 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Mar 2024 05:17:29 -0400
+Date: Tue, 12 Mar 2024 05:17:32 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
@@ -30,9 +30,9 @@ Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
 	Manlio Perillo <manlio.perillo@gmail.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 08/16] strbuf: accept a comment string for
- strbuf_commented_addf()
-Message-ID: <20240312091729.GH95609@coredump.intra.peff.net>
+Subject: [PATCH v2 09/16] strbuf: accept a comment string for
+ strbuf_add_commented_lines()
+Message-ID: <20240312091732.GI95609@coredump.intra.peff.net>
 References: <20240312091013.GA95442@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -45,202 +45,239 @@ Content-Disposition: inline
 In-Reply-To: <20240312091013.GA95442@coredump.intra.peff.net>
 
 As part of our transition to multi-byte comment characters, let's take a
-NUL-terminated string pointer for strbuf_commented_addf() rather than a
-single character.
+NUL-terminated string pointer for strbuf_add_commented_lines() rather
+than a single character.
 
-All of the callers have to be adjusted, but they can just pass
+All of the callers have to be adjusted; most can just pass
 comment_line_str rather than comment_line_char.
 
-Note that we rely on strbuf_add_commented_lines() under the hood, so
-we'll cheat a bit to squeeze our string into a single character (for now
-the two are equivalent, and we'll address this TODO in the next patch).
+And now our "cheat" in strbuf_commented_addf() can go away, as we can
+take the full string from it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- add-patch.c          |  8 ++++----
- builtin/branch.c     |  2 +-
- builtin/merge.c      |  8 ++++----
- builtin/tag.c        |  4 ++--
- rebase-interactive.c |  2 +-
- sequencer.c          |  4 ++--
- strbuf.c             | 10 ++++++++--
+ builtin/notes.c      |  8 ++++----
+ builtin/stripspace.c |  2 +-
+ fmt-merge-msg.c      |  6 +++---
+ rebase-interactive.c |  6 +++---
+ sequencer.c          |  8 ++++----
+ strbuf.c             | 16 +++-------------
  strbuf.h             |  2 +-
- wt-status.c          |  2 +-
- 9 files changed, 24 insertions(+), 18 deletions(-)
+ wt-status.c          |  4 ++--
+ 8 files changed, 21 insertions(+), 31 deletions(-)
 
-diff --git a/add-patch.c b/add-patch.c
-index 68f525b35c..7390677795 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1105,11 +1105,11 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
- 	size_t i;
+diff --git a/builtin/notes.c b/builtin/notes.c
+index ae981085ea..cb011303e6 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -179,7 +179,7 @@ static void write_commented_object(int fd, const struct object_id *object)
  
- 	strbuf_reset(&s->buf);
--	strbuf_commented_addf(&s->buf, comment_line_char,
-+	strbuf_commented_addf(&s->buf, comment_line_str,
- 			      _("Manual hunk edit mode -- see bottom for "
- 				"a quick guide.\n"));
- 	render_hunk(s, hunk, 0, 0, &s->buf);
--	strbuf_commented_addf(&s->buf, comment_line_char,
-+	strbuf_commented_addf(&s->buf, comment_line_str,
- 			      _("---\n"
- 				"To remove '%c' lines, make them ' ' lines "
- 				"(context).\n"
-@@ -1118,13 +1118,13 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
- 			      s->mode->is_reverse ? '+' : '-',
- 			      s->mode->is_reverse ? '-' : '+',
- 			      comment_line_char);
--	strbuf_commented_addf(&s->buf, comment_line_char, "%s",
-+	strbuf_commented_addf(&s->buf, comment_line_str, "%s",
- 			      _(s->mode->edit_hunk_hint));
- 	/*
- 	 * TRANSLATORS: 'it' refers to the patch mentioned in the previous
- 	 * messages.
- 	 */
--	strbuf_commented_addf(&s->buf, comment_line_char,
-+	strbuf_commented_addf(&s->buf, comment_line_str,
- 			      _("If it does not apply cleanly, you will be "
- 				"given an opportunity to\n"
- 				"edit again.  If all lines of the hunk are "
-diff --git a/builtin/branch.c b/builtin/branch.c
-index f6091f3438..2d8c89e9ac 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -673,7 +673,7 @@ static int edit_branch_description(const char *branch_name)
- 	exists = !read_branch_desc(&buf, branch_name);
- 	if (!buf.len || buf.buf[buf.len-1] != '\n')
+ 	if (strbuf_read(&buf, show.out, 0) < 0)
+ 		die_errno(_("could not read 'show' output"));
+-	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_char);
++	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
+ 	write_or_die(fd, cbuf.buf, cbuf.len);
+ 
+ 	strbuf_release(&cbuf);
+@@ -207,10 +207,10 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
+ 			copy_obj_to_fd(fd, old_note);
+ 
  		strbuf_addch(&buf, '\n');
--	strbuf_commented_addf(&buf, comment_line_char,
-+	strbuf_commented_addf(&buf, comment_line_str,
- 		    _("Please edit the description for the branch\n"
- 		      "  %s\n"
- 		      "Lines starting with '%c' will be stripped.\n"),
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a0ba1f9815..4e47434708 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -852,15 +852,15 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 		strbuf_addch(&msg, '\n');
- 		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS) {
- 			wt_status_append_cut_line(&msg);
--			strbuf_commented_addf(&msg, comment_line_char, "\n");
-+			strbuf_commented_addf(&msg, comment_line_str, "\n");
- 		}
--		strbuf_commented_addf(&msg, comment_line_char,
-+		strbuf_commented_addf(&msg, comment_line_str,
- 				      _(merge_editor_comment));
- 		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
--			strbuf_commented_addf(&msg, comment_line_char,
-+			strbuf_commented_addf(&msg, comment_line_str,
- 					      _(scissors_editor_comment));
- 		else
--			strbuf_commented_addf(&msg, comment_line_char,
-+			strbuf_commented_addf(&msg, comment_line_str,
- 				_(no_scissors_editor_comment), comment_line_char);
- 	}
- 	if (signoff)
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 07327d3c04..1c708785bf 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -291,10 +291,10 @@ static void create_tag(const struct object_id *object, const char *object_ref,
- 			struct strbuf buf = STRBUF_INIT;
- 			strbuf_addch(&buf, '\n');
- 			if (opt->cleanup_mode == CLEANUP_ALL)
--				strbuf_commented_addf(&buf, comment_line_char,
-+				strbuf_commented_addf(&buf, comment_line_str,
- 				      _(tag_template), tag, comment_line_char);
- 			else
--				strbuf_commented_addf(&buf, comment_line_char,
-+				strbuf_commented_addf(&buf, comment_line_str,
- 				      _(tag_template_nocleanup), tag, comment_line_char);
- 			write_or_die(fd, buf.buf, buf.len);
- 			strbuf_release(&buf);
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 6dfc33e4e3..affc93a8e4 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -71,7 +71,7 @@ void append_todo_help(int command_count,
+-		strbuf_add_commented_lines(&buf, "\n", strlen("\n"), comment_line_char);
++		strbuf_add_commented_lines(&buf, "\n", strlen("\n"), comment_line_str);
+ 		strbuf_add_commented_lines(&buf, _(note_template), strlen(_(note_template)),
+-					   comment_line_char);
+-		strbuf_add_commented_lines(&buf, "\n", strlen("\n"), comment_line_char);
++					   comment_line_str);
++		strbuf_add_commented_lines(&buf, "\n", strlen("\n"), comment_line_str);
+ 		write_or_die(fd, buf.buf, buf.len);
  
- 	if (!edit_todo) {
- 		strbuf_addch(buf, '\n');
--		strbuf_commented_addf(buf, comment_line_char,
-+		strbuf_commented_addf(buf, comment_line_str,
- 				      Q_("Rebase %s onto %s (%d command)",
- 					 "Rebase %s onto %s (%d commands)",
- 					 command_count),
-diff --git a/sequencer.c b/sequencer.c
-index 4819265bf1..051929c9f1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -667,11 +667,11 @@ void append_conflicts_hint(struct index_state *istate,
- 	}
+ 		write_commented_object(fd, object);
+diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+index 434ac490cb..e5626e5126 100644
+--- a/builtin/stripspace.c
++++ b/builtin/stripspace.c
+@@ -13,7 +13,7 @@ static void comment_lines(struct strbuf *buf)
+ 	size_t len;
  
- 	strbuf_addch(msgbuf, '\n');
--	strbuf_commented_addf(msgbuf, comment_line_char, "Conflicts:\n");
-+	strbuf_commented_addf(msgbuf, comment_line_str, "Conflicts:\n");
- 	for (i = 0; i < istate->cache_nr;) {
- 		const struct cache_entry *ce = istate->cache[i++];
- 		if (ce_stage(ce)) {
--			strbuf_commented_addf(msgbuf, comment_line_char,
-+			strbuf_commented_addf(msgbuf, comment_line_str,
- 					      "\t%s\n", ce->name);
- 			while (i < istate->cache_nr &&
- 			       !strcmp(ce->name, istate->cache[i]->name))
-diff --git a/strbuf.c b/strbuf.c
-index e9b6127e76..76d02e0920 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -368,7 +368,7 @@ void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
- 	add_lines(out, prefix, buf, size, 1);
+ 	msg = strbuf_detach(buf, &len);
+-	strbuf_add_commented_lines(buf, msg, len, comment_line_char);
++	strbuf_add_commented_lines(buf, msg, len, comment_line_str);
+ 	free(msg);
  }
  
--void strbuf_commented_addf(struct strbuf *sb, char comment_prefix,
-+void strbuf_commented_addf(struct strbuf *sb, const char *comment_prefix,
- 			   const char *fmt, ...)
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 66e47449a0..79e8aad086 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -510,7 +510,7 @@ static void fmt_tag_signature(struct strbuf *tagbuf,
+ 	if (sig->len) {
+ 		strbuf_addch(tagbuf, '\n');
+ 		strbuf_add_commented_lines(tagbuf, sig->buf, sig->len,
+-					   comment_line_char);
++					   comment_line_str);
+ 	}
+ }
+ 
+@@ -557,7 +557,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 				strbuf_add_commented_lines(&tagline,
+ 						origins.items[first_tag].string,
+ 						strlen(origins.items[first_tag].string),
+-						comment_line_char);
++						comment_line_str);
+ 				strbuf_insert(&tagbuf, 0, tagline.buf,
+ 					      tagline.len);
+ 				strbuf_release(&tagline);
+@@ -566,7 +566,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 			strbuf_add_commented_lines(&tagbuf,
+ 					origins.items[i].string,
+ 					strlen(origins.items[i].string),
+-					comment_line_char);
++					comment_line_str);
+ 			fmt_tag_signature(&tagbuf, &sig, buf, len);
+ 		}
+ 		strbuf_release(&payload);
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index affc93a8e4..c343e16fcd 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -78,7 +78,7 @@ void append_todo_help(int command_count,
+ 				      shortrevisions, shortonto, command_count);
+ 	}
+ 
+-	strbuf_add_commented_lines(buf, msg, strlen(msg), comment_line_char);
++	strbuf_add_commented_lines(buf, msg, strlen(msg), comment_line_str);
+ 
+ 	if (get_missing_commit_check_level() == MISSING_COMMIT_CHECK_ERROR)
+ 		msg = _("\nDo not remove any line. Use 'drop' "
+@@ -87,7 +87,7 @@ void append_todo_help(int command_count,
+ 		msg = _("\nIf you remove a line here "
+ 			 "THAT COMMIT WILL BE LOST.\n");
+ 
+-	strbuf_add_commented_lines(buf, msg, strlen(msg), comment_line_char);
++	strbuf_add_commented_lines(buf, msg, strlen(msg), comment_line_str);
+ 
+ 	if (edit_todo)
+ 		msg = _("\nYou are editing the todo file "
+@@ -98,7 +98,7 @@ void append_todo_help(int command_count,
+ 		msg = _("\nHowever, if you remove everything, "
+ 			"the rebase will be aborted.\n\n");
+ 
+-	strbuf_add_commented_lines(buf, msg, strlen(msg), comment_line_char);
++	strbuf_add_commented_lines(buf, msg, strlen(msg), comment_line_str);
+ }
+ 
+ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+diff --git a/sequencer.c b/sequencer.c
+index 051929c9f1..d12c5a8a03 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1853,7 +1853,7 @@ static void add_commented_lines(struct strbuf *buf, const void *str, size_t len)
+ 		s += count;
+ 		len -= count;
+ 	}
+-	strbuf_add_commented_lines(buf, s, len, comment_line_char);
++	strbuf_add_commented_lines(buf, s, len, comment_line_str);
+ }
+ 
+ /* Does the current fixup chain contain a squash command? */
+@@ -1952,7 +1952,7 @@ static int append_squash_message(struct strbuf *buf, const char *body,
+ 	strbuf_addf(buf, _(nth_commit_msg_fmt),
+ 		    ++opts->current_fixup_count + 1);
+ 	strbuf_addstr(buf, "\n\n");
+-	strbuf_add_commented_lines(buf, body, commented_len, comment_line_char);
++	strbuf_add_commented_lines(buf, body, commented_len, comment_line_str);
+ 	/* buf->buf may be reallocated so store an offset into the buffer */
+ 	fixup_off = buf->len;
+ 	strbuf_addstr(buf, body + commented_len);
+@@ -2043,7 +2043,7 @@ static int update_squash_messages(struct repository *r,
+ 		strbuf_addstr(&buf, "\n\n");
+ 		if (is_fixup_flag(command, flag))
+ 			strbuf_add_commented_lines(&buf, body, strlen(body),
+-						   comment_line_char);
++						   comment_line_str);
+ 		else
+ 			strbuf_addstr(&buf, body);
+ 
+@@ -2063,7 +2063,7 @@ static int update_squash_messages(struct repository *r,
+ 			    ++opts->current_fixup_count + 1);
+ 		strbuf_addstr(&buf, "\n\n");
+ 		strbuf_add_commented_lines(&buf, body, strlen(body),
+-					   comment_line_char);
++					   comment_line_str);
+ 	} else
+ 		return error(_("unknown command: %d"), command);
+ 	repo_unuse_commit_buffer(r, commit, message);
+diff --git a/strbuf.c b/strbuf.c
+index 76d02e0920..7c8f582127 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -359,13 +359,9 @@ static void add_lines(struct strbuf *out,
+ }
+ 
+ void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
+-				size_t size, char comment_prefix)
++				size_t size, const char *comment_prefix)
  {
- 	va_list params;
-@@ -379,7 +379,13 @@ void strbuf_commented_addf(struct strbuf *sb, char comment_prefix,
+-	char prefix[2];
+-
+-	prefix[0] = comment_prefix;
+-	prefix[1] = '\0';
+-	add_lines(out, prefix, buf, size, 1);
++	add_lines(out, comment_prefix, buf, size, 1);
+ }
+ 
+ void strbuf_commented_addf(struct strbuf *sb, const char *comment_prefix,
+@@ -379,13 +375,7 @@ void strbuf_commented_addf(struct strbuf *sb, const char *comment_prefix,
  	strbuf_vaddf(&buf, fmt, params);
  	va_end(params);
  
--	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_prefix);
-+	/*
-+	 * TODO Our commented_lines helper does not yet understand
-+	 * comment strings. But since we know that the strings are
-+	 * always single-char, we can cheat for the moment, and
-+	 * fix this later.
-+	 */
-+	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_prefix[0]);
+-	/*
+-	 * TODO Our commented_lines helper does not yet understand
+-	 * comment strings. But since we know that the strings are
+-	 * always single-char, we can cheat for the moment, and
+-	 * fix this later.
+-	 */
+-	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_prefix[0]);
++	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_prefix);
  	if (incomplete_line)
  		sb->buf[--sb->len] = '\0';
  
 diff --git a/strbuf.h b/strbuf.h
-index dc4710adbb..b128ca539a 100644
+index b128ca539a..58dddf2777 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -379,7 +379,7 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
-  * blank to the buffer.
+@@ -288,7 +288,7 @@ void strbuf_splice(struct strbuf *sb, size_t pos, size_t len,
   */
- __attribute__((format (printf, 3, 4)))
--void strbuf_commented_addf(struct strbuf *sb, char comment_prefix, const char *fmt, ...);
-+void strbuf_commented_addf(struct strbuf *sb, const char *comment_prefix, const char *fmt, ...);
+ void strbuf_add_commented_lines(struct strbuf *out,
+ 				const char *buf, size_t size,
+-				char comment_prefix);
++				const char *comment_prefix);
  
- __attribute__((format (printf,2,0)))
- void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+ 
+ /**
 diff --git a/wt-status.c b/wt-status.c
-index 7108a92b52..3845e1d383 100644
+index 3845e1d383..ae623e760e 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1103,7 +1103,7 @@ void wt_status_append_cut_line(struct strbuf *buf)
- {
+@@ -1028,7 +1028,7 @@ static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncom
+ 	if (s->display_comment_prefix) {
+ 		size_t len;
+ 		summary_content = strbuf_detach(&summary, &len);
+-		strbuf_add_commented_lines(&summary, summary_content, len, comment_line_char);
++		strbuf_add_commented_lines(&summary, summary_content, len, comment_line_str);
+ 		free(summary_content);
+ 	}
+ 
+@@ -1104,7 +1104,7 @@ void wt_status_append_cut_line(struct strbuf *buf)
  	const char *explanation = _("Do not modify or remove the line above.\nEverything below it will be ignored.");
  
--	strbuf_commented_addf(buf, comment_line_char, "%s", cut_line);
-+	strbuf_commented_addf(buf, comment_line_str, "%s", cut_line);
- 	strbuf_add_commented_lines(buf, explanation, strlen(explanation), comment_line_char);
+ 	strbuf_commented_addf(buf, comment_line_str, "%s", cut_line);
+-	strbuf_add_commented_lines(buf, explanation, strlen(explanation), comment_line_char);
++	strbuf_add_commented_lines(buf, explanation, strlen(explanation), comment_line_str);
  }
  
+ void wt_status_add_cut_line(struct wt_status *s)
 -- 
 2.44.0.481.gf1a6d20963
 
