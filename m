@@ -1,38 +1,44 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2061C8DD
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 08:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D84977A03
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710233944; cv=none; b=FtPw5CGrUEW6MS43RuEHwF4XYi0Dk7Cqouvc4MsIoXzZymcAQqL7ygTIRrFU6BiRUT8k+Z9MoOgXhOvKrjCYyTePJBSLv71eMl4E4HpogOHbA4kvT/4jq2PWCzMVGIGRskAMOd8CVVbTzIfw8MEdM2nMYIlHDi+xFtH70ahSv0w=
+	t=1710234617; cv=none; b=RUvqBrjHH5hPFCwDz3K76ZVGBn1VYMswtR0kOMxcnHM/juWhY54mGSDJsmRwc1BjHTAD/NzMVlG7vmapeLeUgI7ljzy4x5YL8pIcwrw6o0BcAJNfrrUA6FZE+UsjA5XCj8pvcD0FCu8OL634HR2f6d/XvCUG3wVmLPIb4yH+8sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710233944; c=relaxed/simple;
-	bh=wD/A6o2XiVOIX9PdAq2Rtq8PzLJAxQsgnOTeToyEAr4=;
+	s=arc-20240116; t=1710234617; c=relaxed/simple;
+	bh=/NIhtosYp1c9YmRzz8Zqy15P7W3aGUJ46zIEMpOwRfg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LDkx4hJy/Ct7p6H7Uafl6tQjkyDnKL+kkKF8WQys8qE6nQGrgH+YpwM5p89DPfg7RKsvkueWCz0nO6ZhLOEkwAiHdoxeuHYhzkJS8taTt4tMzh1UIRD/OxP05eSdif0cCTCzbacf8VNUOXKBMJZp5AAaGYjC81Jdym9W961QAks=
+	 Content-Type:Content-Disposition:In-Reply-To; b=hMgKRJddBqC2ty41JSa4EWJjqWC830Eu585rMYcIjsOCXklm3R2G4+bQz1Qe5FkM+QF/d7CPLq1XVzpRxw8oAqv/jOP0biAyCOe/+KHKFnRSzZOwkmi3oQDSpkiFWSFR6yQ+JaubzpRAv4S3x+x0Giu2LG1215bMnFj2KSWDk14=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17271 invoked by uid 109); 12 Mar 2024 08:59:02 -0000
+Received: (qmail 17376 invoked by uid 109); 12 Mar 2024 09:10:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 08:59:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 09:10:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27818 invoked by uid 111); 12 Mar 2024 08:59:06 -0000
+Received: (qmail 27954 invoked by uid 111); 12 Mar 2024 09:10:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 04:59:06 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 05:10:18 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Mar 2024 04:59:01 -0400
+Date: Tue, 12 Mar 2024 05:10:13 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] cat-file: add %(objectmode) avoid verifying
- submodules' OIDs
-Message-ID: <20240312085901.GA69635@coredump.intra.peff.net>
-References: <pull.1689.git.1710183362.gitgitgadget@gmail.com>
- <xmqqwmq8o36j.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 0/16] allow multi-byte core.commentChar
+Message-ID: <20240312091013.GA95442@coredump.intra.peff.net>
+References: <CAAToxAEE-2B_8Wqrquk1peOnqTbOpV_8KZmsJ2dgk-mfCZXHiA@mail.gmail.com>
+ <5e10f1e5-b87f-43cd-ac1e-d7c01b7dad21@app.fastmail.com>
+ <xmqqsf1466eh.fsf@gitster.g>
+ <52d6850914982ffaf15dda937d611ffb@manjaro.org>
+ <xmqqmsrc4osm.fsf@gitster.g>
+ <20240306080804.GB4099518@coredump.intra.peff.net>
+ <20240307091407.GA2072522@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,60 +47,251 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwmq8o36j.fsf@gitster.g>
+In-Reply-To: <20240307091407.GA2072522@coredump.intra.peff.net>
 
-On Mon, Mar 11, 2024 at 02:43:00PM -0700, Junio C Hamano wrote:
+Here's a revised version of my series. It incorporates the fixups I sent
+(which I think Junio had applied already), and incorporates a new patch
+at the beginning to forbid newlines.
 
-> It is somewhat unsatisfying that --batch/--batch-check lacks so
-> much.  Even with %(objectmode) its nature of one-object-at-a-time
-> makes querying children of a large tree a chore, when you compare it
-> with something like "cat-file -p HEAD:" that allows you to grab the
-> needed information for all children with a single invocation.
-> 
-> This is orthogonal to what the patch wants to do, which is to enrich
-> the output side with more formatting, bit I wonder if we want to
-> consider enriching the input side?  e.g. instead of feeding just a
-> single object name from the standard input of "cat-file
-> --batch/--batch-check", perhaps a syntax can say "Here I have the
-> object name for a tree-ish object, but please pretend that I gave
-> you all the objects contained within it", or something?
+I _didn't_ convert any of the starts_with_mem() call to starts_with().
+I'm on the fence on whether that is simplifying things or creating
+potential confusion/bugs later.
 
-That is an interesting direction. In practice I guess you might want to
-expand trees (to show their contents) or perhaps commits (to traverse
-history and/or look at their trees). And we already have tools to do
-that.
+If we don't like the new patch 1 (or if we prefer to do it on top; there
+is really not much reason to prefer one or the other), then this should
+otherwise be the same as what Junio has already queued as
+jk/core-comment-char.
 
-So for example you can already do:
+Range diff (from v1, without my fixups) is below.
 
-  git ls-tree --format='%(objectname) %(objectmode)' HEAD
+ -:  ---------- >  1:  86efec435d config: forbid newline as core.commentChar
+ 1:  be18aa04e3 =  2:  7c016e5dc3 strbuf: simplify comment-handling in add_lines() helper
+ 2:  0f8ea2a86d =  3:  2b4170b5f0 strbuf: avoid static variables in strbuf_add_commented_lines()
+ 3:  9b56d9f4f0 =  4:  24ca214986 commit: refactor base-case of adjust_comment_line_char()
+ 4:  0a191e5588 =  5:  9f6433dbe6 strbuf: avoid shadowing global comment_line_char name
+ 5:  f41e196138 !  6:  d0f32f10f9 environment: store comment_line_char as a string
+    @@ builtin/commit.c: static void adjust_comment_line_char(const struct strbuf *sb)
+     
+      ## config.c ##
+     @@ config.c: static int git_default_core_config(const char *var, const char *value,
+    - 		else if (!strcasecmp(value, "auto"))
+    - 			auto_comment_line_char = 1;
+      		else if (value[0] && !value[1]) {
+    + 			if (value[0] == '\n')
+    + 				return error(_("core.commentChar cannot be newline"));
+     -			comment_line_char = value[0];
+     +			comment_line_str = xstrfmt("%c", value[0]);
+      			auto_comment_line_char = 0;
+ 6:  84261af2ed !  7:  2c91628564 strbuf: accept a comment string for strbuf_stripspace()
+    @@ Commit message
+     
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+    + ## builtin/am.c ##
+    +@@ builtin/am.c: static int parse_mail(struct am_state *state, const char *mail)
+    + 
+    + 	strbuf_addstr(&msg, "\n\n");
+    + 	strbuf_addbuf(&msg, &mi.log_message);
+    +-	strbuf_stripspace(&msg, '\0');
+    ++	strbuf_stripspace(&msg, NULL);
+    + 
+    + 	assert(!state->author_name);
+    + 	state->author_name = strbuf_detach(&author_name, NULL);
+    +
+      ## builtin/branch.c ##
+     @@ builtin/branch.c: static int edit_branch_description(const char *branch_name)
+      		strbuf_release(&buf);
+    @@ builtin/branch.c: static int edit_branch_description(const char *branch_name)
+      	strbuf_addf(&name, "branch.%s.description", branch_name);
+      	if (buf.len || exists)
+     
+    + ## builtin/commit.c ##
+    +@@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const char *prefix,
+    + 	s->hints = 0;
+    + 
+    + 	if (clean_message_contents)
+    +-		strbuf_stripspace(&sb, '\0');
+    ++		strbuf_stripspace(&sb, NULL);
+    + 
+    + 	if (signoff)
+    + 		append_signoff(&sb, ignored_log_message_bytes(sb.buf, sb.len), 0);
+    +
+      ## builtin/notes.c ##
+     @@ builtin/notes.c: static void prepare_note_data(const struct object_id *object, struct note_data *
+      			die(_("please supply the note contents using either -m or -F option"));
+    @@ builtin/notes.c: static void prepare_note_data(const struct object_id *object, s
+      	}
+      }
+      
+    +@@ builtin/notes.c: static void concat_messages(struct note_data *d)
+    + 		if ((d->stripspace == UNSPECIFIED &&
+    + 		     d->messages[i]->stripspace == STRIPSPACE) ||
+    + 		    d->stripspace == STRIPSPACE)
+    +-			strbuf_stripspace(&d->buf, 0);
+    ++			strbuf_stripspace(&d->buf, NULL);
+    + 		strbuf_reset(&msg);
+    + 	}
+    + 	strbuf_release(&msg);
+     
+      ## builtin/rebase.c ##
+     @@ builtin/rebase.c: static int edit_todo_file(unsigned flags)
+    @@ builtin/tag.c: static void create_tag(const struct object_id *object, const char
+      	if (!opt->message_given && !buf->len)
+      		die(_("no tag message?"));
+     
+    + ## builtin/worktree.c ##
+    +@@ builtin/worktree.c: static int can_use_local_refs(const struct add_opts *opts)
+    + 			strbuf_add_real_path(&path, get_worktree_git_dir(NULL));
+    + 			strbuf_addstr(&path, "/HEAD");
+    + 			strbuf_read_file(&contents, path.buf, 64);
+    +-			strbuf_stripspace(&contents, 0);
+    ++			strbuf_stripspace(&contents, NULL);
+    + 			strbuf_strip_suffix(&contents, "\n");
+    + 
+    + 			warning(_("HEAD points to an invalid (or orphaned) reference.\n"
+    +
+    + ## gpg-interface.c ##
+    +@@ gpg-interface.c: static int verify_ssh_signed_buffer(struct signature_check *sigc,
+    + 		}
+    + 	}
+    + 
+    +-	strbuf_stripspace(&ssh_keygen_out, '\0');
+    +-	strbuf_stripspace(&ssh_keygen_err, '\0');
+    ++	strbuf_stripspace(&ssh_keygen_out, NULL);
+    ++	strbuf_stripspace(&ssh_keygen_err, NULL);
+    + 	/* Add stderr outputs to show the user actual ssh-keygen errors */
+    + 	strbuf_add(&ssh_keygen_out, ssh_principals_err.buf, ssh_principals_err.len);
+    + 	strbuf_add(&ssh_keygen_out, ssh_keygen_err.buf, ssh_keygen_err.len);
+    +
+      ## rebase-interactive.c ##
+     @@ rebase-interactive.c: int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+      	if (launch_sequence_editor(todo_file, &new_todo->buf, NULL))
+ 7:  bb22f9c9c5 =  8:  a271207e48 strbuf: accept a comment string for strbuf_commented_addf()
+ 8:  8d20688e87 =  9:  c1831453d8 strbuf: accept a comment string for strbuf_add_commented_lines()
+ 9:  4b22efb941 = 10:  523eb9e534 prefer comment_line_str to comment_line_char for printing
+10:  cd03310902 = 11:  85428eadaa find multi-byte comment chars in NUL-terminated strings
+11:  13a346480e ! 12:  b9e2e2302d find multi-byte comment chars in unterminated buffers
+    @@ trailer.c: static size_t find_trailer_block_start(const char *buf, size_t len)
+      		ssize_t separator_pos;
+      
+     -		if (bol[0] == comment_line_char) {
+    -+		if (starts_with_mem(bol, buf + end_of_title - bol, comment_line_str)) {
+    ++		if (starts_with_mem(bol, buf + len - bol, comment_line_str)) {
+      			non_trailer_lines += possible_continuation_lines;
+      			possible_continuation_lines = 0;
+      			continue;
+12:  fb3c6659fc ! 13:  7661ca6306 sequencer: handle multi-byte comment characters when writing todo list
+    @@ Commit message
+         We can't just return comment_line_char anymore, since it may require
+         multiple bytes. Instead, we'll return "0" for this case, which is the
+         same thing we'd return for a command which does not have a single-letter
+    -    abbreviation (e.g., "revert" or "noop"). In that case the caller then
+    -    falls back to outputting the full name via command_to_string(). So we
+    -    can handle TODO_COMMENT there, returning the full string.
+    +    abbreviation (e.g., "revert" or "noop"). There is only a single caller
+    +    of command_to_char(), and upon seeing "0" it falls back to outputting
+    +    the full name via command_to_string(). So we can handle TODO_COMMENT
+    +    there, returning the full string.
+     
+         Note that there are many other callers of command_to_string(), which
+         will now behave differently if they pass TODO_COMMENT. But we would not
+13:  94524b8817 = 14:  8ddab67432 wt-status: drop custom comment-char stringification
+14:  d754e86f7b = 15:  16d65f9179 environment: drop comment_line_char compatibility macro
+15:  a6ffe08469 ! 16:  461cc720a0 config: allow multi-byte core.commentChar
+    @@ Commit message
+         how each site behaves. In the interim let's forbid it and we can loosen
+         things later.
+     
+    +    Likewise, the "commentChar cannot be a newline" rule is now extended to
+    +    "it cannot contain a newline" (for the same reason: it can confuse our
+    +    parsing loops).
+    +
+         Since comment_line_str is used in many parts of the code, it's hard to
+         cover all possibilities with tests. We can convert the existing
+         double-semicolon prefix test to show that "git status" works. And we'll
+    @@ config.c: static int git_default_core_config(const char *var, const char *value,
+      		else if (!strcasecmp(value, "auto"))
+      			auto_comment_line_char = 1;
+     -		else if (value[0] && !value[1]) {
+    +-			if (value[0] == '\n')
+    +-				return error(_("core.commentChar cannot be newline"));
+     -			comment_line_str = xstrfmt("%c", value[0]);
+     +		else if (value[0]) {
+    ++			if (strchr(value, '\n'))
+    ++				return error(_("core.commentChar cannot contain newline"));
+     +			comment_line_str = xstrdup(value);
+      			auto_comment_line_char = 0;
+      		} else
+    @@ config.c: static int git_default_core_config(const char *var, const char *value,
+     
+      ## t/t0030-stripspace.sh ##
+     @@ t/t0030-stripspace.sh: test_expect_success 'strip comments with changed comment char' '
+    - 	test -z "$(echo "; comment" | git -c core.commentchar=";" stripspace -s)"
+    - '
+      
+    + test_expect_success 'newline as commentchar is forbidden' '
+    + 	test_must_fail git -c core.commentChar="$LF" stripspace -s 2>err &&
+    +-	grep "core.commentChar cannot be newline" err
+    ++	grep "core.commentChar cannot contain newline" err
+    ++'
+    ++
+     +test_expect_success 'empty commentchar is forbidden' '
+     +	test_must_fail git -c core.commentchar= stripspace -s 2>err &&
+     +	grep "core.commentChar must have at least one character" err
+    -+'
+    -+
+    + '
+    + 
+      test_expect_success '-c with single line' '
+    - 	printf "# foo\n" >expect &&
+    - 	printf "foo" | git stripspace -c >actual &&
+     
+      ## t/t7507-commit-verbose.sh ##
+     @@ t/t7507-commit-verbose.sh: test_expect_success 'verbose diff is stripped out with set core.commentChar' '
 
-Or if you wanted to mix-and-match with other cat-file placeholders, you
-can do:
+  [01/16]: config: forbid newline as core.commentChar
+  [02/16]: strbuf: simplify comment-handling in add_lines() helper
+  [03/16]: strbuf: avoid static variables in strbuf_add_commented_lines()
+  [04/16]: commit: refactor base-case of adjust_comment_line_char()
+  [05/16]: strbuf: avoid shadowing global comment_line_char name
+  [06/16]: environment: store comment_line_char as a string
+  [07/16]: strbuf: accept a comment string for strbuf_stripspace()
+  [08/16]: strbuf: accept a comment string for strbuf_commented_addf()
+  [09/16]: strbuf: accept a comment string for strbuf_add_commented_lines()
+  [10/16]: prefer comment_line_str to comment_line_char for printing
+  [11/16]: find multi-byte comment chars in NUL-terminated strings
+  [12/16]: find multi-byte comment chars in unterminated buffers
+  [13/16]: sequencer: handle multi-byte comment characters when writing todo list
+  [14/16]: wt-status: drop custom comment-char stringification
+  [15/16]: environment: drop comment_line_char compatibility macro
+  [16/16]: config: allow multi-byte core.commentChar
 
-  git ls-tree --format='%(objectname) %(objectmode)' HEAD |
-  git cat-file --batch-check='%(objectname) %(deltabase) %(rest)'
-
-That is a little less efficient (we look up the object twice), but once
-you are working with hex object ids it is not too bad (cat-file is
-heavily optimized here). Of course in the long run I think we should
-move to a future where the formatting code is shared, and you can just
-ask ls-tree for deltabase if you want to.
-
-I think leaving this to specialized tools like ls-tree gives them a lot
-of flexibility that a special input mode to cat-file might find awkward.
-For example, recurse vs non-recursive tree listing. Or filtering with
-pathspecs. And of course when you get into commits and traversal, there
-are many rev-list options. :)
-
-The strategy so far has been making sure cat-file can efficiently take
-in the output of these other tools to further describe objects. But
-moving towards a unified output formatting model would be even better, I
-think. In the meantime, I think cat-file learning %(objectmode) makes
-sense for single names (rather than listing trees), and fortunately it
-uses the same (obvious) name that ls-tree does, so we won't have a
-problem unifying them later.
-
-The patch itself looked reasonable to me, modulo the comments you
-already made.
+ Documentation/config/core.txt |  4 ++-
+ add-patch.c                   | 14 +++++-----
+ builtin/am.c                  |  2 +-
+ builtin/branch.c              |  8 +++---
+ builtin/commit.c              | 21 +++++++--------
+ builtin/merge.c               | 12 ++++-----
+ builtin/notes.c               | 12 ++++-----
+ builtin/rebase.c              |  2 +-
+ builtin/stripspace.c          |  4 +--
+ builtin/tag.c                 | 14 +++++-----
+ builtin/worktree.c            |  2 +-
+ commit.c                      |  3 ++-
+ config.c                      |  8 +++---
+ environment.c                 |  2 +-
+ environment.h                 |  2 +-
+ fmt-merge-msg.c               |  8 +++---
+ gpg-interface.c               |  4 +--
+ rebase-interactive.c          | 10 ++++----
+ sequencer.c                   | 48 ++++++++++++++++++-----------------
+ strbuf.c                      | 47 ++++++++++++++++++----------------
+ strbuf.h                      |  9 ++++---
+ t/t0030-stripspace.sh         | 10 ++++++++
+ t/t7507-commit-verbose.sh     | 10 ++++++++
+ t/t7508-status.sh             |  4 ++-
+ trailer.c                     |  6 ++---
+ wt-status.c                   | 31 +++++++++-------------
+ 26 files changed, 162 insertions(+), 135 deletions(-)
 
 -Peff
