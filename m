@@ -1,92 +1,102 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9A71386A8
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 20:45:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DFC142636
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 21:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710276317; cv=none; b=pCf8ACeY7PkEVLJbfA6wYwd/veUHXJ4sOuiwL+puILCXeXEnn/PUpACjPgKMp22ntqVGlZFROv3htpvzsU496bjbdqk71wYZR8TsVq/y+JIyFlYC0e0QjxA/3WiKgAhwTXMnSRZIZURPrQft4Ctb2VLpAzjhHZr3aQyI9BNnE9s=
+	t=1710279256; cv=none; b=s2C8BsOfqmlNmatziy/YwSNx3VQ2+MlUwReLCqqQZlLW6HUHZbGbxxHDX9dROhIYlOETPaWFQzo29CmNtEb3XIKRR85klAXc0+XFsjQRId07KEsFcRA9UKYSVOJjn5pCdhP+/K4bzUITfQbhnNDpTghSLhsRndS1pCXlDmmNviI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710276317; c=relaxed/simple;
-	bh=/fIJOmvH0hYQdqGiG6U4BZybCPZIfd0aG5WCvFbSmAo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f7wd4hNF8jhlbniLYJCRPJifF6QrIJQvbCBgSB4MMZ7Xw+l79FSSu4jlSSoSTcjL4WXKZRaLkmsMbyBxcDuB7Vm1PkMSv5WoEqtsLlDHgXAlWPjXEZUqTbsQKBlbLLtuTcpu7be25ZeQZQCwRWhc0rAYeSSsEgIEoZ6+rWJCh/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1yeGpieQ; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1710279256; c=relaxed/simple;
+	bh=GariS4oC7lRisOpkcG5cV1UuBIEx9KffL/cdpr3TnYE=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=pY0KpuNEhIIKzHroAfa0TqNyFbbuJlgT5gE2WSfQlXu8Xb60trd4dYZYtXmw1AwO/4nKbDEr6qH09IPDyUPediFQerfn7v/qrWcbTQoIYiJsfMrynPJc/ZghaX9RT0PPBxBb0erNGVMFqDZdiJ8L/E/ySMR4T8odob8ZezbogSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LseBleUq; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1yeGpieQ"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a450bedffdfso50267566b.3
-        for <git@vger.kernel.org>; Tue, 12 Mar 2024 13:45:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LseBleUq"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4132cc37e21so15651505e9.0
+        for <git@vger.kernel.org>; Tue, 12 Mar 2024 14:34:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710276314; x=1710881114; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e8gTAjnLTJBUA50BDFGpH/UFkKgJCUYRV0Ajr3iMCg8=;
-        b=1yeGpieQ1UscfBYQrcBN+cjuKYFDPDBMfsBSQBHdD0vjPx6ZG4OUG6D/sjxhUNUgX2
-         3kzB/bawNnMjA8BCTfqY2V1b5fYwUZdIZqZqfZNm9+AaYjY24U4v2CRsed8drcUM4z77
-         K33atBGD2sXfMtjUdSj+JGZBWXFSX9lywqf3IDDXzlpThxLX9p/D71PK932MVej1d7zl
-         ve8+f94YifgVRRdoEyBS1pBXIwy/Z/vf7g29qD8nDhKKA3SHF3Na2UhaPQaAkX1UwSwB
-         Ya3xgHfLIU4GXKBNlyFllWTjI7+kZWG5XkLRc+IcZOcISxnlvEnnVoqUOwzwgps7FLlK
-         osPQ==
+        d=gmail.com; s=20230601; t=1710279253; x=1710884053; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZeLT+pU/krgOq2SZ8KwY+tE+q4k1dnscOy8ZHZxQ5u4=;
+        b=LseBleUqpEjJiTIFT5+qc69QLAq1BnJhT5kWTmlxg2yvVDelKz1nGzm/BZHgIM6dL8
+         uVuUE3/0MrsubthfvvIxHpPp/SKQ6PB25nim0oHws2EDz/Hk2nlu/rZ2Ou10aZrJvSwm
+         N1KzefaEpnqbBg8Ajzi5PMFvnwQw6zLFF+7L6CKzdzBasxnAujAGq2P6NlarA1gTP0Pq
+         tJNrDYEbvbcVkAGQhF+0xSaChfgwx94ul97vw8uraegkulCWrfskOqX0wNNE9xNucrKU
+         WewUnPX98cUaP1T5BYKL/7QG8i+6lNPX962WadB9bS9j5KWn1qIklcP7bK8KqhU/bWsV
+         Vkbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710276314; x=1710881114;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e8gTAjnLTJBUA50BDFGpH/UFkKgJCUYRV0Ajr3iMCg8=;
-        b=WY2JSAQ0AQER8VqmBau5oCEqpaX3sk7u+oNzpqGRgYXlTKPjFNcAHisYCwb3RGqfBr
-         TYe/oiZH0FArdPoGO7C7r1OhVB5D4BBeTLhfzWC52WXrUxrhrDGZu3zEUUXOwJGjh9hh
-         Dkr+4if8OZofdt9u40Iud5gKSjP9UoRRpwnW1iE68r0yhxMUgOPImjWR84NKSiJYUKqK
-         TqDf1eSy+vtxEpeq4c8P1yynMKqmBT4I6Fn9VDIDp2IT89VMtZ6SOJPTEtSMlhIXTiON
-         PTqZgeMiT8ZRkxWT7lUHiGXi0Q9bfRlv1xdCK7b8NHzH7Tjr1E0JTNK3+eVX1MohQGEh
-         X95g==
-X-Forwarded-Encrypted: i=1; AJvYcCVfcl5TatHMNDEd9jDm+9Yx5al9LnLLMOLgLops52bvrczvF+pUpjfMYkn5dL0TO15EfAeUjtMDidSUSAtmSEgEBAX7
-X-Gm-Message-State: AOJu0YzmSpNSGg66uEkI8mZXFfJ1kWr429DDAfIczN4hZjp3JISJbC4q
-	UjleHGnxM7+4ZwtmSe5rzFk0UAPhT9LPjpqKS6YSzGJXEVFZ7UaTOPeakshrpt6Ce0FD4oaj9N3
-	wI5MRO0TxZT41LO1DD9JIX+6iWFeyffzwlG1n
-X-Google-Smtp-Source: AGHT+IHwtnd30dfc78MlmrnnaJtFU43letlahXYlHpLj1iPo7Yk2V3uwUHC6LEfzyhCXekCrCX5pauZ69rVTVKuVPFw=
-X-Received: by 2002:a17:906:a384:b0:a3e:c738:afa2 with SMTP id
- k4-20020a170906a38400b00a3ec738afa2mr959517ejz.76.1710276314489; Tue, 12 Mar
- 2024 13:45:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710279253; x=1710884053;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZeLT+pU/krgOq2SZ8KwY+tE+q4k1dnscOy8ZHZxQ5u4=;
+        b=DPQAxFNwN1u9iLxXGBT25ri6yS2NksP2mJAosex11y5rwC9KBO6wuP/0TAltRWFzvR
+         P/X6ByZejbbM0bs/MJi14WLfOyo2NchX6scdU8hKtaf2w7pwTwsLL5h9ACuYDxqrl2RK
+         BSMgVB2pIWcZn8cf2IE+npgiql3x/7UiqNLVdreSGaznE/ogKtRwxBvSVblDubyiyRyl
+         00ldq2QfSz4aBLOZ5r1i/QoGmUkFnG+xhzQwpGCh850HyxSlhhTOGXhKhA9fOm7jsGA9
+         SC4mWYLA3D7ZxTa7xlh25Us2ckJjXB7efwL61NamQDoSgJ6y4i/uu73sUVYa3OnY6yvi
+         kx4w==
+X-Gm-Message-State: AOJu0YxtE+noQ1fLk9t8TqWYPdKHnsNM1aiDwI+tdu+1Ir78h/EoTK+t
+	e/aPMAzQnq5Gz/Hj5TmPmDBkaQpVi+TWMIiDGzyi/maurhswM4A0hfwtNyVL
+X-Google-Smtp-Source: AGHT+IEMWeU8t8+vsUTbxbtimbUYIQVB6Tk3nMIi233ASyTjr0sUc2ZLEezjoXj+5psiCfAR2lz3Lg==
+X-Received: by 2002:a05:600c:3ac9:b0:413:2ab0:8303 with SMTP id d9-20020a05600c3ac900b004132ab08303mr4893451wms.19.1710279252754;
+        Tue, 12 Mar 2024 14:34:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v15-20020a05600c470f00b004128fa77216sm156740wmo.1.2024.03.12.14.34.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Mar 2024 14:34:12 -0700 (PDT)
+Message-ID: <pull.1686.git.git.1710279251901.gitgitgadget@gmail.com>
+From: "Jonas Wunderlich via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 12 Mar 2024 21:34:11 +0000
+Subject: [PATCH] documentation: camel case of config option, and "no" instead
+ of "false"
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240305012112.1598053-2-atneya@google.com> <20240305012112.1598053-3-atneya@google.com>
- <10042df8-5d06-47cd-9202-ea6965f50784@gmail.com> <xmqqttljs3he.fsf@gitster.g>
-In-Reply-To: <xmqqttljs3he.fsf@gitster.g>
-From: Atneya Nair <atneya@google.com>
-Date: Tue, 12 Mar 2024 13:44:37 -0700
-Message-ID: <CA+D9mTFLehceHtO+_3w4pCW+XKNx1FjxJv_qR+sfwR94kPJMVw@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/3] Make read_gitfile and resolve_gitfile thread safe
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <avila.jn@gmail.com>, 
-	git@vger.kernel.org, jeffhost@microsoft.com, me@ttaylorr.com, 
-	nasamuffin@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Jonas Wunderlich <git@03j.de>,
+    Jonas Wunderlich <git@03j.de>
 
-On Wed, Mar 6, 2024 at 8:57=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
+From: Jonas Wunderlich <git@03j.de>
 
-> >> +    if (!path) die(_("Unexpected null from realpath '%s'"), dir);
-> >
-> > In fact, this is not a null path, but an empty path (null is not part o=
-f
-> > the string).
-> > By the way, shouldn't this be an internal bug instead of a message to
-> > the user?
->
-> Unless the strbuf instance the result_buf pointer points at is
-> corrupt, its .buf member should *NEVER* be NULL.  Testing for NULL
-> is meaningless, unless you are manually futzing with the members of
-> strbuf (you shouldn't).
->
-> Thanks for carefully reading.
->
+The `status.showUntrackedFiles` config option only accepts the values "no",
+"normal" or "all", but not as this part of the man page suggested "false".
 
-Thanks for pointing this out, I fixed this issue in v2.
+Signed-off-by: Jonas Wunderlich <git@03j.de>
+---
+    documentation: camel case of config option, and "no" instead of "false"
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1686%2Fjonas-w%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1686/jonas-w/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/1686
+
+ Documentation/git-status.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 4dbb88373bc..b0f36fabfb3 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -472,7 +472,7 @@ again, because your configuration may already be caching `git status`
+ results, so it could be faster on subsequent runs.
+ 
+ * The `--untracked-files=no` flag or the
+-	`status.showUntrackedfiles=false` config (see above for both):
++	`status.showUntrackedFiles=no` config (see above for both):
+ 	indicate that `git status` should not report untracked
+ 	files. This is the fastest option. `git status` will not list
+ 	the untracked files, so you need to be careful to remember if
+
+base-commit: 945115026aa63df4ab849ab14a04da31623abece
+-- 
+gitgitgadget
