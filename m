@@ -1,141 +1,120 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0525140864
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 17:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972C716FF59
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 18:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710265462; cv=none; b=We6QpxI1ZDw7T373gNJw9tsI5QOjDWvjZ9FCOJXpbKzAaxEDuhQ6tgkyB9K3SRc/PjLJzK34Er9rKZ4c7CkK9yW0+Im7qnFaZDuUiYP0fqJjmh7lE8bEGiUeXXTE9Cx0BfwwENxIy/BuFDGQnboY7ZdlNEIcsZ84CmAfG+Pe1zA=
+	t=1710268529; cv=none; b=Bv6TxIU0oIXz7sqb+Cn7c35MJW9y0JuaRPUIp3QJ5jeoNZ+RZPMjXyrMZonyXNQlq7Y3Vxi34DmLd1M2GBe4p9b9jJ8oZLSe+QooM4CnySADcqDfttoEM6mTRjx9j0xEYcKKQNbsRuC8ecMKvY5YUTgONKkmeRmJrDZK6S6yjjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710265462; c=relaxed/simple;
-	bh=Qg5Oip/sksIZOiIHfL7otN03Pd0OWc91bLbUm1VYyt0=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=IoQclh28yjkHQqExGwyMN4qdjnZJTrapBT6PG37hxOpqLpPD/04W81FJm3GrEsM0FUftAFPfe9OeyEfTHJQSFHSoTdi9HCbKSca+EFvFjTdfaol130Vw2uFP97RoyvYM7N1pcvIoGsQJiQudkpaqIGrzrDwuyNv1oRAfmt+x+A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=CPBjDRzr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZEb21Mh; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1710268529; c=relaxed/simple;
+	bh=8o42131xdDRXZdru5qmlWkR7BXrtzYBpdsAiw1Z2tSY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l00ezQUpEB9hNVg0yS84ljVdCzvIhLtaF+o/cZKpss6WvcbyrwnchB2Q0PJOg7I0JR5v0SAZHkOPEuryKE92gYh3ciDXvg5sgi5OCxhVQAezThEZvaWHClPs1yIXfuhmg/mTKEv2MtyiJq/BEBszwYxF6tL6Xcf6ALM68eyi1do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dt7/V6os; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="CPBjDRzr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZEb21Mh"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 1332D1800076;
-	Tue, 12 Mar 2024 13:44:18 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 12 Mar 2024 13:44:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1710265458; x=1710351858; bh=aMTycaIzAfLPb36mrDgVITGe+QZQWaOT
-	p+JhSY1dO3w=; b=CPBjDRzr5tQO2YPNVHOQViWYWDdDgrfasMtRf1bpIhTzjf8Z
-	pqENNZ0CP+7QUiG0YPQCQrr3Etlmm0v+7/6ZEkzzzH+QAklBqxinv5P60/uu6WUU
-	LAq3+aMOgYxCWLvfoTwBkkCUJ8UJOoef4hk0FXyVv0TUrLJ0mMzKnrz81NNTOwcE
-	PSzgqbMY3fCXZ7yPyQqfQelqr8gouXUaUBwhgIn4AftWAX/7YkV+pfAiOx4BsLyt
-	kfDG6Lq+Ivd8z61/h7mI8h71koEKumwPpqYVdeIWnsZzrWSgHFLPOMj13BNOiO5H
-	DtqvG5n65+nMlo4hBvtOkAqJCSHFP9Zvanlb1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710265458; x=
-	1710351858; bh=aMTycaIzAfLPb36mrDgVITGe+QZQWaOTp+JhSY1dO3w=; b=h
-	ZEb21MhLzvN9tFbM2GKPdCwZsn3PULvDdO5FIo0mG1iCUng0xLeA9hhtpno0M/3g
-	HwiWJRVlfrWiB6SIH3mtNgcnjaxVrbbxdGr6Y7owsYPkNooJ3ud2E+o0yWTTzDrY
-	YC8AXMcuuBYs2sVMBQ72vMgXCtkZgA1ZHKWfS05wD/kuPTqZpqqm6pVv2BQQ62+C
-	y4C2vXufBTRQFfq0+EFquDfA7VU7f8Pmi2voftxeT3HuV2aVbvMlin1b+stpR0w0
-	2ct3fTdHV+nvhddqqL6otLRBlUIAlzyxl8zrwghZCd6A/XUVRXHQrGozyGFIj8aF
-	+KmfOaR6n7w/y0ykyWGRw==
-X-ME-Sender: <xms:cpTwZRJtK8_EQgax4GpRKSrUZPGhhfnGC9xuSWlpa_eBepqXU3XRfTM>
-    <xme:cpTwZdK4CapWD5wxrZVK9D-3x34vL5jl5a6_eYGjDf_wuxl_Q2ftwBZjkgcdh7p63
-    nwp1AuDAFzh-MWnsA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeefgddutdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgfgse
-    htqhertderreejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhk
-    fdcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnh
-    epvdevheeiudefheffvdetueevkeehhfeliefgkedtieefudetueehueeftefffedunecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvse
-    hkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:cpTwZZu1KJc8w7BvwHa0gPlxxVb7PWqY9aYGzrxf8J0iYFt9grat3w>
-    <xmx:cpTwZSYBRgkHcoPNsefUrhbfd017PRvZ2j4Esf9yVTBn0q6Yl6YRhw>
-    <xmx:cpTwZYZlIhePGq2Q7oyArwCEkOKmSqoJm3SlGncN-S8LqE8TRxeh_w>
-    <xmx:cpTwZWA6Sg3iaYgRbPGyzRuyYGp8kjbtXVl2_41B8p49f3rkhhk4IQ>
-    <xmx:cpTwZXldpvvuVWIbr_cXVIiOtuhLy2BrLfGJGAnmHlGP_SVzR8cpsW6LQmA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 3F82115A0092; Tue, 12 Mar 2024 13:44:18 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dt7/V6os"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C047374FE;
+	Tue, 12 Mar 2024 14:35:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8o42131xdDRXZdru5qmlWkR7BXrtzYBpdsAiw1
+	Z2tSY=; b=Dt7/V6osfDm/X5msdy5nNTkrgmO1p92/nWkVNMlOQ2g9ckX78xZ05x
+	OboSnTiBECQaEu+TZHEM3Stloda/bfYzYGkcqq3fI9FRlvhfMDstX468rhNIXX52
+	RwhP8QApl/tsyfOzYXg+GfGFBMcjobqnycShD4moBKUxiHPEV0dlc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 43826374FD;
+	Tue, 12 Mar 2024 14:35:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E450E374FB;
+	Tue, 12 Mar 2024 14:35:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] cat-file: avoid verifying submodules' OIDs
+In-Reply-To: <951f73397c15f76da75bbd74a02f36da0116623f.1710183362.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Mon, 11 Mar 2024
+	18:56:02 +0000")
+References: <pull.1689.git.1710183362.gitgitgadget@gmail.com>
+	<951f73397c15f76da75bbd74a02f36da0116623f.1710183362.git.gitgitgadget@gmail.com>
+Date: Tue, 12 Mar 2024 11:35:16 -0700
+Message-ID: <xmqqh6hbl2mz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <73a4cb87-2800-4ad1-b7a2-33c6465fcc50@app.fastmail.com>
-In-Reply-To: <20240312092959.GA96171@coredump.intra.peff.net>
-References: <cover.1709841147.git.code@khaugsbakk.name>
- <3b12a8cf393b6d8f0877fd7d87173c565d7d5a90.1709841147.git.code@khaugsbakk.name>
- <20240312092959.GA96171@coredump.intra.peff.net>
-Date: Tue, 12 Mar 2024 18:43:55 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Jeff King" <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] log-tree: take ownership of pointer
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4655ADD2-E09F-11EE-B559-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Hi Jeff and thanks for taking a look
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Tue, Mar 12, 2024, at 10:29, Jeff King wrote:
-> On Thu, Mar 07, 2024 at 08:59:35PM +0100, Kristoffer Haugsbakk wrote:
->
->> The MIME header handling started using string buffers in
->> d50b69b868d (log_write_email_headers: use strbufs, 2018-05-18). The
->> subject buffer is given to `extra_headers` without that variable taki=
-ng
->> ownership; the commit =E2=80=9Cpunts on that ownership=E2=80=9D (in g=
-eneral, not just
->> for this buffer).
->>
->> In an upcoming commit we will first assign `extra_headers` to the own=
-ed
->> pointer from another `strbuf`. In turn we need this variable to always
->> contain an owned pointer so that we can free it in the calling
->> function.
->
-> Hmm, OK. This patch by itself introduces a memory leak. It would be ni=
-ce
-> if we could couple it with the matching free() so that we can see that
-> the issue is fixed. It sounds like your patch 2 is going to introduce
-> such a free, but I'm not sure it's complete.
+> +Submodules are handled specially in `git cat-file`, as the objects
+> +corresponding to the recorded OIDs are not expected to be present in the
+> +current repository. For that reason, submodules are reported as having
+> +type `submodule` and mode 1600000 and all other fields are zeroed out.
 
-Is it okay if it is done in patch 2?
+While the above may not be technically wrong per-se, I am not sure
+if that is the more important part of what we want to tell our
+users.  For example, "git ls-tree HEAD -- sha1collisiondetection"
+reports "160000 commit ...object.name.... sha1collisiondetection".
+Is it correct to say ...
 
-> It frees the old extra_headers before reassigning it, but nobody
-> cleans it up after handling the final commit.
+    Submodules are handled specially in `git ls-tree`, as the
+    objects corresponding to the recorded OIDs are not expected to
+    be present in the current repository.
 
-I didn=E2=80=99t get any leak errors from the CI. `extra_headers` in `sh=
-ow_log`
-is populated by calling `log_write_email_headers`. Then later it is
-assigned to
+...?  I do not think so.
 
-    ctx.after_subject =3D extra_headers;
+For the same reason, as an explanation for the reason why "git
+cat-file -t :sha1collisiondetection" just reports "submodule", the
+new text does not sit well.
 
-Then `ctx.after_subject is freed later
+I actually have to wonder if the new behaviour proposed by this
+patch is a solution that is in search of a problem, or trying to
+solve an unstated problem in a wrong way.
 
-    free((char *)ctx.after_subject);
+    O=$(git rev-parse --verify :sha1collisiondetection)
+    git cat-file -t "$O"
+    
+should fail because the object whose name is $O is not available.
+Why should then this succeed and give a different result?
 
-Am I missing something?
+    git cat-file -t :sha1collisiondetection
 
-> We should also drop the "static" from subject_buffer, if it is no long=
-er
-> needed. Likewise, any strings that start owning memory (here or in pat=
-ch
-> 2) should probably drop their "const". That makes the ownership more
-> clear, and avoids ugly casts when freeing.
+The "cat-file" command is about objects.  While object's type may
+sometimes be inferrable (by being contained in a tree), if the user
+asks us to determine the type of the object, we should actually hit
+the object store, whether the commit object in question happens to
+be on our history or somebody else's history that our gitlink points
+at.
 
-Okay, I=E2=80=99ll do that.
+So, I am not yet convinced that I should take this patch.  Previous
+two steps looked good, though.
 
-Thanks
+Thanks.
+
+> index 73bd78c0b63..c59ad682d1f 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -128,7 +128,9 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+>  	switch (opt) {
+>  	case 't':
+>  		oi.type_name = &sb;
+> -		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+> +		if (obj_context.mode == S_IFGITLINK)
+> +			strbuf_addstr(&sb, "submodule");
+> +		else if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+>  			die("git cat-file: could not get object info");
