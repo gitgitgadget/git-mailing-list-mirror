@@ -1,28 +1,28 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E578E78285
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8717867B
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710235029; cv=none; b=BFm/mD1uVQvPertbDBQKVKees82kr0Bf4/AsT06m8FNWE2Herj9yMxKxTkcQSSoKAfbA99S2aBMYXaHZF3HKoYxYyNul+MjpHrnFPhaM0Tneb+j4sIVvuSO9knm2jf2nqcNZE70koIvnNwgYy90swJ20IRnjDOeglFchl+osBzU=
+	t=1710235034; cv=none; b=oHADLSdX1TQtl8l4rFiDVTkkY1PPtToSiaCIRlUB5RA3pCWTA22uV/ryN7WpEQ7WOK/Si/17ZYXcCZXE3CqBMVkNQXxpb7pocxacoz47MLaqEg/+qiOW5dELxdWT6P2IRqnaeUVUPwSSyrsg9Pis+al9IgmgIr7k7pwpn83XyuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710235029; c=relaxed/simple;
-	bh=8/gaBe020pkfhuTohNqkA909omd7GHlXa6WsvM41NfE=;
+	s=arc-20240116; t=1710235034; c=relaxed/simple;
+	bh=QRk+GyfzVuwn8CzF1WApDjtkqt5eHgp93hlCiP3Li3Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iYG/aKbChYPeixoJjK9MXe2q7UWgdpY7pdaxWpdvtq+rCJQ1//w/izrdgKVDwjbS5uiGu1pMqPqbBMgo4MNCohD9SNIus+ap6U7MZETjfqoux/nPkMi6xbIEHXzR8xBuG5hiHCqrflnGa3apz70wWQajyA1ZJt1JO/t5hRdXQOk=
+	 Content-Type:Content-Disposition:In-Reply-To; b=eUV8ejyEg9S0Temq0mkYjWZD5RT6ekOxsaX6Eps/4eN6HZJrsxyRxDF0MzZGbFSzzlZn9YkqXCTLVoG047XmHKECtq6sHZhogXITBaPVIoEJm3KdOReA5y9ab4sEUiBSi/XZyNJVkmBABYx0eDk09scE3AUpT1+jAUFDHUQFLsw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17425 invoked by uid 109); 12 Mar 2024 09:17:07 -0000
+Received: (qmail 17445 invoked by uid 109); 12 Mar 2024 09:17:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 09:17:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 09:17:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27995 invoked by uid 111); 12 Mar 2024 09:17:11 -0000
+Received: (qmail 28007 invoked by uid 111); 12 Mar 2024 09:17:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 05:17:11 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 05:17:15 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Mar 2024 05:17:06 -0400
+Date: Tue, 12 Mar 2024 05:17:10 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
@@ -30,8 +30,9 @@ Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
 	Manlio Perillo <manlio.perillo@gmail.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 01/16] config: forbid newline as core.commentChar
-Message-ID: <20240312091706.GA95609@coredump.intra.peff.net>
+Subject: [PATCH v2 02/16] strbuf: simplify comment-handling in add_lines()
+ helper
+Message-ID: <20240312091710.GB95609@coredump.intra.peff.net>
 References: <20240312091013.GA95442@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,72 +44,85 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240312091013.GA95442@coredump.intra.peff.net>
 
-Since we usually look for a comment char while parsing line-oriented
-files, setting core.commentChar to a single newline can confuse our code
-quite a bit. For example, using it with "git commit" causes us to fail
-to recognize any of the template as comments, including it in the config
-message. Which kind of makes sense, since the template content is on its
-own line (so no line can "start" with a newline). In other spots I would
-not be surprised if you can create more mischief (e.g., violating loop
-assumptions) but I didn't dig into it.
+In strbuf_add_commented_lines(), we prepare two strings with potential
+prefixes: one with just the comment char, and one with an additional
+space. In the add_lines() helper, we use the one without the extra space
+for blank lines or lines starting with a tab.
 
-Since comment characters are a local preference, to some degree this is
-a case of "if it hurts, don't do it". But given that this would be a
-silly and pointless thing to do, and that it makes it harder to reason
-about code parsing comment lines, let's just forbid it.
+While passing in two separate prefixes to the helper is very flexible,
+it's more flexibility than we actually use (or are likely to use, since
+the rules inside add_lines() only make sense if "prefix2" is a variant
+of "prefix1" without the extra space). And setting up the two strings
+makes refactoring in strbuf_add_commented_lines() awkward.
 
-There are other cases that are perhaps questionable (e.g., setting the
-comment char to a single space), but they seem to behave reasonably (at
-least a simple "git commit" will correctly identify and strip the
-template lines). So I haven't worried about going on a hunt for every
-stupid thing a user might do to themselves, and just focused on the most
-confusing case.
+Instead, let's pass in a single string, and just let add_lines() add the
+extra space to the result as appropriate.
+
+We do still need to pass in a flag to trigger this behavior. The helper
+is shared by strbuf_add_lines(), which passes in a NULL "prefix2" to
+inhibit this extra handling.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-In the string version I suppose you could set it to "\nexec rm -rf /" if
-you really wanted to treat yourself to a fun "git rebase". Again, this
-is all local, but it's perhaps nice to know that core.commentChar is not
-a vector for arbitrary code execution.
+ strbuf.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-(That of course made me wonder if setting it to just "exec rm -rf / "
-would work, as the rest of the template line would be ignored by "rm";
-but that is self-defeating as we'd recognize the line as a comment and
-remove it).
-
- config.c              | 2 ++
- t/t0030-stripspace.sh | 5 +++++
- 2 files changed, 7 insertions(+)
-
-diff --git a/config.c b/config.c
-index 3cfeb3d8bd..f561631374 100644
---- a/config.c
-+++ b/config.c
-@@ -1566,6 +1566,8 @@ static int git_default_core_config(const char *var, const char *value,
- 		else if (!strcasecmp(value, "auto"))
- 			auto_comment_line_char = 1;
- 		else if (value[0] && !value[1]) {
-+			if (value[0] == '\n')
-+				return error(_("core.commentChar cannot be newline"));
- 			comment_line_char = value[0];
- 			auto_comment_line_char = 0;
- 		} else
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index d1b3be8725..e399dd9189 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -401,6 +401,11 @@ test_expect_success 'strip comments with changed comment char' '
- 	test -z "$(echo "; comment" | git -c core.commentchar=";" stripspace -s)"
- '
+diff --git a/strbuf.c b/strbuf.c
+index 7827178d8e..689d8acd5e 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -340,18 +340,17 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
+ }
  
-+test_expect_success 'newline as commentchar is forbidden' '
-+	test_must_fail git -c core.commentChar="$LF" stripspace -s 2>err &&
-+	grep "core.commentChar cannot be newline" err
-+'
-+
- test_expect_success '-c with single line' '
- 	printf "# foo\n" >expect &&
- 	printf "foo" | git stripspace -c >actual &&
+ static void add_lines(struct strbuf *out,
+-			const char *prefix1,
+-			const char *prefix2,
+-			const char *buf, size_t size)
++			const char *prefix,
++			const char *buf, size_t size,
++			int space_after_prefix)
+ {
+ 	while (size) {
+-		const char *prefix;
+ 		const char *next = memchr(buf, '\n', size);
+ 		next = next ? (next + 1) : (buf + size);
+ 
+-		prefix = ((prefix2 && (buf[0] == '\n' || buf[0] == '\t'))
+-			  ? prefix2 : prefix1);
+ 		strbuf_addstr(out, prefix);
++		if (space_after_prefix && buf[0] != '\n' && buf[0] != '\t')
++			strbuf_addch(out, ' ');
+ 		strbuf_add(out, buf, next - buf);
+ 		size -= next - buf;
+ 		buf = next;
+@@ -362,14 +361,11 @@ static void add_lines(struct strbuf *out,
+ void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
+ 				size_t size, char comment_line_char)
+ {
+-	static char prefix1[3];
+-	static char prefix2[2];
++	static char prefix[2];
+ 
+-	if (prefix1[0] != comment_line_char) {
+-		xsnprintf(prefix1, sizeof(prefix1), "%c ", comment_line_char);
+-		xsnprintf(prefix2, sizeof(prefix2), "%c", comment_line_char);
+-	}
+-	add_lines(out, prefix1, prefix2, buf, size);
++	if (prefix[0] != comment_line_char)
++		xsnprintf(prefix, sizeof(prefix), "%c", comment_line_char);
++	add_lines(out, prefix, buf, size, 1);
+ }
+ 
+ void strbuf_commented_addf(struct strbuf *sb, char comment_line_char,
+@@ -750,7 +746,7 @@ ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
+ void strbuf_add_lines(struct strbuf *out, const char *prefix,
+ 		      const char *buf, size_t size)
+ {
+-	add_lines(out, prefix, NULL, buf, size);
++	add_lines(out, prefix, buf, size, 0);
+ }
+ 
+ void strbuf_addstr_xml_quoted(struct strbuf *buf, const char *s)
 -- 
 2.44.0.481.gf1a6d20963
 
