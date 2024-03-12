@@ -1,94 +1,91 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22423236
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 07:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D703236
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 07:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710229465; cv=none; b=KUITxmpojc7RiCvfAT7KF5oZhYB+qjZzAvuAbZoydgbOD3kaGqqOvmpQW1cYJX+d6vn9SGH6he2eIKmonoOBgLXvAhl1GswByMSJgClzp9E1swlWH525jFjXQQ2LIVeL7GH4dJdlZnVhTOLR1/GnnpwPwaD5q6s8jZzwpMt4PPA=
+	t=1710229526; cv=none; b=G2g2dPzOcb/dqsUSE5Qi6aG0fPAaiUvuYQJ1e800CPlBWk6VtVsyUIFJyAaI0y0pjJ99aCy/I46LV7b9Qk2ZqNxZSc30tua5wpy4J0IjzENXJEPpE6rMY+9fzPTnDMUrOKA2OgbXtz68sH6WnKpBYnKcK1eBx2/wysPGtEbhO9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710229465; c=relaxed/simple;
-	bh=MUxhQ580SRDwblDOJd5RiO6SGwOagXA6yQLe5rBdGW0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LXn7gg8aDJhA4DjspnkN1U2Y2ZQlVogVVwS71BukCJi3bjkJAjIC9d/g9YEFA/+hkP5tucSystPvQsJDh+8EZx9FLKq4S8kvRi4ZcZSHb0P5567y7khCDdaOabCXsD/+x8Q6Ui7cQfEycQgzSp9AHOmlT8YT9H4CVT+uUlaoU7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cWOqvlqn; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cWOqvlqn"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1FE2F32F56;
-	Tue, 12 Mar 2024 03:44:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=MUxhQ580SRDwblDOJd5RiO6SGwOagXA6yQLe5r
-	BdGW0=; b=cWOqvlqnAx7JHQWvoRUKKWuKKxHQ8zFlYgTlDagMyIzmjeozATAzX4
-	ss5njP9STdoWSq/wbDdfsS53hpq+3NHChiLdD3XbULWYC+yyAoIpIunW/hf409Ru
-	AhKEq0clEuZQoraIXybKMtw5kJYPOgGM/JFoSXI2NtOBEOS1FvY1U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 089E632F55;
-	Tue, 12 Mar 2024 03:44:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9781532F54;
-	Tue, 12 Mar 2024 03:44:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ralph Seichter <github@seichter.de>
-Cc: Chris Torek <chris.torek@gmail.com>,  Ralph Seichter via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  rsbecker@nexbridge.com
-Subject: Re: [PATCH v2] config: add --comment option to add a comment
-In-Reply-To: <877ci7lxid.fsf@ra.horus-it.com> (Ralph Seichter's message of
-	"Tue, 12 Mar 2024 08:28:26 +0100")
-References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
-	<pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
-	<xmqqy1apudvv.fsf@gitster.g>
-	<9166fa83-4ed5-41fd-83f7-337fd524d0e2@seichter.de>
-	<cf21edb2-7681-42a9-8b58-beca5d04c179@seichter.de>
-	<CAPx1Gvd4FjCTSn4oUWNDtLS2G4V3yrddggafX0WHfHEdojtCNQ@mail.gmail.com>
-	<877ci7lxid.fsf@ra.horus-it.com>
-Date: Tue, 12 Mar 2024 00:44:17 -0700
-Message-ID: <xmqqmsr3lwry.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710229526; c=relaxed/simple;
+	bh=05f5Gf1pQSokn80bEdQVsWJISc3uLVsNSl17x2E6kHg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZkSuwN1Ixu8uwlpTs+I9DYbaj+qii+wSO+WuCIsl+vmMfR25pgqOvXm7a+jqG9vUrlngP6rVjMqHIeOmwXoAevk/vJHv7FQ/uLRgsFYav9n6XN1utg00mwi1WUogje0snoO2p0CEege0l+BkRvkK0m+8yXNKZsrA8ueYEOCNwcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 14218 invoked by uid 109); 12 Mar 2024 07:45:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 07:45:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27409 invoked by uid 111); 12 Mar 2024 07:45:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 03:45:18 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 12 Mar 2024 03:45:13 -0400
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
+ docs to code
+Message-ID: <20240312074513.GA47852@coredump.intra.peff.net>
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+ <20240307085632.GB2072294@coredump.intra.peff.net>
+ <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 552B1DB6-E044-11EE-8254-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
 
-Ralph Seichter <github@seichter.de> writes:
+On Thu, Mar 07, 2024 at 10:20:16PM +0000, brian m. carlson wrote:
 
-> * Chris Torek:
->
->> You must use a literal line feed, e.g.:
->>
->> LF='
->> '
->
-> Of course, silly me. Easily done in a shell script. I was too focused on
-> trying it in an interactive shell. Thanks, Chris.
+> > As I discussed in patch 1, remote-curl does handle the "true" thing
+> > correctly. And that's really the helper that matters in practice (it's
+> > possible some third party helper is looking for the explicit "true", but
+> > presumably they'd have reported their confusion to the list). So we
+> > could probably just start tacking on the "true" in transport-helper.c
+> > and leave that part of the documentation untouched.
+> > 
+> > I'm less sure of the specific-algorithm thing, just because it seems
+> > like remote-curl would never make use of it anyway (preferring instead
+> > to match whatever algorithm is used by the http remote). But maybe there
+> > are pending interoperability plans that depend on this?
+> 
+> It was designed to allow indicating that we know how to support both
+> SHA-1 and SHA-256 and we want one or the other (so we don't need to do
+> an expensive conversion).  However, if it's not implemented, I agree we
+> should document what's implemented, and then extend it when interop
+> comes.
 
-;-) 
+I guess my reservation is that when it _does_ come time to extend, we'll
+have to introduce a new capability. The capability "object-format" has a
+documented meaning now, and what we send is currently a subset of that
+(sort of[1]). If we later start sending an explicit algorithm, then in
+theory they're supposed to handle that, too, if they implemented against
+the docs.
 
-I think I've already given you that in my first message that
-mentioned multi-line input.  In the test suite, we already have that
-$LF defined so your tests can use it without defining it yourself.
+Whereas if we roll back the explicit-algorithm part of the docs, now we
+can't assume any helper claiming "object-format" will understand it. And
+we'll need them to say "object-format-extended" or something. That's
+both more work, and delays adoption for helpers which implemented what
+the current docs say.
 
-> Do you perhaps know of a function in the Git code base which could be
-> used to sanitise strings? It is quite a lot of code to sift through if
-> one is unfamiliar with it, so I'll gladly take hints.
+So I guess my question was more of: are we thinking this explicit
+algorithm thing is coming very soon? If so, it might be worth keeping it
+in the docs. But if not, and it's just a hypothetical future, it may be
+better to clean things up now. And I ask you as the person who mostly
+juggles possible future algorithm plans in his head. ;) Of course if the
+answer is some combination of "I don't really remember what the plan
+was" and "I don't have time to work on it anytime soon" that's OK, too.
 
-Don't silently butcher end-user input; instead do something like
-this to make it clear that you do not support it.
+-Peff
 
-	if (strchr(comment_message, '\n'))
-		die(_("multi-line comment not supported: '%s'"),
-			comment_message);
-
+[1] In the above I'm really just talking about the explicit-algorithm
+    part. The "sort of" is that we claim to send "object-format true"
+    but actually just send "object-format". There I'm more inclined to
+    just align the docs with practice, as the two are equivalent.
