@@ -1,173 +1,180 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86317CF0D
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E49F3BBF0
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 09:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710235073; cv=none; b=sz9sNYDtbBHL8wQknAqShM5KI2kxpRXYaPAb5ezwyJMIEEI6LLvx6fOBfK6KZl8tstvKhaLuNK02ARofOU7xUws9nrldbMUp5USZrWRcjnlksKA7CEZez87boTl8Z9VsqSySaFHozEIJKeSK3GLbEBmZkLxP9hnpwgxSg3Ps8qQ=
+	t=1710235768; cv=none; b=kth+I7bO0fo910WBsSvPIqdxqH2fxsG2MYCJ5R7wAE2PNcbKyOSrOflQkvI/NcrxbvgoMAYaa3Fv9jY9xWKW0Il843xbeX5lUmXr5kSADX26JKFrK0hUCGw36+UIAjfl3LxDuOCUi/BhxrBvP0Z+DJgbb4biiNjqvr4ERripk0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710235073; c=relaxed/simple;
-	bh=W2X2wQciIpkIp04Cl9A9H8wLP75DFSRAktUZyFd8CTU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nMOjcXUwgjeW3J1UtG9sJrmdUoL6h6ilEFN8a5KqgK/+Iy8oizGrLkX4frLItRC8O9GeJjOAVeBhGflknhOi7zr+Map5/iR4bpRaV7sZNr2obw1jYZQHhRH1UqPXpzydZjzS0XxA4EmvwT45KUH6nA18Pi4o3MFpbBSTN1IEKLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17747 invoked by uid 109); 12 Mar 2024 09:17:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 09:17:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28135 invoked by uid 111); 12 Mar 2024 09:17:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 05:17:55 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Mar 2024 05:17:50 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 16/16] config: allow multi-byte core.commentChar
-Message-ID: <20240312091750.GP95609@coredump.intra.peff.net>
-References: <20240312091013.GA95442@coredump.intra.peff.net>
+	s=arc-20240116; t=1710235768; c=relaxed/simple;
+	bh=CNXo5Sgkxw13wZ/D08F9ZivweFNafQTiCSwreld0xxo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MzGiiju6cSVuMeHJtnw/qQPFDJWsfu2lfYdrxbu929gEtx+4IDZCJAz4x9nYKnt9CXOXdeQonNBZrjolvv9yUBxJlYfCjYiqWidqJ7vlpS+t2z1XoFjC5guXYn2WbnRoBadBMjGL4R4oMSr35EjxXJyNvWadDAqrILpbdxEUePg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=cHLNwu85; arc=none smtp.client-ip=85.13.153.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="cHLNwu85"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+	s=kas202402191026; t=1710235756;
+	bh=Zku/7rFhBhFhyv5MuvsNOUqZxU6YR30fMHh2okRfD/U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cHLNwu85euF0KvLvJzACz/DnIrU6+kw4In0jPTyDMuoJ61aDArJlCCGiwdczIEVio
+	 eBAm+FmyX/gfEffiohTSFiBM2IMypvZLWQ2CizbB1d25ZlwF1cccWQfbp8H5L6a66C
+	 ok81hW5tILc4iuFxUF7ZTFfww2MjKxaglj4akhhoGBOv5tAO1Wzngax8F9rbJY4Zo2
+	 8F1x8r7MOPhCpF5k5uaI9RzVWwMy/0Njymy5LbJpDTO7ULuMqtgZ0sye7sbfO0S10z
+	 +mIQGMv3+tIHwhuOeQLkkIz55bSp4golPxZP59YYw5q1bDba1alZvT10wy4TlE/mdz
+	 H8rA9NJZlj5MQ==
+Received: from [172.18.72.71] (ip-185-104-138-52.ptr.icomera.net [185.104.138.52])
+	by dd36226.kasserver.com (Postfix) with ESMTPSA id 790AC3C0FBE;
+	Tue, 12 Mar 2024 10:29:15 +0100 (CET)
+Message-ID: <042bfc26-0dcd-4c0d-aa02-f4ccf9f4e66e@haller-berlin.de>
+Date: Tue, 12 Mar 2024 10:28:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240312091013.GA95442@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
+Content-Language: en-US
+To: Elijah Newren <newren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Derrick Stolee <derrickstolee@github.com>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>
+References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
+ <354f9fed-567f-42c8-9da9-148a5e223022@haller-berlin.de>
+ <xmqqsf144pi7.fsf@gitster.g>
+ <CABPp-BGO2ftEMHJDrf6yg3J4AfpKn=rpf_5Wt_WAS+Hi70KqPQ@mail.gmail.com>
+ <845ced9a-1f35-4100-a1ff-4243db2ba34f@haller-berlin.de>
+ <CABPp-BE36Zhacdumd1JSc+7NXYpxZ=CQ1=ieebze=mDewpEUGA@mail.gmail.com>
+ <42426c93-84fe-47d2-a41c-16284a86f003@haller-berlin.de>
+ <CABPp-BF_hWGynLm8FwjWWVYc=7wc6iBr_f79=h==thkzJVoRzw@mail.gmail.com>
+From: Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <CABPp-BF_hWGynLm8FwjWWVYc=7wc6iBr_f79=h==thkzJVoRzw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: +
 
-Now that all of the code handles multi-byte comment characters, it's
-safe to allow users to set them.
+On 09.03.24 04:28, Elijah Newren wrote:
+>> That would be the wrong way round. I want to leave the original branch
+>> untouched, make a new branch and rebase that away from the original.
+> 
+> Ah, sorry for misunderstanding.  Still, though, what's wrong with running
+>     git branch -f original_branch original_branch@{1}
+> after the operation?
 
-There is one special case I kept: we still will not allow an empty
-string for the commentChar. While it might make sense in some contexts
-(e.g., output where you don't want any comment prefix), there are plenty
-where it will behave badly (e.g., all of our starts_with() checks will
-indicate that every line is a comment!). It might be reasonable to
-assign some meaningful semantics, but it would probably involve checking
-how each site behaves. In the interim let's forbid it and we can loosen
-things later.
+It's unintuitive. Users don't think this way, at least as far as I have
+observed them (and I don't think this way myself). Also, for many users
+the branch{n} syntax to access previous reflog entries is an advanced
+concept that they are not familiar with.
 
-Likewise, the "commentChar cannot be a newline" rule is now extended to
-"it cannot contain a newline" (for the same reason: it can confuse our
-parsing loops).
+> Also, since you're not using the git cli directly but going through
+> lazygit, isn't this something you can just include in lazygit as part
+> of whatever overall operation is creating the new copy branch and
+> rebasing it?
 
-Since comment_line_str is used in many parts of the code, it's hard to
-cover all possibilities with tests. We can convert the existing
-double-semicolon prefix test to show that "git status" works. And we'll
-give it a more challenging case in t7507, where we confirm that
-git-commit strips out the commit template along with any --verbose text
-when reading the edited commit message back in. That covers the basics,
-though it's possible there could be issues in more exotic spots (e.g.,
-the sequencer todo list uses its own code).
+Yes, there are various workarounds that I could build into lazygit.
+Right now I'm planning to have lazygit check whether any branch heads
+point at any of the commits in the range of commits that is being
+rebased except for the head, and if not, add --no-update-refs. This will
+solve it well enough for most cases, and it doesn't bother me too much
+that I have to add this additional complexity to our code. I was just
+hoping that cli users typing
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config/core.txt |  4 +++-
- config.c                      | 10 +++++-----
- t/t0030-stripspace.sh         |  7 ++++++-
- t/t7507-commit-verbose.sh     | 10 ++++++++++
- t/t7508-status.sh             |  4 +++-
- 5 files changed, 27 insertions(+), 8 deletions(-)
+  git checkout -b original-branch copy
+  git rebase --onto devel main
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 0e8c2832bf..c86b8c8408 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -523,7 +523,9 @@ core.commentChar::
- 	Commands such as `commit` and `tag` that let you edit
- 	messages consider a line that begins with this character
- 	commented, and removes them after the editor returns
--	(default '#').
-+	(default '#'). Note that this option can take values larger than
-+	a byte (whether a single multi-byte character, or you
-+	could even go wild with a multi-character sequence).
- +
- If set to "auto", `git-commit` would select a character that is not
- the beginning character of any line in existing commit messages.
-diff --git a/config.c b/config.c
-index 7e5dbca4bd..92c752ed9f 100644
---- a/config.c
-+++ b/config.c
-@@ -1565,13 +1565,13 @@ static int git_default_core_config(const char *var, const char *value,
- 			return config_error_nonbool(var);
- 		else if (!strcasecmp(value, "auto"))
- 			auto_comment_line_char = 1;
--		else if (value[0] && !value[1]) {
--			if (value[0] == '\n')
--				return error(_("core.commentChar cannot be newline"));
--			comment_line_str = xstrfmt("%c", value[0]);
-+		else if (value[0]) {
-+			if (strchr(value, '\n'))
-+				return error(_("core.commentChar cannot contain newline"));
-+			comment_line_str = xstrdup(value);
- 			auto_comment_line_char = 0;
- 		} else
--			return error(_("core.commentChar should only be one ASCII character"));
-+			return error(_("core.commentChar must have at least one character"));
- 		return 0;
- 	}
- 
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index e399dd9189..a161faf702 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -403,7 +403,12 @@ test_expect_success 'strip comments with changed comment char' '
- 
- test_expect_success 'newline as commentchar is forbidden' '
- 	test_must_fail git -c core.commentChar="$LF" stripspace -s 2>err &&
--	grep "core.commentChar cannot be newline" err
-+	grep "core.commentChar cannot contain newline" err
-+'
-+
-+test_expect_success 'empty commentchar is forbidden' '
-+	test_must_fail git -c core.commentchar= stripspace -s 2>err &&
-+	grep "core.commentChar must have at least one character" err
- '
- 
- test_expect_success '-c with single line' '
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index c3281b192e..4c7db19ce7 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -101,6 +101,16 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
- 	test_grep "Aborting commit due to empty commit message." err
- '
- 
-+test_expect_success 'verbose diff is stripped with multi-byte comment char' '
-+	(
-+		GIT_EDITOR=cat &&
-+		export GIT_EDITOR &&
-+		test_must_fail git -c core.commentchar="foo>" commit -a -v >out 2>err
-+	) &&
-+	grep "^foo> " out &&
-+	test_grep "Aborting commit due to empty commit message." err
-+'
-+
- test_expect_success 'status does not verbose without --verbose' '
- 	git status >actual &&
- 	! grep "^diff --git" actual
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index a3c18a4fc2..10ed8b32bc 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1403,7 +1403,9 @@ test_expect_success "status (core.commentchar with submodule summary)" '
- 
- test_expect_success "status (core.commentchar with two chars with submodule summary)" '
- 	test_config core.commentchar ";;" &&
--	test_must_fail git -c status.displayCommentPrefix=true status
-+	sed "s/^/;/" <expect >expect.double &&
-+	git -c status.displayCommentPrefix=true status >output &&
-+	test_cmp expect.double output
- '
- 
- test_expect_success "--ignore-submodules=all suppresses submodule summary" '
--- 
-2.44.0.481.gf1a6d20963
+would get the same improvement. It bothers me a bit that we have to
+build clients around the git cli that make it perform better than the
+git cli does.
+
+>> Wait, now you are really turning things around. You make it sound like
+>> my proposal is responsible for what you call a "bug" here. It's not, git
+>> already behaves like this (and you may or may not consider that a
+>> problem), and my proposal doesn't change anything about it. It doesn't
+>> "fix" it, that's right (and this is what I referred to when I said "I'm
+>> fine with it"), but it doesn't make it any worse either.
+> 
+> Ah, I see where I was unclear as well, and my lack of clarity stemmed
+> from not understanding your proposal.  To try to close the loop, allow
+> me to re-translate your "This is a good point, but..it never happens
+> in practice for me." paragraph, the way I _erroneously_ read it at the
+> time:
+> 
+> """
+> For my new proposal, the case you bring up is a good point.  But it
+> doesn't happen for me, so I propose to leave it as undefined behavior.
+> [As undefined behavior, anyone that triggers it is likely to get
+> behavior they deem buggy and not like it, but that won't affect me.]
+> """
+> 
+> Now, obviously, that doesn't sound quite right.  I knew it at the
+> time, but reading and re-reading your paragraph, it kept coming out
+> that way for me.  Thus I tried to ask if that's what you really meant,
+> and apologizing in advance if I was mis-reading.
+> 
+> Anyway, with the extra explanation in your latest email, I now see
+> that you weren't leaving it undefined, but your proposal wasn't clear
+> to me either in that paragraph or in combination with the rest of your
+> previous email.  Sorry for my misunderstanding.
+
+I think it's worth clarifying this again, and see whether "undefined
+behavior" is the right term to use here. Again, this discussion has
+improved my own understanding of the matter, so let me try to spell it
+out again:
+
+The fundamental underlying problem is that when we encounter two
+branches pointing at the same commit in a rebase, git has no way to
+distinguish whether this is because there's an "empty" branch in a stack
+(either at the top or in the middle), or whether one branch is a copy of
+the other. In the first case, both branches should be updated by "rebase
+--update-ref", in the second case only one of them should, since the
+other is not part of the stack. Since there's no way for git to tell for
+sure, it can only guess which of the two was meant by the user, with a
+heuristic that hopefully guesses right in the majority of cases. I think
+it would be wrong to call it a "bug" (or an "edge case bug" like you did
+earlier) if it guesses wrong in a particular scenario.
+
+Right now, it _always_ guesses in favor of the stack, so it never
+considers a branch to be a copy. For my own use of git, and of my
+co-workers as I have observed them in pairing sessions, this is almost
+always wrong. I have never encountered an empty branch in a stack, as
+far as I remember, but I am encountering copies of branches fairly
+often, so I'd like to improve the heuristic to make git guess right in
+these cases. Note that this is definitely not a 5% thing as in your
+three-way merging example; I can't provide any hard numbers of course,
+but it feels much more like the classical 80/20 rule to me (where my
+proposal would improve it for 80% of the cases, to be clear).
+
+So, I concluded that copies are much more frequent than empty branches
+in a stack, so it would make sense for me to turn the heuristic around
+and always guess in favor of a copied branch. The problem is that we can
+only do this for the tip of the branch, because only in that case can we
+tell which branch is the copy (the one being rebased) and which one is
+the original that should be left alone. For branches in the middle of
+the stack we just can't tell, so we have to guess in favor of an empty
+branch in a stack and update both refs, since otherwise we'd have to
+randomly pick one of them to update and leave the other one alone,
+risking to break the stack this way.
+
+So that's really where my proposal comes from: guess in favor of a
+copied branch only at the tip but not in the middle; not because we only
+want it at the tip, but just because we only can at the tip.
+
+But fortunately, it is in fact true that I almost never create a copy of
+a branch in the middle of a stack, but then I almost never have empty
+branches in the middle of a stack either, so it doesn't really matter to
+me which way the heuristic guesses in this case.
+
+I hope this clarifies it a bit more.
+
+
+Having written all this, I do realize that it's probably too complex to
+explain to users (not the behavior itself, which is fairly simple, but
+the rationale behind it).
+
+-Stefan
