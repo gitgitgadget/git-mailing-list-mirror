@@ -1,102 +1,115 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DFC142636
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 21:34:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B14D142636
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 21:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710279256; cv=none; b=s2C8BsOfqmlNmatziy/YwSNx3VQ2+MlUwReLCqqQZlLW6HUHZbGbxxHDX9dROhIYlOETPaWFQzo29CmNtEb3XIKRR85klAXc0+XFsjQRId07KEsFcRA9UKYSVOJjn5pCdhP+/K4bzUITfQbhnNDpTghSLhsRndS1pCXlDmmNviI=
+	t=1710279386; cv=none; b=halccPtbKY3fBEOcjEzkx+iBT3i8F/8axaJEwGnl1bpJJmEZKexPXGqvXxUiuEaXTEYkghukQJVizKD/BaOE/UB/I8bNgGBI43o1Tja3RCxJgXl7CwoOxOVh5Jz9y6J/w2XcK1zIJas2XsR65wL6KrLZ66DX3dwPNfpYSuu2Ln4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710279256; c=relaxed/simple;
-	bh=GariS4oC7lRisOpkcG5cV1UuBIEx9KffL/cdpr3TnYE=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=pY0KpuNEhIIKzHroAfa0TqNyFbbuJlgT5gE2WSfQlXu8Xb60trd4dYZYtXmw1AwO/4nKbDEr6qH09IPDyUPediFQerfn7v/qrWcbTQoIYiJsfMrynPJc/ZghaX9RT0PPBxBb0erNGVMFqDZdiJ8L/E/ySMR4T8odob8ZezbogSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LseBleUq; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1710279386; c=relaxed/simple;
+	bh=7Mpjh2O3D9xKr/fI69esBGDAp02QUyH93M1y0MXhOCM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=mDsOgHXXt5+8q9MvEKMN4dOK7UuBgFx3pG8A1NTQBdEFdMeyjqCmY+vXzeraHkCK659/I/8WYT5+COeqIcsZGSvFfAt1rN3SrZV2L4aC/cPmR6yrnN34VGCQqNAINQ7KOG8Db1ltI6IuLGYINXdx+vSewL9nOivqIzfVLCxuhFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aJVLtPxB; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LseBleUq"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4132cc37e21so15651505e9.0
-        for <git@vger.kernel.org>; Tue, 12 Mar 2024 14:34:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aJVLtPxB"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-60a15449303so34484467b3.0
+        for <git@vger.kernel.org>; Tue, 12 Mar 2024 14:36:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710279253; x=1710884053; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZeLT+pU/krgOq2SZ8KwY+tE+q4k1dnscOy8ZHZxQ5u4=;
-        b=LseBleUqpEjJiTIFT5+qc69QLAq1BnJhT5kWTmlxg2yvVDelKz1nGzm/BZHgIM6dL8
-         uVuUE3/0MrsubthfvvIxHpPp/SKQ6PB25nim0oHws2EDz/Hk2nlu/rZ2Ou10aZrJvSwm
-         N1KzefaEpnqbBg8Ajzi5PMFvnwQw6zLFF+7L6CKzdzBasxnAujAGq2P6NlarA1gTP0Pq
-         tJNrDYEbvbcVkAGQhF+0xSaChfgwx94ul97vw8uraegkulCWrfskOqX0wNNE9xNucrKU
-         WewUnPX98cUaP1T5BYKL/7QG8i+6lNPX962WadB9bS9j5KWn1qIklcP7bK8KqhU/bWsV
-         Vkbg==
+        d=gmail.com; s=20230601; t=1710279383; x=1710884183; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2Lyelo0+F3sBmw294QRDyOCnJ4y4WVl44nk5n9soFdc=;
+        b=aJVLtPxBJzfFRZBDDZ4v+U+2BTart4RK/cILal53gD1au+mTBv2BF329xree6U9MUB
+         sFz5znUuDqe9Zryrcm49XSPQINCCnCJhep1pELy3G4c01l6VcWifr58J7ZgYNrftaacW
+         ZvOGnVE+iRJPPbBQuHBoUoC0vPKDI8hVcEwvGnq/+veZk2XGwG9W/M41NksOzvvatDyQ
+         ijx2os4CPnV020l6odm4CFFx06Uqt1+tzSiqzYo6ZKszPI855krhoLwtv/lpRk85OLpt
+         nDc24I3Q/1YBl0Y2ev2+Tj0SfFyzYULwILnLTm94dZR1pRrnoUF+Y+z4vbibSCh90IG1
+         +8OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710279253; x=1710884053;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZeLT+pU/krgOq2SZ8KwY+tE+q4k1dnscOy8ZHZxQ5u4=;
-        b=DPQAxFNwN1u9iLxXGBT25ri6yS2NksP2mJAosex11y5rwC9KBO6wuP/0TAltRWFzvR
-         P/X6ByZejbbM0bs/MJi14WLfOyo2NchX6scdU8hKtaf2w7pwTwsLL5h9ACuYDxqrl2RK
-         BSMgVB2pIWcZn8cf2IE+npgiql3x/7UiqNLVdreSGaznE/ogKtRwxBvSVblDubyiyRyl
-         00ldq2QfSz4aBLOZ5r1i/QoGmUkFnG+xhzQwpGCh850HyxSlhhTOGXhKhA9fOm7jsGA9
-         SC4mWYLA3D7ZxTa7xlh25Us2ckJjXB7efwL61NamQDoSgJ6y4i/uu73sUVYa3OnY6yvi
-         kx4w==
-X-Gm-Message-State: AOJu0YxtE+noQ1fLk9t8TqWYPdKHnsNM1aiDwI+tdu+1Ir78h/EoTK+t
-	e/aPMAzQnq5Gz/Hj5TmPmDBkaQpVi+TWMIiDGzyi/maurhswM4A0hfwtNyVL
-X-Google-Smtp-Source: AGHT+IEMWeU8t8+vsUTbxbtimbUYIQVB6Tk3nMIi233ASyTjr0sUc2ZLEezjoXj+5psiCfAR2lz3Lg==
-X-Received: by 2002:a05:600c:3ac9:b0:413:2ab0:8303 with SMTP id d9-20020a05600c3ac900b004132ab08303mr4893451wms.19.1710279252754;
-        Tue, 12 Mar 2024 14:34:12 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v15-20020a05600c470f00b004128fa77216sm156740wmo.1.2024.03.12.14.34.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Mar 2024 14:34:12 -0700 (PDT)
-Message-ID: <pull.1686.git.git.1710279251901.gitgitgadget@gmail.com>
-From: "Jonas Wunderlich via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 Mar 2024 21:34:11 +0000
-Subject: [PATCH] documentation: camel case of config option, and "no" instead
- of "false"
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1710279383; x=1710884183;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2Lyelo0+F3sBmw294QRDyOCnJ4y4WVl44nk5n9soFdc=;
+        b=Lni0+7H21uia7fHCU85xbziSEupAu+4O2NApu8hoQLUATgW8MMNeIZREJjJQf/bZn4
+         Ig+oOFW1sQPWwk+lGJsB2+ERPtNdqY8r4Fao6pzpY4G4oBTXzwjIIY85OX7SL4cyKmM+
+         gxET0gf7C6MfnDpaIiZwx2bFtwLXow8y21ORcj2kkfAOwTbj+e0uaABykiPZFbepsEpZ
+         VhmTi3VM93DcBP0mBRTcjf+pQJWqmDPLmAHB0xUOaQMwWGdzGUTzTogh+5FFiwRDzrxp
+         lauDEfdRNR2KY0QIwy7OnJZmIR0wxEKdfQwNb/zKMVfX0jMhHER81NqLO/nSOIjO1Bj1
+         J4Dg==
+X-Gm-Message-State: AOJu0YyEej3y82OarY9mXIr8MBYGXwqm16H0E4PxmSt+jCPRJfXlUoXF
+	q7ShDvGGEINNT4tkohy+csHVqJzn1JXEHpkwaqgC5CqiEQzFVhS2roL4Plbgu7ZnpVqdXaw7Vjn
+	hN0SiAv9x7CFeejLfSz8AkgCvWVK1suXCihw=
+X-Google-Smtp-Source: AGHT+IFZGv584Pc9bpfxNrpMgEVPyXVeCpvexUg7DIGqxTQTc9ITSnvSYSPl05ntE9qZweSshwQJ+mxuJ4V1MrcDZaQ=
+X-Received: by 2002:a81:5250:0:b0:60a:425c:10cf with SMTP id
+ g77-20020a815250000000b0060a425c10cfmr797227ywb.9.1710279383645; Tue, 12 Mar
+ 2024 14:36:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Nick <billingidentity@gmail.com>
+Date: Tue, 12 Mar 2024 22:36:12 +0100
+Message-ID: <CA+cJT-HV=GH84p1nQaoywnJABDWDK9PS-StzW8BTEBezHuvocg@mail.gmail.com>
+Subject: having issue with git commands. Probably a bug
 To: git@vger.kernel.org
-Cc: Jonas Wunderlich <git@03j.de>,
-    Jonas Wunderlich <git@03j.de>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Jonas Wunderlich <git@03j.de>
+Hi Git Team,
 
-The `status.showUntrackedFiles` config option only accepts the values "no",
-"normal" or "all", but not as this part of the man page suggested "false".
+I am having the following issue:
+My repository has all these files but my terminal shows that they are
+deleted. My repo is in Amazon Web Services.
 
-Signed-off-by: Jonas Wunderlich <git@03j.de>
----
-    documentation: camel case of config option, and "no" instead of "false"
+My terminal show the following:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1686%2Fjonas-w%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1686/jonas-w/patch-1-v1
-Pull-Request: https://github.com/git/git/pull/1686
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    Page2 csv file.csv
+        deleted:    Page3 and Page4 csv file.csv
+        deleted:    dummy demo.mp4
+        deleted:    page1 csv file.csv
+        deleted:    page5 csv file.csv
+        deleted:    page6 csv file.csv
 
- Documentation/git-status.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I have been trying to delete these files from my terminal and from my
+repository but git commands are not working.
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 4dbb88373bc..b0f36fabfb3 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -472,7 +472,7 @@ again, because your configuration may already be caching `git status`
- results, so it could be faster on subsequent runs.
- 
- * The `--untracked-files=no` flag or the
--	`status.showUntrackedfiles=false` config (see above for both):
-+	`status.showUntrackedFiles=no` config (see above for both):
- 	indicate that `git status` should not report untracked
- 	files. This is the fastest option. `git status` will not list
- 	the untracked files, so you need to be careful to remember if
+Git commands:
 
-base-commit: 945115026aa63df4ab849ab14a04da31623abece
--- 
-gitgitgadget
+#git commit -m "try to delete csv files and dummy demo"
+error: invalid object 100644 d54132721804e177f865b31a807d9fbebc7ff7
+for 'page1 csv ps.csv'
+error: invalid object 100644 d54132721804e177f865b31a807d9fbebc7ff7
+for 'page1 csv ps.csv'
+error: Error building trees
+
+#git log -- page1\ csv\ ps.csv
+commit c302c5202fc374739c0275b2e507a957be45e6
+Date:   Wed Feb 14 22:03:46 2024 +0000
+    Added page1 csv ps.csv
+error: Could not read 32286e5dfdb73b4cfa9eb87abf140dc81e68ab
+fatal: cannot simplify commit aee35d8a1bcde08c2249df029b06d46537751f
+(because of 32286e5dfdb73b4cfa9eb87abf140dc81e68ab)
+
+#git push
+Everything up-to-date
+# git status
+On branch BranchName
+Your branch is up to date with 'origin/BranchName'.
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    Page2 csv file.csv
+        deleted:    Page3 and Page4 csv file.csv
+        deleted:    dummy demo.mp4
+        deleted:    page1 csv file.csv
+        deleted:    page5 csv file.csv
+        deleted:    page6 csv file.csv
+
+Please could you guide me?
+I appreciate!
+Thanks
