@@ -1,137 +1,113 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7D76FAE
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 08:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE119B651
+	for <git@vger.kernel.org>; Tue, 12 Mar 2024 08:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710231245; cv=none; b=giHKHsHr8kfWCND7m6xHJOmXXcZtsNB33F3XuXakeYLEQcurYSK9GuqLYUaEIp76FsXD7iK7+HVB2aiYjUJE+82N74d8Ktjtt3W0YhdkD5fE5qQ3Ft3BajtefVavC9EBEXDEHYJ7bGS0ItBDfeuqcvvGgjRpcHrSPiWuJHmhCws=
+	t=1710231574; cv=none; b=avvNPA9jz+g1LggbYQACo9oGCDLJS9/jNQOz0NtR3bi4xYKnmLZ0S+7csLygHQ0Cb+7u/ok4TldCuDA/UjXqZ4rXLAQpRQ7gB4Os8avCNDWhe618f5GJXSK4M793nLPhUszNVz0C4qe3ILbGYEDcbUT/8SzbqknB+IOAixjFvLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710231245; c=relaxed/simple;
-	bh=C9LcMbc17n9gjdOqw8ZUs1RGDAhY4cytY0WZy3X1Lqo=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=cxUC04CSzOI58UTPAPbTGnnzu0s1D2C+2DdF//K+3T7SWafaX+NtrCZVCGpBbTgFbt9vl7XNrfhT3YNu8SpcKSeZVuz0gagIUUgAKz9YuTn4ePIVnZtF6UZYKg4Ex/eDxn+yOWpud7oGospB7HYn8vy0I3q4rVLpXxPzVxnJliI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=MBjDgmsp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cEsFjx8o; arc=none smtp.client-ip=64.147.123.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="MBjDgmsp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cEsFjx8o"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id E5A83180006D;
-	Tue, 12 Mar 2024 04:14:01 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 12 Mar 2024 04:14:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1710231241; x=1710317641; bh=dN1EXzmcKip642AG8tUFaKw4rKLCuEUg
-	Dv6AaEfWoEs=; b=MBjDgmspJp7D2Z0LBuNbPJc7g7wJIyn4yvRNHcb2th9NbRot
-	+ffYmeJhUMznVjEs4XxrkpH7xUeXeCV1hCFE4pvR+OvARvq5r2qUhH/ZM0ttAYdS
-	jT41qx8+9AcJuCgMbMwNQRTb0e2x3XBnaKJBoIPY8SjTFtcNE/Tvu9vemN3tA+8q
-	u49/G5XUNjiBBlfbpLM8ec225gr0OTOkWGXiXEPCmsMoVVY05VTr68mqtfOaS+hd
-	YiHbZ9G+XjbzGNd3ZVRvKvVonTvQIn8w0JSGcFE/Kld4Pl5pBYmy4DiOz0CeOj8f
-	W3wNzHfz8WKpWDhE+SAynqsDHRflppesjJghUw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710231241; x=
-	1710317641; bh=dN1EXzmcKip642AG8tUFaKw4rKLCuEUgDv6AaEfWoEs=; b=c
-	EsFjx8o6QNJfa01tq9jqqrB/rWi/Tnh+TM/D9neRUJE8yjlMSOetB/r8liEYS6c8
-	S1yTSg3ES36j77HiLqPfBneut+j7ggvQwaIA5iCKKNx09v5buoInpFTKyKa3GQpa
-	OzXzmuNlfuWDkOnmh7Ymx5pBoLL4rGe7TxRj5CRjCZHeQbSwUZmao7FCzeKXi+VY
-	PJtbdyE+zGpgXW8gFzT+YO/ynBCUQ/RsuKzSC6HxlmLKMiU2+QkP1BDMEokCiYgH
-	14QPJnnDZOWiKzxVf7AfwupVL/V4PZ48kHJUEtl47RcSXk8xLk7o2N9DkQ+VhPF7
-	JsEzTd0WdPK578L+aJruQ==
-X-ME-Sender: <xms:yQ7wZaWghGScFiuBeawl5-Q-H2S90DbcLoxspM-ykq-b5jWl6VQoYQI>
-    <xme:yQ7wZWnA3mp6w5UIGVYCEA3fZ3I9hsHvk1qI8ACgi_DpBdm3jW20_KsykVp3I2Rat
-    AXJ3KNMmMRZp38ZCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedvgdduudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:yQ7wZeaa4gdblbSHeUttxGsNWKPyrqsnCzSt-SdtoRuzY946nlqDpw>
-    <xmx:yQ7wZRUEknd4b1DgW3u9dK9nzQOz_Z2VQ8LLcbOl7fui9xba5M2UVw>
-    <xmx:yQ7wZUlfdk6wS5BhhthkWxzZ8gaL4NMu80yOeXw4CUg44de97z0Ahw>
-    <xmx:yQ7wZWfENGgHIPj71_HlbBeF0B68H6yTmt-RyUPkCoBb7sWi0ly7_g>
-    <xmx:yQ7wZZysyHt2a9iMH_QTbwGLfQnaLvOCG3BXfU7LkYzKfUxXJJwS9xQuKYc>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 2F57315A0092; Tue, 12 Mar 2024 04:14:01 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
+	s=arc-20240116; t=1710231574; c=relaxed/simple;
+	bh=68m84BucWv9Z7/mVcBlMAayZeVHUwx6Zlp50vYV6Xa8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AoAe6HOKD73ALPukn3mp2pgFjdrXitwDhwotFiFCAUuQxvn5gIpBnRAHU0pj7KoucF6NqRqIGaqLkPt9Js+jNL2zw2nYic1WzDxsXDSmUlwciJRLUlyoFKfl23/nTwTN7q8JtUI8IeK/6NrIhpNP2Xu149fCVaSRfenM/nkZKlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 16121 invoked by uid 109); 12 Mar 2024 08:19:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Mar 2024 08:19:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27597 invoked by uid 111); 12 Mar 2024 08:19:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Mar 2024 04:19:36 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 12 Mar 2024 04:19:31 -0400
+From: Jeff King <peff@peff.net>
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+	Dragan Simic <dsimic@manjaro.org>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH 11/15] find multi-byte comment chars in unterminated
+ buffers
+Message-ID: <20240312081931.GC47852@coredump.intra.peff.net>
+References: <20240307091407.GA2072522@coredump.intra.peff.net>
+ <20240307092638.GK2080210@coredump.intra.peff.net>
+ <3f823e48-572c-4e19-ab76-e6d7cab9461f@web.de>
+ <d82e11f2-15c1-4ecb-8c7c-19667d2c5fb4@gmail.com>
+ <xmqqfrx0hg01.fsf@gitster.g>
+ <66a70346-98e8-44dd-a680-36a21df5f32a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <d677ed9c-0f93-4fb9-a878-62711f9d6fdf@app.fastmail.com>
-In-Reply-To: <53ea3745-205b-40c0-a4c5-9be26d9b88bf@gmail.com>
-References: <cover.1709841147.git.code@khaugsbakk.name>
- <f405a0140b5655bc66a0a7a603517a421d7669cf.1709841147.git.code@khaugsbakk.name>
- <53ea3745-205b-40c0-a4c5-9be26d9b88bf@gmail.com>
-Date: Tue, 12 Mar 2024 09:13:40 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] format-patch: teach `--header-cmd`
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <66a70346-98e8-44dd-a680-36a21df5f32a@gmail.com>
 
-On Mon, Mar 11, 2024, at 22:29, Jean-No=C3=ABl Avila wrote:
->> +--[no-]header-cmd=3D<cmd>::
->> +	Run _<cmd>_ for each patch. _<cmd>_ should output valid RFC 2822
->> +	email headers. This can also be configured with
->> +	the configuration variable `format.headerCmd`. Can be turned off
->> +	with `--no-header-cmd`. This works independently of
->> +	`--[no-]add-header`.
->> ++
->> +_<cmd>_ has access to these environment variables:
->> ++
->> +	GIT_FP_HEADER_CMD_VERSION
->
-> Better use a nested description list like this:
->
-> GIT_FP_HEADER_CMD_VERSION;;
->   The version of this API. Currently `1`. _<cmd>_ may return exit code
->   `2` in order to signal that it does not support the given version.
->
+On Fri, Mar 08, 2024 at 04:20:12PM +0000, Phillip Wood wrote:
 
-Thanks, I=E2=80=99ll do that in the next version.
+> On 08/03/2024 15:58, Junio C Hamano wrote:
+> > Phillip Wood <phillip.wood123@gmail.com> writes:
+> > 
+> > > I agree with your analysis. I do wonder though if we should reject
+> > > whitespace and control characters when parsing core.commentChar, it
+> > > feels like accepting them is a bug waiting to happen. If
+> > > comment_line_char starts with ' ' or '\t' that part will be eaten by
+> > > the strspn() above and so starts_with_mem() wont match. Also we will
+> > > never match a comment if comment_line_str contains '\n'.
+> > 
+> > Another thing I was wondering is what we want to do a random
+> > byte-sequence that may match from the middle of a multi-byte UTF-8
+> > character.
+> > 
+> > The reason I haven't mentioned these "nonsense input" is because
+> > they will at worst only lead to self-denial-of-service to those who
+> > are too curious, and will fall into "don't do it then" category.
+> 
+> We could certainly leave it as-is and tell users they are only hurting
+> themselves if they complain when it does not work.
 
->> ++
->> +The version of this API. Currently `1`. _<cmd>_ may return exit code
->> +`2` in order to signal that it does not support the given version.
->> ++
->> +	GIT_FP_HEADER_CMD_HASH
->> ++
->> +The hash of the commit corresponding to the current patch. Not set if
->> +the current patch is the cover letter.
->> ++
->> +	GIT_FP_HEADER_CMD_COUNT
->> ++
->> +The current patch count. Increments for each patch.
->> ++
->> +`git format-patch` will error out if _<cmd>_ returns a non-zero exit
->> +code.
->> +
->>  --[no-]cover-letter::
->>  	In addition to the patches, generate a cover letter file
->>  	containing the branch description, shortlog and the overall diffsta=
-t.  You can
->
->
-> Overall, thank you for correctly marking up placeholders and options.
+That was mostly my plan. To some degree I think this is orthogonal to my
+series. You can already set core.commentChar to space or newline, and
+I'm sure the results are not very good. Actually, I guess it is easy to
+try:
 
-Thanks for reviewing!
+  git -c core.commentChar=$'\n' commit --allow-empty
 
---
-Kristoffer Haugsbakk
+treats everything as not-a-comment.
+
+Maybe it's worth forbidding this at the start of the series, and then
+carrying it through. I really do think newline is the most special
+character here, just because it's obviously going to be meaningful to
+all of our line-oriented parsing. So you'll get weird results, as
+opposed to broken multibyte characters, where things would still work if
+you choose to consistently use them (and arguably we cannot even define
+"broken" as the user can use a different encoding).
+
+Likewise, I guess people might complain that their core.commentChar is
+NFD and their editor writes out NFC characters or something, and we
+don't match. I was hoping we could just punt on that and nobody would
+ever notice (certainly I think it is OK to punt for now and somebody who
+truly cares can make a utf8_starts_with() or similar).
+
+> > Also, what exactly is the definition of "nonsense" will become can
+> > of worms.  I can sympathise if somebody wants to use "#\t" to give
+> > themselves a bit more room than usual on the left for visibility,
+> > for example, so there might be a case to want whitespace characters.
+> 
+> That's fair, maybe we could just ban leading whitespace if we do decide to
+> restrict core.commentChar
+
+Leading whitespace actually does work, though I think you'd be slightly
+insane to use it.
+
+I'm currently using "! COMMENT !" (after using a unicode char for a few
+days). It's horribly ugly, but I wanted to see if any bugs cropped up
+(and vim's built-in git syntax highlighting colors it correctly ;) ).
+
+-Peff
