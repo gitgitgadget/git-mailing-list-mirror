@@ -1,90 +1,105 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3AF53E3C
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502DC51C49
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710364215; cv=none; b=hCPvvpBGvtcJH2x3Yzzabx1kHmmgIt02ZPnZNB0eRYJONcwsvpnbTAbKqhwZKHzP37BcaKUJ76IJ+xZuu/xBKBmM3Ip1S8B296IptEtGmyHMDrYqIGyqoqxCcZl3lea/gEPuVZMrfA+B6fczDJrd022PlvS1HTp4ZYiMMIxrklQ=
+	t=1710364317; cv=none; b=m8hogiDM5KUw6syZkWS4UcI70aBoFrmo3SEHlvkHvVgPq58FZIgCSdZM7pdq5dfb07JsNmIrH6CIzWwmYDUBbVkpFLSH6yiLoTHU12/pf+AVKZzG+aDkBIiOm3WF5oj1WXfzTaOzKmlQn/DvmNXJr+GZpvsoEg3ZGbjDvKqDeE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710364215; c=relaxed/simple;
-	bh=ISzHl/wgMrPhdhwC+D2PiIvrT+7U1q4rPwfaG3Igeb8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=SJV7MdqGt5o9ID8iQbnhXNDxk/hwAlJT4sUw62g9ZroRsGGqf40J0ILD/Bn+vTOCFAreD6DzmcGPA/fmOiyUqU+OW7NntUP9RFXExHcgccsuRn6qExap7Ps9DCuEz+30JXTVMYsSZUk0qSC6TjVxoI9+6NPllw/EW741++32T2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSJ+eMiv; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710364317; c=relaxed/simple;
+	bh=RMmtOOxD9fipiKrg0jAosQLLh+A25Eavw9zyuXatd5o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xy51jfjM0Z2+APQ3thyIss9NWyvWm7TDIheM4hgEzhfpOkrqzNLUb1+B5JaGHHwRzXHHnBzaHDPEaTQLk1IdhgAdfe8QBoN0MMB5FXs5bxYVKTrcGFmUjx4TgyGU7eowFgW+Uk/FQkoabRl8/DXi5uU6hB1hOM32lGyHsrDX28M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LuklUS9f; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSJ+eMiv"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5131316693cso417224e87.0
-        for <git@vger.kernel.org>; Wed, 13 Mar 2024 14:10:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710364211; x=1710969011; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ISzHl/wgMrPhdhwC+D2PiIvrT+7U1q4rPwfaG3Igeb8=;
-        b=iSJ+eMivS5EEDwXDmvwy8V4hdEwfK+UKsoMqmCgD+nAvoAsuQhpyfh35d37Wp2Vvhc
-         rwL5U5aIioEShw4EZFJDh1hLOnvEZBaG4wWSNdtOaNCTWUf/UAwdTpn//NZ2UKRN3ZpE
-         MgeUP+xi9YaYLSQbxDi5QRQ+vA/ljlN1GKf3662mqFXdE27bC6G2cXURCdkRP5/atb5y
-         zoTV2hdy9IUoJmq/vkaLjdKj77W0NYPvts/sq3L06VWA22xU3Clwr8rGFSJ4kdNuHlLL
-         MqqUVxxySnIiF0xmQARQznA3soWvNpcj+cq8Lg2OK6gpzSurSABxc1rzbpQD0arpt0hk
-         oEIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710364211; x=1710969011;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ISzHl/wgMrPhdhwC+D2PiIvrT+7U1q4rPwfaG3Igeb8=;
-        b=wsoEPWTdA0u2h954eGV+ZqfhpKOTWP8ESMw4xgEs/VUKw3fn7NuXbVi+kuVxYoq6Wb
-         n+xZoKlqwnUZO+hVPl2dTds8Ikc7fpEDLaLdXm1hswDWL4T/uu3f8g9ZSAZ+MU8+8x/9
-         PwSTnQGxUkHNIvqJbejuOuqXI+Oi2yFAFNwC0N6IFUNro2OIvegfFsiKDtn0taNgsdbD
-         OdxQQCDgVFC3vgj7LE0zAYi4OpplyV56OmkUKdK5NRITMEPHkJyYyad513zCINqVjxZD
-         8J6k9UxpWf1g116J6sadeFUPza9r2Eh3MPmo8GHTwXuoSAs8B8Ua8y8GR9G0HCvAPg7X
-         77nA==
-X-Gm-Message-State: AOJu0YzJshh0nrDtevT09+iyy5TqyWUG7ePdKeYE/tiJiWsavhxhAcXj
-	2KUmv3cZKNQxA1hner5T4RRI3PbO1W+Yrb0OwRw+oW8JtTuuyMD76fs6TZdAU9VzUX+Y7DVM/8C
-	flq6yMK9TUfAAhiTROdi2joe+CoUzV0Rabe1ciJZe
-X-Google-Smtp-Source: AGHT+IG7mKvTwACpHXQO0/aGJ96+C7o17tkdSF63mZLZTHqR7b6NyXGkiY5dMUlfDIDj4Gd3WOb6gZaQYHiNuRkOkPA=
-X-Received: by 2002:a19:4359:0:b0:513:ca36:11f6 with SMTP id
- m25-20020a194359000000b00513ca3611f6mr1651035lfj.34.1710364210757; Wed, 13
- Mar 2024 14:10:10 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LuklUS9f"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1B9D65B3D4;
+	Wed, 13 Mar 2024 21:11:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1710364307;
+	bh=RMmtOOxD9fipiKrg0jAosQLLh+A25Eavw9zyuXatd5o=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=LuklUS9foZWwxwZ2T5E9Tx4czpPpTdKC3ZKLhJEi4gKrV6cZG8lWbQsvJoy12Celx
+	 Tee/4VCmZrusncJs7h6mssqb7R+uVFZip3RgHdxD4s2H0jT0qZN4J6bXC3rg6RpQPS
+	 MXx6sjyK7eSTp3pc5BvcCWqMke2+FeyVipFr/I1wCKaET4bYhDFq8DhxA+GxWM4XFC
+	 PCVRxj4eIMWcJi2b77hrnb7n4lgE+Znq+WZO8uvshXDd3a4UE4wI+zyFlUmdKDTIp9
+	 ac8NtoR4VLbnykVTA84o6TSJgblvRoHD0UAdc3bRk3na+aQ0IYToeTZxF+fFMxbTSo
+	 iDy4Ma2FdL3DtiuPaF7ul28hOhTr5rkukT08dVdEurKLU8NTsgbuXhYiB4xv+EnX+Y
+	 SRS0FX5n7LXTL6R8GbNRGq+ANa0HqSDjwhDMBTi9479HqzyV9mpEoPa2NgDdy4alA6
+	 OXJzVN+M2ICbMsoHHO/pxoh6P7ioeI/Arw93W3pqh0R/sgH0qZk
+Date: Wed, 13 Mar 2024 21:11:44 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, "Eric W. Biederman" <ebiederm@gmail.com>
+Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
+ docs to code
+Message-ID: <ZfIWkJieqcPv5jA8@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	"Eric W. Biederman" <ebiederm@gmail.com>
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+ <20240307085632.GB2072294@coredump.intra.peff.net>
+ <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
+ <20240312074513.GA47852@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Aryan Gupta <garyan447@gmail.com>
-Date: Wed, 13 Mar 2024 22:09:59 +0100
-Message-ID: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
-Subject: =?UTF-8?Q?=5BGSoC=5D_Discuss=3A_Implement_support_for_reftables_in_?=
-	=?UTF-8?Q?=E2=80=98dumb=E2=80=99_HTTP_transport?=
-To: git@vger.kernel.org
-Cc: karthik nayak <karthik.188@gmail.com>, "Patrick Steinhardt [ ]" <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NaffBdlI/P8VOUX3"
+Content-Disposition: inline
+In-Reply-To: <20240312074513.GA47852@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--NaffBdlI/P8VOUX3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello everyone.
+On 2024-03-12 at 07:45:13, Jeff King wrote:
+> So I guess my question was more of: are we thinking this explicit
+> algorithm thing is coming very soon? If so, it might be worth keeping it
+> in the docs. But if not, and it's just a hypothetical future, it may be
+> better to clean things up now. And I ask you as the person who mostly
+> juggles possible future algorithm plans in his head. ;) Of course if the
+> answer is some combination of "I don't really remember what the plan
+> was" and "I don't have time to work on it anytime soon" that's OK, too.
 
-I hope you are doing well. I am brainstorming on the problem
-statement "Implement support for reftables in =E2=80=98dumb=E2=80=99 HTTP t=
-ransport"
-where I encountered some doubts which I wanted to discuss with you.
+The answer is that I'm not planning on doing the SHA-1/SHA-256 interop
+work except as part of my employment, since I'm kinda out of energy in
+that area and it's a lot of work, and I don't believe that my employer
+is planning to have me do that anytime soon.  Thus, if nobody else is
+planning on doing it in short order, it probably won't be getting done.
 
-Problem statement link: https://git.github.io/SoC-2024-Ideas/ (Last one)
+I know Eric was working on some of the interop work, so perhaps he can
+speak to whether he's planning on working in this area soonish.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-1. Do we just need support to know about the default branch or the
-entire reftable?
+--NaffBdlI/P8VOUX3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-2. As far as I am able to understand, I just need to add support for
-these reftable files to transfer through the backend incase of dumb
-http protocol, is this correct or am I missing something? In simple
-words what I understand is I just need to add support for the server
-side nothing is to be done for the client side.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-I am sorry if these sound absolutely basic but I'm genuinely eager to
-learn and implement them.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZfIWkAAKCRB8DEliiIei
+gYPtAQDN7miuj71zxztdAe8w8RSTXEifaeANN20+VCur4F0E1gEAk9URNGokhhK1
+7smmwAWyK6lKxNMnUkev+D4wN8v54Aw=
+=DBcR
+-----END PGP SIGNATURE-----
 
-Thank you.
-
-Regards
-Aryan Gupta
+--NaffBdlI/P8VOUX3--
