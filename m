@@ -1,80 +1,76 @@
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B25B60896
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 18:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EAC71B2F
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 18:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710353819; cv=none; b=YrYhSoXglidBvZY73w8B3kBj4T4wvzWySvpMI4cmM709vI64n3rctp102LWhliW6GG6I+8tw6Ktwx4Akgk2PIXgF92a6gDYunNhuha4PbK3SUzizheHKM0+uH1U3fEQKsvvE7yfUkpo+ZbhcqLB4wvdt0us/BllKOmcCZkUWF5o=
+	t=1710354279; cv=none; b=OU+GAc4MA+RmI+Axe0ESQzJnFCvE/0KoeN3EI692akpAKNCyagj5kXheAxXklEUSsyLoPcvGLR5HLkiRJCgndVLTaE5e/WJqhthdX6hvxqzYqWZ5gwM0gFfD8gHhbFTPM/yHev3Ji8vL2Z+JL7YjfOGJxA9IsNVDmMCsXYQBF24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710353819; c=relaxed/simple;
-	bh=t11s9hkRtxLpcrNc3suVoV4vKTvQWqzpITD/d17ne9I=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=U1M2I9dvJvDJZ1xrXJPtynK6h80cxckGalZnGs61dX7JOUVoH4JS/bQM9ungbuRoyHt67uiiKAukXqKDQsJ/toKzsFGMnPZz15RxR2sgIH40FJTPTYIKiGuXd7PwFG9ssHaMnkTZagqSSHOYbKm4myjQK+IyRzHbdu1djDwrNHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZlIh9NUN; arc=none smtp.client-ip=209.85.166.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710354279; c=relaxed/simple;
+	bh=2l60/QO7orXILEJeB8IHsY1Mq1YuQLtdy66lokoksns=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BiR+93IWbAz4jAkqYEeUlNU3vHxNS3lUyY0rFJuYHqJXs/sf3ZgjuAkIA5n4RdJ7g1yPzZ/tauh4P6ZQRNJXrLpO8hm+fwQY+Ymdq38IUUmJz7pRL10ZoRg1UVFaXxjfyvG1Ib0xsl+nXBY0PLg3UqIFzp+pPjykoWf8Ju6RDtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VvWHfmiY; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlIh9NUN"
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-364f791a428so542835ab.3
-        for <git@vger.kernel.org>; Wed, 13 Mar 2024 11:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710353816; x=1710958616; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=plfMRU97kN38XJE9dspcWFZrzsmeQjp3345BZqaJ4Jc=;
-        b=ZlIh9NUNNcvpcKm/pIYXPg5uPzLZhvU3UhDB5WckyB3PbMq5kMD+GuzjXwHyPiZQ1x
-         y7EOQ/FFYiEgchrvsDXxyFQkllR0L0b+Ybn6+UGFtLFjhILhsRT3YM1eWjk+qd4gNzof
-         QKsg5msuVhmx+0mEhZcoRNxS+vZ+/8HPZoYnWIJHzk1dEbAUpqiU6Yin2qy757PgIjAK
-         lsGsxQYmCWq+oyDqnVsQ3XuXxKomVgT+LklBlSOoEWw1B0zeGO4FgC4sBrIlEK7tNTyN
-         5/GA9n5VWiVtSVjHaJ92BAxrk+d4s6VhwkOH8KpqpWAWiZuP2zNFG9Ge8YbH1s00BCIg
-         Oabw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710353816; x=1710958616;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=plfMRU97kN38XJE9dspcWFZrzsmeQjp3345BZqaJ4Jc=;
-        b=go5+fqLYEiqUQh5CJLNc3tjB8XpiqJxKlJx06wVtWNtLAqULzke/gsYgv/K4VBSb2R
-         OQQQ4oaWdbbAe8L5hwTlqG4K1JSBS0XYLqpid7G/hAWryRBkCcGV41aKsuHF8D3uMvrk
-         hH9aTXJQgZVHdLVzKDU8lQ8wPsamoQDAsH71YcWLRlmzfK5NrQ/3SoDbvy8I4qPV3jy+
-         WOmanvv+i0Io8bG57Xc8qLdJUq8uQ/as3JnyhBKgU0VeUSe2pnTTLl93m3c2aEPcn8cn
-         HAEw3R33fC2Sjs5/YFFtje4DbAzQr74/cmv4qa7jMFeT5iMx85JoAMTKMaTVGF8Rl1C3
-         U/Ag==
-X-Gm-Message-State: AOJu0Ywni6Tc5fik6TmKuIDHNApexJOTjsNxF6GFzQ+HscREH5vqURFk
-	x4UN8nq2uDa0M/vnqxIeb666vcfoZknLmY98NYTsMmA4o7WDhTZufsmG09GiVSaE9b4u1ta/QGb
-	+kEQpfODiHMKEMTdcdVRWrKCYPCz3K5YMlMA=
-X-Google-Smtp-Source: AGHT+IH+wOaJSWDz2dsoSuqUV3ZGA3Y5idZoA3g4QpIGnzyARw5Yw6u8cPHNnqozsIL5FOn67gMVN4yR0aAKzJ8OTzA=
-X-Received: by 2002:a05:6e02:1d11:b0:365:5f55:4ae6 with SMTP id
- i17-20020a056e021d1100b003655f554ae6mr922110ila.12.1710353816360; Wed, 13 Mar
- 2024 11:16:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VvWHfmiY"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 956061A3C4;
+	Wed, 13 Mar 2024 14:24:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=2l60/QO7orXILEJeB8IHsY1Mq1YuQLtdy66lok
+	oksns=; b=VvWHfmiYx0/7L0AMn+UTNApVA0/lXPN6WJa4aaiojhugYr32R4aXrA
+	Ol7L8uk+H0VJaS/gn9Io3pAGPYi+6vQDZG7WNFfC0OuJ+Lk4Gll148wKOYR4FOIE
+	MGam1u3L8xj9XynS5DG3LN0AjsbeoYAC0zO2hjQWmOEfxxqW1TMEU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8DAAA1A3C3;
+	Wed, 13 Mar 2024 14:24:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3C5F61A3C0;
+	Wed, 13 Mar 2024 14:24:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
+Cc: git@vger.kernel.org
+Subject: Re: bisect does not respect 'log.date'
+In-Reply-To: <645c8253-f1ef-410f-8284-7d6c8b6db601@siemens.com> (Michael
+	Osipov's message of "Wed, 13 Mar 2024 12:07:22 +0100")
+References: <645c8253-f1ef-410f-8284-7d6c8b6db601@siemens.com>
+Date: Wed, 13 Mar 2024 11:24:32 -0700
+Message-ID: <xmqq7ci6c7mn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?SmVwcGUgw5hsYW5k?= <joland@gmail.com>
-Date: Wed, 13 Mar 2024 11:16:46 -0700
-Message-ID: <CA+osTZWsGv01xinFPKbTQOF9mpvfwWs4wJczHSZXLdRxf1OmwA@mail.gmail.com>
-Subject: Sparse worktree always contains root files
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F11449BE-E166-11EE-B1BA-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi there,
+"Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com> writes:
 
-I'm trying to use sparse checkouts in a large project, and one oddity
-(bug?) came up.
+> An oversight or bug?
 
-If I do a normal full clone of a repository, then do:
-    git worktree add ../sparse --no-checkout
-    cd ../sparse
-    git sparse-checkout set somepath
-    git checkout
-Now indeed it is a sparse worktree, but the files from the root
-directory are also there.
+Neither, i.e. WAI, I would say.
 
-This also happens with traditional (non-worktree) partial clones.
-(I did both shallow, blob-less and tree-less, and all of them behave
-the same way)
+The configuration variable log.date is about "git log" and its
+documentation makes no promises how "git bisect" may or may not be
+affected.
 
-Regards,
--Jeppe
+Having said that, I think it is not unreasonable for you to make it
+a feature request to add bisect.dateformat or whatever.  The only
+interesting part from the output being the exact commit object name
+the problem bisects to, I personally would not see it a high priority
+feature request, though.
+
+Thanks.
+
