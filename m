@@ -1,52 +1,52 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB94612E6
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 18:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923C3612EF
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 18:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710354650; cv=none; b=PuZq4kl1uv+dUI5uJGT/Ca8M77rzp741gBM3qGWVGYiAmCjsyqw5+HxwVJRYV+pgryiWOThb3xNMMz40dqNbZb2jdDNfPbwhtqQwiWTQ1+JrvB7PNU+wWddL+itClGc5Sc/XyeWCU6SNHkazXio7t7UvPf3oOHumVr6YgsZMMB4=
+	t=1710354871; cv=none; b=EJTz0h25J2Oyms/nsQ4flZX72uD8wsP91pT/8ymxc/1/4WeYzqeT2F2fxfDLIsmScbZ/f9c1ReTCjUMnBdjekAtLoFdUTAj1oIDL162iBylANXmLNSu0m4uY+j41ItRIH9kpVUwuMZrJwOpKIOqqXaTfRmGbhrJBd+j5kxks3+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710354650; c=relaxed/simple;
-	bh=Ki341l+5ikgWeJHbQTsd95B1U0LD9j5wlff9dS7jUg8=;
+	s=arc-20240116; t=1710354871; c=relaxed/simple;
+	bh=zYg4ncSSCxEmfx1P8DLLTbFrtpWFM94Iiz+8tSvUm+k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=itH+LOQv1xJjAf1qkvcyYPsWUyQ6qAfR/Ja25QMmiYQJzWU5qA6VoZsTD3uC6CM3OMZFKHsC1KOMuWpZtZroAut2R3gOxUTET+dCdCsz1ULcAWNy4HaIxHNesCxTv/AHqip8AklSKxApdpPwu1xgdjrNQ6iN3W/mGEjp5AdeT5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=J4HupPJG; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=ETdZgybcvev8iLK/yE9JRRmF2Iix6sC1jBKPRxCgM0D5Af6sgNNhWZg9JA+/UxegyIn/JnEQTl6MPg7a+llzGkSUkSWo8bMg0zVaQCLymBNzm5lO94M9NMSLFOJpCgllyzWzAVu4Y1aLm7+CaSZNTvBElh12zdrn91MPV/7m9UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WxXPRwEy; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J4HupPJG"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 997F31A4B5;
-	Wed, 13 Mar 2024 14:30:47 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WxXPRwEy"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 615821D4D1E;
+	Wed, 13 Mar 2024 14:34:28 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ki341l+5ikgWeJHbQTsd95B1U0LD9j5wlff9dS
-	7jUg8=; b=J4HupPJG4tT5oydFREoC7it6eAs5jDdeypKJg28T0D6CsAPQZbRQNm
-	gUoPd3u14xLGf1aPwz1aByeyM60elkrLqQ3Vub096WIBR3kcAzDNRGZ7m1PzaKnv
-	FGjEd6B3a3lqDpfKdEyQpLgdTms0XQsIrgBC8BqCXR4zb/kyU+4bg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 91C7D1A4B4;
-	Wed, 13 Mar 2024 14:30:47 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=zYg4ncSSCxEm
+	fx1P8DLLTbFrtpWFM94Iiz+8tSvUm+k=; b=WxXPRwEyabUXogGKP3tf9xnH5xh+
+	EfmVka7NyEaDGNHSahXX3joA1piOhtlHx6d7xeI+HnSS+olSnkS7SyiIWcB5mCOL
+	7FloSKoE3EHeZI4ECRPTzjc8rXeUNFHLuSdQzQbXBAQ/CzNiWGYUnwBNl9UWzwda
+	7bsLHZf4/HDRYfw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 58B961D4D1D;
+	Wed, 13 Mar 2024 14:34:28 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2A2851A4B1;
-	Wed, 13 Mar 2024 14:30:44 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ACBC11D4D1A;
+	Wed, 13 Mar 2024 14:34:27 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Beat Bolli" <bb@drbeat.li>
-Cc: michael.osipov@innomotics.com,  git@vger.kernel.org,  Beat Bolli
- <dev+git@drbeat.li>
-Subject: Re: [PATCH] date: make "iso-strict" conforming for the UTC timezone
-In-Reply-To: <20240313175000.2148-1-dev+git@drbeat.li> (Beat Bolli's message
-	of "Wed, 13 Mar 2024 18:50:00 +0100")
-References: <410d458c-ae5b-40cc-9c8e-97b016c74a76@siemens.com>
-	<20240313175000.2148-1-dev+git@drbeat.li>
-Date: Wed, 13 Mar 2024 11:30:42 -0700
-Message-ID: <xmqqwmq6asrx.fsf@gitster.g>
+To: Jeppe =?utf-8?Q?=C3=98land?= <joland@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Sparse worktree always contains root files
+In-Reply-To: <CA+osTZWsGv01xinFPKbTQOF9mpvfwWs4wJczHSZXLdRxf1OmwA@mail.gmail.com>
+	("Jeppe =?utf-8?Q?=C3=98land=22's?= message of "Wed, 13 Mar 2024 11:16:46
+ -0700")
+References: <CA+osTZWsGv01xinFPKbTQOF9mpvfwWs4wJczHSZXLdRxf1OmwA@mail.gmail.com>
+Date: Wed, 13 Mar 2024 11:34:26 -0700
+Message-ID: <xmqqr0geaslp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,70 +54,31 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- CD92BF1A-E167-11EE-82C7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 52CFC876-E168-11EE-A31C-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-"Beat Bolli" <bb@drbeat.li> writes:
+Jeppe =C3=98land <joland@gmail.com> writes:
 
-> ISO 8601-1:2020-12 specifies that a zero timezone offset must be denoted
-> with a "Z" suffix instead of the numeric "+00:00". Add the correponding
-> special case to show_date() and a new test.
-
-Hmph, would this break existing scripts that expects the current
-behaviour, and if it does, is it safe for us to blame the script
-authors for not following the standard?
-
-Assuming that we do not need to worry about them, the patch itself
-looks perfectly reasonable to me.
-
-Thanks.
-
-> Reported-by: Michael Osipov <michael.osipov@innomotics.com>
-> Link: https://lore.kernel.org/git/410d458c-ae5b-40cc-9c8e-97b016c74a76@siemens.com/
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
->  date.c          | 14 +++++++++-----
->  t/t0006-date.sh |  1 +
->  2 files changed, 10 insertions(+), 5 deletions(-)
+> I'm trying to use sparse checkouts in a large project, and one oddity
+> (bug?) came up.
 >
-> diff --git a/date.c b/date.c
-> index 619ada5b2044..44cf2221d81f 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -342,14 +342,18 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
->  				tm->tm_hour, tm->tm_min, tm->tm_sec,
->  				tz);
->  	else if (mode->type == DATE_ISO8601_STRICT) {
-> -		char sign = (tz >= 0) ? '+' : '-';
-> -		tz = abs(tz);
-> -		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
-> +		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d",
->  				tm->tm_year + 1900,
->  				tm->tm_mon + 1,
->  				tm->tm_mday,
-> -				tm->tm_hour, tm->tm_min, tm->tm_sec,
-> -				sign, tz / 100, tz % 100);
-> +				tm->tm_hour, tm->tm_min, tm->tm_sec);
-> +		if (tz == 0) {
-> +			strbuf_addch(&timebuf, 'Z');
-> +		} else {
-> +			strbuf_addch(&timebuf, tz >= 0 ? '+' : '-');
-> +			tz = abs(tz);
-> +			strbuf_addf(&timebuf, "%02d:%02d", tz / 100, tz % 100);
-> +		}
->  	} else if (mode->type == DATE_RFC2822)
->  		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
->  			weekday_names[tm->tm_wday], tm->tm_mday,
-> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index e18b1602864e..1d228a981ee9 100755
-> --- a/t/t0006-date.sh
-> +++ b/t/t0006-date.sh
-> @@ -46,6 +46,7 @@ check_show () {
->  TIME='1466000000 +0200'
->  check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
->  check_show iso8601-strict "$TIME" '2016-06-15T16:13:20+02:00'
-> +check_show iso8601-strict "$(echo "$TIME" | sed 's/+0200$/+0000/')" '2016-06-15T14:13:20Z'
->  check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
->  check_show short "$TIME" '2016-06-15'
->  check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
+> If I do a normal full clone of a repository, then do:
+>     git worktree add ../sparse --no-checkout
+>     cd ../sparse
+>     git sparse-checkout set somepath
+>     git checkout
+> Now indeed it is a sparse worktree, but the files from the root
+> directory are also there.
+
+I think this is working as intended.
+
+Without knowing about the non-tree entries' object names, you cannot
+create your next commit on top, as you need to be able to compute
+the tree object's contents.  You'd update some files in "somepath",
+and that directory being populated you can compute the object name
+of the tree that represents the state of "somepath" after your
+update.  But that object name must be mixed with other things in the
+same directory as "somepath" (i.e. in the root tree), so they must
+be known.
