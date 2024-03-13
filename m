@@ -1,219 +1,320 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C308814293
-	for <git@vger.kernel.org>; Tue, 12 Mar 2024 23:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDFA4A06
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 01:00:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710285371; cv=none; b=q8ViZrTkmaiy1bdJQVNXfBlbltqvnZe+prsv/DyIHnAqOFz5DdHcR2b1Q8i6c3dcEZ+a1098sLKEH4KVdJIrlJRgjaqboAy7S6aErLqNtU/yJh1TPD10tJ64PmCiVMDrQsQXhKXw4mh7sTNdKUpnjDoy6hzD7IM4NTsE+Lh5Fes=
+	t=1710291649; cv=none; b=b4poXihhiIpyoojnUfOKY3yEz47EvKLwjYQKhsqXPLFtGGeY66GFPtdf99lpTSMctzi7/z+MEBx3Z22xq4JFgDnvZ3E9Nj8Lw3amWDH2wty0yytGhp/UwbFCEMyROM76ki2m/6HViylaAETJbfsnlmy4C8Zv9v/EM/OaYlKDUzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710285371; c=relaxed/simple;
-	bh=TO+GScYFGrJEh0HEOLGCQvxGtl8WZ0Ja4ni70lnJatQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=qKbZNrQdVJGGkQbM+0McSaQI8RNwyLdDejI90Tvz3vakc/iN1HZJ+yvKLQQW4a7LA8yifHRjvYFjcJz/05b4Ftc2mMlzM+Z2pCvOiLMlKS0p9TjFj01QWkAmyfibfBENXWqSgGq4ACVORQboNZow6deQVxTtXJmuLR0PiOWIv3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=who-t.net; spf=pass smtp.mailfrom=who-t.net; dkim=pass (2048-bit key) header.d=who-t.net header.i=@who-t.net header.b=F4bNOCsS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cMuV+h4n; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=who-t.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=who-t.net
+	s=arc-20240116; t=1710291649; c=relaxed/simple;
+	bh=9WjeBmB1SJDJ7DC0vLGVB8y+1Rg9LCHqkzia8iAyWiQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qn5tGO+jSDW+qO2wC2tRgJD7pIplWbY8+sKB4XaR4Uir4fxi81rKLmkKD6AtykHvJAvjJm02fPJZ/iDsZeejZW3SoPJ2Dkk5D36CZvtEPexmFt49peF2mQVlTf2GXrQBQjXq8lkBDE9/aCrYOfHkzO5xcJQNSxpxTh1z2f8c7cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hudO/KK3; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=who-t.net header.i=@who-t.net header.b="F4bNOCsS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cMuV+h4n"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id BC20C138012A;
-	Tue, 12 Mar 2024 19:16:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 12 Mar 2024 19:16:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=who-t.net; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm3; t=1710285367; x=1710371767; bh=VUU9n2ojC/nyuQSXa7Al1
-	NE6nCCYSD31CxDz9cjnP6w=; b=F4bNOCsStXXj47GeuovlF+3b4Bhs/o4zZ7CUm
-	43mwse+lANLRxisDdqIBukqj0LS0LyTlQ2V1EqdpSXGiy6cH0nmAoZVzmis2P8TL
-	xsQ210Ke/7RMSv/5peyTGSgAtBrZ1FrpC61wfbL6amrRTa73bX1petAYnXWch5tl
-	gs5NPWhlR79C/BGcyRx2e0Y6QGizRz66RNrgN6HH3wZZyjDwbyQSkN99yethIzRs
-	+T/Q+kb4K0OBRe9i48QU2a5ThRSfFrXtZgswEIpKoBGcSXtp5Ln8khGkMd4rap8g
-	7eCkYqmq8gSQvqI+Nh4LfyTB7lqWUZn9iO93FcetVudZwVIww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1710285367; x=1710371767; bh=VUU9n2ojC/nyuQSXa7Al1NE6nCCY
-	SD31CxDz9cjnP6w=; b=cMuV+h4nzE9WdyQwPA8t5q5EzuWG6hSxjox0bEmpqxN6
-	bBmGKDF9X10ZsUlUvHjlN44OCgvRF+pO5S651Zfre8lP0GdjBEd8mT6zPRyVTq0q
-	AigpF36WunEdx8yfNcpCcHKOaPF45VLVpSGFtxLXQOed3TQ5BBjrQ9RVVAl+KfQT
-	1raQpKSOFng/5TWwIMHfN0e0ZHhfYnF/pQf0s8Oj5YPR4BJ0bsAWmfOm4jtIEe+n
-	u4vPWBM6LMeIeEr6+c776j3uFT1kOMdwgw/fyfa+VxlXTEDSDfFtDOwE+2pHiObr
-	2+xCIOTtxUPzIr5Lh0YYDCucmeK8onRoCST13Onrow==
-X-ME-Sender: <xms:N-LwZYUjpcVxTSR8VbSk3-hoEO2Dk_jnk_YxeO0xvKtmSoyE0tzhBA>
-    <xme:N-LwZcm5y-Fs-LEsEpyrg3pE68rYulEkGYM1xUYHwLhTY45kbOIgEoV0mKCP4xhag
-    hdeRKTueTWLiqWgtcs>
-X-ME-Received: <xmr:N-LwZcYIVbeiyoNvUsUj6-GXFCyDASIVIWZODpxSWdj5waIJXSgfmDx_nUB3pdEng5GYAlHkWhaOxIf3s2sUG3wfF3ZA3_YKOTy->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeeggddtkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfggtggujgesthdtredttddtvdenucfhrhhomheprfgvthgvrhcu
-    jfhuthhtvghrvghruceophgvthgvrhdrhhhuthhtvghrvghrseifhhhoqdhtrdhnvghtqe
-    enucggtffrrghtthgvrhhnpeefleehgffhgffgieduveejjeejveetfeelhfdttdevueek
-    ieeltefhudeufeeftdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpvghtvghrrdhhuhhtthgvrhgvrhesfihhohdqthdrnhgvth
-X-ME-Proxy: <xmx:N-LwZXUMgoQZV5FatXQopHhhRjTSX9CdKr3qDbkl2iXPiU-8FRSL7g>
-    <xmx:N-LwZSkwsHBYS-LQMU2nJFNDg0IgmfrMr5ZeEraOgWXEpuLvWxmTPA>
-    <xmx:N-LwZcfz-7qvcp0BvxIoqyp5pvVzGkS-cH0vA3f_Wi2u8afKQT_nvg>
-    <xmx:N-LwZUEnXbqySoiS-Gi8hhat9V7YVVSseOoCH3fSLTA1dEKKr2-j8Q>
-    <xmx:N-LwZZvjMlLOTUnEhb7baEtcP-anPyMYovnXveUU5UnjemJozAp03Q>
-Feedback-ID: i7ce144cd:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Mar 2024 19:16:04 -0400 (EDT)
-Date: Wed, 13 Mar 2024 09:15:59 +1000
-From: Peter Hutterer <peter.hutterer@who-t.net>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hudO/KK3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710291647; x=1741827647;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=9WjeBmB1SJDJ7DC0vLGVB8y+1Rg9LCHqkzia8iAyWiQ=;
+  b=hudO/KK38FOZQiSZPXn2GmK/xvmWnVvcrpmU9RkrAf9M4S0qukUWJqhW
+   2YFn1dQeh89E/HP0D+MPdTI78WF49v46KU5D7IKKN+ZeE5htOjqq2tLP1
+   2oYmK3sXwIVu4lcOet3ePDL6dVM5n3RUcObZllJkddJp0XsDqbqVc5RMB
+   Az/NZ8WTeQF1x7gCNW5JqAEWBduKyR+ZaeGRZObunSDRgTS0i/sUOFqS+
+   WiN7ZsVHfSCh2GSvWVhiBKBZPMt1a+VWYaGjSxAfiA+UQSSL/0wmQfT8U
+   4IvPjK/y9Cgh1nX81D2yW/8HU5DXR3rCP2RbmS9Rbw5R6/plpwTZPmnA+
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="5641761"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="5641761"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 18:00:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="11822408"
+Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.1])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 18:00:45 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, David Heidelberg <david@ixit.cz>,
-	Dragan Simic <dsimic@manjaro.org>
-Subject: [PATCH v3] diff: add diff.srcPrefix and diff.dstPrefix configuration
- variables
-Message-ID: <20240312231559.GA116605@quokka>
+Cc: Jacob Keller <jacob.keller@gmail.com>
+Subject: [RFC PATCH] mailsplit: add option to extract PATCH M/N numbers
+Date: Tue, 12 Mar 2024 17:58:48 -0700
+Message-ID: <20240313010040.1828970-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.44.0.53.g0f9d4d28b7e6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240312005756.GA3029606@quokka>
+Content-Transfer-Encoding: 8bit
 
-Allow the default prefixes "a/" and "b/" to be tweaked by the
-diff.srcprefix and diff.dstprefix configuration variables.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+git mailsplit splits a mailbox into files, which are then fed into git
+mailinfo to extract patch and subject data. This data is used by git am
+to apply patches from an email file, whether its a maildir or an mbox
+file.
+
+In some cases, the order of emails within an mbox does not reflect the
+actual patch order. I often find this the case when I download a
+t.mbox.gz file from a public inbox archive.
+
+When this occurs, git am will just try applying patches in whatever
+order they appear in the mbox, without any attempt to sort or order
+based on the actual patch numbers.
+
+As an initial attempt at enabling such functionality, implement
+--extract-patch-from-subject into git mailsplit.
+
+This will cause the mailsplit command to store files in
+<total>_<nr>_<count> files instead of just using the mail count as
+currently.
+
+This ordering should be generally useful as it sorts nicely when sorting
+the files alphanumerically.
+
+The extraction implementation is pretty rough, as I wasn't sure if we
+had more robust string matching. I tried to use strchr and some
+assumptions about how patch formatting is done. It looks for a block
+with "[ .. PATCH .. (sp)M/N]" and tries to copy the M and N out of the
+string and then extract the numbers using atoi. If any of this fails, it
+falls back to M=0 and N=0 when formatting the file names.
+
+The end result is that files split from the mailbox or maildir have
+prefixed 000N_000M_000C rather than just using the count of mail files
+within the mailbox.
+
+To allow this to work nicely, I used fgetpos and fsetpos to move through
+the file stream while searching for the subject line. This doesn't work
+with stdin so this support only works if you are processing a real file
+and not processing from stdin.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
-Changes to v2;
-- doc: change to camelcase diff.srcPrefix/diff.dstPrefix for
-  consistency with diff.mnemonicPrefix and most other options
-- git diff --default-prefix forces a/ and b/ regardless of configured
-  prefix, see the 'diff_opt_default_prefix' hunk in the patch below.
 
-The latter may be slightly controversial but: there are scripts out
-there that rely on the a/ and b/ prefix (came across one last night).
-With a custom prefix those scripts will break, having an option that
-forces the a/ and b/ prefix helps. Plus the man page explicitly says:
-  Use the default source and destination prefixes ("a/" and "b/").
-So let's stick with that behaviour then.
+I'm sending this as an RFC because its pretty ugly and I didn't completely
+finish the work to combine this with git-am. The goal is to have all the
+mails extracted from mailsplit nicely sort along subject lines so that git
+am will apply a series in the order that the subject lines specify rather
+than assuming the mails were received and stored in the correct order.
 
- Documentation/config/diff.txt |  6 ++++++
- diff.c                        | 14 ++++++++++++--
- t/t4013-diff-various.sh       | 35 +++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 2 deletions(-)
+Its frustrating to download an mbox file and then have to manually re-sort
+or re-apply patches because it failed to extract things nicely. I don't know
+if this approach is the best solution, or whether there's something else we
+could do instead. In theory we probably want something more robust for the
+M/N extraction over using strchr, memrchr, and whatnot....
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index 6c7e09a1ef5e..afc23d7723b6 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -111,6 +111,12 @@ diff.mnemonicPrefix::
- diff.noprefix::
- 	If set, 'git diff' does not show any source or destination prefix.
+ builtin/mailsplit.c | 126 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 116 insertions(+), 10 deletions(-)
+
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index 3af9ddb8ae5c..5255f4056e91 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -10,7 +10,7 @@
+ #include "strbuf.h"
  
-+diff.srcPrefix::
-+	If set, 'git diff' uses this source prefix. Defaults to 'a/'.
-+
-+diff.dstPrefix::
-+	If set, 'git diff' uses this destination prefix. Defaults to 'b/'.
-+
- diff.relative::
- 	If set to 'true', 'git diff' does not show changes outside of the directory
- 	and show pathnames relative to the current directory.
-diff --git a/diff.c b/diff.c
-index e50def45383e..108c1875775d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -62,6 +62,8 @@ static const char *diff_order_file_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
- static int diff_no_prefix;
-+static const char *diff_src_prefix = "a/";
-+static const char *diff_dst_prefix = "b/";
- static int diff_relative;
- static int diff_stat_name_width;
- static int diff_stat_graph_width;
-@@ -408,6 +410,12 @@ int git_diff_ui_config(const char *var, const char *value,
- 		diff_no_prefix = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.srcprefix")) {
-+		return git_config_string(&diff_src_prefix, var, value);
-+	}
-+	if (!strcmp(var, "diff.dstprefix")) {
-+		return git_config_string(&diff_dst_prefix, var, value);
-+	}
- 	if (!strcmp(var, "diff.relative")) {
- 		diff_relative = git_config_bool(var, value);
- 		return 0;
-@@ -3425,8 +3433,8 @@ void diff_set_noprefix(struct diff_options *options)
+ static const char git_mailsplit_usage[] =
+-"git mailsplit [-d<prec>] [-f<n>] [-b] [--keep-cr] -o<directory> [(<mbox>|<Maildir>)...]";
++"git mailsplit [-d<prec>] [-f<n>] [-b] [--keep-cr] [--extract-patch-from-subject] -o<directory> [(<mbox>|<Maildir>)...]";
  
- void diff_set_default_prefix(struct diff_options *options)
+ static int is_from_line(const char *line, int len)
  {
--	options->a_prefix = "a/";
--	options->b_prefix = "b/";
-+	options->a_prefix = diff_src_prefix;
-+	options->b_prefix = diff_dst_prefix;
+@@ -166,8 +166,83 @@ static int maildir_filename_cmp(const char *a, const char *b)
+ 	return (unsigned char)*a - (unsigned char)*b;
  }
  
- struct userdiff_driver *get_textconv(struct repository *r,
-@@ -5362,6 +5370,8 @@ static int diff_opt_default_prefix(const struct option *opt,
++static int extract_patch_subject(FILE *mbox, int *nr, int *total)
++{
++	struct strbuf tmp, n_buf, m_buf;
++	int found = 0;
++	fpos_t pos;
++	int err;
++
++	err = fgetpos(mbox, &pos);
++	if (err) {
++		error_errno("cannot get file position for %s", mbox);
++		return err;
++	}
++
++	strbuf_init(&tmp, 100);
++	strbuf_init(&n_buf, 10);
++	strbuf_init(&m_buf, 10);
++
++	for (;;) {
++		char *start, *patch, *last_space, *slash, *end;
++
++		if (strbuf_getline(&tmp, mbox))
++			break;
++
++		if (!starts_with(tmp.buf, "Subject:"))
++			continue;
++
++		start = strchr(tmp.buf, '[');
++
++		while (start) {
++			patch = strstr(start, "PATCH");
++			slash = strchr(start, '/');
++			end = strchr(start, ']');
++
++			if (patch && slash && end &&
++			    patch < end && slash < end) {
++
++				last_space = memrchr(patch, ' ', end - patch);
++				if (!last_space || last_space >= end)
++					break;
++
++				found = 1;
++
++				strbuf_reset(&n_buf);
++				strbuf_reset(&m_buf);
++
++				strbuf_add(&m_buf, last_space + 1, slash - last_space - 1);
++				strbuf_add(&n_buf, slash + 1, end - slash - 1);
++
++				break;
++			}
++		}
++
++		break;
++	}
++
++	if (found) {
++		*nr = atoi(m_buf.buf);
++		*total = atoi(n_buf.buf);
++	} else {
++		*nr = 0;
++		*total = 0;
++	}
++
++	strbuf_release(&tmp);
++	strbuf_release(&n_buf);
++	strbuf_release(&m_buf);
++
++	err = fsetpos(mbox, &pos);
++	if (err)
++		error_errno("cannot set file position for %s", mbox);
++		return err;
++
++	return 0;
++}
++
+ static int split_maildir(const char *maildir, const char *dir,
+-	int nr_prec, int skip)
++	int extract_patch, int nr_prec, int skip)
+ {
+ 	char *file = NULL;
+ 	FILE *f = NULL;
+@@ -197,7 +272,17 @@ static int split_maildir(const char *maildir, const char *dir,
+ 			goto out;
+ 		}
  
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(optarg);
-+	diff_src_prefix = "a/";
-+	diff_dst_prefix = "b/";
- 	diff_set_default_prefix(options);
- 	return 0;
+-		name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
++		if (extract_patch) {
++			int nr, total;
++
++			if (extract_patch_subject(f, &nr, &total))
++				goto out;
++
++			name = xstrfmt("%s/%0*d_%0*d_%0*d", dir, nr_prec, total, nr_prec, nr, nr_prec, ++skip);
++		} else {
++			name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
++		}
++
+ 		split_one(f, name, 1);
+ 		free(name);
+ 
+@@ -214,7 +299,8 @@ static int split_maildir(const char *maildir, const char *dir,
+ 	return ret;
  }
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 1e3b2dbea484..e75f9f7d4cb2 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -663,6 +663,41 @@ test_expect_success 'diff --default-prefix overrides diff.mnemonicprefix' '
- 	check_prefix actual a/file0 b/file0
- '
  
-+test_expect_success 'diff respects diff.srcprefix' '
-+	git -c diff.srcprefix=x/ diff >actual &&
-+	check_prefix actual x/file0 b/file0
-+'
+-static int split_mbox(const char *file, const char *dir, int allow_bare,
++static int split_mbox(const char *file, const char *dir,
++		      int extract_patch, int allow_bare,
+ 		      int nr_prec, int skip)
+ {
+ 	int ret = -1;
+@@ -223,8 +309,13 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+ 	FILE *f = !strcmp(file, "-") ? stdin : fopen(file, "r");
+ 	int file_done = 0;
+ 
+-	if (isatty(fileno(f)))
++	if (isatty(fileno(f))) {
++		if (extract_patch) {
++			error("cannot use --extract-patch-from-subject with stdin");
++			return -1;
++		}
+ 		warning(_("reading patches from stdin/tty..."));
++	}
+ 
+ 	if (!f) {
+ 		error_errno("cannot open mbox %s", file);
+@@ -256,7 +347,20 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+ 	}
+ 
+ 	while (!file_done) {
+-		char *name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
++		char *name;
 +
-+test_expect_success 'diff respects diff.dstprefix' '
-+	git -c diff.dstprefix=y/ diff >actual &&
-+	check_prefix actual a/file0 y/file0
-+'
++		if (extract_patch) {
++			int nr, total;
 +
-+test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
-+	git -c diff.srcprefix=z/ diff --src-prefix=z/ >actual &&
-+	check_prefix actual z/file0 b/file0
-+'
++			if (extract_patch_subject(f, &nr, &total)) {
++				nr = 0;
++				total = 0;
++			}
 +
-+test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
-+	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
-+	check_prefix actual a/file0 z/file0
-+'
-+
-+test_expect_success 'diff src/dstprefix ignored with diff.noprefix' '
-+	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff >actual &&
-+	check_prefix actual file0 file0
-+'
-+
-+test_expect_success 'diff src/dstprefix ignored with diff.mnemonicprefix' '
-+	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix diff >actual &&
-+	check_prefix actual i/file0 w/file0
-+'
-+
-+test_expect_success 'diff src/dstprefix ignored with --default-prefix' '
-+	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix >actual &&
-+	check_prefix actual a/file0 b/file0
-+'
-+
- test_expect_success 'diff --no-renames cannot be abbreviated' '
- 	test_expect_code 129 git diff --no-rename >actual 2>error &&
- 	test_must_be_empty actual &&
++			name = xstrfmt("%s/%0*d_%0*d_%0*d", dir, nr_prec, total, nr_prec, nr, nr_prec, ++skip);
++		} else {
++			name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
++		}
+ 		file_done = split_one(f, name, allow_bare);
+ 		free(name);
+ 	}
+@@ -272,7 +376,7 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
+ {
+ 	int nr = 0, nr_prec = 4, num = 0;
+-	int allow_bare = 0;
++	int allow_bare = 0, extract_patch = 0;
+ 	const char *dir = NULL;
+ 	const char **argp;
+ 	static const char *stdin_only[] = { "-", NULL };
+@@ -302,6 +406,8 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
+ 			dir = arg+2;
+ 		} else if (!strcmp(arg, "--mboxrd")) {
+ 			mboxrd = 1;
++		} else if (!strcmp(arg, "--extract-patch-from-subject")) {
++			extract_patch = 1;
+ 		} else if ( arg[1] == '-' && !arg[2] ) {
+ 			argp++;	/* -- marks end of options */
+ 			break;
+@@ -338,7 +444,7 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
+ 		int ret = 0;
+ 
+ 		if (arg[0] == '-' && arg[1] == 0) {
+-			ret = split_mbox(arg, dir, allow_bare, nr_prec, nr);
++			ret = split_mbox(arg, dir, extract_patch, allow_bare, nr_prec, nr);
+ 			if (ret < 0) {
+ 				error("cannot split patches from stdin");
+ 				return 1;
+@@ -354,9 +460,9 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (S_ISDIR(argstat.st_mode))
+-			ret = split_maildir(arg, dir, nr_prec, nr);
++			ret = split_maildir(arg, dir, extract_patch, nr_prec, nr);
+ 		else
+-			ret = split_mbox(arg, dir, allow_bare, nr_prec, nr);
++			ret = split_mbox(arg, dir, extract_patch, allow_bare, nr_prec, nr);
+ 
+ 		if (ret < 0) {
+ 			error("cannot split patches from %s", arg);
 -- 
-2.44.0
+2.44.0.53.g0f9d4d28b7e6
 
