@@ -1,52 +1,50 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3215C606
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 23:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DB31E480
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 23:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710371201; cv=none; b=WIN0o3t1MuE/6typ5mLX463xr4wbfRKOat3iHZ3rI1pKnpdRM5vnQ52lWKROHM91El6HTQG82dCr2+8zp+wijrVflLIOWOpZTPJND0la92I2JcU1qJtR5+zejTfAJkjP9tzyBrrL7uLLH3slv5/FspfmuAd/JBLb/QQbuFa0ZOw=
+	t=1710373145; cv=none; b=E2DxtWZ+6ACtYwfsZHY4v/8kBPZyTg0o3bFmiYPVnTls8xuRSnoKHZdkvksSN1BGEipYHiBCTDZ9QHMZ2PRNm5l89li9ODkwwFA9nFhOjL+Ive2l4SvYVwXhXdp3HvZ/mpwcH9W56jEXJ+FZJ3lMgaHLF0qaseZSUOAnTYiJWTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710371201; c=relaxed/simple;
-	bh=VpO3g6g8nI26WHNlv9zhsjWH3FogKiGZAK7qN+/ikgk=;
+	s=arc-20240116; t=1710373145; c=relaxed/simple;
+	bh=QSsC+69ZyNONWapHARAkpKNh8pITSXDppL3I7g19e6E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VQc4Azs3rZ9pSoNUwsy0jRizDrJTbl7FdwiUYdeQP8XQW//ZuiVLWeDX4AqQ+6PbhnE/5H1A3NGMtWFahox8klSFiGzgR/hSjy/1GTHVJAvGqwEt/YgqgpevghuZ1GBC+aS/2/dyCFBdmR3SanKlNaGJOO2dbLcUQr8taja3onY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hi4lKxAh; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=IjMloWn2ALJ/OnwVaDaP0ymUGMrlTIuAejqwOj/z3Yhnl+9ZxkC90oUmr5hHHDT8w/hlWw/5M85mOgRBVAXHI3hAEDtRCIrn/wRUl7IQpigMMifuSQXcVGzbLYEzLdTU8tB/Xb+6cWkXedIuxL0WBlY5hWOMXw1K5fnIDzf4g2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YNMlofqj; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hi4lKxAh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YNMlofqj"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0BBCB1C6BF;
-	Wed, 13 Mar 2024 19:06:39 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F63C1CA5D;
+	Wed, 13 Mar 2024 19:39:03 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=VpO3g6g8nI26WHNlv9zhsjWH3FogKiGZAK7qN+
-	/ikgk=; b=Hi4lKxAhtNVzPCprz1FT5BXNSyEilDZDq6UdeMzdYa2lkGaBydpYUn
-	gdmS7xpuYxLrYTvVi2D2TBeyVmZpDUirxEEK52tXwL4qpF4TfN9olIgcpCqUnG6L
-	wNMV4ZkE3+E7TtYGmQRIpRVa/+UsOnNDP10/ou8GUVB5jculYVEQI=
+	:content-type; s=sasl; bh=QSsC+69ZyNONWapHARAkpKNh8pITSXDppL3I7g
+	19e6E=; b=YNMlofqjTFDt5CWjQrHv9Dm5E+7tntaUitySR3+7+Qskrtt0TkOsaL
+	rg9stPSMseWTgueBHc8vkDeOtN3i0FChZlIUfFnulCkwfQHlh9h/wRLRK0xtau/x
+	bXA9Bc5zJBu8I59qz1DzYZRnDFcEbYQBOa+8tbW3TVnVsymaw80Eg=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 03D391C6BE;
-	Wed, 13 Mar 2024 19:06:39 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 487EA1CA5C;
+	Wed, 13 Mar 2024 19:39:03 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 31CA11C6BC;
-	Wed, 13 Mar 2024 19:06:35 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C7D951CA58;
+	Wed, 13 Mar 2024 19:38:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Beat Bolli" <bb@drbeat.li>
-Cc: git@vger.kernel.org,  Beat Bolli <dev+git@drbeat.li>,  Michael Osipov
- <michael.osipov@innomotics.com>
-Subject: Re: [PATCH v3] date: make "iso-strict" conforming for the UTC timezone
-In-Reply-To: <20240313225423.11373-1-dev+git@drbeat.li> (Beat Bolli's message
-	of "Wed, 13 Mar 2024 23:54:23 +0100")
-References: <xmqqmsr169e5.fsf@gitster.g>
-	<20240313225423.11373-1-dev+git@drbeat.li>
-Date: Wed, 13 Mar 2024 16:06:33 -0700
-Message-ID: <xmqq5xxp68au.fsf@gitster.g>
+To: Christopher Lindee <christopher.lindee@webpros.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] Teach send-pack & push to --send-up-to-date refs
+In-Reply-To: <SA1PR14MB469144B8903909F65493323A8D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
+	(Christopher Lindee's message of "Tue, 12 Mar 2024 21:55:12 +0000")
+References: <SA1PR14MB469144B8903909F65493323A8D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
+Date: Wed, 13 Mar 2024 16:38:58 -0700
+Message-ID: <xmqqzfv14s8d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,75 +54,148 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 56C1C15C-E18E-11EE-AF8E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ DDD64236-E192-11EE-8331-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-"Beat Bolli" <bb@drbeat.li> writes:
+Christopher Lindee <christopher.lindee@webpros.com> writes:
 
-> ISO 8601-1:2020-12 specifies that a zero timezone offset must be denoted
-> with a "Z" suffix instead of the numeric "+00:00". Add the correponding
-> special case to show_date() and a new test.
->
-> Changing an established output format which might be depended on by
-> scripts is always problematic, but here we choose to adhere more closely
-> to the published standard.
+> Subject: Re: [PATCH 1/2] Teach send-pack & push to --send-up-to-date refs
 
-Perfect.  Thanks for following it through.  Will replace (I've
-queued v2 already but it is easy to replace).
+cf. Documentation/SubmittingPatches:describe-changes.
 
->
-> Reported-by: Michael Osipov <michael.osipov@innomotics.com>
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
-> Changes from v2:
->
-> - changed the rationale according to Junio's feedback
->
-> Changes from v1:
->
-> - added a comment why the change is fine
-> - removed the Link: trailer
->
->  date.c          | 14 +++++++++-----
->  t/t0006-date.sh |  1 +
->  2 files changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/date.c b/date.c
-> index 619ada5b2044..44cf2221d81f 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -342,14 +342,18 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
->  				tm->tm_hour, tm->tm_min, tm->tm_sec,
->  				tz);
->  	else if (mode->type == DATE_ISO8601_STRICT) {
-> -		char sign = (tz >= 0) ? '+' : '-';
-> -		tz = abs(tz);
-> -		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
-> +		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d",
->  				tm->tm_year + 1900,
->  				tm->tm_mon + 1,
->  				tm->tm_mday,
-> -				tm->tm_hour, tm->tm_min, tm->tm_sec,
-> -				sign, tz / 100, tz % 100);
-> +				tm->tm_hour, tm->tm_min, tm->tm_sec);
-> +		if (tz == 0) {
-> +			strbuf_addch(&timebuf, 'Z');
-> +		} else {
-> +			strbuf_addch(&timebuf, tz >= 0 ? '+' : '-');
-> +			tz = abs(tz);
-> +			strbuf_addf(&timebuf, "%02d:%02d", tz / 100, tz % 100);
-> +		}
->  	} else if (mode->type == DATE_RFC2822)
->  		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
->  			weekday_names[tm->tm_wday], tm->tm_mday,
-> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index e18b1602864e..1d228a981ee9 100755
-> --- a/t/t0006-date.sh
-> +++ b/t/t0006-date.sh
-> @@ -46,6 +46,7 @@ check_show () {
->  TIME='1466000000 +0200'
->  check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
->  check_show iso8601-strict "$TIME" '2016-06-15T16:13:20+02:00'
-> +check_show iso8601-strict "$(echo "$TIME" | sed 's/+0200$/+0000/')" '2016-06-15T14:13:20Z'
->  check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
->  check_show short "$TIME" '2016-06-15'
->  check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
+Perhaps
+
+	[PATCH 1/2] push: allow pushing a no-op update to refs
+
+or something?
+
+> Provide an option that forces the local Git transport to transmit a local
+> ref even when the receiving ref would not change (i.e. the local & remote
+> refs point to the same object).  This is not done normally, as no changes
+> would take place on the server in a vanilla Git setup.  However, some Git
+> servers support push options and those push options decide which branches
+> to operate on based on the refs that are transmitted alongside the option.
+> This option ensures the refs listed on the command line are always sent.
+
+Flip the order of description to give your observation of the
+current behaviour first, your perceived problem in it next, and then
+finally your solution.  That way, those who are totally unfamiliar
+with the problem area can just read from start to end straight, and
+those who know what we do currently can skip and start from your
+problem description.
+
+Also, it would be nice if you throw in the issue about missing ref
+in the push certificate, which I mentioned in my response to the
+cover letter.
+
+>  Documentation/git-push.txt      | 8 +++++++-
+>  Documentation/git-send-pack.txt | 7 +++++++
+>  builtin/push.c                  | 1 +
+>  builtin/send-pack.c             | 4 ++++
+>  send-pack.c                     | 2 +-
+>  send-pack.h                     | 3 ++-
+>  transport-helper.c              | 7 ++++++-
+>  transport.c                     | 1 +
+>  transport.h                     | 1 +
+>  9 files changed, 30 insertions(+), 4 deletions(-)
+
+No tests?
+
+>  'git push' [--all | --branches | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+>  	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-q | --quiet] [-v | --verbose]
+> -	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
+> +	   [-u | --set-upstream] [-o <string> | --push-option=<string>] [--send-up-to-date]
+
+I do not know if the new option is a name that is easy to
+understand.  I am not great at naming, either but how does
+"--force-no-op" sound?
+
+> +	Usually, the command will not send a local ref when the remote ref
+> +	already matches, as no change would occur if it did.  This flag
+
+In the context of "push", 'match' is a verb that is used in
+different contexts, like "'git push master' finds a ref that matches
+'master' and updates refs/heads/master".  You would want to avoid it
+when you can.
+
+    Usually the command omits instructing the receiving end to
+    update a ref to point at an object, if the target ref points at
+    the exact object already, as no change ...
+
+> +	disables that check.  This allows push options to be sent alongside
+> +	up-to-date references on the remote.
+
+Aside from options and push certificates, there may be other side
+effects from this change.  I am not sure if we want to make sure we
+enumerate the benefit all like this.  Perhaps drop "This allows ..."
+altogether?
+
+> diff --git a/send-pack.c b/send-pack.c
+> index 37f59d4f66..30b0f2f276 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -313,7 +313,7 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
+>  	case REF_STATUS_REJECT_NODELETE:
+>  		return CHECK_REF_STATUS_REJECTED;
+>  	case REF_STATUS_UPTODATE:
+> -		return CHECK_REF_UPTODATE;
+> +		return args->send_uptodate ? 0 : CHECK_REF_UPTODATE;
+>  
+>  	default:
+>  	case REF_STATUS_EXPECTING_REPORT:
+
+Given the existing flow of this code, I would prefer to see it
+written more like so:
+
+diff --git i/send-pack.c w/send-pack.c
+index 37f59d4f66..97d01726bb 100644
+--- i/send-pack.c
++++ w/send-pack.c
+@@ -313,8 +313,9 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
+ 	case REF_STATUS_REJECT_NODELETE:
+ 		return CHECK_REF_STATUS_REJECTED;
+ 	case REF_STATUS_UPTODATE:
+-		return CHECK_REF_UPTODATE;
+-
++		if (!args->send_uptodate)
++			return CHECK_REF_UPTODATE;
++		/* fallthru */
+ 	default:
+ 	case REF_STATUS_EXPECTING_REPORT:
+ 		/* already passed checks on the local side */
+
+to make it clear that the caller gets 0 ("go ahead and do it")
+unless it is one of the cases explicitly listed abouve the "default"
+label.
+
+> +	int do_nop = flags & TRANSPORT_PUSH_SEND_UPTODATE;
+
+Here we do call it "do_nop", showing that at least to you, "nop" is
+a much more fitting word than "uptodate" for what we are trying to
+achieve in this topic.  It would give us one piece of good input to
+decide what the end-user facing name should be.  In fact it is where
+I took inspiration from for "force-noop" I mentioned earlier.
+
+> @@ -1010,7 +1011,11 @@ static int push_refs_with_push(struct transport *transport,
+>  			} else
+>  				continue;
+>  		case REF_STATUS_UPTODATE:
+> -			continue;
+> +			if (do_nop) {
+> +				; /* do nothing */
+> +			}
+> +			else
+> +				continue;
+
+Drop needless braces around a single-statement block.
+Alternatively, we could write it like so:
+
+			if (!do_nop)
+				continue;
+			/* fallthru */
+
+but I think what you wrote, modulo the unnecessary braces, makes the
+intent a bit more clear.
+
+>  		default:
+>  			; /* do nothing */
+>  		}
