@@ -1,104 +1,202 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB38BE4C
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 01:09:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C316FA7
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 02:15:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710292171; cv=none; b=AHparWpwcGg58Xso0B6FGnKUNr8I0pU2s9DtjPmSAKElwKk6WTcFyOc+Pk1ODu8mS6408uBxrb7+LJnmqCSRfPGxB+3e6FQLR/7JnsNGPJfE8DihFG1oBlaKRIw2W5Lm+mseO58sTLrDlS7J1GqAvQ722dcJTMw0kQdjl0kfM2w=
+	t=1710296155; cv=none; b=ehKqPYUW9vlezCHF4UEJq6i/XA0rfOnqEkRm7qFS7l4Z0BS+Z4bo1loRQrWDwrvs8tn8g7JUEPKVmWt+7OjKxB/CPlKiZUQi4AlyYpkU/ZZyGYT6sMdr8kDq8XnrrRe+P9u9MYtxIeY1AzVvaxk0QuQlguHE1aYYLaDwriFMiLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710292171; c=relaxed/simple;
-	bh=Fo6TvnMcZJuqluOxviGgDB4XHOvEJpf7qnODsJusS7k=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=OsN6z9E3igwoUEWS84GvcAaSa3sCU8SCEI8aAg2epHqUqiVAKVGvwhp9PxrLNd/4EHZqKExKvYWIJcaeAsW//0c0Gtl10VJRuL5W0mP8dTH38AwuksnP7o2gOOCUJeyxtecwtNY730NpN1oB6KWzxdtfF3IseTTxWpqZvkh3BAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=wLb1XgG9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qHGbkwTq; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
+	s=arc-20240116; t=1710296155; c=relaxed/simple;
+	bh=AaamLPG2EJPnmi7xTDOxypMDW+ZJPjuMy0BWDrzoTKI=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=KOG9gqgKieU3BrfKGonv/DJLvyjdEMTYtRi48WJCt53TVx2KzNHophSSRm7LoF71gjBqcDzCOM6q+GslbYMgWIuqujhxFe2zngsNdNEIrJZMQyhzXmq8R5WzMhWJ+Dzna7LMZhYolPjHB8dc9d+ht4hn5HAKSy63UDQTdGd5lrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=DzbOcHEY; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="wLb1XgG9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qHGbkwTq"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2623911400F9;
-	Tue, 12 Mar 2024 21:09:28 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 12 Mar 2024 21:09:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1710292168;
-	 x=1710378568; bh=Fo6TvnMcZJuqluOxviGgDB4XHOvEJpf7qnODsJusS7k=; b=
-	wLb1XgG9ME+ROHNTS9r72Rehd3n1WCyB9FmOTGiIi3xfuXKzHzdtuekfefxt2rAC
-	Kt7elaGXb2BieHkazAmCN2AnUdc9nth0yRSQBug3Wnpx5fujJbmDDzEZb1ox9H2A
-	s+oFlMa/yjhjtWavMKKDlIU4Tli0EaugWiR+dgvizGTBCdo9YIFCKxPd/+a96ita
-	Oie0ZfZlB7iNaUWAEzh3xYTVbc8k4tkzGH/frI8nkgnDG9i5Ac8tdX5e2gwqsBZJ
-	Q7R/ETmuWE7K8pQxp4r4oK5S5zRsWtg5o+K2ky1TUCd5hcXEJVyl1+Qub0KHNgXD
-	srBWDC3Od8WWivAmim0TzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710292168; x=
-	1710378568; bh=Fo6TvnMcZJuqluOxviGgDB4XHOvEJpf7qnODsJusS7k=; b=q
-	HGbkwTqKH/Y2oOGHWaW6YinjSoEFw7tzceb+x3gX/1ayTbE9/Gw52qSSrooN1KmK
-	1awASI3uQ8VUBW/Zv55W5WdJIRsax/fzBkiBm6twRkAElSmZOQd50jM9Z7fWQNoj
-	72sbUCT3A5WRcfJ9HrQ4I9qjk6FRel/P5pKVDwHCIUnbTc2B3CKFrnaNAC4MSBvt
-	qmTh3NHmu+zLiIvEtGwjY3MhFffHKpxumtNtokqsLvoWT7aLyc4adEAILwff19Rc
-	n0fWX31usAAwUkq8XowFCHR0UM0PB+0JaG8a0+q4I6m5x/djA0gtlItkD0ACg8gi
-	vpVuwyPYtdrdIwOiiFhRA==
-X-ME-Sender: <xms:x_zwZXuthP4WNbm5kj5TPWqThYsHYnxRmAg-4uHggAT6hS3bXl1BLg>
-    <xme:x_zwZYd7tHFU4M13QjnfRdb8I9vOsMaD1Kjx0M_Y0BsvkNTx4ELaU417HOW569qg3
-    lM36YYCLPtNY_Hgqw>
-X-ME-Received: <xmr:x_zwZaw6qHpjZgcNxj0_IxwLHgiC60NoeBnIEF11oI7B-kvymN3BHIQlD11FqOBmQlh1EYhTEo8gQeY-guT2F3WhgbS_lGlv4si8eBEd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeeggdeftdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpegggfgtfffkuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgrmhgv
-    shcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrthhtvg
-    hrnhephfetueehudeltedtjeekudelueeihfevheeugfehhedvieektedtvdevgeeileet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmh
-    gvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:x_zwZWPvyuHEKDEkoKbJp2rLkr2LOwrWx8PPOCncnQS1AEMRadC7pQ>
-    <xmx:x_zwZX-jAjwr1NC9eDf0qp5g5e36tcpyUXypBQFzfuqkazim_RMYYw>
-    <xmx:x_zwZWVT_kcd0S1NjKUdl6-J9YJjzk8tSl0VXZG-69_7CVwPLMxxPw>
-    <xmx:x_zwZYfR7w9AQGLbnwA6tZeammXM-R7oSGZT4iWwhaqlCguAtUph-w>
-    <xmx:yPzwZabg1evOdSoqLunUUs_MN2gVVknwRf9-xcCJNiGfgJg2gXLpoQ>
-Feedback-ID: i93f149ec:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Mar 2024 21:09:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="DzbOcHEY"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 Mar 2024 12:09:23 +1100
-Message-Id: <CZS7Z199NZUG.2EM4STQ664P9W@jamesliu.io>
-Subject: Re: [PATCH 3/7] reftable/record: avoid copying author info
-From: "James Liu" <james@jamesliu.io>
-To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1709640322.git.ps@pks.im>
- <6f568e4ccb67a7af8279352153d052c5f9a88234.1709640322.git.ps@pks.im>
-In-Reply-To: <6f568e4ccb67a7af8279352153d052c5f9a88234.1709640322.git.ps@pks.im>
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710296148;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3fJ5a2r2Sb2oaba4JWcsBzhIgyUmXKXcwbqpnUWFO5g=;
+	b=DzbOcHEYrb5jtsHrep4OdTZ6hWZNSlY4sAf2dmldcVryG1wwnMwAnh4MinO9xI3MDK7uaI
+	1HhJr6+WBEHY4l7JBI3vjZUSVgsrIn+qAnmheVdVIcSmsp5mujCo5xLOSayeBagT3AI4k2
+	+0FW7sf7uRUQpi1O+i4sGkjrS9UmM9WqDx6LTxShXMTtJjkSVf4MYxG4PYaTFcAMLuULdM
+	/pfH9cJOgomKevgGWydTsDDmnmtAhuxLsf+jWicODkT8yC8nWAUU7DiZ6kW32yWZnU+qNR
+	YjuSRLloGX+c0uN0RufBNtAy4SZB8NbTwCpoH4biJCeSt31YETbIAtaBqVZqTA==
+Date: Wed, 13 Mar 2024 03:15:47 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Peter Hutterer <peter.hutterer@who-t.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, David
+ Heidelberg <david@ixit.cz>
+Subject: Re: [PATCH v3] diff: add diff.srcPrefix and diff.dstPrefix
+ configuration variables
+In-Reply-To: <20240312231559.GA116605@quokka>
+References: <20240312231559.GA116605@quokka>
+Message-ID: <fac4fec23597bff0f4594112d2a9976d@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Tue Mar 5, 2024 at 11:11 PM AEDT, Patrick Steinhardt wrote:
-> Each reflog entry contains information regarding the authorship of who
-> has made the change. This authorship information is not the same as that
-> of any of the commits that the reflog entry references, but instead
-> corresponds to the local user that has executed the command. Thus, it is
-> almost always the case that all reflog entries have the same author.
+Hello Peter,
 
-What are your thoughts on simplifying this explanation a little bit? I
-gave it a try below:
+On 2024-03-13 00:15, Peter Hutterer wrote:
+> Allow the default prefixes "a/" and "b/" to be tweaked by the
+> diff.srcprefix and diff.dstprefix configuration variables.
 
-Each reflog entry contains authorship information indicating who has made
-the change. The author here corresponds to the local user who has executed
-the command rather than the author of the referenced commits. Thus, it is
-almost always the case that all reflog entries have the same author.
+The only thing that's left is to update the patch description
+to use camel case. :)
 
-
-Cheers,
-James
+> Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+> ---
+> Changes to v2;
+> - doc: change to camelcase diff.srcPrefix/diff.dstPrefix for
+>   consistency with diff.mnemonicPrefix and most other options
+> - git diff --default-prefix forces a/ and b/ regardless of configured
+>   prefix, see the 'diff_opt_default_prefix' hunk in the patch below.
+> 
+> The latter may be slightly controversial but: there are scripts out
+> there that rely on the a/ and b/ prefix (came across one last night).
+> With a custom prefix those scripts will break, having an option that
+> forces the a/ and b/ prefix helps. Plus the man page explicitly says:
+>   Use the default source and destination prefixes ("a/" and "b/").
+> So let's stick with that behaviour then.
+> 
+>  Documentation/config/diff.txt |  6 ++++++
+>  diff.c                        | 14 ++++++++++++--
+>  t/t4013-diff-various.sh       | 35 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 53 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/config/diff.txt 
+> b/Documentation/config/diff.txt
+> index 6c7e09a1ef5e..afc23d7723b6 100644
+> --- a/Documentation/config/diff.txt
+> +++ b/Documentation/config/diff.txt
+> @@ -111,6 +111,12 @@ diff.mnemonicPrefix::
+>  diff.noprefix::
+>  	If set, 'git diff' does not show any source or destination prefix.
+> 
+> +diff.srcPrefix::
+> +	If set, 'git diff' uses this source prefix. Defaults to 'a/'.
+> +
+> +diff.dstPrefix::
+> +	If set, 'git diff' uses this destination prefix. Defaults to 'b/'.
+> +
+>  diff.relative::
+>  	If set to 'true', 'git diff' does not show changes outside of the 
+> directory
+>  	and show pathnames relative to the current directory.
+> diff --git a/diff.c b/diff.c
+> index e50def45383e..108c1875775d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -62,6 +62,8 @@ static const char *diff_order_file_cfg;
+>  int diff_auto_refresh_index = 1;
+>  static int diff_mnemonic_prefix;
+>  static int diff_no_prefix;
+> +static const char *diff_src_prefix = "a/";
+> +static const char *diff_dst_prefix = "b/";
+>  static int diff_relative;
+>  static int diff_stat_name_width;
+>  static int diff_stat_graph_width;
+> @@ -408,6 +410,12 @@ int git_diff_ui_config(const char *var, const char 
+> *value,
+>  		diff_no_prefix = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "diff.srcprefix")) {
+> +		return git_config_string(&diff_src_prefix, var, value);
+> +	}
+> +	if (!strcmp(var, "diff.dstprefix")) {
+> +		return git_config_string(&diff_dst_prefix, var, value);
+> +	}
+>  	if (!strcmp(var, "diff.relative")) {
+>  		diff_relative = git_config_bool(var, value);
+>  		return 0;
+> @@ -3425,8 +3433,8 @@ void diff_set_noprefix(struct diff_options 
+> *options)
+> 
+>  void diff_set_default_prefix(struct diff_options *options)
+>  {
+> -	options->a_prefix = "a/";
+> -	options->b_prefix = "b/";
+> +	options->a_prefix = diff_src_prefix;
+> +	options->b_prefix = diff_dst_prefix;
+>  }
+> 
+>  struct userdiff_driver *get_textconv(struct repository *r,
+> @@ -5362,6 +5370,8 @@ static int diff_opt_default_prefix(const struct
+> option *opt,
+> 
+>  	BUG_ON_OPT_NEG(unset);
+>  	BUG_ON_OPT_ARG(optarg);
+> +	diff_src_prefix = "a/";
+> +	diff_dst_prefix = "b/";
+>  	diff_set_default_prefix(options);
+>  	return 0;
+>  }
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 1e3b2dbea484..e75f9f7d4cb2 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -663,6 +663,41 @@ test_expect_success 'diff --default-prefix
+> overrides diff.mnemonicprefix' '
+>  	check_prefix actual a/file0 b/file0
+>  '
+> 
+> +test_expect_success 'diff respects diff.srcprefix' '
+> +	git -c diff.srcprefix=x/ diff >actual &&
+> +	check_prefix actual x/file0 b/file0
+> +'
+> +
+> +test_expect_success 'diff respects diff.dstprefix' '
+> +	git -c diff.dstprefix=y/ diff >actual &&
+> +	check_prefix actual a/file0 y/file0
+> +'
+> +
+> +test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
+> +	git -c diff.srcprefix=z/ diff --src-prefix=z/ >actual &&
+> +	check_prefix actual z/file0 b/file0
+> +'
+> +
+> +test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
+> +	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
+> +	check_prefix actual a/file0 z/file0
+> +'
+> +
+> +test_expect_success 'diff src/dstprefix ignored with diff.noprefix' '
+> +	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff 
+> >actual &&
+> +	check_prefix actual file0 file0
+> +'
+> +
+> +test_expect_success 'diff src/dstprefix ignored with 
+> diff.mnemonicprefix' '
+> +	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix
+> diff >actual &&
+> +	check_prefix actual i/file0 w/file0
+> +'
+> +
+> +test_expect_success 'diff src/dstprefix ignored with --default-prefix' 
+> '
+> +	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix 
+> >actual &&
+> +	check_prefix actual a/file0 b/file0
+> +'
+> +
+>  test_expect_success 'diff --no-renames cannot be abbreviated' '
+>  	test_expect_code 129 git diff --no-rename >actual 2>error &&
+>  	test_must_be_empty actual &&
