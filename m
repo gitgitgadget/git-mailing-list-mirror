@@ -1,78 +1,102 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DCC51C33
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F5156B7F
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710365974; cv=none; b=S4MXeWWz7EzLVFWNCAYBts5ih/5SLsA2/TfEdFWKS0MVzXlRpPhxYPMCFefYDwCzcCgYQVkhn3NYPaTnRmGq66qoGdDCBEOrSxZ4qw2UFfCm1mfP0+gn5yB0F0SAxsPDxXrS3ReIX35lrIyySMSGQggCsqKUV5sn19MKElsLD8M=
+	t=1710366849; cv=none; b=ADJ7C+Jytkyd7JN4hqduk+D0VOlBIMK+kpVclj9Oz7SrmskC3kGbnS2EcAm4bddcsPkvd/isquabGGKdkidpW9fNY3E5lJ7FOutq8n1VMTvn7upHCoO1r8wDU5XzgvsxgpL5tvqA/P+rn56ty42Bvh44H0RH4H4Dm8Nlct60nxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710365974; c=relaxed/simple;
-	bh=mT0Jk5GKNbnTwtTUbnIBtv5Q2t4QRPAFVoyDNpSkknc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fHHXHxBKmzVp3cxrtUNjJPUtUh6OQ0vGmr8/zYVYlETTNMpxlM7f58T3RaV/bxPVcp9RjuflLBwbjs+2P9tbfvM+vIT16UaOUCrWADHGyP5qyUzxJGh2fhD0s/kYVd73XdnFK8uT9Jd4if4DdthITE/hrs867MMr+5Fo7otlfeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GszsUWef; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710366849; c=relaxed/simple;
+	bh=oCyE/w+vXtP4YIsPQPpxlMsU+sgmqUsx0HsRo2IiCEU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kbAyM5GQiuKwg7Bekw7W6xaOIeNBrhYzMTlXblmav4BOGWhqg6/wd9DyeCZNdTdy30beof+W4LGnUib8iC0vN6fbB+FxzH46iQyUIak6y50NAJHlsB3DpvUw06RFX25XdH1wt83M4YbSUCS9C65etavkimVVAgykBjcCkAVX5Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=T4L87cCJ; arc=none smtp.client-ip=95.215.58.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GszsUWef"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A61301D6962;
-	Wed, 13 Mar 2024 17:39:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=mT0Jk5GKNbnTwtTUbnIBtv5Q2t4QRPAFVoyDNp
-	Skknc=; b=GszsUWefNDc/fyfJ4VH51qA12RTetZ5dhHL07E2U5gRFuGGoyqf1IS
-	tabhPsb0svOlpet6xTE35ejZfgrCaqulht0WRnk99CUBEoYCrOrmuekPW7D+mUZA
-	m0OGwJaXYxsEFmE0TaBmYJ0gu1Rmn9UOWWAsrYBbnMA/gBTB1gyRE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D5211D6961;
-	Wed, 13 Mar 2024 17:39:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14FD61D695E;
-	Wed, 13 Mar 2024 17:39:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aryan Gupta <garyan447@gmail.com>
-Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>,  "Patrick
- Steinhardt [ ]" <ps@pks.im>
-Subject: Re: [GSoC] Discuss: Implement support for reftables in
- =?utf-8?B?4oCYZHVtYuKAmQ==?= HTTP
- transport
-In-Reply-To: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
-	(Aryan Gupta's message of "Wed, 13 Mar 2024 22:09:59 +0100")
-References: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
-Date: Wed, 13 Mar 2024 14:39:24 -0700
-Message-ID: <xmqqa5n1ak1f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="T4L87cCJ"
+Message-ID: <fda3e8f4-fd9e-4a43-a307-c6607d982436@iencinas.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
+	s=key1; t=1710366842;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xL2+fzSbixTXApzoVs6+xN50pW8P2biRG9QeldjmFQM=;
+	b=T4L87cCJdZ7t2SRfEWYcw8CFhj81xRfWDePm78ZTOTRt0rWLEH30klkVi7TAgmdyMIrR/r
+	M2XIDogS7oEKTluoDkRJMt5FoAMb4n7h1b60DDAPWXJQmHGk4x0QtYxq++75Qv80EX9113
+	sKPZYOuTJnmtZpBxQz7eLdpU2FKx+ageTSkf1bgD+hSPzJ/d0p98f7TRtoU9gVUfpWqMtQ
+	3f9RAX9P8RMSKDS0TYkT/C3cT7skw/ZYw3D8LHKgByrZI3jCKVwl65laf7HoCDNcX4pDNQ
+	RIJsxVL2eJpnoJtH7j1ccYVYw/8cO7uRvmHYVrzY9pNXiSTqg7365kX0SGTsEw==
+Date: Wed, 13 Mar 2024 22:53:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 29F5AAFA-E182-11EE-8145-25B3960A682E-77302942!pb-smtp2.pobox.com
+Subject: Re: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <20240307205006.467443-1-ignacio@iencinas.com>
+ <20240309181828.45496-1-ignacio@iencinas.com>
+ <20240309181828.45496-2-ignacio@iencinas.com> <xmqqy1aqvx9n.fsf@gitster.g>
+ <9fb02065-12d2-4c92-b1a5-74c06125c692@iencinas.com>
+ <xmqqil1ssm5y.fsf@gitster.g>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ignacio Encinas Rubio <ignacio@iencinas.com>
+In-Reply-To: <xmqqil1ssm5y.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-Aryan Gupta <garyan447@gmail.com> writes:
 
-> In simple
-> words what I understand is I just need to add support for the server
-> side nothing is to be done for the client side.
 
-Hmph.  The "dumb" transport is kept primarily to allow folks, who
-can only use web hosting that serves nothing but static files, to
-publish their repositories, and requiring more things to be done on
-the "dumb" server side sounds somewhat backwards to me.
+On 11/3/24 18:39, Junio C Hamano wrote:
+> Ignacio Encinas Rubio <ignacio@iencinas.com> writes:
+> 
+>> I can't think of any room for improvement other than integrating
+>> hostname (or a custom hostname) into git and using it in the tests, but
+>> I doubt it is worth it.
+> 
+> Ah, that is a thought.  We have t/helper that builds "test-tool"
+> just for that, and exposing the output of xhostname() does sounds
+> like a reasonable way to go.  It would roughly involve
 
-To be quite honest, I personally doubt that this topic makes much
-sense in this age and day---I've felt that the dumb HTTP walker
-outlived its usefulness for the past 10 years already.  But perhaps
-I am biased by the first-world access to the internet?
+Great! I hadn't noticed "test-tool". Just to double-check, what name do
+we want to use for this? xhostname, hostname, xgethostname, gethostname?
 
-Thanks.
+If I didn't miss something, the only place the test use hostname is in 
+
+    $ git grep '$(hostname' t/
+    t/t6500-gc.sh:	hostname=$(hostname || echo unknown) &&
+
+as you previously pointed out. So my plan is:
+
+1. Extend test-tool, migrate t6500-gc.sh to test-tool xhostname(*)
+2. Update my v2 to use "test-tool xhostname(*)"
+
+(*) or however we want to name it
+
+>  * Add t/helper/test-xhostname.c that defines cmd__xhostname() and
+>    writes the result of calling xhostname() to its standard output.
+> 
+>  * Plumb it through by adding it to a few places:
+> 
+>    - t/helper/test-tool.h wants the extern definition.
+>    - t/helper/test-tool.c wants it in its cmds[] array.
+>    - Makefile wants to list it in TEST_BUILTIN_OBJS
+> 
+>  * Then use "test-tool xhostname" in your tests, instead of
+>    "hostname".
+> 
+> You can run
+> 
+>     $ git grep chmtime ':!t/*.sh"
+> 
+> to find places that needed to be touched when a similar internal
+> tool "chmtime" was added.
+
+Thank you very much for the pointers, they were very helpful!
