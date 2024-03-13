@@ -1,87 +1,90 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A50482D3
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 20:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3AF53E3C
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710361434; cv=none; b=cHMybh/cB8gihww/yETpE4QWoUz4mg8ckfkEdwDUgpRoTKe2c8KUu6eEaux+rjA8cAz/5fGK7LK1apW5xefs+WNykKQHldCXj8thkCJAy8oidBPvnd3aWYA0f5vEbAa0jesysHTOjEWgNIpYt+SaGjGiatwH1B3uH87Da93WtkQ=
+	t=1710364215; cv=none; b=hCPvvpBGvtcJH2x3Yzzabx1kHmmgIt02ZPnZNB0eRYJONcwsvpnbTAbKqhwZKHzP37BcaKUJ76IJ+xZuu/xBKBmM3Ip1S8B296IptEtGmyHMDrYqIGyqoqxCcZl3lea/gEPuVZMrfA+B6fczDJrd022PlvS1HTp4ZYiMMIxrklQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710361434; c=relaxed/simple;
-	bh=0zEgmSSG3UYfYQfX0T4bI5W3IQ5pHoYwufd691rRyGE=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=UqIJKHDYH3tsWVEE79xlPUcbhB0Th74qLXjqzMc6kEHwdoX8bLxIQyDQ5lBjR8Rp0S0YaUagifICpNcXEpG9Jcvry8RoaWj3q29Zu57BifM+dlbtCmyKx6g6EPlN+4OPSPWPCAF6nrVZSg7yrc6dVhYKOD4pFFB4hDxR34ivoYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=GFSEi8kD; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710364215; c=relaxed/simple;
+	bh=ISzHl/wgMrPhdhwC+D2PiIvrT+7U1q4rPwfaG3Igeb8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=SJV7MdqGt5o9ID8iQbnhXNDxk/hwAlJT4sUw62g9ZroRsGGqf40J0ILD/Bn+vTOCFAreD6DzmcGPA/fmOiyUqU+OW7NntUP9RFXExHcgccsuRn6qExap7Ps9DCuEz+30JXTVMYsSZUk0qSC6TjVxoI9+6NPllw/EW741++32T2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSJ+eMiv; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="GFSEi8kD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSJ+eMiv"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5131316693cso417224e87.0
+        for <git@vger.kernel.org>; Wed, 13 Mar 2024 14:10:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710364211; x=1710969011; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ISzHl/wgMrPhdhwC+D2PiIvrT+7U1q4rPwfaG3Igeb8=;
+        b=iSJ+eMivS5EEDwXDmvwy8V4hdEwfK+UKsoMqmCgD+nAvoAsuQhpyfh35d37Wp2Vvhc
+         rwL5U5aIioEShw4EZFJDh1hLOnvEZBaG4wWSNdtOaNCTWUf/UAwdTpn//NZ2UKRN3ZpE
+         MgeUP+xi9YaYLSQbxDi5QRQ+vA/ljlN1GKf3662mqFXdE27bC6G2cXURCdkRP5/atb5y
+         zoTV2hdy9IUoJmq/vkaLjdKj77W0NYPvts/sq3L06VWA22xU3Clwr8rGFSJ4kdNuHlLL
+         MqqUVxxySnIiF0xmQARQznA3soWvNpcj+cq8Lg2OK6gpzSurSABxc1rzbpQD0arpt0hk
+         oEIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710364211; x=1710969011;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ISzHl/wgMrPhdhwC+D2PiIvrT+7U1q4rPwfaG3Igeb8=;
+        b=wsoEPWTdA0u2h954eGV+ZqfhpKOTWP8ESMw4xgEs/VUKw3fn7NuXbVi+kuVxYoq6Wb
+         n+xZoKlqwnUZO+hVPl2dTds8Ikc7fpEDLaLdXm1hswDWL4T/uu3f8g9ZSAZ+MU8+8x/9
+         PwSTnQGxUkHNIvqJbejuOuqXI+Oi2yFAFNwC0N6IFUNro2OIvegfFsiKDtn0taNgsdbD
+         OdxQQCDgVFC3vgj7LE0zAYi4OpplyV56OmkUKdK5NRITMEPHkJyYyad513zCINqVjxZD
+         8J6k9UxpWf1g116J6sadeFUPza9r2Eh3MPmo8GHTwXuoSAs8B8Ua8y8GR9G0HCvAPg7X
+         77nA==
+X-Gm-Message-State: AOJu0YzJshh0nrDtevT09+iyy5TqyWUG7ePdKeYE/tiJiWsavhxhAcXj
+	2KUmv3cZKNQxA1hner5T4RRI3PbO1W+Yrb0OwRw+oW8JtTuuyMD76fs6TZdAU9VzUX+Y7DVM/8C
+	flq6yMK9TUfAAhiTROdi2joe+CoUzV0Rabe1ciJZe
+X-Google-Smtp-Source: AGHT+IG7mKvTwACpHXQO0/aGJ96+C7o17tkdSF63mZLZTHqR7b6NyXGkiY5dMUlfDIDj4Gd3WOb6gZaQYHiNuRkOkPA=
+X-Received: by 2002:a19:4359:0:b0:513:ca36:11f6 with SMTP id
+ m25-20020a194359000000b00513ca3611f6mr1651035lfj.34.1710364210757; Wed, 13
+ Mar 2024 14:10:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710361428;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zs1ytbrFcy2r+4ZHJ6Chmfg3bQArMyLosw7Tu0zjcY4=;
-	b=GFSEi8kD/XypdXjCy+uTaoujgMvz8vOWGGAzILMejIG96Yh1RZYlI4diwQ9Lu3HMhqyQMz
-	vvYNt2lC5sVxDMdpqjHQOTD99rsPktlR71ty5lPsXZGSthVrO/EYFOUL/FYD2g2OtzCPvL
-	K+m8domEhTuT2lacb17dtfwSd9HDV/HQ9VRYoahG+dCPxL409ad8Mx6jPlo5BPDn/RcBS/
-	thkgyLUgg14oHVbj7xaH1JrqcuyScLmMP8KQRPDPlyxngpa/aaWYydEv7DCqLO6JY7nFia
-	k8yLW8TLjBmdKEhrxO3BfrlOqQcTqm42COy752oFtAUCvu9WtlU9S3fgPWKqLg==
-Date: Wed, 13 Mar 2024 21:23:47 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, Peter Hutterer
- <peter.hutterer@who-t.net>, git@vger.kernel.org, David Heidelberg
- <david@ixit.cz>
-Subject: Re: [PATCH v3] diff: add diff.srcPrefix and diff.dstPrefix
- configuration variables
-In-Reply-To: <xmqqbk7if8vj.fsf@gitster.g>
-References: <20240312231559.GA116605@quokka>
- <f8565251-2af1-470b-9b2d-798e3504b0d1@gmail.com>
- <xmqqbk7if8vj.fsf@gitster.g>
-Message-ID: <dc87a2c7e596b1bdca6c1c16b11d74c9@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+From: Aryan Gupta <garyan447@gmail.com>
+Date: Wed, 13 Mar 2024 22:09:59 +0100
+Message-ID: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
+Subject: =?UTF-8?Q?=5BGSoC=5D_Discuss=3A_Implement_support_for_reftables_in_?=
+	=?UTF-8?Q?=E2=80=98dumb=E2=80=99_HTTP_transport?=
+To: git@vger.kernel.org
+Cc: karthik nayak <karthik.188@gmail.com>, "Patrick Steinhardt [ ]" <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-03-13 16:29, Junio C Hamano wrote:
->  Documentation/diff-options.txt | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git c/Documentation/diff-options.txt 
-> w/Documentation/diff-options.txt
-> index aaaff0d46f..62eaa46d84 100644
-> --- c/Documentation/diff-options.txt
-> +++ w/Documentation/diff-options.txt
-> @@ -864,9 +864,10 @@ endif::git-format-patch[]
->  	Do not show any source or destination prefix.
-> 
->  --default-prefix::
-> -	Use the default source and destination prefixes ("a/" and "b/").
-> -	This is usually the default already, but may be used to override
-> -	config such as `diff.noprefix`.
-> +	Use the hardcoded default source and destination prefixes
-> +	("a/" and "b/").  This is designed to be used to override
-> +	configuration variables such as `diff.noprefix` and
-> +	`diff.srcPrefix`.
+Hello everyone.
 
-How about this instead:
+I hope you are doing well. I am brainstorming on the problem
+statement "Implement support for reftables in =E2=80=98dumb=E2=80=99 HTTP t=
+ransport"
+where I encountered some doubts which I wanted to discuss with you.
 
-     Ignore any configuration variables that control source and
-     destination prefixes, which includes `diff.noPrefix`, 
-`diff.srcPrefix`
-     and `diff.dstPrefix` (see `git-config`(1)), and use the default
-     prefixes `a/` and `b/`.
+Problem statement link: https://git.github.io/SoC-2024-Ideas/ (Last one)
 
->  --line-prefix=<prefix>::
->  	Prepend an additional prefix to every line of output.
+1. Do we just need support to know about the default branch or the
+entire reftable?
+
+2. As far as I am able to understand, I just need to add support for
+these reftable files to transfer through the backend incase of dumb
+http protocol, is this correct or am I missing something? In simple
+words what I understand is I just need to add support for the server
+side nothing is to be done for the client side.
+
+I am sorry if these sound absolutely basic but I'm genuinely eager to
+learn and implement them.
+
+Thank you.
+
+Regards
+Aryan Gupta
