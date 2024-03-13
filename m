@@ -1,139 +1,78 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A0C53815
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:35:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DCC51C33
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710365741; cv=none; b=MnAiaaTQFqlgqNrnyE+c1/H2u99CaWTtLzhG5iyZ797aZa1ek+/0jskB9Hp4cIVMn+PFVoWlomuJ7cx4Ry5yz0GWlbMOYMOCdydVXk7YOnrddN7nd9NlmiWUcZwAlA8YW09CmR0hshg/8At5HXPbtdTAN2beprh+qEOdXiMLMkg=
+	t=1710365974; cv=none; b=S4MXeWWz7EzLVFWNCAYBts5ih/5SLsA2/TfEdFWKS0MVzXlRpPhxYPMCFefYDwCzcCgYQVkhn3NYPaTnRmGq66qoGdDCBEOrSxZ4qw2UFfCm1mfP0+gn5yB0F0SAxsPDxXrS3ReIX35lrIyySMSGQggCsqKUV5sn19MKElsLD8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710365741; c=relaxed/simple;
-	bh=jZhOnDyYSIVd8jvog8p1/Meu/dA1DYJ5VYGPTsPF52o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y7wHnni7lxuLWYnTjThra4ZqHZh98REoDpsKWDuOmkBVCaKvPPLZrxP0duXiVzna515mGVEgw/OsBpM/tfzsCerrkpBQ+A7snBPzSiCb23xDvK6AT1VZPGSb0FYcg/pPufxNcu8EUqD07GEtZLbmYL0FwQMKktis7uY4CkOHlOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=AGN5WvFk; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1710365974; c=relaxed/simple;
+	bh=mT0Jk5GKNbnTwtTUbnIBtv5Q2t4QRPAFVoyDNpSkknc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fHHXHxBKmzVp3cxrtUNjJPUtUh6OQ0vGmr8/zYVYlETTNMpxlM7f58T3RaV/bxPVcp9RjuflLBwbjs+2P9tbfvM+vIT16UaOUCrWADHGyP5qyUzxJGh2fhD0s/kYVd73XdnFK8uT9Jd4if4DdthITE/hrs867MMr+5Fo7otlfeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GszsUWef; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AGN5WvFk"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GszsUWef"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A61301D6962;
+	Wed, 13 Mar 2024 17:39:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=mT0Jk5GKNbnTwtTUbnIBtv5Q2t4QRPAFVoyDNp
+	Skknc=; b=GszsUWefNDc/fyfJ4VH51qA12RTetZ5dhHL07E2U5gRFuGGoyqf1IS
+	tabhPsb0svOlpet6xTE35ejZfgrCaqulht0WRnk99CUBEoYCrOrmuekPW7D+mUZA
+	m0OGwJaXYxsEFmE0TaBmYJ0gu1Rmn9UOWWAsrYBbnMA/gBTB1gyRE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D5211D6961;
+	Wed, 13 Mar 2024 17:39:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 34E195B3D5;
-	Wed, 13 Mar 2024 21:35:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1710365737;
-	bh=jZhOnDyYSIVd8jvog8p1/Meu/dA1DYJ5VYGPTsPF52o=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=AGN5WvFkzTcx27GCO23HL8XwQPdr+MdcjZ1rLygh7pAvFJco2K7lQxJOwO4YmSZvX
-	 k/KtG+Ze1B6odF362OHGr0fgCMX/+9NaxYjTMYc+YkggVq3dCr4W+vnEjOxIEDQgiy
-	 LoSPuC9rxg+r/OnjKgwTtUFA41knuuxryH9eLu478o5hK606zFiwbSWNVYtN/w4jlg
-	 +cLkQ6Vp2IO0CZXvSlYjd6LnkUD3RUF04Mkt7e5YY3SBFghfqWrW93BIhodWRuA3/E
-	 1I7jRicG4rjMIAD1nDAfcj8k61oR72f6+Vxl/2xrVh0EE/EwEpY6dQ0Ph4eSowxp1U
-	 dyDPH8jw7fAON2Cngh6k8YnsWZ/EC18ASEgfMQjr6Y8J7tnBPCVn2mne9q+k0Tt7K/
-	 GNvwAYmWI2HYzUJ9tatxbDiL1rt7mxElnZB40/LRoFKxpurEWaKCFeY0wpuX7sySxx
-	 vSSeeh3zE37oX2somiNwmaM7nY2r2paqh3hxzV26yiEbWmNMFu+
-Date: Wed, 13 Mar 2024 21:35:34 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Nick <billingidentity@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: having issue with git commands. Probably a bug
-Message-ID: <ZfIcJo3Jk8XyrWiR@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Nick <billingidentity@gmail.com>, git@vger.kernel.org
-References: <CA+cJT-HV=GH84p1nQaoywnJABDWDK9PS-StzW8BTEBezHuvocg@mail.gmail.com>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14FD61D695E;
+	Wed, 13 Mar 2024 17:39:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aryan Gupta <garyan447@gmail.com>
+Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>,  "Patrick
+ Steinhardt [ ]" <ps@pks.im>
+Subject: Re: [GSoC] Discuss: Implement support for reftables in
+ =?utf-8?B?4oCYZHVtYuKAmQ==?= HTTP
+ transport
+In-Reply-To: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
+	(Aryan Gupta's message of "Wed, 13 Mar 2024 22:09:59 +0100")
+References: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
+Date: Wed, 13 Mar 2024 14:39:24 -0700
+Message-ID: <xmqqa5n1ak1f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lpUXQzrBrur7nLC0"
-Content-Disposition: inline
-In-Reply-To: <CA+cJT-HV=GH84p1nQaoywnJABDWDK9PS-StzW8BTEBezHuvocg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 29F5AAFA-E182-11EE-8145-25B3960A682E-77302942!pb-smtp2.pobox.com
 
+Aryan Gupta <garyan447@gmail.com> writes:
 
---lpUXQzrBrur7nLC0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In simple
+> words what I understand is I just need to add support for the server
+> side nothing is to be done for the client side.
 
-On 2024-03-12 at 21:36:12, Nick wrote:
-> Hi Git Team,
->=20
-> I am having the following issue:
-> My repository has all these files but my terminal shows that they are
-> deleted. My repo is in Amazon Web Services.
->=20
-> My terminal show the following:
->=20
-> Changes to be committed:
->   (use "git restore --staged <file>..." to unstage)
->         deleted:    Page2 csv file.csv
->         deleted:    Page3 and Page4 csv file.csv
->         deleted:    dummy demo.mp4
->         deleted:    page1 csv file.csv
->         deleted:    page5 csv file.csv
->         deleted:    page6 csv file.csv
->=20
-> I have been trying to delete these files from my terminal and from my
-> repository but git commands are not working.
->=20
-> Git commands:
->=20
-> #git commit -m "try to delete csv files and dummy demo"
-> error: invalid object 100644 d54132721804e177f865b31a807d9fbebc7ff7
-> for 'page1 csv ps.csv'
-> error: invalid object 100644 d54132721804e177f865b31a807d9fbebc7ff7
-> for 'page1 csv ps.csv'
-> error: Error building trees
->=20
-> #git log -- page1\ csv\ ps.csv
-> commit c302c5202fc374739c0275b2e507a957be45e6
-> Date:   Wed Feb 14 22:03:46 2024 +0000
->     Added page1 csv ps.csv
-> error: Could not read 32286e5dfdb73b4cfa9eb87abf140dc81e68ab
-> fatal: cannot simplify commit aee35d8a1bcde08c2249df029b06d46537751f
-> (because of 32286e5dfdb73b4cfa9eb87abf140dc81e68ab)
+Hmph.  The "dumb" transport is kept primarily to allow folks, who
+can only use web hosting that serves nothing but static files, to
+publish their repositories, and requiring more things to be done on
+the "dumb" server side sounds somewhat backwards to me.
 
-This looks like your repository has some corruption; it's missing some
-objects that it should have.  You can verify this with `git fsck`.
+To be quite honest, I personally doubt that this topic makes much
+sense in this age and day---I've felt that the dumb HTTP walker
+outlived its usefulness for the past 10 years already.  But perhaps
+I am biased by the first-world access to the internet?
 
-Once you've done that, you'll probably want to find another source for
-your corrupt objects.  The howto documentation[0] covers how to recover
-=66rom corrupted objects (search for "corrupted").  You could also try
-making a copy of the repository to another location, exploding any
-corrupted packfiles, deleting the corrupt objects, and then doing a `git
-fetch REMOTE OBJECT`, which will work if the remote supports protocol v2
-and partial clone and the server has the remote objects.
-
-Are you perhaps storing this repository in a directory with a cloud
-syncing service, such as OneDrive, iCloud, or Dropbox?  If so, that's
-likely the cause of that corruption, and you should definitely not do
-that in the future.  Cloud syncing services can add, remove, and rename
-files without you noticing, which causes the corruption.
-
-[0] https://github.com/git/git/tree/master/Documentation/howto
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---lpUXQzrBrur7nLC0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZfIcJgAKCRB8DEliiIei
-gclyAQDT6qJCOppMGixNzlNJ0N+I7h++7iIaH291EtIWglFHoAD6A3ZtLbsDgmwx
-PMAYjViWJav2BfE1xqR9WApbx3Tt3A8=
-=EYAy
------END PGP SIGNATURE-----
-
---lpUXQzrBrur7nLC0--
+Thanks.
