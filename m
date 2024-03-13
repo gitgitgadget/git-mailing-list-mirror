@@ -1,93 +1,123 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9BA5A0E7
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 22:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED5459B6E
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 22:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710368738; cv=none; b=rLHEcMuw4P1wzBrTzW5hHrrfnifd6FOVwmo+oA+kID0m0goOKCSpEXEUEqEOUB4Eg7XGSXuCE8lWbcrBSBuz3q26xLaeNX+hDEYUNru7dMBW4Li4xXDaf1gcQOlxLPBlZuTXxMMXjCkBalICcVwD3HzBf7V5V/Wfu0gY0PIACvM=
+	t=1710368988; cv=none; b=MtuOmks0X/oWs4KP8Zeli5fECVCRl1Qgl4dhQILcenhhaVj8ytZL43rjjv/H5Qvtx3aZUUtbMQyRfhrgpXdPFfJZl1SRfxpfDQg0etwTXKVm2yXePIsmV1QqG+ZHFv3+m/c/3BRSaT4FRwjsLfUnLnss3x1ZR3HQPHmgAmP9Soc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710368738; c=relaxed/simple;
-	bh=J8OMvoQJjTY/D21mcWiDmuB3NvjrVu5wgCKgXj4CikE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=JRXpg7OKWSw2k9Tbl+rTLhQSpyePHYGbu9F7zcF+3eXn2ryJeN9p01jR58yGZ+akqVa+G6Dq9LCCSgnDdqhuXMuez2vJqGdpSB/SgXpAsOwMs3wYwhgjsS+/P3kvdjxVOaaD0gwKPEj74JgmVNp+D8AiKkmeBJehvlT6EDl8mVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=ODXTiM3s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SVi0Mf8H; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="ODXTiM3s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SVi0Mf8H"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id BC69F138010C;
-	Wed, 13 Mar 2024 18:25:35 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Wed, 13 Mar 2024 18:25:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1710368735;
-	 x=1710455135; bh=J8OMvoQJjTY/D21mcWiDmuB3NvjrVu5wgCKgXj4CikE=; b=
-	ODXTiM3snFTUz+w1rE0eiyMLS7RKgOGRWdWskFZh0zS2wVMTWUezedX/SG4WP5eL
-	83fwOZyE9PmKLFZzPoIOZHn8ye47ktd6KhbvvPTbq2DI1soD6oBFKIxSkwWTAKk7
-	v1EES9rzBJrFTfkkiucy3o+ogp9bCcF30zHNtrDWIm45MOiKKZ2NiegA7vn1hN1U
-	yA5bodrwIjHYHZrZlt/UnC9DoqLmXGHh7zV8+GcIkY+LDxuMJhy0xbMoBomzk0rw
-	Np9VEWrE8mzMcefSp8CEFUuXTTzwPC2QX7w8plbjNATEDMxiuQNnd5y/t+PHeTp1
-	Nuj9N6FhLf9xQvdfZHhMJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710368735; x=
-	1710455135; bh=J8OMvoQJjTY/D21mcWiDmuB3NvjrVu5wgCKgXj4CikE=; b=S
-	Vi0Mf8HKZJXl0tLVoB6253d8XnD0Fy/yS/3LFufNXXksl70zvMoyFm0yL3GOcGg2
-	aup2CGQMaVVRk9KZUHGj6D662pkvJLI4eMjha3MEJ7ak86f86L75BVoTLrVgqpgt
-	dhLGgaZ3nC1BPEH4boSYszv9ksanaXPBwCXYoyCJnBFM9qZGtKd38+rMVx4JBUnL
-	5ORXKxZrmDP+dVZEdRRCklfc85FPP4/i36/0AqKsXi/6I4VDFZV+oEiPtSDvAUSC
-	HakjSlBAsaZs0QnNhMWoi2H+KRYw3xOPMWjNeAznlxgDGvEqqnqERhyPO6dgjNzn
-	myRkc5YXXKrVwBi4Fy10g==
-X-ME-Sender: <xms:3yfyZXAy5QPUgJSz2-gTJDCiz8bw8iB-FOcsOP9o0Ll8MPCAzdpJvw>
-    <xme:3yfyZdg1HXtOqCRSZ1fnPraqbiDYHH7xT8dfjyhZLaoVRI9fD1LSJQDn5CU2feWUo
-    yPzIXO1SwyqqpbF2g>
-X-ME-Received: <xmr:3yfyZSlVUJRZybhi3A5jQPMDcfShGfG7hIbbRT3aM7qNjgph5PaZRhtrTtAhHrM620FKXLx_8XAnWXX0xd7SWnBhV2LY6NOZlmk2T1zd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeehgdduiedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpegggfgtfffkvefuhffvofhfjgesth
-    hqredtredtjeenucfhrhhomhepfdflrghmvghsucfnihhufdcuoehjrghmvghssehjrghm
-    vghslhhiuhdrihhoqeenucggtffrrghtthgvrhhnpeffueektdeigfejhfehhfegleeige
-    duvdevueejjefhgedtvdeihfejtedukeejheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehjrghmvghssehjrghmvghslhhiuhdrihho
-X-ME-Proxy: <xmx:3yfyZZyEZqda47NkhUX1mL65HYM1ZBWivjU7WUGQVeKIL20Kx5wvPA>
-    <xmx:3yfyZcRi3iXffG2-j2zGI-khdNYXSneQNggSIHNPSQDLSyR2pV-DbQ>
-    <xmx:3yfyZcbBAnLj0gIQ10EE8DwJuzKysNk6aWs3TzP9kUmFrdon_NDQnw>
-    <xmx:3yfyZdT2ac42Yi9s2bG3Gob_BC0c5GrH77ijeLtuhDj_-kXHiSVcfg>
-    <xmx:3yfyZSMMjBmaiycGgpouxDpAVvZSHqEqmmOc4Rf0_nbrgMTI7DOhyg>
-Feedback-ID: i93f149ec:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Mar 2024 18:25:33 -0400 (EDT)
+	s=arc-20240116; t=1710368988; c=relaxed/simple;
+	bh=a4CtSmNaUhqFDtfBFWwVFFL8vTKuco0P2I5cNaDODsI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dpnFd7JTR+pD3shEkuX6PLGiQKkwiHx2chuO3UbyYOgpXzM8mkhwsU+tXTbr0XqjStHkvHxGkdhx+6bKrd2bowgrxaiXR+3481YXPS9vRiRAAfkE39N/zPJhRVQ7l877OCSiynM6cUgDaiOZkDKlDVXwPbKYgY8N6iaLE247ygk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(Exim)
+	(envelope-from <bb@drbeat.li>)
+	id 1rkX6U-000000000hT-3IRQ
+	for git@vger.kernel.org;
+	Wed, 13 Mar 2024 23:29:43 +0100
+Received: from [10.20.10.233] (port=54914 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.96.2)
+	(envelope-from <bb@drbeat.li>)
+	id 1rkX6T-005lTD-27;
+	Wed, 13 Mar 2024 23:29:41 +0100
+Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
+	by drbeat.li (Postfix) with SMTP id 5EB821800FD;
+	Wed, 13 Mar 2024 23:29:40 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Wed, 13 Mar 2024 23:29:40 +0100
+From: "Beat Bolli" <bb@drbeat.li>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Beat Bolli <dev+git@drbeat.li>,
+	Michael Osipov <michael.osipov@innomotics.com>
+Subject: [PATCH v2] date: make "iso-strict" conforming for the UTC timezone
+Date: Wed, 13 Mar 2024 23:29:22 +0100
+Message-ID: <20240313222922.11170-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <xmqqwmq6asrx.fsf@gitster.g>
+References: <xmqqwmq6asrx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 14 Mar 2024 09:25:31 +1100
-Message-Id: <CZSZ4481T8CO.1QJYPPDQ24TS7@jamesliu.io>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 0/1] log: make the --oneline option work with -L
-From: "James Liu" <james@jamesliu.io>
-To: "Beat Bolli" <dev+git@drbeat.li>, "Junio C Hamano" <gitster@pobox.com>
-X-Mailer: aerc 0.17.0
-References: <20240313090841.36717-1-james@jamesliu.io>
- <xmqqr0geca36.fsf@gitster.g>
- <a675ab4d-7dde-4630-9de6-970f05225271@drbeat.li>
-In-Reply-To: <a675ab4d-7dde-4630-9de6-970f05225271@drbeat.li>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-On Thu Mar 14, 2024 at 5:08 AM AEDT, Beat Bolli wrote:
+ISO 8601-1:2020-12 specifies that a zero timezone offset must be denoted
+with a "Z" suffix instead of the numeric "+00:00". Add the correponding
+special case to show_date() and a new test.
 
-> There's also "--no-patch" to suppress the patch. It combines well with=20
-> "--oneline".
+This changes an established output format which might be depended on by
+scripts. The original patch 466fb6742d7f (pretty: provide a strict ISO
+8601 date format, 2014-08-29) mentioned XML parsers as its rationale,
+which generally have good parsing support, so this change should be
+fine.
 
-Thanks! That's a good one to keep handy.
+Reported-by: Michael Osipov <michael.osipov@innomotics.com>
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+Changes from v1:
+
+- added a comment why the change is fine
+- removed the Link: trailer
+
+ date.c          | 14 +++++++++-----
+ t/t0006-date.sh |  1 +
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/date.c b/date.c
+index 619ada5b2044..44cf2221d81f 100644
+--- a/date.c
++++ b/date.c
+@@ -342,14 +342,18 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tz);
+ 	else if (mode->type == DATE_ISO8601_STRICT) {
+-		char sign = (tz >= 0) ? '+' : '-';
+-		tz = abs(tz);
+-		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
++		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d",
+ 				tm->tm_year + 1900,
+ 				tm->tm_mon + 1,
+ 				tm->tm_mday,
+-				tm->tm_hour, tm->tm_min, tm->tm_sec,
+-				sign, tz / 100, tz % 100);
++				tm->tm_hour, tm->tm_min, tm->tm_sec);
++		if (tz == 0) {
++			strbuf_addch(&timebuf, 'Z');
++		} else {
++			strbuf_addch(&timebuf, tz >= 0 ? '+' : '-');
++			tz = abs(tz);
++			strbuf_addf(&timebuf, "%02d:%02d", tz / 100, tz % 100);
++		}
+ 	} else if (mode->type == DATE_RFC2822)
+ 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
+ 			weekday_names[tm->tm_wday], tm->tm_mday,
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index e18b1602864e..1d228a981ee9 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -46,6 +46,7 @@ check_show () {
+ TIME='1466000000 +0200'
+ check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
+ check_show iso8601-strict "$TIME" '2016-06-15T16:13:20+02:00'
++check_show iso8601-strict "$(echo "$TIME" | sed 's/+0200$/+0000/')" '2016-06-15T14:13:20Z'
+ check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
+ check_show short "$TIME" '2016-06-15'
+ check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
+-- 
+2.44.0
+
