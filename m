@@ -1,71 +1,113 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020BC4CB47
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 17:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1BA56B80
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 17:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710352100; cv=none; b=YklfpZ3IF2y6zJ/ZmiCCs9VvYRJLgzWaRztniXDfKVl/faLTDx2LhUT76la8Z0+6sWKGriJVzcoIQ/QCZvYy9XJnJx7rXxuj8nFfoFWJSLYkTXZvK//RIbNzM/FCmlZ9+xQcTD2LJgOj5wKvPk6quZ1BCm84EXBBamhumrJ9qZQ=
+	t=1710352221; cv=none; b=HhTqaHo9UVk7JRsh4rUV+o+/SV38Xe44kpAMRam8H74YIi47QKJcWnqwuW5jY13DQdRDUQkINnQYBUCEfVWJIn5yLcklCanOfObcJ3red5h62QfSqiUbzjF9NUdVVybRWdbDdIRl4WakbnHNmfZGFGnkuOnkoCNyP/oWEjT3Bzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710352100; c=relaxed/simple;
-	bh=WE6QxMrDzldBDXVvrrnZMlQcO1COzRQNAg+ROTZJuTI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WCtCgvmqTA5amWesvJzoD6d86iEzfmEAyWELAlE+4Rao8g7D1bJY5DMqzk0pPQGexW28ChHmbAwoWlP76hP1qDwODL98wpxG1EuPNeSto1iVErO4tw76jyc+kDtRTYgYzw01oJSOIU91drDG4PGoxp/eiFzk4/yIwYIlkujek0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xIYDssTX; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xIYDssTX"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AD34919F8E;
-	Wed, 13 Mar 2024 13:48:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=WE6QxMrDzldBDXVvrrnZMlQcO1COzRQNAg+ROT
-	ZJuTI=; b=xIYDssTXzzthNvxZcuEAj4/q0BBVrsxzx/iTE3PVWS6x6rIydx7Tby
-	JKeWehxgRltGwWBIFTgibUCT+08592K9CHqorcqpyGUs9FSsIj/+9bDyfovwY0hz
-	wM6wU7JlK54PU5mXB03nSuLOe7O0qBkBpNz5KEhIAwV5yh4yO8wR4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A640A19F8D;
-	Wed, 13 Mar 2024 13:48:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 54F9719F8A;
-	Wed, 13 Mar 2024 13:48:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 3/6] parse-options: factor out register_abbrev() and
- struct parsed_option
-In-Reply-To: <ZfDMhJ4r5g-g-B3n@google.com> (Josh Steadmon's message of "Tue,
-	12 Mar 2024 14:43:32 -0700")
-References: <20240224212953.44026-1-l.s.r@web.de>
-	<20240303121944.20627-1-l.s.r@web.de>
-	<20240303121944.20627-4-l.s.r@web.de> <ZfDMhJ4r5g-g-B3n@google.com>
-Date: Wed, 13 Mar 2024 10:48:13 -0700
-Message-ID: <xmqqil1qc9b6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710352221; c=relaxed/simple;
+	bh=Au7DqBYdndB4MH01laDuN+uK5wIagdpfmMNH0mik2w4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uaDVRE1Q+Bi0Jcir3NCMC+jpWB3mfmr8KA00L0zUiu585WF0NaVmsigTaPVwEBT85VHEshK2+lgTDDcbg59Qn+YcTnIen7GPia3lV4/azzC6iQs7Z+wwkE97me9FwL2dgi4dbGWAIqvP00gHhWiLVaSiWU//SO6CJHVA39x2yBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(Exim)
+	(envelope-from <bb@drbeat.li>)
+	id 1rkSjx-000000002UE-0VG4
+	for git@vger.kernel.org;
+	Wed, 13 Mar 2024 18:50:09 +0100
+Received: from [10.20.10.232] (port=29154 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.96.2)
+	(envelope-from <bb@drbeat.li>)
+	id 1rkSjw-0041nS-00;
+	Wed, 13 Mar 2024 18:50:08 +0100
+Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
+	by drbeat.li (Postfix) with SMTP id AAEF71800FD;
+	Wed, 13 Mar 2024 18:50:06 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Wed, 13 Mar 2024 18:50:06 +0100
+From: "Beat Bolli" <bb@drbeat.li>
+To: michael.osipov@innomotics.com
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH] date: make "iso-strict" conforming for the UTC timezone
+Date: Wed, 13 Mar 2024 18:50:00 +0100
+Message-ID: <20240313175000.2148-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <410d458c-ae5b-40cc-9c8e-97b016c74a76@siemens.com>
+References: <410d458c-ae5b-40cc-9c8e-97b016c74a76@siemens.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- DE5AB6BE-E161-11EE-A88A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-Josh Steadmon <steadmon@google.com> writes:
+ISO 8601-1:2020-12 specifies that a zero timezone offset must be denoted
+with a "Z" suffix instead of the numeric "+00:00". Add the correponding
+special case to show_date() and a new test.
 
-> I found this change to be hard to follow, although I'm not sure anything
-> actually needs to be changed. Thinking aloud below, apologies for being
-> verbose.
+Reported-by: Michael Osipov <michael.osipov@innomotics.com>
+Link: https://lore.kernel.org/git/410d458c-ae5b-40cc-9c8e-97b016c74a76@siemens.com/
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ date.c          | 14 +++++++++-----
+ t/t0006-date.sh |  1 +
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-Thanks for carefully following the code.  It unfortunately has to
-get long, but this is the kind of review that I would appreciate
-most if I were the author, pointing out what is easy to understand
-and more importantly what is harder to follow.
+diff --git a/date.c b/date.c
+index 619ada5b2044..44cf2221d81f 100644
+--- a/date.c
++++ b/date.c
+@@ -342,14 +342,18 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tz);
+ 	else if (mode->type == DATE_ISO8601_STRICT) {
+-		char sign = (tz >= 0) ? '+' : '-';
+-		tz = abs(tz);
+-		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
++		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d",
+ 				tm->tm_year + 1900,
+ 				tm->tm_mon + 1,
+ 				tm->tm_mday,
+-				tm->tm_hour, tm->tm_min, tm->tm_sec,
+-				sign, tz / 100, tz % 100);
++				tm->tm_hour, tm->tm_min, tm->tm_sec);
++		if (tz == 0) {
++			strbuf_addch(&timebuf, 'Z');
++		} else {
++			strbuf_addch(&timebuf, tz >= 0 ? '+' : '-');
++			tz = abs(tz);
++			strbuf_addf(&timebuf, "%02d:%02d", tz / 100, tz % 100);
++		}
+ 	} else if (mode->type == DATE_RFC2822)
+ 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
+ 			weekday_names[tm->tm_wday], tm->tm_mday,
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index e18b1602864e..1d228a981ee9 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -46,6 +46,7 @@ check_show () {
+ TIME='1466000000 +0200'
+ check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
+ check_show iso8601-strict "$TIME" '2016-06-15T16:13:20+02:00'
++check_show iso8601-strict "$(echo "$TIME" | sed 's/+0200$/+0000/')" '2016-06-15T14:13:20Z'
+ check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
+ check_show short "$TIME" '2016-06-15'
+ check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
+-- 
+2.44.0
+
