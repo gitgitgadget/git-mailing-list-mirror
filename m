@@ -1,125 +1,132 @@
-Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482DB4691
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 22:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09B65D461
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 22:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710370479; cv=none; b=sBrRxVLJD0nzdfrbGwFJiiSXkOvVfmHBA0jl2pkskl0loX4IExoUXR9/I0phOtebYKYPPuBh/a/SC+ZAj0IOdr17cybIfnOx67z63WbIl+d8FXML5QBmbeyvcFMhqjIM/Z/931GGlNo+uGNb2sVbt5mPhPfrITcisZ5uNYeCEvs=
+	t=1710370745; cv=none; b=QOoSVJHB/QvtlLBcPXonVBXC/ng7rz1E/5LV9CCpPnmcZH66SABOQ+T+7qH7jxPbENukcOThiCNmzRjZwV7Iqhz2PRMdrpg7PmpZVH1LA+oAtiJ8+wpSYj96XIx0tbm9dBLfOCcAWXJ9ix4p0srNiueH6iWKE8tyNRMinzx1tZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710370479; c=relaxed/simple;
-	bh=G8NYKJfGH0cdBaUZ59wyRtyAZ4s6q9TngeNrpjTXbak=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWorip1SSDMDNOQXtZNgquF/2ItNAewK8ERpmYlnD3dwS/vMC7fZzjDfnZiJ8x68bcAVNxxPhBc2JLCV1XljkgD7hH//E34B6gG/2Spsr3oeSKoJD/HwJ/4BlRuLe++BeIFJ6MzrLFnBOhJN+rIBQcnFJ3K7de90BpRusoPFheY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
-Received: from s019.cyon.net ([149.126.4.28])
-	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-	(Exim)
-	(envelope-from <bb@drbeat.li>)
-	id 1rkXUX-0000000041S-31BM
-	for git@vger.kernel.org;
-	Wed, 13 Mar 2024 23:54:34 +0100
-Received: from [10.20.10.233] (port=53500 helo=mail.cyon.ch)
-	by s019.cyon.net with esmtpa (Exim 4.96.2)
-	(envelope-from <bb@drbeat.li>)
-	id 1rkXUW-005u3v-1y;
-	Wed, 13 Mar 2024 23:54:32 +0100
-Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id 4A7141800FD;
-	Wed, 13 Mar 2024 23:54:31 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Wed, 13 Mar 2024 23:54:31 +0100
-From: "Beat Bolli" <bb@drbeat.li>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Beat Bolli <dev+git@drbeat.li>,
-	Michael Osipov <michael.osipov@innomotics.com>
-Subject: [PATCH v3] date: make "iso-strict" conforming for the UTC timezone
-Date: Wed, 13 Mar 2024 23:54:23 +0100
-Message-ID: <20240313225423.11373-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <xmqqmsr169e5.fsf@gitster.g>
-References: <xmqqmsr169e5.fsf@gitster.g>
+	s=arc-20240116; t=1710370745; c=relaxed/simple;
+	bh=f6SBv2A2KOciWjo9JFsvxHWE7RIwFdGkvFx4nPIG9qs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=L6jyNDadTA2+0N4L9c5ZKx3DLUWJMZ5kv0MOBPm3ndkzelJJX56CKH389zKwe3//5+qgFhXFc9hfkO4BU+Ppb2i3HbmYfUHiwpFOKZ9wrMKsUvdKjhUxPlh0oXwresVINUQN/97R6EP4zSxo1bRb6QLXEY4asaZ/HxZEMBDXNUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=q2H3A6HB; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q2H3A6HB"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 380731C64F;
+	Wed, 13 Mar 2024 18:59:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=f6SBv2A2KOciWjo9JFsvxHWE7RIwFdGkvFx4nP
+	IG9qs=; b=q2H3A6HBL60cejkdIVchYBoPebAB64J/ACz3v3d7iIHro0N2fuwfU/
+	gMkH7HKKxmPYE13lGzW2AsEzGYDQas71NUhT3pQGaovXMn2vscmuxLuf2oimO8dd
+	TqKfvd55ymwnOqnaJod6O0adnXVvsiPCDGv9+oG5Be1qAJ3QM0RKw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 314B71C64E;
+	Wed, 13 Mar 2024 18:59:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8DE21C649;
+	Wed, 13 Mar 2024 18:58:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christopher Lindee <christopher.lindee@webpros.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] Optionally support push options on up-to-date branches
+In-Reply-To: <SA1PR14MB4691B63C740F95D7D8A495628D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
+	(Christopher Lindee's message of "Tue, 12 Mar 2024 21:55:08 +0000")
+References: <SA1PR14MB4691B63C740F95D7D8A495628D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
+Date: Wed, 13 Mar 2024 15:58:58 -0700
+Message-ID: <xmqqa5n168nh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4749E7D2-E18D-11EE-B98A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-ISO 8601-1:2020-12 specifies that a zero timezone offset must be denoted
-with a "Z" suffix instead of the numeric "+00:00". Add the correponding
-special case to show_date() and a new test.
+Christopher Lindee <christopher.lindee@webpros.com> writes:
 
-Changing an established output format which might be depended on by
-scripts is always problematic, but here we choose to adhere more closely
-to the published standard.
+> Some Git servers can take actions on a branch using push options; to do this,
+> the branch ref must be passed along with the push options.  However, if the
+> branch is up-to-date, then Git submits push options without any refs, so the
+> server is not given a branch to act upon and the push options become no-ops.
 
-Reported-by: Michael Osipov <michael.osipov@innomotics.com>
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
-Changes from v2:
+Yeah, the send-pack/receive-pack were written in the simpler days
+back when "pushing the same object again to the ref was an absolute
+no-op", and push options that breaks the expectation did not exist.
 
-- changed the rationale according to Junio's feedback
+It makes sense to allow a (seemingly no-op) push to go through with
+an option.
 
-Changes from v1:
+And even without custom push option, recording this seemingly no-op
+push as a ref "update" does make sense--push certificate records
+what object the pusher wanted each target ref to have, and omitting
+a ref from the record only because the ref was already pointing at
+the desired object is losing information.
 
-- added a comment why the change is fine
-- removed the Link: trailer
+So I doubly agree with the reasoning beind this change.
 
- date.c          | 14 +++++++++-----
- t/t0006-date.sh |  1 +
- 2 files changed, 10 insertions(+), 5 deletions(-)
+> This changeset proposes to address this issue by adding an option to `push` and
+> `send-pack` that, when specified, will send refs where the old-oid and new-oid
 
-diff --git a/date.c b/date.c
-index 619ada5b2044..44cf2221d81f 100644
---- a/date.c
-+++ b/date.c
-@@ -342,14 +342,18 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tz);
- 	else if (mode->type == DATE_ISO8601_STRICT) {
--		char sign = (tz >= 0) ? '+' : '-';
--		tz = abs(tz);
--		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
-+		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d",
- 				tm->tm_year + 1900,
- 				tm->tm_mon + 1,
- 				tm->tm_mday,
--				tm->tm_hour, tm->tm_min, tm->tm_sec,
--				sign, tz / 100, tz % 100);
-+				tm->tm_hour, tm->tm_min, tm->tm_sec);
-+		if (tz == 0) {
-+			strbuf_addch(&timebuf, 'Z');
-+		} else {
-+			strbuf_addch(&timebuf, tz >= 0 ? '+' : '-');
-+			tz = abs(tz);
-+			strbuf_addf(&timebuf, "%02d:%02d", tz / 100, tz % 100);
-+		}
- 	} else if (mode->type == DATE_RFC2822)
- 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
- 			weekday_names[tm->tm_wday], tm->tm_mday,
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index e18b1602864e..1d228a981ee9 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -46,6 +46,7 @@ check_show () {
- TIME='1466000000 +0200'
- check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
- check_show iso8601-strict "$TIME" '2016-06-15T16:13:20+02:00'
-+check_show iso8601-strict "$(echo "$TIME" | sed 's/+0200$/+0000/')" '2016-06-15T14:13:20Z'
- check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
- check_show short "$TIME" '2016-06-15'
- check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
--- 
-2.44.0
+"where" -> "even if"
 
+> are identical - instead of silently skipping these refs.  The first commit
+> introduces the `--send-up-to-date` option to toggle this behavior, while the
+> second commit updates the commands to output an `(up-to-date)` notice for each
+> branch with an identical old-oid and new-oid.
+>
+> Notably, the `--force` option will not send a ref when the remote is up-to-date.
+
+And it makes sense *not* to update `--force` to do the no-op push,
+becaues you may not want to (accidentally) force push a ref that
+does not fast-forward.  As I already said, tying this with use of
+the "-o" option is not sufficient.  So I agree we may want a new
+option to trigger this behaviour.
+
+A radical counter-proposal for the design is to update the client
+side to do this unconditionally, without needing any new option.
+For an already up-to-date ref, its only contribution to the cost of
+"git push" is from its "Finally, tell the other end!" instruction,
+which is in the order of 100 bytes per ref, and it should not add to
+the pack generation cost at all [*].
+
+    Side note: But we have to be careful---if the receiving end is
+    totally up-to-date and there is absolutely no ref, I think the
+    current code will not even call pack_objects(), and you'd
+    probably want a similar optimization to avoid the cost to spawn
+    pack_objects().
+
+I do not know if "send-up-to-date" is a great name for the option,
+though.
+
+>
+> Chris Lindee (2):
+>   Teach send-pack & push to --send-up-to-date refs
+>   Add transport message for up-to-date references
+>
+>  Documentation/git-push.txt      | 8 +++++++-
+>  Documentation/git-send-pack.txt | 7 +++++++
+>  builtin/push.c                  | 1 +
+>  builtin/send-pack.c             | 4 ++++
+>  send-pack.c                     | 2 +-
+>  send-pack.h                     | 3 ++-
+>  transport-helper.c              | 7 ++++++-
+>  transport.c                     | 3 +++
+>  transport.h                     | 1 +
+>  9 files changed, 32 insertions(+), 4 deletions(-)
+>         
+>
+> base-commit: 3c2a3fdc388747b9eaf4a4a4f2035c1c9ddb26d0
