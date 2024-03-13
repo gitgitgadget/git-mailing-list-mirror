@@ -1,102 +1,121 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F5156B7F
-	for <git@vger.kernel.org>; Wed, 13 Mar 2024 21:54:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5406659B53
+	for <git@vger.kernel.org>; Wed, 13 Mar 2024 22:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710366849; cv=none; b=ADJ7C+Jytkyd7JN4hqduk+D0VOlBIMK+kpVclj9Oz7SrmskC3kGbnS2EcAm4bddcsPkvd/isquabGGKdkidpW9fNY3E5lJ7FOutq8n1VMTvn7upHCoO1r8wDU5XzgvsxgpL5tvqA/P+rn56ty42Bvh44H0RH4H4Dm8Nlct60nxI=
+	t=1710368670; cv=none; b=c+xA5iaTPmogFVltcMJ9Qz804oLY+3CXSkjO8z5lkvqo3F9NZln1+aX2idrfBSNZFBV4olA9xbwHj05rWmQQnbEFbZHts+S8S0mhgQTN0QC1jafz6jyprdtDrnn0kkMW+9qlfKecq5OOsIc4inVpTBfvXzCpuv/VEUdvrn8XJmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710366849; c=relaxed/simple;
-	bh=oCyE/w+vXtP4YIsPQPpxlMsU+sgmqUsx0HsRo2IiCEU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kbAyM5GQiuKwg7Bekw7W6xaOIeNBrhYzMTlXblmav4BOGWhqg6/wd9DyeCZNdTdy30beof+W4LGnUib8iC0vN6fbB+FxzH46iQyUIak6y50NAJHlsB3DpvUw06RFX25XdH1wt83M4YbSUCS9C65etavkimVVAgykBjcCkAVX5Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=T4L87cCJ; arc=none smtp.client-ip=95.215.58.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
+	s=arc-20240116; t=1710368670; c=relaxed/simple;
+	bh=Uv37NNeWGMPt1a60L/Jin3LGVUIwb/CE/iLGkBU5EuA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=hFYCMIrKJSkh8xRZnQhRdv/i6pzjPNS7FmDPup4fGuUBP1MPa0503FycFds5RqORzDjHaH1UjROsLQ5K7GMg8dohejS0wSi1h5tkvi8Cu5430u+GByAo+MSD+YXHUvSjLT3HYjfIL1bn4KNCZBsD3qJ+sHLx1dMR9V96vW68s6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=ZrJRUUSd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZUbm7dvn; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="T4L87cCJ"
-Message-ID: <fda3e8f4-fd9e-4a43-a307-c6607d982436@iencinas.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
-	s=key1; t=1710366842;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xL2+fzSbixTXApzoVs6+xN50pW8P2biRG9QeldjmFQM=;
-	b=T4L87cCJdZ7t2SRfEWYcw8CFhj81xRfWDePm78ZTOTRt0rWLEH30klkVi7TAgmdyMIrR/r
-	M2XIDogS7oEKTluoDkRJMt5FoAMb4n7h1b60DDAPWXJQmHGk4x0QtYxq++75Qv80EX9113
-	sKPZYOuTJnmtZpBxQz7eLdpU2FKx+ageTSkf1bgD+hSPzJ/d0p98f7TRtoU9gVUfpWqMtQ
-	3f9RAX9P8RMSKDS0TYkT/C3cT7skw/ZYw3D8LHKgByrZI3jCKVwl65laf7HoCDNcX4pDNQ
-	RIJsxVL2eJpnoJtH7j1ccYVYw/8cO7uRvmHYVrzY9pNXiSTqg7365kX0SGTsEw==
-Date: Wed, 13 Mar 2024 22:53:50 +0100
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="ZrJRUUSd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZUbm7dvn"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 64D4A138010D;
+	Wed, 13 Mar 2024 18:24:27 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Wed, 13 Mar 2024 18:24:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1710368667;
+	 x=1710455067; bh=Q+YhA2w33YSaB04FMV5+TEs4XXXziCSS2dQsWvRhHD4=; b=
+	ZrJRUUSdYb1S01uIUfaMi6fLdV/pt+mfhCMY43KoH05D+n8sjir0aQ+4T9hmCXsC
+	tJr6t+yviUeD/ttOcSIFgxqhkcAbirBwdgV2I8h01Qu/0MiBF7m0Pn2xSjFYOtY5
+	xaccNc7MKdBejekgyAe3uHUMy3iK/+2gZ+b+quXisQf7g8gL7QmNhvGQEOhzPs6s
+	fz4nVhnQavQZ3yUiIx9nz51KZCsvTN/lr/AV+WluECmafshwsBC1ZGGyDMynxmnL
+	0WZMBoGPIv8BQeYHzV2fx05D/P/rbG5EQ8f7ay6xsv5UNS36jiZaTYMaGeZI1v9g
+	m9/OAL3yUbqxiaabWNYNcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710368667; x=
+	1710455067; bh=Q+YhA2w33YSaB04FMV5+TEs4XXXziCSS2dQsWvRhHD4=; b=Z
+	Ubm7dvn9ZcO2oL3tmZLBCyunacY7eT425KDdPTUkRrTIZJ3J45XCT7eplNU2Bi4f
+	s0xqdrlje8fmR4ff/l4aViO+V418/Lxy3HXsVS4bubioNlHIjOXllqzI+d+/DhBv
+	8bTq7Oj4Ck5iMftjUxIU1xQ03+zhYWPbIsXWoDXslX3JDrCoipND8IavSokVYd6Z
+	fXEhM+a7RNlkxUv58FMJnSXYsg7g6cL6+81RfQ/Ombwjha+n+8gxvzRJQt8scVqX
+	Lw67a4U+CdOI6j3ohWzhXdzL5+ZoRzGLs7Ab1vhxqFFU+twtUoKXxWhgoZyniyHK
+	5QJoQrWhakkEir5e82qTQ==
+X-ME-Sender: <xms:myfyZZ6OhzWVYiSWwf8oHgMVrMl-HyLf5YaJrjy_-reRx6-BeCjcVg>
+    <xme:myfyZW7Jd1oDEGN7JQ6duqO92hSU1COZdfrj3VY0GktmCFGyysR-GzBZ2gCD3LZ38
+    lMVJyzHj5ifVCZvEA>
+X-ME-Received: <xmr:myfyZQfwwTBCZAdW0P3P-chaS8pFoKvoVX9erjipd2UvdqiacoYaiRjwXkg4D8iHJYgj4bozG2phfS0FRX65UPAFvdtBPWUVWDrxUTaJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeehgdduiedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpegggfgtfffkhffvvefuofhfjgesth
+    hqredtredtjeenucfhrhhomhepfdflrghmvghsucfnihhufdcuoehjrghmvghssehjrghm
+    vghslhhiuhdrihhoqeenucggtffrrghtthgvrhhnpeeffefgudevgeefudevveevkeeiff
+    fhteffueekffffhfegleeukeeiffehtdevffenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehjrghmvghssehjrghmvghslhhiuhdrihho
+X-ME-Proxy: <xmx:myfyZSLpkJ1DdC_rUy--ypBkAQJtnJx8g85vvBesgM4PeTYZmLNRiQ>
+    <xmx:myfyZdKTw-ueDvI4AagLb0-4khwycJh6s_PWQpru55uIZ0rewPe30Q>
+    <xmx:myfyZbw4k_vOA1DyIaUnmLwmC9O0lSlA04w5Ch3pPKQGrB-5gxjFuQ>
+    <xmx:myfyZZKhlSpQEtC_0PV_lQKKGVKELG-O0P-n0LED3edrK6Xa8UIuKA>
+    <xmx:myfyZd15C7t9NjaejsUQ9FBD4WkOF8je0N3W5oVGytHlQA8779N8gA>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Mar 2024 18:24:25 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20240307205006.467443-1-ignacio@iencinas.com>
- <20240309181828.45496-1-ignacio@iencinas.com>
- <20240309181828.45496-2-ignacio@iencinas.com> <xmqqy1aqvx9n.fsf@gitster.g>
- <9fb02065-12d2-4c92-b1a5-74c06125c692@iencinas.com>
- <xmqqil1ssm5y.fsf@gitster.g>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ignacio Encinas Rubio <ignacio@iencinas.com>
-In-Reply-To: <xmqqil1ssm5y.fsf@gitster.g>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Date: Thu, 14 Mar 2024 09:24:22 +1100
+Message-Id: <CZSZ38DTWF14.3BNXFKTGVPLZQ@jamesliu.io>
+From: "James Liu" <james@jamesliu.io>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] log: make the --oneline option work with -L
+X-Mailer: aerc 0.17.0
+References: <20240313090841.36717-1-james@jamesliu.io>
+ <xmqqr0geca36.fsf@gitster.g>
+In-Reply-To: <xmqqr0geca36.fsf@gitster.g>
 
+On Thu Mar 14, 2024 at 4:31 AM AEDT, Junio C Hamano wrote:
+> James Liu <james@jamesliu.io> writes:
+>
+> > However, when --oneline is used in combination with -L, Git actually
+> > outputs the single line commit information _as well_ as the full diff.
+> > For example:
+> >
+> >         git log --oneline -L 660:Documentation/MyFirstObjectWalk.txt
+> >
+> > will incorrectly display the diffs too.
+>
+> Why is it incorrect?
+>
+>  * "git log" takes options to tweak formatting of the commit log,
+>    options to tweak what commits are chosen, and options to tweak
+>    how the diff are shown.
+>
+>  * "--oneline" tweaks how the log message gets shown.  Others in the
+>    family are --pretty=3Dfuller, --format=3D'%h %s', etc.
+>
+>  * "-L" tweaks how the diff gets shown (e.g. limits which part of
+>    the diff is shown) and what commits are shown (e.g. limits to
+>    commits that touch the specified area).
 
+I suppose it isn't intuitive to me which options affect how the commits
+are presented, and which affect the diffs. The help entry for -L states
+that it will "Trace the evolution of the line range", which doesn't
+immediately suggest that it tweaks how the log message is shown. As a
+user of this option, I'm more interested in using it as a filter for how
+commits are chosen.
 
-On 11/3/24 18:39, Junio C Hamano wrote:
-> Ignacio Encinas Rubio <ignacio@iencinas.com> writes:
-> 
->> I can't think of any room for improvement other than integrating
->> hostname (or a custom hostname) into git and using it in the tests, but
->> I doubt it is worth it.
-> 
-> Ah, that is a thought.  We have t/helper that builds "test-tool"
-> just for that, and exposing the output of xhostname() does sounds
-> like a reasonable way to go.  It would roughly involve
+-S feels like a similar option to -L, but will omit the diff when used
+with --oneline. I think I was probably experimenting with "--oneline -S"
+and then was surprised to see diffs after trying "--oneline -L".
 
-Great! I hadn't noticed "test-tool". Just to double-check, what name do
-we want to use for this? xhostname, hostname, xgethostname, gethostname?
-
-If I didn't miss something, the only place the test use hostname is in 
-
-    $ git grep '$(hostname' t/
-    t/t6500-gc.sh:	hostname=$(hostname || echo unknown) &&
-
-as you previously pointed out. So my plan is:
-
-1. Extend test-tool, migrate t6500-gc.sh to test-tool xhostname(*)
-2. Update my v2 to use "test-tool xhostname(*)"
-
-(*) or however we want to name it
-
->  * Add t/helper/test-xhostname.c that defines cmd__xhostname() and
->    writes the result of calling xhostname() to its standard output.
-> 
->  * Plumb it through by adding it to a few places:
-> 
->    - t/helper/test-tool.h wants the extern definition.
->    - t/helper/test-tool.c wants it in its cmds[] array.
->    - Makefile wants to list it in TEST_BUILTIN_OBJS
-> 
->  * Then use "test-tool xhostname" in your tests, instead of
->    "hostname".
-> 
-> You can run
-> 
->     $ git grep chmtime ':!t/*.sh"
-> 
-> to find places that needed to be touched when a similar internal
-> tool "chmtime" was added.
-
-Thank you very much for the pointers, they were very helpful!
