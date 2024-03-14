@@ -1,171 +1,283 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFA24A05
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 06:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CA23D75
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 07:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710398484; cv=none; b=Lbo2vOBoYhQM4hOnaw0hM/sodUlSpPbZkm2hzhfqyV4NdxZD+fn22wvVZRVGI15ScmqpmjRhD874ptNDZPmstVzfAsRP9fYStW6o3PQyzze0eK499oJngODu4Dkx9P0H5+onuhWQUnVARS3/1ZKQTvLE2+i59xaYe6CDQg/V1Os=
+	t=1710401793; cv=none; b=UNrL8LJqzVAiJlJ3RDNNreWlhG1FY6rzpCWhFd2whSHRz434AcvilaDeEucCf8b01gM3iKW1g5dRp3Mi/roHFs7TVTYvHu0tXogMVNgTYHB/IjNqnFWTDPAhmMoQ/403NXV8IpKuuvB66gpQC4jFAjQl8z07vbbr8inuNNyfr1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710398484; c=relaxed/simple;
-	bh=XZqrsIGUCToAvn6K6ebrmmhXIfLI3pNiB1c/mtdyIko=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=c9A7TtfTQTnIKWbueHn2f+olsAeaS6pQjeYi+NuFgV3bOwywUv3n6dcGJ4Gf/CIEeyh+FaqFeJFcvtDNbhj3+ImTCjnGEVHsGnpX7DEejXcGFFXIYgEXAsR3kT576NZVd/91qYvmOKenytNTxHAfUhpJX0si1DtPkzWd12vrCaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kOxS3HRJ; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1710401793; c=relaxed/simple;
+	bh=ckluomC40xcKdtyRzmDleuadVkQGnNNuWF/X1AcOwAU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=iuFaQ2xQtJZqTIfL8xfTfegae0y2Hb/XJ+ok2W2imfRQ/etW2w0blRUvwOm8M6RQbZyjpoymPAot3Ruzqr9hbcSOee14k+jeg9y9TuRGXDJJMEKyjr/iw+mHdMfrqGy1SOnjfWIl/B1ObEGLcUfP8ET7OEq8DMvhKJZpu2ww92c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=njN1ANhr; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOxS3HRJ"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-413eede49dbso3545575e9.0
-        for <git@vger.kernel.org>; Wed, 13 Mar 2024 23:41:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njN1ANhr"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4132600824bso3541425e9.2
+        for <git@vger.kernel.org>; Thu, 14 Mar 2024 00:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710398480; x=1711003280; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=uOL2Dm80Ocq4Vwy4dSZmKDmypr4x1Ft1dPOLbJTD5tE=;
-        b=kOxS3HRJo5/VMMOxbU5Fei6BuFH/SvPQp4mP1FyDh5EfKFYZ7H7cb8Hv2Fy5VZXxNc
-         oh+/4Dba3Lh3xKBFC+Xh9h+pw/92YDcMmx08dFF4JZbxzIrn1+nbbHfZbHluto4Wxzz7
-         OSn950ib8g3k6G2iLPbvw8Xf8NudW+1kXi8taV9u7QONejd2vOZ5q2uRG3z3k2ZBVR6H
-         jP9cKN4kqZcm7ua36/QNf4am5A8cdQHB+vr6nwDgBoNck3b1iSvMjEF/zmMH6UXgk7Ow
-         5zcRlsMz/DPznJMXwc9kr2Po5mqwWdLOI2k5LFpgNPNMjyBHtZ1HwZEDhuB9JI3mdQiH
-         ZCgQ==
+        d=gmail.com; s=20230601; t=1710401790; x=1711006590; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l12rscBhYIYXJ5PbO0o9p/4CyV+fxv13mm4xlKQ1VTk=;
+        b=njN1ANhrdcnavFbwNUplZquklIyUMrmlmBb4Vglb98jAr3AF8UMIv9TGPfarQzkjGn
+         f/SNGXgjLIy1Xjnn418W+I351MhGt0+MuLN3QXoF+ZTxjN4sY8cjZuY8yqlIQ2ZkaTPW
+         99jKk76+kNUnrgG1uzsSyL7SYFyUUProcv8MfqKb70eAe4SFaHw08m/vaS4qiGggpLuQ
+         xZ9+Z1Na1JT1SW216+hFyG625PZPoHg2UzrOozCn+n0Q3n+nbuxHSUyRxg1/8vh10t+v
+         j/rr5zzY5f4PUzjyvitjgQ6Xkl+ZNqqkGJIST2dXYb6Buv+bHQKpJUOxRlimzNDPnE5n
+         E0cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710398480; x=1711003280;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uOL2Dm80Ocq4Vwy4dSZmKDmypr4x1Ft1dPOLbJTD5tE=;
-        b=S3L9LNI5KBCqBhFZSWVFP1lGnMElJM0WhZ2WMHp2zvIAwj2/bSZN4rd58D8zFqZ4Bq
-         7e5KmGvQn0/KDfuy3saXOOrL83IgpewQTePdKgLOcLnugGs5zjsBNm1f7nIwbZ0/9Smi
-         T2b099Dam2WFzeQFGDKKGc9wEth/+n6/uu9R77nnDs5/aByK2sNg9q/IkwEXg80YMH2o
-         l5R7y9yJ8RljWtoUdJSULPHM1NLzqwLqv9fK4Sl1iWu62aq0ddh+E35A+U+y3Gj59k2D
-         RmLCv1eeEGHrFtFwhh/BzJlJfGU+ylhZtIsA05l/R887Lb6i9m6LQBrqcfT0PR90LFXe
-         wp7Q==
-X-Gm-Message-State: AOJu0YwH2Rt8LxsLXK7xecrRXbVBFaSnuzwsqVOQ530LmUjWCJiMIB8W
-	HlOjKLvsrNk9lvkMq51sz7SIYwM+9Y8Pu5PB14w76ynhGODBkc/o3FvvFGEu
-X-Google-Smtp-Source: AGHT+IFKy2BRqZSW5dyIBNDgt0mVF5qXnkTHP/NmIiBJWtFZhtOztFlGrypv/+qeQV6nRC84sYU8wg==
-X-Received: by 2002:a05:600c:1ca4:b0:412:d2dd:4bdd with SMTP id k36-20020a05600c1ca400b00412d2dd4bddmr625064wms.26.1710398479568;
-        Wed, 13 Mar 2024 23:41:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r8-20020a05600c458800b00413e8df267bsm1346831wmo.48.2024.03.13.23.41.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 23:41:19 -0700 (PDT)
-Message-ID: <pull.1692.git.1710398478718.gitgitgadget@gmail.com>
-From: "Brian Tracy via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 14 Mar 2024 06:41:18 +0000
-Subject: [PATCH] fuzz: add fuzzer for config parsing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1710401790; x=1711006590;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l12rscBhYIYXJ5PbO0o9p/4CyV+fxv13mm4xlKQ1VTk=;
+        b=jt9OvA15XeWUJ51N6RoPwvU9a/nwfKxTi36Auo8okEz4A/jKidJwGVWC0+MAwAsqr8
+         2IV/iE0UKP7nGHICi6pEoYXIoEv/WqH9vIQM94sRvl4I0NcEeLsgiOMay1bXBUQc9B6Q
+         NHGuup4m1318iNG7Ja0R+P+DIWv4j5nvYAyCZoisv0GCsEtX48WgYguQHOShR+z1ZveD
+         JeeCgFZkV75CHDEXS42vaFhNngyzXnOCrOqiFT8Rhr/v+CCxJccxoJHetXC96lvrXTZp
+         Siu+rNCx2Ov7xaiHaHwN3cFbVPRvRc73TVfCRIrwXpFbk3PEcPrA0B9JPVSBfxZslfcv
+         xr6g==
+X-Gm-Message-State: AOJu0Yy6qDWSGrWrpffVhubMIfTxq7XSllJaBucj4RxPCVTqDheLDIek
+	WS47FtgiWdATZKn2GXA6xqdaPZ01pnXTDKSOB1SEJ4kd3sg1qnGt75DtFWJG
+X-Google-Smtp-Source: AGHT+IFDgV+z2zZIMdfFzQVrWERy7igckVNH/g0VT8hCTlnFxbWkW063Xg9puWxkNQJOqHZ+g9Omdg==
+X-Received: by 2002:a05:600c:3488:b0:413:f58f:2f47 with SMTP id a8-20020a05600c348800b00413f58f2f47mr220334wmq.27.1710401789761;
+        Thu, 14 Mar 2024 00:36:29 -0700 (PDT)
+Received: from gmail.com (221.red-88-14-43.dynamicip.rima-tde.net. [88.14.43.221])
+        by smtp.gmail.com with ESMTPSA id fc6-20020a05600c524600b00413ee7921b4sm2467097wmb.15.2024.03.14.00.36.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Mar 2024 00:36:29 -0700 (PDT)
+Message-ID: <8faa0cd5-25e8-4a8f-ad8b-5fc1b6e5138b@gmail.com>
+Date: Thu, 14 Mar 2024 08:36:25 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Josh Steadmon <steadmon@google.com>,
-    Arthur Chan <arthur.chan@adalogics.com>,
-    Brian Tracy <brian.tracy33@gmail.com>,
-    Brian C Tracy <brian.tracy33@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] checkout: plug some leaks in git-restore
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>
+References: <04a9e001-5cd6-402c-86eb-f3751aa6f354@gmail.com>
+In-Reply-To: <04a9e001-5cd6-402c-86eb-f3751aa6f354@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Brian C Tracy <brian.tracy33@gmail.com>
+In git-restore we need to free the pathspec and pathspec_from_file
+values from the struct checkout_opts.
 
-Add a new fuzz target that exercises the parsing of git configs.
-The existing git_config_from_mem function is a perfect entry point
-for fuzzing as it exercises the same code paths as the rest of the
-config parsing functions and offers an easily fuzzable interface.
+A simple fix could be to free them in cmd_restore, after the call to
+checkout_main returns, like we are doing [1][2] in the sibling function
+cmd_checkout.
 
-Config parsing is a useful thing to fuzz because it operates on user
-controlled data and is a central component of many git operations.
+However, we can do better.
 
-Signed-off-by: Brian C Tracy <brian.tracy33@gmail.com>
+We have git-switch and git-restore, both of them spin-offs[3][4] of
+git-checkout.  All three are implemented as thin wrappers around
+checkout_main.  Considering this, it makes a lot of sense to do the
+cleanup closer to checkout_main.
+
+Factor out the call to checkout_main in a function that does both the
+work and the cleanup, and use it in the three wrappers.
+
+As a consequence, mark: t2070, t2071, t2072 and t6418 as leak-free.
+
+ [1] 9081a421a6 (checkout: fix "branch info" memory leaks, 2021-11-16)
+
+ [2] 7ce4088ab7 (parse-options: consistently allocate memory in
+     fix_filename(), 2023-03-04)
+
+ [3] d787d311db (checkout: split part of it to new command 'switch',
+     2019-03-29)
+
+ [4] 46e91b663b (checkout: split part of it to new command 'restore',
+     2019-04-25)
+
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
-    fuzz: add fuzzer for config parsing
+Range-diff:
+1:  d54a2c4dcc ! 1:  78ad33fa02 checkout: plug some leaks in git-restore
+    @@ Commit message
+          [4] 46e91b663b (checkout: split part of it to new command 'restore',
+              2019-04-25)
+     
+    +    Signed-off-by: Rubén Justo <rjusto@gmail.com>
+    +
+      ## builtin/checkout.c ##
+     @@ builtin/checkout.c: static struct option *add_checkout_path_options(struct checkout_opts *opts,
+      /* create-branch option (either b or c) */
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1692%2Fbriantracy%2Fconfig-fuzzer-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1692/briantracy/config-fuzzer-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1692
+Thanks Eric.
 
- Makefile                            |  1 +
- ci/run-build-and-minimal-fuzzers.sh |  2 +-
- oss-fuzz/.gitignore                 |  1 +
- oss-fuzz/fuzz-config.c              | 32 +++++++++++++++++++++++++++++
- 4 files changed, 35 insertions(+), 1 deletion(-)
- create mode 100644 oss-fuzz/fuzz-config.c
+ builtin/checkout.c               | 51 +++++++++++++++-----------------
+ t/t2070-restore.sh               |  1 +
+ t/t2071-restore-patch.sh         |  1 +
+ t/t2072-restore-pathspec-file.sh |  1 +
+ t/t6418-merge-text-auto.sh       |  1 +
+ 5 files changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 4e255c81f22..aa6c852548c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -760,6 +760,7 @@ FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
- FUZZ_OBJS += oss-fuzz/fuzz-date.o
- FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
- FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
-+FUZZ_OBJS += oss-fuzz/fuzz-config.o
- .PHONY: fuzz-objs
- fuzz-objs: $(FUZZ_OBJS)
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 4fe049cf37..2ff4cf88a6 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1702,10 +1702,10 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
+ /* create-branch option (either b or c) */
+ static char cb_option = 'b';
  
-diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal-fuzzers.sh
-index 8ba486f6598..29a21281f50 100755
---- a/ci/run-build-and-minimal-fuzzers.sh
-+++ b/ci/run-build-and-minimal-fuzzers.sh
-@@ -12,7 +12,7 @@ group "Build fuzzers" make \
- 	LIB_FUZZING_ENGINE="-fsanitize=fuzzer,address" \
- 	fuzz-all
+-static int checkout_main(int argc, const char **argv, const char *prefix,
+-			 struct checkout_opts *opts, struct option *options,
+-			 const char * const usagestr[],
+-			 struct branch_info *new_branch_info)
++static int checkout_main_1(int argc, const char **argv, const char *prefix,
++			   struct checkout_opts *opts, struct option *options,
++			   const char * const usagestr[],
++			   struct branch_info *new_branch_info)
+ {
+ 	int parseopt_flags = 0;
  
--for fuzzer in commit-graph date pack-headers pack-idx ; do
-+for fuzzer in commit-graph date pack-headers pack-idx config ; do
- 	begin_group "fuzz-$fuzzer"
- 	./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
- 	end_group "fuzz-$fuzzer"
-diff --git a/oss-fuzz/.gitignore b/oss-fuzz/.gitignore
-index 5b954088254..892fb09a95d 100644
---- a/oss-fuzz/.gitignore
-+++ b/oss-fuzz/.gitignore
-@@ -2,3 +2,4 @@ fuzz-commit-graph
- fuzz-date
- fuzz-pack-headers
- fuzz-pack-idx
-+fuzz-config
-diff --git a/oss-fuzz/fuzz-config.c b/oss-fuzz/fuzz-config.c
-new file mode 100644
-index 00000000000..5a1b39aa1e7
---- /dev/null
-+++ b/oss-fuzz/fuzz-config.c
-@@ -0,0 +1,32 @@
-+#include "git-compat-util.h"
-+#include "config.h"
-+
-+#include <stdio.h>
-+#include <string.h>
-+
-+int LLVMFuzzerTestOneInput(const uint8_t *, size_t);
-+static int config_parser_callback(const char *, const char *,
-+					const struct config_context *, void *);
-+
-+static int config_parser_callback(const char *key, const char *value,
-+					const struct config_context *ctx UNUSED,
-+					void *data UNUSED)
+@@ -1907,6 +1907,20 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		return checkout_branch(opts, new_branch_info);
+ }
+ 
++static int checkout_main(int argc, const char **argv, const char *prefix,
++			      struct checkout_opts *opts, struct option *options,
++			      const char * const usagestr[])
 +{
-+	/* Visit every byte of memory we are given to make sure the parser
-+	 * gave it to us appropriately. Ensure a return of 0 to indicate
-+	 * success so the parsing continues. */
-+	int c = strlen(key);
-+	if (value)
-+		c += strlen(value);
-+	return c < 0;
++	struct branch_info new_branch_info = { 0 };
++	int ret = checkout_main_1(argc, argv, prefix, opts, options,
++				  checkout_usage, &new_branch_info);
++	branch_info_release(&new_branch_info);
++	clear_pathspec(&opts->pathspec);
++	free(opts->pathspec_from_file);
++	free(options);
++	return ret;
 +}
 +
-+int LLVMFuzzerTestOneInput(const uint8_t *data, const size_t size)
-+{
-+	struct config_options config_opts = { 0 };
-+	config_opts.error_action = CONFIG_ERROR_SILENT;
-+	git_config_from_mem(config_parser_callback, CONFIG_ORIGIN_BLOB,
-+				"fuzztest-config", (const char *)data, size, NULL,
-+				CONFIG_SCOPE_UNKNOWN, &config_opts);
-+	return 0;
-+}
-
-base-commit: 945115026aa63df4ab849ab14a04da31623abece
+ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	struct checkout_opts opts;
+@@ -1922,8 +1936,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode (default)")),
+ 		OPT_END()
+ 	};
+-	int ret;
+-	struct branch_info new_branch_info = { 0 };
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.dwim_new_local_branch = 1;
+@@ -1953,13 +1965,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	options = add_common_switch_branch_options(&opts, options);
+ 	options = add_checkout_path_options(&opts, options);
+ 
+-	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, checkout_usage, &new_branch_info);
+-	branch_info_release(&new_branch_info);
+-	clear_pathspec(&opts.pathspec);
+-	free(opts.pathspec_from_file);
+-	FREE_AND_NULL(options);
+-	return ret;
++	return checkout_main(argc, argv, prefix, &opts, options,
++			     checkout_usage);
+ }
+ 
+ int cmd_switch(int argc, const char **argv, const char *prefix)
+@@ -1977,8 +1984,6 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 			 N_("throw away local modifications")),
+ 		OPT_END()
+ 	};
+-	int ret;
+-	struct branch_info new_branch_info = { 0 };
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.dwim_new_local_branch = 1;
+@@ -1997,11 +2002,8 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 
+ 	cb_option = 'c';
+ 
+-	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, switch_branch_usage, &new_branch_info);
+-	branch_info_release(&new_branch_info);
+-	FREE_AND_NULL(options);
+-	return ret;
++	return checkout_main(argc, argv, prefix, &opts, options,
++			     switch_branch_usage);
+ }
+ 
+ int cmd_restore(int argc, const char **argv, const char *prefix)
+@@ -2020,8 +2022,6 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode")),
+ 		OPT_END()
+ 	};
+-	int ret;
+-	struct branch_info new_branch_info = { 0 };
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.accept_ref = 0;
+@@ -2036,9 +2036,6 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	options = add_common_options(&opts, options);
+ 	options = add_checkout_path_options(&opts, options);
+ 
+-	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, restore_usage, &new_branch_info);
+-	branch_info_release(&new_branch_info);
+-	FREE_AND_NULL(options);
+-	return ret;
++	return checkout_main(argc, argv, prefix, &opts, options,
++			     restore_usage);
+ }
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index 16d6348b69..ac404945d4 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -5,6 +5,7 @@ test_description='restore basic functionality'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
+index 27e85be40a..42d5522119 100755
+--- a/t/t2071-restore-patch.sh
++++ b/t/t2071-restore-patch.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git restore --patch'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./lib-patch-mode.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
+index 8198a1e578..86c9c88788 100755
+--- a/t/t2072-restore-pathspec-file.sh
++++ b/t/t2072-restore-pathspec-file.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='restore --pathspec-from-file'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_tick
+diff --git a/t/t6418-merge-text-auto.sh b/t/t6418-merge-text-auto.sh
+index 41288a60ce..48a62cb855 100755
+--- a/t/t6418-merge-text-auto.sh
++++ b/t/t6418-merge-text-auto.sh
+@@ -15,6 +15,7 @@ test_description='CRLF merge conflict across text=auto change
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_have_prereq SED_STRIPS_CR && SED_OPTIONS=-b
 -- 
-gitgitgadget
+2.43.0
