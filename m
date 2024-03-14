@@ -1,77 +1,99 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C851362
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 02:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC5B4C96
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 03:38:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710383969; cv=none; b=ohe6WECroRRddvUbDvKlGOVzXl5+B71tWIhIWDbo4XSGHlbbL87qjdCXn/K+tCYIz33yI0arykbWrOqZykKWjA8qhkdJT26Z0lzJU0t1+6aOfQ/2LXvfySyB4x9aBtFPs1bn6jhB/kWH04qnbFOuhH034JCmmfm44FhYYM2eisU=
+	t=1710387516; cv=none; b=AqFkfp58VIg4HxbxoCTbCBasUK37lJsdvP4zOb8RS7xQMtWlpBRnsG19c+rD/8tzs1fP+U3+baAjj0UvCysMuQWTkQRYjAXGBzDgxOb6IG6pJ9gHm8yDmAEddj7rDtC377TH2q4fsS8eaIW5MWOlyxHq/DlrHFfrFIqDD2JiUoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710383969; c=relaxed/simple;
-	bh=3ptFBseHO3Gch+k9Ja7ZqBQZVTnm8bsqR81Sa949Lso=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d8VJyPKCYYHXM9FHyICtOsWG/ExM05w9b4r7gfjk71kvgpf1a3MWaCBchqSASP+vrNSJCrjfKXCN2wFed2GpNC9/2N6r3VSPGJI6uV1ol5u6eughm8ezu66xN8Qsd1wHDqzN1vlcOvHHFWUC5SHn+JUzeDWf41y5tuTbK2NHWpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1710387516; c=relaxed/simple;
+	bh=Xnxo2hUmHrqMHrQLPAKj5IBqC4TfO+NzJTlkErWYfJU=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=EHrmqE+w6MVPGln/VaOTxODlM+B0QFYb7QDudgpJW86qn79lW5kvcQeZjCqcBJZZmkop4LFUkgpgJsqam7xNg3QoC/JVnVOgKXykC7l/Q6NgGhkG3Q/dWVxeoGQlVGpq8225Ytz75gZh9DvYNM4AcEEJS4MyCNkkxPZ2wwUKKYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVMqzjVv; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-690cd7f83cdso3658996d6.3
-        for <git@vger.kernel.org>; Wed, 13 Mar 2024 19:39:27 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVMqzjVv"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-6e6b75211ceso590738b3a.0
+        for <git@vger.kernel.org>; Wed, 13 Mar 2024 20:38:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710387514; x=1710992314; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Xnxo2hUmHrqMHrQLPAKj5IBqC4TfO+NzJTlkErWYfJU=;
+        b=QVMqzjVvlXUH1bpEtJremPMoubY95L9nyD3ampHC0/Z4L1ZoIUM5JJEvedD1H2DJpJ
+         O283EGHYsWeWALesvDDFUBI9mXnGiHBHZ3ex/A3RnWPAPchvhzWUCBBUcT0GTFkWPwe5
+         FUs4ITUvcU3I/MDzMEPW9Q96twN8mDfef1tPi5dVKw7G5woaZw5BPjOwH4OCGSr9c7YD
+         CiqmvsUU/DKg+jZR2flrfMvcAulR3aMaZO5+o6NWDhAMj5F8mx3WhfS+L371HX75EVYE
+         Dmkepk5kj3JziGJI0Qe4FcMh26T0mY0Ppse/SHaF3BiIKvvRvHI+lSB1viOmS/Qx85pL
+         0Q5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710383966; x=1710988766;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L0RPtY76IxB+oVqKVIjzbfCReWjNfZG7AG5od5UCpgA=;
-        b=qe5cJ31Jcx47Fh8ux5G2a1uWxVDOmsr5ka6U3H2x4cy7+Tt6FvdvVWrbO/l51XizEn
-         nNb6PeXX8cLIrYUYyZHEbFb2xpTO6b8xh/zlXdeyQOl6P/nM6b/nnCPR/SrGfbEzvoTH
-         moWyL0zipnYTtVVpglBMH9zXSu7GdY2EeHJ20rxzRplSBJhSXyYebddBeQVMEvotFmz+
-         2VuGwj+s7z2idJDIVLIBbkRjpYFadRz96h8+IEJbf2EdqvRVmGRN7XnD4v7HtUBp2slh
-         WndkJqzNZqmmFqtxi5CEzZvlyhIg4A8+y8z6xMjyDcwLdi4+LN21ZiFXW9dYY8AZOgA4
-         /E+w==
-X-Gm-Message-State: AOJu0YyLZZa/xeAoO8ASEgZNs1cplyjx1vAn0sTCLBvhCd8C8bxMo1G4
-	7WQw71FSE0k1Qo7i7xun8MjxEMQEMeGd8Xepm3DruxFTOzn88Gr0GAwqyhYk6/H7bp5xa2rB2jQ
-	AgmNSYP3pJcj32saGEjwsgJAZ3/k=
-X-Google-Smtp-Source: AGHT+IGjSiBGS1ZaQ88+/onkgA1PKdwTt82n5Hj/CkdsPZEnSPIBMod44KJYZh+IjZBlwtSNKI7QFv9TBKU7c6q8Iig=
-X-Received: by 2002:a0c:ea31:0:b0:690:be38:d875 with SMTP id
- t17-20020a0cea31000000b00690be38d875mr546318qvp.29.1710383966661; Wed, 13 Mar
- 2024 19:39:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710387514; x=1710992314;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Xnxo2hUmHrqMHrQLPAKj5IBqC4TfO+NzJTlkErWYfJU=;
+        b=LcJ+gNCAn/KoNsxtHwyN6NizrkxdD5mu41CHtIClwQAOWAM+obcyFBjVVdDjoQqdFM
+         aHUwW8PdvWPDzui8ELPrXoh2C7hUmjH9UdJaxEde+2PLu0O47naxZsATNur+5yIY7k96
+         OeDqG18YF0NvqKUnuTvVy793G6Y/s4XuSWXff4krhRuOKDtUxfKIbwPQ5CpYM9yJ6zgR
+         obx7UU2stQPtUnlLTHU/c3y4QsjupbyegAol93bkTA9DshmfAG8i7b3Qb3CjtEwtEPKV
+         NNQAqlmDTljimMuLoBo1lg1W/mujI7+MicNnAF6M5PS9SxOFlUNVTxQajQJxutNeWGLh
+         +95g==
+X-Gm-Message-State: AOJu0YxHwtMnBn3YK9llFlW1sFMuAsbVIkAMAbmb8djEPHawmMWILzUm
+	84snDg/b6hGCArspQMuZaBxuZkL1Be6ch5U4p3WSZPNJ3SBJvNJM6emERgBK
+X-Google-Smtp-Source: AGHT+IHzY0xCtl3JjEL0Pt14RvOmVY/Yr+KXiLmDhnjaui6MrNIwB/JPjNr8H7cRMGqoQWsgpa7c1A==
+X-Received: by 2002:a05:6a20:3c91:b0:1a1:66cf:c52c with SMTP id b17-20020a056a203c9100b001a166cfc52cmr1148720pzj.12.1710387514117;
+        Wed, 13 Mar 2024 20:38:34 -0700 (PDT)
+Received: from ?IPv6:::1? ([2401:4900:173d:8d82:429a:8969:49fe:dd48])
+        by smtp.gmail.com with ESMTPSA id w19-20020a170902c79300b001dd0a41447fsm396996pla.233.2024.03.13.20.38.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Mar 2024 20:38:33 -0700 (PDT)
+Date: Thu, 14 Mar 2024 09:08:28 +0530
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: ZeiBfVyTCHUywliI@tanuki.smtp.subspace.kernel.org,
+ shejialuo <shejialuo@gmail.com>, Patrick Steinhardt <ps@pks.im>
+CC: git@vger.kernel.org
+Subject: Re: Discuss GSoC: Implement consistency checks for refs
+User-Agent: K-9 Mail for Android
+In-Reply-To: <Ze2E_xgfwTUzsQ92@ArchLinux>
+References: <Ze2E_xgfwTUzsQ92@ArchLinux>
+Message-ID: <04793E15-8C44-45BE-8B17-744EB94B245C@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <04a9e001-5cd6-402c-86eb-f3751aa6f354@gmail.com>
-In-Reply-To: <04a9e001-5cd6-402c-86eb-f3751aa6f354@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 13 Mar 2024 22:39:14 -0400
-Message-ID: <CAPig+cSYB3uNZhNGh6++5KA03ehv5pE+_KK1X=hUbb5JHwMoJQ@mail.gmail.com>
-Subject: Re: [PATCH] checkout: plug some leaks in git-restore
-To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 13, 2024 at 9:33=E2=80=AFPM Rub=C3=A9n Justo <rjusto@gmail.com>=
- wrote:
-> In git-restore we need to free the pathspec and pathspec_from_file
-> values from the struct checkout_opts.
->
-> A simple fix could be to free them in cmd_restore, after the call to
-> checkout_main returns, like we are doing [1][2] in the sibling function
-> cmd_checkout.
->
-> However, we can do better.
->
-> We have git-switch and git-restore, both of them spin-offs[3][4] of
-> git-checkout.  All three are implemented as thin wrappers around
-> checkout_main.  Considering this, it makes a lot of sense to do the
-> cleanup closer to checkout_main.
->
-> Factor out the call to checkout_main in a function that does both the
-> work and the cleanup, and use it in the three wrappers.
->
-> As a consequence, mark: t2070, t2071, t2072 and t6418 as leak-free.
-> ---
+Hi Jialuo,
 
-Missing sign-off.
+Just wanted to chime in to mention one thing=2E
+
+On 10 March 2024 3:31:35 pm IST, shejialuo <shejialuo@gmail=2Ecom> wrote:
+>
+>I think I will at least implement the generic part and files-backend
+>consistency check=2E I will then read some specs about the reftable and t=
+he
+>source code of it=2E If there is sufficient time available, I think I
+>could implement all of them=2E However, I am currently interning remotely=
+,
+>the response may slow=2E
+>
+
+Thanks for mentioning this=2E If your current internship would overlap
+with the GSoC period, kindly clarify the same in your proposal=2E Also,
+if it does overlap kindly clarify the amount of time you'll be able to
+allocate for the GSoC project in the proposal=2E
+
+This would be helpful to set the expectations right=2E
+
+--=20
+Sivaraam
+
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
