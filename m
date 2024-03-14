@@ -1,76 +1,83 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60147138A
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 08:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A4B5DF23
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 08:55:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710403742; cv=none; b=T4p8Wtw0wv6EKKR4U+MPx4BoS2jkDtbOU2ieSPrN4oehgfMBjoObW30BX+602DnbBPU+5Xw3Sb1/llrlotnnYiLyGpQ3+zSxcUBoOj6Dlbejilc7G8+u2Zu2E10tpXozT1MoNcVBNuEDlTTaciJyHhJ36u39CscllW5qGhOZaZI=
+	t=1710406525; cv=none; b=IFLMXEhz/n17B1fNHYy+JUbGasv+xhx3n9zMvg4ZjdtJx35j0q2pkVGsgPUlc2ZIbCDHV+jiJLOQGvBkJbjBmQ18kMiHahXQzPme5s0CS+0fxJ7tnSQ81RgQZ2PJrJZm+iT6oZEoV/YmvZRrs5JO4VQXdTA3fXG48ALXwIYMeoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710403742; c=relaxed/simple;
-	bh=9pIavKQ0e8p7ijyWR8QFz9zOEprb436RifSeb8/4tIg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ssoIwLMCVw6CuBQdp2R6/KTDtNSfadFXN4KE8QlGqdNrhdABLKl1P3x9sooJgFZLu1EQncSiPT8ZLM+YwteZwp6K4KJcnKws1XIrIO3nwLJx6fti7XMAc8P/ot+aScIlPEKfJ9MEw9B95X223Sa5jii0xEAw3K41KhJ3a2pXKG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=idPfrpYb; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="idPfrpYb"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 31FA71DB9BE;
-	Thu, 14 Mar 2024 04:09:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=9pIavKQ0e8p7ijyWR8QFz9zOEprb436RifSeb8
-	/4tIg=; b=idPfrpYbVfE9qgqLzKTdOBIrxuEv1ebI402D0gTyKSQwUpSzjC8GT9
-	90AQfg0WeRnRHpPOalAXFxXS4RW/M542JG+9nVzpSjqgntwNbGBZv0ke2OZk7HZV
-	N2tr8uRRa7ROOlrGXnHPGDpYn+24GIKhUOQ13VSX9QZDgt//uLwrQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 18C751DB9BD;
-	Thu, 14 Mar 2024 04:09:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6743F1DB9BB;
-	Thu, 14 Mar 2024 04:08:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mohit Marathe <mohitmarathe@proton.me>
-Cc: Mohit Marathe via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Mohit Marathe <mohitmarathe23@gmail.com>,
-  Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 2/2] patch-id: replace `atoi()` with
- `strtoi_with_tail()`
-In-Reply-To: <boJAHbg3xUqJ1hriFJu3QNlF9CYWbP9x9zu9mcV1jk1SI2WGAOes-wU1MMBZBWvMxs6VTkhlfE59iMEnYcDTOUTxA-3M72kvOJN613jaygw=@proton.me>
-	(Mohit Marathe's message of "Wed, 13 Mar 2024 15:01:19 +0000")
-References: <boJAHbg3xUqJ1hriFJu3QNlF9CYWbP9x9zu9mcV1jk1SI2WGAOes-wU1MMBZBWvMxs6VTkhlfE59iMEnYcDTOUTxA-3M72kvOJN613jaygw=@proton.me>
-Date: Thu, 14 Mar 2024 01:08:58 -0700
-Message-ID: <xmqq34st1bhh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710406525; c=relaxed/simple;
+	bh=ZLA3JWhLnzWsLvG7/oi8b8P0w1LjrJJrfzXdEp+ngRM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IfJzZLmzfKNPIeUEPTo+BMlEpN2KowzyOPFB8bTqVkngeDOg+JllvIhe+ynkBb5dcY6HYc+YiA148iI+Zhr+/2RZVaPoEWGxODKn8nvqkAOfJD/Dp1qQdPIy7NtqIcm4taqJv/l3zNBe3MF5I8ichWYNoJ633G4kUl2zXP0EnBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(Exim)
+	(envelope-from <bb@drbeat.li>)
+	id 1rkgrt-000000007fE-3n33
+	for git@vger.kernel.org;
+	Thu, 14 Mar 2024 09:55:18 +0100
+Received: from [10.20.10.233] (port=11052 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.96.2)
+	(envelope-from <bb@drbeat.li>)
+	id 1rkgrs-009lgq-2X;
+	Thu, 14 Mar 2024 09:55:16 +0100
+Received: by drbeat.li (Postfix, from userid 1000)
+	id 632FF180130; Thu, 14 Mar 2024 09:55:16 +0100 (CET)
+From: Beat Bolli <dev+git@drbeat.li>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH] t0006: add more tests with a negative TZ offset
+Date: Thu, 14 Mar 2024 09:55:12 +0100
+Message-ID: <20240314085512.1827031-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.42.0.583.ga47b40fd90
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1C9FDDA0-E1DA-11EE-A9DC-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-Mohit Marathe <mohitmarathe@proton.me> writes:
+This test doesn't systematically check a negative timezone offset. Add a
+test for each format that outputs the offset to improve our test
+coverage.
 
-> I am writing to inquire about the status of this patch. 
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ t/t0006-date.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Thanks for pinging.
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 1d228a981e..3031256d14 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -70,6 +70,14 @@ check_show 'format:%s' '123456789 +1234' 123456789
+ check_show 'format:%s' '123456789 -1234' 123456789
+ check_show 'format-local:%s' '123456789 -1234' 123456789
+ 
++# negative TZ offset
++TIME='1466000000 -0200'
++check_show iso8601 "$TIME" '2016-06-15 12:13:20 -0200'
++check_show iso8601-strict "$TIME" '2016-06-15T12:13:20-02:00'
++check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 12:13:20 -0200'
++check_show default "$TIME" 'Wed Jun 15 12:13:20 2016 -0200'
++check_show raw "$TIME" '1466000000 -0200'
++
+ # arbitrary time absurdly far in the future
+ FUTURE="5758122296 -0400"
+ check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" TIME_IS_64BIT,TIME_T_IS_64BIT
+-- 
+2.42.0.583.ga47b40fd90
 
-Please be kind to fellow project members by including a URL under
-https://lore.kernel.org/git/ to the original discussion.  In general
-there needs to be a reason why a patch should be applied, but a lack
-of reason why a patch should be applied is good enough reason why a
-patch may not have been applied so far.  I cannot offhand recall
-what problems the patch had or if there were additional problems in
-the patch that was left unaddressed.
-
-Thanks.
