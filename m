@@ -1,154 +1,266 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10BF1113
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 01:19:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D663D4A0F
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 01:33:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710379145; cv=none; b=mg4kjlcKyi2JcFTIu/m7CpeJO0fbbaFQgVCflrbkQTu+RoElnDKWPR96d/aDSX3LZ9ZzOcfJ2wNatf3HMTfEdShuePK0bDgOmEp7IaFJ1Sd/+yFZeu5472p6aLiuHNwmblkvsldwbppUL9Cvvv/13rIDiYLBpQClvHx2SaHUiRg=
+	t=1710379987; cv=none; b=CTuYmIkyUjHjpllUhL/dFlc2yqMT9xX70Y84Qx92VOrhcEEwSFMX3gXZ48aZJi9uDCgHcQILjS6lxovHSboYbUvAyfLinC95ZPttTNO3LnJucKvfX6Wb1+ATe8OF6+fZVu32jmSngeJNAmvqzZw+omDA0o1VanmZF1trULWFO2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710379145; c=relaxed/simple;
-	bh=kFhsX0terjYFCpZmn7028frpYxlWIop24XLMKkTuICk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IY7mlrDBXvy92KbruO1o+Hv2QWpxF5TDrg0+MyvDLdmiSOYx/19/kJ/0apr5zWAqWBUQ2uMkOETKm4gTdue6Iky/CQuiHhkMU3WiMYcutdrjjN+NBXOXMU19HR1YM9pygARY/1FtMPUd73f8/AGx15ukjUwqKscnBzweg9XaUBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JvJXGhn1; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710379987; c=relaxed/simple;
+	bh=MfrX5rsgbqObHSFCXuWFXs3dP593VIllT+QBxWHobTM=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=gOfFbdX30d+OjesVlnLS1VV30CPiWQRhQraSwhyHYZBPphAzIm1hFSAOuJh0XSL7KikTBCXym3AXWv8uJaY5euDx+V9dDfp695o4lmF6PWi6/d5EU70W4EPKf4+eci0wOCGMhkdWt8KLzfNgA/7bedv7AV2gqgF3FANAblYd6Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B83GC8Qc; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JvJXGhn1"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5024D1D486;
-	Wed, 13 Mar 2024 21:19:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=kFhsX0terjYFCpZmn7028frpYxlWIop24XLMKk
-	TuICk=; b=JvJXGhn1J+F+3ftZ7Yxb78MHFN+mEzKVNj56E7ZYDPnnLGQWw3zlSE
-	o0XELCJixOgSejp66C3GxyH7BuCgFxwXgCNbmsKUnIjYxc+/ozfZaDanY0oOG5U/
-	nGd227NSSYi43OQQzEoOj7v8xvJMwWQY9tReXUI52LTDFvQSSJshM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 35D241D485;
-	Wed, 13 Mar 2024 21:19:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B93191D481;
-	Wed, 13 Mar 2024 21:18:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de
-Subject: Re: [PATCH 1/3] config.txt: describe whitespace characters further
- and more accurately
-In-Reply-To: <1c670101fc29a9ccc71cf4d213545a564e14aa05.1710258538.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Tue, 12 Mar 2024 16:55:44 +0100")
-References: <cover.1710258538.git.dsimic@manjaro.org>
-	<1c670101fc29a9ccc71cf4d213545a564e14aa05.1710258538.git.dsimic@manjaro.org>
-Date: Wed, 13 Mar 2024 18:18:58 -0700
-Message-ID: <xmqqjzm51ugt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B83GC8Qc"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33ddd1624beso306007f8f.1
+        for <git@vger.kernel.org>; Wed, 13 Mar 2024 18:33:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710379984; x=1710984784; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wOLy52DH+gT1RznmXQimcTuXgsZxXF2p7QewQzwpHe4=;
+        b=B83GC8QceI51HckSUVrlP8QyECLLm6Th/wdTD7XJBgPQQncK454qzb8wWdqhVZtRC3
+         p+4UyYSgidi/gjirglsBUaK5J5grI8Z384qV/hHg1ZYDI41luFe47XcNRqXArBdsrteO
+         tTN4zrjZPqQPKHYIivXpTsQ7WOTURSmmoar+IBMbuAqIB6ivv0tUld9byeuIfn2rlCY6
+         E+uUsrv65hO6leZzqraqSQ8VtEOfkWnjK3g4L0wGC8GvHlzkBuSazVUEoSGjz/T2j5Vp
+         VWrAXjB9EljoxRSDI5/QGVUJILtskhGZjwUZWv8Fa6VeGnyH/yANIl8u+rgfVHCHy3o0
+         ft5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710379984; x=1710984784;
+        h=content-transfer-encoding:subject:to:from:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wOLy52DH+gT1RznmXQimcTuXgsZxXF2p7QewQzwpHe4=;
+        b=MsW7oUYrllwWqO25sqm41DVEZUU1v+QVJXx6KRDipaeo517HDXjT6epYTkGFGiYD9q
+         Uc6zTOacrfw7K0r5aFldxWfOTsBhobK17H1HX3LUKDoMJdp/V7OSQcGhtrVq3x6nhAeK
+         F1Xbnt2plwxs7qI8eNs9fLhwAZxZ8m7MU1N854jQUwi0yfWtlb4qNv8h2NeVo+tkUw8T
+         4I6TvMfRoOLaBruPWRtjTYnYLK9MEteBvPWs2XJ7kfvvPI65r7Gh8Y17zrAKHdJOKAqV
+         q+N0u4myCnLfT7Fb4RC0GrOne3qcIURz+RWBkp3ezarNk14WvFkiLptDJeAIZQkG161Q
+         ZwOg==
+X-Gm-Message-State: AOJu0YwYzHFtNdAGp3d0b6YBCXuqbdTh1zticfZkd0wTL5dHTyeEy0Pl
+	gQyR2ap3y4qbsTVHj9diLjK+2Swz+oD0OknPby4svstpJZj1JRtFpOh1zOlb
+X-Google-Smtp-Source: AGHT+IHd3r7GTSarpR4+JRY7oktx/lPHieHg3sjCC4NsmJcuG1ls9+AZ8NRcahRPv+JDQAWL+Vw0fA==
+X-Received: by 2002:adf:a395:0:b0:33e:83a1:227e with SMTP id l21-20020adfa395000000b0033e83a1227emr487472wrb.7.1710379983948;
+        Wed, 13 Mar 2024 18:33:03 -0700 (PDT)
+Received: from gmail.com (205.red-88-14-55.dynamicip.rima-tde.net. [88.14.55.205])
+        by smtp.gmail.com with ESMTPSA id l10-20020a5d410a000000b0033ec5ca5665sm383759wrp.95.2024.03.13.18.33.02
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Mar 2024 18:33:03 -0700 (PDT)
+Message-ID: <04a9e001-5cd6-402c-86eb-f3751aa6f354@gmail.com>
+Date: Thu, 14 Mar 2024 02:32:55 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D6143EB4-E1A0-11EE-8B23-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+Subject: [PATCH] checkout: plug some leaks in git-restore
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Dragan Simic <dsimic@manjaro.org> writes:
+In git-restore we need to free the pathspec and pathspec_from_file
+values from the struct checkout_opts.
 
-> Make it more clear what the whitespace characters are in the context of git
-> configuration, improve the description of the trailing whitespace handling,
-> and correct the description of the value-internal whitespace handling.
->
-> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-> ---
->  Documentation/config.txt | 19 +++++++++++--------
->  1 file changed, 11 insertions(+), 8 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 782c2bab906c..4480bb44203b 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -22,9 +22,10 @@ multivalued.
->  Syntax
->  ~~~~~~
->  
-> -The syntax is fairly flexible and permissive; whitespaces are mostly
-> -ignored.  The '#' and ';' characters begin comments to the end of line,
-> -blank lines are ignored.
-> +The syntax is fairly flexible and permissive.  Whitespace characters,
-> +which in this context are the space character (SP) and the horizontal
-> +tabulation (HT), are mostly ignored.  The '#' and ';' characters begin
-> +comments to the end of line.  Blank lines are ignored.
+A simple fix could be to free them in cmd_restore, after the call to
+checkout_main returns, like we are doing [1][2] in the sibling function
+cmd_checkout.
 
-OK, except for "whitespace characters"---do we need to say
-"whitespace characters", after we already listed HT and SP are the
-ones, instead of just "whitespaces"?
+However, we can do better.
 
-> @@ -64,12 +65,14 @@ The variable names are case-insensitive, allow only alphanumeric characters
->  and `-`, and must start with an alphabetic character.
->  
->  A line that defines a value can be continued to the next line by
-> +ending it with a `\`; the backslash and the end-of-line are stripped.
-> +Leading whitespace characters after 'name =', the remainder of the
->  line after the first comment character '#' or ';', and trailing
-> +whitespace characters of the line are discarded unless they are enclosed
-> +in double quotes.  This discarding of the trailing whitespace characters
-> +also applies after the remainder of the line after the comment character
-> +is discarded.
+We have git-switch and git-restore, both of them spin-offs[3][4] of
+git-checkout.  All three are implemented as thin wrappers around
+checkout_main.  Considering this, it makes a lot of sense to do the
+cleanup closer to checkout_main.
 
-"also" makes it sound as if we do it twice, once to remove trailing
-whitespaces after the remainder of the line after '#", and then trim
-the trailing whitespaces after we removed the comment.
+Factor out the call to checkout_main in a function that does both the
+work and the cleanup, and use it in the three wrappers.
 
-I wonder if we can make it clearer by following the step-by-step
-nature of the earlier part of the paragraph through.  We already say
-the folded line processing is done first, so break things down in
-conceptual phases/steps, perhaps like
+As a consequence, mark: t2070, t2071, t2072 and t6418 as leak-free.
 
- * The backslash at the end-of-line is removed, together with the
-   end-of-line, to form a single long line.
+ [1] 9081a421a6 (checkout: fix "branch info" memory leaks, 2021-11-16)
 
- * Anything that come after the first unquoted comment character,
-   either '#' or ';', are discarded.
+ [2] 7ce4088ab7 (parse-options: consistently allocate memory in
+     fix_filename(), 2023-03-04)
 
- * The leading and trailing whitespaces around the value part
-   (i.e. what follows 'name =') are discarded.
+ [3] d787d311db (checkout: split part of it to new command 'switch',
+     2019-03-29)
 
- * Remaining unquoted whitespaces inside the value part are munged.
+ [4] 46e91b663b (checkout: split part of it to new command 'restore',
+     2019-04-25)
+---
 
-> +Any number of internal whitespace characters found within
-> +the value are converted to the same number of space (SP) characters.
+ builtin/checkout.c               | 51 +++++++++++++++-----------------
+ t/t2070-restore.sh               |  1 +
+ t/t2071-restore-patch.sh         |  1 +
+ t/t2072-restore-pathspec-file.sh |  1 +
+ t/t6418-merge-text-auto.sh       |  1 +
+ 5 files changed, 28 insertions(+), 27 deletions(-)
 
-The last one sounds like a bug to me, by the way.
-
-At least the very original 17712991 (Add ".git/config" file parser,
-2005-10-10) squashed a run of whitespace characters into a single
-SP, which makes sense as a "clean-up".
-
-But ebdaae37 (config: Keep inner whitespace verbatim, 2009-07-30),
-while claiming to "Keep" inner whitespaces, broke it by replacing
-any isspace() bytes that are not SP with SP, contradicting its
-stated purpose.
-
-As the latest change by the author of that change is from more than
-10 years ago, I do not expect that he is still interested in this
-part of the codebase, but thanks to a very clearly written log
-message, we can read what the motivation behind that change was, and
-seeing that what the code does contradicts with the stated
-motivation we can safely declare that this is an ancient bug.
-
-Fixing that bug can of course be left outside the series.  For those
-who are looking for microproject ideas who discovered this message
-by searching for the #leftoverbits keyword, one possible fix would
-be to revert ebdaae37, make sure a value with any whitespace in it
-gets quoted, and document clearly that an unquoted run of
-whitespaces is squashed into a single SP.  Another way that is
-milder is to finish what ebdaae37 wanted to do and retain the
-whitespaces "verbatim".
-
-Thanks.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 4fe049cf37..2ff4cf88a6 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1702,10 +1702,10 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
+ /* create-branch option (either b or c) */
+ static char cb_option = 'b';
+ 
+-static int checkout_main(int argc, const char **argv, const char *prefix,
+-			 struct checkout_opts *opts, struct option *options,
+-			 const char * const usagestr[],
+-			 struct branch_info *new_branch_info)
++static int checkout_main_1(int argc, const char **argv, const char *prefix,
++			   struct checkout_opts *opts, struct option *options,
++			   const char * const usagestr[],
++			   struct branch_info *new_branch_info)
+ {
+ 	int parseopt_flags = 0;
+ 
+@@ -1907,6 +1907,20 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		return checkout_branch(opts, new_branch_info);
+ }
+ 
++static int checkout_main(int argc, const char **argv, const char *prefix,
++			      struct checkout_opts *opts, struct option *options,
++			      const char * const usagestr[])
++{
++	struct branch_info new_branch_info = { 0 };
++	int ret = checkout_main_1(argc, argv, prefix, opts, options,
++				  checkout_usage, &new_branch_info);
++	branch_info_release(&new_branch_info);
++	clear_pathspec(&opts->pathspec);
++	free(opts->pathspec_from_file);
++	free(options);
++	return ret;
++}
++
+ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	struct checkout_opts opts;
+@@ -1922,8 +1936,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode (default)")),
+ 		OPT_END()
+ 	};
+-	int ret;
+-	struct branch_info new_branch_info = { 0 };
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.dwim_new_local_branch = 1;
+@@ -1953,13 +1965,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	options = add_common_switch_branch_options(&opts, options);
+ 	options = add_checkout_path_options(&opts, options);
+ 
+-	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, checkout_usage, &new_branch_info);
+-	branch_info_release(&new_branch_info);
+-	clear_pathspec(&opts.pathspec);
+-	free(opts.pathspec_from_file);
+-	FREE_AND_NULL(options);
+-	return ret;
++	return checkout_main(argc, argv, prefix, &opts, options,
++			     checkout_usage);
+ }
+ 
+ int cmd_switch(int argc, const char **argv, const char *prefix)
+@@ -1977,8 +1984,6 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 			 N_("throw away local modifications")),
+ 		OPT_END()
+ 	};
+-	int ret;
+-	struct branch_info new_branch_info = { 0 };
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.dwim_new_local_branch = 1;
+@@ -1997,11 +2002,8 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 
+ 	cb_option = 'c';
+ 
+-	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, switch_branch_usage, &new_branch_info);
+-	branch_info_release(&new_branch_info);
+-	FREE_AND_NULL(options);
+-	return ret;
++	return checkout_main(argc, argv, prefix, &opts, options,
++			     switch_branch_usage);
+ }
+ 
+ int cmd_restore(int argc, const char **argv, const char *prefix)
+@@ -2020,8 +2022,6 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode")),
+ 		OPT_END()
+ 	};
+-	int ret;
+-	struct branch_info new_branch_info = { 0 };
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.accept_ref = 0;
+@@ -2036,9 +2036,6 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	options = add_common_options(&opts, options);
+ 	options = add_checkout_path_options(&opts, options);
+ 
+-	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, restore_usage, &new_branch_info);
+-	branch_info_release(&new_branch_info);
+-	FREE_AND_NULL(options);
+-	return ret;
++	return checkout_main(argc, argv, prefix, &opts, options,
++			     restore_usage);
+ }
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index 16d6348b69..ac404945d4 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -5,6 +5,7 @@ test_description='restore basic functionality'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
+index 27e85be40a..42d5522119 100755
+--- a/t/t2071-restore-patch.sh
++++ b/t/t2071-restore-patch.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git restore --patch'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./lib-patch-mode.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
+index 8198a1e578..86c9c88788 100755
+--- a/t/t2072-restore-pathspec-file.sh
++++ b/t/t2072-restore-pathspec-file.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='restore --pathspec-from-file'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_tick
+diff --git a/t/t6418-merge-text-auto.sh b/t/t6418-merge-text-auto.sh
+index 41288a60ce..48a62cb855 100755
+--- a/t/t6418-merge-text-auto.sh
++++ b/t/t6418-merge-text-auto.sh
+@@ -15,6 +15,7 @@ test_description='CRLF merge conflict across text=auto change
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_have_prereq SED_STRIPS_CR && SED_OPTIONS=-b
+-- 
+2.44.0.341.g37b2c3c964
