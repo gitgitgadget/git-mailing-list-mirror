@@ -1,21 +1,21 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C561A38D0
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 18:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4340A71750
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 18:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710441614; cv=none; b=GAyBeqUL4srkYWT3/6MBawqNRwduPzZb5ubZ1LvWbfBfTOaeTPakAJ/h6W7hDEw6WdC0Tsh4M8MpmKghBDCduh58jSie6C2nNysDYe5sFGrUE0bU8BGeyovMyYkfuPEdKwqzggCHXGvR6PClNEj8pNp0aCtqPsmrbYKC5TRLCD4=
+	t=1710442108; cv=none; b=ObxPrKkwNBD63rAXaCboh+LPsmE+TRO9QBuFP7rzW4dYgwi22v44gVFwhsXNyI8L3+zFETMRnMpcHMBc/moHF9yNkeVerwz/uacg17edY6KeujO81yghRRwGRD0Egz59N8aVFoxDEyHaw037rVy4Akczhpf7zs3zyKGyl3wqobA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710441614; c=relaxed/simple;
-	bh=7j+N82BmMaqxiTtDNOfd8io0XeW9Mq3eu+E/zByg1lo=;
+	s=arc-20240116; t=1710442108; c=relaxed/simple;
+	bh=ii1bpErtqNUn4qWgVcHhJ43WfU66SOIJLNhS3HQszDI=;
 	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=HYru60StRof65Eq5P0cGo/Zy2BDe+/MK+c1hm9RL3AwhkGdf4IJlHskEpR0AeuCk3TzVss83tTxBsCOyQ5gX/LgTdef6ODFtA0B3iO3AbGEK480DzKGGLX4Xf5NcGsD9TMvxiKfueq//d6jnHWxX60Fn+c8MBAaOWc9lHbjoM44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=ampO3Rth; arc=none smtp.client-ip=116.203.91.91
+	 Message-ID:Content-Type; b=Y002ciCs5lidAJG6td+DUSwf6anAY5SCoApFkRXFV/p5btDZcagV3tsFFHA95btLez40ej+OJDGyBhXtIhPZg+UeWZFJG5ExwMMlc4RfzUFgjdQ9i7LLnxWFBpIuIfpp3SEjCVAwJU9Mk+95Qh0ANwrfu9zWt5Hg6/ZtHaKmjFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=E3COC+2O; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="ampO3Rth"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="E3COC+2O"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -23,28 +23,29 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710441601;
+	t=1710442103;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=/AV8K3JlVFPggvgyMm7+rFeWCwEBOZQutpVfkW0pFdc=;
-	b=ampO3RthIAJclfeQ0e7HxZiQ7jf4AiGqkmEiR7cy/yuJDrjoIvKBskll7yhDybQkL82FwP
-	vcfspFWbwgAZlA1cLe0EbZgvSakcXqRho+axaJ6saHMoW4b2/Hpcu1d4wkl3lZcDZmMn9V
-	hIDvPWaNFKJVg/f8MPCwyuGEzYj91vRBzlvpJIEwpnS6GYdJ4QTmOdh9myvhUArxzGGuNw
-	Sd0I79j3Dd6dsVctQx0tvl5gmoVBSrU6QBN01nHHCPEmLR9ukzAeemFUc4YCTrUKFfvHPR
-	CbVHFnjdXTeTEKp7XAz+5JEGoyvX057ipDks133UBIrWP2OdiTejM2nKcWwASg==
-Date: Thu, 14 Mar 2024 19:40:01 +0100
+	bh=2+KgVsBL5eu9vPGs6xxcD+yBVzXyspHbhmQWzyvbkw8=;
+	b=E3COC+2OROU5hyB6SwTZ4kqN0rGr4HS8nKtpjwR1Ufqqygi5TM5R64oxL+1jHZh0WT4l/Q
+	rIyX5NRjB05nSXqXF4fuwQAbjT+L4B99Xk+9Wm9+r9Yb9BRwC3zZHeU+QekOI/PiC1w+7n
+	QkxUvuE3tgK8U1M9fbPvGsSkgYbzuDKFObY+Pc1S27pc6JUI+q1PouuiUkJWFT1N94D6FD
+	7bKKDfixl4izCIVdhsun4RUBH0wZx9qS8NFLPucWkhkJrCIPxYqlEW6exXQ4fmVYTj6JNw
+	13+u+Fy780oONrdHhmqslT48VLrqGRLgNuM18i4xWxVJNlThpooQFq+8aVxXlA==
+Date: Thu, 14 Mar 2024 19:48:22 +0100
 From: Dragan Simic <dsimic@manjaro.org>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, rsbecker@nexbridge.com, github@seichter.de
-Subject: Re: [PATCH 2/3] config.txt: perform some minor reformatting
-In-Reply-To: <xmqqfrwsyeac.fsf@gitster.g>
+Subject: Re: [PATCH 1/3] config.txt: describe whitespace characters further
+ and more accurately
+In-Reply-To: <xmqqh6h8wymc.fsf@gitster.g>
 References: <cover.1710258538.git.dsimic@manjaro.org>
- <d50c0f22c41ec36b574e1ff67e68485d9a6f2a84.1710258538.git.dsimic@manjaro.org>
- <xmqqedcd1sm5.fsf@gitster.g> <07d0ac0d11b47983d3aa1760fc01ad92@manjaro.org>
- <xmqqfrwsyeac.fsf@gitster.g>
-Message-ID: <f7fa6d9bc9835ad1139bced5ea2b20b3@manjaro.org>
+ <1c670101fc29a9ccc71cf4d213545a564e14aa05.1710258538.git.dsimic@manjaro.org>
+ <xmqqjzm51ugt.fsf@gitster.g> <ff7b0a2ead90ad9a9456141da5e4df4a@manjaro.org>
+ <xmqqh6h8wymc.fsf@gitster.g>
+Message-ID: <11be11f231f3bf41d0245c780c20693f@manjaro.org>
 X-Sender: dsimic@manjaro.org
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
@@ -52,39 +53,35 @@ Content-Transfer-Encoding: 7bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 2024-03-14 17:22, Junio C Hamano wrote:
+On 2024-03-14 17:45, Junio C Hamano wrote:
 > Dragan Simic <dsimic@manjaro.org> writes:
 > 
->>> I was a bit surprised to see such a "preliminary clean-up" step to
->>> come before the main change, not after, but separating this from the
->>> change to the next paragraph, which is the main change in this 
->>> series,
->>> is nevertheless a very good idea.
->> 
->> The reason why this patch went as the second in the series was simply
->> because it's a somewhat unrelated cleanup that performs no actual
->> changes
->> to the contents of the documentation.
+>> Though, further investigation shows that setting a configuration 
+>> value,
+>> by invoking git-config(1), converts value-internal tabs into "\t" 
+>> escape
+>> sequences, which the value-parsing logic doesn't "squash" into spaces.
 > 
-> It would have been understandable if it were left at the end, as
-> "after the dust settles".  It would made even more sense if it were
-> at the front, "before doing anything else, let's clean up the
-> mess--we do not intend to change the behaviour with this change at
-> all".  Having it in the middle was what made me surprised.
+> Correct.  It would have been nicer to just quote values that had
+> whitespaces in them, but replacing HT to SP while turning HT that
+> comes from our tool into "\t" would still let the value round-trip,
+> while breaking anything written manually in editors.  If you stay
+> within Git without using any editor, what ebdaae37 (config: Keep
+> inner whitespace verbatim, 2009-07-30) left us is at least
+> internally consistent.
+
+Yes, but we already support unquoted values that contain whitespace
+characters, and people use editors to configure variables.  For example,
+I never use git-config(1) to make changes to my ~/.gitconfig file.
+
+>> I'd be happy to include the bugfix into this series, if my
+>> above-mentioned
+>> fears prove to be unnecessary.
 > 
-> Generally, the order of preference is to do "preliminary clean-up"
-> first, followed by the real change.  That way, trivial clean-up that
-> is designed not to change any behaviour can go ahead and merged down
-> even before the real change solidifies.
+> Documenting status quo is a good place to stop for now.  I do not
+> know if it is a good idea to add too many tests to etch the current
+> behaviour that we know is wrong and we'll need to update when we fix
+> the bug, though.
 
-After thinking a bit more about it, I'd agree, especially because
-such an approach makes accepting patches easier.  Thank you for
-pointing that out!
-
-> Unrelated changes has no place in a series with a real purpose.
-> Unless the series is about "assorted clean-ups that are not related
-> with each other", that is.
-
-Having all in mind, especially the addition of a bugfix for the
-value parsing into the series, I think it's the best if I take the
-cleanup patch out of the series and send it separately.
+But I already started to work on a bugfix?  I'm pretty much close to
+completing the bugfix and doing some testing.
