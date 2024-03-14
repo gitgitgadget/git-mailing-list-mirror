@@ -1,54 +1,54 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB2D73186
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 16:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB48D2E410
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 16:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710434028; cv=none; b=SYyRN4R+FzSeopH0oWaZ2Ueyh9C0BmT563aGjo7KUHz4lm2wYxMK7cPltiJAmip/tqBYuebbJOodbGE0i9ky7g4oBd3YqqyRLibqzA3cSzvUwOF8B8mO5UKvd3K+GyAcmcHf8vxOiftmYXTdGG5qY6yrCUzeXyizcL1hqmlIPpU=
+	t=1710434754; cv=none; b=qAopwB273IHSM5FFCIokmPSaHwGTp22rXcVkXgoA+sc9QAo5RIt3z2PPS7BA3cRb+kkaN0gNNGhPYsqqzvDby95jDvePzfU+668gC2SPpXWKZEVjJcmbvBPQpyTuLDhnuVhnLNPqdwZ0pddYyo3I70nwT4ji6SHd5m7wVpksHzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710434028; c=relaxed/simple;
-	bh=wRbjPjCyqmPC9JyvG8jgpnHnqdTLccEeRXH54PI2ZMc=;
+	s=arc-20240116; t=1710434754; c=relaxed/simple;
+	bh=gZ3brBv7voZkmv6+NQZLQxPvN4H41TWuxqm6Y0ZtGDw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tezqr0ufbe4u3Eyve4pR1NIG1vU41qvuBg7TAECT6NsotnLnBUPiNpEz1O7sf6LB9dhbz79XDBjseUbthokV2RcGwGPtxV7Aww74ssog6gIgeLHPWmwkzVNPT73wfPyMDXADNs1cuHJYVjFNIOhB3YArVEoMIptH7n0CNW7EKLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZiVPy/4K; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=iRAqx155VJh0LLEGjVKWZVEiUGNj/Nex3LmaJYWGKHxmBWGyOIRvnz0skoz+yBYYRWawhMvFe8mgm3Itn7VVSSqLPVCgkpDRZAOYdZikoWwO88Iua3VOokboEBE8+/99ndZvBSP/N3JLMtD0QnHkJ1RwAZW4coDbckpEEijpVa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OKNPP+Tr; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZiVPy/4K"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0EA711DF198;
-	Thu, 14 Mar 2024 12:33:42 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OKNPP+Tr"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 282C22974A;
+	Thu, 14 Mar 2024 12:45:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wRbjPjCyqmPC9JyvG8jgpnHnqdTLccEeRXH54P
-	I2ZMc=; b=ZiVPy/4KCWcz+rNs1NKTWyFK2Y/NJVMdDkJXPb0gTvxZH59RTZwHMT
-	EjXkpk38JLY64PEiEb4uwDml/9TnNkqLBVpxV7pLRcseqWVV6zcSZXpwSPS2b2kn
-	4i/WVdUa4vGAiYUxdtyzenjo4RRntb0zM1UKfDG+yZpZJ2XvUM8cw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 035591DF197;
-	Thu, 14 Mar 2024 12:33:42 -0400 (EDT)
+	:content-type; s=sasl; bh=gZ3brBv7voZkmv6+NQZLQxPvN4H41TWuxqm6Y0
+	ZtGDw=; b=OKNPP+TrDxHQ5Dp9K73cAH2kIdOpfryXJrIlMAdo0oB0jIxOskGuCc
+	TZWT4ezaO3IUNn8G+IxGbTvAH4p0HYNc5Y9dUdHtz9fKQr0NVKgyPfeOE4WXzeMt
+	5l+M5V4dyek1P6xLFLcETLDSBVhfUOuNoHZU2RZEwANZDhBEUoib0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 214FC29749;
+	Thu, 14 Mar 2024 12:45:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D9881DF192;
-	Thu, 14 Mar 2024 12:33:41 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B9DDE29748;
+	Thu, 14 Mar 2024 12:45:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "barroit via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  barroit <barroit@linux.com>,
-    Emily Shaffer  <nasamuffin@google.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 0/2] bugreport.c: fix a crash in git bugreport with
- --no-suffix option
-In-Reply-To: <xmqqbk7gye0s.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	14 Mar 2024 09:27:47 -0700")
-References: <pull.1693.git.1710260812280.gitgitgadget@gmail.com>
-	<pull.1693.v2.git.1710388817.gitgitgadget@gmail.com>
-	<xmqqbk7gye0s.fsf@gitster.g>
-Date: Thu, 14 Mar 2024 09:33:40 -0700
-Message-ID: <xmqq4jd8ydqz.fsf@gitster.g>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de
+Subject: Re: [PATCH 1/3] config.txt: describe whitespace characters further
+ and more accurately
+In-Reply-To: <ff7b0a2ead90ad9a9456141da5e4df4a@manjaro.org> (Dragan Simic's
+	message of "Thu, 14 Mar 2024 07:20:00 +0100")
+References: <cover.1710258538.git.dsimic@manjaro.org>
+	<1c670101fc29a9ccc71cf4d213545a564e14aa05.1710258538.git.dsimic@manjaro.org>
+	<xmqqjzm51ugt.fsf@gitster.g>
+	<ff7b0a2ead90ad9a9456141da5e4df4a@manjaro.org>
+Date: Thu, 14 Mar 2024 09:45:47 -0700
+Message-ID: <xmqqh6h8wymc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,30 +58,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 9E13DAE4-E220-11EE-AD25-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 4FA0AC82-E222-11EE-947E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dragan Simic <dsimic@manjaro.org> writes:
 
-> "barroit via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> executing git bugreport --no-suffix led to a segmentation fault due to
->> strbuf_addftime() being called with a NULL option_suffix variable. This
->> occurs because negating the "--[no-]suffix" option causes the parser to set
->> option_suffix to NULL, which is not handled prior to calling
->> strbuf_addftime().
->>
->> Jiamu Sun (2):
->>   bugreport.c: fix a crash in `git bugreport` with `--no-suffix` option
->>   doc: update doc file and usage for git-bugreport
->
-> Squash them together into a single patch.  As you didn't have any
-> meaningful log message in [2/2], unless there are other things that
-> need to be updated and v3 is needed, I can squash them into one
-> commit, though.
->
-> Thanks for updating.
+> Though, further investigation shows that setting a configuration value,
+> by invoking git-config(1), converts value-internal tabs into "\t" escape
+> sequences, which the value-parsing logic doesn't "squash" into spaces.
 
-I forgot the two I CC'ed the review thread for the previous round to
-ping them, so here it is.
+Correct.  It would have been nicer to just quote values that had
+whitespaces in them, but replacing HT to SP while turning HT that
+comes from our tool into "\t" would still let the value round-trip,
+while breaking anything written manually in editors.  If you stay
+within Git without using any editor, what ebdaae37 (config: Keep
+inner whitespace verbatim, 2009-07-30) left us is at least
+internally consistent.
+
+> I'd be happy to include the bugfix into this series, if my
+> above-mentioned
+> fears prove to be unnecessary.
+
+Documenting status quo is a good place to stop for now.  I do not
+know if it is a good idea to add too many tests to etch the current
+behaviour that we know is wrong and we'll need to update when we fix
+the bug, though.
 
 Thanks.
