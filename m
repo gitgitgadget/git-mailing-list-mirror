@@ -1,149 +1,137 @@
-Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57038385
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 22:34:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59558749A
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 22:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710455679; cv=none; b=pwVecocJynXJVIsTu3wPmQd9O8lY/NMWTELOn/ZuW7jwY/PTk7wRFW2IyKGyycO+NQR8bgG5NEnS/M8HjyEDiD98t9caYMCzWyzXRhRY4a70QIEDqKeBaX05x/etTPAiFjBtWtNELRVKizRLSXhu/90VNQ9Q6vodZeFY9ABJSuw=
+	t=1710456954; cv=none; b=slOqq6ZGV+rkcu8/eWstYEEshdEjeeVSCpcEKzgEp97TazOe8OeGWZYQWHto4QO+KObq6PV5+sgM1QpoHD4ASwmLcNkOAL/F/cI+PyXhyCjWqzRRPRFBuxNmMWjECTZzKj15RM8nVoxSt3VofGBo+eRzupfI+zmm9Es0lQpnj+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710455679; c=relaxed/simple;
-	bh=2Dq0v7lII9VMqpcyw/gZ8w8aQ5zV6yLACTo+4N24oow=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahUFw6Ovp1ub1Jgq5CXOFZfUnsIlIDWbzgPxm4uveQ4fKLg2SHi90yKMIsXj/AB2pjmQ9KHS7Ue1G5fqeqku63kiThHd5qBysowb7+cHqwTBZIJY4nLA27qUcoGeHVKgUFUPz2DIdL6CQxYmJVXstYKd0kPQazMeEtDjmp/gu2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KvzWBbhk; arc=none smtp.client-ip=209.85.216.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710456954; c=relaxed/simple;
+	bh=WAopodz2C2AZJT1z8YmSxhmmrhFhU9dWrXqtzMSoFXU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GiRkqORLFMV8nZQxbQsgIzEYWJg37kpWBo597id/HipDgfG6ZJjz5GccBT1UqYHT9TjZIdzNWx0uoPidiyJVH7e/8Dh26RSSemhffafNEJ33sZtFmIMsO+wimrk1YyO7GhKArac3khUMkuBmwmlr5VFP3r1MUXoTQ4nDNz9FGFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=po2l4DU+; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KvzWBbhk"
-Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-299b818d63aso1121820a91.0
-        for <git@vger.kernel.org>; Thu, 14 Mar 2024 15:34:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710455677; x=1711060477; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F/DNKAdkmAQkncYLcI/XVDKdMS//1UHZpj5Ap2ADUog=;
-        b=KvzWBbhkz2U1F0jNexmyrsWUE2g40I0Gt/ZPHqtPLEU7e7fjt/h+TUB1BFYOt9y7TW
-         TPgI4M77SEg4XkKKpzXUikrDudIpMa+SWtYMUzIkGOUAW7HDfEN20GQx4TmSdaMOivDc
-         jcCOluwlTykWo9vSSulsBi27tc7XRvb9JmgLjChpdRTN506rLXBZMDCafoz4izcTAy11
-         1LhL+PXaB5eZtTaKg0PXmviuJUx9dMGfwAyrLTwxk3i7OKglV7WN5b0rloAzFmcZb2go
-         kg4xK8Z0FXXykccpFUYwi1mgmist8NENk/Is0X0xv1I2v4BuMf868sFosA/nYNVpa4VN
-         LC7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710455677; x=1711060477;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F/DNKAdkmAQkncYLcI/XVDKdMS//1UHZpj5Ap2ADUog=;
-        b=QXPFx2HgR4QQAQnQQCGQIwpwqwKaqNqSxOZK83EahOb2+eY7JjuiwcU3eOF4H7KSdh
-         +TU3C/uwTftI1Gzg9d7rZIVffVpWi401Fav3gQiIVrSsRfiQd4Xh7IILy1Cb9Agay1Zy
-         wQOGffHuqIrOoAR4Ps2zMnfnkhexTv93hdvO23YEWbGJMQAB6QMcOJzLyh8JUvgAjYim
-         w3ktB7BSJWRJm5hA9Z+UtQ6VVpmCYTDXKI6gXoab/B14s4Wy0A+sgUIO0C1TRBV+ehcj
-         cVYJ8sY1F9Z+E03HRqZz2fr2FEITtoBy8lS/VEYqasRFOqA4BQ0JqbpwNP79eHbxT17Z
-         2HSA==
-X-Gm-Message-State: AOJu0YwV0YI6Vh+b06PZPmxbP4qBzyjG+UCSuM3gCNeG/9evC1DNRAoJ
-	3xPEgwHmBwpIXmjQ6dnHNgOMp+7xihfAy+6lUG1uDGMLaDq883UgpcvKgFRGz/I=
-X-Google-Smtp-Source: AGHT+IGgikeAsmFJfz8JeK6u9den4M+L+YL4oe6CyyOkLuTXWMPklso4jDZMPL7GU2Ip3ziwEB33KQ==
-X-Received: by 2002:a17:90a:7e98:b0:29b:a345:620a with SMTP id j24-20020a17090a7e9800b0029ba345620amr4522614pjl.20.1710455677377;
-        Thu, 14 Mar 2024 15:34:37 -0700 (PDT)
-Received: from SUPERFORTRESS.. (p093208.f.east.v6connect.net. [221.113.93.208])
-        by smtp.gmail.com with ESMTPSA id qc9-20020a17090b288900b0029bbab9516fsm1486232pjb.40.2024.03.14.15.34.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Mar 2024 15:34:37 -0700 (PDT)
-From: Jiamu Sun <baiorettohr@gmail.com>
-X-Google-Original-From: Jiamu Sun <barroit@linux.com>
-To: git@vger.kernel.org
-Cc: barroit@linux.com
-Subject: [PATCH v3] bugreport.c: fix a crash in `git bugreport` with `--no-suffix` option
-Date: Fri, 15 Mar 2024 07:34:06 +0900
-Message-ID: <20240314223406.79283-1-barroit@linux.com>
-X-Mailer: git-send-email 2.44.GIT
-In-Reply-To: <pull.1693.v2.git.1710388817.gitgitgadget@gmail.com>
-References: <pull.1693.v2.git.1710388817.gitgitgadget@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="po2l4DU+"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 26DB45B3DC;
+	Thu, 14 Mar 2024 22:55:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1710456951;
+	bh=WAopodz2C2AZJT1z8YmSxhmmrhFhU9dWrXqtzMSoFXU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=po2l4DU++y+fbPHPvOXHfNHuU45lYLRowYsi4VSlLFWmE5UlMjwYJKNwYNh2117ZA
+	 A4JjNdcRFCbPss0Y9SNmB9v1MvXMPEH969w4XHnRWmTycU/HDx/Fvh5tBxF85OPSMf
+	 egUDiz7R6Mlqyyjhz1OKWvQ2+A7yg/9tjQBK+uLbvl5CzW9nbfCWM8cnbSppKS1t/8
+	 JsDk2MghV5XWVrZjXZYit/vg5xvVOfergTqRyJj+PdKTJB1hDFpC+xqoXxI9IAJkfb
+	 883tYTPDk+4vXmVRZZ/A0AVIlW7ltnMweGvu+Yk5lWIms5mUo95cAHW2RCWdrVy7Ph
+	 Be0F38XFf0fDeIRyiFrF0Lix0CLwA7Ht949YFpIUUrVgiSea0x2FclxKY4wO1PO3Vs
+	 rpaG5zxSKCew/f38b9l4KW3Paw1O5/WJsUsPt9+K0DZb4wVzFYY0EsdmULhhd5jgFb
+	 UVkKyl4KPBY/endZsfV7BbjAwvNAG2+UZsUULc4PqlhJe2yJb5U
+Date: Thu, 14 Mar 2024 22:55:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christopher Lindee <christopher.lindee@webpros.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] Optionally support push options on up-to-date
+ branches
+Message-ID: <ZfOAdVy9_UfTj3zE@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christopher Lindee <christopher.lindee@webpros.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <SA1PR14MB4691B63C740F95D7D8A495628D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
+ <xmqqa5n168nh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aRgd+0QEYJ06HU9H"
+Content-Disposition: inline
+In-Reply-To: <xmqqa5n168nh.fsf@gitster.g>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-executing `git bugreport --no-suffix` led to a segmentation fault
-due to strbuf_addftime() being called with a NULL option_suffix
-variable. This occurs because negating the "--[no-]suffix" option
-causes the parser to set option_suffix to NULL, which is not
-handled prior to calling strbuf_addftime().
 
-By adding a NULL check, the `--no-suffix` option is now available.
-Using this option disables the suffix, and the file is just named
-`git-bugreport` without any disambiguation measure.
+--aRgd+0QEYJ06HU9H
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Jiamu Sun <barroit@linux.com>
----
-Changes since v2:
-- Squashed the previous patch series into a single patch for
-  clarity
+On 2024-03-13 at 22:58:58, Junio C Hamano wrote:
+> Christopher Lindee <christopher.lindee@webpros.com> writes:
+> > This changeset proposes to address this issue by adding an option to `p=
+ush` and
+> > `send-pack` that, when specified, will send refs where the old-oid and =
+new-oid
+>=20
+> "where" -> "even if"
+>=20
+> > are identical - instead of silently skipping these refs.  The first com=
+mit
+> > introduces the `--send-up-to-date` option to toggle this behavior, whil=
+e the
+> > second commit updates the commands to output an `(up-to-date)` notice f=
+or each
+> > branch with an identical old-oid and new-oid.
+> >
+> > Notably, the `--force` option will not send a ref when the remote is up=
+-to-date.
+>=20
+> And it makes sense *not* to update `--force` to do the no-op push,
+> becaues you may not want to (accidentally) force push a ref that
+> does not fast-forward.  As I already said, tying this with use of
+> the "-o" option is not sufficient.  So I agree we may want a new
+> option to trigger this behaviour.
+>=20
+> A radical counter-proposal for the design is to update the client
+> side to do this unconditionally, without needing any new option.
 
- Documentation/git-bugreport.txt |  6 +++++-
- builtin/bugreport.c             | 10 +++++++---
- 2 files changed, 12 insertions(+), 4 deletions(-)
+I'm not sure that would be a great idea.  Since it's a push, that will
+trigger authentication, which may prompt the user (e.g., for a password
+or token or for a YubiKey touch with FIDO2 SSH) and which they might be
+able to easily avoid.  As a server operator, I also expect that there
+are people doing lots of needless attempts at pushing in automated
+systems (because with enough users, there will be at least some who do
+bizarre or inefficient things), and I would prefer to avoid serving
+those requests if I don't need to.  (For example, for us, reference
+updates need to go through a distributed commit protocol to update
+multiple replicas of the repository, and if there's no ref updates, then
+we cut out multiple services which we don't need to contact.)
 
-diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index ca626f7fc6..112658b3c3 100644
---- a/Documentation/git-bugreport.txt
-+++ b/Documentation/git-bugreport.txt
-@@ -8,7 +8,8 @@ git-bugreport - Collect information for user to file a bug report
- SYNOPSIS
- --------
- [verse]
--'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-+'git bugreport' [(-o | --output-directory) <path>]
-+		[(-s | --suffix) <format> | --no-suffix]
- 		[--diagnose[=<mode>]]
- 
- DESCRIPTION
-@@ -51,9 +52,12 @@ OPTIONS
- 
- -s <format>::
- --suffix <format>::
-+--no-suffix::
- 	Specify an alternate suffix for the bugreport name, to create a file
- 	named 'git-bugreport-<formatted-suffix>'. This should take the form of a
- 	strftime(3) format string; the current local time will be used.
-+	`--no-suffix` disables the suffix and the file is just named
-+	`git-bugreport` without any disambiguation measure.
- 
- --no-diagnose::
- --diagnose[=<mode>]::
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 3106e56a13..25f860a0d9 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -64,7 +64,8 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- }
- 
- static const char * const bugreport_usage[] = {
--	N_("git bugreport [(-o | --output-directory) <path>] [(-s | --suffix) <format>]\n"
-+	N_("git bugreport [(-o | --output-directory) <path>]\n"
-+	   "              [(-s | --suffix) <format> | --no-suffix]\n"
- 	   "              [--diagnose[=<mode>]]"),
- 	NULL
- };
-@@ -138,8 +139,11 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	strbuf_complete(&report_path, '/');
- 	output_path_len = report_path.len;
- 
--	strbuf_addstr(&report_path, "git-bugreport-");
--	strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-+	strbuf_addstr(&report_path, "git-bugreport");
-+	if (option_suffix) {
-+		strbuf_addch(&report_path, '-');
-+		strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-+	}
- 	strbuf_addstr(&report_path, ".txt");
- 
- 	switch (safe_create_leading_directories(report_path.buf)) {
--- 
-2.44.GIT
+Note also that no-op ref updates cannot be simply omitted on the server
+side because we need to verify that the old value for the ref is
+correct, or we need to reject the operation as out of date.  While it is
+_unlikely_ that the ref has changed since we fetched it from the server,
+it's not guaranteed, especially if there's an expensive `pre-push` hook.
 
+I do think the proposed change is valuable, though, and I'm in favour of
+it with a suitable option.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--aRgd+0QEYJ06HU9H
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZfOAdAAKCRB8DEliiIei
+gcjzAP9wq+v0hihDIGIWR6l5cUWfnLj2veJdt5EYqwLABvFYLQD/WcKu0dKLA4OA
+RtT2Q9GHNtc8JnpxD/PhPDznwmfWegc=
+=jxYx
+-----END PGP SIGNATURE-----
+
+--aRgd+0QEYJ06HU9H--
