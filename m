@@ -1,99 +1,153 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015C82E410
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 19:34:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54B82E410
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 19:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710444869; cv=none; b=VfXeLQeWKKyyjVgBuGwuc7Fui8srcXeO/9G65dTSsvSWqrYEupGvSGsn9oco1cs1ml2Kh/1L4olccxNIOJNEzUrdqFWYd7LvHGds3W0KBX+wxswlVRyuj6+5NGP6xp6sexRoDyjYJEer0/rSdjTtEF8c8gbIPhrSSoKMIUWk9Kw=
+	t=1710445091; cv=none; b=m92XqJMTK70RNKmDFl+yGnDfGtn0GrCfJNuYd8LIThffe6FGxvU/YaXl+cvQKk7O9G3SFZRbxHlUsjAGFfKmrJw0IxbNeb/D2MyeqHaliG1dZezJxcWCuDrrjZKvfEv4i3+GxoGH6hX/8KyNVgWm2JoDxH765BDUxVagEHFXHG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710444869; c=relaxed/simple;
-	bh=uObKiqtWXmfYuOpFW9QRvIXOF20wHWncSRz88JlB5uU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sSsbwzGsaHIYIq5UyXEvpWsw6iZLrJbW8GhWF6hQBEwJbNY7SrSj/JqRPVD8TIRupuOsbYgBCtzF4vwuhbwfE4TT7sAn010EeXLd5Yzl+CzrGFHr4Vggh9b9cfGjR8V+xirZdroSkFAff3+SMFX5ywDpUtZ/wPKuFXGyelx6rG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=y0OEoqAG; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710445091; c=relaxed/simple;
+	bh=R9h33c/0+xTrGOcjEEfFzrgNkEKmrNLO8janLoGwn6k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g61vbEEyvay0Ga5cpMeywocgHJr5VbtfQgI4rVwl16s2R7Lb40NpNzuvjpU/fBIh4en+PrT8uoUa6Oj6cwRov7b9SvOYlPfhjo4D/ulHroPuPtYX/CfEYDx5TopYLiPEKD9Lm9gD8s+8LW4/AmOyEewhfqhzQYNeTomFnsHZC/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=D4soE22z; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="y0OEoqAG"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710444865;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=FMONbzarC+c427zSam2PTpN6BHHTUCTFS73o73N/gBk=;
-	b=y0OEoqAGl8J/tkXHugYnrXGKVnNwx+8anCoS8F+6nhhke5eq8puAmIvVn94oWmC06Su39t
-	tf6Ad942JVj6yfuglrBEJ+YkYPpVoJgP4aEvhmxRGumcX9f3JXm8/nTNM5ha2UoFkp4Pqw
-	x+DK4N4he6Gkq6wCiS+ye9KheYnl/7nJUd5sogNks0N6V0eyfdsPeh3VkH8lTd9UX4hSTQ
-	EjcUqn/Ve+vZmqDcHJl6vQOzSY1aScp52L2u5peQ8NTVZc/QeCEGDrqC+ymYIiuydYuHTj
-	Go7ur4KwuAn0CYExIzCdcJn8PZGbsnugDVa8ryVS7QQ+UWmAj5rjGRLRDQm5nw==
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH] config.txt: perform some minor reformatting
-Date: Thu, 14 Mar 2024 20:34:21 +0100
-Message-Id: <97bdaf075bf5a68554cca1731eca78aff2662907.1710444774.git.dsimic@manjaro.org>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="D4soE22z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1710445067; x=1711049867; i=l.s.r@web.de;
+	bh=la98M3eGxV7bIEaBrHn1WExsHN7ku/YQppPZQ2yCdbA=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=D4soE22zzcTGmYFXGctmYhvEWKBFnA1JAgN6cHsYyRZ6TP2fFB3VUB1FgQRgqrSI
+	 pWox/vjjVPEXEwvI/GIyVRlhJZkqB0U6CP5cYvfTSpKxkTWj+NLZo6EMuYaNGLUq3
+	 ESXXe4sKrVzAG3zDgIk0O9+AgVf5AgaMEzcdGwEj86E3IxDhH4phdVGHQhQvnxaoS
+	 iXXpVgi2wfSD9snIodQfizR3VlIBVvkzN8Yk6t92awr0+OYCw8MAqIpOhjOWpe3df
+	 oqs1KWtzwG3CB4PQXoLvAlc6XSjkngJ6dI0KNTBZQ5KZSIQI1HDaXqIxS+7ktV9fp
+	 igbgvrCqUtxdt8SZ0w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MJFhX-1rUZEH3ciZ-00KiP1; Thu, 14
+ Mar 2024 20:37:46 +0100
+Message-ID: <89e2369a-9d9b-4621-8311-77e2deb3e5f7@web.de>
+Date: Thu, 14 Mar 2024 20:37:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/15] find multi-byte comment chars in unterminated
+ buffers
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Dragan Simic <dsimic@manjaro.org>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Manlio Perillo <manlio.perillo@gmail.com>
+References: <20240307091407.GA2072522@coredump.intra.peff.net>
+ <20240307092638.GK2080210@coredump.intra.peff.net>
+ <3f823e48-572c-4e19-ab76-e6d7cab9461f@web.de>
+ <20240312080525.GB47852@coredump.intra.peff.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20240312080525.GB47852@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:xLiOoKrrzRGT/thHxPvNaMHbkk84IieuqyFs7/w6K0UiY81+dIf
+ 5Lmw6iYdYFJCW7b0J5RfJpk8obte0mK8CmzhUBkchfeZoUiSHwrx2RmUtbxG75SraPScSgs
+ hxJXUZov6Ls/GC0G/VIa38+PxK2tPpV88E+VCbKHaCg4owUjzOAL23H1jSty1Qa4TInKsTX
+ sMt0H7rLw5Kf2lS/jzFSg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:MYFpGI+IfX0=;0myJjvqd0S2KvrVuYSL6DIuv4Pv
+ tPwCmx3khh/CaHUNM2+IsIs1Du5X0xoKZAj3Qk4Gal30/wCQ7HyuYRAi8NW9Byn4YxhCSZx6A
+ a6GBnoRzCIcdAYegpf5i117f8g9pnIMha/QNgBVRPStcL5MmulJtlvelvyriY1/T2e92hNuEg
+ 61fZl1KCtaRi7YxLQDMjlg6gZ+kVNF/BywFfFrVCyFi12+Ifqzp84tLkkOXu2ylk+RDCNWBEx
+ npHMK9/1Uy7kApe0sEc62Ie2x2qcKA960QH5ZbY+j0yJw1aTnhVX6zfI1KmfLZbdMhMDQKPE5
+ frzPWt15HYQY82dbtT4hh01l/SjrNkUL+4VZRoQzdeJY95xhRELTuSw46KvR7ICDjsUkbdSId
+ 24YwbqRGiy96AfDIjHl7LosdrM/hiV2ouDzb4Y5PkPD+SSuXf9lsrO2JPPJ1e8/e+2UpUVvLw
+ gFHuCahLIE9sKSYnUYE5spxB3H52+EYWzPYqstMr2T9drYQDjw48aLU3vJX31mh+f6luDgshI
+ 14LQ/Sn6xi1xw2yXQXYbMs0vTjBucKiv55WN2+zjxIKqP3Yc8UfjDOOFqdoEq+d3GljzIt6pP
+ mbaFz5IEoctehEmTUziRWRPj4X2FAOBoJKHL/S9ZUSA8LeE3V2D3t7cQNuXZqB3//MjuQuQUJ
+ ZLBjjia40df6M/Vb0n+TWURePgDtvgnzNcywlq6+ReBhIS65KoPCRHENZBIpgR2Y9yLyeb85u
+ quVOiPb7VWp/j9X5dMR9XL5oF+ToTQBW7oUX4sLHuyagKYmerPKtXxEoTK0lAhE2Au6AIBj14
+ 5/6agGJc86UvdhrdVCzobNeOdsARFZDL23R6spVnt4tZg=
 
-Reformat a few lines a bit, to utilize the available horizontal space better.
-There are no changes to the actual contents of the documentation.
+Am 12.03.24 um 09:05 schrieb Jeff King:
+> On Thu, Mar 07, 2024 at 08:42:22PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>>> @@ -2562,7 +2562,7 @@ static int parse_insn_line(struct repository *r,=
+ struct todo_item *item,
+>>>  	/* left-trim */
+>>>  	bol +=3D strspn(bol, " \t");
+>>>
+>>> -	if (bol =3D=3D eol || *bol =3D=3D '\r' || *bol =3D=3D comment_line_c=
+har) {
+>>> +	if (bol =3D=3D eol || *bol =3D=3D '\r' || starts_with_mem(bol, eol -=
+ bol, comment_line_str)) {
+>>
+>> If the strspn() call is safe (which it is, as the caller expects the
+>> string to be NUL-terminated) then you could use starts_with() here and
+>> avoid the length calculation.  But that would also match
+>> comment_line_str values that contain LF, which the _mem version does no=
+t
+>> and that's better.
+>
+> I try not to read too much into the use of string functions on what
+> otherwise appears to be an unterminated buffer. While in Git it is quite
+> often terminated at allocation time (coming from a strbuf, etc) I feel
+> like I've fixed a number of out-of-bounds reads simply due to sloppy
+> practices. And even if something is correct today, it is easy for it to
+> change, since the assumption is made far away from allocation.
+>
+> So I dunno. Like you said, fewer computations is fewer opportunity to
+> mess things up. I don't like the idea of introducing a new hand-grenade
+> that might blow up later, but maybe if it's right next to a strspn()
+> call that's already a problem, it's not materially making anything
+> worse.
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
+Yeah, and my logic was flawed: If the caller somehow guarantees that a
+space or tab occurs before eol then the strspn() call is safe.  Its
+presence doesn't guarantee NUL termination.  parse_insn_line() would
+not be safe to use without that prerequisite, but that's a different
+matter..
 
-Notes:
-    This patch, in a slightly less extensive form, previously belonged to
-    a small series. [1]  After some discussion, [2] this patch was taken out
-    of the series, because the cleanups it introduces are rather unrelated
-    to the future purpose of the series. [3]
-    
-    [1] https://lore.kernel.org/git/d50c0f22c41ec36b574e1ff67e68485d9a6f2a84.1710258538.git.dsimic@manjaro.org/
-    [2] https://lore.kernel.org/git/f7fa6d9bc9835ad1139bced5ea2b20b3@manjaro.org/T/#u
-    [3] https://lore.kernel.org/git/f7fa6d9bc9835ad1139bced5ea2b20b3@manjaro.org/T/#mde1232c9e30b237e425fce9a0810d31e3a56ba2b
+>>> @@ -882,7 +882,7 @@ static size_t find_trailer_block_start(const char =
+*buf, size_t len)
+>>>
+>>>  	/* The first paragraph is the title and cannot be trailers */
+>>>  	for (s =3D buf; s < buf + len; s =3D next_line(s)) {
+>>> -		if (s[0] =3D=3D comment_line_char)
+>>> +		if (starts_with_mem(s, buf + len - s, comment_line_str))
+>>>  			continue;
+>>>  		if (is_blank_line(s))
+>>
+>> Another case where starts_with() would be safe to use, as
+>> is_blank_line() expects (and gets) a NUL-terminated string, but it woul=
+d
+>> allow matching comment_line_str values that contain LF.
+>
+> Hmm. Yes, it is a NUL-terminated string always, but the caller has told
+> us not to look past end_of_log_message(). I suspect that if there is no
+> newline in comment_line_str() it's probably impossible to go past "len"
+> (just because the end of the log surely ends with either a NUL or a
+> newline). But it feels iffy to me. I dunno.
 
- Documentation/config.txt | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Same flawed thinking on my part: As long as we're guaranteed a blank
+line in the buffer we won't walk past its end.  That doesn't mean we can
+assume a NUL is present.  But that's fragile.  The code should use
+memchr() instead of strchrnul().
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 782c2bab906c..450424ee830e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -57,11 +57,11 @@ compared case sensitively. These subsection names follow the same
- restrictions as section names.
- 
- All the other lines (and the remainder of the line after the section
--header) are recognized as setting variables, in the form
--'name = value' (or just 'name', which is a short-hand to say that
--the variable is the boolean "true").
--The variable names are case-insensitive, allow only alphanumeric characters
--and `-`, and must start with an alphabetic character.
-+header) are recognized as setting variables, in the form 'name = value'
-+(or just 'name', which is a short-hand to say that the variable is the
-+boolean "true").  The variable names are case-insensitive, allow only
-+alphanumeric characters and `-`, and must start with an alphabetic
-+character.
- 
- A line that defines a value can be continued to the next line by
- ending it with a `\`; the backslash and the end-of-line are
-@@ -95,10 +95,10 @@ to be included. The variable takes a pathname as its value, and is
- subject to tilde expansion. These variables can be given multiple times.
- 
- The contents of the included file are inserted immediately, as if they
--had been found at the location of the include directive. If the value of the
--variable is a relative path, the path is considered to
--be relative to the configuration file in which the include directive
--was found.  See below for examples.
-+had been found at the location of the include directive.  If the value of
-+the variable is a relative path, the path is considered to be relative to
-+the configuration file in which the include directive was found.  See
-+below for examples.
- 
- Conditional includes
- ~~~~~~~~~~~~~~~~~~~~
+That's not the problem you set out to solve in your series, though, and
+you avoid making it worse by respecting the length limit in the code
+you change.  #leftoverbits
+
+Keeping track of the remaining length increases code size and adds
+opportunities for mistakes.  Not sure how to avoid it, however.  Using
+eol instead of len at least avoids subtractions.
+
+tl;dr: Good patch (in v2).
+
+Ren=C3=A9
