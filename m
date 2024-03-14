@@ -1,117 +1,149 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A797690A
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 21:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57038385
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 22:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710453295; cv=none; b=qCs5eF9eZ85UBDIEo+mwqEQ9zegWzEWfphnkAshJqtoJfNmk3fm9ik8KgnFbtUdlMo8KOHRVh58trGhGP68oSskZTGfbRGmEBG/vBRkh93Q8PXz7qrijkO8pIswZRYy+6IANOMHxcQlyUAUl7DWXSs72XVRLVPDxaMrYkLx66DM=
+	t=1710455679; cv=none; b=pwVecocJynXJVIsTu3wPmQd9O8lY/NMWTELOn/ZuW7jwY/PTk7wRFW2IyKGyycO+NQR8bgG5NEnS/M8HjyEDiD98t9caYMCzWyzXRhRY4a70QIEDqKeBaX05x/etTPAiFjBtWtNELRVKizRLSXhu/90VNQ9Q6vodZeFY9ABJSuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710453295; c=relaxed/simple;
-	bh=HOFQsVM/AepvIw3xL7qUqDuBCEhZnZL79Pex/R9BOyw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZHAEsYsrqV4JQqjYPl5/T+BoYk972RQS7QAeSVuexwb1af0h4ZH7w9syU/INJOX5tRQAjP2OOt+6MpfiO8X3byWTA4ZFRoXMuerb/ary2LYilhbJC8s0GUAA5xHkr4yGl/QcQFv73SlU3P/peTpB4Dfi0xSHhEA8KGC4203iNeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Z9uZV7vD; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1710455679; c=relaxed/simple;
+	bh=2Dq0v7lII9VMqpcyw/gZ8w8aQ5zV6yLACTo+4N24oow=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ahUFw6Ovp1ub1Jgq5CXOFZfUnsIlIDWbzgPxm4uveQ4fKLg2SHi90yKMIsXj/AB2pjmQ9KHS7Ue1G5fqeqku63kiThHd5qBysowb7+cHqwTBZIJY4nLA27qUcoGeHVKgUFUPz2DIdL6CQxYmJVXstYKd0kPQazMeEtDjmp/gu2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KvzWBbhk; arc=none smtp.client-ip=209.85.216.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Z9uZV7vD"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id EA7DB5B3D9;
-	Thu, 14 Mar 2024 21:54:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1710453291;
-	bh=HOFQsVM/AepvIw3xL7qUqDuBCEhZnZL79Pex/R9BOyw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Z9uZV7vDYEBvWgMuRxGuytuyBREHPV4MLhxV1CLyDx6MfUHr5AIBZX6XtDVK0R8/o
-	 hfxL+8NuDKFPvGYFswK79ymT1Mm66GLkXKiviehFSIiPyiaV8MtYLEGe8aVnZokr2N
-	 JPwFIXrZhZ2qw1kZbLqJttbfuLMC1cl5WOSL3sYzGKk9NCZsQLnIQJ2dX9LoU4YpiG
-	 xqmiND60QrTKqSNHv07wsXYa2OE3vFb6a5veQcmWHM/UncZCGkhbUWEilEzrpQZDgw
-	 HTq64yzViGHUbRoRlOlLe4PYwBzzNQbEduLCkDND2UVv7XJThdHCUq4s/z/Gc/btDT
-	 TOUO4J+NX31Y+ROo6rFcALbXPtvUpEzFnVEmlOzrPis9LgDYtgXF+Fv/eDManIi93f
-	 FLrqUzAcG0BFpWQpxgcs5YsItj6wjjNXmSWdj4dLEM0AuEk26CFIGwRGaBx1B9NY20
-	 IuoOsI2equuWb5JQlqEW/NjSAodw3ci1VSVl/y2aYUD5PJN69H4
-Date: Thu, 14 Mar 2024 21:54:48 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	"Eric W. Biederman" <ebiederm@gmail.com>
-Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
- docs to code
-Message-ID: <ZfNyKIEOvnRKjL5O@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, "Eric W. Biederman" <ebiederm@gmail.com>
-References: <20240307084735.GA2072130@coredump.intra.peff.net>
- <20240307085632.GB2072294@coredump.intra.peff.net>
- <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
- <20240312074513.GA47852@coredump.intra.peff.net>
- <ZfIWkJieqcPv5jA8@tapette.crustytoothpaste.net>
- <xmqqv85ozv3v.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KvzWBbhk"
+Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-299b818d63aso1121820a91.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2024 15:34:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710455677; x=1711060477; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F/DNKAdkmAQkncYLcI/XVDKdMS//1UHZpj5Ap2ADUog=;
+        b=KvzWBbhkz2U1F0jNexmyrsWUE2g40I0Gt/ZPHqtPLEU7e7fjt/h+TUB1BFYOt9y7TW
+         TPgI4M77SEg4XkKKpzXUikrDudIpMa+SWtYMUzIkGOUAW7HDfEN20GQx4TmSdaMOivDc
+         jcCOluwlTykWo9vSSulsBi27tc7XRvb9JmgLjChpdRTN506rLXBZMDCafoz4izcTAy11
+         1LhL+PXaB5eZtTaKg0PXmviuJUx9dMGfwAyrLTwxk3i7OKglV7WN5b0rloAzFmcZb2go
+         kg4xK8Z0FXXykccpFUYwi1mgmist8NENk/Is0X0xv1I2v4BuMf868sFosA/nYNVpa4VN
+         LC7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710455677; x=1711060477;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F/DNKAdkmAQkncYLcI/XVDKdMS//1UHZpj5Ap2ADUog=;
+        b=QXPFx2HgR4QQAQnQQCGQIwpwqwKaqNqSxOZK83EahOb2+eY7JjuiwcU3eOF4H7KSdh
+         +TU3C/uwTftI1Gzg9d7rZIVffVpWi401Fav3gQiIVrSsRfiQd4Xh7IILy1Cb9Agay1Zy
+         wQOGffHuqIrOoAR4Ps2zMnfnkhexTv93hdvO23YEWbGJMQAB6QMcOJzLyh8JUvgAjYim
+         w3ktB7BSJWRJm5hA9Z+UtQ6VVpmCYTDXKI6gXoab/B14s4Wy0A+sgUIO0C1TRBV+ehcj
+         cVYJ8sY1F9Z+E03HRqZz2fr2FEITtoBy8lS/VEYqasRFOqA4BQ0JqbpwNP79eHbxT17Z
+         2HSA==
+X-Gm-Message-State: AOJu0YwV0YI6Vh+b06PZPmxbP4qBzyjG+UCSuM3gCNeG/9evC1DNRAoJ
+	3xPEgwHmBwpIXmjQ6dnHNgOMp+7xihfAy+6lUG1uDGMLaDq883UgpcvKgFRGz/I=
+X-Google-Smtp-Source: AGHT+IGgikeAsmFJfz8JeK6u9den4M+L+YL4oe6CyyOkLuTXWMPklso4jDZMPL7GU2Ip3ziwEB33KQ==
+X-Received: by 2002:a17:90a:7e98:b0:29b:a345:620a with SMTP id j24-20020a17090a7e9800b0029ba345620amr4522614pjl.20.1710455677377;
+        Thu, 14 Mar 2024 15:34:37 -0700 (PDT)
+Received: from SUPERFORTRESS.. (p093208.f.east.v6connect.net. [221.113.93.208])
+        by smtp.gmail.com with ESMTPSA id qc9-20020a17090b288900b0029bbab9516fsm1486232pjb.40.2024.03.14.15.34.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Mar 2024 15:34:37 -0700 (PDT)
+From: Jiamu Sun <baiorettohr@gmail.com>
+X-Google-Original-From: Jiamu Sun <barroit@linux.com>
+To: git@vger.kernel.org
+Cc: barroit@linux.com
+Subject: [PATCH v3] bugreport.c: fix a crash in `git bugreport` with `--no-suffix` option
+Date: Fri, 15 Mar 2024 07:34:06 +0900
+Message-ID: <20240314223406.79283-1-barroit@linux.com>
+X-Mailer: git-send-email 2.44.GIT
+In-Reply-To: <pull.1693.v2.git.1710388817.gitgitgadget@gmail.com>
+References: <pull.1693.v2.git.1710388817.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Z3CEfksPfSOH30yB"
-Content-Disposition: inline
-In-Reply-To: <xmqqv85ozv3v.fsf@gitster.g>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Transfer-Encoding: 8bit
 
+executing `git bugreport --no-suffix` led to a segmentation fault
+due to strbuf_addftime() being called with a NULL option_suffix
+variable. This occurs because negating the "--[no-]suffix" option
+causes the parser to set option_suffix to NULL, which is not
+handled prior to calling strbuf_addftime().
 
---Z3CEfksPfSOH30yB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+By adding a NULL check, the `--no-suffix` option is now available.
+Using this option disables the suffix, and the file is just named
+`git-bugreport` without any disambiguation measure.
 
-On 2024-03-14 at 15:33:24, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > The answer is that I'm not planning on doing the SHA-1/SHA-256 interop
-> > work except as part of my employment, since I'm kinda out of energy in
-> > that area and it's a lot of work, and I don't believe that my employer
-> > is planning to have me do that anytime soon.
->=20
-> It is sad to hear that it is depriotised, even though it is one of
-> the larger areas with high importance for the longer term.  Thank
-> you very much for the progress in this area so far..
+Signed-off-by: Jiamu Sun <barroit@linux.com>
+---
+Changes since v2:
+- Squashed the previous patch series into a single patch for
+  clarity
 
-I don't want to claim that my employer is not prioritizing SHA-256, it's
-just that the focus right now is not having me write the interop code.
-Other work is ongoing which has and probably will in the future result
-in Git contributions, although not necessarily directly related to the
-interop work.  Some of our work porting away from from libgit2 to Git to
-get better SHA-256 support has resulted in us writing new features which
-we upstream.
+ Documentation/git-bugreport.txt |  6 +++++-
+ builtin/bugreport.c             | 10 +++++++---
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-As far as my personal contributions, I'm focusing on other, smaller
-Git-related things right now[0], and I'm just writing less code in C
-(and effectively no code in C other than Git).  And I'm also doing other
-things in my life which leave me less time to work on Git.
+diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
+index ca626f7fc6..112658b3c3 100644
+--- a/Documentation/git-bugreport.txt
++++ b/Documentation/git-bugreport.txt
+@@ -8,7 +8,8 @@ git-bugreport - Collect information for user to file a bug report
+ SYNOPSIS
+ --------
+ [verse]
+-'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
++'git bugreport' [(-o | --output-directory) <path>]
++		[(-s | --suffix) <format> | --no-suffix]
+ 		[--diagnose[=<mode>]]
+ 
+ DESCRIPTION
+@@ -51,9 +52,12 @@ OPTIONS
+ 
+ -s <format>::
+ --suffix <format>::
++--no-suffix::
+ 	Specify an alternate suffix for the bugreport name, to create a file
+ 	named 'git-bugreport-<formatted-suffix>'. This should take the form of a
+ 	strftime(3) format string; the current local time will be used.
++	`--no-suffix` disables the suffix and the file is just named
++	`git-bugreport` without any disambiguation measure.
+ 
+ --no-diagnose::
+ --diagnose[=<mode>]::
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 3106e56a13..25f860a0d9 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -64,7 +64,8 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+ }
+ 
+ static const char * const bugreport_usage[] = {
+-	N_("git bugreport [(-o | --output-directory) <path>] [(-s | --suffix) <format>]\n"
++	N_("git bugreport [(-o | --output-directory) <path>]\n"
++	   "              [(-s | --suffix) <format> | --no-suffix]\n"
+ 	   "              [--diagnose[=<mode>]]"),
+ 	NULL
+ };
+@@ -138,8 +139,11 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	strbuf_complete(&report_path, '/');
+ 	output_path_len = report_path.len;
+ 
+-	strbuf_addstr(&report_path, "git-bugreport-");
+-	strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
++	strbuf_addstr(&report_path, "git-bugreport");
++	if (option_suffix) {
++		strbuf_addch(&report_path, '-');
++		strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
++	}
+ 	strbuf_addstr(&report_path, ".txt");
+ 
+ 	switch (safe_create_leading_directories(report_path.buf)) {
+-- 
+2.44.GIT
 
-[0] Including, hopefully soon, some credential helper improvements.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---Z3CEfksPfSOH30yB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZfNyKAAKCRB8DEliiIei
-gYsCAP9hLwFZB8rtc/ja/OZPpCG3NsmtNxd0nWF2hMiCi6zSxwD7BTF7GxS2C+0t
-zEifqLW2PVo4+4wM9KH2AD3rQB2rxwI=
-=Eora
------END PGP SIGNATURE-----
-
---Z3CEfksPfSOH30yB--
