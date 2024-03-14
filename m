@@ -1,51 +1,52 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B2C9454
-	for <git@vger.kernel.org>; Thu, 14 Mar 2024 01:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432628F6C
+	for <git@vger.kernel.org>; Thu, 14 Mar 2024 02:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710381548; cv=none; b=IiT/aA81gc7hJmUJer421cUia18M6v9G8o4qx/El8QiiWUBDydJEcxCgRx7nXzuyMxiW/qdgL0sOpa/C5wTuSSxSb6UMI2ZLYjHX3kZcKCa4kzhL7sWRNTlr6XWrX6iI9g9LH8pxI9Tx4p2Dz0BmAzt1zLB2lfi+mQDXB34+xo0=
+	t=1710382743; cv=none; b=s0rISHCpkAl1Pqp/Tx1ml0pURg/uZvLvaYIi+1TCBpI5VtjfQcuMaYIYngOp5FRk206MgkXaNwNr9e0rG+wVrbgJOgfvkmB7hDiInFRyckryJhipKDIALy45Ijsm2QVA8TwgbVV2Q0CNKNXGxyMFI/2xnGd6v/+gJZWLglNWuJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710381548; c=relaxed/simple;
-	bh=VA3BZZ+zSRczE8pK3oNs5pnKzJZqgeP3/fwf11SNmQU=;
+	s=arc-20240116; t=1710382743; c=relaxed/simple;
+	bh=g+y45QfYGnujFppiD5rq3tqt3QAXEW9a4ZPTuM/TxNk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FXBcH8C66Z80fKNTEhNJYghg8HAlUSJPjM0ATt7pR1HlYu6ZeClejFvllfFsVoxz0hEkW+BWvxC0COlZyeWdy7oqHlkAQt5FQqcAaN0pVXOIzsoIIsV+HtuOkVY3CSF17DmvQiK3naYbXUrydWHNrKKK1/mVyHF9ZK7YH5gLfHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NO1y5pFi; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=SidVk2T0mDvUoCsI5zwK6XGOfG2HF8srbcGz9cFLo/3N0PoK1KYYqE0TXy0mK7hAOgkvdYD4UWFjU3Az/Km7FpvinCOUzUQV/1YSQj776Q6oy32RC2gwTAAx1PWFFNwPlm6tahUj33aBPGqoujpBSXHqn7R8ciK2dO3se71+e0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=t6tf+w0i; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NO1y5pFi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t6tf+w0i"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2E4E1E1341;
-	Wed, 13 Mar 2024 21:58:59 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18EB61E178A;
+	Wed, 13 Mar 2024 22:19:00 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=VA3BZZ+zSRczE8pK3oNs5pnKzJZqgeP3/fwf11
-	SNmQU=; b=NO1y5pFi48fZOtwuDkrN+wSj1LxujtcyePYATV5g7baUulT9T5rmfq
-	wggy/PbKui6T93b/Ctbs0AAdweZyo0kRsGVuD1DBitYOM2uDDpCvLiAXKS7V2bXL
-	BnAXWMINIYMDtT9A9yN1HTq8VK4vxN3azjX+/zL4D9YoOZtoOvRMA=
+	:content-type; s=sasl; bh=g+y45QfYGnujFppiD5rq3tqt3QAXEW9a4ZPTuM
+	/TxNk=; b=t6tf+w0i1GL5OkFXZRiIS1tvOrjqcnPVF5jXVV5rrG0+ZfiTIv4/Nr
+	f8vjvFF5+tcP9846RtNRDRHfbYOo6ycf2DHSTjndfSf81qhYi94RIcMG3NELnaTk
+	Syov0adpyTjU/NqVuR79OaBcu8GQQ9WjR55iNUuMH4GqIVezP5N5E=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D95041E1340;
-	Wed, 13 Mar 2024 21:58:59 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1077D1E1788;
+	Wed, 13 Mar 2024 22:19:00 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 484E21E133F;
-	Wed, 13 Mar 2024 21:58:59 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 44AB51E1786;
+	Wed, 13 Mar 2024 22:18:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Dragan Simic <dsimic@manjaro.org>
 Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de
-Subject: Re: [PATCH 2/3] config.txt: perform some minor reformatting
-In-Reply-To: <d50c0f22c41ec36b574e1ff67e68485d9a6f2a84.1710258538.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Tue, 12 Mar 2024 16:55:45 +0100")
+Subject: Re: [PATCH 3/3] t1300: add tests for internal whitespace and inline
+ comments
+In-Reply-To: <292ab942c38de44476c6c5bf045c375bf4f6a70d.1710258538.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Tue, 12 Mar 2024 16:55:46 +0100")
 References: <cover.1710258538.git.dsimic@manjaro.org>
-	<d50c0f22c41ec36b574e1ff67e68485d9a6f2a84.1710258538.git.dsimic@manjaro.org>
-Date: Wed, 13 Mar 2024 18:58:58 -0700
-Message-ID: <xmqqedcd1sm5.fsf@gitster.g>
+	<292ab942c38de44476c6c5bf045c375bf4f6a70d.1710258538.git.dsimic@manjaro.org>
+Date: Wed, 13 Mar 2024 19:18:58 -0700
+Message-ID: <xmqq8r2l1rot.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,42 +56,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 6C521518-E1A6-11EE-9941-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 379077D6-E1A9-11EE-8A15-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Dragan Simic <dsimic@manjaro.org> writes:
 
-> Reformat a few lines a bit, to utilize the available horizontal space better.
-> There are no changes to the actual contents of the documentation.
+> Add a couple of additional automated tests, to improve the coverage of
+> configuration file entries whose values contain internal whitespace, or have
+> an additional inline comment.
 
-I was a bit surprised to see such a "preliminary clean-up" step to
-come before the main change, not after, but separating this from the
-change to the next paragraph, which is the main change in this series,
-is nevertheless a very good idea.
+While this may document the current behaviour, I am not sure of the
+value of carving the current behaviour in stone, especially after
+checking if the current behaviour is a bug.
 
->
 > Signed-off-by: Dragan Simic <dsimic@manjaro.org>
 > ---
->  Documentation/config.txt | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  t/t1300-config.sh | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 4480bb44203b..2fc4a52d8d76 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -58,11 +58,11 @@ compared case sensitively. These subsection names follow the same
->  restrictions as section names.
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 31c387868708..589af5e81d61 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -11,6 +11,26 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>  TEST_PASSES_SANITIZE_LEAK=true
+>  . ./test-lib.sh
 >  
->  All the other lines (and the remainder of the line after the section
-> -header) are recognized as setting variables, in the form
-> -'name = value' (or just 'name', which is a short-hand to say that
-> -the variable is the boolean "true").
-> -The variable names are case-insensitive, allow only alphanumeric characters
-> -and `-`, and must start with an alphabetic character.
-> +header) are recognized as setting variables, in the form 'name = value'
-> +(or just 'name', which is a short-hand to say that the variable is the
-> +boolean "true").  The variable names are case-insensitive, allow only
-> +alphanumeric characters and `-`, and must start with an alphabetic
-> +character.
->  
->  A line that defines a value can be continued to the next line by
->  ending it with a `\`; the backslash and the end-of-line are stripped.
+> +cat > .git/config << EOF
+> +[section]
+> +	sparse = big 		 blue
+> +	annotated = big blue	# to be discarded
+> +EOF
+> +
+> +echo 'big    blue' > expect
+> +
+> +test_expect_success 'internal whitespace' '
+> +	git config --get section.sparse > output &&
+> +	test_cmp expect output
+> +'
+> +
+> +echo 'big blue' > expect
+> +
+> +test_expect_success 'inline comment' '
+> +	git config --get section.annotated > output &&
+> +	test_cmp expect output
+> +'
+> +
+>  test_expect_success 'clear default config' '
+>  	rm -f .git/config
+>  '
