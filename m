@@ -1,127 +1,125 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5966F1EB2C
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 20:04:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED33535CC
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 20:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710533059; cv=none; b=ZJ430ZzfBSdEr1E2PhhRzd9SHHfOxr4LWitrSQ32BEEw24ThJUB639dx3eiLRkdImIK0M6LkuWlQGaD6RfdAOavE2rmLo2DgmLSY0oQAN3pdTCOUl07pMHVWkxAR3Ws2S1ZtyVYUt//8i04dVTcm0r3QgS70KutqHFwnblQReKU=
+	t=1710534559; cv=none; b=EBsF857XFxhLBciRZJOs+A3AuvuySqRPEx7JA1S135lsMhz5qeb5jvcQFcEmhRmX/kYW41X+cvR35ntxKoSLaX8P9s+ytRrEGBou+zy/I9gWw1ZMNNspRYdXR7XspnNkIUTuF0X6VQmsi1sFZdudVw/yYC/NHUa3B8Ya7wjbuK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710533059; c=relaxed/simple;
-	bh=bm4Q5ZWmdCZjqBa6OoRvGLjaL9dXMy0kBp9lKcFgLmA=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=K6YK1vU3y4yuxI5ymYbBtyHzhA89zBn46mlZdc6NOsvmtSVBf4ldhYCdn/yIFZYsZlhPIv2c1ltLvjgBwucIazp5uRkRj74ntEVixnWiL9BM01m7rL5v98QFEeFxyMlxB93cJS2NceBofAopsnr8Bf3QmvQyuhcuY2hYNCsldDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Y6u3VYfc; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710534559; c=relaxed/simple;
+	bh=OJ+zFcV/taBR9mZ52tfyfY0LdEps49d/PxHUCi9Fj1Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fnv296JanifI9qTMvBaFD7fQHKCGFqhY3pD8wnFx0OFDwneHm/kOSt0o771CnmFzFwjPDBy/BgY2IgGjYySFBlHQ0/o0Plk74rpOO9l7PXGDlU3N68ijYsUbZpH8xPrQ0scRr3BoQehxjgx8Y8cViCCdqHSeggYiichD4a+lMUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=q3HQcSiT; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Y6u3VYfc"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="q3HQcSiT"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F3C475B3DF;
+	Fri, 15 Mar 2024 20:29:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1710534555;
+	bh=OJ+zFcV/taBR9mZ52tfyfY0LdEps49d/PxHUCi9Fj1Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=q3HQcSiTtEpCBBlqotlaSeUOy4tf7Mv8JKJM6ZTFYu+KjxTq68Nd5O50uYiA/u2IF
+	 qxr4XwDx8uqYQHnCppJnoErdN+ZYrUI6Snp3oMTastpam9nSbDk8ueAgH6yx6YjMMZ
+	 UFuEJSYk7XciVfkkwOZ0WrOwhj0SPtNhfnr1EmsnbWB/hlflf0XeJqUC2TAoxz1qJg
+	 BuC8E+Xbi4Dl8n40Tn5U27oRV+yINXs5W19jsf/Idefn4Jb6RBY5vseD7K+4S+/Fyc
+	 qlKvKOjbv+sNvlfyzDzxCAz1MN0VzHU1CHHCY31Eve9UNlXud9vNGdd2HIuKQzhWsi
+	 UKxBQS+mZljX5lT4GhZYLMyLCM7fl0xJHcJ1hfg99Y++Ka8+nhPuT4rx0M+yczk+Q/
+	 h3tAaj1rhko5+5I+t6AB7EHL8NcGNaT26xmMZTmo6/K67+CWr8dtQhUo0bMxFwQ/u2
+	 VSEyI/pnxv8Sj3Q7wFhmicufqFw9ZlcvfAaNphd0933/t1BAqWY
+Date: Fri, 15 Mar 2024 20:29:12 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Christopher Lindee <christopher.lindee@webpros.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] Optionally support push options on up-to-date
+ branches
+Message-ID: <ZfSvmOWrsT2dFnG5@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Christopher Lindee <christopher.lindee@webpros.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <SA1PR14MB4691B63C740F95D7D8A495628D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
+ <xmqqa5n168nh.fsf@gitster.g>
+ <ZfOAdVy9_UfTj3zE@tapette.crustytoothpaste.net>
+ <xmqqv85otmsb.fsf@gitster.g>
+ <ZfOYxnRHwyFdU4Y3@tapette.crustytoothpaste.net>
+ <SA1PR14MB46911007FDFE3FFADB4FB3A68D282@SA1PR14MB4691.namprd14.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710533052;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GNgT9U2MGIzFKBfuSMWYMexSLFbvknN9iztLS9Pciy8=;
-	b=Y6u3VYfc/y71jFKZQRDeayPOfwFCMIZHJtsrTq7dxq/iNzriIKv16dLW1oJ9p5xXj4/CLg
-	S5YyxSLILtykDE09a3kbby2Ut8zs8DtYvWhCnYliglomhyWEuSbvqcLnCw7liBXQJhrHX8
-	5fgpCsAISTFkinfWM0HJm1XWGOOsymmhU7yLhPS+bvdAwjDcfuF/6DkAPqa8MIrFS/tVDd
-	OsFyETN87tLCbj0DHpVNmvFnBpE40Eg7cTCg8VOwkHpKNr6hfDDe4hUfc3tX5lqTjtnqBU
-	dra2wdUgTANCCAG8F+x3TwtLbI0RXv5/6jYJnUXuLeOBVz4Zl7YGm3hRjVtzpg==
-Date: Fri, 15 Mar 2024 21:04:12 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
- github@seichter.de
-Subject: Re: [PATCH 3/4] t1300: add more tests for whitespace and inline
- comments
-In-Reply-To: <CAPig+cRMPNExbG34xJ0w5npUc3DDwxQUGS_AQfam_mi4s53=sA@mail.gmail.com>
-References: <cover.1710508691.git.dsimic@manjaro.org>
- <590731e15a01558d1bbcdfc01df4f78573138742.1710508691.git.dsimic@manjaro.org>
- <CAPig+cRMPNExbG34xJ0w5npUc3DDwxQUGS_AQfam_mi4s53=sA@mail.gmail.com>
-Message-ID: <eb550eebb158064f1780f610669bbda1@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6DuJVdnaJuUUo6PY"
+Content-Disposition: inline
+In-Reply-To: <SA1PR14MB46911007FDFE3FFADB4FB3A68D282@SA1PR14MB4691.namprd14.prod.outlook.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Hello Eric,
 
-On 2024-03-15 20:39, Eric Sunshine wrote:
-> On Fri, Mar 15, 2024 at 9:22 AM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> Add a handful of additional automated tests, to improve the coverage 
->> of
->> configuration file entries whose values contain internal whitespace, 
->> leading
->> and/or trailing whitespace, or which contain an additional inline 
->> comment.
->> 
->> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-> 
-> Just some minor style-related comments...
-> 
->> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
->> @@ -11,6 +11,96 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->> +cat > .git/config << EOF
->> +[section]
->> +       solid = rock
->> +       sparse = big             blue
->> +       sparseAndTail = big              blue
->> +       sparseAndTailQuoted = "big               blue "
->> +       sparseAndBiggerTail = big                blue
->> +       sparseAndBiggerTailQuoted = "big                 blue          
->>  "
->> +       sparseAndBiggerTailQuotedPlus =  "big            blue          
->>  "
->> +       headAndTail =   big blue
->> +       headAndTailQuoted = "   big blue "
->> +       headAndTailQuotedPlus =  "      big blue "
->> +       annotated = big blue    # to be discarded
->> +       annotatedQuoted = "big blue"    # to be discarded
->> +EOF
-> 
-> These days we try to place all test-related code inside a
-> test_expect_success() context rather than having it standalone. In
-> this case, since the file being created is (presumably) shared by
-> multiple tests in this script, you may want to add a new test which
-> performs this setup step.
-> 
-> Use \EOF rather than EOF to signal to readers that we don't expect any
-> variable interpolation to happen within the here-doc body.
-> 
-> Further, use -\EOF inside test_expect_success() to allow us to indent
-> the body of the heredoc to match the test indentation.
-> 
-> Style guideline says to omit whitespace after redirection operators
-> (such as `<<` and `>`).
-> 
-> We have a q_to_tab() function which lets us state explicitly for
-> readers the location of TAB characters in the heredoc body. You'll
-> often see that used instead of literal TABs.
-> 
-> Taking all the above into account, perhaps:
-> 
->     test_expect_success 'setup whitespace' '
->         q_to_tab >.git/config <<-\EOF
->         [section]
->         solid = rock
->         sparse = bigQblue
->         ...
->         EOF
-> 
-> Same comments apply to rest of patch.
+--6DuJVdnaJuUUo6PY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your review and all suggestions!  I'll make sure to rework
-the tests in v2, in the way you described it above.
+On 2024-03-15 at 08:58:35, Christopher Lindee wrote:
+> Is this a potential avenue for DoS?
 
-I'll come back with any questions I might have while reworking the new
-tests.  I hope that's fine.
+No, it's not.  In our implementation, there is a functional limit on ref
+updates and if you exceed it, the operation fails.  We also have rate
+limiting that estimates future cost based on the cost of previous
+requests and delays or fails requests which are projected to exceed a
+reasonable threshold.  (Thus, you can make many more cheap requests, or
+fewer expensive ones, your choice.)  All of this is per-repository, so
+generally only you (and maybe your colleagues or collaborators)
+experience negative consequences if you attempt excessive use.
+
+I can't speak to other implementations, but robust rate limits are
+typically common.  I'm sure all major implementations open to the public
+have some sort of rate limiting because otherwise they'd be down a lot.
+
+The difference is that failing operations and even well-explained,
+well-documented rate limits cause a poor user experience, user
+frustration, and user inquiries (e.g., support requests), as well as
+possibly noisy alerting and potentially pages for engineers.  Anytime a
+user experiences rate limits, they have to make a change in their
+behaviour, and people don't like change.
+
+I'd prefer we left the default to do the cheap no-op because, as I said,
+that scales much better, and thus we allow users to do the obvious thing
+for much longer and it just works for them.  That, in turn, provides
+everyone a better experience.
+
+Certainly, if people start using this option by default, then it will be
+a problem if they engage in excessive use and server implementations
+will probably scale worse, but usually users don't use non-default
+options unless they need them, so I don't think your new proposed option
+is a problem.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--6DuJVdnaJuUUo6PY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZfSvmAAKCRB8DEliiIei
+gXBCAP463czqdZm254/AJgdfoeZj/qgk6AwpqSUm1B69x+0NPAEAuRBuJPzhFoa7
+19kDDyKKyhgYgefFMEURiB9MESxqswM=
+=yi8x
+-----END PGP SIGNATURE-----
+
+--6DuJVdnaJuUUo6PY--
