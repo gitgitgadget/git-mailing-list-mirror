@@ -1,16 +1,16 @@
 Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F85537FF
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6478154770
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710532020; cv=none; b=Cih8ItceMWzRNSIXbkJOAKN2nUxBmsWJmK+0ITKy1KeOZOEzReRy4Q0HZvRCBIW04Y+oeX3yZjpQC3RKJJ6JkGeKcDjxj97x3CS9xs7giXPdkki72DnqN3reNFcbLOw+jwPADaO16h5t9loZF3BVBU1vI8OppkF/gSzxqc52XSg=
+	t=1710532022; cv=none; b=go1CtjyM4ievK5fAIKw1uzRdeUDj76ObvdxhzpsDWj2qOG2QcZmbaS5YvIhQ8F1QTDmPgcdhs2CHf41DYpMUk7GNaK+oSx1DKW2oRxEkYNlWmVqsYXPUuHrMePS7JjvnQ0rpGByLR4SKwTwQYk937lJ1lS8k86qjPoAnGo9XOaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710532020; c=relaxed/simple;
-	bh=hVe7QVNkf4DGFvFdB40IbSu04RV35tP0eR3k3Wkx0aI=;
+	s=arc-20240116; t=1710532022; c=relaxed/simple;
+	bh=dNPRDkkM4IUwytFXl8H1utciOM4OELyXwXUoSQgllzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIZZDsDNKxw1JNIc//fCd6Lpv572TIN+GBJGvlWGdbMsqeJeyStDSstWkp5e37GpAUl4dUo1c5dUHfhc7F8GGnu/ZYKQw3tSaZb/xoqs1HmpGMNuqFxuXrcMF1l3jiNhs478SVuUnzEspS5jL3v646MzV/LkiYRrl7pvV+/FrjI=
+	 MIME-Version; b=hUXqnzrrM307jxAv+TwQ5WMQ2pV8X3ua8gYrajnQVJ1S8x63Hb85mF3jhiQFKU+S/Vy3EGbD3tCtnbcGIUE+rvI8WO7Sf9b9TKfrmjHBJW4GGyQoNxLnbuS1gLon8PjVEI3Lhjdt745sG/MU+RygXx6Kb9Feo80Ie9jo2MidtbY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
@@ -18,25 +18,25 @@ Received: from s019.cyon.net ([149.126.4.28])
 	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
 	(Exim)
 	(envelope-from <bb@drbeat.li>)
-	id 1rlDW3-000000002H0-1Aqz
+	id 1rlDW4-000000002I2-1f8K
 	for git@vger.kernel.org;
-	Fri, 15 Mar 2024 20:46:55 +0100
-Received: from [10.20.10.233] (port=36122 helo=mail.cyon.ch)
+	Fri, 15 Mar 2024 20:46:56 +0100
+Received: from [10.20.10.231] (port=14578 helo=mail.cyon.ch)
 	by s019.cyon.net with esmtpa (Exim 4.96.2)
 	(envelope-from <bb@drbeat.li>)
-	id 1rlDW2-006atA-0W;
-	Fri, 15 Mar 2024 20:46:54 +0100
+	id 1rlDW3-006ath-0t;
+	Fri, 15 Mar 2024 20:46:55 +0100
 Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id D0EE9180130;
-	Fri, 15 Mar 2024 20:46:52 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Fri, 15 Mar 2024 20:46:52 +0100
+	by drbeat.li (Postfix) with SMTP id EA5681800FD;
+	Fri, 15 Mar 2024 20:46:53 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Fri, 15 Mar 2024 20:46:53 +0100
 From: "Beat Bolli" <bb@drbeat.li>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v2 21/22] contrib/coverage-diff: avoid redundant pipelines
-Date: Fri, 15 Mar 2024 20:46:18 +0100
-Message-ID: <20240315194620.10713-22-dev+git@drbeat.li>
+Subject: [PATCH v2 22/22] git-quiltimport: avoid an unnecessary subshell
+Date: Fri, 15 Mar 2024 20:46:19 +0100
+Message-ID: <20240315194620.10713-23-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240315194620.10713-1-dev+git@drbeat.li>
 References: <20240305212533.12947-1-dev+git@drbeat.li>
@@ -56,41 +56,26 @@ X-AntiAbuse: Sender Address Domain - drbeat.li
 X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
 X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-Merge multiple sed and "grep | awk" invocations, finally use "sort -u"
-instead of "sort | uniq".
+Use braces for the compound command.
 
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- contrib/coverage-diff.sh | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ git-quiltimport.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/coverage-diff.sh b/contrib/coverage-diff.sh
-index 4ec419f90048..6ce9603568ef 100755
---- a/contrib/coverage-diff.sh
-+++ b/contrib/coverage-diff.sh
-@@ -74,8 +74,7 @@ do
- 	sort >uncovered_lines.txt
- 
- 	comm -12 uncovered_lines.txt new_lines.txt |
--	sed -e 's/$/\)/' |
--	sed -e 's/^/ /' >uncovered_new_lines.txt
-+	sed -e 's/$/\)/' -e 's/^/ /' >uncovered_new_lines.txt
- 
- 	grep -q '[^[:space:]]' <uncovered_new_lines.txt &&
- 	echo $file >>coverage-data.txt &&
-@@ -91,11 +90,7 @@ cat coverage-data.txt
- 
- echo "Commits introducing uncovered code:"
- 
--commit_list=$(cat coverage-data.txt |
--	grep -E '^[0-9a-f]{7,} ' |
--	awk '{print $1;}' |
--	sort |
--	uniq)
-+commit_list=$(awk '/^[0-9a-f]{7,}/ { print $1 }' coverage-data.txt | sort -u)
- 
- (
- 	for commit in $commit_list
+diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+index e3d390974331..eb34cda4092a 100755
+--- a/git-quiltimport.sh
++++ b/git-quiltimport.sh
+@@ -148,7 +148,7 @@ do
+ 	if [ -z "$dry_run" ] ; then
+ 		git apply --index -C1 ${level:+"$level"} "$tmp_patch" &&
+ 		tree=$(git write-tree) &&
+-		commit=$( (echo "$SUBJECT"; echo; cat "$tmp_msg") | git commit-tree $tree -p $commit) &&
++		commit=$( { echo "$SUBJECT"; echo; cat "$tmp_msg"; } | git commit-tree $tree -p $commit) &&
+ 		git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
+ 	fi
+ done 3<"$QUILT_SERIES"
 -- 
 2.44.0
 
