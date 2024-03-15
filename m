@@ -1,81 +1,138 @@
-Received: from smtp.bit-artificer.com (smtp.bit-artificer.com [172.105.170.90])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9996312E63
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 07:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.170.90
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C7517581
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 08:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710487840; cv=none; b=nvBqQlLEqkOkxShtu6ESovWh8PF6GoDS4GU5d/sOzOhqoTD4zkwSuxuuxcnSRWHQ9CHezzCB3Qre2TdltQAtskq6Ivom05mXV4vfAPv44V8c95rIKS74cT3jrWigDCq0Hp9phGmRKTiim4p8+E2ZXK7/MySkDmaCwVfpijOVulI=
+	t=1710490245; cv=none; b=MzGVrkkR6kgJ0JnCnIGcBPhP2LFmF1UqSphQHr1KOwSqlW6G3/97RXvfmZB995Zdfkw0Wumx/aQVMoXD2llfjNGCsM0fDt+lOKBnDRPcc+6vtgzxDzhRo+hKXWXIAx2RkZs/97kfBJpDatpyQOaxcH/WTXw2bW/17ou5uNl8MQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710487840; c=relaxed/simple;
-	bh=DtruQOTOGQFO/oNzZmlITQXW6OpJMyuYzQ/dPD2FD+U=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject; b=BgPjrsgc4JyX1KLaoDALNwzz7cdGhtNA5loHvQ3UJmol8wfKYU7su02glGR3fgewiAEzfgjBUsGrKm7VPFt//KNMzRomrL70gpobzyLI285Un7VHuOwJ4o95mg55fxegImINIQnuGeTKSLfNGXxMaS3eqz/WlJauD30uMILfXl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bit-artificer.com; spf=pass smtp.mailfrom=bit-artificer.com; dkim=pass (2048-bit key) header.d=bit-artificer.com header.i=@bit-artificer.com header.b=Mw3OZbZP; arc=none smtp.client-ip=172.105.170.90
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bit-artificer.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bit-artificer.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bit-artificer.com header.i=@bit-artificer.com header.b="Mw3OZbZP"
-Received: from localhost (193-115-73-98.tpgi.com.au [193.115.73.98])
-	by smtp.bit-artificer.com (Postfix) with ESMTPSA id 1080E3C0BB
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 07:24:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bit-artificer.com;
-	s=20230529; t=1710487441;
-	bh=fdTFwdxmv7oTJ/ATlImwCR7OoH0u+7hmg7Vyzx5yEQY=;
-	h=Date:From:To:Subject:From;
-	b=Mw3OZbZPzlxyyRwQesr9qYhGn8yTS6Bpg5tq0w1kM+rXS+GpfWqSw/MQ2m8OCNAN6
-	 bN0pRcDr7miLCjbt7WrOw/CpxroOZJNkFAHtjvmQ+8DEgoji5asVxAhwwfSgeE1pTC
-	 xnvenTostCjSSQsW4AnJKPh7ji9JIIgkRpgjHxJrVG6TOgqYoD7htJDJeeMuHce7nn
-	 kmwV1zHa2aZCElHV9v4Cy3Qz27hEm6yC90M27vajZc/Mef6LVzjGtXUlu+qosiBUkG
-	 Hz9r/K3KmHN1SkkYUtrTkLFNYKe4F43kSzTA7i3+fWlPWbAkGbIuYtnWAN3xTiXBxl
-	 VEfiNG9938htA==
+	s=arc-20240116; t=1710490245; c=relaxed/simple;
+	bh=iIRYjYRPkq0YPhx80S6HUuY5DUYhTlhQg2Sbni1URqs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f2Zq4esVo9ShNKM/86V1uKSwCeR6jJkh3D6huiZxwuUV5QO7nEKDe8mgw8/XVk41Wx+5RCzFiCjmvb6ajpkmkZiRYP0mcejDeE3QtCnvGKzlBwUKtvcWOctEiZif2eorTmUoevoCmhydlidPAA3biMzBp0fb2PG2uX64w+1m5iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 24520 invoked by uid 109); 15 Mar 2024 08:10:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 Mar 2024 08:10:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29785 invoked by uid 111); 15 Mar 2024 08:10:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Mar 2024 04:10:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 15 Mar 2024 04:10:41 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH v2 16/16] config: allow multi-byte core.commentChar
+Message-ID: <20240315081041.GA1753560@coredump.intra.peff.net>
+References: <20240312091013.GA95442@coredump.intra.peff.net>
+ <20240312091750.GP95609@coredump.intra.peff.net>
+ <0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
+ <20240315055944.GB1741107@coredump.intra.peff.net>
+ <6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 15 Mar 2024 17:53:59 +1030
-Message-Id: <CZU56XWOUT4P.1WZ2BSE0VLN01@bit-artificer.com>
-From: "Thomas Lowry" <thomas@bit-artificer.com>
-To: <git@vger.kernel.org>
-Subject: Expanded worktree tooling?
-X-Mailer: aerc 0.15.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
 
-Hello,
+On Fri, Mar 15, 2024 at 08:16:53AM +0100, Kristoffer Haugsbakk wrote:
 
-I recently learned about worktrees in git and I was wondering if some
-extra tooling could benefit workflows that lean on it?
+> > Mostly I was worried that people would take "char" in the name to assume
+> > it could only be a single byte (I had originally even started the new
+> > sentence with "Despite the word 'char' in the name, this option
+> > can..."). And that is not just history, but a name we are stuck with
+> > forever[1].
+> 
+> Missing footnote or referring to my footnote?
+> 
+> My suggestion was to use a `core.commentString` alias. Which might
+> matter for new answers to questions about its use. It might not matter
+> if in practice most people get their config tips from 1500 point
+> StackOverflow question about how git-commit(1) keeps swallowing their
+> GitHub issue numbers (due to automatic linewrap) from 2011.
 
-These are the use cases I have banging around in my head:
-- throwaway/temp workspaces
-  One use case that I've seen alot is creating a workspace to handle
-  some hotfix and/or debugging and possibly commit the fix. Instead of
-  needing to actively manage this workspace (mostly the cleanup) I
-  imagine it would not be too dificult to these in the /tmp folder and
-  then cleanup/ignore their entries. Temp workspace file paths might
-  make this kind of tooling pointless unless you also automatically
-  change the working directory to the new workspace.. I've seen people
-  advocate for a git aliases that jump between workspaces but if your
-  adding the workspace and typing out the file path anyways then
-  `cd path` is shorter than an alias anyways.
-- move hunks between workspaces
-  In my experience it's more common for a hotfix/debugging use case to
-  get the report and just use the current branch since it's not often
-  that your current branch is either completely broken or directly
-  conflicts with the reported bug. I usually don't stashing and changing
-  branches until I've got a fix and want to commit it. I recently tried
-  a workspace for this situation but I ended needing to retype the fix
-  in the new workspace, after reflecting a bit I should be able to do=20
-  `git stash -p` in the main workspace then `git stash pop` in the new
-  worktree but a dedicated way to move hunks would be quite useful.
+Heh, missing footnote. I was going to say "we could introduce
+core.commentStr or similar", but after your comment I searched in the
+archive and see that you did indeed already suggest it.
 
-I think there could be more opportunities for general use cases to
-benefit from workspaces if there were extra workspace tooling but these
-are the only ones I can think of, also to be clear I'm not really
-considering any tooling that would allow workspaces to do something you
-can't already do with git in some other way.
+I'm not sure if it would make things more or less confusing to have two
+related values. One nice side effect is that the new variable would be
+ignored by older versions of Git (whereas by extending core.commentChar,
+you end up with config that causes older versions to barf). That
+probably doesn't matter that much for most users, but as somebody who
+works on Git I frequently run old versions for bug testing, bisection,
+and so forth.
 
-Thoughts?
+> > I actually do think the "string" nature is mostly uninteresting, and I'd
+> > be OK leaving it as an easter egg.
+> 
+> To my mind a string subsumes a char (multi- or not). Like in programming
+> languages: some might be used to single-char `#`, but I don’t think they
+> do a double take when they see languages with `//` or `--`.
 
-Regards,
-Thomas
+Hmm, good point. I was mostly focused on UTF-8 characters, but "//" is
+quite a reasonable thing for people to try. It is probably a better
+example than "foo".
+
+> > What your suggestion doesn't say is that multi-byte characters are
+> > OK. But if we think people will just assume that in a modern UTF-8
+> > world, then maybe we don't need to say anything at all?
+> 
+> Given that we’re mostly in the context of a commit message, an
+> ASCII-only restriction would feel archaic.
+>
+> I guess it depends on what the *normal* is in the documentation at
+> large. As a user I’m used to Git handling the text that I give it.
+
+Right, that's what I was asking. To me "character" means an ASCII byte,
+but I think I might be archaic myself. ;) If most of our readers would
+just assume that multi-byte characters work, perhaps it is confusing
+things to even mention it.
+
+> > It actually does not have to be UTF-8.
+> 
+> Good point. Unicode is more appropriate.
+
+I think other Unicode encodings are likely to have problems (because
+they embed NULs). Specifically I was thinking that you could probably
+get away with latin1 or other 8-bit encodings. But again, I really hope
+nobody is doing that anymore.
+
+So anyway, adapting your original suggestion based on discussion in the
+thread, maybe squash in (to the final patch):
+
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index c86b8c8408..c5a8033df9 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -523,9 +523,8 @@ core.commentChar::
+ 	Commands such as `commit` and `tag` that let you edit
+ 	messages consider a line that begins with this character
+ 	commented, and removes them after the editor returns
+-	(default '#'). Note that this option can take values larger than
+-	a byte (whether a single multi-byte character, or you
+-	could even go wild with a multi-character sequence).
++	(default '#'). Note that this variable can be a string like
++	`//` or `⁑⁕⁑`; it doesn't have to be a single ASCII character.
+ +
+ If set to "auto", `git-commit` would select a character that is not
+ the beginning character of any line in existing commit messages.
+
+
+That's assuming we don't want to go the commentString route, which would
+require a bit more re-working of the patch. I'm also open to a more
+clever or pretty multi-byte example if we have one. ;)
+
+-Peff
