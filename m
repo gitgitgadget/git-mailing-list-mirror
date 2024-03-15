@@ -1,129 +1,234 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193511A38F5
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 00:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA58310F4
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 01:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710464251; cv=none; b=nS4omH7S2TAYRlZB7QegsvlVi0rAb9zsrm+Jhx3mW2izQTTniu0JAluQ3yoOKJCGJyQZQEdh2e86p0EvwGw2FNOfT+lp2bV/q6u6QkEFB8TVvnGm7kPzpYqPRXE7o+hJM1/2KVQWmD/bE1CXEbdSB66dk6JHRr2rwQ8QB+V7fIg=
+	t=1710464603; cv=none; b=bkDD6PYCIx1ZIg/Pl4NP556Tb9ePYleFJhDV0DF4kJnP9XhQuhjo9m7CwDWi7SZiJL76QBEi7RuuRrGFYPncaBjGNezJAKpu5P+uvkb/sxUTw3AKZg3q2fC4QFWRYGY8/ToD2uwpOyCA/N07C5fVcUEqwA8Tey1RJ+m1I7ZWQYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710464251; c=relaxed/simple;
-	bh=D6lh7CImVWDMD6Ez2zL7iEUJ+HW8hn/a4lusUPIw2+Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mnYM+yqy+vFmb1w/kyIshKk2hu6zwIZJLVx1ty0OoTZP9ty+J7O+KvOCTxS7d0NPAUn4025YPXZesh0cS5XZ4DqcTJgXluaRnN5HgtGtU4bsA3Y2BrMXmQHHvSmOxQjeNEwlgpv/i5LYEOzM4I8CiFjhbJuy0FKhnSmt3nfRXP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=M3iU+u6Y; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1710464603; c=relaxed/simple;
+	bh=ri8Of+9b0cK5ZwVaGFk5ReUlT48aNtlw4kiFXfQVwVI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=RIMwHYOMk0Bz+JzGM5HZGkqMQy6UEJkJItyPwxHX1VrsX/gpWQXneDbwypg0m7AcqPjhCOpCASTnFz2tRiuia5ZsMh24wodpjm9mgnh3mJWQTUJBCR6WtJs5/m3YSl9hr0LWMQJxeR+QcstORkMW2bG9P7UEGzctIZig+f2/gMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=who-t.net; spf=pass smtp.mailfrom=who-t.net; dkim=pass (2048-bit key) header.d=who-t.net header.i=@who-t.net header.b=MSNvmcXc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qMJ7hOHq; arc=none smtp.client-ip=66.111.4.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=who-t.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=who-t.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="M3iU+u6Y"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F1CA05B3DE;
-	Fri, 15 Mar 2024 00:57:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1710464248;
-	bh=D6lh7CImVWDMD6Ez2zL7iEUJ+HW8hn/a4lusUPIw2+Q=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=M3iU+u6YRss4r7Ym/+cWP8FCDel40LTAQ1HlW8Hernc222O4gBkSDVYFQIpRGxy7H
-	 e9mA6OA8tSpv3UR1esC+hzIMrr3ITxQaLfIGmzpPRgvasLFxuuyaj+ZqHO5c37iJ7n
-	 TLB6fJBy/Vg/UhPhNhDHN74MrMNJN8d28GQqdh+vILZCn20j4m+tCWbHK7QWS9yudB
-	 rK4fiXSENpchKZcChzEEFeY6saiIFIfvw9+yi3BcMKY4reD1SIH7oqZDA80gEmntKa
-	 W6AtoLOiyF6v3cyoFwP07KxqONQg9bpdh20DOnNweT2kkaw7ia7/NFXV1CfSXTjXXs
-	 RVY2X8b7hDWJI/qpnkbemcSMhPdQNeSq3OLrYNJWkjwkmyV6cqdCsdK+2Ln7ankLtz
-	 Altv2RRSoVLBjCdu2irxpVGL/OdumXMuEyu+Pd5dfNbx9WH9jooj8op1HmLzZM9X8m
-	 Q23DvaTemtvKebwWxKDQIdtfQoRqNx3YnQXyiWveRBdL/Guix3h
-Date: Fri, 15 Mar 2024 00:57:26 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christopher Lindee <christopher.lindee@webpros.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] Optionally support push options on up-to-date
- branches
-Message-ID: <ZfOc9hrayymnJNPc@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Chris Torek <chris.torek@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christopher Lindee <christopher.lindee@webpros.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <SA1PR14MB4691B63C740F95D7D8A495628D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
- <xmqqa5n168nh.fsf@gitster.g>
- <ZfOAdVy9_UfTj3zE@tapette.crustytoothpaste.net>
- <xmqqv85otmsb.fsf@gitster.g>
- <CAPx1Gvez4Ema9Yi-7Ei8OOkq9t8AXmBYN=yy948k_C+ZBKdXmw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=who-t.net header.i=@who-t.net header.b="MSNvmcXc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qMJ7hOHq"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id DC4D55C006D;
+	Thu, 14 Mar 2024 21:03:19 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Thu, 14 Mar 2024 21:03:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=who-t.net; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1710464599; x=1710550999; bh=pX7CMPLvivV/U9q3r01c8
+	poj0rDCDCpg4vfIlf1Z39s=; b=MSNvmcXck0VwuVvV1XTO4fFyfQDfhaQgYbnLS
+	2PfaHV9/8Sj+HQvN67jOPQ232xCok7XYLQ4GVsn4eqGjF3LLIvYKNnuJhIN3glFg
+	jqWUsLgfCdXV2znzgVyDuu+JkHk5ni/c7zLTc5jCsJfRXGsQljfWi3nYzbXPmUNz
+	lxLdnPP/IHpj04qk9rvmWkH+AwXmneLqHUIGnx84rbu7MoDF5fxOdzN61ee6NN67
+	xA8wJef2ygRgDuNl7NcpwKOS/vbGIVj2KC68SqNqGe8UMng7SPv/fbgiO1FQPpD5
+	ST23V/EXGvyfMnfkoCei8N/8s8MvAsLYu2btr0Ue6p/SmDFPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1710464599; x=1710550999; bh=pX7CMPLvivV/U9q3r01c8poj0rDC
+	DCpg4vfIlf1Z39s=; b=qMJ7hOHqwacBlqnMx+Vqoro6OPR/nU+vWy/ET/+rjjNS
+	SNsDZ1V+b7EEYdsoAfEMWPD/Jcms0VS5W5sJEN0hxp4hRfljecTdKPU5WEeeTVBe
+	0iBIOo3Htr+LJxUqoEi2GBb61zXoxi8UQkcmv+WWM6mwXYM+E3go2PpT4aUCYZjU
+	EZy46xSnMfXnibvQ85QJXpaiP+L7t/SeooRwY9E1mAV9AXYYw83H9wAuH8BgVHEk
+	y5BkMFtxAgFu3W5kOcvkSArAeaaPs/W4n41zviQkdw9MJb3lWefg3D34J90I10cM
+	uQnBQmRlzuk1ioycq4TBJsmJRQ1J9ZY4afbfnDgZVw==
+X-ME-Sender: <xms:V57zZYkezcg04v00lHFhA3J2MxMi7lLiQofbXmCK6R0pp1-jByZy9g>
+    <xme:V57zZX0yBwVsMFcC4ymjC0Hlc-BZZ8GWwMLmdX9s-vGc1RvA1Ht9Y_IJ9lprDhF8q
+    bkpKAGiLfoiOMVSvew>
+X-ME-Received: <xmr:V57zZWolCYREe9WJP6nWj4Ri5AZ56VACA1y0HVLHVNyIR30Tgi00j12YUyaMOJmxF7BLLqj3IL4pMv2k8PpJaxUOx3Zgjjkeyudi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeekgddvlecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfggtggujgesthdtredttddtvdenucfhrhhomheprfgvthgvrhcu
+    jfhuthhtvghrvghruceophgvthgvrhdrhhhuthhtvghrvghrseifhhhoqdhtrdhnvghtqe
+    enucggtffrrghtthgvrhhnpeefleehgffhgffgieduveejjeejveetfeelhfdttdevueek
+    ieeltefhudeufeeftdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpvghtvghrrdhhuhhtthgvrhgvrhesfihhohdqthdrnhgvth
+X-ME-Proxy: <xmx:V57zZUmWHR7Ow_dIUvJQ3japzO926S8OVoH6ETKPmrvYuAK3y9B3GA>
+    <xmx:V57zZW1XLn2hgzNSy-4kf1KuTluJ0JgmlFDklRk3ufzXUbpM8PKviA>
+    <xmx:V57zZbvDqY5Hxdcp_RyNOQ2ftCythOxLhWH4Skf5NA7x5NsDUIK9yQ>
+    <xmx:V57zZSXqI1EY6ZmtvRbWHKMzmsKkCbyIE-p9MLNmdXQNfK0QYQVrOQ>
+    <xmx:V57zZS-FVJ9gkToKjLlVAS4aTpTzscWluctqAeYZ9uELUksD51pmrA>
+Feedback-ID: i7ce144cd:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 14 Mar 2024 21:03:16 -0400 (EDT)
+Date: Fri, 15 Mar 2024 11:03:10 +1000
+From: Peter Hutterer <peter.hutterer@who-t.net>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, David Heidelberg <david@ixit.cz>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v4] diff: add diff.srcPrefix and diff.dstPrefix configuration
+ variables
+Message-ID: <20240315010310.GA1901653@quokka>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="G8+zj+Jgb7v/BX5S"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPx1Gvez4Ema9Yi-7Ei8OOkq9t8AXmBYN=yy948k_C+ZBKdXmw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+In-Reply-To: <20240312231559.GA116605@quokka>
 
+Allow the default prefixes "a/" and "b/" to be tweaked by the
+diff.srcPrefix and diff.dstPrefix configuration variables.
 
---G8+zj+Jgb7v/BX5S
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+---
+Changes to v3:
+- fix capitalization in the commit message
+- quotes changed to " in the diff.txt hunk (for consistency with
+  diff.mnemonicPrefix)
+- reword the diff-options.txt entry to be more explicit/definitive
 
-On 2024-03-15 at 00:04:25, Chris Torek wrote:
-> On Thu, Mar 14, 2024 at 4:37=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > In any case, I am OK with the feature.  I just was wondering if the
-> > end-user experience may become simpler and easier if we did not have
-> > to have a command line option.
->=20
-> Would it make sense for the *server* to request the option?
->=20
-> That is, you run:
->=20
->     git push server-remote ref
->=20
-> and if the server at server-remote "wants" to know about "no-op
-> pushes" because it will do something for this case, it says so.
-> If the server says nothing, the client doesn't bother with the no-op
-> pushes.
->=20
-> (This could be either per-ref or global, too.)
+Dragan: I used the lowercase `noprefix` spelling here to be consistent
+with the current state of the tree, can you please include the fix for
+this in your pending patch? Thanks.
 
-This is an interesting idea.  I don't think this can be per-ref because
-at the capabilities stage, we don't actually know what the user wants to
-send, if anything.  v0 capabilities are too limited in size to declare
-per-ref options, although I suppose v2 could, in theory, support that.
+ Documentation/config/diff.txt  |  6 ++++++
+ Documentation/diff-options.txt |  5 +++--
+ diff.c                         | 14 ++++++++++++--
+ t/t4013-diff-various.sh        | 35 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 56 insertions(+), 4 deletions(-)
 
-I do worry, though, that even if the server may be interested in
-additional push options or push certificates, as Chris's series
-indicates, it may not generally care about no-op ref updates, and thus,
-it may not be granular enough to avoid the kinds of performance problems
-that I've mentioned elsewhere in the thread.
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index 6c7e09a1ef5e..afc23d7723b6 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -111,6 +111,12 @@ diff.mnemonicPrefix::
+ diff.noprefix::
+ 	If set, 'git diff' does not show any source or destination prefix.
+ 
++diff.srcPrefix::
++	If set, 'git diff' uses this source prefix. Defaults to "a/".
++
++diff.dstPrefix::
++	If set, 'git diff' uses this destination prefix. Defaults to "b/".
++
+ diff.relative::
+ 	If set to 'true', 'git diff' does not show changes outside of the directory
+ 	and show pathnames relative to the current directory.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index aaaff0d46f0c..0e9456957e37 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -865,8 +865,9 @@ endif::git-format-patch[]
+ 
+ --default-prefix::
+ 	Use the default source and destination prefixes ("a/" and "b/").
+-	This is usually the default already, but may be used to override
+-	config such as `diff.noprefix`.
++	This overrides configuration variables such as `diff.noprefix`,
++	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
++	(see `git-config`(1)).
+ 
+ --line-prefix=<prefix>::
+ 	Prepend an additional prefix to every line of output.
+diff --git a/diff.c b/diff.c
+index e50def45383e..108c1875775d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -62,6 +62,8 @@ static const char *diff_order_file_cfg;
+ int diff_auto_refresh_index = 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
++static const char *diff_src_prefix = "a/";
++static const char *diff_dst_prefix = "b/";
+ static int diff_relative;
+ static int diff_stat_name_width;
+ static int diff_stat_graph_width;
+@@ -408,6 +410,12 @@ int git_diff_ui_config(const char *var, const char *value,
+ 		diff_no_prefix = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "diff.srcprefix")) {
++		return git_config_string(&diff_src_prefix, var, value);
++	}
++	if (!strcmp(var, "diff.dstprefix")) {
++		return git_config_string(&diff_dst_prefix, var, value);
++	}
+ 	if (!strcmp(var, "diff.relative")) {
+ 		diff_relative = git_config_bool(var, value);
+ 		return 0;
+@@ -3425,8 +3433,8 @@ void diff_set_noprefix(struct diff_options *options)
+ 
+ void diff_set_default_prefix(struct diff_options *options)
+ {
+-	options->a_prefix = "a/";
+-	options->b_prefix = "b/";
++	options->a_prefix = diff_src_prefix;
++	options->b_prefix = diff_dst_prefix;
+ }
+ 
+ struct userdiff_driver *get_textconv(struct repository *r,
+@@ -5362,6 +5370,8 @@ static int diff_opt_default_prefix(const struct option *opt,
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(optarg);
++	diff_src_prefix = "a/";
++	diff_dst_prefix = "b/";
+ 	diff_set_default_prefix(options);
+ 	return 0;
+ }
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 1e3b2dbea484..e75f9f7d4cb2 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -663,6 +663,41 @@ test_expect_success 'diff --default-prefix overrides diff.mnemonicprefix' '
+ 	check_prefix actual a/file0 b/file0
+ '
+ 
++test_expect_success 'diff respects diff.srcprefix' '
++	git -c diff.srcprefix=x/ diff >actual &&
++	check_prefix actual x/file0 b/file0
++'
++
++test_expect_success 'diff respects diff.dstprefix' '
++	git -c diff.dstprefix=y/ diff >actual &&
++	check_prefix actual a/file0 y/file0
++'
++
++test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
++	git -c diff.srcprefix=z/ diff --src-prefix=z/ >actual &&
++	check_prefix actual z/file0 b/file0
++'
++
++test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
++	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
++	check_prefix actual a/file0 z/file0
++'
++
++test_expect_success 'diff src/dstprefix ignored with diff.noprefix' '
++	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff >actual &&
++	check_prefix actual file0 file0
++'
++
++test_expect_success 'diff src/dstprefix ignored with diff.mnemonicprefix' '
++	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix diff >actual &&
++	check_prefix actual i/file0 w/file0
++'
++
++test_expect_success 'diff src/dstprefix ignored with --default-prefix' '
++	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix >actual &&
++	check_prefix actual a/file0 b/file0
++'
++
+ test_expect_success 'diff --no-renames cannot be abbreviated' '
+ 	test_expect_code 129 git diff --no-rename >actual 2>error &&
+ 	test_must_be_empty actual &&
+-- 
+2.44.0
 
-For example, I know that GitLab uses push options (and GitHub has
-support for them as well in some cases) and thus the proposed feature
-would be useful there, but I suspect we'd still want regular no-op
-pushes (without push options or push certificates) to not be sent for
-performance reasons.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---G8+zj+Jgb7v/BX5S
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZfOc9QAKCRB8DEliiIei
-gd6dAP4onbgj9EnsODzSXq2af0+zxfsWfEqARc1HJS8qPY2K/gD/ZBvU6C1UMh8Q
-gbOAAjYP2obPVPXqwVBAKJqrG/GLvw8=
-=cwgI
------END PGP SIGNATURE-----
-
---G8+zj+Jgb7v/BX5S--
