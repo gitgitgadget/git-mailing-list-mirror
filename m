@@ -1,16 +1,16 @@
 Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92739548EF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9270F548EE
 	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710532008; cv=none; b=PyDPqmUgrUI0e0W+kexuJbfy/Xu8kQcF5R+0+ThOw80zpiz/n2w4cxVt8roqhtcx+FzwAlEe3Rx4GBmS7q6+3G3vt1SkwnXpb5JPlaUtF+cxeVRxI4qqpV2kQXVsTq6BGMBs4CAWaf0eBvxOVBCuqFym5RUGI5GiHzIW4C+BnqY=
+	t=1710532008; cv=none; b=ObSjgPZMJLp+AHadUaCT+xfcGIA9lXKOM7DYIO3Zx0B82ev3M4YbUKprojQOsyhG1lPqHjV8NA8VS3+4894/ZAu69h44JWTBDhlSDWlimCrDT5amy6lnmtAXaxyOuT1idHqRROnmvzmRwqQ4jUILp8kJ6utYyDoWhVdCUdsHQV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1710532008; c=relaxed/simple;
-	bh=b9EAjqiUnNzNOBj2w/QZBJxXrKDtv+hUxrLayEYfGLc=;
+	bh=n+VW9olPmiDPnqzGmqm+lcCHo/bvpWFh/wizfy1/1EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oW8qI5EyMooSkPsRse1UesT0wfQM1hEvBWqbRFrL+kxjDnSckgAP1Oesg3058VSnADHakfCu8uyC6esd/C600Xyi1txrb5F6ptT5TOotUOBANNshua7XtrF42CrDWHJeNZZKTdhVKs8JmUrKESyZWDzE2nvA9jkNuVZ0/8Vf1Mw=
+	 MIME-Version; b=LfBEhhdTM/Nk0P07dyoMl9puj1iv0wUb2+/1vrMrSY3w9L7wzPNsORp4EZJDlW3N2yO4rXYcHqIXcLL904ayqFFGPWZcxZ3jP27dxBaxaMS1q0ciJS/PNAVkickg7JvDsUES2ALlrW37FALxcAh77UqF1G++KfMMivAWCt+ggLU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
@@ -18,25 +18,25 @@ Received: from s019.cyon.net ([149.126.4.28])
 	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
 	(Exim)
 	(envelope-from <bb@drbeat.li>)
-	id 1rlDVr-000000002CY-0u1g
+	id 1rlDVl-000000002Ay-36ab
 	for git@vger.kernel.org;
-	Fri, 15 Mar 2024 20:46:43 +0100
-Received: from [10.20.10.233] (port=31016 helo=mail.cyon.ch)
+	Fri, 15 Mar 2024 20:46:38 +0100
+Received: from [10.20.10.230] (port=56668 helo=mail.cyon.ch)
 	by s019.cyon.net with esmtpa (Exim 4.96.2)
 	(envelope-from <bb@drbeat.li>)
-	id 1rlDVq-006amm-0L;
-	Fri, 15 Mar 2024 20:46:42 +0100
+	id 1rlDVk-006akE-24;
+	Fri, 15 Mar 2024 20:46:36 +0100
 Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id C12301800FD;
-	Fri, 15 Mar 2024 20:46:40 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Fri, 15 Mar 2024 20:46:40 +0100
+	by drbeat.li (Postfix) with SMTP id 50DC8180130;
+	Fri, 15 Mar 2024 20:46:35 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Fri, 15 Mar 2024 20:46:35 +0100
 From: "Beat Bolli" <bb@drbeat.li>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v2 10/22] t/t5*: avoid redundant uses of cat
-Date: Fri, 15 Mar 2024 20:46:07 +0100
-Message-ID: <20240315194620.10713-11-dev+git@drbeat.li>
+Subject: [PATCH v2 05/22] t/perf: avoid redundant use of cat
+Date: Fri, 15 Mar 2024 20:46:02 +0100
+Message-ID: <20240315194620.10713-6-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240315194620.10713-1-dev+git@drbeat.li>
 References: <20240305212533.12947-1-dev+git@drbeat.li>
@@ -56,52 +56,27 @@ X-AntiAbuse: Sender Address Domain - drbeat.li
 X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
 X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
+Take care to redirect stdin, otherwise the output of wc would also contain
+the file name.
+
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- t/t5100-mailinfo.sh                    | 2 +-
- t/t5317-pack-objects-filter-objects.sh | 2 +-
- t/t5534-push-signed.sh                 | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ t/perf/repos/inflate-repo.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 654d8cf3ee00..c8d06554541c 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -70,7 +70,7 @@ test_expect_success 'respect NULs' '
+diff --git a/t/perf/repos/inflate-repo.sh b/t/perf/repos/inflate-repo.sh
+index fcfc992b5b02..412e4b450b16 100755
+--- a/t/perf/repos/inflate-repo.sh
++++ b/t/perf/repos/inflate-repo.sh
+@@ -33,7 +33,7 @@ do
+ done
  
- 	git mailsplit -d3 -o. "$DATA/nul-plain" &&
- 	test_cmp "$DATA/nul-plain" 001 &&
--	(cat 001 | git mailinfo msg patch) &&
-+	git mailinfo msg patch <001 &&
- 	test_line_count = 4 patch
+ git ls-tree -r HEAD >GEN_src_list
+-nr_src_files=$(cat GEN_src_list | wc -l)
++nr_src_files=$(wc -l <GEN_src_list)
  
- '
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-index 2ff3eef9a3b8..79552d6ef7f6 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -455,7 +455,7 @@ test_expect_success 'setup r1 - delete loose blobs' '
- 	test_parse_ls_files_stage_oids <ls_files_result |
- 	sort >expected &&
+ src_branch=$(git symbolic-ref --short HEAD)
  
--	for id in `cat expected | sed "s|..|&/|"`
-+	for id in `sed "s|..|&/|" expected`
- 	do
- 		rm r1/.git/objects/$id || return 1
- 	done
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index b4bc24691c81..c91a62b77afc 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -303,7 +303,7 @@ test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- 		EOF
- 		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
- 	) >expect.in &&
--	key=$(cat "${GNUPGHOME}/trustlist.txt" | cut -d" " -f1 | tr -d ":") &&
-+	key=$(cut -d" " -f1 <"${GNUPGHOME}/trustlist.txt" | tr -d ":") &&
- 	sed -e "s/^KEY=/KEY=${key}/" expect.in >expect &&
- 
- 	noop=$(git rev-parse noop) &&
 -- 
 2.44.0
 
