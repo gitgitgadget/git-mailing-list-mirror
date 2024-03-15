@@ -1,120 +1,261 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127DDDF51
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 05:32:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A6E8F70
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 05:47:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710480723; cv=none; b=k2oXPMpMnjMCF8lyKYkpzIdbi4ROKDmkacqZGzNt/2nmAtk+8c083PHys0Xx6bJlTur3R9M3ErfbBHKJWjeq8bJRUWrzjp40vgqRpjW4A9f0uQ3KttU5ET9cMneHONGHrNHEmj7ElC919OE50wNv2HCVMmlk9NDG06HZWnV/5Nc=
+	t=1710481657; cv=none; b=ENLO9sjUAJkmfPPk5JWgdJz2THR4GIJJzzkXoVkamHhOpQpSbrCeXAFgcT00f4OQ8CYvbI1RI5NaliUIlmDjNrgsS9VqUXWQxeoPPPs4mpNgvM7DJ7fwo9vtw6LNH+PyjkMEr6SSGQpkjyOUIRKKSiWWyOPv/dKDDwtWJBFrLBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710480723; c=relaxed/simple;
-	bh=8VKn7Dyc8op5cWt+IxVy2+xLe1Nq67YaI76XjlhVhUQ=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Nb105E7YAVaqGphlQC3uT8DUNsTb/PBL5cyCLwaLncNTpL5Sfq9oJaTjHLhQa3ZWI01lR6Hsj5cmUbsir3FJIAdYxeIvAHVO2q/IiHCNzRbIRNWoVkF80/JAZd0VVk+pGLnYUnUs0tcs/N5W7jvPc2Nhcjo5ePkKreyHeFDWuUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=W064DtIt; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1710481657; c=relaxed/simple;
+	bh=rzl4L+vzwFk3DyfkdxRuGxDiLb8w0JKIoE5taz2vLF8=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=FiLxzBdqS8pMM6l0U/aTGihqqEuZ3v26/pHI6zHxVsrZC3+iAw1A0zSUGTEtAnjxUFziHCQ9TfRGfANPL7hOGsxlUd63AOIHlzSex+Et45ndw3ZySSdFKUqlAo7U15NCQWFO9kGgYPI0wwiKOQxsbQvUGRgCOfMMqme2zsDBVd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oy1tSBvJ; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W064DtIt"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-60cd62fa1f9so14164917b3.0
-        for <git@vger.kernel.org>; Thu, 14 Mar 2024 22:32:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oy1tSBvJ"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33e99b62e01so1422156f8f.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2024 22:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710480721; x=1711085521; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a8t0GGmTDDPakglaouofbjVGlCDdd/jsERFK7mLdE/0=;
-        b=W064DtItNzzZ5TvWDGKAAvFHySJFIvK91TLnHk2X7GBomM5l0sBRwctNIzBr+GZDPt
-         +LR6RunauacSfvoTg2oq/T1V+tFEuGEYHZlLRYnuufkFzRy962fzwwHWblcdxJa5eAil
-         KwuHbbmTeWdqZWxJo3R6W+GZpcqBhI6VcIcqXCs2sl6s0RKAWCkV0PmizaJbEaG86adx
-         9IcSqbwm9gQHcC6oz0sqyMuqFuyLJN10h8vgKRBifdoKD6N4CGRuzABRiHx3+eGN32rh
-         f056XDFqKgvhUGAo31OkFB3GgzjUHl+al3/+ytLtU83n8avrbdDNzlKHoqZ+QUIpYb4N
-         rsPA==
+        d=gmail.com; s=20230601; t=1710481653; x=1711086453; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zJvOmPxBfU+2HvE9gu+Jesm/xE+xWMk+65pSLCyw1W0=;
+        b=Oy1tSBvJolQ/mXP9WHUbvOlSkcnvcC+4XCFQesHDpQsOjz0Rhx5ZVQpfN0c7p0l21v
+         sKsu03pxLexxYAtuXoM+MdwYvmDfV33b2ScYTy1niRKSqcPnySWvQQW4rPJrLsOHYdq7
+         3+O1Hsjv47rpfUdVFV3aL6tB9NgKDoLm3ZOsT15U4gulsA4/H24gb2Pyo7FORBzKONE0
+         r60wxFpDNgdaV8cszg1C4aXdCMdGMA/6Uafl+vfJMDRAYWOP3ffqI5r4ChHoj80m5oTF
+         h0OXbpvKzVT595Jf+1BqJjtV1sI9qqCiHPtCmzo5JUxwLXRoxd5m9fKH3m3XU1BMbRiQ
+         oU/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710480721; x=1711085521;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=a8t0GGmTDDPakglaouofbjVGlCDdd/jsERFK7mLdE/0=;
-        b=N9hD128tZZmsEfH4HGOesbVtPXUCzPATFjKv4TbkXUtkqVzsAeXfEx5ga4EyNetKrz
-         Q8L/aFPF1AEZUtJFjBr9kXVtSV+1pAMYbJzw8dJzBKpyhtAsr7W0oHF8uuz+O8GArvux
-         e+gCvZIsFh2qUg0zfTJTOyXK2+bkT+1+2nxho1bXgp5jV5jM0lW3Ds404oG8CpBPybg9
-         RDH6zA8v6nZzrlTw0N5VUCgCeLg3d3nRpgaySbJrnhBJcRXoLML1QLY9RxbzoB3fPRDc
-         wGyIeYvwct+NNetlchWgb8ZHsbF0+wUEKxN3OnpuLf9PGCDooRm2XdxvbLervhBlGqV7
-         uZeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWw/hgvD/HNI/vO8fdiB3/Ic92vE6mNAPJYYeTJSsZtx8R7sgG7ynJ10GASeJ8ZE1bB8llg+D7pk0r31IKDCe5ThLYH
-X-Gm-Message-State: AOJu0YwilFA2BGVTC55bqBSHsBkKY1h1JWZXruzqfyVHrLXwZxiG6W6q
-	r5zLsWi7Qese17xvBXFFQhKshfRvPh4DHU89DpFu7yXCW7+UwszKYWVu/W56pyo+UdKX4RDhDxS
-	j6Q==
-X-Google-Smtp-Source: AGHT+IGR9fGGVe6RoMPcFIF2jqC20YBUvbnewbKienPYvG3oEbodSUS9vfA80aynJMoRWzRkPC3V1DRnp7Q=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:2207:b0:dcb:c2c0:b319 with SMTP id
- dm7-20020a056902220700b00dcbc2c0b319mr169901ybb.9.1710480720955; Thu, 14 Mar
- 2024 22:32:00 -0700 (PDT)
-Date: Thu, 14 Mar 2024 22:31:59 -0700
-In-Reply-To: <owlyttmc9m5h.fsf@fine.c.googlers.com>
+        d=1e100.net; s=20230601; t=1710481653; x=1711086453;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zJvOmPxBfU+2HvE9gu+Jesm/xE+xWMk+65pSLCyw1W0=;
+        b=trvKdb7Gs/Li1v2O1pNIUAWr0nZGu2QFiveBVG+GFkzP/WH86aZzNy+jgN3IryAKVg
+         kixCsdtP2RZt48EU/RJGkG0rJbkOmGXn4xTgYaOtlP9m5YIHDp+pqsKzp6zF54IC6i1l
+         VakBfjUQb6DXRhQ47ydIRgBALleMiXnQvekRXGElYBzRGkPEDwP1JIA8t8o+9Ghv59z5
+         /zAASLMAW+m2U6MGwOftol/1Z2RQASabXquONUehRNfytinWyX7sCEq9tt2O1F0wOqzK
+         5og1x751pHX6Wfy9IEQ66OHXAADm9v5xGLlL5rfM7lOcB0eQWJK3mnfrLepKPob+mCTX
+         yLpQ==
+X-Gm-Message-State: AOJu0YxY+PpeRYB0RfOD8BPgk7zHIrGuSUiw/iMK7Kakij6rtuDfx4Ra
+	sW5j5gTqHDoznz0cqekPyjNphDvJGY7P+MIHTjN/ageZUyRU/vjzGgFAbT4l
+X-Google-Smtp-Source: AGHT+IFTbawJ9PtWJR4yUMYzoNsllhxM9WbE1SvkKnrOaNB64efFSbYsEWzAW85TEqi9A7gm/sNOpw==
+X-Received: by 2002:a05:6000:1e83:b0:33d:44d8:eacc with SMTP id dd3-20020a0560001e8300b0033d44d8eaccmr2480785wrb.39.1710481653328;
+        Thu, 14 Mar 2024 22:47:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m10-20020adffe4a000000b0033de10c9efcsm2279953wrs.114.2024.03.14.22.47.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Mar 2024 22:47:32 -0700 (PDT)
+Message-ID: <pull.1692.v2.git.1710481652130.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1692.git.1710398478718.gitgitgadget@gmail.com>
+References: <pull.1692.git.1710398478718.gitgitgadget@gmail.com>
+From: "Brian Tracy via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 15 Mar 2024 05:47:31 +0000
+Subject: [PATCH v2] fuzz: add fuzzer for config parsing
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <ba1f387747b08a7270f7387beddd75dc4a8eddfe.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD3u+QDx2LqpO2ZpeHQszwjMAsQ90qqbE7Om=t1vPRQ==w@mail.gmail.com>
- <owlyr0hgb7qg.fsf@fine.c.googlers.com> <CAP8UFD0nmK4ZigW9LcWOr_POEX5LX7m+T=Jq9rK34YL5C6xatw@mail.gmail.com>
- <owlyttmc9m5h.fsf@fine.c.googlers.com>
-Message-ID: <owly7ci43vsg.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 15/28] format_trailer_info(): avoid double-printing the separator
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <chriscool@tuxfamily.org>, Junio C Hamano <gitster@pobox.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Josh Steadmon <steadmon@google.com>,
+    Arthur Chan <arthur.chan@adalogics.com>,
+    Brian Tracy <brian.tracy33@gmail.com>,
+    Brian C Tracy <brian.tracy33@gmail.com>
 
-Linus Arver <linusa@google.com> writes:
+From: Brian C Tracy <brian.tracy33@gmail.com>
 
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> On Tue, Feb 13, 2024 at 6:21=E2=80=AFPM Linus Arver <linusa@google.com> =
-wrote:
->>>
->>> Christian Couder <christian.couder@gmail.com> writes:
->>>
->>> > On Tue, Feb 6, 2024 at 6:12=E2=80=AFAM Linus Arver via GitGitGadget
->>> > <gitgitgadget@gmail.com> wrote:
->>
->>> > Also I wonder why it was not possible to modify format_trailer_info()
->>> > like it is done in this patch before using it to replace
->>> > format_trailers().
->>>
->>> The artificial organization apparent in this patch was deliberate, in
->>> order to make it painfully obvious exactly what was being replaced and
->>> how. See https://lore.kernel.org/git/xmqqjzno13ev.fsf@gitster.g/
->>
->> As for the previous patch, I would have thought that it would be
->> better not to break the tests.
->
-> I could just squash these patches together to avoid breaking tests (and
-> also avoid doing the flipping of expect_success to expect_fail and back
-> again). I don't mind at all which way we go, but now that we have these
-> patches broken out I wonder if it's better to just keep them that way.
->
-> Junio, do you mind if I squash the relevant changes together into just
-> one patch?  I'd like your input because you requested the current style
-> (modulo test breakages which was my error). Thanks.
+Add a new fuzz target that exercises the parsing of git configs.
+The existing git_config_from_mem function is a perfect entry point
+for fuzzing as it exercises the same code paths as the rest of the
+config parsing functions and offers an easily fuzzable interface.
 
-When I asked this question, I forgot that the number of test cases that
-break are around ~50. This is a very large number. So I think it
-would be cleaner to squash this and the previous patch down to avoid having
-to flip test_expect_{success,failure} for 50+ individual test cases.
+Config parsing is a useful thing to fuzz because it operates on user
+controlled data and is a central component of many git operations.
 
-For the earlier patch
+Signed-off-by: Brian C Tracy <brian.tracy33@gmail.com>
+---
+    fuzz: add fuzzer for config parsing
 
-    [PATCH v4 10/28] format_trailer_info(): use trailer_item objects
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1692%2Fbriantracy%2Fconfig-fuzzer-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1692/briantracy/config-fuzzer-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1692
 
-there are only 8 failures so I think doing the *_{success,failure} flip
-is reasonable.
+Range-diff vs v1:
+
+ 1:  a43a2e3a07c ! 1:  be6aa5efb1c fuzz: add fuzzer for config parsing
+     @@ Commit message
+          Signed-off-by: Brian C Tracy <brian.tracy33@gmail.com>
+      
+       ## Makefile ##
+     -@@ Makefile: FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
+     +@@ Makefile: ETAGS_TARGET = TAGS
+     + # runs in the future.
+     + FUZZ_OBJS += oss-fuzz/dummy-cmd-main.o
+     + FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
+     ++FUZZ_OBJS += oss-fuzz/fuzz-config.o
+       FUZZ_OBJS += oss-fuzz/fuzz-date.o
+       FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
+       FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
+     -+FUZZ_OBJS += oss-fuzz/fuzz-config.o
+     - .PHONY: fuzz-objs
+     - fuzz-objs: $(FUZZ_OBJS)
+     - 
+      
+       ## ci/run-build-and-minimal-fuzzers.sh ##
+      @@ ci/run-build-and-minimal-fuzzers.sh: group "Build fuzzers" make \
+     @@ ci/run-build-and-minimal-fuzzers.sh: group "Build fuzzers" make \
+       	fuzz-all
+       
+      -for fuzzer in commit-graph date pack-headers pack-idx ; do
+     -+for fuzzer in commit-graph date pack-headers pack-idx config ; do
+     ++for fuzzer in commit-graph config date pack-headers pack-idx ; do
+       	begin_group "fuzz-$fuzzer"
+       	./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
+       	end_group "fuzz-$fuzzer"
+      
+       ## oss-fuzz/.gitignore ##
+     -@@ oss-fuzz/.gitignore: fuzz-commit-graph
+     +@@
+     + fuzz-commit-graph
+     ++fuzz-config
+       fuzz-date
+       fuzz-pack-headers
+       fuzz-pack-idx
+     -+fuzz-config
+      
+       ## oss-fuzz/fuzz-config.c (new) ##
+      @@
+      +#include "git-compat-util.h"
+      +#include "config.h"
+      +
+     -+#include <stdio.h>
+     -+#include <string.h>
+     -+
+      +int LLVMFuzzerTestOneInput(const uint8_t *, size_t);
+      +static int config_parser_callback(const char *, const char *,
+      +					const struct config_context *, void *);
+     @@ oss-fuzz/fuzz-config.c (new)
+      +					const struct config_context *ctx UNUSED,
+      +					void *data UNUSED)
+      +{
+     -+	/* Visit every byte of memory we are given to make sure the parser
+     -+	 * gave it to us appropriately. Ensure a return of 0 to indicate
+     -+	 * success so the parsing continues. */
+     -+	int c = strlen(key);
+     ++	/*
+     ++	 * Visit every byte of memory we are given to make sure the parser
+     ++	 * gave it to us appropriately. We need to unconditionally return 0,
+     ++	 * but we also want to prevent the strlen from being optimized away.
+     ++	 */
+     ++	size_t c = strlen(key);
+     ++
+      +	if (value)
+      +		c += strlen(value);
+     -+	return c < 0;
+     ++	return c == SIZE_MAX;
+      +}
+      +
+      +int LLVMFuzzerTestOneInput(const uint8_t *data, const size_t size)
+      +{
+      +	struct config_options config_opts = { 0 };
+     ++
+      +	config_opts.error_action = CONFIG_ERROR_SILENT;
+      +	git_config_from_mem(config_parser_callback, CONFIG_ORIGIN_BLOB,
+      +				"fuzztest-config", (const char *)data, size, NULL,
+
+
+ Makefile                            |  1 +
+ ci/run-build-and-minimal-fuzzers.sh |  2 +-
+ oss-fuzz/.gitignore                 |  1 +
+ oss-fuzz/fuzz-config.c              | 33 +++++++++++++++++++++++++++++
+ 4 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 oss-fuzz/fuzz-config.c
+
+diff --git a/Makefile b/Makefile
+index 4e255c81f22..af32028b18f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -757,6 +757,7 @@ ETAGS_TARGET = TAGS
+ # runs in the future.
+ FUZZ_OBJS += oss-fuzz/dummy-cmd-main.o
+ FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
++FUZZ_OBJS += oss-fuzz/fuzz-config.o
+ FUZZ_OBJS += oss-fuzz/fuzz-date.o
+ FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
+ FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
+diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal-fuzzers.sh
+index 8ba486f6598..a51076d18df 100755
+--- a/ci/run-build-and-minimal-fuzzers.sh
++++ b/ci/run-build-and-minimal-fuzzers.sh
+@@ -12,7 +12,7 @@ group "Build fuzzers" make \
+ 	LIB_FUZZING_ENGINE="-fsanitize=fuzzer,address" \
+ 	fuzz-all
+ 
+-for fuzzer in commit-graph date pack-headers pack-idx ; do
++for fuzzer in commit-graph config date pack-headers pack-idx ; do
+ 	begin_group "fuzz-$fuzzer"
+ 	./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
+ 	end_group "fuzz-$fuzzer"
+diff --git a/oss-fuzz/.gitignore b/oss-fuzz/.gitignore
+index 5b954088254..a877c11f42b 100644
+--- a/oss-fuzz/.gitignore
++++ b/oss-fuzz/.gitignore
+@@ -1,4 +1,5 @@
+ fuzz-commit-graph
++fuzz-config
+ fuzz-date
+ fuzz-pack-headers
+ fuzz-pack-idx
+diff --git a/oss-fuzz/fuzz-config.c b/oss-fuzz/fuzz-config.c
+new file mode 100644
+index 00000000000..94027f5b97e
+--- /dev/null
++++ b/oss-fuzz/fuzz-config.c
+@@ -0,0 +1,33 @@
++#include "git-compat-util.h"
++#include "config.h"
++
++int LLVMFuzzerTestOneInput(const uint8_t *, size_t);
++static int config_parser_callback(const char *, const char *,
++					const struct config_context *, void *);
++
++static int config_parser_callback(const char *key, const char *value,
++					const struct config_context *ctx UNUSED,
++					void *data UNUSED)
++{
++	/*
++	 * Visit every byte of memory we are given to make sure the parser
++	 * gave it to us appropriately. We need to unconditionally return 0,
++	 * but we also want to prevent the strlen from being optimized away.
++	 */
++	size_t c = strlen(key);
++
++	if (value)
++		c += strlen(value);
++	return c == SIZE_MAX;
++}
++
++int LLVMFuzzerTestOneInput(const uint8_t *data, const size_t size)
++{
++	struct config_options config_opts = { 0 };
++
++	config_opts.error_action = CONFIG_ERROR_SILENT;
++	git_config_from_mem(config_parser_callback, CONFIG_ORIGIN_BLOB,
++				"fuzztest-config", (const char *)data, size, NULL,
++				CONFIG_SCOPE_UNKNOWN, &config_opts);
++	return 0;
++}
+
+base-commit: 945115026aa63df4ab849ab14a04da31623abece
+-- 
+gitgitgadget
