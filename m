@@ -1,16 +1,16 @@
 Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5060A548F0
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF195476B
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710532019; cv=none; b=CKTNO2ySsmizELcm4SdyXyeKYnhSWigfvrhQfR5unykcEa3I6wLpzvewmIUEp7StvP2DJNC4NFlU4HyktxnFf/Q2UDmHDjrdvGIRNzZl+xi2ktlTIZ8SKLIPRFSqTcW4CMk4RJQ5EI/EQxUIXqBA7PYP1vABZw/I86XjcMPa8kI=
+	t=1710532020; cv=none; b=PE2oGq54PJf4ZR2aWywVlRRaTiPIe/enWtBN0kVLyALuEVh8StoTbU1yHEZGg9Pp8mVX3QQHyAGgcEm5XAD9VzfFZ+ZZfd/svJrgd82kKT1HnT4cVbYy2BZrLU4jQ7LVmdcOiC2QhxgbSJKwG8SfY/57vRZAtkUKyLHurq+QHSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710532019; c=relaxed/simple;
-	bh=Ka5Cjs70+6pU9eIPGJj+hJfBDJq6YqNeVh3vxWfJhYo=;
+	s=arc-20240116; t=1710532020; c=relaxed/simple;
+	bh=00qYA7JTXb+lUKMTo/3W3A/ZOBd5zgZTElU8QNd1h1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUkMpa710G2onbcr8nWtgpHPxJlwTzygpDSRwbMrE3O/q6BOrGTHJQeN0MYZbJJ0UuIuIqifopxhTThxXdHEZbnTji5sU8csOIIldg87uF8yFtQ7/K5ZsugFH0npRBk+wgSfztyQ+kmchCqZjic+eYSiFnNZfh1hbCR4iPhKAJs=
+	 MIME-Version; b=OegRUX5d+SnaaU5KNMpoQXjIE8xqpyKhqthdG+thCVEWuSAB3+yVa1zuIpMDTgfPVkJlcCdkvZZt0iLMpb/OLIFnCdDxh62WepdDQZQlwtJ9s/EFd+U9M0rbXKnZMnuV/PQDaqRa6xbozSaLQPGO75nVKA+LzTS5JaenzJDd8+I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
@@ -18,25 +18,25 @@ Received: from s019.cyon.net ([149.126.4.28])
 	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
 	(Exim)
 	(envelope-from <bb@drbeat.li>)
-	id 1rlDW2-000000002GF-0l17
+	id 1rlDW1-000000002Fx-0NBY
 	for git@vger.kernel.org;
-	Fri, 15 Mar 2024 20:46:54 +0100
-Received: from [10.20.10.233] (port=35730 helo=mail.cyon.ch)
+	Fri, 15 Mar 2024 20:46:53 +0100
+Received: from [10.20.10.233] (port=35382 helo=mail.cyon.ch)
 	by s019.cyon.net with esmtpa (Exim 4.96.2)
 	(envelope-from <bb@drbeat.li>)
-	id 1rlDW1-006ash-0A;
-	Fri, 15 Mar 2024 20:46:53 +0100
+	id 1rlDVz-006asC-39;
+	Fri, 15 Mar 2024 20:46:51 +0100
 Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id B71AE1800FD;
-	Fri, 15 Mar 2024 20:46:51 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Fri, 15 Mar 2024 20:46:51 +0100
+	by drbeat.li (Postfix) with SMTP id A027A180130;
+	Fri, 15 Mar 2024 20:46:50 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Fri, 15 Mar 2024 20:46:50 +0100
 From: "Beat Bolli" <bb@drbeat.li>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v2 20/22] t/t9*: merge "grep | sed" pipelines
-Date: Fri, 15 Mar 2024 20:46:17 +0100
-Message-ID: <20240315194620.10713-21-dev+git@drbeat.li>
+Subject: [PATCH v2 19/22] t/t8*: merge "grep | sed" pipelines
+Date: Fri, 15 Mar 2024 20:46:16 +0100
+Message-ID: <20240315194620.10713-20-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240315194620.10713-1-dev+git@drbeat.li>
 References: <20240305212533.12947-1-dev+git@drbeat.li>
@@ -58,50 +58,109 @@ X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- t/t9118-git-svn-funky-branch-names.sh | 2 +-
- t/t9350-fast-export.sh                | 2 +-
- t/t9824-git-p4-git-lfs.sh             | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ t/t8013-blame-ignore-revs.sh | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
-index a159ff96b718..d3261e35b818 100755
---- a/t/t9118-git-svn-funky-branch-names.sh
-+++ b/t/t9118-git-svn-funky-branch-names.sh
-@@ -38,7 +38,7 @@ test_expect_success 'setup svnrepo' '
- # SVN 1.7 will truncate "not-a%40{0]" to just "not-a".
- # Look at what SVN wound up naming the branch and use that.
- # Be sure to escape the @ if it shows up.
--non_reflog=$(svn_cmd ls "$svnrepo/pr ject/branches" | grep not-a | sed 's/\///' | sed 's/@/%40/')
-+non_reflog=$(svn_cmd ls "$svnrepo/pr ject/branches" | sed -ne '/not-a/ { s/\///; s/@/%40/; p }')
+diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+index 9a03b0f361ff..dbfbd86e83a7 100755
+--- a/t/t8013-blame-ignore-revs.sh
++++ b/t/t8013-blame-ignore-revs.sh
+@@ -25,11 +25,11 @@ test_expect_success setup '
  
- test_expect_success 'test clone with funky branch names' '
- 	git svn clone -s "$svnrepo/pr ject" project &&
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index d86d07a79d4f..1eb035ee4ce5 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -537,7 +537,7 @@ test_expect_success 'full-tree re-shows unmodified files'        '
+ 	git blame --line-porcelain file >blame_raw &&
  
- test_expect_success 'set-up a few more tags for tag export tests' '
- 	git checkout -f main &&
--	HEAD_TREE=$(git show -s --pretty=raw HEAD | grep tree | sed "s/tree //") &&
-+	HEAD_TREE=$(git show -s --pretty=raw HEAD | sed -n "/tree/s/tree //p") &&
- 	git tag    tree_tag        -m "tagging a tree" $HEAD_TREE &&
- 	git tag -a tree_tag-obj    -m "tagging a tree" $HEAD_TREE &&
- 	git tag    tag-obj_tag     -m "tagging a tag" tree_tag-obj &&
-diff --git a/t/t9824-git-p4-git-lfs.sh b/t/t9824-git-p4-git-lfs.sh
-index fd430403d716..80c8c31e320f 100755
---- a/t/t9824-git-p4-git-lfs.sh
-+++ b/t/t9824-git-p4-git-lfs.sh
-@@ -18,7 +18,7 @@ test_file_in_lfs () {
- 	sed -n '3,3 p' "$FILE" | grep "^size " &&
- 	test_line_count = 3 "$FILE" &&
- 	grep "size $SIZE" "$FILE" &&
--	HASH=$(grep "oid sha256:" "$FILE" | sed -e "s/oid sha256://g") &&
-+	HASH=$(sed -ne "/oid sha256:/s/oid sha256://gp" "$FILE") &&
- 	LFS_FILE=".git/lfs/objects/$(echo "$HASH" | cut -c1-2)/$(echo "$HASH" | cut -c3-4)/$HASH" &&
- 	echo $EXPECTED_CONTENT >expect &&
- 	test_path_is_file "$FILE" &&
+-	grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse X >expect &&
+ 	test_cmp expect actual &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 2" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse X >expect &&
+ 	test_cmp expect actual
+ '
+@@ -53,11 +53,11 @@ do
+ 	test_expect_success "ignore_rev_changing_lines ($I)" '
+ 		git blame --line-porcelain --ignore-rev $I file >blame_raw &&
+ 
+-		grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
++		sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
+ 		git rev-parse A >expect &&
+ 		test_cmp expect actual &&
+ 
+-		grep -E "^[0-9a-f]+ [0-9]+ 2" blame_raw | sed -e "s/ .*//" >actual &&
++		sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
+ 		git rev-parse B >expect &&
+ 		test_cmp expect actual
+ 	'
+@@ -79,10 +79,10 @@ test_expect_success ignore_rev_adding_unblamable_lines '
+ 	git rev-parse Y >expect &&
+ 	git blame --line-porcelain file --ignore-rev Y >blame_raw &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 3" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 3/s/ .*//p" blame_raw >actual &&
+ 	test_cmp expect actual &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 4" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 4/s/ .*//p" blame_raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -92,11 +92,11 @@ test_expect_success ignore_revs_from_files '
+ 	git rev-parse Y >ignore_y &&
+ 	git blame --line-porcelain file --ignore-revs-file ignore_x --ignore-revs-file ignore_y >blame_raw &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse A >expect &&
+ 	test_cmp expect actual &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 2" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse B >expect &&
+ 	test_cmp expect actual
+ '
+@@ -106,11 +106,11 @@ test_expect_success ignore_revs_from_configs_and_files '
+ 	git config --add blame.ignoreRevsFile ignore_x &&
+ 	git blame --line-porcelain file --ignore-revs-file ignore_y >blame_raw &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse A >expect &&
+ 	test_cmp expect actual &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 2" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse B >expect &&
+ 	test_cmp expect actual
+ '
+@@ -121,10 +121,10 @@ test_expect_success override_ignore_revs_file '
+ 	git blame --line-porcelain file --ignore-revs-file "" --ignore-revs-file ignore_y >blame_raw &&
+ 	git rev-parse X >expect &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
+ 	test_cmp expect actual &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 2" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
+ 	test_cmp expect actual
+ 	'
+ test_expect_success bad_files_and_revs '
+@@ -279,11 +279,11 @@ test_expect_success ignore_merge '
+ 	test_merge M B &&
+ 	git blame --line-porcelain file --ignore-rev M >blame_raw &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse B >expect &&
+ 	test_cmp expect actual &&
+ 
+-	grep -E "^[0-9a-f]+ [0-9]+ 9" blame_raw | sed -e "s/ .*//" >actual &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 9/s/ .*//p" blame_raw >actual &&
+ 	git rev-parse C >expect &&
+ 	test_cmp expect actual
+ '
 -- 
 2.44.0
 
