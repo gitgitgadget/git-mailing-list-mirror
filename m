@@ -1,61 +1,62 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2092.outbound.protection.outlook.com [40.107.237.92])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2123.outbound.protection.outlook.com [40.107.220.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C556117
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 00:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670DD19F
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 00:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.123
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710461473; cv=fail; b=THwr553P6mOqHVWtJt18ABd/XY56O24+U6B0UXEB3k5SijGhmcdpL5jAP7VML1+uoNOo6HWraJx4QD0mZHzVQo9UGl4KG/3CRPjbZdyGSInM+dxepxOqSrEZXqqMqkmnzk2IXdC8Wv+zJB+P/P0DydIGnB0ogdgQLc7Y4WkuSus=
+	t=1710462001; cv=fail; b=GyNr42O+k6WH+pjEg62jxXDXl/uj9n9ODwbz7lsp/hQcb5vvkDmaz+0XVJ5dW1/BYGhItMhrnW7ShDax0ViGsHtb+qHe/IdSh8iRt5L0sQ6mHw79HDj2jcoqe/Mi5DkryZJBoSdOwq8MU7WaKTtGOaqwGzXbGsi0BO5Wqit+1Ps=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710461473; c=relaxed/simple;
-	bh=YvNfqehDh872o6BcO0Qzn+SikdTnzgPchrwLTgIgInY=;
+	s=arc-20240116; t=1710462001; c=relaxed/simple;
+	bh=AjYyoyENi4AaL7EAiBCC/jd6SkQdkIAhOkXWI/iILlI=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Y9hcmYIALRaGzYc5ccWLB7nWOeKX2RN02SofA+P+JWPSgLR1AntbAYa5kQxUwERenNpvOYdfPuHdb8Sp4FE7vSZM+Op3s/K3FpJOnpmpnzUFMfOeGsddmeJJCotaXtDNrMZu7gLokmeZqD2qVUFyIMTTPHP8XIp7Vl2AMFYRBQ8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=webpros.com; spf=pass smtp.mailfrom=webpros.com; dkim=pass (2048-bit key) header.d=webpros.com header.i=@webpros.com header.b=mzkYf0Zr; arc=fail smtp.client-ip=40.107.237.92
+	 Content-Type:MIME-Version; b=PC3jJ+ivDRjsz2oNJiTlahViellozJHWxP4rFHWctF4gqgDRn0DTSfnWsYLoNv1IbuSxhLSU1HCcQImjj604SoLdPlgCd1VVQZI7I5/11R7ESUaoxTl30aIOsd8tMZgGi6e/whI6eSvKs06Omoe0AuvvB96eSZm4RTyqZ8xqtkY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=webpros.com; spf=pass smtp.mailfrom=webpros.com; dkim=pass (2048-bit key) header.d=webpros.com header.i=@webpros.com header.b=XPZ96Eei; arc=fail smtp.client-ip=40.107.220.123
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=webpros.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=webpros.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=webpros.com header.i=@webpros.com header.b="mzkYf0Zr"
+	dkim=pass (2048-bit key) header.d=webpros.com header.i=@webpros.com header.b="XPZ96Eei"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=M6gGjavmqDWkIEoPoE/2/2jzzNGpDbPDoDucpIyDEE+VBFgjps5OtKBrTlKAbQMWiuwub3PLx/+Nj2UM07vWRjqrm8msuHtGnao/1EQtFRYuczQE1M//p7I5ieAKlvzJEPwkkC80hLNup6EjOOAOqKLoXFl0BZoTo9LZwbJJpOEx3sYigtEt6yEU+kMOzX2ET0qHQSbSvkCdgV3x7Qs2WQ2fSkq3Gzx573cBY9RLjw16sSGieg1ZC7CpeRqo8+jlTB5Vv2fxRBBL2RjmPXbZ/ZpX2ddIiD79mTY6icEwpVzTvZCkIVyWBhDTsK9cnWq/89npEVrSj04Gdr3ZbJYmpw==
+ b=E7za628Wsfli5T2QjlvYMMgzY/gFRchUlndUG6deFI1AS/d5qZfIp73H9xrhG8+Uw8VWd3nGFyqSoVGjSyfX7v3Uw8KSSTRAjM/tCe5nnXv298si/jTeQPZOk1U9uYytfxy0ZFRrhvR1JH9T2iLyYzM45rrjvXTZry+3KjBclk68o/1nyDLg3O16igNSMGNZRxusNTg80Y9qLxPxtr55KwETmieE8cPbea4f5xjOj+RLZiTS9v9Ui58QUSnEtNjsKhU3MygVU/fwDH21ZG3arst+9fkrX+bhc002oIPE7bJO3pczqkvNA0eIkqws5F37Vsdy6TSyVxP83h46+fq/uQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OBUPslRwMo7Ap2xDL+AkcQiOWdg9pRLydKhjhkMqfuk=;
- b=ium0nIHGCRsdTNhx4OdqsgmFbo/PTkc54Op7qYdrn6SawRvGkEGGXbaXsPDd0x/SISj/5BazlGdmcCwn+wDIimMs5EMkApw15dK/Mf1Qol22t1gup7LveCbNpiFGZd1HElPAEf9DtED9FJ8GKcXhxryegBSSD5QBTx+S5UJ/TxlAkUwuL6dgdAlowLJcDemEOwNXj/6ILZpINgY1f1Kh33i5SasxPxttlMlTeYFKIBJmiX25lCq+deSCR8zkzX1xhg5SOqdUwMGofZNn9IKHFubNR3CR80iCiBQ17HbCmdir6pMyyWqMp250ctCoMAlo4jDVuCeER2m6sJrogsWoMg==
+ bh=yLTeq0bppkGj/dSdX4gvdfAHUM5p2OLiwSkgbNH9CDA=;
+ b=l/nGuvmpTaNZstg2+sMrFvbHUerGy8+42/3i4KZSGUigeDSOUuATekGwjfnnpbwuitLqLIKq/RpSHfedGdpT2GmhkpALcV5GG/Y8quI/xpS6G3AV5f/ZCfECNj0GQ83SbL6qtIOx2FYSqmesa9/xSDbBf3xQkqTwoKQswyGlXIukWhL57jNK170asmRDujg5xQ/6wqUh/d/PfKBCfY6fXwT6SEYYq96n6Ehss5hBXTYxd0eH+E81cgCqBoNAmGGpFOVZmuyK70QFffCT1d6uTYSgCwL/BMA4TO6ADgGzLC0nuvSK0zENVFKaYKAALYl70PW0mx45NLIp7Dp+kMvymw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=webpros.com; dmarc=pass action=none header.from=webpros.com;
  dkim=pass header.d=webpros.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=webpros.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OBUPslRwMo7Ap2xDL+AkcQiOWdg9pRLydKhjhkMqfuk=;
- b=mzkYf0ZrNaePM8PnUy3ilbaocR69WEDGLR2U2+Qd00l5VfkKj1iQ1F70We+jmvA8B8MLt7rC24eTEYzZeDmlVvrxDlGX8w4WTTnl/+MxGj8VZtvOqCis1gdNA5Xgs/VmHwEX9sZj3A02k0jTGiwWLydrBR5WtPT5A6X0vJaYHKrP6xlSeZkjoAG+dLdygjDKiQOkr3iUy3H71hCktCRqWcLWXUrPCLwKKIIchpJ4nftZDLzTigfdnmD6wAorVurc4BivAEnByR0HEHFn8/k3JNW9MfiyMvYUe8SSmWFJAZ6CNDLDHhEHMOmSoBlpm4XOuT32kOhRHP4G0lKLAtfXuA==
+ bh=yLTeq0bppkGj/dSdX4gvdfAHUM5p2OLiwSkgbNH9CDA=;
+ b=XPZ96EeiVWAM7ymIsOYR6eNL2zx8otxidv2zE65eXqV/DAWi4yIF9XMAlnQdedwKTdpcYnZMxt94SmYpdreFIdeiczlP5KRcCbPqM3PO4xtw5sR6G03/n5ReIRGHkvaj3/KixgJ40KXofY04i2EczjuAsSjGr46ALFTisE7qy1RuuKIP/xCYRN4gLlLpHRm+z0ih3s01WIi8SNeS+4Zv4MLxAband2uLMBxo6WNhPx1Ctsnp1IwdZ1MUwQ4TzOq2k0tLjb9SOrXnGgiEEzNTRBX0o7KtSfRG4Twkh/re9i7FodstvUzPDfRNJ48fLmGaSSLnBf3mofHPO+dKwqqh8Q==
 Received: from PH0PR14MB4702.namprd14.prod.outlook.com (2603:10b6:510:83::23)
- by PH7PR14MB5846.namprd14.prod.outlook.com (2603:10b6:510:1b1::21) with
+ by CY8PR14MB6363.namprd14.prod.outlook.com (2603:10b6:930:86::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.20; Fri, 15 Mar
- 2024 00:11:07 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Fri, 15 Mar
+ 2024 00:19:57 +0000
 Received: from PH0PR14MB4702.namprd14.prod.outlook.com
  ([fe80::780f:93d5:996a:1fed]) by PH0PR14MB4702.namprd14.prod.outlook.com
  ([fe80::780f:93d5:996a:1fed%7]) with mapi id 15.20.7386.017; Fri, 15 Mar 2024
- 00:11:07 +0000
+ 00:19:57 +0000
 From: Christopher Lindee <christopher.lindee@webpros.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano
-	<gitster@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>, "brian m. carlson"
+	<sandals@crustytoothpaste.net>
 CC: "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: [PATCH 0/2] Optionally support push options on up-to-date
  branches
 Thread-Topic: [PATCH 0/2] Optionally support push options on up-to-date
  branches
-Thread-Index: AQHadLHezsdN01rhbUOhmHwkmqTtTbE2SreNgAGRaICAABTk5Q==
-Date: Fri, 15 Mar 2024 00:11:07 +0000
+Thread-Index: AQHadLHezsdN01rhbUOhmHwkmqTtTbE2SreNgAGRaICAAAl9poAADcBs
+Date: Fri, 15 Mar 2024 00:19:57 +0000
 Message-ID:
- <PH0PR14MB4702D52DAA9AA81BEDB32D1E8D282@PH0PR14MB4702.namprd14.prod.outlook.com>
+ <PH0PR14MB4702D85D5D40F910A97B49E98D282@PH0PR14MB4702.namprd14.prod.outlook.com>
 References:
  <SA1PR14MB4691B63C740F95D7D8A495628D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
- <xmqqa5n168nh.fsf@gitster.g> <ZfOAdVy9_UfTj3zE@tapette.crustytoothpaste.net>
-In-Reply-To: <ZfOAdVy9_UfTj3zE@tapette.crustytoothpaste.net>
+	<xmqqa5n168nh.fsf@gitster.g>	<ZfOAdVy9_UfTj3zE@tapette.crustytoothpaste.net>
+ <xmqqv85otmsb.fsf@gitster.g>
+In-Reply-To: <xmqqv85otmsb.fsf@gitster.g>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach:
@@ -64,46 +65,46 @@ msip_labels:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=webpros.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR14MB4702:EE_|PH7PR14MB5846:EE_
-x-ms-office365-filtering-correlation-id: eeaabb25-0d39-49c0-6bc5-08dc44846950
+x-ms-traffictypediagnostic: PH0PR14MB4702:EE_|CY8PR14MB6363:EE_
+x-ms-office365-filtering-correlation-id: 73f0f506-78e2-45e9-163b-08dc4485a56d
 x-ms-exchange-atpmessageproperties: SA
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
 x-microsoft-antispam-message-info:
- cmS+m41Frxd+3Y7xa/qgDalaZdT/FAFxlYVEjbTahF/1XvAmjgSMr+6u6/uCFouckzaMWROUJ2V15zJOiMcG72uoBuyhcudr7Gd+hF069MveJsoYmyvdW67T9IHrifrlVTZSKVEeCLeb7fibdROgeu8KolQ+Yo93zDVkQsVhj5YOo6OAab8fs+2N5jZfn1zCBGNOsWdTX6PvC/KJttFqy3Bvk9XDxHduzcvy87ncLa76i8TyWHDpH2BjgP/WOqEl/IWOMfZhBvNsk9zcnxK2AY54i9fNwHR+ePp6bZwA2c52SSbsrXzEB+4zTfo9Qp+29cwWx0kEoSJjEPaANacO1KaQnKQlT4xcbOcvJvfblXuEO1kY8zj6YemGlN60vbJIsuI2YJnrUiqNZs6kYNlqAn2YfMDnjkVv8zXRowiBH69mz7IetZQBIi+ALlTY669EgLoP77LOhgBQzW9MVj8lgfi2G5bIjutPSulaJs8u+lt2XUNbqb8An0JjFjsW5vfnsiYj01E6q0fd9Wu7Cx1qEnk5PiFGSfBInZDrOrvF98ibbL1VECOYTtlIZAy5neKJHZb+JufEFL5+OeVpFZDb8QHDlz1MMv2Tf8+yxl1tH+iJAjgylLjhscgJiiD5WCwfKHS4T2sdEeYf5X7mbjgxkIKbtDY5Pk1ppyaffX5droPM+DH/iEr7ozQbdhu0X+7BVP9Zsfp5lwMyQLtLIPTLtRpCQMEJcreKvhubEAy8KZ8=
+ aagK7P1YwTYGkCh/ao0Pxfd2s9UzrvR8kRxi8QUE+L/l5nuNGRj6w4DhgYAoCRMWWj91+fCKC28BY+NClE5JIsa+ruPcqeoHvR6oP5EDOxb93mOajQ1/3K3IUdNabRq3h2UxZQe+yOiX8oyn44JzZQHyGjBRViDpKf+B2XhNVmyGe8x/I7GPm5o35mDf6NwG0lKuhZ0MK/F2GcIQYWWstHh5xQ+8BFQ6qmxqproxx2BuL36q+zqK3noYijsgS4iH1USniu1VSjIMQ84cPK+WqXok2WoeXOQaMK06uuLr2S17DwtbTuSmodICWnk17hCy2W7XmFYNwptcwuSTcXuh6GE19XAaRO4sHO7J6Eb4H2cTDyUiDt/m8wfT8ab9hMmVR3k4NLJZLV3DqT/pZsVPkBzdxVAb5EZBw8WuNr+Yreb9v1OjPVY7AV4VRZsPvNo9JzKMl5Ynx8Dvr+zURGz1XphoLSoDan42unAw1doZpDIMlFDfw9MwjXaTD52AN+uldJVueHw16uuaYQVMA5IDf8jY/ZCoRLPh6lGUcS68JLB4D3E1pfaOiLreQ5ask2tF07Z4hNpGz+50SOiZWWYNefQNKBcouw/8gkkJI9BP+5/n4EL/9RlDimBbPgH98TeKHfe+Q3ZAsISJjAj27t93W0M68oUV71Ya+NlUT1ThdF7LqcfsVX8PGbOYUNL4AreXAhRgzbJPMLD/MgKht5mGqdMAK70xQ1c2rBxKtKMehOU=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR14MB4702.namprd14.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(376005)(1800799015)(38070700009);DIR:OUT;SFP:1102;
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR14MB4702.namprd14.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007)(38070700009);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?Qu3KwLtf5HegWI+LXAEUgNgumJu+lyXXaRA/Cw8QE7CjBe4Dogop78lGHH?=
- =?iso-8859-1?Q?ZbU9bsNrK1NkwkzxFz7ZdRqPyraqqI92TssC6XSTfqZi3208GbDsxYD8CZ?=
- =?iso-8859-1?Q?jzghEnL8GbqVxVtgcRFUtuRN+mEKYeMW1EoPN2cYn5kGIszusLVvtbPvdI?=
- =?iso-8859-1?Q?Leoxck4q/zHv3j9sTlRoCKt39HxNsA5453S/RsRCE5OWmMLG9CMjPUdL5s?=
- =?iso-8859-1?Q?O1W1r6YlAEGtUjkgoay2e4EjonZ7lNbFCeqmFMy3gPRUQ/46SS/J9Is42I?=
- =?iso-8859-1?Q?+h8zkXJMn6un+IgYvkVEI2hGb1574qPhzKJvQPsDAHLnfNNIfsR2iHThbz?=
- =?iso-8859-1?Q?6XBQJMp1uWlxuY6aaTDoGWjZQkXf8/XZmurzzui7sTI00isWuwOT6suv1W?=
- =?iso-8859-1?Q?P1AGgy06Hiv0E8NAQX3qFPl9DVRCDcAnOAQshNJcP02Jcyoi3h3upb2o6z?=
- =?iso-8859-1?Q?Zt5l6on43PMDbPsWS1UWOhOYwIILsznUEs8b+0hxZcUghd0HLTY2ZEHpap?=
- =?iso-8859-1?Q?PJR48cwkDPVP4i4uw3+pr1eJ0yZiKDNUzgfLYW+zhlBA1x3tRRq6YIvfPl?=
- =?iso-8859-1?Q?4wYohiitYbmqV6hhS/zIkuXZu7R/eG5OY9VE2Sq9Yd2XgH0l/LtUtTV0kl?=
- =?iso-8859-1?Q?OxG8BXO7xj93/djF3KPYJPsJHTuHJLtenY2SjypF3rpydhWa/1OhuiacW7?=
- =?iso-8859-1?Q?Ujwj40cLJJIPm4zaaJgg9QvQmUV/IiK16KiDKl7caq1kbFfRHdVVKoH9LP?=
- =?iso-8859-1?Q?8RGWt79ln/y+LJeE9vSVespmhn5vmVfXSKCUaqQqukuSZicBOgHupcaDv3?=
- =?iso-8859-1?Q?Ge5A/62uu+3IFUWo4BiJ5UhHY6+eBpwmBLg2GaeGbNKrHLv2QdRjKR3cMq?=
- =?iso-8859-1?Q?GuCKHama1QkCjEV9eIjN8S9UYeFFm28BpQybZsRabAhI4gbEMeV/K/rlfj?=
- =?iso-8859-1?Q?6ZDWoKmLwe2Wjs2EY/200zbWWpk3qaT3Zx/sXlzmxY3s7lBF3v6NrL/+U9?=
- =?iso-8859-1?Q?1AT4lOLiB65RTl6+6nmghJnAvdunT087PP0hRoCKI8OWNjtlr7jtjcDGf5?=
- =?iso-8859-1?Q?8kMbQxDGoZN9ZStjYnHDELqUeuQikeqdrV+UvsIfLTZB/RWdmjHAFKqxbO?=
- =?iso-8859-1?Q?MDsoPULFGp+aocf9QcO1n0EUYIEFxv5BMVaKdxIHbcymmuVGrj7uYnEMcN?=
- =?iso-8859-1?Q?40c7bGPCkEZkry9JTPiKD3tX+njb3oRMcswTaUSxO6HMQiuXOUAyCtZQJt?=
- =?iso-8859-1?Q?7+CF++0ig+fyP2OOSKSdKmWPqJIzvvA6dYUz0fGgdB8x8el4n7e9u37kF6?=
- =?iso-8859-1?Q?weEBhsRzgeIQhnY+z7rGjPQiNCBvFbBcjjEEoWBz+s20l9pZDb4Lo8gdzH?=
- =?iso-8859-1?Q?VOy4wnnolDWi8OqFShlVh98rSy341fdXo2X+nEcsEnwI4qsnuzIeuYAz9I?=
- =?iso-8859-1?Q?r+LJSWXhVZ+9h3Cj1kx5sMkMRRefcdzXrC21aCbpNU/+yFaeWRedwe4Vno?=
- =?iso-8859-1?Q?qEK/Mirvu/sphvJLH1L7S1KKoEEQWA0iL2jBhvIF2snUD2KRenMVEcxc5O?=
- =?iso-8859-1?Q?JJb6FtirjdiCA6jYRpw+AqZEngUpCj4+DzFEmqaktr+7LWdYT8LroP1qZq?=
- =?iso-8859-1?Q?6sEmDUzqX3AG48y4DYAYMEF9k9KrR2xfh/nlGOq0ebrcZGaaZSS4lRjQ?=
+ =?iso-8859-1?Q?0da8wv1nPh9s2IZEptaolEI4IAWeGq/hl/dkWvN1HMVovgykGDOhhDqRXe?=
+ =?iso-8859-1?Q?6vGIiskz+JxNk6+yf5h7TTuTVLwRUaLHne6gF61FiYi+rdNd7WndEz8vs5?=
+ =?iso-8859-1?Q?laqmRpUB/itIyt6AiwPqNXWqPeO9j96ayn/0jWCqBo4Gnf6osOdBS+8h0K?=
+ =?iso-8859-1?Q?E6z441JzP65AuyC30lzitxQ9a9A8T+1+8Qqik8snUhCUMdc1Gm4j84jwJq?=
+ =?iso-8859-1?Q?TiJGfIKS6zaxNhPgOJlaz/qPANd4XkoSxGROYdF0ffYxNTDCDIySoY7YQT?=
+ =?iso-8859-1?Q?x9lV4na+vStOgxwTfqsqiOOfT5Y9teJo32x1jfR23Bbj6lqdxCAujgpFnI?=
+ =?iso-8859-1?Q?IQ5i6YzOyM7qKRUplDuH+b+TCsf1SZDhnY7cTYyhnApsqqETBo4QFE2OI5?=
+ =?iso-8859-1?Q?DFGAoygCtLxy+WrrFAuFB73mLSSZyjaUL6YGfMcmfEgf4CQS7uAn9Vzupn?=
+ =?iso-8859-1?Q?ZJ9Rweiv257ftfE4Yjpd3uTD2DJ9wmU4/3qDt/cpWd97QnGCJ5c3mjcyk5?=
+ =?iso-8859-1?Q?+WSmP/sBpGIllFNMjE7GKRO5IHGtkxjSFE3o8tJgS331s5zYql8E9PNHOu?=
+ =?iso-8859-1?Q?eoQ2wD2ern9ZhAev/yBFsafZ7Gs0ZKBDGrlOC9nmi6YEamAMkwKf2v820+?=
+ =?iso-8859-1?Q?yCv3dryFU1skdfhiN7oYxmdROJ7GyDG7zyp6Lv6hdgUod8J6zJ+7K+f10F?=
+ =?iso-8859-1?Q?EhvYsrPff34AKimN+gQjwdOXfUyQA9xTm7xp9gowB1l4GdUrcNVn/5wiQl?=
+ =?iso-8859-1?Q?ju9wQCWZcOk1nn8Rz1Xoq0Dch5pkHni76YZiAOO1c0JufQgML4nLh1h3VZ?=
+ =?iso-8859-1?Q?3nWB1hyPiQjT5XbclG6AzmRqJw5Fb3+vLaT58x/3iRhwo6M6BUsYaMuVuP?=
+ =?iso-8859-1?Q?GXzzu1Yj9aRnuFpSIHmvmJXVKmQmHZSZikaz0oBL3nM9+Oe/ue6xnTa7Ah?=
+ =?iso-8859-1?Q?dwbJDPdkmigbJwe2t4vHTdLBetpcF1JCweM9AksP2UpfoDGuhqSj2Df/Rd?=
+ =?iso-8859-1?Q?4ylB5HQQgDTCIxl9Z3OObs83wS7nHnHVO7M8cxKOeKLC9Q2+B8tqoZITyZ?=
+ =?iso-8859-1?Q?bhLUwue+NjGyIqnTzoN5QGSylWObElrXlYU53Q26scV/syhtPi/pOrArPf?=
+ =?iso-8859-1?Q?P0AmE1e99hd8oEHI2qmWtxcTVX3rEUhUkLtAPG6sKuN6rzZyVatPNHaw7h?=
+ =?iso-8859-1?Q?nSGWIQhA+SdLLTzD2KFgUhTbGADAw+0AKMFzbCBAWtG5GY8dglW0Lv2i1+?=
+ =?iso-8859-1?Q?xeTvH0GQcfBrBpxApSb7HLofA9pSzNRIaups4zAovtlIG92oIViACOdx0X?=
+ =?iso-8859-1?Q?evgyfvJzYp/YYJBV2SQ49eioORFt3PASqwc1JNE4amPwjDz+EV5pKFIuKc?=
+ =?iso-8859-1?Q?pX6Pg9TqoTcB9kKtoTKqF3T+iyOfkgh+zbdn/Dpq5ER2aVLfoBu74QhfQ2?=
+ =?iso-8859-1?Q?/Aklg6F7eGBtZoMMl3citMQqW12SgVzt6kszNX6kk8iwhZkUsTuXyMvTxy?=
+ =?iso-8859-1?Q?tSREzOt29XcvfM0XNZxCMehr9uQunreav08qoBN8vOh042RISpfvIjd9bq?=
+ =?iso-8859-1?Q?za5udg2JQo8PIrs7AfcxPePH1+co7+hY+Ost5i3E5lqmnNABfL9hjBJreS?=
+ =?iso-8859-1?Q?mGdDJYoMz8pVZ4hYaq8hIb+SX0ENLrYIg2t/hoPsMDHpy+U57gDDCYsw?=
  =?iso-8859-1?Q?=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
@@ -116,83 +117,23 @@ MIME-Version: 1.0
 X-OriginatorOrg: webpros.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR14MB4702.namprd14.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eeaabb25-0d39-49c0-6bc5-08dc44846950
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2024 00:11:07.2587
+X-MS-Exchange-CrossTenant-Network-Message-Id: 73f0f506-78e2-45e9-163b-08dc4485a56d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2024 00:19:57.6226
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: f8497356-a834-4060-86b6-d4b1d8059ee0
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ysjmRUK4IKL+BPYyRKIRfEqS/bLgLi8scjZz3cZMVRhv4Pecb7DBInrihNDKEnUiNqtFODqv0Tq7BRICIT+7mNP3U/Y8VLE9N52WhJtOfqc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR14MB5846
+X-MS-Exchange-CrossTenant-userprincipalname: Uwk2qM0ksIfslmyNtLfLHIbAWuMP52YYL678Y/Bltx1MkgRsGtVGSRZfuiZk9ogysyXwMJvA/0oQgx/p8oO0/ZnqycMb86Z9BAxGHAj1jUg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR14MB6363
 
-brian m. carlson writes:=0A=
+Junio C Hamano writes:=0A=
 =0A=
-> On 2024-03-13 at 22:58:58, Junio C Hamano wrote:=0A=
-> > Christopher Lindee <christopher.lindee@webpros.com> writes:=0A=
-> > > This changeset proposes to address this issue by adding an option to =
-`push` and=0A=
-> > > `send-pack` that, when specified, will send refs where the old-oid an=
-d new-oid=0A=
-> > =0A=
-> > "where" -> "even if"=0A=
-> > =0A=
-> > > are identical - instead of silently skipping these refs.  The first c=
-ommit=0A=
-> > > introduces the `--send-up-to-date` option to toggle this behavior, wh=
-ile the=0A=
-> > > second commit updates the commands to output an `(up-to-date)` notice=
- for each=0A=
-> > > branch with an identical old-oid and new-oid.=0A=
-> > > =0A=
-> > > Notably, the `--force` option will not send a ref when the remote is =
-up-to-date.=0A=
-> > =0A=
-> > And it makes sense *not* to update `--force` to do the no-op push,=0A=
-> > becaues you may not want to (accidentally) force push a ref that=0A=
-> > does not fast-forward.  As I already said, tying this with use of=0A=
-> > the "-o" option is not sufficient.  So I agree we may want a new=0A=
-> > option to trigger this behaviour.=0A=
-> > =0A=
-> > A radical counter-proposal for the design is to update the client=0A=
-> > side to do this unconditionally, without needing any new option.=0A=
-> =0A=
-> I'm not sure that would be a great idea.  Since it's a push, that will=0A=
-> trigger authentication, which may prompt the user (e.g., for a password=
+> In any case, I am OK with the feature.  I just was wondering if the=0A=
+> end-user experience may become simpler and easier if we did not have=0A=
+> to have a command line option.=0A=
 =0A=
-> or token or for a YubiKey touch with FIDO2 SSH) and which they might be=
-=0A=
-> able to easily avoid.  As a server operator, I also expect that there=0A=
-> are people doing lots of needless attempts at pushing in automated=0A=
-> systems (because with enough users, there will be at least some who do=0A=
-> bizarre or inefficient things), and I would prefer to avoid serving=0A=
-> those requests if I don't need to.  (For example, for us, reference=0A=
-> updates need to go through a distributed commit protocol to update=0A=
-> multiple replicas of the repository, and if there's no ref updates, then=
-=0A=
-> we cut out multiple services which we don't need to contact.)=0A=
-=0A=
-I agree.  I could easily see a nightly cron that backs up all refs to=0A=
-a server that would then trigger server-side action.=0A=
-=0A=
-I'm curious about authentication though, when I did a packet trace on=0A=
-an up-to-date ref, I noticed it ended with:=0A=
-=0A=
-push< ...=0A=
-push< 0000=0A=
-push> 0000=0A=
-=0A=
-This suggests that something is sent back to the server.  Does that =0A=
-null entry not require authentication?=0A=
-=0A=
-> Note also that no-op ref updates cannot be simply omitted on the server=
-=0A=
-> side because we need to verify that the old value for the ref is=0A=
-> correct, or we need to reject the operation as out of date.  While it is=
-=0A=
-> _unlikely_ that the ref has changed since we fetched it from the server,=
-=0A=
-> it's not guaranteed, especially if there's an expensive `pre-push` hook.=
-=0A=
+I think we should have the command line option, if only for backwards =0A=
+compatibility.  The question on my mind is: do we default to on or off?=0A=
 =0A=
 Regards,=0A=
 Chris.=
