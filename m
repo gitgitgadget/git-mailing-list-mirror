@@ -1,107 +1,95 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3597456745
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 21:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF97811CBD
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 21:43:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710538939; cv=none; b=Hpsnnjl1wpaDT0tjUWAuqq7G/C3f8nsCqw5hQUHz4g5T5HeeBT/lCGNAc/ouqW3CDgkq8h7gxcVC2cRQrNALJWEMUivnvXqjXU/5pU0w8vVeGBSjG2wflPAnQdSM8phTizZXHx3m04O5fa2tKvHvKmXn36BIE7awmvyRoGo/QOE=
+	t=1710539008; cv=none; b=M4n82bzS6ChBz5mtAM54KmCDC4GYJtWtFBrHC25O/NmZis6TWFzFsPYqco9ZW+IEmX/LWkWV3QsRasPf3VmWLn1sIeMt9p/pum0+stry0xiBRuwM1tRYDkvF2rup/yueHQos5QNPhOUSSEajNn5oFCI4XpCuyPc+J3JuF4hA+5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710538939; c=relaxed/simple;
-	bh=i2IOrrJLTWf/6ULVm8rbx+lITn/lPhAmF/woEpDaalg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=Z02LLTYVA3eYlzisC6wiLWZ7Cw7mfOfyVVwQfUZljOoSeiPeY1uKgSWy5UB6lfgtb2STylrIdW6An9ZcrLJYebRuwI9DqmP40B4+EdnUYvWYmtllfwN3SdjfyR2KELThxD5/jUGE7PX6cyICHXmpeQtZ9USxAuWzKCuXkR7S3Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=bh8NNn/E; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710539008; c=relaxed/simple;
+	bh=UcUyJWC65HcZUTceFLdm9GmRLru8pbG7nFe8N1tko1E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jL0w3fMKiqKutAr4OjDZXplx/3VhanmahlCAEV7HqHC0iJ3M55hBETco4FszgyzmAAqj2huqildsBD8wcrZ/tWChkxwqjJPH/XcIp71pnmlrpGsxMj9YQEieQr7vy+NVpnlnLeZiUzITJAXLmAdLQqsMa92BqNjRCekr1biTkxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vNvHfTHM; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="bh8NNn/E"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vNvHfTHM"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1FFEB3496F;
+	Fri, 15 Mar 2024 17:43:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=UcUyJWC65HcZUTceFLdm9GmRLru8pbG7nFe8N1
+	tko1E=; b=vNvHfTHML7ahYqCHIOmL7vonrIxDsoUG6v3yof/YoAIzO1+kydDd8W
+	Y51yykCtOswQO82mCLpLrj5qp7711TcqcAHQJFSZ5xlOsTWb9db8jFTjYJUEf7DL
+	ePx8VvXByqdxIWoFjgZOYTAav+tqPV49sQOeF7OqkUR1Xk5WMcZoo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 171363496E;
+	Fri, 15 Mar 2024 17:43:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A57263496B;
+	Fri, 15 Mar 2024 17:43:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
+ <christian.couder@gmail.com>,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 0/5] Unify trailer formatting functions
+In-Reply-To: <owly4jd741ph.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Fri, 15 Mar 2024 14:36:26 -0700")
+References: <pull.1694.git.1710485706.gitgitgadget@gmail.com>
+	<xmqqjzm3qumx.fsf@gitster.g> <owly4jd741ph.fsf@fine.c.googlers.com>
+Date: Fri, 15 Mar 2024 14:43:18 -0700
+Message-ID: <xmqqv85np3wp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710538932;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=rEgjt4kX4pypEFYpW+p1/YEENpuN0yLAFzddjSvzeLc=;
-	b=bh8NNn/EkefohVM9E9OqEK1l6uUubm0LNj8eay0rumcNzHf/4jjshRQxKKezslVBe5kUEY
-	YQK78Qyfu7Wp40M59COAd6IEjYAfpEYqGezIhGjIZKTgw0/XOrqOeDVUXGPzRa1WJvqLp3
-	Dj186yC+AE56Y0fdOQIiaiyEgbe89yU7gy5Hz4w+fYwDN/W2QQS6pfy6k4Gxi1KhpNGmlk
-	aCxW2eUUjBxqffbCVt3q5LN5PaiVOK+dpLVDGUFRzTklAlQYIpvTOzlOTe/D+YMplYTRq/
-	m8Eyj9l5kUnFLD+WTl34j6ApeUTLVTCO6IRVNc8LA8v/XPpIbdbx/0fLbGYKpw==
-Date: Fri, 15 Mar 2024 22:42:11 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
- github@seichter.de
-Subject: Re: [PATCH 3/4] t1300: add more tests for whitespace and inline
- comments
-In-Reply-To: <CAPig+cRG8eFxepkaiN54H+fa7D=rFGsmEHdvTP+HSSaLO_6T_A@mail.gmail.com>
-References: <cover.1710508691.git.dsimic@manjaro.org>
- <590731e15a01558d1bbcdfc01df4f78573138742.1710508691.git.dsimic@manjaro.org>
- <CAPig+cRMPNExbG34xJ0w5npUc3DDwxQUGS_AQfam_mi4s53=sA@mail.gmail.com>
- <CAPig+cRG8eFxepkaiN54H+fa7D=rFGsmEHdvTP+HSSaLO_6T_A@mail.gmail.com>
-Message-ID: <ac99ea0a24c257eab8f29466589b6eef@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0A9CBCCC-E315-11EE-9078-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 2024-03-15 21:29, Eric Sunshine wrote:
-> On Fri, Mar 15, 2024 at 3:39 PM Eric Sunshine <sunshine@sunshineco.com> 
-> wrote:
->> These days we try to place all test-related code inside a
->> test_expect_success() context rather than having it standalone. In
->> this case, since the file being created is (presumably) shared by
->> multiple tests in this script, you may want to add a new test which
->> performs this setup step.
->> 
->> Taking all the above into account, perhaps:
->> 
->>     test_expect_success 'setup whitespace' '
->>         q_to_tab >.git/config <<-\EOF
->>         [section]
->>         solid = rock
->>         sparse = bigQblue
->>         ...
->>         EOF
->> 
->> Same comments apply to rest of patch.
-> 
-> To be clear, this case is special because the file being created is
-> shared by multiple tests, so it deserves being placed in its own
-> test_expect_success() invocation.
-> 
-> For the remaining cases where you're doing some set-up outside of
-> test_expect_success(), just move the set-up code into the
-> corresponding test_expect_success() invocation. For instance, rather
-> than:
-> 
->     echo 'big               blue' > expect
-> 
->     test_expect_success 'internal whitespace' '
->         git config --get section.sparse > output &&
->         test_cmp expect output
->     '
-> 
-> do this:
-> 
->     test_expect_success 'internal whitespace' '
->         echo 'bigQblue' | q_to_tab >expect
->         git config --get section.sparse >actual &&
->         test_cmp expect actual
->     '
-> 
-> (I changed "output" to "actual" above since the names "expect" and
-> "actual" are common in the tests.)
+Linus Arver <linusa@google.com> writes:
 
-This looks nice, thanks again.  It keeps the expected results and
-the test execution in a single "block", making it a bit easier to
-keep track of different tests and their expected results.
+> I realize now that it's because I copy/pasted the "Cc: ..." lines in the PR
+> description from
+> https://github.com/gitgitgadget/git/pull/1632#issue-2068188239, such
+> that when I pasted those in for the PR description for this series at
+> https://github.com/gitgitgadget/git/pull/1694#issue-2187804953, it
+> carried over the email addresses as Markdown-formatted hyperlinks.
+> Currently it reads
+>
+>     Cc: Christian Couder [chriscool@tuxfamily.org](mailto:chriscool@tuxfamily.org)
+>     Cc: Junio C Hamano [gitster@pobox.com](mailto:gitster@pobox.com)
+>     Cc: Emily Shaffer [nasamuffin@google.com](mailto:nasamuffin@google.com)
+>     cc: Josh Steadmon [steadmon@google.com](mailto:steadmon@google.com)
+>     cc: Randall S. Becker [rsbecker@nexbridge.com](mailto:rsbecker@nexbridge.com)
+>     cc: Christian Couder [christian.couder@gmail.com](mailto:christian.couder@gmail.com)
+>     cc: "Kristoffer Haugsbakk" [code@khaugsbakk.name](mailto:code@khaugsbakk.name)
+>     cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+>
+> when I click on "edit", where the last line must be from your manual fix
+> which GGG picked up. I've cleaned up the PR description manually now,
+> and for this message I'm also attempting to clean up those square
+> brackets.
+
+The last time I asked the author with the same question, we
+unfortunately did not get a clear answer on what should be avoided
+(probably the author was happy enough with the message resulted from
+the updated pull request and forgot that it is more important to
+help others from having the same issue).  Now we have an example we
+can point at when a similar issue arises.
+
+Thanks.
