@@ -1,101 +1,219 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FEDFC01
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 05:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CFB63AC
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 06:02:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710482388; cv=none; b=G3VKoYRG/V2Uyju/IH33Q2byQRQZsAzmIJ4J8pTCmGhqHjF2U/jk0FuxtaXCL++ApaSalIe4hPV12qe/T1zuMvdPEmjZO24bgdJPU56XyIoXgPtulWy4/9Ua3AciVqQG7g9azgRijmFXfDC4si+6o72F144QGk8pgwwCgDxBRPE=
+	t=1710482575; cv=none; b=VKqLV2O5J/IqOiAn5t5DUyJMjr+C0sJjBeWUABJO3WHv9ho469CbKwbafrr7PDNLJKPSLXyuYd8KlxdPPIYPTb1IGLO8tzhmU0J8MQCN12Xjeg/yyJ2ZrMYNzVKAAwwsHQfIqvCFRPAVFC71q8uXEpFuNkE13W8U7KhuK35GFk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710482388; c=relaxed/simple;
-	bh=VS02FBDYMGpKbrFvYmB0vLgmg7h0nV5eTuMN8B9y1s8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BDc6fGB69vCGORLgtBBU2kwTgRRMYGprblu2XK05cdEyg91wI9EZGXtw/Op66hb9GA4teQTquG5/8drBZ5cXyBNmej58Cm3U9WT2Qwrkxesv9dRuaR2nE9NimgFiyMWy0CwQii6mlMiDm3TTg8idLa8pEDQRJ10uG9ZIVn+X+AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23007 invoked by uid 109); 15 Mar 2024 05:59:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 Mar 2024 05:59:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28649 invoked by uid 111); 15 Mar 2024 05:59:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Mar 2024 01:59:48 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 15 Mar 2024 01:59:44 -0400
-From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH v2 16/16] config: allow multi-byte core.commentChar
-Message-ID: <20240315055944.GB1741107@coredump.intra.peff.net>
-References: <20240312091013.GA95442@coredump.intra.peff.net>
- <20240312091750.GP95609@coredump.intra.peff.net>
- <0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
+	s=arc-20240116; t=1710482575; c=relaxed/simple;
+	bh=wUpLBYbnoIIeSrlMirxhGYwS3G9NHjy/ebS6TNyB2/I=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=L2lcju2V5Pxg01QX7UWoFXW1ZsaDH2nJfpLvgCk8GfA4vMbiSKkMvs/kQpb4UvLBKikjSYNSYizXeR21AQa1W7XJGeFabHrv8d5TPl7i5OU1JvNE8YIoWHqq+IKUX7UjLR7dJ9jI9xg+CjF7r4PAu+/E2zJOCQQLTuWaVTjsIOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=hi3alvuS; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="hi3alvuS"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710482569;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vwH++SAnd2IQug+wnLHpzs9xDg60wTjmvfogDA3TcvI=;
+	b=hi3alvuSHbC5f4+bQjHt0a1HuXr4gGPHzzhM/pHHhyDCuxu/38+X/fEcNxNT42fHcoW/F3
+	G4gMmwBR2XXXAglfkuuEaCDWJbUtWBY198pQOWLEHqCEhVDhwCUCi4mqvOm+jzujmYmZHL
+	eEPWsv0xQ1bUO/J5CVa6R4HlhdVKXg/qW9X3UqZyiT79IxjBzm4whDYCGFkcYOGtPL73wa
+	9ygYtGfuffO6CrKzOdeBKh5OZaPX0C3tyDz4WAR53pqImR6hn6OHM+wyUaxNZU/CbtABzT
+	GgsdfXK2p2YLnxLLYEytfKUPGYNtfAo0JPvDBjz3ytsquBrIHjap9CgaUv9fhQ==
+Date: Fri, 15 Mar 2024 07:02:49 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Peter Hutterer <peter.hutterer@who-t.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, David
+ Heidelberg <david@ixit.cz>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5] diff: add diff.srcPrefix and diff.dstPrefix
+ configuration variables
+In-Reply-To: <20240315055448.GA2253326@quokka>
+References: <20240315055448.GA2253326@quokka>
+Message-ID: <deb0800a3ba12ad0f6837f198c16e701@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Wed, Mar 13, 2024 at 07:23:25PM +0100, Kristoffer Haugsbakk wrote:
-
-> Thanks for your work on this. Now I can use dingbats as my comment char.
-
-Truly we have entered a golden age of technology. ;)
-
-> > @@ -523,7 +523,9 @@ core.commentChar::
-> >  	Commands such as `commit` and `tag` that let you edit
-> >  	messages consider a line that begins with this character
-> >  	commented, and removes them after the editor returns
-> > -	(default '#').
-> > +	(default '#'). Note that this option can take values larger than
-> > +	a byte (whether a single multi-byte character, or you
-> > +	could even go wild with a multi-character sequence).
+On 2024-03-15 06:54, Peter Hutterer wrote:
+> Allow the default prefixes "a/" and "b/" to be tweaked by the
+> diff.srcPrefix and diff.dstPrefix configuration variables.
 > 
-> I don’t know if this expanded description focuses a bit much on the
-> history of the change[1] or if it is intentionally indirect about this
-> char-is-really-a-string behavior as a sort of easter egg.[2]
+> Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
 
-Mostly I was worried that people would take "char" in the name to assume
-it could only be a single byte (I had originally even started the new
-sentence with "Despite the word 'char' in the name, this option
-can..."). And that is not just history, but a name we are stuck with
-forever[1].
+Looking good to me!
 
-Certainly "char" is an ambiguous term, though. I didn't mean to leave
-char-is-a-string as an easter egg; that's what I meant by
-"multi-character sequence". Certainly "string" is a shorter way of
-saying that. ;) But I wasn't sure its meaning would be obvious without
-the word "multi-character". Giving an example as you suggested does
-help that.
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 
-That said...
-
-> Maybe it could be more directly stated like:
+> ---
+> Changes to v4 (as pointed out by Dragan):
+> - copy/paste-o fixed in the dstprefix test
+> - reworded the description for the tests as suggested
 > 
->   “ Note that this variable can in fact be a string like `foo`; it
->     doesn’t have to be a single character.
+> Dragan: good catch on the test, thanks for that.
 
-I actually do think the "string" nature is mostly uninteresting, and I'd
-be OK leaving it as an easter egg. What your suggestion doesn't say is
-that multi-byte characters are OK. But if we think people will just
-assume that in a modern UTF-8 world, then maybe we don't need to say
-anything at all?
+Thanks for applying the suggestions in v5.
 
-> (Hopefully UTF-8 is implied by “foo”. Or else “føø”.)
+> I think for the
+> rewording of --default-prefix it might be faster if you reword it?
+> Otherwise we might keep spinning this one for a quite a bit longer :)
 
-It actually does not have to be UTF-8. If you use an alternate encoding
-in your editor (and probably set i18n.commitEncoding to match), I think
-everything might just work. (Though to be clear, I think anybody using
-non-UTF8 in 2024 deserves our pity either for being crazy or for being
-stuck working on an antiquated system).
+Agreed, I had exactly the same in mind. :)
 
--Peff
+>  Documentation/config/diff.txt  |  6 ++++++
+>  Documentation/diff-options.txt |  5 +++--
+>  diff.c                         | 14 ++++++++++++--
+>  t/t4013-diff-various.sh        | 35 ++++++++++++++++++++++++++++++++++
+>  4 files changed, 56 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/config/diff.txt 
+> b/Documentation/config/diff.txt
+> index 6c7e09a1ef5e..fea89291c675 100644
+> --- a/Documentation/config/diff.txt
+> +++ b/Documentation/config/diff.txt
+> @@ -111,6 +111,12 @@ diff.mnemonicPrefix::
+>  diff.noprefix::
+>  	If set, 'git diff' does not show any source or destination prefix.
+> 
+> +diff.srcPrefix::
+> +	If set, 'git diff' uses this source prefix. Defaults to "a/".
+> +
+> +diff.dstPrefix::
+> +	If set, 'git diff' uses this destination prefix. Defaults to "b/".
+> +
+>  diff.relative::
+>  	If set to 'true', 'git diff' does not show changes outside of the 
+> directory
+>  	and show pathnames relative to the current directory.
+> diff --git a/Documentation/diff-options.txt 
+> b/Documentation/diff-options.txt
+> index aaaff0d46f0c..0e9456957e37 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -865,8 +865,9 @@ endif::git-format-patch[]
+> 
+>  --default-prefix::
+>  	Use the default source and destination prefixes ("a/" and "b/").
+> -	This is usually the default already, but may be used to override
+> -	config such as `diff.noprefix`.
+> +	This overrides configuration variables such as `diff.noprefix`,
+> +	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+> +	(see `git-config`(1)).
+> 
+>  --line-prefix=<prefix>::
+>  	Prepend an additional prefix to every line of output.
+> diff --git a/diff.c b/diff.c
+> index e50def45383e..108c1875775d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -62,6 +62,8 @@ static const char *diff_order_file_cfg;
+>  int diff_auto_refresh_index = 1;
+>  static int diff_mnemonic_prefix;
+>  static int diff_no_prefix;
+> +static const char *diff_src_prefix = "a/";
+> +static const char *diff_dst_prefix = "b/";
+>  static int diff_relative;
+>  static int diff_stat_name_width;
+>  static int diff_stat_graph_width;
+> @@ -408,6 +410,12 @@ int git_diff_ui_config(const char *var, const char 
+> *value,
+>  		diff_no_prefix = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "diff.srcprefix")) {
+> +		return git_config_string(&diff_src_prefix, var, value);
+> +	}
+> +	if (!strcmp(var, "diff.dstprefix")) {
+> +		return git_config_string(&diff_dst_prefix, var, value);
+> +	}
+>  	if (!strcmp(var, "diff.relative")) {
+>  		diff_relative = git_config_bool(var, value);
+>  		return 0;
+> @@ -3425,8 +3433,8 @@ void diff_set_noprefix(struct diff_options 
+> *options)
+> 
+>  void diff_set_default_prefix(struct diff_options *options)
+>  {
+> -	options->a_prefix = "a/";
+> -	options->b_prefix = "b/";
+> +	options->a_prefix = diff_src_prefix;
+> +	options->b_prefix = diff_dst_prefix;
+>  }
+> 
+>  struct userdiff_driver *get_textconv(struct repository *r,
+> @@ -5362,6 +5370,8 @@ static int diff_opt_default_prefix(const struct
+> option *opt,
+> 
+>  	BUG_ON_OPT_NEG(unset);
+>  	BUG_ON_OPT_ARG(optarg);
+> +	diff_src_prefix = "a/";
+> +	diff_dst_prefix = "b/";
+>  	diff_set_default_prefix(options);
+>  	return 0;
+>  }
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 1e3b2dbea484..6bf69888f258 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -663,6 +663,41 @@ test_expect_success 'diff --default-prefix
+> overrides diff.mnemonicprefix' '
+>  	check_prefix actual a/file0 b/file0
+>  '
+> 
+> +test_expect_success 'diff respects diff.srcprefix' '
+> +	git -c diff.srcprefix=x/ diff >actual &&
+> +	check_prefix actual x/file0 b/file0
+> +'
+> +
+> +test_expect_success 'diff respects diff.dstprefix' '
+> +	git -c diff.dstprefix=y/ diff >actual &&
+> +	check_prefix actual a/file0 y/file0
+> +'
+> +
+> +test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
+> +	git -c diff.srcprefix=y/ diff --src-prefix=z/ >actual &&
+> +	check_prefix actual z/file0 b/file0
+> +'
+> +
+> +test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
+> +	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
+> +	check_prefix actual a/file0 z/file0
+> +'
+> +
+> +test_expect_success 'diff.*prefix ignored with diff.noprefix' '
+> +	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff 
+> >actual &&
+> +	check_prefix actual file0 file0
+> +'
+> +
+> +test_expect_success 'diff.*prefix ignored with diff.mnemonicprefix' '
+> +	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix
+> diff >actual &&
+> +	check_prefix actual i/file0 w/file0
+> +'
+> +
+> +test_expect_success 'diff.*prefix ignored with --default-prefix' '
+> +	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix 
+> >actual &&
+> +	check_prefix actual a/file0 b/file0
+> +'
+> +
+>  test_expect_success 'diff --no-renames cannot be abbreviated' '
+>  	test_expect_code 129 git diff --no-rename >actual 2>error &&
+>  	test_must_be_empty actual &&
