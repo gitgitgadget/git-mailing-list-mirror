@@ -1,181 +1,257 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2135.outbound.protection.outlook.com [40.107.92.135])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4736FD7
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 03:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.135
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710472197; cv=fail; b=TUBurJ8SZBc2vtGE1v2wSu4emrviqxs+yy/xBrHuTYQrSO26Id8TxLrmX32HwMrOg5gVUJxgOsFR4/x7yjXYKZtAhztSsq47M5VemGo2xtFXFAEmW8mBbSz+r9eLAbyFKit4ojCgz//4J5diOcU7Gv4K/p3Vls4RjQJeIfh3e2k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710472197; c=relaxed/simple;
-	bh=UhDcOaKlpn3HgyWjxaP8EwRgckNRdaV4opP68A4g/EQ=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=AFPVqKlLc1VL44tD743eW9duW0Dob5BKGZl6KylYuHVqkj88+AcxEcMIAuKWDwoWdt/SGY4U2cz9TG+7zIHUogxNWdHK6rT5OqkhmMSaBp9yAO7VF1qATzwvjm87TjEVbem5t6Z7RXcihzr+8048ADYXWmlMx6m7G8ild+GHUy4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=webpros.com; spf=pass smtp.mailfrom=webpros.com; dkim=pass (2048-bit key) header.d=webpros.com header.i=@webpros.com header.b=UEdxjKdw; arc=fail smtp.client-ip=40.107.92.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=webpros.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=webpros.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE3C14A98
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 03:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710474818; cv=none; b=Kce93OfYdXBEdek1LeBHWCQEL56dFeGxQ+bC87RzpsGDANVf2gv925VgsjsA1jRImI6WlYJC9dU3zJadGWO3jWEF3YcEUs8FYKmgq4RMTGg79S98dx0s+pGqbUqY7HsP8bhSDl85ESNRri91fTPNr6lO8SLlaJp0bDW0zh0Lto4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710474818; c=relaxed/simple;
+	bh=KtqmPDlONvlJ56EMQJfk9hwxyuto8oD1avsNZy900OA=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=UFP5DTG7HNsbSR4fXm/D5Fj8Wuq8GYmyal+gF2TDb5UWmABFXJ6dO/fJxzGXzMRN3DGq2f0UHBynhlgaj8apiM/G+Ta5kip6FP+nK6Zp5aMBYsapkd/e0ZAH8jYCQziu3AgO9kamQp8WpxcmQ0RwsdlQM4R2IW7xAZ5dfwcm20Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=P3cSVN+n; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=webpros.com header.i=@webpros.com header.b="UEdxjKdw"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hUQ4VUwgAI+KrTRFvA3A1hAl0yXp7uh4NKIhmEWJWi0W8EPsyIoWf/p9H0x2CNLmyY0MJRICMUOD9hIYj1dojH3yNgSUaqnZewFD/hut6MqiPQwXH7MxWm7XbMG4HA+Yo0bHRGPDmOKfGms8yh8wLSQ7ot0pE4ocWBgDmrPZMLetQfTOqz5g8JwY255YjJRKBhKKQPuoX5J9p9S3lj4L9vxWhvyAtdl22ukBYPAmbyJPZLyEkrqL3moV1vTwaKQcaXNOO6SFhy/tCVRwB/1kMMgSJ0Ujb7Nzie63T1/z0wOz6LOjlA5UAAtNXLH9+VxI3m+GjFi3XdxjVRYZs28kKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aV/9eJVcN7KozD1ZBP7G973DNQ336njdXHmUfWtB4HY=;
- b=lFI4rMTeKYXflpu+WsLYBInUEXjbhFBLqTXuCZvJKaUctGGFY8NWPS7SLRa2hGNz/qcR3T9QWbudD5mxEfmOLKY/tBAq/3rpUum0qudFnhOsyRGSNBEmNltuDyu+4SZgDtgpiyE/7CqDMSq5BefbnLZLM4AblEUaiHgQrYhnuW9cqKtFx2+SrV37emA7EcZRicpJVOlGDtnGe9A7L6VZnhac4g6a2c/zrM/fxWxyyYHoY9hSywDQJySU4r7xv7ZC9nF8iJxB01L0GIhnTuCSixyvhwIiGf/1+vzhio0j3fZNrUU2SKMhbZM9xWFGCe2PogBmBZlSMpXiamAsfNAkrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=webpros.com; dmarc=pass action=none header.from=webpros.com;
- dkim=pass header.d=webpros.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=webpros.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aV/9eJVcN7KozD1ZBP7G973DNQ336njdXHmUfWtB4HY=;
- b=UEdxjKdwsNAln95rr4IkZ+t5igijgY2mAIWmC5KWNrzFmf/i7j1JrDiXv3yioepk5AwEz0Ch/GvT8+HsXFQI52pLdt3TlsZnuHhLN+so8Cm9XjCaQsPzQutx13zFsTLbeUJsDjIlINISFr8JB6nL4CjTZ/yTa11VY9g4i6PNVcQ8JUkpLM8ODhRrGD3CQ2KT73eDY0LWwXjXYGRUfhVYnIMHajFZKGIfHZFxhPKYeyVi47q1L8snxWtfg1PKqqMNYKO4jqdhWzITZslgVRpVxNiIwDLmhuBsWqnRkEcDCY8Rfi1y/HM8vOX1VKVwG6SyJ5epH3I+3xUV4t1G0R5IbA==
-Received: from SA1PR14MB4691.namprd14.prod.outlook.com (2603:10b6:806:196::11)
- by SA1PR14MB5981.namprd14.prod.outlook.com (2603:10b6:806:2b7::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.19; Fri, 15 Mar
- 2024 03:09:53 +0000
-Received: from SA1PR14MB4691.namprd14.prod.outlook.com
- ([fe80::acf2:4ab7:1c71:e00]) by SA1PR14MB4691.namprd14.prod.outlook.com
- ([fe80::acf2:4ab7:1c71:e00%6]) with mapi id 15.20.7386.021; Fri, 15 Mar 2024
- 03:09:53 +0000
-From: Christopher Lindee <christopher.lindee@webpros.com>
-To: =?iso-8859-1?Q?Martin_=C5gren?= <martin.agren@gmail.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] Add transport message for up-to-date references
-Thread-Topic: [PATCH 2/2] Add transport message for up-to-date references
-Thread-Index: AQHadMfJU4Kb2lPtQEKMVlla3PY73LE3yAIAgABTpu4=
-Date: Fri, 15 Mar 2024 03:09:53 +0000
-Message-ID:
- <SA1PR14MB469168B6AAB246344190D9038D282@SA1PR14MB4691.namprd14.prod.outlook.com>
-References:
- <SA1PR14MB4691A8AC86E290A3539BE1398D2B2@SA1PR14MB4691.namprd14.prod.outlook.com>
- <CAN0heSp2A-sx_WA__90WGhP1yD3EBBtR7_N7s5ZPWqe559xpKA@mail.gmail.com>
-In-Reply-To:
- <CAN0heSp2A-sx_WA__90WGhP1yD3EBBtR7_N7s5ZPWqe559xpKA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=webpros.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR14MB4691:EE_|SA1PR14MB5981:EE_
-x-ms-office365-filtering-correlation-id: bd1a5cd9-a959-4a03-e1b4-08dc449d626c
-x-ms-exchange-atpmessageproperties: SA
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- 1bSXmZr8VquZiZfPj+Azm/OoBdvFqr0TkP4jdWioi5vh9nGyv5Jqmtf69GGnb1nXSXao5tkkgpuJb1op7kja8//cqVDV3+IViRS0hg6Hw6pEjXa/QavHuvekJ+sf2NwmeB9bC1IOuXbuk9yvmzLoCt+kzQxHQvbxIspj/jt4rdJNMb2JUTefZsx4qLc+VYWopNb+n0+FmQRwQTSgj5X2uDTQ0D5YjQ9ERdMKE/3gBf8q8sLG7xXICJ+srhd1YtoyPGBZELHBU6SGfKQtcdYyBioFGCq1QFV/1lkfOl1LqLCllIdrEBm4bcQuhyX3ZzIXA1d3N9O0AjKRHHTCRJy4YnXUS3QI3Uv7kokpEI7pFeR99HDx7Qub+O7U1k8t6EXas60AIfjLJ3NKVVHtU2UejmwewDNwHNUiNkSrzw4J6xfjQB3QCsjkjtEWk/et66yYF6kSZOxB1zJVJx042gCzlSOwmwG0BY3rtg9D2hhLiPHt5bHqxLhVoWhlubdIdrOMto0StAdHu/VTttLRS87s7iR1x3c6MCfsBFftYqBB+0cNUp1udzXAhT6HW21vMzByUE4ouIv0B7EirKI/dCuybzpJ/riYlY4f6Xqve1eJvLbgVG8l1FPHwvSDybL1H0/khFzJ7ceAYX+YenQzPF88g5MAKbazFjfPzuaPSWPJXY0osAOwLFSNDLYM2zTjqPg0VzpEODZ8r4wg3JS2vr9yuM+QXjHb3f8T0OjbcznV7fE=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR14MB4691.namprd14.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007)(38070700009);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?HQsZiHWGhmvgHGoqlxFDRRvm3zQGl+DTKtEkNq3NAMBav85YaQgjXdoMcG?=
- =?iso-8859-1?Q?zcS9EgPDU2Ww4DqdJeitBU1n5fQGbdUwkjKSW1jkSqGMVBY5FL2ateT7bn?=
- =?iso-8859-1?Q?LsWk5nMSJ/KQ2bLoaThJkHZVSXTc86m7YPAr5NMl0Bi1GlGyH7uu9SR04a?=
- =?iso-8859-1?Q?Fr4DLBs7DVv3EWOq7hCnGMS9fF6HNfdsdBYtcgP5cDKA7ZdRhaCZnHyBO+?=
- =?iso-8859-1?Q?741FGZvt6gSuJSFMqdPl33ednemEMhjp6W528Djdb17gudifd3gu4WzeIz?=
- =?iso-8859-1?Q?ZU+vnuOr/B/5E6DI3sIrhX7Iraywr1moctxTWkH5hSrV8xQfAloF4uWP7X?=
- =?iso-8859-1?Q?bpB1FxRZBwR6ahadEc1+A0EFEKDxjtXrG4/6YLjq4SIUM6B0S5cG9I70wz?=
- =?iso-8859-1?Q?ADxDpcmvKOOUkQmTwsSW8G9bXje2rt+HhRGphqU9hlGD8SSZSzMe7eiTJV?=
- =?iso-8859-1?Q?8BY95sSXPmVrwxpI+ch8QuEifGP+/vkSLwU+DUEMmeIsJ74+lVf+zDStjL?=
- =?iso-8859-1?Q?kP7bBthPM2Azn2+yYiUCujF0K/vM4QowSslmvc/gkZDMnfGUZE4V6XHhTI?=
- =?iso-8859-1?Q?eShHBIW8QYK+iQPlKtc6zJnkt3oESRUjDSfm4IchCYZlSXCjQBfzjBIyO/?=
- =?iso-8859-1?Q?AO+wbYeTx66LnYUT2XiT/1IFqVWXx3mKi8oDmKfs9qci8RJ2S5IbA1+XrZ?=
- =?iso-8859-1?Q?Cuu1UUm1yCiWkzurfuh/S8UIZVT51J0W5ZV/8zwATy8DHX0ElrQbkqA4pQ?=
- =?iso-8859-1?Q?M77EHEbA6xn9sizemLjxNvRQS3kSrqIN6qmItMYMlap00iOTxNMZbPsHlI?=
- =?iso-8859-1?Q?n+jAQR359jpdxkAJmta2ROjr8XOtPQBHGRbOV5xCV+ZDtsF25axUH4KdVU?=
- =?iso-8859-1?Q?VbrdhK40GyKuKZ631m8JM6GT/ENbETx+MfK9ncEk+g2ZwF36tePWM40AjD?=
- =?iso-8859-1?Q?vBcn3ergPyLS2odFi+qkfCu1HF4LGRsUCQnaWYX1su1/pkTl3Ataj8SKGi?=
- =?iso-8859-1?Q?GcpXRbWJ4ue6j1N8nGddk9SktmOb03CM7nvC1SfFOnwq1qC+Sv8z2tyDdM?=
- =?iso-8859-1?Q?fhBg3aKwdvmy6VlcVh60N4Kg6aR2c8T27jYgzS2Gf2ht9iYXgnUPiMAjCj?=
- =?iso-8859-1?Q?n7P8hNgzqIRVKV29Ot50rZLpjm1a2sl2TZx+qQA6uWMqbZq3koCU0peUe/?=
- =?iso-8859-1?Q?x3KFw7OHvXhhyk4hrftHmeTyfL2KIjCPvp8HW97aITtOCUPgS1iyr0ft6l?=
- =?iso-8859-1?Q?h+VNrDHZ8ANyS7gU8hyTuzstcJ2XcLcrzjGqEDYJ8EzyRL8mknWUnSixUj?=
- =?iso-8859-1?Q?FjjlbiSljEZTnOyaicYyTU8i2ft57FrVohzeO+rHJB5D1eTEbG7bqDUPWv?=
- =?iso-8859-1?Q?Wgxjk/Zb7UWblMc233Xy/QlA8a+ilm+8tlxGdFO9FRxcY8C1xtNCrG1yg2?=
- =?iso-8859-1?Q?FRuOeS7jXR2FEgmvTMDoYIqPa2MrYqvDJcvebGDaO7K0fVDLnt2GletqzY?=
- =?iso-8859-1?Q?gsRJJ6UEhCpzZ9bRn6M8czEoWfVgdYDOpaWhlOiV2M2Wq47tSVWgLyj0fs?=
- =?iso-8859-1?Q?5h4cGpJAIsJltIIYLYq9bBSLQfHSB/ZmJXdTI024tmtAmyT7Fk4pGpc+Pt?=
- =?iso-8859-1?Q?89WBL6Vb6EQ0MwM86XfoyXhOEObSTsHIKDi/3H2eMpmOqL/PwGr5amkQ?=
- =?iso-8859-1?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="P3cSVN+n"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: webpros.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR14MB4691.namprd14.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd1a5cd9-a959-4a03-e1b4-08dc449d626c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2024 03:09:53.1374
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f8497356-a834-4060-86b6-d4b1d8059ee0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: pX3Gq215G+NRYFwI3GCTP0tvo5qXj77EFpmHZ+V0EX5N4KlcTppQoCq5nURsQJA85cax6p9038Te3jue7yQHrqiiAz4C8d/g7l+WSaGm5zI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR14MB5981
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710474811;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gqAqh3bnM2/+8yWBslRrEhxEwk5hn5YIOI1kLB5Zr3A=;
+	b=P3cSVN+nJTgs/4NOKlhlnnwvFSflrMUAPnPWn0kAq8MM+WqEE4hMk6Ij8vPanwuI8ok8Mu
+	NO9GljATLVwQr4/kMdImffMYboC7A1ND4FvKBurzfdvEiH+80gYNR+b/GzrRlXKxa/l+bZ
+	HjhKkwIe/Z6szHao4aeBn67u7RKheE/sxPuFQjlG3p3QYrEaVVA5jKVXunI9L6u1T28Wa7
+	LvGqnJyV44u8cP8Hhs4t198bQHJSdaCfzAFf6aOlOFMm2m+MjHEiaGcBqU8NK+kzALwV8C
+	psOWRjXpibWTpBBYOM0OtZv1PGzsoBRoa5iMUeC65GKCyiMabd2r5EZm+0Vh9g==
+Date: Fri, 15 Mar 2024 04:53:30 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Peter Hutterer <peter.hutterer@who-t.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, David
+ Heidelberg <david@ixit.cz>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4] diff: add diff.srcPrefix and diff.dstPrefix
+ configuration variables
+In-Reply-To: <20240315010310.GA1901653@quokka>
+References: <20240315010310.GA1901653@quokka>
+Message-ID: <2da5f5cd5956194e659c88026a12cb9e@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Martin =C5gren <martin.agren@gmail.com> writes:=0A=
-> On Tue, 12 Mar 2024 at 22:55, Christopher Lindee=0A=
-> <christopher.lindee@webpros.com> wrote:=0A=
-> >=0A=
-> > If the `--send-up-to-date` option in the previous commit is used, the=
-=0A=
-> > "Everything up-to-date!" message will never appear, even if all of the=
-=0A=
-> > refs are up to date.=A0 Moreover, the output `deadbeef..deadbeef` appea=
-rs=0A=
-> > suspicious, almost as if a collision occurred.=A0 To clarify that the h=
-ash=0A=
-> > is, in fact, identical & to allow grepping for the phrase "up-to-date",=
-=0A=
-> > add a message to the output when the ref is transmitted, but no change=
-=0A=
-> > occurred.=0A=
->=0A=
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 if =
-(oideq(old_oid, new_oid))=0A=
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0 msg =3D "up-to-date";=0A=
->=0A=
-> From a grammar point of view, I think this should be "up to date". (A=0A=
-> branch can be up to date, in which case it is an up-to-date branch.)=0A=
-=0A=
-I wondered about that; I will fix.=0A=
-=0A=
-> There is quite some history exactly around this phrase, though, see,=0A=
-> e.g., 80bdaba894 ("messages: mark some strings with "up-to-date" not to=
-=0A=
-> touch", 2024-01-12). If we really want "up-to-date" here, I think we=0A=
-> should add a comment similar to 80bdaba894, although it does feel=0A=
-> awkward to knowingly introduce a new instance. So maybe better, go for=0A=
-> "up-to-date ref"?=0A=
->=0A=
-> If we worry about how "Everything up-to-date" disappeared in the=0A=
-> previous commit, maybe that commit should instead detect that all refs=0A=
-> were such no-ops and emit that "Everything up-to-date"?=0A=
->=0A=
-> (Part of me wonders what kind of existing scripts [1] would be helped by=
-=0A=
-> us sticking to the dashed form. If they go "grep '^Everything=0A=
-> up-to-date$", they won't notice this new output. If they use a more=0A=
-> relaxed "grep up-to-date", they might get confused, possibly much more=0A=
-> often than they could already be by a branch called "up-to-date".)=0A=
-=0A=
-This raises a good point: if we default to the old behavior and only=0A=
-send up-to-date refs when the new option is present (as is currently =0A=
-the case with this patchset), then existing scripts will continue to=0A=
-work.  Moreover, scripts using the new option will consistently have=0A=
-"up to date", so they can change the grep to use that (since it will =0A=
-never show "Everything up-to-date!").=0A=
-=0A=
-Thanks,=0A=
-Chris.=
+Hello Peter,
+
+On 2024-03-15 02:03, Peter Hutterer wrote:
+> Allow the default prefixes "a/" and "b/" to be tweaked by the
+> diff.srcPrefix and diff.dstPrefix configuration variables.
+> 
+> Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
+Looking good to me, except for some of the included tests, please
+see my notes below.
+
+Additionally, perhaps the documentation for "--default-prefix"
+could use some wording improvements, but I'll try to address that
+in my separate patch(es) mentioned below.  Of course, I can send
+my suggestions now, if you prefer it that way?
+
+> ---
+> Changes to v3:
+> - fix capitalization in the commit message
+> - quotes changed to " in the diff.txt hunk (for consistency with
+>   diff.mnemonicPrefix)
+> - reword the diff-options.txt entry to be more explicit/definitive
+> 
+> Dragan: I used the lowercase `noprefix` spelling here to be consistent
+> with the current state of the tree, can you please include the fix for
+> this in your pending patch? Thanks.
+
+Sure, I'll cover it later, after your patch is accepted.  Thanks
+for the notice.
+
+>  Documentation/config/diff.txt  |  6 ++++++
+>  Documentation/diff-options.txt |  5 +++--
+>  diff.c                         | 14 ++++++++++++--
+>  t/t4013-diff-various.sh        | 35 ++++++++++++++++++++++++++++++++++
+>  4 files changed, 56 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/config/diff.txt 
+> b/Documentation/config/diff.txt
+> index 6c7e09a1ef5e..afc23d7723b6 100644
+> --- a/Documentation/config/diff.txt
+> +++ b/Documentation/config/diff.txt
+> @@ -111,6 +111,12 @@ diff.mnemonicPrefix::
+>  diff.noprefix::
+>  	If set, 'git diff' does not show any source or destination prefix.
+> 
+> +diff.srcPrefix::
+> +	If set, 'git diff' uses this source prefix. Defaults to "a/".
+> +
+> +diff.dstPrefix::
+> +	If set, 'git diff' uses this destination prefix. Defaults to "b/".
+> +
+>  diff.relative::
+>  	If set to 'true', 'git diff' does not show changes outside of the 
+> directory
+>  	and show pathnames relative to the current directory.
+> diff --git a/Documentation/diff-options.txt 
+> b/Documentation/diff-options.txt
+> index aaaff0d46f0c..0e9456957e37 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -865,8 +865,9 @@ endif::git-format-patch[]
+> 
+>  --default-prefix::
+>  	Use the default source and destination prefixes ("a/" and "b/").
+> -	This is usually the default already, but may be used to override
+> -	config such as `diff.noprefix`.
+> +	This overrides configuration variables such as `diff.noprefix`,
+> +	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+> +	(see `git-config`(1)).
+> 
+>  --line-prefix=<prefix>::
+>  	Prepend an additional prefix to every line of output.
+> diff --git a/diff.c b/diff.c
+> index e50def45383e..108c1875775d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -62,6 +62,8 @@ static const char *diff_order_file_cfg;
+>  int diff_auto_refresh_index = 1;
+>  static int diff_mnemonic_prefix;
+>  static int diff_no_prefix;
+> +static const char *diff_src_prefix = "a/";
+> +static const char *diff_dst_prefix = "b/";
+>  static int diff_relative;
+>  static int diff_stat_name_width;
+>  static int diff_stat_graph_width;
+> @@ -408,6 +410,12 @@ int git_diff_ui_config(const char *var, const char 
+> *value,
+>  		diff_no_prefix = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "diff.srcprefix")) {
+> +		return git_config_string(&diff_src_prefix, var, value);
+> +	}
+> +	if (!strcmp(var, "diff.dstprefix")) {
+> +		return git_config_string(&diff_dst_prefix, var, value);
+> +	}
+>  	if (!strcmp(var, "diff.relative")) {
+>  		diff_relative = git_config_bool(var, value);
+>  		return 0;
+> @@ -3425,8 +3433,8 @@ void diff_set_noprefix(struct diff_options 
+> *options)
+> 
+>  void diff_set_default_prefix(struct diff_options *options)
+>  {
+> -	options->a_prefix = "a/";
+> -	options->b_prefix = "b/";
+> +	options->a_prefix = diff_src_prefix;
+> +	options->b_prefix = diff_dst_prefix;
+>  }
+> 
+>  struct userdiff_driver *get_textconv(struct repository *r,
+> @@ -5362,6 +5370,8 @@ static int diff_opt_default_prefix(const struct
+> option *opt,
+> 
+>  	BUG_ON_OPT_NEG(unset);
+>  	BUG_ON_OPT_ARG(optarg);
+> +	diff_src_prefix = "a/";
+> +	diff_dst_prefix = "b/";
+>  	diff_set_default_prefix(options);
+>  	return 0;
+>  }
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 1e3b2dbea484..e75f9f7d4cb2 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -663,6 +663,41 @@ test_expect_success 'diff --default-prefix
+> overrides diff.mnemonicprefix' '
+>  	check_prefix actual a/file0 b/file0
+>  '
+> 
+> +test_expect_success 'diff respects diff.srcprefix' '
+> +	git -c diff.srcprefix=x/ diff >actual &&
+> +	check_prefix actual x/file0 b/file0
+> +'
+> +
+> +test_expect_success 'diff respects diff.dstprefix' '
+> +	git -c diff.dstprefix=y/ diff >actual &&
+> +	check_prefix actual a/file0 y/file0
+> +'
+> +
+> +test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
+> +	git -c diff.srcprefix=z/ diff --src-prefix=z/ >actual &&
+
+Shouldn't this be
+
+	git -c diff.srcprefix=e/ diff --src-prefix=z/ >actual &&
+
+instead (or something else for diff.srcPrefix, perhaps "y/"), to 
+actually
+perform the check for overriding?
+
+> +	check_prefix actual z/file0 b/file0
+> +'
+> +
+> +test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
+> +	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
+> +	check_prefix actual a/file0 z/file0
+> +'
+> +
+> +test_expect_success 'diff src/dstprefix ignored with diff.noprefix' '
+
+Shouldn't this be
+
+     test_expect_success 'diff.*prefix ignored with diff.noprefix' '
+
+instead, to describe the test better?
+
+> +	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff 
+> >actual &&
+> +	check_prefix actual file0 file0
+> +'
+> +
+> +test_expect_success 'diff src/dstprefix ignored with 
+> diff.mnemonicprefix' '
+
+Shouldn't this be
+
+     test_expect_success 'diff.*prefix ignored with diff.mnemonicprefix' 
+'
+
+instead, to describe the test better?
+
+> +	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix
+> diff >actual &&
+> +	check_prefix actual i/file0 w/file0
+> +'
+> +
+> +test_expect_success 'diff src/dstprefix ignored with --default-prefix' 
+> '
+
+Shouldn't this be
+
+     test_expect_success 'diff.*prefix ignored with --default-prefix' '
+
+instead, to describe the test better?
+
+> +	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix 
+> >actual &&
+> +	check_prefix actual a/file0 b/file0
+> +'
+> +
+>  test_expect_success 'diff --no-renames cannot be abbreviated' '
+>  	test_expect_code 129 git diff --no-rename >actual 2>error &&
+>  	test_must_be_empty actual &&
