@@ -1,76 +1,72 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275181799D
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 10:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD676376EB
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 13:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710497155; cv=none; b=Bn08lnz/1dpZl7XzA0V3y9KKsiglO78ioHyU8yydm11PJh6MvCapWPj/hmgg7+aYyK/h37pQ4t8bAOMJeG92jBbChSs3kqJCjhy9aG81d63B4Vv/eSXkZQano/SLIG2JjVSp1o9FtVX0LwpbtOqj5KBac+dX1CpczZvZYMwZzTU=
+	t=1710508941; cv=none; b=WgHUP9tv99H9rW12IS/kGbPzXk6e7JIVwABFMRJenQOr6DM7S+59jSXQnyeFTBhC3qMSMyy87gifIuE5Vok8ACktEZ41tL3wdEmGUthqK53f6VV/ZTNYA6tolAad0+4YndE03wB+ROKEH4ljytfkZxgxzp9onXZrSiXcqX7i+mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710497155; c=relaxed/simple;
-	bh=lDyYFjkHzbKm/zVuwDao4AYz6TcRUEls0UWN4dMEUtI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Weq6w8CNfkskeiLrQYkv5DEE59TPllCsTXhGDUgTl33VBK8Orw01Iw2cSUpYefqumXW+BcJJ1QhV3LMmNJ+WZcL1vUdB5G+q/SW5yG6vYJj0F3BoEz5FLdzmrHCibt5wqkXzFbn6stbNPy4io+po36g9C+lfomRItXpVu3SSKZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BaqlIjX9; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710508941; c=relaxed/simple;
+	bh=PoyRDylxbkqm75BvNRzPLsscaHmVc1gjPmFC2S3xKjs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=FLFdJ6kZ/IROelOxCd3qaFV/f7ggsaz2Uy+3IY7+lmj0wRoPvovrioS0PO7E01I+PN/LRwbTUEO5gd2iS59+vcxpxvXkpZ3WEJL13Ol7a0dokijTh0tRqVAZ1fidyquEYhOihNG6sOCzVrQBEpTXahQ1opi9QnWrjPufH4/O+hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=FIBbC3uB; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BaqlIjX9"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-60a057b6601so18879757b3.2
-        for <git@vger.kernel.org>; Fri, 15 Mar 2024 03:05:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710497153; x=1711101953; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lDyYFjkHzbKm/zVuwDao4AYz6TcRUEls0UWN4dMEUtI=;
-        b=BaqlIjX9GiDtS5i4XinfnLiZvWIsG4Aptt3MjoxIqoIllA8W4sGmrHk4BavopjrqK9
-         Wm3NVQRoehVaEKcuj+hS9GWaAxiDhnkwmObjGYkMA1DNOeyTeJKY2p5JE67YLEsjNOtU
-         laejlL7owLhOiiXRJtX0Yxlr1IVSlrETAOujVAyrLO6IJrav30bobewCpfmNKcyRYAHA
-         7WNl+p0eyqN0byZH7TXmglTrFMS6lRYY4DCicnCoXImbIWrUOMhhi3M0dKfvDLFyztMd
-         go1gFzgHAFVvF/GbwoiGE0emsLwbJXFrFk/+JvrjJZ8ZS4CE+O6TE1ce5Rk3kU6g/DS4
-         BM6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710497153; x=1711101953;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lDyYFjkHzbKm/zVuwDao4AYz6TcRUEls0UWN4dMEUtI=;
-        b=fi6M7OyyMYyOm9m2YHRSeN+4xPDv7DDd8TMlyYwVfzUfNjbzIMy8n/TPL10tsXbFCI
-         UFk2/S0rsxO2EzEFwQNvw5fZSuaoNOJ2NcIYxY3t6EIVDhW/IsJwgIYhD5H5NNmXQFHN
-         v+/1cYRkmn8Ed8m4imsDEyYHjkNZ6j2SlWueui7HhArxcWlKdjTN+skPFjIDiegMzyNy
-         Ixw0xFkYn2relW+7Zp/5C20bgrNUsCN+Ra/o6bKSDHtHt4bfnbcGpDV9EDlceJHzcgpG
-         +PS/MwPHkFhUCmlGyK70gudf5nCR5XUBMdnC3MutI60uUvl5jf1En6OdXP/QYBKILLtJ
-         bNJQ==
-X-Gm-Message-State: AOJu0YzTXP/xXExz9KRcwiE9V/+FBwW6D7GtkzuhKRdn1NnSEE3yrNPO
-	LC3GrUTzTpr4O3Jnbih/jz2T2airKfPx6bKaKMkTEVDPeViKkpGg4PyLG1ifbSWDXjmYdF8y+s3
-	wf9yVULBkITf0nzsd8NcAnP8+we8=
-X-Google-Smtp-Source: AGHT+IG5ZTGMi2kZsJHQqgPaJWFOepozKDX0ZzPjUoifqIkds/dJt10iUDWlLL7NXY8xIEXAQcQoS/LFNqN+cwChWTo=
-X-Received: by 2002:a25:bfd1:0:b0:dc2:5553:ca12 with SMTP id
- q17-20020a25bfd1000000b00dc25553ca12mr4205850ybm.14.1710497153012; Fri, 15
- Mar 2024 03:05:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="FIBbC3uB"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710508935;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vRSa0NKeEtkIoLJ886cc8IDnyDtEN/EyT3ZAc9qahOM=;
+	b=FIBbC3uBHuCMV5mCWbcAC3RYQvlRFkFdd3YjJxi7Itp7SCQVOuDdhlKkkNfIUxENT/gg3n
+	6QLeZZHp0i6Uusaou6ufPMPe8w6SXUNl0Hv3xAli+23tRFDQ6kS0BW3PNyln/cyahCxB1Y
+	E7So4FlLjeZxohp9yQ7BT0W68PiOrSewGe6GGr8nO8oOP8fwBGlWCmpjpAXfRmyilOf0rF
+	e/NChuXQPoSz7mZkSJ0YRVNOFgXYeh51SQPXwj8ldWbBrmVq8t6+Emdzj/54VfcEE7jWPq
+	W2P9HfP2bgycdflOZK2Ndy8OTHER55MchgwJXIri3lErrc33c5j4M2vSrrlR+w==
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	rsbecker@nexbridge.com,
+	github@seichter.de
+Subject: [PATCH 1/4] config: minor addition of whitespace
+Date: Fri, 15 Mar 2024 14:22:07 +0100
+Message-Id: <33ae9976fc089fe8f59aa857373319183bf558b3.1710508691.git.dsimic@manjaro.org>
+In-Reply-To: <cover.1710508691.git.dsimic@manjaro.org>
+References: <cover.1710508691.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: eugenio gigante <giganteeugenio2@gmail.com>
-Date: Fri, 15 Mar 2024 11:05:41 +0100
-Message-ID: <CAFJh0PSRrz=WYvuXgFGER6_E5qshVKSWNxBDgVo6GcCGfFDK8A@mail.gmail.com>
-Subject: Re: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
-To: ps@pks.im
-Cc: git@vger.kernel.org, gitster@pobox.com, 
-	karthik nayak <karthik.188@gmail.com>, phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Wed, 24 Jan 2024 09:51:52 +0100 Patrick Steinhardt <ps@pks.im> wrote:
+In general, binary operators should be enclosed in a pair of leading and
+trailing space characters.  Thus, clean up one spotted expression that for
+some reason had a "bunched up" operator.
 
-> We also have consider that there may be alternate implementations of Git
-> that would only know to handle the old layout. Those tools would be
-> broken in case we did such a migration, but they would be broken anyway
-> if the bisect was started via Git and not via the tool.
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
+ config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The first implementations that come to my mind are Jgit and libgit2.
-I took a look at these two and apparently there is no support for git-bisect.
-Maybe you are not referring to those.
-Also, do we care about several GUIs for git?
-
-Eugenio
+diff --git a/config.c b/config.c
+index 3cfeb3d8bd99..a86a20cdf5cb 100644
+--- a/config.c
++++ b/config.c
+@@ -869,7 +869,7 @@ static char *parse_value(struct config_source *cs)
+ 			continue;
+ 		}
+ 		if (c == '"') {
+-			quote = 1-quote;
++			quote = 1 - quote;
+ 			continue;
+ 		}
+ 		strbuf_addch(&cs->value, c);
