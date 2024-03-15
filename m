@@ -1,122 +1,100 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from kaefer-engelbart.com (kaefer-engelbart.com [217.76.55.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A4F47A67
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 18:26:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7133D3EA77
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.76.55.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710527207; cv=none; b=rpDJl3zYK3sHqm7M0xCD7UoKThDsgHZbxjJtXIArO7z42tiMdRs+Nl0tX0XJ9dj7kqg/GpgUCPxuQc3ULQuUEp8jDjYE6WWvuFWa37ijeVAFb0PbgmKuGpIfV144QJG+dMMEDyNhTerwLy0pUskMnvo69EIwWTFAA6uSgeEV5a0=
+	t=1710529259; cv=none; b=ON7FjWFF49JD0Irx5hznbGQMj/FxDiYwBj3LnV6Ud3aqDqM4K3dVlDBdGiK/28TToAkjetn95U3VH8AdY3NMC8a3SMdb6bJb70HvHPdefwa+H2Pg4JEJPgaJwgrD/Zs1vuQWggMgBnKbBAu6kbNIAtcnUx8mCQZ6Dm1kxGwRBXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710527207; c=relaxed/simple;
-	bh=vJiNyk0v+Dvd6GvUimpCf0QphedJ6gJR7sq1EMWBpwc=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=gTw9erqam0ga8bFQyNjImKBcH/oeTc3nHRIFPmZkT82AKAUAxFcVMaEAMfokZw5Xcygq1RoCKc2xbY8+kMTMwV9GTUme0XmHWuRT+KGq3cfpIZMmjuU+5vPKoL5LMAjGRFE9OCFK05K/il+7BYHUEglCHWZwdRWifqfcGsUCWHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ZaW7Rksy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BH5kRE3u; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1710529259; c=relaxed/simple;
+	bh=eYtpzRy0WQNmeiCSY0B3YKKLVGEKmdu9N7KIQSZdf40=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=fqNahtX3X7U7oUUW+Sbn36VUxR184+gG1/fdBKMKFgQbO0ubVVFpAE/dXlRalMisDyuNiiSh6r976DeFYL+rqSegvGT/w/RVokR7danm+q04XtCcuFlGIObF40vFEMD7PRraoB34VVWe6dsXmzCzuX2Xya2KKpV/ZMQ/8qUM9tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kske.dev; spf=pass smtp.mailfrom=kske.dev; dkim=pass (2048-bit key) header.d=kske.dev header.i=@kske.dev header.b=gBzKNjpY; arc=none smtp.client-ip=217.76.55.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kske.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kske.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ZaW7Rksy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BH5kRE3u"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 73A591140114;
-	Fri, 15 Mar 2024 14:26:44 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 15 Mar 2024 14:26:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1710527204; x=1710613604; bh=r/dJtIT6PbFqA49JjWHZyc3QtoVyTpMt
-	ukPcM0qNpuI=; b=ZaW7Rksyqgabko35HYFmc/CXjINmWNrEGG4ikazbnsac2hxS
-	SmpFJQTgW3diKB9eDLwqxVDKkM6WvRVz41N5l4vNtLcTzWv/tM06E/hFoNTv8Ndy
-	Dtu2VmQ0ZrNjTCbWSY1BaXC61Xslx7fRzilILThea+wISd1Jv7oZWdvTO42A8KL7
-	0BYFbn6tKz95KB57r97+QBOvleTJRbevV9+P3lAFD+UJc+v1FyBWd7xAjGYvgJ4X
-	uTt5UEqBd32Zjl6ONmWcYe3lRQdbAyOIUG7iXIBwc13yfnAhvQoItItrkDRGhO7P
-	l2XTjKaiWqIrx/dqzXzPXNZQhXF0i8MUsfJd4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710527204; x=
-	1710613604; bh=r/dJtIT6PbFqA49JjWHZyc3QtoVyTpMtukPcM0qNpuI=; b=B
-	H5kRE3uQVvf+187fpStwaIiI6hqvY4wU8aWEO4GP0zKkcwQmTozs0pgrecJNnuGV
-	iBaaJs7ZrxUEfA7G43ZysyZFaiJNP+KDH31tOd2nmzkKZnGl8OlEBnPNKtJusXr/
-	oRj2OHw3RPpfp05b3Dwa9QM5spMT3npDwT1vHjqnzy0TgJN7PVnz5hJKNU1FPzmG
-	SfAtOUIJlxnJBi5jNQBJjQ2T3rpgM1wtIbepNHyjNpVFUHyuLFrQDCCVImZNUpIG
-	uH67DepcpcdKnIfyMLwtO6HYCGytQTygJyt1MccrT4ozNPvRKHUR5/xgDWPtbtf/
-	qzjOfsWozqD/aZGRGcvsA==
-X-ME-Sender: <xms:45L0ZUP4F-9kb5HwJK36OlDlnkOEo__ZWg8t5A21vGIqZIPU_x5L9_s>
-    <xme:45L0Za8C-5X9AYO5nu0N9LZQBHG79Y1takVmBYP2mXSqL9B9tArT2tR6ZRxEyECAy
-    zGC_UkwAuXqPyck1w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeelgdduuddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
-    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:45L0ZbS2_ZLW0Zfc3PZDvw2strX1N0_Uu_FNWvHVnUpMpj_4JhY83Q>
-    <xmx:45L0Zcvu_1LfMENx7tyAwtxoQECVBFDQWFsZrnlG8hb3d2k1U84wLQ>
-    <xmx:45L0ZcfS6rAgetIUWuVaQjBHYx0pyaRB7qjtFXhfLv62SO7xJUtTtA>
-    <xmx:45L0ZQ0lta_Y8j1xArb9EfsQGXwm4HyALFHHZAso0OBYSwlZLzxMpA>
-    <xmx:5JL0ZU5Y6oMSPk21O_U0Xu4Z5fE8QcSAq8MYEQbBg8gdoATTqcd_jg>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id A7CB815A0094; Fri, 15 Mar 2024 14:26:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-300-gdee1775a43-fm-20240315.001-gdee1775a
+	dkim=pass (2048-bit key) header.d=kske.dev header.i=@kske.dev header.b="gBzKNjpY"
+Received: from [IPV6:2003:e4:a702:8500:8c8f:a1c1:d0a0:5e6c] (p200300e4A70285008C8Fa1C1D0a05E6c.dip0.t-ipconnect.de [IPv6:2003:e4:a702:8500:8c8f:a1c1:d0a0:5e6c])
+	by kaefer-engelbart.com (Postfix) with ESMTPSA id 8BF4A1A022A
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 19:55:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kske.dev; s=mail;
+	t=1710528938; bh=eYtpzRy0WQNmeiCSY0B3YKKLVGEKmdu9N7KIQSZdf40=;
+	h=Date:From:Subject:To:From;
+	b=gBzKNjpYATnVjmFgvV9q71sseyomthcC2LsBynNd5RuNr2+Ho/l0aPdvyEmiiYiz4
+	 mtlVFODU/ug8aHWn4rmWFrjx0Yhg8gqiQseOeGmu3pdL6a0AbU67UD/MTRf0c79roo
+	 UQBnMyazA6nYm17dOMPxc/z0leTiEHVcm1cBAmVc3Qxdor+cSrWRf8D3qzZhktMDZY
+	 7kE6zZpOq62Nypff9CnXKByg7oeNCW+KLVZonqjgvoSA/bmd0Rca4jW7YrJFfREWTq
+	 rruKVLNXgZrUPKyLfMlW5/IPZHYejwRzJFIDU51aXlJ5iaPTCWg4ZmEwYCTM7E/EzY
+	 eFyfO+ODXUEVQ==
+Message-ID: <5f4701bf-3121-4c78-90c8-b1f3a942512b@kske.dev>
+Date: Fri, 15 Mar 2024 19:55:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <75ff994e-f086-4490-a442-dcaa6e2230df@app.fastmail.com>
-In-Reply-To: <xmqqjzm3qumx.fsf@gitster.g>
-References: <pull.1694.git.1710485706.gitgitgadget@gmail.com>
- <xmqqjzm3qumx.fsf@gitster.g>
-Date: Fri, 15 Mar 2024 19:26:13 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Christian Couder" <chriscool@tuxfamily.org>,
- "Emily Shaffer" <nasamuffin@google.com>,
- "Josh Steadmon" <steadmon@google.com>, rsbecker <rsbecker@nexbridge.com>,
- "Christian Couder" <christian.couder@gmail.com>,
- "Linus Arver" <linusa@google.com>, "Josh Soref" <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 0/5] Unify trailer formatting functions
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: leon <leon@kske.dev>
+Subject: [Idea] Only allow commits when no undeletable file has been deleted
+To: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 15, 2024, at 18:20, Junio C Hamano wrote:
-> Not about the series, but about the way it was sent.
->
-> The messages in this series have exactly the same kind of breakages
-> in the recipient names/addresses we recently saw:
->
->     https://lore.kernel.org/git/xmqqh6hkxox6.fsf@gitster.g/
->
-> Human-readable names with a SP inside [square bracket] pair
-> appended, and one of the addresses had that square bracket applied
-> inside <angle bracket> pair and breaking MTAs (I manually fixed
-> khaugsbakk's address before sending this response, so replying to
-> this messages should be OK).
->
-> What are you and Aryan's pull.1675.v3 did differently from other
-> series sent via GGG to trigger this, I have to wonder?  Without
-> knowing it, it would be hard to avoid seeing these broken addresses
-> again.
->
-> Thanks.
+Hello,
 
-I=E2=80=99m the only common CC on these two. Maybe dropping me for the p=
-ossible
-next round would fix it. Would be interesting to see.
+I have an idea for a feature I am missing often enough within Git (and 
+it **needs** to be part of Git itself as it would be rather useless 
+within third-party tools):
+Oftentimes, when you have submodules, you are depending on specific 
+files being present within them, i.e. so that your Shell scripts and/or 
+CI tools work correctly.
+However, especially when the submodule is under your own control, you 
+currently have no option to tell future collaborators that deleting or 
+renaming such a file will break things.
+Or even your future self, FWIW.
+So, what if there was a recognized attribute within the `.gitattributes` 
+that said `files matching this path spec cannot be deleted`?
+The actual content of the file is irrelevant as long as it exists.
+I don't care how this attribute is called in the end and cannot think of 
+any good name.
+My best approach was something like `depended-on-externally` or 
+`undeletable`.
 
-Cheers
+My proposed behavior is thus the following:
+- Git stores the list of files from HEAD that may not be deleted somehow 
+(probably best to compute it on the fly when necessary)
+     - To allow for deleting a file in the same commit as removing its 
+`.gitattribute` entry, the list of files that cannot be deleted depends 
+on the `.gitattributes` as it should be committed.
+- When you try to create a commit, all undeletable files are checked for 
+if they still appear in the tree
+- If files are no longer present in the tree, the commit is aborted with 
+an error message telling the user something like `You are trying to 
+delete the undeletable file <x>/ files <x, y, z>. Either restore 
+it/them, or remove <corresponding path specs> from the '.gitattributes'`
+- In particular, this means the following behavior for changes:
+     - Adding a new file: Nothing to do
+     - Deleted file: Checking if it can actually be deleted
+     - Renamed file: Checking if another file replaced it
+- No idea how to handle path specs pointing inside submodules. I'm fine 
+either way:
+     - Path specs going into submodules are ignored (more performant, 
+plus you cannot influence them directly)
+     - Path specs going into submodules are checked too (helps catch 
+bugs early as an error can only happen when you update the submodule. As 
+such, you'll quickly know that you just broke something)
 
---=20
-Kristoffer Haugsbakk
+Drawbacks of this approach:
+- `git commit` will be slower. Don't know how much, probably depends on 
+the implementation
+
+Advantages:
+- You can ensure that you don't accidentally break something in other 
+repos (or even your own, if you have enough dependencies on your own 
+filenames…)
+
+So, what do you think?
 
