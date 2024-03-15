@@ -1,111 +1,107 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AE7548F4
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 21:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3597456745
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 21:42:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710538592; cv=none; b=CRofqvdin6yuv2EmiIjylT58nLseL/tsgbAJJH7uHmX2okHutelDg55EKYrUKxEAgWHRDDKmu0/o0n/qapdtKgQVZu1OYQOkejqkfnfyyRipu55uBY3nZzmexFlV66X6YTYZhoK0xDwswqgJNE6acy2fW+oXfU2/ZcxTlJW1Xko=
+	t=1710538939; cv=none; b=Hpsnnjl1wpaDT0tjUWAuqq7G/C3f8nsCqw5hQUHz4g5T5HeeBT/lCGNAc/ouqW3CDgkq8h7gxcVC2cRQrNALJWEMUivnvXqjXU/5pU0w8vVeGBSjG2wflPAnQdSM8phTizZXHx3m04O5fa2tKvHvKmXn36BIE7awmvyRoGo/QOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710538592; c=relaxed/simple;
-	bh=OG+54LYbKF5KyJDKhPriR/x7+q5O1/IExK4Lm1AjtTE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=MJ/pOKO/i8SLnMZQgN9YE8xgEmYSwawfPq95Oj6BZossjt0f0mTmZJv1LOz0AA02A2VpYF2gd+bQuJR+0yDIspqsVKPQl7zkLA2EWOf/Xqq7BCIJjQ3DHYBmjbqxTaU+kSGGXaymfe0L8SifiIZlrNkLDowBqiZBszFxfBUy+Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uhvXtGHb; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1710538939; c=relaxed/simple;
+	bh=i2IOrrJLTWf/6ULVm8rbx+lITn/lPhAmF/woEpDaalg=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=Z02LLTYVA3eYlzisC6wiLWZ7Cw7mfOfyVVwQfUZljOoSeiPeY1uKgSWy5UB6lfgtb2STylrIdW6An9ZcrLJYebRuwI9DqmP40B4+EdnUYvWYmtllfwN3SdjfyR2KELThxD5/jUGE7PX6cyICHXmpeQtZ9USxAuWzKCuXkR7S3Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=bh8NNn/E; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uhvXtGHb"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc6b26ce0bbso4839217276.1
-        for <git@vger.kernel.org>; Fri, 15 Mar 2024 14:36:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710538588; x=1711143388; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jocI4bIsES/xcyyrF87HoFGCpeGdjyiAQaVIHJwZ8oY=;
-        b=uhvXtGHbpdoXjV9T0hvBGKZUUvl/hlrkGspReBDJii3DYfdKnc+eOAmazcOswgW9Tp
-         p74zG06osfDh846Z6/rkTbw1A9H/9wa5xzn7hJvnxR5erMKpiD8mI4JOZwsLQv0VfXvo
-         7frQusG6Dlu9B1/+CtjDXJ2U+KAxV0l+hPJ9dI71NnIIodOeGqv5Pw7b6ToA3Gyl6TDh
-         hGkjsQciTRE4PH8qCJjER4/9TZNuIC3cHuWT8tP/7oBbjq7p/MXYTc4gVebkZiqOX0CJ
-         qezDnhKRKn7BhobThIOvN5KHvFLp7IDb15kBVKwWxVjU0aR8SHaUs5Ly/m4yEwIqJZLO
-         PMUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710538588; x=1711143388;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jocI4bIsES/xcyyrF87HoFGCpeGdjyiAQaVIHJwZ8oY=;
-        b=R6b32hBeflg8GvPpdWZ+B90v1xc9LzTKa7vCLKX0ydP34TS7l466XJYgmeA22HuRJn
-         83roSTl8PueYCYWg76vX2Y5bZqYCLDjTUYN2WTGLDO9Dm0BaulY8nq0F280JAzOCxf8b
-         tRvseP1ED9KxHCdpMJ9Fdv/3HaQAhbcwIIz40Wqac7BOGPLkKOGZqd6rfllM+ikqlGgv
-         fJK5x+AVJ1hrg6tJnq65ekEV7Y+W56OnnUnioR6YLRQOgnDG/UA+g3J1e7dtfgIKvL7n
-         IwNcK4cRKX87ULvd2/H5FxRJsC70UGgcVU24nAK1edcCOyGD6BtQveqelBpkAkpa+1y3
-         QEzA==
-X-Gm-Message-State: AOJu0YzFlongoXwV1Do9P6iPkO8smtJra83ABlAKCJr264ai1HyvvBa1
-	dikTR0YrwKCkQwq/9zSawEVZ982ddd6QEVVP2Le0IAg9wKb0z6B1vC6MMKqRXNhboz+EYEeVxC9
-	g/g==
-X-Google-Smtp-Source: AGHT+IETXKhLYUdGWTquP3AAwmCY7zhoWKjP9W1u+5kMFShPSMOVMqU4ysmmp6Y28Pr7YZAQEvBUsytpesg=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:2605:b0:dcb:b9d7:2760 with SMTP id
- dw5-20020a056902260500b00dcbb9d72760mr1742339ybb.13.1710538588083; Fri, 15
- Mar 2024 14:36:28 -0700 (PDT)
-Date: Fri, 15 Mar 2024 14:36:26 -0700
-In-Reply-To: <xmqqjzm3qumx.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="bh8NNn/E"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1694.git.1710485706.gitgitgadget@gmail.com> <xmqqjzm3qumx.fsf@gitster.g>
-Message-ID: <owly4jd741ph.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 0/5] Unify trailer formatting functions
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710538932;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rEgjt4kX4pypEFYpW+p1/YEENpuN0yLAFzddjSvzeLc=;
+	b=bh8NNn/EkefohVM9E9OqEK1l6uUubm0LNj8eay0rumcNzHf/4jjshRQxKKezslVBe5kUEY
+	YQK78Qyfu7Wp40M59COAd6IEjYAfpEYqGezIhGjIZKTgw0/XOrqOeDVUXGPzRa1WJvqLp3
+	Dj186yC+AE56Y0fdOQIiaiyEgbe89yU7gy5Hz4w+fYwDN/W2QQS6pfy6k4Gxi1KhpNGmlk
+	aCxW2eUUjBxqffbCVt3q5LN5PaiVOK+dpLVDGUFRzTklAlQYIpvTOzlOTe/D+YMplYTRq/
+	m8Eyj9l5kUnFLD+WTl34j6ApeUTLVTCO6IRVNc8LA8v/XPpIbdbx/0fLbGYKpw==
+Date: Fri, 15 Mar 2024 22:42:11 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
+ github@seichter.de
+Subject: Re: [PATCH 3/4] t1300: add more tests for whitespace and inline
+ comments
+In-Reply-To: <CAPig+cRG8eFxepkaiN54H+fa7D=rFGsmEHdvTP+HSSaLO_6T_A@mail.gmail.com>
+References: <cover.1710508691.git.dsimic@manjaro.org>
+ <590731e15a01558d1bbcdfc01df4f78573138742.1710508691.git.dsimic@manjaro.org>
+ <CAPig+cRMPNExbG34xJ0w5npUc3DDwxQUGS_AQfam_mi4s53=sA@mail.gmail.com>
+ <CAPig+cRG8eFxepkaiN54H+fa7D=rFGsmEHdvTP+HSSaLO_6T_A@mail.gmail.com>
+Message-ID: <ac99ea0a24c257eab8f29466589b6eef@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2024-03-15 21:29, Eric Sunshine wrote:
+> On Fri, Mar 15, 2024 at 3:39 PM Eric Sunshine <sunshine@sunshineco.com> 
+> wrote:
+>> These days we try to place all test-related code inside a
+>> test_expect_success() context rather than having it standalone. In
+>> this case, since the file being created is (presumably) shared by
+>> multiple tests in this script, you may want to add a new test which
+>> performs this setup step.
+>> 
+>> Taking all the above into account, perhaps:
+>> 
+>>     test_expect_success 'setup whitespace' '
+>>         q_to_tab >.git/config <<-\EOF
+>>         [section]
+>>         solid = rock
+>>         sparse = bigQblue
+>>         ...
+>>         EOF
+>> 
+>> Same comments apply to rest of patch.
+> 
+> To be clear, this case is special because the file being created is
+> shared by multiple tests, so it deserves being placed in its own
+> test_expect_success() invocation.
+> 
+> For the remaining cases where you're doing some set-up outside of
+> test_expect_success(), just move the set-up code into the
+> corresponding test_expect_success() invocation. For instance, rather
+> than:
+> 
+>     echo 'big               blue' > expect
+> 
+>     test_expect_success 'internal whitespace' '
+>         git config --get section.sparse > output &&
+>         test_cmp expect output
+>     '
+> 
+> do this:
+> 
+>     test_expect_success 'internal whitespace' '
+>         echo 'bigQblue' | q_to_tab >expect
+>         git config --get section.sparse >actual &&
+>         test_cmp expect actual
+>     '
+> 
+> (I changed "output" to "actual" above since the names "expect" and
+> "actual" are common in the tests.)
 
-> Not about the series, but about the way it was sent.
->
-> The messages in this series have exactly the same kind of breakages
-> in the recipient names/addresses we recently saw:
->
->     https://lore.kernel.org/git/xmqqh6hkxox6.fsf@gitster.g/
->
-> Human-readable names with a SP inside [square bracket] pair
-> appended, and one of the addresses had that square bracket applied
-> inside <angle bracket> pair and breaking MTAs (I manually fixed
-> khaugsbakk's address before sending this response, so replying to
-> this messages should be OK).
-
-UGH, I'm so sorry about that.
-
-> What are you and Aryan's pull.1675.v3 did differently from other
-> series sent via GGG to trigger this, I have to wonder?
-
-I realize now that it's because I copy/pasted the "Cc: ..." lines in the PR
-description from
-https://github.com/gitgitgadget/git/pull/1632#issue-2068188239, such
-that when I pasted those in for the PR description for this series at
-https://github.com/gitgitgadget/git/pull/1694#issue-2187804953, it
-carried over the email addresses as Markdown-formatted hyperlinks.
-Currently it reads
-
-    Cc: Christian Couder [chriscool@tuxfamily.org](mailto:chriscool@tuxfamily.org)
-    Cc: Junio C Hamano [gitster@pobox.com](mailto:gitster@pobox.com)
-    Cc: Emily Shaffer [nasamuffin@google.com](mailto:nasamuffin@google.com)
-    cc: Josh Steadmon [steadmon@google.com](mailto:steadmon@google.com)
-    cc: Randall S. Becker [rsbecker@nexbridge.com](mailto:rsbecker@nexbridge.com)
-    cc: Christian Couder [christian.couder@gmail.com](mailto:christian.couder@gmail.com)
-    cc: "Kristoffer Haugsbakk" [code@khaugsbakk.name](mailto:code@khaugsbakk.name)
-    cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-
-when I click on "edit", where the last line must be from your manual fix
-which GGG picked up. I've cleaned up the PR description manually now,
-and for this message I'm also attempting to clean up those square
-brackets.
+This looks nice, thanks again.  It keeps the expected results and
+the test execution in a single "block", making it a bit easier to
+keep track of different tests and their expected results.
