@@ -1,113 +1,134 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E733D56A
-	for <git@vger.kernel.org>; Fri, 15 Mar 2024 15:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3BE3B18B
+	for <git@vger.kernel.org>; Fri, 15 Mar 2024 15:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710517263; cv=none; b=WvfRsp0IMCZUqfJZ1yH6eI2rnyMjFeC9l7XL97XGqjBbx4qcWTS2ydXXnlFd2Ryy7QHesvcCvQ0tG4/DABlPxDPWvbAlBGanJ0G6Q4qE6880v7Q43bZTcOQ+QstlXu6Y3oIdJaC/NpQM38GiqSWpcTb15o34J59nCy622TETLlo=
+	t=1710517290; cv=none; b=Q1k53kt1FKwScZQP6UKjR5pXGJyv9kXB+lV0+O2PWN5O7oHugcNTKfOHGzUiKxX5BT7xDHgIOKmcH7+7cpbi8Svot9pYuvsps5vkdaVWSni5ipGxvpmfLoGuler1AQOjEljNUGA/vL2DNIIF8eb6+esD5x5O27ceh8SppCK/COY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710517263; c=relaxed/simple;
-	bh=f2UzakrLowY6gUrXeff6a8tWX5+BopJwjP/bMGeeTHI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LYcpvF3uDgQKxaBX4gAYDZpfqCGVNcc2WyAY9R+ySQYbl93knUdk63TZbaY4b0C6o5SKK3I+6M9jvuDxAZv2gWQnkzYZdGJr9W9iq2TeuEeUhNbpTjzVI+PMFRgn8FVcetJhdQdCtMzJ0xMz59WzEqfsAAjHiPjGOkeOC8OBCCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YGv3jC0C; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710517290; c=relaxed/simple;
+	bh=ziSVZMZg2dJEocVV9+8dgk0hs8UHvLlgp6CaiHb8qFY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=RODqHiiUbLslx8sJsTAZtlQ2pOS5LMuBuptholQNb/FONWwY3PhNY55MFF4h8p5rX7aXjzJQLU4n4XHEJJ95PDOUWsJLBxucLn+P9zk7TfwCkkdbhIKTXNpcV9IoZh42WxpI+/hqpSJEVCXOyyGIvPlWhvoI8Ly+u9B8oPno5N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L9JumueS; arc=none smtp.client-ip=209.85.166.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YGv3jC0C"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E5892B649;
-	Fri, 15 Mar 2024 11:41:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=f2UzakrLowY6
-	gUrXeff6a8tWX5+BopJwjP/bMGeeTHI=; b=YGv3jC0CumKSKo+Djy/Tt19B42qh
-	p7Nr7yJ95TttOpBNXSysb0hUFOtRZzEHIAZHIWHHFzK6ncwP9sXI7cT7bysawDEF
-	knWAsiP6gOGAhpksVMOQrYO8pdHo/F2PRXrQLq6DkRYEDc1Y9/Uv4/tQ99WdR6XB
-	VZL0xR+4Jie/CTE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 26B3C2B648;
-	Fri, 15 Mar 2024 11:41:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BAB5E2B646;
-	Fri, 15 Mar 2024 11:40:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  Dragan Simic
- <dsimic@manjaro.org>,  Manlio Perillo <manlio.perillo@gmail.com>,
-  =?utf-8?Q?Ren=C3=A9?=
- Scharfe <l.s.r@web.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 16/16] config: allow multi-byte core.commentChar
-In-Reply-To: <20240315081041.GA1753560@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 15 Mar 2024 04:10:41 -0400")
-References: <20240312091013.GA95442@coredump.intra.peff.net>
-	<20240312091750.GP95609@coredump.intra.peff.net>
-	<0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
-	<20240315055944.GB1741107@coredump.intra.peff.net>
-	<6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
-	<20240315081041.GA1753560@coredump.intra.peff.net>
-Date: Fri, 15 Mar 2024 08:40:56 -0700
-Message-ID: <xmqqr0gbtsdz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L9JumueS"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-7cbf307213fso36973739f.0
+        for <git@vger.kernel.org>; Fri, 15 Mar 2024 08:41:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710517288; x=1711122088; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=peDrB/QzYIQpKWrvw8fwqDjadXl0Pw7k7BQfGMC8nVI=;
+        b=L9JumueSGtH7968nCWqZylsv19nCZLlI4nDSaYNXN+DwvTmCfVlDcZ9kvKpL7l3y1n
+         6Awq7jy8CNnvDuntn5rKLju4M2DSRYiEJ2JFrKvwHZ1IKNX0jFs64Pvfg4kHvOEz0jaa
+         HIqXDqJxXXZHPboy9WaWX9hYuZkFx9Wrq/oE+Uy9pHE/NJa76py+5M4ZwiN+TDzU4cu4
+         cR+8DTQNDioipgR1M5zPfbb+/tqYtWsD3hX0QFs/INM/fzKoRIh/JebkIg5pDucURYIa
+         qFJejXIUNYA6+jkKLliYJmMZvotvK3SWtXK+/3qoLOhSk3k3Ve7Id0dxUq24FwrRxgOM
+         +jmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710517288; x=1711122088;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=peDrB/QzYIQpKWrvw8fwqDjadXl0Pw7k7BQfGMC8nVI=;
+        b=bS5muX7KLZGOeNppDmzKW2kCqK2dNm+crUsdYJZeMEzaeBWw6qmvRMm1Vj1Od3leC+
+         UAPekcDY0XuJ0RVm3qgps+mQ5TfIf1/Ungo7FmY00B15EYlA14FsDhkR4G1YPt/H2pYZ
+         jSNAFGJ9spAhCNwmTs6CMVILkqjwDzpwl2QKouFu3LKn99QFy0MJKNikLhkno6tuRvGA
+         CfZm++b5Vg95RsfbH8qNnVBSn2ibVic5g81rRdIlVpWTWfGZ7m2CBDvBgyjWRi1Ykxoc
+         UFQJ6WpDs77HsYcW4zGDm0nJaaH3DPEQuf++bgWnBLbZ30oFw+hvy8wmUNUvh6CiS+Iv
+         X0aA==
+X-Forwarded-Encrypted: i=1; AJvYcCXEJgm04YC86WB2WMgWClkVhOed3Ocu3vY79VfyfWmVyvW35FQs05fKmJfNGTqxzSLH4ve5o94r2ziQkw+mSxxx+kvg
+X-Gm-Message-State: AOJu0Yz8/4d5DQBoKMc8YDEVb39L9Fd/SbCC1MhkVVCIlRiyl/Uo3zz4
+	dzoZcoCXTV6qrhB0pR4NIeH0Yy02lPLKIzJNcMMdGcGlsiwEqN1v+WyTog9U
+X-Google-Smtp-Source: AGHT+IGQW89CHIj/DDMoOwr5d7PWFyiYPPqJVeAMqrwke7czkb6CZlQeQO8edGDg16/jovJJ3KwS1Q==
+X-Received: by 2002:a6b:610f:0:b0:7cb:f0e3:c785 with SMTP id v15-20020a6b610f000000b007cbf0e3c785mr2985412iob.12.1710517287821;
+        Fri, 15 Mar 2024 08:41:27 -0700 (PDT)
+Received: from gmail.froward.int.ebiederm.org.gmail.com (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
+        by smtp.gmail.com with ESMTPSA id y26-20020a056638015a00b004772df70c10sm805956jao.46.2024.03.15.08.41.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Mar 2024 08:41:27 -0700 (PDT)
+From: "Eric W. Biederman" <ebiederm@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
+ docs to code
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+	<20240307085632.GB2072294@coredump.intra.peff.net>
+	<Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
+	<20240312074513.GA47852@coredump.intra.peff.net>
+	<ZfIWkJieqcPv5jA8@tapette.crustytoothpaste.net>
+	<87ttl99e0b.fsf@gmail.froward.int.ebiederm.org>
+	<ZfNqVowQBy47_92m@tapette.crustytoothpaste.net>
+Date: Fri, 15 Mar 2024 10:41:24 -0500
+In-Reply-To: <ZfNqVowQBy47_92m@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 14 Mar 2024 21:21:26 +0000")
+Message-ID: <87msqzo63f.fsf@gmail.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 6AD3ABCE-E2E2-11EE-B247-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> +	(default '#'). Note that this variable can be a string like
-> +	`//` or `=E2=81=91=E2=81=95=E2=81=91`; it doesn't have to be a single=
- ASCII character.
+> On 2024-03-14 at 12:47:16, Eric W. Biederman wrote:
+>> That said I think a lot of think we do a lot of that today in practice
+>> by simply detecting the length of the hash.
+>
+> That's only true for the dumb HTTP protocol.  Everything else should not
+> do that and we specifically want to avoid doing that, since we may very
+> well end up with SHA-3-256 or another 256-bit hash instead of SHA-256 if
+> there are sufficient cryptographic advances.
 
-Looking good.
+My apologies.  I thought Jeff King was reporting that object-format
+extension did not work, and that had been masked by a test.
 
-> That's assuming we don't want to go the commentString route, which woul=
-d
-> require a bit more re-working of the patch. I'm also open to a more
-> clever or pretty multi-byte example if we have one. ;)
+I see you saying and a quick grep through the code supports that the
+object-format extension is implemented, and that the primary problem
+is that the Documentation varies slightly from what is implemented.
 
-Adding core.commentString can be done long after the dust settles
-and I would expect that most of the changes in the patch would not
-have to be updated.  The parts that use comment_line_str variable do
-not have to change, the documentation needs "core.commentString is a
-synonym for core.commentChar, the latter of which is understood by
-older versions of Git (but they may use only the first byte of the
-string)" or something, but other than that, the existing text after
-this patch does not have to be updated.  If we add a proper synonym
-support to the config machinery, that would be a sizable project,
-but otherwise it would be just another "if (!strcmp()) var =3D val".
 
-Stepping back a bit, one thing that we do need to mention in this
-round is what happens when you use multi-byte sequence and have it
-accessed by existing versions of Git.  "use only the first byte" I
-wrote above came out of thin air without experimenting or reading
-the code, but something like that ought to be part of the "Note
-that" paragraph above.
+Looking at the code I am left with the question:
+ Is the object-format extension properly implemented in all cases?
 
-	(default '#'). Note that this variable can be a string like
-	`//` or `=E2=81=91=E2=81=95=E2=81=91`; it doesn't have to be a single AS=
-CII character.
-	Also note that older versions of Git used only the first byte
-	(not necessarily a character) of the value of this variable,
-	so you may want to be careful if you plan to use versions of
-	Git older than 2.45.
 
-or something like that, perhaps.
+If the object-format extension is properly implemented such that a
+client and server mismatch can be detected I am for just Documenting
+what is currently implemented and calling it good.
+
+The reason for that is
+Documentation/technical/hash-function-transition.txt does not expect
+servers to support more than hash function.  I don't have a perspective
+that differs.  So detecting what the client and server support and
+failing if they differ should be good enough.
 
 
 
+I am concerned that the current code may not report it's hash function
+in all of the cases it needs to, to be able to detect a mismatch.
 
+I look at commit 8b85ee4f47aa ("transport-helper: implement
+object-format extensions") and I don't see anything that generates
+":object-format=" after it has been asked for except the code
+in remote-curl.c added in commit 7f60501775b2 ("remote-curl: implement
+object-format extensions").
+
+Maybe I am mistaken but a name like remote-curl has me strongly
+suspecting that it does not cover all of the cases that git supports
+that implement protocol v2.
+
+I think I see some omissions in updating the protocol v2 Documentation.
+
+
+Can some folks who understand how git protocol v2 is implemented better
+that I do, tell me if I am seeing things or if it indeed looks like
+there are some omissions in the object-format implementation?
+
+Eric
