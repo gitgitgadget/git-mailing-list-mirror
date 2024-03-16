@@ -1,62 +1,62 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A161C8F49
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 06:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20177CA62
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 06:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710570434; cv=none; b=uEITZP4Hudh8SCqR81jI2iDkFBOmCViuh1B0wVsD7M/ymMYK+d83nJmOrKEEAv5IJ+0SYRcuCwSlguqnt2Sh/5aWe4Yg9T8onZbULBFuB4xeZiSmCpECSHgQ9uVc7T42yxIURcyImm91xtb45yPyAxqTqi4nfIBtLoGWd8kRdd4=
+	t=1710570435; cv=none; b=P0U8W1EvHkr7mzi2MU366uOsURpPp38S/Px0mTCESeSJlKf3ABASiTuHCIOpldKBDC+2IXMdDhdEMg0degvJD5Bt50C1yA7BYKTUbQWMhDZcCg5wNjzJ5eQ7WtjiChJN6dRF9KLsU9d1o1WKS1Xx83TSkPesUXFGvSi8WxwBAIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710570434; c=relaxed/simple;
-	bh=80X67DI7aF5hrHdqSseuDB3it+OyxHl9Gy50onQDU8Q=;
+	s=arc-20240116; t=1710570435; c=relaxed/simple;
+	bh=9kAoMDOFAxLoPOZrzD7YL4t/gUJSopvjOz6CeQeZXkI=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=S8llW3iNUk/0WHCPWhJ6E69eJZkuNLttmLSHV0Qyk0FNkRHeV/Rb9MK42zSONduwSR2o9dpUt+57PsVF9CMyVqbK1aFI1Bj6kmWPO19wtkvwD14UVOm6pmULXj0Bg5z2D407S5Znwj+9KG2V+xhu0NCmvV8KCKocbqO5sstHAWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUK9r4QR; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=qplAnmS80Uhlr8+OJ3u9ixxiBl7yuhxQ53oo01CcvpPq0xQkhDB8AOjPiP0h3Kt381Tg5cfzg+OQlMdK93ZiWMWePOducZ4gfLrRPrtUNl9msO9JwyKVx+8U4pFsjDOy9IHJEu0dzM3CNKzkU7tQ4HWDa4me+qQibM9+K006qyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RzX38lqK; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUK9r4QR"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-413ef770363so23862015e9.2
-        for <git@vger.kernel.org>; Fri, 15 Mar 2024 23:27:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RzX38lqK"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41400332550so13924335e9.1
+        for <git@vger.kernel.org>; Fri, 15 Mar 2024 23:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710570430; x=1711175230; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710570432; x=1711175232; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hKLrpgwqPaFMYDoMpIo/JUVy7Y0gCAs/fTuse1xiu6U=;
-        b=HUK9r4QRaCMKv61gCq1F0km8s7mthPea4/sDP+uicnv6XtoBzGVua9Fr4md9IgRioM
-         QgaBsaX50k3sUVTN0Vnm4On3VjDtDGotXlY0Pr2eYz6cvk5ay/bwJWq9JTX1+kLQhC8H
-         9U1JTHyBRZz3/guc3Ww1Gcw+1gxpleaoZ3zNOW63/RlV03KU0c7jyr/GijSXBEitbrL7
-         gK3SZhfKvK/C0AFMbCDnsJNS7gz43mN/1KKOfb7WoS/9L3a+lIOZeKqA4foh7bHJCxKs
-         LhicP7D3DDaULLzP2FcUQtlFHEqcxwDQY1DwWoFzRNkIuHPYP8IPPu/qeXRRKiyP1hju
-         Oqyw==
+        bh=MOGKGuTkdwRSPqSSaqCCsiOdFMxgqW/ZfvgOAqeO+ic=;
+        b=RzX38lqKJKjlTVxWwYdYFckkiFACuI0EDG082B7JbvSt78W0fWHKHcdoNp3qIHOrYK
+         2Iemn2PTyLVP9cAHYTOEPWKWXRJD3eD2bEzb5CQ92V+wY1d2WWZ0pmLC+g8vwLHb0eev
+         jjUcOsjQVx/f22IRgQvW3OH8tFsfKbOEzGhm+y8jRQkQ5vDJrAYyvDiME1+PNzdWYZhq
+         HJhvi9Dvx/saFK5eW5dswwb5mCjxDlE8Fog+YaM4f13DF14oQNEgAu2gGhoYyU4ktdt8
+         NKfNqsIn57Zoms6tUnvXimgPEHKyi5n1aEjYKdehotEiSsURfH6+2Hcv1FpEZzl/sTP4
+         11Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710570430; x=1711175230;
+        d=1e100.net; s=20230601; t=1710570432; x=1711175232;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hKLrpgwqPaFMYDoMpIo/JUVy7Y0gCAs/fTuse1xiu6U=;
-        b=R2xGs5btfzNJsWuTlaQt2JTNKcSkqD5bLY68n5HB790so2Aqdj3blgXte3eI0qy9QK
-         EBv0KasJemvQns9oDxq/XW3GN2MoKQcYGLEKl/KtBDMf8sPkPkD9b/rZfQgsMmQU5wDh
-         N6VoQDjuZUmSPn6FmjJt3oC9ZK+ZHOrXq/KPZMzkgvL8EMkU5ETBkwEj1wLb1W4oL2wx
-         bKJRXCEsNBMcXVbUtwbVapcoDn3105pfceAGKzb8orVy2Tbm/cxVbysSn5VJ7iNTXs78
-         9KLLztSrZe27ZSD3mH1Z23HAIQQnKwOkMrs/Z9CL5fU3BM+cvU2a2MRN1AM38ZlolrKp
-         H6Yw==
-X-Gm-Message-State: AOJu0Yxbdba2fop78DabS6XXqnVbDTT/zgYjBk57kMIT9bC2smn+oc4m
-	o3pz3+5/DCiMDIBomQzN4VHuAPEz0eex6dUCa3jHXlEAGV9y+jKp5OLfXNWu
-X-Google-Smtp-Source: AGHT+IHucGmsuXDuykohiAuKNmryihn5FMW2dvaHaUHXlRSnceGdR4oHwadHbnrGMPIGWw8euYlErg==
-X-Received: by 2002:a05:600c:3556:b0:412:beee:36b3 with SMTP id i22-20020a05600c355600b00412beee36b3mr1102601wmq.7.1710570429898;
-        Fri, 15 Mar 2024 23:27:09 -0700 (PDT)
+        bh=MOGKGuTkdwRSPqSSaqCCsiOdFMxgqW/ZfvgOAqeO+ic=;
+        b=jXN/Fcb/ch6iwi/hz+gaM9vhWszjKKQdW2CepVlZPaw7cBGmNCs/W1nzgeZWnF/yAR
+         NNg+/zVQnf+SEENav2EPYJuviMFWis4Z9AKuMt5XubNG28+bhdeM7kqINTjpeTLXPjZE
+         KKffhZSGmtQl9gUhgCEt86NlXxMlusARxVI1B0tROc0PpbggG+pbx7BH2b88U33RXUvb
+         Sk7MrgOWKXn/vLlp0lerckFzqq9QKAzwLZP8JHSUPXSSigAjH+sPSKtyDjG786pyXQ4h
+         maSy4lJxrFPbHSgkMnX/CdllsamTzUIcNgjRNKMYYoAYz3cL6/UCsfHcDr9yb13/eNrS
+         cVAg==
+X-Gm-Message-State: AOJu0Ywj93H+WvzruFbVPZPyYkkkLObWRJ0/Sa8k4rCt/N1UrFR9YlnI
+	ckKr2WP5RTLVIz/YUUWp5fMNyY+tWHo7/2MiHub8BUAxNXTcSOS499JhsK/Z
+X-Google-Smtp-Source: AGHT+IE7s0vBQVoDpZuYpOEXOWelVX4dPXBdAY9Pgs4Z/xiBRG6v7VklU50+mepePPsuR7w/+9FMIA==
+X-Received: by 2002:a5d:6683:0:b0:33e:c56f:b5e7 with SMTP id l3-20020a5d6683000000b0033ec56fb5e7mr751835wru.31.1710570431630;
+        Fri, 15 Mar 2024 23:27:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h2-20020a05600c350200b00413177c3f1dsm7741904wmq.18.2024.03.15.23.27.09
+        by smtp.gmail.com with ESMTPSA id bh21-20020a05600c3d1500b004140924b256sm163451wmb.48.2024.03.15.23.27.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Mar 2024 23:27:09 -0700 (PDT)
-Message-ID: <32ad0397737375b826d8af893e14a04628e9e803.1710570428.git.gitgitgadget@gmail.com>
+        Fri, 15 Mar 2024 23:27:10 -0700 (PDT)
+Message-ID: <dc873c3b82093a6411e34369fc516242f1bb0d6c.1710570428.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
 References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 16 Mar 2024 06:27:03 +0000
-Subject: [PATCH 1/6] trailer: teach iterator about non-trailer lines
+Date: Sat, 16 Mar 2024 06:27:04 +0000
+Subject: [PATCH 2/6] sequencer: use the trailer iterator
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,108 +79,79 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linusa@google.com>
 
-Previously the iterator did not iterate over non-trailer lines. This was
-somewhat unfortunate, because trailer blocks could have non-trailer
-lines in them since 146245063e (trailer: allow non-trailers in trailer
-block, 2016-10-21), which was before the iterator was created in
-f0939a0eb1 (trailer: add interface for iterating over commit trailers,
-2020-09-27).
+Instead of calling "trailer_info_get()", which is a low-level function
+in the trailers implementation (trailer.c), call
+trailer_iterator_advance(), which was specifically designed for public
+consumption in f0939a0eb1 (trailer: add interface for iterating over
+commit trailers, 2020-09-27).
 
-So if trailer API users wanted to iterate over all lines in a trailer
-block (including non-trailer lines), they could not use the iterator and
-were forced to use the lower-level trailer_info struct directly (which
-provides a raw string array that includes all lines in the trailer
-block).
+Avoiding "trailer_info_get()" means we don't have to worry about options
+like "no_divider" (relevant for parsing trailers). We also don't have to
+check for things like "info.trailer_start == info.trailer_end" to see
+whether there were any trailers (instead we can just check to see
+whether the iterator advanced at all).
 
-Change the iterator's behavior so that we also iterate over non-trailer
-lines, instead of skipping over them. The new "raw" member of the
-iterator allows API users to access previously inaccessible non-trailer
-lines. Reword the variable "trailer" to just "line" because this
-variable can now hold both trailer lines _and_ non-trailer lines.
-
-The new "raw" member is important because anyone currently not using the
-iterator is using trailer_info's raw string array directly to access
-lines to check what the combined key + value looks like. If we didn't
-provide a "raw" member here, iterator users would have to re-construct
-the unparsed line by concatenating the key and value back together again
---- which places an undue burden for iterator users.
-
-The next commit demonstrates the use of the iterator in sequencer.c as an
-example of where "raw" will be useful, so that it can start using the
-iterator.
-
-For the existing use of the iterator in builtin/shortlog.c, we don't
-have to change the code there because that code does
-
-    trailer_iterator_init(&iter, body);
-    while (trailer_iterator_advance(&iter)) {
-        const char *value = iter.val.buf;
-
-        if (!string_list_has_string(&log->trailers, iter.key.buf))
-            continue;
-
-        ...
-
-and the
-
-        if (!string_list_has_string(&log->trailers, iter.key.buf))
-
-condition already skips over non-trailer lines (iter.key.buf is empty
-for non-trailer lines, making the comparison still work even with this
-commit).
+Note how we have to use "iter.raw" in order to get the same behavior as
+before when we iterated over the unparsed string array (char **trailers)
+in trailer_info.
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 12 +++++-------
- trailer.h |  8 ++++++++
- 2 files changed, 13 insertions(+), 7 deletions(-)
+ sequencer.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/trailer.c b/trailer.c
-index 3e4dab9c065..4700c441442 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1146,17 +1146,15 @@ void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
- 
- int trailer_iterator_advance(struct trailer_iterator *iter)
+diff --git a/sequencer.c b/sequencer.c
+index ea1441e6174..4c1f6c675e7 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -319,35 +319,32 @@ static const char *get_todo_path(const struct replay_opts *opts)
+ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	size_t ignore_footer)
  {
--	while (iter->internal.cur < iter->internal.info.trailer_nr) {
--		char *trailer = iter->internal.info.trailers[iter->internal.cur++];
--		int separator_pos = find_separator(trailer, separators);
+-	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+-	struct trailer_info info;
+-	size_t i;
++	struct trailer_iterator iter;
++	size_t i = 0;
+ 	int found_sob = 0, found_sob_last = 0;
+ 	char saved_char;
+ 
+-	opts.no_divider = 1;
 -
--		if (separator_pos < 1)
--			continue; /* not a real trailer */
-+	if (iter->internal.cur < iter->internal.info.trailer_nr) {
-+		char *line = iter->internal.info.trailers[iter->internal.cur++];
-+		int separator_pos = find_separator(line, separators);
+ 	if (ignore_footer) {
+ 		saved_char = sb->buf[sb->len - ignore_footer];
+ 		sb->buf[sb->len - ignore_footer] = '\0';
+ 	}
  
-+		iter->raw = line;
- 		strbuf_reset(&iter->key);
- 		strbuf_reset(&iter->val);
- 		parse_trailer(&iter->key, &iter->val, NULL,
--			      trailer, separator_pos);
-+			      line, separator_pos);
- 		/* Always unfold values during iteration. */
- 		unfold_value(&iter->val);
- 		return 1;
-diff --git a/trailer.h b/trailer.h
-index 9f42aa75994..ebafa3657e4 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -125,6 +125,14 @@ void format_trailers_from_commit(const struct process_trailer_options *,
-  *   trailer_iterator_release(&iter);
-  */
- struct trailer_iterator {
-+	/*
-+	 * Raw line (e.g., "foo: bar baz") before being parsed as a trailer
-+	 * key/val pair as part of a trailer block. A trailer block can be
-+	 * either 100% trailer lines, or mixed in with non-trailer lines (in
-+	 * which case at least 25% must be trailer lines).
-+	 */
-+	const char *raw;
-+
- 	struct strbuf key;
- 	struct strbuf val;
+-	trailer_info_get(&opts, sb->buf, &info);
++	trailer_iterator_init(&iter, sb->buf);
  
+ 	if (ignore_footer)
+ 		sb->buf[sb->len - ignore_footer] = saved_char;
+ 
+-	if (info.trailer_block_start == info.trailer_block_end)
+-		return 0;
++	while (trailer_iterator_advance(&iter)) {
++		i++;
++		if (sob && !strncmp(iter.raw, sob->buf, sob->len))
++			found_sob = i;
++	}
++	trailer_iterator_release(&iter);
+ 
+-	for (i = 0; i < info.trailer_nr; i++)
+-		if (sob && !strncmp(info.trailers[i], sob->buf, sob->len)) {
+-			found_sob = 1;
+-			if (i == info.trailer_nr - 1)
+-				found_sob_last = 1;
+-		}
++	if (!i)
++		return 0;
+ 
+-	trailer_info_release(&info);
++	found_sob_last = (int)i == found_sob;
+ 
+ 	if (found_sob_last)
+ 		return 3;
 -- 
 gitgitgadget
 
