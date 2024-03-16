@@ -1,113 +1,82 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C947E18EA1
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 18:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D701BDE2
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 18:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710612347; cv=none; b=ozKOsBziZRQa7IqQ0Es1Pk44f1hQgdXKuRgMV9oDIn2YmVBSzp64T7UTkVLQhnNikSt3Z0ko1pIK++wac3EmMicBMdDFiaVPIEPcvAsJk3nVm4MCqf+JWP3XvOLbvBENQfLMRgpMVhwaawGhF0vyrFwlbH+65Dg+h5FTglwRF2w=
+	t=1710612426; cv=none; b=n0etNYEVSsNgkNqLm8nmrA3ilwidjeBAusSe5pSIBjB5oSDJM4dhK4K+gg1bGzxM7HjVcMeVH+LevmTb363mhmxVlQ969clJ+w5a0Y+1s0em2VSePfVJLE5xY9hUMfu6VdzKzM0kLmh/LzNmRG3OOq2TeLQpIw7Mcs8G93EX+TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710612347; c=relaxed/simple;
-	bh=7wMd/XyltKBrL0p7saLmTt63Ljtu6XBtEV3YFgB/Lvs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LBtL6+S24zgje/+5AmDdckilr2aUnBT2nEmHZG8g6G10TDz8i8+E1jGfRURLYGhdfiTZtAmB5a3e1iK59947HhpkY6FdP233ANVSuTPr0TzeSLyA1OrLz0oqyUfDiTO+lMe/suZwJjCrRKA9MeB2YQiaZbQf6vvsv5c1xtGBYVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=eRk/V/UY; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
+	s=arc-20240116; t=1710612426; c=relaxed/simple;
+	bh=g0faRcS7iyG38Lv4dfYl2m2A8VMtBWzDCXCo49Px5XA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VOPGqrgXZfHdDAOIp9HlrYLxWzY5ySAjT4d2Ftr1/XHzzDsOVjQQF4rDu4X5QDbvhtk/LHromK2KMixvS5SkCM/JtLU2YCkJP7uc+htyo4+nE4KqM283W1/0z3EnHKSsz5eZ8zl9gH5uya2/b4SISBQ2Gk/mnxyKOtChYwT6irg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hl7AsM2z; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="eRk/V/UY"
-Message-ID: <ea07fbc2-8937-486b-87c2-e2abe9856d26@iencinas.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
-	s=key1; t=1710612341;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=En/FeWhGGyXRpJz4vRB94rqGBXcyeQE5XxK8qbLnznU=;
-	b=eRk/V/UYjlyt8Ali7JpRAbHx+wloY0iobFPz2s8311UhOmGEDlxvqQxTM4a9C7sdXOSVID
-	vGFoScv6FIoKtAhv/Q8eIuEAlt6OIYK/AnmQ+GMRxO0r1+tM1OvKjIK9zyYq474CTWcOog
-	rpFi224lRCSx8uUM4mhTWYl+OSFlCtw5LE/Vk+bc9p+rOEzU+62a71OnIf9GvRKFwzR8nu
-	fLc+WtSJo9fg1lRYfAVfDBdRGFbwqfHf5Jc4xxZgaysh17JN5b3Q9R3CnBSNuqU3lq3ZF0
-	EVRRiIt72j2YjKYMs++hkZEN3N7jGFiyY0zcjAzeYNE6CJ9MMu7Pj8DQ1zbLnw==
-Date: Sat, 16 Mar 2024 19:05:38 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hl7AsM2z"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 25BD61BDA1;
+	Sat, 16 Mar 2024 14:06:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=g0faRcS7iyG38Lv4dfYl2m2A8VMtBWzDCXCo49
+	Px5XA=; b=hl7AsM2zcUOE0VMpYA9XNX8zyC8CbNFiPSSOnzqaHvHqXGntwTwsTC
+	hA13vhOSktP85ScIm2O9tCUnOQEWW3DP/NHYlG4zPLkXOLvmrFei+4Iw+/+cye4y
+	oMSqK0jLwc3wYXmc9cJ7l9nNsojDi7HS/vTUXtiSpcOnSgGj1qt4Q=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 103551BDA0;
+	Sat, 16 Mar 2024 14:06:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B7B11BD9C;
+	Sat, 16 Mar 2024 14:06:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Beat Bolli <bb@drbeat.li>,  git@vger.kernel.org,  Beat Bolli
+ <dev+git@drbeat.li>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Elijah
+ Newren
+ <newren@gmail.com>,  Philippe Blain <levraiphilippeblain@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 00/22] avoid redundant pipelines
+In-Reply-To: <ZfT7HHZ9Uchvp6Ao@nand.local> (Taylor Blau's message of "Fri, 15
+	Mar 2024 21:51:24 -0400")
+References: <20240305212533.12947-1-dev+git@drbeat.li>
+	<20240315194620.10713-1-dev+git@drbeat.li>
+	<ZfT7HHZ9Uchvp6Ao@nand.local>
+Date: Sat, 16 Mar 2024 11:06:53 -0700
+Message-ID: <xmqqfrwqm4oy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
-Content-Language: en-US
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org, 'Junio C Hamano' <gitster@pobox.com>,
- 'Jeff King' <peff@peff.net>
-References: <20240307205006.467443-1-ignacio@iencinas.com>
- <20240309181828.45496-1-ignacio@iencinas.com>
- <20240309181828.45496-2-ignacio@iencinas.com>
- <20240316065737.GA544929@coredump.intra.peff.net>
- <xmqqo7bem7o8.fsf@gitster.g> <006c01da77c9$298b2e50$7ca18af0$@nexbridge.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ignacio Encinas Rubio <ignacio@iencinas.com>
-In-Reply-To: <006c01da77c9$298b2e50$7ca18af0$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F8BE5C9E-E3BF-11EE-B84A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
+Taylor Blau <me@ttaylorr.com> writes:
 
+> On Fri, Mar 15, 2024 at 08:45:57PM +0100, Beat Bolli wrote:
+>> As follow-up to [1], here's a series that eliminates redundant
+>> pipelines, mostly under t/.
+>>
+>> --
+>> 2.44.0
+>
+> I read through both rounds of this series thoroughly and everything
+> looks all good to me. I left a couple of minor notes throughout that you
+> might consider changing, but I think that neither merit a reroll.
+>
+> I'd be happy to see this series move forward as-is. Thanks for working
+> on this!
 
-On 16/3/24 18:41, rsbecker@nexbridge.com wrote:
-> On Saturday, March 16, 2024 1:03 PM, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->>
->>> Do we need to define "hostname" in more detail here? Specifically, I'm
->>> wondering whether the result will be a FQDN or not (i.e., the output
->>> of "hostname" vs "hostname -f"). Looking at the code I think it will
->>> just be the short name returned. That's probably OK, but it may be
->>> worth documenting.
->>
->> That was my first reaction but there are places where "hostname"
->> already gives a name that is not "short" at all, without being invoked with
-> "-f".
->>
->> For example, the (virtual) workstation I am typing this message on sits in
-> a $WORK datacenter, where "hostname" gives the same
->> string as "hostname -f", which looks like "git.c.xxxxxx.tld" ("git" is the
-> only part I picked myself for it, "c" is shared by those employee
->> workstations hosted at datacenters, "xxxxxx.tld" is redacted to conceal the
-> real domain name to protect the culprits ;-).
->>
->> I think the most honest answer we can give in the documentation is that we
-> use what gethostname() [*] gives.
-> 
-> I think this is probably a good idea and but value should not be cached. My
-> dev box has a multi-home, multi-cpu IP stack. It makes things really weird
-> sometimes. For example, hostname replies with:
-> 
-> ztc0.xxxxxxxx.local
-> 
-> and includes the current default IP stack, which is known to DNS, while
-> uname -n, which I prefer to use when deciding what system I am on during
-> tests, reports:
-> 
-> xxxxxxxx
-> 
-> I am not sure how meaningful hostname is; however, "hostname -f" is not
-> portable. However, includeif depending on whatever gethostname() returns is
-> reasonable, in my opinion, also. I think the series should include a $(uname
-> -n) option in some form for completeness.
+Yeah, looks good.  Thanks, both.
 
-Correct me if I'm wrong, but gethostname() seems to be equivalent to
-$(uname -n)
-
-[1] https://git.musl-libc.org/cgit/musl/tree/src/unistd/gethostname.c 
-[2] https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/posix/gethostname.c;h=3c50706b5823368a0b3e876491e554461a4d515e;hb=HEAD
-
->>
->>
->> [References]
->>
->> *
-> https://pubs.opengroup.org/onlinepubs/9699919799/functions/gethostname.html
-> 
-> --Randall
-> 
