@@ -1,206 +1,124 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB30CA62
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 05:57:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB3EEAD4
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 06:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710568649; cv=none; b=q5xGe5fNUmSzXhU+gDwumbzpcJstNX2gF5By9F0n9EPwMDauf7otNle5HcLUzIEkURCXeRIw+XtPri7gCjgCMdBD60SkwTJM8Rnq3FqhluGxYNlu11HBBCdmtUZseCcKE38lu5GUPpiUDsfYBFQPvPZMdXJrad9DCqFMRLd9WXY=
+	t=1710569071; cv=none; b=WXonnUFTyqWjBuY22Soqp/32e2Vuckuut+T6Z1cBjqIwOdRvhvY4SXQZ3sLwFXfagfyaqEX/D25A2Q9HrbX08KijertwT9VRyCSLPwbH+jwXd2Bywmmvd/ZuAK9hrY5h7vL6VPhHgaRJXJvYXJEP51HdTULI2y1Zp57p1Eh6Qqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710568649; c=relaxed/simple;
-	bh=SHkA7Kx4R43JA39BpmePu/7Gn+YG9V9gD6IKjRJNNB4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TlJYM93DZ8Qhqs9/1FKBY/PorD5q8cbm9bWTGoLkQY8x7kSEerj26Q0zBujxPq4NA1Ub2pIzI/icusaUuMa6t3paHiCPNh603b38RDCgQPslNdcK8NJmLDPV+XjGOfgLHOdPkmBThUMhzppAO/t3unMB93cZGDuMj13ppopv4XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qyd/+rxE; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qyd/+rxE"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8EA2130E10;
-	Sat, 16 Mar 2024 01:57:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=SHkA7Kx4R43JA39BpmePu/7Gn+YG9V9gD6IKjR
-	JNNB4=; b=qyd/+rxEgtwnhQ6Ve6SacN/mr/f0/zHffTyRmyNnUBcEcrJrem9msX
-	iB0DXLZZ6UdGX3ITGsWL882s1w3Nm6eeHNVIH9DiPqVI74XpOBVootCtUN8gYUP4
-	hjnN8m80TOzivpDC0pnstwKUCNW0d+h8NWJ2TJ5/G1xwl/8LRapug=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 78D1030E0F;
-	Sat, 16 Mar 2024 01:57:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11C9030E0E;
-	Sat, 16 Mar 2024 01:57:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Peter Hutterer <peter.hutterer@who-t.net>,  David Heidelberg
- <david@ixit.cz>,  Phillip Wood <phillip.wood123@gmail.com>,  Dragan Simic
- <dsimic@manjaro.org>
-Subject: Re: [PATCH v5] diff: add diff.srcPrefix and diff.dstPrefix
- configuration variables
-In-Reply-To: <xmqqy1ajqvkb.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	15 Mar 2024 10:00:36 -0700")
-References: <20240315055448.GA2253326@quokka> <xmqqy1ajqvkb.fsf@gitster.g>
-Date: Fri, 15 Mar 2024 22:57:22 -0700
-Message-ID: <xmqq8r2ioh19.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710569071; c=relaxed/simple;
+	bh=Cx2uw1GYrZgFVQi5Nun9HwFIt2Ho5iy8w7d/TXJvr5E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UJSnLvvLKCnVAyx1LaM/uuzJTBMh0/kivf69NhS8ySzSu4C0JpaI/TLzqin5YHtDr9GSrTrrCOs2tGPBHk2O23P6vZYuxcOtJCQZ4Rdxh4hATBGm05cs2I9ytcinoeI9kNKvEgxatQvfwGcP3yUDHC0bXvRaYyQM0YGzluGtB6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 5457 invoked by uid 109); 16 Mar 2024 06:04:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 16 Mar 2024 06:04:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7138 invoked by uid 111); 16 Mar 2024 06:04:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 16 Mar 2024 02:04:32 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 16 Mar 2024 02:04:27 -0400
+From: Jeff King <peff@peff.net>
+To: "Eric W. Biederman" <ebiederm@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
+ docs to code
+Message-ID: <20240316060427.GB32145@coredump.intra.peff.net>
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+ <20240307085632.GB2072294@coredump.intra.peff.net>
+ <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
+ <20240312074513.GA47852@coredump.intra.peff.net>
+ <ZfIWkJieqcPv5jA8@tapette.crustytoothpaste.net>
+ <87ttl99e0b.fsf@gmail.froward.int.ebiederm.org>
+ <ZfNqVowQBy47_92m@tapette.crustytoothpaste.net>
+ <87msqzo63f.fsf@gmail.froward.int.ebiederm.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0F743B22-E35A-11EE-999D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87msqzo63f.fsf@gmail.froward.int.ebiederm.org>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Mar 15, 2024 at 10:41:24AM -0500, Eric W. Biederman wrote:
 
-> I am tempted to queue v4 with the z/ -> y/ fix from this round,
-> without any other changes from v4 to v5.
+> I see you saying and a quick grep through the code supports that the
+> object-format extension is implemented, and that the primary problem
+> is that the Documentation varies slightly from what is implemented.
+> 
+> 
+> Looking at the code I am left with the question:
+>  Is the object-format extension properly implemented in all cases?
+> 
+> 
+> If the object-format extension is properly implemented such that a
+> client and server mismatch can be detected I am for just Documenting
+> what is currently implemented and calling it good.
+> 
+> The reason for that is
+> Documentation/technical/hash-function-transition.txt does not expect
+> servers to support more than hash function.  I don't have a perspective
+> that differs.  So detecting what the client and server support and
+> failing if they differ should be good enough.
 
-So, that is what I did before I pushed out today's integration
-result.  I however have an "after the dust settles" clean-up patch
-on top (not committed yet), which I am sending out for review.
+AFAIK the code all works correctly, and there are no cases where we fail
+to notice a mismatch. The two code/doc inconsistencies (and bearing in
+mind this is for the transport-helper protocol, not the v2 protocol
+itself) are:
 
-------- >8 -------------- >8 -------------- >8 --------
-Subject: diff.*Prefix: use camelCase in the doc and test titles
+  - the docs say "object-format true", but the code just says
+    "object-format". They're semantically equivalent, so it's just a
+    minor syntax issue.
 
-We added documentation for diff.srcPrefix and diff.dstPrefix with
-their names properly camelCased, but the diff.noPrefix is listed
-there in all lowercase.  Also these configuration variables, both
-existing ones and the {src,dst}Prefix we recently added, were
-spelled in all lowercase in the tests in t4013.
+  - the docs say that Git may write "object-format sha256" to the
+    helper, but the code will never do that.
 
-Now we are done with the main change, clean these up.
+So my big question is for the second case: is that something that we'll
+need to be able to do (possibly to support interop, but possibly for
+some other case)? If not, we should probably just fix the docs. If so,
+then we need to either fix the code, or accept that we'll need to add a
+new capability/extension later.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> I am concerned that the current code may not report it's hash function
+> in all of the cases it needs to, to be able to detect a mismatch.
+> 
+> I look at commit 8b85ee4f47aa ("transport-helper: implement
+> object-format extensions") and I don't see anything that generates
+> ":object-format=" after it has been asked for except the code
+> in remote-curl.c added in commit 7f60501775b2 ("remote-curl: implement
+> object-format extensions").
+> 
+> Maybe I am mistaken but a name like remote-curl has me strongly
+> suspecting that it does not cover all of the cases that git supports
+> that implement protocol v2.
 
- * If we were early in the review cycle, we would strongly prefer to
-   do a "preliminary clean-up" followed by the main change, as the
-   clean-up step would be much less controversial and can be queued
-   earlier before the main change solidifies.  But at v5 the main
-   change is more or less perfect, so it is not worth rerolling to
-   split the clean-up changes into preliminary ones and change to
-   the main patch.  So this is written as an "on top, after the dust
-   settles" clean-up patch.
+That all sounds right. We are talking just about the transport-helper
+protocol here, where Git speaks to a separate program that actually
+contacts the remote server. And the main helper we ship is remote-curl
+(which handles https, http, etc). Everything else is linked directly and
+does not need to use a separate process (we use a separate process to
+avoid linking curl, openssl, etc into the main Git binary).
 
- Documentation/config/diff.txt |  2 +-
- t/t4013-diff-various.sh       | 48 +++++++++++++++++++++----------------------
- 2 files changed, 25 insertions(+), 25 deletions(-)
+We do ship remote-fd and remote-ext, but they don't support most options
+(and probably don't need to, because they're mostly pass-throughs that
+just use the "connect" feature).
 
-diff --git c/Documentation/config/diff.txt w/Documentation/config/diff.txt
-index fea89291c6..5ce7b91f1d 100644
---- c/Documentation/config/diff.txt
-+++ w/Documentation/config/diff.txt
-@@ -108,7 +108,7 @@ diff.mnemonicPrefix::
- `git diff --no-index a b`;;
- 	compares two non-git things (1) and (2).
- 
--diff.noprefix::
-+diff.noPrefix::
- 	If set, 'git diff' does not show any source or destination prefix.
- 
- diff.srcPrefix::
-diff --git c/t/t4013-diff-various.sh w/t/t4013-diff-various.sh
-index cfb5ad3d8d..3855d68dbc 100755
---- c/t/t4013-diff-various.sh
-+++ w/t/t4013-diff-various.sh
-@@ -633,8 +633,8 @@ check_prefix () {
- 	test_cmp expect actual.paths
- }
- 
--test_expect_success 'diff-files does not respect diff.noprefix' '
--	git -c diff.noprefix diff-files -p >actual &&
-+test_expect_success 'diff-files does not respect diff.noPrefix' '
-+	git -c diff.noPrefix diff-files -p >actual &&
- 	check_prefix actual a/file0 b/file0
- '
- 
-@@ -643,58 +643,58 @@ test_expect_success 'diff-files respects --no-prefix' '
- 	check_prefix actual file0 file0
- '
- 
--test_expect_success 'diff respects diff.noprefix' '
--	git -c diff.noprefix diff >actual &&
-+test_expect_success 'diff respects diff.noPrefix' '
-+	git -c diff.noPrefix diff >actual &&
- 	check_prefix actual file0 file0
- '
- 
--test_expect_success 'diff --default-prefix overrides diff.noprefix' '
--	git -c diff.noprefix diff --default-prefix >actual &&
-+test_expect_success 'diff --default-prefix overrides diff.noPrefix' '
-+	git -c diff.noPrefix diff --default-prefix >actual &&
- 	check_prefix actual a/file0 b/file0
- '
- 
--test_expect_success 'diff respects diff.mnemonicprefix' '
--	git -c diff.mnemonicprefix diff >actual &&
-+test_expect_success 'diff respects diff.mnemonicPrefix' '
-+	git -c diff.mnemonicPrefix diff >actual &&
- 	check_prefix actual i/file0 w/file0
- '
- 
--test_expect_success 'diff --default-prefix overrides diff.mnemonicprefix' '
--	git -c diff.mnemonicprefix diff --default-prefix >actual &&
-+test_expect_success 'diff --default-prefix overrides diff.mnemonicPrefix' '
-+	git -c diff.mnemonicPrefix diff --default-prefix >actual &&
- 	check_prefix actual a/file0 b/file0
- '
- 
--test_expect_success 'diff respects diff.srcprefix' '
--	git -c diff.srcprefix=x/ diff >actual &&
-+test_expect_success 'diff respects diff.srcPrefix' '
-+	git -c diff.srcPrefix=x/ diff >actual &&
- 	check_prefix actual x/file0 b/file0
- '
- 
--test_expect_success 'diff respects diff.dstprefix' '
--	git -c diff.dstprefix=y/ diff >actual &&
-+test_expect_success 'diff respects diff.dstPrefix' '
-+	git -c diff.dstPrefix=y/ diff >actual &&
- 	check_prefix actual a/file0 y/file0
- '
- 
--test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
--	git -c diff.srcprefix=y/ diff --src-prefix=z/ >actual &&
-+test_expect_success 'diff --src-prefix overrides diff.srcPrefix' '
-+	git -c diff.srcPrefix=y/ diff --src-prefix=z/ >actual &&
- 	check_prefix actual z/file0 b/file0
- '
- 
--test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
--	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
-+test_expect_success 'diff --dst-prefix overrides diff.dstPrefix' '
-+	git -c diff.dstPrefix=y/ diff --dst-prefix=z/ >actual &&
- 	check_prefix actual a/file0 z/file0
- '
- 
--test_expect_success 'diff.{src,dst}prefix ignored with diff.noprefix' '
--	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff >actual &&
-+test_expect_success 'diff.{src,dst}Prefix ignored with diff.noPrefix' '
-+	git -c diff.dstPrefix=y/ -c diff.srcPrefix=x/ -c diff.noPrefix diff >actual &&
- 	check_prefix actual file0 file0
- '
- 
--test_expect_success 'diff.{src,dst}prefix ignored with diff.mnemonicprefix' '
--	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix diff >actual &&
-+test_expect_success 'diff.{src,dst}Prefix ignored with diff.mnemonicPrefix' '
-+	git -c diff.dstPrefix=x/ -c diff.srcPrefix=y/ -c diff.mnemonicPrefix diff >actual &&
- 	check_prefix actual i/file0 w/file0
- '
- 
--test_expect_success 'diff.{src,dst}prefix ignored with --default-prefix' '
--	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix >actual &&
-+test_expect_success 'diff.{src,dst}Prefix ignored with --default-prefix' '
-+	git -c diff.dstPrefix=x/ -c diff.srcPrefix=y/ diff --default-prefix >actual &&
- 	check_prefix actual a/file0 b/file0
- '
- 
+The other major helpers people tend to use are adapters to other version
+control systems (e.g., remote-hg, cinnabar). We don't ship any of those
+ourselves. They'll obviously need to learn about the transport-helper
+object-format capability before they're ready to handle sha256 repos,
+but I suspect that works has not really started.
+
+> I think I see some omissions in updating the protocol v2 Documentation.
+
+If you mean from the commits listed above, I don't think so; they are
+just touching the transport-helper protocol, not the v2 wire protocol.
+
+-Peff
