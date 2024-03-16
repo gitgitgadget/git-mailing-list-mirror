@@ -1,82 +1,99 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D701BDE2
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 18:07:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7251BDCE
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 18:14:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710612426; cv=none; b=n0etNYEVSsNgkNqLm8nmrA3ilwidjeBAusSe5pSIBjB5oSDJM4dhK4K+gg1bGzxM7HjVcMeVH+LevmTb363mhmxVlQ969clJ+w5a0Y+1s0em2VSePfVJLE5xY9hUMfu6VdzKzM0kLmh/LzNmRG3OOq2TeLQpIw7Mcs8G93EX+TQ=
+	t=1710612890; cv=none; b=j2tVREpIuqDWrTsZRCcAE4RDn4BDUB8L+mxTrn0rw95L5s9OLJawhr5CIW/D+DotR4/QftrDeuf2VCEGkYKWOzPh3oH2ag19jMIesMYqZRMaZhIn6kLwzVrKtOxL5dQDw28t2ePPm1kHIUwjY1/GgUenaw8hh3yOqCQ91HD7b6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710612426; c=relaxed/simple;
-	bh=g0faRcS7iyG38Lv4dfYl2m2A8VMtBWzDCXCo49Px5XA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VOPGqrgXZfHdDAOIp9HlrYLxWzY5ySAjT4d2Ftr1/XHzzDsOVjQQF4rDu4X5QDbvhtk/LHromK2KMixvS5SkCM/JtLU2YCkJP7uc+htyo4+nE4KqM283W1/0z3EnHKSsz5eZ8zl9gH5uya2/b4SISBQ2Gk/mnxyKOtChYwT6irg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hl7AsM2z; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710612890; c=relaxed/simple;
+	bh=GntCOm2aKxTjfDHSovnK3IsRtNMx0bvkmfuRB22Mu+A=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=TCusGBGcQK3Y2/7BBlqbNC2gWYylUbk7sQ4BlPh/A+EwIDtWlLouQpB6Y4eFFNiyWUQpH3Vkw3guXY73Ugqq4IQg5XCBE0PeChgqjd42RVEhVbhFY9oxGC3TSE2zGy8VShT/t62fjniGynsh130yFzVdKaDAW/3c8KKlVlfpOA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FGQ/S5P4; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hl7AsM2z"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 25BD61BDA1;
-	Sat, 16 Mar 2024 14:06:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=g0faRcS7iyG38Lv4dfYl2m2A8VMtBWzDCXCo49
-	Px5XA=; b=hl7AsM2zcUOE0VMpYA9XNX8zyC8CbNFiPSSOnzqaHvHqXGntwTwsTC
-	hA13vhOSktP85ScIm2O9tCUnOQEWW3DP/NHYlG4zPLkXOLvmrFei+4Iw+/+cye4y
-	oMSqK0jLwc3wYXmc9cJ7l9nNsojDi7HS/vTUXtiSpcOnSgGj1qt4Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 103551BDA0;
-	Sat, 16 Mar 2024 14:06:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B7B11BD9C;
-	Sat, 16 Mar 2024 14:06:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Beat Bolli <bb@drbeat.li>,  git@vger.kernel.org,  Beat Bolli
- <dev+git@drbeat.li>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Elijah
- Newren
- <newren@gmail.com>,  Philippe Blain <levraiphilippeblain@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/22] avoid redundant pipelines
-In-Reply-To: <ZfT7HHZ9Uchvp6Ao@nand.local> (Taylor Blau's message of "Fri, 15
-	Mar 2024 21:51:24 -0400")
-References: <20240305212533.12947-1-dev+git@drbeat.li>
-	<20240315194620.10713-1-dev+git@drbeat.li>
-	<ZfT7HHZ9Uchvp6Ao@nand.local>
-Date: Sat, 16 Mar 2024 11:06:53 -0700
-Message-ID: <xmqqfrwqm4oy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FGQ/S5P4"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-29bacf6d11eso2581175a91.1
+        for <git@vger.kernel.org>; Sat, 16 Mar 2024 11:14:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1710612889; x=1711217689; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Pip1XRx4jrQkLhgKc7p34gp4TxOLPxEdpQuqY1H894=;
+        b=FGQ/S5P4Gcl9BpPA/VerO+7RqNnrjBoJ37TiN1NgZt02DwOVEymTQ32T30pZxbpr/W
+         N8DvCSZ83jEFUfoIZj+mO/J/oss94ddFFByMvZkj9FSqOHyiv7olPlfLNzikWxZNiNGT
+         84gUVy+UYjxszvAgdSp57hD0f1VSILk4PNvh8Rn3paIE5i+4o5C3M+kuPyHDADHFqBSU
+         2CispjWNR72TLJZUr8xZ0kPI36bClf9d4GXdF0oex3uzcviY4qbENhttoRrfeyUPz8NF
+         9sMJ44bn1WP0wMBhsECm/0uvEUV7Bdg0V6bV16x879fDV9h5T20t8kcdaULyP2mJt7Ck
+         Mk7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710612889; x=1711217689;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Pip1XRx4jrQkLhgKc7p34gp4TxOLPxEdpQuqY1H894=;
+        b=i2xEncYRckKtChedBimxiv4QUDf430K4VMBpMRMsI6Up3OwbXs7egR2iwkik80qtyW
+         94D0wmvJibA9wx0dXMSZ/TmIArDRvfqqroK1PdzWaI8WfzGASyecBd4UCQZTitc3UDoz
+         blaTriZomBLEL/gylpYfTAmVTUJ8c5qT0cRk7XY8UZj3Xpap7o5x7909WvUicosjSgOn
+         HirMe7MmunjM9RTNcSSsI1KoIaykmwY9ehMM5F++W5umCt1Ac9XxZgyv7I5oAWKfNcJa
+         wzURw5mULRl7K3BL6PVfzTbBfANwFvWoOmzsPeCm0c9tHTTZXgqZGQ7lw9fNnDM+pyiR
+         Phmg==
+X-Forwarded-Encrypted: i=1; AJvYcCX+PKLJ3Wf/GlXFHP6OCKGbeCfjNeyF02nqptEB5fk6Az6hGp8/DZRWZxvdFC9cPG2KFRjhk16xA37bQyxxzBp72G/K
+X-Gm-Message-State: AOJu0YwbA6RwT0tVS6HyqwPmg2tb+jeHihcRxzeLtyJsvIkx3C+lgLcy
+	7vz9s0YYJM12jrFyDGeS8pxAvceEbX8tVsiB2OB/pcJxizwdy4johKqPmpx29Qalie9QZ0TlELy
+	v8w==
+X-Google-Smtp-Source: AGHT+IE5EkGTv0Ahi8wpjw6tA4PV/DIwINjB6YhvTc2gWjd8ISGvgLGdNJfA3Dqkn+JDaTXZUYepC4PDYao=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:90a:d511:b0:29d:51ce:5a18 with SMTP id
+ t17-20020a17090ad51100b0029d51ce5a18mr23494pju.5.1710612888521; Sat, 16 Mar
+ 2024 11:14:48 -0700 (PDT)
+Date: Sat, 16 Mar 2024 11:14:47 -0700
+In-Reply-To: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F8BE5C9E-E3BF-11EE-B84A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0
+References: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com> <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
+Message-ID: <owlyy1ai2gdk.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2] userdiff: better method/property matching for C#
+From: Linus Arver <linusa@google.com>
+To: Steven Jeuris via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>, Jeff King <peff@peff.net>, 
+	Steven Jeuris <steven.jeuris@gmail.com>, Steven Jeuris <steven.jeuris@3shape.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Taylor Blau <me@ttaylorr.com> writes:
+"Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Fri, Mar 15, 2024 at 08:45:57PM +0100, Beat Bolli wrote:
->> As follow-up to [1], here's a series that eliminates redundant
->> pipelines, mostly under t/.
->>
->> --
->> 2.44.0
+> From: Steven Jeuris <steven.jeuris@3shape.com>
 >
-> I read through both rounds of this series thoroughly and everything
-> looks all good to me. I left a couple of minor notes throughout that you
-> might consider changing, but I think that neither merit a reroll.
+> - Support multi-line methods by not requiring closing parenthesis.
+> - Support multiple generics (comma was missing before).
+> - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
+> - Remove `instanceof` keyword, which isn't C#.
+> - Also detect non-method keywords not positioned at the start of a line.
+> - Added tests; none existed before.
 >
-> I'd be happy to see this series move forward as-is. Thanks for working
-> on this!
+> The overall strategy is to focus more on what isn't expected for
+> method/property definitions, instead of what is, but is fully optional.
 
-Yeah, looks good.  Thanks, both.
+It would make it easier to review if you broke this patch up into smaller
+chunks. For example, you could do it like this:
 
+  (1) add tests to capture existing behavior
+  (2a) change method/property matching behavior, one thing at a time
+  (2b) adjust or add tests along the way, to account for the change in (2a)
+  (3) repeat step (2) as needed for each of the bullet points you've
+      outlined already
+
+Not being familiar with this area, I don't know if (2b) is easily
+doable. But if it is, I think the overall effort of breaking this patch
+down would be worthwhile.
+
+Of course, nothing stops other reviewers (who are more familiar with
+this area) from chiming in and LGTM'ing this patch as is.
+
+Thanks.
