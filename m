@@ -1,73 +1,94 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255B51BC31
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 17:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B481C694
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 17:41:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710608816; cv=none; b=rFqu6ZowNkAKqWfWK+q6CJtJfHU2y/GqbnCsMmSkkRvg1A5HHR+gf9I3xMxgIFOrih5TEX1Vltl+E1Hw9lksNS/UfrahMtSAyYEAEBR0cG5fvG80sGSkEiDUNLVhZAu0PCykVhgW26s3TWaAiTiO+5trGfDo1J5tq9LeCqK0/YM=
+	t=1710610918; cv=none; b=ulE4fqL7uDT2x6BvZi8sosiElBic22PwlEg5E1eSCwXbj+2bWzyviBpPR7/QR3HkV2B0LlxUcEObK79lXYXaTC3Ea+9CZQszwH7BfGInHrgX742DcXfzmszOzJYJ8MxP16+rngL8/q3FYdZpAXx/VVgT5KZ0dOna7snKTsZKf14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710608816; c=relaxed/simple;
-	bh=eAd2L2k+NjpOEWsX4NUGW0/TVg+PIWhkItuYdoGSBnA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ld0g+u5Zlidbq3frDImKHXwtoOtD01JjS3L4VNC84CkzjLEfQbOs8kDp4AnfErNaYiUx9H57xjUM95Hj7JksT5iRqdm8zAonvrJi/ENyQquQeOhIXE4XT6oorFSSdX2a7CUuzvsMCK8B2CeDOCt7C8fXmmUq01Ns52kZBjMglt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tRlUxjf5; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tRlUxjf5"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C78C331EF;
-	Sat, 16 Mar 2024 13:06:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=eAd2L2k+NjpOEWsX4NUGW0/TVg+PIWhkItuYdo
-	GSBnA=; b=tRlUxjf5oHcwuoXBLNIqf84qS2HS88B34s0Ut2nGILvCM5Pftkaydf
-	ElC16+TtcoVa5qeYEaAmbuDWF11j1FnqfkhoisTCjNiAqHHz8beafmSO5Nqy/Mm1
-	Tu2B3UhFVp/1BEd1TIPDAHufLGz8U+gnmOAbqkxUD0JWObHJK3qNE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 95075331EE;
-	Sat, 16 Mar 2024 13:06:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 416F2331EB;
-	Sat, 16 Mar 2024 13:06:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
- Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
- <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 0/6] Make trailer_info struct private (plus sequencer
- cleanup)
-In-Reply-To: <pull.1696.git.1710570428.gitgitgadget@gmail.com> (Linus Arver
-	via GitGitGadget's message of "Sat, 16 Mar 2024 06:27:02 +0000")
-References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
-Date: Sat, 16 Mar 2024 10:06:49 -0700
-Message-ID: <xmqqjzm2m7h2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710610918; c=relaxed/simple;
+	bh=7T4eodIJeJOdmrHziwHWdR4yJotBa9US2oCd0vwPqBY=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PdbMzIMljKyXufrwb5dJglOtnfbfLOudTh2nWTY1R38NWfA/lR9wJOcNsMPYaEkh8+Cmzh1wVFqzjLqlZHCFaeaN91BE9hl2rHmXwPfd2AIDlFgFWJddFaxqaEQ749lgdOQPQLnSwfFoG1gk1Br7Xd7Q1XgHb6KXRHogNsnlvx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 42GHfMns2374810
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Mar 2024 17:41:23 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>, "'Jeff King'" <peff@peff.net>
+Cc: "'Ignacio Encinas'" <ignacio@iencinas.com>, <git@vger.kernel.org>
+References: <20240307205006.467443-1-ignacio@iencinas.com>	<20240309181828.45496-1-ignacio@iencinas.com>	<20240309181828.45496-2-ignacio@iencinas.com>	<20240316065737.GA544929@coredump.intra.peff.net> <xmqqo7bem7o8.fsf@gitster.g>
+In-Reply-To: <xmqqo7bem7o8.fsf@gitster.g>
+Subject: RE: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
+Date: Sat, 16 Mar 2024 13:41:17 -0400
+Organization: Nexbridge Inc.
+Message-ID: <006c01da77c9$298b2e50$7ca18af0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 94F7A434-E3B7-11EE-99B1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJVKjLHunLfVEMKSyBF1vvEJDqbigGtFbHTAifsU7wBfblwPQHvv9//sAsoAmA=
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Saturday, March 16, 2024 1:03 PM, Junio C Hamano wrote:
+>Jeff King <peff@peff.net> writes:
+>
+>> Do we need to define "hostname" in more detail here? Specifically, I'm
+>> wondering whether the result will be a FQDN or not (i.e., the output
+>> of "hostname" vs "hostname -f"). Looking at the code I think it will
+>> just be the short name returned. That's probably OK, but it may be
+>> worth documenting.
+>
+>That was my first reaction but there are places where "hostname"
+>already gives a name that is not "short" at all, without being invoked with
+"-f".
+>
+>For example, the (virtual) workstation I am typing this message on sits in
+a $WORK datacenter, where "hostname" gives the same
+>string as "hostname -f", which looks like "git.c.xxxxxx.tld" ("git" is the
+only part I picked myself for it, "c" is shared by those employee
+>workstations hosted at datacenters, "xxxxxx.tld" is redacted to conceal the
+real domain name to protect the culprits ;-).
+>
+>I think the most honest answer we can give in the documentation is that we
+use what gethostname() [*] gives.
 
-> NOTE: This series is based on the la/format-trailer-info topic branch (see
-> its discussion at [1]).
+I think this is probably a good idea and but value should not be cached. My
+dev box has a multi-home, multi-cpu IP stack. It makes things really weird
+sometimes. For example, hostname replies with:
 
-Folks, a quick review of the base topic is highly appreciated.  Not
-having much review to talk about in [1] makes it a bit premature to
-build another series on top of it.
+ztc0.xxxxxxxx.local
 
-Thanks.
+and includes the current default IP stack, which is known to DNS, while
+uname -n, which I prefer to use when deciding what system I am on during
+tests, reports:
+
+xxxxxxxx
+
+I am not sure how meaningful hostname is; however, "hostname -f" is not
+portable. However, includeif depending on whatever gethostname() returns is
+reasonable, in my opinion, also. I think the series should include a $(uname
+-n) option in some form for completeness.
+
+>
+>
+>[References]
+>
+>*
+https://pubs.opengroup.org/onlinepubs/9699919799/functions/gethostname.html
+
+--Randall
+
