@@ -1,127 +1,206 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563C3746E
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 05:56:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB30CA62
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 05:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710568619; cv=none; b=o9wKVMsskuqfTXBJ0vyhm1TUpBXqWLXbzgL776rHrZ9SA0cJVz+5Kxab3WrKLfMwbWTPiI93Kg7DhXNtyXorBGamTXCt+lLjL41s+M7Lhv5H3F0UWOW7NkyzNGHvT3Lb2KoTFk0Zbg329YQuzsOJg+GClCn01RylMt+My2EnDug=
+	t=1710568649; cv=none; b=q5xGe5fNUmSzXhU+gDwumbzpcJstNX2gF5By9F0n9EPwMDauf7otNle5HcLUzIEkURCXeRIw+XtPri7gCjgCMdBD60SkwTJM8Rnq3FqhluGxYNlu11HBBCdmtUZseCcKE38lu5GUPpiUDsfYBFQPvPZMdXJrad9DCqFMRLd9WXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710568619; c=relaxed/simple;
-	bh=nJWPy9xlX3vv3HxR4Lmdu3YtiuJVCKxd/CgtkiTbBaA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bXKKhYI416A5g26xD38xEbDWhVGDhupx0znm2Cnz+R4utzCCjpIX/qQ5z4HcMh9OogJ3aEQiDvn1k/yY99uE51OqZjgUWekIGehKjv9QAcSSw29anASuW5tcAoHUKSZXVgeu2E74FmdailZwULCHzaxCFw262YkHU3qLyvlJub4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 5425 invoked by uid 109); 16 Mar 2024 05:50:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 16 Mar 2024 05:50:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7076 invoked by uid 111); 16 Mar 2024 05:50:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 16 Mar 2024 01:50:18 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 16 Mar 2024 01:50:13 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH v2 16/16] config: allow multi-byte core.commentChar
-Message-ID: <20240316055013.GA32145@coredump.intra.peff.net>
-References: <20240312091013.GA95442@coredump.intra.peff.net>
- <20240312091750.GP95609@coredump.intra.peff.net>
- <0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
- <20240315055944.GB1741107@coredump.intra.peff.net>
- <6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
- <20240315081041.GA1753560@coredump.intra.peff.net>
- <xmqqr0gbtsdz.fsf@gitster.g>
+	s=arc-20240116; t=1710568649; c=relaxed/simple;
+	bh=SHkA7Kx4R43JA39BpmePu/7Gn+YG9V9gD6IKjRJNNB4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TlJYM93DZ8Qhqs9/1FKBY/PorD5q8cbm9bWTGoLkQY8x7kSEerj26Q0zBujxPq4NA1Ub2pIzI/icusaUuMa6t3paHiCPNh603b38RDCgQPslNdcK8NJmLDPV+XjGOfgLHOdPkmBThUMhzppAO/t3unMB93cZGDuMj13ppopv4XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qyd/+rxE; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qyd/+rxE"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8EA2130E10;
+	Sat, 16 Mar 2024 01:57:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=SHkA7Kx4R43JA39BpmePu/7Gn+YG9V9gD6IKjR
+	JNNB4=; b=qyd/+rxEgtwnhQ6Ve6SacN/mr/f0/zHffTyRmyNnUBcEcrJrem9msX
+	iB0DXLZZ6UdGX3ITGsWL882s1w3Nm6eeHNVIH9DiPqVI74XpOBVootCtUN8gYUP4
+	hjnN8m80TOzivpDC0pnstwKUCNW0d+h8NWJ2TJ5/G1xwl/8LRapug=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 78D1030E0F;
+	Sat, 16 Mar 2024 01:57:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11C9030E0E;
+	Sat, 16 Mar 2024 01:57:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Peter Hutterer <peter.hutterer@who-t.net>,  David Heidelberg
+ <david@ixit.cz>,  Phillip Wood <phillip.wood123@gmail.com>,  Dragan Simic
+ <dsimic@manjaro.org>
+Subject: Re: [PATCH v5] diff: add diff.srcPrefix and diff.dstPrefix
+ configuration variables
+In-Reply-To: <xmqqy1ajqvkb.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	15 Mar 2024 10:00:36 -0700")
+References: <20240315055448.GA2253326@quokka> <xmqqy1ajqvkb.fsf@gitster.g>
+Date: Fri, 15 Mar 2024 22:57:22 -0700
+Message-ID: <xmqq8r2ioh19.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqr0gbtsdz.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0F743B22-E35A-11EE-999D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Fri, Mar 15, 2024 at 08:40:56AM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > That's assuming we don't want to go the commentString route, which would
-> > require a bit more re-working of the patch. I'm also open to a more
-> > clever or pretty multi-byte example if we have one. ;)
-> 
-> Adding core.commentString can be done long after the dust settles
-> and I would expect that most of the changes in the patch would not
-> have to be updated.  The parts that use comment_line_str variable do
-> not have to change, the documentation needs "core.commentString is a
-> synonym for core.commentChar, the latter of which is understood by
-> older versions of Git (but they may use only the first byte of the
-> string)" or something, but other than that, the existing text after
-> this patch does not have to be updated.  If we add a proper synonym
-> support to the config machinery, that would be a sizable project,
-> but otherwise it would be just another "if (!strcmp()) var = val".
+> I am tempted to queue v4 with the z/ -> y/ fix from this round,
+> without any other changes from v4 to v5.
 
-Yeah, I agree we could add core.commentString on top of what's here, as
-long as we're OK with core.commentChar starting to accept strings in the
-meantime. Which is probably reasonable, and in which case the code
-portion of the patch really is just:
+So, that is what I did before I pushed out today's integration
+result.  I however have an "after the dust settles" clean-up patch
+on top (not committed yet), which I am sending out for review.
 
-diff --git a/config.c b/config.c
-index 92c752ed9f..13fb922bf5 100644
---- a/config.c
-+++ b/config.c
-@@ -1560,7 +1560,8 @@ static int git_default_core_config(const char *var, const char *value,
- 	if (!strcmp(var, "core.editor"))
- 		return git_config_string(&editor_program, var, value);
+------- >8 -------------- >8 -------------- >8 --------
+Subject: diff.*Prefix: use camelCase in the doc and test titles
+
+We added documentation for diff.srcPrefix and diff.dstPrefix with
+their names properly camelCased, but the diff.noPrefix is listed
+there in all lowercase.  Also these configuration variables, both
+existing ones and the {src,dst}Prefix we recently added, were
+spelled in all lowercase in the tests in t4013.
+
+Now we are done with the main change, clean these up.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * If we were early in the review cycle, we would strongly prefer to
+   do a "preliminary clean-up" followed by the main change, as the
+   clean-up step would be much less controversial and can be queued
+   earlier before the main change solidifies.  But at v5 the main
+   change is more or less perfect, so it is not worth rerolling to
+   split the clean-up changes into preliminary ones and change to
+   the main patch.  So this is written as an "on top, after the dust
+   settles" clean-up patch.
+
+ Documentation/config/diff.txt |  2 +-
+ t/t4013-diff-various.sh       | 48 +++++++++++++++++++++----------------------
+ 2 files changed, 25 insertions(+), 25 deletions(-)
+
+diff --git c/Documentation/config/diff.txt w/Documentation/config/diff.txt
+index fea89291c6..5ce7b91f1d 100644
+--- c/Documentation/config/diff.txt
++++ w/Documentation/config/diff.txt
+@@ -108,7 +108,7 @@ diff.mnemonicPrefix::
+ `git diff --no-index a b`;;
+ 	compares two non-git things (1) and (2).
  
--	if (!strcmp(var, "core.commentchar")) {
-+	if (!strcmp(var, "core.commentchar") ||
-+	    !strcmp(var, "core.commentstring")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		else if (!strcasecmp(value, "auto"))
-
-(the real work of course being in docs and tests).
-
-If we wanted to distinguish them more (say, core.commentChar remains
-as-is but core.commentString allows strings and takes precedence), then
-we'd need to do it now to avoid flip-flopping between versions. I don't
-see a huge benefit in restricting commentChar though.
-
-> Stepping back a bit, one thing that we do need to mention in this
-> round is what happens when you use multi-byte sequence and have it
-> accessed by existing versions of Git.  "use only the first byte" I
-> wrote above came out of thin air without experimenting or reading
-> the code, but something like that ought to be part of the "Note
-> that" paragraph above.
-> 
-> 	(default '#'). Note that this variable can be a string like
-> 	`//` or `⁑⁕⁑`; it doesn't have to be a single ASCII character.
-> 	Also note that older versions of Git used only the first byte
-> 	(not necessarily a character) of the value of this variable,
-> 	so you may want to be careful if you plan to use versions of
-> 	Git older than 2.45.
-
-The current code barfs for anything larger than a byte:
-
-  $ git.v2.44.0 -c core.commentchar=foo stripspace -s
-  error: core.commentChar should only be one ASCII character
-  fatal: unable to parse 'core.commentchar' from command-line config
-
-I'm mixed on these sorts of version-specific notes in the documentation.
-For people who aren't mixing versions, the history is useless noise
-(whose value decreases as time goes on and 2.45 becomes "old" itself).
-For people who do use older versions, they'd quickly get an error like
-the one above.
-
-So I dunno. I'm not strictly opposed, but if this is something we think
-is worth warning about, then that implies to me that it is worth
-providing a more ergonomic solution like core.commentString.
-
--Peff
+-diff.noprefix::
++diff.noPrefix::
+ 	If set, 'git diff' does not show any source or destination prefix.
+ 
+ diff.srcPrefix::
+diff --git c/t/t4013-diff-various.sh w/t/t4013-diff-various.sh
+index cfb5ad3d8d..3855d68dbc 100755
+--- c/t/t4013-diff-various.sh
++++ w/t/t4013-diff-various.sh
+@@ -633,8 +633,8 @@ check_prefix () {
+ 	test_cmp expect actual.paths
+ }
+ 
+-test_expect_success 'diff-files does not respect diff.noprefix' '
+-	git -c diff.noprefix diff-files -p >actual &&
++test_expect_success 'diff-files does not respect diff.noPrefix' '
++	git -c diff.noPrefix diff-files -p >actual &&
+ 	check_prefix actual a/file0 b/file0
+ '
+ 
+@@ -643,58 +643,58 @@ test_expect_success 'diff-files respects --no-prefix' '
+ 	check_prefix actual file0 file0
+ '
+ 
+-test_expect_success 'diff respects diff.noprefix' '
+-	git -c diff.noprefix diff >actual &&
++test_expect_success 'diff respects diff.noPrefix' '
++	git -c diff.noPrefix diff >actual &&
+ 	check_prefix actual file0 file0
+ '
+ 
+-test_expect_success 'diff --default-prefix overrides diff.noprefix' '
+-	git -c diff.noprefix diff --default-prefix >actual &&
++test_expect_success 'diff --default-prefix overrides diff.noPrefix' '
++	git -c diff.noPrefix diff --default-prefix >actual &&
+ 	check_prefix actual a/file0 b/file0
+ '
+ 
+-test_expect_success 'diff respects diff.mnemonicprefix' '
+-	git -c diff.mnemonicprefix diff >actual &&
++test_expect_success 'diff respects diff.mnemonicPrefix' '
++	git -c diff.mnemonicPrefix diff >actual &&
+ 	check_prefix actual i/file0 w/file0
+ '
+ 
+-test_expect_success 'diff --default-prefix overrides diff.mnemonicprefix' '
+-	git -c diff.mnemonicprefix diff --default-prefix >actual &&
++test_expect_success 'diff --default-prefix overrides diff.mnemonicPrefix' '
++	git -c diff.mnemonicPrefix diff --default-prefix >actual &&
+ 	check_prefix actual a/file0 b/file0
+ '
+ 
+-test_expect_success 'diff respects diff.srcprefix' '
+-	git -c diff.srcprefix=x/ diff >actual &&
++test_expect_success 'diff respects diff.srcPrefix' '
++	git -c diff.srcPrefix=x/ diff >actual &&
+ 	check_prefix actual x/file0 b/file0
+ '
+ 
+-test_expect_success 'diff respects diff.dstprefix' '
+-	git -c diff.dstprefix=y/ diff >actual &&
++test_expect_success 'diff respects diff.dstPrefix' '
++	git -c diff.dstPrefix=y/ diff >actual &&
+ 	check_prefix actual a/file0 y/file0
+ '
+ 
+-test_expect_success 'diff --src-prefix overrides diff.srcprefix' '
+-	git -c diff.srcprefix=y/ diff --src-prefix=z/ >actual &&
++test_expect_success 'diff --src-prefix overrides diff.srcPrefix' '
++	git -c diff.srcPrefix=y/ diff --src-prefix=z/ >actual &&
+ 	check_prefix actual z/file0 b/file0
+ '
+ 
+-test_expect_success 'diff --dst-prefix overrides diff.dstprefix' '
+-	git -c diff.dstprefix=y/ diff --dst-prefix=z/ >actual &&
++test_expect_success 'diff --dst-prefix overrides diff.dstPrefix' '
++	git -c diff.dstPrefix=y/ diff --dst-prefix=z/ >actual &&
+ 	check_prefix actual a/file0 z/file0
+ '
+ 
+-test_expect_success 'diff.{src,dst}prefix ignored with diff.noprefix' '
+-	git -c diff.dstprefix=y/ -c diff.srcprefix=x/ -c diff.noprefix diff >actual &&
++test_expect_success 'diff.{src,dst}Prefix ignored with diff.noPrefix' '
++	git -c diff.dstPrefix=y/ -c diff.srcPrefix=x/ -c diff.noPrefix diff >actual &&
+ 	check_prefix actual file0 file0
+ '
+ 
+-test_expect_success 'diff.{src,dst}prefix ignored with diff.mnemonicprefix' '
+-	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ -c diff.mnemonicprefix diff >actual &&
++test_expect_success 'diff.{src,dst}Prefix ignored with diff.mnemonicPrefix' '
++	git -c diff.dstPrefix=x/ -c diff.srcPrefix=y/ -c diff.mnemonicPrefix diff >actual &&
+ 	check_prefix actual i/file0 w/file0
+ '
+ 
+-test_expect_success 'diff.{src,dst}prefix ignored with --default-prefix' '
+-	git -c diff.dstprefix=x/ -c diff.srcprefix=y/ diff --default-prefix >actual &&
++test_expect_success 'diff.{src,dst}Prefix ignored with --default-prefix' '
++	git -c diff.dstPrefix=x/ -c diff.srcPrefix=y/ diff --default-prefix >actual &&
+ 	check_prefix actual a/file0 b/file0
+ '
+ 
