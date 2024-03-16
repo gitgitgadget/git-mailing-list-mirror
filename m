@@ -1,89 +1,96 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3511847
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 01:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0B5393
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 03:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710554197; cv=none; b=J9qzuWaRQjPKgGLwdEWmdUavx8/Fof/BRcIWGJCe5mJjH2HhBnRWUQzuZZiDlkFYU/ywPTNnhZGbhRieUsPskguf3lbYxKQqlZzlqhyVRnfkYSafTvRSUTETnY4R6OHoJcA3ASB4Akkqq/0z5XjER3sxGsERospLQfD+I00vBn0=
+	t=1710558306; cv=none; b=buov64GImxPLuQTkDCbcdgoHMnELMWRQIdatLKwuQBl+hxNembC1RIqJkH1E39DPwX2RsGM5cLjaFSYQXxw4KWL9qfsbRab+3sgNuE29MaOZV880D0x1Gx8xq/el0PgoSTBAbGP0dQYvp1Wi/FjtiPKcSK7xhNxwfOmkMEVYUiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710554197; c=relaxed/simple;
-	bh=oTBkWeEP5ZTZ5l3KBEQIRvEIAK/cB5THgTYOrE4cRCc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H7cTzEdatBUpp5QAoPm/SVDycB9dqJ6k5tW4zUXBRDbosfdfE3qfCvMmUSvx0qrlhf/x+VdosHCaByT65Jrx88ag/v7IolOTsWVBKdoGrATYWIOz8vJ8FJqCYGtIKfflJjq1hMxQ01K8PY/Bq8t1Fb6ueKoFWmZYlfZKQ8RTWfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=UKnqHDI2; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1710558306; c=relaxed/simple;
+	bh=rEpB9clPsfWk07NaL8F3Z+6c1Ue8tsf8kIdpVRZLNNU=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=PjD6YuEw6UNWTAE5m2gZNMPPaa136N+dg/NVovUn0MAnyLpSmTgQkMrNtRwnjZsjU+4eoK4qKiOf125P7ices3YUwzlBZEA512xz3sasTIm+E1YyiXjo2GCuq5mVFOx8cqxySigaZQduUoAlUIa09msMl6putt/ICyafUbwBnXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egyiYyjq; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UKnqHDI2"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-42e29149883so11419101cf.2
-        for <git@vger.kernel.org>; Fri, 15 Mar 2024 18:56:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egyiYyjq"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3669fadea18so4327545ab.0
+        for <git@vger.kernel.org>; Fri, 15 Mar 2024 20:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1710554195; x=1711158995; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CExa02mAo3LKklM6HOPNIsHZHEgf6VyX3E8eWBMYqs4=;
-        b=UKnqHDI2n9wuQxssMtQvLw3yb66YPS/yeViGpWws3kQk9PSeuzxzFZtrV0XtHqMco9
-         od67uPeta81N+u8yFDQCJdPdapGJi4Nbv4KsJ/ENOaVXNeWdGnFzf+kLaJPKg1oc70fO
-         0BlundldXhSnmji/TkiXI0lRoJQl11uFdbvcfPK3QE4zJ0rKdH8rydC2e6987DyAMddm
-         Cf0vD5mlGb2j9TN57skfXinjHBZbbJHxk19dPeP1JlLx1EznmK/8R351TRoK9mYZaKu/
-         bkI/yf4Iii4z4YE1T8Zbxbr2GiirqQLY3uNQpT/dQoMOYsRu8joQu7V4COV7tRvr3awg
-         apzw==
+        d=gmail.com; s=20230601; t=1710558303; x=1711163103; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NqB1TOTryob4fYeIZ6lrMAQNoaopJaRZoy/hbwRfb0g=;
+        b=egyiYyjq9eB4hzAKoH90x0TXh/9u4rsKZv/JpbA/Yf03Vr+yKqeIInpuqiguoN4DPg
+         Hy21vKdXWtLwkqn077Mqf6wUh9aR6MNRSMyd6GL6HA4vm+T/OuiARqrlRD0+rxavShd0
+         nkmvl5SwmoP6A8AXeFcHYRhPiuriz1e6lLhczrbBMnW8wSzMMB85qs4Djg0o7XCJBAua
+         JUO4Ii2kWi5gMVAm3L8B/dU9Gds4gg9wAYvyCfZmIG6vJEu7KFj66/dHowpNdhBwSx4K
+         0yhz7Jb/2ykFR0+WsDjItwv3D3M9AwW6fMG84rtmSAXNr1mp668v49YqwqoTOZ1bcAkM
+         JBUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710554195; x=1711158995;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1710558303; x=1711163103;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CExa02mAo3LKklM6HOPNIsHZHEgf6VyX3E8eWBMYqs4=;
-        b=u2MRrXWBhdZiw7+JGkhb0o9wdxebmBqrElKBxojYGKLzWBK7M7r4UBU/4F2cK6cVIQ
-         LTxYxxX3Ma4i0VfX3iWFa1CSRjpnCPNQcFeM+w7XP9cEIHfxId8nGSBZ6MVSpE2agZhZ
-         kaiqp850dLE77edozK5F8iw8iCQhhz4n5txo23ZmY07SvVJtCPjbxKDTfN8IO+SvjPWU
-         RKxG6PsALaggQ68Q+RJvnR6s4TGddxMsSOF+/rWJGsQitxf28GjgVXxgXqBkMsMt++cr
-         MboXYhOk+DHZw56DpjEoQuAff+/Ezv/UqTET2reKERSc77Oggh5DQNfISBr36AGHkE4n
-         WPXw==
-X-Gm-Message-State: AOJu0YyJ0rVcfDHZo5EKY0WIiR3IhK6WscWiV65Lakgtel0tEmrjlj3K
-	eLYOhI/PqT7JOw1mBcEMBH35luAA6kIwl2Ye6DHnxvvL626cESvaXIWwmfXhVg4=
-X-Google-Smtp-Source: AGHT+IH/MZ2VGviehLWGtfQP6BLIDiEsqIFz+RXVeJVduOnYIA4+6mAdrgHseUfs+1RFeu51aSq7mw==
-X-Received: by 2002:ac8:7d92:0:b0:42e:b063:a35f with SMTP id c18-20020ac87d92000000b0042eb063a35fmr6539192qtd.8.1710554195429;
-        Fri, 15 Mar 2024 18:56:35 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bb2-20020a05622a1b0200b0042f541ee072sm1123203qtb.4.2024.03.15.18.56.35
+        bh=NqB1TOTryob4fYeIZ6lrMAQNoaopJaRZoy/hbwRfb0g=;
+        b=aQjlFQ5DmxMif1wVLU7pe+PgBLTu/7FFr18AABTbaU+XFXw5gtypPcR6ODuymcq8lW
+         z2RPrTGCnMGSu1CMELJBKTeouu4KRI3dr6sRnmcwFS5vvO/KPToOnXP1372jNHo1fjs0
+         yPAf12dgUMxFwgbUMp4Dtw890mftY2lB7Ps9DnxMWO+DkKTNiF9eqaPmsYU+jaFzKi20
+         cWuK5Chvdw5vD4DFznRZgUbZrlHjutyM6wMY+w0EqS5Wsu3Zec9khmhE0FjB33cxNktU
+         L+UlK4lEICCtOPcBXbuQjZRBL/JXW3kpHIGEuqXCCV0eaqsI2/kIU832E/QpMkmvKa+O
+         DnPw==
+X-Gm-Message-State: AOJu0YxBr4oakbaBoDOkrdV8/hayvmB8CZuj3YE5c66ULgF03XLpd2fo
+	EfkhERgFTqYiUviyVGAVW3YWc0mmmfGm1NjBcGq7PMinLqcz19lnaBoAusHW
+X-Google-Smtp-Source: AGHT+IEBGsTXuFd029euKhL7YxVeIAKHHwW3Kg1TW37hZl19X2n/fRb+XEiUvMIoOgNcHrQFKOFK6A==
+X-Received: by 2002:a92:d287:0:b0:366:999b:f9fb with SMTP id p7-20020a92d287000000b00366999bf9fbmr2890017ilp.13.1710558303273;
+        Fri, 15 Mar 2024 20:05:03 -0700 (PDT)
+Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id t3-20020a92c0c3000000b00364ec1f92d9sm1063406ilf.9.2024.03.15.20.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Mar 2024 18:56:35 -0700 (PDT)
-Date: Fri, 15 Mar 2024 21:56:34 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jiamu Sun <baiorettohr@gmail.com>
-Cc: git@vger.kernel.org, barroit@linux.com
-Subject: Re: [PATCH v3] bugreport.c: fix a crash in `git bugreport` with
- `--no-suffix` option
-Message-ID: <ZfT8UiDM3DQhRX5x@nand.local>
-References: <pull.1693.v2.git.1710388817.gitgitgadget@gmail.com>
- <20240314223406.79283-1-barroit@linux.com>
+        Fri, 15 Mar 2024 20:05:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240314223406.79283-1-barroit@linux.com>
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+In-Reply-To: <xmqqil1rjdf7.fsf@gitster.g>
+Cc: <git@vger.kernel.org>, <newren@gmail.com>, 
+	<me@ttaylorr.com>, <phillip.wood123@gmail.com>, 
+	"Phillip Wood" <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 4/7] sequencer: treat error reading HEAD as unborn branch
+Message-ID: <17bd1fb6986bb4d8.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Sat, 16 Mar 2024 03:05:02 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 15, 2024 at 07:34:06AM +0900, Jiamu Sun wrote:
-> executing `git bugreport --no-suffix` led to a segmentation fault
-> due to strbuf_addftime() being called with a NULL option_suffix
-> variable. This occurs because negating the "--[no-]suffix" option
-> causes the parser to set option_suffix to NULL, which is not
-> handled prior to calling strbuf_addftime().
->
-> By adding a NULL check, the `--no-suffix` option is now available.
-> Using this option disables the suffix, and the file is just named
-> `git-bugreport` without any disambiguation measure.
->
-> Signed-off-by: Jiamu Sun <barroit@linux.com>
-> ---
 
-    Acked-by: Taylor Blau <me@ttaylorr.com>
+On Tue, Mar 12, 2024 at 5:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 
-Thanks,
-Taylor
+> "Brian Lyles" <brianmlyles@gmail.com> writes:
+>=20
+>> If I'm understanding you correctly, it sounds like you're hinting at
+>> something like this:
+>=20
+> You may also want to add _READING (I do not know offhand).  Also
+> you'd want to make sure resolve_ref_unsafe() returned a plausible
+> looking refname (i.e. passes starts_with("refs/heads/").
+>=20
+> But other than that, yeah, doing these as "extra checks" only after
+> we see the primary resolve_ref("HEAD") fails was what I had in mind.
+>=20
+> Thanks.
+
+Makes sense to me. From reading the documentation for
+RESOLVE_REF_READING, I think we do want that as well, and the
+starts_with("refs/heads/") check works as expected too. I'll incorporate
+those into v4.
+
+--=20
+Thank you,
+Brian Lyles
