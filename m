@@ -1,36 +1,38 @@
 Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2701BC37
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 20:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273751CABA
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 21:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710622739; cv=none; b=prQsZugcVuadKseaQX8IwMGM3pk/z8WgUmbg5Gjokt3LlYRZqGi/ou8Cw2vItBBAoDvirymkGduKO98d/6mKo+k9sltDYfmjvxXpjHxfrOdaPAuM2N3dty0473HclDrexQKYUlfjIB3eHNQdsWAek2YLyZY+8846XVRAA2GCN5Y=
+	t=1710623393; cv=none; b=nB4aBpmnRv7OQEpNd9AuRNZUUiyJq/heVC1Ss5YWUPVKerynSDRFAZ7QsorEk+J/8dYeZbAjsoNqttzoGcEZnwNEvQ5EQyrz28B5WY3ZtPnWYYfC7lH9FFhMfuU9mmaaJrAxUnWamVuwuflL5jv+rFrHRg2cYlaGQSPMf9CKcRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710622739; c=relaxed/simple;
-	bh=CwNS5w8rI7Wf+HLNPMAXZEwpoLgvM98ttPR4jGOLajA=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=gkIEblAuQBcyqis27UDyPgQPK1HOjKJYbv5iUiPr5FSCUVi4UTZyBssAKWDsjPYDUsBzaZccQuWF8B3nqIm5UX74SmGrM+wvg8baCQ4SMfdf/UiB31PKrxQx4ZLGBDbm5PJg9fudOSVhV404QQLQzwDvct6NS+C694C7siKbzrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=qx+n0w4+; arc=none smtp.client-ip=212.227.17.12
+	s=arc-20240116; t=1710623393; c=relaxed/simple;
+	bh=q/5Cwmi/X7gRyx5xcB9IwotPAYjjNQyqVOBDNk53x3U=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=XlbEEFRaWCWqrWRcyHStNZ3zUeFGIohprb48zW1eW1PqY9/FnBnGz1HBMzCChup5dvuaOp5ids4CSg1NCDqgmjtDKAziRy20xEX8FUlQMPFMa8D4jZ5CIgYqyGiNje78xN+6oV3Sc15WVmkUVRw9obB+JgFksmHB6aHLHabz8qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ckagsTrN; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="qx+n0w4+"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ckagsTrN"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1710622734; x=1711227534; i=l.s.r@web.de;
-	bh=ofqs0u73wshEJoImfwxBbHaRLe4/iusqwQ5p8Oy0lpw=;
-	h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
-	b=qx+n0w4+bVGC/w9KSr25C4cqDjQsTFqTGl3LDQ3Iu/t/aEwV5J2TeQu7mFYfjPn9
-	 9PbqnF5k9rNrq8XAZ/N87A84IcFRl0d53Jfnak81IvSkJgohm7sTHQbzfaARcizhb
-	 B0qHqh7s36tMLDAXWFBt/sQ7vF7gwyh0oSn9E8SGw6pofFjLy1ANKzFKvxmUli7SG
-	 qA1ENbGGNqGxpA7T8v37GgG4yt3m2TLH4E9d8eL+a+X4CUtXQSi65cmvIcX2ew9vr
-	 V19D2bdE7lVomyFhOANGjVTjrxdd01I8FTx9DLPX48hhjyIKq56S0F+oP1L769ceP
-	 cMuks4LDvu3xMo9aLA==
+	s=s29768273; t=1710623387; x=1711228187; i=l.s.r@web.de;
+	bh=LFGWxwN2XEeAkgqfny+hehGlw8NDJl2VwTUAUbj+LI4=;
+	h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:
+	 In-Reply-To;
+	b=ckagsTrNxcjfTRL2sU1xnTFcCu1RYeDlPGReSrGtMoQATIrEjYk+FR49Q2EbzBp4
+	 w3+3oEx0fztZcgCdaS4Fns7x0T/xujqk57nrSG8Cb1gR2KGQPs6ZXjQnyMojJux54
+	 2oyvstxBEgemeq3UFyKRjVRJUPUrKyoH4DOIuUMbMlWvjeg7SVxj7wje+runlL/v9
+	 07iibcFtHZ5DWNZosmmMsg0P38S7SOUrpWCHFSrIMzuetyWPoWP8hIcDBza+ODBdy
+	 pqCSqm8IslULk3NmdXG9dhq+x2rPqJj5jYM7OuSMpxEFLWu3qBu867y8RCtNSWx/z
+	 qRkNf3FSQvjsGIIJfQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M8TBS-1rhDCS1WRE-004oZ0; Sat, 16
- Mar 2024 21:45:52 +0100
-Message-ID: <197f5ac9-7257-4caa-aa9e-041016c787f7@web.de>
-Date: Sat, 16 Mar 2024 21:45:51 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXXN7-1rHk6G1t2l-00Yu03; Sat, 16
+ Mar 2024 22:09:47 +0100
+Message-ID: <9bf36cc8-ff27-44df-b2fb-9f959c781269@web.de>
+Date: Sat, 16 Mar 2024 22:09:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,84 +40,107 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: [PATCH 2/2] t-prio-queue: check result array bounds
 Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] t-prio-queue: shorten array index message
+References: <197f5ac9-7257-4caa-aa9e-041016c787f7@web.de>
+In-Reply-To: <197f5ac9-7257-4caa-aa9e-041016c787f7@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:yW/1vgVEyjy6kbArwugLihlVuWQyEJZderk3OTEqoSQhiliLick
- 8+9N7IgRBHVopKCOTddLYVXYAcQt23EUT/V9n9owJZYGGalCg8Vqbm4RyCKH2KrdkBNne85
- F6aIndL3+5wvir5TjjGR9+v/jid4gRXk1JhBdkFAy9LFfUum9PiJO1FfiK9s23KiFQDwpTN
- wrKda113GcScDHcTqzIGA==
+X-Provags-ID: V03:K1:voZjCS1pUVyXijRV0a4JtU8NbEtZtstnomS1JIIJC9JqXDe+Xxn
+ 5MT1ZuzrQL4hzHhCm3JyO5U1WKFoNC+81eKRpSBFodN2l+Va9ZuyloHToedcAa9aJ+hqV3Z
+ rwAFYrrxJiJUDUm8yU1WRX6A2NtIQliaf0SvFR+j/nvMRYAWWr327vD3xEhKIEmB3LqdOoj
+ TdkTs4pyNpKopFFpBPHvg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:qnl3XiZIxDg=;8zm3TV1HcqBXsh6wPTRDXDNuAtR
- jU48qP2IW80aC4fxJI4nYkfPyk7RFGuKfdRmGf0KT5qkSocH/m0S6JxtBpi8kd/J0YfPUNnOo
- QrLTCfcuvEJjOxGa5RYZhORFkuACjKFc7Nzra759WckOLXeJspVzriXE6ZzHwbNrWnpYs4Oft
- mGPZdOoL7D+2MT+8w77dQOa9NzXRnlKT2ayB3bmxrF353tSi7Lu/huCOlLhs0x6FBk2c6ZYO6
- EovB/qcDrazc0GV34fu1dPCDHDPPU+5tfZJRxbtpJrxWXk75GvDxJLoz0KHNGETlHQHs1DWgb
- rJM2y208IaNWNqp1eAXnZZlbeUe0O+qsrmTt7KiSSK2l41COirTPeAhjxPWdiF/mWRYl7xKbJ
- afzbcGZQUw7L0yNK0h7Vb3P0ugDxWhAdf3MdU03mHpCp6ALE72RuZ6GuIDkYTfbZ3e1qcpSfS
- qRF0Fzy+I1TMr0+dka9NnEp9CBTTuRIWXFnGnPy9ODPlFSI5gU91c1NK+vUcW6oiRlTi9woWQ
- 23TohsKEn0B0YmrGKgco9dPxM2KoTjiAkY0mZMgQvV6DGlB95pSLddQNm1/y7VY6ix4YpeNXi
- 0lQTLVrxLueZHIj5HcjLFa1IhQybRj5NMMeqzVnf4zFpOEZmILYWSrwaplhvEXx1kms68CNuX
- SlSl0LaBH587BSu0HedQp3wPPk6+XEPQxdIe49gO7xv6DmR5AKMCYBIcWxXLlf5DrLmVKpzaG
- P5p4ZWW3juYIIP4t3ZfofIKOuhddbSbstRhTYg+JH5LESjO/YzvVUdOPdg0mtqxu2Fi1OswZG
- URCYA/SJD2xC0p/vSbflARsVgL7CZnfCaOXSYcfhv6COI=
+UI-OutboundReport: notjunk:1;M01:P0:vf8YaLgJjiI=;Y0drvrAxO3lgaD04AQMpwPnJ0U2
+ a7u1otxyeIQJWPRHymLh9IX158ASv3uXkESsbVy8vKjKcO2V//euozkVRpql/7hPYJswXxJg8
+ J1mfAM9seO2nY9JltzGR4pZmqmXSrYAN1oIBfDzRWVAqcZmormGlZn1dN+1lqg8YjoU6D0x08
+ zo4RN6VZo1yBIHJ4blyE9JKZBNUMPk859D3CAyOk8TRUrkfRCvze5KlPXy/NRudi1Rgqtr0rZ
+ JF1pg5Tnap9DZ41Ywym6jrvHhqIpqV+W6ukvgoXv/wgIw5pIzTII3gRtliFDcg52OhRBXH7H/
+ zeoygga/NqiowDDcfxOx4p6XuyEdtO4MShXU3roTj1FBlcYjh4K//N3XYu9LaaUojtALDgBO+
+ UCRc4ZWeh/QYNkVmOdhmweWnLz7imuJ32XhttZsGu6MBb2HFh9jFdVIzeV0mHO/m3HGjFWTee
+ xfoszNOIVBJiQxAwdb1b0WvgRNETGbFf0JvbetPdWec1lejQwgWWHMl6xOlrNpmFrHwGh4+6Q
+ Jwcus67u19LAyahnIeBci8fBp76MDVnZHKlNbZqxo8rPziN6yjlzrdmJI+6tfbxD1aHStDe/O
+ gmsf5zQHDafE1XLF34J7ftT8EsCfD8A7oaPJAbEewccfkELzd9iTghN40ZXK8c7F8tbXhr9WC
+ ZACsRU0tVyQpN9qNW3bdkE7r1Yb5Mt9t0GXE6BZo7nPV7R/a3H8zIQiwqB8EwcVVNuISEcuu+
+ cfEiac/22NyjpUt4wTqbL1L17DCujRY6ysiCzood3ya7fNkPuQUgvjn+k1+zYDjPvywpT9gkR
+ Ljm2ZHAPQt7dS+lWNly8cBg3AaJVoKD+Tp5cjLWDvv34I=
 
-If we get an unexpected result, the prio-queue unit test reports it like
-this:
+Avoid reading past the end of the "result" array, which could otherwise
+happen if the prio-queue were to yield more items than were put into it
+due to an implementation bug, or if the array has not enough entries due
+to a test bug.
 
- # check "result[j++] =3D=3D show(get)" failed at t/unit-tests/t-prio-queu=
-e.c:43
- #    left: 5
- #   right: 1
- # failed at result[] index 0
-
-That last line repeats "failed" and "result" from the first line.
-Shorten it to resemble a similar one in t-ctype and also remove the
-incrementation from the first line to avoid possible distractions from
-the message of which comparison went wrong where:
-
- # check "result[j] =3D=3D show(get)" failed at t/unit-tests/t-prio-queue.=
-c:43
- #    left: 5
- #   right: 1
- #       j: 0
+Also check at the end whether all "result" entries were consumed, which
+would not be the case if the prio-queue forgot some entries or the test
+definition contained too many.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/unit-tests/t-prio-queue.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ t/unit-tests/t-prio-queue.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
-index d78b002f9e..616d0fc86f 100644
+index 616d0fc86f..5358346361 100644
 =2D-- a/t/unit-tests/t-prio-queue.c
 +++ b/t/unit-tests/t-prio-queue.c
-@@ -31,16 +31,18 @@ static void test_prio_queue(int *input, int *result, s=
-ize_t input_size)
+@@ -19,11 +19,13 @@ static int show(int *v)
+ 	return v ? *v : MISSING;
+ }
+
+-static void test_prio_queue(int *input, int *result, size_t input_size)
++static void test_prio_queue(int *input, size_t input_size,
++			    int *result, size_t result_size)
+ {
+ 	struct prio_queue pq =3D { intcmp };
++	int j =3D 0;
+
+-	for (int i =3D 0, j =3D 0; i < input_size; i++) {
++	for (int i =3D 0; i < input_size; i++) {
+ 		void *peek, *get;
+ 		switch(input[i]) {
+ 		case GET:
+@@ -31,6 +33,8 @@ static void test_prio_queue(int *input, int *result, siz=
+e_t input_size)
  			get =3D prio_queue_get(&pq);
  			if (!check(peek =3D=3D get))
  				return;
--			if(!check_int(result[j++], =3D=3D, show(get)))
--				test_msg("failed at result[] index %d", j-1);
-+			if (!check_int(result[j], =3D=3D, show(get)))
-+				test_msg("      j: %d", j);
-+			j++;
- 			break;
- 		case DUMP:
- 			while ((peek =3D prio_queue_peek(&pq))) {
++			if (!check_uint(j, <, result_size))
++				break;
+ 			if (!check_int(result[j], =3D=3D, show(get)))
+ 				test_msg("      j: %d", j);
+ 			j++;
+@@ -40,6 +44,8 @@ static void test_prio_queue(int *input, int *result, siz=
+e_t input_size)
  				get =3D prio_queue_get(&pq);
  				if (!check(peek =3D=3D get))
  					return;
--				if(!check_int(result[j++], =3D=3D, show(get)))
--					test_msg("failed at result[] index %d", j-1);
-+				if (!check_int(result[j], =3D=3D, show(get)))
-+					test_msg("      j: %d", j);
-+				j++;
- 			}
++				if (!check_uint(j, <, result_size))
++					break;
+ 				if (!check_int(result[j], =3D=3D, show(get)))
+ 					test_msg("      j: %d", j);
+ 				j++;
+@@ -56,6 +62,7 @@ static void test_prio_queue(int *input, int *result, siz=
+e_t input_size)
  			break;
- 		case STACK:
+ 		}
+ 	}
++	check_uint(j, =3D=3D, result_size);
+ 	clear_prio_queue(&pq);
+ }
+
+@@ -79,7 +86,8 @@ static void test_prio_queue(int *input, int *result, siz=
+e_t input_size)
+ {								\
+ 	int input[] =3D {INPUT};					\
+ 	int result[] =3D {RESULT};				\
+-	test_prio_queue(input, result, ARRAY_SIZE(input));	\
++	test_prio_queue(input, ARRAY_SIZE(input),		\
++			result, ARRAY_SIZE(result));		\
+ }
+
+ TEST_INPUT(BASIC_INPUT, BASIC_RESULT, basic)
 =2D-
 2.44.0
