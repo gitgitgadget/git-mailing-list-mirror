@@ -1,99 +1,105 @@
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7251BDCE
-	for <git@vger.kernel.org>; Sat, 16 Mar 2024 18:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4491843
+	for <git@vger.kernel.org>; Sat, 16 Mar 2024 18:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710612890; cv=none; b=j2tVREpIuqDWrTsZRCcAE4RDn4BDUB8L+mxTrn0rw95L5s9OLJawhr5CIW/D+DotR4/QftrDeuf2VCEGkYKWOzPh3oH2ag19jMIesMYqZRMaZhIn6kLwzVrKtOxL5dQDw28t2ePPm1kHIUwjY1/GgUenaw8hh3yOqCQ91HD7b6o=
+	t=1710614986; cv=none; b=Qvx/v+CAScRCl+/CNAm/J2kS2CVdvQ32zV3tDa6wARrsDwIapROPTAnhZRzUV4AY9NN21BrPHIpJfmCReiQl6KR+E0o6VIjsFDoqzakXJ8Tn3IbUaElj2G8j+XopL9q5B9J3K6s+xNi/6JRJxjuPRLi1PD40dhYDbR8bJqa4JVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710612890; c=relaxed/simple;
-	bh=GntCOm2aKxTjfDHSovnK3IsRtNMx0bvkmfuRB22Mu+A=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=TCusGBGcQK3Y2/7BBlqbNC2gWYylUbk7sQ4BlPh/A+EwIDtWlLouQpB6Y4eFFNiyWUQpH3Vkw3guXY73Ugqq4IQg5XCBE0PeChgqjd42RVEhVbhFY9oxGC3TSE2zGy8VShT/t62fjniGynsh130yFzVdKaDAW/3c8KKlVlfpOA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FGQ/S5P4; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FGQ/S5P4"
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-29bacf6d11eso2581175a91.1
-        for <git@vger.kernel.org>; Sat, 16 Mar 2024 11:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710612889; x=1711217689; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Pip1XRx4jrQkLhgKc7p34gp4TxOLPxEdpQuqY1H894=;
-        b=FGQ/S5P4Gcl9BpPA/VerO+7RqNnrjBoJ37TiN1NgZt02DwOVEymTQ32T30pZxbpr/W
-         N8DvCSZ83jEFUfoIZj+mO/J/oss94ddFFByMvZkj9FSqOHyiv7olPlfLNzikWxZNiNGT
-         84gUVy+UYjxszvAgdSp57hD0f1VSILk4PNvh8Rn3paIE5i+4o5C3M+kuPyHDADHFqBSU
-         2CispjWNR72TLJZUr8xZ0kPI36bClf9d4GXdF0oex3uzcviY4qbENhttoRrfeyUPz8NF
-         9sMJ44bn1WP0wMBhsECm/0uvEUV7Bdg0V6bV16x879fDV9h5T20t8kcdaULyP2mJt7Ck
-         Mk7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710612889; x=1711217689;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Pip1XRx4jrQkLhgKc7p34gp4TxOLPxEdpQuqY1H894=;
-        b=i2xEncYRckKtChedBimxiv4QUDf430K4VMBpMRMsI6Up3OwbXs7egR2iwkik80qtyW
-         94D0wmvJibA9wx0dXMSZ/TmIArDRvfqqroK1PdzWaI8WfzGASyecBd4UCQZTitc3UDoz
-         blaTriZomBLEL/gylpYfTAmVTUJ8c5qT0cRk7XY8UZj3Xpap7o5x7909WvUicosjSgOn
-         HirMe7MmunjM9RTNcSSsI1KoIaykmwY9ehMM5F++W5umCt1Ac9XxZgyv7I5oAWKfNcJa
-         wzURw5mULRl7K3BL6PVfzTbBfANwFvWoOmzsPeCm0c9tHTTZXgqZGQ7lw9fNnDM+pyiR
-         Phmg==
-X-Forwarded-Encrypted: i=1; AJvYcCX+PKLJ3Wf/GlXFHP6OCKGbeCfjNeyF02nqptEB5fk6Az6hGp8/DZRWZxvdFC9cPG2KFRjhk16xA37bQyxxzBp72G/K
-X-Gm-Message-State: AOJu0YwbA6RwT0tVS6HyqwPmg2tb+jeHihcRxzeLtyJsvIkx3C+lgLcy
-	7vz9s0YYJM12jrFyDGeS8pxAvceEbX8tVsiB2OB/pcJxizwdy4johKqPmpx29Qalie9QZ0TlELy
-	v8w==
-X-Google-Smtp-Source: AGHT+IE5EkGTv0Ahi8wpjw6tA4PV/DIwINjB6YhvTc2gWjd8ISGvgLGdNJfA3Dqkn+JDaTXZUYepC4PDYao=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90a:d511:b0:29d:51ce:5a18 with SMTP id
- t17-20020a17090ad51100b0029d51ce5a18mr23494pju.5.1710612888521; Sat, 16 Mar
- 2024 11:14:48 -0700 (PDT)
-Date: Sat, 16 Mar 2024 11:14:47 -0700
-In-Reply-To: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1710614986; c=relaxed/simple;
+	bh=xbEQiEOPKmVGnm10RbgwzXPlMi9MW3RqpGQjISKanl4=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=elqTCGefTcLtw1QSUKqfRePhCIQVgmikIlJlr8pvKo/hWrGeHVU7M3iMkzV7HEFScqO9wm+1gQ9w1863iJF+LCmP7gUJbLC3WU0N4aEY58TocnfSs+OhCK1F1fVaDhp9UQZbGrAl62t7YroiBD8gtuexQOBgpcTLliWOSPjHX7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 42GInVqF2383282
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Mar 2024 18:49:31 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Ignacio Encinas Rubio'" <ignacio@iencinas.com>
+Cc: <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Jeff King'" <peff@peff.net>
+References: <20240307205006.467443-1-ignacio@iencinas.com> <20240309181828.45496-1-ignacio@iencinas.com> <20240309181828.45496-2-ignacio@iencinas.com> <20240316065737.GA544929@coredump.intra.peff.net> <xmqqo7bem7o8.fsf@gitster.g> <006c01da77c9$298b2e50$7ca18af0$@nexbridge.com> <ea07fbc2-8937-486b-87c2-e2abe9856d26@iencinas.com>
+In-Reply-To: <ea07fbc2-8937-486b-87c2-e2abe9856d26@iencinas.com>
+Subject: RE: [PATCH v2 1/1] config: learn the "hostname:" includeIf condition
+Date: Sat, 16 Mar 2024 14:49:25 -0400
+Organization: Nexbridge Inc.
+Message-ID: <006d01da77d2$ae4361e0$0aca25a0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com> <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
-Message-ID: <owlyy1ai2gdk.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2] userdiff: better method/property matching for C#
-From: Linus Arver <linusa@google.com>
-To: Steven Jeuris via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>, Jeff King <peff@peff.net>, 
-	Steven Jeuris <steven.jeuris@gmail.com>, Steven Jeuris <steven.jeuris@3shape.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJVKjLHunLfVEMKSyBF1vvEJDqbigGtFbHTAifsU7wBfblwPQHvv9//AgLKp5cBEvzs3a/yi/tA
 
-"Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Steven Jeuris <steven.jeuris@3shape.com>
+On Saturday, March 16, 2024 2:06 PM, Ignacio Encinas Rubio wrote:
+>On 16/3/24 18:41, rsbecker@nexbridge.com wrote:
+>> On Saturday, March 16, 2024 1:03 PM, Junio C Hamano wrote:
+>>> Jeff King <peff@peff.net> writes:
+>>>
+>>>> Do we need to define "hostname" in more detail here? Specifically,
+>>>> I'm wondering whether the result will be a FQDN or not (i.e., the
+>>>> output of "hostname" vs "hostname -f"). Looking at the code I think
+>>>> it will just be the short name returned. That's probably OK, but it
+>>>> may be worth documenting.
+>>>
+>>> That was my first reaction but there are places where "hostname"
+>>> already gives a name that is not "short" at all, without being
+>>> invoked with
+>> "-f".
+>>>
+>>> For example, the (virtual) workstation I am typing this message on
+>>> sits in
+>> a $WORK datacenter, where "hostname" gives the same
+>>> string as "hostname -f", which looks like "git.c.xxxxxx.tld" ("git"
+>>> is the
+>> only part I picked myself for it, "c" is shared by those employee
+>>> workstations hosted at datacenters, "xxxxxx.tld" is redacted to
+>>> conceal the
+>> real domain name to protect the culprits ;-).
+>>>
+>>> I think the most honest answer we can give in the documentation is
+>>> that we
+>> use what gethostname() [*] gives.
+>>
+>> I think this is probably a good idea and but value should not be
+>> cached. My dev box has a multi-home, multi-cpu IP stack. It makes
+>> things really weird sometimes. For example, hostname replies with:
+>>
+>> ztc0.xxxxxxxx.local
+>>
+>> and includes the current default IP stack, which is known to DNS,
+>> while uname -n, which I prefer to use when deciding what system I am
+>> on during tests, reports:
+>>
+>> xxxxxxxx
+>>
+>> I am not sure how meaningful hostname is; however, "hostname -f" is
+>> not portable. However, includeif depending on whatever gethostname()
+>> returns is reasonable, in my opinion, also. I think the series should
+>> include a $(uname
+>> -n) option in some form for completeness.
 >
-> - Support multi-line methods by not requiring closing parenthesis.
-> - Support multiple generics (comma was missing before).
-> - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
-> - Remove `instanceof` keyword, which isn't C#.
-> - Also detect non-method keywords not positioned at the start of a line.
-> - Added tests; none existed before.
->
-> The overall strategy is to focus more on what isn't expected for
-> method/property definitions, instead of what is, but is fully optional.
+>Correct me if I'm wrong, but gethostname() seems to be equivalent to =
+$(uname -n)
 
-It would make it easier to review if you broke this patch up into smaller
-chunks. For example, you could do it like this:
+Glibc definitely uses uname, according to its man page, but that is the =
+exception, not the rule. Evidence from my experimentation on various =
+platforms says that the two values may sometimes be the same but the =
+host configuration may be different, particularly if two stacks are on =
+the same machine with different IP addresses. uname does not go to DNS. =
+gethostname() generally (Windows, S/390, NonStop, Linux where glibc is =
+not used), uses DNS as its first attempt to resolve the name.
 
-  (1) add tests to capture existing behavior
-  (2a) change method/property matching behavior, one thing at a time
-  (2b) adjust or add tests along the way, to account for the change in (2a)
-  (3) repeat step (2) as needed for each of the bullet points you've
-      outlined already
-
-Not being familiar with this area, I don't know if (2b) is easily
-doable. But if it is, I think the overall effort of breaking this patch
-down would be worthwhile.
-
-Of course, nothing stops other reviewers (who are more familiar with
-this area) from chiming in and LGTM'ing this patch as is.
-
-Thanks.
