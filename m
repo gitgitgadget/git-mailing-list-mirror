@@ -1,108 +1,122 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D975240
-	for <git@vger.kernel.org>; Sun, 17 Mar 2024 04:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5746112
+	for <git@vger.kernel.org>; Sun, 17 Mar 2024 04:16:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710648226; cv=none; b=beGOF+xfIZ9lCZ9pQe1HOAj6MH5Twyj1XI6leimT3QOWBlu7BoW6W4Uq+vYW2GSHJbPG/YGZENAY2SduS+CoCnsFtOCdZoM78n1Ih6beCzOnMcl+hFM+hM8xlznjLZdAK4F45jDVe4obcxeY2YEfQJ05Tf9mxZ4ySVUHFPueans=
+	t=1710648967; cv=none; b=bafrHwN+HLQsVa8NlYn5/5kjaI3uXvohkvMPcn4fSOCe8nzpBMadCu4kzdfD1jc6sqWjIipDSlxPpdnX+xiO/SC0JaXYST3oD+o2fQsn/hUKYZ8KE73vIXLvz+92ECWCT96HpFsq4nTBQRSxm+5Lhpiu3npty+hz4Mp528C1Z04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710648226; c=relaxed/simple;
-	bh=LSgP1OjRis2iR0s22OiOisAIG2AaiA2ETa37quSOTn8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X6X3n3x2tPNzutysAyf0tnrSQ4gcwCq0OpK4Psi9TOgJxRklzxl5k3UoFMMtbF1S0Kui2KQG2YVT46yImlJD9hWe0o3zXpVQHUokcRbg5inhIkhyVTEG9jtsCnE2qwt4VXlkdVhO10USqaJTSz/kZ3tM8WGtd8QfRcUspzBtqXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-68f41af71ebso27651136d6.1
-        for <git@vger.kernel.org>; Sat, 16 Mar 2024 21:03:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710648223; x=1711253023;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Dy0oyUapuMatkKcmDUVavWVphu53AljEY31Xa3uZSsk=;
-        b=T/IKY8Rtb7IHpGG83ylpcVc1bL/JXVWGjRlDAHKvI84PeLHbVgcFv+D5kzN40tW99C
-         5yHjgV6ZkSF6Jauz8oOrngF//4OrGY/BysBleKouYwrS4dKtxQuFwaiCeCDQcnPatGtM
-         o8gCC+Zl+MgU/T5JJovmQ4EWKembevRrMK24DwodH9jJeQDRv+TokqQj6NsGBb4XGS2c
-         Lu7QKrXbZvswnciBBLDJi00QjfhbhDojigoR7vgIFO5KpF+ww3dbPXEATOhhaMLPWfdD
-         9sE0flCW0HWSW7jrmfq6cuEyZMx7xVTLNi/FYgEG+024hybdkJnU33z8o1CMjWGMGVUo
-         zjWA==
-X-Gm-Message-State: AOJu0YwQya/XEvsvqI3UcEYFpGukZuQCHNhLxGPuibjc+McDU/eaPDs3
-	0oG37ynJ5Hp/GLD956tD2WQoUKzAkXARWTd1lz/YPfkGicFuR5tXZ1raba5qYN4pitiabcFAeiT
-	K/VMu069KYxf9XWBayje/8cqF8+Y=
-X-Google-Smtp-Source: AGHT+IG57tXdRqJeXL7SOomP6E1Ui5WlNdORgrLXQ3jIsmR/wFxXX7r3SQnmxsctJBbqW9mADPcDtS4R2ZYFpqZ82YM=
-X-Received: by 2002:ad4:4b73:0:b0:690:aaef:7f0f with SMTP id
- m19-20020ad44b73000000b00690aaef7f0fmr9150337qvx.3.1710648222946; Sat, 16 Mar
- 2024 21:03:42 -0700 (PDT)
+	s=arc-20240116; t=1710648967; c=relaxed/simple;
+	bh=uGY5LGjyvalaMkGM7eM7jhlJXETDPBU1yavAdMJ3+zM=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=b5yrTvrREWv4P1HQ9kMzJRTLAxcL5odB1BaE1Z9qe/PmpC3xO8AZDvYb6YWBrAhFa4LyxaioPg8UMeAeIu04p0AGKsfW4Gx53vQWGRkV37S8i5U2JFV6k9/asqweRCr/1frCuUdFbiJR9ysEqYoFwzoMZK84fFY9LXnFzPtxMCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=oVFg9whm; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="oVFg9whm"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1710646998.git.dsimic@manjaro.org> <480b46f2db82ea9c6cd9bbc2423923f81f2d36f5.1710646998.git.dsimic@manjaro.org>
-In-Reply-To: <480b46f2db82ea9c6cd9bbc2423923f81f2d36f5.1710646998.git.dsimic@manjaro.org>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 17 Mar 2024 00:03:32 -0400
-Message-ID: <CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710648962;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EShaBLuubbE4Cceqrq3NIcn8J53Hbqbp3uN0tb42D8k=;
+	b=oVFg9whm+SbJxTjh+ods/niWDN7q7hfI2dXhFtwhYRv4V79OMLQVu4Je5H7g6B9gYb9rUn
+	U3rHAD1+uguwnuE0QNqz2s41eyqsi9z7hWCZ02kwUIHhVbigLtOl7WFp1rTf1bisP8AZrk
+	ijAESkYwBSQEioGyNG8sFbwnXM1P8CEueeQw0jzr89iKnzccE135QpMcxybdPxuHH3T5Gv
+	z3O4ZeewgGlNByX2gvYA9gVmIt62d67L+zfpZhb+LPy6ynQzBURQ/7S971BuY9GmiYWmTm
+	ytqg14twKrs6xY5vbd2iz7JM6cg5SvRpdFiEcwjUyFcgB0Br2DxVvfFVDpokwQ==
+Date: Sun, 17 Mar 2024 05:16:02 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
+ github@seichter.de
 Subject: Re: [PATCH v2 3/5] test: introduce new x_to_tab() helper function
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
-	github@seichter.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com>
+References: <cover.1710646998.git.dsimic@manjaro.org>
+ <480b46f2db82ea9c6cd9bbc2423923f81f2d36f5.1710646998.git.dsimic@manjaro.org>
+ <CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com>
+Message-ID: <514d832b0399ccdbc354675068477fea@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Sat, Mar 16, 2024 at 11:48=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> =
-wrote:
-> There's nothing wrong with the already existing q_to_tab() function, exce=
-pt
-> when it's used on strings that contain uppercase letter "Q" in its litera=
-l
-> meaning, which, for example, can happen with git configurations that cont=
-ain
-> "*.*Quoted" as the names of their configuration variables.
->
-> Thus, let's introduce new x_to_tab() helper function that does pretty muc=
-h
-> the same job as the already existing q_to_tab() helper function, except f=
-or
-> replacing "X" with a horizontal tab (HT), instead of replacing "Q".
->
-> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-> ---
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> @@ -107,6 +107,10 @@ q_to_tab () {
-> +x_to_tab () {
-> +       tr X '\011'
-> +}
+Hello Eric,
 
-I'd like to push back on this change since it may lead to an explosion
-of new almost-identical functions. For such a one-off case where
-q_to_tab() isn't appropriate, it's perfectly fine to simply use `tr X
-`\011'` directly in your test:
+Thanks for responding so quickly.  Please, see my comments below.
 
-    test_expect_success 'foo' '
-        tr X "\011" >expect <<-\EOF
-        some Q stuff
-        whitespaceXhere
-        EOF
-        ...
-    '
+On 2024-03-17 05:03, Eric Sunshine wrote:
+> On Sat, Mar 16, 2024 at 11:48 PM Dragan Simic <dsimic@manjaro.org> 
+> wrote:
+>> There's nothing wrong with the already existing q_to_tab() function, 
+>> except
+>> when it's used on strings that contain uppercase letter "Q" in its 
+>> literal
+>> meaning, which, for example, can happen with git configurations that 
+>> contain
+>> "*.*Quoted" as the names of their configuration variables.
+>> 
+>> Thus, let's introduce new x_to_tab() helper function that does pretty 
+>> much
+>> the same job as the already existing q_to_tab() helper function, 
+>> except for
+>> replacing "X" with a horizontal tab (HT), instead of replacing "Q".
+>> 
+>> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+>> ---
+>> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+>> @@ -107,6 +107,10 @@ q_to_tab () {
+>> +x_to_tab () {
+>> +       tr X '\011'
+>> +}
+> 
+> I'd like to push back on this change since it may lead to an explosion
+> of new almost-identical functions. For such a one-off case where
+> q_to_tab() isn't appropriate, it's perfectly fine to simply use `tr X
+> `\011'` directly in your test:
+> 
+>     test_expect_success 'foo' '
+>         tr X "\011" >expect <<-\EOF
+>         some Q stuff
+>         whitespaceXhere
+>         EOF
+>         ...
+>     '
 
-However, if you really insist upon using a library function, then
-either add a general-purpose function which accepts the special
-character as an argument, or just retrofit q_to_tab() to optionally
-accept the special character:
+Agreed, I'll take this approach in the v3.
 
-    # t/test-lib-functions.sh
+> However, if you really insist upon using a library function, then
+> either add a general-purpose function which accepts the special
+> character as an argument, or just retrofit q_to_tab() to optionally
+> accept the special character:
+> 
+>     # t/test-lib-functions.sh
+> 
+>     # usage: q_to_tab [<needle-char>]
+>     # replace <needle-char> with TAB in stdin
+>     q_to_tab () {
+>         local c=$1
+>         test -n "$c" || c=Q
+>         tr "$c" '\011'
+>     }
+> 
+> But this is probably overkill for a one-off case.
 
-    # usage: q_to_tab [<needle-char>]
-    # replace <needle-char> with TAB in stdin
-    q_to_tab () {
-        local c=3D$1
-        test -n "$c" || c=3DQ
-        tr "$c" '\011'
-    }
+As far as I can see after doing a few really quick greps in the "t"
+subdirectory, such an approach might actually make sense, but it would
+require further work, to make some other already existing tests use
+the enhanced q_to_tab() function, and to warrant the whole thing.
 
-But this is probably overkill for a one-off case.
+That might be an interesting #leftover for someone else to pick it up
+at some point.
