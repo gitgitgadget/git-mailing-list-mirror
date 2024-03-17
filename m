@@ -1,188 +1,103 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD89320E
-	for <git@vger.kernel.org>; Sun, 17 Mar 2024 04:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC9C134A9
+	for <git@vger.kernel.org>; Sun, 17 Mar 2024 08:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710651059; cv=none; b=t+ptIY4dW3pff+21lRdYFa8kJUwKR3C+aNTHilg0DaajRk6k9n4KI+ryuz8H571hWwCSDloyPwWUy+1Ok3or9gyyYYpxlAp0SgjKsF11EmiNLlkuKtU+1vZ64q6bYOvqr3cLamZjkbX4z/aRZGQNtFmtENWpiWONRrbLWKyRQKs=
+	t=1710664076; cv=none; b=RaCCD9WoldqjCeYw+eXXuJAzno4pcWXrggENWbsLMl2sfBp+ZytbmZxuwkkxgEt/NMnl5ukI6mcgbetJ9YKX7eHTaXE6a+H/s8HfEfi3edbswMN4MIS1zujkT6F5ZOK5W4LX3dkKr4ZfWzoBhv/iGpLgAnT/yWtCjrHcdxLS8uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710651059; c=relaxed/simple;
-	bh=LbkPOlG6jON0kwnGLNNP60qUadk8TjHSkaiIxWeuaVw=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=CgJYlSVbAE4egcYkwH+8suCvvC9oeWAZMQ5fjMvRTIO7lvhCWXk+szIx0kvnLLaRZ1IgGIGUgwnzEAnTErOsKdhv1VO5a6Cn8aRdO+vMiKVy2MxsBafTAofHrYrNad8b1V667qDYiKI71nKwyEMh0YdAzjAe4OsATClw/P/Jmrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Sdw0tFBP; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710664076; c=relaxed/simple;
+	bh=c23b/upy7uBCO13+GRkVcv5Qk76W7T4nMN+hnnLlgrQ=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GKqhx9z2zTs/taGUoRRLWlSuj4M32JFAVrY8/we48TbMHrNu46/T5iHoabe1MQnGcqXiu28dQHUYlUwXHbXyLQYN3lrfhgd0B6sJEnD1RNVrSQ9kMZ9Aps0knAgYoTLM5L0IMNh3IUpEITe0MMffnORJUjcJAGSXmtT44QNQUK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wim2wtYI; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Sdw0tFBP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wim2wtYI"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41409c8edb6so4931515e9.0
+        for <git@vger.kernel.org>; Sun, 17 Mar 2024 01:27:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710664072; x=1711268872; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3PkFw1TkptaGZGYGXIbqZ1Emdy5RlDFNp6fNIboGwnM=;
+        b=Wim2wtYI22jexa0Ztx+/t+uq8oLSQ6gAVpB76Y6TfefFYGIGWbC6TH/3JBrnsO55Al
+         tE+kfJYz39ltpkrtdo96fd16Ah9QnTgJWz5Ov8UUGzuxk1Aj1WmXTrPYKCmhaXCPhkui
+         sqaDoSsIJvSg+uaFn8w5l6Yax4dqOt80conCVcIcBQbhsWAs+QGhR7pgvNkw68wGDdrK
+         PG78p7K7w/il9eH02LJvC/fKy2h4ZhGTlFuSNmGFelFMHy7ufM3Nc/E643YPBMjpT0yD
+         kyrTelDK7s5B5uxtUMiEWI5UXWAMS98H0DiD6ujf05IRDejNBDq+pZoRsNHDp2Geg5AQ
+         OhvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710664072; x=1711268872;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3PkFw1TkptaGZGYGXIbqZ1Emdy5RlDFNp6fNIboGwnM=;
+        b=i9x4Xoy+zG7C81dgU5JvWayWR6Szu/gIhTEkxz3DuUfJE8781Pgei2Kux+ffsEJ6FH
+         5soVD+fax6jOqA3I7zk5oK2y1rcNzFgOhQpPy3oZtlPGS6P5qg8WxKETOBgcLD4yaw4V
+         /PdSTSkSi0eRqZuziobtcB2krCOBmg3pR8zZoqfTrAxKoS3ysCbHsJasZ8av+LcMA0ZC
+         Vsi5OWf2DENkh+N0MslW+aIgVCmyBJZS+Iaz1rfw3E4IOufB9bL7hzJhBTeQ6bBMulZU
+         8tExUir/VVpEZfqJXnxi6pK0uAc8GdM1r4VIVYm4QY5miguESIn8361RySaQyyEFOZBP
+         DrZg==
+X-Gm-Message-State: AOJu0YxPQazGoBT7AWyrYtwLBzsHsY+CpX+aOXbZ0TWSx4zUzQIiQfpe
+	LGs0eYyuw1RkunH3clwoDzTP1+Wvqo8Z8qJRHCIBepOlok1DJvN4N1VfSG6x
+X-Google-Smtp-Source: AGHT+IGUKgcVpg8F3FCdNs2lYvSbdfX9KfUf6fg6DtyZ3et7UGOgsgU/FwDkw3EQdLgsLVhsG2V9Og==
+X-Received: by 2002:a05:600c:3c86:b0:414:286:fd1f with SMTP id bg6-20020a05600c3c8600b004140286fd1fmr3434136wmb.11.1710664072161;
+        Sun, 17 Mar 2024 01:27:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v15-20020a05600c470f00b004128fa77216sm14402439wmo.1.2024.03.17.01.27.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Mar 2024 01:27:51 -0700 (PDT)
+Message-ID: <pull.1690.git.1710664071.gitgitgadget@gmail.com>
+From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 17 Mar 2024 08:27:49 +0000
+Subject: [PATCH 0/2] utf8: change return type of some helpers from int to size_t
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710651053;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WzzPmKe9zQrXgUmEfxaDGo6GlrVfW8ufw60YX3FxCF4=;
-	b=Sdw0tFBPNKixo1KuzoGGb+LMx3+SoAlUUsSwQebJ/7rUJDxuZ63FQGgOaOYm1fr7Dgcdxg
-	upGCqMJKbdA+aqErORnbr47HLwZn14FcqgsxzO/p4tID6c1bpjRTVELC/8MS5G0G+Gy8OQ
-	fN5jjX02ulTHoGx5RIj6NrH33/QIv3mTcxL1x/XNvaKvp0eodVdxTEzvmCDWwpGZLqCz6r
-	bmqjGF8TpZtVOxEWV4yMV9kFW5qKTUWQ5hDnFMiVuCYz/p5qKRmBlPtIhPCqNxWipbHEbD
-	KioqtlFE9WGUNtIaDVkkiBHJ4ZGzEu89yWqiALzPEh1apD8CLAAcKaTTWnluHg==
-Date: Sun, 17 Mar 2024 05:50:52 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
- github@seichter.de
-Subject: Re: [PATCH v2 4/5] t1300: add more tests for whitespace and inline
- comments
-In-Reply-To: <CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
-References: <cover.1710646998.git.dsimic@manjaro.org>
- <9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
- <CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
-Message-ID: <9996af464aabe2bf594c63c237d7a6e0@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+To: git@vger.kernel.org
+Cc: Mohit Marathe <mohitmarathe@proton.me>
 
-On 2024-03-17 05:21, Eric Sunshine wrote:
-> On Sat, Mar 16, 2024 at 11:48 PM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> Add a handful of additional automated tests, to improve the coverage 
->> of
->> configuration file entries whose values contain internal whitespace, 
->> leading
->> and/or trailing whitespace, which may or may not be enclosed within 
->> quotation
->> marks, or which contain an additional inline comment.
->> 
->> At the same time, rework one already existing automated test a bit, to 
->> ensure
->> consistency with the newly added tests.  This change introduced no 
->> functional
->> changes to the already existing test.
->> 
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
->> ---
->>     [2] 
->> https://lore.kernel.org/git/CAPig+cRG8eFxepkaiN54H+fa7D=rFGsmEHdvTP+HSSaLO_6T_A@mail.gmail.com/
->> 
->> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
->> @@ -11,7 +11,97 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->> +test_expect_success 'create test configuration' '
-> 
-> In [2] above, I intentionally suggested naming this new test "setup
-> whitespace" because "setup" is a common name used in the test suite
-> for this sort of test which prepares state for subsequent tests. Using
-> a common name (such as "setup") is important since it facilitates
-> running only specific tests within a script in which you are
-> interested rather than having to run all tests. The section "Skipping
-> Tests" in t/README says this:
-> 
->     Sometimes there may be multiple tests with e.g. "setup" in their
->     name that are needed and rather than figuring out the number for
->     all of them we can just use "setup" as a substring/glob to match
->     against the test description:
-> 
->         $ sh ./t0050-filesystem.sh --run=setup,9-11
-> 
->     or one could select both the setup tests and the rename ones
->     (assuming all relevant tests had those words in their
->     descriptions):
-> 
->         $ sh ./t0050-filesystem.sh --run=setup,rename
+Hello,
 
-Totally agreed, thanks for pointing this out.  Will be fixed in v3.
+There are lot of places in the codebase where int is used to store size of
+an object instead of size_t (which is better alternative due to reasons like
+portability, readability, etc). This patch series accomplishes one such
+#TODO comment, which addresses this issue.
 
->> +       x_to_tab >.git/config <<-\EOF
->> +       [section]
->> +               Xsolid = rock
->> +               Xsparse = big XX blue
->> +               XsparseAndTail = big XX blue
->> +               XsparseAndTailQuoted = "big XX blue "
->> +               XsparseAndBiggerTail = big XX blue X X
->> +               XsparseAndBiggerTailQuoted = "big XX blue X X"
->> +               XsparseAndBiggerTailQuotedPlus = "big XX blue X X"X
->> +               XheadAndTail = Xbig blue
->> +               XheadAndTailQuoted = "Xbig blue "
->> +               XheadAndTailQuotedPlus = "Xbig blue "
->> +               Xannotated = big blueX# to be discarded
->> +               XannotatedQuoted = "big blue"X# to be discarded
->> +       EOF
->> +'
-> 
-> The <<- operator strips all leading TAB characters, so the extra
-> indentation you've placed inside the "[section]" section is stripped
-> off. Thus, what you have above is the same as:
-> 
->     x_to_tab >.git/config <<-\EOF
->     [section]
->     Xsolid = rock
->     ...
->     EOF
+I appreciate your review and feedback on this patch series.
 
-Yes, I was already aware that such indentation ends up wasted, but 
-having
-it makes the test a bit more readable.  At least in my opinion, but if 
-you
-find it better not to have such whitespace, for the sake of consistency,
-I'll happily remove this indentation in the v3.
+Best regards, Mohit Marathe
 
-> On a related note, it's not clear why you use 'X' to insert a TAB at
-> the beginning of each line. As I understand it, the configuration file
-> reader does not require such indentation, thus doing so is wasted.
-> Moreover, it confuses readers of this code (and reviewers) into
-> thinking that something unusual is going on, and leads to questions
-> such as this one: Why do you use 'X' to insert a TAB at the beginning
-> of the line?
+Mohit Marathe (2):
+  utf8: change type from int to size_t
+  utf8: make utf8_strnwidth & utf8_strwidth return size_t instead of int
 
-Well, resorting to always not having such instances of 'X' to provide
-leading indentation in test configuration files may actually make some
-bugs go undetected in some tests.  To me, having leading indentation is
-to be expected in the real configuration files in the field, thus 
-providing
-the same indentation in a test configuration feels natural to me, 
-despite
-admittedly making the test configuration a bit less readable.
+ builtin/blame.c    |  6 +++---
+ builtin/branch.c   |  2 +-
+ builtin/fetch.c    |  2 +-
+ builtin/worktree.c |  4 ++--
+ column.c           |  2 +-
+ diff.c             |  8 +++++---
+ gettext.c          |  2 +-
+ gettext.h          |  2 +-
+ pretty.c           |  4 ++--
+ utf8.c             | 14 +++++---------
+ utf8.h             |  4 ++--
+ wt-status.c        |  4 ++--
+ 12 files changed, 26 insertions(+), 28 deletions(-)
 
-Of course, consistency is good, but variety is also good when it comes
-to automated tests.  I'm not very familiar with the tests in git, so
-please let me know if consistency outweights variety in this case, and
-I'll happily remove the leading "X" indentations in the v3.
 
->> -test_expect_success 'clear default config' '
->> +test_expect_success 'clear default configuration' '
->>         rm -f .git/config
->>  '
-> 
-> It's probably not worth a reroll, but it's usually better to avoid
-> this sort of do-nothing noise-change since it distracts reviewers from
-> the primary changes made by the patch.
-
-The v3 is already inevitable, so I'll drop this change.
-
->> @@ -1066,9 +1156,25 @@ test_expect_success '--null --get-regexp' '
->> -test_expect_success 'inner whitespace kept verbatim' '
->> -       git config section.val "foo       bar" &&
->> -       test_cmp_config "foo      bar" section.val
->> +test_expect_success 'inner whitespace kept verbatim, spaces only' '
->> +       echo "foo   bar" >expect &&
->> +       git config section.val "foo   bar" &&
->> +       git config --get section.val >actual &&
->> +       test_cmp expect actual
->> +'
-> 
-> I appreciate the revised test title ("spaces only") which indicates
-> that these aren't TABs which were missed when converting to use
-> q_to_tab() or x_to_tab().
-
-Thanks. :)
+base-commit: 2953d95d402b6bff1a59c4712f4d46f1b9ea137f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1690%2Fmohit-marathe%2Fint-to-size_t-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1690/mohit-marathe/int-to-size_t-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1690
+-- 
+gitgitgadget
