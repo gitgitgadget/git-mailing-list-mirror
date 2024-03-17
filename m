@@ -1,103 +1,108 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EFCF510
-	for <git@vger.kernel.org>; Sun, 17 Mar 2024 03:48:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D975240
+	for <git@vger.kernel.org>; Sun, 17 Mar 2024 04:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710647305; cv=none; b=LHU8aFAJVJ5SFqyu9azpzjph1sfs6a8AuZD98KBEwoV4r6zr8TmH9XWn3rgDAa9lYbuRPUBZROOV/DAGCu6KHxGU0DYSD6nk4J0y9XHN+T8MoPwOHq3EaQGk2aGHJIx8BvkXeGsMf0fLmQZgUXFNsBFTMUL3HoZeT9ndKKaJKGA=
+	t=1710648226; cv=none; b=beGOF+xfIZ9lCZ9pQe1HOAj6MH5Twyj1XI6leimT3QOWBlu7BoW6W4Uq+vYW2GSHJbPG/YGZENAY2SduS+CoCnsFtOCdZoM78n1Ih6beCzOnMcl+hFM+hM8xlznjLZdAK4F45jDVe4obcxeY2YEfQJ05Tf9mxZ4ySVUHFPueans=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710647305; c=relaxed/simple;
-	bh=bfMqUooiRw/RNsr33+IRAqg00ygPGTU6NapqHVRDudc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=e1PWB1DGbFp5Ff4k7tkaSkFnS/YG86ydR+/RxrzJb+EoV0QxXWjlmLewscbgwFQV6iR2zDLGUK/+YRKFD/lRai6jiC/FQ/BMDCfVqOoDfMVYF64F8fTfvWuO1T2S1A3bIrSQHFm3dZyS8O9K5GNqzpQ9+VximBIXWd5Nd+bG9dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=SfBsc4g9; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="SfBsc4g9"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710647293;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4Jv4wuO2E/x/EtdlWKN3ptgzVZrIQ+2mVNL2cFUHWO4=;
-	b=SfBsc4g9K0Ppb6/fA36cybxZDyQmq83/nOH6d/Cdaw0Zfry7I2oecUR7ecyDwpJtkYXgBc
-	ihpEurAOu9DQ0QFM1G7O6h3d0MGCQjsOOrelK2aCR5kve14Dmym8vNNqIxJUUudarMaCW2
-	W0npLAHXAQw2u0LAHEqj8DnpflPO8zwkcl7wRhp4JiCEqW8Ewk2PlzD8/542eBYs/sPAEs
-	0ayM8qlL2LZZN23Cep55dTyt1kJX5jK6t74farNGAJqgvAy4tsMyzbYP8mhUlAuDGdd+GV
-	Eyf2nst7mhkddou80aEi1hdwyoUNdxcVx4gNC5QLMYljUd4b9pNbXGmlrMLKOg==
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	rsbecker@nexbridge.com,
-	github@seichter.de,
-	sunshine@sunshineco.com
-Subject: [PATCH v2 5/5] config.txt: describe handling of whitespace further
-Date: Sun, 17 Mar 2024 04:48:05 +0100
-Message-Id: <041e0bb6fd72d12318130e7010a75dc8321e2d34.1710646998.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1710646998.git.dsimic@manjaro.org>
-References: <cover.1710646998.git.dsimic@manjaro.org>
+	s=arc-20240116; t=1710648226; c=relaxed/simple;
+	bh=LSgP1OjRis2iR0s22OiOisAIG2AaiA2ETa37quSOTn8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X6X3n3x2tPNzutysAyf0tnrSQ4gcwCq0OpK4Psi9TOgJxRklzxl5k3UoFMMtbF1S0Kui2KQG2YVT46yImlJD9hWe0o3zXpVQHUokcRbg5inhIkhyVTEG9jtsCnE2qwt4VXlkdVhO10USqaJTSz/kZ3tM8WGtd8QfRcUspzBtqXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-68f41af71ebso27651136d6.1
+        for <git@vger.kernel.org>; Sat, 16 Mar 2024 21:03:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710648223; x=1711253023;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Dy0oyUapuMatkKcmDUVavWVphu53AljEY31Xa3uZSsk=;
+        b=T/IKY8Rtb7IHpGG83ylpcVc1bL/JXVWGjRlDAHKvI84PeLHbVgcFv+D5kzN40tW99C
+         5yHjgV6ZkSF6Jauz8oOrngF//4OrGY/BysBleKouYwrS4dKtxQuFwaiCeCDQcnPatGtM
+         o8gCC+Zl+MgU/T5JJovmQ4EWKembevRrMK24DwodH9jJeQDRv+TokqQj6NsGBb4XGS2c
+         Lu7QKrXbZvswnciBBLDJi00QjfhbhDojigoR7vgIFO5KpF+ww3dbPXEATOhhaMLPWfdD
+         9sE0flCW0HWSW7jrmfq6cuEyZMx7xVTLNi/FYgEG+024hybdkJnU33z8o1CMjWGMGVUo
+         zjWA==
+X-Gm-Message-State: AOJu0YwQya/XEvsvqI3UcEYFpGukZuQCHNhLxGPuibjc+McDU/eaPDs3
+	0oG37ynJ5Hp/GLD956tD2WQoUKzAkXARWTd1lz/YPfkGicFuR5tXZ1raba5qYN4pitiabcFAeiT
+	K/VMu069KYxf9XWBayje/8cqF8+Y=
+X-Google-Smtp-Source: AGHT+IG57tXdRqJeXL7SOomP6E1Ui5WlNdORgrLXQ3jIsmR/wFxXX7r3SQnmxsctJBbqW9mADPcDtS4R2ZYFpqZ82YM=
+X-Received: by 2002:ad4:4b73:0:b0:690:aaef:7f0f with SMTP id
+ m19-20020ad44b73000000b00690aaef7f0fmr9150337qvx.3.1710648222946; Sat, 16 Mar
+ 2024 21:03:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <cover.1710646998.git.dsimic@manjaro.org> <480b46f2db82ea9c6cd9bbc2423923f81f2d36f5.1710646998.git.dsimic@manjaro.org>
+In-Reply-To: <480b46f2db82ea9c6cd9bbc2423923f81f2d36f5.1710646998.git.dsimic@manjaro.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 17 Mar 2024 00:03:32 -0400
+Message-ID: <CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] test: introduce new x_to_tab() helper function
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
+	github@seichter.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Make it more clear what the whitespace characters are in the context of git
-configuration files, and improve the description of the trailing whitespace
-handling a bit.
+On Sat, Mar 16, 2024 at 11:48=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> =
+wrote:
+> There's nothing wrong with the already existing q_to_tab() function, exce=
+pt
+> when it's used on strings that contain uppercase letter "Q" in its litera=
+l
+> meaning, which, for example, can happen with git configurations that cont=
+ain
+> "*.*Quoted" as the names of their configuration variables.
+>
+> Thus, let's introduce new x_to_tab() helper function that does pretty muc=
+h
+> the same job as the already existing q_to_tab() helper function, except f=
+or
+> replacing "X" with a horizontal tab (HT), instead of replacing "Q".
+>
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> @@ -107,6 +107,10 @@ q_to_tab () {
+> +x_to_tab () {
+> +       tr X '\011'
+> +}
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
+I'd like to push back on this change since it may lead to an explosion
+of new almost-identical functions. For such a one-off case where
+q_to_tab() isn't appropriate, it's perfectly fine to simply use `tr X
+`\011'` directly in your test:
 
-Notes:
-    Changes in v2:
-        - No changes were introduced
+    test_expect_success 'foo' '
+        tr X "\011" >expect <<-\EOF
+        some Q stuff
+        whitespaceXhere
+        EOF
+        ...
+    '
 
- Documentation/config.txt | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+However, if you really insist upon using a library function, then
+either add a general-purpose function which accepts the special
+character as an argument, or just retrofit q_to_tab() to optionally
+accept the special character:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 782c2bab906c..20f3300dc706 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -22,9 +22,10 @@ multivalued.
- Syntax
- ~~~~~~
- 
--The syntax is fairly flexible and permissive; whitespaces are mostly
--ignored.  The '#' and ';' characters begin comments to the end of line,
--blank lines are ignored.
-+The syntax is fairly flexible and permissive.  Whitespace characters,
-+which in this context are the space character (SP) and the horizontal
-+tabulation (HT), are mostly ignored.  The '#' and ';' characters begin
-+comments to the end of line.  Blank lines are ignored.
- 
- The file consists of sections and variables.  A section begins with
- the name of the section in square brackets and continues until the next
-@@ -64,12 +65,14 @@ The variable names are case-insensitive, allow only alphanumeric characters
- and `-`, and must start with an alphabetic character.
- 
- A line that defines a value can be continued to the next line by
--ending it with a `\`; the backslash and the end-of-line are
--stripped.  Leading whitespaces after 'name =', the remainder of the
-+ending it with a `\`; the backslash and the end-of-line are stripped.
-+Leading whitespace characters after 'name =', the remainder of the
- line after the first comment character '#' or ';', and trailing
--whitespaces of the line are discarded unless they are enclosed in
--double quotes.  Internal whitespaces within the value are retained
--verbatim.
-+whitespace characters of the line are discarded unless they are enclosed
-+in double quotes.  The discarding of the trailing whitespace characters
-+applies regardless of the discarding of the portion of the line after
-+the first comment character.  Internal whitespace characters within the
-+value are retained verbatim.
- 
- Inside double quotes, double quote `"` and backslash `\` characters
- must be escaped: use `\"` for `"` and `\\` for `\`.
+    # t/test-lib-functions.sh
+
+    # usage: q_to_tab [<needle-char>]
+    # replace <needle-char> with TAB in stdin
+    q_to_tab () {
+        local c=3D$1
+        test -n "$c" || c=3DQ
+        tr "$c" '\011'
+    }
+
+But this is probably overkill for a one-off case.
