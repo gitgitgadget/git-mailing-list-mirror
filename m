@@ -1,122 +1,159 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5746112
-	for <git@vger.kernel.org>; Sun, 17 Mar 2024 04:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAFD5258
+	for <git@vger.kernel.org>; Sun, 17 Mar 2024 04:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710648967; cv=none; b=bafrHwN+HLQsVa8NlYn5/5kjaI3uXvohkvMPcn4fSOCe8nzpBMadCu4kzdfD1jc6sqWjIipDSlxPpdnX+xiO/SC0JaXYST3oD+o2fQsn/hUKYZ8KE73vIXLvz+92ECWCT96HpFsq4nTBQRSxm+5Lhpiu3npty+hz4Mp528C1Z04=
+	t=1710649300; cv=none; b=O1o5pFcPZC6JHbJGwJsu52dtPGS+oub+J1QI+2GWALcdqxVeAPDFNYnCMiwYEsm3FG1EnmCM62ZUxXkw5tonChRj0NdXgi/dKNOyn6RHF+wyCet+PjKjaaWoflf8Pepl3KKJQPEokW01WHJDexBVVdbGqD4cMGQKry+bIUhYPXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710648967; c=relaxed/simple;
-	bh=uGY5LGjyvalaMkGM7eM7jhlJXETDPBU1yavAdMJ3+zM=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=b5yrTvrREWv4P1HQ9kMzJRTLAxcL5odB1BaE1Z9qe/PmpC3xO8AZDvYb6YWBrAhFa4LyxaioPg8UMeAeIu04p0AGKsfW4Gx53vQWGRkV37S8i5U2JFV6k9/asqweRCr/1frCuUdFbiJR9ysEqYoFwzoMZK84fFY9LXnFzPtxMCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=oVFg9whm; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="oVFg9whm"
+	s=arc-20240116; t=1710649300; c=relaxed/simple;
+	bh=gFq6oRv6enO3XCarDGNQAdYin/3lBBT1uaFVCV2fV7g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g6tf/pn2Zka94aJbYSItzksz8RBoMylPVwEYxuln91qPIFXclSvz/GUSSWl9JCkuKTyrcbi7ywqcc16MTh81pCxqGjCE7O4+Doe5ZbA7lqFtbBNsOjyqQj++BS14iEU5Mfq2/vpqarK9nYW4fuRB5SNM4vbPO3oib9e4o8PK7s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-690db6edb2bso20229406d6.2
+        for <git@vger.kernel.org>; Sat, 16 Mar 2024 21:21:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710649297; x=1711254097;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FIlNRpTBIGnMQX27WoEWn+4rx8myP33hGf/FnqHl/gw=;
+        b=bpNxJyQMHdt2KmwJjyjB7khxtc5EC5gpPAp1Bfyqu17rhA6D7X/gwPEYn+9hIbFvMW
+         exp2zdXTrnGTOf0xWt7MGJdNgNGpgTnWnkroN1z3r+CYno7QVgTig0BNh6QAMcFFp5A9
+         z8LE6Uv4nXq97xLOJm4nGzQZgHql4G+aejdeSGgEz72bkpR0OWGyfSJVNrusjJbdq8XX
+         rg63B/XY4oOr3Ap30z8/3za5+SLnbAwaUsxccdSPMYFvKX+maXgsFQ4OXTJpwMF32b01
+         TXY/Ekqi6Irc+/rSAUhXTIlkGneHQzVjW+TZkZ779MQzHLgXmKrzdZ1LL5h3rukOOvcb
+         7nVw==
+X-Gm-Message-State: AOJu0Yw+G47EeHnKbiAO49HaoLy4tdsEhW0mKNobX9Ybzy2wRlSjRkOM
+	M/JvJDTcQVCWeMyN62GMIL0FmppE+xmMv1wggIUco7UpNuuNw5OqKd5G7sdy9epEMsNUTlzd9n5
+	vk5to1K4EGpxnOr0lrlqwYlTdSLY3dY4MY0s=
+X-Google-Smtp-Source: AGHT+IGNYsJTsAur5oM6J/UVYRwnQfXpftPpu+/RdOE3BJBLS6Dq95/zfSU3qfC8ny8UxOwi5Gt564q8Mt+83khk3KQ=
+X-Received: by 2002:ad4:4147:0:b0:690:735d:ff7d with SMTP id
+ z7-20020ad44147000000b00690735dff7dmr8479501qvp.33.1710649296868; Sat, 16 Mar
+ 2024 21:21:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710648962;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EShaBLuubbE4Cceqrq3NIcn8J53Hbqbp3uN0tb42D8k=;
-	b=oVFg9whm+SbJxTjh+ods/niWDN7q7hfI2dXhFtwhYRv4V79OMLQVu4Je5H7g6B9gYb9rUn
-	U3rHAD1+uguwnuE0QNqz2s41eyqsi9z7hWCZ02kwUIHhVbigLtOl7WFp1rTf1bisP8AZrk
-	ijAESkYwBSQEioGyNG8sFbwnXM1P8CEueeQw0jzr89iKnzccE135QpMcxybdPxuHH3T5Gv
-	z3O4ZeewgGlNByX2gvYA9gVmIt62d67L+zfpZhb+LPy6ynQzBURQ/7S971BuY9GmiYWmTm
-	ytqg14twKrs6xY5vbd2iz7JM6cg5SvRpdFiEcwjUyFcgB0Br2DxVvfFVDpokwQ==
-Date: Sun, 17 Mar 2024 05:16:02 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
- github@seichter.de
-Subject: Re: [PATCH v2 3/5] test: introduce new x_to_tab() helper function
-In-Reply-To: <CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com>
-References: <cover.1710646998.git.dsimic@manjaro.org>
- <480b46f2db82ea9c6cd9bbc2423923f81f2d36f5.1710646998.git.dsimic@manjaro.org>
- <CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com>
-Message-ID: <514d832b0399ccdbc354675068477fea@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <cover.1710646998.git.dsimic@manjaro.org> <9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
+In-Reply-To: <9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 17 Mar 2024 00:21:25 -0400
+Message-ID: <CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] t1300: add more tests for whitespace and inline comments
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
+	github@seichter.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello Eric,
+On Sat, Mar 16, 2024 at 11:48=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> =
+wrote:
+> Add a handful of additional automated tests, to improve the coverage of
+> configuration file entries whose values contain internal whitespace, lead=
+ing
+> and/or trailing whitespace, which may or may not be enclosed within quota=
+tion
+> marks, or which contain an additional inline comment.
+>
+> At the same time, rework one already existing automated test a bit, to en=
+sure
+> consistency with the newly added tests.  This change introduced no functi=
+onal
+> changes to the already existing test.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+>     [2] https://lore.kernel.org/git/CAPig+cRG8eFxepkaiN54H+fa7D=3DrFGsmEH=
+dvTP+HSSaLO_6T_A@mail.gmail.com/
+>
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> @@ -11,7 +11,97 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +test_expect_success 'create test configuration' '
 
-Thanks for responding so quickly.  Please, see my comments below.
+In [2] above, I intentionally suggested naming this new test "setup
+whitespace" because "setup" is a common name used in the test suite
+for this sort of test which prepares state for subsequent tests. Using
+a common name (such as "setup") is important since it facilitates
+running only specific tests within a script in which you are
+interested rather than having to run all tests. The section "Skipping
+Tests" in t/README says this:
 
-On 2024-03-17 05:03, Eric Sunshine wrote:
-> On Sat, Mar 16, 2024 at 11:48 PM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> There's nothing wrong with the already existing q_to_tab() function, 
->> except
->> when it's used on strings that contain uppercase letter "Q" in its 
->> literal
->> meaning, which, for example, can happen with git configurations that 
->> contain
->> "*.*Quoted" as the names of their configuration variables.
->> 
->> Thus, let's introduce new x_to_tab() helper function that does pretty 
->> much
->> the same job as the already existing q_to_tab() helper function, 
->> except for
->> replacing "X" with a horizontal tab (HT), instead of replacing "Q".
->> 
->> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
->> ---
->> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
->> @@ -107,6 +107,10 @@ q_to_tab () {
->> +x_to_tab () {
->> +       tr X '\011'
->> +}
-> 
-> I'd like to push back on this change since it may lead to an explosion
-> of new almost-identical functions. For such a one-off case where
-> q_to_tab() isn't appropriate, it's perfectly fine to simply use `tr X
-> `\011'` directly in your test:
-> 
->     test_expect_success 'foo' '
->         tr X "\011" >expect <<-\EOF
->         some Q stuff
->         whitespaceXhere
->         EOF
->         ...
->     '
+    Sometimes there may be multiple tests with e.g. "setup" in their
+    name that are needed and rather than figuring out the number for
+    all of them we can just use "setup" as a substring/glob to match
+    against the test description:
 
-Agreed, I'll take this approach in the v3.
+        $ sh ./t0050-filesystem.sh --run=3Dsetup,9-11
 
-> However, if you really insist upon using a library function, then
-> either add a general-purpose function which accepts the special
-> character as an argument, or just retrofit q_to_tab() to optionally
-> accept the special character:
-> 
->     # t/test-lib-functions.sh
-> 
->     # usage: q_to_tab [<needle-char>]
->     # replace <needle-char> with TAB in stdin
->     q_to_tab () {
->         local c=$1
->         test -n "$c" || c=Q
->         tr "$c" '\011'
->     }
-> 
-> But this is probably overkill for a one-off case.
+    or one could select both the setup tests and the rename ones
+    (assuming all relevant tests had those words in their
+    descriptions):
 
-As far as I can see after doing a few really quick greps in the "t"
-subdirectory, such an approach might actually make sense, but it would
-require further work, to make some other already existing tests use
-the enhanced q_to_tab() function, and to warrant the whole thing.
+        $ sh ./t0050-filesystem.sh --run=3Dsetup,rename
 
-That might be an interesting #leftover for someone else to pick it up
-at some point.
+> +       x_to_tab >.git/config <<-\EOF
+> +       [section]
+> +               Xsolid =3D rock
+> +               Xsparse =3D big XX blue
+> +               XsparseAndTail =3D big XX blue
+> +               XsparseAndTailQuoted =3D "big XX blue "
+> +               XsparseAndBiggerTail =3D big XX blue X X
+> +               XsparseAndBiggerTailQuoted =3D "big XX blue X X"
+> +               XsparseAndBiggerTailQuotedPlus =3D "big XX blue X X"X
+> +               XheadAndTail =3D Xbig blue
+> +               XheadAndTailQuoted =3D "Xbig blue "
+> +               XheadAndTailQuotedPlus =3D "Xbig blue "
+> +               Xannotated =3D big blueX# to be discarded
+> +               XannotatedQuoted =3D "big blue"X# to be discarded
+> +       EOF
+> +'
+
+The <<- operator strips all leading TAB characters, so the extra
+indentation you've placed inside the "[section]" section is stripped
+off. Thus, what you have above is the same as:
+
+    x_to_tab >.git/config <<-\EOF
+    [section]
+    Xsolid =3D rock
+    ...
+    EOF
+
+On a related note, it's not clear why you use 'X' to insert a TAB at
+the beginning of each line. As I understand it, the configuration file
+reader does not require such indentation, thus doing so is wasted.
+Moreover, it confuses readers of this code (and reviewers) into
+thinking that something unusual is going on, and leads to questions
+such as this one: Why do you use 'X' to insert a TAB at the beginning
+of the line?
+
+> -test_expect_success 'clear default config' '
+> +test_expect_success 'clear default configuration' '
+>         rm -f .git/config
+>  '
+
+It's probably not worth a reroll, but it's usually better to avoid
+this sort of do-nothing noise-change since it distracts reviewers from
+the primary changes made by the patch.
+
+> @@ -1066,9 +1156,25 @@ test_expect_success '--null --get-regexp' '
+> -test_expect_success 'inner whitespace kept verbatim' '
+> -       git config section.val "foo       bar" &&
+> -       test_cmp_config "foo      bar" section.val
+> +test_expect_success 'inner whitespace kept verbatim, spaces only' '
+> +       echo "foo   bar" >expect &&
+> +       git config section.val "foo   bar" &&
+> +       git config --get section.val >actual &&
+> +       test_cmp expect actual
+> +'
+
+I appreciate the revised test title ("spaces only") which indicates
+that these aren't TABs which were missed when converting to use
+q_to_tab() or x_to_tab().
