@@ -1,78 +1,78 @@
 Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC86364AA
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503336AFE
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710759179; cv=none; b=cze5hlM9yA4INoHtdq9CBFGKgnVUQMl6qt80KTH7Y2wu23I8YADMP4dLRv23bL6fHIMVb0qETLTmLYIOjtsQvc2SUgpDd/8Ej0kLVa06L0tFRLALYtQpNUiq2PUHa55s1SmuvpCqH+hcIPqhhDS/zny4hhq2FZHuwlnv8yIvySA=
+	t=1710759185; cv=none; b=stDoVH47izlfjwtMhKw5hvUS5+EiUrXWaA9D5wHGzVk08clPRFqHfhX0GrjuXrABpQU35cLCsfaH48ZvTbCyumK56n3vDgRbxCpYS0rt7D0RF6YP01uz55BBxUfHO6TrSkydz6pNfvmTIbXEfkfWfFJPwECsiQTOgXMtF7rEMoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710759179; c=relaxed/simple;
-	bh=oQT8on1+l/dRIS2KaXkEBK9n5NIxHigJDuiCoWYB6wc=;
+	s=arc-20240116; t=1710759185; c=relaxed/simple;
+	bh=9SVKaQET/O+7k/zJCC7OARR5frvuYW2635WXGhc7nIQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YEkTFn+SxmkNTVyJvuuZXeOt5k86Q1NvtnL4bHNdjLbjvYGH/LXBtQz+UuBv8e/cbYd5JvunaAVN/jWzA6sVRh9F0PVVa+91CsGxNLhnzvC3M8Fb7ynNk8yRSfE8NqbT+DPZ3CidzJI9NX4A3op0mTNEWOc42gqwxLstief2YxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F+HnD75f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YNitTk9N; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=ErnKGopBcWIsAx/tgSTDMNibIWYBTTXhhfjRF8UPJdvI/4i5gCoKab7KpY/WxB1B0ZOqLEpm7OQRGRLCDMYEptUHmwAy9vujqBOKbE7S48EImg49yYQc9hnSa0Iib7XEBF3p3tqh69q1HSEE7iCqGFj2PbwPMmNlcNodCEkm9Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PQzudulQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rFZIdCxs; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F+HnD75f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YNitTk9N"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id ADA55114006D;
-	Mon, 18 Mar 2024 06:52:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PQzudulQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rFZIdCxs"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id BA7B9114009B;
+	Mon, 18 Mar 2024 06:53:02 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 18 Mar 2024 06:52:57 -0400
+  by compute6.internal (MEProxy); Mon, 18 Mar 2024 06:53:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1710759177; x=1710845577; bh=OzsO38GPky
-	iKvDrw5DKmd21FLlUKuv4Rbd4fG+KDkiY=; b=F+HnD75fUa1gu+Xc5jlAA3M8wH
-	FGHniDzEOOLZZ3VUEpv8uWcU9IKVHFKHxpb3TgfnSAd+mWePtEdLvYv2d3VmstE4
-	P6Lp2Ql8Ho19oRyyMGUKgNqcIPzUk6mF6vZZ14G7tAn3hqsEFuMpz264AWdBitU6
-	3G5cUi2zefEkmKZU/vADat1eFcdvYDQ6mmmZeSi/ByHNg3v+FwrnFaqpM9sAMZRG
-	thvwQwzVqgmw1bh6nKKfZvP19m2P3fC4zZqymH8l2ruKv66kacSl6RFhKhjCRKfH
-	+nbvXoxKOsCg3L4kUC9ghgcQUAadzZ+J+iOzBR1Yh8hl/DWERiyYIrcrBurQ==
+	:subject:to:to; s=fm2; t=1710759182; x=1710845582; bh=m9vT/HQUff
+	7fvzAb6+bpQXMsus2+tEtV3WmVW+iQ7XU=; b=PQzudulQxE0dVMzSrHkT5qr4iU
+	DomQPGfgNhgrHVUAOJMxFylSfbAyLgUFKNsgSNIvdPzoYK3C5G/2xhQBgF8YZDZI
+	gJQyYdGJotM9Nyy57+tyULPqrYTNUr1yRxaz71gpF0rRSyDPvc1ziLoG6jIovoYq
+	6+uijUJ8lbBVb+Wq3jMsjj73/46fLPUT83HVRrpmKG+9y1ctqkJSbB9ZSveCNyCq
+	eJWT3PtAT9QaK2EJQxeuC55v0gTWZaeGUgsUr6LQ9aUSRI/lIJk6Ssn8JxvFjtox
+	D6FkD36cfDqhwWYBuG+afNa7ZprG5KSp9QH8HILYQktC4yA9ee0ZHUmH1Svw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1710759177; x=1710845577; bh=OzsO38GPkyiKvDrw5DKmd21FLlUK
-	uv4Rbd4fG+KDkiY=; b=YNitTk9NiU5nnlKWpy4IQnpn2ayhC4ApgnAWaXj/hEM9
-	eX7NHEg560GWlIebhpIZjwGXozsgV9O9zCjvJXwymnNZXrzsC3NhN9P/PybkvVtI
-	0Be+9+ME8v4S2IOjsO0I5Ctbk04IhJ43DjnbCs++nxqGL9AxaOD2pEUMWNW/oJEO
-	6TI3zQU25ipeESpbwUu+4lWYutIC5Ep0IOnwBwgtzZaoOp8BOO7fUjp7oZPAl5iQ
-	168p38eNzIlU+Ejh7ZpkS/cbJQPTJW3VshpZDO36O9bZUJFoONYaLfDCg3AUbqGQ
-	K5kkC4xbLn9VkMkV9MSk8Aaq6IuDx8bbVDqnEb+7GQ==
-X-ME-Sender: <xms:CR34ZYCNOsylpWseXFy1-1tnSImoaDIQ7wNw7N-FDvTP2QXLvLan6w>
-    <xme:CR34ZahbBUom5Ogqn-_3OYLXX4BOx0ZjqXIBekCtvWhHuhlzQ_DIL4TST6w7aTYY_
-    ybVl9z28IcyFHoOeA>
-X-ME-Received: <xmr:CR34ZblO4XpOoisztRQ4MN4EqO4v7y3G-yRb0mx4nRzJ0zsQf-9Cr5O6UDs_LVF9XCCNoa6XOuEffavCpNIung6PRLGr8Hyluv0_GCxJbd0iaA>
+	fm2; t=1710759182; x=1710845582; bh=m9vT/HQUff7fvzAb6+bpQXMsus2+
+	tEtV3WmVW+iQ7XU=; b=rFZIdCxs/rmVLKoYZGJ8Z31MnJvrBCa1vfTzJWcxSYnI
+	3lXG+MpXe+SaMufU0v5v06IGhnQ3MBaWyEeMz6f6MzqbYcpbKHbi5dvjilsEya2c
+	EsBNPyyTFlO4D2MtjRHPjOxarYTEaBiNBCFcpPb2vYLf168y7UesBiZbXmZ8AgVB
+	v2i86v/vM0p7C0tgIQGpcZnRvorBLYl1iWCQAR830e5eJakO4Og1k7v4I+tVMJCO
+	c0BgGMoiAKyGUCkLDbvFsxfxDycaQtrahiNS5CtxtsSM/d6PNpMs/vDlZaXitYfY
+	pF5T5CIKeWugyii9KcSmCOxD3Ir2JYdJWPQ0+XDXHg==
+X-ME-Sender: <xms:Dh34ZXKF41sVPQdqqWSi7n7wyz0MepuKrJme9xO7fBRF6pubhCoB5A>
+    <xme:Dh34ZbJZ0rJoo9A5d3vRo5xab0KcwQyrFTj2oZtgg8A2tvTRBi5yD0ZUByGU0O9Nt
+    gc9OCaO6lKOsepxXA>
+X-ME-Received: <xmr:Dh34Zft0niNgApgD-_eoV0Z3b0n2iwEJucmLtXRERHnfBAhyb0OItLrVpO40imrxzQ13dZKIUp3BgzAAkqiqw_J2VX78l42tSEFDIXfhKTSscg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:CR34ZewmGAQiI6SPrNa2yiczqbj0C5HDf8dJHCLE8m78AVOOTJoYsg>
-    <xmx:CR34ZdReFDefNevTiyOkUS3y9fHsyHUtA3aMM3tpn--q5PmQqVNFNw>
-    <xmx:CR34ZZZ0NYVeGhs5CMFyIsJxc6DlIBX_uoer7ZesiPzPRf29rCk1fg>
-    <xmx:CR34ZWT5Zr-s10Vv23YoWJ1Hbts7OGlxshFtG87vHRBk4zXScpOF7A>
-    <xmx:CR34ZfeWo0itrPgLQaDEXHYlMGu120TjzyTx5UGKvRdVSghkZn3yyA>
+X-ME-Proxy: <xmx:Dh34ZQa92E3VqfXYWyR03BUdj3p0XU5taTsvGX7aevLocZVDssg8xQ>
+    <xmx:Dh34Zeaj55A_eOmR0jlNeUTNy5k7eSSL07TfyG2j6r_OzVDvkam5Cg>
+    <xmx:Dh34ZUAJ0NyylMpl4NoVP61FH9BCfe6h9oO8M8ArudusvqVWP4j0Yw>
+    <xmx:Dh34ZcYBgWZY6AewhZHo39l0QDPY8d52kaB_0IXgJs59ZS5WHth_nA>
+    <xmx:Dh34ZeFWeKijNyGTHdL9_JUsQd56j8cVt4t-HGD4jj3HAxN2uU0i7g>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Mar 2024 06:52:56 -0400 (EDT)
+ 18 Mar 2024 06:53:01 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cef2137c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Mar 2024 10:48:05 +0000 (UTC)
-Date: Mon, 18 Mar 2024 11:52:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 573be819 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Mar 2024 10:48:10 +0000 (UTC)
+Date: Mon, 18 Mar 2024 11:52:59 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 07/15] refs: move `struct pack_refs_opts` to where it's used
-Message-ID: <072627d82cc71a56a4e0884a15380a9df5d1d03d.1710706118.git.ps@pks.im>
+Subject: [PATCH 08/15] refs: remove `PACK_REFS_ALL` flag
+Message-ID: <919abe8eb993dbfab36136c7d9a4fd5987270519.1710706118.git.ps@pks.im>
 References: <cover.1710706118.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,79 +81,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j4ySED2LskrSfWzD"
+	protocol="application/pgp-signature"; boundary="mI4kxrtiIeSIDME/"
 Content-Disposition: inline
 In-Reply-To: <cover.1710706118.git.ps@pks.im>
 
 
---j4ySED2LskrSfWzD
+--mI4kxrtiIeSIDME/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The declaration of `struct pack_refs_opts` is in a seemingly random
-place. Move it so that it's located right next to its flags and
-functions that use it.
+The intent of the `PACK_REFS_ALL` flag is to ask the backend to compact
+all refs instead of only a subset of them. Thus, this flag gets passed
+down to `refs_pack_refs()` via `struct pack_refs_opts::flags`.
+
+But starting with 4fe42f326e (pack-refs: teach pack-refs --include
+option, 2023-05-12), the flag's semantics have changed. Instead of being
+handled by the respective backends, this flag is now getting handled by
+the callers of `refs_pack_refs()` which will add a single glob ("*") to
+the list of refs-to-be-packed. Thus, the flag serves no purpose to the
+ref backends anymore.
+
+Remove the flag and replace it with a local variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ builtin/pack-refs.c | 5 +++--
+ refs.h              | 2 --
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index bcf383cac9..97921beef2 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -21,9 +21,10 @@ int cmd_pack_refs(int argc, const char **argv, const cha=
+r *prefix)
+ 						 .flags =3D flags };
+ 	static struct string_list option_excluded_refs =3D STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *item;
++	int pack_all =3D 0;
+=20
+ 	struct option opts[] =3D {
+-		OPT_BIT(0, "all",   &pack_refs_opts.flags, N_("pack everything"), PACK_R=
+EFS_ALL),
++		OPT_BOOL(0, "all",   &pack_all, N_("pack everything")),
+ 		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default=
+)"), PACK_REFS_PRUNE),
+ 		OPT_STRING_LIST(0, "include", pack_refs_opts.includes, N_("pattern"),
+ 			N_("references to include")),
+@@ -38,7 +39,7 @@ int cmd_pack_refs(int argc, const char **argv, const char=
+ *prefix)
+ 	for_each_string_list_item(item, &option_excluded_refs)
+ 		add_ref_exclusion(pack_refs_opts.exclusions, item->string);
+=20
+-	if (pack_refs_opts.flags & PACK_REFS_ALL)
++	if (pack_all)
+ 		string_list_append(pack_refs_opts.includes, "*");
+=20
+ 	if (!pack_refs_opts.includes->nr)
 diff --git a/refs.h b/refs.h
-index 298caf6c61..139ce7113b 100644
+index 139ce7113b..8c8994cb29 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -66,12 +66,6 @@ const char *ref_storage_format_to_name(unsigned int ref_=
-storage_format);
- #define RESOLVE_REF_NO_RECURSE 0x02
- #define RESOLVE_REF_ALLOW_BAD_NAME 0x04
-=20
--struct pack_refs_opts {
--	unsigned int flags;
--	struct ref_exclusions *exclusions;
--	struct string_list *includes;
--};
--
- const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 				    const char *refname,
- 				    int resolve_flags,
-@@ -433,6 +427,12 @@ void warn_dangling_symrefs(FILE *fp, const char *msg_f=
+@@ -422,10 +422,8 @@ void warn_dangling_symrefs(FILE *fp, const char *msg_f=
 mt,
- #define PACK_REFS_PRUNE 0x0001
- #define PACK_REFS_ALL   0x0002
-=20
-+struct pack_refs_opts {
-+	unsigned int flags;
-+	struct ref_exclusions *exclusions;
-+	struct string_list *includes;
-+};
-+
  /*
-  * Write a packed-refs file for the current repository.
-  * flags: Combination of the above PACK_REFS_* flags.
+  * Flags for controlling behaviour of pack_refs()
+  * PACK_REFS_PRUNE: Prune loose refs after packing
+- * PACK_REFS_ALL:   Pack _all_ refs, not just tags and already packed refs
+  */
+ #define PACK_REFS_PRUNE 0x0001
+-#define PACK_REFS_ALL   0x0002
+=20
+ struct pack_refs_opts {
+ 	unsigned int flags;
 --=20
 2.44.0
 
 
---j4ySED2LskrSfWzD
+--mI4kxrtiIeSIDME/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HQUACgkQVbJhu7ck
-PpS8WQ/7B1N7ZPPP5s1YVQsX0wGuPrxLz0VCNZqt9GTTIQexJs7UNRHGkHggNUmQ
-CsNHKj3w4XKjt0ckDOnjGU6VWwrbd4pJO9zf8yUGBINLj6pdkNoyo3CQ14Puf/s3
-BjnzhwKbO+fbR4PIBLGp4vrjyC5SsO8nV5lk9/a9O1falEWm+dedO5NiMWvod4zb
-yP4/S7uMuEDDhutl3l/ShfWATo2iyfAdYmHUpRYv/z4LrCNvxi0GzQVuzRmjitXN
-kwy6p5qiqrTwREPNFsd7jIvbG+a/yywmu+VTyhCN+Fkd2tJGyZxHReHXw3iiw1kh
-aYDoJvG1G524+rbCn546BTG1quD47axklAZNz+Gn3fvT1vPWa7EaHiaZ6/nZ4WET
-dho/EsOP2AyyHjS0hB8P7W0w1fbyrLcCqBMPPs2M9K48b1289S7gQaxwD97IlzST
-B5hrEfx0mNUsRqdPkX6zqTEuwiZTTggzc32w5iAqeBJsKGdxAnMnsevJzAAJswg5
-sHmodWZYFYaWP88MWLQpr7QLhq8ynUMDR4j1M+SfSH71U/3+ng0gqPh9AfntJq4H
-S5PLTVF9k+azTSD/xjcL7c6pckIFBbt2Rs6y35gG+dinmi9Eh4IPECIgjUtaUGud
-YIkD1ubEJ0kJTOEQ2NjZMyWbohJRspHILcGwb5BY/WJoH+O2d1I=
-=JRjc
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HQoACgkQVbJhu7ck
+PpR08Q//bjYdJk+Zh8+gWLfXpkSLtGd3HCQle40usD41ANbhDkdMLGBZwawJTdTL
+3t+9EbEy2YMJhsVr8sQOUfQmmA7NmdpNsHpa6t92DEFNhXqLs+qlgDyDAUnJbZWh
+CSNWuemdgBeJ4efCCsrmMo+3p9QxqnoOHWNldDByNVdllPyYNwTa7ZsB2KvPcnDr
+//j8HzSxs5lOKdvHzu3NEQD0+5nNAdg7CBi/GCEmbX2qqrXgIxLbOCZQ18jxU9Dy
+RBEMQgxbMLchHIyjK4vUd2KKnDtjG5qzvEA1DFaQLugUGZl65mJtfDPdDesibCZs
+3uBoW1EU1P2lQq8PsQCTj8a4Th+/0n/mPYxq5TfnWR8V5LOUzz38kP0tz2wmGB0I
+lXu/LC4mlK5EuWg6psRUTo25Ss4ii/ABztNRp21siHH53Z6yXYE46TpATwwG+tkI
+HWHIjZATvrzfVyZPqB3R3Sqi5PIXN5VfVpcAk2V9T0ZZH8bcKHTDC6rstFl1qVpO
+xkeaEFDC0RGvY1kqSUst8eX81xnSIMHAwib2Ni2yk/UD2ontgYSB8wS3ubDFQKMT
+CINzlh29+R0dYslgi8/x/F4Bx3oCASVCuYI93PUEDP3zeFarp5LllK+UFs6BKFhf
+zhUbzXpwyf2vMj4yKR128okq76OlrVV2ZIl/dLvkbX5oNW9Eg5Y=
+=6DQZ
 -----END PGP SIGNATURE-----
 
---j4ySED2LskrSfWzD--
+--mI4kxrtiIeSIDME/--
