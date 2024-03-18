@@ -1,40 +1,36 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6E954BFA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71D54F89
 	for <git@vger.kernel.org>; Mon, 18 Mar 2024 17:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710781422; cv=none; b=b1vR5cjm1KsZBu9wXgTLhpRuK85vQOBWCxs2428kWAOWCJdmYOURp5dKfvWnllbHBS/cpAsT67vN4Qfc6UgnjvdeItDGNLLje5OoTashCuSsEV+ag8rimIVMXIcO5jYSee/qx8YLkwjEnTgwIKXLmjVDnpnk9+uh8fFXBlrKaDk=
+	t=1710781422; cv=none; b=P7NWBXYdY9eEA3idxHUUQo699sjX37CVMabt2UyKzCFoJaLThcNuVlS3akbL4/iwYlZNcqH5V7pcbXi2QHA1cWQfn3ww7Ustk0UOWyvmVK/rqtFcDc1QgVvvvAmvWUMZ7hXfdzKpR0Nu+l2qAnY420IzQpJqtEAwoVU42urSGLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1710781422; c=relaxed/simple;
-	bh=HafAkm914n1i3Ie3fCVRteaSBieutfMot2DB381B7n4=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GDYoVkOz1v9mUGR6isqLItq6LsLXHzTHiS+ENgA7his+wWSUbtu88TZ7tNHDw9tuycs3ngrwetdvUwZcsdAjYg5CbxFBWVA7pNJPEhnS6JCqA4oOYwm5JI8Le4a2t7RAn+5KcaZ41y1KxgB/AIzx5KQaLOyvE7hCxDVme+XO4eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=cUTDsnvi; arc=none smtp.client-ip=116.203.91.91
+	bh=E2PAHpRZ/ZUZGX7lnZUktTXKt0f6D3m1uMEuBGrnRD4=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version; b=T/mhLSb8ZdogOHNA01OmdpdlgxIsoq0tZa5iUqayGVUiknj8WQGv10Ar63pkdOKpHW2HSTZK8epDeHI0gO1lEDxv4E+NLyUFQphR4j6VhqxC/0alVjs2oEeoeVutzkhCHWclGd+IPStVRVA36COyHmq76I8ptJDQkMkwyW63nwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=A8od2ZR7; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="cUTDsnvi"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="A8od2ZR7"
 From: Dragan Simic <dsimic@manjaro.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710781411;
+	t=1710781410;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R1X3Hbgd+yE4oHYkBr0Ro8GXeDlXlZR9qhEb3EV/TRk=;
-	b=cUTDsnviIye8bGe5wNefalN8fZdCJr9YbKcQ2leU5VVJltS3Heq8QlQI/YDx4G1hG86LdQ
-	uKK4ARARGa/FbHcvKJXxl2IPUup6d1WNE6DbINgeTAHWyByJoKfRQoIC3CrNRrAadYBXU/
-	RN/KzvXtY/qguitZ7ks48TqPPKK/P+XkoPNmlr3JtzgUz4pXMm815uCJfcT4x0ivf2GDYy
-	FuMmwhf4mDCoWPb7T+2cUmCl9akSERqqyG9zoxDKOy1asMTnIbAv6OHQkfvWKF7Tw2YXAH
-	h+dS8Rj9cpz/vwgU8M/UskqNWMi7Rqz3oz2bztiouAnZL/i6cKT2rHITdRE8xg==
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=jTcfCBQTNUOzW65XJ84nczhypIC1a43p1LqNKdKWzXA=;
+	b=A8od2ZR7qQl1Bj2fwRvdrMvM7e6YJEH5CMv2Ut2SOjccsegttyueOhddqxodBn0aAQYWO3
+	/almW3JLqaibB03Z0h0J1OjEoPr/ViSAexgUAhfQw1oQpN4mqQCEj1uzvf7d+Jgswjha4i
+	1bBzLLsn9vxpMZnykGx8jqLFE+ym/KQSyISwR0CUri1rZl5g+bkrYbhsdVmZuZppWvI7ao
+	mnNKyWy2ltIVSYZ2nxJJQh3m5CXcUiAnk+tXVNg9izQab+V2zRqjmZo4f+fHYC5oSev4vT
+	eLZhXo2TmH583RSd2+AIXqD4L25lqmcuqIzlEKyP7dzz2z3M8/+cu7FPFs+J+Q==
 To: git@vger.kernel.org
-Subject: [PATCH 1/5] grep: perform some minor code and comment cleanups
-Date: Mon, 18 Mar 2024 18:03:21 +0100
-Message-Id: <96b81f3573d3f29bb97e77d623be0d53cf8085b0.1710781235.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1710781235.git.dsimic@manjaro.org>
-References: <cover.1710781235.git.dsimic@manjaro.org>
+Subject: [PATCH 0/5] New config option for git-grep to include untracked files
+Date: Mon, 18 Mar 2024 18:03:20 +0100
+Message-Id: <cover.1710781235.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,68 +41,30 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Move some variable definitions around, and reflow one comment block, to
-make the code a bit neater after spotting those slightly unpolished areas.
-There are no functional changes to the source code.
+This patch series introduces new config option grep.includeUntracked,
+which makes the untracked files also searched by default when git-grep(1)
+is invoked, in addition to searching the tracked files.  This is quite
+handy when someone expects git-grep(1) to mimic grep(1) even better, when
+it comes to the selection of searched files.
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
- builtin/grep.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+Setting grep.includeUntracked to true in one's git configuration should
+have no ill effects to various scripts, which presumably shouldn't rely
+on expensive operations such as git-grep(1).
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 982bcfc4b1df..af89c8b5cb19 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -623,13 +623,13 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		     struct tree_desc *tree, struct strbuf *base, int tn_len,
- 		     int check_attr)
- {
--	struct repository *repo = opt->repo;
--	int hit = 0;
-+	int hit = 0, name_base_len = 0;
-+	int old_baselen = base->len;
- 	enum interesting match = entry_not_interesting;
-+	struct repository *repo = opt->repo;
- 	struct name_entry entry;
--	int old_baselen = base->len;
- 	struct strbuf name = STRBUF_INIT;
--	int name_base_len = 0;
-+
- 	if (repo->submodule_prefix) {
- 		strbuf_addstr(&name, repo->submodule_prefix);
- 		name_base_len = name.len;
-@@ -890,19 +890,15 @@ static int pattern_callback(const struct option *opt, const char *arg,
- 
- int cmd_grep(int argc, const char **argv, const char *prefix)
- {
--	int hit = 0;
-+	int hit = 0, seen_dashdash = 0, use_index = 1;
- 	int cached = 0, untracked = 0, opt_exclude = -1;
--	int seen_dashdash = 0;
- 	int external_grep_allowed__ignored;
-+	int i, dummy, allow_revs;
- 	const char *show_in_pager = NULL, *default_pager = "dummy";
- 	struct grep_opt opt;
- 	struct object_array list = OBJECT_ARRAY_INIT;
- 	struct pathspec pathspec;
- 	struct string_list path_list = STRING_LIST_INIT_DUP;
--	int i;
--	int dummy;
--	int use_index = 1;
--	int allow_revs;
- 
- 	struct option options[] = {
- 		OPT_BOOL(0, "cached", &cached,
-@@ -1059,9 +1055,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		recurse_submodules = 0;
- 
- 	/*
--	 * skip a -- separator; we know it cannot be
--	 * separating revisions from pathnames if
--	 * we haven't even had any patterns yet
-+	 * skip a -- separator; we know it cannot be separating revisions
-+	 * from pathnames if we haven't even had any patterns yet
- 	 */
- 	if (argc > 0 && !opt.pattern_list && !strcmp(argv[0], "--")) {
- 		argv++;
+This series also performs some related cleanups and small improvements,
+which are extracted into separate patches.
+
+Dragan Simic (5):
+  grep: perform some minor code and comment cleanups
+  grep docs: describe --recurse-submodules further and improve
+    formatting a bit
+  grep docs: describe --no-index further
+  grep: introduce new config option to include untracked files
+  grep docs: describe new config option to include untracked files
+
+ Documentation/config/grep.txt |  8 +++++++-
+ Documentation/git-grep.txt    | 19 +++++++++++--------
+ builtin/grep.c                | 24 +++++++++++-------------
+ t/t7810-grep.sh               |  9 +++++++++
+ 4 files changed, 38 insertions(+), 22 deletions(-)
+
