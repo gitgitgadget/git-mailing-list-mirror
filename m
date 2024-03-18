@@ -1,129 +1,88 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7EF52F77
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 15:43:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1DB524CA
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 15:54:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710776594; cv=none; b=AklMJ0FzlhuC1svxmmv02LrC4WXzFcHr1iNW1hUCHw5JrvlEQ4FRRoALnIFjuSFtXyoo0Fyz+eqprftNhJ9LFKTXadyOE+B35iqtdMAPfkbsVFCqLFykGvd7vYHCl39910ni7+L1JNK5AfuKkgG5xuwPf55pSCynRFB4Bk8yx3k=
+	t=1710777262; cv=none; b=hLWnfTeEn9wjduCc5FnsHOjVaKIs+fEbO4g6QIPEFmZxqbkVoCDX3josfuCurcd9M1LlEZrr42qPry4rPyQBthZaGNKh0pVUB45VZ1iytV27ttQrriSjtGMS1Tyvxd237mUNPmhJRMWI1xC8Sc07iIlHH+B5oLK5fnxkV2+9Gjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710776594; c=relaxed/simple;
-	bh=VOSxyPvR0KEA+gwNUA4VFUYbLdR7qxhh949ZQ67KMOA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GETQTozfGasp0a8zadOQQN9CQES9d9RQRIkhpzplbJUosOhBr9rWVTtyQuG13ux5l5F33Fii1GA9B8NZzY7jq7Avu+4gOaTRdambsYH+vo6ONZ2jrAIjozeG7gSndfPEa9jWU433b0imaAgzNC+plAEg2wb6myxohrrWxtHmJ4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kMFuZuzi; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710777262; c=relaxed/simple;
+	bh=1StjE7zjd17x/xpyPcdK24QDz8zI0hElvyrqAB5dM+c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QPPphuIHLlvAOkyEGclTSdSEtaxKiaZFkTvHc5RUcoe69TvoDdx+aTkhH5mmVT/P+TJJqPdMklFcLywFwbRGX12XboktIeX1cDm+j6UUr8JnuENVJTIn+ydnMN4jYOsIVS0l3r5TEwDWxhyK3xIrVvenM8hp8VLOtF39FwAjSM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OpiX0Lbz; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kMFuZuzi"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AC0A1E7368;
-	Mon, 18 Mar 2024 11:42:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=VOSxyPvR0KEA+gwNUA4VFUYbLdR7qxhh949ZQ6
-	7KMOA=; b=kMFuZuzibBS7tGaWoDAOWo8NpDuYFojz14hKajRVYomfqssGA9IKlM
-	zEPrC/Y0dILuh9pnqq/KOtYMEJJ7IICAPX91vL3NBW5uLCKcIa4aXlU6415Kg4/R
-	vA9IcR9Zci7Y4bEODaHVA7kNVFrv+a/t9EBlOPtaWgL22hTo3JD5M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 50A2F1E7367;
-	Mon, 18 Mar 2024 11:42:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B2E011E7366;
-	Mon, 18 Mar 2024 11:42:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Aryan Gupta <garyan447@gmail.com>,  git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v2] Optimize ewah_bitmap.c for efficiency using
- trailing zeros for set bit iteration
-In-Reply-To: <CAOLa=ZSijjnfa8UEEWPi8Cb7Q1hLbgrez7VX-LxshmUhNM29DQ@mail.gmail.com>
-	(Karthik Nayak's message of "Sun, 17 Mar 2024 20:08:41 -0700")
-References: <20240310162614.62691-1-garyan447@gmail.com>
-	<20240313223751.50816-1-garyan447@gmail.com>
-	<CAOLa=ZSijjnfa8UEEWPi8Cb7Q1hLbgrez7VX-LxshmUhNM29DQ@mail.gmail.com>
-Date: Mon, 18 Mar 2024 08:42:48 -0700
-Message-ID: <xmqqr0g7k0lj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OpiX0Lbz"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-5ce2aada130so3632246a12.1
+        for <git@vger.kernel.org>; Mon, 18 Mar 2024 08:54:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710777260; x=1711382060; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VHFaU6fInccGEPLio2mNG7bIn7HT7iVlUI/xrzDK4E4=;
+        b=OpiX0LbzzM4tGwM3k2nINjkNdAF3TRgE7VZRTnfCyvx0w8gbPdQPXEH4S2QWazUWrQ
+         JfrSnr85L65Q5leHqaoEqn9+ivMGTTRowTRFN0PMAzkI295Ka9Fa3uyhWB7GWZY2qMD1
+         gGpwbN7JResk+UT98NZVXsvvLnFFScigL+mDHoH4wASzUBSeGUUAcSQRHujdlhSHCWG+
+         biYqYd5ku71shze1Bz5bY/EV7hsDPYScMNEnClr9+KaBr3k8EG8cR+DDDMsobbuT4rvt
+         egYfhiJFVVGldur95f3HAc/PtFYtKQhLpy5qbpklCgkUqG+fH1dD9fWC+LzjxDi4dmao
+         XZ3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710777260; x=1711382060;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VHFaU6fInccGEPLio2mNG7bIn7HT7iVlUI/xrzDK4E4=;
+        b=liZLWQOT7Nwu8Vfht3qd6uRo6IscJYEZHqPWGGilXrbpILMVeJwM30IBFUHSjg9Kk0
+         2Xzf3exlrVTHQDdHXAPCELGqcO05tA/tI0LjqouQs3kcYKmmWptmKKZy51Blod6hkTa+
+         qEz4LXs8o23Z+lPgeF+Uv59JVMwMx0CyX1WGwtFka7dD6Xt2cCbaHMOQSt7Om/IFEMAo
+         tO9eAe3n8NgcPundc87aNjej9fCRhQQTWzRBlgQaw7Blc5nF04OAbPh24A6wu8qYUqa+
+         hujxluOrfxLWiSXBoVZ7ts8q40mrQI3WG8r+pCOUz2pu9uZ1sKduPUhKC7S0eN7oSEfB
+         WtZw==
+X-Gm-Message-State: AOJu0YzTSsh8Lopr9rLS2ArbaAfY1p4M1wg8olSOpQkPQRw7L66WBWst
+	obK1eAFPcGDcJABmqOD0clJu7bfy57A377x/LEaX8FrA/3CFdLHlw0Oga8J0
+X-Google-Smtp-Source: AGHT+IEgbQ+G8+dcOiqGG/NgR4+DMElo72llPKeHNpk9FDChFjVomCQoijve2di8l074EEFRwiXNLw==
+X-Received: by 2002:a17:90b:101:b0:29b:260f:676 with SMTP id p1-20020a17090b010100b0029b260f0676mr9007896pjz.46.1710777259657;
+        Mon, 18 Mar 2024 08:54:19 -0700 (PDT)
+Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
+        by smtp.gmail.com with ESMTPSA id gd1-20020a17090b0fc100b0029beec8e86csm7844922pjb.36.2024.03.18.08.54.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Mar 2024 08:54:19 -0700 (PDT)
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+To: git@vger.kernel.org
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Subject: [PATCH 0/2] fix certain cases of add and commit with untracked path not erroring out
+Date: Mon, 18 Mar 2024 21:21:57 +0530
+Message-ID: <20240318155219.494206-2-shyamthakkar001@gmail.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2CCE53A2-E53E-11EE-8C53-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+While adding tests for 'commit --include', I accidentally reproduced a
+potential bug where in we do not error out when passing a pathspec which
+does not match any tracked path. This was noticed by Junio while
+reviewing[1]. This patch series fixes that and a similar case in 'add
+--update'.
 
-> Aryan Gupta <garyan447@gmail.com> writes:
->
-> Hello,
->
->> Signed-off-by: Aryan Gupta <garyan447@gmail.com>
->> ---
->>
->> Thank you Vicent for the guidance. I am still not sure how
->> to do the performance measurement for this improvement. Any
->> guidance would be appreciated.
->>
->
-> I guess there is some off-list discussion here. That along with the fact
-> that the commit message is missing makes it really hard to understand
-> how this is better than what was here already.
->
-> The guidelines ('Documentation/SubmittingPatches') also state how to
-> draft the commit message. This patch only seems to have a title, it is
-> recommend to add a description as to why this change is being made.
+[1]: https://lore.kernel.org/git/xmqqil41avcc.fsf@gitster.g/
 
-Yes.
+Ghanshyam Thakkar (2):
+  builtin/commit: error out when passing untracked path with -i
+  builtin/add: error out when passing untracked path with -u
 
->> diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
->> index 8785cbc54a..1a75f50682 100644
->> --- a/ewah/ewah_bitmap.c
->> +++ b/ewah/ewah_bitmap.c
->> @@ -257,12 +257,15 @@ void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), vo
->>  		for (k = 0; k < rlw_get_literal_words(word); ++k) {
->>  			int c;
->>
->> -			/* todo: zero count optimization */
->> -			for (c = 0; c < BITS_IN_EWORD; ++c, ++pos) {
->> -				if ((self->buffer[pointer] & ((eword_t)1 << c)) != 0)
->> -					callback(pos, payload);
->> +			eword_t bitset = self->buffer[pointer];
->> +			while(bitset != 0) {
->> +				eword_t t = bitset & -bitset;
->> +				int r = __builtin_ctzl(bitset);
->> +				bitset ^= t;
->> +				callback(pos+r, payload);
->>  			}
->> -
->> +			
->> +			pos += BITS_IN_EWORD;
->>  			++pointer;
->>  		}
->>  	}
->
-> The bit manipulation done here is slightly hard to comprehend, it would
-> be nice if you could also add some comments as to what is being done
-> here and why.
+ builtin/add.c                            | 16 ++++++++++++++++
+ builtin/commit.c                         | 15 +++++++++++++++
+ t/t1092-sparse-checkout-compatibility.sh |  4 ----
+ t/t2200-add-update.sh                    |  5 +++++
+ t/t7501-commit-basic-functionality.sh    | 16 +---------------
+ 5 files changed, 37 insertions(+), 19 deletions(-)
 
-In addition, this patch assumes that __builtin_ctzl() function is
-always available no matter what environment the code is built on,
-which I am not sure is a safe.  Quite honestory, I suspect that the
-whole of "todo" is to seamlessly detect the presense of the builtin
-support to count the top zero bit, use it only when it is there, and
-giving a fallback implementation when it does not exist.  The code
-itself to use the builtin is only 20% of that effort ;-)
+-- 
+2.44.0
 
-And of course, there is benchmark.  To show how much better
-performance gets for people with that function, and more importantly
-to show that the performance does not degrade for those who are
-without.
-
-Thanks.
