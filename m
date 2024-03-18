@@ -1,101 +1,133 @@
 Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAC0524A0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD4D524A3
 	for <git@vger.kernel.org>; Mon, 18 Mar 2024 15:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710775999; cv=none; b=OtVZrZypD/Cyoa3ts/6Gv1/erkTRitHYyDuF4Yqq+7zVsqJeeJUfyV/npsLllONGbbLthdsprdtX6JdIk5OHAoQyiNRawf3mR/DCabvJd63xCCRzFkueQpdopZnY7qpPJNYekLAiPrP8FsxRbB8+8ipabtmS44/4nTwwA5AkC3o=
+	t=1710776000; cv=none; b=C77FFjUWX3JHK+0VqeO3/WS7IpSJ+DYd32i6Pvw1HW7nlWOBD+/a4N0qgmoO0/3CqkDo3566IGrlxRnJUlVZMYM17g9M4q9tG5iwTgaIJ/f0io1JamC5zZFBG6VCZyQeaERUNkIu7DukBC6ayj+BALPpsWS+XqVzALlo0a4OCp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710775999; c=relaxed/simple;
-	bh=Aeba/vV8H9mObL9qMyriYJRCmVjKqIcrKBXdwB5M2vE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qugQu8rEZQgRNHziZLk4hZCWZ/pSErecXqhQ0OnDIyROnv0nDhXoSRntYv6sjgS1+pjCrvdkkUJM+V24ESbyqnK/JniwCsANpy+EYr2SXMfAZPhJ1P5HDvt5B7pFarEivsQnqZjOmhYx3TxhaDXI2Nix9JCyHsP/RSOxNjppFg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=FHkrYA2N; arc=none smtp.client-ip=80.67.169.77
+	s=arc-20240116; t=1710776000; c=relaxed/simple;
+	bh=Zgf9TjZBXz90VbT4PjK0EYxYjjsyXTqxReI1a7hd6ws=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=guT6kqxL8lnMsyIqxeenmaGrdx+s+0xRPH/e9bxOTzrB74R/6Dv31CxaxgIE+3TXUMcfvvRWjP/gfQwGlcrl5AmtMO50gEG1kJC7ms0Iu8qVwhP/gOi4JMgMXcDQKcH8kWkOEa7LSDY7U+IJJaBGq/By7BuwCDimuV0LhthK/+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=hB39adGz; arc=none smtp.client-ip=80.67.169.77
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="FHkrYA2N"
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="hB39adGz"
 Received: from localhost (unknown [IPv6:2001:910:10ee:0:fc9:9524:11d1:7aa4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id 6365860318;
+	by taslin.fdn.fr (Postfix) with ESMTPSA id B6D7F60319;
 	Mon, 18 Mar 2024 16:33:15 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
 	s=fdn; t=1710775995;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=TK8rnnvXURzd6wH95liJNWaVghzAkFbechuZIdlRrks=;
-	b=FHkrYA2NRdT2NE8mmotn0AZ7k4lnrkpLwWk/DMrfPUtfmnPwgEYWhgBuD+zGFOTkDevsTo
-	HPIkn5QOmqmYNTjgQ7alC4+w3DFuwaLT+enA8RwS9JgkQ66XsKHCIrU+Z7dJb0jYRyUYlb
-	9+zugMUbY+0uk8EK3nzpt09peu0vGAOck3SMfAxet+eR51y70UmY8AVVYDf+nmHY0KC1YS
-	eumViR2wN1RzViiIuEKm4Tp/TqRhoUX661KF/UyG3RdhsZNzPEWuda2yi1413vcTnPFY7l
-	Hw3M9RnDcnscxtpFQyGpPBfdZLm6KCNUDcV/R1TbhUvqo4FLwJGqVqio4qLKsA==
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=79Y8p58BN7UgijTeitJ6k+H+iUyLmmD/AC2uZd04frk=;
+	b=hB39adGzdn9q8WvsoPmkxsf36vzPbWJhTQc47SvU5q/wQZkoi0OgudvZEOnjtIC9g7wr/6
+	xHKm7vigExMs2fN4agwnlgxy2ejLEYyvG8QzNuLyxJakxUdKi847WpiCKRzmvjSLNqMtuL
+	AaW9qkRrKWevmKbGexHMdNnDtyEgMdA2LF4gdLhShv1EAshLrWvpjCiXNTOFZhxOXfOwTI
+	iayJgD4qXaGU9vsRShI1W9t0cI8GDaNPPaa1eWK+On4Yfw3dRla2GCjldw4tnY83+V4uMT
+	/qyLK9lOeKO8KQ7BTHrbBB6XdrX6lVVxubr7ymHcQJXggSpui30JADtwdlVMDQ==
 From: Max Gautier <mg@max.gautier.name>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
 	Derrick Stolee <stolee@gmail.com>,
 	Max Gautier <mg@max.gautier.name>
-Subject: [RFC PATCH 0/5] maintenance: use packaged systemd units
-Date: Mon, 18 Mar 2024 16:31:14 +0100
-Message-ID: <20240318153257.27451-1-mg@max.gautier.name>
+Subject: [RFC PATCH 1/5] maintenance: package systemd units
+Date: Mon, 18 Mar 2024 16:31:15 +0100
+Message-ID: <20240318153257.27451-2-mg@max.gautier.name>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240318153257.27451-1-mg@max.gautier.name>
+References: <20240318153257.27451-1-mg@max.gautier.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Please ignore the previous series, I messed up the cover letter and Cc
-with git-send-email somehow...
-
------
-
-Hello,
-
-This is a proposal to distribute the timers of the systemd scheduler of
-git-maintenance directly, rather than inlining them into the code and
-writing them on demand.
-IMO, this is better than using the user $XDG_CONFIG_HOME, and allows
-that user to override them if they so wish.
-
-We also move away from using the random minute, and instead rely on
-systemd features to achieve the same goal (see patch 2). This allows us
-to go back to using unit templating for the timers.
-(Not that even if we really more specific OnCalendar= settings for each
-timer, we should still do it that way, but instead distribute override
-alongside the template, i.e
-
-/usr/lib/systemd-user/git-maintenance@daily.timer.d/override.conf:
-[Timer]
-OnCalendar=<daily specific calendar spec>
-
-The cleanup code for the units written in $XDG_CONFIG_HOME is adapted,
-and takes care of not removing legitimate user overrides, by checking
-the file start.
-Patch 5 removes the cleanup code, it should not be applied right away,
-but once enough time has passed and we can be reasonably sure that no
-one still has the old units laying around.
-
-Testing:
-The simplest way to simulate having the units in /usr/lib is probably to
-copy them in /etc/systemd/user.
-
-Unresolved (reason why it's still an RFC):
-- Should I implement conditional install of systemd units (if systemd is
-  available) ? I've avoided digging too deep in the Makefile, but that's
-  doable, I think.
-
-
+Signed-off-by: Max Gautier <mg@max.gautier.name>
 ---
- Documentation/git-maintenance.txt     |  33 ++--
- Makefile                              |   4 +
- builtin/gc.c                          | 279 ++--------------------------------
- systemd/user/git-maintenance@.service |  17 +++
- systemd/user/git-maintenance@.timer   |  12 ++
- 5 files changed, 63 insertions(+), 282 deletions(-)
+ Makefile                              |  4 ++++
+ systemd/user/git-maintenance@.service | 16 ++++++++++++++++
+ systemd/user/git-maintenance@.timer   |  9 +++++++++
+ 3 files changed, 29 insertions(+)
+ create mode 100644 systemd/user/git-maintenance@.service
+ create mode 100644 systemd/user/git-maintenance@.timer
+
+diff --git a/Makefile b/Makefile
+index 4e255c81f2..276b4373c6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -619,6 +619,7 @@ htmldir = $(prefix)/share/doc/git-doc
+ ETC_GITCONFIG = $(sysconfdir)/gitconfig
+ ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
+ lib = lib
++libdir = $(prefix)/lib
+ # DESTDIR =
+ pathsep = :
+ 
+@@ -1328,6 +1329,8 @@ BUILTIN_OBJS += builtin/verify-tag.o
+ BUILTIN_OBJS += builtin/worktree.o
+ BUILTIN_OBJS += builtin/write-tree.o
+ 
++SYSTEMD_USER_UNITS := $(wildcard systemd/user/*)
++
+ # THIRD_PARTY_SOURCES is a list of patterns compatible with the
+ # $(filter) and $(filter-out) family of functions. They specify source
+ # files which are taken from some third-party source where we want to be
+@@ -3469,6 +3472,7 @@ install: all
+ 	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(INSTALL_STRIP) $(install_bindir_xprograms) '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) $(BINDIR_PROGRAMS_NO_X) '$(DESTDIR_SQ)$(bindir_SQ)'
++	$(INSTALL) -Dm 644 -t '$(DESTDIR_SQ)$(libdir)/systemd/user' $(SYSTEMD_USER_UNITS)
+ 
+ ifdef MSVC
+ 	# We DO NOT install the individual foo.o.pdb files because they
+diff --git a/systemd/user/git-maintenance@.service b/systemd/user/git-maintenance@.service
+new file mode 100644
+index 0000000000..87ac0c86e6
+--- /dev/null
++++ b/systemd/user/git-maintenance@.service
+@@ -0,0 +1,16 @@
++[Unit]
++Description=Optimize Git repositories data
++
++[Service]
++Type=oneshot
++ExecStart=git for-each-repo --config=maintenance.repo \
++          maintenance run --schedule=%i
++LockPersonality=yes
++MemoryDenyWriteExecute=yes
++NoNewPrivileges=yes
++RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_VSOCK
++RestrictNamespaces=yes
++RestrictRealtime=yes
++RestrictSUIDSGID=yes
++SystemCallArchitectures=native
++SystemCallFilter=@system-service
+diff --git a/systemd/user/git-maintenance@.timer b/systemd/user/git-maintenance@.timer
+new file mode 100644
+index 0000000000..40fbc77a62
+--- /dev/null
++++ b/systemd/user/git-maintenance@.timer
+@@ -0,0 +1,9 @@
++[Unit]
++Description=Optimize Git repositories data
++
++[Timer]
++OnCalendar=%i
++Persistent=true
++
++[Install]
++WantedBy=timers.target
+-- 
+2.44.0
 
