@@ -1,93 +1,81 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576925A4C4
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1458AC7
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:24:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710800111; cv=none; b=eWXOj7Sn2sNz8A7RgSW9fdTReIJv819jQplHHsK/Q0s9HZre0ot4TNCgsycArHcHCs8WZvJzat8PT/daIKJhXAN5tukOW/3/0xUMv4iYkKWGedNGEgpjipvCwCgAbrd6DYWT7Fc5dn/iI7ZuJoQFOmMo6o0zden7nGh/P79/fXs=
+	t=1710800669; cv=none; b=B78ZTe/jWXKPVPTEQGdMNxen6nChgwj2W/EhtCHCywshdPFOI97LTwy5iCTBKMBDSZPA4PAlCLdiXLp7V+agXjywLvYmB8pkePG1d3i8lSlitQRCh8QakcWQBfTXz+uvnfSPuiav78yc6Q1ur0MUJg8rDgAvDvVbQp10OpoiaPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710800111; c=relaxed/simple;
-	bh=HMrPDgOItHh5N9mslooUkB3MC8VAdu6D0IiHrFg5F3Y=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ksIGoTQO1GOcNvMZvG13xVfYgiDvszsmgBg8imh2L+wQ2hC/s17MgvOzXxz1XejD0p8IzgA0cX/3kcbIHj4ZX9utSNwap1A4WBxd2/DkqBttiVVlQ0bfuFkhB3B6CM/G4Gjlinz7EjfUjXdHDVa2moTlEyJYNIE7Nhoav4IyE1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RGkmqZ6Y; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710800669; c=relaxed/simple;
+	bh=FjfECXNSEupii7tzrk+K4YXjCrVe6Fzt2S4ZvntMT8U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ObYoV0MetHcrd9WPszVYtIkbPfgQxO/MH1lzFYyPy2I8l/6D7eBxPL6fQEyPyY1y/9sJAjv+5BRCO+snxqmdquFVwDZBbQEpHJpJDmjnhYwRRb+V5q3UEs3XNMKzUI8B/sM8fk9LP7MiUQ5Pl7g0mVP5yj5XZLta97dlpkRpX80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=s+xqze8V; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RGkmqZ6Y"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-29c75e348afso3647701a91.2
-        for <git@vger.kernel.org>; Mon, 18 Mar 2024 15:15:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710800109; x=1711404909; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=R0B+C9Ztuz3EgIOpY/IWwmk1whKorW4z/1UF/Ulu70s=;
-        b=RGkmqZ6YzHecMPHtt01s2wJDpPWBsmVv5cLl0cKI4tCXU1XPlNb1dNNn3GgGHUnfnb
-         FcgHTtO7LJ1oF4Cpps9BwMbJa+HhRxqG+OSLUzHXchHca8WWctA5Zaad6u3ss4CHj/Cr
-         5uUuQZ0TxHnoUhuFVe301cOwzonYnV7inslyrL5/DOX8yumzxqA/5tqR+2VTY35CCRL+
-         YFf15SvbXVeDOC/RI8awjd1T/6rLDP77vhx9nBUttHcx3FmzTqwIrmwcLFmr/y0n0XKt
-         l88qeoIRpw3aWzepzIfw5zhSIGlzMgLg2o4T07m1H6Ay/GdomSHprBijf1BZ9FAt9/Hw
-         zMIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710800109; x=1711404909;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=R0B+C9Ztuz3EgIOpY/IWwmk1whKorW4z/1UF/Ulu70s=;
-        b=lv5CZ3jaAcLoyKiJMk2LevYyHxmClrEyfOL9iV55Lm5qofRb82/Xw+/B+sFway0aTK
-         VSL1qt8n6z1bhBgXdX78eaa4KFSDIO4Fx66Tmna/EYFuhvsKISL2MduVlCtjzyGGRQNO
-         oXHUqXsHD/spRojBK257G9zeTHM/vS7ItYsrGedAeO3zM8z9AUNQYdssk1/r5mkoLUpl
-         6kYWn+F5ImmIjMQfBBc+kjg7HPZ+zSSldaov8Q/ebuGl75FTUhD5CHiZN6+6DU74IdJy
-         rEYfAciT3dlQ8jjCqbqZsDDPH3aDO3GUrfIG3LLXR9+Ka7Z/dkTWMXYKwpl8hakCJ3I3
-         blgQ==
-X-Gm-Message-State: AOJu0YxCd4/rynxXEl67VDa8k9+xs1DQA5ser/q30v3OrYOByS9GzDe/
-	fWnSq8nKBL4Kkfm9oWGTTAsC/qjpVgh/w+7sD1MxSi5yDBi31Pln4OY6o/4CBQbU2qh8/nEn4pQ
-	DhuV8rXwlFDsOrWPWOKDwnnixI+U=
-X-Google-Smtp-Source: AGHT+IG0dQqSyLNrzN+sLyJ6+FGvO0ajZVRO/rtDqBLmjES4asLCZxXcctDIwu/m/5tXFPGCnc9JHviA8SJYISyVPN8=
-X-Received: by 2002:a17:90b:3005:b0:29b:a4d9:b125 with SMTP id
- hg5-20020a17090b300500b0029ba4d9b125mr830668pjb.30.1710800109414; Mon, 18 Mar
- 2024 15:15:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="s+xqze8V"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710800666;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=lOlxmy7JIBC5a112BW8irT05DPqZhP+iCFnSJoCJot8=;
+	b=s+xqze8VuNH7fsJtGhDrTP0+aQUTAglrDDTfyTNByxVCXR72fDlJ1ofgyLblccLuJvOunW
+	0l4N8QOxKE3TdcigsTn2NU5WzlejF49zhRkNXURDC9MxaAOQO+zpcQLYwUqBMZpDrPKrOQ
+	O4R3LRH1iDRbrLUYw/gMF5YXYVF003uNiP24r3fW8LGNgr9t/phZUD0/IzYfbr8sU2lpnE
+	SlTNcbKAZ5P5PJKLrkBOafPR0p6VH+CPhSJoQ4BXYr48KN6+rY6lUYiXb8YrZCXLKCX5ct
+	Rf4kJtoecX2Ihl4AkUWzesRLtLSjwezl+h73I1nv9ZhYv3ApsmUQ2ubuHvHwAg==
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	rsbecker@nexbridge.com,
+	github@seichter.de,
+	sunshine@sunshineco.com
+Subject: [PATCH v3 0/4] Fix a bug in configuration parsing, and improve tests and documentation
+Date: Mon, 18 Mar 2024 23:24:18 +0100
+Message-Id: <cover.1710800549.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Han-Wen Nienhuys <hanwenn@gmail.com>
-Date: Mon, 18 Mar 2024 23:14:58 +0100
-Message-ID: <CAOw_e7aEPE1QRsqsgvdBVGkk2uFo4e080wWbM5dsVwkiSpYcbA@mail.gmail.com>
-Subject: [PATCH 00/15] refs: introduce `--auto` to pack refs as needed
-To: Patrick Steinhardt <ps@pks.im>, "stolee@gmail.com" <stolee@gmail.com>
-Cc: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-I had a quick look over the reftable bits of this series. It looks OK,
-but here are some comments. Nothing blocking.
+This series is an evolvement from another recent series, [1] as a result
+of a decision to fix a longstanding bug in the parsing of configuration
+option values, instead of documenting the status quo. [2][3]
 
-* reftable/error: discern locked/outdated errors
+The bufgix introduced in this series _should_ have no hidden negative
+effects.  All of the configuration-related tests, both the old and the
+new ones, pass with the patches applied.
 
-It is not obvious to me why you need two different codes. Is it so you
-can print the offending lock file (so people can delete them
-manually?). FWIW, this was based on JGit, which has
+In v2, this series had five patches in total, out of which the third patch
+(i.e. patch 3/5) was dropped in v3. [4]  Other changes in v2 and v3 are
+described in each of the patches.
 
-              /**
-                 * The ref could not be locked for update/delete.
-                 * <p>
-                 * This is generally a transient failure and is
-usually caused by
-                 * another process trying to access the ref at the
-same time as this
-                 * process was trying to update it. It is possible a
-future operation
-                 * will be successful.
-                 */
+There will be follow-up patches, to address the majority of the points
+raised during the review of this series. [5]
 
-* reftable/stack: gracefully handle failed auto-compaction due to locks
+Link to v2: https://lore.kernel.org/git/cover.1710646998.git.dsimic@manjaro.org/T/#u
 
-It's a bit unsatisfying that you have to use details of the locking
-protocol to test it, but I couldn't think of a way to unittest this
-using only the API.  Maybe it's worth considering removing the
-automatic compaction from the reftable-stack.h API, and have the
-caller (eg. in refs/reftable-backend.c) call it explicitly?
+[1] https://lore.kernel.org/git/cover.1710258538.git.dsimic@manjaro.org/T/#u
+[2] https://lore.kernel.org/git/ff7b0a2ead90ad9a9456141da5e4df4a@manjaro.org/
+[3] https://lore.kernel.org/git/11be11f231f3bf41d0245c780c20693f@manjaro.org/
+[4] https://lore.kernel.org/git/514d832b0399ccdbc354675068477fea@manjaro.org/
+[5] https://lore.kernel.org/git/f37d753485094a3ba66fde5e85d0e2dc@manjaro.org/
 
--- 
-Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
+Dragan Simic (4):
+  config: minor addition of whitespace
+  config: really keep value-internal whitespace verbatim
+  t1300: add more tests for whitespace and inline comments
+  config.txt: describe handling of whitespace further
+
+ Documentation/config.txt |  19 ++++---
+ config.c                 |  15 ++++--
+ t/t1300-config.sh        | 112 +++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 130 insertions(+), 16 deletions(-)
+
