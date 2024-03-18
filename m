@@ -1,51 +1,53 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2463B52F77
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 16:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BC535A2
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 16:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710777746; cv=none; b=csqqCO8JS433if13vp2GCJv+h44QRFpb/OuqOMHpt22fnqmY/NQemm090Ku7SMerqI/65btwaPIXLh3o1e+OW5A49copYYCDcizMS+AaM9zv9hKX7KXoGivhQVglXZKGEXlbsJQ77PIHQhpYSFxQzNFrMj4hgTg/JMuzbJ+D3lY=
+	t=1710779155; cv=none; b=IRc2wtx9wnd2JWC1DZ6BfhzQMY72P84ZXzhNjOEMf9mYb6vbJlbVvhgokcSEto8AguU8hZzfL/5SkuFwEj9WzuWI26gJBOyP6Id6P0s8OT92R7dWN0kNPTDr2Ty8zaJ6WvgzyNkxfEFDG/wbFc3QHC4JtjqXvkyh3ULE809vSVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710777746; c=relaxed/simple;
-	bh=ivFFEvMlkouAYQ1y4742WMMrdset+nG8CoyQDexro4s=;
+	s=arc-20240116; t=1710779155; c=relaxed/simple;
+	bh=P9LpPAABluqok61oAfdeP9ieJHRFCsyy7YtDqjh546s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XkSKjoypzIQw+mj1q/vUSnj12xA+I/nsZgxHxy3ih/eqvnSbYOOcnY/SFSEdu8ur6GJv/X9t2YvK62GDXb8dM+UIEKdH1Q4LepPZHhT9GDcHOFeTt0ZiNIxzIEnG7MbJtDWrvLEfmlmFYJBacDgQfBEn6zsr7Ezoy3mKxmIgDkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kPipyZB+; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=IEqonr5rgPITPzpBUpcrzUGthqarTJDVnAt8as3/y/jnjs0NkksCxVPY9g54iglAWPItOd/XQvjqS9La71yTp91BXHkuEouoTvrZRbyHCQvsyxMQWDNIAhH47e9wuyWJn1+fhkWi4fXkEx1tFcHOH9x9YcHKs7GkjKmA84Al2ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BhJDjRpL; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kPipyZB+"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 91D7B207C2;
-	Mon, 18 Mar 2024 12:02:24 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BhJDjRpL"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 080222E1C4;
+	Mon, 18 Mar 2024 12:25:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ivFFEvMlkouAYQ1y4742WMMrdset+nG8CoyQDe
-	xro4s=; b=kPipyZB+8MQsZaan8IgANszHt3gVWSCDuK0zaO3GUDOzNI5LPmUAX5
-	/kCMg1b85bph/tsq9lacZaB41UdauUMfmg/uFo8MZqGMbRxCEyDxiQYAuMaVuR27
-	kmErzmQLpa7j1JAI8SFFUcG4vBzrlc2ynos+1NpfFUhWMMZu7OFwA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 89F6F207C1;
-	Mon, 18 Mar 2024 12:02:24 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=P9LpPAABluqo
+	k61oAfdeP9ieJHRFCsyy7YtDqjh546s=; b=BhJDjRpLso7GURcYPzh4l2HMWH+8
+	HdWTM9ewQ3GWogc8AdhKr9pxZjD3dbJwvsbChkg96MSdQ267uVAnCpQz/q379nxL
+	EJm+JGW7Kv290bHObI2s8iaK4TKB84Fk60Qx0K6mZWLOIsayH4rvGsnzEYpbxMea
+	QG4rXuX75x410mw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 00C3E2E1C3;
+	Mon, 18 Mar 2024 12:25:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E9BA9207BE;
-	Mon, 18 Mar 2024 12:02:19 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 969432E1C1;
+	Mon, 18 Mar 2024 12:25:50 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Linus Arver <linusa@google.com>
-Cc: Brian Lyles <brianmlyles@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] docs: correct trailer `key_value_separator` description
-In-Reply-To: <owlyv85k2gts.fsf@fine.c.googlers.com> (Linus Arver's message of
-	"Sun, 17 Mar 2024 23:29:35 -0700")
-References: <17bdc28ea2b88503.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-	<owlyv85k2gts.fsf@fine.c.googlers.com>
-Date: Mon, 18 Mar 2024 09:02:18 -0700
-Message-ID: <xmqqh6h3jzp1.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  Chandra Pratap
+ <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH 1/2] t-prio-queue: shorten array index message
+In-Reply-To: <197f5ac9-7257-4caa-aa9e-041016c787f7@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sat, 16 Mar 2024 21:45:51 +0100")
+References: <197f5ac9-7257-4caa-aa9e-041016c787f7@web.de>
+Date: Mon, 18 Mar 2024 09:25:48 -0700
+Message-ID: <xmqqa5mvjylv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -53,55 +55,68 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- E64FA036-E540-11EE-8D16-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 2F218B3C-E544-11EE-892A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Linus Arver <linusa@google.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> WRT line lengths, probably 80-ish columns is the (unwritten?) rule. The
+> If we get an unexpected result, the prio-queue unit test reports it lik=
+e
+> this:
+>
+>  # check "result[j++] =3D=3D show(get)" failed at t/unit-tests/t-prio-q=
+ueue.c:43
+>  #    left: 5
+>  #   right: 1
+>  # failed at result[] index 0
+>
+> That last line repeats "failed" and "result" from the first line.
+> Shorten it to resemble a similar one in t-ctype and also remove the
+> incrementation from the first line to avoid possible distractions from
+> the message of which comparison went wrong where:
+>
+>  # check "result[j] =3D=3D show(get)" failed at t/unit-tests/t-prio-que=
+ue.c:43
+>  #    left: 5
+>  #   right: 1
+>  #       j: 0
 
-Your patches will be reviewed on the mailing list.  If you keep your
-line length to somewhere around ~70, the line will still fit within
-the 80-ish terminal width after a few rounds of review exchanges,
-with ">> " prefixed.  That reasoning is mostly about the proposed
-commit log messages, but the same would apply to things like
-AsciiDoc sources.
+Very nice touch, especially the removal of ++ from the message ;-).
 
-It is true that we do not write it down.  Perhaps something like
-this is in order?
-
-diff --git i/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index e734a3f0f1..68e9ad71a1 100644
---- i/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -280,6 +280,14 @@ or, on an older version of Git without support for --pretty=reference:
- 	git show -s --date=short --pretty='format:%h (%s, %ad)' <commit>
- ....
- 
-+[[line-wrap]]
-+
-+Just like we limit the patch subject to 50 chars or so, the lines in
-+the proposed log message should be around 70 chars to make sure that
-+it still can be shown on 80-column terminal without line wrapping
-+after a handful of review exchanges add "> " prefix to them.
-+
-+
- [[sign-off]]
- === Certify your work by adding your `Signed-off-by` trailer
- 
-
-> text files aren't really meant for end-user consumption (that's what the
-> manpage and HTML formats are for), so I think it's OK if the line
-> lengths are roughly in the same ballpark (no need to worry too much
-> about exact lengths).
-
-Yes, too.  And it is one way to reduce patch noise and nicer to
-reviewers, when used moderately (i.e. removing a word and making a
-line to occupy only 50 columns when ajacent ones are 70 columns may
-still be better than reflowing.  Leaving only a single word on such
-a line may not be reasonable and tucking the word after or before
-one of these ajacent 70-column lines would work better in such a
-case).
-
-Thanks.
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  t/unit-tests/t-prio-queue.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
+> index d78b002f9e..616d0fc86f 100644
+> --- a/t/unit-tests/t-prio-queue.c
+> +++ b/t/unit-tests/t-prio-queue.c
+> @@ -31,16 +31,18 @@ static void test_prio_queue(int *input, int *result=
+, size_t input_size)
+>  			get =3D prio_queue_get(&pq);
+>  			if (!check(peek =3D=3D get))
+>  				return;
+> -			if(!check_int(result[j++], =3D=3D, show(get)))
+> -				test_msg("failed at result[] index %d", j-1);
+> +			if (!check_int(result[j], =3D=3D, show(get)))
+> +				test_msg("      j: %d", j);
+> +			j++;
+>  			break;
+>  		case DUMP:
+>  			while ((peek =3D prio_queue_peek(&pq))) {
+>  				get =3D prio_queue_get(&pq);
+>  				if (!check(peek =3D=3D get))
+>  					return;
+> -				if(!check_int(result[j++], =3D=3D, show(get)))
+> -					test_msg("failed at result[] index %d", j-1);
+> +				if (!check_int(result[j], =3D=3D, show(get)))
+> +					test_msg("      j: %d", j);
+> +				j++;
+>  			}
+>  			break;
+>  		case STACK:
+> --
+> 2.44.0
