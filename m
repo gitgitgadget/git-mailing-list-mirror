@@ -1,78 +1,78 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9709C381A4
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:53:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93A1381A4
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710759203; cv=none; b=uL0pkvPW/ib9qLuBqb3pCEYLs/ETDSPVZ5VCwO5xHCp1kXLVcw3lUYIjgp+Gb0NsP5RH+I8IW+3FXa3eoLs4nII0VU18qeMsNbZnzhkXOISY4nFRJONU4Cezta30XrUYBJMwvJoQK1E6u00X5RKl9wdi2cBfbs50YPaZruioQvw=
+	t=1710759208; cv=none; b=iG8kKegQYflBwNYqku3NTxAVBiIDuH1k1L+MJc9hT/59f47XLlFoOhOVJi1HLd8X8ledEsiSpow/werhJ+8sRol4nAXUzYnkA0JhUezCGX0FSrzdQptSm9bXcHqPVmztOF0B+b+OT1cpoA+ozVLIhQNC+aXivWb4XXR3rJLzf+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710759203; c=relaxed/simple;
-	bh=uA9ohyiCQuT2CVly4E0YxGX1OwRJCr7ZIHMd5AItVss=;
+	s=arc-20240116; t=1710759208; c=relaxed/simple;
+	bh=KyPvVSJIncliUNEsdSMnhy1RivlojMLRXZ8lgmC/CgU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PYcm5uEJDfJ09edSts1rtfxDj6RqraW2hwdBCBzKyggXNnYDUxzzSR0tP847KNVpu559ErxeNIp8eZ14dL8m4s+utbUSvfdFzamGUcc04Bfj4uCJmKa5naprejb7mSsIJynmMtXkLOO9MLYtw1fm8FYRc0RLy7PHrkKYTVie840=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eyq9/tXL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SYu6ZiBH; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=iserblQIywGD9P7x1zNUYqsbZjzM6TT30OP3/rwlI3D0ufI40LbpOHo9NWDkmA9u/wL4/hKYSrcbyqCfKPrYbsq5avM3R0HW4kmeGK0vAFCH5PRH3fi5OOSZ8aDHpuOpvbvJK9d1obqRFyuQ0po0S7pQ+C2wCiNpRn7PzMZIXXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RvzQ12o/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WQ70OVyQ; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eyq9/tXL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SYu6ZiBH"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E20A3114009B;
-	Mon, 18 Mar 2024 06:53:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RvzQ12o/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WQ70OVyQ"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id E444A13800B8;
+	Mon, 18 Mar 2024 06:53:25 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 18 Mar 2024 06:53:20 -0400
+  by compute6.internal (MEProxy); Mon, 18 Mar 2024 06:53:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1710759200; x=1710845600; bh=bSlEPbwMHZ
-	Ywu+ZRrfl3qNrPWEu8vPt88gJuHuIkbus=; b=eyq9/tXL/bq7EoH6ukkyZt7oDD
-	ZXwltBC+Vk+Q+4k3Vc+BIZokVec6ZVqJC+NzYF04CneOp/3O3j/DJSbkHDMm1N2I
-	a7QRU7jF3zLGyO/d/N2Hb2aB/+TATuvZcvUNNXs7QC/6Yq55SmFqFfSGb2Vl6Yjh
-	6oUUGSV+GH+nnofP+AFyYA5yavRfFw9xdAz2Z3eX+n0Q1j6rD/qu7+WuzqX8z2Es
-	J+bCAF2hzVixButm1YhSaPeMpeh2uz+plEntkg4hRQDcHwEDuPgeDdCG6zSxCasn
-	ZnKzeJpwBiTyMilChTMDb44d0vdOrorT7xAqrSi+SARzFyquL9e7YPMv1mYA==
+	:subject:to:to; s=fm2; t=1710759205; x=1710845605; bh=PQOo5aifmg
+	NDdsxHz7CMh7vVnHPe/r07M0VgP5TwfjQ=; b=RvzQ12o/BE6hiJFacytYtD2BwD
+	FjGb1K02jDpbPu2q70chQVcOgfxT3RR4zJjV8RHdF5R8JV0W7rQr2GnjtlsmYuXS
+	XtDPNUlfjayKB0WUBB9nVxKZiL6itpt3c5gB+2yQQ/yc77V1K5DyTBPTwx6V6gpv
+	Eu32JGlAG6W4yK76vtYzJjk2vlVxTOmdpA9oFKzquOIQePqA7OkyIM47lZscP9Ra
+	VhPcCJghXkUJbQwhTdeQgQToPvNrl1+XJBc/8fsOGHVUuGA1FUslxLDPtIhuSVJL
+	Mmm4NY7JIZs/FqAQ2LqONFcV/5zxUb4yx2JufmoBkgv5reU6PQZnIusOfblg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1710759200; x=1710845600; bh=bSlEPbwMHZYwu+ZRrfl3qNrPWEu8
-	vPt88gJuHuIkbus=; b=SYu6ZiBHOYHy6YX3d0RtP4sskvKKkkLQzRvmRC3DCVlu
-	x54MWWNmf5K90XOne9BClME6xiOoDwiajcJ9cEt8KGiUeXzhwpEjpEZK2hYndNSK
-	aAxkSYZ1cMKzZsOeauLygHm5qeK+xVJPGy824zk2hi7WuNXkNn7Ais1k7YdpVztl
-	87ocaN0iubYr9CZpkQt1xRH5C8/I7RNYHNWEf+LPUceTtybyeMFZevLos6eg42Nj
-	UBC1Mf2EOXJPDB7Cgo1rRxlxYJjmEf14VcZndq4ZDO7ZvHB4SQbLsdRoDqH7r1We
-	luAQW2qP9lqlZwEbG9YNc/VVmWv2IGIh6v7lPQjsIw==
-X-ME-Sender: <xms:IB34ZToJsLmYCpHs1mbZ4bqUcY-YR-zdi6_tJiVwue3FrdKhD2oiOA>
-    <xme:IB34ZdolrE3-sQdIIJzNSHId-KkDfWmKqlSdYlb2LWHLp8OHD2DAs4yC-D4enLLmH
-    lsjjnKfVT7nDsfsyA>
-X-ME-Received: <xmr:IB34ZQNSpqTtNkaSFcWDj97Z6-Kd9FihX4L1EFT1yzd3DYTiVBgI8Tq_glhKD9K0DtwrMuCUxkp2vABhMZnUmtGbCJ1_GLDapgSV2DP6GfqAWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvvdcutefuodetggdotefrodftvf
+	fm2; t=1710759205; x=1710845605; bh=PQOo5aifmgNDdsxHz7CMh7vVnHPe
+	/r07M0VgP5TwfjQ=; b=WQ70OVyQv+mPO/BRKcs7cRMzjn3YJ0r5UxXnYJ7K0ZkX
+	x+reNOFJe7CX1HZwbG4H3D4m1Mswrh91osGlso6Z/ua/LJV8+CSORUI/k9HsOaN6
+	xFdEaEddj3qZzI03b37PxMH4OKFPz498fNv/21HwqtEi6+zqMUAL38kmwvsnXSk2
+	GIkUh08TN/t8qqNgKaGw+wEHqwkfk7ZLTMYXit9wjoXwsoxHtKK21JRKFqdcrkKm
+	Ekn/heHHtQBKBp1bLmmDvytmGVZR8d3sX1rn4+6DMwaOGESGZ4xp0DnTN/2aP0fd
+	d585xR3+RldptRJAFPx7dYHhFk73fR1hf8xs6GqCQA==
+X-ME-Sender: <xms:JR34ZWwR740A1tqpJ92d6GMWroypzBL6BfnLgaiytbB9MuPdCJVVUw>
+    <xme:JR34ZSSP9zd8iz8ub3SP1qnK1I59lXlISmeDUEj9zy4D15HCt1CRZ_sSstyTfJALO
+    mIoocQAQd0s8NCRBQ>
+X-ME-Received: <xmr:JR34ZYWikmPQURGPTWv_YPBLrjYBilPeWJ2MDIi6wQpc5xWIoRIKx2NgXmyWeXASSt2d1D87odd5NcT3Y8-6ofnacu8nOu36_qQUaabppqYkvA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:IB34ZW4JJwLeUAOjlWV4TK2YziEaJf34lkq9vbnIxkzr0KY1bD-vmg>
-    <xmx:IB34ZS6cw05MKfy2n6mlJ5w0sRMjxIBC73A2FFIbHgwoRgJE-qiS_g>
-    <xmx:IB34Zehv6aYEuLLNaH0DYuc6qoexJawQGCjp0I26WaZ39wG6I6cKcA>
-    <xmx:IB34ZU6nbJh-aJUdLVn7qSrkn_HOHWRXT2ITYrmVQR668s1C2XeZ2g>
-    <xmx:IB34ZYnqyKp0mopuLC1t8bjMYDmHvKcBpp3sTFUO_SBEecDHoxcCrA>
+X-ME-Proxy: <xmx:JR34Zcgc8pBHgFHPUrGiNxOZJiBT_gerQCvwFKfc19NO4Ka6dumNSA>
+    <xmx:JR34ZYC1lXEKgHLcOAz5Ge2jFItN1TBfi6rIOu-dFol-BF1JcO4btw>
+    <xmx:JR34ZdLjtbCP7Brxwldz048XpD-VXN9M9xPnEOaMeox5SuwD5AAXLQ>
+    <xmx:JR34ZfA9Vjy8VdaM7VYifhZSOLt5d7ATDPf4_GuNLwjn-BelKWzwTw>
+    <xmx:JR34ZbMx9AC5R878c9_Wz5-GKJwoFmLz2ycI2h_yWuFHT_GAsj3OdA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Mar 2024 06:53:20 -0400 (EDT)
+ 18 Mar 2024 06:53:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c39799fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Mar 2024 10:48:29 +0000 (UTC)
-Date: Mon, 18 Mar 2024 11:53:18 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e4755ce4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Mar 2024 10:48:34 +0000 (UTC)
+Date: Mon, 18 Mar 2024 11:53:22 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 12/15] builtin/gc: move `struct maintenance_run_opts`
-Message-ID: <65c9ff3ee51c982203e8b76378536958836db7d5.1710706118.git.ps@pks.im>
+Subject: [PATCH 13/15] t6500: extract objects with "17" prefix
+Message-ID: <817de1a88f2fc5edd8c113da2c49636a12ce0725.1710706119.git.ps@pks.im>
 References: <cover.1710706118.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,129 +81,135 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="p3/qx6jyaJSTQAk+"
+	protocol="application/pgp-signature"; boundary="LSac9+pYrVco+Ut6"
 Content-Disposition: inline
 In-Reply-To: <cover.1710706118.git.ps@pks.im>
 
 
---p3/qx6jyaJSTQAk+
+--LSac9+pYrVco+Ut6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to start using `struct maintenance_run_opts` in
-`maintenance_task_pack_refs()`. Move its definition up to prepare for
-this.
+The ".git/obects/17/" shard is somewhat special because it is used by
+git-gc(1) to estimate how many objects there are by extrapolating the
+number of objects in that shard, only. In t6500 we thus have a hard
+coded set of data that, when written to the object database, result in
+blobs starting with that prefix.
+
+We are about to need such "17"-prefixed objects in another test suite.
+Extract them into "t/oid-info/hash-info" so that they can be reused by
+other tests.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 53 ++++++++++++++++++++++++++--------------------------
- 1 file changed, 26 insertions(+), 27 deletions(-)
+ t/oid-info/hash-info | 12 ++++++++++++
+ t/t6500-gc.sh        | 30 +++++++-----------------------
+ 2 files changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index cb80ced6cb..e0029c88f9 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -180,7 +180,32 @@ static void gc_config(void)
- 	git_config(git_default_config, NULL);
- }
+diff --git a/t/oid-info/hash-info b/t/oid-info/hash-info
+index d0736dd1a0..b8a5bcb187 100644
+--- a/t/oid-info/hash-info
++++ b/t/oid-info/hash-info
+@@ -15,3 +15,15 @@ empty_blob sha256:473a0f4c3be8a93681a267e3b1e9a7dcda1185=
+436fe141f7749120a3037218
 =20
--struct maintenance_run_opts;
-+enum schedule_priority {
-+	SCHEDULE_NONE =3D 0,
-+	SCHEDULE_WEEKLY =3D 1,
-+	SCHEDULE_DAILY =3D 2,
-+	SCHEDULE_HOURLY =3D 3,
-+};
+ empty_tree sha1:4b825dc642cb6eb9a060e54bf8d69288fbee4904
+ empty_tree sha256:6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74=
+decc5321
 +
-+static enum schedule_priority parse_schedule(const char *value)
-+{
-+	if (!value)
-+		return SCHEDULE_NONE;
-+	if (!strcasecmp(value, "hourly"))
-+		return SCHEDULE_HOURLY;
-+	if (!strcasecmp(value, "daily"))
-+		return SCHEDULE_DAILY;
-+	if (!strcasecmp(value, "weekly"))
-+		return SCHEDULE_WEEKLY;
-+	return SCHEDULE_NONE;
-+}
++blob17_1 sha1:263
++blob17_1 sha256:34
 +
-+struct maintenance_run_opts {
-+	int auto_flag;
-+	int quiet;
-+	enum schedule_priority schedule;
-+};
++blob17_2 sha1:410
++blob17_2 sha256:174
 +
- static int maintenance_task_pack_refs(MAYBE_UNUSED struct maintenance_run_=
-opts *opts)
- {
- 	struct child_process cmd =3D CHILD_PROCESS_INIT;
-@@ -773,26 +798,6 @@ static const char *const builtin_maintenance_run_usage=
-[] =3D {
- 	NULL
- };
-=20
--enum schedule_priority {
--	SCHEDULE_NONE =3D 0,
--	SCHEDULE_WEEKLY =3D 1,
--	SCHEDULE_DAILY =3D 2,
--	SCHEDULE_HOURLY =3D 3,
--};
++blob17_3 sha1:523
++blob17_3 sha256:313
++
++blob17_4 sha1:790
++blob17_4 sha256:481
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 18fe1c25e6..43d40175f8 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -11,23 +11,7 @@ test_expect_success 'setup' '
+ 	# behavior, make sure we always pack everything to one pack by
+ 	# default
+ 	git config gc.bigPackThreshold 2g &&
 -
--static enum schedule_priority parse_schedule(const char *value)
--{
--	if (!value)
--		return SCHEDULE_NONE;
--	if (!strcasecmp(value, "hourly"))
--		return SCHEDULE_HOURLY;
--	if (!strcasecmp(value, "daily"))
--		return SCHEDULE_DAILY;
--	if (!strcasecmp(value, "weekly"))
--		return SCHEDULE_WEEKLY;
--	return SCHEDULE_NONE;
--}
+-	# These are simply values which, when hashed as a blob with a newline,
+-	# produce a hash where the first byte is 0x17 in their respective
+-	# algorithms.
+-	test_oid_cache <<-EOF
+-	obj1 sha1:263
+-	obj1 sha256:34
 -
- static int maintenance_opt_schedule(const struct option *opt, const char *=
-arg,
- 				    int unset)
- {
-@@ -809,12 +814,6 @@ static int maintenance_opt_schedule(const struct optio=
-n *opt, const char *arg,
- 	return 0;
- }
-=20
--struct maintenance_run_opts {
--	int auto_flag;
--	int quiet;
--	enum schedule_priority schedule;
--};
+-	obj2 sha1:410
+-	obj2 sha256:174
 -
- /* Remember to update object flag allocation in object.h */
- #define SEEN		(1u<<0)
+-	obj3 sha1:523
+-	obj3 sha256:313
+-
+-	obj4 sha1:790
+-	obj4 sha256:481
+-	EOF
++	test_oid_init
+ '
 =20
+ test_expect_success 'gc empty repository' '
+@@ -114,8 +98,8 @@ test_expect_success 'pre-auto-gc hook can stop auto gc' '
+ 		# We need to create two object whose sha1s start with 17
+ 		# since this is what git gc counts.  As it happens, these
+ 		# two blobs will do so.
+-		test_commit "$(test_oid obj1)" &&
+-		test_commit "$(test_oid obj2)" &&
++		test_commit "$(test_oid blob17_1)" &&
++		test_commit "$(test_oid blob17_2)" &&
+=20
+ 		git gc --auto >../out.actual 2>../err.actual
+ 	) &&
+@@ -146,13 +130,13 @@ test_expect_success 'auto gc with too many loose obje=
+cts does not attempt to cre
+ 	# We need to create two object whose sha1s start with 17
+ 	# since this is what git gc counts.  As it happens, these
+ 	# two blobs will do so.
+-	test_commit "$(test_oid obj1)" &&
+-	test_commit "$(test_oid obj2)" &&
++	test_commit "$(test_oid blob17_1)" &&
++	test_commit "$(test_oid blob17_2)" &&
+ 	# Our first gc will create a pack; our second will create a second pack
+ 	git gc --auto &&
+ 	ls .git/objects/pack/pack-*.pack | sort >existing_packs &&
+-	test_commit "$(test_oid obj3)" &&
+-	test_commit "$(test_oid obj4)" &&
++	test_commit "$(test_oid blob17_3)" &&
++	test_commit "$(test_oid blob17_4)" &&
+=20
+ 	git gc --auto 2>err &&
+ 	test_grep ! "^warning:" err &&
 --=20
 2.44.0
 
 
---p3/qx6jyaJSTQAk+
+--LSac9+pYrVco+Ut6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HR0ACgkQVbJhu7ck
-PpSvsA/+IyqIqYw8N3P3JP8id1hh1G3ByazwTXTXKFTxeif/ZR2CZ81/acW9bjvB
-aqF5e+tudFq88fwPM2gixJ+0++YeUYj5ucWy/GCU6rcH2M08of2fZ3TpriCmo/xf
-nsGIwinXwXCoqGH+imhrSFQTIkiMjJ8w357N7TUPEbbFlS9pz3ZULjCui5ZVFbay
-zX/BjmGOwDqRJv5GIeL2v0snQrh5QD2H2oG0fQpNLvwsX8oExulHWXPU3Dxr0e1A
-AytJPx589G6FbsE5r4B2d/s8DP3E45zd8j+ix9kCHwn0rDbBmpBSMaTTOxQBtkEQ
-W68KrST8pQYvsiW8OsDVPZ8dSs5iLs6nyDoaHu6bgLPEuVcUKKdRkw3wgTOgyl7a
-HFra4VEoogPAagY+01Io/R2wjIyMmvINvYG0utpv9ZhgUOCbP/Bq9R6sdk+Q/FL8
-Fu9/eW8/JC8r5uQQq+ktX2X0jyoYBvelxGB088MwF/tzUflEgXsrhoTyIeUhMa+w
-5oYluZYGH+fPksh54DzaSkpxjLfTMzkUmFIjhLYyaLiPLtYHDtZtfy7w9RWMbd6I
-sLeWYrlKJf7LXPveMlN+9MiJ+o1jHK07PkaOMEQBcAR6VKquVo+rT98Lv/d3hsOt
-JFrtkI44q6YcKhqMOjITbaO//h3LEKyuv6DgyfpHofoy5hdvIQw=
-=GZ/p
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HSEACgkQVbJhu7ck
+PpSVkw/+Kaym1mEnsFz5OwMqMqNLnMBy4sdQlIN24+OZ/t8C8U7o9T7NLf9y2PeW
+notvYx2B6iN6QXdqZAQoMYeobWeatVcFwVHuefzsUj/7lcKmbW57KyKQHEEnvFtW
+li5LfMo12IEH90wQolqR0VTHvmcRY63COFB0Z8GSvUHu6aZoL1vOjqGVFr6T9Q4u
+JHybA05IjZiYR6/66xxRArtZPHuh2zC2kN5EmWhNFgRPTXzoQt7qySOKfPpYTnf/
+NKYsXyMo7ByDUI4Q2OCcNyMwP5LcM/7S6Lz4a1oL1Xxt/LVmgo8Pm7Cx+Xvdy8E0
+whXYyLOnfsEsMlRpeAuhobgUljX8AuOEiBDjuYjT43PYKtifyV/3loucu8Lbv6A4
+gMjF/mVi0Ua20BlakdtuX+gwQQop1nIf49BYxKcNOpI8zcCXOV36RB0uhqOskkGN
+qlAafwH8kT3GdwLySa2J0JCQAlSsRAmTJB9PXnvlDTfPfgVtuu+w0yx4dVdl2np8
+gKOMt0gXctPE/4mRHda1NFK5AOf7GQ5GCo1e59RJM3uRzeXtJiVVI79L2HTDq5ew
+4sYDj3RLM0mlbKFzDsa97FfglyJbifgX2alMxfQkXYJR9ZnsLczoeVIFoKj5KOlf
+dJHOOvZl8hM18lAue4wDdTYwy7+MmPL5g/mnu8O4o4Yb0nnc68k=
+=gH8l
 -----END PGP SIGNATURE-----
 
---p3/qx6jyaJSTQAk+--
+--LSac9+pYrVco+Ut6--
