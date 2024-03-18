@@ -1,40 +1,41 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978B556470
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 19:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E772858201
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 19:21:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710789492; cv=none; b=bxiGM7wQlYeMHuKRR8IbgwzYbWgoAd6Pal8iid09t9CuPkkCmbl80UsI1QHAULaaKS/TaJR0HMCqafJrFkSm92QuvRD99nTfDu8mVXCuRK11Aijj6wWVfReO24J67lfX9SSBSlSUHT6oMMaktw4JYBfV/sPwOBsb33TLHqYwRFw=
+	t=1710789690; cv=none; b=cQWHVWQdLBAxzrejYW5OqveO5IUmLnqURIWq8ty74P0EImsa5h5ES25J4Kwq4L4JfHynCtQv+5zakQYWTspABTqoIOO3zxNn8cgQXt6DMfJ9hPFBkA02lZkgvUseTegMQO0y93IHXvx0opEqjiJ9VJ/23iZ9ttbFqGlYmgiO/GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710789492; c=relaxed/simple;
-	bh=XziYInlE+bfjaZmR6xSHlbgfxzGQHez4dn5DPEqZ0B0=;
+	s=arc-20240116; t=1710789690; c=relaxed/simple;
+	bh=PWVNxpHvVB3APmdef/ll6hpLITVzsx7UIhxHRwtMf50=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h3wQZ3JlF1AcMa/jggEHa4IA1Ybs8VMBGKFjzmgWJYTtaZPsvbAf/Ao2D0dpyqXUHNZSnemRw4mnkbzuadp1EkQZ8rVGTX398PswVen3vD9YsmiOVv44Oe6TuEhLTr7i/zsZESmqkJQS1dNRD+31r1O7pz2oEsEZk6fi7WLQ5z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
+	 To:Cc:Content-Type; b=XG+KSiPfDYx6Q0sS+q/UfDBvs+u3uPCubGxaQJsUISOONMR6QMmh3T9oG/TzkkLTXZnO16lP81RxqAJlgNmaTR0efKAbJFAQLV9POOAdGaimtdxevYwAjrf0Q30lt4wp3fPDXHAZt+Fa1GTDu9uf2IGXp529UEFOCbc6QudGLII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6962950c6bfso4645356d6.2
-        for <git@vger.kernel.org>; Mon, 18 Mar 2024 12:18:10 -0700 (PDT)
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-696315c9da5so89366d6.2
+        for <git@vger.kernel.org>; Mon, 18 Mar 2024 12:21:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710789489; x=1711394289;
+        d=1e100.net; s=20230601; t=1710789687; x=1711394487;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pXfP2lBSHkV4Fed6o8YPIRsd3AkjA1kuBgEccWqNCVU=;
-        b=nyQY0qtcVZ8JKr8sdty8IJV7TlCMtiR4GRRvdkhU4Hxw8fhq9g0H/XpNdlMdWPIHuD
-         KP+oyub4vjWXEwgBglI9C3/G8Q6EXI/3I+St5E6b487C8eG8P+lrHZyn10jA+k5hzcWp
-         F8gCFhzcRYgwB6zl7gs6xO8rZpY3JpmNuxCJQZ9m+mYi2ug9Yy5Fucl/Hlnbc8icyPRr
-         Wa1KQYtLh6VbnSbyqGBPSA+C3XQ5alsb8GU9FoexnG9e2hbD90c4uCogoIsviz0G4m4H
-         zzQpar3styEUVOHC/iJ3fq4y1LM5mpiM9Qei+BaKWfalQtbz5uihVVsjVVcn2raaecjg
-         +jFQ==
-X-Gm-Message-State: AOJu0Yyr4W2zXqouy4I1iRqHA0RDeMzc1bFQ6omfv5upefDjaJizrMPl
-	4/sYHGJ9H8C9BJgMAbQdrESeUf2acMhvZh6KJDFNv5YhRQ91a2/i31MWy98qNcMbWjtWcDKDoxC
-	smgiAB7CPQUKbKXjIKXP+HKRlciE=
-X-Google-Smtp-Source: AGHT+IF05RxMIcsqRiaDPE/FOvYpHJnOqgh1OQ1onxw77q+hljtZXDW2y5KTTSzu6oqMntd7SWNm8YD9FLq/NsjgV0I=
-X-Received: by 2002:a05:6214:9c4:b0:696:17cf:d35b with SMTP id
- dp4-20020a05621409c400b0069617cfd35bmr3817799qvb.2.1710789489527; Mon, 18 Mar
- 2024 12:18:09 -0700 (PDT)
+        bh=3fCe1ZaVPiqRXIfHuGNo/pLNcbiJanry3Zkqj+ndXcA=;
+        b=jZ8LKJT6az6sLYPZ0cTQV34Dd2KIs0TsyU8QdwAK4J9ue+0eSfRpk0FrggKhHojZZ1
+         Xn1PRkt3jiCy8pVVhbGXJK+vLY+90NckckkOr9rlzNXkbsAmqP5bQFFHgp1QMpm8bEMo
+         8nedOzhoFvMiP3ilsfSVYHyuVzEV2ufgUn38BDD6XiPK3clsDKi5cZQv1qtGueJ0qVtC
+         xQ3aB2zi4QyPgLR+hQuBrvZtjUQime70AtMgdvaDPWBdjB9m9rNGj8KQhwRfWU0m3mhq
+         N1g/Nq1cRBj5LX0Ef0xNA9tM4/krgJOouSNrizKOzE/jS1Zh+4IZCwc868Bp46ay2xai
+         UNpw==
+X-Forwarded-Encrypted: i=1; AJvYcCUP7YHXLJ258/0aCfpH7t9uVIbpb1J5cYM18pLM6jXMSo1gqYHCOzJC5JsBb1AKOW+VVuXaM4iN+TSSXaJZZWQkvpbQ
+X-Gm-Message-State: AOJu0YzDV41xMGrsOCOWsBLKHLQ7iiVkq3z2atdZP5WlhvPLl3z2BJG9
+	KSFXlwPsDWoHXRhVKoWWhwCVkc68xreQD97IrmKy4hvbxDVgLuqHOYMTDzaXxMqYLerU2o2B7cL
+	U0kVFDC3Z22RwGXDQqrKyeBVeN6o=
+X-Google-Smtp-Source: AGHT+IEQK2LezjTn91zu0Qn5a9hSRpBudvT5McQtl26O702qbtCj9KMUbneA5of82WdYUxPjuknM7cOLyyjDEDJG3Xw=
+X-Received: by 2002:a0c:fe0d:0:b0:696:22f1:cd1f with SMTP id
+ x13-20020a0cfe0d000000b0069622f1cd1fmr2346385qvr.40.1710789686895; Mon, 18
+ Mar 2024 12:21:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,71 +45,54 @@ MIME-Version: 1.0
 References: <cover.1710646998.git.dsimic@manjaro.org> <9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
  <CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
  <9996af464aabe2bf594c63c237d7a6e0@manjaro.org> <CAPig+cTLrsUpvKVjkFUgs1b1gvj54rm6FBa=5v3uoQtJnB4rZQ@mail.gmail.com>
- <c579edaac0d67a6ff46fe02072bddbb4@manjaro.org>
-In-Reply-To: <c579edaac0d67a6ff46fe02072bddbb4@manjaro.org>
+ <xmqqttl4kvch.fsf@gitster.g> <62a4ec0dace46d7c56e75dac9c42c297@manjaro.org>
+In-Reply-To: <62a4ec0dace46d7c56e75dac9c42c297@manjaro.org>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 18 Mar 2024 15:17:58 -0400
-Message-ID: <CAPig+cSJdBm+sRcXSpdZYUqSqktN3ytcjD3kmhu6WfTRuqkPrg@mail.gmail.com>
+Date: Mon, 18 Mar 2024 15:21:16 -0400
+Message-ID: <CAPig+cQgejS5dFpOYkMT49kwn5zvn5ihvyFqViFwHhEmtr9mqw@mail.gmail.com>
 Subject: Re: [PATCH v2 4/5] t1300: add more tests for whitespace and inline comments
 To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, rsbecker@nexbridge.com, 
 	github@seichter.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 18, 2024 at 4:17=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> w=
+On Mon, Mar 18, 2024 at 4:37=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> w=
 rote:
-> On 2024-03-18 03:48, Eric Sunshine wrote:
-> > Readability wasn't my reason for bringing this up. As a reviewer,
-> > every time a question pops into my mind as I'm reading the code, that
-> > indicates that something about the code is unclear or that the commit
-> > message doesn't properly explain why it was done in this way. People
-> > coming across this code in the future may have the same questions but
-> > they won't have the benefit of being able to easily ask you why it was
-> > done this way.
+> On 2024-03-18 05:38, Junio C Hamano wrote:
+> >       sed -e 's/^|//' -e 's/Q/   /g' >.git/config <<-\EOF
+> >       |[section]
+> >       |       solid =3D rock
+> >       |       sparse =3D big QQ blue
+> >       |       ...
+> >       EOF
+> >
+> This looks quite neat.  Furthermore, I think we should also consider
+> the already existing tests in the t1300 that contain such indentation.
+> As I already explained in my earlier response to Eric, [1] the choice
+> of including the indentation or not seems random to me, so we should
+> perhaps consider taking some broader approach.
 >
-> I see.  How about including a small comment in the t1300 that would
-> explain the additional indentation?
-
-I'm just one reviewer. Unless others chime in with similar
-observations or questions regarding the patch, I don't think such a
-comment is necessary. Aside from the other more significant points
-(such as not introducing x_to_tab(), using "setup" in the function
-title, etc.), this is extremely minor, and what you have here is "good
-enough" (though you may want to take Junio's suggestion of using a
-leading "|" to protect indentation).
-
-> As a note, there are already more tests in the t1300 that contain such
-> indentation, so maybe we shoulddo something with those existing tests
-> as well;  the above-proposed comment, which would be placed at the very
-> beginning of t1300, may provide a satisfactory explanation for all the
-> tests in t1300 that contain such additional indentation.
+> How about this as a plan for moving forward:
 >
-> Another option would be to either add the indentation to all relevant
-> tests in the t1300, or to remove the indentation from all tests in the
-> t1300 that already contain it.  I'd be happy to implement and submit
-> patches that do that, after we choose the direction we want to follow.
-
-It would be better to keep this series focused on its primary goal of
-fixing a bug rather than being held hostage to an ever increasing set
-of potential cleanups. Such cleanups can be done as separate patch
-series either atop this series or alongside it. Let's land this series
-first, and then, if you wish, tackle those other less significant
-issues.
-
-> > If these new tests are also checking leading whitespace behavior, then
-> > to improve coverage, would it make sense to have the leading "X" on
-> > some lines but not others?
+> 1) Sprinkle a couple of tests onto the t1300, which try to be
+>     focused on the verification of the indentation-handling logic;
+>     maybe those additional tests could be even seen as redundant,
+>     but I think they can only help with the test coverage
 >
-> Good point, despite that not being the main purpose of the added tests.
-> I'll see to add a couple of tests that check the handling of
-> indentation,
-> possibly at some places in the t1300 that fit the best;  improving the
-> tests coverage can only help in the long run.
+> 2) Create a new helper function that uses the logic you described
+>     above, to make it simpler to include the indentation into configs
+>
+> 3) Finally, propagate the use of this new helper function into the
+>     new test and the already existing tests in the t1300 that already
+>     include the indentation
+>
+> I'd be happy to implement all of the above-proposed steps in the next
+> couple of days.  Sure, it would be quite time-consuming, especially the
+> third proposed step, but it should be worth it in the long run.
 
-As above, such additional tests probably aren't mandatory for this
-bug-fix series. As a reviewer, I'd like to see fewer and fewer changes
-between each version of a patch series; the series should converge so
-that it can land rather than diverge from iteration to iteration. Such
-additional leading-whitespace tests may be perfectly appropriate for a
-follow-up series.
+As noted in my other response, while such cleanups may be nice in the
+long-run, the bug-fix patch series under discussion should not be held
+hostage by an ever-increasing set of potential cleanups. Let's focus
+on landing the current series; these tangential cleanups can be done
+in a separate series.
