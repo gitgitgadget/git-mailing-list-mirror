@@ -1,53 +1,53 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCAB360AE
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD4C364B4
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710759153; cv=none; b=nHLV+2BOnRadeF3507hzRbxDfZYrusjvcLqXpvgHm8arQCiBC9HzKJ8ceTXBPCH02DJP9dYgk5bdQUwIrUed4fAj7Vd6bijaUNHA4LO2nakm52Trv5U51LEOx18qjraAcambICmu9ZQTNxS+tDzf3DBerLj2rGODYQ3x7OMUXb0=
+	t=1710759156; cv=none; b=KsSCgtZCMlZQp3rK0fFqO31KfXvs8K/A31wNyfoIHW78h8QGNQ+ZCyj4m8mSwaZflGclSo3+JdsLfPVcj7Ru3LOyyXlqC6DnnE5Dsm71RMOxLQkleckYWe8gW8ElBq6mDmiIfRX8xRhmFDa1k+oYTaqd/wCz/NxzLE/zemDJFcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710759153; c=relaxed/simple;
-	bh=nEv6E6JCN+i19Xb6dIpJK+9DVVSt24ACbSO2NnjRyJU=;
+	s=arc-20240116; t=1710759156; c=relaxed/simple;
+	bh=vIzB8nBpZdgXFDDHwimpH5wfNZmSsXKsQTtLu2t6D3A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tmrYR4KCOgLcjKwIkKoQ5sYOcBSY7h1pS7uVzO7KQu60cQ6NSVqmS7jpPtfuKaL0ebb1gLmE5eszzUxbv0PGhjJIiJ5d4uKMgOXZk0yVVdAxkvChA2J6dzWI8BCQqHnlNC+KynP53pFzTf40ud4NpmEpbOnA2ncf9onTv8tzJg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L4LP9ziw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FUZ/GbEO; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=OPya7Un8yOViQah56Xwac0iAj6VPucsp4Ea+en027Bz4u+bdDDLhxGYm83mcWTfc7zVIQ1YNn++yIHZGLFyJAaM47evSg8BkDdVfMqvG7u21+ief0IZQ4yWAXUPcZSqg8irdU+VuuMvXM4XBWRMRxHbNrw+UFP2k8bmM0otkB18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OP4OrpT+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rTNW/833; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L4LP9ziw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FUZ/GbEO"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5E8ED13800C8;
-	Mon, 18 Mar 2024 06:52:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OP4OrpT+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rTNW/833"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6937A13800C8;
+	Mon, 18 Mar 2024 06:52:34 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 18 Mar 2024 06:52:30 -0400
+  by compute1.internal (MEProxy); Mon, 18 Mar 2024 06:52:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1710759150; x=1710845550; bh=6x11qkHIEG
-	hset+qHakcZUV6ERKSu63h68YwnEwwm8E=; b=L4LP9ziwKKpqQNisrTm3CZFv4J
-	X3nV/JgJzTbMfBOnHS5PleD78jCkKigExI1CAP2LaVf0NxQ7f7DHDNvra5PsM7oH
-	TmgHiKszgTSl5kBNQM8M0ckmNxQ9DvYvisYKYE/AKa/vqHdZvF7T+FH1yfm368l7
-	CPZb6nZQOksJjT3nWfpyw2/4LxT9xOC/OmRy/GfZxPtrACIx0Xtzfz8bRfdO+HAf
-	F84S7U3vUNWRzSqS/vUdTwgV5VbH52ZIt33l6zLAw3z+ul1PYdtdFl3MDsqEK3hQ
-	U+DCdlUd64wwEeenBJQbrvM3prBJ9lDyxw4IvrqKQnoxy97USXTUKoKDbsNA==
+	:subject:to:to; s=fm2; t=1710759154; x=1710845554; bh=MtnxE3Mru5
+	u8JNu8QY8OPDHc3GxnOXSJ8MA8LrgteNA=; b=OP4OrpT+pyytvFwsPDDSFGehNm
+	4fIP5Jt3te79Yn1VADwY8r45YWEvZcU3h0Et42Bwdcq/Ny0ESilKG/poYEne54QS
+	VIHBPyIloTrlJRjyRBnjX0UCNr2Szl8rEovaXBOFtUp7zDBUzV0S85XG/97KaHLt
+	Rw11wMfKtTtWUzO5JnAii19qqZ6szJRobloG0PGXKf/kskyyY9MZNY+PfW1SjtIH
+	0Z0dEG40GT/CboZjsjXMZslIUbHcOm9KhjoHeLJfv6RfTBtob6sXLABkuHCIUNAA
+	2O5hxioTK6IBnT536LdlxyVwb6EVIjOQDoVwFK19LCgKGoe9jdEsKsmLVylQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1710759150; x=1710845550; bh=6x11qkHIEGhset+qHakcZUV6ERKS
-	u63h68YwnEwwm8E=; b=FUZ/GbEOBMYAEMR0ku2/1dBcnTiBLKCvLkFPucnVMmSQ
-	j8RU5GNi3lyTFg2pwh1NqrQk6fo2r1mYqG4yqx0LBVwIQcNAwEF6QAdaVkSUFP3B
-	M30MY+r9MvHa6l151c+HsDBwPfJVtPtWnSTecFjLcT6y94Ofnavpu8USco0QU99V
-	u1+Zv7KoH0BGAXzZPjTzGQe7UD0eMEcX97KcwUcUdtJi8UUwRwb1l8t+svKX8z8C
-	Q3n1JJJED/xS/k+YhKtU7p3J7+Qw9vVzLQBQsKKJGRQ7FEzGODiEY0vtupaoaIMA
-	Q2+e1lV1OvsumoGMyM6WDEJG3roIlR5G79XHECp2ww==
-X-ME-Sender: <xms:7hz4ZfbdMQyxQgofCdMQAhSvxiFq9E7HZhksbVwHIykfa4Xu3qMyvg>
-    <xme:7hz4ZeahZDm_9kuQ2GsDrRKklh-yLEN27zBjoKvhdBpH5RKtSzWIx3BGTWLMLaG6Z
-    Ye6jclexoL5fRRA3w>
-X-ME-Received: <xmr:7hz4ZR_rtYRDAGFv6nVe8Y1UupLe9Knd9wunmKgohtEaF99rWMdKKIRDj0EbyWZY_vn3hvq5lQbzA2DAi5_89jHHI2wwn8DhGnAs2k6oirqAzg>
+	fm2; t=1710759154; x=1710845554; bh=MtnxE3Mru5u8JNu8QY8OPDHc3Gxn
+	OXSJ8MA8LrgteNA=; b=rTNW/833bqXMxuyXmCJOjm064gblw8DSKo0DMr6ju5PP
+	yGeOE87hNMwbA2uja2j9bF0pw37LIuaQCdrJcm1RxMSghIxMOUrE5sn0oE+srOOd
+	kd2KQgTmu8Tytb/okZBTFD6HnihGGU4jJImJH4bcfs7Lxn3yXroppGVWDz+3LyeM
+	83MIREZexPlx/JFoCdHdJBMsWnhikZSlOWmJKw+WDdcqGWzpAqBSP9XGkH24mpJf
+	eeMwyfxl6yYhPY1U1K9qlcnFDOxHDua2PMzFQTabQxSUsVS2UrvtiBkqa5wiZUUM
+	oL2/SjMSwxgZWLjwYFHYJJUj/fvUYcY92OfZe/FH7g==
+X-ME-Sender: <xms:8hz4ZfjgGhRiLKwOdG906pjaMyC9W4ieef3w3EpDvJWbdUKAU4j1tQ>
+    <xme:8hz4ZcC1JnKRZ8Z4Fv5nkaHuCFEo74tliW0ltXgkIOmIta-YEXRcPDtk-ZOapygpm
+    tEqutNE6WBnT0QU8g>
+X-ME-Received: <xmr:8hz4ZfE6Jma5yNpho6WNWVXKfMUOVn8T52mYZuoel_OSJ0_hA06klcoauhgnQ_i4e6V6nO7umdGpmDf19_cGHvB0kF2638PuKS9GK8zDc0486g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -56,24 +56,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvudcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:7hz4ZVpiKtpsn7IvWhmYxiVNWE_StqWJmzRHdxUK6KO9GbCm7abV2Q>
-    <xmx:7hz4ZaqApOtdD44EesdkN2PPkP3dkoAFcNIWs2lX9EkxsLPLfu5QCQ>
-    <xmx:7hz4ZbQgQqp5QaoU6KVkguBAEe2HsdAJOjhbgAdbPZLE4GVR4JdYKQ>
-    <xmx:7hz4ZSo2F5hAWpC1wQPquomSSiJijVOIN514xZEMiwu0WR_1js5AfQ>
-    <xmx:7hz4ZdVognABL0PgtjKpIYtViSRSnrdke9NdoIVcILY_QF-xLsB0Ng>
+X-ME-Proxy: <xmx:8hz4ZcQKS3A6LjSn34iIBT3VIk1BXTakhJbInbs8gS0UhpQOMLEHmg>
+    <xmx:8hz4Zcxxk1zPsuQDy55d4UDsqt2plS2XZ8_sO_Sa7iwdVUkHShgKsg>
+    <xmx:8hz4ZS5Y-zPFKg-agKDi_TeKzYWUqZOWHEP2oqn_8cDWoJUUZBVBZQ>
+    <xmx:8hz4ZRxxQ5SzfFnUyhTSc9C9rpPSldWccOGhO9Yw61ZEwsB7bgn9QQ>
+    <xmx:8hz4ZY9VeQV-suKKzDhflkChS17RSC0deQgixpFYB8csb2u9tIrnPQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Mar 2024 06:52:29 -0400 (EDT)
+ 18 Mar 2024 06:52:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b932a93c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Mar 2024 10:47:38 +0000 (UTC)
-Date: Mon, 18 Mar 2024 11:52:27 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0ba850c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Mar 2024 10:47:42 +0000 (UTC)
+Date: Mon, 18 Mar 2024 11:52:31 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 01/15] reftable/stack: fix error handling in
- `reftable_stack_init_addition()`
-Message-ID: <1e39d93a45db502280ecff383d53e0294f969719.1710706118.git.ps@pks.im>
+Subject: [PATCH 02/15] reftable/error: discern locked/outdated errors
+Message-ID: <e837703ca1955fc2cafb49ccede12e926150a70c.1710706118.git.ps@pks.im>
 References: <cover.1710706118.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,84 +81,144 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WT54rAcZN8pK21hN"
+	protocol="application/pgp-signature"; boundary="44OyvSMBCLIrr91x"
 Content-Disposition: inline
 In-Reply-To: <cover.1710706118.git.ps@pks.im>
 
 
---WT54rAcZN8pK21hN
+--44OyvSMBCLIrr91x
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In `reftable_stack_init_addition()` we call `stack_uptodate()` after
-having created the lockfile to check whether the stack was modified
-concurrently, which is indicated by a positive return code from the
-latter function. If so, we return a `REFTABLE_LOCK_ERROR` to the caller
-and abort the addition.
+We currently throw two different errors into a similar-but-different
+error code:
 
-The error handling has an off-by-one though because we check whether the
-error code is `> 1` instead of `> 0`. Thus, instead of returning the
-locking error, we would return a positive value. One of the callers of
-`reftable_stack_init_addition()` works around this bug by repeating the
-error code check without the off-by-one. But other callers are subtly
-broken by this bug.
+  - Errors when trying to lock the reftable stack.
 
-Fix this by checking for `err > 0` instead.
+  - Errors when trying to write to the reftable stack which has been
+    modified concurrently.
+
+This results in unclear error handling and user-visible error messages.
+
+Create a new `REFTABLE_OUTDATED_ERROR` so that those error conditions
+can be clearly told apart from each other. Adjust users of the old
+`REFTABLE_LOCK_ERROR` to use the new error code as required.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ reftable/error.c          | 4 +++-
+ reftable/reftable-error.h | 5 ++++-
+ reftable/stack.c          | 6 +++---
+ reftable/stack_test.c     | 2 +-
+ 4 files changed, 11 insertions(+), 6 deletions(-)
 
+diff --git a/reftable/error.c b/reftable/error.c
+index 0d1766735e..cfb7a0fda4 100644
+--- a/reftable/error.c
++++ b/reftable/error.c
+@@ -22,7 +22,7 @@ const char *reftable_error_str(int err)
+ 	case REFTABLE_NOT_EXIST_ERROR:
+ 		return "file does not exist";
+ 	case REFTABLE_LOCK_ERROR:
+-		return "data is outdated";
++		return "data is locked";
+ 	case REFTABLE_API_ERROR:
+ 		return "misuse of the reftable API";
+ 	case REFTABLE_ZLIB_ERROR:
+@@ -35,6 +35,8 @@ const char *reftable_error_str(int err)
+ 		return "invalid refname";
+ 	case REFTABLE_ENTRY_TOO_BIG_ERROR:
+ 		return "entry too large";
++	case REFTABLE_OUTDATED_ERROR:
++		return "data concurrently modified";
+ 	case -1:
+ 		return "general error";
+ 	default:
+diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
+index 4c457aaaf8..e9b07c9f36 100644
+--- a/reftable/reftable-error.h
++++ b/reftable/reftable-error.h
+@@ -25,7 +25,7 @@ enum reftable_error {
+ 	 */
+ 	REFTABLE_NOT_EXIST_ERROR =3D -4,
+=20
+-	/* Trying to write out-of-date data. */
++	/* Trying to access locked data. */
+ 	REFTABLE_LOCK_ERROR =3D -5,
+=20
+ 	/* Misuse of the API:
+@@ -57,6 +57,9 @@ enum reftable_error {
+ 	/* Entry does not fit. This can happen when writing outsize reflog
+ 	   messages. */
+ 	REFTABLE_ENTRY_TOO_BIG_ERROR =3D -11,
++
++	/* Trying to write out-of-date data. */
++	REFTABLE_OUTDATED_ERROR =3D -12,
+ };
+=20
+ /* convert the numeric error code to a string. The string should not be
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 1ecf1b9751..92d9a7facb 100644
+index 92d9a7facb..eaa8bb9c99 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -590,8 +590,7 @@ static int reftable_stack_init_addition(struct reftable=
+@@ -529,9 +529,9 @@ int reftable_stack_add(struct reftable_stack *st,
+ {
+ 	int err =3D stack_try_add(st, write, arg);
+ 	if (err < 0) {
+-		if (err =3D=3D REFTABLE_LOCK_ERROR) {
++		if (err =3D=3D REFTABLE_OUTDATED_ERROR) {
+ 			/* Ignore error return, we want to propagate
+-			   REFTABLE_LOCK_ERROR.
++			   REFTABLE_OUTDATED_ERROR.
+ 			*/
+ 			reftable_stack_reload(st);
+ 		}
+@@ -591,7 +591,7 @@ static int reftable_stack_init_addition(struct reftable=
 _addition *add,
- 	err =3D stack_uptodate(st);
  	if (err < 0)
  		goto done;
--
--	if (err > 1) {
-+	if (err > 0) {
- 		err =3D REFTABLE_LOCK_ERROR;
+ 	if (err > 0) {
+-		err =3D REFTABLE_LOCK_ERROR;
++		err =3D REFTABLE_OUTDATED_ERROR;
  		goto done;
  	}
-@@ -713,10 +712,6 @@ static int stack_try_add(struct reftable_stack *st,
- 	int err =3D reftable_stack_init_addition(&add, st);
- 	if (err < 0)
- 		goto done;
--	if (err > 0) {
--		err =3D REFTABLE_LOCK_ERROR;
--		goto done;
--	}
 =20
- 	err =3D reftable_addition_add(&add, write_table, arg);
- 	if (err < 0)
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 509f486623..b0c7041a4f 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -232,7 +232,7 @@ static void test_reftable_stack_uptodate(void)
+ 	EXPECT_ERR(err);
+=20
+ 	err =3D reftable_stack_add(st2, &write_test_ref, &ref2);
+-	EXPECT(err =3D=3D REFTABLE_LOCK_ERROR);
++	EXPECT(err =3D=3D REFTABLE_OUTDATED_ERROR);
+=20
+ 	err =3D reftable_stack_reload(st2);
+ 	EXPECT_ERR(err);
 --=20
 2.44.0
 
 
---WT54rAcZN8pK21hN
+--44OyvSMBCLIrr91x
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HOoACgkQVbJhu7ck
-PpSiMBAAjTHXloxS0kzTChmcPm1azgL7+OOmRngYzFDpSAfCsAL1VRDD7g/+0F1M
-E1LzGl2uyVejD9gOO0mhiJ6puXWGQLQHr6InNwEM5RAKAOnDTTyifViAVXZi/I1j
-f900pbi52eZXXeBxKFaFAbFe0L+mGr9tsOb6i5Miu5mGAqD34NVBIlT/oVHvkDng
-gX0w0lpCsnBg2dp/6B5IlzCNrKn4IyaTmF2G6M1eQWdY+vlXRfjwjz2g+aPWBJyh
-usnWmxWoiudu8BkWcdjg59AbrweAlWjJ895ful0fCvSF4w4j2GwOjcr87CNdb3DM
-bQDHXRqo6IT+XRP7JKfshD266E3G+Sz1TCYDN3+tvzWcRxiPNqneKaYCAWwt7nM9
-HkQu+SsofexsRD+OD02MrL/nJdZSdlXp+RoNpggtSAmLSBFCGvgnEIImfqRl6i6X
-82iZr5vtNoNLtYD3adEZ8gRgWoUSSFgVIg0FCb69uKljUY2IYYb1QUhouvSq8Ti1
-Da3NErq0z6ctJ77ZkIOY+qtRTg/p5Q/wlwVCcGeZu4ajG+RHSWE6N+PiVkXwTA+3
-HsFhEn5bbaoH2bS/LmISHhZBYrmiJAsZbcZ1s5Y+F8AzDYhivs3SA+d1MSfxyPJF
-mIo19FhBKpF3Ne2z03TC/f4gCJ9nMqYU8n5V1NdFDS4HVcM8ASY=
-=soAr
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HO4ACgkQVbJhu7ck
+PpT3dA/8D/K3X1NHuJXftQsDkm7PrNkmYvMEHjvTeaOhPH0Uzwf4qAdAk2TOxIEl
+POlEY/RJjw3wYmu/mBWy6q975Gq4hLXZVBGTkk4c0vX1DjiYiK8AkmYdQCAciMfV
+x1zxQnYRGdVGYnEu5pQ5gHeEBX5yo8D/h8Fg7oYZL+tqYwI3va2TS2FNaDvZxE1a
+OHZUmtu1LMDTxYbiZMmyas/IzJjpMjaTT2GTB50HQMyzWQ/25825tyAiDG0lTztE
+/L1RHEMJJGUPjZj3chsA2FJuaMIjasfWWw67dsGnkwAumXZ9RP1RsKJQZJmIdJGG
+SI8vO7KTi4KQRd1+lVrSrtjRcqMmcVpyC0TpKTCZTQF59hvGMZnpEEkbZW4ODpru
+Rdlh2aswVN7/kkh3jpRqaeWsssTHRrgQp3j+D3rhBzl9+meyX6R54dRfE3Fid1o9
+wFSWuiMWg2zw/8D63/dh/6nz9bCfl4FPB+X1ifBn8YRdzbrp78Sl5fAx3+RmWMfZ
+D4OuswFFO3qg0Ypw39lhsW00WuDG4xhBa2ynDeoHGnrAo2H1/xAza4VNHqcHrtQK
+Wna6SGzF0uXmOkqOxmBwCYDH+EVf4jz59M3AFj26oNVdFRujs8/rI8rAtieIWY06
+DLDF5Rq5WB3XqMTkaOPxFrcSXVM7956u+hlBOsjDc/L9DDF6vj0=
+=khDW
 -----END PGP SIGNATURE-----
 
---WT54rAcZN8pK21hN--
+--44OyvSMBCLIrr91x--
