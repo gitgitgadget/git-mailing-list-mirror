@@ -1,88 +1,75 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA7157865
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 20:02:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5685D5786B
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 20:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710792138; cv=none; b=jqTeKd2Gy7bRM0R2ynZ+ru5U66zyc/JxXdyAD9jpkZ48j4XpaDMS0Vvf4cUVCh9vIqeGwCUdbiy1NBBQHuOu+npcP8DGSwq9XDxp4oNNigxvqGMKeMSIB46cFeYySoV9DWakv2YGdsB+oECueK33NrTiv8M09oH3wU3QNClnVu8=
+	t=1710793717; cv=none; b=o8AJMzAG6WyBNAoxlbpHUNArypMlzKB2DAF3cJQQx+3VlNWH64gsg8XPUm94fCkyKECVMV928XhVr1AANAKbWKZUtgdC3eNyaIRCa6kU/JTV2A9MzpLi1AhywWfbJP1YcFgD0n+W1/aBav8IMxGKJsABHe5X5ehaobD38p5kXyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710792138; c=relaxed/simple;
-	bh=57IbVwlv7wcygz+qCEJPVRtqvyrA6pGxyM9Zt9v2d88=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LSumlpaLT4EfTXcskX51CH3iCXqYZy0tIvCZvhNJp631q88kTXWTteariuaWAK1GDWPOuPPfkChAnpiEJFoujV9+C5x9sR+pH0iZIZfApvlzayTM2ORKjUqNZnqCUqqqNtGg0ZjIW1MnsWzTCNmhiyHydkw1wST1rZeWE0fLIao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-430c4d0408eso11675061cf.3
-        for <git@vger.kernel.org>; Mon, 18 Mar 2024 13:02:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710792136; x=1711396936;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QweQ97E75TTuNJoFaYH9cYBVtsIw2Mb/iwPN1lg7FuA=;
-        b=cDboZXJvQuuy3TZtWzpTxuqn/uxcN/y0RguI6Hrl5HPZGMYIXRz8YSjrXN4wAkIuZV
-         24dcbfM30Z4T+QhUs2K6ZUkeaiWDnMrAuQHHplI1jo/7sSnpFtTVzW+D0CPDdnkoem+0
-         cBQjvDLAfSdfntPIaCxQbg8fh+dZ+iBE9aj1Ti/EmIXE/unLm2VGdsx7HxWi5vswV89d
-         /HHo3B1OjsNFLT0F+PBLYiaKy3uf8n/BKN6WdiaEQRCi4WrUS/R9gw1Ptf7IoI7E89+D
-         xBOy0VwUff/7TRn40Hsi2G2Ioe0Az3Bk87CfnN0QwKIafwf4XHvyoa/DbCJ5An0wClTS
-         SiPA==
-X-Gm-Message-State: AOJu0YzMSnl2qBRCG+o9COkuzLAR2VtkPQbcTSZJs6Cd8fBE0k/StUPU
-	y6oMnZqtC6+a1C/vV2bytu4wFzMuXlg4nBoeJcRJrGUcFs6bqwAIiuKOqQMfX6VLlE0GdnH55yp
-	FrkHSCv01b74v05uUae1PO3AWDoAmbrShyus=
-X-Google-Smtp-Source: AGHT+IE4SRuO/dx33WsBlu9aTBZ/kHLT4WR7D2ILnLugDYslhKLmi/6ysj3CLmWGb+ObYvpj6uJsDFS84KRxU+F1g0Y=
-X-Received: by 2002:a0c:8c41:0:b0:696:31c6:f1b1 with SMTP id
- o1-20020a0c8c41000000b0069631c6f1b1mr44535qvb.16.1710792135914; Mon, 18 Mar
- 2024 13:02:15 -0700 (PDT)
+	s=arc-20240116; t=1710793717; c=relaxed/simple;
+	bh=Obaa6UuWN/ZOKzuAKv4to7vJLjky8MiUkfh1Q49rIP4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JT8RPJ8gSHhgQzJQ8H+eOtkjQXOCG2995WnME9RMjGHwDrQjbk6FrY3EY/LZJ3ci9RjFlnDd+sXlmJhu+TvmBq360OOp3qqXk+n8vDqaj+4YNqWLwohimzP9z5aZoK3HP9VgdRU6YMVjuLK5tGbXt7MEtk7Ag8Esdmwu2dZRRHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lq2J1l5I; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lq2J1l5I"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A7A473026E;
+	Mon, 18 Mar 2024 16:28:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Obaa6UuWN/ZOKzuAKv4to7vJLjky8MiUkfh1Q4
+	9rIP4=; b=lq2J1l5IP7ONDvrXa1qex7KSvUI63maulyfD4VUjR+b3NhcJRK+GuJ
+	A/V+XtBfW3kRaR8Hy6urBC5HUBurcnBqnFnCkNHn3pn3MLOndN9lvoriKRBYxFva
+	mir+bveIjUOF0H2my5PV8MJ9a9c/18meixN3Gl/OlVk25ZAzugO84=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9FD753026D;
+	Mon, 18 Mar 2024 16:28:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0154A3026C;
+	Mon, 18 Mar 2024 16:28:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Dragan Simic <dsimic@manjaro.org>,  git@vger.kernel.org,
+  rsbecker@nexbridge.com,  github@seichter.de
+Subject: Re: [PATCH v2 4/5] t1300: add more tests for whitespace and inline
+ comments
+In-Reply-To: <CAPig+cSJdBm+sRcXSpdZYUqSqktN3ytcjD3kmhu6WfTRuqkPrg@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 18 Mar 2024 15:17:58 -0400")
+References: <cover.1710646998.git.dsimic@manjaro.org>
+	<9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
+	<CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
+	<9996af464aabe2bf594c63c237d7a6e0@manjaro.org>
+	<CAPig+cTLrsUpvKVjkFUgs1b1gvj54rm6FBa=5v3uoQtJnB4rZQ@mail.gmail.com>
+	<c579edaac0d67a6ff46fe02072bddbb4@manjaro.org>
+	<CAPig+cSJdBm+sRcXSpdZYUqSqktN3ytcjD3kmhu6WfTRuqkPrg@mail.gmail.com>
+Date: Mon, 18 Mar 2024 13:28:30 -0700
+Message-ID: <xmqqwmpze13l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1710781235.git.dsimic@manjaro.org> <784912a8d9156fa00ddee218fd600254d7bab160.1710781235.git.dsimic@manjaro.org>
-In-Reply-To: <784912a8d9156fa00ddee218fd600254d7bab160.1710781235.git.dsimic@manjaro.org>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 18 Mar 2024 16:02:05 -0400
-Message-ID: <CAPig+cQc8W4JOpB+TMP=czketU1U7wcY_x9bsP5T=3-XjGLhRQ@mail.gmail.com>
-Subject: Re: [PATCH 2/5] grep docs: describe --recurse-submodules further and
- improve formatting a bit
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 16659A30-E566-11EE-809B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Mon, Mar 18, 2024 at 1:04=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
-rote:
-> Clarify that --recurse-submodules cannot be used together with --untracke=
-d,
-> and improve the formatting in a couple of places, to make it visually cle=
-ar
-> that those are the commands or the names of configuration options.
->
-> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-> ---
-> diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.tx=
-t
-> @@ -24,5 +24,5 @@ grep.fullName::
->  grep.fallbackToNoIndex::
-> -       If set to true, fall back to git grep --no-index if git grep
-> +       If set to true, fall back to `git grep --no-index` if `git grep`
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Good.
+> As a reviewer, I'd like to see fewer and fewer changes between
+> each version of a patch series; the series should converge so that
+> it can land rather than diverge from iteration to iteration.
 
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> @@ -65,8 +65,8 @@ OPTIONS
->         <tree> option the prefix of all submodule output will be the name=
- of
-> -       the parent project's <tree> object. This option has no effect
-> -       if `--no-index` is given.
-> +       the parent project's <tree> object.  This option cannot be used t=
-ogether
-> +       with `--untracked`, and it has no effect if `--no-index` is speci=
-fied.
+Well said.
 
-I believe that there is a patch series currently in-flight which is
-re-styling in-prose <foo> placeholders as _<foo>_, so you may want to
-make that change as well while you're touching this.
+Thanks.
