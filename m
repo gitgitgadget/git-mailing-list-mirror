@@ -1,94 +1,100 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050AB20334
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 04:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7018D1B966
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 04:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710736758; cv=none; b=U8nyoFpqhW8ivPxFHOpVWXb3V6eV3gnhObbW4wGhiBhRrdxB2ZDY057Hh3Rm+vSnwczkj5/15y4fHbqoJwHcDpHvBZJ1DoagVNADnSwz/u4cA/dUB1d8lApsrpm7BkXjlDR1bzjU5d/WCBZtD+uGOj7dsAWHv4itCvNmcBI/zko=
+	t=1710737354; cv=none; b=lUXlOLDGfezAS0QJCwaTA28JJXNFruNRoegP+C5Vy0d+D6RrQ3kk+xsnagO64WUjhmEUEN0XJPJ/VB/MMQhaq75liMk76pVpkpcs2kv61diZcTMGPSxbqXUJXsUdai9cWZ6j1Tq8ssf8BOlVDEbKZArXTa9WED0YxKLSOrfEGL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710736758; c=relaxed/simple;
-	bh=ikZQYAjAV1HB+iuKVh9mj1MEjWBy8CA+ftLfGdrHQJQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MPsY68c5MXEJGF76YgyCfVsDYtRLysqzptSXLPbjxl3zRg8QSgQk2qCBfATGSaoXxo6wchY6k8Ykz8BPgf6jaJbB6fdE1eh70BkHKvJAHXMijzBz9gOIMB9BZIj+XDMbV1SgjHTi2u4RNApLCfE8rypwS8DG2a1lLidNnDE4yyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=V27YBjek; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710737354; c=relaxed/simple;
+	bh=wBSPAx6WLZjPzeinp+nl1/h/lKugViqAsU3Tv/aSkEY=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=lhhyrJ0KHcPVoVBnPE8b8judI1TjdukYtHMkbWsFT6I/DRiSjAX9D2NqcA+N/mHIy6YOIpgOEWusw9NUc/k52I1mbvwtzSYHbd7MLqfA4LrQ+cSrl1k2fTOCuxf2DPaVOWss5Y8hZCdvrPiD0XO1pRWzO0Ed/PKPb1bcraUU7So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QEhvpv/m; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V27YBjek"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7B35C2979E;
-	Mon, 18 Mar 2024 00:39:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ikZQYAjAV1HB+iuKVh9mj1MEjWBy8CA+ftLfGd
-	rHQJQ=; b=V27YBjekiekvse72o768vcQoq+L3qpqbwLnncocUZ5sMxVQWBVX7LF
-	TfoY9AKwbP4pnNZo2ED5gVOpcI/YGP7947SrfTL4sbhwzmjFQh5ZHATyS5OVv+hb
-	1a2RI4eU0e/4jmxT/HtMyTOFopAPy52TbxsQ4Bm+nwxS8hg790/tk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 739662979D;
-	Mon, 18 Mar 2024 00:39:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1A86E2979C;
-	Mon, 18 Mar 2024 00:39:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Peter Hutterer <peter.hutterer@who-t.net>
-Cc: git@vger.kernel.org,  David Heidelberg <david@ixit.cz>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH v5] diff: add diff.srcPrefix and diff.dstPrefix
- configuration variables
-In-Reply-To: <20240318034957.GA2935525@quokka> (Peter Hutterer's message of
-	"Mon, 18 Mar 2024 13:49:57 +1000")
-References: <20240315055448.GA2253326@quokka> <xmqqy1ajqvkb.fsf@gitster.g>
-	<xmqq8r2ioh19.fsf@gitster.g> <20240318034957.GA2935525@quokka>
-Date: Sun, 17 Mar 2024 21:39:11 -0700
-Message-ID: <xmqqplvskvbk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QEhvpv/m"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-430bf84977dso10569581cf.1
+        for <git@vger.kernel.org>; Sun, 17 Mar 2024 21:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710737352; x=1711342152; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=A+R7V+1A7uyejjSfngW4j1754mBWGzasgrJ/29zWKII=;
+        b=QEhvpv/mTrh3/rBD6drgByZsyKRLxb/Zn1VZMPzJykvnv52Uel+rY8eIiZgyfacY/N
+         qZ53EOtLrVOn7YfhupoYEUxytKTUcldFc4Ks2eM3Quaw2GzSxIEUEiG0nl0VCKbJUesf
+         LwX7q2dg1uUiXvDoIRW5Jnx2EqYqp7d4pFWlEDKnMSYkEmKa9ssrE3ZFl7cyVj2B8Qlp
+         yA2m4sPf0etHZcz4Yytje7dS6uMhEDJX20d4D4+TnzsoTt99V3rM4/g5wyfFJF9rT9/6
+         oY+CqYm2x4jRgubf5bcYXupkdaQvGzEXqgVuSi8WY0K+6wxJZBDOn2fS7a/T+yGvR2Cx
+         CK7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710737352; x=1711342152;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A+R7V+1A7uyejjSfngW4j1754mBWGzasgrJ/29zWKII=;
+        b=PEtRXTA4zW7qnXzSYOLmhvCaMNUCK/kSH6oGDW/zMcIr8uNZenk+J3rezLkkEUmrrp
+         +94C8iVAsN71UKOb5irHfpgVF5Rvno3odjMxwF4uAOjQJLA+a9zi1dYXCXLBcn1XG+Nb
+         FYoHeEzRu95TVgoV3DYsrUSAul+2yoRn/E8jVRCEM3Iny68WlwMUExnC7RtWg557hK1A
+         Ap4RMJuL0jexJ/x+x5X6e1I7dWRtjUQuCOztvxxbbh+YsCBBeIubPeRo7Xh7FpaBbnzT
+         sWRDTLaS3TBvbTRpAVFAuG5nSqXyAEhfLJ7EkJjvPwburG3f6ERjMNY4p5g+SwOtVQE1
+         YP2g==
+X-Gm-Message-State: AOJu0Yx6tHiuML5lr0uykQr8VHkXpS5hMEXlE0gTmbWYeb1a+RueuZQe
+	RMJBX87N1fDpjMTTY6getFh6T3s8up1i5svaBxRnx2cS0p9XYRA3
+X-Google-Smtp-Source: AGHT+IGI22U3AtLB757RLlJKJlaPsYreh9SQTBKvt4Drwjr7aWEUf1zwddKT14wAUbqF7rWL/gcjqA==
+X-Received: by 2002:ad4:40c9:0:b0:690:b9c6:efc2 with SMTP id x9-20020ad440c9000000b00690b9c6efc2mr3451604qvp.46.1710737352160;
+        Sun, 17 Mar 2024 21:49:12 -0700 (PDT)
+Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id dv8-20020ad44ee8000000b006961c06e844sm847610qvb.106.2024.03.17.21.49.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Mar 2024 21:49:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 783F3E30-E4E1-11EE-90F7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: "Linus Arver" <linusa@google.com>
+In-Reply-To: <owly1q8a4qhh.fsf@fine.c.googlers.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH] docs: correct trailer `key_value_separator` description
+Message-ID: <17bdc28ea2b88503.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Mon, 18 Mar 2024 04:49:11 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Peter Hutterer <peter.hutterer@who-t.net> writes:
+Hi Linus
 
-> On Fri, Mar 15, 2024 at 10:57:22PM -0700, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> > I am tempted to queue v4 with the z/ -> y/ fix from this round,
->> > without any other changes from v4 to v5.
->> 
->> So, that is what I did before I pushed out today's integration
->> result.  I however have an "after the dust settles" clean-up patch
->> on top (not committed yet), which I am sending out for review.
->> 
->> ------- >8 -------------- >8 -------------- >8 --------
->> Subject: diff.*Prefix: use camelCase in the doc and test titles
->> 
->> We added documentation for diff.srcPrefix and diff.dstPrefix with
->> their names properly camelCased, but the diff.noPrefix is listed
->> there in all lowercase.  Also these configuration variables, both
->> existing ones and the {src,dst}Prefix we recently added, were
->> spelled in all lowercase in the tests in t4013.
->> 
->> Now we are done with the main change, clean these up.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Reviewed-by: Peter Hutterer <peter.hutterer@who-t.net>
->
-> And thanks for merging the patch!
->
-> Cheers,
->   Peter
+On Sat, Mar 16, 2024 at 1:53=E2=80=AFAM Linus Arver <linusa@google.com> wrot=
+e:
 
-Thanks.
+> Nit: This line was modified to have " each" at the end. If you did that
+> on the next line, then this diff could have been a touch smaller.
+
+Sure -- it looks like this was a result of applying a different
+hard-wrap width than the previous author, perhaps? I thought it more
+prudent to wrap to a consistent length than to be overly concerned about
+the diff given that it was already a fairly trivial patch. That said,
+I'm not seeing a recommended wrap width for doc files documented
+anywhere either. Is there a documented guideline to follow here, both in
+terms of preferred wrap width as well as when it might be appropriate to
+stray from it for reasons such as this?
+
+> It's probably not worth re-rolling, but a small suggestion I have is to
+> simplify the language a bit to reduce repetition, like so:
+>=20
+>     ** 'key_value_separator=3D<sep>': specify the separator between
+>        the key and value of each trailer. Defaults to ": ". Otherwise it
+>        shares the same semantics as 'separator=3D<sep>' above.
+>=20
+
+I do prefer the simplified language. I had initially aimed to simply
+correct the inaccuracy, but I think that it probably *is* worth a quick
+re-roll to make this simplification. I will send that out shortly.
+
+--=20
+Thank you,
+Brian Lyles
