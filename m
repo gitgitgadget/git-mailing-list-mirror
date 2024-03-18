@@ -1,87 +1,114 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212F556470
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 19:13:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978B556470
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 19:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710789230; cv=none; b=H97tptvHfRZA8diBgmsXCjLjIACrYZWs2Zz7F1+/MrlQs+ymT6EdnBvlknf4YqxWkO/QK22fjIDfLiWBUt4/2HHThnkPAmzDPwVpweIvEAe7hSV0iKF7pEjv/Mvm8cAO8dXLCwjlIlwLrq9LZuQFyN/YCUOfCU0ToDLc7fdjXzA=
+	t=1710789492; cv=none; b=bxiGM7wQlYeMHuKRR8IbgwzYbWgoAd6Pal8iid09t9CuPkkCmbl80UsI1QHAULaaKS/TaJR0HMCqafJrFkSm92QuvRD99nTfDu8mVXCuRK11Aijj6wWVfReO24J67lfX9SSBSlSUHT6oMMaktw4JYBfV/sPwOBsb33TLHqYwRFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710789230; c=relaxed/simple;
-	bh=0OuTkhEfmTiTrE6DaN9lK3KukIKJHLcYt8lGveuyPCg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ONGUfEaLmRx1VMSfW15wygBzPFvj862OVHrXWGpMCijYAhtwEEa6XiCMtmjYXUfpIIuFHnw7gbQ+GsB54MGVt557DB1UgBVf1PakeQE2mSTFTeCg5rjNcU3UDyoFuvQ+INYRL34egWOG+Q0+ACWQrt4fWquIGjjgTGSN/c5TiNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=n8cH9m+v; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n8cH9m+v"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A3E62F654;
-	Mon, 18 Mar 2024 15:13:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0OuTkhEfmTiT
-	rE6DaN9lK3KukIKJHLcYt8lGveuyPCg=; b=n8cH9m+vNw2ccfxHN/GCtT3qWj3r
-	/HsxWR2VWhETldH8MWYZA0u7xgXQVAYNgWFLOfstq+K4jwKg42O/6smTVNfKXCyu
-	/vXfJiwOTwP6ZBtFBb45sMuhyrVWrSCLiVTv1iQoD66mlYKWSDuoFaZg7JNtrGBF
-	/wWwpdEjmgtLsKI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 835842F653;
-	Mon, 18 Mar 2024 15:13:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 28B152F651;
-	Mon, 18 Mar 2024 15:13:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: brianmlyles <brianmlyles@gmail.com>,  git@vger.kernel.org,  "Linus
- Arver" <linusa@google.com>
-Subject: Re: [PATCH] docs: correct trailer `key_value_separator` description
-In-Reply-To: <f6a16989-cbcb-4558-ae3b-350437fda7c2@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Mon, 18 Mar 2024 19:15:57 +0100")
-References: <17bdc28ea2b88503.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-	<owlyv85k2gts.fsf@fine.c.googlers.com> <xmqqh6h3jzp1.fsf@gitster.g>
-	<f6a16989-cbcb-4558-ae3b-350437fda7c2@app.fastmail.com>
-Date: Mon, 18 Mar 2024 12:13:43 -0700
-Message-ID: <xmqq5xxjgxp4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710789492; c=relaxed/simple;
+	bh=XziYInlE+bfjaZmR6xSHlbgfxzGQHez4dn5DPEqZ0B0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h3wQZ3JlF1AcMa/jggEHa4IA1Ybs8VMBGKFjzmgWJYTtaZPsvbAf/Ao2D0dpyqXUHNZSnemRw4mnkbzuadp1EkQZ8rVGTX398PswVen3vD9YsmiOVv44Oe6TuEhLTr7i/zsZESmqkJQS1dNRD+31r1O7pz2oEsEZk6fi7WLQ5z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6962950c6bfso4645356d6.2
+        for <git@vger.kernel.org>; Mon, 18 Mar 2024 12:18:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710789489; x=1711394289;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pXfP2lBSHkV4Fed6o8YPIRsd3AkjA1kuBgEccWqNCVU=;
+        b=nyQY0qtcVZ8JKr8sdty8IJV7TlCMtiR4GRRvdkhU4Hxw8fhq9g0H/XpNdlMdWPIHuD
+         KP+oyub4vjWXEwgBglI9C3/G8Q6EXI/3I+St5E6b487C8eG8P+lrHZyn10jA+k5hzcWp
+         F8gCFhzcRYgwB6zl7gs6xO8rZpY3JpmNuxCJQZ9m+mYi2ug9Yy5Fucl/Hlnbc8icyPRr
+         Wa1KQYtLh6VbnSbyqGBPSA+C3XQ5alsb8GU9FoexnG9e2hbD90c4uCogoIsviz0G4m4H
+         zzQpar3styEUVOHC/iJ3fq4y1LM5mpiM9Qei+BaKWfalQtbz5uihVVsjVVcn2raaecjg
+         +jFQ==
+X-Gm-Message-State: AOJu0Yyr4W2zXqouy4I1iRqHA0RDeMzc1bFQ6omfv5upefDjaJizrMPl
+	4/sYHGJ9H8C9BJgMAbQdrESeUf2acMhvZh6KJDFNv5YhRQ91a2/i31MWy98qNcMbWjtWcDKDoxC
+	smgiAB7CPQUKbKXjIKXP+HKRlciE=
+X-Google-Smtp-Source: AGHT+IF05RxMIcsqRiaDPE/FOvYpHJnOqgh1OQ1onxw77q+hljtZXDW2y5KTTSzu6oqMntd7SWNm8YD9FLq/NsjgV0I=
+X-Received: by 2002:a05:6214:9c4:b0:696:17cf:d35b with SMTP id
+ dp4-20020a05621409c400b0069617cfd35bmr3817799qvb.2.1710789489527; Mon, 18 Mar
+ 2024 12:18:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- A407D52A-E55B-11EE-8774-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <cover.1710646998.git.dsimic@manjaro.org> <9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
+ <CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
+ <9996af464aabe2bf594c63c237d7a6e0@manjaro.org> <CAPig+cTLrsUpvKVjkFUgs1b1gvj54rm6FBa=5v3uoQtJnB4rZQ@mail.gmail.com>
+ <c579edaac0d67a6ff46fe02072bddbb4@manjaro.org>
+In-Reply-To: <c579edaac0d67a6ff46fe02072bddbb4@manjaro.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 18 Mar 2024 15:17:58 -0400
+Message-ID: <CAPig+cSJdBm+sRcXSpdZYUqSqktN3ytcjD3kmhu6WfTRuqkPrg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] t1300: add more tests for whitespace and inline comments
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
+	github@seichter.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
-
-> My interpretation of this is
+On Mon, Mar 18, 2024 at 4:17=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> w=
+rote:
+> On 2024-03-18 03:48, Eric Sunshine wrote:
+> > Readability wasn't my reason for bringing this up. As a reviewer,
+> > every time a question pops into my mind as I'm reading the code, that
+> > indicates that something about the code is unclear or that the commit
+> > message doesn't properly explain why it was done in this way. People
+> > coming across this code in the future may have the same questions but
+> > they won't have the benefit of being able to easily ask you why it was
+> > done this way.
 >
-> 1. Commit messages are flowed/reflowed to 72 columns
-> 2. Code is reflowed to 80 columns (enforced by tools like clang-format)
->    =E2=80=A2 See `.clang-format` and `.editorconfig` (kept in synch.)
-> 3. Source documentation (AsciiDoc) is reflowed to 72 opportunistically;
->    not every time (in order to avoid diff noise) but when it feels like=
- it
->    makes sense
+> I see.  How about including a small comment in the t1300 that would
+> explain the additional indentation?
+
+I'm just one reviewer. Unless others chime in with similar
+observations or questions regarding the patch, I don't think such a
+comment is necessary. Aside from the other more significant points
+(such as not introducing x_to_tab(), using "setup" in the function
+title, etc.), this is extremely minor, and what you have here is "good
+enough" (though you may want to take Junio's suggestion of using a
+leading "|" to protect indentation).
+
+> As a note, there are already more tests in the t1300 that contain such
+> indentation, so maybe we shoulddo something with those existing tests
+> as well;  the above-proposed comment, which would be placed at the very
+> beginning of t1300, may provide a satisfactory explanation for all the
+> tests in t1300 that contain such additional indentation.
 >
-> Maybe SubmittingPatches should mention that last point? If my
-> interpretation is correct.
+> Another option would be to either add the indentation to all relevant
+> tests in the t1300, or to remove the indentation from all tests in the
+> t1300 that already contain it.  I'd be happy to implement and submit
+> patches that do that, after we choose the direction we want to follow.
 
-I do not know about #2.  I've seen cases where a patch trying to
-stick to the hard 80-column limit is hurting readability a lot.  I
-think the moral of the story is that code should never be reflowed
-mechanically without thinking---rather developers, when they see the
-need to go way too deep in indentation levels, should learn to take
-it a sign that they need to first refactor their code, e.g. with
-smaller helper functions with meaningful names.
+It would be better to keep this series focused on its primary goal of
+fixing a bug rather than being held hostage to an ever increasing set
+of potential cleanups. Such cleanups can be done as separate patch
+series either atop this series or alongside it. Let's land this series
+first, and then, if you wish, tackle those other less significant
+issues.
 
+> > If these new tests are also checking leading whitespace behavior, then
+> > to improve coverage, would it make sense to have the leading "X" on
+> > some lines but not others?
+>
+> Good point, despite that not being the main purpose of the added tests.
+> I'll see to add a couple of tests that check the handling of
+> indentation,
+> possibly at some places in the t1300 that fit the best;  improving the
+> tests coverage can only help in the long run.
 
+As above, such additional tests probably aren't mandatory for this
+bug-fix series. As a reviewer, I'd like to see fewer and fewer changes
+between each version of a patch series; the series should converge so
+that it can land rather than diverge from iteration to iteration. Such
+additional leading-whitespace tests may be perfectly appropriate for a
+follow-up series.
