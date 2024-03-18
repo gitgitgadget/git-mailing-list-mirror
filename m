@@ -1,63 +1,63 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF8938FA8
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 12:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13E939AF0
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 12:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710766068; cv=none; b=t+nj4oeWIs5nhq6qL+Rn61yM7SZEdEZbI4yGPfxj7HabAMAsbZkZzY2vgg895qR3DyWpczFVwE3fvlQpvAQS+pYbUxVXASth7gCnkdB62vFi7c/LKBGQ+/V6H3HEOH7UBCtF6vw5LJlxEERdcbJ6zV/tjSxgGE3461Mohs6WwIQ=
+	t=1710766069; cv=none; b=bVJd7+triXIUP4PL+EbTlTpqefGlsiMFwDiFS+lTIe9gZTKN9i2QOKO4sLr9ljo6vXiroQdp7zu3Q5LNdx+gCUWIFdkEdycTTV31GorGSPV0Z0EtY2KiIPYpm+HE/73lm99JS86RS4c0k+io8crncqMzuEx0GO2d/7gMdwFtmrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710766068; c=relaxed/simple;
-	bh=2d2f8P/K6eQ5MQuXmEVY8loA+G05OMq9vQLaLXbEaPs=;
+	s=arc-20240116; t=1710766069; c=relaxed/simple;
+	bh=zBJ1zUtEHegQeel+RyK+eV7+jQVOFf0XNgJ+2nUKp30=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KByNr2jZvNCBZI/DEzML4AkILz7cN98K2vXZFq+NwCHuYPapV6wikGr3yceFXa69XqlBbed8BwDScmXFbiuIlk2OlyXhKfbBw8zXu7T6+j2m9A0jIxmwDLFc4rZ203nNUZbnhGkGe9ukmycM1fK3cNzdMYqa/dapa7ZLuEZ/q4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaUpyeXq; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:To:Cc; b=UDG8JewQMlRSEwo4gPZ/Zodls/fkEbjSEffirzrtnZb62M5hz+szoNNapG2COonrBc1lvVpEUzd7Njwn7I9hxUIDMan5xGVOfUTZy/AahcSdblZOGoPnp9QG8yZLcrF8AkLEo2eG+QgRKyu9wOTKBRCO9aibilMp72iMYpXAQaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MH6lBgdx; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaUpyeXq"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-412e784060cso31084295e9.1
-        for <git@vger.kernel.org>; Mon, 18 Mar 2024 05:47:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MH6lBgdx"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-341808b6217so171220f8f.3
+        for <git@vger.kernel.org>; Mon, 18 Mar 2024 05:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710766064; x=1711370864; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710766065; x=1711370865; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=686slgiMFeh2Oc748QM8UuEwyINmY3mZzDpqBG7i2Os=;
-        b=IaUpyeXqM7BAH2Il93t8RT41VuqATVZI9V5d4gNNO6BZ9c9gKaUSUHm/Wm8YpFgvTx
-         QiQU9AydM0xzJiRVpcu/RsQTdJ8nk9hzxgCaEfOsKGhJIUprQ4OYYCroKkNF1JouL2xz
-         rGOf5EHvNhqDB00ZIxsNAocSDKo6y3O2wELr5jCrNQ04HpEMd+1wOmmHY77OJi57fcsZ
-         c7v18xTMMxgpwPznXsnHgyhUsb4KRbjJ7f5aCQZaUWh3JPIsWo0t+RP2ey36yKVX3NgK
-         dnuf7mbO0vqLBArOAArzmXmw2XElMitnupvcAvwwKaGgHiaAhm9Z9dgnExLDsPf5NFJo
-         MBFw==
+        bh=wlgwalGyk2TYHmVYB4Ipx/CZ8UIhfcN9B8A0op3Ix08=;
+        b=MH6lBgdxpfLHaTXg0nIMGT9dR74biwqKXUYhOvN8nGZ1QLUv4n1iwXwUiWoSmAQmrN
+         PXGSRG83e8UXTMFWo+EnjcMIfrg3JzHv9d1Ce+rI/fnAuv9/3LNWerkL18BDY13rKY9e
+         cb2HwhwOsZwuk5SO80z6PbTFrFT5+Tb1GMbBW+t+fczyiqL20Jprh8l0oJ+ur5cE0hCr
+         QsgWSsBMssDltz6ZKSl21Ue5dYStgsLGHE9wgwynIzAp5399sn1iJHb9cX7n1FS87EmJ
+         nD5bDtUbJav5WQtzbvldssfGNPaqJ8SAIBMA7x6kg/Su9Bv08I8R0dZ1KhpH5TXH5NgH
+         zUPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710766064; x=1711370864;
+        d=1e100.net; s=20230601; t=1710766065; x=1711370865;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=686slgiMFeh2Oc748QM8UuEwyINmY3mZzDpqBG7i2Os=;
-        b=boJfXLOF/EZwkEPWYlo33rg/KK9HJgyt7PvpgbymlIrkPv38YEzZd3ckgWmdxdMAuc
-         cpXzkQ08If+jDbNhHCE8DzqvRr+0fTVOJ5xXQ0iKSDlnc3zqs+hoqDsxTyXkQQ1bBli0
-         vjaef6c9KtP1Onfp3ViAL6v484WIvZdafPSv9hUKo8YljMFs9fexMVnhXClFMshRGMHq
-         7jm1QYOKojmh+q917q7Nu5dLlnY5N2giwBnrjLFY5ye9T9LjfxSbrzZSLZFLcSb5aKIX
-         PZRpj/u6bsyNP6BpT8728Ytnk72U6duYjMxMmWl3PAR3iSCe+EDGeowDbnF+2F23rzjm
-         en3g==
-X-Gm-Message-State: AOJu0YwO3M5OKPClsko7ZYQw/esSapwRTGOx82L5U0PndYf4+BOaxggl
-	1pEgERwsOrojodERufN6n+rTWPyvCrUVdSB4o8A2Vl8AlTaI0fnFngv6D7xg
-X-Google-Smtp-Source: AGHT+IEtnIVMrYd24II8nyfu9JsQIzuigsGxIKkawffRRYEfGUj0NcDur2EwpXZ/czvCrNqGpz+sqA==
-X-Received: by 2002:a5d:4a51:0:b0:33e:c91b:9083 with SMTP id v17-20020a5d4a51000000b0033ec91b9083mr10031990wrs.16.1710766063805;
-        Mon, 18 Mar 2024 05:47:43 -0700 (PDT)
+        bh=wlgwalGyk2TYHmVYB4Ipx/CZ8UIhfcN9B8A0op3Ix08=;
+        b=G+caxivpAGuKRyahpMP84kmrBtlyulGrnh6zMsPF/Hu7SkcpRBj8RyNji940pooGMn
+         T51VMs15N4RM6XzeVXxMYmFh4ui+J2Cq7bpEjommvPLnUEfGs+qhkvM4yU5xIMoIPZof
+         QYdrKRuhCaA/jN4G3WaXq8N/sF6imb8aLssFfEamSlJ6nipUXVdBNSS0VYJ2hcTLQa8n
+         +RocaAPl1ElWNev3Mp0Pd8zpQ2TJuLXiC1fI/l8PQIcl+f4i70RkxGuTWTpCZamyVIeQ
+         7dXQV6O88Ht6oZRhmsN0P0z0aNbjW6i2sz1cOJvjqo05VEtgCeO1TSGtUU0D30UxgnCG
+         ipGw==
+X-Gm-Message-State: AOJu0Yycwm3QUYNOwCYEm+pW9zSF8alUE91zCd374dJZ8zOXaMPtNawg
+	ySS0GcBJpGvG1BCZd5XoXJV64rP5hSszzE10YImiBpVJu0n+1Q24in9zVjml
+X-Google-Smtp-Source: AGHT+IFmJCZS5kF1cJoWb17h8laXOm0vFxm0B39Xr1Ubi9YTFWU51rUFU8bL+JZJWKg6JqEpvbRXoA==
+X-Received: by 2002:a05:6000:a90:b0:33e:4238:8615 with SMTP id dh16-20020a0560000a9000b0033e42388615mr7930626wrb.40.1710766065572;
+        Mon, 18 Mar 2024 05:47:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a26-20020a5d457a000000b0033e7e9c8657sm9744639wrc.45.2024.03.18.05.47.43
+        by smtp.gmail.com with ESMTPSA id y4-20020a5d4704000000b0033e7603987dsm9747214wrq.12.2024.03.18.05.47.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Mar 2024 05:47:43 -0700 (PDT)
-Message-ID: <0157b1deaebd5de4734d35f96f22a8da752e09bd.1710766062.git.gitgitgadget@gmail.com>
+        Mon, 18 Mar 2024 05:47:44 -0700 (PDT)
+Message-ID: <8a730b6ebba4111aaad4e8fc938c52f6e7e54480.1710766062.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1699.git.1710766062.gitgitgadget@gmail.com>
 References: <pull.1699.git.1710766062.gitgitgadget@gmail.com>
 From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 18 Mar 2024 12:47:41 +0000
-Subject: [PATCH 1/2] git-compat-util: migrate `convert_slashes()` from
- compat/mingw.h
+Date: Mon, 18 Mar 2024 12:47:42 +0000
+Subject: [PATCH 2/2] test-lib: replace repeated code logic with an existing
+ helper
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,110 +73,40 @@ Cc: Mohit Marathe <mohitmarathe@proton.me>,
 
 From: Mohit Marathe <mohitmarathe@proton.me>
 
-This patch migrates the `convert_slashes` function to `git-compat-
-util.h` and renames it to `change_path_separators`.
+This patch replaces the code, that changes the path separators,
+with the already existing function `change_path_separators()`
 
 Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
 ---
- abspath.c         | 4 ++--
- compat/mingw.c    | 4 ++--
- compat/mingw.h    | 6 ------
- git-compat-util.h | 7 +++++++
- path.c            | 2 +-
- 5 files changed, 12 insertions(+), 11 deletions(-)
+ t/unit-tests/test-lib.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index 1202cde23db..ea35e2c05ce 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -58,7 +58,7 @@ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
- 	strbuf_reset(resolved);
- 	strbuf_add(resolved, remaining->buf, offset);
- #ifdef GIT_WINDOWS_NATIVE
--	convert_slashes(resolved->buf);
-+	change_path_separators(resolved->buf);
- #endif
- 	strbuf_remove(remaining, 0, offset);
- }
-@@ -278,7 +278,7 @@ char *prefix_filename(const char *pfx, const char *arg)
- 
- 	strbuf_addstr(&path, arg);
- #ifdef GIT_WINDOWS_NATIVE
--	convert_slashes(path.buf + pfx_len);
-+	change_path_separators(path.buf + pfx_len);
- #endif
- 	return strbuf_detach(&path, NULL);
- }
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 320fb99a90e..f7c1a009563 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1170,7 +1170,7 @@ char *mingw_getcwd(char *pointer, int len)
- 	}
- 	if (xwcstoutf(pointer, wpointer, len) < 0)
- 		return NULL;
--	convert_slashes(pointer);
-+	change_path_separators(pointer);
- 	return pointer;
- }
- 
-@@ -2636,7 +2636,7 @@ static void setup_windows_environment(void)
- 		 * executable (by not mistaking the dir separators
- 		 * for escape characters).
- 		 */
--		convert_slashes(tmp);
-+		change_path_separators(tmp);
- 	}
- 
- 	/* simulate TERM to enable auto-color (see color.c) */
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 6aec50e4124..f5ca4adc194 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -448,12 +448,6 @@ HANDLE winansi_get_osfhandle(int fd);
-  * git specific compatibility
-  */
- 
--static inline void convert_slashes(char *path)
--{
--	for (; *path; path++)
--		if (*path == '\\')
--			*path = '/';
--}
- #define PATH_SEP ';'
- char *mingw_query_user_email(void);
- #define query_user_email mingw_query_user_email
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 7c2a6538e5a..3db90c09295 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1309,6 +1309,13 @@ static inline int strtol_i(char const *s, int base, int *result)
- 	return 0;
- }
- 
-+static inline void change_path_separators(char *path)
-+{
-+	for (; *path; path++)
-+		if (*path == '\\')
-+			*path = '/';
-+}
-+
- void git_stable_qsort(void *base, size_t nmemb, size_t size,
- 		      int(*compar)(const void *, const void *));
- #ifdef INTERNAL_QSORT
-diff --git a/path.c b/path.c
-index 8bb223c92c9..cd7c88ffa0d 100644
---- a/path.c
-+++ b/path.c
-@@ -758,7 +758,7 @@ char *interpolate_path(const char *path, int real_home)
- 			else
- 				strbuf_addstr(&user_path, home);
- #ifdef GIT_WINDOWS_NATIVE
--			convert_slashes(user_path.buf);
-+			change_path_separators(user_path.buf);
- #endif
+diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+index 66d6980ffbe..b0e26263046 100644
+--- a/t/unit-tests/test-lib.c
++++ b/t/unit-tests/test-lib.c
+@@ -52,9 +52,7 @@ static const char *make_relative(const char *location)
+ 		prefix_len = len - needle_len;
+ 		if (prefix[prefix_len + 1] == '/') {
+ 			/* Oh, we're not Windows */
+-			for (size_t i = 0; i < needle_len; i++)
+-				if (needle[i] == '\\')
+-					needle[i] = '/';
++			change_path_separators(&needle[0]);
+ 			need_bs_to_fs = 0;
  		} else {
- 			struct passwd *pw = getpw_str(username, username_len);
+ 			need_bs_to_fs = 1;
+@@ -88,9 +86,8 @@ static const char *make_relative(const char *location)
+ 
+ 	/* convert backslashes to forward slashes */
+ 	strlcpy(buf, location + prefix_len, sizeof(buf));
+-	for (p = buf; *p; p++)
+-		if (*p == '\\')
+-			*p = '/';
++	p = buf;
++	change_path_separators(p);
+ 	return buf;
+ }
+ 
 -- 
 gitgitgadget
-
