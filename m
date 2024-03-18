@@ -1,89 +1,136 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26C455C27
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 17:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF46255C0E
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 17:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710781425; cv=none; b=UXmqAWS88ZjV0V4qb+J9MoFeCIoa0WyR5P1nnCYbzqaDCDX+27+lEYvHTkTYRGHX4M0nX7pyuQVxsF5fQOZ2Pz6bpb0qzyrwf7P1TmfgQUnfJQ3TtQ3iAh2il+w2ekenqd+PhQD2xTVFqoPzss7yrXFgxldr0zr1R4pmKFl35wY=
+	t=1710782885; cv=none; b=AD2M02FdfimxmH8O2aWmPihARHUtKlvISFLXU4n/54Z7s0XadYlaHyXsMHa50lgsRzHnWJUk5oGzx0gCql/OGQi+/RoHDHqMtB435RdCZSVGeoJ207E+TuRHS93MfZKHHeiwkKTGo9RmNkdp1llZTJ5ydRM7QfvDSjse4cTI04o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710781425; c=relaxed/simple;
-	bh=+Nt9TIz1lSngdEfuWLTdgFFrbxiQIl+eUd/uAKaKTTU=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ou/RBMxdFSF/Agak5YbZXsNmQ1YC5KXnol+H0nYaE/IQfCS46DZfkJJ8VNAmiwCwFojQsmgAc+AUMSNuvarnbLfOXkvzpsO7McuVzaMkQ/gfk83jtILshfgnYPGSqxU+WzXFiJ6omQA3wUh2fUD+AfLtRS1da5rB0mTrYWBXxsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=bU4KqN0Z; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710782885; c=relaxed/simple;
+	bh=JZjv/MNh1Dhe9VPxt/27CC9KKOChIOW9aHVfOvNbvu0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EQZcTF5/rAJktMAfGG5QqeO/mNfa8fE3V2t0oR6XdoSJQBhX1+qqAc+rcMsPIjSxxaBeHQ+HCI/vgBk3Ydilwz72QvDTQGcEhM5w6T1QtUTGDAtQvcPExFgiS5LunkIgcNw4k4fvLteh2zDr9YPi6dqJpEU6HbHOU1z2GXIGEDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wFmNje8x; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="bU4KqN0Z"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710781412;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IKyO4gerwcF0Z9g8rQ8oDKQEc077zWWTUptWOuap30g=;
-	b=bU4KqN0Zy9wJGShfSydOiDhqJ9NNnRP/vBZggb+sfBDbjdSffRZhDOjMi6AgD1hKCNleGw
-	FmmPtjXIDYfmQEyhJsKl2SOmx1W8whIMrQu75bAsM59caFUv+Fd8brd7d50JYalnezvS/w
-	Yu74F0BqHd2Dv1BxZ3OZ6aRQF+n7ho1nJkB7QbwXGMAj8DjOmLgfWN1VXX0ouAhPqXBEq2
-	fP6hmgH8w5eQo4+ttpqGQIKaXmPKUqmYqqdfJyDDwD/rN0BqpxOI3vSKm0S3nAdSuRhF3v
-	XmJLnXYyCbhWeI0HviHbFPcVspIHVWN+rDBqVDeSDLGJrz9ul6V5sV0GK7BpqQ==
-To: git@vger.kernel.org
-Subject: [PATCH 5/5] grep docs: describe new config option to include untracked files
-Date: Mon, 18 Mar 2024 18:03:25 +0100
-Message-Id: <9ce006509306136bb2354006e3b14ceaf26d0d32.1710781235.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1710781235.git.dsimic@manjaro.org>
-References: <cover.1710781235.git.dsimic@manjaro.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wFmNje8x"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 77C242E89E;
+	Mon, 18 Mar 2024 13:28:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=JZjv/MNh1Dhe9VPxt/27CC9KKOChIOW9aHVfOv
+	Nbvu0=; b=wFmNje8xwOV2dGPI5xV8nRb0PKCaQOMimuW0vgypjXwJ728shINUeS
+	edNtD3cQpvXxrJjFU1rood5tAMOPbXlDMl3MH7jG9p0NLLqz1Kxqi+du/za84c+X
+	6InmLl1gxUeIzA62mLgdpSeqU7UQhV0GowrGOnnaUc/vlhaXxnXB8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 717BC2E89D;
+	Mon, 18 Mar 2024 13:28:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 04FB22E898;
+	Mon, 18 Mar 2024 13:27:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] builtin/commit: error out when passing untracked
+ path with -i
+In-Reply-To: <20240318155219.494206-4-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Mon, 18 Mar 2024 21:21:59 +0530")
+References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
+	<20240318155219.494206-4-shyamthakkar001@gmail.com>
+Date: Mon, 18 Mar 2024 10:27:57 -0700
+Message-ID: <xmqqedc7h2le.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DD6EDFCA-E54C-11EE-BBFF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Describe the new configuration option grep.includeUntracked, including the
-dependencies with the already existing options, and the conditions that
-make this option ignored, which allows other options to be used while the
-new option is enabled in one's git configuration file.
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
- Documentation/config/grep.txt | 6 ++++++
- Documentation/git-grep.txt    | 3 ++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+> Currently when we provide a pathspec which does not match any tracked
+> path alongside --include, we do not error like without --include. If
+> there is something staged, it will commit the staged changes and ignore
+> the pathspec which does not match any tracked path. And if nothing is
+> staged, it will print the status. Exit code is 0 in both cases (unlike
+> without --include). This was also described in the TODO comment before
+> the relevant testcase.
 
-diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
-index 10041f27b0c8..32f086997596 100644
---- a/Documentation/config/grep.txt
-+++ b/Documentation/config/grep.txt
-@@ -23,6 +23,12 @@ grep.threads::
- grep.fullName::
- 	If set to true, enable `--full-name` option by default.
- 
-+grep.includeUntracked::
-+	If set to true, enable `--untracked` option by default, to search also
-+	in untracked files, in addition to searching in the tracked files in the
-+	working tree.  If `--cached` or `--no-index` is specified, this option is
-+	ignored.  Also, it cannot be enabled together with `submodule.recurse`.
-+
- grep.fallbackToNoIndex::
- 	If set to true, fall back to `git grep --no-index` if `git grep`
- 	is executed outside of a git repository.  Defaults to false.
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index b377523381bb..af5f6572df16 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -47,7 +47,8 @@ OPTIONS
- 
- --untracked::
- 	In addition to searching in the tracked files in the working
--	tree, search also in untracked files.
-+	tree, search also in untracked files.  See also `grep.includeUntracked`
-+	in CONFIGURATION below.
- 
- --no-index::
- 	Search files in the current directory that is not managed by Git.
+Drop "currently" (cf. https://lore.kernel.org/git/xmqqle6xbep5.fsf@gitster.g/)
+
+> Fix this by matching the pathspec against index and report error if
+> any. And amend the relevant testcase and remove the TODO comment.
+
+> [RFC]: I am still unsure about the removal of --include related lines
+> from the testcase which checks whether the index is expanded or not from
+> t1092. Will separating it into a separate testcase of its own and
+> marking that to expect failure be better?
+>
+>  builtin/commit.c                         | 15 +++++++++++++++
+>  t/t1092-sparse-checkout-compatibility.sh |  4 ----
+>  t/t7501-commit-basic-functionality.sh    | 16 +---------------
+>  3 files changed, 16 insertions(+), 19 deletions(-)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index a91197245f..f8f5909673 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -441,6 +441,21 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>  	 * (B) on failure, rollback the real index.
+>  	 */
+>  	if (all || (also && pathspec.nr)) {
+> +		if (!all) {
+> +			int i, ret;
+> +			char *ps_matched = xcalloc(pathspec.nr, 1);
+> +
+> +			/* TODO: audit for interaction with sparse-index. */
+> +			ensure_full_index(&the_index);
+> +			for (i = 0; i < the_index.cache_nr; i++)
+> +				ce_path_match(&the_index, the_index.cache[i],
+> +					      &pathspec, ps_matched);
+> +
+> +			ret = report_path_error(ps_matched, &pathspec);
+> +			free(ps_matched);
+> +			if (ret)
+> +				exit(1);
+> +		}
+>  		repo_hold_locked_index(the_repository, &index_lock,
+>  				       LOCK_DIE_ON_ERROR);
+>  		add_files_to_cache(the_repository, also ? prefix : NULL,
+
+"git grep" for report_path_error() gives me four or five hits but
+they way all of them populate ps_matched array are different [*],
+so we cannot have a helper function to do so.
+
+    Side note: They tend to do "looping over all the paths, see with
+    ce_path_match() if the path matches, and do something with that
+    path if it does".  They do not do a separate useless loop that
+    is only for checking if all the pathspec elements match, like
+    the loop in this patch does.
+
+In a sense, not making this into a helper function is the right
+thing to do.  It would avoid encouraging this anti-pattern of adding
+a separate and otherwise useless loop.
+
+We must already be using pathspec elements to decide to do the
+"include" addition among all paths that we know about in some loop
+separately, no?  Isn't that what the call to add_files_to_cache() we
+see in the post-context doing?  Shouldn't that loop (probably the
+one in diff-lib.c:run_diff_files(), that calls ce_path_match() for
+each and every path we know about) be the one who needs to learn to
+optionally collect the ps_matched information in addition to what it
+is already doing?
+
+Thanks.
