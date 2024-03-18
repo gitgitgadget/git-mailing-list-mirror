@@ -1,82 +1,92 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA8654BE3
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 17:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6AB54BF7
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 17:03:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710781207; cv=none; b=PSeB9uIr4Q/0wm3k7Ake7mjaTk4y9/Pp/JF8577Y7WM9OXajAfUWoopwax1tA5aLerjqaFtjVuz2OPN94BJakbB9gjJ46746Q7hNoMa8VT5mO7tEZT+cyZcER1lWMzKFdN/Lw66x2HofZYGVSNCIW0jSIdwCcs2nbUrVqk3mOxg=
+	t=1710781421; cv=none; b=ll6krvTptaMsZTp1woaogA2ctlBYfog86IUNJqiZHBMPfvLc9ENbBufeVEWoQvE5OkHqKfQ58XGAO12tTonhSUC2K2z2XqkD5Kbp1puqhtBNtVp6FbPW1/aCbfkcgSR9HbfxqHDWy1L+9iaQDg0CL0xGgHDNUdc2BcGHBL4sjlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710781207; c=relaxed/simple;
-	bh=fcMgSv86o17DBZZ4/csfWra5FUEM/T/yrqEngSmjB7s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Cqhb4loM71a2suiuAURnPw/K4tVistwaxfZynZT4Ljrl8wvGWlutDLiPfH/ZVEs1CDYT/CJ2+rtIV983AD6rDzpSBIcaPNRwqcCCCMHLby884zENC3W0pkoBJVWp4gnC8Rahh3JidtzG1L6T+qpwJtRqHTexlIVCXDSLLs7SUAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qSR8ii0n; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710781421; c=relaxed/simple;
+	bh=J80MmsINZwivdHM8PnHdDpgF2emOYX4ct5zqM6ppZUA=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=HODFNxunjh1mx4Z2rmGGoYQVhkzo9gj7v+MkTOgF1EhVjo6YGhR/oPbKhJGJj2AyOeoDtPPhfU2MMCwYfEZvAanFuwxydzS8ZG5/kh/sA5n5sIW1zSSuO/gKCuS1Xcv2hbIvIiFUO+AINm9xbf91cMCrs/eC4sW4lRglO+CF53E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Cr65mK7q; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qSR8ii0n"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6990920F30;
-	Mon, 18 Mar 2024 13:00:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fcMgSv86o17DBZZ4/csfWra5FUEM/T/yrqEngS
-	mjB7s=; b=qSR8ii0nGDSyTw/vRUebJJ5IeLTKQVLfCyEdDOMPA/4AyXJDWgbzqI
-	3RHj6PSzq9eN7DI4AqE8c3KPMw8RpeObIOj4lfNOamXGmd7fqTnICRWKOBYQTR+D
-	tXUDt9ntfWewvqbmovheJPCHyJW8S71rDGH8NdnG6xKMnud6Y+y6k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 623F920F2D;
-	Mon, 18 Mar 2024 13:00:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5D47F20F1C;
-	Mon, 18 Mar 2024 13:00:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2024, #04; Fri, 15)
-In-Reply-To: <20240318085208.GA604917@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 18 Mar 2024 04:52:08 -0400")
-References: <xmqqedcbnhsq.fsf@gitster.g>
-	<20240318085208.GA604917@coredump.intra.peff.net>
-Date: Mon, 18 Mar 2024 09:59:59 -0700
-Message-ID: <xmqqzfuvh3w0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Cr65mK7q"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710781411;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YklGguCgfPO+/t9bR07jXoGH6HplMVGLdZqDw0OpJYg=;
+	b=Cr65mK7qXeU+AX/mMuGFXjzlVsXFeMvKnLKVkqga0Cc2bnEpdizOcvyywp/s5W3Wq4Tcks
+	ZYFwyRWB3mtxOD3+7t3YU+US9Zpm+JxbmHHLg/+zMFh22ajJU9YOywSxlnjAGwcMF4wG+R
+	VgJkdzrY26HcP+LDBeJ23hYptuU4lptoZGgR0sEptBPaIFwNfqdZt5qtY9mGL6CVFA8Fhu
+	cX1uqZ0vQFV3h539zUyx4nDCmKMeCx942wylH1bkUfuK/m81J6b1oNwR3WuuzO7i2+1aOL
+	5mNk9+8U9ZfuWOJwpWn1Cz5KCogHO0apfzW0uM4bVFE8LmMSyW/0GC4IR0KMEQ==
+To: git@vger.kernel.org
+Subject: [PATCH 3/5] grep docs: describe --no-index further
+Date: Mon, 18 Mar 2024 18:03:23 +0100
+Message-Id: <3e6136028ca3327b027d57c46fb8155ef3c0d6c5.1710781235.git.dsimic@manjaro.org>
+In-Reply-To: <cover.1710781235.git.dsimic@manjaro.org>
+References: <cover.1710781235.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F580CE4C-E548-11EE-B924-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Jeff King <peff@peff.net> writes:
+Describe the dependency between --no-index and either of the --cached and
+--untracked options, which cannot be used together.
 
-> On Fri, Mar 15, 2024 at 05:26:13PM -0700, Junio C Hamano wrote:
->
->> * jk/doc-remote-helper-object-format-option (2024-03-10) 2 commits
->>  - doc/gitremote-helpers: match object-format option docs to code
->>  - t5801: fix object-format handling in git-remote-testgit
->> 
->>  The implementation and documentation of "object-format" option
->>  exchange between the Git itself and its remote helpers did not
->>  quite match.
->> 
->>  What's the conclusion of this one???
->>  cf. <20240312074513.GA47852@coredump.intra.peff.net>
->>  cf. <87ttl99e0b.fsf@gmail.froward.int.ebiederm.org>
->>  source: <20240307084735.GA2072130@coredump.intra.peff.net>
->
-> Expect a re-roll for this one. After the discussion in the thread, I
-> think we can clean up the code a bit, too.
+As part of that, shuffle a couple of the options, to make the documentation
+flow a bit better;  it makes more sense to describe first the options that
+have something in common, and to after that describe an option that has some
+dependency on the already described options.
 
-Thanks.  I was waiting for the discussion to see a resolution, which
-we now seem to have.
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
+ Documentation/git-grep.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index ade69f00ebdd..b377523381bb 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -28,7 +28,7 @@ SYNOPSIS
+ 	   [-f <file>] [-e] <pattern>
+ 	   [--and|--or|--not|(|)|-e <pattern>...]
+ 	   [--recurse-submodules] [--parent-basename <basename>]
+-	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
++	   [ [--[no-]exclude-standard] [--cached | --untracked | --no-index] | <tree>...]
+ 	   [--] [<pathspec>...]
+ 
+ DESCRIPTION
+@@ -45,13 +45,15 @@ OPTIONS
+ 	Instead of searching tracked files in the working tree, search
+ 	blobs registered in the index file.
+ 
+---no-index::
+-	Search files in the current directory that is not managed by Git.
+-
+ --untracked::
+ 	In addition to searching in the tracked files in the working
+ 	tree, search also in untracked files.
+ 
++--no-index::
++	Search files in the current directory that is not managed by Git.
++	This option cannot be used together with `--cached` or `--untracked`.
++	See also `grep.fallbackToNoIndex` in CONFIGURATION below.
++
+ --no-exclude-standard::
+ 	Also search in ignored files by not honoring the `.gitignore`
+ 	mechanism. Only useful with `--untracked`.
