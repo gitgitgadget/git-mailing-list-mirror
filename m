@@ -1,129 +1,179 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9734C1E511
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 08:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8DB2C850
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 08:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710751077; cv=none; b=fFm9ckncuS6T9IoVtbsjqxx74fo9xHDqT69gk6qgK7MO3v74HoV6IwnNSOR/L+FYqSu1Sm7Z8NX0mWTxdKBb1/+gke4tCJNuSGy133HFmSucKrFAHJOsRmc3PYlY3bmXPqopdoM5NzyDLfqEStXSUa+kwgsnG20GivRj+7CqdvY=
+	t=1710751781; cv=none; b=r8XbZ3Qjq/q4g91EagSHtRBXZSlnRO8/+rPgiiHk8ti/qnQg0sahJJ3ND0UOWvgNPGV99uBrHgq54YfY+TMet9cgMKv+FVWjRo3NmhDfwnPpxUFaXofnP4+r7MhFZRn4rAXJD6fNnc6WXf9PTdqzEez0zkmGluOfUKnYeO/CbmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710751077; c=relaxed/simple;
-	bh=b/ZnpP4m75wBqR1MIbij5L02SjPykoQeFqmntztbeOU=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=kdXxMAeidQiVdQupPwqAHgOF5pACK+OdKMZgDp8WvyB4ApVbQS3823YUPz1Pv3I+gAFAjFIPs/dk3pgOw8CmBvnSP8JR6AoEdUrGRyFsOztYFT3/BTR1gvl9/vMDcyLgdwG31uCiyzaBJe1LBZ3ZtvBd5NNLfTrQpCdkNY6o93Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=vQAS9hwf; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="vQAS9hwf"
+	s=arc-20240116; t=1710751781; c=relaxed/simple;
+	bh=qqJCyyoOxyyzLClY8yIHXhz8kKh56nJbr+L6slct39A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RU2nGydf1WxLW9v7m7abSTAHdFW/PBYyCHBkuoY3NwpCPc4cP2HKkZXdTWg7v1RREEE6znRJFcnme+zL26h8uTZcikXKSrQwR3jo5jz/7S8vNttV5QvnrZ5ZD0oA1xrhHniHr52ooGlAsIEQrp6tJkHuDnrXjHypanciQ1N6TmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 9003 invoked by uid 109); 18 Mar 2024 08:49:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Mar 2024 08:49:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26692 invoked by uid 111); 18 Mar 2024 08:49:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Mar 2024 04:49:42 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 18 Mar 2024 04:49:37 -0400
+From: Jeff King <peff@peff.net>
+To: "Eric W. Biederman" <ebiederm@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
+ docs to code
+Message-ID: <20240318084937.GB602575@coredump.intra.peff.net>
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+ <20240307085632.GB2072294@coredump.intra.peff.net>
+ <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
+ <20240312074513.GA47852@coredump.intra.peff.net>
+ <ZfIWkJieqcPv5jA8@tapette.crustytoothpaste.net>
+ <87ttl99e0b.fsf@gmail.froward.int.ebiederm.org>
+ <ZfNqVowQBy47_92m@tapette.crustytoothpaste.net>
+ <87msqzo63f.fsf@gmail.froward.int.ebiederm.org>
+ <20240316060427.GB32145@coredump.intra.peff.net>
+ <87v85k4mcp.fsf@gmail.froward.int.ebiederm.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710751072;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vC7uB6P1AWlhadi/OecEGzqBwxoKH21rPbEhBnGD2Rk=;
-	b=vQAS9hwfgTArmsyA/XYIp8stjmOqZTJAdooze2gHg0hJA7cedevBgtkk5Pb0AKik9Af4NI
-	oO2l1NmZavFmoRGDLKuaPMtsoRgsrnntQVUjVPn2t5GIRkaP4nlUl63yesj1bgASEbC0AA
-	gHr5KKYWWl6yX9di0cXAQlpmfJbV/fkgW92PjIn+pI2Gpo6maGm4FH2hyCs+lseTRYhkny
-	eV7N93lJZBZmXx5d0x0f6uesm4U0dwR26iT784w1B1APbwy1LKzBPbG7Yj7/8JWwApdyUI
-	tFZFo68ZRl+RvOAtgUJAWwEy2/CzEXya6+nvMMYpXAJ9Adda1UYY2qTkFqODCw==
-Date: Mon, 18 Mar 2024 09:37:52 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
- rsbecker@nexbridge.com, github@seichter.de
-Subject: Re: [PATCH v2 4/5] t1300: add more tests for whitespace and inline
- comments
-In-Reply-To: <xmqqttl4kvch.fsf@gitster.g>
-References: <cover.1710646998.git.dsimic@manjaro.org>
- <9a73e7d3cbb9ea210ed1098c5a304b0f5d5e1a2e.1710646998.git.dsimic@manjaro.org>
- <CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com>
- <9996af464aabe2bf594c63c237d7a6e0@manjaro.org>
- <CAPig+cTLrsUpvKVjkFUgs1b1gvj54rm6FBa=5v3uoQtJnB4rZQ@mail.gmail.com>
- <xmqqttl4kvch.fsf@gitster.g>
-Message-ID: <62a4ec0dace46d7c56e75dac9c42c297@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87v85k4mcp.fsf@gmail.froward.int.ebiederm.org>
 
-Hello Junio,
+On Sun, Mar 17, 2024 at 03:47:18PM -0500, Eric W. Biederman wrote:
 
-On 2024-03-18 05:38, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >   - the docs say "object-format true", but the code just says
+> >     "object-format". They're semantically equivalent, so it's just a
+> >     minor syntax issue.
 > 
->>> >> +       x_to_tab >.git/config <<-\EOF
->>> >> +       [section]
->>> >> +               Xsolid = rock
->>> >> +               Xsparse = big XX blue
->>> >> +               ...
->>> >> +       EOF
->>> >> +'
+> I am a bit confused on this point after having read the code.  It
+> appears that when "object-format" is sent remote-curl
+> experiences "object-format true".
+
+Right, this is due to this code in remote-curl.c:
+
+                  } else if (skip_prefix(buf.buf, "option ", &arg)) {
+                          char *value = strchr(arg, ' ');
+                          int result;
+  
+                          if (value)
+                                  *value++ = '\0';
+                          else
+                                  value = "true";
+
+which goes way back to the beginning of remote-curl, even though I don't
+think Git ever sends a value-less option. Anyway, that's presumably why
+nobody noticed that "option object-format" is unusual.
+
+> Assuming remote-curl is the only remote helper that currently implements
+> the object-format capability.  I think we ant to fix transport-helper to
+> send "object-format true" just to be consistent with all of the other
+> options.
+
+We could be breaking third-party helpers that we don't know about. Of
+course, those helpers would have to have ignored the documentation. And
+I suspect they simply don't exist, or somebody would have showed up and
+asked about it (coupled with how new and relatively obscure the hash
+algorithm work has been so far).
+
+So maybe we can get away with fixing it now. We should definitely break
+it out into its own patch so we can decide independently, though.
+
+> >   - the docs say that Git may write "object-format sha256" to the
+> >     helper, but the code will never do that.
 > 
-> Just this part.
-> 
->> My assumption, perhaps incorrectly, was that existing tests already
->> verified correct behavior of leading whitespace and that the tests
->> added by this patch were about internal whitespace. If that's not the
->> case (and perhaps I didn't fully digest the commit message) then my
->> question about the leading "X" is off the mark.
->> 
->> If these new tests are also checking leading whitespace behavior, then
->> to improve coverage, would it make sense to have the leading "X" on
->> some lines but not others?
-> 
-> If "<<-" (I have here-doc but please strip the leading tabs because
-> I am aligning the here-doc with them) gets in the way for testing
-> material with leading tabs, the way to write and preprocess such a
-> here-doc is:
-> 
-> 	sed -e 's/^|//' -e 's/Q/   /g' >.git/config <<-\EOF
-> 	|[section]
-> 	|	solid = rock
-> 	|	sparse = big QQ blue
-> 	|	...
-> 	EOF
-> 
-> It will make it clear where the left-edge of the "sheet of paper"
-> is, removal of leading '|' does not get in the way of using '|' in
-> the middle of the line if needed, and Q being the least used letter
-> makes them stand out more in the middle of the line.  As it is
-> obvious that what is before solid and sparse is a tab (otherwise you
-> would not be using that '|' trick), you do not have to write Xsolid
-> or Qsolid there and still the result is much easier to read.
+> It looks like remote_curl will get confused in that case when it
+> processes "object-format sha256" as well.  As it stores that value in
+> options.hash_algo, which in all other cases is used to store what the
+> hash algorithm computed from the remote side.
 
-This looks quite neat.  Furthermore, I think we should also consider
-the already existing tests in the t1300 that contain such indentation.
-As I already explained in my earlier response to Eric, [1] the choice
-of including the indentation or not seems random to me, so we should
-perhaps consider taking some broader approach.
+Yeah, it ends up in the same variable. I _suspect_ it would simply be
+overwritten by the remote repo's idea of the hash. I'm not sure if
+that's a bug (if the specific algorithm given by the main process is
+supposed to take precedence) or a feature (if it's just a suggestion,
+and then the helper says "tough luck, the remote is using sha1"). It's
+hard to tell because Git never sends it. ;)
 
-How about this as a plan for moving forward:
+> As I read things the happy path for most connections is either going to
+> turn into git protocol v2, git-fast-export, or git-fast-import.
+> Unless I am misunderstanding something all of those will bypass
+> the code paths the remote helper object-format capability affects.
+> It is only when the remote helper send "fallback" during connect
+> that the remote helper format capability might be used.
 
-1) Sprinkle a couple of tests onto the t1300, which try to be
-    focused on the verification of the indentation-handling logic;
-    maybe those additional tests could be even seen as redundant,
-    but I think they can only help with the test coverage
+Yeah, I suspect that is true for remote-curl. It may not be for other
+helpers which don't support "connect".
 
-2) Create a new helper function that uses the logic you described
-    above, to make it simpler to include the indentation into configs
+> The only practical need I can imagine for this is if the client
+> is going to send oids before asking the remote side what it's oids
+> are.  The only case I can imagine doing this is the initial push
+> of a repository.
 
-3) Finally, propagate the use of this new helper function into the
-    new test and the already existing tests in the t1300 that already
-    include the indentation
+Hmm, I _think_ we are OK there in practice. Even if there are no refs on
+the remote repo (running git-receive-pack), it will still issue a
+capability line with its object-format. And then the helper (say,
+remote-curl) will report that back to the caller (git-push) who might
+say "hey, wait, there's a mismatch". And indeed, it seems to work in
+practice with remote-curl, where the push yields:
 
-I'd be happy to implement all of the above-proposed steps in the next
-couple of days.  Sure, it would be quite time-consuming, especially the
-third proposed step, but it should be worth it in the long run.
+  fatal: the receiving end does not support this repository's hash algorithm
 
-[1] 
-https://lore.kernel.org/git/c579edaac0d67a6ff46fe02072bddbb4@manjaro.org/
+In theory I suppose Git could directly issue a "push" command to the
+helper (which would then specify oids along with refs to push) without
+ever issuing "list for-push" (which is what causes the helper to contact
+the remote to discover and report back the object format). But it
+doesn't do that, and I don't see why it ever would.
+
+This is all neglecting dumb protocols that don't even know how to figure
+out the object format of the other side, but I think that's an
+orthogonal problem. Either it remains unsolved, or whatever solution we
+come up with then gets pushed back over the transport-helper protocol in
+the same way.
+
+> My sense is that unless we can find a current case that was overlooked
+> during the initial conversion we should remove "object-format
+> <hash-function>" support from the code and the documentation.
+
+Yeah, if you don't have any plans to use it for interop work, then I
+think we can declare it useless. I'll rework my patch series a bit to
+remove the useless sending-side code, and then add a patch on top to
+switch the "true" syntax as discussed above.
+
+> Looking at the code in transport-helper.c:push_refs it appears the one
+> use case I can think of is explicitly not supported. The code says:
+> >	if (!remote_refs) {
+> >		fprintf(stderr,
+> >			_("No refs in common and none specified; doing nothing.\n"
+> >			  "Perhaps you should specify a branch.\n"));
+> >		return 0;
+> >	}
+
+That only triggers if you didn't ask to push anything. You might have a
+sha256 ref locally and say "git push origin my-branch", and then we'd
+need to communicate the ref/oid combo for my-branch to the helper. But
+as above, I think by that point the helper will have discovered and
+reported back the object-format to push.
+
+> Mostly it deletes and simplifies code, but I found one case where
+> a malfunctioning remote helper could confuse us, so I added a check
+> to ensure :object-format is sent when we expect it to be sent.
+
+That's probably a reasonable thing to check. We should update the docs
+to indicate that it's required to send back ":object-format" if the
+helper negotiated that capability. I'll add a patch to do that.
+
+> Does that jive with how you are reading the situation?
+
+Yep, I think I have a good sense how to proceed. It may be a day or so
+before I produce a series. Thanks for the discussion!
+
+-Peff
