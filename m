@@ -1,21 +1,21 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52D159B55
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250B159B6D
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710799401; cv=none; b=i/qDcjwLtvaJX1J2+OB0QTxzkhDnwxw148OZaog3oj/5aMAXy5SBSmX1LRZvQB1w9qNePGKre9PnE3i/M2bHSlHNt8wwMRIrvekyLvIahQeOsdLGdP+vAVO0gbLE7pe3wdF/M107kkj9s3VpwAFErVCzqhi/opLPO2qVG1K3zII=
+	t=1710800088; cv=none; b=EZnVf6626ih0cB2CNJvjWjrivH0yoZaHe9LtT8X7Z2Snqq6gceBx3Jk47eA8GSj56OBjmIox4EpMPF0yCon+ZBr5rEYMxHJFBoQEtoFTs71P4ko5UKwvoqioNP5CarLGQqwFJa7cRF/bAibN3RT5v9rvk9QCHQ97YAwAaqjluMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710799401; c=relaxed/simple;
-	bh=fqMOVwLBCfA4IggoTBiwPKYofa6rDf4QbNComo8yVJk=;
+	s=arc-20240116; t=1710800088; c=relaxed/simple;
+	bh=3OA2ojQyDUaZ4R6MThjasvn37m3MBUFHiv2em9XuAaQ=;
 	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=rz59aU3CT72WFH9VrVk19JJeK53gdL3ky0wB7IS43QiRvdSYhu0O5Kx62X7REg1oMXdCFwAEUMbYsSTGnkJ+4+xC9PPCsIfFk0zRAT1VnKDo7oXhpS6ez8MJGj/d5OQz7Z8jJAxADUljWiqeDY+N2HNOLlW/xpgEeLYS9Y6s2SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Ne7+rWUV; arc=none smtp.client-ip=116.203.91.91
+	 Message-ID:Content-Type; b=WNS0nQUe2cJaCXLbP9JcGkGOLMN9cb+T8yv2A9AVmbK47rfjVrhBuQCFgaP8f81qcHQ2M8j4H5CYLZBUyBEOs4I5+ECiEhKleYwPCOitojrxDim+LqCrdZIEcIIKB1STd2VLUZrYN9PW9UmT/h3/WauNklZI050q0vdB0RJHiA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=PTSMO0ET; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Ne7+rWUV"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="PTSMO0ET"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -23,27 +23,28 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710799397;
+	t=1710800084;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=tk4+EmgAen2nKuZ/C9xX7wtBRfBFUPDnwdAf+Y3mNyU=;
-	b=Ne7+rWUVIjZTN2KurUESSymw+t+YKiQgJHPHsWQiM6yryHRmq9F3U3g/GsY7reE8CPyIww
-	PTuGsVKSu104iDqyszJdbXbJZB/4/vpDdS/SQnSsw2oQIKJo5LlDZK2Y5F5QTF2lCVRgub
-	l79yviF33xveB9HyiwQOsvMxIji6tXPF6Y2sGcdpBVEHCywbf9+wcy0Jb1gZRyNYRmbXiF
-	tXO6Zqys9JXKtQvPWxiRKkvIhiYv9CojMRjGKeI7Nv0Iab+EfCPbpnXkJzblNnnXNeM0Ss
-	sip20V/zHbQhthhje9EFEQe+WXmmZBw1QFWDgHwvdoAksC2EAL2WLTcQh/Okrg==
-Date: Mon, 18 Mar 2024 23:03:17 +0100
+	bh=W6vAlT0qrhm4HC1hHJLh7XPq/XzmoEZM3quWj5WSn+E=;
+	b=PTSMO0ETdfQQyRQqaqj6YqEGAgtXMkmX2Tuo36GjlltMAiNqbFfrnF4TDps4e0/rj5g9EV
+	WR/Z48G43OXtzsd783vfM1gWbj5ZJV1HSB15hM87X7HA2D8RQUk1n9MxbMozAC6u1fazK/
+	yIFskobH+w0YeTXtJ612vC5lA+gU+GMIYjElVkX7sdA5OPDJ80R3fQry6eonQzda9n28gf
+	6yEPtV21vb2hUWYzhGK38WrX5VAHyR9pRNmaOUwU2NkjK9zxwEg8tcPaNdjD3dIQyqED3q
+	k/e/vJmo13GTCbdlLuolPMu1Z+nGiOQ2kqAopmy0RV+Kg404RJlq3w6hWWPpbg==
+Date: Mon, 18 Mar 2024 23:14:44 +0100
 From: Dragan Simic <dsimic@manjaro.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] grep: perform some minor code and comment cleanups
-In-Reply-To: <CAPig+cQ6Y2oOaPkKFsD41beXLHjhD++nmf59xrcswpb6_Q-sdA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] grep docs: describe --recurse-submodules further and
+ improve formatting a bit
+In-Reply-To: <CAPig+cQc8W4JOpB+TMP=czketU1U7wcY_x9bsP5T=3-XjGLhRQ@mail.gmail.com>
 References: <cover.1710781235.git.dsimic@manjaro.org>
- <96b81f3573d3f29bb97e77d623be0d53cf8085b0.1710781235.git.dsimic@manjaro.org>
- <CAPig+cQ6Y2oOaPkKFsD41beXLHjhD++nmf59xrcswpb6_Q-sdA@mail.gmail.com>
-Message-ID: <9642c7e2adc888d960ded71d79af882b@manjaro.org>
+ <784912a8d9156fa00ddee218fd600254d7bab160.1710781235.git.dsimic@manjaro.org>
+ <CAPig+cQc8W4JOpB+TMP=czketU1U7wcY_x9bsP5T=3-XjGLhRQ@mail.gmail.com>
+Message-ID: <598b8683a06276f5b02dfd045c60d029@manjaro.org>
 X-Sender: dsimic@manjaro.org
 Content-Type: text/plain; charset=UTF-8;
  format=flowed
@@ -51,64 +52,41 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 2024-03-18 20:59, Eric Sunshine wrote:
+On 2024-03-18 21:02, Eric Sunshine wrote:
 > On Mon, Mar 18, 2024 at 1:04 PM Dragan Simic <dsimic@manjaro.org> 
 > wrote:
->> Move some variable definitions around, and reflow one comment block, 
->> to
->> make the code a bit neater after spotting those slightly unpolished 
->> areas.
->> There are no functional changes to the source code.
+>> Clarify that --recurse-submodules cannot be used together with 
+>> --untracked,
+>> and improve the formatting in a couple of places, to make it visually 
+>> clear
+>> that those are the commands or the names of configuration options.
 >> 
 >> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
 >> ---
->> diff --git a/builtin/grep.c b/builtin/grep.c
->> @@ -623,13 +623,13 @@ static int grep_tree(struct grep_opt *opt, const 
->> struct pathspec *pathspec,
->> -       struct repository *repo = opt->repo;
->> -       int hit = 0;
->> +       int hit = 0, name_base_len = 0;
->> +       int old_baselen = base->len;
->>         enum interesting match = entry_not_interesting;
->> +       struct repository *repo = opt->repo;
->>         struct name_entry entry;
->> -       int old_baselen = base->len;
->>         struct strbuf name = STRBUF_INIT;
->> -       int name_base_len = 0;
->> @@ -890,19 +890,15 @@ static int pattern_callback(const struct option 
->> *opt, const char *arg,
->> -       int hit = 0;
->> +       int hit = 0, seen_dashdash = 0, use_index = 1;
->>         int cached = 0, untracked = 0, opt_exclude = -1;
->> -       int seen_dashdash = 0;
->>         int external_grep_allowed__ignored;
->> +       int i, dummy, allow_revs;
->>         const char *show_in_pager = NULL, *default_pager = "dummy";
->>         struct grep_opt opt;
->>         struct object_array list = OBJECT_ARRAY_INIT;
->>         struct pathspec pathspec;
->>         struct string_list path_list = STRING_LIST_INIT_DUP;
->> -       int i;
->> -       int dummy;
->> -       int use_index = 1;
->> -       int allow_revs;
+>> diff --git a/Documentation/config/grep.txt 
+>> b/Documentation/config/grep.txt
+>> @@ -24,5 +24,5 @@ grep.fullName::
+>>  grep.fallbackToNoIndex::
+>> -       If set to true, fall back to git grep --no-index if git grep
+>> +       If set to true, fall back to `git grep --no-index` if `git 
+>> grep`
 > 
-> It's entirely subjective, of course, so no right-or-wrong answer, but
-> I personally do not find that this change improves code quality or
-> readability.
+> Good.
 > 
-> With my reviewer hat on, I spent an inordinate amount of time staring
-> at this change trying to locate each variable's new location to verify
-> that no initializers were dropped and that the declared type hadn't
-> changed. Taking into consideration that reviewers are a limited
-> resource on this project, I'd probably have skipped this patch
-> altogether if I were doing this series unless these changes concretely
-> help a subsequent patch.
+>> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+>> @@ -65,8 +65,8 @@ OPTIONS
+>>         <tree> option the prefix of all submodule output will be the 
+>> name of
+>> -       the parent project's <tree> object. This option has no effect
+>> -       if `--no-index` is given.
+>> +       the parent project's <tree> object.  This option cannot be 
+>> used together
+>> +       with `--untracked`, and it has no effect if `--no-index` is 
+>> specified.
+> 
+> I believe that there is a patch series currently in-flight which is
+> re-styling in-prose <foo> placeholders as _<foo>_, so you may want to
+> make that change as well while you're touching this.
 
-Oh, I'm fully aware that the reviewers are a limited resource, and I do
-agree that all this is subjective.  Though, I believe it makes the code
-look nicer, which is the only reason why I performed and submitted those
-changes in the first place.
-
-Though, maybe it would've been better if I submitted these changes as
-a separate patch, instead as part of this series.
+Thanks for the notice.  I'll add that to the v2 of this series, if
+there will be other reasons for the v2.
