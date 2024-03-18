@@ -1,54 +1,54 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC68376EC
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9709C381A4
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 10:53:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710759198; cv=none; b=JjWiPmbOitfnX9/GYMFakVHeRu9vCVBtWpLRQSbS5pURK2sjlDq6wOcGafIl9h5MuiztQbLv2IC5LNj+uizGdtKhOlbZEoon/iyP1xfNZSSKbPsu4wRH7UKbicAQoBdwCKMiQmw7tjGuCJ2dufigMSeUqxE08bM6zfE92T8EJBs=
+	t=1710759203; cv=none; b=uL0pkvPW/ib9qLuBqb3pCEYLs/ETDSPVZ5VCwO5xHCp1kXLVcw3lUYIjgp+Gb0NsP5RH+I8IW+3FXa3eoLs4nII0VU18qeMsNbZnzhkXOISY4nFRJONU4Cezta30XrUYBJMwvJoQK1E6u00X5RKl9wdi2cBfbs50YPaZruioQvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710759198; c=relaxed/simple;
-	bh=xim6e9zk5yD8yB7HbU9Hg8g7oidPF3zorQnNwdjg6Js=;
+	s=arc-20240116; t=1710759203; c=relaxed/simple;
+	bh=uA9ohyiCQuT2CVly4E0YxGX1OwRJCr7ZIHMd5AItVss=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t2wtPTRSh3XSfYT1WBp4MKaRV7a3z8iLT/oCnmaMJzbGu7EuchyfdDaSyLMs7ef47WT9ey5UI1d4efJuKPfNHM4xJGbRt9NCJ72F9E5mq2V1adBLvmuEPE5MkYRIppFwmNcmHRJeF+YX4ANyIIUwAgis5lmZubV2RVyG3jAd9DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N5VMLHey; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U2xiKl27; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=PYcm5uEJDfJ09edSts1rtfxDj6RqraW2hwdBCBzKyggXNnYDUxzzSR0tP847KNVpu559ErxeNIp8eZ14dL8m4s+utbUSvfdFzamGUcc04Bfj4uCJmKa5naprejb7mSsIJynmMtXkLOO9MLYtw1fm8FYRc0RLy7PHrkKYTVie840=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eyq9/tXL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SYu6ZiBH; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N5VMLHey";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U2xiKl27"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D946313800B8;
-	Mon, 18 Mar 2024 06:53:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eyq9/tXL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SYu6ZiBH"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id E20A3114009B;
+	Mon, 18 Mar 2024 06:53:20 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 18 Mar 2024 06:53:15 -0400
+  by compute4.internal (MEProxy); Mon, 18 Mar 2024 06:53:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1710759195; x=1710845595; bh=KFrt4V0XpV
-	jNJ5VgIdrBlUv53iRXlnUuNtyTcu3Z3nA=; b=N5VMLHeyvKuixCSbYufqsE8YNe
-	0DLNgQzlo4rS+QbWcR+vWk4eSqy6omUtIxCCz8Gn7iCn4HTBKFUIa7l0udZQIW8o
-	KBgejwmFiNyY8EOLmJfMDVXqJi/SKCWOz2wuWalYUP4Bx8itIB6lZkJExBFbnd8r
-	Lb+Lhmkm/Y2QiVlp5w7fnARZ8yOd2TI/0Mbz98FJqd32dH3VFl1DV9EyNLl1eC3M
-	it0pAIYy9X+7s/tuYwrfbjVrEorqZtyUWDIzNUTxxjB/7UuT2Fqg5ZNSTuwSzNIO
-	MehYdmINriY1r7CyDGysikSN5bbc59KAezA9OgZbDUV2IqZVInUWtzxaeUTQ==
+	:subject:to:to; s=fm2; t=1710759200; x=1710845600; bh=bSlEPbwMHZ
+	Ywu+ZRrfl3qNrPWEu8vPt88gJuHuIkbus=; b=eyq9/tXL/bq7EoH6ukkyZt7oDD
+	ZXwltBC+Vk+Q+4k3Vc+BIZokVec6ZVqJC+NzYF04CneOp/3O3j/DJSbkHDMm1N2I
+	a7QRU7jF3zLGyO/d/N2Hb2aB/+TATuvZcvUNNXs7QC/6Yq55SmFqFfSGb2Vl6Yjh
+	6oUUGSV+GH+nnofP+AFyYA5yavRfFw9xdAz2Z3eX+n0Q1j6rD/qu7+WuzqX8z2Es
+	J+bCAF2hzVixButm1YhSaPeMpeh2uz+plEntkg4hRQDcHwEDuPgeDdCG6zSxCasn
+	ZnKzeJpwBiTyMilChTMDb44d0vdOrorT7xAqrSi+SARzFyquL9e7YPMv1mYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1710759195; x=1710845595; bh=KFrt4V0XpVjNJ5VgIdrBlUv53iRX
-	lnUuNtyTcu3Z3nA=; b=U2xiKl27ZA5aDoW7+C2ObkxkkXdqiyRsE1N5YenqpY45
-	t2HzG5eQ1Q1vBcCDs3V0gJ/97wcaR43fakldTgk0EU+l4MZFqCxYkqwr+kAzlxoa
-	4KRWf2ootb5oGf5xIw2X4IVAp2XZaPnSRPdzWBAPcnUPygijTfedR0i08nzR/Rs1
-	W7+He0/kQh2hV938TMAfG31DNFOsEBCC5xkokzoXem89Lw0etSh2jV9oCg8YcbQk
-	mABhaBT5GvaB35rPUrk+j0OlhRr+k1mBZ7Nshc7jkrTAilRrmWsorQV9jZdIxvpt
-	iJ5RaLqwoaOj5OuIHtj7Aj3xr3Ajbl4yslu69TYW1w==
-X-ME-Sender: <xms:Gx34ZVdMxSQ9qLoMTwzddPkgFCR3ybyRfymmqEZD8dNpy9LY92KoFg>
-    <xme:Gx34ZTPHwQTJwyHHc7DSJz0zxMA3CM4o_p6o27u_82NCP_uDCIxLzfworfG5FRZqc
-    G241HhZiZeoVCZtWg>
-X-ME-Received: <xmr:Gx34Zej63fNML6A-YNEDDl4TNjWUuoiks9Cu6xIeDO1ob5dTGpDpGEvCVK3W4zF-D_GGbulrVdmKkORYw7oM9X-sb4RiXCTxJuXVilKCUrGU9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvudcutefuodetggdotefrodftvf
+	fm2; t=1710759200; x=1710845600; bh=bSlEPbwMHZYwu+ZRrfl3qNrPWEu8
+	vPt88gJuHuIkbus=; b=SYu6ZiBHOYHy6YX3d0RtP4sskvKKkkLQzRvmRC3DCVlu
+	x54MWWNmf5K90XOne9BClME6xiOoDwiajcJ9cEt8KGiUeXzhwpEjpEZK2hYndNSK
+	aAxkSYZ1cMKzZsOeauLygHm5qeK+xVJPGy824zk2hi7WuNXkNn7Ais1k7YdpVztl
+	87ocaN0iubYr9CZpkQt1xRH5C8/I7RNYHNWEf+LPUceTtybyeMFZevLos6eg42Nj
+	UBC1Mf2EOXJPDB7Cgo1rRxlxYJjmEf14VcZndq4ZDO7ZvHB4SQbLsdRoDqH7r1We
+	luAQW2qP9lqlZwEbG9YNc/VVmWv2IGIh6v7lPQjsIw==
+X-ME-Sender: <xms:IB34ZToJsLmYCpHs1mbZ4bqUcY-YR-zdi6_tJiVwue3FrdKhD2oiOA>
+    <xme:IB34ZdolrE3-sQdIIJzNSHId-KkDfWmKqlSdYlb2LWHLp8OHD2DAs4yC-D4enLLmH
+    lsjjnKfVT7nDsfsyA>
+X-ME-Received: <xmr:IB34ZQNSpqTtNkaSFcWDj97Z6-Kd9FihX4L1EFT1yzd3DYTiVBgI8Tq_glhKD9K0DtwrMuCUxkp2vABhMZnUmtGbCJ1_GLDapgSV2DP6GfqAWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,23 +56,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrkeejgddvudcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:Gx34Ze-wsweETx3aCzOhO8pLuW5ePb8kDdzlPd60jITGDeAit11IeQ>
-    <xmx:Gx34ZRvUEFM5oIZDlzlwOfCO7X8ibBVBaE6hO6LHa3RwzdDK_FfQ5w>
-    <xmx:Gx34ZdEthfANZDJIctSTX2vrr8znaAJcMjIw3mwq7UnULAQnW8LsgQ>
-    <xmx:Gx34ZYPZJ_0OJE8yllxSfqWGthzXJp2icc_FBWp6XzB4TCSKkxpvMA>
-    <xmx:Gx34ZZIcfQy8Amcg9e4jx0Kdf9_aU8o0zD2wqxjcvLK7LU8l0b7AtQ>
+X-ME-Proxy: <xmx:IB34ZW4JJwLeUAOjlWV4TK2YziEaJf34lkq9vbnIxkzr0KY1bD-vmg>
+    <xmx:IB34ZS6cw05MKfy2n6mlJ5w0sRMjxIBC73A2FFIbHgwoRgJE-qiS_g>
+    <xmx:IB34Zehv6aYEuLLNaH0DYuc6qoexJawQGCjp0I26WaZ39wG6I6cKcA>
+    <xmx:IB34ZU6nbJh-aJUdLVn7qSrkn_HOHWRXT2ITYrmVQR668s1C2XeZ2g>
+    <xmx:IB34ZYnqyKp0mopuLC1t8bjMYDmHvKcBpp3sTFUO_SBEecDHoxcCrA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Mar 2024 06:53:15 -0400 (EDT)
+ 18 Mar 2024 06:53:20 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 294c562e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Mar 2024 10:48:24 +0000 (UTC)
-Date: Mon, 18 Mar 2024 11:53:13 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c39799fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Mar 2024 10:48:29 +0000 (UTC)
+Date: Mon, 18 Mar 2024 11:53:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 11/15] builtin/pack-refs: introduce new "--auto" flag
-Message-ID: <8727f08bab8459ca608915a6320c817711742a87.1710706118.git.ps@pks.im>
+Subject: [PATCH 12/15] builtin/gc: move `struct maintenance_run_opts`
+Message-ID: <65c9ff3ee51c982203e8b76378536958836db7d5.1710706118.git.ps@pks.im>
 References: <cover.1710706118.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,195 +81,129 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="SNdk4uwO/G0VisGs"
+	protocol="application/pgp-signature"; boundary="p3/qx6jyaJSTQAk+"
 Content-Disposition: inline
 In-Reply-To: <cover.1710706118.git.ps@pks.im>
 
 
---SNdk4uwO/G0VisGs
+--p3/qx6jyaJSTQAk+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Calling git-pack-refs(1) will unconditionally cause it to pack all
-requested refs regardless of the current state of the ref database. For
-example:
-
-  - With the "files" backend we will end up rewriting the complete
-    "packed-refs" file even if only a single ref would require
-    compaction.
-
-  - With the "reftable" backend we will end up always compacting all
-    tables into a single table.
-
-This behaviour can be completely unnecessary depending on the backend
-and is thus wasteful.
-
-With the introduction of the `PACK_REFS_AUTO` flag in the preceding
-commit we can improve this and let the backends decide for themselves
-whether to pack refs in the first place. Expose this functionality via a
-new "--auto" flag in git-pack-refs(1), which mirrors the same flag in
-both git-gc(1) and git-maintenance(1).
+We're about to start using `struct maintenance_run_opts` in
+`maintenance_task_pack_refs()`. Move its definition up to prepare for
+this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-pack-refs.txt | 15 ++++++++++++++-
- builtin/pack-refs.c             |  3 ++-
- t/t0601-reffiles-pack-refs.sh   |  7 +++++++
- t/t0610-reftable-basics.sh      | 34 +++++++++++++++++++++++++++++++++
- 4 files changed, 57 insertions(+), 2 deletions(-)
+ builtin/gc.c | 53 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 27 deletions(-)
 
-diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.=
-txt
-index 284956acb3..2dcabaf74c 100644
---- a/Documentation/git-pack-refs.txt
-+++ b/Documentation/git-pack-refs.txt
-@@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repositor=
-y access
- SYNOPSIS
- --------
- [verse]
--'git pack-refs' [--all] [--no-prune] [--include <pattern>] [--exclude <pat=
-tern>]
-+'git pack-refs' [--all] [--no-prune] [--auto] [--include <pattern>] [--exc=
-lude <pattern>]
+diff --git a/builtin/gc.c b/builtin/gc.c
+index cb80ced6cb..e0029c88f9 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -180,7 +180,32 @@ static void gc_config(void)
+ 	git_config(git_default_config, NULL);
+ }
 =20
- DESCRIPTION
- -----------
-@@ -60,6 +60,19 @@ with many branches of historical interests.
- The command usually removes loose refs under `$GIT_DIR/refs`
- hierarchy after packing them.  This option tells it not to.
-=20
-+--auto::
+-struct maintenance_run_opts;
++enum schedule_priority {
++	SCHEDULE_NONE =3D 0,
++	SCHEDULE_WEEKLY =3D 1,
++	SCHEDULE_DAILY =3D 2,
++	SCHEDULE_HOURLY =3D 3,
++};
 +
-+Pack refs as needed depending on the current state of the ref database. The
-+behavior depends on the ref format used by the repository and may change i=
-n the
-+future.
-++
-+	- "files": No special handling for `--auto` has been implemented.
-++
-+	- "reftable": Tables are compacted such that they form a geometric
-+	  sequence. For two tables N and N+1, where N+1 is newer, this
-+	  maintains the property that N is at least twice as big as N+1. Only
-+	  tables that violate this property are compacted.
++static enum schedule_priority parse_schedule(const char *value)
++{
++	if (!value)
++		return SCHEDULE_NONE;
++	if (!strcasecmp(value, "hourly"))
++		return SCHEDULE_HOURLY;
++	if (!strcasecmp(value, "daily"))
++		return SCHEDULE_DAILY;
++	if (!strcasecmp(value, "weekly"))
++		return SCHEDULE_WEEKLY;
++	return SCHEDULE_NONE;
++}
 +
- --include <pattern>::
-=20
- Pack refs based on a `glob(7)` pattern. Repetitions of this option
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index ea2baeec76..db40825666 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -7,7 +7,7 @@
- #include "revision.h"
-=20
- static char const * const pack_refs_usage[] =3D {
--	N_("git pack-refs [--all] [--no-prune] [--include <pattern>] [--exclude <=
-pattern>]"),
-+	N_("git pack-refs [--all] [--no-prune] [--auto] [--include <pattern>] [--=
-exclude <pattern>]"),
++struct maintenance_run_opts {
++	int auto_flag;
++	int quiet;
++	enum schedule_priority schedule;
++};
++
+ static int maintenance_task_pack_refs(MAYBE_UNUSED struct maintenance_run_=
+opts *opts)
+ {
+ 	struct child_process cmd =3D CHILD_PROCESS_INIT;
+@@ -773,26 +798,6 @@ static const char *const builtin_maintenance_run_usage=
+[] =3D {
  	NULL
  };
 =20
-@@ -28,6 +28,7 @@ int cmd_pack_refs(int argc, const char **argv, const char=
- *prefix)
- 	struct option opts[] =3D {
- 		OPT_BOOL(0, "all",   &pack_all, N_("pack everything")),
- 		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default=
-)"), PACK_REFS_PRUNE),
-+		OPT_BIT(0, "auto", &pack_refs_opts.flags, N_("auto-pack refs as needed")=
-, PACK_REFS_AUTO),
- 		OPT_STRING_LIST(0, "include", pack_refs_opts.includes, N_("pattern"),
- 			N_("references to include")),
- 		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
-diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
-index b1cf587347..219a495451 100755
---- a/t/t0601-reffiles-pack-refs.sh
-+++ b/t/t0601-reffiles-pack-refs.sh
-@@ -164,6 +164,13 @@ test_expect_success 'test --exclude takes precedence o=
-ver --include' '
- 	git pack-refs --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
- 	test -f .git/refs/heads/dont_pack5'
+-enum schedule_priority {
+-	SCHEDULE_NONE =3D 0,
+-	SCHEDULE_WEEKLY =3D 1,
+-	SCHEDULE_DAILY =3D 2,
+-	SCHEDULE_HOURLY =3D 3,
+-};
+-
+-static enum schedule_priority parse_schedule(const char *value)
+-{
+-	if (!value)
+-		return SCHEDULE_NONE;
+-	if (!strcasecmp(value, "hourly"))
+-		return SCHEDULE_HOURLY;
+-	if (!strcasecmp(value, "daily"))
+-		return SCHEDULE_DAILY;
+-	if (!strcasecmp(value, "weekly"))
+-		return SCHEDULE_WEEKLY;
+-	return SCHEDULE_NONE;
+-}
+-
+ static int maintenance_opt_schedule(const struct option *opt, const char *=
+arg,
+ 				    int unset)
+ {
+@@ -809,12 +814,6 @@ static int maintenance_opt_schedule(const struct optio=
+n *opt, const char *arg,
+ 	return 0;
+ }
 =20
-+test_expect_success '--auto packs and prunes refs as usual' '
-+	git branch auto &&
-+	test_path_is_file .git/refs/heads/auto &&
-+	git pack-refs --auto --all &&
-+	test_path_is_missing .git/refs/heads/auto
-+'
-+
- test_expect_success 'see if up-to-date packed refs are preserved' '
- 	git branch q &&
- 	git pack-refs --all --prune &&
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index a53d1dc493..6de7529575 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -387,6 +387,40 @@ test_expect_success 'pack-refs: compaction raises lock=
-ing errors' '
- 	test_cmp expect err
- '
+-struct maintenance_run_opts {
+-	int auto_flag;
+-	int quiet;
+-	enum schedule_priority schedule;
+-};
+-
+ /* Remember to update object flag allocation in object.h */
+ #define SEEN		(1u<<0)
 =20
-+test_expect_success 'pack-refs: auto compaction' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		test_commit A &&
-+
-+		# The tables should have been auto-compacted, and thus auto
-+		# compaction should not have to do anything.
-+		ls -1 .git/reftable >tables-expect &&
-+		test_line_count =3D 4 tables-expect &&
-+		git pack-refs --auto &&
-+		ls -1 .git/reftable >tables-actual &&
-+		test_cmp tables-expect tables-actual &&
-+
-+		# Lock all tables write some refs. Auto-compaction will be
-+		# unable to compact tables and thus fails gracefully, leaving
-+		# the stack in a sub-optimal state.
-+		ls .git/reftable/*.ref |
-+		while read table
-+		do
-+			touch "$table.lock" || exit 1
-+		done &&
-+		git branch B &&
-+		git branch C &&
-+		rm .git/reftable/*.lock &&
-+		test_line_count =3D 5 .git/reftable/tables.list &&
-+
-+		git pack-refs --auto &&
-+		test_line_count =3D 1 .git/reftable/tables.list
-+	)
-+'
-+
- test_expect_success 'pack-refs: prunes stale tables' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
 --=20
 2.44.0
 
 
---SNdk4uwO/G0VisGs
+--p3/qx6jyaJSTQAk+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HRgACgkQVbJhu7ck
-PpRXdA/+LcfO3eifWwavcGiQrOKwlpPjnI9ZNWLdbD3lI3gIOgRUjHa2oQvcEQEn
-mtBeWm5rKwUgU9BBynrcIyoxIJwmPgUN8/hXeN2FQeo9YJZ58yccnCM26TXZVxRc
-MmvO7kBrZ9+u/Pxx6caCDrPLBiSaogARqI1Ozz0UXqUo6d9ovbcoc046Bl5ESojw
-jH9kF2AcOql9bWCfhzQ+2l47MQ/wvQEyYyhb8mrcGq4x0oEJ+3cL/vcGRB/rF9pM
-kotorurJ2sTo2omwnPMWN431f0HSHqw7RokUspF7eq/MQkpW17oon6GhNomFfH4C
-d7+qcXQgFjo5IX/ve/DllDbdWx4qa/CHp1EqVbe66Hk3iBPrfmOA0Um68yAlDRCZ
-lPDcx/skvqHEhQf5so4bkDUKcUbfYqOcbL+y2aafa/0vbLPtPDH6D9SRyKwajk1I
-WC9Ll81RoGPkbvn7j6wb9PbwWhDjlYz6EJ87UThWXZHOJcgbDsfNGFrMjSGoH90N
-rDf9MVw0L2JAtZqI9Uk8rpPAmAuPP/ngcrAWVNELxRkwuZZ00yXOKzfcicArLjVm
-9J2IIQo+AdxCl3G5FqrJz09ZZm3GSIdEqVhcClHpNOX5StoDVl/nfpivAus4Tfwa
-wB0kF54eaPK5GIwn2UMUJg3q8NARgo7Nxf5ePzzPFC5lR5kNnyM=
-=VhSW
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX4HR0ACgkQVbJhu7ck
+PpSvsA/+IyqIqYw8N3P3JP8id1hh1G3ByazwTXTXKFTxeif/ZR2CZ81/acW9bjvB
+aqF5e+tudFq88fwPM2gixJ+0++YeUYj5ucWy/GCU6rcH2M08of2fZ3TpriCmo/xf
+nsGIwinXwXCoqGH+imhrSFQTIkiMjJ8w357N7TUPEbbFlS9pz3ZULjCui5ZVFbay
+zX/BjmGOwDqRJv5GIeL2v0snQrh5QD2H2oG0fQpNLvwsX8oExulHWXPU3Dxr0e1A
+AytJPx589G6FbsE5r4B2d/s8DP3E45zd8j+ix9kCHwn0rDbBmpBSMaTTOxQBtkEQ
+W68KrST8pQYvsiW8OsDVPZ8dSs5iLs6nyDoaHu6bgLPEuVcUKKdRkw3wgTOgyl7a
+HFra4VEoogPAagY+01Io/R2wjIyMmvINvYG0utpv9ZhgUOCbP/Bq9R6sdk+Q/FL8
+Fu9/eW8/JC8r5uQQq+ktX2X0jyoYBvelxGB088MwF/tzUflEgXsrhoTyIeUhMa+w
+5oYluZYGH+fPksh54DzaSkpxjLfTMzkUmFIjhLYyaLiPLtYHDtZtfy7w9RWMbd6I
+sLeWYrlKJf7LXPveMlN+9MiJ+o1jHK07PkaOMEQBcAR6VKquVo+rT98Lv/d3hsOt
+JFrtkI44q6YcKhqMOjITbaO//h3LEKyuv6DgyfpHofoy5hdvIQw=
+=GZ/p
 -----END PGP SIGNATURE-----
 
---SNdk4uwO/G0VisGs--
+--p3/qx6jyaJSTQAk+--
