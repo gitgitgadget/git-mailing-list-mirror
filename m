@@ -1,42 +1,42 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B865E59B77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CF95A0E9
 	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710800671; cv=none; b=X3af3OD9n7RCFSl1EttODHYx18yjEp0y6d+2wLSVxymXZkIZRPWYD9cQG5VhGd+nGT0TfJOT8Q2ZaH71H29/WbJJhvpyEZctSi1gg3ik4y0iWYnJ6U38+OHu9+dLuxSc5MwCZtBMhnPeWO/9xJdp+Vsvwx+KLBaFP3/bwn62UoA=
+	t=1710800671; cv=none; b=oiMDPrLXinDqR9iglWOZ4seKri/m65uhy6q+3I3GWuMgCmAxVSwAan82XQJ+2cTR8a/uiX73gEkVVRfG4Z9q9qIgNvQBwCWtfRBRKbNtcHnlZwfSVSw5WgobwIanuHbUvVPPyrb9xSOnARwFKReJL/USnwsiiy760BkqfIgsvX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1710800671; c=relaxed/simple;
-	bh=Opq0hnsXmkEjpwoBrCVGfrnP7ULhUN11knrqaL7o6h4=;
+	bh=p1PfeyuxxycBrbMdREyxM1PNgEic96mNcz1+OhApmRY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KUaES7lsQs3TkG+OqhVtj99CI6SaBqtIC6HJiq56n0A7bpRqRhu9EJj0WU1G4FVDklwNmKTXLMCTNHkmLJ2UtNPB9srcxds89/AM3Co43SzIhAu8Bxm9A7IUAR0r8rSTXvU/4d1DrPCVeLzE4+bVn2olbWr9IkQj74a3Qm0WMz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=uTieX5WE; arc=none smtp.client-ip=116.203.91.91
+	 MIME-Version; b=KcP7BelVJQAJ3WfdcEoJZwIO2cFR9DH2kZD7xjOaBNbWW0MFeHsf9sCGpWcsjroFKsJYojg8/Ha6GcE/xpMlO9VrI2KxbHI7/m504Ao+KKIF3nCqPWr3MKt/KWZ6Qc5vVI1PrXZOqktGfaqfokFkL9ihr4J9P9sK/HguTRDM6kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=OMGd85Kc; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="uTieX5WE"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="OMGd85Kc"
 From: Dragan Simic <dsimic@manjaro.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710800667;
+	t=1710800668;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=yrOs75+rbuLnU8lEv9PIIWH3wYnZ03HmVer+YuNQA4M=;
-	b=uTieX5WEXX8+cVmeP+ycYtXgqtJwqOedDD+eQhk/xo9c5dj7bvAPLFGLKLPvu0VKdI3MT0
-	8IvdlFdYee4Hy3G3lCn8fAz+DzK9iTimcUzxNd+ZgQH0r6BrLoEqJ0b3ixFPs2SS5zqfFS
-	qqa85I4JFVxUjkU0GYfp99TOwSMIlkb6p6GZT6YI7MbNzSIcyrCwnlKh8IAxdzvoFOYjz1
-	mnOjSlvfOmrnp3iYu0aFYixvpJj8tvVK8EZlWlQAxKQtzHAkglk/z4l0dEZtdGAN9XJEq+
-	uZBm5GyUI9P5w1526d/3j1jxk25HrzN2fHI26H0cTgQN1RFsZLEOYdnHKKQGYg==
+	bh=n7Pd1vNNG8RFCIEeb3W6bTh3erqBwKPwxFGU4RXDAKo=;
+	b=OMGd85Kc4WTT2TLyZbov3gw3KybejIZdFgs5E4EDzOTZalOSAmBSZCV8sEY0nHJR9T0b1I
+	8wg18MC9TPsjH34Uf7+aiNH/grxoESQNC0tU59dckf3BOKnA0v8dweiRdLu1jZfDJqwkz8
+	M9pSsUw12Z9BcbsL4MmrSivx+jz3Qtt47HD4nhSv/RnEu9ipcwSVxdyEEoj3F1OLtKHMqc
+	OZpZFj1x+2k8FrjcsZ8334UbR0oXvtB6jFSiBib5KYoXU8yelj1uRf7ZT/gPdXNin6ZoP7
+	pyfTipYb7Y7qm3mgMpL1HcPD1EFyT0z5RmOAXVwtNny9Qp7lNmin2X/W1TeUJg==
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	rsbecker@nexbridge.com,
 	github@seichter.de,
 	sunshine@sunshineco.com
-Subject: [PATCH v3 3/4] t1300: add more tests for whitespace and inline comments
-Date: Mon, 18 Mar 2024 23:24:21 +0100
-Message-Id: <92ddcd1f668906348e20a682cd737d90bb38ddc6.1710800549.git.dsimic@manjaro.org>
+Subject: [PATCH v3 4/4] config.txt: describe handling of whitespace further
+Date: Mon, 18 Mar 2024 23:24:22 +0100
+Message-Id: <e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
 In-Reply-To: <cover.1710800549.git.dsimic@manjaro.org>
 References: <cover.1710800549.git.dsimic@manjaro.org>
 Precedence: bulk
@@ -49,173 +49,60 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Add a handful of additional automated tests, to improve the coverage of
-configuration file entries whose values contain internal whitespace, leading
-and/or trailing whitespace, which may or may not be enclosed within quotation
-marks, or which contain an additional inline comment.
+Make it more clear what the whitespace characters are in the context of git
+configuration files, and improve the description of the trailing whitespace
+handling a bit, especially how it works out together with the presence of
+inline comments.
 
-At the same time, rework one already existing automated test a bit, to ensure
-consistency with the newly added tests.  This change introduced no functional
-changes to the already existing test.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Dragan Simic <dsimic@manjaro.org>
 ---
 
 Notes:
     Changes in v3:
-        - Removed a few unnecessary invocations of x_to_tab()
-        - As pointed out by Eric Sunshine, [3] it's better not to introduce
-          new random helper functions, so x_to_tab() was replaced by a direct
-          invocation of tr(1), in one case that requires use of literal 'Q'
-          characters, and by invocations of q_to_tab(), in the remaining cases
-          that actually allow use of 'Q' characters to represent HTs
-        - Dropped the change of the name of an already existing test, to not
-          distract the reviewers, as suggested by Eric Sunshine [4]
-        - Renamed the first added test, as suggested by Eric Sunshine, [4] to
-          make it consistent with the expected way for naming setup tests
+        - Patch description was expanded a bit, to make it more on point
+        - No changes to the documentation were introduced
     
     Changes in v2:
-        - All new tests and one already existing test reworked according to
-          Eric Sunshine's review suggestions; [1][2]  the already existing
-          test was reworked a bit to ensure consistency
-        - Added a Helped-by tag
-    
-    [1] https://lore.kernel.org/git/CAPig+cRMPNExbG34xJ0w5npUc3DDwxQUGS_AQfam_mi4s53=sA@mail.gmail.com/
-    [2] https://lore.kernel.org/git/CAPig+cRG8eFxepkaiN54H+fa7D=rFGsmEHdvTP+HSSaLO_6T_A@mail.gmail.com/
-    [3] https://lore.kernel.org/git/CAPig+cSLb+Rsy81itvw9Tfvqv9vvKSPgO_ER9fWL04XZrgFvwg@mail.gmail.com/T/#u
-    [4] https://lore.kernel.org/git/CAPig+cTVmQzC38DympSEtPNhgY=-+dYbZmkr0RTRbhG-hp2fmQ@mail.gmail.com/
+        - No changes were introduced
 
- t/t1300-config.sh | 112 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 109 insertions(+), 3 deletions(-)
+ Documentation/config.txt | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 31c387868708..7688362826ea 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -11,6 +11,96 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 782c2bab906c..20f3300dc706 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -22,9 +22,10 @@ multivalued.
+ Syntax
+ ~~~~~~
  
-+test_expect_success 'setup whitespace config' '
-+	tr "X" "\011" >.git/config <<-\EOF
-+	[section]
-+		Xsolid = rock
-+		Xsparse = big XX blue
-+		XsparseAndTail = big XX blue 
-+		XsparseAndTailQuoted = "big XX blue "
-+		XsparseAndBiggerTail = big XX blue X X
-+		XsparseAndBiggerTailQuoted = "big XX blue X X"
-+		XsparseAndBiggerTailQuotedPlus = "big XX blue X X"X 
-+		XheadAndTail = Xbig blue 
-+		XheadAndTailQuoted = "Xbig blue "
-+		XheadAndTailQuotedPlus = "Xbig blue " 
-+		Xannotated = big blueX# to be discarded
-+		XannotatedQuoted = "big blue"X# to be discarded
-+	EOF
-+'
-+
-+test_expect_success 'no internal whitespace' '
-+	echo "rock" >expect &&
-+	git config --get section.solid >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'internal whitespace' '
-+	echo "big QQ blue" | q_to_tab >expect &&
-+	git config --get section.sparse >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'internal and trailing whitespace' '
-+	echo "big QQ blue" | q_to_tab >expect &&
-+	git config --get section.sparseAndTail >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'internal and trailing whitespace, all quoted' '
-+	echo "big QQ blue " | q_to_tab >expect &&
-+	git config --get section.sparseAndTailQuoted >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'internal and more trailing whitespace' '
-+	echo "big QQ blue" | q_to_tab >expect &&
-+	git config --get section.sparseAndBiggerTail >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'internal and more trailing whitespace, all quoted' '
-+	echo "big QQ blue Q Q" | q_to_tab >expect &&
-+	git config --get section.sparseAndBiggerTailQuoted >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'internal and more trailing whitespace, not all quoted' '
-+	echo "big QQ blue Q Q" | q_to_tab >expect &&
-+	git config --get section.sparseAndBiggerTailQuotedPlus >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'leading and trailing whitespace' '
-+	echo "big blue" >expect &&
-+	git config --get section.headAndTail >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'leading and trailing whitespace, all quoted' '
-+	echo "Qbig blue " | q_to_tab >expect &&
-+	git config --get section.headAndTailQuoted >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'leading and trailing whitespace, not all quoted' '
-+	echo "Qbig blue " | q_to_tab >expect &&
-+	git config --get section.headAndTailQuotedPlus >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'inline comment' '
-+	echo "big blue" >expect &&
-+	git config --get section.annotated >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'inline comment, quoted' '
-+	echo "big blue" >expect &&
-+	git config --get section.annotatedQuoted >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'clear default config' '
- 	rm -f .git/config
- '
-@@ -1066,9 +1156,25 @@ test_expect_success '--null --get-regexp' '
- 	test_cmp expect result
- '
+-The syntax is fairly flexible and permissive; whitespaces are mostly
+-ignored.  The '#' and ';' characters begin comments to the end of line,
+-blank lines are ignored.
++The syntax is fairly flexible and permissive.  Whitespace characters,
++which in this context are the space character (SP) and the horizontal
++tabulation (HT), are mostly ignored.  The '#' and ';' characters begin
++comments to the end of line.  Blank lines are ignored.
  
--test_expect_success 'inner whitespace kept verbatim' '
--	git config section.val "foo 	  bar" &&
--	test_cmp_config "foo 	  bar" section.val
-+test_expect_success 'inner whitespace kept verbatim, spaces only' '
-+	echo "foo   bar" >expect &&
-+	git config section.val "foo   bar" &&
-+	git config --get section.val >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'inner whitespace kept verbatim, horizontal tabs only' '
-+	echo "fooQQbar" | q_to_tab >expect &&
-+	git config section.val "$(cat expect)" &&
-+	git config --get section.val >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'inner whitespace kept verbatim, horizontal tabs and spaces' '
-+	echo "foo Q  bar" | q_to_tab >expect &&
-+	git config section.val "$(cat expect)" &&
-+	git config --get section.val >actual &&
-+	test_cmp expect actual
- '
+ The file consists of sections and variables.  A section begins with
+ the name of the section in square brackets and continues until the next
+@@ -64,12 +65,14 @@ The variable names are case-insensitive, allow only alphanumeric characters
+ and `-`, and must start with an alphabetic character.
  
- test_expect_success SYMLINKS 'symlinked configuration' '
+ A line that defines a value can be continued to the next line by
+-ending it with a `\`; the backslash and the end-of-line are
+-stripped.  Leading whitespaces after 'name =', the remainder of the
++ending it with a `\`; the backslash and the end-of-line are stripped.
++Leading whitespace characters after 'name =', the remainder of the
+ line after the first comment character '#' or ';', and trailing
+-whitespaces of the line are discarded unless they are enclosed in
+-double quotes.  Internal whitespaces within the value are retained
+-verbatim.
++whitespace characters of the line are discarded unless they are enclosed
++in double quotes.  The discarding of the trailing whitespace characters
++applies regardless of the discarding of the portion of the line after
++the first comment character.  Internal whitespace characters within the
++value are retained verbatim.
+ 
+ Inside double quotes, double quote `"` and backslash `\` characters
+ must be escaped: use `\"` for `"` and `\\` for `\`.
