@@ -1,56 +1,52 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB881367
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 16:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ADF55780
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 16:34:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710779471; cv=none; b=YWy140UnuXWxm6r3vpiXmtZ0sEQolTBWSrVMyX5zLbEjoAbWUEjk9KFIw2R6UAxcP8LWsqn2WNW2a83VEZ+U9TdWbCbZ+bg4Ow4o+QqktSSTEMx7sZiYyrF+t43LmhlS7TTppw4hCbzPsiVxgUhotZsdAUUogSpDp+SwaddF+OI=
+	t=1710779693; cv=none; b=YoAMZnQgHbKvM5+ei4o1OFtXziKTOptzjYwhYl2Y3RalalE15DniL+YwcKo9ftxoE0v27FHh8Hj1lwiNdgv2hFzVTq//j+qEzRmNe68ajL4Od6kzKfa3N+LDieI7nK7igpi3FfsTqxL0gfVe1a9mF4yilCHIVwmItfv1f7BRXNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710779471; c=relaxed/simple;
-	bh=HYWxsFyO+bHuGu19BwWO64/Xy0HCe6lPxt1Njs6W7P4=;
+	s=arc-20240116; t=1710779693; c=relaxed/simple;
+	bh=Rhb8qX2VNOpJX419vmhw7vY/Us5TIPKKqUsIuts3cBE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g8n9Rcos4NGSwz64VTGhyJE40RPSHZOFcQKjjB0VzNYv9vd0KRMy3ozK7bHCNq5AIVVhr9G2pCcml8GUa36LU7RIjvhk+jl9+ZUrqP0r5/Mj7HsDZmkiaMIxX3IsY2CaUrmY4rT74aswib6Wpdl4tXksdNzDsgV0ACdB43ooDqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bhEQNpEA; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=IPPWV36aYkvtSL9LMxDHwJ+8TAmkeBS24XRdVWhGb5VzwoO+aow87Lg+5PPcpURbSXIL+OqyceLC0VQX2g2mUAIyk1CJOM2XPs+MqqXRRQbhFuJoA8UY7m+og2eljjHKxFkzIkjuKJgK3to6+YEnDzqQ8YxKh2LQNk72URhe6OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lWxwfiwl; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bhEQNpEA"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6CFA52E266;
-	Mon, 18 Mar 2024 12:31:09 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lWxwfiwl"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E05F1FE7BB;
+	Mon, 18 Mar 2024 12:34:45 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=HYWxsFyO+bHu
-	Gu19BwWO64/Xy0HCe6lPxt1Njs6W7P4=; b=bhEQNpEAyVzcXUvrOnfGj8fxZ2LP
-	OB0p7ya2aN18DtwriJkOhFIdaFtXZYdFtTdaTNInonlxzbKqG9QHlOVK61Uo1hVl
-	e60Cz7+1hxS6tP9sMumc8XBbxuDSvnG0NA+DKOwMwJociDMyd7rMpo2dCE7aR2US
-	npQOPJNucDAke6c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 641382E265;
-	Mon, 18 Mar 2024 12:31:09 -0400 (EDT)
+	:content-type; s=sasl; bh=Rhb8qX2VNOpJX419vmhw7vY/Us5TIPKKqUsIut
+	s3cBE=; b=lWxwfiwloE/aUOJDb0rC03m6c2RmLfcuzj1uVftqCKAAryXZoV8SZ/
+	mNrB5NEO9FIagkPlY1IjKA0KE3ymE1Muwiv/EFGdKj9whL6gH7eOVEQg5HGyCxZt
+	B3VCriKH434fhU7qWhK2L6547xXowOqaPx0vd09izB9spkLKre5zw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 261061FE7BA;
+	Mon, 18 Mar 2024 12:34:45 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0B0772E264;
-	Mon, 18 Mar 2024 12:31:05 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F4AF1FE7B9;
+	Mon, 18 Mar 2024 12:34:44 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  ZheNing Hu <adlternative@gmail.com>,
-  Kristoffer Haugsbakk <code@khaugsbakk.name>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,  Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v3 0/2] Allow disabling advice shown after merge conflicts
-In-Reply-To: <pull.1682.v3.git.1710623790.gitgitgadget@gmail.com> (Philippe
-	Blain via GitGitGadget's message of "Sat, 16 Mar 2024 21:16:28 +0000")
-References: <pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
-	<pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
-Date: Mon, 18 Mar 2024 09:31:04 -0700
-Message-ID: <xmqq5xxjjyd3.fsf@gitster.g>
+To: Brian Lyles <brianmlyles@gmail.com>
+Cc: git@vger.kernel.org,  linusa@google.com
+Subject: Re: [PATCH v2 1/2] docs: correct trailer `key_value_separator`
+ description
+In-Reply-To: <20240318053848.185201-1-brianmlyles@gmail.com> (Brian Lyles's
+	message of "Mon, 18 Mar 2024 00:38:01 -0500")
+References: <20240316035612.752910-1-brianmlyles@gmail.com>
+	<20240318053848.185201-1-brianmlyles@gmail.com>
+Date: Mon, 18 Mar 2024 09:34:43 -0700
+Message-ID: <xmqq1q87jy70.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,43 +54,46 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- EB247B00-E544-11EE-8C97-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 6D66BBF0-E545-11EE-9B34-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Brian Lyles <brianmlyles@gmail.com> writes:
 
-> This series introduces a new config 'advice.mergeConflict' and uses it =
-to
-> allow disabling the advice shown when 'git rebase', 'git cherry-pick', =
-'git
-> revert', 'git rebase --apply' and 'git am' stop because of conflicts.
+> The description for `key_value_separator` incorrectly states that this
+> separator is inserted between trailer lines, which appears likely to
+> have been incorrectly copied from `separator` when this option was
+> added.
 >
-> Thanks everyone for the reviews!
+> Update the description to correctly indicate that it is a separator that
+> appears between the key and the value of each trailer.
 >
-> Changes since v2:
+> Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+> ---
+> Changes since v1:
+> - Minor wording tweak
+> - Minor wrapping tweak
 >
->  * expanded the commit messages to explain why the tests for 'git rebas=
-e' do
->    not need to be adjusted
->  * adjusted the wording of the new 'advice.mergeConflict' in the doc, a=
-s
->    suggested by Kristoffer for uniformity with his series which is alre=
-ady
->    merged to 'master' (b09a8839a4 (Merge branch
->    'kh/branch-ref-syntax-advice', 2024-03-15)).
->  * checked all new output manually and consequently adjusted the code i=
-n 1/2
->    to avoid a lonely 'hint: ' line.
->  * adjusted the addition in advice.h in 1/2 to put the new enum
->    alphabetically, as noticed by Rub=C3=A9n.
->  * added misssing newlines in 2/2 as noticed by Phillip and tweaked by
->    Junio.
->  * rebased on master (2953d95d40 (The eighth batch, 2024-03-15)), to av=
-oid
->    conflicts in 'Documentation/config/advice.txt' due to Kristoffer's m=
-erged
->    series
+>  Documentation/pretty-formats.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index d38b4ab566..e1788cb07a 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -330,8 +330,8 @@ multiple times, the last occurrence wins.
+>  ** 'keyonly[=<bool>]': only show the key part of the trailer.
+>  ** 'valueonly[=<bool>]': only show the value part of the trailer.
+>  ** 'key_value_separator=<sep>': specify a separator inserted between
+> -   trailer lines. When this option is not given each trailer key-value
+> -   pair is separated by ": ". Otherwise it shares the same semantics
+> +   the key and value of each trailer. When this option is not given each trailer
+> +   key-value pair is separated by ": ". Otherwise it shares the same semantics
+>     as 'separator=<sep>' above.
 
-Looking good; will queue.  Thanks.
+I was tempted to insert a comma before "each trailer key-value pair"
+while queuing this, but the missing comma is shared with other
+entries of the same list, so I'd queue it as-is.
+
+Thanks.
+
