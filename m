@@ -1,40 +1,44 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1458AC7
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDEA59B6A
+	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710800669; cv=none; b=B78ZTe/jWXKPVPTEQGdMNxen6nChgwj2W/EhtCHCywshdPFOI97LTwy5iCTBKMBDSZPA4PAlCLdiXLp7V+agXjywLvYmB8pkePG1d3i8lSlitQRCh8QakcWQBfTXz+uvnfSPuiav78yc6Q1ur0MUJg8rDgAvDvVbQp10OpoiaPI=
+	t=1710800670; cv=none; b=JWvHVKXogBPwdvYUXxlyOtNufQFi3EHSZUkcgP9fltLrWfLL6OW5HydchdbtWQZIpJty1VGfL1nQMpg/D1xSbY4coKXH7ZdLt57WR3VFDGW7QHb3J7Rpyi5vnGBXrbHIx+yXtAKrksgdZFdYEPljwSo1qes3frHNwaJSglRdzqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710800669; c=relaxed/simple;
-	bh=FjfECXNSEupii7tzrk+K4YXjCrVe6Fzt2S4ZvntMT8U=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ObYoV0MetHcrd9WPszVYtIkbPfgQxO/MH1lzFYyPy2I8l/6D7eBxPL6fQEyPyY1y/9sJAjv+5BRCO+snxqmdquFVwDZBbQEpHJpJDmjnhYwRRb+V5q3UEs3XNMKzUI8B/sM8fk9LP7MiUQ5Pl7g0mVP5yj5XZLta97dlpkRpX80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=s+xqze8V; arc=none smtp.client-ip=116.203.91.91
+	s=arc-20240116; t=1710800670; c=relaxed/simple;
+	bh=PvNSAsFlrDXjT2Mpge9lcdiC3B67yGjfuWQTpGpjj1I=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=CggyOFJFL8xXHrMICnn2DEAccL0RyCtNpuqdEXIAU9d/t4jo/K7/JC9QEG0V60Ce6bJDPo1Pd88cvEIG4DOTK3DpRc0rSg+jNAY/ZnNBkOVYeljfM95EZMS20+OGTu5SUxAyS5mBp3ZrJWi7bdmYEm5js80mj/yaGMlyI+H1L2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=rM7wYV4J; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="s+xqze8V"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="rM7wYV4J"
 From: Dragan Simic <dsimic@manjaro.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
 	t=1710800666;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=lOlxmy7JIBC5a112BW8irT05DPqZhP+iCFnSJoCJot8=;
-	b=s+xqze8VuNH7fsJtGhDrTP0+aQUTAglrDDTfyTNByxVCXR72fDlJ1ofgyLblccLuJvOunW
-	0l4N8QOxKE3TdcigsTn2NU5WzlejF49zhRkNXURDC9MxaAOQO+zpcQLYwUqBMZpDrPKrOQ
-	O4R3LRH1iDRbrLUYw/gMF5YXYVF003uNiP24r3fW8LGNgr9t/phZUD0/IzYfbr8sU2lpnE
-	SlTNcbKAZ5P5PJKLrkBOafPR0p6VH+CPhSJoQ4BXYr48KN6+rY6lUYiXb8YrZCXLKCX5ct
-	Rf4kJtoecX2Ihl4AkUWzesRLtLSjwezl+h73I1nv9ZhYv3ApsmUQ2ubuHvHwAg==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DeMfYo8d3De8yyuA6WBdBoyY6ib8otqM9QvDDSs4q8k=;
+	b=rM7wYV4JZVwjGWpiFKbBsGbRmIGE+j18URnkcEiW9CdO+mt073mHV1n/d/ooXz8UQTQYEI
+	Qsepv0mK/CP83ABA26YpIYAGCZuweCNxe9/uJAENOBCpVHfPnfuyZa8oTWkvjlk4qQEckp
+	WzoRwAu2JlLgYPHiQOBCzZoCNyQRUikXcKiS1mey8KEg9PhLMicIM8PN0j0VVMsM4CouH7
+	zZPbc8ZKFu+b1SItCEsfQEu2sCHpCfwC8UbxfpJwVy4bPft7agorUe1aW2fMKIOKIhSCUz
+	wMdYVuZJ/IbxktvDJsrZ2jJ7Xj0KvYNjw8h4yna70zQp0w1a96r8A4BhYL4tLQ==
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	rsbecker@nexbridge.com,
 	github@seichter.de,
 	sunshine@sunshineco.com
-Subject: [PATCH v3 0/4] Fix a bug in configuration parsing, and improve tests and documentation
-Date: Mon, 18 Mar 2024 23:24:18 +0100
-Message-Id: <cover.1710800549.git.dsimic@manjaro.org>
+Subject: [PATCH v3 1/4] config: minor addition of whitespace
+Date: Mon, 18 Mar 2024 23:24:19 +0100
+Message-Id: <2161355e5c9a8ca0c8c0d3e5115a8843be1f4111.1710800549.git.dsimic@manjaro.org>
+In-Reply-To: <cover.1710800549.git.dsimic@manjaro.org>
+References: <cover.1710800549.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,37 +49,34 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-This series is an evolvement from another recent series, [1] as a result
-of a decision to fix a longstanding bug in the parsing of configuration
-option values, instead of documenting the status quo. [2][3]
+In general, binary operators should be enclosed in a pair of leading and
+trailing space (SP) characters.  Thus, clean up one spotted expression that
+for some reason had a "bunched up" operator.
 
-The bufgix introduced in this series _should_ have no hidden negative
-effects.  All of the configuration-related tests, both the old and the
-new ones, pass with the patches applied.
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
 
-In v2, this series had five patches in total, out of which the third patch
-(i.e. patch 3/5) was dropped in v3. [4]  Other changes in v2 and v3 are
-described in each of the patches.
+Notes:
+    Changes in v3:
+        - Patch description was expanded a tiny bit, to make it more accurate
+        - No changes to the source code were introduced
+    
+    Changes in v2:
+        - No changes were introduced
 
-There will be follow-up patches, to address the majority of the points
-raised during the review of this series. [5]
+ config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Link to v2: https://lore.kernel.org/git/cover.1710646998.git.dsimic@manjaro.org/T/#u
-
-[1] https://lore.kernel.org/git/cover.1710258538.git.dsimic@manjaro.org/T/#u
-[2] https://lore.kernel.org/git/ff7b0a2ead90ad9a9456141da5e4df4a@manjaro.org/
-[3] https://lore.kernel.org/git/11be11f231f3bf41d0245c780c20693f@manjaro.org/
-[4] https://lore.kernel.org/git/514d832b0399ccdbc354675068477fea@manjaro.org/
-[5] https://lore.kernel.org/git/f37d753485094a3ba66fde5e85d0e2dc@manjaro.org/
-
-Dragan Simic (4):
-  config: minor addition of whitespace
-  config: really keep value-internal whitespace verbatim
-  t1300: add more tests for whitespace and inline comments
-  config.txt: describe handling of whitespace further
-
- Documentation/config.txt |  19 ++++---
- config.c                 |  15 ++++--
- t/t1300-config.sh        | 112 +++++++++++++++++++++++++++++++++++++--
- 3 files changed, 130 insertions(+), 16 deletions(-)
-
+diff --git a/config.c b/config.c
+index 3cfeb3d8bd99..a86a20cdf5cb 100644
+--- a/config.c
++++ b/config.c
+@@ -869,7 +869,7 @@ static char *parse_value(struct config_source *cs)
+ 			continue;
+ 		}
+ 		if (c == '"') {
+-			quote = 1-quote;
++			quote = 1 - quote;
+ 			continue;
+ 		}
+ 		strbuf_addch(&cs->value, c);
