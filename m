@@ -1,40 +1,40 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0886E34CDE
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 18:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5002E37708
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 18:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710873498; cv=none; b=AdFMEmvQkb1r8ugO0vWiytdmcn9ZR41hZwIpdl103qoLwEplPWz6B7Q16Y6f2s+oKpIuyf5eVZI6J+rlJsWmJ8gms4O5sMCDXHppidKc/nt9UGlsRxYY4rlFFWgXRetwiwIUHnvtC6Cm8MKHhCcnmCI3knU6ViktguUB9xK0xT8=
+	t=1710873498; cv=none; b=gkPl9GfaTO/8MhiV1VtqDn1G1RlFQvIiL2nk3Mjx1Y7YVlBNDdL6F4qrfAF4ca3tQd8CFJ7Fyh6a6iIJ82KsjeOokGSbrNCzLOOBFAhBh9EebDah6+HnIqYRJrNNu91LiwtXrofbX13k/Qtm7W6Oj299eqQg0np2yew6pR3rvGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1710873498; c=relaxed/simple;
-	bh=ym9q9XEW1WUzllKSfnxEKdeJSwLlDOC1+l+7wDF1QHY=;
+	bh=OUu2lEG9Nv0bZheTKLRjiQrJVzd7iZ0ZpXB4kKh+9K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/OiKjEA43wTJJ8wxvvvFaD1bdqWntM2M2XVC77vRWKJAb/q+QDhHesmXrHS+f6/BJZNJ7usREq9m3N+2724wi6Cl/9wIKhqZLb3ODWtTVoVMrqjyTwrztrsPJc0cFFwq8TSaz3HINasRvPpmhrhpRj894rlwDWvgqNqy9ljPwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=YpnlxOV/; arc=none smtp.client-ip=91.218.175.179
+	 MIME-Version; b=VDt03871BiHZJxJjCZHXuXjJ/uIo1GFJ9DI9SxqCqXqpzdLdva+W30KcsNITtm2STtQje8GtymkmKb1WGX+mq1wkERBBcJk4ZEZP/YmpOCzBS20RZ5uF5t+bOInsbFldOHf3hzVkNH8RIb9A7EyHbCkOKlAfPv1j1GsMmrRUpgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=XhixUwIF; arc=none smtp.client-ip=91.218.175.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="YpnlxOV/"
+	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="XhixUwIF"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
-	s=key1; t=1710873493;
+	s=key1; t=1710873491;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Wq50vlwqQS+3RpR1pQnmzTdRf0OIMhU5xCrpahBuR7w=;
-	b=YpnlxOV/VlDuPCVUKP6YHIJCOZRHV1CCYyjcB74oBlCR7FDYmjFHUUwTZRKiJF8ODohpDx
-	p6W82zB8iB1wbhBB5E45qkOS/RBTdgHZ7yPDQXoigGbtaHtiIY/UHKGDA7cSzd0cBx4pJU
-	OUz8fiHDbpZUiwrhStZbcH1ttNE4mLU2hmP6O+8D8HmJK1Qs4IxIl32RwlopVYnHvm6rHt
-	IRuRf1z+MJXFURFVrl01dPWlJ4XfVsj6AeyevvUwtE9/Wuuf0d7BLdtOGHUFSbMKwRM4A+
-	ke7ZJhdA66J7KXCpMmx7aBrWHFoGzX75b4AJIdtxAZUX/SFpUMgsYsMQEPtqkQ==
+	bh=QlO5iMWkcZmEJ+mJ0bqkas/diFd8Tjwia/QV10eRov8=;
+	b=XhixUwIFy3BgrSsJuf1TqxbNBROghIrJGyBJBUnN3QbumfNv419Uv65ES/mBBa0KPyfjpK
+	KGTejHrOp/yANtqNI9VcvNKIhP9mkMWGFDypfQBer9g6rpTViOD9cFWMVlCVZ2bGbXfvMe
+	3pHcVZAzPicUs+H8rheS9xS+XIueVoWszdRGTdZkg1OK23PszG31IVypgq287chDNifdBK
+	vwgYd6VLoiUL9QXmX/Meqi057V1u4PDcdn4w8nOR84LQ7H/IyezlSsYdU6B6u/BWqw/gdI
+	8uFL2MDfgAu7gcNLUx4DAXP0uClEsshf9dXQPHjgQDIYpc428+FsWvCgrZixyA==
 From: Ignacio Encinas <ignacio@iencinas.com>
 To: git@vger.kernel.org
 Cc: Ignacio Encinas <ignacio@iencinas.com>
-Subject: [PATCH v3 2/2] config: learn the "hostname:" includeIf condition
-Date: Tue, 19 Mar 2024 19:37:22 +0100
-Message-ID: <20240319183722.211300-3-ignacio@iencinas.com>
+Subject: [PATCH v3 1/2] t: add a test helper for getting hostname
+Date: Tue, 19 Mar 2024 19:37:21 +0100
+Message-ID: <20240319183722.211300-2-ignacio@iencinas.com>
 In-Reply-To: <20240319183722.211300-1-ignacio@iencinas.com>
 References: <20240309181828.45496-1-ignacio@iencinas.com>
  <20240319183722.211300-1-ignacio@iencinas.com>
@@ -47,133 +47,95 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Currently, customizing the configuration depending on the machine running
-git has to be done manually.
-
-Add support for a new includeIf keyword "hostname:" to conditionally
-include configuration files depending on the hostname.
+Avoid relying on whether the system running the test has "hostname"
+installed or not, and expose the output of xgethostname through
+test-tool.
 
 Signed-off-by: Ignacio Encinas <ignacio@iencinas.com>
 ---
- Documentation/config.txt  | 10 ++++++++++
- config.c                  | 17 ++++++++++++++++
- t/t1305-config-include.sh | 42 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 69 insertions(+)
+ Makefile                     |  1 +
+ t/helper/test-tool.c         |  1 +
+ t/helper/test-tool.h         |  1 +
+ t/helper/test-xgethostname.c | 12 ++++++++++++
+ t/t6500-gc.sh                |  3 +--
+ 5 files changed, 16 insertions(+), 2 deletions(-)
+ create mode 100644 t/helper/test-xgethostname.c
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e3a74dd1c19d..268a9fab7be0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -186,6 +186,12 @@ As for the naming of this keyword, it is for forwards compatibility with
- a naming scheme that supports more variable-based include conditions,
- but currently Git only supports the exact keyword described above.
+diff --git a/Makefile b/Makefile
+index 4e255c81f223..561d7a1fa268 100644
+--- a/Makefile
++++ b/Makefile
+@@ -863,6 +863,7 @@ TEST_BUILTINS_OBJS += test-userdiff.o
+ TEST_BUILTINS_OBJS += test-wildmatch.o
+ TEST_BUILTINS_OBJS += test-windows-named-pipe.o
+ TEST_BUILTINS_OBJS += test-write-cache.o
++TEST_BUILTINS_OBJS += test-xgethostname.o
+ TEST_BUILTINS_OBJS += test-xml-encode.o
  
-+`hostname`::
-+	The data that follows the keyword `hostname:` is taken to be a
-+	pattern with standard globbing wildcards. If the current
-+	hostname (output of gethostname(2)) matches the
-+	pattern, the include condition is met.
+ # Do not add more tests here unless they have extra dependencies. Add
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 482a1e58a4b6..9318900a2981 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -86,6 +86,7 @@ static struct test_cmd cmds[] = {
+ 	{ "truncate", cmd__truncate },
+ 	{ "userdiff", cmd__userdiff },
+ 	{ "urlmatch-normalization", cmd__urlmatch_normalization },
++	{ "xgethostname", cmd__xgethostname },
+ 	{ "xml-encode", cmd__xml_encode },
+ 	{ "wildmatch", cmd__wildmatch },
+ #ifdef GIT_WINDOWS_NATIVE
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index b1be7cfcf593..075d34bd3c0a 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -79,6 +79,7 @@ int cmd__trace2(int argc, const char **argv);
+ int cmd__truncate(int argc, const char **argv);
+ int cmd__userdiff(int argc, const char **argv);
+ int cmd__urlmatch_normalization(int argc, const char **argv);
++int cmd__xgethostname(int argc, const char **argv);
+ int cmd__xml_encode(int argc, const char **argv);
+ int cmd__wildmatch(int argc, const char **argv);
+ #ifdef GIT_WINDOWS_NATIVE
+diff --git a/t/helper/test-xgethostname.c b/t/helper/test-xgethostname.c
+new file mode 100644
+index 000000000000..285746aef54a
+--- /dev/null
++++ b/t/helper/test-xgethostname.c
+@@ -0,0 +1,12 @@
++#include "test-tool.h"
 +
- A few more notes on matching via `gitdir` and `gitdir/i`:
- 
-  * Symlinks in `$GIT_DIR` are not resolved before matching.
-@@ -261,6 +267,10 @@ Example
- 	path = foo.inc
- [remote "origin"]
- 	url = https://example.com/git
-+
-+; include only if the hostname of the machine matches some-hostname
-+[includeIf "hostname:some-hostname"]
-+	path = foo.inc
- ----
- 
- Values
-diff --git a/config.c b/config.c
-index 3cfeb3d8bd99..50b3f6d24c50 100644
---- a/config.c
-+++ b/config.c
-@@ -317,6 +317,21 @@ static int include_by_branch(const char *cond, size_t cond_len)
- 	return ret;
- }
- 
-+static int include_by_hostname(const char *cond, size_t cond_len)
++int cmd__xgethostname(int argc, const char **argv)
 +{
-+	int ret;
-+	char my_host[HOST_NAME_MAX + 1];
-+	struct strbuf pattern = STRBUF_INIT;
++	char hostname[HOST_NAME_MAX + 1];
 +
-+	if (xgethostname(my_host, sizeof(my_host)))
-+		return 0;
++	if (xgethostname(hostname, sizeof(hostname)))
++		die("unable to get the host name");
 +
-+	strbuf_add(&pattern, cond, cond_len);
-+	ret = !wildmatch(pattern.buf, my_host, 0);
-+	strbuf_release(&pattern);
-+	return ret;
++	puts(hostname);
++	return 0;
 +}
-+
- static int add_remote_url(const char *var, const char *value,
- 			  const struct config_context *ctx UNUSED, void *data)
- {
-@@ -406,6 +421,8 @@ static int include_condition_is_true(const struct key_value_info *kvi,
- 	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
- 				   &cond_len))
- 		return include_by_remote_url(inc, cond, cond_len);
-+	else if (skip_prefix_mem(cond, cond_len, "hostname:", &cond, &cond_len))
-+		return include_by_hostname(cond, cond_len);
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 18fe1c25e6a0..613c766e2bb4 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -395,7 +395,6 @@ test_expect_success 'background auto gc respects lock for all operations' '
  
- 	/* unknown conditionals are always false */
- 	return 0;
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 5cde79ef8c4f..ef9272fd8e53 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -357,4 +357,46 @@ test_expect_success 'include cycles are detected' '
- 	grep "exceeded maximum include depth" stderr
- '
+ 	# now fake a concurrent gc that holds the lock; we can use our
+ 	# shell pid so that it looks valid.
+-	hostname=$(hostname || echo unknown) &&
+ 	shell_pid=$$ &&
+ 	if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
+ 	then
+@@ -404,7 +403,7 @@ test_expect_success 'background auto gc respects lock for all operations' '
+ 		# the Windows PID in this case.
+ 		shell_pid=$(cat /proc/$shell_pid/winpid)
+ 	fi &&
+-	printf "%d %s" "$shell_pid" "$hostname" >.git/gc.pid &&
++	printf "%d %s" "$shell_pid" "$(test-tool xgethostname)" >.git/gc.pid &&
  
-+test_expect_success 'conditional include, hostname' '
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:$(test-tool xgethostname)a"]
-+		path = bar12
-+	EOF
-+	cat >>.git/bar12 <<-EOF &&
-+	[test]
-+		twelve=12
-+	EOF
-+
-+	test_must_fail git config test.twelve &&
-+
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:$(test-tool xgethostname)"]
-+		path = bar12
-+	EOF
-+	echo 12 >expect &&
-+	git config test.twelve >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'conditional include, hostname, wildcard' '
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:$(test-tool xgethostname)a*"]
-+		path = bar13
-+	EOF
-+	cat >>.git/bar13 <<-EOF &&
-+	[test]
-+		thirteen = 13
-+	EOF
-+
-+	test_must_fail git config test.thirteen &&
-+
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:$(test-tool xgethostname)*"]
-+		path = bar13
-+	EOF
-+	echo 13 >expect &&
-+	git config test.thirteen >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	# our gc should exit zero without doing anything
+ 	run_and_wait_for_auto_gc &&
 -- 
 2.44.0
 
