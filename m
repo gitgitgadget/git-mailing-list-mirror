@@ -1,161 +1,142 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1906240BF2
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 22:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7EC2F2C
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 22:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710889014; cv=none; b=G4ea8WdNUxlXcc4ciOG2r0f2jcVR+NQindPOcdIYZborb3d3CyBf8l2s1bIPYAL9NGJS135jfhOs/Zmo3FiKSb8NoWz9f+1Ru0rMzS+b5oR4S4SFTZrtHNZ9WOo2m3LxNwOI9iG8nvW0ukr+GsaXbcf1er596c8dfICicJpM1MU=
+	t=1710889142; cv=none; b=s4pVWzEPHJMwWMCr7Kfd/TT69Yss3WYZm1rBfQEImgFRFxuDHmFErqA+UfshmZa3v7Fsr6RpiHEmLmVpcr7NwBJSSI2zU8C1U72x40LTcd+TZda/oGGH/axlV0VwKIRUqht+Gd0nnaAwAWPsMYVBcw0jmiQjGh/lvqjJ2THnsp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710889014; c=relaxed/simple;
-	bh=I3K+K4fElGHzZviCDsL8HQ2YKbrYlIJOrVV2pIeDlBI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nnjguz74Pw1EgDhOnKs+2OxicKJUAy17WpprCPEu2TgwqsRyYkvgChJdbavw2mKQSPItU/+GVtdeunzIaCI1RUnpXc2YVp7hGu70BHVEad09ExSZAA/np73OVk5092aIuxSxuaLYQTvp5rrPo2TKhKJ5CN2C8Tu6csl/KBQmuUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GenRtiVE; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710889142; c=relaxed/simple;
+	bh=5fSrl/EOEdS2stZFft9qrnmSb7aN/pNP5U0Gh1bDv/s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KagNIESV2FplEGnP1gg6ims6LgQIgH0U08f6B6kklJcJKWCdICtI4zD/LWGWUlx5P5m2FGimj0MS303LmfI4Ry1pS52KvypdHIzVXU1r7Wi1cm4iwZ/uYxXt4plq4XHOj5KRjz2T2Wfu28AJGdHFJIv1G4QHTbpdDPqpgbyGWEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwOfKGLL; arc=none smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GenRtiVE"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D73E1CECB6;
-	Tue, 19 Mar 2024 18:56:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=I3K+K4fElGHzZviCDsL8HQ2YKbrYlIJOrVV2pI
-	eDlBI=; b=GenRtiVEWIMWNBW5czOS3srO8uFAZA0PrLPJ5+KGOq5worwZF65VAo
-	NzgB21/9sAPzl7BBdKjFOriq8t0nT42nfad1I17wHd7XYy2gK+bf2MbNYiwwbPHO
-	Re/eW0S8NiY1sXoIgCGlkG092BLnfXQsPcWz6wtlgk48yP8GbDi/Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 32DEA1CECB5;
-	Tue, 19 Mar 2024 18:56:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 932321CECB4;
-	Tue, 19 Mar 2024 18:56:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: Re: [PATCH 0/1] quote: quote space
-In-Reply-To: <xmqqttl2qml9.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	19 Mar 2024 08:15:46 -0700")
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
-	<xmqqttl2qml9.fsf@gitster.g>
-Date: Tue, 19 Mar 2024 15:56:44 -0700
-Message-ID: <xmqqfrwlltjn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwOfKGLL"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-5d8b887bb0cso4679920a12.2
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 15:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710889140; x=1711493940; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jRSCLwy8n3ut1WrS2pnjIhgYYIO+7B/hzRXC0bi3crU=;
+        b=AwOfKGLLZd7dzq/VnNswSZSdTDy6oOgcivIrSksNBC/7qhQEQkcij+64rSuHNPnDEp
+         sD+6U2tcDHbX8me7rAsdQnXpqdgUAs6ncHU24y9q+tNLfMBkzthhM64KaSfHIOPRbiZt
+         VT3Lp9yiyJGc5YTRDdy8M1Was2BfUODCO/gcpfDN1sN/3FKXEmMwKQqVoVQq0r9xbzDb
+         jIrGj4tkJp1/A/rlbLBePVBiJbDO6GvITK0i9Faw0kgpY2zJYk/GIi3kTxCgQErgJFII
+         k3MGFVNoVxrvjE6jPuqTRnFfTks7dA0At7eF268vaBZcvzzo0zXPKKqrUGh4vBQ3T/lo
+         OUCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710889140; x=1711493940;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jRSCLwy8n3ut1WrS2pnjIhgYYIO+7B/hzRXC0bi3crU=;
+        b=U6LdwaxtThjy66/33jgoBBHW0d53vztyl4nyzdly+DDVjCS2gQ7rtdLoIUopDJrWVq
+         itBr4rNUyEifJfBYmdryc6rK8SO82BPE9BztHhDha67M3ffGVGqmB+oLD4CtnvmldoD+
+         HdVKsA+ZDh0cQ2eN+ONRUJZqJmPlEUItGHJkLQ/OY6i0ILpMlTCOglAu3rT4C86gXHoa
+         KBM5Z3PpdLfkNfOc3aF4t8OfeWCjrZZYw/VklwEZcuWElFRtAdIxDwrClz7M1UzyjTla
+         rPY1wNAvMbDAlBENfbrML+ba6pjchDLqZQqdhrw5160AcnAFOlkEwhoJPzKvXSyRVu9E
+         1Lug==
+X-Gm-Message-State: AOJu0YxktTGIfbGmkopYXdSLfKLgIet9AXxYZ78NPnx5VMEosaLWe84/
+	8Qpd5vaNo9W2cXex82tBt9uDF6E3IFQT2KmOVnmhuFVAp2baRRFh+xS7PYwdiXgzKgSifd0M342
+	tdZQxviVGVWNen61jK/e4KPRa/Q3ARr7S
+X-Google-Smtp-Source: AGHT+IF/Vm0Dj5z7iMlnNFBaPRKysU9xzgYsodeBwUjgwRORPwgxv72fBDf1rCWSQp5rfi/5F+ANSzbjy9fQBDuAX8g=
+X-Received: by 2002:a05:6a20:af88:b0:1a3:6864:9b92 with SMTP id
+ ds8-20020a056a20af8800b001a368649b92mr3810992pzb.33.1710889139838; Tue, 19
+ Mar 2024 15:58:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F5CDDB78-E643-11EE-B386-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <20240319203244.799796-1-mb@x14.nl>
+In-Reply-To: <20240319203244.799796-1-mb@x14.nl>
+From: Justin Donnelly <justinrdonnelly@gmail.com>
+Date: Tue, 19 Mar 2024 18:58:23 -0400
+Message-ID: <CAGTqyRykxy2GJV6b4yavWnegbz0HwykaT7bExOXK4wENdoF+Qg@mail.gmail.com>
+Subject: Re: [PATCH] git-prompt: GIT_PS1_SHOWCONFLICTSTATE variable fix
+To: "Michiel W. Beijen" <mb@x14.nl>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Michiel,
+This is my code, so I'm really glad somebody else finds it useful!
 
-> That is an interesting corner case.  You should make this into a set
-> of new tests somewhere in t/; I suspect this only will "break" for
-> creation and deletion but not modification in-place or renaming (and
-> that should also be in the tests).
 
-It turns out that this is even more unintereseting than I hoped; it
-happens ONLY when there is no contents shown at all in the patch,
-and the patch is about creation or deletion of a path.  Mode change
-without touching any contents may also trigger the same breakage.
+On Tue, Mar 19, 2024 at 4:33=E2=80=AFPM Michiel W. Beijen <mb@x14.nl> wrote=
+:
+>
+> There are a few environment variables that can influence the output for
+> the __git_ps1 macro in git-prompt.sh. All settings that are 'on/off'
+> types such as GIT_PS1_SHOWUNTRACKEDFILES and GIT_PS1_SHOWDIRTYSTATE
+> just take any value, and in the tests are tested with 'y', however
+> GIT_PS1_SHOWCONFLICTSTATE must be set to 'yes' otherwise it will not
+> work.
 
-Here is a fix, which seems not to break any existing tests.
+I had actually considered using set/unset (for the same reason as you
+- consistency), but was advised to use a boolean flag.
 
------ >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] apply: parse names out of "diff --git" more carefully
+See: https://marc.info/?l=3Dgit&m=3D165897458021238&w=3D2 and
+https://marc.info/?l=3Dgit&m=3D165903017715652&w=3D2
 
-"git apply" uses the pathname parsed out of the "diff --git" header
-to decide which path is being patched, but this is used only when
-there is no other names available in the patch.  When there is any
-content change (like we can see in this patch, that modifies the
-contents of "apply.c") or rename (which comes with "rename from" and
-"rename to" extended diff headers), the names are available without
-having to parse this header.
 
-When we do need to parse this header, a special care needs to be
-taken, as the name of a directory or a file can have a SP in it so
-it is not like "find a space, and take everything before the space
-and that is the preimage filename, everything after the space is the
-postimage filename".  We have a loop that stops at every SP on the
-"diff --git a/dir/file b/dir/foo" line and see if that SP is the
-right place that separates such a pair of names.
-
-Unfortunately, this loop can terminate prematurely when a crafted
-directory name ended with a SP.  The next pathname component after
-that SP (i.e. the beginning of the possible postimage filename) will
-be a slash, and instead of rejecting that position as the valid
-separation point between pre- and post-image filenames and keep
-looping, we stopped processing right there.
-
-The fix is simple.  Instead of stopping and giving up, keep going on
-when we see such a condition.
-
-Reported-by: Han Young <hanyang.tony@bytedance.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- apply.c                |  9 ++++++++-
- t/t4126-apply-empty.sh | 22 ++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
-
-diff --git c/apply.c w/apply.c
-index 432837a674..e311013bc4 100644
---- c/apply.c
-+++ w/apply.c
-@@ -1292,8 +1292,15 @@ static char *git_header_name(int p_value,
- 				return NULL; /* no postimage name */
- 			second = skip_tree_prefix(p_value, name + len + 1,
- 						  line_len - (len + 1));
-+			/*
-+			 * If we are at the SP at the end of a directory,
-+			 * skip_tree_prefix() may return NULL as that makes
-+			 * it appears as if we have an absolute path.
-+			 * Keep going to find another SP.
-+			 */
- 			if (!second)
--				return NULL;
-+				continue;
-+
- 			/*
- 			 * Does len bytes starting at "name" and "second"
- 			 * (that are separated by one HT or SP we just
-diff --git c/t/t4126-apply-empty.sh w/t/t4126-apply-empty.sh
-index ece9fae207..eaf0c5304a 100755
---- c/t/t4126-apply-empty.sh
-+++ w/t/t4126-apply-empty.sh
-@@ -66,4 +66,26 @@ test_expect_success 'apply --index create' '
- 	git diff --exit-code
- '
- 
-+test_expect_success 'apply with no-contents and a funny pathname' '
-+	mkdir "funny " &&
-+	>"funny /empty" &&
-+	git add "funny /empty" &&
-+	git diff HEAD "funny /" >sample.patch &&
-+	git diff -R HEAD "funny /" >elpmas.patch &&
-+	git reset --hard &&
-+	rm -fr "funny " &&
-+
-+	git apply --stat --check --apply sample.patch &&
-+	test_must_be_empty "funny /empty" &&
-+
-+	git apply --stat --check --apply elpmas.patch &&
-+	test_path_is_missing "funny /empty" &&
-+
-+	git apply -R --stat --check --apply elpmas.patch &&
-+	test_must_be_empty "funny /empty" &&
-+
-+	git apply -R --stat --check --apply sample.patch &&
-+	test_path_is_missing "funny /empty"
-+'
-+
- test_done
+>
+> This commit changes that behaviour, and makes sure
+> GIT_PS1_SHOWCONFLICTSTATE is consistent with these other parameters.
+>
+> Signed-off-by: Michiel W. Beijen <mb@x14.nl>
+> ---
+>  contrib/completion/git-prompt.sh | 6 +++---
+>  t/t9903-bash-prompt.sh           | 2 +-
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-pr=
+ompt.sh
+> index 71f179cba3..fd6141e463 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -85,8 +85,8 @@
+>  # by setting GIT_PS1_OMITSPARSESTATE.
+>  #
+>  # If you would like to see a notification on the prompt when there are
+> -# unresolved conflicts, set GIT_PS1_SHOWCONFLICTSTATE to "yes". The
+> -# prompt will include "|CONFLICT".
+> +# unresolved conflicts, set GIT_PS1_SHOWCONFLICTSTATE to a nonempty
+> +# value. The prompt will include "|CONFLICT".
+>  #
+>  # If you would like to see more information about the identity of
+>  # commits checked out as a detached HEAD, set GIT_PS1_DESCRIBE_STYLE
+> @@ -528,7 +528,7 @@ __git_ps1 ()
+>         fi
+>
+>         local conflict=3D"" # state indicator for unresolved conflicts
+> -       if [[ "${GIT_PS1_SHOWCONFLICTSTATE}" =3D=3D "yes" ]] &&
+> +       if [ -n "${GIT_PS1_SHOWCONFLICTSTATE-}" ] &&
+>            [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
+>                 conflict=3D"|CONFLICT"
+>         fi
+> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> index d667dda654..6479a0d898 100755
+> --- a/t/t9903-bash-prompt.sh
+> +++ b/t/t9903-bash-prompt.sh
+> @@ -769,7 +769,7 @@ test_expect_success 'prompt - conflict indicator' '
+>         test_when_finished "git reset --hard HEAD~" &&
+>         test_must_fail git stash apply &&
+>         (
+> -               GIT_PS1_SHOWCONFLICTSTATE=3D"yes" &&
+> +               GIT_PS1_SHOWCONFLICTSTATE=3Dy &&
+>                 __git_ps1 >"$actual"
+>         ) &&
+>         test_cmp expected "$actual"
+>
+> base-commit: 3bd955d26919e149552f34aacf8a4e6368c26cec
+> --
+> 2.43.0
+>
