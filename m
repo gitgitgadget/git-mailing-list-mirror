@@ -1,92 +1,101 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B9AD2F5
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 14:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898E362818
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 15:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710859961; cv=none; b=oS6jujzFjM2nJHd10Qt1xHI9eMWiE6GOQy0X6gfOYoFQ01zPEYhq+6IJYC/SNSFyw4Af8+c1zIKIu6Xyb8csmGmYzwYt9EMpzBxUL90xmIEyyYPyc+YLxrxiair37l3phpt2fl7DiDvIqKpu8Zn5X4VJ2o5djoLigBAnRRpfxkY=
+	t=1710861351; cv=none; b=GGnCD2ImoNcE9Al6ZkdqB7gvnjChs9sHwvq4GiBHVeh3mdyrftg34TN2R5BHRg9tLyrK1zCTdZUTcE6Fx+IBbySw8qwNE1IBTklC1dqINRuy5Jnef4DCFwwyYtMT5gaS7e4MTbg4s8pPYdbIWDfcEXWXRVMbjIACwhbrD05Gv2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710859961; c=relaxed/simple;
-	bh=nREMoS1LYbWHm2rAWvi6rVE/FpcUaKdzG27B0vA4LG4=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=HSuSHF/rSt/6kMkCnd63xLhDz0QGczK6TOMNt5Cy5CrGvJdM4/jF/3sNdRai8wHxxGXywVoRQ5JjnwgYlOC2Ze9ccybXYY2v/SujkoYMPko9tzyhX+VV+PWg/z7Wkof/cg8JhzSkGCWVIdNl8JWEAm4gKNZALN4PP47vemOB1A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=XMm3v8VK; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710861351; c=relaxed/simple;
+	bh=u9+/7OrzD2v4WIgiNjUrcwOiNhOK/U2NbeBysW5B2rc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fq4x7I7N1F33zaJxOMsuA3zUhGp1xaGFgwGNZW66cRe65r1t/IxeI+QjOapFXPvfArSjwTK/T5/Kh6CmQiwn5PVC0Muw31ucGGpaB072Lx4H6H9W2NJCl6ZyAmHf5q1HTSEQ2WHxthN+gBjGg/o5ZNmsg3/hKEDAyzLowexK+TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NPL8+HzG; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="XMm3v8VK"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NPL8+HzG"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 734461D9C19;
+	Tue, 19 Mar 2024 11:15:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=u9+/7OrzD2v4WIgiNjUrcwOiNhOK/U2NbeBysW
+	5B2rc=; b=NPL8+HzGI7mWarqArOC3j4eggRvXQt7nku3wsuowndsTxOu/chgoGa
+	sIf3uupjf62Bq33zomj48AmoF6oJTlhBjWojDthn9fRsOX1GNqb6X0YQ+aziZEeT
+	O61jHNttth6F+9BnaXzhUl8vMnntOUokpvQMDH5/ta/MSdOrBNcPg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 690231D9C17;
+	Tue, 19 Mar 2024 11:15:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C14451D9C16;
+	Tue, 19 Mar 2024 11:15:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/1] quote: quote space
+In-Reply-To: <20240319095212.42332-1-hanyang.tony@bytedance.com> (Han Young's
+	message of "Tue, 19 Mar 2024 17:52:11 +0800")
+References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
+Date: Tue, 19 Mar 2024 08:15:46 -0700
+Message-ID: <xmqqttl2qml9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710859949;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HL38rm103Ma1XLJhaq7Wr0+j8AfTLAILx2Cz5CuBO3w=;
-	b=XMm3v8VKK9XYGA3mcWrzsyBxGsS0UEcx+WwtmV1uwWNpN29LqX2Ltr4KgrizUn81pMbGJR
-	jBW+5IJ95GucgKVhDhrqpxcivvSj9MbqVw9EKbKPMpQM/qFtl9hSBYqLPgn+Ax1GHXawnK
-	pP1mk/+CIiqYAp2r5SLHecDhI+luB5Otw+bwrVQqSoSXogyZK0a0QRbVJem9Wqg1fBNJOT
-	Ir97gPwTUciqewNyQLI22bIzaiTO+kmN6xazC/XFJwrE/PDbKY8CVSkHRPx5b8E3lEgImr
-	scnj5DX6xuZEP7+oKCCbJqW8oritZCneqg7uhxW11R3/0IXM1JjZ4iFLeE9+og==
-Date: Tue, 19 Mar 2024 15:52:28 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] grep: introduce new config option to include
- untracked files
-In-Reply-To: <xmqqil1is35i.fsf@gitster.g>
-References: <cover.1710781235.git.dsimic@manjaro.org>
- <9f70eeb4f04a874a2036e1d8c61f3b7ec130663a.1710781235.git.dsimic@manjaro.org>
- <xmqqr0g7rqag.fsf@gitster.g> <923c5f84c44a195d6ba08503e28851af@manjaro.org>
- <xmqqil1is35i.fsf@gitster.g>
-Message-ID: <a00f28ff137fa1d82d00151877f036fe@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9076D9B8-E603-11EE-B6F2-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 2024-03-19 15:32, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->>>> +	if (use_index && !cached)
->>>> +		git_config_get_bool("grep.includeuntracked", &untracked);
->>> Can this ever return an error?  E.g.
->>> 	[grep] includeuntracked = "not really"
->> 
->> After a brief inspection of the code in cache.c, git_config_get_bool()
->> always returns either 0 or 1, so we should be fine.  Thus, any
->> strangeness in a configuration file would end up not enabling
->> this option.
-> 
-> If that were the case, then it is not "fine".
-> 
-> When the user triggered an operation which *requires* us to parse
-> and interpret the meaning of an entry in their configuration file
-> correctly in order to carry it out, and if that entry has a value
-> that we do not consider valid, we should notice and complain, before
-> saying "Nah, this I do not understand, so I'll do one of the two
-> things I would have done if the value were understandable and would
-> not tell the user which one I did".
-> 
-> What makes it fine int his case is that git_config_get_bool() dies
-> when the given value is not a Boolean ;-).  The returned value from
-> the function can be used to tell if the variable does not exist and
-> the caller should decide to stuff some default value to &untracked
-> but in this case you do not need to.
+Han Young <hanyang.tony@bytedance.com> writes:
 
-I'm sorry for not being meticulous enough in my previous response.
-What made me not pay enough attention is that it should all be already
-covered properly with the already existing mechanisms for parsing the
-git configuration files.
+> We're using 'git format-patch' and 'git am' workflow to sync changes between two repositories. This works great but I've found an edge case in apply.c
+>
+> If one commit creates a file whose path has a directory segment ending with space will cause the generated patch unappliable. Here is a script to reproduce the edge case:
+>
+>   mkdir tmp && cd tmp
+>   git init
+>   git commit --allow-empty -m empty
+>   mkdir 'foo '
+>   touch 'foo /bar'
+>   git add -A
+>   git commit -m foo
+>   git format-patch HEAD~1
+>   git reset --hard HEAD~1
+>   git am 0001-foo.patch
 
-In other words, if invoking git_config_get_bool() over a user's
-garbled git configuration file could cause any issues, that would've
-been another, pretty much unrelated bug.
+That is an interesting corner case.  You should make this into a set
+of new tests somewhere in t/; I suspect this only will "break" for
+creation and deletion but not modification in-place or renaming (and
+that should also be in the tests).
+
+But before going into this too deeply.
+
+I have this feeling that we have seen corner cases like this before
+and it always turned out that the right solution was to fix the
+parser on the "apply" side, not on the generation side.  The tools
+in the wild _will_ show a patch with a header like:
+
+    diff --git a/foo /bar b/foo /bar
+    new file mode 100644
+    index 0000000..e25f181
+    --- /dev/null
+    +++ b/foo /bar	
+
+even after we noticed this problem and started working on a fix, so
+making sure future "git apply" can grok such output should be a lot
+more fruitful direction to go into, and when it happens, we do not
+have to touch the generation side at all.  Who knows what external
+tools break when we suddenly start quoting a path with a space
+anywhere in it, which we never did?
+
+Thanks.
