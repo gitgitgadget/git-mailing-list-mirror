@@ -1,90 +1,150 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBB63A1D4
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2DC4C63
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710879704; cv=none; b=XcULFmllzDIWZJgAdRvCV0LDeNY7qurqnLdic/AaddROk0PkuCdvriXfgyiw/pFagVXxNp43aBddARWdDQnGavLL2SJ3mmJpvdkUaInOZg+SzPWU65bDVbSg/Hm92qc5JEPI7c4vNpiCExganWMt0lc/Bq+5l+XLxaNRI/hNvQI=
+	t=1710880273; cv=none; b=V3gN7BtvpNUkC7t7opwn4fFG6Qhc/MXT5IPmt00rF4QsZWIDKfXDmnEuCXlMxV6E9oujb7M+P3zE1q6zii3XHNuNs1G3aOxfj0+asAscPSFliPpAcUrWbO2tzQ41z8MFJBZpV+DxpTGETeQyBcuXttHGD6drx0XkK7DUoBhadBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710879704; c=relaxed/simple;
-	bh=1LgPRCDFz8qsX4vbd//GIYpaJaeOZZvVwVGJCnukQRE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=G5u3wDr0JtfUifw/llhybWKLta41YN6Jb7HnhW892/Iy+l4ePKtS4lL4Umouw0PcnuVxbw13teAwLYpcGE9WN074NjN4jqUVHa/+HTqu8H08GgbjpBIvTNg2XknuI5BMgvwLdp9kGCw37vcutfUG1e1RkMJX/KPUZKzAr0QvgCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQ8UxcXH; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710880273; c=relaxed/simple;
+	bh=wRGHdk6IrzUsw3YBCCQgAjgloP5sy1TN+w6VZFdtL4g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YUB2MLTdNmp/YxItYZ6Y9E2O6ch3DwT6/JDBHCUgsJmANkeAySBqphn/QBNtojERA32oerZViA6GFPcnl4S/ZK78fjrS2QOiybO8Sv71pMyJT9uOHxbxT/O1QGuoO6kYM6rv6rmUO6zrwzgn6LHb9T2GL4uWTfGsCs8gyIV8H1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JwQGzaMz; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQ8UxcXH"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso5604102e87.1
-        for <git@vger.kernel.org>; Tue, 19 Mar 2024 13:21:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710879701; x=1711484501; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1LgPRCDFz8qsX4vbd//GIYpaJaeOZZvVwVGJCnukQRE=;
-        b=aQ8UxcXHnJebqdF7eVh6sSdrjdb+dgb6W5Zs67KGslYmdo0RWTrIINOs5xxvFreK2g
-         cwEtEt0JPYgNSNzsHVcXY2akVjUThAze3aelr72Tqfjv4VIf/HmMhubx14uWxgD7NXpB
-         LFyFjKsrn0QdFaFDhrjIaMUInpPT8SAb1f+5amyg06UJW6O4k/SzoUFJkzByuQX/stMN
-         BzN7C2jHy3jIV9Ds8/VzHa8jJmzzcWq0vJUd5S+0pB3sehEUQ1WW8mtw0L/NSIhTlM8s
-         08eUG6McmZ6qvdlA7twXX+ZlWiNyH/ooLcEnAY9sAgY1SQPZLlQuyeXOu6vYxKw/bgSR
-         E4wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710879701; x=1711484501;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1LgPRCDFz8qsX4vbd//GIYpaJaeOZZvVwVGJCnukQRE=;
-        b=bItd/B+BpZlTV3z1AwNMtzNJao+4Ma8mziLHSTdCmx4IFRS7VTgMlUuY+zhTIzIY3l
-         +z5YDfBqndfebT9L82GyJ4m4goVPaZ7SS47ECN8XJ2RgbjZBKdMlmnU7kfuD2yDKwvGT
-         ABWxqXpw8HLtoAl/eET+CfW7istkIdG7XcBelVq95GIVTgUTMKcJGXEtkW+Mc4sOv7MV
-         3Td24MD4NNvNQ0Mx1P9iTRL+mCW5IKtVTdgRVOAsa7o9cMP28F5kjaAFZz20H2b1nh4m
-         osGz66s0EP5wzeqjSg7SSg3FfA1/2kXRnb7VUbUI27O77h+lPCyvJOSrDtaH56SnHq3P
-         eD3w==
-X-Gm-Message-State: AOJu0YxcwRQ1NbBdS9GJi18T7SOao/K7k+7MZfGtpCtA2JT0RlFZ4eqD
-	Qsgiw7r+2QXj1X7i3qxwdoIO15zonzxl2F1mBY0Bv1H3ynWKH8dv1Ty5z39DnkG2B8mc1nqJdBJ
-	uoC9D5Fo/hIhf7MuX6HHUuQIiO7gp2xrh4sw=
-X-Google-Smtp-Source: AGHT+IEfm4CQw2pd0JQWxUuR9CcR3GQZTn5Y6MepQiLuYNgWNB1RK5mJc0WSKbCe4THbL+GNczNyxgqhiOIDTXOiWnQ=
-X-Received: by 2002:a2e:9114:0:b0:2d4:8e2f:e3d6 with SMTP id
- m20-20020a2e9114000000b002d48e2fe3d6mr7774632ljg.10.1710879700657; Tue, 19
- Mar 2024 13:21:40 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JwQGzaMz"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EA311293DF;
+	Tue, 19 Mar 2024 16:31:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=wRGHdk6IrzUsw3YBCCQgAjgloP5sy1TN+w6VZF
+	dtL4g=; b=JwQGzaMzvIumr+UIXY10zpSSphKqwu8ZCivamRDIjghXMih6LaeTbO
+	JcMiPU9Hot6/EzEIIvwApV2LiFM1FHfNlfZ3WB2heI3X8KdOxKRhRHgehPmIHeIi
+	aRumbmIOvH4id9uvTrOkzVRQU7Gxcf075H3vArUqaKgfgw0s1qM08=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E2A27293DE;
+	Tue, 19 Mar 2024 16:31:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 64FA7293DC;
+	Tue, 19 Mar 2024 16:31:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ignacio Encinas <ignacio@iencinas.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] t: add a test helper for getting hostname
+In-Reply-To: <20240319183722.211300-2-ignacio@iencinas.com> (Ignacio Encinas's
+	message of "Tue, 19 Mar 2024 19:37:21 +0100")
+References: <20240309181828.45496-1-ignacio@iencinas.com>
+	<20240319183722.211300-1-ignacio@iencinas.com>
+	<20240319183722.211300-2-ignacio@iencinas.com>
+Date: Tue, 19 Mar 2024 13:31:06 -0700
+Message-ID: <xmqq8r2eneut.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAN7Jk_3_ys4tAJ3B5uy1aUpzknEgQRwdADNxFXDmLxgCL2bZrg@mail.gmail.com>
-In-Reply-To: <CAN7Jk_3_ys4tAJ3B5uy1aUpzknEgQRwdADNxFXDmLxgCL2bZrg@mail.gmail.com>
-From: Sanchit Jindal <sanchit1053@gmail.com>
-Date: Wed, 20 Mar 2024 01:51:31 +0530
-Message-ID: <CAN7Jk_0hKTacR4cQiYFW-dcj6ipA=8QcCGrVd7rrJ4vVUxUBKg@mail.gmail.com>
-Subject: Fwd: [GSOC] Microproject: Use `test_path_is_*` functions in test scripts
-To: git@vger.kernel.org, christian.couder@gmail.com, 
-	kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9E08BC6E-E62F-11EE-9FD5-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Greetings,
+Ignacio Encinas <ignacio@iencinas.com> writes:
 
-My name is Sanchit Jindal, I will be graduating with a B.E in Computer
-Science from Indian Institute of Technology, Bombay this year. I am
-writing to express my keen interest in contributing to Git as part of
-the GSOC program.
+> diff --git a/Makefile b/Makefile
+> index 4e255c81f223..561d7a1fa268 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -863,6 +863,7 @@ TEST_BUILTINS_OBJS += test-userdiff.o
+>  TEST_BUILTINS_OBJS += test-wildmatch.o
+>  TEST_BUILTINS_OBJS += test-windows-named-pipe.o
+>  TEST_BUILTINS_OBJS += test-write-cache.o
+> +TEST_BUILTINS_OBJS += test-xgethostname.o
+>  TEST_BUILTINS_OBJS += test-xml-encode.o
+>  
+>  # Do not add more tests here unless they have extra dependencies. Add
+> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+> index 482a1e58a4b6..9318900a2981 100644
+> --- a/t/helper/test-tool.c
+> +++ b/t/helper/test-tool.c
+> @@ -86,6 +86,7 @@ static struct test_cmd cmds[] = {
+>  	{ "truncate", cmd__truncate },
+>  	{ "userdiff", cmd__userdiff },
+>  	{ "urlmatch-normalization", cmd__urlmatch_normalization },
+> +	{ "xgethostname", cmd__xgethostname },
+>  	{ "xml-encode", cmd__xml_encode },
+>  	{ "wildmatch", cmd__wildmatch },
+>  #ifdef GIT_WINDOWS_NATIVE
+> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+> index b1be7cfcf593..075d34bd3c0a 100644
+> --- a/t/helper/test-tool.h
+> +++ b/t/helper/test-tool.h
+> @@ -79,6 +79,7 @@ int cmd__trace2(int argc, const char **argv);
+>  int cmd__truncate(int argc, const char **argv);
+>  int cmd__userdiff(int argc, const char **argv);
+>  int cmd__urlmatch_normalization(int argc, const char **argv);
+> +int cmd__xgethostname(int argc, const char **argv);
+>  int cmd__xml_encode(int argc, const char **argv);
+>  int cmd__wildmatch(int argc, const char **argv);
+>  #ifdef GIT_WINDOWS_NATIVE
+> diff --git a/t/helper/test-xgethostname.c b/t/helper/test-xgethostname.c
+> new file mode 100644
+> index 000000000000..285746aef54a
+> --- /dev/null
+> +++ b/t/helper/test-xgethostname.c
+> @@ -0,0 +1,12 @@
+> +#include "test-tool.h"
+> +
+> +int cmd__xgethostname(int argc, const char **argv)
+> +{
+> +	char hostname[HOST_NAME_MAX + 1];
+> +
+> +	if (xgethostname(hostname, sizeof(hostname)))
+> +		die("unable to get the host name");
+> +
+> +	puts(hostname);
+> +	return 0;
+> +}
 
-As I prepare to graduate, I am eager to contribute to open source
-development, and I believe that participating in GSoC with Git would
-be an excellent opportunity to kickstart this endeavor.
 
-For the microproject, I can update the file
-`t/t9803-git-p4-shell-metachars.sh` with the `test_path_*` asserts as
-required,the tests only have the checks at 6 locations which can be
-replaced with `test_path_exists`, `test_path_is_missing` and
-`test_path_is_file`, Please let me know if this is enough for a
-microproject.
+OK.  Given that xgethostname() is meant as a safe (and improved)
+replacement for the underlying gethostname(), I would have used
+gethostname() as the name for the above, but that alone is not big
+enough reason for another update.
 
-I am particularly interested in the "Move existing tests to a unit
-testing framework" project. I plan to familiarize myself with the
-testing framework, and the changes needed in the codebase for the
-project
+> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> index 18fe1c25e6a0..613c766e2bb4 100755
+> --- a/t/t6500-gc.sh
+> +++ b/t/t6500-gc.sh
+> @@ -395,7 +395,6 @@ test_expect_success 'background auto gc respects lock for all operations' '
+>  
+>  	# now fake a concurrent gc that holds the lock; we can use our
+>  	# shell pid so that it looks valid.
+> -	hostname=$(hostname || echo unknown) &&
+>  	shell_pid=$$ &&
+>  	if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
+>  	then
+> @@ -404,7 +403,7 @@ test_expect_success 'background auto gc respects lock for all operations' '
+>  		# the Windows PID in this case.
+>  		shell_pid=$(cat /proc/$shell_pid/winpid)
+>  	fi &&
+> -	printf "%d %s" "$shell_pid" "$hostname" >.git/gc.pid &&
+> +	printf "%d %s" "$shell_pid" "$(test-tool xgethostname)" >.git/gc.pid &&
 
-Regards
-Sanchit Jindal
+We should replace the "hostname || echo unknown" in the original,
+instead of doing this change, as it loses the exit status from the
+"test-tool xgethostname" command.
+
+Thanks.
+
+>  	# our gc should exit zero without doing anything
+>  	run_and_wait_for_auto_gc &&
