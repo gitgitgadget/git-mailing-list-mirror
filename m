@@ -1,36 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E393BBC7
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D873BBED
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710881800; cv=none; b=DgXOxvsFVDPLy6dhx8JTM41Aj02b6RVmQ3AVTadJLCOIXw6pzIfsKq3AqQOH5cVpdSg/smkIps98N8BMOHpqPtbJzB8SSaXh3HxQZzJJ0TQeATO+KIPx6JYZTDB0MHE7U/037tOjBA2R/ek7CLAFBKPk8GplX2aug0F6JyAcAak=
+	t=1710881877; cv=none; b=Ctbt3jFQPt4fze58JCigcOLA84ofvI8mohrGkGDHTTmYbGMXD+R70xsXHVENzdsq/qannk9LeRunsr/Zzc+yR3LpV8Z2UTk4qwGoskbAW9DOk+UoUWhj9QBqeh8l2vjcXhRTYePyjwsD46inAClvOC1UCslvNCOytgjD9SvVfiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710881800; c=relaxed/simple;
-	bh=gcQOOrd+Bf7WJxq5szfh4+MmOt+2yXpyvHR7gh+1ZNM=;
+	s=arc-20240116; t=1710881877; c=relaxed/simple;
+	bh=AXIteg2zU3uIXjqSHFkceGIXXqhvyt/y0a6UfixxPWE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kUCHhsKI9hfY4U59DdpOCX+ytBdeJ4yuA9ghkUzDLM3HBwnGH1x8N6lxCuFKVr6bGf8ti8W97dw+wnI7dKrThk0S0xgW2mNH3KyFnivtM7bGQ3B3DAZRvF7uHztQvP0Vn+nQ6L3i3c1Ay440DF9tmN89j5opYyK0JdH7vUVKGAA=
+	 Content-Type:Content-Disposition:In-Reply-To; b=AU6JLnSEaD0LH0Uk5V/mgc34JYBaReglL6mERlkt3anDAOVOzgcgfkar5elIzJEXFVJyN/UMHtCU18njolSotXjxtLzVSq5Ugq99xhP9/CHfCA82f19EVZiYtp6WcqM48okoPBGojQfNYux0YGf+8zBeUIvrIqOPhEEGEVuQsG8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 3223 invoked by uid 109); 19 Mar 2024 20:56:31 -0000
+Received: (qmail 3242 invoked by uid 109); 19 Mar 2024 20:57:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Mar 2024 20:56:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Mar 2024 20:57:54 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11373 invoked by uid 111); 19 Mar 2024 20:56:33 -0000
+Received: (qmail 11378 invoked by uid 111); 19 Mar 2024 20:57:56 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Mar 2024 16:56:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Mar 2024 16:57:56 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 19 Mar 2024 16:56:30 -0400
+Date: Tue, 19 Mar 2024 16:57:53 -0400
 From: Jeff King <peff@peff.net>
-To: Ignacio Encinas <ignacio@iencinas.com>
-Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ignacio Encinas <ignacio@iencinas.com>, git@vger.kernel.org
 Subject: Re: [PATCH v3 1/2] t: add a test helper for getting hostname
-Message-ID: <20240319205630.GA1159535@coredump.intra.peff.net>
+Message-ID: <20240319205753.GB1159535@coredump.intra.peff.net>
 References: <20240309181828.45496-1-ignacio@iencinas.com>
  <20240319183722.211300-1-ignacio@iencinas.com>
  <20240319183722.211300-2-ignacio@iencinas.com>
+ <xmqq8r2eneut.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,39 +40,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240319183722.211300-2-ignacio@iencinas.com>
+In-Reply-To: <xmqq8r2eneut.fsf@gitster.g>
 
-On Tue, Mar 19, 2024 at 07:37:21PM +0100, Ignacio Encinas wrote:
+On Tue, Mar 19, 2024 at 01:31:06PM -0700, Junio C Hamano wrote:
 
-> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-> index 18fe1c25e6a0..613c766e2bb4 100755
-> --- a/t/t6500-gc.sh
-> +++ b/t/t6500-gc.sh
-> @@ -395,7 +395,6 @@ test_expect_success 'background auto gc respects lock for all operations' '
->  
->  	# now fake a concurrent gc that holds the lock; we can use our
->  	# shell pid so that it looks valid.
-> -	hostname=$(hostname || echo unknown) &&
->  	shell_pid=$$ &&
->  	if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
->  	then
-> @@ -404,7 +403,7 @@ test_expect_success 'background auto gc respects lock for all operations' '
->  		# the Windows PID in this case.
->  		shell_pid=$(cat /proc/$shell_pid/winpid)
->  	fi &&
-> -	printf "%d %s" "$shell_pid" "$hostname" >.git/gc.pid &&
-> +	printf "%d %s" "$shell_pid" "$(test-tool xgethostname)" >.git/gc.pid &&
+> > diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> > index 18fe1c25e6a0..613c766e2bb4 100755
+> > --- a/t/t6500-gc.sh
+> > +++ b/t/t6500-gc.sh
+> > @@ -395,7 +395,6 @@ test_expect_success 'background auto gc respects lock for all operations' '
+> >  
+> >  	# now fake a concurrent gc that holds the lock; we can use our
+> >  	# shell pid so that it looks valid.
+> > -	hostname=$(hostname || echo unknown) &&
+> >  	shell_pid=$$ &&
+> >  	if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
+> >  	then
+> > @@ -404,7 +403,7 @@ test_expect_success 'background auto gc respects lock for all operations' '
+> >  		# the Windows PID in this case.
+> >  		shell_pid=$(cat /proc/$shell_pid/winpid)
+> >  	fi &&
+> > -	printf "%d %s" "$shell_pid" "$hostname" >.git/gc.pid &&
+> > +	printf "%d %s" "$shell_pid" "$(test-tool xgethostname)" >.git/gc.pid &&
+> 
+> We should replace the "hostname || echo unknown" in the original,
+> instead of doing this change, as it loses the exit status from the
+> "test-tool xgethostname" command.
 
-Hmm. Before, we were compensating for a failure to run "hostname" by
-putting in the string "unknown". But I wonder if there were platforms
-where gethostname() simply fails (e.g., because the hostname is too
-long). In that case your test-tool returns the empty string, but git-gc
-internally will use the string "unknown".
+I think you need to lose the exit status. Or alternatively do:
 
-I think it may be OK, though. The failing exit code from test-tool will
-be ignored, and we'll end up with a file containing "123 " or similar.
-Normally we'd use kill() to check that the pid is valid, but with a
-mis-matched hostname we'll just assume the process is still around, and
-the outcome is the same.
+  hostname=$(test-tool xgethostname || echo unknown)
+
+See my other reply.
 
 -Peff
