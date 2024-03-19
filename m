@@ -1,97 +1,95 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D83368
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 00:58:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F179240840
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 05:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710809902; cv=none; b=HBtHCNatyvJ8Y3vuOt8Kln7Jucq7SOa2iola/9DUhI/wJY21zHuCjYOzUTiiBMoh99Mvf0MGiKeLXXwUZlwdmCYn94ZRq5mc8jhJbuUna0QgWLvym3ZEAVfUZpITpomwp7aS+9ZD2cJ//0k6guKTQsM5eGuxnt69rMbqO+v9J/4=
+	t=1710824979; cv=none; b=Z+AQoT+arN+FfdTT2FJJhwzt2CEClZrD/NN8OfyYz1UQYUcO1wEtTCsCC02fDozu7xj/8quv5YW4CUMlg7AOwqirof/1Ev1/QaPmLLCHOIOKH6ctIWsz1NAw5cs5fZmGkEVxLFkFWOvqE3H8Yxn+0JMX92Lb9yH++WqivS4xQao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710809902; c=relaxed/simple;
-	bh=G1f+DN0/6JKDqmfZtZ5YB5rK1kqg7lFnFsKAwPlje0A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JrnQPyo6a/bHXzLAjspQzQ5oEm7pGqmVdI5lIsMWennJng+ut8OPXfYiaU+4GQdP4YC6JpCl9cZRLs1uRc3ECbRHfwE6eBe3SOSSCwpIRY/niyuRDYOcHcxFyMc68fXFD0T0Fl4gjqWppvM6HslptFoWm7wUZR4mXIb3055jLTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BwH+60VP; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710824979; c=relaxed/simple;
+	bh=L8P/LRzSb9SgsG3ZzXObEDAo8MmO3zrSlN8KQbitP4w=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=E34xnK35kNWvIGEFswPZugrKWrZ0eo5dLkNA5j4ZdIr6qqz6XWRItqCCgTT+Pnnve1p3Z9dpCbtpladydWEYJPWccJ/Mt9Vd/KJtJUoGQbNVIlcggtmrcqcILeqZqDRtW/cpFfvFnlCtetjwU4RXQzavRlpYGMOxlPNdL1PKBzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=X4kPMAHd; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BwH+60VP"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2EE4F3219F;
-	Mon, 18 Mar 2024 20:58:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=G1f+DN0/6JKDqmfZtZ5YB5rK1kqg7lFnFsKAwP
-	lje0A=; b=BwH+60VPhWloFjwKfBMoAorUTAsFgnVbPGQ3um//TPVxK3I29fP3bx
-	PkkxlvQBUBkKz0yOLCPceEq5Hj5CJpAQf0z19lmlB2ly8Wjd1QyyzRKx8fdooYfi
-	sNuolvAHlkJoSf7cThNTp5FwLPcrwpgDHYgruNDtfVyELi7kfofTo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 274FB3219C;
-	Mon, 18 Mar 2024 20:58:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BDD733219B;
-	Mon, 18 Mar 2024 20:58:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] grep: introduce new config option to include
- untracked files
-In-Reply-To: <9f70eeb4f04a874a2036e1d8c61f3b7ec130663a.1710781235.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Mon, 18 Mar 2024 18:03:24 +0100")
-References: <cover.1710781235.git.dsimic@manjaro.org>
-	<9f70eeb4f04a874a2036e1d8c61f3b7ec130663a.1710781235.git.dsimic@manjaro.org>
-Date: Mon, 18 Mar 2024 17:58:15 -0700
-Message-ID: <xmqqr0g7rqag.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="X4kPMAHd"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C5454256-E58B-11EE-B4F8-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710824974;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FBUNoc3k6aE6A1+InnOGsxRZqxCU0I9S6lSErhGPVYQ=;
+	b=X4kPMAHdWzXp9B4s/iomKTrtG5o7sHAweNyaCdcu68FHhETuMVlVQF2pFoltxAdRwV57T8
+	Z4wDdYJErBar/ssPwRA6f7cNNK8AsAOBAg/++WN+SDpjYs5IglKKKwiL2bXS6I9/3F7iN5
+	Op8DOcIU7Un/M4Nw+JACRrewkG74TAth3y0br97v3SgSz0tvrT5EB8UKg0vdnJkMMk80r2
+	NrT+2M1QQEkYMBFGfdRue8nKu1tVmkafl6MJpi1woMNwt5fQ0t+xFE2ZrJuApUlw/wxXZV
+	YKV0okntBVDTngK+rbTyxsgVh8/ORoLZdcrG7TlVEbjHDpCFKc3yTMQsb0ahqQ==
+Date: Tue, 19 Mar 2024 06:09:34 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/5] New config option for git-grep to include untracked
+ files
+In-Reply-To: <xmqqwmpzt6jk.fsf@gitster.g>
+References: <cover.1710781235.git.dsimic@manjaro.org>
+ <xmqqwmpzt6jk.fsf@gitster.g>
+Message-ID: <c68a6d94bb02e5d9aa2f81bee022baa8@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Hello Junio,
 
-> Add new configuration option grep.includeUntracked that enables --untracked
-> option by default.  This pretty much follows the logic established by the
-> already existing configuration option grep.fallbackToNoIndex, while also
-> respecting the dependencies of the --untracked option.
->
-> Also add a few automated tests to the t7810, to cover the new configuration
+On 2024-03-19 01:21, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> This patch series introduces new config option grep.includeUntracked,
+>> which makes the untracked files also searched by default when 
+>> git-grep(1)
+>> is invoked, in addition to searching the tracked files.
+> 
+> Hmph.  I am moderately negative on any configuration that screws
+> with the default haystack from which needle is sought for.
+> 
+> I may often do "git grep --cached" but that does not mean I would
+> welcome an configuration option to make "git grep" search in the
+> index even when the request by the user does not have "--cached".
+> 
+> Inclusion of untracked sources in a sense is even worse, especially
+> when an unsuspecting "git grep" user (or a script) fully expects
+> that any paths found in the output are to be found in "git ls-files
+> -s" output but when you stray into a repository with the
+> configuration set, that expectation suddelnly gets broken.
 
-Do we have any non-automated tests in t7810?
+Hmm...  Those are valid concerns.  For example, I'd also be against
+another configuration option that would make it possible to enable
+--cached by default, for example, because it could easily mess the
+things up really bad.
 
-> option by replicating the already existing tests for --untracked.
->
-> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-> ---
->  builtin/grep.c  | 3 +++
->  t/t7810-grep.sh | 9 +++++++++
->  2 files changed, 12 insertions(+)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index af89c8b5cb19..71d94126fb6e 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -1041,6 +1041,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  		the_repository->settings.command_requires_full_index = 0;
->  	}
->  
-> +	if (use_index && !cached)
-> +		git_config_get_bool("grep.includeuntracked", &untracked);
+However, I think that the usability of this new configuration option
+outweighs the possible issues it could cause to some users.  For
+example, I quite often find myself in need to specify --untracked
+while running git-grep(1), to see what's found in the code changes
+I haven't staged yet, so I find this new configuration very useful.
 
-Can this ever return an error?  E.g.
+Of course, I already have a few aliases defined for grep operations,
+but defining another one for "grep --untracked" simply doesn't fit
+into my alias scheme.  Obviously, that's why I implemented this new
+option, :) hoping that it would be usable to other people, too.
 
-	[grep] includeuntracked = "not really"
-
-How badly would setting this configuration variable break third
-party tools that assume their "git grep" invocation without the
-"--untracked" option would not yield hits from untracked files?
+I'm not sure how many users could be affected by the possible negative
+effects of this configuration option, by using a specific mix of git
+operations, but I think it would be quite useful.
