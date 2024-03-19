@@ -1,173 +1,93 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6736850A67
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 07:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8425548F9
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 09:52:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710832888; cv=none; b=bmras0CGfeQaTVkgnMPUbIQ3WAyY733jumlvVKiI0CwUpNOeokGklKcjHdJ5IDOtl31CHwk30PGXy/YaE1NL755wSp/TV2aS6lmUt3G5HBkYlFU5l4Bi+ZfQH+B0dlj+IRHB4qcIRCTgI75ni5PA7gdrzuti5rCyjXD64gpHrJE=
+	t=1710841945; cv=none; b=nsj7LECvbxdvwg8nNsOcblq40pjXF4CZwvv6wsRfHwMJMkJCHH8Dk2H7ixxmGLuGNQoOSIuDB7PTtmEikWRTgtOTDnRmjYyIlagL/TY6FDzWUmmMNETvokdevaZAo+abYDDHf2f81hN999rwbw4bHiczQajEqWwtOIwjsVPsQ9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710832888; c=relaxed/simple;
-	bh=em18NISPIUG02tbbCOXHYz+K4CWoVTiWYkClJPTpgeo=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=mDD0DfQgJ90OZNAzu/xaHZKwvP4pLpHYuK1poVny9ZO+ulShUAMykS/tphlDvxQlWqSxLOdUHkZMWUNURm7Y+s8JuReUM50PxsO93ls365iFlgWFQVIXZa6I3YF62/e95D1QZCQsTJ2wciSnNdSqFhOBn+7ae36iX2H/wZjPZNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3ngkAAwp; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1710841945; c=relaxed/simple;
+	bh=MjGgr0Z0xzGgDNFgv7lPKWXrOnPVXKte0v4BB6LCOqI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TH0TRYrH0OnRzTZb9l1sYCj5jauUabBRhgHorK8v00h/hW2A18efKAUzYTROUXZjovaPjOjxDLaLkXAQUr6vRJdRmhnHqScn2PBPrfPnR1hc2Yz+DDn/wA0ezNeqIfE79X8VlqEj9lyJBWch3/Oxr1XX2TKK7gJdIuDAIRuvcHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=AAIeQ2a5; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3ngkAAwp"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-29dfc072e95so2722167a91.3
-        for <git@vger.kernel.org>; Tue, 19 Mar 2024 00:21:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="AAIeQ2a5"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e0511a4383so336165ad.2
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 02:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710832886; x=1711437686; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EfP2CdBzf76s/JhPJbu1cHnW2jrGIOAqADLqu3m5h2w=;
-        b=3ngkAAwpuRwKOZFQy2sAmWG8x3BywCUK0ndBAKSi2eo9OMY5OpSwpzzfNWH4SmutRr
-         3+m4pjylJeeKyr30elmBuVGhXtOuWgeqamX15mz1nKKNSINilSN25ubBTnOjKH0bOy1Z
-         5I243Xudd5yaFSWI7DQNkpQIduWL1DM9FCTNFKqC3CtBz4Lzz+6jCD2N2EIKJtula9ZA
-         Nx6Cq4sJ90hNlSwzOZ63qfmi/snS7O3Qu8RCUZVxtxzC8IorslngZfQlzOUzQ6iSOsJK
-         xSbYmf7IoWd50is1jJd7PF/boANPGfqW6svrZ7K4X8KTP0KF5OEkKrBaPXFRhE99tzQV
-         dH+w==
+        d=bytedance.com; s=google; t=1710841942; x=1711446742; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kgtF/oNBv26h/FPM/bBKSL/4oGxCmOq4dRc0AZWknSY=;
+        b=AAIeQ2a5ZbPL348SkmGhA/thE+5wpaczkSLltQCbuXoD63Sdvm0bIu6mp+4lVzp1uu
+         EvWfECI/AySTF6pSewrLUULynoW7sIppfDHH+v1vkXJ8S8AW3dAeBeuVlNSSuoWf9Yoa
+         wtZtpf40BHOWpDPAporahG9HpnO+YFBFpLn+bKMdDLv8ERN7x1fgFMWZG8Nhoz2oofY+
+         FQzDZ1PrgT2AQHIhTzdMmjvPCM0j1NILtVEAQ+/077CxtZsA5yWfV1vYt8KkhkgWv7rg
+         wMPmTIC8OPns3hcbbjstjLP77xoiK1g/xlAQKa69EtamDUH6TNuWV/HojJIYx+APuc1Z
+         BPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710832886; x=1711437686;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EfP2CdBzf76s/JhPJbu1cHnW2jrGIOAqADLqu3m5h2w=;
-        b=UfIkzzWCFMz5lIEC14PWcx6AnvDQ5Qmunh4ufL3rQxJL2I2IZFdiGK0pKR7nzzSM1L
-         hDH834EVbOVrDzIrZ3+07F9NvYsHM/JykrQOH6wW4c0sgLt1huDQzmj3dJbNho8Ycbzx
-         86AJjsr58IL1zNORO9uqrONj5LY5JOevvcfNVFEpZv11HNQzBiaLLkeoCuxzxvVwxzUd
-         OxZ8iC+XfzAFBGEVB08+LIJXteyPxjRVk4py4OU/Dy0hKMAr8FrRhrWBdhvm5yTPFyO3
-         iMtiapI5iTO+7DXT4Y1Efax7vxH1nl3+QIEgtvi79v1+6asyi0pDVgchGmT0a/WzjT3l
-         hg8w==
-X-Forwarded-Encrypted: i=1; AJvYcCXaMMD3gI1LSJmnA+3EQBqVAck7XuAMcUNAqWT8uYNjJcy91QLC0KBQEwT+p60VFkmERbCBq7Qjy6olXBH6pmS6u+G7
-X-Gm-Message-State: AOJu0Yy/bDjtdVhyTtP8w/WETYaDOT3wKDC/JsK9hVj1q5QbqbTTndu0
-	IZG3lY6EUFze27bqEqXRNiykn7tfaXAYRGUoLTlpqvDZOiBjcL83+6B16YLssMcP57vYlg9sUVr
-	Qkw==
-X-Google-Smtp-Source: AGHT+IEJhZCc2/S0SHMS5aALmVyS4R1VuURCm7JfO5k+Rrshl5kwPt8cL8kQIQ849OjEDgJztDJvu/SKgyw=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90a:8047:b0:29b:6d9:7a2d with SMTP id
- e7-20020a17090a804700b0029b06d97a2dmr4254pjw.2.1710832886444; Tue, 19 Mar
- 2024 00:21:26 -0700 (PDT)
-Date: Tue, 19 Mar 2024 00:21:25 -0700
-In-Reply-To: <xmqqh6h3jzp1.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1710841942; x=1711446742;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kgtF/oNBv26h/FPM/bBKSL/4oGxCmOq4dRc0AZWknSY=;
+        b=Q1FHI3/AQKZzT/aTCzTFLWM+8hi55ur63iGr42luE2k5ZN3G68Rcfl6lj/M/MKJqq1
+         6XOQVols2XlAyjrNoMfv3JnC8TEW2FP4QK10CmSE0NHW0Fnf1N6K/U44OdIsRkN9vbb2
+         /eHFb78GrouDQw7tcUfung3fF7wqYQsfKp13uZ0Ya1Wb1FxaUdizSCOoEztG0oRPR2kc
+         ZnmznDebs1zxqKk6+3BVlF32uvSd9pIR2O3qaTi0Prq2JX1d2xi6MKrSrdDJFvzddyYJ
+         gAPNwaL9HLvnJjX15B7OwFizHUmfvlQAgu5Bv6/TPXXtO8oeUXg1yPhQjyk0FxEAbdEc
+         +T/g==
+X-Gm-Message-State: AOJu0Yxya+J2E0EvE4sWpD/44md64d+tRH62mKX65dPJ/1JPTA7OUfnH
+	4Y8MEHYGQSpXOpvF0OtT+Kv2JT0GGALn0DOAWAc9N9j6+WMV3QjHn3us4scNilImG3N4E2xBrLl
+	/
+X-Google-Smtp-Source: AGHT+IGWxYtHxrW9X9dxQtH6sNg0mLOo6o4Nx1MTInUr9hX66QpmQGlJ6Eej0ygeYH2ay/gcfonNNQ==
+X-Received: by 2002:a17:902:ccd2:b0:1df:ff0a:70fe with SMTP id z18-20020a170902ccd200b001dfff0a70femr12046349ple.9.1710841942176;
+        Tue, 19 Mar 2024 02:52:22 -0700 (PDT)
+Received: from localhost.localdomain ([203.208.167.152])
+        by smtp.gmail.com with ESMTPSA id kt7-20020a170903088700b001d9b537ad0bsm10958653plb.275.2024.03.19.02.52.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Mar 2024 02:52:21 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH 0/1] quote: quote space
+Date: Tue, 19 Mar 2024 17:52:11 +0800
+Message-ID: <20240319095212.42332-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <17bdc28ea2b88503.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
- <owlyv85k2gts.fsf@fine.c.googlers.com> <xmqqh6h3jzp1.fsf@gitster.g>
-Message-ID: <owlyle6e3cwa.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] docs: correct trailer `key_value_separator` description
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+We're using 'git format-patch' and 'git am' workflow to sync changes between two repositories. This works great but I've found an edge case in apply.c
 
-> Linus Arver <linusa@google.com> writes:
->
->> WRT line lengths, probably 80-ish columns is the (unwritten?) rule. The
->
-> Your patches will be reviewed on the mailing list.  If you keep your
-> line length to somewhere around ~70, the line will still fit within
-> the 80-ish terminal width after a few rounds of review exchanges,
-> with ">> " prefixed.  That reasoning is mostly about the proposed
-> commit log messages, but the same would apply to things like
-> AsciiDoc sources.
+If one commit creates a file whose path has a directory segment ending with space will cause the generated patch unappliable. Here is a script to reproduce the edge case:
 
-Agreed.
+  mkdir tmp && cd tmp
+  git init
+  git commit --allow-empty -m empty
+  mkdir 'foo '
+  touch 'foo /bar'
+  git add -A
+  git commit -m foo
+  git format-patch HEAD~1
+  git reset --hard HEAD~1
+  git am 0001-foo.patch
 
-> It is true that we do not write it down.  Perhaps something like
-> this is in order?
->
-> diff --git i/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-> index e734a3f0f1..68e9ad71a1 100644
-> --- i/Documentation/SubmittingPatches
-> +++ w/Documentation/SubmittingPatches
-> @@ -280,6 +280,14 @@ or, on an older version of Git without support for --pretty=reference:
->  	git show -s --date=short --pretty='format:%h (%s, %ad)' <commit>
->  ....
->
-> +[[line-wrap]]
-> +
-> +Just like we limit the patch subject to 50 chars or so, the lines in
-> +the proposed log message should be around 70 chars to make sure that
-> +it still can be shown on 80-column terminal without line wrapping
-> +after a handful of review exchanges add "> " prefix to them.
-> +
+Git complains 'error: git diff header lacks filename information when removing 1 leading pathname component (line 9)'. Turns out `git_header_name()` uses the 'wrong' space as separator, and `skip_tree_prefix()` thinks the pathname as an absolute path. In theory, we could quote the pathname for this edge case. But that would require many changes to quote.c, simply quote all pathnames with space also fix the issue. 
 
-I would tweak it slightly like this:
+Han Young (1):
+  quote: quote space
 
-    [[line-lengths]]
+ quote.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    Just like we limit the patch subject to 50 chars or so, the lines in
-    the proposed log message should be around 70 chars. This helps avoid
-    line wrapping on 80-column terminal displays, even after after a
-    handful of review exchanges add "> " prefixes to them.
+-- 
+2.44.0
 
->  [[sign-off]]
->  === Certify your work by adding your `Signed-off-by` trailer
->
->
->> text files aren't really meant for end-user consumption (that's what the
->> manpage and HTML formats are for), so I think it's OK if the line
->> lengths are roughly in the same ballpark (no need to worry too much
->> about exact lengths).
->
-> Yes, too.  And it is one way to reduce patch noise and nicer to
-> reviewers, when used moderately (i.e. removing a word and making a
-> line to occupy only 50 columns when ajacent ones are 70 columns may
-> still be better than reflowing.  Leaving only a single word on such
-> a line may not be reasonable and tucking the word after or before
-> one of these ajacent 70-column lines would work better in such a
-> case).
-
-Agreed. Thank you for kindly putting into concrete examples what I was
-too lazy to write out in my earlier response to Brian. :)
-
-Speaking of reducing patch noise, perhaps it deserves a callout in
-SubmittingPatches, something like this (first bullet point)?
-
-    [[optimize-for-reviewers]]
-
-    To help speed up the review process (and to incentivize would-be
-    reviewers), avoid introducing unnecessary noise in your patch
-    series. The following are some things to avoid:
-
-    . Avoid _reflowing_ (i.e., adjusting where lines start and end in a
-      paragraph) around chunks of prose such as in documentation or
-      comments, for relatively minor changes. For example, given a
-      paragraph with lines about 70 characters long and where your patch
-      wants to change the content of one line, consider changing only
-      that one line (and leaving the surrounding lines as is) --- even
-      if doing so would make that one line go under or over 70
-      characters. This makes the patch (now just a one-line diff) easier
-      to read, versus a reflowed version where N lines are modified.
-
-    . Avoid _extraneous changes_ (however small) in your patch that are
-      not called out in the commit log message. Reviewers read your log
-      message first, then read the diffs; if there are things in the
-      diff that do not line up with your log message, it will surprise
-      reviewers.
-
-    . Avoid _breaking tests_ in your series, even if you fix them up
-      later. Consider flipping the broken tests to expect to fail
-      temporarily, and then changing them back to their original state.
-      Making sure that all tests pass (at every patch in your series)
-      helps to keep the history clean, which can potentially help things
-      like git-bisect later on.
-
-    . Avoid having _too many patches_ in one series. Aim for a maximum
-      of 5-10 patches in your series. If your series requires additional
-      patches, consider breaking it up into multiple series (where each
-      series achieves one major objective). Wait for reviews of the
-      first series to be accepted before sending up the next series.
-
-I took the liberty of documenting some additional "what not to do"
-lessons I learned from reviewers from my time on the list so far. I
-assume the "reflowing" thing happens more frequently than the other
-bullet points, so I put it first.
