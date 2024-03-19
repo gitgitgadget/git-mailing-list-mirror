@@ -1,108 +1,84 @@
-Received: from out-187.mta0.migadu.com (out-187.mta0.migadu.com [91.218.175.187])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6EBC4EB55
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 21:23:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130B1CAB2
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 21:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710883385; cv=none; b=Is7HeyuwKF4QUE5PW/g5bhP3YKMuB5T4aTQvoaXDrItZ3ZozXVPtHwmf1OScXxFpkTk2xy3ysg3VDZjQzUu+QVf+jRIal+25FUmt7zOn7TlRskc4M9UVjH6drLfIdO6gq8JglLlNLwNxE4ncqd3yG+UaqHH5qBofckMMxEvySo8=
+	t=1710883784; cv=none; b=fZ0qwn8ty+Knivn+F21YQ1Mx3qB352J6LiqZwj7WM1dL5RkTcTAH7HQhcVaN7W9BvRanom7gh1O4SGL+6w9ivfKS9xYJ4+r63+ox3Pave4xTjSxluz4L0l4CrS/tkSCNombGFTsawHRf0MikMfZAHnug0E+xFo53Cf27L1dMgfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710883385; c=relaxed/simple;
-	bh=dZwgmfb4oix2J/ljrZqjsTcxgATmPguxXSEby8apV/o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uiZS3072a3SkPkYp61cvS1YudvRNP51iEJL9vLpG/jQFbCj6/XnjBjayBOHTK7RIKgDgYRHF/+JQF4dTIQzuZ6TR/tSTWZf0y1mTtlQG2eS1fkJNFgNspF/0vInFICUte9++GL76GbjDuCgBVBLQ0I3CkyDvPpR+tSnvGV3wWcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=WYS3yKdd; arc=none smtp.client-ip=91.218.175.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="WYS3yKdd"
-Message-ID: <29901b21-83bd-4746-b08a-c428eed27604@iencinas.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
-	s=key1; t=1710883378;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/7zLp9L5S+ikwe+VRUz+9QdUjonRjC6qEGkwyKmPz74=;
-	b=WYS3yKdd/S4tvOm8xYb0lT5r7EhtlzlTlsEfWx39p/di3B2mWOuoZ5n2lMTMH5VguFAeQM
-	0LZTGfe3JV3WYtasrV1ChUyKX7yp7+kxXV4ANCMX3n2zSLNaezYG9G05ZnHzXjWBry1PqQ
-	VIcNQuaxVKR7XF/CFQ7xAfqrnGuHE5ARAAQsQcI0tW96O6+kbXE4O0cM3uTAqHKNiemeBM
-	xGF5yVoVxZ15hK80TzQjii8TNo37BsyQtYiFmLfIIJ/C9DMh+D4j0uxjCRyxvNgGhsMcAS
-	ZZ0SbMz9Fz+qbe/ED9PEMemcRJVE0UdhLohhVUSgjkCH5J7ScHPW3uz5Lg0I1A==
-Date: Tue, 19 Mar 2024 22:22:54 +0100
+	s=arc-20240116; t=1710883784; c=relaxed/simple;
+	bh=I7bHLaSrBkSYo42rko32Hgowz3f13HpZ+oziuZ6B5KA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DjiO6ZwejrV/gjtrFIE9WiBLrHmQMtYtiKUTyUXKmY7z/KO9alZfTm85CisB4M0tSZfiOsYmra4ajmTCHVo4pNgGo8l4AFUQD2ieF4ymTu0hA8Hpkh2NiNL97esW5a0zPW2c0XPeTmACmm4vnRjlUpU15RfJx5SA6YT27vnmlDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 3764 invoked by uid 109); 19 Mar 2024 21:29:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Mar 2024 21:29:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11809 invoked by uid 111); 19 Mar 2024 21:29:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Mar 2024 17:29:43 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 19 Mar 2024 17:29:40 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] revision: add a per-email field to rev-info
+Message-ID: <20240319212940.GE1159535@coredump.intra.peff.net>
+References: <cover.1709841147.git.code@khaugsbakk.name>
+ <cover.1710873210.git.code@khaugsbakk.name>
+ <9a7102b708e4afe78447e48e4baf5b6d66ca50d1.1710873210.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/2] Add hostname condition to includeIf
-Content-Language: en-US
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
- Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
- rsbecker@nexbridge.com
-References: <20240309181828.45496-1-ignacio@iencinas.com>
- <20240319183722.211300-1-ignacio@iencinas.com>
- <CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ignacio Encinas Rubio <ignacio@iencinas.com>
-In-Reply-To: <CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9a7102b708e4afe78447e48e4baf5b6d66ca50d1.1710873210.git.code@khaugsbakk.name>
 
+On Tue, Mar 19, 2024 at 07:35:36PM +0100, Kristoffer Haugsbakk wrote:
 
+> Add `pe_header` to `rev_info` to store per-email headers.
 
-On 19/3/24 21:55, Eric Sunshine wrote:
-> On Tue, Mar 19, 2024 at 2:38 PM Ignacio Encinas <ignacio@iencinas.com> wrote:
->> It was pointed out that it wasn't particularly obvious what it was meant by
->>
->>   "If the current hostname matches the pattern, the include condition is met."
->>
->> which is definitely true. Despite this, to my knowledge, there isn't a
->> way to precisely define what we mean by "hostname" other than saying
->> that we mean whatever is returned by gethostname(2).
->>
->> I still think the documentation isn't great, but I don't see a way to
->> improve it further.
+It is only just now that I realized that "pe" stands for per-email
+(though to be fair I was not really focused on the intent of the series
+when reading v1). Can we just call it per_email_headers or something?
+
+> The next commit will add an option to `format-patch` which will allow
+> the user to store headers per-email; a complement to options like
+> `--add-header`.
 > 
-> Peff provided the answer when he suggested[1] implementing `git config
-> --show-hostname-for-includes`.
-> 
-> [1]: https://lore.kernel.org/git/20240318081722.GA602575@coredump.intra.peff.net/
- 
-Sorry if it sounded like I disregarded the opinion. I did see it and
-liked the idea, but I guessed something like that would face a lot of
-resistance. My bad.
+> To make this possible we need a new field to store these headers. We
+> also need to take ownership of `extra_headers_p` in
+> `log_write_email_headers`; facilitate this by removing constness from
+> the relevant pointers.
 
->> 1:  cf175154109e ! 2:  dec622c38916 config: learn the "hostname:" includeIf condition
->>     @@ Documentation/config.txt: As for the naming of this keyword, it is for forwards
->>      +`hostname`::
->>      +  The data that follows the keyword `hostname:` is taken to be a
->>      +  pattern with standard globbing wildcards. If the current
->>     -+  hostname matches the pattern, the include condition is met.
->>     ++  hostname (output of gethostname(2)) matches the
->>     ++  pattern, the include condition is met.
-> 
-> This is still unnecessarily user-hostile, especially to users who are
-> not programmers, but also to programmers who don't want to waste time
-> writing a little test program to determine what gethostname(2) returns
-> on each platform they use. That's not a great situation.
-> 
-> Peff felt that adding `git config --show-hostname-for-includes` was
-> probably overkill, but I'd argue that it is necessary to enable users
-> to deterministically figure out the value to use in their
-> configuration rather than having to grope around in the dark via
-> guesswork and trial-and-error to figure out exactly what works.
-> 
-> And the option name doesn't necessarily have to be so verbose; a
-> shorter name, such as `git config --show-hostname` may be good enough.
-> Implementing this option would also obviate the need to implement
-> `test-tool xgethostname` (though, I agree with Junio that `test-tool
-> gethostname` would have been a better, less implementation-revealing
-> name).
+There are three pointers at play here:
 
-Lets find this a good "home" then [1]. Thanks!
+  - ctx.after_subject has its const removed, since it will now always be
+    allocated by log_write_email_headers(), and then freed by the
+    caller. Makes sense Though it looks like we only free in show_log(),
+    and the free in make_cover_letter() is not added until patch 2?
 
-[1] https://lore.kernel.org/git/CAPig+cTFRAmzBGiJv2F-k1XWvGSbT8UeAG57T+XpB-1w66HRkQ@mail.gmail.com/
+  - rev_info.extra_headers has its const removed here, but I don't think
+    that is helping anything. We only use it to write into the "headers"
+    strbuf in log_write_email_headers(), which always returns
+    headers.buf (or NULL).
+
+  - rev.pe_headers is introduced as non-const because it is allocated
+    and freed for each email. That makes some sense, though if we
+    followed the pattern of rev.extra_headers, then the pointer is
+    conceptually "const" within the rev_info struct, and it is the
+    caller who keeps track of the allocation (using a to_free variable).
+    Possibly we should do the same here?
+
+I do still think this could be split in a more obvious way, leaving the
+pe_headers bits until they are actually needed. Let me see if I can
+sketch it up.
+
+-Peff
