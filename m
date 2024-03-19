@@ -1,54 +1,52 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F014B3BBF4
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 21:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729983F9D4
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 21:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710882041; cv=none; b=QkwFYZVNhECQE6etKzh8pheUG1omNU7EYgu5otTSLEDbuXC04ExkiQoCP/BqvSj90skiK156O5PEgUg/x/R1EPkajISjNDOAqJtNpSMO2yyHpEMNn7/2AmJAKjLjOrIbEzhkCN/XLtapLWI5kw7k6S/2iHhgnha37IQdF2GM8Fk=
+	t=1710882142; cv=none; b=geMi5jUxVJypHs6YolcwswJtPhdI5I9+vyUsIcal1d7pO5F8UTJznGuCps03Qwa0lK0t/ydbhy5Dx84h1bcZrnfgnhhdtuVeecUOJa08RlOi3GUAdUHzhRMhk9iF3WdUi7pHanAHOf33Hhsi5L+gLgexa85oyuHb/xD+bCG4Bjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710882041; c=relaxed/simple;
-	bh=o47zssUKmpwYUgQcB7rv/xxUwL+qLVtSxioGWj0+ESo=;
+	s=arc-20240116; t=1710882142; c=relaxed/simple;
+	bh=a/cEGZ4Ov4MQhT+UHJ0kfoegnhYQHS9ZQ32oyLE3diA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HAaUXu8I1qnWemV45aL/RaiBVV1In2PCVrCt2PO29FtUBC/A7YDUXIBeoob3LGwGLNSb6aFKFhALn5DVfj+3FJ0Hg9LzBlzgtNLizkGbKtI04iZIFKOtCZvqR1fntTvA+rDoBoeQIiDtk16OswXbN6zK1Ig01lmBw/7FJI1yHgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ihSW3QzH; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=cLoe4sbEFXH659JruolFXd+buiCD6GQZyj0rSqUxTE/cFhtCwsEL256GVOZnSUTDMfaj3X5kTRCBLfADdOILPCoTl/NypiJ6qjzjrU1xRt0qQ5AUt0rcrAGoDaUinaLWnAVKiCCb+CZQbSiMgx2z+vDagu/LWvDzqF8xlEVi7q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WNxyzCtd; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ihSW3QzH"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 83196297EB;
-	Tue, 19 Mar 2024 17:00:39 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WNxyzCtd"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A58561A29B;
+	Tue, 19 Mar 2024 17:02:15 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=o47zssUKmpwYUgQcB7rv/xxUwL+qLVtSxioGWj
-	0+ESo=; b=ihSW3QzHqP1P99fqc1/IOy3FY4NRvnUKaGRh4SUX8HF9NwyQXOXuH8
-	kJ1vuw0nOScv0Pc52LcjMUiyRegkNpGWp6gR25tQAoEp4RF+ic+707mzA0BzH5dX
-	+8/3aNJYLz5y5ExzOiIBRzX+qafPwTkUXIyZ6o1FGAqxlTg2dCJOU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7C273297EA;
-	Tue, 19 Mar 2024 17:00:39 -0400 (EDT)
+	:content-type; s=sasl; bh=a/cEGZ4Ov4MQhT+UHJ0kfoegnhYQHS9ZQ32oyL
+	E3diA=; b=WNxyzCtdsBerA/MOTy02oMKQ66uixP/vitCN5gIly0ofcd+cag/Yzm
+	AjWDy8D5yK3bpTT6bCw36PZDpLwvZbMUPjMaL86VNIj/SqEws4W0f/7P8ZhecqOX
+	E66uKVi9cD2WcpdzK5qSr2uRPixR0LJXGKTQj+ycJSW184g1hZ0MU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9DF301A29A;
+	Tue, 19 Mar 2024 17:02:15 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 01A82297E9;
-	Tue, 19 Mar 2024 17:00:35 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2525D1A298;
+	Tue, 19 Mar 2024 17:02:12 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Ignacio Encinas <ignacio@iencinas.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] t: add a test helper for getting hostname
-In-Reply-To: <20240319205753.GB1159535@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 19 Mar 2024 16:57:53 -0400")
-References: <20240309181828.45496-1-ignacio@iencinas.com>
-	<20240319183722.211300-1-ignacio@iencinas.com>
-	<20240319183722.211300-2-ignacio@iencinas.com>
-	<xmqq8r2eneut.fsf@gitster.g>
-	<20240319205753.GB1159535@coredump.intra.peff.net>
-Date: Tue, 19 Mar 2024 14:00:34 -0700
-Message-ID: <xmqqo7balyx9.fsf@gitster.g>
+To: Sergius Nyah <sergiusnyah@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  pk@pks.im
+Subject: Re: [GSOC][PATCH v2]userdiff: improve code quality and add
+ JavaScript language driver.
+In-Reply-To: <20240319101000.76767-1-sergiusnyah@gmail.com> (Sergius Nyah's
+	message of "Tue, 19 Mar 2024 11:10:00 +0100")
+References: <ZeWOhxBDvyjH8gW7@tanuki>
+	<20240319101000.76767-1-sergiusnyah@gmail.com>
+Date: Tue, 19 Mar 2024 14:02:10 -0700
+Message-ID: <xmqqh6h2lyul.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,19 +56,114 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- BB9A1B48-E633-11EE-933C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ F4E8AE32-E633-11EE-BABB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Sergius Nyah <sergiusnyah@gmail.com> writes:
 
-> I think you need to lose the exit status. Or alternatively do:
+> This commit introduces several improvements to the codebase:
 >
->   hostname=$(test-tool xgethostname || echo unknown)
->
-> See my other reply.
+> - replace the use of `test_i18ngrep` with `test_grep` in
+> `t/t4018-diff-funcname.sh` for better pattern matching and improved
+> performance.
+> - add a JavaScript language driver to enhance the functionality of the
+> application.
+> - clean up the code by removing trailing whitespaces and fix multiline
+> comments in `t/t4034-diff-words.sh` and `userdiff.c`.
 
-As "test-tool xgethostname" runs exactly the same codepath as
-"includeIf hostname:blah" feature, I would actually prefer for a
-failing "test-tool gethostname" to _break_ this test so that people
-can take notice.
+Doing too many unrelated things that may appear semi-related only
+because they are about the same files?  Don't.
+
+>
+> Signed-off-by: Sergius Nyah <sergiusnyah@gmail.com>
+> ---
+>  t/t4018-diff-funcname.sh | 14 +++++++-------
+>  t/t4034-diff-words.sh    |  1 +
+>  userdiff.c               | 23 ++++++++++++-----------
+>  3 files changed, 20 insertions(+), 18 deletions(-)
+>
+> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> index d35cce18a0..e6d2f1c215 100755
+> --- a/t/t4018-diff-funcname.sh
+> +++ b/t/t4018-diff-funcname.sh
+> @@ -119,8 +119,6 @@ do
+>  	"
+>  done
+>
+> -test_done
+> -
+>  test_expect_success 'identify builtin patterns in JavaScript' '
+>  	# setup
+>  	echo "function myFunction() { return true; }" > test.js &&
+> @@ -136,9 +134,11 @@ test_expect_success 'identify builtin patterns in JavaScript' '
+>  	git diff >output &&
+>
+>  	# check results
+> -	test_i18ngrep "function myFunction() { return true; }" output &&
+> -	test_i18ngrep "function myFunction() { return false; }" output &&
+> -	test_i18ngrep "var myVar = function() { return false; }" output &&
+> -	test_i18ngrep "var myVar = function() { return true; }" output
+> +	test_grep "function myFunction() { return true; }" output &&
+> +	test_grep "function myFunction() { return false; }" output &&
+> +	test_grep "var myVar = function() { return false; }" output &&
+> +	test_grep "var myVar = function() { return true; }" output
+>  '
+> -test_done
+> \ No newline at end of file
+> +
+> +test_done
+> +
+
+To which version of Git source code are the above hunks meant to
+apply?  Hopefully we do not have a test that says "test_done"
+followed by another "test_expect_success" in our tree.
+
+> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> index 74586f3813..cf2374af2c 100755
+> --- a/t/t4034-diff-words.sh
+> +++ b/t/t4034-diff-words.sh
+> @@ -328,6 +328,7 @@ test_language_driver dts
+>  test_language_driver fortran
+>  test_language_driver html
+>  test_language_driver java
+> +test_language_driver javascript
+>  test_language_driver kotlin
+>  test_language_driver matlab
+>  test_language_driver objc
+
+It is unclear what "clean-up" was done to this file, as claimed in
+the proposed log message.  Puzzled...
+
+> diff --git a/userdiff.c b/userdiff.c
+> index bbe2bcb9a3..15342c8662 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+>
+>  PATTERNS("javascript",
+> -      /* Looks for lines that start with optional whitespace, followed
+> -      * by 'function'* and any characters (for function declarations),
+> -      * or valid JavaScript identifiers, equals sign '=', 'function' keyword
+> -      * and any characters (for function expressions).
+> -      * Also considers functions defined inside blocks with '{...}'.
+> -      */
+> -      "^[ \t]*(function[ \t]*.*|[a-zA-Z_$][0-9a-zA-Z_$]*[ \t]*=[ \t]*function[ \t]*.*|(\\{[ \t]*)?)\n",
+> -      /* This pattern matches JavaScript identifiers */
+> -      "[a-zA-Z_$][0-9a-zA-Z_$]*"
+> -      "|[-+0-9.eE]+|0[xX][0-9a-fA-F]+"
+> -      "|[-+*/<>%&^|=!:]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\|"),
+> +	/*
+> +	 * Look for lines that start with optional whitespace, followed
+> +	 * by 'function' and any characters (for function declarations),
+> +	 * or valid JavaScript identifiers, equals sign '=', 'function' keyword
+> +	 * and any characters (for function expressions).
+> +	 * Also consider functions defined inside blocks with '{...}'.
+> +	 */
+> +	 "^[ \t]*(function[ \t]*.*|[a-zA-Z_$][0-9a-zA-Z_$]*[ \t]*=[ \t]*function[ \t]*.*|(\\{[ \t]*)?)\n",
+> +	 /* Match JavaScript identifiers with this pattern */
+> +	 "[a-zA-Z_$][0-9a-zA-Z_$]*"
+> +	 "|[-+0-9.eE]+|0[xX][0-9a-fA-F]+"
+> +	 "|[-+*/<>%&^|=!:]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\|"),
+
+I do not see trailing whitespaces getting fixed, as claimed in the
+proposed log message.  Puzzled, again...
 
 
