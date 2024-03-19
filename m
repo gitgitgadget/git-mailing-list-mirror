@@ -1,66 +1,114 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www555.your-server.de (www555.your-server.de [78.47.83.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D433F9D4
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550D23BBE7
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.47.83.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710880430; cv=none; b=ZpJIKHWm6aHjF5l+D1tw77KYkLAy0CfE1uOOpYQJ9najstlJ1vuh9qPpAPHW9/DD3kA9nH03+Xr+SvPA/lorYQlagk9lPGVAFM0p0o4/VMGng9hZZ1poXp2eecuNSWZ7R1TrZ06mxuR7phm/u7l0o+M5vrTvDtwhFEIMUq7zs60=
+	t=1710881476; cv=none; b=Q3lu6NG9Tt0nZNqDdJIT5L2o7wOuSgdnfG4mcDl5dDg9AEoAtTlU87YkmGqObz820liaDDq+pIxu/M6GyNsbgjPkCD0JvpOQiADL70G1+1+0HtNlASQrCJa6EdaNAqU50Qn93w3JEV7xvWHmYWqMIeOKuGHISMtfAeY97COZXDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710880430; c=relaxed/simple;
-	bh=YqXSuv7SwImygpJG9LJxzPyig2Egyc0kxtujMjC1i0M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XNvSW0lPWZtkSRkmIE/lVYZgyK7doDnXGSrItK6fZUdHuRnXpig6jjhbakHtiBMYJnZRA/ijMHmn6ngPnMFuyljvPYqizI0KURpylZ0JuW1BiIjkXAq+t3Drz87nB0lojYIedZ+jAoWIFTbjDLjYrGIeRyY234ar0f+PO12wDtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4767bcb4ebdso949673137.0
-        for <git@vger.kernel.org>; Tue, 19 Mar 2024 13:33:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710880427; x=1711485227;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YqXSuv7SwImygpJG9LJxzPyig2Egyc0kxtujMjC1i0M=;
-        b=H10iGiysupH0zFd8zia1SEIFAlsNFzRYRj+gfwiDlMV0rXgl2NDia7SfHLFT9eWd/T
-         3dhozbbx+lgQjxlhVFNXJXoBpV1gnv5GEaBv+P4oQLGxYMMyebXHVV9BmoPfFm5+JqFi
-         Hby3beJkYEoluuwes7Ibwy+kb5tA0GjXY/189XcpArdvT6HurxQU6+k8b+dcRrrE8YP5
-         t4YAT37sEMBxbrNmkwVLqJ4NvZKNj5hWIVUzxG+TV0hfeCyAhOfZtd04NNHxJ5xMgncw
-         9ExqeQeWlluHxrHPmMvJoS/WpHFNPgs3eNbUfYwINqDztcn3USPUdcJknDPXqg3+G8UH
-         Q7zA==
-X-Gm-Message-State: AOJu0YzxO+7tOO9cKZ39V1fAkXgsjPNc9aiQ5MbmLJyPvIXxVoc22IJl
-	xSLF5+LhVoy8jpgc4IZ0GqysYaxsUwlIThaFqexrZ8C0DF4LeBAHCNtvfC/47CJayCYsavoLFvz
-	HzAWn+qEeOxxxXmLl04SR/qGQkaM=
-X-Google-Smtp-Source: AGHT+IGAtNbNio2TBhYp8P7nazf1vp4OZJVcyr6xci9oh51UxBYUADIMTm7Vr1UHkotxyNLL2VEisFUP/Zd1dzeaOfs=
-X-Received: by 2002:a05:6102:19da:b0:476:40c:95d with SMTP id
- jn26-20020a05610219da00b00476040c095dmr12402635vsb.14.1710880427147; Tue, 19
- Mar 2024 13:33:47 -0700 (PDT)
+	s=arc-20240116; t=1710881476; c=relaxed/simple;
+	bh=dBtzWiwrPD6UQwokiTmREFzmlEPiCEyK5G4a9gEUheE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BK9UG6Ror9T/ekBJ5xr0qh55SkQXsCUzCT6r0IjQVlMNWrZHzPRPhud+cehcDrtcF4q/9MYBCbGnmppUSQw/VJ4VxmDIl6NjCMqfVORrfEU6Q/GTzmAp40yXgL5vx/hYxvc+KYv/Kl1KcuU+xaIoYqEX/X1jZa4Pzc9wsuLVSa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=x14.nl; spf=pass smtp.mailfrom=x14.nl; dkim=pass (2048-bit key) header.d=x14.nl header.i=@x14.nl header.b=UurZx2Pn; arc=none smtp.client-ip=78.47.83.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=x14.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=x14.nl
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=x14.nl header.i=@x14.nl header.b="UurZx2Pn"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=x14.nl;
+	s=default2204; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References;
+	bh=51R3lPf8qjolgdhorOcyWKSlN/cd/qNCcH/ols1ltLg=; b=UurZx2Pn0Cb2064UhP2nJ3zbvf
+	1ViS9PXlS9LI0WZqzLDvHb2BwOYWc724o6iGPHeSODkIN9S9IL0EkZXp12yR04gKxMPXBsdrb7Tya
+	G9wdk6xX0ssSC+eRRd1ZW2kZEKcqUoRzJpLSzAlog2nReeBNzx09qP3ogn03uEdAKwJ2PdldsCQax
+	lwBaJwqMlcJrphCp0Um/+MEnEEF+O0lLKJHd4aCqOrb5T5SG11phpBiIzMIVSNwWQVR7XwpMxU5+3
+	T5TnxgtxH1A6U9DF0yQ6WdpLAyh9WlgnyMaWBfTD2YkosqWEGLc5RZAIArKTnPML5hH6xcM6K2D+J
+	ALJq8wdg==;
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+	by www555.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <mb@x14.nl>)
+	id 1rmg98-000O8u-P5; Tue, 19 Mar 2024 21:33:18 +0100
+Received: from [2a02:a44b:9e0c:1:343a:5235:74e3:373a] (helo=foaf.home.x14.nl)
+	by sslproxy07.your-server.de with esmtpa (Exim 4.96)
+	(envelope-from <mb@x14.nl>)
+	id 1rmg98-000Boc-1p;
+	Tue, 19 Mar 2024 21:33:18 +0100
+From: "Michiel W. Beijen" <mb@x14.nl>
+To: git@vger.kernel.org
+Cc: justinrdonnelly@gmail.com,
+	"Michiel W. Beijen" <mb@x14.nl>
+Subject: [PATCH] git-prompt: GIT_PS1_SHOWCONFLICTSTATE variable fix
+Date: Tue, 19 Mar 2024 21:32:44 +0100
+Message-ID: <20240319203244.799796-1-mb@x14.nl>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAN7Jk_3_ys4tAJ3B5uy1aUpzknEgQRwdADNxFXDmLxgCL2bZrg@mail.gmail.com>
- <CAN7Jk_0hKTacR4cQiYFW-dcj6ipA=8QcCGrVd7rrJ4vVUxUBKg@mail.gmail.com>
-In-Reply-To: <CAN7Jk_0hKTacR4cQiYFW-dcj6ipA=8QcCGrVd7rrJ4vVUxUBKg@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 19 Mar 2024 16:33:36 -0400
-Message-ID: <CAPig+cS_L=CS7TQhrt5m8M+O-OsdH0oiZkttWp9SxdbZw0Cu6Q@mail.gmail.com>
-Subject: Re: [GSOC] Microproject: Use `test_path_is_*` functions in test scripts
-To: Sanchit Jindal <sanchit1053@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Sender: mb@x14.nl
+X-Virus-Scanned: Clear (ClamAV 0.103.10/27219/Tue Mar 19 09:25:53 2024)
 
-On Tue, Mar 19, 2024 at 4:21=E2=80=AFPM Sanchit Jindal <sanchit1053@gmail.c=
-om> wrote:
-> For the microproject, I can update the file
-> `t/t9803-git-p4-shell-metachars.sh` with the `test_path_*` asserts as
-> required,the tests only have the checks at 6 locations which can be
-> replaced with `test_path_exists`, `test_path_is_missing` and
-> `test_path_is_file`, Please let me know if this is enough for a
-> microproject.
+There are a few environment variables that can influence the output for
+the __git_ps1 macro in git-prompt.sh. All settings that are 'on/off'
+types such as GIT_PS1_SHOWUNTRACKEDFILES and GIT_PS1_SHOWDIRTYSTATE
+just take any value, and in the tests are tested with 'y', however
+GIT_PS1_SHOWCONFLICTSTATE must be set to 'yes' otherwise it will not
+work.
 
-Utilizing `test_path_*` in t9803 would be suitable for a microproject.
+This commit changes that behaviour, and makes sure
+GIT_PS1_SHOWCONFLICTSTATE is consistent with these other parameters.
+
+Signed-off-by: Michiel W. Beijen <mb@x14.nl>
+---
+ contrib/completion/git-prompt.sh | 6 +++---
+ t/t9903-bash-prompt.sh           | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 71f179cba3..fd6141e463 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -85,8 +85,8 @@
+ # by setting GIT_PS1_OMITSPARSESTATE.
+ #
+ # If you would like to see a notification on the prompt when there are
+-# unresolved conflicts, set GIT_PS1_SHOWCONFLICTSTATE to "yes". The
+-# prompt will include "|CONFLICT".
++# unresolved conflicts, set GIT_PS1_SHOWCONFLICTSTATE to a nonempty
++# value. The prompt will include "|CONFLICT".
+ #
+ # If you would like to see more information about the identity of
+ # commits checked out as a detached HEAD, set GIT_PS1_DESCRIBE_STYLE
+@@ -528,7 +528,7 @@ __git_ps1 ()
+ 	fi
+ 
+ 	local conflict="" # state indicator for unresolved conflicts
+-	if [[ "${GIT_PS1_SHOWCONFLICTSTATE}" == "yes" ]] &&
++	if [ -n "${GIT_PS1_SHOWCONFLICTSTATE-}" ] &&
+ 	   [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
+ 		conflict="|CONFLICT"
+ 	fi
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index d667dda654..6479a0d898 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -769,7 +769,7 @@ test_expect_success 'prompt - conflict indicator' '
+ 	test_when_finished "git reset --hard HEAD~" &&
+ 	test_must_fail git stash apply &&
+ 	(
+-		GIT_PS1_SHOWCONFLICTSTATE="yes" &&
++		GIT_PS1_SHOWCONFLICTSTATE=y &&
+ 		__git_ps1 >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+
+base-commit: 3bd955d26919e149552f34aacf8a4e6368c26cec
+-- 
+2.43.0
+
