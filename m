@@ -1,52 +1,51 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D073D69
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 00:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4E5363
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 00:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710808374; cv=none; b=b130IHc7jzlgtkkz/hnC3PUqKZo6C+JQMnNDHPdhhPoZpRPyTFB0j9TdRcwH4hclnqAAqE9ojLkEOjTm/Vo+DoHaLq1xiaBFKLpSca82E1Hk+19kgUftEqYmpRNFeYQGC9YtkwRYSVGz8HL0BuevKUcJ3UAFkEu0NaWNFNt8OR4=
+	t=1710809709; cv=none; b=cpMIhxpqGNPIsIfXXrKPwkOo6reln/4hGBQf6VNsNlGUTVrPZkT2uOt6ZGtdwMEYD84UaQX85Hwz4SKHF9j6eCe4Fq1GGd9QIlYMnmjN3nUCwBsS4goMkNUw00DiUsHX19MXC8Qf64SBj5ye3RHXHTmSGsjL2U8rQmUY0Wnp0Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710808374; c=relaxed/simple;
-	bh=ahW/9Fsy1vi3AZh4svcgn+T0/jGL9dcdNqm0uN0JS8g=;
+	s=arc-20240116; t=1710809709; c=relaxed/simple;
+	bh=Wzc4YW+XtUEubz5CsSz2y7mR+8+U2tNwCzTcqAP3wyg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b2yu4NZS9j2egmJG1iAzwQCW00kosr1bVN6MuRaadHT6/XFCTvixN8C9vJE3XVrzVXQRTV8jUzvE4kjhi+foCyWrJK/rGzBWcGomCCShRiQtdhTA+fe7/0FL7OL0ZgCDek/NP7dPkfdZ/H26EnxQt+jZJQRIY2epjTv94lGczPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gg20rCfR; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=fnMelpvP8KaBCyC2C1h9XIBhfkH2UOiSi018Md4mjhYZ+2Oi8B/f7aBwF8YByXeNTCXQsSbIR5EQ+hSAbpuPF2jdRkAY0gQ1ir6PJrJvC98K2zR9vnq0+C4VzTIQgplnvYr+LsW121uSmNcCv081mYRGSnahfCE8l48cpK3VuUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mm2ZXywW; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gg20rCfR"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 129261D2823;
-	Mon, 18 Mar 2024 20:32:48 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mm2ZXywW"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A8CF63201B;
+	Mon, 18 Mar 2024 20:55:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ahW/9Fsy1vi3AZh4svcgn+T0/jGL9dcdNqm0uN
-	0JS8g=; b=Gg20rCfR5OZBwymGi/q9X93tPhrgaoSRSjjdvWjH54xj4M5CLABfE7
-	ro9pvTbqNoVT1sOSsFGLi8ceNii4hZD69Z7NH/f8fmrDPVkmxx5nm+lXuQK7ooJf
-	OZ7rTYaXDBXibj1HZarV5phjoaPUAIuzxaqQJ0SN8YVs+zUEr64QQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09B2C1D2822;
-	Mon, 18 Mar 2024 20:32:48 -0400 (EDT)
+	:content-type; s=sasl; bh=Wzc4YW+XtUEubz5CsSz2y7mR+8+U2tNwCzTcqA
+	P3wyg=; b=mm2ZXywW55u+4lNv/cFzlv5lJWcek1OMRnQ1eCsp7R9pLgekTtW+CG
+	YHkt6PXcBId2ZgUpZ1Gt/WZgXo3phxEx/3uNNNGjvbUxoPnj1LAsDx/k/AzYJSIN
+	1k19JG1u+r4MKbcnOcTDVFjJTCl0hR0EfD93CvOT6iwMUQ1Z9Xl5Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8EBA23201A;
+	Mon, 18 Mar 2024 20:55:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6CD2F1D2820;
-	Mon, 18 Mar 2024 20:32:47 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7429E32019;
+	Mon, 18 Mar 2024 20:55:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Dragan Simic <dsimic@manjaro.org>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/5] grep: perform some minor code and comment cleanups
-In-Reply-To: <CAPig+cQ6Y2oOaPkKFsD41beXLHjhD++nmf59xrcswpb6_Q-sdA@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 18 Mar 2024 15:59:41 -0400")
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/5] grep docs: describe --no-index further
+In-Reply-To: <3e6136028ca3327b027d57c46fb8155ef3c0d6c5.1710781235.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Mon, 18 Mar 2024 18:03:23 +0100")
 References: <cover.1710781235.git.dsimic@manjaro.org>
-	<96b81f3573d3f29bb97e77d623be0d53cf8085b0.1710781235.git.dsimic@manjaro.org>
-	<CAPig+cQ6Y2oOaPkKFsD41beXLHjhD++nmf59xrcswpb6_Q-sdA@mail.gmail.com>
-Date: Mon, 18 Mar 2024 17:32:46 -0700
-Message-ID: <xmqqjzlzt61d.fsf@gitster.g>
+	<3e6136028ca3327b027d57c46fb8155ef3c0d6c5.1710781235.git.dsimic@manjaro.org>
+Date: Mon, 18 Mar 2024 17:55:00 -0700
+Message-ID: <xmqqwmpzrqfv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,40 +55,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 35B80B94-E588-11EE-85D3-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 5174F2F4-E58B-11EE-87EF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Dragan Simic <dsimic@manjaro.org> writes:
 
-> It's entirely subjective, of course, so no right-or-wrong answer, but
-> I personally do not find that this change improves code quality or
-> readability.
+> ---no-index::
+> -	Search files in the current directory that is not managed by Git.
+> -
+>  --untracked::
+>  	In addition to searching in the tracked files in the working
+>  	tree, search also in untracked files.
+>  
+> +--no-index::
+> +	Search files in the current directory that is not managed by Git.
+> +	This option cannot be used together with `--cached` or `--untracked`.
+> +	See also `grep.fallbackToNoIndex` in CONFIGURATION below.
 
-I agree that this is entirely subjective.  To those who wrote these
-variable decls and inits, what they wrote was the most readable,
-wasn't it?  It probably falls into the "to some readers the existing
-code may not be perfect, but once it is written, it is not worth a
-patch noise to fix it" category.
+Hmph, this is not the fault of this patch, but the description is
+iffy.  You can run "git grep --no-index" inside a directory that is
+managed by Git, and it behaves as if you gave --untracked, if I am
+not mistaken.
 
-> With my reviewer hat on, I spent an inordinate amount of time staring
-> at this change trying to locate each variable's new location to verify
-> that no initializers were dropped and that the declared type hadn't
-> changed.
+What "--no-index" does is to pretend that there is no system called
+Git and work as if it were a strange implementation of "grep -r".
+The reader should be taught to understand the mode as such, because
+that understanding will apply whether the current directory happens
+to be part of a working tree managed by git, or not under control by
+git repository anywhere.
 
-It is true that "cleaning up, no behaviour changes intended" patches
-are unpleasant to review.  They are boring to read, and the risk of
-breakage due to mistake is unnecessary and severe.
+There is no tracked or untracked or managed or anything like that,
+as we are pretending that there is no git, so it falls naturally
+that --cached or --untracked would not work.
 
-But if the result is objectively better, such a one-time cost may be
-worth it.  We are investing into the better future.  For example, we
-may have an unsorted mess of an enum definition, and we do
-appreciate in the longer run, such a definition were "more or less"
-sorted within the constraint of some other criteria (like, "errors
-get negative value").  If the enum is a huge one, it may need some
-careful reviewing to verify such a change that turns the unsorted
-mess into a sorted nice list, but the cost of doing so may be
-justified.
+And from that point of view, swapping the order of "--no-index" and
+"--untracked" in this patch does make sense.  All other options that
+specify which haystack to find the needle in are all about git;
+"--no-index" truly is an oddball that pretends that we live in a
+world without git, and as an oddball, we should move the description
+out from where it does not belong.  It might also make sense to
+rethink where `--recurse-submodules` sits in the list of options
+while at it, as it also is an option that affects which haystack the
+search for the needle is carried out.
 
-Does the change in this patch qualify as "objectively better"?  I
-dunno.
-
-Thanks.
+>  --no-exclude-standard::
+>  	Also search in ignored files by not honoring the `.gitignore`
+>  	mechanism. Only useful with `--untracked`.
