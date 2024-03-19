@@ -1,85 +1,118 @@
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFA654FAB
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 11:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67E77EF0F
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 12:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710847474; cv=none; b=Lp4ItriANmBYWdiufVbWqbgOyFxlHsdjKsf4gwgSPUo7b1WCq5mocUhVDLXp0Vcmg3bp2qr+0tXkjyiP763GNQ0qm8kKODs+zAawNScrQFC3jB4L204Dhwkg0BCFj05n7VZ40BkfBf6y5tnrfrZo2ZWTrPmD/d0vIzYiH1rv8Hw=
+	t=1710850196; cv=none; b=uXpgFrSb7KA6Xif0Qm8L+7oNZrP6yZcyE1P2Vg+EvFNSuMODp+/FAlfZ0KUfC2btaGinFYqTx7dYtTWrMnrlTRuMnNNi57uba4KV4HDkwA51QAb08qV1V8FCM3xKmtbrPmw03k+uwxPcZRHCBaruf8YVNRn7wx4e2XfS/5pGv0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710847474; c=relaxed/simple;
-	bh=ZvHqG9KyK2fn/PfbiiL0P7HCQkiSTagQKAhyGEx3gV4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dpf311OvXfly647mjDlEeVUWXoz8wGeIb5ck/odcLC0ic3X0SfAbbEPZG8+DqhEEf/tHseZ1VAOTD3SwGPMrbkCLME+Cu9YOPC7Avf87kmUUydedFQla7ttpZEmDVWuHUgFB1oClEn3mWRDPL5kOIgVJ0KWkvOr0AZhQa+yN1FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=X4A/9JfX; arc=none smtp.client-ip=202.61.206.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	s=arc-20240116; t=1710850196; c=relaxed/simple;
+	bh=KznQKpIy0dBwhitgw7vcDhSfmApzWFHnSta7j/jS6BQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aV06XAsJPjc9KcyW+Sg4I0nOMco2LRM5EJMvPuY0s1KJEzeOhSWU2vRoUkEDWGX7osFvDzIRBLX/EczUE/7NW5uIUX0I/lhJz9VRAvlxdR6TcbbCr0bHDhP3u+Vin9nz+d0yPJ335l1+WdDp7JnyA7oKIHKYCAXA6cYXKMRvCrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=IzN/8609; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="X4A/9JfX"
-Received: from localhost ([193.175.198.193])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42JBOO52017034
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 19 Mar 2024 12:24:24 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1710847464; bh=ZvHqG9KyK2fn/PfbiiL0P7HCQkiSTagQKAhyGEx3gV4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4A/9JfXaaB9i4adRaDr7lwVILcVgt55mXhVUCeBjnvVziCXSMKqQKxKa8TYhzPiP
-	 w61YKbjylu+lD/oMjESFYOky5M2G1lE2Pw9Vx29EDeNvFEtJXEWyr5jFdCnyOqkls0
-	 W0xcfmUEz6qVln5sRTOj7VTUCDAEXCBFhEGfosCI=
-From: Dirk Gouders <dirk@gouders.net>
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="IzN/8609"
+Received: from localhost (unknown [IPv6:2001:910:10ee:0:8af0:9e6:aa1:70f1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id CABCB60324;
+	Tue, 19 Mar 2024 13:09:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1710850174;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CoDBTpUzqA6j6rKsMEGHDAfqAsy5vECGqMuold8DaQE=;
+	b=IzN/86099nAxbt32IJUMZvV7yEfwBJxkprsjtvF/bskuVMK0UN3fdPi6lRKMEGTzvKF33o
+	yAI3h9ofb6zUoDirZN2gyDxc/mBq/FF/phIsQfuq0UZgnHIo8fGp+I1Q7M2TEer6a6kQae
+	At+gbBhNettg881DiKCeQScjny/kMfBdbXs5gg4xPR3+KmLAc0cVKQ56BVGFGlIZvQSXj/
+	2tXrydxMXe8Ga8e4iuT+xyYuepCNMPMwUP9pkMBJ84JUbvd5xUaFZ18hUQiMxYiANgDmnH
+	IDYIvFvOs7Tgmyurelg19Ldv1TH1a3kXeoyuEsw0pHoHyYNQFX1143250DpV2Q==
+Date: Tue, 19 Mar 2024 13:09:32 +0100
+From: Max Gautier <mg@max.gautier.name>
 To: git@vger.kernel.org
-Cc: Dirk Gouders <dirk@gouders.net>, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: [PATCH v2 5/5] MyFirstObjectWalk: add stderr to pipe processing
-Date: Tue, 19 Mar 2024 12:23:15 +0100
-Message-ID: <64c36dbf16108353635a7315a3bd5eb60f2aa92e.1710840596.git.dirk@gouders.net>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1710840596.git.dirk@gouders.net>
-References: <cover.1710840596.git.dirk@gouders.net>
+Cc: =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [RFC PATCH 3/5] maintenance: use packaged systemd units
+Message-ID: <ZfmAfIErHRZVbd49@framework>
+References: <20240318153257.27451-1-mg@max.gautier.name>
+ <20240318153257.27451-4-mg@max.gautier.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240318153257.27451-4-mg@max.gautier.name>
 
-In the last chapter of this document, pipes are used in commands to
-filter out the first/last trace messages.  But according to git(1),
-trace messages are sent to stderr if GIT_TRACE is set to '1', so those
-commands do not produce the described results.
+I'm working on updating the test in t7900-maintenance.sh, but I might be
+missing something here:
 
-Fix this by redirecting stderr to stdout prior to the pipe operator
-to additionally connect stderr to stdin of the latter command.
+>test_expect_success 'start and stop Linux/systemd maintenance' '
+>   write_script print-args <<-\EOF &&
+>   printf "%s\n" "$*" >>args
+>   EOF
+>   
+>   XDG_CONFIG_HOME="$PWD" &&
+>   export XDG_CONFIG_HOME &&
+>   rm -f args &&
+>   GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args" git maintenance start --scheduler=systemd-timer &&
 
-Signed-off-by: Dirk Gouders <dirk@gouders.net>
----
- Documentation/MyFirstObjectWalk.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Do I understand correctly that this means we're not actually running
+systemctl here, just printing the arguments to our file ?
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index 981dbf917b..2e6ae4d7fc 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -847,7 +847,7 @@ those lines without having to recompile.
- With only that change, run again (but save yourself some scrollback):
- 
- ----
--$ GIT_TRACE=1 ./bin-wrappers/git walken | head -n 10
-+$ GIT_TRACE=1 ./bin-wrappers/git walken 2>&1 | head -n 10
- ----
- 
- Take a look at the top commit with `git show` and the object ID you printed; it
-@@ -875,7 +875,7 @@ of the first handful:
- 
- ----
- $ make
--$ GIT_TRACE=1 ./bin-wrappers git walken | tail -n 10
-+$ GIT_TRACE=1 ./bin-wrappers git walken 2>&1 | tail -n 10
- ----
- 
- The last commit object given should have the same OID as the one we saw at the
+>	# start registers the repo
+>	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+>
+>	for schedule in hourly daily weekly
+>	do
+>		test_path_is_file "systemd/user/git-maintenance@$schedule.timer" || return 1
+>	done &&
+>	test_path_is_file "systemd/user/git-maintenance@.service" &&
+>
+>	test_systemd_analyze_verify "systemd/user/git-maintenance@hourly.service" &&
+>	test_systemd_analyze_verify "systemd/user/git-maintenance@daily.service" &&
+>	test_systemd_analyze_verify "systemd/user/git-maintenance@weekly.service" &&
+>
+>	printf -- "--user enable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
+>	test_cmp expect args &&
+>
+>	rm -f args &&
+>	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args" git maintenance stop &&
+>
+>	# stop does not unregister the repo
+>	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+>
+>	for schedule in hourly daily weekly
+>	do
+>		test_path_is_missing "systemd/user/git-maintenance@$schedule.timer" || return 1
+>	done &&
+>	test_path_is_missing "systemd/user/git-maintenance@.service" &&
+>
+>	printf -- "--user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
+>	test_cmp expect args
+
+The rest of the systemd tests only check that the service file are in
+XDG_CONFIG_HOME, which should not be the case anymore.
+
+However, the test does not actually check we have enabled and started
+the timers as it is , right ?
+
+Should I add that ? I'm not sure how, because it does not seem like the
+tests run in a isolated env, so it would mess with the systemd user
+manager of the developper running the tests...
+
+Regarding systemd-analyze verify, do the tests have access to the source
+directory in a special way, or is using '../..' enough ?
+
+Thanks
+
 -- 
-2.43.0
-
+Max Gautier
