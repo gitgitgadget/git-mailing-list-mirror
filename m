@@ -1,151 +1,90 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8068B39FD6
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 19:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBB63A1D4
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:21:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710877555; cv=none; b=nE92OYxzmbXzqoe+jyR8Rx5oJx8IwaoHDRgRjOf6W9bKza6yTJM0qfjnRM/ldj9jzAgZjM3bqAqE4Qn6v27l9ZK1LFA+aBL7CqlnNJHs+e2SuMB1I3Di9jUcdoGn/t6yqYNE8+bw9qi6A6ri11rcZJPX2rzGqAR0mlIZFe0fJkc=
+	t=1710879704; cv=none; b=XcULFmllzDIWZJgAdRvCV0LDeNY7qurqnLdic/AaddROk0PkuCdvriXfgyiw/pFagVXxNp43aBddARWdDQnGavLL2SJ3mmJpvdkUaInOZg+SzPWU65bDVbSg/Hm92qc5JEPI7c4vNpiCExganWMt0lc/Bq+5l+XLxaNRI/hNvQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710877555; c=relaxed/simple;
-	bh=i4AqGQilEbm0AGzRWH0JAteuttgyqNjmWSModw8rzQQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=I4WVjjeK1HCsZSOOjSLVNGD9fzrssaUoN/k+smiEXEHjcJ7pXWu+ZAsiSNX3sHDiK1Y1t0v0JosvIj2LWu5NdhBlg9xgLvkqICA8XX6UpUE1RB7VuraH33frRyQDCT9sSwu6HKGKKP/acp4BrwBt5lUL9JCYuvbUxQIfhynflBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CBjPccRV; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1710879704; c=relaxed/simple;
+	bh=1LgPRCDFz8qsX4vbd//GIYpaJaeOZZvVwVGJCnukQRE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=G5u3wDr0JtfUifw/llhybWKLta41YN6Jb7HnhW892/Iy+l4ePKtS4lL4Umouw0PcnuVxbw13teAwLYpcGE9WN074NjN4jqUVHa/+HTqu8H08GgbjpBIvTNg2XknuI5BMgvwLdp9kGCw37vcutfUG1e1RkMJX/KPUZKzAr0QvgCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQ8UxcXH; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CBjPccRV"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-513d212f818so7128097e87.2
-        for <git@vger.kernel.org>; Tue, 19 Mar 2024 12:45:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQ8UxcXH"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso5604102e87.1
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 13:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710877551; x=1711482351; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1710879701; x=1711484501; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=s33kMLKSeE7sYm0NtjwxVRWxSnglOOju6FFlPi52FZA=;
-        b=CBjPccRVm+DigjjIpGLudeSdiGtJUWISkI5kpNNjKEruX13AIe0K3T3YhzObreTdFY
-         9LTy7OJNrDfXTS1uCQo2dPLMifZgfkPN88DpQcZaCN5ObVWagq2DxVaMCQ2ShJtuw+Of
-         uywpteIDaoctQtW19PK/OOqXB5CHZSGZ34UFd2889AKac6tZ9Tewo85UKWCOIWGgV+hF
-         577VK6uidzgMqe3I2L0Sg9ONmzEZXNYssWN5LSAITbL/d0B6fi4ehnnU4GzgrWX6pePD
-         WocQlVxZtOZYdeFYmpiC6CDeeOc/DCU4SXxRD62irlHB2TBV/GuYieQKsp1zNXVSQK4J
-         vyNQ==
+        bh=1LgPRCDFz8qsX4vbd//GIYpaJaeOZZvVwVGJCnukQRE=;
+        b=aQ8UxcXHnJebqdF7eVh6sSdrjdb+dgb6W5Zs67KGslYmdo0RWTrIINOs5xxvFreK2g
+         cwEtEt0JPYgNSNzsHVcXY2akVjUThAze3aelr72Tqfjv4VIf/HmMhubx14uWxgD7NXpB
+         LFyFjKsrn0QdFaFDhrjIaMUInpPT8SAb1f+5amyg06UJW6O4k/SzoUFJkzByuQX/stMN
+         BzN7C2jHy3jIV9Ds8/VzHa8jJmzzcWq0vJUd5S+0pB3sehEUQ1WW8mtw0L/NSIhTlM8s
+         08eUG6McmZ6qvdlA7twXX+ZlWiNyH/ooLcEnAY9sAgY1SQPZLlQuyeXOu6vYxKw/bgSR
+         E4wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710877551; x=1711482351;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1710879701; x=1711484501;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s33kMLKSeE7sYm0NtjwxVRWxSnglOOju6FFlPi52FZA=;
-        b=ELtLGy9dpJ83SKIwOpQO8AlnRHSZwuL6XHcMwN7GX/pi0sFUQjc7ZY+bitJ+Ds2SMu
-         bJoh8DVDieBqs6p91Xdnt9wZ9j4317nJy3DLMYnX7At/1wk5FFsMyxau3Py9hNDDQHEe
-         gQSUWL3skfxzWE1ergd+QWbseN4/Q5CyyYUVGPVHi5/yyN104tBoF+PvvGCJN6F92sJk
-         uIlb/v6lgPZi2pvi7wfa+kVAu3JaZX2GyUpCiFgffgwwKDP41s3DM5ih81FLWcFTSUmc
-         XJMSc1FkvlSNl8UZuPac2Lh/D2N/3EzeTJPERayGXD0jBxC0Eo1amtdjygZmMaGpSucN
-         6jzQ==
-X-Gm-Message-State: AOJu0YxxT1bqOHKIvqDB6L+FYCCRPLGmDs9Ze2RUplYvAavc6tgopITS
-	DQWkLDCrmBGSViYO2T5epF0Vxa+3ylhPR2o2wLA8uKjwjuHl25mHhC5kkMMiqN8=
-X-Google-Smtp-Source: AGHT+IFSKL0tMRHjQdywMSAlyRcQG8a8mXAFH/mZ+M5PF4iR6FSwhZOyy5G3MBoK6z4/wulFC7VOMg==
-X-Received: by 2002:a05:651c:d3:b0:2d2:3c88:cd57 with SMTP id 19-20020a05651c00d300b002d23c88cd57mr48564ljr.32.1710877551364;
-        Tue, 19 Mar 2024 12:45:51 -0700 (PDT)
-Received: from ?IPV6:2001:861:3385:e20:6384:4cf:52c5:3194? ([2001:861:3385:e20:6384:4cf:52c5:3194])
-        by smtp.gmail.com with ESMTPSA id fa6-20020a05600c518600b004146a49d0d3sm162777wmb.30.2024.03.19.12.45.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Mar 2024 12:45:50 -0700 (PDT)
-Message-ID: <e47f9df1-be1f-45aa-9308-dfbc2124f29c@gmail.com>
-Date: Tue, 19 Mar 2024 20:45:49 +0100
+        bh=1LgPRCDFz8qsX4vbd//GIYpaJaeOZZvVwVGJCnukQRE=;
+        b=bItd/B+BpZlTV3z1AwNMtzNJao+4Ma8mziLHSTdCmx4IFRS7VTgMlUuY+zhTIzIY3l
+         +z5YDfBqndfebT9L82GyJ4m4goVPaZ7SS47ECN8XJ2RgbjZBKdMlmnU7kfuD2yDKwvGT
+         ABWxqXpw8HLtoAl/eET+CfW7istkIdG7XcBelVq95GIVTgUTMKcJGXEtkW+Mc4sOv7MV
+         3Td24MD4NNvNQ0Mx1P9iTRL+mCW5IKtVTdgRVOAsa7o9cMP28F5kjaAFZz20H2b1nh4m
+         osGz66s0EP5wzeqjSg7SSg3FfA1/2kXRnb7VUbUI27O77h+lPCyvJOSrDtaH56SnHq3P
+         eD3w==
+X-Gm-Message-State: AOJu0YxcwRQ1NbBdS9GJi18T7SOao/K7k+7MZfGtpCtA2JT0RlFZ4eqD
+	Qsgiw7r+2QXj1X7i3qxwdoIO15zonzxl2F1mBY0Bv1H3ynWKH8dv1Ty5z39DnkG2B8mc1nqJdBJ
+	uoC9D5Fo/hIhf7MuX6HHUuQIiO7gp2xrh4sw=
+X-Google-Smtp-Source: AGHT+IEfm4CQw2pd0JQWxUuR9CcR3GQZTn5Y6MepQiLuYNgWNB1RK5mJc0WSKbCe4THbL+GNczNyxgqhiOIDTXOiWnQ=
+X-Received: by 2002:a2e:9114:0:b0:2d4:8e2f:e3d6 with SMTP id
+ m20-20020a2e9114000000b002d48e2fe3d6mr7774632ljg.10.1710879700657; Tue, 19
+ Mar 2024 13:21:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: add "Hightlight commit name" menu entry
-Content-Language: en-US, fr
-From: =?UTF-8?Q?Rapha=C3=ABl_Gallais-Pou?= <rgallaispou@gmail.com>
-To: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, Denton Liu <liu.denton@gmail.com>,
- Paul Mackerras <paulus@ozlabs.org>, Beat Bolli <dev+git@drbeat.li>
-References: <20240130085308.5440-1-rgallaispou@gmail.com>
-In-Reply-To: <20240130085308.5440-1-rgallaispou@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CAN7Jk_3_ys4tAJ3B5uy1aUpzknEgQRwdADNxFXDmLxgCL2bZrg@mail.gmail.com>
+In-Reply-To: <CAN7Jk_3_ys4tAJ3B5uy1aUpzknEgQRwdADNxFXDmLxgCL2bZrg@mail.gmail.com>
+From: Sanchit Jindal <sanchit1053@gmail.com>
+Date: Wed, 20 Mar 2024 01:51:31 +0530
+Message-ID: <CAN7Jk_0hKTacR4cQiYFW-dcj6ipA=8QcCGrVd7rrJ4vVUxUBKg@mail.gmail.com>
+Subject: Fwd: [GSOC] Microproject: Use `test_path_is_*` functions in test scripts
+To: git@vger.kernel.org, christian.couder@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Greetings,
 
-Gentle ping since I haven't received any reviews or comment on this 
-patch. :)
+My name is Sanchit Jindal, I will be graduating with a B.E in Computer
+Science from Indian Institute of Technology, Bombay this year. I am
+writing to express my keen interest in contributing to Git as part of
+the GSOC program.
 
-Do you guys actually take patches for the gitk tool ? I feel like there 
-is not much features added on this.
+As I prepare to graduate, I am eager to contribute to open source
+development, and I believe that participating in GSoC with Git would
+be an excellent opportunity to kickstart this endeavor.
 
-Regards,
-Raphaël
+For the microproject, I can update the file
+`t/t9803-git-p4-shell-metachars.sh` with the `test_path_*` asserts as
+required,the tests only have the checks at 6 locations which can be
+replaced with `test_path_exists`, `test_path_is_missing` and
+`test_path_is_file`, Please let me know if this is enough for a
+microproject.
 
-Le 30/01/2024 à 09:53, Raphael Gallais-Pou a écrit :
-> When working with diverged branches, some patches can appear several times
-> on different branches without having the need to merge those branches.
-> On the other hand you may have to port a specific patch on another
-> branch you are working on. The search with a SHA1 cannot be applied here
-> since they would differ.
-> 
-> This patch adds an entry in the main context menu to highlight every
-> instance of a commit.
-> 
-> Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
-> ---
->   gitk-git/gitk | 23 ++++++++++++++++++++---
->   1 file changed, 20 insertions(+), 3 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 7a087f123d..4b15230a16 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2672,6 +2672,7 @@ proc makewindow {} {
->           {mc "Make patch" command mkpatch}
->           {mc "Create tag" command mktag}
->           {mc "Copy commit reference" command copyreference}
-> +	{mc "Highlight commit name" command highlightcommitname}
->           {mc "Write commit to file" command writecommit}
->           {mc "Create new branch" command mkbranch}
->           {mc "Cherry-pick this commit" command cherrypick}
-> @@ -9002,13 +9003,13 @@ proc rowmenu {x y id} {
->       if {$id ne $nullid && $id ne $nullid2} {
->           set menu $rowctxmenu
->           if {$mainhead ne {}} {
-> -            $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
-> +            $menu entryconfigure 9 -label [mc "Reset %s branch to here" $mainhead] -state normal
->           } else {
-> -            $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
-> +            $menu entryconfigure 9 -label [mc "Detached head: can't reset" $mainhead] -state disabled
->           }
-> -        $menu entryconfigure 10 -state $mstate
->           $menu entryconfigure 11 -state $mstate
->           $menu entryconfigure 12 -state $mstate
-> +        $menu entryconfigure 13 -state $mstate
->       } else {
->           set menu $fakerowmenu
->       }
-> @@ -9481,6 +9482,22 @@ proc copyreference {} {
->       clipboard append $reference
->   }
->   
-> +proc highlightcommitname {} {
-> +    global rowmenuid autosellen findstring gdttype
-> +
-> +    set format "%s"
-> +    set cmd [list git show -s --pretty=format:$format --date=short]
-> +    if {$autosellen < 40} {
-> +        lappend cmd --abbrev=$autosellen
-> +    }
-> +    set reference [eval exec $cmd $rowmenuid]
-> +    set findstring $reference
-> +    set gdttype [mc "containing:"]
-> +
-> +    clipboard clear
-> +    clipboard append $reference
-> +}
-> +
->   proc writecommit {} {
->       global rowmenuid wrcomtop commitinfo wrcomcmd NS
->   
+I am particularly interested in the "Move existing tests to a unit
+testing framework" project. I plan to familiarize myself with the
+testing framework, and the changes needed in the codebase for the
+project
+
+Regards
+Sanchit Jindal
