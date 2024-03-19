@@ -1,108 +1,80 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CF95A0E9
-	for <git@vger.kernel.org>; Mon, 18 Mar 2024 22:24:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2525B14011
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 00:21:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710800671; cv=none; b=oiMDPrLXinDqR9iglWOZ4seKri/m65uhy6q+3I3GWuMgCmAxVSwAan82XQJ+2cTR8a/uiX73gEkVVRfG4Z9q9qIgNvQBwCWtfRBRKbNtcHnlZwfSVSw5WgobwIanuHbUvVPPyrb9xSOnARwFKReJL/USnwsiiy760BkqfIgsvX4=
+	t=1710807718; cv=none; b=H+R55UibxO2ae4wHudBNQkdOxOiYOs75IYOXfjF5rlbTMb96RG/NmzA7JBy+F+vv9esU40Lz4U26KXhE9LnXXpkbDk4VAWp/uojpFgkZcDQb+8wsosJ6APQZDajV4U3mZm8RqnG4Exu/DMIKOkpF9upWcBASnvqSaqQ9o7biXss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710800671; c=relaxed/simple;
-	bh=p1PfeyuxxycBrbMdREyxM1PNgEic96mNcz1+OhApmRY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KcP7BelVJQAJ3WfdcEoJZwIO2cFR9DH2kZD7xjOaBNbWW0MFeHsf9sCGpWcsjroFKsJYojg8/Ha6GcE/xpMlO9VrI2KxbHI7/m504Ao+KKIF3nCqPWr3MKt/KWZ6Qc5vVI1PrXZOqktGfaqfokFkL9ihr4J9P9sK/HguTRDM6kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=OMGd85Kc; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710807718; c=relaxed/simple;
+	bh=fRS2IFUm0XwdfAyNraBbSckRd/EPAKe2UguAJGjWS34=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V64v8LU4vWS2KsJqEhV3xAz3KJBUChalx98ZKhqsSaexbT6an2MQq/5kmRGAmZeQJQ98jKSYQoJlU/xXpvjWMfc7s2liPhKSGTFuEVm8mzCn8yMJ94H+7pUXRrfeSJT3op4fSTjst04cggbWVXGNK0jPUdRJaEzp4phiD91wjOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dG5IVz4v; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="OMGd85Kc"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710800668;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=n7Pd1vNNG8RFCIEeb3W6bTh3erqBwKPwxFGU4RXDAKo=;
-	b=OMGd85Kc4WTT2TLyZbov3gw3KybejIZdFgs5E4EDzOTZalOSAmBSZCV8sEY0nHJR9T0b1I
-	8wg18MC9TPsjH34Uf7+aiNH/grxoESQNC0tU59dckf3BOKnA0v8dweiRdLu1jZfDJqwkz8
-	M9pSsUw12Z9BcbsL4MmrSivx+jz3Qtt47HD4nhSv/RnEu9ipcwSVxdyEEoj3F1OLtKHMqc
-	OZpZFj1x+2k8FrjcsZ8334UbR0oXvtB6jFSiBib5KYoXU8yelj1uRf7ZT/gPdXNin6ZoP7
-	pyfTipYb7Y7qm3mgMpL1HcPD1EFyT0z5RmOAXVwtNny9Qp7lNmin2X/W1TeUJg==
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	rsbecker@nexbridge.com,
-	github@seichter.de,
-	sunshine@sunshineco.com
-Subject: [PATCH v3 4/4] config.txt: describe handling of whitespace further
-Date: Mon, 18 Mar 2024 23:24:22 +0100
-Message-Id: <e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1710800549.git.dsimic@manjaro.org>
-References: <cover.1710800549.git.dsimic@manjaro.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dG5IVz4v"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D40F31CF8;
+	Mon, 18 Mar 2024 20:21:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=fRS2IFUm0XwdfAyNraBbSckRd/EPAKe2UguAJG
+	jWS34=; b=dG5IVz4vNlIF+ZqlYN53IB3QXNhA9xp6eItWyiRgUdgLkjaHrKA24y
+	1/b9mYsLbNHzvDsxBOQiUKAproszD6IvH5jG3wOlU7ipQXgFwvfpGwk5HJS19ZwF
+	vY+i2YByUdeWjSB1b1rjjJF/qKaoQU2AtpfFT6Us+f+0EhysUKnmA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 85CC931CF7;
+	Mon, 18 Mar 2024 20:21:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2009031CF6;
+	Mon, 18 Mar 2024 20:21:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/5] New config option for git-grep to include untracked
+ files
+In-Reply-To: <cover.1710781235.git.dsimic@manjaro.org> (Dragan Simic's message
+	of "Mon, 18 Mar 2024 18:03:20 +0100")
+References: <cover.1710781235.git.dsimic@manjaro.org>
+Date: Mon, 18 Mar 2024 17:21:51 -0700
+Message-ID: <xmqqwmpzt6jk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ AFB770B2-E586-11EE-94FF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Make it more clear what the whitespace characters are in the context of git
-configuration files, and improve the description of the trailing whitespace
-handling a bit, especially how it works out together with the presence of
-inline comments.
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
+> This patch series introduces new config option grep.includeUntracked,
+> which makes the untracked files also searched by default when git-grep(1)
+> is invoked, in addition to searching the tracked files.
 
-Notes:
-    Changes in v3:
-        - Patch description was expanded a bit, to make it more on point
-        - No changes to the documentation were introduced
-    
-    Changes in v2:
-        - No changes were introduced
+Hmph.  I am moderately negative on any configuration that screws
+with the default haystack from which needle is sought for.
 
- Documentation/config.txt | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+I may often do "git grep --cached" but that does not mean I would
+welcome an configuration option to make "git grep" search in the
+index even when the request by the user does not have "--cached".
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 782c2bab906c..20f3300dc706 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -22,9 +22,10 @@ multivalued.
- Syntax
- ~~~~~~
- 
--The syntax is fairly flexible and permissive; whitespaces are mostly
--ignored.  The '#' and ';' characters begin comments to the end of line,
--blank lines are ignored.
-+The syntax is fairly flexible and permissive.  Whitespace characters,
-+which in this context are the space character (SP) and the horizontal
-+tabulation (HT), are mostly ignored.  The '#' and ';' characters begin
-+comments to the end of line.  Blank lines are ignored.
- 
- The file consists of sections and variables.  A section begins with
- the name of the section in square brackets and continues until the next
-@@ -64,12 +65,14 @@ The variable names are case-insensitive, allow only alphanumeric characters
- and `-`, and must start with an alphabetic character.
- 
- A line that defines a value can be continued to the next line by
--ending it with a `\`; the backslash and the end-of-line are
--stripped.  Leading whitespaces after 'name =', the remainder of the
-+ending it with a `\`; the backslash and the end-of-line are stripped.
-+Leading whitespace characters after 'name =', the remainder of the
- line after the first comment character '#' or ';', and trailing
--whitespaces of the line are discarded unless they are enclosed in
--double quotes.  Internal whitespaces within the value are retained
--verbatim.
-+whitespace characters of the line are discarded unless they are enclosed
-+in double quotes.  The discarding of the trailing whitespace characters
-+applies regardless of the discarding of the portion of the line after
-+the first comment character.  Internal whitespace characters within the
-+value are retained verbatim.
- 
- Inside double quotes, double quote `"` and backslash `\` characters
- must be escaped: use `\"` for `"` and `\\` for `\`.
+Inclusion of untracked sources in a sense is even worse, especially
+when an unsuspecting "git grep" user (or a script) fully expects
+that any paths found in the output are to be found in "git ls-files
+-s" output but when you stray into a repository with the
+configuration set, that expectation suddelnly gets broken.
+
+So, I dunno.
+
