@@ -1,197 +1,104 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18E03BBC7
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:53:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CCA3BBC7
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710881641; cv=none; b=SRwxbciWtpf2KLlJ9NlA2bHz5LrDlGHvVp+ltOt1aLAMFwUI+qJfu8BkRUewqSLxzo9f9hgctmmdNeDsV14+yhnc7sXmNKkMNzuqwFT7AtDO/LFRQTNU3B6mKtkieMKffUqeItnJaKnLUVAfPIGfnZbsrYIr3iXWg9dE8QOxpl0=
+	t=1710881727; cv=none; b=KFvb/Rex68Bi5P2X/ImuaS79PPiODsegZk7xn3FZefqA0ju62sZlkhCFCjoC8YqVs7pYfja0HqadC2Zj03WyhIWVYi+1WaBUlfN8UKQE5lGSYG+sMkp7Jvd3WcR6Ai+1w+caltkgb7JbWOyPiLGmi9sBz8zYbjqXMBIefnlzwI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710881641; c=relaxed/simple;
-	bh=7HMd+Vl2B9GGH+7lf7MpAKAm13V1p/ldvzB4Y3hJi2M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lrv0W+mSaZ5CrIgeziC95ZjmC6FavoIdx07tyYilSZodqWs9ZiUoIRLBWdvu3g8Mhx7PP+oIAZNTlIudo4wKSjL1rCICHp05u3v/ggoF8YuS4KxWMAFcugmpm1ujJYY2UbQAqrGqjWX8OZQiFDR2aRcbCCuTkWXqPdMxuy80oJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HHmxnSv8; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HHmxnSv8"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 87C4229785;
-	Tue, 19 Mar 2024 16:53:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7HMd+Vl2B9GGH+7lf7MpAKAm13V1p/ldvzB4Y3
-	hJi2M=; b=HHmxnSv8fVcGFgclanqWODxwmo8RcMeHjtvyW7I+8azpzmXUzAnXTg
-	JLlMpulOnYobtQMmwlrtJXbnnvSdZGwsQBStLXy018Yzhcv5imb6SoZDDY5eB2DP
-	VznfSYhbGsfIeqIQQNx6gPT19FWr1G5vfv0wOzMQetBCxi0exIquo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 80B4E29784;
-	Tue, 19 Mar 2024 16:53:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 06DC829783;
-	Tue, 19 Mar 2024 16:53:55 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ignacio Encinas <ignacio@iencinas.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] config: learn the "hostname:" includeIf condition
-In-Reply-To: <20240319183722.211300-3-ignacio@iencinas.com> (Ignacio Encinas's
-	message of "Tue, 19 Mar 2024 19:37:22 +0100")
-References: <20240309181828.45496-1-ignacio@iencinas.com>
-	<20240319183722.211300-1-ignacio@iencinas.com>
-	<20240319183722.211300-3-ignacio@iencinas.com>
-Date: Tue, 19 Mar 2024 13:53:54 -0700
-Message-ID: <xmqqsf0mlz8d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710881727; c=relaxed/simple;
+	bh=a/wNaDztv4CNZcdq4Z6YwEOz9B2Y6xfG9ouCcYoGAQ0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OlEtADrd9b2t20UOobkGFIHP0DWCcxqIZjr5fseXS8Ux+FMf/wo3obOhBl3l6HbusezRaTqihWtHxDb6Qj2/bd+16tk9oT8xWVeJ4yteUeVqMPemEX+R2YjV/pK+IRapQfk1EB1rvjGwxQtoyA9LXGaFVfp3HPspX0U8o3KX7FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-690e2d194f6so41117186d6.0
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 13:55:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710881724; x=1711486524;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pVWaJfn4hTQ+49ZZgbCeTQPnhJ9YmVtDxV52DC/FkPw=;
+        b=cxpqhXoHf82xU3+SShZcnT+kXk43cuHJji3DdlSS/X2eamK48RxUHl1DvxVwVeIOG2
+         XNm2dTlegLDfQCg5N+UbKKu1Mihf3gONA1ykREmrzba51qrm8QxzZCfZhKrcH5H/Rnfh
+         XhH1tsv1vvYzF37LphF2z4YAGMkjJpUnaq49xZ4WA/kh6OOkgRB0eUDXK+d5ERayQEou
+         PX6izVOJu+bxGa60v99lxdhWB4pFOK8DhCtiUBSH4bEnXMZ1m2ZXIxCaQj9pReXJuHm0
+         KbzgebxPHWakkqu/9N2+IWJKR5hvzTuJ5mf8W5WYj1xcWlpO/VHRcOyiJPJmTM1Nkrzx
+         YxgA==
+X-Gm-Message-State: AOJu0Yx9Qr4rVdYTaMTyfvES0qA9qPiFq8NAGizxi9LUguxwzOK6gxOo
+	sVMBAflnEwYxcTIWh1aCUEgEjv6uhVixdyV/n084uK3IWWg+hFmmQXsUKCPIqkD5MYx1SpYcZLY
+	f7S1MlBfikv7lo2zI77FdhSr/61s=
+X-Google-Smtp-Source: AGHT+IFwzdBvDEZDgz7KXVHnVL1lmlNMJATUByjn3iNKqLxqt57hCtddIScy4hqcqvTTKv+PQtI9engT3pUoPc3w4A0=
+X-Received: by 2002:a0c:f38e:0:b0:691:3ccd:62cc with SMTP id
+ i14-20020a0cf38e000000b006913ccd62ccmr4182938qvk.6.1710881723978; Tue, 19 Mar
+ 2024 13:55:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CD320B64-E632-11EE-B5C4-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <20240309181828.45496-1-ignacio@iencinas.com> <20240319183722.211300-1-ignacio@iencinas.com>
+In-Reply-To: <20240319183722.211300-1-ignacio@iencinas.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 19 Mar 2024 16:55:12 -0400
+Message-ID: <CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Add hostname condition to includeIf
+To: Ignacio Encinas <ignacio@iencinas.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ignacio Encinas <ignacio@iencinas.com> writes:
+On Tue, Mar 19, 2024 at 2:38=E2=80=AFPM Ignacio Encinas <ignacio@iencinas.c=
+om> wrote:
+> It was pointed out that it wasn't particularly obvious what it was meant =
+by
+>
+>   "If the current hostname matches the pattern, the include condition is =
+met."
+>
+> which is definitely true. Despite this, to my knowledge, there isn't a
+> way to precisely define what we mean by "hostname" other than saying
+> that we mean whatever is returned by gethostname(2).
+>
+> I still think the documentation isn't great, but I don't see a way to
+> improve it further.
 
-> Currently, customizing the configuration depending on the machine running
-> git has to be done manually.
+Peff provided the answer when he suggested[1] implementing `git config
+--show-hostname-for-includes`.
 
-Drop "currently" (cf. https://lore.kernel.org/git/xmqqle6xbep5.fsf@gitster.g/)
+[1]: https://lore.kernel.org/git/20240318081722.GA602575@coredump.intra.pef=
+f.net/
 
-It does not actually have to be done manually.  I and many others
-have ~/src/home/dot/ directory where ~/src/home/dot/Makefile uses
-information available in the environment (like output from the
-`hostname` command), produces the .gitconfig file out of a template,
-and the build procedure can even install with "make install" the
-resulting file to "~/.gitconfig".  Together with other configuration
-files that are kept track of in the ~/src/home/ repository, it is
-managed wihtout much manual labor.
+> 1:  cf175154109e ! 2:  dec622c38916 config: learn the "hostname:" include=
+If condition
+>     @@ Documentation/config.txt: As for the naming of this keyword, it is=
+ for forwards
+>      +`hostname`::
+>      +  The data that follows the keyword `hostname:` is taken to be a
+>      +  pattern with standard globbing wildcards. If the current
+>     -+  hostname matches the pattern, the include condition is met.
+>     ++  hostname (output of gethostname(2)) matches the
+>     ++  pattern, the include condition is met.
 
-Another reason why "[includeif hostname:<name>]" may be useful is
-when the same home directory is shared across multiple machines.  
-As ~/.gitconfig is shared, if you need to have different settings
-depending on the host, you would need to have something that a
-single file ~/.gitconfig is read in different ways on these hosts.
+This is still unnecessarily user-hostile, especially to users who are
+not programmers, but also to programmers who don't want to waste time
+writing a little test program to determine what gethostname(2) returns
+on each platform they use. That's not a great situation.
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index e3a74dd1c19d..268a9fab7be0 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -186,6 +186,12 @@ As for the naming of this keyword, it is for forwards compatibility with
->  a naming scheme that supports more variable-based include conditions,
->  but currently Git only supports the exact keyword described above.
->  
-> +`hostname`::
-> +	The data that follows the keyword `hostname:` is taken to be a
-> +	pattern with standard globbing wildcards. If the current
-> +	hostname (output of gethostname(2)) matches the
-> +	pattern, the include condition is met.
-> +
+Peff felt that adding `git config --show-hostname-for-includes` was
+probably overkill, but I'd argue that it is necessary to enable users
+to deterministically figure out the value to use in their
+configuration rather than having to grope around in the dark via
+guesswork and trial-and-error to figure out exactly what works.
 
-I do not think of a better way to phrase to explain what `hostname`
-means in this context than the above, either.  This should be good
-enough, hopefully ;-).
-
-The entry above this one is really an oddball (it only depends on
-what other repositories the current repository interacts with, and
-does not care about host, directory, or anything of the sort); we
-may want to move it either before the `onbranch` entry.
-
-> diff --git a/config.c b/config.c
-> index 3cfeb3d8bd99..50b3f6d24c50 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -317,6 +317,21 @@ static int include_by_branch(const char *cond, size_t cond_len)
->  	return ret;
->  }
->  
-> +static int include_by_hostname(const char *cond, size_t cond_len)
-> +{
-> +	int ret;
-> +	char my_host[HOST_NAME_MAX + 1];
-> +	struct strbuf pattern = STRBUF_INIT;
-> +
-> +	if (xgethostname(my_host, sizeof(my_host)))
-> +		return 0;
-> +
-> +	strbuf_add(&pattern, cond, cond_len);
-> +	ret = !wildmatch(pattern.buf, my_host, 0);
-> +	strbuf_release(&pattern);
-> +	return ret;
-> +}
-
-OK.  Just as other conditions, it is a bit annoying that we need to
-make a copy of cond string only to NUL terminate it, because
-wildmatch() does not take a counted string as its input, but the
-above code looks good.
-
-> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-> index 5cde79ef8c4f..ef9272fd8e53 100755
-> --- a/t/t1305-config-include.sh
-> +++ b/t/t1305-config-include.sh
-> @@ -357,4 +357,46 @@ test_expect_success 'include cycles are detected' '
->  	grep "exceeded maximum include depth" stderr
->  '
->  
-> +test_expect_success 'conditional include, hostname' '
-> +	cat >>.git/config <<-EOF &&
-> +	[includeIf "hostname:$(test-tool xgethostname)a"]
-> +		path = bar12
-> +	EOF
-
-Exactly the same comment about lost exit status from test-tool
-applies here, too.
-
-> +	cat >>.git/bar12 <<-EOF &&
-> +	[test]
-> +		twelve=12
-> +	EOF
-> +
-> +	test_must_fail git config test.twelve &&
-> +
-> +	cat >>.git/config <<-EOF &&
-> +	[includeIf "hostname:$(test-tool xgethostname)"]
-> +		path = bar12
-> +	EOF
-> +	echo 12 >expect &&
-> +	git config test.twelve >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'conditional include, hostname, wildcard' '
-> +	cat >>.git/config <<-EOF &&
-> +	[includeIf "hostname:$(test-tool xgethostname)a*"]
-
-Hmph, a* is not even "one-or-more a" but "a followed by anything",
-so this will not match, OK.
-
-> +		path = bar13
-> +	EOF
-> +	cat >>.git/bar13 <<-EOF &&
-> +	[test]
-> +		thirteen = 13
-> +	EOF
-> +
-> +	test_must_fail git config test.thirteen &&
-> +
-> +	cat >>.git/config <<-EOF &&
-> +	[includeIf "hostname:$(test-tool xgethostname)*"]
-
-And this is "exactly what gethostname gives, followed by anything
-(including nothing)", so gethostname output should match.  OK.
-
-> +		path = bar13
-> +	EOF
-> +	echo 13 >expect &&
-> +	git config test.thirteen >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+And the option name doesn't necessarily have to be so verbose; a
+shorter name, such as `git config --show-hostname` may be good enough.
+Implementing this option would also obviate the need to implement
+`test-tool xgethostname` (though, I agree with Junio that `test-tool
+gethostname` would have been a better, less implementation-revealing
+name).
