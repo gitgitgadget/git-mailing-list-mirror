@@ -1,74 +1,84 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BB13BBD7
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 21:44:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E14E405FF
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 22:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710884678; cv=none; b=aPABzfMeqII3EKk0ANJ7VM5o7O7x/2GwW1nUXkQ/3Ao7r6OBLJ+juSPOPCf4oh8zpxncji9qnFFKNjlTn2Mko/MMdvClAXkiP2f9mSu1+iYDDyN435gZGIt111Kpif+1PfgOBMsQy1MhsFkYGj4Yy2mFIbN1Esqz7AITmQ+sRHI=
+	t=1710885835; cv=none; b=jlZXHFHmy9wkqLVU4KTgK7j6K0J3LWy+9bS5A2mc1vDZRbfZOg0yUd9WubB0EpfgI15ihg558y6c0HRTkGY4o93JyKSgrG765CW+F6/ww6xw8BvlC7hk7J+u0rvmpQ4Hcsqmj62Ng94O47+h9H0Z5r6bfq+UpJyQN4rsGXXzmUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710884678; c=relaxed/simple;
-	bh=fuKT5z/CIHEAE3zBsHi9cOPHbhJfW/u/qYNBrNyB2Zw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Y3HNh3N6se8zxl8HiDMyn3KB69QYjnt71V7FiddyPpiv4Ic8FEV+dHL0B3gvVq+2wHpAnZ0nWv6L0HL2Npc+LHKMU6lM/bWLmqhof0X0LXXKxDuiqYVP+R793BcMC6yBjv4HLemXH4l+697hN9xvlNBUHGlk7elwA0xdPkyIp3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WBJi08VX; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WBJi08VX"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 19C7229CDF;
-	Tue, 19 Mar 2024 17:44:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fuKT5z/CIHEAE3zBsHi9cOPHbhJfW/u/qYNBrN
-	yB2Zw=; b=WBJi08VXUPrK/KOExISNvJWlnMtLUAaP0ilSFh6FDMpIxyapS0EzyO
-	UJOvSwjgu5cWLQT0TpF/UyZahvJzoin/4SAYb+3aRl+Wl4VSlphKK34mM9blp9A9
-	w5YLvfDt5F8l5E3pMCa9TH0HUG+DdsLTuL6i0FVyczYLwSHrU+yw4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 12D8E29CDE;
-	Tue, 19 Mar 2024 17:44:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8CB3F29CDD;
-	Tue, 19 Mar 2024 17:44:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Ignacio Encinas <ignacio@iencinas.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] t: add a test helper for getting hostname
-In-Reply-To: <20240319211112.GD1159535@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 19 Mar 2024 17:11:12 -0400")
-References: <20240309181828.45496-1-ignacio@iencinas.com>
-	<20240319183722.211300-1-ignacio@iencinas.com>
-	<20240319183722.211300-2-ignacio@iencinas.com>
-	<xmqq8r2eneut.fsf@gitster.g>
-	<20240319205753.GB1159535@coredump.intra.peff.net>
-	<xmqqo7balyx9.fsf@gitster.g>
-	<20240319211112.GD1159535@coredump.intra.peff.net>
-Date: Tue, 19 Mar 2024 14:44:31 -0700
-Message-ID: <xmqq5xxhnbgg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710885835; c=relaxed/simple;
+	bh=pdW8XZDnYhVo2AZNi2WBBdskBMZVeAU0yinfq0PI8C8=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Eh7sLMTe6VBZFEtyXKdqQfCUtaWS0p99DX0WDQou623oeuKEpDAugGJJZUjeFspi7YPw37+AZpeQ+R1C2LwyP54sw8qap1KUAtmwWK+c+jIrFlaojfQMZewbqwlx1e/oEIX4hbAFDEsmgKTShYA/+5KxjOqpcv3CoyoA214TfM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 42JM3BP33089513
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Mar 2024 22:03:11 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Dirk Gouders'" <dirk@gouders.net>,
+        "'Junio C Hamano'" <gitster@pobox.com>
+Cc: "'Eric Sunshine'" <sunshine@sunshineco.com>,
+        "'Ignacio Encinas'" <ignacio@iencinas.com>, <git@vger.kernel.org>,
+        "'Jeff King'" <peff@peff.net>, "'Taylor Blau'" <me@ttaylorr.com>
+References: <20240309181828.45496-1-ignacio@iencinas.com>	<20240319183722.211300-1-ignacio@iencinas.com>	<CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>	<xmqqa5mulycz.fsf@gitster.g> <ghv85hj446.fsf@gouders.net>
+In-Reply-To: <ghv85hj446.fsf@gouders.net>
+Subject: RE: [PATCH v3 0/2] Add hostname condition to includeIf
+Date: Tue, 19 Mar 2024 18:03:05 -0400
+Organization: Nexbridge Inc.
+Message-ID: <02d601da7a49$3bbf1230$b33d3690$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- DFB741DA-E639-11EE-96F5-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGtFbHTdn1kVN5iPDvVZmFFSAj7tAJ4RnKbAdcT/EoCkKsPPAKng2iXsU4pSlA=
 
-Jeff King <peff@peff.net> writes:
+On Tuesday, March 19, 2024 5:37 PM, Dirk Gouders wrote:
+>Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>
+>>> Peff felt that adding `git config --show-hostname-for-includes` was
+>>> probably overkill, but I'd argue that it is necessary to enable users
+>>> to deterministically figure out the value to use in their
+>>> configuration rather than having to grope around in the dark via
+>>> guesswork and trial-and-error to figure out exactly what works.
+>>>
+>>> And the option name doesn't necessarily have to be so verbose; a
+>>> shorter name, such as `git config --show-hostname` may be good enough.
+>>> Implementing this option would also obviate the need to implement
+>>> `test-tool xgethostname` (though, I agree with Junio that `test-tool
+>>> gethostname` would have been a better, less implementation-revealing
+>>> name).
+>>
+>> Yeah, I like that show-hostname thing (which I do not know if "config"
+>> is a good home for, though).
+>
+>A thought when I was reading this: wouldn't it be enough to document that
+`uname -n` can be used to get the hostname that should
+>be used?
+>
+>As far as I know this should be POSIX-compliant and uses gethostname(2).
 
-> But we are not testing "includeIf" in this patch; we are testing git-gc,
-> which falls back to the string "unknown".
+As previously pointed out, uname -n and gethostname(2) are not equivalent.
+uname -n does not (depending on implementation) go to DNS while
+gethostname(2) goes to DNS first (although apparently glibc may not). This
+is particularly important in a multi-home situation where more than one IP
+adapter has a different IP address on the same host, and where DNS does not
+consider the different addresses to be equivalent (which otherwise could
+cause problems for reverse lookups).
+--Randall
 
-Ah, I wasn't aware of such a hardcoded default.  Then replacing the
-existing "hostname" with "test-tool xgethostname" and doing nothing
-else is of course the right thing to do here.
-
-Thanks.
