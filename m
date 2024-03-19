@@ -1,782 +1,483 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E64B11CA1
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 16:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE9A2B9B3
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 17:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710867194; cv=none; b=mxc6qCwmFNj0mZB/SXhG0b4T8de6BJWrNNObI7N20ZPQ3CptPwZ0jYUiKu29FSUYKY3jBzWPOau3KlC4YRo2D8ahBQJnLZ0a+sOz/EwtnY5niwnYSNW9Flbb9ozEyTxG3ubI232Rf5WnJW6RFszdF3j4qxbWxOa8sI6yjFYJ/B8=
+	t=1710868302; cv=none; b=ohyViXUkdRjrq1lCBy9ky/G5REc2vi/+565p9vkmjBkkUtTLuD+Fed0K0F4pqwH3SJw6UGZkmsI5RQhhtcpM0IzpmGqH4u+VnlZiueYIAMFdmGmK1mSRAbFpG45xI4RARLIFjqebvqFs1irwKICejTR2I5MtRnY6WGShZxE5rdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710867194; c=relaxed/simple;
-	bh=VSvc8VLPTY1wVik0JeP5TOoWs26keA0tqHjK1ze1xpM=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CccwZIQb7P31lVaopYBjTERNWhXt0t0DFqjjjqYqDy2QzExv7UKvJGaWUVDtngd44lbpXS75hscChQl7rxGJyT64MiaZUT4BgRj8TYL0MH5kU8ntyIUElFcp0+6Z3AZFbEYxoZjPda4+tE4IpL4Otybqyc3vqTh8Lt0ndX+Umu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k2+NBnJ5; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710868302; c=relaxed/simple;
+	bh=AiqdK9rUtgnu1B5J7MSELq6sm7q5o1NLp+JStMcTYLo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=iJQU1vV+78h3wbAswYXZuLkYfRmc7scA2lLJk5xsUNQUL0t26Jt9Ti1txq7Mka223j540WUIibCU8Lyy8ROvlBIidMZdmEnKqwGHACqIdEI6MHrSm2nZhQYUOA/C4u2cjtlTJt3qjm6KmGvu6fCo8UR/ii5B0Pxwc9FFyBQnoEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YwQOCySw; arc=none smtp.client-ip=209.85.161.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k2+NBnJ5"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5AECE27DD9;
-	Tue, 19 Mar 2024 12:53:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=V
-	Svc8VLPTY1wVik0JeP5TOoWs26keA0tqHjK1ze1xpM=; b=k2+NBnJ5jNzbHsq4w
-	4i48RIoBt9xSC5eyt8Ceicd7fUGXneVFiz+/oIF99cU1727mvIUa25ZD7R3+QzBp
-	7oruO+Dci4VJOPZDipn3QcdGqRO6K1E2hrhTnyg5UogY0B43HQq22K6iYtzbxaT5
-	elKCm57LWfvyJU4xgI4ysnvraU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4BBAF27DD8;
-	Tue, 19 Mar 2024 12:53:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AA20C27DD6;
-	Tue, 19 Mar 2024 12:53:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Mar 2024, #05; Tue, 19)
-X-master-at: 3bd955d26919e149552f34aacf8a4e6368c26cec
-X-next-at: fe251e3e4dec6a6d677e61d53b316c06da172af2
-Date: Tue, 19 Mar 2024 09:53:00 -0700
-Message-ID: <xmqqil1iqi37.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YwQOCySw"
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5a4a2d99598so1467247eaf.2
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 10:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710868299; x=1711473099; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:cc:to:subject:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DgG+ZfPG1mfSYJeKQvr0803Jdfh6bPCWcIr6UemWKrw=;
+        b=YwQOCySwY9h+f8wV8N2IaW0aW6XDd7N/gRuQIBWqWyu93zSpRkdr2ZlxK/r3XQYWpQ
+         Z1+biGeau9QaXHYPnk/hvCV8ueQFAveOkjsLuD3JwR0SdDpEbQm2Qojz1gjMPi21PKF0
+         OWOFtkhGG2IRAbjex7zoLteoMvPZ2dRbxPGiS1bUURHImviphLl3kHjklwrR9AoIg2Vi
+         wb5UTdAJT1BjZyUIy782UFYGwfAhFnbhMMNiV17ZwZT7BuEad78dJDYeF7DxY+jQcDsp
+         5ZvI4fgKpCNk4p5QC1rp1Xy6ZgT+P/idAL4F3JJ8ZV9mpDs0aoTpUONyR70qNvkb9QMc
+         1aow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710868299; x=1711473099;
+        h=content-transfer-encoding:content-language:cc:to:subject:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DgG+ZfPG1mfSYJeKQvr0803Jdfh6bPCWcIr6UemWKrw=;
+        b=tsftTqijnkhqr7VKG23YdKkBNb/KAvNn1to+Q66lSgoPJ/aiosm8X5lJ1sQ3n+iiph
+         +S23tkYLd4loYLvKZEIqEVrygvVlOAilTC1N2BSRrkAJDxtwLVb94oBhmBZnSKce7T1T
+         9EVQEpGCPCjHk5SPszmOeh8HYMSvIQHn/ODMuiEgB5pSM1Ry/rWzen7hKVU2mFwtRfuT
+         8XI6QOFuzPWScB2lDtAZ4ZsCjV1fSrSVOj/vLkkRORIfKcvo4HacM/TbPqMSCyX1Asdj
+         7i8uSGrgmVRoFDXBvLIFGXeCioZAS1ZN2563K+oVHGi5g5dmbkuPI4BWV2R1lXT+0SPP
+         T4YQ==
+X-Gm-Message-State: AOJu0Yw94IfQpZPak/MLD1eLGP7TWl5ZzLeomveefLQk8NB2BwY8h5z7
+	knNAtAWmXsX5hYBXsJosYhEdYNnhnN8hqEsEYisz0Fo4qlmC8Amt5xLvXdSGL/k=
+X-Google-Smtp-Source: AGHT+IGPKZG29bliwkN1aIclCibu1sz7x6D/b9hicZxm9gLsJ/m0wK1z8yJag5m1HxUpa0JwuFzT4w==
+X-Received: by 2002:a05:6358:2799:b0:17b:654b:78f0 with SMTP id l25-20020a056358279900b0017b654b78f0mr10392709rwb.20.1710868298622;
+        Tue, 19 Mar 2024 10:11:38 -0700 (PDT)
+Received: from [10.0.2.15] ([150.129.114.219])
+        by smtp.gmail.com with ESMTPSA id u8-20020a6540c8000000b005e840ad9aaesm4023361pgp.30.2024.03.19.10.11.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 10:11:38 -0700 (PDT)
+Message-ID: <6f0a3c13-c8d9-4f89-8c62-9c031f0a064e@gmail.com>
+Date: Tue, 19 Mar 2024 22:41:26 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 25BE0A8E-E611-11EE-B7E9-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
+User-Agent: Mozilla Thunderbird
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [RFC][GSoC] Proposal: Move reftable and other tests to the unit
+ testing framework
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com, karthik.188@gmail.com, ps@pks.im,
+ kaartic.sivaraam@gmail.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This is my project proposal for the Google Summer of Code 2024 program.
+The document version of this proposal can be accessed through this link:
+https://shorturl.at/ijrTU
+
+---------<8----------<8----------<8----------<8----------<8----------<8
+
+Personal Info
+-------------
+
+Full name: Chandra Pratap
+Preferred name: Chand
+
+E-mail: chandrapratap3519@gmail.com
+Phone: (+91)77618-24030
+
+Education: SV National Institute of Technology, Surat, India
+Year: Sophomore (2nd)
+Major: Mathematics
+
+GitHub: https://github.com/Chand-ra
+
+Before GSoC
+-----------
+
+-----Synopsis-----
+
+A new unit testing framework was introduced to the Git mailing list last
+year with the aim of simplifying testing and improving maintainability.
+The idea was accepted and merged into master on 09/11/2023. This project
+aims to extend that work by moving more tests from the current setup to
+the new unit testing framework.
+
+The SoC 2024 Ideas page (link: https://git.github.io/SoC-2019-Ideas/)
+mentions reftable unit tests migration as a separate project from the
+general unit test migration project, however, I propose migrating other
+tests alongside the reftable unit tests as a part of this proposal.
+The reasoning behind this is explained further down.
+The difficulty for the project should be medium and it should take 
+somewhat between 175 to 350 hours.
+
+-----Contributions-----
+
+• apply.c: make git apply respect core.fileMode settings
+-> Status: merged into master
+-> link: https://public-inbox.org/git/20231226233218.472054-1-gitster@pobox.com/
+
+-> Description: When applying a patch that adds an executable file, git 
+apply ignores the core.fileMode setting (core.fileMode specifies whether
+the executable bit on files in the working tree are to be honored or not)
+resulting in false warnings. Fix this by inferring the correct file mode 
+from the existing index entry when core.filemode is set to false. Add a
+test case that verifies the change and prevents future regression.
+
+-> Remarks: This was the first patch I worked on as a contributor to Git.
+Served me as an essential intro lesson to the community’s working flow and
+general practices.
+
+• tests: Move t0009-prio-queue.sh to the unit testing framework
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com/
+
+-> Description: t/t0009-prio-queue.sh along with t/helper/test-prio-queue.c
+unit test Git's implementation of a priority queue. Migrate the test
+over to the new unit testing framework to simplify debugging and reduce
+test run-time.
+
+-> Remarks: Perhaps the most relevant patch of all the ones mentioned
+here, this patch helped me understand the expectations and workflow for
+the work to be performed in this project.
+
+• write-or-die: make GIT_FLUSH a Boolean environment variable
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1628.v3.git.1704363617842.gitgitgadget@gmail.com/
+
+-> Description: Among Git's environment variable, the ones marked as
+"Boolean" accept values like Boolean configuration variables, i.e. 
+values like 'yes', 'on', 'true' and positive numbers are taken as "on"
+and  values like 'no', 'off','false' are taken as "off". Make GIT_FLUSH 
+accept more values besides '0' and '1' by turning it into a Boolean 
+environment variable & update the related documentation.
+
+• sideband.c: remoye redundant NEEDSWORK tag
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1625.v4.git.1703750460527.gitgitgadget@gmail.com/
+
+-> Description: Replace a misleading NEEDSWORK tag in sideband.c that
+reads ‘replace int with size_t’ with another comment explaining why it
+is fine to use ‘int’ and the replacement isn’t necessary.
+
+• make tig callable from PowerShell/Command Prompt
+-> Status: merged into main
+-> link: https://github.com/git-for-windows/MINGW-packages/pull/104
 
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* jh/trace2-missing-def-param-fix (2024-03-07) 3 commits
-  (merged to 'next' on 2024-03-08 at a797cfea3c)
- + trace2: emit 'def_param' set with 'cmd_name' event
- + trace2: avoid emitting 'def_param' set more than once
- + t0211: demonstrate missing 'def_param' events for certain commands
-
- Some trace2 events that lacked def_param have learned to show it,
- enriching the output.
-
- Reviewed-by: Josh Steadmon <steadmon@google.com>
- cf. <ZejkVOVQBZhLVfHW@google.com>
- source: <pull.1679.v2.git.1709824949.gitgitgadget@gmail.com>
-
-
-* jk/doc-remote-helpers-markup-fix (2024-03-07) 1 commit
-  (merged to 'next' on 2024-03-08 at 2cded1c696)
- + doc/gitremote-helpers: fix missing single-quote
-
- Doc mark-up fix.
- source: <20240307084313.GA2072022@coredump.intra.peff.net>
-
-
-* pw/rebase-i-ignore-cherry-pick-help-environment (2024-02-27) 1 commit
-  (merged to 'next' on 2024-03-08 at e806ee9493)
- + rebase -i: stop setting GIT_CHERRY_PICK_HELP
-
- Code simplification by getting rid of code that sets an environment
- variable that is no longer used.
- source: <pull.1678.git.1709042783847.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[New Topics]
-
-* bb/sh-scripts-cleanup (2024-03-16) 22 commits
-  (merged to 'next' on 2024-03-18 at 4501a04796)
- + git-quiltimport: avoid an unnecessary subshell
- + contrib/coverage-diff: avoid redundant pipelines
- + t/t9*: merge "grep | sed" pipelines
- + t/t8*: merge "grep | sed" pipelines
- + t/t5*: merge a "grep | sed" pipeline
- + t/t4*: merge a "grep | sed" pipeline
- + t/t3*: merge a "grep | awk" pipeline
- + t/t1*: merge a "grep | sed" pipeline
- + t/t9*: avoid redundant uses of cat
- + t/t8*: avoid redundant use of cat
- + t/t7*: avoid redundant use of cat
- + t/t6*: avoid redundant uses of cat
- + t/t5*: avoid redundant uses of cat
- + t/t4*: avoid redundant uses of cat
- + t/t3*: avoid redundant uses of cat
- + t/t1*: avoid redundant uses of cat
- + t/t0*: avoid redundant uses of cat
- + t/perf: avoid redundant use of cat
- + t/annotate-tests.sh: avoid redundant use of cat
- + t/lib-cvs.sh: avoid redundant use of cat
- + contrib/subtree/t: avoid redundant use of cat
- + doc: avoid redundant use of cat
-
- Shell scripts clean-up.
-
- Will merge to 'master'.
- source: <20240315194620.10713-1-dev+git@drbeat.li>
-
-
-* bl/doc-config-fixes (2024-03-16) 2 commits
-  (merged to 'next' on 2024-03-18 at a9038d5a9e)
- + docs: fix typo in git-config `--default`
- + docs: clarify file options in git-config `--edit`
-
- A few typoes in "git config --help" have been corrected.
-
- Will merge to 'master'.
- source: <20240316050149.1182867-2-brianmlyles@gmail.com>
-
-
-* bl/doc-key-val-sep-fix (2024-03-18) 2 commits
-  (merged to 'next' on 2024-03-18 at b2e1babb85)
- + docs: adjust trailer `separator` and `key_value_separator` language
- + docs: correct trailer `key_value_separator` description
-
- The documentation for "%(trailers[:options])" placeholder in the
- "--pretty" option of commands in the "git log" family has been
- updated.
-
- Will merge to 'master'.
- source: <20240316035612.752910-1-brianmlyles@gmail.com>
-
-
-* ja/doc-formatting-fix (2024-03-16) 2 commits
-  (merged to 'next' on 2024-03-18 at edde7a576d)
- + doc: fix some placeholders formating
- + doc: format alternatives in synopsis
-
- Documentation mark-up fix.
-
- Will merge to 'master'.
- source: <pull.1697.git.1710602501.gitgitgadget@gmail.com>
-
-
-* la/hide-trailer-info (2024-03-16) 7 commits
- - trailer: retire trailer_info_get() from API
- - trailer: make trailer_info struct private
- - trailer: make parse_trailers() return trailer_info pointer
- - interpret-trailers: access trailer_info with new helpers
- - sequencer: use the trailer iterator
- - trailer: teach iterator about non-trailer lines
- - Merge branch 'la/format-trailer-info' into la/hide-trailer-info
- (this branch uses la/format-trailer-info.)
-
- The trailer API has been reshuffled a bit.
- source: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
-
-
-* pb/advice-merge-conflict (2024-03-18) 2 commits
- - builtin/am: allow disabling conflict advice
- - sequencer: allow disabling conflict advice
-
- Hints that suggest what to do after resolving conflicts can now be
- squelched by disabling advice.mergeConflict.
-
- Will merge to 'next'?
- source: <pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
-
-
-* rs/t-prio-queue-fixes (2024-03-18) 2 commits
- - t-prio-queue: check result array bounds
- - t-prio-queue: shorten array index message
-
- Test clean-up.
-
- Will merge to 'next'.
- source: <9bf36cc8-ff27-44df-b2fb-9f959c781269@web.de>
-
-
-* ps/pack-refs-auto (2024-03-18) 16 commits
- - builtin/gc: pack refs when using `git maintenance run --auto`
- - builtin/gc: forward git-gc(1)'s `--auto` flag when packing refs
- - t6500: extract objects with "17" prefix
- - builtin/gc: move `struct maintenance_run_opts`
- - builtin/pack-refs: introduce new "--auto" flag
- - builtin/pack-refs: release allocated memory
- - refs/reftable: expose auto compaction via new flag
- - refs: remove `PACK_REFS_ALL` flag
- - refs: move `struct pack_refs_opts` to where it's used
- - t/helper: drop pack-refs wrapper
- - refs/reftable: print errors on compaction failure
- - reftable/stack: gracefully handle failed auto-compaction due to locks
- - reftable/stack: use error codes when locking fails during compaction
- - reftable/error: discern locked/outdated errors
- - reftable/stack: fix error handling in `reftable_stack_init_addition()`
- - Merge branch 'ps/reftable-stack-tempfile' into ps/pack-refs-auto
- (this branch uses ps/reftable-stack-tempfile.)
-
- "git pack-refs" learned the "--auto" option, which is a useful
- addition to be triggered from "git gc --auto".
-
- Needs review.
- source: <cover.1710706118.git.ps@pks.im>
-
---------------------------------------------------
-[Cooking]
-
-* bb/iso-strict-utc (2024-03-13) 1 commit
-  (merged to 'next' on 2024-03-14 at d2ac616873)
- + date: make "iso-strict" conforming for the UTC timezone
-
- The output format for dates "iso-strict" has been tweaked to show
- a time in the Zulu timezone with "Z" suffix, instead of "+00:00".
-
- Will merge to 'master'.
- source: <20240313225423.11373-1-dev+git@drbeat.li>
-
-
-* dg/user-manual-hash-example (2024-03-12) 1 commit
-  (merged to 'next' on 2024-03-14 at 767800d3a7)
- + Documentation/user-manual.txt: example for generating object hashes
-
- User manual (the original one) update.
-
- Will merge to 'master'.
- source: <20240312104238.4920-2-dirk@gouders.net>
-
-
-* jc/show-untracked-false (2024-03-13) 2 commits
- - status: allow --untracked=false and friends
- - status: unify parsing of --untracked= and status.showUntrackedFiles
-
- The status.showUntrackedFiles configuration variable had a name
- that tempts users to set a Boolean value expressed in our usual
- "false", "off", and "0", but it only took "no".  This has been
- corrected so "true" and its synonyms are taken as "normal", while
- "false" and its synonyms are taken as "no".
-
- Will merge to 'next'?
- source: <20240313173214.962532-1-gitster@pobox.com>
-
-
-* js/bugreport-no-suffix-fix (2024-03-16) 1 commit
-  (merged to 'next' on 2024-03-18 at 180db8ec38)
- + bugreport.c: fix a crash in `git bugreport` with `--no-suffix` option
-
- "git bugreport --no-suffix" was not supported and instead
- segfaulted, which has been corrected.
-
- Will merge to 'master'.
- source: <9c6f3f5203ae26c501a5711e2610573130bfd550.1710388817.git.gitgitgadget@gmail.com>
-
-
-* jw/doc-show-untracked-files-fix (2024-03-13) 1 commit
-  (merged to 'next' on 2024-03-14 at 091f64ad6c)
- + doc: status.showUntrackedFiles does not take "false"
-
- The status.showUntrackedFiles configuration variable was
- incorrectly documented to accept "false", which has been corrected.
-
- Will merge to 'master'.
- source: <pull.1686.git.git.1710279251901.gitgitgadget@gmail.com>
-
-
-* ph/diff-src-dst-prefix-config (2024-03-18) 2 commits
- - diff.*Prefix: use camelCase in the doc and test titles
- - diff: add diff.srcPrefix and diff.dstPrefix configuration variables
-
- "git diff" and friends learned two extra configuration variables.
-
- Will merge to 'next'.
- source: <20240315010310.GA1901653@quokka>
- source: <xmqq8r2ioh19.fsf@gitster.g>
-
-
-* ps/clone-with-includeif-onbranch (2024-03-12) 1 commit
- - t5601: exercise clones with "includeIf.*.onbranch"
-
- An additional test to demonstrate something I am not sure what.
-
- Waiting for a review response.
- cf. <xmqqo7bjjid9.fsf@gitster.g>
- source: <0bede59a53862585c49bc635f82e44e983144a7f.1710246859.git.ps@pks.im>
-
-
-* bb/t0006-negative-tz-offset (2024-03-14) 1 commit
-  (merged to 'next' on 2024-03-14 at 3f4751b6b2)
- + t0006: add more tests with a negative TZ offset
-
- More tests on showing time with negative TZ offset.
-
- Will merge to 'master'.
- source: <20240314085512.1827031-1-dev+git@drbeat.li>
-
-
-* rj/restore-plug-leaks (2024-03-14) 1 commit
-  (merged to 'next' on 2024-03-15 at ac10ae7892)
- + checkout: plug some leaks in git-restore
-
- Leaks from "git restore" have been plugged.
-
- Will merge to 'master'.
- source: <64c1c3cc-51d7-4168-9731-4389889e1449@gmail.com>
-
-
-* bt/fuzz-config-parse (2024-03-15) 1 commit
- - fuzz: add fuzzer for config parsing
-
- A new fuzz target that exercises config parsing code.
-
- Will merge to 'next'?
- source: <pull.1692.v2.git.1710481652130.gitgitgadget@gmail.com>
-
-
-* ds/doc-config-reflow (2024-03-14) 1 commit
- - config.txt: perform some minor reformatting
-
- Reflow a paragraph in the documentation source without any effect
- to the formatted text.
-
- Comments?
- source: <97bdaf075bf5a68554cca1731eca78aff2662907.1710444774.git.dsimic@manjaro.org>
-
-
-* jc/index-pack-fsck-levels (2024-03-15) 1 commit
-  (merged to 'next' on 2024-03-18 at 243c5f4125)
- + t5300: fix test_with_bad_commit()
-
- Test fix.
-
- Will merge to 'master'.
- source: <pull.1688.git.git.1710478646776.gitgitgadget@gmail.com>
-
-
-* la/format-trailer-info (2024-03-15) 5 commits
- - trailer: finish formatting unification
- - trailer: begin formatting unification
- - format_trailer_info(): append newline for non-trailer lines
- - format_trailer_info(): drop redundant unfold_value()
- - format_trailer_info(): use trailer_item objects
- (this branch is used by la/hide-trailer-info.)
-
- The code to format trailers have been cleaned up.
-
- Comments?
- source: <pull.1694.git.1710485706.gitgitgadget@gmail.com>
-
-
-* rs/config-comment (2024-03-15) 3 commits
- - config: allow tweaking whitespace between value and comment
- - config: fix --comment formatting
- - config: add --comment option to add a comment
-
- "git config" learned "--comment=<message>" option to leave a
- comment immediately after the "variable = value" on the same line
- in the configuration file.
-
- Waiting for review response.
- cf. <xmqq8r2jp2eq.fsf@gitster.g>
- source: <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
-
-
-* jc/safe-implicit-bare (2024-03-11) 1 commit
-  (merged to 'next' on 2024-03-14 at e8bdbed1a4)
- + setup: notice more types of implicit bare repositories
-
- Users with safe.bareRepository=explicit can still work from within
- $GIT_DIR of a seconary worktree (which resides at .git/worktrees/$name/)
- of the primary worktree without explicitly specifying the $GIT_DIR
- environment variable or the --git-dir=<path> option.
-
- Will merge to 'master'.
- source: <xmqq5xxv0ywi.fsf_-_@gitster.g>
-
-
-* pw/checkout-conflict-errorfix (2024-03-14) 5 commits
- - checkout: fix interaction between --conflict and --merge
- - checkout: cleanup --conflict=<style> parsing
- - merge options: add a conflict style member
- - merge-ll: introduce LL_MERGE_OPTIONS_INIT
- - xdiff-interface: refactor parsing of merge.conflictstyle
-
- "git checkout --conflict=bad" reported a bad conflictStyle as if it
- were given to a configuration variable; it has been corrected to
- report that the command line option is bad.
-
- Will merge to 'next'?
- source: <pull.1684.v2.git.1710435907.gitgitgadget@gmail.com>
-
-
-* bl/cherry-pick-empty (2024-03-11) 7 commits
- - cherry-pick: add `--empty` for more robust redundant commit handling
- - cherry-pick: enforce `--keep-redundant-commits` incompatibility
- - sequencer: do not require `allow_empty` for redundant commit options
- - sequencer: treat error reading HEAD as unborn branch
- - rebase: update `--empty=ask` to `--empty=stop`
- - docs: clean up `--empty` formatting in git-rebase(1) and git-am (1)
- - docs: address inaccurate `--empty` default with `--exec`
-
- "cherry-pick" told to keep redundant commits needs to be allowed to
- create empty commits to do its job, but it required the user to
- give the --allow-empty option, which was unnecessary.  Its UI has
- also been tweaked a bit.
-
- Comments?
- source: <20240119060721.3734775-2-brianmlyles@gmail.com>
-
-
-* ie/config-includeif-hostname (2024-03-10) 1 commit
- - config: learn the "hostname:" includeIf condition
-
- The conditional inclusion mechanism for configuration files learned
- to switch on the hostname.
-
- Expecting a reroll.
- cf. <fda3e8f4-fd9e-4a43-a307-c6607d982436@iencinas.com>
- source: <20240309181828.45496-2-ignacio@iencinas.com>
-
-
-* ja/doc-markup-fixes (2024-03-11) 6 commits
-  (merged to 'next' on 2024-03-14 at 4d1c26143f)
- + doc: git-clone: format placeholders
- + doc: git-clone: format verbatim words
- + doc: git-init: rework config item init.templateDir
- + doc: git-init: rework definition lists
- + doc: git-init: format placeholders
- + doc: git-init: format verbatim parts
-
- Mark-ups used in the documentation has been improved for
- consistency.
-
- Will merge to 'master'.
- source: <pull.1687.git.1710097830.gitgitgadget@gmail.com>
-
-
-* jk/doc-remote-helper-object-format-option (2024-03-10) 2 commits
- - doc/gitremote-helpers: match object-format option docs to code
- - t5801: fix object-format handling in git-remote-testgit
-
- The implementation and documentation of "object-format" option
- exchange between the Git itself and its remote helpers did not
- quite match.
-
- Expecting a reroll.
- cf. <20240318085208.GA604917@coredump.intra.peff.net>
- source: <20240307084735.GA2072130@coredump.intra.peff.net>
-
-
-* pb/ci-win-artifact-names-fix (2024-03-11) 1 commit
-  (merged to 'next' on 2024-03-14 at 5076389536)
- + ci(github): make Windows test artifacts name unique
-
- CI update.
-
- Will merge to 'master'.
- source: <pull.1688.git.1710101097072.gitgitgadget@gmail.com>
-
-
-* fs/find-end-of-log-message-fix (2024-03-07) 1 commit
-  (merged to 'next' on 2024-03-13 at 2bed63caaf)
- + wt-status: don't find scissors line beyond buf len
-
- The code to find the effective end of log message can fall into an
- endless loop, which has been corrected.
-
- Will merge to 'master'.
- cf. <08b9b37d-f0f8-4c1a-b72e-194202ff3d9f@nutanix.com>
- source: <20240307183743.219951-1-flosch@nutanix.com>
-
-
-* jk/core-comment-string (2024-03-12) 16 commits
- - config: allow multi-byte core.commentChar
- - environment: drop comment_line_char compatibility macro
- - wt-status: drop custom comment-char stringification
- - sequencer: handle multi-byte comment characters when writing todo list
- - find multi-byte comment chars in unterminated buffers
- - find multi-byte comment chars in NUL-terminated strings
- - prefer comment_line_str to comment_line_char for printing
- - strbuf: accept a comment string for strbuf_add_commented_lines()
- - strbuf: accept a comment string for strbuf_commented_addf()
- - strbuf: accept a comment string for strbuf_stripspace()
- - environment: store comment_line_char as a string
- - strbuf: avoid shadowing global comment_line_char name
- - commit: refactor base-case of adjust_comment_line_char()
- - strbuf: avoid static variables in strbuf_add_commented_lines()
- - strbuf: simplify comment-handling in add_lines() helper
- - config: forbid newline as core.commentChar
-
- core.commentChar used to be limited to a single byte, but has been
- updated to allow an arbitrary multi-byte sequence.
-
- Waiting for the discussion to settle.
- cf. <20240315081041.GA1753560@coredump.intra.peff.net>
- source: <20240312091013.GA95442@coredump.intra.peff.net>
-
-
-* js/build-fuzz-more-often (2024-03-05) 3 commits
- - SQUASH???
- - fuzz: link fuzz programs with `make all` on Linux
- - ci: also define CXX environment variable
-
- In addition to building the objects needed, try to link the objects
- that are used in fuzzer tests, to make sure at least they build
- without bitrot, in Linux CI runs.
-
- Comments?
- source: <cover.1709673020.git.steadmon@google.com>
-
-
-* ps/reftable-block-search-fix (2024-03-07) 2 commits
-  (merged to 'next' on 2024-03-13 at 34938e24ab)
- + reftable/block: fix binary search over restart counter
- + reftable/record: fix memory leak when decoding object records
-
- The reftable code has its own custom binary search function whose
- comparison callback has an unusual interface, which caused the
- binary search to degenerate into a linear search, which has been
- corrected.
-
- Will merge to 'master'.
- source: <cover.1709843663.git.ps@pks.im>
-
-
-* ps/reftable-reflog-iteration-perf (2024-03-05) 8 commits
-  (merged to 'next' on 2024-03-14 at 72465c29be)
- + refs/reftable: track last log record name via strbuf
- + reftable/record: use scratch buffer when decoding records
- + reftable/record: reuse message when decoding log records
- + reftable/record: reuse refnames when decoding log records
- + reftable/record: avoid copying author info
- + reftable/record: convert old and new object IDs to arrays
- + refs/reftable: reload correct stack when creating reflog iter
- + Merge branch 'ps/reftable-iteration-perf-part2' into ps/reftable-reflog-iteration-perf
-
- The code to iterate over reflogs in the reftable has been optimized
- to reduce memory allocation and deallocation.
-
- Reviewed-by: Josh Steadmon <steadmon@google.com>
- cf. <Ze9eX-aaWoVaqsPP@google.com>
-
- Will merge to 'master'.
- source: <cover.1709640322.git.ps@pks.im>
-
-
-* sj/userdiff-c-sharp (2024-03-06) 1 commit
- - userdiff: better method/property matching for C#
-
- The userdiff patterns for C# has been updated.
-
- Needs review.
- source: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
-
-
-* ps/reftable-stack-tempfile (2024-03-07) 4 commits
-  (merged to 'next' on 2024-03-13 at dcfb0cde8c)
- + reftable/stack: register compacted tables as tempfiles
- + reftable/stack: register lockfiles during compaction
- + reftable/stack: register new tables as tempfiles
- + lockfile: report when rollback fails
- (this branch is used by ps/pack-refs-auto.)
-
- The code in reftable backend that creates new table files works
- better with the tempfile framework to avoid leaving cruft after a
- failure.
-
- Will merge to 'master'.
- source: <cover.1709816483.git.ps@pks.im>
-
-
-* rs/opt-parse-long-fixups (2024-03-03) 6 commits
-  (merged to 'next' on 2024-03-13 at 3755b50794)
- + parse-options: rearrange long_name matching code
- + parse-options: normalize arg and long_name before comparison
- + parse-options: detect ambiguous self-negation
- + parse-options: factor out register_abbrev() and struct parsed_option
- + parse-options: set arg of abbreviated option lazily
- + parse-options: recognize abbreviated negated option with arg
-
- The parse-options code that deals with abbreviated long option
- names have been cleaned up.
-
- Reviewed-by: Josh Steadmon <steadmon@google.com>
- cf. <ZfDM5Or3EKw7Q9SA@google.com>
-
- Will merge to 'master'.
- source: <20240303121944.20627-1-l.s.r@web.de>
-
-
-* cw/git-std-lib (2024-02-28) 4 commits
- - SQUASH??? get rid of apparent debugging crufts
- - test-stdlib: show that git-std-lib is independent
- - git-std-lib: introduce Git Standard Library
- - pager: include stdint.h because uintmax_t is used
-
- Split libgit.a out to a separate git-std-lib tor easier reuse.
-
- Expecting a reroll.
- source: <cover.1696021277.git.jonathantanmy@google.com>
-
-
-* js/cmake-with-test-tool (2024-02-23) 2 commits
- - cmake: let `test-tool` run the unit tests, too
- - Merge branch 'js/unit-test-suite-runner' into js/cmake-with-test-tool
- (this branch uses js/unit-test-suite-runner.)
-
- "test-tool" is now built in CMake build to also run the unit tests.
-
- May want to roll it into the base topic.
- source: <pull.1666.git.1708038924522.gitgitgadget@gmail.com>
-
-
-* js/unit-test-suite-runner (2024-02-23) 8 commits
- - ci: use test-tool as unit test runner on Windows
- - t/Makefile: run unit tests alongside shell tests
- - unit tests: add rule for running with test-tool
- - test-tool run-command testsuite: support unit tests
- - test-tool run-command testsuite: remove hardcoded filter
- - test-tool run-command testsuite: get shell from env
- - t0080: turn t-basic unit test into a helper
- - Merge branch 'jk/unit-tests-buildfix' into js/unit-test-suite-runner
- (this branch is used by js/cmake-with-test-tool.)
-
- The "test-tool" has been taught to run testsuite tests in parallel,
- bypassing the need to use the "prove" tool.
-
- Needs review.
- source: <cover.1708728717.git.steadmon@google.com>
-
-
-* bk/complete-dirname-for-am-and-format-patch (2024-01-12) 1 commit
- - completion: dir-type optargs for am, format-patch
-
- Command line completion support (in contrib/) has been
- updated for a few commands to complete directory names where a
- directory name is expected.
-
- Expecting a reroll.
- cf. <40c3a824-a961-490b-94d4-4eb23c8f713d@gmail.com>
- cf. <6683f24e-7e56-489d-be2d-8afe1fc38d2b@gmail.com>
- source: <d37781c3-6af2-409b-95a8-660a9b92d20b@smtp-relay.sendinblue.com>
-
-
-* bk/complete-send-email (2024-01-12) 1 commit
- - completion: don't complete revs when --no-format-patch
-
- Command line completion support (in contrib/) has been taught to
- avoid offering revision names as candidates to "git send-email" when
- the command is used to send pre-generated files.
-
- Expecting a reroll.
- cf. <CAC4O8c88Z3ZqxH2VVaNPpEGB3moL5dJcg3cOWuLWwQ_hLrJMtA@mail.gmail.com>
- source: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
-
-
-* tb/path-filter-fix (2024-01-31) 16 commits
- - bloom: introduce `deinit_bloom_filters()`
- - commit-graph: reuse existing Bloom filters where possible
- - object.h: fix mis-aligned flag bits table
- - commit-graph: new Bloom filter version that fixes murmur3
- - commit-graph: unconditionally load Bloom filters
- - bloom: prepare to discard incompatible Bloom filters
- - bloom: annotate filters with hash version
- - repo-settings: introduce commitgraph.changedPathsVersion
- - t4216: test changed path filters with high bit paths
- - t/helper/test-read-graph: implement `bloom-filters` mode
- - bloom.h: make `load_bloom_filter_from_graph()` public
- - t/helper/test-read-graph.c: extract `dump_graph_info()`
- - gitformat-commit-graph: describe version 2 of BDAT
- - commit-graph: ensure Bloom filters are read with consistent settings
- - revision.c: consult Bloom filters for root commits
- - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
-
- The Bloom filter used for path limited history traversal was broken
- on systems whose "char" is unsigned; update the implementation and
- bump the format version to 2.
-
- Waiting for a final ack?
- cf. <ZcFjkfbsBfk7JQIH@nand.local>
- source: <cover.1706741516.git.me@ttaylorr.com>
-
-
-* eb/hash-transition (2023-10-02) 30 commits
-  (merged to 'next' on 2024-03-11 at 9cff2e4ab7)
- + t1016-compatObjectFormat: add tests to verify the conversion between objects
- + t1006: test oid compatibility with cat-file
- + t1006: rename sha1 to oid
- + test-lib: compute the compatibility hash so tests may use it
- + builtin/ls-tree: let the oid determine the output algorithm
- + object-file: handle compat objects in check_object_signature
- + tree-walk: init_tree_desc take an oid to get the hash algorithm
- + builtin/cat-file: let the oid determine the output algorithm
- + rev-parse: add an --output-object-format parameter
- + repository: implement extensions.compatObjectFormat
- + object-file: update object_info_extended to reencode objects
- + object-file-convert: convert commits that embed signed tags
- + object-file-convert: convert commit objects when writing
- + object-file-convert: don't leak when converting tag objects
- + object-file-convert: convert tag objects when writing
- + object-file-convert: add a function to convert trees between algorithms
- + object: factor out parse_mode out of fast-import and tree-walk into in object.h
- + cache: add a function to read an OID of a specific algorithm
- + tag: sign both hashes
- + commit: export add_header_signature to support handling signatures on tags
- + commit: convert mergetag before computing the signature of a commit
- + commit: write commits for both hashes
- + object-file: add a compat_oid_in parameter to write_object_file_flags
- + object-file: update the loose object map when writing loose objects
- + loose: compatibilty short name support
- + loose: add a mapping between SHA-1 and SHA-256 for loose objects
- + repository: add a compatibility hash algorithm
- + object-names: support input of oids in any supported hash
- + oid-array: teach oid-array to handle multiple kinds of oids
- + object-file-convert: stubs for converting from one object format to another
-
- Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
-
- Will cook in 'next'.
- cf. <xmqqv86z5359.fsf@gitster.g>
- source: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-
-
-* jc/rerere-cleanup (2023-08-25) 4 commits
- - rerere: modernize use of empty strbuf
- - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
- - rerere: fix comment on handle_file() helper
- - rerere: simplify check_one_conflict() helper function
-
- Code clean-up.
-
- Not ready to be reviewed yet.
- source: <20230824205456.1231371-1-gitster@pobox.com>
+-> Description: Tig is a text mode interface for Git that ships with the
+standard Git for Windows package but isn’t callable from PowerShell/
+Command Prompt by default. Fix this by updating the relevant Makefiles
+and resource scripts.
+
+• fix broken link on Git for Windows’ GitHub wiki
+-> Status: merged
+-> link: https://github.com/git-for-windows/git/wiki/Home/_history
+
+-> Remarks: A simple fix for a broken link that I stumbled upon while
+browsing Git for Windows’ wiki looking for some help with the patch 
+mentioned just before this one.
+
+• t4129: prevent loss of exit codes due to the use of pipes
+-> Status: merged into master
+-> link: https://lore.kernel.org/git/20220311132141.1817-1-shaoxuan.yuan02@gmail.com/
+
+-> Description: Piping the output of git commands like git-ls-files to
+another command (grep in this case) in t4129 hides the exit code returned
+by these commands. Prevent this by storing the output of git-ls-files to
+a temporary file and then "grep-ping" from that file. Replace grep with
+test_grep as the latter is more verbose when it fails.
+
+• t9146: replace test -d/-f with appropriate test_path_is_* function
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1661.v3.git.1707933048210.gitgitgadget@gmail.com/
+
+-> Description: The helper functions test_path_is_* provide better debugging
+information than test -d/-e/-f.
+Replace tests -d/-e/-f with their respective ‘test_path_is_foo’ calls.
+
+• regex: update relevant files in compat/regex
+-> Status: WIP
+-> link: https://github.com/gitgitgadget/git/pull/1641
+
+-> Description: The RegEx code in compat/regex has been vendored from 
+gawk and was last updated in 2010. This may lead to performance issues 
+like high CPU usage. Fix this by synchronizing the relevant files in 
+compat/regex with the latest version from GNULib and then replaying any
+changes we made to gawk’s version on top of the new files.
+
+-> Remarks: When I started working on this patch, I thought it was an
+easy fix but the work turned out to be more involved than I anticipated.
+I had to seek help from the other community members, and we have made
+some good progress, but there is still a lot of cleaning and changes that
+need to be done. I haven’t found enough time to commit to this again,
+but it’s surely something that I want to get done soon.
+
+• tests: Move t0032-reftable-unittest.sh to the unit testing framework
+-> Status: WIP
+-> link: https://github.com/gitgitgadget/git/pull/1698
+
+-> Description: t/t0032-reftable-unittest.sh along with t/helper/test-reftable.c
+unit test Git’s reftable framework. Migrate the test over to the new
+unit testing framework to simplify debugging and reduce test run-time.
+
+-> Remarks: An infant version as of now, I tinkered with this after 
+seeing the project list on 'Git SoC 2024 Ideas' page to get an idea of
+the kind of work that will be involved in this project.
+
+-----Related Work-----
+
+Prior works about the idea have been performed by other community members
+and previous interns which form a good guiding path for my own approach.
+Some previous example work:
+
+i) Port helper/test-ctype.c to unit-tests/t-ctype.c
+-> link: https://lore.kernel.org/git/20240112102743.1440-1-ach.lumap@gmail.com/
+
+ii) Port test-sha256.c and test-sha1.c to unit-tests/t-hash.c
+-> link: https://lore.kernel.org/git/20240229054004.3807-2-ach.lumap@gmail.com/
+
+iii) Port helper/test-date.c to unit-tests/t-date.c
+-> link: https://lore.kernel.org/git/20240205162506.1835-2-ach.lumap@gmail.com/
+
+iv) Port test-strcmp-offset.c to unit-tests/t-strcmp-offset.c
+-> link: https://lore.kernel.org/git/20240310144819.4379-1-ach.lumap@gmail.com/
+
+v) Integrate a simple strbuf unit test with Git's Makefiles
+-> link: https://lore.kernel.org/git/20230517-unit-tests-v2-v2-4-21b5b60f4b32@google.com/
+
+vi) t0080: turn t-basic unit test into a helper
+-> link: https://lore.kernel.org/git/a9f67ed703c8314f0f0507ffb83b503717b846b3.1705443632.git.steadmon@google.com/
+
+In GSoC
+-------
+
+-----Plan-----
+
+-> Reftable tests:
+
+The reftable tests are different from other tests in the test directory
+because they perform unit testing with the help of a custom test framework
+rather than the usual ‘helper file + shell script’ combination.
+Reftable tests do have a helper file and a shell script invoking the
+helper file, but rather than performing the tests, this combination is
+used to invoke tests defined in the reftable directory.
+    The reftable directory consists of nine tests:
+
+•  basics test
+•  record test
+•  block test
+•  tree test
+•  pq test
+•  stack test
+•  merged test
+•  refname test
+•  read-write test
+
+Each of these tests is written in C using a custom reftable testing 
+framework defined by reftable/test_framework (also written in C). The
+framework has four major features utilized in performing the tests:
+
+•  EXPECT_ERR(c): A function-like macro that takes as input an integer
+‘c’ (generally the return value of a function call), compares it against
+0 and spits an error message if equality doesn’t hold. The error message
+itself contains information about the file where this macro was used,
+the line in this file where the macro was called and the error code ‘c’
+causing the error.
+
+•  EXPECT_STREQ(a, b): A function-like macro that takes as input two 
+strings ‘a’ and ‘b’, compares them for equality via strcmp() and throws an
+error if equality doesn’t hold. The error message thrown contains information
+regarding the file where this macro was invoked, the line in this
+file where the macro was called and the mismatched strings ‘a’ and ‘b’.
+
+•  EXPECT(c): A function-like macro that takes as input an integer ‘c’
+(generally the result of a Boolean expression like a == b) and throws an
+error message if c == 0. The error message is similar to EXPECT_ERR(c).
+
+•  RUN_TEST(f): A function-like macro that takes as input the name of a
+function ‘f’ (a test function that exercises a part of reftable’s code),
+prints to stdout the message ‘running f’ and then calls the function with f().
+
+Other than these, the framework consists of two additional functions,
+set_test_hash() and strbuf_add_void() which are used  exclusively in the
+stack tests and refname tests respectively.
+
+Since the reftable test framework is written in C like the unit testing
+framework, we can create a direct translation of the features mentioned
+above using the existing tools in the unit testing framework with the
+following plan:
+
+•  EXPECT_ERR(c): Can be replaced by check(!c) or check_int(c, “==”, 0).
+
+•  EXPECT_STREQ(a, b): Can be replaced by check_str(a, b). 
+
+•  EXPECT(c): Can be replaced by check_int(), similar to EXPECT_ERR.
+   E.g. expect(a >= b) --> check_int(a, “>=”, b)
+
+•  RUN_TEST(f): Can be replaced by TEST(f(), “message explaining the test”).
+
+The information contained in the diagnostic messages of these macros is
+replicated in the unit testing framework by default. Any additional 
+information can be displayed using the test_msg() functionality in the
+framework. The additional functions set_test_hash() and strbuf_add_void()
+may be moved to the source files for stack and refname respectively.
+
+The plan itself is basic and might need some modifications, but using
+the above plan, I have already created a working albeit primitive copy for
+two out of the nine tests (basics test and tree test) as can be seen here:
+(link: https://github.com/gitgitgadget/git/pull/1698)
+
+-> Other tests:
+
+As is already mentioned, the rest of the tests in the test directory use the
+combination of a helper file (written in C) and a shell script that invokes
+the said helper file. I will use my work from the patch
+‘tests: Move t0009-prio-queue.sh to the unit testing framework’
+(link: https://public-inbox.org/git/pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com/)
+to explain the steps involved in the porting of such tests:
+
+• Search for a suitable test to port: As Christian Couder mentioned in this 
+mail (link: https://public-inbox.org/git/CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com/),
+there exists a subset of t/helper worth porting and we need some sort of
+classification to discern these.
+
+All helper files contain a cmd__foo() function which acts as the entry 
+point for that helper tool. For example, the helper/test-prio-queue.c
+file contained cmd__prio_queue() which served as the entry point for the
+prio-queue tool. This function is then mapped to a different name by 
+helper/test-tool.c which is used by the ‘*.sh’ files to perform tests.
+Continuing the prior example, cmd__prio_queue() had been mapped to
+“prio-queue” by test-tool.c and t0009-prio-queue.sh invoked it like 
+“prio-queue 1 2 get 3 dump”.
+
+To classify what among t/helper should be targeted first in this project
+we can use something like ‘git grep foo’ (where foo is the alias for cmd__foo())
+to look at the instances where the helper tool is invoked. The ones appearing 
+lesser in different test scripts are the ones most likely to be used solely
+for unit testing and should probably be targeted first.
+Utilising this strategy, I discovered that the ‘prio-queue’ tool was only
+used in t0009-prio-queue.sh and hence, was a good candidate for the unit 
+testing framework.
+
+Note that this strategy is not full-proof and further investigation is
+absolutely required on a per-test basis, it is only meant to give an
+initial idea of what’s worth investigating. 
+
+•  Create a new C test file in t/unit-tests: After finding a test appropriate
+for the migration efforts, we create a new ‘*.c’ file in t/unit-tests. 
+The test file must be named appropriately to reflect the nature of the 
+tests it is supposed to perform. Most of the times, replacing ‘tXXXX’ 
+with ‘t-‘ and ‘*.sh’ with ‘.c’ in the name of the test script suffices.
+E.g. t/t0009-prio-queue.sh turns to t/unit-tests/t-prio-queue.c. The
+new C file must #include “test-lib.h” (to be able to use the unit
+testing framework) and other necessary headers files.
+
+•  Move the code from the helper file: Since the helper files are written
+in C, this step is mostly a ‘copy-paste then rename’ job. Changes similar
+to the following also need to be made in the Makefile:
+-    TEST_BUILTINS_OBJS += test-prio-queue.o
++    UNIT_TEST_PROGRAMS += t-prio-queue
+
+•  Translate the shell script: The trickiest part of the plan, since 
+different test scripts perform various functions, and a direct translation
+of the scripts to C is not always optimal. Continuing the prior example,
+t0009-prio-queue.sh used a single pattern for testing, write expected
+output to a temporary file (named ‘expect’) -> feed input to the ‘prio-queue’
+helper tool -> dump its output to another temporary file (named ‘actual’)
+-> compare the two files (‘actual’ vs ‘expect’).
+
+In the first iteration of my prio-queue patch, I worked out a
+straightforward translation of this pattern in C. I stored the input in
+a string buffer, passed that buffer to the test function and stored its
+output in another buffer, and then called memcmp() on these two buffers.
+While this did prove to be a working copy, this work was found to be inadequate
+on the mailing list. Through the next several iterations, I reworked the
+logic several times, like comparing the input and output on-the-go rather
+than using buffers and replacing strings with macro definitions.
+
+The test scripts similarly perform other functions like checking for
+prerequisites, creating commits, initializing repositories, changing or 
+creating directories and so forth, and custom logic is required in most
+of the cases of translating these, as seen above.
+
+•  Run the resulting test, correct any errors: It is rare for any migrated
+test to work correctly on the first run. This step involves resolving any
+compile/runtime errors arising from the test and making sure that at the
+very minimum, all the test-cases of the original test are replicated in the
+new work. Improvements upon the original can also be made, for example, the
+original t0009-prio-queue.sh did not exercise the reverse stack
+functionality of prio-queue, which I improved upon in unit-tests/t-prio-queue.
+
+•  Send the resulting patch to the mailing list, respond to the feedback:
+This step involves writing a meaningful commit message explaining each patch
+in the series. From my experience contributing to the Git project, I find it
+to be rare for any patch series to be accepted in the very first iteration.
+Feedback from the community is vital for the refinement of any patch and
+must be addressed by performing the suggested changes and sending the work
+back to the mailing list. This must be repeated until the work is merged
+into ‘seen’, ‘next’ and further down, ‘master’.
+
+
+Timeline
+--------
+
+I’m confident that I can start the project as early as the start of the
+Community Bonding Period (May 1 - 26). This is because I have read
+the related documentation and already have some experience with the idea.
+I believe I’ll be ready to get up to speed to work on the project by then.
+The exact time arrangement for each test is variable and hard to determine,
+but judging from the fact that it took me 3-4 days to complete the first
+iteration of the t-prio-queue work, here is a proposed migration schedule:
+
+• Reftable tests:
+
+If my current work from 'tests: Move t0032-reftable-unittest.sh to the unit
+testing framework' is found satisfactory, there are 7 tests left that need
+to be ported to the unit testing framework. Assuming it takes 2-3 days to
+port one test, I should be done with the first patch series for the reftable
+tests in about 2-3 weeks. From there, it’s a matter of responding to the
+feedback from the mailing list, which can deceptively take longer than expected.
+For instance, I had to continue polishing my t-prio-queue patch for about
+two weeks after the feedback on the first iteration.
+
+• Other tests:
+
+The time required to port these tests is highly variable and depends mostly
+upon the work required in translating the shell script. As mentioned
+previously, it took me 3-4 days to complete the first iteration of the
+test-prio-queue migration patch, and that was a short test with only about
+50 or so lines of shell scripting and all the test cases following a single
+pattern. Considering all this, I believe it should be possible, on average,
+to migrate a new test in 5-8 days.
+
+Hence, it should be possible for me to migrate >=7 tests along with the
+reftable tests throughout the duration of this project.
+
+Availability
+------------
+
+My summertime is reserved for GSoC, so I expect that I can work on a new 
+test 5 days per week, 6-8 hours per day, that is 30-40 hours a week.
+On the weekends, I would like to solely work on the feedback from
+the mailing list and advance my [WIP] patches. Certainly, something
+unexpected may arise, but I will try my best to adhere to this time
+commitment and be always available through the community’s mailing list.
+
+Post GSoC & Closing Remarks
+---------------------------
+
+When I first started contributing to the Git project in October of 2023,
+I had no idea about programmes like GSoC. I was advised by a senior of
+mine to contribute to open-source projects and hence, my aim of contribution
+was to apply what I had learnt in college to solve real-world problems
+and learn from more experienced peers. However, most of what I have
+contributed to Git has been trivial owing to my lack of skills and
+inexperience with the project.
+
+Seeing how I need to do an internship in summer, with GSoC, I hope to be
+able to dedicate this internship time and effort to a cool project like
+Git while simultaneously learning skills to be able to make more useful
+contributions in the future. It’s two birds with one stone. I would also
+like to keep working on this project to see it to completion post-GSoC
+and help mentor other newcomers get started with the Git project.
+
+Thanks & Regards,
+Chandra
