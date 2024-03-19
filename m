@@ -1,154 +1,151 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A583039FD6
-	for <git@vger.kernel.org>; Tue, 19 Mar 2024 19:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8068B39FD6
+	for <git@vger.kernel.org>; Tue, 19 Mar 2024 19:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710877139; cv=none; b=MeTHGr9cUek81fWT0/4cXehy+wiRkybfc7CcAf/OYWwB3Df1DX0Yc5+U/77BkHLtrl343Hb2bqQP4RRSfhozZ8Tx5hm+1Cf/84yQkQ7k28r+YVggsLYBqqt4TnSFNOvyzVNZzsIN1DKwuvimzAoWcOk7HAZqQ7RMegMJWcsPl8U=
+	t=1710877555; cv=none; b=nE92OYxzmbXzqoe+jyR8Rx5oJx8IwaoHDRgRjOf6W9bKza6yTJM0qfjnRM/ldj9jzAgZjM3bqAqE4Qn6v27l9ZK1LFA+aBL7CqlnNJHs+e2SuMB1I3Di9jUcdoGn/t6yqYNE8+bw9qi6A6ri11rcZJPX2rzGqAR0mlIZFe0fJkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710877139; c=relaxed/simple;
-	bh=o6rSP9vH8RglxFWPX5YHbu53JhO6ogqh66a5H5zy0EU=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=XXFnxLN7vck39a7McZjMJxb6lWiwGIwfR7KMtzIzaWdQEAl38kadrGE6QM2vz0LZb3du5QIIpES3NFP5k/bzew70Hc13OIFm2amqG8freq+GrnZ66NAuA6axK0OHddTB1jHJPyqeYe239Tzkc9OhnR/g6glKl97it839wN+lNyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=HdYkEjoL; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	s=arc-20240116; t=1710877555; c=relaxed/simple;
+	bh=i4AqGQilEbm0AGzRWH0JAteuttgyqNjmWSModw8rzQQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=I4WVjjeK1HCsZSOOjSLVNGD9fzrssaUoN/k+smiEXEHjcJ7pXWu+ZAsiSNX3sHDiK1Y1t0v0JosvIj2LWu5NdhBlg9xgLvkqICA8XX6UpUE1RB7VuraH33frRyQDCT9sSwu6HKGKKP/acp4BrwBt5lUL9JCYuvbUxQIfhynflBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CBjPccRV; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="HdYkEjoL"
-Received: from [IPv6:::1] (2a02-8440-320a-0856-47ac-4915-fd66-da4b.rev.sfr.net [IPv6:2a02:8440:320a:856:47ac:4915:fd66:da4b])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id C9A4B60328;
-	Tue, 19 Mar 2024 20:38:51 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1710877133;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OSZh50mZET12HyWudwkNR4ftzXr4Ddn7+M3DUu5ZVrk=;
-	b=HdYkEjoL/RMOzHrgvG71jGDlVqCog1Mr/4RHEY/PkuihdCHh7jXnJxD9NE5MvSZ6A2rOCf
-	Hl22b31bWq2jCu99iSTMgrb/CAS4FZ1ZyKKYBg1PydtFNG+M4YdfX8nst3Pdl+NkBLFocz
-	IFCWKAgalNaI/nIvpjzmK+6xSQFVL6Evd9oqTSKYElFMlFcSdn/9GoxFHm/9GtwDssvZRS
-	GhQJoDHPn9efNo22euzs3Onfq5pNRyHOMlwmKZA4fsVcbuS4pSKcHnob3QFgUBbz8kANck
-	ySxinyB3owp7mXBFnXiZGgMVRf9WMxJdcrCAPI99s5vdFqQoRgdyZRyWctECXA==
-Date: Tue, 19 Mar 2024 20:38:49 +0100
-From: Max Gautier <mg@max.gautier.name>
-To: Eric Sunshine <sunshine@sunshineco.com>
-CC: git@vger.kernel.org, =?ISO-8859-1?Q?L=E9na=EFc_Huard?= <lenaic@lhuard.fr>,
- Derrick Stolee <stolee@gmail.com>
-Subject: Re: [RFC PATCH 3/5] maintenance: use packaged systemd units
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAPig+cSWLoRdTgrrU2SBswnKr82L_BPCKtaP6atMyZVDAU=hpw@mail.gmail.com>
-References: <20240318153257.27451-1-mg@max.gautier.name> <20240318153257.27451-4-mg@max.gautier.name> <ZfmAfIErHRZVbd49@framework> <CAPig+cSWLoRdTgrrU2SBswnKr82L_BPCKtaP6atMyZVDAU=hpw@mail.gmail.com>
-Message-ID: <BA7F27C1-EFE2-47CD-B892-A3F4262394CB@max.gautier.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CBjPccRV"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-513d212f818so7128097e87.2
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 12:45:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710877551; x=1711482351; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s33kMLKSeE7sYm0NtjwxVRWxSnglOOju6FFlPi52FZA=;
+        b=CBjPccRVm+DigjjIpGLudeSdiGtJUWISkI5kpNNjKEruX13AIe0K3T3YhzObreTdFY
+         9LTy7OJNrDfXTS1uCQo2dPLMifZgfkPN88DpQcZaCN5ObVWagq2DxVaMCQ2ShJtuw+Of
+         uywpteIDaoctQtW19PK/OOqXB5CHZSGZ34UFd2889AKac6tZ9Tewo85UKWCOIWGgV+hF
+         577VK6uidzgMqe3I2L0Sg9ONmzEZXNYssWN5LSAITbL/d0B6fi4ehnnU4GzgrWX6pePD
+         WocQlVxZtOZYdeFYmpiC6CDeeOc/DCU4SXxRD62irlHB2TBV/GuYieQKsp1zNXVSQK4J
+         vyNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710877551; x=1711482351;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s33kMLKSeE7sYm0NtjwxVRWxSnglOOju6FFlPi52FZA=;
+        b=ELtLGy9dpJ83SKIwOpQO8AlnRHSZwuL6XHcMwN7GX/pi0sFUQjc7ZY+bitJ+Ds2SMu
+         bJoh8DVDieBqs6p91Xdnt9wZ9j4317nJy3DLMYnX7At/1wk5FFsMyxau3Py9hNDDQHEe
+         gQSUWL3skfxzWE1ergd+QWbseN4/Q5CyyYUVGPVHi5/yyN104tBoF+PvvGCJN6F92sJk
+         uIlb/v6lgPZi2pvi7wfa+kVAu3JaZX2GyUpCiFgffgwwKDP41s3DM5ih81FLWcFTSUmc
+         XJMSc1FkvlSNl8UZuPac2Lh/D2N/3EzeTJPERayGXD0jBxC0Eo1amtdjygZmMaGpSucN
+         6jzQ==
+X-Gm-Message-State: AOJu0YxxT1bqOHKIvqDB6L+FYCCRPLGmDs9Ze2RUplYvAavc6tgopITS
+	DQWkLDCrmBGSViYO2T5epF0Vxa+3ylhPR2o2wLA8uKjwjuHl25mHhC5kkMMiqN8=
+X-Google-Smtp-Source: AGHT+IFSKL0tMRHjQdywMSAlyRcQG8a8mXAFH/mZ+M5PF4iR6FSwhZOyy5G3MBoK6z4/wulFC7VOMg==
+X-Received: by 2002:a05:651c:d3:b0:2d2:3c88:cd57 with SMTP id 19-20020a05651c00d300b002d23c88cd57mr48564ljr.32.1710877551364;
+        Tue, 19 Mar 2024 12:45:51 -0700 (PDT)
+Received: from ?IPV6:2001:861:3385:e20:6384:4cf:52c5:3194? ([2001:861:3385:e20:6384:4cf:52c5:3194])
+        by smtp.gmail.com with ESMTPSA id fa6-20020a05600c518600b004146a49d0d3sm162777wmb.30.2024.03.19.12.45.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 12:45:50 -0700 (PDT)
+Message-ID: <e47f9df1-be1f-45aa-9308-dfbc2124f29c@gmail.com>
+Date: Tue, 19 Mar 2024 20:45:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk: add "Hightlight commit name" menu entry
+Content-Language: en-US, fr
+From: =?UTF-8?Q?Rapha=C3=ABl_Gallais-Pou?= <rgallaispou@gmail.com>
+To: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Denton Liu <liu.denton@gmail.com>,
+ Paul Mackerras <paulus@ozlabs.org>, Beat Bolli <dev+git@drbeat.li>
+References: <20240130085308.5440-1-rgallaispou@gmail.com>
+In-Reply-To: <20240130085308.5440-1-rgallaispou@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi,
 
-Le 19 mars 2024 18:17:27 GMT+01:00, Eric Sunshine <sunshine@sunshineco=2Ec=
-om> a =C3=A9crit=C2=A0:
->On Tue, Mar 19, 2024 at 8:10=E2=80=AFAM Max Gautier <mg@max=2Egautier=2En=
-ame> wrote:
->> I'm working on updating the test in t7900-maintenance=2Esh, but I might=
- be
->> missing something here:
->>
->> >test_expect_success 'start and stop Linux/systemd maintenance' '
->> >   write_script print-args <<-\EOF &&
->> >   printf "%s\n" "$*" >>args
->> >   EOF
->> >
->> >   XDG_CONFIG_HOME=3D"$PWD" &&
->> >   export XDG_CONFIG_HOME &&
->> >   rm -f args &&
->> >   GIT_TEST_MAINT_SCHEDULER=3D"systemctl:=2E/print-args" git maintenan=
-ce start --scheduler=3Dsystemd-timer &&
->>
->> Do I understand correctly that this means we're not actually running
->> systemctl here, just printing the arguments to our file ?
->
->That's correct=2E The purpose of GIT_TEST_MAINT_SCHEDULER is twofold=2E
->
->The primary purpose is to test as much as possible without actually
->mucking with the user's real scheduler-related configuration (whether
->it be systemd, cron, launchctl, etc=2E)=2E This means that we want to
->verify that the expected files are created or removed by
->git-maintenance, that they are well-formed, and that git-maintenance
->is invoking the correct platform-specific scheduler-related command
->with correct arguments (without actually invoking that command and
->messing up the user's personal configuration)=2E
->
->The secondary purpose is to allow these otherwise platform-specific
->tests to run on any platform=2E This is possible since, as noted above,
->we're not actually running the platform-specific scheduler-related
->command, but instead only capturing the command and arguments that
->would have been applied had git-maintenace been run "for real" outside
->of the test framework=2E
+Gentle ping since I haven't received any reviews or comment on this 
+patch. :)
 
-Ok thanks, now I see why it's done this way=2E
+Do you guys actually take patches for the gitk tool ? I feel like there 
+is not much features added on this.
 
->
->> >       for schedule in hourly daily weekly
->> >       do
->> >               test_path_is_missing "systemd/user/git-maintenance@$sch=
-edule=2Etimer" || return 1
->> >       done &&
->> >       test_path_is_missing "systemd/user/git-maintenance@=2Eservice" =
-&&
->> >
->> >       printf -- "--user disable --now git-maintenance@%s=2Etimer\n" h=
-ourly daily weekly >expect &&
->> >       test_cmp expect args
->>
->> The rest of the systemd tests only check that the service file are in
->> XDG_CONFIG_HOME, which should not be the case anymore=2E
->>
->> However, the test does not actually check we have enabled and started
->> the timers as it is , right ?
->
->Correct=2E As noted above, we don't want to muck with the user's real
->configuration, and we certainly don't want the system-specific
->scheduler to actually kick off some command we're testing in the
->user's account while the test script is running=2E
->
->> Should I add that ? I'm not sure how, because it does not seem like the
->> tests run in a isolated env, so it would mess with the systemd user
->> manager of the developper running the tests=2E=2E=2E
->
->No you don't want to add that since, as you state and as stated above,
->it would muck with the user's own configuration which would be
->undesirable=2E
->
+Regards,
+Raphaël
 
-That makes things easier then :)
-
->> Regarding systemd-analyze verify, do the tests have access to the sourc=
-e
->> directory in a special way, or is using '=2E=2E/=2E=2E' enough ?
->
->You can't assume that the source directory is available at "=2E=2E/=2E=2E=
-"
->since the --root option (see t/README) allows the root of the tests
->working-tree to reside outside of the project directory=2E
->
->You may be able to use "$TEST_DIRECTORY/=2E=2E" to reference files in the
->source tree, though the documentation in t/test-lib=2Esh doesn't seem to
->state explicitly that this is intended or supported use=2E However, a
->few existing tests (t1021, t3000, t4023) already access files in the
->source tree in this fashion, so there is precedent=2E
-
-
-I'll look into those=2E Thanks for all the info !
-
---=20
-Max Gautier
+Le 30/01/2024 à 09:53, Raphael Gallais-Pou a écrit :
+> When working with diverged branches, some patches can appear several times
+> on different branches without having the need to merge those branches.
+> On the other hand you may have to port a specific patch on another
+> branch you are working on. The search with a SHA1 cannot be applied here
+> since they would differ.
+> 
+> This patch adds an entry in the main context menu to highlight every
+> instance of a commit.
+> 
+> Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+> ---
+>   gitk-git/gitk | 23 ++++++++++++++++++++---
+>   1 file changed, 20 insertions(+), 3 deletions(-)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 7a087f123d..4b15230a16 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -2672,6 +2672,7 @@ proc makewindow {} {
+>           {mc "Make patch" command mkpatch}
+>           {mc "Create tag" command mktag}
+>           {mc "Copy commit reference" command copyreference}
+> +	{mc "Highlight commit name" command highlightcommitname}
+>           {mc "Write commit to file" command writecommit}
+>           {mc "Create new branch" command mkbranch}
+>           {mc "Cherry-pick this commit" command cherrypick}
+> @@ -9002,13 +9003,13 @@ proc rowmenu {x y id} {
+>       if {$id ne $nullid && $id ne $nullid2} {
+>           set menu $rowctxmenu
+>           if {$mainhead ne {}} {
+> -            $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
+> +            $menu entryconfigure 9 -label [mc "Reset %s branch to here" $mainhead] -state normal
+>           } else {
+> -            $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
+> +            $menu entryconfigure 9 -label [mc "Detached head: can't reset" $mainhead] -state disabled
+>           }
+> -        $menu entryconfigure 10 -state $mstate
+>           $menu entryconfigure 11 -state $mstate
+>           $menu entryconfigure 12 -state $mstate
+> +        $menu entryconfigure 13 -state $mstate
+>       } else {
+>           set menu $fakerowmenu
+>       }
+> @@ -9481,6 +9482,22 @@ proc copyreference {} {
+>       clipboard append $reference
+>   }
+>   
+> +proc highlightcommitname {} {
+> +    global rowmenuid autosellen findstring gdttype
+> +
+> +    set format "%s"
+> +    set cmd [list git show -s --pretty=format:$format --date=short]
+> +    if {$autosellen < 40} {
+> +        lappend cmd --abbrev=$autosellen
+> +    }
+> +    set reference [eval exec $cmd $rowmenuid]
+> +    set findstring $reference
+> +    set gdttype [mc "containing:"]
+> +
+> +    clipboard clear
+> +    clipboard append $reference
+> +}
+> +
+>   proc writecommit {} {
+>       global rowmenuid wrcomtop commitinfo wrcomcmd NS
+>   
