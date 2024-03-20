@@ -1,77 +1,110 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7404AEF0
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 14:42:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E9B4EB45
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 15:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710945776; cv=none; b=u/gI6YEyVWiLkAd3golFVFalIyQh1Tr9e+pUp3VDlY3KBRgFBamcZiIH2m7V+bpV8sXIuc+wdEXagK2P0FR5NjlQfG0JrguTM71ScdTEQncjgwvjubCuHjCu3ojRPvenI7HcU/QenuZMbI7oZVHBjq+kdOcTidaahCtv3Aq1e5A=
+	t=1710947760; cv=none; b=axMsw9uUttAxr6Wc7/J/Yr7ByIcOLN3levnWBghgxjd6OkEyrZS1ZmE13LNzOou7fv5GmYJE9LpykM7wVPxJQOaVuRQCvoAZi2ypU3TrYN7lNLuCNxWHzPpsi+U6IWTo3FRWHj2veD5CMGIkU2ceovOqnp9AOQ0/a7cbiA6bATI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710945776; c=relaxed/simple;
-	bh=QD0B9s8gL0FCW2hMNfLNMpu5q49dLvqmiMMtUiDIs8I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ICKD/Z9WV1JMyttSF9i83CHKOD2efttSD7uRokjvheSFXfvtQJG+0qJo6Qr7UHzdZfcppB7qLwbz3vMF7z0gWkmUIAWHq7XLX9WeUlrmZCSJFCycG0zbETyAjI9QpRxtAYKyI2fNjMAxoL/flwxbtoEIMINkjqKiHvSN30JgIOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VCH/u5X3; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710947760; c=relaxed/simple;
+	bh=MYhzzM/8E76yO12kD6gxwJPqGy9mnl43UEeh9sR1TQw=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=Gkqo/Uhk5X0JoWyuCCunT/ZiF62yBClD09FkDy3GQju1UhJzdvOPRrbJk03BGlaU0LUNHi/rBR5dznkLtrwQOFDKqQ1MYaPOUEYbPcH8CJesCe9IBw2jmxPCzmpVjmIoGInq9VV09NY8TJaYBsgdYlHxiY0b3hMxYn+Z/UJCH68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GzPzqxg4; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VCH/u5X3"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 86F192FB6B;
-	Wed, 20 Mar 2024 10:42:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=QD0B9s8gL0FCW2hMNfLNMpu5q49dLvqmiMMtUi
-	DIs8I=; b=VCH/u5X3M4T/QzupsIxlWtoPuwzQyueM+M0fTBjYIIZdq4eLb5JwqI
-	T43w2nbAl4JqnLdEHRJ1ehcgdmc7OsgOe0yOtgIP55tcGnolE/0tISX8dkEg8TD5
-	F3gQnbNCiPX1CEI9s7ezYB6Vt/zhHaupkkkMdCMWsv2kjOLPJUJzc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F7522FB68;
-	Wed, 20 Mar 2024 10:42:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6D0DD2FB67;
-	Wed, 20 Mar 2024 10:42:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH v3 4/4] config.txt: describe handling of whitespace further
-In-Reply-To: <c4f0e7311edce5d4ed4a55f290de9eaf@manjaro.org> (Dragan Simic's
-	message of "Wed, 20 Mar 2024 08:23:48 +0100")
-References: <cover.1710800549.git.dsimic@manjaro.org>
-	<e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
-	<xmqqttl1js1o.fsf@gitster.g>
-	<c4f0e7311edce5d4ed4a55f290de9eaf@manjaro.org>
-Date: Wed, 20 Mar 2024 07:42:47 -0700
-Message-ID: <xmqq4jd1hsm0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GzPzqxg4"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-430ca04b09bso25008781cf.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 08:15:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710947758; x=1711552558; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yGLmV+BN+HSCaA7QkFXACJBx+SjSxJsuc5+zStOSokc=;
+        b=GzPzqxg4eynWPcor6KED5OxlSNtd5jqokE05v23GZDqWmZOX6NKq4XGiJcdRXernlb
+         qSlq1oWCkJy5Jo5w+5y5hnQiVrnRTgOQSR6+u3u2ngku94fxIut6E3qGrxifU7AepEB7
+         jQVY/wWp5XK33YnSZeuDlt9JF+sv032yET7pwOsmqxumNT4r0aVjscX8kFUnmOh8hf5F
+         agsNCkGA/O8YDnMo4VUq8XXLTaKNv5byjiBAvRsx2dkuPYgs5nXRQCZqZayhyKUXUvc8
+         NWfSobWjyDLCsZaWvxO9YEKuAlbqBRdrXCQczUmGc2ioQl5RteITPiBNhaJhqyETVwsj
+         MFAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710947758; x=1711552558;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yGLmV+BN+HSCaA7QkFXACJBx+SjSxJsuc5+zStOSokc=;
+        b=mcyY9JmlYPGYPDkdNriYooVwVqe1P/GZ3ZKsaf5pX+0kp1RxWl1o7d5pEG1T+xO/7J
+         BumfXbxWcHy2jfa9L7RSnySQlnhQGJTsbspHhBmIp0T9a+ig3xeaC+ocWSI4eJJ75w5M
+         ngpnzAulCuygfxwZb3W6UpAoOhNc6QT1LIMwjZnANjALqtQEEq9/jMAjvjFbEBChU9ge
+         MZSI6LpnbdiK49w03Yfeymftd7RwO7h5jvK1OyxrVV5lhm8H4YFNwrVh3aJVLE4k1Xbs
+         4AUV6LGTfqhR9LV94qHyUD57g2GnSrtCBtbQTzii3bzIWRAIiP1BHqWwU7nTGRA4am/k
+         iUag==
+X-Gm-Message-State: AOJu0YyKOUuL3CQ9ZvE2LioSzDewDFJD38FMd2aEoq77w5J+ZKw0qIgW
+	xQnL8X7UhJa+/8b9YH852+zqCFHxXemOQ0oChVdBV90yEYXUk/yIdo0/R1pE
+X-Google-Smtp-Source: AGHT+IEul477mqqL1I4M0iSy5KHnqZYvUvkU7WeWrGS1ZDAt8elwMtV4l50qddjcMdj74PF4A7l8iQ==
+X-Received: by 2002:a05:622a:81:b0:430:ecb0:545b with SMTP id o1-20020a05622a008100b00430ecb0545bmr5063379qtw.20.1710947757837;
+        Wed, 20 Mar 2024 08:15:57 -0700 (PDT)
+Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id jx1-20020a05622a810100b00430a6fe5867sm7058139qtb.88.2024.03.20.08.15.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Mar 2024 08:15:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1FB1202E-E6C8-11EE-92ED-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+In-Reply-To: <xmqqil1iqi37.fsf@gitster.g>
+Cc: <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Mar 2024, #05; Tue, 19)
+Message-ID: <17be81eb83ff314d.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Wed, 20 Mar 2024 15:15:56 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Hi Junio
 
->>     Leading whitespace characters before and after 'name =', and the
-> Hmm, "leading whitespace" and "after" don't go very well together.
+> * bl/cherry-pick-empty (2024-03-11) 7 commits
+>  - cherry-pick: add `--empty` for more robust redundant commit handling
+>  - cherry-pick: enforce `--keep-redundant-commits` incompatibility
+>  - sequencer: do not require `allow_empty` for redundant commit options
+>  - sequencer: treat error reading HEAD as unborn branch
+>  - rebase: update `--empty=3Dask` to `--empty=3Dstop`
+>  - docs: clean up `--empty` formatting in git-rebase(1) and git-am (1)
+>  - docs: address inaccurate `--empty` default with `--exec`
+>=20
+>  "cherry-pick" told to keep redundant commits needs to be allowed to
+>  create empty commits to do its job, but it required the user to
+>  give the --allow-empty option, which was unnecessary.  Its UI has
+>  also been tweaked a bit.
 
-True.  We can drop "leading" of course.  I meant to refer to, in
-this sample illustration,
+Note that the description here is a little out-of-date; we're no longer
+changing the relationship between --allow-empty and
+--keep-redundant-commits (and the user didn't have to manually supply
+--allow-empty previously). I'd summarize this as:
 
-[section]
-	var = value # comment
+	Allow git-cherry-pick(1) to automatically drop redundant commits via
+	a new `--empty` option, similar to the `--empty` options for
+	git-rebase(1) and git-am(1). Includes a soft deprecation of
+	`--keep-redundant-commits` as well as some related docs changes and
+	sequencer code cleanup.
 
-the fact that "\t" before "var =" is discarded, and " " after "var ="
-before "value" is also discarded.
+>  Comments?
+>  source: <20240119060721.3734775-2-brianmlyles@gmail.com>
 
-Thanks.
+You can expect a v4 reroll tonight to address a few remaining comments.
+The only thing I haven't heard back on is this change [1] to the docs
+for the new `--empty` option, but I'm confident enough in my proposed
+alternative there that I'm comfortable rerolling even if I don't hear
+back today.
+
+[1]: https://lore.kernel.org/git/CAHPHrSfiMbU55K2=3D8+hJZy1cMSRbYM77pCK8BdcA=
+PHLvapHO_A@mail.gmail.com/
+
+--=20
+Thank you,
+Brian Lyles
