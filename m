@@ -1,95 +1,81 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25864F1E5
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 16:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDA253E13
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 16:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710951070; cv=none; b=aNsPlpvJHKSDiHrmpMmwWoKw/5nMLT6CQlA6JqA/MWklveRUUfmkyZBR8xekOb2YreI81tCOn3QdPXpXW6jlEfwdCDYdYLxbp+BgdYxc2Zk4VoBg0gIH+nayrxOEIo76v42XMDztnxsy3xAW7WCSad49CkFuKNukj/oFywyy/hI=
+	t=1710951073; cv=none; b=a/x2OqUSrj1zTmxMVs0IqdGyfOMvQVV9oU/EhaxAgJy1FdtnXy2eQDpB+sxqZCt58wR/2NDJ/p9nXpMx+hvOk6V9dL89zZpTqu7v8jba0zo1d1E5C4dF7bt/cchkKdjVNJqCyRmeu+3gLDMNF/EYNxowitspBn76VThJnM2rgSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710951070; c=relaxed/simple;
-	bh=HX0Lk/ZhlGh3mb7dBR7swAPTVZ2rJt9/GunlrhaEeiE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sRNtFpsBnslPFwGUAZTNX/Rp3KkgKVpg/fjzXHAQGPXbjxpdUSIs7csJYFkTWBOXpxXZL0IMFKrOfazL9A09ulFgE1f+PhRLFxfxWWTMTPVAly94RQktY84DN0wO+VgyGuDzUPn5A9F01VAUiPs87/743/T0C42jucfpWqVr5dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tcyTqLN3; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710951073; c=relaxed/simple;
+	bh=/pNScnJJXi8dvyDkpOzBwaYg9X8eryLcFg2VdErKUmE=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=R86KeKIGVdJwRs/Tb15B8UYn3Ifa+uOa8Ghf+jkRK2BqK07Wcq0XvcQ7jdChGa6SM79Rbhvz3u361FdGijN7nzbAzMIpIAYuJQmlhvYokudDADyHnNVqSbB2UpNsFM9WnIcPwpuQJtF9Fy3X5LTNMUPe6lmzaULFOFRAp6VdV7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=n7u/8dis; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tcyTqLN3"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7227930601;
-	Wed, 20 Mar 2024 12:11:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HX0Lk/ZhlGh3mb7dBR7swAPTVZ2rJt9/Gunlrh
-	aEeiE=; b=tcyTqLN3tGd8aKsh9+0vUceVj6QOy2skKnuwaFtGqyUHOIf9LYYtFt
-	oHX07z/GEfTT+Qx/OjamYxs5pp0CT8zVD2pSCowaSa3N0OxT979K061bqQVOeSu0
-	LCkF+VNqFRmiEeMV9jH191ge8Tn7wggpSPaJ6Z4v9VcTxkwJJoBh4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6ABAD30600;
-	Wed, 20 Mar 2024 12:11:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DC9B0305FF;
-	Wed, 20 Mar 2024 12:11:04 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Brian Lyles" <brianmlyles@gmail.com>
-Cc: <git@vger.kernel.org>, phillip.wood123@gmail.com,
-    =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Subject: Re: What's cooking in git.git (Mar 2024, #05; Tue, 19)
-In-Reply-To: <17be81eb83ff314d.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-	(Brian Lyles's message of "Wed, 20 Mar 2024 15:15:56 +0000")
-References: <17be81eb83ff314d.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Date: Wed, 20 Mar 2024 09:11:03 -0700
-Message-ID: <xmqqmsqshoiw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="n7u/8dis"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7407DB70-E6D4-11EE-80EB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710951061;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2lmTslae0F+tvd6kEmDkEYChcXKxUyoUoDMRqts3t1A=;
+	b=n7u/8disHQd6z7TK6cbww7GK2WJmkdHE3eDtn9/GxhTXYu3HVHgX3/tMpBp6Yu6TSXbuaD
+	Gld6Sb8fZPhpZjbG1PsOv2j5uQJYjVvRL21Mz/YNiQCJv3TBtjhN8XcL3yq5JoFJXxybxB
+	6ILb7crf0xngGOgxlBuHa7Cp41odgaxCQMDacAXk7SeuWqjyQ0J3374HwA6w6NLvv9VD80
+	oscE+e0HYOH8DKkYHA6WITCoQdZ6ISMkOhjhVm3DUIyHqRZMc6DknJh0pbtfzssiI14MeD
+	JKLotNVfJJ/ymQh+19fBHad0JgzVjRz7tvWvguH+JIx/15CQdcOMjY+wEivGbQ==
+Date: Wed, 20 Mar 2024 17:11:01 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, rsbecker@nexbridge.com, github@seichter.de,
+ sunshine@sunshineco.com
+Subject: Re: [PATCH v3 3/4] t1300: add more tests for whitespace and inline
+ comments
+In-Reply-To: <xmqq4jd1j7tp.fsf@gitster.g>
+References: <cover.1710800549.git.dsimic@manjaro.org>
+ <92ddcd1f668906348e20a682cd737d90bb38ddc6.1710800549.git.dsimic@manjaro.org>
+ <xmqqzfutjtfo.fsf@gitster.g> <32c4718d09ff6675e37587e15e785413@manjaro.org>
+ <c5736219057c73a3a344237257534bdc@manjaro.org> <xmqq4jd1j7tp.fsf@gitster.g>
+Message-ID: <1b475b48a88be57efde6d9fc2d8d50c8@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-"Brian Lyles" <brianmlyles@gmail.com> writes:
+Hello Junio,
 
->>  "cherry-pick" told to keep redundant commits needs to be allowed to
->>  create empty commits to do its job, but it required the user to
->>  give the --allow-empty option, which was unnecessary.  Its UI has
->>  also been tweaked a bit.
->
-> Note that the description here is a little out-of-date; we're no longer
-> changing the relationship between --allow-empty and
-> --keep-redundant-commits (and the user didn't have to manually supply
-> --allow-empty previously). I'd summarize this as:
->
-> 	Allow git-cherry-pick(1) to automatically drop redundant commits via
-> 	a new `--empty` option, similar to the `--empty` options for
-> 	git-rebase(1) and git-am(1). Includes a soft deprecation of
-> 	`--keep-redundant-commits` as well as some related docs changes and
-> 	sequencer code cleanup.
+On 2024-03-20 15:28, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Oh, I just saw that you've already picked this patch up in the "seen"
+>> branch.  Would you prefer if I make this change and submit the v4, or
+>> to perform the change in the already planned follow-up patches, which
+>> would also clean up some other tests a bit?
+> 
+> The purpose of the "seen" branch is to bundle the branches the
+> maintainer happens to have seen, and to remind the maintainer that
+> the topics in them might turn out to be interesting when they are
+> polished.  Nothing more than that.  Consider that a topic only in
+> "seen" is not part of "git" yet.
+> 
+> The contributors can use it to anticipate what topics from others
+> may cause conflict with their own work, and find people who are
+> working on these topics to talk to before the potential conflicts
+> get out of control.  It would be a good idea to fork from maint or
+> master to grow a topic and to test (1) it by itself, (2) a temporary
+> merge of it to 'next' and (3) a temporary merge to it to 'seen',
+> before publishing it.
 
-Very much appreciated.  I wonder if we can have a better workflow to
-do this, like perhaps contributors write a paragraph in the cover
-letter with the expectation that it will be used in the What's
-cooking report (which will become an entry in the Release Notes when
-the topic gets included in a release)?
-
-> You can expect a v4 reroll tonight to address a few remaining comments.
-> The only thing I haven't heard back on is this change [1] to the docs
-> for the new `--empty` option, but I'm confident enough in my proposed
-> alternative there that I'm comfortable rerolling even if I don't hear
-> back today.
->
-> [1]: https://lore.kernel.org/git/CAHPHrSfiMbU55K2=8+hJZy1cMSRbYM77pCK8BdcAPHLvapHO_A@mail.gmail.com/
-
-I added a few folks who were in the review discussion to Cc: of this
-message.
-
-Thanks.
+Thank you for the clarification.  Hence, I'll send the v4.
