@@ -1,107 +1,99 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62DE1DA4D
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 06:59:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB511E519
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 07:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710917963; cv=none; b=Pl0s//+6Sqq4wECUTnbRTLXm3c4AqJ6k24sC+X8ddpgEwyrIjtF2CiRsRw08LMJgG4URTCTzpbt9cGO9PgO1bOchKzMSnN9aWUpgvUpYp/QEnGWn4P6Uw1MHg89jnkzACSOpjUWkVvQsB8CtOl0scRCxIzdv6XE5izTOPj5TLbw=
+	t=1710918727; cv=none; b=XlpullcIRovoQjEtyZwC3k8s7ZZUBDxIA9lh28WLUuXnv0g7pxLo7sb3IQLrPB9B19mvd5+IsWf9DPy7NjKrIZT5/nEQ3082DWrO9PbXRNe+1woOzBDUdCgxaLFXkCWLYpYN9mszcMDKug9uQkVWyWeWP55E/90y4NM+4eDedp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710917963; c=relaxed/simple;
-	bh=rkQPyIptNQ8SNjP8+Yw9kyPtKSzqgtOC4x6JbmcJMWQ=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=DhZbGmpTqIkXMPN7Hs1E16f/A/zdqB4qBu/tHDDZL/SsY+r9g5IYUy0GvsOO0UIqeUJQzBf/yVW5HAceLLOQBqirWXgzo4hRAG2PqOkowT9OXa/Xvg/NTJkhmQ2dF9VuuWahRF4EyLtRLLy6XxCMYu7Uxo9NoipYGyYORdRcNXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=LnCBguDs; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710918727; c=relaxed/simple;
+	bh=o86M4vdCMtvQJI4NKx9G4ZTq1u7Nu1xfQvO34i5v0Hk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=myMWl5EUYVbhtcivfnZG+3lX6AASKaPDycUwSgUjxs9dhyXLB9prXtz2HuirTE0afDXGIj4tLK9XhmmQQXu8p1KomhQk7L3F4ci+OLuJH454Mdt5WmCdEcSW/JqqBcKwFTlLrXFhCwqRCorKQdElSzfQq6oD++FcMScWJ48v5S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mf8xAPcO; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="LnCBguDs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mf8xAPcO"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5FE731DAF35;
+	Wed, 20 Mar 2024 03:12:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=o86M4vdCMtvQJI4NKx9G4ZTq1u7Nu1xfQvO34i
+	5v0Hk=; b=Mf8xAPcOmpZ0YTHj93VMWo2ha8C1AqqGfJNZvjiPjbuZ+kDiy2ExWr
+	4pIMFXuREg8knEu5ELmnWnhSprKlBD00vKQxTq64o3dnd03y83GCmhk+TCF61243
+	fyCCeWAPIXBafn2Z1GiLIMVnpZESTYWVQCCavOh3PvpDjWVIIkxE8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 45A1E1DAF34;
+	Wed, 20 Mar 2024 03:12:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A9D91DAF32;
+	Wed, 20 Mar 2024 03:12:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de,
+  sunshine@sunshineco.com
+Subject: Re: [PATCH v3 4/4] config.txt: describe handling of whitespace further
+In-Reply-To: <e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Mon, 18 Mar 2024 23:24:22 +0100")
+References: <cover.1710800549.git.dsimic@manjaro.org>
+	<e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
+Date: Wed, 20 Mar 2024 00:12:03 -0700
+Message-ID: <xmqqttl1js1o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710917959;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wd//pEJtUYABYyqVdfBB6ukKPB43DXMR5h3LeDBZNBA=;
-	b=LnCBguDs9WRFGE9GLISW+OWGexhOdsTQHm15QGXpdg4FI69yqRiAMQWq0+AyDIPHTZQTAB
-	aBvZSTp+4tkrXXQYUmHsJEpj+0eOLGgLXORsm31agrj9OyU2C+mtz1mLJxI8RRuVSruapd
-	/X5Cm2H5UM0y9UUn8CNCu+LR+hWu46s9UcB328tgkwZPBkDyTR53sZjQimq3/7Nh8epJDV
-	7NT8RttXluxf3m5snICUho7fpqYZOzmuFFljzz3WTW/XqHp1DxLWYNBw78AT00KU7RIrPQ
-	S9wX0Z2Rw/GydJ7asq9Kwatoq9AL6dPcI2CtXhFHzPMdD6J5df3fuiRre2Saeg==
-Date: Wed, 20 Mar 2024 07:59:18 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, rsbecker@nexbridge.com, github@seichter.de,
- sunshine@sunshineco.com
-Subject: Re: [PATCH v3 3/4] t1300: add more tests for whitespace and inline
- comments
-In-Reply-To: <32c4718d09ff6675e37587e15e785413@manjaro.org>
-References: <cover.1710800549.git.dsimic@manjaro.org>
- <92ddcd1f668906348e20a682cd737d90bb38ddc6.1710800549.git.dsimic@manjaro.org>
- <xmqqzfutjtfo.fsf@gitster.g> <32c4718d09ff6675e37587e15e785413@manjaro.org>
-Message-ID: <c5736219057c73a3a344237257534bdc@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 27BACFDE-E689-11EE-99CC-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 2024-03-20 07:46, Dragan Simic wrote:
-> On 2024-03-20 07:42, Junio C Hamano wrote:
->> Dragan Simic <dsimic@manjaro.org> writes:
->> 
->>> +test_expect_success 'setup whitespace config' '
->>> +	tr "X" "\011" >.git/config <<-\EOF
->>> +	[section]
->>> +		Xsolid = rock
->>> +		Xsparse = big XX blue
->>> +		XsparseAndTail = big XX blue
->>> +		XsparseAndTailQuoted = "big XX blue "
->>> +		XsparseAndBiggerTail = big XX blue X X
->>> +		XsparseAndBiggerTailQuoted = "big XX blue X X"
->>> +		XsparseAndBiggerTailQuotedPlus = "big XX blue X X"X
->>> +		XheadAndTail = Xbig blue
->>> +		XheadAndTailQuoted = "Xbig blue "
->>> +		XheadAndTailQuotedPlus = "Xbig blue "
->>> +		Xannotated = big blueX# to be discarded
->>> +		XannotatedQuoted = "big blue"X# to be discarded
->>> +	EOF
->>> +'
->> 
->> If you want to write tests where leading and trailing whitespace
->> matter in them, making these invisible characters visible is a good
->> way to convey your intention to your readers.
->> 
->> 	sed -e "s/Q/	/g" \
->> 	    -e "s/^|//" \
->> 	    -e "s/[$]$//" <<-\EOF
->> 	|[section]
->> 	|	solid = rock  $
->> 	|	sparse = tab and space Q $
->> 	EOF
->> 
->> This is still true even if we assume there is no patch corruption
->> while the e-mail is in transit.  It is safe to assume that the
->> receiving end of your patches uses "git am --whitespace=fix" and a
->> common way to protect against it is to use the opposite of "cat -e"
->> as a convention, additional to the "'|' is the left edge of paper"
->> and "Q stands for HT" conventions.
-> 
-> Agreed, will make it so in the v4.  I already had some thoughts
-> about protecting the trailing whitespace, and making obvious it
-> wasn't included by mistake.
-> 
-> Though, I'll have to use 'X' istead of 'Q' for HTs, because the
-> option names already contain 'Q' characters.
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Oh, I just saw that you've already picked this patch up in the "seen"
-branch.  Would you prefer if I make this change and submit the v4, or
-to perform the change in the already planned follow-up patches, which
-would also clean up some other tests a bit?
+>  A line that defines a value can be continued to the next line by
+> +ending it with a `\`; the backslash and the end-of-line are stripped.
+> +Leading whitespace characters after 'name =', the remainder of the
+>  line after the first comment character '#' or ';', and trailing
+> +whitespace characters of the line are discarded unless they are enclosed
+> +in double quotes.
+
+Can we directly tighten the "trailing..." part, instead of having to
+add an extra long sentence ...
+
+> +The discarding of the trailing whitespace characters
+> +applies regardless of the discarding of the portion of the line after
+> +the first comment character.
+
+... like this as an attempt to clarify?
+
+    Leading whitespace characters before and after 'name =', and the
+    remainder of the line after the first comment character '#' or
+    ';', are removed, and then trailing whitespace characters at the
+    end of the line are discarded.
+
+By the way, if a run of whitespace characters are enclosed in double
+quotes, they cannot be trailing at the end of the line, as the
+closing double quote is not a whitespace character, so it is out of
+place to talk about quoted string in the context of trailing blank
+removal.  The unquoting would want to be discussed separately.
+
+> +Internal whitespace characters within the
+> +value are retained verbatim.
+
+Good.
+
+>  
+>  Inside double quotes, double quote `"` and backslash `\` characters
+>  must be escaped: use `\"` for `"` and `\\` for `\`.
+
+Thanks for working on this topic.
