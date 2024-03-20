@@ -1,63 +1,63 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8D886644
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 22:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A077685C76
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 22:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710972345; cv=none; b=Dow1UKceYW/sbRjZqLKxUSi4NKh5cbgVwzV3FBT0bMB5XhOUUmEr+Obu4xYSAG6k8GBg3f8FJGxQVYVfz3woRqcw5u90ipIjWxhL0LAoDhkGE9guRJhN2EoUA+mmRugumKMSTkw/25StdfFPK6Dnqwh/ORJrsDCQvG+C2DU5waQ=
+	t=1710972348; cv=none; b=S18kahye8RPaALbrhUFwIro+qaGUell667sGITLlBUzWXZUbobJ9Xh8L+BBZce+2tfK4JlZZjkuLRk/wg8e8wOFyRnM4OzF8bJYDsrXb4pnNxvKA3COf05OX9yaL9jxmCeYgeN4Rez7ch//FEeXPb9Gz+cCOhGdqCbxOaaPyf60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710972345; c=relaxed/simple;
-	bh=PdfFqYZdxSeycYhSJK6Y5ObhSIdSURN1uLCi4/tpTRk=;
+	s=arc-20240116; t=1710972348; c=relaxed/simple;
+	bh=6+96b/5sUjjFsIAMFH1PO40G1FFuWL/jgT3XvZj3H/w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g2yTy8VY1P/zWxwoBHtIRGk7X2je+evJ6Vf6X4Eb5Y+OzCAquDhzygPddl8eVkNdIeiyPVlL5w8TNKzQju1OF/0srgnpXbApj9CXyn2IDLiX/O4yjBx42Lg8KFbEGxKNuQxdl/ZOUA4a6BfKmtGGulWtJFAPUgdWy9aTDU4SM/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=JYp1rIlQ; arc=none smtp.client-ip=209.85.222.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=Om+kUd7W3Nyv7RrEzQr8SijmXiJ4aPldp105vG8pIq7IH+te8oJInST5/hFeHIiQrTKhJW6/bn3qOwIN3BnZGUYfFzq9m87HbZxBOyspivsoYlENzBnQXxAYGwbrGAC4J83H4Yg5qfFgDvtt8VJCFQYR34O5ltNEmMara0keBVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=m1CjYVa7; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="JYp1rIlQ"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-78a26803f1aso23741485a.3
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 15:05:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="m1CjYVa7"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-789e209544eso20960585a.0
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 15:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1710972342; x=1711577142; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1710972345; x=1711577145; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0JFyZvkyvarvvwkoe9l/kl0kJb7pObru261GyhxLWwI=;
-        b=JYp1rIlQcU3sQWYp2zKZwzhnkU5kp3CAkPLkj3t10bjDTjmgg1pUXU2DKgAK5+l+ps
-         tNaEx14SceveIdhb4lmpftVlXS2TXjnCyPctFfb2AkHtdlaR7q15kH6XDxc64wzYBPAT
-         4U/ctfhE2WL0eOoFS8zZHBzFEG/bKppa0O0bZ3n6sha1ISYblGhxbUqn5kbWZwt/fnoN
-         GhFK6Y0yBZKC+A9JWAojMxq2FpY4pnYn5k8c106CEzgRLVntHWWnJ2+M5nvfhTFwkPGF
-         s2dNOV/f/awFNnzmOnL4TvZwqRnCf6O0lJ8OQOFXyz56NXsv5iddyn7sut5Xq/OngcOc
-         atGA==
+        bh=S6qVirMX4vU5terMRqnTxnGDczVXhtaoK5hQiSz628s=;
+        b=m1CjYVa7MEKQncNnav5Ej6fry8G0jaPCyM1eDYNRAIsJeF4ejQPCJwI2hmIB+NRDS9
+         B1+ottCyN8Jkz2k6YvzygQlXwSLMvE022Nvdf4Xcfa2osrT+6yJMMUA/n0vDbn6i0LLM
+         eA8cdYowVyDqpTYK3eDQBASizKmThTPIyMVzgSArOl80Z9ViDxnmyEu7vjugWjeoGtMm
+         yjSq07MLhvaH/U6eP89VtB5XSym3q2cztUrjp6CQvxQbrw7NbhPAxRGYrLEaoYK09+z7
+         gWRDY3kVXsYIJods5ppg2cjfk7Md/B0ygcdsCKQ/vGI/ziD97KM+hV+w6TnULOx85af3
+         6SIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710972342; x=1711577142;
+        d=1e100.net; s=20230601; t=1710972345; x=1711577145;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0JFyZvkyvarvvwkoe9l/kl0kJb7pObru261GyhxLWwI=;
-        b=noRbNjPU7tzYchW4iFhv0LU2mla1ofyOsQL50i/I5Hz+HTxa8VRmZoVFVPEhqe/KgV
-         qWoWjVIJf6jenAQE/fKxJVUIyb0WDL1HE5OkU7pj42aGU+tWqMX4aLgbyLOGgqkx9dJf
-         oOLIDWZD23xF5Q+WyJd36J5oWEU/y/6fLSyCzuOVUKTaMMjgXHWCl9oH0dMFXc8AU/w1
-         6zxbxrYhAgzatMpQ8jtmGoJFf/v4FVXT8Fy2D+SEgaEI5nBTEaNOkfkl8iGXyDOu1H6u
-         hmElIbPA652HmGrZL+qyFXkhYmU0BWxISQYMDiyfIbBadaunRrHPGIhuG2qiwh7G5llz
-         xcKQ==
-X-Gm-Message-State: AOJu0YyKK0jz92NQ8um8YgVOuRSwSfAzgADeY/p7anoPv4W1L/E5MG0s
-	apwFFNyyEayM06FcStjQ8ctLlusDSPU6GmMfOrPOfGMuK+N+HS3t0jLWOSlonZzv/b+Eb15HTR1
-	T0GE=
-X-Google-Smtp-Source: AGHT+IEeEUXaEMW1G6k8eULJzYPhy5QeWlUJ53/W6a+4NTxmYUb6l2TFs9PfYLIROqtXf/S16aF6Mw==
-X-Received: by 2002:a05:620a:20ca:b0:789:d0ca:82d1 with SMTP id f10-20020a05620a20ca00b00789d0ca82d1mr246393qka.35.1710972342256;
-        Wed, 20 Mar 2024 15:05:42 -0700 (PDT)
+        bh=S6qVirMX4vU5terMRqnTxnGDczVXhtaoK5hQiSz628s=;
+        b=lu38H82Rcm2FisS8mmHZwyVWLVSdXEywt6sAtw1R1YvA3ZCj5V/PqINfXb2nGdN6Gm
+         vG+NJfPYMAUcCR8Wmyi/BvrSUzjG1SQusV16bSMeCIUbrU3WG9pD2s4gLxyS5VlOc/t2
+         Rkbl3ztumDYf8a++bDr5+8E4oDD20wJNkgUDq5LaKcf3WgzfT1QcZ0At4Cl/oXPJpgOE
+         jN7Yfw7s+BM+Ubhhyd8jlxm2eNd4QzJShDIrNQH45LKNJCqHAJyC9evp8AEa1WbQM6Uo
+         h19JVPxpqRJIutpHLjbKCWxCZ/ZShDACIhPNdoHXHKm3/sWVshSILOECkxGehCXYmDgz
+         2kMg==
+X-Gm-Message-State: AOJu0YwPdo5K3QuMxCBHQLfGEVexT+aRDaTL4lkaIUS8khkwAYhDfpOd
+	m2I3BJpNjd52S9xTlE9uZMDt72QwnwgKEZqBGF9CD1THom+6ASU9GiuLJiTCCM4ieis6eptkCrb
+	PMg0=
+X-Google-Smtp-Source: AGHT+IFhqdAC8wLa61kYoXnrm4Eqzv+I1cqstzH4SIxLtrfr2kI89020iESMBMeWH/5bqzktcOygMg==
+X-Received: by 2002:a05:620a:5819:b0:789:ea36:c461 with SMTP id wm25-20020a05620a581900b00789ea36c461mr16148059qkn.74.1710972345339;
+        Wed, 20 Mar 2024 15:05:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c14-20020a37e10e000000b007883a49baeesm6945635qkm.4.2024.03.20.15.05.41
+        by smtp.gmail.com with ESMTPSA id z27-20020a05620a101b00b007887d30dbb7sm6901918qkj.60.2024.03.20.15.05.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Mar 2024 15:05:42 -0700 (PDT)
-Date: Wed, 20 Mar 2024 18:05:41 -0400
+        Wed, 20 Mar 2024 15:05:45 -0700 (PDT)
+Date: Wed, 20 Mar 2024 18:05:44 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 14/24] pseudo-merge: scaffolding for reads
-Message-ID: <7e4d051f37a42e9e44b13acfc60b42fbb2a891b5.1710972293.git.me@ttaylorr.com>
+Subject: [PATCH 15/24] pack-bitmap.c: read pseudo-merge extension
+Message-ID: <7bb644b2b0c3478c65e16c355be41127f32c9787.1710972293.git.me@ttaylorr.com>
 References: <cover.1710972293.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,128 +69,87 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1710972293.git.me@ttaylorr.com>
 
-Implement scaffolding within the new pseudo-merge compilation unit
-necessary to use the pseudo-merge API from within the pack-bitmap.c
-machinery.
+Now that the scaffolding for reading the pseudo-merge extension has been
+laid, teach the pack-bitmap machinery to read the pseudo-merge extension
+when present.
 
-The core of this scaffolding is two-fold:
+Note that pseudo-merges themselves are not yet used during traversal,
+this step will be taken by a future commit.
 
-  - The `pseudo_merge` structure itself, which represents an individual
-    pseudo-merge bitmap. It has fields for both bitmaps, as well as
-    metadata about its position within the memory-mapped region, and
-    a few extra bits indicating whether or not it is satisfied, and
-    which bitmaps(s, if any) have been read, since they are initialized
-    lazily.
-
-  - The `pseudo_merge_map` structure, which holds an array of
-    pseudo_merges, as well as a pointer to the memory-mapped region
-    containing the pseudo-merge serialization from within a .bitmap
-    file.
-
-Note that the `bitmap_index` structure is defined statically within the
-pack-bitmap.o compilation unit, so we can't take in a `struct
-bitmap_index *`. Instead, wrap the primary components necessary to read
-the pseudo-merges in this new structure to avoid exposing the
-implementation details of the `bitmap_index` structure.
+In the meantime, read the table and initialize the pseudo_merge_map
+structure introduced by a previous commit. When the pseudo-merge
+extension is present, `load_bitmap_header()` performs basic sanity
+checks to make sure that the table is well-formed.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pseudo-merge.c | 10 ++++++++
- pseudo-merge.h | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 75 insertions(+)
+ pack-bitmap.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/pseudo-merge.c b/pseudo-merge.c
-index caccef942a1..d18de0a266b 100644
---- a/pseudo-merge.c
-+++ b/pseudo-merge.c
-@@ -441,3 +441,13 @@ void select_pseudo_merges(struct string_list *list,
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index b3b6f9aad21..e0f191b7581 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -20,6 +20,7 @@
+ #include "list-objects-filter-options.h"
+ #include "midx.h"
+ #include "config.h"
++#include "pseudo-merge.h"
  
- 	stop_progress(&progress);
- }
-+
-+void free_pseudo_merge_map(struct pseudo_merge_map *pm)
-+{
-+	uint32_t i;
-+	for (i = 0; i < pm->nr; i++) {
-+		ewah_pool_free(pm->v[i].commits);
-+		ewah_pool_free(pm->v[i].bitmap);
-+	}
-+	free(pm->v);
-+}
-diff --git a/pseudo-merge.h b/pseudo-merge.h
-index 81888731864..2f652fc6767 100644
---- a/pseudo-merge.h
-+++ b/pseudo-merge.h
-@@ -99,4 +99,69 @@ void select_pseudo_merges(struct string_list *list,
- 			  uint32_t *pseudo_merges_nr,
- 			  unsigned show_progress);
+ /*
+  * An entry on the bitmap index, representing the bitmap for a given
+@@ -86,6 +87,9 @@ struct bitmap_index {
+ 	 */
+ 	unsigned char *table_lookup;
  
-+/*
-+ * Represents a serialized view of a file containing pseudo-merge(s)
-+ * (see Documentation/technical/bitmap-format.txt for a specification
-+ * of the format).
-+ */
-+struct pseudo_merge_map {
-+	/*
-+	 * An array of pseudo-merge(s), lazily loaded from the .bitmap
-+	 * file.
-+	 */
-+	struct pseudo_merge *v;
-+	size_t nr;
-+	size_t commits_nr;
++	/* This contains the pseudo-merge cache within 'map' (if found). */
++	struct pseudo_merge_map pseudo_merges;
 +
-+	/*
-+	 * Pointers into a memory-mapped view of the .bitmap file:
-+	 *
-+	 *   - map: the beginning of the .bitmap file
-+	 *   - commits: the beginning of the pseudo-merge commit index
-+	 *   - map_size: the size of the .bitmap file
-+	 */
-+	const unsigned char *map;
-+	const unsigned char *commits;
+ 	/*
+ 	 * Extended index.
+ 	 *
+@@ -205,6 +209,41 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 				index->table_lookup = (void *)(index_end - table_size);
+ 			index_end -= table_size;
+ 		}
 +
-+	size_t map_size;
-+};
++		if (flags & BITMAP_OPT_PSEUDO_MERGES) {
++			unsigned char *pseudo_merge_ofs;
++			size_t table_size;
++			uint32_t i;
 +
-+/*
-+ * An individual pseudo-merge, storing a pair of lazily-loaded
-+ * bitmaps:
-+ *
-+ *  - commits: the set of commit(s) that are part of the pseudo-merge
-+ *  - bitmap: the set of object(s) reachable from the above set of
-+ *    commits.
-+ *
-+ * The `at` and `bitmap_at` fields are used to store the locations of
-+ * each of the above bitmaps in the .bitmap file.
-+ */
-+struct pseudo_merge {
-+	struct ewah_bitmap *commits;
-+	struct ewah_bitmap *bitmap;
++			if (sizeof(table_size) > index_end - index->map - header_size)
++				return error(_("corrupted bitmap index file (too short to fit pseudo-merge table header)"));
 +
-+	off_t at;
-+	off_t bitmap_at;
++			table_size = get_be64(index_end - 8);
++			if (table_size > index_end - index->map - header_size)
++				return error(_("corrupted bitmap index file (too short to fit pseudo-merge table)"));
 +
-+	/*
-+	 * `satisfied` indicates whether the given pseudo-merge has been
-+	 * used.
-+	 *
-+	 * `loaded_commits` and `loaded_bitmap` indicate whether the
-+	 * respective bitmaps have been loaded and read from the
-+	 * .bitmap file.
-+	 */
-+	unsigned satisfied : 1,
-+		 loaded_commits : 1,
-+		 loaded_bitmap : 1;
-+};
++			if (git_env_bool("GIT_TEST_USE_PSEUDO_MERGES", 1)) {
++				const unsigned char *ext = (index_end - table_size);
 +
-+/*
-+ * Frees the given pseudo-merge map, releasing any memory held by (a)
-+ * parsed EWAH bitmaps, or (b) the array of pseudo-merges itself. Does
-+ * not free the memory-mapped view of the .bitmap file.
-+ */
-+void free_pseudo_merge_map(struct pseudo_merge_map *pm);
++				index->pseudo_merges.map = index->map;
++				index->pseudo_merges.map_size = index->map_size;
++				index->pseudo_merges.commits = ext + get_be64(index_end - 16);
++				index->pseudo_merges.commits_nr = get_be32(index_end - 20);
++				index->pseudo_merges.nr = get_be32(index_end - 24);
 +
- #endif
++				CALLOC_ARRAY(index->pseudo_merges.v,
++					     index->pseudo_merges.nr);
++
++				pseudo_merge_ofs = index_end - 24 -
++					(index->pseudo_merges.nr * sizeof(uint64_t));
++				for (i = 0; i < index->pseudo_merges.nr; i++) {
++					index->pseudo_merges.v[i].at = get_be64(pseudo_merge_ofs);
++					pseudo_merge_ofs += sizeof(uint64_t);
++				}
++			}
++
++			index_end -= table_size;
++		}
+ 	}
+ 
+ 	index->entry_count = ntohl(header->entry_count);
 -- 
 2.44.0.303.g1dc5e5b124c
 
