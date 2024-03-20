@@ -1,21 +1,21 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D00885951
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFCD85947
 	for <git@vger.kernel.org>; Wed, 20 Mar 2024 21:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710968938; cv=none; b=rUYHk1aP7d6oe3sZNPzjP0XoZOUMniZ6QaxisSu/5/EA2jv5alVR984D1TFDfbvw0r2K1bPO2tDlxD3OFAcN4FP/Nj17zWQeHFdqJHvzz3fclcoDx5Vrp47ynQ1TsN12TWLnIdVHSMTtFifwF6F2/iAAIa+5iNBG9X18j36m3Fo=
+	t=1710968938; cv=none; b=ktVjWpqR3KUkurnhYWpo7cOhBXiYirkH9zg/Uj/40nX0hpFdRru78VeQs/6YAN0KqetcdIaR+hRXX2hmrNqcq2WUPZ63OC3Md0n3J6eH1f78S2JwOsR0yisv0zKy3Ljmk7ALh8KZwKcpgHtKQzKAP2TiLd7YHpQn91Kpnv/Ragw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1710968938; c=relaxed/simple;
-	bh=6yS4gHRTRJZo82fQSZ+NBYhW/q1CCFop/qCYOFB/qLM=;
+	bh=ldNOCgKAz7SYzP1y3ibPhkg/AnUpIagIJIAM9BbLx1Y=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rlTe2Y45tk3Ujwu4t5ic8W757v3i7Rlpl9yY8lxr4WB4iZDlXOdAKhP3RZFwUahnYs8/7bcFBSTXWCvZ5UPhGjQTs8wj4nXbLQ/SBsM9S6Pp6e22gTOeJAVzvbH8H3LUUbIMMczxNUNUlMJaenTkFk2nRan5pDbS9KTYFPhfuV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=l9H7Zapv; arc=none smtp.client-ip=116.203.91.91
+	 MIME-Version; b=GEEFXY2EYP+qJ8AkFsc/9a/MBN3rnKLWeI2N2W/GeUbOQ1EH/hSLdr6+p+QEtwsXqhWcYAHsdkUst1HLDgUaVC98Wj4J/6AEQBNby6O8BZfEpV7bXptSYUW0jeBIcFbCwuaenxWQBZH0xe6F/9Uuhq8DMWWp8jTdBXaB+ZuOhsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=FymHkjUC; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="l9H7Zapv"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="FymHkjUC"
 From: Dragan Simic <dsimic@manjaro.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
 	t=1710968932;
@@ -23,18 +23,18 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=FY3dKOHZ3HYNbNExnCLrBFqzW6OY9W/fId9jhOM3uKk=;
-	b=l9H7ZapvTxwpOfM+hHxh9E96RdIDZce4jpAq7Gv2qhDZoksaSHOTQuzyvhIaaSECOkwIJM
-	8M4u2dghjq8528fFAVJzLqonKY1J8lsFlBkcS3g8orowb1Nn+LyAnsFYD2UXJT640CrB6/
-	YsA7o05kZRD+yyheVa+xOc5udRRG2pm0B+Q2qP9gH/6jnCPCjoWeE4iRmA0aF+UOuzPSSv
-	Dy/r2ecwppUmKROgbDUSl0ghdP1/xQ6WEGT/5Q2S0dQdGzs+Ju3tXPJf/vyD6aCB1VK9uW
-	D2/vXMm9IApU793ebRIf/FMrFBdOU7yPdF+PM6TkXsunhVWsdAIksMft1HGr+Q==
+	bh=MV7wFHmYZ+9N/CAQ4I6z8LpBlI61nz9WblxsO5zSdCY=;
+	b=FymHkjUCGcXvu9ygFHvVW4XfbctSXpD70M/mTe9yoB3893oYW4PRJxRk/+QKEH1r+RlRnf
+	4//iG67cCiFeQ2nZ1YJeJXH5aBp7taW7R4atsYlQb9VUn6DKX95AYFzVwMVzFsivb4wAEo
+	4FmIxuATbNAFWxAIcvntX6gZkvTVWyL7HmokeL4fFLcICB0g6LGrIdUhWSwfQUElijnJ1v
+	/7WbHkNhX91LUs7BTySGi7YMFPdmFfvOy9v8R5oU/wK3FY/tRWFH5lZLM4DFMcmqg7Zajv
+	SZXnVw2XxXeoRYhZGcN7fGzIchFLRKr5jfs8geVEcV8jDPlFjbz/YBu7pdcmXg==
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	sunshine@sunshineco.com
-Subject: [PATCH 1/3] grep: perform some minor code and comment cleanups
-Date: Wed, 20 Mar 2024 22:08:44 +0100
-Message-Id: <6cf18d2cd76a9caf2ca2a782030cafb3e9432e84.1710968761.git.dsimic@manjaro.org>
+Subject: [PATCH 3/3] grep docs: describe --no-index further and improve formatting a bit
+Date: Wed, 20 Mar 2024 22:08:46 +0100
+Message-Id: <264643a638fd1ee9970f96e7aa4914c37e30b3d2.1710968761.git.dsimic@manjaro.org>
 In-Reply-To: <cover.1710968761.git.dsimic@manjaro.org>
 References: <cover.1710968761.git.dsimic@manjaro.org>
 Precedence: bulk
@@ -47,9 +47,20 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Move some variable definitions around, and reflow one comment block, to
-make the code a bit neater after spotting those slightly unpolished areas.
-There are no functional changes to the source code.
+Improve the description of --no-index, to make a bit more clear what this
+option actually does under the hood, and how it is meant to be used.  Describe
+the dependency between --no-index and either of the --cached and --untracked
+options, which cannot be used together.
+
+As part of that, shuffle a couple of the options, to make the documentation
+flow a bit better;  it makes more sense to describe first the options that
+have something in common, and to after that describe an option that has some
+dependency on the already described options.
+
+While there, improve the descriptions of grep worker threads a bit, to give
+them better context.  Adjust the language a bit, to avoid addressing the
+reader, and perform some minor formatting improvements, to make it clear
+it's the git commands, command parameters, and configuration option names.
 
 Signed-off-by: Dragan Simic <dsimic@manjaro.org>
 ---
@@ -59,72 +70,78 @@ Notes:
     concluded to be not acceptable for merging, because of possible issues
     with various git scripts. [2]
     
-    Compared to the previous version, there are no changes in this version.
-    As expected and as already discussed, patches like this one inevitably
-    raise a few eyebrows. [3][4][5]
+    Compared to the previous version, this version continues the effort to
+    improve the description of --no-index, by also incorporating the possible
+    improvements pointed out by Junio. [3]  This version also improves the
+    wording of some related descriptions, mainly related to grep.threads,
+    and performs some additional small formatting improvements.
     
     [1] https://lore.kernel.org/git/cover.1710781235.git.dsimic@manjaro.org/T/#u
     [2] https://lore.kernel.org/git/d8475579f014a90b27efaf6207bc6fb0@manjaro.org/
-    [3] https://lore.kernel.org/git/CAPig+cQ6Y2oOaPkKFsD41beXLHjhD++nmf59xrcswpb6_Q-sdA@mail.gmail.com/
-    [4] https://lore.kernel.org/git/xmqqjzlzt61d.fsf@gitster.g/#t
-    [5] https://lore.kernel.org/git/24093dca675c49cfde39f6d6efca2342@manjaro.org/
+    [3] https://lore.kernel.org/git/xmqqwmpzrqfv.fsf@gitster.g/
 
- builtin/grep.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ Documentation/git-grep.txt | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 982bcfc4b1df..af89c8b5cb19 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -623,13 +623,13 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		     struct tree_desc *tree, struct strbuf *base, int tn_len,
- 		     int check_attr)
- {
--	struct repository *repo = opt->repo;
--	int hit = 0;
-+	int hit = 0, name_base_len = 0;
-+	int old_baselen = base->len;
- 	enum interesting match = entry_not_interesting;
-+	struct repository *repo = opt->repo;
- 	struct name_entry entry;
--	int old_baselen = base->len;
- 	struct strbuf name = STRBUF_INIT;
--	int name_base_len = 0;
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index f64f40e9775a..b144401b3698 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -28,7 +28,7 @@ SYNOPSIS
+ 	   [-f <file>] [-e] <pattern>
+ 	   [--and|--or|--not|(|)|-e <pattern>...]
+ 	   [--recurse-submodules] [--parent-basename <basename>]
+-	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
++	   [ [--[no-]exclude-standard] [--cached | --untracked | --no-index] | <tree>...]
+ 	   [--] [<pathspec>...]
+ 
+ DESCRIPTION
+@@ -45,13 +45,20 @@ OPTIONS
+ 	Instead of searching tracked files in the working tree, search
+ 	blobs registered in the index file.
+ 
+---no-index::
+-	Search files in the current directory that is not managed by Git.
+-
+ --untracked::
+ 	In addition to searching in the tracked files in the working
+ 	tree, search also in untracked files.
+ 
++--no-index::
++	Search files in the current directory that is not managed by Git,
++	or by ignoring that the current directory is managed by Git.  This
++	allows `git-grep(1)` to be used as the regular `grep(1)` utility,
++	with the additional benefits, such as using multiple worker threads
++	to speed up searches.
+++
++This option cannot be used together with `--cached` or `--untracked`.
++See also `grep.fallbackToNoIndex` in 'CONFIGURATION' below.
 +
- 	if (repo->submodule_prefix) {
- 		strbuf_addstr(&name, repo->submodule_prefix);
- 		name_base_len = name.len;
-@@ -890,19 +890,15 @@ static int pattern_callback(const struct option *opt, const char *arg,
+ --no-exclude-standard::
+ 	Also search in ignored files by not honoring the `.gitignore`
+ 	mechanism. Only useful with `--untracked`.
+@@ -248,8 +255,9 @@ providing this option will cause it to die.
+ 	a non-zero status.
  
- int cmd_grep(int argc, const char **argv, const char *prefix)
- {
--	int hit = 0;
-+	int hit = 0, seen_dashdash = 0, use_index = 1;
- 	int cached = 0, untracked = 0, opt_exclude = -1;
--	int seen_dashdash = 0;
- 	int external_grep_allowed__ignored;
-+	int i, dummy, allow_revs;
- 	const char *show_in_pager = NULL, *default_pager = "dummy";
- 	struct grep_opt opt;
- 	struct object_array list = OBJECT_ARRAY_INIT;
- 	struct pathspec pathspec;
- 	struct string_list path_list = STRING_LIST_INIT_DUP;
--	int i;
--	int dummy;
--	int use_index = 1;
--	int allow_revs;
+ --threads <num>::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in 'CONFIGURATION' for more information.
++	Number of `grep` worker threads to use, to speed up searches.
++	See 'NOTES ON THREADS' and `grep.threads` in 'CONFIGURATION'
++	for more information.
  
- 	struct option options[] = {
- 		OPT_BOOL(0, "cached", &cached,
-@@ -1059,9 +1055,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		recurse_submodules = 0;
+ -f <file>::
+ 	Read patterns from <file>, one per line.
+@@ -336,9 +344,9 @@ The `--threads` option (and the `grep.threads` configuration) will be ignored wh
+ `--open-files-in-pager` is used, forcing a single-threaded execution.
  
- 	/*
--	 * skip a -- separator; we know it cannot be
--	 * separating revisions from pathnames if
--	 * we haven't even had any patterns yet
-+	 * skip a -- separator; we know it cannot be separating revisions
-+	 * from pathnames if we haven't even had any patterns yet
- 	 */
- 	if (argc > 0 && !opt.pattern_list && !strcmp(argv[0], "--")) {
- 		argv++;
+ When grepping the object store (with `--cached` or giving tree objects), running
+-with multiple threads might perform slower than single threaded if `--textconv`
+-is given and there are too many text conversions. So if you experience low
+-performance in this case, it might be desirable to use `--threads=1`.
++with multiple threads might perform slower than single-threaded if `--textconv`
++is given and there are too many text conversions.  Thus, if low performance is
++experienced in this case, it might be desirable to use `--threads=1`.
+ 
+ CONFIGURATION
+ -------------
