@@ -1,104 +1,72 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B5623770
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 07:23:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5F4364BE
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 08:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710919434; cv=none; b=NsS5I+gD1GwKHiwLJLhMQWd4hSpi3wG5rFuPiOd9wEXUQeFJhrn28PY3ZFxl7udgDTU3r1uH2S2zl2sz1fv3j2rqbcWm1/ynJ7SULiIFkMtQWgqt0rYWcgUnl7+3LyDKnUbYDKjEevD9kd3NqvVmU5/BZot497/oMeuFR0JJPO4=
+	t=1710921620; cv=none; b=JUQuXGI3ivQGXLwS1licy3wZmFxztiJHw3tzOqa0onOAOGFko9SJ2380PY0C3SxIyzMki7BejoJnwCGgf53THT5PWiZOufSbyyxh2MaNHuoMuFGa7S7gfOJd2E1jFGd/9YHCQCePLCh/bWaQtWHE4FdVxsMjX6w0WnsRk2IiKB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710919434; c=relaxed/simple;
-	bh=E9mRc9/f3PwuQ/HqVUIUHCAxUySepmmTpuJ/x23s3kU=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=EQYx4/uzNFrV4ACvFxoP6Vc83hCt+HyFJb0l9dqtJ1072Zyyplh4NtlGAbExCAEt6SWt/VeMn8ea+mkYPCIDVvK1NvUn6akF5LH0j5xjN4M2kv0EqWl+ZPcroWB/inVBhQRcwJ3GRs6eCUce5c1TFY1kRFSYNXVtzD9Qd7K0UX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=BPa99ezt; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710921620; c=relaxed/simple;
+	bh=/FNRoSS+uxKrJosvuRSRVe2Cw+yrHpVI374SoUJDmUU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=HU60EPrYEZdZU4sqWdBMrrcZWjbBcMrXb38pAHxfhHyYRh0JTE3X+kIQUwdLn5HYZd5p0wQ6yladf+sIp6Wt1HSzLXQus376j0TQ+XHb6kfe5ZrLcs1CXhWL+puvviLlhoeHmXPtoFPfDeSODQklKquilLSgq0sAxmE69YmEWTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nDlWicRm; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="BPa99ezt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nDlWicRm"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a3ddc13bbb3so112715066b.0
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 01:00:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710921616; x=1711526416; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/FNRoSS+uxKrJosvuRSRVe2Cw+yrHpVI374SoUJDmUU=;
+        b=nDlWicRmFsrpaxd3hObx4Mrfoa/2yEk9M1C55OqblQKcO5TostXISDLsP6pEiN+MIU
+         E246EDmd54fHEfsBja7BziFb4EGUO8xnABnSO2/rrKaENoCqQeF0q+yyTMrFBCGsd9dh
+         eZRBa21csjljwW2gtGM7EwyaT/3aLGsaOggse60zbeYxBGFJcek3R8gsPgyXSW1tBrA5
+         hfQfnjqTl3nouQt8M/KZJfPuNTeY91V43FOufp577mbqm6yDF9NZelk5ca3Bd7yUCZSv
+         zn/CgLqn3pqOaNnJs5iJANwKdCk4ReK3deCQnE/BqeqdNO3dddydOg0pTxHUpdL7w6+B
+         9tfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710921616; x=1711526416;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/FNRoSS+uxKrJosvuRSRVe2Cw+yrHpVI374SoUJDmUU=;
+        b=asFcjlfYmLk6/Frc1Q0hcQMVQnPvdDQ2DYVhfUG2T/ai7rKAKdqevOOHbBNxOgHRdn
+         nPL/UGZekvsDB8goHC5pxjuhOqFCZaa+O5Xnk4Alt9nZTv7zyLtU3MR98OcZw8jtJs2M
+         f10Ki71qMBp7BLLNmcYoLHRWfpxnNQ3yq0b3btLdCOeVnGg2lyxryWpzbo40iSD2qwwO
+         vZEDpuWkrllcHfW28xJMKxgYlQ6nEu/YVuMPItXVXvdejFZHlYSha6C8MGuE6dU8Bx/I
+         Q7hnRVxGCg0m4KEPQttMDacRsXkritPE1NG8c+IAKO9yLfeBx7QILR0517xsGCGTatRx
+         g2Yw==
+X-Gm-Message-State: AOJu0Yww3/Dyx/mTcZ5YIpJE8kRT+zmJSi1ixbe3U0LxHfXXZ8h1JIP0
+	b5I1bI+7ZDcSKrVp2U1lEKiCqzR6Ip627vYwYJJ5xXk3JEQZF8HP8nZKpwMEumDn8I748se7Zwo
+	htb9EopUvuidiLCszl2vypsZaZ+VcuGon/6s=
+X-Google-Smtp-Source: AGHT+IElblKx4BzFa6G3YUHuK6UptyFl7c9Az0C6j9NuGDzsL7v8LGcDdd/T6Bvsfha2kcG4e18wLInazfkj+8BcxO8=
+X-Received: by 2002:a17:906:c7d4:b0:a46:dd1f:7dc6 with SMTP id
+ dc20-20020a170906c7d400b00a46dd1f7dc6mr4076475ejb.24.1710921616076; Wed, 20
+ Mar 2024 01:00:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710919429;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=36kdfa6smvbG+uIPx+HQzAvt/aSv9q59Zph95kG8p1g=;
-	b=BPa99ezt7nHe2/Z5/x2zGH4OpcrNJ2FJ8htXr9LoR01nyLQ0YHgsauN3DpZVtumvAc5S81
-	i7bnhKIXMfh1f5grALjAfn2cvBg509/9PqaNgrqLmj1lIJuadW97IKEvZ18LR2oqYRSEWJ
-	IS+5WE303G3SdNBCOpZc1wDp4L1Dj8a0HfVDGsePIBYOlzezvPa+M1MJENc2bW6yoCjbvv
-	FlWNjDgjpdh2dJf+Z5/iaOGOvBkoDbduvVfoXOreH4lM/SQli4LK4IIu3InMCO0kuIhCJ8
-	O2xM+Gx9wvmCjsnvhzIbOBGpiyU+UHvtEEuBTE33nK/X/pN2rCgLC4c9xNLmGg==
-Date: Wed, 20 Mar 2024 08:23:48 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, rsbecker@nexbridge.com, github@seichter.de,
- sunshine@sunshineco.com
-Subject: Re: [PATCH v3 4/4] config.txt: describe handling of whitespace
- further
-In-Reply-To: <xmqqttl1js1o.fsf@gitster.g>
-References: <cover.1710800549.git.dsimic@manjaro.org>
- <e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
- <xmqqttl1js1o.fsf@gitster.g>
-Message-ID: <c4f0e7311edce5d4ed4a55f290de9eaf@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+From: Matt Hickford <matt.hickford@gmail.com>
+Date: Wed, 20 Mar 2024 08:00:00 +0000
+Message-ID: <CAGJzqsmy9RcWJeFLkZjCrrhv_y5q_R3yYUMhcyafY3jOUJFxOg@mail.gmail.com>
+Subject: Feature request: highlight local worktree in `worktree list`
+To: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-03-20 08:12, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->>  A line that defines a value can be continued to the next line by
->> +ending it with a `\`; the backslash and the end-of-line are stripped.
->> +Leading whitespace characters after 'name =', the remainder of the
->>  line after the first comment character '#' or ';', and trailing
->> +whitespace characters of the line are discarded unless they are 
->> enclosed
->> +in double quotes.
-> 
-> Can we directly tighten the "trailing..." part, instead of having to
-> add an extra long sentence ...
+Hi. `git branch` lists branches. It highlights the current branch with
+an asterisk and (for me) the colour green. This is handy for quick
+reading.
 
-Makes sense, to make it less convoluted.
+`git worktree list` lists worktrees. It would be neat to highlight the
+local worktree.
 
->> +The discarding of the trailing whitespace characters
->> +applies regardless of the discarding of the portion of the line after
->> +the first comment character.
-> 
-> ... like this as an attempt to clarify?
-> 
->     Leading whitespace characters before and after 'name =', and the
-
-Hmm, "leading whitespace" and "after" don't go very well together.
-Such a construct seems a bit confusing, because it implies there's
-something else after, which the leading whitespace refers to, which
-may or may not be easily understandable to the users.
-
-I'll think about how to rephrase this a bit better.
-
->     remainder of the line after the first comment character '#' or
->     ';', are removed, and then trailing whitespace characters at the
->     end of the line are discarded.
-> 
-> By the way, if a run of whitespace characters are enclosed in double
-> quotes, they cannot be trailing at the end of the line, as the
-> closing double quote is not a whitespace character, so it is out of
-> place to talk about quoted string in the context of trailing blank
-> removal.  The unquoting would want to be discussed separately.
-
-I'll think about this as well.
-
->>  Inside double quotes, double quote `"` and backslash `\` characters
->>  must be escaped: use `\"` for `"` and `\\` for `\`.
-> 
-> Thanks for working on this topic.
-
-Thank you for your highly detailed reviews!
+Another idea: `git branch -v` shows the commit subject and
+ahead/behind counts for each branch, eg. "[ahead 1, behind 1] avoid
+RegexReplace". It would be neat for `git worktree list -v` (or
+similar) to show the commit subject and ahead/behind counts.
