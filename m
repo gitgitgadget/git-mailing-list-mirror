@@ -1,147 +1,120 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFCD85947
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 21:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D00933062
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 21:50:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710968938; cv=none; b=ktVjWpqR3KUkurnhYWpo7cOhBXiYirkH9zg/Uj/40nX0hpFdRru78VeQs/6YAN0KqetcdIaR+hRXX2hmrNqcq2WUPZ63OC3Md0n3J6eH1f78S2JwOsR0yisv0zKy3Ljmk7ALh8KZwKcpgHtKQzKAP2TiLd7YHpQn91Kpnv/Ragw=
+	t=1710971448; cv=none; b=RAVVx6D82QozsCv+eCoqZIl7enWUyU3v480NYd4ETUiYq5L10NfvC8wJ/p82JQrwH4kdr7ucxd3gqZiC2E4NSU5H1a2+EZ+XGI2iJgFjxBfLqnKCYiI0GxM9aGStU2F4kHY1LQXYNpd/PtEt5AC+t/4LOBAJEYDKrCm+l8oTnl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710968938; c=relaxed/simple;
-	bh=ldNOCgKAz7SYzP1y3ibPhkg/AnUpIagIJIAM9BbLx1Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GEEFXY2EYP+qJ8AkFsc/9a/MBN3rnKLWeI2N2W/GeUbOQ1EH/hSLdr6+p+QEtwsXqhWcYAHsdkUst1HLDgUaVC98Wj4J/6AEQBNby6O8BZfEpV7bXptSYUW0jeBIcFbCwuaenxWQBZH0xe6F/9Uuhq8DMWWp8jTdBXaB+ZuOhsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=FymHkjUC; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1710971448; c=relaxed/simple;
+	bh=lW2UzR/mvsVYIPQ+eItDxfLwREXW6Kg1vVi0rzC3y2k=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=prYe9Mgv2HTD+75tr61HzgTyC+0qTv41vKk1jSH6xu7R/xaAexMZ9YdD9Wyq7I9JZvxulXnudgND1h6qGiPIoMj/NAUNd4Af5ryYqfd7e+HDQgVONjaDQmdQX3qZdh46PY8MKFoUotUe3CqNQgftzkXrJ8eA/olwogki8gE7NFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=etZ8hewZ; arc=none smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="FymHkjUC"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1710968932;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MV7wFHmYZ+9N/CAQ4I6z8LpBlI61nz9WblxsO5zSdCY=;
-	b=FymHkjUCGcXvu9ygFHvVW4XfbctSXpD70M/mTe9yoB3893oYW4PRJxRk/+QKEH1r+RlRnf
-	4//iG67cCiFeQ2nZ1YJeJXH5aBp7taW7R4atsYlQb9VUn6DKX95AYFzVwMVzFsivb4wAEo
-	4FmIxuATbNAFWxAIcvntX6gZkvTVWyL7HmokeL4fFLcICB0g6LGrIdUhWSwfQUElijnJ1v
-	/7WbHkNhX91LUs7BTySGi7YMFPdmFfvOy9v8R5oU/wK3FY/tRWFH5lZLM4DFMcmqg7Zajv
-	SZXnVw2XxXeoRYhZGcN7fGzIchFLRKr5jfs8geVEcV8jDPlFjbz/YBu7pdcmXg==
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	sunshine@sunshineco.com
-Subject: [PATCH 3/3] grep docs: describe --no-index further and improve formatting a bit
-Date: Wed, 20 Mar 2024 22:08:46 +0100
-Message-Id: <264643a638fd1ee9970f96e7aa4914c37e30b3d2.1710968761.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1710968761.git.dsimic@manjaro.org>
-References: <cover.1710968761.git.dsimic@manjaro.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etZ8hewZ"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6e696ee8fa3so719323a34.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 14:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710971445; x=1711576245; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6719OMYU7VRqgFec92KiSxo2NFDRT8EgbQ6litn+IYQ=;
+        b=etZ8hewZmzBtSBmS73n5Z1T7fjqC9uStSkCDNrloimCs3V0uXrQJcSe0XeeJWwfnqb
+         vdywk4u+ipCQOMa8U3c5JmpLc7qi7K3MXCpZxolDRdp/yKP1uoKLAZ6GClP79OQ/PCqw
+         0DPIb8NT50U6IoNcFCc+qbntqe9MPLb+OU7PUCFy3gYPHXglClVeF9gpR1oY9qrYpbSk
+         SD1I3/5RH6mXSE1EGDZY5Obeawx4QNHGXLyU7hsPtDlMWzpuBOH8YgcAY+ZV2DxtVvy5
+         0U/nE83atmukPizT53Hfldy+WqSbTizkwEtIiXzXWktV7gqq1WTUQZ8GzWkwRRm5reIN
+         lOVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710971445; x=1711576245;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6719OMYU7VRqgFec92KiSxo2NFDRT8EgbQ6litn+IYQ=;
+        b=WqXpKpPnK0rBFJogjDkNpSf4yOyXyRQY8JwCZOkVmQ2v28gSiSMNBYFTKJzNVQcivQ
+         rxd8/LI0S8dVKB+10QYrLTl4FkUK061O71SAMBdVvyWgYaMhTz5wXen6Ha/syTDRcQ+A
+         gr/943mM767eGDlJeoWq/UCNheJ8I4SY+lMaHBB8Sz6maj6Nyt13Y4N4+zRBOS78Owbn
+         yl1OAAUCQ6EGLKFX3d+ROg6u4Rr5xFFliHiuSQndWLiyfZm/m4nY6CGoFzz2AAtb9xq4
+         djtWqOlppuKlQ21fNCFwkKO0Qc4wlCkt5NWvPTtWLRHxVzy17Ljejax9L/FgZHd7b+4P
+         GtvA==
+X-Forwarded-Encrypted: i=1; AJvYcCUsFiUcjCLg6ozWQChggOGiDBpXFddXcBG+AV7Fe29YBHzLAqE5AJDDU9qMAEDv5X5mbt5+c7NBIUjylcke0qo2mb8W
+X-Gm-Message-State: AOJu0Yy4vb5OBQTJmOslsf+/5OMrcqlAyW+evUspEI5gA98lV6c1rn8H
+	3UtUXb1iAaq3GuWymmjO8778BykqVnloAwqxFeRMehPoCrqns1z/rBV/zzrWqbzDnpJP+6paEg9
+	UeBO2Av4P+5A1Amf2TP847vEkU5H703W4KaGd0A==
+X-Google-Smtp-Source: AGHT+IFoCvy0kHQFnlNvlocA5hoapH5HQOE+XRVCgxL3dHan6hZij2BHYEd8Klctr+F+bFgQBow/H3GcQQqkIXKfwJk=
+X-Received: by 2002:a05:6870:3926:b0:221:7fc2:94df with SMTP id
+ b38-20020a056870392600b002217fc294dfmr417129oap.3.1710971444902; Wed, 20 Mar
+ 2024 14:50:44 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 20 Mar 2024 14:50:43 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <1e39d93a45db502280ecff383d53e0294f969719.1710706118.git.ps@pks.im>
+References: <cover.1710706118.git.ps@pks.im> <1e39d93a45db502280ecff383d53e0294f969719.1710706118.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Date: Wed, 20 Mar 2024 14:50:43 -0700
+Message-ID: <CAOLa=ZQ5wFCqWZ4yjMzUg5Yz1UeVpwUap0z9Lx9EfRVKnzHttQ@mail.gmail.com>
+Subject: Re: [PATCH 01/15] reftable/stack: fix error handling in `reftable_stack_init_addition()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000031d74f06141e95ca"
 
-Improve the description of --no-index, to make a bit more clear what this
-option actually does under the hood, and how it is meant to be used.  Describe
-the dependency between --no-index and either of the --cached and --untracked
-options, which cannot be used together.
+--00000000000031d74f06141e95ca
+Content-Type: text/plain; charset="UTF-8"
 
-As part of that, shuffle a couple of the options, to make the documentation
-flow a bit better;  it makes more sense to describe first the options that
-have something in common, and to after that describe an option that has some
-dependency on the already described options.
+Patrick Steinhardt <ps@pks.im> writes:
 
-While there, improve the descriptions of grep worker threads a bit, to give
-them better context.  Adjust the language a bit, to avoid addressing the
-reader, and perform some minor formatting improvements, to make it clear
-it's the git commands, command parameters, and configuration option names.
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 1ecf1b9751..92d9a7facb 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -590,8 +590,7 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
+>  	err = stack_uptodate(st);
+>  	if (err < 0)
+>  		goto done;
+> -
+> -	if (err > 1) {
+> +	if (err > 0) {
+>  		err = REFTABLE_LOCK_ERROR;
+>  		goto done;
+>  	}
+> @@ -713,10 +712,6 @@ static int stack_try_add(struct reftable_stack *st,
+>  	int err = reftable_stack_init_addition(&add, st);
+>  	if (err < 0)
+>  		goto done;
+> -	if (err > 0) {
+> -		err = REFTABLE_LOCK_ERROR;
+> -		goto done;
+> -	}
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
+This changes the behavior though, since now we skip the `goto done`. It
+would be best to change the previous line to `if (err)`, which is what
+the other function (`reftable_stack_new_addition`) does.
 
-Notes:
-    This patch is salvaged from my earlier series, [1] for which it has been
-    concluded to be not acceptable for merging, because of possible issues
-    with various git scripts. [2]
-    
-    Compared to the previous version, this version continues the effort to
-    improve the description of --no-index, by also incorporating the possible
-    improvements pointed out by Junio. [3]  This version also improves the
-    wording of some related descriptions, mainly related to grep.threads,
-    and performs some additional small formatting improvements.
-    
-    [1] https://lore.kernel.org/git/cover.1710781235.git.dsimic@manjaro.org/T/#u
-    [2] https://lore.kernel.org/git/d8475579f014a90b27efaf6207bc6fb0@manjaro.org/
-    [3] https://lore.kernel.org/git/xmqqwmpzrqfv.fsf@gitster.g/
+--00000000000031d74f06141e95ca
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 547e05088620266b_0.1
 
- Documentation/git-grep.txt | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index f64f40e9775a..b144401b3698 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -28,7 +28,7 @@ SYNOPSIS
- 	   [-f <file>] [-e] <pattern>
- 	   [--and|--or|--not|(|)|-e <pattern>...]
- 	   [--recurse-submodules] [--parent-basename <basename>]
--	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
-+	   [ [--[no-]exclude-standard] [--cached | --untracked | --no-index] | <tree>...]
- 	   [--] [<pathspec>...]
- 
- DESCRIPTION
-@@ -45,13 +45,20 @@ OPTIONS
- 	Instead of searching tracked files in the working tree, search
- 	blobs registered in the index file.
- 
----no-index::
--	Search files in the current directory that is not managed by Git.
--
- --untracked::
- 	In addition to searching in the tracked files in the working
- 	tree, search also in untracked files.
- 
-+--no-index::
-+	Search files in the current directory that is not managed by Git,
-+	or by ignoring that the current directory is managed by Git.  This
-+	allows `git-grep(1)` to be used as the regular `grep(1)` utility,
-+	with the additional benefits, such as using multiple worker threads
-+	to speed up searches.
-++
-+This option cannot be used together with `--cached` or `--untracked`.
-+See also `grep.fallbackToNoIndex` in 'CONFIGURATION' below.
-+
- --no-exclude-standard::
- 	Also search in ignored files by not honoring the `.gitignore`
- 	mechanism. Only useful with `--untracked`.
-@@ -248,8 +255,9 @@ providing this option will cause it to die.
- 	a non-zero status.
- 
- --threads <num>::
--	Number of grep worker threads to use.
--	See `grep.threads` in 'CONFIGURATION' for more information.
-+	Number of `grep` worker threads to use, to speed up searches.
-+	See 'NOTES ON THREADS' and `grep.threads` in 'CONFIGURATION'
-+	for more information.
- 
- -f <file>::
- 	Read patterns from <file>, one per line.
-@@ -336,9 +344,9 @@ The `--threads` option (and the `grep.threads` configuration) will be ignored wh
- `--open-files-in-pager` is used, forcing a single-threaded execution.
- 
- When grepping the object store (with `--cached` or giving tree objects), running
--with multiple threads might perform slower than single threaded if `--textconv`
--is given and there are too many text conversions. So if you experience low
--performance in this case, it might be desirable to use `--threads=1`.
-+with multiple threads might perform slower than single-threaded if `--textconv`
-+is given and there are too many text conversions.  Thus, if low performance is
-+experienced in this case, it might be desirable to use `--threads=1`.
- 
- CONFIGURATION
- -------------
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1YN1dpMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mdzM4Qy8wZldvRllrRDZvMlJxUUt4OU5ZeDdDMmx6VAowZlpERkhuRDhp
+QXhCb1QzQ1ZrWENMbEgyNEkrT2h1Y29yYlpDWVVjeGV6TnhXS2Rwek94SEpjeitiNjFWWVVzCi94
+TGlTOHB6dXZjS0tweWN6V3AzdEprZ1JaN0xoL0cxVHUwQWU1ZGdWTlRwZlNVaXNTdUo0Mm5zclNr
+WUtJRm8KbXMwWEMxRE1vNnJXQlBkbWVCZ256Qkc0aUhRem9CazN5VlAzOVFFWXIvS0VSMmN3OXhL
+YVpJS0toTE15eENGWgoxWGNRaWRrd1RmdWc2dlZrRHIxaXUzRnFSOHFIMlp3azZyZUxROWkzeXRJ
+a0NTa2M5cUNxdFd1a0FCcUJqMlhPCjJpZFJnZjFnWUxWUmROakQwMDRJamZMaWlDelQyeklBUFBV
+a0dwNmVwcHFZTXhGdzJlRVdqSTJPQWF4d1dKZ1YKT1hLd2gzeGdQcVc3UDNiVHMwdTJkakRmaWs2
+T3RnTDRjdVV6TkF6VSs5LzBPckxNS0o4cVhobGQvbkRObnBwSwpMTm5VUzFZWHdLcllSQldKSEtt
+c0lPMXZGdWJJU3JVOHgyVCt6WGt1RWRVQ1h6MUtubDNualB3TVFHbWxlTFJRCkVqNkJ0Z1hUUmo1
+S3VWV1ZsWUMzbEFZTHFtbDBZeUo0ODBxR3JJTT0KPWtQTEwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000031d74f06141e95ca--
