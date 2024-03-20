@@ -1,131 +1,86 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CC37464
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 00:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6FE12B7D
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 02:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710895397; cv=none; b=QBKGfq3gvsLu6yXvbfOdjst5ZyipNwXdNqZObtGZZ8c2tG/qGLINAS0NBcRZpsVXJs/863v1ssDFKMUl+NijAOGfqjEGgE9qfA6DPowkft2TMpzoFzRyIGZp+8UFfWJBdv3s9Yrc/Tx+mhT/TUUh/g/SjXjCvkNWW0gZi1IqqdI=
+	t=1710902984; cv=none; b=ZGdEGX99mgalwIGhBoI0xdCukkOVsiYr/7kB+KuYrxi5WQVvQ4krKpJlAPpQt76fcQQJcJEbftRpybK583gyUAHWeDe6TwnQq0L7nspe+cY8RhrkHDYM2KX5N5na/eFfxJwjd80f7LRgqP+PIgJQdT5BawYGGrsH4+7x27J8CRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710895397; c=relaxed/simple;
-	bh=FkpEUruk8k8sYzB0QKDo1VhH/w9Lm26oXuFgL256Vqg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cBzWClk9Pu/9hmgVmVv7DbgGBAoJnj6uGC4IHHNI1E9Yy0SvGNbD2GbfqTFEkIlGK4436etG3ArSKgxG3tqSgEnKXbK0bLx5T4mpf7uPO/U/7bMiu6cviVGmShxqmpDq/y86OXCnbAvF5+HKjnxK88B8o1tr1BzJHJPxwkfA97k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 5712 invoked by uid 109); 20 Mar 2024 00:43:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Mar 2024 00:43:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13490 invoked by uid 111); 20 Mar 2024 00:43:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Mar 2024 20:43:18 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 19 Mar 2024 20:43:14 -0400
-From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] revision: add a per-email field to rev-info
-Message-ID: <20240320004314.GA907161@coredump.intra.peff.net>
-References: <cover.1709841147.git.code@khaugsbakk.name>
- <cover.1710873210.git.code@khaugsbakk.name>
- <9a7102b708e4afe78447e48e4baf5b6d66ca50d1.1710873210.git.code@khaugsbakk.name>
- <20240319212940.GE1159535@coredump.intra.peff.net>
- <20240320002555.GB903718@coredump.intra.peff.net>
+	s=arc-20240116; t=1710902984; c=relaxed/simple;
+	bh=2c0jf7zHW2gyf0Ru/c2Txno/qxygu+dWp0YAGz40rPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mGmf4WDLiSFWrX/FxhbgLPPpKktyYGDv7rvPEsO/Hfv+TO/glsO/KpgcgkHiSbuINEnsmmXeloi2O+XPQy7qz97yG27hpWjBnng2Ob04J/ojsMZm9h1dbX0SzhGrRV8pZatSn5odxankviAUI35ZfVM5WTbgHAE0nRxNguwoApE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcc84ae94c1so5680619276.1
+        for <git@vger.kernel.org>; Tue, 19 Mar 2024 19:49:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710902981; x=1711507781;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2c0jf7zHW2gyf0Ru/c2Txno/qxygu+dWp0YAGz40rPc=;
+        b=UFkiVQLZQxcOv1/7I/w5DcngnJaVPXTrDzgS3R95aSSuJYkFeufotFGZTJpGamokpb
+         WnZykqotjGD3Xa9nUjyLIW2sLYxb0OslE8BEofEtGoSfRGtOHPCodRw1bvkgT2RnGJWM
+         cJ8R+DFGj4yvzuFu5a1Zx/XLz/btjvS5YVohqn/1UDrRAoUdPW+VH45ZLreA4s3Uib9j
+         d1c8ULFv+eM2Z3NVOG3UmE0W3dQSd9AHy3QyWqtMMGSU0RKmcpMSQB17x1qItLgkgpHr
+         u+7okIWpcwpfVaryk1qf3mGMYrYVPd7fvGRDJ366PuUUUf07NlztfZ8rRgnOJQ3CVHTv
+         K0/g==
+X-Forwarded-Encrypted: i=1; AJvYcCUvSStXbAg/02UYqYKbA0aqnMPIex/UkfLDUz/Q4grVUs3NfHXzMLTgm6rxyiYGW1lR4Ce/Ar2q99EljazSYhCjoSVG
+X-Gm-Message-State: AOJu0Yy/OBfkSA2GYgiUPgEfCyI5fw+VBYRtHLwptpUf3L5TrjFY7BSE
+	U21AzL+gYU0BZ5kItn1PxzOVOuZlipdFuO2HG7b0mDb5jJB0jfoIzT0vpb45IV5UhFdXP+YcV9h
+	O+g6mzf1TYILlzuuXftOhyn+J8vQ=
+X-Google-Smtp-Source: AGHT+IHMaIccn33pyMjt9YqngeZLiYZRXJyql/7blWG9oZK3TdOCViuwD1cdgY+rMGvbkjFy973wkt/gS2oyrbBCoB0=
+X-Received: by 2002:a25:a2cb:0:b0:dcf:bc57:cd61 with SMTP id
+ c11-20020a25a2cb000000b00dcfbc57cd61mr15091606ybn.50.1710902981582; Tue, 19
+ Mar 2024 19:49:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240320002555.GB903718@coredump.intra.peff.net>
+References: <20240309181828.45496-1-ignacio@iencinas.com> <20240319183722.211300-1-ignacio@iencinas.com>
+ <CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>
+ <xmqqa5mulycz.fsf@gitster.g> <CAPig+cTFRAmzBGiJv2F-k1XWvGSbT8UeAG57T+XpB-1w66HRkQ@mail.gmail.com>
+ <20240320001934.GA903718@coredump.intra.peff.net>
+In-Reply-To: <20240320001934.GA903718@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 19 Mar 2024 22:49:30 -0400
+Message-ID: <CAPig+cT9QxRZhZyZV=Txt1VfqzDZX=gDbXvFg1nO=rjeMFaBeQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Add hostname condition to includeIf
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Ignacio Encinas <ignacio@iencinas.com>, git@vger.kernel.org, 
+	Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 19, 2024 at 08:25:55PM -0400, Jeff King wrote:
+On Tue, Mar 19, 2024 at 8:19=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 19, 2024 at 05:13:47PM -0400, Eric Sunshine wrote:
+> > The other possibility which came to mind was adding a GIT_HOSTNAME
+> > variable to the output of `git var -l`.
+>
+> That strikes me as a more appropriate spot than an option to git-config.
+> Even if config is the only thing _now_ which cares about the hostname,
+> it may be something that other parts of the system care about in the
+> future.
 
-> Having now stared at this code for a bit, I do think there's another,
-> much simpler option for your series: keep the same ugly static-strbuf
-> allocation pattern in log_write_email_headers(), but extend it further.
-> I'll show that in a moment, too.
+Also, taking into consideration Patrick's proposed revamp[1] of
+git-config to give it a subcommand API, then git-config becomes an
+even less welcome place for a standalone --show-hostname option which,
+by itself, doesn't really fit into the subcommand paradigm, and it
+probably doesn't make sense to add a new subcommand ("info" or
+whatever) just for that.
 
-So something like this:
+[1]: https://lore.kernel.org/git/cover.1710198711.git.ps@pks.im/T/#u
 
-diff --git a/log-tree.c b/log-tree.c
-index e5438b029d..ae0f4fc502 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -474,12 +474,21 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			     int *need_8bit_cte_p,
- 			     int maybe_multipart)
- {
--	const char *extra_headers = opt->extra_headers;
-+	static struct strbuf headers = STRBUF_INIT;
- 	const char *name = oid_to_hex(opt->zero_commit ?
- 				      null_oid() : &commit->object.oid);
- 
- 	*need_8bit_cte_p = 0; /* unknown */
- 
-+	strbuf_reset(&headers);
-+	if (opt->extra_headers)
-+		strbuf_addstr(&headers, opt->extra_headers);
-+	/*
-+	 * here's where you'd do your pe_headers; I wonder if you could even
-+	 * just run the header command directly here and not need to shove the
-+	 * string into rev_info?
-+	 */
-+
- 	fprintf(opt->diffopt.file, "From %s Mon Sep 17 00:00:00 2001\n", name);
- 	graph_show_oneline(opt->graph);
- 	if (opt->message_id) {
-@@ -496,16 +505,13 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 		graph_show_oneline(opt->graph);
- 	}
- 	if (opt->mime_boundary && maybe_multipart) {
--		static struct strbuf subject_buffer = STRBUF_INIT;
- 		static struct strbuf buffer = STRBUF_INIT;
- 		struct strbuf filename =  STRBUF_INIT;
- 		*need_8bit_cte_p = -1; /* NEVER */
- 
--		strbuf_reset(&subject_buffer);
- 		strbuf_reset(&buffer);
- 
--		strbuf_addf(&subject_buffer,
--			 "%s"
-+		strbuf_addf(&headers,
- 			 "MIME-Version: 1.0\n"
- 			 "Content-Type: multipart/mixed;"
- 			 " boundary=\"%s%s\"\n"
-@@ -516,10 +522,8 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			 "Content-Type: text/plain; "
- 			 "charset=UTF-8; format=fixed\n"
- 			 "Content-Transfer-Encoding: 8bit\n\n",
--			 extra_headers ? extra_headers : "",
- 			 mime_boundary_leader, opt->mime_boundary,
- 			 mime_boundary_leader, opt->mime_boundary);
--		extra_headers = subject_buffer.buf;
- 
- 		if (opt->numbered_files)
- 			strbuf_addf(&filename, "%d", opt->nr);
-@@ -539,7 +543,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 		opt->diffopt.stat_sep = buffer.buf;
- 		strbuf_release(&filename);
- 	}
--	*extra_headers_p = extra_headers;
-+	*extra_headers_p = headers.len ? headers.buf : NULL;
- }
- 
- static void show_sig_lines(struct rev_info *opt, int status, const char *bol)
+> Some care may need to be taken for error handling, though. For "git var
+> GIT_HOSTNAME" it is OK to exit non-zero, but "git var -l" should not
+> bail on a system where gethostname() doesn't work (it is still not clear
+> to me if that is a real case to worry about or not).
 
-And then the callers can continue not caring about how or when to free
-the returned pointer. I think in the long run the cleanups I showed are
-a nicer place to end up, but I'd just worry that your feature work will
-be held hostage by my desire to clean. ;)
-
-If you did it this way (probably as a separate preparatory patch minus
-the pe_headers comment), then either I could do my cleanups on top, or
-they could even graduate independently (though obviously there will be a
-little bit of tricky merging at the end).
-
--Peff
+Ports to oddball platforms should probably be providing a
+gethostname() in "compat/" anyhow, just as is done for Windows in
+"compat/mingw.c".
