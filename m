@@ -1,34 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E53B78B
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 09:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83003BB23
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 09:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710927464; cv=none; b=iDLTkoiba2vRBDafrkuegEFBVQpF+r9vLVBjo0K9dWcCbucZcxN4ErntqAK64QdYDWBJGHlYjN15nFGPCsrGRxUvfZQ6N2Zh67LcDtK2ru2I5NP/8+bHbr/Rs2IVsVnT6JeCfGpkNAOOoMWolCBPDYAagoVW5defSyu1Yoq67NQ=
+	t=1710927666; cv=none; b=lyQMbkMfdMHr57M3HTxn1HrcQD2oFDFcZ185QYyfVOdY7egXDXmVjDsApl7TCfX3Cm+lQiorwZ6OGQHQKFptoZeCLXs0RiJfPqIJNl3YlQtI23e1SRAhso+IS/7iy7xF/b14xy6zekpTZ34aZnUFBkb6NhqFxcT55mr/mTi2UMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710927464; c=relaxed/simple;
-	bh=i7pRuGe87StRsm712YwBq02qI/7d1zAPVVMZIe3sL5Y=;
+	s=arc-20240116; t=1710927666; c=relaxed/simple;
+	bh=aF58tSV6+9yZE/Rdug4TDNEWdOuIK2S176d+LcfrBUY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ec/8F9v9CJLDM7UjeGlqNf+i+ukgbf8P3CLwq0jPgt8K6imp/NOadyeh6jFBiLGy+mQBN329WgmlyuBLZzKlyomE8YBjUjzxzwfAaimK1kh7XewKRQJQ4pV9Tnbl86WJwdnmv//RFYFT75wyHTxpc17+eDNov+UIpYhjgxQr75E=
+	 Content-Type:Content-Disposition:In-Reply-To; b=KsFsph/0k8Agv+NhB+RtxW32c7ewhA1m8L3f3uPSmqx4jJMzs/DiwCd73FDGfHkK+yUxoP9QXaL2fGgYMPltvnOvEqq1SkbdxxVceKQRCoHugnjFDgWAt7K1WH7sH8WWecKL05kIcp4pLH5YU7w6g8jQyV9dmp0lg/ck63KEd/M=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11200 invoked by uid 109); 20 Mar 2024 09:37:41 -0000
+Received: (qmail 11211 invoked by uid 109); 20 Mar 2024 09:41:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Mar 2024 09:37:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Mar 2024 09:41:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16800 invoked by uid 111); 20 Mar 2024 09:37:45 -0000
+Received: (qmail 16830 invoked by uid 111); 20 Mar 2024 09:41:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Mar 2024 05:37:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Mar 2024 05:41:08 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 20 Mar 2024 05:37:40 -0400
+Date: Wed, 20 Mar 2024 05:41:03 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	"Eric W. Biederman" <ebiederm@gmail.com>
-Subject: [PATCH 2/3] transport-helper: drop "object-format <algo>" option
-Message-ID: <20240320093740.GB2445682@coredump.intra.peff.net>
+Subject: [PATCH 3/3] transport-helper: send "true" value for object-format
+ option
+Message-ID: <20240320094103.GC2445682@coredump.intra.peff.net>
 References: <20240320093226.GA2445531@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -40,110 +41,110 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240320093226.GA2445531@coredump.intra.peff.net>
 
-The documentation in gitremote-helpers.txt claims that helpers should
-accept an object-format option from Git whose value is either:
+The documentation in gitremote-helpers.txt claims that after a helper
+has advertised the "object-format" capability, Git may then send "option
+object-format true" to indicate that it would like to hear which object
+format the helper is using when it returns refs.
 
-  1. "true", in which case the helper is merely told that Git
-     understands the special ":object-format" response, and will send it
+However, the code implementing this has always written just "option
+object-format", without the extra "true" value. Nobody noticed in
+practice or in the tests because the only two helpers we ship are:
 
-  2. an algorithm name that the helper should use
+  - remote-curl, which quietly converts missing values into "true". This
+    goes all the way back to ef08ef9ea0 (remote-helpers: Support custom
+    transport options, 2009-10-30), despite the fact that I don't think
+    any other option has ever made use of it.
 
-However, Git has never sent the second form, and it's not clear if it
-would ever be useful.
+  - remote-testgit in t5801 does insist on having a "true" value. But
+    since it sends the ":object-format" response regardless of whether
+    it thinks the caller asked for it (technically breaking protocol),
+    everything just works, albeit with an extra shell error:
 
-When interacting with a remote Git repository, we generally discover
-what _their_ object format is, and then decide what to do with a
-mismatch (where that is currently just "bail out", but could eventually
-be on-the-fly conversion and interop). And that is true for native
-protocols, but also for transport helpers like remote-curl that talk to
-remote Git repositories.  There we send back an ":object-format" line
-telling Git what remote-curl detected on the other side.
+      .../git/t/t5801/git-remote-testgit: 150: test: =: unexpected operator
 
-And this is true even for pushes (since we get it via receive-pack's
-advertisement). And it is even true for dumb-http, as we guess at the
-algorithm based on the hash size, due to ac093d0790 (remote-curl: detect
-algorithm for dumb HTTP by size, 2020-06-19).
+    printed to stderr, which you can see running t5801 with --verbose.
+    (The problem is that $val is the empty string, and since we don't
+    double-quote it in "test $val = true", we invoke "test = true"
+    instead).
 
-The one case where it _isn't_ true is dumb-http talking to an empty
-repository. There we have no clue what the remote hash is, so
-remote-curl just sends back its default. If we kept the "object-format
-<algo>" form then in theory Git could say "object-format sha256" to
-change that default. But it doesn't really accomplish anything. We still
-may or may not be mis-matched with the other side. For a fetch that's
-OK, since it's by definition a noop. For a push into an empty
-repository, it might matter (though the dumb http-push DAV code seems
-happy to clobber a remote sha256 info/refs and corrupt the repository).
-If we want to pursue making this work, I think we'd be better off
-improving detection of the object format of empty repositories over
-dumb-http (e.g., an "info/object-format" file).
+When the documentation and code do not match, it is often good to fix
+the documentation rather than break compatibility. And in this case, we
+have had the mis-match since 8b85ee4f47 (transport-helper: implement
+object-format extensions, 2020-05-25). However, the sha256 feature was
+listed as experimental until 8e42eb0e9a (doc: sha256 is no longer
+experimental, 2023-07-31).
 
-But what about helpers that _aren't_ talking to another Git repo?
-Consider something like git-cinnabar, which is converting on the fly
-to/from hg. Most of the heavy lifting is done by fast-import/export, but
-some oids may still pass between Git and the helper. Could
-"object-format <algo>" be useful to tell the helper what oids we expect
-to see?
+It's possible there are some third party helpers that tried to follow
+the documentation, and are broken. Changing the code will fix them. It's
+also possible that there are ones that follow the code and will be
+broken if we change it. I suspect neither is the case given that no
+helper authors have brought this up as an issue (I only noticed it
+because I was running t5801 in verbose mode for other reasons and
+wondered about the weird shell error). That, coupled with the relative
+new-ness of sha256, makes me think nobody has really worked on helpers
+for it yet, which gives us an opportunity to correct the code before too
+much time passes.
 
-Possibly, but in practice this isn't necessary. Git-cinnabar for example
-already peeks at the local-repo .git/config to check its object-format
-(and currently just bails if it is sha256).
+And doing so has some value: it brings "object-format" in line with the
+syntax of other options, making the protocol more consistent. It also
+lets us use set_helper_option(), which has better error reporting.
 
-So I think the "object-format" extension really is only useful for the
-helper telling Git what object-format it found, and not the other way
-around.
+Note that we don't really need to allow any other values like "false"
+here. The point is for Git to tell the helper that it understands
+":object-format" lines coming back as part of the ref listing. There's
+no point in future versions saying "no, I don't understand that".
 
-Note that this patch can't break any remote helpers; we're not changing
-the code on the Git side at all, but just bringing the documentation in
-line with what Git has always done. It does remove the receiving support
-in remote-curl.c, but that code was never actually triggered.
+To make sure everything works as expected, we can improve the
+remote-testgit helper from t5801 to send the ":object-format" line only
+if the other side correctly asked for it (which modern Git will always
+do). With that test change and without the matching code fix here, t5801
+will fail when run with GIT_TEST_DEFAULT_HASH=sha256.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/gitremote-helpers.txt | 7 ++-----
- remote-curl.c                       | 9 ++-------
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ t/t5801/git-remote-testgit | 4 +++-
+ transport-helper.c         | 7 ++-----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 07c8439a6f..0d3f4f37c2 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -542,13 +542,10 @@ set by Git if the remote helper has the 'option' capability.
- 	transaction.  If successful, all refs will be updated, or none will.  If the
- 	remote side does not support this capability, the push will fail.
+diff --git a/t/t5801/git-remote-testgit b/t/t5801/git-remote-testgit
+index bcfb358c51..c5b10f5775 100755
+--- a/t/t5801/git-remote-testgit
++++ b/t/t5801/git-remote-testgit
+@@ -30,6 +30,7 @@ GIT_DIR="$url/.git"
+ export GIT_DIR
  
--'option object-format' {'true'|algorithm}::
--	If 'true', indicate that the caller wants hash algorithm information
-+'option object-format true'::
-+	Indicate that the caller wants hash algorithm information
- 	to be passed back from the remote.  This mode is used when fetching
- 	refs.
--+
--If set to an algorithm, indicate that the caller wants to interact with
--the remote side using that algorithm.
+ force=
++object_format=
  
- SEE ALSO
- --------
-diff --git a/remote-curl.c b/remote-curl.c
-index 1161dc7fed..31b02b8840 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -211,14 +211,9 @@ static int set_option(const char *name, const char *value)
- 		options.filter = xstrdup(value);
- 		return 0;
- 	} else if (!strcmp(name, "object-format")) {
--		int algo;
- 		options.object_format = 1;
--		if (strcmp(value, "true")) {
--			algo = hash_algo_by_name(value);
--			if (algo == GIT_HASH_UNKNOWN)
--				die("unknown object format '%s'", value);
--			options.hash_algo = &hash_algos[algo];
--		}
-+		if (strcmp(value, "true"))
-+			die(_("unknown value for object-format: %s"), value);
- 		return 0;
- 	} else {
- 		return 1 /* unsupported */;
+ mkdir -p "$dir"
+ 
+@@ -61,7 +62,8 @@ do
+ 		echo
+ 		;;
+ 	list)
+-		echo ":object-format $(git rev-parse --show-object-format=storage)"
++		test -n "$object_format" &&
++			echo ":object-format $(git rev-parse --show-object-format=storage)"
+ 		git for-each-ref --format='? %(refname)' 'refs/heads/' 'refs/tags/'
+ 		head=$(git symbolic-ref HEAD)
+ 		echo "@$head HEAD"
+diff --git a/transport-helper.c b/transport-helper.c
+index 7f6bbd06bb..8d284b24d5 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1210,11 +1210,8 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 	data->get_refs_list_called = 1;
+ 	helper = get_helper(transport);
+ 
+-	if (data->object_format) {
+-		write_constant(helper->in, "option object-format\n");
+-		if (recvline(data, &buf) || strcmp(buf.buf, "ok"))
+-			exit(128);
+-	}
++	if (data->object_format)
++		set_helper_option(transport, "object-format", "true");
+ 
+ 	if (data->push && for_push)
+ 		write_constant(helper->in, "list for-push\n");
 -- 
 2.44.0.650.g4615f65fe0
-
