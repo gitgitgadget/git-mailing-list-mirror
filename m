@@ -1,67 +1,66 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C334886255
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 23:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F108613F
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 23:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710977960; cv=none; b=cQjmTPylmgWWMaBdzUcARa5zQbNVyJN8DTqryQExMoYbMCEDECeEiUU1rfQv2y7yQICSUZoTaSiJsiSts6g61jM3RL1luBIoRuMr4/V/LvbVIwbr+0FJ2PuGFLGLHFYVJQKwXAHLYUg/D0sicDV7Fd1ayvIvrTNyf0xO+ZflWaI=
+	t=1710977961; cv=none; b=IwM4aqfCRLzkfnFMI67UbuUwS5Joc2DSNQXPJSwCqFEyPguNXA7nqiRL7NA80/319unyRHIP8IygBXDlm5ijqbyrkSseQzIuU1FCSSAcBRSSPN/6EfuYrbfSjZzXUIQshP0dMdNDT81jrj4owLiegX5I5ZpPRPuAoKws7knGoYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710977960; c=relaxed/simple;
-	bh=oNu/hPOdGS7b+rHZwIzTRLKnDEvzAB3TCLMGbOKKRv8=;
+	s=arc-20240116; t=1710977961; c=relaxed/simple;
+	bh=KNaPKvmdBshX5hFe92IAta1D0x75ADuM6czHijEQRto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1SLZB0iOGvHw+tCCcyrDM2aYDiLynTScsQzt6vx4Sk5yZq8l9HpI97FDp+rQtOIB80GOdDEZjEYm6CRzdwVEIj4aD2FgFWTtUN8FyMPOc+kkxQF0J9GKMPQro6YTIbUGblyh3w6B9BB4ZD2cZQV0SG9+lw7KCLJfm3NJRMyOoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=npEnjFBW; arc=none smtp.client-ip=209.85.222.169
+	 MIME-Version; b=nnZ/foKJukf2C5SXLyj0RdS++qoMVlhXjgjRITohoH4DXhTPIy7m7p7vO15qb3v7Jcop9WpPyrAnD3hZVoUZGhcJ3CMwOqyAvC5NUpke7KCx5Jdahzee1a4zGBDQlejW/RlugOou8lxw1dqT4oNAD9TsSAEci76EnUQPV2eE7s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cYMQVKVa; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npEnjFBW"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-78850ab4075so18743685a.1
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 16:39:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cYMQVKVa"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-78a16114b69so45185385a.0
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 16:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710977957; x=1711582757; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710977958; x=1711582758; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IJVwRAzmp+d9Tnz6YseAaK2s9JICFyBMdLB4S0pQyqI=;
-        b=npEnjFBW7hQ6aE5KoFKWsyVSVyJxzjJQQKCwHygXpAmDd/CjHWGf5upLI8Tu9mLpZh
-         lIk857JGHKNvFofa7+wQFPQe83xYdWhWLx4ji93ObBJE1PrZzbctc4sc8xlrE7/omQ4A
-         ZGNMKekhJCNBjF+WhJykr/0k0XbDnUo8cGVbr5SmF7S34iWZ7qb7xu0L2WhIZACtrPTz
-         b8XYY+pltjC0N2k7yiEdjm2ppm/fGUDYM8tYRzv11CSsF4eLR20TLnoouTIZN8+COUDQ
-         C1TGHbPlj50vMCpUn5sHGuiXre5rAyPGx5jZMLBoIRHnHW1tGRb/L5Mti/ZnohHC/TAx
-         cFYg==
+        bh=WR5+S3hJ6zjSmrEffBraeCyJManzdF4Am+lGe5uct0U=;
+        b=cYMQVKVakj0J3tXNKieCDfEWbapVOD8us/7PW0rcp3KSDVpTRMZZOk+HuIFJc0NNn0
+         sSMoWFTgz3XdeO2m72R6tjS5ykKJh+8aBarZgkucKvrKaNylm4QNLHH9q8XNrOyYBt77
+         8hn9DLSLtjx3yaylVsnLf0XdF/lknjElXKbtEn04ge0F1KKnJg8CMg1suyhs6HOLTiBy
+         cElNmO75/wZLimty+FgdDuTPsDg5ptZIJxAC9LRcBnNU/NThWyOSXdTohfZBkAOezFE9
+         14HiEgaXt+2Iq46pzmROVY2lho+fvzOg0gHBnbTb3oHQi21Kt25V9IR3MJ8f47MpAPng
+         8OBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710977957; x=1711582757;
+        d=1e100.net; s=20230601; t=1710977958; x=1711582758;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IJVwRAzmp+d9Tnz6YseAaK2s9JICFyBMdLB4S0pQyqI=;
-        b=sza5YbVWv44wbCvMZ3zLMsCsVosHE2ldljvl7g4kmDDq9xX2nlny9RF3qYWXZY8U9S
-         fxOf5TT7asG9HdbyFLnJA1+n56Ba5tiksS7fgGUmfF6SyYULEix2Sp99Igf7LbweKlXc
-         DwJlJQpqDVSna3Hrn4UmIzb0Ayao54lhh3EhPM1N+eixsIOPCPWySVIlrNeKXb6DGLH5
-         awTe7/z8EvuCRTbX1gEE98CiSWGhdVtjhIjjVddWdegvHuoF8LPl4slLkW1UcLf8KtAl
-         lO24Iv5TfkQXICZ4othYMvH8GHl2Y0YiH8hL4BhWGwhuIsrc9POZJbtemkyiEL0GW1pq
-         EsRQ==
-X-Gm-Message-State: AOJu0YyZRAHUpjkPEgiOpjLfJrq2pKVFIvgqUqlpLAFdXUO6EYcwT6tY
-	Nhv2d0uSENffb/TuH4XX1tw/04Vp3wAN/vPQC9LQE97wAXnNQH8TgDvfj0LXBO8=
-X-Google-Smtp-Source: AGHT+IEZ8jXCQlzzYQt02ItCBH5a/yxKmkmSdQCxDaXanP09eWvDfNbqoNPpoZG5knw/2PBLkiMrFQ==
-X-Received: by 2002:a05:620a:21c4:b0:78a:280c:219 with SMTP id h4-20020a05620a21c400b0078a280c0219mr2495701qka.38.1710977957022;
-        Wed, 20 Mar 2024 16:39:17 -0700 (PDT)
+        bh=WR5+S3hJ6zjSmrEffBraeCyJManzdF4Am+lGe5uct0U=;
+        b=nZW89goZw+QA9A6z+O3zHFKeZVzL7xrNxQV/9W7iWehyY2PxjsSUapt7oVJWTUpRH8
+         pwKrX1EvSs3XLw773ab6b0UIIPbiNVIwQHNMs8UpsiOmPmyZRIxZ/UoWFeiDPurA/zfd
+         5/WuLuBwVH5QAufbUMzUKyVoCoxahfVJWEBKx+g3m7qmKBaoGOu2SbZCdBWr/lLB7XeM
+         HYI09kAU+jAf4ZHrZZTthTItQUV24XtVG58qQiR1oTJFW8Wud75hm9wpSVNLfr12MPCW
+         Vd7sllCto2uAJYnE94wuuul/oWc4RY5j5gUudJOx7PgUqZNd3B/FbnaSDwm2m9NEeDll
+         ACtA==
+X-Gm-Message-State: AOJu0YxE2VCiz1X0aXPeT+bxUmmLQv1l0IZZ+/IG2/dEFGvv1JT0ovsu
+	3Iz0iQmb1q4i1WzFCY7WdXC+lS3prpaaYYZ4rzSxRMYrLmG9pDYPrgxcfPvI2Rg=
+X-Google-Smtp-Source: AGHT+IF5KtN+C4Q/xnBAMoWHVrWaBiUSsFhH4rY93+E0mb/nw8ykr0QLoJg9GBldA6pg0QVT83CwWA==
+X-Received: by 2002:a05:620a:880f:b0:78a:2fee:3bcf with SMTP id qj15-20020a05620a880f00b0078a2fee3bcfmr158942qkn.29.1710977958330;
+        Wed, 20 Mar 2024 16:39:18 -0700 (PDT)
 Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
-        by smtp.gmail.com with ESMTPSA id v18-20020a05620a123200b0078a0edbaa94sm2400867qkj.91.2024.03.20.16.39.15
+        by smtp.gmail.com with ESMTPSA id v18-20020a05620a123200b0078a0edbaa94sm2400867qkj.91.2024.03.20.16.39.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Mar 2024 16:39:16 -0700 (PDT)
+        Wed, 20 Mar 2024 16:39:17 -0700 (PDT)
 From: Brian Lyles <brianmlyles@gmail.com>
 To: git@vger.kernel.org
 Cc: Brian Lyles <brianmlyles@gmail.com>,
 	newren@gmail.com,
 	me@ttaylorr.com,
 	phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 4/7] sequencer: handle unborn branch with `--allow-empty`
-Date: Wed, 20 Mar 2024 18:36:59 -0500
-Message-ID: <20240320233724.214369-5-brianmlyles@gmail.com>
+	gitster@pobox.com
+Subject: [PATCH v4 5/7] sequencer: do not require `allow_empty` for redundant commit options
+Date: Wed, 20 Mar 2024 18:37:00 -0500
+Message-ID: <20240320233724.214369-6-brianmlyles@gmail.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
 References: <20240119060721.3734775-2-brianmlyles@gmail.com>
@@ -73,127 +72,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When using git-cherry-pick(1) with `--allow-empty` while on an unborn
-branch, an error is thrown. This is inconsistent with the same
-cherry-pick when `--allow-empty` is not specified.
+A consumer of the sequencer that wishes to take advantage of either the
+`keep_redundant_commits` or `drop_redundant_commits` feature must also
+specify `allow_empty`. However, these refer to two distinct types of
+empty commits:
 
-Detect unborn branches in `is_index_unchanged`. When on an unborn
-branch, use the `empty_tree` as the tree to compare against.
+- `allow_empty` refers specifically to commits which start empty
+- `keep_redundant_commits` refers specifically to commits that do not
+  start empty, but become empty due to the content already existing in
+  the target history
 
-Add a new test to cover this scenario. While modelled off of the
-existing 'cherry-pick on unborn branch' test, some improvements can be
-made:
+Conceptually, there is no reason that the behavior for handling one of
+these should be entangled with the other. It is particularly unintuitive
+to require `allow_empty` in order for `drop_redundant_commits` to have
+an effect: in order to prevent redundant commits automatically,
+initially-empty commits would need to be kept automatically as well.
 
-- Use `git switch --orphan unborn` instead of `git checkout --orphan
-  unborn` to avoid the need for a separate `rm -rf *` call
-- Avoid using `--quiet` in the `git diff` call to make debugging easier
-  in the event of a failure. Use simply `--exit-code` instead.
+Instead, rewrite the `allow_empty()` logic to remove the over-arching
+requirement that `allow_empty` be specified in order to reach any of the
+keep/drop behaviors. Only if the commit was originally empty will
+`allow_empty` have an effect.
 
-Make these improvements to the existing test as well as the new test.
+Note that no behavioral changes should result from this commit -- it
+merely sets the stage for future commits. In one such future commit, an
+`--empty` option will be added to git-cherry-pick(1), meaning that
+`drop_redundant_commits` will be used by that command.
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
 ---
-
-Changes from v3:
-
-- More robustly validate that we are on an unborn branch, rather than
-  assuming that an error while reading the HEAD implies an unborn branch
-- Replace `--quiet` with `--exit-code` in the tests rather than just
-  removing `--quiet`, to ensure that the test still fails appropriately
-  if any differences are found.
-
- sequencer.c                   | 39 ++++++++++++++++++++++-------------
- t/t3501-revert-cherry-pick.sh | 14 ++++++++++---
- 2 files changed, 36 insertions(+), 17 deletions(-)
+ sequencer.c | 23 +++++++----------------
+ 1 file changed, 7 insertions(+), 16 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index f49a871ac0..f31d71ebad 100644
+index f31d71ebad..b8d8f15e65 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -770,29 +770,40 @@ static struct object_id *get_cache_tree_oid(struct index_state *istate)
- static int is_index_unchanged(struct repository *r)
- {
- 	struct object_id head_oid, *cache_tree_oid;
-+	const struct object_id *head_tree_oid;
- 	struct commit *head_commit;
- 	struct index_state *istate = r->index;
-+	const char *head_name;
+@@ -1730,34 +1730,25 @@ static int allow_empty(struct repository *r,
+ 	int index_unchanged, originally_empty;
  
--	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
--		return error(_("could not resolve HEAD commit"));
-+	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
-+		/*
-+		 * Check to see if this is an unborn branch
-+		 */
-+		head_name = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE, &head_oid, NULL);
-+		if (!head_name || !starts_with(head_name, "refs/heads/") || !is_null_oid(&head_oid))
-+			return error(_("could not resolve HEAD commit"));
-+		head_tree_oid = the_hash_algo->empty_tree;
-+	} else {
-+		head_commit = lookup_commit(r, &head_oid);
+ 	/*
+-	 * Four cases:
++	 * For a commit that is initially empty, allow_empty determines if it
++	 * should be kept or not
+ 	 *
+-	 * (1) we do not allow empty at all and error out.
+-	 *
+-	 * (2) we allow ones that were initially empty, and
+-	 *     just drop the ones that become empty
+-	 *
+-	 * (3) we allow ones that were initially empty, but
+-	 *     halt for the ones that become empty;
+-	 *
+-	 * (4) we allow both.
++	 * For a commit that becomes empty, keep_redundant_commits and
++	 * drop_redundant_commits determine whether the commit should be kept or
++	 * dropped. If neither is specified, halt.
+ 	 */
+-	if (!opts->allow_empty)
+-		return 0; /* let "git commit" barf as necessary */
+-
+ 	index_unchanged = is_index_unchanged(r);
+ 	if (index_unchanged < 0)
+ 		return index_unchanged;
+ 	if (!index_unchanged)
+ 		return 0; /* we do not have to say --allow-empty */
  
--	head_commit = lookup_commit(r, &head_oid);
-+		/*
-+		 * If head_commit is NULL, check_commit, called from
-+		 * lookup_commit, would have indicated that head_commit is not
-+		 * a commit object already.  repo_parse_commit() will return failure
-+		 * without further complaints in such a case.  Otherwise, if
-+		 * the commit is invalid, repo_parse_commit() will complain.  So
-+		 * there is nothing for us to say here.  Just return failure.
-+		 */
-+		if (repo_parse_commit(r, head_commit))
-+			return -1;
- 
--	/*
--	 * If head_commit is NULL, check_commit, called from
--	 * lookup_commit, would have indicated that head_commit is not
--	 * a commit object already.  repo_parse_commit() will return failure
--	 * without further complaints in such a case.  Otherwise, if
--	 * the commit is invalid, repo_parse_commit() will complain.  So
--	 * there is nothing for us to say here.  Just return failure.
--	 */
--	if (repo_parse_commit(r, head_commit))
--		return -1;
-+		head_tree_oid = get_commit_tree_oid(head_commit);
-+	}
- 
- 	if (!(cache_tree_oid = get_cache_tree_oid(istate)))
- 		return -1;
- 
--	return oideq(cache_tree_oid, get_commit_tree_oid(head_commit));
-+	return oideq(cache_tree_oid, head_tree_oid);
- }
- 
- static int write_author_script(const char *message)
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index aeab689a98..af73227512 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -104,11 +104,19 @@ test_expect_success 'revert forbidden on dirty working tree' '
- '
- 
- test_expect_success 'cherry-pick on unborn branch' '
--	git checkout --orphan unborn &&
-+	git switch --orphan unborn &&
- 	git rm --cached -r . &&
--	rm -rf * &&
- 	git cherry-pick initial &&
--	git diff --quiet initial &&
-+	git diff --exit-code initial &&
-+	test_cmp_rev ! initial HEAD
-+'
-+
-+test_expect_success 'cherry-pick on unborn branch with --allow-empty' '
-+	git checkout --detach &&
-+	git branch -D unborn &&
-+	git switch --orphan unborn &&
-+	git cherry-pick initial --allow-empty &&
-+	git diff --exit-code initial &&
- 	test_cmp_rev ! initial HEAD
- '
- 
+-	if (opts->keep_redundant_commits)
+-		return 1;
+-
+ 	originally_empty = is_original_commit_empty(commit);
+ 	if (originally_empty < 0)
+ 		return originally_empty;
+ 	if (originally_empty)
++		return opts->allow_empty;
++	else if (opts->keep_redundant_commits)
+ 		return 1;
+ 	else if (opts->drop_redundant_commits)
+ 		return 2;
 -- 
 2.43.2
 
