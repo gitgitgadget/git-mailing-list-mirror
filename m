@@ -1,84 +1,93 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B794597E
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 14:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240303FB97
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 14:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710944934; cv=none; b=LxkO2zjzSSzHCF0Fv5k+iyWufHdyJgXT2YlnpfxEVNdNGc24fn9va7D3XsO0jvZdw68YHMBTHjgMR9TkjB2MlL9b0BAXnx781YlvZHv4IE0oS3Ve4VnM73+b2u0pqsCTjUvC7FWUk5S2/hGm9pLKYrhc9B1dquPMHSeDfbqxMMM=
+	t=1710945303; cv=none; b=WfhmUZc/iWxBssjeOyc21/uD/giMr8vjqcITITab0XAdG9TY/qHffZCHp87j/VoCdvD6mtiYaws06kPw2iU5TfuQA3Hf6syzSpGcpsBQMMIhPpuzA7j8N1ueMbT0vSv/SoW6S2Jtd3rj2gj7a/QeYDyWUtjlv/L73KWjd8htkC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710944934; c=relaxed/simple;
-	bh=uYQRxwhPbqhqjsssXMag7xbZy4TyAvy3ySDs9RtiRRw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hghR2U36ADE2CHf2T5feh0DT8OwwOuMsMBo+dwUdMrKX7vV05sVS6fxiFEJulrWPNfzOp+xba+QUnT5FbzlvSSLr8B3yu309NudevyChFsNFGSOIU4CLlgjwtMXTQKzWXj+Jae3pKQNi7X+fDrCPXggcjnXHO3REqVviYaVAGAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qBLCQwYQ; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1710945303; c=relaxed/simple;
+	bh=dNsQH6l8g5QYGNnLigc6ZRF8jYtOnjZaLGJlcWwZ9+Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YtoZvC7yLydbJrU3NB7YzFcZ8HzHcmJS9jiba1/x1tpvOMqplD04Dgu6kPtG8kbD1wt+jX+ZGxtoFnctoL9jSu4fo1FFE22n3yoXkS5Hin8eFcguP0qlywymL8tW5/og3FNARd3HfYcxD99eKSOO4tPlyys7IsTHBIkGgoD6sVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WC5yTK41; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qBLCQwYQ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 039ED1DE185;
-	Wed, 20 Mar 2024 10:28:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=uYQRxwhPbqhqjsssXMag7xbZy4TyAvy3ySDs9R
-	tiRRw=; b=qBLCQwYQFrxn6BVR7z83qtqO76z/9EM+synkkbl6iCzt/VQ8k61Y0m
-	pBzZmnP7UggZDa9u1QURgm3Rwf6c/68gu5CL5D0Hi80NtVJBJDC1k7ik56UvI52b
-	ydjzRsbc/euPU1+sO120+eyVFQeCqUrTChlXRs9JijIvW1n2IgFEE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EE5351DE184;
-	Wed, 20 Mar 2024 10:28:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 60DAE1DE183;
-	Wed, 20 Mar 2024 10:28:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH v3 3/4] t1300: add more tests for whitespace and inline
- comments
-In-Reply-To: <c5736219057c73a3a344237257534bdc@manjaro.org> (Dragan Simic's
-	message of "Wed, 20 Mar 2024 07:59:18 +0100")
-References: <cover.1710800549.git.dsimic@manjaro.org>
-	<92ddcd1f668906348e20a682cd737d90bb38ddc6.1710800549.git.dsimic@manjaro.org>
-	<xmqqzfutjtfo.fsf@gitster.g>
-	<32c4718d09ff6675e37587e15e785413@manjaro.org>
-	<c5736219057c73a3a344237257534bdc@manjaro.org>
-Date: Wed, 20 Mar 2024 07:28:50 -0700
-Message-ID: <xmqq4jd1j7tp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WC5yTK41"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56a2bb1d84eso1786827a12.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 07:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710945300; x=1711550100; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hsuKrM/Q+vr7r1EjF34U6tR1P7XGs8U0QFGtjgMEWXs=;
+        b=WC5yTK417OGwkWUeirR1Htyx0z9VsKjxj2u1Ies9Ex3m7Ed/a/Xz7n5ajRTPVoLxnE
+         MLkF1aSQXI/0nZD+jlDEYaLaXdLbMZ0/hqiE6XNfJjrQOtamUH5z8zG4JbBDAZNORwzs
+         YgmuyDX2rDxtmIlOqDKoxq5ku5KKxFge10s8DUpY1u6DUIqnEouMk7slqUHyTvLwVQnq
+         I9DWEpcchqlwiz6tYpOvvE/u6dNjuNbj+Fd6rNaysZWw2kH/UP93cgkbnk1L/jM+O8Vw
+         UgFJV0LXIu5LbEYQHZWSKTDG7NaKC8lp3KXbZVttmulHfIpasOKstKZschl6m4njGta6
+         BDUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710945300; x=1711550100;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hsuKrM/Q+vr7r1EjF34U6tR1P7XGs8U0QFGtjgMEWXs=;
+        b=WZPLjJ26i4kv1Edx089tCadPOkd/9xoqp4fc08lHYdpK12F0AsT8tFeafIE/izJXlc
+         Ti2z9t2jjV4ojE1JJNVe/L2rhuWWtCguzjHYKzXXsaJVGaB9yoq+2KrYWblC7Ec3l7JK
+         TsPjkMZQSJ+2v0Cw+vMqFlnOD/0U4lTnSI6RDeIat5ng07wNQ4aXRbQiMbaC6RVP7fuU
+         8rrit9fkbblmKt+N1K0w4gyDRv5WPJ4UwiEU+uLUsLiP9MLRqcRx+k5ksCSgVwE2yB1u
+         nb3DP/HS+ThD+hMvYUFr3b70bqJ40e+QxQTAnPZzJQXpclRLb9Z/CMzuXJ1jYMWM3uKz
+         xjcw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvVx6x5k3IjUgWL/sJhih6LMSN6Ydm/aExdPYw3IPPqfh5Y/rq0qNHUSLj+D9V8uNk6ljTcXTF8VrNyXdBaIqXyJpb
+X-Gm-Message-State: AOJu0Yz/sYYhbAhAawthPfXh7G4p/0XppRYbHjAC1kpVUYzh4riVEvex
+	xT9LUPePZE0eOiNrfZm1O4Lzeo5S0p4h/PS262RRd6dFOf5z6ttBhs2N79Os31vOZGgz5gUndmZ
+	vMkllrkSTBPFnkJNy2GhgUck/4X+g3TS10G0=
+X-Google-Smtp-Source: AGHT+IG1wwhz6iz8JXJQD+EmlZsj2vK5CsGrdzkY7xk76E4OBbw9dNTnSJRp/8cND9F1G4xrfF8Pb1YOJFT4Ld22XNc=
+X-Received: by 2002:a50:8e19:0:b0:566:7769:11c with SMTP id
+ 25-20020a508e19000000b005667769011cmr5513046edw.19.1710945300270; Wed, 20 Mar
+ 2024 07:35:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2C2D3C2C-E6C6-11EE-A90E-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <20240309181828.45496-1-ignacio@iencinas.com> <20240319183722.211300-1-ignacio@iencinas.com>
+ <CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>
+ <xmqqa5mulycz.fsf@gitster.g> <CAPig+cTFRAmzBGiJv2F-k1XWvGSbT8UeAG57T+XpB-1w66HRkQ@mail.gmail.com>
+ <20240320001934.GA903718@coredump.intra.peff.net> <CAPig+cT9QxRZhZyZV=Txt1VfqzDZX=gDbXvFg1nO=rjeMFaBeQ@mail.gmail.com>
+ <CAPig+cS_hCOnAuwRd_dY5h37-wgHCk2tjS7asm2Dm_p=s41X3Q@mail.gmail.com>
+In-Reply-To: <CAPig+cS_hCOnAuwRd_dY5h37-wgHCk2tjS7asm2Dm_p=s41X3Q@mail.gmail.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Wed, 20 Mar 2024 07:34:48 -0700
+Message-ID: <CAPx1GvcVZgsU+WHecLd8PWo_MN+wJj6wQ-G5nxYvWnOUOhfQng@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Add hostname condition to includeIf
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Ignacio Encinas <ignacio@iencinas.com>, git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	rsbecker@nexbridge.com, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 
-Dragan Simic <dsimic@manjaro.org> writes:
+The suggestion for having `git var` list GIT_HOSTNAME gave me
+an idea: perhaps instead of, or in addition to, a `hostname`
+condition in the `includeif` code, we could:
 
-> Oh, I just saw that you've already picked this patch up in the "seen"
-> branch.  Would you prefer if I make this change and submit the v4, or
-> to perform the change in the already planned follow-up patches, which
-> would also clean up some other tests a bit?
+ * have an `includeif:env:...` condition that tests an env
+   variable against a pattern; and/or
+ * use $GIT_HOSTNAME as the variable.
 
-The purpose of the "seen" branch is to bundle the branches the
-maintainer happens to have seen, and to remind the maintainer that
-the topics in them might turn out to be interesting when they are
-polished.  Nothing more than that.  Consider that a topic only in
-"seen" is not part of "git" yet.
+We'd then set `GIT_HOSTNAME` to the gethostname() result *unless*
+it's already set.
 
-The contributors can use it to anticipate what topics from others
-may cause conflict with their own work, and find people who are
-working on these topics to talk to before the potential conflicts
-get out of control.  It would be a good idea to fork from maint or
-master to grow a topic and to test (1) it by itself, (2) a temporary
-merge of it to 'next' and (3) a temporary merge to it to 'seen',
-before publishing it.
+This gives users much more flexibility, because:
+
+ * they can use the hostname and/or arbitrary-env-var condition;
+ * they can then *set* GIT_HOSTNAME to the short or full
+   hostname at their discretion if the default is not suitable
+   for some reason; and of course
+ * they can, as noted, use `git var` to find the default setting.
+
+Chris
