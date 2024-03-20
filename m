@@ -1,77 +1,68 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617F55CA1
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 03:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E86A29
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 06:32:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710904065; cv=none; b=eLv7o+MHTD2btvaZUKhugh+jeHUidamkdljwinb6XvaQlsf9LR51zeN9Sks5E9Vf+kD8kIBZnwWCRmydlyzK22JAgwXQBeTJ4Wmbukhe4a3sWp1ho3RX4MVT/R2WAmIfRUXqy8PBlFC6RnIU6CSCGbbWMGr3wHrvx4KG4Iz0UDQ=
+	t=1710916333; cv=none; b=ZPO8bWThDjGL3XHcTihXpwrGmlv/Xgmvqmf80QOo+elw3War3pihzrnlKdOBpOgVQG9z6VhM8XwD5rC0TTpJEI9MNOLU87zjW//PEsZW7CSzrwpcIhOtcBQxedE/l2jQsWf/H0IsrIewQkmdAWBdQDEv7glzKVKjwQ2zTCkcW40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710904065; c=relaxed/simple;
-	bh=fXvhk5EiJqgL4/GPbg/aCK4suZ6ypDeWK8hvAMB7gbQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QmooQeg2FNHguM0P/n++c4pO9nrXGvNQo1J+n6qiJT10Ti4XPq5FNny0cizyCbEXw7uST3UgBRu2/6vpvbEJpGeqX9ExfMmiqLw0I7nx66FUzyLiWvZbDOUTnc673C9PzbUzvU4IwNIAg2UjB6p/ObcijBSuy0suoHYPK6AKP7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-789e6ceaff1so50260385a.0
-        for <git@vger.kernel.org>; Tue, 19 Mar 2024 20:07:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710904062; x=1711508862;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fXvhk5EiJqgL4/GPbg/aCK4suZ6ypDeWK8hvAMB7gbQ=;
-        b=U8INp3d90A/Hr5BBMsOtYcYHPyF6E5rFydkLwtP8Ubw+Iq2tRgpWP8gdy8mOC6QY1r
-         tidYj1DjoaqziUobNpc5YocqW4qUP6KlJXA6QVYGcF5Acfv8kD1hUF8SHcaB8NkDPqR+
-         8f20p8RNDqTkSl8BIhpFiepyuQDCDgVkXjn+VSjV7Lwhp45XTg6+mN5NICZe45UN5UIB
-         IAd5V8VhUWw9K3MdOh1G8fCEuoKgxt4sucnvE67QFDbsyrJD75NBRjD+DcpBocj8czFa
-         O7mMy8Tih3zAT/c2gHpOIWsW761wNsDnefSs5xKoXl3B8PElW1CA4WaxN5hWYdl/Vcbp
-         M/1g==
-X-Forwarded-Encrypted: i=1; AJvYcCU6U1quATofjLOVVWgMwiIhP/r187yPwwrUeqwlUmXvxdmufE0iBnlAit8+1m7433J38UrbYS2DMFN4vtJMGm+hHst/
-X-Gm-Message-State: AOJu0YycTM+zquh/HqhBXcGus0qIef0W/ewVXgZlBlLwr+uJP3HLNEmo
-	JIKn632ygJxlwLQms4/Lkby/ELEgn69wx0iZqa1msstidmbA0CphS39Em6DFeIYvWFMiXjh+Qpn
-	GFNNGj2yIbZBTZbGiIiDy+cfkWD4=
-X-Google-Smtp-Source: AGHT+IEgW0BQwllq7Gd7RlCGwvv2YpBJTlcrgyupOK93uTXp/DHI5GgNKXtEjw3GgMin0p79LPKtmtaSuvJr9YASfPM=
-X-Received: by 2002:a05:6214:400a:b0:691:3d91:80bb with SMTP id
- kd10-20020a056214400a00b006913d9180bbmr5600954qvb.11.1710904062362; Tue, 19
- Mar 2024 20:07:42 -0700 (PDT)
+	s=arc-20240116; t=1710916333; c=relaxed/simple;
+	bh=HIh2b7+X+SJLZOMvINRN6o1BFUACNvi+cfpkhl6haSI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tZ9M1DHuwn8njGY82hURhHWN20c/ZgFqWDFfnabrup/pVqyVAIJ/b8OhWpARwl0LIY0Tq5sdrEyWTAD84FKtOdlyqZK2KuhVTfalSeYui4sDAGYmbDhJkDnlttBz86SsJ+ZzCIIZf6KqO0SZwmxEuVmWzGedwWD6AIIuDb1ZpE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Coahedc2; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Coahedc2"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 880871DB85;
+	Wed, 20 Mar 2024 02:32:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=HIh2b7+X+SJLZOMvINRN6o1BFUACNvi+cfpkhl
+	6haSI=; b=Coahedc2AM05zi4j2QMJWlg+moJXyCmKotvWQvbO01GUn0e1C9qI3x
+	fSYhaKj3YghRNo0gJ2r7St33XO2wQtVI/H/aEI8j6X+mjfzENfYoH8U7vd5v9cR/
+	yaNLXeKlXYNt5nVoIa8XRTTaPwBFqnjqkAgMcaSvX8EoWuo1zFwIg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8161B1DB84;
+	Wed, 20 Mar 2024 02:32:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0A48C1DB83;
+	Wed, 20 Mar 2024 02:32:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de,
+  sunshine@sunshineco.com
+Subject: Re: [PATCH v3 1/4] config: minor addition of whitespace
+In-Reply-To: <2161355e5c9a8ca0c8c0d3e5115a8843be1f4111.1710800549.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Mon, 18 Mar 2024 23:24:19 +0100")
+References: <cover.1710800549.git.dsimic@manjaro.org>
+	<2161355e5c9a8ca0c8c0d3e5115a8843be1f4111.1710800549.git.dsimic@manjaro.org>
+Date: Tue, 19 Mar 2024 23:32:03 -0700
+Message-ID: <xmqq5xxhl8gs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240309181828.45496-1-ignacio@iencinas.com> <20240319183722.211300-1-ignacio@iencinas.com>
- <CAPig+cT4fpX7Kczu0+H5TZnmpVqqq0h8nBafj4UqDs7Xv2Nf4A@mail.gmail.com>
- <xmqqa5mulycz.fsf@gitster.g> <CAPig+cTFRAmzBGiJv2F-k1XWvGSbT8UeAG57T+XpB-1w66HRkQ@mail.gmail.com>
- <20240320001934.GA903718@coredump.intra.peff.net> <CAPig+cT9QxRZhZyZV=Txt1VfqzDZX=gDbXvFg1nO=rjeMFaBeQ@mail.gmail.com>
-In-Reply-To: <CAPig+cT9QxRZhZyZV=Txt1VfqzDZX=gDbXvFg1nO=rjeMFaBeQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 19 Mar 2024 23:07:31 -0400
-Message-ID: <CAPig+cS_hCOnAuwRd_dY5h37-wgHCk2tjS7asm2Dm_p=s41X3Q@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] Add hostname condition to includeIf
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Ignacio Encinas <ignacio@iencinas.com>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9175E946-E683-11EE-82C6-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Tue, Mar 19, 2024 at 10:49=E2=80=AFPM Eric Sunshine <sunshine@sunshineco=
-.com> wrote:
-> On Tue, Mar 19, 2024 at 8:19=E2=80=AFPM Jeff King <peff@peff.net> wrote:
-> > Some care may need to be taken for error handling, though. For "git var
-> > GIT_HOSTNAME" it is OK to exit non-zero, but "git var -l" should not
-> > bail on a system where gethostname() doesn't work (it is still not clea=
-r
-> > to me if that is a real case to worry about or not).
->
-> Ports to oddball platforms should probably be providing a
-> gethostname() in "compat/" anyhow, just as is done for Windows in
-> "compat/mingw.c".
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Ignore my mumbo jumbo response. You are, of course, correct that the
-implementation of `git var -l` needs to be done with care so that it
-doesn't bail if gethostname() fails; that's true regardless of whether
-or not a platform-specific "compat/" implementation is part of the
-mix.
+>  		if (c == '"') {
+> -			quote = 1-quote;
+> +			quote = 1 - quote;
+>  			continue;
+
+Obviously correct.  Will queue.
