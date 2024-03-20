@@ -1,99 +1,60 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from mail114-240.sinamail.sina.com.cn (mail114-240.sinamail.sina.com.cn [218.30.114.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB511E519
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 07:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9151EB44
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 07:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.114.240
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710918727; cv=none; b=XlpullcIRovoQjEtyZwC3k8s7ZZUBDxIA9lh28WLUuXnv0g7pxLo7sb3IQLrPB9B19mvd5+IsWf9DPy7NjKrIZT5/nEQ3082DWrO9PbXRNe+1woOzBDUdCgxaLFXkCWLYpYN9mszcMDKug9uQkVWyWeWP55E/90y4NM+4eDedp8=
+	t=1710919050; cv=none; b=NVdUHdzP6ifT5N7t3zhWP/7tLm6fmylMOl3IYP5aimUVHhtoZ92nagMSmwDMp3bh6Vdjw82sGYDLalDuXm8Ox6o54HTVm2cHcvI/q6+60CrBdAJBba0HxgPQH/NUPcowVUa3Y/yquNJMO2TW645kcxIh77wi+C5xujAntggq2tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710918727; c=relaxed/simple;
-	bh=o86M4vdCMtvQJI4NKx9G4ZTq1u7Nu1xfQvO34i5v0Hk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=myMWl5EUYVbhtcivfnZG+3lX6AASKaPDycUwSgUjxs9dhyXLB9prXtz2HuirTE0afDXGIj4tLK9XhmmQQXu8p1KomhQk7L3F4ci+OLuJH454Mdt5WmCdEcSW/JqqBcKwFTlLrXFhCwqRCorKQdElSzfQq6oD++FcMScWJ48v5S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mf8xAPcO; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mf8xAPcO"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5FE731DAF35;
-	Wed, 20 Mar 2024 03:12:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=o86M4vdCMtvQJI4NKx9G4ZTq1u7Nu1xfQvO34i
-	5v0Hk=; b=Mf8xAPcOmpZ0YTHj93VMWo2ha8C1AqqGfJNZvjiPjbuZ+kDiy2ExWr
-	4pIMFXuREg8knEu5ELmnWnhSprKlBD00vKQxTq64o3dnd03y83GCmhk+TCF61243
-	fyCCeWAPIXBafn2Z1GiLIMVnpZESTYWVQCCavOh3PvpDjWVIIkxE8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 45A1E1DAF34;
-	Wed, 20 Mar 2024 03:12:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A9D91DAF32;
-	Wed, 20 Mar 2024 03:12:04 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  rsbecker@nexbridge.com,  github@seichter.de,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH v3 4/4] config.txt: describe handling of whitespace further
-In-Reply-To: <e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Mon, 18 Mar 2024 23:24:22 +0100")
-References: <cover.1710800549.git.dsimic@manjaro.org>
-	<e389acbfacd5046a926b87346d41f9c7962e3c23.1710800549.git.dsimic@manjaro.org>
-Date: Wed, 20 Mar 2024 00:12:03 -0700
-Message-ID: <xmqqttl1js1o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1710919050; c=relaxed/simple;
+	bh=s41mwz59g1lb2yGJlv+8LdWp5/PlwABJKXx2Fx1u4A0=;
+	h=Date:From:To:Subject:MIME-Version:Message-ID:Content-Type; b=iWRUFPVRjMH3tXuPHnpyZYoXA93knBUibI+gIWC9DEmMLE/Dtws5BsxfrJq4c7R1Atj9n4+uaPAZRM6DNjHYbNaSAIwhJMxxHGPCVq8BgoKaUTatV1Mmr5O8aLu0phEugT9uPwSDJE9MTIectJPTU848rgNkDmSIvX0idbnWcc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sina.com; spf=pass smtp.mailfrom=sina.com; arc=none smtp.client-ip=218.30.114.240
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sina.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.com
+X-SMAIL-HELO: webmail.sinamail.sina.com.cn
+Received: from webmail-23-147.pop3.fmail.yf.sinanode.com (HELO webmail.sinamail.sina.com.cn)([10.2.23.147])
+	by sina.com (172.16.235.24) with SMTP
+	id 65FA8D7A00001EB8; Wed, 20 Mar 2024 15:17:14 +0800 (CST)
+X-Sender: jjb8256@sina.com
+Authentication-Results: sina.com;
+	 spf=none smtp.mailfrom=jjb8256@sina.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=jjb8256@sina.com
+X-SMAIL-MID: 36571745089175
+Received: by webmail.sinamail.sina.com.cn (Postfix, from userid 993)
+	id 4CB55A146C; Wed, 20 Mar 2024 15:17:14 +0800 (CST)
+Date: Wed, 20 Mar 2024 15:17:14 +0800
+Received: from jjb8256@sina.com([218.4.204.164]) by m1.mail.sina.com.cn via HTTP;
+ Wed, 20 Mar 2024 15:17:14 +0800 (CST)
+Reply-To: jjb8256@sina.com
+From: <jjb8256@sina.com>
+To: "" <git@vger.kernel.org>
+Subject: git push error
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 27BACFDE-E689-11EE-99CC-25B3960A682E-77302942!pb-smtp2.pobox.com
+X-Priority: 3
+Message-ID: <65fa8d7a469967.62182104.7cc8fd91@m1.mail.sina.com.cn>
+X-MessageID: 4bd912676f6f218f365a03e053aa4fb9_202403
+X-SMAIL-UIID: E3ED219202FEE77C8664108ACD032089-20240320-151714-2
+X-Mailer: Sina WebMail 4.0
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Dragan Simic <dsimic@manjaro.org> writes:
-
->  A line that defines a value can be continued to the next line by
-> +ending it with a `\`; the backslash and the end-of-line are stripped.
-> +Leading whitespace characters after 'name =', the remainder of the
->  line after the first comment character '#' or ';', and trailing
-> +whitespace characters of the line are discarded unless they are enclosed
-> +in double quotes.
-
-Can we directly tighten the "trailing..." part, instead of having to
-add an extra long sentence ...
-
-> +The discarding of the trailing whitespace characters
-> +applies regardless of the discarding of the portion of the line after
-> +the first comment character.
-
-... like this as an attempt to clarify?
-
-    Leading whitespace characters before and after 'name =', and the
-    remainder of the line after the first comment character '#' or
-    ';', are removed, and then trailing whitespace characters at the
-    end of the line are discarded.
-
-By the way, if a run of whitespace characters are enclosed in double
-quotes, they cannot be trailing at the end of the line, as the
-closing double quote is not a whitespace character, so it is out of
-place to talk about quoted string in the context of trailing blank
-removal.  The unquoting would want to be discussed separately.
-
-> +Internal whitespace characters within the
-> +value are retained verbatim.
-
-Good.
-
->  
->  Inside double quotes, double quote `"` and backslash `\` characters
->  must be escaped: use `\"` for `"` and `\\` for `\`.
-
-Thanks for working on this topic.
+SGmjug0KICAgIGdpdCBwdXNoIMqxt6LP1sjnz8KxqLTto6yzosrUzt63qNDeuMSjrMfrsO/DpqOs
+0LvQu6OhDQoNCiQgZ2l0IHB1c2gNCkVudW1lcmF0aW5nIG9iamVjdHM6IDksIGRvbmUuDQpDb3Vu
+dGluZyBvYmplY3RzOiAxMDAlICg4LzgpLCBkb25lLg0KRGVsdGEgY29tcHJlc3Npb24gdXNpbmcg
+dXAgdG8gOCB0aHJlYWRzDQpDb21wcmVzc2luZyBvYmplY3RzOiAxMDAlICg1LzUpLCBkb25lLg0K
+V3JpdGluZyBvYmplY3RzOiAxMDAlICg1LzUpLCA3MDEgYnl0ZXMgfCAyMzMuMDAgS2lCL3MsIGRv
+bmUuDQpUb3RhbCA1IChkZWx0YSAwKSwgcmV1c2VkIDAgKGRlbHRhIDApLCBwYWNrLXJldXNlZCAw
+IChmcm9tIDApDQpyZW1vdGU6IFRoZSBnaXRsYWItc2hlbGwgaG9va3MgaGF2ZSBiZWVuIG1pZ3Jh
+dGVkIHRvIEdpdGFseSwgc2VlIGh0dHBzOi8vZ2l0bGFiLmNvbS9naXRsYWItb3JnL2dpdGFseS9p
+c3N1ZXMvMTIyNg0KVG8gaHR0cDovLzEwLjExLjE1LjEwL2tzLXJkLWZ3L2dpdC10cmFpbi0yMDIy
+LmdpdA0KICEgW3JlbW90ZSByZWplY3RlZF0gZGV2ZWxvcCAtPiBkZXZlbG9wIChwcmUtcmVjZWl2
+ZSBob29rIGRlY2xpbmVkKQ0KZXJyb3I6IGZhaWxlZCB0byBwdXNoIHNvbWUgcmVmcyB0byAnaHR0
+cDovLzEwLjExLjE1LjEwL2tzLXJkLWZ3L2dpdC10cmFpbi0yMDIyLmdpdCc=
