@@ -1,36 +1,32 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83003BB23
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 09:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321033C082
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 09:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710927666; cv=none; b=lyQMbkMfdMHr57M3HTxn1HrcQD2oFDFcZ185QYyfVOdY7egXDXmVjDsApl7TCfX3Cm+lQiorwZ6OGQHQKFptoZeCLXs0RiJfPqIJNl3YlQtI23e1SRAhso+IS/7iy7xF/b14xy6zekpTZ34aZnUFBkb6NhqFxcT55mr/mTi2UMI=
+	t=1710928108; cv=none; b=BOb+I6nALzIZ8X9a3j16DuDRfLUkOM++HFtr6+ocrwWGqBGQp99nhnlIxvOwy/1zwsuY8i4J/qdUYHI3DhGddDtujuyE264ayLXiUGR++M9HFlb/24N4st/L0WxlNqqx2PSpNiwpGg38c3sta42E3YFLAUtRqDEc7IAGAypuB4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710927666; c=relaxed/simple;
-	bh=aF58tSV6+9yZE/Rdug4TDNEWdOuIK2S176d+LcfrBUY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KsFsph/0k8Agv+NhB+RtxW32c7ewhA1m8L3f3uPSmqx4jJMzs/DiwCd73FDGfHkK+yUxoP9QXaL2fGgYMPltvnOvEqq1SkbdxxVceKQRCoHugnjFDgWAt7K1WH7sH8WWecKL05kIcp4pLH5YU7w6g8jQyV9dmp0lg/ck63KEd/M=
+	s=arc-20240116; t=1710928108; c=relaxed/simple;
+	bh=le8VYKOllWvCtJBj0mhixcfTf+M61Uy20AUuEWX72MM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Z3j82vtAd2jx7v0uFJ/HXwagT/B6Vc/c5TZ4x9KKHh9J1oEep4d3ZnAPwbwlN2RHLA4eQSIRCVNlm/1QVFWdo+DPXbXeJDEdFcyRDJnYdrki4FL/E1flXJecPA+P0lg5sBwVkPD2vOHP2YGElTkmAaty1rXItUkGGWquC2KyM+o=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11211 invoked by uid 109); 20 Mar 2024 09:41:03 -0000
+Received: (qmail 11218 invoked by uid 109); 20 Mar 2024 09:48:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Mar 2024 09:41:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Mar 2024 09:48:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16830 invoked by uid 111); 20 Mar 2024 09:41:08 -0000
+Received: (qmail 16879 invoked by uid 111); 20 Mar 2024 09:48:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Mar 2024 05:41:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Mar 2024 05:48:30 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 20 Mar 2024 05:41:03 -0400
+Date: Wed, 20 Mar 2024 05:48:24 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Eric W. Biederman" <ebiederm@gmail.com>
-Subject: [PATCH 3/3] transport-helper: send "true" value for object-format
- option
-Message-ID: <20240320094103.GC2445682@coredump.intra.peff.net>
-References: <20240320093226.GA2445531@coredump.intra.peff.net>
+Subject: [PATCH] contrib: drop hg-to-git script
+Message-ID: <20240320094824.GA2445978@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,112 +35,315 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240320093226.GA2445531@coredump.intra.peff.net>
 
-The documentation in gitremote-helpers.txt claims that after a helper
-has advertised the "object-format" capability, Git may then send "option
-object-format true" to indicate that it would like to hear which object
-format the helper is using when it returns refs.
+The hg-to-git script is full of command injection vulnerabilities
+against malicious branch and tag names. It's also old and largely
+unmaintained; the last commit was over 4 years ago, and the last code
+change before that was from 2013. Users are better off with a modern
+remote-helper tool like cinnabar or remote-hg.
 
-However, the code implementing this has always written just "option
-object-format", without the extra "true" value. Nobody noticed in
-practice or in the tests because the only two helpers we ship are:
+So rather than spending time to fix it, let's just get rid of it.
 
-  - remote-curl, which quietly converts missing values into "true". This
-    goes all the way back to ef08ef9ea0 (remote-helpers: Support custom
-    transport options, 2009-10-30), despite the fact that I don't think
-    any other option has ever made use of it.
-
-  - remote-testgit in t5801 does insist on having a "true" value. But
-    since it sends the ":object-format" response regardless of whether
-    it thinks the caller asked for it (technically breaking protocol),
-    everything just works, albeit with an extra shell error:
-
-      .../git/t/t5801/git-remote-testgit: 150: test: =: unexpected operator
-
-    printed to stderr, which you can see running t5801 with --verbose.
-    (The problem is that $val is the empty string, and since we don't
-    double-quote it in "test $val = true", we invoke "test = true"
-    instead).
-
-When the documentation and code do not match, it is often good to fix
-the documentation rather than break compatibility. And in this case, we
-have had the mis-match since 8b85ee4f47 (transport-helper: implement
-object-format extensions, 2020-05-25). However, the sha256 feature was
-listed as experimental until 8e42eb0e9a (doc: sha256 is no longer
-experimental, 2023-07-31).
-
-It's possible there are some third party helpers that tried to follow
-the documentation, and are broken. Changing the code will fix them. It's
-also possible that there are ones that follow the code and will be
-broken if we change it. I suspect neither is the case given that no
-helper authors have brought this up as an issue (I only noticed it
-because I was running t5801 in verbose mode for other reasons and
-wondered about the weird shell error). That, coupled with the relative
-new-ness of sha256, makes me think nobody has really worked on helpers
-for it yet, which gives us an opportunity to correct the code before too
-much time passes.
-
-And doing so has some value: it brings "object-format" in line with the
-syntax of other options, making the protocol more consistent. It also
-lets us use set_helper_option(), which has better error reporting.
-
-Note that we don't really need to allow any other values like "false"
-here. The point is for Git to tell the helper that it understands
-":object-format" lines coming back as part of the ref listing. There's
-no point in future versions saying "no, I don't understand that".
-
-To make sure everything works as expected, we can improve the
-remote-testgit helper from t5801 to send the ":object-format" line only
-if the other side correctly asked for it (which modern Git will always
-do). With that test change and without the matching code fix here, t5801
-will fail when run with GIT_TEST_DEFAULT_HASH=sha256.
-
+Reported-by: Matthew Rollings <admin@stealthcopter.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5801/git-remote-testgit | 4 +++-
- transport-helper.c         | 7 ++-----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+This was reported to the security list in December. I suggested there
+that we should just get rid of it, but there was no follow-up. Until
+now. ;) Speak now if anybody wants to volunteer to fix the script
+instead.
 
-diff --git a/t/t5801/git-remote-testgit b/t/t5801/git-remote-testgit
-index bcfb358c51..c5b10f5775 100755
---- a/t/t5801/git-remote-testgit
-+++ b/t/t5801/git-remote-testgit
-@@ -30,6 +30,7 @@ GIT_DIR="$url/.git"
- export GIT_DIR
- 
- force=
-+object_format=
- 
- mkdir -p "$dir"
- 
-@@ -61,7 +62,8 @@ do
- 		echo
- 		;;
- 	list)
--		echo ":object-format $(git rev-parse --show-object-format=storage)"
-+		test -n "$object_format" &&
-+			echo ":object-format $(git rev-parse --show-object-format=storage)"
- 		git for-each-ref --format='? %(refname)' 'refs/heads/' 'refs/tags/'
- 		head=$(git symbolic-ref HEAD)
- 		echo "@$head HEAD"
-diff --git a/transport-helper.c b/transport-helper.c
-index 7f6bbd06bb..8d284b24d5 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1210,11 +1210,8 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
- 	data->get_refs_list_called = 1;
- 	helper = get_helper(transport);
- 
--	if (data->object_format) {
--		write_constant(helper->in, "option object-format\n");
--		if (recvline(data, &buf) || strcmp(buf.buf, "ok"))
--			exit(128);
--	}
-+	if (data->object_format)
-+		set_helper_option(transport, "object-format", "true");
- 
- 	if (data->push && for_push)
- 		write_constant(helper->in, "list for-push\n");
+ contrib/hg-to-git/hg-to-git.py  | 254 --------------------------------
+ contrib/hg-to-git/hg-to-git.txt |  21 ---
+ 2 files changed, 275 deletions(-)
+ delete mode 100755 contrib/hg-to-git/hg-to-git.py
+ delete mode 100644 contrib/hg-to-git/hg-to-git.txt
+
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+deleted file mode 100755
+index 7eb1b24cc7..0000000000
+--- a/contrib/hg-to-git/hg-to-git.py
++++ /dev/null
+@@ -1,254 +0,0 @@
+-#!/usr/bin/env python
+-
+-""" hg-to-git.py - A Mercurial to GIT converter
+-
+-    Copyright (C)2007 Stelian Pop <stelian@popies.net>
+-
+-    This program is free software; you can redistribute it and/or modify
+-    it under the terms of the GNU General Public License as published by
+-    the Free Software Foundation; either version 2, or (at your option)
+-    any later version.
+-
+-    This program is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU General Public License for more details.
+-
+-    You should have received a copy of the GNU General Public License
+-    along with this program; if not, see <http://www.gnu.org/licenses/>.
+-"""
+-
+-import os, os.path, sys
+-import tempfile, pickle, getopt
+-import re
+-
+-if sys.hexversion < 0x02030000:
+-   # The behavior of the pickle module changed significantly in 2.3
+-   sys.stderr.write("hg-to-git.py: requires Python 2.3 or later.\n")
+-   sys.exit(1)
+-
+-# Maps hg version -> git version
+-hgvers = {}
+-# List of children for each hg revision
+-hgchildren = {}
+-# List of parents for each hg revision
+-hgparents = {}
+-# Current branch for each hg revision
+-hgbranch = {}
+-# Number of new changesets converted from hg
+-hgnewcsets = 0
+-
+-#------------------------------------------------------------------------------
+-
+-def usage():
+-
+-        print("""\
+-%s: [OPTIONS] <hgprj>
+-
+-options:
+-    -s, --gitstate=FILE: name of the state to be saved/read
+-                         for incrementals
+-    -n, --nrepack=INT:   number of changesets that will trigger
+-                         a repack (default=0, -1 to deactivate)
+-    -v, --verbose:       be verbose
+-
+-required:
+-    hgprj:  name of the HG project to import (directory)
+-""" % sys.argv[0])
+-
+-#------------------------------------------------------------------------------
+-
+-def getgitenv(user, date):
+-    env = ''
+-    elems = re.compile('(.*?)\s+<(.*)>').match(user)
+-    if elems:
+-        env += 'export GIT_AUTHOR_NAME="%s" ;' % elems.group(1)
+-        env += 'export GIT_COMMITTER_NAME="%s" ;' % elems.group(1)
+-        env += 'export GIT_AUTHOR_EMAIL="%s" ;' % elems.group(2)
+-        env += 'export GIT_COMMITTER_EMAIL="%s" ;' % elems.group(2)
+-    else:
+-        env += 'export GIT_AUTHOR_NAME="%s" ;' % user
+-        env += 'export GIT_COMMITTER_NAME="%s" ;' % user
+-        env += 'export GIT_AUTHOR_EMAIL= ;'
+-        env += 'export GIT_COMMITTER_EMAIL= ;'
+-
+-    env += 'export GIT_AUTHOR_DATE="%s" ;' % date
+-    env += 'export GIT_COMMITTER_DATE="%s" ;' % date
+-    return env
+-
+-#------------------------------------------------------------------------------
+-
+-state = ''
+-opt_nrepack = 0
+-verbose = False
+-
+-try:
+-    opts, args = getopt.getopt(sys.argv[1:], 's:t:n:v', ['gitstate=', 'tempdir=', 'nrepack=', 'verbose'])
+-    for o, a in opts:
+-        if o in ('-s', '--gitstate'):
+-            state = a
+-            state = os.path.abspath(state)
+-        if o in ('-n', '--nrepack'):
+-            opt_nrepack = int(a)
+-        if o in ('-v', '--verbose'):
+-            verbose = True
+-    if len(args) != 1:
+-        raise Exception('params')
+-except:
+-    usage()
+-    sys.exit(1)
+-
+-hgprj = args[0]
+-os.chdir(hgprj)
+-
+-if state:
+-    if os.path.exists(state):
+-        if verbose:
+-            print('State does exist, reading')
+-        f = open(state, 'r')
+-        hgvers = pickle.load(f)
+-    else:
+-        print('State does not exist, first run')
+-
+-sock = os.popen('hg tip --template "{rev}"')
+-tip = sock.read()
+-if sock.close():
+-    sys.exit(1)
+-if verbose:
+-    print('tip is', tip)
+-
+-# Calculate the branches
+-if verbose:
+-    print('analysing the branches...')
+-hgchildren["0"] = ()
+-hgparents["0"] = (None, None)
+-hgbranch["0"] = "master"
+-for cset in range(1, int(tip) + 1):
+-    hgchildren[str(cset)] = ()
+-    prnts = os.popen('hg log -r %d --template "{parents}"' % cset).read().strip().split(' ')
+-    prnts = map(lambda x: x[:x.find(':')], prnts)
+-    if prnts[0] != '':
+-        parent = prnts[0].strip()
+-    else:
+-        parent = str(cset - 1)
+-    hgchildren[parent] += ( str(cset), )
+-    if len(prnts) > 1:
+-        mparent = prnts[1].strip()
+-        hgchildren[mparent] += ( str(cset), )
+-    else:
+-        mparent = None
+-
+-    hgparents[str(cset)] = (parent, mparent)
+-
+-    if mparent:
+-        # For merge changesets, take either one, preferably the 'master' branch
+-        if hgbranch[mparent] == 'master':
+-            hgbranch[str(cset)] = 'master'
+-        else:
+-            hgbranch[str(cset)] = hgbranch[parent]
+-    else:
+-        # Normal changesets
+-        # For first children, take the parent branch, for the others create a new branch
+-        if hgchildren[parent][0] == str(cset):
+-            hgbranch[str(cset)] = hgbranch[parent]
+-        else:
+-            hgbranch[str(cset)] = "branch-" + str(cset)
+-
+-if "0" not in hgvers:
+-    print('creating repository')
+-    os.system('git init')
+-
+-# loop through every hg changeset
+-for cset in range(int(tip) + 1):
+-
+-    # incremental, already seen
+-    if str(cset) in hgvers:
+-        continue
+-    hgnewcsets += 1
+-
+-    # get info
+-    log_data = os.popen('hg log -r %d --template "{tags}\n{date|date}\n{author}\n"' % cset).readlines()
+-    tag = log_data[0].strip()
+-    date = log_data[1].strip()
+-    user = log_data[2].strip()
+-    parent = hgparents[str(cset)][0]
+-    mparent = hgparents[str(cset)][1]
+-
+-    #get comment
+-    (fdcomment, filecomment) = tempfile.mkstemp()
+-    csetcomment = os.popen('hg log -r %d --template "{desc}"' % cset).read().strip()
+-    os.write(fdcomment, csetcomment)
+-    os.close(fdcomment)
+-
+-    print('-----------------------------------------')
+-    print('cset:', cset)
+-    print('branch:', hgbranch[str(cset)])
+-    print('user:', user)
+-    print('date:', date)
+-    print('comment:', csetcomment)
+-    if parent:
+-        print('parent:', parent)
+-    if mparent:
+-        print('mparent:', mparent)
+-    if tag:
+-        print('tag:', tag)
+-    print('-----------------------------------------')
+-
+-    # checkout the parent if necessary
+-    if cset != 0:
+-        if hgbranch[str(cset)] == "branch-" + str(cset):
+-            print('creating new branch', hgbranch[str(cset)])
+-            os.system('git checkout -b %s %s' % (hgbranch[str(cset)], hgvers[parent]))
+-        else:
+-            print('checking out branch', hgbranch[str(cset)])
+-            os.system('git checkout %s' % hgbranch[str(cset)])
+-
+-    # merge
+-    if mparent:
+-        if hgbranch[parent] == hgbranch[str(cset)]:
+-            otherbranch = hgbranch[mparent]
+-        else:
+-            otherbranch = hgbranch[parent]
+-        print('merging', otherbranch, 'into', hgbranch[str(cset)])
+-        os.system(getgitenv(user, date) + 'git merge --no-commit -s ours "" %s %s' % (hgbranch[str(cset)], otherbranch))
+-
+-    # remove everything except .git and .hg directories
+-    os.system('find . \( -path "./.hg" -o -path "./.git" \) -prune -o ! -name "." -print | xargs rm -rf')
+-
+-    # repopulate with checkouted files
+-    os.system('hg update -C %d' % cset)
+-
+-    # add new files
+-    os.system('git ls-files -x .hg --others | git update-index --add --stdin')
+-    # delete removed files
+-    os.system('git ls-files -x .hg --deleted | git update-index --remove --stdin')
+-
+-    # commit
+-    os.system(getgitenv(user, date) + 'git commit --allow-empty --allow-empty-message -a -F %s' % filecomment)
+-    os.unlink(filecomment)
+-
+-    # tag
+-    if tag and tag != 'tip':
+-        os.system(getgitenv(user, date) + 'git tag %s' % tag)
+-
+-    # delete branch if not used anymore...
+-    if mparent and len(hgchildren[str(cset)]):
+-        print("Deleting unused branch:", otherbranch)
+-        os.system('git branch -d %s' % otherbranch)
+-
+-    # retrieve and record the version
+-    vvv = os.popen('git show --quiet --pretty=format:%H').read()
+-    print('record', cset, '->', vvv)
+-    hgvers[str(cset)] = vvv
+-
+-if hgnewcsets >= opt_nrepack and opt_nrepack != -1:
+-    os.system('git repack -a -d')
+-
+-# write the state for incrementals
+-if state:
+-    if verbose:
+-        print('Writing state')
+-    f = open(state, 'w')
+-    pickle.dump(hgvers, f)
+-
+-# vim: et ts=8 sw=4 sts=4
+diff --git a/contrib/hg-to-git/hg-to-git.txt b/contrib/hg-to-git/hg-to-git.txt
+deleted file mode 100644
+index 91f8fe6410..0000000000
+--- a/contrib/hg-to-git/hg-to-git.txt
++++ /dev/null
+@@ -1,21 +0,0 @@
+-hg-to-git.py is able to convert a Mercurial repository into a git one,
+-and preserves the branches in the process (unlike tailor)
+-
+-hg-to-git.py can probably be greatly improved (it's a rather crude
+-combination of shell and python) but it does already work quite well for
+-me. Features:
+-	- supports incremental conversion
+-	  (for keeping a git repo in sync with a hg one)
+-        - supports hg branches
+-        - converts hg tags
+-
+-Note that the git repository will be created 'in place' (at the same
+-location as the source hg repo). You will have to manually remove the
+-'.hg' directory after the conversion.
+-
+-Also note that the incremental conversion uses 'simple' hg changesets
+-identifiers (ordinals, as opposed to SHA-1 ids), and since these ids
+-are not stable across different repositories the hg-to-git.py state file
+-is forever tied to one hg repository.
+-
+-Stelian Pop <stelian@popies.net>
 -- 
 2.44.0.650.g4615f65fe0
