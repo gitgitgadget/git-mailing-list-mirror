@@ -1,66 +1,67 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FB61E87E
-	for <git@vger.kernel.org>; Wed, 20 Mar 2024 23:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6128613E
+	for <git@vger.kernel.org>; Wed, 20 Mar 2024 23:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710977955; cv=none; b=KHfmo0af8ePs1TiHqA1G3/Dk03j9cXUvuwoSuqeq7Dlblc6+mHjig7oI2H6cHabXhc24qMNs5x07l5SdyDqyocUu7CnALgpd3LvohrShmie/eeEOes78FT/sKiBauR2pd7gGRMtqxUBU0AxqhkmPk5+b6jBY+N+iDguOcip2nS0=
+	t=1710977956; cv=none; b=JDCDzr425Vis7EA8Pudz1ftx8W5TEGpfqyoYRyC3XI6ePR/uATyCjEfF0ZmKa5d7h5Hr3xqIjDcbZHoUgdPejef/qwwIjBSDe1xKb6E421Ca81tACz0f/vqR3E53fGDZV4JV7iue/V+RI5wnt+ySZtfHLoP99m5A+vc8sBaXWRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710977955; c=relaxed/simple;
-	bh=/gGmysJuz154kzPuBcp3BA7CefRZ1tcrP7ct4CMN7qE=;
+	s=arc-20240116; t=1710977956; c=relaxed/simple;
+	bh=7vi9xEIraSQTmgrxuX9lWfU89wiQ3Rx44ve0Uy/5DOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvGzzubtuoa39culJSV1ZEvrQIURKtZBPTlbwBwxyMUHxoTd85c9UepumezLzlwiqV3lFj40g/ixLYYA0XzjSIn2gjc3kuGmT/ICyHlwDFKlNcCcJ5bn1G/ZdltgJCCOMnzcy+ZkIQs/G6q3kUR9UEtideXywn+c+9c8vzup8Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L+pX0BqK; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version; b=lxTIhoTkLaicFCDAqdrj2pf0G388glHqEsgWXDgBwPNRtgFprcll3sgmZZ+76UoDe4Q+bpDm/4VbABE2FO9rxwAQ/XC0aBnX+yl2VaLoZ7T11sUoKdBJvWu35IJ69kB1/tETdEPDFhvauSDt8q1uXZuCzAwGmv1QkzDBNO5cnIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PdVmcR73; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L+pX0BqK"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-78a2290b48eso30981385a.3
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 16:39:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PdVmcR73"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-78850c6609bso20399985a.0
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 16:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710977952; x=1711582752; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710977953; x=1711582753; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=25KjxdY9cgfhPxHWLcK/hd7wGvOqIVO30w4kIEVGA1Q=;
-        b=L+pX0BqKfLvi/Q4Bp0aawUFOxu490Hw2m/UI1f65lTLImgP3yIpaY0YmSJhZ7MVT9X
-         ZxI1548dscaDgfHjo5no2V3acqnjeC+N1ikLCFA15tQygv+OrhXc3UaSEC7bYgObiJeu
-         tj7MjlYtVfhNDZZdkUgETAnlY/D8GtyzfuW6lmK4lt8XM84UHuZG9hP2gwKhmKwRNVsJ
-         Zy4C1wwETu6vcmPIMAFz6fd8L0xmbhM9dOLsJbeEXdZh0Mn+LD+r9JlbgA6Txo9XNp0d
-         YgN9BszVOCRtRRz5PrTiTXtTothFU8c1O1sus51JAvvIFZTzDN4ECbQ0dPllWMMTAPP+
-         bNYg==
+        bh=TtZyJeuKt/HRxb8Ihb0j/W0T1+psaZxhXjN6gBA936M=;
+        b=PdVmcR73HOwrnWgmt5xadSHTC9JVxLy437O1iaKp6MEQh0xXqq11UqfOX5p4ZVcYIA
+         S82r37ux4WCTZoL6miAjXeUltvlI1akMBoz8RJnXyGznbiZUmTq9MxjDL7yO/Wt+42t1
+         70jQefx0zW/e0wU1YsOAM58ElET0mCbHko9UW4PdFYUem45N1Ml+OSi/MWLUmxyu7W7N
+         OmC8np9d9VZeEDWDMXTarQbtK76z5Qk582fofURL9ztp0m1VqwJcIiidrRbhrk5bKt1m
+         tVT+cS6/8NrdaHY5V2DG6zif7/8QnMoGZcZO9oDSNjzpAzIFHCf/C6lwiJZ0FCwvI8Xp
+         M0vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710977952; x=1711582752;
+        d=1e100.net; s=20230601; t=1710977953; x=1711582753;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=25KjxdY9cgfhPxHWLcK/hd7wGvOqIVO30w4kIEVGA1Q=;
-        b=tCIaKBjNdARTWtlK6F1u8sWPntCHMJfIf5NOS77YWwrLr9gHhQ2LEiGcajB5ThYZiO
-         KKBvCOXJiIph6NW9nXwfj+0zLpq81kD5KE6VLYRmd8MIKYgsq0yaXawIWCc50CxN+Re9
-         CuEhnI2kpiuFteKBwYKCQLqd8Qk/x1IWUOCuW+Krjw2Dn06ndSKfKefA18+QEuCAYCYD
-         UsZeMCmZXVdmp/SG/LVKWACzuC0/3vDLsuzQZbE5GV4WTJYN//XzL93Xuw0vpx55jlVy
-         /hHHYTKLrQz7mQ5Mnjp3BbpViquloBHm6QcC+48ttcKkqqURSTxME7LMGO211uHv2cZH
-         C8sg==
-X-Gm-Message-State: AOJu0YxWlVpBwpbVsKlm320Gf7UlBxuZAXMTQtu9m1LZ+Xs3DV+GK0Yz
-	2RNQR59yrTLmeeWJHA2nQ66xyFwVFk5B5UPhqE8nPJZnPquZTZvJn1QbckCfXH4=
-X-Google-Smtp-Source: AGHT+IF00uZTeVpJj304vBkqhjt8MFrcpwruIqlh7ZlV/GV4apYwLN2IhPiWekAD2CckhRCknXO0wA==
-X-Received: by 2002:ae9:f114:0:b0:788:4e44:a9b7 with SMTP id k20-20020ae9f114000000b007884e44a9b7mr378600qkg.78.1710977951709;
-        Wed, 20 Mar 2024 16:39:11 -0700 (PDT)
+        bh=TtZyJeuKt/HRxb8Ihb0j/W0T1+psaZxhXjN6gBA936M=;
+        b=rfEIptJFHYwrrlUs/f1n4rDmoIfvBzYEWyynL4JjtNdGENIQSpxP/IMmPopgsUNlmv
+         tez2BLJ2Y2clUyzp4rtqKmpFPi1NLaCa1SuuLS/jGxYhn+0hLM/9SY/0nk2KngxhccHn
+         izpZWXJaEaYXjXH3qM6aFAxgjicygcFBOaF+QJo+NwPFwTLG9M95Lusts6yaVS+IJM8P
+         ly7KDH07C+QxSkgG0a1Hh43FOeIcKyYrwoMQDBw4Mj53ByRx3MtelXo0mv6WV6H31TPr
+         VoAFw9Pa14jZ72XV4T6/oWmRiB+Tc5cjxoe3LPH+tqtHxglZAcs8Yl4dFZlympSe2s9X
+         v0rQ==
+X-Gm-Message-State: AOJu0YyJLMYS27IMV7Om4SDmrHOnhwecMKK6FqHC9YDHM4ftBQpMjCAw
+	+sbe0EcX5G+kDQ1ZGs8pFI9zG7svrhlH95G7POF9u3NFDgx+Ql/yLum4k0aN5pY=
+X-Google-Smtp-Source: AGHT+IFirGrTOX0szZRJJ4YARkFv6teDSCiC/7v6b1eOAog0psxxXe8iURXX4XB7HABomRT9ycKXGw==
+X-Received: by 2002:a05:620a:84e:b0:789:ea39:50c0 with SMTP id u14-20020a05620a084e00b00789ea3950c0mr346171qku.33.1710977953104;
+        Wed, 20 Mar 2024 16:39:13 -0700 (PDT)
 Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
-        by smtp.gmail.com with ESMTPSA id v18-20020a05620a123200b0078a0edbaa94sm2400867qkj.91.2024.03.20.16.39.10
+        by smtp.gmail.com with ESMTPSA id v18-20020a05620a123200b0078a0edbaa94sm2400867qkj.91.2024.03.20.16.39.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Mar 2024 16:39:11 -0700 (PDT)
+        Wed, 20 Mar 2024 16:39:12 -0700 (PDT)
 From: Brian Lyles <brianmlyles@gmail.com>
 To: git@vger.kernel.org
 Cc: Brian Lyles <brianmlyles@gmail.com>,
 	newren@gmail.com,
 	me@ttaylorr.com,
 	phillip.wood123@gmail.com,
-	gitster@pobox.com
-Subject: [PATCH v4 0/7] cherry-pick: add `--empty` for more robust redundant commit handling
-Date: Wed, 20 Mar 2024 18:36:55 -0500
-Message-ID: <20240320233724.214369-1-brianmlyles@gmail.com>
+	gitster@pobox.com,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v4 1/7] docs: address inaccurate `--empty` default with `--exec`
+Date: Wed, 20 Mar 2024 18:36:56 -0500
+Message-ID: <20240320233724.214369-2-brianmlyles@gmail.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
 References: <20240119060721.3734775-2-brianmlyles@gmail.com>
@@ -72,45 +73,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The ultimate goal of this series is to allow git-cherry-pick(1) to
-automatically drop redundant commits. The mechanism chosen is an
-`--empty` option that provides the same flexibility as the `--empty`
-options for git-rebase(1) and git-am(1).
+The documentation for git-rebase(1) indicates that using the `--exec`
+option will use `--empty=drop`. This is inaccurate: when `--interactive`
+is not explicitly provided, `--exec` results in `--empty=keep`
+behaviors.
 
-Some secondary goals are to improve the consistency in the values and
-documentation for this option across the three commands.
+Correctly indicate the behavior of `--exec` using `--empty=keep` when
+`--interactive` is not specified.
 
-See "Does extending `--empty` to git-cherry-pick make sense?" [1] for
-some context for why this option is desired in git-cherry-pick(1).
+Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+---
+ Documentation/git-rebase.txt | 10 +++++-----
+ t/t3424-rebase-empty.sh      | 38 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
-[1]: https://lore.kernel.org/git/CAHPHrSevBdQF0BisR8VK=jM=wj1dTUYEVrv31gLerAzL9=Cd8Q@mail.gmail.com
-
-Along the way, I (with some help from Elijah and Phillip) found a few
-other things in the docs and related sequencer code to clean up.
-
-This re-roll contains only minor changes from v3.
-
-Brian Lyles (7):
-  docs: address inaccurate `--empty` default with `--exec`
-  docs: clean up `--empty` formatting in git-rebase(1) and git-am(1)
-  rebase: update `--empty=ask` to `--empty=stop`
-  sequencer: handle unborn branch with `--allow-empty`
-  sequencer: do not require `allow_empty` for redundant commit options
-  cherry-pick: enforce `--keep-redundant-commits` incompatibility
-  cherry-pick: add `--empty` for more robust redundant commit handling
-
- Documentation/git-am.txt          | 20 +++++----
- Documentation/git-cherry-pick.txt | 30 ++++++++++----
- Documentation/git-rebase.txt      | 26 ++++++++----
- builtin/rebase.c                  | 16 +++++---
- builtin/revert.c                  | 38 ++++++++++++++++-
- sequencer.c                       | 68 +++++++++++++++++--------------
- t/t3424-rebase-empty.sh           | 55 +++++++++++++++++++++++--
- t/t3501-revert-cherry-pick.sh     | 14 +++++--
- t/t3505-cherry-pick-empty.sh      | 51 ++++++++++++++++++++++-
- t/t3510-cherry-pick-sequence.sh   | 32 +++++++++++++++
- 10 files changed, 283 insertions(+), 67 deletions(-)
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 06206521fc..3334e85356 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -295,11 +295,11 @@ See also INCOMPATIBLE OPTIONS below.
+ 	empty after rebasing (because they contain a subset of already
+ 	upstream changes).  With drop (the default), commits that
+ 	become empty are dropped.  With keep, such commits are kept.
+-	With ask (implied by `--interactive`), the rebase will halt when
+-	an empty commit is applied allowing you to choose whether to
+-	drop it, edit files more, or just commit the empty changes.
+-	Other options, like `--exec`, will use the default of drop unless
+-	`-i`/`--interactive` is explicitly specified.
++	With ask, the rebase will halt when an empty commit is applied
++	allowing you to choose whether to drop it, edit files more, or just
++	commit the empty changes.
++	When the `-i`/`--interactive` option is used, the default becomes ask.
++	Otherwise, when the `--exec` option is used, the default becomes keep.
+ +
+ Note that commits which start empty are kept (unless `--no-keep-empty`
+ is specified), and commits which are clean cherry-picks (as determined
+diff --git a/t/t3424-rebase-empty.sh b/t/t3424-rebase-empty.sh
+index 5e1045a0af..73ff35ced2 100755
+--- a/t/t3424-rebase-empty.sh
++++ b/t/t3424-rebase-empty.sh
+@@ -167,4 +167,42 @@ test_expect_success 'rebase --merge does not leave state laying around' '
+ 	test_path_is_missing .git/MERGE_MSG
+ '
+ 
++test_expect_success 'rebase --exec --empty=drop' '
++	git checkout -B testing localmods &&
++	git rebase --exec "true" --empty=drop upstream &&
++
++	test_write_lines D C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --exec --empty=keep' '
++	git checkout -B testing localmods &&
++	git rebase --exec "true" --empty=keep upstream &&
++
++	test_write_lines D C2 C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --exec uses default of --empty=keep' '
++	git checkout -B testing localmods &&
++	git rebase --exec "true" upstream &&
++
++	test_write_lines D C2 C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --exec --empty=ask' '
++	git checkout -B testing localmods &&
++	test_must_fail git rebase --exec "true" --empty=ask upstream &&
++
++	git rebase --skip &&
++
++	test_write_lines D C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.43.2
 
