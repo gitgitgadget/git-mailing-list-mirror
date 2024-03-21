@@ -1,89 +1,151 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456B15474D
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:12:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A63C757F7
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:13:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711026730; cv=none; b=XdL1Jm7TwsbzQT1ZRtvmF/C8ehX1DbeD1c3J2JHoHmrP8qzrnz1isUxYkI63albfkBmzXBl3glT37UmBNC4y2TW8tuonQYrK0/T0fHjRoQcPU63fI02zkpvTInBLgVV1dFQXAy9TsBD+vpxfxxKR4O9WzL/eQs3Ef1KrHOR+dE0=
+	t=1711026827; cv=none; b=us7ENMKX9acL8c2B9aDrSpdNrBRW+NOwxlen/aapOH4LSFfkCixGJiwNpvnyeNDAqiOOU6U15/MP/TX54RWwvWw11NxCSquw6qQOo/5Le9cymAyWsPCe88vmkYIijTHQ4zQepPhu0WgNv4n9vS0c0kMJ5BGMR++EdnUQGpgo1HU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711026730; c=relaxed/simple;
-	bh=Zb5Hzo6Kr1m8yjB+xYfxWbOuD4xgr1dk+MGrlTYUp3I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oUuT8454cXyRYlwiubvwgTf4BWsPPPMaznzgFmp8zBZ90hp4TmMkV0aHqJteqar6j1D87Pfms8Vv8aRJZhPZyQY3UirTSWxsnHaVvPLmZFdjUjPyo2o4Mw8hYnyCER+DUyWFCOcI/h8foatjDXt+GBFCSBofgg670f6rDKQcvbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cKCttyJu; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711026827; c=relaxed/simple;
+	bh=lq9nBW+dTzU7kZhpJmWnXTaYlPNXHAXig7cPpzMEEWw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UNEPWouCbknkhUYR+ipJ9itOTOcFfViQlpKHsbNvahSl2qD8OQy0wqSrsjmOnBDC61wj2ZP6XUe1DNQDWZT4N0ZRYsLvKtVuuwSXuxPYzEBQALeJgpxgb9STtN1vmuc+L+vZI2V49jh6xx2stuzAwH3+jEe0V6Pz8cnIj5u42TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=oekcKsMW; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cKCttyJu"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D0AD72A9E2;
-	Thu, 21 Mar 2024 09:12:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Zb5Hzo6Kr1m8yjB+xYfxWbOuD4xgr1dk+MGrlT
-	YUp3I=; b=cKCttyJuzgj6zQOjAbR6QRTdxs66ukoaWoHegxSPmed95/urxo/ibx
-	mDSZslWhX9axgNGqVv5Q9uT3IWHI61Ddjp2ACqTwwF1eDxN8dbFuumoc8mt7ZlYq
-	k70O8oNEnbbQrBhi2V8d/OZYcmdP54kSljsjujpPGsv7xBMj15YxY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C33FE2A9E1;
-	Thu, 21 Mar 2024 09:12:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="oekcKsMW"
+Received: from localhost (unknown [IPv6:2001:910:10ee:0:a24:f690:de50:c41e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DC17A2A9DC;
-	Thu, 21 Mar 2024 09:12:04 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Brian Lyles" <brianmlyles@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: A note from the maintainer
-In-Reply-To: <17bea3e3320609ca.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-	(Brian Lyles's message of "Thu, 21 Mar 2024 01:38:24 +0000")
-References: <17bea3e3320609ca.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Date: Thu, 21 Mar 2024 06:12:03 -0700
-Message-ID: <xmqqwmpvbufw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id 352C660334;
+	Thu, 21 Mar 2024 14:13:42 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1711026822;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=i26d0bExCCbWymr1YuJyOs8eEKgjmN084/ftiqLcCjc=;
+	b=oekcKsMWq+zMD5/Mb0m2mS6gfDoFX2Oz8pdVvT5O1GGV+wBxHGB80ZBhp84rsmLd82v4pN
+	CuoV+AGwgjKsHa4331GaWJxZaB85JPNmdXb0Fbw1MNK1u/nmUsCr4uT7731U0ccoKzwFL5
+	RbvvwLaAf4gzA0TVBYdQtJ7WKTj1d5HAQBvwt/Y1XLTzicwYkEbtfMOnjMfMrSwky3Slqt
+	aaZR+jNXy4DtDf+RiNak3NLhpAMhEIbygOugH0B7XFaVNj/EDXp7RHZDHE4udgO317vDy6
+	CvIXkEAzfYpnJWtyd61J5Kz1Cpgb5ePvqSNZdCm18d39WvRHwc1lElEzvaYaTg==
+Date: Thu, 21 Mar 2024 14:13:41 +0100
+From: Max Gautier <mg@max.gautier.name>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [RFC PATCH 2/5] maintenance: add fixed random delay to systemd
+ timers
+Message-ID: <ZfwyhSgvhDASusFf@framework>
+References: <20240318153257.27451-1-mg@max.gautier.name>
+ <20240318153257.27451-3-mg@max.gautier.name>
+ <ZfwqD7z6S8Olc5xa@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9CE72522-E784-11EE-A695-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZfwqD7z6S8Olc5xa@tanuki>
 
-"Brian Lyles" <brianmlyles@gmail.com> writes:
+On Thu, Mar 21, 2024 at 01:37:35PM +0100, Patrick Steinhardt wrote:
+> On Mon, Mar 18, 2024 at 04:31:16PM +0100, Max Gautier wrote:
+> > Ensures that:
+> > - git maintenance timers have a fixed time interval between execution.
+> > - the three timers are not executed at the same time.
+> 
+> Commit messages are typically structured so that you first explain what
+> the problem is that you're trying to solve, and then you explain how you
+> solve it. Your commit message is missing the first part.
+> 
+> > This is intended to implement an alternative to the two followings
+> > commits:
+> > c97ec0378b (maintenance: fix systemd schedule overlaps, 2023-08-10)
+> > daa787010c (maintenance: use random minute in systemd scheduler, 2023-08-10)
+> > 
+> > Instead of manually adding a specific minute (which is reset on each
+> > invocation of `git maintenance start`), we use systemd timers
+> > RandomizedDelaySec and FixedRandomDelay functionalities.
+> 
+> I think it would help to not list commits, but put the commit references
+> in a paragraph. Something in the spirit of "In commit c97ec0378b we
+> already tried to address this issue in such and such a way, but that is
+> quite limiting due to that and that. Similarly, in commit daa787010c..".
+> 
 
->> I actually meant what I wrote.
->> 
->> It is possible that the reason why your patch did not receive any
->> response was because it was uninspiring, looked useless, and did not
->> deserve anybody's attention.  But it is also possible that it was
->> lost in the noise.
->> ...
-> Thanks for the clarification. I do still think that a change in the
-> wording and tone of this section could help make the project appear more
-> friendly to new contributors. Phrases like "totally uninteresting",
-> "uninspiring", "looked useless", and "did not deserve anybody's
-> attention" are all fairly harsh sounding, even if sometimes true.
+Ok I see how that would work.
+Stating the limitations of the implemenation added by those commits
+would be the problem we're trying to solve, then the proposed solution.
 
-You completely lost me.  How much harsh words are used before "But
-it is also possible" would not make the project sound less friendly
-at all.
+> > From man systemd.timer:
+> > >FixedRandomDelay=
+> > >  Takes a boolean argument. When enabled, the randomized offset
+> > >  specified by RandomizedDelaySec= is reused for all firings of the
+> > >  same timer. For a given timer unit, **the offset depends on the
+> > >  machine ID, user identifier and timer name**, which means that it is
+> > >  stable between restarts of the manager. This effectively creates a
+> > >  fixed offset for an individual timer, reducing the jitter in
+> > >  firings of this timer, while still avoiding firing at the same time
+> > >  as other similarly configured timers.
+> > 
+> > -> which is exactly the use case for git-maintenance timers.
+> > 
+> > Signed-off-by: Max Gautier <mg@max.gautier.name>
+> > ---
+> >  systemd/user/git-maintenance@.service | 1 +
+> >  systemd/user/git-maintenance@.timer   | 3 +++
+> >  2 files changed, 4 insertions(+)
+> > 
+> > diff --git a/systemd/user/git-maintenance@.service b/systemd/user/git-maintenance@.service
+> > index 87ac0c86e6..f949e1a217 100644
+> > --- a/systemd/user/git-maintenance@.service
+> > +++ b/systemd/user/git-maintenance@.service
+> > @@ -1,5 +1,6 @@
+> >  [Unit]
+> >  Description=Optimize Git repositories data
+> > +Documentation=man:git-maintenance(1)
+> 
+> This change feels unrelated and should likely go into the first commit.
+> 
+> >  
+> >  [Service]
+> >  Type=oneshot
+> > diff --git a/systemd/user/git-maintenance@.timer b/systemd/user/git-maintenance@.timer
+> > index 40fbc77a62..667c5998ba 100644
+> > --- a/systemd/user/git-maintenance@.timer
+> > +++ b/systemd/user/git-maintenance@.timer
+> > @@ -1,9 +1,12 @@
+> >  [Unit]
+> >  Description=Optimize Git repositories data
+> > +Documentation=man:git-maintenance(1)
+> 
+> Same.
+> 
+> Patrick
 
-Let me try again.
+Ack, will do.
 
-You see your patch was sent but did not receive any reaction.  You
-might start thinking: "hmm, perhaps my patch was so horrible" and
-you might think all the bad and harsh things about the quality of
-your patch.
+> 
+> >  [Timer]
+> >  OnCalendar=%i
+> >  Persistent=true
+> > +RandomizedDelaySec=1800
+> > +FixedRandomDelay=true
+> >  
+> >  [Install]
+> >  WantedBy=timers.target
+> > -- 
+> > 2.44.0
+> > 
+> > 
 
-But do not let such thought stop you from pinging the thread again,
-because the quality of your patch may not at all be the reason why
-you did not receive any reaction.  It could be just people were
-swamped and your patch fell into cracks, and there was nothing wrong
-with it.
+
+
+-- 
+Max Gautier
