@@ -1,220 +1,127 @@
-Received: from CAN01-YT3-obe.outbound.protection.outlook.com (mail-yt3can01on2119.outbound.protection.outlook.com [40.107.115.119])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57A5A947
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 15:51:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.115.119
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711036301; cv=fail; b=SsFxA5F/n0ViHrW1+TQ/KwszLUBXcZkW0ogCCCrvEk6vBM9Jl1LqsNtCzXSKMG41nOKT9CBlRwRT01Sg4kCq8Ypzq5KkSJf8p0hqnvN5CN1eY5pbXuGjIxGqwIRMWMSAXLKHG8/gI1q6+z2OcXjh5winZmWdLMGiv36VzpdMSA0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711036301; c=relaxed/simple;
-	bh=1Yo/yZ2qhk5gyR0czhp8F5eq6jt8Iq9NGK0NUzY712E=;
-	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Pn0Dk1jqGoD5XwjdIF+U9A1hPxk7bEL6tSKBuinWkzLvJgmE9uK0dRk+VKdMcyLzk1jXS3XWZo9WhV8LHy/Pya8cmEqOYWIqjluna2hmAnl+G3hqeVFISCYnNp1tc0JG05Mb7OBojV6GIjEGAdJSElv9QKKoexbPtllUfVAqlS8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com; spf=pass smtp.mailfrom=xiplink.com; dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b=GukU93C9; arc=fail smtp.client-ip=40.107.115.119
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xiplink.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2906A86245
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 15:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711036401; cv=none; b=kuL1WvckVLCae20CbHyQOmFw7p80IX681rH670E7uLFWng9CmfDss+u+VcdUzYc9l0n1nVY/nxA5vciOiyCegRLrpVs9uS9WmxJUdzNoQpA3KPD0hfjB3EmkT1ZpYT5ARmmO4FS/d+Nbem5wX3tO72vmtZKjZvEKqPyF9m621uc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711036401; c=relaxed/simple;
+	bh=tZ1WFRkcghTeuhb8p9i/7xm8PN7H7Bosq2ezqbqNCCE=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=BLbMVEwstl9OeWtSiSP47QfxfekVLLc4u+JfIRkq6dpj+A2eu6hlFoQsjrNYp2ECzONm9DYiAnbTHWvG7d1dGw8u83Rza/MhKYFmeyPPBfvL7e3Pu4G78PpmLU9X5lTHkPiaFbYv7mher9Cy95RXBew4tS+XKebWiYCEkgzuq8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=nS+d8jLB; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b="GukU93C9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=idkaSNQNYyXcF176QOlfRz9yJ6kImoiUITd3GchHcljwgt0++KQxzinSRmSoP2R9uOUhuxDB8+M9+HqKf8Ygsc2JGrjw6ywRUamjeUGMDpW4TfaZqtqhUn41tGL9wd0hxnijA5qx3Y2O6I5xyEttKkFJshmv0n236fz9wAL9fr/f2Qu/qyygBj1DNo8yyZHat6C7z3NWPflBHUJc7XVm6qoP4BYoxuriFx7/IdmhuG9pG1I698I1w2ogEUy9RRWh7p5mTIIh3ev50cGV3OvgmmtNWu7NDPk0VyM9E3z409vnWoFftKilembYEG3kW1ztIfzhY6N1nixn5rCoMLZNjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K+XV+ExeZbeYtK3pKCVKDrTXQ6lcKtK2fvNYWizTXTU=;
- b=iErTQrXkuZpiDXeom5kGpNOEFa0MMnHZphf3NuBmpwHtdP7KY1R6TaKOPwsX1Wq5LAsZscxKtCuv7Nm2rgTPr0J5aw18H3QrHHQTBkyFP0QZ1RGTJSdKf3Sv5Kp20LILIsODUtmy7ic86mTWP+I1xWxrNmuJxdR0S/uhNjFrXdvxhQq1PzxvhaBfrcik7ktYpy45uFRgdNKPLoZeCy1xp41hFN6dtdl+fTAxVBNzYUuWe3bFqvIblpWvij105KPnoGg5dOcqDc2wAdeqWNYLkaZd8eI7P5YUUQcSyoY+DoHWAVVddqbfqhvxPWj8l/yCFYCJIrJQ71VJCpoHrCx3hg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
- dkim=pass header.d=xiplink.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=xiplink.onmicrosoft.com; s=selector1-xiplink-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K+XV+ExeZbeYtK3pKCVKDrTXQ6lcKtK2fvNYWizTXTU=;
- b=GukU93C9SCr2WhXALS1PCiVYpR6OamQMtVaDnaQ9AbusxKX1oHBlyofVWpyOmVRxhl3EjtZujsfBU0t7cMbWTNMAeYfn8WnUa6oBbb9Vab+kdxtn2MzF/bXWxcWZZwQSCArLx3TVgUQfgTrwa7cSwl6BSpHnqbX5hxCifEkcJj0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=xiplink.com;
-Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:f5::10)
- by YT3PR01MB6488.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:73::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.24; Thu, 21 Mar
- 2024 15:51:36 +0000
-Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::c6dc:38bd:5001:264a]) by YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::c6dc:38bd:5001:264a%5]) with mapi id 15.20.7409.023; Thu, 21 Mar 2024
- 15:51:35 +0000
-Message-ID: <27b9c158-5cb1-46bf-851a-88a02448fa2d@xiplink.com>
-Date: Thu, 21 Mar 2024 11:51:33 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: add "Hightlight commit name" menu entry
-Content-Language: en-US
-To: Raphael Gallais-Pou <rgallaispou@gmail.com>, git@vger.kernel.org,
- David Aguilar <davvid@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- Denton Liu <liu.denton@gmail.com>, Paul Mackerras <paulus@ozlabs.org>,
- Beat Bolli <dev+git@drbeat.li>
-References: <20240130085308.5440-1-rgallaispou@gmail.com>
-From: Marc Branchaud <marcnarc@xiplink.com>
-In-Reply-To: <20240130085308.5440-1-rgallaispou@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQZPR01CA0093.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:84::23) To YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:f5::10)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="nS+d8jLB"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT2PR01MB10537:EE_|YT3PR01MB6488:EE_
-X-MS-Office365-Filtering-Correlation-Id: f00c739c-e1fa-4fa9-ddf5-08dc49bec915
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	e8EhXDU/EgsWEHXpMmPxCdCsKaQJFv5uiAXQSWOvw/tl7VayulcDVzZe9eG2fRTXTJ/xgF1sr3Am4l+1xP2qLOnNzhV9O9opA8krP3ikmR01EAogO1EbUWgsEXqCA6C+YtPbIvom53NG+uEMxn5J41MllipewItOvIZPjYOITvGLqbyxh1za8lrFz1FqjcLscJ5Y1tf1M3XUY+306vS5wQXqjmANSXKARf2QwavGXVtXFOBKwnf9h9IpRqbcBJv3xg6RkNML+oRIE120yW+eLI0OAfWx78AdPemWSz+LgTjIuEilVGEWc0/rf7jije31qdAI/GW2qQE1ERS7XbjtNzNgIMtv1vn57lB27Xn0R0Is7XivKSFaTwD7atRvvENVyWNUL0T7XThnAbG1Z8evrEgfJwZsea/OreL5mZDuBGoGUg0hWwW6VIwwtJ5as2zw2wewRRAYfvEiwzG2qeY20aTyNt3hgf+ltJ+5LSVBmxKRR2/N5bmFwPDb0tjejlfVlyjoIau2rWnZOcUSNSlCtGQvVVdtxSOkLmO8GACdgnn/Q8uVhEVh8702gpupX2TAi2HSv5wxNDNpT9MavriedRZgnwAyk9PaGEu7psDamB4qSwo5TMyAeSTVs3QR0UXzct/32LQS6FHPQFnTcdfDrgfM18iWu+/Z/Y2rCat7AXI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WlFibm54ZUtMSVBKdmppVmtONGZNbzIzVERCNklaQUw0Zks0NzRJUDJReVdy?=
- =?utf-8?B?MXVyNGttUjk0Q0lpM2p6dk5EUGlHdG9YZTh1UDdFWlNZR0pXSUFVVUtSM3dG?=
- =?utf-8?B?SDRZc2Z3a1Z1SUY4RXVpT2wzcE5ac0VKbFdwU1RLejVsblh3ek9sSFROTHZi?=
- =?utf-8?B?WnE4dXNtaWhENnFVMVBETndyemhhdGtNTC93a3ZGbjVoSHJPNlovd1EzcG1V?=
- =?utf-8?B?UzZ3T3FUSjl2emNXVE5ibDZuc3ZZT3g3NzRJWklJWTdFU2NGdGJqSElFQWp0?=
- =?utf-8?B?czdRdjJ6anpkNS83akxxbkM1U3FPaldpNlRPb0t6WS9GdjhkUmQwcW5pSFdB?=
- =?utf-8?B?Rlp5MDVGR2Y3YXI5a3ZPYU1meW1IaHUwZk5lOW9VeGg0dXNSLzh4dlRRdTkr?=
- =?utf-8?B?UmpLN1BjMFBVZ25WZHB4a0l0U1JrYnV5YkkxSHdaYzBHTGx4cUZWOXJtUm14?=
- =?utf-8?B?YThLZUV1eG9lMWhKYlU3ZjBjZjFFYlM5SDJ5aHFNR2JpOC9sTHlNZ1JCTmUy?=
- =?utf-8?B?WThsampUUFJyT0lBaDJrVThzODFNa0dON3Zsb0VHRlQzWklLN2gzbzUwWFV1?=
- =?utf-8?B?dndtZUdpZTZ3U0RBQk8xUXZCZzVZbXd3eEVuQUd3S3ZuRW9pTWtEcXRnelha?=
- =?utf-8?B?eURlM1lLOElpdVdNNFFtUjlyUnNuVlZ5SjFwT1lZOHZ6Sm1meGZJV3BHVWhC?=
- =?utf-8?B?ckovdzVCVEd1eXFWemlrYXhKZDJrVVhJd0pkOFRNTC9wRVNvL2NPYjg5Y3pN?=
- =?utf-8?B?ejZFQWFYdXlWNFgwUk1nVGJnMStoaXlidURkUDV6emZqV2cxVS93eWtoTHdF?=
- =?utf-8?B?MlMvRFk1Rm9ERHBySW1Lb3ZVV1NkcjhLUTJCL1ZzQ1JMWVBlY1FHcmU1TTVU?=
- =?utf-8?B?TzJTYjJzN3h5dnN3aURpbXZkZm56UHVrS2w2R0ZMb2dIMDNMdmZEZUcyMjJC?=
- =?utf-8?B?K2Q4akxiTVJtdkU0emoybmMwZU1OKzBSL0x2dnp4VjR6cTg1MFdDMmVHZUEz?=
- =?utf-8?B?UHN0UWtXc1A1aS8yRUJIVWU3ZmtBeXY3TS9mRlc3MmZ2M3JTWXNlRm5XSDJn?=
- =?utf-8?B?UXl6RVlVZnZIZ0xrVVI1MFFnbmlmMFBwNW5VY0YyMnNTYkx4QkJzSWQxK255?=
- =?utf-8?B?L29EWEhUTE43eFVscWtvaEcrZGpmNTh4ZThvRHNNOXFrV3Z4QkljRGRXZkdW?=
- =?utf-8?B?MVFSRmp1SDFYempHblFUUmphZTNhekZwS3RNVTVySjhwUFVabzFOTzc4RnB2?=
- =?utf-8?B?RmJ2KzlQYkdja3lCRTNKd0tWL25GZlFOU1UwbTd4MVhWNnI2cEpCa052Zm9O?=
- =?utf-8?B?MTRCZi9reGt6YXR5RDZqYjJzbUM0L09HQ1VZQWpaeHJRRXA4aUV3MmdIN3o2?=
- =?utf-8?B?bmtIYjNpVXhlbHVDdG9WdDdtbGNOWENoUVY3bmhKQmh5RHFwaCs3cjhMYnVP?=
- =?utf-8?B?OE0xM1Jka201MW5kbHR2aldYdjBXdVpEc1JhSTgyVStSaG9Xc3JKSkYxclYw?=
- =?utf-8?B?OU5EV2x3YTZxR1lNNFE2TW0xUWVHckxmc1Z5SFNUQkhuVk00Y1lwS294azNr?=
- =?utf-8?B?YUtJcmo4VXZ6M25vWHkxNVhlTkkyQlF5cC9JSDU2UGNUN3A0bUtRVFdYTWlW?=
- =?utf-8?B?UHhCWUN1eThYS2c5M1A2UDI3aVVMQ0I5RU13TkVMQ1BUb2lJSm1VTEsydFY3?=
- =?utf-8?B?c3g0TkZzTFQyM1dsdHZ0Vmkxam5TeUFDS2FiM2NUVi9sTVZsbUZBek9wS0Fv?=
- =?utf-8?B?RGNlRThTWWQva1Q4MFhSQXMwK3pESUlrVVZPQ2N1RHhUamQzSXozQ2VtWkR1?=
- =?utf-8?B?SFFXdGJWdDVtc2FjNU93d2tWS2NNbS83Z0VqeVFLVm5RMHlBT2dRTWs2YVBz?=
- =?utf-8?B?NTl0YmR0d014NEp2empUaWZDMmNlc0FrbERDdDBpeXlNRkRzd0RkZ1VyQnhi?=
- =?utf-8?B?dExGNW04R2k4d052a2crOEVmdE1zblBjRXRlc1E1cGRWb0RtajZtUVZsT2xP?=
- =?utf-8?B?U0RLVDVaVDh0Yi84YmV4aFQ2UUFnbTdiVWlDSGhWK05xazJaQ1FUbHZZU2Nt?=
- =?utf-8?B?dmwrZXRGVHhJd0JSRUNUYjFnNThISW9YelpVdz09?=
-X-OriginatorOrg: xiplink.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f00c739c-e1fa-4fa9-ddf5-08dc49bec915
-X-MS-Exchange-CrossTenant-AuthSource: YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2024 15:51:35.8904
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IXO2kQ8pUs2iDYFkfoGwYObqCN5Io8ql0C5ZKZKyVKXpqa1uMHadJsIrV2kpNJLPNzUrRezKtiW8gld6qmh66g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB6488
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1711036396;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cW+vuUugC58glugDtO/3sKDAqKOERKnEsQVM6uaJZDk=;
+	b=nS+d8jLBTSfRViXlJJ3cpSP75G3ArNINYgTG6N5ED6iCmvmHbaRXkV80xm1ARU9iWChgcz
+	vxpw1afj0mwmqwMYmrJ5da9N43M/oNf934SJ8a8y+ROxzhQ0fdLFLXMYegsUKHciY09tpY
+	wm3e9YC5slBHfbcNhXji54+qrwh6f5Mrh3WWEqHXf66H+ZZaNdMUQaUzznosMlTZWUA/Oa
+	7WgtEbJ9su2TKZG+LKXXkryZMv1mN4r9d/W8M/Fey6SsvfIhGSHtzeeqaj3XVw+M1CG+Tm
+	W1Vh4lKOGmgqoScj5l5Y4jSi5dLcsC4VxaEpFtIPFBsQVWOrsMXtZnfUa4cC/A==
+Date: Thu, 21 Mar 2024 16:53:16 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Thomas Guyot <tguyot@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Christoph
+ Anton Mitterer <calestyo@scientia.org>, git@vger.kernel.org
+Subject: Re: why does git set X in LESS env var?
+In-Reply-To: <5752129cbefe064a10e57e1b628e516c@manjaro.org>
+References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
+ <xmqqa5sokdd3.fsf@gitster.g>
+ <20231012000416.GA520855@coredump.intra.peff.net>
+ <xmqqh6mwipqi.fsf@gitster.g> <3946c06e90604a92ad0dddf787729668@manjaro.org>
+ <xmqqr0lzhkzk.fsf@gitster.g> <a831af51b6fb46b5d6fcd9768a7fb52d@manjaro.org>
+ <cfbe174f-23ac-4a35-8db4-66bdfdfdc14e@gmail.com>
+ <8022dae27797bf1e1770f099ed37f5d3@manjaro.org>
+ <d54eedf0-7825-44f5-908c-a51541345872@gmail.com>
+ <79cf1bf35ba6c9348735685b01e0f2f9@manjaro.org>
+ <5752129cbefe064a10e57e1b628e516c@manjaro.org>
+Message-ID: <8289ef15266172cbfa10bb146afe9797@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+Hello all,
 
-On 2024-01-30 03:53, Raphael Gallais-Pou wrote:
-> When working with diverged branches, some patches can appear several times
-> on different branches without having the need to merge those branches.
-> On the other hand you may have to port a specific patch on another
-> branch you are working on. The search with a SHA1 cannot be applied here
-> since they would differ.
+On 2023-11-06 04:47, Dragan Simic wrote:
+> On 2023-11-02 15:19, Dragan Simic wrote:
+>> On 2023-11-02 14:19, Thomas Guyot wrote:
+>>> On 2023-11-02 02:48, Dragan Simic wrote:
+>>>> We've basically reached some kind of an agreement about the need for 
+>>>> a
+>>>> good solution, which turned out to be rather complex as a result of
+>>>> being quite universal and extensible, which was required for it to,
+>>>> hopefully, be accepted into less(1).  Also, the author of less(1) 
+>>>> seems
+>>>> to be quite busy with some other things, and he prefers to implement 
+>>>> new
+>>>> features himself.
+>>>> 
+>>>> We've also agreed on another new feature for less(1), hopefully, 
+>>>> which
+>>>> isn't exactly related, but should be quite useful.  It's about the
+>>>> secure mode for less(1).
+>>> 
+>>> Feel free to cc me on your next correspondence. If there are mailing
+>>> lists archives for the thread I'll fetch them as needed. We have at
+>>> least one working term/switch combination, which IMO is a better 
+>>> start
+>>> than nothing :)
+>> 
+>> Please test the "--redraw-on-quit" option, AFAICT that's all we need
+>> (plus the already mentioned other improvements to less(1), to avoid
+>> the version-dependent workarounds), and the distributions will
+>> eventually catch up with the newer versions of less(1).  If the whole
+>> thing has worked for decades as-is, it can continue working that way
+>> for a year or two until the packages get updated.
+>> 
+>> There's actually no two-way mailing list for less(1), the entire
+>> project is pretty much a one-man show, so to speak.  There's a GitHub
+>> page that allows issues to be submitted, but I didn't use that, so I
+>> exchanged a few private email messages instead with the author.  I've
+>> already summed up the important parts of those messages.
 > 
-> This patch adds an entry in the main context menu to highlight every
-> instance of a commit.
-
-Thanks for working on gitk!
-
-Unfortunately, I don't understand the description of your new option. 
-How is this different from the existing "Find containing:" feature? 
-Gitk can already highlights commits that match a specified string. 
-Please explain what gitk does when this new option is selected.
-
-Also, please explain how your code identifies "every instance" of a 
-commit.  When I think of a "commit instance" I think of the
-"git patch-id" command, which I don't see here.
-
-(It looks to me like this is basically a shortcut to auto-fill gitk's 
-"containing:" field with the subject line of the selected commit?)
-
-> Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
-> ---
->   gitk-git/gitk | 23 ++++++++++++++++++++---
->   1 file changed, 20 insertions(+), 3 deletions(-)
+> Good news! :)  The author of less(1) has implemented a couple of new
+> features that should resolve our issues with the pagination.  The
+> improvements for the secure mode of less(1) have also been
+> implemented.  I'll test all that in detail, and I'll move forward with
+> implementing the required changes in Git.
 > 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 7a087f123d..4b15230a16 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2672,6 +2672,7 @@ proc makewindow {} {
->           {mc "Make patch" command mkpatch}
->           {mc "Create tag" command mktag}
->           {mc "Copy commit reference" command copyreference}
-> +	{mc "Highlight commit name" command highlightcommitname}
+> It seems that a new version of less(1) may also be released rather
+> soon, so we might be on a good way to have these longstanding issues
+> resolved in the upcoming releases of Git and less(1).  It will take
+> time for the Linux distributions to catch up with their package
+> versions, but also the rolling-release distributions will get the new
+> versions with no delays.
 
-This line is indented with a tab, but it should use spaces.
+Good news, new beta version 653 of less(1) has been released! [1]
 
->           {mc "Write commit to file" command writecommit}
->           {mc "Create new branch" command mkbranch}
->           {mc "Cherry-pick this commit" command cherrypick}
-> @@ -9002,13 +9003,13 @@ proc rowmenu {x y id} {
->       if {$id ne $nullid && $id ne $nullid2} {
->           set menu $rowctxmenu
->           if {$mainhead ne {}} {
-> -            $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
-> +            $menu entryconfigure 9 -label [mc "Reset %s branch to here" $mainhead] -state normal
->           } else {
-> -            $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
-> +            $menu entryconfigure 9 -label [mc "Detached head: can't reset" $mainhead] -state disabled
->           }
-> -        $menu entryconfigure 10 -state $mstate
->           $menu entryconfigure 11 -state $mstate
->           $menu entryconfigure 12 -state $mstate
-> +        $menu entryconfigure 13 -state $mstate
->       } else {
->           set menu $fakerowmenu
->       }
-> @@ -9481,6 +9482,22 @@ proc copyreference {} {
->       clipboard append $reference
->   }
->   
-> +proc highlightcommitname {} {
-> +    global rowmenuid autosellen findstring gdttype
-> +
-> +    set format "%s"
-> +    set cmd [list git show -s --pretty=format:$format --date=short]
+Version 653 contains new pagination-related features (in particular,
+LESSKEY_CONTENT and LESS_UNSUPPORT) I asked the less(1) author for,
+which will finally resolve age-old pagination issues in git and
+a few other upstream projects.
 
-Why bother with the $format variable here?  Couldn't you just quote the 
---pretty part?
-	"--pretty=format:%s"
-(FYI, I am not a TCL/TK coder.)
+I'll test the new beta version, after which I'll start working on
+the required patches for git and a few other upstream projects.
 
-		M.
+Looking forward to resolving those age-old pagination issues! :)
 
-> +    if {$autosellen < 40} {
-> +        lappend cmd --abbrev=$autosellen
-> +    }
-> +    set reference [eval exec $cmd $rowmenuid]
-> +    set findstring $reference
-> +    set gdttype [mc "containing:"]
-> +
-> +    clipboard clear
-> +    clipboard append $reference
-> +}
-> +
->   proc writecommit {} {
->       global rowmenuid wrcomtop commitinfo wrcomcmd NS
->   
+[1] https://greenwoodsoftware.com/less/news.653.html
