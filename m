@@ -1,80 +1,81 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00D783CD7
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790DB83CD3
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711026558; cv=none; b=G8Bl5/6NWTsC2Calv2+mCTBTpoDogBkqOcdmfuIyC6Lp8j/MRtAx7DeyxCNgyHW+4mKN1HakcHQz8Kg5ltKvPw24ILP4S3tN0JlRWwH5R/M4PtyQ+F24vr47+2DkeEjzX20AiTdRK881k8xGgROEMLV4vJT3l7viDJUHjSK79TE=
+	t=1711026607; cv=none; b=EmtDZ/R1/3Beuym09v2vcAAeRA9DZduJS6YF5S/mMEPuMxgbRzgCCmHCk4Bllhs6vez/SLOQYwdTXc/qB+9hGqj/ycpVKRLxq3kuQIGlF5ztj8R8++NczD0mIFd4LF2PHek7vSo+z342kId/DtdUY2hO9w//L05U4mvQ7aujcv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711026558; c=relaxed/simple;
-	bh=LQNIdWYin9oo8d2qWtCmvzs6Nec7hJDgU45OLztKlW8=;
+	s=arc-20240116; t=1711026607; c=relaxed/simple;
+	bh=uRhqMUDIdpTnp3upPw9qCS+Ij8B8iWcre5cUHaEPb/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MsArsSvlvftrnyBoh+MPlnddGQkzZb0pNU+MvMe1r5sk1YsqrHl9oCuIgup+JKtVsANhZczTuxQZ5tKbqfVG6+EOKlC+rm30CfPmH4C9YN2swJtNuW/ysD39+OkE3xcN3IEkUXKPlYYWoNF2ERhREDWrP6FLrVh/2X0o6mLL/XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AGfabZfc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DwktBieG; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=HuevTU/q2B9khLOkp17tX3dqJdJmLk6sqHXtt8oJvnYREZ8gEU4KaV5SrlfeXzHTzLNWQA9lZVkEQQk1p+2JmBEGSXnUCLuqPvfCHUvc2LSDvK10pnVLM9UF+frpmzpmmu8p0F7CgRqO4P/PxgDi2eAlMZBCG0vumiugEbMBIVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UlBQ+3st; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q1Fp52Sm; arc=none smtp.client-ip=64.147.123.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AGfabZfc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DwktBieG"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UlBQ+3st";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q1Fp52Sm"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id A80CA18000AA;
-	Thu, 21 Mar 2024 09:09:15 -0400 (EDT)
+	by mailfout.west.internal (Postfix) with ESMTP id 21BA01C000D6;
+	Thu, 21 Mar 2024 09:10:04 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 21 Mar 2024 09:09:16 -0400
+  by compute5.internal (MEProxy); Thu, 21 Mar 2024 09:10:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711026555; x=1711112955; bh=LQNIdWYin9
-	oo8d2qWtCmvzs6Nec7hJDgU45OLztKlW8=; b=AGfabZfc0MhgQJzRAIbD8F4yVZ
-	FZbX1FXsm6WQGBtG0Dq9bp+zV5y0uvWcbtmGgl27Fd9THlL/pdOECXUKTdJF3Jpz
-	cnb3sYP4IleUlxj6TCNjj+o52+sVR5iy7B0ggP1acgDcgjgXSZa+diR1NII6KnVi
-	hJUrPMmOPkquAUT9JBY/ScTibv4+04Yh59TEBCcmBDqZT6sKkPlhlmfs1nzoX2wg
-	flG4XqmJdgOsK4MD5lPF0AmcaDY19k8m5imoT0Oszj5x0ko7Gb2y0f7+IJNDPYgc
-	l54ZYEpe/bd16a+dRdm7krEmIuo8F+6QdHtwfd/N6GEmuo/MPvi+N311CAKg==
+	:subject:to:to; s=fm2; t=1711026603; x=1711113003; bh=uRhqMUDIdp
+	Tnp3upPw9qCS+Ij8B8iWcre5cUHaEPb/o=; b=UlBQ+3stC8JcJvXfEv/iQdulLU
+	0nl7k/iwDXQ0zKWF5VG/xGRTroJLhf5/dtQede1KKTAA/mUxoiaHAtZ5LLwN0bXQ
+	D0yrrf0frL/KPnLVfy7sXhPUKi03+/9TjOc3qAvLPqz0towS0CwcqLgbAhuBJEx/
+	DpdXDuXmEjLe9WID2tgj2gXWOjeE7xbPeyboSDrt39ZaU1w6Ula60WQz7zraoHBK
+	3AEquM6oBEc76rpNWuivOLsxjncY6lIYCC65gi+AZB38AeswAM4+kR1LEkuVMnn9
+	2jBNle6GzU83uYXv54+IlC9mXuGLwTfjRBU9MCK8b97RwyY8VYOvZjSxxHRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711026555; x=1711112955; bh=LQNIdWYin9oo8d2qWtCmvzs6Nec7
-	hJDgU45OLztKlW8=; b=DwktBieGMEX98bhsu6mdbmcLbdRH5DHk+jJw7c/dMD+J
-	FtBUCGbsD+llmdynVIiP+eNza38+W3MqFg7OQO/2jGF6cgKLPKe6HNODO5hWwUqL
-	zw04gLQFmGO6c8fMbvjeZigny9bzhocNgG8TslmMyOSWniGDe1fRruik5Q/9v/AW
-	5j9Edc6UOvJv4E9C9hi78Yfim5qZOZrXjlvNBAjYpJbsgfhRWE6Qx1TApHbCSBSj
-	CdcMmFHPGwk/UTx90+wYdoIto5xz02KQ4yi6hPoP19OdNiLXZ3m0ztAm1xq+YSxs
-	P66vZNPCAdA+Zohpscs2EeoJ4d2WDoGZ5bfgw6NMIg==
-X-ME-Sender: <xms:ezH8ZfJGGh5jFurQlfuC7bVhcKJ-POQldh0fV5Ma54STA2wCo2w5xg>
-    <xme:ezH8ZTK9-_eq8SvBDw9uNh_qPAalG9iizwf7K5f4bEjiD6ddGvclW5gCFcDIM89o2
-    okhMqgKUscmtA7Faw>
-X-ME-Received: <xmr:ezH8ZXvSon-tGy7JT5la2E-599aR5YyITCuhE_9rU6oC1VghPeUxSbOr7A-VG2YUMXDgtF9yQEWRTW3MeghzAJF1SE9iXUW3s3RrREjSNOLgPA>
+	fm2; t=1711026603; x=1711113003; bh=uRhqMUDIdpTnp3upPw9qCS+Ij8B8
+	iWcre5cUHaEPb/o=; b=Q1Fp52SmnZfSNeCTQU/ZbpQvhNFm/oZQUp41PIkjdrv6
+	UN8KlvkEWPinLoRVXyEhTuaEuS0dL7Bp3qj3eJmoCxOcLen+EX+ui0+QL/e5YdLO
+	sF8/LJ8vuJIo1H97gSYiQTJfLS+EyORCTM2sSzGBcqEu05jGC5wi2L42XxcmFSNx
+	Hpuo5xqQq52qGs4BJlWyQ6Q3UmelbfR0KckZAYuB284GDYLT2/F/C7R/XQ3seYph
+	eRsKCplFnxRZvWs9gB50TEuWLtF+pLkUnQiTvxXZDgr04keww+1OvDgs0Wk38wKE
+	8NjPhsX7SE48SV5pF13/yNP+JX06sKQuGSn2giv54A==
+X-ME-Sender: <xms:qzH8ZbdzQ2E_rT4Hi0qL6ybXxUe5a2KhQwDF-v3KhRDnFm-gnQItiQ>
+    <xme:qzH8ZRPLWKoGq4NaS8S11THoIp8sDs3Vd7cgFgnVS1fCnRGmyn8hu1aTWSIA1661E
+    XST6joKYqfK66Kwng>
+X-ME-Received: <xmr:qzH8ZUjhJfU5mfPuK8WkG7gxKN-2sLPLgzZdpvCH7KkSPZlLMUDbz7R4q9YGytYdcvHhVbviemJJW-gW6PFt7GdOnOLGwHAt21V0RapiNtj6hw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdeglecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:ezH8ZYaMtZk5blpFZi8y8RMUpy7TFPno8feO4QjMtzyoUicGrL21fg>
-    <xmx:ezH8ZWb9WIpzU0c0ct_87dQjaNb806bws08z5mBxpwXJfSrTWC5YqQ>
-    <xmx:ezH8ZcAkfGpV3yBP0Oyrg_VnAIJyFyqaBEhpQ4asyZnamRvIz6i1RA>
-    <xmx:ezH8ZUa3fbMqmkNgaFHLLM1re1KJ32tUg1vZvGu1VSBnThogbpbZtQ>
-    <xmx:ezH8ZbNMT2o59rO2J0Fsrnu9FO0ToNaPQ97MjDEXmNrmvtC-al1MjOs4btk>
+X-ME-Proxy: <xmx:qzH8Zc8Hy8xPj0ULqtLxR-FE6luhG2cKVAUo9rrf7hkBbzx2e7-IHA>
+    <xmx:qzH8ZXsRjow8anqm27KVO5KidlXQn0_yrojNid5O80nwJcSR8J04Lg>
+    <xmx:qzH8ZbGPfMRRGTl__CcqkS0DX4AeB-Pi4wP7VUu_9lvjdwZRrmFg0Q>
+    <xmx:qzH8ZePF6_ntRBhOMf8jWTa1UWEteBUxC1TkVq5UmETs4qBivwls3A>
+    <xmx:qzH8ZXLaikp1LweLpHJN3PxIu2V0Oz7Ys5xyTFNN9dMV8fguhuqG2KQxDMU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 09:09:13 -0400 (EDT)
+ 21 Mar 2024 09:10:02 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 385e04b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 13:09:08 +0000 (UTC)
-Date: Thu, 21 Mar 2024 14:09:10 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id f8902a44 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Mar 2024 13:09:58 +0000 (UTC)
+Date: Thu, 21 Mar 2024 14:10:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: eugenio gigante <giganteeugenio2@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	karthik nayak <karthik.188@gmail.com>, phillip.wood123@gmail.com
-Subject: Re: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
-Message-ID: <ZfwxdiF2RPS23zAl@tanuki>
-References: <CAFJh0PSRrz=WYvuXgFGER6_E5qshVKSWNxBDgVo6GcCGfFDK8A@mail.gmail.com>
+To: James Liu <james@jamesliu.io>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/7] reftable/record: avoid copying author info
+Message-ID: <ZfwxqBTLFYHI0SGh@tanuki>
+References: <cover.1709640322.git.ps@pks.im>
+ <6f568e4ccb67a7af8279352153d052c5f9a88234.1709640322.git.ps@pks.im>
+ <CZS7Z199NZUG.2EM4STQ664P9W@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,60 +83,57 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Z/G5Q2Nd69lq0iSF"
+	protocol="application/pgp-signature"; boundary="41J8gLcs/UaEGhNF"
 Content-Disposition: inline
-In-Reply-To: <CAFJh0PSRrz=WYvuXgFGER6_E5qshVKSWNxBDgVo6GcCGfFDK8A@mail.gmail.com>
+In-Reply-To: <CZS7Z199NZUG.2EM4STQ664P9W@jamesliu.io>
 
 
---Z/G5Q2Nd69lq0iSF
+--41J8gLcs/UaEGhNF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 15, 2024 at 11:05:41AM +0100, eugenio gigante wrote:
-> On Wed, 24 Jan 2024 09:51:52 +0100 Patrick Steinhardt <ps@pks.im> wrote:
+On Wed, Mar 13, 2024 at 12:09:23PM +1100, James Liu wrote:
+> On Tue Mar 5, 2024 at 11:11 PM AEDT, Patrick Steinhardt wrote:
+> > Each reflog entry contains information regarding the authorship of who
+> > has made the change. This authorship information is not the same as that
+> > of any of the commits that the reflog entry references, but instead
+> > corresponds to the local user that has executed the command. Thus, it is
+> > almost always the case that all reflog entries have the same author.
 >=20
-> > We also have consider that there may be alternate implementations of Git
-> > that would only know to handle the old layout. Those tools would be
-> > broken in case we did such a migration, but they would be broken anyway
-> > if the bisect was started via Git and not via the tool.
+> What are your thoughts on simplifying this explanation a little bit? I
+> gave it a try below:
 >=20
-> The first implementations that come to my mind are Jgit and libgit2.
-> I took a look at these two and apparently there is no support for git-bis=
-ect.
-> Maybe you are not referring to those.
+> Each reflog entry contains authorship information indicating who has made
+> the change. The author here corresponds to the local user who has executed
+> the command rather than the author of the referenced commits. Thus, it is
+> almost always the case that all reflog entries have the same author.
 
-I'm basically referring to everything that has wider use out there and
-that knows to access Git repositories. I don't know about all the
-implementations out there and whether they do or don't support
-bisections. If they don't then this is great, because it makes it a ton
-easier for us to argue why the proposed refactoring is okay to do.
+That would've been a bit shorter indeed. But the patch series has been
+merged to `next` by now, so I'll leave it at that.
 
-> Also, do we care about several GUIs for git?
-
-Many users do use graphical frontends, so we likely should investigate
-how they'd behave, yes.
+Thanks!
 
 Patrick
 
---Z/G5Q2Nd69lq0iSF
+--41J8gLcs/UaEGhNF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8MXUACgkQVbJhu7ck
-PpTdQw/9EMXPzXhKTLIG2vSP60ePd6P9UEVOlWeunaFcxnzkoDHWD2eEAeEE4Mbx
-u53iPSsMv1Ir1/mmHlRM9G6F7ucFWQY54BgwQ16INGE4GvzU90o08SFcl1KEEhii
-yP0hDMpMRSwLtZAZmIJo6BwCtPGXUERp42kvnC4w95X/xkzocSK9+9nUEvhzj8UW
-QWFdmAmMUNLCyi6KvOYIhIrUTvW7Ee4anl0qK/BaO62x5D8+B/gnsE/biS6vfaMQ
-9kxHHaB7svVn09Tl9tXbN/FyJkQkF7GDDNM1e1njIxCLR0nBTQOZBKpag4GHWOBf
-gRx/T02rUvSOjogTvD63TiaUr8iKUEFGoG1JoB/d8nNjokf16yeYQrW82hQrO8tX
-V4hQn2amgRg1rcCnoRvBKBTYewL0dEJ46BybJPX9iFwX0OGs5vYTAtDo8u9YfeGO
-5YVqk2nqOuvTxU5pHT7ruwHXkhX6446qyXdBzuGZKV6eWUumqWEW/E7GxPzHC4KN
-FX0Z5jGyz4Lbw+U4+rT/2v9goA+Ru5szyq75tRSmK2rNL57xRkltf+V9iGzub0Vn
-PKN/c+fReEIht7pH2sfpdmNF8QBja+2hwYtrPHJvYMnSvIoLjs8eAKDjXRaak1yB
-OsDiInPR9K/UxmqaMdpo9hhg49TSnCFsQ35nqNzBaxN0+48lAfc=
-=pBtr
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8MacACgkQVbJhu7ck
+PpRU+BAAq0a6UTMWGkiwaC0eHxRaf9q5hfQx/Df0ydhCMM5A54J50r9N7Sg6NVBW
+ytrcltjQS917+27CVqoyJjysT11cvdUnsmec3X2q+xi04gX/D+K+Jebar1CxiImi
+8LtbBtrfm6A8z0IgTuYUCqFAAf7uwrAOWjr+2MWWt4ScT5iXehWH+eH2MqqmvOkM
+TJOROv9CPOlBtoCLoHbFiqg5twNOMN5iqLs+EofOi8lkD6x+goC/PzKLWPiQgCtJ
+/38lZpXVFtwDFeuntLMS0NkPKBFK0zEFJLosWjh6NWnQQqbcLhtsOtFe0JO/T7m8
+TT67+UfizVuHbSRgKJ8QOhlOj8NPk9wAvHhInrI7FD/ajWUYQHvaX92+eHvz+bc3
+6kbXAsvZSnzlfTYxhLyqYe7rEJrddfcAjFhWHGZmdmtdmJTIMv9qr+uB/+i/Ivc2
+YmpwBGkkk8lxUbYCRLORebm0+Y/FdkFl1AvnoU/awT11SVKoa1f3eAl0+wHoRa2g
+JuQV0EgJTmTp7Gag/mGKrBoqqNi+0JRfwB/gKoqfdbQZBH/5ZLgavinaD2J3euIn
+xhIbk5BpoUg4SqJc9yE7sMHUFz18TrMWVK/gC/O0dfAmiyxwN+ieDSgfb7PAEAiC
+gfScjVnu3hoeU0uoHryeIEyN5awHhFaQfvmkvCwx2VCjLLTX7zk=
+=nIyq
 -----END PGP SIGNATURE-----
 
---Z/G5Q2Nd69lq0iSF--
+--41J8gLcs/UaEGhNF--
