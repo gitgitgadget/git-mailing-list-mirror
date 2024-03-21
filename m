@@ -1,54 +1,52 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3F8132C0D
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 16:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E185660
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 17:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711040350; cv=none; b=msQrsch0l/nrPYKJucGSQXg7kdity1fCNSv02QnvPSRbE/T0a0FetR2TwpRym8XMl4LOR1nomdS0o3c3gRBgioP9pgAgCCo6cLijTVgq3Fq2EC9quoCqO5EOSf4c9Nh39eorHrBgx7wRypwbMbJAteW42w6U1Wz4nFo/YAC0Hmc=
+	t=1711041167; cv=none; b=fsEmC+b0iN4MtjYVfx5Qm20s33sGPpE0RB+fOUPWFPU+lHZxOGEyiq8K0sGQdwIvTYWdzvzpDzmnmiwpwUpZ84TaI8K9Zb3NH3YgITvO3Wb8jwXciHXSctfeampYrRZGKIHmHYvTS4+M6WI+61Hrdk++K5tCkIqR2qg0uDAzzmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711040350; c=relaxed/simple;
-	bh=WpgXTjIPVMjn7flM874sulNs9oexHYMNHKaEDDEt/6g=;
+	s=arc-20240116; t=1711041167; c=relaxed/simple;
+	bh=duSvRDPiu2t+zl4+4gtPXTb4tXJVQVGN2UXY/MNiRk8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VB6T3OFaIiZopg8comiRoIY1ud3xoxX3IT2M4Y+gDlG/Dg0RcyE7UNodmal9/lg9Yi1Owbu3ADoab3tmPbaR8W5sg4ZsTrJ7BT0k6Nih3SbLMRBMRMu6tlcWD4hoI5/LV9AKk2K05/uCru9JzZSFauvv+mf4l0o40SwIIGzsmZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uRD/8FkD; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=Vyy3GvCcaFxSAowvoTlb2MHCx0XsODCxLXnrNAloO1XtJsnxPN1LbL/QEEptXxABWWqdrLlNi0w6NIJEsgqXF9nRm8mQHRE+EjGwDtOII22QHfj3/pl/D21+Ckj9elwo5By1SrH32AuaLuFW6mkE6xG56tGCkZpk1dt7hsRfxoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ja4b6uTY; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uRD/8FkD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ja4b6uTY"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C8082C544;
-	Thu, 21 Mar 2024 12:59:08 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C4642C679;
+	Thu, 21 Mar 2024 13:12:45 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=WpgXTjIPVMjn7flM874sulNs9oexHYMNHKaEDD
-	Et/6g=; b=uRD/8FkDQqCKA7IpkH+UebiIhwB3YmqEVxumqsiibRQkVEPzZniA+3
-	f3hNC+gWFTxtofXKij2ZZodv3sYn2KSshjI/t3vFwZ4g4i/yv4g4iOmOT01UTgVm
-	GG8gF6cGBOtpJCxvDQECcvALgNgOBsZJBi991PLRxky20hyFPM9Qg=
+	:content-type; s=sasl; bh=duSvRDPiu2t+zl4+4gtPXTb4tXJVQVGN2UXY/M
+	NiRk8=; b=Ja4b6uTYy/2An04TQVQs0OljkkWZ77YYBVEnc87/iEMTcOg9d6bgjR
+	oPHK6jS/kbLWjDLREsCzdkN4SVCPbdKzkBG/pLPk7lHbkZLEkgUlMGizXvijeRJ1
+	Q4LfhsbsAtcfdcwRMdGWTkuNAmtrRWxGXR29BIthnoUK8DVR/J2Uc=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4510D2C543;
-	Thu, 21 Mar 2024 12:59:08 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2583D2C678;
+	Thu, 21 Mar 2024 13:12:45 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B75132C540;
-	Thu, 21 Mar 2024 12:59:04 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A320B2C677;
+	Thu, 21 Mar 2024 13:12:41 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Aryan Gupta <garyan447@gmail.com>,  git@vger.kernel.org,  karthik nayak
- <karthik.188@gmail.com>
-Subject: Re: [GSoC] Discuss: Implement support for reftables in
- =?utf-8?B?4oCYZHVtYuKAmQ==?= HTTP
- transport
-In-Reply-To: <Zfwv24OnsD0pDQ7D@tanuki> (Patrick Steinhardt's message of "Thu,
-	21 Mar 2024 14:02:19 +0100")
-References: <CAMbn=B7MtohTm=J+XL8iwx_CuWo47jM-v=e=p+k6hY2CKWX+Og@mail.gmail.com>
-	<xmqqa5n1ak1f.fsf@gitster.g> <Zfwv24OnsD0pDQ7D@tanuki>
-Date: Thu, 21 Mar 2024 09:59:03 -0700
-Message-ID: <xmqqcyrna5d4.fsf@gitster.g>
+Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>
+Subject: Re: [PATCH 3/3] t/README: document how to loop around test cases
+In-Reply-To: <326fb7965036fccc1c23ad02f200251f6388e6dd.1711028473.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Thu, 21 Mar 2024 14:47:33 +0100")
+References: <cover.1711028473.git.ps@pks.im>
+	<326fb7965036fccc1c23ad02f200251f6388e6dd.1711028473.git.ps@pks.im>
+Date: Thu, 21 Mar 2024 10:12:40 -0700
+Message-ID: <xmqqzfur8q5z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,46 +56,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 52F755C0-E7A4-11EE-B5D5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 39E2F2AE-E7A6-11EE-9140-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The reason why I added this project is that I found it to be interesting
-> as a thought experiment. The reason why we have "info/refs" is to help
-> out clients of the dumb HTTP transport to figure out actual refs in the
-> repository because they typically live in many separate files. But what
-> I realized is that we don't actually need it with the reftable format
-> anymore because we basically already have a definitive list of all files
-> that a client needs to download to acquire all refs: "tables.list".
+> In some cases it makes sense to loop around test cases so that we can
+> execute the same test with slightly different arguments. There are some
+> gotchas around quoting here though that are easy to miss and that may
+> lead to easy-to-miss errors and portability issues.
+>
+> Document the proper way to do this in "t/README".
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/README | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/t/README b/t/README
+> index 36463d0742..d56401a254 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -721,6 +721,25 @@ The "do's:"
+>     Note that we still &&-chain the loop to propagate failures from
+>     earlier commands.
+>  
+> + - Repeat tests with slightly different arguments in a loop.
+> +
+> +   In some cases it may make sense to re-run the same set of tests with
+> +   different options or commands to ensure that the command behaves
+> +   despite the different parameters. This can be achieved by looping
+> +   around a specific parameter:
+> +
+> +	for arg in '' "--foo"
+> +	do
+> +		test_expect_success "test command ${arg:-without arguments}" '
+> +			command $arg
+> +		'
+> +	done
+> +
+> +  Note that while the test title uses double quotes ("), the test body
+> +  should continue to use single quotes ('). The loop variable will be
+> +  accessible regardless of the single quotes as the test body is passed
+> +  to `eval`.
 
-Yes, YES, YES!!!
+We also want to say that they are not equivalent, don't we?
 
-> So theoretically speaking we can implement support for dumb HTTP with
-> reftables by having the client download "tables.list" and then fetch all
-> the "*.ref" files listed in it. Whether that is sensible may be a
-> different question.
+        for var in '' a 'b"c'
+        do
+                test_expect_success "with dq <$var>" "
+                        echo \"$var\"
+                "
+        done
 
-It is not even theoretical---I think it is the RIGHT way to do the
-dumb HTTP walker if we had reftable from the beginning.  Having a
-file at a known location where we can start "walking" from is
-a very powerful thing [*1*].
+breaks, but if we use
 
-If we do not have to change the server side at all, which I think
-what you are saying, that removes the major part of the problem I
-was having with this proposal.  I do not even have to worry about
-speaking with the first-world bias and hurting folks with needs that
-are only served by the dumb HTTP walker, either.
+                test_expect_success "with sq <$var>" '
+                        echo "$var"
+                '
 
-By the way, about two years ago, we have talked about making the
-first step to deprecate dumb HTTP walker [*2*], but given that
-nothing concrete materialized, we are ready to move further, yet.
+in the loop, it works as expected.
 
+Other than that, all three patches do make sense.
 
-[Footnote]
-
-*1* With the filesystem backed refs, because there was no standard
-    and widely supported way to ask a dumb HTTP server "what are the
-    files and directories under this hierarchy?" and that was here
-    the ugly "info/refs" hack came from.
-
-*2* https://lore.kernel.org/git/f8639116d2d384a6d285c75830c52d8a8230ae6b.1647243509.git.ps@pks.im/
+Thanks.
