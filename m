@@ -1,158 +1,220 @@
-Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
+Received: from CAN01-YT3-obe.outbound.protection.outlook.com (mail-yt3can01on2119.outbound.protection.outlook.com [40.107.115.119])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E961E879;
-	Thu, 21 Mar 2024 15:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711036226; cv=none; b=W7HI8o02voieIeUCnztyR1zEEFH4CfnMnykoydwgudVpuJaCI7EBHXwjA8uHoiVvqkjhJSdHwOl0x4cjBq41th1UqD+XeUSzrSqvdKikeQLXDftaUw9Jh6Nrm3rFfsRskY7aKzqzuVMUOWK0gKMc18wvqtKPQOqkUjk2zup5rwY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711036226; c=relaxed/simple;
-	bh=pWYRj90+3IRpLoEC4I5WtrtlREcuOMGnXKqZLPWAOqE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fsUHUrVYdjDitF5NXvT5y6Zn04vDgXTokryxC9p2NOypxppmOhl8iX9VhUc+OsyQocOo7k/G2I12qJmXAntY2av0iMNKiatu19RnNXTV5HGL1yobnhAycVWzaDVAEy+S9QJiddSHRxcuczZTuegS/lWPkTXwSvsGWPjYw5vqwmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dOasO8TM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a8G4LAiG; arc=none smtp.client-ip=64.147.123.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57A5A947
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 15:51:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.115.119
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711036301; cv=fail; b=SsFxA5F/n0ViHrW1+TQ/KwszLUBXcZkW0ogCCCrvEk6vBM9Jl1LqsNtCzXSKMG41nOKT9CBlRwRT01Sg4kCq8Ypzq5KkSJf8p0hqnvN5CN1eY5pbXuGjIxGqwIRMWMSAXLKHG8/gI1q6+z2OcXjh5winZmWdLMGiv36VzpdMSA0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711036301; c=relaxed/simple;
+	bh=1Yo/yZ2qhk5gyR0czhp8F5eq6jt8Iq9NGK0NUzY712E=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Pn0Dk1jqGoD5XwjdIF+U9A1hPxk7bEL6tSKBuinWkzLvJgmE9uK0dRk+VKdMcyLzk1jXS3XWZo9WhV8LHy/Pya8cmEqOYWIqjluna2hmAnl+G3hqeVFISCYnNp1tc0JG05Mb7OBojV6GIjEGAdJSElv9QKKoexbPtllUfVAqlS8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com; spf=pass smtp.mailfrom=xiplink.com; dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b=GukU93C9; arc=fail smtp.client-ip=40.107.115.119
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xiplink.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dOasO8TM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a8G4LAiG"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id CCBD81C000D5;
-	Thu, 21 Mar 2024 11:50:22 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 21 Mar 2024 11:50:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711036222; x=1711122622; bh=rglaQrnqm1
-	HhjpekC8jaG5f2LXu47KX36g+PZ9NDYd8=; b=dOasO8TMowc9sjQJcbxHEYxqlV
-	0Rfm1iPbQL8YJigWdFnymLDwnsCS49UQjvT+1OI0OrKj3H4kAsjiLsgh85TivWTy
-	Jdwd34MQYOv0Wf3dyU3kQv6U3/9nWGPeY6karZZZ+xdEb1ypPF5zP8KvFVp3OYKS
-	hZf1Tq/7RvwJPKSMNownl509AnBi8MF8UP5x1rsXqgyLOQwWKfZGdescIa9kW7yt
-	nTm53yIQh6FLpeNt8NJkSUbZwUh/fvk57c8/CKEt+78mmV0p8SuFrc+pd5E5hIBR
-	3gghZrPIlKSGZYNtjL9Aai283yfwSIAqoNOzOQPztETXPp8ewcsC3aodUC6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711036222; x=1711122622; bh=rglaQrnqm1HhjpekC8jaG5f2LXu4
-	7KX36g+PZ9NDYd8=; b=a8G4LAiGyMLJTiS75WtUeEMfdJ8WCkPbLW1Twa4uLk/e
-	sW5yh/BjoPW1fzDnckgRX8kqvrhrwYHvCJufwnBdZqDIiXlTowcMZABfvyEN7cfv
-	iE04rMpKkzrT6rxkInhwNp6FJgrc5Emd9pNqYwxy7gydvqML1fEw0R9NbIOCNk6S
-	xTVmObKYhCgp4MLAvB3ugtuO+iyIzw+KzXrrAZe2c3hZe/GECzgpTVN+r/gkRJyh
-	zfZLXxkkW66BQicD5bWNlIesvgaMXr35cPJ7Yy8JuMxMCiBzWtYrEubNcNBqE+aB
-	X8f0zbgulP748OtkNk9w+Mu/MGyRrYDfsfPxu59iVA==
-X-ME-Sender: <xms:Plf8ZRxy35m3oBnOiQf2Lt2qiJ4WquXuhGAwIXx8-BG3ZUJW3McLaw>
-    <xme:Plf8ZRTabgaFD8hJHRTQp2DLPUTxMpeB6U1-BFeSgYPO3Vv5iNrZ_ZaJLaYZrLuQ5
-    gcd6BCGu0JQL8FC4A>
-X-ME-Received: <xmr:Plf8ZbUq8a4mLSapGGVxrGhpM4iRMOsk76Fys7hlH5yXKds8-WVrf_kOQZkw7uDivgRidQArclHV5JlfOHfkCVV7TTGBmTVnLpbnlCuTu3AM-g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleejgddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:Plf8ZTg5zcL-6wmWTUMZ5_msBJtupMLE0U4GekxjzbGjmQOmLEVNtA>
-    <xmx:Plf8ZTBxrd7F0sXYgFuuWwhVb57wrjrOxxMzWYF6YaCyu2JnPM9CnA>
-    <xmx:Plf8ZcLtsBxt93hZPEpOuBbFD9irQTwEtoQbXQAVM3VMXDt5N12jNg>
-    <xmx:Plf8ZSAZZwp3Mb6QOwPZMJ-D4g4t3X_TlQ7ijMqz8OtVSQW7h5Qzfw>
-    <xmx:Plf8Ze7knMW08K8FTVK6FPQPXujk6U6RAkZ9q6t82lzn3tmvp1xErmT10Tk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 11:50:21 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5129d5b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 15:50:16 +0000 (UTC)
-Date: Thu, 21 Mar 2024 16:50:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: rsbecker@nexbridge.com
-Cc: 'Chuck Lever' <chuck.lever@oracle.com>, git@vger.kernel.org,
-	linux-nfs@vger.kernel.org
-Subject: Re: t0032 fails on NFS mounts
-Message-ID: <ZfxXOR9e7Mu7T3to@tanuki>
-References: <ZfBwZTL9zqDsac5m@manet.1015granger.net>
- <0cb701da74a0$4e39ef60$eaadce20$@nexbridge.com>
+	dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b="GukU93C9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=idkaSNQNYyXcF176QOlfRz9yJ6kImoiUITd3GchHcljwgt0++KQxzinSRmSoP2R9uOUhuxDB8+M9+HqKf8Ygsc2JGrjw6ywRUamjeUGMDpW4TfaZqtqhUn41tGL9wd0hxnijA5qx3Y2O6I5xyEttKkFJshmv0n236fz9wAL9fr/f2Qu/qyygBj1DNo8yyZHat6C7z3NWPflBHUJc7XVm6qoP4BYoxuriFx7/IdmhuG9pG1I698I1w2ogEUy9RRWh7p5mTIIh3ev50cGV3OvgmmtNWu7NDPk0VyM9E3z409vnWoFftKilembYEG3kW1ztIfzhY6N1nixn5rCoMLZNjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=K+XV+ExeZbeYtK3pKCVKDrTXQ6lcKtK2fvNYWizTXTU=;
+ b=iErTQrXkuZpiDXeom5kGpNOEFa0MMnHZphf3NuBmpwHtdP7KY1R6TaKOPwsX1Wq5LAsZscxKtCuv7Nm2rgTPr0J5aw18H3QrHHQTBkyFP0QZ1RGTJSdKf3Sv5Kp20LILIsODUtmy7ic86mTWP+I1xWxrNmuJxdR0S/uhNjFrXdvxhQq1PzxvhaBfrcik7ktYpy45uFRgdNKPLoZeCy1xp41hFN6dtdl+fTAxVBNzYUuWe3bFqvIblpWvij105KPnoGg5dOcqDc2wAdeqWNYLkaZd8eI7P5YUUQcSyoY+DoHWAVVddqbfqhvxPWj8l/yCFYCJIrJQ71VJCpoHrCx3hg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
+ dkim=pass header.d=xiplink.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=xiplink.onmicrosoft.com; s=selector1-xiplink-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=K+XV+ExeZbeYtK3pKCVKDrTXQ6lcKtK2fvNYWizTXTU=;
+ b=GukU93C9SCr2WhXALS1PCiVYpR6OamQMtVaDnaQ9AbusxKX1oHBlyofVWpyOmVRxhl3EjtZujsfBU0t7cMbWTNMAeYfn8WnUa6oBbb9Vab+kdxtn2MzF/bXWxcWZZwQSCArLx3TVgUQfgTrwa7cSwl6BSpHnqbX5hxCifEkcJj0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=xiplink.com;
+Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:f5::10)
+ by YT3PR01MB6488.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:73::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.24; Thu, 21 Mar
+ 2024 15:51:36 +0000
+Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::c6dc:38bd:5001:264a]) by YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::c6dc:38bd:5001:264a%5]) with mapi id 15.20.7409.023; Thu, 21 Mar 2024
+ 15:51:35 +0000
+Message-ID: <27b9c158-5cb1-46bf-851a-88a02448fa2d@xiplink.com>
+Date: Thu, 21 Mar 2024 11:51:33 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk: add "Hightlight commit name" menu entry
+Content-Language: en-US
+To: Raphael Gallais-Pou <rgallaispou@gmail.com>, git@vger.kernel.org,
+ David Aguilar <davvid@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+ Denton Liu <liu.denton@gmail.com>, Paul Mackerras <paulus@ozlabs.org>,
+ Beat Bolli <dev+git@drbeat.li>
+References: <20240130085308.5440-1-rgallaispou@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+In-Reply-To: <20240130085308.5440-1-rgallaispou@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQZPR01CA0093.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:84::23) To YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:f5::10)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CV1N6EIPpqpQyrnU"
-Content-Disposition: inline
-In-Reply-To: <0cb701da74a0$4e39ef60$eaadce20$@nexbridge.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT2PR01MB10537:EE_|YT3PR01MB6488:EE_
+X-MS-Office365-Filtering-Correlation-Id: f00c739c-e1fa-4fa9-ddf5-08dc49bec915
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	e8EhXDU/EgsWEHXpMmPxCdCsKaQJFv5uiAXQSWOvw/tl7VayulcDVzZe9eG2fRTXTJ/xgF1sr3Am4l+1xP2qLOnNzhV9O9opA8krP3ikmR01EAogO1EbUWgsEXqCA6C+YtPbIvom53NG+uEMxn5J41MllipewItOvIZPjYOITvGLqbyxh1za8lrFz1FqjcLscJ5Y1tf1M3XUY+306vS5wQXqjmANSXKARf2QwavGXVtXFOBKwnf9h9IpRqbcBJv3xg6RkNML+oRIE120yW+eLI0OAfWx78AdPemWSz+LgTjIuEilVGEWc0/rf7jije31qdAI/GW2qQE1ERS7XbjtNzNgIMtv1vn57lB27Xn0R0Is7XivKSFaTwD7atRvvENVyWNUL0T7XThnAbG1Z8evrEgfJwZsea/OreL5mZDuBGoGUg0hWwW6VIwwtJ5as2zw2wewRRAYfvEiwzG2qeY20aTyNt3hgf+ltJ+5LSVBmxKRR2/N5bmFwPDb0tjejlfVlyjoIau2rWnZOcUSNSlCtGQvVVdtxSOkLmO8GACdgnn/Q8uVhEVh8702gpupX2TAi2HSv5wxNDNpT9MavriedRZgnwAyk9PaGEu7psDamB4qSwo5TMyAeSTVs3QR0UXzct/32LQS6FHPQFnTcdfDrgfM18iWu+/Z/Y2rCat7AXI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WlFibm54ZUtMSVBKdmppVmtONGZNbzIzVERCNklaQUw0Zks0NzRJUDJReVdy?=
+ =?utf-8?B?MXVyNGttUjk0Q0lpM2p6dk5EUGlHdG9YZTh1UDdFWlNZR0pXSUFVVUtSM3dG?=
+ =?utf-8?B?SDRZc2Z3a1Z1SUY4RXVpT2wzcE5ac0VKbFdwU1RLejVsblh3ek9sSFROTHZi?=
+ =?utf-8?B?WnE4dXNtaWhENnFVMVBETndyemhhdGtNTC93a3ZGbjVoSHJPNlovd1EzcG1V?=
+ =?utf-8?B?UzZ3T3FUSjl2emNXVE5ibDZuc3ZZT3g3NzRJWklJWTdFU2NGdGJqSElFQWp0?=
+ =?utf-8?B?czdRdjJ6anpkNS83akxxbkM1U3FPaldpNlRPb0t6WS9GdjhkUmQwcW5pSFdB?=
+ =?utf-8?B?Rlp5MDVGR2Y3YXI5a3ZPYU1meW1IaHUwZk5lOW9VeGg0dXNSLzh4dlRRdTkr?=
+ =?utf-8?B?UmpLN1BjMFBVZ25WZHB4a0l0U1JrYnV5YkkxSHdaYzBHTGx4cUZWOXJtUm14?=
+ =?utf-8?B?YThLZUV1eG9lMWhKYlU3ZjBjZjFFYlM5SDJ5aHFNR2JpOC9sTHlNZ1JCTmUy?=
+ =?utf-8?B?WThsampUUFJyT0lBaDJrVThzODFNa0dON3Zsb0VHRlQzWklLN2gzbzUwWFV1?=
+ =?utf-8?B?dndtZUdpZTZ3U0RBQk8xUXZCZzVZbXd3eEVuQUd3S3ZuRW9pTWtEcXRnelha?=
+ =?utf-8?B?eURlM1lLOElpdVdNNFFtUjlyUnNuVlZ5SjFwT1lZOHZ6Sm1meGZJV3BHVWhC?=
+ =?utf-8?B?ckovdzVCVEd1eXFWemlrYXhKZDJrVVhJd0pkOFRNTC9wRVNvL2NPYjg5Y3pN?=
+ =?utf-8?B?ejZFQWFYdXlWNFgwUk1nVGJnMStoaXlidURkUDV6emZqV2cxVS93eWtoTHdF?=
+ =?utf-8?B?MlMvRFk1Rm9ERHBySW1Lb3ZVV1NkcjhLUTJCL1ZzQ1JMWVBlY1FHcmU1TTVU?=
+ =?utf-8?B?TzJTYjJzN3h5dnN3aURpbXZkZm56UHVrS2w2R0ZMb2dIMDNMdmZEZUcyMjJC?=
+ =?utf-8?B?K2Q4akxiTVJtdkU0emoybmMwZU1OKzBSL0x2dnp4VjR6cTg1MFdDMmVHZUEz?=
+ =?utf-8?B?UHN0UWtXc1A1aS8yRUJIVWU3ZmtBeXY3TS9mRlc3MmZ2M3JTWXNlRm5XSDJn?=
+ =?utf-8?B?UXl6RVlVZnZIZ0xrVVI1MFFnbmlmMFBwNW5VY0YyMnNTYkx4QkJzSWQxK255?=
+ =?utf-8?B?L29EWEhUTE43eFVscWtvaEcrZGpmNTh4ZThvRHNNOXFrV3Z4QkljRGRXZkdW?=
+ =?utf-8?B?MVFSRmp1SDFYempHblFUUmphZTNhekZwS3RNVTVySjhwUFVabzFOTzc4RnB2?=
+ =?utf-8?B?RmJ2KzlQYkdja3lCRTNKd0tWL25GZlFOU1UwbTd4MVhWNnI2cEpCa052Zm9O?=
+ =?utf-8?B?MTRCZi9reGt6YXR5RDZqYjJzbUM0L09HQ1VZQWpaeHJRRXA4aUV3MmdIN3o2?=
+ =?utf-8?B?bmtIYjNpVXhlbHVDdG9WdDdtbGNOWENoUVY3bmhKQmh5RHFwaCs3cjhMYnVP?=
+ =?utf-8?B?OE0xM1Jka201MW5kbHR2aldYdjBXdVpEc1JhSTgyVStSaG9Xc3JKSkYxclYw?=
+ =?utf-8?B?OU5EV2x3YTZxR1lNNFE2TW0xUWVHckxmc1Z5SFNUQkhuVk00Y1lwS294azNr?=
+ =?utf-8?B?YUtJcmo4VXZ6M25vWHkxNVhlTkkyQlF5cC9JSDU2UGNUN3A0bUtRVFdYTWlW?=
+ =?utf-8?B?UHhCWUN1eThYS2c5M1A2UDI3aVVMQ0I5RU13TkVMQ1BUb2lJSm1VTEsydFY3?=
+ =?utf-8?B?c3g0TkZzTFQyM1dsdHZ0Vmkxam5TeUFDS2FiM2NUVi9sTVZsbUZBek9wS0Fv?=
+ =?utf-8?B?RGNlRThTWWQva1Q4MFhSQXMwK3pESUlrVVZPQ2N1RHhUamQzSXozQ2VtWkR1?=
+ =?utf-8?B?SFFXdGJWdDVtc2FjNU93d2tWS2NNbS83Z0VqeVFLVm5RMHlBT2dRTWs2YVBz?=
+ =?utf-8?B?NTl0YmR0d014NEp2empUaWZDMmNlc0FrbERDdDBpeXlNRkRzd0RkZ1VyQnhi?=
+ =?utf-8?B?dExGNW04R2k4d052a2crOEVmdE1zblBjRXRlc1E1cGRWb0RtajZtUVZsT2xP?=
+ =?utf-8?B?U0RLVDVaVDh0Yi84YmV4aFQ2UUFnbTdiVWlDSGhWK05xazJaQ1FUbHZZU2Nt?=
+ =?utf-8?B?dmwrZXRGVHhJd0JSRUNUYjFnNThISW9YelpVdz09?=
+X-OriginatorOrg: xiplink.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f00c739c-e1fa-4fa9-ddf5-08dc49bec915
+X-MS-Exchange-CrossTenant-AuthSource: YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2024 15:51:35.8904
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IXO2kQ8pUs2iDYFkfoGwYObqCN5Io8ql0C5ZKZKyVKXpqa1uMHadJsIrV2kpNJLPNzUrRezKtiW8gld6qmh66g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB6488
 
 
---CV1N6EIPpqpQyrnU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2024-01-30 03:53, Raphael Gallais-Pou wrote:
+> When working with diverged branches, some patches can appear several times
+> on different branches without having the need to merge those branches.
+> On the other hand you may have to port a specific patch on another
+> branch you are working on. The search with a SHA1 cannot be applied here
+> since they would differ.
+> 
+> This patch adds an entry in the main context menu to highlight every
+> instance of a commit.
 
-On Tue, Mar 12, 2024 at 01:11:15PM -0400, rsbecker@nexbridge.com wrote:
-> On Tuesday, March 12, 2024 11:10 AM, Chuck Lever wrote:
-> >I've checked out "maint".
-> >
-> >Unit test t0032 fails when run on an NFS mount:
-> >
-> >[vagrant@cel t]$ ./t0032-reftable-unittest.sh not ok 1 - unittests
-> >#
-> >#		TMPDIR=3D$(pwd) && export TMPDIR &&
-> >#		test-tool reftable
-> >#
-> ># failed 1 among 1 test(s)
-> >1..1
-> >[vagrant@cel t]$
-> >
-> >But not on XFS:
-> >
-> >[vagrant@cel t]$ ./t0032-reftable-unittest.sh ok 1 - unittests # passed =
-all
-> 1 test(s)
-> >1..1
-> >[vagrant@cel t]$ cd ..
-> >[vagrant@cel git]$ ./git --version
-> >git version 2.44.0
-> >[vagrant@cel git]$
-> >
-> >v2.43.2 seems to work OK.
->=20
-> I have seen a similar effect on a standard POSIX file system (NonStop) wh=
-en
-> run in a special platform container (Pathway). It does not happen for me
-> when run from bash directly. This may be something other than an NFS effe=
-ct,
-> or unrelated to what I observed. I'll be monitoring this sub-test for
-> repeats.
+Thanks for working on gitk!
 
-Interesting. Do you know at what point in time this happened? Was it for
-one of the releases or any of the in-between states? Also, does Pathway
-mess with the stat(3P) info somehow?
+Unfortunately, I don't understand the description of your new option. 
+How is this different from the existing "Find containing:" feature? 
+Gitk can already highlights commits that match a specified string. 
+Please explain what gitk does when this new option is selected.
 
-Patrick
+Also, please explain how your code identifies "every instance" of a 
+commit.  When I think of a "commit instance" I think of the
+"git patch-id" command, which I don't see here.
 
---CV1N6EIPpqpQyrnU
-Content-Type: application/pgp-signature; name="signature.asc"
+(It looks to me like this is basically a shortcut to auto-fill gitk's 
+"containing:" field with the subject line of the selected commit?)
 
------BEGIN PGP SIGNATURE-----
+> Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+> ---
+>   gitk-git/gitk | 23 ++++++++++++++++++++---
+>   1 file changed, 20 insertions(+), 3 deletions(-)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 7a087f123d..4b15230a16 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -2672,6 +2672,7 @@ proc makewindow {} {
+>           {mc "Make patch" command mkpatch}
+>           {mc "Create tag" command mktag}
+>           {mc "Copy commit reference" command copyreference}
+> +	{mc "Highlight commit name" command highlightcommitname}
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8VzkACgkQVbJhu7ck
-PpS+kA//bmQvJu38h54ksVp5FmVlmEtn+xeMoFSAy1b/xXNq+KXVgf2Vx45NLC/7
-AwQoa47+l7Db1/TJf7Cu827GjKzqKi8754/X9L5Uq6d8LGf8i6wCBvdxKZJbKDsL
-bzyuSOMVvVDZNdFzQFtIem9+vdpzV/cjZ7We0yd1zUt6CZaoWRsneUZ07Fdsys2O
-/icYIs5c5oIrCri01ICkyijr9idiTNuZWC0W/FqdpeWYk8NDJM9Qz544KUP5K4ya
-PdsKx0wdJ+2lsstYyiM3YTyRjMROh/2IuSdPlfbi1tS1CdPikhm4J19axN+LBxUb
-XJFt1g1FZtN3COqfiuloUJZm6vjuyvuS/K7DisGH+0n1SiL6p2CoW8ppeFkJU9Ak
-rwGBStS+KB6LsqicOdhBba/6u5miyh4rugchum3C7ap90DDoNW0LuK1CWLHiR3qY
-WAY6ZrnfuKSiog3ppdVvt3GfSZVqpBQjYeXZprGCf9IoA8OQSFZ6Nkg62r/CbIBM
-IHY2Iqlv6CAXVSG0klJiBZSn6qvqO7p3nuU3fq6ULAG3uG/m2bFX1GsHxJ4vePfc
-qCezKRdvVbDpflfNlGgovT0lCR6b8fnp+rLnWLkCiHRzjaxJSxPCx2IYI9QJar6W
-d4Rzd7NPYmCG/ebDTt9TY66bOh7xJhSDdvz2oWUa19diUgcrrx8=
-=YNIH
------END PGP SIGNATURE-----
+This line is indented with a tab, but it should use spaces.
 
---CV1N6EIPpqpQyrnU--
+>           {mc "Write commit to file" command writecommit}
+>           {mc "Create new branch" command mkbranch}
+>           {mc "Cherry-pick this commit" command cherrypick}
+> @@ -9002,13 +9003,13 @@ proc rowmenu {x y id} {
+>       if {$id ne $nullid && $id ne $nullid2} {
+>           set menu $rowctxmenu
+>           if {$mainhead ne {}} {
+> -            $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
+> +            $menu entryconfigure 9 -label [mc "Reset %s branch to here" $mainhead] -state normal
+>           } else {
+> -            $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
+> +            $menu entryconfigure 9 -label [mc "Detached head: can't reset" $mainhead] -state disabled
+>           }
+> -        $menu entryconfigure 10 -state $mstate
+>           $menu entryconfigure 11 -state $mstate
+>           $menu entryconfigure 12 -state $mstate
+> +        $menu entryconfigure 13 -state $mstate
+>       } else {
+>           set menu $fakerowmenu
+>       }
+> @@ -9481,6 +9482,22 @@ proc copyreference {} {
+>       clipboard append $reference
+>   }
+>   
+> +proc highlightcommitname {} {
+> +    global rowmenuid autosellen findstring gdttype
+> +
+> +    set format "%s"
+> +    set cmd [list git show -s --pretty=format:$format --date=short]
+
+Why bother with the $format variable here?  Couldn't you just quote the 
+--pretty part?
+	"--pretty=format:%s"
+(FYI, I am not a TCL/TK coder.)
+
+		M.
+
+> +    if {$autosellen < 40} {
+> +        lappend cmd --abbrev=$autosellen
+> +    }
+> +    set reference [eval exec $cmd $rowmenuid]
+> +    set findstring $reference
+> +    set gdttype [mc "containing:"]
+> +
+> +    clipboard clear
+> +    clipboard append $reference
+> +}
+> +
+>   proc writecommit {} {
+>       global rowmenuid wrcomtop commitinfo wrcomcmd NS
+>   
