@@ -1,48 +1,52 @@
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048431339AB
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 19:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9919B12B171
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 19:50:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711050377; cv=none; b=Rd3Xk7X83pFSR28CA/9DqIEoTmMlxJdAEU1UnqMVvE43y/la/OFtwhrWqJbzB39Ba4icRfeO8MvLCbVWDIlMJb++CkGyFdjjb/dg/2yr5B7YfnfCR6mXl0rcVEVDFFmj06v+QjK/vC7b9V5Nj28rnTGi7oTCV9WTMHU6vvLHKYk=
+	t=1711050645; cv=none; b=q1GTVbdyUdT/AZNTARSkHrszVavE42MGRgEz5vwnepYyky8KirV8J62iAvHqESj/QT79W6PFzkfdXEIn7WS43ziX2rYK4/cGBKXP36I5ji/DLcfpt9MgTEEUkyg8yL8Z4Id6tSTozkIQgzSwEyM1peslD91ReXXvdUNww39i6+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711050377; c=relaxed/simple;
-	bh=tzDjQVcPm4/l77y2mk/p9qGlRKVnlagHurXDSk71fbk=;
+	s=arc-20240116; t=1711050645; c=relaxed/simple;
+	bh=djbcDkFawuZg5isXH9aSbpgkYw06wEEJ8sPOtX2lNRk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rrFnBT3trCYoAoiQsFcGPdCNQ3EGQMgdMIrMnrn5OiBsMnL483K43eClqmFEkaTJgwxGUGE4qa5GVA4RMcr9MkFpA0d3MyBSAS9tooKhVXZlRf3EA0aJfE1Bemgdx1Kw8Tz0x0940XnJUFy2UV54gr+4MXs0VGmY6i1rRtkpzok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=lRWXKcTI; arc=none smtp.client-ip=202.61.206.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	 MIME-Version:Content-Type; b=nWHF9+VaCoavyFh2fnNpNEVrb8IwWzc3jp/K0U00trJBbVjtepk63gW/VYvAMHAp6B1/PHUZBxNBrHYrCpnEOXobLBnEpq/DnkfPgp/1/Vv68EMjRd8jXsP8Q5yl67tn8jB90MhJvS6f8s7cDtJrrm7cOicNtrX/qRuD3kS85qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y/SwyrAK; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="lRWXKcTI"
-Received: from localhost (ip-109-42-178-162.web.vodafone.de [109.42.178.162])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42LJk34J025974
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 21 Mar 2024 20:46:03 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1711050364; bh=tzDjQVcPm4/l77y2mk/p9qGlRKVnlagHurXDSk71fbk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=lRWXKcTIgDjKf9SbrkXrGIrnA0E0DuSoxcqoEbr2/NKTAA/a0Xanugv2GGRgCcotr
-	 8Q1PQzP+l1j1kEmvTatZJigeJsmZ6yWhcbjrvjkzUoR95h3jvAI641nJtrgxYBJZ59
-	 JZMPB6Pk1ENsUDc/MeiJfs3JdrVpmL4OSGXocxy8=
-From: Dirk Gouders <dirk@gouders.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org, newren@gmail.com,
-        me@ttaylorr.com, phillip.wood123@gmail.com,
-        Phillip
- Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 4/7] sequencer: handle unborn branch with
- `--allow-empty`
-In-Reply-To: <xmqqh6gzblmc.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	21 Mar 2024 09:22:35 -0700")
-References: <20240119060721.3734775-2-brianmlyles@gmail.com>
-	<20240320233724.214369-5-brianmlyles@gmail.com>
-	<ghttkzykru.fsf@gouders.net> <xmqqh6gzblmc.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y/SwyrAK"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B2241F13E5;
+	Thu, 21 Mar 2024 15:50:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=djbcDkFawuZg5isXH9aSbpgkYw06wEEJ8sPOtX
+	2lNRk=; b=Y/SwyrAKUzpIsvKzbg/fLjFuN3eXPJOYHud7eGt+buNhK0qMF9WY83
+	LPHy95eUgLf3lKvcsLJ6aKsZjQ+0MlxdgyvUWTovroZKDhXwSSIPsPRVbY+xfUWF
+	e3WlMzCxtyDEIBXcgbUsoRtrOPomRXJtWBGBNEI4huZPEPK6q9bBU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 426D61F13E4;
+	Thu, 21 Mar 2024 15:50:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A159D1F13E3;
+	Thu, 21 Mar 2024 15:50:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH 00/24] pack-bitmap: pseudo-merge reachability bitmaps
+In-Reply-To: <cover.1710972293.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Wed, 20 Mar 2024 18:04:57 -0400")
+References: <cover.1710972293.git.me@ttaylorr.com>
+Date: Thu, 21 Mar 2024 12:50:40 -0700
+Message-ID: <xmqqzfur74a7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Thu, 21 Mar 2024 20:45:58 +0100
-Message-ID: <ghh6gzz7ux.fsf@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,46 +54,19 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4C675BF2-E7BC-11EE-8252-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Dirk Gouders <dirk@gouders.net> writes:
->
->> Brian Lyles <brianmlyles@gmail.com> writes:
->>
->>> +	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
->>> +		/*
->>> +		 * Check to see if this is an unborn branch
->>> +		 */
->> In the above example, there is a short but outstanding comment that
->> announces a check (and if I understood correctly by [1] it is a kind of
->> trick that could deserve some more information) and it does _not_
->> comment on the result.  Of course, I have an idea where the correct
->> place for a comment /* This is an unborn branch -- handle it as if... */
->> could be, but I'm not sure.
->
-> You mean "Check to see if this is an unborn branch, and if so, use
-> an empty tree to compare against, instead of the tree of the HEAD
-> that does not yet exist"?
->
-> I think that is possible, but the use of the_hash_algo->empty_tree
-> indicates that clearly enough.  But we need to stop somewhere and
-> what we see above may be a reasonable place to do so.
->
-> If anything, we may want to say why we want to continue as if we had
-> an empty tree (as opposed to fail and return with an error()), or
-> the tree to compare with is computed here for what purpose.  But the
-> name of the function may tell what this whole computation and
-> comparison is for, so it probably is not needed, either.
+> This series implements a new idea in the pack-bitmap machinery called
+> "pseudo-merge reachability bitmaps".
 
-Thank you for the reply.
+When you work on your next series, please describe the feature in a
+different order.  Giving name, and then mechanism (from coarse to
+detailed), and then finally what it is good for, is a sure way to
+discourage people from reading the long description.  What is the
+problem, what insight led to a new solution to the problem, and what
+the mechansim looks like, is probably an order to keep the reader
+engaged better.
 
-I guess, the hidden question in my comment was: "Do experienced
-Git developers understand the code as something obvious?".
-And I read your answer as a "Yes, no problem.".
-
-Now, I can put this subject aside and later, after more reading, check
-if my understanding improved sufficiently to now understand that code
-without additional comments, as you already do.
-
-Dirk
