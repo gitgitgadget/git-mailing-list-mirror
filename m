@@ -1,54 +1,54 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD3658AAF
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A6D762C6
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711023139; cv=none; b=uysiSWV4G34mXUyU6Em3ym1UrkGnWaBgH2k2nytdOj94a1lfZ1d5VCQY0BsFy9HNy/b9TBIHO8cia7hkSXv2Pm9kCRdUhT+7qrAUHr43wQ+WRrIMlxZ9kiiCxV0XeZFUjybIMYibEXBP3II6eOGd6cvCutuDgTwwge5MbHFW81M=
+	t=1711023671; cv=none; b=c0sL1/Ix9S0N9kRDYASfmQlnSAc6FcbdZtjKmfCWxTbBWM2mXU98wSbvs6CudAgJzdh/fp1eVER3tWYni0QM6CVxkiBzzp/p4V5/SLsc8Avgl6sJiZZvdPLLzh/vuzUv/YGmn0xiiSM+GTIWP61B2vFBdk0fQB9AIABzSk+z4GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711023139; c=relaxed/simple;
-	bh=v0sTrtl3+J3GPW4qNihMU2w8JIvlQbHyS+G96pE9WrU=;
+	s=arc-20240116; t=1711023671; c=relaxed/simple;
+	bh=XJLo8iSLQvC0XnwU5VQv3xQYjBluh/omvgM+MTomb2o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ojnvd/xLrbJk565syVb15kQosfMPsfPiwWi1iVWcQ9lmCp3eHzGlqTY3YQp9G0N1Fs1XbViN4wlypjYxIAax5M/kFEKd2J9tbxUaudX1TT6CjDFUYZZqs0cKGRuOlEwgFgt7gsJJI2lGokEREfu0thTLDzFeqctKMsLQeGLp0ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KABL93Cv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFTMTQ1Z; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=LJoR/Oq1hl4ufJoKYMQvbRO2Knsu3SYUu5deuu7D2a3YJbksP8ST8o4dwtz1IhkLyrjU/Les9aB7b2Op9o4idIrAdEd8nJmcfv/n4hSbZYYqOKEG6Fia5Vuomkho5vwSvlngiHc+2/zdld5kBj2Uuuj0Q59rmiUwNmtlC5RlYDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UCQ2ZRyW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OMFN7N4J; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KABL93Cv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFTMTQ1Z"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 06CCB18000E4;
-	Thu, 21 Mar 2024 08:12:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UCQ2ZRyW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OMFN7N4J"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id B67971380136;
+	Thu, 21 Mar 2024 08:21:08 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 21 Mar 2024 08:12:16 -0400
+  by compute6.internal (MEProxy); Thu, 21 Mar 2024 08:21:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711023135; x=1711109535; bh=O2Zxg/iemy
-	MpMkPedz46J2brqAUY6EF14G8h17a/Ru4=; b=KABL93CvkBBVhTQHh8qdCiPheO
-	FFb1xdarq6X9fQoXJj91JRQ/maZ2SiyYENEufL8RS/u5+spCkrPVEytsXQiEMpXM
-	w6PNKrYOEqSmnG7OWHMeh5e1th1kNxFvCNiqncfsFR6/NesaCchTS7Z1pzbF/Wq0
-	4XcmfPi5eS6ZIHPq/KAC7fjItsNi/+XNAR2eI2OVDcloeTzSze68gkP/1VmHn7of
-	nl3583AlNKO7OT9y12jHa072VefyQaEuFgHLddIUbAeTpDqTHGuol/mU6yUENSMS
-	Jro9TyN2Lo0TAb6jqT4PlmVoy10BBj00F0bHcs7/4AEnhpzoKUlTaMpMlAPg==
+	:subject:to:to; s=fm2; t=1711023668; x=1711110068; bh=0dG9gh5PfB
+	Gv5TLOHr8dGuyRcxFXc7C5SMSmqqESkWI=; b=UCQ2ZRyWr4GMrQteIsw0Pr6Svt
+	AuI9uFzrr7Vp6RgI86PyZpMN2up0gKPSYyGkMjnIkjluCpuaUD+u4ifxMpynGPYX
+	tnbXUKGBX8bf3nGll9t5/VsFSBmrcvWTsOy7jJIgg9UJudRsuU1wouOHCagWx+Yd
+	pgIsmR8Zy94WhJ/4DsUtnlry+3Aihm6CRs03YTXzI0AJ0qmhz8xFyEMfZSiX9Sme
+	5+lVtSz5kCdC54hORdmWwZa8gAkiYv3FWDqmIX1Tp6Q/4ZB9MXaBFntJ9E4ZNYxm
+	7alrP3az99aUuyCtC1WeRc6eobfcOwuTs0/vi298P7J5mB2VupRGGyiLcpUA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711023135; x=1711109535; bh=O2Zxg/iemyMpMkPedz46J2brqAUY
-	6EF14G8h17a/Ru4=; b=TFTMTQ1Z4h52ZZckbTmxfV4X2W+DTQ6BVqo66N+GgNSI
-	eefmOTLjCmLNniU5r12aLuxfXNL+xl1KIs4Na7VDdCoXpng/q7/UgOcHOu5X2g0/
-	DeHoyqWsP9xzWezc4N289CAa/dcQsmLgLhnMsEiG1Nq8RaLjpsZPGZ2OoR6sMjV5
-	byc5uq32udrluhkp4UStaUPdY3SBe71QuskzUTIY6n0w0e8ep9uL5kY+bmaBbvQR
-	FPjqbzUicLHSkr27D2SeAhwWky8qrXHrMI89hjCQbB7sQgZEbuh+5nougdIUoTSO
-	rSLTbdbE7alBCc/ftwUlzum87WMCqIsLoFuJIi8g2g==
-X-ME-Sender: <xms:HyT8ZWZNCZeIf4JTxulB-Yr5PhGCp4gdTUShD2vwJqn_Sq6W4dK42w>
-    <xme:HyT8ZZa0fcBtcmMlURnyzHvZNeQhVjq61cMwo-boSbwXOwCJ_hQyAlftkBY9vYQvi
-    sziFB-tTOk3g2zSoA>
-X-ME-Received: <xmr:HyT8ZQ8AbWuHrH4Lonhj_mXEZ738MXDtQ3-pyuEo9WVMg-Abve2fRbjO_I2vHQz7LCg_zpCUTm7ubbKKZ8REvdzlsuJ7jXBhFT5-bdXHFssFQg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdefjecutefuodetggdotefrodftvf
+	fm2; t=1711023668; x=1711110068; bh=0dG9gh5PfBGv5TLOHr8dGuyRcxFX
+	c7C5SMSmqqESkWI=; b=OMFN7N4JuEKwY44IJwc4s0/TWo+mMHmNWeB4k+ZHNYsd
+	+MSBcYDPcHrSQ2Pzp+vO1AG2NFfDSn/bk5CynpDZ9gmUA+93JBaM6VjEEMQwkL7U
+	yQEws2kxFJjo6Q0Xqf5FLzZ5y4vbXqeVmLZUEk6OwOOpkq0sgckCrSThj8ANe1RW
+	Sn538FXvUakvz8ghwnVzf0Q3V3vqYXAWgPsyMO8dcZ8DhhuTgjfTtmMhRS/6QRix
+	Av5UScK0dJJvdjKvraxppXuCzwnE7gfmbxfLz71AFdq50q0YhuFA6a22w6GOGC3K
+	WmXOjQOrc6ohs2Ml7AvLcGGHYLXGV4IyocoYR1Fbrw==
+X-ME-Sender: <xms:Myb8ZQlgGckd7G37qXb-GLczndgypAp4c_UUlp2UM0WeD5aAdtRDeQ>
+    <xme:Myb8Zf0VWArhJ5zoo03ugtoIwj18x6lbmiPA6uOpbYTg4zq5tIAbRw4iqMdkV5Fny
+    QtJjl1nCUXOMOBGRA>
+X-ME-Received: <xmr:Myb8ZeoC3y0vSa_-fhsXccKh_NmqiyzzuBNMgmQzDurPX37qwHbHME2tnZyvJzI9O-T3vrjIUQ2xbNSRM6Ol-KQY4CRoTS2dhATvs8RU4cqBNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdeflecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtdorredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,24 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdefjecutefuodetggdote
     hnpeehfefhuedtvedtfeeiteeugefgfeelgeelveehffeukeelfefhieekteevudfhffen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:HyT8ZYrsLQAhTDtB8iIvxEhMyLypnTqtz3EQbektsqqpdj60T2mKdA>
-    <xmx:HyT8ZRp3jU3gsOp3HEZP8bFH9LUbMAsaUbVqUOpAzpg1xI3JGo1axg>
-    <xmx:HyT8ZWSuG_f1Jp9YX5c96gB674e2JOJ6e-ScMYRavgHTIsguirx7jQ>
-    <xmx:HyT8ZRqqRAQdHZtP--R8vPwSo70uBRE19rw0xOyQ07izYHfvTn6yEA>
-    <xmx:HyT8ZYX8_UFNqQyLid0e9x0Zpz6jMWGTRPxT3uC2tQM24Ueefrb6MEef9q4>
+X-ME-Proxy: <xmx:Myb8ZcnlLcVFaTZRNXp8WiDu69UDSuYnrFxhaea26FlG8Tp0Lwxxkw>
+    <xmx:Myb8Ze0wjZC5AqaAAZdcZZ_es939JomEDSplIOufDhtg9B9jyxS1gA>
+    <xmx:Myb8ZTtfdYdbnb14w39hZiaubxUhXH1xJUU7XSSbVz2GxHpZ-5ozZg>
+    <xmx:Myb8ZaUfiodJ7fBPoWdBuVEUp8niBQ5i9MsgEUqbY6DyGdX-1NXddA>
+    <xmx:NCb8ZTxRdqpIqp8WtjuhteyR4idmvoW_MqSe7VB_g-p99INsv1ZmLQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 08:12:14 -0400 (EDT)
+ 21 Mar 2024 08:21:06 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f764558c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 12:12:09 +0000 (UTC)
-Date: Thu, 21 Mar 2024 13:12:10 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 40c9277e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Mar 2024 12:21:02 +0000 (UTC)
+Date: Thu, 21 Mar 2024 13:21:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Utsav Parmar <utsavp0213@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [GSoC] microproject: builtin patterns for userdiff
-Message-ID: <ZfwkGjdeHDpFAPrM@tanuki>
-References: <20240316211618.490683-1-utsavp0213@gmail.com>
+Subject: Re: [GSoC][PATCH] userdiff: add funcname regex and wordregex for
+ typescript language
+Message-ID: <ZfwmMKLBjtYvUPUV@tanuki>
+References: <20240319185938.243667-1-utsavp0213@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,119 +82,336 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="g/f8/KRQd8YE1bcR"
+	protocol="application/pgp-signature"; boundary="Z0FZYmWKTun4wITd"
 Content-Disposition: inline
-In-Reply-To: <20240316211618.490683-1-utsavp0213@gmail.com>
+In-Reply-To: <20240319185938.243667-1-utsavp0213@gmail.com>
 
 
---g/f8/KRQd8YE1bcR
+--Z0FZYmWKTun4wITd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 17, 2024 at 02:46:18AM +0530, Utsav Parmar wrote:
-> Hello,
->=20
-> I am Utsav, a Computer Engineering graduate, with 2.5+ years of
-> experience in the technical industry.
->=20
-> I am writing to express my interest in contributing to the Git project
-> as part of the GSoC internship. While I have had some experience
-> contributing to open-source projects, Git had felt a bit daunting to
-> start. I am happy to use GSoC as a reason to introduce myself to the
-> Git community and start contributing via microprojects initially. I am
-> aware that I am far late in starting with this but I'd like to use
-> this opportunity to learn and contribute more even if my proposal is
-> not accepted.
->=20
-> I am passionate about TDD and work at an organization that fosters a
-> culture for writing tests first and continuously improving tests and
-> thus, naturally, the project idea "Move existing tests to a unit
-> testing framework" caught my interest. While I have some ideas around
-> this, I've been focused on choosing a microproject and implementing it
-> lately.
+On Wed, Mar 20, 2024 at 12:29:38AM +0530, Utsav Parmar wrote:
+> This patch adds a builtin driver for typescript language supporting regex=
+ for both function name and words. Also updates the `.gitattributes.txt` to=
+ reflect this.
 
-Thanks for your interest in the Git project, and welcome to the
-community :)
+Please be mindful that we typically wrap commit messages at 72 columns
+per line. Furthermore, we don't typically say "This patch", but rather
+use an imperative style. So instead of saying "This patch adds a biultin
+driver", we'd say "Add a builtin driver".
 
-> I have been working on "Add more builtin patterns for userdiff" for
-> Haskell language but a regex for checking the beginning of a function
-> definition here is tricky.
->=20
-> Haskell has function definitions that look like -=20
-> ```haskell
-> main =3D do
-> 	putStrLn "The addition of the two numbers is:"
-> 	print(add 2 5)
-> ```
-> This is fairly easy to implement and I have been successful is doing so a=
-s well with verifying them with tests.
->=20
-> However, Haskell also has function definitions that look like -=20
-> ```haskell
-> zip (x:xs) (y:ys) =3D (x,y) : zip xs ys
-> zip  xs     ys    =3D []
-> ```
-> Notice how the function name is repeated on every line. (and this is perf=
-ectly legal in Haskell!)
-> I couldn't think of a way around this. Please let me know if you have any=
- ideas on this.
+> gitattributes: add typescript language to hunk headers support
+> t4034: add tests for typescript word_regex
+> t4018: add tests for typescript funcname regex
+> userdiff: add funcname regex and wordregex for typescript language
 
-I cannot be of much help with regards to this, and I assume that most
-everybody who is frequenting this mailing list is likely not all that
-familiar with Haskell, either. But I saw that you've instead moved on to
-provide support for TypeScript instead, so that's fine, too.
+We don't usually provide such bulleted-list-style changes for each of
+the files. In this case, it shoul be fine to say something "Add tests
+and documentation for the new driver".
 
-> I'd like to know if there are any criteria for selecting languages to
-> write built-in drivers for the hunk header as I only see a small
-> subset of languages already added. Is it left open as a
-> good-first-contribution for beginners and so can we add any
-> language/s?
+Last but not least, this message is missing your signoff.
 
-I don't really think we have any specific criteria for adding languages
-to the userdiff intrastructure. It should probably have more than one
-user so that it's actually useful to somebody, but other than that you
-are basically to add whatever you think makes sense.
+I would recommend you to read "Documentation/MyFirstContribution.txt",
+which explains all of this.
 
-> I am asking this because I noticed a pattern for css and instantly
-> thought of it for writing for scss files and would like to understand
-> any implications of this before I send a patch.
->=20
-> I observed that javascript and typescript have not been added yet
-> despite being popular languages. It seems that someone else has
-> already been working on javascript, so I'll implement it for
-> typescript language.
-
-These seem to be good candidates then :)
-
-> Upon implement this locally, I got confused a bit about `t/t4034/`
-> directory. Could you tell me more about it please and especially
-> `expect` files here? Are these auto generated? How can I trace these?
-
-I assume you already figured this out by now given that your patch
-contains tests in t4034 for TypeScript. Let me know in case things are
-still unclear though.
+I can't really say much regarding the remainder of your changes given
+that I'm neither familiar with "userdiff.c" nor with TypeScript. I hope
+that others can chime in here.
 
 Patrick
 
---g/f8/KRQd8YE1bcR
+> ---
+> Index: userdiff.c
+> diff --git a/userdiff.c b/userdiff.c
+> --- a/userdiff.c	(revision 2953d95d402b6bff1a59c4712f4d46f1b9ea137f)
+> +++ b/userdiff.c	(revision 6724df99624834d9b7278a0bc95fa319f526a1fe)
+> @@ -297,6 +297,22 @@
+>  	 "|([^][)(}{[ \t])+"),
+>  PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+>  	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+> +PATTERNS("typescript",
+> +         "^[ \t]*((enum|interface|type)[ \t]+([a-zA-Z][a-zA-Z0-9]*)+.*)$=
+\n"
+> +         /* Method definitions */
+> +         "^[ \t]*[a-z]+[ \t]+([A-Za-z_][A-Za-z_0-9]*)+([ \t]*=3D[ \t]*(f=
+unction)?)?([ \t]*[A-Za-z_<>&][?&<>|.,A-Za-z_]*[ \t]*)*[ \t]*\\([^;]*$",
+> +         /* -- */
+> +         "[a-zA-Z_][a-zA-Z0-9_]*"
+> +         /* Integers and floats */
+> +         "|[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?"
+> +         /* Binary */
+> +         "|0[bB][01]+"
+> +         /* Hexadecimals */
+> +         "|0[xX][0-9a-fA-F]+"
+> +         /* Floats starting with a decimal point */
+> +         "|[-+]?([0-9]*\\.?[0-9]+|[0-9]+\\.?[0-9]*)([eE][-+]?[0-9]+)?"
+> +         /* Operators */
+> +         "[-+*/%&|^!=3D<>]=3D?|=3D=3D=3D|!=3D=3D|<<=3D?|>>=3D?|&&|\\|\\|=
+|\\?\\?|\\+\\+|--|~"),
+>  { "default", NULL, NULL, -1, { NULL, 0 } },
+>  };
+>  #undef PATTERNS
+> Index: t/t4018/typescript-arrow-function
+> diff --git a/t/t4018/typescript-arrow-function b/t/t4018/typescript-arrow=
+-function
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-arrow-function	(revision b60d253ea78063d444f7131=
+c3100388a7cdac060)
+> @@ -0,0 +1,4 @@
+> +const RIGHT =3D (one) =3D> {
+> +    someMethodCall();
+> +    return ChangeMe;
+> +}
+> Index: t/t4018/typescript-class-member-function
+> diff --git a/t/t4018/typescript-class-member-function b/t/t4018/typescrip=
+t-class-member-function
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-class-member-function	(revision b60d253ea78063d4=
+44f7131c3100388a7cdac060)
+> @@ -0,0 +1,7 @@
+> +class Test {
+> +	var one;
+> +	function RIGHT(two: string) {
+> +		someMethodCall();
+> +		return ChangeMe;
+> +	}
+> +}
+> Index: t/t4018/typescript-enum
+> diff --git a/t/t4018/typescript-enum b/t/t4018/typescript-enum
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-enum	(revision b60d253ea78063d444f7131c3100388a7=
+cdac060)
+> @@ -0,0 +1,6 @@
+> +enum RIGHT {
+> +    ONE =3D 1,
+> +    TWO,
+> +    THREE,
+> +    ChangeMe
+> +}
+> Index: t/t4018/typescript-function
+> diff --git a/t/t4018/typescript-function b/t/t4018/typescript-function
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-function	(revision b60d253ea78063d444f7131c31003=
+88a7cdac060)
+> @@ -0,0 +1,4 @@
+> +function RIGHT<Type implements AnotherType>(one: number): Type {
+> +    someMethodCall();
+> +    return ChangeMe;
+> +}
+> Index: t/t4018/typescript-function-assignment
+> diff --git a/t/t4018/typescript-function-assignment b/t/t4018/typescript-=
+function-assignment
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-function-assignment	(revision b60d253ea78063d444=
+f7131c3100388a7cdac060)
+> @@ -0,0 +1,4 @@
+> +const RIGHT =3D function(one: number): Type {
+> +    someMethodCall();
+> +    return ChangeMe;
+> +}
+> Index: t/t4018/typescript-interface
+> diff --git a/t/t4018/typescript-interface b/t/t4018/typescript-interface
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-interface	(revision b60d253ea78063d444f7131c3100=
+388a7cdac060)
+> @@ -0,0 +1,4 @@
+> +interface RIGHT {
+> +  one?: string;
+> +  [propName: ChangeMe]: any;
+> +}
+> \ No newline at end of file
+> Index: t/t4018/typescript-type
+> diff --git a/t/t4018/typescript-type b/t/t4018/typescript-type
+> new file mode 100644
+> --- /dev/null	(revision b60d253ea78063d444f7131c3100388a7cdac060)
+> +++ b/t/t4018/typescript-type	(revision b60d253ea78063d444f7131c3100388a7=
+cdac060)
+> @@ -0,0 +1,4 @@
+> +type RIGHT =3D {
+> +  one: number,
+> +  ChangeMe: CustomType
+> +}
+> \ No newline at end of file
+> Index: t/t4034-diff-words.sh
+> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> --- a/t/t4034-diff-words.sh	(revision b60d253ea78063d444f7131c3100388a7cd=
+ac060)
+> +++ b/t/t4034-diff-words.sh	(revision be6b88ac5ca33921af60ee42f71397011ef=
+b1806)
+> @@ -338,6 +338,7 @@
+>  test_language_driver ruby
+>  test_language_driver scheme
+>  test_language_driver tex
+> +test_language_driver typescript
+> =20
+>  test_expect_success 'word-diff with diff.sbe' '
+>  	cat >pre <<-\EOF &&
+> Index: t/t4034/typescript/expect
+> diff --git a/t/t4034/typescript/expect b/t/t4034/typescript/expect
+> new file mode 100644
+> --- /dev/null	(revision be6b88ac5ca33921af60ee42f71397011efb1806)
+> +++ b/t/t4034/typescript/expect	(revision be6b88ac5ca33921af60ee42f713970=
+11efb1806)
+> @@ -0,0 +1,57 @@
+> +<BOLD>diff --git a/pre b/post<RESET>
+> +<BOLD>index e4a51a2..9c56465 100644<RESET>
+> +<BOLD>--- a/pre<RESET>
+> +<BOLD>+++ b/post<RESET>
+> +<CYAN>@@ -1,16 +1,16 @@<RESET>
+> +log("Hello World<RED>!\n<RESET><GREEN>?<RESET>")
+> +<GREEN>(<RESET>1<GREEN>) (<RESET>-1e10<GREEN>) (<RESET>0xabcdef<GREEN>) =
+u<RESET>'<RED>x<RESET><GREEN>y<RESET>'
+> +!<RED>a<RESET><GREEN>x<RESET> ~<RED>a a<RESET><GREEN>x x<RESET>++ <RED>a=
+<RESET><GREEN>x<RESET>-- <RED>a<RESET><GREEN>x<RESET>*<RED>b a<RESET><GREEN=
+>y x<RESET>&<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>/<RED>b a<RESET><GREEN>y=
+ x<RESET>%<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>+<RED>b a<RESET><GREEN>y x<RESET>-<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET><<<RED>b a<RESET><GREEN>y x<RESET>>><RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET><<RED>b a<RESET><GREEN>y x<RESET><=3D<RED>b a<RESET><GREE=
+N>y x<RESET>><RED>b a<RESET><GREEN>y x<RESET>>=3D<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>=3D=3D<RED>b a<RESET><GREEN>y x<RESET>!=3D<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>&<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>^<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>|<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>&&<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>||<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>?<RED>b<RESET><GREEN>y<RESET>:z
+> +<RED>a<RESET><GREEN>x<RESET>=3D<RED>b a<RESET><GREEN>y x<RESET>+=3D<RED>=
+b a<RESET><GREEN>y x<RESET>-=3D<RED>b a<RESET><GREEN>y x<RESET>*=3D<RED>b a=
+<RESET><GREEN>y x<RESET>/=3D<RED>b a<RESET><GREEN>y x<RESET>%=3D<RED>b a<RE=
+SET><GREEN>y x<RESET><<=3D<RED>b a<RESET><GREEN>y x<RESET>>>=3D<RED>b a<RES=
+ET><GREEN>y x<RESET>&=3D<RED>b a<RESET><GREEN>y x<RESET>^=3D<RED>b a<RESET>=
+<GREEN>y x<RESET>|=3D<RED>b
+> +<RESET>
+> +<RED>a<RESET><GREEN>y
+> +<RESET>
+> +<GREEN>x<RESET>,y
+> Index: t/t4034/typescript/post
+> diff --git a/t/t4034/typescript/post b/t/t4034/typescript/post
+> new file mode 100644
+> --- /dev/null	(revision be6b88ac5ca33921af60ee42f71397011efb1806)
+> +++ b/t/t4034/typescript/post	(revision be6b88ac5ca33921af60ee42f71397011=
+efb1806)
+> @@ -0,0 +1,16 @@
+> +log("Hello World?")
+> +(1) (-1e10) (0xabcdef) u'y'
+> +!x ~x x++ x-- x*y x&y
+> +x*y x/y x%y
+> +x+y x-y
+> +x<<y x>>y
+> +x<y x<=3Dy x>y x>=3Dy
+> +x=3D=3Dy x!=3Dy
+> +x&y
+> +x^y
+> +x|y
+> +x&&y
+> +x||y
+> +x?y:z
+> +x=3Dy x+=3Dy x-=3Dy x*=3Dy x/=3Dy x%=3Dy x<<=3Dy x>>=3Dy x&=3Dy x^=3Dy x=
+|=3Dy
+> +x,y
+> Index: t/t4034/typescript/pre
+> diff --git a/t/t4034/typescript/pre b/t/t4034/typescript/pre
+> new file mode 100644
+> --- /dev/null	(revision be6b88ac5ca33921af60ee42f71397011efb1806)
+> +++ b/t/t4034/typescript/pre	(revision be6b88ac5ca33921af60ee42f71397011e=
+fb1806)
+> @@ -0,0 +1,16 @@
+> +log("Hello World!\n")
+> +1 -1e10 0xabcdef 'x'
+> +!a ~a a++ a-- a*b a&b
+> +a*b a/b a%b
+> +a+b a-b
+> +a<<b a>>b
+> +a<b a<=3Db a>b a>=3Db
+> +a=3D=3Db a!=3Db
+> +a&b
+> +a^b
+> +a|b
+> +a&&b
+> +a||b
+> +a?b:z
+> +a=3Db a+=3Db a-=3Db a*=3Db a/=3Db a%=3Db a<<=3Db a>>=3Db a&=3Db a^=3Db a=
+|=3Db
+> +a,y
+> Index: Documentation/gitattributes.txt
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribute=
+s.txt
+> --- a/Documentation/gitattributes.txt	(revision be6b88ac5ca33921af60ee42f=
+71397011efb1806)
+> +++ b/Documentation/gitattributes.txt	(revision 2891f81b087a3f1c89d1417c4=
+0ba576aaa30feb9)
+> @@ -902,6 +902,8 @@
+> =20
+>  - `tex` suitable for source code for LaTeX documents.
+> =20
+> +- `typescript` suitable for source code for TypeScript language.
+> +
+> =20
+>  Customizing word diff
+>  ^^^^^^^^^^^^^^^^^^^^^
+>=20
+
+--Z0FZYmWKTun4wITd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8JBoACgkQVbJhu7ck
-PpQ8Pw/8DSkyGLB6+ORUUhc6HEyCHFjg9vewNqKbbnqvew6YSK3OcA+iqCEJ+j7S
-MkXAEtSowXPFkf5fwt40XrCsC/1VxDoj37lzvYMRQzNB01+txUpmatEf4Bq3maJ1
-Fvvo2cm3+rkFJSvChECWQ8q7nCD60rbuOhXA3zRz4fLpJJvNL/JQ5ky9UygNu11l
-srU3aukCoJvTBZTrrzDHdAgzt+tMkKegMrU+aCim+/Xc1kexBnz5BgWJqrGeq4RG
-j1xFpYTZgMmQqe1RYknl9xuSMJlvFLVQIt4dzWwcWyQ7hOcOdtedch8kxazqb3HK
-T0muYR4ZbyiCQQdz8IQAZUV5YGTE4a2dtHrXO/wjiiaPYp01zBRHQ8zNs4w1DY6U
-RnnkRdkFN9/MRECq/bxSjbQSsDdRW0FYAvmHhTxFdjPFXRiBZIFTw62ZDsIpaGDq
-jVJwLJwTjDUVrLyqEz5l8egpAG66FttAm2C4JHZdnuPIawfzB88a40BA7icwGW0z
-E4G9SfDUhiH1zBCUHXSqa7UJwnxFKLjV0+ZZ+Gy1ysdUeJcaDDyuieEs/ZdXiZxS
-qt/PDxPUTwQbgf7uevGFBHAO9v7To95BgBvrMiBfk/aEGJjDgKMtUaq4BcGgPmIf
-Dx8f5Uzm+ybzOIWGLXG8WtJP/04BjMJcu64ucUPaXpQ06dZagJ4=
-=2jFJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8Ji8ACgkQVbJhu7ck
+PpRjsBAAjs8tI+ULZxG89UsItE1wbdK5jF4yrDrhMm+cI9B+D3JUG1dSXVhyzgv0
+JIk6+CNSzX2axSbqirfylOBk00Zt4RPlL9NL6xSW7ijcoo+L32o+FgegMAe5/HP9
+jIfc+sAX7zRsSPW0WqLnxGedmUL49VdWQyUJmqoqGr8dxhuRe4UoRfBRAbshtwTh
+vYDHm0V4YcnspoM5nZRhmmwAXItY/J/JBG9R+7FxXZMj36/aHrpRtVAYtyhqg7jW
+96R9zktqOlzxITVzlEjqNygEUYI3yBXEF+x0KWEEBj4sea8DYJLl6+ZYS7KUGnxt
+XagVmlV/ZBoah1XjZeLjuSsBB2N4dAZllntOy6EzUQkRkMj8TLeSm+fA1XFc07dZ
+XyTgIKqClaLYUdDM0rJNT5rugqsdzqoxjAcgN/iFIjxyHLPHl7j1AICRP/MUao1O
+lrygTqBtqme/AFCJWAEz91FC291zw4Snf49oN0XPwxzhnqV8cpZPjpcMGBZ+G50F
+EqP7ZJuVuCC0PFY70tKmNdFWlWlVtYHcmO71SAB16wzp7RAGbHC1rR/Wirq01Kbb
+rIvQICo+d9Q00+JcaRb+SQqz5QLEGm9Z2NATCYD2J+ndHkypn5bNz9v3zjEbrbCs
+Chzi/AFsJjHmAN1SR21TJPB/063Nv3KimiCWde3gkknHjufuuxU=
+=sCeI
 -----END PGP SIGNATURE-----
 
---g/f8/KRQd8YE1bcR--
+--Z0FZYmWKTun4wITd--
