@@ -1,306 +1,115 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E5115CB
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 22:40:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C209217CD
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 22:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711060826; cv=none; b=coNrwZu3dFmo9Js7x7Ms1sKmazzd4XGWCPLtS8fOwPVH/PPbvAnwTYoqXQbM6FR1zZG1NWZK0osvrYadm1fxG4rJFKcgsj1LmJ8ag8eBhwN12YC/FNbQ8J5TLtivUD5jsThkznVChygRhj+SPoKeTN7VxbQ2d20qjd9DuVJRhmE=
+	t=1711060826; cv=none; b=CIOtvHUOU44rixq1+zJS8N5xcafT2A5W17C5tQUCQxa00j62wxYs3RfhaesYJ2RTB4a6lXfogW/6sjpjeU8Rk8RcoWq0RvwmL04NV7RqR4LF1A9ZYmb2DXbmecpTz5V5JAMyvQoRZANATg6h2FWHzlK4IChZBG1QGXeCXKYbepw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711060826; c=relaxed/simple;
-	bh=LkwcRwYthynB9shmUtHbNHAAqm/WFGah4oIPAWPrCPQ=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=Lmx4O0Yh8dWoX7nUD9S1obRxZo/IDQnwXtdpTHIwLzvazDIJwP2eRab75am4FL0tq6C7EgkJDx1raFp8cowyX2yR78tF29NjjHCt1cU7skKA/WIirQG//RaCfJ1ibgHt4+z9DoBE3Q2k4zM7MkVaoSN6DpdVaA29ADhf+dgquyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IoZO2Mqb; arc=none smtp.client-ip=209.85.128.44
+	bh=VJIF5meFWE7Fg/1Gsf+o5Ow+XVN2Q5G+1dd2X+H+wlI=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=lWhraEQ86EpaVk+Zfzq/PU4T5LSRWJcDeC7njWmA7C8dsX7Xsn6mB/pY//IXvd/QkHlHHRWYsa9BjOtKsxjibwUDZN/lLDK9Qs/XBIvpuhFoQu3dWkJaFszMWLXfM1l7eI7fKsZ20JUmVwO100jpC7RZkoW4IIYIKAYylg0cqLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JODWp0fO; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IoZO2Mqb"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-414689ba80eso12225415e9.2
-        for <git@vger.kernel.org>; Thu, 21 Mar 2024 15:40:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JODWp0fO"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33ff53528ceso891807f8f.0
+        for <git@vger.kernel.org>; Thu, 21 Mar 2024 15:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711060821; x=1711665621; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=gmail.com; s=20230601; t=1711060822; x=1711665622; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RpT0XL5P3moBw0tPkt9+2efD2fxyuixvxWpGAQKH05U=;
-        b=IoZO2MqbDyYescAZrCVtokeyJYPCwHUgDb1xi6MGjI+mS7SVywe9u6nhGceiTr8uBM
-         6ggR2xFiPrtzWQTS3htpYrE+1ZsJtbJRXL+DkU4l6/bBIgIUXUTCRYKse8gqKoUgvCc4
-         S/m0aP0E50aZH8JHJR6YSm5Rts2ltMTVZVmilWkFFFdZuOTiZyxbv7MD57nXnUY3SIl+
-         pCm35ZumZRKMeE9SKPwywpCRZadfzT2EWUMlifJeYyE6kmHUhUtr0qQ4r0kJRINvU/IF
-         NvU9eKfbxJfkKjMywxXdNc0vJf1ZasgCZJbuz/ShoQSjLzwHJuGSvuwAscGCAaJQ8zQ5
-         du2Q==
+        bh=kIZyJ/hofVbeu1GReQb5fgigxMBucHrxc0j68laoQwY=;
+        b=JODWp0fOVEunuiP49MruuQqPSx9ceiBl4oR8vmP4NwpHJVFZQS2EiWjxvTyXnwAKCz
+         DuFY1EQIiwBvbPPXjkTwBApZXc1Jcnt21bqc8Q+BYhgJ/eKIensSxGNiRJpdU7NnnqqJ
+         tox57FgMznVCagM8vlZVgi1posgnziPncWmN51JnWw9UJJG9geGjvHPiffI2idohbfaC
+         GIPLJjhToS1wkDWY1C3YFuVn4JLAztWHM/LWfwO5E7RPUm/tN1+jUtvhpSiz+SO9F56Y
+         jKqffiYlyr2OCnAW+PDKxPHL2T9TGPhEVz9+IqkDYehcdifwNgUQve2psHtk6nZaNwn0
+         9Rfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711060821; x=1711665621;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=1e100.net; s=20230601; t=1711060822; x=1711665622;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RpT0XL5P3moBw0tPkt9+2efD2fxyuixvxWpGAQKH05U=;
-        b=vw8FTXEhEzCZbTFcFmsq+hI8d3Y/hhJS3UTSD9ZkAdYgMB2UApjzgbP2iwiUA+seVt
-         ZOIfBcrNV/+iN3wGNz38xf54EWPr2b4pJ45xGEpGW+s1iSOEyQGS4a95LWBYYj35cBdl
-         VFOsSow68NN4rwUC1DOy+erjES1kZn8ojkMLqIGaIfONNYbzgojAVk2NzFBDVNsNQ7Xn
-         FvH9sYSapsuVMmsYerhd1LXibo6p9br53MQPhCPtVG4cVL7fCZTvOB0JPSR/+ktOKBpR
-         vvowmt4wAKrl0WOtlfuTZaYGjwQHKk/isKYYI4p+DC9Rxbh8y6GBLhmkji7H8R1m3eOQ
-         JpZA==
-X-Gm-Message-State: AOJu0YxWopziPIaBAxkyThE7NFySPC1GKjxpKX2yEH9rRclzbOG2s7nK
-	81djRIPhTtTX2wqZMJEdMp8RGDg7ZuTStgD52mYE25eEACjaAJy2s6ZYfRsg
-X-Google-Smtp-Source: AGHT+IHY8FK+21Tjd0XKylJCbVxhH8w718iXJMRLQLa7TWlORe0ly0w//nnyB/rztqQXL2yHGDSAGQ==
-X-Received: by 2002:a5d:6d45:0:b0:33e:c522:a071 with SMTP id k5-20020a5d6d45000000b0033ec522a071mr372090wri.51.1711060821366;
+        bh=kIZyJ/hofVbeu1GReQb5fgigxMBucHrxc0j68laoQwY=;
+        b=TsTr5ngIYh7NlIc0iFJvPqWouYzj2u7eYyxxqpWttUja7PXNwjMoUyGSX9APpDn3dZ
+         OXT0/9dbwJd1/DPKjFToIMqZefqtiFOv0QfOW6EHBs/6yY6PD2X6t3ZgE6P71KDtt2jh
+         bSU+PsWC+hkDeLWsvnTgoK2rN4/jWD2aOTUk34UKJppeSUWocR/zsQvRD9YpPTa4Wb7x
+         9DuWRvHq3x67HOUf2CMlYTsTtwPHMww67p/6lhJaw7/8/qX+AluS0WPV/zQWqPsAQ4Gb
+         9JyI3A22smLMeKguxP7dD0v1v1m7DA7dtpzn/3BOqXGwRz5uDcOdxnhWFBn9BXMb7qx4
+         Uf4A==
+X-Gm-Message-State: AOJu0YzKZK298DiwBusMalAXQ1a0fGICLbVVg0xN2dFcP4u7IZM3T5AE
+	ozHCiQqF60KXfoRyqDFUy52ho41kdgQf3PV0cSZgl7uUJ1OhNMDDNpQsRtAy
+X-Google-Smtp-Source: AGHT+IETrcZNQqXw8J9W5bLt+I8tGgfAh/AuMbw+IIZRvbb+2sDm3dFQfff1HHC1HhEF2kT4e2Jl1Q==
+X-Received: by 2002:a5d:4d0e:0:b0:341:a60a:2d17 with SMTP id z14-20020a5d4d0e000000b00341a60a2d17mr317061wrt.8.1711060821935;
         Thu, 21 Mar 2024 15:40:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bn21-20020a056000061500b0033e0dd83be1sm610965wrb.91.2024.03.21.15.40.20
+        by smtp.gmail.com with ESMTPSA id 6-20020a056000156600b0033b7ce8b496sm613607wrz.108.2024.03.21.15.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Mar 2024 15:40:20 -0700 (PDT)
-Message-ID: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
+        Thu, 21 Mar 2024 15:40:21 -0700 (PDT)
+Message-ID: <cb6b152e5c86ab14165e072ac20dfa865b5f3aaa.1711060820.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
 References: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
+	<pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
 From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 Mar 2024 22:40:16 +0000
-Subject: [PATCH v2 0/3] reftable/stack: use geometric table compaction
+Date: Thu, 21 Mar 2024 22:40:17 +0000
+Subject: [PATCH v2 1/3] reftable/stack: add env to disable autocompaction
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Justin Tobler <jltobler@gmail.com>,
     Justin Tobler <jltobler@gmail.com>
 
-Hello again,
+From: Justin Tobler <jltobler@gmail.com>
 
-This is the second version my patch series that refactors the reftable
-compaction strategy to instead follow a geometric sequence. Changes compared
-to v1:
+In future tests it will be neccesary to create repositories with a set
+number of tables. To make this easier, introduce the
+`GIT_TEST_REFTABLE_NO_AUTOCOMPACTION` environment variable that, when
+set, disables autocompaction of reftables.
 
- * Added GIT_TEST_REFTABLE_NO_AUTOCOMPACTION environment variable to disable
-   reftable compaction when testing.
- * Refactored worktree tests in t0610-reftable-basics.sh to properly assert
-   git-pack-refs(1) works as expected.
- * Added test to validate that alternating table sizes are compacted.
- * Added benchmark to compare compaction strategies.
- * Moved change that made compaction segment end inclusive to its own
-   commit.
- * Added additional explanation in commits and comments and fixed typos.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ reftable/stack.c  | 2 +-
+ reftable/system.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Thanks for taking a look!
-
-Justin
-
-Justin Tobler (3):
-  reftable/stack: add env to disable autocompaction
-  reftable/stack: use geometric table compaction
-  reftable/segment: make segment end inclusive
-
- reftable/stack.c           | 113 ++++++++++++++++---------------------
- reftable/stack.h           |   3 -
- reftable/stack_test.c      |  66 +++++-----------------
- reftable/system.h          |   1 +
- t/t0610-reftable-basics.sh |  43 +++++++++-----
- 5 files changed, 94 insertions(+), 132 deletions(-)
-
-
-base-commit: 3bd955d26919e149552f34aacf8a4e6368c26cec
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1683%2Fjltobler%2Fjt%2Freftable-geometric-compaction-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1683/jltobler/jt/reftable-geometric-compaction-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1683
-
-Range-diff vs v1:
-
- -:  ----------- > 1:  cb6b152e5c8 reftable/stack: add env to disable autocompaction
- 1:  7a518853a10 ! 2:  def70084523 reftable/stack: use geometric table compaction
-     @@ Commit message
-          occurring until a separate operation produces a table matching the
-          previous table log value.
-      
-     -    To avoid unbounded growth of the table list, walk through each table and
-     -    evaluate if it needs to be included in the compaction segment to restore
-     -    a geometric sequence.
-     +    Instead, to avoid unbounded growth of the table list, the compaction
-     +    strategy is updated to ensure tables follow a geometric sequence after
-     +    each operation. This is done by walking the table list in reverse index
-     +    order to identify the compaction segment start and end. The compaction
-     +    segment end is found by identifying the first table which has a
-     +    preceding table size less than twice the current table. Next, the
-     +    compaction segment start is found iterating through the remaining tables
-     +    in the list checking if the previous table size is less than twice the
-     +    cumulative of tables from the segment end. This ensures the correct
-     +    segment start is found and that the newly compacted table does not
-     +    violate the geometric sequence.
-     +
-     +    When creating 10 thousand references, the new strategy has no
-     +    performance impact:
-     +
-     +    Benchmark 1: update-ref: create refs sequentially (revision = HEAD~)
-     +      Time (mean ± σ):     26.516 s ±  0.047 s    [User: 17.864 s, System: 8.491 s]
-     +      Range (min … max):   26.447 s … 26.569 s    10 runs
-     +
-     +    Benchmark 2: update-ref: create refs sequentially (revision = HEAD)
-     +      Time (mean ± σ):     26.417 s ±  0.028 s    [User: 17.738 s, System: 8.500 s]
-     +      Range (min … max):   26.366 s … 26.444 s    10 runs
-     +
-     +    Summary
-     +      update-ref: create refs sequentially (revision = HEAD) ran
-     +        1.00 ± 0.00 times faster than update-ref: create refs sequentially (revision = HEAD~)
-      
-          Some tests in `t0610-reftable-basics.sh` assert the on-disk state of
-          tables and are therefore updated to specify the correct new table count.
-     @@ reftable/stack.c: static int segment_size(struct segment *s)
-      +	 * until a valid segment end is found. If the preceding table is smaller
-      +	 * than the current table multiplied by the geometric factor (2), the
-      +	 * current table is set as the compaction segment end.
-     ++	 *
-     ++	 * Tables after the ending point are not added to the byte count because
-     ++	 * they are already valid members of the geometric sequence. Due to the
-     ++	 * properties of a geometric sequence, it is not possible for the sum of
-     ++	 * these tables to exceed the value of the ending point table.
-      +	 */
-      +	for (i = n - 1; i > 0; i--) {
-      +		if (sizes[i - 1] < sizes[i] * 2) {
-     -+			seg.end = i;
-     ++			seg.end = i + 1;
-      +			bytes = sizes[i];
-       			break;
-      +		}
-     @@ reftable/stack.c: static int segment_size(struct segment *s)
-      +
-      +	/*
-      +	 * Find the starting table of the compaction segment by iterating
-     -+	 * through the remaing tables and keeping track of the accumulated size
-     -+	 * of all tables seen from the segment end table.
-     ++	 * through the remaining tables and keeping track of the accumulated
-     ++	 * size of all tables seen from the segment end table.
-      +	 *
-      +	 * Note that we keep iterating even after we have found the first
-     -+	 * first starting point. This is because there may be tables in the
-     -+	 * stack preceding that first starting point which violate the geometric
-     ++	 * starting point. This is because there may be tables in the stack
-     ++	 * preceding that first starting point which violate the geometric
-      +	 * sequence.
-      +	 */
-      +	for (; i > 0; i--) {
-     @@ reftable/stack.c: static int segment_size(struct segment *s)
-       }
-       
-       static uint64_t *stack_table_sizes_for_compaction(struct reftable_stack *st)
-     -@@ reftable/stack.c: int reftable_stack_auto_compact(struct reftable_stack *st)
-     - 		suggest_compaction_segment(sizes, st->merged->stack_len);
-     - 	reftable_free(sizes);
-     - 	if (segment_size(&seg) > 0)
-     --		return stack_compact_range_stats(st, seg.start, seg.end - 1,
-     -+		return stack_compact_range_stats(st, seg.start, seg.end,
-     - 						 NULL);
-     - 
-     - 	return 0;
-      
-       ## reftable/stack.h ##
-      @@ reftable/stack.h: int read_lines(const char *filename, char ***lines);
-     @@ reftable/stack_test.c: static void test_reftable_stack_hash_id(void)
-      -	EXPECT(min.start == 2);
-      -	EXPECT(min.end == 7);
-      +	EXPECT(min.start == 1);
-     -+	EXPECT(min.end == 9);
-     ++	EXPECT(min.end == 10);
-       }
-       
-       static void test_suggest_compaction_segment_nothing(void)
-     @@ t/t0610-reftable-basics.sh: test_expect_success 'ref transaction: writes cause a
-       
-       	test_commit -C repo --no-tag B &&
-       	test_line_count = 1 repo/.git/reftable/tables.list
-     + '
-     + 
-     ++test_expect_success 'ref transaction: alternating table sizes are compacted' '
-     ++	test_when_finished "rm -rf repo" &&
-     ++	git init repo &&
-     ++	test_commit -C repo A &&
-     ++	for i in $(test_seq 20)
-     ++	do
-     ++		git -C repo branch -f foo &&
-     ++		git -C repo branch -d foo || return 1
-     ++	done &&
-     ++	test_line_count = 2 repo/.git/reftable/tables.list
-     ++'
-     ++
-     + check_fsync_events () {
-     + 	local trace="$1" &&
-     + 	shift &&
-      @@ t/t0610-reftable-basics.sh: test_expect_success 'ref transaction: writes are synced' '
-       		git -C repo -c core.fsync=reference \
-       		-c core.fsyncMethod=fsync update-ref refs/heads/branch HEAD &&
-     @@ t/t0610-reftable-basics.sh: do
-       		git -C repo pack-refs &&
-       		test_expect_perms "-rw-rw-r--" repo/.git/reftable/tables.list &&
-      @@ t/t0610-reftable-basics.sh: test_expect_success 'worktree: pack-refs in main repo packs main refs' '
-     + 	test_when_finished "rm -rf repo worktree" &&
-     + 	git init repo &&
-       	test_commit -C repo A &&
-     - 	git -C repo worktree add ../worktree &&
-     +-	git -C repo worktree add ../worktree &&
-     ++	GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C repo worktree add ../worktree &&
-     ++	GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C worktree update-ref refs/worktree/per-worktree HEAD &&
-       
-      -	test_line_count = 3 repo/.git/worktrees/worktree/reftable/tables.list &&
-      -	test_line_count = 4 repo/.git/reftable/tables.list &&
-     -+	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-     -+	test_line_count = 1 repo/.git/reftable/tables.list &&
-     ++	test_line_count = 4 repo/.git/worktrees/worktree/reftable/tables.list &&
-     ++	test_line_count = 3 repo/.git/reftable/tables.list &&
-       	git -C repo pack-refs &&
-      -	test_line_count = 3 repo/.git/worktrees/worktree/reftable/tables.list &&
-     -+	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-     ++	test_line_count = 4 repo/.git/worktrees/worktree/reftable/tables.list &&
-       	test_line_count = 1 repo/.git/reftable/tables.list
-       '
-       
-      @@ t/t0610-reftable-basics.sh: test_expect_success 'worktree: pack-refs in worktree packs worktree refs' '
-     + 	test_when_finished "rm -rf repo worktree" &&
-     + 	git init repo &&
-       	test_commit -C repo A &&
-     - 	git -C repo worktree add ../worktree &&
-     +-	git -C repo worktree add ../worktree &&
-     ++	GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C repo worktree add ../worktree &&
-     ++	GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C worktree update-ref refs/worktree/per-worktree HEAD &&
-       
-      -	test_line_count = 3 repo/.git/worktrees/worktree/reftable/tables.list &&
-      -	test_line_count = 4 repo/.git/reftable/tables.list &&
-     -+	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-     -+	test_line_count = 1 repo/.git/reftable/tables.list &&
-     ++	test_line_count = 4 repo/.git/worktrees/worktree/reftable/tables.list &&
-     ++	test_line_count = 3 repo/.git/reftable/tables.list &&
-       	git -C worktree pack-refs &&
-       	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-      -	test_line_count = 4 repo/.git/reftable/tables.list
-     -+	test_line_count = 1 repo/.git/reftable/tables.list
-     ++	test_line_count = 3 repo/.git/reftable/tables.list
-       '
-       
-       test_expect_success 'worktree: creating shared ref updates main stack' '
-     + 	test_when_finished "rm -rf repo worktree" &&
-     + 	git init repo &&
-     + 	test_commit -C repo A &&
-     ++	test_commit -C repo B &&
-     + 
-     + 	git -C repo worktree add ../worktree &&
-     + 	git -C repo pack-refs &&
-      @@ t/t0610-reftable-basics.sh: test_expect_success 'worktree: creating shared ref updates main stack' '
-     + 	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-     + 	test_line_count = 1 repo/.git/reftable/tables.list &&
-       
-     - 	git -C worktree update-ref refs/heads/shared HEAD &&
-     +-	git -C worktree update-ref refs/heads/shared HEAD &&
-     ++	GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C worktree update-ref refs/heads/shared HEAD &&
-       	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-     --	test_line_count = 2 repo/.git/reftable/tables.list
-     -+	test_line_count = 1 repo/.git/reftable/tables.list
-     + 	test_line_count = 2 repo/.git/reftable/tables.list
-       '
-     - 
-     - test_expect_success 'worktree: creating per-worktree ref updates worktree stack' '
- -:  ----------- > 3:  a23e3fc6972 reftable/segment: make segment end inclusive
-
+diff --git a/reftable/stack.c b/reftable/stack.c
+index b64e55648aa..2370d93d13b 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -681,7 +681,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 	if (err)
+ 		goto done;
+ 
+-	if (!add->stack->disable_auto_compact)
++	if (!add->stack->disable_auto_compact && !git_env_bool("GIT_TEST_REFTABLE_NO_AUTOCOMPACTION", 0))
+ 		err = reftable_stack_auto_compact(add->stack);
+ 
+ done:
+diff --git a/reftable/system.h b/reftable/system.h
+index 6b74a815143..ec08b728177 100644
+--- a/reftable/system.h
++++ b/reftable/system.h
+@@ -15,6 +15,7 @@ license that can be found in the LICENSE file or at
+ #include "strbuf.h"
+ #include "hash-ll.h" /* hash ID, sizes.*/
+ #include "dir.h" /* remove_dir_recursively, for tests.*/
++#include "parse.h"
+ 
+ int hash_size(uint32_t id);
+ 
 -- 
 gitgitgadget
+
