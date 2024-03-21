@@ -1,84 +1,83 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039FA622
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 00:53:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B943417D2
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 01:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710982410; cv=none; b=hoNb905cGFWzWsi/6wd6v8pXuj9hi8g88hArwZnC77Eth1IIwIJ6Q/lGMq+CL7D5yMgQjfy58r8+AcDxnIEdAKutzoda4czIajOD/ap2ZQzcrsgr0/2nfUCbDg1wGyflpzFMmfwEIX566RiTDfIOA7w7NdH4pnpJMQZiYHAjlE4=
+	t=1710982912; cv=none; b=ji2okPLbSgLtfZO2AtNNFUjeW9C5dgGUAgXnZYfHLs3FywpLvwtYy04tT6Z0WoiUpgv+iNBz/7gAuZVPznFgxQd10s011V7Z/wW3zJugLLoZyLXqHpTmi87Re35ILaLxEpNSW+opuzU2Z95dhMgsChzYp9wIezYREAajFuxnzis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710982410; c=relaxed/simple;
-	bh=uM+tI1NwLUPXPmc1SZf8wZIObySvnfF5a1SLumW1ypk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mlg/YdUPAR+3I8aK7g6ZFxkrXAM61SvMmMuGPjkC+UtoChBpk6gGpUn+0INZ5cZ+B2gtEtsarc6gEIBUjV8K6rFgnbYs/JN5Vm6NWymCfyBW1kkxQFlknwUMcbkCMyUeTKzCNSMxC8F/QrfjisRF8tIzNb/QZ8VpxZKgfIk9lX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMjyIejq; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1710982912; c=relaxed/simple;
+	bh=uyftspPq5rn6XXAqZCtekVYSHjQqh+e9XaHLJ2qJ5e4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xmoz6NinoxY9X6FBHBvXuJuo3+59hgsQr5/tE0LuP7Ty8AfpboZqdc6N426y4/UgfTqOl/Z0X02K3bwJ7KfRn0dhXP8LrdCd9ky7C7gspQ4Z+elFUZyOaz2AwL4yc9bjao7+aio973wH2k0v0dF+TDtb+gyhtKmFIOaIAbXxVfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=l6X4qsln; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMjyIejq"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-56bc5a3aeb9so316590a12.3
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 17:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710982407; x=1711587207; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4+xUz1Vjd3Dp768VqhYd62k4z1kA1ngvSLGAu76eMQs=;
-        b=VMjyIejqrTXW3ymnZ3mSR+1pUZEiutZ9FH0abpdRcFQhCYrxqPCQCB1+XAzZOSOF50
-         SGVxOrEgtAaZdtOhEouPdL2Nvkr9EpVIbTd3Ko1yhUaM81vFjHFz8qLkyO2BIh2dkM45
-         d5UzYoOz6shRpmpAAkDpg5w0hHQb0AyPQpZWzURpjybh6ZU5x1LCtrKojzafwNlRdD71
-         KoT1LU85/DDQBBS3puJdTD0nI5h+Q/p7v3fGBdWMQf3g5q9MaUcHF/kRmteNQSJM1l8W
-         b5lddIQL4NpiETMGeWjPx3iff3fmZnwVr4fEN75++tfnUasGOFnkuKXVGn4G8eRKQ34u
-         12Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710982407; x=1711587207;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4+xUz1Vjd3Dp768VqhYd62k4z1kA1ngvSLGAu76eMQs=;
-        b=neJBQMkoCieCxNVDIpg87N7eqgpBu/WsQ89KSBGLY3WoEoEOPE9mfwEYX141xBiPR5
-         mETuzlimbRTeQAWW3NUyXddvLjnFgV8u5eoeEhVvIRKp3NqoRiO6SNdz4QIeRuxA9sb/
-         Mm1RzBjWACMLeCXcVUySO82+4f9NFCN0JMw7VAUlqFX1X3OTgoAU0Om2M4OIelkYR6MY
-         PjY5DOrS1tMF0aof0bOJfDC4gInyOebI3RIQIPTga+VzDKXSJa6npsSnjTvAB24frVLS
-         JmxXxZac9AJWhvPesz3Xa7ynEeRix32G14LTh+hP2GW1kyO4h2SgI27o46r6pdwt5M6+
-         ANgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUuwcBQjkO0LPIknZ46S1HpeGBdwBOYa7DyMJTw/djZVlHteaRCztzAIIl19zSHIuJyYrYUFywXpFgXuOIR6SWbZ+H9
-X-Gm-Message-State: AOJu0YynPP8qqMEQwafqPa/Dtt3LNpJLa8+XzhVIc7Qmn9LIqjhnU0D5
-	pm1+cNqXqL25DS/ksV774kdP5tbta0HIfzvLsxHzLx+L+gOwmFuAhB57CCp6MkOF/CdCc+SQ2xY
-	UJ1natjRrC8SHeKrVWbcTq0gXS08=
-X-Google-Smtp-Source: AGHT+IGqZILFfrr3sFeisdYiJcEUJEQWsnK/bQ4bJat9Ra5OCXP0LlKxCpdkRB3Rt4W1n/C4qXzAsdyFqq+arIaZjbg=
-X-Received: by 2002:a50:cd9e:0:b0:567:fb9b:37d5 with SMTP id
- p30-20020a50cd9e000000b00567fb9b37d5mr300288edi.32.1710982407168; Wed, 20 Mar
- 2024 17:53:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l6X4qsln"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 397F525971;
+	Wed, 20 Mar 2024 21:01:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=uyftspPq5rn6XXAqZCtekVYSHjQqh+e9XaHLJ2
+	qJ5e4=; b=l6X4qsln2jSVykr/nFMgnmAs8HxcjWVfm/zSk7n3atvawDJtxM9plR
+	q1w9nrTGFSQlBOoiPrt/Pz3MxY381ftLghDIPIHIVZv+cPRPGko0B7hCPzGnQqSO
+	lzMLYAHSPfaB42ss37l+fGCugVEU+uABg75G7JQPbtPusq5043ii0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 31B9E25970;
+	Wed, 20 Mar 2024 21:01:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B2E2A2596D;
+	Wed, 20 Mar 2024 21:01:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Brian Lyles" <brianmlyles@gmail.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: A note from the maintainer
+In-Reply-To: <17be9ebbcb24ec98.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+	(Brian Lyles's message of "Thu, 21 Mar 2024 00:03:57 +0000")
+References: <17be9ebbcb24ec98.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Wed, 20 Mar 2024 18:01:39 -0700
+Message-ID: <xmqq4jd0fle4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGJzqsmy9RcWJeFLkZjCrrhv_y5q_R3yYUMhcyafY3jOUJFxOg@mail.gmail.com>
- <63dda239-1205-4aae-a3b2-10365147751c@gmail.com>
-In-Reply-To: <63dda239-1205-4aae-a3b2-10365147751c@gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Wed, 20 Mar 2024 17:53:15 -0700
-Message-ID: <CAPx1Gvf5g3z8E0e6TmwgDc-TVFmTvSBexBGtOwB8+jh-k6G=7g@mail.gmail.com>
-Subject: Re: Feature request: highlight local worktree in `worktree list`
-To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
-Cc: Matt Hickford <matt.hickford@gmail.com>, Git Mailing List <git@vger.kernel.org>, 
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 93A974B2-E71E-11EE-9FDD-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Wed, Mar 20, 2024 at 3:24=E2=80=AFPM Rub=C3=A9n Justo <rjusto@gmail.com>=
- wrote:
-> "git branch --list" has a much richer machinery than "git worktree list".
-> Perhaps the display machinery of both commands can converge in some way.
+"Brian Lyles" <brianmlyles@gmail.com> writes:
 
-I have no concrete suggestions for such, but I will note that there is a
-`git for-each-ref` plumbing command for refs, but no `git for-each-worktree=
-`
-plumbing command for worktrees.  Given the relationship here (each
-worktree has a worktree-specific set of refs), perhaps that's a point
-of leverage, as it were?
+> To me, this initially sounded like it meant "your patch was not
+> something that the git maintainers would be interested in accepting". I
+> *suspect* that what is actually meant here is "your patch was
+> straightforward and non-controversial to the point that no members of
+> the list saw it and felt the need to comment on it", though to be honest
+> I am not 100% sure.
 
-Chris
+I actually meant what I wrote.
+
+It is possible that the reason why your patch did not receive any
+response was because it was uninspiring, looked useless, and did not
+deserve anybody's attention.  But it is also possible that it was
+lost in the noise.
+
+And pinging on the topic by responding to your own message is not
+just acceptable but very much appreciated way to remind others who
+may have missed it, in case it is the latter.
+
+If a topic is truly obvious and straight-forward, it may be taken
+silently to 'seen' and even to 'next', and since it is suggested for
+the contributors to look at "master..seen", such a topic would not
+fall into the "hear nothing about it from anybody for a long time"
+category anyway.
