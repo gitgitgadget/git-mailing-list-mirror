@@ -1,124 +1,78 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A6C74E05
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:00:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC54C83CC1
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711026037; cv=none; b=qBb6PNEqIAQAMp5eWlcDmmBbMnz+gga+el35XY1yflyhfr/H8gqbMOh/UREGprQrmXcy8/Y2vPxI/vds/8NHCbXXaOe39xx2WeDwwXjN3H4esxwnw47rdmbX/gTfULwaTXoLi9W/x48ONlgu8DRdA5D2k993pfCGNVLqsewBj9U=
+	t=1711026133; cv=none; b=PHlWASlhsETBog0zztIf/xhdvHPWby/bgBVETmRvIFzU8w/cbTKWsuiBvdAxaCglL4rdILs+bSldstBrJvSkao3AIPnKZyHS16C+dQKcBUGPxvBHE4ez4oDOlz12gAgkDNndYN2lqO52AZdUVnuL71JVcD/vVJPxZVkqQ4R5mK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711026037; c=relaxed/simple;
-	bh=cdmsevrGqEkGhyTmRowF2wmpwGCr7sp9RQF4WWuNGco=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q4fPD0iyBnnMlHO+Eo0LP2cQHZL4OFJAuPuMueSlxvvNJ68RlQqwohHUr3/qdaw7bdD1wpQVSnJBQ0sEASQsNtWHw9zq73g6L7GomGCvZuvi383ql96MeIzLb9+f6uXt0kxrR/1Z3ujIMVayTBa7b+XMkhsx/FOL7sQFuUsTD80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iIoM/4ss; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711026133; c=relaxed/simple;
+	bh=R+N4627bmm8MJLhN/Qe9RX4D8KKzt79UZLjvxGTpdZ4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nDK7i3dRnKLhhx4HNBFt//Qaxuw4fz7OiXwPNbUUCziyyskLQ7GFemS/g+TSXEQ66ZavuuW3w0peUKUxrPy7FktIufiN4uITekkCpSkbiVFBtvZaO5pksfkAabFaSs5dWxMGq7PgrtaxNvTJ2PNr/PZLYnfPRud+qmJj+ROnruI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TqgFUJCk; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIoM/4ss"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a470c79ef7cso121670366b.0
-        for <git@vger.kernel.org>; Thu, 21 Mar 2024 06:00:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711026034; x=1711630834; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VCUpRMsczJw7wsKbhARrM/Ed42hz+ZW3SzTsETAeDHE=;
-        b=iIoM/4ss1WxvxQ0qr4HkX1vhD8Dchsub6FhqSr6gBNt5TRoSqCnXWKlAny7bzHdLUK
-         sXapYvGpQXv7QWlkV4BjF1IJO87a4ODIyRg/Gt025x/WzDBLSzYpxaC9M+TszUzabIUo
-         AW0pryiQYxy0lm465JXuXbfnj4DN84Dl4xvFKQ/yHrR4hAa/nWbTzZlwhpqoTPxeJdeg
-         g3iHUqeK8IRKt5XxA2PQDBVAM/B390tKOeaagW8BeLzRd28zDJk8RgiM0GAO6i4xUqoR
-         oA/5bHKKCI6909iIdHPabAfvG8EuuTi9uz5QQqei97MTDV0kk8+fZAXcq2Qs25768Pc/
-         4+kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711026034; x=1711630834;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VCUpRMsczJw7wsKbhARrM/Ed42hz+ZW3SzTsETAeDHE=;
-        b=iu2OXqTI33m2eIfFBppiHiqjNpm1EZbRteFIJdKqRyyZFACnAQWHcxOID6jQtbO38b
-         GaHJkG1QJSM31JhNkRVCABC3klosy6QWvWdpcm1An5XvGBooa50kSj9yCifeNfhGC6m2
-         Se1uo5WMnfrRpnTaepOAs++6YRpuTYwi/gVPePBS2yMen5y4smN3FMExMis/fQ2onkRz
-         Pu3geIW761Oe8SazTfXk4+mpsn9tEo2eNMQzKPUm4UVpYsnPXt8IHXcMIjcORRwqTpzV
-         oZZ3ngjGUbGn3zmTjioNxNVS59hxn9gFCtkdZWINqd33N8s7SONnAC4Osf/e4UUgMRfL
-         uCWg==
-X-Gm-Message-State: AOJu0YykQroNJ1SIpikLXFubyjX2cNxBCaem4DhNLpJvOI8xLeOh1zEw
-	CtUWm+iw7wIDsU5p18Dt+OgloHiPvctXrmgC/w0pLHCXZYIVvBrtGCVZ/QwTecpPVlC9iIsy2ik
-	ByhkxWRtHJFqHLc+YR5TlWYWkOs/RLTOU9tw=
-X-Google-Smtp-Source: AGHT+IEgXr8Mle/fHteRz7WgQNcn7qELTpkkiVwLXPFpJbiC+1Y/1MLPc4CGMeI+i3hs9Asen6gJs0KpuI0JPNcWhso=
-X-Received: by 2002:a17:906:7f81:b0:a46:3d7d:35c with SMTP id
- f1-20020a1709067f8100b00a463d7d035cmr2285230ejr.30.1711026034152; Thu, 21 Mar
- 2024 06:00:34 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TqgFUJCk"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 374EF2A809;
+	Thu, 21 Mar 2024 09:02:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=R+N4627bmm8MJLhN/Qe9RX4D8KKzt79UZLjvxG
+	TpdZ4=; b=TqgFUJCk6C1ODqAteq8occP6/7XyKfUW4nOrLsDeA90vr/eQzwlF24
+	i8B/dLS1V9qSm+q8ebGs1aON188lnMYUNJiNCab1fPzjC/Ij3wtrGWgYRvpTEwnL
+	Yd+iz3SelFuQsMrbfJ1SD0UDJnKRsrKOptpcdoNsUexiVHH7HNYg0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3016E2A808;
+	Thu, 21 Mar 2024 09:02:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0D07D2A807;
+	Thu, 21 Mar 2024 09:02:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Brian Lyles" <brianmlyles@gmail.com>
+Cc: <git@vger.kernel.org>,  <phillip.wood123@gmail.com>,  =?utf-8?Q?Jean-N?=
+ =?utf-8?Q?o=C3=ABl_AVILA?=
+ <jn.avila@free.fr>
+Subject: Re: What's cooking in git.git (Mar 2024, #05; Tue, 19)
+In-Reply-To: <17bea28cf691d3eb.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+	(Brian Lyles's message of "Thu, 21 Mar 2024 01:13:54 +0000")
+References: <17bea28cf691d3eb.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Thu, 21 Mar 2024 06:02:03 -0700
+Message-ID: <xmqq34sjd9h0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGJzqsmy9RcWJeFLkZjCrrhv_y5q_R3yYUMhcyafY3jOUJFxOg@mail.gmail.com>
- <20240320100232.GB2446185@coredump.intra.peff.net>
-In-Reply-To: <20240320100232.GB2446185@coredump.intra.peff.net>
-From: Matt Hickford <matt.hickford@gmail.com>
-Date: Thu, 21 Mar 2024 13:00:00 +0000
-Message-ID: <CAGJzqsmKcmd5+FADnE_T6kHTQXEvBo2=L3MexvQiJqj6OgXHiA@mail.gmail.com>
-Subject: Re: Feature request: highlight local worktree in `worktree list`
-To: Jeff King <peff@peff.net>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 375E43DA-E783-11EE-B0F6-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Wed, 20 Mar 2024 at 10:02, Jeff King <peff@peff.net> wrote:
->
-> On Wed, Mar 20, 2024 at 08:00:00AM +0000, Matt Hickford wrote:
->
-> > Hi. `git branch` lists branches. It highlights the current branch with
-> > an asterisk and (for me) the colour green. This is handy for quick
-> > reading.
-> >
-> > `git worktree list` lists worktrees. It would be neat to highlight the
-> > local worktree.
-> >
-> > Another idea: `git branch -v` shows the commit subject and
-> > ahead/behind counts for each branch, eg. "[ahead 1, behind 1] avoid
-> > RegexReplace". It would be neat for `git worktree list -v` (or
-> > similar) to show the commit subject and ahead/behind counts.
->
-> I'm not sure if this is a dumb idea or not, but: what if git-branch
-> learned to display branches associated with worktrees (just like "-r"
-> lists remote branches, etc).
->
-> Then you'd get the all of the display niceties you want, along with
-> other features like sorting, limiting by merge, etc. You can even show
-> the worktree paths with a custom format that uses %(worktreepath).
->
-> I think the only thing it wouldn't do is show worktrees that are
-> detached from any branch at all. I'm not sure if that's important to
-> your workflow or not.
+"Brian Lyles" <brianmlyles@gmail.com> writes:
 
-I frequently run `git worktree list` to review my work in each tree.
-Or to choose an inactive tree for new work. Example output:
+> A strategy that I have seen work well is for any commit making a notable
+> change (one that should appear in the release notes) to include an entry
+> in a CHANGELOG.NEXT.md file.
 
-E:/product1  ea601b57e (detached HEAD)
-E:/product2  b255bd1b6 [json]
-E:/product3  0d7623530 [optimise]
-E:/product4  7bf8297c7 (detached HEAD)
-E:/product5  a8f89cabc (detached HEAD)
-E:/product6  89a022651 [xml]
+While I very much like the idea of distributing the burden of coming
+up with an initial draft for an entry in the final release notes, I
+am not convinced that the approach to use a single in-tree file
+would work well in our distributed development style where the
+history is merge-heavy with many topics in flight in parallel.
 
-The more information the better -- highlighting the local workspace,
-ref names when HEAD is detached:
+I can imagine how well the approach for each contributor to give
+such a draft entry in the cover letter of their topic would work;
+it would be with much less friction compared to a single in-tree
+file that will be the source of merge conflicts.
 
-  E:/product1  ea601b57e (detached HEAD, main)
-  E:/product2  b255bd1b6 [json]
-  E:/product3  0d7623530 [optimise]
-* E:/product4  7bf8297c7 (detached HEAD)
-  E:/product5  a8f89cabc (detached HEAD, origin/random)
-  E:/product6  89a022651 [xml]
 
-A verbose option with commit subjects and ahead-behind counts:
-
-  E:/product1  ea601b57e (detached HEAD, main)           Articulate splines
-  E:/product2  b255bd1b6 [json]                          [ahead 1]
-Correct syntax error
-  E:/product3  0d7623530 [optimise]                      Optimise algorithm
-* E:/product4  7bf8297c7 (detached HEAD)                 Reformat doc
-  E:/product5  a8f89cabc (detached HEAD, origin/random)  Seed random generator
-  E:/product6  89a022651 [xml]                           Replace with XML
