@@ -1,102 +1,68 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B0417CD
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 22:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C104F17CD
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 22:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711061370; cv=none; b=Yud/YmotKvQAz8fvB1U8RxnBBiYms2jwpvcPaX4pshXdPL2Js/xX1Cvbd/+NYiW/rskagPYRNc4gmSpr6NV8tTErEF8alEGrsGb6U+x3GNYaFZO3HFkfyl7JrTAO0O/4Fy3rb+FpVzBggYdFqOTwhC1317Ujp2WXES/QFS8P7G8=
+	t=1711061947; cv=none; b=Nz4hMJNS2T+sQ7xTOKR3Y0LZQXeMgRie6qeAas/lmQxCiHArbb9Sn1Ag38+NSZ6mw3kLWp8guWz0O+KNbDZ3ovR9IwytZVLRXyUmBWKqhr67Am2g0pUOxP5gSdVL4W/ye83rYpOhztXJ6ucA1NV3+RS2BKoRII3A+sDJhmZIW0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711061370; c=relaxed/simple;
-	bh=GhTkIpKmOZi+AJRDz76rOQ3ernNKJcGALBwG1DAp9ac=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hNEfBN1G/eqtyzo8eSdpzcZMtt61Hc62llfFd+877ncKG+r6WgJFl9uT8+frQoowInLV/sN+lhLu2e1oR8iVL6w/hO3aCYWQqs9880CM06DMOGsTND8jBRKxBjHCCYcT4fqPBsTUHjpfY59oiDEKH9jZ1003cxwYXYwsQmELnuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4SdNH8z; arc=none smtp.client-ip=209.85.160.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711061947; c=relaxed/simple;
+	bh=DQPVIjTk7CN31Ib0pEto2u4fqFFFlvXTDVkjgUcEeiM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lqXCMU53UnkY+eMuA6YsZDyko+lqk0emuzsse8H5IqxOAGJRVnMoPLaVquYr7fQuj2+IZnjYPtCYvEdPTuERpFqEj5uBe8oQf4wMLJ8D6t2G28T2uw0TFzijXwSEje3bAQGEyL/WiqrJtGV5i4pAEBYQdHUuLlXT381GkFqpcUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cdkOH8Z2; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4SdNH8z"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-221816e3ab9so713299fac.2
-        for <git@vger.kernel.org>; Thu, 21 Mar 2024 15:49:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711061367; x=1711666167; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hQFVj4Zh/5SUu/ekLlNGEzvcGBU2UiAB08JKcptiKUw=;
-        b=l4SdNH8zChaS0ctl9RKnbIg8dQE//VfGJpaXo7Px/U5BwqTYJk1KHyb3NhG+ruyXgA
-         ppdTc+qXbkrgWuK5F46/e8nYltHlZudZQjHI2a0gp1OIfCL9Fz5SoYDIRAvscireBVzo
-         T5WKJN5vv0rNG+yvV20t/ZVOqmWaFc1KQBgv7FUe74oT2FqD/d61orPiF3Xj7xdkfwiS
-         /5gUghXsynAuAnBYu2nGQCWsMNXAg/wNI3wC94UR3JpPDgNNu3orlTcujkFhcBsONcIF
-         Dl1LyBjeRwOHRG7EdHy8AM1Nu6YgVxZaRqigur8uNwRUsimZV9XtaMhxvGTupowgHSXx
-         n2aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711061367; x=1711666167;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hQFVj4Zh/5SUu/ekLlNGEzvcGBU2UiAB08JKcptiKUw=;
-        b=tDx4DZpQLF9cwWDcrUTzpepRt0H0cNEAlM6mJuo1mgzye+UgUsWJlXGMwlHUb3wkKw
-         tzD9lSQ8o1vhKbXY/cNXs6RcM1CB2VgoJ8l1hQc91YS98wh62EHw4r3za/lSeN32UW28
-         cQz/EThKUMCpgJbzROaTu0FwXExH3Dr3BF/4+8O+D16HNKInnUIee4PCjzdCzWexpdS8
-         0uoix50kYu7pS02vjx04PI5A8ViRkYu3rNGgVNmDOi6Nit2JGKMBugaSSyVc0hWGBxN4
-         4513I6il//OHa5eoucXQ2aBClw4tCqmPd0VTaD0ethZvArM+KbmSr0ofOFgtzy+VzeN8
-         9sKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXDA4VjtkIPLfOT4CLgHxSYdZss0iDadDdS8Q1w+827bAqPCbhoFUJ9zu0fjzkNp/KAdAqOnOAG6W6sGllQSHuPe80/
-X-Gm-Message-State: AOJu0Yyz8SRqCVio1n1qWszxRzg7WTBzi9WJGIEPyisTCEyBn5qvbJ4R
-	XPt9wEO4wmvBT+WQs7aEAEjI7MyZ8KtO0X7Cl/FEiKx9ylGGQzoI
-X-Google-Smtp-Source: AGHT+IGhPDcRBhpFAjwoIhC/ab6ZsdXj5tEuKJfPUjcc2whOiYOtuuP36dyTtVj4HHuX+VOGpDjiGA==
-X-Received: by 2002:a05:6870:649f:b0:221:c9ef:43c with SMTP id cz31-20020a056870649f00b00221c9ef043cmr716808oab.1.1711061367662;
-        Thu, 21 Mar 2024 15:49:27 -0700 (PDT)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id hx27-20020a056871531b00b0022260d13f18sm193775oac.25.2024.03.21.15.49.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Mar 2024 15:49:27 -0700 (PDT)
-Date: Thu, 21 Mar 2024 17:48:37 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org
-Subject: Re: [PATCH] reftable/stack: use geometric table compaction
-Message-ID: <g55luyh5diq6w4d5jigkhrwnxfu4ekz6nb2s7sjug2agjoexd5@63cyzht4ihcx>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, 
-	Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
- <ZehjoXhH6deTJmSm@tanuki>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cdkOH8Z2"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0A6A13BA94;
+	Thu, 21 Mar 2024 18:59:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=DQPVIjTk7CN31Ib0pEto2u4fqFFFlvXTDVkjgU
+	cEeiM=; b=cdkOH8Z21z9SmjBhCeddVZ8tWbOhdc0wGZt1qvYTf8HYGoeKGY2kDQ
+	W1sEF/LSxF53jbxKePe5xWimNidDYuXAUGVFR3jbBqpRdUQbsDFkeTvbI9JeuMAV
+	XeC4sOkYro88mx8ZVYZ5Dy/4ETLNiCP7NpRxxvWZCvi1AJnEZ7Fis=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0150D3BA93;
+	Thu, 21 Mar 2024 18:59:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 720A43BA91;
+	Thu, 21 Mar 2024 18:59:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Dragan Simic <dsimic@manjaro.org>,  git@vger.kernel.org,
+  rsbecker@nexbridge.com,  github@seichter.de
+Subject: Re: [PATCH v5 4/4] config.txt: describe handling of whitespace further
+In-Reply-To: <CAPig+cToaiCzj2XwNSeStx7p7ZPn7=a2nKZBFLwX12Uj=hJ7cw@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 21 Mar 2024 02:22:54 -0400")
+References: <cover.1711001016.git.dsimic@manjaro.org>
+	<a75a5eb8793f4ae6eb6e7cf0e2fd017471fefd0e.1711001016.git.dsimic@manjaro.org>
+	<CAPig+cToaiCzj2XwNSeStx7p7ZPn7=a2nKZBFLwX12Uj=hJ7cw@mail.gmail.com>
+Date: Thu, 21 Mar 2024 15:58:59 -0700
+Message-ID: <xmqq1q836vkc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZehjoXhH6deTJmSm@tanuki>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9B9CEAC4-E7D6-11EE-ABF2-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On 24/03/06 01:37PM, Patrick Steinhardt wrote:
-> On Tue, Mar 05, 2024 at 08:03:45PM +0000, Justin Tobler via GitGitGadget wrote:
-> > From: Justin Tobler <jltobler@gmail.com>
-> > @@ -1305,7 +1287,7 @@ int reftable_stack_auto_compact(struct reftable_stack *st)
-> >  		suggest_compaction_segment(sizes, st->merged->stack_len);
-> >  	reftable_free(sizes);
-> >  	if (segment_size(&seg) > 0)
-> > -		return stack_compact_range_stats(st, seg.start, seg.end - 1,
-> > +		return stack_compact_range_stats(st, seg.start, seg.end,
-> >  						 NULL);
-> >  
-> >  	return 0;
-> 
-> One more thing: I think it would make sense to move the refactoring
-> where you change whether the end segment index is inclusive or exclusive
-> into a separate patch so that it's easier to reason about. Also, the
-> fact that no tests would require changes would further stress the point
-> that this is a mere refactoring without unintended side effects.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-The `test_suggest_compaction_segment()` in `stack_test.c` does have to
-be updated to reflect the segment end now being inclusive. But other
-than that, no tests have to be updated.
+> Thanks. I find this discussion clearer than v4.
+>
+> I don't have any further review comments on v5.
 
-Thanks Patrick for all the great feedback! I've updated per your
-comments in V2 of the patch series.
-
--Justin
+Thanks, both.  Let's mark it for 'next' then.
