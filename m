@@ -1,62 +1,64 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F51134CCC
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 20:29:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBFE133402
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 20:29:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711052952; cv=none; b=TZyh0Ws1ijiW5xyfCwRBYUWJ0NlEAef9TAptR2IitXZh5jNvCOvXysA6CS6iRYTu6ymFmRHGo6DAHxfXlcE/Tlifb/naOrwC/XLIt7LpmGUiGI04EOfTS/XeCIdemgp+FRXzaUy4MDnX6eV57fNQRVh90XqwtQEk4lcLqnb4q7c=
+	t=1711052953; cv=none; b=iIZMO8yOcoHhF8g5qNwiw3ABDDpBUednjeb1zya7EUQGb1UEhzBsF4vgNIOE9OoVvgx7jV9FAQRC7snCrt1FEeZhUOoKgg7P9UilibMmOtJcO0xcoobZolOBMk8V5cG3yKQZSAj1bzT7qnWTjUqEJqcOzWjKGAxM9XL+3wmNDuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711052952; c=relaxed/simple;
-	bh=UisMqWELOPBM7uUZKOAIE5q4+tdfu5lto+lNpO8PQZ4=;
+	s=arc-20240116; t=1711052953; c=relaxed/simple;
+	bh=TGhdwus/VX5J85zeAR/7/1Y5HkTTqocOu67CB4CQrw4=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UF/jjsSZ4gGz9llGkuv2L/eAoV9PyoyBMxLnFzB91SZsejB2RAL7HD12mHsER0SEaOO6mbFM5Q26W0CBpoefAN25S8LhbOxoD614njGXlIucSC2qRSGZvfCfFlO3145ZeL9HuPnFWCKzZz/krRiCRjXn9t1SKfTRKIDMOY2jt2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mUGIfyfK; arc=none smtp.client-ip=209.85.208.175
+	 MIME-Version:To:Cc; b=N5L1u2UOOiwf5h5qXsbp776Z81HED/75sG+b0R6MynfWc/1gnFsrvliGtmpQZrdWoxRqv/rWAgaF8SBH4aWZuRMArWa8Q69q2XC0jPzZnG40vJZZd3QhkL1bk6N6meeHwnnjSpJ7YuTUoTVNWe6If/nePmOKgwr6ZHppsOyg9Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YrfVZzl9; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mUGIfyfK"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d109e82bd0so19088501fa.3
-        for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:29:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YrfVZzl9"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4141156f245so9976875e9.2
+        for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711052948; x=1711657748; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1711052949; x=1711657749; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vB3Fd6ckRbtBe69vrtdbtEQ0MTHNdUHFmRtBPFvaSUw=;
-        b=mUGIfyfKm4SgMPm5EF42yAXKFH12h6eidbD5nCOU3etZzvu6CV9OpvOFtitGYJYBTT
-         Zc5gx3BMc5Qo7AEqpboz0ppVOS/072nkfnry/2J6giuSUHl04qzgIcX05jZ6cYetpZig
-         fYaZV3omiWnAkW3mDgkoMcR4FAobbSKQqqrcXyrLgbIYGZv7UNKXb3wzNAuqteu7hPat
-         yc3lN1Fvn4Xbm9OEqiMacWSidP9o0GJHu3Z3bNPbUZPhPALliY2735E4z/wraQuqykcI
-         Uq79wisBbkYDs8XZNvUsk05Od9FT/HHD7gTYRFV5q68/H4AnMGfJNCwfo9FXnUBwFzV0
-         kkdg==
+        bh=OfzqRUpikjr4tFiZDQnD+q7FE5fMKcEiqXBSb22F80M=;
+        b=YrfVZzl9sk4sj84JPS+ixpw7DjOj+IpdwRZtmV3LMhPKkGEP1QiiZ8uTPMqjGPdoYt
+         bXjO+9HLxfzk/OmP9mnPwS6boucgg52hmSEIfki7PqjvMMaH+G4IESKcFiuJ+QW2xZZo
+         95YLcN8scodNflae1e/K/AMBVZsWkXO52e1j/66Eezw6EHq8WzMF8wQxQxJHMWecW0DD
+         Ss9S/6PO7w9V7Njdk5sOt63JZwEHxhz1KegBBOSNzHt8b0Y/KsQW/mUvcwloGNAaEl1s
+         79XmdPIT4pGyp2V9ISMeN5+Wg2rY09nCAM+OSoMxWLop7HpN7U74Oxz+pUkRamJ9pn/v
+         j0bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711052948; x=1711657748;
+        d=1e100.net; s=20230601; t=1711052949; x=1711657749;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vB3Fd6ckRbtBe69vrtdbtEQ0MTHNdUHFmRtBPFvaSUw=;
-        b=pVYvodz9I3+bLW41OxXxedz0m7oq58DdRfMmiFuch1mRuRjgylQWEYBOPrPUoZm1s2
-         mjeEH0Zw1nAU8yBokT/sedI7taKEXpCDNP4fVRQ0WmwkXJTzVsUCJtazIB7wkq/aY6I9
-         pif4ewEEWQI0KAsHeIvlAoPevB+00DOemNW8CCDtk3Kk6wtErRWUMUiSaYGq8PRH164d
-         PuMVNmcR4zMseyXINYMF6A0I1lt9WcUyYdTw2JJu0Ipx6zqDQ4eeOfGRWokNAKwq4nvO
-         tOp5GPruhyP6PvSlJ3RKZ9Za/tuHXXK7s2ceOr8Y8CmAjlOOcIb1qbcWMYi7dFjYSNFU
-         CRQQ==
-X-Gm-Message-State: AOJu0Yxg2mGVMyYCwD4/0+iyI+kRvesn22rn521jEbZs5ax5yFYP75C+
-	1NtjaUCKS+eZknc9waCB36B5kr0Pj646RUASTqc8IcPOtsHpChvFXXiGRBjd
-X-Google-Smtp-Source: AGHT+IFlZriIm58cYH8rPLfCcGcGr4UQ2WTteBoSuAk3yNewBaptUFb2DdmDwOTXuipF3QwCAqBSEA==
-X-Received: by 2002:a2e:880a:0:b0:2d6:a3ad:2327 with SMTP id x10-20020a2e880a000000b002d6a3ad2327mr457146ljh.11.1711052948152;
+        bh=OfzqRUpikjr4tFiZDQnD+q7FE5fMKcEiqXBSb22F80M=;
+        b=KzLPWzr0fkzPlrBgWVqCr7nVUs2PXfdeGq2nBvE18QC79WUDA+sL481IcioNrpL2FI
+         tDKodihDfkDGEasF9y1Wi0hE/cwQA9U+YqEXqTjTkUFW772tDExuK77DP474ZlN3+f2F
+         tOdSIXIqozx5OdzWWJ4lUE3V+6CWTttIbfBH/OK6MCe77sVf3fhXyUQxA6E7tZ5VUUL4
+         wztxZIexjQgulzkZvCOSB7ez4tPgOrzbLHlkm+ofVkFD4c2qYJr0ESyf/DqLbvXguLSO
+         O+qJdQgq7soePLrkbRvzntPrrhg6tpkKBwWqOFrmMRsl8JtumCdmKEpbgibixkwdr3OZ
+         nQ5Q==
+X-Gm-Message-State: AOJu0YxzLohne3HjDRBN5PpoKOM2VhRRL7kZFKiH0Ee6PbulV43UQsE/
+	UYRty0abPycAVpscpNCrEQkafyMHJ+ktBDiL4rHbY6w5hyZo6hpXaXkwb4+b
+X-Google-Smtp-Source: AGHT+IFY+VHqf/Dvj+UUe2Rga7ctknI0W+C7qTfdxTUaInxs1ORjHYOJmw0yjRRlX/lFPC/2B3foUg==
+X-Received: by 2002:a05:600c:1515:b0:414:6bc9:d01c with SMTP id b21-20020a05600c151500b004146bc9d01cmr149216wmg.22.1711052948768;
         Thu, 21 Mar 2024 13:29:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g11-20020a05600c310b00b0041408e16e6bsm808284wmo.25.2024.03.21.13.29.07
+        by smtp.gmail.com with ESMTPSA id j8-20020a05600c1c0800b004146bcdde06sm823234wms.6.2024.03.21.13.29.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Mar 2024 13:29:07 -0700 (PDT)
-Message-ID: <pull.1691.v2.git.git.1711052946.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1691.git.git.1711049963.gitgitgadget@gmail.com>
+        Thu, 21 Mar 2024 13:29:08 -0700 (PDT)
+Message-ID: <b541ce7a49cedee5a3044af8b52bf1d155496211.1711052946.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1691.v2.git.git.1711052946.gitgitgadget@gmail.com>
 References: <pull.1691.git.git.1711049963.gitgitgadget@gmail.com>
-From: "Sanchit Jindal via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 Mar 2024 20:29:04 +0000
-Subject: [PATCH v2 0/2] t9803-git-p4-shell-metachars.sh: update to use test_path_* functions
+	<pull.1691.v2.git.git.1711052946.gitgitgadget@gmail.com>
+From: "sanchit1053 via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 21 Mar 2024 20:29:05 +0000
+Subject: [PATCH v2 1/2] t9803-git-p4-shell-metachars.sh: update to use
+ test_path_* functions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,30 +70,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
-    Sanchit Jindal <sanchit1053@gmail.com>
+    Sanchit Jindal <sanchit1053@gmail.com>,
+    sanchit1053 <sanchit1053@gmail.com>
 
-Correct Typo in Branch name
+From: sanchit1053 <sanchit1053@gmail.com>
 
-Sanchit Jindal (1):
-  t9803: update commit messages and description
-
-sanchit1053 (1):
-  t9803-git-p4-shell-metachars.sh: update to use test_path_* functions
-
+Signed-off-by: sanchit1053 <sanchit1053@gmail.com>
+---
  t/t9803-git-p4-shell-metachars.sh | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
-
-base-commit: 3bd955d26919e149552f34aacf8a4e6368c26cec
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1691%2Fsanchit1053%2Fsj%2Ft9803_use_path_helper_fn-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1691/sanchit1053/sj/t9803_use_path_helper_fn-v2
-Pull-Request: https://github.com/git/git/pull/1691
-
-Range-diff vs v1:
-
- 1:  b541ce7a49c = 1:  b541ce7a49c t9803-git-p4-shell-metachars.sh: update to use test_path_* functions
- 2:  b8d0620d410 < -:  ----------- t9803: update commit messages and description
- -:  ----------- > 2:  e25b5f928a9 t9803: update commit messages and description
-
+diff --git a/t/t9803-git-p4-shell-metachars.sh b/t/t9803-git-p4-shell-metachars.sh
+index 2913277013d..4905ed2ae9e 100755
+--- a/t/t9803-git-p4-shell-metachars.sh
++++ b/t/t9803-git-p4-shell-metachars.sh
+@@ -33,8 +33,8 @@ test_expect_success 'shell metachars in filenames' '
+ 	(
+ 		cd "$cli" &&
+ 		p4 sync ... &&
+-		test -e "file with spaces" &&
+-		test -e "foo\$bar"
++		test_path_exists "file with spaces" &&
++		test_path_exists "foo\$bar"
+ 	)
+ '
+ 
+@@ -52,8 +52,8 @@ test_expect_success 'deleting with shell metachars' '
+ 	(
+ 		cd "$cli" &&
+ 		p4 sync ... &&
+-		test ! -e "file with spaces" &&
+-		test ! -e foo\$bar
++		test_path_is_missing "file with spaces" &&
++		test_path_is_missing foo\$bar
+ 	)
+ '
+ 
+@@ -100,8 +100,8 @@ test_expect_success 'branch with shell char' '
+ 		git p4 clone --dest=. --detect-branches //depot@all &&
+ 		git log --all --graph --decorate --stat &&
+ 		git reset --hard p4/depot/branch\$3 &&
+-		test -f shell_char_branch_file &&
+-		test -f f1
++		test_path_is_file shell_char_branch_file &&
++		test_path_is_file f1
+ 	)
+ '
+ 
 -- 
 gitgitgadget
+
