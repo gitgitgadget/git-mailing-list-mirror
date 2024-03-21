@@ -1,53 +1,52 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE3C6FBF
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 04:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942F6FBF
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 04:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710996648; cv=none; b=H5R11mCMgCAQ3320K4vlpYyabtk3FkPJr5g2dnFpYpcTyPzd80dco5XJ9aM0MOL4MOVGeqOjazkDLwakP3BBG1y3FFB4FuIGizHmKLPfK6uZ/v2xSrvsAteJCOhgiW9BXn/oUUi38vf4X4wglxUIH5erFJQcX/cVP8xoW0H/KPU=
+	t=1710996934; cv=none; b=Jj5+nA6vm1FFVMX63TS36bDGED7W4G84l0X3IBiHkGvhOY611kBI9+uNMI3+FIlFQ87lIIeU/hF18njxIo2iFhHMIfpNV2I/MkjzNxOZmoZek3B+ntsDUm8fhlSEA/TGzNHhnrxGxIueCSIa50JkGpsQTFSjh8ZcqxVqr39z3Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710996648; c=relaxed/simple;
-	bh=ZYjHYi3qp7CFK3FypNN5Aqtbm+HJKQsn2wGcJrE/6zA=;
+	s=arc-20240116; t=1710996934; c=relaxed/simple;
+	bh=Cbd6Yrg9erA5MWUjvSSta2ZlJV11k1qdBLjs3lW1rys=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LytvqQ8ERIVdOzmg028mcGILwcHZEKJe3L78W94di4ouaBWUlT00nIxF0BA8B19V3ryvSOH01BUiMxkWvT+2ELIZr58EVv2C+C7+9jLDnsrx85W8Cdj85iVTQ+iX53QfQgg4YvUvyX1c1vyq8ZMKegr7QtYb/BEpDXDh6YZ7hwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+	 To:Cc:Content-Type; b=YpWeOwy2nFUa+oNoMMPVKknZQsHdqNFAkNyrm6WIOJPPYqDJPzxmTqgKpVXHdXQc2HipYsNrOlrC5r6vx9tL/9RByWf0OnHaNt5kch8T5glCtqFRLLiKIDjUDDK1W2XOECues+7fozksFHSk9SV2//SFI6NuZzD2CER5j/fR4pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-695df25699fso5667426d6.2
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 21:50:46 -0700 (PDT)
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-69107859bedso3974316d6.2
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 21:55:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710996645; x=1711601445;
+        d=1e100.net; s=20230601; t=1710996932; x=1711601732;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8hbOvCNocqAqK7bs/UydGSUw/DhM1cyE80h1mRUzLro=;
-        b=UetvjLeywwMHLB374eq7qlxEFLjl+pwmljjCtCIfIJqeTLEUEfHVzjsU0STUVc4sCy
-         ttorAry/fcSH3VzaxI1ywDuYtJpNAS6EcV7Q+YvyHcXWSOLwp4ZjvvX+uYlRXcEamrpH
-         n2/hzyu7XmRUpPGAKQbHOJ5vTKM6VEq2UsqcqBTYWrUy0+hMZfLqiTXovga4xrmxB7e+
-         sN5X/24C00+96xtwgGV7tBhG/xsbfhV60xE4m1g1JvQNmxn6BCbFydpts3dmLS7lDIAT
-         ClCu0Xm1xKvAVLI8gYQKkDk/yAOzJ+HiA6MTSGEkEDg17AVg61Jbd3NhaIiUWOtJdV/A
-         NGKA==
-X-Gm-Message-State: AOJu0YwTZ/IFm4NdFmuX84MilFWN97OjPgHt0QZs9nS4q5ONSYLoz3lW
-	huCwgo4orjKs9puEb6hwD/GNxCcGgEWl50diOfABzuWRoHeqXSS7IpFT+mozTqSS1F3JYez2GXu
-	vUGI+/SnjkHI7fSOywydxabPf3X2LOFJM
-X-Google-Smtp-Source: AGHT+IENwC9Mb8MvEDqYzgIl2j1dTKEZVPBfFRp9IV3Zin7aVfiMZ6glThG2AaDS/FPuvNeeXlxdloecBYtDljw32Nw=
-X-Received: by 2002:a05:6214:110c:b0:696:4621:9da6 with SMTP id
- e12-20020a056214110c00b0069646219da6mr3590027qvs.3.1710996645311; Wed, 20 Mar
- 2024 21:50:45 -0700 (PDT)
+        bh=Buw+rlShIAYd4zZlJFwsXnK5XBfMrUESJyryfMoQNMw=;
+        b=rUXhYKgcRmFKICtd+WwZFcREnqGobPh29IyGQpngPjNH8WeMvG0/o2mDbYxyf1OrLQ
+         hVuGV7S/O36Jfl/7vihXaxEolT5d33sOszidR4Ah8IC6BEhuVvCMNnUhuayjCtWBTtlW
+         MmQXP4VrGYlN35ADBOXFH2y70TDY6KPSKm1MKYlhzojC3xJkMtR+B4VvjzBytMzzqnzA
+         0XEMPFP1lEtqzY34+OgPLPCq2NzWYIOcfz8CyVSefu1ShoIgXHJB1oXKcy06bPrR//Jq
+         LJV6O1mGi6GdH67AUvDkbmoW15RQf6BQhqN/a8NaJwDzR5PzRQejSSQRi77gzrVsfxBe
+         KHhA==
+X-Gm-Message-State: AOJu0YxaG0jMZnuWvZiRdfiOUwnQYxrKAweCC1Srbio8bk/3pepfFeo6
+	9fZblSqJhTN+4/tN+YESHzC37Hog/4MIUs926xsPh8z0lGVA395H/7lVSAVn2IkgrsORRpS+qBA
+	n0okL8ZxkyYXlVfmNM+TeYIfPmLw=
+X-Google-Smtp-Source: AGHT+IFzP/Z12VbS1ntJtFUAl9EH9P90xroxbpjFQSi9Tx5ecdasQZW/J/EZ/BwO4aEQwfadC/NjvjQuTGd3UR7LQdk=
+X-Received: by 2002:a05:6214:514:b0:690:bb11:2a0 with SMTP id
+ px20-20020a056214051400b00690bb1102a0mr22084710qvb.10.1710996931700; Wed, 20
+ Mar 2024 21:55:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1710994548.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1710994548.git.dsimic@manjaro.org>
+References: <cover.1710994548.git.dsimic@manjaro.org> <688128d8ef09589712634888074ffd71a192a7aa.1710994548.git.dsimic@manjaro.org>
+In-Reply-To: <688128d8ef09589712634888074ffd71a192a7aa.1710994548.git.dsimic@manjaro.org>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 21 Mar 2024 00:50:34 -0400
-Message-ID: <CAPig+cRCCqRHYOpMxdL4MWaSF5S0Qb7fcJ5HqkT0j_MU1dRvfQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] Fix a bug in configuration parsing, and improve
- tests and documentation
+Date: Thu, 21 Mar 2024 00:55:20 -0400
+Message-ID: <CAPig+cQekOLrpcK_NcL951SRZAg-1Y1aFzE0-i-uCTK_XuiajQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] t1300: add more tests for whitespace and inline comments
 To: Dragan Simic <dsimic@manjaro.org>
 Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
 	github@seichter.de
@@ -56,21 +55,33 @@ Content-Transfer-Encoding: quoted-printable
 
 On Thu, Mar 21, 2024 at 12:17=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> =
 wrote:
-> In v2, this series had five patches in total, out of which the third patc=
-h
-> (i.e. patch 3/5) was dropped in v3. [4]  Other changes in each version ar=
-e
-> described in each patch.
+> Add a handful of additional tests, to improve the coverage of the handlin=
+g
+> of configuration file entries whose values contain internal whitespace,
+> leading and/or trailing whitespace, which may or may not be enclosed with=
+in
+> quotation marks, or which contain an additional inline comment.
+>
+> At the same time, rework one already existing whitespace-related test a b=
+it,
+> to ensure its consistency with the newly added tests.  This change introd=
+uced
+> no functional changes to the already existing test.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> @@ -11,6 +11,98 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +test_expect_success 'setup whitespace config' '
+> +       sed -e "s/^|//" \
+> +           -e "s/[$]$//" \
+> +           -e "s/X/\\t/g" >.git/config <<-\EOF
 
-In addition to a written description of the changes since the previous
-version, reviewers also greatly appreciate seeing a range-diff which
-you can generate automatically in the cover-letter via:
+Representing TAB as `\t` in the sed replacement is not necessarily
+portable and (as far as I can see) we don't rely upon that in any
+existing tests. It probably would be safer to employ a literal TAB
+character in `s/X/ /g` as Junio showed in his example[1].
 
-   git format-patch --cover-letter --range-diff=3D<...> ...
-
-or less frequently, an interdiff via:
-
-    git format-patch --cover-letter --interdiff=3D<...> ...
-
-Both options (--range-diff & --interdiff) also work for single-patch
-series which lack a cover-letter.
+[1]: https://lore.kernel.org/git/xmqqzfutjtfo.fsf@gitster.g/
