@@ -1,79 +1,79 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
+Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A140C83CD3
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A1483CC9
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711028850; cv=none; b=qfLiOYHpxCezOa2xrpolTVE67jVJ1dXiZ2jnJmevMSu6y3AP6uTGuPVZC6Gr25K/q2iQCInp0YQP7WKlyeMgBsfGFHsQUKKX/ILcdrTCFpAIPzak590HX2lX5c9+Fv4Nyy5tr6ZvfPV4cShYXWKDdBb0FCRXbHzRzXhi7Gb0GTI=
+	t=1711028852; cv=none; b=e9kwl7zOCSdwmgPgkFkoX8sTACaEkJvNxVhuw3wH44b4D0iPPLERjxdDQZW0FwVfOyD28V6zTCDNGVOaDYDbnKSq1I7LUpD0HUt43L+ROjUATK78lWTQpicdx/+uwxz8aKfnPAnshRvAFo0UOOf8nrJH4j9JLFKnFT9t1tKIexo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711028850; c=relaxed/simple;
-	bh=cFVEiQWhOlirLnuR7vMNm2ViWQghDjA1iJc2lKgFC3o=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=bM1lwHwXrigGEPT2vUX3MM/DjryRVtaG2ApfZ3rBcNtr3fA5rC8+MhJK4Du81BF0A3Mi2tEBA3Vi2295+Z6zg25hZJQQis/1d4c/I5sM0Nh0s6DQyK14stgibbPO6cYK9jdTzeM65/5C0JKvYYPnyE096dSFA3XYqdUqcFbk47c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iQUfntBS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q3pkbf+7; arc=none smtp.client-ip=64.147.123.151
+	s=arc-20240116; t=1711028852; c=relaxed/simple;
+	bh=Ja+fUEYIcnNAcKT0bw9zoqjAdYezdx7fy4IFDbLPvqE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MnQtzy7wEeATd5N3bYMn8kbQHodX/cGP3GbVDRw0GroKULHLmHgFt2I+zWwuo+PuOcxuaD32dnTZ4VZhUiAtSVI6x/cxwEHiCfMgkWHz9qtKGVFHktRsWyiwKbfddsp+Y2rSs/vNgJYot0j6QhZQKB7M0wuL5E61CREdgzZS254=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gZpzlV78; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cx9aNH7F; arc=none smtp.client-ip=64.147.123.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iQUfntBS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q3pkbf+7"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gZpzlV78";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cx9aNH7F"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 756B01C000A5;
-	Thu, 21 Mar 2024 09:47:27 -0400 (EDT)
+	by mailfhigh.west.internal (Postfix) with ESMTP id 85BDE18000C6;
+	Thu, 21 Mar 2024 09:47:29 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 21 Mar 2024 09:47:27 -0400
+  by compute6.internal (MEProxy); Thu, 21 Mar 2024 09:47:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1711028846; x=1711115246; bh=OqPxXRUdPtyN/S9msVK83EpkO1EC1mZp
-	fPASgqCirTg=; b=iQUfntBSaDoHP4bFaZQLvjE3/yizPO2b9tN5yxU6UsZxVkkY
-	9eKGFo7z+tmuWmjGRX+Yuo99BjfLxUx2MjuuJEM4m3La5c7HL3kQhbP8TukURHUA
-	iJI4UGLGj65HrIaemN6mIaPbjpL3IbCPNJIYihkoIVyyGlwslD/B7fq50SUJLqZ0
-	azF0dxWdsAvQKLzQPMdzHgLVEtcxz5LRWOWzOrd0bs/OjsbdgYo/QoAzqzV052HN
-	CpXvYzLR+nn/WeshtigE9Yyq7803pXdENMTmHV2i0N7dh+3AQbuSp/PqLL1Olv1d
-	izZDpqePtFQ12HdnfzXaftbM23bjbXi4moR2nA==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711028849; x=1711115249; bh=5iz6zHOTTo
+	dtxrSD745hwbdj8OlggqxuCMS6k3irRm4=; b=gZpzlV78tAqWelBM39fD+LO8HX
+	JGItY6AGvSmrC5JKGKgK08n5gsvOKen/aXy3lS+Hk5NG8awa4jKZZZRXCdrku1GW
+	WyeMHSB/5BDYkcPerQx2DFB0hMncOGzLkOe1oDjP0KJIXl5wQ6a9M98DsapqJWzO
+	FhcROUShhLmbjddlxFjYnoGxmJvwEDJOMcT3SMGUjjhgoXSI5DuMPuQrPIOeIiqF
+	BsyVm2CWNgzbFrM3/aDouzObFCwojhoAW+kuPJNVb9HeCmXXr5hQRfSq7HXxBN4f
+	iyNJJO70Ujg6w3ApI8j2z1kOWK3/m01tGHswHpVnuRXthF6B9NxISjaoJ85A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1711028846; x=1711115246; bh=OqPxXRUdPtyN/S9msVK83EpkO1EC1mZpfPA
-	SgqCirTg=; b=q3pkbf+76/Mf+bMVMDdA/3N0dBvSE7ARtXnIkEZ91vqlZQmax4C
-	sjAqMfGxiuVwhL1ladhnFUJcHZkwL0KBoHN9hMU0c9nbUwdzSwyB7Eq8pKlTB22S
-	ubFWnBHFRDCcOEImv8v6C8bO8h1VEqX401tSitYGF3U7Lg1LG5vUGUxUt6lz/zJo
-	KF9gPn51Co3ruvNCfvfk7Zs2tHKopVDGC6uQAomXO62PoxP1DAvk6TKMmDY1QVgb
-	MoisSrEUNwvX9VPe5m4yrNWK46b7dekpNwusC759hn83urzcUHYdj0NCbVXIKvJm
-	PkaHHFBTf7nArlCKhv+dLzO18UGNsVPx42Q==
-X-ME-Sender: <xms:bjr8ZY6M-9SjLKc6-vuFwVdw5p-Pout8Iu9JxoWgyKQu4vMr1vTG-A>
-    <xme:bjr8ZZ6IQK6A0KpC_XuULYFPzz0QQUksEQP-ickep1dM-b6eGRu8JzlE9Q-RA4d24
-    QADOkes-jhc_kPSwQ>
-X-ME-Received: <xmr:bjr8ZXd3QBkVvhTRxGUKOOmUNEpfqWbPdiok50TdmqxfsGCDycZc5qPhqlwkGblUQtTCaI6_JRrYUKlLTLHZxblOvkTsh5DueD25ZBDrJ7hyGQ>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711028849; x=1711115249; bh=5iz6zHOTTodtxrSD745hwbdj8Olg
+	gqxuCMS6k3irRm4=; b=cx9aNH7FZqvzz83Y/D/FqQnmxDgYvFnaPhmsjg99M+wL
+	58F/JKt4LzQtAG1+BjMJtj0sNhdHzJ7uBE4YpnhXaf+bw0oLm4pfnYFlh5i8x/ZV
+	PjAEzsG5hs3yYHO3WYUhUHD2iGnYre7TQkCGLiDUexfHqkj8oVXYH+75V5z6PpTY
+	bpY86Rh6bZCDJuDTetjLIM29kCy1dMQ6EaqxYN6qbkmirKvReEeo+CF/+GVk/j9N
+	b8gXM8YIDhz9+KSvwTaUm4U1lgDYp2xHyayuZZ+keHl6QoOaJYn1kmBiWGkXISNZ
+	BwE23souwDrLt3Yo50T7FtLGcziAZIvDv+eeVhnHBg==
+X-ME-Sender: <xms:cDr8ZdwBapFRdVrpjdcWLynraxsVCE6q8yhabF0984CMNyMlDA2ihQ>
+    <xme:cDr8ZdSOlO7I6R-KqyIG5sShP4bSAL8731Xt2MJJPxGHCnL6sND-69zXBBf8XaqBd
+    5jTFp-ShY8rV9k79A>
+X-ME-Received: <xmr:cDr8ZXWgY4i621nNfC_L9AWi6i7eK0vCe3m0BN8NN8pdxbzfV4SFp1VEkVaVshjOCyKUkpw_MwVrtTZXFlCnSAP5Z-KlZ16PNRzPXZyCvLuDxw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdehiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepledtveevteevhfefuddvgefgveehgeeiudeghf
-    eijedtleffjefgtdevleefvdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:bjr8ZdIzX0TNNScUvUcyBYockNfrJKkPLZAf1dbtVyV3tFKhxKtL7g>
-    <xmx:bjr8ZcKA88Jgqo4jAIXhthHwRbYLQHfvXhbej1QeTLNHDvRVTwyZeQ>
-    <xmx:bjr8Zey6Gjf8DTL0VisdDZoe6inaoJ_NkiXZWbSfMIgkKBRw4u6Vow>
-    <xmx:bjr8ZQIwf-aB-g60IXQ7j2RZX77fgh7x5n-DZiY_IQfqk3AXa5zAag>
-    <xmx:bjr8ZRH9cTiAYCy-ptCfbb_7kwPz2oE9GWXr_KgneDh4X3WBLDboHvmYELc>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:cDr8ZfjbUzt2X_Y3IVqJenglrU6MV3lvuVFnthK3xNhSexc8EiViZw>
+    <xmx:cDr8ZfA8Oa-knYGO4DIHHiAwFv4mDF4vezW7U1g2rx6JVf44kOpzEA>
+    <xmx:cDr8ZYIuRdarchCyFwR-FA1R2VDOcY-ScSS9kaJHulXooFmQMC-t3g>
+    <xmx:cDr8ZeAqs3En5BSeguKl0aM_TjR4RH7xn_qwfGov7wKE_0hvCTuQog>
+    <xmx:cTr8Za81C5fv5rEmPR_rZ8PCfAW9-FHbb3daH9C60fPWDdE-kx6WLlsNmp0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 09:47:25 -0400 (EDT)
+ 21 Mar 2024 09:47:28 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a4f3ff38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 13:47:18 +0000 (UTC)
-Date: Thu, 21 Mar 2024 14:47:20 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 87354bc1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Mar 2024 13:47:23 +0000 (UTC)
+Date: Thu, 21 Mar 2024 14:47:24 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/3] t7800: fix quoting of looped test bodies
-Message-ID: <cover.1711028473.git.ps@pks.im>
+Subject: [PATCH 1/3] t7800: improve test descriptions with empty arguments
+Message-ID: <fd37c2931904bc64fb6ea14331aea60278f495eb.1711028473.git.ps@pks.im>
+References: <cover.1711028473.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,59 +81,128 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ev6UMgI6ujnk2wgC"
+	protocol="application/pgp-signature"; boundary="FqT1J1fm3Hi8Byk6"
 Content-Disposition: inline
+In-Reply-To: <cover.1711028473.git.ps@pks.im>
 
 
---ev6UMgI6ujnk2wgC
+--FqT1J1fm3Hi8Byk6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Some of the tests in t7800 are executed repeatedly in a loop with
+different arguments. To distinguish these tests, the value of that
+variable is rendered into the test title. But given that one of the
+values is the empty string, it results in a somewhat awkward test name:
 
-SZEDER made me aware [1] of a quoting issue with some test refactorings
-in t7800 I recently introduced when refactoring the tests to run in a
-loop. This patch series fixes those issues and also adds a paragraph to
-"t/README" to document how this is supposed to be done properly.
+    difftool  ignores exit code
 
-Thanks!
+Improve this by printing "without options" in case the value is empty.
 
-Patrick
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t7800-difftool.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-[1]: https://lore.kernel.org/git/20240308221229.GA1908@szeder.dev/
-
-Patrick Steinhardt (3):
-  t7800: improve test descriptions with empty arguments
-  t7800: use single quotes for test bodies
-  t/README: document how to loop around test cases
-
- t/README            | 19 +++++++++++++++++++
- t/t7800-difftool.sh | 40 ++++++++++++++++++++--------------------
- 2 files changed, 39 insertions(+), 20 deletions(-)
-
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 96ae5d5880..80bf108f54 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -93,40 +93,40 @@ test_expect_success 'difftool forwards arguments to dif=
+f' '
+=20
+ for opt in '' '--dir-diff'
+ do
+-	test_expect_success "difftool ${opt} ignores exit code" "
++	test_expect_success "difftool ${opt:-without options} ignores exit code" "
+ 		test_config difftool.error.cmd false &&
+ 		git difftool ${opt} -y -t error branch
+ 	"
+=20
+-	test_expect_success "difftool ${opt} forwards exit code with --trust-exit=
+-code" "
++	test_expect_success "difftool ${opt:-without options} forwards exit code =
+with --trust-exit-code" "
+ 		test_config difftool.error.cmd false &&
+ 		test_must_fail git difftool ${opt} -y --trust-exit-code -t error branch
+ 	"
+=20
+-	test_expect_success "difftool ${opt} forwards exit code with --trust-exit=
+-code for built-ins" "
++	test_expect_success "difftool ${opt:-without options} forwards exit code =
+with --trust-exit-code for built-ins" "
+ 		test_config difftool.vimdiff.path false &&
+ 		test_must_fail git difftool ${opt} -y --trust-exit-code -t vimdiff branch
+ 	"
+=20
+-	test_expect_success "difftool ${opt} honors difftool.trustExitCode =3D tr=
+ue" "
++	test_expect_success "difftool ${opt:-without options} honors difftool.tru=
+stExitCode =3D true" "
+ 		test_config difftool.error.cmd false &&
+ 		test_config difftool.trustExitCode true &&
+ 		test_must_fail git difftool ${opt} -y -t error branch
+ 	"
+=20
+-	test_expect_success "difftool ${opt} honors difftool.trustExitCode =3D fa=
+lse" "
++	test_expect_success "difftool ${opt:-without options} honors difftool.tru=
+stExitCode =3D false" "
+ 		test_config difftool.error.cmd false &&
+ 		test_config difftool.trustExitCode false &&
+ 		git difftool ${opt} -y -t error branch
+ 	"
+=20
+-	test_expect_success "difftool ${opt} ignores exit code with --no-trust-ex=
+it-code" "
++	test_expect_success "difftool ${opt:-without options} ignores exit code w=
+ith --no-trust-exit-code" "
+ 		test_config difftool.error.cmd false &&
+ 		test_config difftool.trustExitCode true &&
+ 		git difftool ${opt} -y --no-trust-exit-code -t error branch
+ 	"
+=20
+-	test_expect_success "difftool ${opt} stops on error with --trust-exit-cod=
+e" "
++	test_expect_success "difftool ${opt:-without options} stops on error with=
+ --trust-exit-code" "
+ 		test_when_finished 'rm -f for-diff .git/fail-right-file' &&
+ 		test_when_finished 'git reset -- for-diff' &&
+ 		write_script .git/fail-right-file <<-\EOF &&
+@@ -140,7 +140,7 @@ do
+ 		test_line_count =3D 1 actual
+ 	"
+=20
+-	test_expect_success "difftool ${opt} honors exit status if command not fo=
+und" "
++	test_expect_success "difftool ${opt:-without options} honors exit status =
+if command not found" "
+ 		test_config difftool.nonexistent.cmd i-dont-exist &&
+ 		test_config difftool.trustExitCode false &&
+ 		if test "${opt}" =3D '--dir-diff'
 --=20
 2.44.0
 
 
---ev6UMgI6ujnk2wgC
+--FqT1J1fm3Hi8Byk6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8OmcACgkQVbJhu7ck
-PpSDghAAmc+D/6K2naJ/rI+wAdjAhuPuyC1HIWTHK4ccHzLyB9VFQqU3cIPutlmP
-n4b4S5RrNClsQKashkisOOs0HilXaXZKj6ATD66lMnCzOS6fV6bMJA/bid5ezRqk
-aVFRTX4pqHsNJuc37+/Et53llk4Fnqp5SpVQ6tGVHOROXY/JGYjT9HWVyTfxArqP
-YSiPEPt4cwtXlnE04S20OKukgFkfCISeRArFOxnVdUsOxGJUHVLcYN/nillyM+mp
-fqN3XluivJhE00Es9exNGxbuOfJfihYqzA85VynEmS77e9fX9CHV/zTf3jGH3xPQ
-pph0iP6ctBYyTNQB7OdYKAyHpQ/zq1LXfws8SeK3PnAeZCIihui1lsbvYSXzeZZv
-u28rNkG4moGWWmkTUy5knxituMtIGPy/M5QlB0WQC3vJIqSRh6j+l4K48s5XMIzu
-gcut2LMdvJmQwEm/q3ieftrZ34xuAHffAsBI/UrJGyApREI0az4imbGikTeZzHbX
-vBUaCxbd2EkQ1X/uIxB+ZYQUNxfap9Hne0BX+KjXWG3q8c4+tLa5sBCoXubaShY8
-uAOSaNejgHu2Bvdu7QvEIrXr/dOx4LhwSnSx+7sQhHnzEZXyqG0TJuVrmWjltV6d
-UYuYFFfYU3N/mvdGgqGJm8et4nsAo9yh9Mtem1IZHXaXP8Itxok=
-=lYIm
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8OmsACgkQVbJhu7ck
+PpQyOw/+IDwcNrh12cdwTmfbcROL0ZsulNQ+WrmkoQGRffh3e0d9rrkidsOtBGKP
+i9qDgjU5BGYMBEXT4YTJju6K9yuAghuUDUjLcHBRHbAlZENVBbiFId7FStJSnIkB
+KkCEMAjLZU82BXbouoBQ30tlj34wXASV5y1ceBwR+Q1++qWKB20zOLSeqpiOsOjy
+L+LPXat+X+wh28Ypp8ZH2i2Eeqeh4terQ5n8DClRnqqQByZtDqpIZ0HmBGRMGZhk
+dA3ru8T7EOMcjGuUM7R3atdBdSxx0hdgO9J/w9IZG+Eu3Se+AWaK5BOw145pDlEK
+f2bKTn90tu0be76Aj31qBXO7mbJuM9t/oJxGJxozy6pPJ0gich/4qvnJKApMIjCi
+cjysclImD+73NBLC6FBSacx2YgsdOrcWb1Dk/4vN7Tae6b1hMdRGxOEZAC2dXSaq
+UUxBlsNEXdp0dETIy/dWzg72J199zSS1KHtiM30fS6eMcgQPlSheG7h7QPow3pEm
+xp1LMHDYSv6exipV4adTlcooSSGdK7hfq1+BVLPpwafQ6Hziu1kSCpTKpAFGxy9F
+vwufB6hxgZi/PSr46bDmaqk2iOoFWk3BTuGnQqZqy8l40H9LpqllqVj0BU4A3w7M
+a448q7pbDyc0ydLGSxyKLet5+tpC6WNyaFZvvNMA0GQHd0A/zbA=
+=lYJR
 -----END PGP SIGNATURE-----
 
---ev6UMgI6ujnk2wgC--
+--FqT1J1fm3Hi8Byk6--
