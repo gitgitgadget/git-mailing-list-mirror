@@ -1,91 +1,84 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E8D7E9
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 00:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039FA622
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 00:53:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710979901; cv=none; b=Z5IY2pz4q+VkYfob9pG0F7L+da4ZRz6ZpkEtx99PpFiFCEceTKEqlWdJmlb9RY9Vv/rNYesr93x1zM7TPSGo7vK5z0+6UssL53QScn8/SdOOLQ3J55SQO8dxCPmsHjL1Q5m9xeWgaMw9ecRcPBcEGym8w5MrfK3rgjhLAjtT5PQ=
+	t=1710982410; cv=none; b=hoNb905cGFWzWsi/6wd6v8pXuj9hi8g88hArwZnC77Eth1IIwIJ6Q/lGMq+CL7D5yMgQjfy58r8+AcDxnIEdAKutzoda4czIajOD/ap2ZQzcrsgr0/2nfUCbDg1wGyflpzFMmfwEIX566RiTDfIOA7w7NdH4pnpJMQZiYHAjlE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710979901; c=relaxed/simple;
-	bh=2ZAV575Z4lgVL2As4QANFuz2Kba3L6H/juFZYGBAXFo=;
+	s=arc-20240116; t=1710982410; c=relaxed/simple;
+	bh=uM+tI1NwLUPXPmc1SZf8wZIObySvnfF5a1SLumW1ypk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tCWEEOc/6E2mxL+JOXBv4Gi0unJ8vKkS23TIvwfcJRf1OQS/JzIIIHUKuS57e/z8oSD96PaNz/tOIe+8CvzFjZppBu9V7zdvaaK3NR+zEzLywSzmwocQzVjLdZGI0JAGgLDIR40FcuCziJw4KVQl+GtAcF/7iDGVEPPY9sBle8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WZVretph; arc=none smtp.client-ip=209.85.208.50
+	 To:Cc:Content-Type; b=mlg/YdUPAR+3I8aK7g6ZFxkrXAM61SvMmMuGPjkC+UtoChBpk6gGpUn+0INZ5cZ+B2gtEtsarc6gEIBUjV8K6rFgnbYs/JN5Vm6NWymCfyBW1kkxQFlknwUMcbkCMyUeTKzCNSMxC8F/QrfjisRF8tIzNb/QZ8VpxZKgfIk9lX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMjyIejq; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZVretph"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56b0af675deso408601a12.1
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 17:11:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMjyIejq"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-56bc5a3aeb9so316590a12.3
+        for <git@vger.kernel.org>; Wed, 20 Mar 2024 17:53:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710979898; x=1711584698; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710982407; x=1711587207; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/iB09WnzZyrkkVkMxFuUImGkoilUP/7oxQgWPP8jpLk=;
-        b=WZVretphaDk61hUr3Z5jFKXvq/6MWrV971PhH8nSwOLvgDwgCJge/iVS9l6KqvHEik
-         3AxK5DYVD2qTrsB+iei5h9uKiuCcaEN4jFOw/AKr3oBhe+S2FNLtZ10vX/4s4sc0szVQ
-         iZNCMGSBDUvyMMk43dz7w6VxQuLAhoTGX+h0fm9IHgQPGnXimhWOkUZMLBsZqN67IEHO
-         w/4K1g7U8GHJ4kHvU7iuWj85ZE1A16Y2aqMvWBcibwiAfUd4QKRZECs9lEFYnVY2VHAK
-         DmYiW70Ku+P9Uonzftkgagpl1HIgHFrBQj9kYy0hQX938gSoC/mtD9PFhGTFNj+kFDvT
-         Awrw==
+        bh=4+xUz1Vjd3Dp768VqhYd62k4z1kA1ngvSLGAu76eMQs=;
+        b=VMjyIejqrTXW3ymnZ3mSR+1pUZEiutZ9FH0abpdRcFQhCYrxqPCQCB1+XAzZOSOF50
+         SGVxOrEgtAaZdtOhEouPdL2Nvkr9EpVIbTd3Ko1yhUaM81vFjHFz8qLkyO2BIh2dkM45
+         d5UzYoOz6shRpmpAAkDpg5w0hHQb0AyPQpZWzURpjybh6ZU5x1LCtrKojzafwNlRdD71
+         KoT1LU85/DDQBBS3puJdTD0nI5h+Q/p7v3fGBdWMQf3g5q9MaUcHF/kRmteNQSJM1l8W
+         b5lddIQL4NpiETMGeWjPx3iff3fmZnwVr4fEN75++tfnUasGOFnkuKXVGn4G8eRKQ34u
+         12Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710979898; x=1711584698;
+        d=1e100.net; s=20230601; t=1710982407; x=1711587207;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/iB09WnzZyrkkVkMxFuUImGkoilUP/7oxQgWPP8jpLk=;
-        b=VBjWu2EzpPmsVatWJuj5EZkcz8NeKn6Wt+4qOEpRUJi4SKpGMK8JDPpYp52JJXGstc
-         rn262iUK3h/wuQDtK5QQtmDGPy1Rn/8lmjK1GUWZXqW8AYqFaL8CCb8kuPPG603LaeCi
-         YyQKlcRNWratDSqkUjeYfYCEvFJrh7DV95NGriTdGqYgClao0Sa6D2BaE8W8gwX7X6zR
-         w69g8F45mICJ6QPkyAVaS0r9ImYrfJbhAsm7NX5YctsFLV0fAR59bulvDFOuKh37UC2T
-         tYagy21Uk+k6ZlkIY+9fRYJ8PvUgOXHaGm6hFovFCeIs7W/hq4DQGRRJVq9lglh3ad7k
-         xEwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEyeOTSTQYF563Q0qwKOa2ci8rSKaVam8T/kGdsof24YeLSUF1D3dNYUWVjg8rzmi5pvaYFEsOJUHG4RCD+Bbd7fpE
-X-Gm-Message-State: AOJu0YwtC/23WIW+QbxhVI3EGoNbu3GcJRHNJ5ruSXiAUk7ftr4zMrD2
-	cOQ63R2076+Wz3lN7ra2rocgsRdCm+w0f2fAJIfx7XnnXR58cHOfqmrFILKFl95OXxhEpTwns/a
-	oEWyq3FlgOBQEkbe/cUK9RebkuwS2RCREqLk=
-X-Google-Smtp-Source: AGHT+IHduxGgz210sMtvL6Nx4Kgwut25ZH1mKZE5y9MYGcwUQciWXJD9NO6JQlzH5cGNWXIKAjemULt5Vek7wjxKUGE=
-X-Received: by 2002:a05:6402:1f4b:b0:567:3c07:8bbc with SMTP id
- 11-20020a0564021f4b00b005673c078bbcmr2787338edz.21.1710979897800; Wed, 20 Mar
- 2024 17:11:37 -0700 (PDT)
+        bh=4+xUz1Vjd3Dp768VqhYd62k4z1kA1ngvSLGAu76eMQs=;
+        b=neJBQMkoCieCxNVDIpg87N7eqgpBu/WsQ89KSBGLY3WoEoEOPE9mfwEYX141xBiPR5
+         mETuzlimbRTeQAWW3NUyXddvLjnFgV8u5eoeEhVvIRKp3NqoRiO6SNdz4QIeRuxA9sb/
+         Mm1RzBjWACMLeCXcVUySO82+4f9NFCN0JMw7VAUlqFX1X3OTgoAU0Om2M4OIelkYR6MY
+         PjY5DOrS1tMF0aof0bOJfDC4gInyOebI3RIQIPTga+VzDKXSJa6npsSnjTvAB24frVLS
+         JmxXxZac9AJWhvPesz3Xa7ynEeRix32G14LTh+hP2GW1kyO4h2SgI27o46r6pdwt5M6+
+         ANgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUuwcBQjkO0LPIknZ46S1HpeGBdwBOYa7DyMJTw/djZVlHteaRCztzAIIl19zSHIuJyYrYUFywXpFgXuOIR6SWbZ+H9
+X-Gm-Message-State: AOJu0YynPP8qqMEQwafqPa/Dtt3LNpJLa8+XzhVIc7Qmn9LIqjhnU0D5
+	pm1+cNqXqL25DS/ksV774kdP5tbta0HIfzvLsxHzLx+L+gOwmFuAhB57CCp6MkOF/CdCc+SQ2xY
+	UJ1natjRrC8SHeKrVWbcTq0gXS08=
+X-Google-Smtp-Source: AGHT+IGqZILFfrr3sFeisdYiJcEUJEQWsnK/bQ4bJat9Ra5OCXP0LlKxCpdkRB3Rt4W1n/C4qXzAsdyFqq+arIaZjbg=
+X-Received: by 2002:a50:cd9e:0:b0:567:fb9b:37d5 with SMTP id
+ p30-20020a50cd9e000000b00567fb9b37d5mr300288edi.32.1710982407168; Wed, 20 Mar
+ 2024 17:53:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240309181828.45496-1-ignacio@iencinas.com> <20240319183722.211300-1-ignacio@iencinas.com>
- <20240319183722.211300-2-ignacio@iencinas.com> <xmqq8r2eneut.fsf@gitster.g>
- <20240319205753.GB1159535@coredump.intra.peff.net> <xmqqo7balyx9.fsf@gitster.g>
- <20240319211112.GD1159535@coredump.intra.peff.net> <xmqq5xxhnbgg.fsf@gitster.g>
-In-Reply-To: <xmqq5xxhnbgg.fsf@gitster.g>
+References: <CAGJzqsmy9RcWJeFLkZjCrrhv_y5q_R3yYUMhcyafY3jOUJFxOg@mail.gmail.com>
+ <63dda239-1205-4aae-a3b2-10365147751c@gmail.com>
+In-Reply-To: <63dda239-1205-4aae-a3b2-10365147751c@gmail.com>
 From: Chris Torek <chris.torek@gmail.com>
-Date: Wed, 20 Mar 2024 17:11:26 -0700
-Message-ID: <CAPx1GvfZJpM6T_sbvFvNhg787o20QxHqVAhTXO0a+UEX7Gu9=Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] t: add a test helper for getting hostname
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Ignacio Encinas <ignacio@iencinas.com>, git@vger.kernel.org
+Date: Wed, 20 Mar 2024 17:53:15 -0700
+Message-ID: <CAPx1Gvf5g3z8E0e6TmwgDc-TVFmTvSBexBGtOwB8+jh-k6G=7g@mail.gmail.com>
+Subject: Re: Feature request: highlight local worktree in `worktree list`
+To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Cc: Matt Hickford <matt.hickford@gmail.com>, Git Mailing List <git@vger.kernel.org>, 
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 19, 2024 at 2:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Jeff King <peff@peff.net> writes:
->
-> > But we are not testing "includeIf" in this patch; we are testing git-gc=
-,
-> > which falls back to the string "unknown".
->
-> Ah, I wasn't aware of such a hardcoded default.  Then replacing the
-> existing "hostname" with "test-tool xgethostname" and doing nothing
-> else is of course the right thing to do here.
+On Wed, Mar 20, 2024 at 3:24=E2=80=AFPM Rub=C3=A9n Justo <rjusto@gmail.com>=
+ wrote:
+> "git branch --list" has a much richer machinery than "git worktree list".
+> Perhaps the display machinery of both commands can converge in some way.
 
-Note that if we choose to use $GIT_HOSTNAME (auto-set-if-unset),
-we can change the test to simply force $GIT_HOSTNAME to something
-known to the test script.
-
-(That seems orthogonal to this change, but I thought I would mention it.)
+I have no concrete suggestions for such, but I will note that there is a
+`git for-each-ref` plumbing command for refs, but no `git for-each-worktree=
+`
+plumbing command for worktrees.  Given the relationship here (each
+worktree has a worktree-specific set of refs), perhaps that's a point
+of leverage, as it were?
 
 Chris
