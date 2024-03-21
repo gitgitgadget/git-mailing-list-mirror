@@ -1,85 +1,95 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8BD13442E
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 19:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048431339AB
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 19:46:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711049970; cv=none; b=hk7c5HQkOKsy4ZiGZv8rCYt+PwkkYmy7sUs5N1uVvRH49p+4/mkDZbiSs1nHuoF4o8DkQsufo50SpQITbY3mY4TA4e7FXv/CTYqlkO8BmuS5IaKP2vQcDIPy5WFGjwxr7Pkq2qoBhoYrZkCsbU4173OW14zuHvP4yX2+1Flvtbs=
+	t=1711050377; cv=none; b=Rd3Xk7X83pFSR28CA/9DqIEoTmMlxJdAEU1UnqMVvE43y/la/OFtwhrWqJbzB39Ba4icRfeO8MvLCbVWDIlMJb++CkGyFdjjb/dg/2yr5B7YfnfCR6mXl0rcVEVDFFmj06v+QjK/vC7b9V5Nj28rnTGi7oTCV9WTMHU6vvLHKYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711049970; c=relaxed/simple;
-	bh=RzfKZ7dj+XGzXuLDyZJWzPNFkO3D+yrUQT9gi2HjGIY=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uVwKXj2Cdwx82J0hs00I6+TEVoM9Ec3m9IbWvFlZiXykVSzMe0pcHV5wvoXn5maIy4TluCod0HohuA6Cwmhw3zXDRDSRt4GcA/qcsAKV8kgsCVT1aMUMDvJQ988cbrc6V1T7kPhPHkBWoJz8R55uhG2tzrpLxn5B2FdPKzcmT8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGY98J71; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711050377; c=relaxed/simple;
+	bh=tzDjQVcPm4/l77y2mk/p9qGlRKVnlagHurXDSk71fbk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rrFnBT3trCYoAoiQsFcGPdCNQ3EGQMgdMIrMnrn5OiBsMnL483K43eClqmFEkaTJgwxGUGE4qa5GVA4RMcr9MkFpA0d3MyBSAS9tooKhVXZlRf3EA0aJfE1Bemgdx1Kw8Tz0x0940XnJUFy2UV54gr+4MXs0VGmY6i1rRtkpzok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=lRWXKcTI; arc=none smtp.client-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGY98J71"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-341950a6c9aso948499f8f.1
-        for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:39:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711049966; x=1711654766; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/DoPvBfbWGi4gY/0R0DUsvsjAWBI/r3F3KkPTF4IVdE=;
-        b=bGY98J71uGvAvzRvlHpIXIUxlrrJS25hcZeoKLTMnyeKIHUfOgc+h3qAfksVzM5wQr
-         r1ZWHnO8a2yg1C61P1ZXS2mu2eWdo4UJNn33TGMESYKaGW3TFefCZ7MkqEZXvgxL9l3m
-         2l8XXB9yJ9WhB7vnn909J3SCxSQw0VAxJ2DKM7EHwcO9urrTnyonQFJajeeLtfx1VZtH
-         ynAXTRrU7OMmfefQ4czdTn+37CL2AwWOMJRlA9avrfJyiaJDGRw6iTva5Vt3PpLt9/X2
-         ddHYq5Ke2tQ6v1NPTxgEdbKnMc9ujyiGMmtXDudr4UiQhsTticefERCYwC2tkzxrtMuU
-         jfqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711049966; x=1711654766;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/DoPvBfbWGi4gY/0R0DUsvsjAWBI/r3F3KkPTF4IVdE=;
-        b=S9RPjOxq6gbM3VCX3FOfFscz3mPWShNtHXqeuMwj/XTR8osE7/O7xQ9aI1ymHPYxXp
-         4RT8JQ5e5ylMfexAjtPsVcNpTUnZcuFNHn4G6h8Ntrf32Bdu0FMprL/UG7bBUjs0SLSB
-         j8nqG6v6QCySAGfIUDZobJ+tcLlKJLiR4aiv+OL0hv112sRrSsXDeLMR/v52rIOwq0gT
-         sxGjwAGh+3MuDDolMdYjgj16XManNWtzEzlVj6xUilfZukh4qmDN7MEDy9wrvvYb0Xgp
-         YaGx9uq8xd1WVBUmXDGyrflR+VZGM6L5yGy2hsxJgwg3v1a7KwB8sdplvHC7/UDFK80u
-         o23w==
-X-Gm-Message-State: AOJu0YzSCSWcTF5To+z4TaQHMK3+NQVK8vEn+EOdSc/I1qBi7FRVpJOR
-	Dw2YT7IQjot07cUOaTrrfnGjfTQ2rpKIiOLjls6Yjot2Ka60NYafPPIZNDj3
-X-Google-Smtp-Source: AGHT+IHWa3QGYrv7Wm5w9Fz5ih8ft5hxmWSvV8CR93kqGsgrb6R12HVGo8/8Eop9AwJEPTMhHGsNCA==
-X-Received: by 2002:a05:6000:8e:b0:33e:c4c1:b45a with SMTP id m14-20020a056000008e00b0033ec4c1b45amr125578wrx.8.1711049966547;
-        Thu, 21 Mar 2024 12:39:26 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t13-20020a5d42cd000000b0033ec312cd8asm329450wrr.33.2024.03.21.12.39.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Mar 2024 12:39:25 -0700 (PDT)
-Message-ID: <b8d0620d4104106210ecf6a34ada591adf01cff8.1711049963.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1691.git.git.1711049963.gitgitgadget@gmail.com>
-References: <pull.1691.git.git.1711049963.gitgitgadget@gmail.com>
-From: "Sanchit Jindal via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 Mar 2024 19:39:23 +0000
-Subject: [PATCH 2/2] t9803: update commit messages and description
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="lRWXKcTI"
+Received: from localhost (ip-109-42-178-162.web.vodafone.de [109.42.178.162])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42LJk34J025974
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 21 Mar 2024 20:46:03 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
+	t=1711050364; bh=tzDjQVcPm4/l77y2mk/p9qGlRKVnlagHurXDSk71fbk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=lRWXKcTIgDjKf9SbrkXrGIrnA0E0DuSoxcqoEbr2/NKTAA/a0Xanugv2GGRgCcotr
+	 8Q1PQzP+l1j1kEmvTatZJigeJsmZ6yWhcbjrvjkzUoR95h3jvAI641nJtrgxYBJZ59
+	 JZMPB6Pk1ENsUDc/MeiJfs3JdrVpmL4OSGXocxy8=
+From: Dirk Gouders <dirk@gouders.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org, newren@gmail.com,
+        me@ttaylorr.com, phillip.wood123@gmail.com,
+        Phillip
+ Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 4/7] sequencer: handle unborn branch with
+ `--allow-empty`
+In-Reply-To: <xmqqh6gzblmc.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	21 Mar 2024 09:22:35 -0700")
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+	<20240320233724.214369-5-brianmlyles@gmail.com>
+	<ghttkzykru.fsf@gouders.net> <xmqqh6gzblmc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 21 Mar 2024 20:45:58 +0100
+Message-ID: <ghh6gzz7ux.fsf@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Sanchit Jindal <sanchit1053@gmail.com>,
-    Sanchit Jindal <sanchit1053@gmail.com>
+Content-Type: text/plain
 
-From: Sanchit Jindal <sanchit1053@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-replacing `test -e` with test_path_exists,
-	  `test ! -e` with test_path_is_missing
-	  `test -f` with test_path_is_file
-These helper functions will run the `test` command with the
-corresponding flags and will echo a message if the assert fails.
-This will provide better debugging logs for test, instead of the
-previous method which provided no message
+> Dirk Gouders <dirk@gouders.net> writes:
+>
+>> Brian Lyles <brianmlyles@gmail.com> writes:
+>>
+>>> +	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
+>>> +		/*
+>>> +		 * Check to see if this is an unborn branch
+>>> +		 */
+>> In the above example, there is a short but outstanding comment that
+>> announces a check (and if I understood correctly by [1] it is a kind of
+>> trick that could deserve some more information) and it does _not_
+>> comment on the result.  Of course, I have an idea where the correct
+>> place for a comment /* This is an unborn branch -- handle it as if... */
+>> could be, but I'm not sure.
+>
+> You mean "Check to see if this is an unborn branch, and if so, use
+> an empty tree to compare against, instead of the tree of the HEAD
+> that does not yet exist"?
+>
+> I think that is possible, but the use of the_hash_algo->empty_tree
+> indicates that clearly enough.  But we need to stop somewhere and
+> what we see above may be a reasonable place to do so.
+>
+> If anything, we may want to say why we want to continue as if we had
+> an empty tree (as opposed to fail and return with an error()), or
+> the tree to compare with is computed here for what purpose.  But the
+> name of the function may tell what this whole computation and
+> comparison is for, so it probably is not needed, either.
 
-Signed-off-by: Sanchit Jindal <sanchit1053@gmail.com>
--- 
-gitgitgadget
+Thank you for the reply.
+
+I guess, the hidden question in my comment was: "Do experienced
+Git developers understand the code as something obvious?".
+And I read your answer as a "Yes, no problem.".
+
+Now, I can put this subject aside and later, after more reading, check
+if my understanding improved sufficiently to now understand that code
+without additional comments, as you already do.
+
+Dirk
