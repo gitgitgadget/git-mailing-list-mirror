@@ -1,87 +1,77 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942F6FBF
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 04:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBFE2AF19
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 04:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710996934; cv=none; b=Jj5+nA6vm1FFVMX63TS36bDGED7W4G84l0X3IBiHkGvhOY611kBI9+uNMI3+FIlFQ87lIIeU/hF18njxIo2iFhHMIfpNV2I/MkjzNxOZmoZek3B+ntsDUm8fhlSEA/TGzNHhnrxGxIueCSIa50JkGpsQTFSjh8ZcqxVqr39z3Sg=
+	t=1710997129; cv=none; b=Au6h/8+Oh8ASE29I+VeG5ZRqp4EKUTf1jExGivgCiOUzG4loHzqLcJvOW62lnSTd3IERZiHMJ7O+1oD8217MjkBMERnJ88djsDKhwU/foEsN9HvtpZc4sw6cRH7vWdU3eCFrAgMZQUplYuy8zae3C+sfuD6W2vBOZ/ThxEtCPEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710996934; c=relaxed/simple;
-	bh=Cbd6Yrg9erA5MWUjvSSta2ZlJV11k1qdBLjs3lW1rys=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YpWeOwy2nFUa+oNoMMPVKknZQsHdqNFAkNyrm6WIOJPPYqDJPzxmTqgKpVXHdXQc2HipYsNrOlrC5r6vx9tL/9RByWf0OnHaNt5kch8T5glCtqFRLLiKIDjUDDK1W2XOECues+7fozksFHSk9SV2//SFI6NuZzD2CER5j/fR4pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-69107859bedso3974316d6.2
-        for <git@vger.kernel.org>; Wed, 20 Mar 2024 21:55:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710996932; x=1711601732;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Buw+rlShIAYd4zZlJFwsXnK5XBfMrUESJyryfMoQNMw=;
-        b=rUXhYKgcRmFKICtd+WwZFcREnqGobPh29IyGQpngPjNH8WeMvG0/o2mDbYxyf1OrLQ
-         hVuGV7S/O36Jfl/7vihXaxEolT5d33sOszidR4Ah8IC6BEhuVvCMNnUhuayjCtWBTtlW
-         MmQXP4VrGYlN35ADBOXFH2y70TDY6KPSKm1MKYlhzojC3xJkMtR+B4VvjzBytMzzqnzA
-         0XEMPFP1lEtqzY34+OgPLPCq2NzWYIOcfz8CyVSefu1ShoIgXHJB1oXKcy06bPrR//Jq
-         LJV6O1mGi6GdH67AUvDkbmoW15RQf6BQhqN/a8NaJwDzR5PzRQejSSQRi77gzrVsfxBe
-         KHhA==
-X-Gm-Message-State: AOJu0YxaG0jMZnuWvZiRdfiOUwnQYxrKAweCC1Srbio8bk/3pepfFeo6
-	9fZblSqJhTN+4/tN+YESHzC37Hog/4MIUs926xsPh8z0lGVA395H/7lVSAVn2IkgrsORRpS+qBA
-	n0okL8ZxkyYXlVfmNM+TeYIfPmLw=
-X-Google-Smtp-Source: AGHT+IFzP/Z12VbS1ntJtFUAl9EH9P90xroxbpjFQSi9Tx5ecdasQZW/J/EZ/BwO4aEQwfadC/NjvjQuTGd3UR7LQdk=
-X-Received: by 2002:a05:6214:514:b0:690:bb11:2a0 with SMTP id
- px20-20020a056214051400b00690bb1102a0mr22084710qvb.10.1710996931700; Wed, 20
- Mar 2024 21:55:31 -0700 (PDT)
+	s=arc-20240116; t=1710997129; c=relaxed/simple;
+	bh=KuXJnqGZlcSQxtItoxAXf9PTyy20q1xwgpNVy6kMRV0=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=Wz+YnG8+IYy3xTMwEiUmaDcg07wPQI1qP4n3OggsWNiUAPj3PKX8/0ufLH3xfzwCGbZlnsfjtib4MCp5i/k0u78+LJsEhGiEODclyQaTum29LshpSAo2ZsGKxYxxE9YS0g6ud2mbOOoP95i4looN6jq6AYEQ1ve/hUHt/EPF7u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=wjFYP0KX; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="wjFYP0KX"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1710994548.git.dsimic@manjaro.org> <688128d8ef09589712634888074ffd71a192a7aa.1710994548.git.dsimic@manjaro.org>
-In-Reply-To: <688128d8ef09589712634888074ffd71a192a7aa.1710994548.git.dsimic@manjaro.org>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 21 Mar 2024 00:55:20 -0400
-Message-ID: <CAPig+cQekOLrpcK_NcL951SRZAg-1Y1aFzE0-i-uCTK_XuiajQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] t1300: add more tests for whitespace and inline comments
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com, 
-	github@seichter.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1710997124;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=arbfcikys+bMLPw9SfvsbM01plz6sCSX0/DMl7BWrdk=;
+	b=wjFYP0KXud9GTMcB9vngayZTE8dcBibRtZ/Kt0Rky3RYJ3sEgoWxltcbFVb5WpYllJ4Fc4
+	SlYsSrOHNaJLwPemntRNWvyGWhR9JYWlfGo2WV2wGoTIid6ZWI+DuoKR3wFkduwmQfd3xl
+	AN0XhkEam4513MosWuB0b4MN7L7KOfpJRIE7WAoiVfGA/gFXXHt10pD3VoaILaDpYJDs49
+	KJC3vQ051ueAYmpZiX2oOaY2Ybvd5nhAKfUKME0hPrujEG1hrKNzayJ1ZPfsvaTwRwNy/6
+	Q0Hn5dnUkzZFrloKCjBKzVwJzscfaY8usvBq3Z63t532GTWwMpqfYCAc5NnVew==
+Date: Thu, 21 Mar 2024 05:58:43 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, rsbecker@nexbridge.com,
+ github@seichter.de
+Subject: Re: [PATCH v4 0/4] Fix a bug in configuration parsing, and improve
+ tests and documentation
+In-Reply-To: <CAPig+cRCCqRHYOpMxdL4MWaSF5S0Qb7fcJ5HqkT0j_MU1dRvfQ@mail.gmail.com>
+References: <cover.1710994548.git.dsimic@manjaro.org>
+ <CAPig+cRCCqRHYOpMxdL4MWaSF5S0Qb7fcJ5HqkT0j_MU1dRvfQ@mail.gmail.com>
+Message-ID: <2f5f35d6171209cd1c9d5ea1a1d3cb92@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Thu, Mar 21, 2024 at 12:17=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> =
-wrote:
-> Add a handful of additional tests, to improve the coverage of the handlin=
-g
-> of configuration file entries whose values contain internal whitespace,
-> leading and/or trailing whitespace, which may or may not be enclosed with=
-in
-> quotation marks, or which contain an additional inline comment.
->
-> At the same time, rework one already existing whitespace-related test a b=
-it,
-> to ensure its consistency with the newly added tests.  This change introd=
-uced
-> no functional changes to the already existing test.
->
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-> ---
-> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> @@ -11,6 +11,98 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +test_expect_success 'setup whitespace config' '
-> +       sed -e "s/^|//" \
-> +           -e "s/[$]$//" \
-> +           -e "s/X/\\t/g" >.git/config <<-\EOF
+On 2024-03-21 05:50, Eric Sunshine wrote:
+> On Thu, Mar 21, 2024 at 12:17 AM Dragan Simic <dsimic@manjaro.org> 
+> wrote:
+>> In v2, this series had five patches in total, out of which the third 
+>> patch
+>> (i.e. patch 3/5) was dropped in v3. [4]  Other changes in each version 
+>> are
+>> described in each patch.
+> 
+> In addition to a written description of the changes since the previous
+> version, reviewers also greatly appreciate seeing a range-diff which
+> you can generate automatically in the cover-letter via:
+> 
+>    git format-patch --cover-letter --range-diff=<...> ...
+> 
+> or less frequently, an interdiff via:
+> 
+>     git format-patch --cover-letter --interdiff=<...> ...
+> 
+> Both options (--range-diff & --interdiff) also work for single-patch
+> series which lack a cover-letter.
 
-Representing TAB as `\t` in the sed replacement is not necessarily
-portable and (as far as I can see) we don't rely upon that in any
-existing tests. It probably would be safer to employ a literal TAB
-character in `s/X/ /g` as Junio showed in his example[1].
-
-[1]: https://lore.kernel.org/git/xmqqzfutjtfo.fsf@gitster.g/
+I'll keep that in mind for future patches.
