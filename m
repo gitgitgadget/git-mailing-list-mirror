@@ -1,83 +1,81 @@
 Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D95A59B68
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865F279B8E
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711024054; cv=none; b=doh4GkqB+ekd8jZa9bcGC2pGSz6GDwNWqaaBAaWqUNI0xpoPlw10XGx13sPSEHqbG5fOhSP6gMStSLkI0dvTVN7e8sVzNThmB7Os5RnpzvOAk3fIJehJPfiZ1rp9IWm1Tn895Y2vN4iqTisDwg4tyeuaLEgCmnqvQM2S91mmVOI=
+	t=1711024658; cv=none; b=sasnLusWBxuomSpmpF+qFrJ6x9EimwP5mQ6quWmaCP4QvvfoKOHzp6k5eet2AzpMzkrXEZOYs1idpmg1z1vb36fALLOPKBIbvnoJXE6xQRBT0YaarFqsGvHPep/LVMNWqchamnY0HxPGI+ORB7X3yr8NybXLj8MeI6R9jljZJlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711024054; c=relaxed/simple;
-	bh=+J4/JzJIq+zCfR5XL5fqBhOo7une2SNBtZLqq3nUsak=;
+	s=arc-20240116; t=1711024658; c=relaxed/simple;
+	bh=gI3nruv8DLkJxaJ+RJlYJsu78jZ8zIWOrXRJy1PAE7E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bmTE6ThJlVxoPhfke7HvQHCtAsQQF9BH/FV1o4kFF/LOltwsppgEp+uaHhAISy3B7EWaXOUUqTN2MEZsOANgINoK0apIr5bR26lZfa/5Gx93OYKgfvtbIOS18DYLZVij7sZA4IqV+Na/N8foISvluWBpMoxPUruSnU5IgIEdBSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G83zZzQO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O/+m7eGH; arc=none smtp.client-ip=64.147.123.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=e503XmLpghLK0OHGuqE2c5rBPGvc/Ku67OKp5cdNDDd+d+DUgLpFGO8tJwRnmIRfEVEgl1F8MISgq4fpqa/AgXZwkNVagHo3kw0PFD7l5Dw+BhunggZ8Cl0rbZxbBfP1+66LUqoWHyMlbtuaMO2IRSyhfTNHY452hrjxsaKHJ/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FEXg0kek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tjh+1vRK; arc=none smtp.client-ip=64.147.123.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G83zZzQO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O/+m7eGH"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 4E3DE1C000C4;
-	Thu, 21 Mar 2024 08:27:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FEXg0kek";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tjh+1vRK"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.west.internal (Postfix) with ESMTP id 5F0771C0008A;
+	Thu, 21 Mar 2024 08:37:35 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 21 Mar 2024 08:27:31 -0400
+  by compute4.internal (MEProxy); Thu, 21 Mar 2024 08:37:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711024050; x=1711110450; bh=+J4/JzJIq+
-	zCfR5XL5fqBhOo7une2SNBtZLqq3nUsak=; b=G83zZzQO3G0bDw8j+ZE06zZpWw
-	umgEhoPfromluVRQi3kyvF7EchqPqU7OByu1V4gui/ecYsOJfhGBsEhWjPAsaHs1
-	YbrI71Yqw846kg5FBGgB9E0wcVOTG8YoTGcRZuyQBkBWwHOG/lsTT8jcLxNwg7ro
-	SZSDogeYe/Fe9GsHtFAIkIrfbHWwJ4YSw//z550YyqMBK/yIfu/2xVbGRmhszR8b
-	WRFDIhLbbjcprO9qri/SvsjWW8yN6AV1dCMvetFRnQ85F5BlrzhJLNQKWUsWgMPS
-	m+HiMLp0kAciAFgShN7OZIfjz1ijCI4WLFCLdpP/bykCjnDEqJ/6sruSYknQ==
+	:subject:to:to; s=fm2; t=1711024654; x=1711111054; bh=jGq+84qWU4
+	Wx4BtUWnlZJrm5rsIaMoA8nXpFu0R9fxo=; b=FEXg0kekVUSvvKPly5bUE7yVHT
+	Ro/KCGvqOrzYM+/lnwZNZYkIWS3tNuoOytywBwwWayPXd9PQDC6elya7USksQbdT
+	roXLNibQEyzEnLfJ91PgtYaNFwVkhpvLtWYx9S2Ox8SJtlxtBtYmRpRpHAOpgRDu
+	picQPlqcAK9o+YbZCgmi4AE6AibVw4fjZqgli1rOQAl4D3B5ipGj/uyon91rwSvk
+	1X+99vqDMF8HcHZk9fk/H7dTQdspFg3qGzX18bmD4ATujDMa3Ha5NnWpJrZ+zlYO
+	+KQ/w0sSLZjGvNUperuy526sU/R/jUmvHKO4JJdVI3YVr06Ub063D8zNiPLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711024050; x=1711110450; bh=+J4/JzJIq+zCfR5XL5fqBhOo7une
-	2SNBtZLqq3nUsak=; b=O/+m7eGH2tKhS2ps9yT10K0X7dUJnopQkVOoMsQn3v9D
-	SqyifDz4YIDDJwPPSqI+K4lGLOxqV/SG/Gtr4iHvPTlbynO7SIcEYa2aGAn6D0l4
-	mmPoboJRszRAi93grteLim2DhHMO8SwGnlNY59UaaOarHzqU53Vt/kRZ5HrFfLby
-	i8dH23pMxCeLywage+DPsr6popLgswYl8jks+d/AlIXcGFi4TbHKqUryBpk4pmwq
-	5SrjAQDvDuZcUhMot6O/bjE1uc9vS46qAdWX7NnbFhViIvUasW3QImWbESxXmBL+
-	epe042VKsP7Lgf5Vsvc3Ynv1TKkMSw6z2niLnzBPtg==
-X-ME-Sender: <xms:sif8ZdvTkPtCF7dwTmabURORfnLvDPeG4AVTH4pQEJmez7qOXW2UoA>
-    <xme:sif8ZWcS27psRabfBLgkL0A-8nZTXKCtfCCAiYTFV_mGkdyUcUX_JhtJ4DCA5QTP3
-    -UKUeAWVPbPKONbbg>
-X-ME-Received: <xmr:sif8ZQy4I6I_YMhCAwrgUVLu2-wNknTOlKaDdE2DJVvWs39r9UAXHir6kCfwP13Knb7P46sV-KCBo4Qne8HjxiMZSwxOdSsOqmDk5ZCDVZEEng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdegtdcutefuodetggdotefrodftvf
+	fm2; t=1711024654; x=1711111054; bh=jGq+84qWU4Wx4BtUWnlZJrm5rsIa
+	MoA8nXpFu0R9fxo=; b=tjh+1vRK+GkSK9RCxpV6bwzf+5wCQQ3FKZD+CCipm2aZ
+	QZGWppCgFy4SVPZIp6gZBHExR4J0B/oKfl2BJjLCcrwZ8cWQSL6KLQmvsds0t/Fp
+	4UQKncIrZc6hU2D1l/UZfLYD0Ks8tp2rxLwwOA5uzssREcWoULDwagzj5qzdu0h7
+	mOY/ZVKn4UR0OANlTcuounBuOhab9Gu0z2IHWKwfK4QTg9/V1SuQ0aUWZkvZRXXe
+	EctlAmY3CZByPIPDhnK77Y4uTuPsRzrKrS6oWlZwBH1ffSwG3ppeggr4obj4l/GY
+	G8bbqh/ugSpE+PY5mdmfNzbON9l6NgXjMGQiVlfOiw==
+X-ME-Sender: <xms:Dir8ZXPMp0gZBDeZhv5LvH35lyHSH4FfvBythByYkSNwdAZsZpVaYQ>
+    <xme:Dir8ZR97Gy1wGHUO27mWq2A_NTkol7CoVXkgkokDdMn0F1SxX5c9cUv_f3iLyqyLs
+    qK-TRfWXwpDA28eng>
+X-ME-Received: <xmr:Dir8ZWSeRT_COiNHDQO6Z4r7nhISPQZjfPpS31G2GyHkCQRKy8frwiaIHWPR4qeYPvTg75mPQN70pmM8PM8ugyM7C09c1DWNSSQmJR8lLykHqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdegvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenog
-    fuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpeffhffvvefukfhfgggtuggj
-    sehgtderredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoe
-    hpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedtfeelvdekleeufeevffejieej
-    feehieejkeeftdeljefhteevudfgfeejgfejheenucffohhmrghinhepghhithhhuhgsrd
-    hiohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
-    shesphhkshdrihhm
-X-ME-Proxy: <xmx:sif8ZUORg3gg-jzNxaAGmmCMY4I_09S38ZRuMDHsn7F9fsecgR16gg>
-    <xmx:sif8Zd_PjsTS_Cq8ekEyxc2pzXtTxdHoby10pqtjn_qClgK_829CGA>
-    <xmx:sif8ZUV4C4TxIQstkawlixclevPOy9401R20ZcFBkALeBv-p9xi4rQ>
-    <xmx:sif8ZefEKa_kemYb-K97VpGGr2L29w-W0gg1nCUl8RZsxN4RaIvbdA>
-    <xmx:sif8ZdzlFszAq__Xnd920J9z0LlqFd_Mz-i7rVYGDOiMBBvh3BLJTkkPrQ4>
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:Dir8Zbu0BX4mZvXGDUXohvg_I036CRCwnSPjlEHHjR6xAAAFVRpaaw>
+    <xmx:Dir8Zfe5dcvolXMyxIlKLsjG236lPEiPu6aBVcfg2ENmY-6rpDrT9g>
+    <xmx:Dir8ZX20zoiq4pr5PC2PEzYOYUISQftUptzPcGltB2IhLkwGtnZs1Q>
+    <xmx:Dir8Zb-4BDJW0AW20UrCGHjJpd3CtQ-AjQhZb4fsaHzBm3tl2gqQDQ>
+    <xmx:Dir8ZQH5biweaHof4v1kSqpot7M5zE2uLgI9ZMnEuJ0BZ-Dto32FPRKXTII>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 08:27:29 -0400 (EDT)
+ 21 Mar 2024 08:37:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5a43419b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 12:27:23 +0000 (UTC)
-Date: Thu, 21 Mar 2024 13:27:24 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id df9c1ac7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Mar 2024 12:37:28 +0000 (UTC)
+Date: Thu, 21 Mar 2024 13:37:30 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org,
-	karthik.188@gmail.com, kaartic.sivaraam@gmail.com
-Subject: Re: [RFC][GSoC] Proposal: Move reftable and other tests to the unit
- testing framework
-Message-ID: <ZfwnrL6Zl_lcV09y@tanuki>
-References: <6f0a3c13-c8d9-4f89-8c62-9c031f0a064e@gmail.com>
- <CAP8UFD3Rb0kN=g=EPcSqYBb3U=OgW_06jqwafF=vRYhetZ9hdQ@mail.gmail.com>
+To: Max Gautier <mg@max.gautier.name>
+Cc: git@vger.kernel.org, =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [RFC PATCH 1/5] maintenance: package systemd units
+Message-ID: <ZfwqCv889UdI0mU6@tanuki>
+References: <20240318153257.27451-1-mg@max.gautier.name>
+ <20240318153257.27451-2-mg@max.gautier.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,77 +83,137 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="37moweATJMM8Ub8R"
+	protocol="application/pgp-signature"; boundary="JNH5XexEgcR/DsfD"
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD3Rb0kN=g=EPcSqYBb3U=OgW_06jqwafF=vRYhetZ9hdQ@mail.gmail.com>
+In-Reply-To: <20240318153257.27451-2-mg@max.gautier.name>
 
 
---37moweATJMM8Ub8R
-Content-Type: text/plain; charset=utf-8
+--JNH5XexEgcR/DsfD
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 20, 2024 at 02:17:23PM +0100, Christian Couder wrote:
-> On Tue, Mar 19, 2024 at 6:11=E2=80=AFPM Chandra Pratap
-> <chandrapratap3519@gmail.com> wrote:
-[snip]
-> > A new unit testing framework was introduced to the Git mailing list last
-> > year with the aim of simplifying testing and improving maintainability.
-> > The idea was accepted and merged into master on 09/11/2023. This project
-> > aims to extend that work by moving more tests from the current setup to
-> > the new unit testing framework.
-> >
-> > The SoC 2024 Ideas page (link: https://git.github.io/SoC-2019-Ideas/)
-> > mentions reftable unit tests migration as a separate project from the
-> > general unit test migration project, however, I propose migrating other
-> > tests alongside the reftable unit tests as a part of this proposal.
+On Mon, Mar 18, 2024 at 04:31:15PM +0100, Max Gautier wrote:
+
+It would be great to document _why_ we want to package the systemd units
+alongside with Git.
+
+> Signed-off-by: Max Gautier <mg@max.gautier.name>
+> ---
+>  Makefile                              |  4 ++++
+>  systemd/user/git-maintenance@.service | 16 ++++++++++++++++
+>  systemd/user/git-maintenance@.timer   |  9 +++++++++
+>  3 files changed, 29 insertions(+)
+>  create mode 100644 systemd/user/git-maintenance@.service
+>  create mode 100644 systemd/user/git-maintenance@.timer
 >=20
-> It means that if we select your proposal, we cannot select someone
-> else to work on either the "Move existing tests to a unit testing
-> framework" project or the "Convert reftable unit tests to use the unit
-> testing framework" project.
->=20
-> I am not sure but I think that, after migrating all the reftable unit
-> tests, I would prefer you working on other reftable related tasks
-> rather than on more unit test migrations.
+> diff --git a/Makefile b/Makefile
+> index 4e255c81f2..276b4373c6 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -619,6 +619,7 @@ htmldir =3D $(prefix)/share/doc/git-doc
+>  ETC_GITCONFIG =3D $(sysconfdir)/gitconfig
+>  ETC_GITATTRIBUTES =3D $(sysconfdir)/gitattributes
+>  lib =3D lib
+> +libdir =3D $(prefix)/lib
+>  # DESTDIR =3D
+>  pathsep =3D :
+> =20
+> @@ -1328,6 +1329,8 @@ BUILTIN_OBJS +=3D builtin/verify-tag.o
+>  BUILTIN_OBJS +=3D builtin/worktree.o
+>  BUILTIN_OBJS +=3D builtin/write-tree.o
+> =20
+> +SYSTEMD_USER_UNITS :=3D $(wildcard systemd/user/*)
+> +
+>  # THIRD_PARTY_SOURCES is a list of patterns compatible with the
+>  # $(filter) and $(filter-out) family of functions. They specify source
+>  # files which are taken from some third-party source where we want to be
+> @@ -3469,6 +3472,7 @@ install: all
+>  	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+>  	$(INSTALL) $(INSTALL_STRIP) $(install_bindir_xprograms) '$(DESTDIR_SQ)$=
+(bindir_SQ)'
+>  	$(INSTALL) $(BINDIR_PROGRAMS_NO_X) '$(DESTDIR_SQ)$(bindir_SQ)'
+> +	$(INSTALL) -Dm 644 -t '$(DESTDIR_SQ)$(libdir)/systemd/user' $(SYSTEMD_U=
+SER_UNITS)
 
-I agree, I'd also like to keep these projects separate from each other.
-Also, the reftable tests could certainly use some polishing and a lot
-more documentation than they currently have. Their coding style does not
-really match the rest of the project, and if we're busy migrating the
-code then I think we should also take the chance and touch it up.
+I wonder whether we want to unconditionally install those units. Many of
+the platforms that we support don't even have systemd available, so
+certainly it wouldn't make any sense to install it on those platforms.
 
-That will require the student to understand the reftable code a whole
-lot more deeply than a mere conversion would require though. Thus, I
-would like to caution any student who wants to pick up this project to
-not underestimate the effort required for this project. The reftable
-code itself is certainly non-trivial.
+Assuming that this is something we want in the first place I thus think
+that we should at least make this conditional and add some platform
+specific quirk to "config.mak.uname".
 
-As Chris mentioned, if this project would be finished early I'm quite
-sure that the efforts would uncover bugs, test gaps or similar things in
-the vicinity of reftables that the student could certainly continue to
-work on.
+>  ifdef MSVC
+>  	# We DO NOT install the individual foo.o.pdb files because they
+> diff --git a/systemd/user/git-maintenance@.service b/systemd/user/git-mai=
+ntenance@.service
+> new file mode 100644
+> index 0000000000..87ac0c86e6
+> --- /dev/null
+> +++ b/systemd/user/git-maintenance@.service
+> @@ -0,0 +1,16 @@
+> +[Unit]
+> +Description=3DOptimize Git repositories data
+> +
+> +[Service]
+> +Type=3Doneshot
+> +ExecStart=3Dgit for-each-repo --config=3Dmaintenance.repo \
+> +          maintenance run --schedule=3D%i
+> +LockPersonality=3Dyes
+> +MemoryDenyWriteExecute=3Dyes
+> +NoNewPrivileges=3Dyes
+> +RestrictAddressFamilies=3DAF_UNIX AF_INET AF_INET6 AF_VSOCK
+> +RestrictNamespaces=3Dyes
+> +RestrictRealtime=3Dyes
+> +RestrictSUIDSGID=3Dyes
+> +SystemCallArchitectures=3Dnative
+> +SystemCallFilter=3D@system-service
+
+Curious, but how did you arrive at these particular restrictions for the
+unit? Might be something to explain in the commit message, as well.
 
 Patrick
 
---37moweATJMM8Ub8R
+> diff --git a/systemd/user/git-maintenance@.timer b/systemd/user/git-maint=
+enance@.timer
+> new file mode 100644
+> index 0000000000..40fbc77a62
+> --- /dev/null
+> +++ b/systemd/user/git-maintenance@.timer
+> @@ -0,0 +1,9 @@
+> +[Unit]
+> +Description=3DOptimize Git repositories data
+> +
+> +[Timer]
+> +OnCalendar=3D%i
+> +Persistent=3Dtrue
+> +
+> +[Install]
+> +WantedBy=3Dtimers.target
+> --=20
+> 2.44.0
+>=20
+>=20
+
+--JNH5XexEgcR/DsfD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8J6sACgkQVbJhu7ck
-PpSdhhAAndh0MFomV+Kirj4j/plbSXhXORAqvyAKmcqg5g6xOHCuqp2nOjV7hbNx
-YSq7VhbRXL5C26PpBLi2Xf3eTNN9YMzCHcyO2kmNIXE9EPq9IteBWgAfM96j2NjZ
-uhdwCcwNU2quwvHUazisBULbyLejRfQ91SEMd04UKG/HPS+l3JvbFcN6FA8c5h29
-xII5Sr5evYjM3mXLsgeG3OX+I8dcsooCjnqDHscl5D1H5o7zpSEZjaXCpZC4rgMq
-BY2lain44W7yrZEifWmxT5k6jnPzi2XNAjHDLDQ6kTgRBXBA8rZLCzXFGJVJA9ww
-FCNkqhMJIz0y3e2CR3KYUR2qV1BYT1B3klyFGBrNgp2oRqiLHNLxmx+fwtZeNhlD
-tR8Y+LegmBgdWgjVV1f2bNuOlnDuTEtXZ4y9BOvIOyd6/i0gx81ITSRa5rTZf69I
-DWGysinvAFonQtQwBTvI8ZIxja+rZKDOI8D+n1vaf4fhQ7jtNJ3rxgWiMEoTzL/6
-4xsWGPoTczU1fBks0wlmcV2qFNlD4g/WDDl+o024IeSs2lel5THYGoTiBYmrCiSo
-mezlEn9t1BGB04xRWr4KcMqYwKZuco6ISTLTYdbgascYRNqotPKQY3cfscX2mVnz
-o6MNtriE2IwpMNB/COOJLlFuIm0j6x+BuiKLpRU7vFGSO36FtKc=
-=VHrH
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8KgkACgkQVbJhu7ck
+PpRjzg/8DdbC1sXgTj7NcXJUJQ1klxN+HLpjTV14IM6uqEE4AtISA5SJE7CzRO4F
+ujw+f96rv5PRZHfwO8CfEWnJwNOHvXhK5uzDPNFkQVe380mFq2puwNiAUTSl4uD1
+zgNvcDS8uJKCZfQikRHWu/swxtleHoq1hDjh3aiQHWOtfE9b/8rEl8bck6mXua8l
+oi5NmhBE2X0OOhSAe1ktPRj6ZF7Ym04NHRuyz7Werv9OJRYqsjoqE1v7QVxqPs3w
+3EfCnRdpTM8P3as+Ut+iCGpO8h2zaZvirAXFjoV7u12pcy1kTymxBOUxb+y/y4ZW
+Mxuogx6qCIutEhPG9yE6xQEKF4Y9WBPxK0fIc0oqMDgslbQ6hUgbuvbPWIO5b71a
+Q96I1JRUQG1wELbTujVePjvm2BDkodYQYp1O8kzaG4JQEy3Lnm8CxLDbCwuKYWl6
+5YINilMz0ILdU8Tzm5JHkC4A6c6WV4KjnEmVBZ6sYjRTrFKD9ZYrQUJqPrikFe6N
+ByxtRZfQewMF6PvAsEFqf7jqGfha4SVROsv619yPrGC+Hj/4Ut9sOOv6wVgAisDM
+9Cni6oee2jA+z0YcS8Wp3HIAW0qI1nFFkg/jPLKu2QHl85gDAPv1UJrXH9DMahs5
+8tkXayn7Cg3//Txwib/GPavf/cbY5gOhK6+sjfemVSNwZKB2j+0=
+=j70w
 -----END PGP SIGNATURE-----
 
---37moweATJMM8Ub8R--
+--JNH5XexEgcR/DsfD--
