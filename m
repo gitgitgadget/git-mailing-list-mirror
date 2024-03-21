@@ -1,85 +1,84 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
+Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B7583CD3
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 13:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B758B84FA0
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 14:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711029020; cv=none; b=QCXrTUfKyv72H0Ce/Zevo00q3Dc8kbtUOsPKSSinHUmwmfH+m8sMIz6+sC7k8Ja7grZ3951Z35+Qeg7Cf72dnmSSfsxO7fv8I7LPAv8W9nEBKGm72fz9Bo/DFf4/L80/JTRfvBO9xPWc9atmumDLJ4sbt2lLoIG/NOZNCSKGXG0=
+	t=1711031983; cv=none; b=adGBafVml6iaa9PPTm34nlJ4enI06eaFHSj5ne8YjyKWH4tjzk54KWk+gJvagErmlcq7ZReUBOii/ZnZOS6VsFP+JHI+Wcl12UIEKLOMspk8Oe37RoeODMhANsrhJj6Us3a7DzIBHghlKwqdaKVFfpnpLwO7S1N9iyBZ1SkUPhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711029020; c=relaxed/simple;
-	bh=oE1bpZg8zoienNWGomdI4C1u7CvDWFWFNYU3Q1lcVUw=;
+	s=arc-20240116; t=1711031983; c=relaxed/simple;
+	bh=mXaluiar+20mwY4sq/PfIYrpqGLtT4nQFf9GxEuH7QQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PIO6tBFu4H5R/tiHXBwjMjU/tZMgPz5oZ02zsYPblDx5EDWibzfP2Ugd3f6/RmcNKgzxKRuhoUoveZJowekVbdDvmNe1k+OcNdmCjxljATEZpdPP2kZGqbVJkMJ9NBleWHDkJX+/tF8Z/mvrJYUwKNwg3a6TFPJM3CyTmgUY8Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lxb5/TaW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p1CjB45k; arc=none smtp.client-ip=64.147.123.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=RNrUO3cf3VXGlRhBiN5mdqQOrxpKkKQYR5FdRdeb3gqe82TrVDqNMw/lfhoFiIPf+yzkX1Qzl/j7WoG7q3DIcfXI2mPSAbos2vZ7M8azz2+fvuHs74U2wlGYQ59/oK/SFnU3smKzzVd04/Eq373g9kMl50VDjE5rl1wKAFcAW1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WhXc1rr6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sAlHoT5q; arc=none smtp.client-ip=64.147.123.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lxb5/TaW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p1CjB45k"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id B431D1C000C5;
-	Thu, 21 Mar 2024 09:50:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WhXc1rr6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sAlHoT5q"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 5FB3418000B4;
+	Thu, 21 Mar 2024 10:39:40 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Thu, 21 Mar 2024 09:50:18 -0400
+  by compute1.internal (MEProxy); Thu, 21 Mar 2024 10:39:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711029016; x=1711115416; bh=ZVJ83c1PLp
-	2G/WtxZ5u+yHUpDJdtQS0QRdDW3/wdN28=; b=lxb5/TaWlANj9ZzFHm/ZkES0vd
-	hcVu0L9Mj715+nhhByMEFsaV0J0+RTPqkW1mNWELy+Kk9stkrsy0KJTNnW2K6qIc
-	aJ7HnWatHNznshXpnDln5HMJoZDOM+W0QWu1H7U7NQe6ImmGh9mCkgpGyJdnMHFu
-	9LhdsKmx87JHVMlcc3UlbJfwgGKbsxObGs4wfm9Kzp20LULJalc8tWaZH+VrkUyM
-	JwVRmPQnkZyCSUqf0WnTMGrgkk7GnVjXMEf+nyQwDhXQSRImBKKaCJ2PFQ9A6rgY
-	8g7ahSwTbZmVUR0lmeil8okedato9DRL3lErlpd5PYgyVDTtBFQrgw1r+y4g==
+	:subject:to:to; s=fm2; t=1711031979; x=1711118379; bh=mXaluiar+2
+	0mwY4sq/PfIYrpqGLtT4nQFf9GxEuH7QQ=; b=WhXc1rr6B+Z71O4Ceu+dQAXE1S
+	ofys3jJaGdAGWxIm+YCbsYARSbCiqV6tmBA4T00F910FrBKwo5vdztmbGQBUSCgc
+	QuEp0vlPKQJcnYd2K5RKb2bhtZ+6bcl0SJC3baVpfHhwmPq76q6PHanYaSA2bTv5
+	JoyReT3/IwOUeecmKwqsXtLk4K7NU6jHY6H+7pEoMjcZ+el0g9TSgq90lsvh1Sez
+	4sfPamgJmXxuDOftx+5jdUQMf6oXbe+pM5hcUqsk0qY+1A98stfd3o5iLpR7/grh
+	ExpSDT0UtgWjN1jRizyzqEVk7iNOXYMrIG1Pi45j262Y3P2LZztr+0HiNusQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711029016; x=1711115416; bh=ZVJ83c1PLp2G/WtxZ5u+yHUpDJdt
-	QS0QRdDW3/wdN28=; b=p1CjB45kY3xZtFmlTaPK5qmqkXOUU+9uAJ6GGVAbw56h
-	bZwieHNgYt41HWqNsKRcLo0tvRFFSHmkp3z2qDmQAPEz0/mHJxCCSKBZPqYtHzfx
-	mNG96ari0fC9fl/L9gdqq6tdhlhxtj19DSbLuVMb/mLfdsffniRMl7p4IziSusw3
-	3pZ1xpEWP+82KBayUPfykzMlaaFGDc1AFehCIIrbo0MFDd4MrE2SrVSbBp2Q/BOI
-	28lbABZgUONrMWZ/I4XID4t8xtYzQxut8vn6SvJmdB/dsF8lFIJJGOZS1Xn/mEnk
-	mT0eJbdnbW/Wc/iKtOXKXTU5392l3Nk6+BE/5aI4yw==
-X-ME-Sender: <xms:GDv8ZUF4Phuno4bbrUEwCm7kfJkRilOygIATIDYtzA0TlcXIceIExg>
-    <xme:GDv8ZdW1hTu79-C5-aw64QLxJ7HRb-hR5RVjEJe_puB9ZMFIe30aKU_2HS5sEMICr
-    r0bJhbS1npTkk844A>
-X-ME-Received: <xmr:GDv8ZeIhCMc1d3GY9xU6WxF0YvAHyBdvFO5PP_T0jPGx6VZrrcOS4ZSGNdo9QfR2X5xx4W5ATcDyiuqQFKLtBfKriUlo6ooGMLRLu8RAcrOKjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdehjecutefuodetggdotefrodftvf
+	fm2; t=1711031979; x=1711118379; bh=mXaluiar+20mwY4sq/PfIYrpqGLt
+	T4nQFf9GxEuH7QQ=; b=sAlHoT5qvQeXU6r8yTlp0V9qkpp6N+jnx4kotTtNT9hV
+	FrVeuN1moCBsFU19tORtf0l4tYBptJpXgojDZOCwYN7bQzV8JmFVpOyusftzJMMj
+	B8X9VIehOiC8Vu8j1O6yB3O1+TnIb0B80Q8d8O5e1fRBSyP5uj+KHVSRUaH+vmj9
+	0PIOl9g4rfcs/QivM1FVedhIo8aUqGGm4s7qOnUn2087/3ENQfBJXvTlN40gpGsM
+	un38CH0SJPDCZ2OyrmqiDMY2nsrEXikia26h1rYLavdSLsU7FkdZz+/S9WAJfzVZ
+	Nt1Qm6A9Nk5le+jJOL9KsjtN2LBOt+YLOLXiBf2rWA==
+X-ME-Sender: <xms:q0b8ZdpXMnhuFTVBDh7WxbFLyU98bKZ_G6Pn6rR-UasB2ZmSDw3nXA>
+    <xme:q0b8ZfpfS7nqG8LpKyMaHbpqepD-2ZXxTDKcd0uqYSaahuSD2QFOQc_qn0tzYMf70
+    bOOK3XbmdogJRLOSA>
+X-ME-Received: <xmr:q0b8ZaPRKtsmImpFofyZI9DSuJF9INIyGIkiFCLbJTJpFK5AO-c9ot8kB07UH_glhB5jlTeVuq7JKoPVGKPiLgkcRrI3DpstPsEwnPH7cVf3hw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleejgddtgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddunecuhfhrohhmpefrrghtrhhi
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvffdvgfdvleeukeffieetlefffffgheduueehieefiefgudfhudejgfejfeefvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:GDv8ZWHlIopYjkzNlyN72ktL7Y52bgJ8P6UFZd87JKQFzwKT86gI_g>
-    <xmx:GDv8ZaWUoPrYuFG6vZKGW93Jjk6P1TbYFYX9zy_ftXO5IE26FEz4pw>
-    <xmx:GDv8ZZMk7pqUOBzg-A0ypCLXla2fzGPdzEZz5lN03WiVvxVdwYp0Ow>
-    <xmx:GDv8ZR02Y5A8xxMQKpCprXPSWt0aa-xcud8bKsmG_oEDqFK0HmxHrA>
-    <xmx:GDv8Zcco3CkJtZYqh2bjO6bPTPKLlmHujJxAIIqoJPk61dsHS_KsOhsys1w>
+    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:q0b8ZY4gu6p0Vx-th5q_V9hQeVBzMoJ5sl_CxlgpyQw4FUJ_0RdEMg>
+    <xmx:q0b8Zc40GDSj6DmyKCCPpzk0mvTyvmNfS5NU1xPZEkp3CT2yCqdUXw>
+    <xmx:q0b8ZQgsjsBJBXsWv1YZIpm2pO08elyimdfagajSLlHdzMACGenaLw>
+    <xmx:q0b8Ze6AFbLj9QLaxioDcDH50p6TVG6weLtbXKHFLd2oOYpgyN6l9A>
+    <xmx:q0b8ZZtnrSMB9PtJ8wqt7nw0wVGcocGATVAwqtesH1zoa-YQC5l-TXZTizY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 09:50:15 -0400 (EDT)
+ 21 Mar 2024 10:39:38 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id add1697e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 13:50:11 +0000 (UTC)
-Date: Thu, 21 Mar 2024 14:50:13 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3a3b9ee0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Mar 2024 14:39:33 +0000 (UTC)
+Date: Thu, 21 Mar 2024 15:39:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-	git@vger.kernel.org,
-	=?iso-8859-1?Q?Jean-R=E9my?= Falleri <jr.falleri@gmail.com>
-Subject: Re: [PATCH v2] git-difftool--helper: honor `--trust-exit-code` with
- `--dir-diff`
-Message-ID: <Zfw7FUtDcKBaA0-6@tanuki>
-References: <976C9BF2-CB82-429A-B9FA-6A14BCFFCA3D@gmail.com>
- <0fac668f8fc021af9f9c4df5134da59816307ccc.1708423309.git.ps@pks.im>
- <20240308221229.GA1908@szeder.dev>
- <xmqqcys4fj15.fsf@gitster.g>
+To: Aryan Gupta <garyan447@gmail.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC][PROPOSAL v1] Refactor git-bisect(1) to make its state
+ self-contained
+Message-ID: <ZfxGp6p6RiS5i5SD@tanuki>
+References: <CAMbn=B4HDXOAThvAmmyA5GEzG1nnvbGvc4yjpg7FHSHQQ-WQfw@mail.gmail.com>
+ <ZfwsnMWg12S2gV3C@tanuki>
+ <CAMbn=B73ioQ8oRucG4X8anhwrnbhJRky7BSe7DKpQad85Dt5xg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,81 +86,54 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CBtUwfDTZjV3Igik"
+	protocol="application/pgp-signature"; boundary="is4CnEauiHvaevv7"
 Content-Disposition: inline
-In-Reply-To: <xmqqcys4fj15.fsf@gitster.g>
+In-Reply-To: <CAMbn=B73ioQ8oRucG4X8anhwrnbhJRky7BSe7DKpQad85Dt5xg@mail.gmail.com>
 
 
---CBtUwfDTZjV3Igik
-Content-Type: text/plain; charset=iso-8859-1
+--is4CnEauiHvaevv7
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 08, 2024 at 02:36:22PM -0800, Junio C Hamano wrote:
-> SZEDER G=E1bor <szeder.dev@gmail.com> writes:
->=20
-> >> -test_expect_success 'difftool honors exit status if command not found=
-' '
-> >> -	test_config difftool.nonexistent.cmd i-dont-exist &&
-> >> -	test_config difftool.trustExitCode false &&
-> >> -	test_must_fail git difftool -y -t nonexistent branch
-> >> -'
-> >> +	test_expect_success "difftool ${opt} honors exit status if command n=
-ot found" "
-> >> +		test_config difftool.nonexistent.cmd i-dont-exist &&
-> >> +		test_config difftool.trustExitCode false &&
-> >> +		if test "${opt}" =3D '--dir-diff'
+On Thu, Mar 21, 2024 at 02:27:56PM +0100, Aryan Gupta wrote:
+> On Thu, Mar 21, 2024 at 1:48=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wr=
+ote:
+[snip]
+> > If you want to stick with this idea then I would strongly recommend that
+> > you mention this in your proposal.
 > >
-> > The quoting doesn't quite work here.
->=20
-> Thanks for looking at them carefully.
->=20
-> In general, when you want to interpolate an variable that exists
-> outside test_expect_success, you should write it this way:
->=20
-> 	for var in a "b c"
-> 	do
-> 		test_expect_success "message with $var interpolated" '
-> 			command and "$var" as its argument
-> 		'
-> 	done
->=20
-> The last parameter to test_expect_{success,failure} is eval'ed, so=20
-> enclose it within a pair of single quotes, and let the eval to
-> interpolate references to $variables at runtime (as opposed to when
-> the parameters to test_expect_success are formulated) avoids a lot
-> of surprises and headaches.
->=20
-> Perhaps we should have something like the above as a hint in
-> t/README?
+> I am open to changing to another idea, I won't mind that. Because my
+> ultimate aim to add something (even it's a small patch) to git and if
+> this project will never be in use. I am willing to change it. Let me know
+> what you think about it.
 
-Makes sense. I've sent a separate patch series addressing this issue in
-[1].
-
-Thanks!
+I'll leave it up to you to pick the project you're most interested in. I
+only want to ensure that you have as much information as required to do
+a proper assessment of the different proposed projects. So if you want
+to stick to the idea then that's fine. If you want to switch now, then
+that is fine, too.
 
 Patrick
 
-[1]: https://lore.kernel.org/git/cover.1711028473.git.ps@pks.im/
-
---CBtUwfDTZjV3Igik
+--is4CnEauiHvaevv7
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8OxQACgkQVbJhu7ck
-PpSqEw/+LbluYBnSULXC0Sck6pK0y46N/jtQQVhntWDWn7LSEope5RqlGn2PnySh
-Dabdb6tXM08Aen1h0I770xC86Rr/Lww5i7ZZ/2mIgJlBlvxx8RiS8Hxls65KoXzb
-yQk+S/x62Wsxw0eRwF5zuVDwZaIq78ObX/GjeluO6Q3M/Z09f4mYa7+9s/UNVCbS
-bkjnfF6eQ6u+SIkC1PTSHe2UmSsfQTdcTa8nj2qUHiJdc6I2Ic6JR0YMi0dyD8Hb
-y9OjYMUVOJ1ukqEDeVb1ulp7Gq29fTCH60zX7gSbyzKmoB7WQ100wgPEc/TsINQI
-hPp8d+CexYnb41IYFZq3aQb8ueyc/omurBGbFTyf5kw8R90e3a4o/6gtgnh5cxth
-tOIUCtixHyJu+2HMpaUvHemsNWamP1Rxpr287GuNd1+RcyPSGJzetKRBZ5BGBwx9
-xMiHleHyPbA8ayeAcAGuPFUqAsoFpcMQuGSsoMEYBxghiLPdEhERb0sFj032MMAQ
-qqLWy+eMXc5mmO0lcsgsla+KN0OoneJKKajIU5Vl6Pes7zOd1+azGbE6qiftzo9R
-HVnHKZujiFeL77tfBWaQLX9W6KvGU2PlQcoTO19v5/Ldx7P4LZlJYFt536bXpFWk
-mZXdHmhfzAqji+IJy8Ge606KpZTlNl8qaETgZbEc26r6brg2dO0=
-=AAaP
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8RqYACgkQVbJhu7ck
+PpQGNBAAiPQP8UDUTJa16mxhb5NM+tIQrLkU6lY/QQ85njTbzAZV5Z2BwYCNJi7F
+uJaKAYllO8foy5K3mPJGlIUgDqbItAb2RiJKfAmsNkR9g0rjmM1EriKg0iinxbYG
+dO2YhYKGT8bEOh06pRtE0nHxO6EwZ/skN+kQead75ew8qRd+8cLw9tFroZsMQERH
+8uYG6iLUAIga5ikGAfVDD8iqT6NFTE984W4aGCTfeIPU7vddNK0dnNhw8GPy7wBN
+mFvLsiMMKF3nar9TRfE+KKrfV+HsYeB4oH8Zzvgx/M6ZHylFpKiE7Y8ACG6fKQsz
+jacFZ3yNIIYefTI2QILHAngPM4gfjRSCXWAa3y6QLYYESIl69PMaiu52b2vYGz2R
+wCASHLVD0kFsmGMU2Dqn/ALD9nPsNqxhbvEBT6lPydEva1xPJ6+NF4vle8bcoF5S
+igHYoezEO8+6zijnl31IU8Zutibpc1XIZZg2JtkuFY3yzXdkEmxY0QcwPe9jg+Uy
+cQ/704pXFeY2+DzN08ft8NmweMWCWze1DKfThHuJxpS+aODeeJBQ6KfW3Se7LSBm
+Yys5JL4rTfEEjK+nzxcAnUiDeiBNl64ioVcU9FNo3G6+I/NtqOG3w8SpG4v4qVO6
+6St+7F1b2Mgy+9BnNouD4fcOCkJzg6Msp/uXES180tfLtUJOZ/g=
+=lK0u
 -----END PGP SIGNATURE-----
 
---CBtUwfDTZjV3Igik--
+--is4CnEauiHvaevv7--
