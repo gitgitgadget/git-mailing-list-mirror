@@ -1,81 +1,82 @@
 Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D019C79B8E
-	for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6691CA83
+	for <git@vger.kernel.org>; Thu, 21 Mar 2024 12:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711024682; cv=none; b=flyjErHM4B5Syc9E6ikh9TRZqOtlAYsPtfhNmYHDVU4HdlIobOAcZnIhNU+DkgZD4zDkHWtVUdOsnrc/jZ6KbzBnqdKrF+YZwfALsXdlYYNQhOvZ8huXpYwXYrQe3Cpr7Ld1armBFj1pxSzkDz+kRoNw1F7jRdHKLKmgnY8smcs=
+	t=1711025316; cv=none; b=G2jw1cSFCuzXFoihmE+1rdeTUIr/mAdnP6qbAvo/NesqYGGny/bOVpdqRVQQi8MWE0Y0D0T9nR9UXjWuRm/CGU77yVNqnzHCKSzXHpUWfDta9yge5DerA+tjHFsLOOliPXxZp+XZ9dFyWRvDKuPExVBgRNXG3VGb/ZlFsPAPI5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711024682; c=relaxed/simple;
-	bh=oIIw82BbXBMftti0SKNkWZtY9bOowYug5KkcrCpZlQc=;
+	s=arc-20240116; t=1711025316; c=relaxed/simple;
+	bh=1wJE0CRjiZWu2F2OnuppV5NjVznWcTs4y9zUdKgzVYw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnsOx/LMxhwNt7GqTVMq9kYq1Vdf2k0beIGAlDluiDP8jbq2dEewgKvzbi172MfO4XWoL8hFvdh5lrArnC71B7aMAy5ZPBBU93RMTi2YCZkUTldPP+w38Gn0OPVMhEasZJ/5iXIiaiwUujxFk5fABxqVf/vwFnQ6evTyKirgOSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZGNYW0eK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AaZBy/il; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=EP6rN2Ino0thtKVMA7hhnMmOjQK7OKb1ACtkS99Z3JCl0jWZdeTBn4AzJkHa7VCL95/m805VhXuJ1p+RjnKz42p6ybg6WioErQ/bc0+17zUCxVrxv4TTMePfbbtwdxB5Bleu2Tpttglox2zORx9FlGLaitRblKXmjBEt7hRCVVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oEg08a/H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B0n63kPC; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZGNYW0eK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AaZBy/il"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 8C44C18000FC;
-	Thu, 21 Mar 2024 08:37:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oEg08a/H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B0n63kPC"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 8B81918000BC;
+	Thu, 21 Mar 2024 08:48:33 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 21 Mar 2024 08:37:59 -0400
+  by compute2.internal (MEProxy); Thu, 21 Mar 2024 08:48:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711024679; x=1711111079; bh=64SgaSTa9Y
-	qMoYVyXvh4PaIvE0HiM47xdlJkwXil8J0=; b=ZGNYW0eKH2byCxUrdaEkRXEagV
-	V8oE+I/eI4EPVctmtdgSh4btChwvufvzpbPkoPHuyTqQsdQWBdZhJrl1uX3BWBuf
-	d1eZeWh2xIeEJ45/rj8HEYjxUUf2p3bAfprS41InlFJcwd5IXsupS7LEpMv1pQhC
-	f0VQC43B37+Ax2YkWOXysIwuw60a9MNuw06OaLhrWQ49EYMWYYeQ1mhclJjE3c8l
-	5PjQijz8g1T5ZAPP+a4raXmikGes0IsmoZuPYc39LGKDm5+zKayCPiylxSyO0Lq+
-	AGPxjJavte4fuDJsX26BHLkshd1ks6P09eGC9dBYXBbn5QSosrZd3UEWAiZg==
+	:subject:to:to; s=fm2; t=1711025313; x=1711111713; bh=1wJE0CRjiZ
+	Wu2F2OnuppV5NjVznWcTs4y9zUdKgzVYw=; b=oEg08a/H3rlLC5TifkA1BvnDx/
+	RTc0jgPfNvRBmF0kl7iEsUIsVwt4eeZVNInBPfBySslPcmVPsxFz+7f0JXYxjsRv
+	5YIkMcVsC1dvoPgeq+3dxwrWRaO/wEBGz849c7qY5miS0mHNDJZ+YqcPl4O/eDeX
+	X6eGMyKvtF1dyTyaVQ/EmbCk0eEVnK/knSWAUAuPp/wTFeGIxj9uGMxUTz2wg/4y
+	o5Y0H2I2WfJN/qoraVoDoWhcqYB5VRqi2C+HFXqJNj4L9yv8sHfP/HyUTQtDO+Hy
+	qf4NsPove8H/O5nDhleGlzshC3yBBYMai+FIjyseKXXY+EcBRfYJyy8OrBGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711024679; x=1711111079; bh=64SgaSTa9YqMoYVyXvh4PaIvE0Hi
-	M47xdlJkwXil8J0=; b=AaZBy/ilWL/ow3eCYJ9bolw8U2wJ5jE5CjhOlYON3mRH
-	KEaCpOUW3w9zPTLa9jgdiv2inr3PE3E4JAPjncHOkCPx+y2yqcT+uDb8drhni0ro
-	QePW0hcirAhBIq0ygiUcwRXUfl2x0BAG7JQ9twaa4/Bt1VJyKLM58R3uYLL69Obv
-	R9OrrNVvAmaobOQ0zna/rLSMKfIpqhEsvu6sFLM6tIwa9GMM2+hW07fXGxRhteFu
-	lihCBMpmVwOJAOjlB5TutdHScucTausdd3d5lO8WX/72AGoG//eR0FqJn9XNuvBf
-	YvRMX1j/sh+oCvp5W5DgxfvuKVPUkJ3X9+vIkIvHNg==
-X-ME-Sender: <xms:Jir8ZS6Zb1iTKfvN3uWydXaYrDDwxxdLW_ZQcASe1eDUH0i66Ppbhw>
-    <xme:Jir8Zb6ogU0JvoFNkrRjUwxGoIxRvhDQq6AoHIs3wUr8vW0n0RDV_WHRosJkn9UkQ
-    OT76Ju-4KD5Zout6w>
-X-ME-Received: <xmr:Jir8ZRflV8gzRtsd9RQRdK6EFpGMPL5XMieouZ5vw3svk-ns3MA_icTHgbOJw8nM7DDmj65mm6hx_mwrI_8V_GibLxhJ6ePf_hHCf33NlzeziQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdegvdcutefuodetggdotefrodftvf
+	fm2; t=1711025313; x=1711111713; bh=1wJE0CRjiZWu2F2OnuppV5NjVznW
+	cTs4y9zUdKgzVYw=; b=B0n63kPCW1Baa0MuIMcc5Y1JovSRm6sbaZgpMNDD85n+
+	t8Wvjjv3061mp0xyztU3SvlBXNK5JRweSTBSXyHWZtSgrAXgBM4MSlFZFBof+UFD
+	nML+UWL9XeropnhlhE9ujjuLp3U1YyJXUgftlJWD70lqUjuGojBEBwdwKgTX4Gx3
+	OkcaCL3IJ7jqd/q985AmJre2XO+33O1J+TOByXN2ZmLdMcwY/aJe0+7zjmLJY1EU
+	BVnqnCa7yR33+r4WHWmHKHm5y7dGE/sq7CsX4aLRJ9fZgNngbL0VuhHUwuAog47K
+	xH7hx8it7hGEdlNvmS43QRANQZH+/GZnvDXS0IsD6A==
+X-ME-Sender: <xms:oCz8ZYfi0-xjPN0VKnAbRYowpTu7mm4U71a-MeLKkaRcfQKiWNapKw>
+    <xme:oCz8ZaPZJmLjqcNZmSN5TzJ-PGhjXud1ry1k2KwZ-A1YdB1bfHdEk1GOuu65gaVOM
+    KYJgnJmSxCr8rnfkw>
+X-ME-Received: <xmr:oCz8ZZh0t6UQpHqJVr-wIbQIaARhWx0E8SrHivG23R64rcJFwCUzbKG7uGEY5iFd9U9mM0ZTOVo2ptXhDBiD1sdWKwQGQLSNNY-lvzspVbDSrQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleeigdeggecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:Jir8ZfKgVq1tZwGnzG52D60bfUbziCgdEV_FeUTLSJAieohgRgszsg>
-    <xmx:Jir8ZWK31xnI11mupNgHMEv3s6HbZ9NRg43hsDNh750nVW4rCIL1nA>
-    <xmx:Jir8ZQy92VqSLPfK0WpOUZVApLvvphIwhZpaa3gw6zngQxue1x7NJA>
-    <xmx:Jir8ZaLXO3Aacz6CNJ0L3xGnRxrgPAgLEx641i8KAns2QSAk98_Fiw>
-    <xmx:Jyr8ZYjf4K6mfmRa558ySildIQhIK7JBJlQjkt5cExmltuDa59JYINI3xfc>
+X-ME-Proxy: <xmx:oCz8Zd-g4PLg5uHbQSzuduqxwCdG14dJK9pwPAVxzQpuw6qT-1u20w>
+    <xmx:oCz8ZUudBCbSbqnjzaVcr_hTXNaOUQhLWwqPUy-nndCRH47JxPEilg>
+    <xmx:oCz8ZUH3UuEStgogsHJbrcdhea6NwKsT-MFXsAV0p1g4WlsH8pDsnA>
+    <xmx:oCz8ZTM-ATstv9WGBE8Q9A6AsDiwRr7sUnb9Bol9GEiNny_0Wv2FrQ>
+    <xmx:oSz8ZYj3KrqRSLDNfUK5SuA1svVozxA62CDJIpKujBPSRtwKbTMr0MCjJ2w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Mar 2024 08:37:57 -0400 (EDT)
+ 21 Mar 2024 08:48:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 28f83402 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Mar 2024 12:37:53 +0000 (UTC)
-Date: Thu, 21 Mar 2024 13:37:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 71558ebe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Mar 2024 12:48:26 +0000 (UTC)
+Date: Thu, 21 Mar 2024 13:48:28 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Max Gautier <mg@max.gautier.name>
-Cc: git@vger.kernel.org, =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [RFC PATCH 4/5] maintenance: update systemd scheduler docs
-Message-ID: <ZfwqIklp5GoC1RP-@tanuki>
-References: <20240318153257.27451-1-mg@max.gautier.name>
- <20240318153257.27451-5-mg@max.gautier.name>
+To: Aryan Gupta <garyan447@gmail.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC][PROPOSAL v1] Refactor git-bisect(1) to make its state
+ self-contained
+Message-ID: <ZfwsnMWg12S2gV3C@tanuki>
+References: <CAMbn=B4HDXOAThvAmmyA5GEzG1nnvbGvc4yjpg7FHSHQQ-WQfw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,118 +84,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Qs6zBuc2H1A1hbN1"
+	protocol="application/pgp-signature"; boundary="ZkuhQetXH0MEkQbR"
 Content-Disposition: inline
-In-Reply-To: <20240318153257.27451-5-mg@max.gautier.name>
+In-Reply-To: <CAMbn=B4HDXOAThvAmmyA5GEzG1nnvbGvc4yjpg7FHSHQQ-WQfw@mail.gmail.com>
 
 
---Qs6zBuc2H1A1hbN1
+--ZkuhQetXH0MEkQbR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 18, 2024 at 04:31:18PM +0100, Max Gautier wrote:
+On Sat, Mar 16, 2024 at 07:57:49PM +0100, Aryan Gupta wrote:
+[snip]
+> -- Plan --
+> ----------------
+>=20
+> What is Git Bisect?
+>=20
+> Git Bisect is a git command which helps to find which commit
+> introduced the bug into the codebase at a faster rate by leveraging
+> the power of binary search.
+>=20
+>=20
+> The project idea is relatively easy to understand by the description
+> itself. Git bisect stores some state files such as BISECT_START,
+> BISECT_FIRST_PARENT etc which looks very similar to the naming
+> convention used for creating the refs file. Due to this similar naming
+> convention it sometimes causes unexpected results when these state
+> files are confused as the ref files.
+>=20
+> In order to fix this problem we can create a new ".git/bisect-state"
+> directory and store all the state files which belong to the
+> git-bisect(1) command in that directory as proposed by Patrick and
+> store all the files as follows.
+>=20
+>=20
+> - BISECT_TERMS -> bisect-state/terms
+> - BISECT_LOG -> bisect-state/log
+> - BISECT_START -> bisect-state/start
+> - BISECT_RUN -> bisect-state/run
+> - BISECT_FIRST_PARENT -> bisect-state/first-parent
+> - BISECT_ANCESTORS_OK -> bisect-state/ancestors-ok
+>=20
+> While the change looks very simple, it actually is. We will just
+> update all the paths from where these files are being accessed. When I
+> went through the code of bisect.c file I found that the path is pretty
+> easy to configure we just need to modify it at a few places. The main
+> problem is to efficiently handle the backward compatibility and
+> implement proper test cases to not let the existing things break. I
+> have already gone through the bisect.c file a couple of times just
+> reading and trying to understand all the functions and was able to
+> understand a lot of things about how it works.
 
-This commit is missing an explanation what exactly you are updating.
-While you mention that you update something, the reader now has to
-find out by themselves what exactly you update by reading through the
-whole commit diff.
+As you also mention further down in the section about backwards
+compatibility, the challenge of this project is not about doing those
+changes. That indeed is the trivial part of this whole project.
+
+The real challenge is figuring out with the community how to ensure that
+the change is indeed backwards compatible, and that does not only
+involve backwards compatibility with Git itself, but also with other,
+third party tools. The biggest question will be whether the refactoring
+is ultimately going to be worth it in the bigger picture, or whether we
+should really just leave it be.
+
+So personally, I rather see the biggest part of this project to find
+good middle ground with the community. It's thus of a more "political"
+nature overall.
+
+I don't mean to discourage you with this. I just want to state up front
+where you should expect difficulties so that you don't underestimate the
+difficulty of this project overall. It could very well happen that the
+whole idea gets shot down by the community in case we figure out that it
+is simply too risky and/or not worth it in the long run.
+
+If you want to stick with this idea then I would strongly recommend that
+you mention this in your proposal.
 
 Patrick
 
-> Signed-off-by: Max Gautier <mg@max.gautier.name>
-> ---
->  Documentation/git-maintenance.txt | 33 +++++++++++++++----------------
->  1 file changed, 16 insertions(+), 17 deletions(-)
->=20
-> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-mainte=
-nance.txt
-> index 51d0f7e94b..6511c3f3f1 100644
-> --- a/Documentation/git-maintenance.txt
-> +++ b/Documentation/git-maintenance.txt
-> @@ -304,10 +304,9 @@ distributions, systemd timers are superseding it.
->  If user systemd timers are available, they will be used as a replacement
->  of `cron`.
-> =20
-> -In this case, `git maintenance start` will create user systemd timer uni=
-ts
-> -and start the timers. The current list of user-scheduled tasks can be fo=
-und
-> -by running `systemctl --user list-timers`. The timers written by `git
-> -maintenance start` are similar to this:
-> +In this case, `git maintenance start` will enable user systemd timer uni=
-ts
-> +and start them. The current list of user-scheduled tasks can be found by
-> +running `systemctl --user list-timers`. These timers are similar to this:
-> =20
->  -----------------------------------------------------------------------
->  $ systemctl --user list-timers
-> @@ -317,25 +316,25 @@ Fri 2021-04-30 00:00:00 CEST 5h 42min left Thu 2021=
--04-29 00:00:11 CEST 18h ago
->  Mon 2021-05-03 00:00:00 CEST 3 days left   Mon 2021-04-26 00:00:11 CEST =
-3 days ago git-maintenance@weekly.timer git-maintenance@weekly.service
->  -----------------------------------------------------------------------
-> =20
-> -One timer is registered for each `--schedule=3D<frequency>` option.
-> +One timer instance is enabled for each `--schedule=3D<frequency>` option.
-> =20
-> -The definition of the systemd units can be inspected in the following fi=
-les:
-> +The definition of the systemd units can be inspected this way:
-> =20
->  -----------------------------------------------------------------------
-> -~/.config/systemd/user/git-maintenance@.timer
-> -~/.config/systemd/user/git-maintenance@.service
-> -~/.config/systemd/user/timers.target.wants/git-maintenance@hourly.timer
-> -~/.config/systemd/user/timers.target.wants/git-maintenance@daily.timer
-> -~/.config/systemd/user/timers.target.wants/git-maintenance@weekly.timer
-> +$ systemctl cat --user git-maintenance@.timer
-> +$ systemctl cat --user git-maintenance@.service
->  -----------------------------------------------------------------------
-> =20
-> -`git maintenance start` will overwrite these files and start the timer
-> -again with `systemctl --user`, so any customization should be done by
-> -creating a drop-in file, i.e. a `.conf` suffixed file in the
-> -`~/.config/systemd/user/git-maintenance@.service.d` directory.
-> +Customization of the timer or service can be performed with the usual sy=
-stemd
-> +tooling:
-> +-----------------------------------------------------------------------
-> +$ systemctl edit --user git-maintenance@.timer # all the timers
-> +$ systemctl edit --user git-maintenance@hourly.timer # the hourly timer
-> +$ systemctl edit --user git-maintenance@.service # all the services
-> +$ systemctl edit --user git-maintenance@hourly.service # the hourly run
-> +-----------------------------------------------------------------------
-> =20
-> -`git maintenance stop` will stop the user systemd timers and delete
-> -the above mentioned files.
-> +`git maintenance stop` will disable and stop the user systemd timers.
-> =20
->  For more details, see `systemd.timer(5)`.
-> =20
-> --=20
-> 2.44.0
->=20
->=20
-
---Qs6zBuc2H1A1hbN1
+--ZkuhQetXH0MEkQbR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8KiEACgkQVbJhu7ck
-PpQEhBAAgjVmE7xUUWezyhBrGTYDNZDo5p0bIlnmN/myYUQ4sHnajrt73wi8r9lx
-S+d7NdI1hATiPzvZJb/x6ziSpXB5fbLCmbn7PpJ83H2GGF8SvQ1otzi3vP74RQSq
-hual441UkXuTMbWgvACQJBQunFYVWE1d7ouFfUj2tXdmDSyPJQq84kF6mlgNdw/U
-3TXWCnIbAc4ZmMZvv5ca92sYEa3iJQCzP9ceRljJepFuSRix/t1yYSmS18tXS89p
-talzdDtLPw8d2LJbpPZhUAAZkkFR5TZAXuJOBCVGKCiBjrPw21wOY4gGjispSeYT
-y+ln1Y2GfRxYCuEBPPkehOmunn65jEggycpHmulL4E88TAGQfIMI4rZj2M+mgLCx
-uDzzPk+P2Hb+1wR9akmZZHQWQ41UqPVF3CgNbZ578AhPilZejtMJifX67NnrNrUo
-vpTaqNYauOpKPXcFwKMXD3KDXHZyeNYPOT/Wv0wIHuHKr7BjeeA+yUjxVS0XjX4l
-3dtwwAXzmXqIH13O7Ovs/YcfHbJzSUlUvRoDXLx4z620GfaMYmH6HBqlRFro0VYi
-3hqBEXYVMRgWbY+MxqV9zphIcrsFzltKT1dQ6z983m/D3IG1ML8D93mDEZpcY+4s
-WABaWa9b8zzwVtXAd9Snbhu1tGRYvnht8gSdwAG4jSf67QHLmQw=
-=qIfn
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX8LJsACgkQVbJhu7ck
+PpQbUw//QWlvMq7BpU3SXMarUboldMaFKVPrQOvBWwPkatefFQnhcaROtOFxv9xJ
+v8bRHjtZMSGsErMwTbpjjPQWJSfoz2uZg+wqQJgkRduf3eZPVxWqJkSsIdHbiWVs
+Famc3Lj1sSCbW7xXT2QZT/XrEJtz+zcNsWPGt/9g/WU97axfMcU7Ug3+I7SFphii
+5RYArjZl750I8xTsgRFNf3D8ZiKgdrj6Eqhjp+ZQwh7koMmxSk6dziAs04Raky43
+itbNaDSQpdwKIeV0/h4IIEaYAn/oxPdVSjr/SSdBJL0zoFPSU9MFaCcLiWXn+HC6
+uni+puaYAY0tjKt2MKp+UwHwMFxi06eivudhski5EU8I2WvqcxiXXRQgE9la3aZ5
+TSwv+YxLrtntryWlg4gELHbibYzjainunB0W9rPci9ZRLctpIE3ha5X1HNZg28Sm
+EDYyHF83tfy6OkAXwBK1cHo3aAmnPYLoaiKjxPxOyrpLZgcNkzyzebI+EBkmYwLU
+j6wQ0R0I+0QxVRnhQrRq76VNpqYa0dO09/La22l30zpwWNn473hfT4xcuQgMpzgX
+5G29f0V+vvo+UIZbgiXDjGKAIFLcAuLouoep8mK0GUbgL01I6sH1oQSlxjlXDxO/
+x2ZFl1UOp1kmCiIZM/wWu6EkCENAPDQXHsWEG5fl4h9Wkna2LhA=
+=qq1O
 -----END PGP SIGNATURE-----
 
---Qs6zBuc2H1A1hbN1--
+--ZkuhQetXH0MEkQbR--
