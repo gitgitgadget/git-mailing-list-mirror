@@ -1,65 +1,66 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E258839AC5
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 18:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B990964CC6
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 18:56:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711133329; cv=none; b=tmbLcFl06drwfW3sfSTBWRhVcqZOewh5N8G7y0ZxMcmbtz7U1OuCodOYHq/y66RZTofLPooRglj82HDei6NyRW1J4re8tG6EQx0I+U7itAWgvsCWU+tU/p350j3aJl81XFivd/IAx1ZJ76mKpuYkoiBWp1z2YQgEZel/Qip/FDk=
+	t=1711133777; cv=none; b=BvY1RtG5S7/DEaRWkAaHFpM5vJDBhgKw0UHD3VwwVqGCsE5oQM4rq7TyjHfV/uJjVVpYxYt5H8x4V2yMfYk8t7PgE046V3ylJ9i0gqSboP286z6I67sjKbOgc46sMof5fIzzSW1C+TPWFBWkejS4wH8rjr/ZyNOs2SzaleDiPaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711133329; c=relaxed/simple;
-	bh=mo/gckyvD9+KuXYzjmk+v12OE6RVKyzn0+iIxCOTHKA=;
+	s=arc-20240116; t=1711133777; c=relaxed/simple;
+	bh=63UxLTedZ/PELUzVZtZDCOtwajh0tke7eowBgvJCSP8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G4t2eJpEVOEjWV0kqAqMCsWN4iM3Xn3gSVzghRALGPh8tQy1jOHqwxc2X4eDM2TudCz7FQdx/w7fzYBN/LafzzANrnGPaOt0xRIChvmbar7GGEBu9D6y9xPeIMb6ZOZwvZewTT/HIcc+5gtX1gvb8XR+1IxndrpaqARytJIVY8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SQO9aX3n; arc=none smtp.client-ip=209.85.161.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=QQ5zlJg5/n6vADAhg9mCal8Gm6AV/ZTxCAnz83UV+SCaTwjTxoXD5oaAdh5CmQ13+W4v9HWWYLHeQu0Me6Fuxza+YKbW8KLSYGdC2IUKblrn3fFLovW7XF0IHRcy5idyr9jhI+Dab00QwU3uMCKunVYndCsF/keSXeYgblayuuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g8E5D5HR; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SQO9aX3n"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5a52c5c96feso63052eaf.3
-        for <git@vger.kernel.org>; Fri, 22 Mar 2024 11:48:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g8E5D5HR"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3c36dcb305cso1125523b6e.0
+        for <git@vger.kernel.org>; Fri, 22 Mar 2024 11:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711133327; x=1711738127; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1711133775; x=1711738575; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xEQTY2/BLRgae576vM4MaZIkkdidXc8ldPNz0XrBWQk=;
-        b=SQO9aX3nhKSZXW7gcUE4ca89lFRtqIOtug3FzebVWv0O3sFDOB+tTr/8BaKaDp1pbp
-         hd2uHPK3X3LDpVXrRUNe4uwDmmDHq/hV/ebXETHY4KIo4cbu1dkTxmi3zG1Q65RIQkdA
-         MoCeWEMIsY5B62JbqTY0zX/ZnmmXU5bnTT+Cd9LRqg6B0LcoFJ4n5/LYZNgahd2pJbaz
-         i7hj5ZAYav1vJ0hx/AVJwOl1a19UY4m5EZ/vcyqGsb5bBzYM2uFKr9UlfUJwBm0DZjvQ
-         YqSX94OlrNyKVvmLb4v97Fbozwx1ouNo2PBV+CExGGGmAyfHd7bcINWxncoBgh0hvlda
-         sb/A==
+        bh=U1InE1iBsPO8lNJtIzS4Yn7Gf368r/UVolH/6ljMOV4=;
+        b=g8E5D5HRiKVaroklV1Y0IKhATbtSSnMPC9W+rB9xwfpw3UAaOfDzD+tqwzqA2/oYy4
+         WKiSrIOdDJdfcrpMQQ1F1nY8LuiUrPxyCng5/fSOIzhoGWCCAE7k3fHAfFn2bNO5qcL+
+         /zSrGhwvG+EP5GoR9kOs2IiBc5hBCXZLkuAhX7FmkwSKihxEjJ+Hxq1WURi6JslSHv91
+         IkeQbSkem0VkRxbB2SdVBRlmqlFJduUPdgoP3edqc5+mhl2AKP44b4wnIDpC+Qc3/jBn
+         FCpBhHy0UUlfG+op5sdEZX2wdl0HGsZr+w6q8b6wgoCal9JMTa87PM9yeD4KEGojdahI
+         1R/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711133327; x=1711738127;
+        d=1e100.net; s=20230601; t=1711133775; x=1711738575;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xEQTY2/BLRgae576vM4MaZIkkdidXc8ldPNz0XrBWQk=;
-        b=tVskBwnOkYNsOd2U4ih3DnSLMZhKpGc8JnTYJ+mfL3Oz1/izRw9V64DQtno3q5Wjfk
-         NlWdm9kA3LO64U7OTuEPKAJ25LuUWkQRhI2BiV7G7aVzeS1BZyy63x4Z543ZsZFcwj4u
-         52g8Im5M2ADBgb6kCZWmM4fY8WOKO/qCR8Kk5QZq+B7l4ffXmyea48R8Z9qM+SJ5Z9Yv
-         ys3aGrNuGJjbdVEbh+g6Otmy7iZ8yVe3i4EeM2nV8sqtp66qPjN90eauRklSP2qFMwFK
-         m4aiBN2N2U0psJzBUT7l7fWZgJrEyqO/LdT63vGdoml9GPMDUGtdFYrKk9LqNNc7P1ZW
-         5BHA==
-X-Gm-Message-State: AOJu0YwhwOzSHiSbscmWZwGNs+Rr0EO8mIWt93diqGWwG/aQks+91Eno
-	lySGG0846/uzerxL/JuG6bUZ3I+P0rJvllhW/xtrbFmlyb+bJlJZuh/nuwsR
-X-Google-Smtp-Source: AGHT+IGjhFthTZ61PgSMOFT9wG0gvTwKkoZB3suKcLxcGeO8iNG44DCc7KqWX7tQDyjzKaMPNvr9vw==
-X-Received: by 2002:a05:6820:1b13:b0:5a4:2c5e:807d with SMTP id bv19-20020a0568201b1300b005a42c5e807dmr590384oob.4.1711133326946;
-        Fri, 22 Mar 2024 11:48:46 -0700 (PDT)
+        bh=U1InE1iBsPO8lNJtIzS4Yn7Gf368r/UVolH/6ljMOV4=;
+        b=A87omKwU47MEsFlvBc6tUDrVHi+S3psGuPvkbeioUz1R0ko7FKwj+aErvFIHXi09ig
+         o71kQjpWSj6wH/j66zvsf0JlRxnQdrOLvZn6XlZBCH5igzcUXwv47axZ/Tv39zPCBCom
+         ilJHtcYEXMY0zwmGJkjqqad3M6zKuvOSvSTQVmywOyCe3Up1QHUhukz43pCqj71AZ+Xm
+         O7nB+t1T0SAr7S1P3DMAZIQOgtP7/XiV0ddSbap/hhnn1vEGEyFbwT0avMN/LReWBLuZ
+         xWg4nSz/YttikXec7f2P8fFFGWFrl7R5Z4sSCWgauXi5B6UNPk6trKVVaaTTNFEA6IvM
+         3e4w==
+X-Gm-Message-State: AOJu0Yx13LCb7yDfa/iGfDK6BReALWAN2LEwUzSAr+pZRAfOnPLEL5GB
+	acAKUKDOpxpDHd62j0qeiA4wsM+EtZT4rscE3MpuJdtUZXDb1oP2DBgt1uih
+X-Google-Smtp-Source: AGHT+IFPMV+HXW5beuJg5DklORRFgl77lcEKSn4WaDA381VOWSw7LN/PX2P8SkEN/o9amkhR/udoUQ==
+X-Received: by 2002:a05:6808:222a:b0:3c3:a69d:f4a7 with SMTP id bd42-20020a056808222a00b003c3a69df4a7mr195180oib.25.1711133774772;
+        Fri, 22 Mar 2024 11:56:14 -0700 (PDT)
 Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id ch5-20020a0568200a0500b005a21ec7b19fsm152124oob.3.2024.03.22.11.48.03
+        by smtp.gmail.com with ESMTPSA id bo16-20020a056808229000b003c3829794d3sm33221oib.28.2024.03.22.11.56.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 11:48:22 -0700 (PDT)
-Date: Fri, 22 Mar 2024 13:46:56 -0500
+        Fri, 22 Mar 2024 11:56:10 -0700 (PDT)
+Date: Fri, 22 Mar 2024 13:55:17 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/7] reftable/basics: improve `binsearch()` test
-Message-ID: <zlj4jlfv645bxqgtjkrm3qdan3b7q4lzhxv3nqp7qagycri323@m5hhhxwuoetv>
+Subject: Re: [PATCH 3/7] reftable/refname: refactor binary search over
+ refnames
+Message-ID: <4ea7gnm5gbuvqnoyxdll3ccxxhr4bmlgzwpjtc7kqzbaf5juzb@5kwcy2qhblss>
 Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <cover.1711109214.git.ps@pks.im>
- <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
+ <44386818ce681da02f00a498acf66043aa55558e.1711109214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,55 +69,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
+In-Reply-To: <44386818ce681da02f00a498acf66043aa55558e.1711109214.git.ps@pks.im>
 
 On 24/03/22 01:22PM, Patrick Steinhardt wrote:
-> The `binsearch()` test is somewhat weird in that it doesn't explicitly
-> spell out its expectations. Instead it does so in a rather ad-hoc way
-> with some hard-to-understand computations.
-> 
-> Refactor the test to spell out the needle as well as expected index for
-> all testcases. This refactoring highlights that the `binsearch_func()`
-> is written somewhat weirdly to find the first integer smaller than the
-> needle, not smaller or equal to it. Adjust the function accordingly.
-> 
-> While at it, rename the callback function to better convey its meaning.
+> It is comparatively hard to understand how exactly the binary search
+> over refnames works given that the function and variable names are not
+> exactly easy to grasp. Rename them to make this more obvious. This
+> should not result in any change in behaviour.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  reftable/basics_test.c | 55 ++++++++++++++++++++++++------------------
->  1 file changed, 31 insertions(+), 24 deletions(-)
+>  reftable/refname.c | 44 ++++++++++++++++++++++----------------------
+>  1 file changed, 22 insertions(+), 22 deletions(-)
 > 
-> diff --git a/reftable/basics_test.c b/reftable/basics_test.c
-> index dc1c87c5df..85c4d1621c 100644
-> --- a/reftable/basics_test.c
-> +++ b/reftable/basics_test.c
-> @@ -12,40 +12,47 @@ license that can be found in the LICENSE file or at
->  #include "test_framework.h"
->  #include "reftable-tests.h"
+> diff --git a/reftable/refname.c b/reftable/refname.c
+> index 64eba1b886..9ec488d727 100644
+> --- a/reftable/refname.c
+> +++ b/reftable/refname.c
+> @@ -12,15 +12,15 @@
+>  #include "refname.h"
+>  #include "reftable-iterator.h"
 >  
-> -struct binsearch_args {
-> -	int key;
-> -	int *arr;
-> +struct integer_needle_lesseq {
-> +	int needle;
-> +	int *haystack;
+> -struct find_arg {
+> -	char **names;
+> -	const char *want;
+> +struct refname_needle_lesseq_args {
+> +	char **haystack;
+> +	const char *needle;
 >  };
 
-This is probably just personal preference, but I think `key` and `arr`
-in this case are a bit more straightforward. I do like that we rename
-the args to be more specific. Do we want to also append `_args` to
-denote that it is an argument set? Maybe `integer_lesseq_args`?
-
->  
-> -static int binsearch_func(size_t i, void *void_args)
-> +static int integer_needle_lesseq(size_t i, void *_args)
->  {
-> -	struct binsearch_args *args = void_args;
-> -
-> -	return args->key < args->arr[i];
-> +	struct integer_needle_lesseq *args = _args;
-> +	return args->needle <= args->haystack[i];
->  }
+I agree that the previous `names` and `want` are a bit ambiguous. What
+do you think about `refnames` and `target_refname` instead?
 
 -Justin
