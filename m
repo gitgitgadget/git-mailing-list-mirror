@@ -1,145 +1,148 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2765D752
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 16:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CE541C70
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 17:00:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711126253; cv=none; b=d1SDtkpmAWEX8xNGHXU59B84QXvSKB7u19zYshItnMMHo4POlgaswbFtPHN0lYDGjrsS5wIcYAPvr7EBhY+xDo2C/8o0Ot/Pb4ZZlI9tEig7cVOCKh6av1L5OYzI2dqFz6PAdBCOPxJ4DDjCt5GkEpLRUzR8kvQHZVFZGwd8Pz4=
+	t=1711126848; cv=none; b=JM/rWMlJKP24NVHHFpqLR/MzA3Um4aHMiVguvPMW/+H+f1k2b+rji84Nyq1WrcTKo8NlWYN9/GdtH3nGFnvSxhluRP1tEOppMSBLMT/DdyNJOjo+sbCiISGxbUwoP6R+w1vxtWPGSHwh774MlSUY+SHr4Ik4lac3GdsWW5Mgo/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711126253; c=relaxed/simple;
-	bh=LxfTboy9ezd4JauvQiuNxGwUGKfCM7gWtun/M3lyZGk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Aabw4FQdoFYjbdyatc8WKpxX46cNFfpAtbwqzUnHrgX9eTrYQLPitEPzIqCQ+sHznzUYtn/BTUwm0zzlTXj321k+05UeJBU9qbCk08HutJAxIcaA7SUGgmKXAKLgwqng54Kr3nzX/CdruAL0IGFpXxnGEA+SZ63SoVLaWSp6ZU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g7BN6FL2; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711126848; c=relaxed/simple;
+	bh=FDK/nJIr3B8Msq4it7hBhT7Vofp5idn7xzgS/lxptN4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=GPpq8yAmb87h8cWuoQM8bL263hN+wAXZKC8Fc4LJArX1pW4ZKEN+8L2QtDYGChSeK5vTr3P1f+wEy0TTct9ws8vT2+ny8ycfsB5B6rZatZ6wJ9orar7PQ9ly1bLZpbvPq8EMk6MvrGxygp6fqgmVhIFDq4syhbX31pCF+2A0FQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ByzYO6Oa; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g7BN6FL2"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 60C591F4EA2;
-	Fri, 22 Mar 2024 12:50:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LxfTboy9ezd4JauvQiuNxGwUGKfCM7gWtun/M3
-	lyZGk=; b=g7BN6FL2oe5mpSB7kat7DqEj3Up8zYTwg8TwLIs96nG0bL5HW6h7e/
-	cZy6s8dHmKyfCF5yVl/o9N9lUmBD5s6dQB1h0E+gzn5txgw4qOR00aZ8JPZqkmEI
-	nVSGzPE+5aMBsM4RHJ8Zy6TGpGc32ANdw1WTAC4MzfOBfCJwIzdF4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 59A091F4EA1;
-	Fri, 22 Mar 2024 12:50:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B69D71F4EA0;
-	Fri, 22 Mar 2024 12:50:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  git@vger.kernel.org
-Subject: Re: [PATCH 7/6] format-patch: fix leak of empty header string
-In-Reply-To: <20240322095951.GA529578@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 22 Mar 2024 05:59:51 -0400")
-References: <cover.1709841147.git.code@khaugsbakk.name>
-	<cover.1710873210.git.code@khaugsbakk.name>
-	<9a7102b708e4afe78447e48e4baf5b6d66ca50d1.1710873210.git.code@khaugsbakk.name>
-	<20240319212940.GE1159535@coredump.intra.peff.net>
-	<20240320002555.GB903718@coredump.intra.peff.net>
-	<20240322095951.GA529578@coredump.intra.peff.net>
-Date: Fri, 22 Mar 2024 09:50:48 -0700
-Message-ID: <xmqqr0g21a8n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ByzYO6Oa"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4147d09eb8aso5001085e9.1
+        for <git@vger.kernel.org>; Fri, 22 Mar 2024 10:00:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711126845; x=1711731645; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JBkCLDLSeSDBCIEJ28KH+2sOzZlvAwB6zfgPPfsrXtA=;
+        b=ByzYO6OajtnYYiFYjB7XjFNRnc8b/6HWrcALe/UM5+moBGuIQwjFaJjuyZXJBMkdu9
+         WJ5aXAzCuUM1feoW/ZUUY0LiuoPlI6YUfSVsGV+LWAeP6qqKQN31CXHgsgx6R9V0Hv1j
+         tGy0VEsRSCwC8A4DtDPqirLwubZ4WXGwjLGtPXP7uK3TrMzw+vTe+CSVWfLjMGVR0gQx
+         XIgK+OHYgGBPjAp/PyCmwn25qNgpxFrhPiBHiU4BUGjYoAiDsizy9ddjGvLaXmMHyHR+
+         G5o4Ou/PhdjHBqL+5KSDHtgI4o1ZdZ4gdVgsBnVchzUcX2XOgS0fLablVJfOrhkZB3qh
+         cJMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711126845; x=1711731645;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JBkCLDLSeSDBCIEJ28KH+2sOzZlvAwB6zfgPPfsrXtA=;
+        b=kPBD72x8GhLDcez5jbV1h5hkGAhEcWvzwgnQLsd5VpfIJ0TiplmXSkatON52WmuKQA
+         2bgrn7VVkAJiK9rd6rCl5N7yim8X8jxaaWvUS/vUhu5cRDyxDQ2Trqsnb+uc0vXfpzTE
+         RlUrctERHWN54mXNwDEgn9aATiOTePP/ufs9iE15In1MxbWLIkv3IrnT3H2Om4RFNQ8p
+         hsz0pugH7tNXKYS0yynt6a0/3LLmZKLNwq0IMdb4PP5NvoBMHXez5Dn+b/I/E4pWP4HV
+         FJv6jdTmXQgk+yqw9oyJp6hVn0qIRx8RoTNrsLr+1Byf0ET6KjmyKksJnDttxJUvC+bJ
+         D7Tw==
+X-Forwarded-Encrypted: i=1; AJvYcCX3xE/T1ttCt7bE4WJaWgOtuANuoYYPErScI4SEyatUa9gaNphtceLLPzRzz1ULOyRUx6zeiLcicP0y/bDhIRDvvJCe
+X-Gm-Message-State: AOJu0YzOi7/4w0uzSW3T3vX/3A/ZXtp++T3J/gVLkx/zZUuGL1zMvO/r
+	uCyK//9SzeXESAN+tiS8fLGu9gGOGukVDx4os0LtNk7WswlScKw3hmLQZ880
+X-Google-Smtp-Source: AGHT+IF2eSrfELq6bfElTRsoSURmzBxEzvZK4EBJcxdMTeS3G6C6eyATlqetfqjB5UPPHFWEmkYtuw==
+X-Received: by 2002:a05:600c:1c26:b0:414:c64:f3d0 with SMTP id j38-20020a05600c1c2600b004140c64f3d0mr1854466wms.27.1711126844977;
+        Fri, 22 Mar 2024 10:00:44 -0700 (PDT)
+Received: from gmail.com (181.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.181])
+        by smtp.gmail.com with ESMTPSA id z15-20020a05600c0a0f00b004146b00cd9csm51322wmp.11.2024.03.22.10.00.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Mar 2024 10:00:44 -0700 (PDT)
+Message-ID: <0ad0371c-c6ac-4ccb-b9a8-b30715f74308@gmail.com>
+Date: Fri, 22 Mar 2024 18:00:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 565648B6-E86C-11EE-91D6-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Worktree shares a common remote with main checkout
+Content-Language: en-US
+To: Bill Wallace <wayfarer3130@gmail.com>, git@vger.kernel.org
+References: <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Jeff King <peff@peff.net> writes:
+On Fri, Mar 22, 2024 at 10:50:30AM -0400, Bill Wallace wrote:
+> This issue is just to fix an easy to make mistake when working with
+> multiple remote origins and worktrees, where it is too easy to push to
+> the wrong remote origin because one can't set the default origin on a
+> per-worktree basis.
+> 
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> Used
+> * git worktree to create a worktree
+> * git remote add to add a custom repository
+> * git commit/push to try to push changes
+> 
+> What did you expect to happen? (Expected behavior)
+> Expected to have the git push recommend a remote origin that matched
+> the worktree, but it defaults to 'origin' all
+> the time, which means I need to checkout a clean clone from the
+> specific origin I'm making changes for so that I don't accidentally
+> push to the default origin.
 
-> On Tue, Mar 19, 2024 at 08:25:55PM -0400, Jeff King wrote:
->
->>   [1/6]: shortlog: stop setting pp.print_email_subject
->>   [2/6]: pretty: split oneline and email subject printing
->>   [3/6]: pretty: drop print_email_subject flag
->>   [4/6]: log: do not set up extra_headers for non-email formats
->>   [5/6]: format-patch: return an allocated string from log_write_email_headers()
->>   [6/6]: format-patch: simplify after-subject MIME header handling
->
-> These patches introduce a small leak into format-patch. I didn't notice
-> before because the "leaks" CI jobs were broken due to sanitizer problems
-> in the base image (which now seem fixed?).
->
-> Here's a fix that can go on top of jk/pretty-subject-cleanup. That topic
-> is not in 'next' yet, so I could also re-roll. The issue was subtle
-> enough that a separate commit is not such a bad thing, but I'm happy to
-> squash it in if we'd prefer.
+Interesting.
 
-Indeed it is subtle and I like the corner case described separately
-like this one does.  Very much appreciated.
+Can you please describe in a little more detail the new behavior?
+
+It may be obvious, but not to me, but what should we say in these cases:
+
+  - 'git [-C <custom_worktree>] status'
+  - 'git [-C <main-worktree>] status'
+  - 'git [-C <custom_worktree>] branch --list -v -v'
+  - 'git [-C <main_worktree> branch] --list -v -v'
+  - ...
+
+I'm sure there are others that I'm missing.  If you could explore and
+describe them, perhaps with sketches, it would be a great help.
 
 Thanks.
 
-> -- >8 --
-> Subject: [PATCH] format-patch: fix leak of empty header string
->
-> The log_write_email_headers() function recently learned to return the
-> "extra_headers_p" variable to the caller as an allocated string. We
-> start by copying rev_info.extra_headers into a strbuf, and then detach
-> the strbuf at the end of the function. If there are no extra headers, we
-> leave the strbuf empty. Likewise, if there are no headers to return, we
-> pass back NULL.
->
-> This misses a corner case which can cause a leak. The "do we have any
-> headers to copy" check is done by looking for a NULL opt->extra_headers.
-> But the "do we have a non-empty string to return" check is done by
-> checking the length of the strbuf. That means if opt->extra_headers is
-> the empty string, we'll "copy" it into the strbuf, triggering an
-> allocation, but then leak the buffer when we return NULL from the
-> function.
->
-> We can solve this in one of two ways:
->
->   1. Rather than checking headers->len at the end, we could check
->      headers->alloc to see if we allocated anything. That retains the
->      original behavior before the recent change, where an empty
->      extra_headers string is "passed through" to the caller. In practice
->      this doesn't matter, though (the code which eventually looks at the
->      result treats NULL or the empty string the same).
->
->   2. Only bother copying a non-empty string into the strbuf. This has
->      the added bonus of avoiding a pointless allocation.
->
->      Arguably strbuf_addstr() could do this optimization itself, though
->      it may be slightly dangerous to do so (some existing callers may
->      not get a fresh allocation when they expect to). In theory callers
->      are all supposed to use strbuf_detach() in such a case, but there's
->      no guarantee that this is the case.
->
-> This patch uses option 2. Without it, building with SANITIZE=leak shows
-> many errors in t4021 and elsewhere.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  log-tree.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/log-tree.c b/log-tree.c
-> index eb2e841046..59eeaef1f7 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -480,7 +480,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
->  
->  	*need_8bit_cte_p = 0; /* unknown */
->  
-> -	if (opt->extra_headers)
-> +	if (opt->extra_headers && *opt->extra_headers)
->  		strbuf_addstr(&headers, opt->extra_headers);
->  
->  	fprintf(opt->diffopt.file, "From %s Mon Sep 17 00:00:00 2001\n", name);
+> What happened instead? (Actual behavior)
+
+> Suggests 'origin' as the default origin - which is CORRECT for the
+> main git branch, but I want to use worktrees to allow working against
+> several remote origins, with the default being determined by which
+> worktree I'm in.
+> 
+> What's different between what you expected and what actually happened?
+
+> Suggested 'origin' for the --set-default rather than allowing me to
+> define the origin I want, for example 'wayfarer' as teh name of my own
+> remote that I have cloned on github.  The default origin is still
+> supposed to be 'origin' for pulls/naming, but when I push, it needs to
+> recommend the matching origin.
+> 
+> Anything else you want to add:
+> This is a bit of feature request, but the reason I'm listing it as a
+> bug is it makes it very easy to make a mistake by pushing to the wrong
+> origin for a new branch.
+> 
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+> 
+> 
+> [System Info]
+> git version:
+> git version 2.31.1.windows.1
+> cpu: x86_64
+> built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
+> sizeof-long: 4
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+> uname: Windows 10.0 22631
+> compiler info: gnuc: 10.2
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): <unset>
+> 
+> 
+> [Enabled Hooks]
