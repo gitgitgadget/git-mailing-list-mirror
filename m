@@ -1,51 +1,52 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEC443AAB
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 14:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB7343AB2
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 14:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711118268; cv=none; b=P3Omar0detIqk969bpgvXbszMSBIpB4oVL8BryCjfb+N2atV9pHofEIpdO1QJ/or3gf7zczDI9lYed1zh8ES1IxhMsJyauj6Gu6oYhHWzroeCy94yULcENukpT0cZPD8WRTn4ZiIPp27InZCCH7U98C7Mc+znBlergtNs2gvRM4=
+	t=1711118771; cv=none; b=Z9i5sl+9X35N7aRSDRVe4eLqNiZFNSf/mf3znAhx399bGGr9Yi8WO25yZAxHm/PytF0AcYGO9bP7heOMPlMt1pt5ZdosXs17Xu+BWx3piQR3zQb/vSZcJIv+iNPNzSsWoVUV+FkwAamjc7faax3TfeKFhIV3LCA/RdtIYp9N6OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711118268; c=relaxed/simple;
-	bh=yqKWvJ7LqCNcTvMrbO5R00lcaqjmGwTKqCfIF0aOmW4=;
+	s=arc-20240116; t=1711118771; c=relaxed/simple;
+	bh=A+6/CDWqkiq12X4qvIQ3dIQPj/cUENEgMFKbpTqrDR0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nPeUvp0afq7iCCLoZmsQK/00+MaWmKp3b6Q9Q/ZHBttbJBcRqUfwgOA3dRCyACJFlGlEghAT/n/mSikMjAdfi0Cn79SBOzdGTHYWjBY9rlh5lbQCKDkFH9TeTM4H7FozuECaQOznqX59Y2vjTs2gaMFN5RHNx4ia8e1t+0/DrkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Uc/TN3sb; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=Tuu92Ihqn1Op61JLMqUU73sDxCELUWiIshIEM6wuriauzkqhDm5OS7pXtlpccd7GRPvzI0IU10xrNhBCYpOVMIqzzDnUEovv6ysTPkzMgwIr6iTlBokYLSkmRVEZ+PeLwmIv/JzxGWFHcdnUjKj7MAwVhRZSddTXKs8DOoKjozY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=e2XKVHHP; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uc/TN3sb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="e2XKVHHP"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 56D2A1F3C45;
-	Fri, 22 Mar 2024 10:37:45 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C4C91F3CB9;
+	Fri, 22 Mar 2024 10:46:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=yqKWvJ7LqCNcTvMrbO5R00lcaqjmGwTKqCfIF0
-	aOmW4=; b=Uc/TN3sbeqWaUjdEpYQpaYIEN//kXauZf68Ch/lugwh5pAQlkuYMJ3
-	yC4yDQZM539Bm+BmH04E5ApQZdy82CYlcBFo5pvinTzZawlJ6QkpMGPTa3QkGl6N
-	9mivmgp+q3kfzVEFW0RDOKQvBffTxScD5rWzTSv0Tc5A+rvnajNqg=
+	:content-type; s=sasl; bh=A+6/CDWqkiq12X4qvIQ3dIQPj/cUENEgMFKbpT
+	qrDR0=; b=e2XKVHHPVI3IucBohBpJkMf4GE4cQ42BzsPL9MmIUAYGsvP7aNNsnV
+	HcSbmhqgcDqiyYbENgv7MKCvMptn8xGxuWAAxeNUOYyzJg6hGbMn8xNPihf8lrt7
+	Sg7AQNCzLjlohM4CKCqy5KiClJUcwu4muMm/LJFac3rNVh5PcOCA4=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C4D11F3C44;
-	Fri, 22 Mar 2024 10:37:45 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CDD91F3CB8;
+	Fri, 22 Mar 2024 10:46:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A57011F3C43;
-	Fri, 22 Mar 2024 10:37:44 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 66B951F3CB7;
+	Fri, 22 Mar 2024 10:46:07 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 0/3] t7800: fix quoting of looped test bodies
-In-Reply-To: <cover.1711074118.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Fri, 22 Mar 2024 03:23:32 +0100")
-References: <cover.1711028473.git.ps@pks.im> <cover.1711074118.git.ps@pks.im>
-Date: Fri, 22 Mar 2024 07:37:43 -0700
-Message-ID: <xmqqmsqq49jc.fsf@gitster.g>
+To: "Brian Lyles" <brianmlyles@gmail.com>
+Cc: <git@vger.kernel.org>,  <phillip.wood123@gmail.com>,  =?utf-8?Q?Jean-N?=
+ =?utf-8?Q?o=C3=ABl_AVILA?=
+ <jn.avila@free.fr>
+Subject: Re: What's cooking in git.git (Mar 2024, #05; Tue, 19)
+In-Reply-To: <17bef643ca4eabab.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+	(Brian Lyles's message of "Fri, 22 Mar 2024 02:47:59 +0000")
+References: <17bef643ca4eabab.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Fri, 22 Mar 2024 07:46:06 -0700
+Message-ID: <xmqqfrwi495d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,57 +56,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- BEDCE560-E859-11EE-8E3C-25B3960A682E-77302942!pb-smtp2.pobox.com
+ EA85BE16-E85A-11EE-B1FA-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Brian Lyles" <brianmlyles@gmail.com> writes:
 
-> Hi,
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  [for what's cooking]
+>>  * An experimental procedure for a topic author to propose the topic
+>>    description to be used in "What's cooking" report and in the
+>>    release notes have been added to the SubmittingPatches document.
+>> 
+>>  Documentation/SubmittingPatches | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
+>> 
+>> diff --git i/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
+>> index e734a3f0f1..05e15b9436 100644
+>> --- i/Documentation/SubmittingPatches
+>> +++ w/Documentation/SubmittingPatches
+>> @@ -459,6 +459,17 @@ an explanation of changes between each iteration can be kept in
+>>  Git-notes and inserted automatically following the three-dash
+>>  line via `git format-patch --notes`.
+>>  
+>> +[[a-paragraph-summary]]
+>> +
+>> +*This is EXPERIMENTAL*.  When sending a topic, you can propose one
+>> +paragraph summary that appears in the "What's cooking" report when it
+>> +is picked up to explain the topic.  If you choose to do so, please
+>> +write 2-5 lines of a paragraph that will fit well in our release notes
+>> +(see Documentation/RelNotes/* directory for examples), and put it in
+>> +the cover letter, clearly marked as such.  For a single-patch series,
+>> +use the space between the three-dash line and the diffstat, as
+>> +described earlier.
 >
-> this is the second version of my patch series that aims to address some
-> issues with looping around `test_expect_success` in t7800.
+> Would it be beneficial to request some specific heading, phrase, or
+> other structured text such that this summary is obvious, or even easily
+> extracted with some sort of script? Or is that perhaps overkill for now?
 
-Looking good.  Thanks.  Will queue.
-
-Let's mark it for 'next' already ;-)
-
->
-> Changes compared to v1:
->
->     - Fixed indentation of a paragraph in "t/README".
->
->     - Added a clarification why one wants to use single quotes to
->       "t/README".
->
-> Thanks!
->
-> Patrick
->
-> Patrick Steinhardt (3):
->   t7800: improve test descriptions with empty arguments
->   t7800: use single quotes for test bodies
->   t/README: document how to loop around test cases
->
->  t/README            | 20 ++++++++++++++++++++
->  t/t7800-difftool.sh | 40 ++++++++++++++++++++--------------------
->  2 files changed, 40 insertions(+), 20 deletions(-)
->
-> Range-diff against v1:
-> 1:  fd37c29319 = 1:  fd37c29319 t7800: improve test descriptions with empty arguments
-> 2:  a4ca974397 = 2:  a4ca974397 t7800: use single quotes for test bodies
-> 3:  326fb79650 ! 3:  f83b710208 t/README: document how to loop around test cases
->     @@ t/README: The "do's:"
->      +		'
->      +	done
->      +
->     -+  Note that while the test title uses double quotes ("), the test body
->     -+  should continue to use single quotes ('). The loop variable will be
->     -+  accessible regardless of the single quotes as the test body is passed
->     -+  to `eval`.
->     ++   Note that while the test title uses double quotes ("), the test body
->     ++   should continue to use single quotes (') to avoid breakage in case the
->     ++   values contain e.g. quoting characters. The loop variable will be
->     ++   accessible regardless of the single quotes as the test body is passed
->     ++   to `eval`.
->      +
->       
->       And here are the "don'ts:"
+We do not even know if it is a good idea, so let's start with a
+lightweight process that does not burden participants with too much
+red tape.  For a series with a cover letter, the rule might end up
+to be as simple as "When the first paragraph of the message looks
+like an entry in the Release Notes, it is used as such".  The " a
+paragraph that is 2-5 lines long, indented by three SPs, whose first
+line has SP-asterisk-SP instead" may be a distinct enough style that
+it may not require any further marking.
