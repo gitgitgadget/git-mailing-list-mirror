@@ -1,111 +1,105 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594E78062D
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E641E80C02
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:05:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711145099; cv=none; b=UUwaNw9mJ7xxiqS9bRRzsqoYwQ7a2S3xK+6X36ISYJr994qZqY0LjUugRyAu3BJ9+oKwIEODAdpuc2WaJTp/PaxJAhNF8KRD+BDP3tErDUn2/Gjnbsmh2ebfCXs5pXTpbDLnarBruleg2U1tGYJhZWHko9ANP1eu4PFHa8nZa28=
+	t=1711145153; cv=none; b=foj3ILpXlk2LMcOE51WgauPx/82qNha5n8gJYsBkkVA4C4jcNHrv9xZs8eI1vYmmKSX60WVOKOBkUiChKx/+mPOYcUVdNmebXfXSBTDaTzaimnkz3Ez3qPsomlBairSnhDU4vUJjS5dZB8Mmg1BSYw6uxLNAERL7bsNnalv+Z8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711145099; c=relaxed/simple;
-	bh=oXWUOWn39F6jc9G9pMPWhzbwOzyfZ83oeD33YAM7L24=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=HxCkRbROLLxHrlb4ZubwWSW6SaHEF5eaWY4QcJRSEGMu3j6yt/jOfc963sp6b7uJbLNajTUsDficcifzA4PQztsvICIHVscHXcCYid7hS0ooYoU6NKojryyLV/9E561I31bWvixpUbGb0o5D9zRZAlwa2wxIzlq8LaCdPnp33/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=BH5cAlaA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n6jZdrYk; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1711145153; c=relaxed/simple;
+	bh=giD1eKaOE1txsjpzS/6V2KSdYKeQga84ECnBZrvfmI8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NjQhgW+T2wQ1b15kk1ONgGJcNxMDfFaZnpoZqKKBne5anGqCcwMX9+K5qxsTOBReXb5t0KNJvDrjcelzqafQsWP2kFs79YSFef05vmil5DehK2xc9rGG8DJkx5MCPKbv7AOByPl/DfkvqZVPtw+yORlSemfcQCHIjGcKJK4MLl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=S4eMfB2K; arc=none smtp.client-ip=185.238.129.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="BH5cAlaA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n6jZdrYk"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7C3ED1380066;
-	Fri, 22 Mar 2024 18:04:56 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 22 Mar 2024 18:04:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1711145096; x=
-	1711231496; bh=1HnM3+synmz/isLWwm5XfXF4NFzUI/AE6pLQYhgu+7E=; b=B
-	H5cAlaALvljjoTG/+KoEad4Pn6/E06ASx+4tEvxnm/tFrZyOUVTbKDw3L2TO4byn
-	Zn1nGFFs4v+kJ+Bxtl8d8+aXKL98xguasKKSSCyo8KpL0mkGZsbbfNxUL1TOx1Fg
-	WAKmweS5qXySxIyFvDIT0tQL9xUZN0hj7JQk0epCTKpPwrhvYldrxyhQM1HF6V3Y
-	k4JHSCAGNfnpA+H/z21exVlBdqocDasCDwZzYmsoX65QCVbDKT0uKzQpgNU326KM
-	jInDYQHz8/hz0yJS2tBHhjNNkz7wHyG+2s42iBqga7L/RlnIsrRPYQGiJR+bfcxa
-	7NBgQqR97mjUOGmSjjO9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711145096; x=1711231496; bh=1HnM3+synmz/isLWwm5XfXF4NFzU
-	I/AE6pLQYhgu+7E=; b=n6jZdrYkteKVl4TbOazC1LAlHdF8B4GELPs/M2xQY732
-	OCS2BZf0eiD2c6pvucspGwOmxXEBiRTLBksjzeUSGYE0vBsc/yiFaBWp2yUGoZ1x
-	8FQx1vsR8xTOhO87oH53heSzWE36nrfVYXDALIadA0k3nnJJGHw+CIdFstm9//Mv
-	iEU58mie6HzT+JxhPAreZGunetgt5JZq/n5RwaJ7jiZz+n/mNap3qQAJ54MBBelD
-	aXUbCV7Bj+0swiWPdFplLggiB0hA0rmrTTEUoQSzSO2MBcw+e9uYgzjcnIROuwf1
-	U0bI43wUvMCOQKBnsYrSpWUt0+Y10oPGcR9753ls0g==
-X-ME-Sender: <xms:iAD-ZVZqr0Q-nruj_a7o1Jk_SDTxFacqXWavySIVHk14cwt2bJ2NISM>
-    <xme:iAD-Zcamd7thnNnmN9BcviRmJs02GM6DeYCl5kKg0do-2MD4l4eyM1et022CCOxdF
-    b9Jd8rXss9iFshh5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtvddgledvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    dtkedtjeeiffelteffheeiheeufffgheelueeftdejkeeufffgiefhgeekffffueenucev
-    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:iAD-ZX8-sLvwlaqxjKTrDgSZ2jAx_H-ScXMGnjb6uFlbx2BDUq7U7g>
-    <xmx:iAD-ZToiKEbrTQ872lRApGKYu3z6atscwK5BQoOr2T2uH3rEa_mx_g>
-    <xmx:iAD-ZQpzkgOYzhTSw4pn-tBsDLtvRX6MlJ4VCRnN4kxsDWmhDW2zYQ>
-    <xmx:iAD-ZZST1FJM8IVu8eLM6QYo9a7pWQ4PYfK0H4n5Zx2i5zB9_juX_Q>
-    <xmx:iAD-ZX0Xkf4BEt8Gm9I2fXGiY8RYFYZUajcRf4D-3sgnS41YUNS0qA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 1DDB615A0093; Fri, 22 Mar 2024 18:04:56 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-332-gdeb4194079-fm-20240319.002-gdeb41940
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="S4eMfB2K"
+Received: from [10.2.12.48] (unknown [10.2.12.48])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by 7of9.schinagl.nl (Postfix) with ESMTPSA id D9D4119FD460;
+	Fri, 22 Mar 2024 23:05:48 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1711145149; bh=giD1eKaOE1txsjpzS/6V2KSdYKeQga84ECnBZrvfmI8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=S4eMfB2KQ9lh/nOkSJ5ILvXySlsNLNeEf4wJi5OFrxELpPv8EZYgxuQ2Asw3W7N+w
+	 hbkNLMF/BiZtnUwSnSNQyG7w0xM5vRvd0VjTNCOrlPp32ELQ4wmf2yOSEjo/+u5agn
+	 tyu72hwvwDKSGavJYynEgH6l0ZIVZcEvWXj2PSyQ=
+Message-ID: <0c8f5b5b-ed25-483e-901c-cd0850640697@schinagl.nl>
+Date: Fri, 22 Mar 2024 23:05:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <ad20990e-1328-458a-a142-7d2d93bda170@app.fastmail.com>
-In-Reply-To: <20240320003139.GD904136@coredump.intra.peff.net>
-References: <20240320002555.GB903718@coredump.intra.peff.net>
- <20240320003139.GD904136@coredump.intra.peff.net>
-Date: Fri, 22 Mar 2024 23:04:31 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Jeff King" <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/6] log: do not set up extra_headers for non-email formats
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Support diff.wordDiff config
+Content-Language: nl
+To: Chris Torek <chris.torek@gmail.com>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>
+References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
+ <20240302095751.123138-1-karthik.188@gmail.com> <xmqqedcszhty.fsf@gitster.g>
+ <CAOLa=ZR6tN8eQhByaUobj3kS9wwYegsOQNT8cjZYA-YATJJt7w@mail.gmail.com>
+ <34bb249d-4a4d-4cc7-b737-bb18398341d0@app.fastmail.com>
+ <CAPx1GveaNR9ooWqE1VkAuFg5NO4Lwzx7bj-W1mWeHRg-rcg6+w@mail.gmail.com>
+From: Olliver Schinagl <oliver@schinagl.nl>
+In-Reply-To: <CAPx1GveaNR9ooWqE1VkAuFg5NO4Lwzx7bj-W1mWeHRg-rcg6+w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 20, 2024, at 01:31, Jeff King wrote:
-> The commit pretty-printer code has an "after_subject" parameter which it
-> uses to insert extra headers into the email format. In show_log() we set
-> this by calling log_write_email_headers() if we are using an email
-> format, but otherwise default the variable to the rev_info.extra_headers
-> variable.
->
-> Since the pretty-printer code will ignore after_subject unless we are
-> using an email format, this default is pointless. We can just set
-> after_subject directly, eliminating an extra variable.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+On 03-03-2024 08:23, Chris Torek wrote:
+> Continuing the digression a bit:
+> 
+> On Sat, Mar 2, 2024 at 11:58 AM Kristoffer Haugsbakk
+> <code@khaugsbakk.name> wrote:
+>> This looks similar to the discussion from a [stash] topic:
+>>
+>> • Proposed introducing config variables which change how `git stash
+>>    push` and `git stash save` behave (what they save)
+>> • Concern about how that could break third-party scripts
+> [snippage]
+>> 🔗 [stash]: https://lore.kernel.org/git/xmqq34tnyhhf.fsf@gitster.g/
+> 
+> As I see it, the general issue here is the tension between Git
+> commands that are used for scripting -- which ideally should
+> always be plumbing commands -- and those used by end-users.
+> 
+> This tension is relieved somewhat when there *are* separate
+> plumbing commands, such as `git diff-index` and `git diff-tree`
+> and so on, or `git rev-list` vs `git log`. Unfortunately there
+> are some commands, including `git log` itself, that have options
+> that are missing from the roughly-equivalent plumbing command,
+> and there are commands (such as `git stash` and `git status`)
+> that either do not have, or at one time lacked, plumbing command
+> equivalents or options.
 
-Good. I did feel like the code was kind of daisy-chaining assignments
-for no obvious reason.
+I think you are spot on; and as I mentioned earlier, who is git for? 
+Which commands are for whom. Human or machine. I suppose you can never 
+avoid commands being abused, but should we favor machine abuse for very 
+poor UX for the human? I would say 'absolutly not' but up until now, 
+this has always been the case.
 
-> ---
-> This one is enabled by the previous commits. And after this now both
-> callers of log_write_email_headers() directly pass in "after_subject",
-> which makes the next steps easy.
+Maybe it comes from Linus's strict 'never break userspace'. But I think 
+the situation is different. We want to enrich the user experience, we 
+are constantly degrading it in favor of machines. Even though the 
+manuals and interwebs are full of 'don't use these commands in scripts, 
+they may break'. In that light, I would say 'lets break it in favor of UX :p
 
-Yep, these changes are being done in a nice progression.
+> 
+> The `git status` command shows one way out of this problem:
+> we can *add* `--porcelain` options.  Perhaps every command (or
+> every non-plumbing-only one) should have `--porcelain[=<version>]`.
 
--- 
-Kristoffer Haugsbakk
+That's a fair argument, and makes it clear, however, there's tons of 
+scripts that probably don't do this right now.
 
+> 
+> This doesn't fix the situation today, but provides an obvious
+> future-proofing path.
+> 
+> Chris
