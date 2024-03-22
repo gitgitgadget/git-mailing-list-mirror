@@ -1,51 +1,49 @@
 Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774BC80C03
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77484627FC
 	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711145645; cv=none; b=O6oivLpEjxI+zjN9qT762aOYlmtp/wYr2flHBrFcZEOpZM9HjO5kYUYYZY0BWAANmOEhsB31MhJ7b7Na85gOkg1DVsjvVIvlZgmp+BIyPJQja7TBctXKxvq4T4SHArhcC8N4LhAf/S7qr2Ztnc70SbQ1Wke4vh15UXuq9GgNyXg=
+	t=1711145645; cv=none; b=dXtJztVB7AUTsbAuKFG8WgT/KRo3a1rPVzDD1qT4TGCE6K3fbONGN90mMOlkGAJqbsETggLQac1646llONUPPVv+/gFnpvmDsRzZCtCWyVDGooDHzNRr7RYXQa/b4YNTKy42NfrgbDRI2kuGJZsqH5ukfOt/Lo9VdMzkSKZ1qEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711145645; c=relaxed/simple;
-	bh=mUP/g8fzBtTUk2XWm2E3wzy38DpT3pDvY8yNAtZiclA=;
+	bh=dd/cdCy/iEyphH3D8yhFqdQeh1mVkEmKgW9oo9D2Kpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkt2u9CokAGax/rRkVSyF0w3B2cal6RiaNHuUAMsnOk0mYU9N9N760ZbEEQRViOMoLHXc+/qx8D/g8cEwszTRunjRt6JddlIkBnbbxwa2WAnW2Ouy1ZtlfJuZ9v6VOov0VnQXp0bmtLrjHrb+QppNatmi90fRnbWPO3LtfTCZfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=Qb9wdEDJ; arc=none smtp.client-ip=80.67.169.77
+	 MIME-Version; b=PCrz23d4D4U1r2gbNLPJwRDQe6jngrrRg3GiMimSkoh72rYCBSrdq6TYsySsSMRQ3hyjgbqZD04bVM/IN6qgm8RrjoEaiDGW6QARaBTrV6R8sQfhu/9/y7BPVB/6iEA9vm/5VabkM0U8YRq8BhTi3HG8PGxQWROHlINhBQH5qzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=rgOz4WR0; arc=none smtp.client-ip=80.67.169.77
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="Qb9wdEDJ"
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="rgOz4WR0"
 Received: from localhost (reverse-238.fdn.fr [80.67.176.238])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id 1F6E560379;
-	Fri, 22 Mar 2024 23:13:54 +0100 (CET)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id 5946260377;
+	Fri, 22 Mar 2024 23:13:53 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1711145634;
+	s=fdn; t=1711145633;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=gPiJPiGolYaJh6ma4zzZgwHwJBI2dPrwAFYxApcigjg=;
-	b=Qb9wdEDJX8ltLDhWeDQZd1W8GfF5YPNaZnem3NRovrt5C9rAWSKRhmONOqRLULdi0GjIdF
-	4sBMGmwRvjULUqBeMjIwVt40RrQv9PtLwJkcGEW2whzLeG+pJs/91B/xYsnIS4tNTDLGGM
-	ZlCP8pE7MxuKrugegLjVQmndxvnkxCJSXjJxy/YcEWcOwlOTNIyOvZcXNxFhzECihv81mz
-	9LvhiDlgP8tJFp5QrBSX0+DW0qeklIkM6XkaCp8UytFpEf4QF94HhtisPVC4sweKT7m1oi
-	f3DMgH2puPtLruhIO7dDfOD5qnCcO5BgZWjz3uufghr6DfzO6cBJx2uALGi2hQ==
+	bh=ICpdFnDFUZiXKsyGQBKm+LbC8i8XiowDzYRx58Os4PQ=;
+	b=rgOz4WR0hbClfKtj+3aYO+RfT0nhr4eG/ZmT7tqlVtOxiykAvnpUJPudCqdjLb2WZuZFJ9
+	WaoJfbBSOcN4z5ZOwkSfKBux2BFzSTgk60eOz4jDcnerc+RsOWjOvp0ffkkZb5zA2rUBkJ
+	GiZ0DgxAC/SvfDumwsrEFtizRQcdfWHBb3K8pIyaFa6k6q6WS4qr7xPWktDwYbx3VMheEf
+	ZL6g8UW7ixba4KTT4EguHLakQa5f16ZCEcY4a8MW9Wqjua91uRMoeuB6ePMvKhKFtvNCiD
+	6KQlrUonj95Umfm+zUKqM/pVLmoMhWgcpg1YN6gk2yEOZsFln2mV1PKxTmmhYg==
 From: Max Gautier <mg@max.gautier.name>
 To: git@vger.kernel.org
 Cc: Max Gautier <mg@max.gautier.name>,
 	=?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
 	Derrick Stolee <stolee@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v2 3/6] maintenance: simplify systemctl calls
-Date: Fri, 22 Mar 2024 23:11:08 +0100
-Message-ID: <20240322221327.12204-4-mg@max.gautier.name>
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/6] maintenance: use systemd timers builtin randomization
+Date: Fri, 22 Mar 2024 23:11:06 +0100
+Message-ID: <20240322221327.12204-2-mg@max.gautier.name>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322221327.12204-1-mg@max.gautier.name>
 References: <20240322221327.12204-1-mg@max.gautier.name>
@@ -57,111 +55,339 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The systemctl invocation to enable or disable the git maintenance timers
-is needlessly complicated:
-- systemctl does not mind at all enabling already enabled units, nor
-  disabling already disabled units.
-- it can act on several units at once instead of only one.
+Commit daa787010c (maintenance: use random minute in systemd scheduler,
+2023-08-10) hooked the systemd timers with the get_random_minute()
+function, which is used to spread the load generated by clients, while
+keeping one hour between each run (for the hourly run).
 
-Use only one systemctl invocation per `git maintenance start/stop`.
-Transparently pass its status and output.
-Add the --force option to override conflicting symlinks to previous
-instances of our units files which lived in $XDG_CONFIG_HOME.
+There is two problems with this approach:
+1. The random minute is the same for all timers, which can lead to
+   overlapping execution, and in practice skipped execution for some of
+   the timers.
+2. The timers are overwritten on each execution of `git maintenance
+   start`, with a new random minute, which can lead to missing a daily
+   or weekly timer.
+
+   Consider this (unlikely) sequence of events:
+   - weekly timer schedule is "Mon 0:52:00".
+   - user run `git maintenance start` Monday, at 0:30:00.
+   - the random minute happens to be 22, making the new weekly timer
+     schedule "Mon 0:22:00".
+   - the weekly timer does not fire until the next Monday.
+
+Commit c97ec0378b (maintenance: fix systemd schedule overlaps,
+2023-08-10) resolve problem 1 by skipping some executions of the timers
+to avoid overlap, but not problem 2.
+
+Revert both commits to instead use two native systemd timers properties:
+- RandomizedDelaySec: as the name suggest, this adds a random offset
+  to each timer execution. Use 3540 seconds (59 minutes) to spread
+  execution as much as possible.
+- FixedRandomDelay: this makes the offset from the previous setting
+  deterministic, depending on machine ID, timer name and user
+  identifier.
+
+(For more details on these settings, see man 5 systemd.timer)
+
+This give us timers which:
+- don't overlap (schedule depend on timer name)
+- are spread out by user (schedule depend on machine ID and user ID)
+- happen at fixed intervals
+
+This also restore the ability to use the systemd templating system, and
+keep the systemd unit strings embedded in the C code simpler, with no
+need for format strings.
 
 Signed-off-by: Max Gautier <mg@max.gautier.name>
 ---
- builtin/gc.c | 63 ++++++++++++----------------------------------------
- 1 file changed, 14 insertions(+), 49 deletions(-)
+ builtin/gc.c           | 154 +++++++----------------------------------
+ t/t7900-maintenance.sh |  15 +---
+ 2 files changed, 27 insertions(+), 142 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 199c8e6240..aaee91451a 100644
+index cb80ced6cb..dac59414f0 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -2303,70 +2303,35 @@ static int is_systemd_timer_available(void)
- 	return real_is_systemd_timer_available();
+@@ -2308,54 +2308,29 @@ static char *xdg_config_home_systemd(const char *filename)
+ 	return xdg_config_home_for("systemd/user", filename);
  }
  
--static int systemd_timer_enable_unit(int enable,
--				     enum schedule_priority schedule)
-+static int systemd_set_units_state(int enable)
+-#define SYSTEMD_UNIT_FORMAT "git-maintenance@%s.%s"
+-
+-static int systemd_timer_delete_timer_file(enum schedule_priority priority)
++static int systemd_timer_delete_unit_templates(void)
  {
- 	const char *cmd = "systemctl";
- 	struct child_process child = CHILD_PROCESS_INIT;
--	const char *frequency = get_frequency(schedule);
+ 	int ret = 0;
+-	const char *frequency = get_frequency(priority);
+-	char *local_timer_name = xstrfmt(SYSTEMD_UNIT_FORMAT, frequency, "timer");
+-	char *filename = xdg_config_home_systemd(local_timer_name);
 -
--	/*
--	 * Disabling the systemd unit while it is already disabled makes
--	 * systemctl print an error.
--	 * Let's ignore it since it means we already are in the expected state:
--	 * the unit is disabled.
--	 *
--	 * On the other hand, enabling a systemd unit which is already enabled
--	 * produces no error.
--	 */
--	if (!enable)
--		child.no_stderr = 1;
++	char *filename = xdg_config_home_systemd("git-maintenance@.timer");
+ 	if (unlink(filename) && !is_missing_file_error(errno))
+ 		ret = error_errno(_("failed to delete '%s'"), filename);
++	FREE_AND_NULL(filename);
  
- 	get_schedule_cmd(&cmd, NULL);
- 	strvec_split(&child.args, cmd);
--	strvec_pushl(&child.args, "--user", enable ? "enable" : "disable",
--		     "--now", NULL);
--	strvec_pushf(&child.args, "git-maintenance@%s.timer", frequency);
-+
-+	strvec_pushl(&child.args, "--user", "--force", "--now",
-+			enable ? "enable" : "disable",
-+			"git-maintenance@hourly.timer",
-+			"git-maintenance@daily.timer",
-+			"git-maintenance@weekly.timer", NULL);
-+	/*
-+	 * --force override existing conflicting symlinks
-+	 * We need it because the units have changed location (~/.config ->
-+	 * /usr/lib)
-+	 */
- 
- 	if (start_command(&child))
- 		return error(_("failed to start systemctl"));
- 	if (finish_command(&child))
--		/*
--		 * Disabling an already disabled systemd unit makes
--		 * systemctl fail.
--		 * Let's ignore this failure.
--		 *
--		 * Enabling an enabled systemd unit doesn't fail.
--		 */
--		if (enable)
--			return error(_("failed to run systemctl"));
-+		return error(_("failed to run systemctl"));
- 	return 0;
- }
- 
--static int systemd_timer_disable_units(void)
--{
--	return systemd_timer_enable_unit(0, SCHEDULE_HOURLY) ||
--	       systemd_timer_enable_unit(0, SCHEDULE_DAILY) ||
--	       systemd_timer_enable_unit(0, SCHEDULE_WEEKLY);
--}
--
--static int systemd_timer_setup_units(void)
--{
--
--	int ret = systemd_timer_enable_unit(1, SCHEDULE_HOURLY) ||
--		  systemd_timer_enable_unit(1, SCHEDULE_DAILY) ||
--		  systemd_timer_enable_unit(1, SCHEDULE_WEEKLY);
--	if (ret)
--		systemd_timer_disable_units();
+-	free(filename);
+-	free(local_timer_name);
 -	return ret;
 -}
 -
- static int systemd_timer_update_schedule(int run_maintenance, int fd UNUSED)
- {
--	if (run_maintenance)
--		return systemd_timer_setup_units();
--	else
--		return systemd_timer_disable_units();
-+	return systemd_set_units_state(run_maintenance);
+-static int systemd_timer_delete_service_template(void)
+-{
+-	int ret = 0;
+-	char *local_service_name = xstrfmt(SYSTEMD_UNIT_FORMAT, "", "service");
+-	char *filename = xdg_config_home_systemd(local_service_name);
++	filename = xdg_config_home_systemd("git-maintenance@.service");
+ 	if (unlink(filename) && !is_missing_file_error(errno))
+ 		ret = error_errno(_("failed to delete '%s'"), filename);
+ 
+ 	free(filename);
+-	free(local_service_name);
+ 	return ret;
  }
  
- enum scheduler {
+-/*
+- * Write the schedule information into a git-maintenance@<schedule>.timer
+- * file using a custom minute. This timer file cannot use the templating
+- * system, so we generate a specific file for each.
+- */
+-static int systemd_timer_write_timer_file(enum schedule_priority schedule,
+-					  int minute)
++static int systemd_timer_write_unit_templates(const char *exec_path)
+ {
+-	int res = -1;
+ 	char *filename;
+ 	FILE *file;
+ 	const char *unit;
+-	char *schedule_pattern = NULL;
+-	const char *frequency = get_frequency(schedule);
+-	char *local_timer_name = xstrfmt(SYSTEMD_UNIT_FORMAT, frequency, "timer");
+-
+-	filename = xdg_config_home_systemd(local_timer_name);
+ 
++	filename = xdg_config_home_systemd("git-maintenance@.timer");
+ 	if (safe_create_leading_directories(filename)) {
+ 		error(_("failed to create directories for '%s'"), filename);
+ 		goto error;
+@@ -2364,23 +2339,6 @@ static int systemd_timer_write_timer_file(enum schedule_priority schedule,
+ 	if (!file)
+ 		goto error;
+ 
+-	switch (schedule) {
+-	case SCHEDULE_HOURLY:
+-		schedule_pattern = xstrfmt("*-*-* 1..23:%02d:00", minute);
+-		break;
+-
+-	case SCHEDULE_DAILY:
+-		schedule_pattern = xstrfmt("Tue..Sun *-*-* 0:%02d:00", minute);
+-		break;
+-
+-	case SCHEDULE_WEEKLY:
+-		schedule_pattern = xstrfmt("Mon 0:%02d:00", minute);
+-		break;
+-
+-	default:
+-		BUG("Unhandled schedule_priority");
+-	}
+-
+ 	unit = "# This file was created and is maintained by Git.\n"
+ 	       "# Any edits made in this file might be replaced in the future\n"
+ 	       "# by a Git command.\n"
+@@ -2389,12 +2347,14 @@ static int systemd_timer_write_timer_file(enum schedule_priority schedule,
+ 	       "Description=Optimize Git repositories data\n"
+ 	       "\n"
+ 	       "[Timer]\n"
+-	       "OnCalendar=%s\n"
++	       "OnCalendar=%i\n"
+ 	       "Persistent=true\n"
++	       "RandomizedDelaySecond=3540\n"
++	       "FixedRandomDelay=true\n"
+ 	       "\n"
+ 	       "[Install]\n"
+ 	       "WantedBy=timers.target\n";
+-	if (fprintf(file, unit, schedule_pattern) < 0) {
++	if (fputs(unit, file) == EOF) {
+ 		error(_("failed to write to '%s'"), filename);
+ 		fclose(file);
+ 		goto error;
+@@ -2403,36 +2363,9 @@ static int systemd_timer_write_timer_file(enum schedule_priority schedule,
+ 		error_errno(_("failed to flush '%s'"), filename);
+ 		goto error;
+ 	}
+-
+-	res = 0;
+-
+-error:
+-	free(schedule_pattern);
+-	free(local_timer_name);
+ 	free(filename);
+-	return res;
+-}
+ 
+-/*
+- * No matter the schedule, we use the same service and can make use of the
+- * templating system. When installing git-maintenance@<schedule>.timer,
+- * systemd will notice that git-maintenance@.service exists as a template
+- * and will use this file and insert the <schedule> into the template at
+- * the position of "%i".
+- */
+-static int systemd_timer_write_service_template(const char *exec_path)
+-{
+-	int res = -1;
+-	char *filename;
+-	FILE *file;
+-	const char *unit;
+-	char *local_service_name = xstrfmt(SYSTEMD_UNIT_FORMAT, "", "service");
+-
+-	filename = xdg_config_home_systemd(local_service_name);
+-	if (safe_create_leading_directories(filename)) {
+-		error(_("failed to create directories for '%s'"), filename);
+-		goto error;
+-	}
++	filename = xdg_config_home_systemd("git-maintenance@.service");
+ 	file = fopen_or_warn(filename, "w");
+ 	if (!file)
+ 		goto error;
+@@ -2465,18 +2398,17 @@ static int systemd_timer_write_service_template(const char *exec_path)
+ 		error_errno(_("failed to flush '%s'"), filename);
+ 		goto error;
+ 	}
+-
+-	res = 0;
++	free(filename);
++	return 0;
+ 
+ error:
+-	free(local_service_name);
+ 	free(filename);
+-	return res;
++	systemd_timer_delete_unit_templates();
++	return -1;
+ }
+ 
+ static int systemd_timer_enable_unit(int enable,
+-				     enum schedule_priority schedule,
+-				     int minute)
++				     enum schedule_priority schedule)
+ {
+ 	const char *cmd = "systemctl";
+ 	struct child_process child = CHILD_PROCESS_INIT;
+@@ -2493,14 +2425,12 @@ static int systemd_timer_enable_unit(int enable,
+ 	 */
+ 	if (!enable)
+ 		child.no_stderr = 1;
+-	else if (systemd_timer_write_timer_file(schedule, minute))
+-		return -1;
+ 
+ 	get_schedule_cmd(&cmd, NULL);
+ 	strvec_split(&child.args, cmd);
+ 	strvec_pushl(&child.args, "--user", enable ? "enable" : "disable",
+ 		     "--now", NULL);
+-	strvec_pushf(&child.args, SYSTEMD_UNIT_FORMAT, frequency, "timer");
++	strvec_pushf(&child.args, "git-maintenance@%s.timer", frequency);
+ 
+ 	if (start_command(&child))
+ 		return error(_("failed to start systemctl"));
+@@ -2517,58 +2447,24 @@ static int systemd_timer_enable_unit(int enable,
+ 	return 0;
+ }
+ 
+-/*
+- * A previous version of Git wrote the timer units as template files.
+- * Clean these up, if they exist.
+- */
+-static void systemd_timer_delete_stale_timer_templates(void)
+-{
+-	char *timer_template_name = xstrfmt(SYSTEMD_UNIT_FORMAT, "", "timer");
+-	char *filename = xdg_config_home_systemd(timer_template_name);
+-
+-	if (unlink(filename) && !is_missing_file_error(errno))
+-		warning(_("failed to delete '%s'"), filename);
+-
+-	free(filename);
+-	free(timer_template_name);
+-}
+-
+-static int systemd_timer_delete_unit_files(void)
+-{
+-	systemd_timer_delete_stale_timer_templates();
+-
+-	/* Purposefully not short-circuited to make sure all are called. */
+-	return systemd_timer_delete_timer_file(SCHEDULE_HOURLY) |
+-	       systemd_timer_delete_timer_file(SCHEDULE_DAILY) |
+-	       systemd_timer_delete_timer_file(SCHEDULE_WEEKLY) |
+-	       systemd_timer_delete_service_template();
+-}
+-
+ static int systemd_timer_delete_units(void)
+ {
+-	int minute = get_random_minute();
+-	/* Purposefully not short-circuited to make sure all are called. */
+-	return systemd_timer_enable_unit(0, SCHEDULE_HOURLY, minute) |
+-	       systemd_timer_enable_unit(0, SCHEDULE_DAILY, minute) |
+-	       systemd_timer_enable_unit(0, SCHEDULE_WEEKLY, minute) |
+-	       systemd_timer_delete_unit_files();
++	return systemd_timer_enable_unit(0, SCHEDULE_HOURLY) ||
++	       systemd_timer_enable_unit(0, SCHEDULE_DAILY) ||
++	       systemd_timer_enable_unit(0, SCHEDULE_WEEKLY) ||
++	       systemd_timer_delete_unit_templates();
+ }
+ 
+ static int systemd_timer_setup_units(void)
+ {
+-	int minute = get_random_minute();
+ 	const char *exec_path = git_exec_path();
+ 
+-	int ret = systemd_timer_write_service_template(exec_path) ||
+-		  systemd_timer_enable_unit(1, SCHEDULE_HOURLY, minute) ||
+-		  systemd_timer_enable_unit(1, SCHEDULE_DAILY, minute) ||
+-		  systemd_timer_enable_unit(1, SCHEDULE_WEEKLY, minute);
+-
++	int ret = systemd_timer_write_unit_templates(exec_path) ||
++		  systemd_timer_enable_unit(1, SCHEDULE_HOURLY) ||
++		  systemd_timer_enable_unit(1, SCHEDULE_DAILY) ||
++		  systemd_timer_enable_unit(1, SCHEDULE_WEEKLY);
+ 	if (ret)
+ 		systemd_timer_delete_units();
+-	else
+-		systemd_timer_delete_stale_timer_templates();
+-
+ 	return ret;
+ }
+ 
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 0943dfa18a..37aa408d26 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -790,15 +790,7 @@ test_expect_success 'start and stop Linux/systemd maintenance' '
+ 	# start registers the repo
+ 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+ 
+-	for schedule in hourly daily weekly
+-	do
+-		test_path_is_file "systemd/user/git-maintenance@$schedule.timer" || return 1
+-	done &&
+-	test_path_is_file "systemd/user/git-maintenance@.service" &&
+-
+-	test_systemd_analyze_verify "systemd/user/git-maintenance@hourly.service" &&
+-	test_systemd_analyze_verify "systemd/user/git-maintenance@daily.service" &&
+-	test_systemd_analyze_verify "systemd/user/git-maintenance@weekly.service" &&
++	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" &&
+ 
+ 	printf -- "--user enable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
+ 	test_cmp expect args &&
+@@ -809,10 +801,7 @@ test_expect_success 'start and stop Linux/systemd maintenance' '
+ 	# stop does not unregister the repo
+ 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+ 
+-	for schedule in hourly daily weekly
+-	do
+-		test_path_is_missing "systemd/user/git-maintenance@$schedule.timer" || return 1
+-	done &&
++	test_path_is_missing "systemd/user/git-maintenance@.timer" &&
+ 	test_path_is_missing "systemd/user/git-maintenance@.service" &&
+ 
+ 	printf -- "--user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
 -- 
 2.44.0
 
