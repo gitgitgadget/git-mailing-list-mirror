@@ -1,103 +1,136 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C261F81205
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774F481207
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:14:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711145353; cv=none; b=G9y+00kQaAU/RdiMpSVtZcTwMYFldRTwW93MwDxgKihRFjamcEtCQIQAuwUC3s8QOAVRVwSQw4E+lfSDslf8v+92JZZhJZjjmSAgq9hDDgtxpe+Aj5Sp0cY7zXOT9N3c10nk9erNlHNiaKdBTYJSInW/LqRLtJJCc9riRqzvMSk=
+	t=1711145644; cv=none; b=FRQClsfT3KZ8rMiI1nsmeZhUZDv0Mnutx5FJGUr4dohOAnlbrKfqJIos5NTbsJ4MfKa/MjGgg0YKrHJCp2WAfh88DAn9fcL/wvoZWjCMI4djq7MY7c9s+sX3VGI6Kr6vNQufrrmmDN5srAmKtft3SWt+E3yLq2n73EfHrCYUvJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711145353; c=relaxed/simple;
-	bh=j+Qx4Dv41keuKyR4CP+/yiH4HuzXBurw2PDS4q341XU=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=oPwSL0b7V3Wwu8VKnas6in/M8lopLYR4Aon+bdAAqXjFKyohRAA+8501p5BbHCuu4OmdMnhF3ve0Hmf1gh/N0moRT/TMOJBQVLosof1MAxYwHQMshlQz88Ps0hjAZwpPIVHgelwBloO/L3psV4uPzgA+XCE83j80b8OLhfBlc8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=af6Hejen; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=okIblE1/; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1711145644; c=relaxed/simple;
+	bh=GPddT3vuYv8b96rYYXfMppXzyC8w0K5sxVMWjjcT5IU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NUfUzEUqYXs2DKcdMq/NPl9WDRiH05PkkNekHTfzGWvwyZ//UB/hIzZTgoppKzsqDjTz7ASFVbNmoZE1XLwMrFFtkeEASMroqp28kJc2Np2J/E5avT7H5YEEkrMVrYFWXhUzpGkqnntg9zWquo+QaahBbRghVqKAP7M2R7XzA64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=lxmQxCQO; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="af6Hejen";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="okIblE1/"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CAADD114015E;
-	Fri, 22 Mar 2024 18:09:10 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 22 Mar 2024 18:09:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1711145350; x=
-	1711231750; bh=4uASdkszkryAKCSXKHzhSlL3b5xawy0E0Poix+Qe9HQ=; b=a
-	f6Hejen+D24NIRN9vyeadkLnK8MYX8mAWW1Na2lk5Nm66YoAWnVkcFRSY8Ry+FBP
-	SwkiB7AwEa3/AHFRxCv/kH5aETi0fHPFWL8jM01NYHkFFBpbWjoo+KSrtkxWKV5G
-	gJWZ5STw+UyNt2TCCEohdR9SJclNyb2WBb7PeyDFevXecTj2rBGBjYbgA/HR276f
-	mQ5/gDLYwiw8xtaV0EJkzrUSH/0WPhI3fbdxJkRQgJFwEUytxVTT8/z/a072bI/1
-	/lq52sDtMKCfRBOgdhl1gCV4GnqaNZR6MqT0+2HL8wWax0chfNmPGUiXlbR/MxOk
-	zDFDvTkFmBjkQTiZvtShw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711145350; x=1711231750; bh=4uASdkszkryAKCSXKHzhSlL3b5xa
-	wy0E0Poix+Qe9HQ=; b=okIblE1/EyyPBVKV7cJ4vyxXqvpJWIN4PTTd2Qip2iSH
-	+3zONpd4q5wADWlA86hH+DOvRBOPFsasUeqlOk8fyIlp/DB78VgfByCPBGIHJ3jd
-	VN3LN/TmpjNxwy1uKC3o3nvcSN1X5hCqs+tqDalNuMSXuGrC9SWHgMqrWQPRBKSb
-	ssS/ZmwlxpxLwx7BYiixZjBGKaX3RLQuxzHMH9STkdpPS9r/Qe1AUjeKc9MOBTIs
-	zOuZyiGAdneWtFuKnLDwvCix0pTmOxw1jh3oQHAGPjFSTtWE0Vw4kaa+RYALXfR3
-	9ST8Y1hU8a2d07W6jmkZDdZLYK21e3DN+jE5TafkwQ==
-X-ME-Sender: <xms:hgH-Za2PkUmzZD2ZS_WOdYNee0BRbncLPKODQlVfEncO2sZFx_TaE0s>
-    <xme:hgH-ZdG2gdvier0tySORlmhpBu83uuiYrS_0GTGPoILCLJ-0e666RjkEUt-MjPx8b
-    WdAyr2w4eJ_aJrcGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtvddgleefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    dtkedtjeeiffelteffheeiheeufffgheelueeftdejkeeufffgiefhgeekffffueenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:hgH-ZS71hr6gJrlLal72q6pBLL1mSPo4mv-I1mwJLNxDBS4pnP1dVA>
-    <xmx:hgH-Zb0kCY-_NmlNObjUVMBEYyBuUj79qpJGolJ3p1ClQSKjxFqt9g>
-    <xmx:hgH-ZdE2Zh4-NIgUn2dvGwYxd7lDw8tP4PxgWBlaJnYFYWTlfiK76g>
-    <xmx:hgH-ZU-5Vw44EnqZUlwmba4cshCZ1L3fYI9beQVsC9Bzob3V1WLZVQ>
-    <xmx:hgH-ZSTtON8mA0k1pew7VS12iANzoMMqfq8nSVOUWqYGlxjZrpZXPA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 8DD7B15A0093; Fri, 22 Mar 2024 18:09:10 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-332-gdeb4194079-fm-20240319.002-gdeb41940
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="lxmQxCQO"
+Received: from localhost (reverse-238.fdn.fr [80.67.176.238])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id 75A3C6037A;
+	Fri, 22 Mar 2024 23:13:54 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1711145634;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3JvtaAHuIsinpNSxPVRMAdnASiq8hhGWGMnbjt/Z9j4=;
+	b=lxmQxCQO2OgJgRu+uqxNII50lbCMOLTIvxE2spibxtK7NZfI2rz+HDALioaPqfSxbB1WWs
+	QsSYs/F4YYCjYJ5YLhnUXlLc4z6SadTMN56CHXcI3B5janEuqYZH7sovaR3cGJwbpxAT5P
+	euTSxEZcOMQREfJFYHnNqR8/MZkQCx8owFD1gHfAAG9MTBEkwFBkrie5SDlA5PUZvKAKEV
+	ESK45VRDELVglqytT3AkR9pSeZ3U8h7QLG72vrd7LA6P26ipehQRcOqODU9yMN21oKyVxT
+	ki0jh5QrB/K23Ggtn2US49bX2RlQw3TWcZksQ8MTmvwu7nFAWQ2PEHgnisFAxg==
+From: Max Gautier <mg@max.gautier.name>
+To: git@vger.kernel.org
+Cc: Max Gautier <mg@max.gautier.name>,
+	=?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
+	Derrick Stolee <stolee@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 4/6] maintenance: cleanup $XDG_CONFIG_HOME/systemd/user
+Date: Fri, 22 Mar 2024 23:11:09 +0100
+Message-ID: <20240322221327.12204-5-mg@max.gautier.name>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240322221327.12204-1-mg@max.gautier.name>
+References: <20240322221327.12204-1-mg@max.gautier.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <e9a1da5a-733b-4122-917a-5f5356ea1f7a@app.fastmail.com>
-In-Reply-To: <20240320003557.GF904136@coredump.intra.peff.net>
-References: <20240320002555.GB903718@coredump.intra.peff.net>
- <20240320003557.GF904136@coredump.intra.peff.net>
-Date: Fri, 22 Mar 2024 23:08:49 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Jeff King" <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] format-patch: simplify after-subject MIME header handling
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 20, 2024, at 01:35, Jeff King wrote:
-> In log_write_email_headers(), we append our MIME headers to the set of
-> extra headers by creating a new strbuf, adding the existing headers, and
-> then adding our new ones.  We had to do it this way when our output
-> buffer might point to the constant opt->extra_headers variable.
->
-> But since the previous commit, we always make a local copy of that
-> variable. Let's turn that into a strbuf, which lets the MIME code simply
-> append to it. That simplifies the function and avoids a pointless extra
-> copy of the headers.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+Before commit 976640edbb (maintenance: use packaged systemd units,
+2024-03-21), we we're putting systemd unit files in $XDG_CONFIG_HOME ;
+these could mask those we are now distributing as part of git.
 
-I like how all the previous work makes this change straightforward.
+Remove all the systemd units possibly created by previous version of
+git when running `git maintenance start/stop`.
+Avoid overwriting units we didn't write, by comparing the first line
+with the start of the comment we added to our unit files previously.
 
+Signed-off-by: Max Gautier <mg@max.gautier.name>
+---
+
+Notes:
+    How should I refer to a commit which is part of the same patch series ?
+    The commit id will change so the message won't be correct anymore, right
+    ?
+
+ builtin/gc.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index aaee91451a..99b158e481 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -2329,8 +2329,50 @@ static int systemd_set_units_state(int enable)
+ 	return 0;
+ }
+ 
++/*
++ * TODO: in the future (~2026 ?) remove this cleanup code
++ */
++static void systemd_delete_user_unit(char const *unit)
++{
++	char const	file_start_stale[] =	"# This file was created and is"
++						" maintained by Git.";
++	char		file_start_user[sizeof(file_start_stale)] = {'\0'};
++
++	char *filename = xdg_config_home_for("systemd/user", unit);
++	int handle = open(filename, O_RDONLY);
++
++	/*
++	 * Check this is actually our file and we're not removing a legitimate
++	 * user override.
++	 */
++	if (handle == -1 && !is_missing_file_error(errno))
++		warning(_("failed to delete '%s'"), filename);
++	else {
++		read(handle, file_start_user, sizeof(file_start_stale) - 1);
++		close(handle);
++		if (strcmp(file_start_stale, file_start_user) == 0) {
++			if (unlink(filename) == 0)
++				warning(_("deleted stale unit file '%s'"), filename);
++			else if (!is_missing_file_error(errno))
++				warning(_("failed to delete '%s'"), filename);
++		}
++	}
++
++	free(filename);
++}
++
+ static int systemd_timer_update_schedule(int run_maintenance, int fd UNUSED)
+ {
++	/*
++	 * A previous version of Git wrote the units in the user configuration
++	 * directory. Clean these up, if they exist.
++	 * TODO: in the future (~2026 ?) remove this cleanup code
++	 */
++	systemd_delete_user_unit("git-maintenance@hourly.timer");
++	systemd_delete_user_unit("git-maintenance@daily.timer");
++	systemd_delete_user_unit("git-maintenance@weekly.timer");
++	systemd_delete_user_unit("git-maintenance@.timer");
++	systemd_delete_user_unit("git-maintenance@.service");
+ 	return systemd_set_units_state(run_maintenance);
+ }
+ 
 -- 
-Kristoffer Haugsbakk
+2.44.0
 
