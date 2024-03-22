@@ -1,35 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD5C8174C
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 23:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CF77F7C0
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 23:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711150620; cv=none; b=Qo7zSB2qFx/mKb0Zlf+vETSuA40B+avPquliEYugVPlajLnKPBBByNtmgPZAZggvOOUNPVfyt0TkhQtzGAaxsXxNddU2Oi2gNaIPCeOO4kYT2pMEJeBHDXAG4h61LL54IxKn4uWKy24l/VssJJWvPVSdwA+j7ShA2EV2y6S5Kds=
+	t=1711151037; cv=none; b=PB/gcUVzWHJhGJneqLF4at73enBWgbThCyv/FhTR+nK0MbvZh9p/nbCznC4hJeUaIPzj00QgfwalNZI8jEOp7IfW11ogEP1bWuLIZaJi8tKwzefNBNo+lkZsupDg/XBMtfqX1+t4boryTZQy0e42rmzyn/8lezEiyST9Kxvsw/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711150620; c=relaxed/simple;
-	bh=B2LguVmltvhIS6DhrA98gngg4E5V89AZaSbeaOH3qt8=;
+	s=arc-20240116; t=1711151037; c=relaxed/simple;
+	bh=6DvE1eMuaTU7tR1KgVv78jBDHLbo2D4aCSTXyTT/Wc8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iorjlcGEkA9qqToiKV7bEIKalBbkSkntrHdv1oPI8FsNNLwbTASCMkNuEU7xZ5dXG/VF13P1iTPdOiTaIxTQ91k0UdhNhsJlUPd/OYwnY4AoYBx8q0u3/InHyLgYBCpnmFQsrB1haGJ9D5Pu/y1S80yq2QbkS+3+OUbnzXMOo6c=
+	 Content-Type:Content-Disposition:In-Reply-To; b=rzSZo/k269jQNIGCzhDbVkDelRcjSjOUT2BNcnwpDUVz59OIFSV/SuzO3AMkqHNVhTblyBt5xSpDZwxRrU7YbxrzSzj2FAeuJ8XrzDv0X5ceqWNYL2etINIOnJF7XrvoG8NXKh5IARbHo9eCkoaGiOVqG8Fvv7Zh0ldRhuDYoRE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 15528 invoked by uid 109); 22 Mar 2024 23:36:57 -0000
+Received: (qmail 15545 invoked by uid 109); 22 Mar 2024 23:43:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 Mar 2024 23:36:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 Mar 2024 23:43:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12318 invoked by uid 111); 22 Mar 2024 23:36:59 -0000
+Received: (qmail 12352 invoked by uid 111); 22 Mar 2024 23:43:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Mar 2024 19:36:59 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Mar 2024 19:43:57 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 22 Mar 2024 19:36:56 -0400
+Date: Fri, 22 Mar 2024 19:43:54 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] rebase: use child_process_clear() to clean
-Message-ID: <20240322233656.GB2049941@coredump.intra.peff.net>
-References: <20240322103502.GA2045297@coredump.intra.peff.net>
- <xmqqedc218to.fsf@gitster.g>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthew Rollings <admin@stealthcopter.com>,
+	Stelian Pop <stelian@popies.net>, git@vger.kernel.org
+Subject: Re: [PATCH] contrib: drop hg-to-git script
+Message-ID: <20240322234354.GC2049941@coredump.intra.peff.net>
+References: <20240320094824.GA2445978@coredump.intra.peff.net>
+ <01de5e16-a4ee-47df-03e6-67f5f0d601a7@gmx.de>
+ <xmqqjzlu2r8n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,28 +41,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqedc218to.fsf@gitster.g>
+In-Reply-To: <xmqqjzlu2r8n.fsf@gitster.g>
 
-On Fri, Mar 22, 2024 at 10:21:23AM -0700, Junio C Hamano wrote:
+On Fri, Mar 22, 2024 at 08:58:16AM -0700, Junio C Hamano wrote:
 
-> > We should use child_process_clear() instead, which covers both. And more
-> > importantly, it future proofs us against the struct ever growing more
-> > allocated fields.
-> 
-> When 21853626 (built-in rebase: call `git am` directly, 2019-01-18)
-> started using run_command() API to drive "am", there already was
-> child_process API and child_process_clear() did clear both .args and
-> .env_array members but we used argv_array_clear() only to clear
-> am.args, leaking am.env_array.
+> Those with specific needs (e.g., "A project uses Mercuial; I want
+> its history in Git because I am used to it more") will never come to
+> our contrib/ as their first place to look, but they may still find
+> us in https://letmegooglethat.com/?q=mercurial+to+git if we left an
+> otherwise empty directory there.
 
-Ah, interesting. I didn't bother to dig into the history. Back then,
-though, I think that "args" was the only allocated thing. The env call
-was added much later in be0d29d301 (rebase --apply: make reflog messages
-match rebase --merge, 2022-10-12).
+Thanks, I was going to write something similar, but you did it much
+better than I would have. :)
 
-> I wonder what are in .env array at this point, though, but that is
-> mere curiosity and not a problem with this patch.
+I was curious what results such a search _would_ turn up these days. The
+top hits for me (keeping in mind that sometimes search results are
+personalized, of course) are:
 
-It's $GIT_REFLOG_ACTION for the sub-process.
+  - https://git-scm.com/book/en/v2/Git-and-Other-Systems-Migrating-to-Git
+
+    which suggests hg-fast-export to git-fast-import for a one-time
+    conversion.
+
+  - https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/importing-a-mercurial-repository
+
+    which does likewise.
+
+  - https://www.alexpage.de/guides/convert-a-mercurial-hg-repository-to-git/
+
+    which suggests using hg-git to push into the Git repository.
+
+I suggested remote-hg or cinnabar, which is what I would have turned to.
+But I guess those are more about continuous interoperability rather than
+a one-shot conversion (and of course are based on fast-export/import
+under the hood anyway).
+
+Anyway, the important takeaway to me is that searches are not likely to
+end up at contrib/hg-to-git, with people wondering where it went. They
+will point directly to the alternatives.
 
 -Peff
