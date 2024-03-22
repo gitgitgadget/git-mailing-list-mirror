@@ -1,104 +1,106 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B990964CC6
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 18:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEC678274
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 21:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711133777; cv=none; b=BvY1RtG5S7/DEaRWkAaHFpM5vJDBhgKw0UHD3VwwVqGCsE5oQM4rq7TyjHfV/uJjVVpYxYt5H8x4V2yMfYk8t7PgE046V3ylJ9i0gqSboP286z6I67sjKbOgc46sMof5fIzzSW1C+TPWFBWkejS4wH8rjr/ZyNOs2SzaleDiPaI=
+	t=1711144664; cv=none; b=Tw0bXyQaPm09xfvq6Kv5pMeZDH8uv0xuhLZPKYAuDg1INSfp/1M5K7v6/P6RfbJ3sQDwRyglvT4gI9rryLv9xzRNfrUJFI4hWonj6ZOTgHHSAjKkTDf0hrp9eyQTISbBaphK4MqrAQx9ZM79oQ7n60v80SeUlWnlzAWyHZgt/+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711133777; c=relaxed/simple;
-	bh=63UxLTedZ/PELUzVZtZDCOtwajh0tke7eowBgvJCSP8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QQ5zlJg5/n6vADAhg9mCal8Gm6AV/ZTxCAnz83UV+SCaTwjTxoXD5oaAdh5CmQ13+W4v9HWWYLHeQu0Me6Fuxza+YKbW8KLSYGdC2IUKblrn3fFLovW7XF0IHRcy5idyr9jhI+Dab00QwU3uMCKunVYndCsF/keSXeYgblayuuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g8E5D5HR; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711144664; c=relaxed/simple;
+	bh=KLQMiqyv1jocpElodC1ecd7weo0HzQCiYYZ6rEjC5nc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HTxT60+GnrRZq6Y53HLxdf/ea+nfe5jDxpnt2k7XNsNEBvAKfFzbFGQxC3DqBfhePrXuzvmE1CAJSc5KMTY1uyWMmpCn0YMJZjR9cO68KfMw0UitjhpodRTuLbq9659XaV6QJ6tM/3hhLch7QdnoWH4Rz/60tcbX3JmGXUMq19A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=rPPPOyQJ; arc=none smtp.client-ip=185.238.129.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g8E5D5HR"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3c36dcb305cso1125523b6e.0
-        for <git@vger.kernel.org>; Fri, 22 Mar 2024 11:56:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711133775; x=1711738575; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U1InE1iBsPO8lNJtIzS4Yn7Gf368r/UVolH/6ljMOV4=;
-        b=g8E5D5HRiKVaroklV1Y0IKhATbtSSnMPC9W+rB9xwfpw3UAaOfDzD+tqwzqA2/oYy4
-         WKiSrIOdDJdfcrpMQQ1F1nY8LuiUrPxyCng5/fSOIzhoGWCCAE7k3fHAfFn2bNO5qcL+
-         /zSrGhwvG+EP5GoR9kOs2IiBc5hBCXZLkuAhX7FmkwSKihxEjJ+Hxq1WURi6JslSHv91
-         IkeQbSkem0VkRxbB2SdVBRlmqlFJduUPdgoP3edqc5+mhl2AKP44b4wnIDpC+Qc3/jBn
-         FCpBhHy0UUlfG+op5sdEZX2wdl0HGsZr+w6q8b6wgoCal9JMTa87PM9yeD4KEGojdahI
-         1R/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711133775; x=1711738575;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U1InE1iBsPO8lNJtIzS4Yn7Gf368r/UVolH/6ljMOV4=;
-        b=A87omKwU47MEsFlvBc6tUDrVHi+S3psGuPvkbeioUz1R0ko7FKwj+aErvFIHXi09ig
-         o71kQjpWSj6wH/j66zvsf0JlRxnQdrOLvZn6XlZBCH5igzcUXwv47axZ/Tv39zPCBCom
-         ilJHtcYEXMY0zwmGJkjqqad3M6zKuvOSvSTQVmywOyCe3Up1QHUhukz43pCqj71AZ+Xm
-         O7nB+t1T0SAr7S1P3DMAZIQOgtP7/XiV0ddSbap/hhnn1vEGEyFbwT0avMN/LReWBLuZ
-         xWg4nSz/YttikXec7f2P8fFFGWFrl7R5Z4sSCWgauXi5B6UNPk6trKVVaaTTNFEA6IvM
-         3e4w==
-X-Gm-Message-State: AOJu0Yx13LCb7yDfa/iGfDK6BReALWAN2LEwUzSAr+pZRAfOnPLEL5GB
-	acAKUKDOpxpDHd62j0qeiA4wsM+EtZT4rscE3MpuJdtUZXDb1oP2DBgt1uih
-X-Google-Smtp-Source: AGHT+IFPMV+HXW5beuJg5DklORRFgl77lcEKSn4WaDA381VOWSw7LN/PX2P8SkEN/o9amkhR/udoUQ==
-X-Received: by 2002:a05:6808:222a:b0:3c3:a69d:f4a7 with SMTP id bd42-20020a056808222a00b003c3a69df4a7mr195180oib.25.1711133774772;
-        Fri, 22 Mar 2024 11:56:14 -0700 (PDT)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id bo16-20020a056808229000b003c3829794d3sm33221oib.28.2024.03.22.11.56.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 11:56:10 -0700 (PDT)
-Date: Fri, 22 Mar 2024 13:55:17 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/7] reftable/refname: refactor binary search over
- refnames
-Message-ID: <4ea7gnm5gbuvqnoyxdll3ccxxhr4bmlgzwpjtc7kqzbaf5juzb@5kwcy2qhblss>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1711109214.git.ps@pks.im>
- <44386818ce681da02f00a498acf66043aa55558e.1711109214.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="rPPPOyQJ"
+Received: from [10.2.12.48] (unknown [10.2.12.48])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by 7of9.schinagl.nl (Postfix) with ESMTPSA id CB3BD19FD3FE;
+	Fri, 22 Mar 2024 22:57:36 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1711144656; bh=KLQMiqyv1jocpElodC1ecd7weo0HzQCiYYZ6rEjC5nc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=rPPPOyQJZz7mj+HTq8zbkToOiewESTikajjfV4Fhnz+XTHnXsOVGpCeGd5zenVxVd
+	 8F6ApcUtQl4QIzEWu5laokc6JzmQQewv0MuCieZF17l9oG9FVbSWpf2+k+T+0sIdfw
+	 U4YU++ncQ9sq2PZ4Wpd9S3Ma6Dy8q2m8e9VTGnR0=
+Message-ID: <3925ac99-bc05-4f8e-9a52-c22c13f6a4b5@schinagl.nl>
+Date: Fri, 22 Mar 2024 22:57:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <44386818ce681da02f00a498acf66043aa55558e.1711109214.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Support diff.wordDiff config
+Content-Language: en-US, nl
+To: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
+ <20240302095751.123138-1-karthik.188@gmail.com> <xmqqedcszhty.fsf@gitster.g>
+From: Olliver Schinagl <oliver@schinagl.nl>
+In-Reply-To: <xmqqedcszhty.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 24/03/22 01:22PM, Patrick Steinhardt wrote:
-> It is comparatively hard to understand how exactly the binary search
-> over refnames works given that the function and variable names are not
-> exactly easy to grasp. Rename them to make this more obvious. This
-> should not result in any change in behaviour.
+Hey list,
+
+On 02-03-2024 18:03, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 > 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/refname.c | 44 ++++++++++++++++++++++----------------------
->  1 file changed, 22 insertions(+), 22 deletions(-)
+>> This patch series adds the diff.wordDiff config option. This mimics the
+>> '--word-diff' option of `git-diff(1)`.
 > 
-> diff --git a/reftable/refname.c b/reftable/refname.c
-> index 64eba1b886..9ec488d727 100644
-> --- a/reftable/refname.c
-> +++ b/reftable/refname.c
-> @@ -12,15 +12,15 @@
->  #include "refname.h"
->  #include "reftable-iterator.h"
->  
-> -struct find_arg {
-> -	char **names;
-> -	const char *want;
-> +struct refname_needle_lesseq_args {
-> +	char **haystack;
-> +	const char *needle;
->  };
+> Is it even be sensible to introduce this configuration variable in
+> the first place?
 
-I agree that the previous `names` and `want` are a bit ambiguous. What
-do you think about `refnames` and `target_refname` instead?
+Of course it is :p as a human, I crave it :p
 
--Justin
+On a slightly more serious note though, I always have to use an alias, 
+or the command line option I cannot use `git diff` with this as default. 
+ From a human UX point of view, this is odd, and we have tons of 
+configuration options to do exactly what is desired, without aliases.
+
+I suppose the deeper discussion would be, do we distinct between user 
+(human) facing options and arguments, and machine facing options and 
+argument (in theory, yes we do; in practice things get abused).
+
+Git is often blamed due to its horrible UX. I think the problem comes 
+from the deeper issue mentioned above. Because things get abused, they 
+can no longer be touched, not even to improve UX for the human.
+
+> What would this do to users who set this variable
+> and use third-party or their own scripts that run "git diff" under
+> the hood?
+> 
+> The usual answer is "these tools should be using the low-level
+> plumbing commands like diff-files, diff-index, and diff-tree", so I
+> am not worried about it too much myself, and the above is purely the
+> devil's advocate comment.
+> 
+> Having said that, running
+> 
+> 	$ git grep -e 'git diff '
+> 
+> in the collection of scripts I use [*] to work on this project, I am
+> reminded that I may have to be a bit more conservative than I
+> currently am about the risk of breaking scripts with the changes
+> like the one being proposed.
+> 
+> The proposed feature also may break those who use the git-prompt and
+> diff-highlight available in conrib/, even though I am not sure how
+> badly they would break, because I only looked at the lines given by
+> this command:
+> 
+> 	$ git grep -e 'git diff ' -- \*.sh ':!t/'
+> 
+> and didn't check how the output from 'git diff' is used.
+> 
+> 
+> [Footnote]
+> 
+>   * They can be seen in the 'todo' branch, if anybody is interested.
