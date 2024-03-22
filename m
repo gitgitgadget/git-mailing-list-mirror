@@ -1,382 +1,152 @@
-Received: from mail.popies.net (mail.popies.net [163.172.86.50])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D73A1AAD4
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 08:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=163.172.86.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711097128; cv=none; b=aiSxTJD8Uh2dcmHm6NUoBA7dDGuQTI0NlOU6wWHdNCnh9NtgyFWT9T+mfMTxuBd+oMTjzGPBF7c5VbQFwG7bhoguWGvF7CqIWliZp8a1bVA6XHocpIK7+EKTEPip1yb4CPXqjuOUzdyTVjWH8DQfaOHotDy/GkrfFanRG99K4bg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711097128; c=relaxed/simple;
-	bh=atTejvi5E9JFqFFTxPI8uugyFlZdYdgPTmmREyj8JXU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=saWCZNoec9mOjk40TX024yJpkt8Xjh83Lt5wrVZeloqVc7IWNELE9Wl4gLZxc2sOSlS0hJeaiQh9wvCwwWQYv99xte++7VnnFg6dWuL5BWSB0s4zHLmTwfYWur+EKEG7rMBWTT6b7sbqFzz8ujhGfZTTh5LbKeGsLzL2xCvG5v0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=popies.net; spf=pass smtp.mailfrom=popies.net; arc=none smtp.client-ip=163.172.86.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=popies.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=popies.net
-Received: from localhost (localhost [127.0.0.1])
-	by mail.popies.net (Postfix) with ESMTP id 518A81E80434;
-	Fri, 22 Mar 2024 09:36:31 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at popies.net
-Received: from mail.popies.net ([127.0.0.1])
-	by localhost (sd-111039.dedibox.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1tbAeZErS-0P; Fri, 22 Mar 2024 09:36:27 +0100 (CET)
-Received: from [10.124.51.48] (125.139.158.77.rev.sfr.net [77.158.139.125])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	(Authenticated sender: stelian)
-	by mail.popies.net (Postfix) with ESMTPSA id E5E501E8018F;
-	Fri, 22 Mar 2024 09:36:26 +0100 (CET)
-Message-ID: <37e4cd61-b370-437e-bd42-f98f47d3ad32@popies.net>
-Date: Fri, 22 Mar 2024 09:36:23 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF243381D5
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 09:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711100382; cv=none; b=hjhNkyNRkL8aFkj7+lrmWRoiAWwZJRM5tnKX2awGQT89/YZCn4U0Fxz9BTolLaz3dKUKXPeuKjzBpwLIyX0UPJmDnCaM34l7DvEmqKK56zQwpNEMZGw+y9/HT9NDjHUQZdQm3JJtppuddeGR0T8Im9pnHWdP13JBNjIl7kJi9BM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711100382; c=relaxed/simple;
+	bh=/LGaX7lLmJy12xrMYy0hsNA5npDmBHM0id4cOfusZVg=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=q1P+8cveyNkPrwER5xG1I64Ki5SMSDCC1YrvK8gFqHMa/yRa9FNKHZupbXnohv7T10E9vRUgWAYD1d8W4UcyAs5AgwxidhKvr3Vk1aY13cxbm/rFylrIcJTxYBk2J62zt+e1BgDa/brfwy07JsGqi+XP1qddvGeQu/HutBpJii8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=axzZ9kYV; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="axzZ9kYV"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-515830dc79cso2100927e87.1
+        for <git@vger.kernel.org>; Fri, 22 Mar 2024 02:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711100379; x=1711705179; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2SadI4lkPZIjiVWYCPZw5Ha6H9NiQ+yzoV7XxmLEVYg=;
+        b=axzZ9kYVhYqZU70aXIfdNFk8PKwVdfaQlVqHn3vOtVjfwkcI+lcy2i7OrPq4VHtYte
+         E5E6/HjjqqHfB1ojDxJ3JRNw+0CneCvo0JGgiOceJtx7d8Z1sxFXhYIvbQJSx9kKa3tY
+         +FD7lFi0oxWN7319c1zstBRlHelU2ZDJXPO4fj30tIZHgTJqNh/lRnHLaWu7CuLInHvD
+         nbPWFPEVJUGC4UXZDakYSdF3w9/Jj9ctHQhX/w81h3uH/RMMj2dHgMEcGVlM/2TovuUl
+         3QrCK/CZaOXLyk0m3BELxZfWn0fxDPPk10pMu09hWq9quYO10of5H6B2LzXtN3FabAje
+         i/BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711100379; x=1711705179;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2SadI4lkPZIjiVWYCPZw5Ha6H9NiQ+yzoV7XxmLEVYg=;
+        b=B9VK1mlh2qlrYELqG/p3B2ONXv4pVqRawhCrWEZgMYI8TfVmEKoA22SYZwXlcWZqAc
+         6dwFTkYGuo2ddWKgwJZXEId53+eV8fGBELp51TDqkPrHvWvSHF5oVLruAJbDYDA0kt8U
+         N62onZ3FfukYD7ddruwjHW8927KPb9PDDq4edF5aPUd69chCxAuUHG/60hkwXk1PosxR
+         5EFKIIkyghcUPl2U0ZOVbk47Ra0r6B0fV3Huojrjucu13WdIrqAREpP4LBU+OGIAd+TB
+         1oVEH/MP26WeBKo6L1ceC+gpxHYza2aWstfRTryjobUh6/X9oASD9TFWFJF5U/b+C3z4
+         bJuA==
+X-Forwarded-Encrypted: i=1; AJvYcCU1Op83vp8lcx66EUa0pfQp1xcX9aYmFKJih+Kte4gmfNepXhz86uHEvoq1lj1UuzqA/Zx6I6tmC0gqKjGPNECR19zm
+X-Gm-Message-State: AOJu0Yw07jQwbwFQwWZG19tgRqghTutVHzKfbWsuOGatu5YNWPy7onHN
+	ypYOiVohqiQhLeG+vkHqpcDmNeX2i0zKbyY/PsX2xffZnaIuhnNsuDG3Z/xunho6tQ==
+X-Google-Smtp-Source: AGHT+IFcqAkJm0174K8IdmfESMmJWI7v9hyo4n4rIDOuQ/Yo/rJFpsiT3p82BYgvHCpl/zxwhufd+Q==
+X-Received: by 2002:ac2:465b:0:b0:513:c227:70bd with SMTP id s27-20020ac2465b000000b00513c22770bdmr1431667lfo.60.1711100378116;
+        Fri, 22 Mar 2024 02:39:38 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id t28-20020ac243bc000000b00513ccce5c04sm282028lfl.227.2024.03.22.02.39.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Mar 2024 02:39:37 -0700 (PDT)
+From: Sergey Organov <sorganov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Richard Kerry <richard.kerry@eviden.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: Merge selected files or folders
+References: <PA4PR07MB7406FAC1F8C00E29979FCFF59E322@PA4PR07MB7406.eurprd07.prod.outlook.com>
+	<xmqqbk778oeb.fsf@gitster.g>
+Date: Fri, 22 Mar 2024 12:39:36 +0300
+In-Reply-To: <xmqqbk778oeb.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	21 Mar 2024 10:50:52 -0700")
+Message-ID: <87bk76fvvr.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib: drop hg-to-git script
-Content-Language: fr
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Jeff King <peff@peff.net>, Matthew Rollings <admin@stealthcopter.com>
-Cc: git@vger.kernel.org
-References: <20240320094824.GA2445978@coredump.intra.peff.net>
- <01de5e16-a4ee-47df-03e6-67f5f0d601a7@gmx.de>
-From: Stelian Pop <stelian@popies.net>
-Autocrypt: addr=stelian@popies.net; keydata=
- xsFNBF2Rs1YBEADLUWOKYudLrOmmyGfIXnac9s7AZyfPUY3dknCk+Ki9V0RusV0bbRzx/382
- kW/+anvIVXa7IgEYVjh7oHFg1RonRnpnmVy7EtNTelh9cbHOm1M2voIj0aKKxqCGtiaO7wFe
- pcEZbc5QGxwyHqzCqFTvgBEEO5OacOtZnkZS78XOjpkyUkqpQ0EQWP+pJgeXEuBFB2ujpoQG
- +nixIsOP6ynwPRDOCLE+M9G6upUv4zr+jrIEbHAVMguDiprQ+zZCcZQG7ajRdbt2Wt7HHUXY
- PEZC4826cGey6nrvu5FPM4ehkZa1FF671jRltLRzvW6g1WiiAIJ7AZ3rvKP2AKeX3KeOmuPr
- jsEXJG/YDGEYCW9vfM2/FfgPyVPBP5LVWPNBJG24Or9XchCdcodEf9rOj13I2SpCaYhjNbAp
- jk8Qrss3WK5pY5ipKXu/BhZ7ShPO2CHOOPeTGBG0Tke6PNEInHOjyIxohD4IDVQmh5RVpzFJ
- ZNnw+SyTK9+n7cogRtKXNnlP9US90ZEZ3WHREuc5iWU1h6wOX+bM4sdderZuJfHPalItUklc
- 0g7cZ7BCzOjj0bdXQVBv6tfHfYR05sT9Vxh9IKYpHuItq6ih/L6aUZ//KPCKLALe9MYbTQC1
- 88xlHAEqg1o4OEEuDHvzHdRDEa09VujOBLCw67OWEWSX/axcxQARAQABzSBTdGVsaWFuIFBv
- cCA8c3RlbGlhbkBwb3BpZXMubmV0PsLBjgQTAQoAOBYhBL/z1YWWZ4FtUEk55/ry31X0eqUl
- BQJdkbNWAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEPry31X0eqUlaJEP/184wuZv
- zwA+T32AkXGPITlp1KHcybkoQ6OB9fNX7ueBEhnmAiWR5H4vbVOEr4zq0mSAjuH556T/dxrQ
- TJXa/1LfJKQ4Z2dUsiI1gRKhNnvcD7bAeOtsX/SJQn5NGQZf0K3wkd3le2DTTN5uC1NK+cOC
- VCo6SZMyRGBSHsEHE4rOikdQ218XwoiwPLq8zsL3R6IezM4H6scj7270kxIo+6rdrGeeXMag
- j3ZFiTg3WFxiJByS/r8IqGv4LCStzn5OF4jfUsBn54mruvrbL9jDtIQMVDm2Drirxb71loR5
- 95Han4BVe9N7qx7oO+umDeQTv3d96kcCRc88HvUAT98nU/UFMi6CG8V1l1jt8GB3PlkWle/1
- OIXfD/yByqozAMqUlCDDyJrLGgFsCnVfOH5h6/QejHBVOk5PJm2CT4BhZdKBSNlLObahCC38
- CmliY3Tc+5Ukgj2a5SNvm6LInF2jAzV7FcR0RdAzfxunnP+Lm/cpm45BbJbY/45mu6xpFuM4
- SGTuW5+YcA9dji5ZFF+Gar7t+c2jjtgLvROd2kcw52m/j9C7xbyz6SkFKc9OVjDhWdSz4PKp
- aMTA1SwbHV1sLL2IUeMGR/uvM/iUTOP6uK/J9r2a0TgpyJ3mLZHelJELkVRIcTCBrU0WSmOA
- NbgoSSk/6L2VuVU4L5XzwhA/t7ZvzsFNBF2Rs1YBEADhoUTSu/xQFMkGZYIXda1HnZAiW3wy
- 1pfNqqRuziv3w11ryISzzJ0bRdO/jF9deW/xR2hTnpZFPf3lXrHob9H26BDBUbZF5mT5Amo5
- drFieZd34H1HvjIhiss4T/wkvXBRA/8gt6TFCVUN8QWvIU3T7KWc28rWtdf9+uuv4rjFUn+e
- RFLr/iEGOToU0EO1NwG+pX9RJRDfXSac877wUeu34mA1pRGZqf1f2kCNogqFXI5rFklIJaxB
- 8PfDmq2YpxUixMqAtE/Okg2DBmLjhjF64LMzLCIwsP5rxP8mq8NpuCnJBMIqgMKp+L0dnOJd
- TFKNj4Pcyb2jBYNVuioFGkVpBUVRnduX+xGVhBM5CU8Rn27CeIM0yz0myk76IFb7qIcpjFkW
- zbDqeq0J74Eynbe+5NSsh1BzE2AHwt0Tab+okJ8eJy8+BoQ9LHfFrAc+mZ69JdsPqscto7Hx
- uNQZJO5oMQY4VeX2O6Zo61TuDmLHW0nm8Q+jMsF+T8mOFkNGFKTLgRrc99vHxW7h7rXofgxU
- w7giD9bA63GaF8AaaxijLqKcQZq1AX1I8VgO7eAnyVMwzQr/n1OA8x3k4uF4qmlLsJPxi5dp
- 2IPdFTy/Uhz5Yjn0D/egqL7j5vbn+ZErVsLx+F1y1MjBY906t954p5NreOGVstfTOH9kDkK2
- ZIktnwARAQABwsF2BBgBCgAgFiEEv/PVhZZngW1QSTnn+vLfVfR6pSUFAl2Rs1YCGwwACgkQ
- +vLfVfR6pSUCJA//UQA9h4/cBG8za6WHd8asVY+CoD/sIRaWNpT70ul/kIpGv5jopmD/3sjz
- x1aKXszTs/I5iFw//ku2+BO20D1Ri6wfVIaUFmxqEBC0NRsm7GariF4czDbMZW282IpuYglb
- zKw/Nw6a8pwM1+VxClhj03hbkqAOUtGJ5/j/LGbhWZQvhtNE4FCc9Xsloz9NJAifv51un7ad
- cnbgbzVf8lBm+fqw7CC+8q7uufTAL5JelwxWRPu/WcZtDre5kHHanDw4IZ3Sgx68a/O89ctB
- LC6tfOyPG0jH+WyWQuxXbWWi0Vysdhj1SmzvEBo2r6v9D94MOe2MqitBGfXCXAERlLp94r5U
- 5WqlzEV0xMsF1fC6ZHVDSs1kWZmWQIEt5qny9OVHm3YuTPqeHGVUJa9aO5ZQGup7Y8iHknKK
- i/GRNDOdJASSyvtN4NEfdBjnyeJ14LswXuDXVpu8JUN0k0hnWFOj4KSUisKJTMnA8o29RsPN
- UFOmngVHTnOFVEO8VrMdHN1CmUE1YRNpk/Z+KwK9XZwuYnlJ8Xvd45C+Vy5VUZ9FTwrK5Ooq
- 3ibdnPBOQyW49rlWCJ560uE0tzI5hCdf6rgsWtsDCwQ0dbytBWb1njndmyxhXpj7mNHbcb9y
- 66v1LtPpqCSoLdbFBlPJbr1pVtHEOnmW0uFfbAjF9Wan60rlDro=
-In-Reply-To: <01de5e16-a4ee-47df-03e6-67f5f0d601a7@gmx.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ZAXqpaFHz96TfYyMISa60EXq"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ZAXqpaFHz96TfYyMISa60EXq
-Content-Type: multipart/mixed; boundary="------------8DeTPydw5r2nGQ5vbEn2OjdZ";
- protected-headers="v1"
-From: Stelian Pop <stelian@popies.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Jeff King <peff@peff.net>, Matthew Rollings <admin@stealthcopter.com>
-Cc: git@vger.kernel.org
-Message-ID: <37e4cd61-b370-437e-bd42-f98f47d3ad32@popies.net>
-Subject: Re: [PATCH] contrib: drop hg-to-git script
-References: <20240320094824.GA2445978@coredump.intra.peff.net>
- <01de5e16-a4ee-47df-03e6-67f5f0d601a7@gmx.de>
-In-Reply-To: <01de5e16-a4ee-47df-03e6-67f5f0d601a7@gmx.de>
+Junio C Hamano <gitster@pobox.com> writes:
 
---------------8DeTPydw5r2nGQ5vbEn2OjdZ
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+> Richard Kerry <richard.kerry@eviden.com> writes:
+>
+>> I'd like to merge only certain files, or folders, from another
+>> branch.  What command or options should I be looking at to get
+>> this done?
+>
+> If you are using the verb "merge" in the way Git uses, then there is
+> *no* option to do so and that is very much deliberate, as allowing
+> such a operation will break your history.
 
-SGkgZXZlcnlvbmUsDQoNCkZXSVcsIEkgaGF2ZSBubyBvYmplY3Rpb24gdG8gdGhpcyByZW1v
-dmFsICENCg0KU2lnbmVkLW9mZi1ieTogU3RlbGlhbiBQb3AgPHN0ZWxpYW5AcG9waWVzLm5l
-dD4NCg0KDQpCZXN0LA0KDQpTdGVsaWFuLg0KDQpMZSAyMi8wMy8yMDI0IMOgIDA4OjMxLCBK
-b2hhbm5lcyBTY2hpbmRlbGluIGEgw6ljcml0wqA6DQo+IEhpIEplZmYsDQo+IA0KPiBJIENj
-OmVkIE1hdCAod2hvIHJlcG9ydGVkIHRoZSBpc3N1ZSkgYW5kIFN0ZWxpYW4gKHdobyBhZGRl
-ZCB0aGlzIHNjcmlwdCBpbg0KPiAyMDA3IGFuZCB3aG9zZSBlbWFpbCBhZGRyZXNzIGhvcGVm
-dWxseSBzdGlsbCB3b3JrcykuDQo+IA0KPiBXaGlsZSBJIGhhdmUgbm8gb2JqZWN0aW9uIHRv
-IGRyb3BwaW5nIHRoaXMgc2NyaXB0LCBJIGFtIHJlbHVjdGFudCB0byBkcm9wDQo+IGl0IHdp
-dGhvdXQgbGVhdmluZyBhbnl0aGluZyBoZWxwZnVsIGluIHBsYWNlLiBJIGFtIHRoaW5raW5n
-IGFib3V0DQo+IHNvbWV0aGluZyBsaWtlIGEgYFJFQURNRS5tZGAgdGhhdCB3b3VsZCBjb250
-YWluIGhlbHBmdWwgaW5mb3JtYXRpb24gZm9yDQo+IGFueSBpbnRlcmVzdGVkIHJlYWRlci4g
-SSBhbSBub3QgZ29vZCB3cml0aW5nIHN1Y2ggdGhpbmdzLCBzbyBJIGFza2VkDQo+IENvcGls
-b3QsIGFuZCBpdCBjYW1lIHVwIHdpdGggdGhpczoNCj4gDQo+IAlUaGUgYGhnLXRvLWdpdGAg
-c2NyaXB0LCB3aGljaCB3YXMgdXNlZCB0byBpbnRlZ3JhdGUgTWVyY3VyaWFsDQo+IAlyZXBv
-c2l0b3JpZXMgaW50byBHaXQsIGhhcyBiZWVuIGRyb3BwZWQgZHVlIHRvIGxhY2sgb2YNCj4g
-CW1haW50ZW5hbmNlLiBUaGVyZSBoYXZlIGJlZW4gbWFueSBwYXN0IGVuZGVhdm9ycyB0byBp
-bnRlZ3JhdGUNCj4gCU1lcmN1cmlhbCByZXBvc2l0b3JpZXMgaW50byBHaXQsIGJ1dCBub3Qg
-YWxsIG9mIHRoZW0gaGF2ZSBiZWVuDQo+IAlzdWNjZXNzZnVsLiBGb3IgdGhvc2Ugd2hvIGFy
-ZSBpbnRlcmVzdGVkIGluIHRoaXMgdG9waWMsIHRoZXJlIGlzDQo+IAlzdGlsbCBhbiBhY3Rp
-dmUgcHJvamVjdCBjYWxsZWQgQ2lubmFiYXIsIHdoaWNoIGNhbiBiZSBmb3VuZCBvbg0KPiAJ
-R2l0SHViLiBZb3UgY2FuIGxlYXJuIG1vcmUgYWJvdXQgaXQgYnkgdmlzaXRpbmcgdGhlIENp
-bm5hYmFyDQo+IAlyZXBvc2l0b3J5IGF0IGh0dHBzOi8vZ2l0aHViLmNvbS9nbGFuZGl1bS9n
-aXQtY2lubmFiYXIuDQo+IA0KPiBDaWFvLA0KPiBKb2hhbm5lcw0KPiANCj4gT24gV2VkLCAy
-MCBNYXIgMjAyNCwgSmVmZiBLaW5nIHdyb3RlOg0KPiANCj4+IFRoZSBoZy10by1naXQgc2Ny
-aXB0IGlzIGZ1bGwgb2YgY29tbWFuZCBpbmplY3Rpb24gdnVsbmVyYWJpbGl0aWVzDQo+PiBh
-Z2FpbnN0IG1hbGljaW91cyBicmFuY2ggYW5kIHRhZyBuYW1lcy4gSXQncyBhbHNvIG9sZCBh
-bmQgbGFyZ2VseQ0KPj4gdW5tYWludGFpbmVkOyB0aGUgbGFzdCBjb21taXQgd2FzIG92ZXIg
-NCB5ZWFycyBhZ28sIGFuZCB0aGUgbGFzdCBjb2RlDQo+PiBjaGFuZ2UgYmVmb3JlIHRoYXQg
-d2FzIGZyb20gMjAxMy4gVXNlcnMgYXJlIGJldHRlciBvZmYgd2l0aCBhIG1vZGVybg0KPj4g
-cmVtb3RlLWhlbHBlciB0b29sIGxpa2UgY2lubmFiYXIgb3IgcmVtb3RlLWhnLg0KPj4NCj4+
-IFNvIHJhdGhlciB0aGFuIHNwZW5kaW5nIHRpbWUgdG8gZml4IGl0LCBsZXQncyBqdXN0IGdl
-dCByaWQgb2YgaXQuDQo+Pg0KPj4gUmVwb3J0ZWQtYnk6IE1hdHRoZXcgUm9sbGluZ3MgPGFk
-bWluQHN0ZWFsdGhjb3B0ZXIuY29tPg0KPj4gU2lnbmVkLW9mZi1ieTogSmVmZiBLaW5nIDxw
-ZWZmQHBlZmYubmV0Pg0KPj4gLS0tDQo+PiBUaGlzIHdhcyByZXBvcnRlZCB0byB0aGUgc2Vj
-dXJpdHkgbGlzdCBpbiBEZWNlbWJlci4gSSBzdWdnZXN0ZWQgdGhlcmUNCj4+IHRoYXQgd2Ug
-c2hvdWxkIGp1c3QgZ2V0IHJpZCBvZiBpdCwgYnV0IHRoZXJlIHdhcyBubyBmb2xsb3ctdXAu
-IFVudGlsDQo+PiBub3cuIDspIFNwZWFrIG5vdyBpZiBhbnlib2R5IHdhbnRzIHRvIHZvbHVu
-dGVlciB0byBmaXggdGhlIHNjcmlwdA0KPj4gaW5zdGVhZC4NCj4+DQo+PiAgIGNvbnRyaWIv
-aGctdG8tZ2l0L2hnLXRvLWdpdC5weSAgfCAyNTQgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0NCj4+ICAgY29udHJpYi9oZy10by1naXQvaGctdG8tZ2l0LnR4dCB8ICAyMSAt
-LS0NCj4+ICAgMiBmaWxlcyBjaGFuZ2VkLCAyNzUgZGVsZXRpb25zKC0pDQo+PiAgIGRlbGV0
-ZSBtb2RlIDEwMDc1NSBjb250cmliL2hnLXRvLWdpdC9oZy10by1naXQucHkNCj4+ICAgZGVs
-ZXRlIG1vZGUgMTAwNjQ0IGNvbnRyaWIvaGctdG8tZ2l0L2hnLXRvLWdpdC50eHQNCj4+DQo+
-PiBkaWZmIC0tZ2l0IGEvY29udHJpYi9oZy10by1naXQvaGctdG8tZ2l0LnB5IGIvY29udHJp
-Yi9oZy10by1naXQvaGctdG8tZ2l0LnB5DQo+PiBkZWxldGVkIGZpbGUgbW9kZSAxMDA3NTUN
-Cj4+IGluZGV4IDdlYjFiMjRjYzcuLjAwMDAwMDAwMDANCj4+IC0tLSBhL2NvbnRyaWIvaGct
-dG8tZ2l0L2hnLXRvLWdpdC5weQ0KPj4gKysrIC9kZXYvbnVsbA0KPj4gQEAgLTEsMjU0ICsw
-LDAgQEANCj4+IC0jIS91c3IvYmluL2VudiBweXRob24NCj4+IC0NCj4+IC0iIiIgaGctdG8t
-Z2l0LnB5IC0gQSBNZXJjdXJpYWwgdG8gR0lUIGNvbnZlcnRlcg0KPj4gLQ0KPj4gLSAgICBD
-b3B5cmlnaHQgKEMpMjAwNyBTdGVsaWFuIFBvcCA8c3RlbGlhbkBwb3BpZXMubmV0Pg0KPj4g
-LQ0KPj4gLSAgICBUaGlzIHByb2dyYW0gaXMgZnJlZSBzb2Z0d2FyZTsgeW91IGNhbiByZWRp
-c3RyaWJ1dGUgaXQgYW5kL29yIG1vZGlmeQ0KPj4gLSAgICBpdCB1bmRlciB0aGUgdGVybXMg
-b2YgdGhlIEdOVSBHZW5lcmFsIFB1YmxpYyBMaWNlbnNlIGFzIHB1Ymxpc2hlZCBieQ0KPj4g
-LSAgICB0aGUgRnJlZSBTb2Z0d2FyZSBGb3VuZGF0aW9uOyBlaXRoZXIgdmVyc2lvbiAyLCBv
-ciAoYXQgeW91ciBvcHRpb24pDQo+PiAtICAgIGFueSBsYXRlciB2ZXJzaW9uLg0KPj4gLQ0K
-Pj4gLSAgICBUaGlzIHByb2dyYW0gaXMgZGlzdHJpYnV0ZWQgaW4gdGhlIGhvcGUgdGhhdCBp
-dCB3aWxsIGJlIHVzZWZ1bCwNCj4+IC0gICAgYnV0IFdJVEhPVVQgQU5ZIFdBUlJBTlRZOyB3
-aXRob3V0IGV2ZW4gdGhlIGltcGxpZWQgd2FycmFudHkgb2YNCj4+IC0gICAgTUVSQ0hBTlRB
-QklMSVRZIG9yIEZJVE5FU1MgRk9SIEEgUEFSVElDVUxBUiBQVVJQT1NFLiAgU2VlIHRoZQ0K
-Pj4gLSAgICBHTlUgR2VuZXJhbCBQdWJsaWMgTGljZW5zZSBmb3IgbW9yZSBkZXRhaWxzLg0K
-Pj4gLQ0KPj4gLSAgICBZb3Ugc2hvdWxkIGhhdmUgcmVjZWl2ZWQgYSBjb3B5IG9mIHRoZSBH
-TlUgR2VuZXJhbCBQdWJsaWMgTGljZW5zZQ0KPj4gLSAgICBhbG9uZyB3aXRoIHRoaXMgcHJv
-Z3JhbTsgaWYgbm90LCBzZWUgPGh0dHA6Ly93d3cuZ251Lm9yZy9saWNlbnNlcy8+Lg0KPj4g
-LSIiIg0KPj4gLQ0KPj4gLWltcG9ydCBvcywgb3MucGF0aCwgc3lzDQo+PiAtaW1wb3J0IHRl
-bXBmaWxlLCBwaWNrbGUsIGdldG9wdA0KPj4gLWltcG9ydCByZQ0KPj4gLQ0KPj4gLWlmIHN5
-cy5oZXh2ZXJzaW9uIDwgMHgwMjAzMDAwMDoNCj4+IC0gICAjIFRoZSBiZWhhdmlvciBvZiB0
-aGUgcGlja2xlIG1vZHVsZSBjaGFuZ2VkIHNpZ25pZmljYW50bHkgaW4gMi4zDQo+PiAtICAg
-c3lzLnN0ZGVyci53cml0ZSgiaGctdG8tZ2l0LnB5OiByZXF1aXJlcyBQeXRob24gMi4zIG9y
-IGxhdGVyLlxuIikNCj4+IC0gICBzeXMuZXhpdCgxKQ0KPj4gLQ0KPj4gLSMgTWFwcyBoZyB2
-ZXJzaW9uIC0+IGdpdCB2ZXJzaW9uDQo+PiAtaGd2ZXJzID0ge30NCj4+IC0jIExpc3Qgb2Yg
-Y2hpbGRyZW4gZm9yIGVhY2ggaGcgcmV2aXNpb24NCj4+IC1oZ2NoaWxkcmVuID0ge30NCj4+
-IC0jIExpc3Qgb2YgcGFyZW50cyBmb3IgZWFjaCBoZyByZXZpc2lvbg0KPj4gLWhncGFyZW50
-cyA9IHt9DQo+PiAtIyBDdXJyZW50IGJyYW5jaCBmb3IgZWFjaCBoZyByZXZpc2lvbg0KPj4g
-LWhnYnJhbmNoID0ge30NCj4+IC0jIE51bWJlciBvZiBuZXcgY2hhbmdlc2V0cyBjb252ZXJ0
-ZWQgZnJvbSBoZw0KPj4gLWhnbmV3Y3NldHMgPSAwDQo+PiAtDQo+PiAtIy0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0KPj4gLQ0KPj4gLWRlZiB1c2FnZSgpOg0KPj4gLQ0KPj4gLSAgICAg
-ICAgcHJpbnQoIiIiXA0KPj4gLSVzOiBbT1BUSU9OU10gPGhncHJqPg0KPj4gLQ0KPj4gLW9w
-dGlvbnM6DQo+PiAtICAgIC1zLCAtLWdpdHN0YXRlPUZJTEU6IG5hbWUgb2YgdGhlIHN0YXRl
-IHRvIGJlIHNhdmVkL3JlYWQNCj4+IC0gICAgICAgICAgICAgICAgICAgICAgICAgZm9yIGlu
-Y3JlbWVudGFscw0KPj4gLSAgICAtbiwgLS1ucmVwYWNrPUlOVDogICBudW1iZXIgb2YgY2hh
-bmdlc2V0cyB0aGF0IHdpbGwgdHJpZ2dlcg0KPj4gLSAgICAgICAgICAgICAgICAgICAgICAg
-ICBhIHJlcGFjayAoZGVmYXVsdD0wLCAtMSB0byBkZWFjdGl2YXRlKQ0KPj4gLSAgICAtdiwg
-LS12ZXJib3NlOiAgICAgICBiZSB2ZXJib3NlDQo+PiAtDQo+PiAtcmVxdWlyZWQ6DQo+PiAt
-ICAgIGhncHJqOiAgbmFtZSBvZiB0aGUgSEcgcHJvamVjdCB0byBpbXBvcnQgKGRpcmVjdG9y
-eSkNCj4+IC0iIiIgJSBzeXMuYXJndlswXSkNCj4+IC0NCj4+IC0jLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tDQo+PiAtDQo+PiAtZGVmIGdldGdpdGVudih1c2VyLCBkYXRlKToNCj4+IC0g
-ICAgZW52ID0gJycNCj4+IC0gICAgZWxlbXMgPSByZS5jb21waWxlKCcoLio/KVxzKzwoLiop
-PicpLm1hdGNoKHVzZXIpDQo+PiAtICAgIGlmIGVsZW1zOg0KPj4gLSAgICAgICAgZW52ICs9
-ICdleHBvcnQgR0lUX0FVVEhPUl9OQU1FPSIlcyIgOycgJSBlbGVtcy5ncm91cCgxKQ0KPj4g
-LSAgICAgICAgZW52ICs9ICdleHBvcnQgR0lUX0NPTU1JVFRFUl9OQU1FPSIlcyIgOycgJSBl
-bGVtcy5ncm91cCgxKQ0KPj4gLSAgICAgICAgZW52ICs9ICdleHBvcnQgR0lUX0FVVEhPUl9F
-TUFJTD0iJXMiIDsnICUgZWxlbXMuZ3JvdXAoMikNCj4+IC0gICAgICAgIGVudiArPSAnZXhw
-b3J0IEdJVF9DT01NSVRURVJfRU1BSUw9IiVzIiA7JyAlIGVsZW1zLmdyb3VwKDIpDQo+PiAt
-ICAgIGVsc2U6DQo+PiAtICAgICAgICBlbnYgKz0gJ2V4cG9ydCBHSVRfQVVUSE9SX05BTUU9
-IiVzIiA7JyAlIHVzZXINCj4+IC0gICAgICAgIGVudiArPSAnZXhwb3J0IEdJVF9DT01NSVRU
-RVJfTkFNRT0iJXMiIDsnICUgdXNlcg0KPj4gLSAgICAgICAgZW52ICs9ICdleHBvcnQgR0lU
-X0FVVEhPUl9FTUFJTD0gOycNCj4+IC0gICAgICAgIGVudiArPSAnZXhwb3J0IEdJVF9DT01N
-SVRURVJfRU1BSUw9IDsnDQo+PiAtDQo+PiAtICAgIGVudiArPSAnZXhwb3J0IEdJVF9BVVRI
-T1JfREFURT0iJXMiIDsnICUgZGF0ZQ0KPj4gLSAgICBlbnYgKz0gJ2V4cG9ydCBHSVRfQ09N
-TUlUVEVSX0RBVEU9IiVzIiA7JyAlIGRhdGUNCj4+IC0gICAgcmV0dXJuIGVudg0KPj4gLQ0K
-Pj4gLSMtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4+IC0NCj4+IC1zdGF0ZSA9ICcnDQo+
-PiAtb3B0X25yZXBhY2sgPSAwDQo+PiAtdmVyYm9zZSA9IEZhbHNlDQo+PiAtDQo+PiAtdHJ5
-Og0KPj4gLSAgICBvcHRzLCBhcmdzID0gZ2V0b3B0LmdldG9wdChzeXMuYXJndlsxOl0sICdz
-OnQ6bjp2JywgWydnaXRzdGF0ZT0nLCAndGVtcGRpcj0nLCAnbnJlcGFjaz0nLCAndmVyYm9z
-ZSddKQ0KPj4gLSAgICBmb3IgbywgYSBpbiBvcHRzOg0KPj4gLSAgICAgICAgaWYgbyBpbiAo
-Jy1zJywgJy0tZ2l0c3RhdGUnKToNCj4+IC0gICAgICAgICAgICBzdGF0ZSA9IGENCj4+IC0g
-ICAgICAgICAgICBzdGF0ZSA9IG9zLnBhdGguYWJzcGF0aChzdGF0ZSkNCj4+IC0gICAgICAg
-IGlmIG8gaW4gKCctbicsICctLW5yZXBhY2snKToNCj4+IC0gICAgICAgICAgICBvcHRfbnJl
-cGFjayA9IGludChhKQ0KPj4gLSAgICAgICAgaWYgbyBpbiAoJy12JywgJy0tdmVyYm9zZScp
-Og0KPj4gLSAgICAgICAgICAgIHZlcmJvc2UgPSBUcnVlDQo+PiAtICAgIGlmIGxlbihhcmdz
-KSAhPSAxOg0KPj4gLSAgICAgICAgcmFpc2UgRXhjZXB0aW9uKCdwYXJhbXMnKQ0KPj4gLWV4
-Y2VwdDoNCj4+IC0gICAgdXNhZ2UoKQ0KPj4gLSAgICBzeXMuZXhpdCgxKQ0KPj4gLQ0KPj4g
-LWhncHJqID0gYXJnc1swXQ0KPj4gLW9zLmNoZGlyKGhncHJqKQ0KPj4gLQ0KPj4gLWlmIHN0
-YXRlOg0KPj4gLSAgICBpZiBvcy5wYXRoLmV4aXN0cyhzdGF0ZSk6DQo+PiAtICAgICAgICBp
-ZiB2ZXJib3NlOg0KPj4gLSAgICAgICAgICAgIHByaW50KCdTdGF0ZSBkb2VzIGV4aXN0LCBy
-ZWFkaW5nJykNCj4+IC0gICAgICAgIGYgPSBvcGVuKHN0YXRlLCAncicpDQo+PiAtICAgICAg
-ICBoZ3ZlcnMgPSBwaWNrbGUubG9hZChmKQ0KPj4gLSAgICBlbHNlOg0KPj4gLSAgICAgICAg
-cHJpbnQoJ1N0YXRlIGRvZXMgbm90IGV4aXN0LCBmaXJzdCBydW4nKQ0KPj4gLQ0KPj4gLXNv
-Y2sgPSBvcy5wb3BlbignaGcgdGlwIC0tdGVtcGxhdGUgIntyZXZ9IicpDQo+PiAtdGlwID0g
-c29jay5yZWFkKCkNCj4+IC1pZiBzb2NrLmNsb3NlKCk6DQo+PiAtICAgIHN5cy5leGl0KDEp
-DQo+PiAtaWYgdmVyYm9zZToNCj4+IC0gICAgcHJpbnQoJ3RpcCBpcycsIHRpcCkNCj4+IC0N
-Cj4+IC0jIENhbGN1bGF0ZSB0aGUgYnJhbmNoZXMNCj4+IC1pZiB2ZXJib3NlOg0KPj4gLSAg
-ICBwcmludCgnYW5hbHlzaW5nIHRoZSBicmFuY2hlcy4uLicpDQo+PiAtaGdjaGlsZHJlblsi
-MCJdID0gKCkNCj4+IC1oZ3BhcmVudHNbIjAiXSA9IChOb25lLCBOb25lKQ0KPj4gLWhnYnJh
-bmNoWyIwIl0gPSAibWFzdGVyIg0KPj4gLWZvciBjc2V0IGluIHJhbmdlKDEsIGludCh0aXAp
-ICsgMSk6DQo+PiAtICAgIGhnY2hpbGRyZW5bc3RyKGNzZXQpXSA9ICgpDQo+PiAtICAgIHBy
-bnRzID0gb3MucG9wZW4oJ2hnIGxvZyAtciAlZCAtLXRlbXBsYXRlICJ7cGFyZW50c30iJyAl
-IGNzZXQpLnJlYWQoKS5zdHJpcCgpLnNwbGl0KCcgJykNCj4+IC0gICAgcHJudHMgPSBtYXAo
-bGFtYmRhIHg6IHhbOnguZmluZCgnOicpXSwgcHJudHMpDQo+PiAtICAgIGlmIHBybnRzWzBd
-ICE9ICcnOg0KPj4gLSAgICAgICAgcGFyZW50ID0gcHJudHNbMF0uc3RyaXAoKQ0KPj4gLSAg
-ICBlbHNlOg0KPj4gLSAgICAgICAgcGFyZW50ID0gc3RyKGNzZXQgLSAxKQ0KPj4gLSAgICBo
-Z2NoaWxkcmVuW3BhcmVudF0gKz0gKCBzdHIoY3NldCksICkNCj4+IC0gICAgaWYgbGVuKHBy
-bnRzKSA+IDE6DQo+PiAtICAgICAgICBtcGFyZW50ID0gcHJudHNbMV0uc3RyaXAoKQ0KPj4g
-LSAgICAgICAgaGdjaGlsZHJlblttcGFyZW50XSArPSAoIHN0cihjc2V0KSwgKQ0KPj4gLSAg
-ICBlbHNlOg0KPj4gLSAgICAgICAgbXBhcmVudCA9IE5vbmUNCj4+IC0NCj4+IC0gICAgaGdw
-YXJlbnRzW3N0cihjc2V0KV0gPSAocGFyZW50LCBtcGFyZW50KQ0KPj4gLQ0KPj4gLSAgICBp
-ZiBtcGFyZW50Og0KPj4gLSAgICAgICAgIyBGb3IgbWVyZ2UgY2hhbmdlc2V0cywgdGFrZSBl
-aXRoZXIgb25lLCBwcmVmZXJhYmx5IHRoZSAnbWFzdGVyJyBicmFuY2gNCj4+IC0gICAgICAg
-IGlmIGhnYnJhbmNoW21wYXJlbnRdID09ICdtYXN0ZXInOg0KPj4gLSAgICAgICAgICAgIGhn
-YnJhbmNoW3N0cihjc2V0KV0gPSAnbWFzdGVyJw0KPj4gLSAgICAgICAgZWxzZToNCj4+IC0g
-ICAgICAgICAgICBoZ2JyYW5jaFtzdHIoY3NldCldID0gaGdicmFuY2hbcGFyZW50XQ0KPj4g
-LSAgICBlbHNlOg0KPj4gLSAgICAgICAgIyBOb3JtYWwgY2hhbmdlc2V0cw0KPj4gLSAgICAg
-ICAgIyBGb3IgZmlyc3QgY2hpbGRyZW4sIHRha2UgdGhlIHBhcmVudCBicmFuY2gsIGZvciB0
-aGUgb3RoZXJzIGNyZWF0ZSBhIG5ldyBicmFuY2gNCj4+IC0gICAgICAgIGlmIGhnY2hpbGRy
-ZW5bcGFyZW50XVswXSA9PSBzdHIoY3NldCk6DQo+PiAtICAgICAgICAgICAgaGdicmFuY2hb
-c3RyKGNzZXQpXSA9IGhnYnJhbmNoW3BhcmVudF0NCj4+IC0gICAgICAgIGVsc2U6DQo+PiAt
-ICAgICAgICAgICAgaGdicmFuY2hbc3RyKGNzZXQpXSA9ICJicmFuY2gtIiArIHN0cihjc2V0
-KQ0KPj4gLQ0KPj4gLWlmICIwIiBub3QgaW4gaGd2ZXJzOg0KPj4gLSAgICBwcmludCgnY3Jl
-YXRpbmcgcmVwb3NpdG9yeScpDQo+PiAtICAgIG9zLnN5c3RlbSgnZ2l0IGluaXQnKQ0KPj4g
-LQ0KPj4gLSMgbG9vcCB0aHJvdWdoIGV2ZXJ5IGhnIGNoYW5nZXNldA0KPj4gLWZvciBjc2V0
-IGluIHJhbmdlKGludCh0aXApICsgMSk6DQo+PiAtDQo+PiAtICAgICMgaW5jcmVtZW50YWws
-IGFscmVhZHkgc2Vlbg0KPj4gLSAgICBpZiBzdHIoY3NldCkgaW4gaGd2ZXJzOg0KPj4gLSAg
-ICAgICAgY29udGludWUNCj4+IC0gICAgaGduZXdjc2V0cyArPSAxDQo+PiAtDQo+PiAtICAg
-ICMgZ2V0IGluZm8NCj4+IC0gICAgbG9nX2RhdGEgPSBvcy5wb3BlbignaGcgbG9nIC1yICVk
-IC0tdGVtcGxhdGUgInt0YWdzfVxue2RhdGV8ZGF0ZX1cbnthdXRob3J9XG4iJyAlIGNzZXQp
-LnJlYWRsaW5lcygpDQo+PiAtICAgIHRhZyA9IGxvZ19kYXRhWzBdLnN0cmlwKCkNCj4+IC0g
-ICAgZGF0ZSA9IGxvZ19kYXRhWzFdLnN0cmlwKCkNCj4+IC0gICAgdXNlciA9IGxvZ19kYXRh
-WzJdLnN0cmlwKCkNCj4+IC0gICAgcGFyZW50ID0gaGdwYXJlbnRzW3N0cihjc2V0KV1bMF0N
-Cj4+IC0gICAgbXBhcmVudCA9IGhncGFyZW50c1tzdHIoY3NldCldWzFdDQo+PiAtDQo+PiAt
-ICAgICNnZXQgY29tbWVudA0KPj4gLSAgICAoZmRjb21tZW50LCBmaWxlY29tbWVudCkgPSB0
-ZW1wZmlsZS5ta3N0ZW1wKCkNCj4+IC0gICAgY3NldGNvbW1lbnQgPSBvcy5wb3BlbignaGcg
-bG9nIC1yICVkIC0tdGVtcGxhdGUgIntkZXNjfSInICUgY3NldCkucmVhZCgpLnN0cmlwKCkN
-Cj4+IC0gICAgb3Mud3JpdGUoZmRjb21tZW50LCBjc2V0Y29tbWVudCkNCj4+IC0gICAgb3Mu
-Y2xvc2UoZmRjb21tZW50KQ0KPj4gLQ0KPj4gLSAgICBwcmludCgnLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0nKQ0KPj4gLSAgICBwcmludCgnY3NldDonLCBj
-c2V0KQ0KPj4gLSAgICBwcmludCgnYnJhbmNoOicsIGhnYnJhbmNoW3N0cihjc2V0KV0pDQo+
-PiAtICAgIHByaW50KCd1c2VyOicsIHVzZXIpDQo+PiAtICAgIHByaW50KCdkYXRlOicsIGRh
-dGUpDQo+PiAtICAgIHByaW50KCdjb21tZW50OicsIGNzZXRjb21tZW50KQ0KPj4gLSAgICBp
-ZiBwYXJlbnQ6DQo+PiAtICAgICAgICBwcmludCgncGFyZW50OicsIHBhcmVudCkNCj4+IC0g
-ICAgaWYgbXBhcmVudDoNCj4+IC0gICAgICAgIHByaW50KCdtcGFyZW50OicsIG1wYXJlbnQp
-DQo+PiAtICAgIGlmIHRhZzoNCj4+IC0gICAgICAgIHByaW50KCd0YWc6JywgdGFnKQ0KPj4g
-LSAgICBwcmludCgnLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0n
-KQ0KPj4gLQ0KPj4gLSAgICAjIGNoZWNrb3V0IHRoZSBwYXJlbnQgaWYgbmVjZXNzYXJ5DQo+
-PiAtICAgIGlmIGNzZXQgIT0gMDoNCj4+IC0gICAgICAgIGlmIGhnYnJhbmNoW3N0cihjc2V0
-KV0gPT0gImJyYW5jaC0iICsgc3RyKGNzZXQpOg0KPj4gLSAgICAgICAgICAgIHByaW50KCdj
-cmVhdGluZyBuZXcgYnJhbmNoJywgaGdicmFuY2hbc3RyKGNzZXQpXSkNCj4+IC0gICAgICAg
-ICAgICBvcy5zeXN0ZW0oJ2dpdCBjaGVja291dCAtYiAlcyAlcycgJSAoaGdicmFuY2hbc3Ry
-KGNzZXQpXSwgaGd2ZXJzW3BhcmVudF0pKQ0KPj4gLSAgICAgICAgZWxzZToNCj4+IC0gICAg
-ICAgICAgICBwcmludCgnY2hlY2tpbmcgb3V0IGJyYW5jaCcsIGhnYnJhbmNoW3N0cihjc2V0
-KV0pDQo+PiAtICAgICAgICAgICAgb3Muc3lzdGVtKCdnaXQgY2hlY2tvdXQgJXMnICUgaGdi
-cmFuY2hbc3RyKGNzZXQpXSkNCj4+IC0NCj4+IC0gICAgIyBtZXJnZQ0KPj4gLSAgICBpZiBt
-cGFyZW50Og0KPj4gLSAgICAgICAgaWYgaGdicmFuY2hbcGFyZW50XSA9PSBoZ2JyYW5jaFtz
-dHIoY3NldCldOg0KPj4gLSAgICAgICAgICAgIG90aGVyYnJhbmNoID0gaGdicmFuY2hbbXBh
-cmVudF0NCj4+IC0gICAgICAgIGVsc2U6DQo+PiAtICAgICAgICAgICAgb3RoZXJicmFuY2gg
-PSBoZ2JyYW5jaFtwYXJlbnRdDQo+PiAtICAgICAgICBwcmludCgnbWVyZ2luZycsIG90aGVy
-YnJhbmNoLCAnaW50bycsIGhnYnJhbmNoW3N0cihjc2V0KV0pDQo+PiAtICAgICAgICBvcy5z
-eXN0ZW0oZ2V0Z2l0ZW52KHVzZXIsIGRhdGUpICsgJ2dpdCBtZXJnZSAtLW5vLWNvbW1pdCAt
-cyBvdXJzICIiICVzICVzJyAlIChoZ2JyYW5jaFtzdHIoY3NldCldLCBvdGhlcmJyYW5jaCkp
-DQo+PiAtDQo+PiAtICAgICMgcmVtb3ZlIGV2ZXJ5dGhpbmcgZXhjZXB0IC5naXQgYW5kIC5o
-ZyBkaXJlY3Rvcmllcw0KPj4gLSAgICBvcy5zeXN0ZW0oJ2ZpbmQgLiBcKCAtcGF0aCAiLi8u
-aGciIC1vIC1wYXRoICIuLy5naXQiIFwpIC1wcnVuZSAtbyAhIC1uYW1lICIuIiAtcHJpbnQg
-fCB4YXJncyBybSAtcmYnKQ0KPj4gLQ0KPj4gLSAgICAjIHJlcG9wdWxhdGUgd2l0aCBjaGVj
-a291dGVkIGZpbGVzDQo+PiAtICAgIG9zLnN5c3RlbSgnaGcgdXBkYXRlIC1DICVkJyAlIGNz
-ZXQpDQo+PiAtDQo+PiAtICAgICMgYWRkIG5ldyBmaWxlcw0KPj4gLSAgICBvcy5zeXN0ZW0o
-J2dpdCBscy1maWxlcyAteCAuaGcgLS1vdGhlcnMgfCBnaXQgdXBkYXRlLWluZGV4IC0tYWRk
-IC0tc3RkaW4nKQ0KPj4gLSAgICAjIGRlbGV0ZSByZW1vdmVkIGZpbGVzDQo+PiAtICAgIG9z
-LnN5c3RlbSgnZ2l0IGxzLWZpbGVzIC14IC5oZyAtLWRlbGV0ZWQgfCBnaXQgdXBkYXRlLWlu
-ZGV4IC0tcmVtb3ZlIC0tc3RkaW4nKQ0KPj4gLQ0KPj4gLSAgICAjIGNvbW1pdA0KPj4gLSAg
-ICBvcy5zeXN0ZW0oZ2V0Z2l0ZW52KHVzZXIsIGRhdGUpICsgJ2dpdCBjb21taXQgLS1hbGxv
-dy1lbXB0eSAtLWFsbG93LWVtcHR5LW1lc3NhZ2UgLWEgLUYgJXMnICUgZmlsZWNvbW1lbnQp
-DQo+PiAtICAgIG9zLnVubGluayhmaWxlY29tbWVudCkNCj4+IC0NCj4+IC0gICAgIyB0YWcN
-Cj4+IC0gICAgaWYgdGFnIGFuZCB0YWcgIT0gJ3RpcCc6DQo+PiAtICAgICAgICBvcy5zeXN0
-ZW0oZ2V0Z2l0ZW52KHVzZXIsIGRhdGUpICsgJ2dpdCB0YWcgJXMnICUgdGFnKQ0KPj4gLQ0K
-Pj4gLSAgICAjIGRlbGV0ZSBicmFuY2ggaWYgbm90IHVzZWQgYW55bW9yZS4uLg0KPj4gLSAg
-ICBpZiBtcGFyZW50IGFuZCBsZW4oaGdjaGlsZHJlbltzdHIoY3NldCldKToNCj4+IC0gICAg
-ICAgIHByaW50KCJEZWxldGluZyB1bnVzZWQgYnJhbmNoOiIsIG90aGVyYnJhbmNoKQ0KPj4g
-LSAgICAgICAgb3Muc3lzdGVtKCdnaXQgYnJhbmNoIC1kICVzJyAlIG90aGVyYnJhbmNoKQ0K
-Pj4gLQ0KPj4gLSAgICAjIHJldHJpZXZlIGFuZCByZWNvcmQgdGhlIHZlcnNpb24NCj4+IC0g
-ICAgdnZ2ID0gb3MucG9wZW4oJ2dpdCBzaG93IC0tcXVpZXQgLS1wcmV0dHk9Zm9ybWF0OiVI
-JykucmVhZCgpDQo+PiAtICAgIHByaW50KCdyZWNvcmQnLCBjc2V0LCAnLT4nLCB2dnYpDQo+
-PiAtICAgIGhndmVyc1tzdHIoY3NldCldID0gdnZ2DQo+PiAtDQo+PiAtaWYgaGduZXdjc2V0
-cyA+PSBvcHRfbnJlcGFjayBhbmQgb3B0X25yZXBhY2sgIT0gLTE6DQo+PiAtICAgIG9zLnN5
-c3RlbSgnZ2l0IHJlcGFjayAtYSAtZCcpDQo+PiAtDQo+PiAtIyB3cml0ZSB0aGUgc3RhdGUg
-Zm9yIGluY3JlbWVudGFscw0KPj4gLWlmIHN0YXRlOg0KPj4gLSAgICBpZiB2ZXJib3NlOg0K
-Pj4gLSAgICAgICAgcHJpbnQoJ1dyaXRpbmcgc3RhdGUnKQ0KPj4gLSAgICBmID0gb3Blbihz
-dGF0ZSwgJ3cnKQ0KPj4gLSAgICBwaWNrbGUuZHVtcChoZ3ZlcnMsIGYpDQo+PiAtDQo+PiAt
-IyB2aW06IGV0IHRzPTggc3c9NCBzdHM9NA0KPj4gZGlmZiAtLWdpdCBhL2NvbnRyaWIvaGct
-dG8tZ2l0L2hnLXRvLWdpdC50eHQgYi9jb250cmliL2hnLXRvLWdpdC9oZy10by1naXQudHh0
-DQo+PiBkZWxldGVkIGZpbGUgbW9kZSAxMDA2NDQNCj4+IGluZGV4IDkxZjhmZTY0MTAuLjAw
-MDAwMDAwMDANCj4+IC0tLSBhL2NvbnRyaWIvaGctdG8tZ2l0L2hnLXRvLWdpdC50eHQNCj4+
-ICsrKyAvZGV2L251bGwNCj4+IEBAIC0xLDIxICswLDAgQEANCj4+IC1oZy10by1naXQucHkg
-aXMgYWJsZSB0byBjb252ZXJ0IGEgTWVyY3VyaWFsIHJlcG9zaXRvcnkgaW50byBhIGdpdCBv
-bmUsDQo+PiAtYW5kIHByZXNlcnZlcyB0aGUgYnJhbmNoZXMgaW4gdGhlIHByb2Nlc3MgKHVu
-bGlrZSB0YWlsb3IpDQo+PiAtDQo+PiAtaGctdG8tZ2l0LnB5IGNhbiBwcm9iYWJseSBiZSBn
-cmVhdGx5IGltcHJvdmVkIChpdCdzIGEgcmF0aGVyIGNydWRlDQo+PiAtY29tYmluYXRpb24g
-b2Ygc2hlbGwgYW5kIHB5dGhvbikgYnV0IGl0IGRvZXMgYWxyZWFkeSB3b3JrIHF1aXRlIHdl
-bGwgZm9yDQo+PiAtbWUuIEZlYXR1cmVzOg0KPj4gLQktIHN1cHBvcnRzIGluY3JlbWVudGFs
-IGNvbnZlcnNpb24NCj4+IC0JICAoZm9yIGtlZXBpbmcgYSBnaXQgcmVwbyBpbiBzeW5jIHdp
-dGggYSBoZyBvbmUpDQo+PiAtICAgICAgICAtIHN1cHBvcnRzIGhnIGJyYW5jaGVzDQo+PiAt
-ICAgICAgICAtIGNvbnZlcnRzIGhnIHRhZ3MNCj4+IC0NCj4+IC1Ob3RlIHRoYXQgdGhlIGdp
-dCByZXBvc2l0b3J5IHdpbGwgYmUgY3JlYXRlZCAnaW4gcGxhY2UnIChhdCB0aGUgc2FtZQ0K
-Pj4gLWxvY2F0aW9uIGFzIHRoZSBzb3VyY2UgaGcgcmVwbykuIFlvdSB3aWxsIGhhdmUgdG8g
-bWFudWFsbHkgcmVtb3ZlIHRoZQ0KPj4gLScuaGcnIGRpcmVjdG9yeSBhZnRlciB0aGUgY29u
-dmVyc2lvbi4NCj4+IC0NCj4+IC1BbHNvIG5vdGUgdGhhdCB0aGUgaW5jcmVtZW50YWwgY29u
-dmVyc2lvbiB1c2VzICdzaW1wbGUnIGhnIGNoYW5nZXNldHMNCj4+IC1pZGVudGlmaWVycyAo
-b3JkaW5hbHMsIGFzIG9wcG9zZWQgdG8gU0hBLTEgaWRzKSwgYW5kIHNpbmNlIHRoZXNlIGlk
-cw0KPj4gLWFyZSBub3Qgc3RhYmxlIGFjcm9zcyBkaWZmZXJlbnQgcmVwb3NpdG9yaWVzIHRo
-ZSBoZy10by1naXQucHkgc3RhdGUgZmlsZQ0KPj4gLWlzIGZvcmV2ZXIgdGllZCB0byBvbmUg
-aGcgcmVwb3NpdG9yeS4NCj4+IC0NCj4+IC1TdGVsaWFuIFBvcCA8c3RlbGlhbkBwb3BpZXMu
-bmV0Pg0KPj4gLS0NCj4+IDIuNDQuMC42NTAuZzQ2MTVmNjVmZTANCj4+DQo+Pg0KDQotLSAN
-ClN0ZWxpYW4gUG9wIDxzdGVsaWFuQHBvcGllcy5uZXQ+DQoNCg==
+No, it won't break history. The merge commit *content* does not break
+*history* in any way. Path-limiting makes perfect sense when one is
+about to create merge commit content and knows in advance the exact set
+of paths the changes from which are to be included (or ignored).
 
---------------8DeTPydw5r2nGQ5vbEn2OjdZ--
+>
+> A "merge" commit in Git records the fact that *all* changes that
+> were done in each parent since the merged branches diverged have
+> been considered and the tree recorded by the merge commit is the
+> result.  Hence, if you later change your mind and "merge" other
+> changes from the same branch, it will result in no change at all, by
+> definition.
 
---------------ZAXqpaFHz96TfYyMISa60EXq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Yes, but it's not an argument against path limiting support in the merge
+*command* that is just a helper to create merge commits. With this
+feature in place I'd just tell "git merge" that I've already considered
+all the other paths and decided that changes from them are irrelevant
+and are not to be included.
 
------BEGIN PGP SIGNATURE-----
+> But if you are porting some changes made on another branch to the
+> current branch, and then planning to record the result as a regular
+> single parent commit, then there is no fundamental reason to forbid
+> such an operation.  It is what cherry-pick ought to be able to do,
+> even though I do not think it accepts a pathspec to limit currently.
 
-iQIzBAEBCgAdFiEEv/PVhZZngW1QSTnn+vLfVfR6pSUFAmX9QwcACgkQ+vLfVfR6
-pSWlBA//SJU/ARdJj3qNrn2KB+xVCEEvsjNpxuHXPay3S4So75DKRk9JwiAadljw
-3+HDhShagpjtC17IRThYCzEZ3zcOLXhsvESyQF5dRbiEuUWr6OoLFPvuKilhvRl9
-bJLy7Aqdrja1sacboynewOxzI+tXwCnyprBTOT3SCyPK65/YGruWjZ88/wDxFskm
-58vR3UhYeiUQDX4Du3F5jz1mgU8uQIVkd0/YzJaNhcOH9zlEl27AVvq2t54GR/6K
-Ua7mC7WZsjv60wejpxDDJl4KKkMk4QeZC1Mol8xbMJ/mfM7tylhMMkkUBCnjhth4
-PR8kt5PnB4K2GeePTNl3b8+D8aYahw/heZoMaiudZweBjs/bcjx9nWnqQ3287mU4
-vobMrwmgfxI2aWDmN1g7HI45B+wAKqft4zgdMBJL00cPzeTyNODiJunddcYdv9Ux
-wHck+07UdfpZEwYmSLGxhioTvsBwv0k2TGAFH1YislSplRy5Xe6GKNYr+Gk5dWV3
-nTdwVPO0WYbV0GgTDhrmTka9CJGjX/hLsGHMdOY+9cDY5TLBo5NTrWK1g6dXUDDF
-o44PmgFnrmdptK/xQ1SECVvrlty1bY7XTsy9GAlATa0qRQ7hAmK5bvYbGZu02B22
-oOVSKZoflA+VyGmyl/IOS0NRLdbXItmnah2Ugh/0TnWv/d0V2DY=
-=6K2y
------END PGP SIGNATURE-----
+I think both cherry-pick and merge can be given such a possibility, as
+there is nothing wrong with it (see above), provided we do properly
+document what we are actually doing.
 
---------------ZAXqpaFHz96TfYyMISa60EXq--
+>
+> Assuming a history of this shape:
+>
+>       x---x---X (that other branch)
+>      /
+>     O---o---o---o---H	(current branch)
+>
+> such a "cherry-pick" would essentially be applying all the changes
+> lead to X since the histories forked at O on top of H:
+>
+>     $ git checkout H
+>     $ O=$(git merge-base X H)
+>     $ git diff $O X | git apply
+>     $ git commit -m "picked changes from branch X"
+>
+> And if you want to limit the paths involved in the operation, the
+> "git diff" step can be given a <pathspec> to limit the changes that
+> are ported.
+>
+>     $ git checkout H
+>     $ O=$(git merge-base X H)
+>     $ git diff $O X -- thisdir/ that/file | git apply
+>     $ git commit -m "picked changes from branch X"
+>
+> Teaching "git cherry-pick" to accept a pathspec and natively 
+> perform something like the above is left as an exercise.
+
+Well, I'd argue that both cherry-pick and merge should learn to have
+this useful feature, and it's much more useful for merges, as, unlike
+single commits the cherry-pick deals with, the merges tend to be huge
+from time to time, making manual amendments a real pain.
+
+Do such patches have a chance of being accepted?
+
+Thanks,
+-- Sergey Organov
