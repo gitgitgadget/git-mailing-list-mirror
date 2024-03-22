@@ -1,187 +1,201 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE40823A4
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA98D43AB5
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:17:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711145648; cv=none; b=uzcaR1ybfAs1Ty1+hissceiMMf610G7+rgh8UNzXJPbPViRxuY5TurEz51KznM/bglazxe9qHsS5581NkJEWIUknbCHDIIqG+gb312yxS3l5653Mm+Jurey0ko9HBWFH6HqncdTLUfoyQHufOBWBEAXwISbR76IKfSWN+6uSDR8=
+	t=1711145855; cv=none; b=tzOc8wtPj8/RJvDqMqg8CWSZ5MJh/PgyE23X88zgWDh6/BjR7e80Gqp/SZoWPynJCOYI1wQe7fVhNJdzqpmUh3z9dM598IHjHyVcGkx1eLYKbemJjSaOWd/gl+urdDjqJvyuhao725IKBYDf3jV/CMKkT5lnQ3tXXdXTF2MSVco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711145648; c=relaxed/simple;
-	bh=trBhGdehN0Wt/SXG9bQuxMyUinyhaZ5MtTv3rs9BWXQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dwdb6o37uDu9uLQPP9g3E6ss6WeQpq6viHpptD2sy5/zdBMecmm3HpimenvNRAZFa1AEAm32KQVxXS600V7owcdWDpCc5Z5DvIMGkIKH/5P+qVwpoJ1s4DcM1y0XVYW6WwAp6YkcwCFLQM0I2Z4H4amfo4aXeHUBWe6FwPxkne4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=zIPKeWBW; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	s=arc-20240116; t=1711145855; c=relaxed/simple;
+	bh=Y5NJBvBN4Ts1Jrz8PFTSKNFvQpSBMnumqOkx/ZmeXV4=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=d/W193Ee1dzDY5pojusibWs0CjOlfxBU3wc2G0l0g/dx63CKPbyHoF3AhMv+TV29dS/qvpHoopBTc5sFGdjer2RiOjh9nrP8cDxf2AdpCbX9SfNEtcjEAf4aZPtVzbB7v1Me9s6bqEWiV96gaPRQlrOcAqyOYwxAlmlt+qzskYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=AeoQAKt5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sOVf2BA4; arc=none smtp.client-ip=66.111.4.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="zIPKeWBW"
-Received: from localhost (reverse-238.fdn.fr [80.67.176.238])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id 3406F6037D;
-	Fri, 22 Mar 2024 23:13:55 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1711145635;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AXrpPHLZFaKXcQPNpkAahZyZz/rn+FU0YFVbXIQKhAY=;
-	b=zIPKeWBWSnMMEnwrfo+O+70pfB2PUym/1CliF7qgVel10crOaGi2CXTM6HmiJK1IEKBUg9
-	uST2CPfr/N10wDS7OjMD9p4Ga/Vj6hF1gtm0/LBNypi5URKlAxKgiF5dMJsAaxrSEgUBWV
-	G8AKmSJDqhMqXfKjO9TuogHkBqjc+6rF9bvnx97q8TlqDQsI9xWDyKYcJhmbn308JLa3O4
-	sF7UQ+djk8pwERom7/4LfB0DZRqpt4jPcRhxMRDZvsGJbV7W/iAvZxcKDTN/x+or3LPvKV
-	W1ro4ntG0mL68oQzKCqjv/iE1OwqZ8xKGGucyvttRSjX2qSnzeGDndVe/qWlHQ==
-From: Max Gautier <mg@max.gautier.name>
-To: git@vger.kernel.org
-Cc: Max Gautier <mg@max.gautier.name>,
-	=?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
-	Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 6/6] maintenance: update tests for systemd scheduler
-Date: Fri, 22 Mar 2024 23:11:11 +0100
-Message-ID: <20240322221327.12204-7-mg@max.gautier.name>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240322221327.12204-1-mg@max.gautier.name>
-References: <20240322221327.12204-1-mg@max.gautier.name>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="AeoQAKt5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sOVf2BA4"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id E794E5C004F;
+	Fri, 22 Mar 2024 18:17:31 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Fri, 22 Mar 2024 18:17:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1711145851; x=1711232251; bh=5HOcmKRuHfbesEJy/+6MXG+/q/Qrk9mk
+	b2eeyfbxCh8=; b=AeoQAKt5u4PGvvml30BKJ4P3aRzUSXh+hpBuPcyu8oA4pTZn
+	jncmmUFaSf5ua9qhPzrn3AI2laq4VsnPo8koxrMk3GRuNn6kzTinZqYUrc62eK4X
+	I6ZpEsZGgthkpoQf3kIUTMbzEaiYQoJnGT6tChlVpYerjKSgjeCHiBGf+44IQjKp
+	5LtM2nehx2o7J6Py2LVi2GVvXs/0ZFfCMrsvzvimnoBBwErQtvVceRN++QdR0MMd
+	5LHVOdJsWGxOUkwSusEzjHwtUCHrW1AI53EviHcic06MMug7d/soZrYreSV1mpIU
+	OdXPVroiatZghmlNYWgO7siMdFBstWWjfl1NxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1711145851; x=
+	1711232251; bh=5HOcmKRuHfbesEJy/+6MXG+/q/Qrk9mkb2eeyfbxCh8=; b=s
+	OVf2BA4ltCqfTH5hrFUcdWY4XVsMMJ4EkCmNmE0RE3w0AoJzxbNOpVxfolDz2ile
+	jBdRn2GxCK/HvKIVScqtIyY/mS9gwsHDx7u99qM36AVgOnIcIcuiFkLsceTZvVJ6
+	prWULpf8ulIyxNCrwPDhcQEmx/TSBiyJIy7TjH5A3y/zJm6G1h6CBeS2zNWI2Bmc
+	8W1CACe3tw4VhRjlinJ9s6H49MQYzypCcuJCCXuQac9tgU8WWbYPuLO0+aU/6j5I
+	GhgJ7ZmOt5EcVmCmE3HUrjxAt5gceof043I+xKBN138pxvEUOiGyajCAv649FX23
+	/ds8EsyaBPKsANIYN1dAA==
+X-ME-Sender: <xms:ewP-ZULw6VpmZ_Xm9SI6R4HSRMhJeNnwCydRuLHyMcUHQNwlvwcw04U>
+    <xme:ewP-ZUK0ROTj53bAweskjwMYwlGWrWSo8BAwiW6Ke0GORDW3ml9w-8vXdnwYKwE4h
+    zMt8-fy44Y_5WRuoQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtvddgleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgfgse
+    htqhertderreejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhk
+    fdcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnh
+    epvdevheeiudefheffvdetueevkeehhfeliefgkedtieefudetueehueeftefffedunecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvse
+    hkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:ewP-ZUtkbEtv22ax2pao4-Z5xVH65hTuSFcXs4FMxmsth_TP5mGYbg>
+    <xmx:ewP-ZRaCSUNkw3pWN8SEkXFsHWNCWF1vDZ2pVAOuaGbo_uU0fKI6ew>
+    <xmx:ewP-Zbbrt-1tc5WyikNXagnLyGjnUgjoMuauOhiY3fdaTq1UF4EDVw>
+    <xmx:ewP-ZdB8wxUto43jXioqCPRyAzEMVSXs7-LQFu61wVxn62YZyqQeDQ>
+    <xmx:ewP-Zal5NLiW1N2qoPW0H9RatLrB_71M2smezRQcyUEJTpejMHtsOA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id A063415A0092; Fri, 22 Mar 2024 18:17:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-332-gdeb4194079-fm-20240319.002-gdeb41940
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-Id: <fe89de4a-44aa-4d2a-8bb5-742a0bb4a7e0@app.fastmail.com>
+In-Reply-To: <20240322095951.GA529578@coredump.intra.peff.net>
+References: <cover.1709841147.git.code@khaugsbakk.name>
+ <cover.1710873210.git.code@khaugsbakk.name>
+ <9a7102b708e4afe78447e48e4baf5b6d66ca50d1.1710873210.git.code@khaugsbakk.name>
+ <20240319212940.GE1159535@coredump.intra.peff.net>
+ <20240320002555.GB903718@coredump.intra.peff.net>
+ <20240322095951.GA529578@coredump.intra.peff.net>
+Date: Fri, 22 Mar 2024 23:16:59 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Jeff King" <peff@peff.net>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 7/6] format-patch: fix leak of empty header string
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The systemd units are now in the source tree, rather than produced when
-running git maitenance start. There is no need anymore to couple
-validating the units and testing `git maintenance start`.
+On Fri, Mar 22, 2024, at 10:59, Jeff King wrote:
+> On Tue, Mar 19, 2024 at 08:25:55PM -0400, Jeff King wrote:
+>
+>>   [1/6]: shortlog: stop setting pp.print_email_subject
+>>   [2/6]: pretty: split oneline and email subject printing
+>>   [3/6]: pretty: drop print_email_subject flag
+>>   [4/6]: log: do not set up extra_headers for non-email formats
+>>   [5/6]: format-patch: return an allocated string from log_write_emai=
+l_headers()
+>>   [6/6]: format-patch: simplify after-subject MIME header handling
+>
+> These patches introduce a small leak into format-patch. I didn't notice
+> before because the "leaks" CI jobs were broken due to sanitizer proble=
+ms
+> in the base image (which now seem fixed?).
+>
+> Here's a fix that can go on top of jk/pretty-subject-cleanup. That top=
+ic
+> is not in 'next' yet, so I could also re-roll. The issue was subtle
+> enough that a separate commit is not such a bad thing, but I'm happy to
+> squash it in if we'd prefer.
+>
+> -- >8 --
+> Subject: [PATCH] format-patch: fix leak of empty header string
+>
+> The log_write_email_headers() function recently learned to return the
+> "extra_headers_p" variable to the caller as an allocated string. We
+> start by copying rev_info.extra_headers into a strbuf, and then detach
+> the strbuf at the end of the function. If there are no extra headers, =
+we
+> leave the strbuf empty. Likewise, if there are no headers to return, we
+> pass back NULL.
+>
+> This misses a corner case which can cause a leak. The "do we have any
+> headers to copy" check is done by looking for a NULL opt->extra_header=
+s.
+> But the "do we have a non-empty string to return" check is done by
+> checking the length of the strbuf. That means if opt->extra_headers is
+> the empty string, we'll "copy" it into the strbuf, triggering an
+> allocation, but then leak the buffer when we return NULL from the
+> function.
+>
+> We can solve this in one of two ways:
+>
+>   1. Rather than checking headers->len at the end, we could check
+>      headers->alloc to see if we allocated anything. That retains the
+>      original behavior before the recent change, where an empty
+>      extra_headers string is "passed through" to the caller. In practi=
+ce
+>      this doesn't matter, though (the code which eventually looks at t=
+he
+>      result treats NULL or the empty string the same).
+>
+>   2. Only bother copying a non-empty string into the strbuf. This has
+>      the added bonus of avoiding a pointless allocation.
+>
+>      Arguably strbuf_addstr() could do this optimization itself, though
+>      it may be slightly dangerous to do so (some existing callers may
+>      not get a fresh allocation when they expect to). In theory callers
+>      are all supposed to use strbuf_detach() in such a case, but there=
+'s
+>      no guarantee that this is the case.
+>
+> This patch uses option 2. Without it, building with SANITIZE=3Dleak sh=
+ows
+> many errors in t4021 and elsewhere.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  log-tree.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/log-tree.c b/log-tree.c
+> index eb2e841046..59eeaef1f7 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -480,7 +480,7 @@ void log_write_email_headers(struct rev_info *opt,
+> struct commit *commit,
+>
+>  	*need_8bit_cte_p =3D 0; /* unknown */
+>
+> -	if (opt->extra_headers)
+> +	if (opt->extra_headers && *opt->extra_headers)
+>  		strbuf_addstr(&headers, opt->extra_headers);
+>
+>  	fprintf(opt->diffopt.file, "From %s Mon Sep 17 00:00:00 2001\n", nam=
+e);
+> --
+> 2.44.0.682.g01e1dab148
 
-Adjust the test to verify the new `systemctl` command used, discard
-checks for presence/absence of unit files in $XDG_CONFIG_HOME.
+I was wondering if the new empty-string check now makes the condition
+look non-obvious. I mean given that
 
-Validate the systemd units in the source tree, with one test per unit to
-have more distinct failures.
+=E2=80=A2 You explain how headers-to-copy-check and have-non-empty-strin=
+g are
+  not the same
+=E2=80=A2 You explain how strbuf_addstr() could do this itself (which ma=
+kes
+  sense) but how it could be risky
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Max Gautier <mg@max.gautier.name>
----
+The condition looks bare without a comment. But the empty-string check
+of course makes sense without this context. And it could also be read as
+an optimization (and not a leak fix).
 
-Notes:
-    I encountered the same issue that
-    cover.1697319294.git.code@khaugsbakk.name tried to solve; I was
-    expecting multiples tests to be independent while they weren't (in
-    particular the MacOS ones).
-    
-    Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+And maybe most people just `git log -S'*opt->extra_headers'` if they
+have questions in their head. So no information is really missing.
 
- t/t7900-maintenance.sh | 39 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
-
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 37aa408d26..dc0bf39250 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -24,13 +24,6 @@ test_lazy_prereq SYSTEMD_ANALYZE '
- 	systemd-analyze verify /lib/systemd/system/basic.target
- '
- 
--test_systemd_analyze_verify () {
--	if test_have_prereq SYSTEMD_ANALYZE
--	then
--		systemd-analyze verify "$@"
--	fi
--}
--
- test_expect_success 'help text' '
- 	test_expect_code 129 git maintenance -h >actual &&
- 	test_grep "usage: git maintenance <subcommand>" actual &&
-@@ -776,23 +769,32 @@ test_expect_success 'start and stop Windows maintenance' '
- 		hourly daily weekly >expect &&
- 	test_cmp expect args
- '
-+test_expect_success SYSTEMD_ANALYZE 'validate maintenance systemd service unit' '
-+	git_path=$(command -v git) &&
-+	sed "s+@BINDIR@/git+${git_path}+" "$TEST_DIRECTORY"/../systemd/user/git-maintenance@.service.in > git-maintenance@.service &&
-+	systemd-analyze verify git-maintenance@hourly.service git-maintenance@daily.service git-maintenance@weekly.service &&
-+	rm git-maintenance@.service &&
-+	unset git_path
-+'
-+
-+test_expect_success SYSTEMD_ANALYZE 'validate maintenance systemd timer unit' '
-+	SYSTEMD_UNIT_PATH="$TEST_DIRECTORY"/../systemd/user/: systemd-analyze verify git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer
-+	# ':' at the end of SYSTEMD_UNIT_PATH appends the default systemd search path
-+	# This is needed because analyze tries to load implicit / default unit dependencies
-+'
- 
- test_expect_success 'start and stop Linux/systemd maintenance' '
- 	write_script print-args <<-\EOF &&
- 	printf "%s\n" "$*" >>args
- 	EOF
- 
--	XDG_CONFIG_HOME="$PWD" &&
--	export XDG_CONFIG_HOME &&
- 	rm -f args &&
- 	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args" git maintenance start --scheduler=systemd-timer &&
- 
- 	# start registers the repo
- 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
- 
--	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" &&
--
--	printf -- "--user enable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
-+	echo "--user --force --now enable" git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer >expect &&
- 	test_cmp expect args &&
- 
- 	rm -f args &&
-@@ -801,10 +803,7 @@ test_expect_success 'start and stop Linux/systemd maintenance' '
- 	# stop does not unregister the repo
- 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
- 
--	test_path_is_missing "systemd/user/git-maintenance@.timer" &&
--	test_path_is_missing "systemd/user/git-maintenance@.service" &&
--
--	printf -- "--user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
-+	echo "--user --force --now disable" git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer >expect &&
- 	test_cmp expect args
- '
- 
-@@ -819,12 +818,12 @@ test_expect_success 'start and stop when several schedulers are available' '
- 		hourly daily weekly >expect &&
- 	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
- 		hourly daily weekly >>expect &&
--	printf -- "systemctl --user enable --now git-maintenance@%s.timer\n" hourly daily weekly >>expect &&
-+	echo "systemctl --user --force --now enable" git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer >>expect &&
- 	test_cmp expect args &&
- 
- 	rm -f args &&
- 	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=launchctl &&
--	printf -- "systemctl --user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
-+	echo "systemctl --user --force --now disable" git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer >expect &&
- 	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
- 		hourly daily weekly >>expect &&
- 	for frequency in hourly daily weekly
-@@ -837,7 +836,7 @@ test_expect_success 'start and stop when several schedulers are available' '
- 
- 	rm -f args &&
- 	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=schtasks &&
--	printf -- "systemctl --user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
-+	echo "systemctl --user --force --now disable" git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer >expect &&
- 	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
- 		hourly daily weekly >>expect &&
- 	printf "schtasks /create /tn Git Maintenance (%s) /f /xml\n" \
-@@ -846,7 +845,7 @@ test_expect_success 'start and stop when several schedulers are available' '
- 
- 	rm -f args &&
- 	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance stop &&
--	printf -- "systemctl --user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
-+	echo "systemctl --user --force --now disable" git-maintenance@hourly.timer git-maintenance@daily.timer git-maintenance@weekly.timer >expect &&
- 	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
- 		hourly daily weekly >>expect &&
- 	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
--- 
-2.44.0
+--=20
+Kristoffer Haugsbakk
 
