@@ -1,78 +1,108 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45095FB81
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 17:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA55341C70
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 17:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711127714; cv=none; b=cP/+Aux3j5c6b38NdYjyqamqCTNrM6PI9mW5f/m3u8Uqqk99a2TREDE4c/cx2KxLuFCQVOTxZhZEQ4XgXqfIPSud1wO4uydxvqnpGxEfIje8D9Rv/g/5B7mOOc43s1j1FlOpdP5gRGOtOPwQM1ekkAAlMexxol240kt0Nk6y9Yo=
+	t=1711128088; cv=none; b=RPUYwwytmNDgs9pNtau36f+zR8BvtbKaknSLt5jnRorkDsmEieQOyMHUt3He/cajB/v4YjYUCYdCrg5EWXpiPSZgSTsS44S8Gni8WlGik7vuumrlkwEr9jo9zb6H5JPZMhPYUxiNX2ocokDxqiWsF9X1A0xXBiG1RR5HTbDOF0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711127714; c=relaxed/simple;
-	bh=r5cog2SYxhNlTR67nRFuSHQ9BdIXeP7WzwpLOd1uvN8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=SVFcqQatLexZOOCYj1tNsw9af6GrSjunJN6tOWPW2ZfO4lYH6hnIcmZgQXjh8Jgg3jyIvt8Y8qvJ7mrDECN/5bH3G9k3onmF7G4Uiyk2VfaPCzCt50hV36Fke7G6xWngZGxKcUVv0aEmC4Ek/QcUqDEbnq6k8GfLBJ44mR5xRhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f9meraZ9; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711128088; c=relaxed/simple;
+	bh=jLR8dIWsfLXmOMTMQCcR9POZT2hxkkRK0Eutc+KdFpc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KyEmoeddYSViAEYLAVnRirMTAQkmoaNzET7024prc40xYieEUnEeb2p+xOztnQQtm8Cwi632fV1zxwqCDMJnRX9CQMp15bSADE5RC0VQD9mIiHC/tVW9pV7HjURpkQb2w1vTyMKn2fK+4rhH95cE6GlWYWaepCixgItUobZnzGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wX/ijpau; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f9meraZ9"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d68cf90ec4so40087991fa.1
-        for <git@vger.kernel.org>; Fri, 22 Mar 2024 10:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711127711; x=1711732511; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r5cog2SYxhNlTR67nRFuSHQ9BdIXeP7WzwpLOd1uvN8=;
-        b=f9meraZ95eCHSXNbWgb66q3f6Dr3Lf6x2zjieUSoSfYQ/uCJrGkH95IGO2BE2SeqLI
-         UHljgqb9kKVlaVxybKriUwMp1B87LqZRRx1ceIcJFI5FLwS6gcIwnie92yNowunR9X/a
-         CxX8C7PoV6jigRoWLZTf/QW3dTvHseTJk2AqH2jMaJuzh6aiSp2s3JV7XUBPWfcHWjA2
-         FbD34TdoNKsGBUICBUwbEy2ZhCzH4HdChm9jlq1HgT7G+vkWfYWtwfKNOe9KdOYyPiJm
-         2xnRKkWf/oe4yXcUi7yR7wwJ53UWlGEaM/TxbO6jWN1Z1rHvRmkaACUvWKDX4LsJfGnt
-         9Mdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711127711; x=1711732511;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r5cog2SYxhNlTR67nRFuSHQ9BdIXeP7WzwpLOd1uvN8=;
-        b=jXprUKtlaTVUr4cGeeq1kRdNzr3BrhiiRIUH8SZByIrKK9ERKLpMnBsO8Yb6sAwSGs
-         8WnSbVgz1gQbhYU3FK39pgCJKAqvhAmLznwIMrLSn3ynzbFUkaMeorgs1csXZqmjJkF7
-         DPMVoFQpYlg01pprO/ryy8aCv+9KiEPcE/KZMIrTlwhM3OepBYiY7UakPCrKhz5ACSwx
-         c8ZKXSlyoDAp7NgM3oUw+JDus6WGkc8YP3JLwGpHWca9Fe4HjSHRlI1b5vt/FoBsHBdl
-         glDdkqYtjbXFTPTREoaN02sbOLzXxXIYw4N/kWLHqshaGTLv284fh6GWT71WVM6o3nYE
-         a4dQ==
-X-Gm-Message-State: AOJu0YxC6zIkJcBLFETAZ2PPN2bw1TyBPwuaw44ybJ5C+zn1ZrztAwwT
-	vVsoFX3YnMD3T0BpqMi7wXwppyy47FQQvo7kW3DAbOwiw54Sg9o4
-X-Google-Smtp-Source: AGHT+IFCTxD2hU5zktQeGFAvo5pet3pBysUz2/YNr+10KlBUNJ5KmlC/bych42UoVTsZInwJBHCG9w==
-X-Received: by 2002:a2e:a609:0:b0:2d6:bad0:88a8 with SMTP id v9-20020a2ea609000000b002d6bad088a8mr93637ljp.6.1711127710746;
-        Fri, 22 Mar 2024 10:15:10 -0700 (PDT)
-Received: from gmail.com (181.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.181])
-        by smtp.gmail.com with ESMTPSA id he11-20020a05600c540b00b0041465c859d0sm64114wmb.39.2024.03.22.10.15.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 10:15:10 -0700 (PDT)
-Message-ID: <cd50671c-d3a1-4e72-89ae-e66567ee14ca@gmail.com>
-Date: Fri, 22 Mar 2024 18:15:09 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wX/ijpau"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B02261F51A9;
+	Fri, 22 Mar 2024 13:21:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=jLR8dIWsfLXmOMTMQCcR9POZT2hxkkRK0Eutc+
+	KdFpc=; b=wX/ijpau1ZLfofmm3AylR/AQa2UaqgrUi+sXrll2Wj2bA6CAfT0GSa
+	4DF5jWyzhqd0cXJOEyJ/RjH1KCALBo1S6duhJ3WPoP+I2KlsM/pFQNl15VLnlogb
+	FJWkoK076ifB0SCfBO2REhMqzRywplCjX4qQmtYMIIKQDAO2khq/E=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A86681F51A8;
+	Fri, 22 Mar 2024 13:21:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F3A51F51A7;
+	Fri, 22 Mar 2024 13:21:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] rebase: use child_process_clear() to clean
+In-Reply-To: <20240322103502.GA2045297@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 22 Mar 2024 06:35:02 -0400")
+References: <20240322103502.GA2045297@coredump.intra.peff.net>
+Date: Fri, 22 Mar 2024 10:21:23 -0700
+Message-ID: <xmqqedc218to.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Worktree shares a common remote with main checkout
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Bill Wallace <wayfarer3130@gmail.com>
-References: <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
- <0ad0371c-c6ac-4ccb-b9a8-b30715f74308@gmail.com>
-Content-Language: en-US
-Cc: git@vger.kernel.org
-In-Reply-To: <0ad0371c-c6ac-4ccb-b9a8-b30715f74308@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9C4EE9E6-E870-11EE-AE77-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Mar 22, 2024 at 06:00:43PM +0100, Rubén Justo wrote:
+Jeff King <peff@peff.net> writes:
 
-> describe them, perhaps with sketches, it would be a great help.
+> In the run_am() function, we set up a child_process struct to run
+> "git-am", allocating memory for its args and env strvecs. These are
+> normally cleaned up when we call run_command(). But if we encounter
+> certain errors, we exit the function early and try to clean up ourselves
+> by clearing the am.args field. This leaks the "env" strvec.
+>
+> We should use child_process_clear() instead, which covers both. And more
+> importantly, it future proofs us against the struct ever growing more
+> allocated fields.
 
-Of course, a series would be much better received ;-)
+When 21853626 (built-in rebase: call `git am` directly, 2019-01-18)
+started using run_command() API to drive "am", there already was
+child_process API and child_process_clear() did clear both .args and
+.env_array members but we used argv_array_clear() only to clear
+am.args, leaking am.env_array.
+
+> These are unlikely errors to happen in practice, so they don't actually
+> trigger the leak sanitizer in the tests. But we can add a new test which
+> does exercise one of the paths (and fails SANITIZE=leak without this
+> patch).
+> ...
+> Not sure if the test is overkill. It really does nothing useful in a
+> non-leak-checking build.
+
+I wonder what are in .env array at this point, though, but that is
+mere curiosity and not a problem with this patch.
+
+Thanks.  Will queue.
+
+
+> diff --git a/t/t3438-rebase-broken-files.sh b/t/t3438-rebase-broken-files.sh
+> index c614c4f2e4..821f08e5af 100755
+> --- a/t/t3438-rebase-broken-files.sh
+> +++ b/t/t3438-rebase-broken-files.sh
+> @@ -58,4 +58,13 @@ test_expect_success 'unknown key in author-script' '
+>  	check_resolve_fails
+>  '
+>  
+> +test_expect_success POSIXPERM,SANITY 'unwritable rebased-patches does not leak' '
+> +	>.git/rebased-patches &&
+> +	chmod a-w .git/rebased-patches &&
+> +
+> +	git checkout -b side HEAD^ &&
+> +	test_commit unrelated &&
+> +	test_must_fail git rebase --apply --onto tmp HEAD^
+> +'
+> +
+>  test_done
