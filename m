@@ -1,132 +1,255 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D0A65C
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 01:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517694A02
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 02:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711072798; cv=none; b=dd8HrclU0NpadXl3HJ9RxrezPyXSUOik3t0CZRDltJ5t9AJINhQuzW7cETS79iREDJPqykfHn0KK+GSCxxLRWbAQoQ2FvO97Xg1idANulLKcpiL9v6dsrDBUimJ4G6OFQTyKOArC9N+IvwcVpeTUdj9HqZO/FaZetkZhyKI3EPY=
+	t=1711072894; cv=none; b=tVGX2P+uS33NPKpTI4oiSv44qRi4YQjZbbv5y2yvnSRJHXpkaC80jS7X94I0fXsXIDYq4HAoZzgPOMNecb65zBSYAS4qSucOQPSx7EVAvOHZ3dq2lvsBsnRg1EBFF2R74QyY16I1v7TvkJ6FWFwK2YJjqDKW1CkraLJwHihmbRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711072798; c=relaxed/simple;
-	bh=ZZ/yQUiswgTBVTIcRnb8RtDuaTrMSK3uLX+Zwkprcs0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KMMofikZmJ4Ous83E56FUF3FW/znnocwy3X3InWWZ+rWkZrIBCVM7XAAzzqU0cRZ+ySXFTCjU6E62wSKhXxwm89bJX/bePwS8ZZ01X2kLbeXn3tv7RnfsRwbFyHbNvje1MGhlBFVcWDTwRMCtr0Qgfda1f/qgDIQaJ4IbPd5SUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=V3GL43mx; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711072894; c=relaxed/simple;
+	bh=yfGM2Wbj30MVQW5FCvCb0x76PMby87jl9LO//t7Tcck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uyZdSCCpXYo3fjMBJOnOFAV76eX0R4UdHIYa1hC50ZrX3rslhAWtsN/jKCGxjeBJJs9ZKEd5vg9cey5k5kYqGqbf7Qxpb4M6Zs6qs3CJCs/DrqeV9b4KDetmg89wED6XCZaqJGiH2ffnO43tZH9Jn3F3zr1cNZ3I1GtNbBuERxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bcjBPqtc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fwPHj00S; arc=none smtp.client-ip=66.111.4.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V3GL43mx"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB2A61F3C5A;
-	Thu, 21 Mar 2024 21:59:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZZ/yQUiswgTBVTIcRnb8RtDuaTrMSK3uLX+Zwk
-	prcs0=; b=V3GL43mxfU0IE3+i6ku+mdFqLzXcMuv45an+G4/b+/5wuo52Hod488
-	Z9kdZWCdppMl46P7Wup10lx737zwzUY+RBBU8bxt+t9CUoTUBGe9g6En82k9p9zp
-	Idxp3bQJP48ZtK+F1l4KDqYpC3tvQECoKVfj7jDMAPx1M3h3w1VBc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D27D71F3C59;
-	Thu, 21 Mar 2024 21:59:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 076901F3C58;
-	Thu, 21 Mar 2024 21:59:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Brian Lyles" <brianmlyles@gmail.com>
-Cc: <git@vger.kernel.org>,  <phillip.wood123@gmail.com>,  =?utf-8?Q?Jean-N?=
- =?utf-8?Q?o=C3=ABl_AVILA?=
- <jn.avila@free.fr>
-Subject: Re: What's cooking in git.git (Mar 2024, #05; Tue, 19)
-In-Reply-To: <17bef197ac874ae6.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-	(Brian Lyles's message of "Fri, 22 Mar 2024 01:22:22 +0000")
-References: <17bef197ac874ae6.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Date: Thu, 21 Mar 2024 18:59:52 -0700
-Message-ID: <xmqqcyrn58mf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bcjBPqtc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fwPHj00S"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 234935C0072;
+	Thu, 21 Mar 2024 22:01:31 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 21 Mar 2024 22:01:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711072891; x=1711159291; bh=3Za35tixiS
+	B2t5XvXzNktr9VeMSmS1IuJ7ra3T+rKOw=; b=bcjBPqtcjKzm2bMmBuC9XFYlnd
+	u/40pAJ85pwmAz1Vj5BqC3XvghCnkgtSnxBVbQeTaGCzg4fZ8qdPwcBdt0Xwt07m
+	8OfNBVS+Z2DwLehaUFVZ4XGiKs+/4lHrXmkC2RAenwCeaXm2pBhzgBQz0u7GYYmU
+	tOjyP8Ir8OFYpeWdIZoR3cmrHs+Qu+sFS1iA2f6tsAbPsT1FFS/MIwA/7p0lXWMQ
+	jkzf7nln5Z0KR6sOY1Oiy7tXwqOebO7mSI+PM5syFMI5OXMC3hUSkfmvT3ZrY83s
+	DtERKKf7j4D1SbafICitpIOUYtlTwWGzG+/aGsVXdEhlcpJbJwSJiblm4owQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711072891; x=1711159291; bh=3Za35tixiSB2t5XvXzNktr9VeMSm
+	S1IuJ7ra3T+rKOw=; b=fwPHj00S/djxx/Nl/qaolBSRDZWW06IOu6BiMvWHMzDR
+	9R4CUNO11jlbmB5zL9mrr700HBupWOFJT2ide+tGJ2U+NdhbCA8Eio6haFFoc2yl
+	HogIaiI1IfBqSjn9l76K7mDjsJ6BodJnBS7reoIfAD0/8Bj1hdFKR0V6KTMkKTcY
+	pWn+5DnIlPl6ku3dyzvotUOnK/LnVZ+u2fu2wxY8IzXUcTig0TeWBC5W0nKHDIFv
+	Io+ylqWs5XuGz2pkJiEZkLrY1r6mOVc2/9FVdp652NYpdfkWrVsMJLBJ3ar6hhV4
+	hy+rdXi7IqN+H5XWIH2IVUjexKY4PignoA+fmt6qeA==
+X-ME-Sender: <xms:eub8ZS5EHymNAvH-2Mue1Ucb5Z8zBlbvL2mjcy3W_bL0hpNRrYXMvg>
+    <xme:eub8Zb53759XYbwYySaFxCqlooEsRdtsobkxAa8xPyA99FfvCe38hxk1KFljGkGDg
+    BJjKXnGU_XSR3YKlA>
+X-ME-Received: <xmr:eub8ZRcIE10bGzqlSYavleOHj8JD_kAcm73rcd76z7PR0KTwNDI8VxB2jBrUU405GpJHeHn4UDMXWK-fuz045riPw1EXORxpKD_cRnsPA_FiHA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrleelgddutdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:eub8ZfKHdmY4PMQ6a_wankBjaR7dxuZhVKXjMBs-6gYO8kpMtnEvOA>
+    <xmx:eub8ZWIS94ns72uBR0jDwDIuFYXOHo7d4qr1C9ToSjqZJByHJDhSVA>
+    <xmx:eub8ZQx89Scu96XWXV1jo0yTP5swQI4NboY6ZKEXFAtepBAEPJXbcQ>
+    <xmx:eub8ZaIqpsagB8StYrbRlM2QAshIrKB111cL2tEYfRBDOFNhSEckfg>
+    <xmx:e-b8ZYgWrJEebFz1rx9EBG4HHiaFopWc4UHYK6WZjhDB1vn0J0sEIQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Mar 2024 22:01:29 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8455c119 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 22 Mar 2024 02:01:22 +0000 (UTC)
+Date: Fri, 22 Mar 2024 03:01:25 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	rsbecker@nexbridge.com, Angelo Dureghello <angelo@kernel-space.org>
+Subject: Re: [PATCH] t5601: exercise clones with "includeIf.*.onbranch"
+Message-ID: <ZfzmdcBT5MUqoxrk@tanuki>
+References: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org>
+ <0bede59a53862585c49bc635f82e44e983144a7f.1710246859.git.ps@pks.im>
+ <xmqqo7bjjid9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E03EE6DC-E7EF-11EE-B421-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="p4CIHP67jwIi1op9"
+Content-Disposition: inline
+In-Reply-To: <xmqqo7bjjid9.fsf@gitster.g>
 
-"Brian Lyles" <brianmlyles@gmail.com> writes:
 
-> Yes, I suspect you are right. I think the cover letter would be a good
-> start at the very least. Would you welcome a patch to
-> 'Documentation/SubmittingPatches' that adds a new expectation for this,
-> or do you think this would be best handled yourself? I am interested in
-> contributing but, as I'm sure you've noticed, I'm also quite new to the
-> project =)
+--p4CIHP67jwIi1op9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'd prefer to start with a much less official "experimental" launch
-of such a new workflow, instead of adding an unproven idea as if it
-is a new hard requirement to the SubmittingPatches document.  If it
-works well, we can write it down later.
+On Tue, Mar 12, 2024 at 01:38:26PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > +test_expect_success 'clone with includeIf' '
+> > +	test_when_finished "rm -rf repo \"$HTTPD_DOCUMENT_ROOT_PATH/repo.git\=
+"" &&
+> > +	git clone --bare --no-local src "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" =
+&&
+> > +
+> > +	test_when_finished "rm \"$HOME\"/.gitconfig" &&
+> > +	cat >"$HOME"/.gitconfig <<-EOF &&
+> > +	[includeIf "onbranch:something"]
+> > +		path =3D /does/not/exist.inc
+> > +	EOF
+> > +	git clone $HTTPD_URL/smart/repo.git repo
+> > +'
+>=20
+> Hmph, isn't the end-user expectation more like if you clone with
+> "git clone -b something" then the configuration stored in the named
+> file to take effect, while "git clone" that would never place you on
+> that something branch would ignore that missing file?  Is this only
+> the latter half of the pair?
 
-But even a soft launch needs some way to advertise it to the target
-audience, and the SubmittingPatches document is the only sensible
-place to do so.  So, perhaps do something like this?  I dunno.
+It probably is, but I'm not really sure to be honest. That's why I
+punted on it and just assert that it doesn't die.
 
-------- >8 ------------- >8 ------------- >8 -------
-Subject: SubmittingPatches: release-notes entry experiment
+In any case I would claim that the current behaviour is really quite
+broken in Git v2.43:
 
-It has been the maintainer's task to prepare the description of each
-topic listed in the "What's cooking" report.  The description is
-automatically picked up from the "What's cooking" report and used in
-the commit log message of the merge commit when the topic is merged
-into integration branches.  These commit log messges of the merge
-commits are then propagated to the release notes.
+```
+$ cat >$HOME/.gitconfig <<EOF
+[includeIf "onbranch:master"]
+    path =3D $HOME/include
+EOF
 
-The original author of a topic may be in the best position to write
-the initial description of a topic, but we so far lacked a formal
-channel for the author to tell what description to use.  The usual
-procedure has been to see the topic described in "What's cooking"
-report, and then either complain about inaccurate explanation and/or
-offer a rewrite.
+$ cat >$HOME/include <<EOF
+garbage
+EOF
 
-Let's try an experiment to optionally let the author propose the one
-paragraph description when the topic is submitted.  Pick the cover
-letter as the logical place to do so, and describe an experimental
-workflow in the SubmittingPatches document.
+# Init source with a different branch name than our condition.
+$ git init source --initial-branch=3Dmain
+$ git -C source commit --allow-empty -m initial
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- [for what's cooking]
- * An experimental procedure for a topic author to propose the topic
-   description to be used in "What's cooking" report and in the
-   release notes have been added to the SubmittingPatches document.
+$ git clone source target
+Cloning into 'target'...
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+remote: Enumerating objects: 2, done.
+remote: Counting objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (2/2), done.
+error: key does not contain a section: garbage
 
- Documentation/SubmittingPatches | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+$ git clone -b main source target
+Cloning into 'target'...
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+remote: Enumerating objects: 2, done.
+remote: Counting objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (2/2), done.
+error: key does not contain a section: garbage
 
-diff --git i/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index e734a3f0f1..05e15b9436 100644
---- i/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -459,6 +459,17 @@ an explanation of changes between each iteration can be kept in
- Git-notes and inserted automatically following the three-dash
- line via `git format-patch --notes`.
- 
-+[[a-paragraph-summary]]
-+
-+*This is EXPERIMENTAL*.  When sending a topic, you can propose one
-+paragraph summary that appears in the "What's cooking" report when it
-+is picked up to explain the topic.  If you choose to do so, please
-+write 2-5 lines of a paragraph that will fit well in our release notes
-+(see Documentation/RelNotes/* directory for examples), and put it in
-+the cover letter, clearly marked as such.  For a single-patch series,
-+use the space between the three-dash line and the diffstat, as
-+described earlier.
-+
- [[attachment]]
- Do not attach the patch as a MIME attachment, compressed or not.
- Do not let your e-mail client send quoted-printable.  Do not let
+$ git clone -b other source target
+Cloning into 'target'...
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+error: key does not contain a section: garbage
+remote: Enumerating objects: 2, done.
+remote: Counting objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (2/2), done.
+error: key does not contain a section: garbage
+
+$ cat >$HOME/.gitconfig <<EOF
+[includeIf "onbranch:other"]
+    path =3D $HOME/include
+EOF
+$ git -C source branch other
+
+$ git clone -b other source target
+Cloning into 'target'...
+remote: Enumerating objects: 2, done.
+remote: Counting objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (2/2), done.
+error: key does not contain a section: garbage
+```
+
+So the behaviour is inconsistent already and does not make a lot of
+sense. Part of the problem is likely that we pre-initialize "HEAD" to
+"refs/heads/master", which is why you can see some of the includes being
+triggered.
+
+With Git v2.44 this behaviour did indeed change, and arguably for the
+better. This is because we now pre-init "HEAD" to "refs/heads/.invalid"
+instead of using the default branch name. Thus, we do not match "master"
+anymore, which is likely the correct thing to do.
+
+```
+$ cat >$HOME/.gitconfig <<EOF
+[includeIf "onbranch:other"]
+    path =3D $HOME/include
+EOF
+
+$ git clone -b main source target
+Cloning into 'target'...
+remote: Enumerating objects: 2, done.
+remote: Counting objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (2/2), done.
+
+$ git clone -b other source target
+Cloning into 'target'...
+remote: Enumerating objects: 2, done.
+remote: Counting objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (2/2), done.
+error: key does not contain a section: garbage
+```
+
+So arguably, the ".invalid" hack actually fixed this case somewhat and
+made it behave saner. But I'm just not sure whether I feel comfortable
+enough with all of this incidental behaviour to actually put it into a
+test and cast it into stone.
+
+Thus the current version of my test that simply asserts that this does
+something successfully instead of crashing. In my opinion, we need to
+put more thought into how this is supposed to work before adding more
+tests.
+
+Patrick
+
+--p4CIHP67jwIi1op9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX85nQACgkQVbJhu7ck
+PpTr9Q/+N//VzVsghAsdLWehk9zOXt49M0XHG96LTdEGexRw3QU0UZonibL9jiwm
+ZObyAzYEG6kzX/f/ST7tdaGO8iYc6fl8ksGNuuN2wzrgys68/8GEQuU0CWLLNw3g
+yHWK/J5q4L6g7NzL7lrr7GzNMpUccoYx9jzqG4+loLNJhXT1AK2cvbW3CsPZQZw8
+ORPJX+HjlFnDHU2rEPCfN99rDd54NevBhhYb1FmKCSKHZQ1KB+gtHVxpAnRTIecd
+LQfFJj165Ke3hBf2MFh8XvB3MXU/bOFzDiYg5+gjOsk7mlpJg2IBD2/sb5xlPqEL
+8gAoVH07gMmbEm8XpzC5MkOuCcCStWkyWK9h7yrWG/FYPLyW3G5dYTwmYFNf+clc
+frJOVc2Y9vV5XVZFwPu15qb1PMYidXD1LrIjEUVTmN2Jk4tJYXKjFWc6jLnwoCFz
+/Ypv3ClREGHeXN9iHcUPfiWkxiXnKT3+8agbwaSxOTYowvPdxfVRS8E7QAT8mc8N
+R56PXIfADwB8dLtdk1mupf0uJVoTBrwvaiD3dJB+XPu5yRXulB1YlUtA1/wIEUVH
+jAn0QhvEZMcSo+IqqR+KB99elFQMoAXDxRsLFpxNxRHqzKCq+Qk3QTAQVUBVA+SC
+B/tiCxmvPJ6Hwceb/7AzUE9B+BBq2aG7rtTBWFFNnlCWneCtYl8=
+=fn1d
+-----END PGP SIGNATURE-----
+
+--p4CIHP67jwIi1op9--
