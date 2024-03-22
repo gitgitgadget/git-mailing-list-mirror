@@ -1,109 +1,118 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969432E3FD
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:38:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53EE78297
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711147113; cv=none; b=SVQ/hUqbubDA0sJyvQYdkigIfTIsULhbpjn/dACtEpl/LNaT9jeosORBkFfjTD/WFZoxien/NiIsSdq/bkU6uABnBGlk38dvvH0fyldgr/EUMdbyp8mft08VKrDabTVLLGb9Fi5a0Gir+imHkSI05aTp/aBkRHeFvTEt5YOhiCQ=
+	t=1711147264; cv=none; b=ZdAKDFv2ZvT3fi037nPDnguPSU5mPgAEyGSqHHTHxfvq1kGcF6QX9LbFQnH6hSLHzw2A4NKCa4U70FG91lsMj+dVnvZD2i7kgKhuoIbRW45Wi0VVZTk/jCB9siE6nVOl9KfPDGnOlbOcbz2tQ6Wjj/LotHmno33jO28ovj3+3Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711147113; c=relaxed/simple;
-	bh=xDFbjrRU9DwXdD2edsA3pkWhBHVZGQGxWrIwouDK1Ko=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=dSk0dDSmKSwb+UiiajvZjtPf/CVoFfyL+9WgB/jszjPL3nYPr2xaHqdYZBf+mNO9hcLCjrPYwpj8ba1ap5yxyYLHtPWLOEgNi/k9KACNhE4RMbA4kFjG4gauBnuZM+5mlqmsxeMMZvx377svcCLAxr6fJLPQ98qIwUvn54V/EF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=AWYuwRQS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WwKTGpZH; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1711147264; c=relaxed/simple;
+	bh=841B2BJRcB7UIGRvWFJ8yrNqGcojAVnoEUEqAm1uIo4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VRNtDDkXX+9WcLljcl4s7YkUQ9EeGzIA34QRcEddUcb9bh65aryy3rsQWUziWuc0X7nI1GmtWRuHlfLLuWw6rdT7/3RxeKLNp8HvuyvhzaRkQ8Rvjv2wLE3DbjBj/lYhDSy72ToFeVxrRJJ3RaItPh29GMIHNLy4cfdH3H8Ps+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RgRrTnJE; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="AWYuwRQS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WwKTGpZH"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3A2781140074;
-	Fri, 22 Mar 2024 18:38:30 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 22 Mar 2024 18:38:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1711147110; x=1711233510; bh=yLr/YpeHktztviVnCb7haMGvJUXPrRSY
-	jzPTMyRUU2E=; b=AWYuwRQS99jX48obYUD2ILwqi3YWyti9IsLPzW3khgXtXypQ
-	1aYsm2yegwgn+K9U2eRZ8O7HJ4q5LOtOx6TQd5hi1IgN0LL9s50a7uCe4QINz0ym
-	Q8tXHWRkx6++D4l9nBD+f2hanB8deoU+EWXy6rdJJd5QqeFJrOZkViZCjfmGSrv5
-	8Vlvs7n2XTqc6NEmshksOjINDYAGBVzqild1TfAnYEUc/tfPj7B4mlC9KXjvB+Zg
-	FfHI7/RmJSUDM8wFoXlh7GtW3wneCsmjBNNTQOnixtQSCF4KF6LXdYyeDLQenu/X
-	fAtoXizZBLitVvOP2OvSkfWhw90IDC1wg+Vi3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1711147110; x=
-	1711233510; bh=yLr/YpeHktztviVnCb7haMGvJUXPrRSYjzPTMyRUU2E=; b=W
-	wKTGpZH4CIXvNBlqzWtzs4arnmWwSz0tulSPzuUT77Y71/w1FU5qGv1DKPlQiLQc
-	nEdWmUgQ+GBmreUFo4w6pvaZI8ooIdYxrA2tY47B4zt8V/f06cGufxVe3OHYPjxw
-	gHllUpZeNGHwBFAZPsmQK40TpA4gGGHa4jvuwhDlXP5lXWsS/fBbAXHalOrFq8v1
-	B5js45v7HDkYjpueL+RyyZtrTcAH57yJaypO+yEE08e/7E6zTqsN9dUJVoj2B8MQ
-	NjofymOyzz60an0FCR6c061RVR2cn/4cSyOVrEBtgDrhINJIVMbZkq4ZV3j+qQeQ
-	kczPUOme71lq8+qxuDJEg==
-X-ME-Sender: <xms:ZQj-ZZDC7zv1T30OoRjk-jrKJOXeF7_sHAHB7EhpdDzmaRbh848uKQc>
-    <xme:ZQj-ZXhTmXLHGkXYdTwW3wa-yAGgNDzD4Woo8D5SWCHKvnqhar03tx_p0G9mryynB
-    QQuBt0jj49xtSGi7w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtfedgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:ZQj-ZUmyRoa1Gr0L4jGtYjGv4-J_ALzIXtReh5hIdtxGTStmw85FAg>
-    <xmx:ZQj-ZTzrdp5bYEC4SVFcwIdr-eiZVDA10cyv02IPIC2B3VVUi5lo_Q>
-    <xmx:ZQj-ZeTUjW-sRC1JOLflA-_VvCUv3v7kksrZuYNk0XBzVoUg3VMYxQ>
-    <xmx:ZQj-ZWYZv2fXZVTL2q9K4nFh5YXTqtlAxJTn8bwTUIjw-PZkyHMyjg>
-    <xmx:Zgj-ZbSrXhAV6vYC3BYUix2QkrBVBhQhoHJ-wZVRBV925OsbL62gmw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 8241115A0092; Fri, 22 Mar 2024 18:38:29 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-332-gdeb4194079-fm-20240319.002-gdeb41940
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RgRrTnJE"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B81A41F7300;
+	Fri, 22 Mar 2024 18:41:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=841B2BJRcB7UIGRvWFJ8yrNqGcojAVnoEUEqAm
+	1uIo4=; b=RgRrTnJE+SuBaFgSL4T6IBCo0f/xMwT+/PE6hqeUOsCEfwyHek+p6Z
+	ek1O1h4UjEO5PChRkPW7ORj9ZFn/GYn964S1u4xa1EgstnfvEFTYN0ma7TX7b8VN
+	waufnTcEHprmDbNBmqYU8wCwfY/K3yVvYwSWzVAXRwzv7W7hY0Tws=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F04E1F72FF;
+	Fri, 22 Mar 2024 18:41:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B57A11F72FE;
+	Fri, 22 Mar 2024 18:41:00 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Max Gautier <mg@max.gautier.name>
+Cc: git@vger.kernel.org,  Hans Jerry Illikainen <hji@dyntopia.com>
+Subject: Re: [PATCH] editorconfig: add Makefiles to "text files"
+In-Reply-To: <20240322221813.13019-1-mg@max.gautier.name> (Max Gautier's
+	message of "Fri, 22 Mar 2024 23:17:58 +0100")
+References: <20240322221813.13019-1-mg@max.gautier.name>
+Date: Fri, 22 Mar 2024 15:40:59 -0700
+Message-ID: <xmqqo7b5zy84.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <5b9dc977-e8f9-472f-8476-1b13fa6e6d93@app.fastmail.com>
-In-Reply-To: <20240322221327.12204-5-mg@max.gautier.name>
-References: <20240322221327.12204-1-mg@max.gautier.name>
- <20240322221327.12204-5-mg@max.gautier.name>
-Date: Fri, 22 Mar 2024 23:38:09 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Max Gautier" <mg@max.gautier.name>
-Cc: =?UTF-8?Q?L=C3=A9na=C3=AFc_Huard?= <lenaic@lhuard.fr>,
- "Derrick Stolee" <stolee@gmail.com>, "Patrick Steinhardt" <ps@pks.im>,
- "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
- git@vger.kernel.org
-Subject: Re: [PATCH v2 4/6] maintenance: cleanup $XDG_CONFIG_HOME/systemd/user
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 41DE4B28-E89D-11EE-AFB9-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Mar 22, 2024, at 23:11, Max Gautier wrote:
-> Notes:
->     How should I refer to a commit which is part of the same patch ser=
-ies ?
->     The commit id will change so the message won't be correct anymore,=
- right
->     ?
+Max Gautier <mg@max.gautier.name> writes:
 
-It looks like a fair few say =E2=80=9Cin the previous commit=E2=80=9D fo=
-r the one just
-before this one and =E2=80=9Cin a previous commit=E2=80=9D for some comm=
-it that was
-before this in the series but not the immediate previous one. I guess
-that=E2=80=99s okay, no?
+> The Makefile and makefile fragments use the same indent style than the
+> rest of the code (with some inconsistencies).
+>
+> Add them to the relevant .editorconfig section to make life easier for
+> editors and reviewers.
+>
+> Signed-off-by: Max Gautier <mg@max.gautier.name>
+> ---
+>  .editorconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/.editorconfig b/.editorconfig
+> index f9d819623d..15d6cbeab1 100644
+> --- a/.editorconfig
+> +++ b/.editorconfig
+> @@ -4,7 +4,7 @@ insert_final_newline = true
+>  
+>  # The settings for C (*.c and *.h) files are mirrored in .clang-format.  Keep
+>  # them in sync.
+> -[*.{c,h,sh,perl,pl,pm,txt}]
+> +[{*.{c,h,sh,perl,pl,pm,txt},config.mak.*,Makefile}]
+>  indent_style = tab
+>  tab_width = 8
 
---=20
-Kristoffer Haugsbakk
+A question out of curiosity (because the answer does not affect any
+conclusion): Does editorconfig attempt to cover any non-text files?
 
+Two more questions that do affect the conclusions are:
 
+ * Among the files we ship (i.e. "git ls-tree -r HEAD") and edit
+   with editors that honor .editorconfig settings, are there any
+   file that we do not want tab indentation other than *.py?
+
+ * Does .editorconfig file allow possibly conflicting setting, with
+   a reliable conflict resolution rules?
+
+What I am trying to get at is if it is possible to make something
+along this line to work:
+
+    [*]
+	charset = utf-8
+	insert_final_newline = true
+	indent_style = tab
+	tab_width = 8
+    [*.py]
+	indent_style = space
+	indet_size = 4
+
+I am assuming, without knowing, that the conflict resolution rule
+may be "for the same setting, the last match wins" so by default we
+always use "indent_style = tab", but if we are talking about a Python
+script, it is overruled with "indent_style = space".
+
+If that is possible, we do not have to keep adding "ah, files that
+match this pattern are also text", i.e., everything is text and
+indented by tab, unless specified otherwise.
+
+Thanks.
