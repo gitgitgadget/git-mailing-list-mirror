@@ -1,53 +1,53 @@
 Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FFA3FE46
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 12:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33838446DB
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 12:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711110160; cv=none; b=lzXsUevG52PCK/hsHsvr7hJZwmV7qdVTCcqySy9XjX6QFFjCHInr7VaQuIp6idOok2IvrkBGCbTNaO3Mv9Z+IUqdRrtrxe3/AXoebrYdVjkS0nVO6ouPclR7RShQCJJAnY7v5XDTaxAxp7my8MNWU0if/1+0AliAutUAfi1wszI=
+	t=1711110165; cv=none; b=FZicla4gKSdYrN/oANAOfpO8bJrlHzxOJNmhKcb8FTlWBJ/dbNObF01Sc2TtQs8GIOWvDYi9gOsG5tYjPAh5etYNlVSYEtrEEU/pBDlWhTpp81PWhopONZ+xzO7DLxoJS5PXS1Xe7f80vRNh5ACFs85YkQJoyZuE41DNWDcyRzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711110160; c=relaxed/simple;
-	bh=BaNYT5MLIxYYcMXMcDWu0jfzBN1e9ky2CY/eKLGjm1A=;
+	s=arc-20240116; t=1711110165; c=relaxed/simple;
+	bh=3aHD4qJdJg8ITYYJJJsvxNOrP2fUOB1b73JOMJbEDRo=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IxJGx8UD+XRMSCKzdbenl0eI/8pnwJsX2HZQyOzcbmSxpJYuMVlBgA9takKM7wKaWgNO3+2GbKhZWVla97vuJT9eN1QkDcW9MNdXpjwzg8uDv9qoIqAkWL9jSKZcrcUc5F+SpRHtJutsodqivkpvx/kYE6MyEJIxKtV+bX6aRQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c947KVMs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uLNuOVmu; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=GuuPZeDq0yRnlYWVHwN6feDkIFMXmDlAgCHr5k4rgkY1hgWAjO8o9Grk9rxIsyqeakX9sPNBvOR/BQv4wbafJSscF3OlkKzXqlZNICN1jzqfUV9Yvm8uNiVyZm5o6P7vE725DqCX2PHmU5+Y7XP9OCAgfBXG3gj/OyHw3NxnxNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bAKtWuIm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wSpB1eZi; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c947KVMs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uLNuOVmu"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 6599513800F8
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bAKtWuIm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wSpB1eZi"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4F31C13800F7
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:42 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 22 Mar 2024 08:22:37 -0400
+  by compute2.internal (MEProxy); Fri, 22 Mar 2024 08:22:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711110157; x=1711196557; bh=Kigp1rEQ+J
-	AaQBkBHmAEpbNjaREoSvpq2xWlq4hEuUs=; b=c947KVMsJStRuQesPBEiOD8x8a
-	UsFL+4aIBGHvTuCCqP2kTBUX4RlbD78X882j3daSq0FDpBAquuHttLaO2KRS/Z+q
-	O49/qisGFeUqpHZjBzqJbODU4Fekuj/s7/rZMT3Dp505Dwd/lMnS3qwq2lLQiLw5
-	+z+i0evHlLKbUpxY1sOXE0imMQ9nRvG8GjmsxWR181lKrOm2gAunFNV/n0EAghD1
-	c+aeIP1H/lm4qhp7U7raIB1OmsQMIsWa5R/xukjHxn+c4YBYI991p8sAnoAZsXeT
-	fGkn2DoIEQKU/dnTHnhzTPtI5sM93yx1dHGAGadCWrPsiptNAYYcjpZYsGmA==
+	:subject:to:to; s=fm2; t=1711110162; x=1711196562; bh=42Pbfgda5c
+	kYq5TiurrBvSIz/V+eiMQewuGOQn4u+JU=; b=bAKtWuImtGMW/3+s3nm3PBe+Mk
+	QzaF1dOwiWWowA2KRkA7u1skwlpk9xX9a7dtVyYgoAMjG17ppTQFZnDVjsMKgC0K
+	Yg4gdUo4MyyR2ScTl4rgdD5KhVjscR7ibpMGS6vxjrEHBw70feLBTo96bs6CB5Ct
+	L4J8bok9ThrqD+wyY9vLluTAYsh01HxhTbvemdaEeTp3ArBo2VLeCOeGb8HjlbhC
+	b+b1/GftmEx3EaBZBWqnsXNBdP510HA6x9ia+sPvLdcr5SpVn30JG5YCGhGOX6Er
+	SMqjztjPgMTWnmvIheYn13IxOBT8CvRCBEbN4O9Sa/QN9Uycu2RAb1G/oS2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711110157; x=1711196557; bh=Kigp1rEQ+JAaQBkBHmAEpbNjaREo
-	Svpq2xWlq4hEuUs=; b=uLNuOVmufiuFpyM8Iob4w35GYMHps/MWCLSVAswmxMot
-	wAngOupBeFSzbJIzb4B6M5e7/bgPaIcDIYqkWuFXHeJdkzrNLdf1ACsRep5AS0D9
-	mY8cmzRWvIBmPtl5SCGIyBn6iClHXMNkBAEqwydK3dzHto3SMXeVD9Ks7V6HogNr
-	8rH0In5d8UaESgfyZDDZy4WGUg4Jd7WjX6s0AqxZYM9UXA05rioAn8UC4ICPbOLp
-	Z28rnnjz2g9KgBHckYmIsPiHowtDKHMPN2sUkk2CHE95n+agddrQiknFxOgLnm17
-	Z/sSqGPkcgm007c2Yi7RkDsEsuoThgYyMhAjus6sGA==
-X-ME-Sender: <xms:DXj9ZVH6vlSZfi0Tzn5iyY0VNO6KZigcg5GVe00jOdIjIXxU9RTxCw>
-    <xme:DXj9ZaV21_I8A4FhpdVY-PwAEElafaOMFsYs5MWu0yIVy8dEtYyn97EbBB51q7hbw
-    KrbHO-yj2wFJvN9Xg>
-X-ME-Received: <xmr:DXj9ZXIa0mfex6tH1bTPNYijNgh5NtHv19DwA027b-yeTVg2pclP4xSw-rOWG4fwe_RUxpPOer9Lwkldeej1QRqmRlfMJ4K1f33I3Y0hJ-2wvx1_ug>
+	fm2; t=1711110162; x=1711196562; bh=42Pbfgda5ckYq5TiurrBvSIz/V+e
+	iMQewuGOQn4u+JU=; b=wSpB1eZin2eNF+xs7myDHJJfaelGjEwEFr13vLBfy3tV
+	b4d5PiZYnLkVU5duVk97is+WQzl8EjE3Hfbhz5zNRsPwT+8IAgSBBBglZpU4it2F
+	an8S9hp8F1Q4FjL03I/+BXCgAMILJThFJ5bcAJtDYXmBkMx6YxjHBjxFRQOCFq2V
+	2iXtjFjG6t3jnXaGuupKDfdHpqrJeaa18t1HLWIg9aJr52iiUUJyKZqTjvZKYbOo
+	QEs9r3TwfBQPC4LXj42P1O1elJD4AvkzQgNQpbCnbr5+fxI0S2jFS5bYjJDZquzR
+	FWJbNuEF7bg48g4mc/3uk7sWVHr5Jn8HKmbXKGcJbw==
+X-ME-Sender: <xms:Enj9ZT2s_OifcAOR60226YQvFzbYVkg-Fukz3IlEFUnnx65L8mrBQQ>
+    <xme:Enj9ZSFAhix7DiX2FiYKsNPCSurTXkpWJK-EYQN-yg19zaAF2sYMR5lAI5XCZ947-
+    Cfz91lTFBp2wceOng>
+X-ME-Received: <xmr:Enj9ZT5Mk0b50kuABBaYlkTv9VvQhmlM7AUloJidBlNUl6wxy4EJH9G4iXU-d36wQRWCV7N69RnmrhRt2nMWgJGrPlhDyG9SA8TfNICIiQzH8k5AAw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddttddgfeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -55,23 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddttddgfeeiucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:DXj9ZbEaM3oqXDjL4G0xfOGjaqj5kZZJMeo2mitLmJflEyOkZZX1Bg>
-    <xmx:DXj9ZbUnLUeAPqpQOM_r04_jIREYj6DdX2Ii2zxMivSlbHwPHmMoTQ>
-    <xmx:DXj9ZWMiqfHjICB-W2UEzhK092to9lMMjqhRVOsKEMSZw_AzbHDuCA>
-    <xmx:DXj9Za0nytnyEjNu_BZy-hop-Q5HIHnyS-uSZXvBpHFBl3NU55dHjQ>
-    <xmx:DXj9ZYiWbx3HSc82rhQ9vaoUWSb4g4LYTEMPq-pR-1L774seXj2CVw>
+X-ME-Proxy: <xmx:Enj9ZY2WQrVgi4Fp95SpOiR8W9DKF-lcNcJtp7COYl3LSkf17_8aPw>
+    <xmx:Enj9ZWGM3EzMscpl2pONHKtBVNdfPKHqGIxg6zjtFciQ2t6JXoEEmg>
+    <xmx:Enj9ZZ-HWejFRWPLLc8VE6fExmrjFewOCQVro6I4DnouQKbXZIBNxQ>
+    <xmx:Enj9ZTkqKbkA8z2TP9HHE3Yd0mjNITG2Z5SE5g-_SfM29Mrr2c0pcw>
+    <xmx:Enj9ZbRkbinkgzS7Gn3vXHJ0qO8pDeNWXLRr-geRZQu3OxrVnM_G1w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:36 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:41 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 021578d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c8fc589e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 22 Mar 2024 12:22:31 +0000 (UTC)
-Date: Fri, 22 Mar 2024 13:22:35 +0100
+	Fri, 22 Mar 2024 12:22:35 +0000 (UTC)
+Date: Fri, 22 Mar 2024 13:22:39 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 2/7] reftable/basics: improve `binsearch()` test
-Message-ID: <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
+Subject: [PATCH 3/7] reftable/refname: refactor binary search over refnames
+Message-ID: <44386818ce681da02f00a498acf66043aa55558e.1711109214.git.ps@pks.im>
 References: <cover.1711109214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,130 +80,139 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OkIuNxZKGKzK6TOB"
+	protocol="application/pgp-signature"; boundary="LtE2ZQTN2raOHOvt"
 Content-Disposition: inline
 In-Reply-To: <cover.1711109214.git.ps@pks.im>
 
 
---OkIuNxZKGKzK6TOB
+--LtE2ZQTN2raOHOvt
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `binsearch()` test is somewhat weird in that it doesn't explicitly
-spell out its expectations. Instead it does so in a rather ad-hoc way
-with some hard-to-understand computations.
-
-Refactor the test to spell out the needle as well as expected index for
-all testcases. This refactoring highlights that the `binsearch_func()`
-is written somewhat weirdly to find the first integer smaller than the
-needle, not smaller or equal to it. Adjust the function accordingly.
-
-While at it, rename the callback function to better convey its meaning.
+It is comparatively hard to understand how exactly the binary search
+over refnames works given that the function and variable names are not
+exactly easy to grasp. Rename them to make this more obvious. This
+should not result in any change in behaviour.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics_test.c | 55 ++++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 24 deletions(-)
+ reftable/refname.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/reftable/basics_test.c b/reftable/basics_test.c
-index dc1c87c5df..85c4d1621c 100644
---- a/reftable/basics_test.c
-+++ b/reftable/basics_test.c
-@@ -12,40 +12,47 @@ license that can be found in the LICENSE file or at
- #include "test_framework.h"
- #include "reftable-tests.h"
+diff --git a/reftable/refname.c b/reftable/refname.c
+index 64eba1b886..9ec488d727 100644
+--- a/reftable/refname.c
++++ b/reftable/refname.c
+@@ -12,15 +12,15 @@
+ #include "refname.h"
+ #include "reftable-iterator.h"
 =20
--struct binsearch_args {
--	int key;
--	int *arr;
-+struct integer_needle_lesseq {
-+	int needle;
-+	int *haystack;
+-struct find_arg {
+-	char **names;
+-	const char *want;
++struct refname_needle_lesseq_args {
++	char **haystack;
++	const char *needle;
  };
 =20
--static int binsearch_func(size_t i, void *void_args)
-+static int integer_needle_lesseq(size_t i, void *_args)
+-static int find_name(size_t k, void *arg)
++static int refname_needle_lesseq(size_t k, void *arg)
  {
--	struct binsearch_args *args =3D void_args;
--
--	return args->key < args->arr[i];
-+	struct integer_needle_lesseq *args =3D _args;
-+	return args->needle <=3D args->haystack[i];
+-	struct find_arg *f_arg =3D arg;
+-	return strcmp(f_arg->names[k], f_arg->want) >=3D 0;
++	struct refname_needle_lesseq_args *f_arg =3D arg;
++	return strcmp(f_arg->needle, f_arg->haystack[k]) <=3D 0;
  }
 =20
- static void test_binsearch(void)
- {
--	int arr[] =3D { 2, 4, 6, 8, 10 };
--	size_t sz =3D ARRAY_SIZE(arr);
--	struct binsearch_args args =3D {
--		.arr =3D arr,
-+	int haystack[] =3D { 2, 4, 6, 8, 10 };
-+	struct {
-+		int needle;
-+		size_t expected_idx;
-+	} testcases[] =3D {
-+		{-9000, 0},
-+		{-1, 0},
-+		{0, 0},
-+		{2, 0},
-+		{3, 1},
-+		{4, 1},
-+		{7, 3},
-+		{9, 4},
-+		{10, 4},
-+		{11, 5},
-+		{9000, 5},
- 	};
-+	size_t i =3D 0;
+ static int modification_has_ref(struct modification *mod, const char *name)
+@@ -29,21 +29,21 @@ static int modification_has_ref(struct modification *mo=
+d, const char *name)
+ 	int err =3D 0;
 =20
--	int i =3D 0;
--	for (i =3D 1; i < 11; i++) {
--		size_t res;
--
--		args.key =3D i;
--		res =3D binsearch(sz, &binsearch_func, &args);
-+	for (i =3D 0; i < ARRAY_SIZE(testcases); i++) {
-+		struct integer_needle_lesseq args =3D {
-+			.haystack =3D haystack,
-+			.needle =3D testcases[i].needle,
-+		};
-+		size_t idx;
-=20
--		if (res < sz) {
--			EXPECT(args.key < arr[res]);
--			if (res > 0)
--				EXPECT(args.key >=3D arr[res - 1]);
--		} else {
--			EXPECT(args.key =3D=3D 10 || args.key =3D=3D 11);
--		}
-+		idx =3D binsearch(ARRAY_SIZE(haystack), &integer_needle_lesseq, &args);
-+		EXPECT(idx =3D=3D testcases[i].expected_idx);
+ 	if (mod->add_len > 0) {
+-		struct find_arg arg =3D {
+-			.names =3D mod->add,
+-			.want =3D name,
++		struct refname_needle_lesseq_args arg =3D {
++			.haystack =3D mod->add,
++			.needle =3D name,
+ 		};
+-		size_t idx =3D binsearch(mod->add_len, find_name, &arg);
++		size_t idx =3D binsearch(mod->add_len, refname_needle_lesseq, &arg);
+ 		if (idx < mod->add_len && !strcmp(mod->add[idx], name))
+ 			return 0;
  	}
- }
 =20
+ 	if (mod->del_len > 0) {
+-		struct find_arg arg =3D {
+-			.names =3D mod->del,
+-			.want =3D name,
++		struct refname_needle_lesseq_args arg =3D {
++			.haystack =3D mod->del,
++			.needle =3D name,
+ 		};
+-		size_t idx =3D binsearch(mod->del_len, find_name, &arg);
++		size_t idx =3D binsearch(mod->del_len, refname_needle_lesseq, &arg);
+ 		if (idx < mod->del_len && !strcmp(mod->del[idx], name))
+ 			return 1;
+ 	}
+@@ -71,11 +71,11 @@ static int modification_has_ref_with_prefix(struct modi=
+fication *mod,
+ 	int err =3D 0;
+=20
+ 	if (mod->add_len > 0) {
+-		struct find_arg arg =3D {
+-			.names =3D mod->add,
+-			.want =3D prefix,
++		struct refname_needle_lesseq_args arg =3D {
++			.haystack =3D mod->add,
++			.needle =3D prefix,
+ 		};
+-		size_t idx =3D binsearch(mod->add_len, find_name, &arg);
++		size_t idx =3D binsearch(mod->add_len, refname_needle_lesseq, &arg);
+ 		if (idx < mod->add_len &&
+ 		    !strncmp(prefix, mod->add[idx], strlen(prefix)))
+ 			goto done;
+@@ -90,11 +90,11 @@ static int modification_has_ref_with_prefix(struct modi=
+fication *mod,
+ 			goto done;
+=20
+ 		if (mod->del_len > 0) {
+-			struct find_arg arg =3D {
+-				.names =3D mod->del,
+-				.want =3D ref.refname,
++			struct refname_needle_lesseq_args arg =3D {
++				.haystack =3D mod->del,
++				.needle =3D ref.refname,
+ 			};
+-			size_t idx =3D binsearch(mod->del_len, find_name, &arg);
++			size_t idx =3D binsearch(mod->del_len, refname_needle_lesseq, &arg);
+ 			if (idx < mod->del_len &&
+ 			    !strcmp(ref.refname, mod->del[idx]))
+ 				continue;
 --=20
 2.44.0
 
 
---OkIuNxZKGKzK6TOB
+--LtE2ZQTN2raOHOvt
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIyBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX9eAoACgkQVbJhu7ck
-PpR0Tw/3ZF1bJvUmzjxr6theZ534QjjwQNwam79U878WjM/wUlGwvS82kQZ3GICl
-vgwe4ltclucHxRkxW2EQXcbpe0HQMLyRrQyCCsSXimp4IGeU5XpJphVR7MXa9Kzt
-JE3cOvjDZGjWEhHuEGCZnBMYu/P42+3r050EfQ96n/j2Wb5VftgoHoj0sEEhmDpA
-lWwUnbiLrdtl2HTyaGd2zuQ9XfO/v+D5iuAJ1nuDOkWCmGaa7tSU3xAibth4Y8LO
-xMYtZtnaRzdYdPO6DhJj2+lofu2M0csvOmk7yJUy2vTJT23V8eJPJzsIzZD5g0GS
-dnXrYyLln7XgVIPT5qZeVRokAZ8UDGicUki8g5cj2osKtYSmfFUo8D3HtR6oZOJb
-fA429bvcJjLHqu++8JXs1hGWCa2RbbzatMPP+/jTTHWzS7WR0a2qSsoXfpSwE/Fp
-gf5haujg73+cSD/rmEbP1LSSOtlv5WD22jBf5Uzm6qr8T6ahwDjkoLbLH95znX1Z
-kGUoZEuS7Jt7TiC2A0ewY3QOIj4QR7XoF1nacnBhFI77FHkP9KFTm5r3fiiqOXl/
-Fj0Wk7TdYuv1kXSjPTmCmlg+82abTggk33d0UDTJ9Lc2VVet9mwQDvKcCp7kXsLl
-albrZWZbsRET2H8S4x3oFNAk4k4d6rl+vwOZMOP5fOcZzNP+vQ==
-=NETA
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX9eA4ACgkQVbJhu7ck
+PpR2yw//aL+95zX+gb0g4jww0D6gDj9BFv47yYUHvGE2jx5emuqFyc3UudJ3/YLO
+Z4aeyL6NBIe8zr+IM1E14hQoOr/TRcf39cey9hjG6zzx1LxpyXoux+a1CCaZJwG6
+1OOtrBPNXHH/wPDeyDgPgwOiknaaHIdeUAxBtk5klk489MOskZBc28GVt1NGWM/q
+m6eKLaDacJ1b+nt11fldQaqukW/X4MlVluJAEj3IDRi0oe03Y6p+UQObFtQsKS54
+ob5BhWTixrrtK1XvQgJ5CwTzBYEiemHAXDeo7202KiYA6v+Joofo0wY0jH42z5Lr
+EzvcNAFwu+xqQYwuemX/BZ47p7XqNTepzjXsnwghUNcdUb/sc0FMmiGL9rl1gUyU
+tBvtGLUqD0nXLU5TyCxWJpukA/BiIUiUGL81T7wbpGQpJ8EjfwDwppooTxIn/rcS
+Nnvhh2rBJHYgdkBRtWSKhhM8GKKWN4T38ctObNipJRAGwtLCtZhh3SA6RlSZAmVu
+M9LIzdVeRN719nVnt1Wc2VF7FdOOmKmlD39MWK6Fp4/huwCUJkBPkmwo/rehAJxU
+Zra1Yb65jlqtwABBKU6rhKqX15EV3aCFQEF4g9JMd/D4XQvsggo2eZH9kwBhX276
+ujVlSTJG5TyVCGBoym7w5ZMt/FOCPIi3o9m/JrloXGO5tkPI2Ys=
+=7gmZ
 -----END PGP SIGNATURE-----
 
---OkIuNxZKGKzK6TOB--
+--LtE2ZQTN2raOHOvt--
