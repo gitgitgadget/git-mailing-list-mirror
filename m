@@ -1,39 +1,39 @@
-Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6526FA7
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 00:04:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B63EA48
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 00:04:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711065854; cv=none; b=BRnR49vF1QApRI844nkWnp4AH/ES96Hfm34GN8J0NuNuVIwrD5EFG221601KjxUC4wuqDh99UCQZ+Jfh5nj4jnAgjWZvydB/ZPB2ZQH26PFUpnN1Aqc+5gxaJn81v8zu+1aA8sm9g1Tv6L94bVtXCRk70VWAVG1b+aiW+S6I4k4=
+	t=1711065858; cv=none; b=FQkR+ZVUqg7IwofLRUwxYwhnc/HxvkKjfwZVDPItEttEhrA+JKMCHPQgnbL+uiymbn2+XDrKcM5kztJ76e0S5Yg6XRmp4Mm63XswRRDYxLp17Sj3EsGv65XAJbZwUSgvj2mnx+kc0cx5xNGKHDxRK0+RAC1HdsYrC9MaWHB76Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711065854; c=relaxed/simple;
-	bh=Cdxjvkcvts9GRDS6Mn5tch/ecFZG2SziGfTPEUMhQYE=;
+	s=arc-20240116; t=1711065858; c=relaxed/simple;
+	bh=vxmk4UhIrlJGXcxb1yNqJM60pW8TeGWjNVXzCmMUqko=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bVqpmlNdXZmSfCK7oAuJwQib7zI8MXkAaiG4jhRBNE9x190+CHDMs7LLHzxoprYzjnOJTprxNtYiQSwgMRpKzU3lDi+e0S5E1rQpMT/vKi37E1qznCGbc66As0deLBO0AhqxZpxJ/e2u3BNFOd8NEVFV5jwtF0pnwzB54VYeHaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=qXMFPeHd; arc=none smtp.client-ip=185.70.43.17
+	 MIME-Version:Content-Type; b=mnzhkxSno6PfAtjA0hAvxHOekshZ/cuCo21OrVIB7Jf5JJOmTIEvLQLQZdDI5YMNB/T7FjPm+OdJ43KBhKj29DFEyjspFHi44W6/NuCARyxdPQHOxS6paqemqOe8HEJ4MfZf7FAYlkFMRgFfs00sb6zH+sLw1fL5tSKthNTHCPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=Xopya0eK; arc=none smtp.client-ip=51.77.79.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="qXMFPeHd"
+	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="Xopya0eK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
 	s=protonmail3; t=1711065847; x=1711325047;
-	bh=lnr5Yo35SRcJxBK8Gpcc0T08RtF1yx9dss8eTsKgAdo=;
+	bh=TmiGSefOnYVM6KMa3hvPOEUJOHJa6TzrAMAXpPg2504=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=qXMFPeHdTXWfFoWgu56WPFHiCTRY36Znl8LkllwS+Bdp200T2NQC3QfFGl3KCeAuN
-	 4JhADnWAg3225cmx3B1H0l9+o3LwoJetv129Z8SKQgl3g4UElE9wq9MTj94yUJVyG/
-	 9UaeEieFho4/v1XUG+j/xyiY5IQdz87piXmm9+Iw4VkzGbwfreBWGHDsw0gCAvr89S
-	 DqFfosSDUhFUNr3cW0+KVhQzJrDC3AyUGTe0ylvjiGhQSOr3KPRtcHrCq1WyCc0AH+
-	 /dSyXxUGirDDWGj1I9KxTRvorkwMMPFDPm0OGYuzRR7uiEe4PUUk+Va/Wx7u9OlkC3
-	 lD/1Duf6HVpAw==
-Date: Fri, 22 Mar 2024 00:03:55 +0000
+	b=Xopya0eKcxq4rCBc609VMZ3YLVnux6AabFVKhJh0IiXcdyybpuXkiYICn3YGNzOCG
+	 EPCdk8bEgr0VG4i+lfSA5TtE8fQ5UM8Dwf1tej7EVaOBAKVydk0TLLsZ3CInMNkYG1
+	 zCnrXz6HurLt/Y17v2y6eEgfY55m6AQO6rixXr3UAuaftG95R5mNWVVlDzkebdUHyU
+	 27Njq/VqOAT4OMhzPAy8JRXZLu5q1epE4SFv+oRvRjE3Wba6UMZHrenU0hiF9idysV
+	 wfAOAiuyeRSJLDK3SXvDrJ4wATYsalnqpueqsyCr1j0/blciohTMQlrJBwwpy+v4y4
+	 9jnVGSU/f4a8A==
+Date: Fri, 22 Mar 2024 00:03:47 +0000
 To: git@vger.kernel.org
 From: Thalia Archibald <thalia@archibald.dev>
 Cc: Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
-Subject: [PATCH 6/6] fast-import: forbid escaped NUL in paths
-Message-ID: <20240322000304.76810-7-thalia@archibald.dev>
+Subject: [PATCH 5/6] fast-import: document C-style escapes for paths
+Message-ID: <20240322000304.76810-6-thalia@archibald.dev>
 In-Reply-To: <20240322000304.76810-1-thalia@archibald.dev>
 References: <20240322000304.76810-1-thalia@archibald.dev>
 Feedback-ID: 63908566:user:proton
@@ -46,65 +46,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-NUL cannot appear in paths. Even disregarding filesystem path
-limitations, the tree object format delimits with NUL, so such a path
-cannot be encoded by Git.
-
-When a quoted path is unquoted, it could possibly contain NUL from
-"\000". Forbid it so it isn't truncated.
-
-fast-import still has other issues with NUL, but those will be addressed
-later.
+Simply saying =E2=80=9CC-style=E2=80=9D string quoting is imprecise, as onl=
+y a subset of
+C escapes are supported. Document the exact escapes.
 
 Signed-off-by: Thalia Archibald <thalia@archibald.dev>
 ---
- Documentation/git-fast-import.txt | 1 +
- builtin/fast-import.c             | 2 ++
- t/t9300-fast-import.sh            | 1 +
- 3 files changed, 4 insertions(+)
+ Documentation/git-fast-import.txt | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-imp=
 ort.txt
-index 4aa8ccbefd..411413e8c3 100644
+index 271bd63a10..4aa8ccbefd 100644
 --- a/Documentation/git-fast-import.txt
 +++ b/Documentation/git-fast-import.txt
-@@ -657,6 +657,7 @@ and must be in canonical form. That is it must not:
- The root of the tree can be represented by a quoted empty string (`""`)
- as `<path>`.
+@@ -630,18 +630,23 @@ in octal.  Git only supports the following modes:
+ In both formats `<path>` is the complete path of the file to be added
+ (if not already existing) or modified (if already existing).
 =20
-+`<path>` cannot contain NUL, either literally or escaped as `\000`.
- It is recommended that `<path>` always be encoded using UTF-8.
+-A `<path>` string must use UNIX-style directory separators (forward
+-slash `/`), may contain any byte other than `LF`, and must not
+-start with double quote (`"`).
++A `<path>` string may contain any byte other than `LF`, and must not
++start with double quote (`"`). It is interpreted as literal bytes
++without escaping.
 =20
- `filedelete`
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index ae8494d0ac..e36f59084e 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2283,6 +2283,8 @@ static void parse_path(struct strbuf *sb, const char =
-*p, const char **endp, int
- =09if (*p =3D=3D '"') {
- =09=09if (unquote_c_style(sb, p, endp))
- =09=09=09die("Invalid %s: %s", field, command_buf.buf);
-+=09=09if (strlen(sb->buf) !=3D sb->len)
-+=09=09=09die("NUL in %s: %s", field, command_buf.buf);
- =09} else {
- =09=09if (allow_spaces)
- =09=09=09*endp =3D p + strlen(p);
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index ef04b43f46..994a80e442 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -3285,6 +3285,7 @@ test_path_fail () {
- test_path_base_fail () {
- =09test_path_fail 'unclosed " in '"$field"          '"hello.c'    "Invalid=
- $field"
- =09test_path_fail "invalid escape in quoted $field" '"hello\xff"' "Invalid=
- $field"
-+=09test_path_fail "escaped NUL in quoted $field"    '"hello\000"' "NUL in =
-$field"
- }
- test_path_eol_quoted_fail () {
- =09test_path_base_fail
+ A path can use C-style string quoting; this is accepted in all cases
+ and mandatory if the filename starts with double quote or contains
+-`LF`. In C-style quoting, the complete name should be surrounded with
+-double quotes, and any `LF`, backslash, or double quote characters
+-must be escaped by preceding them with a backslash (e.g.,
+-`"path/with\n, \\ and \" in it"`).
++`LF`. In C-style quoting, the complete name is surrounded with
++double quotes (`"`) and certain characters must be escaped by preceding
++them with a backslash: `LF` is written as `\n`, backslash as `\\`, and
++double quote as `\"`. Additionally, some characters may may optionally
++be written with escape sequences: `\a` for bell, `\b` for backspace,
++`\f` for form feed, `\n` for line feed, `\r` for carriage return, `\t`
++for horizontal tab, and `\v` for vertical tab. Any byte can be written
++with 3-digit octal codes (e.g., `\033`).
+=20
+-The value of `<path>` must be in canonical form. That is it must not:
++A `<path>` must use UNIX-style directory separators (forward slash `/`)
++and must be in canonical form. That is it must not:
+=20
+ * contain an empty directory component (e.g. `foo//bar` is invalid),
+ * end with a directory separator (e.g. `foo/` is invalid),
 --=20
 2.44.0
 
