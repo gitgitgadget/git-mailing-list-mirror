@@ -1,116 +1,63 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8354481A5
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 15:00:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8324C601
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 15:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711119640; cv=none; b=NQDuMbJ6WI5h9D5VZW0IVjf0qsRY8Z6CfckV5ptxYUlF+njhowLeNMiRrM0lmSJTFD1qMWtOfiuHWf6VkgLXNg4ZkIJwkzSXZHeeQ3L5SN8pIpCGSXPjqYD+HqTIdWtJd0BNAhe4uv1lR8k3Uxf3hdXaV+KqlAwpj2L//Cy/kcQ=
+	t=1711120532; cv=none; b=hgu0FlhQcMCb2zSVXI0DRp/WF7OqhZ15W+lv9n4C0kq16LqSd19mxy9SiZrJOHEhtIQQzHjd/Bzt7THtTnwVHs1rGLdgOqgSMPoIzW/t2qFY6mTMxwVhBAery4rwiX30A2dEXx4CMLIFAdc33qpEMr259jIJpxzZmaIBM/YNb8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711119640; c=relaxed/simple;
-	bh=IKMLrPjS283tPxO1AsI3PkeAzUuYJn5JV3G7Y+la1aw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GJdlpVZR459vNDMpIQXgFIHfR3X/dqhvzz9A80j1gmH4gUQB2kKWBujluqV30nrrawgwTVc03YoGstzCnR2AJ7EVjkCdDWhlnniEGj3NcSW2Qk7E65hMJIIrj0Cotd/X9SCdG0+JMI8+JToDTHwDVXz3zCJDWvWBhkVgarSK7XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lPkga9Vn; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711120532; c=relaxed/simple;
+	bh=JGUDGPE4hhNxmN7jBYQ45M/WYMEsQIE2W1GGmTd3Cjs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HIY8pIz5s+kCF6RWkUoMVQSKhHZzKvN4LNvgXMfQG4bRphcuJFTmbVeSjrQDd24NwYdhEy+h1eHvYx6kcbkkoq15ZnEpLIUKv+XybtAm9pcIhcXHSjE6C1VPT92i3UIYnBxGn0LxWCR3V53ED7G1kjvlBnK65VlW61lMXi5tIZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=sKaRPkDZ; arc=none smtp.client-ip=91.218.175.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lPkga9Vn"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56845954ffeso2821239a12.2
-        for <git@vger.kernel.org>; Fri, 22 Mar 2024 08:00:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711119637; x=1711724437; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=359nC69eJdHXtkhtlss7/ULhRY/LvM8z5/TKTYttt7w=;
-        b=lPkga9Vn3tXgeSaSt2XShYtyuEl/xzEkYyvpT2kyIfVTFJ8qz1YC1vYQaDttVP7OGx
-         i4TIYajzKXbBpg7yAkCgLg2l/n9WlzRuVRBgnNMeNSJX890siMiBR+pEgcP24+fA3vAM
-         7P8HfK3A/UNVVFkH3gYKJpgES5Tbeu5ymgjVZatRgcSAE7Ph0CaLdivOY3jIeVmSPi+D
-         JZuU7NAMdHyIYeuaVjGbyNNNAOivfHhBKSioi9U3UWhl4oSqB5y/wOIyW3C7L4d3EWTu
-         ivFKY1z6MklmMbh8UeqdCgrz2FV3YW9lHogjX5RsDdcqDD4Qs0Rcrd4LjP6ZDTXFHE4h
-         LWiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711119637; x=1711724437;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=359nC69eJdHXtkhtlss7/ULhRY/LvM8z5/TKTYttt7w=;
-        b=DmAziKnh1ZIrKmXHCO8nRMR9VnEcsHc/T8SqET8raFzHxYZVckFTtlXoOT7vk0C/uE
-         nzfSpRSo9XjQnnNyi7CfrS4eMC031ozxk7PUp1HInbwoLvUYym58oh8hMt+0+P53WlOG
-         G2KDgqRayfaCDMUmISlZVbIkj/g5/i7RgUNSU726Iyc4GTHQCmJavXzO0hKFja1d9kGL
-         Bbzl4Pmx8Zz8sLbep/SR/W9mJJWNE+OP3V4Hm0rbGWlnppE/zpNK9WyqW2a7LwKnAn/M
-         BqOaHMOKXaDcBeGvhTlDAG4b/pPMoIfEqR9wd3R/u+L2TIrPUjAA3mKupaxbiu/VtvSl
-         WecA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7SXk9MmPcfefYbDkNBDuz7qG1vVd8cEtS7mhpb8TKtNAgMJdYU2bu+dvJj9OCQ8ADTtQvU4qxmEmpYYuBY1w10REt
-X-Gm-Message-State: AOJu0YxgyUsEVs/u57/VEgyTT5xaM2FkXRb8j7wx7vXkeJy5mbNIhmrS
-	tNCoQhYTBk+cjrDNZk+eNQVZzY5D7yrNYW3y8sfoQhalGoQiCX7Ln3R0z2FFsL12DudvWRyx2i9
-	T+togDbHg0plJQDpyqxz328qlDy4=
-X-Google-Smtp-Source: AGHT+IEYYw/tyMazCjjTXeGQNIl7D2WjOghu0bXy5gHvrqeiZhODzCUzza6w6/xFmiMGf0sCopFdhYgpDd2NDAGcbDE=
-X-Received: by 2002:a17:907:70c1:b0:a45:270e:3617 with SMTP id
- yk1-20020a17090770c100b00a45270e3617mr1862404ejb.27.1711119636845; Fri, 22
- Mar 2024 08:00:36 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="sKaRPkDZ"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1711120527;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JGUDGPE4hhNxmN7jBYQ45M/WYMEsQIE2W1GGmTd3Cjs=;
+	b=sKaRPkDZZugChjK5bhNpnoL/K9FPUDwgH9lCPbKRuCnSZHnGqjzmJ86rlipuotFbRaMpan
+	ZRNKpnF6OEorS/FlaJMaI9DNl6uZX30BzPQcNHg8keD3TiAsLvIk8rW+VWvpV7jPcyzVpk
+	i0HdeabbIQAiToktYwlIsy6tic+49uY=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Chuck Lever <chuck.lever@oracle.com>, rsbecker@nexbridge.com, Jeff King
+ <peff@peff.net>, linux-nfs@vger.kernel.org
+Subject: Re: [PATCH] reftable: fix tests being broken by NFS'
+ delete-after-close semantics
+In-Reply-To: <8ac5e94a3930cdd2aee9ea86acda3155674b635c.1711035529.git.ps@pks.im>
+References: <ZfBwZTL9zqDsac5m@manet.1015granger.net>
+ <8ac5e94a3930cdd2aee9ea86acda3155674b635c.1711035529.git.ps@pks.im>
+Date: Fri, 22 Mar 2024 16:15:12 +0100
+Message-ID: <87frwiuwlb.fsf@to1.studio>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGJzqs=ULaHwttY1jRaW4ZT0tGeSW2S_gcEw=tMrY+i26Jy1gA@mail.gmail.com>
- <xmqq5xxf8k9r.fsf@gitster.g>
-In-Reply-To: <xmqq5xxf8k9r.fsf@gitster.g>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Fri, 22 Mar 2024 15:00:00 +0000
-Message-ID: <CAGJzqskywQhaaG+HPWiLDqtrUE3+Zb0XuGdheJaHJMS7LqJ9xA@mail.gmail.com>
-Subject: Re: Feature request: status could list ref names after "HEAD detached"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: M Hickford <mirth.hickford@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, 21 Mar 2024 at 19:20, Junio C Hamano <gitster@pobox.com> wrote:
->
-> M Hickford <mirth.hickford@gmail.com> writes:
->
-> > I frequently run `git status`. Sometimes HEAD is detached:
-> >
-> >     HEAD detached at ea601b57e
-> >
-> > It would be neat to include ref names here, similar to git log:
-> >
-> >     HEAD detached at ea601b57e (origin/main, origin/HEAD, main)
-> >
-> > This gives me more information before I create a new branch or switch branch.
->
-> This has already moved away from the original "I want to know on
-> which branch other worktrees are working" feature, but while we are
-> expanding the edges...
->
-> I wonder what you want to see when a detached HEAD deviated from its
-> initial position (i.e., when we say "HEAD detached from", not "HEAD
-> detached at", in "git status" output).  Would we still want to show
-> the "--decorate" list of existing refs for the original position?
->
->     $ git checkout --detach master
->     $ git status | head -n1
->     HEAD detached at 3bd955d269
->     $ git checkout --allow-empty -m empty
->     $ git status | head -n1
->     HEAD detached from 3bd955d269
->     $ git reset --hard HEAD^
->     $ git status | head -n1
->     HEAD detached at 3bd955d269
->
-> If we add "(master)" after 3bd955d269 in the above illustration, I
-> wonder if it makes it too misleading.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Interesting. I hadn't appreciated the difference between "HEAD
-detached at" and "HEAD detached from". In the 'from' case, it'd be
-informative to see some measure of distance from the original
-position:
+> Fix this bug by skipping over any files that start with a leading dot
+> when counting files. While we could explicitly check for a prefix of
+> ".nfs", other network file systems like SMB for example do the same
+> trickery but with a ".smb" prefix. In any case though, this loosening of
+> the assertion should be fine given that the reftable library would never
+> write files with leading dots by itself.
 
-HEAD detached from 3bd955d269 (HEAD~1)
-HEAD detached [ahead 1] from 3bd955d269
+I'm fully supportive of this, as this will also fix any issues possibly
+caused by .DS_Store files created by Finder on macOS, although it's very
+unlikely they will be created in these tests.
 
-Decorated with refs:
-
-HEAD detached from 3bd955d269 (HEAD~1, master)
-HEAD detached [ahead 1] from 3bd955d269 (master)
+--
+Toon
