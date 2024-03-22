@@ -1,137 +1,122 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB16641C70
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 17:29:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E258839AC5
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 18:48:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711128548; cv=none; b=Y1vtGLa43YIA4ZxxiUzNcuv5wAR/ot1CjAxokjDcbK7oT2rYLuit6oLvIBF2sIWyNoCA7cBl1VXsCdFOykg9z1qDBXJrtyU/Lgp03PXAp/6EzTQy/cF2WxBaANTsZu737EHPGMOwiVUeKgXEaDJkZ6aocrwB61V1kNC8ZBkmbK0=
+	t=1711133329; cv=none; b=tmbLcFl06drwfW3sfSTBWRhVcqZOewh5N8G7y0ZxMcmbtz7U1OuCodOYHq/y66RZTofLPooRglj82HDei6NyRW1J4re8tG6EQx0I+U7itAWgvsCWU+tU/p350j3aJl81XFivd/IAx1ZJ76mKpuYkoiBWp1z2YQgEZel/Qip/FDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711128548; c=relaxed/simple;
-	bh=ZQx613lLdF+xHmCC04vtsl0DLg9nsGiyQ8OH9UF6ZPw=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=ZbZhTFhTtGFc2B18UT9cSGvSad3vW2wQDTLmPjJDN4zuEvq2BrOrwJ/v4wGb3AreX62s/HW9TiRmchr3rMW1eqPQTyuwHhbCJILW7fWHUXRx728QcEQ+L3OUe2J7y3nOlPPS4bPyvT2bRbk8fKym7QJO70SnZdKmF5tw1BDeUm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=sP6QXIEU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YLPLUlBm; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1711133329; c=relaxed/simple;
+	bh=mo/gckyvD9+KuXYzjmk+v12OE6RVKyzn0+iIxCOTHKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G4t2eJpEVOEjWV0kqAqMCsWN4iM3Xn3gSVzghRALGPh8tQy1jOHqwxc2X4eDM2TudCz7FQdx/w7fzYBN/LafzzANrnGPaOt0xRIChvmbar7GGEBu9D6y9xPeIMb6ZOZwvZewTT/HIcc+5gtX1gvb8XR+1IxndrpaqARytJIVY8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SQO9aX3n; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="sP6QXIEU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YLPLUlBm"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D084013800C2;
-	Fri, 22 Mar 2024 13:29:04 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 22 Mar 2024 13:29:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1711128544; x=1711214944; bh=UUYBOK9mzdtcVDoty3UQx7oB2h3g9RUX
-	KhRVYpjEY0E=; b=sP6QXIEUGUb5V5coKHjq+St239+5AwgKmvYfbqEz45xMbvph
-	Qx+UEbJ4SQMvc5eCI1ZRw4PreDPNXoJQtNsL8YprlsQYAVGmjKQgERTmo34/ryus
-	j/oylRWvgqKhOHIoJI8g5dXYnI8O3fqKht9cSNxtFYitBI2vJvjy5NIGn9cgZK4F
-	YwNEc0iI+CQh/+xIYCNVkASwbf5VppspD3j08leM8wpzHkktg0KNINp1q/TRqBx6
-	H/dmguuYLkgeLlxSJhHNQVeyjlLJAyDcNBN7xo/0Kdx8FKh3DI9jSmnE2bRkBGmI
-	BAwh3zg05i0nO5R3co6cJlJOeUEr3V2VB9Iu1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1711128544; x=
-	1711214944; bh=UUYBOK9mzdtcVDoty3UQx7oB2h3g9RUXKhRVYpjEY0E=; b=Y
-	LPLUlBmXB0Y5i7bnQwz0j0pGsb6rdctJ/xYpUX3XotEnLvKLZn5WlSKLdvqAkbLt
-	3np2ny/tuG+SmZQ90MJDE/c5uyxQQhXBPvcrqK4yCksyKOI3Vf/D/CMaV83tTep0
-	aAf9G+OvMHL76qDfe5c/NEV4qjRHuic5K/x7CfZMnB0EPdW0C5ChEe5MBFvVHcDB
-	LuUr22149SANE939sqEQRIyDZO1NTUn4d3b1PAjqlZ3NpIbNNm1LYL/d224PKc7G
-	x1MWmnhHBSR9FVw+JVAQ7+Dsib8oR7Lg3UONkR+PUt2vMb1mVJ8Aj9nsC6q8kI6i
-	hzNpvRIAhQHxuEqI1x7Kg==
-X-ME-Sender: <xms:4L_9ZbxGShAx_rPASa7HnRAczC04hfC9Z0sPSI3W_-NnhM-HAb9IPuM>
-    <xme:4L_9ZTQiczDSkgNakimGEXaaLp3NjoMIGHjnxZUbMgyA5KXAZNUc6clM147cI5dBw
-    -RR0Fhd_dGHfbkVHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtvddgfeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:4L_9ZVWgEKkMVcJIpTyDrwE5nUtHgf1WzFRvVtUfa0NzKQUImPsqFQ>
-    <xmx:4L_9ZVgOYLWneUc0_rlfxZD_1n6-O-iXbi8YN5INZGVU6BmdYB0h5w>
-    <xmx:4L_9ZdDvLExqzMjzk99nOvcSENHVzWTEPRXjugYQaIkgg8LV52UKYQ>
-    <xmx:4L_9ZeKXPcPep_rwUz84rM2iu_TIX2ZkRBn8S2gAvKeCRmD6yy48hg>
-    <xmx:4L_9ZcNXmKNX1-kJ-6jZs2TziPXqS-oCk5lZIlzDv6Oo8AGzzQU_-A>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id A3C7D15A0092; Fri, 22 Mar 2024 13:29:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-332-gdeb4194079-fm-20240319.002-gdeb41940
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SQO9aX3n"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5a52c5c96feso63052eaf.3
+        for <git@vger.kernel.org>; Fri, 22 Mar 2024 11:48:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711133327; x=1711738127; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xEQTY2/BLRgae576vM4MaZIkkdidXc8ldPNz0XrBWQk=;
+        b=SQO9aX3nhKSZXW7gcUE4ca89lFRtqIOtug3FzebVWv0O3sFDOB+tTr/8BaKaDp1pbp
+         hd2uHPK3X3LDpVXrRUNe4uwDmmDHq/hV/ebXETHY4KIo4cbu1dkTxmi3zG1Q65RIQkdA
+         MoCeWEMIsY5B62JbqTY0zX/ZnmmXU5bnTT+Cd9LRqg6B0LcoFJ4n5/LYZNgahd2pJbaz
+         i7hj5ZAYav1vJ0hx/AVJwOl1a19UY4m5EZ/vcyqGsb5bBzYM2uFKr9UlfUJwBm0DZjvQ
+         YqSX94OlrNyKVvmLb4v97Fbozwx1ouNo2PBV+CExGGGmAyfHd7bcINWxncoBgh0hvlda
+         sb/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711133327; x=1711738127;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xEQTY2/BLRgae576vM4MaZIkkdidXc8ldPNz0XrBWQk=;
+        b=tVskBwnOkYNsOd2U4ih3DnSLMZhKpGc8JnTYJ+mfL3Oz1/izRw9V64DQtno3q5Wjfk
+         NlWdm9kA3LO64U7OTuEPKAJ25LuUWkQRhI2BiV7G7aVzeS1BZyy63x4Z543ZsZFcwj4u
+         52g8Im5M2ADBgb6kCZWmM4fY8WOKO/qCR8Kk5QZq+B7l4ffXmyea48R8Z9qM+SJ5Z9Yv
+         ys3aGrNuGJjbdVEbh+g6Otmy7iZ8yVe3i4EeM2nV8sqtp66qPjN90eauRklSP2qFMwFK
+         m4aiBN2N2U0psJzBUT7l7fWZgJrEyqO/LdT63vGdoml9GPMDUGtdFYrKk9LqNNc7P1ZW
+         5BHA==
+X-Gm-Message-State: AOJu0YwhwOzSHiSbscmWZwGNs+Rr0EO8mIWt93diqGWwG/aQks+91Eno
+	lySGG0846/uzerxL/JuG6bUZ3I+P0rJvllhW/xtrbFmlyb+bJlJZuh/nuwsR
+X-Google-Smtp-Source: AGHT+IGjhFthTZ61PgSMOFT9wG0gvTwKkoZB3suKcLxcGeO8iNG44DCc7KqWX7tQDyjzKaMPNvr9vw==
+X-Received: by 2002:a05:6820:1b13:b0:5a4:2c5e:807d with SMTP id bv19-20020a0568201b1300b005a42c5e807dmr590384oob.4.1711133326946;
+        Fri, 22 Mar 2024 11:48:46 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id ch5-20020a0568200a0500b005a21ec7b19fsm152124oob.3.2024.03.22.11.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Mar 2024 11:48:22 -0700 (PDT)
+Date: Fri, 22 Mar 2024 13:46:56 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/7] reftable/basics: improve `binsearch()` test
+Message-ID: <zlj4jlfv645bxqgtjkrm3qdan3b7q4lzhxv3nqp7qagycri323@m5hhhxwuoetv>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <cover.1711109214.git.ps@pks.im>
+ <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <0f65aae3-15a1-456d-8285-7923a880deea@app.fastmail.com>
-In-Reply-To: 
- <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
-References: 
- <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
-Date: Fri, 22 Mar 2024 18:28:44 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Bill Wallace" <wayfarer3130@gmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Subject: Re: Worktree shares a common remote with main checkout
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
 
-On Fri, Mar 22, 2024, at 15:50, Bill Wallace wrote:
-> This issue is just to fix an easy to make mistake when working with
-> multiple remote origins and worktrees, where it is too easy to push to
-> the wrong remote origin because one can't set the default origin on a
-> per-worktree basis.
->
-> What did you do before the bug happened? (Steps to reproduce your issu=
-e)
-> Used
-> * git worktree to create a worktree
-> * git remote add to add a custom repository
-> * git commit/push to try to push changes
->
-> What did you expect to happen? (Expected behavior)
-> Expected to have the git push recommend a remote origin that matched
-> the worktree, but it defaults to 'origin' all
-> the time, which means I need to checkout a clean clone from the
-> specific origin I'm making changes for so that I don't accidentally
-> push to the default origin.
->
-> What happened instead? (Actual behavior)
-> Suggests 'origin' as the default origin - which is CORRECT for the
-> main git branch, but I want to use worktrees to allow working against
-> several remote origins, with the default being determined by which
-> worktree I'm in.
->
-> What's different between what you expected and what actually happened?
-> Suggested 'origin' for the --set-default rather than allowing me to
-> define the origin I want, for example 'wayfarer' as teh name of my own
-> remote that I have cloned on github.  The default origin is still
-> supposed to be 'origin' for pulls/naming, but when I push, it needs to
-> recommend the matching origin.
->
-> Anything else you want to add:
-> This is a bit of feature request, but the reason I'm listing it as a
-> bug is it makes it very easy to make a mistake by pushing to the wrong
-> origin for a new branch.
+On 24/03/22 01:22PM, Patrick Steinhardt wrote:
+> The `binsearch()` test is somewhat weird in that it doesn't explicitly
+> spell out its expectations. Instead it does so in a rather ad-hoc way
+> with some hard-to-understand computations.
+> 
+> Refactor the test to spell out the needle as well as expected index for
+> all testcases. This refactoring highlights that the `binsearch_func()`
+> is written somewhat weirdly to find the first integer smaller than the
+> needle, not smaller or equal to it. Adjust the function accordingly.
+> 
+> While at it, rename the callback function to better convey its meaning.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/basics_test.c | 55 ++++++++++++++++++++++++------------------
+>  1 file changed, 31 insertions(+), 24 deletions(-)
+> 
+> diff --git a/reftable/basics_test.c b/reftable/basics_test.c
+> index dc1c87c5df..85c4d1621c 100644
+> --- a/reftable/basics_test.c
+> +++ b/reftable/basics_test.c
+> @@ -12,40 +12,47 @@ license that can be found in the LICENSE file or at
+>  #include "test_framework.h"
+>  #include "reftable-tests.h"
+>  
+> -struct binsearch_args {
+> -	int key;
+> -	int *arr;
+> +struct integer_needle_lesseq {
+> +	int needle;
+> +	int *haystack;
+>  };
 
-I don=E2=80=99t understand the expectation. git-worktree(1) just gives y=
-ou a new
-worktree to work on a branch, do a bisect, maybe a rebase and so on. I
-expect `git remote add <remote>` to have nothing to do with the current
-worktree that I am in. A remote ref is for the repository, not
-per-worktree.
+This is probably just personal preference, but I think `key` and `arr`
+in this case are a bit more straightforward. I do like that we rename
+the args to be more specific. Do we want to also append `_args` to
+denote that it is an argument set? Maybe `integer_lesseq_args`?
 
-If you are creating a local branch based on this so-called
-worktree-specific remote and this branch exists on this remote (and
-*only* on that one) then you can use `git worktree --add --guess-remote`
-to automatically track the remote branch.
+>  
+> -static int binsearch_func(size_t i, void *void_args)
+> +static int integer_needle_lesseq(size_t i, void *_args)
+>  {
+> -	struct binsearch_args *args = void_args;
+> -
+> -	return args->key < args->arr[i];
+> +	struct integer_needle_lesseq *args = _args;
+> +	return args->needle <= args->haystack[i];
+>  }
+
+-Justin
