@@ -1,53 +1,53 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B9940BF5
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 12:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FFA3FE46
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 12:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711110158; cv=none; b=erqSwyMfu73ZUbtR+Oxd1Dv6u2sN6y0iQAxyisptc8A/mOdL0/a4Swr0Trk9t3RU2PEKEh88KWD2EuY4ksk41KHG8x3XXrPDGFwSuSyiP08NyC7a8XRFJnaPZ1C6ni9ytXsX7KLZ4ZuA5fNKHUTz36v6ynsG7JQQwWQ8iPeiNO4=
+	t=1711110160; cv=none; b=lzXsUevG52PCK/hsHsvr7hJZwmV7qdVTCcqySy9XjX6QFFjCHInr7VaQuIp6idOok2IvrkBGCbTNaO3Mv9Z+IUqdRrtrxe3/AXoebrYdVjkS0nVO6ouPclR7RShQCJJAnY7v5XDTaxAxp7my8MNWU0if/1+0AliAutUAfi1wszI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711110158; c=relaxed/simple;
-	bh=R4CkqGfM3uVLn/P5K39gjJ7SoIpQtvV1GgeWdSjzlTo=;
+	s=arc-20240116; t=1711110160; c=relaxed/simple;
+	bh=BaNYT5MLIxYYcMXMcDWu0jfzBN1e9ky2CY/eKLGjm1A=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y4gMkrKwtHiCyk9sj62nJ9ZksYv8r5FxJ9XgCPwbralBs3QULdT+UhIBNzHYA9qg1/cFtp0r2FTT03jcw791kQD6WAAfSdTYKfsRB11itw1NszFkE9kCKG3L2fx7UPANzB9I2jb/hEwT3Myk4oqTpC5q4Hw0lfYO97MgVnTHch0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qb+D7Cuw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v6vJF0y0; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=IxJGx8UD+XRMSCKzdbenl0eI/8pnwJsX2HZQyOzcbmSxpJYuMVlBgA9takKM7wKaWgNO3+2GbKhZWVla97vuJT9eN1QkDcW9MNdXpjwzg8uDv9qoIqAkWL9jSKZcrcUc5F+SpRHtJutsodqivkpvx/kYE6MyEJIxKtV+bX6aRQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c947KVMs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uLNuOVmu; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qb+D7Cuw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v6vJF0y0"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7ECB3114013C
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c947KVMs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uLNuOVmu"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6599513800F8
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:37 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 22 Mar 2024 08:22:33 -0400
+  by compute1.internal (MEProxy); Fri, 22 Mar 2024 08:22:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711110153; x=1711196553; bh=GjH2fo8ECo
-	SfW8dEbznRXafQRWSFIQAL29EYm3QyQjY=; b=qb+D7CuweRfQkgeXVaJoq9VHmr
-	wxy4+wuC2537WhN57U0qdSDC7XXkIBD2eHxr5lX41H/mUVaqdLiWvWKEuj6oIRXC
-	w8cZDv3hlnWivnaB0NPS/Fhmnctdf7DVqjZUHvcASVk62hWUl7tO555MpCGJ2X6r
-	dNSe9Sq5WsZhOSPwvQctE7VMEB3ynrV/y6i7+EvuFWpPt52crjj7SVbI4r0rK2Kl
-	hFVbNFMqCqew3QpMRgnZRq1D1YJkkP2wTexVolfEpKh/NwsCtL8l0eQ93iw+WjjG
-	Cuk9PEhLWR/ymA4tFKTuCBJxMmHy2b4bVSLgJSi4bBA4ZPmjuknmjDHUkYjw==
+	:subject:to:to; s=fm2; t=1711110157; x=1711196557; bh=Kigp1rEQ+J
+	AaQBkBHmAEpbNjaREoSvpq2xWlq4hEuUs=; b=c947KVMsJStRuQesPBEiOD8x8a
+	UsFL+4aIBGHvTuCCqP2kTBUX4RlbD78X882j3daSq0FDpBAquuHttLaO2KRS/Z+q
+	O49/qisGFeUqpHZjBzqJbODU4Fekuj/s7/rZMT3Dp505Dwd/lMnS3qwq2lLQiLw5
+	+z+i0evHlLKbUpxY1sOXE0imMQ9nRvG8GjmsxWR181lKrOm2gAunFNV/n0EAghD1
+	c+aeIP1H/lm4qhp7U7raIB1OmsQMIsWa5R/xukjHxn+c4YBYI991p8sAnoAZsXeT
+	fGkn2DoIEQKU/dnTHnhzTPtI5sM93yx1dHGAGadCWrPsiptNAYYcjpZYsGmA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711110153; x=1711196553; bh=GjH2fo8ECoSfW8dEbznRXafQRWSF
-	IQAL29EYm3QyQjY=; b=v6vJF0y0MHo0D0o+5Ms416vYETo6Z6+RNelU1QEY8mHY
-	nCgncV0WhoG4xrNDfP0m/Yk8kgLSoCtxz3c7cQajgSbhIdT5RIEJdbJL6Om2hOLw
-	ArqV1M0UsHAEuXt1gfq+JtMlvGdw0BxA9uezqUcKF+iJBURQ77zccaWRkkrN1i0z
-	DTGQ7RnONGEE1xuiWhaZyXDFH1wAOSdo8K1s7TbtLdp8CUJk+FMpn17zMc5jZ7x/
-	cEJbAgaNMZbQtELtKisfR/8tE9QNZsEOUh9lqCVnN42jxVLfZ5eXhZj8thHqjo8x
-	9+zMgevzGsxVyEH0xuGN0ua4P05pXlU7XAn8XonrdA==
-X-ME-Sender: <xms:CXj9ZaEqg2bQkrUli5BCLpC5Yi18HSBSJzaChwZvceLMIPOJ8fHGtA>
-    <xme:CXj9ZbXoh7Bc8CXoLc3Qldkk6uNAxXbHzIYKk5h_6sGhOjpQp4Rrw_VA7hvi4CBi2
-    GSAvGtVL9z9npVj4Q>
-X-ME-Received: <xmr:CXj9ZUILLbn1Glj12mGK0Mv7ZCDOMD96FiBArCenVVet5qxnpfdH7MI9mqI9OJDrZwiHx_meWgTUQhNwCbSv6lxX2F1xea07AmBaizeP89o950fB9A>
+	fm2; t=1711110157; x=1711196557; bh=Kigp1rEQ+JAaQBkBHmAEpbNjaREo
+	Svpq2xWlq4hEuUs=; b=uLNuOVmufiuFpyM8Iob4w35GYMHps/MWCLSVAswmxMot
+	wAngOupBeFSzbJIzb4B6M5e7/bgPaIcDIYqkWuFXHeJdkzrNLdf1ACsRep5AS0D9
+	mY8cmzRWvIBmPtl5SCGIyBn6iClHXMNkBAEqwydK3dzHto3SMXeVD9Ks7V6HogNr
+	8rH0In5d8UaESgfyZDDZy4WGUg4Jd7WjX6s0AqxZYM9UXA05rioAn8UC4ICPbOLp
+	Z28rnnjz2g9KgBHckYmIsPiHowtDKHMPN2sUkk2CHE95n+agddrQiknFxOgLnm17
+	Z/sSqGPkcgm007c2Yi7RkDsEsuoThgYyMhAjus6sGA==
+X-ME-Sender: <xms:DXj9ZVH6vlSZfi0Tzn5iyY0VNO6KZigcg5GVe00jOdIjIXxU9RTxCw>
+    <xme:DXj9ZaV21_I8A4FhpdVY-PwAEElafaOMFsYs5MWu0yIVy8dEtYyn97EbBB51q7hbw
+    KrbHO-yj2wFJvN9Xg>
+X-ME-Received: <xmr:DXj9ZXIa0mfex6tH1bTPNYijNgh5NtHv19DwA027b-yeTVg2pclP4xSw-rOWG4fwe_RUxpPOer9Lwkldeej1QRqmRlfMJ4K1f33I3Y0hJ-2wvx1_ug>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddttddgfeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -55,24 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddttddgfeeiucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:CXj9ZUGDBjJHmd_I2VnOJHGFc4jLUPcr7ovcMdfPnRKXgDwlhxTjSQ>
-    <xmx:CXj9ZQUN4sDa4aD83qcF6BsTSQkrMhM4VfiPfhuB_BiJQNFxttpphg>
-    <xmx:CXj9ZXOldA8vhDxTytwnUX7azChNLl_FK-khvxGFjb1jmuQPuLk4yQ>
-    <xmx:CXj9ZX1V8RMbqxJyZ0d6UkQotTD9512v-ntENZjMrJ6BIe2j1hrmlQ>
-    <xmx:CXj9ZdjVvfxROZvlBLYtuc_jiiXO3ueQt2oO8GDFDUJhqiby1lKtEQ>
+X-ME-Proxy: <xmx:DXj9ZbEaM3oqXDjL4G0xfOGjaqj5kZZJMeo2mitLmJflEyOkZZX1Bg>
+    <xmx:DXj9ZbUnLUeAPqpQOM_r04_jIREYj6DdX2Ii2zxMivSlbHwPHmMoTQ>
+    <xmx:DXj9ZWMiqfHjICB-W2UEzhK092to9lMMjqhRVOsKEMSZw_AzbHDuCA>
+    <xmx:DXj9Za0nytnyEjNu_BZy-hop-Q5HIHnyS-uSZXvBpHFBl3NU55dHjQ>
+    <xmx:DXj9ZYiWbx3HSc82rhQ9vaoUWSb4g4LYTEMPq-pR-1L774seXj2CVw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:32 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 22 Mar 2024 08:22:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ce5bfa80 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 021578d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 22 Mar 2024 12:22:27 +0000 (UTC)
-Date: Fri, 22 Mar 2024 13:22:30 +0100
+	Fri, 22 Mar 2024 12:22:31 +0000 (UTC)
+Date: Fri, 22 Mar 2024 13:22:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 1/7] reftable/basics: fix return type of `binsearch()` to be
- `size_t`
-Message-ID: <cd82ac6531f87917c736c4b523496ef270be34b5.1711109214.git.ps@pks.im>
+Subject: [PATCH 2/7] reftable/basics: improve `binsearch()` test
+Message-ID: <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
 References: <cover.1711109214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,179 +80,130 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IaendBED3d/I7wWT"
+	protocol="application/pgp-signature"; boundary="OkIuNxZKGKzK6TOB"
 Content-Disposition: inline
 In-Reply-To: <cover.1711109214.git.ps@pks.im>
 
 
---IaendBED3d/I7wWT
+--OkIuNxZKGKzK6TOB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `binsearch()` function can be used to find the first element for
-which a callback functions returns a truish value. But while the array
-size is of type `size_t`, the function in fact returns an `int` that is
-supposed to index into that array.
+The `binsearch()` test is somewhat weird in that it doesn't explicitly
+spell out its expectations. Instead it does so in a rather ad-hoc way
+with some hard-to-understand computations.
 
-Fix the function signature to return a `size_t`. This conversion does
-not change any semantics given that the function would only ever return
-a value in the range `[0, sz]` anyway.
+Refactor the test to spell out the needle as well as expected index for
+all testcases. This refactoring highlights that the `binsearch_func()`
+is written somewhat weirdly to find the first integer smaller than the
+needle, not smaller or equal to it. Adjust the function accordingly.
+
+While at it, rename the callback function to better convey its meaning.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c      |  2 +-
- reftable/basics.h      |  2 +-
- reftable/basics_test.c |  6 +++---
- reftable/block.c       |  3 ++-
- reftable/refname.c     | 17 +++++++----------
- 5 files changed, 14 insertions(+), 16 deletions(-)
+ reftable/basics_test.c | 55 ++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 24 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 0785aff941..2c5f34b39e 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -27,7 +27,7 @@ void put_be16(uint8_t *out, uint16_t i)
- 	out[1] =3D (uint8_t)(i & 0xff);
- }
-=20
--int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
-+size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
- {
- 	size_t lo =3D 0;
- 	size_t hi =3D sz;
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 91f3533efe..2672520e76 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -28,7 +28,7 @@ void put_be16(uint8_t *out, uint16_t i);
-  * Contrary to bsearch(3), this returns something useful if the argument i=
-s not
-  * found.
-  */
--int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args);
-+size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args);
-=20
- /*
-  * Frees a NULL terminated array of malloced strings. The array itself is =
-also
 diff --git a/reftable/basics_test.c b/reftable/basics_test.c
-index 1fcd229725..dc1c87c5df 100644
+index dc1c87c5df..85c4d1621c 100644
 --- a/reftable/basics_test.c
 +++ b/reftable/basics_test.c
-@@ -34,15 +34,15 @@ static void test_binsearch(void)
+@@ -12,40 +12,47 @@ license that can be found in the LICENSE file or at
+ #include "test_framework.h"
+ #include "reftable-tests.h"
 =20
- 	int i =3D 0;
- 	for (i =3D 1; i < 11; i++) {
--		int res;
-+		size_t res;
-+
- 		args.key =3D i;
- 		res =3D binsearch(sz, &binsearch_func, &args);
+-struct binsearch_args {
+-	int key;
+-	int *arr;
++struct integer_needle_lesseq {
++	int needle;
++	int *haystack;
+ };
 =20
- 		if (res < sz) {
- 			EXPECT(args.key < arr[res]);
--			if (res > 0) {
-+			if (res > 0)
- 				EXPECT(args.key >=3D arr[res - 1]);
--			}
- 		} else {
- 			EXPECT(args.key =3D=3D 10 || args.key =3D=3D 11);
- 		}
-diff --git a/reftable/block.c b/reftable/block.c
-index e2a2cee58d..422885bddb 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -382,7 +382,8 @@ int block_reader_seek(struct block_reader *br, struct b=
-lock_iter *it,
+-static int binsearch_func(size_t i, void *void_args)
++static int integer_needle_lesseq(size_t i, void *_args)
+ {
+-	struct binsearch_args *args =3D void_args;
+-
+-	return args->key < args->arr[i];
++	struct integer_needle_lesseq *args =3D _args;
++	return args->needle <=3D args->haystack[i];
+ }
+=20
+ static void test_binsearch(void)
+ {
+-	int arr[] =3D { 2, 4, 6, 8, 10 };
+-	size_t sz =3D ARRAY_SIZE(arr);
+-	struct binsearch_args args =3D {
+-		.arr =3D arr,
++	int haystack[] =3D { 2, 4, 6, 8, 10 };
++	struct {
++		int needle;
++		size_t expected_idx;
++	} testcases[] =3D {
++		{-9000, 0},
++		{-1, 0},
++		{0, 0},
++		{2, 0},
++		{3, 1},
++		{4, 1},
++		{7, 3},
++		{9, 4},
++		{10, 4},
++		{11, 5},
++		{9000, 5},
  	};
- 	struct block_iter next =3D BLOCK_ITER_INIT;
- 	struct reftable_record rec;
--	int err =3D 0, i;
-+	int err =3D 0;
-+	size_t i;
++	size_t i =3D 0;
 =20
- 	if (args.error) {
- 		err =3D REFTABLE_FORMAT_ERROR;
-diff --git a/reftable/refname.c b/reftable/refname.c
-index 7570e4acf9..64eba1b886 100644
---- a/reftable/refname.c
-+++ b/reftable/refname.c
-@@ -33,10 +33,9 @@ static int modification_has_ref(struct modification *mod=
-, const char *name)
- 			.names =3D mod->add,
- 			.want =3D name,
- 		};
--		int idx =3D binsearch(mod->add_len, find_name, &arg);
--		if (idx < mod->add_len && !strcmp(mod->add[idx], name)) {
-+		size_t idx =3D binsearch(mod->add_len, find_name, &arg);
-+		if (idx < mod->add_len && !strcmp(mod->add[idx], name))
- 			return 0;
+-	int i =3D 0;
+-	for (i =3D 1; i < 11; i++) {
+-		size_t res;
+-
+-		args.key =3D i;
+-		res =3D binsearch(sz, &binsearch_func, &args);
++	for (i =3D 0; i < ARRAY_SIZE(testcases); i++) {
++		struct integer_needle_lesseq args =3D {
++			.haystack =3D haystack,
++			.needle =3D testcases[i].needle,
++		};
++		size_t idx;
+=20
+-		if (res < sz) {
+-			EXPECT(args.key < arr[res]);
+-			if (res > 0)
+-				EXPECT(args.key >=3D arr[res - 1]);
+-		} else {
+-			EXPECT(args.key =3D=3D 10 || args.key =3D=3D 11);
 -		}
++		idx =3D binsearch(ARRAY_SIZE(haystack), &integer_needle_lesseq, &args);
++		EXPECT(idx =3D=3D testcases[i].expected_idx);
  	}
+ }
 =20
- 	if (mod->del_len > 0) {
-@@ -44,10 +43,9 @@ static int modification_has_ref(struct modification *mod=
-, const char *name)
- 			.names =3D mod->del,
- 			.want =3D name,
- 		};
--		int idx =3D binsearch(mod->del_len, find_name, &arg);
--		if (idx < mod->del_len && !strcmp(mod->del[idx], name)) {
-+		size_t idx =3D binsearch(mod->del_len, find_name, &arg);
-+		if (idx < mod->del_len && !strcmp(mod->del[idx], name))
- 			return 1;
--		}
- 	}
-=20
- 	err =3D reftable_table_read_ref(&mod->tab, name, &ref);
-@@ -77,7 +75,7 @@ static int modification_has_ref_with_prefix(struct modifi=
-cation *mod,
- 			.names =3D mod->add,
- 			.want =3D prefix,
- 		};
--		int idx =3D binsearch(mod->add_len, find_name, &arg);
-+		size_t idx =3D binsearch(mod->add_len, find_name, &arg);
- 		if (idx < mod->add_len &&
- 		    !strncmp(prefix, mod->add[idx], strlen(prefix)))
- 			goto done;
-@@ -96,11 +94,10 @@ static int modification_has_ref_with_prefix(struct modi=
-fication *mod,
- 				.names =3D mod->del,
- 				.want =3D ref.refname,
- 			};
--			int idx =3D binsearch(mod->del_len, find_name, &arg);
-+			size_t idx =3D binsearch(mod->del_len, find_name, &arg);
- 			if (idx < mod->del_len &&
--			    !strcmp(ref.refname, mod->del[idx])) {
-+			    !strcmp(ref.refname, mod->del[idx]))
- 				continue;
--			}
- 		}
-=20
- 		if (strncmp(ref.refname, prefix, strlen(prefix))) {
 --=20
 2.44.0
 
 
---IaendBED3d/I7wWT
+--OkIuNxZKGKzK6TOB
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX9eAUACgkQVbJhu7ck
-PpQ/GA/+O67k367Es+tFHabytpkcYU1RCmm0uK9fac80FtxO5FcOPchNOc/BfJuC
-JLtks6owS2uvyRrd0lEIm4w/njBzBp6JuNaH1wdIQZMS7Xp4KfHcAhGusxGcgRVY
-Onbhj0wqmACBSSXRQ+QQase47D0AXzj2Rmn5h2TmEW+zrU9AVsUPmO1bRS6IDKXJ
-puBzIx2RLHp/C/IBj68+6kX/pVYwx8K/sbUFICURiopp/XE/Sa5vtW7X/jKJyQaj
-DszIMDM+9k0aKPmzXeNwNp0PKxeIcBAofXeGp/6/5ts9NW66Hh9dj5TgBryf8afW
-MStkcllADmGlkCtUNXFeu9AwGM453doxOvcC93l/4AcL5eFtoIcssgO48Q9xCrpB
-nlgjav2QEJhZhHE2JJXZwHvXh0ChxZqYt1fU2j7BWYRpgyYegvOBArghhzpdb4l7
-UnqEbkyOtkPpTaqBihh8tBVo9VaWyISNGVPNDNuaPnh4hVWHhyAROh2HKr7DjwkV
-4LtYwWdct/+gMhgVd9pe9r4ZXnRFAfZC27Skx0UlRX2e4++o7pP3rWMnFu0ITX+1
-U/yVBUIZZdXTDTIShhDAZXKRys4bCjEAEujSiCMJ/geiNXjqpLC9x9EY988fq5bB
-IRwjwfnYfqtp1uNAacaGoSTOVPyUGKvjL6xtagv8RzfY2cYNddY=
-=1F05
+iQIyBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmX9eAoACgkQVbJhu7ck
+PpR0Tw/3ZF1bJvUmzjxr6theZ534QjjwQNwam79U878WjM/wUlGwvS82kQZ3GICl
+vgwe4ltclucHxRkxW2EQXcbpe0HQMLyRrQyCCsSXimp4IGeU5XpJphVR7MXa9Kzt
+JE3cOvjDZGjWEhHuEGCZnBMYu/P42+3r050EfQ96n/j2Wb5VftgoHoj0sEEhmDpA
+lWwUnbiLrdtl2HTyaGd2zuQ9XfO/v+D5iuAJ1nuDOkWCmGaa7tSU3xAibth4Y8LO
+xMYtZtnaRzdYdPO6DhJj2+lofu2M0csvOmk7yJUy2vTJT23V8eJPJzsIzZD5g0GS
+dnXrYyLln7XgVIPT5qZeVRokAZ8UDGicUki8g5cj2osKtYSmfFUo8D3HtR6oZOJb
+fA429bvcJjLHqu++8JXs1hGWCa2RbbzatMPP+/jTTHWzS7WR0a2qSsoXfpSwE/Fp
+gf5haujg73+cSD/rmEbP1LSSOtlv5WD22jBf5Uzm6qr8T6ahwDjkoLbLH95znX1Z
+kGUoZEuS7Jt7TiC2A0ewY3QOIj4QR7XoF1nacnBhFI77FHkP9KFTm5r3fiiqOXl/
+Fj0Wk7TdYuv1kXSjPTmCmlg+82abTggk33d0UDTJ9Lc2VVet9mwQDvKcCp7kXsLl
+albrZWZbsRET2H8S4x3oFNAk4k4d6rl+vwOZMOP5fOcZzNP+vQ==
+=NETA
 -----END PGP SIGNATURE-----
 
---IaendBED3d/I7wWT--
+--OkIuNxZKGKzK6TOB--
