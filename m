@@ -1,88 +1,107 @@
-Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE22B627FC
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:18:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D738180628
+	for <git@vger.kernel.org>; Fri, 22 Mar 2024 22:31:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711145933; cv=none; b=n0Sq1Fgxe9AyV9kiTBHJYMCD+vDjzXic7zWH15sRXcmcgHSGO+S4W1Hp+fYWiqap+gUukOWH9Q1rLF1a0yZBasqlbHEfE/U5quSvNNcAi8z15jiYaAKjupqZYRPc7hcg1enUG0M1w5WMW5lR8+WScZswM8WnRjQgLxGuS+u54QY=
+	t=1711146694; cv=none; b=MMBU6WDv3NI415Q4C92ABALre9hqwqroKzl7/UozhnnNPmaA0X3kyl1LWrI8A5tmVZ2ADqEjAOqRcidLlNbOAzWwNSmWtLeE86fSpKJDmevDPl2y3zhHmsgeNKwcIU83UTcfZNE3Fr1iWom68AkkrzP9y4SLc/DFn8RL5W8KqIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711145933; c=relaxed/simple;
-	bh=U/+YTUpM7UQ2XRhIae8V90Tdc6iKkSQokmsPCDFl5p4=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=VftDGFGlRUifXqJVnhuLlm4pOjkq2g/F7P/BgbQE6eev41dbu5f98LnDxrq0dRVWjbXZXTLDeUzViJyNNoC7HzCilICtHUtp+d0cn5OqHP11dY0mwbTvRG2SZYUPjIDT5t+FujDGpPg6rmyyfG1Mfi+wuq928KEQZzlPdp4zMos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=uXNtxYB4; arc=none smtp.client-ip=185.238.129.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+	s=arc-20240116; t=1711146694; c=relaxed/simple;
+	bh=IKzjFceGs0rbvBVpRqbQTh7Ge23ASRDcSyWVCoAB/2Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VVx7FqFKT67Rr0JMVfks7MH3yLzP0Rj3/nF4twv9M/PP7micCLZpfR0PU90tgsOoNKx5ly7DfjA8QBJpYZ6VdjozICzW97+pzPMEBLwcgSx4f4IBMlO6MPxrXIKwunIFB5Er/j6wpamo2S1jmKeiJlRJK1ugpW5D49K/1zEtZX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NuDBl3C/; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="uXNtxYB4"
-Received: from [10.2.12.48] (unknown [10.2.12.48])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NuDBl3C/"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DB1E11F729F;
+	Fri, 22 Mar 2024 18:31:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=IKzjFceGs0rbvBVpRqbQTh7Ge23ASRDcSyWVCo
+	AB/2Y=; b=NuDBl3C/LYxsbIWpJhSO0jCa2/CyDbCCzRu0AiofgnfK3ehhZsNhf5
+	zV+daSru6nDXcGrQINzTF/NuNCG3pNGAAI/KgaRZEiSuDJGbyzc5+KLjOQoVd11n
+	/Yi/B5MjrOda4UnJXSsK4KtXN5JXb6JX4jnOlWOYys38OpLRzG21s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D31571F729E;
+	Fri, 22 Mar 2024 18:31:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by 7of9.schinagl.nl (Postfix) with ESMTPSA id 8F97319FD49E
-	for <git@vger.kernel.org>; Fri, 22 Mar 2024 23:18:47 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1711145927; bh=U/+YTUpM7UQ2XRhIae8V90Tdc6iKkSQokmsPCDFl5p4=;
-	h=Date:To:From:Subject;
-	b=uXNtxYB48lH7jVdpSb2p4aLuZIWSh9/obIZc0iQaIVsVGSAaupIa51f3kkznMVI1q
-	 T102/vHZ+DVgpraluPQMre4b7HVpHjW97CkgJB72F2Vdj/qMtJIWZUZV1o/TYLzbPN
-	 D8VvlcF1sBWTv6GaLzpymUl/LUFfC0eLLlOKeHKQ=
-Message-ID: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl>
-Date: Fri, 22 Mar 2024 23:18:47 +0100
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41E441F729D;
+	Fri, 22 Mar 2024 18:31:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olliver Schinagl <oliver@schinagl.nl>
+Cc: git@vger.kernel.org
+Subject: Re: Allow git bisect to auto-skip
+In-Reply-To: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl> (Olliver
+	Schinagl's message of "Fri, 22 Mar 2024 23:18:47 +0100")
+References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl>
+Date: Fri, 22 Mar 2024 15:31:29 -0700
+Message-ID: <xmqqwmptzyny.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: nl, en-US
-From: Olliver Schinagl <oliver@schinagl.nl>
-Subject: Allow git bisect to auto-skip
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EDD61958-E89B-11EE-95A3-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-In some cases, we know a commit will always break bisect. This is bad 
-and evil but sometimes needed.
+Olliver Schinagl <oliver@schinagl.nl> writes:
 
-An example, in my particular case, when OpenWRT does a kernel bump, 
-patches and config files get copied to the new version. This is fine, 
-but there is not git copy (one could also see that as an individual 
-feature request which would solve the actual issue for now :p). Since 
-the files are copied, git treats them as new files, without history. 
-This makes tracking history almost impossible (config-4.14 -> config 
-5.15 -> config 6.6 etc). People have found out, there's some tricks to 
-apply where we can make git not see the copy as such, and we'll have our 
-history of both files [0]. In short, this hack is used to create two 
-commits.
+> In some cases, we know a commit will always break bisect. This is bad
+> and evil but sometimes needed.
+> ...
+> git commit -m 'copy old to new' -m 'GIT_SKIP_BISECT'
+> ...
 
-git checkout -b _tmp
-git mv old new
-git commit -m 'copy old to new' -m 'GIT_SKIP_BISECT'
-git checkout HEAD~ old
-git commit -m 'restore old'
-git switch _tmp
-git merge _tmp
+If "I want a bisect to skip any commit that has 'Skip Me' in its
+subject" is the case, perhaps your "git bisect run" script can say
 
-and to remove the ugly merge commit
+    #!/bin/sh
 
-git rebase HEAD~1
+    case "$(git show -s --oneline)" in
+    *"Skip Me"*) exit 125 ;;
+    esac
 
-which surely is a hack :p
+    ... your test script body comes here ...
+    if test successful
+    then
+        exit 0
+    else
+        exit 1
+    fi
 
-But, it's a `git cp` if you will.
+The _clue_ to mark a commit to be skipped does not have to be
+hardcoded commit title.  It often is discovered that a commit
+breaks bisection after the fact and it is not feasible to rebase
+all the history after the commit.  Maybe an approach more suitable
+in such a situation would attach a note to such untestable commits
+after the fact, and check if such a note is attached at the
+beginning of "git bisect run" script and exit with 125.
 
-Now this does break git bisect, when the commit with the move comes in, 
-things are broken until the next commit. It would be very nice if we can 
-have a special marker keyword (GIT_SKIP_BISECT) in the commit message 
-for example, to force git bisect to just skip this commit. It will fail, 
-it is designed to fail.
+And a new "git bisect --skip-when <condition>" option can be added to
+manual bisection process.  The <condition> part would contain
+something like
 
-There's probably also other very useful cases, but this is just one example.
+    case "$(git show -s --oneline)" in
+    *"Skip Me"*) exit 125 ;;
+    esac
 
-And hey, if this leads to two patches, where a second one introduces 
-`git cp` I'd be even more happy :)
+taken from the above illustration.
 
-Olliver
+But I am not sure what end result you are trying to achieve, so the
+above are random collection of ideas.  Turning them into a patch is
+left as an exercise to readers.
 
-[0]: https://github.com/openwrt/openwrt/blob/main/scripts/kernel_bump.sh
+
+
