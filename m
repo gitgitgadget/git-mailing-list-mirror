@@ -1,129 +1,115 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A5063D
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 19:46:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5F154675
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 19:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711223182; cv=none; b=YEA2hKEJvOTIUSqiOKeOIHcjVhsBUFWzvolqrfDMb5WhD/EfiCxLfkrqYhgh8IFrS5yUQztC3RhwIhXVHpGr5euX/SVsdTnAX6cNya7zy3+n5GR5miT3VlSYeO1tiUUM5CVrcVWXnGzPLbZsX0savgRnSfLTeOo/qtwZz0bqR8g=
+	t=1711223322; cv=none; b=FHuMHdnvhRP405PXlXc1cQ8g8jhw4PMNFTYXYAd8rpWhSSfGE6aHOZMsNGXbyGMFkASS9xt10nTD4tBxZv3txs6WN0MeF9CI5CvocZGQUi05cIq5R5JEfg5cN79h8nDyHJfirGLv239vE9UaEKeYJ2PNV7txs/P3jBbgV1Ef5bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711223182; c=relaxed/simple;
-	bh=ushgdkVlgmEhtChho/3/VcSNc4Vxua8XMralUl5r1p0=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=gqdPTk/7wk8RHsq8wTkxMpONGCyyK+rRRwx3Fi+Z01POIZ/XsXfpYAf+6979N4C13Oo7sA/rUhzN5/+NbopxD8i4RLz1E05ID7nOH/79pIzYY/qQAv0ZowegCTL7tS0gYJEyhK2TPhQfLhgLd5QE7MHSNUQnH8Nf46bxW5U7zuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=vBHzKM2h; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1711223322; c=relaxed/simple;
+	bh=5YlV/G4eY/L6VBnJ1wI3RWllrG4o44uE4543dXA4a7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LXzqc3q6VTW6x3NXwSrsXOMOwOO6E2wrWDxVOxcD+NFtcO6EHMqI32P+57XzyVGxiJPM6mZIb3HmCCfwl0ViQFL9EwykDKaflcUxfeEsurHCieiRNXBcEZ68a+tv4gDelL6OoBmA+L8JnnxcFgL05BKf/diR1G+iz3M9Dv4co5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n6sApju2; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="vBHzKM2h"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n6sApju2"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e6f69e850bso2567105b3a.0
+        for <git@vger.kernel.org>; Sat, 23 Mar 2024 12:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1711223319; x=1711828119; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=plDf+NMAd0qHABpxGV7/MpN3LLsJiJMIXm8kX8KDupk=;
+        b=n6sApju2RUdUy7qwaZIpbbo2xNxsO/rKtOoO+n/YbA+NYqcmLRmb7neVUu7Bd1+nO/
+         IEBL4RsKICqFoXzSVaNuEXjo35l1aTgHvz/dbIWTNckAkF02AIV4FwVz+LCWzsVqkDX+
+         Mhxub8TFx6UoUyPosFqoq89oh01cQn1YYN2aNMbqlSUMqC4hj1zVhRx9ShA3o56XNWfL
+         PeDEHB3fkROTlYdogDuSuCtRH0pSosdh4a+fdeLxUWPPIe+IJV/1VW2KohS4efoHCaSA
+         hPhofev2eNEEpXC3qh9lUkiNiVjGz9VedwKYoEmJuqcDMPt3kxbmOCM+kbGR8v4k+2w7
+         kK8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711223319; x=1711828119;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=plDf+NMAd0qHABpxGV7/MpN3LLsJiJMIXm8kX8KDupk=;
+        b=WzwEDnf1FK+UjQyZuMglj90MbJRQg414uFVoW97av8i0Gz7IKL7toGxKu/MzkpyFtw
+         byqMPqci9vRn8klhp5GaxqMBAqBKUrTov78Sp+t5lDA7zVvws1901SmB05swiczHsLu2
+         x0W/b9LU3Lb7JH+VPR/88sqhVR8L+D+NccXdQI1/84gakM7jrkj0kmVeZEanpi4LDKrW
+         yugZDyD+uloHwGXyLTs4k7HpYtmnWsXM08sKr9W5nh4vaafnfOPwirNcGed6nracj/A2
+         mdu51T6xmMf7+WGQ0elWN8mmTQ3N7YwKaZcDS8Z/9ycGXGL3oWd5R0kkhKcsEZUoXH3I
+         zp0g==
+X-Gm-Message-State: AOJu0Yx8loi9NBS/UPkfKRECJ8XVYF5lfjGqngsPg/151KImY6VGvv0/
+	j1DCmJBGBBFv9EPnILYD33VTNChmGIPcsZnfd8ZtTxP5bJkyyRq7XrFwv9DAnWO1Wq+RiZ7s1N6
+	Raw==
+X-Google-Smtp-Source: AGHT+IH3pc4WQAVEyFXj06i+iNnV8der53XjgTdUp/lRbBuz9M/oTxzKWF2Rc0K/r1EIEWL+czPhXg==
+X-Received: by 2002:a05:6a00:3d51:b0:6e8:4485:8965 with SMTP id lp17-20020a056a003d5100b006e844858965mr4239186pfb.10.1711223319164;
+        Sat, 23 Mar 2024 12:48:39 -0700 (PDT)
+Received: from google.com (144.44.83.34.bc.googleusercontent.com. [34.83.44.144])
+        by smtp.gmail.com with ESMTPSA id lb13-20020a056a004f0d00b006e64ddfa71asm1761661pfb.170.2024.03.23.12.48.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Mar 2024 12:48:38 -0700 (PDT)
+Date: Sat, 23 Mar 2024 12:48:35 -0700
+From: Kyle Lippincott <spectral@google.com>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 5/5] MyFirstObjectWalk: add stderr to pipe processing
+Message-ID: <bwm73ljwyva36idgouda53qlm7hefkpnt7nomlc5d3c2zje47g@cwkt4dtmx7le>
+References: <cover.1710840596.git.dirk@gouders.net>
+ <64c36dbf16108353635a7315a3bd5eb60f2aa92e.1710840596.git.dirk@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1711223176;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y1bnSBXahjgJsIYy1PZ/S8ShEZ5/mVRkGwVpthmitHM=;
-	b=vBHzKM2hKsxqcmPvOH2pFNVC+M9g1Wtkdxq6dnMCTTKMS3kC2iy4xDDrB6C7Wb8tV5qpQa
-	Z8Osc04dtti4Xh4UQ576s8fyIQNai9hO/I9+fqizNdK1rI4eyFhMssH7YW7As0g46V1093
-	K/b2F5cdle8UvVxoyQTxTg1ISpLJcFXelN0V6lBXyKI+1wblFYzec3Xnva4jbhhxo9xeFU
-	S1Vb1RUJC2NOGh4XUgD7ef8cRv6K7aLBpo97w/jZBU9dJArMP5XGFwk9j+TbrgURe7/k3d
-	cBQzzEBjuzH75GlSoqlg3PM8kEn1ViDPd0ggFFZfknUMGPWSvO20A2m/pFMUiA==
-Date: Sat, 23 Mar 2024 20:46:16 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
-Subject: Re: [PATCH 3/3] grep docs: describe --no-index further and improve
- formatting a bit
-In-Reply-To: <6056709.lOV4Wx5bFT@cayenne>
-References: <cover.1710968761.git.dsimic@manjaro.org>
- <264643a638fd1ee9970f96e7aa4914c37e30b3d2.1710968761.git.dsimic@manjaro.org>
- <6056709.lOV4Wx5bFT@cayenne>
-Message-ID: <ed050f2d496a6db07e698fd2f1094b81@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <64c36dbf16108353635a7315a3bd5eb60f2aa92e.1710840596.git.dirk@gouders.net>
 
-Hello Jean-Noël,
-
-On 2024-03-23 20:26, Jean-Noël AVILA wrote:
-> On Wednesday, 20 March 2024 22:08:46 CET Dragan Simic wrote:
->> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
->> index f64f40e9775a..b144401b3698 100644
->> --- a/Documentation/git-grep.txt
->> +++ b/Documentation/git-grep.txt
->> @@ -28,7 +28,7 @@ SYNOPSIS
->>  	   [-f <file>] [-e] <pattern>
->>  	   [--and|--or|--not|(|)|-e <pattern>...]
->>  	   [--recurse-submodules] [--parent-basename <basename>]
->> -	   [ [--[no-]exclude-standard] [--cached | --no-index | --
-> untracked] | <tree>...]
->> +	   [ [--[no-]exclude-standard] [--cached | --untracked | --no-
-> index] | <tree>...]
+On Tue, Mar 19, 2024 at 12:23:15PM +0100, Dirk Gouders wrote:
+> In the last chapter of this document, pipes are used in commands to
+> filter out the first/last trace messages.  But according to git(1),
+> trace messages are sent to stderr if GIT_TRACE is set to '1', so those
+> commands do not produce the described results.
 > 
-> This change gives precedence to some option in alternatives, which 
-> seems
-> weird.
-
-As explained in the patch description, it isn't about the precedence,
-but about grouping together the options that have something in common.
-In more detail, --cached and --untracked have something in common,
-i.e. they both leave git-grep in the usual state, in which it treats
-the directory as a local git repository, unlike --no-index that makes
-git-grep treat the directory not as a git repository.
-
->> @@ -45,13 +45,20 @@ OPTIONS
->>  	Instead of searching tracked files in the working tree, search
->>  	blobs registered in the index file.
->> 
->> ---no-index::
->> -	Search files in the current directory that is not managed by Git.
->> -
->>  --untracked::
->>  	In addition to searching in the tracked files in the working
->>  	tree, search also in untracked files.
->> 
->> +--no-index::
->> +	Search files in the current directory that is not managed by Git,
->> +	or by ignoring that the current directory is managed by Git.  This
->> +	allows `git-grep(1)` to be used as the regular `grep(1)` utility,
+> Fix this by redirecting stderr to stdout prior to the pipe operator
+> to additionally connect stderr to stdin of the latter command.
 > 
-> Auto-referencing the git-grep manpage in itself is useless.
-
-Please note this isn't a link, it just mentions the operation.  Though,
-I agree that rewording it a bit might be beneficial.
-
->>  When grepping the object store (with `--cached` or giving tree 
->> objects),
-> running
->> -with multiple threads might perform slower than single threaded if 
->> `--
-> textconv`
->> -is given and there are too many text conversions. So if you 
->> experience low
->> -performance in this case, it might be desirable to use `--threads=1`.
->> +with multiple threads might perform slower than single-threaded if 
->> `--
-> textconv`
->> +is given and there are too many text conversions.  Thus, if low 
->> performance
-> is
->> +experienced in this case, it might be desirable to use `--threads=1`.
+> Signed-off-by: Dirk Gouders <dirk@gouders.net>
+> ---
+>  Documentation/MyFirstObjectWalk.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> I'm not native speaker, but I'm not sure the switch to passive form is
-> helpful. In Simplified English, passive form is considered harmful and
-> difficult to translate because the subject is elided.
+> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+> index 981dbf917b..2e6ae4d7fc 100644
+> --- a/Documentation/MyFirstObjectWalk.txt
+> +++ b/Documentation/MyFirstObjectWalk.txt
+> @@ -847,7 +847,7 @@ those lines without having to recompile.
+>  With only that change, run again (but save yourself some scrollback):
+>  
+>  ----
+> -$ GIT_TRACE=1 ./bin-wrappers/git walken | head -n 10
+> +$ GIT_TRACE=1 ./bin-wrappers/git walken 2>&1 | head -n 10
+>  ----
+>  
+>  Take a look at the top commit with `git show` and the object ID you printed; it
+> @@ -875,7 +875,7 @@ of the first handful:
+>  
+>  ----
+>  $ make
+> -$ GIT_TRACE=1 ./bin-wrappers git walken | tail -n 10
+> +$ GIT_TRACE=1 ./bin-wrappers git walken 2>&1 | tail -n 10
 
-In general, not addressing the user/reader directly is preferred in
-technical documentation, because it eliminates the possible element
-of persuading the user to do something.  In other words, we should be
-telling the user what our software can do, instead of telling the
-user what to do.
+I think there's a second issue here: this should be `./bin-wrappers/git`, right?
+
+>  ----
+>  
+>  The last commit object given should have the same OID as the one we saw at the
+> -- 
+> 2.43.0
+> 
+> 
