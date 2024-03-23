@@ -1,140 +1,198 @@
-Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95CBA31
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 02:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98F51A38C9
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 03:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711159211; cv=none; b=GXyqm93bdqvEo6zQOEn/QtUw+cFWyunpLpLqcWieRvPondlYqQqwijPcDFgvLRy0KhZP1S1gIRz8y5lUA/I0Ix62MdRU07Dt7FNY0lgYVn3MctaCdZ5zmhKHwuwpftghFyLQuLUqn4493c8nijG3JEQCPQnV1+7B3FLZMoKgF2Y=
+	t=1711164466; cv=none; b=EjS+67R1J6CksdEQdJ2GvWyKEW6NEvnGnLse2TFmZ4/BA9pwnTPydpr69kKBqWDDvscwJbjuK0Se7GAOU47qgA4YzduZnJOBwpnYCGqf9kYLz0hFfu73upavoH3Rlbka4LPc0Jk7qF01ftqMK4uv1gnRT6ea9x1xREzBUbw4YI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711159211; c=relaxed/simple;
-	bh=9PdsIR8I5IlNLMxCAKHT+1SxKCIqfsiALMnDWJtE40w=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=D9wOdtVpj1ENvrOPC94THkx4MrhBwZTXft8C131t0ojrKocb/JaawMrOcBaGUD2wgvbksnJh2hxxLKUEayWu0ue8hW1MNgzpzzSUJvkaZ+U/+1I6bifUVM7Dv2e+TFIWjdAIvZyA9YcLj7zLRUBA+Obfb1MRG/BXn/1B0mWSxLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=pn/cNHea; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=CSwlhvz9; arc=none smtp.client-ip=185.238.129.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+	s=arc-20240116; t=1711164466; c=relaxed/simple;
+	bh=LjT3T1URpw6gcMHUhJ7hCm/ll802UIM+5PJ9vHtsNVI=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=a40/8NTvtSDvJGBmiTX8D6RV5CFZlBYjLEe3M8AqM7u5mvAXDYW3n+lglUEojw+qT25jLAkDgSYrgkZjKS5/2On3Y/GdKqd8JLhRKcuWcInplSgFm0CXZaacHVlPk3nTn/YRcFgOELmcqY9TMB5wRPQfBQ657msOZ1O6U2OnuFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AOdRWEJ1; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="pn/cNHea";
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="CSwlhvz9"
-Received: from localhost (7of9.are-b.org [127.0.0.1])
-	by 7of9.schinagl.nl (Postfix) with ESMTP id 2079819FD8D9;
-	Sat, 23 Mar 2024 02:59:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1711159199; bh=9PdsIR8I5IlNLMxCAKHT+1SxKCIqfsiALMnDWJtE40w=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References;
-	b=pn/cNHeax4Fdg7saYCgsDetKcougpXduUROOTxain4U07paBVlDgNPEuc41QVsmiH
-	 Mt/FevsoLTcDi1DuMoFYSpeTALIJaQviWQczuYD/u6F0zyDLUmV7zwoIuEramhdEyF
-	 o4zlqInios/AglmV6fSPNO3Crgs8ZHQOoqUe+oYg=
-X-Virus-Scanned: amavisd-new at schinagl.nl
-Received: from 7of9.schinagl.nl ([127.0.0.1])
-	by localhost (7of9.schinagl.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id OV8bKuajsGMT; Sat, 23 Mar 2024 02:59:57 +0100 (CET)
-Received: from [127.0.0.1] (unknown [10.2.12.100])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by 7of9.schinagl.nl (Postfix) with ESMTPSA id B859A19FD8D1;
-	Sat, 23 Mar 2024 02:59:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1711159197; bh=9PdsIR8I5IlNLMxCAKHT+1SxKCIqfsiALMnDWJtE40w=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References;
-	b=CSwlhvz9r8DWLd+FWwWsSJlLGg6B8/vDz85QF+FTn6WO5p14oPDKiuo+sQoEqeKiW
-	 T+IvL+DkBR2x4d/l5d8fipdFMnPSBL9s9mZUM2ZTwxHmuAiw+GfKOdzFdSUe7m3YRP
-	 QlRTz32FM+1KvI22asF2TBsyx+p/BxiwQ8eJpisY=
-Date: Sat, 23 Mar 2024 02:59:59 +0100
-From: Olliver Schinagl <oliver@schinagl.nl>
-To: Junio C Hamano <gitster@pobox.com>
-CC: git@vger.kernel.org
-Subject: Re: Allow git bisect to auto-skip
-User-Agent: K-9 Mail for Android
-In-Reply-To: <xmqqwmptzyny.fsf@gitster.g>
-References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl> <xmqqwmptzyny.fsf@gitster.g>
-Message-ID: <CC68481D-E993-49F2-8941-8F5FA080B139@schinagl.nl>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AOdRWEJ1"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d46c44dcc0so32700921fa.2
+        for <git@vger.kernel.org>; Fri, 22 Mar 2024 20:27:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711164462; x=1711769262; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bD5OsuWuCklzf31mHs71Mv3lpSVtmayZZbP0RowYCeI=;
+        b=AOdRWEJ1FvpDzAq82cuaqne48jbT6OBstTWXQc0bwe04w+hOqtR9pxW2vZ/nUGA/on
+         9gF3mEqXdartbTSEukT5p82xWoTx2KIuF7qWPlqt05us6VvvY08LrooAN738u9eKEvi1
+         KmkUrIY4nJbAp0Es/ZkBZIw34gClcuv/CrZH46niSAzATj7ZLO+K3Ej+BraDIm1I+xHR
+         S4Zi05LXIRO4PHCq40sCCbuvcblgi5vX9yAf6JxxT4MUnh2lifpOuUGIB3Y2RFgeiauN
+         p/Q1BA14SJJer7xTWUVeZjFFfpBp0rnMxuqX4JgjOW5bYIhPaClWVRrWESHjLYPXGLei
+         xKtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711164462; x=1711769262;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bD5OsuWuCklzf31mHs71Mv3lpSVtmayZZbP0RowYCeI=;
+        b=lgexKH951GAMfrXdoRASs+CQV8EUl3I+ICg46BnKBhioY55BL+D7uOhDK3KVLQ3JT2
+         jfy/tM0k6Z5CQqNpv1f0r5RWeHx9ZKduKiDsSQiytrJuGJppGpZ+jVlalCEiYVoUZ9Z+
+         OZ2FzA4zEqbwAA6h/zk9mGvQNT1UqLP00C4vWE/O6XXez19nrggfAsXbRQdT1Uuei4OB
+         4k5PO/i9Y5hBUhHfnvYUQoqX1aLXyaNZDsIxkUgDyKo6dqbfRRr9Ornj4e3LaabZ8qeV
+         mJRmzRZrVPGETLWraDiGW2W7Ix5hYY6NBAjQeFo51ix6e2oBFSOxg1cLKIhidCJ1jnId
+         28Nw==
+X-Gm-Message-State: AOJu0YyZEOaRANVjhd3uGW4275sVpKiZ3F6co12yAIJHqr4XfRGnk9xf
+	niVGciqIDzDNRnwiqK0UoT7IyzE7iRbxBO1AqUaIUDIJ9DcJcT5kQiSd5YrW
+X-Google-Smtp-Source: AGHT+IG63UQQLwvY/auYklkOUlc+J02sDqsmrX6MP6x8Ly5xq1fBeUqbcKAfUzJnXo75/OxnZEjGMA==
+X-Received: by 2002:a2e:9087:0:b0:2d4:484c:41d3 with SMTP id l7-20020a2e9087000000b002d4484c41d3mr753911ljg.14.1711164461761;
+        Fri, 22 Mar 2024 20:27:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id fc19-20020a05600c525300b004140c161e8dsm1209390wmb.43.2024.03.22.20.27.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Mar 2024 20:27:41 -0700 (PDT)
+Message-ID: <pull.1694.git.git.1711164460562.gitgitgadget@gmail.com>
+From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 23 Mar 2024 03:27:40 +0000
+Subject: [PATCH] RFC: add MAINTAINERS file
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Linus Arver <linusa@google.com>,
+    Linus Arver <linusa@google.com>
 
-Hey Junio,
+From: Linus Arver <linusa@google.com>
 
-On March 22, 2024 11:31:29=E2=80=AFp=2Em=2E GMT+01:00, Junio C Hamano <git=
-ster@pobox=2Ecom> wrote:
->Olliver Schinagl <oliver@schinagl=2Enl> writes:
->
->> In some cases, we know a commit will always break bisect=2E This is bad
->> and evil but sometimes needed=2E
->> =2E=2E=2E
->> git commit -m 'copy old to new' -m 'GIT_SKIP_BISECT'
->> =2E=2E=2E
->
->If "I want a bisect to skip any commit that has 'Skip Me' in its
->subject" is the case, perhaps your "git bisect run" script can say
->
->    #!/bin/sh
->
->    case "$(git show -s --oneline)" in
->    *"Skip Me"*) exit 125 ;;
->    esac
->
->    =2E=2E=2E your test script body comes here =2E=2E=2E
->    if test successful
->    then
->        exit 0
->    else
->        exit 1
->    fi
->
+This patch is designed to spur discussion about adding an official
+MAINTAINERS file to our project. The hope is that it could be used as a
+reference in (at least) the following scenarios:
 
-This is a nice way to wrap got bisect, but from a UX point of view, having=
- native support from the got client would be much nicer=2E E=2Eg=2E the use=
-r doesn't have to learn about special scripts=2E I'd argue, if we can do it=
- the same way everywhere (I=2Ee=2E shipping such a script as part of the go=
-t distro), why not handle it nativily=2E
+  (1) [CC list] patch authors want to know who to CC on their
+      submissions, without resorting to git-blame-level of precision;
 
-The magic word could be a default with an override in the gitconfig=2E
+  (2) [escalation path] patch authors have been waiting 1+ weeks for
+      review comments, but are not sure who to escalate to (other than
+      Junio);
 
->The _clue_ to mark a commit to be skipped does not have to be
->hardcoded commit title=2E  It often is discovered that a commit
->breaks bisection after the fact and it is not feasible to rebase
->all the history after the commit=2E  Maybe an approach more suitable
->in such a situation would attach a note to such untestable commits
->after the fact, and check if such a note is attached at the
->beginning of "git bisect run" script and exit with 125=2E
->
->And a new "git bisect --skip-when <condition>" option can be added to
->manual bisection process=2E  The <condition> part would contain
->something like
->
->    case "$(git show -s --oneline)" in
->    *"Skip Me"*) exit 125 ;;
->    esac
->
->taken from the above illustration=2E
->
+  (3) [status tracking] record former maintainers/reviewers who are now
+      inactive.
 
-I've read the notes solution from 13 years ago ;) and I do like the elegan=
-ce=2E But I think there's two cases=2E One during the fact, when you know t=
-his will be an issue andere in deed ons after the fact=2E
+In addition having a MAINTAINERS file could give a more official sense
+of ownership in the codebase.
 
-I'll admit, I was oblivious by git notes, and will read up on it now=2E Al=
-ways using a note for this feature does make sense, as its part of the repo=
-sitory=2E
+The MAINTAINERS file here is stolen from the one used in the Linux
+Kernel. We do not have to follow its format at all; it is merely added
+here as a reference for comparison and prior art.
 
+Signed-off-by: Linus Arver <linusa@google.com>
+---
+    RFC: add MAINTAINERS file
 
->But I am not sure what end result you are trying to achieve, so the
->above are random collection of ideas=2E  Turning them into a patch is
->left as an exercise to readers=2E
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1694%2Flistx%2Fmaintainers-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1694/listx/maintainers-v1
+Pull-Request: https://github.com/git/git/pull/1694
 
-In the end, is it (internally) even possible for got bisect to check this,=
- and would a patch that handles this 'behind the scenes' be accepted, witho=
-ut the user having to install special tooling (scripts)?
+ MAINTAINERS | 85 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
+ create mode 100644 MAINTAINERS
 
-Having said that, on a different note is 'git copy' feasable? E=2Eg=2E git=
- CP old new, where both files share the same history?
+diff --git a/MAINTAINERS b/MAINTAINERS
+new file mode 100644
+index 00000000000..34fa3baf3a5
+--- /dev/null
++++ b/MAINTAINERS
+@@ -0,0 +1,85 @@
++List of maintainers
++===================
++
++Descriptions of section entries and preferred order
++---------------------------------------------------
++
++	M: *Mail* patches to: FullName <address@domain>
++	R: Designated *Reviewer*: FullName <address@domain>
++	   These reviewers should be CCed on patches.
++	L: *Mailing list* that is relevant to this area
++	S: *Status*, one of the following:
++	   Supported:	Someone is actually paid to look after this.
++	   Maintained:	Someone actually looks after it.
++	   Odd Fixes:	It has a maintainer but they don't have time to do
++			much other than throw the odd patch in. See below..
++	   Orphan:	No current maintainer [but maybe you could take the
++			role as you write your new code].
++	   Obsolete:	Old code. Something tagged obsolete generally means
++			it has been replaced by a better system and you
++			should be using that.
++	W: *Web-page* with status/info
++	Q: *Patchwork* web based patch tracking system site
++	B: URI for where to file *bugs*. A web-page with detailed bug
++	   filing info, a direct bug tracker link, or a mailto: URI.
++	C: URI for *chat* protocol, server and channel where developers
++	   usually hang out, for example irc://server/channel.
++	P: *Subsystem Profile* document for more details submitting
++	   patches to the given subsystem. This is either an in-tree file,
++	   or a URI. See Documentation/maintainer/maintainer-entry-profile.rst
++	   for details.
++	T: *SCM* tree type and location.
++	   Type is one of: git, hg, quilt, stgit, topgit
++	F: *Files* and directories wildcard patterns.
++	   A trailing slash includes all files and subdirectory files.
++	   F:	drivers/net/	all files in and below drivers/net
++	   F:	drivers/net/*	all files in drivers/net, but not below
++	   F:	*/net/*		all files in "any top level directory"/net
++	   One pattern per line.  Multiple F: lines acceptable.
++	X: *Excluded* files and directories that are NOT maintained, same
++	   rules as F:. Files exclusions are tested before file matches.
++	   Can be useful for excluding a specific subdirectory, for instance:
++	   F:	net/
++	   X:	net/ipv6/
++	   matches all files in and below net excluding net/ipv6/
++	N: Files and directories *Regex* patterns.
++	   N:	[^a-z]tegra	all files whose path contains tegra
++	                        (not including files like integrator)
++	   One pattern per line.  Multiple N: lines acceptable.
++	   scripts/get_maintainer.pl has different behavior for files that
++	   match F: pattern and matches of N: patterns.  By default,
++	   get_maintainer will not look at git log history when an F: pattern
++	   match occurs.  When an N: match occurs, git log history is used
++	   to also notify the people that have git commit signatures.
++	K: *Content regex* (perl extended) pattern match in a patch or file.
++	   For instance:
++	   K: of_get_profile
++	      matches patches or files that contain "of_get_profile"
++	   K: \b(printk|pr_(info|err))\b
++	      matches patches or files that contain one or more of the words
++	      printk, pr_info or pr_err
++	   One regex pattern per line.  Multiple K: lines acceptable.
++
++Maintainers List
++----------------
++
++.. note:: When reading this list, please look for the most precise areas
++          first. When adding to this list, please keep the entries in
++          alphabetical order.
++
++3C59X NETWORK DRIVER
++M:	Steffen Klassert <klassert@kernel.org>
++L:	netdev@vger.kernel.org
++S:	Odd Fixes
++F:	Documentation/networking/device_drivers/ethernet/3com/vortex.rst
++F:	drivers/net/ethernet/3com/3c59x.c
++
++...
++
++THE REST
++M:	Linus Torvalds <torvalds@linux-foundation.org>
++L:	linux-kernel@vger.kernel.org
++S:	Buried alive in reporters
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
++F:	*
++F:	*/
 
-Olliver
+base-commit: 11c821f2f2a31e70fb5cc449f9a29401c333aad2
+-- 
+gitgitgadget
