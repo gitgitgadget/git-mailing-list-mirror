@@ -1,86 +1,74 @@
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D442E410
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 19:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7718759B48
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 20:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711223926; cv=none; b=Ks+lEzeREc8J9e8PkPmPhGRdXHVnnwvKEBCWl6xrWc+hi1O9GZ1PQE4+SHQn71sKo6RT/788UDASDhEwv4d1qNKcrs4jsgpeq8eF4q5tUXNKG5CNNDDsFTMrOaQ5Ofq33XfxOLbPcWL6VrpR9lvrfzrmeY5OSFuUBLwlvnZ45eU=
+	t=1711225030; cv=none; b=ddvKaMDuXoXJGSbzy1isLYigyWLS8UZ57DGeMRsiLrlBbdynx8xgBSPy+iAs2mE6+b+4kC94UfmQUSZ+W6kVq7upgXGIfEPZgtN+Ij4GrJ6q6zLxWf3cJR/3tQykG9Tjbaeoq4Ay49GIDSg+7JBnP5MxD8KIwWQYlz3V0JGk84Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711223926; c=relaxed/simple;
-	bh=42umCI2w+xVaP4uqLDnpSdPN25SxObptMI233exQ0LE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lhAhbLUFP569vU6zUMWiUZIi4KxiKIFdesBL8k7+pDpy+lWiNaFdfytgsxe/pbBP4mI2++r1Njkk7BZw5DrjHmlbYYHUXv399IZiQZtwgIIaIN37E8oo8GtHUCQyRTFBq6epazt3uNSQn4+IgGjaP7D856UWl2YbTyRzUS9gwpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=212.27.42.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:3559:5be6:8fac:2a78])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 3D2F419F593;
-	Sat, 23 Mar 2024 20:58:40 +0100 (CET)
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <avila.jn@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] doc/gitremote-helpers: fix more missing single-quotes
-Date: Sat, 23 Mar 2024 20:58:39 +0100
-Message-ID: <22254967.EfDdHjke4D@cayenne>
-In-Reply-To: <xmqq7chvblgr.fsf@gitster.g>
-References:
- <20240320091748.GA2444639@coredump.intra.peff.net>
- <519698f1-1daf-4085-9aec-380f44492e72@gmail.com> <xmqq7chvblgr.fsf@gitster.g>
+	s=arc-20240116; t=1711225030; c=relaxed/simple;
+	bh=fkr52tfVJcpYGUM4d01GKfEYJMIFba+7QSYtcK13uqE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PylsTjozdvBa/uV9iEKgkENXalDo/PacxXfX+NVNNYiLwAdwBAgm6ECVfuEp69VQpraaAaEgCzhiMGWYE13j9GKcLueS+w/DJWZ463xKPq5wyb9nH7ISJ5F9EOfB208aVJ8ip6eC+yx5IdK9eGO4JSw0zCIdVEPsos4qK4TiQpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=jJC3RbT5; arc=none smtp.client-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="jJC3RbT5"
+Received: from localhost (ip-109-42-177-242.web.vodafone.de [109.42.177.242])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42NKGm5o014644
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Sat, 23 Mar 2024 21:16:48 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
+	t=1711225009; bh=fkr52tfVJcpYGUM4d01GKfEYJMIFba+7QSYtcK13uqE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=jJC3RbT5Fu2oJtWuQdkcW+qdDpKbxf2pJUc7eVF4z7trXZBvF/66tMqMT1TIG+jV2
+	 PcS+douSuimsZFjDGqN6VWJH7L6Arx9Dh6vOFu+vi9qeWcoq5QNpG1LZgMl/usCSwW
+	 uZiiFgTUFCL4Mrn1/TxWDfeGGvPN/TatV6UkQr80=
+From: Dirk Gouders <dirk@gouders.net>
+To: Kyle Lippincott <spectral@google.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer
+ <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 5/5] MyFirstObjectWalk: add stderr to pipe processing
+In-Reply-To: <bwm73ljwyva36idgouda53qlm7hefkpnt7nomlc5d3c2zje47g@cwkt4dtmx7le>
+	(Kyle Lippincott's message of "Sat, 23 Mar 2024 12:48:35 -0700")
+References: <cover.1710840596.git.dirk@gouders.net>
+	<64c36dbf16108353635a7315a3bd5eb60f2aa92e.1710840596.git.dirk@gouders.net>
+	<bwm73ljwyva36idgouda53qlm7hefkpnt7nomlc5d3c2zje47g@cwkt4dtmx7le>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Sat, 23 Mar 2024 21:16:42 +0100
+Message-ID: <ghcyrkzot1.fsf@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain
 
-Le jeudi 21 mars 2024, 17:25:56 CET Junio C Hamano a =E9crit :
-> Jean-No=EBl Avila <avila.jn@gmail.com> writes:
->=20
-> >> -'option deepen-relative {'true'|'false'}::
-> >> +'option deepen-relative' {'true'|'false'}::
-> >>  	Deepens the history of a shallow repository relative to
-> >>  	current boundary. Only valid when used with "option depth".
-> >
-> > The syntax for describing alternatives is specified as (true|false).
->=20
-> Hmmmm, here, true and false are to be given verbatim.
+Kyle Lippincott <spectral@google.com> writes:
 
-In such case, it's (`true`|`false`) . As well as the command before.
+> On Tue, Mar 19, 2024 at 12:23:15PM +0100, Dirk Gouders wrote:
 
->=20
-> > Also, in my reworks of syntax, I chose to remove all formatting from the
-> > term parts of the description lists.
->=20
-> I know we added the _<placeholder>_ thing, but have we added these
-> to Documentation/CodingGuidelines yet?
->=20
-> Thanks.
->=20
->=20
+>> -$ GIT_TRACE=1 ./bin-wrappers/git walken | head -n 10
+>> +$ GIT_TRACE=1 ./bin-wrappers/git walken 2>&1 | head -n 10
+>>  ----
+>>  
+>>  Take a look at the top commit with `git show` and the object ID you printed; it
+>> @@ -875,7 +875,7 @@ of the first handful:
+>>  
+>>  ----
+>>  $ make
+>> -$ GIT_TRACE=1 ./bin-wrappers git walken | tail -n 10
+>> +$ GIT_TRACE=1 ./bin-wrappers git walken 2>&1 | tail -n 10
+>
+> I think there's a second issue here: this should be `./bin-wrappers/git`, right?
 
-No, we haven't.=20
+Oh yes, that is a second issue -- thank you very much for spending the
+time to look at this series.
 
-I skimmed over different documentation projects and there's no real consens=
-us=20
-on what the formatting should be in detail, except for some common rules.
-man-pages(7) gives some good hints that we should adhere to, which are echo=
-ed=20
-in the guide of asciidoc: https://docs.asciidoctor.org/asciidoctor/latest/
-manpage-backend/ . Basically, verbatim are in bold, and variables are in=20
-italic.
-
-In our man pages, the asciidoc verbatim are rendered as bold and asciidoc=20
-emphasis are rendered as underlined, just like italics,  which adheres to t=
-he=20
-principles,
-
-Note that bold/verbatim are usually also used in terms of description lists.
-
-I'm totally ok to change the CodingGuidelines and reroll git-clone and git-
-init with these new rules.
-
+Dirk
 
