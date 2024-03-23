@@ -1,101 +1,132 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9674B1E526
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 15:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBFB1E522
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 15:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711206454; cv=none; b=VlkQ9OeRi4tPBG8kN4CQxwS9qRwicvv2vhcvAHwnO5vMWWJidjyE2l2yCCPTtVoZGzQRpSJq/o1TSCMuk7Z2Y7i0fBssbcpsC1uy8h31QYLgm10P7b9M5JH/MH0+Lr9MbDdJzUd7BrdpsxZgzwZBMRmGBJ7u8tEFglA8V4T1GYM=
+	t=1711209493; cv=none; b=Q44ej3D4Rae2aO5IIgXOexToGGVH9lKOinCIZu+pi2rzp4leFRrQZnghSSza/TBlquDXXXERpkwjl8tnZNQOuJkWbdothHbW43UB4ArCb0TlzB7l+Km79AZutsNugs9Jc6quxhFt1GiRDSSn9M7DcBUN488AHAYFqc8P4fcpIaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711206454; c=relaxed/simple;
-	bh=KrEcXs2vU9CHd9imCkbU8h78xY5+7RbGpsmHtHmKdxY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=et/YLkNzzRM4BLREXwg1W7Vere13/qW+xWme15PHVgmiZ0UZOhbISgWSp02AYscv1HbDalQisrAPQe7MvZ3gHSFDsPcExfbqY/y29f98q+IUewngYOekKSg6QbeU69Kaz1TOI8AOU7t3xHVjnm0sFVZDiL0lwFQpLzJq2AQDLok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QkYHBYvb; arc=none smtp.client-ip=209.85.221.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711209493; c=relaxed/simple;
+	bh=T8okGbkuprcR4cMPXHJMLwdO1IjguK9tViGka12yQR0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jCB9PD0PoDieQFghrQ9MA9M7GqqKfoPPvuGBMxQBq9hBbXlD19OQ1z4iUItqgaGeUKiPi1fLzItykDIibCDELhwIlqgVH3S+EfYivtr9xXIMXsaZLyeCEhLIoGUV3nvdi0/ZpveMNSm7RiKFQhll39iQQTPI0tcv3xfUa+eyACY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=JtbzgKnO; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QkYHBYvb"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-4d47000f875so1052691e0c.2
-        for <git@vger.kernel.org>; Sat, 23 Mar 2024 08:07:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711206450; x=1711811250; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KrEcXs2vU9CHd9imCkbU8h78xY5+7RbGpsmHtHmKdxY=;
-        b=QkYHBYvbcnnCHn33br+dNSqryY+wOunjeH4CioA+Fr/okWD+dZ8Eou2a7sxMRVHhD3
-         qC8DNR3JLq+kjg8fFifDBSdC4KdT+huS8OQgz7J8SdxSLDnJ9hUWdkyocSAuXwZIIQL4
-         xgwOnA2aT8hReINAggFjxW44ezCRDRy4SO195VzGd5uxiS8/DtzRZv4MjDi9N9p7CFlu
-         7SqOBAVyqGw7LVKgEW1B/0COvP7M2hvo96SkylPxsbDgR3wo8zYp3pnhW4w+vnKbsbTd
-         0IAvvAqnPcN1AaYF2Yl1mb2n7KJOsHWkvijLLppy31/aN6ap0Y5LYMnO6Y5Z01IzNN5N
-         RvKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711206450; x=1711811250;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KrEcXs2vU9CHd9imCkbU8h78xY5+7RbGpsmHtHmKdxY=;
-        b=FNYbct8P2gUGv3ci/SU4xn1+G0gXCDIoiW3KMZI4v9Y3EeHdbVfVF0Y5J6srsyWYbf
-         dhRLfBZiKYtvnJqf0YJBaalvkzUyaovVFY9TUvPO4koeBymuvUWWQUVUe9p3qb6WusWB
-         1hDbYmPSyrcolRreKCdMjWu0cOPvtc2SPlaTkDMf4e8mA5M0x5a9RRc1aUOWf71xEoH+
-         uR4dPeqmt01edvPaJa/UgfEOIvAoQiOEOboGERkfJy6aikq9g5IOnrKWpwMryhKuJ3jU
-         UotM60I6vwdmx0E6Yk/Uk42rKCpR9SS4L0Fs0IFmNXFJFuXtVdihQp4t7qfsN7x6ct91
-         Fbtw==
-X-Gm-Message-State: AOJu0YzAlm7WBWnjo079KUUecFriw9/HtinvyN1b7VUiiwU5qSl4w2Hk
-	OB1UjcZEbvTNqPvo8Ex0jR5T1UIEeVDmybL+AzrOYi4faws+L7C2knrUrucFYOC1TydxNPIh80C
-	KF525ZN/p6+0MrVxvcPzLEQr8tUOBI6loD8I=
-X-Google-Smtp-Source: AGHT+IFPxLCmA3xeUGrK5bfdqF1HRDDPikYI19WtuzaU/MTQ31vmzF/NDJD9zvI3j72Wv8PzBQ1Gwg1Pn94nxRBxGgE=
-X-Received: by 2002:a05:6122:1682:b0:4d3:3adc:b639 with SMTP id
- 2-20020a056122168200b004d33adcb639mr2204706vkl.6.1711206450343; Sat, 23 Mar
- 2024 08:07:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="JtbzgKnO"
+Received: from localhost (reverse-238.fdn.fr [80.67.176.238])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id 319FC6038D;
+	Sat, 23 Mar 2024 16:58:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1711209485;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cdl/IFaWnYg26h9vlFzbdNTuO1z1wXlWB9Qbs2Z4wFM=;
+	b=JtbzgKnOEGIKy/8PlP6tC7dcsfTUbiZH4iJGAv2kgwNFsxa3Mpnf8UGGx3zTkCf6LRYkiA
+	SsnXNun03ebbzoiYijmkDvR+EJUWaFDGpZ1urPqju8I4oQLdM5ob99UDu4N0EG9nIQX3TJ
+	7Qhrevxr3RL01JjZgTQMAl/8RGqAqLsqM76/UUjC+WYzw89ZC2893EZkbqMnFB2sVFRCAW
+	TlqceJ1indRgZy5wlrTB+mtibY3Ge6LzsJe+0YP/NfxomNzqq6xW0hIirR3SDgDZMkGBw9
+	hWCcjgdyom1LYrdwpcCPl7aH2UzD2ovX3bzeB2v43FMiVDmGZPmjYucE+5JVdA==
+Date: Sat, 23 Mar 2024 16:55:47 +0100
+From: Max Gautier <mg@max.gautier.name>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Hans Jerry Illikainen <hji@dyntopia.com>
+Subject: Re: [PATCH] editorconfig: add Makefiles to "text files"
+Message-ID: <Zf77gyA28KsZdOUs@framework>
+References: <20240322221813.13019-1-mg@max.gautier.name>
+ <xmqqo7b5zy84.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240319185938.243667-1-utsavp0213@gmail.com> <ZfwmMKLBjtYvUPUV@tanuki>
-In-Reply-To: <ZfwmMKLBjtYvUPUV@tanuki>
-From: Utsav Parmar <utsavp0213@gmail.com>
-Date: Sat, 23 Mar 2024 20:37:15 +0530
-Message-ID: <CAD6u1kgiLmes_CCzr2sp6NFDgxo8c0ZQp793H66+_iMtJ+CdqA@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] userdiff: add funcname regex and wordregex for
- typescript language
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo7b5zy84.fsf@gitster.g>
 
-> Please be mindful that we typically wrap commit messages at 72 columns pe=
-r line. Furthermore, we don't typically say "This patch", but rather use an=
- imperative style. So instead of saying "This patch adds a biultin driver",=
- we'd say "Add a builtin driver".
+On Fri, Mar 22, 2024 at 03:40:59PM -0700, Junio C Hamano wrote:
+> A question out of curiosity (because the answer does not affect any
+> conclusion): Does editorconfig attempt to cover any non-text files?
 
-Thank you, I'll keep this in mind. Although that wasn't the intended
-commit message.
-I tried to create a single patch out of the 4 recent commits and send
-it via email and this is how it came across. So, the 4 lines after
-that are the actual commit messages.
+Apparently they it does not differentiate binary files:
+https://github.com/editorconfig/editorconfig-core-js/issues/42
+https://github.com/editorconfig/editorconfig/issues/285#issuecomment-267400370
 
-> > gitattributes: add typescript language to hunk headers support
-> > t4034: add tests for typescript word_regex
-> > t4018: add tests for typescript funcname regex
-> > userdiff: add funcname regex and wordregex for typescript language
+> Two more questions that do affect the conclusions are:
+> 
+>  * Among the files we ship (i.e. "git ls-tree -r HEAD") and edit
+>    with editors that honor .editorconfig settings, are there any
+>    file that we do not want tab indentation other than *.py?
 
-> We don't usually provide such bulleted-list-style changes for each of the=
- files. In this case, it shoul be fine to say something "Add tests and docu=
-mentation for the new driver".
+$ git ls-tree -r HEAD | cut -f 2 | \
+    grep -vE '.*\.(c|h|sh|perl|pl|pm|txt)' | grep -v t/ \
+    | rev | cut -d . -f -1 | rev | sort | uniq -c | grep -vE '\<1\>'
+-> gives for a first approximation (much more if not filtering unique
+occurrences)
+      2 bash
+      2 el
+      8 gitattributes
+     15 gitignore
+      4 go
+      2 in
+      7 js -> git-gui + git-web
+      8 md
+      2 png
+     41 po
+      2 pot
+     14 sample
+     41 tcl -> git-gui
+      5 xsl
+      5 yml -> ci stuff
+Not sure which one among those don't want the same tab-indent settings
+though.
 
-These are the original commit messages ':|. I apologize, I'm still new
-to using a command line mailer, so please bear with me. I'm learning
-how to use this well. On a side note, is there a mailer that you'd
-recommend?
 
-> Last but not least, this message is missing your signoff.
+> 
+>  * Does .editorconfig file allow possibly conflicting setting, with
+>    a reliable conflict resolution rules?
 
-I believe I made a blunder while creating a patch file since the
-commits are signed locally. I'll take extra care to review my mails
-before sending from now onwards. Thank you for your direction.
+Yeah it does: https://spec.editorconfig.org/#id8
+TL;DR:
+- from top to bottom, last matching section wins
+- if multiple .editorconfig are found (up until one with the root key or
+  in /) closest to the file wins.
+> 
+> What I am trying to get at is if it is possible to make something
+> along this line to work:
+> 
+>     [*]
+> 	charset = utf-8
+> 	insert_final_newline = true
+> 	indent_style = tab
+> 	tab_width = 8
+>     [*.py]
+> 	indent_style = space
+> 	indet_size = 4
+> 
+> I am assuming, without knowing, that the conflict resolution rule
+> may be "for the same setting, the last match wins" so by default we
+> always use "indent_style = tab", but if we are talking about a Python
+> script, it is overruled with "indent_style = space".
 
-I'll submit a follow up version with patches for each commit.
+So it looks like it's possible, if we also add judiciously .editorconfig
+in subdirectory where we have other files which don't want the same
+settings, probably:
+- po/
+- t/
+- contrib/
+- .github/
+- ...
+
+Not sure if that's easier than adding stuff to the to the root config
+though.
+
+-- 
+Max Gautier
