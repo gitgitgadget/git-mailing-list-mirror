@@ -1,52 +1,55 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D9F23BF
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 18:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031AE14AA3
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 18:49:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711219391; cv=none; b=bgO6mvYvXuHS7i0sLJsguQyaF/Xp/Aitw38PD0Upiv9jGdRc8MVEIw+qg2dvNvZLb3Il2ZHNtmHKxsd1LOjuGl90DbxYHYW0i0XBeFEPYkHDVycwk0R9pcK1HvAUIe4dcqvULZFF1BTtFV5XVQ47ibG1WM5gZ4E88fvHghT7msI=
+	t=1711219774; cv=none; b=vCF0uMzM43u49JHOXHeZ7WLz9R2SwsfXSacKjVB4Nh3dtEOZX8WVREuAU6ID2OgXw1c+h9jZP0DfZmMRmimiM53T4NuYZzClgFmqfz0AoO3EVFjnN7d4UtfZAXGNe5/ernDJ832VYSTv3+AfPDLvAHVEwR93Evss1wikRAR1l7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711219391; c=relaxed/simple;
-	bh=jbPHXarjkfgEWulAbtMB9DfjBAFGjI+Hr/rtp00KIRo=;
+	s=arc-20240116; t=1711219774; c=relaxed/simple;
+	bh=vCtuZ3SW6zG6wYCr2D4c6hfv0GITT109gG+fAtU/Qoc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j9aO5nw6dGV8iPCJszi86GjCHMiD+Fl7LbtaBFsDH8Y6QAJ7ITU9rP4C6X44nePRUDK9IiSkcHFJFCTX4/XF1F9nIe9u7Hw9iRqyIZpHbqx56NNNJATiy6NYcaG+VCkNM+NLa2/0MBopKY3bMR/bS+U1mbHFrCQXBOP66YZdtko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rygr+CeK; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=OEpmr/bQcg2lvkNMU2fzAEgSdkDsUmkKbMXzXFkMAmSVsNI6aAuntKw+27Ln2A2RzigUUzZlo9k9MBeE8hKFWMO1gqXpeH6/PVjjPx9HebObMXmt6IbcSQjJp7PiRmrEyuVahEPC09UBzNRPWpTzhNLAjAz5WYtCP1JF7RfBtCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vpu1/A8a; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rygr+CeK"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 676CB220C9;
-	Sat, 23 Mar 2024 14:43:08 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vpu1/A8a"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CB6241D6E28;
+	Sat, 23 Mar 2024 14:49:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=jbPHXarjkfgEWulAbtMB9DfjBAFGjI+Hr/rtp0
-	0KIRo=; b=rygr+CeKbjL3bgI0uiNK8SaZGvBSGr/mCVqNNtfFKnCXvGcBVcPla7
-	pa7XZrJx1gjbaoYdavkrPdFM5oPX9FhPY3txSWCXpEnUF712XhXo8lWSa11cIszI
-	TqiZyqQlgEJRcrlS87d1b6kqwVpwDnokJdCg65Eq3GzawMr7+G7Kw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 604FE220C8;
-	Sat, 23 Mar 2024 14:43:08 -0400 (EDT)
+	:content-type; s=sasl; bh=vCtuZ3SW6zG6wYCr2D4c6hfv0GITT109gG+fAt
+	U/Qoc=; b=Vpu1/A8aer/dh+ULvc3cHozBJG9mDvnInl0UkWmIhU7jYC67a1DPkR
+	Sj0feI0xnNI7l/CSXGSFZfLNYSjza9yC1IGgjpV0hKNhp6wi4EA95HU8hoXhiW9M
+	d67yLHG3WUmTgt+Jb0cMmwNIiib3SErQ3m6A40BFoHdsnNake1pMs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C32A51D6E27;
+	Sat, 23 Mar 2024 14:49:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D61DB220C7;
-	Sat, 23 Mar 2024 14:43:04 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 040041D6E26;
+	Sat, 23 Mar 2024 14:49:30 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Stefan Haller <lists@haller-berlin.de>
-Cc: Olliver Schinagl <oliver@schinagl.nl>,  git@vger.kernel.org
-Subject: Re: Allow git bisect to auto-skip
-In-Reply-To: <01e09c64-4d62-406d-85fe-9fb77939cf63@haller-berlin.de> (Stefan
-	Haller's message of "Sat, 23 Mar 2024 14:51:21 +0100")
-References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl>
-	<xmqqwmptzyny.fsf@gitster.g>
-	<01e09c64-4d62-406d-85fe-9fb77939cf63@haller-berlin.de>
-Date: Sat, 23 Mar 2024 11:43:03 -0700
-Message-ID: <xmqqle68x008.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Matthew Rollings
+ <admin@stealthcopter.com>,  Stelian Pop <stelian@popies.net>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] contrib: drop hg-to-git script
+In-Reply-To: <20240322234354.GC2049941@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 22 Mar 2024 19:43:54 -0400")
+References: <20240320094824.GA2445978@coredump.intra.peff.net>
+	<01de5e16-a4ee-47df-03e6-67f5f0d601a7@gmx.de>
+	<xmqqjzlu2r8n.fsf@gitster.g>
+	<20240322234354.GC2049941@coredump.intra.peff.net>
+Date: Sat, 23 Mar 2024 11:49:29 -0700
+Message-ID: <xmqqh6gwwzpi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,26 +59,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 2F32B7F4-E945-11EE-9C7D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 155B1384-E946-11EE-B704-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Stefan Haller <lists@haller-berlin.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 22.03.24 23:31, Junio C Hamano wrote:
->> It often is discovered that a commit
->> breaks bisection after the fact and it is not feasible to rebase
->> all the history after the commit.
->
-> This reminds me of a similar problem with git blame, for which we have
-> the blame.ignoreRevsFile config to work around it. Couldn't there be a
-> similar mechanism for bisect, e.g. bisect.skipRevsFile?
+> Anyway, the important takeaway to me is that searches are not likely to
+> end up at contrib/hg-to-git, with people wondering where it went. They
+> will point directly to the alternatives.
 
-A Very good point.  If a breakage of a commit is "this does not even
-build" kind of breakage, such a mechanism would be an excellent fit.
+And what is most attractive is that the list of alternatives they
+will see in there searches will be updated as new and better ones
+appear, unlike contrib/hg-to-git/README that we would need to
+conciously maintain, which we are unlikely to do.
 
-But if a breakage is "only this particular test fails and we know
-the reason why it fails has nothing to do with the bug we are
-chasing", then compiling such a fixed list of commits, or pointing
-at such a list with a configuration variable, would not work very
-well, I am afraid.
+We might want to see if there are other contrib/ ones with only
+tombstone READMEs and remove them as a part of spring (in the
+northern hemisphere) cleaning, #leftoverbits, citing what we
+discussed in this thread as the rationale.
 
 Thanks.
