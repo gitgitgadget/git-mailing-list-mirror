@@ -1,127 +1,161 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from tarta.nabijaczleweli.xyz (tarta.nabijaczleweli.xyz [139.28.40.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7E13FC7
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 11:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E13282FB
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 13:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=139.28.40.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711192046; cv=none; b=o3oAcVQwXLYf4J1cqmnN+u2E08St7/JuYKdXBJK5vcV8BPaT/znsteWTEYpb1WGIt5JjDWU6FxrLjcwp47ss1oUaCZZiGTkn4gyyVLFpNxwaSBNdkR1WBAnYADS1tpsf4JQ8xf/GsSJFSmkiW8K2Nlr984T1Rq6xCDPGv75MPBw=
+	t=1711199903; cv=none; b=nXMs+TrPz3tIUn8EJ+sBINVy/X1ly6j4xVXlJaDR1sjTrIjqMjy9C4VHpk4I4oHTFsJVNhvC34nFcPFn2n7fxRTJhCf/tEE98l9WYoAhlwKPODnvuN1aalpViSd/vxzQ7Axzt2139jkd2OczCqqdXHH4jSOYP/4hgEs5/IClZvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711192046; c=relaxed/simple;
-	bh=v+NbIWDlQtBhoav1T8KWqQk480MFJXzJmBCMdjmY6Bg=;
+	s=arc-20240116; t=1711199903; c=relaxed/simple;
+	bh=gney06a10qR/JjKWakCdKn10oEu9qZ0POfiFRCmqV2w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UsxliNeLv+9Y1xbX50pljZnlFYxHd0D4wEcMHV6r360sWm8NgYv1LFXXcbafykSI+R74KsnQet6y72Diump+ejXpukQLosP8+rYJT6u22xKyv2CgwlVndS2R9EcSiqLkqMBzezmVQoo+cXvfid/pcixL4hMVVn9aOWZ16ocEcOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=NpuFKDtL; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qhjxh5b8H9oUOMBDKcCNNX3zkh5QhBR83H6dGzj8cj4PTMS9/BA7Bm9S7usbq8owt1B+RzVxlapPsTfD/9X6Kn/pkufwqkyGocvq7b35MrSWnT5NVdH8lvTrQC+tmX+t1h9CfI2M06eyGEx7D8Z+j2w2souYelIpG5fWoIc72JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nabijaczleweli.xyz; spf=pass smtp.mailfrom=nabijaczleweli.xyz; dkim=pass (2048-bit key) header.d=nabijaczleweli.xyz header.i=@nabijaczleweli.xyz header.b=hXB4qQbD; arc=none smtp.client-ip=139.28.40.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nabijaczleweli.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabijaczleweli.xyz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="NpuFKDtL"
-Received: from localhost (reverse-238.fdn.fr [80.67.176.238])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id 0C50A6038B;
-	Sat, 23 Mar 2024 12:07:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1711192042;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JjxpZp0CXCdlqL9xWU2w6WlvGqJo+ct+GQW0MELDiXE=;
-	b=NpuFKDtLW4dm/AL2q3MGZaRGvLwpfVscH6jzWR0a6qLKXbtHoxNE2npBtd8GzmCOyU5eKK
-	q49QjIYqkHFNstltyBIivlmhFqZ35VeqkF/P9c395nAKunLEpNs/5v50AS97ULsObPHqEH
-	BWtAGb/JszJzbL3gJ2Thu0ExgFP5YPtgZIxZoV5j5ihhLpzrbRQ9oVdckobL6xePRXeiMC
-	+ztCpJg6KNTyXwqs091OKPJJ441xG3Rrd2TsQnz995P9eF6ebVv4fgqTFI71Y41UYGbLQb
-	l2+o1k6ue07v7K2SXSbrSnY0QX7Feli1cqvidUv3djkeNpEorMu7EzN+jEOzgg==
-Date: Sat, 23 Mar 2024 12:07:21 +0100
-From: Max Gautier <mg@max.gautier.name>
+	dkim=pass (2048-bit key) header.d=nabijaczleweli.xyz header.i=@nabijaczleweli.xyz header.b="hXB4qQbD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nabijaczleweli.xyz;
+	s=202305; t=1711199889;
+	bh=gney06a10qR/JjKWakCdKn10oEu9qZ0POfiFRCmqV2w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hXB4qQbDAuBBSyCO5+NCHHg7gEw1JGtyjs0wpt06DyTNY0CGmSjw3Ry0WE5lFSf+Y
+	 esG7yHfw2/QtCqzrGOLj05oBgnmHQvHuHaKWDDAaB8mhWt2A8iTcbdqdijnc5KFCi/
+	 6sOaNLtlpEbPyYCASnR5isCBk14SDu7oR3FcdHXkbzcKCikr/fW7fgKpEypJcY2gMa
+	 AqJMeg0tYp3K+wrgBSdCf2sF/i9DtOmu8L9MFBhnFnb6TNUcgSN3YRJ4wgzjhR0/IS
+	 /WleDdT3+Htjc99Cddv1k0dF33QAHt4d4WVO4u7b+KL2TGwKZVDoduIc9Au3K+wyCl
+	 kWqzOKpwPM9Hg==
+Received: from tarta.nabijaczleweli.xyz (unknown [192.168.1.250])
+	by tarta.nabijaczleweli.xyz (Postfix) with ESMTPSA id 3CFE5145E;
+	Sat, 23 Mar 2024 14:18:09 +0100 (CET)
+Date: Sat, 23 Mar 2024 14:18:08 +0100
+From: 
+	Ahelenia =?utf-8?Q?Ziemia=C5=84ska?= <nabijaczleweli@nabijaczleweli.xyz>
 To: git@vger.kernel.org
-Cc: =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] maintenance: cleanup $XDG_CONFIG_HOME/systemd/user
-Message-ID: <Zf636bsHs9woXRAS@framework>
-References: <20240322221327.12204-1-mg@max.gautier.name>
- <20240322221327.12204-5-mg@max.gautier.name>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Josh Steadmon <steadmon@google.com>
+Subject: [PATCH v2] grep: improve errors for unmatched ( and )
+Message-ID: <tkz3a5jkalcz5ajemx4b4x42pe6kv45sfmgpin4zeai3moq42o@tarta.nabijaczleweli.xyz>
+References: <xmqq34si2p8b.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qmouig7i3omh2ess"
 Content-Disposition: inline
-In-Reply-To: <20240322221327.12204-5-mg@max.gautier.name>
+In-Reply-To: <xmqq34si2p8b.fsf@gitster.g>
+User-Agent: NeoMutt/20231221-2-4202cf-dirty
 
-On Fri, Mar 22, 2024 at 11:11:09PM +0100, Max Gautier wrote:
->  
-> +/*
-> + * TODO: in the future (~2026 ?) remove this cleanup code
-> + */
-> +static void systemd_delete_user_unit(char const *unit)
-> +{
-> +	char const	file_start_stale[] =	"# This file was created and is"
-> +						" maintained by Git.";
-> +	char		file_start_user[sizeof(file_start_stale)] = {'\0'};
-> +
-> +	char *filename = xdg_config_home_for("systemd/user", unit);
-> +	int handle = open(filename, O_RDONLY);
-> +
-> +	/*
-> +	 * Check this is actually our file and we're not removing a legitimate
-> +	 * user override.
-> +	 */
-> +	if (handle == -1 && !is_missing_file_error(errno))
-> +		warning(_("failed to delete '%s'"), filename);
-> +	else {
-> +		read(handle, file_start_user, sizeof(file_start_stale) - 1);
 
-Actually that fails -Werror because I don't check read return.
-Alternative below (on top of this one), with one question:
-Are VLA using size_t const OK ? It's folded to a constant array by gcc
-but I don't know if that causes portability problem with other platforms
-? I can always repeat the sizeof expr if it's a problematic construct.
+--qmouig7i3omh2ess
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- >8 --
+Imagine you want to grep for (. Easy:
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 99b158e481..7fb25ea2b1 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -2332,11 +2332,14 @@ static int systemd_set_units_state(int enable)
- /*
-  * TODO: in the future (~2026 ?) remove this cleanup code
-  */
-+
- static void systemd_delete_user_unit(char const *unit)
- {
- 	char const	file_start_stale[] =	"# This file was created and is"
- 						" maintained by Git.";
--	char		file_start_user[sizeof(file_start_stale)] = {'\0'};
-+	size_t const	length = sizeof(file_start_stale);
-+	char		file_start_user[length] = {'\0'};
-+
- 
- 	char *filename = xdg_config_home_for("systemd/user", unit);
- 	int handle = open(filename, O_RDONLY);
-@@ -2348,14 +2351,14 @@ static void systemd_delete_user_unit(char const *unit)
- 	if (handle == -1 && !is_missing_file_error(errno))
- 		warning(_("failed to delete '%s'"), filename);
- 	else {
--		read(handle, file_start_user, sizeof(file_start_stale) - 1);
--		close(handle);
--		if (strcmp(file_start_stale, file_start_user) == 0) {
-+		if (length - 1 == read(handle, file_start_user, length - 1) &&
-+				strcmp(file_start_stale, file_start_user) == 0) {
- 			if (unlink(filename) == 0)
- 				warning(_("deleted stale unit file '%s'"), filename);
- 			else if (!is_missing_file_error(errno))
- 				warning(_("failed to delete '%s'"), filename);
- 		}
-+		close(handle);
- 	}
- 
- 	free(filename);
+  $ git grep '('
+  fatal: unmatched parenthesis
 
--- 
-Max Gautier
+uhoh. This is plainly wrong. Unless you know specifically that
+(a) git grep has expression groups and that
+(b) the only way to work around them is by doing -- '(' or -e '('
+
+Similarly,
+
+  $ git grep ')'
+  fatal: incomplete pattern expression: )
+
+is somehow worse. ")" is a complete regular expression pattern.
+Of course, the error wants to say "group" here.
+In this case it's also not "incomplete", it's unmatched.
+But whatever.
+
+Make them return
+
+  $ ./git grep '('
+  fatal: unmatched ( for expression group
+  $ ./git grep ')'
+  fatal: incomplete pattern expression group: )
+
+which hopefully are clearer in indicating that it's not the expression
+that's wrong (since no pattern had been parsed at all), but rather that
+it's been misconstrued as a grouping operator.
+
+Link: https://bugs.debian.org/1051205
+Signed-off-by: Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczleweli.xyz>
+---
+On Fri, Mar 22, 2024 at 09:41:40AM -0700, Junio C Hamano wrote:
+> Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczleweli.xyz> writes:
+> > uhoh. This is plainly wrong. Unless you know specifically that
+> > (a) git grep has expression groups and that
+> > (b) the only way to work around them is by doing -- '(' or -e '('
+> I do not think "--" (end of options and beginning of pathspec)
+> marker would work for that purpose, UNLESS you are talking about a
+> file whose name is an open parenthesis.
+False. -- turns all subsequent parameters into arguments, and if
+there is no -e, the first argument is the pattern, and all the
+subsequent ones are paths. This is normal [git] grep behaviour.
+
+> Just keep "-e '('" in the
+> description and drop the double-dash there.
+Disagree. This is one of the two methodologies I've devised to work
+around this in the past, and it's one of the two methodologies that
+work.
+
+All else applied.
+
+ grep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 5f23d1a..ac34bfe 100644
+--- a/grep.c
++++ b/grep.c
+@@ -621,7 +621,7 @@ static struct grep_expr *compile_pattern_atom(struct gr=
+ep_pat **list)
+ 		*list =3D p->next;
+ 		x =3D compile_pattern_or(list);
+ 		if (!*list || (*list)->token !=3D GREP_CLOSE_PAREN)
+-			die("unmatched parenthesis");
++			die("unmatched ( for expression group");
+ 		*list =3D (*list)->next;
+ 		return x;
+ 	default:
+@@ -792,7 +792,7 @@ void compile_grep_patterns(struct grep_opt *opt)
+ 	if (p)
+ 		opt->pattern_expression =3D compile_pattern_expr(&p);
+ 	if (p)
+-		die("incomplete pattern expression: %s", p->pattern);
++		die("incomplete pattern expression group: %s", p->pattern);
+=20
+ 	if (opt->no_body_match && opt->pattern_expression)
+ 		opt->pattern_expression =3D grep_not_expr(opt->pattern_expression);
+--=20
+2.39.2
+
+--qmouig7i3omh2ess
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEfWlHToQCjFzAxEFjvP0LAY0mWPEFAmX+1pAACgkQvP0LAY0m
+WPG1GQ/9FSR4hEBgFAmn5dzXZIp2aOpsfFhME4UXgHNZZLleexGdvTLYWVPsih40
+9wqWU+E+HzsJUujjAoY+RMdkzDa0DBAyrWIlnyCGbcWpSpF/EfgbiRglECfJLXpm
+3I1zPtjwKr5ZLOMab3lymlcK4/KEdhV2clKjxXEY3JJEPav7HIgw9+BzXmkfedOk
+XsrVqnkSspFPMAkDzioNI3R4vggf9SupeEvtEu5PckDHkRJZe8ZuvUSWAe1VoVbE
+8Hk+u1WF8NfAMI2EkxdTDa4ITunDsqMhBIobgNkEv546lYEXzxUW22u6CWk3+y3M
+WxMYWSh4i92YdRpCZeojTFstxI08+K884aBRinpYS8e3z1A2oGFZb06xazwHgwd+
+6kBpwvdtduRpFfix3DJ2ACNvmHZZXtUQuTGXtXoEtpnUcedN6az0y70xXvKtdxNI
+LVoaZcecvjtcN/sX6fA9hpD7C5FFCG8mw1wGDKSBV+wiCk6bMmTA48TJ8NTMfKfB
+GCm7qpRX8eyy3+7sPN1WhVjcUUlHtZsDbh/HqLcmK61uIoIxGK1NWYXav6Npc2uB
+mKtJAaramZ2/x6rCXppS+9C4JIewWJSnyl1dzzk1K6YpRRN/8mi2BqXOo6yvC9uE
+praRdYaFDp5kyIbKXnhe/3nIUne09VfJX1VFTyrFrHaAHCSKHF8=
+=N3rS
+-----END PGP SIGNATURE-----
+
+--qmouig7i3omh2ess--
