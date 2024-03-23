@@ -1,136 +1,232 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD63963D
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 19:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D08D5A781
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 19:19:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711221447; cv=none; b=R65R0SoZCAw3IcVnJkSn3OZb2oHxu4C1s62T6+iNfFCqCBwi7AoEvWEYAZOyfGhRxGT+3O1yFzf66d6yKX1HzDVNcdOIuMTC178uDCCxv01HPqJTzMBYsQypmNtIjKEYoVG5pWjXPe58alo3FkgG54Qqu347Zd4zeGPb1CGkr7s=
+	t=1711221569; cv=none; b=NqjelPw8jMXxSb8KUQRrUsHx/RH2daQqS6mS+YV9YGBK9rRRHiefa2vqAx2RGKy4e5uMP5NSuZmXNruigTJsiP6O4UrKS6Vqo3NqyJiz+xfriU9KJpWm3SWuJYL0N3nuJRhurBul8RLhasgWoUXfrfku5Y3QusidNxagVQ3lqFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711221447; c=relaxed/simple;
-	bh=0sSq4o/+VU06SkdwuTRPiB/w6LIHuhlv1Srka4G+1EA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nt9Nyn671+Y7mg9mhKHp+0EYmtI6kRRC/30loq9/MQi8q1yjUTbgTJW7V70EDuRdOa7axEeKs9jBWcfFJArYQl35QmXjtpq6hEQXcunHZuk7Op9/F2LlGlHDP49MYvyK0/0SMBbvetCVfcvuHMklnAwGmjhMcmDEqcgaWzraXp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dvSPs5tQ; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711221569; c=relaxed/simple;
+	bh=t58r/GR8Q6JwXQ26+RJa/etWUy7dNhW0EPnZSDS27ok=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d35yuyF+iz3mDsNWyzmSj/v8lBMs53bM8EDXS7eumjAo6oYXxNqZlyAA/em5OhWK4KaewgTb0iMeXtdK7ldaz7uRzZZJox63k09JSwfA39ndnm2SPA9rHaI5LOVEEF17DwmJf6GNesFHToBXmmyMPKpY1GoI+Ww/h+/GdrNpa8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CkFlLPLI; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dvSPs5tQ"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-60a0579a968so33547387b3.3
-        for <git@vger.kernel.org>; Sat, 23 Mar 2024 12:17:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711221445; x=1711826245; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W1aCl0GpefSvfJ3yfuq0i+yLPyZbVHVCu4kG7iqXjfg=;
-        b=dvSPs5tQhEGytL7/zE2/rmD7Ym0Avwqv/L2jIcJMDptPPL4OCeO65KKHJQk3732NlF
-         YIwzz8klx/Huzei+JmTWMO8Ld00HgjdvVWr66hio2WsMb8wYTH7avGtdMROqW4M3xEPz
-         pXezyidlh6Zs+nZSbIf5My1uYF+6YcHbs5sd+7amlZUNc0AhUsRhFfSm7m5h7pPJwRkB
-         yv6oKAI+iT1hQ5mL3p1ZCs1T3Bk8/H1QfC5OQWfpCa3ctv8ztkVDY8Sl/S3EkGtqiTYr
-         fDbImAU62IvWrMuaetyo8HOM7bBJYU51YCZT3B71om59rvoq8PLiHOUB3Xvy1SvT2tj/
-         lL/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711221445; x=1711826245;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W1aCl0GpefSvfJ3yfuq0i+yLPyZbVHVCu4kG7iqXjfg=;
-        b=vnz5OHQgAZN4LxGnn5ImEHOcGMhy7wHcnse13JUUHj4YtFFQmO//usMm2jpuwZdklU
-         HoFJt9ZfXUMctSWLUrwK/Z+oiFQT1HJ7tVDXqzGylr6J9zQ4SxP5rjuMUiS5NR/+AgrI
-         vLgLibmulqQhuP+Fv/BmVzoctCX7ppQQzfGfQc20TREL++z6drEQg4tGSyWJcx4yvHXI
-         Gm3VRkocBl+7U/oJ8Y4m3IYVVz9RKc2j6LXPGoxYUZaSUj5B2RfafeB3GGEvqpjDSA0s
-         8nQ2ldlGLr2STQLwKk6+0SUz+112CNCyC2pFNxaCgSBJRwN539VVZXsMYrkdYHcGVE4K
-         tefA==
-X-Forwarded-Encrypted: i=1; AJvYcCVecFUXXxomSpaHUdToMdjOO2VXQRlv2coka5LjtArDeSdjHXRvSugMYVwBR1cMUbcGlfik7N5Rm0/JGP8MljE3sY/2
-X-Gm-Message-State: AOJu0YwNAR0Ji57i1gBXzJ+pyCUqOonC9hGWfmD3TpBLc5J+2Tl5uFcN
-	XT/nQbQxMLNt64Ypt7U6zBcV1XEAiwLrKHfPxg71q+ChHRyqV13r
-X-Google-Smtp-Source: AGHT+IGlBe9msKhy1oLYaX99AhTYfcu8gfWeVd4yavKd6n6W1+EV0CFcsQzGuZvZGAy7vGaIloUxnw==
-X-Received: by 2002:a0d:ea93:0:b0:60a:1b34:6251 with SMTP id t141-20020a0dea93000000b0060a1b346251mr3152236ywe.13.1711221444721;
-        Sat, 23 Mar 2024 12:17:24 -0700 (PDT)
-Received: from ?IPV6:2605:2a00:9000:dead:eb24:737d:2586:62fd? ([2605:2a00:9000:dead:eb24:737d:2586:62fd])
-        by smtp.gmail.com with ESMTPSA id q4-20020a05621419e400b00690d45bb18asm2340785qvc.34.2024.03.23.12.17.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Mar 2024 12:17:24 -0700 (PDT)
-Message-ID: <d8fa6ab2-949b-4d6f-9c8f-e80f2e524fb7@gmail.com>
-Date: Sat, 23 Mar 2024 15:17:20 -0400
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CkFlLPLI"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1B4763EB96;
+	Sat, 23 Mar 2024 15:19:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=t58r/GR8Q6JwXQ26+RJa/etWUy7dNhW0EPnZSD
+	S27ok=; b=CkFlLPLIrqeA1f2yvooXdmqxFg1a3GNrkk6DR6edZvP3K+9YafLOtE
+	BbOtzXen6ph2AjeUvPhfpELMiu2GR3/d1tNHE1WXOaW/BMIwA4ctgQvuQXTbenvJ
+	hgKomMvbdYlWKIDEFFyBJQVHJDVh8ZqtM04njlTkE/d/X5ERm61Ls=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 132F73EB95;
+	Sat, 23 Mar 2024 15:19:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 93E773EB94;
+	Sat, 23 Mar 2024 15:19:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH] RFC: add MAINTAINERS file
+In-Reply-To: <pull.1694.git.git.1711164460562.gitgitgadget@gmail.com> (Linus
+	Arver via GitGitGadget's message of "Sat, 23 Mar 2024 03:27:40 +0000")
+References: <pull.1694.git.git.1711164460562.gitgitgadget@gmail.com>
+Date: Sat, 23 Mar 2024 12:19:15 -0700
+Message-ID: <xmqqsf0gvjrg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git is not recognizing some merge conflicts and just accepting
- incoming master version
-Content-Language: en-US, fr
-To: Kai <k.vongrambusch@googlemail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-References: <CA+XMOBuK1_BNqgQRfCne8dVXKGPt+iQ9wt4iZqz0PgEqZ5UCtg@mail.gmail.com>
- <606fe3fa-a5a0-4d35-a4a0-59521043dde4@kdbg.org>
- <CA+XMOBskofgsmCbcchmPYo9rF9+Cdtdj_m8VzQrLbGhZPm+mrw@mail.gmail.com>
- <ebd073ef-4ba4-44df-919a-2adefb40e3e7@kdbg.org> <xmqqzfuznn7g.fsf@gitster.g>
- <CA+XMOBuYVWwEE-p=3GHBUcnnM_jn0pneW1rbcQU124DjnJYycA@mail.gmail.com>
-From: Thomas Guyot <tguyot@gmail.com>
-Autocrypt: addr=tguyot@gmail.com; keydata=
- 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
-In-Reply-To: <CA+XMOBuYVWwEE-p=3GHBUcnnM_jn0pneW1rbcQU124DjnJYycA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 3DA5F03A-E94A-11EE-89C7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 2024-03-16 05:19, Kai wrote:
-> Thanks a lot for the explanations Brian and Hannes. That clarifies it
-> a lot. I had not come across such a semantic issue in my limited
-> experience with git before, so I was a bit thrown off.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Linus Arver <linusa@google.com>
 >
-> Given this behavior, I still think it would be a great feature for the
-> person doing the merge to at least optionally be able to see
-> highlighted parts of the code that had any changes between the base
-> and the other two branches. Since these parts of the code could
-> potentially cause problems much more than lines of code that have not
-> been touched by any branch. But I guess that would be more a GUI
-> feature than related to git directly, correct? Maybe there is already
-> a GUI offering that?
+> This patch is designed to spur discussion about adding an official
+> MAINTAINERS file to our project. The hope is that it could be used as a
+> reference in (at least) the following scenarios:
+>
+>   (1) [CC list] patch authors want to know who to CC on their
+>       submissions, without resorting to git-blame-level of precision;
+>
+>   (2) [escalation path] patch authors have been waiting 1+ weeks for
+>       review comments, but are not sure who to escalate to (other than
+>       Junio);
+>
+>   (3) [status tracking] record former maintainers/reviewers who are now
+>       inactive.
+>
+> In addition having a MAINTAINERS file could give a more official sense
+> of ownership in the codebase.
 
-The --diff-merges=combined option (or simply "-c") of git show is 
-probably what you're looking for.
+OK.  They are understandable goals.
 
-There is also a dense-combined (or "--cc") option that skips seemingly 
-unrelated hunks, which doesn't mean these hunk aren't problematic, just 
-that there's 6+ lines appart.
+As to the format of the actual file, I do not have much opinion.
+What works for the kernel may or may not work for us, as the project
+size is very different, but I am fairly confident that we can agree
+on something usable.
 
-Regards,
+I am more worried about how the file is used and maintained.  Some
+things to think about while in the "spurred discussion" I can think
+of are:
 
---
-Thomas
+ - Is the project big enough to require this (especially for the
+   purpose of (1)), or would
+
+   $ git shortlog -n --no-merges --since=24.months -- path-to-file
+
+   be sufficient and more importantly the value that it will keep
+   current automatically outweigh the benefit of having this file
+   that can go stale?  To answer this question, we'd need to know
+   the turnover rates of past project contributors, of course.  If
+   it is too high, having such a list may help for (1) and (3)
+   above.
+
+ - How binding is it for a contributor to be on this list as an area
+   expert?  Will there be concrete "expected response time"?  It can
+   be different for each area expert, of course.  I'd expect better
+   from those who work on Git as a major part of their job and
+   contributes some part of their work product back to the upstream,
+   than from folks who do Git as a hobby.  Is each contributer
+   expected to volunteer to be on this list, with self declared
+   service level target?
+
+ - With many good reviewer candidates being employed in companies
+   and doing Git as part of their job, how would we handle folks
+   getting transferred out of the Git ecosystem?  Unlike in a
+   corporate environment, nominating successors who have no track
+   record in the community by the current area expert would not work
+   at all.  The successors themselves have to earn respect by
+   demonstrating their own competence, which would take time.
+
+There may be many others.
+
+Thanks.
+
+> The MAINTAINERS file here is stolen from the one used in the Linux
+> Kernel. We do not have to follow its format at all; it is merely added
+> here as a reference for comparison and prior art.
+>
+> Signed-off-by: Linus Arver <linusa@google.com>
+> ---
+>     RFC: add MAINTAINERS file
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1694%2Flistx%2Fmaintainers-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1694/listx/maintainers-v1
+> Pull-Request: https://github.com/git/git/pull/1694
+>
+>  MAINTAINERS | 85 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 85 insertions(+)
+>  create mode 100644 MAINTAINERS
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> new file mode 100644
+> index 00000000000..34fa3baf3a5
+> --- /dev/null
+> +++ b/MAINTAINERS
+> @@ -0,0 +1,85 @@
+> +List of maintainers
+> +===================
+> +
+> +Descriptions of section entries and preferred order
+> +---------------------------------------------------
+> +
+> +	M: *Mail* patches to: FullName <address@domain>
+> +	R: Designated *Reviewer*: FullName <address@domain>
+> +	   These reviewers should be CCed on patches.
+> +	L: *Mailing list* that is relevant to this area
+> +	S: *Status*, one of the following:
+> +	   Supported:	Someone is actually paid to look after this.
+> +	   Maintained:	Someone actually looks after it.
+> +	   Odd Fixes:	It has a maintainer but they don't have time to do
+> +			much other than throw the odd patch in. See below..
+> +	   Orphan:	No current maintainer [but maybe you could take the
+> +			role as you write your new code].
+> +	   Obsolete:	Old code. Something tagged obsolete generally means
+> +			it has been replaced by a better system and you
+> +			should be using that.
+> +	W: *Web-page* with status/info
+> +	Q: *Patchwork* web based patch tracking system site
+> +	B: URI for where to file *bugs*. A web-page with detailed bug
+> +	   filing info, a direct bug tracker link, or a mailto: URI.
+> +	C: URI for *chat* protocol, server and channel where developers
+> +	   usually hang out, for example irc://server/channel.
+> +	P: *Subsystem Profile* document for more details submitting
+> +	   patches to the given subsystem. This is either an in-tree file,
+> +	   or a URI. See Documentation/maintainer/maintainer-entry-profile.rst
+> +	   for details.
+> +	T: *SCM* tree type and location.
+> +	   Type is one of: git, hg, quilt, stgit, topgit
+> +	F: *Files* and directories wildcard patterns.
+> +	   A trailing slash includes all files and subdirectory files.
+> +	   F:	drivers/net/	all files in and below drivers/net
+> +	   F:	drivers/net/*	all files in drivers/net, but not below
+> +	   F:	*/net/*		all files in "any top level directory"/net
+> +	   One pattern per line.  Multiple F: lines acceptable.
+> +	X: *Excluded* files and directories that are NOT maintained, same
+> +	   rules as F:. Files exclusions are tested before file matches.
+> +	   Can be useful for excluding a specific subdirectory, for instance:
+> +	   F:	net/
+> +	   X:	net/ipv6/
+> +	   matches all files in and below net excluding net/ipv6/
+> +	N: Files and directories *Regex* patterns.
+> +	   N:	[^a-z]tegra	all files whose path contains tegra
+> +	                        (not including files like integrator)
+> +	   One pattern per line.  Multiple N: lines acceptable.
+> +	   scripts/get_maintainer.pl has different behavior for files that
+> +	   match F: pattern and matches of N: patterns.  By default,
+> +	   get_maintainer will not look at git log history when an F: pattern
+> +	   match occurs.  When an N: match occurs, git log history is used
+> +	   to also notify the people that have git commit signatures.
+> +	K: *Content regex* (perl extended) pattern match in a patch or file.
+> +	   For instance:
+> +	   K: of_get_profile
+> +	      matches patches or files that contain "of_get_profile"
+> +	   K: \b(printk|pr_(info|err))\b
+> +	      matches patches or files that contain one or more of the words
+> +	      printk, pr_info or pr_err
+> +	   One regex pattern per line.  Multiple K: lines acceptable.
+> +
+> +Maintainers List
+> +----------------
+> +
+> +.. note:: When reading this list, please look for the most precise areas
+> +          first. When adding to this list, please keep the entries in
+> +          alphabetical order.
+> +
+> +3C59X NETWORK DRIVER
+> +M:	Steffen Klassert <klassert@kernel.org>
+> +L:	netdev@vger.kernel.org
+> +S:	Odd Fixes
+> +F:	Documentation/networking/device_drivers/ethernet/3com/vortex.rst
+> +F:	drivers/net/ethernet/3com/3c59x.c
+> +
+> +...
+> +
+> +THE REST
+> +M:	Linus Torvalds <torvalds@linux-foundation.org>
+> +L:	linux-kernel@vger.kernel.org
+> +S:	Buried alive in reporters
+> +T:	git git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+> +F:	*
+> +F:	*/
+>
+> base-commit: 11c821f2f2a31e70fb5cc449f9a29401c333aad2
