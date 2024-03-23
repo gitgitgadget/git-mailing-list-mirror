@@ -1,134 +1,162 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6D2535C4
-	for <git@vger.kernel.org>; Sat, 23 Mar 2024 17:36:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5E5535A8
+	for <git@vger.kernel.org>; Sat, 23 Mar 2024 17:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711215420; cv=none; b=ThKqsw8SL7bnNaSKreyZ0V9bT4oFtZEpI3D879Y9oOwa8Ji2pHGcljEtmBdz/gMyKKT2Tv+k86wEr7LMdu2HyLkSXBqf0bWUcyPHCF1KE3VxGMF3rG0xy12rxISuGMevzMTSGSgvBYq/37FdOuogietOnG2PaGx9LWR349LLvnE=
+	t=1711216375; cv=none; b=VXQBjbGYEsEub+S83ud51XZhw5zBJpcmxLymXTJo/T9vnGesXnHTcWN6NRny8efLw8cxLNJu37H02jtWvn+BhLq+NJBsE55W8fdVXwd3P1QZMEVhzkv4nC/7kHovU/3Kskt/Fl833CocOLeSDVZxTRK8KTNPtG1I/U/1htDF9l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711215420; c=relaxed/simple;
-	bh=YcC99lOgRL5yf1ZDWQbjsmxqGy42OaBEikb6plazQ8I=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=gosAxmXB1HNYM0H64NHHp2PttWOrWjYBUFQ33L0xi9uNtRQ0qixahmhI2sC8oc79SK+ZbBdg7+Jfb9VGZ+wlhLmCJlpPc0FZewPuGYeroZRiAuivxZyZU4TYI717xdYH3lt9PmINldaBFbcMGvRSTLbMW5KwIp2pFXJOCKLqBf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QpDj+hVP; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711216375; c=relaxed/simple;
+	bh=Wvw83t9yBOBeASENhdsJ/R7jbzPv+K+FSxAY0nqsKtg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=puPIMYEAn27BTYcjV2c7nOzt4dOCOOR8CP4oYVD/tTPVu4VYzd8mOtB5/fhuOaluxUnNjc9ZkvTld9g+IfNxAxl30POrNC9DYdd+HZR/0cAm/JcAw3ojbVYMHKsM8Mn05GJmC9r3PnzJjA/0tOuEd7szPECZonid78gQZqkrIew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NRmIwlct; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QpDj+hVP"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33ecb04e018so2029639f8f.1
-        for <git@vger.kernel.org>; Sat, 23 Mar 2024 10:36:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711215417; x=1711820217; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8IneL7ycCxg5rabSPhRr5UcFzUBhPE59XhcTWAN/83k=;
-        b=QpDj+hVPw4BbP/eaXr1MWGHmCLUu+tZdD08lKMI+7rQscw5EAOPcpeI7gKxzS3JmKw
-         PuWp9v2ZytEbk+d22btM6hS3bpKNaw5cy9MezH9YqQZ3pS4bOmbH61jqmLK+zVWd7yv9
-         Ihk7QOtCaQve/PEYz7XBrnVUSeT4w7sJ7Ulmprk7G4HqQDdZledbY8pFPXrKTqUoUQUl
-         vPswScx3WQ0UUmZHBWQq5YRKh/HyKsSn2cQIcpSwxgLM5YzrtM4e6cX2QCRWf9QU6lHv
-         c1Re3O3IiBAjqWgbJ4KR/GNJE1TQ/OL8MIlcNHv9Cn34Ff+oREZi/GYQXGUe3ZbVCdRM
-         883Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711215417; x=1711820217;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8IneL7ycCxg5rabSPhRr5UcFzUBhPE59XhcTWAN/83k=;
-        b=FPJPEnzV7qxAVoC49UBTZ2bwJ+Q2Ld7G6y1xxUwJYCTkbl2Bwwi0Z6FAGn/hRQ9Q8K
-         aLf1H02sAvpr6RNjD2KbgEsDWaKBvyH5op2rlkhD/emjYG7WpRF65YsneT3BCmxZY+5o
-         QhbWMR3puDndUCDKFh6WvPhBdY6rIEObVaBtqdavemEBZ2T2lOOc/i+jGtOtTLGmV1Nb
-         3pMLKGyoAwUsxvtpZKa9ZRaSv8zNimwfUQhNta6KQl9SsS3H9094G+bleOEA9biD5xKN
-         w65yUu/UpdLAy7mLlHg1sEdL/0HJCNrqRxEF5U1sp/kIk8VjDbnGIXJKc4BugLsSVTlV
-         nBBA==
-X-Gm-Message-State: AOJu0Yxi0/865Z0PxNatnXsg8T6bNhghTcp9FWk4/xKwNP2rYq2YLUKl
-	yEtBJeLC9BiQ+a3WJGrwyDZsNESIhUfV1iOPuM8/NHlQ89l5IpJcEZteSUTE
-X-Google-Smtp-Source: AGHT+IGdW08Lc4/naUgXHufG5zgsM1FzfiG1FHnn+ATldfk8NpwDwCjU+rrss76jKfETjmuo0rw1CA==
-X-Received: by 2002:a5d:5287:0:b0:33e:acd8:1422 with SMTP id c7-20020a5d5287000000b0033eacd81422mr1841965wrv.18.1711215416957;
-        Sat, 23 Mar 2024 10:36:56 -0700 (PDT)
-Received: from gmail.com (181.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.181])
-        by smtp.gmail.com with ESMTPSA id bx10-20020a5d5b0a000000b00341c3071c93sm1446083wrb.73.2024.03.23.10.36.54
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Mar 2024 10:36:56 -0700 (PDT)
-Message-ID: <1117b5b1-fb9e-49b8-b1c3-47b985adce35@gmail.com>
-Date: Sat, 23 Mar 2024 18:36:51 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NRmIwlct"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 15E9F1D68C2;
+	Sat, 23 Mar 2024 13:52:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Wvw83t9yBOBeASENhdsJ/R7jbzPv+K+FSxAY0n
+	qsKtg=; b=NRmIwlctQIL0q9X3dov20YPvpmLfZv0UKa1clYq53K5pk1Xd9kJGHZ
+	ciPmF7gTWbTjHtUGzfldizUx85WgwBlAD38vpQJtCGdA4VbuhFrj89KgA2kf09y+
+	BQyEnG+uMWzL2KKcFuRK1qoROO/j5sQAKle5bNdQJ2c4xQwROatdI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BD1C1D68C1;
+	Sat, 23 Mar 2024 13:52:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 746F71D68C0;
+	Sat, 23 Mar 2024 13:52:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tim Landscheidt <tim@tim-landscheidt.de>
+Cc: git@vger.kernel.org
+Subject: Re: Inconsistent/buggy behaviour of "git config --add"
+In-Reply-To: <87o7b5dj8h.fsf@vagabond.tim-landscheidt.de> (Tim Landscheidt's
+	message of "Sat, 23 Mar 2024 16:07:58 +0000")
+References: <87o7b5dj8h.fsf@vagabond.tim-landscheidt.de>
+Date: Sat, 23 Mar 2024 10:52:45 -0700
+Message-ID: <xmqq8r28ygwi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH 2/2] bugreport: add a mark to each proposed questions
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
-In-Reply-To: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 28175454-E93E-11EE-8957-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Include a mark in the questions we provide, to enhance the readability
-of the reports we receive.
+Tim Landscheidt <tim@tim-landscheidt.de> writes:
 
-Of course, the user has the flexibility to choose a different format or
-rewrite the report entirely.  However, including these marks in the
-template may suggest that we value some structure in the message.
+> | # git config section.key value0
+> | # git config --add section.key value1
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- builtin/bugreport.c  | 8 ++++----
- t/t0091-bugreport.sh | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+The action verb --add comes immediately after "git config" (and
+possibly file-option and type option), so this is a request to
+append "key = value1" in the "[section]" (if there is no existing
+section.key, then "[section]" would have to be created at the same
+time, but in this case there already is one).
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 01b72163b9..d60ec483fa 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -76,13 +76,13 @@ static int get_bug_template(struct strbuf *template)
- "Thank you for filling out a Git bug report!\n"
- "Please answer the following questions to help us understand your issue.\n"
- "\n"
--"What did you do before the bug happened? (Steps to reproduce your issue)\n"
-+"== What did you do before the bug happened? (Steps to reproduce your issue)\n"
- "\n\n"
--"What did you expect to happen? (Expected behavior)\n"
-+"== What did you expect to happen? (Expected behavior)\n"
- "\n\n"
--"What happened instead? (Actual behavior)\n"
-+"== What happened instead? (Actual behavior)\n"
- "\n\n"
--"What's different between what you expected and what actually happened?\n"
-+"== What's different between what you expected and what actually happened?\n"
- "\n\n"
- "Anything else you want to add:\n"
- "\n"
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index f9c1ff9cb2..9b3a2b0cd2 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -16,16 +16,16 @@ test_expect_success 'report contains wanted template (before first section)' '
- 	Thank you for filling out a Git bug report!
- 	Please answer the following questions to help us understand your issue.
- 
--	What did you do before the bug happened? (Steps to reproduce your issue)
-+	== What did you do before the bug happened? (Steps to reproduce your issue)
- 
- 
--	What did you expect to happen? (Expected behavior)
-+	== What did you expect to happen? (Expected behavior)
- 
- 
--	What happened instead? (Actual behavior)
-+	== What happened instead? (Actual behavior)
- 
- 
--	What'\''s different between what you expected and what actually happened?
-+	== What'\''s different between what you expected and what actually happened?
- 
- 
- 	Anything else you want to add:
--- 
-2.44.0.494.g7a0daf3e0d
+> | # cat .git/config
+> | [core]
+> |         repositoryformatversion = 0
+> |         filemode = true
+> |         bare = false
+> |         logallrefupdates = true
+> | [section]
+> |         key = value0
+> |         key = value1
+
+So this makes perfect sense.
+
+> | # git config section.key --add value2
+
+No action verb immediately after "git config" (possibly after
+file-option and type option).  This should be taken as
+
+    git config <name> <value> <value-pattern>
+
+where
+
+    <name> = section.key
+    <value> = --add
+    <value-pattern> = value2
+
+As we lack --replace-all, the default behaviour is to replace a
+single existing entry of "section.key" with existing value "value2",
+with the new value "--add", or if there is no such existing entry,
+add one such entry.
+
+> | # cat .git/config
+> | [core]
+> |         repositoryformatversion = 0
+> |         filemode = true
+> |         bare = false
+> |         logallrefupdates = true
+> | [section]
+> |         key = value0
+> |         key = value1
+> |         key = --add
+
+which seems to be what the code did.
+
+> | # git config section.key --add
+
+No action verb immediately after "git config" (possibly after
+file-option and type option).  This should be taken as
+
+    git config <name> <value>
+
+where
+
+    <name> = section.key
+    <value> = --add
+
+and is an attempt to replace existing section.key with the new value
+"--add", but because we have already three such entries, we get 
+
+> | warning: section.key has multiple values
+> | error: cannot overwrite multiple values with a single value
+> |        Use a regexp, --add or --replace-all to change section.key.
+> | #
+
+which sounds sensible.
+
+> So on one hand, "--add" must be given before the key to add
+> a line, but if on the other hand one passes the option after
+> the key and before the value, it is literally taken as the
+> value and the value does not seem to be interpreted as a
+> value-pattern, either.  However, if the value is missing,
+> Git correctly recognizes that this does not make sense.
+
+Not really.  I agree that the "git config" syntax is messy, but I
+followed your example with "git config --help" (especially its
+SYNOPSIS section) in hand, and reached the above explanation, which
+your conjecutre does not quite match.
+
+> My expectation of least surprise is that "git config
+> section.key --add value" should be equivalent to "git config
+> --add section.key value".
+
+You cannot have "--add" as a value by doing so.
+
+> If that is not possible, I would expect "git config
+> section.key --add value2" to mean "change the values of
+> section.key to '--add' where they currently match the
+> value-pattern of 'value2'".
+
+I think your expectation needs to be updated in this particular
+case, but there is a discussion to revamp the UI started elsewhere,
+which stops the double-dashed action verbs and instead trigger
+different actions as subcommands of "git config", which will
+hopefully make things easier to understand.
