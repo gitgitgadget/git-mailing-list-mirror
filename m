@@ -1,127 +1,114 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA46928E7
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 11:21:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CA62107
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 14:29:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711279286; cv=none; b=F2+PRkCA9DCRcneivh+gEbDbSZEGrAdioHXpoYkBzx3PSBcCgZpunD0zD40yJZC17xgY+uxZBIJcgGhrMcvuO8ow5r3C9Q26viphShVjafaC5Li0bCYz/rHQ2u+jL+qORHOqC9vXTrDPA/YdCWGg3g1m5c9eD1G1O5yKI5sglGw=
+	t=1711290572; cv=none; b=qs61RzTPtbjSXVhcj3jISINqA1kTCULglcWcHChV/lmXW1BzvPmGaeaadQFPq6OHJZygrkpcayJhCQvX9mHpm569iMo8+A/dHdBfP5G3tACG/xxP5MEvEhLietWNsHC7kStAQ7pBkycOUhhiSbhFL1I+ggGLtZoTMidZmhddaiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711279286; c=relaxed/simple;
-	bh=KA7wZqU5i23ElsYPwQnSYv0NRwO/wUXarjhmXSLCHUg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=f/o58UBeQjVy6TPNKv+6weN7e0rnqfmEHrtpLGwsGm/NIvoiBqYrTOG0sfppQm2gWsuXXh4y3KRvL1gVLhTNWKIQuEnmIBttVq4GeYUmaTT04xAvbG+b/8HC0xK9ssyU5Htid5clbrn94Xw/GNCm6B9ehK3J9u5wadnbUPAIWWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=j8UAVnyf; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1711290572; c=relaxed/simple;
+	bh=2fHEsWzbUtKOdRS8g1KRfiKX1M2sr1eBSnvxTdHsQLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JuVaQlKxXJ0APDcJzvV8knOxQSiMzQzKAJzvA5SyOkcWFl8eh2DU8nOBPyO/4w+/9d+l8DtVXa67kf/znw0sXLfp5E4gbDuuVBAa++FWgEC4PsOtxzEwPYIycZOxWdKswCSPyW3uFkA8SHSa4txlB101RVLw/GJIqJX2Yif0t1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Scj/scUh; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="j8UAVnyf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1711279276; x=1711884076; i=l.s.r@web.de;
-	bh=OAuwuF8NUXDIIDm6R0oEGUoTUFSF6z7eycIblSMacDk=;
-	h=X-UI-Sender-Class:Date:Subject:From:To:References:In-Reply-To;
-	b=j8UAVnyfdawRhJJNcvvzWWZ4G3dW2JqtzfIcoO6Yr2QVhhlqG5K8HYneZAnC8rHq
-	 cyMTdWw3SLnjillMH0tea4/wOGQi/GBfUiH5tR8+b76LXmMacCqVbnn5tsOFBQtZb
-	 B5dG9UgZCSwwWYRz+NenIzPn8MWNRhvXXKdnZ/lnOQ0u9clZczNl5xDRYS8xlu9/E
-	 9V5xpRpg4oZNi+WyNrEkswmB4qNv/ybh6/1HSD9txRjT04n7rmHOSV3Sxc4ZbwlaW
-	 fEiDkIOQhaDeNl0nWUZDMnc1eAdYGIdHAAOGk9rvwuXUOeLJYCUqjI2CFiU2zbUuv
-	 anwtZIBSu+gKk7yLjw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MQPdr-1sAiHy4B9N-00MNOg for
- <git@vger.kernel.org>; Sun, 24 Mar 2024 12:21:16 +0100
-Message-ID: <c6f915a9-0788-4492-b71a-37171a8bb13b@web.de>
-Date: Sun, 24 Mar 2024 12:21:15 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Scj/scUh"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56890b533aaso4221849a12.3
+        for <git@vger.kernel.org>; Sun, 24 Mar 2024 07:29:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711290568; x=1711895368; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RL1++Epa74vObbVSE3rXxcRj9coV8nxt6Ts2MMF4eRE=;
+        b=Scj/scUhzBQRfeyxG7lCoCy1nD7/FDrDMEYVPOTbR5Ymq59nmz0BJPDZsuNO63M8rJ
+         IIzg2PLQKT0LYN+f/R9pHxYUsgnqKp2UqoGOOrmBT0kppDEXiThRsJqKpYcaG+0nu5oc
+         KNTPjEEb8fbp77TLi91SWM5OuYoXKTOCmlCS2QyenqEnIUSln4I7k/HOStRR2lWgLtU3
+         RQsbOaUb4a/xzRJ4Z+qxDPJk6NgNKlQUqZwSnlLKnVSkas6XnngkSI9VLquDbfoTAgzc
+         t0sGI1oZOuQsnX55T7YB11buUk+Pf4G1hNyunpu0hxuR385x4kuQfrSPZ2AWEnfChvj8
+         QAdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711290568; x=1711895368;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RL1++Epa74vObbVSE3rXxcRj9coV8nxt6Ts2MMF4eRE=;
+        b=b0pd+YL/MPuCKRHWzdO/NmxYYYornD2K8nzPiC+V4i4wmMOwxS9HKUFOfFWlaf6hsj
+         R+t2sSijb+aDpHq6KmearhfuPqy9dm4whRRMR+7t8a2eYFKhBsrRLC2SPoTTiPk7Gume
+         D0oE9/QIOzxoAFuPT10G/r3QzPpbTuRwsRFZYYoyTqDfvOpASsUjNyFiGQI/pFxdz4oq
+         2QH9o6di+VkxeSBS50ew80Ywpej4pm/Cz4y4r+j7mGt2zkQ/3ppX4FC64V4woOq86NQQ
+         PML8RQlv5kDFyv20c4iEKB+4affkf6R9rFZKs1wji3K60jhlXSnxnX1c772NMKanAoVT
+         GkJw==
+X-Forwarded-Encrypted: i=1; AJvYcCXhABoKOsQTUNjPNFDDe4iqdR4bE5IHmc/GHGnwobWoTQEZ/G+lHwy1vx0RSuPRib6pLblfDfjcDFy+wtD641OdfYw1
+X-Gm-Message-State: AOJu0YwTYjIYHKA3GAkVad1sB7eIqWwQ0/PsLa4AZWoNrzibLb8dQ/VL
+	V5BRBHFvq+7EJOHm/CpRFepF3EDT2GfXUIwS6+r9homda91cFdRof2jDE75l3+kMMl0PuJt97N4
+	WtJAnbOlSbjnMLfUVbhBOKzoyytE=
+X-Google-Smtp-Source: AGHT+IHQ7pDz92yeLzvFJFviXNCBExi5PYTaBiRVgZO7uYWSUv68eKN8sztQQBRgbdrGUfAQ5Of3QWs8uEXuG94Cy54=
+X-Received: by 2002:a17:906:3d6a:b0:a46:d79e:a28f with SMTP id
+ r10-20020a1709063d6a00b00a46d79ea28fmr2956505ejf.76.1711290568294; Sun, 24
+ Mar 2024 07:29:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 2/2] cat-file: use strbuf_expand_bad_format()
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-References: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
-Content-Language: en-US
-In-Reply-To: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
-Content-Type: text/plain; charset=UTF-8
+References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl>
+ <xmqqwmptzyny.fsf@gitster.g> <01e09c64-4d62-406d-85fe-9fb77939cf63@haller-berlin.de>
+ <xmqqle68x008.fsf@gitster.g> <e896da79-c87b-4475-9890-10051d8ddf76@haller-berlin.de>
+In-Reply-To: <e896da79-c87b-4475-9890-10051d8ddf76@haller-berlin.de>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sun, 24 Mar 2024 15:29:15 +0100
+Message-ID: <CAP8UFD2DhkmVias+RfMESJz9Z-rKKHWHB+MFHcDb9QLO16TOhg@mail.gmail.com>
+Subject: Re: Allow git bisect to auto-skip
+To: Stefan Haller <lists@haller-berlin.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Olliver Schinagl <oliver@schinagl.nl>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xVqiHagLpygPv8l0HHn6sSA8m0dIPsGOejx3xt2xBQ61ux0smre
- NfU6me/0PKDG0FtqwRt5goHskx6a6pM1+QDONpNyundMWOVVp07KJ0xQOhuzGQFaqDDpyd1
- Kddn1f3+C3qLg0sKfiILEGv1tGIQwoBCtR2jJBKtoFSE7zVQnuPPCXPCvxFqPiQhyWm6j1v
- 4qn0BwSTcBVd2fdEwO/QQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:C/yzvgTxFR8=;jdLXaJlAdGUzPL321QMw1lJPatp
- ryE20MPS+eZjWdSNUq8ox2y6OvUvNtTsq+1RytsPgDJsx1HS+Ad3yy2tem+F0iaAMeoiNPEFg
- H6lzZFvX/Mnc8rm4/7f90I16VKfoSG1xjNY49ZZ5GVWtG90TuGKP28jHQPheSkuyxOZ3ZPtjo
- 2SQH3ZEAaWBFobva3dQ3RkXF7R3K8ZtHcbBoZQgYjIfAYKl+Fc6gzdtvqYUL4NBY0UwkbyBMU
- HIyj1gyWn+7HEeigcCqmPOHoNMnURDcE4RZDB52ne7bnV03iu/ImxbxZji/+CPBYxQamRK3BA
- moAW2hSV+iFeA+YEnwu+8LDJ/1kgXkzYQ/phkI5QeUGUJ9ramFDtx7j16vdBoFLfQHTbwcRnv
- iKrixo5/BAlwe2b8re80tHp4bgdwlW9JLZzCxsJd0isBNbXdeTJasL6CevsgEfpCryGmmPPmK
- WILiuumo+tGyw7EkNGA+LU7r5ua+Op7Hqr5niM1AznLdpf8yRXiOgRClQ5wGbCpeg9bHfoUhI
- kKWiLuWw7F8iNxxdYMcOTKw96EKbBV+FtSd/qwTwQ47plCnxfHokkMOsrak9KdlGuS8yJKiDW
- PlzLqo4JfViFYsk6+vn49YPPluMFyZDBm+c3ozltdoqkbmEe0JrBQsg9LB8/S6HtrxFRrU9kw
- Pgyi689qFw/Qw5car4aZz5v4Ed2VllY+bx5ZT5g9Xaux5IwAmdS4GQTi8oRabLydVh7qBzujY
- kuJBU/Wi4Sr0lYsLnUykh6Sqg7bqTBkBTsctIr2Rzz472Wf35FFUDD0xq1otcBg1iDBo4hFsi
- cCNRwBUsAtKuzdF5tmlEhjI/yMTUPj+F7SVr8KjCkYfUQ=
 
-Report unknown format elements and missing closing parentheses with
-consistent and translated messages by calling strbuf_expand_bad_format()
-at the very end of the combined if/else chain of expand_format() and
-expand_atom().
+On Sun, Mar 24, 2024 at 11:16=E2=80=AFAM Stefan Haller <lists@haller-berlin=
+.de> wrote:
+>
+> On 23.03.24 19:43, Junio C Hamano wrote:
+> > Stefan Haller <lists@haller-berlin.de> writes:
+> >
+> >> On 22.03.24 23:31, Junio C Hamano wrote:
+> >>> It often is discovered that a commit
+> >>> breaks bisection after the fact and it is not feasible to rebase
+> >>> all the history after the commit.
+> >>
+> >> This reminds me of a similar problem with git blame, for which we have
+> >> the blame.ignoreRevsFile config to work around it. Couldn't there be a
+> >> similar mechanism for bisect, e.g. bisect.skipRevsFile?
+> >
+> > A Very good point.  If a breakage of a commit is "this does not even
+> > build" kind of breakage, such a mechanism would be an excellent fit.
+> >
+> > But if a breakage is "only this particular test fails and we know
+> > the reason why it fails has nothing to do with the bug we are
+> > chasing", then compiling such a fixed list of commits, or pointing
+> > at such a list with a configuration variable, would not work very
+> > well, I am afraid.
+>
+> That's true, but the same can be said about blame.ignoreRevsFile. There
+> may be commits that contain both uninteresting whitespace changes and
+> real changes (not in a well-maintained project of course :-), so it
+> wouldn't be a good idea to add those to blame.ignoreRevsFile. But that's
+> not a reason not to offer the feature at all.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Same as v1.
+I am not against the feature, but I think it would be especially
+useful if the file(s) containing the revs that should be skipped
+is(are) tracked in Git. In this case though, any such file wouldn't be
+used automatically after cloning the repo as the bisect.skipRevsFile
+option would still need to be configured.
 
- builtin/cat-file.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index bbf851138e..fadf2da2f0 100644
-=2D-- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -310,8 +310,8 @@ static int is_atom(const char *atom, const char *s, in=
-t slen)
- 	return alen =3D=3D slen && !memcmp(atom, s, alen);
- }
-
--static void expand_atom(struct strbuf *sb, const char *atom, int len,
--			struct expand_data *data)
-+static int expand_atom(struct strbuf *sb, const char *atom, int len,
-+		       struct expand_data *data)
- {
- 	if (is_atom("objectname", atom, len)) {
- 		if (!data->mark_query)
-@@ -343,7 +343,8 @@ static void expand_atom(struct strbuf *sb, const char =
-*atom, int len,
- 			strbuf_addstr(sb,
- 				      oid_to_hex(&data->delta_base_oid));
- 	} else
--		die("unknown format element: %.*s", len, atom);
-+		return 0;
-+	return 1;
- }
-
- static void expand_format(struct strbuf *sb, const char *start,
-@@ -354,12 +355,11 @@ static void expand_format(struct strbuf *sb, const c=
-har *start,
-
- 		if (skip_prefix(start, "%", &start) || *start !=3D '(')
- 			strbuf_addch(sb, '%');
--		else if (!(end =3D strchr(start + 1, ')')))
--			die("format element '%s' does not end in ')'", start);
--		else {
--			expand_atom(sb, start + 1, end - start - 1, data);
-+		else if ((end =3D strchr(start + 1, ')')) &&
-+			 expand_atom(sb, start + 1, end - start - 1, data))
- 			start =3D end + 1;
--		}
-+		else
-+			strbuf_expand_bad_format(start, "cat-file");
- 	}
- }
-
-=2D-
-2.44.0
+Also, how much better would this be compared to tracking  "git bisect
+run" scripts in the repo, even if they have to be copied somewhere
+else before they are launched? I wonder about this because writing the
+conditions that decide whether the current commit is good or bad might
+not be so easy either. So if the goal is to simplify things for users,
+then simplifying all the way by providing example scripts with
+comments about how they could be customized might be even better.
