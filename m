@@ -1,49 +1,49 @@
 Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298D464A
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9701A10F4
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711242795; cv=none; b=P0pcMenT3UFUrfWhRkEP0oQ+qqU/+kfRMiHpTvCaTax4i4+wU6mmsHTu5XtgLJMtWgB+BV9ZkuC9hO5YlJO0bNgvBwIGNXYUyZEcdYJO1HlkPelyydbANPQ/wkno5rDcXUZlRoJQ8ndtBVmUMPszTm/W997ezP22TcfWaXEN9x0=
+	t=1711242795; cv=none; b=BFMv7FTVlWdsTzKz1z4jhy9xLMuQM6+QQCIMcS57muieYC7zJYdlIbb2FfyU4PD0iBwEdJgoM4ojlRtQ/ntr8k32tRx4/CtdK4G+vz/qKkkLl/X6f56O38y1FBYayExVnOYndr+9i6E3CnhVMZjmM+TnZ270GiuCNhspau7L+n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711242795; c=relaxed/simple;
-	bh=pKtX4IurOShQJ74V2qb9RIIgEn39MetHTFanPotyiJY=;
+	bh=OYUDDWVtX0rJQqZYjpAXqg4Jc5rZmv2VJh935Jl/Ws0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrTHAxfSsHYDCpH1f206/q6LwnO9n2TUOPdt+BuRrcSh1P1Sb4vekwIyH8rL/nfrjLmE2GOMPbkOntsqvFJodQt3PKwl7z93s3LX5771aa51OSlqwdPUD748jf0/Zl8L/vGfKsDqZTrqGWzUoveaOGKneY5wHRCVco4jtzaJ4V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=k628mKOs; arc=none smtp.client-ip=172.105.110.227
+	 MIME-Version; b=tWGX3Juyrtq9qvuBXEePDg8qEmxaFDw86QcKPgoT46IL07bJVqWM6FuUiEN14z+5A8BjkMl/b475fSsV8J9OqXYffVk18AET+i6HrU8CVHjxnPmgIWjwDvK6nRyyU/hlHQVd9dOkre+iklV/TatjkvnDnBzVxd4PJD0DVbuiyfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UG6kpjKc; arc=none smtp.client-ip=172.105.110.227
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="k628mKOs"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UG6kpjKc"
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 323F25D411;
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 5B8895D415;
 	Sun, 24 Mar 2024 01:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1711242786;
-	bh=pKtX4IurOShQJ74V2qb9RIIgEn39MetHTFanPotyiJY=;
+	bh=OYUDDWVtX0rJQqZYjpAXqg4Jc5rZmv2VJh935Jl/Ws0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=k628mKOs4Yhs39LOD4b854uGfpf+oAcxlkJGJmgl1yHLxq7w6BPuG9U7YTAs3Gfmh
-	 zHL14/vBX1nsA7PpGOXBhOArHr9Fib93FLs/mvxuIvsPGsoq52G//Z3MPuzWFRnDbH
-	 Flp2if7ZWnjqloN2jH9muVl3y842wIvyS3ABA/pIA5a7I8S2knYBlI9r0QluBx9g4L
-	 I78VYoCaZCee4CpFZUpSp8Is3rJm20ARppyup1Y2zOYmCuYqgKf029CikEkLxFn1Hc
-	 OzlHxQK8zThnOj9Sgny/IDOg2SnB2KLeE67mlUDFZyo6I828HPWD4xZFMeQydJ93Lu
-	 Tx5kakznaSAkoMGvvRA7ogEt3CTDbuQRk+NJM5PYJcPHYZu5kpEGZlXxybUcli+Qyp
-	 X4Q7ydZjX5+c+RH4LDpmcOyrEMEXxlXTOCNuuWAbLNkYn95V2EwKPgpq+fVXl5zaY/
-	 sA4Jwdc+RWsc2aETARF4hTrH866CwwywNtcN6fSxFTab3FKP1h3
+	b=UG6kpjKclQEeFn0b0o/Ya7tUAc2l7UCwUWopBbySNWb5jGxRU/Bv9pB9wp5QZK7QL
+	 kJujpZecbycSj+OsYTR9SOUOdzUdy1cn+FAkLjA6sirw9GjLszOv72r7DooXkJe7Ji
+	 PPQQEgpXUdsYPqxrSjU2u29btfIrVFuSuKGK4HE/cNJA9s7vA0m3zm4mFPxjghdjIw
+	 Vb4doHfk5qjth8MzVWh2B2xe11hpj5WwKFCORfjuEEcy83kAtN2dYWXl4gjELb/gWM
+	 Z5UZPYS1Zi5EacnpE+QHyIv/6tDHXM6nH2vMsKO6Ar42KEfjlmKNpGwYdd1s5IsWEb
+	 SSaumovlk+UhtTHmAutizpWOpeg1AD/QUTrpqLEyrYZMR1hh4vOVoKbAWVRE8hrL/u
+	 DYwOT7akZf4w8hMhYUaMgbc7cTbzYlmasMwc+0fwQCChLp6EMQ/7Ap7GUm33jir1Hi
+	 fyEuSpxRIKfIhi/Fq3He7gwAh0q/hCd+9EER/zRbBhQMVN0isNq
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthew John Cheetham <mjcheetham@outlook.com>,
 	M Hickford <mirth.hickford@gmail.com>
-Subject: [PATCH 08/13] credential: add an argument to keep state
-Date: Sun, 24 Mar 2024 01:12:56 +0000
-Message-ID: <20240324011301.1553072-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 11/13] t5563: refactor for multi-stage authentication
+Date: Sun, 24 Mar 2024 01:12:59 +0000
+Message-ID: <20240324011301.1553072-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
 In-Reply-To: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
 References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
@@ -55,231 +55,289 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Until now, our credential code has mostly deal with usernames and
-passwords and we've let libcurl deal with the variant of authentication
-to be used.  However, now that we have the credential value, the
-credential helper can take control of the authentication, so the value
-provided might be something that's generated, such as a Digest hash
-value.
+Some HTTP authentication schemes, such as NTLM- and Kerberos-based
+options, require more than one round trip to authenticate.  Currently,
+these can only be supported in libcurl, since Git does not have support
+for this in the credential helper protocol.
 
-In such a case, it would be helpful for a credential helper that gets an
-erase or store command to be able to keep track of an identifier for the
-original secret that went into the computation.  Furthermore, some types
-of authentication, such as NTLM and Kerberos, actually need two round
-trips to authenticate, which will require that the credential helper
-keep some state.
+However, in a future commit, we'll add support for this functionality
+into the credential helper protocol and Git itself. Because we don't
+really want to implement either NTLM or Kerberos, both of which are
+complex protocols, we'll want to test this using a fake credential
+authentication scheme.  In order to do so, update t5563 and its backend
+to allow us to accept multiple sets of credentials and respond with
+different behavior in each case.
 
-In order to allow for these use cases and others, allow storing state in
-a field called "state[]".  This value is passed back to the credential
-helper that created it, which avoids confusion caused by parsing values
-from different helpers.
+Since we can now provide any number of possible status codes, provide a
+non-specific reason phrase so we don't have to generate a more specific
+one based on the response.  The reason phrase is mandatory according to
+the status-line production in RFC 7230, but clients SHOULD ignore it,
+and curl does (except to print it).
+
+Each entry in the authorization and challenge fields contains an ID,
+which indicates a corresponding credential and response.  If the
+response is a 200 status, then we continue to execute git-http-backend.
+Otherwise, we print the corresponding status and response.  If no ID is
+matched, we use the default response with a status of 401.
+
+Note that there is an implicit order to the parameters.  The ID is
+always first and the creds or response value is always last, and
+therefore may contain spaces, equals signs, or other arbitrary data.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-credential.txt | 29 ++++++++++++++++++-----------
- credential.c                     | 20 +++++++++++++++++---
- credential.h                     |  7 +++++++
- t/t0300-credentials.sh           | 29 +++++++++++++++++++++++++++++
- 4 files changed, 71 insertions(+), 14 deletions(-)
+ t/lib-httpd/nph-custom-auth.sh | 17 ++++--
+ t/t5563-simple-http-auth.sh    | 96 +++++++++++++++++++---------------
+ 2 files changed, 66 insertions(+), 47 deletions(-)
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index f3ed3a82fa..ef30c89c00 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -196,6 +196,15 @@ provided on input.
- This value should not be sent unless the appropriate capability (see below) is
- provided on input.
+diff --git a/t/lib-httpd/nph-custom-auth.sh b/t/lib-httpd/nph-custom-auth.sh
+index f5345e775e..d408d2caad 100644
+--- a/t/lib-httpd/nph-custom-auth.sh
++++ b/t/lib-httpd/nph-custom-auth.sh
+@@ -19,21 +19,30 @@ CHALLENGE_FILE=custom-auth.challenge
+ #
  
-+`state[]`::
-+	This value provides an opaque state that will be passed back to this helper
-+	if it is called again.  Each different credential helper may specify this
-+	once.  The value should include a prefix unique to the credential helper and
-+	should ignore values that don't match its prefix.
-++
-+This value should not be sent unless the appropriate capability (see below) is
-+provided on input.
-+
- `wwwauth[]`::
+ if test -n "$HTTP_AUTHORIZATION" && \
+-	grep -Fqsx "${HTTP_AUTHORIZATION}" "$VALID_CREDS_FILE"
++	grep -Fqs "creds=${HTTP_AUTHORIZATION}" "$VALID_CREDS_FILE"
+ then
++	idno=$(grep -F "creds=${HTTP_AUTHORIZATION}" "$VALID_CREDS_FILE" | sed -e 's/^id=\([a-z0-9-][a-z0-9-]*\) .*$/\1/')
++	status=$(sed -ne "s/^id=$idno.*status=\\([0-9][0-9][0-9]\\).*\$/\\1/p" "$CHALLENGE_FILE" | head -n1)
+ 	# Note that although git-http-backend returns a status line, it
+ 	# does so using a CGI 'Status' header. Because this script is an
+ 	# No Parsed Headers (NPH) script, we must return a real HTTP
+ 	# status line.
+ 	# This is only a test script, so we don't bother to check for
+ 	# the actual status from git-http-backend and always return 200.
+-	echo 'HTTP/1.1 200 OK'
+-	exec "$GIT_EXEC_PATH"/git-http-backend
++	echo "HTTP/1.1 $status Nonspecific Reason Phrase"
++	if test "$status" -eq 200
++	then
++		exec "$GIT_EXEC_PATH"/git-http-backend
++	else
++		sed -ne "s/^id=$idno.*response=//p" "$CHALLENGE_FILE"
++		echo
++		exit
++	fi
+ fi
  
- 	When an HTTP response is received by Git that includes one or more
-@@ -208,18 +217,16 @@ they appear in the HTTP response. This attribute is 'one-way' from Git
- to pass additional information to credential helpers.
+ echo 'HTTP/1.1 401 Authorization Required'
+ if test -f "$CHALLENGE_FILE"
+ then
+-	cat "$CHALLENGE_FILE"
++	sed -ne 's/^id=default.*response=//p' "$CHALLENGE_FILE"
+ fi
+ echo
+diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+index b098cd0fdf..515185ae00 100755
+--- a/t/t5563-simple-http-auth.sh
++++ b/t/t5563-simple-http-auth.sh
+@@ -63,11 +63,12 @@ test_expect_success 'access using basic auth' '
  
- `capability[]`::
--	This signals that the caller supports the capability in question.
--	This can be used to provide better, more specific data as part of the
--	protocol.
-+  This signals that Git, or the helper, as appropriate, supports the
-+	capability in question.  This can be used to provide better, more specific
-+	data as part of the protocol.
- +
--The only capability currently supported is `authtype`, which indicates that the
--`authtype` and `credential` values are understood.  It is not obligatory to use
--these values in such a case, but they should not be provided without this
--capability.
--+
--Callers of `git credential` and credential helpers should emit the
--capabilities they support unconditionally, and Git will gracefully
--handle passing them on.
-+There are two currently supported capabilities.  The first is `authtype`, which
-+indicates that the `authtype` and `credential` values are understood.  The
-+second is `state`, which indicates that the `state[]` value is understood.
-+
-+It is not obligatory to use the additional features just because the capability
-+is supported, but they should not be provided without this capability.
- 
- Unrecognised attributes and capabilities are silently discarded.
- 
-diff --git a/credential.c b/credential.c
-index f2a26b8672..0cd7dd2a00 100644
---- a/credential.c
-+++ b/credential.c
-@@ -30,6 +30,7 @@ void credential_clear(struct credential *c)
- 	free(c->authtype);
- 	string_list_clear(&c->helpers, 0);
- 	strvec_clear(&c->wwwauth_headers);
-+	strvec_clear(&c->state_headers);
- 
- 	credential_init(c);
- }
-@@ -286,8 +287,13 @@ int credential_read(struct credential *c, FILE *fp, int op_type)
- 			c->path = xstrdup(value);
- 		} else if (!strcmp(key, "wwwauth[]")) {
- 			strvec_push(&c->wwwauth_headers, value);
--		} else if (!strcmp(key, "capability[]") && !strcmp(value, "authtype")) {
--			credential_set_capability(&c->capa_authtype, op_type);
-+		} else if (!strcmp(key, "state[]")) {
-+			strvec_push(&c->state_headers, value);
-+		} else if (!strcmp(key, "capability[]")) {
-+			if (!strcmp(value, "authtype"))
-+				credential_set_capability(&c->capa_authtype, op_type);
-+			else if (!strcmp(value, "state"))
-+				credential_set_capability(&c->capa_state, op_type);
- 		} else if (!strcmp(key, "password_expiry_utc")) {
- 			errno = 0;
- 			c->password_expiry_utc = parse_timestamp(value, NULL, 10);
-@@ -329,8 +335,12 @@ static void credential_write_item(FILE *fp, const char *key, const char *value,
- 
- void credential_write(const struct credential *c, FILE *fp, int op_type)
- {
--	if (credential_has_capability(&c->capa_authtype, op_type)) {
-+	if (credential_has_capability(&c->capa_authtype, op_type))
- 		credential_write_item(fp, "capability[]", "authtype", 0);
-+	if (credential_has_capability(&c->capa_state, op_type))
-+		credential_write_item(fp, "capability[]", "state", 0);
-+
-+	if (credential_has_capability(&c->capa_authtype, op_type)) {
- 		credential_write_item(fp, "authtype", c->authtype, 0);
- 		credential_write_item(fp, "credential", c->credential, 0);
- 	}
-@@ -347,6 +357,10 @@ void credential_write(const struct credential *c, FILE *fp, int op_type)
- 	}
- 	for (size_t i = 0; i < c->wwwauth_headers.nr; i++)
- 		credential_write_item(fp, "wwwauth[]", c->wwwauth_headers.v[i], 0);
-+	if (credential_has_capability(&c->capa_state, op_type)) {
-+		for (size_t i = 0; i < c->state_headers.nr; i++)
-+			credential_write_item(fp, "state[]", c->state_headers.v[i], 0);
-+	}
- }
- 
- static int run_credential_helper(struct credential *c,
-diff --git a/credential.h b/credential.h
-index 2051d04c5a..e2021455fe 100644
---- a/credential.h
-+++ b/credential.h
-@@ -142,6 +142,11 @@ struct credential {
- 	 */
- 	struct strvec wwwauth_headers;
- 
-+	/**
-+	 * A `strvec` of state headers from credential helpers.
-+	 */
-+	struct strvec state_headers;
-+
- 	/**
- 	 * Internal use only. Keeps track of if we previously matched against a
- 	 * WWW-Authenticate header line in order to re-fold future continuation
-@@ -156,6 +161,7 @@ struct credential {
- 		 username_from_proto:1;
- 
- 	struct credential_capability capa_authtype;
-+	struct credential_capability capa_state;
- 
- 	char *username;
- 	char *password;
-@@ -177,6 +183,7 @@ struct credential {
- 	.helpers = STRING_LIST_INIT_DUP, \
- 	.password_expiry_utc = TIME_MAX, \
- 	.wwwauth_headers = STRVEC_INIT, \
-+	.state_headers = STRVEC_INIT, \
- }
- 
- /* Initialize a credential structure, setting all fields to empty. */
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 8477108b28..aa56e0dc84 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -46,9 +46,12 @@ test_expect_success 'setup helper scripts' '
- 	credential=$1; shift
- 	. ./dump
- 	echo capability[]=authtype
-+	echo capability[]=state
- 	test -z "${capability##*authtype*}" || return
- 	test -z "$authtype" || echo authtype=$authtype
- 	test -z "$credential" || echo credential=$credential
-+	test -z "${capability##*state*}" || return
-+	echo state[]=verbatim-cred:foo
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
  	EOF
  
- 	write_script git-credential-verbatim-with-expiry <<-\EOF &&
-@@ -99,6 +102,29 @@ test_expect_success 'credential_fill invokes helper with credential' '
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: Basic realm="example.com"
  	EOF
- '
  
-+test_expect_success 'credential_fill invokes helper with credential and state' '
-+	check fill "verbatim-cred Bearer token" <<-\EOF
-+	capability[]=authtype
-+	capability[]=state
-+	protocol=http
-+	host=example.com
-+	--
-+	capability[]=authtype
-+	capability[]=state
-+	authtype=Bearer
-+	credential=token
-+	protocol=http
-+	host=example.com
-+	state[]=verbatim-cred:foo
-+	--
-+	verbatim-cred: get
-+	verbatim-cred: capability[]=authtype
-+	verbatim-cred: capability[]=state
-+	verbatim-cred: protocol=http
-+	verbatim-cred: host=example.com
-+	EOF
-+'
-+
+ 	test_config_global credential.helper test-helper &&
+@@ -100,11 +101,12 @@ test_expect_success 'access using basic auth via authtype' '
  
- test_expect_success 'credential_fill invokes multiple helpers' '
- 	check fill useless "verbatim foo bar" <<-\EOF
-@@ -122,6 +148,7 @@ test_expect_success 'credential_fill invokes multiple helpers' '
- test_expect_success 'credential_fill response does not get capabilities when helpers are incapable' '
- 	check fill useless "verbatim foo bar" <<-\EOF
- 	capability[]=authtype
-+	capability[]=state
- 	protocol=http
- 	host=example.com
- 	--
-@@ -132,10 +159,12 @@ test_expect_success 'credential_fill response does not get capabilities when hel
- 	--
- 	useless: get
- 	useless: capability[]=authtype
-+	useless: capability[]=state
- 	useless: protocol=http
- 	useless: host=example.com
- 	verbatim: get
- 	verbatim: capability[]=authtype
-+	verbatim: capability[]=state
- 	verbatim: protocol=http
- 	verbatim: host=example.com
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
  	EOF
+ 
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: Basic realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
+@@ -137,11 +139,12 @@ test_expect_success 'access using basic auth invalid credentials' '
+ 
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+ 	EOF
+ 
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: Basic realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
+@@ -174,13 +177,14 @@ test_expect_success 'access using basic auth with extra challenges' '
+ 
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+ 	EOF
+ 
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: FooBar param1="value1" param2="value2"
+-	WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: FooBar param1="value1" param2="value2"
++	id=default response=WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
++	id=default response=WWW-Authenticate: Basic realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
+@@ -214,13 +218,14 @@ test_expect_success 'access using basic auth mixed-case wwwauth header name' '
+ 
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+ 	EOF
+ 
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	www-authenticate: foobar param1="value1" param2="value2"
+-	WWW-AUTHENTICATE: BEARER authorize_uri="id.example.com" p=1 q=0
+-	WwW-aUtHeNtIcAtE: baSiC realm="example.com"
++	id=1 status=200
++	id=default response=www-authenticate: foobar param1="value1" param2="value2"
++	id=default response=WWW-AUTHENTICATE: BEARER authorize_uri="id.example.com" p=1 q=0
++	id=default response=WwW-aUtHeNtIcAtE: baSiC realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
+@@ -254,18 +259,19 @@ test_expect_success 'access using basic auth with wwwauth header continuations'
+ 
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+ 	EOF
+ 
+ 	# Note that leading and trailing whitespace is important to correctly
+ 	# simulate a continuation/folded header.
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: FooBar param1="value1"
+-	 param2="value2"
+-	WWW-Authenticate: Bearer authorize_uri="id.example.com"
+-	 p=1
+-	 q=0
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: FooBar param1="value1"
++	id=default response= param2="value2"
++	id=default response=WWW-Authenticate: Bearer authorize_uri="id.example.com"
++	id=default response= p=1
++	id=default response= q=0
++	id=default response=WWW-Authenticate: Basic realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
+@@ -299,21 +305,22 @@ test_expect_success 'access using basic auth with wwwauth header empty continuat
+ 
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+ 	EOF
+ 
+ 	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
+ 
+ 	# Note that leading and trailing whitespace is important to correctly
+ 	# simulate a continuation/folded header.
+-	printf "WWW-Authenticate: FooBar param1=\"value1\"\r\n" >"$CHALLENGE" &&
+-	printf " \r\n" >>"$CHALLENGE" &&
+-	printf " param2=\"value2\"\r\n" >>"$CHALLENGE" &&
+-	printf "WWW-Authenticate: Bearer authorize_uri=\"id.example.com\"\r\n" >>"$CHALLENGE" &&
+-	printf " p=1\r\n" >>"$CHALLENGE" &&
+-	printf " \r\n" >>"$CHALLENGE" &&
+-	printf " q=0\r\n" >>"$CHALLENGE" &&
+-	printf "WWW-Authenticate: Basic realm=\"example.com\"\r\n" >>"$CHALLENGE" &&
++	printf "id=1 status=200\n" >"$CHALLENGE" &&
++	printf "id=default response=WWW-Authenticate: FooBar param1=\"value1\"\r\n" >>"$CHALLENGE" &&
++	printf "id=default response= \r\n" >>"$CHALLENGE" &&
++	printf "id=default response= param2=\"value2\"\r\n" >>"$CHALLENGE" &&
++	printf "id=default response=WWW-Authenticate: Bearer authorize_uri=\"id.example.com\"\r\n" >>"$CHALLENGE" &&
++	printf "id=default response= p=1\r\n" >>"$CHALLENGE" &&
++	printf "id=default response= \r\n" >>"$CHALLENGE" &&
++	printf "id=default response= q=0\r\n" >>"$CHALLENGE" &&
++	printf "id=default response=WWW-Authenticate: Basic realm=\"example.com\"\r\n" >>"$CHALLENGE" &&
+ 
+ 	test_config_global credential.helper test-helper &&
+ 	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
+@@ -346,17 +353,18 @@ test_expect_success 'access using basic auth with wwwauth header mixed line-endi
+ 
+ 	# Basic base64(alice:secret-passwd)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+ 	EOF
+ 
+ 	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
+ 
+ 	# Note that leading and trailing whitespace is important to correctly
+ 	# simulate a continuation/folded header.
+-	printf "WWW-Authenticate: FooBar param1=\"value1\"\r\n" >"$CHALLENGE" &&
+-	printf " \r\n" >>"$CHALLENGE" &&
+-	printf "\tparam2=\"value2\"\r\n" >>"$CHALLENGE" &&
+-	printf "WWW-Authenticate: Basic realm=\"example.com\"" >>"$CHALLENGE" &&
++	printf "id=1 status=200\n" >"$CHALLENGE" &&
++	printf "id=default response=WWW-Authenticate: FooBar param1=\"value1\"\r\n" >>"$CHALLENGE" &&
++	printf "id=default response= \r\n" >>"$CHALLENGE" &&
++	printf "id=default response=\tparam2=\"value2\"\r\n" >>"$CHALLENGE" &&
++	printf "id=default response=WWW-Authenticate: Basic realm=\"example.com\"" >>"$CHALLENGE" &&
+ 
+ 	test_config_global credential.helper test-helper &&
+ 	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
+@@ -389,15 +397,16 @@ test_expect_success 'access using bearer auth' '
+ 
+ 	# Basic base64(a-git-token)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Bearer YS1naXQtdG9rZW4=
++	id=1 creds=Bearer YS1naXQtdG9rZW4=
+ 	EOF
+ 
+ 	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
+ 
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: FooBar param1="value1" param2="value2"
+-	WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: FooBar param1="value1" param2="value2"
++	id=default response=WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
++	id=default response=WWW-Authenticate: Basic realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
+@@ -433,15 +442,16 @@ test_expect_success 'access using bearer auth with invalid credentials' '
+ 
+ 	# Basic base64(a-git-token)
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+-	Bearer YS1naXQtdG9rZW4=
++	id=1 creds=Bearer YS1naXQtdG9rZW4=
+ 	EOF
+ 
+ 	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
+ 
+ 	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+-	WWW-Authenticate: FooBar param1="value1" param2="value2"
+-	WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
+-	WWW-Authenticate: Basic realm="example.com"
++	id=1 status=200
++	id=default response=WWW-Authenticate: FooBar param1="value1" param2="value2"
++	id=default response=WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
++	id=default response=WWW-Authenticate: Basic realm="example.com"
+ 	EOF
+ 
+ 	test_config_global credential.helper test-helper &&
