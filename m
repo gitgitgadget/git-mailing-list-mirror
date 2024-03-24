@@ -1,106 +1,118 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from smtp05-ext.udag.de (smtp05-ext.udag.de [62.146.106.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7BE79E4
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 18:34:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E236C6FB1
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 18:38:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.146.106.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711305279; cv=none; b=PK7lEXC4x2iQB40fDpFK/JIJztrvtJH7zeoaUwRfnVo2PkvTWgrb7AJyza3PanIRDJG0DKqzzhYPeV1h8Js6Kc3VBBFbOZmZJI7vQ/qnfJek3gGmHLRc62br8kJluhXe7JK5R/b10Zf1p1C1kLcZK0YzsRYi8x5DfclrbYkS0Ac=
+	t=1711305508; cv=none; b=axpzggmnIxcv0cTrL01Z3FlR127JyuBogLWLUt3HkjEMWN3UVi5ixJw47BTC7O3zta4Jwcdz3l9RzBBfBGSgT6RCffRkiDN6xpi+WrPL0UDwU8UupLs3aE7ygDwQnoJngpt2s13ktr0k1wznH/+iieVwsg9pAhMks3QGT5ClDhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711305279; c=relaxed/simple;
-	bh=RPnFWbGXAp58OfWR1F14kn6SnRKwhbcwq0p02lWDbAI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=crNirgMSIyCatLrjGNg4b17CAG4Va1Ls9Z6QamcLd1wt9srv9QlSjmpQxO0VkgnZhxUvTpi283NlKN+/JUFnWidm3rrzvRMgr/JpDZPaw1nLGbZHBqJxqT9xk08QjnfToIkjSMa/JOD1I1TNxvtPcuseJiglZYTDJmdlonrO2II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=r3KC+1ue; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711305508; c=relaxed/simple;
+	bh=A6E9v4RRBP8bitEg9ezVoRinlMB9VzSJwCCEKWVbIxM=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=jU1Gwtqo/3WFJnTEj3aNEYuCQx2jKo80EOId+YfKeSKpBBqEBJCT0uOjtbUoFjGGCD2CtDtlOOCpvaqb9LqJp+64NShNTK7ORV7WytOoDyqHJUXhnWrjqNlS73qBM5g1b8VvptV3I1qodweTSA8uPXeE7tR5JPT6lIsNVM8H0Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rohdewald.de; spf=pass smtp.mailfrom=rohdewald.de; dkim=pass (2048-bit key) header.d=rohdewald.de header.i=@rohdewald.de header.b=X4gSLyB5; arc=none smtp.client-ip=62.146.106.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rohdewald.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rohdewald.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="r3KC+1ue"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 359F2298F1;
-	Sun, 24 Mar 2024 14:34:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=RPnFWbGXAp58OfWR1F14kn6SnRKwhbcwq0p02l
-	WDbAI=; b=r3KC+1ueVZieNhy+ghngAs92Jfyo9LK75oqsrYBlivrzcFGbiwQYT6
-	a74C7RBF2+QRY5F4N1zqsi5J1LwHQur7XCaHq0xo36o044m5uImGC9rxnI2gLfQt
-	ruvrDOP2w2FU1INWb8hGGTUci27F7qfySXYFNcRwvyjSnhzpfJZBY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DBE8298F0;
-	Sun, 24 Mar 2024 14:34:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AE51B298EF;
-	Sun, 24 Mar 2024 14:34:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Stefan Haller <lists@haller-berlin.de>,  Olliver Schinagl
- <oliver@schinagl.nl>,  git@vger.kernel.org
-Subject: Re: Allow git bisect to auto-skip
-In-Reply-To: <CAP8UFD2DhkmVias+RfMESJz9Z-rKKHWHB+MFHcDb9QLO16TOhg@mail.gmail.com>
-	(Christian Couder's message of "Sun, 24 Mar 2024 15:29:15 +0100")
-References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl>
-	<xmqqwmptzyny.fsf@gitster.g>
-	<01e09c64-4d62-406d-85fe-9fb77939cf63@haller-berlin.de>
-	<xmqqle68x008.fsf@gitster.g>
-	<e896da79-c87b-4475-9890-10051d8ddf76@haller-berlin.de>
-	<CAP8UFD2DhkmVias+RfMESJz9Z-rKKHWHB+MFHcDb9QLO16TOhg@mail.gmail.com>
-Date: Sun, 24 Mar 2024 11:34:26 -0700
-Message-ID: <xmqq8r27sclp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=rohdewald.de header.i=@rohdewald.de header.b="X4gSLyB5"
+Received: from [10.210.137.29] (p4fd4440a.dip0.t-ipconnect.de [79.212.68.10])
+	by smtp05-ext.udag.de (Postfix) with ESMTPA id 27996E02D2
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 19:28:22 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rohdewald.de;
+	s=uddkim-202310; t=1711304902;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4i1qldwgIUgcGQroTiQJrTgCOuheMArj3zOs9KgXlto=;
+	b=X4gSLyB5loL/D9mTUmbasIj9l8nORYvw8CIHkpjsP/sxR2MtRxVLbOnrGJD9vNXYNT7zl9
+	qPI0vkYMqcDoT+RKEBwN57g/HvfJLzatqAouEthnFhAYhdfXZVs9Q+RpTSUwbEO7sr1pW5
+	xma2VBSrDNKHUmaiUKoEMf5qeOL2VOn0WhlCAfNzDyIhaPhJbDNaY9j9W6a7KGkoiOwVHS
+	pYZHpVdAhFDsJx5/1RDLhg+jeLtj3aoqe8Qgtv5C0qDC10AWy3CuEa4SNptSlZdV9w7GqX
+	R5GkBVls3VYDetOmAXS6FRjhRZW4UmwzijHvaGApI+DvGsWSSeGoxCMuQjib7Q==
+Message-ID: <88a694de4a7f767613475ef1d19292a69eaccb07.camel@rohdewald.de>
+Subject: segfault with git rebase --abort
+From: Wolfgang Rohdewald <wolfgang@rohdewald.de>
+To: git@vger.kernel.org
+Date: Sun, 24 Mar 2024 19:28:21 +0100
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 255BA466-EA0D-11EE-9329-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Authentication-Results: smtp05-ext.udag.de;
+	auth=pass smtp.auth=wolfgang@rohdewald.de smtp.mailfrom=wolfgang@rohdewald.de
 
-Christian Couder <christian.couder@gmail.com> writes:
+git rebase -i
 
-> Also, how much better would this be compared to tracking  "git bisect
-> run" scripts in the repo, even if they have to be copied somewhere
-> else before they are launched? I wonder about this because writing the
-> conditions that decide whether the current commit is good or bad might
-> not be so easy either. So if the goal is to simplify things for users,
-> then simplifying all the way by providing example scripts with
-> comments about how they could be customized might be even better.
+git rebase --abort # boom
 
-If we are driving our bisection session via "bisect run" script,
-computing the condition that we need to skip in the script is the
-most natural and obvious thing to do, but the way I guessed (because
-it was not explicitly written down) what the OP wanted was a way for
-bisect_next() called after even a manual "git bisect (good|bad)" to
-automatically skip certain set of commits.  Because there are cases
-where you have to be testing manually and cannot afford to write
-"bisect run" script, giving a manual bisection a way to compute if a
-commit need to be skipped may be worth having, and that was where my
-"git bisect --skip-when <script>" came from.  It would not be
-necessary if you are doing "bisect run", which can dynamically tell
-if the commit is untestable.  And if the user is going to decide
-after manually testing the one that is suggested, it is not useful
-either, as the point would be to avoid even asking to test ones that
-need to be skipped.  So it is likely that the set of commits that
-need skipping is known a-priori before the bisect session even
-begins.  The end user experience may look like:
+git status only shows changes to be committed
+I can mail or upload the git archive, that would be 230MB
 
- * "git bisect start" takes "--skip-when <script>" and remembers it,
-   together with other options "start" can take (like <good>, <bad>,
-   <terms>, <pathspec>).
+git fsck;git repack;git prune;git gc does not help
 
- - If <good> and <bad> are already given upon "start", the command
-   may check out a revision and ask you to test.
+Happens with git 2.39 and with latest git commit 11c821f2f2a31e70fb5cc449f9=
+a29401c333aad2, compiled with -g -O0
 
- * Every time the command checks out a revision to be tested by the
-   user, the command guarantees if it satisfies the --skip-when
-   condition (and internally doing "git bisect skip").
+gdb:
 
- * Otherwise the interaction between the user and the session is
-   exactly the same as usual.
+Starting program: /home/wr/bin/git rebase --abort
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555557ef89a in has_rerere_resolution (id=3D0x5555559f5950) at rerere=
+.c:167
+167             return ((id->collection->status[variant] & both) =3D=3D bot=
+h);
+(gdb) bt
+#0  0x00005555557ef89a in has_rerere_resolution (id=3D0x5555559f5950) at re=
+rere.c:167
+#1  0x00005555557f249c in rerere_clear (r=3D0x5555559ea220 <the_repo>, merg=
+e_rr=3D0x7fffffffc0a0) at rerere.c:1249
+#2  0x000055555562388e in cmd_rebase (argc=3D0, argv=3D0x7fffffffd8b0, pref=
+ix=3D0x0) at builtin/rebase.c:1315
+#3  0x0000555555574b71 in run_builtin (p=3D0x5555559b6010 <commands+2256>, =
+argc=3D2, argv=3D0x7fffffffd8b0) at git.c:469
+#4  0x0000555555574f8c in handle_builtin (argc=3D2, argv=3D0x7fffffffd8b0) =
+at git.c:724
+#5  0x00005555555751b0 in run_argv (argcp=3D0x7fffffffd71c, argv=3D0x7fffff=
+ffd710) at git.c:788
+#6  0x0000555555575724 in cmd_main (argc=3D2, argv=3D0x7fffffffd8b0) at git=
+.c:923
+#7  0x0000555555673c7a in main (argc=3D3, argv=3D0x7fffffffd8a8) at common-=
+main.c:62
+(gdb) p id->collection->status
+$2 =3D (unsigned char *) 0x0
+(gdb) p *(id->collection)
+$3 =3D {status_alloc =3D 0, status_nr =3D 0, status =3D 0x0, name =3D 0x555=
+5559f5e80 "a8ec6f624ee23ef2e37148a8172ebac3c6639f93"}
+
+there is no file named a8ec6f624ee23ef2e37148a8172ebac3c6639f93
+
+
+[System Info]
+git version:
+git version 2.44.GIT
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.6.22-25 #1 SMP PREEMPT_DYNAMIC Sun Mar 17 12:35:12 CET 2024 =
+x86_64
+compiler info: gnuc: 12.2
+libc info: glibc: 2.36
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+--=20
+mit freundlichen Gr=C3=BCssen
+
+Wolfgang Rohdewald
