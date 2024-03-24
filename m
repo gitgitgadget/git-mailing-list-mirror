@@ -1,71 +1,104 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C24F18E29
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 17:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3245CA64
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 17:04:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711299836; cv=none; b=VTf/JqtrU24TaLqUl1uTfeG4O+leWxxBkLxzdCbojdpEd3y5i9jvbEIjrRw/X0Cp4pEeujRj0UtiO40rPgUFL5n7enqpK8ep65swXhtvW52+OVD9/0IJJkhzijORpZcwygoO5gvP1W+0t+RtdWbaBus+EATGIkt7oJm9dO9M2Dw=
+	t=1711299878; cv=none; b=F9EOXChYK1Tn0iVgURC8qUSWLLRBSu9lQVaKssMDz9H1vLuLJZXE57PeyF6sHEpnBOcIJIhlAgtqqXDrciAp8/g2gsNV9Bj+hC5kx8bhsjK5mFKDE8fafZVICb6bJ6LznBrwOdx9OWgD09JIbi74tzNQtFGG6yWooTkip+jfINs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711299836; c=relaxed/simple;
-	bh=ns2MX0Gg++BCtbWrhB8rIaD+8lHmPRZJptJewPOvuJg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IU2HgmS5mjolI4Ip5ng6lAFvwfSlL78pp3wQ5p/pr7yRivm4otmn5lJ2pKzbvh6JtUEJ+YF1RGGZE+v7ynM/1vtCzvHUOlbZvvXQoNzPv91UZ2TEAufVaH1kBnC7Xgtl7Fk0pGecXfu+Go7XAgwyzeRSZ/6nYKeiL95wgv0I2vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1711299878; c=relaxed/simple;
+	bh=ulVNjaPvXOp2tK8S3csDqDzHECQebj6YkQkE4P/NeSk=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=pkY78nSmfSWTflSVcayH1kVCvaRo1Sj9gQT4W6s+IW3pLtkiywjC+wOmEgl3XefJzkWG9duMoOJDhqJZPbkVXzZ2I5e9+mn4SdtXx4OwxMUtvXwJrlW0REhOa2q5et2S6IOCbanCHatC8bAKLiGOsRaK4D/Onu5NMxko2VpISYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+z1LqmF; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6968a5d1b47so2646006d6.1
-        for <git@vger.kernel.org>; Sun, 24 Mar 2024 10:03:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711299833; x=1711904633;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+z1LqmF"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-690c1747c3cso28380866d6.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2024 10:04:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711299875; x=1711904675; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=g/7MX2Gj+NL1SBshB/epFJArzCe63I9nZVGoAzWkIWs=;
-        b=oxHXkkD9GWL084OG6xUL9wUr6jW23RR1qenAP5W8Hjo5FHL1dJyWAQF0VWPu5OuEK7
-         /9yjtJayhrUDcRSoPylmeFQe6rkvtmHhK60YJfXwuIXBmMeN/IqI3JT9CQ20iZX9XG8g
-         VbOOC2t0ButAksf/yBF+jrCBxFLFMimrBVqt8ulH3ncaPMGDoHizdBRyLRIub+dmxUeL
-         V+5PLZqXYvDTUJk0DcHP0XhFIuFHsV0AjO29U5wJeTizdYtehLfbOC0mBUBCqu2s4udh
-         Kj7JXUI5ROtbN00QbcWWl9poj/LNp9QVdFw1HuYw9GkfVd0KUVoynQ3Nsy4wtUxj8mWV
-         WB6w==
-X-Forwarded-Encrypted: i=1; AJvYcCV5brfFF0vsEjCgEH0KdUAj/xtUQ8MsaRaefcTFEoAbMiw55Tni+VK7LpNbtZuWZKZegcdjc4zpc2RaBxFasEc1Kv5T
-X-Gm-Message-State: AOJu0YyeM3IX8lpRdcD7awtZateeQn4cimWd8tTBI1Qfloa71enP3hut
-	m0N7yuizpM5ddTJ6WGiYEf7i4V1bSRqLtDw0GpJ9mZwgiV5eiPezeY1XMQKT6+I8/L8Et1l/BQ9
-	68EO5I92M+240woK25nM34aIobHg=
-X-Google-Smtp-Source: AGHT+IEIy1nNNLNmkSJ0gz32IAYwmT7loTte0c0TeDAgEPYKBdZydjAy6qA8XyID0MhiDSdGI1CrLU5IKOxug2pYawY=
-X-Received: by 2002:a0c:eb92:0:b0:696:7ba3:ff50 with SMTP id
- x18-20020a0ceb92000000b006967ba3ff50mr3989368qvo.48.1711299833429; Sun, 24
- Mar 2024 10:03:53 -0700 (PDT)
+        bh=aGDNrqNXTsLhPenttcKCykdt4SOJqo8ie+9JjE6LfW8=;
+        b=h+z1LqmFp3gqRTTOgAEnQlyu9NYqbRMoQ2y24rLWwDFN+MgwEelFG9KiG8OsZsK1kP
+         rk+TjmY02DnMNtCPgxHIXB58CJnTY84pMuhLs58FRnEgBRaOQJsqH25f54ylmS3eAcj0
+         xiMIzZ+6A+Ev7GE3Zc7okPlENVRhRofvXwq19oKyyrKqqru4y1pPF5g4yHND3A6iS6H6
+         BsN0SbXy4ubsqH+zIh0Ix6JEEl43x8wDjL9D7jZGLK70vnYaJuRBpaC5ANK2i0+KCQa/
+         3vf31OjF4nEFqC0/et4VzUjYWRoeBCto9orDc+hAwzJBWAQw7HjSUaoOKQQX6AxT5MLa
+         GJlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711299875; x=1711904675;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aGDNrqNXTsLhPenttcKCykdt4SOJqo8ie+9JjE6LfW8=;
+        b=PGIJbX4We2kRbhKmaBnnRHc7VhRYPB8A0NxVNiJh3coAH9HEb9zkq+eX/i1oujxlTr
+         5RHU1OgQ7FkBWZFxYjJiJDmCwQ/eJeJzcRODch8GsqMd9m4FOdf7+OJWiU+Mlf1ttC25
+         u67xVhFvkG/sYZ+A7mP8HuyZ3GfkP4wlXvDHEWHnlTkCrmBp5UXfYRSxS8M/I0oSMYj1
+         g0B+jnAhH81faRdE21iyBp+Ew/SYUxNWcnIPcpwH7w6I3M1UCAuv30kpAkCwDxt9qkw7
+         tHb5/2ObFmxGi5ejgtM5OUC8Yynm4UjcMSajcmXTBFchgIBMvV/1cuxsGLJd2l4CCeIj
+         evRg==
+X-Gm-Message-State: AOJu0YxxQjBkd1ayPSTBPbZp6oCDAngG+mBeMYmVJt4ddVz5cXhcFvdI
+	zT54hCx3WsagwA0v5abCNADAjRhcDraFt67MPo/F5sBf8AfHB0kOxoTd93Zl
+X-Google-Smtp-Source: AGHT+IGehgTspp5d05uaZFDANch8W0TpQ06LNbyUbBK4wyN4rujjZL1kGLDF+XEaweDoBPu+EAiNkA==
+X-Received: by 2002:a05:6214:ca9:b0:690:84d5:cfc3 with SMTP id s9-20020a0562140ca900b0069084d5cfc3mr8195613qvs.1.1711299875488;
+        Sun, 24 Mar 2024 10:04:35 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:15:103b:7d73:db39:fcae:4412? ([2606:6d00:15:103b:7d73:db39:fcae:4412])
+        by smtp.gmail.com with ESMTPSA id hu4-20020a056214234400b0068ff8d75a90sm3220462qvb.19.2024.03.24.10.04.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 24 Mar 2024 10:04:35 -0700 (PDT)
+Subject: Re: [PATCH] t/README: mention test files are make targets
+To: Junio C Hamano <gitster@pobox.com>,
+ Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1701.git.1711293246094.gitgitgadget@gmail.com>
+ <xmqq4jcvtxtz.fsf@gitster.g>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <97212b72-70d6-e55f-8b2a-04ede4321288@gmail.com>
+Date: Sun, 24 Mar 2024 13:04:34 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240322221327.12204-1-mg@max.gautier.name> <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com>
-In-Reply-To: <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 24 Mar 2024 13:03:42 -0400
-Message-ID: <CAPig+cT1Bz9M5zsB_OSEu-LTTVMBPY6U4vaDHmoHtmoDfH+hpg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] maintenance: use packaged systemd units
-To: phillip.wood@dunelm.org.uk
-Cc: Max Gautier <mg@max.gautier.name>, git@vger.kernel.org, 
-	=?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>, 
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq4jcvtxtz.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 
-On Sun, Mar 24, 2024 at 10:55=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
-> 5 - documentation updates
->    I'm on the fence about having these in a separate commit like the
->    current patch 5 or updating the documentation when the code is
->    changed.
+Hi Junio,
 
-It's generally more reviewer-friendly to bundle documentation change
-into the patch which changes the observable behavior. This way, a
-reviewer has the behavior change fresh in mind and can verify that the
-revised documentation matches the new implementation. Same goes for
-revising tests in the same patch which changes behavior (though, of
-course, revising tests at the same time as the change of behavior is
-also mandatory for maintaining bisectability).
+Le 2024-03-24 à 12:10, Junio C Hamano a écrit :
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>
+>> Since 23fc63bf8f (make tests ignorable with "make -i", 2005-11-08), each
+>> test file defines a target in the test Makefile, such that one can
+>> invoke:
+>>
+>> 	make *checkout*
+>>
+>> to run all tests with 'checkout' in their filename. This is useful to
+>> run a subset of tests when you have a good idea of what part of the code
+>> is touched by the changes your are testing.
+> 
+> While I agree with the patch that this is a useful "feature" of
+> t/Makefile, I've always felt it was ugly to use a file itself that
+> we do not consider a build product, rather a source, as the target
+> to trigger some action.  Are we comfortable casting this behaviour
+> in stone by documenting it here?
+
+Since '$(T)' is listed at the bottom of the Makefile as .PHONY,
+I think it is OK and not that ugly since this uses a documented feature
+of make.
+
+Cheers,
+Philippe.
