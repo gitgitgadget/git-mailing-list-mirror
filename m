@@ -1,104 +1,126 @@
-Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAC01426E
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 07:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2800313ADA
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 07:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711266433; cv=none; b=VkYVqJkQ+SY+Lyp5FqLnGMVkDI8XJwtPo5TeYHGzrMH9QYUUvFqMtdKKT77MdB1q8GIoWwg4lATV+xCLO0W5akCHve+SaYgRRHUb0xPuctMAUuZfunThQk8S7Gdghjd3pMv9LgQDiIKLLziNXreg4cG6sGyQaOGzMj9qRTyRLiQ=
+	t=1711267035; cv=none; b=i0c+7+cmWBfU/blwkG39/vI8LyaiErePOhyL3jNn05O+Tgqyfg0aCnn5HMta69/AyI2lV6sHQTrxWVqkioelm+z0tLgBNh7agg2zQAJc2aO45VuEbsz5cFUDqJdDqWDeBrCv8xinqH/ZQW+ySMVpV5EJRhNlHnYD1weEcQyyQDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711266433; c=relaxed/simple;
-	bh=FLAvdvudXIdgZy5kYOt9Y+0ENRV6tsIMfjcgNbrPOsg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=U1eoa+qrsXoxEZARreZJAuQUSkgLVGhKci+vzWznnf+gT+X7gqcawbnmVQfZKi2bP5F8mSlxLS6K9iUt8oXbo3cTOdG80UoxnEKX+d+cGZkWTeL57+cIQH53xX8i4AcOTiLGqy1S8112iqyUQjScnWrk+HZJcLPQM6UtsWI9o6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=n+gAhU56; arc=none smtp.client-ip=185.238.129.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+	s=arc-20240116; t=1711267035; c=relaxed/simple;
+	bh=xRYLparMb8cHq+15AHO/xYOrRP0Px6vkFsMMnSJsV7o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JZpaDTLopHiy3r0GZ5uVDJlsx9kjoNgbOvdDHIRVzbUt0ZjIO17rNi1zqGPSpCBZYrMySKJsH/EtsRvhQbCpGwlbptw0JNXssgoLIuaM2xk1nAjCW11jKR2H+tpwHc2vEeoI5ljQyWJDe7ZogNuVwlIPofy+ox0B7gUZ84rMW+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=xLSOEPga; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="n+gAhU56"
-Received: from [10.2.12.48] (unknown [10.2.12.48])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="xLSOEPga"
+Received: from localhost (reverse-238.fdn.fr [80.67.176.238])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by 7of9.schinagl.nl (Postfix) with ESMTPSA id CE71419FF91D;
-	Sun, 24 Mar 2024 08:47:01 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1711266421; bh=FLAvdvudXIdgZy5kYOt9Y+0ENRV6tsIMfjcgNbrPOsg=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To;
-	b=n+gAhU560EgKKtdiNdLzAzJPnH/swZ40ArZBv6hjlDXogRUkxJPBk/5GleQSeWrBo
-	 MUpYR46Y7m7uTqrUrGknkC/6p3xcf/M+f8Ap0NRsX4EvWQmaBwCj9g+93GxMRwFvi8
-	 VCU82M6YJyD3pLK8tU/FFZLTs4iXf54NenrniqXo=
-Message-ID: <7610ff9c-b0d4-494c-a963-19494df2f74e@schinagl.nl>
-Date: Sun, 24 Mar 2024 08:47:01 +0100
+	by taslin.fdn.fr (Postfix) with ESMTPSA id 431F060392;
+	Sun, 24 Mar 2024 08:57:03 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1711267023;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=02dcs6l1Qxr5KBjOn26106BE31lHO6svNa76zshOatY=;
+	b=xLSOEPgaCc54+WYQcCOSblG5uxsQAX6VFmTZMNk+ofnFvCU9x+OgpdUvrp9gTD94uuVdt3
+	jbyfP8FZMRaI11CQ+0Ne0llEEVUlT8oLHO3fezbIG0HjaiVk+AZftWmSP/QRm09iL2EvFV
+	xoeZa+nBuwK1Ewy3navZvG0hURBcMDjTlpRt6BsZ97/OywmgZr8uwS6ars0nf0WDsBGex/
+	MXwTdlAtzefni6Cp1XkrdE4M46Ypv6GyApmLiffW6qQGcoK7DFBATFJgj8KQlgE4G8qjej
+	02+wD0q86oC17zTUIPZ6GBfx1V52TBTJvmMZm94s9UhSPOnW0mnTw9t0L6kTrA==
+Date: Sun, 24 Mar 2024 08:54:49 +0100
+From: Max Gautier <mg@max.gautier.name>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Hans Jerry Illikainen <hji@dyntopia.com>
+Subject: Re: [PATCH] editorconfig: add Makefiles to "text files"
+Message-ID: <Zf_cSWY9DxVxKZu2@framework>
+References: <20240322221813.13019-1-mg@max.gautier.name>
+ <xmqqo7b5zy84.fsf@gitster.g>
+ <Zf77gyA28KsZdOUs@framework>
+ <xmqqr0g0yhoe.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Allow git bisect to auto-skip
-From: Olliver Schinagl <oliver@schinagl.nl>
-To: Junio C Hamano <gitster@pobox.com>, Stefan Haller <lists@haller-berlin.de>
-Cc: git@vger.kernel.org
-References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl>
- <xmqqwmptzyny.fsf@gitster.g>
- <01e09c64-4d62-406d-85fe-9fb77939cf63@haller-berlin.de>
- <xmqqle68x008.fsf@gitster.g>
- <4cf100aa-4239-4377-b20a-7c90443fb405@schinagl.nl>
-Content-Language: nl
-In-Reply-To: <4cf100aa-4239-4377-b20a-7c90443fb405@schinagl.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr0g0yhoe.fsf@gitster.g>
 
-On 23-03-2024 21:51, Olliver Schinagl wrote:
-> On 23-03-2024 19:43, Junio C Hamano wrote:
->> Stefan Haller <lists@haller-berlin.de> writes:
->>
->>> On 22.03.24 23:31, Junio C Hamano wrote:
->>>> It often is discovered that a commit
->>>> breaks bisection after the fact and it is not feasible to rebase
->>>> all the history after the commit.
->>>
->>> This reminds me of a similar problem with git blame, for which we have
->>> the blame.ignoreRevsFile config to work around it. Couldn't there be a
->>> similar mechanism for bisect, e.g. bisect.skipRevsFile?
->>
->> A Very good point.  If a breakage of a commit is "this does not even
->> build" kind of breakage, such a mechanism would be an excellent fit.
->>
->> But if a breakage is "only this particular test fails and we know
->> the reason why it fails has nothing to do with the bug we are
->> chasing", then compiling such a fixed list of commits, or pointing
->> at such a list with a configuration variable, would not work very
->> well, I am afraid.
+On Sat, Mar 23, 2024 at 10:36:01AM -0700, Junio C Hamano wrote:
+> >>  * Does .editorconfig file allow possibly conflicting setting, with
+> >>    a reliable conflict resolution rules?
+> >
+> > Yeah it does: https://spec.editorconfig.org/#id8
+> > TL;DR:
+> > - from top to bottom, last matching section wins
+> > - if multiple .editorconfig are found (up until one with the root key or
+> >   in /) closest to the file wins.
+> >> 
+> >> What I am trying to get at is if it is possible to make something
+> >> along this line to work:
+> >> 
+> >>     [*]
+> >> 	charset = utf-8
+> >> 	insert_final_newline = true
+> >> 	indent_style = tab
+> >> 	tab_width = 8
+> >>     [*.py]
+> >> 	indent_style = space
+> >> 	indet_size = 4
+> >> 
+> >> I am assuming, without knowing, that the conflict resolution rule
+> >> may be "for the same setting, the last match wins" so by default we
+> >> always use "indent_style = tab", but if we are talking about a Python
+> >> script, it is overruled with "indent_style = space".
+> >
+> > So it looks like it's possible, if we also add judiciously .editorconfig
+> > in subdirectory where we have other files which don't want the same
+> > settings, probably:
 > 
-> This changes my view of the issue a little bit. Building vs testing, 
-> though in reality its the same of course.
+> That is much less than ideal---I was hoping that we can do this
+> with just one file.  My reading of that spec is that in the same
+> file it would be the last one wins, so something line what I gave
+> you above should work more-or-less as-is?
 > 
-> I can totally see that a user would need a special bisect script to 
-> handle these cases 'this commit breaks test 54, 43 and 12; but the rest 
-> work'. This is too specific to handle generically. Probably in using a 
-> similar trick, store in the notes what works and does not work.
 
-P.S. One (imo big) issue to me is, that notes aren't automatically 
-fetched or pushed according to what I found so far online (haven't 
-personally tested it yet).
+I read it the same way, I didn't intend to imply using one top level
+only was not possible ; sorry for the lack of clarity.
 
-If that is the case, this makes the feature to be used in combination 
-with bisect much more difficult for the un-informed. having a 
-`refs/notes/<bisect-or-like-related-name>` notes tree is great, but only 
-if it gets automatically pulled.
-
-I think this also might be the reason it is a very undervalued thing maybe?
-
-Olliver
-
+> Also I am not sure if there is any reason why ...
 > 
-> I think it still stands that having a 'generic' way of telling bisect to 
-> skip the entire commit is still reasonable. Kind of like how you can do 
-> `git push -o ci.skip=true` with GitLab.
+> > - po/
+> > - t/
+> > - contrib/
+> > - .github/
+> > - ...
+> >
+> > Not sure if that's easier than adding stuff to the to the root config
+> > though.
 > 
-> Olliver
-> 
->>
->> Thanks.
+> ... t/*.sh should use rules different from those that apply to
+> check-builtins.sh at the root level, or contrib/mw-to-git/*.perl
+> should use Perl rules different from those that apply to
+> perl/Git.pm.  So I think "we need per-directory customization" is a
+> red herring.
+
+Oh, I was more thinking about the other stuff under t/ , not she scripts
+themselves, there is some .test, .diff, lots of files without extensions
+(some css apparently, among other stuff) , and without looking in
+details, my best guess is that most of this is test samples (=> I mean
+things used by the tests to compare / test processing result).
+I don't know if that's supposed to be edited manually though.
+
+But yeah, "per-directory customization" isn't good, it multiplies the
+place to look when the config is not correct. I was mentioning by fear
+that using only one file would be hard to manage is there is too much
+patterns. 
+
+-- 
+Max Gautier
