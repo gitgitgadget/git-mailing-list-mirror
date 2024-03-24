@@ -1,49 +1,49 @@
 Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CA0ECF
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D271EC4
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711242795; cv=none; b=rfBG2KS47Ib1EI6qHeJ+o6Znuf+nY7YqM2X0wnn3v0z/dRvCajitSQmII4k6ZNE8Eeza6JDZ2dyep7uh17Dm07TOw7rGGGzDXGbqPwEqivxRyzYnKX97nWslVSXaHZMK0SflqqVbVliVqnT8FEJT5lgPnESwa5aaR2WmRTvCs9Q=
+	t=1711242795; cv=none; b=FszKTBUujhKQd6eSk/GwUeBuFCRQkzTOaaAIhYqkbM4XXlZ3ErSHC0WqfcHtK65hMn30kEbmScOr7GOymJx7DP+9FtCDkL8ACN+IcxpvZxxWjoKxqKVp7RYSgIpeeWhQqKGg8Ml5b0UCT7XqdZa9oP+l7IZGlVc2jktAKm9wqek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711242795; c=relaxed/simple;
-	bh=nkKd0E37Am2K8HItmwId5mlnNWgfJnJARVeNMIObChc=;
+	bh=xMhWRt1J+S4TuQXO1QSsMBSmNfSgr2pe2mgv+AZjeMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hIUxD4AZED3QxWIBiNzP3yU7aqxz1H3uGolEFAIkh90pOGUAk3jbMjRySlAUfOXXU6S0BvnZhOicYs8Rk+IpBjWu4qEeO+21Xhc1sWanAI665bEI0I+MCD9hCPpqDVo+SJTLX3h9WcPkuce7gXqLBiEJmfSxjmAk1zIAhiLi/uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=itSIMOal; arc=none smtp.client-ip=172.105.110.227
+	 MIME-Version; b=VyxV2MalqN2qZMhogKOoklI/pk2v29SCtitWo7/3DNTJFuvgURR9L2oSs/n3I9tvZyK3zCQHbxFGwDcJgtkwCuhZwh9k+9SUOp9nHXaIBnEMxQ70Dq1tTNDxicbR6JUFo1yzQJfPi/9c7fI/WUwqVIZ+ez4/L/dGWxqvQswnvTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FE7/x1kL; arc=none smtp.client-ip=172.105.110.227
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="itSIMOal"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FE7/x1kL"
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 759875D47E;
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 3E2F65D412;
 	Sun, 24 Mar 2024 01:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1711242786;
-	bh=nkKd0E37Am2K8HItmwId5mlnNWgfJnJARVeNMIObChc=;
+	bh=xMhWRt1J+S4TuQXO1QSsMBSmNfSgr2pe2mgv+AZjeMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=itSIMOal76RtURegA7pY9cLNiVIa8DSlqG0LadWRi1df4TbddV5vCshPJiggS+nt0
-	 PXOqBRCIrgo3Y3Jb00DToMltS6uHKkyNXV3zE6aC007veHU9YsfsHb4H1EHCCIccjF
-	 A4aiWgXPAHn4lyCeK+HB3BDfA9VlvCnmL/kG3VPXNwX8iedBsGtl2gGthR/2kR+1Y5
-	 Py+3FMpMNBYI+1PA/rj22Q27j8C+AMDv10GbCn+lT5T/mBh1qmeLDz5wyKms+/tss3
-	 nMIE33sBMrNNAflIJf3EwmN5Iaal7ap6tWvm0XWHQRA06KFLro6rWoKdosihUiOLko
-	 tZP0Rjht5twAyDsnXNozGv7HVSSXX/HGvj58EB3zOJzCbTpAitsMqrRkLXd9JyfoAv
-	 Z1N72Wj0Z7dOa1ZsCD5Ir3mzsSLdQNLXaNh6OyRqfLqDuTWf1ZGmUT5erCIjE/jfhd
-	 E6gAxCQ0ADAo5Q0sbfE0lMIoHBMYvZC0ThRZygnSBBYipOtTgaL
+	b=FE7/x1kL0lSv8qwhHbv5nUexQvphbzRjoC1MQTQx6p3QS+uuyWycdrkSE8HaazxC1
+	 vgQwy1Z1Sle6VZZUlh0jLchkW5aF4UuLl8mFudV+CuJaDfp62nwBsxxbtFR+II7iYo
+	 BoH6Yk3I6y409oKPdmKGBc+devzuuUu/OcqkGGPNlELQzikgytXLmIxr9rZ0bmuTBU
+	 bXswQoagOQahWPoRG45WeJbFuczBOY/dvKczTMYtZeSumaUf7o+X8Y+177qHHOEOi8
+	 apeKbCSJKbgOgN2T1ejZgflKNf23DASocGBNAYhAAu/XJ9WbpOl7ZndWLTBSquQYdg
+	 hlzWbkycDcfNCjR8/XFRGYpTnnsPVODEQkkcEwnAUkQCTioSgSACj03iRSt61ncQSA
+	 naA3KRfzV5EE1Tu7bg0QFAS1u4AfSK1nAYhWKXi2xnWEssLREO1DkbofGkugcb8NqB
+	 GCd0zcpe3t4ETKzgKCLU8y2kqGXLnDc4KUBxTuMuzyRt3SKPXvA
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthew John Cheetham <mjcheetham@outlook.com>,
 	M Hickford <mirth.hickford@gmail.com>
-Subject: [PATCH 12/13] strvec: implement swapping two strvecs
-Date: Sun, 24 Mar 2024 01:13:00 +0000
-Message-ID: <20240324011301.1553072-13-sandals@crustytoothpaste.net>
+Subject: [PATCH 09/13] credential: enable state capability
+Date: Sun, 24 Mar 2024 01:12:57 +0000
+Message-ID: <20240324011301.1553072-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
 In-Reply-To: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
 References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
@@ -55,48 +55,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a future commit, we'll want the ability to efficiently swap the
-contents of two strvec instances without needing to copy any data.
-Since a strvec is simply a pointer and two sizes, swapping them is as
-simply as copying the two pointers and sizes, so let's do that.
-
-We use a temporary here simply because C doesn't provide a standard
-swapping function, unlike C++ and Rust, but a good optimizing compiler
-will recognize this syntax and handle it appropriately using an
-optimization pass.
+Now that we've implemented the state capability, let's send it along by
+default when filling credentials so we can make use of it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- strvec.c | 7 +++++++
- strvec.h | 5 +++++
- 2 files changed, 12 insertions(+)
+ credential.c                |  1 +
+ t/t5563-simple-http-auth.sh | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/strvec.c b/strvec.c
-index 178f4f3748..93006f1e63 100644
---- a/strvec.c
-+++ b/strvec.c
-@@ -106,3 +106,10 @@ const char **strvec_detach(struct strvec *array)
- 		return ret;
- 	}
+diff --git a/credential.c b/credential.c
+index 0cd7dd2a00..0ca7c12895 100644
+--- a/credential.c
++++ b/credential.c
+@@ -38,6 +38,7 @@ void credential_clear(struct credential *c)
+ static void credential_set_all_capabilities(struct credential *c)
+ {
+ 	c->capa_authtype.request_initial = 1;
++	c->capa_state.request_initial = 1;
  }
-+
-+void strvec_swap(struct strvec *a, struct strvec *b)
-+{
-+	struct strvec t = *a;
-+	*a = *b;
-+	*b = t;
-+}
-diff --git a/strvec.h b/strvec.h
-index 4715d3e51f..5b762532bb 100644
---- a/strvec.h
-+++ b/strvec.h
-@@ -88,4 +88,9 @@ void strvec_clear(struct strvec *);
-  */
- const char **strvec_detach(struct strvec *);
  
-+/**
-+ * Swap the contents of two `strvec` structs without allocating.
-+ */
-+void strvec_swap(struct strvec *, struct strvec *);
-+
- #endif /* STRVEC_H */
+ int credential_match(const struct credential *want,
+diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+index b3ed0d9fc2..b098cd0fdf 100755
+--- a/t/t5563-simple-http-auth.sh
++++ b/t/t5563-simple-http-auth.sh
+@@ -75,6 +75,7 @@ test_expect_success 'access using basic auth' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=Basic realm="example.com"
+@@ -111,6 +112,7 @@ test_expect_success 'access using basic auth via authtype' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=Basic realm="example.com"
+@@ -147,6 +149,7 @@ test_expect_success 'access using basic auth invalid credentials' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=Basic realm="example.com"
+@@ -185,6 +188,7 @@ test_expect_success 'access using basic auth with extra challenges' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=FooBar param1="value1" param2="value2"
+@@ -224,6 +228,7 @@ test_expect_success 'access using basic auth mixed-case wwwauth header name' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=foobar param1="value1" param2="value2"
+@@ -268,6 +273,7 @@ test_expect_success 'access using basic auth with wwwauth header continuations'
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=FooBar param1="value1" param2="value2"
+@@ -314,6 +320,7 @@ test_expect_success 'access using basic auth with wwwauth header empty continuat
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=FooBar param1="value1" param2="value2"
+@@ -356,6 +363,7 @@ test_expect_success 'access using basic auth with wwwauth header mixed line-endi
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=FooBar param1="value1" param2="value2"
+@@ -397,6 +405,7 @@ test_expect_success 'access using bearer auth' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=FooBar param1="value1" param2="value2"
+@@ -440,6 +449,7 @@ test_expect_success 'access using bearer auth with invalid credentials' '
+ 
+ 	expect_credential_query get <<-EOF &&
+ 	capability[]=authtype
++	capability[]=state
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=FooBar param1="value1" param2="value2"
