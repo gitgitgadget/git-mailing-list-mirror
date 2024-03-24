@@ -1,139 +1,121 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E7A10F4
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822A481E
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 02:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711243213; cv=none; b=azQAFjhlrEaPTSBotUTfrP4wHtLyCG0ubXtzIkyrfcaXO1N1wW9p34r3CdQo3ZwEs7C3A5gpeVWOAtFK9XasJkfSuWQDDUmqNJeHV6sCY1geoMWT3nvftKuEB5XRkkCofElAZjvSi410x+XAd9MC2CaCB4fuTdbduHlTCul7wCA=
+	t=1711246785; cv=none; b=mtc1/xJyXk8H/mwQl+WFNmhBYUFGiZa92mTUvzJY0amkVcBPKurgLd+CZGNm5/yasVNNGj1F2UxXx31+cFft+7ZjNFHJxmAvJgeUUt6UlUxDOk3l11hljm93pHNJpCUzaVmMKqpgHd7N2aoHWN5eb23VJug8OqG86DX12c/Wb5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711243213; c=relaxed/simple;
-	bh=3Rn148Tb27U7Koze/W8bg0Ri3gJwwh7RJc898Sg4wXc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akpP+9pPX0XrkGGbcX3hP0Qh+6w64s/Ijobsgc7JsU6O3Hq88GHdtLemC+kL1UNUt+2x/KELR5GvZReK8Z1opDvSpYfIIIu/mZoXCbGgtxvQCl9IWe4hHm8LuM+jRUURuITK/ohMGlmuZvNlmHHh4m7hEyBG7XuOvu6sQL6EW4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=JAafURWr; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1711246785; c=relaxed/simple;
+	bh=OD2praSQnflsVQevcuLQ+hibW0DsLUi8RyCseNaVk5k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Hr05ZJJtWn5IyVEBAWrE4YOswaX8c5q2ckZ5d0pGN2l/7KEDvIU6YNOvpP4Q32UaC4XmKIEKq9bBoRUZbSBZ27wpVzsiZLitYz86VxjP8jf9z5tk/DUK0QOtKr0ZwP03FK+OzWkhGK1Yt4ehzv3HgWExkAnDmA3wOMZ+vPheWas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pUu5Hbqc; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JAafURWr"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pUu5Hbqc"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id BB134190AD;
+	Sat, 23 Mar 2024 22:19:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=OD2praSQnfls
+	VQevcuLQ+hibW0DsLUi8RyCseNaVk5k=; b=pUu5HbqcE8bbpMYmpm3R+0B6j1Lc
+	9FVw7+eJz1cVBr+sXASXqXTy1vrTDRFZ0pbOQI1LDxNCu72Yc8nyMzmWFHcT1umV
+	o/ulekTzg5NPNgDrXT/eZpnVT0NUylA7tQneqt2VLUpxZby0mCZIZLSB13jXJYCL
+	52hyM4w5z7RENsg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B283B190AC;
+	Sat, 23 Mar 2024 22:19:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B611A5B452;
-	Sun, 24 Mar 2024 01:13:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1711242785;
-	bh=3Rn148Tb27U7Koze/W8bg0Ri3gJwwh7RJc898Sg4wXc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=JAafURWrPlfH29DJCYxFE1Isp9vK0MlmRQcLMf71n0Cc89YkqFN9e1+kfBJ/MLAe5
-	 3/zlCdtbstHFvdPAzg2wUigHYH6D5+pK4b4QkEMprPS+ELehf6R1JGzinVZBnnVxea
-	 xaYS6Wy23tk+dSNzN6cqId7Z7/Sz7cxOArV2Yi1FKU/puDr+ozylaeJXWhNcSFOKsH
-	 QAiZwtxaV7/1wdJR+1Yf9uFbKz5kRra3DsToYoju45ga56uz+X/V3LbqqPuXy4u+/9
-	 RMQ6v8mGwo7SAN6nuD1BAHOhTX89O2Z4Lz6V5T84djROsKybSp6P1UEi7hvmDnv592
-	 ZpwdwfhtcGwoh5UqAFzdrqlRL6KX0/iNsmufHD3A8TkU9udryK3ps9LSyuExLBtObF
-	 vKUNI6zd7N+MTD7mDXIyw8+fKJmx0YdNgaoAqV++tTg1qWe1m4c+tXJ6/vSBDt/zLp
-	 7ecwAPknL3j8eK9nnVbherZVnT4jWdy/NYwfYDmGAdaUnAD9efZ
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthew John Cheetham <mjcheetham@outlook.com>,
-	M Hickford <mirth.hickford@gmail.com>
-Subject: [PATCH 01/13] credential: add an authtype field
-Date: Sun, 24 Mar 2024 01:12:49 +0000
-Message-ID: <20240324011301.1553072-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
-In-Reply-To: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
-References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 402C3190AB;
+	Sat, 23 Mar 2024 22:19:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH] doc/gitremote-helpers: fix more missing single-quotes
+In-Reply-To: <22254967.EfDdHjke4D@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+	"Sat, 23 Mar 2024 20:58:39 +0100")
+References: <20240320091748.GA2444639@coredump.intra.peff.net>
+	<519698f1-1daf-4085-9aec-380f44492e72@gmail.com>
+	<xmqq7chvblgr.fsf@gitster.g> <22254967.EfDdHjke4D@cayenne>
+Date: Sat, 23 Mar 2024 19:19:38 -0700
+Message-ID: <xmqqmsqov0at.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ F81E8F46-E984-11EE-85C0-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-When Git makes an HTTP request, it can negotiate the type of
-authentication to use with the server provided the authentication scheme
-is one of a few well-known types (Basic, Digest, NTLM, or Negotiate).
-However, some servers wish to use other types of authentication, such as
-the Bearer type from OAuth2.  Since libcurl doesn't natively support
-this type, it isn't possible to use it, and the user is forced to
-specify the Authorization header using the http.extraheader setting.
+Jean-No=C3=ABl AVILA <avila.jn@gmail.com> writes:
 
-However, storing a plaintext token in the repository configuration is
-not very secure, especially if a repository can be shared by multiple
-parties.  We already have support for many types of secure credential
-storage by using credential helpers, so let's teach credential helpers
-how to produce credentials for an arbitrary scheme.
+>> Hmmmm, here, true and false are to be given verbatim.
+>
+> In such case, it's (`true`|`false`) . As well as the command before.
 
-If the credential helper specifies an authtype field, then it specifies
-an authentication scheme (e.g., Bearer) and the password field specifies
-the raw authentication token, with any encoding already specified.  We
-reuse the password field for this because some credential helpers store
-the metadata without encryption even though the password is encrypted,
-and we'd like to avoid insecure storage if an older version of the
-credential helper gets ahold of the data.
+Yes, they should be given like so, I think.
 
-The username is not used in this case, but it is still preserved for the
-purpose of finding the right credential if the user has multiple
-accounts.
+>> I know we added the _<placeholder>_ thing, but have we added these
+>> to Documentation/CodingGuidelines yet?
+>>=20
+>> Thanks.
+>
+> No, we haven't.=20
+>
+> I skimmed over different documentation projects and there's no real con=
+sensus=20
+> on what the formatting should be in detail, except for some common rule=
+s.
+> man-pages(7) gives some good hints that we should adhere to, which are =
+echoed=20
+> in the guide of asciidoc: https://docs.asciidoctor.org/asciidoctor/late=
+st/
+> manpage-backend/ . Basically, verbatim are in bold, and variables are i=
+n=20
+> italic.
+>
+> In our man pages, the asciidoc verbatim are rendered as bold and asciid=
+oc=20
+> emphasis are rendered as underlined, just like italics,  which adheres =
+to the=20
+> principles,
 
-If the authtype field is not specified, then the password behaves as
-normal and it is passed along with the username to libcurl.
+What I meant by "verbatim" was "what the user would give Git
+verbatim", which are marked up as `true` (or `false`), and typically
+typeset in monospace in HTML.  I just checked the prerendered man
+pages, and indeed \fB...\fR surrounds verbatim phrases, which was a
+bit surprising to me.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- credential.c | 5 +++++
- credential.h | 6 ++++++
- 2 files changed, 11 insertions(+)
+> Note that bold/verbatim are usually also used in terms of description l=
+ists.
+>
+> I'm totally ok to change the CodingGuidelines and reroll git-clone and =
+git-
+> init with these new rules.
 
-diff --git a/credential.c b/credential.c
-index 18098bd35e..3dec433df5 100644
---- a/credential.c
-+++ b/credential.c
-@@ -26,6 +26,7 @@ void credential_clear(struct credential *c)
- 	free(c->username);
- 	free(c->password);
- 	free(c->oauth_refresh_token);
-+	free(c->authtype);
- 	string_list_clear(&c->helpers, 0);
- 	strvec_clear(&c->wwwauth_headers);
- 
-@@ -252,6 +253,9 @@ int credential_read(struct credential *c, FILE *fp)
- 		} else if (!strcmp(key, "oauth_refresh_token")) {
- 			free(c->oauth_refresh_token);
- 			c->oauth_refresh_token = xstrdup(value);
-+		} else if (!strcmp(key, "authtype")) {
-+			free(c->authtype);
-+			c->authtype = xstrdup(value);
- 		} else if (!strcmp(key, "url")) {
- 			credential_from_url(c, value);
- 		} else if (!strcmp(key, "quit")) {
-@@ -295,6 +299,7 @@ void credential_write(const struct credential *c, FILE *fp)
- 	}
- 	for (size_t i = 0; i < c->wwwauth_headers.nr; i++)
- 		credential_write_item(fp, "wwwauth[]", c->wwwauth_headers.v[i], 0);
-+	credential_write_item(fp, "authtype", c->authtype, 0);
- }
- 
- static int run_credential_helper(struct credential *c,
-diff --git a/credential.h b/credential.h
-index acc41adf54..dc96ca0318 100644
---- a/credential.h
-+++ b/credential.h
-@@ -143,6 +143,12 @@ struct credential {
- 	char *path;
- 	char *oauth_refresh_token;
- 	timestamp_t password_expiry_utc;
-+
-+	/**
-+	 * The authorization scheme to use.  If this is NULL, libcurl is free to
-+	 * negotiate any scheme it likes.
-+	 */
-+	char *authtype;
- };
- 
- #define CREDENTIAL_INIT { \
+So to go back to the original example, what do we want to do instead
+of ...
+
+    'option deepen-relative' {'true'|'false'}::
+
+... this?  Like this ...
+
+    `option deepen-relative` (`true`|`false`)::
+
+... or something else?
+
+Thanks.
