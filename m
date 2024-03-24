@@ -1,190 +1,71 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E440D18E29
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 16:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C24F18E29
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 17:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711299470; cv=none; b=sKnJVQRbBXD0NP30irXjmcCV89ubh3yuWSJg+jFt3/gc0JUK+z01SGJ+ED9DvGj+KtHy0HFN3LyQvDxawla0198k/XZZ449kFVjbP5XdG7UDxvJ/yPAylXHBg1wMploL9uOzOzTW7UJJefnepVbNu7vn1gkV/H6NSMaI/jEqsKs=
+	t=1711299836; cv=none; b=VTf/JqtrU24TaLqUl1uTfeG4O+leWxxBkLxzdCbojdpEd3y5i9jvbEIjrRw/X0Cp4pEeujRj0UtiO40rPgUFL5n7enqpK8ep65swXhtvW52+OVD9/0IJJkhzijORpZcwygoO5gvP1W+0t+RtdWbaBus+EATGIkt7oJm9dO9M2Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711299470; c=relaxed/simple;
-	bh=cIBOSOiOSCfN1nVo5kqmwsTjeIXWgpmb2GiE+a3aYus=;
-	h=To:Cc:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=K1ZFFy2oYcR0uLk2gRbvQFyREr+TCA9LYyEyzr1JQxUOgDMvBjRHnNAmSn/bOqGixLP1GASAejUvk5kjER+29neJ+R+eG7rIDB1AtFAYHXmK4d3o+OrDiPY7yVn8+AjdhsNM8wzVMcQXfJzspj+iD+1VwVWNuYpTeBm41gMbzR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bRU5T5Ao; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1711299836; c=relaxed/simple;
+	bh=ns2MX0Gg++BCtbWrhB8rIaD+8lHmPRZJptJewPOvuJg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IU2HgmS5mjolI4Ip5ng6lAFvwfSlL78pp3wQ5p/pr7yRivm4otmn5lJ2pKzbvh6JtUEJ+YF1RGGZE+v7ynM/1vtCzvHUOlbZvvXQoNzPv91UZ2TEAufVaH1kBnC7Xgtl7Fk0pGecXfu+Go7XAgwyzeRSZ/6nYKeiL95wgv0I2vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bRU5T5Ao"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-789f00aba19so280430685a.0
-        for <git@vger.kernel.org>; Sun, 24 Mar 2024 09:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711299468; x=1711904268; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+ZhNQeJMb+Nibj3fH9FHaTBqzr+dpeadRzFEAGjEutI=;
-        b=bRU5T5AotI2nCgTMr6Qfpuedt7cm4WRMe6sjIIi2XRfmYfDAi9BPKAxD1CreusyiMT
-         f/ux16lP0l4mKcQMC/8rgG3puxjdwXd3bnmCa/M3v9xKXykxJUjRHFK4N+7hckSEMhhY
-         hi0R/eCny/sDmenRT7B5hJ0ibC/6E01Xtxr7emSg96XeMPDnvHvmuThYdB+98aP2aOOv
-         SwzbQYhkW6ftm9Y1rF9/yVBGz8R+lZEQf8nh0NmuV8aGXKQeuVBAPJTO9FcnH9qalc6w
-         aGfkKF+h+P2nqlqqJXFfiiJNwdgqYonUJupVzI2bcE8GYZTDDCglf3RuKxAQBRcDGmH0
-         Ivpg==
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6968a5d1b47so2646006d6.1
+        for <git@vger.kernel.org>; Sun, 24 Mar 2024 10:03:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711299468; x=1711904268;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1711299833; x=1711904633;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+ZhNQeJMb+Nibj3fH9FHaTBqzr+dpeadRzFEAGjEutI=;
-        b=UPZUGAXAopnkAxmvC5ewFDM9U8vlnG7nCxFsODOaPJwmqAAGiVjaevfySaIyLK4hTf
-         TU7TnEwjPgltK/zV+qzcwQO6G84BbABhfYpUsM+eOhYbuWyy4ivPyW8HnjOwN135qPQA
-         1337FXUzJ4YgutkBLplwy/2lj44RWwTaxOf4e340fvBV7Mt39dvTjYuOfcKRxDHUBDKK
-         ER1PY7LkHabbPx0T9eyKUA9HrGcTT8OCjUrUox7nO50SSfzpY8Qu/6kF6D8EtFP/y+jb
-         bl5ZQauYE6r7tPIoSBdLirJEFArm0SlX7R7Z/NYfesoukbGbDNslwKLNxgTHW+cZRlH5
-         DoTQ==
-X-Gm-Message-State: AOJu0Yyke6BQ2QKreRD507B6b4keBgSXZ9ZjEfciPdyay5la9rzweHJk
-	CdfQbkk8hKfQOF5Me9Snu7m7TT/J8v82mk5dygO8CUwDkA9l0lMu
-X-Google-Smtp-Source: AGHT+IEW/UBENmo2ooNMJqyieHHbdArhLAu/irgFhde+beGbcIzOrO1D9YpSlBSrup6XZFWAxUxYPQ==
-X-Received: by 2002:a05:620a:535f:b0:78a:da8:58e2 with SMTP id op31-20020a05620a535f00b0078a0da858e2mr5383813qkn.9.1711299467767;
-        Sun, 24 Mar 2024 09:57:47 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:15:103b:7d73:db39:fcae:4412? ([2606:6d00:15:103b:7d73:db39:fcae:4412])
-        by smtp.gmail.com with ESMTPSA id k10-20020ae9f10a000000b00789e94cf424sm1481027qkg.108.2024.03.24.09.57.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Mar 2024 09:57:47 -0700 (PDT)
-To: Git mailing list <git@vger.kernel.org>
-Cc: Christian Couder <christian.couder@gmail.com>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: 'git bisect run' not fully automatic when a merge base must be tested
-Message-ID: <6ee4b8d8-5acb-3d3c-28e0-be972945e8d7@gmail.com>
-Date: Sun, 24 Mar 2024 12:57:45 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        bh=g/7MX2Gj+NL1SBshB/epFJArzCe63I9nZVGoAzWkIWs=;
+        b=oxHXkkD9GWL084OG6xUL9wUr6jW23RR1qenAP5W8Hjo5FHL1dJyWAQF0VWPu5OuEK7
+         /9yjtJayhrUDcRSoPylmeFQe6rkvtmHhK60YJfXwuIXBmMeN/IqI3JT9CQ20iZX9XG8g
+         VbOOC2t0ButAksf/yBF+jrCBxFLFMimrBVqt8ulH3ncaPMGDoHizdBRyLRIub+dmxUeL
+         V+5PLZqXYvDTUJk0DcHP0XhFIuFHsV0AjO29U5wJeTizdYtehLfbOC0mBUBCqu2s4udh
+         Kj7JXUI5ROtbN00QbcWWl9poj/LNp9QVdFw1HuYw9GkfVd0KUVoynQ3Nsy4wtUxj8mWV
+         WB6w==
+X-Forwarded-Encrypted: i=1; AJvYcCV5brfFF0vsEjCgEH0KdUAj/xtUQ8MsaRaefcTFEoAbMiw55Tni+VK7LpNbtZuWZKZegcdjc4zpc2RaBxFasEc1Kv5T
+X-Gm-Message-State: AOJu0YyeM3IX8lpRdcD7awtZateeQn4cimWd8tTBI1Qfloa71enP3hut
+	m0N7yuizpM5ddTJ6WGiYEf7i4V1bSRqLtDw0GpJ9mZwgiV5eiPezeY1XMQKT6+I8/L8Et1l/BQ9
+	68EO5I92M+240woK25nM34aIobHg=
+X-Google-Smtp-Source: AGHT+IEIy1nNNLNmkSJ0gz32IAYwmT7loTte0c0TeDAgEPYKBdZydjAy6qA8XyID0MhiDSdGI1CrLU5IKOxug2pYawY=
+X-Received: by 2002:a0c:eb92:0:b0:696:7ba3:ff50 with SMTP id
+ x18-20020a0ceb92000000b006967ba3ff50mr3989368qvo.48.1711299833429; Sun, 24
+ Mar 2024 10:03:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 7bit
+References: <20240322221327.12204-1-mg@max.gautier.name> <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com>
+In-Reply-To: <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 24 Mar 2024 13:03:42 -0400
+Message-ID: <CAPig+cT1Bz9M5zsB_OSEu-LTTVMBPY6U4vaDHmoHtmoDfH+hpg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] maintenance: use packaged systemd units
+To: phillip.wood@dunelm.org.uk
+Cc: Max Gautier <mg@max.gautier.name>, git@vger.kernel.org, 
+	=?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>, 
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Sun, Mar 24, 2024 at 10:55=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
+> 5 - documentation updates
+>    I'm on the fence about having these in a separate commit like the
+>    current patch 5 or updating the documentation when the code is
+>    changed.
 
-I have encountered a situation where 'git bisect run' is not fully automatic,
-i.e. it stops before finding the first bad commit with the message:
-"a merge base must be tested".
-
-Is there a reason why it could not run the provided script 
-on the merge-base that it checks out ?
-
-For context (and a reproducer), I was bisecting the 
-'git commit --verbose --trailer' regression I reported in [1].
-
-I was running the bisection on a machine without curl installed, and so I 
-was building with 'NO_CURL' and thus needed to cherry-pick my 30bced3a67 
-(imap-send: add missing "strbuf.h" include under NO_CURL, 2024-02-02) at most steps
-of the bisection. So I was running this command:
-
-git bisect reset && git bisect start &&
-git bisect bad v2.43.2 && git bisect good v2.42.1 &&
-git bisect run ~/bisect-git.sh
-
-with this script to drive the bisection:
-
-=== ~/bisect-git.sh ===
-#!/bin/bash
-
-git cherry-pick --allow-empty 30bced3a67
-if   make -j NO_CURL=1
-then
-    # run project specific test and report its status
-    ~/bisect-trailers.sh
-    status=$?
-else
-    # tell the caller this is untestable
-    status=125
-fi
-
-# return control
-exit $status
-==== end of ~/bisect-git.sh ===
-
-and this one to reproduce the regression:
-
-=== ~/bisect-trailer.sh ===
-set -e
-
-export PATH="/path/to/git/bin-wrappers/:$PATH"
-
-repo=${TMPDIR:-/tmp}/test-trailers
-rm -rf "$repo" 
-
-unset $(git rev-parse --local-env-vars)
-
-git init "$repo"
-cd "$repo"
-date>file
-git add file
-export GIT_EDITOR='cat file'
-git commit --verbose -em "file" --trailer="key: value" > /dev/null
-git show | \grep -q value
-=== end of ~/bisect-trailer.sh ===
-
-This results in the bisection stopping at:
-
-	HEAD is now at 4a14ccd05d imap-send: add missing "strbuf.h" include under NO_CURL
-	Bisecting: a merge base must be tested
-	[d57c671a511d885a5cd390e3d6064c37af524a91] treewide: remove unnecessary includes in source files
-	bisect run success
-
-with the following bisect log:
-
-git bisect start
-# status: waiting for both good and bad commits
-# bad: [efb050becb6bc703f76382e1f1b6273100e6ace3] Git 2.43.2
-git bisect bad efb050becb6bc703f76382e1f1b6273100e6ace3
-# status: waiting for good commit(s), bad commit known
-# good: [61a22ddaf0626111193a17ac12f366bd6d167dff] Git 2.42.1
-git bisect good 61a22ddaf0626111193a17ac12f366bd6d167dff
-# good: [5edbcead426056b54286499149244ae4cbf8b5f7] Merge branch 'bc/racy-4gb-files'
-git bisect good 5edbcead426056b54286499149244ae4cbf8b5f7
-# good: [5baedc68b02c1b43b307d436edac702ac3e7b89d] Merge branch 'jk/bisect-reset-fix' into maint-2.43
-git bisect good 5baedc68b02c1b43b307d436edac702ac3e7b89d
-# good: [2873a9686cf59ecbf851cea8c41e6ee545195423] Merge branch 'rs/rebase-use-strvec-pushf' into maint-2.43
-git bisect good 2873a9686cf59ecbf851cea8c41e6ee545195423
-# bad: [03bc5976514f706889fceea623f35133014ebe78] imap-send: add missing "strbuf.h" include under NO_CURL
-git bisect bad 03bc5976514f706889fceea623f35133014ebe78
-# bad: [9ae3c6dceb187af1ae09649dc5c61bb05a7013d9] imap-send: add missing "strbuf.h" include under NO_CURL
-git bisect bad 9ae3c6dceb187af1ae09649dc5c61bb05a7013d9
-# good: [007488839cabbb5bc6777924ae03c4edeb1b6110] imap-send: add missing "strbuf.h" include under NO_CURL
-git bisect good 007488839cabbb5bc6777924ae03c4edeb1b6110
-
-This was the first time that I did a bisection with 'git bisect run'
-that was not fully automated so it threw me off a bit.
-
-I tried it again today and realized that if I modify my ~/bisect-git.sh
-to use 'git cherry-pick --no-commit --allow-empty' instead, then the
-bisection runs to completion and finds the bad commit. So my understanding
-is that cherry-picking a commit during the bisection (without --no-commit)
-alters the commit graph and might not be the best idea... Looking at the man
-page the example does use 'git merge --no-commit' so I should have known better.
-
-But the question remains: in general shouldn't 'git bisect run' do everything
-automatically and not require the user to do something manually ?
-
-
-And a side note to finish:
-Initially I did not use 'unset $(git rev-parse --local-env-vars)' in
-my ~/bisect-trailers.sh, and I was running the bisection in a secondary
-worktree of my clone of git.git. This did not work at all since the
-'git init' and 'git commit --verbose -em "file" --trailer="key: value"'
-steps were running _in my secondary worktree_ instead of in $TMPDIR,
-because of how the repository detection works in worktrees and
-exports some variables (I think...) This was also very confusing
-and I'm wondering if we should add a note somewhere about that 
-in the documentation, although it seems specific to bisecting git.git...
-
-Cheers,
-Philippe
-
-[1] https://lore.kernel.org/git/8b4738ad-62cd-789e-712e-bd45a151b4ac@gmail.com/
+It's generally more reviewer-friendly to bundle documentation change
+into the patch which changes the observable behavior. This way, a
+reviewer has the behavior change fresh in mind and can verify that the
+revised documentation matches the new implementation. Same goes for
+revising tests in the same patch which changes behavior (though, of
+course, revising tests at the same time as the change of behavior is
+also mandatory for maintaining bisectability).
