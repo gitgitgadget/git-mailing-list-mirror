@@ -1,49 +1,49 @@
 Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E31ECF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E7A10F4
 	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711243213; cv=none; b=thwMehFplPwYCLvVxPHlcmNCpkSUKBEqTl95qp0mhGo6+jb5R/amGX/YBjP3mqGSUx2RW/N90Agmfj8ysMwJ1rR8y7BiAGKqgHu105sK8g15wMVsb0E2YxaxObQ4P4PV5L99FH31DKCMpAZcYOo3KJTXjxw1vZATMAqPMRLfg/E=
+	t=1711243213; cv=none; b=azQAFjhlrEaPTSBotUTfrP4wHtLyCG0ubXtzIkyrfcaXO1N1wW9p34r3CdQo3ZwEs7C3A5gpeVWOAtFK9XasJkfSuWQDDUmqNJeHV6sCY1geoMWT3nvftKuEB5XRkkCofElAZjvSi410x+XAd9MC2CaCB4fuTdbduHlTCul7wCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711243213; c=relaxed/simple;
-	bh=8TxfuBxsWtpSLU/4F9w2T/UCfwNMMCASchJnroJ1l/o=;
+	bh=3Rn148Tb27U7Koze/W8bg0Ri3gJwwh7RJc898Sg4wXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=al9MPSJ5nq/cGIeKE0CuewF7Vjtfn+kjAvT88ZUxAcvzGckQscaXn6hAnMHEk3BfHbeYuangnZXdXqcsT++s4mvhnkzHewDNRyP841a7smmPYd9ciOIXxZwKnLtS7Tfx7jMLY29Zabzt1Iw8caI49+UjSzvV+fQKczj6pPANFZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=s8RJ2Epo; arc=none smtp.client-ip=172.105.110.227
+	 MIME-Version; b=akpP+9pPX0XrkGGbcX3hP0Qh+6w64s/Ijobsgc7JsU6O3Hq88GHdtLemC+kL1UNUt+2x/KELR5GvZReK8Z1opDvSpYfIIIu/mZoXCbGgtxvQCl9IWe4hHm8LuM+jRUURuITK/ohMGlmuZvNlmHHh4m7hEyBG7XuOvu6sQL6EW4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=JAafURWr; arc=none smtp.client-ip=172.105.110.227
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="s8RJ2Epo"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JAafURWr"
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id DA9155D3B9;
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B611A5B452;
 	Sun, 24 Mar 2024 01:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1711242785;
-	bh=8TxfuBxsWtpSLU/4F9w2T/UCfwNMMCASchJnroJ1l/o=;
+	bh=3Rn148Tb27U7Koze/W8bg0Ri3gJwwh7RJc898Sg4wXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=s8RJ2Epo6pwN55aeaeP/G6LroBAzxY6eToIm79svuO5dAM6uJcdJqJDct2+FL/H53
-	 IsQbQNX8btpH0i/7oj5+q9D/3nFyP9wIs/pWVliRF4f6SJg0JFY43YZynmqE1keUof
-	 bkViluKFntc/lbNwTx7j9g4Y29VRBuCzte6qM4lfs48LaXxwTjnGURUfEPGgm+Vwia
-	 b2CrBmHm9qDXSC7WAwkXSp0c/oESTFpTf16YQfY5BlsLhk9OARNGyFnxprZs73ShpK
-	 KuysNPYvnWDY5g59Pd/Fv0IKCZ7ezQa+CQFhXo+h3HdQlxHw+Ieo8dGRyM/MXHNgld
-	 cJoduRDp/eQBtM0BJcnv78OCpakVw9QaKrP2gc1AHL8U13aQm9aRrRutbKwKNk1+ie
-	 m2sMj0Ck1UZCVXUij3+abYdQwUSaJX0dQT0hY+EZEWUIGmAliciOQWtIhw+Ipx+h3l
-	 ZiAnCrMvZ3kMFok0OgpVTNfXESmfj53C3q2ThkSD2OEDOLDRvw3
+	b=JAafURWrPlfH29DJCYxFE1Isp9vK0MlmRQcLMf71n0Cc89YkqFN9e1+kfBJ/MLAe5
+	 3/zlCdtbstHFvdPAzg2wUigHYH6D5+pK4b4QkEMprPS+ELehf6R1JGzinVZBnnVxea
+	 xaYS6Wy23tk+dSNzN6cqId7Z7/Sz7cxOArV2Yi1FKU/puDr+ozylaeJXWhNcSFOKsH
+	 QAiZwtxaV7/1wdJR+1Yf9uFbKz5kRra3DsToYoju45ga56uz+X/V3LbqqPuXy4u+/9
+	 RMQ6v8mGwo7SAN6nuD1BAHOhTX89O2Z4Lz6V5T84djROsKybSp6P1UEi7hvmDnv592
+	 ZpwdwfhtcGwoh5UqAFzdrqlRL6KX0/iNsmufHD3A8TkU9udryK3ps9LSyuExLBtObF
+	 vKUNI6zd7N+MTD7mDXIyw8+fKJmx0YdNgaoAqV++tTg1qWe1m4c+tXJ6/vSBDt/zLp
+	 7ecwAPknL3j8eK9nnVbherZVnT4jWdy/NYwfYDmGAdaUnAD9efZ
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthew John Cheetham <mjcheetham@outlook.com>,
 	M Hickford <mirth.hickford@gmail.com>
-Subject: [PATCH 04/13] credential: add a field for pre-encoded credentials
-Date: Sun, 24 Mar 2024 01:12:52 +0000
-Message-ID: <20240324011301.1553072-5-sandals@crustytoothpaste.net>
+Subject: [PATCH 01/13] credential: add an authtype field
+Date: Sun, 24 Mar 2024 01:12:49 +0000
+Message-ID: <20240324011301.1553072-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
 In-Reply-To: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
 References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
@@ -55,118 +55,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-At the moment, our credential code wants to find a username and password
-for access, which, for HTTP, it will pass to libcurl to encode and
-process.  However, many users want to use authentication schemes that
-libcurl doesn't support, such as Bearer authentication.  In these
-schemes, the secret is not a username and password pair, but some sort
-of token that meets the production for authentication data in the RFC.
+When Git makes an HTTP request, it can negotiate the type of
+authentication to use with the server provided the authentication scheme
+is one of a few well-known types (Basic, Digest, NTLM, or Negotiate).
+However, some servers wish to use other types of authentication, such as
+the Bearer type from OAuth2.  Since libcurl doesn't natively support
+this type, it isn't possible to use it, and the user is forced to
+specify the Authorization header using the http.extraheader setting.
 
-In fact, in general, it's useful to allow our credential helper to have
-knowledge about what specifically to put in the protocol header.  Thus,
-add a field, credential, which contains data that's preencoded to be
-suitable for the protocol in question.  If we have such data, we need
-neither a username nor a password, so make that adjustment as well.
+However, storing a plaintext token in the repository configuration is
+not very secure, especially if a repository can be shared by multiple
+parties.  We already have support for many types of secure credential
+storage by using credential helpers, so let's teach credential helpers
+how to produce credentials for an arbitrary scheme.
 
-It is in theory possible to reuse the password field for this.  However,
-if we do so, we must know whether the credential helper supports our new
-scheme before sending it data, which necessitates some sort of
-capability inquiry, because otherwise an uninformed credential helper
-would store our preencoded data as a password, which would fail the next
-time we attempted to connect to the remote server.  This design is
-substantially simpler, and we can hint to the credential helper that we
-support this approach with a simple new field instead of needing to
-query it first.
+If the credential helper specifies an authtype field, then it specifies
+an authentication scheme (e.g., Bearer) and the password field specifies
+the raw authentication token, with any encoding already specified.  We
+reuse the password field for this because some credential helpers store
+the metadata without encryption even though the password is encrypted,
+and we'd like to avoid insecure storage if an older version of the
+credential helper gets ahold of the data.
+
+The username is not used in this case, but it is still preserved for the
+purpose of finding the right credential if the user has multiple
+accounts.
+
+If the authtype field is not specified, then the password behaves as
+normal and it is passed along with the username to libcurl.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- credential.c | 14 ++++++++++----
- credential.h |  1 +
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ credential.c | 5 +++++
+ credential.h | 6 ++++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/credential.c b/credential.c
-index 3dec433df5..c521822e5a 100644
+index 18098bd35e..3dec433df5 100644
 --- a/credential.c
 +++ b/credential.c
-@@ -25,6 +25,7 @@ void credential_clear(struct credential *c)
- 	free(c->path);
+@@ -26,6 +26,7 @@ void credential_clear(struct credential *c)
  	free(c->username);
  	free(c->password);
-+	free(c->credential);
  	free(c->oauth_refresh_token);
- 	free(c->authtype);
++	free(c->authtype);
  	string_list_clear(&c->helpers, 0);
-@@ -234,6 +235,9 @@ int credential_read(struct credential *c, FILE *fp)
- 		} else if (!strcmp(key, "password")) {
- 			free(c->password);
- 			c->password = xstrdup(value);
-+		} else if (!strcmp(key, "credential")) {
-+			free(c->credential);
-+			c->credential = xstrdup(value);
- 		} else if (!strcmp(key, "protocol")) {
- 			free(c->protocol);
- 			c->protocol = xstrdup(value);
-@@ -291,6 +295,7 @@ void credential_write(const struct credential *c, FILE *fp)
- 	credential_write_item(fp, "path", c->path, 0);
- 	credential_write_item(fp, "username", c->username, 0);
- 	credential_write_item(fp, "password", c->password, 0);
-+	credential_write_item(fp, "credential", c->credential, 0);
- 	credential_write_item(fp, "oauth_refresh_token", c->oauth_refresh_token, 0);
- 	if (c->password_expiry_utc != TIME_MAX) {
- 		char *s = xstrfmt("%"PRItime, c->password_expiry_utc);
-@@ -366,7 +371,7 @@ void credential_fill(struct credential *c)
- {
- 	int i;
+ 	strvec_clear(&c->wwwauth_headers);
  
--	if (c->username && c->password)
-+	if ((c->username && c->password) || c->credential)
- 		return;
- 
- 	credential_apply_config(c);
-@@ -379,7 +384,7 @@ void credential_fill(struct credential *c)
- 			/* Reset expiry to maintain consistency */
- 			c->password_expiry_utc = TIME_MAX;
- 		}
--		if (c->username && c->password)
-+		if ((c->username && c->password) || c->credential)
- 			return;
- 		if (c->quit)
- 			die("credential helper '%s' told us to quit",
-@@ -387,7 +392,7 @@ void credential_fill(struct credential *c)
+@@ -252,6 +253,9 @@ int credential_read(struct credential *c, FILE *fp)
+ 		} else if (!strcmp(key, "oauth_refresh_token")) {
+ 			free(c->oauth_refresh_token);
+ 			c->oauth_refresh_token = xstrdup(value);
++		} else if (!strcmp(key, "authtype")) {
++			free(c->authtype);
++			c->authtype = xstrdup(value);
+ 		} else if (!strcmp(key, "url")) {
+ 			credential_from_url(c, value);
+ 		} else if (!strcmp(key, "quit")) {
+@@ -295,6 +299,7 @@ void credential_write(const struct credential *c, FILE *fp)
  	}
- 
- 	credential_getpass(c);
--	if (!c->username && !c->password)
-+	if (!c->username && !c->password && !c->credential)
- 		die("unable to get password from user");
+ 	for (size_t i = 0; i < c->wwwauth_headers.nr; i++)
+ 		credential_write_item(fp, "wwwauth[]", c->wwwauth_headers.v[i], 0);
++	credential_write_item(fp, "authtype", c->authtype, 0);
  }
  
-@@ -397,7 +402,7 @@ void credential_approve(struct credential *c)
- 
- 	if (c->approved)
- 		return;
--	if (!c->username || !c->password || c->password_expiry_utc < time(NULL))
-+	if (((!c->username || !c->password) && !c->credential) || c->password_expiry_utc < time(NULL))
- 		return;
- 
- 	credential_apply_config(c);
-@@ -418,6 +423,7 @@ void credential_reject(struct credential *c)
- 
- 	FREE_AND_NULL(c->username);
- 	FREE_AND_NULL(c->password);
-+	FREE_AND_NULL(c->credential);
- 	FREE_AND_NULL(c->oauth_refresh_token);
- 	c->password_expiry_utc = TIME_MAX;
- 	c->approved = 0;
+ static int run_credential_helper(struct credential *c,
 diff --git a/credential.h b/credential.h
-index dc96ca0318..9db892cf4d 100644
+index acc41adf54..dc96ca0318 100644
 --- a/credential.h
 +++ b/credential.h
-@@ -138,6 +138,7 @@ struct credential {
- 
- 	char *username;
- 	char *password;
-+	char *credential;
- 	char *protocol;
- 	char *host;
+@@ -143,6 +143,12 @@ struct credential {
  	char *path;
+ 	char *oauth_refresh_token;
+ 	timestamp_t password_expiry_utc;
++
++	/**
++	 * The authorization scheme to use.  If this is NULL, libcurl is free to
++	 * negotiate any scheme it likes.
++	 */
++	char *authtype;
+ };
+ 
+ #define CREDENTIAL_INIT { \
