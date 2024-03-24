@@ -1,138 +1,186 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90FD179BE
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 15:21:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3247182D4
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 15:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711293668; cv=none; b=aauNduizXjcBLC2gFoCTKJ+WTj/MtWIkeYNW1I1zD0KwYiX7jqyduZMvKKVWk8O3UAV7CZyAuFuAg8FUqE3c8bdHZQvMuzIqcr8tApPhq8o4vghhL3bLkACfQaDS5rUwX9rqjMxflAcBaruViKqYbsC6QwF+XLhcfbMbvzmHp+A=
+	t=1711295149; cv=none; b=rU1qhOE79WjzR07mOwq6hWx+UCwiPmLhEYl+7mvQPMal0b/sosH1KypIe9haNlRHITAKI9FvEMtOtUEwrQX9s/bDPvUKJFQ52mfraKcNj9t1DKtjADaQ+QHztBj23g8eRhUHKIVaRDVXWPyA3sbO7QUuoRDUERVLG1fikDY6qNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711293668; c=relaxed/simple;
-	bh=9nLQj9xKm6fEvCauKh8ldQXOAvsa1evltRjCR5udwzM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s2xB6k5ntB3Wmqw3vPpGEolbbTZlbaY8+khI+2Ht92381e08xqaLyYxveEsbdwSL7PQtkPYxO2RPb7dp+Zuhc5kF5VIT9n2tszI7EqP4irnA7qwUD/biH8pwAwoYXE3M7+ih3FyX08+h8X7d68Z04YU1hVt0U++14og2KLKeJyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=lHlXXktV; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1711295149; c=relaxed/simple;
+	bh=VAutYhKnmcHbCGcDFX7v82ijTSLWwhOYhJeiW/5ovQc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OHT4cPw4YkxAXZiAuk3vFlKGVHcj6Ke9ROdwDMzgMn5+Me8jzHoJofxDU4NHD/ak1yWtUY136js1ZwNrtNBNE1ySf9qQPmJL/lMb1upO3a8D0c2b5xzxSxDI0zfgBxYrwUHcdx9JEiwF5BKJmHyXkErhyBTOZXB2NiGp2yDvY/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyVRTxM9; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lHlXXktV"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 8A2AD5B41A;
-	Sun, 24 Mar 2024 15:21:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1711293664;
-	bh=9nLQj9xKm6fEvCauKh8ldQXOAvsa1evltRjCR5udwzM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=lHlXXktVHa6QWjhi9Dbl+/QMcy0PbowQuWTSUJ53BAuKU4EtCJq7GSr7AGVUPsMcN
-	 r7E7owN9Lbw1qdAsrzKllQg9KmrD68NNW16uvv6oF1cYYqPQBgzim/nsLysbqE5rY7
-	 GkSkscfTQR5MBTAFvRQ4lnFIhkSGsKCvamRPrZmtTL8yAtUVcI4Co0f7/zLgi4tuqA
-	 WCKL1Yd89BceMRx6aeGmfgMmgQ/BVVNNSS0A/VEXHOg8uvc3wbm3xgDmna83wzBiyj
-	 3kjlOQGeGYlshyXTbb2yKPB8hD5Zj0/LqTGSOkdINc6iKv2HqtmNiQZT74RyDxtOok
-	 dgmrEAtqgocC3Wy/gmK3fXqqxHdCnTmgSigOxlEbKLt2yLYbSFmzGnUIAUjuZdTjoR
-	 5q/ntI69IswSLBTE+RllCCB0FMFQojWSrfCzRp0iYpSY75aXJNzUpv1d1kqW8zRw/+
-	 ficv7pEg7k3Lq8VFbAsMAyhEPT2KXwRkcUTSLfcOaob8o4ikP/i
-Date: Sun, 24 Mar 2024 15:21:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Matthew John Cheetham <mjcheetham@outlook.com>,
-	M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH 00/13] Support for arbitrary schemes in credentials
-Message-ID: <ZgBE37Xs3TQEF2c-@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Matthew John Cheetham <mjcheetham@outlook.com>,
-	M Hickford <mirth.hickford@gmail.com>
-References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
- <xmqqedc0v029.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyVRTxM9"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-341c7c8adf3so557579f8f.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2024 08:45:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711295146; x=1711899946; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=s6/WF8Zb55aRG/tWcuaRNFqMV8ythzvGsPTu2FOHV0A=;
+        b=fyVRTxM9evmXWgvfrxNTvMs0JT7nYnrXOO0wN4w6yhFQdIwgwEKN/4HqTlhdbn4AJK
+         DHOMFFbIPBoHpmFyBadtaptmW4SB5mP6bhR3Nizi7fqmcyNrnfDDyVHqL1DnUxOxZp0u
+         oLpp1UIl1li5C/UmJKDDGb7PI+mcfO2w7332touLfCoHkvHHcJnzGRWHC3gXGzkM1bgn
+         JWFBT1ab60MNjdJFvJXsIJGU+mWZpwCjKuwKGhoKuDDYdL1Cu4aadcpAytuJlIKrPPgM
+         99mSUL8B5Tfse5h/9QnhKMaVH3ZJii6WuCPXI+NdET79fdwvKdZwcWjwO9N7O0HC6v61
+         l0jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711295146; x=1711899946;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s6/WF8Zb55aRG/tWcuaRNFqMV8ythzvGsPTu2FOHV0A=;
+        b=bD3hUtbSq6ZJ+AKuBaRVZS3PjesP4e/3+5l2vXKuJLwnK83O/2jeqS3XPMNllwdRDo
+         B+/SSXPZdnw3sU30EvqwFeSCmd0a9dOxXixtg0T+Q51RoUdaetspfNNzk2WxnRfwtWuC
+         w4XNBGfsyJWdRm8pkFrxr0itOrV/lJf7w8e/OTwtvhiUAg41fehDcbnOkgTSJaKQ7mEF
+         +Gm4DCVgQ0qiN5wWTBvJmxeOuMJCXYbyD0J7R9vEitbfacVSIKPNOL53KZ1x5EIGKuJE
+         UwOjvJUFGVZeqhIdLY8JBI6myyf+vF3WcgwFWJsQlXUpqRVx1SIoFLEoC4/tmW7sB1tR
+         WLBg==
+X-Forwarded-Encrypted: i=1; AJvYcCXSxBMQYHa9jFXJQJBb5joddwueMlYXgjuNwvta0fVVUVO9rIucG8d78Jbo+MBnLmkAIU0rX4gY42373o1m4ipemmFG
+X-Gm-Message-State: AOJu0YyVihaAqWo2eNYC5/R0LM3KOwWG3PowbMYagrBlqI0dwds2abVt
+	3CB7oHNSJJ1n8D8/yjYr2uRGq2D+do+oA6GoUjMkUBJsgX48EOkbmZa981t8
+X-Google-Smtp-Source: AGHT+IGoQyYrj5yHxI5SNH2U6f5s8IqNteOxxPWQ5Kzbly4U6hzFOq47Tq0DulNNNl93Z+BDwYYgYw==
+X-Received: by 2002:a5d:5245:0:b0:33e:c593:bb08 with SMTP id k5-20020a5d5245000000b0033ec593bb08mr3054839wrc.13.1711295146158;
+        Sun, 24 Mar 2024 08:45:46 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443? ([2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443])
+        by smtp.gmail.com with ESMTPSA id w17-20020adfcd11000000b0033e786abf84sm7043382wrm.54.2024.03.24.08.45.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 24 Mar 2024 08:45:45 -0700 (PDT)
+Message-ID: <1cce271f-c3df-432b-94ff-bf7b11c6924d@gmail.com>
+Date: Sun, 24 Mar 2024 15:45:45 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uxd7PzaOO6YsejW3"
-Content-Disposition: inline
-In-Reply-To: <xmqqedc0v029.fsf@gitster.g>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/6] maintenance: cleanup $XDG_CONFIG_HOME/systemd/user
+Content-Language: en-US
+To: Max Gautier <mg@max.gautier.name>, git@vger.kernel.org
+Cc: =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+ Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <20240322221327.12204-1-mg@max.gautier.name>
+ <20240322221327.12204-5-mg@max.gautier.name> <Zf636bsHs9woXRAS@framework>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <Zf636bsHs9woXRAS@framework>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Max
 
---uxd7PzaOO6YsejW3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 23/03/2024 11:07, Max Gautier wrote:
+> On Fri, Mar 22, 2024 at 11:11:09PM +0100, Max Gautier wrote:
+>>   
+>> +/*
+>> + * TODO: in the future (~2026 ?) remove this cleanup code
+>> + */
 
-On 2024-03-24 at 02:24:46, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > ... and because of this difficulty and the fact that NTLM uses cryptogr=
-aphy
-> > known to be insecure since 1995, there is often little interest in
-> > implementing this support outside of libcurl. However, it would be
-> > helpful if people who want to use it can still use it.
->=20
-> This position was a bit surprising to me to come from you, but
-> perhaps I am mixing up my recollection of your past work on this
-> project with somebody else's?  I somehow expected to hear something
-> more like "if a less secure thing is cumbersome to implement, let it
-> be, as that is better for the world".  But I am OK to add less secure
-> thing as long as it is an opt-in "easy way out".
->=20
-> Everything else I read in the cover letter made sense to me.  I just
-> wanted to say that the above part was a bit surprising.
+That is rather optimistic - users only run "git maintenance start" once 
+so any unit files that have been written in the past will exist well 
+beyond 2026.
 
-I do firmly feel that NTLM should go gentle into that good night.
+>> +static void systemd_delete_user_unit(char const *unit)
+>> +{
+>> +	char const	file_start_stale[] =	"# This file was created and is"
+>> +						" maintained by Git.";
+>> +	char		file_start_user[sizeof(file_start_stale)] = {'\0'};
+>> +
+>> +	char *filename = xdg_config_home_for("systemd/user", unit);
+>> +	int handle = open(filename, O_RDONLY);
+>> +
+>> +	/*
+>> +	 * Check this is actually our file and we're not removing a legitimate
+>> +	 * user override.
+>> +	 */
+>> +	if (handle == -1 && !is_missing_file_error(errno))
+>> +		warning(_("failed to delete '%s'"), filename);
+>> +	else {
+>> +		read(handle, file_start_user, sizeof(file_start_stale) - 1);
+> 
+> Actually that fails -Werror because I don't check read return.
+> Alternative below (on top of this one), with one question:
+> Are VLA using size_t const OK ? It's folded to a constant array by gcc
+> but I don't know if that causes portability problem with other platforms
+> ? I can always repeat the sizeof expr if it's a problematic construct.
 
-However, we've seen a lot of user questions on Git LFS from users who
-want to use NTLM or Digest, which we don't support and probably will not
-for security and maintainability reasons, but which their corporate
-environment imprudently requires. Thus, my goal is to make it _possible_
-for people to implement this, but it to make it their responsibility (or
-that of a suitable open source project) to do so instead of asking me to
-maintain it.  That, I think, is a fair and equitable tradeoff for this
-situation.
+I think it would be easier to use strbuf_read_file() instead - it is 
+only a small file so there is not really any advantage in just reading 
+the first line. Something like
 
-Also, right now, Windows users sometimes choose to use the older v2.13.3
-version of Git LFS which, due to a Go standard library bug, has an
-arbitrary code execution vulnerability, but which did support NTLM.
-Thus, it would also be better for security to have people on a suitably
-patched version of Git LFS with an external NTLM helper.
+static int systemd_delete_user_unit(const char* unit)
+{
+	int ret = 0;
+	struct strbuf buf = STRBUF_INIT;
+	char *filename = xdg_config_home_for("systemd/user", unit);
 
-This series would also, in an approach that's better for security, allow
-people to use better Kerberos mechanisms than what Windows supports
-natively, or to use an AWS HMAC-v4-style request signing (using
-HMAC-SHA-256) if they want to do so, both of which would be a win for
-security.
+	if (strbuf_read_file(&buf, filename, 0) < 0) {
+		if (errno != ENOENT)
+			ret = error_errno(_("could not read '%s'", filename));
+		goto out;
+	}
+	if (starts_with(buf.buf,
+			"# This file was created and is maintained by git.\n") &&
+	    unlink(filename))
+		ret = error_errno(_("could not remove '%s', filename));
 
-I could have put all of this into the cover letter, but I felt it was
-pretty long and didn't want to sell this as an advantage only for Git
-LFS when I think it provides general benefit for Git users.  I know
-the policy of the project is not to prioritize any one external
-project, and I try to be sensitive to that here.
+out:
+	free(filename);
+	strbuf_release(&buf);
+	return ret;
+}
 
-I don't think this constitutes a marked change in my historical
-"let's-remove-all-the-obsolete-cryptography-and-obsolete-operating-systems"
-approach, but I see how it might look that way at first glance.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Best Wishes
 
---uxd7PzaOO6YsejW3
-Content-Type: application/pgp-signature; name="signature.asc"
+Phillip
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZgBE3gAKCRB8DEliiIei
-gWw+APwOpbt8jraQTwZmjI9F+GgEPd5rBZ9S+UbuUW8m6I1cBwD9F69YfN3oI3KQ
-CvyxjASr0WWlAWzBfOUfAQ0jyhgr5AI=
-=ylmp
------END PGP SIGNATURE-----
-
---uxd7PzaOO6YsejW3--
+> -- >8 --
+> 
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 99b158e481..7fb25ea2b1 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -2332,11 +2332,14 @@ static int systemd_set_units_state(int enable)
+>   /*
+>    * TODO: in the future (~2026 ?) remove this cleanup code
+>    */
+> +
+>   static void systemd_delete_user_unit(char const *unit)
+>   {
+>   	char const	file_start_stale[] =	"# This file was created and is"
+>   						" maintained by Git.";
+> -	char		file_start_user[sizeof(file_start_stale)] = {'\0'};
+> +	size_t const	length = sizeof(file_start_stale);
+> +	char		file_start_user[length] = {'\0'};
+> +
+>   
+>   	char *filename = xdg_config_home_for("systemd/user", unit);
+>   	int handle = open(filename, O_RDONLY);
+> @@ -2348,14 +2351,14 @@ static void systemd_delete_user_unit(char const *unit)
+>   	if (handle == -1 && !is_missing_file_error(errno))
+>   		warning(_("failed to delete '%s'"), filename);
+>   	else {
+> -		read(handle, file_start_user, sizeof(file_start_stale) - 1);
+> -		close(handle);
+> -		if (strcmp(file_start_stale, file_start_user) == 0) {
+> +		if (length - 1 == read(handle, file_start_user, length - 1) &&
+> +				strcmp(file_start_stale, file_start_user) == 0) {
+>   			if (unlink(filename) == 0)
+>   				warning(_("deleted stale unit file '%s'"), filename);
+>   			else if (!is_missing_file_error(errno))
+>   				warning(_("failed to delete '%s'"), filename);
+>   		}
+> +		close(handle);
+>   	}
+>   
+>   	free(filename);
+> 
