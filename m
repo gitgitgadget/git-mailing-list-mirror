@@ -1,36 +1,38 @@
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3BC15E97
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 10:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763C77F9
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 11:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711276973; cv=none; b=ed3Fp4Sc+r3qDQJKCxpaN2WIK0A2JoM/c4POwgPwMzuqhHVxy0GQqinfCSqJxC2bE+PZpMkVZw/s6IFLUKAXZG1H9jpukZp18yCv1P0mwoHxfNFSrC5XXZkj1iVpGx/HOvizfq4NmacMf/Ot+Ixh6DE80Zl6Uu+sXL1H/glhzhk=
+	t=1711279038; cv=none; b=sHPv6ErdzDebKxhB9t4t/o/+JZPLMp41UeLM858w916Uj0aK03CqMIpIB1zwcX1OjiU16cH8fzy5BlN2+mq0UAA5CRWtyOcxqlQ0iSjErheIQsbF2kJwgZZxmCLakBmDp6OeA68rSeD1YLql6llUl2JodEg+KJbFHwXJ1n2NRu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711276973; c=relaxed/simple;
-	bh=4goz9jjxH2AAixz/ya2iOEvdqr4h9yFQynpL9Gz5MDI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=riqTnuZiAxmYkj8NjC3LDhpyio3zV2DJzHSkMZnG+MIYqzh7BJDjw0g9huJENUwqBbB5LJQLz5KOqSOwgDh9/o8Nqw6jzF66w0DRcJjBVQwZG7lNsl6H7m53KGBkmu2vbQcOWXLQgoyFv7mcdhijq4yTDwmjGNLYRlhahlDL7sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=Y7nR2Mla; arc=none smtp.client-ip=85.13.153.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
+	s=arc-20240116; t=1711279038; c=relaxed/simple;
+	bh=lN0LcpBNtmkOUDZ+h3VpambVQjhgEEM/cHHIoAMEGjo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fAk3f5sQkI2E7LWE1XKYyjYFDpxzDt2m2i/IscBvl9AP9b9zAN581GF10c4scAaqk6lVuTXDuv2QYZQTy/uHl5a9lgGtpAB/nSHWCPptg02T65cyfNmDaBCJgD943PPhtY7BHgYhQxrnrooFjuRMdzj6+KJvSeGK7Btt6J7Xwc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=JzmLDXeN; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="Y7nR2Mla"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202402191026; t=1711276968;
-	bh=Bck21o0MRyhnXnPdSOxvnh7PhK9CZ/XSmoFOSruy4Ts=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=Y7nR2Mlapo0LxgUNCBZyWheoQ8ph3DIsIRkiw3IpW+SssMi2NzWzZPs/toIJRfj9D
-	 HfYYb2BIuNFgfcycrDFPy4FyIzrI9Hso5xG69GuqOvIEhcaYt48ZEM6V7ID5wDhJ4U
-	 174/DES6P+bdUmhdedl4MEARxo1FiFu6N1zok7Y3XqkkDTDHwhk/jLlyCGytrortWI
-	 HksgLFM4QHK/Z7FVojnH4adtP55tjKT7WuRJO7kw0nQ65CWCmjMFbmWlw+7Mqi/x12
-	 ulwg/vUMYYOSJ+JP8gob0xCitGMx7xCRZY4pS7QfeQd+95MJsoHthEsJPEj5MxUvMw
-	 8AOJUz4SLMSTA==
-Received: from [192.168.42.22] (29-99-142-46.pool.kielnet.net [46.142.99.29])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id 151103C01DE;
-	Sun, 24 Mar 2024 11:42:48 +0100 (CET)
-Message-ID: <3a197bc5-de6d-4623-9141-b227cf454450@haller-berlin.de>
-Date: Sun, 24 Mar 2024 11:42:47 +0100
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="JzmLDXeN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1711279032; x=1711883832; i=l.s.r@web.de;
+	bh=rOVC+PYtMKk43XsTy2R8xOB20+5eEm9thNf3uJs4PjI=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=JzmLDXeNsuDw6LSjYI4RKXVC7Zv9tqiviXOmAL35bZa7r/vRGmh7P9QC2eHi7h1k
+	 xz3vgxCAUUcSV5L+kvoS9jGdl1XLbzgIDMFaSkH5yHPyWZYXEPxwaCTqlh528D3a6
+	 PyHAGoUuvF2t881xN+scI6hXGx+aevzhtn3uL1LYKe8ITfdwhBGiitsPfCFxkJClD
+	 AR9YBJvqhSmZBEV+kvsaW6qL3awxNfN/QvnHUeOA8DqiTsnrkLzCBsb/stIx48EtZ
+	 Yso903WBKN7nOX8RORLhIVq9Fkji0A4GYdzohhQTQn58+4gGNAffuN21TiQ4hvdW0
+	 kYxbXtbJrUjg/RWUkg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MHmm4-1s3FoE2LOY-00Eqwm; Sun, 24
+ Mar 2024 12:17:12 +0100
+Message-ID: <67aa076b-1a73-45a6-b727-6416963a1bd0@web.de>
+Date: Sun, 24 Mar 2024 12:17:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,83 +40,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
-Content-Language: de-DE, en-US
-From: Stefan Haller <lists@haller-berlin.de>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
-In-Reply-To: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
+Subject: Re: [PATCH 1/2] factor out strbuf_expand_bad_format()
+To: Chris Torek <chris.torek@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+References: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
+ <CAPx1GveKUL1nexRQDYueAVU7G0vp+JzB=5yUf4r4eoRjU49Jcg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAPx1GveKUL1nexRQDYueAVU7G0vp+JzB=5yUf4r4eoRjU49Jcg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: /
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:iLjAdGcSihPocKHf18woeyH7Yw4akay9DFLcCtjJwAi7fAPFp1P
+ 2nAw2LJHfYZl6NIwL0G/iOzbOv+KRmxTXr7SqJLCxy8wqq+seNUbS5O08J7gayrniT7l0ff
+ 1sxvrqJ1vGivMv7b/c8N/Nc/GU513SuxFl8P0aK/10koqJU8ptXwc+TAStXVp//o6l91jnA
+ I2IfBg8BmxPzpFhWv63pw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:e7/7gMyqPs8=;u0XeUoeEgm3PN3UimCzRA2ajl4G
+ Rhxqh4yBoBgXG9Z4TFa0WFQKfAZyxgtA5M3Bv5oRiV2yqCshSDUdJ2alIo0uIo8eGMvmr7Jix
+ y9QMYsMJwLzgRf83ertKU0fn/HL4O01d4W81GGnTBwHvB6Ze1+OZwF3J74Mk5eebmQV+27fZt
+ XCqJVhbYFb8KopVEdG3H9sCnMEOGQd2esRAQ5Q/NTzmPul2x+bKFNQlyfLgJx6Ord5a4h26Q6
+ 1qBTRJk4y25CsecYwSDJ5J3cBMp4ifKLfhPZP2XfDNfCXLkeL+Jo4ZHNCn21WvIkaatkujLOr
+ vKtwYhKjuWFYwScXb86u12i8claT/YsTs1E26g0VVe2QR1I6wEY5RXYja8IO+VUg4TWXfGnJk
+ h0tyCqF3ktZAqvYKZraMrE3Q3m3oKA59BTWdVWxR9UUWYLdXGCsYI8/A2ZPz7rID6R59JvlZ7
+ Ofcc8Qc4QYrhnCCdPY27dDhuzezkNZwY1hclfUu3I3DqHBtkFXVp8BJrd2YCxpnX0v41V3FgT
+ K3hdH25etDPZFecA3wK5M/Lh+AZpEDzNAAWMcs7BF/Z3Yw5rcQliajYIFxme4Uqz7uTlwxsbM
+ pqAX7H2+WnG4ue6XHuGeUVdmf4SDwosUKiNmZifNnHfhlLrscsofejC+ojJ9/IdmFnY6+gnuD
+ ZBtWGmnzpmQUYV/XqfHXjRi0STq9+celItPAJ9Do6EHHeq45jAz9+rdzdc8bS+WP51zmFW9KB
+ 3MguHO4ileriS0HUhvnYLTAaEqQCc19l6b8h2sRcG+yQF0ndTsy8GSNBrHcm56ywjJlOoej5b
+ MQq7dmDyZn5czfeX6EeidJakivOilxLWLg2VfPFuLy10I=
 
-On 17.04.23 10:21, Stefan Haller wrote:
-> The --update-refs option of git rebase is so useful that I have it on by
-> default in my config. For stacked branches I find it hard to think of
-> scenarios where I wouldn't want it.
-> 
-> However, there are cases for non-stacked branches (i.e. other branches
-> pointing at the current HEAD) where updating them is undesirable. In
-> fact, pretty much always, for me. Two examples, both very similar:
-> 
-> 1. I have a topic branch which is based off of master; I want to make a
-> copy of that branch and rebase it onto devel, just to try if that would
-> work. I don't want the original branch to be moved along in this case.
-> 
-> 2. I have a topic branch, and I want to make a copy of it to make some
-> heavy history rewriting experiments. Again, my interactive rebases would
-> always rebase both branches in the same way, not what I want. In this
-> case I could work around it by doing the experiments on the original
-> branch, creating a tag beforehand that I could reset back to if the
-> experiments fail. But maybe I do want to keep both branches around for a
-> while for some reason.
-> 
-> Both of these cases could be fixed by --update-refs not touching any
-> refs that point to the current HEAD. I'm having a hard time coming up
-> with cases where you would ever want those to be updated, in fact.
+Am 24.03.24 um 10:00 schrieb Chris Torek:
+> Minor:
+>
+> On Sun, Mar 24, 2024 at 1:00=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de>=
+ wrote:
+>> @@ -308,8 +301,7 @@ static void show_ce_fmt(struct repository *repo, co=
+nst struct cache_entry *ce,
+>>                 else if (skip_prefix(format, "(path)", &format))
+>>                         write_name_to_buf(&sb, fullname);
+>>                 else
+>> -                       die(_("bad ls-files format: %%%.*s"),
+>> -                           (int)(end - format + 1), format);
+>> +                       strbuf_expand_bad_format(format, "ls-format");
+>
+> This last string constant is clearly supposed to be "ls-files".
 
-Sorry for continuing to beat this dead horse, but I just can't help
-adding this other use case that I just ran into yesterday and that
-supports my point as well.
+LOL.  Seems I can only hold one f-word in my mind at a time.
 
-Suppose I have a branch b, and I realize that it has commits for two
-separate features, so I want to split it up into two independent
-branches. The most natural way to do this is to create a branch b2 off
-of b, do an interactive rebase on b and drop half of its commits, then
-checkout b2, do an interactive rebase on it too and drop the other half
-of the commits. With rebase.updateRefs set to true, the first
-interactive rebase changes both b and b2, which is not what I want.
+Thank you for catching this!
 
-Of course you can argue that since I'm doing an interactive rebase in
-this case, it's easy to see the update-ref todo and delete it if I don't
-want it. That's true, but it's an extra thing that I have to pay
-attention to.
-
-Also, there's a twist as I'm writing this from the perspective of
-lazygit again. Lazygit has a feature to drop commits from a branch
-without doing an interactive rebase; it runs an interactive rebase
-behind the scenes, sets the marked commits to "drop", and continues the
-rebase. I don't get a chance to delete the update-ref todo in this case.
-
-Now you can argue that this is really lazygit's problem then, and I can
-add code to it to delete the update-ref todo in this scenario if that's
-what I want. That's true again, and I will, but it bugs me that we have
-to add clients around stock git to get the desired behavior. I would
-prefer to change git so that it behaves in the desired way in the first
-place.
-
-And finally you can argue again that there's Phillip Wood's
-counter-example, where you create b2 off of b with the intention to
-create a stack, but before you make the first commit on b2 you realize
-there's this unwanted commit in b that you want to drop first. In this
-case you do want to update both b and b2. My take on this is that 1)
-it's a much more rare case in my experience, and 2) it's much easier to
-recover from. Once you realize that b2 wasn't updated by the rebase, you
-just reset --hard it to b again. This is a straight-forward operation
-that even novice git users know how to do. Compare this to having to
-reset b2 back to where it was when you realize that it was updated by
-the rebase and you didn't want it to; you need to get it back from the
-reflog in that case, which is a more advanced operation for many users.
-
--Stefan
+Ren=C3=A9
