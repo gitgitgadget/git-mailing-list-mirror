@@ -1,36 +1,37 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4925114AA8
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 08:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F2C8831
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 08:04:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711267238; cv=none; b=mNpkYmrfOUOvy3awBqfQ6R2T1Jnn5ufJXMVkgbPhZRlEE4OO3CE7xCgG2RyL6T6mFMw0QpCJTsYAdtZQR77CmidaUHWTiCzWz3fP9xUHxY+fMxGHTbJB477wiFzZsKYEg/P1vCJ5tCpG8L/u5MGXkGzk0Icvsz158gkTGYG0E5g=
+	t=1711267466; cv=none; b=AVM30uePsJYVGsh615RG6kU6ha7uaVKW4T1UVRhsZyynJfDCPS0EJe2l7jjMIA1qyrDVus+0Glm0W4MvSlyXCBPKF0Oc2+UJDuL+e8Kd1FmdIrc+vmstp2sJpXpQ/eeoNCLyu0BDaf7C72rG9wUYiJF+b41jFqYjv045gMPvwpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711267238; c=relaxed/simple;
-	bh=KH0C+x2X+5N9D3wVFwO1Xo9UYmcWPWBYI3Z1/VJk4so=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=RgfRHYhkV8UGvFyqU6TEYoSGneSPBEBXGt8ABD8eGe4JaAvmk234zCllH/OutaWWEsHoVRkN+puq1k4kdLaWVBBwySRs2z0xDaUCYGyARXd6/4zj37k++g+FS97OfbCTxrYNkfySLpDjwAmWrhIZ/9dstY4SNY3DoQfNEPMHxKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=LRFfxzv1; arc=none smtp.client-ip=212.227.17.11
+	s=arc-20240116; t=1711267466; c=relaxed/simple;
+	bh=A+YSaDX0ZxHVaMZy9wwzRjrjkZhjLXNgMP6gXHyNyEk=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=QdMi80MsDrxcQqBRrpsBnUDK6ToOlpmifuicowjlDu4XQSZ8Q7dwYof2iNTdJPIt5p7OhzDaZx0pXIMWTpvvNKD6GmpISljf6zm/hqkUqXgajsq3DilLP8zorcCloZVrZMO638M5sdERqUvT/GNZfBbrAlANWliEM7OSTVX0aZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=BruJGMxW; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="LRFfxzv1"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="BruJGMxW"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1711267227; x=1711872027; i=l.s.r@web.de;
-	bh=gTclcn7+oW8t738MZQbgDkM0yQ1dofk8+jBsF1YeiiM=;
-	h=X-UI-Sender-Class:Date:To:From:Subject;
-	b=LRFfxzv1Uo/6O4WvLATHyFgVgzgoBaIef9hbr0r+EWQjxzZ3VuOdAVEPi4Sy+SI9
-	 bMddQW1NLd85aosSeVJO2s/D9VjfrpWE/EqovaEbpdSCNvqU0aVczBB88lNuqN4x3
-	 nI+rmrnbZtPrCGS8JugNjl0XWWe8caFUZgPOiR4a5wkwAFaUlXd1tppXQ+pJFIV7N
-	 JTHaLscAZHIENgD7OcPCrN1ZepnH64WjBctCM1xo6vdLrCSvSvdXNCUf6XAUe8Iwz
-	 uxssZnbzBOLddRlzqCkd1A69f65+xd3T4KIo9YClaPEA81Jz/JdyJ/EJIl4TutSfK
-	 dBDzkbh+m76bKKOcmA==
+	s=s29768273; t=1711267462; x=1711872262; i=l.s.r@web.de;
+	bh=KO3xIc5epXfxTb10zdNMkM35xVpQxUfDbCLLmE170kY=;
+	h=X-UI-Sender-Class:Date:Subject:From:To:References:In-Reply-To;
+	b=BruJGMxW16DmRII7SztsESoV4/X6YZV7+hY3KoPXSNgP56N3/brZN+yi60IuDqOC
+	 M3H/25MoCPkRQyFzEuZ0HoJI3v0ku9TDq1z4wpOo1jHwt3XO5K3xdW/JamfZJPZXq
+	 tA5WygyUD0Sr/Vqvz+PVprHfAXLzLlNwKiiSqsc3j9L6YNsYEJ88AGpqZRiGk/+cT
+	 p7ulg9LiJ0ulYQIm/UUTfKpe6lzNPn7e1WGLsGugfh2ENOu90xAJQqwXHewDrsQzn
+	 i+6Vml04369JUtcIFjmxUnn/DfNyFEl7ZAA7fTpmnir2dB7+RzX/XBcLcgiCt3wbr
+	 86A84tJC/DRRXV0/TA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MbTL1-1rCU2f0dWj-00bry4 for
- <git@vger.kernel.org>; Sun, 24 Mar 2024 08:55:16 +0100
-Message-ID: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
-Date: Sun, 24 Mar 2024 08:55:15 +0100
+Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MCXVZ-1reiCT0LWF-009O7m for
+ <git@vger.kernel.org>; Sun, 24 Mar 2024 09:04:22 +0100
+Message-ID: <62c7ec20-4c1f-4a17-9deb-30699215251a@web.de>
+Date: Sun, 24 Mar 2024 09:04:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,167 +39,87 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
+Subject: [PATCH 2/2] cat-file: use strbuf_expand_bad_format()
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] factor out strbuf_expand_bad_format()
+To: Git List <git@vger.kernel.org>
+References: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
+Content-Language: en-US
+In-Reply-To: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:SVN/FFBfCY8A/C7cb8LC0CYmfLoOkJnCo660QlQwq/rI/KK/Han
- 2j6b9//dR1HzyJ88J5wwRtp/MjGDPpPDwYxgQ8yTuhhantcovF4IbWmX+Y6gk6fjr0fnfEz
- nSD0Cu7gybmPj21KA69K9/SlEwZQwva26FHc9dehQUDkp5FaF0krHt2B3IVbTQ5QCWDyNLm
- 3tcdIBo5pj5ENHcwyGo2w==
+X-Provags-ID: V03:K1:CaiKggvgmKHGUPZ5RKzgxk5W12tpsmNlgfTf2zMiXPU7RDLTu8U
+ WrHLPH/f3pT4TTocuvnhQQmnrDqEvUbv7psz5hnSGhTGRfSIKu0cotLFQBaJ3jxllmLEmlD
+ YS95KOw/JHP/iE01Sp/G3pKhwpf2o4FpZdYm21M9Dj18LKnWSBU95cH/tvyCgCqQxBrx8UV
+ tnYphVYKLfLeDD3NeeXPw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:463lOuvEgyI=;vUDgSrJW1s3cLfpStVWkAdTizqk
- UBxqsnP2SkdFyUL8JyoJ8Nj7u93RXnkv54nJWtxXCl7/ZG69G3CIw9OsJ1Xqg01htn5LJ82p5
- tV2dlXrOcS04Woy6EXpec3KTwRtk8V9f4/IFEv9nmdO0e+7DxqOK/zJam/ZpVGshpxZJDaQ7U
- XpuAckwSNLBVA1ZZD3GyqXoBBOzPSVX9H33CcvNLK1WDg7+EW/hFX2+7fxJGxdmCeN2wQJC/v
- MDxp8RCqaC1Zgto1ymewIdiEPlqBr53vDWDf3oImTQsfPVM4YlwtopyRrC/Z/AD7+LNPE1PG2
- yf/0ToL30W9xZ1emYeRbLHIjaFenEwzq0JaVai69XVltqpF2/R4JTmYeas8nwWVZDiC3VKqod
- fLuidp8Moplv2HVQEpfUnQi8esboUE1g5ELF13o4IQfSbkk7tN0wYjJRXzODM9Yu4f7HSV0Kx
- e8L/Q1zuc1tTbJjpBaa+v/20pb+hgD8Cn5XlZEUxYYRsCGTtkyeb5yhSk/Qs4XSu62tYy+uRe
- V1tvitdlXb+PQqq4kEjk5u9SP5BeKTwTAcdcjtfBOdrvaDM8ORUzZp+J6pslGpJMtE8vRzN+9
- xmXMNBCF2rodlPXIBFFzoWPnt95WffcBQTq92rzrxoS9lainQ335t9SJC+9VDavgK4AblNhrx
- 9QhJwJVzG015wS5vzUHlCHsMeIoatnS1nTUycxKg0oYFGxh0k7Q0/+iC2sb0ej40YiglivdZ7
- Gk7Df8oGyOraZwC0jYzvlwYh/w5jM/Tj7VWtFZ9YjQFWIRXVohbO0mIkTMtC1/EZZfKa2px2i
- VrGf4xWerv1L3vI+3hyM5H0y7gIUZi9WmlhBQIAnNpLiE=
+UI-OutboundReport: notjunk:1;M01:P0:i+37WVCF2NU=;SLklub8iTywUNWTSBqyG62DO40m
+ EVpRpargK50ZhKR0wk/6kQkiSfvIdbuMYucLeEktmolP7B8+ZKXmugV4AOiZuOvKPWDBNgdLr
+ ewUH2hbjYeRzZV7vqT6PFP0SftvYjDBmWwSF0CJo2FSxqz/x5Vnd8lqMe/NMRqPQTgUljUPSm
+ XMnbpbvkXpuTXWT/RUpcmIYuLH8GGa92kBzOoQgAiTFqKg9XEGYihB1HchEtAz7L1uMKTC5d8
+ jJ4HfoF7593u1Mb/W2qU+7jlVOOm4yBub2BDKAyZRIlcLKcyQ8XAagRLA64vSW1tLb09Ebplm
+ hZgyqtngx4i7GY6BSiuzPhsDZMcCr3l9UoPqcF1NPDGv/jdccuR5IzNcCL5xa3tsmFVY9Wp/e
+ pjlHhh0qqraa5YapTvXH/yyRXc0Ic2bUi39Ahy96vAYSwdc3D714jJ7Df1jSyArNQkMop5ze/
+ rPd5ajRModekul67IZ9xYc7lwLWLAxLPGyy/CvEbIq5cviIHjXmsdqBqyOmwogL236IiQ5kf6
+ TddJ99pZuvYdvIxRjnCDiTURtIoZ8UBlaed531OnT1tJa86mESYfj/bLyBCLe85LzX7DKOrnx
+ ohqBnEbGzLcT5P4H+bUYMkSO1guPtDeFwk9dqlLwA9MRH8Qn2zus/ogH5esOaC4FAZdywjFG+
+ 1u16wqUWgB43d26DfHyxIEHMNoGdR36Dmj5s6OqCRjoSDz+ykwg8vEhEctpLViwCuh9L2930v
+ bTFK9ljq+K6/s5Y9JVFoO4g0Wv92hIbKq4k8d18njkKEtDZc0aSToIqVjx1ERzGurk1OxSjE4
+ TO66cG60PWQ68MF/gQtgFd0tbSZ5HpOE465PYXex6PSC4=
 
-Extract a function for reporting placeholders that are not enclosed in a
-parenthesis or are unknown.  This reduces the number of strings to
-translate and improves consistency across commands.  Call it at the end
-of the if/else chain, after exhausting all accepted possibilities.
+Report unknown format elements and missing closing parentheses with
+consistent and translated messages by calling strbuf_expand_bad_format()
+at the very end of the combined if/else chain of expand_format() and
+expand_atom().
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/ls-files.c | 10 +---------
- builtin/ls-tree.c  | 10 +---------
- strbuf.c           | 20 ++++++++++++++++++++
- strbuf.h           |  5 +++++
- 4 files changed, 27 insertions(+), 18 deletions(-)
+ builtin/cat-file.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 92f94e65bf..89e7e726c0 100644
-=2D-- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -266,7 +266,6 @@ static void show_ce_fmt(struct repository *repo, const=
- struct cache_entry *ce,
- 	struct strbuf sb =3D STRBUF_INIT;
-
- 	while (strbuf_expand_step(&sb, &format)) {
--		const char *end;
- 		size_t len;
- 		struct stat st;
-
-@@ -274,12 +273,6 @@ static void show_ce_fmt(struct repository *repo, cons=
-t struct cache_entry *ce,
- 			strbuf_addch(&sb, '%');
- 		else if ((len =3D strbuf_expand_literal(&sb, format)))
- 			format +=3D len;
--		else if (*format !=3D '(')
--			die(_("bad ls-files format: element '%s' "
--			      "does not start with '('"), format);
--		else if (!(end =3D strchr(format + 1, ')')))
--			die(_("bad ls-files format: element '%s' "
--			      "does not end in ')'"), format);
- 		else if (skip_prefix(format, "(objectmode)", &format))
- 			strbuf_addf(&sb, "%06o", ce->ce_mode);
- 		else if (skip_prefix(format, "(objectname)", &format))
-@@ -308,8 +301,7 @@ static void show_ce_fmt(struct repository *repo, const=
- struct cache_entry *ce,
- 		else if (skip_prefix(format, "(path)", &format))
- 			write_name_to_buf(&sb, fullname);
- 		else
--			die(_("bad ls-files format: %%%.*s"),
--			    (int)(end - format + 1), format);
-+			strbuf_expand_bad_format(format, "ls-format");
- 	}
- 	strbuf_addch(&sb, line_terminator);
- 	fwrite(sb.buf, sb.len, 1, stdout);
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index e4a891337c..bd803ace03 100644
-=2D-- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -100,19 +100,12 @@ static int show_tree_fmt(const struct object_id *oid=
-, struct strbuf *base,
- 		return 0;
-
- 	while (strbuf_expand_step(&sb, &format)) {
--		const char *end;
- 		size_t len;
-
- 		if (skip_prefix(format, "%", &format))
- 			strbuf_addch(&sb, '%');
- 		else if ((len =3D strbuf_expand_literal(&sb, format)))
- 			format +=3D len;
--		else if (*format !=3D '(')
--			die(_("bad ls-tree format: element '%s' "
--			      "does not start with '('"), format);
--		else if (!(end =3D strchr(format + 1, ')')))
--			die(_("bad ls-tree format: element '%s' "
--			      "does not end in ')'"), format);
- 		else if (skip_prefix(format, "(objectmode)", &format))
- 			strbuf_addf(&sb, "%06o", mode);
- 		else if (skip_prefix(format, "(objecttype)", &format))
-@@ -135,8 +128,7 @@ static int show_tree_fmt(const struct object_id *oid, =
-struct strbuf *base,
- 			strbuf_setlen(base, baselen);
- 			strbuf_release(&sbuf);
- 		} else
--			die(_("bad ls-tree format: %%%.*s"),
--			    (int)(end - format + 1), format);
-+			strbuf_expand_bad_format(format, "ls-tree");
- 	}
- 	strbuf_addch(&sb, options->null_termination ? '\0' : '\n');
- 	fwrite(sb.buf, sb.len, 1, stdout);
-diff --git a/strbuf.c b/strbuf.c
-index 7827178d8e..449eb610f1 100644
-=2D-- a/strbuf.c
-+++ b/strbuf.c
-@@ -442,6 +442,26 @@ size_t strbuf_expand_literal(struct strbuf *sb, const=
- char *placeholder)
- 	return 0;
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index bbf851138e..fadf2da2f0 100644
+=2D-- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -310,8 +310,8 @@ static int is_atom(const char *atom, const char *s, in=
+t slen)
+ 	return alen =3D=3D slen && !memcmp(atom, s, alen);
  }
 
-+void strbuf_expand_bad_format(const char *format, const char *command)
-+{
-+	const char *end;
-+
-+	if (*format !=3D '(')
-+		/* TRANSLATORS: The first %s is a command like "ls-tree". */
-+		die(_("bad %s format: element '%s' does not start with '('"),
-+		    command, format);
-+
-+	end =3D strchr(format + 1, ')');
-+	if (!end)
-+		/* TRANSLATORS: The first %s is a command like "ls-tree". */
-+		die(_("bad %s format: element '%s' does not end in ')'"),
-+		    command, format);
-+
-+	/* TRANSLATORS: %s is a command like "ls-tree". */
-+	die(_("bad %s format: %%%.*s"),
-+	    command, (int)(end - format + 1), format);
-+}
-+
- void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *=
-src)
+-static void expand_atom(struct strbuf *sb, const char *atom, int len,
+-			struct expand_data *data)
++static int expand_atom(struct strbuf *sb, const char *atom, int len,
++		       struct expand_data *data)
  {
- 	size_t i, len =3D src->len;
-diff --git a/strbuf.h b/strbuf.h
-index e959caca87..c758de3729 100644
-=2D-- a/strbuf.h
-+++ b/strbuf.h
-@@ -337,6 +337,11 @@ size_t strbuf_expand_literal(struct strbuf *sb, const=
- char *placeholder);
-  */
- int strbuf_expand_step(struct strbuf *sb, const char **formatp);
+ 	if (is_atom("objectname", atom, len)) {
+ 		if (!data->mark_query)
+@@ -343,7 +343,8 @@ static void expand_atom(struct strbuf *sb, const char =
+*atom, int len,
+ 			strbuf_addstr(sb,
+ 				      oid_to_hex(&data->delta_base_oid));
+ 	} else
+-		die("unknown format element: %.*s", len, atom);
++		return 0;
++	return 1;
+ }
 
-+/**
-+ * Used with `strbuf_expand_step` to report unknown placeholders.
-+ */
-+void strbuf_expand_bad_format(const char *format, const char *command);
-+
- /**
-  * Append the contents of one strbuf to another, quoting any
-  * percent signs ("%") into double-percents ("%%") in the
+ static void expand_format(struct strbuf *sb, const char *start,
+@@ -354,12 +355,11 @@ static void expand_format(struct strbuf *sb, const c=
+har *start,
+
+ 		if (skip_prefix(start, "%", &start) || *start !=3D '(')
+ 			strbuf_addch(sb, '%');
+-		else if (!(end =3D strchr(start + 1, ')')))
+-			die("format element '%s' does not end in ')'", start);
+-		else {
+-			expand_atom(sb, start + 1, end - start - 1, data);
++		else if ((end =3D strchr(start + 1, ')')) &&
++			 expand_atom(sb, start + 1, end - start - 1, data))
+ 			start =3D end + 1;
+-		}
++		else
++			strbuf_expand_bad_format(start, "cat-file");
+ 	}
+ }
+
 =2D-
 2.44.0
