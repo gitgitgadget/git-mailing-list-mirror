@@ -1,118 +1,117 @@
-Received: from smtp05-ext.udag.de (smtp05-ext.udag.de [62.146.106.75])
+Received: from gavdos.tim-landscheidt.de (gavdos.tim-landscheidt.de [116.203.46.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E236C6FB1
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 18:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.146.106.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203C3D518
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 18:57:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.46.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711305508; cv=none; b=axpzggmnIxcv0cTrL01Z3FlR127JyuBogLWLUt3HkjEMWN3UVi5ixJw47BTC7O3zta4Jwcdz3l9RzBBfBGSgT6RCffRkiDN6xpi+WrPL0UDwU8UupLs3aE7ygDwQnoJngpt2s13ktr0k1wznH/+iieVwsg9pAhMks3QGT5ClDhI=
+	t=1711306655; cv=none; b=Efy0LuzI6Xr3wUnSH1y80PmN2QGeAwf0xuyeIUGGh/+0SeuoHykYbPQvaopc1ZD1qnL81MJhK7TyJNx90BcfA4enIVJ91uwMF5LI0ju2nncQArvrcVatkKHK03XeRRC8T9GyYDO/zYEAHduyboaP7Q63jXvaJ0V+a5wLNuEdbG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711305508; c=relaxed/simple;
-	bh=A6E9v4RRBP8bitEg9ezVoRinlMB9VzSJwCCEKWVbIxM=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=jU1Gwtqo/3WFJnTEj3aNEYuCQx2jKo80EOId+YfKeSKpBBqEBJCT0uOjtbUoFjGGCD2CtDtlOOCpvaqb9LqJp+64NShNTK7ORV7WytOoDyqHJUXhnWrjqNlS73qBM5g1b8VvptV3I1qodweTSA8uPXeE7tR5JPT6lIsNVM8H0Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rohdewald.de; spf=pass smtp.mailfrom=rohdewald.de; dkim=pass (2048-bit key) header.d=rohdewald.de header.i=@rohdewald.de header.b=X4gSLyB5; arc=none smtp.client-ip=62.146.106.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rohdewald.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rohdewald.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rohdewald.de header.i=@rohdewald.de header.b="X4gSLyB5"
-Received: from [10.210.137.29] (p4fd4440a.dip0.t-ipconnect.de [79.212.68.10])
-	by smtp05-ext.udag.de (Postfix) with ESMTPA id 27996E02D2
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 19:28:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rohdewald.de;
-	s=uddkim-202310; t=1711304902;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=4i1qldwgIUgcGQroTiQJrTgCOuheMArj3zOs9KgXlto=;
-	b=X4gSLyB5loL/D9mTUmbasIj9l8nORYvw8CIHkpjsP/sxR2MtRxVLbOnrGJD9vNXYNT7zl9
-	qPI0vkYMqcDoT+RKEBwN57g/HvfJLzatqAouEthnFhAYhdfXZVs9Q+RpTSUwbEO7sr1pW5
-	xma2VBSrDNKHUmaiUKoEMf5qeOL2VOn0WhlCAfNzDyIhaPhJbDNaY9j9W6a7KGkoiOwVHS
-	pYZHpVdAhFDsJx5/1RDLhg+jeLtj3aoqe8Qgtv5C0qDC10AWy3CuEa4SNptSlZdV9w7GqX
-	R5GkBVls3VYDetOmAXS6FRjhRZW4UmwzijHvaGApI+DvGsWSSeGoxCMuQjib7Q==
-Message-ID: <88a694de4a7f767613475ef1d19292a69eaccb07.camel@rohdewald.de>
-Subject: segfault with git rebase --abort
-From: Wolfgang Rohdewald <wolfgang@rohdewald.de>
-To: git@vger.kernel.org
-Date: Sun, 24 Mar 2024 19:28:21 +0100
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1711306655; c=relaxed/simple;
+	bh=xscuITJzvqN7hLX8y7LkBc9pfsnTzZk09N+9xmHcmEI=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=nJNtUEt2ni7pVCN7qo8GktTwBXnUZ5qnd39AefDFHMIqKB3e4ECNTbOp0BDKReLnyxzZSpelE2kpwp/Blp+sQyWYRRQpuRW4xtc4Gz/qBWMAeVSO0rKAtvU+TBUQVwehHaxt1nJkxG7CnC5tGVgd4rUTivMrrzVwzfY69BZPYKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tim-landscheidt.de; spf=pass smtp.mailfrom=tim-landscheidt.de; arc=none smtp.client-ip=116.203.46.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tim-landscheidt.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tim-landscheidt.de
+Received: from [146.0.233.147] (port=51428 helo=vagabond)
+	by gavdos.tim-landscheidt.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <tim@tim-landscheidt.de>)
+	id 1roT22-00GPVa-2t;
+	Sun, 24 Mar 2024 18:57:22 +0000
+From: Tim Landscheidt <tim@tim-landscheidt.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: Inconsistent/buggy behaviour of "git config --add"
+Organization: https://www.tim-landscheidt.de/
+References: <87o7b5dj8h.fsf@vagabond.tim-landscheidt.de>
+	<xmqq8r28ygwi.fsf@gitster.g>
+Date: Sun, 24 Mar 2024 18:57:21 +0000
+In-Reply-To: <xmqq8r28ygwi.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	23 Mar 2024 10:52:45 -0700")
+Message-ID: <87o7b3xxta.fsf@vagabond.tim-landscheidt.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.3 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Authentication-Results: smtp05-ext.udag.de;
-	auth=pass smtp.auth=wolfgang@rohdewald.de smtp.mailfrom=wolfgang@rohdewald.de
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-git rebase -i
+Junio C Hamano <gitster@pobox.com> wrote:
 
-git rebase --abort # boom
+> [=E2=80=A6]
 
-git status only shows changes to be committed
-I can mail or upload the git archive, that would be 230MB
+>> So on one hand, "--add" must be given before the key to add
+>> a line, but if on the other hand one passes the option after
+>> the key and before the value, it is literally taken as the
+>> value and the value does not seem to be interpreted as a
+>> value-pattern, either.  However, if the value is missing,
+>> Git correctly recognizes that this does not make sense.
 
-git fsck;git repack;git prune;git gc does not help
+> Not really.  I agree that the "git config" syntax is messy, but I
+> followed your example with "git config --help" (especially its
+> SYNOPSIS section) in hand, and reached the above explanation, which
+> your conjecutre does not quite match.
 
-Happens with git 2.39 and with latest git commit 11c821f2f2a31e70fb5cc449f9=
-a29401c333aad2, compiled with -g -O0
+I respectfully disagree (somewhat).  git-config(1) reads:
 
-gdb:
+| [=E2=80=A6]
 
-Starting program: /home/wr/bin/git rebase --abort
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+|        Multiple lines can be added to an option by using
+|        the --add option. If you want to update or unset an
+|        option which can occur on multiple lines, a
+|        value-pattern (which is an extended regular
+|        expression, unless the --fixed-value option is
+|        given) needs to be given. Only the existing values
+|        that match the pattern are updated or unset. If you
+|        want to handle the lines that do not match the
+|        pattern, just prepend a single exclamation mark in
+|        front (see also the section called =E2=80=9CEXAMPLES=E2=80=9D), but
+|        note that this only works when the --fixed-value
+|        option is not in use.
 
-Program received signal SIGSEGV, Segmentation fault.
-0x00005555557ef89a in has_rerere_resolution (id=3D0x5555559f5950) at rerere=
-.c:167
-167             return ((id->collection->status[variant] & both) =3D=3D bot=
-h);
-(gdb) bt
-#0  0x00005555557ef89a in has_rerere_resolution (id=3D0x5555559f5950) at re=
-rere.c:167
-#1  0x00005555557f249c in rerere_clear (r=3D0x5555559ea220 <the_repo>, merg=
-e_rr=3D0x7fffffffc0a0) at rerere.c:1249
-#2  0x000055555562388e in cmd_rebase (argc=3D0, argv=3D0x7fffffffd8b0, pref=
-ix=3D0x0) at builtin/rebase.c:1315
-#3  0x0000555555574b71 in run_builtin (p=3D0x5555559b6010 <commands+2256>, =
-argc=3D2, argv=3D0x7fffffffd8b0) at git.c:469
-#4  0x0000555555574f8c in handle_builtin (argc=3D2, argv=3D0x7fffffffd8b0) =
-at git.c:724
-#5  0x00005555555751b0 in run_argv (argcp=3D0x7fffffffd71c, argv=3D0x7fffff=
-ffd710) at git.c:788
-#6  0x0000555555575724 in cmd_main (argc=3D2, argv=3D0x7fffffffd8b0) at git=
-.c:923
-#7  0x0000555555673c7a in main (argc=3D3, argv=3D0x7fffffffd8a8) at common-=
-main.c:62
-(gdb) p id->collection->status
-$2 =3D (unsigned char *) 0x0
-(gdb) p *(id->collection)
-$3 =3D {status_alloc =3D 0, status_nr =3D 0, status =3D 0x0, name =3D 0x555=
-5559f5e80 "a8ec6f624ee23ef2e37148a8172ebac3c6639f93"}
+| [=E2=80=A6]
 
-there is no file named a8ec6f624ee23ef2e37148a8172ebac3c6639f93
+|        --replace-all
+|            Default behavior is to replace at most one
+|            line. This replaces all lines matching the key
+|            (and optionally the value-pattern).
 
+This says quite clearly if one wants to /add/ a value,
+"--add" must be given; the default is to /replace/ an
+existing value.
 
-[System Info]
-git version:
-git version 2.44.GIT
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.6.22-25 #1 SMP PREEMPT_DYNAMIC Sun Mar 17 12:35:12 CET 2024 =
-x86_64
-compiler info: gnuc: 12.2
-libc info: glibc: 2.36
-$SHELL (typically, interactive shell): /bin/bash
+The only indication that this might be false is the
+description of "--add" itself which gives another and
+different explanation for the behaviour of "--replace-all":
 
+|        --add
+|            Adds a new line to the option without altering
+|            any existing values. This is the same as
+|            providing ^$ as the value-pattern in
+|            --replace-all.
 
-[Enabled Hooks]
+| [=E2=80=A6]
 
---=20
-mit freundlichen Gr=C3=BCssen
+So the first section states that "only the existing values
+that match the pattern are updated or unset", and here it
+says that if there are no matches, a new line is added.
 
-Wolfgang Rohdewald
+>> My expectation of least surprise is that "git config
+>> section.key --add value" should be equivalent to "git config
+>> --add section.key value".
+
+> You cannot have "--add" as a value by doing so.
+
+> [=E2=80=A6]
+
+The standard way to achieve this would be to use "--",
+i. e. "git config section.key --add -- --add" (apparently
+even part of POSIX as "Utility Syntax Guidelines", but also
+commonly used elsewhere in Git).
+
+Tim
