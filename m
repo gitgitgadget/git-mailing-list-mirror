@@ -1,21 +1,21 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA1418EB3
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 17:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50274199DC
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 17:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711302687; cv=none; b=SLBQvQT/Lh//cIRKa3KOMKCPv2eHPz+MxpDCThWawcxYudbtCmO/ZoEW4JJnJlH3fTzGq5GnX5d50zg4/HAVhRj1OClxI3B8woO4dIlBC681JOpdjSMMagcAUGU+s3AY1gaw93/543+2MRnO5kEV1zSYqjLfA6wzl80Vy4W9i08=
+	t=1711302688; cv=none; b=JaFm9mKBV0pTNLMWbCDpkhEiAsENr+lxQZZRbjQ6B0NcE7tfVaXxRXhstVIXfUSqrRnuqsvgdf8PNsdYon1F+RFA5uWJbcmezLoTtoavuIpDi1/AyEd5bCcdWcDmH0VzzFbJSBlyT9vS2HCB/ganJpI1WNMnVWD1aNCkDa2DvYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711302687; c=relaxed/simple;
-	bh=28rinPfRAsdoVh70bz0iauUpvdwMJnfMmo+qyTwvSvM=;
+	s=arc-20240116; t=1711302688; c=relaxed/simple;
+	bh=diRCxvnw15jmv/h4aepmIdgdcQIdvjAmL01FBXWR/uM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Wc1DaWMfZNZhkMCjjjQdOIH6cSxIam1i1vWfDeyckO/9ysn0vX98q4YUPVt42+P/9Poj7DFcoRc1udXPQakc/3aBvJPpqNMjXSA/qJ0yS7TN7fOO2UDD344CYtVSfSABufKHPGePODlFOAPpweVBx/JE0oZ1tqijl6BPSZDWfbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Nvvth7zz; arc=none smtp.client-ip=116.203.91.91
+	 MIME-Version; b=SZ1G+bDv35nwvDnPZLNDfq21AdG+zmLFmguMtOCR3sFOtF/dKsWlaV5sZ9OZW8VLxj+if88iIw5C07pQnjQJX6/3sqrkQ/p1QPxuKyWOsWIwXQBcCSYElK7g5Bsj94oG4tfINpQcEzcPyvbIDQQhCt2Kzh4P4UyWRWrmF+kcPDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=nlWBf7Qt; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Nvvth7zz"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="nlWBf7Qt"
 From: Dragan Simic <dsimic@manjaro.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
 	t=1711302676;
@@ -23,19 +23,19 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=dg+7xj7Ye+JzMmqAI5BCTMwiMDe08e97lMMeZWUn8sI=;
-	b=Nvvth7zzJlm2YEttzWW9djbf8IqPTQoGZudXzCqREvz6N5T4fDry43xydfUKJTENEZDTfh
-	Pe5SyHwFttG085kIOnzyCffaBjL6ZR2JfGTeKbEn/ydtg0jpWhx/L0hLLvJbK/7p4hmKMW
-	JHnmzMlDm1wRLxKPjtLyH436RJdr7kPT8DDrdtSpYUWJrffUBYk5088fDN3eFszrBXi1xw
-	Sn+8ez3+aTJYbphgAlVFPUP1EBBdI4dLsEGbESmy4u0QD9eEEFUZ5SedAOcoffXrOFMUyD
-	z4cl7j8Od3Y51fEpmeMsuCGY4ykPttvEsN5Y7XdDwZqA165QXJB011edyEXClQ==
+	bh=jHdvZ0KY+fEfQ9drFiQjJlbGj33a3BhftpMz28RJyAE=;
+	b=nlWBf7QtEfcshm/YVCQp61rbWlrS7EwPgnFXt7F6pUDpUA9+FYj3Xjn9Jv0Vwmvwb87RN/
+	+28W94JCmXMtvG4lSxDyI1EK826j7HhrjDKcM9mOs8rYSvX2NgMMiXvOV6O4M2uyIYop7T
+	DyA+KYhXxMXaFQUmBnLg+rexo1l8B70ndGe/H2zKUAUUbdY2NLMTgNjbxMZQU9+qBTqWNL
+	T3zlNMUPiJ1E1yjCLi7AynmhcYq6DuADa1jd4VyBhw01P35T5S5TDwDpXHAoQa5kYtC2WD
+	/EOpAdypBVjHSWiTxsX0yqPBEgZZ/nNM3tn/cKYiirnhR3Gt6bGB9tG944Tslg==
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	sunshine@sunshineco.com,
 	jn.avila@free.fr
-Subject: [PATCH v2 1/3] grep: perform some minor code and comment cleanups
-Date: Sun, 24 Mar 2024 18:51:11 +0100
-Message-Id: <55867253d2925892f5192dbc3145f7bc9221b791.1711302588.git.dsimic@manjaro.org>
+Subject: [PATCH v2 2/3] grep docs: describe --recurse-submodules further and improve formatting a bit
+Date: Sun, 24 Mar 2024 18:51:12 +0100
+Message-Id: <cf9d3f4833f121b271fd8aacf4c0e2e4a9920585.1711302588.git.dsimic@manjaro.org>
 In-Reply-To: <cover.1711302588.git.dsimic@manjaro.org>
 References: <cover.1711302588.git.dsimic@manjaro.org>
 Precedence: bulk
@@ -48,9 +48,14 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Move some variable definitions around, and reflow one comment block, to
-make the code a bit neater after spotting those slightly unpolished areas.
-There are no functional changes to the source code.
+Clarify that --recurse-submodules cannot be used together with --untracked,
+and improve the formatting in a couple of places, to make it visually clear
+that those are the commands or the names of configuration options.
+
+While there, change a couple of "<tree>" placeholders to "_<tree>_", to help
+with an ongoing translation improvement effort. [1]
+
+[1] https://lore.kernel.org/git/CAPig+cQc8W4JOpB+TMP=czketU1U7wcY_x9bsP5T=3-XjGLhRQ@mail.gmail.com/
 
 Signed-off-by: Dragan Simic <dsimic@manjaro.org>
 ---
@@ -59,76 +64,64 @@ Notes:
     Changes in v2:
         - No changes were introduced
     
-    This patch is salvaged from my earlier series, [1] for which it has been
+    This patch is salvaged from my earlier series, [2] for which it has been
     concluded to be not acceptable for merging, because of possible issues
-    with various git scripts. [2]
+    with various git scripts. [3]
     
-    Compared to the version in the earlies series, there are no changes in
-    this version.  As expected and as already discussed, patches like this one
-    inevitably raise a few eyebrows. [3][4][5]
+    Compared to the version in the earlier series, this version adds some more
+    small formatting improvements of the same kind, and also changes a couple
+    of "<tree>" placeholders to "_<tree>_", as suggested by Eric Sunshine. [1]
     
-    [1] https://lore.kernel.org/git/cover.1710781235.git.dsimic@manjaro.org/T/#u
-    [2] https://lore.kernel.org/git/d8475579f014a90b27efaf6207bc6fb0@manjaro.org/
-    [3] https://lore.kernel.org/git/CAPig+cQ6Y2oOaPkKFsD41beXLHjhD++nmf59xrcswpb6_Q-sdA@mail.gmail.com/
-    [4] https://lore.kernel.org/git/xmqqjzlzt61d.fsf@gitster.g/#t
-    [5] https://lore.kernel.org/git/24093dca675c49cfde39f6d6efca2342@manjaro.org/
+    [2] https://lore.kernel.org/git/cover.1710781235.git.dsimic@manjaro.org/T/#u
+    [3] https://lore.kernel.org/git/d8475579f014a90b27efaf6207bc6fb0@manjaro.org/
 
- builtin/grep.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ Documentation/config/grep.txt |  2 +-
+ Documentation/git-grep.txt    | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 982bcfc4b1df..af89c8b5cb19 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -623,13 +623,13 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		     struct tree_desc *tree, struct strbuf *base, int tn_len,
- 		     int check_attr)
- {
--	struct repository *repo = opt->repo;
--	int hit = 0;
-+	int hit = 0, name_base_len = 0;
-+	int old_baselen = base->len;
- 	enum interesting match = entry_not_interesting;
-+	struct repository *repo = opt->repo;
- 	struct name_entry entry;
--	int old_baselen = base->len;
- 	struct strbuf name = STRBUF_INIT;
--	int name_base_len = 0;
-+
- 	if (repo->submodule_prefix) {
- 		strbuf_addstr(&name, repo->submodule_prefix);
- 		name_base_len = name.len;
-@@ -890,19 +890,15 @@ static int pattern_callback(const struct option *opt, const char *arg,
+diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
+index e521f20390ce..10041f27b0c8 100644
+--- a/Documentation/config/grep.txt
++++ b/Documentation/config/grep.txt
+@@ -24,5 +24,5 @@ grep.fullName::
+ 	If set to true, enable `--full-name` option by default.
  
- int cmd_grep(int argc, const char **argv, const char *prefix)
- {
--	int hit = 0;
-+	int hit = 0, seen_dashdash = 0, use_index = 1;
- 	int cached = 0, untracked = 0, opt_exclude = -1;
--	int seen_dashdash = 0;
- 	int external_grep_allowed__ignored;
-+	int i, dummy, allow_revs;
- 	const char *show_in_pager = NULL, *default_pager = "dummy";
- 	struct grep_opt opt;
- 	struct object_array list = OBJECT_ARRAY_INIT;
- 	struct pathspec pathspec;
- 	struct string_list path_list = STRING_LIST_INIT_DUP;
--	int i;
--	int dummy;
--	int use_index = 1;
--	int allow_revs;
+ grep.fallbackToNoIndex::
+-	If set to true, fall back to git grep --no-index if git grep
++	If set to true, fall back to `git grep --no-index` if `git grep`
+ 	is executed outside of a git repository.  Defaults to false.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 0d0103c780af..f64f40e9775a 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -64,9 +64,9 @@ OPTIONS
+ --recurse-submodules::
+ 	Recursively search in each submodule that is active and
+ 	checked out in the repository.  When used in combination with the
+-	<tree> option the prefix of all submodule output will be the name of
+-	the parent project's <tree> object. This option has no effect
+-	if `--no-index` is given.
++	_<tree>_ option the prefix of all submodule output will be the name of
++	the parent project's _<tree>_ object.  This option cannot be used together
++	with `--untracked`, and it has no effect if `--no-index` is specified.
  
- 	struct option options[] = {
- 		OPT_BOOL(0, "cached", &cached,
-@@ -1059,9 +1055,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		recurse_submodules = 0;
+ -a::
+ --text::
+@@ -178,7 +178,7 @@ providing this option will cause it to die.
+ 	Use \0 as the delimiter for pathnames in the output, and print
+ 	them verbatim. Without this option, pathnames with "unusual"
+ 	characters are quoted as explained for the configuration
+-	variable core.quotePath (see linkgit:git-config[1]).
++	variable `core.quotePath` (see linkgit:git-config[1]).
  
- 	/*
--	 * skip a -- separator; we know it cannot be
--	 * separating revisions from pathnames if
--	 * we haven't even had any patterns yet
-+	 * skip a -- separator; we know it cannot be separating revisions
-+	 * from pathnames if we haven't even had any patterns yet
- 	 */
- 	if (argc > 0 && !opt.pattern_list && !strcmp(argv[0], "--")) {
- 		argv++;
+ -o::
+ --only-matching::
+@@ -332,7 +332,7 @@ EXAMPLES
+ NOTES ON THREADS
+ ----------------
+ 
+-The `--threads` option (and the grep.threads configuration) will be ignored when
++The `--threads` option (and the `grep.threads` configuration) will be ignored when
+ `--open-files-in-pager` is used, forcing a single-threaded execution.
+ 
+ When grepping the object store (with `--cached` or giving tree objects), running
