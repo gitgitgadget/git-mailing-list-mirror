@@ -1,132 +1,115 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428FD18651
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 16:05:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE481426F
+	for <git@vger.kernel.org>; Sun, 24 Mar 2024 16:06:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711296313; cv=none; b=g1NdsK3EauTIKrb/KroC5kt6BZvIkVodQ85z6CvWVuSTB1iRCuoNbKsdpBJRsJl3PBDa1LtVgt2af5HakQJ+TnsJbxKyc6+8LOHRHh4w+m1B3k5wBgUb2Q/WlAOcSZeXjn5srudRT6uOYTZg+BSwFJMy2rqVS8pLwc/4DvVWmV8=
+	t=1711296416; cv=none; b=sZGeG+IqTO2zgqq9dOsrxQY+Da4yebQpRCFDHkms6S/Mv0RJhnDN0kDAXBBa/Lbi++wabhyQid9xJiSvN6pt93fTFjklktK4B4fdvr1fW1Yn70BEtV3ZO9Fd4O8aE4JisfXnLQTiJPj8wOfdxTd44svnNE5P211xVfT8xK4dmsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711296313; c=relaxed/simple;
-	bh=X2azCSaI20HkVNGi0cJuutyKoqKx7y/AtbgSFJm1Cgs=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rF/vP/GPnd8mLgaTYAFnFo6G5PNr3SIZ4Rw1AXCjeyw+fEEz2VU8Q01bAaMb2x/hMLA/RaeHNNIPj+Sfo/m84hHExBxTzfj0HIIOKoYnEm8OMf8BWynO3IJ6bpXM62aVuj/lpWH7uZXiPHiMcgGiZzZf5AHOO+hFK4PP1VzZfXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 42OG4lia027333
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Mar 2024 16:04:47 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Christian Couder'" <christian.couder@gmail.com>,
-        "'Stefan Haller'" <lists@haller-berlin.de>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Olliver Schinagl'" <oliver@schinagl.nl>, <git@vger.kernel.org>
-References: <3d835c4b-d026-4c6a-b68e-6989a7a2065f@schinagl.nl> <xmqqwmptzyny.fsf@gitster.g> <01e09c64-4d62-406d-85fe-9fb77939cf63@haller-berlin.de> <xmqqle68x008.fsf@gitster.g> <e896da79-c87b-4475-9890-10051d8ddf76@haller-berlin.de> <CAP8UFD2DhkmVias+RfMESJz9Z-rKKHWHB+MFHcDb9QLO16TOhg@mail.gmail.com>
-In-Reply-To: <CAP8UFD2DhkmVias+RfMESJz9Z-rKKHWHB+MFHcDb9QLO16TOhg@mail.gmail.com>
-Subject: RE: Allow git bisect to auto-skip
-Date: Sun, 24 Mar 2024 12:04:41 -0400
-Organization: Nexbridge Inc.
-Message-ID: <066501da7e04$fecabf40$fc603dc0$@nexbridge.com>
+	s=arc-20240116; t=1711296416; c=relaxed/simple;
+	bh=f8TS1cGRXE5rG44sAeGrKWC4Vm0To4vlpoewONPA7nY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OeFM54XXLae7Gh/lTACTVynZJQjyZO6VXPhhjEJifYOneN/0NGFdM7dxNYJyPhLWcJfbT4mTXo/2xxjk1uCdczOZ99RpFUHWoqFucqBIs2iAL72lsrrEb2VjUJcuuN16yJziYKdVpnqQs2soeqVDy1ze3k2m5CGE8yXtKdMHpJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wxPTxVoB; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wxPTxVoB"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 61C9D1DEDD6;
+	Sun, 24 Mar 2024 12:06:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=f8TS1cGRXE5r
+	G44sAeGrKWC4Vm0To4vlpoewONPA7nY=; b=wxPTxVoBuE2rTEWKvQdkxdMxwp9U
+	af4Q4Mc2yTkO/amGdrJyAirirSl/q2/ThcVjDJGogcrr8iGaFk2GrMz2jjIs32Ea
+	rfKk9A9/vwP9dDCtnwyfECZy9L8mkix0UDbDXpalqyW/Y2oJHJwo/182dfzCwFGu
+	KXNRUfj/U+9MZEA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 595B11DEDD5;
+	Sun, 24 Mar 2024 12:06:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ABF7A1DEDD4;
+	Sun, 24 Mar 2024 12:06:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] factor out strbuf_expand_bad_format()
+In-Reply-To: <cf8f2256-d954-4a3e-bc2a-31b2de4c8e1d@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sun, 24 Mar 2024 12:19:40 +0100")
+References: <27cdcde7-74bc-4ee8-bc84-9a6046292cae@web.de>
+	<cf8f2256-d954-4a3e-bc2a-31b2de4c8e1d@web.de>
+Date: Sun, 24 Mar 2024 09:06:49 -0700
+Message-ID: <xmqqa5mnty06.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 862BC772-E9F8-11EE-B6FA-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQNLgi3b+fMjDR3yv7fp/bqT8+4c/gE2keweARG/cUwBu8we7AI/93BRARCVG0+uKlyG4A==
 
-On Sunday, March 24, 2024 10:29 AM, Christian Couder wrote:
->On Sun, Mar 24, 2024 at 11:16=E2=80=AFAM Stefan Haller =
-<lists@haller-berlin.de> wrote:
->>
->> On 23.03.24 19:43, Junio C Hamano wrote:
->> > Stefan Haller <lists@haller-berlin.de> writes:
->> >
->> >> On 22.03.24 23:31, Junio C Hamano wrote:
->> >>> It often is discovered that a commit breaks bisection after the
->> >>> fact and it is not feasible to rebase all the history after the
->> >>> commit.
->> >>
->> >> This reminds me of a similar problem with git blame, for which we
->> >> have the blame.ignoreRevsFile config to work around it. Couldn't
->> >> there be a similar mechanism for bisect, e.g. bisect.skipRevsFile?
->> >
->> > A Very good point.  If a breakage of a commit is "this does not =
-even
->> > build" kind of breakage, such a mechanism would be an excellent =
-fit.
->> >
->> > But if a breakage is "only this particular test fails and we know
->> > the reason why it fails has nothing to do with the bug we are
->> > chasing", then compiling such a fixed list of commits, or pointing
->> > at such a list with a configuration variable, would not work very
->> > well, I am afraid.
->>
->> That's true, but the same can be said about blame.ignoreRevsFile.
->> There may be commits that contain both uninteresting whitespace
->> changes and real changes (not in a well-maintained project of course
->> :-), so it wouldn't be a good idea to add those to
->> blame.ignoreRevsFile. But that's not a reason not to offer the =
-feature at all.
->
->I am not against the feature, but I think it would be especially useful =
-if the file(s)
->containing the revs that should be skipped
->is(are) tracked in Git. In this case though, any such file wouldn't be =
-used
->automatically after cloning the repo as the bisect.skipRevsFile option =
-would still
->need to be configured.
->
->Also, how much better would this be compared to tracking  "git bisect =
-run" scripts in
->the repo, even if they have to be copied somewhere else before they are =
-launched?
->I wonder about this because writing the conditions that decide whether =
-the current
->commit is good or bad might not be so easy either. So if the goal is to =
-simplify things
->for users, then simplifying all the way by providing example scripts =
-with comments
->about how they could be customized might be even better.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-In some situations, git bisect is used for compile issues, while others =
-in debugging. In development branches, bisect is sufficient. However, if =
-one has multiple production deploy branches, where feature merge squash =
-happens multiple times into multiple branches, this makes finding the =
-offending commit using bisect rather difficult as the defect may come in =
-and out depending on the order in which feature branches are squashed =
-(some may have the bug, while others don't). I can see the point of =
-teaching bisect to knowingly skipping specific versions in this setting, =
-although it is arguable that the investigation probably should not =
-happen on the destination branches where functional stability cannot be =
-guaranteed.
+> @@ -274,12 +273,6 @@ static void show_ce_fmt(struct repository *repo, c=
+onst struct cache_entry *ce,
+>  			strbuf_addch(&sb, '%');
+>  		else if ((len =3D strbuf_expand_literal(&sb, format)))
+>  			format +=3D len;
+> -		else if (*format !=3D '(')
+> -			die(_("bad ls-files format: element '%s' "
+> -			      "does not start with '('"), format);
+> -		else if (!(end =3D strchr(format + 1, ')')))
+> -			die(_("bad ls-files format: element '%s' "
+> -			      "does not end in ')'"), format);
 
-But this brought up a thought. What if bisect had the notion of parallel =
-context: Meaning running two (or more) bisects in parallel on the same =
-repo in search of two semi-independent defects, then analysing =
-convergence between the two analyses - something like
+We used to do these two checks upfront, before the cascade of checks
+that follow from here to the "else die()".
 
- bisect 1: A(good) B(good) C(bad) D(bad);
- bisect 2: A(good) B(good) C(good) D(bad);
- bisect 3: A(good) B(bad) C(good) D(bad),   <- a production-like branch
+But we do not even take advantage of the fact that we already
+checked these two in the following tests.  We do not take advantage
+of the fact that we know where the placeholder ends by computing
+"end" early, and all the checks in the "else if" cascade check that
+the placeholder is enclosed inside a pair of parentheses again and
+again.
 
-with an interpretation that C and D may have interrelated defects but =
-started showing in B in one situation. This is not a well-baked thought, =
-but I can see this having some relevance when sub-modules are involved =
-and bugs exist in more than one sub-module with bisects happening in the =
-main repo. [note: I am not certain where I am going with this idea as of =
-yet].
+So there is no point in optimizing to fail fast by having these two
+tests early.
 
---Randall
+> +void strbuf_expand_bad_format(const char *format, const char *command)
+> +{
+> +	const char *end;
+> +
+> +	if (*format !=3D '(')
+> +		/* TRANSLATORS: The first %s is a command like "ls-tree". */
+> +		die(_("bad %s format: element '%s' does not start with '('"),
+> +		    command, format);
+> +
+> +	end =3D strchr(format + 1, ')');
+> +	if (!end)
+> +		/* TRANSLATORS: The first %s is a command like "ls-tree". */
+> +		die(_("bad %s format: element '%s' does not end in ')'"),
+> +		    command, format);
+> +
+> +	/* TRANSLATORS: %s is a command like "ls-tree". */
+> +	die(_("bad %s format: %%%.*s"),
+> +	    command, (int)(end - format + 1), format);
+> +}
+> +
 
+Now these "pair of parentheses" checks are removed from the "else
+if" cascade, and we check them only to give a different message that
+tells _how_ the format was bad in expand_bad_format().
+
+Looks good.
