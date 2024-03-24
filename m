@@ -1,49 +1,52 @@
 Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EA210F7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E5810E4
 	for <git@vger.kernel.org>; Sun, 24 Mar 2024 01:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711243212; cv=none; b=TutrO2PDvEHQnUgZBodRpFy2v8lR3NX7lz8aa2Xij68/jNI0mK2kwSAC1eIgWmaCz+UakYfy3lVb2rhAJMYqYw1aX1n1WbIan7ZsP77r0to6RZx12cXkBoVFg1Ve/6XoscXdAe1wGch+kD3phuxJ/pL7exDBwIRpDQtC/dYiC+8=
+	t=1711243213; cv=none; b=QR3eDXAArZG8cVYKfKyv3mWDaCznBlTIWd66z1OdcgKVZYW4WjTQ87SKKsMb93KmbAomXU5wiBkhMIocv9JXwN8oI3/ksZW7Lo8BA1PHUP32AnJhPIedXL3qOLaXfU8JXfdVQh56W4FA3fMkbHz+WfrvHtfPOsuhGLSTjDSyFkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711243212; c=relaxed/simple;
-	bh=xnSW/yySgf9Z131zLOiqkdVcjqMykkAvoe8uQMhnDZM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pQfpmBrLiI1iQkd5nHulWUSzhd099kNP5V0PTswP7FoBrOa7NGg34501Sb9wjIAWrcV58q75P923s42LJr6w3oBUwbX+M78F3FTVhPZUfqaH1iDSIe45xJPLGgSTNv1eqzAQ0tateG8+mW7CvaiIxsVNhdXWXZzuf9/VPaxQdBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Unsb8Htv; arc=none smtp.client-ip=172.105.110.227
+	s=arc-20240116; t=1711243213; c=relaxed/simple;
+	bh=flc2Wc51u+HIaZDdabkjLz+DJAqbvsiiDqu2NGfVorQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=X/tN0m9gzja8/xWGp5w7yYtNYQz3IzsfjczlDt87UEFtK9O2HdkdiQ4iCx9TKgIl0/MWLGIyuweYYJsGDvJc6JAB6G1NJ811cddVTzHf9bVXeGHgBBVE0r77ouBTS3RldY3Cj1kRzlHU1j94a+VhshZnolHYbSjQy4MF1VuyeY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=KaWh+XSV; arc=none smtp.client-ip=172.105.110.227
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Unsb8Htv"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KaWh+XSV"
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A83745B41A;
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id CD9615CBB4;
 	Sun, 24 Mar 2024 01:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1711242785;
-	bh=xnSW/yySgf9Z131zLOiqkdVcjqMykkAvoe8uQMhnDZM=;
-	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Unsb8HtvpQWEJjgFP0YcVdgNOSurGmkKTZi6d7Lh7mwXLK1BbfXocq2P4ZyQiEXW4
-	 1ltGuF+yUG71Yma2cVwSI4oCAJY2jqEXdHwOwRsBsmj3lR85zpGKX690WzklDidRAs
-	 F3qlLlVAzy71fQN2gJp6F5gLE8BvQEwb378+3PyMEzO8dW23emdFmkCe/CyFTO9jx4
-	 XDeZhawoyMa+9FiAZDAfAPuNCBTl8Bk9UXqFzfArysEJ+ktA1wm/g6IikzzUyPMWyh
-	 3nhu4GfLD37d5N1OeeD50T5NYafJ/m/8uV0eNHjUfi2eVd3GuUW5KCw7itosSB+e+/
-	 EzRk7zWGeiGNXPsPXebDYVFrTwolHBwq8NFT/OSaRpSdYc1nntgAkCetIseJk2fzcg
-	 VYLH6csYsJU2a6xE5z3oNsAbprqXjPLhXZMYo2a7XFKcgJJlXROWtUGjCFBccF60X5
-	 AexUztNBogBtGfgX/qUfSSR5nAd5AZxprshSEE45jlCKuj3X7/R
+	bh=flc2Wc51u+HIaZDdabkjLz+DJAqbvsiiDqu2NGfVorQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=KaWh+XSV3jF6rljHM/fRYUmLyw4Bqc7hbrhe+hrx5/9uxwKjfAeYlbOeAyNbVxp9l
+	 hzlCowsBGHHRu4lvgOa+Bu+qi0Z1bYq5FKu+ngyEZj+e4jgxxrRRyzGc6vK38os8Gk
+	 lMLQETb4Ugvl+avN4ElaVqu9UB5u+1+wJEjLYeOrDjnR+kMUSWHV0CJof27HVeOLVJ
+	 P/97E+FydONuK0cFQMVgB0jzKQeZgxHLaCloKKjNxsteT8XgP6iF23+JClyoQgXI20
+	 2oqGJMrd3n2nVit33GPhXI1E0KFE0NM0whiHAVIZNvATSHT4mGzZhhSdaFj4pJJqo5
+	 C84tAsyMp6nLK5AWT+1wwkwtvNlxu0naYlGbdIPkDQLKOD4kKb89yEXDHArQk7Rb/v
+	 jnQr5J04MPjqq8UCkIBA89HIqLL5pyPyniRElIzaciGTl+nbYmfg/v5k9hslVaPQNW
+	 DcvG/t6BV5jRdMp6RDJbwwj4TktDwn2bbSESeM7EHSN2GPRkvgc
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthew John Cheetham <mjcheetham@outlook.com>,
 	M Hickford <mirth.hickford@gmail.com>
-Subject: [PATCH 00/13] Support for arbitrary schemes in credentials
-Date: Sun, 24 Mar 2024 01:12:48 +0000
-Message-ID: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+Subject: [PATCH 03/13] http: use new headers for each object request
+Date: Sun, 24 Mar 2024 01:12:51 +0000
+Message-ID: <20240324011301.1553072-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
+In-Reply-To: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,114 +55,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Right now, HTTP authentication in Git is mostly limited to approaches
-that require a username and password or are Kerberos (GSSAPI).  In
-addition, we effectively require that libcurl (or, for other software,
-such as Git LFS, using the credential helper, that HTTP library) knows
-how to implement the authentication scheme.
+Currently we create one set of headers for all object requests and reuse
+it.  However, we'll need to adjust the headers for authentication
+purposes in the future, so let's create a new set for each request so
+that we can adjust them if the authentication changes.
 
-However, this poses two sets of problems.  First, some sites, such as
-Azure DevOps, want to use Bearer authentication, which we don't support.
-This is implemented using `http.extraHeader`, which is not a secure way
-to store credentials, since our credential helper protocol does not
-support this functionality.
+Note that the cost of allocation here is tiny compared to the fact that
+we're making a network call, not to mention probably a full TLS
+connection, so this shouldn't have a significant impact on performance.
+Moreover, nobody who cares about performance is using the dumb HTTP
+protocol anyway, since it often makes huge numbers of requests compared
+to the smart protocol.
 
-In addition, other tools using the credential helper protocol do not
-support the variety of authentication mechanisms that Git does.
-Specifically, making NTLM function in a useful way on Windows is
-nontrivial and requires extensive integration and testing with C code,
-and because of this difficulty and the fact that NTLM uses cryptography
-known to be insecure since 1995, there is often little interest in
-implementing this support outside of libcurl. However, it would be
-helpful if people who want to use it can still use it.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ http.c | 19 +++++++++++--------
+ http.h |  2 ++
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-This series introduces new functionality to the credential helper
-protocol that allows helpers to produce credentials for arbitrary HTTP
-authentication schemes using the `authtype` and `credential`[0] fields.
-This allows a suitable credential helper to send Bearer credentials or
-any other standard or custom authentication scheme.  (It may be able to
-be extended to other functionality in the future, such as
-git-send-email, to implement custom SASL functionality, and due care has
-been taken to make the protocol adequately flexible for that purpose.)
-
-In addition, the protocol is also expanded to include per-helper state
-and multi-legged authentication (the former is effectively required for
-the latter).  The per-helper state can be useful to help credential
-helpers identify where the credential is stored, or any other
-information necessary.  Because NTLM and Negotiate (Kerberos/wrapped
-NTLM) require two rounds of authentication, the multi-legged
-authentication support along with per-helper state allows the helper to
-support these authentication methods without Git or other clients having
-to be aware of how they work.  (This would also be useful for SASL, as
-mentioned above.)
-
-This series introduces a capability mechanism to announce this
-functionality, which allows a helper to provide a username and password
-on older versions of Git while supporting more advanced functionality on
-newer versions.  (This is especially important on Azure DevOps, where
-NTLM uses a username and password but Basic or Bearer can use a personal
-access token.)  It is also designed such that extremely simple
-credential helpers, such as the shell one-liner in the Git FAQ that
-reads from the environment, don't accidentally claim to support
-functionality they don't offer.
-
-In addition, there is documentation for the expanded protocol, although
-none of the built-in helpers have been updated (that will be a future
-series for those for which it's possible).
-
-My personal interest here is getting credentials out of config files
-with `http.extraHeader` (which a future series will produce a warning
-for) and also allowing Git LFS to support Digest and NTLM with a
-suitable credential helper.  Git LFS used to support NTLM using custom
-code (because the Go standard library does not), but it was found to be
-broken in lots of ways on Windows, and nobody with a Windows system
-wanted to fix it or support it, so we removed it.  However, there are
-still some people who do want to use it, so allowing them to use a
-custom credential helper they maintain themselves seems like the best
-way forward.  Despite the advantages of this series for Azure DevOps, I
-have no personal or professional stake in their product; my only
-interest is the general one in whether their users can securely store
-credentials.  I believe the changes here are of general advantage to the
-Git userbase in a variety of ways such that the goal of this series
-should be uncontroversial.
-
-Feedback on any portion of this series is of course welcome.
-
-[0] A name different from `password` was explicitly chosen to avoid
-confusion from less capable protocol helpers so that they don't
-accidentally send invalid data.  This does have the downside that
-credential helpers must learn a new field to not log, but that should be
-generally easy to fix in most cases.
-
-brian m. carlson (13):
-  credential: add an authtype field
-  remote-curl: reset headers on new request
-  http: use new headers for each object request
-  credential: add a field for pre-encoded credentials
-  credential: gate new fields on capability
-  docs: indicate new credential protocol fields
-  http: add support for authtype and credential
-  credential: add an argument to keep state
-  credential: enable state capability
-  docs: set a limit on credential line length
-  t5563: refactor for multi-stage authentication
-  strvec: implement swapping two strvecs
-  credential: add support for multistage credential rounds
-
- Documentation/git-credential.txt   |  59 +++++-
- builtin/credential-cache--daemon.c |   2 +-
- builtin/credential-store.c         |   2 +-
- builtin/credential.c               |   7 +-
- credential.c                       | 114 ++++++++++-
- credential.h                       |  69 ++++++-
- http.c                             | 128 +++++++-----
- http.h                             |   5 +
- imap-send.c                        |   2 +-
- remote-curl.c                      |  14 +-
- strvec.c                           |   7 +
- strvec.h                           |   5 +
- t/lib-httpd/nph-custom-auth.sh     |  17 +-
- t/t0300-credentials.sh             | 136 ++++++++++++-
- t/t5563-simple-http-auth.sh        | 308 +++++++++++++++++++++++++----
- 15 files changed, 760 insertions(+), 115 deletions(-)
-
+diff --git a/http.c b/http.c
+index e73b136e58..1c2200da77 100644
+--- a/http.c
++++ b/http.c
+@@ -128,7 +128,6 @@ static unsigned long empty_auth_useless =
+ 	| CURLAUTH_DIGEST;
+ 
+ static struct curl_slist *pragma_header;
+-static struct curl_slist *no_pragma_header;
+ static struct string_list extra_http_headers = STRING_LIST_INIT_DUP;
+ 
+ static struct curl_slist *host_resolutions;
+@@ -299,6 +298,11 @@ size_t fwrite_null(char *ptr UNUSED, size_t eltsize UNUSED, size_t nmemb,
+ 	return nmemb;
+ }
+ 
++static struct curl_slist *object_request_headers(void)
++{
++	return curl_slist_append(http_copy_default_headers(), "Pragma:");
++}
++
+ static void closedown_active_slot(struct active_request_slot *slot)
+ {
+ 	active_requests--;
+@@ -1275,8 +1279,6 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 
+ 	pragma_header = curl_slist_append(http_copy_default_headers(),
+ 		"Pragma: no-cache");
+-	no_pragma_header = curl_slist_append(http_copy_default_headers(),
+-		"Pragma:");
+ 
+ 	{
+ 		char *http_max_requests = getenv("GIT_HTTP_MAX_REQUESTS");
+@@ -1360,8 +1362,6 @@ void http_cleanup(void)
+ 	curl_slist_free_all(pragma_header);
+ 	pragma_header = NULL;
+ 
+-	curl_slist_free_all(no_pragma_header);
+-	no_pragma_header = NULL;
+ 
+ 	curl_slist_free_all(host_resolutions);
+ 	host_resolutions = NULL;
+@@ -2370,6 +2370,7 @@ void release_http_pack_request(struct http_pack_request *preq)
+ 	}
+ 	preq->slot = NULL;
+ 	strbuf_release(&preq->tmpfile);
++	curl_slist_free_all(preq->headers);
+ 	free(preq->url);
+ 	free(preq);
+ }
+@@ -2454,11 +2455,11 @@ struct http_pack_request *new_direct_http_pack_request(
+ 	}
+ 
+ 	preq->slot = get_active_slot();
++	preq->headers = object_request_headers();
+ 	curl_easy_setopt(preq->slot->curl, CURLOPT_WRITEDATA, preq->packfile);
+ 	curl_easy_setopt(preq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
+ 	curl_easy_setopt(preq->slot->curl, CURLOPT_URL, preq->url);
+-	curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
+-		no_pragma_header);
++	curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER, preq->headers);
+ 
+ 	/*
+ 	 * If there is data present from a previous transfer attempt,
+@@ -2624,13 +2625,14 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	}
+ 
+ 	freq->slot = get_active_slot();
++	freq->headers = object_request_headers();
+ 
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEDATA, freq);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_FAILONERROR, 0);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_ERRORBUFFER, freq->errorstr);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, freq->url);
+-	curl_easy_setopt(freq->slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
++	curl_easy_setopt(freq->slot->curl, CURLOPT_HTTPHEADER, freq->headers);
+ 
+ 	/*
+ 	 * If we have successfully processed data from a previous fetch
+@@ -2718,5 +2720,6 @@ void release_http_object_request(struct http_object_request *freq)
+ 		release_active_slot(freq->slot);
+ 		freq->slot = NULL;
+ 	}
++	curl_slist_free_all(freq->headers);
+ 	strbuf_release(&freq->tmpfile);
+ }
+diff --git a/http.h b/http.h
+index 3af19a8bf5..c5f8cc4620 100644
+--- a/http.h
++++ b/http.h
+@@ -196,6 +196,7 @@ struct http_pack_request {
+ 	FILE *packfile;
+ 	struct strbuf tmpfile;
+ 	struct active_request_slot *slot;
++	struct curl_slist *headers;
+ };
+ 
+ struct http_pack_request *new_http_pack_request(
+@@ -229,6 +230,7 @@ struct http_object_request {
+ 	int zret;
+ 	int rename;
+ 	struct active_request_slot *slot;
++	struct curl_slist *headers;
+ };
+ 
+ struct http_object_request *new_http_object_request(
