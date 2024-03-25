@@ -1,96 +1,84 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71065102B
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71426DCE8
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711402494; cv=none; b=XADzFEFQxZ+mWxow5djMCE8XqYzJvH4MYBlbt/18R1zEKzz8kllHQQMIqLABgi0cPzg7CkrPSE9BtvTPdyvr3StcytjMPUFu9CJbPjz190lnFuY+/S408YRhs2ZRtTp+xMEXxj4O1knYbaOUFlVS/1KGZWv5pSnK2CM0QvPLlUA=
+	t=1711402659; cv=none; b=XJ08s37O6SLA9Zy3Lesax5xELM7O0HOGplmT5mpaNWfVSbWfks3JTmwWZoFyEVkMM5UyHNBKzw3W9Wh6hI+0TnU58Dlu6xRhak/73o38g2NHhGhWoYw8OhrwtOimxOLGbfUSgPgbJFajMbg3I8Eu6WOsh0OSHALPm6rqUogPUm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711402494; c=relaxed/simple;
-	bh=/FprnCglktDRpOn0VaTVOz9KbDYlf9OG0dbM1YsR4qw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ArFn0sBBKzyn+vUAjLkUXlUfb8TEOx6TsfQ5a1n1/4n8R0R522MDItHbFUpmFlLgbfkttV9GShDDL9VvO1tBve6e6+SlFz/FVLD0eYFuAS8CA9n3KE0nfV3AEvfdiOBqOhqjaugbZn4Q4+XzzN1TzZnLBzio+SH12cir07JLNWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iJiD2FqJ; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iJiD2FqJ"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5B20327B7A;
-	Mon, 25 Mar 2024 17:34:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/FprnCglktDR
-	pOn0VaTVOz9KbDYlf9OG0dbM1YsR4qw=; b=iJiD2FqJ780EYIet81T7lwKYk+gy
-	j7HggKDyom+HqE3J/MkZ9nprpcexKtxpC7fu4EB8eFEXNseP934PUz1upus7WLrS
-	XxWFnNjqnzHqEpw/+3cE4+P9BQJiejW583VRAwMldG2OcdrW3lwwKYmGMdpGkJ4q
-	hnmZ3pXKLTUGA74=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 54C9127B79;
-	Mon, 25 Mar 2024 17:34:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 91C4F27B78;
-	Mon, 25 Mar 2024 17:34:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] add-patch: do not print hunks repeatedly
-In-Reply-To: <6bc655ea-783e-477e-84ec-04503fa20799@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Mon, 25 Mar 2024 22:07:05 +0100")
-References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
-	<6bc655ea-783e-477e-84ec-04503fa20799@gmail.com>
-Date: Mon, 25 Mar 2024 14:34:46 -0700
-Message-ID: <xmqqjzlqgfm1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1711402659; c=relaxed/simple;
+	bh=sFevrzGP52TdN23dej4X32oxmNMnX/5CxGut4vH3aEg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a60/CVzT5f0ineJVYdYnTC83I5ATnW1FfDfM3jSB32QQXbWVt6r+JYocxsgvYXXPYs767Yj+Geh0pn9ssyuIy2QeMPnxO5/IcRQ9RPEZtqd8PSgjgR1OMb8zk5HkQXkDJcZloUYXt1EAPK2rJdbo+mNuWPup/RElmsehCLi+ZjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-476757820ceso1451519137.1
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 14:37:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711402657; x=1712007457;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BmZXvpFo4nOUmJv/MEhbHAD8joVZUX2KuluREud98aw=;
+        b=hTcffrTh4OIr4wcDmuJo+oDfekJm59/x7XmGbiBAST7+IgSOiqHy1X2T1mcf+SM9p9
+         duDbMEievgoNTBKK1QceajpYNtMCdUg57zCwrcxv/SI52QRu6GM17LzuQbxo5RM2+QGx
+         vktwCmVUxSjWXIupaQEnHA9n43EMECd4ythj7R1edjzAALAIcRY34k4ouIWG9c7hCEWU
+         2phHRm7arcxJcsI+4elPXUeLN1saV9tPI/+zTTIA+uDFzgvPJzJcgdq6Lysc/CosE7sH
+         UaW7heT0Use0yVcckF9jSXAkDeUhsVSgLLU4k/h5J4ijUWMl9rOlsUOkwgehKdXOlDd4
+         Jplg==
+X-Forwarded-Encrypted: i=1; AJvYcCUqvZFOahPKoQe+aQ4TZ4PDDm5OFDmMFhqLFe2DeXOcvObsQ9O5wxUXgOZIpzacPrDvcil/t/rA9sjFI7lueglXj+0B
+X-Gm-Message-State: AOJu0YytMnsY3DBsrj0Lo03FnYko1n28lwSbGf0rtWlRncHigOY1svJ6
+	decGE2fCnYWsFgf/KTwmENFILgMuJwm4yO41n2IWtCThhUVCZ0I6KeVSP8vjaQrs/QW7yVk+xi6
+	+NRqK2MbunLpsLFF/Eh24OP6uQwbD+iPM
+X-Google-Smtp-Source: AGHT+IERSk9L2HvvWP3oXHTHFhkU8ErV+7To71iJNN8GVBOvjfFFBMbpw4VDWZtUTiDzFR3wpBN6bnHkugcKQFSn2oc=
+X-Received: by 2002:a67:fa14:0:b0:476:d23b:de3c with SMTP id
+ i20-20020a67fa14000000b00476d23bde3cmr6737161vsq.0.1711402656712; Mon, 25 Mar
+ 2024 14:37:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 8184B40C-EAEF-11EE-AE4F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me> <CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
+ <xmqq1q7yhupa.fsf@gitster.g>
+In-Reply-To: <xmqq1q7yhupa.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 25 Mar 2024 17:37:25 -0400
+Message-ID: <CAPig+cQAoK1UkgADFrnJfY4xw0kP6BypPAPe3aLoeFFGT_r2fQ@mail.gmail.com>
+Subject: Re: [GSoC] Microproject help
+To: Junio C Hamano <gitster@pobox.com>
+Cc: vk <g@vkabc.me>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-
-> ... or an invalid option, i.e: "U"
-> ...
->     (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? U
-> ...
->     ? - print help
->     @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next u=
-ndecided hunk\n"
->      static int patch_update_file(struct add_p_state *s,
->      			     struct file_diff *file_diff)
->      {
->     -	size_t hunk_index =3D 0;
->     +	size_t hunk_index =3D 0, prev_hunk_index =3D -1;
->      	ssize_t i, undecided_previous, undecided_next;
->      	struct hunk *hunk;
->      	char ch;
->     (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?
+On Mon, Mar 25, 2024 at 5:23=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > On Mon, Mar 25, 2024 at 11:40=E2=80=AFAM vk <g@vkabc.me> wrote:
+> >> If there is any low hanging fruits that you can suggest to me for the
+> >> microproject, that will be great. I will also be searching throughout
+> >> the mailing list to see if there are any potential microproject to wor=
+k
+> >> on.
+> >
+> > Searching the mailing list for "#leftoverbits"[1] can be a good way to
+> > discover little tasks which may be suitable for a GSoC microproject.
 >
-> Printing the chunk again followed by the question can be confusing as
-> the user has to pay special attention to notice that the same chunk is
-> being reconsidered.
->
-> It can also be problematic if the chunk is longer than one screen heigh=
-t
-> because the result of the previous iteration is lost off the screen (th=
-e
-> help guide in the previous example).
+> True, but with a caveat that they may range from "low hanging fruit"
+> to "too hard, let's punt".  After seeing the anonymous questioners'
+> question, I did go to that query page (actually I qualified the
+> query further to list only the ones I gave the mark) and decided not
+> to suggest it because I found that many recent ones are harder than
+> "trivial changes suitable for a practice material to go through the
+> review cycles" X-<.
 
-Indeed.  The more important part of the message from the command in
-these cases tells that the previous input was invalid and why.
-
-Stopping after that without showing the hunk again does make sense.
+Since the purpose of a GSoC microproject is to familiarize the
+candidate with the project's mailing-list workflow and to give the
+GSoC mentors a feel for how the candidate interacts, perhaps the
+easiest suggestion would be the old fallback of having the candidate
+look for a single test script which still uses `test -f` or `test -e`
+or such, and converting that to use one of the test_path_foo()
+functions from t/test-lib-functions.sh.
