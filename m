@@ -1,102 +1,124 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D9F679E5
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C3143AA4
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711387395; cv=none; b=qlQYJ89BrltsIwoZ+s1vb1agr/GrhooRtS28LBVtZz1t5RMjTnH1IIc0acfDrGJlulI2x29ZgRwy/MpEiyVWJvpTVjZUp517lbYXpotAbK94cbe5P1AEnbsw4/dLITiROCJEh2Su4IOo2wSn7SqlaKAItHHbG+URIqaL2RU2I+Y=
+	t=1711387460; cv=none; b=BE1VGS8vnLqkTOfWnDB7CT8kyCG7M0IYCYa+oFIRnGkmy7Hv5/Lp+0ZKq+a1uuLG0lwNTknJtLxGQeu5zeSauZLmBtP3VDgLj9z4Sm4bn3GSzkaj8ybqO5UrmMOErT9P1O7wMjH6KYjvN4hWXK8Z91xX1PhWMXafCMRlu/bCU+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711387395; c=relaxed/simple;
-	bh=kHtmTPfIusGiL6ODhRhFStdAyhKQgstheuUhaPrGqR0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J4fd84RVVjJk9YiBleW3ch6Sfh3fWp2cMCys4xy1x3cfbD7SL0TKlPnbqJpKK/bc6UnNUv6EGpUZGvvFlpDQ26eodzDE+9L8dx4fDSG9D6fPlleZIFvQ1v6rhgD0z9JRv7oFN1zc8dJ+BgAwS2J8iPyYg/sC9UhbdzAvfPNy8gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F2YqYIO9; arc=none smtp.client-ip=209.85.161.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711387460; c=relaxed/simple;
+	bh=hngW9f5PCB5r0JkmwM9tBfaMb2cL9qU8+ITQAQPkyFQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=q2kvHgiztCyNDaEEwAZQ6TqpfYl3G7Vrt1X2kPtwVEw70H7zIjLcaau7wv63Zz1mGrgJnOFDJSLlWDJKHj1qb/WIqdnoPmT2LIHmbFnEeAALC9PJV7dwDd1zg3iHbvf0zZu08KdRC3VLU/t/RlECeAdtCRpi9G02yhK63592n90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Pn6pGbJ9; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F2YqYIO9"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5a529a1f69aso1276936eaf.3
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:23:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Pn6pGbJ9"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-78a2290b48eso365174985a.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:24:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711387392; x=1711992192; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kHtmTPfIusGiL6ODhRhFStdAyhKQgstheuUhaPrGqR0=;
-        b=F2YqYIO9qgvvnqtyQRUgfc1RwDyGJKVTg6z1Pl4sLvsn4Dw6VkNpxbunljXWJzYbYN
-         tvH4Wy5iQmSghMBaYrXlCXSLJJxUtqB0GLe08Ir4JWP3hbrBhrxGz1h9rRZE/mY4V7AY
-         02qvmJpwV58eB2wUU+K1cgoou//O+k8O8YKa74XEGhXIWjiHQ6AQy0pLfn19Lz6QUQi2
-         QMu4xdPCfar91FUOSu9iWj9+2Dj6g7kiovtbZAlcsMfN2+woMsG45aURVDpMVvFiV6VC
-         ZXZN7/aRMiPdBdg67Hrop0615XKru6pV9pghv86RJTFIFwHuvJmokFqqjIStqzEC+ahZ
-         rhmA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711387457; x=1711992257; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=trccme5/7MJr/nM+75dvkRpNcmwhGy6uHZgBzY+Fg0U=;
+        b=Pn6pGbJ9z4pcWYo7FTGo672AhvTZjK/fj7i0o5ZW4mfFlxVjw8w43oOros+Gpniyyb
+         H1s+SojBgQukgfAuuQtqLKReHBCcuce3aFzC6x1H7aPWnOgHom5hSWoXuBDpbWnnKinw
+         mtk1Xxu3Z3ciBAPYnB21k/SowUdAb8GwZzywimKbeFBWqN6zH3CjFImFbuNSUk2PD0ut
+         L7Dy1UA97+lRICtnB4XDYhXmwJ2E7zKyeolOhhhURamVKS3E6xWTclCLW9OmaNidcDCy
+         JPTMTbVxXxtHo0/7XBGOPicATAaRNiVOje30s+EHrZYLzLrb3+DRbl4TH2Lu0ivjvm8A
+         ajUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711387392; x=1711992192;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kHtmTPfIusGiL6ODhRhFStdAyhKQgstheuUhaPrGqR0=;
-        b=wuf58bBVzdP8/VngpbcgqF4fZKFg0Q3iu+6G2eeNLWALm+laj7MNMb1qq8kZFUIhsl
-         UgJOJFQu9Yj+/0zGwfKVxNDEqdnTJrtAe1mMuBa/aGknD2g4iGOmfROV6LFgCI4ssLfd
-         xpPXVqpRkH8YQ/qp8Jrg1ogodOqEYb7vSIk1E4T0nZwKWD6VQIwzynnr3JH5EJAWNwHA
-         PqeRbMm4zuNFUG8R7uIpoE4TlIc3oTohBHTrcbXrES8OQfqQaScxLI4R99K+JWImxTIO
-         l3Oll5NvpaCpgbmCAcATsT9GiEaONXi4zzIE+gkL/W+yxYZfGgbKiZWAMATbUd2vo8Rp
-         5TYg==
-X-Gm-Message-State: AOJu0YzolQ9Ba6AKflpHiFLZzU5QDx4i3NF989Lqvh9Apvb8r0WcmHsy
-	e1MFEBkXMMGw/+IRuL+ROASm8NpJzBxccUl3prJ4+feSZk4G+T1BoKcxgni68OQeGdQ1fHTX8mQ
-	Fmrt16wxiDHDODY9LRRvnxcoA8guejY3vs2I=
-X-Google-Smtp-Source: AGHT+IFMQ3+FkEJ1sDCn35Fo03JJWuxB0tmlWFirWy42RNns7xYKwKGWuWuYxSjtQJul84TQNaEN2NAEkjYDc4fwR0w=
-X-Received: by 2002:a05:6870:1708:b0:22a:f96:28b3 with SMTP id
- h8-20020a056870170800b0022a0f9628b3mr7012559oae.53.1711387392550; Mon, 25 Mar
- 2024 10:23:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 25 Mar 2024 10:23:11 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240324174423.55508-1-utsavp0213@gmail.com>
-References: <20240319185938.243667-1-utsavp0213@gmail.com> <20240324174423.55508-1-utsavp0213@gmail.com>
+        d=1e100.net; s=20230601; t=1711387457; x=1711992257;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=trccme5/7MJr/nM+75dvkRpNcmwhGy6uHZgBzY+Fg0U=;
+        b=cFm3yTI0w96XzUYA218w5uk3IxWn+NzPqisbuoz6sPxHLsb0yA3Oq6feNe8t2Pogy2
+         xQChI4Qkm1kV9gLE+7AzvgGDoUcmAem76jtpEPobq012zh9UPNBX6Rsn1O9go2S6XsCs
+         IUKS3UOeJRICIFIPQPIHdks+A/JEN3tJzshalsqa0IndKV4f0mb3CwaJmvGyXXW5tbFy
+         V/2BjErxiLXFF0EuT2988mOSMBNczejwHnpdEURU4dfQotVdLW/63I+BYHmklg+RmvAf
+         TpKTVIk9QTHX8Aro8R0YyQSpP6mdC05eDFyHCicfD2SeUPUaqMJRS9SCwOu3lRfIhUkL
+         uLfA==
+X-Gm-Message-State: AOJu0YwPpbaq1tfa+ztn1tqhvdHpAg/nTK58cZIKG5qF+QGzxLRjEGJQ
+	EBoMNCdZ1YmQrej7u8IoNR3gllssGjvWnxkZL+ILojfRYN+ulqR+buw2HMpZXfa65EttCy315fl
+	AVvg=
+X-Google-Smtp-Source: AGHT+IHSWpCYUf4Ct7yLbxxva/m6D2/KFw/VLrUE0sl8MIklOYTSOegYN5D+nV9xvqJwvo5wKPu+wg==
+X-Received: by 2002:ad4:5fc5:0:b0:696:7fbb:d3e4 with SMTP id jq5-20020ad45fc5000000b006967fbbd3e4mr7343928qvb.55.1711387456979;
+        Mon, 25 Mar 2024 10:24:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 8-20020a05621420a800b0069680936f00sm2431715qvd.10.2024.03.25.10.24.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 10:24:16 -0700 (PDT)
+Date: Mon, 25 Mar 2024 13:24:11 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 00/11] midx: split MIDX writing routines into midx-write.c,
+ cleanup
+Message-ID: <cover.1711387439.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 25 Mar 2024 10:23:11 -0700
-Message-ID: <CAOLa=ZTSHSErXaZjwxERLgjejqws5fgs43+RoUXp2cgn0fs_Eg@mail.gmail.com>
-Subject: Re: [PATCH] userdiff: add builtin driver for typescript language
-To: Utsav Parmar <utsavp0213@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000009b444d06147f6d95"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
---0000000000009b444d06147f6d95
-Content-Type: text/plain; charset="UTF-8"
+This is a small-ish series that I worked on to split the functions from
+midx.c which are responsible for writing MIDX files into a separate
+compilation unit, midx-write.c.
 
-Utsav Parmar <utsavp0213@gmail.com> writes:
+This is done for a couple of reasons:
 
-Hello,
+  - It reduces the size of midx.c, which is already quite large, thus
+    making it easier to read.
 
-> There are no implementation or test changes in this patch. It simply relies on the git formatting rather than the IDE git UI formatting that I believe messed up in the parent email.
->
+  - It more clearly separates responsibility between the two, similar to
+    the division between pack-bitmap.c, and pack-bitmap-write.c.
 
-I think Patrick mentioned this already, but seems like the new patch
-too needs to be wrapped to 72 chars. Also when we send a follow up
-patch, we version it accordingly like "[PATCH v2]". I would suggest
-reading 'Documentation/MyFirstContribution.txt'.
+Most importantly, it makes midx.c easier to read in preparation for
+future changes that I hope to make to midx.c in order to support
+incremental MIDXs in a repository.
 
---0000000000009b444d06147f6d95
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ebdabd3f01e3cb8c_0.1
+The series is structured as follows:
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZQnN2MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNEZ3Qy85STliVE9GZ2lsRkF2WjVwcnlBbkR5TkZnVwo1NCtHMHB6SDVC
-Q2lmc3lXWDQ5dXF5SUluc0MreHV6YU1uWDNydlFmc1R0WlRZa3V5TkZrUkFTVFhuQmJ4UWdxClJr
-N0JYRHBkZzlISC85VmUybXRzbjlsZDA0cSs4T0x1aloxdFpSc0dHRjNuVVdBRDVtN2R5T2NBMzc2
-VE16djEKc3N2NTRac3BYRm0vb2wxNXAvTlRMS3hreWZQTk0zZklYVWxETVVPWHpndE53dkovMTQx
-bWpNeFV1bGZVd25xMgppWFcvVWpkMGtGNG0wR2RzV3NjMGZlUk9hZnZkS1gvaTV1OUhVbUpCRUJV
-cUxqeHdHV01kd1hMdDV1NnE0M3FjClY1WSsxMlZ5Y3pHUkxsTUQ4NGQrUTRoNTYrRDAxSEdndkpK
-bjlybkhla0Y0dGJxdzlIOGlmZ2w3V3dvckRyb3EKZGxqZmsyUndTTG9BTjl4RWNDdVVoVUZpUmYr
-QW41aVdUTWJtMDBscGd0cndvUGtRL0ozUTVRRC9teTB5SldJNwpKaW9mdnZPUGp2OFFJVjVsV05y
-VURkOU05R3QrWG12NkdkWmF1VlBkQnhBZktnVEIveW8wYTNIc21Pc2ZPM1o0CkFHMHFESVpYVkhr
-aWxicGJaWnBsQ3phRnhXOExWUGliY0t0L3lHND0KPXhEM28KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009b444d06147f6d95--
+  - The first seven patches move all writing-related functions from
+    midx.c to their new home in midx-write.c.
+
+  - The remaining four patches rewrite `git multi-pack-index repack` in
+    terms of `git pack-objects --stdin-packs`, yielding more
+    tightly-packed output as a result of the supplemental traversal
+    performed by `--stdin-packs`.
+
+The first seven are the main goal of this series, and the remaining four
+could be queued separately, depending on how folks feel about them.
+
+Thanks in advance for your review!
+
+Taylor Blau (11):
+  midx-write: initial commit
+  midx: extern a pair of shared functions
+  midx: move `midx_repack` (and related functions) to midx-write.c
+  midx: move `expire_midx_packs` to midx-write.c
+  midx: move `write_midx_file_only` to midx-write.c
+  midx: move `write_midx_file` to midx-write.c
+  midx: move `write_midx_internal` (and related functions) to
+    midx-write.c
+  midx-write.c: avoid directly managed temporary strbuf
+  midx-write.c: factor out common want_included_pack() routine
+  midx-write.c: check count of packs to repack after grouping
+  midx-write.c: use `--stdin-packs` when repacking
+
+ Makefile     |    1 +
+ midx-write.c | 1525 ++++++++++++++++++++++++++++++++++++++++++++++++
+ midx.c       | 1558 +-------------------------------------------------
+ midx.h       |   19 +
+ 4 files changed, 1559 insertions(+), 1544 deletions(-)
+ create mode 100644 midx-write.c
+
+
+base-commit: 3bd955d26919e149552f34aacf8a4e6368c26cec
+-- 
+2.44.0.290.g736be63234b
