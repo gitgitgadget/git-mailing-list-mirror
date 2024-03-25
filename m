@@ -1,56 +1,52 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9E8803
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 18:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701AF1849
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 18:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711392974; cv=none; b=qrL5WQNDZliGljnoYAdgcVDb4uawZ1+35EnHQ0gcKRPTgquT13z07XpC69dO/23jC2eWkMayG76TMnBuGGvs/lu0tVpiDFytYrKvjg5uEQwO01b0Tvvi4aR95hyJABEmDuEQVvLjQgwL8Lri1M7U1zIqcutA+unb758A+tYtCCQ=
+	t=1711393020; cv=none; b=mjRtBDSCT0SDugfUzNGNAgeRYSxqLHwbYhFQ+WkWR2QgOeJ/KUqJNMMy3PsQR+6oGwZdvh7hvW738sORF+BfaB9n8s0HN2sjgZXpKuCjC6TkRdBm16ItCysTNlPX0rQSFYe1NbmFrb58/oW5zDvGM6F0CslUgMrO6vIYqlJp7bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711392974; c=relaxed/simple;
-	bh=958dUhq3nf/HR39yNj0I5HAXHpGonK5uHMYGa3tBa4o=;
+	s=arc-20240116; t=1711393020; c=relaxed/simple;
+	bh=ELNNNLkz4AFLGsspzX++kuEinF4p5+U5Nf9zVUrmmf4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h6/J9cT7O/ht9xm9rEJKRbJuf7mzvTn//mf2dOabvZPEmceTUDzKXqeCC37aNpIo2XrLkb1NKL3VHXdu5Yyagl+++ohSaDIPdef87C41FNbixs8+iJxgMoiD67Wm03jz/6V5yEsBY0fEtGrxG6xlTJELqazSedZKzOIUDKNZr4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EK3sssNd; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=K/JizOqzDybM38lZ9PVDRZzEISJw3w4xYFMVDs9GrCfSMPnvbR/zrAHDRyrpUr3+xZbnVJgKYT97KM2LckO2CVZnLyfOT3+ZSUXUJN8gJSkoBAKu57iizg4PlktP21OUTA24ir1RNbf4PLlu2YECapwj2JSD6N110BbCsP0p1qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rTczFW9E; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EK3sssNd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rTczFW9E"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8248F1E814E;
-	Mon, 25 Mar 2024 14:56:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DEE51E8159;
+	Mon, 25 Mar 2024 14:56:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=958dUhq3nf/HR39yNj0I5HAXHpGonK5uHMYGa3
-	tBa4o=; b=EK3sssNdMnr4rUEdo63BiraIdxiumvEzzD4CjO02Lzs0Hq/begn1iv
-	laiesRNsYBtCGyxo7kFvlVnSOfiW3JUPQf24HpYnJ7mjYthNYmbYkVBL0qMgeCyQ
-	vvQLA8FScLs8YAx7OdxtjTe3lIn5fwCChw5oJJ9GzuUDSycOVO5k4=
+	:content-type; s=sasl; bh=ELNNNLkz4AFLGsspzX++kuEinF4p5+U5Nf9zVU
+	rmmf4=; b=rTczFW9EdhsrXwTYkIWKm6XUTRCoxJ4DB7AK2daEyNZ39RseGOP1Yn
+	CkvAMPs0YTAZTMxGK0fkIsIsODwOinElSZIbINNZ09g8NEWXWZE1ZhVokuXndwCv
+	g9pRLgloH9fyn4Pjp9i97keY+BJkIo9wGSVii0FhLHyvLD5FzRIlM=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75CDA1E814D;
-	Mon, 25 Mar 2024 14:56:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 670421E8158;
+	Mon, 25 Mar 2024 14:56:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 08EE31E814C;
-	Mon, 25 Mar 2024 14:56:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CABD41E8157;
+	Mon, 25 Mar 2024 14:56:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-Cc: =?utf-8?Q?Rapha=C3=ABl?= Gallais-Pou <rgallaispou@gmail.com>,
-  git@vger.kernel.org,
-  David Aguilar <davvid@gmail.com>,  Denton Liu <liu.denton@gmail.com>,
-  Paul Mackerras <paulus@ozlabs.org>,  Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH] gitk: add "Hightlight commit name" menu entry
-In-Reply-To: <742ac151-74cd-46f8-8dfb-3dcdaa513314@xiplink.com> (Marc
-	Branchaud's message of "Mon, 25 Mar 2024 08:52:00 -0400")
-References: <20240130085308.5440-1-rgallaispou@gmail.com>
-	<27b9c158-5cb1-46bf-851a-88a02448fa2d@xiplink.com>
-	<146fbb87-9047-4d96-8d06-76f5710ca9e1@gmail.com>
-	<742ac151-74cd-46f8-8dfb-3dcdaa513314@xiplink.com>
-Date: Mon, 25 Mar 2024 11:56:08 -0700
-Message-ID: <xmqq34sekunr.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Tim Landscheidt <tim@tim-landscheidt.de>,  git@vger.kernel.org
+Subject: Re: Inconsistent/buggy behaviour of "git config --add"
+In-Reply-To: <ZgEnqE23PYVCNeKc@tanuki> (Patrick Steinhardt's message of "Mon,
+	25 Mar 2024 08:28:40 +0100")
+References: <87o7b5dj8h.fsf@vagabond.tim-landscheidt.de>
+	<xmqq8r28ygwi.fsf@gitster.g>
+	<87o7b3xxta.fsf@vagabond.tim-landscheidt.de> <ZgEnqE23PYVCNeKc@tanuki>
+Date: Mon, 25 Mar 2024 11:56:56 -0700
+Message-ID: <xmqqy1a6jg1z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,21 +56,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 580A0494-EAD9-11EE-BA63-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 7480E08E-EAD9-11EE-A02D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> (BTW, on this list we pronounce "the name of the commit" as "the
-> commit subject (line)".)
+> I plan to reroll this patch series soonish. Please feel free to provide
+> your feedback on it so that we can iterate on the proposed UI/UX and
+> make it match user's expectations better.
 
-Yup. "subject" probably comes from the fact that the title (the
-first paragraph, folded into a single line) of the commit is used on
-the "Subject:" header when formatted for e-mail submission, and also
-'s' in "git log --pretty='%s'" is described as "subject" in the
-documentation.  Other words I've seen used are "commit title" and
-"oneline description", but "subject" would be the most common, I
-suspect.
-
-"commit name" on the other hand brings a different concept, i.e.,
-"the commit object name", more strongly to readers' minds, and can
-be mistaken as what you'd get in "git log --pretty='%H'".
+;-)
