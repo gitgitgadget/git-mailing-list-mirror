@@ -1,75 +1,73 @@
-Received: from mail-108-mta168.mxroute.com (mail-108-mta168.mxroute.com [136.175.108.168])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FEE5D8F8
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 13:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF6B1741D7
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 13:19:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711372517; cv=none; b=D6xRefb+FSsr7hKaDQP8lTy3xxxMUaJCFdvqy3khDKJvwKDglaPgNAWDXpdUZpuSRqU1F9AeohQ1aLC3ShDxwk92jrJk0eUjIdkPoyFWGBmztPzJsSMISxK5xo4kRpc3EEJBEYBBfloMshGxxB2KxafE7PHOH2/a4oI5EQQqDa0=
+	t=1711372785; cv=none; b=i0JEerld8EnjNhZL8WIBXGzP75SZwJhjqMiST2SqGeKMe3d7G/DcSrqceCoXosd1e1f+JOQiD+rtV8cR/yzCCfS31epZdPL73PQJmTkQtVcSTCwmcyhP5VUI2RGMC2VL154eOKk4/0iX6HyLKIB5RcHL+7spCl+TYn/GCGPTyCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711372517; c=relaxed/simple;
-	bh=faUZQxVPPIwdqFSy2V6Rbtzpgklqwf5sJXsimyuT954=;
-	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=ctkWlsPfsDTwNfySuj4ud+8/pEeHG0MS1BWUReydikR17ZnLBJdw+TT3YwdJUVSMEdubexLSVLULlUYuoyAi6jiaIr5/U9tzH/5NgehPWbKjjfPXCO9gpfgZjrQeYBnF2k//RrI2+azsIVCMC0AfPqXFHkjEiOmWBfxk4RNpsgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vkabc.me; spf=pass smtp.mailfrom=vkabc.me; dkim=fail (2048-bit key) header.d=vkabc.me header.i=@vkabc.me header.b=Rlqd5nms reason="signature verification failed"; arc=none smtp.client-ip=136.175.108.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vkabc.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vkabc.me
+	s=arc-20240116; t=1711372785; c=relaxed/simple;
+	bh=DubbNUQKdlz/m2hwc0qzBsOrVzz98jd57+UvAxMLqLU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fTA00ga/hbN7P/xViiSmunbTyhOHQfm7rttnQoTTZyYCpruSh7wOIEzkaEB4n7nQ2CCy+kqnC1qLUxpWVj+DU/9lzh+FnjdlMR46P4n0MY5GkRM9K5S4DSXwGZ+F5N3OwzrUTFS5iIRnQPJSAl1v7evB7h+o9fsmjxypfu6phV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=bpUoRjiM; arc=none smtp.client-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=vkabc.me header.i=@vkabc.me header.b="Rlqd5nms"
-Received: from filter006.mxroute.com ([136.175.111.2] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta168.mxroute.com (ZoneMTA) with ESMTPSA id 18e75bb7c0c0003bea.001
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Mon, 25 Mar 2024 13:10:05 +0000
-X-Zone-Loop: f98544bbd24742fa12810611e40f5fefc93545848808
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=vkabc.me;
-	s=x; h=Content-Transfer-Encoding:Content-Type:Message-ID:Subject:To:From:Date
-	:MIME-Version:Sender:Reply-To:Cc:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
-	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
-	List-Owner:List-Archive; bh=yfeweBxepHWo3zIhoa3efsKmhF1ErY1KMY/pngAM8ss=; b=R
-	lqd5nms0vZGy7UqppWEVrID6Bp5MjqIxT6td6aTIN4sGlb0gjx7pQE34tof8r6sxFCnZ3IknohZ9h
-	xdaRCNWtyG7yTf4T/EQv/Ieq5pHN6wGyDdzhemi5KdlICYNysMQrvbLnxcFzSiIhr7NItrG7OhV5c
-	s/7Ku0Rp3kjF6ealJcnjSS52VP0AXhyV2K2Pxncg6eypX1UtaiC7oofzVMyPA21F9+RH5vsVdjXfU
-	YqgEKPYtuuy1e4OVImDNzV3AfPJkqFASPDrjjYuc5yjwnjuLZ0g3kM8cIPdeWyG7tw6/KJ7e+Ghyw
-	5DQYAHuBKuZR4PR62/wr0fliipGqSbm8w==;
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="bpUoRjiM"
+Received: from localhost (ip-109-42-177-242.web.vodafone.de [109.42.177.242])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42PDJUxv003615
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Mon, 25 Mar 2024 14:19:30 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
+	t=1711372770; bh=DubbNUQKdlz/m2hwc0qzBsOrVzz98jd57+UvAxMLqLU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=bpUoRjiMKrx0VV6nm06jY0cxJpAIXzUT20nTb4rkRVc0vkH/w2gu+pwekB42Hwl2c
+	 7fUm5toyhh2upI5L9yegeIzfoifrhLRJ2YsVdxbV/CT6tYsBj0k1uJY9yq0YPwBz4r
+	 6Xq5lR8yqFjD8VskB4KEJBBlJkbxJdukvW/01oCA=
+From: Dirk Gouders <dirk@gouders.net>
+To: git@vger.kernel.org
+Cc: Dirk Gouders <dirk@gouders.net>, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Kyle Lippincott <spectral@google.com>
+Subject: [PATCH v3 2/5] MyFirstObjectWalk: fix misspelled "builtins/"
+Date: Mon, 25 Mar 2024 13:33:33 +0100
+Message-ID: <3122ae247263fb65d5900c67f7955d68de7f874c.1711368499.git.dirk@gouders.net>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1711368498.git.dirk@gouders.net>
+References: <cover.1710840596.git.dirk@gouders.net> <cover.1711368498.git.dirk@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 25 Mar 2024 21:10:03 +0800
-From: vk <g@vkabc.me>
-To: git@vger.kernel.org
-Subject: [GSoC] Microproject help
-Message-ID: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
-X-Sender: g@vkabc.me
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Id: g@vkabc.me
+Content-Transfer-Encoding: 8bit
 
-Hello all,
+pack-objects.c resides in builtin/ (not builtins/).
 
-I'm Vk and I work as a software engineer. I am interested in 
-contributing to git repository. Apologies for the late start as I only 
-stumbled upon GSoC recently and git project interested me as I use it 
-everyday at work and it would be meaningful for me to contribute to it. 
-Even if I am not chosen, it will be great if I can start learning to 
-contribute to git open source.
+Fix the misspelled directory name.
 
-For the microproject, I have looked into the lists for 2024 and it seems 
-that all the projects have been taken except for `Replace a 
-run_command*() call by direct calls to C functions`. However, it seems 
-that the issue has been solved. The command I ran to search throughout 
-the repo is `git grep 'run_command*('` and the search result returns 
-run_command functions which I assume are essential.
+Signed-off-by: Dirk Gouders <dirk@gouders.net>
+---
+ Documentation/MyFirstObjectWalk.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-If there is any low hanging fruits that you can suggest to me for the 
-microproject, that will be great. I will also be searching throughout 
-the mailing list to see if there are any potential microproject to work 
-on.
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index cceac2df95..c33d22ae99 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -525,7 +525,7 @@ about each one.
+ 
+ We can base our work on an example. `git pack-objects` prepares all kinds of
+ objects for packing into a bitmap or packfile. The work we are interested in
+-resides in `builtins/pack-objects.c:get_object_list()`; examination of that
++resides in `builtin/pack-objects.c:get_object_list()`; examination of that
+ function shows that the all-object walk is being performed by
+ `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
+ functions reside in `list-objects.c`; examining the source shows that, despite
+-- 
+2.43.0
 
-Best Regards,
-Vk
