@@ -1,81 +1,81 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD0519D1D1
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F194C19F530
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361265; cv=none; b=nVnvfiLw72HzjdaQHrmlo6m57LJwCYfIVQSoEJCOcQENOfOwy0HxnoeEJMc+t/MJJOddbz7OR/uynyQPt6lx25ty133GiEPjLdn1eBMws7THzWgPC/6fSVqrC5p0Yf+FcxM/Mby7R0MwE2EMwLOcllBJMj08mB5P6U3L9TPf/r0=
+	t=1711361448; cv=none; b=QzR+dGKSK31NL3V68jbM1jIg/+r5kJ9K/rTXbLShQYuTTKn6Up31ffRJzTmt0hV1Nb+/m5TO3Xd510G649opN0j3NrWLSQNT4I+iH2Cnqdlt5oZwdMJWLvCrVz2Xy4bjCoLxdP2/4r/7sh9SAjyB8MHNhIfP9YCxOU/EjuWQ+H4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361265; c=relaxed/simple;
-	bh=D7CFBN5z8jVLbklKnoaMRCkZXX61C8J3Yajx9m+CEx0=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S9i9f1A7pymStWNc6g+moQhE0mMLyfhOamnkMXkk6Vg69tuvA5Z4QYWz5bEGbk7fT/amablgW7yzOz/2MCiwtsD82j/1MU4QMEgXbwS2Lki9IbuprEqUz9ZSA0ppiNpIRcrHqzDJK40uyV9epNIqzU/tJAy2QJDoKVSDOEpFsaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Uacw5n6i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f+IPKkiF; arc=none smtp.client-ip=66.111.4.27
+	s=arc-20240116; t=1711361448; c=relaxed/simple;
+	bh=gE0TgUBdA/aO2A7jK1udRZ0JKND1yykEhVkywlYuh00=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C3Zwk6Pt8rA1afUVTftlz+XSHXGTpliGsvMlZKaLfCbswJqQr2LpUYtQDQWNUHAriEx5lzoVqI2WeQsfj4bO6HmMgf5kc7H6Y67B+s5BBknRt87b4Ii7pAdGZU0xuP65KFliAT+jKnQ7SjyWKpQsL8YlaJguumgxXoW6o9lSdhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a3+yKoCg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2UVyzC2; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Uacw5n6i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f+IPKkiF"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id E8E9B5C0041
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 06:07:42 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 25 Mar 2024 06:07:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a3+yKoCg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2UVyzC2"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id EC94D1380117;
+	Mon, 25 Mar 2024 06:10:45 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 25 Mar 2024 06:10:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711361262; x=1711447662; bh=wjzCGzgz9P
-	7qHpXDn8yIWgz7gkOGO8N2a9yhu2cyiHs=; b=Uacw5n6idxa8Rx3ETDMp2jerXv
-	BH9P4AYCQ+i7QdDJz2Kj+rYcA8JhyukwBkKzLQIlPCiqz7SbXcNnQg1hQeVmjNf4
-	pzdC2rlU/lzisrdY34i6qRRq0Y7Rfzk0Teqf95hf2YHq8L+LsIXmLMv/w6ZjTSiY
-	aeJGpAbW4JW7Jw5m1N0xuc7UWPLCT9mAD01QQmPHDrqc8QvO/fCNCebJ/BYCm05U
-	EnxK6T+HMSWBVk+2zM/PZwsPUXN148sZ+LoyHVCquMExfpCmEmcPlOQy1VIvsm6I
-	75zf14g2hLEejG2y6P9MGUN29wY1a5X4HLHgpR1lW7gn/saVyUxNkRUeyHQA==
+	:subject:to:to; s=fm2; t=1711361445; x=1711447845; bh=n4nglsMU3x
+	rxH5x4tWJOSSrK7hEXfnRVL5jZZfokunw=; b=a3+yKoCgY2xleW5nzvCOyi0QYK
+	cDacNjZe5S32STjBzAaVHsK0PSNszLJrRg52x+WZ/qhk3c9+Uy6fBktwE+3maS7O
+	Nunfu7kTWPVmWeEXYeHywK7UqA8mkbny85Fy7eSXeVnHRQ+OH99bjKfJfxPPvcj6
+	APuH2Il2t8JsXAFqVpHfqnuUcyOFrtI1uyxv6+xKEmUcZo4echqhUKkfsNuE2F/k
+	4K313Rv8UKLaOONL07uICXORppNQXj6kiunRuxUkUAI1SchVOr1oEDxJs+WlYyNL
+	HXe8A4jn4CzSmOUIIFJ9FUPdDQwz6UzYOkl+n6imdeqnJ9573p6LRUruC1KQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711361262; x=1711447662; bh=wjzCGzgz9P7qHpXDn8yIWgz7gkOG
-	O8N2a9yhu2cyiHs=; b=f+IPKkiFVNxl02VdxUqgs05UWduBdlAdCPWXzVcoDuQf
-	9sGo9uofIqY7fQb+4tsUUslft/6Whan8hQJOzu+0L5SlHbwNlBMYC8w83UU2yviB
-	cm+/2n//2t0RPEldvqXzu3nQAe/bzW1Jw8o72f8UmBds6gXC1rGPMbORROobkIk3
-	K/Wv5ouqaomKRzpFIzJoCpL+bAZnzxfdN9OP+okNws/Lbynwcm0c0MVR9E9JFs/v
-	97RxAE0mgY0f/kNtyKrmdL4ZZ4xp+ZzWxmCpf2JVaps7Vcp/rhcDuBRI4d/4IgIJ
-	USiIriI/pyCvAT4RushCfug9ZXwMwiMleqCJuVSWOA==
-X-ME-Sender: <xms:7kwBZgWns7TnRubb6zcf2qz9rtoRCOUXoIUN23iP0CIy_hsni1qWeg>
-    <xme:7kwBZkm3Hu-xcjy4Kqog-OmCe9mJSbFT4nr9QZBiQHIZ0Yi2DErZLtaLp81arDk26
-    5a4ySk2NbAInxY4pg>
-X-ME-Received: <xmr:7kwBZkb4a6XYdoxpiu4DEsejq43cGEOA5bJJVS_B9wyv_Cd6r1qJxJ6u23zEp-qCS5qIFDiF-y47VDvB-OZfSU-oFft-Sg3Oq3LI9P3BkBnCvA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledgudduucetufdoteggodetrfdotf
+	fm2; t=1711361445; x=1711447845; bh=n4nglsMU3xrxH5x4tWJOSSrK7hEX
+	fnRVL5jZZfokunw=; b=Q2UVyzC227P6lj/VCLpqvD12rMAft54Ddh0QT3ITaly1
+	HGx3ZCNyntbFUX+7jk1De96toXeCkQFHjdq0oc6CYJW3mTAzyhfPilduiaQlcvmu
+	dke+j7wbNQr2PDO8BFsGU340hcuH1nwFy2QCDNy1b9sOlmM35hJ4KwzBT6W7wLsP
+	4zqPgfoTG6S/5Idda9jDgoMsgPCvJ8IfN0PSMoQjDmBjS61mg+Cv9c5amUZKEraQ
+	jaWyujbctB43yK6+wCzhlUCOKcwU1+j8r/s9gOpi+qrIWHZrDNzm9TMyNMEUOq6t
+	/RnmJJRYim75tRSjF7FvVJwOS0FiY5nAaptNKrxCsQ==
+X-ME-Sender: <xms:pU0BZrPyCeOAnW3eBpbql0noiAQz0pxExfl3OiDHKJw311rZZCItHg>
+    <xme:pU0BZl9EQ9qiNIHdwvaVhwhJLn0qyIaVBZ0FiAoC6AX1sQzCjeGeRkBjMEhcsdJ7k
+    35gCKBGMyL8v5ZbAg>
+X-ME-Received: <xmr:pU0BZqTOBb-ga79qQ6hEMlkSU9i4TMPQLf1gB2jJpwyM9S0AmPXfp8E4ZoLRtEqImrsrK8BRLgZu3W4hXnW1Zn2gcYq0Hgl21HkEIdqOg5MXNg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:7kwBZvUFc0nS8_m0g5UqbsvttTvaId38jy-2VsBPgBhyOyFQ2S8NXA>
-    <xmx:7kwBZqlrc80C0vPe7vdm5t9aU02NNKUl7A_jBrwtmvQl51sxf_hApw>
-    <xmx:7kwBZkdJkXvBk0_G16nhJqd0p0h_0PJbOKVYuAIk97bMHjaNul8w8A>
-    <xmx:7kwBZsGOw7Z0DQicTErz53ae6ve1d85h059Cjt-o8btq8PmBE5YdrQ>
-    <xmx:7kwBZuv6RguCZy3DQiB5zjNZ7Zksx5KwF8wf3OzlJ_SPRgufLpqJXw>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:pU0BZvu_M4lfSjYNXaZEOHXSfWPwUK-xFdHj5ysXjuocw6HrRGFK2A>
+    <xmx:pU0BZjcELMv3aus-YEX5g0YZFTaxFXiD6dSG56kKAeGoqtLHZ2W-fw>
+    <xmx:pU0BZr3RISOLu7rQ3NA3VdlxNo6EDgtFvk5pHsEsowaPiqP29DDulQ>
+    <xmx:pU0BZv-srwq19fSEyHtBhf1ehKyBfvjVHB31Vg9mE7J2Ppdmv7nfAA>
+    <xmx:pU0BZv7RmSGGQqbofOyFurtvcJTY5QC0C7H5zqeH0EkCgxoVb8c26g>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 25 Mar 2024 06:07:42 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Mar 2024 06:10:45 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c9f8e104 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 25 Mar 2024 10:07:32 +0000 (UTC)
-Date: Mon, 25 Mar 2024 11:07:40 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 54ea4049 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Mar 2024 10:10:35 +0000 (UTC)
+Date: Mon, 25 Mar 2024 11:10:42 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: Re: [PATCH 3/7] reftable/refname: refactor binary search over
- refnames
-Message-ID: <ZgFM7Jw5y3JdImbE@tanuki>
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2 4/7] reftable/block: refactor binary search over restart
+ points
+Message-ID: <5e20d93ae000359f2231bf950a930cfc4898ced2.1711361340.git.ps@pks.im>
 References: <cover.1711109214.git.ps@pks.im>
- <44386818ce681da02f00a498acf66043aa55558e.1711109214.git.ps@pks.im>
- <4ea7gnm5gbuvqnoyxdll3ccxxhr4bmlgzwpjtc7kqzbaf5juzb@5kwcy2qhblss>
+ <cover.1711361340.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,71 +83,204 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VX6nkuFwnRGyDtUb"
+	protocol="application/pgp-signature"; boundary="00gATv1vjKrA/mz4"
 Content-Disposition: inline
-In-Reply-To: <4ea7gnm5gbuvqnoyxdll3ccxxhr4bmlgzwpjtc7kqzbaf5juzb@5kwcy2qhblss>
+In-Reply-To: <cover.1711361340.git.ps@pks.im>
 
 
---VX6nkuFwnRGyDtUb
+--00gATv1vjKrA/mz4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 22, 2024 at 01:55:17PM -0500, Justin Tobler wrote:
-> On 24/03/22 01:22PM, Patrick Steinhardt wrote:
-> > It is comparatively hard to understand how exactly the binary search
-> > over refnames works given that the function and variable names are not
-> > exactly easy to grasp. Rename them to make this more obvious. This
-> > should not result in any change in behaviour.
-> >=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  reftable/refname.c | 44 ++++++++++++++++++++++----------------------
-> >  1 file changed, 22 insertions(+), 22 deletions(-)
-> >=20
-> > diff --git a/reftable/refname.c b/reftable/refname.c
-> > index 64eba1b886..9ec488d727 100644
-> > --- a/reftable/refname.c
-> > +++ b/reftable/refname.c
-> > @@ -12,15 +12,15 @@
-> >  #include "refname.h"
-> >  #include "reftable-iterator.h"
-> > =20
-> > -struct find_arg {
-> > -	char **names;
-> > -	const char *want;
-> > +struct refname_needle_lesseq_args {
-> > +	char **haystack;
-> > +	const char *needle;
-> >  };
->=20
-> I agree that the previous `names` and `want` are a bit ambiguous. What
-> do you think about `refnames` and `target_refname` instead?
+When seeking a record in our block reader we perform a binary search
+over the block's restart points so that we don't have to do a linear
+scan over the whole block. The logic to do so is quite intricate though,
+which makes it hard to understand.
 
-As said in the preceding commit I was rather aiming for consistency
-across the callsites, so I'll keep this as-is for now. I'm happy to be
-overruled though if others feel the same way.
+Improve documentation and rename some of the functions and variables so
+that the code becomes easier to understand overall. This refactoring
+should not result in any change in behaviour.
 
-Patrick
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/block.c | 97 ++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 70 insertions(+), 27 deletions(-)
 
---VX6nkuFwnRGyDtUb
+diff --git a/reftable/block.c b/reftable/block.c
+index 422885bddb..6cd4c053df 100644
+--- a/reftable/block.c
++++ b/reftable/block.c
+@@ -273,34 +273,36 @@ void block_reader_start(struct block_reader *br, stru=
+ct block_iter *it)
+ 	it->next_off =3D br->header_off + 4;
+ }
+=20
+-struct restart_find_args {
++struct restart_needle_less_args {
+ 	int error;
+-	struct strbuf key;
+-	struct block_reader *r;
++	struct strbuf needle;
++	struct block_reader *reader;
+ };
+=20
+-static int restart_key_less(size_t idx, void *args)
++static int restart_needle_less(size_t idx, void *_args)
+ {
+-	struct restart_find_args *a =3D args;
+-	uint32_t off =3D block_reader_restart_offset(a->r, idx);
++	struct restart_needle_less_args *args =3D _args;
++	uint32_t off =3D block_reader_restart_offset(args->reader, idx);
+ 	struct string_view in =3D {
+-		.buf =3D a->r->block.data + off,
+-		.len =3D a->r->block_len - off,
++		.buf =3D args->reader->block.data + off,
++		.len =3D args->reader->block_len - off,
+ 	};
+-
+-	/* the restart key is verbatim in the block, so this could avoid the
+-	   alloc for decoding the key */
+-	struct strbuf rkey =3D STRBUF_INIT;
++	struct strbuf kth_restart_key =3D STRBUF_INIT;
+ 	uint8_t unused_extra;
+-	int n =3D reftable_decode_key(&rkey, &unused_extra, in);
+-	int result;
++	int result, n;
++
++	/*
++	 * TODO: The restart key is verbatim in the block, so we can in theory
++	 * avoid decoding the key and thus save some allocations.
++	 */
++	n =3D reftable_decode_key(&kth_restart_key, &unused_extra, in);
+ 	if (n < 0) {
+-		a->error =3D 1;
++		args->error =3D 1;
+ 		return -1;
+ 	}
+=20
+-	result =3D strbuf_cmp(&a->key, &rkey);
+-	strbuf_release(&rkey);
++	result =3D strbuf_cmp(&args->needle, &kth_restart_key);
++	strbuf_release(&kth_restart_key);
+ 	return result < 0;
+ }
+=20
+@@ -376,9 +378,9 @@ void block_iter_close(struct block_iter *it)
+ int block_reader_seek(struct block_reader *br, struct block_iter *it,
+ 		      struct strbuf *want)
+ {
+-	struct restart_find_args args =3D {
+-		.key =3D *want,
+-		.r =3D br,
++	struct restart_needle_less_args args =3D {
++		.needle =3D *want,
++		.reader =3D br,
+ 	};
+ 	struct block_iter next =3D BLOCK_ITER_INIT;
+ 	struct reftable_record rec;
+@@ -390,7 +392,35 @@ int block_reader_seek(struct block_reader *br, struct =
+block_iter *it,
+ 		goto done;
+ 	}
+=20
+-	i =3D binsearch(br->restart_count, &restart_key_less, &args);
++	/*
++	 * Perform a binary search over the block's restart points, which
++	 * avoids doing a linear scan over the whole block. Like this, we
++	 * identify the section of the block that should contain our key.
++	 *
++	 * Note that we explicitly search for the first restart point _greater_
++	 * than the sought-after record, not _greater or equal_ to it. In case
++	 * the sought-after record is located directly at the restart point we
++	 * would otherwise start doing the linear search at the preceding
++	 * restart point. While that works alright, we would end up scanning
++	 * too many record.
++	 */
++	i =3D binsearch(br->restart_count, &restart_needle_less, &args);
++
++	/*
++	 * Now there are multiple cases:
++	 *
++	 *   - `i =3D=3D 0`: The wanted record must be contained before the first
++	 *     restart point. We will thus start searching for the record in
++	 *     that section after accounting for the header offset.
++	 *
++	 *   - `i =3D=3D restart_count`: The wanted record was not found at any of
++	 *     the restart points. As there is no restart point at the end of
++	 *     the section the record may thus be contained in the last block.
++	 *
++	 *   - `i > 0`: The wanted record must be contained in the section
++	 *     before the found restart point. We thus do a linear search
++	 *     starting from the preceding restart point.
++	 */
+ 	if (i > 0)
+ 		it->next_off =3D block_reader_restart_offset(br, i - 1);
+ 	else
+@@ -399,21 +429,34 @@ int block_reader_seek(struct block_reader *br, struct=
+ block_iter *it,
+=20
+ 	reftable_record_init(&rec, block_reader_type(br));
+=20
+-	/* We're looking for the last entry less/equal than the wanted key, so
+-	   we have to go one entry too far and then back up.
+-	*/
++	/*
++	 * We're looking for the last entry less than the wanted key so that
++	 * the next call to `block_reader_next()` would yield the wanted
++	 * record. We thus don't want to position our reader at the sought
++	 * after record, but one before. To do so, we have to go one entry too
++	 * far and then back up.
++	 */
+ 	while (1) {
+ 		block_iter_copy_from(&next, it);
+ 		err =3D block_iter_next(&next, &rec);
+ 		if (err < 0)
+ 			goto done;
+-
+-		reftable_record_key(&rec, &it->last_key);
+-		if (err > 0 || strbuf_cmp(&it->last_key, want) >=3D 0) {
++		if (err > 0) {
+ 			err =3D 0;
+ 			goto done;
+ 		}
+=20
++		/*
++		 * Check whether the current key is greater or equal to the
++		 * sought-after key. In case it is greater we know that the
++		 * record does not exist in the block and can thus abort early.
++		 * In case it is equal to the sought-after key we have found
++		 * the desired record.
++		 */
++		reftable_record_key(&rec, &it->last_key);
++		if (strbuf_cmp(&it->last_key, want) >=3D 0)
++			goto done;
++
+ 		block_iter_copy_from(it, &next);
+ 	}
+=20
+--=20
+2.44.GIT
+
+
+--00gATv1vjKrA/mz4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBTOsACgkQVbJhu7ck
-PpRqHxAAhAjs5q61owWj2xf32GtukKU0IRPzG3eJSa562GoxM5lsH+oEY5wwKaAo
-KeY8Re3AofNNcpFoYJ2SidFqTmR6T5yyQ00A13EUV+IxkA93tLA/1KpvE3I8HAdg
-JVxwbPpmbv3UNZlZ1hmEkDqbZcDpKnIco5H78tptrjD4mPgReva2SLznD5mlzaT/
-rFMfP5Unep2JJJpn9vAPpWdlff8Q0kfwMDv9yDYEkZF1GYskMt4SS3+2quZkHQvN
-ku6uHkDjnp+CjR6GJY5vRAXpDmngZXg9mQJHEf2oORcucfIssYR4ASMRTc5kqJEf
-TP9RqZJtxyn8fFYBuWStY/jcUIVlj5LLFBRYejlTcmktS5xdIeYdi+ZSuwxvhjFZ
-GVpqQ/WMZIRJTwFuMPCnIjBORbxJHQ42urYEyvskl8iHFWqJNuDuta7T6efAUutb
-ZLDqdNqpSQJlH1EXO5rWuedF7nDa4+0MCjVPpsV/shPQ7qVy4PE+Q0L/3du7876b
-wmZU5q6p8pxeBplRK/3g8p4vM8Y1//A0luYpk2rFM2+1yrp1FNmBWt3PNUSjUfeD
-SFasiCmmWcGKYkxhzWdeOrL2O/vyKnTsnN2BuRsWS7xD0ZQBRu3aJHhFFE/qCVA+
-q8QTxYCqaanlm5t6G8P9eU/rV1LaoqlRC4IqWTk2wEiTFPznDlw=
-=FjAa
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBTaEACgkQVbJhu7ck
+PpQGJw/+J48rSe27NmzMV9oG47JGTfZgf0PyEj4z1x8ISwSViXUJRWqZNhkD96jK
+H/KKXcaQSKfF1asPpZkowJl5Gri7g9AnWWSWXMC4l03pZPr4Yy617ALjeDAV77Ja
+30iaC2ANPcMvicVgL1QmcoJDqpoK1U/VyvPnrL+pYW37xRBQyf09QatsNEIB5shk
+OQlr2RrO8Ikls+qh/e/JEFL22u8Rmedl87z+Z9RgrFAdZ7cx8+15ZpuFQTs0itG0
+CH1NiXVOyyOIl4TVzNdHLA6TIxQSRdtHMkDYhAi/4l1UuRn05dFGJuAjEVqhwVAS
+CLFbJakq4VUsRXU2lKU+K7jHdfx+zhpbHWrBxx8GVt7XABwYa568txFZvCRc/ICk
+DRzHadIDwnC5hDZ51onruA8qWjW7C27W//P8D1aaBklB45XHLxSkUNl4PjMRWkL+
+IOuVS+wDQu6POxt+B4pblB0zsCkGs9OFAYy084SDRfEXdchJpwyx7keAd03JNX6I
+k5UqsfaSupME/tD0dfR+iUmq7TfLCQiXqAWkQlCIZNHW2Ae5GEF6ug0JV0HZIEIG
+9hXwnTd00244rzzir/6Cbb1dBeklrGT6bN3sW3yFPom9ZqR4LkgrIBBAH0b4GHoG
+7lUv2xK/RmzNrhBfsZZ2xxvoi2WEBl0nl+M3faGJ5mDOJXvYuwQ=
+=dKNG
 -----END PGP SIGNATURE-----
 
---VX6nkuFwnRGyDtUb--
+--00gATv1vjKrA/mz4--
