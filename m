@@ -1,105 +1,134 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D524CDDC3
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 19:18:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505AA1B80F
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 19:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711394301; cv=none; b=BEYbaYgWPHZgAX8is5j+rtWPkE3ck4IMrC1OH+1rxfUcp2mgWoYVrkleE9BpBORh7EKCj28NrR48aKkKCPwgDOjHz29OE62KeVh6sRfMyZc1RE8afLrvUstbUXg9rEUhe1TcZfz06jiWqZKHlgcQ+QPFERfmailTbFXRPZgMT6U=
+	t=1711395396; cv=none; b=rm5i429kepzGeeHkBgzfvO/7QtLg1wqPJ1PvqDrYKHvRqkYSFJa7E1+xK+LVklvxTfyDRMfiQ0bjBqabwZKQOfFiazaKk+RlIShYId7at8dMcK78FqIf24G+KO2wRzqQGzV1X1Nt//UZc6Q7zGifYDTha897Ln1sLai+QHlWji4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711394301; c=relaxed/simple;
-	bh=mZN9B+PPpLyAV6GIgvpwxOXi8lx2gMJD2z7trl/O3yo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Cfnj1vykjnEgJEl8F0ZUgmOROTVawkrHM0rX82HTY4ITsfH1ctK7vnBpvMCpcPT8JtU2DFFlIGNUGPhYM14fLsPuER1f4JL6pTUGzQZZbZCkMqnVSVxYnL6qbWWUT1Y4ZmELuJPGWd6bfkWC2pf94dxf+uYljqdfK9gD2K2l8p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KzQAeHhw; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711395396; c=relaxed/simple;
+	bh=bAIOOxRflrzCbW7kjbrhMVhRs4QoFZfSTimggs5Tf1c=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=pBnwFkQLS43vsufFgjh332EzrSmDEd5RliJdxw53T3TKGjhB5eckG6+GtB1QT74Jnj7UbGyWO8NCK37prrRYjYxjw0mixyDaP6J7WwwhmeRoq9kwPdWZKJ7agzxdbIuzFWtf07DAJ5Kws5eVT2X7XqPFae0TkA1cQQ0frkroV4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PpQG+Tst; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KzQAeHhw"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AD9C21E978B;
-	Mon, 25 Mar 2024 15:18:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=mZN9B+PPpLyAV6GIgvpwxOXi8lx2gMJD2z7trl
-	/O3yo=; b=KzQAeHhwlA6uB/aTI/d8IgOL7XiarPGpacA25jZLvb7mv5Ook1hQQv
-	L61I25LP2PwLjc85/Z0ecSRhtfW0AaRqQXGqhq/Ueqx6pBp0xr16ks4IoJAuFc4E
-	9fgHCOwV1DZFXzwXezEe2doGalcxk6oJawd2lXDnI9mnULWwcmerc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A46401E978A;
-	Mon, 25 Mar 2024 15:18:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0A6B11E9789;
-	Mon, 25 Mar 2024 15:18:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  sunshine@sunshineco.com,  jn.avila@free.fr
-Subject: Re: [PATCH v2 3/3] grep docs: describe --no-index further and
- improve formatting a bit
-In-Reply-To: <a7e5151fa615d572ab4ed05519dd277048ce935c.1711302588.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Sun, 24 Mar 2024 18:51:13 +0100")
-References: <cover.1711302588.git.dsimic@manjaro.org>
-	<a7e5151fa615d572ab4ed05519dd277048ce935c.1711302588.git.dsimic@manjaro.org>
-Date: Mon, 25 Mar 2024 12:18:16 -0700
-Message-ID: <xmqqa5mmjf2f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PpQG+Tst"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-56c2787aff5so102505a12.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 12:36:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711395392; x=1712000192; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jVsxhzNue3U6Hi+nPnKIZFTWvgCMGrVdacygdHdfZLM=;
+        b=PpQG+TstU2RhfyRTuVDw9cAMoMynZlfAl2XtN8zIBIAAfkq4/K0oLzA3Fswu2cfL3z
+         SInkVUF3MCNv0biOm+0wkuvJsbiScbl90WzDDiVfw3e54xkJIOFL+1/bgOX2nrEBcj+j
+         8S3L/7gBvGCjFVUf5DvqKjUD4qB/QFwEzBYj2xrqTfuMD/x1+UCsSN5B4N1QtWKvlaIL
+         Fk5VaAQRiISq/1SZj1ypafMFv/UVlezFeJzxNuv2fzyOjtDPkI+TIxZ78dpJww2wGSRD
+         UNv0/ENB0TNEE//z7JT+u9VBm9QcKKvppt/Sh0B5D4/Ny988TAlvN7B9v3E8xcpQroJi
+         2sgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711395392; x=1712000192;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jVsxhzNue3U6Hi+nPnKIZFTWvgCMGrVdacygdHdfZLM=;
+        b=mUgetG1WxhIFb/viKckcsgjdF0/8SeDH2/eu4/OMKwnsw2fS4lOH2Ad2Ei1++iXHy6
+         62aCsbKrLwu9+IRNCkGTeOhsNpgzyFObTstAe2qRTm0KQwkjCe0QozXmydyRNzV9h3xI
+         wEmhGnhWrqVKowrJl6l1oTJZESjkOxTF+0TPFfe4eTIZaiYjbanMVsjC/goY6gOJiQKG
+         bqrw9MAvGufYGVL3xS2rGYhY7maeWIqeQhZFWuw7nJXVYH2WdRzAexyEyn5megoqHsn5
+         oOOu/Y3kMmSdZS8HeDlxAfOLSglswDsfKsaRGRbSjaT/HBYLq1Rqg70rv09YcMZoB0he
+         U0dw==
+X-Gm-Message-State: AOJu0YzIvt9XAN5qmhCxxMbV4CuCONIhG9HE4j8ta1x0LEZ2LR5n4Ub2
+	VINcJYZYgV9PoBV0Ez3hYgYvPzrwHbB9O/ePJ4GaWyyB09GsFyuB
+X-Google-Smtp-Source: AGHT+IEI/hHQf7/eIXByq8F660TdKSPOMlLO1JvWrlpOFAq+g+M7TZk6lasQsxAQvEoEXOOLcnUmCg==
+X-Received: by 2002:a17:907:a0a:b0:a47:52e7:1068 with SMTP id bb10-20020a1709070a0a00b00a4752e71068mr3551825ejc.52.1711395392471;
+        Mon, 25 Mar 2024 12:36:32 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
+        by smtp.gmail.com with ESMTPSA id ws9-20020a170907704900b00a46caa13e67sm3348787ejb.105.2024.03.25.12.36.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 12:36:32 -0700 (PDT)
+Message-ID: <2ab7445f-08ee-4608-96ad-8171f9ce1b73@gmail.com>
+Date: Mon, 25 Mar 2024 19:36:33 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6F926590-EADC-11EE-9951-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 0/7] cherry-pick: add `--empty` for more robust
+ redundant commit handling
+Content-Language: en-US
+To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
+References: <17c00de527e3a0c4.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+In-Reply-To: <17c00de527e3a0c4.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Hi Brian
 
-> +--no-index::
-> +	Search files in the current directory that is not managed by Git,
-> +	or by ignoring that the current directory is managed by Git.  This
-> +	is rather similar to running the regular `grep(1)` utility with its
-> +	`-r` option specified, but with some additional benefits, such as
-> +	using multiple worker threads to speed up searches.
+On 25/03/2024 16:12, Brian Lyles wrote:
+>>       ++		head_name = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE, &head_oid, NULL);
+>>       ++		if (!head_name || !starts_with(head_name, "refs/heads/") || !is_null_oid(&head_oid))
+>>
+>> While we don't mind the occasional line that is a little over 80
+>> characters these really are rather long.
+>>
+> 
+> You're right, these got a little long. I wasn't able to identify a
+> definitive wrapping style for these cases, so I'll include my proposed
+> update here just to avoid another re-roll. Does the following diff from
+> v4 to a proposed v5 work for you?
+> 
+> @@ -776,11 +776,13 @@ static int is_index_unchanged(struct repository *r)
+>   	const char *head_name;
+>   
+>   	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
+> -		/*
+> -		 * Check to see if this is an unborn branch
+> -		 */
+> -		head_name = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE, &head_oid, NULL);
+> -		if (!head_name || !starts_with(head_name, "refs/heads/") || !is_null_oid(&head_oid))
+> +		/* Check to see if this is an unborn branch */
+> +		head_name = resolve_ref_unsafe("HEAD",
+> +			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+> +			&head_oid, NULL);
+> +		if (!head_name
+> +			|| !starts_with(head_name, "refs/heads/")
+> +			|| !is_null_oid(&head_oid))
+>   			return error(_("could not resolve HEAD commit"));
 
-Sorry for not mentioning this earlier, but I do not think
-multi-threaded grep has to be something we own and others cannot
-implement.  A richer pathspec globbing [*1*] and logical operation
-on match results may be better examples of "additional benefits" if
-we really wanted to mention why people might want to use
-"--no-index" in a directory that is outside Git.
+Normally we'd write this as
 
-[Footnote]
+	if (!head_name ||
+	    starts_with(head_name, "refs/heads/") ||
+	    !is_null_oid(&head_oid))
+		return error(...)
 
- *1* When you want to look for something in files whose name begins
-     with "g" but does not have "rc" in it, you'd do
+breaking lines after an operator and indenting to the open bracket after 
+the if. The rest looks good. Junio was talking about merging this to 
+next in the latest "what's cooking" email so I'd double check he hasn't 
+done that yet before re-rolling.
 
-     $ git grep --no-index -c . ':(exclude)*rc*' 'g*'
+>   		head_tree_oid = the_hash_algo->empty_tree;
+>   	} else {
+> 
+>> Apart from the minor style issues this all looks good to me, thanks
+>> for working on it, it will be a useful addition to be able to drop
+>> cherry-picks that become empty.
+> 
+> Thanks, I really appreciate your help with this series!
 
-> ++
-> +This option cannot be used together with `--cached` or `--untracked`.
-> +See also `grep.fallbackToNoIndex` in 'CONFIGURATION' below.
-> +
+Thank you for working on it, I've enjoyed reading your patches
 
-OK.
+Best Wishes
 
->  --threads <num>::
-> -	Number of grep worker threads to use.
-> -	See `grep.threads` in 'CONFIGURATION' for more information.
-> +	Number of `grep` worker threads to use, to speed up searches.
-> +	See 'NOTES ON THREADS' and `grep.threads` in 'CONFIGURATION'
-> +	for more information.
-
-I actually do not think adding ", to speed up searches" is an
-improvement.  But referring to NOTES ON THREADS is a good idea, and
-by reading that NOTES ON THREADS section, readers can tell why it
-sometimes does not speed things up or even slow them down.
-
-Other than that, looking great.
-
-Thanks.
+Phillip
