@@ -1,80 +1,82 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50664170ED6
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 09:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799207351A
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 09:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711357829; cv=none; b=UQXgD7ACmy+gvAYk93vM6kqOmxIs6hjetgVgCfio+1DteeL6Rd0x/KE+3m9WAqYCcTVJS5s7RBrNv0Ehg0b1tC6D3gmw9FUrJBOM0Z+FXcMvMUn7Zab2XPZDQKqwMXuJf3i8ryCQZI2Ol0htQczj0FKTDb8NDqz4XtGFVBrXaoM=
+	t=1711357846; cv=none; b=I8q5up/ldR4JQe2agBQS3vWder0BMob8Vws0MuCz1X53vUHxzHfW9n2EPZ2ADyNbkp7z2XEMuiZgcXPySIbeD8aAwtsEpKDolCR/7yS/Hs10zOccbIZ+ISTY1iHjkR6ArGxCN82Y9eeRxUTq2ZAmeaPo51debzNlMfyIb05fs+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711357829; c=relaxed/simple;
-	bh=YzPXrN57CCnT14ct3hZ4zOjaZMl59KYObL5of6bnN9U=;
+	s=arc-20240116; t=1711357846; c=relaxed/simple;
+	bh=XeilNrI7NauizJ+lniESkt6b8uk/4oPgarbhyrYJ8H8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E8RPQRly1soqhO+F0lcFRggtD1p/nR2L1mv/NzKI0iEc9QQa7Iw2iEmI0NCYWjl3eOuMbjJr8WOmBchIPmy6xXPLyRcfCgXhctWXzqzQyn765oFE7jTTESbs6k2Vp8TNzepW+M9iy2kxsGu08pK0U4BG9x+nzI1Ln2YjKe81PWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WTSYJSQY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d8JUEBcu; arc=none smtp.client-ip=66.111.4.27
+	 Content-Type:Content-Disposition:In-Reply-To; b=PMp3Z44wE5kvMUHkFrptSQvMzIjQR1fAzqvmLwbuxxEV6ALiHkgQ1VWG73fFK3Ya7kKm8lqd9Jzm/O0sqrhuzdToJI7O/+eYa0oQ1mkF1uOLD4OyIiTGGshiEQlPfN2R6JPP2Ii+bXwBCrtupfHtOw0xSXeOXaQYsKNZG6pM/UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BEO4/FGx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jOPs3FC0; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WTSYJSQY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d8JUEBcu"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 353455C0060;
-	Mon, 25 Mar 2024 05:10:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BEO4/FGx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jOPs3FC0"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 850851380117;
+	Mon, 25 Mar 2024 05:10:43 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 25 Mar 2024 05:10:26 -0400
+  by compute6.internal (MEProxy); Mon, 25 Mar 2024 05:10:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711357826; x=1711444226; bh=XWOvPFkzSi
-	odUip/56te65D4xIDaiDl1S6UDs9Uk2Aw=; b=WTSYJSQYpkrn4JbMhDG9wCQ9Ef
-	x/UFPy0F8H9yGeTDCrFvc4XIacnR3ptFC1Z+xZfOEfVdkHnRhIclKQ9IJ20SueLB
-	ls9Fr5j/8Q3KMjop31DH6mKN4gxhyLZ1Nu9lVRPQTcJCtPJfpD0yE/UN9iIJImmg
-	g55q9DTph1kN4ZOlRacNHIPRsklWDV7xTUSpqmOo+srY8xxP83CmKSIhbXAeUOka
-	2iBp9ekDpE2v5Hqsy53zLXqrzU8UXlkzRzhOOWfz+tqn4tL7lV148WNSIYAb7Wcw
-	ycOhMYUUnsaYD5Vgyyn5qyL02JZ+MJnlZwH+MZeLPmoBXp6FwCWBpyF93b0g==
+	:subject:to:to; s=fm2; t=1711357843; x=1711444243; bh=aOy4HENEq+
+	9A68fSvxgWz1b+LEsWbRfCrjYKfs/lnqw=; b=BEO4/FGxOShJckqs66TelfOnNx
+	Ez6TewX/uU+3/l87k5+9VVip8ishX1U5PqfejmR+VxL/RVRV4CLkNOouBE7RLEXZ
+	cGcq35EKjcAeIRAukjekCccq42luaiXtJlYm3cr1SMNJ2xto5SQSKeIovz0nrOtT
+	cAbJ42A0udlzeURie+cKh+2P3/TXIqcGKf3w8R8vtoCE+3Zs0ROUBnuzIZbDFBn7
+	nCYEAwwFN0iWfp9mDw5mRuVE6B7naPI0wy9gH/QVOtybbT5WHpA4H9S86GmaFvrO
+	WMsfHbUSeCCiMG1civ7/chNZT/fCYg2KW66W1kWT+YjG2FvMSw7E2+r9l4aw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711357826; x=1711444226; bh=XWOvPFkzSiodUip/56te65D4xIDa
-	iDl1S6UDs9Uk2Aw=; b=d8JUEBcup45PQBnKEMBaIQHZsfEKn6+tzh1hWEyoGJGT
-	+U15hXmV6cJMWowzLl1MxFrqhM1NqOqktxbH8CR3J1F6rqtEtjx6NN/1qpxsFpA7
-	dC0tgBIwaAuGEm9unMQbh2i9nbEJ3L+02OeHZ50UX2Y4vL9CuDn7vtBSj7EBYMXz
-	arZZ0v3n8AqhwmfD/Ua2Iu+UTFS8+PQ8BSFsvh3/yScyZl7Ve/oI6wfFdqPol0aG
-	/jtcLfjl1l0tnMH4s7XasbQrzJXmrN2kucDd3dmIwc7TUAnqaXPpLivNe/uG66cM
-	sPeBtxcjOXTzjSjebskwYznkVp9V+1qbnqJAaFly/A==
-X-ME-Sender: <xms:gj8BZoktOjwVo5s0MKHQsinA44MFg1ksxb4riwX0CrcsZBQPvIb4lQ>
-    <xme:gj8BZn2V8Pl0Y2pI38c271rHqfpnTbe0oktHauV1VMZo6SyqqwvlFsHoKeNCgOc9d
-    02JPg4HM_3-QybiVQ>
-X-ME-Received: <xmr:gj8BZmpMWr6-RXCPvNteCbRAwUKtp-cqbm8JPm_G8q3S1hQmZdsyMNa1R2a7U-WaK4TGIbJSrzYOEfcLysEOo-qFGWZgu_0fM5Q0xUIVeNpBGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtkedgudeftdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:gj8BZkkxtc9epXu5i-mBDr-HPW_x8V6wE1cSzn1EPK40SGjxdZpsHQ>
-    <xmx:gj8BZm1W_TOBPt6qrn0XXBUVKZzC_vUgo-LTDRYsrAIqEgNrJKEthg>
-    <xmx:gj8BZrtW5nHbwRQ1xAMJ1NJdccrv-1pO9i5nrX8USO5PCwmfYIMJXw>
-    <xmx:gj8BZiWBAALgIhweBSf7Xjy5Wv5ZJqnGB9kLtB5Nctn_UUI8sqeFAg>
-    <xmx:gj8BZry4PlKp0KURD3Kv0maL86p3UKNGj3xNVJgYuVFbXukUobXbGg>
+	fm2; t=1711357843; x=1711444243; bh=aOy4HENEq+9A68fSvxgWz1b+LEsW
+	bRfCrjYKfs/lnqw=; b=jOPs3FC0kajlfmf+XQ/jm8GSGone4K4kFAt6VHeAX3Gk
+	WyzX7ef/KeTCaIdkgVnu/nsp7jTOSBGgqmJ4OVZdhwpLDDcYepbG37vVdXQgJOul
+	axNwYACsfWQnClZ8cu4JUXJn3XGgfAU3wSbcaufEfJaYlYo2zoqvRMx5WfSOThJY
+	4C0569fd9WXAEFHjAB9CEMattHm7bMJzqCkjxy+t4kV1uwA0t7YJosB57WQ42smw
+	8xHoMC1CvLVXTpdDDhkiIV3IYDI+PiMwkdwcpxO6m4uvSc7VcKLP7tk2clEKAEBa
+	EvxSqd3L1tWQtvmfq8dDbhZyIy9s/TzwbqMLquR3zA==
+X-ME-Sender: <xms:kz8BZsmkB-Xs43NzBM7_p5fAi1dhQSMS1dOlHW2XuQuEFHgCRBh7SA>
+    <xme:kz8BZr3bj-FYGGj1L5d96sQPoPz3DoNAC7Wx712OQYKH9BJ6IsYPiWramLDNDtaKB
+    gj0JOGB82O1DJdeHQ>
+X-ME-Received: <xmr:kz8BZqq1SLnZ-gUh8s8I4hbdFVXkCXPKpnIx4fK6N2al2gZHKfdaUOgAMUz0vHAF8w7Seiq3lLZEKPKhgmMitLFXkOq-2RfsWYJnRG2Htwg8iA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtlecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    eukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteenucev
+    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:kz8BZomBx2DjyJYQ6kWrJI2b4YCvnM4LdLj-3vWz1nzCyb_72arN9A>
+    <xmx:kz8BZq0B4-eGrHvdTMG5f6maSgudTPU4APBVp12QpLMFzzmxa2fq_w>
+    <xmx:kz8BZvvAi8H-UaHGBZ1p6dualpjEz22BJE8XMNQWqft1NQmKq7Ywnw>
+    <xmx:kz8BZmU-5PuBJc_xbVQkShv1wlf4-FV9UrYKEgXtLs16UO3h6M2CbA>
+    <xmx:kz8BZtRUt0-sjt0X54Gvbv0LmpPevhhTvLG89R3aMMRo0RN2dYwyIg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Mar 2024 05:10:25 -0400 (EDT)
+ 25 Mar 2024 05:10:42 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d0e6b5d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Mar 2024 09:10:13 +0000 (UTC)
-Date: Mon, 25 Mar 2024 10:10:20 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id cdb331eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Mar 2024 09:10:32 +0000 (UTC)
+Date: Mon, 25 Mar 2024 10:10:40 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 00/15] refs: introduce `--auto` to pack refs as needed
-Message-ID: <ZgE_fJpufp463Bp7@tanuki>
+Subject: Re: [PATCH 04/15] reftable/stack: gracefully handle failed
+ auto-compaction due to locks
+Message-ID: <ZgE_kJldM-Rh9tKl@tanuki>
 References: <cover.1710706118.git.ps@pks.im>
- <CAOLa=ZTgJj=moQC2Ve40KzSinmNGFwTSx_RcKaiCEQArcg8NoQ@mail.gmail.com>
+ <37a18b91ca998ca5ad27d17e86d286040b6e6ee1.1710706118.git.ps@pks.im>
+ <CAOLa=ZRxt7rwmU4UJAZra605zyqk5QJD5OD1oM_BidRpJbZP1w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,80 +84,130 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bWlIxu/wHwXFmcRG"
+	protocol="application/pgp-signature"; boundary="DZyJd84S1ZDqPr2N"
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTgJj=moQC2Ve40KzSinmNGFwTSx_RcKaiCEQArcg8NoQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRxt7rwmU4UJAZra605zyqk5QJD5OD1oM_BidRpJbZP1w@mail.gmail.com>
 
 
---bWlIxu/wHwXFmcRG
+--DZyJd84S1ZDqPr2N
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 20, 2024 at 12:30:58PM -0700, Karthik Nayak wrote:
+On Wed, Mar 20, 2024 at 03:22:55PM -0700, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > The `PACK_REFS_AUTO` flag is exposed via a new `git pack-refs --auto`
-> > flag. It is wired up in both `git gc --auto` and `git maintenance run
-> > --auto`.
+>=20
+> > Whenever we commit a new table to the reftable stack we will end up
+> > invoking auto-compaction of the stack to keep the total number of tables
+> > at bay. This auto-compaction may fail though in case at least one of the
+> > tables which we are about to compact is locked. This is indicated by the
+> > compaction function returning a positive value. We do not handle this
+>=20
+> We no longer return a positive value, do we?
+
+Yup, this is stale.
+
+> > case though, and thus bubble that return value up the calling chain,
+> > which will ultimately cause a failure.
+> >
+> > Fix this bug by handling positive return values.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  reftable/stack.c           | 13 ++++++++++++-
+> >  t/t0610-reftable-basics.sh | 20 ++++++++++++++++++++
+> >  2 files changed, 32 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/reftable/stack.c b/reftable/stack.c
+> > index ba15c48ddd..dd5160d751 100644
+> > --- a/reftable/stack.c
+> > +++ b/reftable/stack.c
+> > @@ -680,8 +680,19 @@ int reftable_addition_commit(struct reftable_addit=
+ion *add)
+> >  	if (err)
+> >  		goto done;
+> >
+> > -	if (!add->stack->disable_auto_compact)
+> > +	if (!add->stack->disable_auto_compact) {
+> > +		/*
+> > +		 * Auto-compact the stack to keep the number of tables in
+> > +		 * control. Note that we explicitly ignore locking issues which
+> > +		 * may indicate that a concurrent process is already trying to
+> > +		 * compact tables. This is fine, so we simply ignore that error
+> > +		 * condition.
+> > +		 */
 > >
 >=20
-> Wondering if this is also exposed as a config option.
+> Nit: The last two sentences are somewhat the same, it'd be perhaps nicer
+> to explain why "this is fine".
 
-It's not, no, and I don't quite think it would make sense. We don't
-expose the current `git gc --auto` flag as config option, either. While
-we have "gc.auto", it doesn't configure whether or not the `--auto` flag
-is set, but rather configures the boundary at which objects would be
-repacked.
+Fair enough.
 
-In hindsight that config option is too narrowly focussed on objects
-while pretending to be quite general. It would've been great if this was
-called "gc.autoLooseObjectLimit" or something similar instead to not
-cause confusion and to be more easily extendable in the future.
-
-I can certainly see that we might eventually want to have ref backend
-specific configuration here. For the "files" backend this could be be
-the number of loose refs that are allowed to exist before repacking,
-whereas for the "reftable" backend this could be the geometric factor.
-But I'll leave that for a future series.
-
-> > The series is structured as follows:
+> >  		err =3D reftable_stack_auto_compact(add->stack);
+> > +		if (err < 0 && err !=3D REFTABLE_LOCK_ERROR)
+> > +			goto done;
+> > +		err =3D 0;
+> > +	}
 > >
-> >     - Patches 1 - 5: Bugfixes and improvements for the reftable-specific
-> >       compaction code. These are issues that I've found while working on
-> >       this series.
+> >  done:
+> >  	reftable_addition_close(add);
+> > diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+> > index 686781192e..5f2f9baa9b 100755
+> > --- a/t/t0610-reftable-basics.sh
+> > +++ b/t/t0610-reftable-basics.sh
+> > @@ -340,6 +340,26 @@ test_expect_success 'ref transaction: empty transa=
+ction in empty repo' '
+> >  	EOF
+> >  '
 > >
-> >     - Patches 6 - 8: Refactorings to drop the `PACK_REFS_ALL` flag,
-> >       which isn't actually used by the ref backends anymore and confused
-> >       me multiple times.
-> >
-> >     - Patches 9 - 15: Handling of `PACK_REFS_ALL` in git-pack-refs(1),
-> >       git-gc(1) and git-maintenance(1).
-> >
+> > +test_expect_success 'ref transaction: fails gracefully when auto compa=
+ction fails' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> > +
+> > +		test_commit A &&
+> > +		for i in $(test_seq 10)
+> > +		do
+> > +			git branch branch-$i &&
+> > +			for table in .git/reftable/*.ref
+> > +			do
+> > +				touch "$table.lock" || exit 1
+> > +			done ||
+> > +			exit 1
+> > +		done &&
+> > +		test_line_count =3D 13 .git/reftable/tables.list
+> > +	)
+> > +'
 >=20
-> I'm assuming this means `PACK_REFS_AUTO` in the last sentence.
+> I'm not sure about the testing setup for reftables, but maybe if we
+> moved this to the unit tests, we could've also checked the
+> `reftable_stack_compaction_stats(st)->failures` value. This is fine, but
+> it doesn't really tell us if the compaction was even attempted.
 
-Ah, yes.
+Both tests have their merit, I'd say. Let's thus just add both.
 
 Patrick
 
---bWlIxu/wHwXFmcRG
+--DZyJd84S1ZDqPr2N
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBP3wACgkQVbJhu7ck
-PpSH0g//alrKf55LnR5a/0838pw9QwoKyT9ejasHSiRPt7tfSXT/s7zQA6q9N21a
-Gl8m+XvJqfET+VXyABH4mS4GSI4yt7nkqL2mCNE+AcO2ZJzjEYyUjrIvTeq4pWOz
-JTMai75IjTXZ5TmiFyEGJXIQ5UnN2jeRuxzzofbvfpFc5B+YUW1aABLwqBnMmJPx
-/zZ2u2bSEXDdud9AXqjkGECGJUCezvvjhgb+0uRAWEWMKaN79jq04/+xEI25w2/T
-/k6Xx1NCPPASlqGKbYZAWkDT+3F54B3OgMjHmvBK80qB5Tx1UYBzcUlSHDaOe8Dm
-e+wsJhRpBlFMbmRtAeqvzRuTMfBS4RN4yd7jRBD+I7l+zWkPxJUL56lGkStQAjwy
-ID9K4FSWSt4XlmY2P+qxBvV9Ay+m75IdHR6goO74D/zDM1Gf/uFP6+zUSTIAyDpy
-kZA4BuNAp5mOO/pFQEXyTJDj+r6APs3WAmnTjkRKYG0IxwTyO5UXDAFpdbD9ut3q
-3174Adt/rI7MIxRKrmOOScqZQxW1A4Pjd9n6ZI63+O0cq4+O8rRisa815HA3nQpI
-d8uf78EsM2DP4F6HPtdFWdDFOZ+9WJwiapT4DT+l7gRocCzDfv0tosYFm005KeT4
-vHeVixefWSGbVBCAUjXwYoQytRokhIdcCRpjSh2311piAgtlQA0=
-=ha2b
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBP48ACgkQVbJhu7ck
+PpRTyA/+NwIVNjJ+HCEQCZBb6rs6y86TgSICRM5LrirUFxGNoj/c+MM5+lU3lPLs
+wDqTXg43NeDZ8QRe2gGwHUHsmdyTynWIeivy8tOgc1ORlpn+OIzk3yTlxyjeZ6Zr
+WsMDC/xtjuCD1BNg6zy8M/jRCHyQRA+midS/mztawsT0T6jFhgD9gr9G/fOuoOJJ
+aQOPuRI+oxwPCuAQF11a0TJATVnl2lLLSWM08Z9d+sARK48SrK3O7Dr7EaawhOGA
+R9BxzwU2+6WJ2ID+aIP8Y9HXgUq4E/gZISZSa4i3ioCT5O4TpiL4TU1vUaPd7dkU
+h9Ej9z0ODMP7jjkcTyvwKgCllS6IRi1LBUPry/78CcuYHTCK/XX+oF82TR3o7osf
+xvJUb5jd3l2lceeBwgSRDwxH877T+vUwrWxV7EEOOZ4GmBr0hmeqArZnNFUvsPCO
+LE5VMkGjfYtII7e1DtN3V9Cod0I59O5wZWH8+bvIXmdM6l1f9onDNtIwB8McWKYU
+ozDqhCcITMrz3q4sInfszeJ6dgpEvnywbLQTUu7EvlR7kNwc35bqzXcODmoObNjJ
+upuL9zGPuDg+j8zzZS2t4pQ7xxS9y5p5BT8CkRdeUgxVthMr4JusznYvw4ttLqU0
+uVmoYN6bLFlW4IDeR+6I6tii4WvT5GqF1ghthfzvuDZI/H1b4aI=
+=HbyC
 -----END PGP SIGNATURE-----
 
---bWlIxu/wHwXFmcRG--
+--DZyJd84S1ZDqPr2N--
