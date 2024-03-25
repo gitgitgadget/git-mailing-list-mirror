@@ -1,152 +1,121 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4A1448CB
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513517BAB
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711387494; cv=none; b=RS826Us78v93fLyt8EG0Gk0bV+kXwTwMwa97Vj3U1c68zsuy6BNfvfRGFIvjPx2R6uHPVQlnoUY4A7vVV1KrSo+gB3NDfvJS8DYiMskwwyGW7jND+OOe9Bu7jE2BZR96uVy63I+FADonhioFNV/o9C5hAYlYENub987m2Abz8Hs=
+	t=1711387556; cv=none; b=BJ1G2HvVjgO1FYplXv1Oxnh8Ma1GMAKzZ0u3WukM69hHMYF3p3lCzhcG+4F83Z3CwcbvJGPkeChi+NVNIevAKpK5fOdzQWwc6o3rf3z1h9vQN0zJSs4CVZy9+SkliqlwPMLO3pirdxJqOktPz5GXu5VjV/lq0cZDVJdD7xOb2KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711387494; c=relaxed/simple;
-	bh=KM3C5PDylPZro2XYnIjfoxNQGrNjai2tiJPhElUxg+Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gEBlu75yTLhjvHmhFCaIrjvWBM4piT2W6VVt+WhqKpGGK40gyJRMSp6lOyu3JT249k5BWKf6ZI6dz8Wt3MPYoYz5oMfNGRlI8KvI5XccGDhHumwd2K+z2WTl5RiBh4X7DK5tifYf6sFDGMo/urhuMtLZ+eHkYwuRwGrGjc+wAvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Mf/oc+v1; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1711387556; c=relaxed/simple;
+	bh=PzUPSF8UqVgcRa4y7YraCJA6sVqD8CftE3FHkeiQenQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=E6nqq99QhPDTnquZ0TV/5YgPxY8ujFM1Zbeobh0MDobRodnMTn8ZLJ170kw61QtXr9O78TPJK2kzby60Fd3YosEK1a3TlVXrKKn+adbKYeYdjMaFGKLMq85F8Jvww7kO4vTqSTCIDkVmxXY16HI4MIOfhhgLwT2/Jp/2NfON2Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=edzHloQE; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Mf/oc+v1"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-789f1b59a28so302298985a.3
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:24:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711387492; x=1711992292; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KZoe6v6JANoWwVQsnBR8xjoHp7tsRd/vEy+SzRgfSNE=;
-        b=Mf/oc+v1ZCTsG8hvDAG1iXYFCHf/uKtP+i3JaIzppsValYIVWVElp5nEXrhhCmgBWU
-         Ljz8Dlm8DR7tfT6296BxDTUmwbii0NNCD0fb20zVu6dqnYQOVq0TZ90qBgdXQjicYQW9
-         vz4Z5IGoGzxHUO/ErDLzHi3Q/KNl0B7q4SYP7col5H5KdzwTDctr2JpuGgQarhbQCRBJ
-         +f5y2c7l524ijhB6UgIjW5UsM5HBUOYhVXqosUXFpo0cOXya/4ymtoSa6i8x0G9s47Tw
-         JjKZNZHuvs9w+8jSW/KCu/W3I1yPY+HeS2NIqJAl+rDgoanX/YH1971+XrNU+txD56Ja
-         On3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711387492; x=1711992292;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KZoe6v6JANoWwVQsnBR8xjoHp7tsRd/vEy+SzRgfSNE=;
-        b=UxWiHp08YiiBKrK4EJdEXBlB2obSF9cHAU9Zgq3bcjifcgYmi0WPvMRPyYZLZoOfNw
-         vDxtj5zRIh7mNroNXrTS5c/LMd6nXG+EAc71iaOLeJjUScQ5ZMSpw1NvHUVg4OTh5xDt
-         dQqhcWFQoBJLM8dCaN+JggR4D9W9Lgow0r3IwuSzFbWbthFwLlVe3NMdTnhQ7S86T2Cz
-         2xbGYP6KXW6E70xZ7w75CqvGPSTkzOFYuGCbZR/K/M47zeuZZGREecCk1U9ZjgUB7hCi
-         WljVVCZ0Iu5BqmQUBDmIK8RKwA835lq/Yh7yvVkFMOIkkcT2r7w8DzUJTVwx8+f4Myr5
-         RRLA==
-X-Gm-Message-State: AOJu0Yw3ki4hvjDnk5wYyG3eWvPfYjRFdb9xRcK67E97+z9f3Kq8YWet
-	Y3Mccf22nIWd1OHlh0OwZ7nvBClyoh3imr7/lD8zpvL3vcXRy/NccHDTjKV7KorcRiOjkayZupf
-	4tWo=
-X-Google-Smtp-Source: AGHT+IGkV3qVUnZSLRIawD6t1DpVou/iqa1QWCcYVJ+AKhw/ZUvW1k5CQzsewDPxf9f0VeOFR9lBMw==
-X-Received: by 2002:a05:620a:125b:b0:78a:3509:ccdf with SMTP id a27-20020a05620a125b00b0078a3509ccdfmr7723622qkl.65.1711387491738;
-        Mon, 25 Mar 2024 10:24:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b17-20020a05620a04f100b00789f3c50914sm2300025qkh.33.2024.03.25.10.24.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 10:24:51 -0700 (PDT)
-Date: Mon, 25 Mar 2024 13:24:50 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 11/11] midx-write.c: use `--stdin-packs` when repacking
-Message-ID: <736be63234baf7fc6df8259d9bb7298858b2bc74.1711387439.git.me@ttaylorr.com>
-References: <cover.1711387439.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="edzHloQE"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C828F1E766F;
+	Mon, 25 Mar 2024 13:25:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PzUPSF8UqVgcRa4y7YraCJA6sVqD8CftE3FHke
+	iQenQ=; b=edzHloQEfbXZXzkuIAqoSRrG1v3ranyclUav9k0WTp3WwVbRC71oS2
+	3Xh63yPPHlFjIOVvPENKJJqp4SbQfXZgW8TsZuJMdFisTSOy/Yc+dPV5oDAES9di
+	X3ni4Oz9fBDURZh//t6xIV3ND+0RkL1CqEcA+IKBZ9IoMDDmukjW8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BFA801E766E;
+	Mon, 25 Mar 2024 13:25:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 299C71E766D;
+	Mon, 25 Mar 2024 13:25:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Kyle
+ Lippincott <spectral@google.com>
+Subject: Re: [PATCH v3 4/5] MyFirstObjectWalk: fix description for counting
+ omitted objects
+In-Reply-To: <cfa4b9ce503e98035d3ce09b0c9e00bcfb6ff70a.1711368499.git.dirk@gouders.net>
+	(Dirk Gouders's message of "Mon, 25 Mar 2024 13:33:35 +0100")
+References: <cover.1710840596.git.dirk@gouders.net>
+	<cover.1711368498.git.dirk@gouders.net>
+	<cfa4b9ce503e98035d3ce09b0c9e00bcfb6ff70a.1711368499.git.dirk@gouders.net>
+Date: Mon, 25 Mar 2024 10:25:52 -0700
+Message-ID: <xmqq34semden.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1711387439.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BB506A1E-EACC-11EE-BA23-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-When constructing a new pack `git multi-pack-index repack` provides a
-list of objects which is the union of objects in all MIDX'd packs which
-were "included" in the repack.
+Dirk Gouders <dirk@gouders.net> writes:
 
-Though correct, this typically yields a poorly structured pack, since
-providing the objects list over stdin does not give pack-objects a
-chance to discover the namehash values for each object, leading to
-sub-optimal delta selection.
+> Before the changes to count omitted objects, the function
+> traverse_commit_list() was used and its call cannot be changed to pass
+> a pointer to an oidset to record omitted objects.
+>
+> Fix the text to clarify that we now use another traversal function to
+> be able to pass the pointer to the introduced oidset.
+>
+> Helped-by: Kyle Lippincott <spectral@google.com>
+> Signed-off-by: Dirk Gouders <dirk@gouders.net>
+> ---
+>  Documentation/MyFirstObjectWalk.txt | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+> index a06c712e46..811175837c 100644
+> --- a/Documentation/MyFirstObjectWalk.txt
+> +++ b/Documentation/MyFirstObjectWalk.txt
+> @@ -754,10 +754,11 @@ points to the same tree object as its grandparent.)
+>  === Counting Omitted Objects
+>  
+>  We also have the capability to enumerate all objects which were omitted by a
+> -filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
+> -`traverse_commit_list_filtered()` to populate the `omitted` list means that our
+> -object walk does not perform any better than an unfiltered object walk; all
+> -reachable objects are walked in order to populate the list.
+> +filter, like with `git log --filter=<spec> --filter-print-omitted`. To do this,
+> +change `traverse_commit_list()` to `traverse_commit_list_filtered()`, which is
+> +able to populate an `omitted` list. Note that this means that our object walk
 
-We can use `--stdin-packs` instead, which has a couple of benefits:
+"this means that" could be rephrased in a way a bit more helpful and
+to readers with clarity, perhaps:
 
-  - it does a supplemental walk over objects in the supplied list of
-    packs to discover their namehash, leading to higher-quality delta
-    selection
+	Note that our object walk will not perform any better than
+	an unfiltered walk with this function, because all reachable
+	objects need to be walked in order to ...
 
-  - it requires us to list far less data over stdin; instead of listing
-    each object in the resulting pack, we need only list the
-    constituent packs from which those objects were selected in the MIDX
+> +will not perform any better than an unfiltered object walk; all reachable
+> +objects are walked in order to populate the list.
 
-Of course, this comes at a slight cost: though we save time on listing
-packs versus objects over stdin[^1] (around ~650 milliseconds), we add a
-non-trivial amount of time walking over the given objects in order to
-find better deltas.
+Other than that, looking very good.
 
-In general, this is likely to more closely match the user's expectations
-(i.e. that packs generated via `git multi-pack-index repack` are written
-with high-quality deltas). But if not, we can always introduce a new
-option in pack-objects to disable the supplemental object walk, which
-would yield a pure CPU-time savings, at the cost of the on-disk size of
-the resulting pack.
+Thanks, both.
 
-[^1]: In a patched version of Git that doesn't perform the supplemental
-  object walk in `pack-objects --stdin-packs`, we save around ~650ms
-  (from 5.968 to 5.325 seconds) when running `git multi-pack-index
-  repack --batch-size=0` on git.git with all objects packed, and all
-  packs in a MIDX.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- midx-write.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/midx-write.c b/midx-write.c
-index 4f1d649aa6..d341b9c628 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1474,7 +1474,8 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	repo_config_get_bool(r, "repack.usedeltabaseoffset", &delta_base_offset);
- 	repo_config_get_bool(r, "repack.usedeltaislands", &use_delta_islands);
- 
--	strvec_push(&cmd.args, "pack-objects");
-+	strvec_pushl(&cmd.args, "pack-objects", "--stdin-packs", "--non-empty",
-+		     NULL);
- 
- 	if (delta_base_offset)
- 		strvec_push(&cmd.args, "--delta-base-offset");
-@@ -1498,16 +1499,15 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	}
- 
- 	cmd_in = xfdopen(cmd.in, "w");
--
--	for (i = 0; i < m->num_objects; i++) {
--		struct object_id oid;
--		uint32_t pack_int_id = nth_midxed_pack_int_id(m, i);
--
--		if (!include_pack[pack_int_id])
-+	for (i = 0; i < m->num_packs; i++) {
-+		struct packed_git *p = m->packs[i];
-+		if (!p)
- 			continue;
- 
--		nth_midxed_object_oid(&oid, m, i);
--		fprintf(cmd_in, "%s\n", oid_to_hex(&oid));
-+		if (include_pack[i])
-+			fprintf(cmd_in, "%s\n", pack_basename(p));
-+		else
-+			fprintf(cmd_in, "^%s\n", pack_basename(p));
- 	}
- 	fclose(cmd_in);
- 
--- 
-2.44.0.290.g736be63234b
+>  First, add the `struct oidset` and related items we will use to iterate it:
+>  
+> @@ -778,8 +779,9 @@ static void walken_object_walk(
+>  	...
+>  ----
+>  
+> -Modify the call to `traverse_commit_list_filtered()` to include your `omitted`
+> -object:
+> +Replace the call to `traverse_commit_list()` with
+> +`traverse_commit_list_filtered()` and pass a pointer to the `omitted` oidset
+> +defined and initialized above:
+>  
+>  ----
+>  	...
