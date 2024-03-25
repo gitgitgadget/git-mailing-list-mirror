@@ -1,134 +1,86 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505AA1B80F
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 19:36:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C2F12B77
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 19:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711395396; cv=none; b=rm5i429kepzGeeHkBgzfvO/7QtLg1wqPJ1PvqDrYKHvRqkYSFJa7E1+xK+LVklvxTfyDRMfiQ0bjBqabwZKQOfFiazaKk+RlIShYId7at8dMcK78FqIf24G+KO2wRzqQGzV1X1Nt//UZc6Q7zGifYDTha897Ln1sLai+QHlWji4=
+	t=1711395481; cv=none; b=ax6FgYycegzptb+3yjtwf63b3zjg/r7fxlkYl27xOTINtIau7xjqYKgBz3tSanTrOjmVpAXWVL+RNG/+eHiXzK0xi/y4Xwigo4pKk5Mjuxf7+VTlcHXxG+8lUZmrDpt9Uu7yv3eWY4M4ptZu2uLAOshIAJJfYmPUXce5JX7bGyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711395396; c=relaxed/simple;
-	bh=bAIOOxRflrzCbW7kjbrhMVhRs4QoFZfSTimggs5Tf1c=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pBnwFkQLS43vsufFgjh332EzrSmDEd5RliJdxw53T3TKGjhB5eckG6+GtB1QT74Jnj7UbGyWO8NCK37prrRYjYxjw0mixyDaP6J7WwwhmeRoq9kwPdWZKJ7agzxdbIuzFWtf07DAJ5Kws5eVT2X7XqPFae0TkA1cQQ0frkroV4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PpQG+Tst; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711395481; c=relaxed/simple;
+	bh=l5rFy6riCC6Yp833Zl2nJpDzYz1k/6iFkr5iXMBEWaU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y66SDCTKPgOIe/NO2Gnd/GpDn7Ff2tmkiz1D01hY4Mly9vUa1D0EsY5Lkz7+XHeOJCtcjfC61j+CQu5AFV6MiJE+HkQ0IbzlbgprM91JWWDjeXcanCLJZS77YK7xKO+KWWmh3lcGgmLjfE2GtD9zcjkh7IOmlCQNoUEaM5+alTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=vj+Eer6Q; arc=none smtp.client-ip=46.232.251.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PpQG+Tst"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-56c2787aff5so102505a12.3
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 12:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711395392; x=1712000192; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jVsxhzNue3U6Hi+nPnKIZFTWvgCMGrVdacygdHdfZLM=;
-        b=PpQG+TstU2RhfyRTuVDw9cAMoMynZlfAl2XtN8zIBIAAfkq4/K0oLzA3Fswu2cfL3z
-         SInkVUF3MCNv0biOm+0wkuvJsbiScbl90WzDDiVfw3e54xkJIOFL+1/bgOX2nrEBcj+j
-         8S3L/7gBvGCjFVUf5DvqKjUD4qB/QFwEzBYj2xrqTfuMD/x1+UCsSN5B4N1QtWKvlaIL
-         Fk5VaAQRiISq/1SZj1ypafMFv/UVlezFeJzxNuv2fzyOjtDPkI+TIxZ78dpJww2wGSRD
-         UNv0/ENB0TNEE//z7JT+u9VBm9QcKKvppt/Sh0B5D4/Ny988TAlvN7B9v3E8xcpQroJi
-         2sgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711395392; x=1712000192;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jVsxhzNue3U6Hi+nPnKIZFTWvgCMGrVdacygdHdfZLM=;
-        b=mUgetG1WxhIFb/viKckcsgjdF0/8SeDH2/eu4/OMKwnsw2fS4lOH2Ad2Ei1++iXHy6
-         62aCsbKrLwu9+IRNCkGTeOhsNpgzyFObTstAe2qRTm0KQwkjCe0QozXmydyRNzV9h3xI
-         wEmhGnhWrqVKowrJl6l1oTJZESjkOxTF+0TPFfe4eTIZaiYjbanMVsjC/goY6gOJiQKG
-         bqrw9MAvGufYGVL3xS2rGYhY7maeWIqeQhZFWuw7nJXVYH2WdRzAexyEyn5megoqHsn5
-         oOOu/Y3kMmSdZS8HeDlxAfOLSglswDsfKsaRGRbSjaT/HBYLq1Rqg70rv09YcMZoB0he
-         U0dw==
-X-Gm-Message-State: AOJu0YzIvt9XAN5qmhCxxMbV4CuCONIhG9HE4j8ta1x0LEZ2LR5n4Ub2
-	VINcJYZYgV9PoBV0Ez3hYgYvPzrwHbB9O/ePJ4GaWyyB09GsFyuB
-X-Google-Smtp-Source: AGHT+IEI/hHQf7/eIXByq8F660TdKSPOMlLO1JvWrlpOFAq+g+M7TZk6lasQsxAQvEoEXOOLcnUmCg==
-X-Received: by 2002:a17:907:a0a:b0:a47:52e7:1068 with SMTP id bb10-20020a1709070a0a00b00a4752e71068mr3551825ejc.52.1711395392471;
-        Mon, 25 Mar 2024 12:36:32 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id ws9-20020a170907704900b00a46caa13e67sm3348787ejb.105.2024.03.25.12.36.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 12:36:32 -0700 (PDT)
-Message-ID: <2ab7445f-08ee-4608-96ad-8171f9ce1b73@gmail.com>
-Date: Mon, 25 Mar 2024 19:36:33 +0000
+	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="vj+Eer6Q"
+Received: from localhost (unknown [IPv6:2a01:41e1:2dd8:ee00:bc08:5ebd:9623:f7f1])
+	by smtp.roethke.info (Postfix) with ESMTPA id 36DF71E0004A;
+	Mon, 25 Mar 2024 19:30:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
+	s=20200807; t=1711395058;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+V3p/ZwJewT6W74Vs5MC1LWnwlqjXMpXcYeVdIlvZJw=;
+	b=vj+Eer6QuuTnBxt/4H9gW9ONVv/FFqgnh1V/VWwOS/D/toB6vxUh8yTuXuy5V9+eeo3ANy
+	Da5tkx/y0nosVfycBmllr/30pj4ctZ74H8RMVnUtw+CFuRqoYUTMr5Y+/57X1FG/EXTe/A
+	QKEZqOADavCtqMcdAxynD8CxIRm/v6jV9bHDpDQ/rnkDHU+3iKpfkNcm51WbOO2MqyEt3P
+	jAfW6uI7NJdc4WQIBNN6QckP6KLohjBPpqc/xLHwWfMAnZHhFtpFJ8kTshyICi6SsKJBvw
+	dNFbLkT8Pm8MjhlwXJv6R4K7e2ei/Wci1u34TVCp+8ftP+M/zAoLoQ8FlBxT/2xnAtK4ot
+	MDLlHgcLCQs1OtosqprG5VaNRwJ9DfA4QlGYfOX89b8h6VbRxjB7Fz/364TZQdEf81FpD8
+	R9YDxrndE+xd5sb9BvFLVW9BUH15kf4YW+2Bjsfe2n0DM3gAXRg4c7gMQ6tV1zohNgi+4k
+	/C689Uvs+F1d1Z0ZVFjPw3JRsOzzYs9AO+HjbYXgVt+o/sYtteFCHhDhNpweEx7XsH2Tjq
+	3ETDFntIIQxD6rZlbCAigUfRQUJQDbzF6C/3r7Q7Orctoa/DMNe6rRJZDhlVMVc9K5SNzG
+	HjFck1osqGLDO2IaoahFcOWb0tKdAFQCsShJnP9MZ4V3jCZ01OJtg=
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
+Date: Mon, 25 Mar 2024 20:30:57 +0100
+From: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] rerere: fix crash during clear
+Message-ID: <ZgHQ8YsJxUtRpB8M@roethke.info>
+References: <xmqqplvjpacq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/7] cherry-pick: add `--empty` for more robust
- redundant commit handling
-Content-Language: en-US
-To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
-References: <17c00de527e3a0c4.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-In-Reply-To: <17c00de527e3a0c4.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqplvjpacq.fsf@gitster.g>
 
-Hi Brian
+On 2024-03-24 14:51:17, Junio C Hamano wrote:
+> Marcel Röthke <marcel@roethke.info> writes:
+>
+> > On 2024-02-19 17:22:43, Junio C Hamano wrote:
+> >> Marcel Röthke <marcel@roethke.info> writes:
+> >>
+> >> > When rerere_clear is called, for instance when aborting a rebase, and
+> >> > the current conflict does not have a pre or postimage recorded git
+> >> > crashes with a SEGFAULT in has_rerere_resolution when accessing the
+> >> > status member of struct rerere_dir.
+> >>
+> >> I had to read this twice before realizing the reason why I found it
+> >> hard to grok was because of a missing comma between "recorded" and
+> >> "git".
+> >
+> > fixed
+> > ...
+> > I'm unfortunately not sure how it happened. I do have the initial state
+> > of the repository and I think I know the commands that were executed,
+> > but I could not reproduce it.
+> >
+> > I will look into adding a test case though.
+>
+> It has been about a month.  Any new development on this topic?
+>
+> Thanks.
 
-On 25/03/2024 16:12, Brian Lyles wrote:
->>       ++		head_name = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE, &head_oid, NULL);
->>       ++		if (!head_name || !starts_with(head_name, "refs/heads/") || !is_null_oid(&head_oid))
->>
->> While we don't mind the occasional line that is a little over 80
->> characters these really are rather long.
->>
-> 
-> You're right, these got a little long. I wasn't able to identify a
-> definitive wrapping style for these cases, so I'll include my proposed
-> update here just to avoid another re-roll. Does the following diff from
-> v4 to a proposed v5 work for you?
-> 
-> @@ -776,11 +776,13 @@ static int is_index_unchanged(struct repository *r)
->   	const char *head_name;
->   
->   	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
-> -		/*
-> -		 * Check to see if this is an unborn branch
-> -		 */
-> -		head_name = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE, &head_oid, NULL);
-> -		if (!head_name || !starts_with(head_name, "refs/heads/") || !is_null_oid(&head_oid))
-> +		/* Check to see if this is an unborn branch */
-> +		head_name = resolve_ref_unsafe("HEAD",
-> +			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-> +			&head_oid, NULL);
-> +		if (!head_name
-> +			|| !starts_with(head_name, "refs/heads/")
-> +			|| !is_null_oid(&head_oid))
->   			return error(_("could not resolve HEAD commit"));
-
-Normally we'd write this as
-
-	if (!head_name ||
-	    starts_with(head_name, "refs/heads/") ||
-	    !is_null_oid(&head_oid))
-		return error(...)
-
-breaking lines after an operator and indenting to the open bracket after 
-the if. The rest looks good. Junio was talking about merging this to 
-next in the latest "what's cooking" email so I'd double check he hasn't 
-done that yet before re-rolling.
-
->   		head_tree_oid = the_hash_algo->empty_tree;
->   	} else {
-> 
->> Apart from the minor style issues this all looks good to me, thanks
->> for working on it, it will be a useful addition to be able to drop
->> cherry-picks that become empty.
-> 
-> Thanks, I really appreciate your help with this series!
-
-Thank you for working on it, I've enjoyed reading your patches
-
-Best Wishes
-
-Phillip
+No, I have been otherwise occupied. But I plan to get back to this soon. Probably this week, next week at the latest.
