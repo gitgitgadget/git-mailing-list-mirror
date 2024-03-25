@@ -1,152 +1,182 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6E21966A8
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 07:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4555D8E4
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 07:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711351728; cv=none; b=clF3/ZtvoEvWEzlG9Cnqnx22VVkHPnTXBQiOyzpxSWGnnt/XYVUROX9+ErDJEcy2ZJ8GQ3NEVlXJtrAVXhSDrpNfndKHnjMonq+TZKwMZd06+a8rCWQzefBEjqh5PIeRY/WSpKDDzKVrPS/Mt3PlWvQVEkZBIL/jPP6GzRUKjO0=
+	t=1711351678; cv=none; b=cFcR4RRRg+b+aYBqmGL9pqJaTrvfhyzDrkH4i1wLA86ZlTEnyif6BSrA1ge7mMs+kxdZKJz6HEDbtd89ZohlTQzyZad7fyZE/dolZyan5bJV6OmU2WFI6qh5zadIfnTn1LDseXWaVuX6i/PV84Se/mAP2xQt9Dc2zHmjgIzftQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711351728; c=relaxed/simple;
-	bh=fpfqNbN2zph53Wn8McEIHYKb2J8psfvaGBZGXnRCpVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HSO7mklwk+F65uk3F0cTDPC7VhbukYKQNS31LLBq+Yk01yW47cmclMMzaY9nONvsAr2x+bZUrGid5hhkaw9RGCVMYvZ1iuqMLZZTSxQtED2GxBGHXnS37AndvAVtb7qjxFXLNf5LTzvmVqZAYO8YDTr8VtEfAOBW6HYI+PCOiSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cjveqGvH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NiuLk2V9; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1711351678; c=relaxed/simple;
+	bh=qF/wG8Kh1L2vsFyTP2GfrAO0ESA4kppVqsf1AGjmFUs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=J8ZC3vQTts8OFMPxhJ/OAp8iIDl52bGgnlT5No9KLqwCERHOqlYaOlKI5UQtyUzfxmQtxXWd6VeGFljCEhN6VHCPGnuJj83a/bQNRnSnPSvmN0rv9Sf/AYRGguqAmgPe+KmZXVhI2jr739Qlnd1R7eEfN5V5LInaArSuFNK8LF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z38XM966; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cjveqGvH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NiuLk2V9"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 424FF11400CA;
-	Mon, 25 Mar 2024 03:28:45 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 25 Mar 2024 03:28:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711351725; x=1711438125; bh=fpfqNbN2zp
-	h53Wn8McEIHYKb2J8psfvaGBZGXnRCpVQ=; b=cjveqGvHW02i/tvW2d3GQHdTOB
-	hSQ4nv9dzYPtMZcykNjhpl9m5DZGYMWOMaZpa4N3CUB/loyzy35XJNzqPOKEWlZl
-	oZwBJ8bfpSPHXwDAT2tPWSK1tcN84SdROSGuU5az1S7tmhlSCowwIqXrzx1xIeEG
-	r+BfjQjPkybx/7tW+5het+BAN9O7kuy4DzUqKFhmIvlrvo1W7nmpfPzTsBTzQQRE
-	iA0obwyw1Wcub0oRrw488dc7uO5Rl5/uqd52iDntRsvZNSvsuz7taJ6fU4LaPpye
-	YI/mRB1gaHbFK6sr52qJ36dBnQAXnBprKvscrIYER8N6PCO6fiIZX+Y/PXcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711351725; x=1711438125; bh=fpfqNbN2zph53Wn8McEIHYKb2J8p
-	sfvaGBZGXnRCpVQ=; b=NiuLk2V9DH5l6C/ToelSCSvtCNdKW5sE09TR19iKnQLe
-	qZT62PH/EacXQQ9GGidNvFvoH7yXHaULjFPY1duGYulxIR0ES1JZpcSUWCSgQuju
-	2nbCU4jFcxDugUqm9OFQ5qEBklQ3qkTDBRih6YT12ly/6YiTYQnLeeOz26yuBMtJ
-	19DdPrBDBt0fIeeqSKXyC+pVKndAedRNlJaCO5ucEy28Bb19DSNO3tD4/IbwW97u
-	BNO+b1z3xbxyiAIsEBOpE7DbfDI6IHGmtoLw75HqPnvWsoPKZIh0PAFYSbFVD1I8
-	vmjBN2Fx/vJu65sBn+x1RFPlw84gnfW3IP9CxnqgWA==
-X-ME-Sender: <xms:rCcBZkgjdgeepyywPzMFWaSK8sMBKz0VHmWJtSLFyEEIfcD6mLh_sQ>
-    <xme:rCcBZtDRVY-wSdcHCejdZStV5Yw8ype4NJKs-lZdhNZJ3TYbZzCcb4CcRBNq10u6C
-    lSb-Q_9UMWRh-xTkw>
-X-ME-Received: <xmr:rCcBZsGNK-W709V5YRG_XhOirv30KKbMRuNSE7NuVH3Wy55Nx_J-FOho5GLtG4PecyFOMXl3C5ItUMr0aNtHo4tKVxdKAIGSNVEQRszidw-mFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtkedguddutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptdeiffelledvfffgtdejgfevvefhle
-    etjeduhfeuhfeiledvleetiefgkeejueffnecuffhomhgrihhnpehkvghrnhgvlhdrohhr
-    ghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:rScBZlQttgVEYc-LC7Y7dznfy1-Vi73rXYXCJutxpAnJPbTahqnwHA>
-    <xmx:rScBZhyJ_vgwEP6jUHip9zLdAZtgdZu2EXZSHu_TNbYWRjsCTTLumA>
-    <xmx:rScBZj4lRuIqPjgth733HD8rjAd0x1vfgnb-kMryQiDjjH83rJ4qgw>
-    <xmx:rScBZuwgGenG74VWPn9YgL2src_ZcOSwUqAUwO7VOL0SVE850tmSbg>
-    <xmx:rScBZjthvVID305QscJ3vYfCqoL-JwYzLUPLhDaiJk_v-caSrJePpw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Mar 2024 03:28:44 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0f044672 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Mar 2024 07:28:32 +0000 (UTC)
-Date: Mon, 25 Mar 2024 08:28:40 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Tim Landscheidt <tim@tim-landscheidt.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Inconsistent/buggy behaviour of "git config --add"
-Message-ID: <ZgEnqE23PYVCNeKc@tanuki>
-References: <87o7b5dj8h.fsf@vagabond.tim-landscheidt.de>
- <xmqq8r28ygwi.fsf@gitster.g>
- <87o7b3xxta.fsf@vagabond.tim-landscheidt.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z38XM966"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5a4716cfbbcso2361945eaf.2
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 00:27:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711351675; x=1711956475; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PDNwE1YO4j66+XlREJav9dmB+lugCQkg9YH+FCoKoTU=;
+        b=Z38XM9666Y1oBhbbuWeAtAT0cTdcPB6ZUvIJggIbCNgSlz7IBmNaCwbbCojHxcEAfj
+         ZWmk7Cw9faC65N5rDVpIzGkuMXENg3Mov35sCZ3mubM0E0owbimRpRiLkeHrhQxHk7am
+         rVoNHbYL7JuH2ru63bi68StBjzDw3gmMbMGb8BEEUZaJPup6fQANJT9omfZZpBYbyf82
+         m2l0ne/kUtJd/VpU03zfaXavdN/jQYNS/0Mf5kVvP4jJ5eXK5SkATLDlD39xxLP/hm8k
+         hYw+n5ufzISg8ffIpiOtxe9siJDN/pfzGKxddtxQPl+b+dHj1Ql7ZjLPB1RY4XzZ9ZuW
+         /LEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711351675; x=1711956475;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PDNwE1YO4j66+XlREJav9dmB+lugCQkg9YH+FCoKoTU=;
+        b=VVXS4cZulJ/RUUEjFmbQs6IuWB9zbY2t+3xntW9Mom7C7jWI+b1QEmr7YJ3lVysmT8
+         EuEiHMV8I3YbaH5RDhDcE+fUv7bpleRFGT2NlKVFp3Ri+MU41S7xyyn/4Cnc1a9siq9t
+         qfNi1Se2M6Tb1od0yZ6vddXFW664hHbtgiJUPEx6npVjhD392d336K4hDM9Tzdut3TrR
+         1kEeDKSRKddtIU7XLal7lF9REfn2WklRXgF8xkwPFgpmbKtTavE+6uBcepqdkxXIScvt
+         SG84lamZh1Mwr9GCByLNOFZ6GMGB8vk/MZ0BAxAHuRbg/9DDuYCcA4auJrScR4DSuCu0
+         FI0A==
+X-Gm-Message-State: AOJu0YwdSxAtTHPXq1u1UcWoXwuOx08yGWXMo7I5Lr9ZezI6zgnV1SjN
+	kMxidJP6/iyl6a/8ZpTdw67mQEzEhuLkZ3hGacxAaezsHFkeTr54/Y78n8Nv
+X-Google-Smtp-Source: AGHT+IH4173/wbZQZ8Fr3V+gFMfbgLAjfrkewW/QMpVCirGF6EviheI2Zfu31n6Ie6z7pX650QIARQ==
+X-Received: by 2002:a05:6820:20e:b0:5a5:24ad:b2ea with SMTP id bw14-20020a056820020e00b005a524adb2eamr6066167oob.1.1711351675053;
+        Mon, 25 Mar 2024 00:27:55 -0700 (PDT)
+Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id bs27-20020a056820179b00b005a53376cf14sm918172oob.9.2024.03.25.00.27.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 00:27:54 -0700 (PDT)
+From: Brian Lyles <brianmlyles@gmail.com>
+To: git@vger.kernel.org
+Cc: Brian Lyles <brianmlyles@gmail.com>,
+	peff@peff.net
+Subject: [PATCH v2 1/2] pretty: update tests to use `test_config`
+Date: Mon, 25 Mar 2024 02:25:12 -0500
+Message-ID: <20240325072651.947505-1-brianmlyles@gmail.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240324214316.917513-1-brianmlyles@gmail.com>
+References: <20240324214316.917513-1-brianmlyles@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8xHVShCUe8CAGyVq"
-Content-Disposition: inline
-In-Reply-To: <87o7b3xxta.fsf@vagabond.tim-landscheidt.de>
+Content-Transfer-Encoding: 8bit
 
+These tests use raw `git config` calls, which is an older style that can
+cause config to bleed between tests if not manually unset. `test_config`
+ensures that config is unset at the end of each test automatically.
 
---8xHVShCUe8CAGyVq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+`test_config` is chosen over `git -c` since `test_config` still ends up
+calling `git config` which seems slightly more realistic to how pretty
+formats would be defined normally.
 
-On Sun, Mar 24, 2024 at 06:57:21PM +0000, Tim Landscheidt wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-[snip]
-> >> My expectation of least surprise is that "git config
-> >> section.key --add value" should be equivalent to "git config
-> >> --add section.key value".
->=20
-> > You cannot have "--add" as a value by doing so.
->=20
-> > [=E2=80=A6]
->=20
-> The standard way to achieve this would be to use "--",
-> i. e. "git config section.key --add -- --add" (apparently
-> even part of POSIX as "Utility Syntax Guidelines", but also
-> commonly used elsewhere in Git).
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+---
+ t/t4205-log-pretty-formats.sh | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-I think the whole design of git-config(1) is just not great, and I'm not
-surprised at all that folks run into issues like the one you describe
-here. I agree that it is quite surprising that modes like "--add" look
-like a flag, but don't really behave like one in the general case.
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index e3d655e6b8..20bba76c43 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -30,40 +30,38 @@ test_expect_success 'set up basic repos' '
+ 	>bar &&
+ 	git add foo &&
+ 	test_tick &&
+-	git config i18n.commitEncoding $test_encoding &&
++	test_config i18n.commitEncoding $test_encoding &&
+ 	commit_msg $test_encoding | git commit -F - &&
+ 	git add bar &&
+ 	test_tick &&
+-	git commit -m "add bar" &&
+-	git config --unset i18n.commitEncoding
++	git commit -m "add bar"
+ '
+ 
+ test_expect_success 'alias builtin format' '
+ 	git log --pretty=oneline >expected &&
+-	git config pretty.test-alias oneline &&
++	test_config pretty.test-alias oneline &&
+ 	git log --pretty=test-alias >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'alias masking builtin format' '
+ 	git log --pretty=oneline >expected &&
+-	git config pretty.oneline "%H" &&
++	test_config pretty.oneline "%H" &&
+ 	git log --pretty=oneline >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'alias user-defined format' '
+ 	git log --pretty="format:%h" >expected &&
+-	git config pretty.test-alias "format:%h" &&
++	test_config pretty.test-alias "format:%h" &&
+ 	git log --pretty=test-alias >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'alias user-defined tformat with %s (ISO8859-1 encoding)' '
+-	git config i18n.logOutputEncoding $test_encoding &&
++	test_config i18n.logOutputEncoding $test_encoding &&
+ 	git log --oneline >expected-s &&
+ 	git log --pretty="tformat:%h %s" >actual-s &&
+-	git config --unset i18n.logOutputEncoding &&
+ 	test_cmp expected-s actual-s
+ '
+ 
+@@ -75,34 +73,34 @@ test_expect_success 'alias user-defined tformat with %s (utf-8 encoding)' '
+ 
+ test_expect_success 'alias user-defined tformat' '
+ 	git log --pretty="tformat:%h" >expected &&
+-	git config pretty.test-alias "tformat:%h" &&
++	test_config pretty.test-alias "tformat:%h" &&
+ 	git log --pretty=test-alias >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'alias non-existent format' '
+-	git config pretty.test-alias format-that-will-never-exist &&
++	test_config pretty.test-alias format-that-will-never-exist &&
+ 	test_must_fail git log --pretty=test-alias
+ '
+ 
+ test_expect_success 'alias of an alias' '
+ 	git log --pretty="tformat:%h" >expected &&
+-	git config pretty.test-foo "tformat:%h" &&
+-	git config pretty.test-bar test-foo &&
++	test_config pretty.test-foo "tformat:%h" &&
++	test_config pretty.test-bar test-foo &&
+ 	git log --pretty=test-bar >actual && test_cmp expected actual
+ '
+ 
+ test_expect_success 'alias masking an alias' '
+ 	git log --pretty=format:"Two %H" >expected &&
+-	git config pretty.duplicate "format:One %H" &&
+-	git config --add pretty.duplicate "format:Two %H" &&
++	test_config pretty.duplicate "format:One %H" &&
++	test_config pretty.duplicate "format:Two %H" --add &&
+ 	git log --pretty=duplicate >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'alias loop' '
+-	git config pretty.test-foo test-bar &&
+-	git config pretty.test-bar test-foo &&
++	test_config pretty.test-foo test-bar &&
++	test_config pretty.test-bar test-foo &&
+ 	test_must_fail git log --pretty=test-foo
+ '
+ 
+-- 
+2.43.2
 
-This is part of the reason why I have recently proposed to convert this
-command to use proper subcommands [1]. This introduces things like `git
-config set`, `git config list`, `git config get`, `git config unset`
-that (in my opinion) behave a lot more obvious. Also, I certainly agree
-with you that those subcommands should respect "--" as many other of our
-Git commands already do.
-
-I plan to reroll this patch series soonish. Please feel free to provide
-your feedback on it so that we can iterate on the proposed UI/UX and
-make it match user's expectations better.
-
-Patrick
-
-[1]: https://lore.kernel.org/git/cover.1710198711.git.ps@pks.im/
-
---8xHVShCUe8CAGyVq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBJ6MACgkQVbJhu7ck
-PpQSaQ/+K61F9f7gB8IL+6qT8jIQBZY+CeqV+npckznpSIYM3xlisHYaJA3Wr2DP
-oe1KH9FBf8tn3vLGBbBCeVpIKIoOJZB2XRUWEVpyTHblxj7ev53eK9GbLmsEcfRa
-5GosT6V781zr21yNUgwwZqJeIy0JNlI5q44B/xYvv2O17zvii6i25Q1a+tkdsF7H
-R/p6eIKFkP1r8H/4H3Az2GgsYBVTByD+mkQC+mg60DPKDC7Bx3MEBGLS4IGKOIA+
-m0HVSs/+K20LcqHMC6T23vTjF2Q48c+cjrRGvOBs9CnimqPhzMGbxb6AQb8jDT++
-zDXS9JaPtdroJEvPX4wRxfue/7Ihxl8vL5KssNmOPwCjRtXFRShrDmmi40q8fw21
-u7Jz6lG3SqLCzQoz9bk0HLnv+Lk6UV5WhkaGnP5LgD1tzZ//8VOJs8fOlMBy6+Zh
-yaa/ovG5CQcEZObWKV9aPx41JnNBkn3A91rTr8Asxe1emb/FBRiMpwCihfwOqJKx
-xQGxTTzKvhjcuDftcmDHudRsLMJvxygIOHiDQwgcZXOsr7v5/9Zd7uB+Dy3+9Xby
-XG+aNi/1nVhoYJtny0lYNU+LGC2e1gsdlMIED9Nddj3+cHC94knduZ68ZoFIcP/y
-RNAO+3cK7ZZL0OMBbLJS+0kO9l1GAz5r4XZI8eLfE07Cr55VkhI=
-=RU6E
------END PGP SIGNATURE-----
-
---8xHVShCUe8CAGyVq--
