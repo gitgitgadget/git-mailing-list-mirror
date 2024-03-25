@@ -1,68 +1,93 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90AF5B669
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:17:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6516CDA1
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:23:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711401465; cv=none; b=Bw42xlOhadXAq0vYmH2D4XKlJD70OPfAEmueUWCdPU6ZjBuabEOkDfVuEX8ca+CY2G6pcibI6FQqgRB0iyWP95gHcIRzjXxo306Z3sJkNiRMfL3DofgwWot2BJd0eTZdHGrXAv6O370GKMeVPcdW2gkpybt66JrOgqrgzzVpsVk=
+	t=1711401816; cv=none; b=IEwIBbqYtYw0DVWBXTH/Lll+wl+K36EzLvumWTo/50u3vK9u6IUrSt4Iso6LuOwaey+kNwvdV5F43JY76sok0yOEVNQ87fylj3rwAIyMacw5Yj07ZMWjrvd2KEdvJu3NZcuLuUeOC+jCPSbLraUNi23MK2sb+cZLiaBGqogcoQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711401465; c=relaxed/simple;
-	bh=L1LuIMX0K52MdET7YY1fhoMj+bqJ8a99Rj7Vth8nQfg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=pJAsYH1CldBTXTql5A4MsrpAV8RFgNcvV8Mz2qOKmkiSYG/agST7unHk1rIOYIZzkaJiHFi3DgedCVnQnu+2OInefIvvuZSlY9+KfG1r+nEYazS3U16SIAX2lnlGllCgcE0DecZayGWMRgREqbbXucs8WFpQPrQA38XNfOKECSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Qj0He44m; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1711401816; c=relaxed/simple;
+	bh=Mgq5lKo6bllFd/mK0e1P72SxIhTP2zmTmXOlDUd2CzE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gOHx1IIg491syzbh6oepBAFA+A00tKNjBGwHboxp7udqcgpH2oUFTDNkSrKzj210+aqR4Wo5ZRZ4cyRAckredfwVUin79bqMTq55KLgAfu+gM7LYgv7k8lkvQ6PyBpLFLbjq/rTOK5KCzM6NXPEsiJL02BeTosxplLPz81E0THE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KiDei9NY; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Qj0He44m"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KiDei9NY"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 500BA27AAD;
+	Mon, 25 Mar 2024 17:23:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Mgq5lKo6bllF
+	d/mK0e1P72SxIhTP2zmTmXOlDUd2CzE=; b=KiDei9NYSba8g9jJbcQjvBt7tRDu
+	E0IrOyfaqLs+D7ggiBr1QP6kU/riTgX3jSR2BGSzlUN1MLimwyfqeMOM3POw2lB7
+	nUQrRse96BCIeSzehVekWryORuoJ3Qp4KU4fJGBSw9k0a8YKD+D10O5MQ5T+PxMZ
+	GMDAahLBLWJxjXw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4712C27AAC;
+	Mon, 25 Mar 2024 17:23:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CBFA927AA7;
+	Mon, 25 Mar 2024 17:23:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: vk <g@vkabc.me>,  git@vger.kernel.org
+Subject: Re: [GSoC] Microproject help
+In-Reply-To: <CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 25 Mar 2024 16:51:55 -0400")
+References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
+	<CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
+Date: Mon, 25 Mar 2024 14:23:29 -0700
+Message-ID: <xmqq1q7yhupa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1711401461;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7k6czYHezVF8O52M5tfSfP2p7swQGFejAUWnx/0wNPM=;
-	b=Qj0He44m77eOoyvyqXUq7ikCIMdewDN4MEs6e/er+f4bZFY3u74FD44GgHa2PJ6bzYOrDH
-	iCo+PzshQ1aPeo14dFDtJWNBzI1WbRPCM65flShOXwokCBpChfrJJ/+nD38MCjOWGhVWRb
-	pQQVv/AS7JaFmp2D5ytXFEqJNNwtxwkqH4WaqwY4azLXp0FiEFz3hqD2cH5xLlT8kvnzLv
-	yw9m/oOA7zF5NxhSFoKgCKfuydqV8ortnurL9KpJ8Wbqyd69NhnO7APJ0/o7c2e/LqCblp
-	T0Xtie3IEMEe89ymrUcoyHsdMpwNP7pUTn9gEJlQxY+AqSJuquzJoAK73DKHhA==
-Date: Mon, 25 Mar 2024 22:17:40 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, jn.avila@free.fr
-Subject: Re: [PATCH v2 1/3] grep: perform some minor code and comment cleanups
-In-Reply-To: <xmqq5xxahvmi.fsf@gitster.g>
-References: <cover.1711302588.git.dsimic@manjaro.org>
- <55867253d2925892f5192dbc3145f7bc9221b791.1711302588.git.dsimic@manjaro.org>
- <xmqq5xxahvmi.fsf@gitster.g>
-Message-ID: <ab5145b696565ba170c90e2fc1b9a7e1@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ ED8ACF12-EAED-11EE-BB00-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-03-25 22:03, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> Move some variable definitions around, and reflow one comment block, 
->> to
->> make the code a bit neater after spotting those slightly unpolished 
->> areas.
->> There are no functional changes to the source code.
-> 
-> It cannot be objectively better than the original as "neater" and
-> 'unpolished" are fairly subjective.  Let's leave this out and take
-> the two "obviously good" documentation improvements for now.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-That's fine with me.  This "experiment", so to speak, has also taught me
-not to pay attention to making the code "neater".
+> On Mon, Mar 25, 2024 at 11:40=E2=80=AFAM vk <g@vkabc.me> wrote:
+>> For the microproject, I have looked into the lists for 2024 and it see=
+ms
+>> that all the projects have been taken except for `Replace a
+>> run_command*() call by direct calls to C functions`. However, it seems
+>> that the issue has been solved. The command I ran to search throughout
+>> the repo is `git grep 'run_command*('` and the search result returns
+>> run_command functions which I assume are essential.
+>>
+>> If there is any low hanging fruits that you can suggest to me for the
+>> microproject, that will be great. I will also be searching throughout
+>> the mailing list to see if there are any potential microproject to wor=
+k
+>> on.
+>
+> Searching the mailing list for "#leftoverbits"[1] can be a good way to
+> discover little tasks which may be suitable for a GSoC microproject.
+>
+> [1]: https://lore.kernel.org/git/?q=3D%23leftoverbits
+
+True, but with a caveat that they may range from "low hanging fruit"
+to "too hard, let's punt".  After seeing the anonymous questioners'
+question, I did go to that query page (actually I qualified the
+query further to list only the ones I gave the mark) and decided not
+to suggest it because I found that many recent ones are harder than
+"trivial changes suitable for a practice material to go through the
+review cycles" X-<.
+
+Thanks.
+
