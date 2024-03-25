@@ -1,204 +1,250 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91DF19F52A
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFF618C7B2
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:48:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361452; cv=none; b=ixrsLvZMrzPPmEOFvJF3HZShDKZ0iLJYjWVpNWiCfS9nxsU+jIOvW76nmtyaZbrNsuCn5uiFu57rrsWIo1MTkKh3EQ9qoUcfTuhdGgZrdrrvcvlVVSAO0NPk84AFHV4ZkKDJ7LeraqoUskkfwEzu4Yi5/H4FicPvJhwnRdaqxRo=
+	t=1711363699; cv=none; b=IDlEwtd1OdJR/OG2k/3NYgJMiqMLtD5ZvHfldq31G0Rg54lo4ymuVKkxau2ZEAGpiD+tX54qxAgy1Qo8I/iWMILo34hYRhsnj5UWOD6fbWQ1A0MJqJ3mnua31V4+WIwTgpd33JzJUlVxI93B7jD3I5dZBj684jUm8g0dfWJquS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361452; c=relaxed/simple;
-	bh=zQFnffg0xqi9KwVSYmrqd7FE5InPataIde2pt6CMvOQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qwv/hhvIKu3x77iJq4RuwlYfhlSImGGUI2gt6CBd9CxbjnHTAl8YOlAG7rWVYoEHeyxvIsM3m0IW19jUS1eop3BUgWjeWIqhPCrw2gqKH5sMwjJg7utw4x4CACmBVB6WHkO5HaA9IQF3C+ozcIsG9wU1w71soD4BzZzS7ppozCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fHEkIol1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G+m408iN; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1711363699; c=relaxed/simple;
+	bh=lkfrIlplNqqB7v/k+L8Wpt+yZL3o2RsVCBFYK458uFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Et2on40gqa8ERkFTBJqXaPpZdlGLAkO1ryt7WIMHUUWQC03LrpgiJxJu0Cbn1fYjNLVZa1ozsjFEsltI8xHQS4UKs1SLmdAnTGgEcjxDMKR8riRcB5jm6VfbndVHdcIxo59rBZfMt816WkDOgFHaQ05LcpHZijkeHHy75tLR8bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gRYufMhu; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fHEkIol1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G+m408iN"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 0477B1380114;
-	Mon, 25 Mar 2024 06:10:50 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 25 Mar 2024 06:10:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711361450; x=1711447850; bh=rI1TZB7rEk
-	0b5IMU7vDKi3gjp60u1WWIqvXZ6icS7h8=; b=fHEkIol1OmrzlhBioWvgPE9um0
-	xeIkNNbPkg/U0ieeEdabj47UswGwCpAxj3WJG6hFXYRMrcQ2z4Pn6RjON7JlW55m
-	7a3TDblkH17/OoBgnlV4lrCuO8KhC/hgHa/ShpzfWGnUF8TS/lAxDs2mIavB1rB0
-	vCUkpRNWKGjFFFKvPXjzM7JG95Jk6MKRRWggo6jyq4KN81LU4N76Y/TQ44vvICH3
-	QV/eXYX9zTDBMeySUzlMtEsKhmZcox36SfT+3fVw4XRnenKaMeIvev8TGbMga/Af
-	IPsyKxAhEstG1CCIZZz4bJuJ93Hlc/4VHCjU3R+E6HFFE9L8JZaVvY8fTwQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711361450; x=1711447850; bh=rI1TZB7rEk0b5IMU7vDKi3gjp60u
-	1WWIqvXZ6icS7h8=; b=G+m408iNEMIXR19zEEme7PQcL90GIDxiToWVjxnaO1k8
-	bg3LdEvR0dlGrb4DxnCJdh5baCZzftt8NAk0vxbBjuOr7636hj1OkXPBEWPv3/J+
-	e8mZK7XEnRzvoR3w/JqmASFEiga6yp1QoSUKRdh7jtSIcJ34LhxVzeWDjMSryGT3
-	ilkBaq2bPy7F9v5WsWZDspxATyPaWaIllampdGlKnypKh7LGHfRp7AN54n8jD6fP
-	PvvwzOLD0J5Pm8m1CJUx62ghc2zXqxk/01Wq2BnjmDpTGI9mjA2/MA4A0edf5znt
-	Hg1cgadxZyHTfKVjgiQ4wG/3v6J206CWU1rGICMTUw==
-X-ME-Sender: <xms:qU0BZnaL580wWFea8izSmCSqeNFz1mR0pFVli1SZ1dwxpVRedS0wtw>
-    <xme:qU0BZmaBoN-pHn0QxRPSfU50QHiVmZB-j5fGRYt362qzwQd790oZCRVlx5mk510p_
-    qwA_MQh8xr-zAV-Mg>
-X-ME-Received: <xmr:qU0BZp8UASE9IMr9sMy-jaaWnIZgbLwyKDEoOP0ByEy25m44-c3AiopLJsJ-pCkpC3nJBdZTyF0x5sMtrjocGlDky122bhxLekBbRmsnmRu9Ng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledguddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:qU0BZtoNdC9LXe2-4fdnkZhmDZEWKS5uIyReaOY1V95J9MtS6o05Vg>
-    <xmx:qU0BZiqGF4YDumtR5uTrZHioqbzTHOUIZTmAbZuEsAiKI8E1kuVzig>
-    <xmx:qU0BZjR4LNZHIlxGMIRXzKqKYbSbDG7uGuxW9nRfByh0xEY_8RbKAQ>
-    <xmx:qU0BZqp3e3-FZiB5hYaPlguCn-X5MvtUuhdADLq32ogw242FQX_Yww>
-    <xmx:qk0BZlUwkMsyb5IjRIL3keu57dgYhEYrDmnIyuX_acfUcyLVkT_j9g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Mar 2024 06:10:49 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b18ea232 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Mar 2024 10:10:39 +0000 (UTC)
-Date: Mon, 25 Mar 2024 11:10:47 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 5/7] reftable/block: fix error handling when searching
- restart points
-Message-ID: <5bbeab114f9f0563c9a6c07417b90d41c7fcddc1.1711361340.git.ps@pks.im>
-References: <cover.1711109214.git.ps@pks.im>
- <cover.1711361340.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRYufMhu"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d52e65d4a8so56193031fa.0
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 03:48:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711363694; x=1711968494; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=G/ZEycnrAWB+rhiLSG/D+x4CAWnfUL7uwxKsvwd6F0U=;
+        b=gRYufMhuZahTqKTuZ/3LKXK2RgEJe/9uQsQ/h1elppvo4CowKzPBodZSr6RKTTg0np
+         BkYxWep7M6sZ9xC/Q/HZYZnu8QBzdw71NB6gvwUNZ7LBsh+QMZCIjdVU3iOPLElMHcVK
+         1iKnCeIpyCCmCXY7VBVQI3B6WOGf0sv79DUw553ak73Rx1TkYMw6fD2x7LAvpgDjArlZ
+         wehU/C/FzhdvXxZ6PDZFPViArovwNVAZUITfH27lGO0SLOR6AcjBh+9C8OS/sZEG/0z/
+         R4B0qsPwVUakxsaRT3Rhvh+IgLIP6v5mPVDFSZekiO/QBYTJgsyUZG/qGxLLtxVTf6d9
+         ix/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711363694; x=1711968494;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G/ZEycnrAWB+rhiLSG/D+x4CAWnfUL7uwxKsvwd6F0U=;
+        b=MflVxbTEsv1PocXU8BO46mnTdiAG6tlEQVADuF5gKddfgeDpJS5qzi1OEyZQukpnpc
+         jBTIjD0ccyI5fs0L3+2fwg2RY3T1KxiAi9NeMMffrEaQAflN0DFmd6rh4R7fywAgLIpy
+         MjhV2wthqUvpjXwsULwBR2uqtp4pa5qNy5NhSCBFhk/8cBZ7OCk6QjUtIkoBOJQUQ05S
+         jdD4PnHH23iYMkstu/U8Qz/kQ4+eB4Jn30oGhgG6DHDqclSb2igZcj1KrhBcB1IiqqxA
+         Y9jlwAq2eCU29SGPEBH62C1j/YcH7JAKXQKPSH8e2m05+7w7mML5Y2OjjRVAk4Pzy0vq
+         pr2A==
+X-Forwarded-Encrypted: i=1; AJvYcCXP0MHfHiTLSCigLkLI3X+a+5Vi/Yxi4ZB+uNyKwMkS7esNl1GRLKkGnBPXjVx/J3/hNMSgqa/bwim9JWx67vbfsjg7
+X-Gm-Message-State: AOJu0Ywv86nSZVg8N+alDw+aExGcs+j5KBfIhIvXgQqCQ7iQ+OCn0DtK
+	OObrr35zdFI85yoULB92VRiR7wzjGgtSvYmgxfKHE9w/lpkfI0fxDvsPAir2
+X-Google-Smtp-Source: AGHT+IEr3jPdgUFP3v9GZVxr33srmXIK7YzE0/i5yU9YKzJRvxK5Mf6b9HkZ2f8kMOtoq8lMm6xm+Q==
+X-Received: by 2002:a2e:b00a:0:b0:2d6:b11a:3a49 with SMTP id y10-20020a2eb00a000000b002d6b11a3a49mr4289912ljk.9.1711363693532;
+        Mon, 25 Mar 2024 03:48:13 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6a5:fd01:d2c6:37ff:fef6:7b1? ([2a0a:ef40:6a5:fd01:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id v6-20020a05600c470600b00414896bb1e0sm3181618wmo.36.2024.03.25.03.48.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 03:48:13 -0700 (PDT)
+Message-ID: <e040c631-42d9-4501-a7b8-046f8dac6309@gmail.com>
+Date: Mon, 25 Mar 2024 10:48:12 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oBIQkwkho9M2OJJ6"
-Content-Disposition: inline
-In-Reply-To: <cover.1711361340.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/2] Allow disabling advice shown after merge conflicts
+To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ ZheNing Hu <adlternative@gmail.com>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>, =?UTF-8?Q?Rub=C3=A9n_Justo?=
+ <rjusto@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>
+References: <pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
+ <pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Philippe
 
---oBIQkwkho9M2OJJ6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 16/03/2024 21:16, Philippe Blain via GitGitGadget wrote:
+> Changes since v2:
+> 
+>   * expanded the commit messages to explain why the tests for 'git rebase' do
+>     not need to be adjusted
+>   * adjusted the wording of the new 'advice.mergeConflict' in the doc, as
+>     suggested by Kristoffer for uniformity with his series which is already
+>     merged to 'master' (b09a8839a4 (Merge branch
+>     'kh/branch-ref-syntax-advice', 2024-03-15)).
+>   * checked all new output manually and consequently adjusted the code in 1/2
+>     to avoid a lonely 'hint: ' line.
+>   * adjusted the addition in advice.h in 1/2 to put the new enum
+>     alphabetically, as noticed by Rubén.
+>   * added misssing newlines in 2/2 as noticed by Phillip and tweaked by
+>     Junio.
+>   * rebased on master (2953d95d40 (The eighth batch, 2024-03-15)), to avoid
+>     conflicts in 'Documentation/config/advice.txt' due to Kristoffer's merged >     series
+> [...] 
+> Note that the code path where 'git rebase --apply' stops because of
+> conflicts is not covered by the tests but I tested it manually using this
+> diff:
+> 
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index 47534f1062..34eac2e6f4 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -374,7 +374,7 @@ test_pull_autostash_fail ()
+>       echo conflicting >>seq.txt &&
+>       test_tick &&
+>       git commit -m "Create conflict" seq.txt &&
+> -	test_must_fail git pull --rebase . seq 2>err >out &&
+> +	test_must_fail git -c rebase.backend=apply pull --rebase . seq 2>err >out &&
+>       test_grep "Resolve all conflicts manually" err
+>   '
 
-When doing the binary search over restart points in a block we need to
-decode the record keys. This decoding step can result in an error when
-the block is corrupted, which we indicate to the caller of the binary
-search by setting `args.error =3D 1`. But the only caller that exists
-mishandles this because it in fact performs the error check before
-calling `binsearch()`.
+Thanks for being so thorough, this version looks good to me
 
-Fix this bug by checking for errors at the right point in time.
-Furthermore, refactor `binsearch()` so that it aborts the search in case
-the callback function returns a negative value so that we don't
-needlessly continue to search the block.
+Best Wishes
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/basics.c | 5 ++++-
- reftable/basics.h | 5 +++--
- reftable/block.c  | 9 ++++-----
- 3 files changed, 11 insertions(+), 8 deletions(-)
+Phillip
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 2c5f34b39e..fea711db7e 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -39,8 +39,11 @@ size_t binsearch(size_t sz, int (*f)(size_t k, void *arg=
-s), void *args)
- 	 */
- 	while (hi - lo > 1) {
- 		size_t mid =3D lo + (hi - lo) / 2;
-+		int ret =3D f(mid, args);
-+		if (ret < 0)
-+			return sz;
-=20
--		if (f(mid, args))
-+		if (ret > 0)
- 			hi =3D mid;
- 		else
- 			lo =3D mid;
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 2672520e76..523ecd5307 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -22,8 +22,9 @@ uint32_t get_be24(uint8_t *in);
- void put_be16(uint8_t *out, uint16_t i);
-=20
- /*
-- * find smallest index i in [0, sz) at which f(i) is true, assuming
-- * that f is ascending. Return sz if f(i) is false for all indices.
-+ * find smallest index i in [0, sz) at which `f(i) > 0`, assuming that f is
-+ * ascending. Return sz if `f(i) =3D=3D 0` for all indices. The search is =
-aborted
-+ * and `sz` is returned in case `f(i) < 0`.
-  *
-  * Contrary to bsearch(3), this returns something useful if the argument i=
-s not
-  * found.
-diff --git a/reftable/block.c b/reftable/block.c
-index 6cd4c053df..ca80a05e21 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -387,11 +387,6 @@ int block_reader_seek(struct block_reader *br, struct =
-block_iter *it,
- 	int err =3D 0;
- 	size_t i;
-=20
--	if (args.error) {
--		err =3D REFTABLE_FORMAT_ERROR;
--		goto done;
--	}
--
- 	/*
- 	 * Perform a binary search over the block's restart points, which
- 	 * avoids doing a linear scan over the whole block. Like this, we
-@@ -405,6 +400,10 @@ int block_reader_seek(struct block_reader *br, struct =
-block_iter *it,
- 	 * too many record.
- 	 */
- 	i =3D binsearch(br->restart_count, &restart_needle_less, &args);
-+	if (args.error) {
-+		err =3D REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-=20
- 	/*
- 	 * Now there are multiple cases:
---=20
-2.44.GIT
+> 
+> Philippe Blain (2):
+>    sequencer: allow disabling conflict advice
+>    builtin/am: allow disabling conflict advice
+> 
+>   Documentation/config/advice.txt |  2 ++
+>   advice.c                        |  1 +
+>   advice.h                        |  1 +
+>   builtin/am.c                    | 14 +++++++++-----
+>   sequencer.c                     | 33 ++++++++++++++++++---------------
+>   t/t3501-revert-cherry-pick.sh   |  1 +
+>   t/t3507-cherry-pick-conflict.sh |  2 ++
+>   t/t4150-am.sh                   |  8 ++++----
+>   t/t4254-am-corrupt.sh           |  2 +-
+>   9 files changed, 39 insertions(+), 25 deletions(-)
+> 
+> 
+> base-commit: 2953d95d402b6bff1a59c4712f4d46f1b9ea137f
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1682%2Fphil-blain%2Fsequencer-conflict-advice-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1682/phil-blain/sequencer-conflict-advice-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1682
+> 
+> Range-diff vs v2:
+> 
+>   1:  a2ce6fd24c2 ! 1:  6005c1e9890 sequencer: allow disabling conflict advice
+>       @@ Commit message
+>            merge conflict through a new config 'advice.mergeConflict', which is
+>            named generically such that it can be used by other commands eventually.
+>        
+>       +    Remove that final '\n' in the first hunk in sequencer.c to avoid an
+>       +    otherwise empty 'hint: ' line before the line 'hint: Disable this
+>       +    message with "git config advice.mergeConflict false"' which is
+>       +    automatically added by 'advise_if_enabled'.
+>       +
+>            Note that we use 'advise_if_enabled' for each message in the second hunk
+>            in sequencer.c, instead of using 'if (show_hints &&
+>            advice_enabled(...)', because the former instructs the user how to
+>       @@ Commit message
+>        
+>            Update the tests accordingly. Note that the body of the second test in
+>            t3507-cherry-pick-conflict.sh is enclosed in double quotes, so we must
+>       -    escape them in the added line.
+>       +    escape them in the added line. Note that t5520-pull.sh, which checks
+>       +    that we display the advice for 'git rebase' (via 'git pull --rebase')
+>       +    does not have to be updated because it only greps for a specific line in
+>       +    the advice message.
+>        
+>            Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>        
+>         ## Documentation/config/advice.txt ##
+>        @@ Documentation/config/advice.txt: advice.*::
+>       - 		Advice on how to set your identity configuration when
+>       - 		your information is guessed from the system username and
+>       - 		domain name.
+>       + 		Shown when the user's information is guessed from the
+>       + 		system username and domain name, to tell the user how to
+>       + 		set their identity configuration.
+>        +	mergeConflict::
+>       -+		Advice shown when various commands stop because of conflicts.
+>       ++		Shown when various commands stop because of conflicts.
+>         	nestedTag::
+>       - 		Advice shown if a user attempts to recursively tag a tag object.
+>       + 		Shown when a user attempts to recursively tag a tag object.
+>         	pushAlreadyExists::
+>        
+>         ## advice.c ##
+>       @@ advice.c: static struct {
+>        
+>         ## advice.h ##
+>        @@ advice.h: enum advice_type {
+>       + 	ADVICE_GRAFT_FILE_DEPRECATED,
+>         	ADVICE_IGNORED_HOOK,
+>         	ADVICE_IMPLICIT_IDENTITY,
+>       - 	ADVICE_NESTED_TAG,
+>        +	ADVICE_MERGE_CONFLICT,
+>       + 	ADVICE_NESTED_TAG,
+>         	ADVICE_OBJECT_NAME_WARNING,
+>         	ADVICE_PUSH_ALREADY_EXISTS,
+>       - 	ADVICE_PUSH_FETCH_FIRST,
+>        
+>         ## sequencer.c ##
+>        @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
+>       @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
+>         
+>         	if (msg) {
+>        -		advise("%s\n", msg);
+>       -+		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s\n", msg);
+>       ++		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", msg);
+>         		/*
+>         		 * A conflict has occurred but the porcelain
+>         		 * (typically rebase --interactive) wants to take care
+>   2:  3235542cc6f ! 2:  73d07c8b6a7 builtin/am: allow disabling conflict advice
+>       @@ Commit message
+>            on stderr instead of stdout. In t4150, redirect stdout to 'out' and
+>            stderr to 'err', since this is less confusing. In t4254, as we are
+>            testing a specific failure mode of 'git am', simply disable the advice.
+>       +    Note that we are not testing that this advice is shown in 'git rebase'
+>       +    for the apply backend since 2ac0d6273f (rebase: change the default
+>       +    backend from "am" to "merge", 2020-02-15).
+>        
+>       +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>       +    Helped-by: Junio C Hamano <gitster@pobox.com>
+>            Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>        
+>         ## builtin/am.c ##
+>       @@ builtin/am.c: static const char *msgnum(const struct am_state *state)
+>         
+>        -		printf_ln(_("When you have resolved this problem, run \"%s --continue\"."), cmdline);
+>        -		printf_ln(_("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
+>       -+		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\"."), cmdline);
+>       -+		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
+>       ++		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\".\n"), cmdline);
+>       ++		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead.\n"), cmdline);
+>         
+>         		if (advice_enabled(ADVICE_AM_WORK_DIR) &&
+>         		    is_empty_or_missing_file(am_path(state, "patch")) &&
+>         		    !repo_index_has_changes(the_repository, NULL, NULL))
+>        -			printf_ln(_("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
+>       -+			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
+>       ++			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\".\n"), cmdline);
+>         
+>        -		printf_ln(_("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
+>        +		strbuf_addf(&sb, _("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
+> 
 
-
---oBIQkwkho9M2OJJ6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBTaYACgkQVbJhu7ck
-PpRtORAAkRti7/S+i06AkAKOMvrQ5tu4im1dST1+D1+c8CU84Adjc/gB7g3bwWA6
-W7eMc8Q01yQBi00oPh1ZFPbNldo7dy2VaH96yEo0noUhNnrcfb1rHdLo46E5dcNv
-RcPODdehFgPO8MXImWgPaTAgMJFnDEmGmB8pDVnIlGiq0antWachyPyPZtQDQRpu
-oxmxYerDU/3j68ojOuCzTBrDhLlwOfUOz4JeyvYpZNPbKe6TlbnrIpT8wQP/6VBI
-VyStrmHyNScAK8B4fv5pVyETM2ddFXTrhbE3zbvPrmNTXJWhx65P4cpRE/gpGvT7
-xJbIB5m1r3Ta5RUcWASkQN0Wzf92WXjN2ZuHvnmBCiZj8isBo/8TkqleosK9HdVs
-U6bXkYe+KbKcwg/mm6ULCEsIz//FxBUaBl6uzebEDUo/c1qEKEvw07C180cLD2gd
-Hfbq1UjEAhXoPeqLo9NTedcl3G72GVi+sC7iahtXAVcepn/iVvC2yO1vRcAF8YcQ
-Bhoc4sZ5NQu8rX6Pvlm25MlWAhSwJeuytN7Sqv/tfCIHc643b+1XS3zMurJGS4zQ
-UbcThFYC/NyGX/tAwlzv0l0phhl59cprzvpnJJFqQ/7knFHFp6BZcjoPry0RXaW3
-LOJJiRyw3r8yS7kk/ctsWg3j8JX46zj5kCRk9E6ZsPcVztwq9O8=
-=zIsA
------END PGP SIGNATURE-----
-
---oBIQkwkho9M2OJJ6--
