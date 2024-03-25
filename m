@@ -1,102 +1,69 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D605D467
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 20:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A955A115
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 20:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711398796; cv=none; b=jusEwXmPc6C0I4AcUppkjsz0Csqe6ySzPDkrhls+XqTTb13lqon7n8mc2mHJPHuhHDh6NJ+dANvUB6V7IHZBBa2NUxbISj/tUbZjhw8UeQr9k4+rr3RHIVmMCx5DKrRo2dil2Tm6lUu28Kayg4JBp1i6NU0zgBemMx29g+oiHqo=
+	t=1711398900; cv=none; b=RizB8gtFO6YRikZ/jhm7nznn2F4+++cnPznpYfmSnsdWOgf4R3hqgPPAOa7OhqnplLGnPa/Q6pBQ1AtVj/bzz5VPZNpNz50CsBmPrUzdZfHpUIhfiA9Z7LnEdq3bNcnTFIZbixFUy4mu7cMLLkwdfAhng7/aeyHYLWbUf8m2XAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711398796; c=relaxed/simple;
-	bh=pcmd5UCTnUFsBg8u5sCd+NpEUyPYo2KTUQpWn5WeZlc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TQ73ntR/jKRLbmZ+Yq4Hno4StEVDTEzO2YcABFWSveNiEEJPrhAmJGG09StigB0LmVioH7C1K+p++q2QmYYd4zbteDpB7GTclHhdgbMzAEQPZGD9GY4Pn5ObHPWWTQ7Bc583RUoXe0SVx9bhkQJQU9V5juRPg3TuYAl/kNTqLho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cmpws7eB; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711398900; c=relaxed/simple;
+	bh=mzZU8cIUqeLEaegNZ0lY8+hh9jqHn5xx7dkz9qQXMGU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dI0RUxQsIVYcLnkG+hWJy0lAtmK0FY92OAAvOet7hMTl03iY3YacdrE4mNwhTxDViyNYQEcqSsmp84g/ceGMrqh3XiuisxUPf8g63DoxmZP7V0nXqoT+GC68i2ztu+qg41tzf5Zjnadv8VL8NmzMiKrbOZUXPM/pcGe6CxV5m2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=xmJVTEeW; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cmpws7eB"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9681F1E9F57;
-	Mon, 25 Mar 2024 16:33:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pcmd5UCTnUFsBg8u5sCd+NpEUyPYo2KTUQpWn5
-	WeZlc=; b=Cmpws7eBZxjQmgkk+t461IVNkMJdoifpuxmUzUdx46q/Uxq6SvA4LA
-	iE49FfYWX2NTI0vb9EGiQca1/Gw7+dmCVi6wtQ4i2BIvuoRytjOh7FXIh59UrOVL
-	RjLnEg14pdlnBzA+1m0L67GB/ATgRpvS0KJclgFi0a7mRhczRhrJo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EFA01E9F56;
-	Mon, 25 Mar 2024 16:33:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B35141E9F47;
-	Mon, 25 Mar 2024 16:33:12 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/11] midx-write.c: avoid directly managed temporary
- strbuf
-In-Reply-To: <8e32755c492d20eec02c81351d249ce34cc6d7b9.1711387439.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Mon, 25 Mar 2024 13:24:41 -0400")
-References: <cover.1711387439.git.me@ttaylorr.com>
-	<8e32755c492d20eec02c81351d249ce34cc6d7b9.1711387439.git.me@ttaylorr.com>
-Date: Mon, 25 Mar 2024 13:33:11 -0700
-Message-ID: <xmqqv85ahx14.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="xmJVTEeW"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1711398896;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=eNiSAz2UR50a1eX+8C0RgcGd50WUCt0CW1PuTBgOe/s=;
+	b=xmJVTEeWckuvqGQD5bozFUaeAup930JOeDlLzOJ6wZgUVsGwuvm6UoAm5sR7GUprszyHjZ
+	Lc8b/7LdAlgKj0gIcEe6fTQqWO+u52Xmc/GDG6OlolPE36S9MU676+cgXolF9yDuoJqPeA
+	nyVX53HH1LRVp0wqIFNuhRJqhUgFX9hs49yOniqs+GCx5ZLjb2igukne9lNmu3UqWV67qs
+	oSVu0yJ/sySwkTdImL39adTv14jFBC9tCldYz7GAfgvAu8UFDMyUezQH1XRxK0rNU5Ej4L
+	Tr59WGBM4SUl6EgFvmtlLdz8B9Jd16Ji933B3R+J2a1QUNA6+fIPvGfXUEe3fQ==
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	sunshine@sunshineco.com,
+	jn.avila@free.fr
+Subject: [PATCH v3 0/3] Assorted improvements salvaged from an earlier series
+Date: Mon, 25 Mar 2024 21:34:50 +0100
+Message-Id: <cover.1711398665.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E69D3CB4-EAE6-11EE-8FF3-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+This series contains patches salvaged from my earlier series, [1] for
+which it has been concluded to be not acceptable for merging, because of
+possible issues with various git scripts. [2]
 
-> In midx-write.c::midx_repack(), we construct the command-line arguments
-> for a pack-objects invocation which will combine objects from the packs
-> below our `--batch-size` option.
->
-> To construct the base name of the output pack, we use a temporary
-> strbuf, and then push the result of that onto the strvec which holds the
-> command-line arguments, after which point we release the strbuf.
->
-> We could replace this by doing something like:
->
->     struct strbuf buf = STRBUF_INIT;
->     strbuf_addf(&buf, "%s/pack/pack", object_dir);
->     strvec_push_nodup(&cmd.args, strbuf_detach(&buf));
+Changes introduced to the patches are described separately in each patch.
 
-Hmph, I thought I saw another patch recently that uses
-strvec_pushf() to simplify such a sequence.  Does the technique
-apply here as well?
+Link to v1: https://lore.kernel.org/git/cover.1710968761.git.dsimic@manjaro.org/T/#u
+Link to v2: https://lore.kernel.org/git/cover.1711302588.git.dsimic@manjaro.org/T/#u
 
-Ah, yes, exactly.  See <9483038c-9529-4243-9b9a-97254fac29c1@web.de>
+[1] https://lore.kernel.org/git/cover.1710781235.git.dsimic@manjaro.org/T/#u
+[2] https://lore.kernel.org/git/d8475579f014a90b27efaf6207bc6fb0@manjaro.org/
 
-> @@ -1473,10 +1472,6 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
->  
->  	strvec_push(&cmd.args, "pack-objects");
->  
-> -	strbuf_addstr(&base_name, object_dir);
-> -	strbuf_addstr(&base_name, "/pack/pack");
-> -	strvec_push(&cmd.args, base_name.buf);
-> -
->  	if (delta_base_offset)
->  		strvec_push(&cmd.args, "--delta-base-offset");
->  	if (use_delta_islands)
-> @@ -1487,7 +1482,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
->  	else
->  		strvec_push(&cmd.args, "-q");
->  
-> -	strbuf_release(&base_name);
-> +	strvec_pushf(&cmd.args, "%s/pack/pack", object_dir);
->  
->  	cmd.git_cmd = 1;
->  	cmd.in = cmd.out = -1;
+Dragan Simic (3):
+  grep: perform some minor code and comment cleanups
+  grep docs: describe --recurse-submodules further and improve
+    formatting a bit
+  grep docs: describe --no-index further and improve formatting a bit
+
+ Documentation/config/grep.txt |  2 +-
+ Documentation/git-grep.txt    | 36 +++++++++++++++++++++--------------
+ builtin/grep.c                | 21 ++++++++------------
+ 3 files changed, 31 insertions(+), 28 deletions(-)
+
