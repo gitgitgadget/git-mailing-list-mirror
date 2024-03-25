@@ -1,132 +1,109 @@
-Received: from smtp03-ext2.udag.de (smtp03-ext2.udag.de [62.146.106.30])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC536201279
-	for <git@vger.kernel.org>; Sun, 24 Mar 2024 23:03:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.146.106.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FF13A3E8
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 00:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711321409; cv=none; b=kUSX9v6pGxVdG2GTbZy3DL69CcqnwUaF/FGoWNXSdxnqAxWMQJrppC4Br2n2e2lOmiNL9GxyZ8/53r/XLP+zyDfQtQZ3UmP9T7eUtCFmEnuWQSCtOq1YJJJhgrPQ+X+7ORyRji3Q0VDlrG+TAbXADCJYBRUn2a+mVcP3KXeQLUg=
+	t=1711326693; cv=none; b=Qj9tQ6bU2ePkXOasLSZ51EqIfLSJM+C6NRrIAx41DOiojWC6VL+lvKv+/AetYXhsIJjPH3tnwIY7f+CuX+K5ZB5q13dynuuXjgz0FiqSukvWf3uTcqwIXw1VHYqLph7lhJUb6GQQbKtVPDgajbj2ckE6w7ZZa/0dADIZDpQ7IdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711321409; c=relaxed/simple;
-	bh=lzOAhv7rxEBpoXzx2C4ev3aUxGKIfiDJtbhedDC9B1U=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=q43ALP5ASXjfE9VMF44KYBI65Alm65jYC7OnVC8iggb6Ud1H0/HaFfC9xqQeMoK2JXadRatMApLG1T1Jt79fzdce/QBsx+zF4v7Xo9LM9/0NrYS19Pgnq+MNhazxF1fnyHj7c5wrGLeJS1H25vZtIGnCJRJDuqbAqNf9KkwdDWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rohdewald.de; spf=pass smtp.mailfrom=rohdewald.de; dkim=pass (2048-bit key) header.d=rohdewald.de header.i=@rohdewald.de header.b=J9HfMgm2; arc=none smtp.client-ip=62.146.106.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rohdewald.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rohdewald.de
+	s=arc-20240116; t=1711326693; c=relaxed/simple;
+	bh=WPaPpRkUSCy/wsywcLQHNMaFZUDUBzmHmuPeqd+hAks=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LoLhFU2zBUIYM1V0//kRnEtxIwA/J1i4ObntjutPiscmkYmBgpEUKpUb83jxvBrKA5PtcZ8G1vQvs2KUJaQ6/1pRkILHsTDhijSrz6wG2Pkp3qj1XvenH0MRN6Q0xuAfL8r9IcpI4ft+yUzWXsF/IVLxy/Zi7qLZGwRYNIynvbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=aaBukfe+; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rohdewald.de header.i=@rohdewald.de header.b="J9HfMgm2"
-Received: from [10.210.137.29] (p4fd4440a.dip0.t-ipconnect.de [79.212.68.10])
-	by smtp03-ext2.udag.de (Postfix) with ESMTPA id 96D3AE0F40;
-	Sun, 24 Mar 2024 23:56:29 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rohdewald.de;
-	s=uddkim-202310; t=1711320989;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cC/HdTGzKpQE4TnvRJt4dD5Jiozc/jKz8Zb4nPstMoU=;
-	b=J9HfMgm2dtNV9fHWEHY9J/eXosH3ZvElfLi3zNnPOFHuL5YobCoIOmbxnknT9bjNAtFCq8
-	4pLqbbnFN4x3C2aZQnr1Xa4XCoNkQ9WsDn7+Jyv6717v1L33ysulgeyLDSABSbqbFqMLA2
-	t6EfsNSjUeV2cBPorl+NXSJBAZ3LxGrKXPEmOqbfl0Gt0adq+KEAJ1pz1dRCmyjDcLn4PA
-	LqpWispsMgIIo1e/bU2lQ9hen2WbFw1X9D7ZrFjIOXpoZQiAMSdosLEp4d9gAiml/j9AS7
-	RmeETRcXyRmN2pmlfFuorhEAVXNpcU3kTEIj1NzviRoyXUjg2KSFUSY97KSuGQ==
-Message-ID: <7df26e3813ef76ee90c1fb02847bbb4b9bad630d.camel@rohdewald.de>
-Subject: Re: segfault with git rebase --abort
-From: Wolfgang Rohdewald <wolfgang@rohdewald.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Date: Sun, 24 Mar 2024 23:56:28 +0100
-In-Reply-To: <xmqqle67pa7a.fsf@gitster.g>
-References: <88a694de4a7f767613475ef1d19292a69eaccb07.camel@rohdewald.de>
-	 <xmqqle67pa7a.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aaBukfe+"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 42C7F5B41A;
+	Mon, 25 Mar 2024 00:31:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1711326688;
+	bh=WPaPpRkUSCy/wsywcLQHNMaFZUDUBzmHmuPeqd+hAks=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=aaBukfe+2XRbDY9K1GtOEFaqXQ3l/BfuxhRJYrxTBR+gMYTjpmneIMILlMmoJEeft
+	 5gSylygxydw5elnzsoE0hIRuok0HqYzfneUm1a1jPG6QVwZa8NKa7/dOFT9XjbOq2l
+	 U6UKBv2gOs3Jg8EEKtJbZW0HCeCE/YXQQL9FC02Ds6Se6I7S3hx3nmNu2Ed4QD7Opu
+	 tgp3AdRmUchelKZ1CvziTXKJLxaWZtLXQH6RSR0TjrwgD2ZvyCfmZQwXUUEi8AmwMw
+	 p5u9KP9w8Fitx/iAwm9T13Ka2mNv6/qZs1TmUAucjh3uOlCV07KTtm3MYzxst+i2Gd
+	 d1y6+smrwA9A82/hflJoQgVqXP58ogIeRBlTPNXP4ETVXwOpn0Wh/Ez/DZHdR8O0bV
+	 uclOUKcBUcCOiJDS2Eo4Y7eMYhXmYzJ12CUFuEBBUrOD6MJILcnHvWAZxvkvBNOzLM
+	 DlGzbYZ3LS4SLs7swyNrzhe9e2ROlFHE4FBrvA4V/iry9BB9Vxw
+Date: Mon, 25 Mar 2024 00:31:26 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Tim Landscheidt <tim@tim-landscheidt.de>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Inconsistent/buggy behaviour of "git config --add"
+Message-ID: <ZgDF3uIEYNbawplE@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Tim Landscheidt <tim@tim-landscheidt.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <87o7b5dj8h.fsf@vagabond.tim-landscheidt.de>
+ <xmqq8r28ygwi.fsf@gitster.g>
+ <87o7b3xxta.fsf@vagabond.tim-landscheidt.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Authentication-Results: smtp03-ext2.udag.de;
-	auth=pass smtp.auth=wolfgang@rohdewald.de smtp.mailfrom=wolfgang@rohdewald.de
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vXVZ2VVqff5+Iv51"
+Content-Disposition: inline
+In-Reply-To: <87o7b3xxta.fsf@vagabond.tim-landscheidt.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Am Sonntag, dem 24.03.2024 um 14:54 -0700 schrieb Junio C Hamano:
-> Wolfgang Rohdewald <wolfgang@rohdewald.de> writes:
+
+--vXVZ2VVqff5+Iv51
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-03-24 at 18:57:21, Tim Landscheidt wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> >> My expectation of least surprise is that "git config
+> >> section.key --add value" should be equivalent to "git config
+> >> --add section.key value".
 >=20
-> > git rebase -i
-> >=20
-> > git rebase --abort # boom
-> >=20
-> This thread _might_ be relevant.
+> > You cannot have "--add" as a value by doing so.
 >=20
-> =C2=A0 https://lore.kernel.org/git/20240218114936.1121077-1-marcel@roethk=
-e.info/
+> > [=E2=80=A6]
 >=20
-> The "might" is because the symptom is a sign of corruption of the
-> rerere database but the discussion or the patch in there do not know
-> how such a corruption happened in the first place.
->=20
-> If you rebuild Git with Marcel's patch (there is v2 downthread, and
-> we have been waiting for a v3) and it improves the situation, please
-> do let us know.
+> The standard way to achieve this would be to use "--",
+> i. e. "git config section.key --add -- --add" (apparently
+> even part of POSIX as "Utility Syntax Guidelines", but also
+> commonly used elsewhere in Git).
 
-Yes, the patch resolved my problem. Thanks a lot!
+POSIX mandates that all options come before all non-option arguments.
+So by that rule, `git config section.key --add value` means that `--add`
+is a non-option argument, not the option `--add`.
 
-From the bash history below, this might be the sequence:
-
-(git 2.39)
-
-I think I forgot to remove one line of "<<<<<<< HEAD" before doing the firs=
-t git add.
-
-Because git rebase --abort then told me about the lockfile, the segfault pr=
-obably
-already happened with the second git rebase --continue.
-and from then on all git rebase --abort segfaulted.
-
-Oh - and I definitively did not mess around in .git
-
-I do have a backup of the repo, so if you want me to look up things ...
-
-git checkout master
-git rebase -i
-vi servertable.py
-git add servertable.py  # here I probably left that <<<< HEAD line
-git rebase --continue
-vi servertable.py=20
-git add servertable.py
-git rebase --continue   # I think this already segfaulted
-git status
-df                      # plenty of free space
-git rebase --abort
-rm .git/MERGE_RR.lock
-
-
-Since the patch is about rerere, I now did:
-
-wrpc:~/tmp/kajongg (master|REBASE-i) git rerere status
-src/servertable.py
-wrpc:~/tmp/kajongg (master|REBASE-i) git rerere diff
-error: Could not stat .git/rr-cache/a8ec6f624ee23ef2e37148a8172ebac3c6639f9=
-3/preimage: No such file or directory
-fatal: unable to generate diff for '.git/rr-cache/a8ec6f624ee23ef2e37148a81=
-72ebac3c6639f93'
-
-wrpc:~/tmp/kajongg/.git/rr-cache (GIT_DIR!|REBASE-i) ls -lrt | tail -3
-drwxr-xr-x 2 wr wr 4096 Mar 24 16:19 e6c7ce944f313fa718cad6875d4ee784c09886=
-8c
-drwxr-xr-x 2 wr wr 4096 Mar 24 16:19 d0a20608fa0aafd2b234cce432ce7af567c1a9=
-4a
-drwxr-xr-x 2 wr wr 4096 Mar 24 16:43 a8ec6f624ee23ef2e37148a8172ebac3c6639f=
-93
-wrpc:~/tmp/kajongg/.git/rr-cache (GIT_DIR!|REBASE-i) ls -l a8ec6f624ee23ef2=
-e37148a8172ebac3c6639f93/
-total 0
-
-
+Certainly some GNU tools do break the rule, and Git begrudgingly allows
+it in some cases, but in utilities in general, it isn't allowed.  Many
+non-Linux OSes and non-GNU tools don't allow options to appear after
+non-option arguments at all.
 --=20
-mit freundlichen Gr=C3=BCssen
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Wolfgang Rohdewald
+--vXVZ2VVqff5+Iv51
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZgDF3gAKCRB8DEliiIei
+gfWLAP9iDxiuIFa6LvN86h6eh0Sy8PPHxFw5vapwfMH9NS/8+QEAnrghjxCr3Bit
+rb65uKwAiy1fbeRfgO+Mrs4l8sAcHgM=
+=2WVU
+-----END PGP SIGNATURE-----
+
+--vXVZ2VVqff5+Iv51--
