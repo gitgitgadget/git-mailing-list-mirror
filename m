@@ -1,52 +1,55 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6516CDA1
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226375D744
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711401816; cv=none; b=IEwIBbqYtYw0DVWBXTH/Lll+wl+K36EzLvumWTo/50u3vK9u6IUrSt4Iso6LuOwaey+kNwvdV5F43JY76sok0yOEVNQ87fylj3rwAIyMacw5Yj07ZMWjrvd2KEdvJu3NZcuLuUeOC+jCPSbLraUNi23MK2sb+cZLiaBGqogcoQ8=
+	t=1711401938; cv=none; b=XxHl+pDa47ElmvTlLGj/I0JGZndZt/J37qVZgMkSIuS54xeXpkc0nqgG7fiRLG1PnL5EVX8uXzHlNDmOgijmKMVU8gXcMw9MvLSOWvX2QyWoSqHlrsgftIfE7L1MjxOYSg7C39VUYqCcbxwy/KgbJGVhVt38GuxZed7b+DRUOJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711401816; c=relaxed/simple;
-	bh=Mgq5lKo6bllFd/mK0e1P72SxIhTP2zmTmXOlDUd2CzE=;
+	s=arc-20240116; t=1711401938; c=relaxed/simple;
+	bh=MeFeMeTYxco2Imzz5Kt0XyUJdzWy6ghnBYoUmSLERq8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gOHx1IIg491syzbh6oepBAFA+A00tKNjBGwHboxp7udqcgpH2oUFTDNkSrKzj210+aqR4Wo5ZRZ4cyRAckredfwVUin79bqMTq55KLgAfu+gM7LYgv7k8lkvQ6PyBpLFLbjq/rTOK5KCzM6NXPEsiJL02BeTosxplLPz81E0THE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KiDei9NY; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=IorybYI7sQ55GU0tUp9T0L5rT0z4rmsuepBIqoANolhtnH5qpQu+yqEH1cJ8DQeGS7grq30p3wOSHQO6r/ofyrK5/Tv8xjNXpWB0VkzOOtmsacyCMG/Mumtnv4DkpmQeQevSnyEBR3B7UNKwbI8Iti2nfCKeSNIsuRe3LWIIsVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WaHTuwyH; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KiDei9NY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WaHTuwyH"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 500BA27AAD;
-	Mon, 25 Mar 2024 17:23:34 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B392C27AC8;
+	Mon, 25 Mar 2024 17:25:36 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Mgq5lKo6bllF
-	d/mK0e1P72SxIhTP2zmTmXOlDUd2CzE=; b=KiDei9NYSba8g9jJbcQjvBt7tRDu
-	E0IrOyfaqLs+D7ggiBr1QP6kU/riTgX3jSR2BGSzlUN1MLimwyfqeMOM3POw2lB7
-	nUQrRse96BCIeSzehVekWryORuoJ3Qp4KU4fJGBSw9k0a8YKD+D10O5MQ5T+PxMZ
-	GMDAahLBLWJxjXw=
+	:content-type; s=sasl; bh=MeFeMeTYxco2Imzz5Kt0XyUJdzWy6ghnBYoUmS
+	LERq8=; b=WaHTuwyHtCoVakXho+O3t4IcbuR+wuQ56CJv3QFMnwmqLCZFjM6RRN
+	nHYYFBplG3eA3QvIsjOPhWiRt0EHP2YXuAaZwW3zyhYQLRhxUy4OU1x7TIhZ/3xy
+	YXj8Ai8OPEl1B/bz9k88CQZ4jw4GtvpzusjvqtFtpxqA89M+JYvHo=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4712C27AAC;
-	Mon, 25 Mar 2024 17:23:34 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id ACEFE27AC7;
+	Mon, 25 Mar 2024 17:25:36 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CBFA927AA7;
-	Mon, 25 Mar 2024 17:23:30 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2160127AC6;
+	Mon, 25 Mar 2024 17:25:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: vk <g@vkabc.me>,  git@vger.kernel.org
-Subject: Re: [GSoC] Microproject help
-In-Reply-To: <CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 25 Mar 2024 16:51:55 -0400")
-References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
-	<CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
-Date: Mon, 25 Mar 2024 14:23:29 -0700
-Message-ID: <xmqq1q7yhupa.fsf@gitster.g>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Kyle
+ Lippincott <spectral@google.com>
+Subject: Re: [PATCH v3 4/5] MyFirstObjectWalk: fix description for counting
+ omitted objects
+In-Reply-To: <ghplvikrdk.fsf@gouders.net> (Dirk Gouders's message of "Mon, 25
+	Mar 2024 21:07:03 +0100")
+References: <cover.1710840596.git.dirk@gouders.net>
+	<cover.1711368498.git.dirk@gouders.net>
+	<cfa4b9ce503e98035d3ce09b0c9e00bcfb6ff70a.1711368499.git.dirk@gouders.net>
+	<xmqq34semden.fsf@gitster.g> <ghplvikrdk.fsf@gouders.net>
+Date: Mon, 25 Mar 2024 14:25:31 -0700
+Message-ID: <xmqqwmpqgg1g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,40 +57,21 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- ED8ACF12-EAED-11EE-BB00-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 3670AE5E-EAEE-11EE-831F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Dirk Gouders <dirk@gouders.net> writes:
 
-> On Mon, Mar 25, 2024 at 11:40=E2=80=AFAM vk <g@vkabc.me> wrote:
->> For the microproject, I have looked into the lists for 2024 and it see=
-ms
->> that all the projects have been taken except for `Replace a
->> run_command*() call by direct calls to C functions`. However, it seems
->> that the issue has been solved. The command I ran to search throughout
->> the repo is `git grep 'run_command*('` and the search result returns
->> run_command functions which I assume are essential.
+>> "this means that" could be rephrased in a way a bit more helpful and
+>> to readers with clarity, perhaps:
 >>
->> If there is any low hanging fruits that you can suggest to me for the
->> microproject, that will be great. I will also be searching throughout
->> the mailing list to see if there are any potential microproject to wor=
-k
->> on.
+>> 	Note that our object walk will not perform any better than
+>> 	an unfiltered walk with this function, because all reachable
+>> 	objects need to be walked in order to ...
 >
-> Searching the mailing list for "#leftoverbits"[1] can be a good way to
-> discover little tasks which may be suitable for a GSoC microproject.
->
-> [1]: https://lore.kernel.org/git/?q=3D%23leftoverbits
+> Would it be OK to rearrange it even more?
 
-True, but with a caveat that they may range from "low hanging fruit"
-to "too hard, let's punt".  After seeing the anonymous questioners'
-question, I did go to that query page (actually I qualified the
-query further to list only the ones I gave the mark) and decided not
-to suggest it because I found that many recent ones are harder than
-"trivial changes suitable for a practice material to go through the
-review cycles" X-<.
-
-Thanks.
+Sure.  We are in the business of clarifying this document, so making
+it easier to read is very much welcomed.
 
