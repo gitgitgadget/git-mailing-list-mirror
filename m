@@ -1,94 +1,74 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9B1839E1
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 23:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EB284D11
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 23:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711409873; cv=none; b=LhWtXZI4TtOze1xgYWD1PElJvQn8O3fFQ18uYPnVVpTGmsEjHROfCUonnJ7zm/kai9X2lPr+mFzvFFzNd12VDa3Evtf8VKm2y3TLML8EHV49u3aTPi3d4OEYwxHzHnZznzKVfNsCJA5KF/I/0iJFVkcGWi5X+7EFsESWHEpinCI=
+	t=1711410131; cv=none; b=OcqASQTga84+Ubzbowe4bTifKe24OzGMZQeYeqVgP3hSnwOC+CgYOzafarrQDsIuwP1/8dmEAkRhgxuuKM6ewzVEaF3Yy7nNCFVD91X3PCrimQoBoGZfgrnhTzTPvFQBUZFx9zz8t/wXmJPernfuFuOWmmT/O7TZSvvea6WWS4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711409873; c=relaxed/simple;
-	bh=z+qPHi4XlIwkyilwCVY97ZJj8xg1ZnFo6xXIfa4eIjs=;
-	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
-	 Content-Type; b=E6h5mz8yhmFM6XKmGVCQt8fnE7EEngnkQGXQrazaWfMv5OSs/QBd24HeRa+Vc62e6HbPjddZtChukqkMa4sLOSbupdPXtk4jia3l0jKkmI3ww5mjUiXdbyOyLGLWm0JEXdEkFiyXgqQN5vPJd93PGkImgLUTlUQ75ibsRnxjEbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QWkmclix; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711410131; c=relaxed/simple;
+	bh=twuZB12K7kLiQk1IFwhG1Qy9yJsVA1sOPs0/GJVJpbA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GYjF8+3ef6h4kvh+daV6KIio569cuED62BZ+hFifQqN7gRkhOt4AYtnpNocn/2oqcdo0e+NRp0zBfJsSqB3kVvTjdjl0soelsoBVC9vj12gJ8Qk5twBDazh77nTPwcfR2YaOyaF0UAUoq0L8uwVuh2Wffx3k5cB5Jf9OK3OrcAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PrvuSGPz; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QWkmclix"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6e673ffbd79so2915738a34.2
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 16:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711409870; x=1712014670; darn=vger.kernel.org;
-        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qh+rX1mLoyGYxHisU45jqeDEboHdUAEVVnCDUckW9cE=;
-        b=QWkmclixXJE1IgILvgnP6kwU+wxn2dncjgSHtpLD8EhVnHrelpK5GZi/AaLjH9cmut
-         WUYWSseqHoUemT+LTxFedOEvwLphrX69p2kXXQVHaqYDct7bQ/v4nAUHW3nt+WwnwsgP
-         CWOquIzvT3YpyCROer+HkHnhhwbmik1QoPTL2EcELyJYOx3fh0yNmVGhk0cMCjZ6ARG6
-         8tOTZDjqfYPrRD7cnKCy+TtuvOnVPJGALZNbBmAS2PQmtIqIXo7gG24EqPQeRMhaxw/j
-         imEgOy+RCPIRhdO6Wv09medSCYJu45GOhrxaL9pi7DrjgMWMpQ54PY2B/bM5AxNBMY7r
-         Rp2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711409870; x=1712014670;
-        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
-         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qh+rX1mLoyGYxHisU45jqeDEboHdUAEVVnCDUckW9cE=;
-        b=jn7qVMH7Q4Fopln+9OnzPkLg1BJJuQryhD8sWgYOpY1lqH9xJola108Jc2prNQOHGu
-         YEmmfLGgUP2sT2IIvp2vDxpl/1q2AFGXAD/jO7mHaFAyjEoAb0P0LazvlvkSHCT9c7Gp
-         mkS8CptxWcfGAO9isl8HYcaRasGM6AQpAyb45jwQt70gYWkupZBzlU4av7IEnVIU2RVV
-         89r+oMP6RCJzLVIjFB9Bdner0ygHHNI7EhYz0OmWLnd07pSbzt3y0r1NQLFD9zE1ey2z
-         Ek7rbgkWcj6jRd89VeiFYbpY02phWPbz8frdq6vZugEK+egFoAJm8UOkUv4OhhtrZ5nN
-         OeWg==
-X-Gm-Message-State: AOJu0YxeqZSXuxFz6cFqiibytMtsPDnD06opgHyr2V5t8BMkZ9L0IhXG
-	hbzsvWXWbyIcQpklbmZ7oXLx5x0HO9nIOBnc+LWRQxXlvH+zk/chRn9QpQxZH1w=
-X-Google-Smtp-Source: AGHT+IHNFUZwbE+b7CT+y/Jj9aFeXH7fSdoLoGOIr+ZPp859FP2aghvqlKkffU9X1v/IwxMnDyA0cg==
-X-Received: by 2002:a05:6830:2b26:b0:6e6:7d9a:e3c5 with SMTP id l38-20020a0568302b2600b006e67d9ae3c5mr11191686otv.34.1711409870612;
-        Mon, 25 Mar 2024 16:37:50 -0700 (PDT)
-Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
-        by smtp.gmail.com with ESMTPSA id n20-20020a9d4d14000000b006e67e27fd71sm1335863otf.28.2024.03.25.16.37.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 16:37:50 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PrvuSGPz"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0676F31E43;
+	Mon, 25 Mar 2024 19:42:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=twuZB12K7kLi
+	Qk1IFwhG1Qy9yJsVA1sOPs0/GJVJpbA=; b=PrvuSGPz8SaHe8zS473j7wrRstCQ
+	CRPcXf7d+TMRyTpinGgGxLCeq4KhnezvwkcJFg8klbj+swzMZy/HqCdCfjzzx0Cf
+	fy9e4pnBkdA0K5Mc/V7nlH3YAGkAalE5IkqwklmvaP7Y6C9q9gCIxG/ecL8SdIdG
+	JZ3BcyWEOJtJsHQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F2D5331E42;
+	Mon, 25 Mar 2024 19:42:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 464CE31E41;
+	Mon, 25 Mar 2024 19:42:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] add-patch: introduce 'p' in interactive-patch
+In-Reply-To: <8dc0218b-914d-4a12-8136-45c6d62162a6@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Tue, 26 Mar 2024 00:15:51 +0100")
+References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
+	<fa64a975-40e4-40f2-bdcf-fd2da4fc506e@gmail.com>
+	<xmqqcyrigfft.fsf@gitster.g>
+	<8dc0218b-914d-4a12-8136-45c6d62162a6@gmail.com>
+Date: Mon, 25 Mar 2024 16:42:04 -0700
+Message-ID: <xmqq1q7xg9pv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Brian Lyles" <brianmlyles@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-In-Reply-To: <xmqq8r26eyva.fsf@gitster.g>
-Cc: <git@vger.kernel.org>, <phillip.wood123@gmail.com>, 
-	"=?utf-8?Q?Jean-No=C3=ABl_AVILA?=" <jn.avila@free.fr>
-Subject: Re: [PATCH v2] SubmittingPatches: release-notes entry experiment
-Message-ID: <17c0263586f87125.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Date: Mon, 25 Mar 2024 23:37:49 +0000
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 49EFDC26-EB01-11EE-A78F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-On Mon, Mar 25, 2024 at 5:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+> Doing nothing here produces, in the current implementation, the intende=
+d
+> printing.  Maybe the message needs to state so?
 
-> +[[a-paragraph-summary]]
-> +
-> +*This is EXPERIMENTAL*.  When sending a topic, you can propose one
-> +paragraph summary that appears in the "What's cooking" report when it
-> +is picked up to explain the topic.  If you choose to do so, please
-> +write 2-5 lines of a paragraph that will fit well in our release notes
-> +(see Documentation/RelNotes/* directory for examples), and make it
-> +the first paragraph of the cover letter.  For a single-patch series,
-> +use the space between the three-dash line and the diffstat, as
-> +described earlier.
-> +
+Yeah, "/* Nothing special is needed */", or something.
 
-One very minor grammar note: "you can propose *a* one paragraph
-summary".
-
-Otherwise, this patch looks good to me. Thanks for considering this.
-
---=20
-Thank you,
-Brian Lyles
+Thanks for a quick response.
