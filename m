@@ -1,129 +1,158 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D94A15539A
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 08:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBF917107D
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 09:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711355805; cv=none; b=n/OtU3oCJN2+tuo3wzTTKsYEQsm3BHZ7es6t+FlZ0awJVia2tpgo+p3YV3SVYZvpiBsVFDl+ooJTkrydcI5/L0omoOKIqPA8AVLGW8bpn2T5TUOIi5ACDllj0/HleL8v5ZWNDgXKJZ/gsiSrxjbmggdC79xMyUWysgs+8Sg3pPQ=
+	t=1711357838; cv=none; b=L8A6bKnyFUNUWJiVkmq7QfJVAhdbXlD4EoBWEOV8Rpl5lmKzUA6eb278Dy6H8Rpk4DeLUNeesPn20827a9ANkUgGKNk38uywViXGr2ENakolxoN6yq+LvGH1lNQitJAHVd0UPEcyB4QgY4+JYm1RCTkAUpyjnBwP8Qxd0ScNk9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711355805; c=relaxed/simple;
-	bh=UfPYYwnecrYP2LTihIxhYurB+ADnkt/W8WBrd90r/Rs=;
+	s=arc-20240116; t=1711357838; c=relaxed/simple;
+	bh=TfF/a/Y4ARXtAjNiiEVW6xS6+kBiz7Dp4uaPOZr3aTY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bwOrvUSgZdT4nCAbFnONHQBPbc+yr1C1nBXUTzsjg9EjLrkTZViOqpf3KqyBgmChjHvf5+Kg3qEs5yVGpPRM61LUVc5ArVcJrv7J0wlzRerOmZz7l0pUXuflMisZpMisWXhbpwyW91hMHC/+Et7HO5oApKUepMvxUaThpP8CadI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=pBsRvnC4; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	 Content-Type:Content-Disposition:In-Reply-To; b=NS9RqVjlAP5NnqZDCke9LlR5EmJjwj4XdyL0sER3V1FoDE1Qfx7zJDuEh2TCrRGDacePK5YuI29gkfq7XQ9scK5kDpQwQwgf2kGwj43X6vkNIBTC78BL2Vg3ULmFvGbK7Fyasndb7NqH3DZk1LlA9o++jbze/KNuYljHpv+9u+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f/vpxJ83; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fuQh1v6m; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="pBsRvnC4"
-Received: from localhost (unknown [IPv6:2001:910:10ee:0:d5de:3293:133e:f31a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id AB34E60384;
-	Mon, 25 Mar 2024 09:36:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1711355800;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sswWaW0LS2cQIXFEkD4fWq+XIz7x5IvgR5AGdh/YVAs=;
-	b=pBsRvnC4dPqdzZJLZou1ewgBmV+Ar2bEvu1BRGSe32YqORY2ELHcAJ3V9TRdcAOk//KZeP
-	Oh1rR8CDc0tobGLl2W4WR2/dgbaraIS64hNOol//izLYJs24BS2F3qB6PDbSqWnQAr8snL
-	VhG6xAx9Jh065XurJ9Q8USehhqRvrgCYGU30IeyvJqBB/+5PrPeRoYP2Qpmw6GtNih4rLj
-	uF1BDAd2YuAO4G5IRJBoCeg+Y3OC6KDafvrFRs88oVbwPAvo8LZp5X5TjiUaRydlnZIO8s
-	wNDcP6fv09yzPYvLKHVhzvFkGq8DExHbFcu1OeijTLth/ntql/g/YLBlc328CQ==
-Date: Mon, 25 Mar 2024 09:36:40 +0100
-From: Max Gautier <mg@max.gautier.name>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] maintenance: cleanup $XDG_CONFIG_HOME/systemd/user
-Message-ID: <ZgE3mHsPfKbuQLQP@framework>
-References: <20240322221327.12204-1-mg@max.gautier.name>
- <20240322221327.12204-5-mg@max.gautier.name>
- <Zf636bsHs9woXRAS@framework>
- <1cce271f-c3df-432b-94ff-bf7b11c6924d@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f/vpxJ83";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fuQh1v6m"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 65A681380119;
+	Mon, 25 Mar 2024 05:10:35 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Mon, 25 Mar 2024 05:10:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711357835; x=1711444235; bh=2t6GEF8cNq
+	Vb/SZvjpc6MIGE0tAE3K1LUCgJtyzWYXU=; b=f/vpxJ830frYhfz0vII235M/OR
+	nNEyNID9oSZIrBYlGOQG1hfZK2Vp2Vu6LeCZ7Ztn3mpBEP09SPJ4afT5LWmE1go0
+	/5y1XCQgPCF5NM+MtCJqmBuD+oU0E6mSa75fu3vrpeSG1CqczvRg+vxvPZxBdqjh
+	ums5EVf8eraf96yQDpbg8QoWi4L1G3ayNJRvQ6DAlxniKc/05ohKrpR1pkb93LSq
+	yUFnAUHWjiudnPlp2qPCD+k61wGcWRh4aqqjkdCyQWb/y4mf9viUdqkf1Pg6TJnq
+	zVIOAwRBn+fq7lrTRNxpzpg/95tQcEH2Cxl64ABN6zwLiIpnZsyeSUqJ70bw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711357835; x=1711444235; bh=2t6GEF8cNqVb/SZvjpc6MIGE0tAE
+	3K1LUCgJtyzWYXU=; b=fuQh1v6ms/0F5Ws3+GuBB+cANL0qSDxnJJGoaMm8i+Kw
+	4IOd35W7F2/+0DjLwLGmoMw4L/+aVkJSPLdfbYLtMQeOL2PWNWNVi4ocb0Qebzyn
+	UTi+0SHXnYbJEJJCthjlgO2CO74Gw4JQA/mOgiS7QhAYnWL2z0RWGMtFbh3SVP7U
+	N9MtnVQr3aufnZG+ZA5aSJ3xiScWQVw4J33dC9EtXPbLT9W2WJuLCxzuNmPi7chD
+	8mrp4kCbsYrUkUj0VFMe1mn9vfnV3s/EMh4Nig+WQS0CsWfrHxkwFGEkCUQMnp1r
+	7LbiSf5m4f951lJFlDJUvyp2Lb1wOVKNRj90eR8GdA==
+X-ME-Sender: <xms:iz8BZtNx0L50PgWzRas7Pn5VFC1A_iqaEF5sndtGFEeBDkNaKHoykA>
+    <xme:iz8BZv8kfrVcQbzvisv8p0uhdfzFFOYnR_mgkwmFXe-FUKG1m7-braBiZLC3zYoSj
+    jOrnEu8dPVecdX2kg>
+X-ME-Received: <xmr:iz8BZsQyZ9A0dqFc1Ac7l4QrGPUu8F-Jyu70HjguRpYvBOb4flFDdVuCovicZO7k80PEDyDBK1RT7OkIhNNV5WhImCC1M9SBiHcjBJ7S50AvTQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtlecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    eukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:iz8BZpshIH0de84KsxJSjEp5eCs7GP02OLE0crj1MhGjz7nHe2fd6w>
+    <xmx:iz8BZldVB8Y_dBDQo824wgF0tnTZyl_xarFD9sjFss-fYo0RsVTTcQ>
+    <xmx:iz8BZl0c5oYSfJJ6rUZFcbiFPOr3FRFOHNw_rOVgihx6X4LCtb3veg>
+    <xmx:iz8BZh8zz2ubGluVbFPqPKoMDsGGXDu7i0j1ilABVnlrQ3kHWdsgxw>
+    <xmx:iz8BZs5m4o820QFri9bwuRqX4kvYhCfqxWeDEavf-DZPyfUU-MptQQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Mar 2024 05:10:34 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7bb02117 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Mar 2024 09:10:18 +0000 (UTC)
+Date: Mon, 25 Mar 2024 10:10:26 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 01/15] reftable/stack: fix error handling in
+ `reftable_stack_init_addition()`
+Message-ID: <ZgE_ggdkO6ejjuOG@tanuki>
+References: <cover.1710706118.git.ps@pks.im>
+ <1e39d93a45db502280ecff383d53e0294f969719.1710706118.git.ps@pks.im>
+ <CAOLa=ZQ5wFCqWZ4yjMzUg5Yz1UeVpwUap0z9Lx9EfRVKnzHttQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Mhp+TGj6W8k6rwyX"
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQ5wFCqWZ4yjMzUg5Yz1UeVpwUap0z9Lx9EfRVKnzHttQ@mail.gmail.com>
+
+
+--Mhp+TGj6W8k6rwyX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1cce271f-c3df-432b-94ff-bf7b11c6924d@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 24, 2024 at 03:45:45PM +0000, Phillip Wood wrote:
-> Hi Max
-> 
-> On 23/03/2024 11:07, Max Gautier wrote:
-> > On Fri, Mar 22, 2024 at 11:11:09PM +0100, Max Gautier wrote:
-> > > +/*
-> > > + * TODO: in the future (~2026 ?) remove this cleanup code
-> > > + */
-> 
-> That is rather optimistic - users only run "git maintenance start" once so
-> any unit files that have been written in the past will exist well beyond
-> 2026.
+On Wed, Mar 20, 2024 at 02:50:43PM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > diff --git a/reftable/stack.c b/reftable/stack.c
+> > index 1ecf1b9751..92d9a7facb 100644
+> > --- a/reftable/stack.c
+> > +++ b/reftable/stack.c
+> > @@ -590,8 +590,7 @@ static int reftable_stack_init_addition(struct reft=
+able_addition *add,
+> >  	err =3D stack_uptodate(st);
+> >  	if (err < 0)
+> >  		goto done;
+> > -
+> > -	if (err > 1) {
+> > +	if (err > 0) {
+> >  		err =3D REFTABLE_LOCK_ERROR;
+> >  		goto done;
+> >  	}
+> > @@ -713,10 +712,6 @@ static int stack_try_add(struct reftable_stack *st,
+> >  	int err =3D reftable_stack_init_addition(&add, st);
+> >  	if (err < 0)
+> >  		goto done;
+> > -	if (err > 0) {
+> > -		err =3D REFTABLE_LOCK_ERROR;
+> > -		goto done;
+> > -	}
+>=20
+> This changes the behavior though, since now we skip the `goto done`. It
+> would be best to change the previous line to `if (err)`, which is what
+> the other function (`reftable_stack_new_addition`) does.
 
-In that case, should we hook the cleanup (in it's final form) in more
-place ? `git maintenance register` for instance ?
+It actually doesn't because `reftable_stack_init_addition()` does not
+return a positive value anymore. And as it returns `REFTABLE_LOCK_ERROR`
+in the case where it previously did return a positive value the
+behaviour is exactly the same because we go into thee `if (err < 0)`
+branch.
 
-> 
-> > > +static void systemd_delete_user_unit(char const *unit)
-> > > +{
-> > > +	char const	file_start_stale[] =	"# This file was created and is"
-> > > +						" maintained by Git.";
-> > > +	char		file_start_user[sizeof(file_start_stale)] = {'\0'};
-> > > +
-> > > +	char *filename = xdg_config_home_for("systemd/user", unit);
-> > > +	int handle = open(filename, O_RDONLY);
-> > > +
-> > > +	/*
-> > > +	 * Check this is actually our file and we're not removing a legitimate
-> > > +	 * user override.
-> > > +	 */
-> > > +	if (handle == -1 && !is_missing_file_error(errno))
-> > > +		warning(_("failed to delete '%s'"), filename);
-> > > +	else {
-> > > +		read(handle, file_start_user, sizeof(file_start_stale) - 1);
-> > 
-> > Actually that fails -Werror because I don't check read return.
-> > Alternative below (on top of this one), with one question:
-> > Are VLA using size_t const OK ? It's folded to a constant array by gcc
-> > but I don't know if that causes portability problem with other platforms
-> > ? I can always repeat the sizeof expr if it's a problematic construct.
-> 
-> I think it would be easier to use strbuf_read_file() instead - it is only a
-> small file so there is not really any advantage in just reading the first
-> line. Something like
-> 
-> static int systemd_delete_user_unit(const char* unit)
-> {
-> 	int ret = 0;
-> 	struct strbuf buf = STRBUF_INIT;
-> 	char *filename = xdg_config_home_for("systemd/user", unit);
-> 
-> 	if (strbuf_read_file(&buf, filename, 0) < 0) {
-> 		if (errno != ENOENT)
-> 			ret = error_errno(_("could not read '%s'", filename));
-> 		goto out;
-> 	}
-> 	if (starts_with(buf.buf,
-> 			"# This file was created and is maintained by git.\n") &&
-> 	    unlink(filename))
-> 		ret = error_errno(_("could not remove '%s', filename));
-> 
-> out:
-> 	free(filename);
-> 	strbuf_release(&buf);
-> 	return ret;
-> }
+I'll amend the commit message to clariyf.
 
-Thanks, this is exactly what I needed, I looked at the strbuf API but
-couldn't find this somehow.
+Patrick
 
--- 
-Max Gautier
+--Mhp+TGj6W8k6rwyX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBP4EACgkQVbJhu7ck
+PpQMKw/+OKjYU9oazdiSmO00DUkEJ2rcJi7zQf3jv5sCajcy5CRVtF1+Cup3Xbys
+tO3zrglewVUe2T1LNc/vUukQvTMqDb6ee8SchMdMJdDTOQvNOpjftQm46lHy/DAQ
+iWOW7rc+fKuW/awmTS6RP5K42WTr6oKGIjjUTatIKzYzHS0iK6A4kB5bX5jxjFTr
+aspA64txB2keT+NAto+U/RqAN/Iu+MKAUMY9JmqCAwIqeSJzG3yeY1IeMkpvL5s2
+3diq76Npvx0ROq8UlftZRixfC6cCWuRYnEJn33/3WKlUU2dbBapPRqB0azvik0Cu
+PFvpwdmIV/Tau6V1fnrXYhxyFxpe6QlDL4ebN910SupwsemZUd81L05+hs8wbf7h
+8pfSTD/ChUq6HoxXAOiC4udmS2lpCqyziVsGnC49iLFBnCE0OWGivaytAyxtsFjg
+LttuJWQiSbQdHilqAXcrk0SwbHKS15Dd+yZDhXSbNecTi1GM29fGbxG9sTdqDuaw
+tss3TTjuTLNM2k6ZWGMl4Xucj/7YNOYKdEOfHMdy36pD6oP3dFiRr2TnKsg3+A/0
+VgLZyPwVW86Md7lw8eYzJH0lmrw6oJ2SAUEGvNf8vKedfylt2DGJf4GIRABrZvlK
+7yv4DrcOwsT4k21oRjSk7RxEpdunMJ/NU8N5Tc0W/z8g8KqN0I4=
+=dYtS
+-----END PGP SIGNATURE-----
+
+--Mhp+TGj6W8k6rwyX--
