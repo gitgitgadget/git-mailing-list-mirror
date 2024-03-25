@@ -1,193 +1,164 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE472199EA7
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC5F19D1CE
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361195; cv=none; b=IRTYxcdAPgOUM4erFFoyuQlBxZZOUn3wrVsQFkvCAA4OcQhfajXKk8Xk84ygEHYu4qTX4VbmvFmLKyaIfn3f2fg5bzNuGTzDCOarWHyDNtoQ487txz8eEugDcuNQu40bj44D7d19n9ook+34mQ8eTEXhgTuO7dN0yoOtub+vuXE=
+	t=1711361261; cv=none; b=isEJQn9fbvzwKWd2p1kCq/pHpnTjKUx9e7DUrgUcwSYykx21YCrWu4vFKkkhMiaGe9H+AET/nqtb+EKYA5gLZ9kfyHT6cySXq1cuXQSbZ5ABwtsZu//X8pZGvr3Gu92e5EQxoMllnpL3aUPQ4SvnMnyvX07R3vRh6QZY0pMTrg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361195; c=relaxed/simple;
-	bh=2LC7wLbTOBmz0LsfMwLzI2PyQg7FJTB3LgCJ/KNUvTA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=YRKN2NJfBZ2DKo+6hjN199b1XU5E1qHvTbT7eAGA83cIx+sBIWlazWktxRaQTGYAnLub54Uc+wQQKGaYB1BzKXC2eFbRDnJSTw0zTqz32dtwGLVVJAWn4oy+GnPHVukWsa6Z7nObb/82VVgDAv0Njf4KJP106uqW+rxlMx7zdYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T6Do0d21; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711361261; c=relaxed/simple;
+	bh=Q3cMjq59wOxecyA9yYw7hoRHjLwKiWPpjkgInq9mxAY=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EaZ7SWafAkMwcbe3whxNVnyPhgOibCzP6moi4kRDbTLJMCIQHQ3ZM941WnpHkYMeyti5lypcPb3hW95Hr1MFtUaIMLiN5AS625JqLUIDb+gKFbV9XAMgT/zqf7SGJcOL9gMugcBu1wG31Ka9645GsMO722xawW6QmQtVwBN1zMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tr+nnjYo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ojz1Gu6E; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T6Do0d21"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d68cf90ec4so71032131fa.1
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 03:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711361191; x=1711965991; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=X5QFvJ0Vunr8NczBnC8j7ueP2Dmmd1AMjtxoyYRR2mI=;
-        b=T6Do0d21dqEnvimFrfT8Frap8Rf8nkMeSFa/IZsu4EXRfIC39FOy6XGdA97FxNJicU
-         lFauDA6MQt1hxrBDbECjNvjzTgptesGTnQHMIA1t2ya711eCYUMCiGW2sVSB5bX8Zwcl
-         YhcC732aquib3RVQ5C+LbQ9Lcl34nUdoV6t9yCXzoCTXWqodpigzYoTSiYWldxHx41u1
-         bPmpLfjvbfHFiuJqKbjSAoLJfswi3JPG5WRaEaOv3iubQAE8UMz+vkqTc7gvdFNq6V5+
-         NeEKxm4Wa8enjVXIVjptOJNpwQVn0Q76vl8nMQOYGkxFC9E6g4XkGbmSqvhiah5JbiSE
-         MG0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711361191; x=1711965991;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X5QFvJ0Vunr8NczBnC8j7ueP2Dmmd1AMjtxoyYRR2mI=;
-        b=G39tKpuSr/dhD+bWUvX+NiRufkmcKEeu3LuhfEhz69jqZdZE+IBZS2NN5yvzcAk/Y/
-         gaQ84nLbEbzyeWsUUxVYZdkWgMITubfIEHASutydcyDI/29Xi2tRmp4x3YTePdJPNg2q
-         89VAKtM4HBApqPOV8ur0d9f3sIn8kI/EaVbyty+aGpNaO87j0W8Vk8z0bpDwfGTrq3U8
-         JEBbUApXkSsPoa0T6jhaDXdcrn1O+oy/ljjcKGn2U5D6WAPJTLpuUL8CHSKzd/1xVLnS
-         Z8lsnUFl9kC2/b4/5u9ilQg/4jVQP1EanY3/GMToMyjtVc//NfcgdeF9Sr6ai1JMrcgZ
-         uvMQ==
-X-Gm-Message-State: AOJu0Yxg+KxOSQMMY0M04qG75TSNIf+dNm7uqpOB0yMjkeZIiz82MHFL
-	cnz56GOHpYwzY5DRk64rQ6opQpC//zekzVvoiJvTP+61wxXAkt75Z609cnZM
-X-Google-Smtp-Source: AGHT+IH1Ovrvu0GLYKLsJ8oWlN1NqkQVOILN08BqAyL6e7LFJeqo7FhvCKrqjA6Ziae3UCogUpWfGw==
-X-Received: by 2002:a2e:8090:0:b0:2d4:8e2f:e3d6 with SMTP id i16-20020a2e8090000000b002d48e2fe3d6mr4053382ljg.10.1711361190794;
-        Mon, 25 Mar 2024 03:06:30 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443? ([2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b004147ec48845sm7897103wmo.26.2024.03.25.03.06.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 03:06:30 -0700 (PDT)
-Message-ID: <03513931-7070-4430-bfae-aa039f73d74b@gmail.com>
-Date: Mon, 25 Mar 2024 10:06:29 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tr+nnjYo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ojz1Gu6E"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id F399211400FD
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 06:07:38 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 25 Mar 2024 06:07:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711361258; x=1711447658; bh=l/Peby/0z1
+	Su0b0HSUcSskYLROZs5NTytPNwdBOvTe8=; b=Tr+nnjYoK28XPlqcw2ZeMXtLxP
+	gRDSZUfy/hD8FqFwzXV4rIUidHKPfMewLeY8IftbISKHGRh+A1N4K87zy63PTAje
+	Bjyg6sCrao8O5gW4BS+tvSZ3mJ0DOgXHzwoVN9GtR0xBDOLYgQu3aLeEtXwcWNte
+	/CTzckAFEH3SRz/uqgwIQKax9EZCCFomEpb4Ag7VXlRKd8geEFFkxjsluRmZKF1d
+	Dgux3lqxH9tC+lriJwYmYrjMW950KjSDdZIixFny7sPBrXCGAmOtCHt1bRkNMs6q
+	j11AGekYTMNzzCeNTVqALI5nQ1709YzrCCsgSgPlNL1sD1aUUKk8qsihdySQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711361258; x=1711447658; bh=l/Peby/0z1Su0b0HSUcSskYLROZs
+	5NTytPNwdBOvTe8=; b=Ojz1Gu6EaEtwK+KjoRJpk11IKLIdwu8L/jB0PC6Ehz8q
+	8YrF4LGTQmoJYPmEBNewmro+IqIS8UTVKkNj26AxZUmCmttAQSSBStVjuFR2wPQV
+	eaxtarA/VXaHoNrBIfUfB7dxuLbPTvPMNQYM9s7r6iICn+2AaAp6rG8+HH9OD1zT
+	TXi+rEQdA0wubRLrEUrQBodGZWw4t4A/ECI8Spa1MA0r2Z6ZQ291ipZkZCbi1jWy
+	QhD6S7WayTSmEzr9T/2tWMv9uR/0lYRHEfctUtSzhdOm0OUL4QFFlL2u1qz/0MnI
+	SCs7QNSzURmZt56X4pYepKlMb/bAaOwQYxfHBUy2cA==
+X-ME-Sender: <xms:6kwBZjZlQr97YRvU0TMquaPSA2m5glwerXwsNZgmUb_bwm9jXpwHAA>
+    <xme:6kwBZia48X9mXXptkgZLAhwnIRMwSxBHPrEol3TEqvBV766HLPbTbl9_OI8O9m9V1
+    MaqZna0XZ6DD2Vlug>
+X-ME-Received: <xmr:6kwBZl_kxVNsbBheUXQC9iBWYW_lQX_A18TSujMf2vqJsPfS2L3aHNXPINvdlB-CgEXLsoZD7zEo-_s10ID4poJGX_YapWPhoTAL1YiYdcocqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:6kwBZpoC56TjV0D_e1gB_3FmarDdLcycKRdn9sRXqIMnedwIUOR8Gg>
+    <xmx:6kwBZuo77vAj-xKxd3kERCZRSsVXAWFSF8rBnlATouJ4n9yNTXu57w>
+    <xmx:6kwBZvRa4kf3d0qlGEBMgCdIttv6EGAUsNt9ZUHTRIeo3Xa3Obi1QA>
+    <xmx:6kwBZmqDpdzcPkX24WZfkmEuBJxoKWRaeQ0BHM4ma3ix6tnWREYONg>
+    <xmx:6kwBZl0cicG1AREb0tVnYCG7IbxYHRqZjIqSSTo2JTVpMouseK1azw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 25 Mar 2024 06:07:38 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c5dba9a0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 25 Mar 2024 10:07:27 +0000 (UTC)
+Date: Mon, 25 Mar 2024 11:07:34 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: Re: [PATCH 2/7] reftable/basics: improve `binsearch()` test
+Message-ID: <ZgFM5pUU4TKRbiMt@tanuki>
+References: <cover.1711109214.git.ps@pks.im>
+ <7955f7983a6d8ef81a572f108b11c7afa93e34fd.1711109214.git.ps@pks.im>
+ <zlj4jlfv645bxqgtjkrm3qdan3b7q4lzhxv3nqp7qagycri323@m5hhhxwuoetv>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/6] maintenance: use packaged systemd units
-Content-Language: en-US
-To: Max Gautier <mg@max.gautier.name>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
- Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <20240322221327.12204-1-mg@max.gautier.name>
- <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com> <ZgE2pFt-pXurYnKU@framework>
-In-Reply-To: <ZgE2pFt-pXurYnKU@framework>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vxXePNLS4IGan9Ts"
+Content-Disposition: inline
+In-Reply-To: <zlj4jlfv645bxqgtjkrm3qdan3b7q4lzhxv3nqp7qagycri323@m5hhhxwuoetv>
 
-Hi Max
 
-On 25/03/2024 08:32, Max Gautier wrote:
-> On Sun, Mar 24, 2024 at 02:54:58PM +0000, Phillip Wood wrote:
->> Hi Max
->>
->> On 22/03/2024 22:11, Max Gautier wrote:
->>> * Distribute the systemd timers used by the `git maintenance start` with
->>>     the systemd scheduler as part of git, rather than writing them in
->>>     $XDG_CONFIG_HOME.
->>>
->>> This allows users to override the units if they wish, and is more
->>> in-line with the usual practices of distribution for systemd units.
->>
->> Thanks for suggesting this, I think this is a useful change, but the
->> implementation could be improved.
->>
->>> We also move away from using the random minute, and instead rely on
->>> systemd features to achieve the same goal (see patch 2). This allows us
->>> to go back to using unit templating for the timers. This is also a
->>> prerequisite to have static unit files.
->>>
->>> Note that even if we really need more specific OnCalendar= settings for
->>> each timer, we should still do it that way, but instead distribute
->>> override alongside the template, for instance for weekly:
->>>
->>> /usr/lib/systemd-user/git-maintenance@daily.timer.d/override.conf:
->>> [Timer]
->>> OnCalendar=<daily specific calendar spec>
->>
->> We should definitely do that. Using systemd's random delay does not prevent
->> the different maintenance jobs from running concurrently as one job may be
->> started before a previous job has finished. It is important to only have one
->> job running at a time because the first thing "git maintenance run" does is
->> to try and acquire a lock file so if the hourly job is running when the
->> daily jobs tries to start the daily job will not be run.
-> 
-> Thinking about that, it occurs to me that the current scheme does not
-> prevent concurrent execution either: the timers all use Persistent=true,
-> which means they can fire concurrently on machine boot, if two or more
-> would have been triggered during the time the machine was powered off
-> (or just the user logged out, since it's a user unit).
+--vxXePNLS4IGan9Ts
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Interesting, I wonder if the other schedulers suffer from the same problem.
+On Fri, Mar 22, 2024 at 01:46:56PM -0500, Justin Tobler wrote:
+> On 24/03/22 01:22PM, Patrick Steinhardt wrote:
+> > The `binsearch()` test is somewhat weird in that it doesn't explicitly
+> > spell out its expectations. Instead it does so in a rather ad-hoc way
+> > with some hard-to-understand computations.
+> >=20
+> > Refactor the test to spell out the needle as well as expected index for
+> > all testcases. This refactoring highlights that the `binsearch_func()`
+> > is written somewhat weirdly to find the first integer smaller than the
+> > needle, not smaller or equal to it. Adjust the function accordingly.
+> >=20
+> > While at it, rename the callback function to better convey its meaning.
+> >=20
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  reftable/basics_test.c | 55 ++++++++++++++++++++++++------------------
+> >  1 file changed, 31 insertions(+), 24 deletions(-)
+> >=20
+> > diff --git a/reftable/basics_test.c b/reftable/basics_test.c
+> > index dc1c87c5df..85c4d1621c 100644
+> > --- a/reftable/basics_test.c
+> > +++ b/reftable/basics_test.c
+> > @@ -12,40 +12,47 @@ license that can be found in the LICENSE file or at
+> >  #include "test_framework.h"
+> >  #include "reftable-tests.h"
+> > =20
+> > -struct binsearch_args {
+> > -	int key;
+> > -	int *arr;
+> > +struct integer_needle_lesseq {
+> > +	int needle;
+> > +	int *haystack;
+> >  };
+>=20
+> This is probably just personal preference, but I think `key` and `arr`
+> in this case are a bit more straightforward.
 
-> So maybe there should be a more robust mechanism to avoid concurrent
-> execution ? I assume from what you say above the lock is acquired in a
-> non-blocking way. Could going to a blocking one be a solution ?
+I was trying to make this consistent across all the callsites, and here
+I personally think that `haystack` and `needle` are well understood by
+most folks and generic enough.
 
-It is possible to wait on a lock file but I'd be worried about building 
-up an endless queue of processes if the process holding the lock file 
-crashed leaving it in place without anyway to automatically remove it.
+> I do like that we rename
+> the args to be more specific. Do we want to also append `_args` to
+> denote that it is an argument set? Maybe `integer_lesseq_args`?
 
-I don't think we need to solve that problem as part of this patch series 
-but we should take care not to make it worse. Long term we may be better 
-scheduling a single job and have "git maintenance run" decide which jobs 
-to run based on the last time it run, rather than trying to schedule 
-different jobs with the os scheduler.
+Oh, yeah, that's an oversight indeed.
 
->> As the daily job is
->> a superset of the hourly job and the weekly job is a superset of the daily
->> job so it does not make sense to run more than one job per hour.
-> 
-> Is that set in stone, or could they perform disjoint set of tasks
-> instead ?
+Patrick
 
-All of the schedulers are set up to run a single job each hour, I don't 
-see why we'd start running disjoint sets of tasks in the different jobs.
+--vxXePNLS4IGan9Ts
+Content-Type: application/pgp-signature; name="signature.asc"
 
->>> The cleanup code for the units written in $XDG_CONFIG_HOME is adapted,
->>> and takes care of not removing legitimate user overrides, by checking
->>> the file start.
->>
->> This points to an alternate strategy for supporting user overrides - don't
->> overwrite the unit files if the user has edited them. I think that there is
->> still a benefit to moving to system wide unit files though as it means that
->> if we improve the unit files in the future systemd will pick up these
->> improvements automatically. That is an improvement over the status quo where
->> the users' unit files are written once and never updated.
->>
->> I think it would help to reorder the changes in this series as follows:
->>
->> 1 - simplify the invocation of "systemctl --user"
->>    This would be the current patch 3 without adding "--force" or
->>    moving "--now" combined with the relevant test changes from patch 6.
->>    This would make it clear that those changes are a simple clean up that
->>    is independent of the other changes made in this series.
->>
->> 2 - don't delete user edited unit files
->>    This would be based on the current patch 4 and would show that we can
->>    avoid deleting unit files that the user has edited without the other
->>    changes in this series. This change should have an associated test.
->>
->> 3 - start using systemd's random delay function
->>    This would be the current patch 1 without the template changes and the
->>    commit message should explain that it is in preparation for disturbing
->>    system-wide unit files.
->>
->> 4 - install system-wide systemd unit files
->>    This would be based on the current patch 2 with the addition of
->>    overrides to prevent more than one job running per hour. The unit
->>    files should be installed under $XDG_DATA_HOME when $(prefix) starts
->>    with $(HOME), not just when they are equal. The associated test
->>    changes from patch 6 should be moved here as well as the "--force"
->>    change from patch 3.
->>
->> 5 - documentation updates
->>    I'm on the fence about having these in a separate commit like the
->>    current patch 5 or updating the documentation when the code is
->>    changed.
-> 
-> I had started cooking v3, I'll take into account, thanks !
+-----BEGIN PGP SIGNATURE-----
 
-Thanks
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBTOUACgkQVbJhu7ck
+PpRP1xAAo03KIHAnivbwQnDi6WhVhgg5NnQYEAFRWkst31kzO5zl+QxfWofgYl2O
+0md9G4vaDhbRHzpVpJnMsuV2My7ZQhHUHgo2BAy0VyQQFdvgordYNdaSorjGXBua
+suEAcX9IrJcAn6gGtXLfXja+SoJV9ZoYrITPkD3YvpPPNWkTlxqZBvuQlgDEwa3C
+hmCZD7KKtU39Ad8rWi1YmIAXCc2pVm0DHOEiVVhgugd4SubPMr70x1WgGiapCldU
+kfejbHKEIqcIj1sCtSYQ1tvSCMHGVhAHkF4H09+M0We1QNFbEqIpKBMOBtEuUCyQ
+B5uypd29mZORF/PlFFDckcz/E3wOcrjKFTduKP8PmEZQq+p4LwlUooTRiz74oo3f
+YjZor1BSBgfqLoSryN9dycqeJk7L21yeaC+zT59KWAtm3luLB7qAM5ADkTdf5P7m
+zNIrKqWZmHXuZYOdeEPVEZ9VghhpHBoxXNbKU1eT38PxqJexhoO+j1K7nV01b4jg
+YGoHBLL7jO2BJZYBoSO4byMtJGDUoZhg6/kq+F8j6ZfPvLNh/Ak4t3PuovpyfqL/
+Zj0aweZACfquQblAol3+B2z8ej6CQGrwn9eFahqJGKc4nWe0721xPBXG0uHb6kMQ
+cZ+yRd2+15Rw8WXakRnOloE+aWzag62YH+CGugaYmXmSogCyreQ=
+=oSAw
+-----END PGP SIGNATURE-----
 
-Phillip
+--vxXePNLS4IGan9Ts--
