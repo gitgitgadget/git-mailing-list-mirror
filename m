@@ -1,376 +1,190 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9625C902
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 11:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C22149006
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 11:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711364473; cv=none; b=Scq6N7pZDrVnPHOq3K4TwNNaIN2ceojKPuR0y8Lv+/8DvL736gUwqixLueFUxgKHOrNbtnvM4olDH7nzmaxokp9+oDv6Z3OazL6Hw+EY9dfkAN9A76dXpIxOdArn3D1mCNqy3zhAKxHye0lu+8XSC1xpdXOy5NOlWsw+vaEzd6A=
+	t=1711365753; cv=none; b=P7gucqC/uAqRGiudR6jAkG9/gzarLCfr1Y2UP6V0oQKz/sMFDaQqBoX32Xy8u00fsd70Zt7tJ7lSRcdQOkoy5cV/SwkTeGDQCQKGqcU9RncC7sKvj5DKBLNBv76GLL1SVCNa1CLSZp00Leg2rTofcfZJWVBCnL2cCBcJ20RSL14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711364473; c=relaxed/simple;
-	bh=ASnKz4nYWZ53Sq1KX10ASvApkmWdXNd6Bdq3f9vqyso=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q8gK7cFMKM/vlbjKvWk5aGtzH7AcvBfFUyz3OY5vj+2gQUpI5+Obx2flODrLhKtaIzUwgQppMm1PFqGv4QOK3s3KEZ6OWeagfetFuLm6ieY1CdlxUAQkA4lhRoJr/RU2OGsPJAVXZqH0mzH/oo6d8IxHmmzMdk54CMG/PxCh3Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRcIKuNL; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711365753; c=relaxed/simple;
+	bh=ob0Gd7PByI/VUcToV1/YRjYnE1PuPmAiTpkIkbwHWPo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OUPMszxu59irmYsQcAhWs5HXHBhZan+Yf0DPmiW7GX5TIZ4Njsv1qlthtAeXNvK/r6H9KwTBYu/hEnlZ7ksdtsX7gHLQz4WOkQXVHNjqBn+PcBJEcvG4h4RcD/N2AR3bj7mqTgJIK/fPCZhHU1vfGq4GNJg/iY0dV1GdXzax42w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mp9fIT5m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gaseLXL6; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRcIKuNL"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dcbd1d4904dso4218466276.3
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 04:01:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711364470; x=1711969270; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sXDH6RdCI/T+rPpmOjkUsWZCrnNGCIqz0XLJrkc9md0=;
-        b=QRcIKuNL1rTSQQQX9G2kV/xNlvE1yM4EU9x9orm1gl1D2s+epZDX4vsHrNqzQsYNjX
-         HsFoC3b/gQu2KIa1LoI8fhz6k0v6ZtfOhGEBGXRzuxtwEYMxLa5W77wVIsZiTC6s5My8
-         k10qBMtx+WgMfshb4o3O5AIxfro/ER//eA2iQti7QOBveddQqFr4+s1lRmjytReaB23S
-         YaXL77sVQfdr7EYcwg2U4f6YErXNfRS8mPDtoFNjaL/hlAsj0EgtjyyxmkbKMK60qJ4F
-         9knnUMAAhG04lWredrmc0j8QdEJMTSgDaY79karY6ht0TO71+3lsWEhYjw4/6gtvgn5w
-         8ANQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711364470; x=1711969270;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sXDH6RdCI/T+rPpmOjkUsWZCrnNGCIqz0XLJrkc9md0=;
-        b=tu7yIYVeO88zD1vX4L0vDH5N+bseG2tZzWbKExxWCJmJy6S4cgmuwA1noYGEhcEMvl
-         CLxVTd5sC/ZEHw2BqQshRvPCtm6rCgZVRHsKIqIPhR3ZaghzNZ64tceqi3gVUhPyO+jN
-         JaBgpEM6uYfauqKi5IIA52AaK58Vy0OtnYK+G5ZdCfmeJDxSMzqazajHiOL9QVAgPbmw
-         UIriDUMN0FLVc6r3qH0349IobtTtHGKnuIHFdAXxm4peflS0lvcgLhkjrKq7TilVxUVT
-         MYO0pvNQ8AMCpoYPJ/WddcR4kX9PVHwh1KwlBAOLMUSOPV6blLWwRkI5Nl+stUVUbtiS
-         cItg==
-X-Gm-Message-State: AOJu0YyKc+R7FAwzPPVVQeHzuGJs1LciWrkFHRxi7o0ndATenHF/YXnd
-	/oB8LZYZ63dRMFbU0VPtqJF5XdohYILjVMyvdk5A/0C8+J/80JaMybdnfxXWLgXjMG9N0Ed89uL
-	RzQglJohzkLzLvph/k6d/z1AtVVa+V+JKFfT4fA==
-X-Google-Smtp-Source: AGHT+IFf6kRtrlBdVfJY5meQg0wGTT2a5XG5VQLi1CsLeyvMg8CLtQWwcYGion69yljhU6sWLl03Tncy0gi7fJUvBsE=
-X-Received: by 2002:a25:d88c:0:b0:dcd:2aa3:d73b with SMTP id
- p134-20020a25d88c000000b00dcd2aa3d73bmr4524003ybg.50.1711364469434; Mon, 25
- Mar 2024 04:01:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mp9fIT5m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gaseLXL6"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 571C011400D8;
+	Mon, 25 Mar 2024 07:22:29 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 25 Mar 2024 07:22:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711365749; x=1711452149; bh=8Oiz0z0Ofn
+	3WWAkQYlWFiDz9ZdgKO4b3CoDN8oZnxxk=; b=mp9fIT5m7as1Huh2d+qzsM01Pc
+	MXku/QSjzeVyTd6F/9vSxcaLVnzdW9nQwJ5JN1shgCLvclEEx7GSqgSE+71H3aXH
+	giWquk+Z2yPba5ZGioLdD16JV3Z5pJNyMfCfrvwfbzrL81qZcHYPU1G2YobHmUAz
+	NYMHA1uaCybdJcfWE7kOGgTg/Ja8we2R6Vo7hUsgvTdFZxuIWiDTGE5i/BaU4aGo
+	eRcOd9ylzzj/+jim70N6b7EfuNNcDmKlu2KI0I2IciXVZdhKOmHlfk4RfBqcJ/tE
+	Zfd/H7ggcZRog5+H2vSCToaHdBOwe3Mxq9KJoPy2Pae8u3Vkespg4mPXihWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711365749; x=1711452149; bh=8Oiz0z0Ofn3WWAkQYlWFiDz9ZdgK
+	O4b3CoDN8oZnxxk=; b=gaseLXL6QixQo4hN3wQYTnXvbvU+UZHJQTtRLvUEiMdt
+	utEInLM+a0tR9UWUpW+YEDd9YQSrChYFwjyuZpUsgnkIShX0Ktg7xcZIZgVQSYLt
+	K7q9PtE8KVfKCNifIaDU68jOAJUI6RwSOMJCfIq0kgHZUnOmxntdGoIThhZPaX8n
+	u3CyTTXIKP5yu1NJp+8m/4tCSXVO4iEZs86UBJc2jHkd0kfjeZb/c0Z1No+NAQ7j
+	9/EcLU+cO3sJmLyYcKKIskiC36MqisZhggdVszLDxodrJSUx41sFld2LZseyk9te
+	Y7AFwqgof5xRnoDlZNbnl1/WZcr2Z5mBr2LfBgGfrw==
+X-ME-Sender: <xms:dV4BZhn-PktpOiLm29iTy55HEI5OystPC0HlwBVI8xoMh8b3YnQBAA>
+    <xme:dV4BZs3CHteQZtVDlL_vXsFsPvGRZ_pNEDuQhhYZtwDJLsocv_9PaPkExAhlN92Vp
+    0SjzGwyWFvs-S-CPw>
+X-ME-Received: <xmr:dV4BZnp3eY0Cu4zerGtZZn2kdfG2NqPnDMT4APS-1CMcw4b8lm9beSrqFGD2HTyIFqChXsDg4cVFqECYpXnFt5csgUr3KUmEtUBPwdjR3TLVtg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddutddgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:dV4BZhnnapO_q176y39JfQTXtx0IX99b6v6vFsaHtokzffmehd2SMw>
+    <xmx:dV4BZv2fdMUwcCkG-LFa-kRsD30OeXX8xlkN6T8WhGquV78s_7YduA>
+    <xmx:dV4BZgsJiD4xRHEGf_ZU5ZgyF4Kh3fH5pvy6EbO7IcedAlIwQG1I0g>
+    <xmx:dV4BZjVNzSqUlT9U65eoAjz5szqVsE1wANTltumiue431HpVuHfWKA>
+    <xmx:dV4BZqRtBXCnhSDSF4MQmFmiiapPpcdb2uR6Tw2EEWmHmhFeLVkNMw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Mar 2024 07:22:28 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9f8de695 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Mar 2024 11:22:16 +0000 (UTC)
+Date: Mon, 25 Mar 2024 12:22:24 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 04/15] reftable/stack: gracefully handle failed
+ auto-compaction due to locks
+Message-ID: <ZgFecAnKzLgCbRcj@tanuki>
+References: <cover.1710706118.git.ps@pks.im>
+ <cover.1711360631.git.ps@pks.im>
+ <50a3c37f92a28876c0db24e515826485c863ecc3.1711360631.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFJh0PS_VB8yv7B1uM5+Ts9PtMFtU5mL4y8UUDORKQcYHSoxPA@mail.gmail.com>
- <ZgE1fxIFFQIdtIyN@tanuki>
-In-Reply-To: <ZgE1fxIFFQIdtIyN@tanuki>
-From: eugenio gigante <giganteeugenio2@gmail.com>
-Date: Mon, 25 Mar 2024 12:00:58 +0100
-Message-ID: <CAFJh0PTxhDSW1qsnVRrDxmMnp5k16nPGe6RAgrmWow0rgYV+dw@mail.gmail.com>
-Subject: Re: [RFC][GSoC] Proposal: Refactor git-bisect(1)
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fC0/zy/FaQwHdCms"
+Content-Disposition: inline
+In-Reply-To: <50a3c37f92a28876c0db24e515826485c863ecc3.1711360631.git.ps@pks.im>
+
+
+--fC0/zy/FaQwHdCms
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-> To further stress the point: the biggest challenge of this project is
-> indeed to find an agreement with the community whether this refactoring
-> will ultimately be worth it. This will require some good arguing on your
-> part why exactly you think this is fine and how exactly this will
-> interact with other implementations of Git like libgit2/JGit/Dulwich. It
-> may very well happen that ultimately the community decides that this
-> whole endeavour is not worth it.
+On Mon, Mar 25, 2024 at 11:02:51AM +0100, Patrick Steinhardt wrote:
+[snip]
+> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> index 2c3540d9e6..822e681028 100644
+> --- a/reftable/stack_test.c
+> +++ b/reftable/stack_test.c
+> @@ -343,6 +343,48 @@ static void test_reftable_stack_transaction_api_perf=
+orms_auto_compaction(void)
+>  	clear_dir(dir);
+>  }
+> =20
+> +static void test_reftable_stack_auto_compaction_fails_gracefully(void)
+> +{
+> +	struct reftable_ref_record ref =3D {
+> +		.refname =3D "refs/heads/master",
+> +		.update_index =3D 1,
+> +		.value_type =3D REFTABLE_REF_VAL1,
+> +		.value.val1 =3D {0x01},
+> +	};
+> +	struct reftable_write_options cfg =3D {0};
+> +	struct reftable_stack *st;
+> +	struct strbuf table_path =3D STRBUF_INIT;
+> +	char *dir =3D get_tmp_dir(__LINE__);
+> +	int err;
+> +
+> +	err =3D reftable_new_stack(&st, dir, cfg);
+> +	EXPECT_ERR(err);
+> +
+> +	err =3D reftable_stack_add(st, write_test_ref, &ref);
+> +	EXPECT_ERR(err);
+> +	EXPECT(st->merged->stack_len =3D=3D 1);
+> +	EXPECT(st->stats.attempts =3D=3D 0);
+> +	EXPECT(st->stats.failures =3D=3D 0);
+> +
+> +	/*
+> +	 * Lock the newly written table such that it cannot be compacted.
+> +	 * Adding a new table to the stack should not be impacted by this, even
+> +	 * though auto-compaction will now fail.
+> +	 */
+> +	strbuf_addf(&table_path, "%s/%s.lock", dir, st->readers[0]->name);
+> +	write_file_buf(table_path.buf, "", 0);
+> +
+> +	ref.update_index =3D 2;
+> +	err =3D reftable_stack_add(st, write_test_ref, &ref);
+> +	EXPECT_ERR(err);
+> +	EXPECT(st->merged->stack_len =3D=3D 2);
+> +	EXPECT(st->stats.attempts =3D=3D 1);
+> +	EXPECT(st->stats.failures =3D=3D 1);
+> +
+> +	reftable_stack_destroy(st);
+> +	clear_dir(dir);
+> +}
+> +
 
-Yeah, I'll try to expand a bit in this direction. Meanwhile, if you think
-there are others tools to look into, besides the already cited
-(libgit2/JGit/Dulwich),
-like UI interfaces or something else, please let me know.
-(Maybe GitLab is something to keep in mind?)
+I forgot to free the `table_path` buffer here. So this needs the
+following patch on top:
 
-> I don't think that the unit testing framework would be a good fit. The
-> intent of that new framework is mostly to test low-level functionality
-> that otherwise cannot be easily tested. But here it should actually be
-> quite easy to test things as part of our regular integration-style tests
-> in "t/t*.sh", so it would be preferable to write those instead.
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 822e681028..7b2a8b1afd 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -382,6 +382,7 @@ static void test_reftable_stack_auto_compaction_fails_g=
+racefully(void)
+        EXPECT(st->stats.failures =3D=3D 1);
 
-Oh ok, I thought the testing framework should have been used for all tests.
-I'll change that.
+        reftable_stack_destroy(st);
++       strbuf_release(&table_path);
+        clear_dir(dir);
+ }
 
-> Thanks for your proposal. Please make sure you submit it as a PDF file
-> to the GSoC website soonish, unless you already did that.
+Patrick
 
-Thanks for the review!
+--fC0/zy/FaQwHdCms
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Il giorno lun 25 mar 2024 alle ore 09:27 Patrick Steinhardt
-<ps@pks.im> ha scritto:
->
-> On Fri, Mar 22, 2024 at 11:26:48AM +0100, eugenio gigante wrote:
-> > Hi all, this is my proposal for the GSoC 2024.
-> >
-> > -----------------------------------------------------------------------=
------------------------------
-> >
-> > Refactor git-bisect(1) to make its state self-contained
-> >
-> > Contacts
-> > -------------------
-> >
-> > Full Name: Eugenio Gigante
-> > Email: giganteeugenio2@gmail.com
-> > Github: www.github.com/EuGig
-> >
-> >
-> > Synopsis
-> > ------------
-> >
-> > The git-bisect(1) tool is employed to pinpoint the exact commit within =
-a
-> > series of commits that introduced a particular bug. When initiating a
-> > bisection session,
-> > it generates a collection of state files within the Git repository,
-> > documenting diverse
-> > parameters such as ".git/BISECT_START". Instead of having different
-> > files scattered
-> > in the =E2=80=98.git=E2=80=99 directory, it has been suggested by Patri=
-ck to introduce
-> > a new =E2=80=98.git/bisect-state=E2=80=99
-> > directory which will contain the state files
-> > (https://lore.kernel.org/git/Za-gF_Hp_lXViGWw@tanuki/).
-> > The aim of the project is to implement this new layout for storing
-> > git-bisect(1) related files.
-> > The project will also handle backward compatibility issues that may
-> > arise with such a change.
-> > This is one of the project ideas suggested by the community of Git.
-> > The difficulty for the project should be medium and it should take
-> > somewhat between 175 to 350 hours.
-> >
-> >
-> > Contributions
-> > -------------------
-> >
-> > add.c: use unsigned integral type for collection of bits
-> > (https://lore.kernel.org/git/20240224112638.72257-2-giganteeugenio2@gma=
-il.com/)
-> >
-> >
-> > Description:
-> >
-> > Since the MSB of signed integral type=E2=80=99 is special, =E2=80=98fla=
-gs=E2=80=99 fields should be
-> > declared of type =E2=80=98unsigned integral=E2=80=99. builtin/add.c:ref=
-resh() declares
-> > 'flags' as signed,
-> > and uses it  to call refresh_index() that expects an unsigned value.
-> > Fix this by modifying its type =E2=80=98unsigned int=E2=80=99.
-> >
-> > Although the code was easy, this patch gave me the opportunity to get
-> > familiar with
-> > the process of submitting patches. The lesson learned was not only
-> > about understanding
-> > git commands for formatting and sending patches to the mailing list;
-> > but, most importantly,
-> > was about how to interact with the community; i. e., how to interact
-> > with reviewers,
-> > to ask them questions and give them answers. That is why I chose a
-> > micro-project idea
-> > that explicitly required interaction with the community, before
-> > writing any code.
-> >
-> > Status:
-> >
-> > Merged to master on: Thu Mar 7 15:59:41 2024
-> > commit f46a3f143eba661b9eb2b1e741447d6709eb6e90
-> >
-> >
-> > Deliverables
-> > ------------------
-> >
-> > As soon as the acceptance to the program is communicated, I will start =
-writing a
-> > sort of Backlog of required changes which has to be shared with mentors=
-.
-> > This has the goal of better tracking progress and possible issues.
-> > Already individuated changes and possible strategies are considered in
-> > what follows:
-> >
-> > 1. First, one needs to inspect the possible impacts such a change could=
- have
-> > regarding Backward compatibility. There will be two possible situations=
- in which
-> > backward compatibility breaks:
-> >
-> > a. (Noted by Junio (https://lore.kernel.org/git/xmqqwms0ndvu.fsf@gitste=
-r.g/)).
-> > People switch versions in the middle of a git-bisect session. Even
-> > though I think this
-> > case would not be that common, one should take this into consideration
-> > nonetheless.
-> >
-> > b. (Noted by Patrick (https://lore.kernel.org/git/ZbDPqOnyLw4yhu--@tanu=
-ki/)).
-> > Different implementations of Git could suffer backward
-> > incompatibilities like Libgit2,
-> > JGit and Dulwich. In this case, I will investigate if (and how) these
-> > tools would suffer the change.
-> >
-> > In this phase it is important to find an agreement with the community
-> > if the refactoring
-> > would be worth it, and in case it is, to find the best solution to
-> > guarantee backward compatibility.
-> > The simplest way seems to be to teach Git how to recognise the old
-> > style layout and move
-> > the files by following the new one. This can be achieved by checking
-> > the presence of state files
-> > inside =E2=80=98.git=E2=80=99, just after the starting of a bisect sess=
-ion and by
-> > moving them accordingly.
->
-> To further stress the point: the biggest challenge of this project is
-> indeed to find an agreement with the community whether this refactoring
-> will ultimately be worth it. This will require some good arguing on your
-> part why exactly you think this is fine and how exactly this will
-> interact with other implementations of Git like libgit2/JGit/Dulwich. It
-> may very well happen that ultimately the community decides that this
-> whole endeavour is not worth it.
->
-> > 2. After a strategy for backward compatibility is decided, I will
-> > refactor the directory
-> > where all the file states are created. This is done by changing the
-> > function factory
-> > =E2=80=98GIT_PATH_FUNC=E2=80=99 in =E2=80=98builtin/bisect.c=E2=80=98=
-=E2=80=99. The following is an example
-> > for =E2=80=98BISECT_START=E2=80=99:
-> >
-> > - #static GIT_PATH_FUNC(git_path_bisect_start, =E2=80=9CBISECT_START=E2=
-=80=9D)
-> > + #static GIT_PATH_FUNC(git_path_bisect_start, =E2=80=9Cbisect-state/st=
-art=E2=80=9D)
-> >
-> > Similarly for =E2=80=98bisect-state/terms=E2=80=99, etc. This kind of c=
-hanges should
-> > also be done in =E2=80=98bisect.c=E2=80=99
-> > (which contains the binary searching algorithm git-bisect(1) uses).
-> > Then, as noted by
-> > Junio (https://lore.kernel.org/git/xmqqwms0ndvu.fsf@gitster.g/) this
-> > path should be
-> > marked per-worktree, since each worktree can have its own bisect sessio=
-ns.
-> > Probably, also files related to git-worktree use the directory of
-> > state files somehow,
-> > so one should also check them.
-> >
-> > 3. Write some tests for the new layout. The plan is to use the new
-> > unit testing framework. First tests that come to mind are:
-> >
-> > a. Check that the state files are inside =E2=80=98.git/bisect-state=E2=
-=80=99.
-> > b. Check if the path pertains to GIT_DIR and not COMMON_DIR.
-> > c. Check that after adding a worktree which was being bisected does
-> > not somehow spoil the session and the state files.
-> >
-> > This can be taken as an example of test file for git-bisect(1) using
-> > the new framework:
-> >
-> > #include test-lib.h
-> > #include bisect.h
-> >
-> > // Write functions like:
-> > // t_bisect_dir_init()
-> > // t_worktree_init()
-> > // t_test_layout()
-> > // and include them in cmd_main
-> >
-> > int cmd_main(int argc, const char **argv)
-> > {
-> > if (!TEST(t_bisect_dir_init(), =E2=80=9Cbisect directory initialized=E2=
-=80=9D))
-> > test_skip_all(=E2=80=9CBisect initialization failed=E2=80=9D);
-> > if (!TEST(t_worktree_init(), =E2=80=9Cworktree initialized=E2=80=9D))
-> > test_skip_all(=E2=80=9CWorktree initialization failed=E2=80=9D);
-> > TEST(t_layout(), =E2=80=9Cnew laypout=E2=80=9D);
-> >
-> > return test_done();
-> > }
->
-> I don't think that the unit testing framework would be a good fit. The
-> intent of that new framework is mostly to test low-level functionality
-> that otherwise cannot be easily tested. But here it should actually be
-> quite easy to test things as part of our regular integration-style tests
-> in "t/t*.sh", so it would be preferable to write those instead.
->
-> > 4. Implement strategy for backward compatibility and related tests such=
- as:
-> >
-> > a. Check if Git correctly recognizes the old layout and in case
-> > correctly moves the files according to the new one.
-> >
-> >
-> > Timeline
-> > ------------
-> >
-> > May 1 - 26:
-> > Community bounding Period.
-> > Read Documentation.
-> > Write Backlog.
-> >
-> >
-> > May 27 - July 8:
-> > Implement a new layout for state files.
-> > Write tests.
-> >
-> > July 12 - August 19:
-> > Assess and implement backward compatibility.
-> >
-> > August 19 - Deadline :
-> > Write documentation for the project.
-> >
-> > I can dedicate 3 hours a day during weekdays, and 5 hours during the we=
-ekends.
-> >
-> >
-> > Benefits to the Community
-> > -------------------------------------
-> >
-> > How state files dedicated for git-bisect(1) are stored is not ideal.
-> > Having a single directory dedicated to these files, instead of having d=
-ifferent
-> > files spread in the Git directory during the bisecting session, is
-> > better and facilitates
-> > even the removal of them after bisecting.  Moreover, as noted by
-> > Phillip (https://lore.kernel.org/git/9c800cd5-8d20-4df7-8834-f74ab00069=
-5e@gmail.com/#t),
-> > by aligning the organization of these files to that used for am,
-> > rebase, cherry-pick, etc.,
-> > the repo will have a more coherent and uniform layout.
-> > This will enhance readability and maintainability in general.
-> >
-> > Karthik [1] also expressed  the need of such refactoring as a prerequis=
-ite
-> > to introduce new syntax checks for pseudoref in =E2=80=98is_pseudoref_s=
-yntax()=E2=80=99.
-> >
-> >
-> > [1] See Karthik=E2=80=99s commit: 1eba2240f8ba9f05a47d488bb62041c42c5d4=
-b9c
->
-> Nicely summarized.
->
-> >
-> > Biographical information
-> > ----------------------------------
-> >
-> > I=E2=80=99m a former student of Logic and Philosophy who turned to codi=
-ng
-> > after graduating.
-> > I have been working as a Developer for NTT Data Italia for a year.
-> > I hold a full-time job, but I've seen that it doesn't conflict with
-> > the rules of GSoC
-> > since I'm an open source beginner. I am fully capable of managing my
-> > workload independently,
-> > including my working hours. I know it is not ideal, but I can
-> > definitely work around
-> > my schedule and dedicate time to the project.
-> >
-> > Before, I have contributed small patches to two open source projects:
-> > - Pydata/Sparse: https://github.com/pydata/sparse/pull/611
-> > - Pennylane: https://github.com/PennyLaneAI/pennylane/pull/3959
->
-> Thanks for your proposal. Please make sure you submit it as a PDF file
-> to the GSoC website soonish, unless you already did that.
->
-> Patrick
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBXm8ACgkQVbJhu7ck
+PpThgg//ZcBdyKrjOqPJn5qyDpNTbRbbh+FJaiFZuTgzOxAYZ12lDmkrSmP2Es/5
+gL0rJ0VTb+f9lU+dDPhdkhz3F+voVFumXTjrKYGca4j/riQe+2PTtckPMag174fQ
+QZoCC3o/mEGyNgsL48ct00c8JFhQYOe+ZOsXHLnFlLJyz2gDexj1cfNhRIYwcRV3
+2fqsLLv6mWrIb3xaKRqLYPr5kytc8uf/QrsQAGy0CE4u9cTH1tp/TBymeXiJHIBo
+fC3X4RHSySOtHJNcwQhQ88OfdBQB94mIKhO179fkqZyYqststoFdbZVO2kZSrBdn
+fJOMFjD5i9WshxV1CrMNmHAe5oZG5Ok8b0b2IooQQaUCdlwoD1P5gp8OUZivK5KZ
+9S6c91I1STO2n/P76tyaPHejQ9bhYDPW7iZytWJSMia2563RoQ9r7Dz9EqVcomhx
+PLhoftDOe44qMdWF9Ish9i0XZp3G8nI4pKH4i/Do447WnPji3Xdxh2eImL7zsNzY
+dBjf+ZabFYKklAYR2Y5NIWL51nkStodylr0KAzvS0AHYj3jk5a44KM1yVjRrtD8T
+uxh0qGgQ7Z3PVVQmsvV1B2iPyZHHs3GO0tdOzA+fNTHjQMu0l8VhdS9Bak7xThtJ
+BYIqscaxUtg0jHWOCHSzDDt+JAa33oV1KUdNCt92cBFR0GLJNBc=
+=+zPD
+-----END PGP SIGNATURE-----
+
+--fC0/zy/FaQwHdCms--
