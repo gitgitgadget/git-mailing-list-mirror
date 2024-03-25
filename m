@@ -1,118 +1,106 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7444A13FF5
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 16:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4910F3FEC
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711385879; cv=none; b=OLXRqs30ubY2mRvMdHhZiRL6VtskMmb4cR0ua2C2Xx/+LEBG8JOYfatdz9LKCG9Mpa/rPLJQdx3Kk251a/WCCK7BkxUbzxfZZdaxlXWaf7CGmaAPs5qf3KeNvdiTqK4E4o0JDvwSETVAdd2QDkTJGJsQcHFeOVpqt3I3RhARHyo=
+	t=1711386376; cv=none; b=KCpR7NcNlLDFYRzltmEdT+PcmO4sCj0pL7rzfIOrm1/vg/ZJJqgXpGjmbEy2ESgge3vE1c8CJpoB/aDmS70DeiFhsZm6MBywJQj8nb3JGiJHHMEXpWJkB68qCJ2hQY3tVr8mpVXzyf1w6i4NMzkq/xgvajhOelA0qHjYCzKbYik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711385879; c=relaxed/simple;
-	bh=PMFRkKCWTYR8r+siyOCHU0w0kY/RgUoo6raqSs/fDYQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hn9eoV49zh2+McaxDqGJ290JWAJSG1UwQXVYrvAAhlfTNL1+V8ai0HAlmEke6WRjAdjQltOojDMWpQowFusJXGBdcUERV6A3B0vHOVhnnm0X1rqkaPfmYqGYaSKVphkZtMgQTy4wj5bd3N4EN47H14sxoQrOSTACyKw62eGkJeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L+aHV/D8; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711386376; c=relaxed/simple;
+	bh=BlGbV1nz5A1xFxr67JBLo1KPB0v75S8hkXkt69VS7vU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gyj6SE/trU+XeHzBvcmTctwKrHh+1CndFyXX8NZk6ZBKjm+g8LHfkaC70X+OgfzUQRPuyycS3UDpSBEVs1LiQf07ddYQkuem1dA7V2l+nJQxkYCOwEnlMq448PCvJXbaoPG/MK/dTdDXCV8ByYhx4JxWgy/55SGhhqduQWtkOZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yf0xPGO1; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+aHV/D8"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D8851E7316;
-	Mon, 25 Mar 2024 12:57:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=PMFRkKCWTYR8
-	r+siyOCHU0w0kY/RgUoo6raqSs/fDYQ=; b=L+aHV/D8PRHqztsK9BQV/AZq1n/r
-	lxK5aL8IxIFkkmbwtRmxdAjMlaRAuz+vaTAZGm+VU5GtbOLNoJTmrchoOT07J84N
-	UMDZZ0Xu83ia3ugiF3wFH+S2wRzq6HDuotOrdfPVGHWPe5OKD8G3JbCveiWLzBaT
-	qX4xTLij82gtWcA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 83BF01E7315;
-	Mon, 25 Mar 2024 12:57:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E02A91E7314;
-	Mon, 25 Mar 2024 12:57:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  ZheNing Hu <adlternative@gmail.com>,
-  Kristoffer Haugsbakk <code@khaugsbakk.name>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,  Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v3 0/2] Allow disabling advice shown after merge conflicts
-In-Reply-To: <e040c631-42d9-4501-a7b8-046f8dac6309@gmail.com> (Phillip Wood's
-	message of "Mon, 25 Mar 2024 10:48:12 +0000")
-References: <pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
-	<pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
-	<e040c631-42d9-4501-a7b8-046f8dac6309@gmail.com>
-Date: Mon, 25 Mar 2024 09:57:55 -0700
-Message-ID: <xmqqle66mep8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yf0xPGO1"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a470d7f77eeso581934166b.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:06:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1711386372; x=1711991172; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=08NOqBLykdBy1LoiwEuyF9HpU8AEDqL7VhCGqNH415Y=;
+        b=yf0xPGO1vUg+nKL0/HIadQiBVOkLyxDce6A8R6y2xRzQwmr68+5j8U5EMifLDZVneG
+         HrsQG3yPnlOehlLq9YaY6LHO1fl2JWMbRYmqz5zUlXKcZsYnGFaN33oXdcuv+Oio12UM
+         wt7ZqY1XrKDAq+6AMyxgF/V64fAWL6uaO8t+O7BQ6/8FBAF9cJfSDSsv1d/ACK1vUWY4
+         EO/n6He38x6Wb4kwPUpO3eW5DmIhWHMFSoJy7NfdBtOZ08Jfu2yXFuCwYHUEF5lq5B4y
+         AJJthmjDBz51Flx4SoNSVfZpz2NBG8rE+lMbZcbJnpQRamsyFmMA1ue2Q1f1RmLxK+vx
+         9mPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711386372; x=1711991172;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=08NOqBLykdBy1LoiwEuyF9HpU8AEDqL7VhCGqNH415Y=;
+        b=BiLdWrtwAjO454x3vsInC7h0IGBSTCSDYjkgA3eE+J2N6ASB4KDLqdXS+Xy8p0wTbK
+         Z1di5KgfdGqeRdUvmt4S8ajye+f6egIB7a9XCS/wu49/8rrpNhz2CHRegbWZuCXOxFxV
+         NqaodvUiXGluTA0EljNQHJD8A8N0AIDBBcJXQdDOIE1cM4CoikmLAlws+TG/J2A/ndCE
+         cqJmslSjpqjOYsuoTxxVySAT2jPKaHPxQPgQLLOlsFCtfTi+vxQyr3RmkM63sf3QefVJ
+         p+7K0OP8NL3i+CKsKYl7OU+dctzRCy8jnPT70o1hN23RH8bkm2zcJtBzmzGqOoqT4qKI
+         mPnQ==
+X-Gm-Message-State: AOJu0YwQ87udNpO2o/3TJCkR/1zZyyODMzHmjXpuI+yiMBC3c/phOdB7
+	nv6pKZir54SRdJpULYO7hMCIU25ZnrrU99ty8mqXZm8HCcHwbM9x6yuStQsuARCwELN/zzXA/6k
+	d5g1jTrRxsRFIsqFgnxJSJQ1zcHShf/SePztjBzVl0dME+O3CTQ==
+X-Google-Smtp-Source: AGHT+IGAwV/iie1YXgxbgBN2LuCA+DxqtdUYYClQ1gh5/O7w/5tngq9YHig48ViDS9BYupqg3Lxny+nQA4tisfihqlI=
+X-Received: by 2002:a17:907:9722:b0:a47:48b0:922e with SMTP id
+ jg34-20020a170907972200b00a4748b0922emr5685702ejc.23.1711386372325; Mon, 25
+ Mar 2024 10:06:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- D4307F00-EAC8-11EE-99D6-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <cover.1710840596.git.dirk@gouders.net> <cover.1711368498.git.dirk@gouders.net>
+In-Reply-To: <cover.1711368498.git.dirk@gouders.net>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 25 Mar 2024 10:05:55 -0700
+Message-ID: <CAO_smVgb4uWZQGv9bKUEL1AGC2DXBb8xL6KeYOkvHgMCXSAhow@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] Fixes for Documentation/MyFirstObjectWalk.txt
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> Hi Philippe
+On Mon, Mar 25, 2024 at 6:19=E2=80=AFAM Dirk Gouders <dirk@gouders.net> wro=
+te:
 >
-> On 16/03/2024 21:16, Philippe Blain via GitGitGadget wrote:
->> Changes since v2:
->>   * expanded the commit messages to explain why the tests for 'git
->> rebase' do
->>     not need to be adjusted
->>   * adjusted the wording of the new 'advice.mergeConflict' in the doc,=
- as
->>     suggested by Kristoffer for uniformity with his series which is al=
-ready
->>     merged to 'master' (b09a8839a4 (Merge branch
->>     'kh/branch-ref-syntax-advice', 2024-03-15)).
->>   * checked all new output manually and consequently adjusted the code=
- in 1/2
->>     to avoid a lonely 'hint: ' line.
->>   * adjusted the addition in advice.h in 1/2 to put the new enum
->>     alphabetically, as noticed by Rub=C3=A9n.
->>   * added misssing newlines in 2/2 as noticed by Phillip and tweaked b=
-y
->>     Junio.
->>   * rebased on master (2953d95d40 (The eighth batch, 2024-03-15)), to =
-avoid
->>     conflicts in 'Documentation/config/advice.txt' due to Kristoffer's=
- merged >     series
->> [...] Note that the code path where 'git rebase --apply' stops
->> because of
->> conflicts is not covered by the tests but I tested it manually using t=
-his
->> diff:
->> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
->> index 47534f1062..34eac2e6f4 100755
->> --- a/t/t5520-pull.sh
->> +++ b/t/t5520-pull.sh
->> @@ -374,7 +374,7 @@ test_pull_autostash_fail ()
->>       echo conflicting >>seq.txt &&
->>       test_tick &&
->>       git commit -m "Create conflict" seq.txt &&
->> -	test_must_fail git pull --rebase . seq 2>err >out &&
->> +	test_must_fail git -c rebase.backend=3Dapply pull --rebase . seq 2>e=
-rr >out &&
->>       test_grep "Resolve all conflicts manually" err
->>   '
+> The 3rd iteration for this series.
 >
-> Thanks for being so thorough, this version looks good to me
+> I tried to credit Kyle's suggestions for 4 and 5 with Helped-by tags and
+> hope it was adequate to do so.  Actually, at least #4 was a lot more
+> than a Helped-by, I would say...
+> ---
+> Changes in v3:
+> * Reword the description in [4/5]
+> * Add a missing slash in [5/5]
+>
+> Changes in v2:
+> * Added Emily to Cc in the hope for a review
+> * Remove superfluous tags from [1/5] and [3/5]
+> * Replace bashism `|&` by `2>&1 |` in [5/5]
+> ---
+> Dirk Gouders (5):
+>   MyFirstObjectWalk: use additional arg in config_fn_t
+>   MyFirstObjectWalk: fix misspelled "builtins/"
+>   MyFirstObjectWalk: fix filtered object walk
+>   MyFirstObjectWalk: fix description for counting omitted objects
+>   MyFirstObjectWalk: add stderr to pipe processing
+>
+>  Documentation/MyFirstObjectWalk.txt | 36 ++++++++++++++++-------------
+>  1 file changed, 20 insertions(+), 16 deletions(-)
+>
+> Range-diff against v2:
+> -:  ---------- > 1:  0eeb4b78ac MyFirstObjectWalk: use additional arg in =
+config_fn_t
+> -:  ---------- > 2:  3122ae2472 MyFirstObjectWalk: fix misspelled "builti=
+ns/"
+> -:  ---------- > 3:  f21348ab80 MyFirstObjectWalk: fix filtered object wa=
+lk
 
-Yup, these look good.  Let's mark the topic for 'next'.
-
-Thanks, both.
+Looks good, thanks again!
