@@ -1,79 +1,79 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F194C19F530
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C0819F538
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:10:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361448; cv=none; b=QzR+dGKSK31NL3V68jbM1jIg/+r5kJ9K/rTXbLShQYuTTKn6Up31ffRJzTmt0hV1Nb+/m5TO3Xd510G649opN0j3NrWLSQNT4I+iH2Cnqdlt5oZwdMJWLvCrVz2Xy4bjCoLxdP2/4r/7sh9SAjyB8MHNhIfP9YCxOU/EjuWQ+H4=
+	t=1711361460; cv=none; b=mibPwzVMUyniEgkpt1intmIFJGjKbV5e1DP5N1qFx0zDHftAJcGHgOrqV7AROKOKyY8hu3yysngq+CbPu4Ua7o6+OWW21Y5sNk5gC3k7KnJvHUdewzwkMecmu4ALDkE8l3mN7PfXH3qHgFzMUASU+pyZ0PLw0T/JLtDCtg/apjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361448; c=relaxed/simple;
-	bh=gE0TgUBdA/aO2A7jK1udRZ0JKND1yykEhVkywlYuh00=;
+	s=arc-20240116; t=1711361460; c=relaxed/simple;
+	bh=PEjsrV73JvhMQMhOVhibN59d6+pevE6cZPYTJOUnzSM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C3Zwk6Pt8rA1afUVTftlz+XSHXGTpliGsvMlZKaLfCbswJqQr2LpUYtQDQWNUHAriEx5lzoVqI2WeQsfj4bO6HmMgf5kc7H6Y67B+s5BBknRt87b4Ii7pAdGZU0xuP65KFliAT+jKnQ7SjyWKpQsL8YlaJguumgxXoW6o9lSdhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a3+yKoCg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2UVyzC2; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=TDQW1UQSLe1ILVkkWp6SEpelKYOXtVW7aSXCkv3bWm51sTgJbGtR18r6+se1RzUALnYXIMmsw0KkceFkvC64raFWNouHRjK81deUx151DgDcS+7GnGz/ydZ4kgavLcis4OkwUdggZcNeCe2XNuwpWoTiVSlolhyXrSkDYsqM+gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ANE/zHk5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=knDsNyp0; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a3+yKoCg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2UVyzC2"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id EC94D1380117;
-	Mon, 25 Mar 2024 06:10:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ANE/zHk5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="knDsNyp0"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 0F5551140105;
+	Mon, 25 Mar 2024 06:10:58 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 25 Mar 2024 06:10:45 -0400
+  by compute1.internal (MEProxy); Mon, 25 Mar 2024 06:10:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711361445; x=1711447845; bh=n4nglsMU3x
-	rxH5x4tWJOSSrK7hEXfnRVL5jZZfokunw=; b=a3+yKoCgY2xleW5nzvCOyi0QYK
-	cDacNjZe5S32STjBzAaVHsK0PSNszLJrRg52x+WZ/qhk3c9+Uy6fBktwE+3maS7O
-	Nunfu7kTWPVmWeEXYeHywK7UqA8mkbny85Fy7eSXeVnHRQ+OH99bjKfJfxPPvcj6
-	APuH2Il2t8JsXAFqVpHfqnuUcyOFrtI1uyxv6+xKEmUcZo4echqhUKkfsNuE2F/k
-	4K313Rv8UKLaOONL07uICXORppNQXj6kiunRuxUkUAI1SchVOr1oEDxJs+WlYyNL
-	HXe8A4jn4CzSmOUIIFJ9FUPdDQwz6UzYOkl+n6imdeqnJ9573p6LRUruC1KQ==
+	:subject:to:to; s=fm2; t=1711361458; x=1711447858; bh=pEnSqzHHki
+	KdCthL1J2g0Ppr/oeSo1rFTCQkuf1jsGc=; b=ANE/zHk59APer/s6307sI9j22H
+	3VR1DrhZomUxyCtN417MBhIbt3nvR3ADsfZKkkutQJaolywEH/nRU7J2fJKVoszq
+	2AgmbFdoBHPAge7DhrW8YL64aGJ3lf5QHe8VU4/wj0wL0bDa/8pRvjSPDt4Z+vjA
+	qG6HTRS9YQQi5JjjM6+7AoM+ENzIwXKUMx7mBmJbTDMrwC5mPTL9c1XprMbHzuMK
+	O9W3J3O+ZvyF8dWCrUfy6otr9VRB3fv1Qg8n6eXQxCaG3Rg5yXOis+rCdLi+naMZ
+	cLHvafCnhGDsBlVf0Ph3xe75IIlr1LBZsQcof52vW5BVU2YFTOyDsropCQ4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711361445; x=1711447845; bh=n4nglsMU3xrxH5x4tWJOSSrK7hEX
-	fnRVL5jZZfokunw=; b=Q2UVyzC227P6lj/VCLpqvD12rMAft54Ddh0QT3ITaly1
-	HGx3ZCNyntbFUX+7jk1De96toXeCkQFHjdq0oc6CYJW3mTAzyhfPilduiaQlcvmu
-	dke+j7wbNQr2PDO8BFsGU340hcuH1nwFy2QCDNy1b9sOlmM35hJ4KwzBT6W7wLsP
-	4zqPgfoTG6S/5Idda9jDgoMsgPCvJ8IfN0PSMoQjDmBjS61mg+Cv9c5amUZKEraQ
-	jaWyujbctB43yK6+wCzhlUCOKcwU1+j8r/s9gOpi+qrIWHZrDNzm9TMyNMEUOq6t
-	/RnmJJRYim75tRSjF7FvVJwOS0FiY5nAaptNKrxCsQ==
-X-ME-Sender: <xms:pU0BZrPyCeOAnW3eBpbql0noiAQz0pxExfl3OiDHKJw311rZZCItHg>
-    <xme:pU0BZl9EQ9qiNIHdwvaVhwhJLn0qyIaVBZ0FiAoC6AX1sQzCjeGeRkBjMEhcsdJ7k
-    35gCKBGMyL8v5ZbAg>
-X-ME-Received: <xmr:pU0BZqTOBb-ga79qQ6hEMlkSU9i4TMPQLf1gB2jJpwyM9S0AmPXfp8E4ZoLRtEqImrsrK8BRLgZu3W4hXnW1Zn2gcYq0Hgl21HkEIdqOg5MXNg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledguddvucetufdoteggodetrfdotf
+	fm2; t=1711361458; x=1711447858; bh=pEnSqzHHkiKdCthL1J2g0Ppr/oeS
+	o1rFTCQkuf1jsGc=; b=knDsNyp0gC0DGrBMjqh+tvUwV2dSTLOIlAhaMCcnyqxa
+	rOX63i9QMQXLxkmBd5XEQLlAHMUl/YFxzz+ZzctWcfVS6uSmAuq3A/0x1hRDxUW8
+	1x6/3FI6omZQvkuSyPNZun/ZR0Jo3GTPTyHsGjXsxRG8GfZAwthmyPIPMRNsdfIt
+	k0tYI/unnxuMh/QHF52K2SJKtN1SZAotH5pdcIrAEfjaKLY2yMxePtH2e831tA9k
+	OB5yx0H96KbwCIw/a6o0cBZKbR3pBOZgvmSt3YhuYKI2BFMF5NSFCBmuINo4Bbyb
+	lTAOxT2xa+inBfYCWt05PybY9PMUT7nEAA+zm2QUOw==
+X-ME-Sender: <xms:sU0BZhIu2U6biBeXynHnnP4O66DNhDbachSYmneHI1MdYKyxTPEO3w>
+    <xme:sU0BZtLlag5GbpmbZP5tve3dNiwZTy3br8UbdwCZnrbMQaw7T6z1bu9zAoqpPlSdX
+    sFT5QMxu2mfkDrTQw>
+X-ME-Received: <xmr:sU0BZpve9h7e9hTwFJS-w81U7E4nSHt3FssayAs-FG-vImJXlTAPVzIkszduaji6SEiGMMECbDujzWE4p5sQcY7b77p8Hqk5Z39_YQOwE-9hCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledgudduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:pU0BZvu_M4lfSjYNXaZEOHXSfWPwUK-xFdHj5ysXjuocw6HrRGFK2A>
-    <xmx:pU0BZjcELMv3aus-YEX5g0YZFTaxFXiD6dSG56kKAeGoqtLHZ2W-fw>
-    <xmx:pU0BZr3RISOLu7rQ3NA3VdlxNo6EDgtFvk5pHsEsowaPiqP29DDulQ>
-    <xmx:pU0BZv-srwq19fSEyHtBhf1ehKyBfvjVHB31Vg9mE7J2Ppdmv7nfAA>
-    <xmx:pU0BZv7RmSGGQqbofOyFurtvcJTY5QC0C7H5zqeH0EkCgxoVb8c26g>
+X-ME-Proxy: <xmx:sU0BZiZ24-C9gYI2o0W7Ntsoyv1jhTWaCIl5rwqdTnBBQP_uq8wFXw>
+    <xmx:sU0BZoY2SzhBO381-NnESEi4kz-vcd2mArRDjorDsUG_VXd91o8Rvg>
+    <xmx:sU0BZmA3cYMuXOp-DA74hn7BVXy-si-tWmV1PRYVQmzLG8tn_y5ynA>
+    <xmx:sU0BZmZlEm71J6Kk36pWFZhmVCRFleXEEqc1Z--UH9tr2ML1TSI_Vw>
+    <xmx:sk0BZgEphckvOZbrkhpnQMFbS5JmIdDcTQ-WARaYgFZY1T1hyxYM5A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Mar 2024 06:10:45 -0400 (EDT)
+ 25 Mar 2024 06:10:57 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 54ea4049 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Mar 2024 10:10:35 +0000 (UTC)
-Date: Mon, 25 Mar 2024 11:10:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c795c42e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Mar 2024 10:10:47 +0000 (UTC)
+Date: Mon, 25 Mar 2024 11:10:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 4/7] reftable/block: refactor binary search over restart
- points
-Message-ID: <5e20d93ae000359f2231bf950a930cfc4898ced2.1711361340.git.ps@pks.im>
+Subject: [PATCH v2 6/7] reftable/record: extract function to decode key
+ lengths
+Message-ID: <271bacb210837ca4984155cbbc90915e9f2331c0.1711361340.git.ps@pks.im>
 References: <cover.1711109214.git.ps@pks.im>
  <cover.1711361340.git.ps@pks.im>
 Precedence: bulk
@@ -83,204 +83,126 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="00gATv1vjKrA/mz4"
+	protocol="application/pgp-signature"; boundary="wGsiJzAw7lwiudRV"
 Content-Disposition: inline
 In-Reply-To: <cover.1711361340.git.ps@pks.im>
 
 
---00gATv1vjKrA/mz4
+--wGsiJzAw7lwiudRV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When seeking a record in our block reader we perform a binary search
-over the block's restart points so that we don't have to do a linear
-scan over the whole block. The logic to do so is quite intricate though,
-which makes it hard to understand.
+We're about to refactor the binary search over restart points so that it
+does not need to fully decode the record keys anymore. To do so we will
+need to decode the record key lengths, which is non-trivial logic.
 
-Improve documentation and rename some of the functions and variables so
-that the code becomes easier to understand overall. This refactoring
-should not result in any change in behaviour.
+Extract the logic to decode these lengths from `refatble_decode_key()`
+so that we can reuse it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/block.c | 97 ++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 70 insertions(+), 27 deletions(-)
+ reftable/record.c | 34 +++++++++++++++++++++++++---------
+ reftable/record.h |  6 ++++++
+ 2 files changed, 31 insertions(+), 9 deletions(-)
 
-diff --git a/reftable/block.c b/reftable/block.c
-index 422885bddb..6cd4c053df 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -273,34 +273,36 @@ void block_reader_start(struct block_reader *br, stru=
-ct block_iter *it)
- 	it->next_off =3D br->header_off + 4;
+diff --git a/reftable/record.c b/reftable/record.c
+index 23b497adab..5506f3e913 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -159,26 +159,42 @@ int reftable_encode_key(int *restart, struct string_v=
+iew dest,
+ 	return start.len - dest.len;
  }
 =20
--struct restart_find_args {
-+struct restart_needle_less_args {
- 	int error;
--	struct strbuf key;
--	struct block_reader *r;
-+	struct strbuf needle;
-+	struct block_reader *reader;
- };
-=20
--static int restart_key_less(size_t idx, void *args)
-+static int restart_needle_less(size_t idx, void *_args)
+-int reftable_decode_key(struct strbuf *last_key, uint8_t *extra,
+-			struct string_view in)
++int reftable_decode_keylen(struct string_view in,
++			   uint64_t *prefix_len,
++			   uint64_t *suffix_len,
++			   uint8_t *extra)
  {
--	struct restart_find_args *a =3D args;
--	uint32_t off =3D block_reader_restart_offset(a->r, idx);
-+	struct restart_needle_less_args *args =3D _args;
-+	uint32_t off =3D block_reader_restart_offset(args->reader, idx);
- 	struct string_view in =3D {
--		.buf =3D a->r->block.data + off,
--		.len =3D a->r->block_len - off,
-+		.buf =3D args->reader->block.data + off,
-+		.len =3D args->reader->block_len - off,
- 	};
--
--	/* the restart key is verbatim in the block, so this could avoid the
--	   alloc for decoding the key */
--	struct strbuf rkey =3D STRBUF_INIT;
-+	struct strbuf kth_restart_key =3D STRBUF_INIT;
- 	uint8_t unused_extra;
--	int n =3D reftable_decode_key(&rkey, &unused_extra, in);
--	int result;
-+	int result, n;
-+
-+	/*
-+	 * TODO: The restart key is verbatim in the block, so we can in theory
-+	 * avoid decoding the key and thus save some allocations.
-+	 */
-+	n =3D reftable_decode_key(&kth_restart_key, &unused_extra, in);
- 	if (n < 0) {
--		a->error =3D 1;
-+		args->error =3D 1;
+-	int start_len =3D in.len;
+-	uint64_t prefix_len =3D 0;
+-	uint64_t suffix_len =3D 0;
++	size_t start_len =3D in.len;
+ 	int n;
+=20
+-	n =3D get_var_int(&prefix_len, &in);
++	n =3D get_var_int(prefix_len, &in);
+ 	if (n < 0)
  		return -1;
- 	}
+ 	string_view_consume(&in, n);
 =20
--	result =3D strbuf_cmp(&a->key, &rkey);
--	strbuf_release(&rkey);
-+	result =3D strbuf_cmp(&args->needle, &kth_restart_key);
-+	strbuf_release(&kth_restart_key);
- 	return result < 0;
- }
+-	n =3D get_var_int(&suffix_len, &in);
++	n =3D get_var_int(suffix_len, &in);
+ 	if (n <=3D 0)
+ 		return -1;
+ 	string_view_consume(&in, n);
 =20
-@@ -376,9 +378,9 @@ void block_iter_close(struct block_iter *it)
- int block_reader_seek(struct block_reader *br, struct block_iter *it,
- 		      struct strbuf *want)
- {
--	struct restart_find_args args =3D {
--		.key =3D *want,
--		.r =3D br,
-+	struct restart_needle_less_args args =3D {
-+		.needle =3D *want,
-+		.reader =3D br,
- 	};
- 	struct block_iter next =3D BLOCK_ITER_INIT;
- 	struct reftable_record rec;
-@@ -390,7 +392,35 @@ int block_reader_seek(struct block_reader *br, struct =
-block_iter *it,
- 		goto done;
- 	}
-=20
--	i =3D binsearch(br->restart_count, &restart_key_less, &args);
-+	/*
-+	 * Perform a binary search over the block's restart points, which
-+	 * avoids doing a linear scan over the whole block. Like this, we
-+	 * identify the section of the block that should contain our key.
-+	 *
-+	 * Note that we explicitly search for the first restart point _greater_
-+	 * than the sought-after record, not _greater or equal_ to it. In case
-+	 * the sought-after record is located directly at the restart point we
-+	 * would otherwise start doing the linear search at the preceding
-+	 * restart point. While that works alright, we would end up scanning
-+	 * too many record.
-+	 */
-+	i =3D binsearch(br->restart_count, &restart_needle_less, &args);
+-	*extra =3D (uint8_t)(suffix_len & 0x7);
+-	suffix_len >>=3D 3;
++	*extra =3D (uint8_t)(*suffix_len & 0x7);
++	*suffix_len >>=3D 3;
 +
-+	/*
-+	 * Now there are multiple cases:
-+	 *
-+	 *   - `i =3D=3D 0`: The wanted record must be contained before the first
-+	 *     restart point. We will thus start searching for the record in
-+	 *     that section after accounting for the header offset.
-+	 *
-+	 *   - `i =3D=3D restart_count`: The wanted record was not found at any of
-+	 *     the restart points. As there is no restart point at the end of
-+	 *     the section the record may thus be contained in the last block.
-+	 *
-+	 *   - `i > 0`: The wanted record must be contained in the section
-+	 *     before the found restart point. We thus do a linear search
-+	 *     starting from the preceding restart point.
-+	 */
- 	if (i > 0)
- 		it->next_off =3D block_reader_restart_offset(br, i - 1);
- 	else
-@@ -399,21 +429,34 @@ int block_reader_seek(struct block_reader *br, struct=
- block_iter *it,
-=20
- 	reftable_record_init(&rec, block_reader_type(br));
-=20
--	/* We're looking for the last entry less/equal than the wanted key, so
--	   we have to go one entry too far and then back up.
--	*/
-+	/*
-+	 * We're looking for the last entry less than the wanted key so that
-+	 * the next call to `block_reader_next()` would yield the wanted
-+	 * record. We thus don't want to position our reader at the sought
-+	 * after record, but one before. To do so, we have to go one entry too
-+	 * far and then back up.
-+	 */
- 	while (1) {
- 		block_iter_copy_from(&next, it);
- 		err =3D block_iter_next(&next, &rec);
- 		if (err < 0)
- 			goto done;
--
--		reftable_record_key(&rec, &it->last_key);
--		if (err > 0 || strbuf_cmp(&it->last_key, want) >=3D 0) {
-+		if (err > 0) {
- 			err =3D 0;
- 			goto done;
- 		}
-=20
-+		/*
-+		 * Check whether the current key is greater or equal to the
-+		 * sought-after key. In case it is greater we know that the
-+		 * record does not exist in the block and can thus abort early.
-+		 * In case it is equal to the sought-after key we have found
-+		 * the desired record.
-+		 */
-+		reftable_record_key(&rec, &it->last_key);
-+		if (strbuf_cmp(&it->last_key, want) >=3D 0)
-+			goto done;
++	return start_len - in.len;
++}
 +
- 		block_iter_copy_from(it, &next);
- 	}
++int reftable_decode_key(struct strbuf *last_key, uint8_t *extra,
++			struct string_view in)
++{
++	int start_len =3D in.len;
++	uint64_t prefix_len =3D 0;
++	uint64_t suffix_len =3D 0;
++	int n;
++
++	n =3D reftable_decode_keylen(in, &prefix_len, &suffix_len, extra);
++	if (n < 0)
++		return -1;
++	string_view_consume(&in, n);
 =20
+ 	if (in.len < suffix_len ||
+ 	    prefix_len > last_key->len)
+diff --git a/reftable/record.h b/reftable/record.h
+index 826ee1c55c..d778133e6e 100644
+--- a/reftable/record.h
++++ b/reftable/record.h
+@@ -86,6 +86,12 @@ int reftable_encode_key(int *is_restart, struct string_v=
+iew dest,
+ 			struct strbuf prev_key, struct strbuf key,
+ 			uint8_t extra);
+=20
++/* Decode a record's key lengths. */
++int reftable_decode_keylen(struct string_view in,
++			   uint64_t *prefix_len,
++			   uint64_t *suffix_len,
++			   uint8_t *extra);
++
+ /*
+  * Decode into `last_key` and `extra` from `in`. `last_key` is expected to
+  * contain the decoded key of the preceding record, if any.
 --=20
 2.44.GIT
 
 
---00gATv1vjKrA/mz4
+--wGsiJzAw7lwiudRV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBTaEACgkQVbJhu7ck
-PpQGJw/+J48rSe27NmzMV9oG47JGTfZgf0PyEj4z1x8ISwSViXUJRWqZNhkD96jK
-H/KKXcaQSKfF1asPpZkowJl5Gri7g9AnWWSWXMC4l03pZPr4Yy617ALjeDAV77Ja
-30iaC2ANPcMvicVgL1QmcoJDqpoK1U/VyvPnrL+pYW37xRBQyf09QatsNEIB5shk
-OQlr2RrO8Ikls+qh/e/JEFL22u8Rmedl87z+Z9RgrFAdZ7cx8+15ZpuFQTs0itG0
-CH1NiXVOyyOIl4TVzNdHLA6TIxQSRdtHMkDYhAi/4l1UuRn05dFGJuAjEVqhwVAS
-CLFbJakq4VUsRXU2lKU+K7jHdfx+zhpbHWrBxx8GVt7XABwYa568txFZvCRc/ICk
-DRzHadIDwnC5hDZ51onruA8qWjW7C27W//P8D1aaBklB45XHLxSkUNl4PjMRWkL+
-IOuVS+wDQu6POxt+B4pblB0zsCkGs9OFAYy084SDRfEXdchJpwyx7keAd03JNX6I
-k5UqsfaSupME/tD0dfR+iUmq7TfLCQiXqAWkQlCIZNHW2Ae5GEF6ug0JV0HZIEIG
-9hXwnTd00244rzzir/6Cbb1dBeklrGT6bN3sW3yFPom9ZqR4LkgrIBBAH0b4GHoG
-7lUv2xK/RmzNrhBfsZZ2xxvoi2WEBl0nl+M3faGJ5mDOJXvYuwQ=
-=dKNG
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBTa4ACgkQVbJhu7ck
+PpS3vg/9F8/xjZ3hhoVHLOl8MCjzvknFicpa6vSFmtMzzTzM5E2w5jhFv+ichBzn
+OJRAbRWYZvmT0uw1Ot1ya9qxNQpW3wud0kXELIWDGHSltldb/CGMRtmDnIaHw/5l
+0UCcKyGX4Gr/+hj5wuZJEi2sS7UMDq2lVxPSyTIja8ZZv3SXS+b33xEYlO8kw/xZ
+9pB8Oyv7za0Zgdn4foIHIGPHeKMPKdFj1AD6ngFs7XdcqnNnCHREFwvoMnFB6/O9
+QK4P8DQyNcTf5g1TrlZ5mnl8Egwhyp7FdfiImJLSJdPW8VjpzfTvdcLx7yztfV8K
+00bndAiQ6pR7FgPuGL2cn1gZUO57r0I4NLzBwSQZv2mCaHGCdQsG9Q0LZMGEeJfm
+OrYP+KEJJvqFMyULiAzlMZ6XTICQT/URQKZbhLmTqVUKHY0CS8KBJ8ynzQ9r8s4R
+HcVQRCSrkSfYx0ec0l5sTTBkUhOE+GH42VimHKfrVvgcCbfY9RjU/ng4t+/02hip
+VqDCbZTcVl8qZiluRAxu4BVWbjE8wlBORo0DmdDGPRWFybSoRYkEetb7rd/1RVsw
+9yhowgQvlGN48XZ3r2lUw30M8pDQdOT4HUrYMUYGMkK85GXhRX/uC1ZkzdVeQbgY
+HD6vDLHE/EAlD4IFpcDbODhRB7AQWR0wGzZdNAWcbFRb7Z4MGTk=
+=KPXb
 -----END PGP SIGNATURE-----
 
---00gATv1vjKrA/mz4--
+--wGsiJzAw7lwiudRV--
