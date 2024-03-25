@@ -1,164 +1,132 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175B8153579
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 06:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ABD130A4C
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 06:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711347302; cv=none; b=Ljad7PRDdwc6iTvj3xiHQ6hmU/LLVhnH9tGC5mazJL1vxFYT0n3CE2KzNO6X2keG1ps32WEGbYVnwC+iASSM2HwAUQzXJj0J5bU0mgcIKSQfwglE9/9ciKXS4PIUKbcp7Tdtp+YGqtYnlatnFCK+j73LP6rPP3+Z+UoeUBm5eaQ=
+	t=1711348930; cv=none; b=ReOkHjGxq3zX1LEqlUjErZTfU4LOzCi3VBIGhnga69RXCaTc7Fl9tNkeR218I1nshCnoCcNNgFb8Ff2EhhhMAqfBnaqTJFUT2zctE8vJwj0KvTcXvuguzIkfdE3YWx9YddeqltCkMlyVK5zmnaL+Vzs2CMq/S7TkJqlij2HlA/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711347302; c=relaxed/simple;
-	bh=CAq+Wbp9t4HGu7QeW8BSncneiYzVzoZVFQBHVqvolt8=;
+	s=arc-20240116; t=1711348930; c=relaxed/simple;
+	bh=lIpdmaAwcqUuzX4ATVIgwr09YMODj4sO40r8CLzcLvc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tFzj4Xs2/Xi9GnvYISqem1GvLwUyh2G+tDohalR1bckY7bgzSBvq8FKOckXbGFthEjXBBVo2ZBgPQNnTComxKE5bKsA2SIQlhylM2CnsCyEFfTQic4g0uvsU4TJJqpF51JaDy1vo3aYCNWzBSEwdytRGVl/pocBRVidomK0XVXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 10926 invoked by uid 109); 25 Mar 2024 06:14:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Mar 2024 06:14:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 845 invoked by uid 111); 25 Mar 2024 06:14:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Mar 2024 02:14:57 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 25 Mar 2024 02:14:52 -0400
-From: Jeff King <peff@peff.net>
-To: Brian Lyles <brianmlyles@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=m04VhGhHNn5yTCTncBpMSGjnmX2U3r/gjNq8FS+H0+uXOu8FrMu7quSpsz6dLymWJrwCUqP3ysisj9eYMbixTlprZM09z9c4+WDFogcj5hOrgbRlu4oke/sXFfKV+hIpj3ImJ3UUX7jw/CYe2fPbkbKnEOvTUGhp5H9TY08vomc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l1YqRzgU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=llYSnfP0; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l1YqRzgU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="llYSnfP0"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id A3AEE11400A3;
+	Mon, 25 Mar 2024 02:42:06 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Mon, 25 Mar 2024 02:42:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711348926; x=1711435326; bh=3qrLHAc9IH
+	OJdH/lBoyPtEsn7VwzeG+wUg9JJQ8yE7I=; b=l1YqRzgUETRr0r12IT8c/mFLBE
+	jasbMt73dQUlhA2rSyCvrI0wJNryP6OWND/BkGOkcI9eLbm7kYo4yejnSj7NgJuc
+	xae81rXSWTgmBFnDRQRCNbHW3TiIWaMLXwC2tVMkC++agrUzn3DTDVEXlT7jnSD7
+	JRlP8SFntm8KiQPRHHwhZRHgfS02AWwiWoorCkAAD/UBtMoywHpq/IfFmNjGqdv8
+	Po3RFr8cEuNdDW68N/tIJRm2G+4O+fiv3nmWMtJ2a89/0YO4BhmVMvnXqxZiLocu
+	O4Q314ux1ysVLGrg4L/aqyeEw5rvTsWG5rX0guTC96QrkyD+dQHmOTe//+Lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711348926; x=1711435326; bh=3qrLHAc9IHOJdH/lBoyPtEsn7Vwz
+	eG+wUg9JJQ8yE7I=; b=llYSnfP0Di1FdcKWAGZxxydWpWFlMmP6c8PQw7xipAFi
+	KwEhFLeIVXRY5ofav12r6+OEbSBWMynXGQ3HUfbPdfL2ZfIwa4Y+09KW0XKSakGT
+	f5lm/ohZLArzx1JDTIZxLikBNROPj2yJiwheR+ihIPfEVmGb5keKSMKTfm5twLkd
+	exi5ZwCVtbLC46sRpTiqMrTReGhlem772FwKqJZ+ELvlBnPpS6o/TXAwvDG03H+a
+	78pnvcTE6Bbi+J0J49n0y5a2qpCGsZ6bylSQGCpyapgGmkbhIwiG1P7Ac3b8ZKDa
+	VKg5ZCmA4A2QQj7jUvh8LYpy9Z8rQnH3+Rx8G9dmlQ==
+X-ME-Sender: <xms:vhwBZo0Jt-nDcI8LD3hA-hoZFcc14c5BHDz9XLudBTrDN9zi0u_UkQ>
+    <xme:vhwBZjHbdVEv9UHneNW3Be_-rqoc7E-QOYYo2HrUBbZQ6U5IDy5b2hPk2RuUqLSSM
+    cEDNX5jRIUTO_uAng>
+X-ME-Received: <xmr:vhwBZg6yqBh3rsvArCFROKYABIGEw-4Vwu98l8AmKj5LmcuXmHzNSrXnYqUiU_Ftz_uEHJiwNYsClrECE7Zvw6QGZY6txpANKsy0whp-YPuztA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtkedguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepieekjeekveefveefgeeuffehjeegfe
+    ehtefgveehjeeuteffueelleeftdfgjeetnecuffhomhgrihhnpehpkhhsrdhimhdpkhgv
+    rhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:vhwBZh3Ql50I0X-WkW3Lu6EXD224Oo1nRLy7wTnvwIbyTzb9jnwCfg>
+    <xmx:vhwBZrFunbsEmWV-PWHSAheBMGAYu-g2Ul9Zi49KE_0pJZWe51f-qA>
+    <xmx:vhwBZq_DjV0MWQ3pRcIRqOMgokdDpGnMy_28_GixPFICLassw4jTtg>
+    <xmx:vhwBZgkdHc1--pD6Qz14mYCyLbnqewuJXZ9Oqf93Y9YbuF5g0oKuDA>
+    <xmx:vhwBZjBQw_qdWMa-izHOGAIgre-6Yg-xXiPswpN8CSSw3RJOWpVspw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Mar 2024 02:42:05 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 727099a8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Mar 2024 06:41:53 +0000 (UTC)
+Date: Mon, 25 Mar 2024 07:42:00 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] pretty: find pretty formats case-insensitively
-Message-ID: <20240325061452.GA242093@coredump.intra.peff.net>
-References: <20240324214316.917513-1-brianmlyles@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2024, #07; Fri, 22)
+Message-ID: <ZgEcuDJfPoN-MYy5@tanuki>
+References: <xmqqedc1zs1p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QKwkDZ7LNYKgUeP4"
 Content-Disposition: inline
-In-Reply-To: <20240324214316.917513-1-brianmlyles@gmail.com>
+In-Reply-To: <xmqqedc1zs1p.fsf@gitster.g>
 
-On Sun, Mar 24, 2024 at 04:43:09PM -0500, Brian Lyles wrote:
 
-> User-defined pretty formats are stored in config, which is meant to use
-> case-insensitive matching for names as noted in config.txt's 'Syntax'
-> section:
-> 
->     All the other lines [...] are recognized as setting variables, in
->     the form 'name = value' [...]. The variable names are
->     case-insensitive, [...].
-> 
-> When a user specifies one of their format aliases with an uppercase in
-> it, however, it is not found.
-> 
->     $ git config pretty.testAlias %h
->     $ git config --list | grep pretty
->     pretty.testalias=%h
->     $ git log --format=testAlias -1
->     fatal: invalid --pretty format: testAlias
->     $ git log --format=testalias -1
->     3c2a3fdc38
+--QKwkDZ7LNYKgUeP4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I agree that case-insensitive matching makes more sense here due
-to the nature of config keys, especially given this:
+On Fri, Mar 22, 2024 at 05:54:26PM -0700, Junio C Hamano wrote:
+> * ps/clone-with-includeif-onbranch (2024-03-12) 1 commit
+>  - t5601: exercise clones with "includeIf.*.onbranch"
+>=20
+>  An additional test to demonstrate something I am not sure what.
+>=20
+>  Waiting for a review response.
+>  cf. <xmqqo7bjjid9.fsf@gitster.g>
+>  source: <0bede59a53862585c49bc635f82e44e983144a7f.1710246859.git.ps@pks.=
+im>
 
-> This is true whether the name in the config file uses any uppercase
-> characters or not.
+Based on [1] I think this topic can move forward now, right? Or is the
+intent to wait for another review response here?
 
-I.e., the config code is going to normalize the variable names already,
-so we must match (even if the user consistently specifies camelCase).
+Patrick
 
-But...
+[1]: https://lore.kernel.org/git/xmqq34sj583m.fsf@gitster.g/
 
->  static struct cmt_fmt_map *find_commit_format(const char *sought)
->  {
-> +	struct cmt_fmt_map *result;
-> +	char *sought_lower;
-> +
->  	if (!commit_formats)
->  		setup_commit_formats();
->  
-> -	return find_commit_format_recursive(sought, sought, 0);
-> +	/*
-> +	 * The sought name will be compared to config names that have already
-> +	 * been normalized to lowercase.
-> +	 */
-> +	sought_lower = xstrdup_tolower(sought);
-> +	result = find_commit_format_recursive(sought_lower, sought_lower, 0);
-> +	free(sought_lower);
-> +	return result;
->  }
+--QKwkDZ7LNYKgUeP4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The mention of "recursive" in the function we call made me what wonder
-if we'd need more normalization. And I think we do. Try this
-modification to your test:
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 321e305979..be549b1d4b 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -61,8 +61,9 @@ test_expect_success 'alias user-defined format' '
- 
- test_expect_success 'alias user-defined format is matched case-insensitively' '
- 	git log --pretty="format:%h" >expected &&
--	git config pretty.testalias "format:%h" &&
--	git log --pretty=testAlias >actual &&
-+	git config pretty.testone "format:%h" &&
-+	git config pretty.testtwo testOne &&
-+	git log --pretty=testTwo >actual &&
- 	test_cmp expected actual
- '
- 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBHLMACgkQVbJhu7ck
+PpSs0g//W75bzJnkW0+jboX8gt5Z3JjQynmg37oq7gSlg77nNyWKcozCBJJ9CuAL
+ofP1fmoJ/T427y5p/1Aptbnkli8Xu+xqqaVn1BT4fNcr2RofBnRto3O9FIsb6dew
+lMDCd8na+HUI0Zby3WvN0Egx7tl3+VpQCAd8vjgghFgYBQE6maew9I95plMt14Lk
+eT1Re5VtgJf1ZC8UM2d3bzzB64/ZrY2fHocm+xaSgcZK+ZceGQ0cNr3DF9xHCeyh
+4ebxJaIZSUe8ooCpWZoHjqisxJtIN4IvDRvDANTJbV2EcOHnvQNuM2d7j2xgcX2h
+Ghpx82cB8rc2dg5stesu8e5s3QEA/gla2aKkRcWQCHXvO2eeZHtYcIf3nEjl2u+R
+EP8rRiNQmAIFvGQQ0GgTBX4JA/dWVME6mY0tj1+SJIWSTd3xJ6uq3O/FDnpOn6Yk
+OTpIxIxvBPZZu1d+ExNYk8mGeOOz9wJnYHUH63OAue7JMRy1v2WpJTFMvVkm08yF
+Xzf6yVeXk+sok17Vz8qVYu0F4oASxMdZhsrBEspKYEYg+W4/yI5K07/1LlpGgLwX
+DkOcGPgFgvaNbhV76/PaL6dCQ9x6v34M07KVt/Y7YE4ljGF+PBdXEvNlfZkq88e0
+v6NneQ7PcW4XjAhY0d0j4A3tq2bQQvJnazkFmLz1vFycPFpdlag=
+=dXbc
+-----END PGP SIGNATURE-----
 
-which fails because looking up "testOne" in the recursion won't work. So
-I think we'd want to simply match case-insensitively inside the
-function, like:
-
-diff --git a/pretty.c b/pretty.c
-index 50825c9d25..10f71ee004 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -147,7 +147,7 @@ static struct cmt_fmt_map *find_commit_format_recursive(const char *sought,
- 	for (i = 0; i < commit_formats_len; i++) {
- 		size_t match_len;
- 
--		if (!starts_with(commit_formats[i].name, sought))
-+		if (!istarts_with(commit_formats[i].name, sought))
- 			continue;
- 
- 		match_len = strlen(commit_formats[i].name);
-
-And then you would not even need to normalize it in
-find_commit_format().
-
-> +test_expect_success 'alias user-defined format is matched case-insensitively' '
-> +	git log --pretty="format:%h" >expected &&
-> +	git config pretty.testalias "format:%h" &&
-> +	git log --pretty=testAlias >actual &&
-> +	test_cmp expected actual
-> +'
-
-Modern style would be to use "test_config" here (or just "git -c"), but
-I see the surrounding tests are too old to do so. So I'd be OK with
-matching them (but cleaning up all of the surrounding ones would be
-nice, too).
-
--Peff
-
-PS The matching rules in find_commit_format_recursive() seem weird
-   to me. We do a prefix match, and then return the entry whose name is
-   the shortest? And break ties based on which came first? So:
-
-     git -c pretty.abcd=format:one \
-         -c pretty.abc=format:two \
-         -c pretty.abd=format:three \
-	 log -1 --format=ab
-
-   quietly chooses "two". I guess the "shortest wins" is meant to allow
-   "foo" to be chosen over "foobar" if you specify the whole name. But
-   the fact that we don't flag an ambiguity between "abc" and "abd"
-   seems strange.
-
-   That is all orthogonal to your patch, of course, but just a
-   head-scratcher I noticed while looking at the code.
+--QKwkDZ7LNYKgUeP4--
