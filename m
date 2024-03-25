@@ -1,146 +1,157 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692A0823DB
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 23:15:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF245D724
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 23:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711408560; cv=none; b=BmsWgm1iBMRYc8eQwSPcliCh9xNtWCZuXNM4TL/VYWGRMvJYsxojcYLbaDEwAmWWDZkhZ90AXAOJmNglfyFR+Bn4tq3q71Ty9rvgkoU8c0o609WzeXxWMjbmw2wM/zw9WWdGDKuUTJhEaEmdhvPyjsPLuO31ZGT8WzKe+5v7V24=
+	t=1711408582; cv=none; b=I1OUB4Yuf60s7mIxbBY6koGq5zHZlycEV8WyUFXAds6orgwMLNNAXQE10Eit9RQ1/4VPyUe4ivgZjs9Hby/DqZRAxZHQ11QmVGcLwngnOOdPu4r5RwwAJQ7bOmJuH17mnoA+G+SXKGiq+rrWZ7RzJlUIZeRQmrgrdLjaM+EE6II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711408560; c=relaxed/simple;
-	bh=SC/XM7p1veQrPznIoCbzYxSRGbGCtnKwjwyeGKGslHk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m3OXG+PmCY+zE/yw18mkAGfsN3AQRJ7pq6r8OzHZOxtoGhIffxn70PHbTEcZFC0fg7yciFSwhUaWjQNUYYyflMi8CuOnH7U6MG9q8TZ01ob/TfUF81qiRvRtpys0/NP1X2tQlz+dYo6bqNkJbYnMWLDSK6CfIg0IApl6W1MjXP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VDQ4wPi4; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1711408582; c=relaxed/simple;
+	bh=htn1lOJAjaE0GTL7ddCzNvA1WJqEnk393qATSCFeCcY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EL/ncgVFHZmPgpxhg6gidFq9CHa+I7eMhX1Pv6WsoogipZKIlFNUhFTHWNPts93yssxoOnrvRvf0I8i2MvLWiGGbgA+lzQF3XuH3rI+dieQ+0Sx2IFOHduhmnH6bQC1cwgKw/A8V00WarCNAKH8n+SvjKTGJb8li0DxpK5tmRaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyFdy/TK; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VDQ4wPi4"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4148c743ae3so3632535e9.1
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 16:15:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyFdy/TK"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34100f4f9a2so2920647f8f.2
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 16:16:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711408556; x=1712013356; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ehb+a+uWt7Omk8zuido7RVAeTYXA+Vzr4FzJETM8Sbg=;
-        b=VDQ4wPi4av5Ch7lkkrNRt2sFhvxgivnlNEKTZNIi2l3cC0aYMN7Sh3M4k1b1Hi308C
-         qTwR4z+VFamDb1kWcqgEdyWHHucalMm80tXQtokGHiFwpneeEcIYGu0zXEkYBaVn1uSI
-         5wEI/0wLbBPt1pZBu4o1uoN+E6Ba+Ek9BAu/UTPW3ocolXmVYIApJBZEFKX5QuwUH9up
-         BdGgFKjRFNhSc/qWkG7T6a42o25LdIGGfkV6Tp5ApAgcvMddRqcqyDpwSkL8WV2bNU0e
-         wfxxORcZ9Wp6vLTsvjvcWyTXBHrCryGax+H005Z5R+UidpOU8W5nt06DizkqjvvRjqH+
-         JXfg==
+        d=gmail.com; s=20230601; t=1711408579; x=1712013379; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LYzXgsXjPe5qr7YG8HhogJUWjTsRhiwuthRrZIfsbL4=;
+        b=lyFdy/TKr99j+jZ89v8CS5e7wl/2zzknL3upO32fuILG7jvZ2V9Sa/tA1WAhwokl4I
+         a98ENkX5l0hSV2LtRzDnGTVDNWlufuh23rkSM0GR/8yAGeAY0comlyhakUYZo+RwdcER
+         hGhPkO95KYlRmeJdiWYdEh8JVVtWpRJTgLjHm6Dfa5e7dhXMTWxX/iSM0WQTUva5Fd6w
+         2/QOHMD9j8Kexv8YIOc76UWBrgkQ/3wuLZZZz9lyS/a1PGzzxNTt87oxWpQNja0h9E9k
+         jbBuTJIjTzFABVOwReP/bwwulezvuKtsFT7tN4sfJX4eTspZPGV29kSyMI/UsOUR7yjc
+         RFCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711408556; x=1712013356;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ehb+a+uWt7Omk8zuido7RVAeTYXA+Vzr4FzJETM8Sbg=;
-        b=UC9giKiyvngpYUZ5yf+sdJpd4VE0Bxrndb/8sk7LH6hHf8DSp5c9xssANHKCPSeU+7
-         wZ5tOVi40Vcj9B3S/lsn2OhKSrLCbpNH8M+HYXqPDl5UdIx4SJoPbJMnCQTbfq5kw4lK
-         2W2Jag91BStVP8qsYrfoESEkqmUxsZTOYjaumaVCPK0E8jT/l6xEfhkYDk4ft2a3weQ1
-         jfsBbgQI61bqhui8WLTmgF4vjcbtpSWfYY5aUquX94+jxj0H9vJiykgYrAtwoLbWWPZp
-         ASKTuP3K6UqoiVEzvLWcI+jMLBf9Y354qqt4CBA86a/pkqw62Gk+BwOMkqoD0BzOqRxM
-         CySw==
-X-Gm-Message-State: AOJu0YyxWssM1yKJme6itc9ItDCXAjoUJdImw/s0Z+/agcW/l9MFVnfT
-	qtFPNhvKRiFkv1nuogRUDdJc/mVu7GzhkjmNAfWV2VhHpHx0Uq2aHrqhxXxs
-X-Google-Smtp-Source: AGHT+IHs38YK8zWnnWxi0gIggQy02DyohZZjxGcu6sFKkdQIr+vTEgLYMhrJ+V+MvcuC+U9mbp7lcA==
-X-Received: by 2002:a05:600c:3b98:b0:414:5e9b:804b with SMTP id n24-20020a05600c3b9800b004145e9b804bmr6435182wms.10.1711408556261;
-        Mon, 25 Mar 2024 16:15:56 -0700 (PDT)
-Received: from gmail.com (70.red-88-14-202.dynamicip.rima-tde.net. [88.14.202.70])
-        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b0041330d49604sm9776832wmq.45.2024.03.25.16.15.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 16:15:55 -0700 (PDT)
-Message-ID: <8dc0218b-914d-4a12-8136-45c6d62162a6@gmail.com>
-Date: Tue, 26 Mar 2024 00:15:51 +0100
+        d=1e100.net; s=20230601; t=1711408579; x=1712013379;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LYzXgsXjPe5qr7YG8HhogJUWjTsRhiwuthRrZIfsbL4=;
+        b=VFPA7qrYWu0kfONtWcyD/BA0NtT6mvpjy38i87lk0qKneKP2Z5IgruYuMl48HY2eVH
+         gP23kYFy3wE+JznWwlCeEeoA1AIBXqJrr6Lo6Mgx7NVnqbBDzHEu/Wfd3oxGNx8hLArq
+         hNOsH4rtt00YWwIRD0rWikwWSycExv2Skbq5m8E40fJGLAb41wP79QwuW2HCjV2XAIZ+
+         CRi07Wy7hJYm7n8cJWHGQWWxVwCVWF2XrdyD1YUpEWc8B4q/4VDcDLJqPQLKQJpvAl8U
+         /+IyDszztDAMrLOOv6iL8/IzGfFOJ/9zoeew2+Uy9ao1fJmSk5uQIcwmduLgP8IuT/E4
+         ykzg==
+X-Gm-Message-State: AOJu0Yw+JtN2oB0oqZ+9TLMhokromLh8FsiSZM1FXot2mtpoFN2x6P7g
+	fi6EhMw+YZOQ0Bu+eife5v9HihUZwhJkaHMC30gTopYXpob+lyH9
+X-Google-Smtp-Source: AGHT+IH/9qiiIA/BDfpvWCEYwiqj5m0iwMYo4ombbRwLZDzXXoouAQXMcW2X9h4zGnE7xOIIZ7DmEg==
+X-Received: by 2002:adf:e247:0:b0:33e:281c:8f42 with SMTP id bl7-20020adfe247000000b0033e281c8f42mr4725570wrb.70.1711408578787;
+        Mon, 25 Mar 2024 16:16:18 -0700 (PDT)
+Received: from localhost.localdomain ([31.124.44.211])
+        by smtp.gmail.com with ESMTPSA id r17-20020adff711000000b0033b6e26f0f9sm10601559wrp.42.2024.03.25.16.16.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 16:16:18 -0700 (PDT)
+From: M Hickford <mirth.hickford@gmail.com>
+To: sandals@crustytoothpaste.net
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	mirth.hickford@gmail.com,
+	mjcheetham@outlook.com
+Subject: Re: [PATCH 06/13] docs: indicate new credential protocol fields
+Date: Mon, 25 Mar 2024 23:16:09 +0000
+Message-ID: <20240325231609.284-1-mirth.hickford@gmail.com>
+X-Mailer: git-send-email 2.44.0.windows.1
+In-Reply-To: <20240324011301.1553072-7-sandals@crustytoothpaste.net>
+References: <20240324011301.1553072-7-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] add-patch: introduce 'p' in interactive-patch
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
- <fa64a975-40e4-40f2-bdcf-fd2da4fc506e@gmail.com> <xmqqcyrigfft.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqcyrigfft.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 25, 2024 at 02:38:30PM -0700, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > Shortly we're going make interactive-patch stop printing automatically
-> > the hunk under certain circumstances.
-> >
-> > Let's introduce a new option to allow the user to explicitly request
-> > the printing.
-> 
-> That is good, but ...
-> 
-> > Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> > ---
-> >  add-patch.c                |  4 ++++
-> >  t/t3701-add-interactive.sh | 22 +++++++++++-----------
-> >  2 files changed, 15 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/add-patch.c b/add-patch.c
-> > index 68f525b35c..52be1ddb15 100644
-> > --- a/add-patch.c
-> > +++ b/add-patch.c
-> > @@ -1388,6 +1388,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
-> >     "/ - search for a hunk matching the given regex\n"
-> >     "s - split the current hunk into smaller hunks\n"
-> >     "e - manually edit the current hunk\n"
-> > +   "p - print again the current hunk\n"
-> >     "? - print help\n");
-> >  
-> >  static int patch_update_file(struct add_p_state *s,
-> > @@ -1480,6 +1481,7 @@ static int patch_update_file(struct add_p_state *s,
-> >  				permitted |= ALLOW_EDIT;
-> >  				strbuf_addstr(&s->buf, ",e");
-> >  			}
-> > +			strbuf_addstr(&s->buf, ",p");
-> >  		}
-> >  		if (file_diff->deleted)
-> >  			prompt_mode_type = PROMPT_DELETION;
-> > @@ -1658,6 +1660,8 @@ static int patch_update_file(struct add_p_state *s,
-> >  				hunk->use = USE_HUNK;
-> >  				goto soft_increment;
-> >  			}
-> > +		} else if (s->answer.buf[0] == 'p') {
-> > +			/* nothing to do */
-> 
-> This is not good.  If we are taking a new input, why doesn't the
-> code already respond to it?  "Showing it again" should be a separate
-> feature even if some other codepaths still do show when [2/2] would
-> prevent them to show, no?
-
-Doing nothing here produces, in the current implementation, the intended
-printing.  Maybe the message needs to state so?
-
-> Also, in addition to the changes to the patch to unbreak it, we'd
-> need to update the git-add(1) manual page, especially its section on
-> the interactive mode.  I think a single-line addition should suffice,
-> but it has to be there, added by the same patch as the one that
-> starts accepting 'p' and acting on that input.
-
-Oh, of course.  I think this is the line needed:
-
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 14a371fff3..90b47927b2 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -348,6 +348,7 @@ patch::
-        K - leave this hunk undecided, see previous hunk
-        s - split the current hunk into smaller hunks
-        e - manually edit the current hunk
-+       p - print again the current hunk
-        ? - print help
- +
- After deciding the fate for all hunks, if there is any hunk
+> Tell users that they can continue to use a username and password even if=
+=0D
+> the new capability is supported.=0D
+> =0D
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>=0D
+> ---=0D
+>  Documentation/git-credential.txt | 34 +++++++++++++++++++++++++++++++-=0D
+>  1 file changed, 33 insertions(+), 1 deletion(-)=0D
+> =0D
+> diff --git a/Documentation/git-credential.txt b/Documentation/git-credent=
+ial.txt=0D
+> index 918a0aa42b..f3ed3a82fa 100644=0D
+> --- a/Documentation/git-credential.txt=0D
+> +++ b/Documentation/git-credential.txt=0D
+> @@ -178,6 +178,24 @@ empty string.=0D
+>  Components which are missing from the URL (e.g., there is no=0D
+>  username in the example above) will be left unset.=0D
+>  =0D
+> +`authtype`::=0D
+> +	This indicates that the authentication scheme in question should be use=
+d.=0D
+> +	Common values for HTTP and HTTPS include `basic`, `digest`, and `ntlm`,=
+=0D
+> +	although the latter two are insecure and should not be used.  If `crede=
+ntial`=0D
+> +	is used, this may be set to an arbitrary string suitable for the protoc=
+ol in=0D
+> +	question (usually HTTP).=0D
+=0D
+How about adding 'bearer' to this list? Popular hosts Bitbucket https://bit=
+bucket.org and Gitea/Forgejo (such as https://codeberg.org) support Bearer =
+auth with OAuth tokens.=0D
+=0D
+> ++=0D
+> +This value should not be sent unless the appropriate capability (see bel=
+ow) is=0D
+> +provided on input.=0D
+> +=0D
+> +`credential`::=0D
+> +	The pre-encoded credential, suitable for the protocol in question (usua=
+lly=0D
+> +	HTTP).  If this key is sent, `authtype` is mandatory, and `username` an=
+d=0D
+> +	`password` are not used.=0D
+=0D
+A credential protocol attribute named 'credential' is confusing. How about =
+'authorization' since it determines the HTTP Authorization header? This det=
+ail is surely worth mentioning too.=0D
+=0D
+> ++=0D
+> +This value should not be sent unless the appropriate capability (see bel=
+ow) is=0D
+> +provided on input.=0D
+> +=0D
+>  `wwwauth[]`::=0D
+>  =0D
+>  	When an HTTP response is received by Git that includes one or more=0D
+> @@ -189,7 +207,21 @@ attribute 'wwwauth[]', where the order of the attrib=
+utes is the same as=0D
+>  they appear in the HTTP response. This attribute is 'one-way' from Git=0D
+>  to pass additional information to credential helpers.=0D
+>  =0D
+> -Unrecognised attributes are silently discarded.=0D
+> +`capability[]`::=0D
+> +	This signals that the caller supports the capability in question.=0D
+>=0D
+>=0D
+> =0D
+> +	This can be used to provide better, more specific data as part of the=0D
+> +	protocol.=0D
+> ++=0D
+> +The only capability currently supported is `authtype`, which indicates t=
+hat the=0D
+> +`authtype` and `credential` values are understood.  It is not obligatory=
+ to use=0D
+> +these values in such a case, but they should not be provided without thi=
+s=0D
+> +capability.=0D
+>=0D
+> ++=0D
+> +Callers of `git credential` and credential helpers should emit the=0D
+> +capabilities they support unconditionally, and Git will gracefully=0D
+> +handle passing them on.=0D
+> +> +Unrecognised attributes and capabilities are silently discarded.=0D
