@@ -1,177 +1,193 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DC2157A5C
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE472199EA7
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361001; cv=none; b=ARlYSFRhp4MHdmOl4VuMKYjsJyE1MZJNKKkd2HpIbNRCLuukyF8MG9YFUH9hlsNSMQnZiy4F5yV+gNzAqWEhEJ96lA7zc5nMcgBQrQFdSyKcZn+9YvPosDdyJS3YxDzHAXCeeRKX/pxSwlI7DspV9vNNoMzFHwx8aMoMmh8g+CI=
+	t=1711361195; cv=none; b=IRTYxcdAPgOUM4erFFoyuQlBxZZOUn3wrVsQFkvCAA4OcQhfajXKk8Xk84ygEHYu4qTX4VbmvFmLKyaIfn3f2fg5bzNuGTzDCOarWHyDNtoQ487txz8eEugDcuNQu40bj44D7d19n9ook+34mQ8eTEXhgTuO7dN0yoOtub+vuXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361001; c=relaxed/simple;
-	bh=pGC5JOMMsDDm9NrEPuDh4xYSlLvvdRT7azYwwaXS46Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DIG40JHc1Q2yS2Qnm/INME/yve7eGtdrRCwijTYwQlEA2UyWkK20WuZpbCFXXzuy1UTZTV5LIUC7rFioE5YK75qGsRye4nUUiL7Z/L1ma/JKc2/kiW5zmTlsfB7Iy2MsNubSnUE6q7Ri4lpBlZoX0fanNCT+3G0ScwoKDAQFDwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S0S8um1z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xtOulHBq; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1711361195; c=relaxed/simple;
+	bh=2LC7wLbTOBmz0LsfMwLzI2PyQg7FJTB3LgCJ/KNUvTA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YRKN2NJfBZ2DKo+6hjN199b1XU5E1qHvTbT7eAGA83cIx+sBIWlazWktxRaQTGYAnLub54Uc+wQQKGaYB1BzKXC2eFbRDnJSTw0zTqz32dtwGLVVJAWn4oy+GnPHVukWsa6Z7nObb/82VVgDAv0Njf4KJP106uqW+rxlMx7zdYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T6Do0d21; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S0S8um1z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xtOulHBq"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EAC4411400B2;
-	Mon, 25 Mar 2024 06:03:18 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 25 Mar 2024 06:03:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711360998; x=1711447398; bh=BpxXWxcMvb
-	Tp852bBm+Wfny8qNXppmKMMorTPRhfikQ=; b=S0S8um1z3MFg/7Zfxkz9HCQQ6C
-	yu97GPcA4euOaf1izCtV9qRj6CRJG/pt6cw0m6gGUYC7Ni5SzVPRWLnPtJbz+8tv
-	J7mwFkdkxZ37v6hummEZ8iIwbAYKdT8WxEG/QCP3m48Rm4jDPZqP7JLWpmgvnGJX
-	tLjLcX948CFbOLB4mm5ieiJ1v7vlnqoFhsnecmh4+XVhgAigKi0xTvOINy1ss0VS
-	6Pq0uSOzKQVQBeCG0OuXnuK5KGULvdgaZS7RuRuBhC/CRL5Y8GeAdE5ZOX5h06Z4
-	rv911iDjNqLCVdMhkANfrOdGoLA96MVzkAqNuTILfYJKtFRL7j6kn/SFG+sg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711360998; x=1711447398; bh=BpxXWxcMvbTp852bBm+Wfny8qNXp
-	pmKMMorTPRhfikQ=; b=xtOulHBqMEGj7HoHWvuntZ3ZBYFTt3DLQVsu4haG9ylK
-	xpmUDn4KG9D0ma70HMGl/Y4/vDs/Xt5gfYxF1MCCcskptHYFcw9/7uwjDv3fxrzZ
-	bl5q08By+s8WGGWWiLqmiyn18cE2bqqRXcBVuVLFZfzP1rmQKGgASaZA8c4Zmi29
-	soL6a0ShwsT+GEllY/G0jLFf4EBYOJsgG9sB0uuF4tJm0WJAZK7Vb/wQgL9Adqyo
-	86DnBMcHbQzmwt5HwoRmE55Xp3Q3uJKpAksrAvaq9+ZD/VQF+UkIae+AdiTZ9CXB
-	JA6Z14F10knut4FL+pNTp2xzL58qrJtlyQbFFPSkCA==
-X-ME-Sender: <xms:5ksBZpkYZDYuScNUW1DD2DLdihEDDbGjOOmNmkYR3fJcNIHXfd1eTA>
-    <xme:5ksBZk0LurlIyXToqXIszXb88kj7Nsgo6_PU2XcS0R-HpHIY_Wd5pf8CyO5PuQ9Nk
-    jpFvZwBT6IOUA4SnQ>
-X-ME-Received: <xmr:5ksBZvpVumJVLB7br2wiAvRtQb-mds8lAR8zyp1Zj7ynZj7MIPvC30C18ynZUzN1NEpAlCUOdjcfeGW5f57ZAIU_uODWB-nonuff3rSlDrrdOg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtledguddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:5ksBZpmj8MWEhjO8IDa2aqnJQwrwnEcQ391lEYi8myvy_dogVU3-WA>
-    <xmx:5ksBZn3iwDXD9traMShWqsVNqSlACi3qov8CMsua3ifO4YB2Jd4byw>
-    <xmx:5ksBZotZv-DMeaE_hfIOQgcEkDhRzc7Te8mo7_NQW6QYwkNP25JC_w>
-    <xmx:5ksBZrWTrSTnOuWQK78G94aJShIddVzPVCxm_yxofC0c3eF4pipzlg>
-    <xmx:5ksBZiQEOKIfYiuDjILueUko73wUw5mrMWH3wuPrviMtBGwzijhwIw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Mar 2024 06:03:17 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a2e2de95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Mar 2024 10:03:07 +0000 (UTC)
-Date: Mon, 25 Mar 2024 11:03:15 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 10/15] builtin/pack-refs: release allocated memory
-Message-ID: <23c6c20e4ee62bea22bb35c86baad0119985f426.1711360631.git.ps@pks.im>
-References: <cover.1710706118.git.ps@pks.im>
- <cover.1711360631.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T6Do0d21"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d68cf90ec4so71032131fa.1
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 03:06:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711361191; x=1711965991; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=X5QFvJ0Vunr8NczBnC8j7ueP2Dmmd1AMjtxoyYRR2mI=;
+        b=T6Do0d21dqEnvimFrfT8Frap8Rf8nkMeSFa/IZsu4EXRfIC39FOy6XGdA97FxNJicU
+         lFauDA6MQt1hxrBDbECjNvjzTgptesGTnQHMIA1t2ya711eCYUMCiGW2sVSB5bX8Zwcl
+         YhcC732aquib3RVQ5C+LbQ9Lcl34nUdoV6t9yCXzoCTXWqodpigzYoTSiYWldxHx41u1
+         bPmpLfjvbfHFiuJqKbjSAoLJfswi3JPG5WRaEaOv3iubQAE8UMz+vkqTc7gvdFNq6V5+
+         NeEKxm4Wa8enjVXIVjptOJNpwQVn0Q76vl8nMQOYGkxFC9E6g4XkGbmSqvhiah5JbiSE
+         MG0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711361191; x=1711965991;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X5QFvJ0Vunr8NczBnC8j7ueP2Dmmd1AMjtxoyYRR2mI=;
+        b=G39tKpuSr/dhD+bWUvX+NiRufkmcKEeu3LuhfEhz69jqZdZE+IBZS2NN5yvzcAk/Y/
+         gaQ84nLbEbzyeWsUUxVYZdkWgMITubfIEHASutydcyDI/29Xi2tRmp4x3YTePdJPNg2q
+         89VAKtM4HBApqPOV8ur0d9f3sIn8kI/EaVbyty+aGpNaO87j0W8Vk8z0bpDwfGTrq3U8
+         JEBbUApXkSsPoa0T6jhaDXdcrn1O+oy/ljjcKGn2U5D6WAPJTLpuUL8CHSKzd/1xVLnS
+         Z8lsnUFl9kC2/b4/5u9ilQg/4jVQP1EanY3/GMToMyjtVc//NfcgdeF9Sr6ai1JMrcgZ
+         uvMQ==
+X-Gm-Message-State: AOJu0Yxg+KxOSQMMY0M04qG75TSNIf+dNm7uqpOB0yMjkeZIiz82MHFL
+	cnz56GOHpYwzY5DRk64rQ6opQpC//zekzVvoiJvTP+61wxXAkt75Z609cnZM
+X-Google-Smtp-Source: AGHT+IH1Ovrvu0GLYKLsJ8oWlN1NqkQVOILN08BqAyL6e7LFJeqo7FhvCKrqjA6Ziae3UCogUpWfGw==
+X-Received: by 2002:a2e:8090:0:b0:2d4:8e2f:e3d6 with SMTP id i16-20020a2e8090000000b002d48e2fe3d6mr4053382ljg.10.1711361190794;
+        Mon, 25 Mar 2024 03:06:30 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443? ([2a0a:ef40:6a5:fd01:2d60:4cd4:e8ec:b443])
+        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b004147ec48845sm7897103wmo.26.2024.03.25.03.06.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 03:06:30 -0700 (PDT)
+Message-ID: <03513931-7070-4430-bfae-aa039f73d74b@gmail.com>
+Date: Mon, 25 Mar 2024 10:06:29 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9CicF3ngk5gTxz8x"
-Content-Disposition: inline
-In-Reply-To: <cover.1711360631.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/6] maintenance: use packaged systemd units
+Content-Language: en-US
+To: Max Gautier <mg@max.gautier.name>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+ Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <20240322221327.12204-1-mg@max.gautier.name>
+ <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com> <ZgE2pFt-pXurYnKU@framework>
+In-Reply-To: <ZgE2pFt-pXurYnKU@framework>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Max
 
---9CicF3ngk5gTxz8x
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 25/03/2024 08:32, Max Gautier wrote:
+> On Sun, Mar 24, 2024 at 02:54:58PM +0000, Phillip Wood wrote:
+>> Hi Max
+>>
+>> On 22/03/2024 22:11, Max Gautier wrote:
+>>> * Distribute the systemd timers used by the `git maintenance start` with
+>>>     the systemd scheduler as part of git, rather than writing them in
+>>>     $XDG_CONFIG_HOME.
+>>>
+>>> This allows users to override the units if they wish, and is more
+>>> in-line with the usual practices of distribution for systemd units.
+>>
+>> Thanks for suggesting this, I think this is a useful change, but the
+>> implementation could be improved.
+>>
+>>> We also move away from using the random minute, and instead rely on
+>>> systemd features to achieve the same goal (see patch 2). This allows us
+>>> to go back to using unit templating for the timers. This is also a
+>>> prerequisite to have static unit files.
+>>>
+>>> Note that even if we really need more specific OnCalendar= settings for
+>>> each timer, we should still do it that way, but instead distribute
+>>> override alongside the template, for instance for weekly:
+>>>
+>>> /usr/lib/systemd-user/git-maintenance@daily.timer.d/override.conf:
+>>> [Timer]
+>>> OnCalendar=<daily specific calendar spec>
+>>
+>> We should definitely do that. Using systemd's random delay does not prevent
+>> the different maintenance jobs from running concurrently as one job may be
+>> started before a previous job has finished. It is important to only have one
+>> job running at a time because the first thing "git maintenance run" does is
+>> to try and acquire a lock file so if the hourly job is running when the
+>> daily jobs tries to start the daily job will not be run.
+> 
+> Thinking about that, it occurs to me that the current scheme does not
+> prevent concurrent execution either: the timers all use Persistent=true,
+> which means they can fire concurrently on machine boot, if two or more
+> would have been triggered during the time the machine was powered off
+> (or just the user logged out, since it's a user unit).
 
-Some of the command line options in `cmd_pack_refs()` require us to
-allocate memory. This memory is never released and thus leaking, but we
-paper over this leak by declaring the respective variables as `static`
-function-level variables, which is somewhat awkward.
+Interesting, I wonder if the other schedulers suffer from the same problem.
 
-Refactor the code to release the allocated memory and drop the `static`
-declaration. While at it, remove the useless `flags` variable.
+> So maybe there should be a more robust mechanism to avoid concurrent
+> execution ? I assume from what you say above the lock is acquired in a
+> non-blocking way. Could going to a blocking one be a solution ?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/pack-refs.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+It is possible to wait on a lock file but I'd be worried about building 
+up an endless queue of processes if the process holding the lock file 
+crashed leaving it in place without anyway to automatically remove it.
 
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index 97921beef2..ea2baeec76 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -13,15 +13,17 @@ static char const * const pack_refs_usage[] =3D {
-=20
- int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- {
--	unsigned int flags =3D PACK_REFS_PRUNE;
--	static struct ref_exclusions excludes =3D REF_EXCLUSIONS_INIT;
--	static struct string_list included_refs =3D STRING_LIST_INIT_NODUP;
--	struct pack_refs_opts pack_refs_opts =3D { .exclusions =3D &excludes,
--						 .includes =3D &included_refs,
--						 .flags =3D flags };
--	static struct string_list option_excluded_refs =3D STRING_LIST_INIT_NODUP;
-+	struct ref_exclusions excludes =3D REF_EXCLUSIONS_INIT;
-+	struct string_list included_refs =3D STRING_LIST_INIT_NODUP;
-+	struct pack_refs_opts pack_refs_opts =3D {
-+		.exclusions =3D &excludes,
-+		.includes =3D &included_refs,
-+		.flags =3D PACK_REFS_PRUNE,
-+	};
-+	struct string_list option_excluded_refs =3D STRING_LIST_INIT_NODUP;
- 	struct string_list_item *item;
- 	int pack_all =3D 0;
-+	int ret;
-=20
- 	struct option opts[] =3D {
- 		OPT_BOOL(0, "all",   &pack_all, N_("pack everything")),
-@@ -45,5 +47,10 @@ int cmd_pack_refs(int argc, const char **argv, const cha=
-r *prefix)
- 	if (!pack_refs_opts.includes->nr)
- 		string_list_append(pack_refs_opts.includes, "refs/tags/*");
-=20
--	return refs_pack_refs(get_main_ref_store(the_repository), &pack_refs_opts=
-);
-+	ret =3D refs_pack_refs(get_main_ref_store(the_repository), &pack_refs_opt=
-s);
-+
-+	clear_ref_exclusions(&excludes);
-+	string_list_clear(&included_refs, 0);
-+	string_list_clear(&option_excluded_refs, 0);
-+	return ret;
- }
---=20
-2.44.GIT
+I don't think we need to solve that problem as part of this patch series 
+but we should take care not to make it worse. Long term we may be better 
+scheduling a single job and have "git maintenance run" decide which jobs 
+to run based on the last time it run, rather than trying to schedule 
+different jobs with the os scheduler.
 
+>> As the daily job is
+>> a superset of the hourly job and the weekly job is a superset of the daily
+>> job so it does not make sense to run more than one job per hour.
+> 
+> Is that set in stone, or could they perform disjoint set of tasks
+> instead ?
 
---9CicF3ngk5gTxz8x
-Content-Type: application/pgp-signature; name="signature.asc"
+All of the schedulers are set up to run a single job each hour, I don't 
+see why we'd start running disjoint sets of tasks in the different jobs.
 
------BEGIN PGP SIGNATURE-----
+>>> The cleanup code for the units written in $XDG_CONFIG_HOME is adapted,
+>>> and takes care of not removing legitimate user overrides, by checking
+>>> the file start.
+>>
+>> This points to an alternate strategy for supporting user overrides - don't
+>> overwrite the unit files if the user has edited them. I think that there is
+>> still a benefit to moving to system wide unit files though as it means that
+>> if we improve the unit files in the future systemd will pick up these
+>> improvements automatically. That is an improvement over the status quo where
+>> the users' unit files are written once and never updated.
+>>
+>> I think it would help to reorder the changes in this series as follows:
+>>
+>> 1 - simplify the invocation of "systemctl --user"
+>>    This would be the current patch 3 without adding "--force" or
+>>    moving "--now" combined with the relevant test changes from patch 6.
+>>    This would make it clear that those changes are a simple clean up that
+>>    is independent of the other changes made in this series.
+>>
+>> 2 - don't delete user edited unit files
+>>    This would be based on the current patch 4 and would show that we can
+>>    avoid deleting unit files that the user has edited without the other
+>>    changes in this series. This change should have an associated test.
+>>
+>> 3 - start using systemd's random delay function
+>>    This would be the current patch 1 without the template changes and the
+>>    commit message should explain that it is in preparation for disturbing
+>>    system-wide unit files.
+>>
+>> 4 - install system-wide systemd unit files
+>>    This would be based on the current patch 2 with the addition of
+>>    overrides to prevent more than one job running per hour. The unit
+>>    files should be installed under $XDG_DATA_HOME when $(prefix) starts
+>>    with $(HOME), not just when they are equal. The associated test
+>>    changes from patch 6 should be moved here as well as the "--force"
+>>    change from patch 3.
+>>
+>> 5 - documentation updates
+>>    I'm on the fence about having these in a separate commit like the
+>>    current patch 5 or updating the documentation when the code is
+>>    changed.
+> 
+> I had started cooking v3, I'll take into account, thanks !
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBS+IACgkQVbJhu7ck
-PpRJGhAAi4bRgt1Xfas1asmuWTP1dWT2WEDxbuYjRmR7rykHwOR40RAk5eD8wRCx
-PRH8JZ582l7OOHJCX5FgPts2Uspl2/238oSWGBEqRpr2LkJWKac+0wFwwss355Uu
-uVGQaTyabIwNYTjsH0THcGxd/DxgLExg5U7bGbjelSQEvDPu6kCr6BLqaTs6yEhB
-+aQQ1F3WNGOMT62MykvkOh5qrepOj7NPJkL+Hn8qZpE60SaVY/u8GG3Z59F0nW+R
-UGtuEw0tLRd3sCZoyTeyizdmY7ZJnKeLG5Z3pXl6wBP6eNe0IUItFBMkMHfRierE
-k7c1Pu/wH++lgTRlOMvGygRBW4/kMQFa8OhW4icb6Ozpgzk0uWFoSkNEipXIx8Rv
-AnuusYL14sbNAPQHyFZGh/crzrDxWYa5dHkKFrmKJc4M7YqlitOH9+wyebCjtduT
-xVOik5mSM1wDktgsRK6JwJEPeXM/KrBNzITR16mH79O5N8EBx4yldLKwRTO90izv
-vSsP7HkfMgRkqb5T5GjnzDzfmeVjSP2itK1awW2vCjaTTQwviVbXZTlshIUT2Iak
-K2Pno2IK5JBWRJg//u+f/7kMOA8AX/EeYajTrcvH7gSsep2Fil3UzM+50R/5Pb8b
-rVIcQk7wNYgmnHJU8suV2HKLKfcZ6Jnu1YSDicxZ63tbqgVgACs=
-=M+wb
------END PGP SIGNATURE-----
+Thanks
 
---9CicF3ngk5gTxz8x--
+Phillip
