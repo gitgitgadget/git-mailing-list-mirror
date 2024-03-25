@@ -1,167 +1,137 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECDC17EB6C
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 07:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A40175805
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 07:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711350517; cv=none; b=LvFn5X6+ocYRSuTs5Ax0hOsROuPBRqKXuvVd2HPoq3sTgoLqkTRaECT7PcM3FEc4Dos8gn+t3ep+2xmY+Sbl0VRVw/vgLyg1C9Ow7W2RqZpPsDQJp8jqAAEaGQhSotj3pQrUOr1FfjBLeuXF/Z9+zQdpyQDmomlq7vYlb8yBLHo=
+	t=1711351679; cv=none; b=JzxVVikJ2N+uB4FXlIuxz8Wp0c4DJcHtTiO5PZJjxBs6TNjMohELn+J0TJAvrhK8gBztV1CVz4fKAbrhKVVGRKgF8L+H2pE+yJQLuMRoxOakODkEMvflETWJhDGYddivypZlvM5DNTdrd709ikRQSYTX5Y1rx3qay0KdywM4egU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711350517; c=relaxed/simple;
-	bh=hxAgvJnabppe2xpNuPgEe+GwifC1hnvBCdh9Vk3TXUU=;
-	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
-	 Content-Type; b=hv5/vYJfHGTdwX3dIgv+Czj/7cCrcMd/9K2dANd8HCEldD9etT3ljoC/NEU65RW+tV7UHuZbXaiy+Ydy9N7c/13JWvbU3qx3nqDFfY/5frdu8cRvio//U6LHRS/ic+Z+Jvh6K0Dr6duu8iw/oAqKb3U2mXKoOYwu9sRwIPhdCpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H27XXUpV; arc=none smtp.client-ip=209.85.161.47
+	s=arc-20240116; t=1711351679; c=relaxed/simple;
+	bh=ZZCHq9w+IsggVD4wc0xxB2UPjtGfXg7oH0UK4PF0GFw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OwAy5K1i2UqgBVIL4D+tUieTNGlGWZqbwx/HlWBaoCSJznM0iodyE9pIs3hu6XOs/CEGpStRk010knKciNK7pQ5QF+aI6L1ntti0lgxicD8iW0WQLcbN1sCN9C7+Upb0v0h7dWeg50/EkSgVmPMZlqEQgpxYSV74oeZR1pxR87Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cb85H7rC; arc=none smtp.client-ip=209.85.161.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H27XXUpV"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5a529a1f69aso997930eaf.3
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 00:08:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cb85H7rC"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5a5272035d3so1221534eaf.1
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 00:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711350513; x=1711955313; darn=vger.kernel.org;
-        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CODmWcs+A0O9Z/iggTI/Hwd3YTX9wUguetOHyDefAao=;
-        b=H27XXUpV7bwQIDObgRmkd96DHQU8j9tSnGyevmEV4bzvo/attaguHyNB7Fmz/zoNVB
-         HocA/hnbF5PhcpzQA/AyHCxxGlp4O5nYJiC2kgde32ICP8ykuaTS5hhmYSiMiI5KSv4m
-         d/jKQxiWlPN3YebL8ICe409j65IGsKskFYE5sivK35u8nqwJoKRcMuZdf3GNN1UB7OTK
-         Nf56CofjgHBwV9CRnBPJ/HFsu0MN/rj/xTOpZIXmQPuMKtRE3yp03Tqz9j+d/9ri7Hm6
-         dHw4tBhi46F1Jm4Pg+NkLfK2uMjYS5ZCv4Ies5rC1leLf/gNXK8IQY851v5VDCOpvrug
-         2R6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711350513; x=1711955313;
-        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
-         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1711351676; x=1711956476; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CODmWcs+A0O9Z/iggTI/Hwd3YTX9wUguetOHyDefAao=;
-        b=OejxO9HwgvrL/YmgXkU4hb6gQYeVlQyM7S36pPGy+mhXYeltN6PVQB/zVPlAbg7y8f
-         VFeMTgT8KVxZgLLPa2O2KMLz1vi45h8N307OYNjZNy0vKDRlO1jThbkro3RPhmvWqVRw
-         JzKn0nWdune0Fz/AOzkVazisf/FPvskuvW4MHu8ovyyHCDoDM/4cHvgCnPzwt9qhG4oP
-         R+lheEZfaFCc81UW+UCUlwkQC6Tsp3Nh00osBeQHyw/sjY9dtTVJhoe+i0t7bEwWETig
-         M9zEJ3iaNAZldRQ8dJ+8XkyyC4llIaJhq1d4sfMabpQ1JSo763kgfNFoNnzE2OSafotz
-         zt4g==
-X-Gm-Message-State: AOJu0Yyf+VnAuif2mc7CFJIoBObjzvduSVJTZKm4A/g27gYFcf66nqL6
-	8Oah8YGtMAOql4WgFepdlh4H/QCljo315/rALUQaJAgskDRAF8ARBf4KM07u
-X-Google-Smtp-Source: AGHT+IHaUHmKYnnH3/kn9d9kNoRbn0SQdRfj+Kpa6ODpUnoyuGVWOcmvMMiIwpHj9IV39BEw8SBKPA==
-X-Received: by 2002:a05:6820:2111:b0:5a5:639a:2fa0 with SMTP id cd17-20020a056820211100b005a5639a2fa0mr82416oob.0.1711350513406;
-        Mon, 25 Mar 2024 00:08:33 -0700 (PDT)
-Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
-        by smtp.gmail.com with ESMTPSA id cr10-20020a056820250a00b005a0fc5a89dfsm1341426oob.5.2024.03.25.00.08.32
+        bh=6Tqe2uQqG2MIouSSJJ+8vd83uD9Pmi+y5CPySSpmUh0=;
+        b=cb85H7rC9D8DntQJ96zxiCAkd+1E5GaQMw0VQhFBDIO080/CW3by07GhS16NjAr3yg
+         mG5QPZ46naU+e/ytciFq66gesJURrhsx4fJqH8olHjbixd1kwEn8x3kcbkhIwydCKhn/
+         loqjS0gkcLUYaJKEUSmUnhsrc2OxyDIs9UMbKMyeGZ6bFGaTXNni+hYHP5ZuETRDpVTm
+         0cIXVQ4ME6Qvn/yxn3dD9rTfJeTvQLmc3l2cvDYYodjRkZHU8/l0QW/rCrKq3LcxKkJd
+         pyk+dc3ZNjdebqF4uvjmLw7seGdIN2amRZV7GzUEdB2aY8/XfXE0GYqLwRiuXY+puikX
+         RIMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711351676; x=1711956476;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6Tqe2uQqG2MIouSSJJ+8vd83uD9Pmi+y5CPySSpmUh0=;
+        b=N6t8a0IJj3gU7/PtRXzTow22wtveYQNta4LRast+1KHKqcXe8zNiXFoZI5yaUHD7d9
+         r0q6E4KC3HrvBgMBHhAC39cee5JOJk/oxv/7uvXKaF3PVC8GWhAtV0P0qP1QIowlmio5
+         kzewXWG2psb5uJ+PKb/bBrDQ8pjl5MpbuXESCQwaxWm62SDEdkvkvLP4bSz1jCziSy24
+         j3cqthdiBS8GxbjgciiBwwbxz6cCyi0aZuQJN6204xZEPuMDz19QQN+Rg6LmG+LsdO6p
+         5JaxJWjVF3ucN1bsNSNfO/OyrR1SNLs9Nx+07qieUEvUYtz+jI5ct4ggiH4nBmdfdM7q
+         cCcQ==
+X-Gm-Message-State: AOJu0YwyuE3BhS+WHFCnin/zBYZpzP5KALhPaNQtG6KBEdFQtdaM2SU3
+	B1yh1vquEd65gj7X/32uiijnUofyzkZdG3H33bAjsYTB4sXCthnjAlEFhGh+
+X-Google-Smtp-Source: AGHT+IETfhDqpgbN+zB3ZX18RLedNwkbBOQWIeioBnD+5xy+l7+/Is4Vxvk/cz/TVsYXqXwzN/8S4g==
+X-Received: by 2002:a05:6820:990:b0:5a5:46e:d0f with SMTP id cg16-20020a056820099000b005a5046e0d0fmr7441920oob.1.1711351676031;
+        Mon, 25 Mar 2024 00:27:56 -0700 (PDT)
+Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id bs27-20020a056820179b00b005a53376cf14sm918172oob.9.2024.03.25.00.27.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 00:08:32 -0700 (PDT)
+        Mon, 25 Mar 2024 00:27:55 -0700 (PDT)
+From: Brian Lyles <brianmlyles@gmail.com>
+To: git@vger.kernel.org
+Cc: Brian Lyles <brianmlyles@gmail.com>,
+	peff@peff.net
+Subject: [PATCH v2 2/2] pretty: find pretty formats case-insensitively
+Date: Mon, 25 Mar 2024 02:25:13 -0500
+Message-ID: <20240325072651.947505-2-brianmlyles@gmail.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240324214316.917513-1-brianmlyles@gmail.com>
+References: <20240324214316.917513-1-brianmlyles@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Brian Lyles" <brianmlyles@gmail.com>
-To: "Jeff King" <peff@peff.net>
-In-Reply-To: <20240325061452.GA242093@coredump.intra.peff.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] pretty: find pretty formats case-insensitively
-Message-ID: <17bff03951f07360.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-Date: Mon, 25 Mar 2024 07:08:32 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Peff
+User-defined pretty formats are stored in config, which is meant to use
+case-insensitive matching for names as noted in config.txt's 'Syntax'
+section:
 
-Thanks for the review.
+    All the other lines [...] are recognized as setting variables, in
+    the form 'name = value' [...]. The variable names are
+    case-insensitive, [...].
 
-On Mon, Mar 25, 2024 at 1:14=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+When a user specifies one of their format aliases with an uppercase in
+it, however, it is not found.
 
-> The mention of "recursive" in the function we call made me what wonder
-> if we'd need more normalization. And I think we do. Try this
-> modification to your test:
->=20
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index 321e305979..be549b1d4b 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -61,8 +61,9 @@ test_expect_success 'alias user-defined format' '
-> =20
->  test_expect_success 'alias user-defined format is matched case-insensitiv=
-ely' '
->  	git log --pretty=3D"format:%h" >expected &&
-> -	git config pretty.testalias "format:%h" &&
-> -	git log --pretty=3DtestAlias >actual &&
-> +	git config pretty.testone "format:%h" &&
-> +	git config pretty.testtwo testOne &&
-> +	git log --pretty=3DtestTwo >actual &&
->  	test_cmp expected actual
->  '
-> =20
->=20
-> which fails because looking up "testOne" in the recursion won't work. So
-> I think we'd want to simply match case-insensitively inside the
-> function, like:
->=20
-> diff --git a/pretty.c b/pretty.c
-> index 50825c9d25..10f71ee004 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -147,7 +147,7 @@ static struct cmt_fmt_map *find_commit_format_recursiv=
-e(const char *sought,
->  	for (i =3D 0; i < commit_formats_len; i++) {
->  		size_t match_len;
-> =20
-> -		if (!starts_with(commit_formats[i].name, sought))
-> +		if (!istarts_with(commit_formats[i].name, sought))
->  			continue;
-> =20
->  		match_len =3D strlen(commit_formats[i].name);
->=20
-> And then you would not even need to normalize it in
-> find_commit_format().
+    $ git config pretty.testAlias %h
+    $ git config --list | grep pretty
+    pretty.testalias=%h
+    $ git log --format=testAlias -1
+    fatal: invalid --pretty format: testAlias
+    $ git log --format=testalias -1
+    3c2a3fdc38
 
-Good catch -- you're absolutely right, and simply switching to
-`istarts_with` is a more elegant solution than my initial patch. I'll
-switch to this approach in a v2 re-roll.
+This is true whether the name in the config file uses any uppercase
+characters or not.
 
->> +test_expect_success 'alias user-defined format is matched case-insensiti=
-vely' '
->> +	git log --pretty=3D"format:%h" >expected &&
->> +	git config pretty.testalias "format:%h" &&
->> +	git log --pretty=3DtestAlias >actual &&
->> +	test_cmp expected actual
->> +'
->=20
-> Modern style would be to use "test_config" here (or just "git -c"), but
-> I see the surrounding tests are too old to do so. So I'd be OK with
-> matching them (but cleaning up all of the surrounding ones would be
-> nice, too).
+Use case-insensitive comparisons when identifying format aliases.
 
-Thanks for the tip. Updating the existing tests in this file to use
-`test_config` looks to be fairly trivial, so I will start v2 with a
-patch that does that as well. I'm opting for `test_config` over `git -c`
-for no real reason other than they seem roughly equivalent, but
-`test_config` still ends up calling `git config` which seems slightly
-more realistic to how pretty formats would be defined normally.
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+---
+ pretty.c                      | 2 +-
+ t/t4205-log-pretty-formats.sh | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-> PS The matching rules in find_commit_format_recursive() seem weird
->    to me. We do a prefix match, and then return the entry whose name is
->    the shortest? And break ties based on which came first? So:
->=20
->      git -c pretty.abcd=3Dformat:one \
->          -c pretty.abc=3Dformat:two \
->          -c pretty.abd=3Dformat:three \
-> 	 log -1 --format=3Dab
->=20
->    quietly chooses "two". I guess the "shortest wins" is meant to allow
->    "foo" to be chosen over "foobar" if you specify the whole name. But
->    the fact that we don't flag an ambiguity between "abc" and "abd"
->    seems strange.
->=20
->    That is all orthogonal to your patch, of course, but just a
->    head-scratcher I noticed while looking at the code.
+diff --git a/pretty.c b/pretty.c
+index cf964b060c..8c1092c790 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -147,7 +147,7 @@ static struct cmt_fmt_map *find_commit_format_recursive(const char *sought,
+ 	for (i = 0; i < commit_formats_len; i++) {
+ 		size_t match_len;
+ 
+-		if (!starts_with(commit_formats[i].name, sought))
++		if (!istarts_with(commit_formats[i].name, sought))
+ 			continue;
+ 
+ 		match_len = strlen(commit_formats[i].name);
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 20bba76c43..749363ccb8 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -58,6 +58,14 @@ test_expect_success 'alias user-defined format' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'alias user-defined format is matched case-insensitively' '
++	git log --pretty="format:%h" >expected &&
++	test_config pretty.testone "format:%h" &&
++	test_config pretty.testtwo testOne &&
++	git log --pretty=testTwo >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'alias user-defined tformat with %s (ISO8859-1 encoding)' '
+ 	test_config i18n.logOutputEncoding $test_encoding &&
+ 	git log --oneline >expected-s &&
+-- 
+2.43.2
 
-I agree that this behavior is somewhat odd. I'm not sure what we would
-want to do about it at this point -- any change would technically be
-breaking, I assume. Regardless, not something I'd scope into this patch,
-but good observation.
-
---=20
-Thank you,
-Brian Lyles
