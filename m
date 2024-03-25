@@ -1,62 +1,63 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F185A4AEE5
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89293DABF0
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711387485; cv=none; b=aT6vei4/N8xKFlIXzWLBoGCPq4YTRJ3IfeO+llKj9WtGx0/a/VzrxXt/0uGvKfGD7BnAIAxB96u+qSiZjDkLHcTFgPwiyK9+XeyQr9uPUe3QI9l9uNYWdwwbK+myAVGLLcaFoz0ZGS02BfztbtE0lvzs4CwSLBCA7h0JlVQjlIc=
+	t=1711387485; cv=none; b=ECLk0o9+bbgrmPAWTAHG/zwbxpv9YACT2HOhSRqu/4G9pIIHfwxl0IhQQq8i/rZBw5TiGjKhZMAIfY2Ee3lVpQjNb8cuOLlHG9AupcEiKblh941wXWDUXbkVPUrmivXKukl/4HbJj8oVXYvAHbCnRtNtXSM/h/x9X6uJG1TYg0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711387485; c=relaxed/simple;
-	bh=XtWq6NqD52/Hjkup2Pe4JxxY18W1gaSiSaCHCRauUfU=;
+	bh=TVLudebW/yvoLnEKhGjeIDFBnIunVc8Txwmnq/p9D3o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EHoEKRStM7HVXloSzF4ENNBB6mHfSw6as3OWMO3nPJP7BvhZXxd6382x9x43Ql4xSZP74vECNgXo6OyNQksCZZ1+od83nP4n7EEFxEQFDxoOWlT22R94grfSF6fZxx9xj4DbVoT5ZkcqGP0tROaWxhs8x8RAD1YIOX9UffO51r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NwRa5hgt; arc=none smtp.client-ip=209.85.222.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=j0Wk+7rRaNlsTSnGTpTUKV8w4c+JuWBlTLyT7JDh6SOe3t0aswbGknE3/XeUmkAG3nCqr1EUNrSLqIrdSTZ840q4tf4tvftUoSFzLYpQchrK4Ssi5GS4126Dc6e7QtORqQAjyhFyrKy/HaCxX76s4NgU4G7UDK5lN8Y/bnftsEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MWCeQgZK; arc=none smtp.client-ip=209.85.210.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NwRa5hgt"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-78a2093cd44so382116285a.0
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:24:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MWCeQgZK"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6e6d063e88bso926541a34.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711387483; x=1711992283; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711387480; x=1711992280; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=z/pBLXp08H8YK1vw5fo90npRZRIsLzp8EivT+tlHGKs=;
-        b=NwRa5hgt8cTIrEnS7AzmwaZbQBytcuhTYcWSyX0MUstQntMToUzd5ILgWatgCUupWO
-         l5WQBX1xnO9sEdfDIX66r/P3mB1roMR27LBVXDkXMPWA9G7JgWbQ63ib/ThylueYqMnD
-         bxswM2oUMOmvOfLwM07HiFTPNEdDy2/Oj8+uBO4fBGJ0tcDmiprich2JlrAju/oU9ZVl
-         C8pP8qTMs/ByCaWRfj8PWcP9AtxwvpP95iP52QgpnVnPt98Ggi1z7xdjgqGWlJT7iXQe
-         9SrHes3tmkqitKiqqlD16VoE8/1/EtiTz5hgoWmV69kshIAZ7wATFGsrmmgXS8ZRZSeB
-         cBPw==
+        bh=NOvdbCjBbK+KppNFvocMpjdwKencUevqhhU04xjFj6U=;
+        b=MWCeQgZKI76W5UCxaewEoR5LnlL+dJXMAAcJFHSuVzpp4ch3VMP2a1Z+5hfYouRGuQ
+         JlR74Vzn1kcaUoic4w1lofCKN4C8ieTbANg3iZOPXund2/aakEgu7FYiGQuagvKEmFMW
+         bE9mO8xNTLqZN5T92i4Ei62bfr2AXNVj4GviCpN6XcLWziGClnnabR+59ppIij0dn6Wa
+         IZJft1uFDIhgg6isRpgMBDc5yexrhXZCvZJ4gGq+dh5pZeZAO08Idh+1F5We6VoeF9AY
+         yIh8MROm08JREIUOQsSP4vHAqcRefw3Lprhe8+YRFaL1s7TT0my9s1JhSL5fg6QdGRQ/
+         IaQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711387483; x=1711992283;
+        d=1e100.net; s=20230601; t=1711387480; x=1711992280;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z/pBLXp08H8YK1vw5fo90npRZRIsLzp8EivT+tlHGKs=;
-        b=Dw4+irr6wQopEo5F2hX9o3NiM//QDsHGIN+yeNOgG2HJvyWPa69Ui1fdOi+X69ntwy
-         QBAZxIKfMvSjFWjmQLmcqceUALEqyyMteFvDt6dKLyKUG9EqRTjbqIcIaoeHls2kNrqy
-         5hlsn+X/j6qduHfW8F/cfhbyFT4jL9h2Sbw/KkOsyR7/fuKyY0/6uMxdV5pTDQ33JLeP
-         Io1j8Jfz/QUKBsvuZphPoWHS6z2IUPZuBq1rQ9Ekwa6basq086ZYWCxo34CN3CHt45HP
-         Xj8/RxgozEedfbd0/bm0UwfAuKE5gzYsyPZmwnm02R7OdYNN6hwueQkO8qRz21AoOS9s
-         GiVw==
-X-Gm-Message-State: AOJu0Ywv0qxgBOSMymIALP2ukKp9LnBraAlm1/zZliM2cbI8+GlHYw8i
-	zE39P9FHQ6TxqYTaOJvFIDjoTWzBIJAeZddGAV2PMlfX9CFtxVS387dT974dGbECKbVVXPOf3d4
-	7UJE=
-X-Google-Smtp-Source: AGHT+IHj4mqin96IcRX/rEnhA4aoYwUiuS6DGbWyoUSgsrGr50VDuVYwZTPTsxJerrSRh52M3yYdFw==
-X-Received: by 2002:a05:6214:20c1:b0:691:3b87:1382 with SMTP id 1-20020a05621420c100b006913b871382mr9166258qve.26.1711387482831;
-        Mon, 25 Mar 2024 10:24:42 -0700 (PDT)
+        bh=NOvdbCjBbK+KppNFvocMpjdwKencUevqhhU04xjFj6U=;
+        b=FgnW3iFW3FDGJnXQ5Gyo1kCX7fQp3W+a4gwKSuhzIAT6sHw3/ovwlGc9F71YVk5UDF
+         nlklKge1ZlI4E1dym/DWvoX/UD2Mp2oI23cOWASj8C7p8ti0HKSTvI6Omtr4f2HISfRs
+         MYPJmtcQC9MHzzRLxGHVmkZvtXYGDto1XVVMEjS90XKJlSvqx8KF1g43+w9RJbT9zeEk
+         9JVC8elamUKZHqUYKmDqM9oTtm9Chquf/IxyW/YtaaSkG24UiO3gFICDRq9y6WRykFcI
+         I88W+re1UxK9eQlunyqgUIV9fcfjFasWvfyrO8AOClLtWrhYcjzYMUYVJ8jmjP7yUXi4
+         yG1Q==
+X-Gm-Message-State: AOJu0YxPnRLf9W3u+8ZjvTjidiyyy196fzcvF7mBMqipP7KTTnAkvj4D
+	Cc4HUpOxzDnyjLla0qrThZ7quQLp0U5rNkv8l7mV8HhARxu/Agn6BKpV1RKtOkObV8kTv+RW6DV
+	FZiQ=
+X-Google-Smtp-Source: AGHT+IGAqJn0xeJCtJQZ1kBCbZTdGnFyHzGdFFrj4xUepFbWmrWRb39ToxMv5E1kZR75g/R+XNdvSg==
+X-Received: by 2002:a9d:65c6:0:b0:6e6:8da6:a216 with SMTP id z6-20020a9d65c6000000b006e68da6a216mr334613oth.25.1711387479851;
+        Mon, 25 Mar 2024 10:24:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r14-20020a0cf80e000000b0069677500d0bsm2990581qvn.29.2024.03.25.10.24.42
+        by smtp.gmail.com with ESMTPSA id x15-20020a05620a0ecf00b007887d30dbb7sm2288559qkm.60.2024.03.25.10.24.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 10:24:42 -0700 (PDT)
-Date: Mon, 25 Mar 2024 13:24:41 -0400
+        Mon, 25 Mar 2024 10:24:39 -0700 (PDT)
+Date: Mon, 25 Mar 2024 13:24:38 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 08/11] midx-write.c: avoid directly managed temporary strbuf
-Message-ID: <8e32755c492d20eec02c81351d249ce34cc6d7b9.1711387439.git.me@ttaylorr.com>
+Subject: [PATCH 07/11] midx: move `write_midx_internal` (and related
+ functions) to midx-write.c
+Message-ID: <e83ef66cf5945e4ff02ac09123c5857d58a898e6.1711387439.git.me@ttaylorr.com>
 References: <cover.1711387439.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,73 +69,2673 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1711387439.git.me@ttaylorr.com>
 
-In midx-write.c::midx_repack(), we construct the command-line arguments
-for a pack-objects invocation which will combine objects from the packs
-below our `--batch-size` option.
+Move the last writing-related function from midx.c to midx-write.c. This
+patch moves `write_midx_internal()`, along with all of the functions
+used to implement it into midx-write.c.
 
-To construct the base name of the output pack, we use a temporary
-strbuf, and then push the result of that onto the strvec which holds the
-command-line arguments, after which point we release the strbuf.
-
-We could replace this by doing something like:
-
-    struct strbuf buf = STRBUF_INIT;
-    strbuf_addf(&buf, "%s/pack/pack", object_dir);
-    strvec_push_nodup(&cmd.args, strbuf_detach(&buf));
-
-(combining the two separate `strbuf_addstr()` calls into a single
-`strbuf_addf()`). But that is more or less an open-coded version of
-strvec_pushf(), which we could use directly instead.
-
-(Note that at the time this code was written back in ce1e4a105b4 (midx:
-implement midx_repack(), 2019-06-10), strvec did not yet exist, so the
-above example would have replaced the last line with:
-
-    argv_array_push_nodup(&cmd.args, strbuf_detach(&buf));
-
-, but the code is otherwise unchanged).
-
-Avoid directly managing the temporary strbuf used to construct the
-base name for pack-object's command-line arguments, and instead use the
-purpose-built `strvec_pushf()` instead.
+Like previous patch, this patch too does not introduce any functional
+changes, and is best moved with `--color-moved`.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ midx-write.c | 1243 ++++++++++++++++++++++++++++++++++++++++++++++-
+ midx.c       | 1296 +-------------------------------------------------
+ midx.h       |   19 +
+ 3 files changed, 1272 insertions(+), 1286 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index c812156cbd..89e325d08e 100644
+index 3d7697d8a2..c812156cbd 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1446,7 +1446,6 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	unsigned char *include_pack;
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	FILE *cmd_in;
--	struct strbuf base_name = STRBUF_INIT;
- 	struct multi_pack_index *m = lookup_multi_pack_index(r, object_dir);
+@@ -1,22 +1,1257 @@
+ #include "git-compat-util.h"
++#include "abspath.h"
+ #include "config.h"
+ #include "hex.h"
++#include "lockfile.h"
+ #include "packfile.h"
++#include "object-file.h"
++#include "hash-lookup.h"
+ #include "midx.h"
+ #include "progress.h"
++#include "trace2.h"
+ #include "run-command.h"
++#include "chunk-format.h"
+ #include "pack-bitmap.h"
++#include "refs.h"
+ #include "revision.h"
++#include "list-objects.h"
  
- 	/*
-@@ -1473,10 +1472,6 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+-extern int write_midx_internal(const char *object_dir,
++#define PACK_EXPIRED UINT_MAX
++#define BITMAP_POS_UNKNOWN (~((uint32_t)0))
++#define MIDX_CHUNK_FANOUT_SIZE (sizeof(uint32_t) * 256)
++#define MIDX_CHUNK_LARGE_OFFSET_WIDTH (sizeof(uint64_t))
++
++extern int midx_checksum_valid(struct multi_pack_index *m);
++extern void clear_midx_files_ext(const char *object_dir, const char *ext,
++				 unsigned char *keep_hash);
++extern int cmp_idx_or_pack_name(const char *idx_or_pack_name,
++				const char *idx_name);
++
++static size_t write_midx_header(struct hashfile *f,
++				unsigned char num_chunks,
++				uint32_t num_packs)
++{
++	hashwrite_be32(f, MIDX_SIGNATURE);
++	hashwrite_u8(f, MIDX_VERSION);
++	hashwrite_u8(f, oid_version(the_hash_algo));
++	hashwrite_u8(f, num_chunks);
++	hashwrite_u8(f, 0); /* unused */
++	hashwrite_be32(f, num_packs);
++
++	return MIDX_HEADER_SIZE;
++}
++
++struct pack_info {
++	uint32_t orig_pack_int_id;
++	char *pack_name;
++	struct packed_git *p;
++
++	uint32_t bitmap_pos;
++	uint32_t bitmap_nr;
++
++	unsigned expired : 1;
++};
++
++static void fill_pack_info(struct pack_info *info,
++			   struct packed_git *p, const char *pack_name,
++			   uint32_t orig_pack_int_id)
++{
++	memset(info, 0, sizeof(struct pack_info));
++
++	info->orig_pack_int_id = orig_pack_int_id;
++	info->pack_name = xstrdup(pack_name);
++	info->p = p;
++	info->bitmap_pos = BITMAP_POS_UNKNOWN;
++}
++
++static int pack_info_compare(const void *_a, const void *_b)
++{
++	struct pack_info *a = (struct pack_info *)_a;
++	struct pack_info *b = (struct pack_info *)_b;
++	return strcmp(a->pack_name, b->pack_name);
++}
++
++static int idx_or_pack_name_cmp(const void *_va, const void *_vb)
++{
++	const char *pack_name = _va;
++	const struct pack_info *compar = _vb;
++
++	return cmp_idx_or_pack_name(pack_name, compar->pack_name);
++}
++
++struct write_midx_context {
++	struct pack_info *info;
++	size_t nr;
++	size_t alloc;
++	struct multi_pack_index *m;
++	struct progress *progress;
++	unsigned pack_paths_checked;
++
++	struct pack_midx_entry *entries;
++	size_t entries_nr;
++
++	uint32_t *pack_perm;
++	uint32_t *pack_order;
++	unsigned large_offsets_needed:1;
++	uint32_t num_large_offsets;
++
++	int preferred_pack_idx;
++
++	struct string_list *to_include;
++};
++
++static void add_pack_to_midx(const char *full_path, size_t full_path_len,
++			     const char *file_name, void *data)
++{
++	struct write_midx_context *ctx = data;
++	struct packed_git *p;
++
++	if (ends_with(file_name, ".idx")) {
++		display_progress(ctx->progress, ++ctx->pack_paths_checked);
++		/*
++		 * Note that at most one of ctx->m and ctx->to_include are set,
++		 * so we are testing midx_contains_pack() and
++		 * string_list_has_string() independently (guarded by the
++		 * appropriate NULL checks).
++		 *
++		 * We could support passing to_include while reusing an existing
++		 * MIDX, but don't currently since the reuse process drags
++		 * forward all packs from an existing MIDX (without checking
++		 * whether or not they appear in the to_include list).
++		 *
++		 * If we added support for that, these next two conditional
++		 * should be performed independently (likely checking
++		 * to_include before the existing MIDX).
++		 */
++		if (ctx->m && midx_contains_pack(ctx->m, file_name))
++			return;
++		else if (ctx->to_include &&
++			 !string_list_has_string(ctx->to_include, file_name))
++			return;
++
++		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
++
++		p = add_packed_git(full_path, full_path_len, 0);
++		if (!p) {
++			warning(_("failed to add packfile '%s'"),
++				full_path);
++			return;
++		}
++
++		if (open_pack_index(p)) {
++			warning(_("failed to open pack-index '%s'"),
++				full_path);
++			close_pack(p);
++			free(p);
++			return;
++		}
++
++		fill_pack_info(&ctx->info[ctx->nr], p, file_name, ctx->nr);
++		ctx->nr++;
++	}
++}
++
++struct pack_midx_entry {
++	struct object_id oid;
++	uint32_t pack_int_id;
++	time_t pack_mtime;
++	uint64_t offset;
++	unsigned preferred : 1;
++};
++
++static int midx_oid_compare(const void *_a, const void *_b)
++{
++	const struct pack_midx_entry *a = (const struct pack_midx_entry *)_a;
++	const struct pack_midx_entry *b = (const struct pack_midx_entry *)_b;
++	int cmp = oidcmp(&a->oid, &b->oid);
++
++	if (cmp)
++		return cmp;
++
++	/* Sort objects in a preferred pack first when multiple copies exist. */
++	if (a->preferred > b->preferred)
++		return -1;
++	if (a->preferred < b->preferred)
++		return 1;
++
++	if (a->pack_mtime > b->pack_mtime)
++		return -1;
++	else if (a->pack_mtime < b->pack_mtime)
++		return 1;
++
++	return a->pack_int_id - b->pack_int_id;
++}
++
++static int nth_midxed_pack_midx_entry(struct multi_pack_index *m,
++				      struct pack_midx_entry *e,
++				      uint32_t pos)
++{
++	if (pos >= m->num_objects)
++		return 1;
++
++	nth_midxed_object_oid(&e->oid, m, pos);
++	e->pack_int_id = nth_midxed_pack_int_id(m, pos);
++	e->offset = nth_midxed_offset(m, pos);
++
++	/* consider objects in midx to be from "old" packs */
++	e->pack_mtime = 0;
++	return 0;
++}
++
++static void fill_pack_entry(uint32_t pack_int_id,
++			    struct packed_git *p,
++			    uint32_t cur_object,
++			    struct pack_midx_entry *entry,
++			    int preferred)
++{
++	if (nth_packed_object_id(&entry->oid, p, cur_object) < 0)
++		die(_("failed to locate object %d in packfile"), cur_object);
++
++	entry->pack_int_id = pack_int_id;
++	entry->pack_mtime = p->mtime;
++
++	entry->offset = nth_packed_object_offset(p, cur_object);
++	entry->preferred = !!preferred;
++}
++
++struct midx_fanout {
++	struct pack_midx_entry *entries;
++	size_t nr, alloc;
++};
++
++static void midx_fanout_grow(struct midx_fanout *fanout, size_t nr)
++{
++	if (nr < fanout->nr)
++		BUG("negative growth in midx_fanout_grow() (%"PRIuMAX" < %"PRIuMAX")",
++		    (uintmax_t)nr, (uintmax_t)fanout->nr);
++	ALLOC_GROW(fanout->entries, nr, fanout->alloc);
++}
++
++static void midx_fanout_sort(struct midx_fanout *fanout)
++{
++	QSORT(fanout->entries, fanout->nr, midx_oid_compare);
++}
++
++static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
++					struct multi_pack_index *m,
++					uint32_t cur_fanout,
++					int preferred_pack)
++{
++	uint32_t start = 0, end;
++	uint32_t cur_object;
++
++	if (cur_fanout)
++		start = ntohl(m->chunk_oid_fanout[cur_fanout - 1]);
++	end = ntohl(m->chunk_oid_fanout[cur_fanout]);
++
++	for (cur_object = start; cur_object < end; cur_object++) {
++		if ((preferred_pack > -1) &&
++		    (preferred_pack == nth_midxed_pack_int_id(m, cur_object))) {
++			/*
++			 * Objects from preferred packs are added
++			 * separately.
++			 */
++			continue;
++		}
++
++		midx_fanout_grow(fanout, fanout->nr + 1);
++		nth_midxed_pack_midx_entry(m,
++					   &fanout->entries[fanout->nr],
++					   cur_object);
++		fanout->entries[fanout->nr].preferred = 0;
++		fanout->nr++;
++	}
++}
++
++static void midx_fanout_add_pack_fanout(struct midx_fanout *fanout,
++					struct pack_info *info,
++					uint32_t cur_pack,
++					int preferred,
++					uint32_t cur_fanout)
++{
++	struct packed_git *pack = info[cur_pack].p;
++	uint32_t start = 0, end;
++	uint32_t cur_object;
++
++	if (cur_fanout)
++		start = get_pack_fanout(pack, cur_fanout - 1);
++	end = get_pack_fanout(pack, cur_fanout);
++
++	for (cur_object = start; cur_object < end; cur_object++) {
++		midx_fanout_grow(fanout, fanout->nr + 1);
++		fill_pack_entry(cur_pack,
++				info[cur_pack].p,
++				cur_object,
++				&fanout->entries[fanout->nr],
++				preferred);
++		fanout->nr++;
++	}
++}
++
++/*
++ * It is possible to artificially get into a state where there are many
++ * duplicate copies of objects. That can create high memory pressure if
++ * we are to create a list of all objects before de-duplication. To reduce
++ * this memory pressure without a significant performance drop, automatically
++ * group objects by the first byte of their object id. Use the IDX fanout
++ * tables to group the data, copy to a local array, then sort.
++ *
++ * Copy only the de-duplicated entries (selected by most-recent modified time
++ * of a packfile containing the object).
++ */
++static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
++						  struct pack_info *info,
++						  uint32_t nr_packs,
++						  size_t *nr_objects,
++						  int preferred_pack)
++{
++	uint32_t cur_fanout, cur_pack, cur_object;
++	size_t alloc_objects, total_objects = 0;
++	struct midx_fanout fanout = { 0 };
++	struct pack_midx_entry *deduplicated_entries = NULL;
++	uint32_t start_pack = m ? m->num_packs : 0;
++
++	for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++)
++		total_objects = st_add(total_objects,
++				       info[cur_pack].p->num_objects);
++
++	/*
++	 * As we de-duplicate by fanout value, we expect the fanout
++	 * slices to be evenly distributed, with some noise. Hence,
++	 * allocate slightly more than one 256th.
++	 */
++	alloc_objects = fanout.alloc = total_objects > 3200 ? total_objects / 200 : 16;
++
++	ALLOC_ARRAY(fanout.entries, fanout.alloc);
++	ALLOC_ARRAY(deduplicated_entries, alloc_objects);
++	*nr_objects = 0;
++
++	for (cur_fanout = 0; cur_fanout < 256; cur_fanout++) {
++		fanout.nr = 0;
++
++		if (m)
++			midx_fanout_add_midx_fanout(&fanout, m, cur_fanout,
++						    preferred_pack);
++
++		for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++) {
++			int preferred = cur_pack == preferred_pack;
++			midx_fanout_add_pack_fanout(&fanout,
++						    info, cur_pack,
++						    preferred, cur_fanout);
++		}
++
++		if (-1 < preferred_pack && preferred_pack < start_pack)
++			midx_fanout_add_pack_fanout(&fanout, info,
++						    preferred_pack, 1,
++						    cur_fanout);
++
++		midx_fanout_sort(&fanout);
++
++		/*
++		 * The batch is now sorted by OID and then mtime (descending).
++		 * Take only the first duplicate.
++		 */
++		for (cur_object = 0; cur_object < fanout.nr; cur_object++) {
++			if (cur_object && oideq(&fanout.entries[cur_object - 1].oid,
++						&fanout.entries[cur_object].oid))
++				continue;
++
++			ALLOC_GROW(deduplicated_entries, st_add(*nr_objects, 1),
++				   alloc_objects);
++			memcpy(&deduplicated_entries[*nr_objects],
++			       &fanout.entries[cur_object],
++			       sizeof(struct pack_midx_entry));
++			(*nr_objects)++;
++		}
++	}
++
++	free(fanout.entries);
++	return deduplicated_entries;
++}
++
++static int write_midx_pack_names(struct hashfile *f, void *data)
++{
++	struct write_midx_context *ctx = data;
++	uint32_t i;
++	unsigned char padding[MIDX_CHUNK_ALIGNMENT];
++	size_t written = 0;
++
++	for (i = 0; i < ctx->nr; i++) {
++		size_t writelen;
++
++		if (ctx->info[i].expired)
++			continue;
++
++		if (i && strcmp(ctx->info[i].pack_name, ctx->info[i - 1].pack_name) <= 0)
++			BUG("incorrect pack-file order: %s before %s",
++			    ctx->info[i - 1].pack_name,
++			    ctx->info[i].pack_name);
++
++		writelen = strlen(ctx->info[i].pack_name) + 1;
++		hashwrite(f, ctx->info[i].pack_name, writelen);
++		written += writelen;
++	}
++
++	/* add padding to be aligned */
++	i = MIDX_CHUNK_ALIGNMENT - (written % MIDX_CHUNK_ALIGNMENT);
++	if (i < MIDX_CHUNK_ALIGNMENT) {
++		memset(padding, 0, sizeof(padding));
++		hashwrite(f, padding, i);
++	}
++
++	return 0;
++}
++
++static int write_midx_bitmapped_packs(struct hashfile *f, void *data)
++{
++	struct write_midx_context *ctx = data;
++	size_t i;
++
++	for (i = 0; i < ctx->nr; i++) {
++		struct pack_info *pack = &ctx->info[i];
++		if (pack->expired)
++			continue;
++
++		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN && pack->bitmap_nr)
++			BUG("pack '%s' has no bitmap position, but has %d bitmapped object(s)",
++			    pack->pack_name, pack->bitmap_nr);
++
++		hashwrite_be32(f, pack->bitmap_pos);
++		hashwrite_be32(f, pack->bitmap_nr);
++	}
++	return 0;
++}
++
++static int write_midx_oid_fanout(struct hashfile *f,
++				 void *data)
++{
++	struct write_midx_context *ctx = data;
++	struct pack_midx_entry *list = ctx->entries;
++	struct pack_midx_entry *last = ctx->entries + ctx->entries_nr;
++	uint32_t count = 0;
++	uint32_t i;
++
++	/*
++	* Write the first-level table (the list is sorted,
++	* but we use a 256-entry lookup to be able to avoid
++	* having to do eight extra binary search iterations).
++	*/
++	for (i = 0; i < 256; i++) {
++		struct pack_midx_entry *next = list;
++
++		while (next < last && next->oid.hash[0] == i) {
++			count++;
++			next++;
++		}
++
++		hashwrite_be32(f, count);
++		list = next;
++	}
++
++	return 0;
++}
++
++static int write_midx_oid_lookup(struct hashfile *f,
++				 void *data)
++{
++	struct write_midx_context *ctx = data;
++	unsigned char hash_len = the_hash_algo->rawsz;
++	struct pack_midx_entry *list = ctx->entries;
++	uint32_t i;
++
++	for (i = 0; i < ctx->entries_nr; i++) {
++		struct pack_midx_entry *obj = list++;
++
++		if (i < ctx->entries_nr - 1) {
++			struct pack_midx_entry *next = list;
++			if (oidcmp(&obj->oid, &next->oid) >= 0)
++				BUG("OIDs not in order: %s >= %s",
++				    oid_to_hex(&obj->oid),
++				    oid_to_hex(&next->oid));
++		}
++
++		hashwrite(f, obj->oid.hash, (int)hash_len);
++	}
++
++	return 0;
++}
++
++static int write_midx_object_offsets(struct hashfile *f,
++				     void *data)
++{
++	struct write_midx_context *ctx = data;
++	struct pack_midx_entry *list = ctx->entries;
++	uint32_t i, nr_large_offset = 0;
++
++	for (i = 0; i < ctx->entries_nr; i++) {
++		struct pack_midx_entry *obj = list++;
++
++		if (ctx->pack_perm[obj->pack_int_id] == PACK_EXPIRED)
++			BUG("object %s is in an expired pack with int-id %d",
++			    oid_to_hex(&obj->oid),
++			    obj->pack_int_id);
++
++		hashwrite_be32(f, ctx->pack_perm[obj->pack_int_id]);
++
++		if (ctx->large_offsets_needed && obj->offset >> 31)
++			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
++		else if (!ctx->large_offsets_needed && obj->offset >> 32)
++			BUG("object %s requires a large offset (%"PRIx64") but the MIDX is not writing large offsets!",
++			    oid_to_hex(&obj->oid),
++			    obj->offset);
++		else
++			hashwrite_be32(f, (uint32_t)obj->offset);
++	}
++
++	return 0;
++}
++
++static int write_midx_large_offsets(struct hashfile *f,
++				    void *data)
++{
++	struct write_midx_context *ctx = data;
++	struct pack_midx_entry *list = ctx->entries;
++	struct pack_midx_entry *end = ctx->entries + ctx->entries_nr;
++	uint32_t nr_large_offset = ctx->num_large_offsets;
++
++	while (nr_large_offset) {
++		struct pack_midx_entry *obj;
++		uint64_t offset;
++
++		if (list >= end)
++			BUG("too many large-offset objects");
++
++		obj = list++;
++		offset = obj->offset;
++
++		if (!(offset >> 31))
++			continue;
++
++		hashwrite_be64(f, offset);
++
++		nr_large_offset--;
++	}
++
++	return 0;
++}
++
++static int write_midx_revindex(struct hashfile *f,
++			       void *data)
++{
++	struct write_midx_context *ctx = data;
++	uint32_t i;
++
++	for (i = 0; i < ctx->entries_nr; i++)
++		hashwrite_be32(f, ctx->pack_order[i]);
++
++	return 0;
++}
++
++struct midx_pack_order_data {
++	uint32_t nr;
++	uint32_t pack;
++	off_t offset;
++};
++
++static int midx_pack_order_cmp(const void *va, const void *vb)
++{
++	const struct midx_pack_order_data *a = va, *b = vb;
++	if (a->pack < b->pack)
++		return -1;
++	else if (a->pack > b->pack)
++		return 1;
++	else if (a->offset < b->offset)
++		return -1;
++	else if (a->offset > b->offset)
++		return 1;
++	else
++		return 0;
++}
++
++static uint32_t *midx_pack_order(struct write_midx_context *ctx)
++{
++	struct midx_pack_order_data *data;
++	uint32_t *pack_order;
++	uint32_t i;
++
++	trace2_region_enter("midx", "midx_pack_order", the_repository);
++
++	ALLOC_ARRAY(data, ctx->entries_nr);
++	for (i = 0; i < ctx->entries_nr; i++) {
++		struct pack_midx_entry *e = &ctx->entries[i];
++		data[i].nr = i;
++		data[i].pack = ctx->pack_perm[e->pack_int_id];
++		if (!e->preferred)
++			data[i].pack |= (1U << 31);
++		data[i].offset = e->offset;
++	}
++
++	QSORT(data, ctx->entries_nr, midx_pack_order_cmp);
++
++	ALLOC_ARRAY(pack_order, ctx->entries_nr);
++	for (i = 0; i < ctx->entries_nr; i++) {
++		struct pack_midx_entry *e = &ctx->entries[data[i].nr];
++		struct pack_info *pack = &ctx->info[ctx->pack_perm[e->pack_int_id]];
++		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
++			pack->bitmap_pos = i;
++		pack->bitmap_nr++;
++		pack_order[i] = data[i].nr;
++	}
++	for (i = 0; i < ctx->nr; i++) {
++		struct pack_info *pack = &ctx->info[ctx->pack_perm[i]];
++		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
++			pack->bitmap_pos = 0;
++	}
++	free(data);
++
++	trace2_region_leave("midx", "midx_pack_order", the_repository);
++
++	return pack_order;
++}
++
++static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
++				     struct write_midx_context *ctx)
++{
++	struct strbuf buf = STRBUF_INIT;
++	const char *tmp_file;
++
++	trace2_region_enter("midx", "write_midx_reverse_index", the_repository);
++
++	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex(midx_hash));
++
++	tmp_file = write_rev_file_order(NULL, ctx->pack_order, ctx->entries_nr,
++					midx_hash, WRITE_REV);
++
++	if (finalize_object_file(tmp_file, buf.buf))
++		die(_("cannot store reverse index file"));
++
++	strbuf_release(&buf);
++
++	trace2_region_leave("midx", "write_midx_reverse_index", the_repository);
++}
++
++static void prepare_midx_packing_data(struct packing_data *pdata,
++				      struct write_midx_context *ctx)
++{
++	uint32_t i;
++
++	trace2_region_enter("midx", "prepare_midx_packing_data", the_repository);
++
++	memset(pdata, 0, sizeof(struct packing_data));
++	prepare_packing_data(the_repository, pdata);
++
++	for (i = 0; i < ctx->entries_nr; i++) {
++		struct pack_midx_entry *from = &ctx->entries[ctx->pack_order[i]];
++		struct object_entry *to = packlist_alloc(pdata, &from->oid);
++
++		oe_set_in_pack(pdata, to,
++			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
++	}
++
++	trace2_region_leave("midx", "prepare_midx_packing_data", the_repository);
++}
++
++static int add_ref_to_pending(const char *refname,
++			      const struct object_id *oid,
++			      int flag, void *cb_data)
++{
++	struct rev_info *revs = (struct rev_info*)cb_data;
++	struct object_id peeled;
++	struct object *object;
++
++	if ((flag & REF_ISSYMREF) && (flag & REF_ISBROKEN)) {
++		warning("symbolic ref is dangling: %s", refname);
++		return 0;
++	}
++
++	if (!peel_iterated_oid(oid, &peeled))
++		oid = &peeled;
++
++	object = parse_object_or_die(oid, refname);
++	if (object->type != OBJ_COMMIT)
++		return 0;
++
++	add_pending_object(revs, object, "");
++	if (bitmap_is_preferred_refname(revs->repo, refname))
++		object->flags |= NEEDS_BITMAP;
++	return 0;
++}
++
++struct bitmap_commit_cb {
++	struct commit **commits;
++	size_t commits_nr, commits_alloc;
++
++	struct write_midx_context *ctx;
++};
++
++static const struct object_id *bitmap_oid_access(size_t index,
++						 const void *_entries)
++{
++	const struct pack_midx_entry *entries = _entries;
++	return &entries[index].oid;
++}
++
++static void bitmap_show_commit(struct commit *commit, void *_data)
++{
++	struct bitmap_commit_cb *data = _data;
++	int pos = oid_pos(&commit->object.oid, data->ctx->entries,
++			  data->ctx->entries_nr,
++			  bitmap_oid_access);
++	if (pos < 0)
++		return;
++
++	ALLOC_GROW(data->commits, data->commits_nr + 1, data->commits_alloc);
++	data->commits[data->commits_nr++] = commit;
++}
++
++static int read_refs_snapshot(const char *refs_snapshot,
++			      struct rev_info *revs)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct object_id oid;
++	FILE *f = xfopen(refs_snapshot, "r");
++
++	while (strbuf_getline(&buf, f) != EOF) {
++		struct object *object;
++		int preferred = 0;
++		char *hex = buf.buf;
++		const char *end = NULL;
++
++		if (buf.len && *buf.buf == '+') {
++			preferred = 1;
++			hex = &buf.buf[1];
++		}
++
++		if (parse_oid_hex(hex, &oid, &end) < 0)
++			die(_("could not parse line: %s"), buf.buf);
++		if (*end)
++			die(_("malformed line: %s"), buf.buf);
++
++		object = parse_object_or_die(&oid, NULL);
++		if (preferred)
++			object->flags |= NEEDS_BITMAP;
++
++		add_pending_object(revs, object, "");
++	}
++
++	fclose(f);
++	strbuf_release(&buf);
++	return 0;
++}
++static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr_p,
++						    const char *refs_snapshot,
++						    struct write_midx_context *ctx)
++{
++	struct rev_info revs;
++	struct bitmap_commit_cb cb = {0};
++
++	trace2_region_enter("midx", "find_commits_for_midx_bitmap",
++			    the_repository);
++
++	cb.ctx = ctx;
++
++	repo_init_revisions(the_repository, &revs, NULL);
++	if (refs_snapshot) {
++		read_refs_snapshot(refs_snapshot, &revs);
++	} else {
++		setup_revisions(0, NULL, &revs, NULL);
++		for_each_ref(add_ref_to_pending, &revs);
++	}
++
++	/*
++	 * Skipping promisor objects here is intentional, since it only excludes
++	 * them from the list of reachable commits that we want to select from
++	 * when computing the selection of MIDX'd commits to receive bitmaps.
++	 *
++	 * Reachability bitmaps do require that their objects be closed under
++	 * reachability, but fetching any objects missing from promisors at this
++	 * point is too late. But, if one of those objects can be reached from
++	 * an another object that is included in the bitmap, then we will
++	 * complain later that we don't have reachability closure (and fail
++	 * appropriately).
++	 */
++	fetch_if_missing = 0;
++	revs.exclude_promisor_objects = 1;
++
++	if (prepare_revision_walk(&revs))
++		die(_("revision walk setup failed"));
++
++	traverse_commit_list(&revs, bitmap_show_commit, NULL, &cb);
++	if (indexed_commits_nr_p)
++		*indexed_commits_nr_p = cb.commits_nr;
++
++	release_revisions(&revs);
++
++	trace2_region_leave("midx", "find_commits_for_midx_bitmap",
++			    the_repository);
++
++	return cb.commits;
++}
++
++static int write_midx_bitmap(const char *midx_name,
++			     const unsigned char *midx_hash,
++			     struct packing_data *pdata,
++			     struct commit **commits,
++			     uint32_t commits_nr,
++			     uint32_t *pack_order,
++			     unsigned flags)
++{
++	int ret, i;
++	uint16_t options = 0;
++	struct pack_idx_entry **index;
++	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
++					hash_to_hex(midx_hash));
++
++	trace2_region_enter("midx", "write_midx_bitmap", the_repository);
++
++	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
++		options |= BITMAP_OPT_HASH_CACHE;
++
++	if (flags & MIDX_WRITE_BITMAP_LOOKUP_TABLE)
++		options |= BITMAP_OPT_LOOKUP_TABLE;
++
++	/*
++	 * Build the MIDX-order index based on pdata.objects (which is already
++	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
++	 * this order).
++	 */
++	ALLOC_ARRAY(index, pdata->nr_objects);
++	for (i = 0; i < pdata->nr_objects; i++)
++		index[i] = &pdata->objects[i].idx;
++
++	bitmap_writer_show_progress(flags & MIDX_PROGRESS);
++	bitmap_writer_build_type_index(pdata, index, pdata->nr_objects);
++
++	/*
++	 * bitmap_writer_finish expects objects in lex order, but pack_order
++	 * gives us exactly that. use it directly instead of re-sorting the
++	 * array.
++	 *
++	 * This changes the order of objects in 'index' between
++	 * bitmap_writer_build_type_index and bitmap_writer_finish.
++	 *
++	 * The same re-ordering takes place in the single-pack bitmap code via
++	 * write_idx_file(), which is called by finish_tmp_packfile(), which
++	 * happens between bitmap_writer_build_type_index() and
++	 * bitmap_writer_finish().
++	 */
++	for (i = 0; i < pdata->nr_objects; i++)
++		index[pack_order[i]] = &pdata->objects[i].idx;
++
++	bitmap_writer_select_commits(commits, commits_nr, -1);
++	ret = bitmap_writer_build(pdata);
++	if (ret < 0)
++		goto cleanup;
++
++	bitmap_writer_set_checksum(midx_hash);
++	bitmap_writer_finish(index, pdata->nr_objects, bitmap_name, options);
++
++cleanup:
++	free(index);
++	free(bitmap_name);
++
++	trace2_region_leave("midx", "write_midx_bitmap", the_repository);
++
++	return ret;
++}
++
++static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
++							const char *object_dir)
++{
++	struct multi_pack_index *result = NULL;
++	struct multi_pack_index *cur;
++	char *obj_dir_real = real_pathdup(object_dir, 1);
++	struct strbuf cur_path_real = STRBUF_INIT;
++
++	/* Ensure the given object_dir is local, or a known alternate. */
++	find_odb(r, obj_dir_real);
++
++	for (cur = get_multi_pack_index(r); cur; cur = cur->next) {
++		strbuf_realpath(&cur_path_real, cur->object_dir, 1);
++		if (!strcmp(obj_dir_real, cur_path_real.buf)) {
++			result = cur;
++			goto cleanup;
++		}
++	}
++
++cleanup:
++	free(obj_dir_real);
++	strbuf_release(&cur_path_real);
++	return result;
++}
++
++static int write_midx_internal(const char *object_dir,
+ 			       struct string_list *packs_to_include,
+ 			       struct string_list *packs_to_drop,
+ 			       const char *preferred_pack_name,
+ 			       const char *refs_snapshot,
+-			       unsigned flags);
++			       unsigned flags)
++{
++	struct strbuf midx_name = STRBUF_INIT;
++	unsigned char midx_hash[GIT_MAX_RAWSZ];
++	uint32_t i;
++	struct hashfile *f = NULL;
++	struct lock_file lk;
++	struct write_midx_context ctx = { 0 };
++	int bitmapped_packs_concat_len = 0;
++	int pack_name_concat_len = 0;
++	int dropped_packs = 0;
++	int result = 0;
++	struct chunkfile *cf;
  
- 	strvec_push(&cmd.args, "pack-objects");
+-extern struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+-							const char *object_dir);
++	trace2_region_enter("midx", "write_midx_internal", the_repository);
++
++	get_midx_filename(&midx_name, object_dir);
++	if (safe_create_leading_directories(midx_name.buf))
++		die_errno(_("unable to create leading directories of %s"),
++			  midx_name.buf);
++
++	if (!packs_to_include) {
++		/*
++		 * Only reference an existing MIDX when not filtering which
++		 * packs to include, since all packs and objects are copied
++		 * blindly from an existing MIDX if one is present.
++		 */
++		ctx.m = lookup_multi_pack_index(the_repository, object_dir);
++	}
++
++	if (ctx.m && !midx_checksum_valid(ctx.m)) {
++		warning(_("ignoring existing multi-pack-index; checksum mismatch"));
++		ctx.m = NULL;
++	}
++
++	ctx.nr = 0;
++	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
++	ctx.info = NULL;
++	ALLOC_ARRAY(ctx.info, ctx.alloc);
++
++	if (ctx.m) {
++		for (i = 0; i < ctx.m->num_packs; i++) {
++			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
++
++			if (flags & MIDX_WRITE_REV_INDEX) {
++				/*
++				 * If generating a reverse index, need to have
++				 * packed_git's loaded to compare their
++				 * mtimes and object count.
++				 */
++				if (prepare_midx_pack(the_repository, ctx.m, i)) {
++					error(_("could not load pack"));
++					result = 1;
++					goto cleanup;
++				}
++
++				if (open_pack_index(ctx.m->packs[i]))
++					die(_("could not open index for %s"),
++					    ctx.m->packs[i]->pack_name);
++			}
++
++			fill_pack_info(&ctx.info[ctx.nr++], ctx.m->packs[i],
++				       ctx.m->pack_names[i], i);
++		}
++	}
++
++	ctx.pack_paths_checked = 0;
++	if (flags & MIDX_PROGRESS)
++		ctx.progress = start_delayed_progress(_("Adding packfiles to multi-pack-index"), 0);
++	else
++		ctx.progress = NULL;
++
++	ctx.to_include = packs_to_include;
++
++	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
++	stop_progress(&ctx.progress);
++
++	if ((ctx.m && ctx.nr == ctx.m->num_packs) &&
++	    !(packs_to_include || packs_to_drop)) {
++		struct bitmap_index *bitmap_git;
++		int bitmap_exists;
++		int want_bitmap = flags & MIDX_WRITE_BITMAP;
++
++		bitmap_git = prepare_midx_bitmap_git(ctx.m);
++		bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
++		free_bitmap_index(bitmap_git);
++
++		if (bitmap_exists || !want_bitmap) {
++			/*
++			 * The correct MIDX already exists, and so does a
++			 * corresponding bitmap (or one wasn't requested).
++			 */
++			if (!want_bitmap)
++				clear_midx_files_ext(object_dir, ".bitmap",
++						     NULL);
++			goto cleanup;
++		}
++	}
++
++	if (preferred_pack_name) {
++		ctx.preferred_pack_idx = -1;
++
++		for (i = 0; i < ctx.nr; i++) {
++			if (!cmp_idx_or_pack_name(preferred_pack_name,
++						  ctx.info[i].pack_name)) {
++				ctx.preferred_pack_idx = i;
++				break;
++			}
++		}
++
++		if (ctx.preferred_pack_idx == -1)
++			warning(_("unknown preferred pack: '%s'"),
++				preferred_pack_name);
++	} else if (ctx.nr &&
++		   (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))) {
++		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
++		ctx.preferred_pack_idx = 0;
++
++		if (packs_to_drop && packs_to_drop->nr)
++			BUG("cannot write a MIDX bitmap during expiration");
++
++		/*
++		 * set a preferred pack when writing a bitmap to ensure that
++		 * the pack from which the first object is selected in pseudo
++		 * pack-order has all of its objects selected from that pack
++		 * (and not another pack containing a duplicate)
++		 */
++		for (i = 1; i < ctx.nr; i++) {
++			struct packed_git *p = ctx.info[i].p;
++
++			if (!oldest->num_objects || p->mtime < oldest->mtime) {
++				oldest = p;
++				ctx.preferred_pack_idx = i;
++			}
++		}
++
++		if (!oldest->num_objects) {
++			/*
++			 * If all packs are empty; unset the preferred index.
++			 * This is acceptable since there will be no duplicate
++			 * objects to resolve, so the preferred value doesn't
++			 * matter.
++			 */
++			ctx.preferred_pack_idx = -1;
++		}
++	} else {
++		/*
++		 * otherwise don't mark any pack as preferred to avoid
++		 * interfering with expiration logic below
++		 */
++		ctx.preferred_pack_idx = -1;
++	}
++
++	if (ctx.preferred_pack_idx > -1) {
++		struct packed_git *preferred = ctx.info[ctx.preferred_pack_idx].p;
++		if (!preferred->num_objects) {
++			error(_("cannot select preferred pack %s with no objects"),
++			      preferred->pack_name);
++			result = 1;
++			goto cleanup;
++		}
++	}
++
++	ctx.entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &ctx.entries_nr,
++					 ctx.preferred_pack_idx);
++
++	ctx.large_offsets_needed = 0;
++	for (i = 0; i < ctx.entries_nr; i++) {
++		if (ctx.entries[i].offset > 0x7fffffff)
++			ctx.num_large_offsets++;
++		if (ctx.entries[i].offset > 0xffffffff)
++			ctx.large_offsets_needed = 1;
++	}
++
++	QSORT(ctx.info, ctx.nr, pack_info_compare);
++
++	if (packs_to_drop && packs_to_drop->nr) {
++		int drop_index = 0;
++		int missing_drops = 0;
++
++		for (i = 0; i < ctx.nr && drop_index < packs_to_drop->nr; i++) {
++			int cmp = strcmp(ctx.info[i].pack_name,
++					 packs_to_drop->items[drop_index].string);
++
++			if (!cmp) {
++				drop_index++;
++				ctx.info[i].expired = 1;
++			} else if (cmp > 0) {
++				error(_("did not see pack-file %s to drop"),
++				      packs_to_drop->items[drop_index].string);
++				drop_index++;
++				missing_drops++;
++				i--;
++			} else {
++				ctx.info[i].expired = 0;
++			}
++		}
++
++		if (missing_drops) {
++			result = 1;
++			goto cleanup;
++		}
++	}
++
++	/*
++	 * pack_perm stores a permutation between pack-int-ids from the
++	 * previous multi-pack-index to the new one we are writing:
++	 *
++	 * pack_perm[old_id] = new_id
++	 */
++	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
++	for (i = 0; i < ctx.nr; i++) {
++		if (ctx.info[i].expired) {
++			dropped_packs++;
++			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
++		} else {
++			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
++		}
++	}
++
++	for (i = 0; i < ctx.nr; i++) {
++		if (ctx.info[i].expired)
++			continue;
++		pack_name_concat_len += strlen(ctx.info[i].pack_name) + 1;
++		bitmapped_packs_concat_len += 2 * sizeof(uint32_t);
++	}
++
++	/* Check that the preferred pack wasn't expired (if given). */
++	if (preferred_pack_name) {
++		struct pack_info *preferred = bsearch(preferred_pack_name,
++						      ctx.info, ctx.nr,
++						      sizeof(*ctx.info),
++						      idx_or_pack_name_cmp);
++		if (preferred) {
++			uint32_t perm = ctx.pack_perm[preferred->orig_pack_int_id];
++			if (perm == PACK_EXPIRED)
++				warning(_("preferred pack '%s' is expired"),
++					preferred_pack_name);
++		}
++	}
++
++	if (pack_name_concat_len % MIDX_CHUNK_ALIGNMENT)
++		pack_name_concat_len += MIDX_CHUNK_ALIGNMENT -
++					(pack_name_concat_len % MIDX_CHUNK_ALIGNMENT);
++
++	hold_lock_file_for_update(&lk, midx_name.buf, LOCK_DIE_ON_ERROR);
++	f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
++
++	if (ctx.nr - dropped_packs == 0) {
++		error(_("no pack files to index."));
++		result = 1;
++		goto cleanup;
++	}
++
++	if (!ctx.entries_nr) {
++		if (flags & MIDX_WRITE_BITMAP)
++			warning(_("refusing to write multi-pack .bitmap without any objects"));
++		flags &= ~(MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP);
++	}
++
++	cf = init_chunkfile(f);
++
++	add_chunk(cf, MIDX_CHUNKID_PACKNAMES, pack_name_concat_len,
++		  write_midx_pack_names);
++	add_chunk(cf, MIDX_CHUNKID_OIDFANOUT, MIDX_CHUNK_FANOUT_SIZE,
++		  write_midx_oid_fanout);
++	add_chunk(cf, MIDX_CHUNKID_OIDLOOKUP,
++		  st_mult(ctx.entries_nr, the_hash_algo->rawsz),
++		  write_midx_oid_lookup);
++	add_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS,
++		  st_mult(ctx.entries_nr, MIDX_CHUNK_OFFSET_WIDTH),
++		  write_midx_object_offsets);
++
++	if (ctx.large_offsets_needed)
++		add_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS,
++			st_mult(ctx.num_large_offsets,
++				MIDX_CHUNK_LARGE_OFFSET_WIDTH),
++			write_midx_large_offsets);
++
++	if (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP)) {
++		ctx.pack_order = midx_pack_order(&ctx);
++		add_chunk(cf, MIDX_CHUNKID_REVINDEX,
++			  st_mult(ctx.entries_nr, sizeof(uint32_t)),
++			  write_midx_revindex);
++		add_chunk(cf, MIDX_CHUNKID_BITMAPPEDPACKS,
++			  bitmapped_packs_concat_len,
++			  write_midx_bitmapped_packs);
++	}
++
++	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
++	write_chunkfile(cf, &ctx);
++
++	finalize_hashfile(f, midx_hash, FSYNC_COMPONENT_PACK_METADATA,
++			  CSUM_FSYNC | CSUM_HASH_IN_STREAM);
++	free_chunkfile(cf);
++
++	if (flags & MIDX_WRITE_REV_INDEX &&
++	    git_env_bool("GIT_TEST_MIDX_WRITE_REV", 0))
++		write_midx_reverse_index(midx_name.buf, midx_hash, &ctx);
++
++	if (flags & MIDX_WRITE_BITMAP) {
++		struct packing_data pdata;
++		struct commit **commits;
++		uint32_t commits_nr;
++
++		if (!ctx.entries_nr)
++			BUG("cannot write a bitmap without any objects");
++
++		prepare_midx_packing_data(&pdata, &ctx);
++
++		commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, &ctx);
++
++		/*
++		 * The previous steps translated the information from
++		 * 'entries' into information suitable for constructing
++		 * bitmaps. We no longer need that array, so clear it to
++		 * reduce memory pressure.
++		 */
++		FREE_AND_NULL(ctx.entries);
++		ctx.entries_nr = 0;
++
++		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
++				      commits, commits_nr, ctx.pack_order,
++				      flags) < 0) {
++			error(_("could not write multi-pack bitmap"));
++			result = 1;
++			clear_packing_data(&pdata);
++			free(commits);
++			goto cleanup;
++		}
++
++		clear_packing_data(&pdata);
++		free(commits);
++	}
++	/*
++	 * NOTE: Do not use ctx.entries beyond this point, since it might
++	 * have been freed in the previous if block.
++	 */
++
++	if (ctx.m)
++		close_object_store(the_repository->objects);
++
++	if (commit_lock_file(&lk) < 0)
++		die_errno(_("could not write multi-pack-index"));
++
++	clear_midx_files_ext(object_dir, ".bitmap", midx_hash);
++	clear_midx_files_ext(object_dir, ".rev", midx_hash);
++
++cleanup:
++	for (i = 0; i < ctx.nr; i++) {
++		if (ctx.info[i].p) {
++			close_pack(ctx.info[i].p);
++			free(ctx.info[i].p);
++		}
++		free(ctx.info[i].pack_name);
++	}
++
++	free(ctx.info);
++	free(ctx.entries);
++	free(ctx.pack_perm);
++	free(ctx.pack_order);
++	strbuf_release(&midx_name);
++
++	trace2_region_leave("midx", "write_midx_internal", the_repository);
++
++	return result;
++}
  
--	strbuf_addstr(&base_name, object_dir);
--	strbuf_addstr(&base_name, "/pack/pack");
--	strvec_push(&cmd.args, base_name.buf);
+ int write_midx_file(const char *object_dir,
+ 		    const char *preferred_pack_name,
+diff --git a/midx.c b/midx.c
+index 39b5c86736..ae3b49166c 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1,62 +1,22 @@
+ #include "git-compat-util.h"
+-#include "abspath.h"
+ #include "config.h"
+-#include "csum-file.h"
+ #include "dir.h"
+-#include "gettext.h"
+ #include "hex.h"
+-#include "lockfile.h"
+ #include "packfile.h"
+ #include "object-file.h"
+-#include "object-store-ll.h"
+ #include "hash-lookup.h"
+ #include "midx.h"
+ #include "progress.h"
+ #include "trace2.h"
+-#include "run-command.h"
+-#include "repository.h"
+ #include "chunk-format.h"
+-#include "pack.h"
+ #include "pack-bitmap.h"
+-#include "refs.h"
+-#include "revision.h"
+-#include "list-objects.h"
+ #include "pack-revindex.h"
+ 
+-struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+-							const char *object_dir);
 -
- 	if (delta_base_offset)
- 		strvec_push(&cmd.args, "--delta-base-offset");
- 	if (use_delta_islands)
-@@ -1487,7 +1482,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	else
- 		strvec_push(&cmd.args, "-q");
+-int write_midx_internal(const char *object_dir,
+-			       struct string_list *packs_to_include,
+-			       struct string_list *packs_to_drop,
+-			       const char *preferred_pack_name,
+-			       const char *refs_snapshot,
+-			       unsigned flags);
+-
+-#define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
+-#define MIDX_VERSION 1
+-#define MIDX_BYTE_FILE_VERSION 4
+-#define MIDX_BYTE_HASH_VERSION 5
+-#define MIDX_BYTE_NUM_CHUNKS 6
+-#define MIDX_BYTE_NUM_PACKS 8
+-#define MIDX_HEADER_SIZE 12
+-#define MIDX_MIN_SIZE (MIDX_HEADER_SIZE + the_hash_algo->rawsz)
+-
+-#define MIDX_CHUNK_ALIGNMENT 4
+-#define MIDX_CHUNKID_PACKNAMES 0x504e414d /* "PNAM" */
+-#define MIDX_CHUNKID_BITMAPPEDPACKS 0x42544d50 /* "BTMP" */
+-#define MIDX_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
+-#define MIDX_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
+-#define MIDX_CHUNKID_OBJECTOFFSETS 0x4f4f4646 /* "OOFF" */
+-#define MIDX_CHUNKID_LARGEOFFSETS 0x4c4f4646 /* "LOFF" */
+-#define MIDX_CHUNKID_REVINDEX 0x52494458 /* "RIDX" */
+-#define MIDX_CHUNK_FANOUT_SIZE (sizeof(uint32_t) * 256)
+-#define MIDX_CHUNK_OFFSET_WIDTH (2 * sizeof(uint32_t))
+-#define MIDX_CHUNK_LARGE_OFFSET_WIDTH (sizeof(uint64_t))
+-#define MIDX_CHUNK_BITMAPPED_PACKS_WIDTH (2 * sizeof(uint32_t))
+-#define MIDX_LARGE_OFFSET_NEEDED 0x80000000
+-
+-#define PACK_EXPIRED UINT_MAX
++int midx_checksum_valid(struct multi_pack_index *m);
++void clear_midx_files_ext(const char *object_dir, const char *ext,
++			  unsigned char *keep_hash);
++int cmp_idx_or_pack_name(const char *idx_or_pack_name,
++			 const char *idx_name);
  
--	strbuf_release(&base_name);
-+	strvec_pushf(&cmd.args, "%s/pack/pack", object_dir);
+ const unsigned char *get_midx_checksum(struct multi_pack_index *m)
+ {
+@@ -125,6 +85,8 @@ static int midx_read_object_offsets(const unsigned char *chunk_start,
+ 	return 0;
+ }
  
- 	cmd.git_cmd = 1;
- 	cmd.in = cmd.out = -1;
++#define MIDX_MIN_SIZE (MIDX_HEADER_SIZE + the_hash_algo->rawsz)
++
+ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local)
+ {
+ 	struct multi_pack_index *m = NULL;
+@@ -304,6 +266,8 @@ int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t
+ 	return 0;
+ }
+ 
++#define MIDX_CHUNK_BITMAPPED_PACKS_WIDTH (2 * sizeof(uint32_t))
++
+ int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
+ 		       struct bitmapped_pack *bp, uint32_t pack_int_id)
+ {
+@@ -410,8 +374,8 @@ int fill_midx_entry(struct repository *r,
+ }
+ 
+ /* Match "foo.idx" against either "foo.pack" _or_ "foo.idx". */
+-static int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+-				const char *idx_name)
++int cmp_idx_or_pack_name(const char *idx_or_pack_name,
++			 const char *idx_name)
+ {
+ 	/* Skip past any initial matching prefix. */
+ 	while (*idx_name && *idx_name == *idx_or_pack_name) {
+@@ -518,1243 +482,11 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
+ 	return 0;
+ }
+ 
+-static size_t write_midx_header(struct hashfile *f,
+-				unsigned char num_chunks,
+-				uint32_t num_packs)
+-{
+-	hashwrite_be32(f, MIDX_SIGNATURE);
+-	hashwrite_u8(f, MIDX_VERSION);
+-	hashwrite_u8(f, oid_version(the_hash_algo));
+-	hashwrite_u8(f, num_chunks);
+-	hashwrite_u8(f, 0); /* unused */
+-	hashwrite_be32(f, num_packs);
+-
+-	return MIDX_HEADER_SIZE;
+-}
+-
+-#define BITMAP_POS_UNKNOWN (~((uint32_t)0))
+-
+-struct pack_info {
+-	uint32_t orig_pack_int_id;
+-	char *pack_name;
+-	struct packed_git *p;
+-
+-	uint32_t bitmap_pos;
+-	uint32_t bitmap_nr;
+-
+-	unsigned expired : 1;
+-};
+-
+-static void fill_pack_info(struct pack_info *info,
+-			   struct packed_git *p, const char *pack_name,
+-			   uint32_t orig_pack_int_id)
+-{
+-	memset(info, 0, sizeof(struct pack_info));
+-
+-	info->orig_pack_int_id = orig_pack_int_id;
+-	info->pack_name = xstrdup(pack_name);
+-	info->p = p;
+-	info->bitmap_pos = BITMAP_POS_UNKNOWN;
+-}
+-
+-static int pack_info_compare(const void *_a, const void *_b)
+-{
+-	struct pack_info *a = (struct pack_info *)_a;
+-	struct pack_info *b = (struct pack_info *)_b;
+-	return strcmp(a->pack_name, b->pack_name);
+-}
+-
+-static int idx_or_pack_name_cmp(const void *_va, const void *_vb)
+-{
+-	const char *pack_name = _va;
+-	const struct pack_info *compar = _vb;
+-
+-	return cmp_idx_or_pack_name(pack_name, compar->pack_name);
+-}
+-
+-struct write_midx_context {
+-	struct pack_info *info;
+-	size_t nr;
+-	size_t alloc;
+-	struct multi_pack_index *m;
+-	struct progress *progress;
+-	unsigned pack_paths_checked;
+-
+-	struct pack_midx_entry *entries;
+-	size_t entries_nr;
+-
+-	uint32_t *pack_perm;
+-	uint32_t *pack_order;
+-	unsigned large_offsets_needed:1;
+-	uint32_t num_large_offsets;
+-
+-	int preferred_pack_idx;
+-
+-	struct string_list *to_include;
+-};
+-
+-static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+-			     const char *file_name, void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	struct packed_git *p;
+-
+-	if (ends_with(file_name, ".idx")) {
+-		display_progress(ctx->progress, ++ctx->pack_paths_checked);
+-		/*
+-		 * Note that at most one of ctx->m and ctx->to_include are set,
+-		 * so we are testing midx_contains_pack() and
+-		 * string_list_has_string() independently (guarded by the
+-		 * appropriate NULL checks).
+-		 *
+-		 * We could support passing to_include while reusing an existing
+-		 * MIDX, but don't currently since the reuse process drags
+-		 * forward all packs from an existing MIDX (without checking
+-		 * whether or not they appear in the to_include list).
+-		 *
+-		 * If we added support for that, these next two conditional
+-		 * should be performed independently (likely checking
+-		 * to_include before the existing MIDX).
+-		 */
+-		if (ctx->m && midx_contains_pack(ctx->m, file_name))
+-			return;
+-		else if (ctx->to_include &&
+-			 !string_list_has_string(ctx->to_include, file_name))
+-			return;
+-
+-		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+-
+-		p = add_packed_git(full_path, full_path_len, 0);
+-		if (!p) {
+-			warning(_("failed to add packfile '%s'"),
+-				full_path);
+-			return;
+-		}
+-
+-		if (open_pack_index(p)) {
+-			warning(_("failed to open pack-index '%s'"),
+-				full_path);
+-			close_pack(p);
+-			free(p);
+-			return;
+-		}
+-
+-		fill_pack_info(&ctx->info[ctx->nr], p, file_name, ctx->nr);
+-		ctx->nr++;
+-	}
+-}
+-
+-struct pack_midx_entry {
+-	struct object_id oid;
+-	uint32_t pack_int_id;
+-	time_t pack_mtime;
+-	uint64_t offset;
+-	unsigned preferred : 1;
+-};
+-
+-static int midx_oid_compare(const void *_a, const void *_b)
+-{
+-	const struct pack_midx_entry *a = (const struct pack_midx_entry *)_a;
+-	const struct pack_midx_entry *b = (const struct pack_midx_entry *)_b;
+-	int cmp = oidcmp(&a->oid, &b->oid);
+-
+-	if (cmp)
+-		return cmp;
+-
+-	/* Sort objects in a preferred pack first when multiple copies exist. */
+-	if (a->preferred > b->preferred)
+-		return -1;
+-	if (a->preferred < b->preferred)
+-		return 1;
+-
+-	if (a->pack_mtime > b->pack_mtime)
+-		return -1;
+-	else if (a->pack_mtime < b->pack_mtime)
+-		return 1;
+-
+-	return a->pack_int_id - b->pack_int_id;
+-}
+-
+-static int nth_midxed_pack_midx_entry(struct multi_pack_index *m,
+-				      struct pack_midx_entry *e,
+-				      uint32_t pos)
+-{
+-	if (pos >= m->num_objects)
+-		return 1;
+-
+-	nth_midxed_object_oid(&e->oid, m, pos);
+-	e->pack_int_id = nth_midxed_pack_int_id(m, pos);
+-	e->offset = nth_midxed_offset(m, pos);
+-
+-	/* consider objects in midx to be from "old" packs */
+-	e->pack_mtime = 0;
+-	return 0;
+-}
+-
+-static void fill_pack_entry(uint32_t pack_int_id,
+-			    struct packed_git *p,
+-			    uint32_t cur_object,
+-			    struct pack_midx_entry *entry,
+-			    int preferred)
+-{
+-	if (nth_packed_object_id(&entry->oid, p, cur_object) < 0)
+-		die(_("failed to locate object %d in packfile"), cur_object);
+-
+-	entry->pack_int_id = pack_int_id;
+-	entry->pack_mtime = p->mtime;
+-
+-	entry->offset = nth_packed_object_offset(p, cur_object);
+-	entry->preferred = !!preferred;
+-}
+-
+-struct midx_fanout {
+-	struct pack_midx_entry *entries;
+-	size_t nr, alloc;
+-};
+-
+-static void midx_fanout_grow(struct midx_fanout *fanout, size_t nr)
+-{
+-	if (nr < fanout->nr)
+-		BUG("negative growth in midx_fanout_grow() (%"PRIuMAX" < %"PRIuMAX")",
+-		    (uintmax_t)nr, (uintmax_t)fanout->nr);
+-	ALLOC_GROW(fanout->entries, nr, fanout->alloc);
+-}
+-
+-static void midx_fanout_sort(struct midx_fanout *fanout)
+-{
+-	QSORT(fanout->entries, fanout->nr, midx_oid_compare);
+-}
+-
+-static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
+-					struct multi_pack_index *m,
+-					uint32_t cur_fanout,
+-					int preferred_pack)
+-{
+-	uint32_t start = 0, end;
+-	uint32_t cur_object;
+-
+-	if (cur_fanout)
+-		start = ntohl(m->chunk_oid_fanout[cur_fanout - 1]);
+-	end = ntohl(m->chunk_oid_fanout[cur_fanout]);
+-
+-	for (cur_object = start; cur_object < end; cur_object++) {
+-		if ((preferred_pack > -1) &&
+-		    (preferred_pack == nth_midxed_pack_int_id(m, cur_object))) {
+-			/*
+-			 * Objects from preferred packs are added
+-			 * separately.
+-			 */
+-			continue;
+-		}
+-
+-		midx_fanout_grow(fanout, fanout->nr + 1);
+-		nth_midxed_pack_midx_entry(m,
+-					   &fanout->entries[fanout->nr],
+-					   cur_object);
+-		fanout->entries[fanout->nr].preferred = 0;
+-		fanout->nr++;
+-	}
+-}
+-
+-static void midx_fanout_add_pack_fanout(struct midx_fanout *fanout,
+-					struct pack_info *info,
+-					uint32_t cur_pack,
+-					int preferred,
+-					uint32_t cur_fanout)
+-{
+-	struct packed_git *pack = info[cur_pack].p;
+-	uint32_t start = 0, end;
+-	uint32_t cur_object;
+-
+-	if (cur_fanout)
+-		start = get_pack_fanout(pack, cur_fanout - 1);
+-	end = get_pack_fanout(pack, cur_fanout);
+-
+-	for (cur_object = start; cur_object < end; cur_object++) {
+-		midx_fanout_grow(fanout, fanout->nr + 1);
+-		fill_pack_entry(cur_pack,
+-				info[cur_pack].p,
+-				cur_object,
+-				&fanout->entries[fanout->nr],
+-				preferred);
+-		fanout->nr++;
+-	}
+-}
+-
+-/*
+- * It is possible to artificially get into a state where there are many
+- * duplicate copies of objects. That can create high memory pressure if
+- * we are to create a list of all objects before de-duplication. To reduce
+- * this memory pressure without a significant performance drop, automatically
+- * group objects by the first byte of their object id. Use the IDX fanout
+- * tables to group the data, copy to a local array, then sort.
+- *
+- * Copy only the de-duplicated entries (selected by most-recent modified time
+- * of a packfile containing the object).
+- */
+-static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
+-						  struct pack_info *info,
+-						  uint32_t nr_packs,
+-						  size_t *nr_objects,
+-						  int preferred_pack)
+-{
+-	uint32_t cur_fanout, cur_pack, cur_object;
+-	size_t alloc_objects, total_objects = 0;
+-	struct midx_fanout fanout = { 0 };
+-	struct pack_midx_entry *deduplicated_entries = NULL;
+-	uint32_t start_pack = m ? m->num_packs : 0;
+-
+-	for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++)
+-		total_objects = st_add(total_objects,
+-				       info[cur_pack].p->num_objects);
+-
+-	/*
+-	 * As we de-duplicate by fanout value, we expect the fanout
+-	 * slices to be evenly distributed, with some noise. Hence,
+-	 * allocate slightly more than one 256th.
+-	 */
+-	alloc_objects = fanout.alloc = total_objects > 3200 ? total_objects / 200 : 16;
+-
+-	ALLOC_ARRAY(fanout.entries, fanout.alloc);
+-	ALLOC_ARRAY(deduplicated_entries, alloc_objects);
+-	*nr_objects = 0;
+-
+-	for (cur_fanout = 0; cur_fanout < 256; cur_fanout++) {
+-		fanout.nr = 0;
+-
+-		if (m)
+-			midx_fanout_add_midx_fanout(&fanout, m, cur_fanout,
+-						    preferred_pack);
+-
+-		for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++) {
+-			int preferred = cur_pack == preferred_pack;
+-			midx_fanout_add_pack_fanout(&fanout,
+-						    info, cur_pack,
+-						    preferred, cur_fanout);
+-		}
+-
+-		if (-1 < preferred_pack && preferred_pack < start_pack)
+-			midx_fanout_add_pack_fanout(&fanout, info,
+-						    preferred_pack, 1,
+-						    cur_fanout);
+-
+-		midx_fanout_sort(&fanout);
+-
+-		/*
+-		 * The batch is now sorted by OID and then mtime (descending).
+-		 * Take only the first duplicate.
+-		 */
+-		for (cur_object = 0; cur_object < fanout.nr; cur_object++) {
+-			if (cur_object && oideq(&fanout.entries[cur_object - 1].oid,
+-						&fanout.entries[cur_object].oid))
+-				continue;
+-
+-			ALLOC_GROW(deduplicated_entries, st_add(*nr_objects, 1),
+-				   alloc_objects);
+-			memcpy(&deduplicated_entries[*nr_objects],
+-			       &fanout.entries[cur_object],
+-			       sizeof(struct pack_midx_entry));
+-			(*nr_objects)++;
+-		}
+-	}
+-
+-	free(fanout.entries);
+-	return deduplicated_entries;
+-}
+-
+-static int write_midx_pack_names(struct hashfile *f, void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	uint32_t i;
+-	unsigned char padding[MIDX_CHUNK_ALIGNMENT];
+-	size_t written = 0;
+-
+-	for (i = 0; i < ctx->nr; i++) {
+-		size_t writelen;
+-
+-		if (ctx->info[i].expired)
+-			continue;
+-
+-		if (i && strcmp(ctx->info[i].pack_name, ctx->info[i - 1].pack_name) <= 0)
+-			BUG("incorrect pack-file order: %s before %s",
+-			    ctx->info[i - 1].pack_name,
+-			    ctx->info[i].pack_name);
+-
+-		writelen = strlen(ctx->info[i].pack_name) + 1;
+-		hashwrite(f, ctx->info[i].pack_name, writelen);
+-		written += writelen;
+-	}
+-
+-	/* add padding to be aligned */
+-	i = MIDX_CHUNK_ALIGNMENT - (written % MIDX_CHUNK_ALIGNMENT);
+-	if (i < MIDX_CHUNK_ALIGNMENT) {
+-		memset(padding, 0, sizeof(padding));
+-		hashwrite(f, padding, i);
+-	}
+-
+-	return 0;
+-}
+-
+-static int write_midx_bitmapped_packs(struct hashfile *f, void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	size_t i;
+-
+-	for (i = 0; i < ctx->nr; i++) {
+-		struct pack_info *pack = &ctx->info[i];
+-		if (pack->expired)
+-			continue;
+-
+-		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN && pack->bitmap_nr)
+-			BUG("pack '%s' has no bitmap position, but has %d bitmapped object(s)",
+-			    pack->pack_name, pack->bitmap_nr);
+-
+-		hashwrite_be32(f, pack->bitmap_pos);
+-		hashwrite_be32(f, pack->bitmap_nr);
+-	}
+-	return 0;
+-}
+-
+-static int write_midx_oid_fanout(struct hashfile *f,
+-				 void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	struct pack_midx_entry *list = ctx->entries;
+-	struct pack_midx_entry *last = ctx->entries + ctx->entries_nr;
+-	uint32_t count = 0;
+-	uint32_t i;
+-
+-	/*
+-	* Write the first-level table (the list is sorted,
+-	* but we use a 256-entry lookup to be able to avoid
+-	* having to do eight extra binary search iterations).
+-	*/
+-	for (i = 0; i < 256; i++) {
+-		struct pack_midx_entry *next = list;
+-
+-		while (next < last && next->oid.hash[0] == i) {
+-			count++;
+-			next++;
+-		}
+-
+-		hashwrite_be32(f, count);
+-		list = next;
+-	}
+-
+-	return 0;
+-}
+-
+-static int write_midx_oid_lookup(struct hashfile *f,
+-				 void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	unsigned char hash_len = the_hash_algo->rawsz;
+-	struct pack_midx_entry *list = ctx->entries;
+-	uint32_t i;
+-
+-	for (i = 0; i < ctx->entries_nr; i++) {
+-		struct pack_midx_entry *obj = list++;
+-
+-		if (i < ctx->entries_nr - 1) {
+-			struct pack_midx_entry *next = list;
+-			if (oidcmp(&obj->oid, &next->oid) >= 0)
+-				BUG("OIDs not in order: %s >= %s",
+-				    oid_to_hex(&obj->oid),
+-				    oid_to_hex(&next->oid));
+-		}
+-
+-		hashwrite(f, obj->oid.hash, (int)hash_len);
+-	}
+-
+-	return 0;
+-}
+-
+-static int write_midx_object_offsets(struct hashfile *f,
+-				     void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	struct pack_midx_entry *list = ctx->entries;
+-	uint32_t i, nr_large_offset = 0;
+-
+-	for (i = 0; i < ctx->entries_nr; i++) {
+-		struct pack_midx_entry *obj = list++;
+-
+-		if (ctx->pack_perm[obj->pack_int_id] == PACK_EXPIRED)
+-			BUG("object %s is in an expired pack with int-id %d",
+-			    oid_to_hex(&obj->oid),
+-			    obj->pack_int_id);
+-
+-		hashwrite_be32(f, ctx->pack_perm[obj->pack_int_id]);
+-
+-		if (ctx->large_offsets_needed && obj->offset >> 31)
+-			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
+-		else if (!ctx->large_offsets_needed && obj->offset >> 32)
+-			BUG("object %s requires a large offset (%"PRIx64") but the MIDX is not writing large offsets!",
+-			    oid_to_hex(&obj->oid),
+-			    obj->offset);
+-		else
+-			hashwrite_be32(f, (uint32_t)obj->offset);
+-	}
+-
+-	return 0;
+-}
+-
+-static int write_midx_large_offsets(struct hashfile *f,
+-				    void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	struct pack_midx_entry *list = ctx->entries;
+-	struct pack_midx_entry *end = ctx->entries + ctx->entries_nr;
+-	uint32_t nr_large_offset = ctx->num_large_offsets;
+-
+-	while (nr_large_offset) {
+-		struct pack_midx_entry *obj;
+-		uint64_t offset;
+-
+-		if (list >= end)
+-			BUG("too many large-offset objects");
+-
+-		obj = list++;
+-		offset = obj->offset;
+-
+-		if (!(offset >> 31))
+-			continue;
+-
+-		hashwrite_be64(f, offset);
+-
+-		nr_large_offset--;
+-	}
+-
+-	return 0;
+-}
+-
+-static int write_midx_revindex(struct hashfile *f,
+-			       void *data)
+-{
+-	struct write_midx_context *ctx = data;
+-	uint32_t i;
+-
+-	for (i = 0; i < ctx->entries_nr; i++)
+-		hashwrite_be32(f, ctx->pack_order[i]);
+-
+-	return 0;
+-}
+-
+-struct midx_pack_order_data {
+-	uint32_t nr;
+-	uint32_t pack;
+-	off_t offset;
+-};
+-
+-static int midx_pack_order_cmp(const void *va, const void *vb)
+-{
+-	const struct midx_pack_order_data *a = va, *b = vb;
+-	if (a->pack < b->pack)
+-		return -1;
+-	else if (a->pack > b->pack)
+-		return 1;
+-	else if (a->offset < b->offset)
+-		return -1;
+-	else if (a->offset > b->offset)
+-		return 1;
+-	else
+-		return 0;
+-}
+-
+-static uint32_t *midx_pack_order(struct write_midx_context *ctx)
+-{
+-	struct midx_pack_order_data *data;
+-	uint32_t *pack_order;
+-	uint32_t i;
+-
+-	trace2_region_enter("midx", "midx_pack_order", the_repository);
+-
+-	ALLOC_ARRAY(data, ctx->entries_nr);
+-	for (i = 0; i < ctx->entries_nr; i++) {
+-		struct pack_midx_entry *e = &ctx->entries[i];
+-		data[i].nr = i;
+-		data[i].pack = ctx->pack_perm[e->pack_int_id];
+-		if (!e->preferred)
+-			data[i].pack |= (1U << 31);
+-		data[i].offset = e->offset;
+-	}
+-
+-	QSORT(data, ctx->entries_nr, midx_pack_order_cmp);
+-
+-	ALLOC_ARRAY(pack_order, ctx->entries_nr);
+-	for (i = 0; i < ctx->entries_nr; i++) {
+-		struct pack_midx_entry *e = &ctx->entries[data[i].nr];
+-		struct pack_info *pack = &ctx->info[ctx->pack_perm[e->pack_int_id]];
+-		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
+-			pack->bitmap_pos = i;
+-		pack->bitmap_nr++;
+-		pack_order[i] = data[i].nr;
+-	}
+-	for (i = 0; i < ctx->nr; i++) {
+-		struct pack_info *pack = &ctx->info[ctx->pack_perm[i]];
+-		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
+-			pack->bitmap_pos = 0;
+-	}
+-	free(data);
+-
+-	trace2_region_leave("midx", "midx_pack_order", the_repository);
+-
+-	return pack_order;
+-}
+-
+-static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
+-				     struct write_midx_context *ctx)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	const char *tmp_file;
+-
+-	trace2_region_enter("midx", "write_midx_reverse_index", the_repository);
+-
+-	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex(midx_hash));
+-
+-	tmp_file = write_rev_file_order(NULL, ctx->pack_order, ctx->entries_nr,
+-					midx_hash, WRITE_REV);
+-
+-	if (finalize_object_file(tmp_file, buf.buf))
+-		die(_("cannot store reverse index file"));
+-
+-	strbuf_release(&buf);
+-
+-	trace2_region_leave("midx", "write_midx_reverse_index", the_repository);
+-}
+-
+-static void clear_midx_files_ext(const char *object_dir, const char *ext,
+-				 unsigned char *keep_hash);
+-
+-static int midx_checksum_valid(struct multi_pack_index *m)
++int midx_checksum_valid(struct multi_pack_index *m)
+ {
+ 	return hashfile_checksum_valid(m->data, m->data_len);
+ }
+ 
+-static void prepare_midx_packing_data(struct packing_data *pdata,
+-				      struct write_midx_context *ctx)
+-{
+-	uint32_t i;
+-
+-	trace2_region_enter("midx", "prepare_midx_packing_data", the_repository);
+-
+-	memset(pdata, 0, sizeof(struct packing_data));
+-	prepare_packing_data(the_repository, pdata);
+-
+-	for (i = 0; i < ctx->entries_nr; i++) {
+-		struct pack_midx_entry *from = &ctx->entries[ctx->pack_order[i]];
+-		struct object_entry *to = packlist_alloc(pdata, &from->oid);
+-
+-		oe_set_in_pack(pdata, to,
+-			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
+-	}
+-
+-	trace2_region_leave("midx", "prepare_midx_packing_data", the_repository);
+-}
+-
+-static int add_ref_to_pending(const char *refname,
+-			      const struct object_id *oid,
+-			      int flag, void *cb_data)
+-{
+-	struct rev_info *revs = (struct rev_info*)cb_data;
+-	struct object_id peeled;
+-	struct object *object;
+-
+-	if ((flag & REF_ISSYMREF) && (flag & REF_ISBROKEN)) {
+-		warning("symbolic ref is dangling: %s", refname);
+-		return 0;
+-	}
+-
+-	if (!peel_iterated_oid(oid, &peeled))
+-		oid = &peeled;
+-
+-	object = parse_object_or_die(oid, refname);
+-	if (object->type != OBJ_COMMIT)
+-		return 0;
+-
+-	add_pending_object(revs, object, "");
+-	if (bitmap_is_preferred_refname(revs->repo, refname))
+-		object->flags |= NEEDS_BITMAP;
+-	return 0;
+-}
+-
+-struct bitmap_commit_cb {
+-	struct commit **commits;
+-	size_t commits_nr, commits_alloc;
+-
+-	struct write_midx_context *ctx;
+-};
+-
+-static const struct object_id *bitmap_oid_access(size_t index,
+-						 const void *_entries)
+-{
+-	const struct pack_midx_entry *entries = _entries;
+-	return &entries[index].oid;
+-}
+-
+-static void bitmap_show_commit(struct commit *commit, void *_data)
+-{
+-	struct bitmap_commit_cb *data = _data;
+-	int pos = oid_pos(&commit->object.oid, data->ctx->entries,
+-			  data->ctx->entries_nr,
+-			  bitmap_oid_access);
+-	if (pos < 0)
+-		return;
+-
+-	ALLOC_GROW(data->commits, data->commits_nr + 1, data->commits_alloc);
+-	data->commits[data->commits_nr++] = commit;
+-}
+-
+-static int read_refs_snapshot(const char *refs_snapshot,
+-			      struct rev_info *revs)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	struct object_id oid;
+-	FILE *f = xfopen(refs_snapshot, "r");
+-
+-	while (strbuf_getline(&buf, f) != EOF) {
+-		struct object *object;
+-		int preferred = 0;
+-		char *hex = buf.buf;
+-		const char *end = NULL;
+-
+-		if (buf.len && *buf.buf == '+') {
+-			preferred = 1;
+-			hex = &buf.buf[1];
+-		}
+-
+-		if (parse_oid_hex(hex, &oid, &end) < 0)
+-			die(_("could not parse line: %s"), buf.buf);
+-		if (*end)
+-			die(_("malformed line: %s"), buf.buf);
+-
+-		object = parse_object_or_die(&oid, NULL);
+-		if (preferred)
+-			object->flags |= NEEDS_BITMAP;
+-
+-		add_pending_object(revs, object, "");
+-	}
+-
+-	fclose(f);
+-	strbuf_release(&buf);
+-	return 0;
+-}
+-
+-static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr_p,
+-						    const char *refs_snapshot,
+-						    struct write_midx_context *ctx)
+-{
+-	struct rev_info revs;
+-	struct bitmap_commit_cb cb = {0};
+-
+-	trace2_region_enter("midx", "find_commits_for_midx_bitmap",
+-			    the_repository);
+-
+-	cb.ctx = ctx;
+-
+-	repo_init_revisions(the_repository, &revs, NULL);
+-	if (refs_snapshot) {
+-		read_refs_snapshot(refs_snapshot, &revs);
+-	} else {
+-		setup_revisions(0, NULL, &revs, NULL);
+-		for_each_ref(add_ref_to_pending, &revs);
+-	}
+-
+-	/*
+-	 * Skipping promisor objects here is intentional, since it only excludes
+-	 * them from the list of reachable commits that we want to select from
+-	 * when computing the selection of MIDX'd commits to receive bitmaps.
+-	 *
+-	 * Reachability bitmaps do require that their objects be closed under
+-	 * reachability, but fetching any objects missing from promisors at this
+-	 * point is too late. But, if one of those objects can be reached from
+-	 * an another object that is included in the bitmap, then we will
+-	 * complain later that we don't have reachability closure (and fail
+-	 * appropriately).
+-	 */
+-	fetch_if_missing = 0;
+-	revs.exclude_promisor_objects = 1;
+-
+-	if (prepare_revision_walk(&revs))
+-		die(_("revision walk setup failed"));
+-
+-	traverse_commit_list(&revs, bitmap_show_commit, NULL, &cb);
+-	if (indexed_commits_nr_p)
+-		*indexed_commits_nr_p = cb.commits_nr;
+-
+-	release_revisions(&revs);
+-
+-	trace2_region_leave("midx", "find_commits_for_midx_bitmap",
+-			    the_repository);
+-
+-	return cb.commits;
+-}
+-
+-static int write_midx_bitmap(const char *midx_name,
+-			     const unsigned char *midx_hash,
+-			     struct packing_data *pdata,
+-			     struct commit **commits,
+-			     uint32_t commits_nr,
+-			     uint32_t *pack_order,
+-			     unsigned flags)
+-{
+-	int ret, i;
+-	uint16_t options = 0;
+-	struct pack_idx_entry **index;
+-	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
+-					hash_to_hex(midx_hash));
+-
+-	trace2_region_enter("midx", "write_midx_bitmap", the_repository);
+-
+-	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
+-		options |= BITMAP_OPT_HASH_CACHE;
+-
+-	if (flags & MIDX_WRITE_BITMAP_LOOKUP_TABLE)
+-		options |= BITMAP_OPT_LOOKUP_TABLE;
+-
+-	/*
+-	 * Build the MIDX-order index based on pdata.objects (which is already
+-	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
+-	 * this order).
+-	 */
+-	ALLOC_ARRAY(index, pdata->nr_objects);
+-	for (i = 0; i < pdata->nr_objects; i++)
+-		index[i] = &pdata->objects[i].idx;
+-
+-	bitmap_writer_show_progress(flags & MIDX_PROGRESS);
+-	bitmap_writer_build_type_index(pdata, index, pdata->nr_objects);
+-
+-	/*
+-	 * bitmap_writer_finish expects objects in lex order, but pack_order
+-	 * gives us exactly that. use it directly instead of re-sorting the
+-	 * array.
+-	 *
+-	 * This changes the order of objects in 'index' between
+-	 * bitmap_writer_build_type_index and bitmap_writer_finish.
+-	 *
+-	 * The same re-ordering takes place in the single-pack bitmap code via
+-	 * write_idx_file(), which is called by finish_tmp_packfile(), which
+-	 * happens between bitmap_writer_build_type_index() and
+-	 * bitmap_writer_finish().
+-	 */
+-	for (i = 0; i < pdata->nr_objects; i++)
+-		index[pack_order[i]] = &pdata->objects[i].idx;
+-
+-	bitmap_writer_select_commits(commits, commits_nr, -1);
+-	ret = bitmap_writer_build(pdata);
+-	if (ret < 0)
+-		goto cleanup;
+-
+-	bitmap_writer_set_checksum(midx_hash);
+-	bitmap_writer_finish(index, pdata->nr_objects, bitmap_name, options);
+-
+-cleanup:
+-	free(index);
+-	free(bitmap_name);
+-
+-	trace2_region_leave("midx", "write_midx_bitmap", the_repository);
+-
+-	return ret;
+-}
+-
+-struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+-							const char *object_dir)
+-{
+-	struct multi_pack_index *result = NULL;
+-	struct multi_pack_index *cur;
+-	char *obj_dir_real = real_pathdup(object_dir, 1);
+-	struct strbuf cur_path_real = STRBUF_INIT;
+-
+-	/* Ensure the given object_dir is local, or a known alternate. */
+-	find_odb(r, obj_dir_real);
+-
+-	for (cur = get_multi_pack_index(r); cur; cur = cur->next) {
+-		strbuf_realpath(&cur_path_real, cur->object_dir, 1);
+-		if (!strcmp(obj_dir_real, cur_path_real.buf)) {
+-			result = cur;
+-			goto cleanup;
+-		}
+-	}
+-
+-cleanup:
+-	free(obj_dir_real);
+-	strbuf_release(&cur_path_real);
+-	return result;
+-}
+-
+-int write_midx_internal(const char *object_dir,
+-			struct string_list *packs_to_include,
+-			struct string_list *packs_to_drop,
+-			const char *preferred_pack_name,
+-			const char *refs_snapshot,
+-			unsigned flags)
+-{
+-	struct strbuf midx_name = STRBUF_INIT;
+-	unsigned char midx_hash[GIT_MAX_RAWSZ];
+-	uint32_t i;
+-	struct hashfile *f = NULL;
+-	struct lock_file lk;
+-	struct write_midx_context ctx = { 0 };
+-	int bitmapped_packs_concat_len = 0;
+-	int pack_name_concat_len = 0;
+-	int dropped_packs = 0;
+-	int result = 0;
+-	struct chunkfile *cf;
+-
+-	trace2_region_enter("midx", "write_midx_internal", the_repository);
+-
+-	get_midx_filename(&midx_name, object_dir);
+-	if (safe_create_leading_directories(midx_name.buf))
+-		die_errno(_("unable to create leading directories of %s"),
+-			  midx_name.buf);
+-
+-	if (!packs_to_include) {
+-		/*
+-		 * Only reference an existing MIDX when not filtering which
+-		 * packs to include, since all packs and objects are copied
+-		 * blindly from an existing MIDX if one is present.
+-		 */
+-		ctx.m = lookup_multi_pack_index(the_repository, object_dir);
+-	}
+-
+-	if (ctx.m && !midx_checksum_valid(ctx.m)) {
+-		warning(_("ignoring existing multi-pack-index; checksum mismatch"));
+-		ctx.m = NULL;
+-	}
+-
+-	ctx.nr = 0;
+-	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
+-	ctx.info = NULL;
+-	ALLOC_ARRAY(ctx.info, ctx.alloc);
+-
+-	if (ctx.m) {
+-		for (i = 0; i < ctx.m->num_packs; i++) {
+-			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+-
+-			if (flags & MIDX_WRITE_REV_INDEX) {
+-				/*
+-				 * If generating a reverse index, need to have
+-				 * packed_git's loaded to compare their
+-				 * mtimes and object count.
+-				 */
+-				if (prepare_midx_pack(the_repository, ctx.m, i)) {
+-					error(_("could not load pack"));
+-					result = 1;
+-					goto cleanup;
+-				}
+-
+-				if (open_pack_index(ctx.m->packs[i]))
+-					die(_("could not open index for %s"),
+-					    ctx.m->packs[i]->pack_name);
+-			}
+-
+-			fill_pack_info(&ctx.info[ctx.nr++], ctx.m->packs[i],
+-				       ctx.m->pack_names[i], i);
+-		}
+-	}
+-
+-	ctx.pack_paths_checked = 0;
+-	if (flags & MIDX_PROGRESS)
+-		ctx.progress = start_delayed_progress(_("Adding packfiles to multi-pack-index"), 0);
+-	else
+-		ctx.progress = NULL;
+-
+-	ctx.to_include = packs_to_include;
+-
+-	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
+-	stop_progress(&ctx.progress);
+-
+-	if ((ctx.m && ctx.nr == ctx.m->num_packs) &&
+-	    !(packs_to_include || packs_to_drop)) {
+-		struct bitmap_index *bitmap_git;
+-		int bitmap_exists;
+-		int want_bitmap = flags & MIDX_WRITE_BITMAP;
+-
+-		bitmap_git = prepare_midx_bitmap_git(ctx.m);
+-		bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
+-		free_bitmap_index(bitmap_git);
+-
+-		if (bitmap_exists || !want_bitmap) {
+-			/*
+-			 * The correct MIDX already exists, and so does a
+-			 * corresponding bitmap (or one wasn't requested).
+-			 */
+-			if (!want_bitmap)
+-				clear_midx_files_ext(object_dir, ".bitmap",
+-						     NULL);
+-			goto cleanup;
+-		}
+-	}
+-
+-	if (preferred_pack_name) {
+-		ctx.preferred_pack_idx = -1;
+-
+-		for (i = 0; i < ctx.nr; i++) {
+-			if (!cmp_idx_or_pack_name(preferred_pack_name,
+-						  ctx.info[i].pack_name)) {
+-				ctx.preferred_pack_idx = i;
+-				break;
+-			}
+-		}
+-
+-		if (ctx.preferred_pack_idx == -1)
+-			warning(_("unknown preferred pack: '%s'"),
+-				preferred_pack_name);
+-	} else if (ctx.nr &&
+-		   (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))) {
+-		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
+-		ctx.preferred_pack_idx = 0;
+-
+-		if (packs_to_drop && packs_to_drop->nr)
+-			BUG("cannot write a MIDX bitmap during expiration");
+-
+-		/*
+-		 * set a preferred pack when writing a bitmap to ensure that
+-		 * the pack from which the first object is selected in pseudo
+-		 * pack-order has all of its objects selected from that pack
+-		 * (and not another pack containing a duplicate)
+-		 */
+-		for (i = 1; i < ctx.nr; i++) {
+-			struct packed_git *p = ctx.info[i].p;
+-
+-			if (!oldest->num_objects || p->mtime < oldest->mtime) {
+-				oldest = p;
+-				ctx.preferred_pack_idx = i;
+-			}
+-		}
+-
+-		if (!oldest->num_objects) {
+-			/*
+-			 * If all packs are empty; unset the preferred index.
+-			 * This is acceptable since there will be no duplicate
+-			 * objects to resolve, so the preferred value doesn't
+-			 * matter.
+-			 */
+-			ctx.preferred_pack_idx = -1;
+-		}
+-	} else {
+-		/*
+-		 * otherwise don't mark any pack as preferred to avoid
+-		 * interfering with expiration logic below
+-		 */
+-		ctx.preferred_pack_idx = -1;
+-	}
+-
+-	if (ctx.preferred_pack_idx > -1) {
+-		struct packed_git *preferred = ctx.info[ctx.preferred_pack_idx].p;
+-		if (!preferred->num_objects) {
+-			error(_("cannot select preferred pack %s with no objects"),
+-			      preferred->pack_name);
+-			result = 1;
+-			goto cleanup;
+-		}
+-	}
+-
+-	ctx.entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &ctx.entries_nr,
+-					 ctx.preferred_pack_idx);
+-
+-	ctx.large_offsets_needed = 0;
+-	for (i = 0; i < ctx.entries_nr; i++) {
+-		if (ctx.entries[i].offset > 0x7fffffff)
+-			ctx.num_large_offsets++;
+-		if (ctx.entries[i].offset > 0xffffffff)
+-			ctx.large_offsets_needed = 1;
+-	}
+-
+-	QSORT(ctx.info, ctx.nr, pack_info_compare);
+-
+-	if (packs_to_drop && packs_to_drop->nr) {
+-		int drop_index = 0;
+-		int missing_drops = 0;
+-
+-		for (i = 0; i < ctx.nr && drop_index < packs_to_drop->nr; i++) {
+-			int cmp = strcmp(ctx.info[i].pack_name,
+-					 packs_to_drop->items[drop_index].string);
+-
+-			if (!cmp) {
+-				drop_index++;
+-				ctx.info[i].expired = 1;
+-			} else if (cmp > 0) {
+-				error(_("did not see pack-file %s to drop"),
+-				      packs_to_drop->items[drop_index].string);
+-				drop_index++;
+-				missing_drops++;
+-				i--;
+-			} else {
+-				ctx.info[i].expired = 0;
+-			}
+-		}
+-
+-		if (missing_drops) {
+-			result = 1;
+-			goto cleanup;
+-		}
+-	}
+-
+-	/*
+-	 * pack_perm stores a permutation between pack-int-ids from the
+-	 * previous multi-pack-index to the new one we are writing:
+-	 *
+-	 * pack_perm[old_id] = new_id
+-	 */
+-	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
+-	for (i = 0; i < ctx.nr; i++) {
+-		if (ctx.info[i].expired) {
+-			dropped_packs++;
+-			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
+-		} else {
+-			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
+-		}
+-	}
+-
+-	for (i = 0; i < ctx.nr; i++) {
+-		if (ctx.info[i].expired)
+-			continue;
+-		pack_name_concat_len += strlen(ctx.info[i].pack_name) + 1;
+-		bitmapped_packs_concat_len += 2 * sizeof(uint32_t);
+-	}
+-
+-	/* Check that the preferred pack wasn't expired (if given). */
+-	if (preferred_pack_name) {
+-		struct pack_info *preferred = bsearch(preferred_pack_name,
+-						      ctx.info, ctx.nr,
+-						      sizeof(*ctx.info),
+-						      idx_or_pack_name_cmp);
+-		if (preferred) {
+-			uint32_t perm = ctx.pack_perm[preferred->orig_pack_int_id];
+-			if (perm == PACK_EXPIRED)
+-				warning(_("preferred pack '%s' is expired"),
+-					preferred_pack_name);
+-		}
+-	}
+-
+-	if (pack_name_concat_len % MIDX_CHUNK_ALIGNMENT)
+-		pack_name_concat_len += MIDX_CHUNK_ALIGNMENT -
+-					(pack_name_concat_len % MIDX_CHUNK_ALIGNMENT);
+-
+-	hold_lock_file_for_update(&lk, midx_name.buf, LOCK_DIE_ON_ERROR);
+-	f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
+-
+-	if (ctx.nr - dropped_packs == 0) {
+-		error(_("no pack files to index."));
+-		result = 1;
+-		goto cleanup;
+-	}
+-
+-	if (!ctx.entries_nr) {
+-		if (flags & MIDX_WRITE_BITMAP)
+-			warning(_("refusing to write multi-pack .bitmap without any objects"));
+-		flags &= ~(MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP);
+-	}
+-
+-	cf = init_chunkfile(f);
+-
+-	add_chunk(cf, MIDX_CHUNKID_PACKNAMES, pack_name_concat_len,
+-		  write_midx_pack_names);
+-	add_chunk(cf, MIDX_CHUNKID_OIDFANOUT, MIDX_CHUNK_FANOUT_SIZE,
+-		  write_midx_oid_fanout);
+-	add_chunk(cf, MIDX_CHUNKID_OIDLOOKUP,
+-		  st_mult(ctx.entries_nr, the_hash_algo->rawsz),
+-		  write_midx_oid_lookup);
+-	add_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS,
+-		  st_mult(ctx.entries_nr, MIDX_CHUNK_OFFSET_WIDTH),
+-		  write_midx_object_offsets);
+-
+-	if (ctx.large_offsets_needed)
+-		add_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS,
+-			st_mult(ctx.num_large_offsets,
+-				MIDX_CHUNK_LARGE_OFFSET_WIDTH),
+-			write_midx_large_offsets);
+-
+-	if (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP)) {
+-		ctx.pack_order = midx_pack_order(&ctx);
+-		add_chunk(cf, MIDX_CHUNKID_REVINDEX,
+-			  st_mult(ctx.entries_nr, sizeof(uint32_t)),
+-			  write_midx_revindex);
+-		add_chunk(cf, MIDX_CHUNKID_BITMAPPEDPACKS,
+-			  bitmapped_packs_concat_len,
+-			  write_midx_bitmapped_packs);
+-	}
+-
+-	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
+-	write_chunkfile(cf, &ctx);
+-
+-	finalize_hashfile(f, midx_hash, FSYNC_COMPONENT_PACK_METADATA,
+-			  CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+-	free_chunkfile(cf);
+-
+-	if (flags & MIDX_WRITE_REV_INDEX &&
+-	    git_env_bool("GIT_TEST_MIDX_WRITE_REV", 0))
+-		write_midx_reverse_index(midx_name.buf, midx_hash, &ctx);
+-
+-	if (flags & MIDX_WRITE_BITMAP) {
+-		struct packing_data pdata;
+-		struct commit **commits;
+-		uint32_t commits_nr;
+-
+-		if (!ctx.entries_nr)
+-			BUG("cannot write a bitmap without any objects");
+-
+-		prepare_midx_packing_data(&pdata, &ctx);
+-
+-		commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, &ctx);
+-
+-		/*
+-		 * The previous steps translated the information from
+-		 * 'entries' into information suitable for constructing
+-		 * bitmaps. We no longer need that array, so clear it to
+-		 * reduce memory pressure.
+-		 */
+-		FREE_AND_NULL(ctx.entries);
+-		ctx.entries_nr = 0;
+-
+-		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
+-				      commits, commits_nr, ctx.pack_order,
+-				      flags) < 0) {
+-			error(_("could not write multi-pack bitmap"));
+-			result = 1;
+-			clear_packing_data(&pdata);
+-			free(commits);
+-			goto cleanup;
+-		}
+-
+-		clear_packing_data(&pdata);
+-		free(commits);
+-	}
+-	/*
+-	 * NOTE: Do not use ctx.entries beyond this point, since it might
+-	 * have been freed in the previous if block.
+-	 */
+-
+-	if (ctx.m)
+-		close_object_store(the_repository->objects);
+-
+-	if (commit_lock_file(&lk) < 0)
+-		die_errno(_("could not write multi-pack-index"));
+-
+-	clear_midx_files_ext(object_dir, ".bitmap", midx_hash);
+-	clear_midx_files_ext(object_dir, ".rev", midx_hash);
+-
+-cleanup:
+-	for (i = 0; i < ctx.nr; i++) {
+-		if (ctx.info[i].p) {
+-			close_pack(ctx.info[i].p);
+-			free(ctx.info[i].p);
+-		}
+-		free(ctx.info[i].pack_name);
+-	}
+-
+-	free(ctx.info);
+-	free(ctx.entries);
+-	free(ctx.pack_perm);
+-	free(ctx.pack_order);
+-	strbuf_release(&midx_name);
+-
+-	trace2_region_leave("midx", "write_midx_internal", the_repository);
+-
+-	return result;
+-}
+-
+ struct clear_midx_data {
+ 	char *keep;
+ 	const char *ext;
+@@ -1775,8 +507,8 @@ static void clear_midx_file_ext(const char *full_path, size_t full_path_len UNUS
+ 		die_errno(_("failed to remove %s"), full_path);
+ }
+ 
+-static void clear_midx_files_ext(const char *object_dir, const char *ext,
+-				 unsigned char *keep_hash)
++void clear_midx_files_ext(const char *object_dir, const char *ext,
++			  unsigned char *keep_hash)
+ {
+ 	struct clear_midx_data data;
+ 	memset(&data, 0, sizeof(struct clear_midx_data));
+diff --git a/midx.h b/midx.h
+index b374a7afaf..dc477dff44 100644
+--- a/midx.h
++++ b/midx.h
+@@ -8,6 +8,25 @@ struct pack_entry;
+ struct repository;
+ struct bitmapped_pack;
+ 
++#define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
++#define MIDX_VERSION 1
++#define MIDX_BYTE_FILE_VERSION 4
++#define MIDX_BYTE_HASH_VERSION 5
++#define MIDX_BYTE_NUM_CHUNKS 6
++#define MIDX_BYTE_NUM_PACKS 8
++#define MIDX_HEADER_SIZE 12
++
++#define MIDX_CHUNK_ALIGNMENT 4
++#define MIDX_CHUNKID_PACKNAMES 0x504e414d /* "PNAM" */
++#define MIDX_CHUNKID_BITMAPPEDPACKS 0x42544d50 /* "BTMP" */
++#define MIDX_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
++#define MIDX_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
++#define MIDX_CHUNKID_OBJECTOFFSETS 0x4f4f4646 /* "OOFF" */
++#define MIDX_CHUNKID_LARGEOFFSETS 0x4c4f4646 /* "LOFF" */
++#define MIDX_CHUNKID_REVINDEX 0x52494458 /* "RIDX" */
++#define MIDX_CHUNK_OFFSET_WIDTH (2 * sizeof(uint32_t))
++#define MIDX_LARGE_OFFSET_NEEDED 0x80000000
++
+ #define GIT_TEST_MULTI_PACK_INDEX "GIT_TEST_MULTI_PACK_INDEX"
+ #define GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP \
+ 	"GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP"
 -- 
 2.44.0.290.g736be63234b
 
