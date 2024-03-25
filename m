@@ -1,62 +1,62 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470C5481BA
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:24:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385E96FBB7
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:24:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711387462; cv=none; b=qHX4jD5pA5hnVZg2vMlN5qXiRyzWPPlPQwpAcvaGouUtQikV248rkXsE/3tr+ELlBponHbSTlAvLwUJhoMRSxQWE1jWe/rGvNF/BunUydzQ7DGWKUbUw7PFQ4yOY9exhVuJgcVnTWYziKVMr3VrJw3k2H/lHn/s2HE4f+hwkIGY=
+	t=1711387466; cv=none; b=kc9TOcRH5r6p2/T7on6x5KMUwtjHxf3/3VmXlqkgPg/Ok0Uab57zaf9CAUP+zFyMGpVSJDtLm86C7lV6B8S+labOW5DrYq/eaP2TsdMoSVzhE8HNyy6gYrOvmbT6CuYROT7+4Z2TgVVAEeW+7psa/I3jwBAy8uMaGIveBpAnPLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711387462; c=relaxed/simple;
-	bh=Ot9Ew/5Q/UZqDmV5nnRZZZ4ZYKh3wbtWT9k0x79C2Eg=;
+	s=arc-20240116; t=1711387466; c=relaxed/simple;
+	bh=Zb2rZ3n91uJ9QZzCf+DzAHnyKgWyohQNXoF2NMJLfwA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d2IAEB/XWo8QunOkqbHe/k5x8Qd51hUTmEjZutuLlC10XxSbYE8jv62nhlA7KKqb51G5K0XV83ho7qK1q5KvPOXB2Wj9Gtn1Cybjfb37S1fNjo7pvGfSFZ+TOnqBj0S7bTyY6R8si8PNPk+cvKJaa8AiFCMcpbA1wN4JATgGuzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=onXq8CLq; arc=none smtp.client-ip=209.85.128.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=P2SzIVUYbNWfOLxjhe8tS+abKU+9sq4tn1gK3Z7fIFR85qnp31YSMVrZPtqqMkv2NiyiXbITa7V04tIVF9Jo22CK0LSYcOxl5erwB/b6bFuow2ywybCxjEoILVjIZd8ueO7k4U5fUp7XcybhdiMYDLHlJCOKXpJb2ALFFGpVN9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=GctpdTI0; arc=none smtp.client-ip=209.85.160.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="onXq8CLq"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-609f4155b76so49877897b3.1
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:24:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="GctpdTI0"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-430ad286ab8so27049111cf.1
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711387460; x=1711992260; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711387464; x=1711992264; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6ceu0s3e5idqiOpZEvwwRPlDJBJ5d/i4tq+E8njG6zg=;
-        b=onXq8CLqgPb61QQAA6oiZNFkzQKQgx2YSa88yDhFEUJKnCTWFow/x+2yYc3S93L9Ee
-         w+MpoExKcQv2ZOx6Vwr/mtJXNuc+Jct0nPPY+tFbQT0fouvaDcT7XBHkXkWGFibIEwxs
-         Za8p1iZnTIv/Avz7Zh/I3DI7kRv/tyK+n4V5hRx2CLUDj9/lOFVKRzlwb+c9rNXAGq/c
-         AHbR3a6qgyFBRxkIQOeJyhz6FBRfWRBS4MWvPzVOEzI7pxSdGEYglaFjfs94DETZXFoH
-         GyZT2w4Pf1AqUU+vDO1jJcNDf+yDedlxnVWmvAlXcuDA/YebRiVlPPhUeAVwoLeCTkTb
-         dqpQ==
+        bh=o2NfsrsLd0gmM+HYYTMl1k0SuVIEutFba06YeUzqASo=;
+        b=GctpdTI0fD3x5OB3TKn3DzC7XUXWORztD/iCwYo4/mw4eGQfbjv18qLcc4ifcY0e5t
+         aLTN+HLKqPV7ycRq1h+PL4c0DBl2j/RRdi4D6lkkee+OBPs1WOHN/OvAvP9bQXFv6zwC
+         xBUsblmxHOhCQLKKjt443EgyHr16vbWlLrso1GDqRBJIx0meHGd/h7aipFYxfu29APW3
+         zXvX8BsqJHLgTF2nwp8XFa5EdBPyuP50+id0qdr7T3cyXG9Ai1tKPF96B+1roWmewYct
+         DZbh41Fa6dAsVZPk7wFQKVEiQvVeHypvsgmtdggFEmIzD052yvbb59wBNnV4cBjQmNdu
+         VMzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711387460; x=1711992260;
+        d=1e100.net; s=20230601; t=1711387464; x=1711992264;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6ceu0s3e5idqiOpZEvwwRPlDJBJ5d/i4tq+E8njG6zg=;
-        b=sEKQITCm/wAk6wYOzC3LooP6ijxHBlU+9YbDSn+EC9BT+DHKDHAL9j9iAthQA4tAWy
-         7+cfnBdA0sX6/EH4U2FS9CPWzoWIfWMuI3bGe2OZ7OEmRhzYaMesQE4NxWvnQ4N2/Vsl
-         FMlRS/hVHmq4VAW5h72IvYpngk8yhq/rzT8MmEX3z9fgrVqFOfQ5LdbSbXvdmm9vlXLp
-         9MwKwKcFp4TgQ9hRTX/9NDUBnQOMcWVbSHF80KNE3HfY+fnogbH4ZdfAlx0L/CbUar4K
-         ewmfGXHWI0XRvBTxyJv0XxliDKMUR5+cpXn587wzvvMrVie9sxyXqfyeDq/RfhOHKRKq
-         av2Q==
-X-Gm-Message-State: AOJu0YwjfqHXZhs0awBiUH8memKtkPglvQtWKb1tY3BcjZ7QdIKLBFal
-	czGJH6hFC1bkPj+rJzs3YTJya4Lmit7xPNnDG1ZMZmTwuWN+dXjSHnGZsq0NOoM8DHMrtR56aW4
-	5wM8=
-X-Google-Smtp-Source: AGHT+IFxy+4WB97y6mgESRJonHSXdKVZRrrkqZV6nrX/ODftAKf2O+JMdt9V6Rl1VJ1Mbex59DTvCQ==
-X-Received: by 2002:a81:a096:0:b0:611:2207:efb with SMTP id x144-20020a81a096000000b0061122070efbmr6987438ywg.34.1711387460135;
-        Mon, 25 Mar 2024 10:24:20 -0700 (PDT)
+        bh=o2NfsrsLd0gmM+HYYTMl1k0SuVIEutFba06YeUzqASo=;
+        b=Pxacz5wwmN8TgiuSBHL4sXzPN+Hjr4vOUwWvhMvO+Khf1WmnHXD0P2KZ9mWI7kvT95
+         4CdLte/YVDVm68gKO8hj+BdARhDqrjMHwRaGHIvGLMYv8osEI/4UVFkZy7UTlYivYXlS
+         hEco/dkeT/c+EKfUlLQ5rf7KXY0AboATNkoPHAwkkYsrkvpFHdNb0rNMfB/+jIFjVvBh
+         fvW7F8EatDPWVDvWsw/CtcQAU49ULGkcP91LFFkj5QyXMWSNv4OjKrexuD5KRWjxXD7j
+         f+yFUfy2OYzBO5yO0JCzuY2Diu2JyPVSe9pGtLMhzI4oBIMWJL+kBV0H9nw9hpsHwsaa
+         pHVw==
+X-Gm-Message-State: AOJu0YxS+LeK2tNmQbUyotumknr6jL3tZ8IUwWwEBuCoFmnsYDHJiV1d
+	e13CFDs9483KXbq1JcVN2czft1QjOA17EeEz0xNTotgbVKvs8d5/VL4yJgedyjQeaGze90G98C8
+	aMl0=
+X-Google-Smtp-Source: AGHT+IGnvCsip3GhoxIaEVfgjLceUkIhP+L1PEPFhEiDhSg9y98ZNRXkCln7dCI8dVuZJp25t4iR8Q==
+X-Received: by 2002:a05:622a:47cf:b0:431:5c17:60bf with SMTP id dp15-20020a05622a47cf00b004315c1760bfmr3067099qtb.26.1711387464033;
+        Mon, 25 Mar 2024 10:24:24 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ay19-20020a05620a179300b00789db88792fsm2275237qkb.90.2024.03.25.10.24.19
+        by smtp.gmail.com with ESMTPSA id eo7-20020a05622a544700b00431532ced95sm1448560qtb.27.2024.03.25.10.24.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 10:24:19 -0700 (PDT)
-Date: Mon, 25 Mar 2024 13:24:18 -0400
+        Mon, 25 Mar 2024 10:24:23 -0700 (PDT)
+Date: Mon, 25 Mar 2024 13:24:22 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 01/11] midx-write: initial commit
-Message-ID: <ffa8ba18de8be68eb8dbb1e17b5bf8800f564505.1711387439.git.me@ttaylorr.com>
+Subject: [PATCH 02/11] midx: extern a pair of shared functions
+Message-ID: <b776fd528d39144780e50750bdc1013e7eb3477a.1711387439.git.me@ttaylorr.com>
 References: <cover.1711387439.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,42 +68,93 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1711387439.git.me@ttaylorr.com>
 
-Introduce a new empty midx-write.c source file. Similar to the
-relationship between "pack-bitmap.c" and "pack-bitmap-write.c", this
-source file will hold code that is specific to writing MIDX files as
-opposed to reading them (the latter will remain in midx.c).
+The following commits will incrementally move code specific to writing
+MIDXs from midx.c to their new home in midx-write.c.
 
-This is a preparatory step which will reduce the overall size of midx.c
-and make it easier to read as we prepare for future changes to that file
-(outside the immediate scope of this series).
+Prepare for that by externing a pair of functions which:
+
+  - will (temporarily) need to be called from both midx.c and
+    midx-write.c, but
+
+  - are implementation details that should not be exposed via the midx.h
+    header.
+
+Declare these functions as extern within midx-write.c, and introduce a
+similar (non-extern) declaration within midx.c. This change will be
+effectively reverted by the end of this series.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Makefile     | 1 +
- midx-write.c | 2 ++
- 2 files changed, 3 insertions(+)
- create mode 100644 midx-write.c
+ midx-write.c | 10 ++++++++++
+ midx.c       | 24 +++++++++++++++++-------
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 4e255c81f2..cf44a964c0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1072,6 +1072,7 @@ LIB_OBJS += merge-ort-wrappers.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += merge.o
- LIB_OBJS += midx.o
-+LIB_OBJS += midx-write.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += negotiator/default.o
- LIB_OBJS += negotiator/noop.o
 diff --git a/midx-write.c b/midx-write.c
-new file mode 100644
-index 0000000000..214179d308
---- /dev/null
+index 214179d308..4aab273243 100644
+--- a/midx-write.c
 +++ b/midx-write.c
-@@ -0,0 +1,2 @@
-+#include "git-compat-util.h"
-+#include "midx.h"
+@@ -1,2 +1,12 @@
+ #include "git-compat-util.h"
+ #include "midx.h"
++
++extern int write_midx_internal(const char *object_dir,
++			       struct string_list *packs_to_include,
++			       struct string_list *packs_to_drop,
++			       const char *preferred_pack_name,
++			       const char *refs_snapshot,
++			       unsigned flags);
++
++extern struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
++							const char *object_dir);
+diff --git a/midx.c b/midx.c
+index 85e1c2cd12..5f22f01716 100644
+--- a/midx.c
++++ b/midx.c
+@@ -23,6 +23,16 @@
+ #include "list-objects.h"
+ #include "pack-revindex.h"
+ 
++struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
++							const char *object_dir);
++
++int write_midx_internal(const char *object_dir,
++			       struct string_list *packs_to_include,
++			       struct string_list *packs_to_drop,
++			       const char *preferred_pack_name,
++			       const char *refs_snapshot,
++			       unsigned flags);
++
+ #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
+ #define MIDX_VERSION 1
+ #define MIDX_BYTE_FILE_VERSION 4
+@@ -1347,7 +1357,7 @@ static int write_midx_bitmap(const char *midx_name,
+ 	return ret;
+ }
+ 
+-static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
++struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+ 							const char *object_dir)
+ {
+ 	struct multi_pack_index *result = NULL;
+@@ -1372,12 +1382,12 @@ static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+ 	return result;
+ }
+ 
+-static int write_midx_internal(const char *object_dir,
+-			       struct string_list *packs_to_include,
+-			       struct string_list *packs_to_drop,
+-			       const char *preferred_pack_name,
+-			       const char *refs_snapshot,
+-			       unsigned flags)
++int write_midx_internal(const char *object_dir,
++			struct string_list *packs_to_include,
++			struct string_list *packs_to_drop,
++			const char *preferred_pack_name,
++			const char *refs_snapshot,
++			unsigned flags)
+ {
+ 	struct strbuf midx_name = STRBUF_INIT;
+ 	unsigned char midx_hash[GIT_MAX_RAWSZ];
 -- 
 2.44.0.290.g736be63234b
 
