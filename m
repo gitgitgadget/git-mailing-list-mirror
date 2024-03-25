@@ -1,95 +1,83 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EB752F9E
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 20:57:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B7C2F2D
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 20:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711400237; cv=none; b=Q7CdNSxp8iHXb1tGE+1F87NuxlDH8b//e5FDpxqvO0uBi1ft5dU7wUC+m5a88NQyJOsV6SMAWqyOqXzHoexZeq7+SqGhPDOpDsCs+W8tdc6b/zAddUW1fNlOq3LI0v1uI5KNWMXcU1YngynJ600l3NPTQLromqNKjwFFgz32+Kc=
+	t=1711400396; cv=none; b=PkOAIBFCbRotUF/2RWSsiFZBOiZ7pMVy2hRzrBaOTw/nVTdCKLCwQnxSYYcR7xuwxduXXCg8oTH4iG80lVV+ql1P2CfXjyKglHhPiJdIAsZQf9KJvl5kKW6PlnOqASospolmmBzTUhlfponDHdML487VsusFYPtLYyp6EzZkmOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711400237; c=relaxed/simple;
-	bh=KV0eeE/T5Rrp0N28+lYmXcyrdjugkr6RdwVk9L2NjxI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=STOVjo6iH0mLiXaqp52m0ckfQVZpohO84QNu1xJGPUPNtpubbjWRUSVrWRE7FMmRcZwR5QLSSd4VGRuqQ2qCvIuls/IclKVjLb4GiDiTg1EVCDI7g3TVzpatWn5KT5RcpksPzyD6ksZoEK7YEGpQ5OJ686MOEFCYZnOY5RVfaCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FKd5c/AD; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711400396; c=relaxed/simple;
+	bh=2At3jZFKR3/qe1sqkpVbi80dEVmqh3iW4xrJk4K4LkM=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=NEVLaue9Yatm2rWpJv617upQlItUrcocjdvmvK9Ht99lcypwOm8aRst6yVLfmPxN3e1SbfG/oTO3zA9QR5odpL2elknWk6bbhtfpPtcROJD6KjQUz4ICsbqkJW6NytHon0r27/h2M7tOObRdeP/hVVX4uChKPIdcYKXW7+HyPOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TelR78M8; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FKd5c/AD"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D249930EC2;
-	Mon, 25 Mar 2024 16:57:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=KV0eeE/T5Rrp0N28+lYmXcyrdjugkr6RdwVk9L
-	2NjxI=; b=FKd5c/ADJ0w5EPxv/HW67lsvM123GIaNuMxYlz7Q0J2v7DCGmALeQg
-	23SdkqQzoBmWJs//wcvkobYaYiaz0oSkZAH8YPuTcsKKNnCgdnc7pYilrIwIQ836
-	DBOqiFo0QE6HCCXtO3oAXfKJgtgkm1Yxxtk0hEz2AeCE6+AbQTZUc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CA26630EC1;
-	Mon, 25 Mar 2024 16:57:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5066C30EC0;
-	Mon, 25 Mar 2024 16:57:12 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: phillip.wood123@gmail.com
-Cc: Brian Lyles <brianmlyles@gmail.com>,  phillip.wood@dunelm.org.uk,
-  git@vger.kernel.org,  newren@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v4 0/7] cherry-pick: add `--empty` for more robust
- redundant commit handling
-In-Reply-To: <2ab7445f-08ee-4608-96ad-8171f9ce1b73@gmail.com> (phillip's
-	message of "Mon, 25 Mar 2024 19:36:33 +0000")
-References: <17c00de527e3a0c4.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-	<2ab7445f-08ee-4608-96ad-8171f9ce1b73@gmail.com>
-Date: Mon, 25 Mar 2024 13:57:10 -0700
-Message-ID: <xmqqa5mmhvx5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TelR78M8"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-341ccef5058so1012073f8f.2
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 13:59:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711400393; x=1712005193; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:cc:to:content-language:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qTsZby/qCvwmw+zbJV0OT44RzW4TVwi24Ks5rDgD00g=;
+        b=TelR78M8gYptAlv3ZuINzdYI6BeFtuBxA0z+IXPLryWkkop4V4wvy7UbE0iY1HvS81
+         /ie8+rPqh92T3psqkyg24mVFT0tEMAo2h6Yltnk+0qDmn5fAjL//IP4jH+NCXFFGzafm
+         oABwaREszPT/TW1K3LycKM183GMwmpLVJhUjmhcslI/zNSYWI6dtBd8wMB6Rdqa9AhCk
+         PSNRcwT97Jo1LRHgO1zkpob9O5RGXS2jDrLZHy2l5bxGJUJ+hFZh7wFaXnjBv1xwnFDE
+         YYTQRRPpoQi5c+FcG5xfsV1fJPknk1TRXT3sSXeMHfrL+9y3xq2liUVmStfusSL1zlCB
+         yx/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711400393; x=1712005193;
+        h=content-transfer-encoding:subject:cc:to:content-language:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qTsZby/qCvwmw+zbJV0OT44RzW4TVwi24Ks5rDgD00g=;
+        b=evnWZU4kOeMZ8wLmQ63hSoYlUXKaAvfV7u1r+M8LtxKffugrOKLqLvACFhhKA4W5Dt
+         YoqwAy48dC0jgXSNo+pKV/2WVMm9YK+S9I90FSpOqUhLwk7HliB4cLqjxI39dhSq3do7
+         n8TNBjdVmzRtxQdD4VXxRXZXVg9GUkBziYLge0GfIcjkTlye48InEm0MmLc0LOJDgw4a
+         fKQ6s4S76hcpfhBPzwu/j/TxY/UgJTl3BB4xXBwjjMztn4PgxfK3RNOaqB7QNdSD5ipO
+         FR5KM0degplJs76NTuqH+yvfpoVepAf38guyC1eKzBRFWc1S6xYumRW2QxdldZ46J6hd
+         6iTw==
+X-Gm-Message-State: AOJu0YxMpuIWMOlo+ygKtLANDXPW7VpOrsd2cgwP6fRTc9lQ9WZgWZio
+	joZxPzJnddCSLVqGpCjHnJENiEiljJoi2okTI7J3mUQzkr5diWlUUCIGzgwK
+X-Google-Smtp-Source: AGHT+IGD+IVNmCTkbWF6nlFas/B32PjxLmUscfPHWNqbsPKVpEOk+W9nWVw2IIWwy5Hu8qHuuH693A==
+X-Received: by 2002:adf:cd90:0:b0:33e:d68a:7d42 with SMTP id q16-20020adfcd90000000b0033ed68a7d42mr5005135wrj.30.1711400392601;
+        Mon, 25 Mar 2024 13:59:52 -0700 (PDT)
+Received: from gmail.com (70.red-88-14-202.dynamicip.rima-tde.net. [88.14.202.70])
+        by smtp.gmail.com with ESMTPSA id cl1-20020a5d5f01000000b00341b9737fc5sm9391962wrb.96.2024.03.25.13.59.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 13:59:52 -0700 (PDT)
+Message-ID: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
+Date: Mon, 25 Mar 2024 21:59:42 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 40AE1D7E-EAEA-11EE-B412-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/2] improve interactive-patch
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-phillip.wood123@gmail.com writes:
+Let's reduce the verbosity in the interactive-patch process, in order
+to make it less confusing.
 
->> +		/* Check to see if this is an unborn branch */
->> +		head_name = resolve_ref_unsafe("HEAD",
->> +			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
->> +			&head_oid, NULL);
->> +		if (!head_name
->> +			|| !starts_with(head_name, "refs/heads/")
->> +			|| !is_null_oid(&head_oid))
->>   			return error(_("could not resolve HEAD commit"));
->
-> Normally we'd write this as
->
-> 	if (!head_name ||
-> 	    starts_with(head_name, "refs/heads/") ||
-> 	    !is_null_oid(&head_oid))
-> 		return error(...)
->
-> breaking lines after an operator and indenting to the open bracket
-> after the if.
+Rubén Justo (2):
+  add-patch: introduce 'p' in interactive-patch
+  add-patch: do not print hunks repeatedly
 
-> The rest looks good. Junio was talking about merging
-> this to next in the latest "what's cooking" email so I'd double check
-> he hasn't done that yet before re-rolling.
+ add-patch.c                | 20 +++++++++++++++-----
+ t/t3701-add-interactive.sh | 22 +++++++++++-----------
+ 2 files changed, 26 insertions(+), 16 deletions(-)
 
-I do not want to rush things---if we find that this is worth
-touching up (and obviously we do---otherwise we would not be having
-this conversation), then let's do have a quick v5 with minimal
-range-diff.
-
-> Thank you for working on it, I've enjoyed reading your patches
-
-Likewise.  Thanks, both.
+-- 
+2.44.0.494.gf640f9da83
 
