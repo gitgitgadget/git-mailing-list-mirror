@@ -1,132 +1,80 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2721763F3
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 18:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE21F804
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 18:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711391111; cv=none; b=Vzv/bNleIIHp5Id/q/j6yiyavi3RYyXDLybm0Sj1cmfv4FJFT2kRFOmuo2Q1Knr5hgA9YJK2euMvW8SL8bGOk22hyaRrK4AKwGuJ9IrfFKsGHgccfla9Y2cg9XoW9aS+jTknN4aBBvR1c9A3OAvN+dQ4iPmkDCmisJQwyo4o1rs=
+	t=1711391937; cv=none; b=TvzS9Oeh82vpm1BrNmwXiv1RFraSsOKBnODk9NnQrp9yCPPAvmX5zJUxfuPj6384pcqhZfR1nGOfFIqsJU84qQ6/matBeF8VQRa6041ylJiyueaX0Ygpk4UFxTE/EsCuCgeC7Yp2/fkiL3YZG8L/qpnaOePmkRm+Q9ihNir5LvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711391111; c=relaxed/simple;
-	bh=xL9TR3laOQi6XIuFdJ/xIg7HjoFXE0YbzxQCeYFBh9c=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=L4olQbLzlU6R0zWPNB42etpydf0mV9hXidpdEULfw7QHxa1uQ0BCvhGMyLN+MPkA3SjPytMFza3WQe4T+TXFEPgteiPE2mteLl9Mv0LxQBGBPNKQuf5dRLDpp6tjsIup3kN1+L9QgYf8XLQk/Gkz1mA1TCJN5pcPEQAXs40E9nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AN1sGbwm; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711391937; c=relaxed/simple;
+	bh=5dmAJVnKBdlni73SnNA2gcBGLI1LByXFgVMKCzZGQTA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CL5YgTY/k16QHNSI6d4d2k7cb8102iRn/p7CSEv5OJeELMASpXnP6C7CuRjYNtTpMNkXqDSKY+yu2/eofKXOPnZ4t8/PiHuvzHtME1In5ZloDHgiCCSR22EZuwf9VNdX4PnN2CD5ege6Yb+5fUo1fsZMThHBLdObI31vLVRCec4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nvqtWos1; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AN1sGbwm"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6e6db4dfd7aso566540a34.2
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 11:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711391109; x=1711995909; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xL9TR3laOQi6XIuFdJ/xIg7HjoFXE0YbzxQCeYFBh9c=;
-        b=AN1sGbwmeMdhqCuhvblyq+RMcX0hCqmijG2x1tdsDXMHyoTGOz6lNV2YhVShD/p33Q
-         mDnDhmbb4u+l+9v8SuzICk8jMhxWLKmp2gsJtkdHc/wXFemskZZi5akBeg7ReSwzjfYO
-         LjiHHqm5+GktkiF1dIXQftLqy+GpU+yFAFvyy+dkRVtV4GUo2b7PfkCgvKVY43jFoZcl
-         yIjizb3VOR2dNNYXxP6EvprravIIocMHhqC+QbBzjXn6BFfT8Ewdi4utcq6rQomnG3Xa
-         39K2DbTRHAt3meOFTwob7MwqTE5z/niBsEWiAtjL3hn6NCyxuZ5csO2zFcV12VPdyOKo
-         M5yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711391109; x=1711995909;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xL9TR3laOQi6XIuFdJ/xIg7HjoFXE0YbzxQCeYFBh9c=;
-        b=fPk+2HUKgVvgnPA/buj0jrRTvCDAMMs1MABsFzf5JQziGhlBBmQDHl2HVxMqTu2J/w
-         Fydd2kGrW0D9RhdMXcqC/jyaXyF/mqOFQhRbNUqQkKFDYLpFDgoSN7YDueSAROrIwLBw
-         TL1GlwZGzMUW+Z/Z9L6h/z0+g0+jze8XffuEmxIrS5lCCgNOuCayc1iyt69haevZoeyP
-         MqrsCtoXdQ/dF12IWZkL4INYfz1+1eSHIwniOw6HSVH6BtwytLYI7iqQ5k8ByWkjXE+i
-         zxJo5yHe5l3F3d4xb2FvQvJUNeusN+aJRg7wYgbMI6C08lsTp2TsKOaF9mQjlphZILCa
-         p8Ew==
-X-Forwarded-Encrypted: i=1; AJvYcCWOp+VaNe5p7JY0ZrcdPvLpDmin8dIdNYo9ORadOv42ieq1qNeLIVKRcmQTDo4TQnBjS2QRkQL+U3h4Oxv+bW+6Du6X
-X-Gm-Message-State: AOJu0Yw8hnQmZT40hh9evg9sdRzpTj53zlyzPgr2tvD3JNjJLBp6E7V3
-	0M/gjrswSijhBh8v8e8D0pLhDiWrljMhlrO5zQsqow5MkOzM7gakt2hEqjg9diOiB5fhIHp/Xiw
-	JiC8n/V5PGbDR3y6GyZaYqrN+s4iczgA1dkY=
-X-Google-Smtp-Source: AGHT+IFOb+JsqNb/NKYP/oVAQh9gxQmg5wuhAC7hDLTf0z3keoNT6YZqLof8CKDEzFLRg3lxdxRdlD0Hq1UnWOyFFc4=
-X-Received: by 2002:a05:6870:b4ab:b0:21f:412a:87a8 with SMTP id
- y43-20020a056870b4ab00b0021f412a87a8mr8778025oap.41.1711391108850; Mon, 25
- Mar 2024 11:25:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 25 Mar 2024 11:25:07 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
-References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nvqtWos1"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 87E5F1E93D3;
+	Mon, 25 Mar 2024 14:38:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=5dmAJVnKBdlni73SnNA2gcBGLI1LByXFgVMKCz
+	ZGQTA=; b=nvqtWos13Op5g91giKn4Ze5AZm2c0AU8TcDtfBRlk8yJdY+CigFlma
+	/aucfppivnC9HvaPA4oTrKzQ5j6y7KYTC+qymJbaZUPHl0HBKyZaIHuQzbvCZRaR
+	RH3eRbPEN/KU9WcbSz2MQdHKSILstZyUp4VngHege0HTtkh2/QJFY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8056A1E93D2;
+	Mon, 25 Mar 2024 14:38:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB0C11E93D1;
+	Mon, 25 Mar 2024 14:38:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2024, #07; Fri, 22)
+In-Reply-To: <ZgEcuDJfPoN-MYy5@tanuki> (Patrick Steinhardt's message of "Mon,
+	25 Mar 2024 07:42:00 +0100")
+References: <xmqqedc1zs1p.fsf@gitster.g> <ZgEcuDJfPoN-MYy5@tanuki>
+Date: Mon, 25 Mar 2024 11:38:52 -0700
+Message-ID: <xmqqil1akvgj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 25 Mar 2024 11:25:07 -0700
-Message-ID: <CAOLa=ZRrmyZ48C5r8MWioyjySWdKtLxhtDBg5F2tRsExHaR-fg@mail.gmail.com>
-Subject: Re: [GSoC] Microproject help
-To: vk <g@vkabc.me>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000001d82860614804b7b"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EE77A916-EAD6-11EE-930D-25B3960A682E-77302942!pb-smtp2.pobox.com
 
---0000000000001d82860614804b7b
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-vk <g@vkabc.me> writes:
-
-Hello!
-
-> Hello all,
+> On Fri, Mar 22, 2024 at 05:54:26PM -0700, Junio C Hamano wrote:
+>> * ps/clone-with-includeif-onbranch (2024-03-12) 1 commit
+>>  - t5601: exercise clones with "includeIf.*.onbranch"
+>> 
+>>  An additional test to demonstrate something I am not sure what.
+>> 
+>>  Waiting for a review response.
+>>  cf. <xmqqo7bjjid9.fsf@gitster.g>
+>>  source: <0bede59a53862585c49bc635f82e44e983144a7f.1710246859.git.ps@pks.im>
 >
-> I'm Vk and I work as a software engineer. I am interested in
-> contributing to git repository. Apologies for the late start as I only
-> stumbled upon GSoC recently and git project interested me as I use it
-> everyday at work and it would be meaningful for me to contribute to it.
-> Even if I am not chosen, it will be great if I can start learning to
-> contribute to git open source.
->
-> For the microproject, I have looked into the lists for 2024 and it seems
-> that all the projects have been taken except for `Replace a
-> run_command*() call by direct calls to C functions`. However, it seems
-> that the issue has been solved. The command I ran to search throughout
-> the repo is `git grep 'run_command*('` and the search result returns
-> run_command functions which I assume are essential.
->
+> Based on [1] I think this topic can move forward now, right?
 
-When I ran the same, I saw around 135 results. Are you saying that
-they're all essential?
+OK.  We may want to leave some clue to help us remember there are
+still things to design (i.e., your "more thought into how this is
+supposed to work"), which is far more important in the longer term
+than just avoiding the BUG(), but other than that, I have no more
+things to add.
 
-For e.g. In `builtin/gc.c:maintenance_task_pack_refs`, shouldn't you be
-able to replace the `run_command`?
+Thanks.
 
->
-> If there is any low hanging fruits that you can suggest to me for the
-> microproject, that will be great. I will also be searching throughout
-> the mailing list to see if there are any potential microproject to work
-> on.
->
-> Best Regards,
-> Vk
-
-I also see the other microprojects are still applicable, since most of
-them have multiple occurrences throughout the code.
-
-Wish you the best.
-- Karthik
-
---0000000000001d82860614804b7b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a2b6599e00b7e0de_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZQndZRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK1V0Qy80NkhtNnhQK29kZWoxekRRV1h0dWk5blZXawo0VHg2bWdqYkJz
-UUxRZVZzaDF3QW5ZUDcxMFg5K0d3SkVxR2wrZWFKUTZKdWo5Yjl3R2VFeEltcGJnQk1kdC96Cmd5
-b05KakVBKzJ3WWFYZ0xiWkxWMUk2RHdzRUN1OHN3MnRaVXFOV1VjUGREd1B5SUxtRlhLdHBMeWJk
-T0lTMlEKRVQ5WHp1VUVvMXdTSDFUQnFyREp3dW8wK2xpMXFROUNTWHlBcDF4V08wK1hXL09TM29H
-bUl3MWxOSHQzdWl6Two1TDFwVVhuTUVCOEZVT0NwM1lGc1JhaGVFZ1FwRTh2bkQvK0hZVUVlMWZV
-VDNaTGZUVXNrYkMzSFJXMnhWajFSCnB4L0lXMm9EVW1ZNEJKTzJrdXZwSDhocVNxSnlSY29yUmRn
-SlQvR1RPOWNZOVNjQjhFK0dkQlRQT2N2OEdhRzkKdEFSQjloZzJDZDgwaWwzY3dhRGsya2pwZFZN
-VHgzS1Y4MFoxVnVYZkRheEtSdUtCMit0Y2pQanVXMWhKdXMzRwoxNHpMQjI0TDlueFhKQmZWRTE1
-Si82M1FuUEtpbGErZG1HM2VZK3NzQjFlVHNwYlpXLzFSMzZBU2VWUkN5OGpJCisrYmJFeHhOZ1pJ
-a1hwc3ZMZmRuYkJibXdveGpUa0ZqVHRSQ2dVYz0KPWdXOC8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001d82860614804b7b--
