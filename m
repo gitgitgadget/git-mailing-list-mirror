@@ -1,202 +1,266 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from YT5PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11021010.outbound.protection.outlook.com [52.101.189.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BCB3DABFE
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 12:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711369653; cv=none; b=H+sSMMcBG8zdwqwphNvy7b+Ro5ihGxTFBZE3Gk7PvRGv+egUIwyWfNTBTUde1ZdhEuHke4W0EfmUMrsVCewsc+02r4NX/U2I8dgQgSDVqP87OtvN3ZGaguTrfHErOvHaxLovWQQoIOcsPeOhZV4G+f30uzuiwukmTffn9Kl1KuE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711369653; c=relaxed/simple;
-	bh=KDXdo3+VeaDK5H01XH3kUKOe/5cXRUeqUy+8p2Q/BiU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r9rzTsrpIWQt2NIKp/+ZBFl1TIz0RKmJXC2EFYaiGze0Dj/CdjJfpyg+xVyWCTQ+6pKQbGBC64IdHeq/qP36R4UCO+8I8tplah79zEpEiXyZw2mkuWqJTTeq7jR5606nLfKwlGhHc/VOQwZ/FD3Hh7BMwAMUXVU55c5+RAo49ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=VKXMlgwC; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4641758F
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 12:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.189.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711371133; cv=fail; b=pULpTJs0kdi7hnRDIFLQ1oi5K0KZ40MgNTm1xAXfatqj9T/fp9a3D2gF6OkFTPP5I2F72+rjcBx9kQXGIGb7F5dXQ5MQj8SoQHG+QktJfBDsj/GV61XHxe3Il/qKscuwmvT50NookgL673yPff08tiSQn8NpQhv9sK498O4Hnb4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711371133; c=relaxed/simple;
+	bh=JTNdkZA8IPP47onwoQeg4P36qKCgAlZbfPi3T5C+V8w=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=E7I+EDf82qeET4CjoMx1kmRjwREBayKSTzbDypWTczsVozmldcWXk8Lh6ftSxgdpZD2KYzs6JjEhiBxqbdAplunwTQY4y2jCX7sL1chWThVWAI0iGAtoy+flae+9mmORFWSmGXEaak9B8bncjHCaC+l76pUQ9DnNsNrCVTU+wLE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com; spf=pass smtp.mailfrom=xiplink.com; dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b=e6g8/hRB; arc=fail smtp.client-ip=52.101.189.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xiplink.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="VKXMlgwC"
-Received: from localhost (unknown [IPv6:2001:910:10ee:0:d5de:3293:133e:f31a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id 5AC196039A;
-	Mon, 25 Mar 2024 13:27:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1711369640;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aXKtfdGKYCEkspoMCdpoDCoh3gmbXsfYv3R8HXZKaMI=;
-	b=VKXMlgwCwqZhW2rFF39vhD6QVfzatSKwCgqBhu/eBuINmfFVgM46YQalaVXwLlj7yuLIuX
-	Kz81bdb6j/paf3kOPZJ3NquJwWuLgD7lH2XUdd4X+QuNa+qqu6tHir/MAPt41RqM33GeVf
-	F2xl1G6nOdWbBUGD8ffVme6M9cX1CWYUWdedQUNpGH7RHIj0s9q2/R7xfmOGI/z++PowC6
-	Qkhu8R0Rfgd8yG4nsdOVloZVGxMrv4qDky3MG8ny40Y3DJovKITPjiyp76LydXCdDuMzNU
-	eMIT8jUbFmrl8BIgmexLyD6ia7x9+e9XfEraZHHd7urlSZ76hIdLpY9MyD0nLg==
-Date: Mon, 25 Mar 2024 13:27:14 +0100
-From: Max Gautier <mg@max.gautier.name>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, =?iso-8859-1?B?TOluYe9j?= Huard <lenaic@lhuard.fr>,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/6] maintenance: use packaged systemd units
-Message-ID: <ZgFtorXnGPm45oO0@framework>
-References: <20240322221327.12204-1-mg@max.gautier.name>
- <80580cc5-0285-43d2-ac51-71dce16f0028@gmail.com>
- <ZgE2pFt-pXurYnKU@framework>
- <03513931-7070-4430-bfae-aa039f73d74b@gmail.com>
+	dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b="e6g8/hRB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ecCrLmuHCNbcYtp34pEZ42kWA5Yyz7wlagNnAb6t3EcNud0WcUVugkhEm+5rSSnjcxkOMsJDcsnM3KiRJLCFIZazLRhAUswrzcFLXQIVXBE4H2mk0cKMiVJlozUUblaT5B6tcQYBdmRoNrKvxV0hHRWnrouohcaX9rzp9/0/ZrQ9AR4LJID+KOxO38pS1rU9rcm19s0uCD3U7yCyexT0M3Bv1h2rkm4Y1Frg/SGrB3pA1V1svox9CzIWQZQaRRnx3djHFEt7VBDRmI42eXjheDeVFOdow3Im9O4RoVEWkCxNioO1rkjxfzmCBSE7HVrBRotYDwQRumQZ9KtJqyi4rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pkjSSSvmxgH5CPRv1fhuHR9SXWTdCEcBWeIfOk7gIR8=;
+ b=HE9CvnDnUdu7Bi9JRqV/AXqHErkbNKqBuqUCwFKLOq1XIbcqBjVzyXRevXLxBx14I16nJ3LP/5SSt8aoS0O1WCr9GZST9tyZpatAsPR7u3tMOlPqsQ6J0IFYnhPYh9YLGyy3t6eMFfgY9VXigZ5NXWz/6xjTapUCASaLdHvSfhN4cfHSOION7gA33sWiGH1L2l3bBMlOIuC3xDwXKjtrCxjTs3hnJtOcJiD+xEnNRdV1MjvVDdeO9ooQVcy2xfdTu4/n8jHtCDWUr+baEFlDSh5EcvaXRg738a1FChxw6flhN7esG+htR1ESH+zjP4bxGdBT/c27deFFXvQcdVq7fQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
+ dkim=pass header.d=xiplink.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=xiplink.onmicrosoft.com; s=selector1-xiplink-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pkjSSSvmxgH5CPRv1fhuHR9SXWTdCEcBWeIfOk7gIR8=;
+ b=e6g8/hRBizbC1GRYz9wsFNUltI5AlA837i9c858qu9dXi0tRY2u1hvq4fHWonVjZZkysEIVf3TN6KmSDfrYk7fZLpXRhtpyJgs8lLsBckO06+R2hXae+UMjFL0qnOUY56MM71UImUo3Tpgw+z4FJeO8J9+o9xi1cwytD8FMLTcQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=xiplink.com;
+Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:f5::10)
+ by YQBPR0101MB5688.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01:38::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.32; Mon, 25 Mar
+ 2024 12:52:07 +0000
+Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::c6dc:38bd:5001:264a]) by YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::c6dc:38bd:5001:264a%5]) with mapi id 15.20.7409.031; Mon, 25 Mar 2024
+ 12:52:07 +0000
+Message-ID: <742ac151-74cd-46f8-8dfb-3dcdaa513314@xiplink.com>
+Date: Mon, 25 Mar 2024 08:52:00 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk: add "Hightlight commit name" menu entry
+Content-Language: en-US
+To: =?UTF-8?Q?Rapha=C3=ABl_Gallais-Pou?= <rgallaispou@gmail.com>,
+ git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Denton Liu <liu.denton@gmail.com>,
+ Paul Mackerras <paulus@ozlabs.org>, Beat Bolli <dev+git@drbeat.li>
+References: <20240130085308.5440-1-rgallaispou@gmail.com>
+ <27b9c158-5cb1-46bf-851a-88a02448fa2d@xiplink.com>
+ <146fbb87-9047-4d96-8d06-76f5710ca9e1@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+In-Reply-To: <146fbb87-9047-4d96-8d06-76f5710ca9e1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: YQBPR0101CA0151.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:e::24) To YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:f5::10)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <03513931-7070-4430-bfae-aa039f73d74b@gmail.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT2PR01MB10537:EE_|YQBPR0101MB5688:EE_
+X-MS-Office365-Filtering-Correlation-Id: da72665b-a83c-419a-3471-08dc4cca60be
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	84X6gGSt8eU179oCk+wtFLvkR9GXoP8zkpdWswr1joFwDj/QgXnALcmA1/rJ/p1EnV2rTnalRJWLSwNenou6e1cSs/Q/Ji8dnLm8PPT4JQ7RcHJd/7fTi5kkduAt7Po5nt3pp11xXNPw4pf3lfkNtCw0oSZDANZf9pwJAMr/v2zV0Hy3fCfHq9xeeVZPfRtHgyp3kUCOs77r8Yaqi0ArHcH4vZQAY5A3cPRVwCicVOpxLPpF1CLAvFhYFJMb3ETxUfUJKiPRm/qOjOaFJmfA7BRv83De118BXyV8OmQiSdHrvv7A17UrXgZzkE22QGaPPiey2pacR8T+RSasRgFbkwqmJ1Cj0EXY+h/Yfyyoqt508czprpHCy1ZROl5uIVIfkL1CfTxqyub/IzmzhLIstpp07TaXWugMPe5ASBfMIEIcedLS821g6gzzs+Sc59Zfpa85JcA0BTUsAhWFCIDWBTvPOpi+bdUkdAW5+aT7mHudSlQO/+F55E3TNLWw6MlY0qEKoimmZxWKRMOst+YOHxO10vOnhL9P8NvzQzL/zsmQ8e4fz2EFQl8/5JYoX52maNSXirGAbCu2E7jA4N0ZVZm9ESkupFdVfzXlgvzbX7lJ1sn5ICF1ltPPgzI/cmbUb+ilnY0CNFV4t/BBZoKLCNCAz+kehGJL4gj9LhfNufg=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?YWZYdmZ0M0xOU3dpZktEY0dWSXZBTUc0MXBlbDFhc1cza0hpV0hlTWJEU1R1?=
+ =?utf-8?B?MnRTZlJRaENBRklzdExqT2YybDVUQ1NVOEFlc2hHTGQvdHZQOTRoRVlEUDMv?=
+ =?utf-8?B?WVhmcjdOS05EV3A0Q25EZlZudnA2UUNPcktlcHJBd0pjOE41M003RFBGVGU2?=
+ =?utf-8?B?ZVdXVkZwOUNsREFWRXdsaWgxWVFXNzh4TDFqYW4rRG5tZTdOMkxnRTkrL1NX?=
+ =?utf-8?B?MFpRV0s0YXdKQUJmdlZia0s2QU5QVXV6TlRmSlA5NW5aR0NkRlpGNmk2cnY0?=
+ =?utf-8?B?UDJmSElHeG5TZ2RMR3JWWjN3Ny9EckJ5U1hZOWVHR1czSDJudmg1YmNKU01D?=
+ =?utf-8?B?MUhrTkd4Y1d3QXlBekJZaU1ueWEvdWpjK1JkZ3RGUXhHS3ZXWFNodytrcy9E?=
+ =?utf-8?B?dWhpTGYwbXUzbWVnNldpMUg2V2VnQVRaV3lQZkhsdzlSUWhzbmR6aUlxNkwv?=
+ =?utf-8?B?TGVwYnZFOFFpckEzaXVFMlB2c1lWZDlrcW01cHJPOWtKN1lnNStCQTRqYXNu?=
+ =?utf-8?B?TWVhNHlJa3FhTTg1QXpWRUYxdytlNjliZEhWRGFnTldSTnpiZGtFTUw2QlFu?=
+ =?utf-8?B?MmNOTmdQeGlsUW1zRVpXU1ZrVHF1Ym9xQy9lQyt0MG0rY2FQUGRKdHZadk9j?=
+ =?utf-8?B?T2tWUkNjOGpwZ1czaTFVbGxLZFBXNFNaeHk2TytMaGN1cjVlOWJvbFlaUEpv?=
+ =?utf-8?B?SUpXNmd4a0pNZ3A3M05uRE9Cb0VHdE0xR0VPQ2xBcko5K1JqdGNrMmc3REJ2?=
+ =?utf-8?B?WS95VzhqaWI0azBUd1VsZ2UveU5ZMEhzb2xqVGZiaXBmUE1WK2QwMk1TcmxZ?=
+ =?utf-8?B?OElNa0UrSDQwMXh4eTlWYXFRcUpVY2tIeHI5TE52QjNJamNMVFpYOSsySEtY?=
+ =?utf-8?B?RGlteXRtekY5OFN3QzFicVFoTDAzdWNLZjNBUk05V0xXUUJ5RUZPSFNUUk1F?=
+ =?utf-8?B?UFJnV1JUaFV3bTVIaWk1M29nek1aVlBQVUEwMnNndUtydSszKzAvWFU3V3JQ?=
+ =?utf-8?B?NDZwK3ZWaXV0d1NoQ2lsVk53d1pSSkpaVXlHQVE3UlozcGl4VmpWc3V5K1VU?=
+ =?utf-8?B?SHhNSXMvZkpITitEMDN4WllIbnVIVFArZ1hBeUpjakJWbWRBOFloWnJRb0hL?=
+ =?utf-8?B?N0liS2lORkI5RmI0Y2hsWFV4a3luR2ZTT1FUWWVjOGZUbVJyL3NnRW5tRjgy?=
+ =?utf-8?B?ekIwbGhseFhBb2NoL3pPZWdKL1pmNkZmeHFrcThQWkVpUVBjS0hLZytqVVNL?=
+ =?utf-8?B?c0lSb2hzeXpiQnZQbkxVd3FJOWNCckEybzZyNUdjMjFjRHljS2JmVTNwRENY?=
+ =?utf-8?B?OFJYeFlrVlZrN3NhWTcveDNZZEVmeDVHcmtUeWZ0VXY3SzkwRTZKY3VqbkMy?=
+ =?utf-8?B?RHVBS2pHSnVvT2JjRXU4ZzIxOUpwZ3hXZlplcFZTcEpoQmZLazBqS2RVZFZz?=
+ =?utf-8?B?b2owMXZvY055bktsWUFWaHRsUkpVQnh1ZllZSE9CL1hrN2RzNXlvWmlqU0FE?=
+ =?utf-8?B?a2ZUYStnQTRIeW11T3h6ZXd4RW5aTSsvNTNtem9GdWpsWlN3ZUJsK21MODdC?=
+ =?utf-8?B?ZVpVcjB1YkJoZFZUMUk1TlR5YWcyVEpYaU8wWDRVdm5QM0pNYyt1SnJ2Sy9y?=
+ =?utf-8?B?cXorSUFxRy9ycXhEdGhvM2VuajZ3SGhsbnZCZUdjVVVpbXJVeS9EWm5YdkZN?=
+ =?utf-8?B?K0xlbU93Vlc3RFVRMHVTUlFlYzlFMkRDbmZuZEExTDNYYWFCbnB2bkc2VnJJ?=
+ =?utf-8?B?QjNaZ1U2QVhyRVQ0Vy9VaS9aN0hxNlVoaFJrTnZqTXd6K0Z0Uit1dVVBc1RI?=
+ =?utf-8?B?MThMV2R1S1A0NXpqdTJkMm5LdlNCZkc1U1pzeFNyNmtzQnI1WWRuQjJsYk9T?=
+ =?utf-8?B?SE54UnpPQ1owQWJmVlNtSXhIZ2dKckRqZnVKVWMyNFgxOUYwak1OUmIyZ2hz?=
+ =?utf-8?B?ZkxqejRhOG5mSnMvaGxBbjNGRmdEcGE5a0Zobi9QMXZCSi9MT0Mvd3RPbFZG?=
+ =?utf-8?B?UTJ1clFnYXVXSDl6RGtVajlsMWtqczR4b05lR2hWRyt5Yitpa243ZldjT1F0?=
+ =?utf-8?B?WnVkOVRFblFTZDVuNktESzJpeFJZQ1FTd0hGdz09?=
+X-OriginatorOrg: xiplink.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: da72665b-a83c-419a-3471-08dc4cca60be
+X-MS-Exchange-CrossTenant-AuthSource: YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2024 12:52:07.1743
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hkpAuUD6IZml4DQLT4QXA18i8bwipVje0mvxEiCoRpT19wngSd4CTpZQoXAtXoMF5DieUfFyMX/pgSsj0/fhaA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQBPR0101MB5688
 
-On Mon, Mar 25, 2024 at 10:06:29AM +0000, phillip.wood123@gmail.com wrote:
-> Hi Max
+
+On 2024-03-23 05:45, Raphaël Gallais-Pou wrote:
+> Hi Marc,
 > 
-> On 25/03/2024 08:32, Max Gautier wrote:
-> > On Sun, Mar 24, 2024 at 02:54:58PM +0000, Phillip Wood wrote:
-> > > Hi Max
-> > > 
-> > > On 22/03/2024 22:11, Max Gautier wrote:
-> > > > * Distribute the systemd timers used by the `git maintenance start` with
-> > > >     the systemd scheduler as part of git, rather than writing them in
-> > > >     $XDG_CONFIG_HOME.
-> > > > 
-> > > > This allows users to override the units if they wish, and is more
-> > > > in-line with the usual practices of distribution for systemd units.
-> > > 
-> > > Thanks for suggesting this, I think this is a useful change, but the
-> > > implementation could be improved.
-> > > 
-> > > > We also move away from using the random minute, and instead rely on
-> > > > systemd features to achieve the same goal (see patch 2). This allows us
-> > > > to go back to using unit templating for the timers. This is also a
-> > > > prerequisite to have static unit files.
-> > > > 
-> > > > Note that even if we really need more specific OnCalendar= settings for
-> > > > each timer, we should still do it that way, but instead distribute
-> > > > override alongside the template, for instance for weekly:
-> > > > 
-> > > > /usr/lib/systemd-user/git-maintenance@daily.timer.d/override.conf:
-> > > > [Timer]
-> > > > OnCalendar=<daily specific calendar spec>
-> > > 
-> > > We should definitely do that. Using systemd's random delay does not prevent
-> > > the different maintenance jobs from running concurrently as one job may be
-> > > started before a previous job has finished. It is important to only have one
-> > > job running at a time because the first thing "git maintenance run" does is
-> > > to try and acquire a lock file so if the hourly job is running when the
-> > > daily jobs tries to start the daily job will not be run.
-> > 
-> > Thinking about that, it occurs to me that the current scheme does not
-> > prevent concurrent execution either: the timers all use Persistent=true,
-> > which means they can fire concurrently on machine boot, if two or more
-> > would have been triggered during the time the machine was powered off
-> > (or just the user logged out, since it's a user unit).
+> Le 21/03/2024 à 16:51, Marc Branchaud a écrit :
+>>
+>> On 2024-01-30 03:53, Raphael Gallais-Pou wrote:
+>>> When working with diverged branches, some patches can appear several 
+>>> times
+>>> on different branches without having the need to merge those branches.
+>>> On the other hand you may have to port a specific patch on another
+>>> branch you are working on. The search with a SHA1 cannot be applied here
+>>> since they would differ.
+>>>
+>>> This patch adds an entry in the main context menu to highlight every
+>>> instance of a commit.
+>>
+>> Thanks for working on gitk!
+>>
+>> Unfortunately, I don't understand the description of your new option. 
+>> How is this different from the existing "Find containing:" feature? 
+>> Gitk can already highlights commits that match a specified string. 
+>> Please explain what gitk does when this new option is selected.
+>>
+>> Also, please explain how your code identifies "every instance" of a 
+>> commit.  When I think of a "commit instance" I think of the
+>> "git patch-id" command, which I don't see here.
 > 
-> Interesting, I wonder if the other schedulers suffer from the same problem.
+> It is based on the name of the commit. I agree that it is not ideal 
+> since the name can change between two versions.
 
-From what I can find (didn't dig much):
-- cron does not have the problem, because it will just miss the timers
-  if the machine was powered off. Not really better ^
-  - anacron though is another implementation of cron which apparently
-    support that semantic and is the default on ubuntu [1]
-    I can't find if there is something to avoid the same problem that
-    Persitent=true imply
-- same goes for launchctl (Effect of Sleeping and Powering Off at the
-  bottom of the page [2])
-- for schtasks it's apparently possible to have a similar mechanism than
-  Persistent [3]. There is a policy apparently to handle multiples
-  instances [4] but I'm not completely sure whether or not theses
-  instances can have different parameters.
-  It's currently defined that way for the schtasks scheduler:
-  "<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>\n". I
-  don't think it would prevent parallel execution between the different
-  schedule though, it seems to me they are different tasks.
+Thanks for clarifying that.
 
-[1]: https://serverfault.com/a/52338
-[2]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/ScheduledJobs.html
-[3]: https://learn.microsoft.com/en-us/troubleshoot/windows-server/system-management-components/scheduled-task-not-run-upon-reboot-machine-off
-[4]: https://learn.microsoft.com/en-us/windows/win32/taskschd/tasksettings-multipleinstances
+(BTW, on this list we pronounce "the name of the commit" as "the commit 
+subject (line)".)
 
+> As you stated below it is exactly a shortcut, and now that we are 
+> talking about it I think this is not the right right approach to do what 
+> I want.
 > 
-> > So maybe there should be a more robust mechanism to avoid concurrent
-> > execution ? I assume from what you say above the lock is acquired in a
-> > non-blocking way. Could going to a blocking one be a solution ?
+> I was not aware of the 'git patch-id' command, but this it clearly a 
+> better idea to base the search of the commit instances on it.
 > 
-> It is possible to wait on a lock file but I'd be worried about building up
-> an endless queue of processes if the process holding the lock file crashed
-> leaving it in place without anyway to automatically remove it.
+> One thing that I wonder is that 'git patch-id' seems to be based on 
+> standard input. This means that in order to highlight every instances of 
+> a commit the algorithm would need to parse each and every patch and then 
+> proceed to hash them and compare to the one referenced.
 > 
+> Wouldn't it be a tad long to process ?
 
-At least with systemd we have some mechanisms to deal with that.
-- systemd timers don't touch an already running unit, so that won't
-  trigger a new hourly or daily if the previous one is still running.
-- for the automatically removing it, we could:
-  - use XDG_RUNTIME_DIR ("%t" in systemd units) which is removed on
-    logout
-  - optionally add a tmpfiles fragments to delete locks which are really
-    too old (tmpfiles won't delete files on which a lock is taken)
-  - I thought about using a common RuntimeDirectory (see systemd.exec),
-    but this is not possible due to [5]
+Absolutely.  Maybe "git cherry" would be more appropriate?
+
+		M.
 
 
-[5]: https://github.com/systemd/systemd/issues/5394
-
-> I don't think we need to solve that problem as part of this patch series but
-> we should take care not to make it worse. Long term we may be better
-> scheduling a single job and have "git maintenance run" decide which jobs to
-> run based on the last time it run, rather than trying to schedule different
-> jobs with the os scheduler.
+>> (It looks to me like this is basically a shortcut to auto-fill gitk's 
+>> "containing:" field with the subject line of the selected commit?)
+>>
+>>> Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+>>> ---
+>>>   gitk-git/gitk | 23 ++++++++++++++++++++---
+>>>   1 file changed, 20 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/gitk-git/gitk b/gitk-git/gitk
+>>> index 7a087f123d..4b15230a16 100755
+>>> --- a/gitk-git/gitk
+>>> +++ b/gitk-git/gitk
+>>> @@ -2672,6 +2672,7 @@ proc makewindow {} {
+>>>           {mc "Make patch" command mkpatch}
+>>>           {mc "Create tag" command mktag}
+>>>           {mc "Copy commit reference" command copyreference}
+>>> +    {mc "Highlight commit name" command highlightcommitname}
+>>
+>> This line is indented with a tab, but it should use spaces.
 > 
-> > > As the daily job is
-> > > a superset of the hourly job and the weekly job is a superset of the daily
-> > > job so it does not make sense to run more than one job per hour.
-> > 
-> > Is that set in stone, or could they perform disjoint set of tasks
-> > instead ?
+> I will change my setup to use spaces instead of tabs one this file.
 > 
-> All of the schedulers are set up to run a single job each hour, I don't see
-> why we'd start running disjoint sets of tasks in the different jobs.
-
-I was wondering if running distinct tasks would allow overlapping
-execution, or if the different tasks are not safe to run concurrently
-anyway. I'm not familiar enough with them and the git internals to tell.
-
-Another option if the tasks set was distinct for each service instance
-would be to use dependencies and ordering directives like this:
-weekly.service
-```
-[Unit]
-Requires=daily.service
-After=daily.service
-
-[Service]
-ExecStart=<run only weekly stuff>
-```
-
-daily.service
-```
-[Unit]
-Requires=hourly.service
-After=hourly.service
-
-[Service]
-ExecStart=<run only daily stuff>
-```
-
-hourly.service
-```
-[Service]
-ExecStart=<run only hourly stuff>
-```
-
-That would avoid concurrent execution I think.
-
--- 
-Max Gautier
+>>
+>>>           {mc "Write commit to file" command writecommit}
+>>>           {mc "Create new branch" command mkbranch}
+>>>           {mc "Cherry-pick this commit" command cherrypick}
+>>> @@ -9002,13 +9003,13 @@ proc rowmenu {x y id} {
+>>>       if {$id ne $nullid && $id ne $nullid2} {
+>>>           set menu $rowctxmenu
+>>>           if {$mainhead ne {}} {
+>>> -            $menu entryconfigure 8 -label [mc "Reset %s branch to 
+>>> here" $mainhead] -state normal
+>>> +            $menu entryconfigure 9 -label [mc "Reset %s branch to 
+>>> here" $mainhead] -state normal
+>>>           } else {
+>>> -            $menu entryconfigure 8 -label [mc "Detached head: can't 
+>>> reset" $mainhead] -state disabled
+>>> +            $menu entryconfigure 9 -label [mc "Detached head: can't 
+>>> reset" $mainhead] -state disabled
+>>>           }
+>>> -        $menu entryconfigure 10 -state $mstate
+>>>           $menu entryconfigure 11 -state $mstate
+>>>           $menu entryconfigure 12 -state $mstate
+>>> +        $menu entryconfigure 13 -state $mstate
+>>>       } else {
+>>>           set menu $fakerowmenu
+>>>       }
+>>> @@ -9481,6 +9482,22 @@ proc copyreference {} {
+>>>       clipboard append $reference
+>>>   }
+>>> +proc highlightcommitname {} {
+>>> +    global rowmenuid autosellen findstring gdttype
+>>> +
+>>> +    set format "%s"
+>>> +    set cmd [list git show -s --pretty=format:$format --date=short]
+>>
+>> Why bother with the $format variable here?  Couldn't you just quote 
+>> the --pretty part?
+>>      "--pretty=format:%s"
+>> (FYI, I am not a TCL/TK coder.)
+> 
+> I also am not a TCL developer. I pretty much duplicated the 
+> copyreference{} procedure to get what I wanted.
+> 
+> Best regards,
+> Raphaël
+>>
+>>          M.
+>>
+>>> +    if {$autosellen < 40} {
+>>> +        lappend cmd --abbrev=$autosellen
+>>> +    }
+>>> +    set reference [eval exec $cmd $rowmenuid]
+>>> +    set findstring $reference
+>>> +    set gdttype [mc "containing:"]
+>>> +
+>>> +    clipboard clear
+>>> +    clipboard append $reference
+>>> +}
+>>> +
+>>>   proc writecommit {} {
+>>>       global rowmenuid wrcomtop commitinfo wrcomcmd NS
