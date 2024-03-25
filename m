@@ -1,132 +1,167 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ABD130A4C
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 06:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECDC17EB6C
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 07:08:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711348930; cv=none; b=ReOkHjGxq3zX1LEqlUjErZTfU4LOzCi3VBIGhnga69RXCaTc7Fl9tNkeR218I1nshCnoCcNNgFb8Ff2EhhhMAqfBnaqTJFUT2zctE8vJwj0KvTcXvuguzIkfdE3YWx9YddeqltCkMlyVK5zmnaL+Vzs2CMq/S7TkJqlij2HlA/c=
+	t=1711350517; cv=none; b=LvFn5X6+ocYRSuTs5Ax0hOsROuPBRqKXuvVd2HPoq3sTgoLqkTRaECT7PcM3FEc4Dos8gn+t3ep+2xmY+Sbl0VRVw/vgLyg1C9Ow7W2RqZpPsDQJp8jqAAEaGQhSotj3pQrUOr1FfjBLeuXF/Z9+zQdpyQDmomlq7vYlb8yBLHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711348930; c=relaxed/simple;
-	bh=lIpdmaAwcqUuzX4ATVIgwr09YMODj4sO40r8CLzcLvc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m04VhGhHNn5yTCTncBpMSGjnmX2U3r/gjNq8FS+H0+uXOu8FrMu7quSpsz6dLymWJrwCUqP3ysisj9eYMbixTlprZM09z9c4+WDFogcj5hOrgbRlu4oke/sXFfKV+hIpj3ImJ3UUX7jw/CYe2fPbkbKnEOvTUGhp5H9TY08vomc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l1YqRzgU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=llYSnfP0; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1711350517; c=relaxed/simple;
+	bh=hxAgvJnabppe2xpNuPgEe+GwifC1hnvBCdh9Vk3TXUU=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=hv5/vYJfHGTdwX3dIgv+Czj/7cCrcMd/9K2dANd8HCEldD9etT3ljoC/NEU65RW+tV7UHuZbXaiy+Ydy9N7c/13JWvbU3qx3nqDFfY/5frdu8cRvio//U6LHRS/ic+Z+Jvh6K0Dr6duu8iw/oAqKb3U2mXKoOYwu9sRwIPhdCpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H27XXUpV; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l1YqRzgU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="llYSnfP0"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A3AEE11400A3;
-	Mon, 25 Mar 2024 02:42:06 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 25 Mar 2024 02:42:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711348926; x=1711435326; bh=3qrLHAc9IH
-	OJdH/lBoyPtEsn7VwzeG+wUg9JJQ8yE7I=; b=l1YqRzgUETRr0r12IT8c/mFLBE
-	jasbMt73dQUlhA2rSyCvrI0wJNryP6OWND/BkGOkcI9eLbm7kYo4yejnSj7NgJuc
-	xae81rXSWTgmBFnDRQRCNbHW3TiIWaMLXwC2tVMkC++agrUzn3DTDVEXlT7jnSD7
-	JRlP8SFntm8KiQPRHHwhZRHgfS02AWwiWoorCkAAD/UBtMoywHpq/IfFmNjGqdv8
-	Po3RFr8cEuNdDW68N/tIJRm2G+4O+fiv3nmWMtJ2a89/0YO4BhmVMvnXqxZiLocu
-	O4Q314ux1ysVLGrg4L/aqyeEw5rvTsWG5rX0guTC96QrkyD+dQHmOTe//+Lg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711348926; x=1711435326; bh=3qrLHAc9IHOJdH/lBoyPtEsn7Vwz
-	eG+wUg9JJQ8yE7I=; b=llYSnfP0Di1FdcKWAGZxxydWpWFlMmP6c8PQw7xipAFi
-	KwEhFLeIVXRY5ofav12r6+OEbSBWMynXGQ3HUfbPdfL2ZfIwa4Y+09KW0XKSakGT
-	f5lm/ohZLArzx1JDTIZxLikBNROPj2yJiwheR+ihIPfEVmGb5keKSMKTfm5twLkd
-	exi5ZwCVtbLC46sRpTiqMrTReGhlem772FwKqJZ+ELvlBnPpS6o/TXAwvDG03H+a
-	78pnvcTE6Bbi+J0J49n0y5a2qpCGsZ6bylSQGCpyapgGmkbhIwiG1P7Ac3b8ZKDa
-	VKg5ZCmA4A2QQj7jUvh8LYpy9Z8rQnH3+Rx8G9dmlQ==
-X-ME-Sender: <xms:vhwBZo0Jt-nDcI8LD3hA-hoZFcc14c5BHDz9XLudBTrDN9zi0u_UkQ>
-    <xme:vhwBZjHbdVEv9UHneNW3Be_-rqoc7E-QOYYo2HrUBbZQ6U5IDy5b2hPk2RuUqLSSM
-    cEDNX5jRIUTO_uAng>
-X-ME-Received: <xmr:vhwBZg6yqBh3rsvArCFROKYABIGEw-4Vwu98l8AmKj5LmcuXmHzNSrXnYqUiU_Ftz_uEHJiwNYsClrECE7Zvw6QGZY6txpANKsy0whp-YPuztA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddtkedguddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepieekjeekveefveefgeeuffehjeegfe
-    ehtefgveehjeeuteffueelleeftdfgjeetnecuffhomhgrihhnpehpkhhsrdhimhdpkhgv
-    rhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:vhwBZh3Ql50I0X-WkW3Lu6EXD224Oo1nRLy7wTnvwIbyTzb9jnwCfg>
-    <xmx:vhwBZrFunbsEmWV-PWHSAheBMGAYu-g2Ul9Zi49KE_0pJZWe51f-qA>
-    <xmx:vhwBZq_DjV0MWQ3pRcIRqOMgokdDpGnMy_28_GixPFICLassw4jTtg>
-    <xmx:vhwBZgkdHc1--pD6Qz14mYCyLbnqewuJXZ9Oqf93Y9YbuF5g0oKuDA>
-    <xmx:vhwBZjBQw_qdWMa-izHOGAIgre-6Yg-xXiPswpN8CSSw3RJOWpVspw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Mar 2024 02:42:05 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 727099a8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Mar 2024 06:41:53 +0000 (UTC)
-Date: Mon, 25 Mar 2024 07:42:00 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2024, #07; Fri, 22)
-Message-ID: <ZgEcuDJfPoN-MYy5@tanuki>
-References: <xmqqedc1zs1p.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H27XXUpV"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5a529a1f69aso997930eaf.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 00:08:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711350513; x=1711955313; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CODmWcs+A0O9Z/iggTI/Hwd3YTX9wUguetOHyDefAao=;
+        b=H27XXUpV7bwQIDObgRmkd96DHQU8j9tSnGyevmEV4bzvo/attaguHyNB7Fmz/zoNVB
+         HocA/hnbF5PhcpzQA/AyHCxxGlp4O5nYJiC2kgde32ICP8ykuaTS5hhmYSiMiI5KSv4m
+         d/jKQxiWlPN3YebL8ICe409j65IGsKskFYE5sivK35u8nqwJoKRcMuZdf3GNN1UB7OTK
+         Nf56CofjgHBwV9CRnBPJ/HFsu0MN/rj/xTOpZIXmQPuMKtRE3yp03Tqz9j+d/9ri7Hm6
+         dHw4tBhi46F1Jm4Pg+NkLfK2uMjYS5ZCv4Ies5rC1leLf/gNXK8IQY851v5VDCOpvrug
+         2R6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711350513; x=1711955313;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CODmWcs+A0O9Z/iggTI/Hwd3YTX9wUguetOHyDefAao=;
+        b=OejxO9HwgvrL/YmgXkU4hb6gQYeVlQyM7S36pPGy+mhXYeltN6PVQB/zVPlAbg7y8f
+         VFeMTgT8KVxZgLLPa2O2KMLz1vi45h8N307OYNjZNy0vKDRlO1jThbkro3RPhmvWqVRw
+         JzKn0nWdune0Fz/AOzkVazisf/FPvskuvW4MHu8ovyyHCDoDM/4cHvgCnPzwt9qhG4oP
+         R+lheEZfaFCc81UW+UCUlwkQC6Tsp3Nh00osBeQHyw/sjY9dtTVJhoe+i0t7bEwWETig
+         M9zEJ3iaNAZldRQ8dJ+8XkyyC4llIaJhq1d4sfMabpQ1JSo763kgfNFoNnzE2OSafotz
+         zt4g==
+X-Gm-Message-State: AOJu0Yyf+VnAuif2mc7CFJIoBObjzvduSVJTZKm4A/g27gYFcf66nqL6
+	8Oah8YGtMAOql4WgFepdlh4H/QCljo315/rALUQaJAgskDRAF8ARBf4KM07u
+X-Google-Smtp-Source: AGHT+IHaUHmKYnnH3/kn9d9kNoRbn0SQdRfj+Kpa6ODpUnoyuGVWOcmvMMiIwpHj9IV39BEw8SBKPA==
+X-Received: by 2002:a05:6820:2111:b0:5a5:639a:2fa0 with SMTP id cd17-20020a056820211100b005a5639a2fa0mr82416oob.0.1711350513406;
+        Mon, 25 Mar 2024 00:08:33 -0700 (PDT)
+Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id cr10-20020a056820250a00b005a0fc5a89dfsm1341426oob.5.2024.03.25.00.08.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 00:08:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QKwkDZ7LNYKgUeP4"
-Content-Disposition: inline
-In-Reply-To: <xmqqedc1zs1p.fsf@gitster.g>
-
-
---QKwkDZ7LNYKgUeP4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: "Jeff King" <peff@peff.net>
+In-Reply-To: <20240325061452.GA242093@coredump.intra.peff.net>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH] pretty: find pretty formats case-insensitively
+Message-ID: <17bff03951f07360.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Mon, 25 Mar 2024 07:08:32 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 22, 2024 at 05:54:26PM -0700, Junio C Hamano wrote:
-> * ps/clone-with-includeif-onbranch (2024-03-12) 1 commit
->  - t5601: exercise clones with "includeIf.*.onbranch"
+Hi Peff
+
+Thanks for the review.
+
+On Mon, Mar 25, 2024 at 1:14=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+
+> The mention of "recursive" in the function we call made me what wonder
+> if we'd need more normalization. And I think we do. Try this
+> modification to your test:
 >=20
->  An additional test to demonstrate something I am not sure what.
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> index 321e305979..be549b1d4b 100755
+> --- a/t/t4205-log-pretty-formats.sh
+> +++ b/t/t4205-log-pretty-formats.sh
+> @@ -61,8 +61,9 @@ test_expect_success 'alias user-defined format' '
+> =20
+>  test_expect_success 'alias user-defined format is matched case-insensitiv=
+ely' '
+>  	git log --pretty=3D"format:%h" >expected &&
+> -	git config pretty.testalias "format:%h" &&
+> -	git log --pretty=3DtestAlias >actual &&
+> +	git config pretty.testone "format:%h" &&
+> +	git config pretty.testtwo testOne &&
+> +	git log --pretty=3DtestTwo >actual &&
+>  	test_cmp expected actual
+>  '
+> =20
 >=20
->  Waiting for a review response.
->  cf. <xmqqo7bjjid9.fsf@gitster.g>
->  source: <0bede59a53862585c49bc635f82e44e983144a7f.1710246859.git.ps@pks.=
-im>
+> which fails because looking up "testOne" in the recursion won't work. So
+> I think we'd want to simply match case-insensitively inside the
+> function, like:
+>=20
+> diff --git a/pretty.c b/pretty.c
+> index 50825c9d25..10f71ee004 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -147,7 +147,7 @@ static struct cmt_fmt_map *find_commit_format_recursiv=
+e(const char *sought,
+>  	for (i =3D 0; i < commit_formats_len; i++) {
+>  		size_t match_len;
+> =20
+> -		if (!starts_with(commit_formats[i].name, sought))
+> +		if (!istarts_with(commit_formats[i].name, sought))
+>  			continue;
+> =20
+>  		match_len =3D strlen(commit_formats[i].name);
+>=20
+> And then you would not even need to normalize it in
+> find_commit_format().
 
-Based on [1] I think this topic can move forward now, right? Or is the
-intent to wait for another review response here?
+Good catch -- you're absolutely right, and simply switching to
+`istarts_with` is a more elegant solution than my initial patch. I'll
+switch to this approach in a v2 re-roll.
 
-Patrick
+>> +test_expect_success 'alias user-defined format is matched case-insensiti=
+vely' '
+>> +	git log --pretty=3D"format:%h" >expected &&
+>> +	git config pretty.testalias "format:%h" &&
+>> +	git log --pretty=3DtestAlias >actual &&
+>> +	test_cmp expected actual
+>> +'
+>=20
+> Modern style would be to use "test_config" here (or just "git -c"), but
+> I see the surrounding tests are too old to do so. So I'd be OK with
+> matching them (but cleaning up all of the surrounding ones would be
+> nice, too).
 
-[1]: https://lore.kernel.org/git/xmqq34sj583m.fsf@gitster.g/
+Thanks for the tip. Updating the existing tests in this file to use
+`test_config` looks to be fairly trivial, so I will start v2 with a
+patch that does that as well. I'm opting for `test_config` over `git -c`
+for no real reason other than they seem roughly equivalent, but
+`test_config` still ends up calling `git config` which seems slightly
+more realistic to how pretty formats would be defined normally.
 
---QKwkDZ7LNYKgUeP4
-Content-Type: application/pgp-signature; name="signature.asc"
+> PS The matching rules in find_commit_format_recursive() seem weird
+>    to me. We do a prefix match, and then return the entry whose name is
+>    the shortest? And break ties based on which came first? So:
+>=20
+>      git -c pretty.abcd=3Dformat:one \
+>          -c pretty.abc=3Dformat:two \
+>          -c pretty.abd=3Dformat:three \
+> 	 log -1 --format=3Dab
+>=20
+>    quietly chooses "two". I guess the "shortest wins" is meant to allow
+>    "foo" to be chosen over "foobar" if you specify the whole name. But
+>    the fact that we don't flag an ambiguity between "abc" and "abd"
+>    seems strange.
+>=20
+>    That is all orthogonal to your patch, of course, but just a
+>    head-scratcher I noticed while looking at the code.
 
------BEGIN PGP SIGNATURE-----
+I agree that this behavior is somewhat odd. I'm not sure what we would
+want to do about it at this point -- any change would technically be
+breaking, I assume. Regardless, not something I'd scope into this patch,
+but good observation.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYBHLMACgkQVbJhu7ck
-PpSs0g//W75bzJnkW0+jboX8gt5Z3JjQynmg37oq7gSlg77nNyWKcozCBJJ9CuAL
-ofP1fmoJ/T427y5p/1Aptbnkli8Xu+xqqaVn1BT4fNcr2RofBnRto3O9FIsb6dew
-lMDCd8na+HUI0Zby3WvN0Egx7tl3+VpQCAd8vjgghFgYBQE6maew9I95plMt14Lk
-eT1Re5VtgJf1ZC8UM2d3bzzB64/ZrY2fHocm+xaSgcZK+ZceGQ0cNr3DF9xHCeyh
-4ebxJaIZSUe8ooCpWZoHjqisxJtIN4IvDRvDANTJbV2EcOHnvQNuM2d7j2xgcX2h
-Ghpx82cB8rc2dg5stesu8e5s3QEA/gla2aKkRcWQCHXvO2eeZHtYcIf3nEjl2u+R
-EP8rRiNQmAIFvGQQ0GgTBX4JA/dWVME6mY0tj1+SJIWSTd3xJ6uq3O/FDnpOn6Yk
-OTpIxIxvBPZZu1d+ExNYk8mGeOOz9wJnYHUH63OAue7JMRy1v2WpJTFMvVkm08yF
-Xzf6yVeXk+sok17Vz8qVYu0F4oASxMdZhsrBEspKYEYg+W4/yI5K07/1LlpGgLwX
-DkOcGPgFgvaNbhV76/PaL6dCQ9x6v34M07KVt/Y7YE4ljGF+PBdXEvNlfZkq88e0
-v6NneQ7PcW4XjAhY0d0j4A3tq2bQQvJnazkFmLz1vFycPFpdlag=
-=dXbc
------END PGP SIGNATURE-----
-
---QKwkDZ7LNYKgUeP4--
+--=20
+Thank you,
+Brian Lyles
