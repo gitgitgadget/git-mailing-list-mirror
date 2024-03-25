@@ -1,71 +1,102 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE0B5C8EC
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 20:52:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825CA5C8EC
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 20:52:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711399929; cv=none; b=oy7p7Kb11RGUxJLT6p/f0rUkVkX/nsTA2Wt68ioZ5Rb8O/1E1agYXtRUzrQdFounnzKhHnisVKU+VbAjYvXYGg/UJa2gaoQBfLwH02uJ9yJSiOBAms8owQPZZZUlT1tLvZ3Cj3tNMfgxZZBT6AdtceYETSSyhvF4UYvG6ghU3mQ=
+	t=1711399938; cv=none; b=CsP2QLGYg2Yr28KAvTNQUCjiQj5gol0hUdBhlfbuulSVTBzJojGuPg9d3NFJUnCFvcf67vxDzyl+WACoThSpEvO6raqaXQAeYOGdNXlekcy5viJ+hJay8urXBwoFMwi1dHGJ0ZyxyPzCKYnOviZIKlgDNlV/DYx00in1Df4QV2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711399929; c=relaxed/simple;
-	bh=RIaVeubz+DhQ5Py+QHYPxGAKRUvm3R6WW3IYDD1gmNg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o8DYqBh2OYVkv6GKSu/mqvlojgU4nN7zACxA6RU/Zn8KElFdFKSYwoKoROZSrPkJ1OqrFwR/Q3c/W7gTzQW9Vjky0Fknf49NVMS1D3MCU0rV9uf3B9mgoiWKf4rUsKrj/X6Cdh7rgVEortnfjkBB7fsC6DCQ/6I6K6xBgdfnB3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6962a97752eso34492346d6.2
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 13:52:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711399926; x=1712004726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RIaVeubz+DhQ5Py+QHYPxGAKRUvm3R6WW3IYDD1gmNg=;
-        b=vqGg/czzs7tIXMw3KDzQUV/TI3mXY5ZRh6YOciqzrlu0idndMxlIVyZBJo3q5ESopw
-         NivcIJ8y7YE6TmBnsKnreQw25EbPziYpgmBqhvTPYR/WzArBvZNYTvNQpJZ6UbXZgIxg
-         /tdRwraBiX9OjVRgaVinILBGHCsEijTmHzXbhLV7sWO2fhw9qUEbM8oVMSJsvcQW9RkN
-         ltQX27j8dIkVUT5wNVxkGs2EdDG25eiGc6NVIttOrm8Reavpqkn+0HPjYRfFydIPEybj
-         z8FV5JveQDcav4L6HPh0Z0zVsz++H3xY6HkDuzpmkC8QrUrgt0zvfy3K7kykjCLaBkZS
-         TF6A==
-X-Gm-Message-State: AOJu0YzX+IiXVFtFfacaI/PjeeC7lTO671Hvj7zkZViuW/ToO/duWxGa
-	H7LG1KmW/zRB4PP5Xw3AC2M5uZsfaXbu7a0pigZWPW1aUVXYAGNV5ktresSQh36QLKMSybWGAXj
-	p5aaD31RwZxijvQuydYMExBhh5rH4XmhRqTE=
-X-Google-Smtp-Source: AGHT+IGaLkiYzSXb/slegpLB6ShF1d0v3CSmiaN9G/jgO1Stqk0kw4uDnXUnZosNM3HJN3V67OqKzfmSVlTjLD+cMTE=
-X-Received: by 2002:a05:6214:c21:b0:696:5d0b:e0c5 with SMTP id
- a1-20020a0562140c2100b006965d0be0c5mr8585420qvd.16.1711399926488; Mon, 25 Mar
- 2024 13:52:06 -0700 (PDT)
+	s=arc-20240116; t=1711399938; c=relaxed/simple;
+	bh=4R4b74cS1fU8BeSy7CEuXKd8/xA7vCQnsWg5gqE9zEk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A/lNHJJ33Bgxx8As5QaTxGjGpdGjpflGzaFdhMGFEapN9JjSZs5+r84C9KkRgdmPq2uM66KHPiEE6IBtEpk5MSBGwzmnaB0hVYpWqJx4Ql+x14Ofy1ximfQZmLkjmNpRMHdDMiuoQbOZjbPQuuzx723FxGGdSiCeQ3S+tMH0RUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=KUmuetl/; arc=none smtp.client-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="KUmuetl/"
+Received: from localhost (ip-109-42-177-242.web.vodafone.de [109.42.177.242])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42PKq8l3027611
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Mon, 25 Mar 2024 21:52:08 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
+	t=1711399928; bh=4R4b74cS1fU8BeSy7CEuXKd8/xA7vCQnsWg5gqE9zEk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=KUmuetl/FOjUoWKLk3Gwix9UZgNsYdTE5pV6klWFG4Kp6W0+UxDhyTFl4Dtn2nWG0
+	 96Mgmz5Xx85Hnr3945LhySoCgaFNRffvvP68LHjMSAe+BT261i1ga+f9IitJXINJUE
+	 82X1lmQo6BIRSvmcrSivxpE8kX+O9ee3rqeWdYEE=
+From: Dirk Gouders <dirk@gouders.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Kyle
+ Lippincott <spectral@google.com>
+Subject: Re: [PATCH v3 4/5] MyFirstObjectWalk: fix description for counting
+ omitted objects
+In-Reply-To: <xmqq34semden.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	25 Mar 2024 10:25:52 -0700")
+References: <cover.1710840596.git.dirk@gouders.net>
+	<cover.1711368498.git.dirk@gouders.net>
+	<cfa4b9ce503e98035d3ce09b0c9e00bcfb6ff70a.1711368499.git.dirk@gouders.net>
+	<xmqq34semden.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Mon, 25 Mar 2024 21:07:03 +0100
+Message-ID: <ghplvikrdk.fsf@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
-In-Reply-To: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 25 Mar 2024 16:51:55 -0400
-Message-ID: <CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
-Subject: Re: [GSoC] Microproject help
-To: vk <g@vkabc.me>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Mar 25, 2024 at 11:40=E2=80=AFAM vk <g@vkabc.me> wrote:
-> For the microproject, I have looked into the lists for 2024 and it seems
-> that all the projects have been taken except for `Replace a
-> run_command*() call by direct calls to C functions`. However, it seems
-> that the issue has been solved. The command I ran to search throughout
-> the repo is `git grep 'run_command*('` and the search result returns
-> run_command functions which I assume are essential.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Dirk Gouders <dirk@gouders.net> writes:
 >
-> If there is any low hanging fruits that you can suggest to me for the
-> microproject, that will be great. I will also be searching throughout
-> the mailing list to see if there are any potential microproject to work
-> on.
+>> Before the changes to count omitted objects, the function
+>> traverse_commit_list() was used and its call cannot be changed to pass
+>> a pointer to an oidset to record omitted objects.
+>>
+>> Fix the text to clarify that we now use another traversal function to
+>> be able to pass the pointer to the introduced oidset.
+>>
+>> Helped-by: Kyle Lippincott <spectral@google.com>
+>> Signed-off-by: Dirk Gouders <dirk@gouders.net>
+>> ---
+>>  Documentation/MyFirstObjectWalk.txt | 14 ++++++++------
+>>  1 file changed, 8 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+>> index a06c712e46..811175837c 100644
+>> --- a/Documentation/MyFirstObjectWalk.txt
+>> +++ b/Documentation/MyFirstObjectWalk.txt
+>> @@ -754,10 +754,11 @@ points to the same tree object as its grandparent.)
+>>  === Counting Omitted Objects
+>>  
+>>  We also have the capability to enumerate all objects which were omitted by a
+>> -filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
+>> -`traverse_commit_list_filtered()` to populate the `omitted` list means that our
+>> -object walk does not perform any better than an unfiltered object walk; all
+>> -reachable objects are walked in order to populate the list.
+>> +filter, like with `git log --filter=<spec> --filter-print-omitted`. To do this,
+>> +change `traverse_commit_list()` to `traverse_commit_list_filtered()`, which is
+>> +able to populate an `omitted` list. Note that this means that our object walk
+>
+> "this means that" could be rephrased in a way a bit more helpful and
+> to readers with clarity, perhaps:
+>
+> 	Note that our object walk will not perform any better than
+> 	an unfiltered walk with this function, because all reachable
+> 	objects need to be walked in order to ...
 
-Searching the mailing list for "#leftoverbits"[1] can be a good way to
-discover little tasks which may be suitable for a GSoC microproject.
+Would it be OK to rearrange it even more?  To me, the above raises the
+new question "How do I use traverse_commit_list_filtered() to do an
+unfiltered walk?":
 
-[1]: https://lore.kernel.org/git/?q=3D%23leftoverbits
+ 	Note that our object walk with this function will not perform
+	any better than the previous unfiltered walk, because all
+	reachable objects need to be walked in order to ...
+
+Dirk
