@@ -1,86 +1,164 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019B125924B
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 02:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175B8153579
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 06:14:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711335247; cv=none; b=WNGFlP3kuJDTwOFEXF7tXaujGu8xZoFDFj5TPM/nP6AA7w+C4ALsFzOErZPWla3t1xO+zc9uexP2DtGQRWFw+4KGq4yLVUownT4ic1TLHGRTrAGwUaKrkPaX0Ua+z5dZrOjbqw+OpyXtFsDfyoVXi2FNuKO+g38rx4HOv4hAzYA=
+	t=1711347302; cv=none; b=Ljad7PRDdwc6iTvj3xiHQ6hmU/LLVhnH9tGC5mazJL1vxFYT0n3CE2KzNO6X2keG1ps32WEGbYVnwC+iASSM2HwAUQzXJj0J5bU0mgcIKSQfwglE9/9ciKXS4PIUKbcp7Tdtp+YGqtYnlatnFCK+j73LP6rPP3+Z+UoeUBm5eaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711335247; c=relaxed/simple;
-	bh=u4xD05AebUD2Dx/0joKtfgu2/D3LDnrRd+38GSL/WNM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q+cag9FLC6m/Wr8q7uhvzQt3OMcHMwwGaJuyS/IFHerKlfDv0cNFdOVdW71av0pOpG+U42AK44D0uPk4iB78n2zKcFytZKY4qHlPVYRyFSit28LB7gqASkRjmYkOmMN5SU3uGEpTE+Gj4KoxmWGrIercMCLgwaJRi/9wtk725GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FxHGhi+W; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FxHGhi+W"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 77B8621168;
-	Sun, 24 Mar 2024 22:54:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=u4xD05AebUD2Dx/0joKtfgu2/D3LDnrRd+38GS
-	L/WNM=; b=FxHGhi+WADvav4YFX58hHJR/K/6jw1SWJQd97vDqZBNbV1vIX66QiL
-	zYHaVdQ1ubDeY056aokSrTv5jeuCrt1ORQo5YfODw0A/vFZM2/AlhB4n3j0lZ8cZ
-	YcxPvgInsoeKcrYrb2V+ZkyEgPE6AMuy+D3eb8PIkMPW1vXODy+Hc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 70F6721167;
-	Sun, 24 Mar 2024 22:54:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0057B21165;
-	Sun, 24 Mar 2024 22:54:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Max Gautier <mg@max.gautier.name>
-Cc: git@vger.kernel.org,  Hans Jerry Illikainen <hji@dyntopia.com>
-Subject: Re: [PATCH] editorconfig: add Makefiles to "text files"
-In-Reply-To: <Zf_cSWY9DxVxKZu2@framework> (Max Gautier's message of "Sun, 24
-	Mar 2024 08:54:49 +0100")
-References: <20240322221813.13019-1-mg@max.gautier.name>
-	<xmqqo7b5zy84.fsf@gitster.g> <Zf77gyA28KsZdOUs@framework>
-	<xmqqr0g0yhoe.fsf@gitster.g> <Zf_cSWY9DxVxKZu2@framework>
-Date: Sun, 24 Mar 2024 19:54:00 -0700
-Message-ID: <xmqqwmprm37b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1711347302; c=relaxed/simple;
+	bh=CAq+Wbp9t4HGu7QeW8BSncneiYzVzoZVFQBHVqvolt8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tFzj4Xs2/Xi9GnvYISqem1GvLwUyh2G+tDohalR1bckY7bgzSBvq8FKOckXbGFthEjXBBVo2ZBgPQNnTComxKE5bKsA2SIQlhylM2CnsCyEFfTQic4g0uvsU4TJJqpF51JaDy1vo3aYCNWzBSEwdytRGVl/pocBRVidomK0XVXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 10926 invoked by uid 109); 25 Mar 2024 06:14:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Mar 2024 06:14:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 845 invoked by uid 111); 25 Mar 2024 06:14:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Mar 2024 02:14:57 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 25 Mar 2024 02:14:52 -0400
+From: Jeff King <peff@peff.net>
+To: Brian Lyles <brianmlyles@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] pretty: find pretty formats case-insensitively
+Message-ID: <20240325061452.GA242093@coredump.intra.peff.net>
+References: <20240324214316.917513-1-brianmlyles@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EF6CAF6C-EA52-11EE-BFF5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240324214316.917513-1-brianmlyles@gmail.com>
 
-Max Gautier <mg@max.gautier.name> writes:
+On Sun, Mar 24, 2024 at 04:43:09PM -0500, Brian Lyles wrote:
 
-> But yeah, "per-directory customization" isn't good, it multiplies the
-> place to look when the config is not correct. I was mentioning by fear
-> that using only one file would be hard to manage is there is too much
-> patterns. 
+> User-defined pretty formats are stored in config, which is meant to use
+> case-insensitive matching for names as noted in config.txt's 'Syntax'
+> section:
+> 
+>     All the other lines [...] are recognized as setting variables, in
+>     the form 'name = value' [...]. The variable names are
+>     case-insensitive, [...].
+> 
+> When a user specifies one of their format aliases with an uppercase in
+> it, however, it is not found.
+> 
+>     $ git config pretty.testAlias %h
+>     $ git config --list | grep pretty
+>     pretty.testalias=%h
+>     $ git log --format=testAlias -1
+>     fatal: invalid --pretty format: testAlias
+>     $ git log --format=testalias -1
+>     3c2a3fdc38
 
-Understood.
+Yeah, I agree that case-insensitive matching makes more sense here due
+to the nature of config keys, especially given this:
 
-My primary point is that we are not using too many patterns
-currently, and hence many files are *not* covered by .editorconfig
-rules.  Some files may not even be meant to be edited by an editor,
-but many others are allowed to be edited without enforcing any style
-with .editorconfig and how to format them is up to the developers.
-Applying a default rule to these files to enforce consistency may be
-better than uncontrolled random mess each developer may leave
-without any rules, and at the same time, doing so would mean we do
-not have keep adding to the "C uses this rule, Shell uses this rule,
-oh, now we also want Makefile to use this use" enumeration.
+> This is true whether the name in the config file uses any uppercase
+> characters or not.
 
-There may be fallouts (i.e., "For files of type X that currently are
-not governed by .editorconfig, the indent-with-tab rule is not
-suitable, but suddenly these files are subject to the default rule")
-but adjusting the rules with exception would be more explicit and
-clarify the rules.
+I.e., the config code is going to normalize the variable names already,
+so we must match (even if the user consistently specifies camelCase).
 
+But...
+
+>  static struct cmt_fmt_map *find_commit_format(const char *sought)
+>  {
+> +	struct cmt_fmt_map *result;
+> +	char *sought_lower;
+> +
+>  	if (!commit_formats)
+>  		setup_commit_formats();
+>  
+> -	return find_commit_format_recursive(sought, sought, 0);
+> +	/*
+> +	 * The sought name will be compared to config names that have already
+> +	 * been normalized to lowercase.
+> +	 */
+> +	sought_lower = xstrdup_tolower(sought);
+> +	result = find_commit_format_recursive(sought_lower, sought_lower, 0);
+> +	free(sought_lower);
+> +	return result;
+>  }
+
+The mention of "recursive" in the function we call made me what wonder
+if we'd need more normalization. And I think we do. Try this
+modification to your test:
+
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 321e305979..be549b1d4b 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -61,8 +61,9 @@ test_expect_success 'alias user-defined format' '
+ 
+ test_expect_success 'alias user-defined format is matched case-insensitively' '
+ 	git log --pretty="format:%h" >expected &&
+-	git config pretty.testalias "format:%h" &&
+-	git log --pretty=testAlias >actual &&
++	git config pretty.testone "format:%h" &&
++	git config pretty.testtwo testOne &&
++	git log --pretty=testTwo >actual &&
+ 	test_cmp expected actual
+ '
+ 
+
+which fails because looking up "testOne" in the recursion won't work. So
+I think we'd want to simply match case-insensitively inside the
+function, like:
+
+diff --git a/pretty.c b/pretty.c
+index 50825c9d25..10f71ee004 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -147,7 +147,7 @@ static struct cmt_fmt_map *find_commit_format_recursive(const char *sought,
+ 	for (i = 0; i < commit_formats_len; i++) {
+ 		size_t match_len;
+ 
+-		if (!starts_with(commit_formats[i].name, sought))
++		if (!istarts_with(commit_formats[i].name, sought))
+ 			continue;
+ 
+ 		match_len = strlen(commit_formats[i].name);
+
+And then you would not even need to normalize it in
+find_commit_format().
+
+> +test_expect_success 'alias user-defined format is matched case-insensitively' '
+> +	git log --pretty="format:%h" >expected &&
+> +	git config pretty.testalias "format:%h" &&
+> +	git log --pretty=testAlias >actual &&
+> +	test_cmp expected actual
+> +'
+
+Modern style would be to use "test_config" here (or just "git -c"), but
+I see the surrounding tests are too old to do so. So I'd be OK with
+matching them (but cleaning up all of the surrounding ones would be
+nice, too).
+
+-Peff
+
+PS The matching rules in find_commit_format_recursive() seem weird
+   to me. We do a prefix match, and then return the entry whose name is
+   the shortest? And break ties based on which came first? So:
+
+     git -c pretty.abcd=format:one \
+         -c pretty.abc=format:two \
+         -c pretty.abd=format:three \
+	 log -1 --format=ab
+
+   quietly chooses "two". I guess the "shortest wins" is meant to allow
+   "foo" to be chosen over "foobar" if you specify the whole name. But
+   the fact that we don't flag an ambiguity between "abc" and "abd"
+   seems strange.
+
+   That is all orthogonal to your patch, of course, but just a
+   head-scratcher I noticed while looking at the code.
