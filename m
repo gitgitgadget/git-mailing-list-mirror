@@ -1,250 +1,376 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFF618C7B2
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 10:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9625C902
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 11:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711363699; cv=none; b=IDlEwtd1OdJR/OG2k/3NYgJMiqMLtD5ZvHfldq31G0Rg54lo4ymuVKkxau2ZEAGpiD+tX54qxAgy1Qo8I/iWMILo34hYRhsnj5UWOD6fbWQ1A0MJqJ3mnua31V4+WIwTgpd33JzJUlVxI93B7jD3I5dZBj684jUm8g0dfWJquS8=
+	t=1711364473; cv=none; b=Scq6N7pZDrVnPHOq3K4TwNNaIN2ceojKPuR0y8Lv+/8DvL736gUwqixLueFUxgKHOrNbtnvM4olDH7nzmaxokp9+oDv6Z3OazL6Hw+EY9dfkAN9A76dXpIxOdArn3D1mCNqy3zhAKxHye0lu+8XSC1xpdXOy5NOlWsw+vaEzd6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711363699; c=relaxed/simple;
-	bh=lkfrIlplNqqB7v/k+L8Wpt+yZL3o2RsVCBFYK458uFk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Et2on40gqa8ERkFTBJqXaPpZdlGLAkO1ryt7WIMHUUWQC03LrpgiJxJu0Cbn1fYjNLVZa1ozsjFEsltI8xHQS4UKs1SLmdAnTGgEcjxDMKR8riRcB5jm6VfbndVHdcIxo59rBZfMt816WkDOgFHaQ05LcpHZijkeHHy75tLR8bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gRYufMhu; arc=none smtp.client-ip=209.85.208.173
+	s=arc-20240116; t=1711364473; c=relaxed/simple;
+	bh=ASnKz4nYWZ53Sq1KX10ASvApkmWdXNd6Bdq3f9vqyso=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q8gK7cFMKM/vlbjKvWk5aGtzH7AcvBfFUyz3OY5vj+2gQUpI5+Obx2flODrLhKtaIzUwgQppMm1PFqGv4QOK3s3KEZ6OWeagfetFuLm6ieY1CdlxUAQkA4lhRoJr/RU2OGsPJAVXZqH0mzH/oo6d8IxHmmzMdk54CMG/PxCh3Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRcIKuNL; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRYufMhu"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d52e65d4a8so56193031fa.0
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 03:48:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRcIKuNL"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dcbd1d4904dso4218466276.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 04:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711363694; x=1711968494; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=G/ZEycnrAWB+rhiLSG/D+x4CAWnfUL7uwxKsvwd6F0U=;
-        b=gRYufMhuZahTqKTuZ/3LKXK2RgEJe/9uQsQ/h1elppvo4CowKzPBodZSr6RKTTg0np
-         BkYxWep7M6sZ9xC/Q/HZYZnu8QBzdw71NB6gvwUNZ7LBsh+QMZCIjdVU3iOPLElMHcVK
-         1iKnCeIpyCCmCXY7VBVQI3B6WOGf0sv79DUw553ak73Rx1TkYMw6fD2x7LAvpgDjArlZ
-         wehU/C/FzhdvXxZ6PDZFPViArovwNVAZUITfH27lGO0SLOR6AcjBh+9C8OS/sZEG/0z/
-         R4B0qsPwVUakxsaRT3Rhvh+IgLIP6v5mPVDFSZekiO/QBYTJgsyUZG/qGxLLtxVTf6d9
-         ix/Q==
+        d=gmail.com; s=20230601; t=1711364470; x=1711969270; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sXDH6RdCI/T+rPpmOjkUsWZCrnNGCIqz0XLJrkc9md0=;
+        b=QRcIKuNL1rTSQQQX9G2kV/xNlvE1yM4EU9x9orm1gl1D2s+epZDX4vsHrNqzQsYNjX
+         HsFoC3b/gQu2KIa1LoI8fhz6k0v6ZtfOhGEBGXRzuxtwEYMxLa5W77wVIsZiTC6s5My8
+         k10qBMtx+WgMfshb4o3O5AIxfro/ER//eA2iQti7QOBveddQqFr4+s1lRmjytReaB23S
+         YaXL77sVQfdr7EYcwg2U4f6YErXNfRS8mPDtoFNjaL/hlAsj0EgtjyyxmkbKMK60qJ4F
+         9knnUMAAhG04lWredrmc0j8QdEJMTSgDaY79karY6ht0TO71+3lsWEhYjw4/6gtvgn5w
+         8ANQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711363694; x=1711968494;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=G/ZEycnrAWB+rhiLSG/D+x4CAWnfUL7uwxKsvwd6F0U=;
-        b=MflVxbTEsv1PocXU8BO46mnTdiAG6tlEQVADuF5gKddfgeDpJS5qzi1OEyZQukpnpc
-         jBTIjD0ccyI5fs0L3+2fwg2RY3T1KxiAi9NeMMffrEaQAflN0DFmd6rh4R7fywAgLIpy
-         MjhV2wthqUvpjXwsULwBR2uqtp4pa5qNy5NhSCBFhk/8cBZ7OCk6QjUtIkoBOJQUQ05S
-         jdD4PnHH23iYMkstu/U8Qz/kQ4+eB4Jn30oGhgG6DHDqclSb2igZcj1KrhBcB1IiqqxA
-         Y9jlwAq2eCU29SGPEBH62C1j/YcH7JAKXQKPSH8e2m05+7w7mML5Y2OjjRVAk4Pzy0vq
-         pr2A==
-X-Forwarded-Encrypted: i=1; AJvYcCXP0MHfHiTLSCigLkLI3X+a+5Vi/Yxi4ZB+uNyKwMkS7esNl1GRLKkGnBPXjVx/J3/hNMSgqa/bwim9JWx67vbfsjg7
-X-Gm-Message-State: AOJu0Ywv86nSZVg8N+alDw+aExGcs+j5KBfIhIvXgQqCQ7iQ+OCn0DtK
-	OObrr35zdFI85yoULB92VRiR7wzjGgtSvYmgxfKHE9w/lpkfI0fxDvsPAir2
-X-Google-Smtp-Source: AGHT+IEr3jPdgUFP3v9GZVxr33srmXIK7YzE0/i5yU9YKzJRvxK5Mf6b9HkZ2f8kMOtoq8lMm6xm+Q==
-X-Received: by 2002:a2e:b00a:0:b0:2d6:b11a:3a49 with SMTP id y10-20020a2eb00a000000b002d6b11a3a49mr4289912ljk.9.1711363693532;
-        Mon, 25 Mar 2024 03:48:13 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6a5:fd01:d2c6:37ff:fef6:7b1? ([2a0a:ef40:6a5:fd01:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id v6-20020a05600c470600b00414896bb1e0sm3181618wmo.36.2024.03.25.03.48.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 03:48:13 -0700 (PDT)
-Message-ID: <e040c631-42d9-4501-a7b8-046f8dac6309@gmail.com>
-Date: Mon, 25 Mar 2024 10:48:12 +0000
+        d=1e100.net; s=20230601; t=1711364470; x=1711969270;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sXDH6RdCI/T+rPpmOjkUsWZCrnNGCIqz0XLJrkc9md0=;
+        b=tu7yIYVeO88zD1vX4L0vDH5N+bseG2tZzWbKExxWCJmJy6S4cgmuwA1noYGEhcEMvl
+         CLxVTd5sC/ZEHw2BqQshRvPCtm6rCgZVRHsKIqIPhR3ZaghzNZ64tceqi3gVUhPyO+jN
+         JaBgpEM6uYfauqKi5IIA52AaK58Vy0OtnYK+G5ZdCfmeJDxSMzqazajHiOL9QVAgPbmw
+         UIriDUMN0FLVc6r3qH0349IobtTtHGKnuIHFdAXxm4peflS0lvcgLhkjrKq7TilVxUVT
+         MYO0pvNQ8AMCpoYPJ/WddcR4kX9PVHwh1KwlBAOLMUSOPV6blLWwRkI5Nl+stUVUbtiS
+         cItg==
+X-Gm-Message-State: AOJu0YyKc+R7FAwzPPVVQeHzuGJs1LciWrkFHRxi7o0ndATenHF/YXnd
+	/oB8LZYZ63dRMFbU0VPtqJF5XdohYILjVMyvdk5A/0C8+J/80JaMybdnfxXWLgXjMG9N0Ed89uL
+	RzQglJohzkLzLvph/k6d/z1AtVVa+V+JKFfT4fA==
+X-Google-Smtp-Source: AGHT+IFf6kRtrlBdVfJY5meQg0wGTT2a5XG5VQLi1CsLeyvMg8CLtQWwcYGion69yljhU6sWLl03Tncy0gi7fJUvBsE=
+X-Received: by 2002:a25:d88c:0:b0:dcd:2aa3:d73b with SMTP id
+ p134-20020a25d88c000000b00dcd2aa3d73bmr4524003ybg.50.1711364469434; Mon, 25
+ Mar 2024 04:01:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/2] Allow disabling advice shown after merge conflicts
-To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- ZheNing Hu <adlternative@gmail.com>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>, =?UTF-8?Q?Rub=C3=A9n_Justo?=
- <rjusto@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>
-References: <pull.1682.v2.git.1710100261.gitgitgadget@gmail.com>
- <pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1682.v3.git.1710623790.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CAFJh0PS_VB8yv7B1uM5+Ts9PtMFtU5mL4y8UUDORKQcYHSoxPA@mail.gmail.com>
+ <ZgE1fxIFFQIdtIyN@tanuki>
+In-Reply-To: <ZgE1fxIFFQIdtIyN@tanuki>
+From: eugenio gigante <giganteeugenio2@gmail.com>
+Date: Mon, 25 Mar 2024 12:00:58 +0100
+Message-ID: <CAFJh0PTxhDSW1qsnVRrDxmMnp5k16nPGe6RAgrmWow0rgYV+dw@mail.gmail.com>
+Subject: Re: [RFC][GSoC] Proposal: Refactor git-bisect(1)
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Philippe
+> To further stress the point: the biggest challenge of this project is
+> indeed to find an agreement with the community whether this refactoring
+> will ultimately be worth it. This will require some good arguing on your
+> part why exactly you think this is fine and how exactly this will
+> interact with other implementations of Git like libgit2/JGit/Dulwich. It
+> may very well happen that ultimately the community decides that this
+> whole endeavour is not worth it.
 
-On 16/03/2024 21:16, Philippe Blain via GitGitGadget wrote:
-> Changes since v2:
-> 
->   * expanded the commit messages to explain why the tests for 'git rebase' do
->     not need to be adjusted
->   * adjusted the wording of the new 'advice.mergeConflict' in the doc, as
->     suggested by Kristoffer for uniformity with his series which is already
->     merged to 'master' (b09a8839a4 (Merge branch
->     'kh/branch-ref-syntax-advice', 2024-03-15)).
->   * checked all new output manually and consequently adjusted the code in 1/2
->     to avoid a lonely 'hint: ' line.
->   * adjusted the addition in advice.h in 1/2 to put the new enum
->     alphabetically, as noticed by Rubén.
->   * added misssing newlines in 2/2 as noticed by Phillip and tweaked by
->     Junio.
->   * rebased on master (2953d95d40 (The eighth batch, 2024-03-15)), to avoid
->     conflicts in 'Documentation/config/advice.txt' due to Kristoffer's merged >     series
-> [...] 
-> Note that the code path where 'git rebase --apply' stops because of
-> conflicts is not covered by the tests but I tested it manually using this
-> diff:
-> 
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 47534f1062..34eac2e6f4 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -374,7 +374,7 @@ test_pull_autostash_fail ()
->       echo conflicting >>seq.txt &&
->       test_tick &&
->       git commit -m "Create conflict" seq.txt &&
-> -	test_must_fail git pull --rebase . seq 2>err >out &&
-> +	test_must_fail git -c rebase.backend=apply pull --rebase . seq 2>err >out &&
->       test_grep "Resolve all conflicts manually" err
->   '
+Yeah, I'll try to expand a bit in this direction. Meanwhile, if you think
+there are others tools to look into, besides the already cited
+(libgit2/JGit/Dulwich),
+like UI interfaces or something else, please let me know.
+(Maybe GitLab is something to keep in mind?)
 
-Thanks for being so thorough, this version looks good to me
+> I don't think that the unit testing framework would be a good fit. The
+> intent of that new framework is mostly to test low-level functionality
+> that otherwise cannot be easily tested. But here it should actually be
+> quite easy to test things as part of our regular integration-style tests
+> in "t/t*.sh", so it would be preferable to write those instead.
 
-Best Wishes
+Oh ok, I thought the testing framework should have been used for all tests.
+I'll change that.
 
-Phillip
+> Thanks for your proposal. Please make sure you submit it as a PDF file
+> to the GSoC website soonish, unless you already did that.
 
-> 
-> Philippe Blain (2):
->    sequencer: allow disabling conflict advice
->    builtin/am: allow disabling conflict advice
-> 
->   Documentation/config/advice.txt |  2 ++
->   advice.c                        |  1 +
->   advice.h                        |  1 +
->   builtin/am.c                    | 14 +++++++++-----
->   sequencer.c                     | 33 ++++++++++++++++++---------------
->   t/t3501-revert-cherry-pick.sh   |  1 +
->   t/t3507-cherry-pick-conflict.sh |  2 ++
->   t/t4150-am.sh                   |  8 ++++----
->   t/t4254-am-corrupt.sh           |  2 +-
->   9 files changed, 39 insertions(+), 25 deletions(-)
-> 
-> 
-> base-commit: 2953d95d402b6bff1a59c4712f4d46f1b9ea137f
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1682%2Fphil-blain%2Fsequencer-conflict-advice-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1682/phil-blain/sequencer-conflict-advice-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1682
-> 
-> Range-diff vs v2:
-> 
->   1:  a2ce6fd24c2 ! 1:  6005c1e9890 sequencer: allow disabling conflict advice
->       @@ Commit message
->            merge conflict through a new config 'advice.mergeConflict', which is
->            named generically such that it can be used by other commands eventually.
->        
->       +    Remove that final '\n' in the first hunk in sequencer.c to avoid an
->       +    otherwise empty 'hint: ' line before the line 'hint: Disable this
->       +    message with "git config advice.mergeConflict false"' which is
->       +    automatically added by 'advise_if_enabled'.
->       +
->            Note that we use 'advise_if_enabled' for each message in the second hunk
->            in sequencer.c, instead of using 'if (show_hints &&
->            advice_enabled(...)', because the former instructs the user how to
->       @@ Commit message
->        
->            Update the tests accordingly. Note that the body of the second test in
->            t3507-cherry-pick-conflict.sh is enclosed in double quotes, so we must
->       -    escape them in the added line.
->       +    escape them in the added line. Note that t5520-pull.sh, which checks
->       +    that we display the advice for 'git rebase' (via 'git pull --rebase')
->       +    does not have to be updated because it only greps for a specific line in
->       +    the advice message.
->        
->            Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
->        
->         ## Documentation/config/advice.txt ##
->        @@ Documentation/config/advice.txt: advice.*::
->       - 		Advice on how to set your identity configuration when
->       - 		your information is guessed from the system username and
->       - 		domain name.
->       + 		Shown when the user's information is guessed from the
->       + 		system username and domain name, to tell the user how to
->       + 		set their identity configuration.
->        +	mergeConflict::
->       -+		Advice shown when various commands stop because of conflicts.
->       ++		Shown when various commands stop because of conflicts.
->         	nestedTag::
->       - 		Advice shown if a user attempts to recursively tag a tag object.
->       + 		Shown when a user attempts to recursively tag a tag object.
->         	pushAlreadyExists::
->        
->         ## advice.c ##
->       @@ advice.c: static struct {
->        
->         ## advice.h ##
->        @@ advice.h: enum advice_type {
->       + 	ADVICE_GRAFT_FILE_DEPRECATED,
->         	ADVICE_IGNORED_HOOK,
->         	ADVICE_IMPLICIT_IDENTITY,
->       - 	ADVICE_NESTED_TAG,
->        +	ADVICE_MERGE_CONFLICT,
->       + 	ADVICE_NESTED_TAG,
->         	ADVICE_OBJECT_NAME_WARNING,
->         	ADVICE_PUSH_ALREADY_EXISTS,
->       - 	ADVICE_PUSH_FETCH_FIRST,
->        
->         ## sequencer.c ##
->        @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
->       @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
->         
->         	if (msg) {
->        -		advise("%s\n", msg);
->       -+		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s\n", msg);
->       ++		advise_if_enabled(ADVICE_MERGE_CONFLICT, "%s", msg);
->         		/*
->         		 * A conflict has occurred but the porcelain
->         		 * (typically rebase --interactive) wants to take care
->   2:  3235542cc6f ! 2:  73d07c8b6a7 builtin/am: allow disabling conflict advice
->       @@ Commit message
->            on stderr instead of stdout. In t4150, redirect stdout to 'out' and
->            stderr to 'err', since this is less confusing. In t4254, as we are
->            testing a specific failure mode of 'git am', simply disable the advice.
->       +    Note that we are not testing that this advice is shown in 'git rebase'
->       +    for the apply backend since 2ac0d6273f (rebase: change the default
->       +    backend from "am" to "merge", 2020-02-15).
->        
->       +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->       +    Helped-by: Junio C Hamano <gitster@pobox.com>
->            Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
->        
->         ## builtin/am.c ##
->       @@ builtin/am.c: static const char *msgnum(const struct am_state *state)
->         
->        -		printf_ln(_("When you have resolved this problem, run \"%s --continue\"."), cmdline);
->        -		printf_ln(_("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
->       -+		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\"."), cmdline);
->       -+		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead."), cmdline);
->       ++		strbuf_addf(&sb, _("When you have resolved this problem, run \"%s --continue\".\n"), cmdline);
->       ++		strbuf_addf(&sb, _("If you prefer to skip this patch, run \"%s --skip\" instead.\n"), cmdline);
->         
->         		if (advice_enabled(ADVICE_AM_WORK_DIR) &&
->         		    is_empty_or_missing_file(am_path(state, "patch")) &&
->         		    !repo_index_has_changes(the_repository, NULL, NULL))
->        -			printf_ln(_("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
->       -+			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\"."), cmdline);
->       ++			strbuf_addf(&sb, _("To record the empty patch as an empty commit, run \"%s --allow-empty\".\n"), cmdline);
->         
->        -		printf_ln(_("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
->        +		strbuf_addf(&sb, _("To restore the original branch and stop patching, run \"%s --abort\"."), cmdline);
-> 
+Thanks for the review!
 
+Il giorno lun 25 mar 2024 alle ore 09:27 Patrick Steinhardt
+<ps@pks.im> ha scritto:
+>
+> On Fri, Mar 22, 2024 at 11:26:48AM +0100, eugenio gigante wrote:
+> > Hi all, this is my proposal for the GSoC 2024.
+> >
+> > -----------------------------------------------------------------------=
+-----------------------------
+> >
+> > Refactor git-bisect(1) to make its state self-contained
+> >
+> > Contacts
+> > -------------------
+> >
+> > Full Name: Eugenio Gigante
+> > Email: giganteeugenio2@gmail.com
+> > Github: www.github.com/EuGig
+> >
+> >
+> > Synopsis
+> > ------------
+> >
+> > The git-bisect(1) tool is employed to pinpoint the exact commit within =
+a
+> > series of commits that introduced a particular bug. When initiating a
+> > bisection session,
+> > it generates a collection of state files within the Git repository,
+> > documenting diverse
+> > parameters such as ".git/BISECT_START". Instead of having different
+> > files scattered
+> > in the =E2=80=98.git=E2=80=99 directory, it has been suggested by Patri=
+ck to introduce
+> > a new =E2=80=98.git/bisect-state=E2=80=99
+> > directory which will contain the state files
+> > (https://lore.kernel.org/git/Za-gF_Hp_lXViGWw@tanuki/).
+> > The aim of the project is to implement this new layout for storing
+> > git-bisect(1) related files.
+> > The project will also handle backward compatibility issues that may
+> > arise with such a change.
+> > This is one of the project ideas suggested by the community of Git.
+> > The difficulty for the project should be medium and it should take
+> > somewhat between 175 to 350 hours.
+> >
+> >
+> > Contributions
+> > -------------------
+> >
+> > add.c: use unsigned integral type for collection of bits
+> > (https://lore.kernel.org/git/20240224112638.72257-2-giganteeugenio2@gma=
+il.com/)
+> >
+> >
+> > Description:
+> >
+> > Since the MSB of signed integral type=E2=80=99 is special, =E2=80=98fla=
+gs=E2=80=99 fields should be
+> > declared of type =E2=80=98unsigned integral=E2=80=99. builtin/add.c:ref=
+resh() declares
+> > 'flags' as signed,
+> > and uses it  to call refresh_index() that expects an unsigned value.
+> > Fix this by modifying its type =E2=80=98unsigned int=E2=80=99.
+> >
+> > Although the code was easy, this patch gave me the opportunity to get
+> > familiar with
+> > the process of submitting patches. The lesson learned was not only
+> > about understanding
+> > git commands for formatting and sending patches to the mailing list;
+> > but, most importantly,
+> > was about how to interact with the community; i. e., how to interact
+> > with reviewers,
+> > to ask them questions and give them answers. That is why I chose a
+> > micro-project idea
+> > that explicitly required interaction with the community, before
+> > writing any code.
+> >
+> > Status:
+> >
+> > Merged to master on: Thu Mar 7 15:59:41 2024
+> > commit f46a3f143eba661b9eb2b1e741447d6709eb6e90
+> >
+> >
+> > Deliverables
+> > ------------------
+> >
+> > As soon as the acceptance to the program is communicated, I will start =
+writing a
+> > sort of Backlog of required changes which has to be shared with mentors=
+.
+> > This has the goal of better tracking progress and possible issues.
+> > Already individuated changes and possible strategies are considered in
+> > what follows:
+> >
+> > 1. First, one needs to inspect the possible impacts such a change could=
+ have
+> > regarding Backward compatibility. There will be two possible situations=
+ in which
+> > backward compatibility breaks:
+> >
+> > a. (Noted by Junio (https://lore.kernel.org/git/xmqqwms0ndvu.fsf@gitste=
+r.g/)).
+> > People switch versions in the middle of a git-bisect session. Even
+> > though I think this
+> > case would not be that common, one should take this into consideration
+> > nonetheless.
+> >
+> > b. (Noted by Patrick (https://lore.kernel.org/git/ZbDPqOnyLw4yhu--@tanu=
+ki/)).
+> > Different implementations of Git could suffer backward
+> > incompatibilities like Libgit2,
+> > JGit and Dulwich. In this case, I will investigate if (and how) these
+> > tools would suffer the change.
+> >
+> > In this phase it is important to find an agreement with the community
+> > if the refactoring
+> > would be worth it, and in case it is, to find the best solution to
+> > guarantee backward compatibility.
+> > The simplest way seems to be to teach Git how to recognise the old
+> > style layout and move
+> > the files by following the new one. This can be achieved by checking
+> > the presence of state files
+> > inside =E2=80=98.git=E2=80=99, just after the starting of a bisect sess=
+ion and by
+> > moving them accordingly.
+>
+> To further stress the point: the biggest challenge of this project is
+> indeed to find an agreement with the community whether this refactoring
+> will ultimately be worth it. This will require some good arguing on your
+> part why exactly you think this is fine and how exactly this will
+> interact with other implementations of Git like libgit2/JGit/Dulwich. It
+> may very well happen that ultimately the community decides that this
+> whole endeavour is not worth it.
+>
+> > 2. After a strategy for backward compatibility is decided, I will
+> > refactor the directory
+> > where all the file states are created. This is done by changing the
+> > function factory
+> > =E2=80=98GIT_PATH_FUNC=E2=80=99 in =E2=80=98builtin/bisect.c=E2=80=98=
+=E2=80=99. The following is an example
+> > for =E2=80=98BISECT_START=E2=80=99:
+> >
+> > - #static GIT_PATH_FUNC(git_path_bisect_start, =E2=80=9CBISECT_START=E2=
+=80=9D)
+> > + #static GIT_PATH_FUNC(git_path_bisect_start, =E2=80=9Cbisect-state/st=
+art=E2=80=9D)
+> >
+> > Similarly for =E2=80=98bisect-state/terms=E2=80=99, etc. This kind of c=
+hanges should
+> > also be done in =E2=80=98bisect.c=E2=80=99
+> > (which contains the binary searching algorithm git-bisect(1) uses).
+> > Then, as noted by
+> > Junio (https://lore.kernel.org/git/xmqqwms0ndvu.fsf@gitster.g/) this
+> > path should be
+> > marked per-worktree, since each worktree can have its own bisect sessio=
+ns.
+> > Probably, also files related to git-worktree use the directory of
+> > state files somehow,
+> > so one should also check them.
+> >
+> > 3. Write some tests for the new layout. The plan is to use the new
+> > unit testing framework. First tests that come to mind are:
+> >
+> > a. Check that the state files are inside =E2=80=98.git/bisect-state=E2=
+=80=99.
+> > b. Check if the path pertains to GIT_DIR and not COMMON_DIR.
+> > c. Check that after adding a worktree which was being bisected does
+> > not somehow spoil the session and the state files.
+> >
+> > This can be taken as an example of test file for git-bisect(1) using
+> > the new framework:
+> >
+> > #include test-lib.h
+> > #include bisect.h
+> >
+> > // Write functions like:
+> > // t_bisect_dir_init()
+> > // t_worktree_init()
+> > // t_test_layout()
+> > // and include them in cmd_main
+> >
+> > int cmd_main(int argc, const char **argv)
+> > {
+> > if (!TEST(t_bisect_dir_init(), =E2=80=9Cbisect directory initialized=E2=
+=80=9D))
+> > test_skip_all(=E2=80=9CBisect initialization failed=E2=80=9D);
+> > if (!TEST(t_worktree_init(), =E2=80=9Cworktree initialized=E2=80=9D))
+> > test_skip_all(=E2=80=9CWorktree initialization failed=E2=80=9D);
+> > TEST(t_layout(), =E2=80=9Cnew laypout=E2=80=9D);
+> >
+> > return test_done();
+> > }
+>
+> I don't think that the unit testing framework would be a good fit. The
+> intent of that new framework is mostly to test low-level functionality
+> that otherwise cannot be easily tested. But here it should actually be
+> quite easy to test things as part of our regular integration-style tests
+> in "t/t*.sh", so it would be preferable to write those instead.
+>
+> > 4. Implement strategy for backward compatibility and related tests such=
+ as:
+> >
+> > a. Check if Git correctly recognizes the old layout and in case
+> > correctly moves the files according to the new one.
+> >
+> >
+> > Timeline
+> > ------------
+> >
+> > May 1 - 26:
+> > Community bounding Period.
+> > Read Documentation.
+> > Write Backlog.
+> >
+> >
+> > May 27 - July 8:
+> > Implement a new layout for state files.
+> > Write tests.
+> >
+> > July 12 - August 19:
+> > Assess and implement backward compatibility.
+> >
+> > August 19 - Deadline :
+> > Write documentation for the project.
+> >
+> > I can dedicate 3 hours a day during weekdays, and 5 hours during the we=
+ekends.
+> >
+> >
+> > Benefits to the Community
+> > -------------------------------------
+> >
+> > How state files dedicated for git-bisect(1) are stored is not ideal.
+> > Having a single directory dedicated to these files, instead of having d=
+ifferent
+> > files spread in the Git directory during the bisecting session, is
+> > better and facilitates
+> > even the removal of them after bisecting.  Moreover, as noted by
+> > Phillip (https://lore.kernel.org/git/9c800cd5-8d20-4df7-8834-f74ab00069=
+5e@gmail.com/#t),
+> > by aligning the organization of these files to that used for am,
+> > rebase, cherry-pick, etc.,
+> > the repo will have a more coherent and uniform layout.
+> > This will enhance readability and maintainability in general.
+> >
+> > Karthik [1] also expressed  the need of such refactoring as a prerequis=
+ite
+> > to introduce new syntax checks for pseudoref in =E2=80=98is_pseudoref_s=
+yntax()=E2=80=99.
+> >
+> >
+> > [1] See Karthik=E2=80=99s commit: 1eba2240f8ba9f05a47d488bb62041c42c5d4=
+b9c
+>
+> Nicely summarized.
+>
+> >
+> > Biographical information
+> > ----------------------------------
+> >
+> > I=E2=80=99m a former student of Logic and Philosophy who turned to codi=
+ng
+> > after graduating.
+> > I have been working as a Developer for NTT Data Italia for a year.
+> > I hold a full-time job, but I've seen that it doesn't conflict with
+> > the rules of GSoC
+> > since I'm an open source beginner. I am fully capable of managing my
+> > workload independently,
+> > including my working hours. I know it is not ideal, but I can
+> > definitely work around
+> > my schedule and dedicate time to the project.
+> >
+> > Before, I have contributed small patches to two open source projects:
+> > - Pydata/Sparse: https://github.com/pydata/sparse/pull/611
+> > - Pennylane: https://github.com/PennyLaneAI/pennylane/pull/3959
+>
+> Thanks for your proposal. Please make sure you submit it as a PDF file
+> to the GSoC website soonish, unless you already did that.
+>
+> Patrick
