@@ -1,103 +1,102 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D786F517
-	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:53:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3373C6F520
+	for <git@vger.kernel.org>; Mon, 25 Mar 2024 21:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711403640; cv=none; b=sr+QZVb5TQsJQBv9wGQg5vMq3LMK3i6WCY+viznpGDf3fDBjtdXGxGxD+n/P/0DRYGtULHwCcCNMqr4Hw9BHiA4CsVd+oz3JC/eAZvVOCwscKcGOAhO2W2YQhwlTfwHKbLIkc+oqSdYiVzAdoDwl3Ku01J6hLqJSXmzWA6GzEfc=
+	t=1711403937; cv=none; b=JFvA9WQUS9YwNtiEF5a7ApbIuLUQvLbiO/LKPxPWw/5v+SsHbLLpnhEiVfFR8Ufl/lCaTgn652rpSv+5OXpI+8US7VQ9jutLDQN3Uj1CDxsu6k5KybTTsLAHCuyfR+hzGeUBNidpUe9+YR1Oh9Q+MAJusxoYWBJPVqfKTJD6K2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711403640; c=relaxed/simple;
-	bh=OzZV31oe50bLq52OwB3DU4+dQtxk8we4oNzyUdq0hTo=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=fzDBnCn276yxapjzFw2lQPq9fx15T6OOi6O0Z3O5guYRifpqX6FlWGVhINX83FK4/VqEDOkzj9e0tzCA3nBNiN1E6dR5LaMYrAqkxSdv5aanJY/8nNzmjt07IQvobukn1mSuR/25t2+fpINhQLjrAqfh0R0q5UTc+h79XTnKo+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Y8j2FEwc; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1711403937; c=relaxed/simple;
+	bh=KYZK1T5OugGr5z9ntzIyJVWlJSA8PZ1dkkamlRzofws=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aWr9OplHx9AGXwsuomaRu1Dm8MDMkwGtAVeLc8E2F89hcTuNQk47lO5q9JGr1gMvtE6QoujdN3yE2oA3nA/Vis6G4+G/GKEcIXS6UY6rsuVcyJcdySx3UttzBrNBf4N/qbvHhg1yZnFktA8s9G6eHeeTdBsPqtPzt6nT6R/p8U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iWxsnIPs; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Y8j2FEwc"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iWxsnIPs"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 148FE1E936B;
+	Mon, 25 Mar 2024 17:58:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=KYZK1T5OugGr5z9ntzIyJVWlJSA8PZ1dkkamlR
+	zofws=; b=iWxsnIPsq2a+BeVsbX7YHPQqojN+NX8GooZCcL5VufQTS+PrNaZafE
+	hVaop8zuNS3gQzyHMig5cG0bb6DZr9S+7Lo5Dmtit5vngH4pJ5MtOWlGlyzCjuZs
+	wpQAbeYt6prlf9p2UYI+pgkchSvssJJigSMmrgvYTf+VZPr05XrKg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B0431E936A;
+	Mon, 25 Mar 2024 17:58:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72C6B1E9369;
+	Mon, 25 Mar 2024 17:58:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: vk <g@vkabc.me>,  git@vger.kernel.org
+Subject: Re: [GSoC] Microproject help
+In-Reply-To: <CAPig+cQAoK1UkgADFrnJfY4xw0kP6BypPAPe3aLoeFFGT_r2fQ@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 25 Mar 2024 17:37:25 -0400")
+References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
+	<CAPig+cRLUra6RObK82nvm1S_goK8q2CXe3A7EeCFA7xqhJCdMg@mail.gmail.com>
+	<xmqq1q7yhupa.fsf@gitster.g>
+	<CAPig+cQAoK1UkgADFrnJfY4xw0kP6BypPAPe3aLoeFFGT_r2fQ@mail.gmail.com>
+Date: Mon, 25 Mar 2024 14:58:53 -0700
+Message-ID: <xmqqv85aezxe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1711403635;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qJcatthCjjw96L//iETONaTTj9xJzqXZMJBUZZ6N1PI=;
-	b=Y8j2FEwcsbbfjGJQEiKWmpMPZfjh7DyjOAJGXS7yGFzcCzMVVO2JnZ0rnnxGEU9avmLIkb
-	7iihl8KVhFsOTUzc0COzXx26d7nCcYDPH17KoZ/mOh4n4rLGGavFhg+GQBjYvN3dnpUtj2
-	EmIAK6wj3+9WommVLUTfXl2O5FtTTK91atL1OoyABD7jiUX62bDChtrGHxSzK+Hj6x3Ei+
-	sOCaGHjS9VT4SevvwDAHTtwNm/Qf6JcjvgkSAd3mB4wP7JrpFAJlKiwRPg0rTi5bh45dqB
-	3KdA0czq+1kCWXREtmueSgtigXEMHnNkZI85nqlLUoKOKZn3u15jJA4jtNoXEg==
-Date: Mon, 25 Mar 2024 22:53:55 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Olliver Schinagl <oliver@schinagl.nl>
-Cc: Junio C Hamano <gitster@pobox.com>, Chris Torek <chris.torek@gmail.com>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>, Karthik Nayak
- <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Support diff.wordDiff config
-In-Reply-To: <6e035003-0c08-4e44-811c-27d2cebe9fa8@schinagl.nl>
-References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
- <20240302095751.123138-1-karthik.188@gmail.com> <xmqqedcszhty.fsf@gitster.g>
- <CAOLa=ZR6tN8eQhByaUobj3kS9wwYegsOQNT8cjZYA-YATJJt7w@mail.gmail.com>
- <34bb249d-4a4d-4cc7-b737-bb18398341d0@app.fastmail.com>
- <CAPx1GveaNR9ooWqE1VkAuFg5NO4Lwzx7bj-W1mWeHRg-rcg6+w@mail.gmail.com>
- <xmqqle6zw6om.fsf@gitster.g>
- <6e035003-0c08-4e44-811c-27d2cebe9fa8@schinagl.nl>
-Message-ID: <91f0848b917a15873a7b75b380619126@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DF538376-EAF2-11EE-8B3F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 2024-03-22 23:08, Olliver Schinagl wrote:
-> On 03-03-2024 18:45, Junio C Hamano wrote:
->> Chris Torek <chris.torek@gmail.com> writes:
->> 
->>> This tension is relieved somewhat when there *are* separate
->>> plumbing commands, such as `git diff-index` and `git diff-tree`
->>> and so on, or `git rev-list` vs `git log`. Unfortunately there
->>> are some commands, including `git log` itself, that have options
->>> that are missing from the roughly-equivalent plumbing command,
->>> and there are commands (such as `git stash` and `git status`)
->>> that either do not have, or at one time lacked, plumbing command
->>> equivalents or options.
->> 
->> Yup.  It is my pet peeve that more and more contributors got lazy
->> and tweaked only Porcelain commands, without bothering to improve
->> plumbing commands to match, while adding more features during the
->> last decade.  Unfortunately there is no easy remedy after such sins
->> have been committed.  Once people start using `git log` in their
->> scripts, it is way too late to tell them to update their scripts to
->> use `git log --porcelain`.  The fact that you need to tell them is
->> an admission that you already broke their scripts.
->> 
-> To avoid this request from dieing quietly, I will ask (complain)
-> again. Who's the client for. How important is the human UX?
-> 
-> Even introducing a new cli, 'git-cli-for-humans' it will be abused
-> again for sure. So what's a good way forward? Personally, as I
-> mentioned before, it's in the docs to not script around non-plumbing
-> commands, which gives an opening to the admission. And why is
-> admitting things a bad thing, when it improves things for the human?
-> Even if it hurts.
-> 
-> One could argue 'git3 will break things! Human and machine control is
-> split. Use --porcelain (or plumbing commands) in your scripts or
-> expect breakage from time to time. You have been warned!'
-> 
-> We do in the end want progress, do we not? :)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Maybe, but just maybe, a possible solution for introducing such new
-configuration options could be introduce a new category of configuration
-options, which could be set in the user's git configuration only?
+> Since the purpose of a GSoC microproject is to familiarize the
+> candidate with the project's mailing-list workflow and to give the
+> GSoC mentors a feel for how the candidate interacts, perhaps the
+> easiest suggestion would be the old fallback of having the candidate
+> look for a single test script which still uses `test -f` or `test -e`
+> or such, and converting that to use one of the test_path_foo()
+> functions from t/test-lib-functions.sh.
 
-That way, a repository enabling some troublesome configuration option
-wouldn't cause the user's scripts to break.
+During today's discussion, we came up another interesting one.
+
+    Follow one of our three tutorial documents to the letter to see
+    if they need adjusting, and come up with a set of patches to
+    adjust them.
+
+This kills a few birds with a stone.
+
+ - The student has to be familiar with the codebase and MyFirst
+   tutorials are meant as a gentle "dip your toes in the water"
+   introduction.  Following the examples and copy-pasting code
+   snippet and trying to build would be useful exercise for GSoC
+   candidates by itself.
+
+ - These tutorials, unfortunately, haven't been maintained as well
+   as they should have been, and some do not compile any longer due
+   to API changes, header shuffling, etc.  Identifying such breakages
+   and reporting them as bugs is already useful by itself, even if
+   the student does not manage to fix them.
+
+ - But if the GSoC student can learn to address such a bug (which
+   requires use of "git log" and "git blame" to spelunk where the
+   breakage happened, after which it would be obvious what the right
+   fix would be), that is valuable exercise by itself, even if it
+   does not reach the "patch submission" stage.
+
+ - And of course, the result of such a work can go through the usual
+   patch review cycle, which would serve as a microproject.
+
+Hmm?
+
