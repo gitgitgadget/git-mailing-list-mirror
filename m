@@ -1,55 +1,55 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372CC23CB
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 22:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248AA13D604
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 22:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711490421; cv=none; b=gsO8eLB9loeDUy5Gwk//LYhxZpB8No0zNoxXwah5dVs3gf6Oh48IddVfX1TqVy3CRIZtIu+Qyw0IktA3A7BNTx0weRGzrMh+snLVE+24D5UwLkIu+FcWZSi/ItcaAG95PoxyXu81KMBXAqbo8rUTgYnMxtT0LsUXqo5JprNNQk4=
+	t=1711490794; cv=none; b=NWLjjqVeFLjiX6/iVwGO0UwHE3+P0R37I12ns0l4hSrzmQDIlunhcsGmHY87pkddCnCkNBGW1+9MEIm+cJ2WkLRFNtZ9nijqo2HDcUV1lpRHKuOQTYn1AvIslT3NVD6Johv1lopqY16JWw5U4bBWjjf2QEKAxiNQ0UX0cSe7i5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711490421; c=relaxed/simple;
-	bh=YJbQqpliWCWjjW53W9Vmvcltu3quhKOwl9IT4zUbnE8=;
+	s=arc-20240116; t=1711490794; c=relaxed/simple;
+	bh=iGRsrlnRfjitoNnn+xgPHm1h1haoh2fBBl5SrvMorsU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SeL2DpEIbWF1DiyMsHoWuOdgIZ6rq6qFl2J49ooOux0nTFsQC13wo7qBVeY0u6YOV9vEYaEoxmI+9zWK2SuZNR9jMPdN/5rM3v58JdnkOAffN2QsRx1ZEDYmPpY7eNFLsPjZdcENlNNJHnOcxQn6bznz37HFEGgE2XckuvmegtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LdjcRRYa; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=Wh1A6S0OPNcs1Wbk4ZpqsfETa+O5LpUQeshlpz/ZEtVCYdjN0rzSlT2oDIBhexMAM9LAmTSzFVI3ZYTuIqfU05sbCpfangqXS2bGZfCiWZDItrOZJ740YEvnXlFPkSqG/eDxDsnYWhhWQuf+iVfnLSMvORPhdvOUOC3JQUo8frs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gKmIHZEy; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LdjcRRYa"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E0751982A;
-	Tue, 26 Mar 2024 18:00:19 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gKmIHZEy"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BF4691F3095;
+	Tue, 26 Mar 2024 18:06:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YJbQqpliWCWjjW53W9Vmvcltu3quhKOwl9IT4z
-	UbnE8=; b=LdjcRRYa9WzjZc7H5b7vMN81PWgLcxdUokJBiJ4tcTzh4GVfz5tmyf
-	C1IsDGNPfPNp+btxWw8ypxBRSj7X84xzOztBm057uVpdm3T3yDWmQXk+WuAoDKJx
-	PXzpIww67O4LrAj0y6qfHg88z7vVZtk/vsYw2X/aZlAfO/fURtDzM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 853F519829;
-	Tue, 26 Mar 2024 18:00:19 -0400 (EDT)
+	:content-type; s=sasl; bh=iGRsrlnRfjitoNnn+xgPHm1h1haoh2fBBl5Srv
+	MorsU=; b=gKmIHZEyNz1I+tanq99N+IOqHHCcBXRbMVuuXYLnwdiowPO5gqUKMr
+	etErk4a2zlDfzKhv6X4RMxb6fvbTkRzvJZhXKJywpZvGnLVPI+MBrtGI3NHubIKW
+	fFcZSgXHzzrKyZGVrn8fJf7kRONBNpT5R35YaGZ0P/0ug7jzEVBvM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B5FFC1F3094;
+	Tue, 26 Mar 2024 18:06:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CFFF919824;
-	Tue, 26 Mar 2024 18:00:14 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 177AA1F3091;
+	Tue, 26 Mar 2024 18:06:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
- Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
- <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 0/6] Make trailer_info struct private (plus sequencer
- cleanup)
-In-Reply-To: <pull.1696.git.1710570428.gitgitgadget@gmail.com> (Linus Arver
-	via GitGitGadget's message of "Sat, 16 Mar 2024 06:27:02 +0000")
-References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
-Date: Tue, 26 Mar 2024 15:00:13 -0700
-Message-ID: <xmqqjzlo7ixe.fsf@gitster.g>
+To: Ralph Seichter <github@seichter.de>
+Cc: rsbecker@nexbridge.com,  Dragan Simic <dsimic@manjaro.org>,  Chris Torek
+ <chris.torek@gmail.com>,  git@vger.kernel.org,  "Ralph Seichter via
+ GitGitGadget" <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 3/1] config: allow tweaking whitespace between value and
+ comment
+In-Reply-To: <xmqq4jd7p1wf.fsf_-_@gitster.g> (Junio C. Hamano's message of
+	"Fri, 15 Mar 2024 15:26:40 -0700")
+References: <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+	<pull.1681.v3.git.1710280020508.gitgitgadget@gmail.com>
+	<xmqq8r2jp2eq.fsf@gitster.g> <xmqq4jd7p1wf.fsf_-_@gitster.g>
+Date: Tue, 26 Mar 2024 15:06:29 -0700
+Message-ID: <xmqqcyrg7imy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,18 +59,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 39A71FB2-EBBC-11EE-9C4E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 19E9B918-EBBD-11EE-B355-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> NOTE: This series is based on the la/format-trailer-info topic branch (see
-> its discussion at [1]).
+> Extending the previous step, this allows ...
 
-This unfortunately depends on another series, which has seen no
-reviews after 10 days X-<.  It did not help that this was sent
-almost immediately after that unreviewed series that it depends on.
+If I am not mistaken, this topic, originating at
 
-Any takers?  There must be some folks who know the trailer code very
-well, no?
+https://lore.kernel.org/git/pull.1681.v3.git.1710280020508.gitgitgadget@gmail.com/
+
+is expecting responses from you.  Can you unblock it to let us move
+forward?
 
 Thanks.
