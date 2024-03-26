@@ -1,88 +1,174 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BE713CC6B
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 19:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D35481A3
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 20:03:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711480439; cv=none; b=UAyb5tDcOpSdSVKk5xJ85AiRHaKI/Ln0qnDOyLV3CualcNc28Dj7tLkQ+FyMvUVLTinOsfOyhxGxt9o5cgAFOw2RWA3ZPP+L4gWwfM8558PJqgBAaz5WY/KKukVOSHQ/adVuydEpD6QIM+p3VwJZ+87gr78ooc9t9UEIpKGY3D4=
+	t=1711483419; cv=none; b=gmqm08rfPaV4nlKgp9dz8+mbVQpDNo5DgKq2blFevZt34xHCJgcrvat2m0eCsb8/eRA86Jy2+/aioITP9PKLfaoUapsiT+d/ue4x+9wb/1u7w5sn4ZfWUCysRvy+59ecQP8GOjlWiRPgeIwJWOcFfDco/Bff4Ibl1gHEfwjcb8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711480439; c=relaxed/simple;
-	bh=nW2GQ3X236qtotZPb0PKcgCPcA9sZdVuOz5PWVRV5Y8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jrGATeDTQ4j1cOplmSLnhiwy6iGWbdNtfZ+M4WuqBRZ8KfC6iMv1+50mO2AdoV/ozwdZHLjmyI8rmgb7Wj5Hx7Y6rRZyWlwA0MTl+P8+lfqjNSiNiQH34wdm7FyLpeH0OaKsieRdXYSDRrL4rzZsxujszND/2vNXJy0qdz3A8b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=t14Dku/S; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711483419; c=relaxed/simple;
+	bh=Bw8GjuN5iyiMQZM9OFu+Hs4pE0DE0401P9xHbcutpjQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KhM894+m/T5/k/tmlFg+q/utIU1Pc4Jp5o5iRV84J495zVWvM8rLvtOgyB6NsKP1A93ZTOLDWyoUQicAsLfPMIiEI52AXJ9ZU3Z5b7WExqkPq6nd7nzmmL6M3H7R7rHSevUs6H4NC7mz4Tmrio9YDJwcVaV0P8Cwn3PBa0LJAlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbHthqtk; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t14Dku/S"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0ED8218853;
-	Tue, 26 Mar 2024 15:13:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=nW2GQ3X236qt
-	otZPb0PKcgCPcA9sZdVuOz5PWVRV5Y8=; b=t14Dku/SgmHryZd/8Dhr+2lblBGC
-	K86bh054LoUxSovowsQqZsdUNLWhNWsuNDsGDBJSq/2Hx4KvHu7Hsp1kAMOLPKSa
-	y5CONl1/E0mhAJO7O4HtO7zM3evEwDPHhBd3v+ABijNZsW1JvTGucpnxgdEQ0wNK
-	OuecVfqh6RXp1uU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 063A518852;
-	Tue, 26 Mar 2024 15:13:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A150418850;
-	Tue, 26 Mar 2024 15:13:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Git List
- <git@vger.kernel.org>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/2] improve interactive-patch
-In-Reply-To: <eabf30e0-091e-475a-b59f-16b1091763ed@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 26 Mar 2024 19:48:24 +0100")
-References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
-	<6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
-	<59f19783-a663-449d-a1ef-3a9ebc43cc59@gmail.com>
-	<xmqq5xx9dn6q.fsf@gitster.g>
-	<eabf30e0-091e-475a-b59f-16b1091763ed@gmail.com>
-Date: Tue, 26 Mar 2024 12:13:46 -0700
-Message-ID: <xmqqcyrgajrp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbHthqtk"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-29c75e348afso4351986a91.2
+        for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:03:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711483417; x=1712088217; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T6nL3TxTAwRdqrSKOGiRwbDYS95p6dKtG+oYbucoZRU=;
+        b=jbHthqtkKopZgh3CRRgPJgcTGdiLhKpOa7hVrvlriyhAf8D20zhf1C3RWN/ep2T+nZ
+         Nusdxd1ysbBUwHCcKVzKSeouU7hfqry8va6eVcCPF7F3pv/6auzLEScFaJ6xado3ICJn
+         xIcGHlqSVp1AaiCuh5W80PbHWZEw9EP/0MHA/Obxy/W3ySR/DHKvO81k06LcyqvC01z7
+         5dtzSok5rZAkGNzluV2zTrdweujFCX4++7CmiZxi+RlbZTNcrvLVKYBUcokh7xXOrrhL
+         9/1dBMGbhPAtF6Z9TRI6oyuPstmfRbDg205476C6BZXwj+RYFyzpuoHDXXWwj29JF+Sn
+         GfXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711483417; x=1712088217;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T6nL3TxTAwRdqrSKOGiRwbDYS95p6dKtG+oYbucoZRU=;
+        b=BeGwtHrFLydLyL0wyZXhqnu8Yxed0MJv0a692a7pHbgtjmUafDtsbRabOp924jjSiE
+         u2iHCfuHoZ12ViTArahXNV5sG9mKnB72yeQy+RwnfU2SG/RG5LmIReyLklru/3AZ2GRJ
+         SLX9idBHGp3wKm8/3jimk8cyjmlVueHwAkj9Ojqg/55+aUNElYsBBHqmZOHDIi2xXcc1
+         R36qkjsuq+ErFt/9X2+Ew7JLctdwv2dC9YoTK+cmQVFFvymia2Ddh9jRKMEw/xwrbv+V
+         Kdkatjw30tfNmjhv4Ern7PVFqiYfMSdkPFD6R6D8FaaZRnP13sugZ0cqmsGlpAoy7d9o
+         Htag==
+X-Gm-Message-State: AOJu0YxsjbebMEFgwqxAX4VFgjT3Vs1k5DN4csrXg7wlppUOtRIXnY5u
+	b2sV367pbuoCn4ro8d11VxG7EG4tMSPO9h8mEkQ5alCZRDehmoX1/9ZsXSBLR2lsAmJsqYq0BYm
+	t1ZSQoFxUINSAoLVV1V1zKpiLhts=
+X-Google-Smtp-Source: AGHT+IFetTxc8pSb0xrWGT8CPJSHtQNPZ54YJosrNSQMOE2pbEvDdd4DIxxOiBynOzDLzb0Mohr92mYKJpPbwxe/k7I=
+X-Received: by 2002:a17:90b:1107:b0:29d:51ce:607d with SMTP id
+ gi7-20020a17090b110700b0029d51ce607dmr8416239pjb.27.1711483417198; Tue, 26
+ Mar 2024 13:03:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- F8D211B6-EBA4-11EE-93A0-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <pull.1702.git.1711318739.gitgitgadget@gmail.com> <5ae83d3f799e9ab84d5233f77cb91715415ae167.1711318740.git.gitgitgadget@gmail.com>
+In-Reply-To: <5ae83d3f799e9ab84d5233f77cb91715415ae167.1711318740.git.gitgitgadget@gmail.com>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Tue, 26 Mar 2024 21:03:25 +0100
+Message-ID: <CAN0heSoSNxuoObvO_xtu1fXb+XYH+gBvVOWfJVBkpXouR0cmWQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] doc: git-clone: apply new documentation guidelines
+To: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Thanks for working on this. This renders really nicely.
 
-> On Tue, Mar 26, 2024 at 08:31:41AM -0700, Junio C Hamano wrote:
+On Sun, 24 Mar 2024 at 23:20, Jean-No=C3=ABl Avila via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
->> 'r'edisplay may work well (and I wonder "r | less" or
->> piping the hunk display to anything in general would be a useful
->> future enhancement).
+> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
 >
-> Yeah.  That's a very good enhancement.
+> Heavily apply literal and placeholder markup everywhere.
 >
-> However, I'm not sure how.  Perhaps with the help of git-diff-files(1)?
+> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> ---
+>  Documentation/config/clone.txt |  23 +++++--
+>  Documentation/git-clone.txt    | 120 ++++++++++++++++-----------------
+>  Documentation/urls.txt         |  22 +++---
+>  3 files changed, 88 insertions(+), 77 deletions(-)
+>
+> diff --git a/Documentation/config/clone.txt b/Documentation/config/clone.=
+txt
+> index d037b57f729..0e0a8a1ae4a 100644
+> --- a/Documentation/config/clone.txt
+> +++ b/Documentation/config/clone.txt
+> @@ -1,13 +1,22 @@
+> -clone.defaultRemoteName::
+> +`clone.defaultRemoteName`::
+>         The name of the remote to create when cloning a repository.  Defa=
+ults to
+> -       `origin`, and can be overridden by passing the `--origin` command=
+-line
+> +       `origin`.
+> +ifdef::git-clone[]
+> +       It can be overridden by passing the `--origin` command-line
+> +       option.
+> +endif::[]
+> +ifndef::git-clone[]
+> +       It can be overridden by passing the `--origin` command-line
+>         option to linkgit:git-clone[1].
+> +endif::[]
 
-It is perfectly OK that you are not sure, as I do not think I am,
-either.  I am reasonably sure "git diff-files" wouldn't be involved,
-though ;-)  It would be more like tweaking fputs() of a strbuf that
-was filled by render_hunk() to instead spawn a pager and feed the
-same strbuf to it, or something.  IOW, we already have the payload
-to show.  We just want a pager involved in its showing so that users
-with a huge hunk that does not fit on a page can use "less" on it.
+There's a bit more going on here than the commit message claims. FWIW, I
+think these changes are good, even if maybe a bit surprising.
 
-In any case, the future enhancement is not within, and we shouldn't
-add it to, the scope of this topic.
+> -'git clone' [--template=3D<template-directory>]
+> -         [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+> -         [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <reposi=
+tory>]
+> -         [--dissociate] [--separate-git-dir <git-dir>]
+> -         [--depth <depth>] [--[no-]single-branch] [--no-tags]
+> -         [--recurse-submodules[=3D<pathspec>]] [--[no-]shallow-submodule=
+s]
+> -         [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reje=
+ct-shallow]
+> -         [--filter=3D<filter> [--also-filter-submodules]] [--] <reposito=
+ry>
+> -         [<directory>]
+> +`git clone` [`--template=3D`{empty}__<template-directory>__]
+> +         [`-l`] [`-s`] [`--no-hardlinks`] [`-q`] [`-n`] [`--bare`] [`--m=
+irror`]
+> +         [`-o` _<name>_] [`-b` _<name>_] [`-u` _<upload-pack>_] [`--refe=
+rence` _<repository>_]
+> +         [`--dissociate`] [`--separate-git-dir` _<git-dir>_]
+> +         [`--depth` _<depth>_] [`--`[`no-`]`single-branch`] [`--no-tags`=
+]
+> +         [`--recurse-submodules`[`=3D`{empty}__<pathspec>__]] [`--`[`no-=
+`]`shallow-submodules`]
+> +         [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] =
+[`--`[`no-`]`reject-shallow`]
+> +         [`--filter=3D`{empty}__<filter-spec>__] [`--also-filter-submodu=
+les`]] [`--`] _<repository>_
+> +         [_<directory>_]
+
+Don't ask me why, but I need this on top (whitespace-damaged)
+
+-         [`--depth` _<depth>_] [`--`[`no-`]`single-branch`] [`--no-tags`]
+-         [`--recurse-submodules`[`=3D`{empty}__<pathspec>__]]
+[`--`[`no-`]`shallow-submodules`]
+-         [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_]
+[`--sparse`] [`--`[`no-`]`reject-shallow`]
++         [`--depth` _<depth>_] [`--`[`no-`]{empty}`single-branch`]
+[`--no-tags`]
++         [`--recurse-submodules`[`=3D`{empty}__<pathspec>__]]
+[`--`[`no-`]{empty}`shallow-submodules`]
++         [`--`[`no-`]{empty}`remote-submodules`] [`--jobs` _<n>_]
+[`--sparse`] [`--`[`no-`]{empty}`reject-shallow`]
+
+i.e., some sprinkling of "{empty}", to keep each of these "[--[no-]"
+from simply disappearing. This is with Asciidoctor 1.5.5, which is
+admittedly starting to get old, but still ok as per our INSTALL
+document.
+
+> ---bare::
+> +`--bare`::
+>         Make a 'bare' Git repository.  That is, instead of
+>         creating _<directory>_ and placing the administrative
+> -       files in `<directory>/.git`, make the _<directory>_
+> +       files in _<directory>_`/.git`, make the _<directory>_
+
+This should be __<directory>__{empty}`/.git`
+
+Thanks. Apart from the small mistake and the misrendering of "[--[no-]",
+this looks really nice to me, both HTML and manpage. The source .txt
+files do get a bit messier, especially with the {empty} trickery, but
+ok. (I haven't been paying attention. Maybe this has been discussed
+before, and TBH I haven't even dug -- I don't mean to start another
+round of discussion.)
+
+Martin
