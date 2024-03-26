@@ -1,40 +1,40 @@
 Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D31874BE8
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A5474BE8
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711458584; cv=none; b=FopXitsjNFgPzNTdlWNkYWgSpO8sLC1QX6RTZsip9XjAlonbv/c2ksfLoPH5JBYgHuypQ2FzgXcPj/107bz0YHeSLCSij7bXZDbwgsraqifgnT/PNFA6OjZmj22o26bi7UH2FWBCxrdb4e/TOc8OdlQXDyxPEH7Aq3zeIHjoRA4=
+	t=1711458588; cv=none; b=gtKWUk+VXS4WQ75z4QXiI5CPe+2LSYKq5bcKykWMXjThWVo7e/PsPya30uL3mNFAXoGpBxhhDDOxpF0TWG+bfmuUDcEgnpuGVSh6wvkyWYqF91/bvnOVlX8+seZc0sNemAqnnZrPxxVyttjaolgmhYai8bwxKToYdVrtxvPDN1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711458584; c=relaxed/simple;
-	bh=0fwatfWzHzvDwFm/9YzaaNSv6HPygBWP2jjc/WbXyls=;
+	s=arc-20240116; t=1711458588; c=relaxed/simple;
+	bh=wghaP0s2MnPKElJKstvS5+NKe1NTbmB/eOL39kddtn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roJER2IC8nSszctBr/mhbpXtCVnkUHf8k0+N31i4VFr40m/n2yxuFTuswaV8Ma84h3KFFVESFwGc7TrAEhjC95xlEtZvk24nPD2fR2M+3QWiuooprDP6QTCd9xEAGconEEE2Gwoodm+oye8qAdSBQR9V41D8++OF6I0IE3Hemz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=CDZb8V+C; arc=none smtp.client-ip=202.61.206.94
+	 MIME-Version; b=hzV7HpkyAr3EhdJYf0MdZxSfG+yRflsMW9VXwK7nM8EACXIlEAOXLIyPlIyCsV/swh4YGqmaMjterGlKWyldy8djos/SUgMgMgYPzmv3xKdKWkMmBB3DuohEkt9hK1owGJWSDvyijMG/FS7QHZrUUruT9nxSsyj7fuYmqm7i47w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=t7dK5bz8; arc=none smtp.client-ip=202.61.206.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="CDZb8V+C"
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="t7dK5bz8"
 Received: from localhost ([193.175.198.193])
 	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42QD9V42006395
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42QD9bZK006405
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 26 Mar 2024 14:09:31 +0100
+	Tue, 26 Mar 2024 14:09:37 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1711458572; bh=0fwatfWzHzvDwFm/9YzaaNSv6HPygBWP2jjc/WbXyls=;
+	t=1711458577; bh=wghaP0s2MnPKElJKstvS5+NKe1NTbmB/eOL39kddtn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDZb8V+CTCDyD0on9bKMLnPbV1jK51HvTk5GrEooeK413+hxE3OBxq76kbVltB/9Z
-	 1ECGvZlByrQMeZNrkHZBa2/oFh/m6lLu0zHYp5AIo3qbNozUu4sQJ/4Gg9cm4g7byn
-	 0HTuKNaz8q00oklQFjPQ6ztk2fGr9oNlxI2UTh0g=
+	b=t7dK5bz8iYnpMLPPnATq2lv02z1wP5CTyxsENPFejNjtH42X7iAlkNOd+TSE21yO+
+	 z0i5TAHtacwzv6Y+ccVHzCKG+wS3m26349FkFChKPraseyNPJl0LSGjG2pnaW7rqz/
+	 etmfqYneE3Ho7Z1aJ7RYXMVxgwwG31sOSuSLeL0I=
 From: Dirk Gouders <dirk@gouders.net>
 To: git@vger.kernel.org
 Cc: Dirk Gouders <dirk@gouders.net>, Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Kyle Lippincott <spectral@google.com>
-Subject: [PATCH v4 4/5] MyFirstObjectWalk: fix description for counting omitted objects
-Date: Tue, 26 Mar 2024 14:08:39 +0100
-Message-ID: <20240326130902.7111-5-dirk@gouders.net>
+Subject: [PATCH v4 5/5] MyFirstObjectWalk: add stderr to pipe processing
+Date: Tue, 26 Mar 2024 14:08:40 +0100
+Message-ID: <20240326130902.7111-6-dirk@gouders.net>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1711368498.git.dirk@gouders.net>
 References: <cover.1711368498.git.dirk@gouders.net>
@@ -46,52 +46,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Before the changes to count omitted objects, the function
-traverse_commit_list() was used and its call cannot be changed to pass
-a pointer to an oidset to record omitted objects.
+In the last chapter of this document, pipes are used in commands to
+filter out the first/last trace messages.  But according to git(1),
+trace messages are sent to stderr if GIT_TRACE is set to '1', so those
+commands do not produce the described results.
 
-Fix the text to clarify that we now use another traversal function to
-be able to pass the pointer to the introduced oidset.
+Fix this by redirecting stderr to stdout prior to the pipe operator
+to additionally connect stderr to stdin of the latter command.
+
+Further, while reviewing the above fix, Kyle Lippincott noticed
+a second issue with the second of the examples: a missing slash in the
+executable path "./bin-wrappers git".
+
+Add the missing slash.
 
 Helped-by: Kyle Lippincott <spectral@google.com>
 Signed-off-by: Dirk Gouders <dirk@gouders.net>
 ---
- Documentation/MyFirstObjectWalk.txt | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ Documentation/MyFirstObjectWalk.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index a06c712e46..6901561263 100644
+index 6901561263..90446c30a4 100644
 --- a/Documentation/MyFirstObjectWalk.txt
 +++ b/Documentation/MyFirstObjectWalk.txt
-@@ -754,10 +754,12 @@ points to the same tree object as its grandparent.)
- === Counting Omitted Objects
- 
- We also have the capability to enumerate all objects which were omitted by a
--filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
--`traverse_commit_list_filtered()` to populate the `omitted` list means that our
--object walk does not perform any better than an unfiltered object walk; all
--reachable objects are walked in order to populate the list.
-+filter, like with `git log --filter=<spec> --filter-print-omitted`. To do this,
-+change `traverse_commit_list()` to `traverse_commit_list_filtered()`, which is
-+able to populate an `omitted` list.  This list of filtered objects may have
-+performance implications, however, because despite filtering objects, the possibly
-+much larger set of all reachable objects must be processed in order to
-+populate that list.
- 
- First, add the `struct oidset` and related items we will use to iterate it:
- 
-@@ -778,8 +780,9 @@ static void walken_object_walk(
- 	...
- ----
- 
--Modify the call to `traverse_commit_list_filtered()` to include your `omitted`
--object:
-+Replace the call to `traverse_commit_list()` with
-+`traverse_commit_list_filtered()` and pass a pointer to the `omitted` oidset
-+defined and initialized above:
+@@ -848,7 +848,7 @@ those lines without having to recompile.
+ With only that change, run again (but save yourself some scrollback):
  
  ----
- 	...
+-$ GIT_TRACE=1 ./bin-wrappers/git walken | head -n 10
++$ GIT_TRACE=1 ./bin-wrappers/git walken 2>&1 | head -n 10
+ ----
+ 
+ Take a look at the top commit with `git show` and the object ID you printed; it
+@@ -876,7 +876,7 @@ of the first handful:
+ 
+ ----
+ $ make
+-$ GIT_TRACE=1 ./bin-wrappers git walken | tail -n 10
++$ GIT_TRACE=1 ./bin-wrappers/git walken 2>&1 | tail -n 10
+ ----
+ 
+ The last commit object given should have the same OID as the one we saw at the
 -- 
 2.43.0
 
