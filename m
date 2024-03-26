@@ -1,66 +1,57 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33601272C6
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 20:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE912B158
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 21:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711486680; cv=none; b=u8V0DPJuO1mkBSDQzYWxyCv9+xqooHXQ9N+XtXIjHOfvdC3rsEThOZTKKSkJyEeTeu1N4K+A3ERZPu6VxJamC/eNjGZ/dwRpQRjkIdq/EcbmbpXkrniiiF7IN0Y1bWGL/tMpOJrGZE61A1hOMMW3/Ac8bx7arEBuTTRLoxh+wjA=
+	t=1711486806; cv=none; b=JLqWWKwLch7Qy3ShkfymbAfUgTDsDYC6ZJB0fOvCliverJ9P0sARlYPJ1cFh/4akqMIl+QA6yuaKG9g8FUwKUJ2P54f4OpNym3baSRxq6pXUZXCzlSnUjHyVmwe3/yVb+vLgWHURT6bMGerQkLZze4VTqFgRfFwxODScx5NDhNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711486680; c=relaxed/simple;
-	bh=aQDXEA21Lm7V6BmaWZ21T6EL93k2go6UyeE4LHtMYTs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K4x7awn6iBZ+Afbwmf++7miAZCMw24DW4C2RGLhvLGIU9fxUIX1kKHVxdwvO6T3IjJBa3EcbqkY7bcGzNtgTVvQX+9sqVcTdD61f0oORvj5CpFUyyubEjQekqDTLh6vzZPywdy12F8k+6gRa0CCBfM/3Y4Pl4SGLNS5q9fsHmIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NQTd5MG+; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1711486806; c=relaxed/simple;
+	bh=tBadLIB3IVGssNHhtmXHGfXBM3wJW0RVrczEtJ7ciSM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oGV2tbnfi6lNHmkJ7pZ06nQWNSs5ZDfrx3WYByQgThuuVtEJvr66NVtRn/nheQMLfFdAjANRbnbQNqnRo8SDssWkWgvgy4xVahIUHOqLqv7yZdN1fhnsXQez9cIyiAQ45WKf/rL6hk9+GeyLIRbvJOpCUOj8bn80+wgsyNZUPJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GjYTsXFM; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NQTd5MG+"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6964b1c529cso51670976d6.0
-        for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1711486678; x=1712091478; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HegFSS9WWCNPUg1A83Qo1cv4ngcB+G4N72xMR0XAfxc=;
-        b=NQTd5MG+b6XuIokin2MJY0cAypWkI4d748MPGTORiOjngWQjL411pzBiZMjS++m7o7
-         IlK/C5uy7IxQ63AY+PYz0en+DbgDQcUVaA4dIYZBrjRCyg1oYJMZzp2ZVFFcFh6yvCUr
-         /ycAN/vAfYF3FxAHzEYToyEqPVgc83YiiCTYbSuMVTMmFyMt0jc09kiq1tZanHxGZt/k
-         CJVTUpeRBGsxvqHhCiGieQ7FukNdWdSmjrfx63WHMK/Gdno8+Y4OG5vIMhn3HpRaB+Uj
-         NFp2bpkMw0r0xAjxsyPnGLf03sFgrBC8MnqOYYAJjYsp5iutZwckCzrmxv8ajn6xXghw
-         Z9gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711486678; x=1712091478;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HegFSS9WWCNPUg1A83Qo1cv4ngcB+G4N72xMR0XAfxc=;
-        b=oUgsAch/Oc7vQ5fvJzl8ldLvsPvyVGfsG6kdfjzvgom5N7Koiu6NPYVN67DPhs2esy
-         NYQH2dZsAeeRPJ0vZaBno2C+Mo0oqesibvICNRgnC1eTGsfQ4170rUrKFIrTovPfTTw/
-         VpURWKIbifk09lf/609Q6/NNpzK2ix2ZC2+8BA331fuuAvT2kgx+ushwvlEjeniEF+BH
-         9UYRNBH6ZQV683RTGFiwyIRZmeTFpqD/Eg+bZMO2rq3HOteLStPFspqYOneyllvKfIYM
-         rnjL5oJ0Ogjh/R6lqc3PoSK3bPF7Jv/p5K9ZF4rc9c9dn1MmH/ZjeJMejJ0Xl+XwQMKr
-         hPwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUVjQQlAZOVmuQqP8wTzXJZtLe84v2GnZLNmRFlGo9sGbcRQ5mePATCsuVD8qBlrwvNUI+br1AaupvZjldALcr8LmxA
-X-Gm-Message-State: AOJu0YylFukbsFmR8w8/QpCKoa66fgIqSLHP9DBCHdTDoigurFmO0KMc
-	T4YWN2yqtk/x0LUUY8koOwwiDQ3nSDJZreS7918gkZbPCO2MZO9aTHxrmBLpcCZLA3/JYKMrnXn
-	QX/o=
-X-Google-Smtp-Source: AGHT+IH4efoglYqI88dP2s7YLAPqVvrNsJLMVbJjXhbB51T0E21jB5ncvijnQWvbpmeO7+AjR7/Qig==
-X-Received: by 2002:a05:6214:411e:b0:690:a800:8ffa with SMTP id kc30-20020a056214411e00b00690a8008ffamr3883238qvb.31.1711486677722;
-        Tue, 26 Mar 2024 13:57:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u9-20020a0562141c0900b006915269936bsm5528764qvc.25.2024.03.26.13.57.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Mar 2024 13:57:57 -0700 (PDT)
-Date: Tue, 26 Mar 2024 16:57:48 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2024, #08; Tue, 26)
-Message-ID: <ZgM2zMykhkIAaXro@nand.local>
-References: <xmqqle64algt.fsf@gitster.g>
- <ZgMwaG28aoC7Njcg@nand.local>
- <xmqqwmpo90xk.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GjYTsXFM"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CC7C1F2AB2;
+	Tue, 26 Mar 2024 17:00:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=tBadLIB3IVGs
+	sNHhtmXHGfXBM3wJW0RVrczEtJ7ciSM=; b=GjYTsXFMlNoR8/AGksLLc5RpxDVN
+	9bgauel/klBEhJSK4TRdcUCzLLN4KgHy+Qb14Z7KSzl9oxwpJV4pJc4RtCOUANp7
+	fh9jZ32rnrH7sTLAJrjKpJi8Yo10TH0lBQUgUCVLv+7jz4YLSIivyItLgoJN23Nc
+	HpFLhAuZtgH0Vg0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F1F81F2AAC;
+	Tue, 26 Mar 2024 17:00:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 722CC1F2AA1;
+	Tue, 26 Mar 2024 17:00:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,  =?utf-8?Q?Jea?=
+ =?utf-8?Q?n-No=C3=ABl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 4/4] doc: git-clone: apply new documentation guidelines
+In-Reply-To: <3285532.aeNJFYEL58@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+	"Tue, 26 Mar 2024 21:49:17 +0100")
+References: <pull.1702.git.1711318739.gitgitgadget@gmail.com>
+	<CAN0heSoSNxuoObvO_xtu1fXb+XYH+gBvVOWfJVBkpXouR0cmWQ@mail.gmail.com>
+	<xmqq8r24agov.fsf@gitster.g> <3285532.aeNJFYEL58@cayenne>
+Date: Tue, 26 Mar 2024 13:59:59 -0700
+Message-ID: <xmqqsf0c90a8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,35 +59,17 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwmpo90xk.fsf@gitster.g>
+X-Pobox-Relay-ID:
+ CFE8D8C0-EBB3-11EE-936F-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 26, 2024 at 01:45:59PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >>  The pack-bitmap machinery has been extended to write bitmaps for
-> >>  pseudo-merges, which are imaginary commits which act as octopus
-> >>  merges covering groups of the un-bitmapped parts of history at
-> >>  reference tips.  This is good for ... what ...?
-> >
-> > Instead of "this is good for ... what ...", let me know what you think
-> > of:
-> >
-> >   This allows for greater bitmap coverage (and, thus, performance when
-> >   using bitmaps) of repositories with many references which ordinarily
-> >   would not receive full coverage.
->
-> Much better than "god for ... what ..." ;-)
->
-> Now if it gets summarized in 2-5 lines, we have something we can
-> use.
+Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
 
-Sure, try this:
+> For now, we are stuck with the compatibility with the existing tools. I=
+ will=20
+> try an propose something else. Would preprocessing be accepted?
 
-    The pack-bitmap machinery learned to write pseudo-merge bitmaps,
-    which act as imaginary octopus merges covering un-bitmapped
-    reference tips. This enhances bitmap coverage, and thus,
-    performance, for repositories with many references using bitmaps.
+Pre-processing will be hidden inside Documentation/Makefile and
+would be invisible to developers, so as long as it is cleanly and
+robustly done, that would be fine, I would say.
 
-Thanks,
-Taylor
