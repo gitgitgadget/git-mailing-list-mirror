@@ -1,60 +1,60 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36F4763E6
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 14:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE36ED9
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 14:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711463961; cv=none; b=dZ/uGTDUDYMSXugZVs7GlrRHipIbj67PTMCW1/YaHknSQqASBSQs1HOt8DX9yDWHA5SW0xM7q7q0pxQ8OfRvYbHRdHYc88Ob4rDF3Qcc/ecUx7OGixvPIcV0EOBCr4IH3jkD4okhSF40MySAA46hVoQEE0lxyLSlKNHEZoWYSPQ=
+	t=1711464350; cv=none; b=QWwZ5F3kZsiIXFV7kXRO9z3hYzplqzGkX963XvW5go5SUHZ+WJG13ZVQHn8O6qqN0qVdgSH+qaiC2+O3pz11jyqhS60Qg0mKxt0hg2Azae5EvhS3RLKl7+AMIQ5rNnzW1vF8gH/XP+lun1199qJW9ZceHnOHc5ZoU3qzmL4Ays0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711463961; c=relaxed/simple;
-	bh=Vl/2frO5uLrHf4ifahzHlPy9EXFW4PlOZMPdIrutLPc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uSA6lyawOuIWAkvlcOki1Q6f1teElrKpYZ9Vdv2We0nRpEECi/WZfz2DTIyr/uQ5H0C3cQ1HvcL0rhnkLsohfvEY5feO22+tMQ7EQ9AcDfN/A6BTs+6GFar42DZMHdFDERLGZXKQmFHLhq7hP4a71BARf8j91j/F+7lA+Atz7uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QyUM5Dwp; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1711464350; c=relaxed/simple;
+	bh=WLFPIrDhGPLV0Q1TnJ+rKohPh0oPSXuOdwEsUqJWCL8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=df7WLjIljJ7OJWpQkzvtPQiErOWWa1SyAT/cz4c1mC++G286tjL8l8kKTKsrs7oTDY5iM11zg2D8qN+F4vJiKmqUdMU5EZbtKXE1SND4NX++89JVtJ69eCrSuAVE2wdeufFf1izJf+eOWPLiKBJUnamHZLOMF+hJQLOq54Ivvrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FWGf7D7w; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QyUM5Dwp"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-513e89d0816so6991066e87.0
-        for <git@vger.kernel.org>; Tue, 26 Mar 2024 07:39:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FWGf7D7w"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d6c9678cbdso42425911fa.2
+        for <git@vger.kernel.org>; Tue, 26 Mar 2024 07:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711463958; x=1712068758; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1711464346; x=1712069146; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0zmZ94yA486PNKQo9S/745hgHIvnVPE0rULIL/idw/U=;
-        b=QyUM5Dwps5aoo45bJMUQzWqOo0SMVMhF4cN/5js1bvVgBQhosDQoESXqXE9PN9Pi/v
-         iZgv19N85uc9T4XNM0OLpHJTiIwabpzvCQuKGwqtRRvezeNEhegI2Q1P/eRM3iYB89mk
-         tXjx9lW2MStGf0p5sEjh+Hv55hEZa1bJGPVhZAfw9ymGmSeeVh1e6hqGMzekW2z7Y4ch
-         py84XxNSpUDFgXPgjWKH/37lryFSdFVo+nvtYzOQlIvSOil3oDebI0vNku2nUXSo0xK4
-         7gJzr49LkilQltpzRt6uTo+VnoAvmoKVVwxGdn/Z7mFVPvW5V0gEW/ilxadqTXPoi9il
-         W/Jw==
+        bh=L4ut6edjW/eJEhBHgr1bTFkiizGRMKocPyMcchlzUuY=;
+        b=FWGf7D7wT8HUFOl4oFpXamM0e39qbUJ+IhzHgbRlPFcs89JRHc6p3nL0R10TSL6SlR
+         ku0FlYPQi8UtctJysY614S3O8/mtuYFgZBnQUoOH3sj2AHmIuTio5HDDyH5SxXgJp1K6
+         nMwBItugruc4WtB5G5I21JA1UzDsiHwjeYN5QgUFOtEGS2cfaTzo07XB2ynOGDyyejYk
+         NQ2Oz+OX9/31v752JRjsvUdvKsjeZUzvp7CfcjasWwLsVHa7mku6RM0UVyoQ43R3rW+/
+         zDbFHxqB2E7EzvSyjIKPF0Jtkv4R0ltm++UYF6N2fwaIowei4aEU2PZ/cRr3Ix2jyhET
+         WFvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711463958; x=1712068758;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1711464346; x=1712069146;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0zmZ94yA486PNKQo9S/745hgHIvnVPE0rULIL/idw/U=;
-        b=LXx/bn221ZyrOChy1nB07APiXogC45CMXtaXUGi6DFH/sJsGjrQTRWcJGT2E0NivBT
-         rK4+E/SbMKEZcFwlqutqNJ2hzLLejge+vQmm6tfKrfePeFh63oO+kBMZNanD5yxJ6He/
-         NqVHB2d61uO5Hp4NUNg2PHRTFZP3a4dvBaVDnf8F3fJAPdcoN0ru65Syn0yWTfXo5IlH
-         efa8aXas5f3cTdvmQzYXhiUoq/o0MM09DZTU+eYhMhlua4F6g0yGj+KKn+psdXKq4zGj
-         X7gJgyEmcpLMYseG45CklucsnbNwfCeV1s5EM6laZQ4hAeVJxT7JkLikC58FJjjr+zlk
-         QnLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXmbwr3LaoebgZiCey7RYTXtkegqmpAolX2ZexfeUxqBJY9Xk8Yt/TRKQbZ5cdG+mfP6cyRJOfgT+5dRvuDAk7bdQzs
-X-Gm-Message-State: AOJu0YwbPHZqJMaW+Urf+6CTdUaVeZDvK2DOuIzawcLjsWZVKL4DLRUI
-	gpcdjRiz3g8i6anTTbh4vzwb20qMtfjMobfelTaVyke3qRud2qSf
-X-Google-Smtp-Source: AGHT+IGlDKceHOiZ3JNoVNcM2/3B5r+lo/Yt5r9kPJE6U7SYqDj/fOBsCGxJU7wY6/QtXUbyGcrH1Q==
-X-Received: by 2002:a19:ae14:0:b0:513:97e2:43e6 with SMTP id f20-20020a19ae14000000b0051397e243e6mr6276918lfc.10.1711463957534;
-        Tue, 26 Mar 2024 07:39:17 -0700 (PDT)
+        bh=L4ut6edjW/eJEhBHgr1bTFkiizGRMKocPyMcchlzUuY=;
+        b=M43fovpNfO+ZV2g0LtO+X7HlxTa2896kWnwyWQLQOu50cpd4PJRxmA9y4yGoESZ3vk
+         jgq1uq5RQb3oh8dOuxeLtgdVdlOlQRbUrbLyX1loQIiJ3JXJdftacnYrlPUYqKu6PRGq
+         /wSLWhYAbyLpFLKNe61NaeRruoc1cHvBgZBWr6PXH+8wSo6cYuBiyeNbEIvNtlS/qgs0
+         T8dliuYL1GGG2kEZ7G+kK+Y/xmfYAmaUOseeZzkVHVv2Lvm269Y0LZ0oruAxr0nQaKA1
+         na7iIPGAhk8vl5fkH7FdJylI3h00FPUhC+cgTjgQXKASgNO2C3T/eJWZJeUX4ZsTcBW2
+         UanQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVwoCJDun2DU+CIMo5XsBljLEEFSJBf0TcTXJC6dS1iOb53sBmsSfPt9+GPvDTNA4ylR7KFasVwsPSNOehG/IrEfh4f
+X-Gm-Message-State: AOJu0YxD/TtkIhHagGKy4fUh7s/VDuBRvc5l6pNRyDQgVheIfs+q+7uS
+	JCjIX/p4kTR3qJtB2cfTMlS2HeVxLVgH1MaXknLuH7uZQ8aQZbYs
+X-Google-Smtp-Source: AGHT+IHB3K7Shf8pNa0nqgByF/caCMiAXb22XHmwBDfs5EdAtgs2wDBsz0N0yPP2XdVDPuWxmxPDAg==
+X-Received: by 2002:a05:651c:2123:b0:2d6:dbc3:3d57 with SMTP id a35-20020a05651c212300b002d6dbc33d57mr1203247ljq.27.1711464346004;
+        Tue, 26 Mar 2024 07:45:46 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id u10-20020a17090663ca00b00a4a33cfe593sm2445834ejk.39.2024.03.26.07.39.16
+        by smtp.gmail.com with ESMTPSA id o22-20020aa7dd56000000b0056c07b6924csm3160361edw.41.2024.03.26.07.45.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Mar 2024 07:39:17 -0700 (PDT)
-Message-ID: <b3c6a5dd-2d78-4149-95f4-57cf8bd1240a@gmail.com>
-Date: Tue, 26 Mar 2024 14:39:18 +0000
+        Tue, 26 Mar 2024 07:45:45 -0700 (PDT)
+Message-ID: <a397f3dd-e4e1-4275-b17d-1daca9e166fe@gmail.com>
+Date: Tue, 26 Mar 2024 14:45:45 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,133 +62,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] add-patch: do not print hunks repeatedly
+Subject: Re: [PATCH v5 0/7] cherry-pick: add `--empty` for more robust
+ redundant commit handling
 Content-Language: en-US
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
- <6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
- <c123bf09-7f4c-46f5-aa09-48b2816bf85d@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <c123bf09-7f4c-46f5-aa09-48b2816bf85d@gmail.com>
+To: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
+Cc: newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <20240325232451.963946-1-brianmlyles@gmail.com>
+In-Reply-To: <20240325232451.963946-1-brianmlyles@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Rubén
+Hi Brian
 
-On 26/03/2024 00:17, Rubén Justo wrote:
->      $ git add -p
->      diff --git a/add-patch.c b/add-patch.c
->      index 52be1ddb15..8fb75e82e2 100644
->      --- a/add-patch.c
->      +++ b/add-patch.c
->      @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
->       static int patch_update_file(struct add_p_state *s,
->       			     struct file_diff *file_diff)
->       {
->      -	size_t hunk_index = 0;
->      +	size_t hunk_index = 0, prev_hunk_index = -1;
->       	ssize_t i, undecided_previous, undecided_next;
->       	struct hunk *hunk;
->       	char ch;
->      (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? U
->      y - stage this hunk
->      n - do not stage this hunk
->      q - quit; do not stage this hunk or any of the remaining ones
->      a - stage this hunk and all later hunks in the file
->      d - do not stage this hunk or any of the later hunks in the file
->      j - leave this hunk undecided, see next undecided hunk
->      J - leave this hunk undecided, see next hunk
->      g - select a hunk to go to
->      / - search for a hunk matching the given regex
->      e - manually edit the current hunk
->      p - print again the current hunk
->      ? - print help
->      @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
->       static int patch_update_file(struct add_p_state *s,
->       			     struct file_diff *file_diff)
->       {
->      -	size_t hunk_index = 0;
->      +	size_t hunk_index = 0, prev_hunk_index = -1;
->       	ssize_t i, undecided_previous, undecided_next;
->       	struct hunk *hunk;
->       	char ch;
->      (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?
+On 25/03/2024 23:16, Brian Lyles wrote:
+> This is the final planned re-roll of this series, addressing two minor
+> style concerns with commit 4/7 as noted in this [2] thread. All other
+> commits are left unchanged.
 > 
-> Printing the chunk again followed by the question can be confusing as
-> the user has to pay special attention to notice that the same chunk is
-> being reconsidered.
-
-As we print a long help message if we don't re-display the hunk it ends 
-up being separated from the prompt. Personally I find the help message 
-quite annoying when I've fat-fingered the wrong key - I'd prefer a 
-shorter message pointing to "?" to display more help. We already do 
-something similar if the user presses a key such as "s" that is disabled 
-for the current hunk.
-
-> It can also be problematic if the chunk is longer than one screen height
-> because the result of the previous iteration is lost off the screen (the
-> help guide in the previous example).
+> [2]: https://lore.kernel.org/git/xmqqa5mmhvx5.fsf@gitster.g
 > 
-> To avoid such problems, stop printing the chunk if the iteration does
-> not advance to a different chunk.
+> Range-diff from v4:
 > 
-> Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> ---
->   add-patch.c | 18 ++++++++++++------
->   1 file changed, 12 insertions(+), 6 deletions(-)
-> 
-> diff --git a/add-patch.c b/add-patch.c
-> index 444fd75b2a..54a7d9c01f 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
->   static int patch_update_file(struct add_p_state *s,
->   			     struct file_diff *file_diff)
->   {
-> -	size_t hunk_index = 0;
-> +	size_t hunk_index = 0, prev_hunk_index = -1;
+> 1:  f6b8a655cd = 1:  f6b8a655cd docs: address inaccurate `--empty` default with `--exec`
+> 2:  401de76c0b = 2:  401de76c0b docs: clean up `--empty` formatting in git-rebase(1) and git-am(1)
+> 3:  031b3bb7bb = 3:  031b3bb7bb rebase: update `--empty=ask` to `--empty=stop`
+> 4:  fd53c39482 ! 4:  d3bfe41819 sequencer: handle unborn branch with `--allow-empty`
+>      @@ sequencer.c: static struct object_id *get_cache_tree_oid(struct index_state *ist
+>        	struct commit *head_commit;
+>        	struct index_state *istate = r->index;
+>       +	const char *head_name;
+>      -
+>      --	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
+>      --		return error(_("could not resolve HEAD commit"));
+>      ++
+>       +	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL)) {
+>      -+		/*
+>      -+		 * Check to see if this is an unborn branch
+>      -+		 */
+>      -+		head_name = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE, &head_oid, NULL);
+>      -+		if (!head_name || !starts_with(head_name, "refs/heads/") || !is_null_oid(&head_oid))
+>      ++		/* Check to see if this is an unborn branch */
+>      ++		head_name = resolve_ref_unsafe("HEAD",
+>      ++			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>      ++			&head_oid, NULL);
+>      ++		if (!head_name ||
+>      ++			!starts_with(head_name, "refs/heads/") ||
+>      ++			!is_null_oid(&head_oid))
+>       +			return error(_("could not resolve HEAD commit"));
+>       +		head_tree_oid = the_hash_algo->empty_tree;
+>       +	} else {
+>       +		head_commit = lookup_commit(r, &head_oid);
 
-I found the name a bit confusing as we have keys for displaying the 
-previous hunk and it make me think of that. As it is used to record the 
-index of the hunk that we've rendered perhaps "rendered_hunk_index" 
-would be a better name. Also as it needs to hold a negative value we 
-should declare it as ssize_t like the variables on the line below.
+This version is definitely more readable, thanks
 
->   	ssize_t i, undecided_previous, undecided_next;
->   	struct hunk *hunk;
->   	char ch;
-> @@ -1448,10 +1448,14 @@ static int patch_update_file(struct add_p_state *s,
->   
->   		strbuf_reset(&s->buf);
->   		if (file_diff->hunk_nr) {
-> -			render_hunk(s, hunk, 0, colored, &s->buf);
-> -			fputs(s->buf.buf, stdout);
-> +			if (prev_hunk_index != hunk_index) {
-> +				render_hunk(s, hunk, 0, colored, &s->buf);
-> +				fputs(s->buf.buf, stdout);
-> +				strbuf_reset(&s->buf);
-> +
-> +				prev_hunk_index = hunk_index;
-> +			}
->   
-> -			strbuf_reset(&s->buf);
+>      +-	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
+>      +-		return error(_("could not resolve HEAD commit"));
+>      +-
+>       -	head_commit = lookup_commit(r, &head_oid);
+>       +		/*
+>       +		 * If head_commit is NULL, check_commit, called from
 
-I'd be inclined to leave this line as is to make it clear that the 
-strbuf is always cleared before adding the keybindings.
+This looks strange, but if I do a range-diff locally from v4 to v5 I 
+only see the line wrapping changes above so I don't think it is anything 
+to worry about.
 
->   			if (undecided_previous >= 0) {
->   				permitted |= ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK;
->   				strbuf_addstr(&s->buf, ",k");
-> @@ -1649,10 +1653,12 @@ static int patch_update_file(struct add_p_state *s,
->   			if (!(permitted & ALLOW_SPLIT))
-
-style: as you're adding braces to the other clause in this if statement 
-you should add them to this clause as well.
-
-Best Wishes
+Thanks for working on this
 
 Phillip
+
+> 5:  90dca45c12 = 5:  5e690bca6e sequencer: do not require `allow_empty` for redundant commit options
+> 6:  ab3b6afc97 = 6:  ed03908e9e cherry-pick: enforce `--keep-redundant-commits` incompatibility
+> 7:  0e2577ea56 = 7:  d3cf068c45 cherry-pick: add `--empty` for more robust redundant commit handling
+> 
+> 
+> Brian Lyles (7):
+>    docs: address inaccurate `--empty` default with `--exec`
+>    docs: clean up `--empty` formatting in git-rebase(1) and git-am(1)
+>    rebase: update `--empty=ask` to `--empty=stop`
+>    sequencer: handle unborn branch with `--allow-empty`
+>    sequencer: do not require `allow_empty` for redundant commit options
+>    cherry-pick: enforce `--keep-redundant-commits` incompatibility
+>    cherry-pick: add `--empty` for more robust redundant commit handling
+> 
+>   Documentation/git-am.txt          | 20 ++++++---
+>   Documentation/git-cherry-pick.txt | 30 ++++++++++---
+>   Documentation/git-rebase.txt      | 26 +++++++----
+>   builtin/rebase.c                  | 16 ++++---
+>   builtin/revert.c                  | 38 +++++++++++++++-
+>   sequencer.c                       | 72 ++++++++++++++++++-------------
+>   t/t3424-rebase-empty.sh           | 55 +++++++++++++++++++++--
+>   t/t3501-revert-cherry-pick.sh     | 14 ++++--
+>   t/t3505-cherry-pick-empty.sh      | 51 +++++++++++++++++++++-
+>   t/t3510-cherry-pick-sequence.sh   | 32 ++++++++++++++
+>   10 files changed, 286 insertions(+), 68 deletions(-)
+> 
