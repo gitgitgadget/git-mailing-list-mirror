@@ -1,53 +1,50 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791D313D502
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 17:01:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87517A95B
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 17:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711472466; cv=none; b=YOe/djY0CNnWHT2czRmX+SuUFl+/RK9YrVkF2IiKn/JcxtikeBEkugosR8rk8NTm2O5bffs/4kcxRvrWwzYCkl2vgqXTAc/NwJiRriAWmTN+KNLV6MBT8jMeK1O/O2Y9cuBJVJT1xU+44qVQc6kZ4yBnSpIlUgBV2T5pu23kt9E=
+	t=1711474814; cv=none; b=b2t5hcvmtfFlwfwmlMEPeP71VWukWAzFf468B+PuXr3TOMIp36d3BSIMOOjYhnxbshW8mHEOGzH9ANP4SCG+Gax9VRqVqbstlMF+Z0tj5zd5deilp6lbmcABoQfLWEh8kBP4XZszTV2/wfzbaaogCPzMI8CkOmH55Ds5PA2G5Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711472466; c=relaxed/simple;
-	bh=dQClXk2Zu+Wnvj5r41qqfb37ySH1COhyj48DZCc2iaU=;
+	s=arc-20240116; t=1711474814; c=relaxed/simple;
+	bh=zvhBcBmXdiF9577G6bRc5w8iqvGRU2MmpCOj+ABIfic=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gJynYGM626S2F3WGEwWogltUZVMBOvS5Gve3+0m0h35b7eBRzam2h4xHZVY+Kz/f4JOPTWL28Kc3vdFk0ubvtuaAQrirQX2Jr+Z3AsA/PhQYWwUJITa8YlDKhHfIHQt4kENxCtwJQu9i3UwIgGWn5keWFdLEAosGtlGB6LC3TGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jjgvaDVT; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=Tc9sQPl7c92OUCIN5Rx6RzumuX82c1naDWmqL0/qyLufeXPF/YFCD3mjE5VehH8ri7z0nZioVVswCRChFpy0u/D5Madv3li7ACmU4pWQzRkh9SbQryBhhJuo9GzVX94TXQ25ynRGQfD6SCBhe9+xG5zMKtS09IeffEOTlqtdJK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q8qyJKJi; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jjgvaDVT"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D822837AFA;
-	Tue, 26 Mar 2024 13:01:01 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q8qyJKJi"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D34B82EA03;
+	Tue, 26 Mar 2024 13:40:11 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dQClXk2Zu+Wnvj5r41qqfb37ySH1COhyj48DZC
-	c2iaU=; b=jjgvaDVTzdLnCe/Mhj00/IZpx817/T7rZVoOnDA9xb1l5/Rsj8nSiH
-	Dcq7s6wmtnY7zJmguEAEsJmsHYq7SpMmF6Vz7VQ+YG6bEVsPiWRixuiSKK8h1fOG
-	f7xXmHKNpPZCQPHUkuv44Sen914GOMG+v7fBisICy4yPWEpdD+rTg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CFE1637AF9;
-	Tue, 26 Mar 2024 13:01:01 -0400 (EDT)
+	:content-type; s=sasl; bh=zvhBcBmXdiF9577G6bRc5w8iqvGRU2MmpCOj+A
+	BIfic=; b=Q8qyJKJiGMFXadmwdRHiz3g4MDLYV5RAAtA+sSiUCk7VVfA2cN6YIi
+	tv35Y0TwYJOVk34htkAlDoIJMSVVP0sdzBNHlKHLxosAD6GU5rz5yt0/XcqlYaIY
+	ajYnHyBeOPsgMEOZnkQH1vrwxAWAbGj4V0J8Ymih1gwZG6rcJG0Pw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CC5EE2EA02;
+	Tue, 26 Mar 2024 13:40:11 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 50B0537AF5;
-	Tue, 26 Mar 2024 13:00:58 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7188F2EA01;
+	Tue, 26 Mar 2024 13:40:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Dirk Gouders <dirk@gouders.net>
-Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Kyle
- Lippincott <spectral@google.com>
-Subject: Re: [PATCH v4 4/5] MyFirstObjectWalk: fix description for counting
- omitted objects
-In-Reply-To: <20240326130902.7111-5-dirk@gouders.net> (Dirk Gouders's message
-	of "Tue, 26 Mar 2024 14:08:39 +0100")
-References: <cover.1711368498.git.dirk@gouders.net>
-	<20240326130902.7111-5-dirk@gouders.net>
-Date: Tue, 26 Mar 2024 10:00:56 -0700
-Message-ID: <xmqqo7b1apx3.fsf@gitster.g>
+To: Eric Wong <e@80x24.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/3] switch to tombstone-free khashl table
+In-Reply-To: <20240325230704.262272-1-e@80x24.org> (Eric Wong's message of
+	"Mon, 25 Mar 2024 23:07:00 +0000")
+References: <20240325230704.262272-1-e@80x24.org>
+Date: Tue, 26 Mar 2024 10:40:06 -0700
+Message-ID: <xmqqy1a4ao3t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,44 +54,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 6ABB3A54-EB92-11EE-8EAE-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ E3851D24-EB97-11EE-86C1-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Dirk Gouders <dirk@gouders.net> writes:
+Eric Wong <e@80x24.org> writes:
 
-> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-> index a06c712e46..6901561263 100644
-> --- a/Documentation/MyFirstObjectWalk.txt
-> +++ b/Documentation/MyFirstObjectWalk.txt
-> @@ -754,10 +754,12 @@ points to the same tree object as its grandparent.)
->  === Counting Omitted Objects
->  
->  We also have the capability to enumerate all objects which were omitted by a
-> -filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
-> -`traverse_commit_list_filtered()` to populate the `omitted` list means that our
-> -object walk does not perform any better than an unfiltered object walk; all
-> -reachable objects are walked in order to populate the list.
-> +filter, like with `git log --filter=<spec> --filter-print-omitted`. To do this,
-> +change `traverse_commit_list()` to `traverse_commit_list_filtered()`, which is
-> +able to populate an `omitted` list.  This list of filtered objects may have
-> +performance implications, however, because despite filtering objects, the possibly
-> +much larger set of all reachable objects must be processed in order to
-> +populate that list.
+> The memory improvement is minor, but any memory reduction at all
+> is welcome at this point.  Fortunately, this set of changes is
+> unintrusive.
+>
+> I have some other ideas that I'll hopefully get to implement before
+> swapping kills all my SSDs (see bottom).
 
-It may be just me not reading what is obvious to everybody else
-clearly, in which case I am happy to take the above text as-is, but
-the updated text that says a "list" may have "performance
-implications" reads a bit odd.  It would be understandable if you
-said "asking for list of filtered objects may have", though.
+Please describe what this topic aims at to sell the topic better.
+Are we trying to reduce memory footprint?  In other words, if this
+topic were to hit a released version of Git, what would the short
+paragraph description for the topic in the release notes look like?
 
-Are you contrasting a call to traverse_commit_list() and
-traverse_commit_list_filtered() and discussing their relative
-performance?  
+ * The khash.h hashtable implementation has been replaced with
+   khashl.h that is mostly API compatible with reduced memory
+   consumption, simpler insertion and a bit slower deletion.
 
-Of are you contrasting a call to traverse_commit_list_filtered()
-with and without the omitted parameter, and saying that a call with
-omitted parameter asks the machinery to do more work so it has to
-cost more?
+or somesuch.
 
-Other than that I had no trouble with this latest round.
+A performance oriented topic would be helped to have benchmark
+numbers to show how much improvement it makes and a memory reduction
+topic would be helped to have some numbers in the cover letter.  It
+is OK to summarize/duplicate what appears in the proposed log
+message of some step; it does not need too much text to say 100MB
+total allocations reduced by 10MB or something like that, for
+example.
+
+An API improvement topic would be helped to have an example rewrite
+of a caller (or just a reference to a representative one, i.e., "see
+how the caller in function X gets simplified in [PATCH 04/28]") in
+the cover letter.
+
+A bugfix topic would be helped to have an end-user visible effect in
+the cover letter.
 
 Thanks.
+
