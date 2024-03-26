@@ -1,174 +1,119 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D35481A3
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 20:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F1513D26D
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 20:09:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711483419; cv=none; b=gmqm08rfPaV4nlKgp9dz8+mbVQpDNo5DgKq2blFevZt34xHCJgcrvat2m0eCsb8/eRA86Jy2+/aioITP9PKLfaoUapsiT+d/ue4x+9wb/1u7w5sn4ZfWUCysRvy+59ecQP8GOjlWiRPgeIwJWOcFfDco/Bff4Ibl1gHEfwjcb8o=
+	t=1711483777; cv=none; b=qmd+SHb+pA2LXQ7LTd7Ri7HQdlCWKkw4nZMf9bfRKjojlV2o1WFRCTLMtdmNK7EkyPT6PdPkyjvqaj2F+CpYsj4bcTltKLH3k566ImHFQiUsARW01vfmuDilvVJlL0n5jSd0mTKzzUlTMKM+UiHMq8PDFwNDCrArxBCVJ2CrdwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711483419; c=relaxed/simple;
-	bh=Bw8GjuN5iyiMQZM9OFu+Hs4pE0DE0401P9xHbcutpjQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KhM894+m/T5/k/tmlFg+q/utIU1Pc4Jp5o5iRV84J495zVWvM8rLvtOgyB6NsKP1A93ZTOLDWyoUQicAsLfPMIiEI52AXJ9ZU3Z5b7WExqkPq6nd7nzmmL6M3H7R7rHSevUs6H4NC7mz4Tmrio9YDJwcVaV0P8Cwn3PBa0LJAlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbHthqtk; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711483777; c=relaxed/simple;
+	bh=I4jIBfqXrZZIJkAeSolohLn+IoWAlTCzt2BNLSa0EdQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K6UWLodo9FJRq69Xa07cThtPRKUH72SW9MjGHm20T1pK94aSoeULZvIAYD0GAYUNqme2d/aR94Cf61GY4mI0W9Dg2RmH6OIDBPgxTZzNHnPHFXMKSyGzhHkhLMV+/f2Nf3bMn+TiRAckFpRBTTNYwzmzhGj38RlYxLNaKcQK3Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=CRavASKp; arc=none smtp.client-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbHthqtk"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-29c75e348afso4351986a91.2
-        for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:03:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711483417; x=1712088217; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T6nL3TxTAwRdqrSKOGiRwbDYS95p6dKtG+oYbucoZRU=;
-        b=jbHthqtkKopZgh3CRRgPJgcTGdiLhKpOa7hVrvlriyhAf8D20zhf1C3RWN/ep2T+nZ
-         Nusdxd1ysbBUwHCcKVzKSeouU7hfqry8va6eVcCPF7F3pv/6auzLEScFaJ6xado3ICJn
-         xIcGHlqSVp1AaiCuh5W80PbHWZEw9EP/0MHA/Obxy/W3ySR/DHKvO81k06LcyqvC01z7
-         5dtzSok5rZAkGNzluV2zTrdweujFCX4++7CmiZxi+RlbZTNcrvLVKYBUcokh7xXOrrhL
-         9/1dBMGbhPAtF6Z9TRI6oyuPstmfRbDg205476C6BZXwj+RYFyzpuoHDXXWwj29JF+Sn
-         GfXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711483417; x=1712088217;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T6nL3TxTAwRdqrSKOGiRwbDYS95p6dKtG+oYbucoZRU=;
-        b=BeGwtHrFLydLyL0wyZXhqnu8Yxed0MJv0a692a7pHbgtjmUafDtsbRabOp924jjSiE
-         u2iHCfuHoZ12ViTArahXNV5sG9mKnB72yeQy+RwnfU2SG/RG5LmIReyLklru/3AZ2GRJ
-         SLX9idBHGp3wKm8/3jimk8cyjmlVueHwAkj9Ojqg/55+aUNElYsBBHqmZOHDIi2xXcc1
-         R36qkjsuq+ErFt/9X2+Ew7JLctdwv2dC9YoTK+cmQVFFvymia2Ddh9jRKMEw/xwrbv+V
-         Kdkatjw30tfNmjhv4Ern7PVFqiYfMSdkPFD6R6D8FaaZRnP13sugZ0cqmsGlpAoy7d9o
-         Htag==
-X-Gm-Message-State: AOJu0YxsjbebMEFgwqxAX4VFgjT3Vs1k5DN4csrXg7wlppUOtRIXnY5u
-	b2sV367pbuoCn4ro8d11VxG7EG4tMSPO9h8mEkQ5alCZRDehmoX1/9ZsXSBLR2lsAmJsqYq0BYm
-	t1ZSQoFxUINSAoLVV1V1zKpiLhts=
-X-Google-Smtp-Source: AGHT+IFetTxc8pSb0xrWGT8CPJSHtQNPZ54YJosrNSQMOE2pbEvDdd4DIxxOiBynOzDLzb0Mohr92mYKJpPbwxe/k7I=
-X-Received: by 2002:a17:90b:1107:b0:29d:51ce:607d with SMTP id
- gi7-20020a17090b110700b0029d51ce607dmr8416239pjb.27.1711483417198; Tue, 26
- Mar 2024 13:03:37 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="CRavASKp"
+Received: from localhost (ip-109-42-178-117.web.vodafone.de [109.42.178.117])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42QK9DLt024754
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Tue, 26 Mar 2024 21:09:14 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
+	t=1711483754; bh=I4jIBfqXrZZIJkAeSolohLn+IoWAlTCzt2BNLSa0EdQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=CRavASKp737BeXfpN1aKHRdYzIyD19JvAGU3TSwo0VPpHusAWyCN3Z6pfe3fzAhzQ
+	 g+20wOn63xgEsxQbcuf5ZBx+IZLtj34Zo8i50YCFma7D+BiL2QyFwqw3ix/Nj1OKF0
+	 LNOaYZSQys83L2tRz6aRS0kT8cNQNJD/eHA6vNtY=
+From: Dirk Gouders <dirk@gouders.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Kyle
+ Lippincott <spectral@google.com>
+Subject: Re: [PATCH v4 4/5] MyFirstObjectWalk: fix description for counting
+ omitted objects
+In-Reply-To: <xmqqo7b1apx3.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	26 Mar 2024 10:00:56 -0700")
+References: <cover.1711368498.git.dirk@gouders.net>
+	<20240326130902.7111-5-dirk@gouders.net> <xmqqo7b1apx3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Tue, 26 Mar 2024 21:09:08 +0100
+Message-ID: <gh34scvjq3.fsf@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1702.git.1711318739.gitgitgadget@gmail.com> <5ae83d3f799e9ab84d5233f77cb91715415ae167.1711318740.git.gitgitgadget@gmail.com>
-In-Reply-To: <5ae83d3f799e9ab84d5233f77cb91715415ae167.1711318740.git.gitgitgadget@gmail.com>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Tue, 26 Mar 2024 21:03:25 +0100
-Message-ID: <CAN0heSoSNxuoObvO_xtu1fXb+XYH+gBvVOWfJVBkpXouR0cmWQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] doc: git-clone: apply new documentation guidelines
-To: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for working on this. This renders really nicely.
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sun, 24 Mar 2024 at 23:20, Jean-No=C3=ABl Avila via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+> Dirk Gouders <dirk@gouders.net> writes:
 >
-> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
+>> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+>> index a06c712e46..6901561263 100644
+>> --- a/Documentation/MyFirstObjectWalk.txt
+>> +++ b/Documentation/MyFirstObjectWalk.txt
+>> @@ -754,10 +754,12 @@ points to the same tree object as its grandparent.)
+>>  === Counting Omitted Objects
+>>  
+>>  We also have the capability to enumerate all objects which were omitted by a
+>> -filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
+>> -`traverse_commit_list_filtered()` to populate the `omitted` list means that our
+>> -object walk does not perform any better than an unfiltered object walk; all
+>> -reachable objects are walked in order to populate the list.
+>> +filter, like with `git log --filter=<spec> --filter-print-omitted`. To do this,
+>> +change `traverse_commit_list()` to `traverse_commit_list_filtered()`, which is
+>> +able to populate an `omitted` list.  This list of filtered objects may have
+>> +performance implications, however, because despite filtering objects, the possibly
+>> +much larger set of all reachable objects must be processed in order to
+>> +populate that list.
 >
-> Heavily apply literal and placeholder markup everywhere.
+> It may be just me not reading what is obvious to everybody else
+> clearly, in which case I am happy to take the above text as-is, but
+> the updated text that says a "list" may have "performance
+> implications" reads a bit odd.  It would be understandable if you
+> said "asking for list of filtered objects may have", though.
+
+Oh yes, you are right (as far as I can say): I would change this to
+something like:
+
+"Asking for this list of filtered objects may cause performance
+implications, however, because in this case, despite filtering objects,
+the possibly much larger set of all reachable objects must be processed
+in order to populate that list."
+
+(Later in the document, it is suggested to do timing with the two
+versions, which kind of follows up on the performance impact that is
+focused on, here.  So, this doesn't remain an unresolved detail.)
+
+> Are you contrasting a call to traverse_commit_list() and
+> traverse_commit_list_filtered() and discussing their relative
+> performance?  
 >
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> ---
->  Documentation/config/clone.txt |  23 +++++--
->  Documentation/git-clone.txt    | 120 ++++++++++++++++-----------------
->  Documentation/urls.txt         |  22 +++---
->  3 files changed, 88 insertions(+), 77 deletions(-)
+> Of are you contrasting a call to traverse_commit_list_filtered()
+> with and without the omitted parameter, and saying that a call with
+> omitted parameter asks the machinery to do more work so it has to
+> cost more?
+
+This answer has the potential to cause an enhancement request, anyway:
+
+Previously, the document didn't state that
+traverse_commit_list_filtered() can be used without asking for a
+`omitted` list (and I didn't change that), so the contrasting
+in my understanding explicitely is traverse_commit_list()
+vs. traverse_commit_list_filtered().
+
+The second of your cases is only included implicitely, for those who
+know or can guess they could use NULL as the pointer to `omitted` list.
+
+Thank you for looking at this one more time!
+
+Dirk
+
+> Other than that I had no trouble with this latest round.
 >
-> diff --git a/Documentation/config/clone.txt b/Documentation/config/clone.=
-txt
-> index d037b57f729..0e0a8a1ae4a 100644
-> --- a/Documentation/config/clone.txt
-> +++ b/Documentation/config/clone.txt
-> @@ -1,13 +1,22 @@
-> -clone.defaultRemoteName::
-> +`clone.defaultRemoteName`::
->         The name of the remote to create when cloning a repository.  Defa=
-ults to
-> -       `origin`, and can be overridden by passing the `--origin` command=
--line
-> +       `origin`.
-> +ifdef::git-clone[]
-> +       It can be overridden by passing the `--origin` command-line
-> +       option.
-> +endif::[]
-> +ifndef::git-clone[]
-> +       It can be overridden by passing the `--origin` command-line
->         option to linkgit:git-clone[1].
-> +endif::[]
-
-There's a bit more going on here than the commit message claims. FWIW, I
-think these changes are good, even if maybe a bit surprising.
-
-> -'git clone' [--template=3D<template-directory>]
-> -         [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
-> -         [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <reposi=
-tory>]
-> -         [--dissociate] [--separate-git-dir <git-dir>]
-> -         [--depth <depth>] [--[no-]single-branch] [--no-tags]
-> -         [--recurse-submodules[=3D<pathspec>]] [--[no-]shallow-submodule=
-s]
-> -         [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reje=
-ct-shallow]
-> -         [--filter=3D<filter> [--also-filter-submodules]] [--] <reposito=
-ry>
-> -         [<directory>]
-> +`git clone` [`--template=3D`{empty}__<template-directory>__]
-> +         [`-l`] [`-s`] [`--no-hardlinks`] [`-q`] [`-n`] [`--bare`] [`--m=
-irror`]
-> +         [`-o` _<name>_] [`-b` _<name>_] [`-u` _<upload-pack>_] [`--refe=
-rence` _<repository>_]
-> +         [`--dissociate`] [`--separate-git-dir` _<git-dir>_]
-> +         [`--depth` _<depth>_] [`--`[`no-`]`single-branch`] [`--no-tags`=
-]
-> +         [`--recurse-submodules`[`=3D`{empty}__<pathspec>__]] [`--`[`no-=
-`]`shallow-submodules`]
-> +         [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] =
-[`--`[`no-`]`reject-shallow`]
-> +         [`--filter=3D`{empty}__<filter-spec>__] [`--also-filter-submodu=
-les`]] [`--`] _<repository>_
-> +         [_<directory>_]
-
-Don't ask me why, but I need this on top (whitespace-damaged)
-
--         [`--depth` _<depth>_] [`--`[`no-`]`single-branch`] [`--no-tags`]
--         [`--recurse-submodules`[`=3D`{empty}__<pathspec>__]]
-[`--`[`no-`]`shallow-submodules`]
--         [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_]
-[`--sparse`] [`--`[`no-`]`reject-shallow`]
-+         [`--depth` _<depth>_] [`--`[`no-`]{empty}`single-branch`]
-[`--no-tags`]
-+         [`--recurse-submodules`[`=3D`{empty}__<pathspec>__]]
-[`--`[`no-`]{empty}`shallow-submodules`]
-+         [`--`[`no-`]{empty}`remote-submodules`] [`--jobs` _<n>_]
-[`--sparse`] [`--`[`no-`]{empty}`reject-shallow`]
-
-i.e., some sprinkling of "{empty}", to keep each of these "[--[no-]"
-from simply disappearing. This is with Asciidoctor 1.5.5, which is
-admittedly starting to get old, but still ok as per our INSTALL
-document.
-
-> ---bare::
-> +`--bare`::
->         Make a 'bare' Git repository.  That is, instead of
->         creating _<directory>_ and placing the administrative
-> -       files in `<directory>/.git`, make the _<directory>_
-> +       files in _<directory>_`/.git`, make the _<directory>_
-
-This should be __<directory>__{empty}`/.git`
-
-Thanks. Apart from the small mistake and the misrendering of "[--[no-]",
-this looks really nice to me, both HTML and manpage. The source .txt
-files do get a bit messier, especially with the {empty} trickery, but
-ok. (I haven't been paying attention. Maybe this has been discussed
-before, and TBH I haven't even dug -- I don't mean to start another
-round of discussion.)
-
-Martin
+> Thanks.
