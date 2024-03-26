@@ -1,209 +1,109 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2E813C831
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 22:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687E2173
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 22:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711490859; cv=none; b=Y/gI8yRuEu3hRgJr7iNSFXiRLaioZYGWYIAKA8gUVuHacwQ0nLA3rxwSETHeQ/fVdIDUTFHcavUHoKbWAsRHbbbIsfX7J8ecGInP+1ro3bb4PylISW9vs5lnobXY5LqjD0R+R4qQgpyzOZkzcq2U9+n2EstPZMrQjDJ/0cWGrCE=
+	t=1711491028; cv=none; b=HYHyINscUtfHIHudob266f8XyQ3vmqLtKgN1vhN6wv1cMyvkMqLtgJy4XDA1Kxjq3g3aKpbrslP8HOlrwiBZNVeHXNUIJW/f5wAL7bpNbVk2u7ynpRX6avZqUCe3aEcbIEsXlnxfSQsYDOX2Gwa4z8nEF/oca5HLpPCEiEWzXhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711490859; c=relaxed/simple;
-	bh=Mr23Ryv04jdbzG6t87yuzJGJos9wQO70D0vzKy/7Tq8=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=aeJwB4u2Pq5M4fuA0q23VuUwHMiee6JAotxj56u7l5NlT36MWLTgxWYpJQx6MuSFCVJntvW+b/SjRHI8H3rwEN7tZVI66nzssvIarhOwNB90I6VRPxYGOtJb7bfXUNsIoPewISjXZ4b/b4IO6Ee8fvE8ftOnqZ2OYwL3NoK2MLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v6VBdMsU; arc=none smtp.client-ip=64.147.108.70
+	s=arc-20240116; t=1711491028; c=relaxed/simple;
+	bh=Z+AOT7OlNGrPFCdYa8BODZ6AdcOKS/FDz8zk2TUEhvg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UYx4/EssqYhChxqBfTcaYdi4OoCMU+EEsjfU95dOLmU6jpU7C44eJ8sszqQHjv8/vhN0sEMhcUfZVq7PNoj/vY5gfb6mY0b9lDBVEuMI6VuvTcfQYTLUu+npkhsyqA5l3CusIq8KK1C1+eByNhTgCa8sf6MHTYCdHOGzTAVC7hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VIGvo489; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v6VBdMsU"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EA401DA769
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 18:07:37 -0400 (EDT)
-	(envelope-from schwern@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=message-id
-	:date:mime-version:to:from:subject:content-type
-	:content-transfer-encoding; s=sasl; bh=Mr23Ryv04jdbzG6t87yuzJGJo
-	s9wQO70D0vzKy/7Tq8=; b=v6VBdMsUhY9iBs4qXpfDoLoe8+rUsomChPRqonETJ
-	PSn2jpmBTulr5bHd5jJWN2r958MzI5lO3VKp1I+2tq/gUA9yjxT5fkYRo+JkeZsT
-	y6vcrEaxfgBrCW/FEbHlRQA3j19m7XSvCnE6GgfVDg1qpx5deC94z67PazoIOe0c
-	6o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 16B561DA768
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 18:07:37 -0400 (EDT)
-	(envelope-from schwern@pobox.com)
-Received: from [10.2.197.236] (unknown [84.239.48.132])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VIGvo489"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C0EB1F30FB;
+	Tue, 26 Mar 2024 18:10:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Z+AOT7OlNGrP
+	FCdYa8BODZ6AdcOKS/FDz8zk2TUEhvg=; b=VIGvo489pUBSOzy8ayr57UGrQoWl
+	HjDPz5JfzfDLJ0krPMUIxTWXMzU9YQjxHfvWpyOV80f+k7YYYUW4XQTdQqXA7MU3
+	gu7YTxwDElxDK5sGTGTai2B3ueLf2v9QtpW+DN6m9DOlJSV6G0JGYJdAqal8oISe
+	+c3bmD/5N4UsOYI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3321C1F30FA;
+	Tue, 26 Mar 2024 18:10:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72D9D1DA766
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 18:07:36 -0400 (EDT)
-	(envelope-from schwern@pobox.com)
-Message-ID: <ddeef5fe-d208-49e1-bbf1-5563df3dcf51@pobox.com>
-Date: Tue, 26 Mar 2024 15:07:35 -0700
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8DE061F30F9;
+	Tue, 26 Mar 2024 18:10:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  Dragan Simic
+ <dsimic@manjaro.org>,  Manlio Perillo <manlio.perillo@gmail.com>,
+  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe <l.s.r@web.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2 16/16] config: allow multi-byte core.commentChar
+In-Reply-To: <20240315081041.GA1753560@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 15 Mar 2024 04:10:41 -0400")
+References: <20240312091013.GA95442@coredump.intra.peff.net>
+	<20240312091750.GP95609@coredump.intra.peff.net>
+	<0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
+	<20240315055944.GB1741107@coredump.intra.peff.net>
+	<6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
+	<20240315081041.GA1753560@coredump.intra.peff.net>
+Date: Tue, 26 Mar 2024 15:10:23 -0700
+Message-ID: <xmqq8r247igg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Michael G Schwern <schwern@pobox.com>
-Subject: Bug: `git check-ignore -v` changes the exit code.
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 40ED34F4-EBBD-11EE-8F01-78DCEB2EC81B-02258300!pb-smtp1.pobox.com
+ A5145B74-EBBD-11EE-A5F0-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Jeff King <peff@peff.net> writes:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> So anyway, adapting your original suggestion based on discussion in the
+> thread, maybe squash in (to the final patch):
+>
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.=
+txt
+> index c86b8c8408..c5a8033df9 100644
+> --- a/Documentation/config/core.txt
+> +++ b/Documentation/config/core.txt
+> @@ -523,9 +523,8 @@ core.commentChar::
+>  	Commands such as `commit` and `tag` that let you edit
+>  	messages consider a line that begins with this character
+>  	commented, and removes them after the editor returns
+> -	(default '#'). Note that this option can take values larger than
+> -	a byte (whether a single multi-byte character, or you
+> -	could even go wild with a multi-character sequence).
+> +	(default '#'). Note that this variable can be a string like
+> +	`//` or `=E2=81=91=E2=81=95=E2=81=91`; it doesn't have to be a single=
+ ASCII character.
+>  +
+>  If set to "auto", `git-commit` would select a character that is not
+>  the beginning character of any line in existing commit messages.
+>
+>
+> That's assuming we don't want to go the commentString route, which woul=
+d
+> require a bit more re-working of the patch. I'm also open to a more
+> clever or pretty multi-byte example if we have one. ;)
 
-$ tree
-.
-=E2=94=9C=E2=94=80=E2=94=80 dir_b
-=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 sub
-=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test
-=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test
-=E2=94=94=E2=94=80=E2=94=80 top
+It has been 10 days since this discussion petered out.
 
-$ cat .gitignore
-*
+My preference is to introduce core.commentString to avoid confusion
+coming from an older Git using the first-byte of a multi-byte
+string, or dying upon reading a configuration file meant for a newer
+Git, and then let core.commentString override core.commentChar, but
+I would prefer to see the discussion participants to raise their
+opinions and reach a conclusion.
 
-!/dir_b/
-!/dir_b/**
-
-$ git status --ignored
-On branch main
-
-No commits yet
-
-Untracked files:
-   (use "git add <file>..." to include in what will be committed)
-	dir_b/
-
-Ignored files:
-   (use "git add -f <file>..." to include in what will be committed)
-	.gitignore
-	top
-
-nothing added to commit but untracked files present (use "git add" to tra=
-ck)
-
-
-What did you expect to happen? (Expected behavior)
-
-$ git check-ignore dir_b/sub/test
-$ echo $?
-1
-
-$ git check-ignore -v dir_b/sub/test
-$ echo $?
-1
-
-
-What happened instead? (Actual behavior)
-
-$ git check-ignore dir_b/sub/test
-$ echo $?
-1
-
-$ git check-ignore -v dir_b/sub/test
-.gitignore:4:!/dir_b/**	dir_b/sub/test
-$ echo $?
-0
-
-What's different between what you expected and what actually happened?
-
-First, `git check-ignore -v` should have exited with 1 because that is=20
-defined as "None of the provided paths are ignored". Exiting with 0,=20
-"One or more of the provided paths is ignored", is clearly incorrect.
-
-Second, it's confusing that `git check-ignore -v` shows matches to=20
-negation patterns. The documentation says "Instead of printing the paths=20
-that are excluded, for each path that matches an exclude pattern, print=20
-the exclude pattern together with the path." which seems pretty clear,=20
-but then there's this parenthetical... "(Matching an exclude pattern=20
-usually means the path is excluded, but if the pattern begins with "!"=20
-then it is a negated pattern and matching it means the path is NOT=20
-excluded.)" which *implies* -v is also going to show unignored files,=20
-but it's unclear.
-
-An additional problem is the use of "excluded" to mean "ignored" and=20
-"exclude pattern" which includes negated patterns which include. Oy.
-
-The existence of --non-matching makes this extra confusing. The casual=20
-reader can think "non-matching" means "paths which are not ignored"=20
-rather than "paths which match no pattern". Again, the misunderstanding=20
-hinges on realizing "exclude pattern" includes negated patterns which=20
-include.
-
-Anything else you want to add:
-
-`git check-ignore`, `git check-ignore -v`, and `git status --ignored`=20
-should all agree at least on what is ignored.
-
-Verbose flags should not change the behavior of a command, they should=20
-only add to its output. `git check-ignore` shows only ignored paths=20
-while `git check-ignore -v` also shows unignored paths. One could argue=20
-only the exit status is the true behavior, but people look at the=20
-output. See=20
-https://stackoverflow.com/questions/78216866/file-in-the-same-path-one-ca=
-n-be-git-trace-but-others-cannot#comment137908188_78216923=20
-for a real example of this causing confusion.
-
-I think the issue is that `git check-ignore` is for checking which files=20
-are ignored. Users expect --verbose to also show them why their file was=20
-ignored, but --verbose also shows unignored files. This is unexpected.=20
-The change in the exit status exacerbates the problem.
-
-It would help to talk about "ignored files" rather than "excluded=20
-files". It's called "check-ignore" and users edit their ".gitignore" fie=20
-and read the "gitignore" docs (.git/exclude being rarely used).
-
-I would also simply say "pattern". This avoids the confusion that=20
-"exclude patterns" sometimes unexclude. gitignore only says "pattern"=20
-and never says "exclude pattern". This also avoids the confusing=20
-"negated exclude pattern", that is just a "negated pattern".
-
-Ideally, I'd make --verbose just show the path + the last matched=20
-pattern. Separate flag(s) change what is shown.
-
--v, --verbose
-Print the matching pattern and the path.
-
--a, --all-matching
-Show paths which match any pattern. If the path matches a negated=20
-pattern (the pattern begins with "!") it will be shown despite not being=20
-ignored.
-
-The current behavior would be `git check-ignore -v -a <path>...`.
-
-If -v has to remain backwards compatible, I would suggest...
-
--v, --verbose
-Print the matching pattern and the path. If the match is a negated=20
-pattern (the pattern begins with "!") the path is not ignored.
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.43.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 23.3.0 Darwin Kernel Version 23.3.0: Wed Dec 20 21:28:58=20
-PST 2023; root:xnu-10002.81.5~7/RELEASE_X86_64 x86_64
-compiler info: clang: 15.0.0 (clang-1500.1.0.2.5)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+Thanks.
