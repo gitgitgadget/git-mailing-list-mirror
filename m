@@ -1,40 +1,40 @@
 Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A79374420
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC567440B
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711458567; cv=none; b=qvpbEkAXEXD9GxlM+ozGp30fIC+asBx1w8Jpjab1VZoNt9EF+lU2/vwsr3+Bv72ENZxrwe8crT8uTzc26e4vEoPmAdbp1speUJfILIBY75C9FGj6eJYozlLcgwcKJQhiqXwPOTnbfYsrO/QCu2Vpj0ry7QSBhZ/lrNY1bO9CjYQ=
+	t=1711458573; cv=none; b=klQB6zZVu8Y6f7jZVpstuOgYbbAyqa86m3B4J6L5yQfvCgHruAP2zIVgWn5rClvd9OwpuEkdSdlS0bM0Nuo1DlbmM5RIwlQ3A1QkwUmLWGw/LChSmhhOUt2Nf9gyTe6rT22DJQ/Z5vYuqOyFFLyV5PGlCXcJc3ywujq02KTKaNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711458567; c=relaxed/simple;
-	bh=CpRomrezvQDUn43nIevebbmkF0ukq3h9qTDfjfXBaa4=;
+	s=arc-20240116; t=1711458573; c=relaxed/simple;
+	bh=DubbNUQKdlz/m2hwc0qzBsOrVzz98jd57+UvAxMLqLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPB2/E8ILkim4ht19+UKNYERZdynWoeYqcB+yBzDyS3LHgTe1K18X0GLaPnYrDuiFM8+xyD6JP3gLkFaBgAumUoNNEZ0htDkYLC8zIKSKETlObwIil7R2G24wazZyR0/bwoVhLdhWvvC1AlR1yGel4pr8VyRavnuZRsL8wpUhRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=sUClkOVC; arc=none smtp.client-ip=202.61.206.94
+	 MIME-Version; b=ggRz68s6jqDyggfHao0Uw0LLc8jFEohog8p/bxAYCbQfZgUq5L8erQnAJgD29bk/0DGn5NXvlTwS+n9YjvqrtjHHjgoGsen4RxfD2uhp8HV4c+2Z/XxrzwYsLXUMtzSCfvu1s7em5dr6j6S0dqbtVIlMI6Zh91It+K8dYcWrCyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=Pk6tMBhs; arc=none smtp.client-ip=202.61.206.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="sUClkOVC"
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="Pk6tMBhs"
 Received: from localhost ([193.175.198.193])
 	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42QD9FYf006370
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42QD9KkX006376
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 26 Mar 2024 14:09:15 +0100
+	Tue, 26 Mar 2024 14:09:21 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1711458555; bh=CpRomrezvQDUn43nIevebbmkF0ukq3h9qTDfjfXBaa4=;
+	t=1711458561; bh=DubbNUQKdlz/m2hwc0qzBsOrVzz98jd57+UvAxMLqLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sUClkOVC80OJPYqQ0dVXWTVFvXgu4ROyuLZtitbl7jf1hv4hmfEmAHZSkc6+kVi71
-	 IJUbXEuqfvR8m/7Ml/Q6iMoVrz/0ydtGum1vRz4LARrEwOZVTJmVD7BoQYf4cGqwWw
-	 tRwNQJa8zre6iEsjt55ThXQGqvvMfugTG+rGzBZw=
+	b=Pk6tMBhsbiIwSJy8uOQRmhfveEf9jZb5FhSX2q9sk/gPkM3PObpVgfD4lTTEqH8FK
+	 WWtFUsUMVKRVeYDOtJHhSuVPysLBXDEKdfVmUEQu7bYSFqP82mYVW4+PmkW14kO3/6
+	 i7oulMCKjg+L27L6BCRhe9xXv/fnnBJpG9hZ4WZ4=
 From: Dirk Gouders <dirk@gouders.net>
 To: git@vger.kernel.org
 Cc: Dirk Gouders <dirk@gouders.net>, Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Kyle Lippincott <spectral@google.com>
-Subject: [PATCH v4 1/5] MyFirstObjectWalk: use additional arg in config_fn_t
-Date: Tue, 26 Mar 2024 14:08:36 +0100
-Message-ID: <20240326130902.7111-2-dirk@gouders.net>
+Subject: [PATCH v4 2/5] MyFirstObjectWalk: fix misspelled "builtins/"
+Date: Tue, 26 Mar 2024 14:08:37 +0100
+Message-ID: <20240326130902.7111-3-dirk@gouders.net>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1711368498.git.dirk@gouders.net>
 References: <cover.1711368498.git.dirk@gouders.net>
@@ -46,54 +46,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit a4e7e317f8 (config: add ctx arg to config_fn_t, 2023-06-28)
-added a fourth argument to config_fn_t but did not change relevant
-function calls in Documentation/MyFirstObjectWalk.txt.
+pack-objects.c resides in builtin/ (not builtins/).
 
-Fix those calls and the example git_walken_config() to use
-that additional argument.
+Fix the misspelled directory name.
 
 Signed-off-by: Dirk Gouders <dirk@gouders.net>
 ---
- Documentation/MyFirstObjectWalk.txt | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ Documentation/MyFirstObjectWalk.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index c68cdb11b9..cceac2df95 100644
+index cceac2df95..c33d22ae99 100644
 --- a/Documentation/MyFirstObjectWalk.txt
 +++ b/Documentation/MyFirstObjectWalk.txt
-@@ -210,13 +210,14 @@ We'll also need to include the `config.h` header:
+@@ -525,7 +525,7 @@ about each one.
  
- ...
- 
--static int git_walken_config(const char *var, const char *value, void *cb)
-+static int git_walken_config(const char *var, const char *value,
-+			     const struct config_context *ctx, void *cb)
- {
- 	/*
- 	 * For now, we don't have any custom configuration, so fall back to
- 	 * the default config.
- 	 */
--	return git_default_config(var, value, cb);
-+	return git_default_config(var, value, ctx, cb);
- }
- ----
- 
-@@ -389,10 +390,11 @@ modifying `rev_info.grep_filter`, which is a `struct grep_opt`.
- First some setup. Add `grep_config()` to `git_walken_config()`:
- 
- ----
--static int git_walken_config(const char *var, const char *value, void *cb)
-+static int git_walken_config(const char *var, const char *value,
-+			     const struct config_context *ctx, void *cb)
- {
--	grep_config(var, value, cb);
--	return git_default_config(var, value, cb);
-+	grep_config(var, value, ctx, cb);
-+	return git_default_config(var, value, ctx, cb);
- }
- ----
- 
+ We can base our work on an example. `git pack-objects` prepares all kinds of
+ objects for packing into a bitmap or packfile. The work we are interested in
+-resides in `builtins/pack-objects.c:get_object_list()`; examination of that
++resides in `builtin/pack-objects.c:get_object_list()`; examination of that
+ function shows that the all-object walk is being performed by
+ `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
+ functions reside in `list-objects.c`; examining the source shows that, despite
 -- 
 2.43.0
 
