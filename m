@@ -1,58 +1,58 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13588163
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 00:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848B61FBB
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 00:17:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711412258; cv=none; b=qU0t10d27luIVbSyZ62S5uZt220Qd9hZhNrTpXtu3aotLxTy3NJCKoAYDYtUkVOVxCD09545Z0R7PJlVLDwtdg/7d67wKxwpM6OsLCxH8I6sFq9SMBZ1yBrYEli3utd//JmuGHwTRP4/nNgTrZkx30NsARx5YKJSOVI+Us5X6v8=
+	t=1711412276; cv=none; b=fPhtSXxmy3+bQIWeasv9cxvNzlu66AzcyrJs+Zm979Oecw7w2rRCywbLqiCW/m6fRckz2Da2Hf2QpuG0qcLX/jgRtbJG9JXDgP3mrJPc6lIak+Zy89KUvUJO51Gg7z0MIvM2GP35FPdZE78IvjZH4GUDSXmubRlPdfxvfPwRhA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711412258; c=relaxed/simple;
-	bh=P/R0/IEdirTlDGfAlhhhX9ohln4OeQhG5/yEmWv0NAM=;
+	s=arc-20240116; t=1711412276; c=relaxed/simple;
+	bh=KKqsypByYlHqjIkWXyRUDuYWe0khFGW8aEKZeO9gNOw=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jSk2wX7xOFTylVcyc3nuyEVF5DRuNEXzifDOlLMW7e0WBbQxlZ9DCtG+dI4wbNNsLibv/RXIwlaVX1cB3HDSqE9N4ng9Cw1M0GxZRVzdp6oOYTh8oHjSpUEis964ER3lBTrdRVoTV9AAj1bupWhvcRTKBo5H2cUQq8OmOEndNa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MENEOggu; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:Content-Type; b=E4M3lHaLZkXaYk1NYxYkzh/BlGMtb5xl70rq0pqj3+14F5XgJohE7xzbXNGjAABHh9noJoYy4UcOmLg+bxn0pqxBu2quCmb3CIsgz82XEP31SyecXxfqG16yJOxj8V6mfX0UeZjvFowmm7eGH279D3N+Od+iDfMYuQtrlRfaNGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gfEuHpp4; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MENEOggu"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4148c65ea45so4411065e9.2
-        for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:17:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gfEuHpp4"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4148e14799eso1049825e9.0
+        for <git@vger.kernel.org>; Mon, 25 Mar 2024 17:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711412255; x=1712017055; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wXRT/qVSx4UDLPRHFs/xj53qu3CwxE+F8mxHvhAgrqI=;
-        b=MENEOgguYkgHXxsHjXiynS/FBqWSo90ni4RSsbv5jOfcZc9GPJSp4yv73nW+/K/tai
-         HDHX4DIlsmX7CpIXAdGMBcB3buC5UceXs3WwCdzfQvgw4Zw/RbPQIexF/q9hcBrAwho8
-         HUwNxJiTddis6eogLKO8C2HPuRQR93L0gYJAbu+iGmpJgJxXvvbpymwIvhJW2TQDUqR1
-         /V4tcH6wO/tTwkZSc5cTEblqu8D+4dC664NWQ3MNesHrnRCQ+t/GzY5G1UL2eTAxo48d
-         zk0hP5G3YkWxFa1lyNd2tKOv9P1N2r8K2wQdQULrr0fhuQaJikEZQKQv9icujStRHHq/
-         n7wA==
+        d=gmail.com; s=20230601; t=1711412273; x=1712017073; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IZJBGgEpKSpH//lSlbkOxw9bPLIlAVK8OgqHAOLkDQM=;
+        b=gfEuHpp4HJIb1aO0WW33SWuBPz8Zp8/rmQLiwXsTEVUd+vm3VfSb+e89gXdEHGvDjB
+         sdIUSCetEJSYatAHxR1ZntEC6dyP+gSouQPgcazEe6ZunSUcKvyOKcDbt4rYEgogbgm/
+         L876O3Dndbk+l/nd9o8Y4wNNGY/xdHJQ45itdeyaNjyj+3XCeHensG5+i3oAsS9OVigg
+         wEJdyDaHUDiUe2KzeD6bIIRHGJdU5SJYH+uOb72zlexEaKQT6IP4r4c51XCcUlGCjH8N
+         GBZshOU2LyIfd8VUzqw+HRdymAzjT6Pp5oOveIS0vlUEqGZME91dw/hZ7nxyaxBHnvNc
+         YDlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711412255; x=1712017055;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1711412273; x=1712017073;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wXRT/qVSx4UDLPRHFs/xj53qu3CwxE+F8mxHvhAgrqI=;
-        b=dhRsGB0oHUY17W/SBg1qjAUBNoKLxQwCpmC+sH33bCT5Uq6P5dw4KumqmqBZfVVgW2
-         zMQlijzrOrE4upxZ/FEcV8Av5SJ0ibI38/5A/p8UDAgdcb9/JN/qVnUc8p8vGbsPNsDj
-         w2PCwj9gQ2bDhN67W0xfxGI+MwUgwCFe3qi7L97ux1nNI1xSTy2zM0ZKZB36Z7m+LMl7
-         B4N3ZgNEHMoOY0TKQpVDPNJXpKsYfREbAvxQvhMC49i7Cg5uCJL/CXcwJlCXO/h81Ue4
-         uVnnmiPbqlBn0riVsZD04t5RHA4wqpoEjY8RgKGphG3VsWkM0A1IikOFi0iaGJ3JDO3m
-         d2uw==
-X-Gm-Message-State: AOJu0YyYIVncyUjH94zCxFzjgXi1FsCjzU28Qnp1gTfR4MDowes9aRFD
-	SkURdeFCt17o4A6oox4RBWznZTvoktiSVP0nBlOAeR7B0uNQJ0Yb9NygRhdk
-X-Google-Smtp-Source: AGHT+IHNb0+AaMnwpiNCxY59oLw6hjNvmfaZj1ZrUJQNA3y34NoaIyudo2qeRRhCl9vmFfMe34sxRQ==
-X-Received: by 2002:adf:f884:0:b0:33d:9c3d:f930 with SMTP id u4-20020adff884000000b0033d9c3df930mr6412386wrp.66.1711412255227;
-        Mon, 25 Mar 2024 17:17:35 -0700 (PDT)
+        bh=IZJBGgEpKSpH//lSlbkOxw9bPLIlAVK8OgqHAOLkDQM=;
+        b=ZcnGt8bcwkaeqn9HHm3ucjZEMsvFNkKN1tXBVJtBHHYoIyolU8Pmw7r7cWtKzHXTRD
+         FuvXC41RAOfse5QxBlIfztAsn283oYbKC0/g9aMISCry4XmRv7JWsvpr5jvF9bdZn9ff
+         ooCg0ZIvye4hW1FTts/ld/GvrrEyn/8IvFSEZtFSPUBGc3Piz+uw1o05Aq0RZAEcEUIg
+         VTvC4rJtOplRlTBoKqrzb0IwaCkbOsCpdSWJNSmcOC51ckfRZ+sJisxQtpJP2Ilf0iG5
+         euPnAtDBgyqAhumHl1DZ7AbMoHt/dHcM1RfJH07VrPRKKEI/nEJI7n/tT0gB0xjdx/5O
+         TcVQ==
+X-Gm-Message-State: AOJu0YwISFmtw0tmquOQVol6aJz0Pw11wtVX4e+B6qS9D5QEAh+INh+8
+	vCxmCcHI8auQT6KpTSq168+gnJQNZtff5ZNON5oKkdLY6h2QLGxYcoO68jDv
+X-Google-Smtp-Source: AGHT+IEd6aXzJ9egmi30OGNCHpn8dP7olyQjRb7HO8tSLaz+FrIf0Qb9LCHnNluXiyigtkC9qWHLjw==
+X-Received: by 2002:a05:600c:5844:b0:413:f034:da6e with SMTP id ka4-20020a05600c584400b00413f034da6emr6209023wmb.38.1711412272698;
+        Mon, 25 Mar 2024 17:17:52 -0700 (PDT)
 Received: from gmail.com (70.red-88-14-202.dynamicip.rima-tde.net. [88.14.202.70])
-        by smtp.gmail.com with ESMTPSA id k13-20020adff5cd000000b0033ec9936909sm10717287wrp.39.2024.03.25.17.17.33
+        by smtp.gmail.com with ESMTPSA id t15-20020a5d690f000000b0033e95bf4796sm10666431wru.27.2024.03.25.17.17.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 17:17:34 -0700 (PDT)
-Message-ID: <34e027d3-c351-431b-97de-e15a2d5a9756@gmail.com>
-Date: Tue, 26 Mar 2024 01:17:31 +0100
+        Mon, 25 Mar 2024 17:17:52 -0700 (PDT)
+Message-ID: <c123bf09-7f4c-46f5-aa09-48b2816bf85d@gmail.com>
+Date: Tue, 26 Mar 2024 01:17:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,144 +60,160 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 1/2] add-patch: introduce 'p' in interactive-patch
-Content-Language: en-US
+Subject: [PATCH v2 2/2] add-patch: do not print hunks repeatedly
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Git List <git@vger.kernel.org>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Junio C Hamano <gitster@pobox.com>
 References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
  <6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
+Content-Language: en-US
 In-Reply-To: <6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Shortly we're going make interactive-patch stop printing automatically
-the hunk under certain circumstances.
+The interactive-patch is a sequential process where, on each step, we
+print one hunk from a patch and then ask the user how to proceed.
 
-Let's introduce a new option to allow the user to explicitly request
-the printing.
+There is a possibility of repeating a step, for example if the user
+enters a non-applicable option, i.e: "s"
+
+    $ git add -p
+    diff --git a/add-patch.c b/add-patch.c
+    index 52be1ddb15..8fb75e82e2 100644
+    --- a/add-patch.c
+    +++ b/add-patch.c
+    @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
+     static int patch_update_file(struct add_p_state *s,
+     			     struct file_diff *file_diff)
+     {
+    -	size_t hunk_index = 0;
+    +	size_t hunk_index = 0, prev_hunk_index = -1;
+     	ssize_t i, undecided_previous, undecided_next;
+     	struct hunk *hunk;
+     	char ch;
+    (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? s
+    Sorry, cannot split this hunk
+    @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
+     static int patch_update_file(struct add_p_state *s,
+     			     struct file_diff *file_diff)
+     {
+    -	size_t hunk_index = 0;
+    +	size_t hunk_index = 0, prev_hunk_index = -1;
+     	ssize_t i, undecided_previous, undecided_next;
+     	struct hunk *hunk;
+     	char ch;
+    (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?
+
+... or an invalid option, i.e: "U"
+
+    $ git add -p
+    diff --git a/add-patch.c b/add-patch.c
+    index 52be1ddb15..8fb75e82e2 100644
+    --- a/add-patch.c
+    +++ b/add-patch.c
+    @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
+     static int patch_update_file(struct add_p_state *s,
+     			     struct file_diff *file_diff)
+     {
+    -	size_t hunk_index = 0;
+    +	size_t hunk_index = 0, prev_hunk_index = -1;
+     	ssize_t i, undecided_previous, undecided_next;
+     	struct hunk *hunk;
+     	char ch;
+    (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? U
+    y - stage this hunk
+    n - do not stage this hunk
+    q - quit; do not stage this hunk or any of the remaining ones
+    a - stage this hunk and all later hunks in the file
+    d - do not stage this hunk or any of the later hunks in the file
+    j - leave this hunk undecided, see next undecided hunk
+    J - leave this hunk undecided, see next hunk
+    g - select a hunk to go to
+    / - search for a hunk matching the given regex
+    e - manually edit the current hunk
+    p - print again the current hunk
+    ? - print help
+    @@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
+     static int patch_update_file(struct add_p_state *s,
+     			     struct file_diff *file_diff)
+     {
+    -	size_t hunk_index = 0;
+    +	size_t hunk_index = 0, prev_hunk_index = -1;
+     	ssize_t i, undecided_previous, undecided_next;
+     	struct hunk *hunk;
+     	char ch;
+    (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?
+
+Printing the chunk again followed by the question can be confusing as
+the user has to pay special attention to notice that the same chunk is
+being reconsidered.
+
+It can also be problematic if the chunk is longer than one screen height
+because the result of the previous iteration is lost off the screen (the
+help guide in the previous example).
+
+To avoid such problems, stop printing the chunk if the iteration does
+not advance to a different chunk.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- Documentation/git-add.txt  |  1 +
- add-patch.c                |  4 ++++
- t/t3701-add-interactive.sh | 22 +++++++++++-----------
- 3 files changed, 16 insertions(+), 11 deletions(-)
+ add-patch.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 14a371fff3..90b47927b2 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -348,6 +348,7 @@ patch::
-        K - leave this hunk undecided, see previous hunk
-        s - split the current hunk into smaller hunks
-        e - manually edit the current hunk
-+       p - print again the current hunk
-        ? - print help
- +
- After deciding the fate for all hunks, if there is any hunk
 diff --git a/add-patch.c b/add-patch.c
-index 68f525b35c..444fd75b2a 100644
+index 444fd75b2a..54a7d9c01f 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -1388,6 +1388,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
-    "/ - search for a hunk matching the given regex\n"
-    "s - split the current hunk into smaller hunks\n"
-    "e - manually edit the current hunk\n"
-+   "p - print again the current hunk\n"
-    "? - print help\n");
- 
+@@ -1394,7 +1394,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
  static int patch_update_file(struct add_p_state *s,
-@@ -1480,6 +1481,7 @@ static int patch_update_file(struct add_p_state *s,
- 				permitted |= ALLOW_EDIT;
- 				strbuf_addstr(&s->buf, ",e");
- 			}
-+			strbuf_addstr(&s->buf, ",p");
- 		}
- 		if (file_diff->deleted)
- 			prompt_mode_type = PROMPT_DELETION;
-@@ -1658,6 +1660,8 @@ static int patch_update_file(struct add_p_state *s,
- 				hunk->use = USE_HUNK;
+ 			     struct file_diff *file_diff)
+ {
+-	size_t hunk_index = 0;
++	size_t hunk_index = 0, prev_hunk_index = -1;
+ 	ssize_t i, undecided_previous, undecided_next;
+ 	struct hunk *hunk;
+ 	char ch;
+@@ -1448,10 +1448,14 @@ static int patch_update_file(struct add_p_state *s,
+ 
+ 		strbuf_reset(&s->buf);
+ 		if (file_diff->hunk_nr) {
+-			render_hunk(s, hunk, 0, colored, &s->buf);
+-			fputs(s->buf.buf, stdout);
++			if (prev_hunk_index != hunk_index) {
++				render_hunk(s, hunk, 0, colored, &s->buf);
++				fputs(s->buf.buf, stdout);
++				strbuf_reset(&s->buf);
++
++				prev_hunk_index = hunk_index;
++			}
+ 
+-			strbuf_reset(&s->buf);
+ 			if (undecided_previous >= 0) {
+ 				permitted |= ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK;
+ 				strbuf_addstr(&s->buf, ",k");
+@@ -1649,10 +1653,12 @@ static int patch_update_file(struct add_p_state *s,
+ 			if (!(permitted & ALLOW_SPLIT))
+ 				err(s, _("Sorry, cannot split this hunk"));
+ 			else if (!split_hunk(s, file_diff,
+-					     hunk - file_diff->hunk))
++					     hunk - file_diff->hunk)) {
+ 				color_fprintf_ln(stdout, s->s.header_color,
+ 						 _("Split into %d hunks."),
+ 						 (int)splittable_into);
++				prev_hunk_index = -1;
++			}
+ 		} else if (s->answer.buf[0] == 'e') {
+ 			if (!(permitted & ALLOW_EDIT))
+ 				err(s, _("Sorry, cannot edit this hunk"));
+@@ -1661,7 +1667,7 @@ static int patch_update_file(struct add_p_state *s,
  				goto soft_increment;
  			}
-+		} else if (s->answer.buf[0] == 'p') {
-+			/* nothing special is needed */
+ 		} else if (s->answer.buf[0] == 'p') {
+-			/* nothing special is needed */
++			prev_hunk_index = -1;
  		} else {
  			const char *p = _(help_patch_remainder), *eol = p;
  
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 0b5339ac6c..bc55255b0a 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -325,9 +325,9 @@ test_expect_success 'different prompts for mode change/deleted' '
- 	git -c core.filemode=true add -p >actual &&
- 	sed -n "s/^\(([0-9/]*) Stage .*?\).*/\1/p" actual >actual.filtered &&
- 	cat >expect <<-\EOF &&
--	(1/1) Stage deletion [y,n,q,a,d,?]?
--	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,?]?
--	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]?
-+	(1/1) Stage deletion [y,n,q,a,d,p,?]?
-+	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,p,?]?
-+	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]?
- 	EOF
- 	test_cmp expect actual.filtered
- '
-@@ -514,13 +514,13 @@ test_expect_success 'split hunk setup' '
- test_expect_success 'goto hunk' '
- 	test_when_finished "git reset" &&
- 	tr _ " " >expect <<-EOF &&
--	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? + 1:  -1,2 +1,3          +15
-+	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? + 1:  -1,2 +1,3          +15
- 	_ 2:  -2,4 +3,8          +21
- 	go to which hunk? @@ -1,2 +1,3 @@
- 	_10
- 	+15
- 	_20
--	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?_
-+	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?_
- 	EOF
- 	test_write_lines s y g 1 | git add -p >actual &&
- 	tail -n 7 <actual >actual.trimmed &&
-@@ -530,11 +530,11 @@ test_expect_success 'goto hunk' '
- test_expect_success 'navigate to hunk via regex' '
- 	test_when_finished "git reset" &&
- 	tr _ " " >expect <<-EOF &&
--	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? @@ -1,2 +1,3 @@
-+	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? @@ -1,2 +1,3 @@
- 	_10
- 	+15
- 	_20
--	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?_
-+	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?_
- 	EOF
- 	test_write_lines s y /1,2 | git add -p >actual &&
- 	tail -n 5 <actual >actual.trimmed &&
-@@ -715,21 +715,21 @@ test_expect_success 'colors can be overridden' '
- 	<BLUE>+<RESET><BLUE>new<RESET>
- 	<CYAN> more-context<RESET>
- 	<BLUE>+<RESET><BLUE>another-one<RESET>
--	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
-+	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
- 	<MAGENTA>@@ -1,3 +1,3 @@<RESET>
- 	<CYAN> context<RESET>
- 	<BOLD>-old<RESET>
- 	<BLUE>+<RESET><BLUE>new<RESET>
- 	<CYAN> more-context<RESET>
--	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
-+	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
- 	<CYAN> more-context<RESET>
- 	<BLUE>+<RESET><BLUE>another-one<RESET>
--	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
-+	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
- 	<CYAN> context<RESET>
- 	<BOLD>-old<RESET>
- 	<BLUE>+new<RESET>
- 	<CYAN> more-context<RESET>
--	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? <RESET>
-+	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>
- 	EOF
- 	test_cmp expect actual
- '
 -- 
 2.44.0.494.gfaa70abb0d
