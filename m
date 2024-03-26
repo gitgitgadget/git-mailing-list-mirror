@@ -1,179 +1,163 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA364C6D
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 10:30:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD6152F67
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 11:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711449013; cv=none; b=ikCsNswZexlRe0EuTU8wNDSK6uhOSd3/THgOj7k8CMaMozxhh2HuapHTUDuyS5ugvI63ldS0qHZQtkxMouPsEphmZdbB78sJkQQMTUcc57fLiQ8lOfyAhnhFuYPgiuRHmZrzIpDKvZaswJtwRw1Y7Ct0uoOXe26sOkxHrGy207I=
+	t=1711452159; cv=none; b=YRuDqkXLBGsXIiHmgUOaSuZVNU8YXxT92AhufAahiWhX6/H8tKOVxF/50q1Usc6rE4qKzv1wMtTEuYhdxFuYR1Y2b0P+a5wI4Nvi0fUxlhAMAeev5itd4tGW8zKLR+csct0+DCcgTSJyBPbrmBANgn3U8kXfyk8GO5n3lWpad0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711449013; c=relaxed/simple;
-	bh=n6rmYtycxtq+JUJwACryeW2zc3I3Vj1SlP39eWMW2JQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N/f0ThFv3U/WEhJemQYOJfFUENHq5MTkM9CyIoTzFC15IRYwIUtpVo0Nx6qzDi9DcLaCtqzRt0VkZ7Cd7EmdpVbETwlPGdgqeGKZGstUCqom7PtOiMFKoQaxAQOnswldyngFZcT3JNXFIn1N4c2ItPnpYhfbFABiHHhWXACaLvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VEGMg2hi; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711452159; c=relaxed/simple;
+	bh=HdvMaytKHTNPJj4+Eqqc3qPyXp8jLi1QGuZ+icfqV5s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zzze9YdEelC8+U7ramCkwHuGaAfL1jfLPu/f4uA01F0F6xWs9kC2fJ6lk1cBrEw0eymGH+TIRf+4ym1JV4Os4ioqPz0UffrLqgZqAmkk5pFH+ZqdoAXhRqQhsIZ4QA7T6pVS112JSuSGyq9i/6TTbOZF+35++HCShwkwEMn7ifo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WeUtrI3v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vUi90kkh; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VEGMg2hi"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56c1922096cso2006948a12.0
-        for <git@vger.kernel.org>; Tue, 26 Mar 2024 03:30:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711449010; x=1712053810; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h2ANBhz3MttM5EL4vDgp/9uuKUKbBNh9N9t7Ogvx/fw=;
-        b=VEGMg2hiTXXCpkztUlyuLRThX8p33gPA8xdCs9WfbvIFW7sQloD5CQunhzfOZOu417
-         8/kIg8AwZIIr9q5SZ9PJUwJGOZUjDPgXQqaBKeNQnJOcseKe+tztQJolt1fllp7sEAl9
-         G++nCaA+TDnr8WIazzdOsOg0/icPTT+OSlPz3t0oU1TzG+33r4bKod7z5+ZEHQoDGpsF
-         0nG6DnDnhncaYkY14ArrySMDb7SvBCdJ1snSZmacJ7l36m5V/2mOEttCpVVVu+RAO67L
-         z9WWMmuo3bw8zWS2GvvVMnVrWatLl/TK3rAp/cPLg3SxVj/CzRHybZmd9uoMVcNhy/38
-         iczg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711449010; x=1712053810;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h2ANBhz3MttM5EL4vDgp/9uuKUKbBNh9N9t7Ogvx/fw=;
-        b=ZrOGH/yNBQWDBqZ2Zkw0d4RYIB9rQRArJ/BeSH3Fu/f2kD622LRrNT8EBB/jfjpg3U
-         UsWPG3Jl/gFj5wDiC6AOB/URGOw4VQTejrJELR/cmPtqmNwdIEAw2b1fX8kvTnjDqHZg
-         c5SYocWYhfVwDpvnhdrXa1RrLQnR1s2n5yEwfUApHwRirIJZb1xFyqLQUrppGBitqhYn
-         z7oAKxOgrVFmPMnlYrN6RNk3wkGHqCsUrg6tYS5x4XeMReoxYF4aO2wiCycFATGWLWCR
-         bFrYjX4EBhbUOQ00DfMx2MGiEolYoOa+xaOmIlHPSesKqC+DXPs0ZkJxR56FdbVSnu9H
-         9rWw==
-X-Gm-Message-State: AOJu0Yy3ovDmHvCb/Bb3CRZXZ2DSTUjONmcYsh93gEaa3Psyd/Ord+NO
-	HIgjBbIA2gv38zx8bVP52iU+LeqrL3qNJWK8/C0oWJSA+B7TdlTLtnDorTWC2g2YwvUR/MaO8x9
-	9CqoIg6YOHmIUG8pO7HPs2Q945Zc=
-X-Google-Smtp-Source: AGHT+IF23Q8sjZ/4RV1NqdC/jNZwsmuWov/NPUJ6yuS//smlIZiy2UBLwwoIepc1OftfvY3NL1DaJDOdAvMt4VXiiWY=
-X-Received: by 2002:a17:907:7ea7:b0:a47:31c8:81f5 with SMTP id
- qb39-20020a1709077ea700b00a4731c881f5mr711256ejc.47.1711449010197; Tue, 26
- Mar 2024 03:30:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WeUtrI3v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vUi90kkh"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 93CD413800C9;
+	Tue, 26 Mar 2024 07:22:34 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 26 Mar 2024 07:22:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711452154; x=1711538554; bh=HdvMaytKHT
+	NPJj4+Eqqc3qPyXp8jLi1QGuZ+icfqV5s=; b=WeUtrI3vw9kzPv266QU8vwE7vL
+	h2AXpPWkjaxCqs6jrVhUKthyDEA4IUboKbwwqSo13o9ArONRNnwVdS1tfIOMWCYj
+	7KRtOdDb9AH98INWYGU1a3z94SWu0rWbgpmJAYGm/c1lrbCk6BwCk1DHHu/20nHc
+	9wP3EzISNuKC3UlsMuv3OYx3Y/QIvTHK7JD9jx0nwwWsCSwFqCiA4d/49Sq8TUri
+	yR7rALJ0MSm/TXBA+eoBX9v3I9pdCCr9DB6ptjsz+FM8gXVbn7aVLWuyIZdge7A7
+	5vtXPc9JVg0VdEVzWBh3uivt8J81/uRFJgiy0O5CHaQhfhh8XFC1KeKm5Gqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711452154; x=1711538554; bh=HdvMaytKHTNPJj4+Eqqc3qPyXp8j
+	Li1QGuZ+icfqV5s=; b=vUi90kkhbTDhYmIQtllEI1UAERphOKpxfaGTHQD+LbWl
+	ekM4M8jVqcgtuoD+3X/oMP4lyT/uE2OhedG/Jx00EseugYb4j7v4l3IPZQ2Jevxz
+	/Ghx4EkGR9QLRTYP9VazJwWNbM6qXHI5MSgysQJv6ra0jkBr4I/dgttECl9i0kpt
+	lGxPw9PsElTYiD/8QTTfoB3vw0gDbtr/DviDl1Kn8WBy+M8w7gbgQsivmPnLh1pC
+	NWw+LzfHutNNdPQzB+CGOfRXR1vdwjot3Ib7Sc9r+NKJ+cOqsKsrdGDsD63Lft0o
+	Ae0w9DqLFAxq1KpC0UA9OBiYVOK1tSOS82BGcDkCuA==
+X-ME-Sender: <xms:-q8CZsZ_oti5vJ__xzFIdEbtah-9tzxVYAQD3fAh8yeXypetG1pO-A>
+    <xme:-q8CZnZnegKYewEoHSHNc-U59mFKP8pIzG0Xvy6yI5GFCVJKC01aR6NNaMdJLBjrW
+    sLZ2_hD6s2yQWoLbw>
+X-ME-Received: <xmr:-q8CZm9pOrMQEgpp5CgsbOT9a9JvZPout0utiZ7Ib_RHaOQEGs2urkfeb7KT1aF6HvikTc77tdVdoNW_EIilHGXtqIymEqz0a89jb4ClH1oH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddufedgvdejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    goufhushhpvggtthffohhmrghinhculdegledmnecujfgurhepfffhvfevuffkfhggtggu
+    jgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuc
+    eophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjeefhfegkeffuedvjedvudeu
+    jedtgfefveehgeetfeetkefgudduudejvdekudetnecuffhomhgrihhnpehmvgguihgrfi
+    hikhhirdhorhhgpdhgihhthhhusgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:-q8CZmoK0IMUJ1K5N7UVTEeJw_sia91J8vXurCzKjh4-RyWIapw8pg>
+    <xmx:-q8CZnpv68q5sEbpA2fiJSf5ktE5S-H-s9jZszRwF-ChVRWOKYkv3w>
+    <xmx:-q8CZkSvxP1RaaFvszYzFcj3UzW5CErOAJPHeDhBPbxI2ejXSzN9gA>
+    <xmx:-q8CZnpJg7-2btYa2sHR34ZGphtMZj0axtNOkCOyahJ462i6BO_-GA>
+    <xmx:-q8CZonNIvRZn17N5TrnX3HomrFqpTMD1j-OSsWN69IdZsf9wFT5hw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Mar 2024 07:22:33 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7f28ee7a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 26 Mar 2024 11:22:20 +0000 (UTC)
+Date: Tue, 26 Mar 2024 12:22:30 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Aishwarya Narayanan <aishnana.03@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: GSoC 2024
+Message-ID: <ZgKv9sZ6shfqym2P@tanuki>
+References: <CAHCXyj3U69qyhYewOLY9hN2rvi_5ZuSxQEBJbDxrKefm9MzVWg@mail.gmail.com>
+ <CAOLa=ZRqkKhqUPjrYQWmLnLAf6Cmt17ZSMJja0rYLNWifUG+og@mail.gmail.com>
+ <CAHCXyj2a5QFO+fDekR0sQuyFLocucMQeuABxG=6g1X92_cEkpA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMbn=B4HDXOAThvAmmyA5GEzG1nnvbGvc4yjpg7FHSHQQ-WQfw@mail.gmail.com>
- <CAP8UFD3qf1MW1PkCh7DvwmNoi51sLq4r0Z=K57OCa65WtorAKw@mail.gmail.com> <CAMbn=B58_KSvkEMEsCnrN6rGL61+qFv9NqcOO8adyU5A37=vjQ@mail.gmail.com>
-In-Reply-To: <CAMbn=B58_KSvkEMEsCnrN6rGL61+qFv9NqcOO8adyU5A37=vjQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 26 Mar 2024 11:29:57 +0100
-Message-ID: <CAP8UFD1U3j4tf3snk0qcDjHPRKxuaUVZOw7GuCEwAnXb-gRvHQ@mail.gmail.com>
-Subject: Re: [GSoC][PROPOSAL v1] Refactor git-bisect(1) to make its state self-contained
-To: Aryan Gupta <garyan447@gmail.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt [ ]" <ps@pks.im>, karthik nayak <karthik.188@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wuDKkEXWtsLoPqNW"
+Content-Disposition: inline
+In-Reply-To: <CAHCXyj2a5QFO+fDekR0sQuyFLocucMQeuABxG=6g1X92_cEkpA@mail.gmail.com>
+
+
+--wuDKkEXWtsLoPqNW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Aryan,
+On Tue, Mar 26, 2024 at 02:33:59PM +0530, Aishwarya Narayanan wrote:
+> Dear Git Project Maintainers,
+>=20
+> Assistance Needed: Locating Test Script for Addressing Git's Exit Code
+> Suppression. I hope this email finds you well. My name is Aishwarya,
+> and I am reaching out to seek assistance with a microproject I am
+> working on within the Git project.
 
-On Thu, Mar 21, 2024 at 2:21=E2=80=AFPM Aryan Gupta <garyan447@gmail.com> w=
-rote:
+Please not that top-posting is discouraged on the Git mailing list [1].
 
-> On Wed, Mar 20, 2024 at 12:06=E2=80=AFPM Christian Couder
-> <christian.couder@gmail.com> wrote:
+> As part of my efforts to contribute to the Git project, I am currently
+> focusing on addressing the suppression of Git's exit code in test
+> scripts, as outlined in the project's microproject ideas.
+> Specifically, I aim to identify a test script within the t directory
+> where Git's exit code may be inadvertently suppressed.
+>=20
+> While I have attempted to locate such a test script independently, I
+> have encountered challenges in identifying a suitable candidate.
+> Therefore, I am reaching out to request guidance from the project
+> maintainers in locating a test script where this issue needs to be
+> addressed.
+> I tried commands that included:
+> grep -Er "git .* \|" t/, grep -R "git .* |" t/, findstr /s /i /p "git .* =
+|" *.sh
+>=20
+> Could you please provide any insights or guidance on identifying a
+> test script within the t directory that exhibits the suppression of
+> Git's exit code? Any pointers or suggestions would be greatly
+> appreciated.
+>=20
+> Additionally, if there are specific criteria or patterns that I should
+> look for when identifying such test scripts, please let me know, and I
+> will ensure to align my search accordingly.
 
-> > On Sat, Mar 16, 2024 at 7:58=E2=80=AFPM Aryan Gupta <garyan447@gmail.co=
-m> wrote:
+The command proposed by Karthik (which is also part of your pipeline
+above) does result in several matches in "t/", some of which are actual
+good candidates for a micro project. Did you scan through these matches?
+The microprojects page at [2] should give you a good idea for what to be
+on the lookout for as it explains the issue as well as highlighting some
+patterns to watch out for.
 
-> > > -- About Me --
-> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > >
-> > > I have been enthusiastic about open source from the very beginning of
-> > > my journey as a software developer. I=E2=80=99ve contributed to other
-> > > open-source projects, though still a beginner, I=E2=80=99m generally =
-familiar
-> > > with the process of contribution. The related experiences are all in
-> > > the contribution graph on my GitHub profile page [1]. In the ZAP
-> > > Project[2] community, I=E2=80=99ve made over 50 PRs [3]. I also parti=
-cipated
-> > > in the Google Summer of Code 2023 with the OWASP Foundation and
-> > > successfully completed it as well [4]. I have contributed to some
-> > > other small projects as well on GitHub.
-> >
-> > It's interesting to know that you have already participated in a GSoC.
-> > Is there a single blog post about this or more?
->
-> Here it is: https://www.zaproxy.org/blog/2023-09-11-browser-recorder/
+Patrick
 
-I saw that there is one blog post, but I wanted to ask if there are
-more blog posts. That's because we ask GSoC contributors to post on
-their blog at least every 2 weeks and if possible every week.
+[1]: https://www.mediawiki.org/wiki/Mailing_list_etiquette
+[2]: https://git.github.io/SoC-2024-Microprojects/
 
-> > > -- Strategies for Handling Backward Compatibility --
-> > > ---------------------------------------------------------
-> > >
-> > > 1. Before implementing any changes, a good understanding of how
-> > > git-bisect works and how it is structured is very important. So, I
-> > > will thoroughly analyze the existing usage patterns of git-bisect and
-> > > list down all the potential areas of impact.
-> > >
-> > > 2. To validate the codebase changes and ensure the stability and the
-> > > backward compatibility of git-bisect command. I will write unit tests
-> > > for all the required changes.
-> >
-> > Do you mean unit tests using the new unit test framework in C. Could
-> > you show an example?
-> >
->
-> Not sure about what is the standard way that git uses for writing unit te=
-sts.
-> Could you tell me a bit about this?
+--wuDKkEXWtsLoPqNW
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I was just asking if you planned to use the new unit test framework in
-C. The "Move existing tests to a unit testing framework" project that
-we propose on https://git.github.io/SoC-2024-Ideas/ is about moving
-some unit tests to this new unit test framework. Please take a look at
-that project to get more information about this subject.
+-----BEGIN PGP SIGNATURE-----
 
-> > > 3. I will also try to create some real scenarios where I will be
-> > > manually testing the desired behavior.
-> > >
-> > > 4. We might also need some regression tests to test some of the
-> > > functionality which can't be tested using unit tests.
-> >
-> > In which test script would you add them?
->
-> I will be writing these in bash and will be adding it in a new test case =
-file
-> inside the git/t directory or maybe in "git\t\t6030-bisect-porcelain.sh"
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYCr/UACgkQVbJhu7ck
+PpQ/tRAAnFFplyb0jXWXD633koBuahSAA6t/+gxo0IJXiJG7M3xkJYueC9qhzlTH
+tRxGAKEsNhc3Ete8cXvivT545x+FR6b/Hrfvph8H198KcsmMBRhiuzVGxJNq/Mce
+3pic39HY1Eyr453C1zvVxVyWvOe7RCPkUMIh2yRG0VX1CcDrmrKWV9WRfa0BuwyI
+g61D75bvp6hL6hWc/3cgjr37bGIAp5AkblK9ILZkjazYuUHP3PF+vLRl6zuF5okM
+f7iPYtpdmWC3ZoAQKhot+mRtqm1JaxcVwnJayx9JoRVP4ASL6dP2z5WnCSG1Lgjx
+xcrbRMSMACZtut9vrU32zOrDXcJp9XHI+gCabdxD/AYe74EqM/N0xjAn1UmErv9Q
+M5B0BFCBfJjR9sD4os2MMcGHIkcJxqcADIpnmTSlGxq83zaNtvnSGit1eiVNU/DP
+v84QN883oSCJpzw4H2ATaaM7D7q5pgKQyZx+prYgmB++XN0Qx8VttcezkP+ZmpdT
+LJJkeErUwWT13OZuH11P4+YbyltunnC24rh7aF7aCKOPdKe6+a66Nl17XYMWz07e
+tBA6KB8B+5vbkuTCJr98k6dkF7i05oGb4oiYtqqOjFtKCShkotBHDDh/8HwP3NaW
+BtTtVPX3DNMnfJZhk8h+FEvAeeWzGVE2udPmeFHwmyA2Y/uO6M0=
+=s3hu
+-----END PGP SIGNATURE-----
 
-It's better to always use the Unix notation for paths like
-"t/t6030-bisect-porcelain.sh" starting at the root of the repo, rather
-than mixing the Unix and Windows notations and adding "git/" before
-the root.
-
-> file. I will try mocking a scenario where we have the BISECT_* files avai=
-lable
-> in the .git directory and then run git bisect using the command line and =
-then
-> check the expected results.
-
-The t/*.sh test scripts are the right place for end-to-end tests
-(sometimes called "black box" tests), but not for unit tests that
-would test some C functions. Both unit tests and end-to-end tests
-could be regression tests or performance tests.
-
-> > > 4. Adding Tests
-> > >     - Through testing for backward compatibility is very very
-> > > important so that the changes don=E2=80=99t break the existing change=
-s.
-> > >
-> > > 5. Documenting the changes
-> > >     - This might also go side by side if mentors need some weekly
-> > > documentation of the tasks done.
-> >
-> > Tests and documentation should be part of the patches that change the
-> > behavior. So it doesn't really make sense to list them separately in
-> > the timeline.
->
-> Okay. Maybe a blog post could be a part of this?
-
-We ask GSoC contributors to post weekly on their blog, so except for a
-final blog post, most of the blogging should be also part of the
-regular work.
-
-Thanks for updating your proposal.
+--wuDKkEXWtsLoPqNW--
