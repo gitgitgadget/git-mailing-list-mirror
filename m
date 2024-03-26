@@ -1,119 +1,93 @@
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F1513D26D
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 20:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1408AFC0E
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 20:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711483777; cv=none; b=qmd+SHb+pA2LXQ7LTd7Ri7HQdlCWKkw4nZMf9bfRKjojlV2o1WFRCTLMtdmNK7EkyPT6PdPkyjvqaj2F+CpYsj4bcTltKLH3k566ImHFQiUsARW01vfmuDilvVJlL0n5jSd0mTKzzUlTMKM+UiHMq8PDFwNDCrArxBCVJ2CrdwA=
+	t=1711484325; cv=none; b=Xcn6GB0jvAvkxXGJ3iX6sN3s5Ual5BogbyJ5arIXmXkyZcWVLbtC7VQLZN3bn+lGFN3YhQvmxA9TZ9Cga0irhhhCAXOGqn7UNUyFChMryl9gqstb8lNh3Jb9Lm2zOWIMAKqM9PJIQOu8wZxD+F2N6Li2zLfayC6R3OdO58sMZsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711483777; c=relaxed/simple;
-	bh=I4jIBfqXrZZIJkAeSolohLn+IoWAlTCzt2BNLSa0EdQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K6UWLodo9FJRq69Xa07cThtPRKUH72SW9MjGHm20T1pK94aSoeULZvIAYD0GAYUNqme2d/aR94Cf61GY4mI0W9Dg2RmH6OIDBPgxTZzNHnPHFXMKSyGzhHkhLMV+/f2Nf3bMn+TiRAckFpRBTTNYwzmzhGj38RlYxLNaKcQK3Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=CRavASKp; arc=none smtp.client-ip=202.61.206.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	s=arc-20240116; t=1711484325; c=relaxed/simple;
+	bh=uKplHoNbtk4b4ZC62z62PeC3kRMbuYGgV23kq3KUAcw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BpX46W9OlohmXZSSJreoAHGSTtaqKnkcesDalc2XvEG4mQDRJX48+UAAG9bDqDKTjDNAnp+rQ7TROmikKpvYtB4IwpMWAf4bjo/NPvCdmXqJZwWE5CGi67c+u0OBd/77XBJAbMoOyFRhQgYCgR7KLEukj0ytyR/nJw0NvMAjFEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DfHFibbG; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="CRavASKp"
-Received: from localhost (ip-109-42-178-117.web.vodafone.de [109.42.178.117])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42QK9DLt024754
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 26 Mar 2024 21:09:14 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1711483754; bh=I4jIBfqXrZZIJkAeSolohLn+IoWAlTCzt2BNLSa0EdQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=CRavASKp737BeXfpN1aKHRdYzIyD19JvAGU3TSwo0VPpHusAWyCN3Z6pfe3fzAhzQ
-	 g+20wOn63xgEsxQbcuf5ZBx+IZLtj34Zo8i50YCFma7D+BiL2QyFwqw3ix/Nj1OKF0
-	 LNOaYZSQys83L2tRz6aRS0kT8cNQNJD/eHA6vNtY=
-From: Dirk Gouders <dirk@gouders.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Kyle
- Lippincott <spectral@google.com>
-Subject: Re: [PATCH v4 4/5] MyFirstObjectWalk: fix description for counting
- omitted objects
-In-Reply-To: <xmqqo7b1apx3.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	26 Mar 2024 10:00:56 -0700")
-References: <cover.1711368498.git.dirk@gouders.net>
-	<20240326130902.7111-5-dirk@gouders.net> <xmqqo7b1apx3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Tue, 26 Mar 2024 21:09:08 +0100
-Message-ID: <gh34scvjq3.fsf@gouders.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DfHFibbG"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6e6ca2ac094so5155552b3a.0
+        for <git@vger.kernel.org>; Tue, 26 Mar 2024 13:18:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711484323; x=1712089123; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gLUIIXlFKtGnxe6z6SpnIr3inNTsPmXvuB8tdxBsEmE=;
+        b=DfHFibbGeu0nhPeG/qKiQ7HYY7DY+hMzsa+XmTG3unMCDtAxWi82gq0o1eQwZAmzbS
+         PrNOA/274NvNdgJU42JnhJgMa4KKQgxhFvBcv8qZMOYb5EIxPGgebRyCr6Y3nRcexyj8
+         tj3CUfHK5qDoI+xyWdGNj0gXmuSDzRcHdswyWm/4RIt3ws4VJPhsS4GPLOB+LvZ1ZGa2
+         2gsqBkUS7+KojYiiftk+Bn9uWHO1XX5EQcQY42XlDm+m/MTtO7jARW4mf/jHapZqwHrV
+         HsteDaQOT56B5eK2dI4dqFTr4owKZKO3+y9GVHEQrTAtiO35LpEccQMNTywEa/F0XAti
+         tHew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711484323; x=1712089123;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gLUIIXlFKtGnxe6z6SpnIr3inNTsPmXvuB8tdxBsEmE=;
+        b=fAlumxv+cCtwc4F3EEcXNfjcjGnJmeySyM7PKVfwquh6uOHsAJJz2pV0cEJtT98yS7
+         zuo/R/DvvfdjEi3a/MXZu3klNbwplKAAJnTY9WvQyA66wv+FB/90DtEP7BPf1TjFHuCv
+         WaAQba9wgF6DoNaKYTgttbCowaCPnn2jXrKUVr3+hVJE9gnjjecq0k2nDk8IZH7pbdV3
+         5SeeVyy4MHrAsq76weRwSoFH6PT2dF8ZIQo8GKODkchK3BwY81uqIqAcFM+HOAqUKE1i
+         O9IOwxq3LSx8toqU0X2Y32Jb+wAQLMHmjpPyM2N3a8z42d2B15RGV6dbiKaRBHzvCGe3
+         gIaQ==
+X-Gm-Message-State: AOJu0Yy1YipbgtBqlE66JK3pOTULpSe/VTM75AIyzLW1QwissYc2sEev
+	sIQkgctfbJZvBU6l50j4gS8WHAVBxneSkekHKFYn89VyqgewnU0OjCmgOzsOutd48qDAtA96xU/
+	VwLzqs8P0YvkIZ2KNOpY1jLMrOKA=
+X-Google-Smtp-Source: AGHT+IHb1GUtFQC9QV5o4he4eiI3dF9AjkeYGIStODR/DZt02CWCyggVxQI9SupQhTT+FvwT9giIQkeajWMaksyXjgI=
+X-Received: by 2002:a05:6a20:4aa9:b0:1a3:66e2:f2e1 with SMTP id
+ fn41-20020a056a204aa900b001a366e2f2e1mr7783858pzb.28.1711484323428; Tue, 26
+ Mar 2024 13:18:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1702.git.1711318739.gitgitgadget@gmail.com> <310f09fc81c75ef03eb00629db6302d1904585fe.1711318740.git.gitgitgadget@gmail.com>
+In-Reply-To: <310f09fc81c75ef03eb00629db6302d1904585fe.1711318740.git.gitgitgadget@gmail.com>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Tue, 26 Mar 2024 21:18:31 +0100
+Message-ID: <CAN0heSpVLAw3iYiCcgTnOtO9saY0KXR+00r7mR-PfqU+EcfPoA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] doc: git-init: apply new documentation formatting guidelines
+To: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, 24 Mar 2024 at 23:19, Jean-No=C3=ABl Avila via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> -umask::
+> -false::
+> +`umask`::
+> +`false`::
 
-> Dirk Gouders <dirk@gouders.net> writes:
->
->> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
->> index a06c712e46..6901561263 100644
->> --- a/Documentation/MyFirstObjectWalk.txt
->> +++ b/Documentation/MyFirstObjectWalk.txt
->> @@ -754,10 +754,12 @@ points to the same tree object as its grandparent.)
->>  === Counting Omitted Objects
->>  
->>  We also have the capability to enumerate all objects which were omitted by a
->> -filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
->> -`traverse_commit_list_filtered()` to populate the `omitted` list means that our
->> -object walk does not perform any better than an unfiltered object walk; all
->> -reachable objects are walked in order to populate the list.
->> +filter, like with `git log --filter=<spec> --filter-print-omitted`. To do this,
->> +change `traverse_commit_list()` to `traverse_commit_list_filtered()`, which is
->> +able to populate an `omitted` list.  This list of filtered objects may have
->> +performance implications, however, because despite filtering objects, the possibly
->> +much larger set of all reachable objects must be processed in order to
->> +populate that list.
->
-> It may be just me not reading what is obvious to everybody else
-> clearly, in which case I am happy to take the above text as-is, but
-> the updated text that says a "list" may have "performance
-> implications" reads a bit odd.  It would be understandable if you
-> said "asking for list of filtered objects may have", though.
+(It should be `umask` here exactly as you did, ok, good.)
 
-Oh yes, you are right (as far as I can say): I would change this to
-something like:
+>  Use permissions reported by umask(2). The default, when `--shared` is no=
+t
+>  specified.
 
-"Asking for this list of filtered objects may cause performance
-implications, however, because in this case, despite filtering objects,
-the possibly much larger set of all reachable objects must be processed
-in order to populate that list."
+>  _<perm>_ is a 3-digit octal number prefixed with `0` and each file
+>  will have mode _<perm>_. _<perm>_ will override users'`umask(2)`
 
-(Later in the document, it is suggested to do timing with the two
-versions, which kind of follows up on the performance impact that is
-focused on, here.  So, this doesn't remain an unresolved detail.)
+It's a bit of a mix whether umask(2) should be `umask(2)` with backticks
+or just umask(2) without. That's pretty much the only thing I noticed,
+everything else looks really nice and consistent. I guess it's not a
+literal, since we don't expect to user to actually type the 8 characters
+"umask(2)"? If you do decide to drop the backticks, notice that there's
+one instance (seen above) of "users'`umask(2)`" with a missing space,
+so you might want to fix that up at the same time.
 
-> Are you contrasting a call to traverse_commit_list() and
-> traverse_commit_list_filtered() and discussing their relative
-> performance?  
->
-> Of are you contrasting a call to traverse_commit_list_filtered()
-> with and without the omitted parameter, and saying that a call with
-> omitted parameter asks the machinery to do more work so it has to
-> cost more?
-
-This answer has the potential to cause an enhancement request, anyway:
-
-Previously, the document didn't state that
-traverse_commit_list_filtered() can be used without asking for a
-`omitted` list (and I didn't change that), so the contrasting
-in my understanding explicitely is traverse_commit_list()
-vs. traverse_commit_list_filtered().
-
-The second of your cases is only included implicitely, for those who
-know or can guess they could use NULL as the pointer to `omitted` list.
-
-Thank you for looking at this one more time!
-
-Dirk
-
-> Other than that I had no trouble with this latest round.
->
-> Thanks.
+Martin
