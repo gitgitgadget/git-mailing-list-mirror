@@ -1,80 +1,99 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-108-mta169.mxroute.com (mail-108-mta169.mxroute.com [136.175.108.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2CF6CDA3
-	for <git@vger.kernel.org>; Tue, 26 Mar 2024 11:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8503E6BB5D
+	for <git@vger.kernel.org>; Tue, 26 Mar 2024 12:01:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711453942; cv=none; b=Pdc6ZLIe5Oq84fk5OTAxOladzGBFKj810CYq/9MkHQUx+1vOT0GeUofm8euG6sLE1IKKbALNcLUBREzcrNom3T4qwb6otkjyQC1fsuRNL+Sktb6kp8jigl6Mz3tOXgiDDkSneIpY7QQBhugp4hjgOUwWjhsG19jpriuR8lFm6hA=
+	t=1711454492; cv=none; b=Si82ve9V41xzmevjaxDzlhoUZjZJarD0iGy3owlsej1t66iT7fHd1cH2NCXAvdncB/xxXyE1wMiuL8q4hpphtkyGuikIOnHukAHNfyegVoKlqedWfutYAE9xfCihb9h2/78a0biv4IYC98w9PTfUXPaTlsxRmP5oCeRloTsaDv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711453942; c=relaxed/simple;
-	bh=Z3bBaqakSPvBZH0GwAb7B3tpoIGPmQGm5/Z+Ecp/ci8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXC/N8F7ipG0e8jKOPwjeFGSZMNZNFjbH2cWDffY3SoqsjI40Ekp04GmYdU/Usd1wPwQszOTXkblu6K3UD6DPC7P0VDziuYV7ojz57yqCqypiUU0UyiqDLooi7UASoytBoiOZErsU0BayCUcBKiX+7dfgKF6WzPzAASXP2QF++c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FyneqExk; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711454492; c=relaxed/simple;
+	bh=yNEWTAMfuZLQVMO7VhVG49dkb/BgRpf9wSjlTiOLVxA=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=D3Zjuaeciix4aV/ZsBAYrS1695ZBTGqhQrW3i9k2H/z0jqJWIFNmGeIsiznm6Ikv3ayGO5oj8XyQ92qcPdeBKxggYFGrRYnKtNReEuaijwlMOhOgcQi46LA+RgEjysMSWfUW+hGLZkzO4Xc0GuakT6d8mcHr/ZLe1mNbnip7uP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vkabc.me; spf=pass smtp.mailfrom=vkabc.me; dkim=fail (2048-bit key) header.d=vkabc.me header.i=@vkabc.me header.b=Bd0SiqHe reason="signature verification failed"; arc=none smtp.client-ip=136.175.108.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vkabc.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vkabc.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FyneqExk"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e0d8403257so9881025ad.1
-        for <git@vger.kernel.org>; Tue, 26 Mar 2024 04:52:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711453940; x=1712058740; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z3bBaqakSPvBZH0GwAb7B3tpoIGPmQGm5/Z+Ecp/ci8=;
-        b=FyneqExkPhKvrtNkAT6+sHWIE9r5BWEL9dyzpSDxJzN/qZQK7IVSu+vpZKNHIbOHfR
-         VVL+uFkO9kZFxgX+I9eckQ1eOpUhyvBZJWDyXJfn/Kg/eDhsgMS7AuSTi9bt3n3TmwjL
-         xXumVO4VQc0XPowCrdFDsskEWTQDj/3HQHAVomn+Lvenq3dvXIwbtI/LhoLM69pBfOed
-         YSkW8rYh2xaJQdT/ndeEpfNsJ9+Gg4u3MCKtRnibjK39WJjacLksS4X8kWLmHgki189J
-         mFn1f1xzOhPNIMtjMtkcsNQevmO+oHOL+PS1YfnLTXJFv4D/2OoQZU30AYpwuEHneKXK
-         wJmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711453940; x=1712058740;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z3bBaqakSPvBZH0GwAb7B3tpoIGPmQGm5/Z+Ecp/ci8=;
-        b=Ls4N/o+6hHgzmgdYf8SS16ecv7WBACjBaVQ+tPwm2+Fm6IOiujYvUMIpsI7IrtKwMp
-         6Jm6P9aN2WvuKxjog4UA+Xt3TYeK/8PdjJ2fy/xeXICUN9hl6pAWFxNWxK67kv8JR8Zf
-         f5iWmqPoV6/4xeBjs9unvOq2O4O4BT+iIFAjh6l7bdtYAvatyqkvjHvRAGGrb7UaLt91
-         aaRwcG0je9q799lVDlmEuYgM0UqiV/qridS8FycJjXpPv9j1pqezoIBvrOteGmCJrw1A
-         y5fO0ArQQgVgVYYSI/ErZdb7OcDgof3BIrxdPaG6aFJQfmtJoEPoC/yEqVYcOPdbpmN+
-         ssOw==
-X-Gm-Message-State: AOJu0Yy/zYzl1lDpMers8a6nGTMyFkHN5ET2c8DRfHr/8vJ/ocyOBpw5
-	sf8ixM6z4T3fAP86+XKnhCOh3v3/tUXS8vHAQ+1ayLPv/BTA2xQcu26knJFAD50=
-X-Google-Smtp-Source: AGHT+IGA2HORFGQeAljvHDoeuN1f1riogE2F9ljgNS3++9UYP9kMCnveRLAQzydHd/ABGnZ2lq/BUA==
-X-Received: by 2002:a17:902:e752:b0:1e0:b5d4:9f55 with SMTP id p18-20020a170902e75200b001e0b5d49f55mr7287252plf.50.1711453940084;
-        Tue, 26 Mar 2024 04:52:20 -0700 (PDT)
-Received: from ArchLinux.localdomain ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with ESMTPSA id ko12-20020a17090307cc00b001e0f2dc4165sm1173884plb.60.2024.03.26.04.52.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Mar 2024 04:52:19 -0700 (PDT)
-From: shejialuo <shejialuo@gmail.com>
-To: ps@pks.im
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [GSoC][PROPOSAL v1] Implement consistency check for refs
-Date: Tue, 26 Mar 2024 19:52:15 +0800
-Message-ID: <20240326115215.40180-1-shejialuo@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <ZgEwgNl3fug3qGG5@tanuki>
-References: <ZgEwgNl3fug3qGG5@tanuki>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=vkabc.me header.i=@vkabc.me header.b="Bd0SiqHe"
+Received: from filter006.mxroute.com ([136.175.111.2] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta169.mxroute.com (ZoneMTA) with ESMTPSA id 18e7a9e54280003bea.002
+ for <git@vger.kernel.org>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Tue, 26 Mar 2024 11:56:20 +0000
+X-Zone-Loop: 9f2bb3b3838c06eec19e18bd33702872b511fa89b054
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=vkabc.me;
+	s=x; h=Content-Transfer-Encoding:Content-Type:Message-ID:References:
+	In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=SSCmh6Pz3UrD2VxHrOufhSGHPeIBSu4wrK1T405H3Mk=; b=Bd0SiqHe/YgLHnA/fmFjypKNrs
+	AsPJFX0NMYcoqtub10FtLvu32c0LsYv6J+HR6oU/fiPdku09tx7WinLq/3/CGOpTGYtD0P6p4zutM
+	0JIG3bz8eD9OlT04S67KUm+8mZMpqgHzNZ+TRy5BvGl4dVUOlmlUbTLyBigcDTD3EXUtKtvVLw64R
+	OqvWFKEu95VYfDOkvsHoy3Oylry7dQg+4Z1S13m8cPm5csnC21ukJw/VyOJz5mTS+0KJbUTsfeW7+
+	wrGr7Xd5Pxs46uHOY6Sy+eDT+Po8caduL14sNpgyNlhR/heoTSTFnztuhou6BlSlTScrFiTtYMdJ+
+	PCDpbntw==;
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Tue, 26 Mar 2024 19:56:19 +0800
+From: vk <g@vkabc.me>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC] Microproject help
+In-Reply-To: <CAOLa=ZRrmyZ48C5r8MWioyjySWdKtLxhtDBg5F2tRsExHaR-fg@mail.gmail.com>
+References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
+ <CAOLa=ZRrmyZ48C5r8MWioyjySWdKtLxhtDBg5F2tRsExHaR-fg@mail.gmail.com>
+Message-ID: <a344deea98bdd2daa7671fae45c0bf11@vkabc.me>
+X-Sender: g@vkabc.me
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authenticated-Id: g@vkabc.me
 
-> Hum, okay. This does sound extremely taxing and I do wonder whether this
-> is going to be a sustainable mode of working for multiple months in a
-> row.
+On 2024-03-26 02:25, Karthik Nayak wrote:
+> vk <g@vkabc.me> writes:
+> 
+> Hello!
+> 
+>> Hello all,
+>> 
+>> I'm Vk and I work as a software engineer. I am interested in
+>> contributing to git repository. Apologies for the late start as I only
+>> stumbled upon GSoC recently and git project interested me as I use it
+>> everyday at work and it would be meaningful for me to contribute to 
+>> it.
+>> Even if I am not chosen, it will be great if I can start learning to
+>> contribute to git open source.
+>> 
+>> For the microproject, I have looked into the lists for 2024 and it 
+>> seems
+>> that all the projects have been taken except for `Replace a
+>> run_command*() call by direct calls to C functions`. However, it seems
+>> that the issue has been solved. The command I ran to search throughout
+>> the repo is `git grep 'run_command*('` and the search result returns
+>> run_command functions which I assume are essential.
+>> 
+> 
+> When I ran the same, I saw around 135 results. Are you saying that
+> they're all essential?
+> 
+> For e.g. In `builtin/gc.c:maintenance_task_pack_refs`, shouldn't you be
+> able to replace the `run_command`?
+> 
 
-Such a long schedule might indeed be too intense, but I think it's very
-flexible, and I can continue to improve this aspect of the work after
-GSoC.
+My bad as the example uses `run_command_v_opt` and upon further 
+inspection it seems that there might be similar situations like the 
+example that can save an external process. However, for the 
+maintenance_task_pack_refs, the command being run is `git pack-refs` 
+which is a write process unlike the example which is a simple read only 
+process of `git show-branch` to get the current commit? I will be 
+searching the codebase for similar read only `run_command` and see if I 
+can replace them.
 
+Thank you
