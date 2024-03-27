@@ -1,140 +1,127 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9698C23754
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 09:47:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926253BBD3
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 09:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711532853; cv=none; b=InD/kPFYTwsvULJ11QFic1JuS659odz1lfTgLlUboyu076BwOn22jh9/58Aly4Mc2QKDSUX6a9P2mKYZ1Oe3jbPKFKEMnHGOvy3sEyDBPP9F6h0Gw/Sf03r2qkDHutUPtYYAPLFOLiKEvjXVZ+TXHjne68vNYXreXlETRE0EVx0=
+	t=1711532924; cv=none; b=gsjtaCCpAlo6/aZmdOJfCu6WydDv9IluEr/PjYE4geDDRwEGiPj/cxUKUZe3TZVeuA/U1zDQfVt/YdwkQvy2SzRg9QhcdYkj6IiA11gfsvgy4s375t+NdRB2gOPLoODQFTlyVgT5bWxV3UKEzIGUGPaG78/XpIDqoBGCWUywANE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711532853; c=relaxed/simple;
-	bh=Balw7z2aIUUdDzmf8xw5DUy3bNUWOvyzoWmmh6qJTzg=;
+	s=arc-20240116; t=1711532924; c=relaxed/simple;
+	bh=XdUIRSZLKTDalH7eXx2JM1wYqhKls8naJBkCuguh4Wo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d5VTXsx8bcBasv96neDjlZivlB7DgztAqns332NxLXcqoEfZYAEAVTBUtz8fsaLPLEjAD6gERccr6cGirVa4iHXoCVd1ttvE/1Uy9E9d6r4IdQtu/MfK3qLD27XEfxILZvuOssWPXrXFV01gFG0tj+CB7xo3wuLbNze0u01wt6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G99UD7OC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=flpM8GxA; arc=none smtp.client-ip=66.111.4.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G99UD7OC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="flpM8GxA"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 052155C0060;
-	Wed, 27 Mar 2024 05:47:30 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Wed, 27 Mar 2024 05:47:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711532850; x=1711619250; bh=Balw7z2aIU
-	UdDzmf8xw5DUy3bNUWOvyzoWmmh6qJTzg=; b=G99UD7OCfkPOSE4tFhYot7+Vdy
-	bkDeFihmc7KT92PZZ7IbSrdlSqs3QHjprhFWqCtnz03CPwRmBNT+aIO4qH6QWcqZ
-	8aDLC7iaqPXNDfCbaJ4OYRILpGlCKYciKy7EUhDJ8QF/QNk8zjT2hXrIJMT7B1d2
-	dCU8XFq+ZCubXDUKaJCASKF8vD13nM8B4Gx5PHECK6ZAXD3yTzan3o4FOA/FzrKM
-	oTwWJxKFNnJHX4UtC2SndJRzoAa7a13PZy4BL+etPchRxqn2/3/25e/t/ZeirSrd
-	ljJ+/1LC16falVbgxVKFvIl/1MzUXTbhFY0KfPK9gMohc4/NYtYE8BAdUwTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711532850; x=1711619250; bh=Balw7z2aIUUdDzmf8xw5DUy3bNUW
-	OvyzoWmmh6qJTzg=; b=flpM8GxALw74gyOee2ZmirZvXo3B4+QAPxR/Ejb2xJHT
-	tukGK3Ox6YoQL+6EMaX8DwdaXg3oIZADJAj6qiZMkgJ5xOtn7LAfbKtJODxaAJO6
-	FlLGds0q8xLPBHHdAL5THSpqiyjb+nLH7kCh+F+zoBvqNlpWp3whec7bEeSRiwXi
-	URKEV81rqwhfw2zfP9FS7BL6YBEzrya17guhG0xRHl0/WcNkQj5CHID16YZP2LYR
-	fdggqLeLPJiNQrUrFxGU1KyGvk0quFinlbyakK5QMXr2Vugrcxo8rbzzUje9gqoq
-	LYiZlPe3Tx79pshKGE7mVZyXUatd1LbyIFEe+a15ZQ==
-X-ME-Sender: <xms:MesDZsUl_iPBi4Y8lUE3ZjdKar5vn83EQCpCG3akpFUjJalr55zKCQ>
-    <xme:MesDZgkvt5jhDxqKDHODPmXnOmNejL0BVF7rDLFKXFG3gdicolj2kyCLMDQtz6Jsh
-    4Z29l5MQ-5TUyQuQA>
-X-ME-Received: <xmr:MesDZgZ17bsUyPO-OgoPf5oSl8YL3nqRQMi_4X_zOcbYU5KtzGa2iBdiArc6IhKqTwtXNI1y06uXvsRprAPsRRxI8385y6B1VrOjbumSQHfG2A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudduhedgtdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:MesDZrWjqbVooI1fOcsWDfaw4cPJLEGOU622DN3d2u3en8xOZTGm6A>
-    <xmx:MesDZmkWb9_dRQRGo-MW3bsSJzH_9J8-I1gc0QCPgwjgtRFFO0uCog>
-    <xmx:MesDZgd9ISj40kcHs2PNNaKCKg628I8N0AIvfddqv0FaIb7oHlnNUA>
-    <xmx:MesDZoEXqPMHxsDy-NxvOFRJL37zlPLSCGLcMiBVkdNuA98_f6IzhA>
-    <xmx:MusDZojco0lCl6nS9uh6GMoysIhTqdYgRoIgW8w1cS_57p0-bepdSw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Mar 2024 05:47:28 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c761c71a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 27 Mar 2024 09:47:13 +0000 (UTC)
-Date: Wed, 27 Mar 2024 10:47:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Aishwarya Narayanan <aishnana.03@gmail.com>
-Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>
-Subject: Re: GSoC 2024 [PATCH]
-Message-ID: <ZgPrLXjB5mVXitXu@tanuki>
-References: <CAHCXyj3Now+ZrA+w+L-sQAtAMZ8REru=3uF_Y3Xdt=7CSf=pYQ@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=kp6MfhOXsPKxi5p22G0hff4NAzeagc7H+eGvZFSZ/tlUcUqla6Y9eHGNYqXXd3qJv+x10NWkPGDstwttbLrMuGNLQbhmgd5LRVg1xVH/ykPjG7W/vK5unvmp0LyOc5sJg0A6F54KrAzfDk3i14xTBHae3nCrJYh255lsm0VtgqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 23365 invoked by uid 109); 27 Mar 2024 09:48:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Mar 2024 09:48:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25273 invoked by uid 111); 27 Mar 2024 09:48:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Mar 2024 05:48:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 27 Mar 2024 05:48:40 -0400
+From: Jeff King <peff@peff.net>
+To: "Eric W. Biederman" <ebiederm@gmail.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 0/3] some transport-helper "option object-format"
+ confusion
+Message-ID: <20240327094840.GA857435@coredump.intra.peff.net>
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+ <20240320093226.GA2445531@coredump.intra.peff.net>
+ <87y1ac3kb6.fsf@gmail.froward.int.ebiederm.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="th+ETBWmkRCA2AWB"
-Content-Disposition: inline
-In-Reply-To: <CAHCXyj3Now+ZrA+w+L-sQAtAMZ8REru=3uF_Y3Xdt=7CSf=pYQ@mail.gmail.com>
-
-
---th+ETBWmkRCA2AWB
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87y1ac3kb6.fsf@gmail.froward.int.ebiederm.org>
 
-On Wed, Mar 27, 2024 at 03:05:57PM +0530, Aishwarya Narayanan wrote:
-> Dear Git Organization,
->=20
-> I hope this email finds you well. I've prepared a patch to address an
-> issue related to the handling of exit codes in our test suite
-> concerning the Microproject idea Avoid suppressing Git=E2=80=99s exit cod=
-e in
-> test scripts. The changes ensure that the exit code of the write_utf16
-> and write_utf32 functions is properly captured and not suppressed,
-> improving the reliability of our testing process.
-> I kindly request your review and any remarks or changes you may have.
-> Please accept my apologies for any mistakes or oversights. Thank you
-> for your time and attention.
+On Wed, Mar 20, 2024 at 12:05:49PM -0500, Eric W. Biederman wrote:
 
-Please not that patches are supposed to be sent as mails directly
-instead of being attached to mails. You can use e.g. git-send-email(1)
-to achieve this.
+> Your sentence has what I was asking for backwards.  It would be healthy
+> if the code fails when "object-format" has been advertised by the
+> remote, requested by the transport-helper, and the remote does not send
+> ":object-format".
 
-I would recommend to have a look "Documentation/MyFirstContribution.txt"
-and "Documentation/SubmittingPatches". These resources should get you a
-better picture of how a typical workflow would look like here.
+Ah, I see. That is probably reasonable, under the assumption that nobody
+would have implemented "object-format" so far and _not_ sent it. It
+might be worth clarifying the documentation at the same time.
 
-Thanks!
+> The implementation should just be:
+> 
+> diff --git a/transport-helper.c b/transport-helper.c
+> index b660b7942f9f..e648f136287d 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -1206,6 +1206,7 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+>  	struct ref **tail = &ret;
+>  	struct ref *posn;
+>  	struct strbuf buf = STRBUF_INIT;
+> +	bool received_object_format = false;
+>  
+>  	data->get_refs_list_called = 1;
+>  	helper = get_helper(transport);
+> @@ -1236,9 +1236,13 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+>  					die(_("unsupported object format '%s'"),
+>  					    value);
+>  				transport->hash_algo = &hash_algos[algo];
+> +				received_object_format = true;
+>  			}
+>  			continue;
+>  		}
+> +		else if (data->object_format && !received_object_format) {
+> +			die(_("missing :object-format"));
+> +		}
+>  
+>  		eov = strchr(buf.buf, ' ');
+>  		if (!eov)
+> 
+> Am I missing something that makes a bad implementation?
 
-Patrick
+No, that seems right to me (modulo that we do not use C99 "bool" in our
+code base).
 
---th+ETBWmkRCA2AWB
-Content-Type: application/pgp-signature; name="signature.asc"
+> Hmm.  I thought gitremote-helpers.txt said the key value pairs
+> would precede everything else from a list command.
+> gitremote-helpers.txt does not mention that.  That looks like
+> a Documentation oversight.
+> 
+> However remote-curl.c in output_refs prints :object-format before
+> anything else, and transport-helper.c will malfunction if :object-format
+> is sent after any of the refs.  As transport->hash_algop is used by
+> get_oid_hex_algop is used to parse the oids of the refs.
 
------BEGIN PGP SIGNATURE-----
+Yeah, I think it is a natural consequence of "object-format", since it
+is necessary for parsing the result. And since there aren't any other
+keywords yet, we can surmise that nobody is doing the wrong thing yet.
+So now is a good time to clarify the documentation.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYD6ywACgkQVbJhu7ck
-PpQ+mA//YvPnwMaxmljnJk/PA9mD0pt0UFpHHxYk6eIDnMhUxO3aBaF71l2QMKrC
-wHqijuKfh/ncrqdnglbmTkBGLObqgFf2KL74OMITvMzaMHBW2b+qhposxKJ4Uw3T
-mODnn79mEd7QiPXUtd8Jna6hf4RWrIg5cshRvEAhsSS/IPW9mJlMakcf4KPBUn5T
-RunwB5g8zGudLNWxhG/kgGxQ91/cPARSwN0f5edZZ9NixYmgvowew3HagNTqNakD
-XDGFqECZemTBUgQyI3GarVteaEtHNd0+SSuQ4HiOywSfcW/exfioOC4BHVF6QmEB
-rtfrICrCFPvBMK+l5xqXzvg/V90v11FKmloidmAyNL1MumGfafCNi/5dH593s4k5
-8i3nepXsGSZZdcH4zwNN2od1WiLeu66EZBtPRZahnDE5LGOPsUMszr5NTUU5cMMN
-xU31QujLC1TvYR0wRlyG74eR2pU6dHOwRTv31FdLOYo2kxOhw00x/mX4iSHufBaS
-y87geazz4s/Ey40VdPZbVCQeODwALsRg046U+00mlqIba+P32VHvIm8mvlDKMtCj
-tX2jrtiIZpEXVjy0l7grEgq2SD0cgsHsUNZ3LEJEfjt/trN9xf5HcbIHANxP6Evu
-/41iQmnuCmjTzSUXuJAZCGr/b18rRpqO0cDTtGVMOJ7KmMRNZC8=
-=OHIw
------END PGP SIGNATURE-----
+I'm also not sure if we ever say explicitly in the documentation that
+the keywords start with a colon. But maybe I am just missing it.
 
---th+ETBWmkRCA2AWB--
+> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+> index ed8da428c98b..b6ca29a245f3 100644
+> --- a/Documentation/gitremote-helpers.txt
+> +++ b/Documentation/gitremote-helpers.txt
+> @@ -268,6 +268,8 @@ Support for this command is mandatory.
+>  	ref. A space-separated list of attributes follows the name;
+>  	unrecognized attributes are ignored. The list ends with a
+>  	blank line.
+> +
+> +	Keywords should precede everything else in the list.
+>  +
+>  See REF LIST ATTRIBUTES for a list of currently defined attributes.
+>  See REF LIST KEYWORDS for a list of currently defined keywords.
+> 
+> I do agree that the sanity check can be added to your series, so if you
+> would prefer I can do that.
+
+Yeah, do you want to send some patches that can go on top of mine?
+
+-Peff
