@@ -1,187 +1,272 @@
-Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CA2E541
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 13:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E37F12F5A1
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 14:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711546248; cv=none; b=KiOZNFFKYT639CANsGTPEnoedbPg5fPiB9BWmEkNDn+eBMX/Cy6s/MOs9x7plwyt7YO5ABorZ+aMWHHEhvtw6Z6C2zKg1/Hmnmc89wymld54bmrRfaal3pLPMafUCo9G6ARJ52q+ZX/BxjvIrtIItyt7CyjUukw2w+wT3oc3INs=
+	t=1711550176; cv=none; b=B3mHXIP9tVtMSBfV+HYSju1S9fK41yNxe7baq/eOHhTBFlDtQfPJEPMq6GhNfsVLKvkZTbFReN8gpI3GCaL1XKxwCTKSPd4vti6fxhYVLV7PDBp+SukgJYmNBHi7bSr45YgasU61duWBBede/EjJPfsFIGNpzA58Y9XrZ+YNc+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711546248; c=relaxed/simple;
-	bh=MwtodLNMMriBlU9ce+Dl6nfD2zESSpr3O+znfCwcO3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UXoOcBckmDd7HV8DdTKp/FGbJKZ2MoqSADF7tbAnUWJ+dFzG3A3I7vaDYynvVfs9cScIzcgl6+q98z8dFXT1b81rmxk26uDsGUGTMEkCZi+46swF9llkuH3MPXxeg7jJSoVtwEH3qLlVZz1CSR3mfVUV8wY4WXeS1ug33+LcRE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fvHF+/+r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wz5PJ0Ta; arc=none smtp.client-ip=64.147.123.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1711550176; c=relaxed/simple;
+	bh=MQnOy7fZKrGaoHTjk6KFOLFSEnGIPSiTBkx8zCrvaZk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=iP6flxDDQoA4hugE6hVbjM9F3bat3lroXLco3EsSwAOqyk2x2Y89zV58tBgZhpTW3TikANGJn3FxSWhmnDMy/bSGltUQf/DNuTU7iaEX75XxG8bwp/ghiJyqCHHTmWyH5lwt2KiEsnuN1tNY/XUiuQwxlySx1HQAAFkO+o/MbHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WSVS2vCm; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fvHF+/+r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wz5PJ0Ta"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.west.internal (Postfix) with ESMTP id AC7BF1C000A7;
-	Wed, 27 Mar 2024 09:30:43 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 27 Mar 2024 09:30:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711546243; x=1711632643; bh=MVKdoxlAmI
-	aP44t9wZ5iGNAZackLUguTFgBPpxVG8DI=; b=fvHF+/+r+nKC6/Q0HQubZDeOWx
-	nFp5KYZ7ps8H8OjAPTfN3jBfk8xQ5aUqGzX4LgcemyvwBkm4+OQr5DccTJb3JLpc
-	e0K7mq5uE56MuVBTglFB3N/23+8vKMheaUhjTNcn5hwK1gWA8mX8W1DYbAqfS/ht
-	BUA9L8yBPDVmy6Z2TZ3ARHOJD0LgrCJYN9xXhhRpUSZ1U23SoUWlT1ItsaXa4ClI
-	6HcFEThs0hRoB/FULTuUyy5PpYWbmOmh1esEn0fbzFyECQSKigRelbVqHI3vrSTA
-	lVp0BRrH5IOiOQMO+6PUHgNXPKNFkszhyMoMwCbRKp2PmzdE2pvunOScxJqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711546243; x=1711632643; bh=MVKdoxlAmIaP44t9wZ5iGNAZackL
-	UguTFgBPpxVG8DI=; b=Wz5PJ0TazuoRYCtv9aAkhG0/Vl3ODm55pYGwawCVAI0D
-	MmuRvzNtcytGyotXzf4Re2GMIlpDWj3avWN6RVR5OzDBrnLUyGYYwIoFgK15avZK
-	JbOcwiC1XZt0G8tB5l78gBaZgMlrMLgkgFNl+UiwcIDG7GZjN/g1+towTd1kHfFn
-	8b11F7zVPd6UWAcnI4Xhy8lPjPuPs/ynw0H1NMKR+Jat8bm7YjZj6O7pcm0D6IEC
-	r1v6gJdFwEXKXioBrP6MKhKWz2V1xE/SzINg9ClRfAmVXFUlMsT08tDTloTJhYIW
-	8EjldtQ+A0xR13mRe5gOhlIf4E03xR2do/TrOVnFXw==
-X-ME-Sender: <xms:gh8EZgxBy1etdQQp30YqBHlPcURi9z7-tip8y0kW9YK9TvSJm6s-gg>
-    <xme:gh8EZkSWAaXu_qeMmPsU_KM3pvjjTwDHLc7pdD3xVmJCoevx1cMrZJJBjCTfegsiu
-    YIXnSxLC6BNaZhAmg>
-X-ME-Received: <xmr:gh8EZiVrviQw5Vf7P02vJ-lnxwo5510IwlKW3Ve-R1DdpvOgrtJDVIhetL-cqY_BlTanA6VJzTCSxQqxe5ykwxYf_cHkvfLhHNTJmuaCd8Fs5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudduiedgvdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepveehtefgveetfeeufeduieffkefgledtkeettedtgeefveetvddutdefleetuddt
-    necuffhomhgrihhnpehgihhthhhusgdrihhonecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:gh8EZuhIVtoe6mDwtptSoyDnU4GJbfVd2fKj8N8ejFeHtVx5vGvpXw>
-    <xmx:gh8EZiA_YR5S3-8VACrajNVZDQ_VTviP0NjSsnmPtbskxt7i7zaQHw>
-    <xmx:gh8EZvI8hcBFESp2gpCXBlYh_InlyOZtLbwCiemks2c2MuAJU7km4g>
-    <xmx:gh8EZpDwMSt-6mc7xeU39lWIOXpZFR1pCzgEj2BkvxqbLpoHh7kY_w>
-    <xmx:gx8EZtOOqZS_I3pQxn40OWAZxRXfGQWRnL-A4AB3X2wkzn5tBkEzYpqgihA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Mar 2024 09:30:41 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 886cbcd8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 27 Mar 2024 13:30:25 +0000 (UTC)
-Date: Wed, 27 Mar 2024 14:30:37 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Aishwarya Narayanan <aishnana.03@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: GSoC 2024 [RFC PATCH]
-Message-ID: <ZgQffea0krKmZUEt@tanuki>
-References: <CAHCXyj09EKKdBOAdQ319LGY-6GbQw+HHp9u_Mbpf4C+wF6ReSw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WSVS2vCm"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d6fd3cfaa6so8664321fa.2
+        for <git@vger.kernel.org>; Wed, 27 Mar 2024 07:36:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711550172; x=1712154972; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d2wFDJoki31O9cZmZo0FBWbayI6Xv5vMqrRPkhlCgPc=;
+        b=WSVS2vCm6zqN147WQ8k4g+WC+wxLwsFcsSDQt2GJLM6YDPJQhrrjYskvH0D7pcbQny
+         4tiDMyomDeeGM1ZHke8ICet1T1qQg8a8npUJAl1LNK79N2ZeOw6hgC5jBYBFtCadvYFS
+         P2qzOQbx79SBlYNvthgUf9Y0ayR4+XU5QbofFM9iKDsK5DSVviHBzjip1N6DsznqhmlU
+         pcbyXJFAolhLiR5vtdUHD66t0Ao8r9ABDFmqJnVXH7lVZrAr67EjRDj1Dfd+nZ3OEZkI
+         T2vOQIauN972tVqSZc37xUdDLF3WkuXxQh6pYqqYtWrl+t0BrbIz8WKhnoKkiOEkEvZm
+         xUrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711550172; x=1712154972;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d2wFDJoki31O9cZmZo0FBWbayI6Xv5vMqrRPkhlCgPc=;
+        b=RAQVB9vsErk6WU3P6BDsDQbaADop0B0RvUr0ryqoicUBYLhWIaoVLCB/lesfzMaocc
+         2CsnjAIfW8zMeB8tscCa+RIcnw4jr8MgWqCo3NGoVY5hAu1aXfMGYGXYbTtRteDdMU6g
+         CBOgOW/qbBSrfnMfUelSlCbbWDQ7ules/m2z0LROMjaYdVEQxA6Mrfv78j9BWZDn+q8l
+         j8CxBRQY6oCUsPcN95LlWStrWc6o2+nbUz26aSypTF9NqxrlXVAu/HJwI6NDG100qJHX
+         FJkaJYzLGRo/KV1w1rua1teKvAsJ7Q8u3IBkau+Ff0CvUl3MryxelQ2t9fitIQOSPwM3
+         pjDg==
+X-Gm-Message-State: AOJu0Yw8MBLI9hAnt2ivtP8TBagpkidif6dT5liMw40w/MQGSlLf7VQ4
+	/lZFLcEni/l7ze41um0ZcWcJF10+HicesSO99HOBMjAuZMlimofCC+/UiI+mZZ9/r69+SopYDL2
+	r1aicQFHiTOxjt/h4pvM8w04nBcwrzcqZ
+X-Google-Smtp-Source: AGHT+IFaah1c+pZp6JY64b4yEzDB5XZTdbBXpfK7YsglQeqQ0h6apSVdaUMOkFZTXkNysBeqyCuoXOQ/Iad/1RTN7II=
+X-Received: by 2002:a2e:a7d0:0:b0:2d4:908e:4cc4 with SMTP id
+ x16-20020a2ea7d0000000b002d4908e4cc4mr211306ljp.4.1711550171670; Wed, 27 Mar
+ 2024 07:36:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qqRxyiPbaeygGqUL"
-Content-Disposition: inline
-In-Reply-To: <CAHCXyj09EKKdBOAdQ319LGY-6GbQw+HHp9u_Mbpf4C+wF6ReSw@mail.gmail.com>
-
-
---qqRxyiPbaeygGqUL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <CAN7Jk_2mMiVjXuF02S14OX6Rjq2jVjNxcUbZvTqhcz_YMnD=gg@mail.gmail.com>
+In-Reply-To: <CAN7Jk_2mMiVjXuF02S14OX6Rjq2jVjNxcUbZvTqhcz_YMnD=gg@mail.gmail.com>
+From: Sanchit Jindal <sanchit1053@gmail.com>
+Date: Wed, 27 Mar 2024 20:06:06 +0530
+Message-ID: <CAN7Jk_0hyjx39rrO1PKbEcJQXLtCYkWP7A4mCv01DZu2ffGHyw@mail.gmail.com>
+Subject: Fwd: [GSOC][Proposal] Move existing tests to a unit testing framework
+To: git@vger.kernel.org, christian.couder@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 27, 2024 at 06:34:41PM +0530, Aishwarya Narayanan wrote:
-> Dear Git Organization,
->=20
-> I hope this email finds you well. I've prepared a patch to address an
-> issue related to the handling of exit codes in our test suite. The
-> changes ensure that the exit code of the write_utf16 and write_utf32
-> functions is properly captured and not suppressed, improving the
-> reliability of our testing process.
-> Below are the details of the patch:
+Hello,
 
-The mail's subject should ideally be a short summary of what the patch
-does, whereas the commit message here should contain a description of
-what the problem is, why it is a problem and how you fix it.
+Please find my proposal for GSOC 2024 for the project "Move existing
+tests to a unit testing framework" at
+https://docs.google.com/document/d/1yWP5GFRksdQEOKtYIEXbNSVb1qlJ2szRvpTcXXV=
+vgTk/edit?usp=3Dsharing.
+I am also adding the text version for convenience.
 
-> ---
+Thank You,
+Sanchit Jindal
+--------------------
 
-Additional context like the greetings you wrote above or the trailer of
-this mail can go here, between the "---" and the diff stat. This kind of
-information should not go into the commit history because people
-wouldn't care about greetings when going through the logs, but about
-what the patch itself is about.
+Google Summer Of Code Proposal
 
->  t/t0028-working-tree-encoding.sh | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
->=20
-> diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-enco=
-ding.sh
-> index ad151a3467..f372c14bc0 100755
-> --- a/t/t0028-working-tree-encoding.sh
-> +++ b/t/t0028-working-tree-encoding.sh
-> @@ -19,10 +19,13 @@ test_expect_success 'setup test files' '
->   echo "*.utf16 text working-tree-encoding=3Dutf-16" >.gitattributes &&
->   echo "*.utf16lebom text working-tree-encoding=3DUTF-16LE-BOM"
-> >>.gitattributes &&
->   printf "$text" >test.utf8.raw &&
-> - printf "$text" | write_utf16 >test.utf16.raw &&
-> - printf "$text" | write_utf32 >test.utf32.raw &&
-> - printf "\377\376"                         >test.utf16lebom.raw &&
-> - printf "$text" | iconv -f UTF-8 -t UTF-16LE >>test.utf16lebom.raw &&
-> + test_utf16_raw=3D$(printf "$text" | write_utf16) &&
-> + test_utf32_raw=3D$(printf "$text" | write_utf32) &&
-> + test_utf16lebom_raw=3D$(printf "\377\376"; printf "$text" | iconv -f
-> UTF-8 -t UTF-16LE) &&
-> + echo "$test_utf16_raw" > test.utf16.raw &&
-> + echo "$test_utf32_raw" > test.utf32.raw &&
-> + echo "$test_utf16lebom_raw" > test.utf16lebom.raw &&
+GIT (Move existing tests to a unit testing framework)
 
-On the technical side: I don't think that these commands actually need
-to be converted. As the microproject site [1] says, pipes may discard
-the left-hand side of the pipe, not the right-hand side. And given that
-the left-hand side is in all cases only using `printf` I rather doubt
-that this would ever really fail.
+### Personal Information
 
-So ultimately, we care more about converting sites where the left-hand
-side is a Git command itself. "t2104-update-index-skip-worktree.sh" for
-example has several cases where Git commands are on the left-hand side
-and that could be converted.
+Name:          Sanchit Jindal
+Email:         sanchit1053@gmail.com
+Qualification: B.Tech in Computer Science and Engineering
 
-Patrick
 
-[1]: https://git.github.io/SoC-2024-Microprojects/
+Greetings,
 
->   # Line ending tests
->   printf "one\ntwo\nthree\n" >lf.utf8.raw &&
-> --=20
->=20
-> I kindly request your review and any remarks or changes you may have.
-> Please accept my apologies for any mistakes or oversights.
->=20
-> Thank you for your time and attention.
->=20
-> Best regards, Aishwarya Narayanan
+My name is Sanchit Jindal, currently pursuing my B.E. in Computer
+Science at the Indian Institute of Technology, Bombay, I will complete
+my degree in May 2024. I am writing to put forward my proposal for the
+Git Project to transition the unit tests to the new Unit Testing
+Framework.
 
---qqRxyiPbaeygGqUL
-Content-Type: application/pgp-signature; name="signature.asc"
+You can find my Resume at
+https://www.linkedin.com/in/sanchit-jindal-0a953621a/ in the featured
+section
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYEH3wACgkQVbJhu7ck
-PpQO3A/+PmVj0558JFeFVUUjD/+rmhu75Fw5Nq+PgrGh2XuI5fJI2dDIWFCiGvGU
-j1qIXqf4ll8wxXU7w3DruODDXF56oZpCSi4KXZnD/I3J//SJL2/yJ4baVHiP4ZXt
-8rSZ5n8E4KmqgvbGskPewQNRbX6v3ML0iIGI9MyixXGjbAPtWNOOtBwCBwnKdD1i
-KbYGv0hIUIyyjD5z4Tbh6l7rg12VYKN2BgyyKrzji30uXYWYD5Y0M4PK7w0cHCf8
-efdVb1QetGyXeXIHrMlH0/dNhOyxPpimY22NOzvmwf7RVLMSd6YTHhreXsqEXyPc
-3iWXte78/YkTUij5GU+zJ9jBmqB0tUv2WAZGs5Jy6tqbJxr6Uj5cRqFlYcoaExpy
-ById6u05kfa1Bq8xM3hH5WURMtw8ia8e+ddEZwmfhioBuSrLHceVTsU3crVQxVW8
-A+V94FFN4rmz3L8MUC+CsVZZHdos7xyRLU1KeOmEJorzWEJiB5Om6qUiFjSrv+gj
-fbdchKpzT3b83jDkhj3mpfphXlxJcg+qy2rfBfhamVXXrjWJ3te5BMqaotNM+3gU
-ixvQTjHvPr6uJ+PaAyNuVGpxdmQ/fH/MV+lE00K1DJuVB8V8LHMf5Hvs3EciIkpG
-nYeeXjw/ZZDUJIR/GQmgMG+dIaDUAIuc1xZhDukL4uikQFfmtC4=
-=1EWz
------END PGP SIGNATURE-----
+Throughout my academic journey and internships, I've gained valuable
+experience across diverse domains, ranging from machine learning to
+fundamental system components like compilers and operating systems.
+This breadth of exposure has honed my ability to swiftly grasp new
+concepts and adapt to different codebases. Proficient in both C and
+C++, I am well-equipped to contribute effectively to the project.
 
---qqRxyiPbaeygGqUL--
+For this GSOC project, I aspire to make meaningful contributions to
+the open-source community. My interest in software development drives
+me to create solutions that will offer utility to others.
+
+
+### Overview
+
+Proposed Abstract
+Git has a lot of test cases that need to be migrated to use a new unit
+testing framework. This typically involves moving code from both:
+* a =E2=80=9Ct/helper/test-*.c=E2=80=9D test helper in C, and
+* a =E2=80=9Ct/*.sh=E2=80=9D test script in shell that invokes the test hel=
+per
+
+
+over to a single =E2=80=9Ct/unit-tests/t-*.c=E2=80=9D in C using the unit t=
+esting framework.
+
+
+### Details
+
+The Project entails porting the current testing framework (which is a
+collection of helper files written in c that provide various
+utilities, and various shell scripts) to using a new Unit-Testing
+Library. The shell scripts in the original code base setup the
+environment and , using the helper functions, test the functionalities
+provided by git. The new framework utilises the test-lib library that
+will combine the functionality of both the helper functions and the
+shell scripts into one unit-test.
+Advantages of this approach
+* Unit Tests are a great way to check any program and to test all
+possible corner cases and functions
+* Using this new testing framework will provide a more modular
+approach to unit testing, allowing to create more extensive tests, and
+to provide better debugging features. Such as better debug Messages or
+a better CLI to choose and run tests.
+* The tests will also improve the runtime as instead of running
+multiple process (with each use of shell commands), the program can
+compile and run a single process
+* The approach will also future proof the unit testing as having a c
+library will provide a better base than shell scripts to test
+libraries and other internal features
+
+
+### Basic Structure of the Changes
+
+* For each file in the helper directory I will create a corresponding
+unit-test file. (Some files which are being used by multiple test can
+be ported later)
+* Each test in the script will be corresponding to a function that
+will be called in the format
+
+'''
+TEST(funtion_name(), =E2=80=9CSUCCESS MESSAGE=E2=80=9D);
+'''
+
+* The function body will contain the main implementation of the test
+corresponding to the c file ( The helper function will ideally be the
+same with no or minimal changes just to allow it to be called as
+required )
+* Where the assert usually given at the end of the test will be made
+using the utility functions such as check_int, check_str and others,
+(or creating more function as they are required)
+* The Make files will be updated to remove the use of shell script
+with compiling and running the new c programs
+
+### Previous Contributions
+
+I have worked on the micro-project
+Use test_path_is_* functions in test scripts
+
+Thread Link: https://lore.kernel.org/git/b8d0620d4104106210ecf6a34ada591adf=
+01cff8.1711049963.git.gitgitgadget@gmail.com/
+Status: Open
+
+I had some difficulties in understanding the usage of gitgitGadget and
+git send-email which are being employed as the Pull request
+alternatives. Having tried gitgitGadget I am confident that I will be
+able to utilise it hereafter. I am having some trouble using git
+send-email with the network at my institute but I am optimistic that I
+will be able to use it after the completion of my degree.
+
+With the guidance of Eric Sunshine and Junio C Hamano, I have iterated
+through different versions of the pull request, and familiarised
+myself with the git commit pattern and formalities
+
+
+### Deliverables
+
+The plan is to port the helper functions from helper directory to the
+unit-test directory along with the test defined in the shell scripts.
+Some of the helper tools which have a more basic functionality and are
+being used by multiple test scripts can be left untouched.
+As a stretch goal I will try to port the shell scripts to the new
+testing interface creating new functions for the library as required
+I also plan to keep documenting all the changes made and to keep in
+constant contact with the mentors regarding any bugs or reviews
+regarding the code.
+
+
+### Availability
+
+I am expecting to be free from my academic responsibilities by 4th
+May. I have no further commitments for the summer and will be able to
+provide about 40-50 hours of work per week. I am confident that I
+should be able to complete about 2-3 files each week depending on the
+files.
+
+
+Related Work
+The project has been worked on by Achu Luma for the Outreachy Internship
+Test-ctype:
+https://lore.kernel.org/git/20240112102743.1440-1-ach.lumap@gmail.com/#t
+Test-advise:
+https://lore.kernel.org/git/20240112102122.1422-1-ach.lumap@gmail.com/
+Test-data:
+https://lore.kernel.org/git/20240205162506.1835-2-ach.lumap@gmail.com/
+Test-hash:
+https://lore.kernel.org/git/20240229054004.3807-2-ach.lumap@gmail.com/
+Test-strcmp-offset:
+https://lore.kernel.org/git/20240310144819.4379-1-ach.lumap@gmail.com/
+
+
+Another testcase has also been handled by Ghanshyam Thakkar
+Test=E2=80=93oid-array:
+https://lore.kernel.org/git/20240223193257.9222-1-shyamthakkar001@gmail.com=
+/
+
+
+
+
+Timeline (Tentative)
+
+Community Bonding
+(1 May- 26 May)
+Be in contact with mentors and figure out the best way to migrate the
+test-cases, Familiarise myself with the library and previous work done
+during the outreachy program.
+
+Phase I
+(27 May - 11 July)
+Begin tackling the harder or longer testcases that will require more
+knowledge of the implementation
+
+Phase II
+(12 July - 18 Aug)
+Keep working on the testcases following the mentors feedback
+
+Final Week
+(19 Aug - 26 Aug)
+Finish up the remaining testcases, fixing any bugs that may be
+discovered in the earlier implementations
+
+### Acknowledgement
+I would like to thank Eric Sunshine and Junio C Hamano for helping me
+with the microproject and for the guidance on the gitgitGadget and git
+send-email features, And also helping me get acquainted with the git
+PR guidelines.
+
+Regards
+Sanchit Jindal
