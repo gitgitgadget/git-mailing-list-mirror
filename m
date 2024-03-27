@@ -1,153 +1,82 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922AA13AD39
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 13:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD17712FB2D
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 13:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711545869; cv=none; b=Y2U5v9uuT5pIfp1a/vd4II2UPUnp4QEsRQm2iKs+AAA53gILx+03nB7O2qBfF4Yvl9nAoHiH9pwpDKo7B392NPo71+9UMq5M5bD8eZ0rGw9JDIeFwfcp+hIsUMR25pmROkvH8A5uayqjeDr19ZWV28+C1JqeuEFkdfyJ9KmMHjY=
+	t=1711546158; cv=none; b=B0+0rS2zH7laM9IvrKhPk2CsCweZdSSSve8KcvOSK7HsA8fKUYU5U00Mcx/52xXgsEhl9VoSGhwzrenuHoZEG23mTeBB+6ObJS3d1bwu1VIyUWEEIWXr3yxbino519bRygVwIjK+tUXeRvsP1lXIB4dZwJuJpklw/WxH/ksBQ98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711545869; c=relaxed/simple;
-	bh=3V/FdoGwV3ZfVXKZOVhkxgN0o5Vnckx2okUJ6q14khA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qjoXi23xCj6Eu7KS9TmFL/rlufoicagXqglntvGKZ9fkPSpizFxWzwKJGvymKoGIFkUJPbvREKUKzm3J3gbrFUpzRt0TrO7OXEEla45258mUyTvwcuX9U4PnK5o4FgYdCr/4fEeJqzdGTbkk9Itp5juWFpCG6YmBRuOEZjzSq94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cgA9fGs1; arc=none smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711546158; c=relaxed/simple;
+	bh=Xs3PLQMmhUvDw+3ohxffmkh8rOnqqgPYGKIjJe/Vlk8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cYwEf8tHFZRSz64I/MUbkCukfzRUq/EQjMLMfPGGIEfIgarPejsjAw3Ph3g//4MEauRwt/Zehx6XBGM0LQlD0TFjBtyRPycYchoYFZep9iZG+5G72Fmz5bwGH2fGNtjALCLvNwexWEtIqA2VXGZMU2BW13jzGG3EZv7Bx37wkys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qx8sCoxw; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cgA9fGs1"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3c3d3710018so1610741b6e.0
-        for <git@vger.kernel.org>; Wed, 27 Mar 2024 06:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711545866; x=1712150666; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MVfVALANXFK8fnKGza0TDs9ff1FWuvZQe9MLetnWvHI=;
-        b=cgA9fGs1hJbq+CIBoXFeak1PpADTFdZdFq39svgbOdgG5S+fsgJoCwcQT6i8ZSnrBF
-         JgZ4yPEDnWq/g5MhQY/IrmV8O3QH+XccU9iwfYggM/QSlh3ONOQsNIBL6uJYoASBWI5V
-         JmFXxBdDBj54FY/DXx1qCPciR0kxl9Ty/s6UvmOSLdfXuB1QJuUhpi7Mr131daH+l/34
-         8bTq7oDN1o6Pz5FGLYxpw0oM/TTkeBqHFv8v7m5YcEc0xcTNkfKx59JczdR/jP/IZ3id
-         FuLpiVaAH8r7+D0gObjFM0YMQpvmEHIp9MkISYie9d1HtGxPcAWH7Cdnh7XST49afHnY
-         V7qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711545866; x=1712150666;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MVfVALANXFK8fnKGza0TDs9ff1FWuvZQe9MLetnWvHI=;
-        b=DDgFQe5RdiRags8mkCt4oddDaEmirpnAnp+7rKSCacueZct5RXzTodnd9dWO+dvuJL
-         ZNNL21CiGAXleostjgeIsMDAAXmNUamarxHGvCUOXO2RI0KUmdWaUzzEHggfiQnkQHPn
-         lZIuCfgoRYWc5stJ2Rz2llmMuOVHVpdFFQ9Po/23eS9jRtNSyklEv4L44RqXjGg1v5Bx
-         TqPI84t7JyBqWKmTZYHm1+1oQIrKVE0MR0WosaCxGbulG4afK4HvJtB3DAmmF/LH6AgK
-         LI5Eve3+wUgLxsmbSpBsZ+2VwC6ZDMcUIVVpIDsAMS0n/g8ENzxR0hsVKARCQCdsNk3D
-         KcWw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQRb49j2HgSz5q8mcHjHYvO7hPTokCKGtVpnvSB7hqOPmOcMLYcBX2WmZNJqz+dVpW87fruzHTnpm9QhAJ0OwAmG9w
-X-Gm-Message-State: AOJu0YxJOGAQxh7r78z42zmZ+p0/32Dg3kEVk9ET2Z2KrW0IZX1jl+I2
-	sx/rn0tjGo8GAk75Hiy5tCV1AFfYaveUW1VnnyUbtL3vRgQuDDeu5YU7ghpdsquaxi472Nsk8wU
-	fu/TO/yBYEkJMRKsfoSvz5FzNJAkcal4Y270=
-X-Google-Smtp-Source: AGHT+IFMDn5LRyf6VPOBv1nYHrvESG+iLEpiIhSNyHuoMHETGfcLMtfYcXAQNuQ1dE3wHzc0wo63vTzLXqGvWV29nak=
-X-Received: by 2002:a05:6870:160d:b0:22a:6ad4:5cb with SMTP id
- b13-20020a056870160d00b0022a6ad405cbmr4410375oae.7.1711545865109; Wed, 27 Mar
- 2024 06:24:25 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 27 Mar 2024 06:24:23 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <def7008452303f71c1fa469609bc199c629a19ec.1711060820.git.gitgitgadget@gmail.com>
-References: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
- <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com> <def7008452303f71c1fa469609bc199c629a19ec.1711060820.git.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qx8sCoxw"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 62D171C818E;
+	Wed, 27 Mar 2024 09:29:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Xs3PLQMmhUvDw+3ohxffmkh8rOnqqgPYGKIjJe
+	/Vlk8=; b=qx8sCoxwSxboMADxDuSc3+nGRL+oKXy/l1jgNgf55+2+qQO/QjhqeL
+	6ihWJfVuq0Jk7rAf88jU4anSDvJPmTER4fE+/+lsQMpwD2HkMjeGGGWQFExY7S/d
+	nNdJ1hLJwnf+4XGa6qrtxXBsUt96kyuyr1rD0K5kOWa8H+EjhHnxI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ACE61C818D;
+	Wed, 27 Mar 2024 09:29:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BCAD91C818C;
+	Wed, 27 Mar 2024 09:29:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] RFC: add MAINTAINERS file
+In-Reply-To: <owly7cho1eh4.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Tue, 26 Mar 2024 21:32:55 -0700")
+References: <pull.1694.git.git.1711164460562.gitgitgadget@gmail.com>
+	<xmqqsf0gvjrg.fsf@gitster.g> <owly7cho1eh4.fsf@fine.c.googlers.com>
+Date: Wed, 27 Mar 2024 06:29:13 -0700
+Message-ID: <xmqq4jcr6bx2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 27 Mar 2024 06:24:23 -0700
-Message-ID: <CAOLa=ZQFiBKWs1qT=MyJhBKgn8MJBL-5G6X7EjeXkKwNOaCC4w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] reftable/stack: use geometric table compaction
-To: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000004e98300614a453f4"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 013BA6FC-EC3E-11EE-B941-25B3960A682E-77302942!pb-smtp2.pobox.com
 
---0000000000004e98300614a453f4
-Content-Type: text/plain; charset="UTF-8"
+Linus Arver <linusa@google.com> writes:
 
-"Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> I realize that such an idea is beyond the scope of a simple MAINTAINERS
+> (or similar) file that's checked into the Git code repo, but I think
+> it's worth stating as a thought experiment.
 
-> From: Justin Tobler <jltobler@gmail.com>
->
-> To reduce the number of on-disk reftables, compaction is performed.
-> Contiguous tables with the same binary log value of size are grouped
-> into segments. The segment that has both the lowest binary log value and
-> contains more than one table is set as the starting point when
-> identifying the compaction segment.
->
-> Since segments containing a single table are not initially considered
-> for compaction, if the table appended to the list does not match the
-> previous table log value, no compaction occurs for the new table. It is
-> therefore possible for unbounded growth of the table list. This can be
-> demonstrated by repeating the following sequence:
->
+As we already have agreed that neither of us care the exact format
+of the file (yet), regardless of how a contributor, who is about to
+send a patch, will find an area "maintainer" to help the patch along
+the process, it is far more important to discuss and decide what
+responsibilities and authorities are expected of these maintainers.
 
-Nit: A numerical example would really help make this simpler to understand.
+The development community has been fairly loosely organized so far,
+but I'd like to see responsibility and authority spread a bit more
+widely yet still not too thinly to compromise the project integrity.
 
-> +	/*
-> +	 * Find the ending table of the compaction segment needed to restore the
-> +	 * geometric sequence.
-> +	 *
-> +	 * To do so, we iterate backwards starting from the most recent table
-> +	 * until a valid segment end is found. If the preceding table is smaller
-> +	 * than the current table multiplied by the geometric factor (2), the
-> +	 * current table is set as the compaction segment end.
-> +	 *
-> +	 * Tables after the ending point are not added to the byte count because
-> +	 * they are already valid members of the geometric sequence. Due to the
-> +	 * properties of a geometric sequence, it is not possible for the sum of
-> +	 * these tables to exceed the value of the ending point table.
-> +	 */
-> +	for (i = n - 1; i > 0; i--) {
-> +		if (sizes[i - 1] < sizes[i] * 2) {
-> +			seg.end = i + 1;
-> +			bytes = sizes[i];
->  			break;
-> +		}
-> +	}
-> +
-> +	/*
-> +	 * Find the starting table of the compaction segment by iterating
-> +	 * through the remaining tables and keeping track of the accumulated
-> +	 * size of all tables seen from the segment end table.
-> +	 *
+> The overall point I want to make is that we need to be
+> extra-thankful to those who sign up to say "yes, I can review
+> patches in areas X, Y, Z" and recognize (in a very official way)
+> their generosity in contributing back to this project.
 
-Nit: we need the accumulated sum because the tables from the end of the
-segment will be recursively merged backwards. This might be worthwhile
-to add here.
+Yup.
 
-
->  static void test_suggest_compaction_segment(void)
->  {
-> -	uint64_t sizes[] = { 128, 64, 17, 16, 9, 9, 9, 16, 16 };
-> +	uint64_t sizes[] = { 512, 64, 17, 16, 9, 9, 9, 16, 2, 16 };
->  	/* .................0    1    2  3   4  5  6 */
-
-Nit: since we're here, maybe worthwhile cleaning up this comment. Not
-sure what it actually is for.
-
---0000000000004e98300614a453f4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5f0513d033a99833_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZRUhnWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOFRKQy80Z2szSm5IM3RvWFVpNjI4ZCtldXFLZEVzUwpHaTVwUG11NU9l
-L0FzVS9KOHJRMW1pOWIya1EydFdoUU9RN0lLYVR3SjFxWWFZaU9BZHhXZ3RKb29wbjEyOG8xCmxH
-Q1JQaDBCbXdIWTd1VVlYSEtJMWZrbTVrWXRaWWpMYjVxZWN0eVh0NDI0Y0dtZ2x0bFBIa1pBUXZ3
-blI2MjMKamRXckk2Q3llUTVHOWdJNlE1WVhRamN5aGxyMVFNRCtySkhIMmlweThNemRPdnlKV0x0
-OXFST090bGY0Rm9OeApsZ1QySnJuNDQ0R1MxS3F2djdFL1J3eWx6YkJqc0VwU1VyZHB3dnhmRy96
-bHdqUEhMWCthcktVNnlqaVZYTzAvCnRQV01qUUZNWGRpeURvb0o3NG8zWlkvUU8wUERrYWpnci93
-emZ2WXFhc0c3bnpCcnJXK2c5RlAxWDZvS1ZYTnoKaW9nRng0RkJERG45cXRTL3h3S2xlTXJyZUhH
-M2RncXFOUkxjc0x2cWNGWmZMRm1ZbUY2bjR2NkpPSENSZC9jUAo0WDBmUGJzVytBSG9ickZ5ZFcy
-NHNtRnhHTnBjdXlUNEc1cmR3VDFJNEFlNmV3eGh6b2VnMWh6WlBXcXNEcWkzCkhyQ0RpSmwzYWt6
-Y2J2WWlXWUx4T0R2Yk1oaDltS2FXbnJ4SDlFWT0KPTFwUEYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004e98300614a453f4--
