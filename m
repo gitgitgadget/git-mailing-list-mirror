@@ -1,111 +1,89 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15CB42A91
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 16:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3823130497
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 16:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711556080; cv=none; b=bBiXSdROOcL/3BTaQUrvkSLYq92AySsuxsWkkZ03z4qwZiPrALlrxYfm53lu1+w07W1+VoKeyM4bnKQ/vf4T2nKSZb91UObv/hKNxfvjUzqWb1Y96CQgfQrILm1FYIaKvRILrFIcqbzouyu/WgZ9mI0Bu6RB0MJWEt7hyGhWzOo=
+	t=1711556443; cv=none; b=isKd0fQ91AcQvxfaiYdteHt4zKUYlpW6aKu9QnW5Xv2+zcAEogwFQGqukeGH57ehLSotJgKnW89xBBhj/gs2RECXxWwUAD3prglnhD9b6bC2YvRQLuqTu7Llsp1x7/fmn10k70gvKcw22MkIvHW+noRE+0jDd+21JLgBI7RoY4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711556080; c=relaxed/simple;
-	bh=GuA4Yxy5BLxopCUeK0NTA7Is/afu0mSE0dhDft2ypnA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kWf33/O6MHx9vBZVUPsl4I7Tqzr6OPLG5IX8aN5XqAMTZntSV3fkvTchpHaPMRTp7tJ7X5uePkz4CY5w1az7ltB3CIrHeZhr2PTiacrek4+2SXxhx4oIAhblrOz4GkAd5oLZSTA9AEqx5EDcSDDDkyKg7czG8LWJEYPe5/Gz+JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=esCAL0L2; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711556443; c=relaxed/simple;
+	bh=KKVqSoY0oU3Tfji0JWtbiwgheigXSd7q65OVK9ZsueA=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=UwWnFdmmCbZbz4VEYGTjqPulyeYMEDaoJ50FDBvXhxUpbSkF98Mv4rpbcYH3e1Dbo/V67Flir8L2InQyjiqrHy1MNat7lx95CH5P5ER+1d6lq0JvdsyTa+g1vmNuL14Z0Z5LzHVjO4SsH1unzhoA4sZ1Aeo5RUUXm1mwaLWDvok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=SyCw3GFy; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esCAL0L2"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-414978a4a64so2269405e9.2
-        for <git@vger.kernel.org>; Wed, 27 Mar 2024 09:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711556077; x=1712160877; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yA7lzhplfYzKoy5ceT7syJLTzVwz3jS4LAYXQFgwBWk=;
-        b=esCAL0L2xLMcXK/rv23L/LU8bnEe24GTXoRScOdW0gZv7AjXYIuFN1UZBDL22zKM72
-         C4rKy1jzrf+w464flbPgeyt6dMTDbqMZPZcejqIGQHSvF6iHQJgsCWocAS8EKmNTDYeC
-         fhgI920dwmisFaYK3zUKNyKz+O4b++8pB7RTR9bwJ5qx6ji13THJ3p/TmODNH3zdCUZs
-         qhgo2QfPAVH58mxAQU2DNxmG+erpB3T1P4By8S7OkXYRya2p9XYETo/QYAfMCCXQ5u7A
-         tOlzL8DQZBDQUc/HiJgmLH0XbGemjG7scm4lt57DcY9NcxbKAp37LlU4QWQUtXAEGoFm
-         CcEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711556077; x=1712160877;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yA7lzhplfYzKoy5ceT7syJLTzVwz3jS4LAYXQFgwBWk=;
-        b=GUpZxQPuCia1bL5fJ8+PqvVzHcIuFqK/3Uf4wDJw6ruqMj3kQlWmdUc/EGnFF/k2FV
-         WsYGzEdoDTKcL9gNvt86HX3B4T6k0M3eItO3GRRqnv1pQ5bS5UHBNRbCeILRUBSoIt2P
-         zWP+rJST50/0KSVuRPh+1e4fMsKJoWeyiNJd6iZGKKEczEnYm6j9uHQsspxvfyQ+NNPR
-         DnaOHK6f3FXuBa+2cXk7pEYS7hd0y73mUNoCmixs938md2jnGKB2y8qQIt95nyVTJvMQ
-         0XMtx3lnUd6eBhPSttKVWtVTP7P5MA+Q+rVc1JRpqlT+JanBVgtFInWl9hi+9eLfnGVA
-         7fCg==
-X-Forwarded-Encrypted: i=1; AJvYcCWCJc6swKNvu8QQYbmwBWL2gC4+asIDaIZAldbdehn77SJiNInKLWvOc3V4UKXLCjCRH3LHP30TdIdq0f0zqkgo974+
-X-Gm-Message-State: AOJu0Ywo1lnknZEmDLpAtUuJ00ce1PX9h4x8wYSEIV6blXtp+jt+/GZ5
-	7QJa31HXI1GPogT2UTZOh+e3OCdSME13H7uWsM1iVfL7l7NWPh11
-X-Google-Smtp-Source: AGHT+IES0G5GkG4jluICNP3kBdB3sX4v5OFoEUc4RTn6iDE/lAs2YmF4zEYar3gUXz5jzKST2jxPcg==
-X-Received: by 2002:a05:600c:3c99:b0:414:88a2:fb7b with SMTP id bg25-20020a05600c3c9900b0041488a2fb7bmr354545wmb.11.1711556077175;
-        Wed, 27 Mar 2024 09:14:37 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id m28-20020a05600c3b1c00b00414688af147sm2567655wms.20.2024.03.27.09.14.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 09:14:36 -0700 (PDT)
-Message-ID: <c1aa4948-ef2b-470e-896a-1e7ea35d11cc@gmail.com>
-Date: Wed, 27 Mar 2024 16:14:36 +0000
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="SyCw3GFy"
+Received: from [IPv6:::1] (2a02-8440-3309-f888-694a-b4fa-82bb-551a.rev.sfr.net [IPv6:2a02:8440:3309:f888:694a:b4fa:82bb:551a])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id A4AD66039B;
+	Wed, 27 Mar 2024 17:20:29 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1711556430;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KKVqSoY0oU3Tfji0JWtbiwgheigXSd7q65OVK9ZsueA=;
+	b=SyCw3GFygaHNbFjywrFbKBH0OAofa7eyPVS26xvZGkdZvDKpw9cBeQTREqn9hQ/06pbdm/
+	JEOROBssYdhaPYJrB5xz3CbtIQ0m5LOmRcvZV64B0Qdq0wx5vhUkHVXJvYVplzjchakNAU
+	oU0WK0D7RBjthdqIUQO1yB7sQHu9IfkwS2LzerIoP+jYKuQUhqlUQ67NtoX+r5WaYWGo11
+	7B/jbQMRarqxzTJACrsKYZQ3ENIDNF9cOrbIPoLeIxF0QFU9zn4uFDqYsLv4fSpRk1HsdX
+	o2+Uc0Q/Q8gGCpyPv4ayDWX7DCtBsXDijms3fYpqTYf30TvK2fc3ObCDEVFzjw==
+Date: Wed, 27 Mar 2024 17:20:27 +0100
+From: Max Gautier <mg@max.gautier.name>
+To: phillip.wood@dunelm.org.uk, Phillip Wood <phillip.wood123@gmail.com>
+CC: git@vger.kernel.org, =?ISO-8859-1?Q?L=E9na=EFc_Huard?= <lenaic@lhuard.fr>,
+ Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/6] maintenance: cleanup $XDG_CONFIG_HOME/systemd/user
+User-Agent: K-9 Mail for Android
+In-Reply-To: <cd7bc865-4a01-46f6-8d68-24f02fdabcb9@gmail.com>
+References: <20240322221327.12204-1-mg@max.gautier.name> <20240322221327.12204-5-mg@max.gautier.name> <Zf636bsHs9woXRAS@framework> <1cce271f-c3df-432b-94ff-bf7b11c6924d@gmail.com> <ZgE3mHsPfKbuQLQP@framework> <cd7bc865-4a01-46f6-8d68-24f02fdabcb9@gmail.com>
+Message-ID: <9426FFE4-09FE-4918-92A7-DE22648962D0@max.gautier.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/2] improve interactive-patch
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
- <6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
- <59f19783-a663-449d-a1ef-3a9ebc43cc59@gmail.com> <xmqq5xx9dn6q.fsf@gitster.g>
- <8a05d7f7-6d94-4228-9507-d3af44f100e7@gmail.com> <xmqqttkr3ckz.fsf@gitster.g>
-In-Reply-To: <xmqqttkr3ckz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 27/03/2024 15:43, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> ... My
->> reasoning was that 'p' does not do anything useful for the user, if
->> they press it they end up with exactly the same content being printed
->> to the screen ...
-> 
-> Actually I do not agree that it necessarily is useless that the same
-> content is shown.  Especially since we do not page, it is plausible
-> for a user, who saw a huge hunk, to want to tweak terminal setting
-> and raise scrollbuffer size (which may be set to 0 for usual
-> sessions, like me), and say "please show it again".  Or even in a
-> more primitive environment, just say "please show it again" and
-> immediately type \C-s to stop while the early part of the hunk is
-> shown ;-).
+Le 25 mars 2024 17:39:23 GMT+01:00, Phillip Wood <phillip=2Ewood123@gmail=
+=2Ecom> a =C3=A9crit=C2=A0:
+>Hi Max
+>
+>On 25/03/2024 08:36, Max Gautier wrote:
+>> On Sun, Mar 24, 2024 at 03:45:45PM +0000, Phillip Wood wrote:
+>>> Hi Max
+>>>=20
+>>> On 23/03/2024 11:07, Max Gautier wrote:
+>>>> On Fri, Mar 22, 2024 at 11:11:09PM +0100, Max Gautier wrote:
+>>>>> +/*
+>>>>> + * TODO: in the future (~2026 ?) remove this cleanup code
+>>>>> + */
+>>>=20
+>>> That is rather optimistic - users only run "git maintenance start" onc=
+e so
+>>> any unit files that have been written in the past will exist well beyo=
+nd
+>>> 2026=2E
+>>=20
+>> In that case, should we hook the cleanup (in it's final form) in more
+>> place ? `git maintenance register` for instance ?
+>
+>I'm not sure if that is needed if we leave the code to delete the unit fi=
+les in place=2E
+>
+>Best Wishes
 
-Good point, I'd not thought of that - it is useful after all.
+But don't we want to remove it, eventually ?
 
-> Thinking about the name of the option again, if we are omitting to
-> show a hunk in some situations, the request to ask for the current
-> hunk to be shown is "please show me", not "please reshow me", so the
-> verb 'print' may apply to wider situations than the verb 'reprint',
-> strictly speaking.
-
-We're only omitting to show the hunk if we've already shown it so I 
-think of it as showing it again but I don't mind much either way.
-
-Thanks
-
-Phillip
+--=20
+Max Gautier
