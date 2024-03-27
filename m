@@ -1,52 +1,56 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09AA13B5A8
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 15:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A1145BE9
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 15:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711553040; cv=none; b=GtmyfKJALIA26xuLDRlJ+0gnuTl89N6bYnj9AYty5uUOOjcRbFeiA3TRwdFb21eo95OBYBKJFfIPs2ieb5lZpvaBuAi2F9qv2nvhNTIAd4wDToumzOakkZGmjmTCRaGgd+eI3PsycLHp71fDXlHepKGXQc4cx980Jn7vvS5ZyPc=
+	t=1711554198; cv=none; b=KB34ckwA4Mf1+eaEbMyURWAfBzgBHkPRbEX9yTUc6o6vnW1tAQ5SeHa6HIqzmzvEU41h5RY9kD1ZUci7TkMHMsZcFGn9/STbDhKkcZXFXxQvY3GGGw/bN76hDuLogdpaiXo2IZzjkQOfIf4Kv5tz/1qJh9JpvDGyVszjV8NSkTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711553040; c=relaxed/simple;
-	bh=n6aQiVhx88L8m/rjHkagVbDCMzsxnaj9KvjtxHY3Z24=;
+	s=arc-20240116; t=1711554198; c=relaxed/simple;
+	bh=DI7Qxw8eLE90IbCPM4IJQoteNwtGqo2WODVRShOsVUU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FXPIoK0PCxD6DWJWrQVlslgyA1kammEc7t84tsXjFtNPm1OqCl5TZWI3k3MC9AUueTFrR2dEThPHOBklNcNbmbB9oMs+5BUydhznS58Joo4eLPfvsKVo+lzB4RIRcf72ZXItBDjMadq8NLteZCDSBOSyosTNf8OdOL1b+zNZDsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k60l/+45; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=AJZm0GMF/IvpfMXKC3hiQhrmp3C+mWvNVkRYsC/sPXXVxosp5Dil7W77pEbyAHfo6MyscZYXs9wujf9b/GkHFRUzAByIJcan/viWQHVpr35MhSjfbsdbJnNznIzJ5At0u0QEx8glF117sinEcOp/kSKhJg0uuat8CmWF38djll0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=teJjxngz; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k60l/+45"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AEF9F1C90EA;
-	Wed, 27 Mar 2024 11:23:57 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="teJjxngz"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4E2561F59A;
+	Wed, 27 Mar 2024 11:43:15 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=n6aQiVhx88L8m/rjHkagVbDCMzsxnaj9KvjtxH
-	Y3Z24=; b=k60l/+45s3WkSCAx6Nh+SXcKtH+5AoHYcnuTiVDsxQh5Fs3Y2d1e85
-	R87eAQKJzrw1b2N5GtK89BZdviy1XNQ6j4URL4Sw0U+MamA6RmI4rFjn/otI7gCY
-	w7IVYqCR9e7IebYwSFs376MEs2zMk2cB0bSCsQZ54vtdSGom7cAcY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A5FCF1C90E9;
-	Wed, 27 Mar 2024 11:23:57 -0400 (EDT)
+	:content-type; s=sasl; bh=DI7Qxw8eLE90IbCPM4IJQoteNwtGqo2WODVRSh
+	OsVUU=; b=teJjxngzvQRzdge85rGlkhdGWuQ38CNvrJeoOsM1kCzci5JG9fe6jG
+	hypWswPt1EOkil0wbtKjSE2LjbfEFWXnk4deSoXN9PvdDewiEgqpkDXg8CHFGlth
+	JPctEperuCTlJDhoLLJIHo1AVfnbmumtkOdxvvI5GvZH1B2OSuyPA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 465C61F599;
+	Wed, 27 Mar 2024 11:43:15 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13E8F1C90E8;
-	Wed, 27 Mar 2024 11:23:57 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EC8A01F597;
+	Wed, 27 Mar 2024 11:43:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Aishwarya Narayanan <aishnana.03@gmail.com>,  git@vger.kernel.org,
-  karthik nayak <karthik.188@gmail.com>
-Subject: Re: GSoC 2024 [PATCH]
-In-Reply-To: <ZgPrLXjB5mVXitXu@tanuki> (Patrick Steinhardt's message of "Wed,
-	27 Mar 2024 10:47:25 +0100")
-References: <CAHCXyj3Now+ZrA+w+L-sQAtAMZ8REru=3uF_Y3Xdt=7CSf=pYQ@mail.gmail.com>
-	<ZgPrLXjB5mVXitXu@tanuki>
-Date: Wed, 27 Mar 2024 08:23:55 -0700
-Message-ID: <xmqqfrwb4s1g.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] improve interactive-patch
+In-Reply-To: <8a05d7f7-6d94-4228-9507-d3af44f100e7@gmail.com> (Phillip Wood's
+	message of "Wed, 27 Mar 2024 11:14:18 +0000")
+References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
+	<6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
+	<59f19783-a663-449d-a1ef-3a9ebc43cc59@gmail.com>
+	<xmqq5xx9dn6q.fsf@gitster.g>
+	<8a05d7f7-6d94-4228-9507-d3af44f100e7@gmail.com>
+Date: Wed, 27 Mar 2024 08:43:08 -0700
+Message-ID: <xmqqttkr3ckz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,25 +60,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 07692E4A-EC4E-11EE-BD29-25B3960A682E-77302942!pb-smtp2.pobox.com
+ B69577D2-EC50-11EE-9B8F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Please not that patches are supposed to be sent as mails directly
-> instead of being attached to mails. You can use e.g. git-send-email(1)
-> to achieve this.
->
-> I would recommend to have a look "Documentation/MyFirstContribution.txt"
-> and "Documentation/SubmittingPatches". These resources should get you a
-> better picture of how a typical workflow would look like here.
+> ... My
+> reasoning was that 'p' does not do anything useful for the user, if
+> they press it they end up with exactly the same content being printed
+> to the screen ...
 
-Thanks.  It is very good that you recommended the documentation on
-the contribution process.
+Actually I do not agree that it necessarily is useless that the same
+content is shown.  Especially since we do not page, it is plausible
+for a user, who saw a huge hunk, to want to tweak terminal setting
+and raise scrollbuffer size (which may be set to 0 for usual
+sessions, like me), and say "please show it again".  Or even in a
+more primitive environment, just say "please show it again" and
+immediately type \C-s to stop while the early part of the hunk is
+shown ;-).
 
-The tasks for microproject are designed to be easy to solve and the
-changes in the patches themselves would not be the interesting part
-for new contributors.  Rather, it is designed for a new contributor
-to experience the contribution process from the beginning to the
-end, from coming up with an initial patch and explaining it well,
-sending it to the list in the established way, receiving and
-responding to review comments, and move on to the next iteration.
+Thinking about the name of the option again, if we are omitting to
+show a hunk in some situations, the request to ask for the current
+hunk to be shown is "please show me", not "please reshow me", so the
+verb 'print' may apply to wider situations than the verb 'reprint',
+strictly speaking.
+
+Thanks.
