@@ -1,52 +1,52 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C053D4D9E0
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 21:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526001DDD1
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 22:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711576469; cv=none; b=egO+kVLyoPiWNd7vFwQXiPdXQScXwd6qhLxGdYPHwi3lO+kSqoxHas9xK1XHL80Y3COO7+T01nw+mr20gLUCq12mlZnz4j9wbsozQFE5yXkU08UUaiJhXt6kw1q3rkRJDsZT81u5JzCbSWSeXHUFvGQSFPVN7f0IpMx3tTOKrTs=
+	t=1711577473; cv=none; b=jYPsM3+dPlmP9LTtz2B1UDb9loUJiIAYNW+OT5HAIbDBIoPw9Tr/XaJy7vsvxj0hNBptxNvc7DWCJtCorU6oF7dmAF1Q9R5JzrySDrsdIctXyt/swMVhoDOc+5OMQGxCrL6wuA9ybf2Syy4jFn3+tpqc6o1p+dntK15qwhe9y5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711576469; c=relaxed/simple;
-	bh=0oO3PAq4PPec87hW5a9DjdB8BiIs/nSr52mo/A5pu+U=;
+	s=arc-20240116; t=1711577473; c=relaxed/simple;
+	bh=pSd+Qnbq8Sja4Hv8qAvgDLUDrvRYzI3+EqshfGRZXho=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RdILd4/1WtnMl18y/fEZwgHgJFFPo+RojkgeEgMDNTg7UPD1W+s6mos+EHnOK8X28fAEfqacTDTbG2r42Mm2wZNduwjkNVPwfBvxxuo2rwoJIYb/l6gDvhBSGSdyF1P7V4DtO9X8YU5PGG25Oi/2wgjIlHcGs++ENNPIh0yWlL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SNGAwjZE; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=jFJ4EXiwI+foIJODqSGIl+k5AL1Pj/zfXnwr4blZH7GsRpAtQd6B+vHs+WDmAgyihBkZAIHyKmBVp/iQmZLuhD0sFA3B2PIOXQwDhfaGCUz1pwUepSbVbQtsUsoU3f06vcgSCrEcdibZSPQ1eXcB5WdLxOyQfjohJJfvSkDwx7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vG+8mF51; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SNGAwjZE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vG+8mF51"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B2BCC1E45DF;
-	Wed, 27 Mar 2024 17:54:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 20C041E4861;
+	Wed, 27 Mar 2024 18:11:11 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=0oO3PAq4PPec87hW5a9DjdB8BiIs/nSr52mo/A
-	5pu+U=; b=SNGAwjZEBQQ2KF5CW0ficIG0lUAhoewzf+x98ShwtrL9x170cA4MlH
-	gAt3r9tLUhORs7fhO9MultHjWo7XaCHaWBx3XywP3bO+qK5/+zu4qm8KihG/CSXy
-	LF5Pnu+1/N6JWU0l/qTzsoY9ePg/aIo/8WWQWZ6B0RXocMz6btI+k=
+	:content-type; s=sasl; bh=pSd+Qnbq8Sja4Hv8qAvgDLUDrvRYzI3+EqshfG
+	RZXho=; b=vG+8mF51ZHbn0pzUDhT3HcVxjiZ8ARXfXReS9vvMhtTiYS/ikOByes
+	IBBDqxdEBkPCcPyXuNee0SdN8tM67j302x0GvTxAJou1Pn7rzYy0TlDZwvP3U5uP
+	Eqkhp1+WUCg2+chadpsGDJ9ohsh28EU8Cv6PZ7MMuYH9pJ8weBrg8=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA45C1E45DC;
-	Wed, 27 Mar 2024 17:54:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 134181E4860;
+	Wed, 27 Mar 2024 18:11:11 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 188A61E45D4;
-	Wed, 27 Mar 2024 17:54:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B0071E485F;
+	Wed, 27 Mar 2024 18:11:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Eric Wong <e@80x24.org>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/3] treewide: switch to khashl for memory savings
-In-Reply-To: <20240327093710.GA847433@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 27 Mar 2024 05:37:10 -0400")
-References: <20240325230704.262272-1-e@80x24.org>
-	<20240325230704.262272-3-e@80x24.org> <xmqqttksanpj.fsf@gitster.g>
-	<20240327093710.GA847433@coredump.intra.peff.net>
-Date: Wed, 27 Mar 2024 14:54:18 -0700
-Message-ID: <xmqq7chn1gtx.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Han Young <hanyang.tony@bytedance.com>, Jeff King <peff@peff.net>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/1] quote: quote space
+In-Reply-To: <xmqqfrwlltjn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	19 Mar 2024 15:56:44 -0700")
+References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
+	<xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g>
+Date: Wed, 27 Mar 2024 15:11:08 -0700
+Message-ID: <xmqqsf0bz5oj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,44 +56,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 909DAAC0-EC84-11EE-8B69-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ EAACAC30-EC86-11EE-A776-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Tue, Mar 26, 2024 at 10:48:40AM -0700, Junio C Hamano wrote:
->
->> $ make builtin/fast-import.sp ;# part of make sparse
->>     SP builtin/fast-import.c
->> builtin/fast-import.c: note: in included file (through oidset.h, packfile.h):
->> khashl.h:516:1: error: Using plain integer as NULL pointer
->> khashl.h:516:1: error: Using plain integer as NULL pointer
->> make: *** [Makefile:3237: builtin/fast-import.sp] Error 1
->> 
->> I found IMPL_GET and IMPL_DEL's use of (h->keys == 0) were giving
->> one of these two, and managed to reduce the error to just one with
->> the attached patch, but I don't know what the other error is coming
->> from.
->
-> Probably:
->
-> diff --git a/khashl.h b/khashl.h
-> index 8fcebed237..1e724bbf88 100644
-> --- a/khashl.h
-> +++ b/khashl.h
-> @@ -116,7 +116,7 @@ static kh_inline khint_t __kh_h2b(khint_t hash, khint_t bits) { return hash * 26
+> diff --git c/t/t4126-apply-empty.sh w/t/t4126-apply-empty.sh
+> index ece9fae207..eaf0c5304a 100755
+> --- c/t/t4126-apply-empty.sh
+> +++ w/t/t4126-apply-empty.sh
+> @@ -66,4 +66,26 @@ test_expect_success 'apply --index create' '
+>  	git diff --exit-code
+>  '
 >  
->  #define __KHASHL_IMPL_RESIZE(SCOPE, HType, prefix, khkey_t, __hash_fn, __hash_eq) \
->  	SCOPE void prefix##_resize(HType *h, khint_t new_n_buckets) { \
-> -		khint32_t *new_used = 0; \
-> +		khint32_t *new_used = NULL; \
->  		khint_t j = 0, x = new_n_buckets, n_buckets, new_bits, new_mask; \
->  		while ((x >>= 1) != 0) ++j; \
->  		if (new_n_buckets & (new_n_buckets - 1)) ++j; \
->
-> -Peff
+> +test_expect_success 'apply with no-contents and a funny pathname' '
+> +	mkdir "funny " &&
+> +	>"funny /empty" &&
+> +	git add "funny /empty" &&
+> +	git diff HEAD "funny /" >sample.patch &&
+> +	git diff -R HEAD "funny /" >elpmas.patch &&
+> +	git reset --hard &&
+> +	rm -fr "funny " &&
+> +
+> +	git apply --stat --check --apply sample.patch &&
+> +	test_must_be_empty "funny /empty" &&
+> +
+> +	git apply --stat --check --apply elpmas.patch &&
+> +	test_path_is_missing "funny /empty" &&
+> +
+> +	git apply -R --stat --check --apply elpmas.patch &&
+> +	test_must_be_empty "funny /empty" &&
+> +
+> +	git apply -R --stat --check --apply sample.patch &&
+> +	test_path_is_missing "funny /empty"
+> +'
+> +
+>  test_done
 
-Spot on.  With this (and the other two 0 -> NULL fixes), and with
-the SWAP() thing in brian's credential series fixed, the tip of
-'seen' passes the static-analysis and sparse CI jobs again.
+This seems to fail only on Windows, and I have run out of my today's
+allotment of time for this topic.
 
-Thanks.
+The earlier part that creates the directory with a trailing SP,
+redirects to a file in such a directory to create an empty file, and
+adds that path to the index, all succeed and follow the &&-chain,
+but the step that runs "git diff" with "funny /" (i.e. the name of
+the directory a trailing slash) as the pathspec produces an empty
+patch, and "git apply" would of course choke on an empty file as an
+input.
+
+With the following band-aid, we can skip the test and the output
+from "sh t4126-*.sh -i -v -x" might give us a clue that explains how
+such a failure happens.  Unfortunately GitHub CI's win test does not
+give us insight into a test that did not fail, so I did not get
+anything useful from the "ls -l" down there (I already knew that
+sample patches are empty files).
+
+---- >8 ----
+Date: Wed, 27 Mar 2024 14:41:26 -0700
+Subject: [PATCH] t4126: make sure a directory with SP at the end is usable
+
+If the platform is unable to properly create these sample
+patches about a file that lives in a directory whose name
+ends with a SP, there is no point testing how "git apply"
+behaves there.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t4126-apply-empty.sh | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
+index eaf0c5304a..d2ac7a486f 100755
+--- a/t/t4126-apply-empty.sh
++++ b/t/t4126-apply-empty.sh
+@@ -66,14 +66,26 @@ test_expect_success 'apply --index create' '
+ 	git diff --exit-code
+ '
+ 
+-test_expect_success 'apply with no-contents and a funny pathname' '
++test_expect_success 'setup patches in dir ending in SP' '
++	test_when_finished "rm -fr \"funny \"" &&
+ 	mkdir "funny " &&
+ 	>"funny /empty" &&
+ 	git add "funny /empty" &&
+-	git diff HEAD "funny /" >sample.patch &&
+-	git diff -R HEAD "funny /" >elpmas.patch &&
++	git diff HEAD -- "funny /" >sample.patch &&
++	git diff -R HEAD -- "funny /" >elpmas.patch &&
+ 	git reset --hard &&
+-	rm -fr "funny " &&
++
++	if  grep "a/funny /empty b/funny /empty" sample.patch &&
++	    grep "b/funny /empty a/funny /empty" elpmas.patch
++	then
++		test_set_prereq DIR_ENDS_WITH_SP
++	else
++		# Win test???
++		ls -l
++	fi
++'
++
++test_expect_success DIR_ENDS_WITH_SP 'apply with no-contents and a funny pathname' '
+ 
+ 	git apply --stat --check --apply sample.patch &&
+ 	test_must_be_empty "funny /empty" &&
+-- 
+2.44.0-368-gc75fd8d815
+
