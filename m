@@ -1,112 +1,90 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E5912DDB3
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 16:37:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C88F4E2
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 17:27:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711557455; cv=none; b=G0eWJT1u0YRiQmmgRUE4+bqVfvXsIMBo+EK3yZVER4GV0uNvCRkciZno7poGWc+woxGliLRqgZBMPDvPFcPaSnBiOFACerJcrTEeXEBFXS7Z6TGKO07mwafxJ75MVioeSRrHOD7zMjgFKoFcaaPOi8l4OebDUFZRMblNl3HZXaA=
+	t=1711560451; cv=none; b=UHqY77UIrTdEHJ3vSpKCYjLWGoP9ZhsQ/5dgxd6qMVonpw7nL6vpN4eRWUJdkDl9auMAXd9q6uX4+VuESlGsEjorLqaCRz8a9w+CoadZiHDZHqFI2fIK/AkNrifEQw4sRMRwlUg+U8S2YghbiJ4Ka+cKDFCIs1Joa67IAoqt1Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711557455; c=relaxed/simple;
-	bh=4wHxlQrzEzzbchLzWYSbttmJx+/tTrKQeJDtlcFRbX8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dnSBgmFHTd2uSawDsT9Brkpxuv83Z5WhRZcBZaSUaPepS32/NOLPTbtQMNBkjoDpQRmoV8t++v3SgSc6yAi31aw5snsWVEH61cQ2JaLl29jtVPAAF7NJ1L+CwgxtTWFLX5lekkPvUJtoEA0Y+IcaCKXEuMmHswH9af1bS5ZrAUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XPNHTXCY; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711560451; c=relaxed/simple;
+	bh=u4Oj2tqYWEuWNQ/H3ttPUSuFCvPqwiDY2TZBTh0Oox0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EXT5KmUZ+rJGen+hUYGrM4CXf3onAgYLLx+1yiGbAyaIPIQae8OWNN9JfNinv/1sIEYb5p91PGg7nMcB/tzXnkA2fogREv0m7+b+N4iMPRfN5SkZf3UgRtcdzc0yBppwuMKg+DMKaEsDPYL/Yrk+2T7hvuGV6f0bn1uifh+yD8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=F8W5h2+v; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XPNHTXCY"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3416a975840so5261713f8f.0
-        for <git@vger.kernel.org>; Wed, 27 Mar 2024 09:37:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711557452; x=1712162252; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wZ0qrE8U6XFvlr4d8LERulMjhld8e14yPICl8zwK9hk=;
-        b=XPNHTXCYw+StV1jlsXbKe9FZR8ZyqGrpxLy0Fyv9e5vqsmr5S7hud1pmtuUd46cSOn
-         KIG74QnPB90aU8MXUaTbFx7szCwsKmuO0gx4NkdL0VupJRGNmZVQO7+w/o5G7n0B0+Sl
-         95PUU6L5ND7p4P9gOVHE2EImedbo6UkX22WkgC30uOgwmKfpUCj9kVzPhF6JUWW4EaK1
-         uOnt7EgzqtA21pmV07emJPLm6WxbMaN4Y//9C9R4ClHp5aozjmiVEagciWUVVrA5Fmts
-         eEpY9TvWCiJ5HbaHPpVZG344VgrytBPBKDsYNxqQ8Yeenf/5P3UKaHbV6sT/1iEc7fgy
-         6kYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711557452; x=1712162252;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wZ0qrE8U6XFvlr4d8LERulMjhld8e14yPICl8zwK9hk=;
-        b=GLhOEueC2TxOSm9TF/iKmA5Mqq0NKEeMWNKK5ogcvAR5wqOK550MPL1HFERy4ddM9A
-         Ef0V4hMEW4IVgXGA7z11iI3tMB0dsASJn8up2sE1C3m1InQ3s/Vujz03eqvOcLPeEDjb
-         pbGvu27CdanmnhExSP38EYp/RUb5grUrzwj+x4evWXvMsfZp4yfPhNIpH22kNKYyskNP
-         Zct4brwZ6vcPL2Pqtq0jxAypitFM2fZuqXhaYISMAGo73ue5BuctCksPyNAbSPOC37EJ
-         2belVYBNHH993qrUPf4vumDlWZAUowigRiSvk62ernG14m5TKyuVhlESMNSDkVXQ/qDI
-         V7fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXLtk3DB5PKZ7Z3CRNqrj6AvNYkr4/9qa3kBjnohOatur2cSH4cOfHBIohM8A1k8sPR13+1kuBBlQ23qfoWgQrZXD/p
-X-Gm-Message-State: AOJu0YwohOVmynORtR3qiKX8XOHROnHMFdEKq3NWfeH2Bu1ihr95eXci
-	zbNaR0uaUckPvHZAcFBCje65wILbvQXLHIzkSu1XQ+v6eMaw5kgv
-X-Google-Smtp-Source: AGHT+IHy4nYCJcetC7/dk8+Wn316EmZ6a3jWaIc9R51IGtkDI6y/18imP+nYN5Ozrkw1RUfO5TlHaA==
-X-Received: by 2002:adf:e803:0:b0:33d:a011:ae42 with SMTP id o3-20020adfe803000000b0033da011ae42mr299755wrm.38.1711557451908;
-        Wed, 27 Mar 2024 09:37:31 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id q2-20020adfcd82000000b0033e7603987dsm15315954wrj.12.2024.03.27.09.37.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 09:37:31 -0700 (PDT)
-Message-ID: <b952aee0-68f8-4df0-be40-109b28f4383f@gmail.com>
-Date: Wed, 27 Mar 2024 16:37:30 +0000
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="F8W5h2+v"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E690E36DEF;
+	Wed, 27 Mar 2024 13:27:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=u4Oj2tqYWEuWNQ/H3ttPUSuFCvPqwiDY2TZBTh
+	0Oox0=; b=F8W5h2+vBCBOAcLZXd6vT8LMDsEzqcgZFC1sIncM1wPlQj8XfL7nVt
+	qhTQ5ip1jKGlqQlB/udr2RDQPrH7z1fmz84Z1xusE/5jKbUrD/nFffLKlUB6tqi2
+	IZ2cSjm0VYnNpLgedWQFXtE/4UyVDmFRG0T/LGBd+CXHnMq32CXPA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DF76636DEE;
+	Wed, 27 Mar 2024 13:27:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5D1B136DEB;
+	Wed, 27 Mar 2024 13:27:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ralph Seichter <github@seichter.de>
+Cc: rsbecker@nexbridge.com,  Dragan Simic <dsimic@manjaro.org>,  Chris Torek
+ <chris.torek@gmail.com>,  git@vger.kernel.org,  Ralph Seichter via
+ GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 3/1] config: allow tweaking whitespace between value and
+ comment
+In-Reply-To: <871q7wv7s1.fsf@ra.horus-it.com> (Ralph Seichter's message of
+	"Wed, 27 Mar 2024 01:27:10 +0100")
+References: <pull.1681.v2.git.1709824540636.gitgitgadget@gmail.com>
+	<pull.1681.v3.git.1710280020508.gitgitgadget@gmail.com>
+	<xmqq8r2jp2eq.fsf@gitster.g> <xmqq4jd7p1wf.fsf_-_@gitster.g>
+	<xmqqcyrg7imy.fsf@gitster.g> <874jcsvccq.fsf@ra.horus-it.com>
+	<xmqq4jcs7evl.fsf@gitster.g> <871q7wv7s1.fsf@ra.horus-it.com>
+Date: Wed, 27 Mar 2024 10:27:22 -0700
+Message-ID: <xmqqwmpn1t6t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/7] cherry-pick: add `--empty` for more robust
- redundant commit handling
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org,
- newren@gmail.com, me@ttaylorr.com
-References: <20240119060721.3734775-2-brianmlyles@gmail.com>
- <20240325232451.963946-1-brianmlyles@gmail.com>
- <a397f3dd-e4e1-4275-b17d-1daca9e166fe@gmail.com> <xmqqplvgalud.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqplvgalud.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4681381E-EC5F-11EE-A9DD-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 26/03/2024 18:28, Junio C Hamano wrote:
-> phillip.wood123@gmail.com writes:
-> 
->> Hi Brian
->> ...
->>>        +		head_commit = lookup_commit(r, &head_oid);
->>
->> This version is definitely more readable, thanks
->>
->> ...
->>
->> This looks strange, but if I do a range-diff locally from v4 to v5 I
->> only see the line wrapping changes above so I don't think it is
->> anything to worry about.
->>
->> Thanks for working on this
-> 
-> So, I take it as an Ack from the person who acted as the main
-> reviewer for this series? 
+Ralph Seichter <github@seichter.de> writes:
 
-Yes I'm happy
+>>> I thought we already discussed this and unconditional "#comment" has
+>>> already been declared a non starter.
+>
+> This unilateral decision of yours, and the following prolonged debate
+> about spaces/tabs (which I clearly stated I consider a waste of time)
+> left me with the impression that what I think doesn't matter much
+> anyway.
 
-> If so, I'll mark the topic for 'next'.
+You can call it unilateral or whatever you like, but there are
+project principles, e.g., "try to keep things consistent", and
+"making unusual things possible is fine, but it shouldn't make the
+default thing harder", and they are not negotiable.
 
-Excellent
+When it comes to quality of the end product, it is true that your
+considering it a waste of time does not matter.  It is effort needed
+to polish your topic to an acceptable level.  Either we do so with
+the help of reviewer input, or alternatively we could drop the
+topic.
 
-> Tanks, both of you.  The resulting series does look very good.
+In any case, I'll keep the three patches separate and mark the topic
+for 'next'.
 
-All credit to Brian - it has been a well structured and well written 
-series since the first iteration.
-
-Best Wishes
-
-Phillip
+Thanks.
