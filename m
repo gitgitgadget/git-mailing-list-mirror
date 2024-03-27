@@ -1,37 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926253BBD3
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 09:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8103233989
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 10:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711532924; cv=none; b=gsjtaCCpAlo6/aZmdOJfCu6WydDv9IluEr/PjYE4geDDRwEGiPj/cxUKUZe3TZVeuA/U1zDQfVt/YdwkQvy2SzRg9QhcdYkj6IiA11gfsvgy4s375t+NdRB2gOPLoODQFTlyVgT5bWxV3UKEzIGUGPaG78/XpIDqoBGCWUywANE=
+	t=1711534104; cv=none; b=GhIi+M2QZKcU9LrDxwyqyPy0UVpKWwt5J102ngo3pZgJZRTR9TrzecZTsgSjGV8xvPveG9NQ+IdTsD1M6obqdQHN18jEQrh8j38QHU1o//kyZ4afCqPk81tVsJauIS+AIXAEiKpM8XxlVEWhTZ1Ff45Y6rTvKu5Gqt9Fn/vLwu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711532924; c=relaxed/simple;
-	bh=XdUIRSZLKTDalH7eXx2JM1wYqhKls8naJBkCuguh4Wo=;
+	s=arc-20240116; t=1711534104; c=relaxed/simple;
+	bh=jZQjrcBmCZoyJ5F2YeBkVfajZMxm9WZG/jbj36R52ds=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kp6MfhOXsPKxi5p22G0hff4NAzeagc7H+eGvZFSZ/tlUcUqla6Y9eHGNYqXXd3qJv+x10NWkPGDstwttbLrMuGNLQbhmgd5LRVg1xVH/ykPjG7W/vK5unvmp0LyOc5sJg0A6F54KrAzfDk3i14xTBHae3nCrJYh255lsm0VtgqM=
+	 Content-Type:Content-Disposition:In-Reply-To; b=A8oPY7ciK23u73AInE/v7Fxsb0JDDlzdz3FadDtbsGKi6kEVMR9InHrq/0ZuN2u8DuLhzwyxTBUQo8cEOQJ3uDHfBAkZnLz32RlSzd3pMYgajEGsuCn11pocOetES676DnkqW2dOBVZP6AChK56dRgkUu2fGeHyZJN+RFValbkQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23365 invoked by uid 109); 27 Mar 2024 09:48:41 -0000
+Received: (qmail 23612 invoked by uid 109); 27 Mar 2024 10:08:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Mar 2024 09:48:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Mar 2024 10:08:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25273 invoked by uid 111); 27 Mar 2024 09:48:46 -0000
+Received: (qmail 25434 invoked by uid 111); 27 Mar 2024 10:08:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Mar 2024 05:48:46 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Mar 2024 06:08:25 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 27 Mar 2024 05:48:40 -0400
+Date: Wed, 27 Mar 2024 06:08:19 -0400
 From: Jeff King <peff@peff.net>
-To: "Eric W. Biederman" <ebiederm@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/3] some transport-helper "option object-format"
- confusion
-Message-ID: <20240327094840.GA857435@coredump.intra.peff.net>
-References: <20240307084735.GA2072130@coredump.intra.peff.net>
- <20240320093226.GA2445531@coredump.intra.peff.net>
- <87y1ac3kb6.fsf@gmail.froward.int.ebiederm.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Edward Thomson <ethomson@edwardthomson.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: repositoryformatversion and extensions
+Message-ID: <20240327100819.GB857435@coredump.intra.peff.net>
+References: <CA+WKDT0fAASYE_ZhSxATv2NUnYceOP-_EF1kqKNFSOWU4QdPVQ@mail.gmail.com>
+ <Zfv-kpa4CJJvop2j@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,88 +39,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87y1ac3kb6.fsf@gmail.froward.int.ebiederm.org>
+In-Reply-To: <Zfv-kpa4CJJvop2j@tanuki>
 
-On Wed, Mar 20, 2024 at 12:05:49PM -0500, Eric W. Biederman wrote:
+On Thu, Mar 21, 2024 at 10:32:11AM +0100, Patrick Steinhardt wrote:
 
-> Your sentence has what I was asking for backwards.  It would be healthy
-> if the code fails when "object-format" has been advertised by the
-> remote, requested by the transport-helper, and the remote does not send
-> ":object-format".
-
-Ah, I see. That is probably reasonable, under the assumption that nobody
-would have implemented "object-format" so far and _not_ sent it. It
-might be worth clarifying the documentation at the same time.
-
-> The implementation should just be:
+> > > When reading the core.repositoryformatversion variable, a git
+> > > implementation which supports version 1 MUST also read any configuration
+> > > keys found in the extensions section of the configuration file.
 > 
-> diff --git a/transport-helper.c b/transport-helper.c
-> index b660b7942f9f..e648f136287d 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -1206,6 +1206,7 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
->  	struct ref **tail = &ret;
->  	struct ref *posn;
->  	struct strbuf buf = STRBUF_INIT;
-> +	bool received_object_format = false;
->  
->  	data->get_refs_list_called = 1;
->  	helper = get_helper(transport);
-> @@ -1236,9 +1236,13 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
->  					die(_("unsupported object format '%s'"),
->  					    value);
->  				transport->hash_algo = &hash_algos[algo];
-> +				received_object_format = true;
->  			}
->  			continue;
->  		}
-> +		else if (data->object_format && !received_object_format) {
-> +			die(_("missing :object-format"));
-> +		}
->  
->  		eov = strchr(buf.buf, ' ');
->  		if (!eov)
+> Yeah, indeed. As far as I understand, the major difference between
+> version 1 and version 0 is that version 1 asks the Git client to bail
+> out as soon as there is any extension that isn't understood by the
+> client. To me this behaviour is somewhat surprising because it doesn't
+> allow for in-between states where some extensions are mandatory whereas
+> others aren't. It would have been better to have a mechanism that
+> disregards the version but makes each extension itself highlight whether
+> it is mandatory or not.
+
+The point of bumping "0" to "1" at all was that older versions of Git,
+which did not understand extensions at all, would continue to bail. So
+yes, I do think it's unfortunate that we do not insist that the version
+is set to "1" when parsing extensions, but it is a bug for any writer to
+set an extension and _not_ bump the version. Versions of Git older than
+v2.6.3 would quietly ignore them.
+
+And you're correct that it does not allow for non-mandatory extensions.
+But then, that is the whole point of the extensions.* mechanism: it is
+to make sure that versions of Git that do not understand the particular
+extension refuse to run. If something isn't mandatory, then it should
+not be in extensions.* at all. It should be regular config, with the
+knowledge that older versions may ignore it.
+
+At least that was how it was all originally designed. I think later
+extensions did not always correctly set the repository version. We tried
+to fix that later, but ran into compatibility issues. See 11664196ac
+(Revert "check_repository_format_gently(): refuse extensions for old
+repositories", 2020-07-15).
+
+So that splits us our extensions into two sets:
+
+  - ones that existed at the time of 11664196ac, which are allowed with
+    v0 for compatibility. These are found in handle_extension_v0() in
+    Git's code
+
+  - everything else that is added should do things correctly, and should
+    go into handle_extension_v1()
+
+So getting back to Ed's question...
+
+> > Despite that, at least one extension (objectformat) does require
+> > core.repositoryformatversion >= 1. Though, do note that objectformat
+> > is not mentioned in the repository-version documentation.
+> > 
+> > What other extensions require repository format version >= 1? Is
+> > core.objectformat the outlier here?
+
+...the answer is that it's the other way around. Those older extensions
+are the outliers. But since we don't add extensions often, for a long
+time it was the only one that did things right. ;) And now refstorage
+does it right, too.
+
+If we add more extensions, they will also behave that way.
+
+> In any case, the policy of the Git project is that any new extension
+> should only ever be understood when the repository format version is >=
+> 1 from now on. At least, that's what the code tells us:
 > 
-> Am I missing something that makes a bad implementation?
-
-No, that seems right to me (modulo that we do not use C99 "bool" in our
-code base).
-
-> Hmm.  I thought gitremote-helpers.txt said the key value pairs
-> would precede everything else from a list command.
-> gitremote-helpers.txt does not mention that.  That looks like
-> a Documentation oversight.
+> ```
+> /*
+>  * Do not add new extensions to this function. It handles extensions which are
+>  * respected even in v0-format repositories for historical compatibility.
+>  */
+> static enum extension_result handle_extension_v0(const char *var,
+> 						 const char *value,
+> 						 const char *ext,
+> 						 struct repository_format *data)
+> ```
 > 
-> However remote-curl.c in output_refs prints :object-format before
-> anything else, and transport-helper.c will malfunction if :object-format
-> is sent after any of the refs.  As transport->hash_algop is used by
-> get_oid_hex_algop is used to parse the oids of the refs.
+> So it's probably safe to assume that every new extension should be at
+> least v1 from now on.
 
-Yeah, I think it is a natural consequence of "object-format", since it
-is necessary for parsing the result. And since there aren't any other
-keywords yet, we can surmise that nobody is doing the wrong thing yet.
-So now is a good time to clarify the documentation.
+Right, exactly.
 
-I'm also not sure if we ever say explicitly in the documentation that
-the keywords start with a colon. But maybe I am just missing it.
+If you really want more gory details, I think the discussion is all in:
 
-> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-> index ed8da428c98b..b6ca29a245f3 100644
-> --- a/Documentation/gitremote-helpers.txt
-> +++ b/Documentation/gitremote-helpers.txt
-> @@ -268,6 +268,8 @@ Support for this command is mandatory.
->  	ref. A space-separated list of attributes follows the name;
->  	unrecognized attributes are ignored. The list ends with a
->  	blank line.
-> +
-> +	Keywords should precede everything else in the list.
->  +
->  See REF LIST ATTRIBUTES for a list of currently defined attributes.
->  See REF LIST KEYWORDS for a list of currently defined keywords.
-> 
-> I do agree that the sanity check can be added to your series, so if you
-> would prefer I can do that.
-
-Yeah, do you want to send some patches that can go on top of mine?
+  https://lore.kernel.org/git/pull.675.git.1594677321039.gitgitgadget@gmail.com/
 
 -Peff
