@@ -1,472 +1,206 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5732D045
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 08:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3CA24A08
+	for <git@vger.kernel.org>; Wed, 27 Mar 2024 08:19:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711527527; cv=none; b=k1m1eaXHtP8I0H2J/qsVXuH+hcNFZZHZKrfo+popjOoK38wD5mFCAebdbaICqj2SWSoAYAvY2xe1twubWuQNsMESTgUIawJsQtZuN67UsbHYxqg/hWDR26HGxZaaZSaC4QWB/57f+eMz038/wdPPqFrQMCxooR3Sqm4HotIaz9k=
+	t=1711527566; cv=none; b=I9n+N4SdEMFqlEY0+l4+/ulmld3qjGIvZYyFJeAq+DlavFpRLH5ByU2nGP64lR23eTI2kqJOPM4dHk5wgGTbqisk9jAo4gppXEyoBZxS6HvBpWkAWUJelkNLf1sbk0mbSIpt1McCf+Mict72qFFDpdLgFXOPjgAQQLgKcgQ981I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711527527; c=relaxed/simple;
-	bh=zKYPf3124TurfuQ/wI+3Ju5suZlT0by50VMG90VdoCc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b7zO6/gsFQ3FKKQUEbR86b3TXwb5nkvz5HGY8SGBeRI/kfQT5Id7+dQKX8tUl+VHWSCfkTejaSAmFL1YpVJvIwFsD6JY/oRwA7meUi1Q79cRU1op6u4svA+6fWC80uerjpLuYWMlGP/HX5KeiL/VHJpjQBDnrlMiv9XIrM1Jteo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4V4JHY5Lh6z61B9
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 08:30:49 +0100 (CET)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4V4JHP34D6zRpKf;
-	Wed, 27 Mar 2024 08:30:41 +0100 (CET)
-Message-ID: <1facab70-4c8a-4cf4-b464-b27ab90b1339@kdbg.org>
-Date: Wed, 27 Mar 2024 08:30:41 +0100
+	s=arc-20240116; t=1711527566; c=relaxed/simple;
+	bh=R6FTFSsv9T4PmyZmvGWbL2gSqtJ/PNQ13tfvnCKBYIM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GLq84whmd3TouFjR69cofHJdM+fVRSHmEImD0ygwWYHilgKMYGaoBVFq1fv5tZFt6JDLCTi/HsfhvA7167Zq3f5x0rawHC6PwKCro+2eli8IPFIz4fUEZWeO5FXK3OwolFQhQBeOSvYZxHUl/rHA497GgDH2/7ThotdyZP6lRcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 21198 invoked by uid 109); 27 Mar 2024 08:19:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Mar 2024 08:19:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24289 invoked by uid 111); 27 Mar 2024 08:19:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Mar 2024 04:19:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 27 Mar 2024 04:19:22 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: [PATCH 17/16] config: add core.commentString
+Message-ID: <20240327081922.GA830163@coredump.intra.peff.net>
+References: <20240312091013.GA95442@coredump.intra.peff.net>
+ <20240312091750.GP95609@coredump.intra.peff.net>
+ <0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
+ <20240315055944.GB1741107@coredump.intra.peff.net>
+ <6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
+ <20240315081041.GA1753560@coredump.intra.peff.net>
+ <xmqq8r247igg.fsf@gitster.g>
+ <20240327074655.GA831122@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] userdiff: better method/property matching for C#
-To: Steven Jeuris via GitGitGadget <gitgitgadget@gmail.com>
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Jeff King <peff@peff.net>, Steven Jeuris <steven.jeuris@gmail.com>,
- Steven Jeuris <steven.jeuris@3shape.com>, git@vger.kernel.org
-References: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com>
- <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240327074655.GA831122@coredump.intra.peff.net>
 
-Am 06.03.24 um 21:21 schrieb Steven Jeuris via GitGitGadget:
-> From: Steven Jeuris <steven.jeuris@3shape.com>
+On Wed, Mar 27, 2024 at 03:46:55AM -0400, Jeff King wrote:
+
+> > My preference is to introduce core.commentString to avoid confusion
+> > coming from an older Git using the first-byte of a multi-byte
+> > string, or dying upon reading a configuration file meant for a newer
+> > Git, and then let core.commentString override core.commentChar, but
+> > I would prefer to see the discussion participants to raise their
+> > opinions and reach a conclusion.
 > 
-> - Support multi-line methods by not requiring closing parenthesis.
-> - Support multiple generics (comma was missing before).
-> - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
-> - Remove `instanceof` keyword, which isn't C#.
-> - Also detect non-method keywords not positioned at the start of a line.
-> - Added tests; none existed before.
-> 
-> The overall strategy is to focus more on what isn't expected for
-> method/property definitions, instead of what is, but is fully optional.
-> 
-> Signed-off-by: Steven Jeuris <steven.jeuris@gmail.com>
-> ---
+> OK. I don't have a strong opinion. Are you OK with core.commentString as
+> a strict synonym (so last-one-wins and either name overwrites previous)?
+> Or do you want an override (i.e., commentString always overrides
+> commentChar, regardless of order). I think it's mostly academic, and the
+> strict synonym version is much easier to implement.
 
-I like the comprehensive test cases that are added. However, I found one
-major point in the patterns that must be considered. See below.
+Like this, on top of what you have queued in jk/core-comment-string.
 
->     userdiff: better method/property matching for C#
->     
->     Change since v1: I removed "from" from the list of keywords to skip.
->     First, I considered adding "await", but I discovered both "await" and
->     "from" are "contextual keywords", which unlike the other keywords
->     currently listed, aren't reserved, and can thus cause false negatives.
->     I.e., it is valid to have a method named "await" or "from". In edge
->     cases, this may lead to false positives, but a different exclusion rule
->     will need to be added to handle these.
+Note that you graduated kh/doc-commentchar-is-a-byte, which says "this
+ASCII character" early in the description, which will be incorrect if my
+series is merged. This would need to be fixed (possibly as part of
+merging my topic, though I don't think it actually triggers a conflict,
+so you'll have to remember to do so manually). Or mine could be rebased
+on top of master and then remove it as part of the series.
 
-So, this patch makes the choice to have some false positives instead of
-some false negatives. I have no experience in C#, so I trust your
-judgement that users are better served with this choice rather than the
-opposite.
+-- >8 --
+Subject: [PATCH] config: add core.commentString
 
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1682%2FWhathecode%2Fmaster-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1682/Whathecode/master-v2
-> Pull-Request: https://github.com/git/git/pull/1682
-> 
-> Range-diff vs v1:
-> 
->  1:  cdd8dd4d871 ! 1:  00315519014 userdiff: better method/property matching for C#
->      @@ Commit message
->       
->           - Support multi-line methods by not requiring closing parenthesis.
->           - Support multiple generics (comma was missing before).
->      -    - Add missing `foreach`, `from`, `lock` and  `fixed` keywords to skip over.
->      +    - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
->           - Remove `instanceof` keyword, which isn't C#.
->           - Also detect non-method keywords not positioned at the start of a line.
->           - Added tests; none existed before.
->      @@ t/t4018/csharp-method-skip-body (new)
->       +		{
->       +		}
->       +		int[] numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
->      -+		var test =
->      -+			from num in Numbers(
->      -+		 	) select num;
->       +		
->       +		// Control
->       +		if (false)
->      @@ userdiff.c: PATTERNS("cpp",
->       +	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
->       +	  * making them look like methods.
->       +	  */
->      -+	 "!(^|[ \t]+)(do|while|for|foreach|from|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
->      ++	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
->       +	 /* Methods/constructors:
->       +	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
->       +	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
-> 
-> 
->  t/t4018/csharp-method               |  10 +++
->  t/t4018/csharp-method-explicit      |  12 +++
->  t/t4018/csharp-method-generics      |  11 +++
->  t/t4018/csharp-method-modifiers     |  13 ++++
->  t/t4018/csharp-method-multiline     |  10 +++
->  t/t4018/csharp-method-params        |  10 +++
->  t/t4018/csharp-method-skip-body     | 112 ++++++++++++++++++++++++++++
->  t/t4018/csharp-method-special-chars |  11 +++
->  t/t4018/csharp-method-with-spacing  |  10 +++
->  t/t4018/csharp-property             |  11 +++
->  userdiff.c                          |  16 ++--
->  11 files changed, 221 insertions(+), 5 deletions(-)
->  create mode 100644 t/t4018/csharp-method
->  create mode 100644 t/t4018/csharp-method-explicit
->  create mode 100644 t/t4018/csharp-method-generics
->  create mode 100644 t/t4018/csharp-method-modifiers
->  create mode 100644 t/t4018/csharp-method-multiline
->  create mode 100644 t/t4018/csharp-method-params
->  create mode 100644 t/t4018/csharp-method-skip-body
->  create mode 100644 t/t4018/csharp-method-special-chars
->  create mode 100644 t/t4018/csharp-method-with-spacing
->  create mode 100644 t/t4018/csharp-property
-> 
-> diff --git a/t/t4018/csharp-method b/t/t4018/csharp-method
-> new file mode 100644
-> index 00000000000..85ff0cb8b5b
-> --- /dev/null
-> +++ b/t/t4018/csharp-method
-> @@ -0,0 +1,10 @@
-> +class Example
-> +{
-> +	string Method(int RIGHT)
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		return "ChangeMe";
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-explicit b/t/t4018/csharp-method-explicit
-> new file mode 100644
-> index 00000000000..083aa094ce2
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-explicit
-> @@ -0,0 +1,12 @@
-> +using System;
-> +
-> +class Example : IDisposable
-> +{
-> +	void IDisposable.Dispose() // RIGHT
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		// ChangeMe
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-generics b/t/t4018/csharp-method-generics
-> new file mode 100644
-> index 00000000000..c472d4a18df
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-generics
-> @@ -0,0 +1,11 @@
-> +class Example<T1, T2>
-> +{
-> +	Example<int, string> Method<TA, TB>(TA RIGHT, TB b)
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		// ChangeMe
-> +		return null;
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-modifiers b/t/t4018/csharp-method-modifiers
-> new file mode 100644
-> index 00000000000..f1c008a4749
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-modifiers
-> @@ -0,0 +1,13 @@
-> +using System.Threading.Tasks;
-> +
-> +class Example
-> +{
-> +	static internal async Task Method(int RIGHT)
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		// ChangeMe
-> +		await Task.Delay(1);
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-multiline b/t/t4018/csharp-method-multiline
-> new file mode 100644
-> index 00000000000..0a20b0cb49c
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-multiline
-> @@ -0,0 +1,10 @@
-> +class Example
-> +{
-> +	string Method_RIGHT(
-> +		int a,
-> +		int b,
-> +		int c)
-> +	{
-> +		return "ChangeMe";
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-params b/t/t4018/csharp-method-params
-> new file mode 100644
-> index 00000000000..18598449008
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-params
-> @@ -0,0 +1,10 @@
-> +class Example
-> +{
-> +	string Method(int RIGHT, int b, int c = 42)
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		return "ChangeMe";
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-skip-body b/t/t4018/csharp-method-skip-body
-> new file mode 100644
-> index 00000000000..c8c9621634d
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-skip-body
-> @@ -0,0 +1,112 @@
-> +using System.Linq;
-> +using System;
-> +
-> +class Example : IDisposable
-> +{
-> +	string Method(int RIGHT)
-> +	{
-> +		// Method calls
-> +		MethodCall();
-> +		MethodCall(1, 2);
-> +		MethodCall(
-> +			1, 2);
-> +		
-> +		// Assignments
-> +		var constantAssignment = "test";
-> +		var methodAssignment = MethodCall();
-> +		var multiLineMethodAssignment = MethodCall(
-> +			);
-> +		
-> +		// Initializations/disposal
-> +		new Example();
-> +		new Example(
-> +			);
-> +		new Example { };
-> +		using (this) 
-> +		{
-> +		}
-> +		var def =
-> +			this is default(
-> +				Example);
-> +		
-> +		// Iteration statements
-> +		do { } while (true);
-> +		do MethodCall(
-> +			); while (true);
-> +		while (true);
-> +		while (true) {
-> +			break;
-> +		}
-> +		for (int i = 0; i < 10; ++i)
-> +		{
-> +		}
-> +		foreach (int i in Enumerable.Range(0, 10))
-> +		{
-> +		}
-> +		int[] numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
-> +		
-> +		// Control
-> +		if (false)
-> +		{
-> +			return "out";
-> +		}
-> +		else { }
-> +		if (true) MethodCall(
-> +			);
-> +		else MethodCall(
-> +			);
-> +		switch ("test")
-> +		{
-> +			case "one":
-> +				return MethodCall(
-> +					);
-> +			case "two":
-> +				break;
-> +		}
-> +		(int, int) tuple = (1, 4);
-> +		switch (tuple)
-> +		{
-> +			case (1, 4):
-> +				MethodCall();
-> +		}
-> +		
-> +		// Exceptions
-> +		try
-> +		{
-> +			throw new Exception("fail");
-> +		}
-> +		catch (Exception)
-> +		{
-> +		}
-> +		finally
-> +		{
-> +		}
-> +		try { } catch (Exception) {}
-> +		try
-> +		{
-> +			throw GetException(
-> +				);
-> +		}
-> +		catch (Exception) { }
-> +		
-> +		// Others
-> +		lock (this)
-> +		{
-> +		}
-> +		unsafe
-> +		{
-> +			byte[] bytes = [1, 2, 3];
-> +			fixed (byte* pointerToFirst = bytes)
-> +			{
-> +			}
-> +		}
-> +		
-> +		return "ChangeMe";
-> +	}
+The core.commentChar code recently learned to accept more than a
+single ASCII character. But using it is annoying with multiple versions
+of Git, since older ones will reject it outright:
 
-Nice! This tests the exlusion patterns.
+    $ git.v2.44.0 -c core.commentchar=foo stripspace -s
+    error: core.commentChar should only be one ASCII character
+    fatal: unable to parse 'core.commentchar' from command-line config
 
-> +	
-> +	public void Dispose() {}
-> +	
-> +	string MethodCall(int a = 0, int b = 0) => "test";
-> +	Exception GetException() => new Exception("fail");
-> +	int[] Numbers() => [0, 1];
+Let's add an alias core.commentString. That's arguably a better name
+anyway, since we now can handle strings, and it makes it possible to
+have a config that works reasonably with both old and new versions of
+Git (see the example in the documentation).
 
-Are these also patterns that should not be picked up? If so, should the
-"ChangeMe" not be later in the file? As written, they would never be
-candidates because there is no diff hunk later in the file.
+This is strictly an alias, so there's not much point in adding duplicate
+tests; I added a single one to t0030 that exercises the alias code.
 
-> +}
-> diff --git a/t/t4018/csharp-method-special-chars b/t/t4018/csharp-method-special-chars
-> new file mode 100644
-> index 00000000000..ec3565fd000
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-special-chars
-> @@ -0,0 +1,11 @@
-> +class @Some_Type
-> +{
-> +	@Some_Type @Method_With_Underscore(int RIGHT)
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		// ChangeMe
-> +		return new @Some_Type();
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-method-with-spacing b/t/t4018/csharp-method-with-spacing
-> new file mode 100644
-> index 00000000000..4143929a711
-> --- /dev/null
-> +++ b/t/t4018/csharp-method-with-spacing
-> @@ -0,0 +1,10 @@
-> +class Example
-> +{
-> +		string   Method 	( int 	RIGHT )
-> +	{
-> +		// Filler
-> +		// Filler
-> +		
-> +		return "ChangeMe";
-> +	}
-> +}
-> diff --git a/t/t4018/csharp-property b/t/t4018/csharp-property
-> new file mode 100644
-> index 00000000000..1792117f964
-> --- /dev/null
-> +++ b/t/t4018/csharp-property
-> @@ -0,0 +1,11 @@
-> +class Example
-> +{
-> +	public bool RIGHT
-> +    {
-> +        get { return true; }
-> +        set
-> +        {
-> +            // ChangeMe
-> +        }
-> +    }
-> +}
-> diff --git a/userdiff.c b/userdiff.c
-> index e399543823b..5a9e8a0ef55 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -89,12 +89,18 @@ PATTERNS("cpp",
->  	 "|\\.[0-9][0-9]*([Ee][-+]?[0-9]+)?[fFlL]?"
->  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
->  PATTERNS("csharp",
-> -	 /* Keywords */
-> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
-> -	 /* Methods and constructors */
-> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-> +	 /*
-> +	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
-> +	  * making them look like methods.
-> +	  */
-> +	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
-> +	 /* Methods/constructors:
-> +	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
-> +	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
-> +	  */
+Note also that the error messages for invalid values will now show the
+variable the config parser handed us, and thus will be normalized to
+lowercase (rather than camelcase). A few tests in t0030 are adjusted to
+match.
 
-I would have appreciated if the comment lines were not so long. We
-already have many long lines of code in this file, but comment lines
-generally stay below the 80 character limit. Also watch out for the
-multi-line comment style (put the opening /* on a line by itself, like
-you did in the comment above).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+An alternative to using "$var cannot ..." in the error messages (if we
+don't like the all-lowercase variable name) is to just say "comment
+strings cannot ...". That vaguely covers both cases, and the message
+printed by the config code itself does mention the actual variable name
+that triggered the error.
 
-> +	 "^[ \t]*(([][[:alnum:]@_<>.,]*[^=:{ \t][ \t]+[][[:alnum:]@_<>.,]*)+\\([^;]*)$\n"
+ Documentation/config/core.txt | 19 ++++++++++++++++---
+ config.c                      |  7 ++++---
+ t/t0030-stripspace.sh         |  9 +++++++--
+ 3 files changed, 27 insertions(+), 8 deletions(-)
 
-I am not 100% sure about the meaning of this expression. But would it
-not match this line, which looks like part of a multi-line expression:
-
-	+ func(x)
-
-and produce a false positive? [Testing myself...] Yes it does. I do not
-know if it is worth fixing as I do not do C#. But if this were patterns
-for C or C++, I would consider it a major problem.
-
->  	 /* Properties */
-> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
-> +	 "^[ \t]*((([][[:alnum:]@_<>.,]+)[ \t]+[][[:alnum:]@_]*)+[^=:;,()]*)$\n"
-
-OK. Since the second of the two words is optional and almost the same as
-the first, I have a gut feeling that the pattern can be expensive to
-match. But since I do not have data to back up my suspicion, let's leave
-it as it is.
-
->  	 /* Type definitions */
->  	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct|record)[ \t]+.*)$\n"
->  	 /* Namespace */>
-> base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
-
--- Hannes
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index c86b8c8408..bbe869c497 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -520,15 +520,28 @@ core.editor::
+ 	`GIT_EDITOR` is not set.  See linkgit:git-var[1].
+ 
+ core.commentChar::
++core.commentString::
+ 	Commands such as `commit` and `tag` that let you edit
+ 	messages consider a line that begins with this character
+ 	commented, and removes them after the editor returns
+-	(default '#'). Note that this option can take values larger than
+-	a byte (whether a single multi-byte character, or you
+-	could even go wild with a multi-character sequence).
++	(default '#').
+ +
+ If set to "auto", `git-commit` would select a character that is not
+ the beginning character of any line in existing commit messages.
+++
++Note that these two variables are aliases of each other, and in modern
++versions of Git you are free to use a string (e.g., `//` or `⁑⁕⁑`) with
++`commentChar`. Versions of Git prior to v2.45.0 will ignore
++`commentString` but will reject a value of `commentChar` that consists
++of more than a single ASCII byte. If you plan to use your config with
++older and newer versions of Git, you may want to specify both:
+++
++    [core]
++    # single character for older versions
++    commentChar = "#"
++    # string for newer versions (which will override commentChar
++    # because it comes later in the file)
++    commentString = "//"
+ 
+ core.filesRefLockTimeout::
+ 	The length of time, in milliseconds, to retry when trying to
+diff --git a/config.c b/config.c
+index 92c752ed9f..d12e0f34f1 100644
+--- a/config.c
++++ b/config.c
+@@ -1560,18 +1560,19 @@ static int git_default_core_config(const char *var, const char *value,
+ 	if (!strcmp(var, "core.editor"))
+ 		return git_config_string(&editor_program, var, value);
+ 
+-	if (!strcmp(var, "core.commentchar")) {
++	if (!strcmp(var, "core.commentchar") ||
++	    !strcmp(var, "core.commentstring")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+ 		else if (!strcasecmp(value, "auto"))
+ 			auto_comment_line_char = 1;
+ 		else if (value[0]) {
+ 			if (strchr(value, '\n'))
+-				return error(_("core.commentChar cannot contain newline"));
++				return error(_("%s cannot contain newline"), var);
+ 			comment_line_str = xstrdup(value);
+ 			auto_comment_line_char = 0;
+ 		} else
+-			return error(_("core.commentChar must have at least one character"));
++			return error(_("%s must have at least one character"), var);
+ 		return 0;
+ 	}
+ 
+diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+index a161faf702..f10f42ff1e 100755
+--- a/t/t0030-stripspace.sh
++++ b/t/t0030-stripspace.sh
+@@ -401,14 +401,19 @@ test_expect_success 'strip comments with changed comment char' '
+ 	test -z "$(echo "; comment" | git -c core.commentchar=";" stripspace -s)"
+ '
+ 
++test_expect_success 'strip comments with changed comment string' '
++	test ! -z "$(echo "// comment" | git -c core.commentchar=// stripspace)" &&
++	test -z "$(echo "// comment" | git -c core.commentchar="//" stripspace -s)"
++'
++
+ test_expect_success 'newline as commentchar is forbidden' '
+ 	test_must_fail git -c core.commentChar="$LF" stripspace -s 2>err &&
+-	grep "core.commentChar cannot contain newline" err
++	grep "core.commentchar cannot contain newline" err
+ '
+ 
+ test_expect_success 'empty commentchar is forbidden' '
+ 	test_must_fail git -c core.commentchar= stripspace -s 2>err &&
+-	grep "core.commentChar must have at least one character" err
++	grep "core.commentchar must have at least one character" err
+ '
+ 
+ test_expect_success '-c with single line' '
+-- 
+2.44.0.727.g4d9414de3a
 
