@@ -1,270 +1,115 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A4F131E4B
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 21:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF704651B7
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 21:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711660140; cv=none; b=dnk+Iq6r7Yc8DugR1YvbsXU4tsGczg8i/j/otO1YdME1ZkEGJ66r7d+YKZV9um9l2JUE0h70jPwChZG5SiHEm2LMqfMWvVF1LHNtdfey7fPy8lfaDj6CXYS9q5pMWcrtIsBIEEz20hMTH1mpRp/dmwFDjltGEoc28eAlsNgIXpE=
+	t=1711660739; cv=none; b=gEv+aW80W1EddNRG0fItZosSvZu9JM4VXBCXEdkzgdvrqgQ1nvY2Oi7pQ4I/4nW3QA6bHTUAq7bcDWOzNtDW+VKtpAzayjw7/Jz95zkCutEtc+CxYFHDXPm7OvfS0UmLq/F78ieLDg38YWZ39NNv6g838p4GtBv1yQ+yuqxAnYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711660140; c=relaxed/simple;
-	bh=n0K3xn65h+Ta8ZhLgwrPT2wX/kZVHOPg5RBghVlNlpg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aRZIA2XteBLDwJD1LLuce646/feFJZPJOz05DH1iDy1BMQXMoK5zWmZxieVsx8phNRMVyRq7qoPMGLjjqrCHAKBPNnEx7z3pOQfh5RHFZdtxdB3+2/ggJn1yFDDyRxRB0SduYwSyPdPu2gLVn8dGlSDwneH+NB3caq2awuJkn40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NcjHvDiW; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711660739; c=relaxed/simple;
+	bh=Q5nU80CaKl7Xk2uq34pLitWOoQAe4gI5qv9r8k6X28o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EAu1MQFb46ogoS5I0GY4Z9c269i0ZLeFuMDdwoaYXaFgYNfo6iGFXkzz/Zcf2Q5ma3KbKSTk/+4GJ3LWCFQlvBcn8Kd6iDow9KszsUc3cz+KJSU22ETkK9jFW0S6HliHuHu1HrSA5+IO25PA9V91HbM30xpEZhXi8LabxMoACZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zZMvzbmn; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NcjHvDiW"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AF1DC299BA;
-	Thu, 28 Mar 2024 17:08:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=n0K3xn65h+Ta8ZhLgwrPT2wX/kZVHOPg5RBghV
-	lNlpg=; b=NcjHvDiWqaO6XWu/q4EUsC1pTJx6h0bpfgB0WEQ1qKn0rBtowGWbyD
-	6eurCjBjBmWfLDK6sA7QzkBfyQ+i4oWRUmTXMMcS2NDCT1fLQ3c5aYkU7ehsuE5x
-	pnFhSPhXYp7E5VRJgl8rvfvqbMTgSRHbEidL7OG1y3txWcKVNcAD0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F3DA299B9;
-	Thu, 28 Mar 2024 17:08:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zZMvzbmn"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 10C6B29979;
-	Thu, 28 Mar 2024 17:08:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,  Han
- Young <hanyang.tony@bytedance.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] t4126: make sure a directory with SP at the end is usable
-In-Reply-To: <xmqqa5miuutd.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	28 Mar 2024 10:31:42 -0700")
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
-	<xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g>
-	<xmqqsf0bz5oj.fsf@gitster.g>
-	<20240328103254.GA898963@coredump.intra.peff.net>
-	<20240328114038.GA1394725@coredump.intra.peff.net>
-	<CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
-	<xmqqa5miuutd.fsf@gitster.g>
-Date: Thu, 28 Mar 2024 14:08:47 -0700
-Message-ID: <xmqqh6gqt674.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AE58F5D49A;
+	Thu, 28 Mar 2024 21:18:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1711660734;
+	bh=Q5nU80CaKl7Xk2uq34pLitWOoQAe4gI5qv9r8k6X28o=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zZMvzbmn2e3kr2fkCA0KD5OpAKlZiAsGSO1bdEKGdiRvQvMe3XWLNwRwsV2W+gR2/
+	 wPoluYdWZXmakUFRjV/YHnstMxThnn4p77b0DmK4pnkGB4pW9oIoyYyigLT4ARdYmt
+	 jnX09Qyv0okjSg0O8uvvVZlvRwbIVmDrKlETpSlJD0Gqu03lffQlUs+4TF9+SDyll+
+	 ol9n1eySQvfiuB3veyhtD0dd9aLSdHqCW2REOBn6perWMkx+KzJn/R+GqkyHC3wwqy
+	 r8hGX+aU/iTZ4Q/W0CnZ9L9RMfvAftrb5BRSg1KSFddJfgIHO8hIyqw7ltIevNTB1v
+	 FhXqgyUdjmukvPro89se8YtHT66ba5PdQaLGaC6gINyw3Z4+SKGsadneKxVvtmT89I
+	 9Qg02J+rJBVL0CQwCBPnJaGvYqCqSrDtoTe378WryzSNYkTn0CLA+PvHgJvq+kTBXM
+	 nwyexgU7kGbhbsBDdQ13UYaYsXzZpjzQVOqJ/KtUovdGTAT6B2c
+Date: Thu, 28 Mar 2024 21:18:53 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH 05/13] credential: gate new fields on capability
+Message-ID: <ZgXevTHIkZoC3vnj@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	M Hickford <mirth.hickford@gmail.com>
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+ <20240324011301.1553072-6-sandals@crustytoothpaste.net>
+ <20240328102053.GA890906@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5F355064-ED47-11EE-BE6F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="p7YjxkPGSYNEp9ww"
+Content-Disposition: inline
+In-Reply-To: <20240328102053.GA890906@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-As afb31ad9 (t1010: fix unnoticed failure on Windows, 2021-12-11)
-said:
 
-    On Microsoft Windows, a directory name should never end with a period.
-    Quoting from Microsoft documentation[1]:
+--p7YjxkPGSYNEp9ww
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	Do not end a file or directory name with a space or a period.
-	Although the underlying file system may support such names, the
-	Windows shell and user interface does not.
+On 2024-03-28 at 10:20:53, Jeff King wrote:
+> I think this "|| return" needs to be "|| exit 0" or similar. The Windows
+> CI jobs fail with:
+>=20
+>   --- a/expect-stderr
+>   +++ b/stderr
+>   @@ -2,3 +2,4 @@ verbatim-cred: get
+>    verbatim-cred: capability[]=3Dauthtype
+>    verbatim-cred: protocol=3Dhttp
+>    verbatim-cred: host=3Dexample.com
+>   +D:\a\git\git\t\trash directory.t0300-credentials\git-credential-verbat=
+im-cred: line 10: return: can only `return' from a function or sourced scri=
+pt
+>=20
+> (actually if you count the line numbers, I think this particular case is
+> the similar "|| return" added to the script later, but both should be
+> fixed).
+>=20
+> It doesn't show up elsewhere because only bash complains, but not dash.
+> Even running the test script with bash isn't enough, because
+> write_script uses $SHELL_PATH under the hood. But building with "make
+> SHELL_PATH=3D/bin/bash test" shows the problem on other platforms.
 
-    [1]: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+I'll definitely make that change.  I run Debian, and I've left the
+default dash as /bin/sh because it's faster, so I didn't notice.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-and the condition addressed by this change is exactly that.  If the
-platform is unable to properly create these sample patches about a
-file that lives in a directory whose name ends with a SP, there is
-no point testing how "git apply" behaves there on the filesystem.
+--p7YjxkPGSYNEp9ww
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Even though the ultimate purpose of "git apply" is to apply a patch
-and to update the filesystem entities, this particular test is
-mainly about parsing a patch on a funny pathname correctly, and even
-on a system that is incapable of checking out the resulting state
-correctly on its filesystem, at least the parsing can and should work
-fine.  Rewrite the test to work inside the index without touching the
-filesystem.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZgXevAAKCRB8DEliiIei
+gWc1AP9zSIuY2VFM9nPpVNRKRodCBGnEU1EFGcuNukff6oaQAwD/dPUm12VUll3x
+wtIbjP4X6ar7b8cSiFJH9wCTF37fKgY=
+=i520
+-----END PGP SIGNATURE-----
 
-    Junio C Hamano <gitster@pobox.com> writes:
-
-    > As this test _is_, unlike the cited patch that was not about a
-    > directory with a funny name, about parsing a patch and applying it
-    > to a path with a directory with a funny name, I am tempted to keep
-    > the test with the filesystem, instead of replacing it with the one
-    > using the "--cached" that Peff suggested.  I am _also_ tempted to
-    > add that "--cached" thing (instead of replacing), though.
-
-    So, I changed my mind and just took Peff's "--cached" approach
-    with no filesystem-based test.  format-patch --range-diff just
-    didn't understand that the single patch corresponds to the only
-    one patch in the older "series", and I had to force it to match
-    them with --creation-factor=999 in a separate invocation.  The
-    patch text has changed too much so it is useless, but the log
-    message change may be easier to see in the range-diff.
-
-1:  7e84d0f64f ! 1:  a107f21ea2 t4126: make sure a directory with SP at the end is usable
-    @@ Commit message
-         and the condition addressed by this change is exactly that.  If the
-         platform is unable to properly create these sample patches about a
-         file that lives in a directory whose name ends with a SP, there is
-    -    no point testing how "git apply" behaves there.
-    +    no point testing how "git apply" behaves there on the filesystem.
-     
-    -    Protect the test that involves the filesystem access with a
-    -    prerequisite, and perform the same test only within the index
-    -    everywhere.
-    +    Even though the ultimate purpose of "git apply" is to apply a patch
-    +    and to update the filesystem entities, this particular test is
-    +    mainly about parsing a patch on a funny pathname correctly, and even
-    +    on a system that is incapable of checking out the resulting state
-    +    correctly on its filesystem, at least the parsing can and should work
-    +    fine.  Rewrite the test to work inside the index without touching the
-    +    filesystem.
-     
-         Helped-by: Jeff King <peff@peff.net>
-         Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-    @@ t/t4126-apply-empty.sh: test_expect_success 'apply --index create' '
-      '
-      
-     -test_expect_success 'apply with no-contents and a funny pathname' '
-    -+test_expect_success 'setup patches in dir ending in SP' '
-    -+	test_when_finished "rm -fr \"funny \"" &&
-    - 	mkdir "funny " &&
-    - 	>"funny /empty" &&
-    - 	git add "funny /empty" &&
-    +-	mkdir "funny " &&
-    +-	>"funny /empty" &&
-    +-	git add "funny /empty" &&
-     -	git diff HEAD "funny /" >sample.patch &&
-     -	git diff -R HEAD "funny /" >elpmas.patch &&
-    -+	git diff HEAD -- "funny /" >sample.patch &&
-    -+	git diff -R HEAD -- "funny /" >elpmas.patch &&
-    ++test_expect_success 'parsing a patch with no-contents and a funny pathname' '
-      	git reset --hard &&
-     -	rm -fr "funny " &&
-    -+
-    -+	if  grep "a/funny /empty b/funny /empty" sample.patch &&
-    -+	    grep "b/funny /empty a/funny /empty" elpmas.patch
-    -+	then
-    -+		test_set_prereq DIR_ENDS_WITH_SP
-    -+	else
-    -+		# Win test???
-    -+		ls -l
-    -+	fi
-    -+'
-    -+
-    -+test_expect_success DIR_ENDS_WITH_SP 'apply with no-contents and a funny pathname' '
-    -+	test_when_finished "rm -fr \"funny \"" &&
-    - 
-    - 	git apply --stat --check --apply sample.patch &&
-    - 	test_must_be_empty "funny /empty" &&
-    -@@ t/t4126-apply-empty.sh: test_expect_success 'apply with no-contents and a funny pathname' '
-    - 	test_path_is_missing "funny /empty"
-    - '
-    - 
-    -+test_expect_success 'parsing a patch with no-contents and a funny pathname' '
-    -+	git reset --hard &&
-    -+
-     +	empty_blob=$(test_oid empty_blob) &&
-    -+	echo $empty_blob >expect &&
-    -+
-    ++	echo "$empty_blob" >expect &&
-    + 
-    +-	git apply --stat --check --apply sample.patch &&
-    +-	test_must_be_empty "funny /empty" &&
-     +	git update-index --add --cacheinfo "100644,$empty_blob,funny /empty" &&
-     +	git diff --cached HEAD -- "funny /" >sample.patch &&
-     +	git diff --cached -R HEAD -- "funny /" >elpmas.patch &&
-     +	git reset &&
-    -+
-    + 
-    +-	git apply --stat --check --apply elpmas.patch &&
-    +-	test_path_is_missing "funny /empty" &&
-     +	git apply --cached --stat --check --apply sample.patch &&
-     +	git rev-parse --verify ":funny /empty" >actual &&
-     +	test_cmp expect actual &&
-    -+
-    + 
-    +-	git apply -R --stat --check --apply elpmas.patch &&
-    +-	test_must_be_empty "funny /empty" &&
-     +	git apply --cached --stat --check --apply elpmas.patch &&
-     +	test_must_fail git rev-parse --verify ":funny /empty" &&
-    -+
-    + 
-    +-	git apply -R --stat --check --apply sample.patch &&
-    +-	test_path_is_missing "funny /empty"
-     +	git apply -R --cached --stat --check --apply elpmas.patch &&
-     +	git rev-parse --verify ":funny /empty" >actual &&
-     +	test_cmp expect actual &&
-     +
-     +	git apply -R --cached --stat --check --apply sample.patch &&
-     +	test_must_fail git rev-parse --verify ":funny /empty"
-    -+'
-    -+
-    + '
-    + 
-      test_done
-
- t/t4126-apply-empty.sh | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
-
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-index eaf0c5304a..2462cdf904 100755
---- a/t/t4126-apply-empty.sh
-+++ b/t/t4126-apply-empty.sh
-@@ -66,26 +66,29 @@ test_expect_success 'apply --index create' '
- 	git diff --exit-code
- '
- 
--test_expect_success 'apply with no-contents and a funny pathname' '
--	mkdir "funny " &&
--	>"funny /empty" &&
--	git add "funny /empty" &&
--	git diff HEAD "funny /" >sample.patch &&
--	git diff -R HEAD "funny /" >elpmas.patch &&
-+test_expect_success 'parsing a patch with no-contents and a funny pathname' '
- 	git reset --hard &&
--	rm -fr "funny " &&
-+	empty_blob=$(test_oid empty_blob) &&
-+	echo "$empty_blob" >expect &&
- 
--	git apply --stat --check --apply sample.patch &&
--	test_must_be_empty "funny /empty" &&
-+	git update-index --add --cacheinfo "100644,$empty_blob,funny /empty" &&
-+	git diff --cached HEAD -- "funny /" >sample.patch &&
-+	git diff --cached -R HEAD -- "funny /" >elpmas.patch &&
-+	git reset &&
- 
--	git apply --stat --check --apply elpmas.patch &&
--	test_path_is_missing "funny /empty" &&
-+	git apply --cached --stat --check --apply sample.patch &&
-+	git rev-parse --verify ":funny /empty" >actual &&
-+	test_cmp expect actual &&
- 
--	git apply -R --stat --check --apply elpmas.patch &&
--	test_must_be_empty "funny /empty" &&
-+	git apply --cached --stat --check --apply elpmas.patch &&
-+	test_must_fail git rev-parse --verify ":funny /empty" &&
- 
--	git apply -R --stat --check --apply sample.patch &&
--	test_path_is_missing "funny /empty"
-+	git apply -R --cached --stat --check --apply elpmas.patch &&
-+	git rev-parse --verify ":funny /empty" >actual &&
-+	test_cmp expect actual &&
-+
-+	git apply -R --cached --stat --check --apply sample.patch &&
-+	test_must_fail git rev-parse --verify ":funny /empty"
- '
- 
- test_done
--- 
-2.44.0-368-gc75fd8d815
+--p7YjxkPGSYNEp9ww--
