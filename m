@@ -1,57 +1,53 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2661879
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22F1E52A
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711647106; cv=none; b=bdV8I5cX394eEYeQ0cOPEpXzMfHCu2HuDrr5ubPe/0OKC/SASyX3cSGu7aH/yvnFJ5SckYUfyxsiV8s+TOR/7WDlHCXrb7xHEPSLs6Hg9N4o3ngVmd3/6iOZQcdpapQP2txLG9XdMBxI0o4UukYPu/I/gzhhuxkjK0Er1/IrV6k=
+	t=1711647369; cv=none; b=iWdMuxtdTYKA6q2CpazV0vR8PmoDDDypkh+c5W9PSp5nRQBT0mXlkTDLgzH9OTRkM18CZ2hIyGH41D3NVFlXzLNtsu4ndF6v1Kp3pAbJxN3QVrhMgkhzETgEkpdfWwnio2uWLskKIJqRpMibklBvi5BiklXCj+pNRwS/tvR5E3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711647106; c=relaxed/simple;
-	bh=vuIvJH6sgR7wM3trNhididDYl+FqX2yrdUAbqvsNrOk=;
+	s=arc-20240116; t=1711647369; c=relaxed/simple;
+	bh=06Den4qOw0+T3WlB/25TD62elBXyO4lEgiHEPAUc4uM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IJF2wF38QC4TtqlMB67GMPLLM1PECd2VIc4aEDg/4s14z/nMCE9S9i9B7uiH8Oxszsy5t6v5Qq8odaWWuoYdgn5fai33joQ2TPomQDIT8PmsEryoAbxlO8ZsK6ciHNh/3QQ4Gd7sIvaX1NUd5vugLClwn2XrO3l/l6hF8DqhW5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sUN5uYOs; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=En+bYeEIOixOt4UGaVetVHIX22F1ASCvQ7a6aczqxjpIk+Qie2Pk8jyLWoBREJjn+K/xw6TKXSdK6z+H2kDUxP4MycLo1SC64FmKFH6bDhzpFqQGglGiqmeDep/39wzkw/oYb9J92ypElHUjeG7ciWMDH6+3/Ld6yUBX5qEdWsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ycSSNOrz; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sUN5uYOs"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BFA2A1EBB62;
-	Thu, 28 Mar 2024 13:31:43 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ycSSNOrz"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5960D1E376;
+	Thu, 28 Mar 2024 13:35:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=vuIvJH6sgR7wM3trNhididDYl+FqX2yrdUAbqv
-	sNrOk=; b=sUN5uYOsxUBEhmZ8b7HTAUGERJg3mDV3la5UK8Lw8BJWfL03Vsm6zA
-	u7WCWlP4CLNLyKpzY7l2nauDbpUOICe0fpczpQvcAmzorF/09N+VnxRDCOiNb9Mj
-	XYYmCIQelBiOXbI8ITnSf4JqImN/45iDuvDXiOKrkdLi/1g325cxE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B58451EBB61;
-	Thu, 28 Mar 2024 13:31:43 -0400 (EDT)
+	:content-type; s=sasl; bh=06Den4qOw0+T3WlB/25TD62elBXyO4lEgiHEPA
+	Uc4uM=; b=ycSSNOrzZ3h8frtfsvNmnKrU6TIBgYAB/LInsQ8tJECMwbfEMGTOCW
+	IF/q2WJq+L6s7BCNUahOgCYmfYJiOzrnqf0K3js1mpuZHwTeKYdhRwAANLUZokbQ
+	kix8DSgz9H/R1kwB4NlXQeCXeZ41vvMMYJH0iDZJMNEIa+ooGCvpE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 521181E375;
+	Thu, 28 Mar 2024 13:35:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 10D981EBB60;
-	Thu, 28 Mar 2024 13:31:43 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DC3811E36B;
+	Thu, 28 Mar 2024 13:35:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Han Young
- <hanyang.tony@bytedance.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/1] quote: quote space
-In-Reply-To: <CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 28 Mar 2024 13:05:10 -0400")
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
-	<xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g>
-	<xmqqsf0bz5oj.fsf@gitster.g>
-	<20240328103254.GA898963@coredump.intra.peff.net>
-	<20240328114038.GA1394725@coredump.intra.peff.net>
-	<CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
-Date: Thu, 28 Mar 2024 10:31:42 -0700
-Message-ID: <xmqqa5miuutd.fsf@gitster.g>
+To: zhang kai <kylerzhang11@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Update message_advice_pull_before_push to mention how to push
+ after rebasing
+In-Reply-To: <CAK_130RadXce-_PwnZTzJ6qmr3m=OXd2M9bCj2gggM49RxL9=g@mail.gmail.com>
+	(zhang kai's message of "Fri, 29 Mar 2024 01:19:23 +0800")
+References: <CAK_130T8sZUZAuvj4x7sB278kVL7ARaBv3Pg2djQB45O+7xKTg@mail.gmail.com>
+	<xmqqo7aywfc5.fsf@gitster.g>
+	<CAK_130RadXce-_PwnZTzJ6qmr3m=OXd2M9bCj2gggM49RxL9=g@mail.gmail.com>
+Date: Thu, 28 Mar 2024 10:35:53 -0700
+Message-ID: <xmqq5xx6uume.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,27 +57,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 0B1B89A8-ED29-11EE-BFF1-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ A135A158-ED29-11EE-A945-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+zhang kai <kylerzhang11@gmail.com> writes:
 
-> This reminded me very much of [1] which exhibited the same failure
-> mode and was due to the same limitation(s) of the OS.
->
-> [1]: https://lore.kernel.org/git/20211209051115.52629-3-sunshine@sunshineco.com/
+> Updates were rejected because the tip of your current branch is behind
+> its remote counterpart. If you want to integrate the remote changes,
+> use 'git pull' before pushing again. If this is not the case, you may consider
+> `git push --force-with-lease`.
+> See the 'Note about fast-forwards' in 'git push --help' for details.
 
-Ahhhh.  That one gives the official excuse to apply the band-aid.
-You quoted from their documentation
+True, but isn't that a slipperly slope to cram more and more of the
+material from the manual into the "hint" that is supposed to be
+short, helpful and not so obnoxious?  Perhaps removing "pull again
+before you push", and saying "updates were rejected because X; see
+the note about fast-forwards in the manual" and nothing else would
+be an improvement?
 
-    Do not end a file or directory name with a space or a period.
-    Although the underlying file system may support such names, the
-    Windows shell and user interface does not.
-
-As this test _is_, unlike the cited patch that was not about a
-directory with a funny name, about parsing a patch and applying it
-to a path with a directory with a funny name, I am tempted to keep
-the test with the filesystem, instead of replacing it with the one
-using the "--cached" that Peff suggested.  I am _also_ tempted to
-add that "--cached" thing (instead of replacing), though.
-
-Thanks
+Thanks.
