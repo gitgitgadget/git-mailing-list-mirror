@@ -1,84 +1,83 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789FA7C0B5
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9357CF17
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711621275; cv=none; b=BXUf5H55IVM0mOzUMrsqpDHycHAm9sNe1ak5ZbLEH99ED705nz23i4vOI5MazjqmlK7esjoBeYUArutu3ej5SFN/dkrGKg1Mq7Zg2rDpHxLrcfR7BaU2F5Fg2tQA0WrJL6zb/7CJlAf91ugk2ppo1tgQEGEFBwV5OJxEsy3kuco=
+	t=1711621977; cv=none; b=RNIiVbazrnyPTPzla4AnEgl+ee8Ikbbl60qup38cS2mTkhtGYiGjoRAhndw5CHMvSeJCgMP15RotybLRCqGlLEbPqcUWxBkzQXCaPPQrQwWBzA3K1muF8DRBwR8ro03Zgwc5BR5wMqDGMxPzwN48nVxv99s70N6mLlrX5JquOD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711621275; c=relaxed/simple;
-	bh=9EvsvwW4svKmn6hfua68baAamr31s1J+XXFW7GKOup8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DZoKTHLI7e9+7Exy6ydUrAvtapdyYDxDMoVwYAOc7WIlG6E4aIxN2WeSlE3y2WMYGWVWXELrxLa9KGTfYvjD/k52CAWG+oAH5m7x4gYYV2zuiTivA93T72OeNp+mIsCizvofFNpoFQl1Mg3zgxin0K+CQZ6Xo/gy+cVG5fcPjxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-69625f89aa2so6076656d6.3
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 03:21:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711621272; x=1712226072;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1k4HMRegsWoD0Vl23N1VbW2usjhHV40bJ+S2b6QURd4=;
-        b=DReC94NI3AgL4BmQhzOVkH5WS1gqR/61k4WMbvc5bWj8Lb/p9VbKse4+pLHXaBAND5
-         bqwRU3JeuecVZy5hnJ5U+/aLtDXRlKziTqiw0ip7wNLweQFpTadUxgCJlTsCf9bQKSjy
-         DvtoXqJWd94V6s/yeGDZhzWEN9MhKck5UT6ghAvanZt1/Dno52d1xgCfgxs10pmNaa6O
-         TLSNwbl+o45mjC3fsIO1hanoZaTVwBkB4Y4NMMcrHYM7Jq+m7ob5+DmO1tftNpM/sgvU
-         JPXLK6IUEOa613fVsoSnFcm+7xygQxYLRCVRFxwRCHjILcm/H48huTxo/2+PmcCRH9MH
-         91eg==
-X-Forwarded-Encrypted: i=1; AJvYcCXH1Y1LfKjvEvLb7vLS0tFo5Mce4uuLEuh0iL28QhG6CsVAsZCnx5+No7XD34I1ZzTRTtVGhDqLDz1tnUO6P75/+ABC
-X-Gm-Message-State: AOJu0Yx+9ozMHaSxB+eef6B83aBG86ixocFXMRBm/r4eSt+KHMa7xDUk
-	9YukpYlRZqCTrTrpYYLux3T6tQ+929qsYBBHABbgj+zvnB0d5T+POAlFNkexTEhHKtt7nBBz1i8
-	d/MvndCLg5gepdH+BJtHgw+VsA54=
-X-Google-Smtp-Source: AGHT+IFhKwc3v9Y5KwYa8FoUp3I3+3drjCqvdhXw6lS/ub65tBuhHFP/AuzIoiOPdfel5UVkCF4TxpxyO79dUhp/Ak0=
-X-Received: by 2002:ad4:5507:0:b0:696:990b:dfeb with SMTP id
- pz7-20020ad45507000000b00696990bdfebmr1989691qvb.16.1711621272396; Thu, 28
- Mar 2024 03:21:12 -0700 (PDT)
+	s=arc-20240116; t=1711621977; c=relaxed/simple;
+	bh=FcXmgLG6NRoAgxteyoQH4yVdA4xTVd7qP294lE8ZI7Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m4RBPSgx9gAcWbkonol6NqMKJjFOSlTZ/yKcInzvpN+l3T6huRKPLuFLLcRgB573Hob0ygm25YCIlBhC+uPE4+rs5aAFxKa+Cw84N5PYsjnhgr5p/PLM36mPWHmJfEhR5rv095iW4xpU+pTM+xuQoXmymXCXO5+Fo6zu2iriZ0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 3677 invoked by uid 109); 28 Mar 2024 10:32:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Mar 2024 10:32:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4718 invoked by uid 111); 28 Mar 2024 10:32:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Mar 2024 06:32:59 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 28 Mar 2024 06:32:54 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Han Young <hanyang.tony@bytedance.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/1] quote: quote space
+Message-ID: <20240328103254.GA898963@coredump.intra.peff.net>
+References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
+ <xmqqttl2qml9.fsf@gitster.g>
+ <xmqqfrwlltjn.fsf@gitster.g>
+ <xmqqsf0bz5oj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1702.git.1711318739.gitgitgadget@gmail.com>
- <202ed891463c134904b89a0d746d85bb62338d52.1711318739.git.gitgitgadget@gmail.com>
- <20240328100658.GA883510@coredump.intra.peff.net>
-In-Reply-To: <20240328100658.GA883510@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 28 Mar 2024 06:21:00 -0400
-Message-ID: <CAPig+cSEJA9DiiGL3eFekkicMoaEET=2Tm-RkW+p65f7Q=2L3g@mail.gmail.com>
-Subject: Re: [PATCH 2/4] doc: allow literal and emphasis format in doc vs help tests
-To: Jeff King <peff@peff.net>
-Cc: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsf0bz5oj.fsf@gitster.g>
 
-On Thu, Mar 28, 2024 at 6:07=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> On Sun, Mar 24, 2024 at 10:18:57PM +0000, Jean-No=C3=ABl Avila via GitGit=
-Gadget wrote:
-> > +                     s/{empty}\|_\|`//g;
->
-> It looks like this doesn't work in the macos CI jobs. E.g., this run:
->
-> I think the issue is that "|" alternation is not portable. In GNU sed,
-> doing "\|" with BRE is enough, but in BSD sed you need to enable ERE
-> with "-E". I'm not sure how portable that is (we do seem to have at
-> least one instance in t6030, so maybe it's OK). The most basic
-> alternative is just splitting it like:
+On Wed, Mar 27, 2024 at 03:11:08PM -0700, Junio C Hamano wrote:
 
-After reading a patch very recently which used `sed -E`, but before
-responding that it was not portable and wouldn't work on macOS, I did
-a bit of research and was surprised to find that it is POSIX, and that
-(at least) relatively recent macOS does support it. I recall that I
-also spotted the existing instance in t6030, thus didn't respond after
-all.
+> This seems to fail only on Windows, and I have run out of my today's
+> allotment of time for this topic.
+> 
+> The earlier part that creates the directory with a trailing SP,
+> redirects to a file in such a directory to create an empty file, and
+> adds that path to the index, all succeed and follow the &&-chain,
+> but the step that runs "git diff" with "funny /" (i.e. the name of
+> the directory a trailing slash) as the pathspec produces an empty
+> patch, and "git apply" would of course choke on an empty file as an
+> input.
+> 
+> With the following band-aid, we can skip the test and the output
+> from "sh t4126-*.sh -i -v -x" might give us a clue that explains how
+> such a failure happens.  Unfortunately GitHub CI's win test does not
+> give us insight into a test that did not fail, so I did not get
+> anything useful from the "ls -l" down there (I already knew that
+> sample patches are empty files).
 
->   s/{empty}//g;
->   s/[_`]//g;
+We package up the failed test output and trash directories for each run.
+You can find the one for this case here:
 
-That said, I'm not sure how recently macOS started supporting `sed
--E`, so what you propose here may be a good idea anyhow; and it's
-certainly going to be more portable done this way.
+  https://github.com/git/git/actions/runs/8458842054/artifacts/1364695605
+
+It is sometimes misleading because we don't run with "-i", so subsequent
+tests may stomp on things. But in this case the failing test is the last
+one. Unfortunately, I don't think it shows us much, because the state we
+tried to diff is removed by the test itself (both the funny dir and the
+index after we tried to add it).
+
+So I don't know if we failed to even create "funny /" in the first
+place, if adding it to the index failed, or if the diff somehow failed.
+
+On the plus side, while trying to find the failing CI job, I ran across
+and diagnosed two other unrelated failures in "seen". ;)
+
+-Peff
