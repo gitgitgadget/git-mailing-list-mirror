@@ -1,108 +1,75 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2E42B9A7
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 19:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7815544376
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 19:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711653394; cv=none; b=I20xHyCyWx9rQDDLvC+C5mS+ter0tVM/5DjTJvql1QK558vmC6KgkXcC78pmF57FY9HK3f5zrYM7GXyeJBvrfrXuqbuA5org/WPpGIyfN+ye2RuZBXiN5fff0ytFBGBNxjVCyn1h7FefKJ919wCMvXTAHQuzy6FAcx8V/VG35uk=
+	t=1711654401; cv=none; b=kD276J60Hhl6iRevg2tvlKSg+kRONK2zbv0BBkgjgpTeOBBrgS5bSATlRBzceTVh7qKyv9VFl7sR6tml7hEu0MhFPWNdpL+gRSKdqSjAHAyEyxDs4XsRiCxX1HSEfYlrfJBiZYib6mT4NIhsYo8x/9dJdnVT5WtreWO6nYKNO7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711653394; c=relaxed/simple;
-	bh=5tuvkvZBsIAtIO/EjF8BLg4WBjctFtIByxBw4F8Oe+w=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=mzLPI/wZnVk+XpfcjlaiCeGafx2T2qt/93iOH3pplRiliZqKcH9tqPriyKs/nh3yKymMNxgSqcbNjrhoBRScXeamwlfKBwdIeVAO2xnoY3gVSpHLBb8bxR57SL0SJkODIPkJBaNMpPWPFSl06M4gsGhEQpENdpH+I4izmsfTE3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=UAjvyFPq; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1711654401; c=relaxed/simple;
+	bh=j735oIc3vii5VjKndbOc1pIkf5TKjnKYdlXVWF8hjZM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UWdVR5iwJ8O2+ot1TkdWCzXUimQZe28EkXiYEfrLW3mpowHrWwCLCDm7s2zwZFr85lX4klBdxs6ODUlAWaYeQuk2e8XOP+m+O4il3vvHgRnK6YsC2nf09bR0R+5CwEXOlH1rT5V5WdgFCTLmLQsLn7+rNnsDf1oKMCVdfVlWtEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lc1XXXjH; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="UAjvyFPq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lc1XXXjH"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 319EB1DD671;
+	Thu, 28 Mar 2024 15:33:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=j735oIc3vii5VjKndbOc1pIkf5TKjnKYdlXVWF
+	8hjZM=; b=lc1XXXjHcZo3oo+s2qwiuy8jXADhYpObE9ImT4CgTd77yiFue8GiM1
+	cjwAZB40yqrkyS6OtE7zrmLTRECB15CMR8fpqgqt7CzJ6hno1gZAKpJaPEswe+8Z
+	wighhYVWnc9HTnsyUCs8b3HkpqEg51IQm6Y9rsysmE7Qse9HMo2Ik=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28ED61DD670;
+	Thu, 28 Mar 2024 15:33:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 865D51DD66F;
+	Thu, 28 Mar 2024 15:33:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  Jeff
+ King <peff@peff.net>,  Linus Arver <linusa@google.com>,  Johannes Sixt
+ <j6t@kdbg.org>,  Steven Jeuris <steven.jeuris@gmail.com>,  Steven Jeuris
+ <steven.jeuris@3shape.com>
+Subject: Re: [PATCH v4] userdiff: better method/property matching for C#
+In-Reply-To: <pull.1682.v4.git.git.1711653257043.gitgitgadget@gmail.com>
+	(Steven Jeuris via GitGitGadget's message of "Thu, 28 Mar 2024
+	19:14:16 +0000")
+References: <pull.1682.v3.git.git.1711613220277.gitgitgadget@gmail.com>
+	<pull.1682.v4.git.git.1711653257043.gitgitgadget@gmail.com>
+Date: Thu, 28 Mar 2024 12:33:15 -0700
+Message-ID: <xmqqv856tamc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1711653388;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=To+BMFvP5DAPYll8HbNHAxYQofxDMVF0e0Mn07qk4sY=;
-	b=UAjvyFPq/jeos9VqbCpoLoLzx7mme1DItYd+ZcG2zO8v2oB+Un/1CmR+3EQkWlr7t83iA9
-	7TbVOp6LIvLUdPwTntiXEuXYvoiXhz9MzBHV38hGDFmig1WY8xwGiwFaSAjBNpJqY6hrjq
-	bjw5nl6hd1oVYdKZA/bRAll9bkSz52IPl6SiMWga5oaOqz3oUjc+j1/ErAz/ddiwRwQxft
-	e15S159E6c6rGuiDssKEEHXWMe+We3/htWTtdsjgi7NYIIsgGC77uWM9/meq6+5skDmwZa
-	97/hV6yF4SCSsm5st+w/H2qMbqrr0ZF7IQ2B4hvPaN1hSDsxIRj2E4GOl0/Twg==
-Date: Thu, 28 Mar 2024 20:16:28 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eugenio Bargiacchi <svalorzen@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Better visual separation of hunks in `git add -p`
-In-Reply-To: <CAHfn=+s5_hvV1osP1HFjWs4wxRfr9YUW-9=WkXbgSp-8sPZ-Qg@mail.gmail.com>
-References: <CAHfn=+snXChcPFiEgxvK=XFCq2uVMKQTyfrN9RNfAod18d0V=Q@mail.gmail.com>
- <xmqqo7ayuwpi.fsf@gitster.g> <a9cffbe4aadd319760635ca6d5b4f465@manjaro.org>
- <xmqq1q7uusin.fsf@gitster.g> <1b81a013dd0faccdc24fe018fd740755@manjaro.org>
- <CAHfn=+tsrgAyUUqUkq4TpXcABr7=ZcH+cna+vwALJqZ3H8LxFA@mail.gmail.com>
- <26f8d21dfd53d699804485b0f8c6abe1@manjaro.org>
- <CAHfn=+s5_hvV1osP1HFjWs4wxRfr9YUW-9=WkXbgSp-8sPZ-Qg@mail.gmail.com>
-Message-ID: <de182310842ea3ff04c171a271587ca1@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 065D3E28-ED3A-11EE-BC3C-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 2024-03-28 20:08, Eugenio Bargiacchi wrote:
-> But then each can configure it specifically for their terminal, no? Or
-> are you afraid that a user may use different terminals at the same
-> time, so the same config would be applied, so it would not work? In
-> any case, my suggestion was aiming mainly to avoid having to add
-> multiple options while allowing to freely customize the separators,
-> but if that will not work in general to clear, that makes sense as
-> well.
+"Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Of course, users could pick the right escape sequences for their
-terminals, but as you already noted, the same configurations could
-end up being used on different terminals.  For example, even SSHing
-into a machine using a different SSH client could lead to a mess.
+>     As before, I ran into many regex limitations (no possessive quantifiers,
+>     no lookahead). It also seems different regex evaluators are used on
+>     different test runs. Which one does git diff use? Maybe it is about time
+>     to update this? E.g., if speed is a concern, possessive quantifiers can
+>     speed up search.
 
-
-> On Thu, 28 Mar 2024 at 20:04, Dragan Simic <dsimic@manjaro.org> wrote:
->> 
->> On 2024-03-28 20:01, Eugenio Bargiacchi wrote:
->> >> Here's a possible solution, or better said a new configuration option,
->> >> which I've been thinking about for a while...  When running "add -p",
->> >> displayed chunks can sometimes become confusing or a bit hard on the
->> >> eyes, but simply clearing the screen _before_ displaying any new step
->> >> (i.e. a new chunk, interactive help, etc.) could make it much easier
->> >> on the eyes.  It would be a new option, of course.
->> >
->> > In my head, an option to print an arbitrary string would be amazing,
->> > since then if wanted one can print a special character that clears the
->> > screen, or simply add some space, or something else.
->> 
->> Huh, letting the users handle screen clearing that way could be rather
->> problematic, because different terminals may do it differently.
->> 
->> > On Thu, 28 Mar 2024 at 19:29, Dragan Simic <dsimic@manjaro.org> wrote:
->> >>
->> >> On 2024-03-28 19:21, Junio C Hamano wrote:
->> >> > Dragan Simic <dsimic@manjaro.org> writes:
->> >> >
->> >> >> Here's a possible solution, or better said a new configuration option,
->> >> >> which I've been thinking about for a while...  When running "add -p",
->> >> >> displayed chunks can sometimes become confusing or a bit hard on the
->> >> >> eyes, but simply clearing the screen _before_ displaying any new step
->> >> >> (i.e. a new chunk, interactive help, etc.) could make it much easier
->> >> >> on the eyes.  It would be a new option, of course.
->> >> >
->> >> > Or your 'p' option can have a 'P' variant that clears before prints.
->> >> > I have this feeling that even those who want clearing of the screen,
->> >> > they do not want it always on, when many of their hunks are 7 lines
->> >> > long.
->> >>
->> >> That would be even better.  Though, would adding new short
->> >> command-line
->> >> option to git-add be frowned upon?
+When you make regcomp(3) and regexec(3) calls, you'll be using the
+system library that supplies them.  IOW, we use whatever is on the
+system.
