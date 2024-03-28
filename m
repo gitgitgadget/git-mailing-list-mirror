@@ -1,164 +1,107 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526001DDD1
-	for <git@vger.kernel.org>; Wed, 27 Mar 2024 22:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2A1BE4F
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 00:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711577473; cv=none; b=jYPsM3+dPlmP9LTtz2B1UDb9loUJiIAYNW+OT5HAIbDBIoPw9Tr/XaJy7vsvxj0hNBptxNvc7DWCJtCorU6oF7dmAF1Q9R5JzrySDrsdIctXyt/swMVhoDOc+5OMQGxCrL6wuA9ybf2Syy4jFn3+tpqc6o1p+dntK15qwhe9y5c=
+	t=1711586357; cv=none; b=R8ckALH69bxLkmW7qTDDiil0IbUA0BT0zjGwpWUqketop2ink/mnmQdXPD181HWAElZkVjMpfgmKdkD/cjBRM0XiZCUWG0YbVzMKjOZWsKIv6PxhY7xIw/OOMbthAPwlwZCCkh2fGOLK2FmjLW1Y5e3iQWMJCwABlo6su8Zkt0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711577473; c=relaxed/simple;
-	bh=pSd+Qnbq8Sja4Hv8qAvgDLUDrvRYzI3+EqshfGRZXho=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jFJ4EXiwI+foIJODqSGIl+k5AL1Pj/zfXnwr4blZH7GsRpAtQd6B+vHs+WDmAgyihBkZAIHyKmBVp/iQmZLuhD0sFA3B2PIOXQwDhfaGCUz1pwUepSbVbQtsUsoU3f06vcgSCrEcdibZSPQ1eXcB5WdLxOyQfjohJJfvSkDwx7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vG+8mF51; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711586357; c=relaxed/simple;
+	bh=cW81BWiyZI0tvusHgzSMZcTNr/ejWXLfJE8frOpa2a8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AFOl2umdLgeUDP+YY7qVgmDwhmsuPJUtauOWVvd0XihjDF8Urso7ObTepvNTXbeLSbEr/fMr/D4ehn1zfCwJZTo8AKpiap2Hd+gF9PPFOF4XNYl5cf5hzPcYl2U5Y+vbCWfkEyGGswg9FGpbwo6+vGRwiEyodNmsCiWKAdDIEYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eHppXnGv; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vG+8mF51"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 20C041E4861;
-	Wed, 27 Mar 2024 18:11:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pSd+Qnbq8Sja4Hv8qAvgDLUDrvRYzI3+EqshfG
-	RZXho=; b=vG+8mF51ZHbn0pzUDhT3HcVxjiZ8ARXfXReS9vvMhtTiYS/ikOByes
-	IBBDqxdEBkPCcPyXuNee0SdN8tM67j302x0GvTxAJou1Pn7rzYy0TlDZwvP3U5uP
-	Eqkhp1+WUCg2+chadpsGDJ9ohsh28EU8Cv6PZ7MMuYH9pJ8weBrg8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 134181E4860;
-	Wed, 27 Mar 2024 18:11:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B0071E485F;
-	Wed, 27 Mar 2024 18:11:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>, Jeff King <peff@peff.net>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/1] quote: quote space
-In-Reply-To: <xmqqfrwlltjn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	19 Mar 2024 15:56:44 -0700")
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
-	<xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g>
-Date: Wed, 27 Mar 2024 15:11:08 -0700
-Message-ID: <xmqqsf0bz5oj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eHppXnGv"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33ed4dd8659so973593f8f.0
+        for <git@vger.kernel.org>; Wed, 27 Mar 2024 17:39:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711586354; x=1712191154; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7ikN26aDjYKr6p5OdzJptbKi1tKTBT57sC7CHecdTQA=;
+        b=eHppXnGvG7AfQq2+aYzR++giJfiyao6dm0g3uWrB8q5FDx976sU/EMftd+297xOtNn
+         pGEWv/DZN50YozdkU+XhCEc0lJlbViI0vSvKsFeujJ++XtbzFf4OZTT/0wiZx2RQ7E2U
+         PaCgxVgjyfarMGxeLEc7mTcPLrlBtBWpcC1cAWyjc6PqFVymc4xPNqhkQjo526mW/Daf
+         l5eIeF0OqasrlmwdKW+NMhVkI0GR2Ec7+at8DiB+93W1SJgduAxEYav/8XkD8+wD5/nN
+         00zbyi0l0yVWf9Y1aF0mlKM3dPDS5fgp6dDEqBFafphz4us+V4EJjAWJij7hFGzq454X
+         UCcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711586354; x=1712191154;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7ikN26aDjYKr6p5OdzJptbKi1tKTBT57sC7CHecdTQA=;
+        b=ORXzwlkH6M2y9NClAJt6a905rzr6IuWpLtxqxgBslVjG3NrHTyjCKoUoNHjP+zKj/f
+         dOqzwejzyjHuJqHfNHdyBRNA69/0FwkJDbdYNmJBPnq/XBs5whEzIhTP/bgOD6NY9sTh
+         5vzvQJddIsYv2Gz85h7msjvD0Z5y3ij19aob34t9lQfBbkfLfYVhfllvD3HtzEPzbM6P
+         5ua7MxiCUvjpCsbAd2wpQETKak4Jy1NrlP0R3fSqsWAqnEsSujAmD7kVuiyVhp8rMtPc
+         AK6tJvoeWu1EiIfl8Gwgf8V06Fdcd5sGbNhm7lPBOmGG8BixsmzKBPyFHGhtbWsexDhK
+         hJPg==
+X-Forwarded-Encrypted: i=1; AJvYcCWsuFCSHSdt1GPpFygOW5y0TY3NM5mrPMdyBsgsUxxM19Pvph5pNsipe1Gs8znW6sgvgyjghpY1MoMhrfTFbZnFcuZS
+X-Gm-Message-State: AOJu0YzQEIeNHrxUr1cunJ7Hs3/CrVxTUn0CYDgb0EdkSvZuEnqMrQBK
+	QF/jqipJ8+7PVg2DIopwb/5POhNKmMxB/aW5re7LsCk7H9eCebDZ
+X-Google-Smtp-Source: AGHT+IHwG0krbJJwwrl+y9OZ8BgOQwphUd0vlPV8AMV/rnMfkUwVSPS8oyBwhZqKt01vfzZ7XRBIIg==
+X-Received: by 2002:a5d:6781:0:b0:341:e382:3b6d with SMTP id v1-20020a5d6781000000b00341e3823b6dmr586821wru.32.1711586353817;
+        Wed, 27 Mar 2024 17:39:13 -0700 (PDT)
+Received: from gmail.com (200.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.200])
+        by smtp.gmail.com with ESMTPSA id s7-20020adfecc7000000b0033e239040d8sm292057wro.84.2024.03.27.17.39.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Mar 2024 17:39:13 -0700 (PDT)
+Message-ID: <5abeffbe-892a-468f-8d2c-40016662b0d9@gmail.com>
+Date: Thu, 28 Mar 2024 01:39:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EAACAC30-EC86-11EE-A776-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] add-patch: do not print hunks repeatedly
+To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
+ <6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
+ <c123bf09-7f4c-46f5-aa09-48b2816bf85d@gmail.com>
+ <b3c6a5dd-2d78-4149-95f4-57cf8bd1240a@gmail.com>
+ <db774d76-5ecb-4b4d-9ede-dce0217c324b@gmail.com>
+ <b578630c-08d5-4a85-85db-c0bdb24a8486@gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <b578630c-08d5-4a85-85db-c0bdb24a8486@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Mar 27, 2024 at 11:06:49AM +0000, Phillip Wood wrote:
 
-> diff --git c/t/t4126-apply-empty.sh w/t/t4126-apply-empty.sh
-> index ece9fae207..eaf0c5304a 100755
-> --- c/t/t4126-apply-empty.sh
-> +++ w/t/t4126-apply-empty.sh
-> @@ -66,4 +66,26 @@ test_expect_success 'apply --index create' '
->  	git diff --exit-code
->  '
->  
-> +test_expect_success 'apply with no-contents and a funny pathname' '
-> +	mkdir "funny " &&
-> +	>"funny /empty" &&
-> +	git add "funny /empty" &&
-> +	git diff HEAD "funny /" >sample.patch &&
-> +	git diff -R HEAD "funny /" >elpmas.patch &&
-> +	git reset --hard &&
-> +	rm -fr "funny " &&
-> +
-> +	git apply --stat --check --apply sample.patch &&
-> +	test_must_be_empty "funny /empty" &&
-> +
-> +	git apply --stat --check --apply elpmas.patch &&
-> +	test_path_is_missing "funny /empty" &&
-> +
-> +	git apply -R --stat --check --apply elpmas.patch &&
-> +	test_must_be_empty "funny /empty" &&
-> +
-> +	git apply -R --stat --check --apply sample.patch &&
-> +	test_path_is_missing "funny /empty"
-> +'
-> +
->  test_done
+> >       (1/4) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? U
+> >       Unknown option "U".  Use '?' for help.
+> 
+> Yes, I like that (though I'd use the same quotes for both parts of the
+> message)
 
-This seems to fail only on Windows, and I have run out of my today's
-allotment of time for this topic.
+Yes, you're right.  Using the same quotes are the correct thing to do.
+I don't know how I thought we should print the result of
+git_read_line_interactively().  After thinking about it again, I see
+that would be misleading, to say the least.
 
-The earlier part that creates the directory with a trailing SP,
-redirects to a file in such a directory to create an empty file, and
-adds that path to the index, all succeed and follow the &&-chain,
-but the step that runs "git diff" with "funny /" (i.e. the name of
-the directory a trailing slash) as the pathspec produces an empty
-patch, and "git apply" would of course choke on an empty file as an
-input.
+> > If find having two strbuf_reset()'s in a row confusing.  Maybe it is
+> > just me not seeing that that second strbuf_reset is "close" to noop.
+> 
+> If we don't print the hunk then the second call to strbuf_reset is indeed a
+> noop. In our code base it is common to see a call to strbuf_reset()
+> immediately before adding new content to the buffer, rather than cleaning up
+> ready for reuse after the buffer has been used. If you grep 'strbuf_reset'
+> in this file you'll see all the calls come immediately before adding new
+> content to the buffer. By moving the call inside the conditional we're
+> moving from a pattern of cleaning up before adding new content to a pattern
+> of cleaning up afterwards which I think is harder to follow given the way
+> the rest of the code uses strbuf_reset()
 
-With the following band-aid, we can skip the test and the output
-from "sh t4126-*.sh -i -v -x" might give us a clue that explains how
-such a failure happens.  Unfortunately GitHub CI's win test does not
-give us insight into a test that did not fail, so I did not get
-anything useful from the "ls -l" down there (I already knew that
-sample patches are empty files).
-
----- >8 ----
-Date: Wed, 27 Mar 2024 14:41:26 -0700
-Subject: [PATCH] t4126: make sure a directory with SP at the end is usable
-
-If the platform is unable to properly create these sample
-patches about a file that lives in a directory whose name
-ends with a SP, there is no point testing how "git apply"
-behaves there.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4126-apply-empty.sh | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-index eaf0c5304a..d2ac7a486f 100755
---- a/t/t4126-apply-empty.sh
-+++ b/t/t4126-apply-empty.sh
-@@ -66,14 +66,26 @@ test_expect_success 'apply --index create' '
- 	git diff --exit-code
- '
- 
--test_expect_success 'apply with no-contents and a funny pathname' '
-+test_expect_success 'setup patches in dir ending in SP' '
-+	test_when_finished "rm -fr \"funny \"" &&
- 	mkdir "funny " &&
- 	>"funny /empty" &&
- 	git add "funny /empty" &&
--	git diff HEAD "funny /" >sample.patch &&
--	git diff -R HEAD "funny /" >elpmas.patch &&
-+	git diff HEAD -- "funny /" >sample.patch &&
-+	git diff -R HEAD -- "funny /" >elpmas.patch &&
- 	git reset --hard &&
--	rm -fr "funny " &&
-+
-+	if  grep "a/funny /empty b/funny /empty" sample.patch &&
-+	    grep "b/funny /empty a/funny /empty" elpmas.patch
-+	then
-+		test_set_prereq DIR_ENDS_WITH_SP
-+	else
-+		# Win test???
-+		ls -l
-+	fi
-+'
-+
-+test_expect_success DIR_ENDS_WITH_SP 'apply with no-contents and a funny pathname' '
- 
- 	git apply --stat --check --apply sample.patch &&
- 	test_must_be_empty "funny /empty" &&
--- 
-2.44.0-368-gc75fd8d815
-
+I have no strong objection.  I'll reroll leaving that strbuf_reset
+untouched.
