@@ -1,88 +1,133 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE51152F6F
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:05:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFBD3D988
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711645525; cv=none; b=jmlyY6skLrqo28+92CxHhqkApuqgSg5lR11dU5Ti2VIdz5TELTZdwluSPLFIQNU14AQIGlqaci0DWk8fusLh9cve/wFPSeHvrjdCZHaHBgRSxHZ+t1Tn5tBOHTglL2sCzCypYiyWtWRS4biC7q9KFVl7aQdMi7cRAeLFKJLX1O0=
+	t=1711645818; cv=none; b=V7k3IXVDxXTxtASBKquINmqz45rLHyfIh/W/UyjDhkjzGYmhrYO+Ilz0SfFxaYElfvSY/jK1kQWox+mW9EmKrNt7IkO1IvoKkwyKaDdFUukkA7thjVd9YZbsPBmEq/F0UptFtIRhkqU91r/zj5ZEIPbg1pHoEMeaKYOgXeOX/EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711645525; c=relaxed/simple;
-	bh=uot/gU11C/jeKNvFj7gKKEHaCwzArXHR1S1PTNpyzd8=;
+	s=arc-20240116; t=1711645818; c=relaxed/simple;
+	bh=P+pGMA2XMKxLsgVolh3b5c4K2VgaQj7elSXzJ+s99YI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r2kyDswczu08c31UPZqS+5ny5v9lAPt70vtR+YlTsxQ11E3wuGtUhp2FtR4mtLIMwt+IQ9qOOB7kJ/TRNBBmkRzfDxTm2j5P+PF4OG1UDsphiqvHGWWF46U8R9p3pr2wOnjrO4donOAUV27fZNBTN1kYB1mMpDF//dmTPxl7qJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	 To:Cc:Content-Type; b=p/wbkkksVuNq37i96iQd4dQA9JGwgzH5kExdw16+2bff7sy8++8dhyI/zT9W/iJMEObx3kv080VBj1zhTGw6c4OEtBz3IHpIsZHy5J2pkGs1QQvR4Gsu6dgxVDUp5f51k+gn25vWlfjMrlxcuFsBAS8o2Ls6LpbnkBXKoBE2yEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WE9UJSHl; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-690fed6816fso5837526d6.1
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:05:22 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WE9UJSHl"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a46ba938de0so170857866b.3
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:10:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711645815; x=1712250615; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OS+19GUtaN/6LkXDt1z167ZyT51HnytPc0pWRtbosOk=;
+        b=WE9UJSHl2nXdtNSnYBSLKbRegbOUmqmxwzVNxMkHWIZwf0A36vz6J0cWsaGmvrdfrY
+         nGcuo0KX+amMtFEn5+PXGIKSv/hHO3YhzLDawlAJkHpbyBAIyhFqByRbgOp3VWPNNCLq
+         J5USdQWDhrGS+IeQVC0/+v9pRHgnZnHkMOcottk0cqhMkd1xch4Ql5G+gc2AvR8CdoVC
+         okI00Z8W/ViwSO55Irf5SytYz2dLuBTmoGHcG0exk1xmncPigXEPeJEJE75Oo1m89xXZ
+         fAic7z5ZB7eGZeutdEmrLr2siqXF6NVI39MTGWjFThOXnh68n4QMl2GnLp78kdm5IOV/
+         kAjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711645521; x=1712250321;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qiZEEhNVwOodArOcc2ov0MHkXT7707tiRNrz16oXYSo=;
-        b=PK4/3284uymkrKHXD4fBw+60k/Ho6M479R5LSnxm66YgGT7IjKxnaH0p0OOMLEWEHH
-         TgtYVAITdnVphofpipk4PjPOQ4fA/b/oR5zgVs4fX4xC3FK+frumVHUDnV66xU4/aASx
-         mWBlwqvaMdXzypU/Xshsmh+6CDY5UhvXzmQ8C5mHU+2hG14XI2jqX6KrwHRaVB4QbcWQ
-         8ea3ftt/BdoY3XmB0uEaSmTP4nnZXyui/VduODSYDQex963+Sa60h066wv+HikAhzCRo
-         2TbjIBuS1oqGXoN/fLDS+9NGYkdqyakGTLvUmcMuGxdprUTeSMdTmFZXheZ3nPpJQYlu
-         In6g==
-X-Forwarded-Encrypted: i=1; AJvYcCUCYhM98Ub6eo53dE30lRQ9W2YeirAdZK9agDsSQ99WTYtPOW9CvOWjFnOEQZGkYlVVT6UgCBTR44fZMGDmg9Nr1qTD
-X-Gm-Message-State: AOJu0YyYkRyoxF7N2QSGkngr1twXN+AKaaKdGRWD4UAW707ZdrqE9huT
-	9sq1uX64KyxqApO0t+2Cr8AsC+e+o9ydFiHqHl2RL0rzGgrhuBfeKFpPFjj3x4FDmUM2F4AnQLi
-	sFRGljrz/CUi81sKtOQ5g5ENw+dw=
-X-Google-Smtp-Source: AGHT+IE4uGNrisV/jJa9ltVdDA607FwbzAy8tUPKlfpBnHtYbgLsYvVj2OcAJccSWb1Dbq9Kg8DOunWTwnaVnJviky0=
-X-Received: by 2002:a0c:e8c4:0:b0:696:9aba:67ff with SMTP id
- m4-20020a0ce8c4000000b006969aba67ffmr3199266qvo.0.1711645521461; Thu, 28 Mar
- 2024 10:05:21 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711645815; x=1712250615;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OS+19GUtaN/6LkXDt1z167ZyT51HnytPc0pWRtbosOk=;
+        b=MPQpUDJU+P8eyrxl2etAbraZw/dj3Q/azT6fTiEUXNL4jwk+frzp6SVVUj0Zn5vVKD
+         6SpYzShTI8Pgw/bySElXVpwKd3q+Emutdinfq1Vz6ydq+u0pmGq2UtQLXV7j19wz7oX3
+         hnQdk6T8uuM7nMhNg68Q1Xzh1zFsS80Vl7P8nbjy/zH1ViRpqEmkD/OARaH7bgM7CzOa
+         sEKDK2xILM5LdTO0hRQQl4mg6McCL0ONsEtPTKWGhRDw1lTkvqC8WKja3nHC64kFlcK5
+         UqgPnMnwqByw8LLy0ilryuBG784+PhKwDU9FbNgmVfOgnLEdex+GBDExxLs9+U2ekU/4
+         aMyA==
+X-Gm-Message-State: AOJu0YzuO2pSYE8ICSIbo00xsgMs+34JBQGZxuQoiqq1UtF5w5HLDoW7
+	MyGP7usUTAOTw8edI/ccJ/Z4JQMfHrlmYi0qNtqQBCaBbLfIPXbkCoGjsqokGOHzSZ3lO07W2ZR
+	XLo5uDUn+RAEf3kURyjnwKtqfRms=
+X-Google-Smtp-Source: AGHT+IEe2Hny6tuIr385I4Ut2gYRxNYvrCv3mJNt5O0pBjlIqU5X/theGQFrcUnbUrnA6ZYAm9INv6k4s3fNPDMFnyQ=
+X-Received: by 2002:a17:907:940a:b0:a4e:196a:3457 with SMTP id
+ dk10-20020a170907940a00b00a4e196a3457mr2402695ejc.10.1711645814693; Thu, 28
+ Mar 2024 10:10:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
- <xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g> <xmqqsf0bz5oj.fsf@gitster.g>
- <20240328103254.GA898963@coredump.intra.peff.net> <20240328114038.GA1394725@coredump.intra.peff.net>
-In-Reply-To: <20240328114038.GA1394725@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 28 Mar 2024 13:05:10 -0400
-Message-ID: <CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
-Subject: Re: [PATCH 0/1] quote: quote space
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Han Young <hanyang.tony@bytedance.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <CAHfn=+snXChcPFiEgxvK=XFCq2uVMKQTyfrN9RNfAod18d0V=Q@mail.gmail.com>
+ <xmqqo7ayuwpi.fsf@gitster.g>
+In-Reply-To: <xmqqo7ayuwpi.fsf@gitster.g>
+From: Eugenio Bargiacchi <svalorzen@gmail.com>
+Date: Thu, 28 Mar 2024 18:10:03 +0100
+Message-ID: <CAHfn=+sJotET-x7wZWZH0p4znR=o909qyV6wSDq_D0+VivT67w@mail.gmail.com>
+Subject: Re: Better visual separation of hunks in `git add -p`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 28, 2024 at 7:40=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> It looks like making the directory works fine:
->
->   # mkdir "funny "
->   # ls -ld f*
->   drwxr-xr-x 1 runneradmin None 0 Mar 28 11:01 'funny '
->
-> So I suspect this isn't a bug in Git so much as we are running afoul of
-> OS limitations. And that is corroborated by these:
->
->   https://superuser.com/questions/1733673/how-to-determine-if-a-file-with=
--a-trailing-space-exists
->   https://stackoverflow.com/questions/48439697/trailing-whitespace-in-fil=
-ename
->
-> There's some Win32 API magic you can do by prepending "\\?\", but I
-> couldn't get it to do anything useful.  Curiously, asking Git to
-> traverse itself yields another failure mode:
->
->   # git add "funny "
->   error: open("funny /empty"): No such file or directory
->   error: unable to index file 'funny /empty'
->   fatal: adding files failed
+Thank you for the suggestion, it already helps a bit.
 
-This reminded me very much of [1] which exhibited the same failure
-mode and was due to the same limitation(s) of the OS.
+The problem only using indentations as a visual separator, for me, is
+that if the code snipped already has indentations, then the ones added
+by 'git add' do not really stand up, and instead become part of a very
+long uninterrupted stream of text. In addition to this, given that the
+snippet is colored, the result is a very bright and flashy wall of
+text that can be a bit much to sift through (were it all the same
+color it would be worse though). Being able to break up the hunks
+visually with some whitespace would really go a long way.
 
-[1]: https://lore.kernel.org/git/20211209051115.52629-3-sunshine@sunshineco=
-.com/
+In any case, for now I'll try to pick up the most obnoxious colors for
+the prompt that I can :) Hopefully in the future this will be an
+available option for difficult people like me.
+
+On Thu, 28 Mar 2024 at 17:50, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Eugenio Bargiacchi <svalorzen@gmail.com> writes:
+>
+> > I'm looking for a way to print some sort of separator between hunks
+> > when running `git add -p`, as I have a bit of trouble detecting when
+> > the previous hunk begins and the current one starts. Being able to
+> > print an empty line or a couple lines filled with "=======" would
+> > really help me out.
+>
+> Hmph, my hope when I designed that particular UI was that the
+> command prompt for the previous interaction followed by the hunk
+> header of the current hunk would give us clear enough separation.
+>
+> For example, after answering "n" to the prompt for the previous
+> hunk, we'd see
+>
+>     ...
+>     +   (merge bff85a338c bl/doc-key-val-sep-fix later to maint).
+>     +
+>       * Other code cleanup, docfix, build fix, etc.
+>         (merge f0e578c69c rs/use-xstrncmpz later to maint).
+>         (merge 83e6eb7d7a ba/credential-test-clean-fix later to maint).
+>     (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? n
+>     @@ -233,3 +245,6 @@ Fixes since v2.44
+>         (merge 781fb7b4c2 as/option-names-in-messages later to maint).
+>         (merge 51d41dc243 jk/doc-remote-helpers-markup-fix later to maint).
+>         (merge e1aaf309db pb/ci-win-artifact-names-fix later to maint).
+>     +   (merge ad538c61da jc/index-pack-fsck-levels later to maint).
+>     +   (merge 67471bc704 ja/doc-formatting-fix later to maint).
+>     ...
+>     (2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]?
+>
+> The '@' (the first character of the hunk header line for the current
+> hunk) and "(1/2" are surrounded by lines that begin with a space,
+> and the hope was that it was sufficient "separator" already.
+>
+> These days (long after I stopped mucking with the interactive add
+> code actively), the prompt line is painted in prompt_color (you can
+> tweak it with the color.interactive.prompt configuration variable,
+> it defaults to BOLD BLUE) while the first part of the hunk header
+> line is painted in the fraginfo color (default CYAN), which should
+> give you even more visual distinction.
+>
+> Perhaps
+>
+>     [color "interactive"]
+>         prompt = bold red reverse
+>
+> would be sufficient?  I dunno.
+>
