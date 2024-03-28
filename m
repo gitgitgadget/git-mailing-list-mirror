@@ -1,162 +1,115 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A77D286AF
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 11:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9418D2E419
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 11:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711626042; cv=none; b=IGllRduobSAC9ks5v2MbfYcGjNDcV2IDMxqPbExMPM/m0OW6tcb7NQB8TYo8bTv157EdIYZONjms3IWhVftrzQl/F6GlHTHKfjc4id7l5WytZPHv7rvTgSqZNjDGdy/ENNNXiiVwrxUjwq/eaXB1a/RU5zZ9saxiyD9/Ckg64o8=
+	t=1711626579; cv=none; b=M8NEwuLZSR5tkPq0udD+Y6CwRoCNnvcoY1GZb/OtT2HD2arXRGkq8HkgbuDwmgGL93YVcP4ePf0yAQNlU4eA6WZe36c4dnEI/8EPIfb+P9E5yuOVsImvL40NRYAdSROO9D+ETihZRZL6S0zVZeAeb8Kj1A9n17finbpXOT4WlOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711626042; c=relaxed/simple;
-	bh=xeHefqLhn4GU9Ow95Zy5LkSi4FEmag9mWkYajUQ+lXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DSScUg+Pc120sccM6mf2JQQtRp0GA9zdzBUvey6OR3mnA5ZmJHpMM9mj2DP8NxRbAk+LrEsmnB3VSwuStf6INEupaOZL+CUXv4HwfliKeGI2kizntlObpWL+Cxsm6wqtX3GfExVqzquT8x4IazXTpscBZ4YmSMCHDmsUTFoF8nA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 4194 invoked by uid 109); 28 Mar 2024 11:40:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Mar 2024 11:40:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5550 invoked by uid 111); 28 Mar 2024 11:40:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Mar 2024 07:40:39 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 28 Mar 2024 07:40:38 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Han Young <hanyang.tony@bytedance.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/1] quote: quote space
-Message-ID: <20240328114038.GA1394725@coredump.intra.peff.net>
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
- <xmqqttl2qml9.fsf@gitster.g>
- <xmqqfrwlltjn.fsf@gitster.g>
- <xmqqsf0bz5oj.fsf@gitster.g>
- <20240328103254.GA898963@coredump.intra.peff.net>
+	s=arc-20240116; t=1711626579; c=relaxed/simple;
+	bh=O+/4tfyNLrjbNzfkvoQJWbLmX7unfFsG0ga1byroQu0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=BtHdL2TJety7lQhOQ3MTcvefx8g+VdRql84v3mtfjOvlXeD7BnHfT7BAGKjnPgD3atpBGA70S/kAU20Mprax+x7GcMmzPMc/4fepIfOkYxoX/6DlGhou8Yym6jZ3EcRW18Aqxymv+AVUExQrvh52XX7klNgbllaOCL7tFFxFGWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=enKJ9Svh; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="enKJ9Svh"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d29aad15a5so9517251fa.3
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 04:49:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711626576; x=1712231376; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=q3UYKgzikhJP+4YrRyMtv28foogxB1w8Yzyxsm8LFsY=;
+        b=enKJ9SvhvAlhX7XJH0AfAS/P0q1Q/mjTCoAyCeV4mfNE2xMixOTagMLeBe6Faiaf2C
+         PEX8JlktrD0ltA8jZXSIUBe9/PCz73x5lTQYnw97fhaOcLEgWhG0PoeAt6xea7b7wITE
+         teOZvfWMBLNwdSgIoBeasG19IKhDCdMoTc1rQUHKGUVvaAi051HwqsXgO126vyHj//jK
+         i1mA6/Rx4+J9uzAR6FL4aS4LffijJvbGlArlkkjqAOq9iXhgtOrzQMJrW9yHU2Xxobwg
+         UMEQBrzlDRQ4YjbUFj+twcvs7LC65w4RG8oLJnWsePfBKAicYN8OYyyXc61P38hL+jSn
+         +XFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711626576; x=1712231376;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q3UYKgzikhJP+4YrRyMtv28foogxB1w8Yzyxsm8LFsY=;
+        b=RsZTzL8JplJPSx0tMjnyUEwSj7DdnrRBlavRVwyeWxFLmwQa77hZwCWnu/GUXcFaDg
+         nJfc/+HiN0MIcw0BljJEkQuttHs7BwdYYaMLyrqAvAR6IXI0ZL+U+tkIwYKGNd+wW/jJ
+         VJnAh6LddBySYue24NAbDxaZ5HJvxe5IwTCjTdgWoRQEn0GRETVHl5jC8qleZNxqGs+N
+         htTH4bjVWqHUsDyneNMhkKq44GW05xsG9KB4BX+kL/Ac2NGcWO7y2nFbCupF9/ZqXwxW
+         lbgTGB2NXM3D3Hjk5kqoClGay1Y5vGvpAXpPMiSu621DebcSGNCgnc5vIfYzubxEzUo/
+         FqiA==
+X-Forwarded-Encrypted: i=1; AJvYcCWK/I7vOEQj08NkOnt50QUiJ3bof3l8PS4I+USsL4Td+sODIDMPpx7JTcqMphoxa+elHfWVc5/lEMK+Je97LJAREk3y
+X-Gm-Message-State: AOJu0YxHtRcmyOUG6w2YCijyHKhmfYaoVQ9CMe8rkCZ0+DDgnLPqFsSf
+	3GzwmsxgTqbjtRsV0MPmrfyhplWFtXnY583xpY82NAAukM8krW0R
+X-Google-Smtp-Source: AGHT+IGxXJbf3/k5wlEP+JQio3V7LUAN8j3P2/QCI7bXuHAr00WdZwuhiPVsHZxeocQd2QtA5ymzMw==
+X-Received: by 2002:a2e:3209:0:b0:2d6:d852:1757 with SMTP id y9-20020a2e3209000000b002d6d8521757mr1976101ljy.39.1711626575456;
+        Thu, 28 Mar 2024 04:49:35 -0700 (PDT)
+Received: from gmail.com (220.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.220])
+        by smtp.gmail.com with ESMTPSA id j9-20020a05600c42c900b0041497707746sm2004397wme.0.2024.03.28.04.49.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Mar 2024 04:49:35 -0700 (PDT)
+Message-ID: <8d226216-9a80-471e-9d7b-3ca8d21c1e05@gmail.com>
+Date: Thu, 28 Mar 2024 12:49:30 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240328103254.GA898963@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Update message_advice_pull_before_push to mention how to push
+ after rebasing
+To: zhang kai <kylerzhang11@gmail.com>, git@vger.kernel.org
+References: <CAK_130T8sZUZAuvj4x7sB278kVL7ARaBv3Pg2djQB45O+7xKTg@mail.gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAK_130T8sZUZAuvj4x7sB278kVL7ARaBv3Pg2djQB45O+7xKTg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 28, 2024 at 06:32:54AM -0400, Jeff King wrote:
-
-> We package up the failed test output and trash directories for each run.
-> You can find the one for this case here:
+On Thu, Mar 28, 2024 at 05:54:13PM +0800, zhang kai wrote:
+> Hi all,
 > 
->   https://github.com/git/git/actions/runs/8458842054/artifacts/1364695605
+> Our team uses git rebase a lot. A common hiccup we noticed during the
+> daily work is that new devs often didn't know how to push properly
+> after the rebase.
 > 
-> It is sometimes misleading because we don't run with "-i", so subsequent
-> tests may stomp on things. But in this case the failing test is the last
-> one. Unfortunately, I don't think it shows us much, because the state we
-> tried to diff is removed by the test itself (both the funny dir and the
-> index after we tried to add it).
+> When someone try to push to the remote after rebasing the branch, the
+> push would mostly fail with the message_advice_pull_before_push:
 > 
-> So I don't know if we failed to even create "funny /" in the first
-> place, if adding it to the index failed, or if the diff somehow failed.
+> > Updates were rejected because the tip of your current branch is behind\n" "its remote counterpart. If you want to integrate the remote changes,\n" "use 'git pull' before pushing again.\n" "See the 'Note about fast-forwards' in 'git push --help' for details.
+> 
+> However, in this situation, pull will "invalid" the rebasing. After
+> pull then push, devs often will be surprised by the merge/pull request
+> containing diffs that should not be in this branch. In this case, we
+> often should just do `git push --force-with-lease`.
+> 
+> If we add a message like "If you just rebased your branch, please
+> consider 'git push --force-with-lease'" to the
+> message_adivce_pull_before_push, we may save devs some time figuring
+> out what's wrong with their branch.
 
-I ran it again using https://github.com/mxschmitt/action-tmate to get an
-interactive shell.
+It does sound sensible ...
 
-It looks like making the directory works fine:
+> If this is acceptable, we'd be
+> happy to prepare a patch.
 
-  # mkdir "funny "
-  # ls -ld f*
-  drwxr-xr-x 1 runneradmin None 0 Mar 28 11:01 'funny '
+... but you should better expect acceptance after sending a concrete
+series that makes the objective clear ;)
 
-Likewise making the file:
+I see that we are using, in builtin/push.c, the form:
 
-  # >"funny /empty"
-  # ls -l f*/*
-  -rw-r--r-- 1 runneradmin None 0 Mar 28 11:02 'funny /empty'
+	if (advice_enabled(XXX))
+		advise(YYY)
 
-Adding it _seems_ to work, but nothing is put into the index:
+It would be well received, I think, if your proposal includes a change
+for that, to start using the now preferred advise_if_enabled() mechanism.
 
-  # git add funny\ /empty
-  # git ls-files -s
-  100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       empty
+Of course, this is entirely optional and does not need to be done in the
+context of this hypothetical series.
 
-At first I thought we had somehow created an entry with the wrong
-filename, but that is just the existing "empty" entry from the earlier
-tests. If you "rm .git/index" and try again, you get an empty index.
-
-Running it under a debugger, it looks like treat_leading_path() realizes
-it needs to look at "funny /", which it then feeds to is_directory().
-That calls stat(), which returns -1. Digging there it looks like we feed
-the expected name to GetFileAttributesExW(), but it returns an error
-(123?) which we don't match in the switch statement, and we declare it
-ENOENT.
-
-So I suspect this isn't a bug in Git so much as we are running afoul of
-OS limitations. And that is corroborated by these:
-
-  https://superuser.com/questions/1733673/how-to-determine-if-a-file-with-a-trailing-space-exists
-
-  https://stackoverflow.com/questions/48439697/trailing-whitespace-in-filename
-
-There's some Win32 API magic you can do by prepending "\\?\", but I
-couldn't get it to do anything useful.  Curiously, asking Git to
-traverse itself yields another failure mode:
-
-  # git add "funny "
-  error: open("funny /empty"): No such file or directory
-  error: unable to index file 'funny /empty'
-  fatal: adding files failed
-
-I'm way over my head here in terms of Windows quirks, so I'll stop
-digging and assume it's not worth trying to make this work.
-
-The patch you showed earlier functions as a workaround. But I think we
-could also skip the filesystem entirely, since what we care about is
-parsing the patch itself. Something like this:
-
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-index eaf0c5304a..003b117362 100755
---- a/t/t4126-apply-empty.sh
-+++ b/t/t4126-apply-empty.sh
-@@ -67,25 +67,23 @@ test_expect_success 'apply --index create' '
- '
- 
- test_expect_success 'apply with no-contents and a funny pathname' '
--	mkdir "funny " &&
--	>"funny /empty" &&
--	git add "funny /empty" &&
--	git diff HEAD "funny /" >sample.patch &&
--	git diff -R HEAD "funny /" >elpmas.patch &&
--	git reset --hard &&
--	rm -fr "funny " &&
-+	blob=$(git rev-parse HEAD:empty) &&
-+	git update-index --add --cacheinfo 100644,$blob,"funny /empty" &&
-+	git diff --cached HEAD -- "funny /" >sample.patch &&
-+	git diff --cached -R HEAD -- "funny /" >elpmas.patch &&
-+	git reset &&
- 
--	git apply --stat --check --apply sample.patch &&
--	test_must_be_empty "funny /empty" &&
-+	git apply --cached --stat --check --apply sample.patch &&
-+	git rev-parse --verify ":funny /empty" &&
- 
--	git apply --stat --check --apply elpmas.patch &&
--	test_path_is_missing "funny /empty" &&
-+	git apply --cached --stat --check --apply elpmas.patch &&
-+	test_must_fail git rev-parse --verify ":funny /empty" &&
- 
--	git apply -R --stat --check --apply elpmas.patch &&
--	test_must_be_empty "funny /empty" &&
-+	git apply --cached -R --stat --check --apply elpmas.patch &&
-+	git rev-parse --verify ":funny /empty" &&
- 
--	git apply -R --stat --check --apply sample.patch &&
--	test_path_is_missing "funny /empty"
-+	git apply --cached -R --stat --check --apply sample.patch &&
-+	test_must_fail git rev-parse --verify ":funny /empty"
- '
- 
- test_done
-
--Peff
+Thanks.
