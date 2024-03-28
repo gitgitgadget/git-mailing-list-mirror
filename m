@@ -1,95 +1,88 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EED210EC
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 16:53:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE51152F6F
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711644819; cv=none; b=HWItO1covLYiAXk+NgxDjtZEeKmPeb+gNpLcN2orQ2Yc6jtSyrnYRUiFDEoGJktbhQ60zCzb43ZxzButRdRtyfV26/N+WImF0Lv7RYte5KIuXip7aT1e1MsWEbX5Awn8Xo/kxxlB3PRcqTjQ1BDXZCOn52wbqCCKeBE1TejAZEU=
+	t=1711645525; cv=none; b=jmlyY6skLrqo28+92CxHhqkApuqgSg5lR11dU5Ti2VIdz5TELTZdwluSPLFIQNU14AQIGlqaci0DWk8fusLh9cve/wFPSeHvrjdCZHaHBgRSxHZ+t1Tn5tBOHTglL2sCzCypYiyWtWRS4biC7q9KFVl7aQdMi7cRAeLFKJLX1O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711644819; c=relaxed/simple;
-	bh=JTNqPSQYu31OhIADk9TtOvNlb4wssZXe2pe/bJycxss=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JtYRxNsbRlEMaE6QB7TAeo39tpoaofHHTduw6VOLTVlslePjWz6v6aHmDz9vQaB2JZFpZ5tRKDqBk+UKmxhfhO2GVzhwyKa5KDOW62K/kGVYamIefdDej1Kq751DjAKMf3B3/v30M0btXlNfIwi6h/P2zlytWwF+RBTtkP1IoyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=beOnAnnv; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="beOnAnnv"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 579231EB728;
-	Thu, 28 Mar 2024 12:53:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JTNqPSQYu31OhIADk9TtOvNlb4wssZXe2pe/bJ
-	ycxss=; b=beOnAnnvfz4EZbfaUYWDKDLZSTwapFy+5uC+6o5lG+W7SoTqB9KUb8
-	CzWZdDb0p5xk/F0gNa+HilpINk2RdgceMUkLuUw0OXI4YCGZx3wzAttKpf9Ay0VT
-	Jr/TG3RqAOWCHjbiZTl5IJK/qG/treKDuYbXP/AFNQASOCZ5WfKJ8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F92C1EB727;
-	Thu, 28 Mar 2024 12:53:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B83FD1EB726;
-	Thu, 28 Mar 2024 12:53:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Han Young <hanyang.tony@bytedance.com>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/1] quote: quote space
-In-Reply-To: <20240328163028.GB1403492@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 28 Mar 2024 12:30:28 -0400")
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
-	<xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g>
-	<xmqqsf0bz5oj.fsf@gitster.g>
-	<20240328103254.GA898963@coredump.intra.peff.net>
-	<xmqq34sawcqr.fsf@gitster.g>
-	<20240328163028.GB1403492@coredump.intra.peff.net>
-Date: Thu, 28 Mar 2024 09:53:35 -0700
-Message-ID: <xmqqjzlmuwkw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1711645525; c=relaxed/simple;
+	bh=uot/gU11C/jeKNvFj7gKKEHaCwzArXHR1S1PTNpyzd8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r2kyDswczu08c31UPZqS+5ny5v9lAPt70vtR+YlTsxQ11E3wuGtUhp2FtR4mtLIMwt+IQ9qOOB7kJ/TRNBBmkRzfDxTm2j5P+PF4OG1UDsphiqvHGWWF46U8R9p3pr2wOnjrO4donOAUV27fZNBTN1kYB1mMpDF//dmTPxl7qJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-690fed6816fso5837526d6.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:05:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711645521; x=1712250321;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qiZEEhNVwOodArOcc2ov0MHkXT7707tiRNrz16oXYSo=;
+        b=PK4/3284uymkrKHXD4fBw+60k/Ho6M479R5LSnxm66YgGT7IjKxnaH0p0OOMLEWEHH
+         TgtYVAITdnVphofpipk4PjPOQ4fA/b/oR5zgVs4fX4xC3FK+frumVHUDnV66xU4/aASx
+         mWBlwqvaMdXzypU/Xshsmh+6CDY5UhvXzmQ8C5mHU+2hG14XI2jqX6KrwHRaVB4QbcWQ
+         8ea3ftt/BdoY3XmB0uEaSmTP4nnZXyui/VduODSYDQex963+Sa60h066wv+HikAhzCRo
+         2TbjIBuS1oqGXoN/fLDS+9NGYkdqyakGTLvUmcMuGxdprUTeSMdTmFZXheZ3nPpJQYlu
+         In6g==
+X-Forwarded-Encrypted: i=1; AJvYcCUCYhM98Ub6eo53dE30lRQ9W2YeirAdZK9agDsSQ99WTYtPOW9CvOWjFnOEQZGkYlVVT6UgCBTR44fZMGDmg9Nr1qTD
+X-Gm-Message-State: AOJu0YyYkRyoxF7N2QSGkngr1twXN+AKaaKdGRWD4UAW707ZdrqE9huT
+	9sq1uX64KyxqApO0t+2Cr8AsC+e+o9ydFiHqHl2RL0rzGgrhuBfeKFpPFjj3x4FDmUM2F4AnQLi
+	sFRGljrz/CUi81sKtOQ5g5ENw+dw=
+X-Google-Smtp-Source: AGHT+IE4uGNrisV/jJa9ltVdDA607FwbzAy8tUPKlfpBnHtYbgLsYvVj2OcAJccSWb1Dbq9Kg8DOunWTwnaVnJviky0=
+X-Received: by 2002:a0c:e8c4:0:b0:696:9aba:67ff with SMTP id
+ m4-20020a0ce8c4000000b006969aba67ffmr3199266qvo.0.1711645521461; Thu, 28 Mar
+ 2024 10:05:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B85C166A-ED23-11EE-8B9A-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
+ <xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g> <xmqqsf0bz5oj.fsf@gitster.g>
+ <20240328103254.GA898963@coredump.intra.peff.net> <20240328114038.GA1394725@coredump.intra.peff.net>
+In-Reply-To: <20240328114038.GA1394725@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 28 Mar 2024 13:05:10 -0400
+Message-ID: <CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
+Subject: Re: [PATCH 0/1] quote: quote space
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Han Young <hanyang.tony@bytedance.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Mar 28, 2024 at 09:19:08AM -0700, Junio C Hamano wrote:
+On Thu, Mar 28, 2024 at 7:40=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> It looks like making the directory works fine:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> >> With the following band-aid, we can skip the test and the output
->> >> from "sh t4126-*.sh -i -v -x" might give us a clue that explains how
->> >> such a failure happens.  Unfortunately GitHub CI's win test does not
->> >> give us insight into a test that did not fail, so I did not get
->> >> anything useful from the "ls -l" down there (I already knew that
->> >> sample patches are empty files).
->> >
->> > We package up the failed test output and trash directories for each run.
->> > You can find the one for this case here:
->> >
->> >   https://github.com/git/git/actions/runs/8458842054/artifacts/1364695605
->> 
->> What I meant was that with the band-aid that (1) sets prerequisite
->> so that Windows would not fail and (2) has some diagnostic in the
->> code that sets prerequisite, because the overall test does not fail,
->> we do not package up that diagnostic output.
+>   # mkdir "funny "
+>   # ls -ld f*
+>   drwxr-xr-x 1 runneradmin None 0 Mar 28 11:01 'funny '
 >
-> Right, I meant that we could look at the run without the band-aid (which
-> is what the link points to). But I guess maybe you realized already that
-> it would not be helpful because of the "reset --hard" that the test
-> does.
+> So I suspect this isn't a bug in Git so much as we are running afoul of
+> OS limitations. And that is corroborated by these:
+>
+>   https://superuser.com/questions/1733673/how-to-determine-if-a-file-with=
+-a-trailing-space-exists
+>   https://stackoverflow.com/questions/48439697/trailing-whitespace-in-fil=
+ename
+>
+> There's some Win32 API magic you can do by prepending "\\?\", but I
+> couldn't get it to do anything useful.  Curiously, asking Git to
+> traverse itself yields another failure mode:
+>
+>   # git add "funny "
+>   error: open("funny /empty"): No such file or directory
+>   error: unable to index file 'funny /empty'
+>   fatal: adding files failed
 
-Actually, looking at the trash directory of the failed test was how
-"I already knew that sample patches are empty files", and my hope
-was that with the band-aid patch I could gather more information ;-)
+This reminded me very much of [1] which exhibited the same failure
+mode and was due to the same limitation(s) of the OS.
+
+[1]: https://lore.kernel.org/git/20211209051115.52629-3-sunshine@sunshineco=
+.com/
