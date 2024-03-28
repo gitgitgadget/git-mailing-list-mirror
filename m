@@ -1,77 +1,90 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22F1E52A
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A11446A5
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711647369; cv=none; b=iWdMuxtdTYKA6q2CpazV0vR8PmoDDDypkh+c5W9PSp5nRQBT0mXlkTDLgzH9OTRkM18CZ2hIyGH41D3NVFlXzLNtsu4ndF6v1Kp3pAbJxN3QVrhMgkhzETgEkpdfWwnio2uWLskKIJqRpMibklBvi5BiklXCj+pNRwS/tvR5E3I=
+	t=1711647609; cv=none; b=W4jVKN5btk2v5BcuTHYUnfy6obQFIzJzoxCXGLdQ4TQPSOYtsgOsSkvij3T3hwALLIGypueABF4/I6kWf5YQEnp4gjqKfRuEFjM/PpjZbtg3bduRxzbdqehqRFocCb1cjUEnQ+ovIcCW7qHrmNmOkT/IFx09+F6d6evdSOC9+Pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711647369; c=relaxed/simple;
-	bh=06Den4qOw0+T3WlB/25TD62elBXyO4lEgiHEPAUc4uM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=En+bYeEIOixOt4UGaVetVHIX22F1ASCvQ7a6aczqxjpIk+Qie2Pk8jyLWoBREJjn+K/xw6TKXSdK6z+H2kDUxP4MycLo1SC64FmKFH6bDhzpFqQGglGiqmeDep/39wzkw/oYb9J92ypElHUjeG7ciWMDH6+3/Ld6yUBX5qEdWsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ycSSNOrz; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711647609; c=relaxed/simple;
+	bh=UEB4nQVRdn1ITkvQ/Tt38EZdY7cP+N/MunHJqJUSCJc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=R0NHgTqHl7VLND47d62HDeAMj5o5AGwVScpvHh1+E7c9E21T7dBTVSnee6/cHEQM/5jJDpoh1XXCoKPeRLKebYeQfbaxtyU77Gse0asDi/gzp/k3ftXSrGty7ZcZbIFpHn6LDJ+oLN7qoc5baZLlW9P6spy5jUg870cVvh7VAL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com; spf=pass smtp.mailfrom=fuseenergy.com; dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b=FbArcApO; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fuseenergy.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ycSSNOrz"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5960D1E376;
-	Thu, 28 Mar 2024 13:35:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=06Den4qOw0+T3WlB/25TD62elBXyO4lEgiHEPA
-	Uc4uM=; b=ycSSNOrzZ3h8frtfsvNmnKrU6TIBgYAB/LInsQ8tJECMwbfEMGTOCW
-	IF/q2WJq+L6s7BCNUahOgCYmfYJiOzrnqf0K3js1mpuZHwTeKYdhRwAANLUZokbQ
-	kix8DSgz9H/R1kwB4NlXQeCXeZ41vvMMYJH0iDZJMNEIa+ooGCvpE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 521181E375;
-	Thu, 28 Mar 2024 13:35:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DC3811E36B;
-	Thu, 28 Mar 2024 13:35:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: zhang kai <kylerzhang11@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Update message_advice_pull_before_push to mention how to push
- after rebasing
-In-Reply-To: <CAK_130RadXce-_PwnZTzJ6qmr3m=OXd2M9bCj2gggM49RxL9=g@mail.gmail.com>
-	(zhang kai's message of "Fri, 29 Mar 2024 01:19:23 +0800")
-References: <CAK_130T8sZUZAuvj4x7sB278kVL7ARaBv3Pg2djQB45O+7xKTg@mail.gmail.com>
-	<xmqqo7aywfc5.fsf@gitster.g>
-	<CAK_130RadXce-_PwnZTzJ6qmr3m=OXd2M9bCj2gggM49RxL9=g@mail.gmail.com>
-Date: Thu, 28 Mar 2024 10:35:53 -0700
-Message-ID: <xmqq5xx6uume.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b="FbArcApO"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a466e53f8c0so160056266b.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fuseenergy-com.20230601.gappssmtp.com; s=20230601; t=1711647606; x=1712252406; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tlXcMDAELQkEheZ6Be/2sTIrt6379mLH+nyTdad6jDU=;
+        b=FbArcApOK+1iru4o5sZpyNHD8BQvWGWRHFAim/lO9k3EL9lJzdtcpCVI11ZbPMpCWo
+         5aFqf5WJyWaoP0f1CAIzfMEljvtrAMEFRU1ik5pC8cBa50xD6kvDORpocxvhyELcJmO7
+         pXQ2rafopX1NyQuGRkgtv17TynTXEjkI21J1H54r9GPLYBWY+smH6RCjHq3nA7rZ8QcQ
+         oQbjhgjlLHHUTDdr5yL2bcGI0aFqnQBwoD6tAhq7CUY2VRq8iQmLqXjIkF3RbrRqb8ZT
+         IFpH7drwdzLariPS8OwRp8R1bbu7QDGsdcD0LSCT8Xgh2rki0dGeBseKHJueu7UzDVtu
+         8qTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711647606; x=1712252406;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tlXcMDAELQkEheZ6Be/2sTIrt6379mLH+nyTdad6jDU=;
+        b=WczJGsLL1GPJNfW7Zk8qEdpZgZtggxGODZD9AmCUvdb8OHxobzyG3cGcUVibiJzuJ9
+         R0yVxNSgj61wP+gSuiqohEI4UdSmnVpe0WChIlslwO1StUKPUNXWv+Te26T9egqyAcQR
+         tuNiLHnRYqL8DpRKU9i4K/YO0KkIvPb52KPT9UMqixK3JoZAiYT5pto5x9O1LpSJfoBz
+         pRo4OXbO2Sv5SDzeCKpoIhESgpiOtlCC493+A+yFde+kEpPojNHoEkBGvuTdnE7D0D5u
+         7l9Hk6y4F+KOo5pbQyMLYFs3k/bJTzKbpDdi+r9tJjB+A1nndet16AgqzNbO1tHZulYY
+         cwlg==
+X-Gm-Message-State: AOJu0YxOCOIayPw7Ceb0nGOQtvSvJdSsUi9wb1c9s4BFbwvDy267ImaU
+	E12GH1vVovAIaOKmO74M3zRzvkz5P6bHC9K42dK2fNN0yucehoYrfSUREh9pz4Z2mRzELoBhGnH
+	w4e3KyihynBpwKNgX9UQgUxSwzn/3Lr5LJLTpUAPtuDlRaX6m+NrYYw==
+X-Google-Smtp-Source: AGHT+IFleAQD7A5cU0UUwHwYbrUeZr2aW0en3am5sdYMe5y0n+LVscUz656l8vYa4fDVIhTyeryHFIku79N0/2PdZ6k=
+X-Received: by 2002:a17:906:7315:b0:a4e:c3c:e0d8 with SMTP id
+ di21-20020a170906731500b00a4e0c3ce0d8mr3086020ejc.3.1711647606383; Thu, 28
+ Mar 2024 10:40:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A135A158-ED29-11EE-A945-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
+ <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
+In-Reply-To: <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
+From: Tamir Duberstein <tamird@fuseenergy.com>
+Date: Thu, 28 Mar 2024 17:39:55 +0000
+Message-ID: <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
+Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-zhang kai <kylerzhang11@gmail.com> writes:
+Yes, the problem is persistent. The branch is never deleted.
 
-> Updates were rejected because the tip of your current branch is behind
-> its remote counterpart. If you want to integrate the remote changes,
-> use 'git pull' before pushing again. If this is not the case, you may consider
-> `git push --force-with-lease`.
-> See the 'Note about fast-forwards' in 'git push --help' for details.
 
-True, but isn't that a slipperly slope to cram more and more of the
-material from the manual into the "hint" that is supposed to be
-short, helpful and not so obnoxious?  Perhaps removing "pull again
-before you push", and saying "updates were rejected because X; see
-the note about fast-forwards in the manual" and nothing else would
-be an improvement?
-
-Thanks.
+On Thu, Mar 28, 2024 at 5:24=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+>
+> On Thu, Mar 28, 2024 at 10:54=E2=80=AFAM Tamir Duberstein <tamird@fuseene=
+rgy.com> wrote:
+> > % git branch -d cleanup
+> > error: cannot delete branch 'cleanup' used by worktree at '<my source d=
+ir>'
+> > % git worktree list
+> > <my source dir>  dc46f6d5e [main]
+> > % git branch
+> >   cleanup
+> > * main
+>
+> Is this error persistent once it arises? That is, if you invoke `git
+> branch -d cleanup` again immediately after (or a little while after)
+> the above sequence, does the problem persist? Or does it "clear up" on
+> its own at some point?
