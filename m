@@ -1,195 +1,101 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EA72C1BC
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 08:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5762B2AEFB
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 09:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711615220; cv=none; b=uZLzyJ+m4sIxbtOBxkQHVK0JbpiwmmUJTaQ6ssgdXS+J1g+cv/QVEVbCujXTU1mnJtq8At0qN8fowJECuqxEdnBynC7R/rY8pnP0rIuN+fytDz8/nLV7ws1DV5bMwpHiIGgHaDgb3SUylv70BiBwAsNz2Kx5wSYwVOqYmDzgDwA=
+	t=1711619270; cv=none; b=LfgFG+sjsvV1glJ43emFARASoCy5gLtU1IUX5INn/VhYX1dC1mFbC4eWTCqDwRuLArXTBOQJXBR3ztcLC4MCkrL6iP+Cv2hhF5T9Lo1lBerJjpLyMvwPvCfNLRHA25fIjfq0ihhZsIsxCVglZRRRiEUwuQhxzC8DYiiDtnzWi5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711615220; c=relaxed/simple;
-	bh=ySbxiPDildXU2OiWz5/Q3oa11+X9atVPWHxHfcPQxtY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=bY5wYsahRdE3VxQQ3Jg2pqQL/uuoTHKC6YbuA+HOuFqIGQLhz5XiYNZbCxUMA0QaoQ4vL8mAGSQP2JmPw6VroMZLK61IyUYNN7xCPwFuSQ1HEXLqrrl9jht0iOaH0gX/9tVFod9KPo2Nj86RlO3SegsGmN+25lQtVVmDnQwb0G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A6TkefDy; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A6TkefDy"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d4515ec3aaso6204091fa.1
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 01:40:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711615216; x=1712220016; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/R8kHgYJzMLu5JtB7XlFoDMPQ6dI/Bkz/ov91ObdaUo=;
-        b=A6TkefDyAKLPZ8l42N1FSTgQ2K8A8sdRo6pnYj3x6mnH1jQvdH9KUafEiWCvHDPTfx
-         EE8wZbmKE+4nj9yxgSCCkHP3wOa7WKYQEPiNhP6jkWOaBLad0gMkB6zE1BqPBoBjaiAj
-         DB8bpMcMkBuLodO4uVbxyKpVya3PaBaQkTHgIB57CTp//Oll0BHL5TgqSvbwVMKPvtly
-         /oC/Oyk2B22WPI1dCJwwiPQ70wrKs+LZiBTy9h+FC+WGpCD6wyRY+w26+fiqJGoX8Ie7
-         x2juV2P+i8jCOQZuNiLu8vm2WSe8z7Gd65qFf4SM/Njy83kQeAWoI3UjzUWOVvkOD8/P
-         at2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711615216; x=1712220016;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/R8kHgYJzMLu5JtB7XlFoDMPQ6dI/Bkz/ov91ObdaUo=;
-        b=B4u7198LnbHvva/E0LXnQinf+feVXIBykvf4qy3fSy/+oI1/wjwVDOZnV9HjEV5vWC
-         HI+B8brvJunSFWsJhDGeoD9NSgvmX2k2tEUW8G2thYI1McWGvbv1Su+nb83ogj8FiH+l
-         3Szqw8JQB0/+dSDatXLm2Kg8LdOGK+gL0n2NJ1URba6cgyK1/FUq/tHyGDB4qGXMHaBY
-         vHkmu0KVMZ7X/m2XxxicjyUVGYptm5RDfdUOFK820asxDuV/csJtTUKg6LVNsXXadPN+
-         NmzDX70Fqt/m9yqApW6WCuq1tCkGmGboJbiQX2Gg70N4Rr05VDBICSTG6D6SkHA506Kf
-         uImw==
-X-Gm-Message-State: AOJu0YwmcPdLI9AQ7ZSKpKKvzpkXfXVWVISw8lXrfU6VCvI+bKWrk04e
-	WAErF/VvF35umx82n/2r9zxQbjsOoQ6bvlzA6lDPA5cTREKPwSBLecjtghzmbCbpZiJwmdiUWIk
-	ouDXZEWmhtqWZeKPs77myybAWr95opwCBWa1kVvm2
-X-Google-Smtp-Source: AGHT+IHPh/j1GOlDf9asBGVjha25Mvy0orKoE4ByY6c9ysjiut99hQD0RelhTvmJBGm7QBlI4baet3jYc2+cGfvd3Gk=
-X-Received: by 2002:a2e:b16c:0:b0:2d5:9d0c:9590 with SMTP id
- a12-20020a2eb16c000000b002d59d0c9590mr589412ljm.19.1711615215929; Thu, 28 Mar
- 2024 01:40:15 -0700 (PDT)
+	s=arc-20240116; t=1711619270; c=relaxed/simple;
+	bh=Asoa13RxCepEVr38PQKR3eOj+hBDUkPpJoZ0GQuL5D0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FQhF3yBtwkBlwTGKxPY+aBocnPkg3I3DoqkiAYPFZhRSf4CvU9ys04RtKJqsGwN9P/R2Wkm29In2Sv2nj841mqicj5xd32ZnbWzYPQ4jy6WOgRmZDlb7ZGBuu8sWHqjfpUddMn+JzqAt75tgEE7LpUPaSriubuyLQFVFt5M9h5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 2961 invoked by uid 109); 28 Mar 2024 09:47:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Mar 2024 09:47:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4217 invoked by uid 111); 28 Mar 2024 09:47:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Mar 2024 05:47:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 28 Mar 2024 05:47:40 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH 17/16] config: add core.commentString
+Message-ID: <20240328094740.GA871147@coredump.intra.peff.net>
+References: <20240312091013.GA95442@coredump.intra.peff.net>
+ <20240312091750.GP95609@coredump.intra.peff.net>
+ <0426f7bf-6032-4fc7-886c-c4278c6e105b@app.fastmail.com>
+ <20240315055944.GB1741107@coredump.intra.peff.net>
+ <6be335ed-8598-406c-b535-2e58554b00e9@app.fastmail.com>
+ <20240315081041.GA1753560@coredump.intra.peff.net>
+ <xmqq8r247igg.fsf@gitster.g>
+ <20240327074655.GA831122@coredump.intra.peff.net>
+ <20240327081922.GA830163@coredump.intra.peff.net>
+ <xmqqa5mj3b6c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Aishwarya Narayanan <aishnana.03@gmail.com>
-Date: Thu, 28 Mar 2024 14:10:04 +0530
-Message-ID: <CAHCXyj1vbGqmXjeUyN7AgBtkvtsGUtmXwb=timJ3s48F=8Kd7Q@mail.gmail.com>
-Subject: GSoC 2024 [RFC PATCH] Fix Git command exit code suppression in test
- script t2104-update-index-skip-worktree.sh
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa5mj3b6c.fsf@gitster.g>
 
-Dear Git Contributors,
-Please find attached a patch addressing an issue in the test script
-t2104-update-index-skip-worktree.sh. The issue pertains to the
-inadvertent suppression of exit codes from Git commands when used in
-pipelines, potentially leading to false positives in test results.
+On Wed, Mar 27, 2024 at 09:13:31AM -0700, Junio C Hamano wrote:
 
-From a80ff00cda2445f93eac1510f0434095f342887b Mon Sep 17 00:00:00 2001
-From: Aishwarya <your@email.com>
-Date: Thu, 28 Mar 2024 13:54:35 +0530
-Subject: [PATCH] This commit addresses an issue in our test scripts where t=
-he
- exit code of Git commands could be inadvertently suppressed when used in
- pipelines. Such suppression can lead to tests passing despite failures in =
-Git
- commands, potentially masking bugs or regressions.
+> > An alternative to using "$var cannot ..." in the error messages (if we
+> > don't like the all-lowercase variable name) is to just say "comment
+> > strings cannot ...". That vaguely covers both cases, and the message
+> > printed by the config code itself does mention the actual variable name
+> > that triggered the error.
+> 
+> OK, because the error() return from this function will trigger
+> another die() in the caller, e.g.
+> 
+>     error: core.commentchar must have at least one character
+>     fatal: bad config variable 'core.commentchar' in file '.git/config' at line 6
+> 
+> so we can afford to make the "error" side vague, except that the
+> "fatal" one is also downcased already, so we are not really solving
+> anything by making the message vague, I would think.  The posted
+> patch as-is is prefectly fine.
 
-Changes made:
+Oh, right.  For some reason I thought the die() message would have the
+variable as written by the user, but that obviously is not true. So I
+agree it would not even be an improvement (and the normalizing in my new
+error() message is something we've been living with all along anyway for
+other messages).
 
-- Modified instances where `git ls-files -t` and similar Git commands
-are used in pipelines, to capture their output in a variable first.
-This ensures that the exit code of the Git command is correctly
-evaluated.
-- Applied checks for the exit code immediately after the command
-execution, allowing the script to exit with an error if the Git
-command fails.
-- Adjusted related test cases to work with the new method of capturing
-and evaluating Git command outputs.
+> Side note:
+>     I wonder if we would later want to somehow _merge_ these two
+>     error messages, i.e. the lower-level will notice and record the
+>     nature of the problem instead of calling error(), and the caller
+>     will use the recorded information while composing the "fatal"
+>     message to die with.  I actually do not know if it is a good
+>     idea to begin with.  If we want to do it right, the "record"
+>     part probably cannot be a simple "stringify into strbuf" that
+>     will result in lego message that is harder for i18n folks.
 
-These changes improve the robustness of our testing framework by
-ensuring that the failure of a Git command in a test script is
-correctly detected and reported. This is crucial for maintaining the
-reliability and integrity of the Git project as we continue to evolve
-and enhance its functionality.
----
- t/t2104-update-index-skip-worktree.sh | 66 ++++++++-------------------
- 1 file changed, 20 insertions(+), 46 deletions(-)
+Yeah, this is a general problem of accumulating errors. I had always
+assumed in cases like this that we could have some language-independent
+syntax like:
 
-diff --git a/t/t2104-update-index-skip-worktree.sh
-b/t/t2104-update-index-skip-worktree.sh
-index 0bab134d71..c552d2208e 100755
---- a/t/t2104-update-index-skip-worktree.sh
-+++ b/t/t2104-update-index-skip-worktree.sh
-@@ -3,65 +3,39 @@
- # Copyright (c) 2008 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
- #
+  die("%s:%d: error parsing '%s': %s",
+      file, line_nr, var, err_from_callback);
 
--test_description=3D'skip-worktree bit test'
--
--TEST_PASSES_SANITIZE_LEAK=3Dtrue
--. ./test-lib.sh
--
--sane_unset GIT_TEST_SPLIT_INDEX
--
--test_set_index_version () {
--    GIT_INDEX_VERSION=3D"$1"
--    export GIT_INDEX_VERSION
--}
--
--test_set_index_version 3
--
--cat >expect.full <<EOF
--H 1
--H 2
--H sub/1
--H sub/2
--EOF
--
--cat >expect.skip <<EOF
--S 1
--H 2
--S sub/1
--H sub/2
--EOF
--
- test_expect_success 'setup' '
-    mkdir sub &&
-    touch ./1 ./2 sub/1 sub/2 &&
-    git add 1 2 sub/1 sub/2 &&
--   git ls-files -t | test_cmp expect.full -
--'
--
--test_expect_success 'index is at version 2' '
--   test "$(git update-index --show-index-version)" =3D 2
-+   output=3D$(git ls-files -t)
-+   echo "$output" | test_cmp expect.full -
-+   if [ $? -ne 0 ]; then
-+       exit 1
-+   fi
- '
+It's certainly lego-like, but it avoids the worst lego cases where
+we're literally composing sentences. But as somebody who does not do
+translations, it's possible I'm just being optimistic. ;)
 
- test_expect_success 'update-index --skip-worktree' '
-    git update-index --skip-worktree 1 sub/1 &&
--   git ls-files -t | test_cmp expect.skip -
--'
--
--test_expect_success 'index is at version 3 after having some
-skip-worktree entries' '
--   test "$(git update-index --show-index-version)" =3D 3
-+   output=3D$(git ls-files -t)
-+   echo "$output" | test_cmp expect.skip -
-+   if [ $? -ne 0 ]; then
-+       exit 1
-+   fi
- '
-
- test_expect_success 'ls-files -t' '
--   git ls-files -t | test_cmp expect.skip -
-+   output=3D$(git ls-files -t)
-+   echo "$output" | test_cmp expect.skip -
-+   if [ $? -ne 0 ]; then
-+       exit 1
-+   fi
- '
-
- test_expect_success 'update-index --no-skip-worktree' '
-    git update-index --no-skip-worktree 1 sub/1 &&
--   git ls-files -t | test_cmp expect.full -
-+   output=3D$(git ls-files -t)
-+   echo "$output" | test_cmp expect.full -
-+   if [ $? -ne 0 ]; then
-+       exit 1
-+   fi
- '
--
--test_expect_success 'index version is back to 2 when there is no
-skip-worktree entry' '
--   test "$(git update-index --show-index-version)" =3D 2
--'
--
--test_done
---
+-Peff
