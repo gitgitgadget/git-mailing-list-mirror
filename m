@@ -1,115 +1,85 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF704651B7
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 21:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9AB2BAE7
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 21:19:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711660739; cv=none; b=gEv+aW80W1EddNRG0fItZosSvZu9JM4VXBCXEdkzgdvrqgQ1nvY2Oi7pQ4I/4nW3QA6bHTUAq7bcDWOzNtDW+VKtpAzayjw7/Jz95zkCutEtc+CxYFHDXPm7OvfS0UmLq/F78ieLDg38YWZ39NNv6g838p4GtBv1yQ+yuqxAnYw=
+	t=1711660776; cv=none; b=AjruYfx7VUkI71mmmVhMSumypIpmOWjROlDrVHMbqx4suPpoYAQEJ4lZKDN02OJPk8ZlzxDxT3V26sU5CzJ9yegk1rKjPmHjwo/3EPhQlRLEdpIWhmitdLDg58nb982M6Rujq2cWlrUl8D8NWEFHVlblS3qhWIyqA5Jir3/uq/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711660739; c=relaxed/simple;
-	bh=Q5nU80CaKl7Xk2uq34pLitWOoQAe4gI5qv9r8k6X28o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EAu1MQFb46ogoS5I0GY4Z9c269i0ZLeFuMDdwoaYXaFgYNfo6iGFXkzz/Zcf2Q5ma3KbKSTk/+4GJ3LWCFQlvBcn8Kd6iDow9KszsUc3cz+KJSU22ETkK9jFW0S6HliHuHu1HrSA5+IO25PA9V91HbM30xpEZhXi8LabxMoACZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zZMvzbmn; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1711660776; c=relaxed/simple;
+	bh=ea37D0qmwoxxG9oxfK94VhlZJODKicLBlaLKYL0WDyw=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=I0AooWxE3U2QdUROqG/sw92Ju4i5D3eGDZ+4Toejyhm/iWNy0e0MV2cb4H4mDhYfcLpxyNCD8duhQZMP0aI2ZxXP0Kh37MRC2OptdHySIULc7KT71hiyKERKbvgy3jE6pBMKj1hHKfPJ+sWZGM2NYlFEb20TtP00NIqa3rIIczw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=xGjM4wVx; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zZMvzbmn"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AE58F5D49A;
-	Thu, 28 Mar 2024 21:18:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1711660734;
-	bh=Q5nU80CaKl7Xk2uq34pLitWOoQAe4gI5qv9r8k6X28o=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=zZMvzbmn2e3kr2fkCA0KD5OpAKlZiAsGSO1bdEKGdiRvQvMe3XWLNwRwsV2W+gR2/
-	 wPoluYdWZXmakUFRjV/YHnstMxThnn4p77b0DmK4pnkGB4pW9oIoyYyigLT4ARdYmt
-	 jnX09Qyv0okjSg0O8uvvVZlvRwbIVmDrKlETpSlJD0Gqu03lffQlUs+4TF9+SDyll+
-	 ol9n1eySQvfiuB3veyhtD0dd9aLSdHqCW2REOBn6perWMkx+KzJn/R+GqkyHC3wwqy
-	 r8hGX+aU/iTZ4Q/W0CnZ9L9RMfvAftrb5BRSg1KSFddJfgIHO8hIyqw7ltIevNTB1v
-	 FhXqgyUdjmukvPro89se8YtHT66ba5PdQaLGaC6gINyw3Z4+SKGsadneKxVvtmT89I
-	 9Qg02J+rJBVL0CQwCBPnJaGvYqCqSrDtoTe378WryzSNYkTn0CLA+PvHgJvq+kTBXM
-	 nwyexgU7kGbhbsBDdQ13UYaYsXzZpjzQVOqJ/KtUovdGTAT6B2c
-Date: Thu, 28 Mar 2024 21:18:53 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Matthew John Cheetham <mjcheetham@outlook.com>,
-	M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH 05/13] credential: gate new fields on capability
-Message-ID: <ZgXevTHIkZoC3vnj@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthew John Cheetham <mjcheetham@outlook.com>,
-	M Hickford <mirth.hickford@gmail.com>
-References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
- <20240324011301.1553072-6-sandals@crustytoothpaste.net>
- <20240328102053.GA890906@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="xGjM4wVx"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="p7YjxkPGSYNEp9ww"
-Content-Disposition: inline
-In-Reply-To: <20240328102053.GA890906@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1711660766;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YC7Zk247u6w+GiiS8eaygJ2kAnHp6tShcopMIEdg2nU=;
+	b=xGjM4wVx6Uy2NWBmphXiL/rX1ShY1WUATyRtjSUnbG/ux3AlW4klQ/jiZs3mqINBsWH3WA
+	zhegGKJ0hYcKjIs03+FzzLnJvu2BlBDPgdyUHfIahWw92PipfDfw8yKahaEo8rxFfhwcV1
+	RqSMaljNMr+FUwpkEeTR9iV6e8qxL4A9nNbx+MJ7ZCGKZOD+3ekaQ7nl30cbY+01wnrQAb
+	FNQ2//EqjyfLf89gb4tQyQdDcoer2Gc+/FQiO70B7/6T+8GqvX1eef2y8Lx08ulqfZMUIc
+	vJSsyKdxj68x2gWAIh2DmlSKUFrZNiehynjtoqu0eOGZEl08ANyoI9ofLRG71g==
+Date: Thu, 28 Mar 2024 22:19:24 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eugenio Bargiacchi <svalorzen@gmail.com>, git@vger.kernel.org
+Subject: Re: Better visual separation of hunks in `git add -p`
+In-Reply-To: <xmqqr0fut7di.fsf@gitster.g>
+References: <CAHfn=+snXChcPFiEgxvK=XFCq2uVMKQTyfrN9RNfAod18d0V=Q@mail.gmail.com>
+ <xmqqo7ayuwpi.fsf@gitster.g> <a9cffbe4aadd319760635ca6d5b4f465@manjaro.org>
+ <xmqq1q7uusin.fsf@gitster.g> <1b81a013dd0faccdc24fe018fd740755@manjaro.org>
+ <CAHfn=+tsrgAyUUqUkq4TpXcABr7=ZcH+cna+vwALJqZ3H8LxFA@mail.gmail.com>
+ <26f8d21dfd53d699804485b0f8c6abe1@manjaro.org>
+ <CAHfn=+s5_hvV1osP1HFjWs4wxRfr9YUW-9=WkXbgSp-8sPZ-Qg@mail.gmail.com>
+ <de182310842ea3ff04c171a271587ca1@manjaro.org> <xmqqr0fut7di.fsf@gitster.g>
+Message-ID: <fc4ede3ecffd33811adca702493c8763@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+On 2024-03-28 21:43, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Of course, users could pick the right escape sequences for their
+>> terminals, but as you already noted, the same configurations could
+>> end up being used on different terminals.  For example, even SSHing
+>> into a machine using a different SSH client could lead to a mess.
+> 
+> There is a separate discussion of conditional configuration based on
+> environment variable settings, e.g.
+> 
+>     [includeIf "env:TERM:vt100"]
+> 	path = ~/.git-config-bits/vt100
+> 
+> where the named file might have
+> 
+>     [prompt] prefix = "\033[H\033[J"
+> 
+> so it is certainly doable.
+> 
+> It is a different story if doing so is sensible, of course.
 
---p7YjxkPGSYNEp9ww
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2024-03-28 at 10:20:53, Jeff King wrote:
-> I think this "|| return" needs to be "|| exit 0" or similar. The Windows
-> CI jobs fail with:
->=20
->   --- a/expect-stderr
->   +++ b/stderr
->   @@ -2,3 +2,4 @@ verbatim-cred: get
->    verbatim-cred: capability[]=3Dauthtype
->    verbatim-cred: protocol=3Dhttp
->    verbatim-cred: host=3Dexample.com
->   +D:\a\git\git\t\trash directory.t0300-credentials\git-credential-verbat=
-im-cred: line 10: return: can only `return' from a function or sourced scri=
-pt
->=20
-> (actually if you count the line numbers, I think this particular case is
-> the similar "|| return" added to the script later, but both should be
-> fixed).
->=20
-> It doesn't show up elsewhere because only bash complains, but not dash.
-> Even running the test script with bash isn't enough, because
-> write_script uses $SHELL_PATH under the hood. But building with "make
-> SHELL_PATH=3D/bin/bash test" shows the problem on other platforms.
-
-I'll definitely make that change.  I run Debian, and I've left the
-default dash as /bin/sh because it's faster, so I didn't notice.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---p7YjxkPGSYNEp9ww
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZgXevAAKCRB8DEliiIei
-gWc1AP9zSIuY2VFM9nPpVNRKRodCBGnEU1EFGcuNukff6oaQAwD/dPUm12VUll3x
-wtIbjP4X6ar7b8cSiFJH9wCTF37fKgY=
-=i520
------END PGP SIGNATURE-----
-
---p7YjxkPGSYNEp9ww--
+Quite frankly, I think that would be like opening a can of worms.
+In other words, if we end up implementing support for the "add -P"
+prefix, allowing the users to do whatever they want with the prefixes
+would surely be fine, but only if we implement "add -P" at the same
+time, to already provide a reliable and simple way for clearing the
+screen.
