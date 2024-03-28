@@ -1,113 +1,212 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94787E574
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 14:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3014712AAC8
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 15:10:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711637633; cv=none; b=iROE1X2h6QxmeK/49rEH0ZRMwLPSEhkvKWdqjnGdSt8j2Uhw6f4bzD/RAYVpL+a/xz/nE5sWcf3+kXAJYc6iRzrxLYV9me7y6Z+UbIery/4FxGw2h81FLQI8/imPYfBWL4zO4Vq1r5UxP6Nkp1np+lc/NwvSrYrwFhddeEgDK/Q=
+	t=1711638661; cv=none; b=NhFzYhinYpZCbd0ODKvrBlT9Oepvyx7N9lXrWrR8mmKm3hQAoU2hhfxYFsNprNovmxLdkYFh2O77wDdrPCxxmtmi9eHIQZR/BohNesjfyt6gi1NA1mFTJ234ITTHYea23FWnQMIACloItMx2hK0ownHsQlojQh28LE7jsK9HNX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711637633; c=relaxed/simple;
-	bh=vroNsreKmfFmtRs+J1PgZa36yxnBzSjfq1oTZQgYeTU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ifOTN8HzsY7TTAdFeHIE6H1XiIv3VY/RINY2wHMrtGRGUQl6okEdLQFWnK7GgR4dEu+hC5CqA6kf6q3Fuycf4MkM2bA+Mvw3TV8CYXDAyMIKm6mRP5+ILLdOHun75/ZsOYhse34hfim4BGqMsO+i8Pn1zPGhGp5rZmNt1ZznOOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com; spf=pass smtp.mailfrom=fuseenergy.com; dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b=E8uSq4jr; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fuseenergy.com
+	s=arc-20240116; t=1711638661; c=relaxed/simple;
+	bh=7VgWd6bZZvaOnfIvy61Io8gWCIaTAHugyxis0exjytI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MAh+OseMNdoFYz+GntCbc9dVqu2ost5HVRliLFL9xUYzVhhzwnivQ7Yneb55XC+jDxJ1D68+PxSnuBEoDq1rGm9D1Igv4W6mOzEacyE9JOPqJoUZe00wmgJtTFeLfX9/v1pBglL97EvxiNBb2po0xW41K5ylyTdZqisqIl2/Tlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dK13OEZu; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b="E8uSq4jr"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a4e1742d3a3so132119166b.1
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 07:53:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fuseenergy-com.20230601.gappssmtp.com; s=20230601; t=1711637628; x=1712242428; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=L5ju9MpD4x4+Zv3jm5mKETm6jkNzNz/+eNg96UQDOvQ=;
-        b=E8uSq4jrdDll4huuacbqOuZ9cKMOsBfxCyCW6W+loFbdUJdGC1XyUbgLYKFMsUgBcB
-         S0V+E65SjN6uRPgQZmzKDS8q9dTvqgA8ADreAjrdowV7s+n9U+1XbwEn+AmiKwQP3jLt
-         XlcbNVQ4FCazh+V0gzO7hoPjDY3C6XYKJj0vs1dWC8YT4vmCbooGoVdl/K3B5Q5iygm9
-         4gUiJZ8ZkyGgB+pvzghCKCNbeEMMQPt2QBjiZawvd6hNZL88ErzjhD1e5S6ph5oTzHcA
-         9mkfGCifzmTVqQW7qeFy/3Ra9vukBicVn2RNCUpXo3q5ADz/TmCIeqCed++8YCrxQbyn
-         UOYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711637628; x=1712242428;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L5ju9MpD4x4+Zv3jm5mKETm6jkNzNz/+eNg96UQDOvQ=;
-        b=Bvny1ArH1Vy85JPN+a2RGctUi9X1lXsUMxBqkPaKsdc5GA9n9aPP2mAor9yKlpUYBK
-         eGAEVyRfnX588vylG7NksggfJui0ozOqghYr9oO4pBHLTG7AcrHSdrlPb2zJAT7DgQ1P
-         RF+8MbMbVc1tAHzMNVUjPiQpiLjqViLDgPaOdcd2gPdIFPGhwaIL16kKxKGwf5drbsKx
-         Vqv6CdTaFFHNsJ57LtXK4otjhI4SLgtqF4ja4WIg6MnLuZUQX5L1W8BxM5V/o7G2/x4G
-         kuNkKPwbDLWAWZcgqRrV/3NsTPeImMcLgl2dyJVnt81CFZCgWrzyu578r5kE1Ephaxk4
-         8maw==
-X-Gm-Message-State: AOJu0YyH++Xy9n1T2YeENryXwvnzqM8Gr7qZttHUWdhDTmOdgUNMOC8u
-	ixMpPYRC+7go6QQc0dSqFS1N8wIKA56iRmc/yf818/B9xjLHRf/KaxPiFTXi0ZP9+CHMz5+ZjKB
-	XrKnbSOxONdw3bWR6A9PpcdNSe9j/hv8bg/PcmYPPtixJJevKgmZYbhsn
-X-Google-Smtp-Source: AGHT+IFhc95Z6v70DAXhI/SQbbhMSqkfagGF8dfwJfmrEtNKLLPrl2ggA3O1EPnNP9UV7uUCs6LoUHQf24Xr3KObLZ0=
-X-Received: by 2002:a17:906:57c7:b0:a4e:1508:9e8b with SMTP id
- u7-20020a17090657c700b00a4e15089e8bmr1906112ejr.5.1711637628496; Thu, 28 Mar
- 2024 07:53:48 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dK13OEZu"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0835C1EAAED;
+	Thu, 28 Mar 2024 11:10:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7VgWd6bZZvaO
+	nfIvy61Io8gWCIaTAHugyxis0exjytI=; b=dK13OEZufnuXW6LD1Itp8mK7y7Q8
+	WbSRvIMAcBrcHceS31rKNkCR8oDosoyyMsanIaixKP1Uz517BeoWRPR0Pt08IPpK
+	Ty6trJB62GZ36J7rNiMLZlp/1EuTKjEDPQ7u/kSMkYGuuBb14yCkN6FXdEQCOZXH
+	EsO6pZUiC6VYhAE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00BD51EAAEC;
+	Thu, 28 Mar 2024 11:10:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5A4AB1EAAEA;
+	Thu, 28 Mar 2024 11:10:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aishwarya Narayanan <aishnana.03@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: GSoC 2024 [RFC PATCH] Fix Git command exit code suppression in
+ test script t2104-update-index-skip-worktree.sh
+In-Reply-To: <CAHCXyj1vbGqmXjeUyN7AgBtkvtsGUtmXwb=timJ3s48F=8Kd7Q@mail.gmail.com>
+	(Aishwarya Narayanan's message of "Thu, 28 Mar 2024 14:10:04 +0530")
+References: <CAHCXyj1vbGqmXjeUyN7AgBtkvtsGUtmXwb=timJ3s48F=8Kd7Q@mail.gmail.com>
+Date: Thu, 28 Mar 2024 08:10:57 -0700
+Message-ID: <xmqqttkqwfwe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Tamir Duberstein <tamird@fuseenergy.com>
-Date: Thu, 28 Mar 2024 14:53:37 +0000
-Message-ID: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
-Subject: bug report: spurious "cannot delete branch '%s' used by worktree"
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 61AC644A-ED15-11EE-9ADC-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Pasting the output of `git bugreport`:
+Aishwarya Narayanan <aishnana.03@gmail.com> writes:
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+> Dear Git Contributors,
+> Please find attached a patch addressing an issue in the test script
+> t2104-update-index-skip-worktree.sh. The issue pertains to the
+> inadvertent suppression of exit codes from Git commands when used in
+> pipelines, potentially leading to false positives in test results.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+The above belongs to the space after the three-dash line before the
+diffstat.
 
-I created a branch, pushed to a remote, and then the remote deleted the branch.
-Then I tried to delete the local branch.
+There are many things in this proposed log message that can be
+improved by reading and following Documentation/SubmittingPatches
+document.  The above is one of them.
 
-What did you expect to happen? (Expected behavior)
+> From a80ff00cda2445f93eac1510f0434095f342887b Mon Sep 17 00:00:00 2001
+> From: Aishwarya <your@email.com>
+> Date: Thu, 28 Mar 2024 13:54:35 +0530
 
-The branch to be deleted.
+Copying a patch into e-mail (be careful not to corrupt whitespaces
+and line-folding) is pefectly fine, but the above should not even
+appear anywhere in your message.  The first one is there to serve as
+a hint to help find(1) the type of the mailbox file and to separate
+patches in a file (when you have multiple patches in a file).  From:
+and Date: will be taken from the e-mail headers (so your MUA should
+send as the address you sign off your patch with).
 
-What happened instead? (Actual behavior)
+> Subject: [PATCH] This commit addresses an issue in our test scripts whe=
+re the
+>  exit code of Git commands could be inadvertently suppressed when used =
+in
+>  pipelines. Such suppression can lead to tests passing despite failures=
+ in Git
+>  commands, potentially masking bugs or regressions.
 
-% git branch -d cleanup
-error: cannot delete branch 'cleanup' used by worktree at '<my source dir>'
-% git worktree list
-<my source dir>  dc46f6d5e [main]
-% git branch
-  cleanup
-* main
+The first paragraph of the message you write in "git commit -e" should
+be a single-line that is around 50 columns wide or less.
 
-What's different between what you expected and what actually happened?
+> Changes made:
+>
+> - Modified instances where `git ls-files -t` and similar Git commands
+> are used in pipelines, to capture their output in a variable first.
+> This ensures that the exit code of the Git command is correctly
+> evaluated.
+> - Applied checks for the exit code immediately after the command
+> execution, allowing the script to exit with an error if the Git
+> command fails.
+> - Adjusted related test cases to work with the new method of capturing
+> and evaluating Git command outputs.
 
-Git reports the branch is being used by a worktree, but prints the current
-repository's directory, where a different branch is clearly checked out.
+And these bulleted list should not have to be there---the code
+change should be obvious enough.
 
-Anything else you want to add:
+> These changes improve the robustness of our testing framework by
+> ensuring that the failure of a Git command in a test script is
+> correctly detected and reported. This is crucial for maintaining the
+> reliability and integrity of the Git project as we continue to evolve
+> and enhance its functionality.
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+Missing sign-off.
+
+> ---
+>  t/t2104-update-index-skip-worktree.sh | 66 ++++++++-------------------
+>  1 file changed, 20 insertions(+), 46 deletions(-)
+>
+> diff --git a/t/t2104-update-index-skip-worktree.sh
+> b/t/t2104-update-index-skip-worktree.sh
+> index 0bab134d71..c552d2208e 100755
+> --- a/t/t2104-update-index-skip-worktree.sh
+> +++ b/t/t2104-update-index-skip-worktree.sh
+> @@ -3,65 +3,39 @@
+>  # Copyright (c) 2008 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+>  #
+>
+> -test_description=3D'skip-worktree bit test'
+> -
+> -TEST_PASSES_SANITIZE_LEAK=3Dtrue
+> -. ./test-lib.sh
+> -
+> -sane_unset GIT_TEST_SPLIT_INDEX
+> -
+> -test_set_index_version () {
+> -    GIT_INDEX_VERSION=3D"$1"
+> -    export GIT_INDEX_VERSION
+> -}
+> -
+> -test_set_index_version 3
+> -
+> -cat >expect.full <<EOF
+> -H 1
+> -H 2
+> -H sub/1
+> -H sub/2
+> -EOF
+> -
+> -cat >expect.skip <<EOF
+> -S 1
+> -H 2
+> -S sub/1
+> -H sub/2
+> -EOF
+> -
+
+It is not clear what all of these removals have to do with the
+changes the proposed log message talked about.  With the above
+change, nobody creates expect.full or expect.skip, but yet the
+remaining tests still do use these two files.  We no longer force
+the index version to 3, either.
+
+>  test_expect_success 'setup' '
+>     mkdir sub &&
+>     touch ./1 ./2 sub/1 sub/2 &&
+>     git add 1 2 sub/1 sub/2 &&
+> -   git ls-files -t | test_cmp expect.full -
+> -'
+> -
+> -test_expect_success 'index is at version 2' '
+> -   test "$(git update-index --show-index-version)" =3D 2
+
+I do not know what justifies the index-version check, so I won't
+comment on this change.
+
+> +   output=3D$(git ls-files -t)
+> +   echo "$output" | test_cmp expect.full -
+
+It is unsual to take the output into a variable, echo it and pretend
+as if that is in file '-'.  A more usual construction would be
+
+	git ls-files -t >actual &&
+	test_cmp expect.full actual
+
+> +   if [ $? -ne 0 ]; then
+> +       exit 1
+> +   fi
+>  '
+
+Documentation/CodingGuidelines; we prefer "test" over "[]", indent
+with tab, and write the conditional like so:
+
+	if ...
+	then
+		...
+	fi
 
 
-[System Info]
-git version:
-git version 2.44.0
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 23.4.0 Darwin Kernel Version 23.4.0: Fri Mar 15 00:12:25
-PDT 2024; root:xnu-10063.101.17~1/RELEASE_ARM64_T6030 arm64
-compiler info: clang: 15.0.0 (clang-1500.1.0.2.5)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+Besides, you should not "exit" from test_expect_success block to
+begin with.  Perhaps you didn't read t/README especially the part
+"And here are the "don'ts:""?  Please do so before touching any
+tests.
 
-
-[Enabled Hooks]
+I'll stop here.
