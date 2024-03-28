@@ -1,69 +1,75 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464A242A9C
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:24:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E061D5BADB
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711646660; cv=none; b=oH0MbRR2uOJLuw3OJKSCw5Y+lirgSRDqYXox2F2eCZQJCCAGvITol8ZAPcD8JBZ41JPLFXVrLSgNF0FMNjCoIV1/Jm1ka9CaQnwGPGxz9OG7T7IrWDrtAl+JI0cwgcxF+V36c8KEkzi4aenKAtM5R0h574NZtzlY+z64GqkNV1Y=
+	t=1711646733; cv=none; b=tyhKo/68897+NyWIdLJ1A/t/P93bAN+Nu+jtY0Cn6AWnPEy0uLIwIr5kM1Epa7yi1lH28FY8mv/vwM/5KHovbUjItKaL3o//AXZZzFqObMY7Fkl0BIR6kKKPCs2uP9T70tE6kDyxpOCwlxXE1kFqYOUIgppiG4Is+fxTmyUiSXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711646660; c=relaxed/simple;
-	bh=bXepF04mJhqqnk/Wlxn16wXYeAVRCMGCmtrMI84KbEo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fsZnAbGzdu6D3+JR8JftopntKYGHGKV8KoeLSLKMKoHDr2yb/jxKqPi7RoxD1+4YKP80Q0H3McoboH73sRcBp5sAz9ZSPXnlLzkN/X763cqP0ZnwBIXg1GIAQl1qjmJgC/+WQhvXA9GrA6L7jTRKK42bnx5q6SoVEJmlSyNlhHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-690caa6438aso6474986d6.0
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:24:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711646657; x=1712251457;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1QyDOzD49tAUqkNONhDAXABLtojeYh0hojG12QgoTTM=;
-        b=bDextunj9yx0GigNpqGq1dsHQ/Na66eObucwNDjiEfEE27Ik7JNNyn6nzpu56ubszA
-         cbR9Rf6jHQh950hu6qweagQxQfROe/vM+XqawR77LHPgf3+AVKCy0PBmSHNW5k35ZIIG
-         WtdSd+MBDOLT7Ar3zPO77MJOVEyek0TnXft538YVlhw+jhPM5kFmjGrE8N07DGhHId3O
-         3R7jGYEFXq63/Nyn7BX5SDQKFzNsL1R7W6Uk/V+0kG7gmgYM5cLBh3fByWu94c0KIkmt
-         SzFvJNCggaQS3CbiRMRCDP1yqq7kYq3YjFqMSoLNUK6k1AOnCQHb1A6YU2oIgXSS/mLL
-         pO9A==
-X-Gm-Message-State: AOJu0Yyb+abVtpp0w6wBOw1a2D2Nqucx8sJowuEh53pVA20ED/7+1dRf
-	EEIF8nf8+W+kqavOy6KHcCcfLwdSRHTitq9mEClWxmNuJCRqUxxnoUm7lpCwHRQhkkxe2mofyOx
-	AaG8LiMEDuxMLsE3EScveBCTGVkujQk8WPpA=
-X-Google-Smtp-Source: AGHT+IFT088FuMhUfpcUKtJ7nLCPJs4RzTa2J2NR98bXk+UDaG0Mx5HKOB2pual49vyRxWxMngpn44eEB8OAN1kTOVA=
-X-Received: by 2002:a05:6214:14ec:b0:696:b106:916d with SMTP id
- k12-20020a05621414ec00b00696b106916dmr3061134qvw.42.1711646657099; Thu, 28
- Mar 2024 10:24:17 -0700 (PDT)
+	s=arc-20240116; t=1711646733; c=relaxed/simple;
+	bh=bTtodjHidW8y3TPr6zDJb2nW51HtxrWrnS3aDM7isAM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OpYNX5QwmtmEwR3wVwtfqmwcBov4taZMiZeyfGma+ld+xmEVhVhWXaror0qj+TCDAXEXPlceBqLMDZAxY1P5R9fGsI8p+jSnUSK8Ja68GS45C78YqunETUMAAVmXGqukmlMsl38cOj/M+u1jW7dwk/saoB4AqimU6hJLrxd/OVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v98u3UST; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v98u3UST"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 953CB1EBAD8;
+	Thu, 28 Mar 2024 13:25:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=bTtodjHidW8y3TPr6zDJb2nW51HtxrWrnS3aDM
+	7isAM=; b=v98u3USTqLwRhpHE+lfEKSUF/8DSMkNo6CWqNx7LXOOLftrkafRGIz
+	duc0u0wZ6O4MZ1rKYlGRjlaPKXM2VaxQeP5w8hCzqWcE6l3aCsn7l2aXgDFRugDj
+	RnEazrnJebVffNqA3kdeRjS/TY9fyFkGed/7XUkBYsGBDA6r+C0Zs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 882391EBAD7;
+	Thu, 28 Mar 2024 13:25:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E31C71EBAD6;
+	Thu, 28 Mar 2024 13:25:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Matthew John Cheetham <mjcheetham@outlook.com>,  M Hickford
+ <mirth.hickford@gmail.com>
+Subject: Re: [PATCH 05/13] credential: gate new fields on capability
+In-Reply-To: <20240328162923.GA1403492@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 28 Mar 2024 12:29:23 -0400")
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+	<20240324011301.1553072-6-sandals@crustytoothpaste.net>
+	<20240328102053.GA890906@coredump.intra.peff.net>
+	<xmqq7chmwczx.fsf@gitster.g>
+	<20240328162923.GA1403492@coredump.intra.peff.net>
+Date: Thu, 28 Mar 2024 10:25:27 -0700
+Message-ID: <xmqqfrwauv3s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
-In-Reply-To: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 28 Mar 2024 13:24:06 -0400
-Message-ID: <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
-Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
-To: Tamir Duberstein <tamird@fuseenergy.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2C1AD092-ED28-11EE-8F99-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thu, Mar 28, 2024 at 10:54=E2=80=AFAM Tamir Duberstein <tamird@fuseenerg=
-y.com> wrote:
-> % git branch -d cleanup
-> error: cannot delete branch 'cleanup' used by worktree at '<my source dir=
->'
-> % git worktree list
-> <my source dir>  dc46f6d5e [main]
-> % git branch
->   cleanup
-> * main
+Jeff King <peff@peff.net> writes:
 
-Is this error persistent once it arises? That is, if you invoke `git
-branch -d cleanup` again immediately after (or a little while after)
-the above sequence, does the problem persist? Or does it "clear up" on
-its own at some point?
+> I think the sneaking has already been done, because Windows CI uses bash
+> (which is after all how I noticed this). I'm not sure if using bash more
+> places would be helpful.
+
+Yeah, you are absolutely right.  Let's not pile another difference
+in the linux-TEST-vars that is already a kitchen sink.
+
+Thanks for a quick dose of sanity.
+
