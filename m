@@ -1,74 +1,89 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D308012FB2D
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 16:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DFF81219
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 16:35:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711643432; cv=none; b=TyU3vhhed+PcJqf/cKh3eLX6+In00D5xEpN7ORokzGFsZ0v24WQxZ/TqRy3jz5oR2nZpfjWOUmsRCvBoDaahPTnFmb/dJQhrRGurzdCA5aC7yPjD3kg/fbWXym0dJ9HhwDe7cZzXnXrPBHewXO3NsXPIboX4B4ItQdXE3ig35Uo=
+	t=1711643749; cv=none; b=OBXUKJ49em/BHYstq/E/kL/pE8kZXjFxKV0ZGa2Hqmu8FyR4M/qOkdSF5c1xHIHYwA/FLrXDCQrofZSz6Ggcj+aCujBD8K8Q5c4TpyLzKji7vS+/FMsu5Zj9x5Rqbd6rpekQvMEWbuufR+ErXOquFOCMq06NeOL9oCOy3ITps8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711643432; c=relaxed/simple;
-	bh=QCXruFZOO526R3fi7zIgA4oKfvXYJveTfZyz5fu+Azg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lNQbwcrl1haxwZLtQJulRSxKYoryPmImJG16Qxsm8Qtv0Rcuvfq6Xum6DJmyt3a0uoF2hq37sSRksI0LO3+n36g3hva9NrZEtafX6WxrbNqx4gzVmqGXxZqeta6qDdbERVv8heyTYBH7gZCwzgyzjiGcQi5MeY3b4/7gd+eGqMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7249 invoked by uid 109); 28 Mar 2024 16:30:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Mar 2024 16:30:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7490 invoked by uid 111); 28 Mar 2024 16:30:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Mar 2024 12:30:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 28 Mar 2024 12:30:28 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Han Young <hanyang.tony@bytedance.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/1] quote: quote space
-Message-ID: <20240328163028.GB1403492@coredump.intra.peff.net>
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
- <xmqqttl2qml9.fsf@gitster.g>
- <xmqqfrwlltjn.fsf@gitster.g>
- <xmqqsf0bz5oj.fsf@gitster.g>
- <20240328103254.GA898963@coredump.intra.peff.net>
- <xmqq34sawcqr.fsf@gitster.g>
+	s=arc-20240116; t=1711643749; c=relaxed/simple;
+	bh=rVnOTy92DnjqLCVLFEjDdVXHMLlcF9+xqlD0+rBhy2Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oqGLgCC6+7s88e+zF/CE5rHz1O4hEM8zFdGOdS/tk83BrRQN8wIDmppZssOuzBGGxu4sTogkVFZXgEGr9RUStfl98/8Ml2HFgz32WCrnH8p9NQ5eWGmbiA987UNjNjuHDEGWlu3RG4OB2F2CRSd6JEZP+P6/mfNtQ2wbceNgvpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OJrhnizQ; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OJrhnizQ"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 21F5D1DC08B;
+	Thu, 28 Mar 2024 12:35:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=rVnOTy92DnjqLCVLFEjDdVXHMLlcF9+xqlD0+r
+	Bhy2Y=; b=OJrhnizQgS7h0Z1U5aykkRG8WUFD7pjTdoRX1ZW4Rf4DcF2dgCW2LE
+	1q9ePDp1war8ZPs542/h41oVM8DD4YGNe4IBZkAoTPxn+eY1rlhm/K9UPaZ1MBP7
+	jewz58zglFLsmX6zhiOR33W+H9UoAbTI805oQsLloU8FDnwTJaNVY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A1191DC08A;
+	Thu, 28 Mar 2024 12:35:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8543A1DC089;
+	Thu, 28 Mar 2024 12:35:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: Achu Luma <ach.lumap@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com,  Christian Couder <chriscool@tuxfamily.org>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [Outreachy][PATCH 2/2] Port helper/test-date.c to
+ unit-tests/t-date.c
+In-Reply-To: <tpaamfc3g5mrrbfufyvxi67ja2ko2hiihrptwxkbmdx4qpid3f@7aashrngiscn>
+	(Ghanshyam Thakkar's message of "Thu, 28 Mar 2024 18:05:59 +0530")
+References: <20240205162506.1835-1-ach.lumap@gmail.com>
+	<20240205162506.1835-2-ach.lumap@gmail.com>
+	<tpaamfc3g5mrrbfufyvxi67ja2ko2hiihrptwxkbmdx4qpid3f@7aashrngiscn>
+Date: Thu, 28 Mar 2024 09:35:39 -0700
+Message-ID: <xmqqttkquxes.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq34sawcqr.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 36E32F12-ED21-11EE-9348-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Thu, Mar 28, 2024 at 09:19:08AM -0700, Junio C Hamano wrote:
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> With the following band-aid, we can skip the test and the output
-> >> from "sh t4126-*.sh -i -v -x" might give us a clue that explains how
-> >> such a failure happens.  Unfortunately GitHub CI's win test does not
-> >> give us insight into a test that did not fail, so I did not get
-> >> anything useful from the "ls -l" down there (I already knew that
-> >> sample patches are empty files).
-> >
-> > We package up the failed test output and trash directories for each run.
-> > You can find the one for this case here:
-> >
-> >   https://github.com/git/git/actions/runs/8458842054/artifacts/1364695605
-> 
-> What I meant was that with the band-aid that (1) sets prerequisite
-> so that Windows would not fail and (2) has some diagnostic in the
-> code that sets prerequisite, because the overall test does not fail,
-> we do not package up that diagnostic output.
+> I believe the issue might not be related to the setenv function, but rather
+> with tzset(). As you can see here[1], when we set TZ before we call the
+> unit-testing binaries, the tests which were failing (EST5 ones that I
+> separated with t-datetest) pass on 'win test (0)', and the ones which
+> were passing (UTC ones, t-date) fail. (Although some tests on linux are also
+> failing, but that can be explained by the fact that t-date runs first
+> and sets the TZ to UTC, afterwhich t-datetest runs and fails, although
+> this is not conclusive). Therefore, I am almost certain that the issue
+> is with changing the timezone during runtime on windows and not with setting
+> TZ variable with setenv(). CC'ing Johannes to see if he has any insights
+> on this.
 
-Right, I meant that we could look at the run without the band-aid (which
-is what the link points to). But I guess maybe you realized already that
-it would not be helpful because of the "reset --hard" that the test
-does.
+Interesting.  Sometime before I started working on Git, I learned
+that no program did tzset() after it started running to switch
+multiple timezones and worked correctly on many different variants
+of UNIXes (there were many of them back then), and because I never
+got interested in writing a world-clock program, I didn't know, and
+kind of surprised to learn that it works on some platforms (like
+Linux and macOS) to switch zones with tzset() these days ;-).
 
--Peff
+So, if Windows runtime is unhappy with the program calling tzset()
+more than once, I wouldn't be too surprised.
+
+Thanks.
