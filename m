@@ -1,129 +1,113 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C91B4E1C9
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 14:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94787E574
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 14:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711637165; cv=none; b=Y/3MTnZKncpmRZ+OjEd/6y48rweDmoHgBzD4dXW55W9VqAkzEhnrIpkgYlYdG7ePFBIeMVzzeybvOoKA2Y6lPzu/WUv7Yx8c5HqOrLD32j9VFdJZDQPKE3t1L/nx5JKJur/JbPOzGUUSIplYA+bHJQ+SoDPI6aFlGmTGF5UOChQ=
+	t=1711637633; cv=none; b=iROE1X2h6QxmeK/49rEH0ZRMwLPSEhkvKWdqjnGdSt8j2Uhw6f4bzD/RAYVpL+a/xz/nE5sWcf3+kXAJYc6iRzrxLYV9me7y6Z+UbIery/4FxGw2h81FLQI8/imPYfBWL4zO4Vq1r5UxP6Nkp1np+lc/NwvSrYrwFhddeEgDK/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711637165; c=relaxed/simple;
-	bh=xQmzOMiYfOAWPYS+rCr902lJ2/W1mFco+fdenw8HjEM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BYJz4+aM6hTc/CHNDhzc2B7/kIaRaLs9uN5uZmndVZbdOs9lc9Cx+pukiHkvR6bxVs3VmQ2TauJKxkUNW8D7BUjG4BIjL8Z1e8qvhPR6i0m4rDKl7ZAJ/5uJlHkPhPaaRQpagLSSYh2lHh7bE7rvvWCzccTPGO2XG2sV8K1Tk28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XAXE1Wi5; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711637633; c=relaxed/simple;
+	bh=vroNsreKmfFmtRs+J1PgZa36yxnBzSjfq1oTZQgYeTU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ifOTN8HzsY7TTAdFeHIE6H1XiIv3VY/RINY2wHMrtGRGUQl6okEdLQFWnK7GgR4dEu+hC5CqA6kf6q3Fuycf4MkM2bA+Mvw3TV8CYXDAyMIKm6mRP5+ILLdOHun75/ZsOYhse34hfim4BGqMsO+i8Pn1zPGhGp5rZmNt1ZznOOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com; spf=pass smtp.mailfrom=fuseenergy.com; dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b=E8uSq4jr; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fuseenergy.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XAXE1Wi5"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BDF51EA8D8;
-	Thu, 28 Mar 2024 10:46:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xQmzOMiYfOAW
-	PYS+rCr902lJ2/W1mFco+fdenw8HjEM=; b=XAXE1Wi5bB6Xt1NEimKwgrt8nwtv
-	5r7mWotlgnA93ABkriyDjJd1mJ7eieDooOPm/RqLUo2xKAmrubqL5hafRj/Wcwjk
-	yAI2jm5Rw7UEYPdNoGc/HhHcpFbRZvw77LtDgyREYYLyagF3sYuSzvBSj4IMmJx1
-	3yPJhFx61u2kQrM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 734BE1EA8D7;
-	Thu, 28 Mar 2024 10:46:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7E231EA8D5;
-	Thu, 28 Mar 2024 10:46:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 2/2] add-patch: do not print hunks repeatedly
-In-Reply-To: <60c43160-1b60-42f6-9488-4cc332201b7e@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Thu, 28 Mar 2024 02:12:13 +0100")
-References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
-	<6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
-	<60d978d0-f69a-4b65-b4ba-d30dac8f112a@gmail.com>
-	<60c43160-1b60-42f6-9488-4cc332201b7e@gmail.com>
-Date: Thu, 28 Mar 2024 07:46:00 -0700
-Message-ID: <xmqqmsqixvmf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b="E8uSq4jr"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a4e1742d3a3so132119166b.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 07:53:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fuseenergy-com.20230601.gappssmtp.com; s=20230601; t=1711637628; x=1712242428; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=L5ju9MpD4x4+Zv3jm5mKETm6jkNzNz/+eNg96UQDOvQ=;
+        b=E8uSq4jrdDll4huuacbqOuZ9cKMOsBfxCyCW6W+loFbdUJdGC1XyUbgLYKFMsUgBcB
+         S0V+E65SjN6uRPgQZmzKDS8q9dTvqgA8ADreAjrdowV7s+n9U+1XbwEn+AmiKwQP3jLt
+         XlcbNVQ4FCazh+V0gzO7hoPjDY3C6XYKJj0vs1dWC8YT4vmCbooGoVdl/K3B5Q5iygm9
+         4gUiJZ8ZkyGgB+pvzghCKCNbeEMMQPt2QBjiZawvd6hNZL88ErzjhD1e5S6ph5oTzHcA
+         9mkfGCifzmTVqQW7qeFy/3Ra9vukBicVn2RNCUpXo3q5ADz/TmCIeqCed++8YCrxQbyn
+         UOYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711637628; x=1712242428;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L5ju9MpD4x4+Zv3jm5mKETm6jkNzNz/+eNg96UQDOvQ=;
+        b=Bvny1ArH1Vy85JPN+a2RGctUi9X1lXsUMxBqkPaKsdc5GA9n9aPP2mAor9yKlpUYBK
+         eGAEVyRfnX588vylG7NksggfJui0ozOqghYr9oO4pBHLTG7AcrHSdrlPb2zJAT7DgQ1P
+         RF+8MbMbVc1tAHzMNVUjPiQpiLjqViLDgPaOdcd2gPdIFPGhwaIL16kKxKGwf5drbsKx
+         Vqv6CdTaFFHNsJ57LtXK4otjhI4SLgtqF4ja4WIg6MnLuZUQX5L1W8BxM5V/o7G2/x4G
+         kuNkKPwbDLWAWZcgqRrV/3NsTPeImMcLgl2dyJVnt81CFZCgWrzyu578r5kE1Ephaxk4
+         8maw==
+X-Gm-Message-State: AOJu0YyH++Xy9n1T2YeENryXwvnzqM8Gr7qZttHUWdhDTmOdgUNMOC8u
+	ixMpPYRC+7go6QQc0dSqFS1N8wIKA56iRmc/yf818/B9xjLHRf/KaxPiFTXi0ZP9+CHMz5+ZjKB
+	XrKnbSOxONdw3bWR6A9PpcdNSe9j/hv8bg/PcmYPPtixJJevKgmZYbhsn
+X-Google-Smtp-Source: AGHT+IFhc95Z6v70DAXhI/SQbbhMSqkfagGF8dfwJfmrEtNKLLPrl2ggA3O1EPnNP9UV7uUCs6LoUHQf24Xr3KObLZ0=
+X-Received: by 2002:a17:906:57c7:b0:a4e:1508:9e8b with SMTP id
+ u7-20020a17090657c700b00a4e15089e8bmr1906112ejr.5.1711637628496; Thu, 28 Mar
+ 2024 07:53:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- E59FB8E6-ED11-11EE-8CF1-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From: Tamir Duberstein <tamird@fuseenergy.com>
+Date: Thu, 28 Mar 2024 14:53:37 +0000
+Message-ID: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
+Subject: bug report: spurious "cannot delete branch '%s' used by worktree"
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Pasting the output of `git bugreport`:
 
-> @@ -1448,10 +1448,15 @@ static int patch_update_file(struct add_p_state=
- *s,
-> =20
->  		strbuf_reset(&s->buf);
->  		if (file_diff->hunk_nr) {
-> -			render_hunk(s, hunk, 0, colored, &s->buf);
-> -			fputs(s->buf.buf, stdout);
-> +			if (rendered_hunk_index !=3D hunk_index) {
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-So, the one previously rendered is compared with the current one,
-which raises an obvious question, what happens to the first new hunk
-resulting from splitting a hunk?  The answer is below ...
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> +				render_hunk(s, hunk, 0, colored, &s->buf);
-> +				fputs(s->buf.buf, stdout);
-> +
-> +				rendered_hunk_index =3D hunk_index;
-> +			}
-> =20
->  			strbuf_reset(&s->buf);
-> +
->  			if (undecided_previous >=3D 0) {
->  				permitted |=3D ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK;
->  				strbuf_addstr(&s->buf, ",k");
-> @@ -1649,10 +1654,12 @@ static int patch_update_file(struct add_p_state=
- *s,
->  			if (!(permitted & ALLOW_SPLIT))
->  				err(s, _("Sorry, cannot split this hunk"));
->  			else if (!split_hunk(s, file_diff,
-> -					     hunk - file_diff->hunk))
-> +					     hunk - file_diff->hunk)) {
->  				color_fprintf_ln(stdout, s->s.header_color,
->  						 _("Split into %d hunks."),
->  						 (int)splittable_into);
-> +				rendered_hunk_index =3D -1;
-> +			}
+I created a branch, pushed to a remote, and then the remote deleted the branch.
+Then I tried to delete the local branch.
 
-... we explicitly say "we always want to show the current one after
-this operation", which makes sense.
+What did you expect to happen? (Expected behavior)
 
->  		} else if (s->answer.buf[0] =3D=3D 'e') {
->  			if (!(permitted & ALLOW_EDIT))
->  				err(s, _("Sorry, cannot edit this hunk"));
-> @@ -1661,7 +1668,7 @@ static int patch_update_file(struct add_p_state *=
-s,
->  				goto soft_increment;
->  			}
->  		} else if (s->answer.buf[0] =3D=3D 'p') {
-> -			/* nothing special is needed */
-> +			rendered_hunk_index =3D -1;
+The branch to be deleted.
 
-And that matches what is done for 'p', which is the base case that
-wants to say "no matter what, show the current one".  Doubly makes
-sense.
+What happened instead? (Actual behavior)
 
->  		} else {
->  			const char *p =3D _(help_patch_remainder), *eol =3D p;
+% git branch -d cleanup
+error: cannot delete branch 'cleanup' used by worktree at '<my source dir>'
+% git worktree list
+<my source dir>  dc46f6d5e [main]
+% git branch
+  cleanup
+* main
 
-Looking good.  As we are not doing anything dynamic to the help
-text, I think dropping "again" in [1/2] would make sense.
+What's different between what you expected and what actually happened?
 
-Will queue.  Thanks.
+Git reports the branch is being used by a worktree, but prints the current
+repository's directory, where a different branch is clearly checked out.
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.44.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 23.4.0 Darwin Kernel Version 23.4.0: Fri Mar 15 00:12:25
+PDT 2024; root:xnu-10063.101.17~1/RELEASE_ARM64_T6030 arm64
+compiler info: clang: 15.0.0 (clang-1500.1.0.2.5)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
