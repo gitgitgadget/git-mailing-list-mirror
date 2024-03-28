@@ -1,90 +1,156 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A11446A5
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF6740856
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711647609; cv=none; b=W4jVKN5btk2v5BcuTHYUnfy6obQFIzJzoxCXGLdQ4TQPSOYtsgOsSkvij3T3hwALLIGypueABF4/I6kWf5YQEnp4gjqKfRuEFjM/PpjZbtg3bduRxzbdqehqRFocCb1cjUEnQ+ovIcCW7qHrmNmOkT/IFx09+F6d6evdSOC9+Pg=
+	t=1711648592; cv=none; b=Rq8iT1sCaB6fxtkE8HtlWePiZZ2duJX3v8JcqdqBwcghRhJy02k4HbBEsVelR3UYL+bdO/zRIKOjnnJkuVsar2sP3ts1l8I3ujpc4PRDGmz/f0soOQ9PylDsbRU30APdvV9B5rnkDXb6d85JlAj5XzwaOoNNHshzNunnVA+6L4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711647609; c=relaxed/simple;
-	bh=UEB4nQVRdn1ITkvQ/Tt38EZdY7cP+N/MunHJqJUSCJc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R0NHgTqHl7VLND47d62HDeAMj5o5AGwVScpvHh1+E7c9E21T7dBTVSnee6/cHEQM/5jJDpoh1XXCoKPeRLKebYeQfbaxtyU77Gse0asDi/gzp/k3ftXSrGty7ZcZbIFpHn6LDJ+oLN7qoc5baZLlW9P6spy5jUg870cVvh7VAL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com; spf=pass smtp.mailfrom=fuseenergy.com; dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b=FbArcApO; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fuseenergy.com
+	s=arc-20240116; t=1711648592; c=relaxed/simple;
+	bh=TZLXc1tNThgMr1OkQAmvSwCI/JHdK6hskUE7JU4o1dA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X7Mf8RjNZ+w9ssi788AkeWvkPOAGaDwSVZs4zaISul9OkXaYdr3EA5r62GiWhuFV8YkZ7dw2WgvcZcP7jSoTCjYURhyYAplg22WIL6YELMSfIyjeuZ10lPozf+Q9wNo4k7ZoD6koM3aC2wmZvTX2SLR0TFxPIkvr5Yan10btdtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=sP0omNuT; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b="FbArcApO"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a466e53f8c0so160056266b.1
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 10:40:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fuseenergy-com.20230601.gappssmtp.com; s=20230601; t=1711647606; x=1712252406; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tlXcMDAELQkEheZ6Be/2sTIrt6379mLH+nyTdad6jDU=;
-        b=FbArcApOK+1iru4o5sZpyNHD8BQvWGWRHFAim/lO9k3EL9lJzdtcpCVI11ZbPMpCWo
-         5aFqf5WJyWaoP0f1CAIzfMEljvtrAMEFRU1ik5pC8cBa50xD6kvDORpocxvhyELcJmO7
-         pXQ2rafopX1NyQuGRkgtv17TynTXEjkI21J1H54r9GPLYBWY+smH6RCjHq3nA7rZ8QcQ
-         oQbjhgjlLHHUTDdr5yL2bcGI0aFqnQBwoD6tAhq7CUY2VRq8iQmLqXjIkF3RbrRqb8ZT
-         IFpH7drwdzLariPS8OwRp8R1bbu7QDGsdcD0LSCT8Xgh2rki0dGeBseKHJueu7UzDVtu
-         8qTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711647606; x=1712252406;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tlXcMDAELQkEheZ6Be/2sTIrt6379mLH+nyTdad6jDU=;
-        b=WczJGsLL1GPJNfW7Zk8qEdpZgZtggxGODZD9AmCUvdb8OHxobzyG3cGcUVibiJzuJ9
-         R0yVxNSgj61wP+gSuiqohEI4UdSmnVpe0WChIlslwO1StUKPUNXWv+Te26T9egqyAcQR
-         tuNiLHnRYqL8DpRKU9i4K/YO0KkIvPb52KPT9UMqixK3JoZAiYT5pto5x9O1LpSJfoBz
-         pRo4OXbO2Sv5SDzeCKpoIhESgpiOtlCC493+A+yFde+kEpPojNHoEkBGvuTdnE7D0D5u
-         7l9Hk6y4F+KOo5pbQyMLYFs3k/bJTzKbpDdi+r9tJjB+A1nndet16AgqzNbO1tHZulYY
-         cwlg==
-X-Gm-Message-State: AOJu0YxOCOIayPw7Ceb0nGOQtvSvJdSsUi9wb1c9s4BFbwvDy267ImaU
-	E12GH1vVovAIaOKmO74M3zRzvkz5P6bHC9K42dK2fNN0yucehoYrfSUREh9pz4Z2mRzELoBhGnH
-	w4e3KyihynBpwKNgX9UQgUxSwzn/3Lr5LJLTpUAPtuDlRaX6m+NrYYw==
-X-Google-Smtp-Source: AGHT+IFleAQD7A5cU0UUwHwYbrUeZr2aW0en3am5sdYMe5y0n+LVscUz656l8vYa4fDVIhTyeryHFIku79N0/2PdZ6k=
-X-Received: by 2002:a17:906:7315:b0:a4e:c3c:e0d8 with SMTP id
- di21-20020a170906731500b00a4e0c3ce0d8mr3086020ejc.3.1711647606383; Thu, 28
- Mar 2024 10:40:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="sP0omNuT"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB2971F44D;
+	Thu, 28 Mar 2024 17:56:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1711648589;
+	bh=TZLXc1tNThgMr1OkQAmvSwCI/JHdK6hskUE7JU4o1dA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sP0omNuTf7EzhgwENPFQDFgRezN4+zeC8r7ND6vAa/3BRZ5uldncyO5ZP+3HmHvg/
+	 LulhEF9Dvg6bz6ghNTkFRJEZv5qYge57yih94YCVry83Inx0FADLTP9RYRmogLGZ4n
+	 NGqaofF9dptwsrrrUGfB8eUwDhNmuZni6jQErWAc=
+Date: Thu, 28 Mar 2024 17:56:29 +0000
+From: Eric Wong <e@80x24.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/3] switch to tombstone-free khashl table
+Message-ID: <20240328175629.M707542@dcvr>
+References: <20240328101356.300374-1-e@80x24.org>
+ <xmqqh6gqwdz0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
- <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
-In-Reply-To: <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
-From: Tamir Duberstein <tamird@fuseenergy.com>
-Date: Thu, 28 Mar 2024 17:39:55 +0000
-Message-ID: <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
-Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh6gqwdz0.fsf@gitster.g>
 
-Yes, the problem is persistent. The branch is never deleted.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
+> > Range-diff:
+> > -:  ---------- > 1:  3bf3148cab list-objects-filter: use kh_size API
+> > 1:  e74965907e ! 2:  09900edb48 treewide: switch to khashl for memory savings
+> 
+> Do you have the correct range-diff?  The previous round had the
+> change to the list-object-filter.c to use kh_size() already.
+> 
+> But I see the 0 -> NULL fixes.  Perhaps the left-side base was off
+> by one when you took the range-diff and there is nothing else going
+> on that we should be worried about...
 
+Odd...  I switched to a different machine (w) for v2 due to
+connectivity problems to the original machine (m) I did v1 on
+and applied the patches sent to the list.
 
-On Thu, Mar 28, 2024 at 5:24=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
->
-> On Thu, Mar 28, 2024 at 10:54=E2=80=AFAM Tamir Duberstein <tamird@fuseene=
-rgy.com> wrote:
-> > % git branch -d cleanup
-> > error: cannot delete branch 'cleanup' used by worktree at '<my source d=
-ir>'
-> > % git worktree list
-> > <my source dir>  dc46f6d5e [main]
-> > % git branch
-> >   cleanup
-> > * main
->
-> Is this error persistent once it arises? That is, if you invoke `git
-> branch -d cleanup` again immediately after (or a little while after)
-> the above sequence, does the problem persist? Or does it "clear up" on
-> its own at some point?
+I did end up rebasing v1 on (w) against the newer master:
+c75fd8d815 (The eleventh batch, 2024-03-25)
+instead of commit 11c821f2f2 (The tenth batch, 2024-03-21)
+on (m).
+
+On (w):
+
+	git format-patch -o $OUT/ khashl-base..khashl-v2 \
+		 --cover-letter --range-diff=khashl-v1 -v2
+
+Seems to mess up infer_range_diff_ranges and it chose `khashl-v2'
+instead of `khash-base' as the `a' part of the range for r1.
+(m) doesn't do this, both running 2.44.0.32*-ish
+
+Here it is from (w) with the explicit `a..' part for --range-diff:
+
+	git format-patch -o $OUT/ khashl-base..khashl-v2 \
+		 --cover-letter --range-diff=khashl-base..khashl-v1 -v2
+
+Range-diff against v1:
+1:  3bf3148cab = 1:  3bf3148cab list-objects-filter: use kh_size API
+2:  e74965907e ! 2:  09900edb48 treewide: switch to khashl for memory savings
+    @@ Commit message
+     
+         khashl is an updated version of khash with less memory overhead
+         (one bit/bucket instead of two) than the original khash and
+    -    similar overall performance.  Insertions are simpler (linear
+    -    probing) but deletions may be slightly slower[1].  Of course,
+    -    the majority of hash tables in git do not delete individual
+    -    elements.
+    +    similar overall performance.  According to its author,
+    +    insertions are simpler (linear probing) but deletions may be
+    +    slightly slower[1].  Of course, the majority of hash tables in
+    +    git do not delete individual elements.
+     
+         Overall memory usage did not decrease much, as the hash tables
+         and elements we store in them are big and currently dwarf the
+         overhead of the khash internals.  Only around 10 MB in
+    -    allocations (not peak use) is saved when doing a no-op `git gc'
+    -    of a Linux kernel object store with thousands of refs and
+    -    islands.
+    +    allocations (and a few dozen KB peak use out of ~6 GB) is saved
+    +    when doing a no-op `git gc' of a Linux kernel object store with
+    +    thousands of refs and islands.
+     
+         A summary of differences I've found from khash to khashl:
+     
+    @@ Commit message
+         * flesh out KHASHL_{SET,MAP}_INIT wrappers with *_clear, *_resize,
+           and *_release functions
+     
+    +    * sparse fixes from Junio and Jeff
+    +
+         [1] https://attractivechaos.wordpress.com/2019/12/28/deletion-from-hash-tables-without-tombstones/
+         [2] git clone https://github.com/attractivechaos/klib.git
+             2895a16cb55e (support an ensemble of hash tables, 2023-12-18)
+    @@ Commit message
+           typedef) and was the only place where I had to change a definition.
+     
+         Signed-off-by: Eric Wong <e@80x24.org>
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+    +    Helped-by: Jeff King <peff@peff.net>
+     
+      ## builtin/fast-import.c ##
+     @@
+    @@ khashl.h (new)
+     +#define __KHASHL_IMPL_GET(SCOPE, HType, prefix, khkey_t, __hash_fn, __hash_eq) \
+     +	SCOPE khint_t prefix##_getp_core(const HType *h, const khkey_t *key, khint_t hash) { \
+     +		khint_t i, last, n_buckets, mask; \
+    -+		if (h->keys == 0) return 0; \
+    ++		if (!h->keys) return 0; \
+     +		n_buckets = (khint_t)1U << h->bits; \
+     +		mask = n_buckets - 1U; \
+     +		i = last = __kh_h2b(hash, h->bits); \
+    @@ khashl.h (new)
+     +
+     +#define __KHASHL_IMPL_RESIZE(SCOPE, HType, prefix, khkey_t, __hash_fn, __hash_eq) \
+     +	SCOPE void prefix##_resize(HType *h, khint_t new_n_buckets) { \
+    -+		khint32_t *new_used = 0; \
+    ++		khint32_t *new_used = NULL; \
+     +		khint_t j = 0, x = new_n_buckets, n_buckets, new_bits, new_mask; \
+     +		while ((x >>= 1) != 0) ++j; \
+     +		if (new_n_buckets & (new_n_buckets - 1)) ++j; \
+    @@ khashl.h (new)
+     +#define __KHASHL_IMPL_DEL(SCOPE, HType, prefix, khkey_t, __hash_fn) \
+     +	SCOPE int prefix##_del(HType *h, khint_t i) { \
+     +		khint_t j = i, k, mask, n_buckets; \
+    -+		if (h->keys == 0) return 0; \
+    ++		if (!h->keys) return 0; \
+     +		n_buckets = (khint_t)1U<<h->bits; \
+     +		mask = n_buckets - 1U; \
+     +		while (1) { \
+3:  744e1b7198 = 3:  bfb20eae37 khashl: fix ensemble lookups on empty table
