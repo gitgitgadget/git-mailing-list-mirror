@@ -1,55 +1,50 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DFF81219
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 16:35:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F9A225D0
+	for <git@vger.kernel.org>; Thu, 28 Mar 2024 16:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711643749; cv=none; b=OBXUKJ49em/BHYstq/E/kL/pE8kZXjFxKV0ZGa2Hqmu8FyR4M/qOkdSF5c1xHIHYwA/FLrXDCQrofZSz6Ggcj+aCujBD8K8Q5c4TpyLzKji7vS+/FMsu5Zj9x5Rqbd6rpekQvMEWbuufR+ErXOquFOCMq06NeOL9oCOy3ITps8M=
+	t=1711644655; cv=none; b=SnsnkSvhg6M+ym28b3X/LaOipLrvk/A+b/bcaEP/QSbrnEg7PSQLzxq1gAMHRJpkr3kABR2zo3pRs9gAZoXS90BgtrC6G6vRY94kAwTkd4wDvxcDpgkTO1FC2kB5HAfQClAGuezasNqsXvuM7Xi/nSzyi+hgX9Hq7zPOqSRWXGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711643749; c=relaxed/simple;
-	bh=rVnOTy92DnjqLCVLFEjDdVXHMLlcF9+xqlD0+rBhy2Y=;
+	s=arc-20240116; t=1711644655; c=relaxed/simple;
+	bh=JQhJaXXEIJ9LAtMwgyUq5C6dAYJ7fidmLsSTCOcf1Fw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oqGLgCC6+7s88e+zF/CE5rHz1O4hEM8zFdGOdS/tk83BrRQN8wIDmppZssOuzBGGxu4sTogkVFZXgEGr9RUStfl98/8Ml2HFgz32WCrnH8p9NQ5eWGmbiA987UNjNjuHDEGWlu3RG4OB2F2CRSd6JEZP+P6/mfNtQ2wbceNgvpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OJrhnizQ; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=JgiDSdT0AhAQJi/MVa2prW3H2Laqo32zYO6difAsC24Sq4+yMjhfPcp3QejL86K/vSAR8pxd658140rsLHIaaGf/In+ke6w6KhIbsmfOJMTxJNhzlseWX7NofVJOZCiptL66z5PuHHaA+taMTSgjhKyWk1WVk2bTrrYpSYd9t3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UrOlLXRi; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OJrhnizQ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 21F5D1DC08B;
-	Thu, 28 Mar 2024 12:35:41 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UrOlLXRi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF1031EB6FA;
+	Thu, 28 Mar 2024 12:50:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=rVnOTy92DnjqLCVLFEjDdVXHMLlcF9+xqlD0+r
-	Bhy2Y=; b=OJrhnizQgS7h0Z1U5aykkRG8WUFD7pjTdoRX1ZW4Rf4DcF2dgCW2LE
-	1q9ePDp1war8ZPs542/h41oVM8DD4YGNe4IBZkAoTPxn+eY1rlhm/K9UPaZ1MBP7
-	jewz58zglFLsmX6zhiOR33W+H9UoAbTI805oQsLloU8FDnwTJaNVY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A1191DC08A;
-	Thu, 28 Mar 2024 12:35:41 -0400 (EDT)
+	:content-type; s=sasl; bh=JQhJaXXEIJ9LAtMwgyUq5C6dAYJ7fidmLsSTCO
+	cf1Fw=; b=UrOlLXRisfGAy+iF+TP7ka5sTZjYm25h7XNUcmBnUZC4bb29ic2ck4
+	7AxTBpcNPE7OUYbn35LHLGMDaxVY2k8C7wLgRKxUAJ8Qv3wFXrYIcTRIT78NHjSO
+	bdeY1zXg6z7yV6VuYGJ3cnAMkJP2xTWjV/h+X5XsBTpSsNPgAX8fk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B74BF1EB6F9;
+	Thu, 28 Mar 2024 12:50:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8543A1DC089;
-	Thu, 28 Mar 2024 12:35:40 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 020CC1EB6F8;
+	Thu, 28 Mar 2024 12:50:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: Achu Luma <ach.lumap@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  Christian Couder <chriscool@tuxfamily.org>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [Outreachy][PATCH 2/2] Port helper/test-date.c to
- unit-tests/t-date.c
-In-Reply-To: <tpaamfc3g5mrrbfufyvxi67ja2ko2hiihrptwxkbmdx4qpid3f@7aashrngiscn>
-	(Ghanshyam Thakkar's message of "Thu, 28 Mar 2024 18:05:59 +0530")
-References: <20240205162506.1835-1-ach.lumap@gmail.com>
-	<20240205162506.1835-2-ach.lumap@gmail.com>
-	<tpaamfc3g5mrrbfufyvxi67ja2ko2hiihrptwxkbmdx4qpid3f@7aashrngiscn>
-Date: Thu, 28 Mar 2024 09:35:39 -0700
-Message-ID: <xmqqttkquxes.fsf@gitster.g>
+To: Eugenio Bargiacchi <svalorzen@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Better visual separation of hunks in `git add -p`
+In-Reply-To: <CAHfn=+snXChcPFiEgxvK=XFCq2uVMKQTyfrN9RNfAod18d0V=Q@mail.gmail.com>
+	(Eugenio Bargiacchi's message of "Thu, 28 Mar 2024 14:36:11 +0100")
+References: <CAHfn=+snXChcPFiEgxvK=XFCq2uVMKQTyfrN9RNfAod18d0V=Q@mail.gmail.com>
+Date: Thu, 28 Mar 2024 09:50:49 -0700
+Message-ID: <xmqqo7ayuwpi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,31 +54,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 36E32F12-ED21-11EE-9348-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 56298B58-ED23-11EE-999E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+Eugenio Bargiacchi <svalorzen@gmail.com> writes:
 
-> I believe the issue might not be related to the setenv function, but rather
-> with tzset(). As you can see here[1], when we set TZ before we call the
-> unit-testing binaries, the tests which were failing (EST5 ones that I
-> separated with t-datetest) pass on 'win test (0)', and the ones which
-> were passing (UTC ones, t-date) fail. (Although some tests on linux are also
-> failing, but that can be explained by the fact that t-date runs first
-> and sets the TZ to UTC, afterwhich t-datetest runs and fails, although
-> this is not conclusive). Therefore, I am almost certain that the issue
-> is with changing the timezone during runtime on windows and not with setting
-> TZ variable with setenv(). CC'ing Johannes to see if he has any insights
-> on this.
+> I'm looking for a way to print some sort of separator between hunks
+> when running `git add -p`, as I have a bit of trouble detecting when
+> the previous hunk begins and the current one starts. Being able to
+> print an empty line or a couple lines filled with "=======" would
+> really help me out.
 
-Interesting.  Sometime before I started working on Git, I learned
-that no program did tzset() after it started running to switch
-multiple timezones and worked correctly on many different variants
-of UNIXes (there were many of them back then), and because I never
-got interested in writing a world-clock program, I didn't know, and
-kind of surprised to learn that it works on some platforms (like
-Linux and macOS) to switch zones with tzset() these days ;-).
+Hmph, my hope when I designed that particular UI was that the
+command prompt for the previous interaction followed by the hunk
+header of the current hunk would give us clear enough separation.
 
-So, if Windows runtime is unhappy with the program calling tzset()
-more than once, I wouldn't be too surprised.
+For example, after answering "n" to the prompt for the previous
+hunk, we'd see
 
-Thanks.
+    ...
+    +   (merge bff85a338c bl/doc-key-val-sep-fix later to maint).
+    +
+      * Other code cleanup, docfix, build fix, etc.
+        (merge f0e578c69c rs/use-xstrncmpz later to maint).
+        (merge 83e6eb7d7a ba/credential-test-clean-fix later to maint).
+    (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? n
+    @@ -233,3 +245,6 @@ Fixes since v2.44
+        (merge 781fb7b4c2 as/option-names-in-messages later to maint).
+        (merge 51d41dc243 jk/doc-remote-helpers-markup-fix later to maint).
+        (merge e1aaf309db pb/ci-win-artifact-names-fix later to maint).
+    +   (merge ad538c61da jc/index-pack-fsck-levels later to maint).
+    +   (merge 67471bc704 ja/doc-formatting-fix later to maint).
+    ...
+    (2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]?
+
+The '@' (the first character of the hunk header line for the current
+hunk) and "(1/2" are surrounded by lines that begin with a space,
+and the hope was that it was sufficient "separator" already.
+
+These days (long after I stopped mucking with the interactive add
+code actively), the prompt line is painted in prompt_color (you can
+tweak it with the color.interactive.prompt configuration variable,
+it defaults to BOLD BLUE) while the first part of the hunk header
+line is painted in the fraginfo color (default CYAN), which should
+give you even more visual distinction.
+
+Perhaps
+
+    [color "interactive"]
+	prompt = bold red reverse
+
+would be sufficient?  I dunno.
+
