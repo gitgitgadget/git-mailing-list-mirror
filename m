@@ -1,126 +1,205 @@
-Received: from mail-108-mta247.mxroute.com (mail-108-mta247.mxroute.com [136.175.108.247])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AC7381AD
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 03:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.247
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B378E381AD
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 03:58:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711684660; cv=none; b=E4vM+mmDmQvx0XnoxPvhMxbpU4k84QR7gGQ+KD+dIK1udK9MhHZQ3b4J5RAj3VoR7QtrVbQE+7uz47pC8HCLqoj1V8yQ8Eqcyh/h/yvsg8BEUopSAWs4wj11dI2W0CroXuD5F8La7svhrcC1IvpNTilWUZJhvW5/S2Ly+1Ke2Y4=
+	t=1711684724; cv=none; b=fUGLBYoLAoaOAV8Z9X9QDo4zwoRdgEkxAMp0IQ5gSPypILj69ld4YvrwY4ZJE7NIzACxU+aa4Ep9U1XwhPxPUXSIaQwY/x3gm9YSvDDmU2kGvKp8DFdtWj1SZHdFVzcDZhXt5ecsxbMNi2o8VaWhK6zhaqbhHgL840PZnMupkiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711684660; c=relaxed/simple;
-	bh=evDCHhaNUJLUmfoGBASYd+4iuJbcBYAe/t2PVQHEiw0=;
-	h=MIME-Version:Date:From:To:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=M4EeXkKYMYThM529uRazf8WmrA20aXhiFlsLm72yplhs+bXzRAff3gW4Xk1GPAdEOhvEYfNzvqvOMvPOh7hQBp1+TlcFBsRCKQzOew5+39Qs/3UGct8JBGzDabneigarAVJ4w95VV+n9oRLguRWpgGO0L7jY1XGWFXava2OSblc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vkabc.me; spf=pass smtp.mailfrom=vkabc.me; dkim=fail (2048-bit key) header.d=vkabc.me header.i=@vkabc.me header.b=bizsaDOQ reason="signature verification failed"; arc=none smtp.client-ip=136.175.108.247
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vkabc.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vkabc.me
+	s=arc-20240116; t=1711684724; c=relaxed/simple;
+	bh=afFFj9wzNvhnnQs0zmYWzrKM+HnRGj6CO6oGRHZt7t4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=uwiO2lC+As0CFqKSDdUB2bOORoxDer2X9CCRopYfo/iTqHbKONfoo2QfXGNzk1m12apGZLfX3bqCEC+S8XTvHwwoLKkDmXQA7jyoGcZ+D8HuwV/6IGZemAIz5QjayUxqG/cjiyMKVNMyO/hMyLhKTQcwiu0lbDZqxOKLwqnPmeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CZJAY6Ud; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=vkabc.me header.i=@vkabc.me header.b="bizsaDOQ"
-Received: from filter006.mxroute.com ([136.175.111.2] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta247.mxroute.com (ZoneMTA) with ESMTPSA id 18e885b0e7e0003bea.001
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Fri, 29 Mar 2024 03:57:32 +0000
-X-Zone-Loop: e4a5741850f28a75eae2390c8efd395b72f157d39eeb
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=vkabc.me;
-	s=x; h=Content-Transfer-Encoding:Content-Type:Message-ID:References:
-	In-Reply-To:Subject:To:From:Date:MIME-Version:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=+K2SoX1t+o8+lhlFkIzvkqLpAG+5wNqkke3fWuZLNOc=; b=bizsaDOQT0u3Hw5xZJ9e2/2Uy1
-	QvNF1Q/VJC6TJMvlmV/hGc9rDRaovZq93t0ww2q+znohjWtlqQ9W5OCRHLWUhsMybWvf02Z1jFiPn
-	uZo1CNb8nxfzT6utbpZCHoRxAXF14JNbqIz8wv2tT8JD7fR50KM+YdfCviOBr87HgVQjgq9p5clfk
-	m1dO5cveEELO66awvbLWf9oJq+z310nBhEcPXkjECEGej+WQjQLWZXU981JOMKLcHUkHREHhWZ3BV
-	hgyZofcbQGEXKW88z6F4pDx+y+6BGPS+k3zhBRxpxevWqViN+DTgrpF/otpq1BOMrUQ4Lz7EE1MWl
-	9lX8t0uA==;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CZJAY6Ud"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33d90dfe73cso843365f8f.0
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 20:58:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711684721; x=1712289521; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ao4v96ZSb+um2rQvqluoqIhAYCQCqnZIpC3ykusINek=;
+        b=CZJAY6UdIbmUx5UQOobEWsuezMY+n0zRO5nsZvwNsGXDYUShHrCsAHb6f8J85ep2gY
+         AEBFhCwwTljRpIl7Njpu7EZ1WyJkeexur4PAhs/8IoJDVOh9ENosryx1L4mL3cU96AAf
+         mICTzA+peV2wJX/ke6MYGznG7DA0UN7s1fkV3FJQFyLlG67AlY6pKABytYu7vaTxCype
+         N0CfddAx9a1QQURVTSb0A5TiBHYOspdO0+1tsqVzabwPV4+sILuGwsB/k9jooExWcl+h
+         gCR9ptFR/XL7rvvSwUY1gQTgthgc9bZb/Vsftcp1/tJ5qQQLJpzQMe1STLLTD01DO8uw
+         bImQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711684721; x=1712289521;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ao4v96ZSb+um2rQvqluoqIhAYCQCqnZIpC3ykusINek=;
+        b=l+90W0WZjEj1aOxeNtqpkCgOerSalFh6Z1mLlGA3daWvSQJd/FsGB+tbhiqj7jCWHR
+         HCcGy7FxAvUv5RkBWHCKRJkf1t30/pUVyicPbCR/L2ixR+3w+xFeQzjjFG1tiuTK17bz
+         2ZeE+LSpuaFjUGP8PnVveF8xytHHBK+FxgjGCHbyfD/fg5D+UkD8tnQ6tnQ6sygyV0oW
+         9Vom+OLbUHm4uZp/QwZbT4vfA7RncMZ55uEWraRzzc+wJrdEqMGF4Cjww8nrGh03e9Tf
+         8PCcIsRuEE91J2Xq04ILT3w1vs9qSnh4HnTaZifM5DgPbcdaZTeoh7l657ES4aYiVhvL
+         pbvg==
+X-Gm-Message-State: AOJu0Ywuf88hMIwajxvzrYAmlAbVkdxy9edQPZaW/rcoaFMFj7A6eEiN
+	/Vb0GDMj8G7CVQmIXtKLap0vdWNjeShpZPOdgis8d3jGgnZhspIeTzwbWNym
+X-Google-Smtp-Source: AGHT+IGbqDSoJ0Igqsn8UnO8y4Xdl0jJaFoDfXM0owV0f7tM1tni8jH/8+zA68vYcE/4bMXKUOIhfw==
+X-Received: by 2002:adf:e6cb:0:b0:343:343f:85da with SMTP id y11-20020adfe6cb000000b00343343f85damr2628878wrm.33.1711684720917;
+        Thu, 28 Mar 2024 20:58:40 -0700 (PDT)
+Received: from gmail.com (220.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.220])
+        by smtp.gmail.com with ESMTPSA id dw14-20020a0560000dce00b0034174875850sm3154990wrb.70.2024.03.28.20.58.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Mar 2024 20:58:40 -0700 (PDT)
+Message-ID: <5d1c767c-4558-4d81-a6d4-6d3eef8d6ca6@gmail.com>
+Date: Fri, 29 Mar 2024 04:58:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 29 Mar 2024 11:57:31 +0800
-From: vk <g@vkabc.me>
-To: Git <git@vger.kernel.org>
-Subject: Re: [GSoC] Microproject help
-In-Reply-To: <ZgO-W3E-CeT3n7vl@tanuki>
-References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
- <CAOLa=ZRrmyZ48C5r8MWioyjySWdKtLxhtDBg5F2tRsExHaR-fg@mail.gmail.com>
- <a344deea98bdd2daa7671fae45c0bf11@vkabc.me> <ZgO-W3E-CeT3n7vl@tanuki>
-Message-ID: <80f0bb12243eedbc4ad6580cb06abeb2@vkabc.me>
-X-Sender: g@vkabc.me
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Id: g@vkabc.me
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v4 1/2] add-patch: introduce 'p' in interactive-patch
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
+ <6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
+ <60d978d0-f69a-4b65-b4ba-d30dac8f112a@gmail.com>
+ <a9c515fe-6664-4b5d-abca-d88fdd32a883@gmail.com>
+Content-Language: en-US
+In-Reply-To: <a9c515fe-6664-4b5d-abca-d88fdd32a883@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 2024-03-27 14:36, Patrick Steinhardt wrote:
-> On Tue, Mar 26, 2024 at 07:56:19PM +0800, vk wrote:
->> On 2024-03-26 02:25, Karthik Nayak wrote:
->> > vk <g@vkabc.me> writes:
->> >
->> > Hello!
->> >
->> > > Hello all,
->> > >
->> > > I'm Vk and I work as a software engineer. I am interested in
->> > > contributing to git repository. Apologies for the late start as I only
->> > > stumbled upon GSoC recently and git project interested me as I use it
->> > > everyday at work and it would be meaningful for me to contribute to
->> > > it.
->> > > Even if I am not chosen, it will be great if I can start learning to
->> > > contribute to git open source.
->> > >
->> > > For the microproject, I have looked into the lists for 2024 and it
->> > > seems
->> > > that all the projects have been taken except for `Replace a
->> > > run_command*() call by direct calls to C functions`. However, it seems
->> > > that the issue has been solved. The command I ran to search throughout
->> > > the repo is `git grep 'run_command*('` and the search result returns
->> > > run_command functions which I assume are essential.
->> > >
->> >
->> > When I ran the same, I saw around 135 results. Are you saying that
->> > they're all essential?
->> >
->> > For e.g. In `builtin/gc.c:maintenance_task_pack_refs`, shouldn't you be
->> > able to replace the `run_command`?
->> >
->> 
->> My bad as the example uses `run_command_v_opt` and upon further 
->> inspection
->> it seems that there might be similar situations like the example that 
->> can
->> save an external process. However, for the maintenance_task_pack_refs, 
->> the
->> command being run is `git pack-refs` which is a write process unlike 
->> the
->> example which is a simple read only process of `git show-branch` to 
->> get the
->> current commit? I will be searching the codebase for similar read only
->> `run_command` and see if I can replace them.
-> 
-> Hint: the `maintenance_task_pack_refs()` can in fact be converted to 
-> use
-> `refs_pack_refs()` instead. I was briefly considering doing that in 
-> [1],
-> but then didn't want to do such an unrelated refactoring in an already
-> long patch series.
-> 
-> So if you decide to do that you should probably build on top of my 
-> patch
-> series to avoid conflicts. The patch series is available e.g. at [2],
-> branch "ps/pack-refs-auto". So if you decide to give it a try you 
-> should
-> build on top of that branch.
+Shortly we're going make interactive-patch stop printing automatically
+the hunk under certain circumstances.
 
+Let's introduce a new option to allow the user to explicitly request
+the printing.
 
-Hello all,
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+ Documentation/git-add.txt  |  1 +
+ add-patch.c                |  4 ++++
+ t/t3701-add-interactive.sh | 22 +++++++++++-----------
+ 3 files changed, 16 insertions(+), 11 deletions(-)
 
-For the build on top of ps/pack-refs-auto, do I commit to this branch 
-locally and get the diff for submitting the patch?
-
-Thank you
-
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 14a371fff3..aceaa025e3 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -348,6 +348,7 @@ patch::
+        K - leave this hunk undecided, see previous hunk
+        s - split the current hunk into smaller hunks
+        e - manually edit the current hunk
++       p - print the current hunk
+        ? - print help
+ +
+ After deciding the fate for all hunks, if there is any hunk
+diff --git a/add-patch.c b/add-patch.c
+index 68f525b35c..b5d3a3f0cc 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1388,6 +1388,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
+    "/ - search for a hunk matching the given regex\n"
+    "s - split the current hunk into smaller hunks\n"
+    "e - manually edit the current hunk\n"
++   "p - print the current hunk\n"
+    "? - print help\n");
+ 
+ static int patch_update_file(struct add_p_state *s,
+@@ -1480,6 +1481,7 @@ static int patch_update_file(struct add_p_state *s,
+ 				permitted |= ALLOW_EDIT;
+ 				strbuf_addstr(&s->buf, ",e");
+ 			}
++			strbuf_addstr(&s->buf, ",p");
+ 		}
+ 		if (file_diff->deleted)
+ 			prompt_mode_type = PROMPT_DELETION;
+@@ -1658,6 +1660,8 @@ static int patch_update_file(struct add_p_state *s,
+ 				hunk->use = USE_HUNK;
+ 				goto soft_increment;
+ 			}
++		} else if (s->answer.buf[0] == 'p') {
++			/* nothing special is needed */
+ 		} else {
+ 			const char *p = _(help_patch_remainder), *eol = p;
+ 
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 0b5339ac6c..bc55255b0a 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -325,9 +325,9 @@ test_expect_success 'different prompts for mode change/deleted' '
+ 	git -c core.filemode=true add -p >actual &&
+ 	sed -n "s/^\(([0-9/]*) Stage .*?\).*/\1/p" actual >actual.filtered &&
+ 	cat >expect <<-\EOF &&
+-	(1/1) Stage deletion [y,n,q,a,d,?]?
+-	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,?]?
+-	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]?
++	(1/1) Stage deletion [y,n,q,a,d,p,?]?
++	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,p,?]?
++	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]?
+ 	EOF
+ 	test_cmp expect actual.filtered
+ '
+@@ -514,13 +514,13 @@ test_expect_success 'split hunk setup' '
+ test_expect_success 'goto hunk' '
+ 	test_when_finished "git reset" &&
+ 	tr _ " " >expect <<-EOF &&
+-	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? + 1:  -1,2 +1,3          +15
++	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? + 1:  -1,2 +1,3          +15
+ 	_ 2:  -2,4 +3,8          +21
+ 	go to which hunk? @@ -1,2 +1,3 @@
+ 	_10
+ 	+15
+ 	_20
+-	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?_
++	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?_
+ 	EOF
+ 	test_write_lines s y g 1 | git add -p >actual &&
+ 	tail -n 7 <actual >actual.trimmed &&
+@@ -530,11 +530,11 @@ test_expect_success 'goto hunk' '
+ test_expect_success 'navigate to hunk via regex' '
+ 	test_when_finished "git reset" &&
+ 	tr _ " " >expect <<-EOF &&
+-	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? @@ -1,2 +1,3 @@
++	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? @@ -1,2 +1,3 @@
+ 	_10
+ 	+15
+ 	_20
+-	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?_
++	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?_
+ 	EOF
+ 	test_write_lines s y /1,2 | git add -p >actual &&
+ 	tail -n 5 <actual >actual.trimmed &&
+@@ -715,21 +715,21 @@ test_expect_success 'colors can be overridden' '
+ 	<BLUE>+<RESET><BLUE>new<RESET>
+ 	<CYAN> more-context<RESET>
+ 	<BLUE>+<RESET><BLUE>another-one<RESET>
+-	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
++	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
+ 	<MAGENTA>@@ -1,3 +1,3 @@<RESET>
+ 	<CYAN> context<RESET>
+ 	<BOLD>-old<RESET>
+ 	<BLUE>+<RESET><BLUE>new<RESET>
+ 	<CYAN> more-context<RESET>
+-	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
++	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
+ 	<CYAN> more-context<RESET>
+ 	<BLUE>+<RESET><BLUE>another-one<RESET>
+-	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
++	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
+ 	<CYAN> context<RESET>
+ 	<BOLD>-old<RESET>
+ 	<BLUE>+new<RESET>
+ 	<CYAN> more-context<RESET>
+-	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? <RESET>
++	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>
+ 	EOF
+ 	test_cmp expect actual
+ '
+-- 
+2.44.0.370.ge17b8d70f1
