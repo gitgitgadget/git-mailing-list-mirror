@@ -1,58 +1,58 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6773987C
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 06:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E66107A8
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 07:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711695297; cv=none; b=CDyphoLNM4Pv+4c1bbBo0qOaV9RsTQcAU3kLZoPhk0jvaOB3YEdrTnQl3LVWp2N81rrz3WraV0dD4yOBcBe2e+JdnjnIFZ/lrxZUEQM6cyjVpZeLsEn6OiFG6NGjGThgN7ptVxTkUz0Od16bvaNHTCOnO/EN9N8GUbGPGTvLv0U=
+	t=1711696118; cv=none; b=UwiVkCF0/uKT01IvSCvlgrmYyeLsYPaP4wDq5M5PL/GbrxtYm38VstZ6X30mNp575viR/0fBycSUimuVgwiUjDrxVSEuDJdsJsevNsUr8wLuRT2O0gpGTp4Eq4aIZOylJRYtADM27VEsP53jxjrKVnzNjVISy6EyytusWWByI58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711695297; c=relaxed/simple;
-	bh=hN8erdFKrvb8wI1JEwu8OfELv4wYrhrmCE/Z1SxC9Ks=;
+	s=arc-20240116; t=1711696118; c=relaxed/simple;
+	bh=56pOnfRtRkAz7uFcSJc0EniDm2G21ZZVW4xn8qRG02k=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fqXKul4ZMYy3oPrX7n2RcXothtp9/EvutRxOMgeLlR3+//AwJeXZV/Jk19SXU64EtzMmtLpRTwGyIAyb4ssoDXiVKaid9pQlwF9GLqZiYmjCGIALCMDXxGcaA1SPg1ej2mURlLCQa/JouWXmfG9iMZnxHdX3MlpIEcPwZeicGwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e8XwYusS; arc=none smtp.client-ip=209.85.210.180
+	 In-Reply-To:Content-Type; b=mYC8vngSOipgrPdhcEu0SqE7iMpiM7jDBj6pu6ZGmnY/zRZvEZbE4DVfRZp5CiicWrapLvY6O6EsCSysaWTIJonZNoExMGnUbP32fnerMX8Bga3KQQVdusfTP5YJZU/q541n76RGjVqb2YYKk4Apb/BjsOeSTGiUG9iJQ0PoDoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GIlUmjRo; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e8XwYusS"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6e6afb754fcso1678567b3a.3
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 23:54:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GIlUmjRo"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e740fff1d8so1511114b3a.1
+        for <git@vger.kernel.org>; Fri, 29 Mar 2024 00:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711695295; x=1712300095; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1711696115; x=1712300915; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Gyh+erocazpwK7G4aRBDgpZ+/ZmqeMGcDRiEgK8CzvM=;
-        b=e8XwYusSX63x80bAysx5JQP6Q95cExkXHbg8L/bmS7O6a/tAWrTkajcWpKWHiWnriD
-         wQ+2yGY13fLB4tyROpKwByz29v0jpESr0/HG1s5CZonO4r3dXk5ACPsV+yJ2X56xXNW7
-         ny3jcxkDZDtZJyNk9Eu+27nOW6LoqTZ331A+PsS0QcAJdfAUEA2YxAlZBmEJqyhvnyiC
-         QuSe9oR71ngnIpNBIdCGjkmgZsvgwYu5K9s2ENqVbJAYBodR9h7ent6gjxksh7c45neO
-         ulBCJHtt1vZ2hjKIkkZh1QtfS1+4OnL8MzpMwKElE9/GyYhTQJ/324R6vSG1eBQLoKXO
-         cnUQ==
+        bh=j4eo4iipb3tFGb9si20EbEoawljaldQKKlRJLRHIhxU=;
+        b=GIlUmjRok5FpoJOS0YzKX8HPNU1yVaeHnyBhmgEsxka8EO7noot0weElFqnj38e45D
+         Kjwd4Ri9gYXqvpTGdTgyiB0P/ZjpXXksq/WU054v4Xc2tfXNXFk1T1qTGzL3k8cZxqpw
+         ak5DIcRTD2p8azwNP+06eY07jXJAza47P4H1bqVMb17DGrXRNCFpc+oBN5u+RKThLmbJ
+         KGiOF0o0O77TD4Y8xClj6OWd7F2MP030VBfSBjk83MavMXLjpQOH8YiE9aj+CQc3atGX
+         IXMUXXURHoDmJzaTcWwzI/KGu2KLxkIodOzk4WGhh/eR/1Qv4nyteiX0jYZjOpURYaqw
+         KBMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711695295; x=1712300095;
+        d=1e100.net; s=20230601; t=1711696115; x=1712300915;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gyh+erocazpwK7G4aRBDgpZ+/ZmqeMGcDRiEgK8CzvM=;
-        b=ImkXFOY+NXtzSoz2kA0X+ZZqwLpRP5Xm5e+wMgbWivAkqbvhxcv9KfzdmaTGNQUnWK
-         LWvy4dqTFJZIUVFxCGW0d7bZOXgHlcE1CPXxvoQW/fsQMkDSp4To5cCTccwrBllG5eWR
-         RqzTUyG1R8gtOA3GE4bSfOPbYTg2jSXii+0dFnIoIT1ojVUfsq07mlQxSXG3Yz1QLXig
-         C2mgcUvzv5pl47MWvDobz/fFawPoq5nhitdKEtIetQiYgrvy3ut35ZWZKALrdNDXtlgS
-         Ewx00mddSASowBOWaAA/doKWXOwSYOY9mEWAv8g9bFXt3jb9oSSKSBDQyHnpNcwDbR8b
-         XUkw==
-X-Gm-Message-State: AOJu0Yyo6tRdlyngsQkDfKdl1UqOUGhgrMeGIjfqV3m6dBkTjjfHmd2q
-	/PSUwic8I1qzebpdvvAlHxD4bDDZvPBSVXG3pOoB+kFQqqiFWSr1
-X-Google-Smtp-Source: AGHT+IHmKMh+y8T3UqxHaVqz5w773l5Tn28gxLQwfK5a99JuW/IdKq/ZRQBHPMObmoEhXYTXkZ8qiQ==
-X-Received: by 2002:a05:6a20:550a:b0:1a3:6a74:2e6a with SMTP id ko10-20020a056a20550a00b001a36a742e6amr1359125pzb.14.1711695294311;
-        Thu, 28 Mar 2024 23:54:54 -0700 (PDT)
+        bh=j4eo4iipb3tFGb9si20EbEoawljaldQKKlRJLRHIhxU=;
+        b=Z+8G+uwrKvZ4S4u7MHWOU6o4RHuCNT050nbv2rusuL5vALfbshUXQImItreF/+idwk
+         BcEWzklZugq4mkD1SlzpqeK+ke75hEYmnfEDXdQ+b2GAmkBp3JZ/lmvKCQn91DI8/Fkr
+         QNO5EzpMp7ReK/MCGbLbc+HD0JU+ujaJq9WAuHaer5iCiX9uGMM8EuH4W1lWysQJnNlU
+         FFe0QjaThtcwVQIAUFoMo/AMRv/xIYJ71JFl6/eyjCZH3mZfCyUn9XwvVShX6FIWRlSs
+         zLOyEvaElD6GJtWqf7DlhpvOXgpcXt4kwsZYDfS0BZMezHT4PBkFFk/7gXOYR0BC1UcW
+         gMiQ==
+X-Gm-Message-State: AOJu0YywKC804HVa3htC/KDWU0km3G5sl06G/cHooRIAQOevDnsX6dyx
+	9sCNDueesDY4o9Mre9U4rgNLYy5gyodb2mMTSwlOmgF8GZl3MFBqbHN5CzS+QQI=
+X-Google-Smtp-Source: AGHT+IG/zm5KspRXu7zRUYjYHnNKwk8S1g+eljuRrgFmxppuDbuSHDRXjJWzAFB4Y8fXqvMHHDod0g==
+X-Received: by 2002:a05:6a20:1591:b0:1a3:c43b:2c2c with SMTP id h17-20020a056a20159100b001a3c43b2c2cmr1465018pzj.47.1711696115029;
+        Fri, 29 Mar 2024 00:08:35 -0700 (PDT)
 Received: from [10.0.2.15] ([160.202.10.71])
-        by smtp.gmail.com with ESMTPSA id co18-20020a17090afe9200b0029df9355e79sm2440806pjb.13.2024.03.28.23.54.52
+        by smtp.gmail.com with ESMTPSA id lm10-20020a056a003c8a00b006e6b180d87asm2454082pfb.35.2024.03.29.00.08.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 23:54:54 -0700 (PDT)
-Message-ID: <e2d91c9f-9c7a-4127-9bc2-41807765241b@gmail.com>
-Date: Fri, 29 Mar 2024 12:24:49 +0530
+        Fri, 29 Mar 2024 00:08:34 -0700 (PDT)
+Message-ID: <63059d3b-e883-4fa2-8364-64f7bbd064f7@gmail.com>
+Date: Fri, 29 Mar 2024 12:38:31 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [RFC][GSoC] Proposal v2: Move more tests to the unit testing
- framework
+Subject: Re: [RFC][GSoC] Proposal v2: Move and improve reftable tests in the
+ unit testing framework
 To: Patrick Steinhardt <ps@pks.im>,
  Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, karthik.188@gmail.com, kaartic.sivaraam@gmail.com
@@ -77,7 +77,13 @@ Content-Transfer-Encoding: 8bit
 Thanks for the feedback, Christian and Patrick! With your advice, I
 decided to split my original proposal into two to conform to what was
 suggested by the SoC 2024 Ideas page.
-This is the proposal for the unit tests migration project.
+
+This is the proposal for the reftable tests migration project. However,
+I am unsure of what would be a good project size for this project.
+I have quite a long summer vacation and don't really have any other
+plans other than GSoC as of now so I decided to go with large project
+size on GSoC's website but please let me know if another size would
+be more appropriate.
 
 ---------<8----------<8----------<8----------<8----------<8----------<8
 
@@ -106,12 +112,13 @@ year with the aim of simplifying testing and improving maintainability
 by moving the current testing setup from shell scripts and helper files
 to a framework written wholly in C. The idea was accepted and merged
 into master on 09/11/2023. The choice of testing framework and the
-reasoning behind the choice is described in
+rationale behind the choice is thoroughly described in
 Documentation/technical/unit-tests.txt.
 
-This project aims to extend that work by moving more tests from the current
-setup to the new unit testing framework. The difficulty for the project
-should be medium and it should take somewhat between 175 to 350 hours.
+This project aims to extend that work by moving the reftable tests from
+the current setup to the new unit testing framework and improving the
+tests themselves. The difficulty for the project should be medium
+and it should take somewhat around 175-350 hours.
 
 -----Contributions-----
 
@@ -131,6 +138,19 @@ test case that verifies the change and prevents future regression.
 Served me as an essential intro lesson to the community’s working flow and
 general practices.
 
+• tests: Move t0032-reftable-unittest.sh to the unit testing framework
+-> Status: WIP (GitGitGadget PR)
+-> link: https://github.com/gitgitgadget/git/pull/1698
+
+-> Description: t/t0032-reftable-unittest.sh along with t/helper/test-reftable.c
+unit test Git’s reftable framework. Migrate the test over to the new
+unit testing framework to simplify debugging and reduce test run-time.
+
+-> Remarks: An infant version as of now, I tinkered with this after seeing
+the project list on Git’s SoC 2024 Ideas page to get an idea of the kind of
+work that will be involved in this project. Probably the most relevant
+patch out of all the ones mentioned here.
+
 • tests: Move t0009-prio-queue.sh to the unit testing framework
 -> Status: merged into master
 -> link: https://public-inbox.org/git/pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com/
@@ -140,11 +160,6 @@ general practices.
 unit test Git's implementation of a priority queue. Migrate the test
 over to the new unit testing framework to simplify debugging and reduce
 test run-time.
-
--> Remarks: Probably the most relevant patch of all the ones mentioned
-here, I decided to work on this patch well before I decided to take part
-in this year’s GSoC. This patch helped me understand the expectations and
-workflow for the work to be performed in unit tests migrations.
 
 • write-or-die: make GIT_FLUSH a Boolean environment variable
 -> Status: merged into master
@@ -158,7 +173,7 @@ and  values like 'no', 'off','false' are taken as "off". Make GIT_FLUSH
 accept more values besides '0' and '1' by turning it into a Boolean 
 environment variable & update the related documentation.
 
-• sideband.c: remoye redundant NEEDSWORK tag
+• sideband.c: remove redundant NEEDSWORK tag
 -> Status: merged into master
 -> link: https://public-inbox.org/git/pull.1625.v4.git.1703750460527.gitgitgadget@gmail.com/
 -> Merge commit: 6484eb9a97fe3cd81a2d5711183b93494e6ddefa
@@ -223,32 +238,19 @@ some good progress, but there is still a lot of cleaning and changes that
 need to be done. I haven’t found enough time to commit to this again,
 but it’s surely something that I want to get done soon.
 
-• tests: Move t0032-reftable-unittest.sh to the unit testing framework
--> Status: WIP (GitGitGadget PR)
--> link: https://github.com/gitgitgadget/git/pull/1698
-
--> Description: t/t0032-reftable-unittest.sh along with t/helper/test-reftable.c
-unit test Git’s reftable framework. Migrate the test over to the new
-unit testing framework to simplify debugging and reduce test run-time.
-
--> Remarks: An infant version as of now, I tinkered with this after 
-seeing the project list on 'Git SoC 2024 Ideas' page to get an idea of
-the kind of work that will be involved in the ‘Move reftable tests to
-the new unit testing framework’ project.
-
 • commit.c: ensure find_header_mem() doesn't scan beyond given range
 -> Status: Dropped
 
--> Remarks: This was a patch addressing a NEEDSWORK comment in commit.c
-which was dropped because René Scharfe found out a better way to fix the
+-> Remarks: This was a patch addressing a NEEDSWORK comment in commit.c.
+It was dropped because René Scharfe found out a better way to fix the
 issue at hand than my approach or what the NEEDSWORK comment suggested.
 
 
 -----Related Work-----
 
-Prior works about the idea have been performed by other community members
-and previous interns which form a good guiding path for my own approach.
-Some previous example work:
+Prior work regarding tests migrations have been performed by other
+community members and previous interns which form a good guiding path
+for my own approach. Some previous example work:
 
 i) Port helper/test-ctype.c to unit-tests/t-ctype.c
 -> link: https://lore.kernel.org/git/20240112102743.1440-1-ach.lumap@gmail.com/
@@ -271,132 +273,202 @@ vi) t0080: turn t-basic unit test into a helper
 In GSoC
 -------
 
+-----Background for reftable-----
+
+Git’s internals consist of mainly three objects: blobs, tree objects and
+commit objects. The blobs and tree objects are responsible for storing a
+repository’s content while the commit objects store information about
+commits in the repo and are responsible for capturing the repo’s
+history. Every one of these objects can be accessed through a unique key
+generated by a SHA-256 (previously SHA-1) algorithm. To make life
+easier, instead of remembering the hash key for commit objects, we can
+assign a simple name to them, store these names in a file and use that
+file whenever we need access to the commits. These names are called
+‘references’ or ‘refs’.
+
+Since a repository can contain a lot of commits and branches and hence,
+a lot of refs, Git used packed-refs to save space by storing unused refs
+in a single file. However, this arrangement doesn’t scale well in terms
+of both space and performance. This is where reftable comes in. A
+reftable file is a portable binary file format customized for storing
+references. Some objectives of reftable are:
+-  Sorted references enabling advanced scans like binary search.
+-  Near constant time lookup for any single reference.
+-  Efficient enumeration of an entire namespace like refs/tags/
+-  Combined reflog storage with ref storage for small transactions and
+   separate reflog storage for base refs and historical logs.
+-  Near constant time verification if an object name is referred to by at
+   least one reference.
+
 -----Plan-----
 
-Tests for Git are defined in the t/ directory and use the combination of
-a helper file (written in C) and a shell script that invokes the said
-helper file. I will use my work from the patch ‘tests: Move
-t0009-prio-queue.sh to the unit testing framework’ to explain the steps
-involved in the porting of such tests:
+The reftable tests are different from other tests in the test directory
+because they perform unit testing with the help of a custom test framework
+rather than the usual ‘helper file + shell script’ combination.
+Reftable tests do have a helper file and a shell script invoking the
+helper file, but rather than performing the tests, this combination is
+used to invoke tests defined in the reftable directory.
+The reftable directory consists of nine tests:
 
-• Search for a suitable test to port: 
+•  basics test
+•  record test
+•  block test
+•  tree test
+•  pq test
+•  stack test
+•  merged test
+•  refname test
+•  read-write test
 
-As Christian Couder mentioned in this mail (link: https://public-inbox.org/git/CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com/),
-there exists a subset of t/helper worth porting and we need some sort of
-classification to discern these.
+Each of these tests is written in C using a custom reftable testing 
+framework defined by reftable/test_framework (also written in C). The
+framework has four major features utilized in performing the tests:
 
-All helper files contain a cmd__foo() function which acts as the entry
-point for that helper tool. For example, the helper/test-prio-queue.c
-file contained cmd__prio_queue() which served as the entry point for
-that file. The binary for the helper file is then mapped to a different
-name by helper/test-tool.c which is used by the ‘*.sh’ files to perform
-the tests. This name can be discovered by searching for the helper
-file’s entry point in test-tool.c. Continuing the prior example,
-“prio-queue” was the name for the helper/test-prio-queue.c binary and
-t0009-prio-queue.sh invoked it like “prio-queue 1 2 get 3 dump”.
+•  EXPECT_ERR(c): A function-like macro that takes as input an integer
+‘c’ (generally the return value of a function call), compares it against
+0 and spits an error message if equality doesn’t hold. The error message
+itself contains information about the file where this macro was used,
+the line in this file where the macro was called and the error code ‘c’
+causing the error.
 
-To classify what among t/helper should be targeted first in this
-project, we can use something like ‘git grep foo’ (where foo is the name
-for the helper’s binary) to look at the instances where the helper tool
-is invoked. The ones appearing lesser in different test scripts are the
-ones most likely to be used solely for unit testing and should probably
-be targeted first. Utilising this strategy, I discovered that the
-‘prio-queue’ tool was only used in t0009-prio-queue.sh and hence, was a
-good candidate for the unit testing framework.
-Note that this strategy is not full-proof and further investigation is
-absolutely required on a per-test basis, it is only meant to give an
-initial idea of what’s worth investigating.
+•  EXPECT_STREQ(a, b): A function-like macro that takes as input two 
+strings ‘a’ and ‘b’, compares them for equality via strcmp() and throws an
+error if equality doesn’t hold. The error message thrown contains information
+regarding the file where this macro was invoked, the line in this
+file where the macro was called and the mismatched strings ‘a’ and ‘b’.
 
-•  Create a new C test file in t/unit-tests: 
+•  EXPECT(c): A function-like macro that takes as input an integer ‘c’
+(generally the result of a Boolean expression like a == b) and throws an
+error message if c == 0. The error message is similar to EXPECT_ERR(c).
 
-After finding a test appropriate for the migration efforts, we create a
-new ‘*.c’ file in t/unit-tests.  The test file must be named appropriately
-to reflect the nature of the  tests it is supposed to perform.
-Most of the times, replacing ‘tXXXX’  with ‘t-‘ and ‘*.sh’ with ‘.c’ in
-the name of the test script suffices. E.g. t/t0009-prio-queue.sh turns
-to t/unit-tests/t-prio-queue.c.
-The new C file must #include “test-lib.h” (to be able to use the unit
-testing framework) and other necessary headers files.
+•  RUN_TEST(f): A function-like macro that takes as input the name of a
+function ‘f’ (a test function that exercises a part of reftable’s code),
+prints to stdout the message ‘running f’ and then calls the function with f().
 
-•  Move the code from the helper file: 
+Other than these, the framework consists of two additional functions,
+set_test_hash() and strbuf_add_void() which are used  exclusively in the
+stack tests and refname tests respectively.
 
-Since the helper files are written in C, this step is mostly a
-‘copy-paste then rename’ job. Changes similar to the following also need
-to be made in the Makefile:
--    TEST_BUILTINS_OBJS += test-prio-queue.o
-+    UNIT_TEST_PROGRAMS += t-prio-queue
+Since the reftable test framework is written in C like the unit testing
+framework, we can create a direct translation of the features mentioned
+above using the existing tools in the unit testing framework with the
+following plan:
 
-•  Translate the shell script: 
+•  EXPECT_ERR(c): Can be replaced by check(!c) or check_int(c, “==”, 0).
 
-The trickiest part of the plan, since  different test scripts perform
-various functions and a direct translation of the scripts to C is not
-always optimal. Continuing the prior example, t0009-prio-queue.sh used a
-single pattern for testing, write expected output to a temporary file
-(named ‘expect’) -> feed input to the ‘prio-queue’ helper tool -> dump its
-output to another temporary file (named ‘actual’) -> compare the two files
-(‘actual’ vs ‘expect’).
+•  EXPECT_STREQ(a, b): Can be replaced by check_str(a, b). 
 
-In the first iteration of my prio-queue patch, I worked out a
-straightforward translation of this pattern in C. I stored the input in
-a string buffer, passed that buffer to the test function, stored its
-output in another buffer and then called memcmp() on these two buffers.
-While this did prove to be a working copy, this work was found to be inadequate
-on the mailing list. Through the next several iterations, I reworked the
-logic several times, like comparing the input and output on-the-go rather
-than using buffers and replacing strings with macro definitions.
+•  EXPECT(c): Can be replaced by check_int(), similar to EXPECT_ERR.
+   E.g. expect(a >= b) --> check_int(a, “>=”, b)
 
-The test scripts similarly perform other functions like checking for
-prerequisites, creating commits, initializing repositories, changing or 
-creating directories and so forth, and custom logic is required in most
-of the cases of translating these, as seen above.
+•  RUN_TEST(f): Can be replaced by TEST(f(), “message explaining the test”).
 
-•  Run the resulting test, correct any errors:
+The information contained in the diagnostic messages of these macros is
+replicated in the unit testing framework by default. Any additional 
+information can be displayed using the test_msg() functionality in the
+framework. The additional functions set_test_hash() and strbuf_add_void()
+may be moved to reftable/stack.c and reftable/refname.c respectively.
 
-It is rare for any migrated test to work correctly on the first run.
-This step involves resolving any compile/runtime errors arising from the
-test and making sure that at the very minimum, all the test-cases of the
-original test are replicated in the new work. Improvements upon the original
-can also be made, for example, the original t0009-prio-queue.sh did not
-exercise the reverse stack functionality of prio-queue, which I improved
-upon in unit-tests/t-prio-queue.
+The plan itself is basic and does need improvements, but using this plan,
+I have already created a working albeit primitive copy for two out of the
+nine tests (basics test and tree test) as can be seen here:
+(link: https://github.com/gitgitgadget/git/pull/1698)
 
-•  Send the resulting patch to the mailing list, respond to the feedback:
+-----Improvements-----
 
-This step involves writing a meaningful commit message explaining each patch
-in the series. From my experience contributing to the Git project, I find it
-to be rare for any patch series to be accepted in the very first iteration.
-Feedback from the community is vital for the refinement of any patch and
-must be addressed by performing the suggested changes and sending the work
-back to the mailing list. This must be repeated until the work is merged
-into ‘seen’, ‘next’ and further down, ‘master’.
+As Patrick Steinhardt mentioned in this mail (link: https://public-inbox.org/git/ZfwnrL6Zl_lcV09y@tanuki/),
+apart from the port to the unit testing framework, the reftable tests
+could use some more refinement. This can be done alongside the test
+migration efforts and can involve:
+
+• Improving documentation for the tests:
+
+The reftable tests suffer from a lack of documentation. This might be
+fine for the simpler tests like basics tests and tree tests but for the
+more complex tests, more documentation means easier on-boarding to the
+reftable sub-project for newer people as well as ease of maintenance.
+This is something that could be worked on during this project.
+
+• Match coding style with rest of the project:
+
+There are parts of reftable’s code not in accordance with Git’s coding
+style. As a simple example, this snippet in reftable/basics_test.c
+(lines 41-48) doesn’t follow the coding conventions:
+
+if (res < sz) {
+	foo;
+	if (res > 0) {
+		bar;
+	}
+} else {
+	baz;
+}
+
+And should be re-written as:
+
+if (res < sz) {
+	foo;
+	if (res > 0)
+		bar;
+}
+else
+	baz;
+
+It should be well worth it to refactor other parts of the tests to align
+with Git’s coding standards through this project.
+
+• Increase test coverage:
+
+There may be parts of reftable’s code that are not currently exercised
+by the existing tests, or edge cases being overlooked by the current
+setup. This could also be improved upon during this project. As an
+example, while working on the t-prio-queue migration patch, I discovered
+that prio-queue’s reverse stack functionality was not tested by the
+existing setup, which I improved upon by adding a new test case to the
+prio-queue test in the unit testing framework.
+
+• Other than these, working on the tests might uncover bugs or there might
+exist issues within the vicinity of this project that could be worked upon.
 
 Timeline
 --------
 
-I’m confident that I can start the project as early as the start of the
-Community Bonding Period (May 1 - 26). This is because I have read
-the related documentation and already have some experience with the idea.
-I believe I’ll be ready to get up to speed to work on the project by then.
-The exact time arrangement for each test is variable and hard to determine,
-but judging from the fact that it took me 3-4 days to complete the first
-iteration of the t-prio-queue work, here is a proposed migration schedule:
+-----Pre-GSoC (Until May 1)-----
 
-The first few steps of the plan are easy enough to knock out in a day,
-the time required to port the tests depends mostly upon the work
-required in translating the shell script. As mentioned previously, it
-took me 3-4 days to complete the first iteration of the test-prio-queue
-migration patch and that was a short test with only about 50 or so lines
-of shell scripting and all the test cases following a single pattern.
-Considering all this, I believe it should be possible, on average, to
-migrate a new test in 4-7 days.
-From there, it’s a matter of polishing the patch until integration with
-‘master’ by addressing the feedback on the mailing list which can
-deceptively take longer than expected. For instance, I had to continue
-refining my t-prio-queue patch for around 2 weeks after the first
-iteration to get it merged to ‘next’.
+My end-semester examinations take place during this period, so it would
+be difficult for me to allocate time to much else. Nevertheless, I wish
+to keep working on my [WIP] patches and finish reading the reftable
+documentation (link: https://git-scm.com/docs/reftable) during this period.
 
-Hence, it should be possible for me to migrate >=8 tests throughout the
-duration of this project.
+-----Community Bonding (May 1 - May 26)-----
+
+Continue learning in-depth about the reftable sub-project with the help
+of mentors, contribute a few patches related to reftable to familiarize
+myself with the code. Finish the first iteration of the test migration
+project using the plan outlined prior.
+
+-----Phase I (May 27 - July 11)-----
+
+Polish the new tests in the unit testing framework using the points
+mentioned above and mentors’ advice. Send the resulting tests to the
+mailing list and work on the feedback received from the community. At
+the very least, get the ported tests merged to ‘seen’ before the end of
+this period. Continue learning and experimenting with the rest of
+reftable’s codebase.
+
+-----Phase II (July 12 - Aug 18)-----
+
+Continue working on refining the tests until merge with ‘master’. If
+that is already within sight, focus on extending the reftable tests and
+improving documentation. Work on other reftable related tasks in the
+vicinity of this project.
+
+-----Final Week (Aug 19 - Aug 26)-----
+
+Finish up the final touches on any of the work done during the project,
+this involves ensuring the said work is merged with upstream. Write a
+final report on the work accomplished during the project and outline
+future goals.
 
 Blogging
 --------
@@ -415,18 +487,17 @@ leaving something similar for other newcomers.
 Availability
 ------------
 
-My summertime is reserved for GSoC, so I expect that I can work on a new 
-test 5 days per week, 6-8 hours per day, that is 30-40 hours a week.
-On the weekends, I would like to solely work on the feedback from
-the mailing list and advance my [WIP] patches. Certainly, something
-unexpected may arise, but I will try my best to adhere to this time
-commitment and be always available through the community’s mailing list.
+My summertime is reserved for GSoC, so I expect that I can work on the
+project 5 days per week, 6 - 8 hours per day, that is 30 - 40 hours a week.
+Certainly, something unexpected may arise, but I will try my best to
+adhere to this time commitment and be always available through the
+community’s mailing list.
 
 Post GSoC & Closing Remarks
 ---------------------------
 
 When I first started contributing to the Git project in October of 2023,
-I had no idea about programmes like GSoC. I was advised by a senior of
+I had no idea about programs like GSoC. I was advised by a senior of
 mine to contribute to open-source projects and hence, my aim of contribution
 was to apply what I had learnt in college to solve real-world problems
 and learn from more experienced peers. However, most of what I have
@@ -437,8 +508,15 @@ Seeing how I need to do an internship in summer, with GSoC, I hope to be
 able to dedicate this internship time and effort to a cool project like
 Git while simultaneously learning skills to be able to make more useful
 contributions in the future. It’s two birds with one stone. I would also
-like to keep working on this project to see it to completion post-GSoC
-and help mentor other newcomers get started with the Git project.
+like to keep contributing to reftable after GSoC and help mentor other
+newcomers get started with the Git project.
 
 Thanks & Regards,
 Chandra
+
+References
+----------
+
+-  The Pro Git book: https://git-scm.com/book/en/v2
+-  Git’s reftable documentation: https://git-scm.com/docs/reftable
+-  Shaoxuan Yuan’s 2022 GSoC proposal: https://docs.google.com/document/d/1VZq0XGl-wCxECxJamKN9PGVPXaBhszQWV1jaIIvlFjE/edit
