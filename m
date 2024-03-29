@@ -1,86 +1,444 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218523C68C
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 05:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6773987C
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 06:54:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711691205; cv=none; b=TWwCLatZDSmfpgXSdzxDgsNkfLjva6ksRpPJjX9okvxaG0sc7IGKjwgGHiF756nr/v/NtqIztQK0uYvTOLF7ti7bN0/+dOZILXXD7brmmY9sJP06yBLKf2new1HUJxvIdjni14IMPID25SGGf7YMnlEK0Gc++LgeqpeFbAKvE3o=
+	t=1711695297; cv=none; b=CDyphoLNM4Pv+4c1bbBo0qOaV9RsTQcAU3kLZoPhk0jvaOB3YEdrTnQl3LVWp2N81rrz3WraV0dD4yOBcBe2e+JdnjnIFZ/lrxZUEQM6cyjVpZeLsEn6OiFG6NGjGThgN7ptVxTkUz0Od16bvaNHTCOnO/EN9N8GUbGPGTvLv0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711691205; c=relaxed/simple;
-	bh=HF+xEsCkDAWvXf5Lfov8w17N133mzgBoFFWLmgcVR1E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uJMhByl53FUhi0Qf06c+FoACWqSVZwXzjOXeUBkFxmRGmBbiN8LQOQ7BhfwvWgOMnYMGH7f7w3SrKe7o/EAriYxYhy8ykOI+4LO05IPExnQTJplDTqJ+ATsXGQCQqvvPRchnXPvV+4wWou0i8oiB5cswmsOP6kPA656qCe8akj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mPbBEvGl; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711695297; c=relaxed/simple;
+	bh=hN8erdFKrvb8wI1JEwu8OfELv4wYrhrmCE/Z1SxC9Ks=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=fqXKul4ZMYy3oPrX7n2RcXothtp9/EvutRxOMgeLlR3+//AwJeXZV/Jk19SXU64EtzMmtLpRTwGyIAyb4ssoDXiVKaid9pQlwF9GLqZiYmjCGIALCMDXxGcaA1SPg1ej2mURlLCQa/JouWXmfG9iMZnxHdX3MlpIEcPwZeicGwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e8XwYusS; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mPbBEvGl"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C48321F0546;
-	Fri, 29 Mar 2024 01:46:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HF+xEsCkDAWvXf5Lfov8w17N133mzgBoFFWLmg
-	cVR1E=; b=mPbBEvGlblmfSlJ+0MKOb1txM8O05bDZx2eGW+CNHl7JMu4vG3wRgP
-	fOpUlV36DnhESFdSdUh/j7QQbdtvj/awH+LbmwRrnP6um57s6Z4IMiblDjPzbT4l
-	RQKFB4MfMORKEWstHPFtHi75M109treWLnLAKjbh3m7R/R6foe9qU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ACE6C1F0545;
-	Fri, 29 Mar 2024 01:46:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C7F41F0544;
-	Fri, 29 Mar 2024 01:46:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: vk <g@vkabc.me>,  Karthik Nayak <karthik.188@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [GSoC] Microproject help
-In-Reply-To: <ZgO-W3E-CeT3n7vl@tanuki> (Patrick Steinhardt's message of "Wed,
-	27 Mar 2024 07:36:11 +0100")
-References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
-	<CAOLa=ZRrmyZ48C5r8MWioyjySWdKtLxhtDBg5F2tRsExHaR-fg@mail.gmail.com>
-	<a344deea98bdd2daa7671fae45c0bf11@vkabc.me> <ZgO-W3E-CeT3n7vl@tanuki>
-Date: Thu, 28 Mar 2024 22:46:35 -0700
-Message-ID: <xmqqo7axvbd0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e8XwYusS"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6e6afb754fcso1678567b3a.3
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 23:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711695295; x=1712300095; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Gyh+erocazpwK7G4aRBDgpZ+/ZmqeMGcDRiEgK8CzvM=;
+        b=e8XwYusSX63x80bAysx5JQP6Q95cExkXHbg8L/bmS7O6a/tAWrTkajcWpKWHiWnriD
+         wQ+2yGY13fLB4tyROpKwByz29v0jpESr0/HG1s5CZonO4r3dXk5ACPsV+yJ2X56xXNW7
+         ny3jcxkDZDtZJyNk9Eu+27nOW6LoqTZ331A+PsS0QcAJdfAUEA2YxAlZBmEJqyhvnyiC
+         QuSe9oR71ngnIpNBIdCGjkmgZsvgwYu5K9s2ENqVbJAYBodR9h7ent6gjxksh7c45neO
+         ulBCJHtt1vZ2hjKIkkZh1QtfS1+4OnL8MzpMwKElE9/GyYhTQJ/324R6vSG1eBQLoKXO
+         cnUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711695295; x=1712300095;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gyh+erocazpwK7G4aRBDgpZ+/ZmqeMGcDRiEgK8CzvM=;
+        b=ImkXFOY+NXtzSoz2kA0X+ZZqwLpRP5Xm5e+wMgbWivAkqbvhxcv9KfzdmaTGNQUnWK
+         LWvy4dqTFJZIUVFxCGW0d7bZOXgHlcE1CPXxvoQW/fsQMkDSp4To5cCTccwrBllG5eWR
+         RqzTUyG1R8gtOA3GE4bSfOPbYTg2jSXii+0dFnIoIT1ojVUfsq07mlQxSXG3Yz1QLXig
+         C2mgcUvzv5pl47MWvDobz/fFawPoq5nhitdKEtIetQiYgrvy3ut35ZWZKALrdNDXtlgS
+         Ewx00mddSASowBOWaAA/doKWXOwSYOY9mEWAv8g9bFXt3jb9oSSKSBDQyHnpNcwDbR8b
+         XUkw==
+X-Gm-Message-State: AOJu0Yyo6tRdlyngsQkDfKdl1UqOUGhgrMeGIjfqV3m6dBkTjjfHmd2q
+	/PSUwic8I1qzebpdvvAlHxD4bDDZvPBSVXG3pOoB+kFQqqiFWSr1
+X-Google-Smtp-Source: AGHT+IHmKMh+y8T3UqxHaVqz5w773l5Tn28gxLQwfK5a99JuW/IdKq/ZRQBHPMObmoEhXYTXkZ8qiQ==
+X-Received: by 2002:a05:6a20:550a:b0:1a3:6a74:2e6a with SMTP id ko10-20020a056a20550a00b001a36a742e6amr1359125pzb.14.1711695294311;
+        Thu, 28 Mar 2024 23:54:54 -0700 (PDT)
+Received: from [10.0.2.15] ([160.202.10.71])
+        by smtp.gmail.com with ESMTPSA id co18-20020a17090afe9200b0029df9355e79sm2440806pjb.13.2024.03.28.23.54.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Mar 2024 23:54:54 -0700 (PDT)
+Message-ID: <e2d91c9f-9c7a-4127-9bc2-41807765241b@gmail.com>
+Date: Fri, 29 Mar 2024 12:24:49 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B49C740E-ED8F-11EE-ACAF-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [RFC][GSoC] Proposal v2: Move more tests to the unit testing
+ framework
+To: Patrick Steinhardt <ps@pks.im>,
+ Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, kaartic.sivaraam@gmail.com
+References: <6f0a3c13-c8d9-4f89-8c62-9c031f0a064e@gmail.com>
+ <CAP8UFD3Rb0kN=g=EPcSqYBb3U=OgW_06jqwafF=vRYhetZ9hdQ@mail.gmail.com>
+ <ZfwnrL6Zl_lcV09y@tanuki>
+Content-Language: en-US
+In-Reply-To: <ZfwnrL6Zl_lcV09y@tanuki>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Thanks for the feedback, Christian and Patrick! With your advice, I
+decided to split my original proposal into two to conform to what was
+suggested by the SoC 2024 Ideas page.
+This is the proposal for the unit tests migration project.
 
-> Hint: the `maintenance_task_pack_refs()` can in fact be converted to use
-> `refs_pack_refs()` instead. I was briefly considering doing that in [1],
-> but then didn't want to do such an unrelated refactoring in an already
-> long patch series.
->
-> So if you decide to do that you should probably build on top of my patch
-> series to avoid conflicts.
+---------<8----------<8----------<8----------<8----------<8----------<8
 
-As the microproject is a learning experience for skills to work well
-with others, we may want to suggest an area where there won't be
-much conflicts, i.e. skill to find an area that are relatively
-quiescent to avoid stepping each other's toes.
+Personal Info
+-------------
 
-To be quite honest, I'd rather not to see a task that uses
-run_command() API and gets done in safe process isolation turned
-into an internal call by pure amateurs, unless competent mentors
-go through the change with fine toothed comb and make sure there are
-no unintended consequences and side effects of doing it in process.
-This is especially true for microprojects, where the primary focus
-is about learning the process of contribution and working with the
-community, and not about learning the existing codebase and API.
+Full name: Chandra Pratap
+Preferred name: Chand
 
-Thanks.
+E-mail: chandrapratap3519@gmail.com
+Phone: (+91)77618-24030
+
+Education: SV National Institute of Technology, Surat, India
+Year: Sophomore (2nd)
+Major: Mathematics
+
+GitHub: https://github.com/Chand-ra
+
+Before GSoC
+-----------
+
+-----Synopsis-----
+
+A new unit testing framework was introduced to the Git mailing list last
+year with the aim of simplifying testing and improving maintainability
+by moving the current testing setup from shell scripts and helper files
+to a framework written wholly in C. The idea was accepted and merged
+into master on 09/11/2023. The choice of testing framework and the
+reasoning behind the choice is described in
+Documentation/technical/unit-tests.txt.
+
+This project aims to extend that work by moving more tests from the current
+setup to the new unit testing framework. The difficulty for the project
+should be medium and it should take somewhat between 175 to 350 hours.
+
+-----Contributions-----
+
+• apply.c: make git apply respect core.fileMode settings
+-> Status: merged into master
+-> link: https://public-inbox.org/git/20231226233218.472054-1-gitster@pobox.com/
+-> Merge commit: cf47fb7ec7e183a1a1e521a540862fba3c2a89eb
+
+-> Description: When applying a patch that adds an executable file, git 
+apply ignores the core.fileMode setting (core.fileMode specifies whether
+the executable bit on files in the working tree are to be honored or not)
+resulting in false warnings. Fix this by inferring the correct file mode 
+from the existing index entry when core.filemode is set to false. Add a
+test case that verifies the change and prevents future regression.
+
+-> Remarks: This was the first patch I worked on as a contributor to Git.
+Served me as an essential intro lesson to the community’s working flow and
+general practices.
+
+• tests: Move t0009-prio-queue.sh to the unit testing framework
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com/
+-> Merge commit: 107023e1c9f981476c505e73eab319db6534a536
+
+-> Description: t/t0009-prio-queue.sh along with t/helper/test-prio-queue.c
+unit test Git's implementation of a priority queue. Migrate the test
+over to the new unit testing framework to simplify debugging and reduce
+test run-time.
+
+-> Remarks: Probably the most relevant patch of all the ones mentioned
+here, I decided to work on this patch well before I decided to take part
+in this year’s GSoC. This patch helped me understand the expectations and
+workflow for the work to be performed in unit tests migrations.
+
+• write-or-die: make GIT_FLUSH a Boolean environment variable
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1628.v3.git.1704363617842.gitgitgadget@gmail.com/
+-> Merge commit: b3049bbb97c9c0d0292bc9239e976cc661961f39
+
+-> Description: Among Git's environment variables, the ones marked as
+"Boolean" accept values like Boolean configuration variables, i.e. 
+values like 'yes', 'on', 'true' and positive numbers are taken as "on"
+and  values like 'no', 'off','false' are taken as "off". Make GIT_FLUSH 
+accept more values besides '0' and '1' by turning it into a Boolean 
+environment variable & update the related documentation.
+
+• sideband.c: remoye redundant NEEDSWORK tag
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1625.v4.git.1703750460527.gitgitgadget@gmail.com/
+-> Merge commit: 6484eb9a97fe3cd81a2d5711183b93494e6ddefa
+
+-> Description: Replace a misleading NEEDSWORK tag in sideband.c that
+reads ‘replace int with size_t’ with another comment explaining why it
+is fine to use ‘int’ and the replacement isn’t necessary.
+
+• make tig callable from PowerShell/Command Prompt
+-> Status: merged into main (Git for Windows)
+-> link: https://github.com/git-for-windows/MINGW-packages/pull/104
+-> Merge commit: 8eb71eb31c6a1b5d41b253c1ab66d981cc448cb0
+
+-> Description: Tig is a text mode interface for Git that ships with the
+standard Git for Windows package but isn’t callable from PowerShell/
+Command Prompt by default. Fix this by updating the relevant Makefiles
+and resource scripts.
+
+• fix broken link on Git for Windows’ GitHub wiki
+-> Status: merged (Git for Windows)
+-> link: https://github.com/git-for-windows/git/wiki/Home/_history
+-> Merge commit: 0df663304bce986da6571cca48b34508d4823a11
+
+-> Remarks: A simple fix for a broken link that I stumbled upon while
+browsing Git for Windows’ wiki looking for some help with the patch 
+mentioned just before this one.
+
+• t4129: prevent loss of exit codes due to the use of pipes
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1636.git.1704891257544.gitgitgadget@gmail.com/
+-> Merge commit: 1b095626937a858e3a68e9c7d1de11b71117bb42
+
+-> Description: Piping the output of git commands like git-ls-files to
+another command (grep in this case) in t4129 hides the exit code returned
+by these commands. Prevent this by storing the output of git-ls-files to
+a temporary file and then "grep-ping" from that file. Replace grep with
+test_grep as the latter is more verbose when it fails.
+
+• t9146: replace test -d/-f with appropriate test_path_is_* function
+-> Status: merged into master
+-> link: https://public-inbox.org/git/pull.1661.v3.git.1707933048210.gitgitgadget@gmail.com/
+-> Merge commit: 90c0c15e56fa761ae8c4cf5f5fe09b329c0a5dc5
+
+-> Description: The helper functions test_path_is_* provide better debugging
+information than test -d/-e/-f.
+Replace tests -d/-e/-f with their respective ‘test_path_is_foo’ calls.
+
+• regex: update relevant files in compat/regex
+-> Status: WIP (GitGitGadget PR)
+-> link: https://github.com/gitgitgadget/git/pull/1641
+
+-> Description: The RegEx code in compat/regex has been vendored from 
+gawk and was last updated in 2010. This may lead to performance issues 
+like high CPU usage. Fix this by synchronizing the relevant files in 
+compat/regex with the latest version from GNULib and then replaying any
+changes we made to gawk’s version on top of the new files.
+
+-> Remarks: When I started working on this patch, I thought it was an
+easy fix but the work turned out to be more involved than I anticipated.
+I had to seek help from the other community members, and we have made
+some good progress, but there is still a lot of cleaning and changes that
+need to be done. I haven’t found enough time to commit to this again,
+but it’s surely something that I want to get done soon.
+
+• tests: Move t0032-reftable-unittest.sh to the unit testing framework
+-> Status: WIP (GitGitGadget PR)
+-> link: https://github.com/gitgitgadget/git/pull/1698
+
+-> Description: t/t0032-reftable-unittest.sh along with t/helper/test-reftable.c
+unit test Git’s reftable framework. Migrate the test over to the new
+unit testing framework to simplify debugging and reduce test run-time.
+
+-> Remarks: An infant version as of now, I tinkered with this after 
+seeing the project list on 'Git SoC 2024 Ideas' page to get an idea of
+the kind of work that will be involved in the ‘Move reftable tests to
+the new unit testing framework’ project.
+
+• commit.c: ensure find_header_mem() doesn't scan beyond given range
+-> Status: Dropped
+
+-> Remarks: This was a patch addressing a NEEDSWORK comment in commit.c
+which was dropped because René Scharfe found out a better way to fix the
+issue at hand than my approach or what the NEEDSWORK comment suggested.
+
+
+-----Related Work-----
+
+Prior works about the idea have been performed by other community members
+and previous interns which form a good guiding path for my own approach.
+Some previous example work:
+
+i) Port helper/test-ctype.c to unit-tests/t-ctype.c
+-> link: https://lore.kernel.org/git/20240112102743.1440-1-ach.lumap@gmail.com/
+
+ii) Port test-sha256.c and test-sha1.c to unit-tests/t-hash.c
+-> link: https://lore.kernel.org/git/20240229054004.3807-2-ach.lumap@gmail.com/
+
+iii) Port helper/test-date.c to unit-tests/t-date.c
+-> link: https://lore.kernel.org/git/20240205162506.1835-2-ach.lumap@gmail.com/
+
+iv) Port test-strcmp-offset.c to unit-tests/t-strcmp-offset.c
+-> link: https://lore.kernel.org/git/20240310144819.4379-1-ach.lumap@gmail.com/
+
+v) Integrate a simple strbuf unit test with Git's Makefiles
+-> link: https://lore.kernel.org/git/20230517-unit-tests-v2-v2-4-21b5b60f4b32@google.com/
+
+vi) t0080: turn t-basic unit test into a helper
+-> link: https://lore.kernel.org/git/a9f67ed703c8314f0f0507ffb83b503717b846b3.1705443632.git.steadmon@google.com/
+
+In GSoC
+-------
+
+-----Plan-----
+
+Tests for Git are defined in the t/ directory and use the combination of
+a helper file (written in C) and a shell script that invokes the said
+helper file. I will use my work from the patch ‘tests: Move
+t0009-prio-queue.sh to the unit testing framework’ to explain the steps
+involved in the porting of such tests:
+
+• Search for a suitable test to port: 
+
+As Christian Couder mentioned in this mail (link: https://public-inbox.org/git/CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com/),
+there exists a subset of t/helper worth porting and we need some sort of
+classification to discern these.
+
+All helper files contain a cmd__foo() function which acts as the entry
+point for that helper tool. For example, the helper/test-prio-queue.c
+file contained cmd__prio_queue() which served as the entry point for
+that file. The binary for the helper file is then mapped to a different
+name by helper/test-tool.c which is used by the ‘*.sh’ files to perform
+the tests. This name can be discovered by searching for the helper
+file’s entry point in test-tool.c. Continuing the prior example,
+“prio-queue” was the name for the helper/test-prio-queue.c binary and
+t0009-prio-queue.sh invoked it like “prio-queue 1 2 get 3 dump”.
+
+To classify what among t/helper should be targeted first in this
+project, we can use something like ‘git grep foo’ (where foo is the name
+for the helper’s binary) to look at the instances where the helper tool
+is invoked. The ones appearing lesser in different test scripts are the
+ones most likely to be used solely for unit testing and should probably
+be targeted first. Utilising this strategy, I discovered that the
+‘prio-queue’ tool was only used in t0009-prio-queue.sh and hence, was a
+good candidate for the unit testing framework.
+Note that this strategy is not full-proof and further investigation is
+absolutely required on a per-test basis, it is only meant to give an
+initial idea of what’s worth investigating.
+
+•  Create a new C test file in t/unit-tests: 
+
+After finding a test appropriate for the migration efforts, we create a
+new ‘*.c’ file in t/unit-tests.  The test file must be named appropriately
+to reflect the nature of the  tests it is supposed to perform.
+Most of the times, replacing ‘tXXXX’  with ‘t-‘ and ‘*.sh’ with ‘.c’ in
+the name of the test script suffices. E.g. t/t0009-prio-queue.sh turns
+to t/unit-tests/t-prio-queue.c.
+The new C file must #include “test-lib.h” (to be able to use the unit
+testing framework) and other necessary headers files.
+
+•  Move the code from the helper file: 
+
+Since the helper files are written in C, this step is mostly a
+‘copy-paste then rename’ job. Changes similar to the following also need
+to be made in the Makefile:
+-    TEST_BUILTINS_OBJS += test-prio-queue.o
++    UNIT_TEST_PROGRAMS += t-prio-queue
+
+•  Translate the shell script: 
+
+The trickiest part of the plan, since  different test scripts perform
+various functions and a direct translation of the scripts to C is not
+always optimal. Continuing the prior example, t0009-prio-queue.sh used a
+single pattern for testing, write expected output to a temporary file
+(named ‘expect’) -> feed input to the ‘prio-queue’ helper tool -> dump its
+output to another temporary file (named ‘actual’) -> compare the two files
+(‘actual’ vs ‘expect’).
+
+In the first iteration of my prio-queue patch, I worked out a
+straightforward translation of this pattern in C. I stored the input in
+a string buffer, passed that buffer to the test function, stored its
+output in another buffer and then called memcmp() on these two buffers.
+While this did prove to be a working copy, this work was found to be inadequate
+on the mailing list. Through the next several iterations, I reworked the
+logic several times, like comparing the input and output on-the-go rather
+than using buffers and replacing strings with macro definitions.
+
+The test scripts similarly perform other functions like checking for
+prerequisites, creating commits, initializing repositories, changing or 
+creating directories and so forth, and custom logic is required in most
+of the cases of translating these, as seen above.
+
+•  Run the resulting test, correct any errors:
+
+It is rare for any migrated test to work correctly on the first run.
+This step involves resolving any compile/runtime errors arising from the
+test and making sure that at the very minimum, all the test-cases of the
+original test are replicated in the new work. Improvements upon the original
+can also be made, for example, the original t0009-prio-queue.sh did not
+exercise the reverse stack functionality of prio-queue, which I improved
+upon in unit-tests/t-prio-queue.
+
+•  Send the resulting patch to the mailing list, respond to the feedback:
+
+This step involves writing a meaningful commit message explaining each patch
+in the series. From my experience contributing to the Git project, I find it
+to be rare for any patch series to be accepted in the very first iteration.
+Feedback from the community is vital for the refinement of any patch and
+must be addressed by performing the suggested changes and sending the work
+back to the mailing list. This must be repeated until the work is merged
+into ‘seen’, ‘next’ and further down, ‘master’.
+
+Timeline
+--------
+
+I’m confident that I can start the project as early as the start of the
+Community Bonding Period (May 1 - 26). This is because I have read
+the related documentation and already have some experience with the idea.
+I believe I’ll be ready to get up to speed to work on the project by then.
+The exact time arrangement for each test is variable and hard to determine,
+but judging from the fact that it took me 3-4 days to complete the first
+iteration of the t-prio-queue work, here is a proposed migration schedule:
+
+The first few steps of the plan are easy enough to knock out in a day,
+the time required to port the tests depends mostly upon the work
+required in translating the shell script. As mentioned previously, it
+took me 3-4 days to complete the first iteration of the test-prio-queue
+migration patch and that was a short test with only about 50 or so lines
+of shell scripting and all the test cases following a single pattern.
+Considering all this, I believe it should be possible, on average, to
+migrate a new test in 4-7 days.
+From there, it’s a matter of polishing the patch until integration with
+‘master’ by addressing the feedback on the mailing list which can
+deceptively take longer than expected. For instance, I had to continue
+refining my t-prio-queue patch for around 2 weeks after the first
+iteration to get it merged to ‘next’.
+
+Hence, it should be possible for me to migrate >=8 tests throughout the
+duration of this project.
+
+Blogging
+--------
+
+I plan on writing weekly blogs on the weekends summarizing my work and
+outlining future plans here (link: https://chand-ra.github.io/)
+(I have yet to set up the blog). This is because I believe jotting ideas
+down help you understand them better while simultaneously serving as a
+guiding path for new contributors to get started with the Git project.
+I learnt quite a lot from previous intern’s blogs like Shaoxuan Yuan’s
+GSoC 2022 Blog (link: https://ffyuanda.github.io/), Shuqi Lang’s GSoC
+2023 blog (link: https://cheskaqiqi.github.io/) and Achu Luma’s Outreachy
+2023 Blog (link: https://gitlab.com/lumap/lumap.gitlab.io) and plan on
+leaving something similar for other newcomers.
+
+Availability
+------------
+
+My summertime is reserved for GSoC, so I expect that I can work on a new 
+test 5 days per week, 6-8 hours per day, that is 30-40 hours a week.
+On the weekends, I would like to solely work on the feedback from
+the mailing list and advance my [WIP] patches. Certainly, something
+unexpected may arise, but I will try my best to adhere to this time
+commitment and be always available through the community’s mailing list.
+
+Post GSoC & Closing Remarks
+---------------------------
+
+When I first started contributing to the Git project in October of 2023,
+I had no idea about programmes like GSoC. I was advised by a senior of
+mine to contribute to open-source projects and hence, my aim of contribution
+was to apply what I had learnt in college to solve real-world problems
+and learn from more experienced peers. However, most of what I have
+contributed to Git has been trivial owing to my lack of skills and
+inexperience with the project.
+
+Seeing how I need to do an internship in summer, with GSoC, I hope to be
+able to dedicate this internship time and effort to a cool project like
+Git while simultaneously learning skills to be able to make more useful
+contributions in the future. It’s two birds with one stone. I would also
+like to keep working on this project to see it to completion post-GSoC
+and help mentor other newcomers get started with the Git project.
+
+Thanks & Regards,
+Chandra
