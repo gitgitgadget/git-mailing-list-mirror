@@ -1,52 +1,54 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8166B79DF
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 21:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2190E1E862
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 21:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711748586; cv=none; b=MV6EzhoI4wcqmY5RD2vcxCfGSQVxeh4cBlTa2xtz5wyAZhIrD6Na1L8aOIFxAxHo8cq+Vz0BiwlU+DJQm0FU/7CQqZoEKq02bromFLMTxhwSyScu0GSnicLiW9z5xHeV5zj2aOC7DO9XWdaXCyHP7FydoxmXp/3GAd/T3rHeVA4=
+	t=1711749373; cv=none; b=kW2fR1InqMsno8qRFbOWYWZfTpfwdJ4IcqJi4tBOh/wqchskard3OEuDq+bVMVJUXKyzOCeP4FcOmNk4/o93Ltc1/UvNnOLqJzAcBAUn2INoVZXZw9bv9wAREMB/aBJEqpe2qHFA2hLkdry7jcLcNFVZbqHQNkhJBHj/PNaNLmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711748586; c=relaxed/simple;
-	bh=tSYqNTZ6KFS+jTNrPJ0ctKLQey2hv+EAn4dBElc6Des=;
+	s=arc-20240116; t=1711749373; c=relaxed/simple;
+	bh=wLMjsyjQtLuiXo7OT7KRalyeZnSLIfmmeBB20/aJ9hQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kLCTJDz1lM8MV0kxra+kqs2J0VJekOwwFr1PntM4KXaPaSfEzv2d6s+T77pQPS285uGeC1V5nO9aBQpqeF4+0OihHey+rQ/XQHQSHWrpu/isNE1mgAtymw2TvNWkN6zWKKpDgbbkg/3KkIB3Arh+qWvIXpEV55SgrEb3pM/xens=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tDzXlQ4D; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=qNBcj7xqdnPd93TTGJRiVEqXAOTjvRxxa8mQ5ieuGhcL7shAurWgJjUYv3Ehi5fgutBUMHehZrKi5v3J12IhRuAHpqP2xkvJGtifLfOaArNrEFBKSTHYHGDnEFNS/BAduQ1B9rWbRqMWc867X+NW5ch1aP1Fe09uNnXe8oLpFk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHl4A664; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tDzXlQ4D"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHl4A664"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9846D1F59FD;
-	Fri, 29 Mar 2024 17:43:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 15FA41F5AC9;
+	Fri, 29 Mar 2024 17:56:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=tSYqNTZ6KFS+jTNrPJ0ctKLQey2hv+EAn4dBEl
-	c6Des=; b=tDzXlQ4DDpJ/rlb4TiIrx86iGl8LoUZFdhwxvP3YzdAc+Y9utFVv+w
-	xvW21XuJM54dtWKuf4UPLtWiCl8ee/ZxsNjOxKamY+nNZkMFdzfU/IJGS+sISr46
-	T19gjWYFEeG7TAjcS4BSek30ZCljsL6cBWLPinzeohTqbSP8gZnAo=
+	:content-type; s=sasl; bh=wLMjsyjQtLuiXo7OT7KRalyeZnSLIfmmeBB20/
+	aJ9hQ=; b=gHl4A6641dM2rj1QQEHwqkdTal67MkJa2qr+cqsHRGP6oLEfJU/e0w
+	+id5xctGfHi/Y+sUJGMzq+xWFBl+/fncCV163nR7CFhak+CBnaZjOOs/1wx10fTI
+	NK2Ct96Pg1GkyjoIPp/oAUSyToFIwZj98GyZJKs0nXIjCqARm8rq8=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 907831F59FC;
-	Fri, 29 Mar 2024 17:43:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CA531F5AC7;
+	Fri, 29 Mar 2024 17:56:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E8D531F59FB;
-	Fri, 29 Mar 2024 17:43:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 740E41F5AC6;
+	Fri, 29 Mar 2024 17:56:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] builtin/add: error out when passing untracked
- path with -u
-In-Reply-To: <20240329205649.1483032-5-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Sat, 30 Mar 2024 02:26:21 +0530")
-References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
-	<20240329205649.1483032-5-shyamthakkar001@gmail.com>
-Date: Fri, 29 Mar 2024 14:43:00 -0700
-Message-ID: <xmqqzfugvhnf.fsf@gitster.g>
+To: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 1/3] reftable/stack: add env to disable autocompaction
+In-Reply-To: <2fdd8ea11331da13ec56d511fe4cadd47544419f.1711685809.git.gitgitgadget@gmail.com>
+	(Justin Tobler via GitGitGadget's message of "Fri, 29 Mar 2024
+	04:16:47 +0000")
+References: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
+	<pull.1683.v3.git.1711685809.gitgitgadget@gmail.com>
+	<2fdd8ea11331da13ec56d511fe4cadd47544419f.1711685809.git.gitgitgadget@gmail.com>
+Date: Fri, 29 Mar 2024 14:56:08 -0700
+Message-ID: <xmqqttkovh1j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,99 +58,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 513C4E76-EE15-11EE-8ED5-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 26A2574E-EE17-11EE-B8DB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+"Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> When passing untracked path with -u option, it silently succeeds. There
-> is no error message and the exit code is zero. This is inconsistent
-> with other instances of git commands where the expected argument is a
-> known path. In those other instances, we error out when the path is
-> not known.
->
-> Therefore, fix this by passing a character array to
+> -	if (!add->stack->disable_auto_compact)
+> +	if (!add->stack->disable_auto_compact && !git_env_bool("GIT_TEST_REFTABLE_NO_AUTOCOMPACTION", 0))
 
-"Therefore, fix" -> "Fix".
+Fold the line after " &&", i.e.
 
-> add_files_to_cache() to collect the pathspec matching information and
-> report the error if a pathspec does not match any cache entry. Also add
-> a testcase to cover this scenario.
->
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> ---
->  builtin/add.c         | 9 ++++++++-
->  t/t2200-add-update.sh | 6 ++++++
->  2 files changed, 14 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/add.c b/builtin/add.c
-> index ffe5fd8d44..650432bb13 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -370,6 +370,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  	int add_new_files;
->  	int require_pathspec;
->  	char *seen = NULL;
-> +	char *ps_matched = NULL;
->  	struct lock_file lock_file = LOCK_INIT;
+	if (!add->stack->disable_auto_compact &&
+	    !git_env_bool("GIT_TEST_REFTABLE_NO_AUTOCOMPACTION", 0))
+
+> diff --git a/reftable/system.h b/reftable/system.h
+> index 5d8b6dede50..05b7c8554af 100644
+> --- a/reftable/system.h
+> +++ b/reftable/system.h
+> @@ -17,6 +17,7 @@ license that can be found in the LICENSE file or at
+>  #include "tempfile.h"
+>  #include "hash-ll.h" /* hash ID, sizes.*/
+>  #include "dir.h" /* remove_dir_recursively, for tests.*/
+> +#include "parse.h"
 >  
->  	git_config(add_config, NULL);
-> @@ -547,15 +548,20 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  		string_list_clear(&only_match_skip_worktree, 0);
->  	}
+>  int hash_size(uint32_t id);
 >  
-> +
->  	begin_odb_transaction();
-
-Unnecessary change.
-
-> +	ps_matched = xcalloc(pathspec.nr, 1);
->  	if (add_renormalize)
->  		exit_status |= renormalize_tracked_files(&pathspec, flags);
->  	else
->  		exit_status |= add_files_to_cache(the_repository, prefix,
-> -						  &pathspec, NULL,
-> +						  &pathspec, ps_matched,
->  						  include_sparse, flags);
->  
-> +	if (take_worktree_changes)
-> +		exit_status |= report_path_error(ps_matched, &pathspec);
-
-Hmph, are we sure take_worktree_changes is true only when
-add_renormalize is false?
-
->  	if (add_new_files)
->  		exit_status |= add_files(&dir, flags);
-
-If report_path_error() detected that the pathspec were faulty,
-should we still proceed to add new files?  This is NOT a rhetorical
-question, as I do not know the answer myself.  I do not even know
-offhand what add_files_to_cache() above did when pathspec elements
-are not all consumed---if it does not complain and does not refrain
-from doing any change to the index, then we should follow suite and
-add_files() here, too.
-
-> @@ -568,6 +574,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
->  		die(_("unable to write new index file"));
->  
-> +	free(ps_matched);
->  	dir_clear(&dir);
->  	clear_pathspec(&pathspec);
->  	return exit_status;
-> diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-> index c01492f33f..7cba325f08 100755
-> --- a/t/t2200-add-update.sh
-> +++ b/t/t2200-add-update.sh
-> @@ -65,6 +65,12 @@ test_expect_success 'update did not touch untracked files' '
->  	test_must_be_empty out
+> diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+> index 686781192eb..434044078ed 100755
+> --- a/t/t0610-reftable-basics.sh
+> +++ b/t/t0610-reftable-basics.sh
+> @@ -299,6 +299,21 @@ test_expect_success 'ref transaction: writes cause auto-compaction' '
+>  	test_line_count = 1 repo/.git/reftable/tables.list
 >  '
 >  
-> +test_expect_success 'error out when passing untracked path' '
-> +	echo content >baz &&
-> +	test_must_fail git add -u baz 2>err &&
-> +	test_grep -e "error: pathspec .baz. did not match any file(s) known to git" err
+> +test_expect_success 'ref transaction: environment variable disables auto-compaction' '
+> +	test_when_finished "rm -rf repo" &&
+> +
+> +	git init repo &&
+> +	test_commit -C repo A &&
+> +	for i in $(test_seq 20)
+> +	do
+> +		GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C repo update-ref branch-$i HEAD || return 1
+
+Fold the line before "git", i.e.
+
+		GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true \
+		git -C repo update-ref branch-$i HEAD || return 1
+
+> +	done &&
+> +	test_line_count = 23 repo/.git/reftable/tables.list &&
+> +
+> +	git -C repo update-ref foo HEAD &&
+> +	test_line_count = 1 repo/.git/reftable/tables.list
 > +'
 > +
->  test_expect_success 'cache tree has not been corrupted' '
->  
->  	git ls-files -s |
+>  check_fsync_events () {
+>  	local trace="$1" &&
+>  	shift &&
