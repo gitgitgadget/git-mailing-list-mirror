@@ -1,91 +1,143 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CB03A27B
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 04:15:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F175374C3
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 04:16:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711685705; cv=none; b=S5+lmsu0huNaO6zlx6GlylpgdwkG9b7nftfQ6bfL0HDLcJELEWka0Wj3JG8J4iCw5mgRYrFsemqbeWJVkncvLkP/yYKOg25MNmjBg/cHVk5Gvlpw7fQmf1dWljPi3NqqG2J29m3noW/OVbDC9zUfb3bZVpbD3ws1TeiH94w6ENo=
+	t=1711685818; cv=none; b=mzlB8XnDehTqTtV4ylIou55nhosVrx5+OCvkfIcY4o8z5sVJE3NfTzoXSpWR1CEEFDeCeLoM8VZ7Kn+zyBFNMZu3X21r6a2MEYFvfm/C22gNh+AtTx3a9eYqcTp8QINBTo6O6F+zU13JXsp4QcWQJ+ppviYZU66/hNtRE8M/pYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711685705; c=relaxed/simple;
-	bh=dMDNCrj34W5kK4XtcMwpdJ3yeGAl2qMd1yeHmBwPZbw=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=Md0AZ6F8cglNgZYIDe+gDew/iMcdAGSMyBtVT5uLI/w1uVAEeLxUhylM1FJjMh/ha+SyEVEEB+uN5hQSU0ZSFgVSkDKYYWJEyeSavJbmSjeq1r4cdp4V3vYsnXoAc+SXXjLwUaM/YI7+iVjIHQs/z3EhBpXdBxYZFMRqDitzpZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dWYSZK3Y; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1711685818; c=relaxed/simple;
+	bh=B2MuKFtlifHHU3jsML3vXdKkYVxHgHRL2u+twuhUdJk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=aIlG8Q21ZczaSS9P/6RTvKUX7AmNVQbu7Tz58h+daWz3k/WonRHoRrRVRTxziXnLuTBxhLoyfirecKK/rgqqJPSPBco8KTETIBXfQYyMGjXoHfzQ9wwYX1YR63WK9zx2n8zFyL1Olr2EwOiuESVExLsQGnVMyjxM0SnXzeKSXtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XwI0oy1o; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dWYSZK3Y"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-415482307b0so9682685e9.0
-        for <git@vger.kernel.org>; Thu, 28 Mar 2024 21:15:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XwI0oy1o"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4154614b47eso6567325e9.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 21:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711685702; x=1712290502; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:cc:to:content-language:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1711685812; x=1712290612; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=510KJwx0+xhh+zA0Y6JHX2AIvAT7sUNCB/7laBzA3c4=;
-        b=dWYSZK3YGezi2jvLt4iASQKR3Wrwy14fFrXCh2i5MqQdxoQX8s5vSMAthSQh6HaHCu
-         NdAC0n28kaR2SlBBieIzfYFdsfpDRlmIeo3sAsDfOF5Yvfhxaa9CcJ2JkdkMvE4bn6kD
-         67hgTcQywI2YCiCJJUmk7Dr92kGMFi+4DkfoJk0z1N0hUagL/id1y30cx8aclZYCcByC
-         DBbu2phpiB+Wc/ARIJv8d2dBv91ywM2zsWruYdQqQcQE3VMBTTdyNkuiWWrvqgt1KBU3
-         Kj7OAq6raSfrrxsM4mxsvVeujHLZm97G83AeJpNEHMOgoQS7H6Wf3EdOFS2ei5iPEI9C
-         NfbA==
+        bh=Q0TMh64KiTj3gNmGSnDHL2FpmVgefE9kRbcYQEsM4to=;
+        b=XwI0oy1o4TBGponKLBPQ+9oXSXvi6Hq+4XAWJHkj1zKdVB077p7ZY/KzRlnB6I0CEE
+         kjWCOrR27m1b3g3s+SxFtyV+3d9UCKc+dibpQE82xK+5jXeayqiTHWt4tmCc6rCpJ7i6
+         Iihssl7g91qUh13XHfOtuFcCqsK6WmIo8YbNIAVfizPdkY0cu7eAm8aIZq51lVPJyUar
+         2k06AM1bI/6fj87QjHmxQPsqX2XBp4DoKXb3LMwF9cFNcHLDeGLJAD6YSDYB3Lj0Uvgn
+         PQjy1kAP4p18S8xadH/ghsA8aWvw4O8MN8ucH350JVwgavm+1Lwy510UxRRsFoW2qgml
+         x8AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711685702; x=1712290502;
-        h=content-transfer-encoding:subject:cc:to:content-language:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=510KJwx0+xhh+zA0Y6JHX2AIvAT7sUNCB/7laBzA3c4=;
-        b=jcO5GQS0CaoEFYrhBABHRTEkhCnNryaU4tRPvAs2I4gDqXlozbLRzb/CwH3t1QhE9n
-         yRRQfUyMipicFckaSzGSvsl8cerzrfCtl5wqHioAurTlb34Mgkkcqpbd51Bnn6qqAgvu
-         fa266h7NNVnFwaOiogmJ83GkTzVPhUb9X2rgSNF+c5VNhq5JbUADK56PbXIK2NtKOd2P
-         v+OOJoYB9j8vxPF7Zy70mlh/bM5dAV/QuYVppjwUOLu5rLwrDvgpWeiTYd6WhJI7A2Zp
-         ZlG5hQS8k0wy7yYNeyxm7GxfUlaGXcJWLqRl5MdzZMd0OsTgn5CIRorKrYF63X2vECQ2
-         zLuA==
-X-Gm-Message-State: AOJu0Yyi/zFLpvOaWcfdABQtIi9DRkdi0WlJKMC8RUN7IEcZIM/b8jeM
-	1IK7FiF3MJXNMD7Cfgi+noNZ1F4qHbl7Ytdqla5RXY37/O6ycCs++Du6t8pt
-X-Google-Smtp-Source: AGHT+IF9zgDCvPuDIUzH8pcmjUOaNd9/Cpn9BJUOhCr+GMTXAH6qxra4Oqf/eaf5fBPMIKvrRrq6DA==
-X-Received: by 2002:a05:600c:3b0f:b0:413:f4d1:199e with SMTP id m15-20020a05600c3b0f00b00413f4d1199emr996636wms.31.1711685702333;
-        Thu, 28 Mar 2024 21:15:02 -0700 (PDT)
-Received: from gmail.com (220.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.220])
-        by smtp.gmail.com with ESMTPSA id bi25-20020a05600c3d9900b00415481edde3sm3206236wmb.9.2024.03.28.21.14.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 21:15:02 -0700 (PDT)
-Message-ID: <06c9b422-b22e-4310-ad5b-1686616ab860@gmail.com>
-Date: Fri, 29 Mar 2024 05:14:53 +0100
+        d=1e100.net; s=20230601; t=1711685812; x=1712290612;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Q0TMh64KiTj3gNmGSnDHL2FpmVgefE9kRbcYQEsM4to=;
+        b=UJbo1GrbYWXOjztXx69Ux25e7KQtDRpryjySStsVIAKAm87ZY/CXmTgimH1W0syzaP
+         mzybCiO3MHB0Scq8a3vzz26XMOPkJ8GYfzkwJN5BIlc7/ci/V2NRhxaUgVWmTfoa9/3j
+         1SJdi1DK/4XBuJip9JJSWTwN1u0c/rU9FQOTIRKNyZC/mXUTz+X2pabv89XkKvJWj0iB
+         agCH6xIq2PFy7v8rjyZCw7vm1WXj7KrSDZHSoT9GjWqnde+H8YNPeGhas6VUvU9K3a68
+         Ad8If4LW9omDIzbJh4z0ZIiKReim8zRbqQGXaKgYwgT03HtVgwlrlJYnvS0cIaimjT+2
+         aEIg==
+X-Gm-Message-State: AOJu0Yyn5lZjr85DYxNBA5kFIGDzvjPHt3Yz5aqplCxey9K1HA7Nx2I0
+	oMXR1ZADbaEKqiPwuCZTja/NzuM4G8qrqBmLq26j1IZ9UpXGKBL9iTPVZGl0
+X-Google-Smtp-Source: AGHT+IF+wdrDyzFEtzn/AXKlroiiZEBZS+vTxOibSLlhWgOAFSwjFBsmnW9w4mo/2EwrSyvr1JZzTA==
+X-Received: by 2002:a05:600c:1907:b0:414:927d:60db with SMTP id j7-20020a05600c190700b00414927d60dbmr3624559wmq.17.1711685811435;
+        Thu, 28 Mar 2024 21:16:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f14-20020a05600c154e00b00414674a1a40sm4137662wmg.45.2024.03.28.21.16.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Mar 2024 21:16:51 -0700 (PDT)
+Message-Id: <2fdd8ea11331da13ec56d511fe4cadd47544419f.1711685809.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1683.v3.git.1711685809.gitgitgadget@gmail.com>
+References: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
+	<pull.1683.v3.git.1711685809.gitgitgadget@gmail.com>
+From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 29 Mar 2024 04:16:47 +0000
+Subject: [PATCH v3 1/3] reftable/stack: add env to disable autocompaction
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/3] add: use advise_if_enabled
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    Justin Tobler <jltobler@gmail.com>,
+    Justin Tobler <jltobler@gmail.com>
 
-This series is a simple change, in builtin/add.c, from:
+From: Justin Tobler <jltobler@gmail.com>
 
-	if (advice_enabled(XXX))
-		advise(MMM)
+In future tests it will be neccesary to create repositories with a set
+number of tables. To make this easier, introduce the
+`GIT_TEST_REFTABLE_NO_AUTOCOMPACTION` environment variable that, when
+set, disables autocompaction of reftables.
 
-to the newer:
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ reftable/stack.c           |  2 +-
+ reftable/system.h          |  1 +
+ t/t0610-reftable-basics.sh | 15 +++++++++++++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
-	advise_if_enabled(XXX, MMM)
-
-
-Rubén Justo (3):
-  add: use advise_if_enabled for ADVICE_ADD_IGNORED_FILE
-  add: use advise_if_enabled for ADVICE_ADD_EMPTY_PATHSPEC
-  add: use advise_if_enabled for ADVICE_ADD_EMBEDDED_REPO
-
- builtin/add.c              | 18 ++++++---------
- t/t3700-add.sh             | 45 ++++++++++++++++++++++++++++++++++++--
- t/t7400-submodule-basic.sh |  3 +--
- 3 files changed, 51 insertions(+), 15 deletions(-)
-
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 1ecf1b9751c..07262beaaf7 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -681,7 +681,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 	if (err)
+ 		goto done;
+ 
+-	if (!add->stack->disable_auto_compact)
++	if (!add->stack->disable_auto_compact && !git_env_bool("GIT_TEST_REFTABLE_NO_AUTOCOMPACTION", 0))
+ 		err = reftable_stack_auto_compact(add->stack);
+ 
+ done:
+diff --git a/reftable/system.h b/reftable/system.h
+index 5d8b6dede50..05b7c8554af 100644
+--- a/reftable/system.h
++++ b/reftable/system.h
+@@ -17,6 +17,7 @@ license that can be found in the LICENSE file or at
+ #include "tempfile.h"
+ #include "hash-ll.h" /* hash ID, sizes.*/
+ #include "dir.h" /* remove_dir_recursively, for tests.*/
++#include "parse.h"
+ 
+ int hash_size(uint32_t id);
+ 
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 686781192eb..434044078ed 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -299,6 +299,21 @@ test_expect_success 'ref transaction: writes cause auto-compaction' '
+ 	test_line_count = 1 repo/.git/reftable/tables.list
+ '
+ 
++test_expect_success 'ref transaction: environment variable disables auto-compaction' '
++	test_when_finished "rm -rf repo" &&
++
++	git init repo &&
++	test_commit -C repo A &&
++	for i in $(test_seq 20)
++	do
++		GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=true git -C repo update-ref branch-$i HEAD || return 1
++	done &&
++	test_line_count = 23 repo/.git/reftable/tables.list &&
++
++	git -C repo update-ref foo HEAD &&
++	test_line_count = 1 repo/.git/reftable/tables.list
++'
++
+ check_fsync_events () {
+ 	local trace="$1" &&
+ 	shift &&
 -- 
-2.44.0.371.gf9813d4ed5
+gitgitgadget
+
