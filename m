@@ -1,52 +1,52 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1331DFC4
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 21:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DCC21364
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 21:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711748138; cv=none; b=ttP35Qug2JMEer7t2c0mUV7JW93s+c9YbxTMkahw69+EbYa4/vc3R17KYBhbHkuRs21XZtiJv/7/Hwy0PHcqFyN6/rOJE+Ws4PZ5hbqqLD2V30+EfrUr7TTo9gULkUKyn5RQTZYAZ3QH+AAmjnkuphpMcYFwEHzbloDM2sNNqsA=
+	t=1711748309; cv=none; b=s5WxwKBa8/gFQyl66jAoLULMU/1ve7cbZjUr7TqBxUwDM7q1fo5LZ7YuxeBEjxeCAFhsgN8c5ASFfEbiQvhMgFSMJZosq4a/wbo0Sr5BqINbYM95IJpZpRIRa8EuN5myl6FkO395O4PUFO7L8ToGK3wLmlNMB0lJ13Yv3QRN6xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711748138; c=relaxed/simple;
-	bh=wVyHnajRldZdP7oj9bPvygtbs6iPNG9yOvnmxNl/fAs=;
+	s=arc-20240116; t=1711748309; c=relaxed/simple;
+	bh=s/yAaE0K9uCDp7YGcDxy9v5poBTktcNxcvIhkNRq5Cs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T3WVi8D2zrrbOj8BnaCTAXzjYXO42vVaPo+911Cs3tOo4Nv4VAKaY7XVlWl4vPvOEvtvqtEIj/VUqvREAUoQGNvKo88hn5am4jqGXX9SwQdy9yRgfxKUizgtex/bdxPT1uliOeLfMqNNxcJ8qIkZdZMVCP92niHvxcgg+myQ9c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=REINnlpU; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=Hver+IlAbGITQS7CrvmEHh0yJyFdKNjjMyKKu8KhNxCRLzv3AM00akwmJSAOanf9dMF082jzDckymBGVAHbsh5oRa9XXls/e0tMD0k4CXUYjaUqcJhjKiGwgOzcr3RrwJibP/6L9i8qoqzs6FmKyuqmrX3lMf48Ov8qCIRk3q34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=doNVhNP2; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="REINnlpU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="doNVhNP2"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E43171E7944;
-	Fri, 29 Mar 2024 17:35:35 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CD9BD1E7959;
+	Fri, 29 Mar 2024 17:38:26 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wVyHnajRldZdP7oj9bPvygtbs6iPNG9yOvnmxN
-	l/fAs=; b=REINnlpUX3//8EUUQjXEi17ZrHXwhg9xcohL3B1mzs+Vs2lMZjLHbg
-	9YV/X+OvtOcr5by80fW7CU65iTB6bMW50wAVfjH9HL5ZsauSvGxyCUuQLKdvTl3M
-	qaSTagmrc1p4OKbtVeDZyN4PijurjpXVNbJHFEk80BxAz4zLJ7ZT8=
+	:content-type; s=sasl; bh=s/yAaE0K9uCDp7YGcDxy9v5poBTktcNxcvIhkN
+	Rq5Cs=; b=doNVhNP271jezaaqB0jWimTCUr+hwuZ53B56oGTxLWE1IZw3/unu6+
+	rmgmlUh4+M4CQJYFz0u9e+66B2/T1Qa8GEvIreXKXvhabpuqQesO3qNb8kiY/Cia
+	fnZGKdz2LBRJ6dJBUgwVWutujBxj/p6XLC3bEatv2zf8CwvPiypyA=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DCA551E7941;
-	Fri, 29 Mar 2024 17:35:35 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C3EC41E7958;
+	Fri, 29 Mar 2024 17:38:26 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 485FC1E7940;
-	Fri, 29 Mar 2024 17:35:35 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 299581E7956;
+	Fri, 29 Mar 2024 17:38:26 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] read-cache: optionally collect pathspec matching
- info
-In-Reply-To: <20240329205649.1483032-3-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Sat, 30 Mar 2024 02:26:19 +0530")
+Subject: Re: [PATCH v2 2/3] builtin/commit: error out when passing untracked
+ path with -i
+In-Reply-To: <20240329205649.1483032-4-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Sat, 30 Mar 2024 02:26:20 +0530")
 References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
-	<20240329205649.1483032-3-shyamthakkar001@gmail.com>
-Date: Fri, 29 Mar 2024 14:35:34 -0700
-Message-ID: <xmqqjzlkwwk9.fsf@gitster.g>
+	<20240329205649.1483032-4-shyamthakkar001@gmail.com>
+Date: Fri, 29 Mar 2024 14:38:24 -0700
+Message-ID: <xmqqcyrcwwfj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,101 +56,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 4701DFEE-EE14-11EE-8B94-25B3960A682E-77302942!pb-smtp2.pobox.com
+ ACDB6A88-EE14-11EE-9F09-25B3960A682E-77302942!pb-smtp2.pobox.com
 
 Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-> The add_files_to_cache() adds files to the index. And
-> add_files_to_cache() in turn calls run_diff_files() to perform this
-> operation. The run_diff_files() uses ce_path_match() to match the
-> pathspec against cache entries. However, it is called with NULL value
-> for the seen parameter, which collects the pathspec matching
-> information.
+> When we provide a pathspec which does not match any tracked path
+> alongside --include, we do not error like without --include. If there
+> is something staged, it will commit the staged changes and ignore the
+> pathspec which does not match any tracked path. And if nothing is
+> staged, it will print the status. Exit code is 0 in both cases (unlike
+> without --include). This is also described in the TODO comment before
+> the relevant testcase.
+>
+> Fix this by passing a character array to add_files_to_cache() to
+> collect the pathspec matching information and error out if the given
+> path is untracked. Also, amend the testcase to check for the error
+> message and remove the TODO comment.
+>
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+>  builtin/commit.c                      |  9 ++++++++-
+>  t/t7501-commit-basic-functionality.sh | 16 +---------------
+>  2 files changed, 9 insertions(+), 16 deletions(-)
 
-", which collects" -> ", which means we lose"
+Nice.
 
-> Therefore, introduce a new parameter 'char *ps_matched' to 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 24efeaca98..355f25ec2a 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -441,10 +441,17 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>  	 * (B) on failure, rollback the real index.
+>  	 */
+>  	if (all || (also && pathspec.nr)) {
+> +		char *ps_matched = xcalloc(pathspec.nr, 1);
+>  		repo_hold_locked_index(the_repository, &index_lock,
+>  				       LOCK_DIE_ON_ERROR);
+>  		add_files_to_cache(the_repository, also ? prefix : NULL,
+> -				   &pathspec, NULL, 0, 0);
+> +				   &pathspec, ps_matched, 0, 0);
+> +		if (!all && report_path_error(ps_matched, &pathspec)) {
+> +			free(ps_matched);
+> +			exit(1);
+> +		}
+> +		free(ps_matched);
+> +
 
-"Therefore, introduce" -> "Introduce"
+Looking simple and very nice.
 
-> add_files_to_cache() and in turn to run_diff_files(), to feed it to
-> ce_path_match() to optionally collect the pathspec matching
-> information. This will be helpful in reporting error in case of an
-> untracked path being passed when the expectation is a known path. Thus,
-> this will be used in the subsequent commits to fix 'commit -i' and 'add
-> -u' not erroring out when given untracked paths.
-
-A new parameter to run_diff_files() came as a bit of surprise to me.
-
-When I responded to the previous round, I somehow thought that we'd
-add a new member to the rev structure that points at an optional
-.ps_matched member next to the existing .prune_data member.  
-
-That way, it would hopefully be easy for a future code to see if a
-"diff" invocation, not necessarily run_diff_files() that compares
-the working tree and the index, consumed all the pathspec elements.
-If such a new .ps_matched member is initialized to NULL, all the
-patch noise we see in this patch will become unnecessary, no?
-
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 5e8717c774..2dc3864abd 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -101,7 +101,8 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
->  	return changed;
->  }
->  
-> -void run_diff_files(struct rev_info *revs, unsigned int option)
-> +void run_diff_files(struct rev_info *revs, char *ps_matched,
-> +		    unsigned int option)
->  {
->  	int entries, i;
->  	int diff_unmerged_stage = revs->max_count;
-> @@ -127,7 +128,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
->  		if (diff_can_quit_early(&revs->diffopt))
->  			break;
->  
-> -		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
-> +		if (!ce_path_match(istate, ce, &revs->prune_data, ps_matched))
->  			continue;
->  
->  		if (revs->diffopt.prefix &&
-
-This may be a non-issue, but after this point we see the beginning
-of another filter to reject paths outside the hierarchy "--relative"
-specifies.  It is possible that a pathspec element matches ce->name
-but the matched cache entry is outside the current area.  Shouldn't
-we then consider that the pathspec element did not match?  E.g., in
-our project, what should happen if we did this?
-
-    $ echo >>diff.h
-    $ cd t
-    $ git diff --relative \*.h
-
-The command should show nothing.  Did the pathspec '*.h' match?  From
-those who know how the machinery works, yes it did before the resulting
-paths were further filtered out, but from the end-user's point of view,
-because "--relative" limits the diff to the current directory and below,
-and because 't' and below did not have any C header files, wouldn't it
-be more natural and useful to say the pathspec wasn't used?
-
-This does not matter right now because we are not planning to add a
-new "--error-unmatch" option to "git diff", but when/if we do, it
-starts to matter.  The hunk at least needs a NEEDSWORK comment,
-summarizing the above.
-
-	/*
-	 * NEEDSWORK:
-	 * Here we filter with pathspec but the result is further
-	 * filtered out when --relative is in effect.  To end-users,
-         * a pathspec element that matched only to paths outside the
-         * current directory is like not matching anything at all;
-         * the handling of ps_matched[] here may become problematic
-	 * if/when we add the "--error-unmatch" option to "git diff".
-	 */ 
-
-A solution to that problem might be just a matter of swapping the
-order of filtering, but it may have performance implications and I'd
-rather not have to worry about it right now in the context of the
-current topic, hence a NEEDSWORK comment without attempting to "fix"
-it would be the most preferred approach to such a side issue.
+This change would not have to be redone even if we decide not to add
+a new parameter to run_diff_files() and instead add a new member to
+the revs structure instead, because it all happens at the level or
+below add_files_to_cache().
