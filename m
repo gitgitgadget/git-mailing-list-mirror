@@ -1,68 +1,96 @@
-Received: from germ.lanvaux.fr (germ.lanvaux.fr [184.68.159.242])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0680E6FC3
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 00:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=184.68.159.242
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787EE33D2
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 00:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711672389; cv=none; b=HwSjN2BZeoEq/QfrYpWZhIdEzEQFWoRoDmDxAk5J6g9OpC0+ksNJ0x1fkv27wImj9Ndw+MmAcps+nSduKF4xPfYaq9dIazV38XXqoWlwjGYgfTBS+gH10TAdzc5SGJvIC/N4TaQ1tfsLZCJEVOjkXG7RQZjYqexVZhm7YBu+7qc=
+	t=1711673471; cv=none; b=A8PVuJF9Hj5FcrG79R64/UOpDNpHu7F6AOptYbkEPoPRA7oNesC0IyHZBpBAAnPHgxoOCVNgixw6SmKqDoQXNNXvipMwFILwFHf5awD9XpETDl62Q/RhhS5AlhThzhr5UQoTnEaLEnCAuvc5os6pSdA5miFkKJUvMu1ACJuGus4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711672389; c=relaxed/simple;
-	bh=V1VxtCLH/Knrqvlfh886dLcXD+Zm6cT9xrLQpmY8/n4=;
-	h=Date:From:To:Subject:Message-Id:Mime-Version:Content-Type; b=ERZmOhx6/UcQ2/wGmwLHMR69iGVFb1OY6X7Gfk6qk1ISpbBf3gIcaGt2y1KVKTnMukfR5hoDki1Fcyc1QH7uni57EwFCDklj2dgmQk2yLRDTB56c4cEOqdASrBEvOT5+5mvklwHndu7qIAzAVVfYmUojU6LoFD7dHnKCBBr7uSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lanvaux.fr; spf=pass smtp.mailfrom=lanvaux.fr; arc=none smtp.client-ip=184.68.159.242
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lanvaux.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lanvaux.fr
-Received: from germ.lanvaux.fr (localhost [IPv6:::1])
-	by germ.lanvaux.fr (Postfix) with ESMTP id 9CB22270659
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:25:51 -0700 (PDT)
-Received: from Asus ([207.35.73.116])
-	by germ.lanvaux.fr with ESMTPSA
-	id T/vPHo8KBmY1PAAAg0nwow
-	(envelope-from <germain.lechapelain@lanvaux.fr>)
-	for <git@vger.kernel.org>; Thu, 28 Mar 2024 17:25:51 -0700
-Date: Thu, 28 Mar 2024 17:23:30 -0700
-From: Germain <germain.lechapelain@lanvaux.fr>
+	s=arc-20240116; t=1711673471; c=relaxed/simple;
+	bh=F6LR9gqKcHkVOugEf3Ro+ngvHEF6vjxVBpCOY/MMkeE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=okN1vc4t4ITfHw4DdF/VxJWOwiwCN1beyU8LJHs6T4zeoc7DHr05ZjIMHHVlseohjOVr7Y3u2+B6ELE79jzGv09m0ekoD4oysWqn2WZVjR4dPkfLgsebHsmu77SnvCztAswsQrMEdn2g+NTwad9ekwDI3HEqXEmIHKkC9cEXs80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sopbXk+S; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sopbXk+S"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6579D1DFBF1;
+	Thu, 28 Mar 2024 20:51:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=F
+	6LR9gqKcHkVOugEf3Ro+ngvHEF6vjxVBpCOY/MMkeE=; b=sopbXk+S5pz0B0dOA
+	tFUp72TdfKYfpsltpj9vSux6M8RkAU/d4132OYx8us++oWOOYuDsLrorKUnQjWrk
+	4mdxSUspwOTNs20Fg5977SWiss6bEEtbgbNGKnX1YSscyaT6fqmh1rcAxdRphjG3
+	Vj2kv0gRLk3prWOAh5ZeV+bOwo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DCFD1DFBEF;
+	Thu, 28 Mar 2024 20:51:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ABEF41DFBEE;
+	Thu, 28 Mar 2024 20:51:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: File resolution on Windows in gitk
-Message-Id: <20240328172330.7fe89edb6efb59b99085da0b@lanvaux.fr>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.30; i686-pc-mingw32)
+Cc: Derrick Stolee <stolee@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] do not set GIT_TEST_MAINT_SCHEDULER where it does not matter
+Date: Thu, 28 Mar 2024 17:51:07 -0700
+Message-ID: <xmqqmsqhsvwk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6E405594-ED66-11EE-9FC6-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Hi there!
+31345d55 (maintenance: extract platform-specific scheduling,
+2020-11-24) added code to t/test-lib.sh for everybody to set
+GIT_TEST_MAINT_SCHEDULER to a "safe" value and instructed the test
+writers to set the variable locally when their test wants to check
+the scheduler integration.
 
-I am a big fan of=20
- . Windows
- , Git
- . Resolving conflicts (in no particular order.)
+But it did so without "export GIT_TEST_MAINT_SCHEDULER", so the
+setting does not seem to have any effect anyway.  Instead of setting
+it to a "safe" value, just unset it.
 
-I find the out-of-the-box experience of resolving conflicts to be a disaste=
-r on Windows:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
- o P4Merge doesn't install for me
- o Meld worked (seemingly so far.)  But I do get a big fat error from `gdbu=
-s.exe' (whatever this is:) `Procedure DllMain not found in something-libMel=
-d' (from my recollection.)
+ * t7900 (maintenance) uses many tests that does one-shot export of
+   the variable, and one test that sets the value to its safe
+   "failure" value and exports it at the end.
 
-I can have a look on my side,
-Sorry to complain I realize those two issues are certainly within there res=
-pective other software packages (I complained separately to Helix.)
+   t9210 (scaler) sets up a safe fake scheduler and exports it
+   before doing any of its tests.
 
-But I had most fine `WinMerge' installed and redo to go.  And I understand =
-this software is `the thing' for file comparison under MS Windows=AE.
+   Nobody else that includes t/test-lib.sh mentions this variable.
 
-Oh and also, I had to add the path to `Meld' in my `PATH' environment varia=
-ble. :'(.
+ t/test-lib.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Arrivederci!
-Hope everyone is having a blast aside from that
-Kindest regards,
---=20
-Germain <germain.lechapelain@lanvaux.fr>
+diff --git c/t/test-lib.sh w/t/test-lib.sh
+index c8af8dab79..48345864f4 100644
+--- c/t/test-lib.sh
++++ w/t/test-lib.sh
+@@ -1959,9 +1959,9 @@ test_lazy_prereq DEFAULT_REPO_FORMAT '
+ # Ensure that no test accidentally triggers a Git command
+ # that runs the actual maintenance scheduler, affecting a user's
+ # system permanently.
+-# Tests that verify the scheduler integration must set this locally
+-# to avoid errors.
+-GIT_TEST_MAINT_SCHEDULER="none:exit 1"
++# Tests that verify the scheduler integration must set and
++# export this variable locally.
++sane_unset GIT_TEST_MAINT_SCHEDULER
+ 
+ # Does this platform support `git fsmonitor--daemon`
+ #
