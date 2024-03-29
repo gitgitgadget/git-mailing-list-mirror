@@ -1,86 +1,112 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23EB2C698
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 02:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B94D11182
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 02:44:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711678739; cv=none; b=nNOmmEX4kUM2QIkhRSfMNXo0GqiHainvzgaFL/6sI+bvcJXCPbOHqUE5ob9DZtOHVZjJKegTN6+7qjuSIQxM2wozN0uGM3akHj1Io8aCy05AyAXrFQsx3Hwh4aGWghP5cnbduixrMCLoqPYN1e02QYHpU7xwiiZv9ctp9uJetYw=
+	t=1711680242; cv=none; b=nkCEjb14oXjiaWLJ+HwNmnnpTHLdEhAZamtAHIokFXnqMYMy3Wd02BL06V1CRAeL31ZLjEGCbDPKkLilcviCWHLmafrJNvxtGMWlRqbL4o9AAhjpx0IPtb00BE5nOGGoqNcsd/CmBpJZ6J8/zEKMtPCj8wWH9Ww9RBs/fDe5piM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711678739; c=relaxed/simple;
-	bh=LwjV/f7HSXB/HuLlKhNrTnunzc3n69stuDm2ev/mGcQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uY1AZ/KDhrJ6bKaiImrJjFkcf8VbpYRiY0nDhRBJI/SiE6HyFLxp29nJeU27C061LNN+npGCLxHsyaK1y20/b3dGwdcG+1Y7LYDOx8tWhzjf/1ATTJah8imaJcq7A5t74CVfPJ3nqgkjzyV0Ry2EN952f1mT7oWOZ1t8OkeyeZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gZdLgNOv; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gZdLgNOv"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D2953217D9;
-	Thu, 28 Mar 2024 22:18:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LwjV/f7HSXB/HuLlKhNrTnunzc3n69stuDm2ev
-	/mGcQ=; b=gZdLgNOvfO89TNu7GaPddqotwNj2g+BmGC8+5I2hkpS+jJjMNQklBR
-	nAZ4u8SFdiKN5xUuJthOu4cqwHx8dvJquh42NaU9ag6aUW8HXTerC4LPmtWaBu4w
-	gFOtozb1lqND9CWd2laz5eHCAgmtXbMprZ74mU7XrtD1tmnbmQ2BM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BE13D217D8;
-	Thu, 28 Mar 2024 22:18:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 40C5C217D6;
-	Thu, 28 Mar 2024 22:18:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>,
-  Han Young <hanyang.tony@bytedance.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] t4126: make sure a directory with SP at the end is
- usable
-In-Reply-To: <xmqqh6gqt674.fsf_-_@gitster.g> (Junio C. Hamano's message of
-	"Thu, 28 Mar 2024 14:08:47 -0700")
-References: <20240319095212.42332-1-hanyang.tony@bytedance.com>
-	<xmqqttl2qml9.fsf@gitster.g> <xmqqfrwlltjn.fsf@gitster.g>
-	<xmqqsf0bz5oj.fsf@gitster.g>
-	<20240328103254.GA898963@coredump.intra.peff.net>
-	<20240328114038.GA1394725@coredump.intra.peff.net>
-	<CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
-	<xmqqa5miuutd.fsf@gitster.g> <xmqqh6gqt674.fsf_-_@gitster.g>
-Date: Thu, 28 Mar 2024 19:18:52 -0700
-Message-ID: <xmqqil15srub.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1711680242; c=relaxed/simple;
+	bh=7LHgMKa1N+o2dJZk8rHOXWT9K1lYU1a71NhvCiU2gpQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZS7iJS3zs8qLKy3vbyiR3R/AlwjsgRldusOCCNkAJFKinNjlPxLzhAS5TRZ0lu/3NGBxbS5/pb7lsyERj7rOvbAACamO9g399qQMVmgqPX4V6qjz/Gqi/iTSQl3wEN29dZQP7FhNTTFF6HdY64PIwxTtIv0im4+Y8EB5MI+c2uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-690bff9d4a6so9586636d6.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2024 19:44:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711680239; x=1712285039;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gHY3HjDz7KW36k468xp66rGFXZ1QbktgM3Sxt+/xT6g=;
+        b=WS/tE7AQRoHLdE4lONiTryHAs7z+M614AhBfjCkRKtgLQcy42SMZNaZLaQ0jxKtHcn
+         f7BQ+g+4BBUaJOr841CaaP35w77g8DEGXGRfWFl2XtRFvBDsxESt6eXlVeZSNiCUn22i
+         JtD9r80Lve5Ryke0jutQlZHszk9oz1fjjweYuhMDBt8FRq1+ViVcK7kH1Don/krbTCDC
+         w97SUSb6fQNE6nmW7UHQLdoOxwAHmm5WZAlG+tbm+zgk7JaHACRD7OXMnPlRnlA6ohPx
+         B9Abs8bZimfPDZVZO6boDZcbAkFW2Tv7+BGSSYwvQf+BC/KZyaBYNibMOyQ8YLEMQHvY
+         AtcA==
+X-Gm-Message-State: AOJu0YwV+G/XeLlBudfGYK1uODtWo/GMPhpL3ua96vAQb3swOKS7IGGN
+	XxmR8QOB5dyfLIn0v/LIwuN/nElq/8bR+GS47sa0uQs3la8SbjXzZ6QohClRhoo7/Ry0Ed6DjPm
+	USi7cTIn/Lox6zLYTRvFXK3zpp63n56YKD+A=
+X-Google-Smtp-Source: AGHT+IGX5Bo3IZCXr24uSK7QaXifwIGbj2L/6Ix+V/nqTBlriPYk8XYAcWmKfDtRMsvrBNYeXlrzbcF9CEpL6ZMDLsM=
+X-Received: by 2002:a0c:f68e:0:b0:691:8262:ec48 with SMTP id
+ p14-20020a0cf68e000000b006918262ec48mr900197qvn.35.1711680239482; Thu, 28 Mar
+ 2024 19:43:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B0C50CD2-ED72-11EE-A803-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <xmqqmsqhsvwk.fsf@gitster.g>
+In-Reply-To: <xmqqmsqhsvwk.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 28 Mar 2024 22:43:48 -0400
+Message-ID: <CAPig+cStHRX-wZKwdcO33wCjd4UU3MO-rVisyOFZ1vPbGaN51Q@mail.gmail.com>
+Subject: Re: [PATCH] do not set GIT_TEST_MAINT_SCHEDULER where it does not matter
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Mar 28, 2024 at 8:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> 31345d55 (maintenance: extract platform-specific scheduling,
+> 2020-11-24) added code to t/test-lib.sh for everybody to set
+> GIT_TEST_MAINT_SCHEDULER to a "safe" value and instructed the test
+> writers to set the variable locally when their test wants to check
+> the scheduler integration.
+>
+> But it did so without "export GIT_TEST_MAINT_SCHEDULER", so the
+> setting does not seem to have any effect anyway.  Instead of setting
+> it to a "safe" value, just unset it.
 
-> +test_expect_success 'parsing a patch with no-contents and a funny pathname' '
->  	git reset --hard &&
-> +	empty_blob=$(test_oid empty_blob) &&
-> +	echo "$empty_blob" >expect &&
->  
-> +	git update-index --add --cacheinfo "100644,$empty_blob,funny /empty" &&
+I agree that the missing `export` makes this a do-nothing assignment.
+In fact, that problem traces back to the original 2fec604f8d
+(maintenance: add start/stop subcommands, 2020-09-11).
 
-It seems that on Windows, this step fails with "funny /empty" as
-"invalid path".
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git c/t/test-lib.sh w/t/test-lib.sh
+> @@ -1959,9 +1959,9 @@ test_lazy_prereq DEFAULT_REPO_FORMAT '
+>  # Ensure that no test accidentally triggers a Git command
+>  # that runs the actual maintenance scheduler, affecting a user's
+>  # system permanently.
+> -# Tests that verify the scheduler integration must set this locally
+> -# to avoid errors.
+> -GIT_TEST_MAINT_SCHEDULER=3D"none:exit 1"
+> +# Tests that verify the scheduler integration must set and
+> +# export this variable locally.
+> +sane_unset GIT_TEST_MAINT_SCHEDULER
 
-https://github.com/git/git/actions/runs/8475098601/job/23222724707#step:6:244
+Clearly the idea was to protect the scheduler-configuration of the
+person running the test in the event that the test author forgot to
+set GIT_TEST_MAINT_SCHEDULER to one of the legitimate "testing values"
+before invoking a "destructive" command, such as `git maintenance
+start`. By defaulting to `none:exit 1`, the problem would be caught
+and reported before any damage could be done to the configuration of
+the person running the tests.
 
-So I'll have to redo this step; unfortunately I think it is already
-in 'next', so an additional patch needs to resurrect that prerequisite
-trick.
+So, I'm somewhat skeptical of the new direction of simply unsetting
+GIT_TEST_MAINT_SCHEDULER since that outright removes the intended
+protection. I'd have expected this problem to be addressed by
+exporting GIT_TEST_MAINT_SCHEDULER, not by making it easier for an
+absent-minded test author to break his or her own configuration.
 
-Sorry for breaking CI for 'next'.
+Having said that, it you do want to go the route of eliminating the
+(intended) protection altogether, I have a couple additional
+observations:
+
+First, this change requires a corresponding update to the lead-in
+comment ("Ensure that no test accidentally triggers a Git command that
+runs the actual maintenance scheduler, affecting a user's system
+permanently.") since it renders that comment incorrect.
+
+Second, it seems very unlikely that GIT_TEST_MAINT_SCHEDULER will be
+set in the user's environment anyhow before running the tests, so
+unsetting it here seems unnecessary and pointless. Instead, a cleaner
+approach would be to simply remove the entire hunk in t/test-lib.sh
+dealing with GIT_TEST_MAINT_SCHEDULER, including the comment.
