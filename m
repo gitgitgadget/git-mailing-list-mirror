@@ -1,74 +1,128 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317682DF7D
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 18:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CA92770B
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 18:36:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711737275; cv=none; b=gDgaj3N+viEyYxmCnyqJ/HiL+N4vJIT2tF0fkO/7Uq4Kbh7sHzPphG9Vt8GnyVM4FxFljhBSUirUyfGqVfoPVeH36jCIXKtTUTr/UoPBw5UKZ9pVdoRefphf/Wds8XS+Y96oJy6asibywqD4BWxuW4zEZ1a0x4Revc+r4nH77b0=
+	t=1711737397; cv=none; b=CyOJTN0tEkIkcWPALg0nnU16DJSESNPvsPQcGa9sQ4+8M/cZbIay/T1ZY1+OCyFR8mmOSU22WO7TVWdKYFEmTP0W04Y9ppa9sbGT4+FEy7qiEDpfuHqBo/I/cIzd0eaUxzhHv4Jlknk0r9kT7izv5Mp5XMM3QDuQ56uann8NGBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711737275; c=relaxed/simple;
-	bh=+KZq91iwscdEa3a6Sbp5PN1Nvn4iUTVqH3kTvxwuTzM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cj1YqkNRLlUE9+bdf+pxZKxSF1I3UcUW+3uRM6pNtKDnNaKSGR3XrloJjCwczGw2UaHtKWFrs+Y9H3fM3T2cY2q+N8OO3R4Y5Fr6E1tNeTfpJRhnLZrsOObh0pUKKLPVQMEB+LFklEOCgKwo0LsF9VPrVuXlt43rRHpWaG4a8og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 25015 invoked by uid 109); 29 Mar 2024 18:34:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Mar 2024 18:34:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21511 invoked by uid 111); 29 Mar 2024 18:34:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Mar 2024 14:34:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 29 Mar 2024 14:34:31 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Han Young <hanyang.tony@bytedance.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] t4126: fix "funny directory name" test on Windows
- (again)
-Message-ID: <20240329183431.GB31800@coredump.intra.peff.net>
-References: <xmqqfrwlltjn.fsf@gitster.g>
- <xmqqsf0bz5oj.fsf@gitster.g>
- <20240328103254.GA898963@coredump.intra.peff.net>
- <20240328114038.GA1394725@coredump.intra.peff.net>
- <CAPig+cQe1rAN2MUFTwo7JoCt3sO2eCk_psnJL9D=Rs=Q9MWO9A@mail.gmail.com>
- <xmqqa5miuutd.fsf@gitster.g>
- <xmqqh6gqt674.fsf_-_@gitster.g>
- <xmqqil15srub.fsf@gitster.g>
- <xmqqwmplvbsa.fsf_-_@gitster.g>
- <xmqq5xx50x8p.fsf_-_@gitster.g>
+	s=arc-20240116; t=1711737397; c=relaxed/simple;
+	bh=0cVgH0Jxmiw2MjcTk9zsuKYfxbEx7H7Dqa7jlDaPtxs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=II20Pph8kAhnnq7uSq2RRInl56whUihB/YNHjoEhj3jPLdjnwcAfSFbaAf+mp7hxHg+a18Nr42SO8F8jwvhiE8LZVpgmnNwdipK+atsh2UU/f6ihPk14k2hiXX9mOiKmHIV16b0O21dc6qTKsSBtS39O/jKi/KU6ytncW+11huA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OijxwR5c; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OijxwR5c"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC3811F4868;
+	Fri, 29 Mar 2024 14:36:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=0cVgH0Jxmiw2MjcTk9zsuKYfxbEx7H7Dqa7jlD
+	aPtxs=; b=OijxwR5cv9uqSkNIOdNv+tcPyoCY3YUp/Yi9px4C0Wzak0QnEt9Amk
+	W9RQGr1ZoEpEEh9gt/2bbqR7nF2kf3g57q2uV/cBm5GE1xsWQNgbwuH2YoMDzgW6
+	Iu8cfCrYHhtBUMC5Zbz1UPFwimzH8dXID9/m0vI2crEKSskgm/Y/s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D2FAE1F4867;
+	Fri, 29 Mar 2024 14:36:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 45B3D1F4866;
+	Fri, 29 Mar 2024 14:36:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 3/3] reftable/stack: make segment end inclusive
+In-Reply-To: <9a33914c852a0487dbd90c83f53fa0e36414fda1.1711685809.git.gitgitgadget@gmail.com>
+	(Justin Tobler via GitGitGadget's message of "Fri, 29 Mar 2024
+	04:16:49 +0000")
+References: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
+	<pull.1683.v3.git.1711685809.gitgitgadget@gmail.com>
+	<9a33914c852a0487dbd90c83f53fa0e36414fda1.1711685809.git.gitgitgadget@gmail.com>
+Date: Fri, 29 Mar 2024 11:36:33 -0700
+Message-ID: <xmqqsf08yjf2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq5xx50x8p.fsf_-_@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 44DDCC6E-EDFB-11EE-AF32-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Fri, Mar 29, 2024 at 10:21:58AM -0700, Junio C Hamano wrote:
+"Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Even though "git update-index --cacheinfo" ought to be filesystem
-> agnostic,
-> 
->     $ git update-index --add --cacheinfo "100644,$empty_blob,funny /empty"
-> 
-> fails only on Windows, and this unfortunately makes the approach of
-> the previous step unworkable.
-> 
-> Resurrect the earlier approach to give up on running the test on
-> known-bad platforms.  Instead of computing a custom prerequisite,
-> just use !MINGW we have used elsewhere.
+> From: Justin Tobler <jltobler@gmail.com>
+>
+> For a reftable segment, the start of the range is inclusive and the end
+> is exclusive. In practice we increment the end when creating the
+> compaction segment only to decrement the segment end when using it.
+>
+> Simplify by making the segment end inclusive. The corresponding test,
+> `test_suggest_compaction_segment()`, is updated to show that the segment
+> end is now inclusive.
+>
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  reftable/stack.c      | 4 ++--
+>  reftable/stack_test.c | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks, this looks good to me. You mentioned FUNNYNAMES earlier (which I
-forgot even existed). That would probably work in practice, but it is
-kind of overloaded already. I think using MINGW here gets to the point,
-and as you note, if some other platforms fails we'd want to hear about
-it.
+I'd defer it to Patrick (and Han-Wen, if he wants to comment on it),
+but isn't it a natural expectation shared among CS folks that it is
+the most usual way to express a range to use inclusive lower-end and
+exclusive upper-end?  
 
--Peff
+After all, that is how an array works, i.e. msg[n] is NULL and
+beyond the end where n == strlen(msg).
+
+So, I dunno.
+
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index e7b9a1de5a4..0973c47dd92 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -1237,7 +1237,7 @@ struct segment suggest_compaction_segment(uint64_t *sizes, size_t n)
+>  	 */
+>  	for (i = n - 1; i > 0; i--) {
+>  		if (sizes[i - 1] < sizes[i] * 2) {
+> -			seg.end = i + 1;
+> +			seg.end = i;
+>  			bytes = sizes[i];
+>  			break;
+>  		}
+
+
+
+> @@ -1291,7 +1291,7 @@ int reftable_stack_auto_compact(struct reftable_stack *st)
+>  		suggest_compaction_segment(sizes, st->merged->stack_len);
+>  	reftable_free(sizes);
+>  	if (segment_size(&seg) > 0)
+> -		return stack_compact_range_stats(st, seg.start, seg.end - 1,
+> +		return stack_compact_range_stats(st, seg.start, seg.end,
+>  						 NULL);
+>  
+>  	return 0;
+> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> index 21541742fe5..4d7305623a0 100644
+> --- a/reftable/stack_test.c
+> +++ b/reftable/stack_test.c
+> @@ -723,7 +723,7 @@ static void test_suggest_compaction_segment(void)
+>  	struct segment min =
+>  		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes));
+>  	EXPECT(min.start == 1);
+> -	EXPECT(min.end == 10);
+> +	EXPECT(min.end == 9);
+>  }
+>  
+>  static void test_suggest_compaction_segment_nothing(void)
