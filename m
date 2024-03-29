@@ -1,77 +1,94 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE033BB2A
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 20:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6057413C9D1
+	for <git@vger.kernel.org>; Fri, 29 Mar 2024 20:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711745048; cv=none; b=OQOWfvKek/QIZ6ePmcP0baacwl20w2LuPrmNfqVu4xtOCWwuFYCQZqPO4MJEl4lhQkFweJogL1nmeLGWAyHcFybwBdB0qFP+i00h9BItlKaf74cFhdvX+xcqVQGmRUax/oz6+fZDbrBojAVEx0WHQYDEIECS5q8O8lOTFOlt45M=
+	t=1711746002; cv=none; b=oFLufORyFx6OHNFbrI81NJD66/P5KvRey37CgX3nvWVBMMiANAOJzfA8RiljYpKOdWSS4yX/QvjYrGFqd6Acr3iSpwg1NLJgF9yr+n4yQ9tOo1Nw4Oyeor5z6DApy7elTwU+N0zHQfTk0dNMo8umsW4QnBouFtyItmoI3oQ7/d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711745048; c=relaxed/simple;
-	bh=DlD2FCvI+tHAFikFQCbWmrxu1vhJmO0VwP9PYXECjhw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CJYriZEKGbuKcSse+ASr89+OHOUrvgjHxVfx2Gh+u0wvj3KfwIHVE1d49Kt0M8it7NUPl4/BDjOz+9l7Chtu9/8KC65IBxDdcBYDVtlm4oiG79BaHSd66QwOlV+8iyCFouSq3LH28rlqli7LE7BmhDxX9x/eQ9+sfj8NCX8LWHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cs.washington.edu; spf=pass smtp.mailfrom=cs.washington.edu; dkim=pass (1024-bit key) header.d=cs.washington.edu header.i=@cs.washington.edu header.b=gugjqdzm; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cs.washington.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cs.washington.edu
+	s=arc-20240116; t=1711746002; c=relaxed/simple;
+	bh=z7qexvuXaYICrgNBaOWusqO/1HxTQ5g/gWd85Mn4i7c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Km6TvoYRaq9XAkgl64wG9R56c4INHrSjPO8fmrxPpg1IbB155P8BOMMvczqp9ISoQ84zkFZy/xCSztH0khXuKA6Z0WffVGs0BNhEk/smLdm4iMiuU6S5eFGfWwlNfgd3rO6LjIpHyQkRwXEG6QLUeQP/CmL4KKw2iB9H5TpRDnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=G3BomjKK; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cs.washington.edu header.i=@cs.washington.edu header.b="gugjqdzm"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56c0a249bacso2913471a12.1
-        for <git@vger.kernel.org>; Fri, 29 Mar 2024 13:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cs.washington.edu; s=goo201206; t=1711745045; x=1712349845; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0nVvHfdMRzmbIqC/21yuRajgovcIpjaZ7HZwyAYTuaw=;
-        b=gugjqdzmCtzPcJ3c2pIol7RF09hRbpAnON66cFuSXw9qK6hhbOGxVwFc09DwgNmCV+
-         aRmr69UxYRsE9oUxH0oR4loZmrcYJKjC2NUBAaa6hUfyaupPROqTj1ApA5eXP6Vdi6UZ
-         QGHIADqqNbLjBCOq2eLuopFevjlM5lJuoeteg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711745045; x=1712349845;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0nVvHfdMRzmbIqC/21yuRajgovcIpjaZ7HZwyAYTuaw=;
-        b=Ix9sYgbvqH3Y1goXEq0IBd1s8EV0n96L4k1KcI5i/2w9hPArO3oM8jC6Kdb8gG5kil
-         CnIiTlUSQ3eeew7Z6EZtoSvBVZhju779yvW4vgh0DC/0bsiSCVA+HRE0q0q9qfpXrvIh
-         i9lLB1XF+kL+EDYLS4H/uRJjtCnmgo2AVhmHKUMRKnuEpKAKke4PoYCzwufPBmZ/gt1i
-         9uqOiREEQ/Tb6AeqOBtSaRgdILWnmSlK7FAKmjcALZHCA9251yMoCLy3QK4r6r7i6Dhc
-         hJLwO6gxJ6wZYbHsxMNAFq0q+0prpYw95Vl5BMxeqlQocG1jJHYLjnobB4+ldoWkRoeI
-         8jYA==
-X-Gm-Message-State: AOJu0YwZWHha3vpAW6OY4ysmHnMZIoKXfIm4HvrmQ9zsXyd2prlVaSes
-	YbraOOwuR81tL1H8PjX96zR7QdFyOoviawvUeg7Oj6JhL2SLpWjByVXHaaspoxGKItw42m4DezX
-	htkeOwXLMjPPK3mR9bTysHIGq2Ap5OLgi29Jh
-X-Google-Smtp-Source: AGHT+IG58yFXgn+bjiogZqQQtzov0stgA3PHy5ajsrdmzVwB/1HtQsKyz0CrLK8Zf+47sPLl45DUZ2gM+OYWz+78lKE=
-X-Received: by 2002:a50:d64e:0:b0:568:d7fe:a857 with SMTP id
- c14-20020a50d64e000000b00568d7fea857mr1887217edj.11.1711745044982; Fri, 29
- Mar 2024 13:44:04 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G3BomjKK"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 995D927AB2;
+	Fri, 29 Mar 2024 16:59:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=z7qexvuXaYIC
+	rgNBaOWusqO/1HxTQ5g/gWd85Mn4i7c=; b=G3BomjKKlLQ2i6/963BpZmZVWfTg
+	rVDpCWX2aB/Y9FX2w88F2JLX7ubqhIWXApzx+8Dic0G4ESPcTX2+agoMEH5hGLZ5
+	7IQY7ldouQfwuTr3DO3fHKKJpOkw7CjfS321KR6Mn01XkkMTEneSyMIQltXTxZfU
+	PhPZkz2GBO4aBNw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 915B927AB1;
+	Fri, 29 Mar 2024 16:59:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0AF7727AB0;
+	Fri, 29 Mar 2024 16:59:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] add: use advise_if_enabled for
+ ADVICE_ADD_EMBEDDED_REPO
+In-Reply-To: <a76a0935-78e6-4ad3-9bf9-989f5ed53b84@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Fri, 29 Mar 2024 20:59:27 +0100")
+References: <06c9b422-b22e-4310-ad5b-1686616ab860@gmail.com>
+	<0e38da05-efd6-451e-bd8a-b2b3457c0c75@gmail.com>
+	<xmqqcyrczzv7.fsf@gitster.g>
+	<de916779-3c0c-4cf0-b78e-d0536c65af0e@gmail.com>
+	<xmqqjzlkygvh.fsf@gitster.g>
+	<a76a0935-78e6-4ad3-9bf9-989f5ed53b84@gmail.com>
+Date: Fri, 29 Mar 2024 13:59:15 -0700
+Message-ID: <xmqq8r20yct8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAJCdQQB3_DWOTCTbb-TAkLUX_XVd5TBd3z0M2_KrHxKxr69Kw@mail.gmail.com>
- <xmqqfrw8ygg2.fsf@gitster.g>
-In-Reply-To: <xmqqfrw8ygg2.fsf@gitster.g>
-From: Michael Ernst <mernst@cs.washington.edu>
-Date: Fri, 29 Mar 2024 13:43:53 -0700
-Message-ID: <CAAJCdQQceA7yANHCPzUGbANR-XKVDUzfN5ym6Rb-oEWgcq=4Uw@mail.gmail.com>
-Subject: Re: Feature request: a merge strategy that makes any file difference
- a merge conflict
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 34AB0730-EE0F-11EE-AB9B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Junio-
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-Thank you for the clarification.  There is a lot of misleading
-information about this on the Internet.
+> On Fri, Mar 29, 2024 at 12:31:30PM -0700, Junio C Hamano wrote:
+>> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+>>=20
+>> >> This one also needs a similar justification, but with a twist.
+>> >
+>> > May I ask what you would find a good justification?
+>> >
+>> > Perhaps "newer" -> "now preferred"?
+>>=20
+>> That is merely shifting justification around.  You'd now need to
+>> answer: Why do you consider it preferred?
+>
+> Because it's newer ;-D
 
-I was mistaken about when a merge driver is called.  Now I see that
-the merge driver is called anytime that no two of
-{base,parent1,parent2} are the same.  This means that a merge driver
-*can* prevent a clean-but-incorrect merge.  I was right that a
-mergetool cannot be used to correct a clean-but-incorrect merge.
+A newer thing is not necessarily better, though.
 
--Mike
+> Maybe I'll point to the commit where advise_if_enabled() was introduced=
+,
+> b3b18d1621 (advice: revamp advise API, 2020-03-02). We have some
+> arguments there.  I'll sleep on it.
+
+I think I've already given my verison of justification in the
+message you are responding to.  I'll stop spending time on this
+topic while you are sleeping on it ;-)
+
