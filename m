@@ -1,56 +1,56 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D461DFC5
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 17:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDEA1DFC5
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 18:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711821596; cv=none; b=fKm86KHuP4Wi1Dpm7KOvYT3njoF5HGWUPA20go8XhJ1sAfJC5bjJPmp0UGmnyGBwbVoyet6Jvoi6Qf2x6caqzFTxGL9ErhCN9vm/W8/y8Dvb2f2ubJXbnJsUlWf5H2bxPPF4SpO6n9dZvlU8OIliQYdZI0IauQco7/00vR5rexA=
+	t=1711821804; cv=none; b=gbVLMt5DUcUcNWLEGYE0yWPz6O1Mip8F9TZUsFJ8IYfIab5hrEarkD4reRA5RULB/Hk7UxbmS24+ujlo1tlr2Lx9AcWer9xSVgntWExnEBwaVntq3XdgXy4GwphsjL7nhh3VHpJ9S+m3D27e6it9JcNt40WAr2jjR6+4VKTy9JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711821596; c=relaxed/simple;
-	bh=FxMcTj83rxvnUTuJl02ZEYwqfOh1SI6s+l6ncAGzOeY=;
+	s=arc-20240116; t=1711821804; c=relaxed/simple;
+	bh=GUS0oTL5vZhdu/dil0jkIUSh7VzCl7913RGARAE/r54=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=OdsDdyc6nwqT1gJzLEzyRUVR9t7QDRzC6sWRu/lwV1EqCQTfbPBHBGpm2u+enrBOO0lZ++RuMIh5AkOcIBrdkMvvDpRxGjO9ZPGCj3wdg2rhllE0qhSOuyTiqvAdp2Mcf9wumEHtfpwHsTcw0c7Dfonhtm1NgfrHhozy1WCq2bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=w5BeG6wR; arc=none smtp.client-ip=209.85.210.201
+	 To:Cc:Content-Type; b=J3xjXAYwcMrxslGZpFMqVgCJzS9PC1dXpxEoIO8cycl8WFLhgT481+u+oSl7+jsZuDtXRGU4uq8D5HlkL1bOEo5oAtTRhg+M8hXV5TD+obxKw+a7LzlRzqY4ia54+mu36++GcZFt3wQkBbjTZKNSpev1O4jMr699E6ER8e/4gWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=30yVwgLC; arc=none smtp.client-ip=209.85.214.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="w5BeG6wR"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6ea92b9b61eso2755535b3a.3
-        for <git@vger.kernel.org>; Sat, 30 Mar 2024 10:59:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="30yVwgLC"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-1e0ae06181eso26397465ad.0
+        for <git@vger.kernel.org>; Sat, 30 Mar 2024 11:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1711821595; x=1712426395; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1711821802; x=1712426602; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FxMcTj83rxvnUTuJl02ZEYwqfOh1SI6s+l6ncAGzOeY=;
-        b=w5BeG6wRIW8I0NRRV+8Ao87s8G8XlfqwSikyLpyOe1HUl4F+vtY1vIAMFOaDiR7ZD3
-         T3ZUMngk3jBi4yjPRh2RrV4NepuaBP6R6Pewtc2jPHwxU0cDQ7dNBfSTLg2KU0MrYiuu
-         RmO/AGXAcjNJ7rWVvKSs11784ewEpx8jpZqqp32lFUIm3yAbd+hwPlEQE7dfKUVBLAar
-         ItPnnw1jAl/DioZOPBmeH04y+SBlHTpXHOiv3IHiT7D73+CJUFDpJDmi8xVPVQdhdvOR
-         HiK4/980DfYlWkQSMpb/9QsaQa75QpusjkZQj9ZB89MEDHsJBQgea5JVb8baPrqDJKnn
-         ntKg==
+        bh=GUS0oTL5vZhdu/dil0jkIUSh7VzCl7913RGARAE/r54=;
+        b=30yVwgLCdnmmHeKz8pX8UKZob0Y8GN+qK9mK08q44LsNtT8s7btPBGP6CLOQFOAZML
+         SYA4hMvbcn4aUr92kji/l/DVbSwObQkV/yv+xGeczSEWMW4olWHn9Jlc7SI1PMLYPmda
+         8oJNNslGbUFMv7gOxbxgW7l5sAZnjoB5X6lBEVz0NjBjO2XO/WtUOSauQaeuvKYY9Zil
+         bV+168Az2aktDj4leqC3YuySiPPDow2CJfYTSpP5uPQq+GOYdRBV2kWxPsXBjHfac3XF
+         YsxIWC0f9YtsoH5fwkweaO/fSW1CQJ2bWg+NKkbzfAma6JxKkp1O3DfpiJq0cOUTOZjG
+         Ya1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711821595; x=1712426395;
+        d=1e100.net; s=20230601; t=1711821802; x=1712426602;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FxMcTj83rxvnUTuJl02ZEYwqfOh1SI6s+l6ncAGzOeY=;
-        b=qqK+JufKLSLeGlK1XGwDfa71Kgs8wBMum3XINoUq+TETYOdQ+bvQ+nPyK39Cbju4Ib
-         iVnGeaU3T/LgGhwQbO6Y9NsvC8Q4+0LXvdDfQhp05wcMH81bjPzdf7RIMvvKMStq8jLm
-         nMs9jkNw7A64jtgH+hH5HDd/qGWjeNvEOlhVAcZojIOsSgQ02nsE380UZeif4fk5cf/R
-         uWqakOKlpYb+zT9aAcygBGnR6WLX2g1EI+t/1JmN+4N2VmbVOIgHv6f7s4x8OrlygjRQ
-         s43HSNUIQLfjk23hmAV5bYoADS2ci99I6SScorLyPVq2R3SYbXvt5yEA0bVxpq7/do7u
-         n3bg==
-X-Forwarded-Encrypted: i=1; AJvYcCXf6YJyrr6TRWB2WbTArdtFDisBPoQd+sL0p1Ym3IsaKlQ3YGLjowPoPB4jVeb52MjpmFyIrKLZrnZ6rMN87MReFDSA
-X-Gm-Message-State: AOJu0YzEQT+AC4Lqd5VWiuekHHq+/GobJIXwPqWE5T9XGLcSFsVnLXRs
-	kIa9VccoJwmJZIgd3ss9OTEgdl32YjVYhCkj3YhZuyPj7I0j3e/rENVDaJERfw1lneZv6bWDaEx
-	yVA==
-X-Google-Smtp-Source: AGHT+IElUJo3zs4n5gEAt1eSGb+ZeTmF6dNF7ccgiDBTc463ttFF+3OJi9jFiUsqa0zY++JZZ+Tnny5vuvs=
+        bh=GUS0oTL5vZhdu/dil0jkIUSh7VzCl7913RGARAE/r54=;
+        b=EhX54PeQG1vdm8O5iUxboQAc6glOcyY82zFOigoKgxe68LrMKKOaqdXqKpN73MZ711
+         aLzQPCn3/EHrQ0DNqmzL8fKjrsTNjxKCYCmzffnpV9PuGoub1B1FQW1IRk7ADYqj3AmT
+         lvThMfdRQrCrdFWNQSVCSi0KqrSqxh04sNPwFpmhn3tvxYxG6ufH908ajxeBZgB3dr7G
+         IdA1HxJsnw+6/arYfCnT1jDL1z5zFHydqJuKFx4cI8UY6oXYXlRwGKYyRtnqRRXa6TEM
+         7LgQ5q+yCe8Oqo1ejcLxtikt91Ijud+G3PQtseSPubf7FHEfkDGEnchr8Crh00SlWhR9
+         W8zw==
+X-Forwarded-Encrypted: i=1; AJvYcCVYHOvLDtcbWTwJoQijoCokziYu+7DkrnQAeBkKsR8HGEdbHNrLf3Icij1e18JdACe4K3LR1c5VhngOcwGHZFO6y6HB
+X-Gm-Message-State: AOJu0Yz8wbXv2NILfeX7BPRu8kxcBE1VDya9lr0u9n2KNaBPPcDy5hRN
+	aYdqp8a7fi2ZEWvgMYVn2l2/mCgiVRqBIxi+8LTtnyjAnNtugrmZK4NwdQHJb66wAG0JJIpyC6r
+	p7w==
+X-Google-Smtp-Source: AGHT+IERk1+0yWG2Y++i2dGgZySHhuF5kunY/JVZNkS7Y7LSLuIfbXETH15Tdc/I+Gj02eEL0nc3Oq0DwdA=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a00:2d20:b0:6ea:c428:935c with SMTP id
- fa32-20020a056a002d2000b006eac428935cmr70170pfb.2.1711821594788; Sat, 30 Mar
- 2024 10:59:54 -0700 (PDT)
-Date: Sat, 30 Mar 2024 10:59:53 -0700
-In-Reply-To: <xmqq4jcr6bx2.fsf@gitster.g>
+ (user=linusa job=sendgmr) by 2002:a17:903:78e:b0:1df:f9c7:6891 with SMTP id
+ kn14-20020a170903078e00b001dff9c76891mr24043plb.6.1711821802392; Sat, 30 Mar
+ 2024 11:03:22 -0700 (PDT)
+Date: Sat, 30 Mar 2024 11:03:21 -0700
+In-Reply-To: <ZgPIEgFGVokYWc-H@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,42 +58,23 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <pull.1694.git.git.1711164460562.gitgitgadget@gmail.com>
- <xmqqsf0gvjrg.fsf@gitster.g> <owly7cho1eh4.fsf@fine.c.googlers.com> <xmqq4jcr6bx2.fsf@gitster.g>
-Message-ID: <owlyttkn61nq.fsf@fine.c.googlers.com>
+ <xmqqsf0gvjrg.fsf@gitster.g> <xmqq8r27nhwo.fsf@gitster.g> <ZgPIEgFGVokYWc-H@tanuki>
+Message-ID: <owlyr0fr61hy.fsf@fine.c.googlers.com>
 Subject: Re: [PATCH] RFC: add MAINTAINERS file
 From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
 Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Linus Arver <linusa@google.com> writes:
+> On Sun, Mar 24, 2024 at 07:51:03PM -0700, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+> [...]
 >
->> I realize that such an idea is beyond the scope of a simple MAINTAINERS
->> (or similar) file that's checked into the Git code repo, but I think
->> it's worth stating as a thought experiment.
->
-> As we already have agreed that neither of us care the exact format
-> of the file (yet), regardless of how a contributor, who is about to
-> send a patch, will find an area "maintainer" to help the patch along
-> the process, it is far more important to discuss and decide what
-> responsibilities and authorities are expected of these maintainers.
+> I would thus reformulate the proposal from "MAINTAINERS" to "REVIEWERS".
+> Instead of saying that person A is a maintainer of subsystem B, it would
+> say person A has a keen interest in subsystem B and would thus be a very
+> good candidate to Cc in all your mails touching this subsystem.
 
-I'm starting to think that the new responsibility should be as small as
-possible, and build from there. So the smallest bit of (initial?)
-responsibility expected of the new roster of maintainers could be
-"maintainer must respond to CC pings on the list within 7 days".
-
-For those who have more time to spend on the project, the next rung of
-responsibility could be "maintainer is available to review patches
-outside of their domain of expertise if no one else has reviewed the
-series in 7 days".
-
-I haven't thought too much about the "authority" part yet.
-
-> The development community has been fairly loosely organized so far,
-> but I'd like to see responsibility and authority spread a bit more
-> widely yet still not too thinly to compromise the project integrity.
-
-Agreed.
+Good idea!
