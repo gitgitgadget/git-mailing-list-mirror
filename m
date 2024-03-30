@@ -1,209 +1,300 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7891A79D8
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 08:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF4A79D8
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 08:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711785725; cv=none; b=mRikzm86gW2sOecLZjfib627b4GvVRkeSPBq6afoWejvvwTiR9VfEG6+yVNkEu7AoSLq3Yjk0wYnASeFsnSkc1oi+nLWKRH8IUVj3DfsgV0idnVEctIv/PnNq5Q4byIAu5OsiJx+G1DOiUeq1d50+jYfUz4exleQL/1Ss7J8MgM=
+	t=1711786307; cv=none; b=h6pcho0ZI1z9+zBrAJmFdAQsBZftAlQaDCrTEpINq7nxXP353jiSN1AQ/AR5gAMxB+Mk0LjJFBROmPK+s+gGmXeGKWvYxTSKTe9jkUh4cF5aJXf+NrNvv7KnBB+fj7UmgNZ+ywwdxbQX3YyQ3bQbxEKlTWTcJQMvHcqtQ3gY29I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711785725; c=relaxed/simple;
-	bh=rWRC/GyRPToXYWAnNkVzh0Q6tdeEYVA2EV4BDFV6KcA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IVBGGj3nkOegetetPDiyq9oZt5Mvktsn/n5BFP50RvsEPRPMqiGQnVtGF7/ULXEap7Na8DjsaZRfQPima3eCxZEcNgGXIMZkYcnBCh1MLLVCtKPWUGLop7PSUUjHjOb51fvshYcaEZVBcHnEXl3CONQyYgQwqVAvnritGogUvnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gbkipui4; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711786307; c=relaxed/simple;
+	bh=+ip4Gdq1shhEWR8BYlq+QEc3ATA7ClSerVDIREZwEFY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FJBh8UUgDThkM0kPBtMOCj3sDUcUZKjnhCb5vOilLbBofMAgZFcCaqAanAxY3KsQPVqxKbqaEPKizzt1HOilIT11SrwTewmAt/Zcg+huv0VAn7tpvf75e5tbZ7mW1BGuES2+Q75EjTD1Uur7goGe9TMJXDjf9JErqtvfJiN3Qf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=Widzi2fh; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=A9tzBa23; arc=none smtp.client-ip=185.238.129.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gbkipui4"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a4734ae95b3so336315066b.0
-        for <git@vger.kernel.org>; Sat, 30 Mar 2024 01:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711785722; x=1712390522; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HpKqC1scH/aprsdI+BQzU1JdbVyOWg2IYRw4RW7f4dA=;
-        b=Gbkipui4wof/sSOcBraLoGVOVLODNh/bZCBhBrEmvxuLl/nc2rmjUosvEW5rMqkVbn
-         fk0JUAIher8MUXbjK8lHHvC4ROhYocC+QMYbDUztl+uFydAxkoFmVsr6uoLhdGEuwmnK
-         dNNtZGWU2beVwovSM6vWfssD8b1YeOfnaYLUrNPheh+NLIbGkmqr/GPPunPkBG9c5Pr1
-         aGwCIRGJ+4rbSXE/SMjajDHfL9mQ/6XIcKMy95FPq5GnFaGJV+y+d4G90vClVws+Av/N
-         FlpNKYhiW75L98hYq3iqNswc1jJwinsrUr62FCb8M0k21zzKfONg1xQAGLIgmboU3E4h
-         ZL0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711785722; x=1712390522;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HpKqC1scH/aprsdI+BQzU1JdbVyOWg2IYRw4RW7f4dA=;
-        b=HtUFzptMOGifQNtZVmsiZTaUD6U3rdDICeTf8GT6ggUwYVK+deAoITvry5TOnNsI5T
-         th/oR50YFwVxn1j5UIHWaum/XoJHb1fajeetxvkYzfPSJAOVWEiOsjs8fLZuStcLjiaZ
-         UYYwW0NtmXhsX9EMlYWt6yXR1w9nCU+frYqtw/ySUxlREik6gtlsR+uXl/nrny1j0HMH
-         irCUDptLSFvtDfhdBUgfwDvHfwsfoWjS+Nm5F46FUdhKSp9Gpb0gUwsEkxXtKF2Ibjhb
-         b16iERoeHehQwOh0r+UStQG/kj3SbCXga5oZxjIdCW3pTGJJGMMFlAhgeuh8lwDOLlso
-         A75g==
-X-Gm-Message-State: AOJu0YzV7ESfCYF1JXzHhJvISX1dLJQTg1yv7u7kswpnWsEQtFz4O+J7
-	JlSjTLqkFTxKxK+nJnCnVv01ttTK0f+IhozHgTyL1vlEL2yaBzJo9BC23eBOmhZFUr1RhXLZqLM
-	w+LAC8+ifF3r7Li1Fy/qN/4oTe/Q=
-X-Google-Smtp-Source: AGHT+IEGelvSHOFAVqQofPw02QQms9rI6hES4k7gUBo/pF2FcsBJq2op2DKOvEfZB/wYumsNLpPlFYB6lGr6tj1QAJw=
-X-Received: by 2002:a17:907:7e9a:b0:a47:4ae0:3bb9 with SMTP id
- qb26-20020a1709077e9a00b00a474ae03bb9mr3303795ejc.23.1711785721540; Sat, 30
- Mar 2024 01:02:01 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="Widzi2fh";
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="A9tzBa23"
+Received: from localhost (7of9.are-b.org [127.0.0.1])
+	by 7of9.schinagl.nl (Postfix) with ESMTP id BD3D71A0A7C4;
+	Sat, 30 Mar 2024 09:11:34 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1711786294; bh=+ip4Gdq1shhEWR8BYlq+QEc3ATA7ClSerVDIREZwEFY=;
+	h=From:To:Cc:Subject:Date;
+	b=Widzi2fh8/zFK/RYjIiAUmbA0ayIsRsrBnV7lyqyThgf55WJpwKsm0BPzSaIGJTB6
+	 5R9QqJKwC9/Avf7g61g0s8Dgatz9Ho1JAvGCPl2ORnKsRf2EkquybYihqF/ZAL67mJ
+	 d0qUHP2x5Q1VbXcKa6BqTQzayXcDMejkpmcY1ESE=
+X-Virus-Scanned: amavisd-new at schinagl.nl
+Received: from 7of9.schinagl.nl ([127.0.0.1])
+	by localhost (7of9.schinagl.nl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id o_8nqL_Xo1Dm; Sat, 30 Mar 2024 09:11:33 +0100 (CET)
+Received: from 2of9.are-b.org (unknown [10.2.12.48])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by 7of9.schinagl.nl (Postfix) with ESMTPSA id CECF61A0A7BF;
+	Sat, 30 Mar 2024 09:11:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1711786292; bh=+ip4Gdq1shhEWR8BYlq+QEc3ATA7ClSerVDIREZwEFY=;
+	h=From:To:Cc:Subject:Date;
+	b=A9tzBa23KNk3kMc1D0HaReIji99WuHKLlO4SvbBZgU8uHTzFNyb8K+DcXmGBMNoFS
+	 wuCNJTcuXV89rNON4Pxc13sAbJLEft385WxLAw65FUHycpIl4D01/XBoHpavL1Z4+/
+	 bI4LDVRqEOmUXXnA8xHogKBJ/1r+2KR7yDKx4FaQ=
+From: Olliver Schinagl <oliver@schinagl.nl>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Stefan Haller <lists@haller-berlin.de>,
+	Olliver Schinagl <oliver@schinagl.nl>
+Subject: [RFC] bisect: Introduce skip-when to automatically skip commits
+Date: Sat, 30 Mar 2024 09:10:27 +0100
+Message-ID: <20240330081026.362962-2-oliver@schinagl.nl>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Sat, 30 Mar 2024 08:00:00 +0000
-Message-ID: <CAGJzqsnNmz1P1bqOztiC5=-SXDD=j_oaCuPLcPf_NV4c7VNjMA@mail.gmail.com>
-Subject: Re: [PATCH 00/13] Support for arbitrary schemes in credentials
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Matthew John Cheetham <mjcheetham@outlook.com>, M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Sun, 24 Mar 2024 at 01:13, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> Right now, HTTP authentication in Git is mostly limited to approaches
-> that require a username and password or are Kerberos (GSSAPI).  In
-> addition, we effectively require that libcurl (or, for other software,
-> such as Git LFS, using the credential helper, that HTTP library) knows
-> how to implement the authentication scheme.
->
-> However, this poses two sets of problems.  First, some sites, such as
-> Azure DevOps, want to use Bearer authentication, which we don't support.
+Before I go dig myself in deeper, I'd like some feedback and opinions on
+whether this is the correct direction.
 
-Git's lack of support for Bearer auth is also a frustration for OAuth
--- OAuth tokens are intended as Bearer tokens. As a workaround,
-popular Git hosts support Basic auth with an OAuth token as password.
-For certain hosts, this requires a magic username such as 'oauth2'
-(GitLab) or 'x-token-auth' (Bitbucket). This is problematic if the
-user has multiple accounts, or a different username stored in
-credential.username or the remote URL.
+If I got it right, do say so, as then I can start adding some tests and
+update the documentation.
 
-> This is implemented using `http.extraHeader`, which is not a secure way
-> to store credentials, since our credential helper protocol does not
-> support this functionality.
+Olliver
 
-Config key http.extraHeader is particularly unsuitable to hold
-short-lived Bearer tokens. For example, GitLab's OAuth tokens expire
-after 2 hours.
+---
 
->
-> In addition, other tools using the credential helper protocol do not
-> support the variety of authentication mechanisms that Git does.
-> Specifically, making NTLM function in a useful way on Windows is
-> nontrivial and requires extensive integration and testing with C code,
-> and because of this difficulty and the fact that NTLM uses cryptography
-> known to be insecure since 1995, there is often little interest in
-> implementing this support outside of libcurl. However, it would be
-> helpful if people who want to use it can still use it.
->
-> This series introduces new functionality to the credential helper
-> protocol that allows helpers to produce credentials for arbitrary HTTP
-> authentication schemes using the `authtype` and `credential`[0] fields.
+In some situations, it is needed to skip certain commits when bisecting,
+because the compile doesn't work, or tests are known to fail.
 
-Exciting! I drafted a patch to make git-credential-oauth generate
-Bearer credentials
-https://github.com/hickford/git-credential-oauth/pull/51 . Tested
-together with your patch, it works for host bitbucket.org. Though of
-course it isn't practical while storage helpers (such as
-credential-cache, credential-wincred, credential-libsecret and
-credential-osxkeychain) are unable to store the new attributes -- the
-user has to complete the OAuth flow for every authentication.
+For this purpose, we introduce the `--skip-when` flag which takes a
+script as an input and is expected to return exit code 125 if a commit
+is to be skipped, which uses a regular `git bisect skip` and the commit
+thus ends up on the skipped pile.
 
-> This allows a suitable credential helper to send Bearer credentials or
-> any other standard or custom authentication scheme.  (It may be able to
-> be extended to other functionality in the future, such as
-> git-send-email, to implement custom SASL functionality, and due care has
-> been taken to make the protocol adequately flexible for that purpose.)
->
-> In addition, the protocol is also expanded to include per-helper state
-> and multi-legged authentication (the former is effectively required for
-> the latter).  The per-helper state can be useful to help credential
-> helpers identify where the credential is stored, or any other
-> information necessary.  Because NTLM and Negotiate (Kerberos/wrapped
-> NTLM) require two rounds of authentication, the multi-legged
-> authentication support along with per-helper state allows the helper to
-> support these authentication methods without Git or other clients having
-> to be aware of how they work.  (This would also be useful for SASL, as
-> mentioned above.)
->
-> This series introduces a capability mechanism to announce this
-> functionality, which allows a helper to provide a username and password
-> on older versions of Git while supporting more advanced functionality on
-> newer versions.  (This is especially important on Azure DevOps, where
-> NTLM uses a username and password but Basic or Bearer can use a personal
-> access token.)  It is also designed such that extremely simple
-> credential helpers, such as the shell one-liner in the Git FAQ that
-> reads from the environment, don't accidentally claim to support
-> functionality they don't offer.
+In addition we also offer a git-hook, to make this as predictable and
+painless as possible.
 
+The script can do whatever it wants to to determine if a commit is to be
+skipped; From comparing the hash against a known list, to checking git
+notes for a keyword or, as the included example, the commit body.
 
+Signed-off-by: Olliver Schinagl <oliver@schinagl.nl>
+---
+ bisect.c                                 |  2 +
+ builtin/bisect.c                         | 93 +++++++++++++++++++++++-
+ templates/hooks--bisect-skip_when.sample | 10 +++
+ 3 files changed, 101 insertions(+), 4 deletions(-)
+ create mode 100755 templates/hooks--bisect-skip_when.sample
 
+diff --git a/bisect.c b/bisect.c
+index 60aae2fe50..185909cca9 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -476,6 +476,7 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
+ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
++static GIT_PATH_FUNC(git_path_bisect_skip_when, "BISECT_SKIP_WHEN")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+@@ -1179,6 +1180,7 @@ int bisect_clean_state(void)
+ 	unlink_or_warn(git_path_bisect_log());
+ 	unlink_or_warn(git_path_bisect_names());
+ 	unlink_or_warn(git_path_bisect_run());
++	unlink_or_warn(git_path_bisect_skip_when());
+ 	unlink_or_warn(git_path_bisect_terms());
+ 	unlink_or_warn(git_path_bisect_first_parent());
+ 	/*
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 9891cf2604..6870142b85 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -4,6 +4,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
++#include "hook.h"
+ #include "object-name.h"
+ #include "oid-array.h"
+ #include "parse-options.h"
+@@ -14,19 +15,21 @@
+ #include "revision.h"
+ #include "run-command.h"
+ #include "strvec.h"
++#include "wrapper.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
++static GIT_PATH_FUNC(git_path_bisect_skip_when, "BISECT_SKIP_WHEN")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+ 
+ #define BUILTIN_GIT_BISECT_START_USAGE \
+-	N_("git bisect start [--term-(new|bad)=<term> --term-(old|good)=<term>]" \
+-	   "    [--no-checkout] [--first-parent] [<bad> [<good>...]] [--]" \
+-	   "    [<pathspec>...]")
++	N_("git bisect start [--term-(new|bad)=<term> --term-(old|good)=<term>]\n" \
++	   "                 [--no-checkout] [--first-parent] [--skip-when=<script>]\n" \
++	   "                 [<bad> [<good>...]] [--] [<pathspec>...]")
+ #define BUILTIN_GIT_BISECT_STATE_USAGE \
+ 	N_("git bisect (good|bad) [<rev>...]")
+ #define BUILTIN_GIT_BISECT_TERMS_USAGE \
+@@ -89,6 +92,7 @@ static const char vocab_bad[] = "bad|new";
+ static const char vocab_good[] = "good|old";
+ 
+ static int bisect_autostart(struct bisect_terms *terms);
++static enum bisect_error bisect_skip(struct bisect_terms *terms, int argc, const char **argv);
+ 
+ /*
+  * Check whether the string `term` belongs to the set of strings
+@@ -680,14 +684,74 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
+ 	return res;
+ }
+ 
++static int get_skip_when(const char **skip_when)
++{
++	struct strbuf str = STRBUF_INIT;
++	FILE *fp = NULL;
++	int res = 0;
++
++	fp = fopen(git_path_bisect_skip_when(), "r");
++	if (!fp) {
++		res = -1;
++		goto finish;
++	}
++
++	strbuf_getline_lf(&str, fp);
++	*skip_when = strbuf_detach(&str, NULL);
++
++finish:
++	if (fp)
++		fclose(fp);
++	strbuf_release(&str);
++
++	return res;
++}
++
+ static enum bisect_error bisect_auto_next(struct bisect_terms *terms, const char *prefix)
+ {
++	int no_checkout = ref_exists("BISECT_HEAD");
++	enum bisect_error res;
++	struct object_id oid;
++
+ 	if (bisect_next_check(terms, NULL)) {
+ 		bisect_print_status(terms);
+ 		return BISECT_OK;
+ 	}
+ 
+-	return bisect_next(terms, prefix);
++	res = bisect_next(terms, prefix);
++	if (res)
++		return res;
++
++	if (!read_ref(no_checkout ? "BISECT_HEAD" : "HEAD", &oid)) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++		char *rev = oid_to_hex(&oid);
++		const char *skip_when = NULL;
++		int ret = 0;
++
++		get_skip_when(&skip_when);
++		if (skip_when != NULL) {
++			struct child_process cmd = CHILD_PROCESS_INIT;
++
++			cmd.use_shell = 1;
++			cmd.no_stdin = 1;
++			strvec_pushl(&cmd.args, skip_when, rev, NULL);
++
++			printf(_("running '%s'\n"), skip_when);
++			ret = run_command(&cmd);
++		}
++
++		strvec_push(&opt.args, rev);
++		if ((ret == 125) ||
++		    (run_hooks_opt("bisect-skip_when", &opt) == 125)) {
++			struct strvec argv = STRVEC_INIT;
++
++			printf(_("auto skipping commit [%s]...\n"), rev);
++			sq_dequote_to_strvec("skip", &argv);
++			res = bisect_skip(terms, argv.nr, argv.v);
++		}
++	}
++
++	return res;
+ }
+ 
+ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+@@ -703,6 +767,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 	struct strbuf start_head = STRBUF_INIT;
+ 	struct strbuf bisect_names = STRBUF_INIT;
+ 	struct object_id head_oid;
++	char *skip_when = NULL;
+ 	struct object_id oid;
+ 	const char *head;
+ 
+@@ -727,6 +792,15 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 			no_checkout = 1;
+ 		} else if (!strcmp(arg, "--first-parent")) {
+ 			first_parent_only = 1;
++		} else if (!strcmp(arg, "--skip-when")) {
++			i++;
++
++			if (argc <= i)
++				return error(_("'' is not a valid skip-when script"));
++
++			skip_when = xstrdup(argv[i]);
++		} else if (skip_prefix(arg, "--skip-when=", &arg)) {
++			skip_when = xstrdup(arg);
+ 		} else if (!strcmp(arg, "--term-good") ||
+ 			 !strcmp(arg, "--term-old")) {
+ 			i++;
+@@ -867,11 +941,22 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 		goto finish;
+ 	}
+ 
++	if (skip_when) {
++		if (access(skip_when, X_OK)) {
++			res = error(_("%s: no such path in the working tree.\n"), skip_when);
++			goto finish;
++		}
++		write_to_file(git_path_bisect_skip_when(), "%s\n", skip_when);
++	}
++
+ 	res = bisect_append_log_quoted(argv);
+ 	if (res)
+ 		res = BISECT_FAILED;
+ 
+ finish:
++	if (skip_when)
++		free(skip_when);
++
+ 	string_list_clear(&revs, 0);
+ 	string_list_clear(&states, 0);
+ 	strbuf_release(&start_head);
+diff --git a/templates/hooks--bisect-skip_when.sample b/templates/hooks--bisect-skip_when.sample
+new file mode 100755
+index 0000000000..ff3960841f
+--- /dev/null
++++ b/templates/hooks--bisect-skip_when.sample
+@@ -0,0 +1,10 @@
++#!/bin/sh
++#
++# usage: ${0} <commit_object_name>
++# expected to exit with 125 when the commit should be skipped
++
++if git cat-file commit "${1:-HEAD}" | grep -q "^GIT_BISECT_SKIP=1$"; then
++	exit 125
++fi
++
++exit 0
+-- 
+2.44.0
 
->
-> In addition, there is documentation for the expanded protocol, although
-> none of the built-in helpers have been updated (that will be a future
-> series for those for which it's possible).
->
-> My personal interest here is getting credentials out of config files
-> with `http.extraHeader` (which a future series will produce a warning
-> for) and also allowing Git LFS to support Digest and NTLM with a
-> suitable credential helper.  Git LFS used to support NTLM using custom
-> code (because the Go standard library does not), but it was found to be
-> broken in lots of ways on Windows, and nobody with a Windows system
-> wanted to fix it or support it, so we removed it.  However, there are
-> still some people who do want to use it, so allowing them to use a
-> custom credential helper they maintain themselves seems like the best
-> way forward.  Despite the advantages of this series for Azure DevOps, I
-> have no personal or professional stake in their product; my only
-> interest is the general one in whether their users can securely store
-> credentials.  I believe the changes here are of general advantage to the
-> Git userbase in a variety of ways such that the goal of this series
-> should be uncontroversial.
->
-> Feedback on any portion of this series is of course welcome.
->
-> [0] A name different from `password` was explicitly chosen to avoid
-> confusion from less capable protocol helpers so that they don't
-> accidentally send invalid data.  This does have the downside that
-> credential helpers must learn a new field to not log, but that should be
-> generally easy to fix in most cases.
->
-> brian m. carlson (13):
->   credential: add an authtype field
->   remote-curl: reset headers on new request
->   http: use new headers for each object request
->   credential: add a field for pre-encoded credentials
->   credential: gate new fields on capability
->   docs: indicate new credential protocol fields
->   http: add support for authtype and credential
->   credential: add an argument to keep state
->   credential: enable state capability
->   docs: set a limit on credential line length
->   t5563: refactor for multi-stage authentication
->   strvec: implement swapping two strvecs
->   credential: add support for multistage credential rounds
->
->  Documentation/git-credential.txt   |  59 +++++-
->  builtin/credential-cache--daemon.c |   2 +-
->  builtin/credential-store.c         |   2 +-
->  builtin/credential.c               |   7 +-
->  credential.c                       | 114 ++++++++++-
->  credential.h                       |  69 ++++++-
->  http.c                             | 128 +++++++-----
->  http.h                             |   5 +
->  imap-send.c                        |   2 +-
->  remote-curl.c                      |  14 +-
->  strvec.c                           |   7 +
->  strvec.h                           |   5 +
->  t/lib-httpd/nph-custom-auth.sh     |  17 +-
->  t/t0300-credentials.sh             | 136 ++++++++++++-
->  t/t5563-simple-http-auth.sh        | 308 +++++++++++++++++++++++++----
->  15 files changed, 760 insertions(+), 115 deletions(-)
->
