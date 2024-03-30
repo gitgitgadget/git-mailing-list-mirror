@@ -1,107 +1,128 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFCF36AEC
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 15:09:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFBF3A29F
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 16:12:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711811370; cv=none; b=BPUH9Pk25c+/4gUFbdL+X4VyPHZqxH7ex6+8IhCY09VLFLb+0ZzXpHwyuSUO97C8lYBOGJ7qwGTsYHEUWwQcHj20rqC54H2KCAQRqk+s1y8Qko1HhWcqc9KjWlQZLhtey0bPq6dqphyVQBEpXCNIGy1P06UXy2kZAB7xCtp/LJs=
+	t=1711815132; cv=none; b=KirZOQs6OiTi2xi/cMZmYc/DzvyhHLT7c0qAsQQY753z8lPMtb7tlNiO6+NuSmNBmvI2YIUO9qJWRuFpdUfvCputTPEsR+fx2GInMb1O96ZkF1tItYg8rrFwKwLIqVWTrNzlA3rPaPAIvHb5NNSvnif5IovADBTGUiSON8Q/YQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711811370; c=relaxed/simple;
-	bh=ide6aBaz5qmEZoSo3IA1yH8LM90dPczMnvPYarYKh+I=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=I1sZp+oWhxtCZFoDGt0EMhrxRE9tmwd4pQqefzRRkKE5otLmvs5kNcGWGdRhGqNHQQZi61SENV8/4SKIe4PTmfjqAVDckm4TWvwQpswzAllYYCCCAwHXDTwn5YQpCzD+Vmpu6GIY38pFJAsuGGCnVM35aQ3h10WHz+cYElR/QAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b=eH4dAbt8; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
+	s=arc-20240116; t=1711815132; c=relaxed/simple;
+	bh=cRM0Ms5wJ7zxaC7Kyb6a87+J6i+YtdYVzdSmGmGgNig=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:Cc:To; b=r965sixvu94mP73wXXFvWc3fFeICq9DGLLzO0aeJnOEMGXmypnAMJH3M0MwreHOG/iT7M13VFQnxAf34IUcMsebqejZpoTxAG0VJkmG751xjwpVHOnnwSMQo/Grhn8V2WmNFkLOSmwmf6OSClzjaO/HQL60ZdWEP5gBzaUm1+7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QAX06SHd; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b="eH4dAbt8"
-Received: from [IPV6:2a01:e0a:122:9f40:dcc9:6f7:4081:991a] (unknown [IPv6:2a01:e0a:122:9f40:dcc9:6f7:4081:991a])
-	(Authenticated sender: thomas.koutcher@online.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 9269B2003BE;
-	Sat, 30 Mar 2024 16:09:17 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
-	s=smtp-20201210; t=1711811358;
-	bh=ide6aBaz5qmEZoSo3IA1yH8LM90dPczMnvPYarYKh+I=;
-	h=Date:From:Subject:To:From;
-	b=eH4dAbt8QXLtOKiLySTsJ7IkBgx6D0QFED/eltCM0gNqk7ZUMfd9voaYiBq5Jx8Yc
-	 Lh+yTs59aKlOOWT01ji4X4XDIkWVv7rG0aydqOF4Q5SZcsqAc7akkr1BPQO06+9wdm
-	 yNPlUx6xK2z89qmm/AbOM2sjxCLoSG0XrgDMPtdI6DA3rVhq8Rp5E3f/WpH8P2Tpxe
-	 8PSV8eNTUXs9koAZRic9o1Yu5cPekzTMycCPampnQgxDgRwfOxsAJwfnxhZL3RsEtE
-	 1Fx9RvwheaNVFrcVsXNkZjyLMYB1JlnU5xpzfDXX/jZng3uI64QJkwo50I7/eR2B2e
-	 HqFN8Q5N7yTRw==
-Message-ID: <c94a0b01-549e-4dfd-a01c-77a512c04bb5@online.fr>
-Date: Sat, 30 Mar 2024 16:09:17 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QAX06SHd"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5a4f608432bso1738853eaf.2
+        for <git@vger.kernel.org>; Sat, 30 Mar 2024 09:12:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711815130; x=1712419930; darn=vger.kernel.org;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kZMs12IjZwLcP3oLkclbq0hVAkMMiTFazkEbV5IcOcw=;
+        b=QAX06SHdDTbeI/YGPpvIE+pQqaKQ73UOAYtJ4scjUEZKr7tThXOfO94/INPc96tKG9
+         ypxyn172BGeNYBtyRORrvIC7PzHo6rPzuyKLsSF4dmcPXHCCOoCboUvHn/In6RXl7YuY
+         DPPPtt8FCnF7ZI6VOcWoWPAFC5JgOOgHFRZz6FCZgK9CB7KjuVctiZyyUnPR2+KVMjdt
+         Lw8C9tEOtaJS7vKtwywLDuz6V+ibsjuH0XAkvk9Svlovo1ptubthpbsXko9EEtVOm72q
+         FQw9av2k5rnM/XFDvvNJa40poegzLWeNDJ0Sbh1duuz+v8LM9w8LdZZ9B4qurA2TWBWU
+         Tr/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711815130; x=1712419930;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kZMs12IjZwLcP3oLkclbq0hVAkMMiTFazkEbV5IcOcw=;
+        b=nVnXqLsML3B9re5phNH7e7i83+8rzlRJ9AYECauOG68PoXWnKKvOWw1lHFbb0wpdIc
+         Nbl36QZE/baLKVm8ofGnuqMcFJ7DmPhbRUYTeBBoXWLULofqhjgUeJX01iDXqlw0wLQu
+         jCfMbMPkF/abqUUuwW72ZzifU3JOUX8pDEavY3aOLaOMPlDGGCa69X35oFbTGijW3doz
+         OfSKZdOZl4FKQpWawF3Aw9gwWXqV199Bwj3mc7KLDcEEVmykvyxvYKkitFGzqgB2Y3Mi
+         q0B5TxekNSpRNHjR+w7clBdf2kSkJgiIgL6gfhtZLwg6pcCWp7E6sAaWUR8Qv/KfyI6t
+         Ecgw==
+X-Gm-Message-State: AOJu0YxOtZP4AxrBTi9LtZUPdjYw3wunmOW2cgiZ3L2AiWS7owR94JsT
+	3beEa5Nh7oTv3Fy6/yVxXdVOZB9URXjsMiT9UVX05CrFelZKt2Vr
+X-Google-Smtp-Source: AGHT+IGUOSy/gXtO7ppuQ2yxd29aIMFUPspMLnmDL0fl2S6dbsX/5dA7aP8iuab3UDwpb8Gg5XLcfw==
+X-Received: by 2002:a05:6820:2017:b0:5a1:b571:4871 with SMTP id by23-20020a056820201700b005a1b5714871mr1994504oob.5.1711815130377;
+        Sat, 30 Mar 2024 09:12:10 -0700 (PDT)
+Received: from smtpclient.apple ([2601:5c1:8380:760:45ad:937d:79bf:858d])
+        by smtp.gmail.com with ESMTPSA id fe8-20020a05622a4d4800b004314e13afa2sm2729657qtb.29.2024.03.30.09.12.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Mar 2024 09:12:10 -0700 (PDT)
+From: Benjamin <ben.knoble@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Thomas Koutcher <thomas.koutcher@online.fr>
-Subject: [ANNOUNCE] tig-2.5.9
-To: git@vger.kernel.org
-Content-Language: en-GB, et, fr
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.4\))
+Subject: Re: [RFC PATCH 0/3] Parallel submodule status
+Message-Id: <D0DB711F-8D07-42EE-BB5C-69662EFE8B13@gmail.com>
+Date: Sat, 30 Mar 2024 12:12:08 -0400
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ jeffhost@microsoft.com,
+ me@ttaylorr.com,
+ nasamuffin@google.com
+To: atneya@google.com
+X-Mailer: Apple Mail (2.3696.120.41.1.4)
 
-Hi,
+> This set tries to speed up git status (and other commands which =
+examine the tree state) for repositories with many submodules.
 
-I am pleased to announce Tig version 2.5.9 which brings some improvements
-and bugfixes. See the release notes below for a detailed list of changes.
+I built these patches on top of master from d6fd04375f (The twelfth =
+batch, 2024-03-28), and that went smoothly. However, I used hyperfine to =
+benchmark the changes in a repo of mine with many submodules (which I =
+have used as a case study for the performance before [1]), and I don=E2=80=
+=99t notice any change:
 
-What is Tig?
-------------
+=CE=BB hyperfine 'git status' ~c/git/git-status 'git status =
+--ignore-submodules=3Dall' '~/code/git/git-status =
+--ignore-submodules=3Dall'
+Benchmark 1: git status
+  Time (mean =C2=B1 =CF=83):     977.8 ms =C2=B1   3.4 ms    [User: =
+415.4 ms, System: 460.2 ms]
+  Range (min =E2=80=A6 max):   971.5 ms =E2=80=A6 983.4 ms    10 runs
 
-Tig is an ncurses-based text-mode interface for git. It functions mainly
-as a Git repository browser, but can also assist in staging changes for
-commit at chunk level and act as a pager for output from various Git
-commands.
+Benchmark 2: /Users/Knoble/code/git/git-status
+  Time (mean =C2=B1 =CF=83):     987.0 ms =C2=B1   6.0 ms    [User: =
+419.5 ms, System: 461.5 ms]
+  Range (min =E2=80=A6 max):   980.5 ms =E2=80=A6 1000.1 ms    10 runs
 
-- Homepage:https://jonas.github.io/tig/
-- Manual:https://jonas.github.io/tig/doc/manual.html
-- Tarballs:https://github.com/jonas/tig/releases
-- Gitter:https://gitter.im/jonas/tig
-- Q&A:https://stackoverflow.com/questions/tagged/tig
+Benchmark 3: git status --ignore-submodules=3Dall
+  Time (mean =C2=B1 =CF=83):      29.2 ms =C2=B1   0.5 ms    [User: 8.5 =
+ms, System: 19.1 ms]
+  Range (min =E2=80=A6 max):    27.8 ms =E2=80=A6  30.4 ms    90 runs
 
-Release notes
--------------
-Improvements:
+Benchmark 4: ~/code/git/git-status --ignore-submodules=3Dall
+  Time (mean =C2=B1 =CF=83):      32.3 ms =C2=B1   0.6 ms    [User: 10.5 =
+ms, System: 19.1 ms]
+  Range (min =E2=80=A6 max):    31.0 ms =E2=80=A6  35.0 ms    81 runs
 
-  - Update utf8proc to v2.9.0, supporting Unicode 15.1.
-  - Also use lightweight tags in the Refs line of the diff view. (#1235)
-  - Support %(text) in all views with a text column. (#1275)
-  - Use HTTPS for GitHub clone URLs. (#1310)
-  - Move default log view options to tigrc.
-  - Allow to go to stage view without Enter. (#1284)
-  - Add new "prefetch" reference type for refs created by `git maintenance`
-    (hidden in default config). (#1318)
-  - Show the selected commit in the blame view title window.
-  - Improve the blob view experience.
-  - Clear keybinding from all keymaps (unbind) with `bind generic <key> 
-none`.
+Summary
+  git status --ignore-submodules=3Dall ran
+    1.11 =C2=B1 0.03 times faster than ~/code/git/git-status =
+--ignore-submodules=3Dall
+   33.47 =C2=B1 0.63 times faster than git status
+   33.78 =C2=B1 0.66 times faster than /Users/Knoble/code/git/git-status
 
-Bug fixes:
 
-  - Fix "dangling pointer" warning. (#1268)
-  - Don't use array size in function arguments. (#1269)
-  - Fix rpmbuild -ta. (#1276)
-  - Initialise struct timezone. (#1291)
-  - Fix NULL dereference at startup. (#1293)
-  - Enforce a blank before view scroll percentage.
-  - Fix refresh-mode periodic not updating branch labels. (#1270)
-  - Fix display non-ascii character. (#1299)
-  - Fix readline echo when stdin is redirected. (#1229)
-  - Fix tig blame --reverse. (#1300)
-  - Fix status view lockup.
-  - Fix untracked changes and chunk staging behaviour in plain stage view.
-  - Reset state variables when selecting a commit with no reference.
-  - Fix parsing of `git ls-tree` for submodules. (#1282)
+Is there something I needed to enable to see the speedup (am I =C2=AB =
+holding it wrong =C2=BB)? Or is this series not actually implementing =
+the parallelization yet=E2=80=94perhaps it is a series of preparatory =
+commits?
 
-Thanks to everyone who contributed (in alphabetical order): Abhinav Gupta,
-Armin Brauns, Conor Lowry, Jakub Wilk, Johannes Altmanninger, Kimihiro 
-Nonaka,
-Pavel Roskin, Thomas Koutcher, Wesley Moore.
+I look forward to an implementation of this feature; searching the =
+mailing list reveals some candidates which don=E2=80=99t appear to have =
+ever made it to master [2].
 
---
-Thomas Koutcher
+[1]: =
+https://lore.kernel.org/git/CALnO6CCoXOZTsfag6yN_Ffn+H7KE-KTzm+P-GqLKnDMg8=
+j_Qmg@mail.gmail.com/
+[2]: =
+https://lore.kernel.org/git/20220922232947.631309-1-calvinwan@google.com/
+
