@@ -1,176 +1,68 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C023A8475
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 18:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7356A3BBC2
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 20:34:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711824574; cv=none; b=O0OX0xqD0vt5qof/R+A37rkqDi97K+coLtY8yUKtF14ObRTuG2dO8P34sM5O+8bNohdas5Jbw/QHBqJ8Gwd9CStOzNVw6nVBpxV5AeKL8Nd/UVu0wb2FZcs9L6mgqV6ZjtLhNfAmmgtlfYJttRWxcobWgDBMs8Xy2EP8Atb4yCg=
+	t=1711830892; cv=none; b=RZmZLZFjyCbw900bR/zOCHdKXMtPFuwVcKIwgCacF99x83jdmLyFHajj8Q52v7Ss8nib81dIi98GM2zByT4HtgkV9gAl+t94+9qUhmwqedGqSDxsLNFBIG592kGfJBjCyUNpyFdyA9OxQtxeHKOUWvsoRnfHikpgPe0r++UZHNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711824574; c=relaxed/simple;
-	bh=KjXBO4Oqx483V6IttiA7jJUnZU7hBjllUz5jAuNXK6Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J2ALfRErKTY1/n4XISU9jP0sEZiuO4maJGDdcyKxXoQnAwAZMEZikLw7qOqoC98SbNTv1bSslCt61qRq3PLeWIPTIL8a+oK1AlkS1KiHAVUMNW1JplceOV8l7YIttvVbZqJTWd2EjevNUAUBQ9MEFJHn/pILdWctmKUVdDG/d6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp3.bon.at (unknown [192.168.181.107])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4V6RBw62yTz5vTP
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 19:49:12 +0100 (CET)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4V6RBk5WRtz5tl9;
-	Sat, 30 Mar 2024 19:49:02 +0100 (CET)
-Message-ID: <bb4fe56f-f45d-404a-834e-31ba877641c7@kdbg.org>
-Date: Sat, 30 Mar 2024 19:49:02 +0100
+	s=arc-20240116; t=1711830892; c=relaxed/simple;
+	bh=fUOSCWF+OgF7dk0apcooWpT/m/AwZ36y05tI+zAlQ2E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Yf1vFryM/0/t6F+++0iGFPOVbdXbRE3gpKqUSzX5DPKWTOUCx97TzBJr4p67IIQuZ2TqDAos0M4ovA1RDiRm3uEFOAqJMjOSjj4hWlH5Gi5OyPF81aq03E7dohCdoWKii36y3Dk0eQt6RUBhqp9a76jOEjvgYR4qNXY7nZWS6lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xegcSknx; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xegcSknx"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FEEC2F483;
+	Sat, 30 Mar 2024 16:34:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=fUOSCWF+OgF7dk0apcooWpT/m/AwZ36y05tI+z
+	AlQ2E=; b=xegcSknxIuBtcVQbEDb2iq40Az3A8Y9xtEHit0EpiHB/0s5Yjyt9Q7
+	0z1C8SXAmmtiS9tEXEmH6bW6UIQtwnPJpoUMH2q0wNhKq2YN5eK9CVD4ULsn4Epn
+	f5lS+jdHLfF98u5Pl3+0x7He2n6fSobf9q23jD/2hmhBnchTfzDj0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5833E2F482;
+	Sat, 30 Mar 2024 16:34:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D9A342F481;
+	Sat, 30 Mar 2024 16:34:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] config: fix some small capitalization issues, as spotted
+In-Reply-To: <6f6f821fc090fb59f632fcdbd061154b897b1244.1711772691.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Sat, 30 Mar 2024 05:26:31 +0100")
+References: <6f6f821fc090fb59f632fcdbd061154b897b1244.1711772691.git.dsimic@manjaro.org>
+Date: Sat, 30 Mar 2024 13:34:40 -0700
+Message-ID: <xmqqo7avlaqn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] userdiff: better method/property matching for C#
-To: Steven Jeuris via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Jeff King <peff@peff.net>, Linus Arver <linusa@google.com>,
- Steven Jeuris <steven.jeuris@gmail.com>,
- Steven Jeuris <steven.jeuris@3shape.com>
-References: <pull.1682.v3.git.git.1711613220277.gitgitgadget@gmail.com>
- <pull.1682.v4.git.git.1711653257043.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1682.v4.git.git.1711653257043.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EFD26100-EED4-11EE-A80A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Am 28.03.24 um 20:14 schrieb Steven Jeuris via GitGitGadget:
-> diff --git a/userdiff.c b/userdiff.c
-> index e399543823b..35e0e1183f7 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -89,12 +89,46 @@ PATTERNS("cpp",
->  	 "|\\.[0-9][0-9]*([Ee][-+]?[0-9]+)?[fFlL]?"
->  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
->  PATTERNS("csharp",
-> -	 /* Keywords */
-> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
-> -	 /* Methods and constructors */
-> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-> -	 /* Properties */
-> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
-> +	 /*
-> +	  * Jump over reserved keywords which are illegal method names, but which
-> +	  * can be followed by parentheses without special characters in between,
-> +	  * making them look like methods.
-> +	  */
-> +	 "!(^|[ \t]+)" /* Start of line or whitespace. */
-> +		"(do|while|for|foreach|if|else|new|default|return|switch|case|throw"
-> +		"|catch|using|lock|fixed)"
-> +		"([ \t(]+|$)\n" /* Whitespace, "(", or end of line. */
-> +	 /*
-> +	  * Methods/constructors:
-> +	  * The strategy is to identify a minimum of two groups (any combination
-> +	  * of keywords/type/name) before the opening parenthesis, and without
-> +	  * final unexpected characters, normally only used in ordinary statements.
-> +	  */
-> +	 "^[ \t]*" /* Remove leading whitespace. */
-> +		"(" /* Start chunk header capture. */
-> +		"(" /* Group of keywords/type/names. */
-> +		"([][[:alnum:]@_<>.]|, [ |\t]*)+" /* Space only allowed after ",". */
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Mental note: This pattern means:
+>  On some file system/operating system combinations, this is unreliable.
+> -Set this config setting to 'rename' there; However, This will remove the
+> +Set this config setting to 'rename' there;  however, this will remove the
+>  check that makes sure that existing object files will not get overwritten.
 
-   a sequence of at least one of
-   (
-       one character of a certain set
-       OR
-       a comma
-          followed by SP
-          optionally followed by whitespace or |
-   )
+Looking good, except that we do not want double-space after a
+semicolon.
 
-> +		"[ \t]+" /* One required space forces a minimum of two items. */
-
-OK.
-
-> +		"([][[:alnum:]@_<>.]|, [ |\t]*)+"
-
-Same here.
-
-Is it the case of t4018/csharp-method-generics?
-
-    Example<int, string> Method<TA, TB>(TA RIGHT, TB b)
-
-Let me see if I make sense of this. The idea is to treat the ', '
-sequence as a single "character" so that the SP in this sequence does
-not count as the word separator that we otherwise have between two plain
-words.
-
-I am unsure whether this is a workable solution. The set of symbols that
-can occur before a method definition overlaps too much with the symbols
-that can occur elsewhere. For example, if you have these lines of code:
-
-    something(arg,
-        meth, func(x),
-        prop, y,
-        more);
-
-you have a false positive in the lines in the middle.
-
-I have the feeling that it is impossible to distinguish method
-definitions from other code reliably. We can go back and forth a while,
-but at some point we have to stop and accept that there are false
-positives. Where that point is, I cannot tell, because I do not know
-what is common and what is uncommon in typical C# code. It is your call.
-
-> +		"[ \t]*" /* Optional space before parameters start. */
-> +		")+"
-> +		"\\(" /* Start of method parameters. */
-> +		"[^;]*" /* Allow complex parameters, but exclude statements (;). */
-> +		")$\n" /* Close chunk header capture. */
-> +	 /*
-> +	  * Properties:
-> +	  * As with methods, expect a minimum of two groups. But, more trivial than
-> +	  * methods, the vast majority of properties long enough to be worth
-> +	  * showing a chunk header for don't include "=:;,()" on the line they are
-> +	  * defined, since they don't have a parameter list.
-> +	  */
-> +	 "^[ \t]*("
-> +		"("
-> +		"([][[:alnum:]@_<>.]|, [ |\t]*)+[ \t]+"
-> +		"([][[:alnum:]@_<>.]|, [ |\t]*)+[ \t]*"
-> +		")+" /* Up to here, same as methods regex. */
-
-Is the intent to match pairs of words? Or is the intent to find at least
-two words? If the latter, then the preceding 4 lines are better written as
-
-		       "([][[:alnum:]@_<>.]|,[ \t]+)+"
-		"([ \t]+([][[:alnum:]@_<>.]|,[ \t]+)+)+"
-
-If the former, then the space after the second word must not be
-optional, because it would match
-
-    a bc d
-
-as two pairs
-
-    (a b)(c d)
-
-BTW that there is an | symbol in the potential space after the comma is
-certainly an oversight, right? And, why is a tab after the comma not
-permitted?
-
-When you construct regular expressions, make sure that repeated parts
-always begin with a mandatory part and that this mandatory part cannot
-be an optional part at the end of the preceding or the repeated pattern.
-Otherwise, in a non-matching case you send the matcher into an expensive
-backtracking loop.
-
-> +		"[^;=:,()]*" /* Compared to methods, no parameter list allowed. */
-> +		")$\n"
->  	 /* Type definitions */
->  	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct|record)[ \t]+.*)$\n"
->  	 /* Namespace */
-> 
-> base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
