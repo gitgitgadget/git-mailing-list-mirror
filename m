@@ -1,121 +1,146 @@
-Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6326F1C0DE0
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F158A1D6AA
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711840240; cv=none; b=oeOQTfX5AF+4spNuGWR2nAU6R4wbQRXuOLprEVVZxeeeizyBQps9rVhTNPPJgTeiy7HO9HGuahy+s34E9v6ekKFD2gZahUJc2gQle5lJWCHxfd0ovO9A6WQLbWhHb3kKJ3EV2HtZts4G06x8RRhbjzpqnDOsxIBK0QZnspOVqZ0=
+	t=1711842857; cv=none; b=VXmDL2gnZWQb4Fd7/KN14d1f30NxgsRLQpHe7Ro1jaZESxDVbm2PV3dvaVutvkCWE0egDEhBXIZUFxCW6IQ+0UKyLw5Y3wjMJOlukPN2XDYVVOwtyDsDOULzmE0V2D56eVUbf46KvGcGko9/Bm5eDY+CshA8AP0orQcx6cnRb7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711840240; c=relaxed/simple;
-	bh=9ZiFbDD32iCHoBBX0pVil7k5PzicuREQxo/vYjmle/A=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=GlndLVdq+P/5GMPjggAFzd1beXikR+j/JQChN7RG7KxvDU0t2ixlL9uyzxJgfneb5VAFZ+Y2hXkC4sT/K2xrxFyNednAzKxOxxfuOD8zA/uAl7Fjnixo66McS2s2oe+bjve3N9Ripw2soXisWUzIY2LGqNBk7qJy72jpuFzyohg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=VBtHHJWY; arc=none smtp.client-ip=185.114.57.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
+	s=arc-20240116; t=1711842857; c=relaxed/simple;
+	bh=wlMHaGlauf6OU8259JDUl2vgOgwWhPbGIdnS+BVFyE4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=DOJOocjZ7LazTUG7FMxLxV/iHpuGFOfLUgjEG7x0AzncjciIaS6CMzDoxO4fci0HZSYkQDPVp+E2BwCpS5ey9JIgDpIf1N1QsEfUIZPV/LauN+JvuaG1HUs9esscK2D9TpLe4UC/WB5bmC3mzyMoGTZ36A69sChLLQEYjJgWR1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=Vjq2tn1Y; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=PMpGekbE; arc=none smtp.client-ip=185.238.129.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="VBtHHJWY"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:Message-ID:Subject:To:
-	From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=boxxmc2LBBWtaRw9KxEpbAtThmW3h1/O1bNcT5zFiaE=; b=VBtHHJWYy1AR1ZeeUyhNq/8zEz
-	GDU6IQrd/WJiwtQ3gsnHfVw8QG2oQm69gNNqXoAX/jYm7wL8WvxSbdnJGzMzX2WVtBR2PVFsSszvE
-	FJVjfYFEolbhIEL3lVgBvJA80Ub9hKhnQ3D397LIUsvSutlVzR8/qeKSrc0NQZkoAruJ7jIy1JrLC
-	RAvbJrJbBQI4kaPeH06DZQ93b923HnNbdpSn/iMaQR86ruGVS52w7iD2JQqWHiv+UNcyFH7Dkn9uH
-	al9IrhPh7L0ZZU0nMEVkv0T/GA51Quj3GciRxfhCrmOqTKy4ql0k4COCi5bjhrTnrQTchaXDP8GVW
-	QEPvQTyA==;
-Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:60142 helo=mail.nordhost.no)
-	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <peter@softwolves.pp.se>)
-	id 1rqhqC-00000006vLl-2JKZ;
-	Sun, 31 Mar 2024 00:10:24 +0100
-Date: Sun, 31 Mar 2024 00:10:24 +0100 (CET)
-From: Peter Krefting <peter@softwolves.pp.se>
-To: git@vger.kernel.org, 
-    "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
-Subject: [PATCH v2] bisect: Honor log.date
-Message-ID: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="Vjq2tn1Y";
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="PMpGekbE"
+Received: from localhost (7of9.are-b.org [127.0.0.1])
+	by 7of9.schinagl.nl (Postfix) with ESMTP id 666B01A0BE63;
+	Sun, 31 Mar 2024 00:54:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1711842851; bh=wlMHaGlauf6OU8259JDUl2vgOgwWhPbGIdnS+BVFyE4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References;
+	b=Vjq2tn1YcwNLUve9pITgdTS3M6Hg+n/8QTgO3aLyoHwbtNGcvpwEs17n27NGUENIU
+	 9fQWJ6CAvArv0XywbKkTG2WGbVJy0A6G0n2BywV9pbOKTIrYY8QQSsVG0YNkSRRjah
+	 qkz5qOWeTe0q9fvb+iwzE8ACQg4Mj+M78FIQhURk=
+X-Virus-Scanned: amavisd-new at schinagl.nl
+Received: from 7of9.schinagl.nl ([127.0.0.1])
+	by localhost (7of9.schinagl.nl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id VA-P4SOWPgML; Sun, 31 Mar 2024 00:54:10 +0100 (CET)
+Received: from [127.0.0.1] (unknown [10.2.12.100])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by 7of9.schinagl.nl (Postfix) with ESMTPSA id 36AD11A0BE5E;
+	Sun, 31 Mar 2024 00:54:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1711842850; bh=wlMHaGlauf6OU8259JDUl2vgOgwWhPbGIdnS+BVFyE4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References;
+	b=PMpGekbEBWXz56x3RoeGEwyh7Aer6LfrQAnnJQSMhnp+qQlz28+ZSRv0dPpTgHTk7
+	 GhKFXLjKnzX3S7SYebmG4qk2XLYX+mXKsrbLc5YbaXD7qk5F+XoFtzgny5PcqzGZUW
+	 ua7qGYFOjN6MJLWWmF/odPzFD5JR5oGKcee2siC8=
+Date: Sun, 31 Mar 2024 00:54:12 +0100
+From: Olliver Schinagl <oliver@schinagl.nl>
+To: Patrick Steinhardt <ps@pks.im>
+CC: Christian Couder <christian.couder@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+ psteinhardt@gitlab.com, Taylor Blau <me@ttaylorr.com>
+Subject: Re: Git mirror at gitlab
+User-Agent: K-9 Mail for Android
+In-Reply-To: <ZghUu7Ae5PYga-Ji@ncase>
+References: <xmqqy1aba6i6.fsf@gitster.g> <E5C00398-536B-4CE5-AB25-FE7FCD55CCD8@schinagl.nl> <ZfzUb9HkZLq1UIed@tanuki> <CAP8UFD2LmapWutRpfveL6ChSg8xrCkQXyQaJwHyEp8JA0p_Osw@mail.gmail.com> <Zf2B5oksaJRDH5WT@tanuki> <1d6a282e-afe6-4d43-a61c-d0259131b11c@schinagl.nl> <ZgfK3DoeidDcIaFj@framework> <f283d6ed-54b6-4bbd-8b14-67c9c8d50a2a@schinagl.nl> <ZgfWH_smdZ1jXkLO@ncase> <68563c5e-af74-4300-84c4-a0d75434167f@schinagl.nl> <ZghUu7Ae5PYga-Ji@ncase>
+Message-ID: <4A3E0E2D-2922-4C90-A306-30A685D11C4D@schinagl.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Relay-Host: 185.114.57.50
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-When bisect finds the target commit to display, it calls git diff-tree
-to do so. This is a plumbing command that is not affected by the user's
-log.date setting. Switch to instead use "git show", which does honor
-it.
 
-Reported-by: Michael Osipov <michael.osipov@innomotics.com>
-Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
----
-  bisect.c | 25 ++++++++++---------------
-  1 file changed, 10 insertions(+), 15 deletions(-)
 
-This version also uses "--stat" which produces an output more like the 
-one from the diff-tree utility.
+On March 30, 2024 7:06:51=E2=80=AFp=2Em=2E GMT+01:00, Patrick Steinhardt <=
+ps@pks=2Eim> wrote:
+>On Sat, Mar 30, 2024 at 11:59:51AM +0100, Olliver Schinagl wrote:
+>> On 30-03-2024 10:06, Patrick Steinhardt wrote:
+>> > On Sat, Mar 30, 2024 at 09:20:22AM +0100, Olliver Schinagl wrote:
+>> > > On 30-03-2024 09:18, Patrick Steinhardt wrote:
+>> > > > On Sat, Mar 30, 2024 at 09:14:47AM +0100, Olliver Schinagl wrote:
+>> > > > > On 22-03-2024 14:04, Patrick Steinhardt wrote:
+>> > > > > > On Fri, Mar 22, 2024 at 11:08:34AM +0100, Christian Couder wr=
+ote:
+>> > > > > > > (Sorry for initially sending this privately to Patrick=2E)
+>> > > > > > >=20
+>> > > > > > > On Fri, Mar 22, 2024 at 10:41=E2=80=AFAM Patrick Steinhardt=
+ <ps@pks=2Eim> wrote:
+>> > > > > > [snip]
+>> > > > > > > > I'd personally rather go with the latter, mostly because =
+it matches our
+>> > > > > > > > git-scm=2Ecom domain=2E I also like it better than the cu=
+rrent git-vcs/git
+>> > > > > > > > because of that=2E
+>> > > > > > > >=20
+>> > > > > > > > So Chris, would you mind adding me (@pks-t, my non-GitLab=
+ handle) as an
+>> > > > > > > > additional owner of that group?
+>> > > > >=20
+>> > > > > I'll empty out my gitscm group, make it private so that it won'=
+t be
+>> > > > > accidentally used and transfer ownership to pks-t=2E You can th=
+en 'do what is
+>> > > > > needed' with the group=2E Since gitlab doesn't support aliases =
+(yet? :p) best
+>> > > > > to park the namespace=2E
+>> > > > >=20
+>> > > > > Olliver
+>> > > >=20
+>> > > > By the way, thanks a ton for being this open and helpful during t=
+he
+>> > > > whole process=2E This is greatly appreciated!
+>> > >=20
+>> > > Hey, no problem=2E I initiated this discussion because I wanted to =
+get to this
+>> > > solution=2E Just because my mirror is not used doesn't mean I don't=
+ agree :)
+>> > >=20
+>> > > Btw, I can't transfer the group, it's empty, but if I delete it _ri=
+ght now_,
+>> > > you'll have to re-create it, _right_now_ (well within the next 5 mi=
+nutes?)=2E
+>> >=20
+>> > Shouldn't it be possible to add me as a secondary owner of the group =
+in
+>> > [1]? From thereon I could "transfer" the group by removing you from i=
+t=2E
+>>=20
+>> Done and done=2E
+>>=20
+>> I'll remove myself, or you can kick me :( one I know you have successfu=
+lly
+>> received ownership=2E I tried to invite the group git-scm but that coul=
+dn't be
+>> found, probably you can do that (and then remove yourself :p)
+>>=20
+>> Would have been useful to transfer ownership of a group, iirc you do th=
+at
+>> with repo's as well? Under the hood it could use the invite + remove me=
+mbers
+>> thing=2E Though this works=2E
+>
+>Thanks! I've added Christian to this group such that it has a higher bus
+>factor=2E I guess it should probably have the same owners as the "git-scm=
+"
+>one just in case we ever want to do anything with it=2E I've also removed
 
-GitHub's test run reports a single failed test (7300), but this passes 
-when I try it locally: 
-https://github.com/nafmo/git-l10n-sv/commit/2f27ae64064edc5c2570f1c9ea121f3f1a7283d7
+Could you not just invite the git-scm group and have no members at all?
 
-diff --git a/bisect.c b/bisect.c
-index 8487f8cd1b..3d0100b165 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -959,23 +959,18 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
-  }
 
-  /*
-- * This does "git diff-tree --pretty COMMIT" without one fork+exec.
-+ * Runs "git show" to display a commit
-   */
--static void show_diff_tree(struct repository *r,
--			   const char *prefix,
--			   struct commit *commit)
-+static void show_commit(struct commit *commit)
-  {
--	const char *argv[] = {
--		"diff-tree", "--pretty", "--stat", "--summary", "--cc", NULL
--	};
--	struct rev_info opt;
-+	struct child_process show = CHILD_PROCESS_INIT;
-
--	git_config(git_diff_ui_config, NULL);
--	repo_init_revisions(r, &opt, prefix);
--
--	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
--	log_tree_commit(&opt, commit);
--	release_revisions(&opt);
-+	strvec_pushl(&show.args, "show", "--pretty=medium", "--stat", "--no-abbrev-commit", "--no-patch",
-+		     oid_to_hex(&commit->object.oid), NULL);
-+	show.git_cmd = 1;
-+	if (run_command(&show))
-+		die(_("unable to start 'show' for object '%s'"),
-+		    oid_to_hex(&commit->object.oid));
-  }
-
-  /*
-@@ -1092,7 +1087,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
-  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
-  			term_bad);
-
--		show_diff_tree(r, prefix, revs.commits->item);
-+		show_commit(revs.commits->item);
-  		/*
-  		 * This means the bisection process succeeded.
-  		 * Using BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND (-10)
--- 
-2.39.2
-
+>you from this group now=2E
+>
+>Patrick
