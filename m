@@ -1,107 +1,114 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA581C0DD1
-	for <git@vger.kernel.org>; Fri, 29 Mar 2024 23:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3025197
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 00:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711755335; cv=none; b=rXbJM/VT/Y2dYKedFHsWASn0mSz3M31EGjzb7i1NxUdCJbxltf6WC4ayRgcNcyjxdAHR4yrz/9THvwVoOw8+41kcumPA8Em9YKTe5bv+XSn9Odphj6NMLH+VlZHOEqo71V/AGiBNpUSY9o0bW/sKBrT1RzxWSX0A2VwuOFRlBwU=
+	t=1711756936; cv=none; b=eTh+jp4oZ3PSScpwNnsMkwmw3xAPFC5kmdXm6E8iO40swc1menNOlCSuMhv+oVAZv5NnrfQx0B7Ycx7+8IZ1ePPEGjDBt1v5Uw9Vg0nbNA0q2tDSEwwYAvwwplgJNOomVJAIDhhoO8wXTRixX+99dSdUWvPn2VWL664ra1lUz3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711755335; c=relaxed/simple;
-	bh=+4cc+LAVEtPtu3ZVQowmHolTkogivIRhquqMJYrJDNg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=qsh1kuG44uwzMqjHaSvvvTFUZotCTwIAMFNLTjp5+2DGB5C9yXeW5vggO2hPjJs4UuXn9VNmCeGgUe0C3przPGPl5ZXdBuaXqd/5cDkQTD4NImiLis/sLKVl35E+D0WfdIhl/G86SKM/wZooCvGxClZXojFtc60id5y3NukWEEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=w87D2PkZ; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="w87D2PkZ"
+	s=arc-20240116; t=1711756936; c=relaxed/simple;
+	bh=uFcPIPcsvI18Fn6mS14f/8j+yT69QtsZImcSvvSXo5s=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Ghm86ZumcaHBXVbU8NJNcUSsLrT6XwpeJjXGNVQcMsehNltJoA96liT9L4W2tAYR8DmBbMSOktNPoTr8EHv/SwWzFnsjOBqtwj1koxst+ZzU/wgdBwpRp/zoLf/irf0w7FaQ7GMWFEGc4WePyWaGpMrFkjj/VPbeYIZKC0XddK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 32414 invoked by uid 109); 30 Mar 2024 00:02:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 30 Mar 2024 00:02:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24700 invoked by uid 111); 30 Mar 2024 00:02:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Mar 2024 20:02:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 29 Mar 2024 20:02:12 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Daniel Stenberg <daniel@haxx.se>
+Subject: tests broken with curl-8.7.0
+Message-ID: <20240330000212.GA1261238@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1711755324;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Zf5qWCOeloTI4K9rCyeyaDhAJE01WAGkKvRHr8pOWqM=;
-	b=w87D2PkZlMYnFfjolP6DADVNZcXdkbQlH9ZkndKc10PqqyYQdQ0B4FCQWjxULkX5LQTXNI
-	Iba/2F3DoTZLr285NU3I97tzfqUa4Ju871wfF4B3BzS+AwdB1VNs9o8aBnnR39Btyi20Wz
-	20a8exN6+H2HvSXd/bpKWdt+HQ50oexghWCYtHAYAth7ilt1IALLewXj7GmRYn6afbXbzO
-	ueaUhKH3PNlBozUQOLyoU9jk021eu6iwLjWh6ZVc+xGcAoZZfOraXEvOquF0f1c9G79MfG
-	JwzN344BQzrKtagN4ha9E6KUWR4jN9jKi+/KlgeRcVir5eV6Zr2fLPAyiSYleg==
-Date: Sat, 30 Mar 2024 00:35:22 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] advice: omit trailing whitespace
-In-Reply-To: <xmqq4jcooddp.fsf@gitster.g>
-References: <xmqq4jcooddp.fsf@gitster.g>
-Message-ID: <50ca23f79bc0588cf6d99a56415eee2d@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On 2024-03-29 23:57, Junio C Hamano wrote:
-> Git tools all consistently encourage users to avoid whitespaces at
-> the end of line by giving them features like "git diff --check" and
-> "git am --whitespace=fix".  Make sure that the advice messages we
-> give users avoid trailing whitespaces.  We shouldn't be wasting
-> vertical screen real estate by adding blank lines in advice messages
-> that are supposed to be concise hints, but as long as we write such
-> blank line in our "hints", we should do it right.
-> 
-> A test that expects the current behaviour of leaving trailing
-> whitespaces has been adjusted.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I noticed some http-related failures in the test suite on my Debian
+unstable system, which recently got an upgraded curl package. It looks
+like it's related to cases where we use the remote-curl helper in
+"connect" mode (i.e., protocol v2) and the http buffer is small
+(requiring us to stream the data to curl). Besides just running t5551,
+an easy reproduction is:
 
-Looking good to me.  Consistency is always good.
+  [this works]
+  $ git ls-remote https://git.kernel.org/pub/scm/git/git.git | wc -l
+  1867
 
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+  [this doesn't]
+  $ git -c http.postbuffer=65536 ls-remote https://git.kernel.org/pub/scm/git/git.git
+  fatal: expected flush after ref listing
 
-> ---
->  advice.c          | 3 ++-
->  t/t3200-branch.sh | 4 ++--
->  2 files changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git c/advice.c w/advice.c
-> index d19648b7f8..75111191ad 100644
-> --- c/advice.c
-> +++ w/advice.c
-> @@ -105,8 +105,9 @@ static void vadvise(const char *advice, int
-> display_instructions,
-> 
->  	for (cp = buf.buf; *cp; cp = np) {
->  		np = strchrnul(cp, '\n');
-> -		fprintf(stderr,	_("%shint: %.*s%s\n"),
-> +		fprintf(stderr,	_("%shint:%s%.*s%s\n"),
->  			advise_get_color(ADVICE_COLOR_HINT),
-> +			(np == cp) ? "" : " ",
->  			(int)(np - cp), cp,
->  			advise_get_color(ADVICE_COLOR_RESET));
->  		if (*np)
-> diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
-> index d3bbd00b81..ccfa6a720d 100755
-> --- c/t/t3200-branch.sh
-> +++ w/t/t3200-branch.sh
-> @@ -1154,9 +1154,9 @@ test_expect_success 'avoid ambiguous track and 
-> advise' '
->  	hint: tracking ref '\''refs/heads/main'\'':
->  	hint:   ambi1
->  	hint:   ambi2
-> -	hint: ''
-> +	hint:
->  	hint: This is typically a configuration error.
-> -	hint: ''
-> +	hint:
->  	hint: To support setting up tracking branches, ensure that
->  	hint: different remotes'\'' fetch refspecs map into different
->  	hint: tracking namespaces.
+The error message comes from ls-remote itself, which was expecting a
+FLUSH packet from the remote. Instead it gets the RESPONSE_END from
+remote-curl (remember that in connect mode, remote-curl is just ferrying
+bytes back and forth between ls-remote and the server).
+
+It works with older versions of libcurl, but not 8.7.0 (or 8.7.1).
+Bisecting in libcurl points to 9369c30cd (lib: Curl_read/Curl_write
+clarifications, 2024-02-15).
+
+Running with GIT_TRACE_CURL=1 shows weirdness on the POST we send to
+issue the ls-refs command. With older curl, I see this:
+
+  => Send header: POST /pub/scm/git/git.git/git-upload-pack HTTP/1.1
+  => Send header: Host: git.kernel.org
+  => Send header: User-Agent: git/2.44.0.789.g252ee96bc5.dirty
+  => Send header: Accept-Encoding: deflate, gzip
+  => Send header: Content-Type: application/x-git-upload-pack-request
+  => Send header: Accept: application/x-git-upload-pack-result
+  => Send header: Git-Protocol: version=2
+  => Send header: Transfer-Encoding: chunked
+  => Send header:
+  => Send data: 14..0014command=ls-refs...
+  => Send data: 2a..002aagent=git/2.44.0.789.g252ee96bc5.dirty..
+  [and so on until...]
+  == Info: Signaling end of chunked upload via terminating chunk.
+
+But with the broken version, I get:
+
+  => Send header: POST /pub/scm/git/git.git/git-upload-pack HTTP/1.1
+  => Send header: Host: git.kernel.org
+  => Send header: User-Agent: git/2.44.0.789.g252ee96bc5.dirty
+  => Send header: Accept-Encoding: deflate, gzip, br, zstd
+  => Send header: Content-Type: application/x-git-upload-pack-request
+  => Send header: Accept: application/x-git-upload-pack-result
+  => Send header: Git-Protocol: version=2
+  => Send header: Transfer-Encoding: chunked
+  => Send header:
+  => Send data, 0000000014 bytes (0x0000000e)
+  => Send data: 4..0014..0....
+  == Info: upload completely sent off: 14 bytes
+
+So we only get the first 4 bytes, and then we quit (the double mention
+of 14 is confusing, but I think it is both the size of the pkt-line
+("command=ls-refs\n") but also the length of the 4-byte string when
+framed with chunked transfer-encoding). Those 4 bytes are the first
+thing returned by rpc_out(), which we use as our CURLOPT_READFUNCTION.
+
+It's possible that we're doing something wrong with our read/write
+function callbacks. But I don't see how; we say "here's 4 bytes", but
+then we never get called again. It's like curl is giving up on trying to
+read the post input early for some reason.
+
+I'm not sure how to dig further. That commit is pretty big and scary. I
+did check that the tip of master in curl.git is still affected (I'd
+hoped maybe the 0-length write fixes in b30d694a027 would be related,
+but that's not it).
+
+Ideas?
+
+-Peff
