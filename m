@@ -1,65 +1,66 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AEF2030B
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 14:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBCE8464
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 14:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711808297; cv=none; b=ljHvEmnAiItULBfuVd7muclRLAN4/i9FAqBeIRJIsGTEAde7Wcfq7FAfEbdRPaQNtFwGKrqTmZGg3iPbc7/NqaVjrEv6peo7igN6ZIh3RCda67P96viBfNXSwM8dNjmudVc66mqiy7jhr5Q4xmX9uoK2ffjZqUN3B2VYgbek8bw=
+	t=1711808846; cv=none; b=U8TDwN6xYBtUun/pqpx3PO0iAs3rAq6GgWVZgxmI+eLoCu++D7j/TVcMjmpjpKB7sj1E1zGK5DcsUIb8rgYPguix2FmHX3Ar26Sk21v4fiKrxXd20tTN1E4MsR6pz7D+GppS7c+oyJbCSOSLEx/1Gm/h+P1U81UVZ4qdUInwzQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711808297; c=relaxed/simple;
-	bh=4mG018XS/VRwdM4O3tRchYQoDFJkjQOiSMWWHsBZlwc=;
+	s=arc-20240116; t=1711808846; c=relaxed/simple;
+	bh=0L2LxGZMCIBicRB9a+Ut+mLV1gxE5SfYSStmLe1SA7k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OWQKeT+aFx8IKK+PGWY3GZlUx3UKPJXCy9cOOX+7dvz0KtrUBl4Vr9R20y1+rLJTw4JQ7KrA/GAzDq6xRnOQ86nLaTCcHWYSjFte9+MrXM2nWzmJ+DxJTtoVtMS10hCrNv4bUXEUWrdEk4gw3+Lh9Sum5OxbT+VDz5nQ6qKoYQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+lt/FnR; arc=none smtp.client-ip=209.85.210.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=Of2194W9wSgIAzdAFAzPJsB70xO6GShcG2W2Vbe4cqp4WWVlmLSmc+3i6Kp/yydoSSPPoA1iRO3t1cFreoknqGE0JESgDaqdNkJzOV3Rxfb4nMBxNb9UqKUfxQHAQ8bJD0Y1eJ+1OPiGmwZ+8H6a6mqWzKP8SnkhWQ5V/k29V7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OI4XOSSc; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+lt/FnR"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e6b729669bso2380090b3a.3
-        for <git@vger.kernel.org>; Sat, 30 Mar 2024 07:18:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OI4XOSSc"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-5f034b4dcecso1865892a12.1
+        for <git@vger.kernel.org>; Sat, 30 Mar 2024 07:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711808295; x=1712413095; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1711808844; x=1712413644; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BfgfHXAjwVbT5aoqU1JVl0QLJgh7485W6gjrZkoi6do=;
-        b=B+lt/FnRmRyrsbYQFZjGpBpMisNgha8fibls269GsT8oc/w7b3X10ma73Y59yyD1NG
-         HGOn3Z4jUd6avto3GTJHUnVdPBohrqHj3/7SqQnlG6vGhsr/F2g01+VQtcgq/I8g8yoc
-         QMrWV0jwc87k7Z9xMMdVJLjzaWeuSn1YAIXLgpZaRM4LXLOI99FAWvmtj2F0eQxVXhqb
-         +uffE6kd5aE19I93kNUsY295mS2OkOSA/qvI7apbmcXfIaBAJPo2Y1y2jj/MOu/UVcGk
-         ob1a7hewF4Nv40mU8kbr9WtKfA0IOraP1+F3WUYx3NYJUEDpkdRMNkTHKdS5E/dPkX9k
-         UtGw==
+        bh=pt4lcgXHLhFOV/Nqm/sUw+tTAn/kd1Kdm8WbRF+PI7A=;
+        b=OI4XOSScp0WwQt9AGq6724hbRot+Xq8sV277iKGqlpgzwBi1fg6Db8P0JKSWgDAw4d
+         rzLHSGeOYIr1GOcfvIizjqfu/kJRgph0mLFNSjIoegA7gbYdQhtGBgb4thlt/vR9hwPc
+         WXvPSojmp84B+DRHpB4WEwMLUq0AUi7YDzaBcQp+Zjq4YcyvvXaQ/aHDgeZWhphU5rYN
+         5lE5DP5Ys5HIT7ow+0WwZJ+bdwuX+PlElQoirRP7vjG99/cF3HtmRc+vTNS0QFu0KP6A
+         T82he48NFjQa2uuZxqFL75v+BOV3+o4GcLwLZR8ZD6Vnw6rHNx/X0aWQlAreLzNH4UJs
+         pakQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711808295; x=1712413095;
+        d=1e100.net; s=20230601; t=1711808844; x=1712413644;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BfgfHXAjwVbT5aoqU1JVl0QLJgh7485W6gjrZkoi6do=;
-        b=Gq80vi4qy3C36xbKXflcK2P0apMhdCzjA7p20zC6jaZzXWUWGJ3L0/2xE4Gue9c7VW
-         ScseNQlP3mfSv2gqljzGdutKkO4et9nXSugZ2WFp4QhnOAr5bzPFcHN3DZpmhjUWzLuC
-         wyiZz/zv3nfzbaPX5DFG72nKTFzf2SlfB1Uqwkd0VwtySAGEUidaOfeX8H4wPP/5WR7Q
-         iUjSElkQ20uLgdzvO+ZO9b0fa08N64w5+GrRHYfVJkmYmDy38XHmxQfrZZhlSC2LPbgV
-         EEJRB2mYboLOa0tIPUJaY5iCG4ieTHcSgkNK6JmKQLSlIOjBRZzRatWoxF2yNPDBuinR
-         Zmcw==
-X-Gm-Message-State: AOJu0YyHz8XsylA3noXwN/I77fbZeDIR2WmaVgsIWLSP0Lv9G2+u5SOr
-	mqFlsD5RXofuTzquInqUQBy3EBtjSKrh/IGPVt6DPfvS05tnq5V9
-X-Google-Smtp-Source: AGHT+IEt7QanpqzaJR/BFkUZj85LFgtsoEx6OQ64TWumm6/vvWT6fYc7tm2aD9djwD9/ZVBgizxgtw==
-X-Received: by 2002:aa7:888f:0:b0:6ea:afd1:9023 with SMTP id z15-20020aa7888f000000b006eaafd19023mr5965088pfe.0.1711808294903;
-        Sat, 30 Mar 2024 07:18:14 -0700 (PDT)
+        bh=pt4lcgXHLhFOV/Nqm/sUw+tTAn/kd1Kdm8WbRF+PI7A=;
+        b=rZZVvm3+LaILYcS222t2tkRLNaa9kCdgjdX1WiB4gXwEiHgi2Ca3HgpsfyX9bN+xSf
+         M3Zm/I+mIGLM2O2rZG8eukO8V5eKLiOeNi97q6S0KJO6fksV6NsVwR6TPebaLaYJ2Xbk
+         vJMi1rd9/ExMPIRgxPi+sZCcG8bHbmelDDn3mP0SZxDKoTTbK/HRvOuG9KhOxdsZkTRt
+         Gpgjt/hCKCz2Nae0pfcJRNZiYO76igwE2fNc5HttzPykLYAihHlbgwgiLNBd4i55CeOx
+         gG49gp9g3Z3QR2c/NP0DDfrMl8VgFIlIICwSO381n6t/SBKW6ectKdMenzP8FIUhU5fR
+         +tCA==
+X-Gm-Message-State: AOJu0YxBNpMo9NzHbj5OnbqihyyUG9JfBNgBl/WzuRpo1imkkY+2ABSG
+	ERgla4m2HjZXgC8sdzjsBucx80Bq2LCgYt+5/NKckqOrOTkaoqDK
+X-Google-Smtp-Source: AGHT+IGitDo175JEtH1kyTcA73yvcI/yof2ijqUFDfuCQ/TjS8eYCj+UMR1LFLJeDS8WL8rraPjK0Q==
+X-Received: by 2002:a17:903:183:b0:1e0:9926:aded with SMTP id z3-20020a170903018300b001e09926adedmr11655730plg.24.1711808844340;
+        Sat, 30 Mar 2024 07:27:24 -0700 (PDT)
 Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id z185-20020a6265c2000000b006ea80883ce3sm4808906pfb.133.2024.03.30.07.18.14
+        by smtp.gmail.com with ESMTPSA id l2-20020a170903244200b001e246cac31dsm1127120pls.188.2024.03.30.07.27.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Mar 2024 07:18:14 -0700 (PDT)
-Date: Sat, 30 Mar 2024 19:48:11 +0530
+        Sat, 30 Mar 2024 07:27:24 -0700 (PDT)
+Date: Sat, 30 Mar 2024 19:57:21 +0530
 From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] builtin/add: error out when passing untracked
- path with -u
-Message-ID: <b3j7l2ncstdiaxojtollxddmxvkbbeciou25yptguttr5qugmx@y3bzqbdxkyaw>
+Subject: Re: [PATCH v2 1/3] read-cache: optionally collect pathspec matching
+ info
+Message-ID: <gfwbrhhklmus4yyxkn3gi6jrt54azgqexi6kyb6snvs5dxlu4g@7g77due7iiq3>
 References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
- <20240329205649.1483032-5-shyamthakkar001@gmail.com>
- <xmqqzfugvhnf.fsf@gitster.g>
+ <20240329205649.1483032-3-shyamthakkar001@gmail.com>
+ <xmqqjzlkwwk9.fsf@gitster.g>
+ <xmqqo7awvg2w.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,117 +69,181 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqzfugvhnf.fsf@gitster.g>
+In-Reply-To: <xmqqo7awvg2w.fsf@gitster.g>
 
 On Fri, 29 Mar 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> > +	if (take_worktree_changes)
-> > +		exit_status |= report_path_error(ps_matched, &pathspec);
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> Hmph, are we sure take_worktree_changes is true only when
-> add_renormalize is false?
+> > A new parameter to run_diff_files() came as a bit of surprise to me.
+> >
+> > When I responded to the previous round, I somehow thought that we'd
+> > add a new member to the rev structure that points at an optional
+> > .ps_matched member next to the existing .prune_data member.  
+> >
+> > That way, it would hopefully be easy for a future code to see if a
+> > "diff" invocation, not necessarily run_diff_files() that compares
+> > the working tree and the index, consumed all the pathspec elements.
+> > If such a new .ps_matched member is initialized to NULL, all the
+> > patch noise we see in this patch will become unnecessary, no?
 > 
-> >  	if (add_new_files)
-> >  		exit_status |= add_files(&dir, flags);
-> 
-> If report_path_error() detected that the pathspec were faulty,
-> should we still proceed to add new files?  This is NOT a rhetorical
-> question, as I do not know the answer myself.  I do not even know
-> offhand what add_files_to_cache() above did when pathspec elements
-> are not all consumed---if it does not complain and does not refrain
-> from doing any change to the index, then we should follow suite and
-> add_files() here, too.
-Sorry if I'm missing something, but in your last line after '---', do you mean
-that we should proceed even after report_path_error() detected error like in
-the above patch or perhaps something like this:
+> This is how such a change may look like.  After applying [2/3] and
+> [3/3] steps from your series on top of this patch, the updated tests
+> in your series (2200 and 7501) seem to still pass.
 
-diff --git a/builtin/add.c b/builtin/add.c
-index dc4b42d0ad..eccda485ed 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -64,7 +64,8 @@ static int chmod_pathspec(struct pathspec *pathspec, char flip, int show_only)
-        return ret;
- }
- 
--static int renormalize_tracked_files(const struct pathspec *pathspec, int flags)
-+static int renormalize_tracked_files(const struct pathspec *pathspec,
-+                                    char *ps_matched, int flags)
- {
-        int i, retval = 0;
- 
-@@ -79,7 +80,8 @@ static int renormalize_tracked_files(const struct pathspec *pathspec, int flags)
-                        continue; /* do not touch unmerged paths */
-                if (!S_ISREG(ce->ce_mode) && !S_ISLNK(ce->ce_mode))
-                        continue; /* do not touch non blobs */
--               if (pathspec && !ce_path_match(&the_index, ce, pathspec, NULL))
-+               if (pathspec &&
-+                   !ce_path_match(&the_index, ce, pathspec, ps_matched))
-                        continue;
-                retval |= add_file_to_index(&the_index, ce->name,
-                                            flags | ADD_CACHE_RENORMALIZE);
-@@ -370,7 +372,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
-        int add_new_files;
-        int require_pathspec;
-        char *seen = NULL;
-+       char *ps_matched = NULL;
-        struct lock_file lock_file = LOCK_INIT;
-+       struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
- 
-        git_config(add_config, NULL);
- 
-@@ -487,7 +491,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
-        if (pathspec.nr) {
-                int i;
-                char *skip_worktree_seen = NULL;
--               struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
- 
-                if (!seen)
-                        seen = find_pathspecs_matching_against_index(&pathspec,
-@@ -544,18 +547,26 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
-                free(seen);
-                free(skip_worktree_seen);
--               string_list_clear(&only_match_skip_worktree, 0);
-        }
- 
-        begin_odb_transaction();
- 
-+       ps_matched = xcalloc(pathspec.nr, 1);
-        if (add_renormalize)
--               exit_status |= renormalize_tracked_files(&pathspec, flags);
-+               exit_status |=
-+                       renormalize_tracked_files(&pathspec, ps_matched, flags);
-        else
-                exit_status |= add_files_to_cache(the_repository, prefix,
--                                                 &pathspec, NULL,
-+                                                 &pathspec, ps_matched,
-                                                  include_sparse, flags);
- 
-+       if ((take_worktree_changes ||
-+            (add_renormalize && !only_match_skip_worktree.nr)) &&
-                                                  include_sparse, flags);
- 
-+       if ((take_worktree_changes ||
-+            (add_renormalize && !only_match_skip_worktree.nr)) &&
-+           report_path_error(ps_matched, &pathspec)) {
-+               exit_status = 1;
-+               goto cleanup;
-+       }
-+
-        if (add_new_files)
-                exit_status |= add_files(&dir, flags);
- 
-@@ -568,6 +579,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
-                               COMMIT_LOCK | SKIP_IF_UNCHANGED))
-                die(_("unable to write new index file"));
- 
-+cleanup:
-+       string_list_clear(&only_match_skip_worktree, 0);
-+       free(ps_matched);
-        dir_clear(&dir);
-        clear_pathspec(&pathspec);
-        return exit_status;
+This seems perfect. I hope you're OK with me using this patch as a base
+for patch [2/3] and [3/3]. :)
 
-Although I'm not sure if we should flush_odb_transaction() in the
-cleanup, because end_odb_transaction() would not be called if we go
-straight to cleanup.
+> ------- >8 ------------- >8 ------------- >8 ------------- >8 -------
+> 
+> Subject: [PATCH] revision: optionally record matches with pathspec elements
+> 
+> Unlike "git add" and other end-user facing command, where it is
+> diagnosed as an error to give a pathspec with an element that does
+> not match any path, the diff machinery does not care if some
+> elements of the pathspec does not match.  Given that the diff
+> machinery is heavily used in pathspec-limited "git log" machinery,
+> and it is common for a path to come and go while traversing the
+> project history, this is usually a good thing.
+> 
+> However, in some cases we would want to know if all the pathspec
+> elements matched.  For example, "git add -u <pathspec>" internally
+> uses the machinery used by "git diff-files" to decide contents from
+> what paths to add to the index, and as an end-user facing command,
+> "git add -u" would want to report an unmatched pathspec element.
+> 
+> Add a new .ps_matched member next to the .prune_data member in
+> "struct rev_info" so that we can optionally keep track of the use of
+> .prune_data pathspec elements that can be inspected by the caller.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/add.c      |  4 ++--
+>  builtin/checkout.c |  3 ++-
+>  builtin/commit.c   |  2 +-
+>  diff-lib.c         | 11 ++++++++++-
+>  read-cache-ll.h    |  4 ++--
+>  read-cache.c       |  8 +++++---
+>  revision.h         |  1 +
+>  7 files changed, 23 insertions(+), 10 deletions(-)
+> 
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 393c10cbcf..dc4b42d0ad 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -553,8 +553,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  		exit_status |= renormalize_tracked_files(&pathspec, flags);
+>  	else
+>  		exit_status |= add_files_to_cache(the_repository, prefix,
+> -						  &pathspec, include_sparse,
+> -						  flags);
+> +						  &pathspec, NULL,
+> +						  include_sparse, flags);
+>  
+>  	if (add_new_files)
+>  		exit_status |= add_files(&dir, flags);
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 2e8b0d18f4..56d1828856 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -878,7 +878,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
+>  			 * entries in the index.
+>  			 */
+>  
+> -			add_files_to_cache(the_repository, NULL, NULL, 0, 0);
+> +			add_files_to_cache(the_repository, NULL, NULL, NULL, 0,
+> +					   0);
+>  			init_merge_options(&o, the_repository);
+>  			o.verbosity = 0;
+>  			work = write_in_core_index_as_tree(the_repository);
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index b27b56c8be..8f31decc6b 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -444,7 +444,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>  		repo_hold_locked_index(the_repository, &index_lock,
+>  				       LOCK_DIE_ON_ERROR);
+>  		add_files_to_cache(the_repository, also ? prefix : NULL,
+> -				   &pathspec, 0, 0);
+> +				   &pathspec, NULL, 0, 0);
+>  		refresh_cache_or_die(refresh_flags);
+>  		cache_tree_update(&the_index, WRITE_TREE_SILENT);
+>  		if (write_locked_index(&the_index, &index_lock, 0))
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 1cd790a4d2..683f11e509 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -127,7 +127,16 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+>  		if (diff_can_quit_early(&revs->diffopt))
+>  			break;
+>  
+> -		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
+> +		/*
+> +		 * NEEDSWORK:
+> +		 * Here we filter with pathspec but the result is further
+> +		 * filtered out when --relative is in effect.  To end-users,
+> +		 * a pathspec element that matched only to paths outside the
+> +		 * current directory is like not matching anything at all;
+> +		 * the handling of ps_matched[] here may become problematic
+> +		 * if/when we add the "--error-unmatch" option to "git diff".
+> +		 */
+> +		if (!ce_path_match(istate, ce, &revs->prune_data, revs->ps_matched))
+>  			continue;
+>  
+>  		if (revs->diffopt.prefix &&
+> diff --git a/read-cache-ll.h b/read-cache-ll.h
+> index 2a50a784f0..09414afd04 100644
+> --- a/read-cache-ll.h
+> +++ b/read-cache-ll.h
+> @@ -480,8 +480,8 @@ extern int verify_ce_order;
+>  int cmp_cache_name_compare(const void *a_, const void *b_);
+>  
+>  int add_files_to_cache(struct repository *repo, const char *prefix,
+> -		       const struct pathspec *pathspec, int include_sparse,
+> -		       int flags);
+> +		       const struct pathspec *pathspec, char *ps_matched,
+> +		       int include_sparse, int flags);
+>  
+>  void overlay_tree_on_index(struct index_state *istate,
+>  			   const char *tree_name, const char *prefix);
+> diff --git a/read-cache.c b/read-cache.c
+> index f546cf7875..e1723ad796 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -3958,8 +3958,8 @@ static void update_callback(struct diff_queue_struct *q,
+>  }
+>  
+>  int add_files_to_cache(struct repository *repo, const char *prefix,
+> -		       const struct pathspec *pathspec, int include_sparse,
+> -		       int flags)
+> +		       const struct pathspec *pathspec, char *ps_matched,
+> +		       int include_sparse, int flags)
+>  {
+>  	struct update_callback_data data;
+>  	struct rev_info rev;
+> @@ -3971,8 +3971,10 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+>  
+>  	repo_init_revisions(repo, &rev, prefix);
+>  	setup_revisions(0, NULL, &rev, NULL);
+> -	if (pathspec)
+> +	if (pathspec) {
+>  		copy_pathspec(&rev.prune_data, pathspec);
+> +		rev.ps_matched = ps_matched;
+> +	}
+>  	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+>  	rev.diffopt.format_callback = update_callback;
+>  	rev.diffopt.format_callback_data = &data;
+> diff --git a/revision.h b/revision.h
+> index 94c43138bc..0e470d1df1 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -142,6 +142,7 @@ struct rev_info {
+>  	/* Basic information */
+>  	const char *prefix;
+>  	const char *def;
+> +	char *ps_matched; /* optionally record matches of prune_data */
+>  	struct pathspec prune_data;
+>  
+>  	/*
+> -- 
+> 2.44.0-413-gd6fd04375f
+> 
