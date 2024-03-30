@@ -1,97 +1,121 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24C42E3E8
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6326F1C0DE0
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711839658; cv=none; b=u1NntZQm2JLm86VJtfC05NUA8q5mAaZ6fWSbdBNNSb+eSYSIHf4PWwiiEFubJwTLcO/if0dhdDUw5iLOXI3TVHwSp3utclBkUntFLJLFRTAHSWnkmpTEJTO8yETBR+ZqQ1OxQ3u4nf5y2zupkqdI5AhEr6gw7PoKtFwSpKAynaI=
+	t=1711840240; cv=none; b=oeOQTfX5AF+4spNuGWR2nAU6R4wbQRXuOLprEVVZxeeeizyBQps9rVhTNPPJgTeiy7HO9HGuahy+s34E9v6ekKFD2gZahUJc2gQle5lJWCHxfd0ovO9A6WQLbWhHb3kKJ3EV2HtZts4G06x8RRhbjzpqnDOsxIBK0QZnspOVqZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711839658; c=relaxed/simple;
-	bh=DAst49a2PD18y4rmLI9/w5bZ4Cjg7UsdRAEsHg7j38Q=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=V0sUNcXp/Xcf8GWy7oBAcCBs3MW8b2Yq5vt9gSHoJEoLRUakgL5SCm200xrspH5tIW7G3/C5HM3cKJrI9SKopwgDBZNtS9ehrqTjQLYL+62d9shVO7g/oVvhwBFkUl+Vpv6RRgUCeitJ8M5q5eR47FkzFBdOt/7XC7lBP7c0tVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hV0CWCX7; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711840240; c=relaxed/simple;
+	bh=9ZiFbDD32iCHoBBX0pVil7k5PzicuREQxo/vYjmle/A=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=GlndLVdq+P/5GMPjggAFzd1beXikR+j/JQChN7RG7KxvDU0t2ixlL9uyzxJgfneb5VAFZ+Y2hXkC4sT/K2xrxFyNednAzKxOxxfuOD8zA/uAl7Fjnixo66McS2s2oe+bjve3N9Ripw2soXisWUzIY2LGqNBk7qJy72jpuFzyohg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=VBtHHJWY; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hV0CWCX7"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a4e0e3ef357so387514166b.2
-        for <git@vger.kernel.org>; Sat, 30 Mar 2024 16:00:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711839654; x=1712444454; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=c8OIERt3sbR7MKqQ0OSeukEYH4zlFwHhSDqBoRM9XhU=;
-        b=hV0CWCX7/951ynrocAYxuqbi0NeSY+3bzHdoHEznGCR50UhKlt1rKXTlPOAqne6vIE
-         4Re8KwH9qZwP2g+hMMcxxCa9QNHcqxbAdUoNuTxbkgFrGlI4mDlCJlc3T43xhseIUjuH
-         C3TGHhF0ZOr9EiC9VI48YUv//esBzfEB9x84iF1U4r3OfKCFGfpRqy0suzvy7dCrBIF6
-         5ICAEf3CAqwWQpma0VKb0t3yF+9muDOdAMeYocivjVkqhMyphlA2IniAc+SBLhiXwQFc
-         n8nu6HeQTd67XPfqTVbZsYlpgUBo2HiIcWtt863ppRXQ1v2JSDlRkrxA6KPLykwILEuE
-         EW5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711839654; x=1712444454;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c8OIERt3sbR7MKqQ0OSeukEYH4zlFwHhSDqBoRM9XhU=;
-        b=r2RYGtovaDLazhakDWnIQFXoqbXKp+fe03FCmo+zmEUD1Fz4TlaRH57uEiq2xQqMDn
-         XT553QF8VRo0Fvj8tciVKI0/IWruyvjBD8hlstopRbU1FcPPtnjFyOJdkGNjxn34hMvF
-         YTh2d20wJsDw3UCEtLl7mfbsoqBVz2sRDkn5yTpw0qLBNC1BGUccts/08+Oa3asBqcyK
-         /VYruPa5OGlebIBwKKCBMHCktu3XPZL7zBkP+VlJeMqRcZzaToJFkAIg9wqiVEUckGl3
-         PqIaGKsm8882OAx3Zpkqi2bd7QjdTSCWIox6lu6/aGTEpHA8QM3PexAoCNtvyqow+JhG
-         ulQw==
-X-Gm-Message-State: AOJu0YyXzgwpqOJM6IPbdlfCixOv5DHQDzYQ6XenKbelPMotjielfx/l
-	4UaOITz+EiCMVgGJFlbD3CaKyIGXXxZmgxZ0EqGBISI5s1tyt29LRWn4o6LCdFQ7fZYfyngPEV/
-	Rpdn3ZYcpzFreDyEaorJffoQvqFNW9mPmIOAvxQ==
-X-Google-Smtp-Source: AGHT+IEB6scJledqmgqsSTSEXn9U0p12RZsatzcfCqULWOeg+IIsKYi11Htzj2N1tc2auDyeCkhC/ZgKw7ePlNCp2eY=
-X-Received: by 2002:a17:906:b42:b0:a4e:5f3b:1b8d with SMTP id
- v2-20020a1709060b4200b00a4e5f3b1b8dmr219173ejg.10.1711839654185; Sat, 30 Mar
- 2024 16:00:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="VBtHHJWY"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:Message-ID:Subject:To:
+	From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=boxxmc2LBBWtaRw9KxEpbAtThmW3h1/O1bNcT5zFiaE=; b=VBtHHJWYy1AR1ZeeUyhNq/8zEz
+	GDU6IQrd/WJiwtQ3gsnHfVw8QG2oQm69gNNqXoAX/jYm7wL8WvxSbdnJGzMzX2WVtBR2PVFsSszvE
+	FJVjfYFEolbhIEL3lVgBvJA80Ub9hKhnQ3D397LIUsvSutlVzR8/qeKSrc0NQZkoAruJ7jIy1JrLC
+	RAvbJrJbBQI4kaPeH06DZQ93b923HnNbdpSn/iMaQR86ruGVS52w7iD2JQqWHiv+UNcyFH7Dkn9uH
+	al9IrhPh7L0ZZU0nMEVkv0T/GA51Quj3GciRxfhCrmOqTKy4ql0k4COCi5bjhrTnrQTchaXDP8GVW
+	QEPvQTyA==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:60142 helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1rqhqC-00000006vLl-2JKZ;
+	Sun, 31 Mar 2024 00:10:24 +0100
+Date: Sun, 31 Mar 2024 00:10:24 +0100 (CET)
+From: Peter Krefting <peter@softwolves.pp.se>
+To: git@vger.kernel.org, 
+    "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
+Subject: [PATCH v2] bisect: Honor log.date
+Message-ID: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sun, 31 Mar 2024 00:00:42 +0100
-Message-ID: <CAP8UFD25Dcz-Fk6wBaETX4G4OBucrexDqTd1jwH25tM3ixUhkg@mail.gmail.com>
-Subject: Draft of Git Rev News edition 109
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Bruno Brito <bruno@git-tower.com>, Harmen Stoppels <me@harmenstoppels.nl>, 
-	=?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>, Patrick Steinhardt <ps@pks.im>, Linus Arver <linusa@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Relay-Host: 185.114.57.50
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 
-Hi everyone,
+When bisect finds the target commit to display, it calls git diff-tree
+to do so. This is a plumbing command that is not affected by the user's
+log.date setting. Switch to instead use "git show", which does honor
+it.
 
-A draft of a new Git Rev News edition is available here:
+Reported-by: Michael Osipov <michael.osipov@innomotics.com>
+Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
+---
+  bisect.c | 25 ++++++++++---------------
+  1 file changed, 10 insertions(+), 15 deletions(-)
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-109.md
+This version also uses "--stat" which produces an output more like the 
+one from the diff-tree utility.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+GitHub's test run reports a single failed test (7300), but this passes 
+when I try it locally: 
+https://github.com/nafmo/git-l10n-sv/commit/2f27ae64064edc5c2570f1c9ea121f3f1a7283d7
 
-  https://github.com/git/git.github.io/issues/697
+diff --git a/bisect.c b/bisect.c
+index 8487f8cd1b..3d0100b165 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -959,23 +959,18 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
+  }
 
-You can also reply to this email.
+  /*
+- * This does "git diff-tree --pretty COMMIT" without one fork+exec.
++ * Runs "git show" to display a commit
+   */
+-static void show_diff_tree(struct repository *r,
+-			   const char *prefix,
+-			   struct commit *commit)
++static void show_commit(struct commit *commit)
+  {
+-	const char *argv[] = {
+-		"diff-tree", "--pretty", "--stat", "--summary", "--cc", NULL
+-	};
+-	struct rev_info opt;
++	struct child_process show = CHILD_PROCESS_INIT;
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+-	git_config(git_diff_ui_config, NULL);
+-	repo_init_revisions(r, &opt, prefix);
+-
+-	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
+-	log_tree_commit(&opt, commit);
+-	release_revisions(&opt);
++	strvec_pushl(&show.args, "show", "--pretty=medium", "--stat", "--no-abbrev-commit", "--no-patch",
++		     oid_to_hex(&commit->object.oid), NULL);
++	show.git_cmd = 1;
++	if (run_command(&show))
++		die(_("unable to start 'show' for object '%s'"),
++		    oid_to_hex(&commit->object.oid));
+  }
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+  /*
+@@ -1092,7 +1087,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+  			term_bad);
 
-Jakub, Markus, Kaartic and I plan to publish this edition on
-Monday April 1st, 2024.
+-		show_diff_tree(r, prefix, revs.commits->item);
++		show_commit(revs.commits->item);
+  		/*
+  		 * This means the bisection process succeeded.
+  		 * Using BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND (-10)
+-- 
+2.39.2
 
-Thanks,
-Christian.
