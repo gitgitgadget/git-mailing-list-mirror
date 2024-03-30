@@ -1,54 +1,59 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA7CEAC6
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 16:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97491C0DF8
+	for <git@vger.kernel.org>; Sat, 30 Mar 2024 17:06:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711817360; cv=none; b=A2cQx2KMCYfuuDaMw9tzyuDHJN9qXguq8oe6PUeulC5jfQnwrXA3OV/N8XeDATJiIS3cgCl7My0eYmYUOhIHioIPgTAsu3GPUDrnyWwFzLvcQXtyHCMVBSMhtsre4k7QS9Pz+PWHFnEb8j2S7+O0pOwwFI+yWLpJS386KyKJTms=
+	t=1711818373; cv=none; b=OvmjYV0dANj9TWCrWGbSwDNGmiXXl+TLqYEmg9sSh548rOZzbvQCEaAUzusYkXB7ftU2wtW7L1ogKVBssVutwRtrysYKW6PMfHjljUZ5fHs1lvpSbMgbNjigPWjzaqamlD0jxvc4dh0xdVzA6T5KrIPGzQipLFaZ79hZnwciKVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711817360; c=relaxed/simple;
-	bh=YUvSIoNr1Ti3srInkw2D+70CmqHtSAblFkQuNE2ZjUo=;
+	s=arc-20240116; t=1711818373; c=relaxed/simple;
+	bh=a/ln5bI1kEJ9bLuHeTqhk35sKxTETpNPoP2bNa4YPXo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KSL9trPBQaUhjX5472cb2brftOjP/3T+dY7qWimkd5ZoDBGZ7kHit2d4cwgtAYOcCqUPDT8xNdwli2vgfvFGtugOmTaLcOU7YW2Q/JHN9V/BrC4g6F7YAzWFm24qWtYrqk1MFMUSvcw6GbkcIZQExx/Eg2yhIzkj3mCnaWupYk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YeOY/KXI; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=jwovGVh51iSlMmw1Wrj55C1tzgfbCZkHRjq4F6TKn8+0tSDT1hYwr+agDwzgLRDfqEK5BcXrMrVSE3GdlxC0X6aVjsiKhK4zYqLefquYlnxIec5bLwsSBesTYh5r81FmVaPaetS5UQJBXtHox9M+HmRz0SgcaMXPS8aQHmgdeqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=o5lvGQcx; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YeOY/KXI"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 19B111EE104;
-	Sat, 30 Mar 2024 12:49:17 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o5lvGQcx"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFE931D4BD8;
+	Sat, 30 Mar 2024 13:06:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YUvSIoNr1Ti3srInkw2D+70CmqHtSAblFkQuNE
-	2ZjUo=; b=YeOY/KXIJySJ/KN8JCj0mFT1RhGcfI4vfRHUMe19nS63i7ugrHVxwJ
-	VrogFG+cRFlbapcs4RjLhgjg4I9FL2opcvb771weLvVzHx3FAEccnNQVgDPhr3jI
-	yUdcJyOM4Q15K0IuXLKizxBissgVE9xXILaAW92GkZOWduJwAvaow=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 103761EE102;
-	Sat, 30 Mar 2024 12:49:17 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=a/ln5bI1kEJ9
+	bLuHeTqhk35sKxTETpNPoP2bNa4YPXo=; b=o5lvGQcxNNfP5Ke+na4LVdOnYc2m
+	qHWBZG9xjpd0pA+8XnF7Ga9Aif0e54H0DgllDtUll7CW4zQcbYSY0CqQwn3zk23f
+	OBMDAUombKg55ykEw0BQYO891ZkGZW/upU1xywDvjH5vT/L3d1JD/xNGOgMxBHUZ
+	D4mJqeeUB/E1D1g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C62AE1D4BD7;
+	Sat, 30 Mar 2024 13:06:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6A93F1EE101;
-	Sat, 30 Mar 2024 12:49:16 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 370AF1D4BD6;
+	Sat, 30 Mar 2024 13:06:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] builtin/add: error out when passing untracked
- path with -u
-In-Reply-To: <b3j7l2ncstdiaxojtollxddmxvkbbeciou25yptguttr5qugmx@y3bzqbdxkyaw>
-	(Ghanshyam Thakkar's message of "Sat, 30 Mar 2024 19:48:11 +0530")
-References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
-	<20240329205649.1483032-5-shyamthakkar001@gmail.com>
-	<xmqqzfugvhnf.fsf@gitster.g>
-	<b3j7l2ncstdiaxojtollxddmxvkbbeciou25yptguttr5qugmx@y3bzqbdxkyaw>
-Date: Sat, 30 Mar 2024 09:49:15 -0700
-Message-ID: <xmqqh6gnmzqs.fsf@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] improve interactive-patch
+In-Reply-To: <c19f444c-f4ad-497b-a82d-4f6195b44fce@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Fri, 29 Mar 2024 20:26:04 +0100")
+References: <2c99dee8-fa6b-4f4f-93b4-3f7a8e0901f9@gmail.com>
+	<6f2ed406-2152-476b-b463-3010afe7e11e@gmail.com>
+	<59f19783-a663-449d-a1ef-3a9ebc43cc59@gmail.com>
+	<xmqq5xx9dn6q.fsf@gitster.g>
+	<eabf30e0-091e-475a-b59f-16b1091763ed@gmail.com>
+	<xmqqcyrgajrp.fsf@gitster.g>
+	<c19f444c-f4ad-497b-a82d-4f6195b44fce@gmail.com>
+Date: Sat, 30 Mar 2024 10:06:00 -0700
+Message-ID: <xmqqsf07lkef.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,102 +61,54 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 72059A0E-EEB5-11EE-88F4-25B3960A682E-77302942!pb-smtp2.pobox.com
+ C9853C6A-EEB7-11EE-A104-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-> On Fri, 29 Mar 2024, Junio C Hamano <gitster@pobox.com> wrote:
->> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
->> > +	if (take_worktree_changes)
->> > +		exit_status |= report_path_error(ps_matched, &pathspec);
->> 
->> Hmph, are we sure take_worktree_changes is true only when
->> add_renormalize is false?
->> 
->> >  	if (add_new_files)
->> >  		exit_status |= add_files(&dir, flags);
->> 
->> If report_path_error() detected that the pathspec were faulty,
->> should we still proceed to add new files?  This is NOT a rhetorical
->> question, as I do not know the answer myself.  I do not even know
->> offhand what add_files_to_cache() above did when pathspec elements
->> are not all consumed---if it does not complain and does not refrain
->> from doing any change to the index, then we should follow suite and
->> add_files() here, too.
-> Sorry if I'm missing something, but in your last line after '---', do you mean
-> that we should proceed even after report_path_error() detected error like in
-> the above patch or perhaps something like this:
+> I do not plan to address this in this series, but while the topic is
+> warm;  Perhaps?:
+>
+> --- >8 ---
+> @@ -1450,7 +1451,7 @@ static int patch_update_file(struct add_p_state *=
+s,
+>  		if (file_diff->hunk_nr) {
+>  			if (rendered_hunk_index !=3D hunk_index) {
+>  				render_hunk(s, hunk, 0, colored, &s->buf);
+> -				fputs(s->buf.buf, stdout);
+> +				fputs_to_pager(s->buf.buf);
+>  				rendered_hunk_index =3D hunk_index;
+>  			}
 
-We roughly do:
+For this particular application, such a "I have the whole thing in
+core, send it to the pater" API might be sufficient, but it may not
+be usable if the existing code sends its output in pieces already.
 
-	if (add_renorm)
-		exit_status |= renorm();
-	else
-		exit_status |= add_files_to_cache();
-+	if (take_worktree_changes)
-+		exit_status |= report_path_error();
-	if (add_new_files)
-		exit_status |= add_files();
+I was envisioning an API more along the lines of
 
-I was wondering if we should refrain from adding new files when we
-exit_status is true to avoid making "further damage", and was
-wondering if the last one should become:
+	/*
+	 * pager control data structure
+	 */
+	struct pager_control;
 
-	if (!exit_status && add_new_files)
-		exit_status |= add_files();
+	/*
+	 * Start a pager, from now on, what we write to our fd #0
+	 * and stdout are fed to the pager.  The function returns
+	 * 0 on success, or -1 on failure.
+	 */
+	int redirect_fd_to_pager(struct pager_control *);
 
-But that was merely because I was not thinking things through.  If
-we were to go that route, the whole thing needs to become (because
-there are other things that notice errors before this part of the
-code):
-	
-	if (!exit_status) {
-		if (add_renorm)
-			exit_status |= renorm();
-		else
-                	exit_status |= add_files_to_cache();
-	}
-	if (!exit_status && take_worktree_changes)
-		exit_status |= report_path_error();
+	/*
+	 * We have written everything we want to write to the
+	 * pager.  Tell the pager that we are done.  Wait until
+	 * the end-user quits the pager and then give us control
+	 * back.  The fd #0 and stdout are restored.
+	 */
+	int wait_for_pager(struct pager_control *);
 
-	if (!exit_status && add_new_files)
-		exit_status |= add_files();
-
-but (1) that is far bigger change of behaviour to the code than
-suitable for "notice unmatched pathspec elements and report an
-error" topic, and more importantly (2) it is still not sufficient to
-make it "all-or-none". E.g., if "add_files_to_cache()" call added
-contents from a few paths and then noticed that some pathspec
-elements were not used, we are not restoring the previous state to
-recover.  The damage is already done, and not making further damage
-does not help the user all that much.
-
-So, it was a fairly pointless thing that I was wondering about.  The
-current behaviour, and the new behaviour with the new check, are
-fine as-is.
-
-If we wanted to make it "all-or-none", I think the way to do so is
-to tweak the final part of the cmd_add() function to skip committing
-the updated index, e.g.,
-
-         finish:
-        -	if (write_locked_index(&the_index, &lock_file,
-        +	if (exit_status)
-        +		fputs(_("not updating the index due to failure(s)\n"), stderr);
-        +	else if (write_locked_index(&the_index, &lock_file,
-                                       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-                        die(_("unable to write new index file"));
- 
-And if/when we do so, the existing code (with or without the updates
-made by the topic under discussion) needs no change.  We can do all
-steps regardless of the errors we notice along the way with earlier
-steps, and discard the in-core index if we saw any errors.
-
-The renormalize() thing is not noticing unused pathspec elements,
-which we might want to fix, but I suspect it is far less commonly
-used mode of operation, so it may be OK to leave it to future
-follow-up series.
-
-Thanks.
+so that any subpart of existing code can be enclosed inside the two
+calls, keep writing to fd#0/stdout as before, and we'd page only
+that part of the output from the program without changing anything
+else.
