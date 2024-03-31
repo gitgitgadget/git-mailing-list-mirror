@@ -1,84 +1,122 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01275144D24
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 22:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D9014532A
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 22:20:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711923197; cv=none; b=I2AB8H3vtaNEJVnwZJKqHMA/REjDNtSnpOmbJuEZCZ4ielZa6o1YZ3IYwmmhFQ8caqS2ut2vKpspmC3ytWtOswwiTMVvTggD071aIcJYybaYqNmM68WStHKOxRjMainM7WxdvThguSE+xUMN7xeS4uaVmULO87YxyUdGhfKF0J4=
+	t=1711923627; cv=none; b=gMhFfrrdcd1T3InFSEB9H0LMHFGceYAXFRofhtMoHiVT8qxtgjigDHsFB+BYwnhkSZ8H+JRV+HG3MvYMu7qHCHs5HFmW/z3S1yAO6RRV5kMLpTQEIu/6/3ykFEabfPMWSeFNGtbTsDUw0x4l6zQideAg7/IsaPglDeng2ThrdUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711923197; c=relaxed/simple;
-	bh=Fo/lYGw5NdADHiz5iWIpmwgORU4GiiX0PUXLOoM62Hc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=lOEHOweKu/qr6U6bqd6pdPIF83fgkoTlBGTyUWxL1L8CawWemalMIDhuzqI8nHojjkrYLRC17Fy5+0LYWdldCAKEJb4evHF64HnWeuumhpHHA4ZmdfFwigNU7X6oFV9J8K5oRzF/E2cAD1yiUJrEpQdQDbZfWIIgb7v21higIcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qziaw9PD; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711923627; c=relaxed/simple;
+	bh=7ab8qFj4Xm2hvBC6XMnXqgubJswLS1dlT+yGHD31GmU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=j1RW1Bn/LY/2hN0FFXraTRrI+32nt1Uzx2xKhegiMHLE9hyti1rc+WlY7+HSj0K8xVYhodZLVpk+ZGw6maQW5pY/5+LkDniqVizXnVBmSaPNHJIA2wQqbdOayWPdHEJPMQdo1FicWBGQZt3xiWm+bqvSzecTMw1ZjZvcKge2YlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SlxFjlzi; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qziaw9PD"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33eee0258abso1898426f8f.3
-        for <git@vger.kernel.org>; Sun, 31 Mar 2024 15:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711923194; x=1712527994; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Fo/lYGw5NdADHiz5iWIpmwgORU4GiiX0PUXLOoM62Hc=;
-        b=Qziaw9PDb73CF6Rf0xgoIV0M5VDnMTITbOpgIiKR6JZic80eXXy9TvPlxPv8IhdmON
-         UfUS2NDMojJF3F3WeCSK2+tfj03EtiphVvv6XU6oZK95i8XldLqCdaVj2yABdx8ZxYV5
-         W7zdxt0ElBftse3gPbnyi7r7YzhOsUhf1zViA8gd+tWyEDp80hz1ldKupSA9g090Y6vk
-         L4Bkcfn7iXZmDQcEjtb4JjRL7Zfe8Rp9JDrY7zMdWlLiVx7XWLKvBKg+Qd4+QRh207Qm
-         s8EJw1TdEuw/zF1L3IaNpwCZoEyzSQSypq1OUtKbyPtQ9EqXJ6mselzNP5lrFp9XtlVQ
-         Z+EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711923194; x=1712527994;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Fo/lYGw5NdADHiz5iWIpmwgORU4GiiX0PUXLOoM62Hc=;
-        b=M/YgLUM49df2jgUsXO4Ntd9d4KdgLzHoznW25PqxI3Bmf6kauALOs8nHsY/Jt8gQVy
-         Qgt94lS2nGs2g0uS7HaE5YquYA9OZ5oH2eb0x2OmKq8X4VlWKhFWLSPunRygjf8yAXWk
-         sC54r2ztkbfBHVJySa3ttIS9UnZD+w9wLo9eBmR17Nvqunr2tJLyhNzLpwopzM1gokMB
-         bAx3pehtaJklPsR+3nBPYbVA0aTTknVaHPhqbE3kw+qd2oPriHMB+Kw1UqnBgijgUvtI
-         B4HDROBHO8MuLE9ErizWnxu1mzpIjsaGSUPQuPiG9fWwaqAb9271q7m2gQu5cqHRO7wy
-         1cXw==
-X-Gm-Message-State: AOJu0Yxad3bCvaEr8hGScyviit8dhQx7zpomBFgjDyCYtdQszwkQAMY3
-	lVa4jakhzyxmNQUWSbG+FKzX+oQ76eChpY6PiIeKh5kxw9CRgB8bTQzL3pb2pqT7SbsbL8Y1Dbc
-	G1+yHeO2rAUw3IEIFsWTEfdPP8dDxTbQMdMs=
-X-Google-Smtp-Source: AGHT+IGa4gsD56CCRen1KYGkODbwzo16FhwqcuBKlEjW0sLfryGSC09FIIPyknsn3VBCxyD5fbJdkTq6dWk4oFztn4w=
-X-Received: by 2002:a05:6000:1212:b0:33d:a944:54c0 with SMTP id
- e18-20020a056000121200b0033da94454c0mr4652914wrx.22.1711923194073; Sun, 31
- Mar 2024 15:13:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SlxFjlzi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B86A1E01C4;
+	Sun, 31 Mar 2024 18:20:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7ab8qFj4Xm2h
+	vBC6XMnXqgubJswLS1dlT+yGHD31GmU=; b=SlxFjlziSuyGRNF+OTyga1jM3Ndo
+	tcUffdG/JM+RU+kYABXADcmQnBK1a2p25YdA1lzatSsrZyZEhOeaGu8QuQ6RTlfh
+	nVFA1x9sqMEOyMJgKJsCIUQmMw0ISB6GF9OPE0l5lQTvBLlytfdvlEpfzXuBvdq3
+	AZzb0BfpZCtGaks=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42F7B1E01C1;
+	Sun, 31 Mar 2024 18:20:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 973921E01C0;
+	Sun, 31 Mar 2024 18:20:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] advice: omit trailing whitespace
+In-Reply-To: <3e35b731-333e-4b46-9c0c-089b5c47fe99@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Sun, 31 Mar 2024 10:11:08 +0200")
+References: <xmqq4jcooddp.fsf@gitster.g>
+	<fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
+	<4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com>
+	<xmqqcyraj3z7.fsf@gitster.g>
+	<0f43cd7b-a366-4ec2-9577-93708e21f2ff@gmail.com>
+	<3e35b731-333e-4b46-9c0c-089b5c47fe99@gmail.com>
+Date: Sun, 31 Mar 2024 15:20:22 -0700
+Message-ID: <xmqqo7auf3h5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Nude F. Ninja" <nudefninja@gmail.com>
-Date: Sun, 31 Mar 2024 23:13:03 +0100
-Message-ID: <CAOSCdbFg8jY1_0JE0+xf8oxrJjx-Kj0Cb0pPg3oUAXMN5q=kzw@mail.gmail.com>
-Subject: :/regex syntax picks stash entries over regular commits
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ DE329270-EFAC-11EE-B519-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-I ran git stash push, which created the stash entry "On main: dark
-mode". Then I committed changes before noticing an oversight with the
-previous commit. I wrote the fix and ran git commit --fixup :/dark
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-What did you expect to happen? (Expected behavior)
-The fixup commit should have referenced the previous commit.
+>> > > and move the "hint" literal to the args, to ease the translation w=
+ork:
+>> > > -               fprintf(stderr, _("%shint:%s%.*s%s\n"),
+>> > > +               fprintf(stderr, "%s%s:%s%.*s%s\n",
+>> > >                         advise_get_color(ADVICE_COLOR_HINT),
+>> > > +                       _("hint"),
+>> > >                         (np =3D=3D cp) ? "" : " ",
+>> > >                         (int)(np - cp), cp,
+>> > >                         advise_get_color(ADVICE_COLOR_RESET));
+>> >=20
+>> > It is not guaranteed that any and all languages want to use a colon
+>> > immediately after translation of "hint"; the current message string
+>> > with or without my patch allows translators adjust that part to the
+>> > target language, but your version will force them to always use only
+>> > a colon there.  Is that an improvement?  I somehow do not think so.
+>>=20
+>> I was just thinking if leaving the format open to the translation is a
+>> sane option.  Maybe we can move the colon to the literal in the args,
+>> too.
+>
+> Just for the record, zh_CN (Chinese) and zh_TW (Traditional Chinese)
+> do not use ':' on its translation, but '=EF=BC=9A'
+>
+> So, if we go the way I proposed we'll need to move the ':' too.  I
+> still think it's an improvement.  But, optional to this series.
 
-What happened instead? (Actual behavior)
-It referenced the stash entry.
+It is making it even worse.
 
-What's different between what you expected and what actually happened?
-I cannot autosquash the commit that refers to the stash entry. I
-suggest adding an option to prefer (older) regular commits over
-(newer) stash entries when specifying a commit with the :/regex
-syntax. In any case I think it's a bug for the --fixup option to
-readily produce a commit that does not work with the --autosquash
-option which it seems it was designed for.
+Giving larger unit to work with to translators is usually a better
+for i18n than chopping a single logical message into multiple pieces
+and paste them together in the code, as your untranslated
+format-string (e.g., "%s%s:%s%.*s%s\n" we see above) will force the
+word order in the final output.
 
+I think the patch at the beginning of the thread is more than
+serviceable, but if we wanted to improve on it, we should go in the
+opposite direction, e.g.
 
-[System Info]
-git version:
-git version 2.39.3 (Apple Git-146)
+	if (np =3D=3D cp)
+		fprintf(stderr, _("%shint:%s\n"),
+			advise_get_color(ADVICE_COLOR_HINT),
+			advise_get_color(ADVICE_COLOR_RESET));
+	else
+		fprintf(stderr, _("%shint: %.*s%s\n"),
+			advise_get_color(ADVICE_COLOR_HINT),
+			(int)(np - cp), cp,
+			advise_get_color(ADVICE_COLOR_RESET));
+
+to give translators flexibility to choose what kind of space to use
+(including "none") after "hint:".
+
+I am not going to do that, though, until/unless somebody complains
+and says "there is no inter-word spaces and it is more customary not
+to have a space after the translation of 'hint:' in my language".
