@@ -1,80 +1,101 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5502905
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 06:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663552F3B
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 07:04:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711867890; cv=none; b=J1t088gm/RUL08Sly4p2apMA04cKCqD+gDSph+G3gMUEw9eIoZWM89Fq4poALI9ZqvYOpFGCLhds7+L6nGc4eSDrqOy/7CEfpwwubbNol0qjeQJYCINk5IdWNbZMv9YAlkDri8Wwfdt38ld7jpmHmnfhfLWuXfNFqAN9YovAnnM=
+	t=1711868672; cv=none; b=tBcikNZVi2oMhLMaHFFaR1KexrrEZZoY5HbX+XCoP2VIORM1YKSaIH+RfVRLjxUIat8wTDlIz6a8WbsF22Kt6ks2IOn++UDWUfHOXVv2KDXD6BqHDpxFIrrme4ObKnze9j5/woG8xf2BUBhTE4rv3mSojp9mqVQZXfWHx2A9LYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711867890; c=relaxed/simple;
-	bh=A2zfDofGLjk9/XbcRRvTsjBIeUFv8XkJmHA+PmJJkxU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M0s6NGp0rwzNq3yMBpuWlQ+av3mtNrIPVdnGa3+HEvqGbH1ZkBbKhkZxg1QLvX/rOUuTILok5Ny1falp1wsyUw+i5sSKGBn4RBCojpFooWgQlaJ/UTiNhfyrJmU+2FKuA1mRn/w7Y11p6hR1qbWy1YiegDJ+NS0WzVIpjV6I+so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1711868672; c=relaxed/simple;
+	bh=kRqaq66M0LBN1RpAJwXon7SbYtQndqGo98WP8ucnb6g=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
+	 In-Reply-To:Content-Type; b=bb4f3f51rXEKDQbRKxB7dePTf4JVEOa4jYRaYhPuJsmZacGc4vWY7LlRlp1rm7yxrEy9it3ECqM5F74+Ap4FqTL/yvD2rhufIDJTO9OabVMLjohwBBphchJ8iDcojoJqJNr/+t52bNvVGBJNVOocnUMKKxDmGEqqj5TYvsxsxhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NV4yiphZ; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6964b1c529cso27170016d6.0
-        for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:51:28 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NV4yiphZ"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4148c6132b4so23350085e9.1
+        for <git@vger.kernel.org>; Sun, 31 Mar 2024 00:04:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711868669; x=1712473469; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Zuw+eJ9sqDPpgW7H2hsuL9ADtjxnPRf5UsY2LYCFqNM=;
+        b=NV4yiphZujSnXEOOlqaCWGoBdy4EaejF2h/lm7Z6DvAfi+zTTB+3Ysa/PlDgvHNjLD
+         lvcIbVJZu4CjYkdYp+MYXcknOmb85tWIFED8keyb7T7HIGTT3W+7Urwpxnu8OPIx8C6s
+         u5+gt6H2ZCef/rK+27u4G9VaZpzC8tLUOY7GdoYvnCQfJEPvaULdMdfgJN+Hhk+Nk0Em
+         /J2hN0nZlau7nbZKp1Vsd9s8dEiZVC8xYZ955bZwCv/hlm0yL1gyASHiDRBqME7ETIr+
+         byvsFnLqLAl0fRXWHqoP2rBINSfrxLegFXClE9l3QOizncP8fm+FsctSHtksJPHUS276
+         cKYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711867888; x=1712472688;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A2zfDofGLjk9/XbcRRvTsjBIeUFv8XkJmHA+PmJJkxU=;
-        b=s9cMN/2N1QzVEHqLxziTiD35yNlpxkb9u9fQyTkWtFz8Awt4+FXaXQrR/lX7e+e+Ki
-         U/tCZiYtL1heDbSvojlXo20B8bwm1w9A34cLmSvMerd1s+DLW2May6b0Ouns6aQTjGkS
-         +wBECFYo+zUjC+SWpONiBWOsOvTZvEVnYN1C2ToJmFkLQ67HLF5SrL2p8dfZ6TjKCEj4
-         wTcerB/HCmXb0fNlaKQvruYQwTlZH+1Ug5al09L62LXn4kCyUWP8Msl/4IpFZY0OmhWd
-         eivAX4/YgV5XGQtoB0P5HGFQAUKcnSAEcDiMUd5S1QIltYgrdMxeEoI0rWqiR8gGwFgU
-         oYQg==
-X-Gm-Message-State: AOJu0YxP7zBbyzOmGR6AFunqfYY5G2qZNokhgRS1SlthicaxcSvzmGq+
-	Nmd3cGf7a2krgVvoPg4h03pHrv/9NHD7QGDuDX09xm5YzPEUhrvb8QJAyZvY6DhukFV+MZN3U29
-	weh9RXqeCGCxVHWz3avEBeH+UnCQ=
-X-Google-Smtp-Source: AGHT+IE9oonChngHHqPx4E7CwaqxZHuMbSh5aiC7jdwDKcasdKhsfqB42NjB5FQzbh/DkRlJ4NsqHjgMX8SIOVIScl4=
-X-Received: by 2002:a05:6214:2484:b0:699:415:2326 with SMTP id
- gi4-20020a056214248400b0069904152326mr1067888qvb.56.1711867887722; Sat, 30
- Mar 2024 23:51:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711868669; x=1712473469;
+        h=content-transfer-encoding:in-reply-to:cc:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zuw+eJ9sqDPpgW7H2hsuL9ADtjxnPRf5UsY2LYCFqNM=;
+        b=uJV6GHbZK72KdGsHgb2j/FhZ9vmWiYcS/hSvz279Y72Zl73Dgs5HP0G3WRGxfvezP+
+         ChAmKaGtC4vQ55Jw2dxMk2TiJLEGezmZI3lQY5DMZds04Jtr3pbUteVP0H++BiCD5yiL
+         asAN9E4ImjlyNMxSh52IMbrDPN6Q9SdC/2JHpOUUbXhP8rJQx+C6LsH93vp2QeG1R9ge
+         cTJIOmIp8RZtUgeLDoZhITd9Sk44IZYvx5XCDk3n4G/No0DzW4jokhNe0BmhKSFcRazr
+         nUe1oQ87w6S8NCbBS8rfZgxHemUD5tXQFxmtOEbe4t9HFWVfNWhLRKKgltU1OkX1ubMo
+         JL+g==
+X-Gm-Message-State: AOJu0YydTn8CuYDO9K8/R1SQmBRlupFjs05qarO2HTX3f7/t0lSbo3cO
+	+goi0ZX4R2Dr/9RNBxz6ICzqwEtukAjVcVvI+cTQMy4BebAH7hIv3ySqiire
+X-Google-Smtp-Source: AGHT+IG0mQH/DNA7eq0qNJghtga95dEy59mvxmtMIHfFb858BP8aznsvRRiGLZnaq4YTWa0gOJOAOg==
+X-Received: by 2002:adf:ec86:0:b0:341:d306:88eb with SMTP id z6-20020adfec86000000b00341d30688ebmr8205930wrn.31.1711868668533;
+        Sun, 31 Mar 2024 00:04:28 -0700 (PDT)
+Received: from gmail.com (26.red-88-14-197.dynamicip.rima-tde.net. [88.14.197.26])
+        by smtp.gmail.com with ESMTPSA id z2-20020a05600c0a0200b00415515263b4sm6634081wmp.7.2024.03.31.00.04.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 Mar 2024 00:04:28 -0700 (PDT)
+Message-ID: <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
+Date: Sun, 31 Mar 2024 09:04:06 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqmsqhsvwk.fsf@gitster.g> <20240329222703.9343-1-ericsunshine@charter.net>
-In-Reply-To: <20240329222703.9343-1-ericsunshine@charter.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 31 Mar 2024 02:51:16 -0400
-Message-ID: <CAPig+cQApMC_UEgee06e=jbu9VoNHQT10hCU1OAQtpn1W7Fqmw@mail.gmail.com>
-Subject: Re: [PATCH] test-lib: fix non-functioning GIT_TEST_MAINT_SCHEDULER fallback
-To: Eric Sunshine <ericsunshine@charter.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] improve bugreports
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Emily Shaffer <nasamuffin@google.com>
+In-Reply-To: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 29, 2024 at 6:27=E2=80=AFPM Eric Sunshine <ericsunshine@charter=
-.net> wrote:
-> When environment variable GIT_TEST_MAINT_SCHEDULER is set, `git
-> maintenance` invokes the command specified as the variable's value
-> rather than invoking the actual underlying platform-specific scheduler
-> management command. By setting GIT_TEST_MAINT_SCHEDULER to some suitable
-> value, test authors can therefore validate behavior of "destructive"
-> `git maintenance` commands without having to worry about clobbering the
-> user's own local scheduler configuration.
->
-> In order to protect an absent-minded test author from forgetting to set
-> GIT_TEST_MAINT_SCHEDULER in the local test script (and thus clobbering
-> his or her own scheduler configuration), t/test-lib.sh assigns an
-> "immediately error-out" value to GIT_TEST_MAINT_SCHEDULER by default
-> which should ensure that the problem will be caught and reported before
-> any damage can be done to the configuration of the person running the
-> tests.
->
-> Unfortunately, however, t/test-lib.sh neglects to export
-> GIT_TEST_MAINT_SCHEDULER, which renders the default "error-out"
-> assignment worthles. Fix this by exporting the variable as originally
-> intended.
+On Sat, Mar 23, 2024 at 06:32:35PM +0100, Rubén Justo wrote:
+> Let's try to improve the readability of the bug reports we receive.
+> 
+> The first message should not receive many comments.  The second one
+> might.  I'm open to suggestions.
+> 
+> Thanks.
+> 
+> Rubén Justo (2):
+>   bugreport: add a new line between questions
+>   bugreport: add a mark to each proposed questions
+> 
+>  builtin/bugreport.c  | 16 ++++++++--------
+>  t/t0091-bugreport.sh | 12 ++++++++----
+>  2 files changed, 16 insertions(+), 12 deletions(-)
+> 
+> -- 
+> 2.44.0.494.g7a0daf3e0d
 
-s/worthles/worthless/
+This series received no response.  One option may be because it went
+unnoticed, another because it may not add value.  I'm going to give it
+another try and I'll quietly :-) take silence as confirmation of the
+second option. 
 
-(I won't reroll just for this minor typo.)
+I'll try to increase the chances of getting a "looks good" by CC'ing
+some folks involved in the bugreport tool.
+
+Thanks.
