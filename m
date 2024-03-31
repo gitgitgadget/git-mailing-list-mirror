@@ -1,142 +1,144 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA1414532A
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 22:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF808144D19
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 22:58:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711924059; cv=none; b=ffhoDzTqIU3W+X9weHI0gymXW6HHBo/21sUbibGCydudp/aq7Vy3NmEaFuHNwIEev6pqCg4PSEtlNgCpWlNdOoUCSu2l1naXEkGF91mc9VKJsasNkm6HTGGTzSHW/dR5vQUkskB4zd/qJALMsAmVGJa2wS/5IqBC1Phwa04gtSw=
+	t=1711925915; cv=none; b=WtI/zq3qGKUwaRZfmDsuNRiRP5XKrka+P3CiDuns2SDeE3/fMe+yZbxONN+/OxTJINJH69W1DV4RrbNRQ23J9otyheaqyOskgLE1ciZgTds+rPw3uArMc24VdMhIFw5JLl+WqUXDObsfaZUpy3SnL+Qbu+VBj1bzTWxq5XRMykQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711924059; c=relaxed/simple;
-	bh=JWrJ5wCzwBoq6qv6NmGmbWY974Mir5cqaj0SPDrhFdI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hgECYCc8moybthmjagKtYpLrgC9XlmJVAk/GRX8k8LQeP5Hq+thX2zYuUqGxffQ3BFCjZw0YhbnOLXxPapijmj1ojVHuqAs3lytOWa3CjJj0Lf1bPIpNBXbv2S52rqe5fg8gXJ5vB0RVoy7DTZ7bRBDHw/n62xAEQP5eAhZGERM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5X+YVpC; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711925915; c=relaxed/simple;
+	bh=+5PPvpOpc3iZyGEFtEyrkLUrtOE/fsVMo84SV+XtRN0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r/QWTTdGFQuG+HVqaPbg3ua113KK5389wbkdiJU3UTPRB0A4fomi9cT7WPmY6iU2ZqJWR5dLikULQqLCQpKZXO+GvTw4k6gY0qNwyUkIIRNdnAS6U78Xad1St5J+kQoUsW/FS9Ka2dtkh8povN/8xRwuMUyRRdtCmMdptJhYzp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EAo3oR2z; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5X+YVpC"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56bc8cfc19fso3704446a12.1
-        for <git@vger.kernel.org>; Sun, 31 Mar 2024 15:27:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711924056; x=1712528856; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lrS3O25xtiqQXozIELIwNWzEmEY9o5tKOXmnawrR/Ek=;
-        b=V5X+YVpCvMl9GOSmEd2Se3dfk5/6gGUyA6zqlUWHqpNzWY1Sl0WN9k69xFoK3kXKYS
-         MLbkPeU6Sc9y+iWHlWzW8lbMQTLKmtszDPCN5Nmw3bN0RimuvzRh6m7vS7EoqmNbLzGB
-         BzRtnGaSqvJJNpSVBfm5YpovSZSjCC+my+GaAR1JJ4h0mExb9ojkXKTm/Hzx0KkesfhY
-         kcnqUQYyc8GMzm6jNfUvvA089osoO5/ruRDtHwXvi1mKjs/hz+RV/jmCNBFIKfHBlef0
-         D9anQtpIM+w7AlR3h6H8hYhp8alHBMTU8lur9/sjc7bAraVKg3lnxDKh0X3GbIzRKKyG
-         /XiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711924056; x=1712528856;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lrS3O25xtiqQXozIELIwNWzEmEY9o5tKOXmnawrR/Ek=;
-        b=Dyp5BRAoRL6tGtL6/xF/0udR8DDig/DeITfY7qo3+1eLmuVqhqSs9+qOjTEg7dBBuU
-         iCNxHw4sAy6Q2ZHAvrBtaWE0KVdrfpTbBO+4bFn9gZZ2BcmQ6hpp/Lr8+RRUvPvOwQEE
-         N0YkWId2gt9Omhz5g8GxXS6BLu6bcwZvpgcPCgG9Sl5T91byCZ4oz9N1TWdBHQegO2A0
-         YTcE18b9XFi00BvanYoReQNaOar2r4srtqUGTfx4H7RRftvafazmfIA2r6yhEucMTpFc
-         MdXi3YZ+yxq3CiQzp/8E8R9NlLIHHCXz3jfL9PoxpicXmM41yJFivrrQWZlSidZWmim3
-         kGiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXopU/9jzTRbMq++MejgN5KuIqfOXXy0S9gboqNvgaXRL900va7p9k8ScyhdLxnLdxUXG+Emp21zaMR0O+ZPI1cdlTE
-X-Gm-Message-State: AOJu0YzX8/4/xUdZg7ReQu05QDSPo3foadhn7GICqir3IWUJ8ykNyM4Y
-	ukK0Kxl3q5oaLBzrhHUVPhOJlzqh5QELeZhWU8DI9RknLAf8Yah3jsZPhQRh2lsUpILr0JitOJX
-	SDWgvjvzUnDoD50m3H0ihY8192u0=
-X-Google-Smtp-Source: AGHT+IF6/PstFXLR2godX0e2muPeOMGky7O9pC5zG+0NQX6Q7IyImdpw+LUjVqV6pgkqvQLL0ykclf863Wgk8hpIn20=
-X-Received: by 2002:a50:8d0c:0:b0:56a:ae8a:acc0 with SMTP id
- s12-20020a508d0c000000b0056aae8aacc0mr4823175eds.21.1711924055707; Sun, 31
- Mar 2024 15:27:35 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EAo3oR2z"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id F1A6C37750;
+	Sun, 31 Mar 2024 18:58:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+5PPvpOpc3iZyGEFtEyrkLUrtOE/fsVMo84SV+
+	XtRN0=; b=EAo3oR2zffkkvjcuNHsnLY0noiaCB/ShFKRMDPprf6wvVIRqyxlFOD
+	Iad8cwzEQWFhxne+GXXnN+lKGzryo2sj5TYFrHagplw4fTMI7PA2whTJ0LioyRRE
+	9hhMLVNtKaFmWDqc5h0H5VTpf9wT3cKZ4Yci2XcXDBBi6U0bvB584=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EA91E3774F;
+	Sun, 31 Mar 2024 18:58:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7AE7E3774E;
+	Sun, 31 Mar 2024 18:58:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Peter Krefting <peter@softwolves.pp.se>
+Cc: git@vger.kernel.org,
+    "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>,
+    Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] bisect: Honor log.date
+In-Reply-To: <5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se> (Peter
+	Krefting's message of "Sun, 31 Mar 2024 18:10:32 +0100 (CET)")
+References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
+	<xmqqh6gni1ur.fsf@gitster.g>
+	<5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se>
+Date: Sun, 31 Mar 2024 15:58:21 -0700
+Message-ID: <xmqq7chif1pu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240330224623.579457-1-knayak@gitlab.com> <20240330224623.579457-8-knayak@gitlab.com>
- <xmqqy19yf40l.fsf@gitster.g>
-In-Reply-To: <xmqqy19yf40l.fsf@gitster.g>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Sun, 31 Mar 2024 15:27:24 -0700
-Message-ID: <CAPx1GvdXdH3OdY1nC2ijVSdpWfg8jn5=j0KB+Wgv70wWeCNH5g@mail.gmail.com>
-Subject: Re: [PATCH 7/8] refs: add 'update-symref' command to 'update-ref'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2D1DB9D2-EFB2-11EE-858F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Sun, Mar 31, 2024 at 3:09=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> ... we are giving to "update-symref" is not an object name, but a
-> refname (i.e. the target of the symref at <ref> points at), so
-> "newvalue" -> "new-ref" or something is needed.
+Peter Krefting <peter@softwolves.pp.se> writes:
 
-I kept this line just to say, I agree on all of the above ...
+> There are a lot of parameters to show that I have haven't used in my
+> 14+ years of using Git, --summary is one of them. That's why I didn't
+> add it.
 
-> Existing "update" command can be used to create (by having "zero"
-> <old-oid>) and to delete (by having "zero" <new-oid>), but we still
-> have "create" and "delete" separately.  Given that we are teaching
-> the command to also work with symrefs by adding command(s) for
-> symrefs to an existing vocabulary, we should offer "create-symref"
-> and "delete-symref" for consistency between refs and symrefs.
+Yup, that is semi-understandable, but especially given that it is
+one of the options used by the original "diff-tree"'s invocation,
+and that we are trying to replace it with "show" from the same
+family of commands, it is a bit of disappointment.
 
-.. and on this, but:
+We know we used to drive "diff-tree" with a known set of options,
+and we are replacing the command to use "show" with some other set
+of options.  I expected it to be fairly straight-forward and natural
+to feed randomly picked commits to the two commands and compare
+their output while deciding what that "some other set of options"
+should be.  It is exactly the reason why I mentioned v1.0.0^0 is a
+good test case.
 
-> It probably is a good idea to allow "update-symref" to also create
-> and delete a symref in similar ways with the existing "update"
-> allows creation and deletion of a ref.  An "zero" <old-ref> may be
-> an update that can happen only when the <ref> does not exist, i.e.,
-> creation, and an "zero" <new-ref> may be an update that makes <ref>
-> disappear.
->
-> "zero" value in the context of refs is a 0{40} object name (side
-> note: we have an explicit mention of 40 in the doc, which needs to
-> be updated eventually, probably outside this series).  But in the
-> new context of symrefs, a safe "zero" value needs to be picked
-> carefully.  An empty string may not work well syntactically
-> especially in the `-z` format, because you cannot tell if
->
->         update-symref NUL HEAD NUL refs/heads/main NUL NUL
->
-> wants to say that <old-ref> is an empty string, or if it is missing.
+Again, the output from them do not have to be identical---we are
+primarily after catching unintended loss of informatino in such a
+comparison, while gaining more confidence that it is a better
+approach to use "show" output to produce output for end-user
+consumption.
 
-For these reasons, I'd suggest that the all-zero hash be officially
-deprecated in favor of create/delete and of course create-symref
-and delete-symref. Of course, compatibility requires some sort
-of support for the old system for some time.  As to whether that
-means something like the suggestion of ".missing" etc, I have no
-particular opinion -- but since the symref options are new, they
-would not *need* symmetric options, if we just say that "update-symref"
-cannot create or delete a symref.
+We have changed the bisect output before, as recent as in 2019 with
+b02be8b9 (bisect: make diff-tree output prettier, 2019-02-22), and
+heard nobody complain, so once we get to a reasonable set of options
+and land this patch, maybe we can try improving on it safely.
 
-Meanwhile, for testing purposes I was curious as to what happens
-if you ask `git update-ref` to delete an existing symref, so after
-creating a test repository:
+FYI, attached is a comparison between the diff-tree output and
+output from show with my choice of options for "show" picked from
+the top of my head.  I do not think I personally like the --stat
+output applied to a merge (--stat and --summary do not work N-way
+like --cc does for patch text), but I think these options are the
+closest parallel to what we have been giving to "diff-tree".
 
-$ git branch
-* main
-  symref -> main
-$ git update-ref --stdin
-delete refs/heads/symref
-$ git branch
+Thanks.
 
-Whoops, this doesn't look good...
+---------------------- >8 ----------------------
+$ git diff-tree --pretty --stat --summary --cc v1.0.0^0
+commit c2f3bf071ee90b01f2d629921bb04c4f798f02fa
+Merge: 1ed91937e5cd59fdbdfa5f15f6fac132d2b21ce0 41f93a2c903a45167b26c2dc93d45ffa9a9bbd49
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Wed Dec 21 00:01:00 2005 -0800
 
-Restoring the branch name (I had saved the hash ID Just In Case):
+    GIT 1.0.0
+    
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-$ echo d88ee82e6a5c29c95f712030f5efc9d43116ae79 > .git/refs/heads/main
+ .gitignore                                       |   1 -
+ Documentation/diff-options.txt                   |   8 +
+ ...
+ tar-tree.c                                       |   4 +-
+ unpack-objects.c                                 |  13 +-
+ 66 files changed, 778 insertions(+), 617 deletions(-)
+ delete mode 100644 Documentation/git-octopus.txt
+ ...
+ mode change 100644 => 100755 t/t5500-fetch-pack.sh
+ mode change 100644 => 100755 t/t6101-rev-parse-parents.sh
 
-brings things back, after which this works properly:
+---------------------- >8 ----------------------
+$ git show -s --stat --summary --first-parent v1.0.0^0
+commit c2f3bf071ee90b01f2d629921bb04c4f798f02fa
+Merge: 1ed91937e5 41f93a2c90
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed Dec 21 00:01:00 2005 -0800
 
-$ git branch -d symref
-Deleted branch symref (was refs/heads/main).
-$ git branch
-* main
+    GIT 1.0.0
+    
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-If this (deleting the target of the symref when using "delete")
-is a bug, and I think it is, that's a separate topic of course...
-
-Chris
+ .gitignore                                       |   1 -
+ Documentation/diff-options.txt                   |   8 +
+ ...
+ tar-tree.c                                       |   4 +-
+ unpack-objects.c                                 |  13 +-
+ 66 files changed, 778 insertions(+), 617 deletions(-)
+ delete mode 100644 Documentation/git-octopus.txt
+ ...
+ mode change 100644 => 100755 t/t5500-fetch-pack.sh
+ mode change 100644 => 100755 t/t6101-rev-parse-parents.sh
