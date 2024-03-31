@@ -1,58 +1,58 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663552F3B
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 07:04:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2A579CC
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 07:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711868672; cv=none; b=tBcikNZVi2oMhLMaHFFaR1KexrrEZZoY5HbX+XCoP2VIORM1YKSaIH+RfVRLjxUIat8wTDlIz6a8WbsF22Kt6ks2IOn++UDWUfHOXVv2KDXD6BqHDpxFIrrme4ObKnze9j5/woG8xf2BUBhTE4rv3mSojp9mqVQZXfWHx2A9LYQ=
+	t=1711869141; cv=none; b=jw4wMVlTZrLUB2N7Tel7LZVU2QHeVOQkWxeQRVNqJgFomm2348tKFRZ/UEDE/1mA5eWAf0v26SZfykgf/wSps7aBmr3X4+HhxB9ZT9LiQ21/HtNYpLeINNSwBfXfFDiVb1EvlgV3naOp92CZ9abdl+3XOKwYHN0mk4yR55TWi/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711868672; c=relaxed/simple;
-	bh=kRqaq66M0LBN1RpAJwXon7SbYtQndqGo98WP8ucnb6g=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=bb4f3f51rXEKDQbRKxB7dePTf4JVEOa4jYRaYhPuJsmZacGc4vWY7LlRlp1rm7yxrEy9it3ECqM5F74+Ap4FqTL/yvD2rhufIDJTO9OabVMLjohwBBphchJ8iDcojoJqJNr/+t52bNvVGBJNVOocnUMKKxDmGEqqj5TYvsxsxhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NV4yiphZ; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1711869141; c=relaxed/simple;
+	bh=tM21bXargaiwJw4P71LxlXRlXF891T64o+nLxDWJzS0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aLh0It2QFKZOx8gv5xWsEOIg6TtIVcZAW1W9OEI1NBpAY2SRIt+zlOEMf3V+yGhH1jt06sgnWPH3tQhUmiKeT4n3YaMb7Mcrt/y4kCJPJsIMm9xnrEayO86eQN1KxdI1KriRTirH6ZK377pkZlAj+VVseJLfuNOdNHXRicZ9iBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9T3afOw; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NV4yiphZ"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4148c6132b4so23350085e9.1
-        for <git@vger.kernel.org>; Sun, 31 Mar 2024 00:04:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9T3afOw"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4148c6132b4so23365515e9.1
+        for <git@vger.kernel.org>; Sun, 31 Mar 2024 00:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711868669; x=1712473469; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1711869139; x=1712473939; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Zuw+eJ9sqDPpgW7H2hsuL9ADtjxnPRf5UsY2LYCFqNM=;
-        b=NV4yiphZujSnXEOOlqaCWGoBdy4EaejF2h/lm7Z6DvAfi+zTTB+3Ysa/PlDgvHNjLD
-         lvcIbVJZu4CjYkdYp+MYXcknOmb85tWIFED8keyb7T7HIGTT3W+7Urwpxnu8OPIx8C6s
-         u5+gt6H2ZCef/rK+27u4G9VaZpzC8tLUOY7GdoYvnCQfJEPvaULdMdfgJN+Hhk+Nk0Em
-         /J2hN0nZlau7nbZKp1Vsd9s8dEiZVC8xYZ955bZwCv/hlm0yL1gyASHiDRBqME7ETIr+
-         byvsFnLqLAl0fRXWHqoP2rBINSfrxLegFXClE9l3QOizncP8fm+FsctSHtksJPHUS276
-         cKYw==
+        bh=ozmA49dhhoeDc20FXkBigaQGJVDi6TGCfXO+0/40gV0=;
+        b=X9T3afOwhAGQuv43xI6DqvdUu8hQrHS+2l80Llx/cmEEOSSK3c/vtHTiMkp22vKlhz
+         0qR3CAc1sbPo4yCh40SzWsfwL9ORgLwmdpTvsFzgwPlgYFgiAMtHMCD1c+dETJI9+eng
+         HSODfNzsrfZwXocf9KZnXna09ZUfiLWuvi0QEn3b8DjZmWRsNsucV4gOInhSEpcn0wgj
+         Kvs2BCm/4nEtQYgP3siBEB4xO18msNwGkhiDNG5s/XsdhXbCsqlRTJBvPWAhuiXDPo0h
+         dEM4G4Oig4xBwF8K0wSztvUKhnYTYPtaw93aN6IQB+7syhOYhQ6Zh7tMF0d3KyTRNy57
+         Gw4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711868669; x=1712473469;
-        h=content-transfer-encoding:in-reply-to:cc:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1711869139; x=1712473939;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zuw+eJ9sqDPpgW7H2hsuL9ADtjxnPRf5UsY2LYCFqNM=;
-        b=uJV6GHbZK72KdGsHgb2j/FhZ9vmWiYcS/hSvz279Y72Zl73Dgs5HP0G3WRGxfvezP+
-         ChAmKaGtC4vQ55Jw2dxMk2TiJLEGezmZI3lQY5DMZds04Jtr3pbUteVP0H++BiCD5yiL
-         asAN9E4ImjlyNMxSh52IMbrDPN6Q9SdC/2JHpOUUbXhP8rJQx+C6LsH93vp2QeG1R9ge
-         cTJIOmIp8RZtUgeLDoZhITd9Sk44IZYvx5XCDk3n4G/No0DzW4jokhNe0BmhKSFcRazr
-         nUe1oQ87w6S8NCbBS8rfZgxHemUD5tXQFxmtOEbe4t9HFWVfNWhLRKKgltU1OkX1ubMo
-         JL+g==
-X-Gm-Message-State: AOJu0YydTn8CuYDO9K8/R1SQmBRlupFjs05qarO2HTX3f7/t0lSbo3cO
-	+goi0ZX4R2Dr/9RNBxz6ICzqwEtukAjVcVvI+cTQMy4BebAH7hIv3ySqiire
-X-Google-Smtp-Source: AGHT+IG0mQH/DNA7eq0qNJghtga95dEy59mvxmtMIHfFb858BP8aznsvRRiGLZnaq4YTWa0gOJOAOg==
-X-Received: by 2002:adf:ec86:0:b0:341:d306:88eb with SMTP id z6-20020adfec86000000b00341d30688ebmr8205930wrn.31.1711868668533;
-        Sun, 31 Mar 2024 00:04:28 -0700 (PDT)
+        bh=ozmA49dhhoeDc20FXkBigaQGJVDi6TGCfXO+0/40gV0=;
+        b=nO2Cq5T2mJ4V9atXup4HiGsLFWrphkNffG1jntQyiWKiyQEgRcii3KULP4sDGkqRdM
+         HrKVZuyIe6d2LmElG+h+2nZGL83TlrItaUpdMr6IwSd4bp3Slb65V4lQaI4P/VTEM43u
+         Ypz56G/xgF7ir5R1vAGK8xpLOJe/2+tBpfnIyyzqg0YBFN22Wzhah2OgF3nhqN9tCaMH
+         +WwVeGa06Fk6aXGiRZAYP1Q81J9ccloRURgymUEoiDX5tLkETWZKTbpYTv6q9w0i/bz5
+         /YMvRblKNOm21P0loNIeuiyTycLdn6ZafyM0uGkUeVB1qZOmmoIopBH6YvUpHSXntsN1
+         xTLg==
+X-Gm-Message-State: AOJu0YyJ2UDWSgAZCyFBMmlspgX4obuXyYvCkgilM/gxjZiZ15HDYpWq
+	a/5srQcyNUi0/JyYBJDS30qnDk8Fc0XVcHcSBvRbRY6XhJFDu88TPAnS1rVS
+X-Google-Smtp-Source: AGHT+IFcGPdZRm5RaYdK11UAfAnQbVQIG4mwiMhqw25I84790k2N91gkZDurA3Sy7F8m0mwN0RUHWg==
+X-Received: by 2002:a05:600c:4f85:b0:414:8c84:5f43 with SMTP id n5-20020a05600c4f8500b004148c845f43mr7849298wmq.14.1711869138489;
+        Sun, 31 Mar 2024 00:12:18 -0700 (PDT)
 Received: from gmail.com (26.red-88-14-197.dynamicip.rima-tde.net. [88.14.197.26])
-        by smtp.gmail.com with ESMTPSA id z2-20020a05600c0a0200b00415515263b4sm6634081wmp.7.2024.03.31.00.04.21
+        by smtp.gmail.com with ESMTPSA id bg3-20020a05600c3c8300b0041481207b23sm10850943wmb.8.2024.03.31.00.12.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 Mar 2024 00:04:28 -0700 (PDT)
-Message-ID: <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
-Date: Sun, 31 Mar 2024 09:04:06 +0200
+        Sun, 31 Mar 2024 00:12:18 -0700 (PDT)
+Message-ID: <0f43cd7b-a366-4ec2-9577-93708e21f2ff@gmail.com>
+Date: Sun, 31 Mar 2024 09:11:59 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,42 +60,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] improve bugreports
-Content-Language: en-US
+Subject: Re: [PATCH] advice: omit trailing whitespace
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <xmqq4jcooddp.fsf@gitster.g>
+ <fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
+ <4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com> <xmqqcyraj3z7.fsf@gitster.g>
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Emily Shaffer <nasamuffin@google.com>
-In-Reply-To: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqcyraj3z7.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, Mar 23, 2024 at 06:32:35PM +0100, Rubén Justo wrote:
-> Let's try to improve the readability of the bug reports we receive.
+On Sat, Mar 30, 2024 at 11:43:40PM -0700, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
 > 
-> The first message should not receive many comments.  The second one
-> might.  I'm open to suggestions.
+> >> >  	for (cp = buf.buf; *cp; cp = np) {
+> >> >  		np = strchrnul(cp, '\n');
+> >> > -		fprintf(stderr,	_("%shint: %.*s%s\n"),
+> >> > +		fprintf(stderr,	_("%shint:%s%.*s%s\n"),
+> >> >  			advise_get_color(ADVICE_COLOR_HINT),
+> >> > +			(np == cp) ? "" : " ",
+> >> >  			(int)(np - cp), cp,
+> >> >  			advise_get_color(ADVICE_COLOR_RESET));
+> >
+> > Thinking again on this I wonder, while we're here, if we could go further
+> > and move the "hint" literal to the args, to ease the translation work:
+> > -               fprintf(stderr, _("%shint:%s%.*s%s\n"),
+> > +               fprintf(stderr, "%s%s:%s%.*s%s\n",
+> >                         advise_get_color(ADVICE_COLOR_HINT),
+> > +                       _("hint"),
+> >                         (np == cp) ? "" : " ",
+> >                         (int)(np - cp), cp,
+> >                         advise_get_color(ADVICE_COLOR_RESET));
 > 
-> Thanks.
-> 
-> Rubén Justo (2):
->   bugreport: add a new line between questions
->   bugreport: add a mark to each proposed questions
-> 
->  builtin/bugreport.c  | 16 ++++++++--------
->  t/t0091-bugreport.sh | 12 ++++++++----
->  2 files changed, 16 insertions(+), 12 deletions(-)
-> 
-> -- 
-> 2.44.0.494.g7a0daf3e0d
+> It is not guaranteed that any and all languages want to use a colon
+> immediately after translation of "hint"; the current message string
+> with or without my patch allows translators adjust that part to the
+> target language, but your version will force them to always use only
+> a colon there.  Is that an improvement?  I somehow do not think so.
 
-This series received no response.  One option may be because it went
-unnoticed, another because it may not add value.  I'm going to give it
-another try and I'll quietly :-) take silence as confirmation of the
-second option. 
+I was just thinking if leaving the format open to the translation is a
+sane option.  Maybe we can move the colon to the literal in the args,
+too.
 
-I'll try to increase the chances of getting a "looks good" by CC'ing
-some folks involved in the bugreport tool.
-
-Thanks.
+In any case, the patch is OK as it is.
