@@ -1,109 +1,70 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87785146D6E
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 18:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E96FCC
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 20:21:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711911193; cv=none; b=fIdggggL4+5VVgyuzQZnB+mAth6b7d5VLc5FdX/eJRfHhGPhOwmDJOI47yj4Z98Oqc+Md3Spyme2sN1Fbh0OxpmTpOS15iqQU0XLHkg/v1ApbQxYL1RH0fne9a01WoYzsGQKSkK+4RffDc663SnT6QwSldF+4FjpywHWv+huqRY=
+	t=1711916479; cv=none; b=GnrjKQd/axXYcHDLIwuq3obPz0hSgkE3JAZyt92MQdH66uBMJOSQuHNpMc7bt9P+A7QI8rfmMaSLipI5w96jpNk5E1gQmo8el5uSrr+US7eZBCxA2nxJ+zd9uQ0Jl0SMFqEwLjXp/8mlmLUa/8m/A2mYE8kQkg+BaCTG3g0PcOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711911193; c=relaxed/simple;
-	bh=bMpch+5qpvH5ZmIKbAIb6y0IUBWoexWyS+zmqjVIQec=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=YgNOWoHg3d6pjOcENzmVw8BHEmUKTS0YfLMc/R63CtVEuSsZ2qgIsSM5Sn8PaWkBrW631m1lk8yImYTeWzdbLNmCch4Bdyuu7lZWs/oGtp6/DwwYp9YFjhgNHsb9BQKuX6cRq4bcjgg7lIOpOZ82gLYDSv55w7BqOsyuoDEsSa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Ni8s78qy; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1711916479; c=relaxed/simple;
+	bh=0usSLrgHa0TeRo8jYK38K/t61ev7LeMxjc/AeCKUiW4=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=s7NM6Q/PfmpHpfdDwwmUTznPb+vaNFrDrD4wJCQ3OEWeD/KBz/CV7ZyPOKQCylCBw3hFbeOOscHTDnCTYpFc23maOD0/hyHASTxgkm256cmISsQfL3PATmfxtVq7g92dSMLwZzxH9lZXvgUP3RV2/YgSRlUz6avaT/eEREOMbpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=JhnR6OlN; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Ni8s78qy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1711911188; x=1712515988; i=l.s.r@web.de;
-	bh=eivzBLd8ZNZVf0xV4/odW6/+MS7GHO1zsmD/cU/mS/c=;
-	h=X-UI-Sender-Class:Date:To:From:Subject;
-	b=Ni8s78qyI1NSR+27rUhlYtBTeqtJmesiMWlHoBmveh0u/iRtlyJNG6r7UOKvXNel
-	 sTzmVbFXY0jk32YtHicuHle5CHPB14gRe3umfS705QDssTYgxRK5uQO8aUrnxpkOy
-	 Gf5rBh6akYuGXpth65TOSSg42tqrCQppUQbvzI6scGEhI1ZPnrCKCQtBlv2eHmwXX
-	 mmDbVnBaUpUZLydS9wRywsuZTLcxRrUgIotMvrn83pst8zSNsH3dGjWboPa+tWCrx
-	 2jLV8SnzFBrqWxTTaDyA3GHsrxOydClTjXUV0+1EQ34Ce9vLdLFjYOLUNC1dI54xX
-	 qnTY0cuBI8ODq0sNGA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M76XN-1ruZjf0K7T-008IXT for
- <git@vger.kernel.org>; Sun, 31 Mar 2024 20:53:08 +0200
-Message-ID: <bbe00b9e-64d8-4ec8-a2b9-2c6917c72dbd@web.de>
-Date: Sun, 31 Mar 2024 20:53:07 +0200
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="JhnR6OlN"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] mem-pool: use st_add() in mem_pool_strvfmt()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ajyxNXusKEYN/64wAedlk1fEDSxuOuHtcrV/6A7AyPjGzu3ijpv
- 3V+Z2TCqKmPyWOiyII1n5vwfzLSVjN10iIVsh9wAIbwp7TRXNKD4Dhythp5AAUWKSjk1KId
- Xx5Pm1QEv+iX0IvcskRwSJc+Unlunb8aEsz9NIq8uPdA0BCKGCdChhGOJ4KSCQ9j45Oa2sA
- G58FpkTje9F9rrcWrd+WA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:cm+OCI/6fNw=;MWzKMJ2CSavUBI9htN7EphNHkf0
- E1PUcwv6n5n5BdJVORPT/3P5acJasK8BNZSgjrWLz8afBbzogYNSN8DmVoj2KftioFnBzoQry
- 3y7iF0x9VDmgUF8bUDyb8lpCU1l3qwVBnBC9a8PebDT+ustQHH2fA5Gc8QAXis9iYNpDLFiyo
- mzTsnJYDfbVGn01ktZshgaDVx2NSYOM6FwvPF2kGnSd0r/vs3Owo1C2DI6zuqainNhtvF3ScB
- ocNNLDMF3GAnjC0vWzCa5sTjRBGt7ZfWOOtGz5sQhnzYWCHFm929sw9I46U+mYQYZ2I3L8D6a
- g8vOAp/6+EJiMOQNPqAHA+WUQLDSgZseaDZu0X/Zf3oj7Qibk4xkr0+yFS6AVfYvAfvGGqq47
- m4C7DZSrtOm4+2ArS8gPkjmHMj9c3NnfXeA5Ml1HaXjmZLFSh+h+KZYrb4gjX28LGLlHIFEa/
- Adc494jd6K1DB8MCBhz1XzAfg62Eb8OOBPBGzxweS/0AYXS3K+FwtfeMBY451bWvXfk0MVke5
- VPO+Aj5QzKvr7cVnQUSF+J0JkeS5PmgZ/J+Gz5X6Cu8dfrsBebhFC7JLw//5RFNq1bZ7aJxDZ
- yuAoLdzwrT0wFl+pz5sKqEBBHTc+MYPU2o1f0CIh4UvyGnZK13hFnj6qSRYGj1NCcNkCot8wU
- YbX3SP27hYEtmYX/Riyb2ZwWvv5Ti6nratuKZ8jUDkObjbTyjLw8mlsM0+/th16R/7Hru4ed+
- Y06pcppdQw4rxiDdZvIjth15L+SvIyBSHbtqmwdGtaaaGrgLl8CqGmO6EFikmbe2NUofEhNO6
- K4C5zqdKsAV5SkOGGuCggoCm3jjhMYnAF0Avad+X3WMd0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1711916474;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y58zYEap9QMTjbE0z5HedNbyLZk23jBMbCt/AxGC58c=;
+	b=JhnR6OlNODnPq4giWhMQdmGOrGXAc6i0VI0/fI73bMAemrpPts+KLcOcmErzXK5XzSFoRZ
+	ALQw71pkcnbyclhEasa7zCJDlUUIT48p2cl8r8s4z82hLil/5uXhF8meFZxHmfS6YcxS+C
+	jQMdhFtiPNmMkbnNRAgO9dTZuJEO3lCUVpGVLWeCO8/ZzwnbtBJ6t1Sm/s1SlZuDhJhlhi
+	E97jLmSsesI7AXJhX7wLcMXihW2yQ1lBgN/XlnCPx414utb1DaU8Mwz8zWU86HGjCafu3z
+	EMcDH16wPd6wDYZAVO5wJBdf5zoQXXOeYK+SWEhbMoVkrGGT1DQRCeimw7XyXA==
+Date: Sun, 31 Mar 2024 22:21:13 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] config: fix some small capitalization issues, as spotted
+In-Reply-To: <xmqqo7avlaqn.fsf@gitster.g>
+References: <6f6f821fc090fb59f632fcdbd061154b897b1244.1711772691.git.dsimic@manjaro.org>
+ <xmqqo7avlaqn.fsf@gitster.g>
+Message-ID: <769daf078b53d62f8232209b5547e6ed@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-If len is INT_MAX in mem_pool_strvfmt(), then len + 1 overflows.
-Casting it to size_t would prevent that.  Use st_add() to go a step
-further and make the addition *obviously* safe.  The compiler can
-optimize the check away on platforms where SIZE_MAX > INT_MAX, i.e.
-basically everywhere.
+Hello Junio,
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- mem-pool.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On 2024-03-30 21:34, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>>  On some file system/operating system combinations, this is 
+>> unreliable.
+>> -Set this config setting to 'rename' there; However, This will remove 
+>> the
+>> +Set this config setting to 'rename' there;  however, this will remove 
+>> the
+>>  check that makes sure that existing object files will not get 
+>> overwritten.
+> 
+> Looking good, except that we do not want double-space after a
+> semicolon.
 
-diff --git a/mem-pool.c b/mem-pool.c
-index 2078c22b09..3065b12b23 100644
-=2D-- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -115,6 +115,7 @@ static char *mem_pool_strvfmt(struct mem_pool *pool, c=
-onst char *fmt,
- 	size_t available =3D block ? block->end - block->next_free : 0;
- 	va_list cp;
- 	int len, len2;
-+	size_t size;
- 	char *ret;
-
- 	va_copy(cp, ap);
-@@ -123,13 +124,14 @@ static char *mem_pool_strvfmt(struct mem_pool *pool,=
- const char *fmt,
- 	if (len < 0)
- 		BUG("your vsnprintf is broken (returned %d)", len);
-
--	ret =3D mem_pool_alloc(pool, len + 1);  /* 1 for NUL */
-+	size =3D st_add(len, 1); /* 1 for NUL */
-+	ret =3D mem_pool_alloc(pool, size);
-
- 	/* Shortcut; relies on mem_pool_alloc() not touching buffer contents. */
- 	if (ret =3D=3D next_free)
- 		return ret;
-
--	len2 =3D vsnprintf(ret, len + 1, fmt, ap);
-+	len2 =3D vsnprintf(ret, size, fmt, ap);
- 	if (len2 !=3D len)
- 		BUG("your vsnprintf is broken (returns inconsistent lengths)");
- 	return ret;
-=2D-
-2.44.0
+Thanks, I'll send a v2 that fixes this issue.
