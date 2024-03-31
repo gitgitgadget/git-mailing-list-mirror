@@ -1,116 +1,129 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176918495
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 08:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC7E145347
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 17:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711872680; cv=none; b=P6Sz3nJGF0RcSYeZtvDrZiSd+9egMB4/rPoxdeT6XtJvMuAemKO9lSrjqmfhP92T1mPvRfWWlRdQFEOVgFUuTf6udfAEpbeq8cUdxPBvcCrK8mejttDizSSfBQxw49yMsFtiQI2YhQRAk9DeEhw2iFu9XNfcuC035syYdCwIzxQ=
+	t=1711905043; cv=none; b=O9/rwqh3DKxXbb8rimodeSBE6QyfLnMwdio0SRrZ5XK2hM3AB6J0FcXas5Q2FyJITHXpeLSjP81xqNVyoGI95NXl5euEzlhp3lEHXoEWPXYrHfFwA9up0tFdGGecIUEKOkejI+d7QhqvM/ekQWb43Ac2xQyd4SdZX3BuGD20Nrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711872680; c=relaxed/simple;
-	bh=EPNBS2lW9kT+I6Gx56Ft3i6ilBf13vCa19YZe8W9Ce8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=L4hWu/wXfna/OPjYFdmgNTrMdqh98pOnEX33cyYOa8113lBCsmovnYGNEcPd+MgrUv9P0iPGHld3r7ZZrxSbxnBi7d/xMygzZWqB353oerUdldbY4WarWHcgX91pcE2Kt/ctD5QsWF66cJ0nYcexK2yNiEhAigAMfZBFpqmnLc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ESl84dy2; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711905043; c=relaxed/simple;
+	bh=+ADAIheL/N3HtkIbFaWhhLJpx1HgyEJ9RK1CVz2oPeE=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=kgojfDiwJlUzJWIjk5XOBJFxoFMtNwkRWCcWjg2feVo+qYtIaGZalfvTQG7OSog558nJi+nXZhPFiYzDL0ALqbHZ+BrB9kBRcqVvzdo+eVp1M2/cX1qzZxicgbX33T8ZKsCXEBRqTDpwYc9B/9eOrO0gghRgCnwmypwzTpd1IPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=tJ11lWr/; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ESl84dy2"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-513d599dbabso4047728e87.1
-        for <git@vger.kernel.org>; Sun, 31 Mar 2024 01:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711872677; x=1712477477; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZMxp7L6nYf1iyxdX31WtCe31AJ+2D2s9JqJ+cI6eYCg=;
-        b=ESl84dy2YBC4Axh2E8PLyVvnGlVD/mt7eZn+keEasgjrMPRILlecYI4mDqxj5mWiJ4
-         fEHQyKpDUMiW4O91U76Z59VdCgaQVNvU0Ocw2R/2nEcssWcOFbwoyl95lRPIkKVEYRkZ
-         kdtsunr88kT1hhnbhdBwmdRxCNkW53z+XoY9OKAV87mMmGFRrisoImrdUuWu7qM6/uPG
-         k/c4hAFrlgjm5m/gmjYyUSjSkfJQDlqLjwfF23uzyqwxnoebBNoFJb16DcIt1FPp3rTO
-         ujwtR0bLTAODt9dAnPMgbuNz3rXPCDD5Ifj18ghEgBmUwpNZupkkGo+jmRms8WaGk9tM
-         JErA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711872677; x=1712477477;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZMxp7L6nYf1iyxdX31WtCe31AJ+2D2s9JqJ+cI6eYCg=;
-        b=f9yndpXvtKXY0C/ZEexm+V0e1uAepo04c1XEmpUlISufAu3MMVrKohjTm58idrzi05
-         rsJxFk9VnvWlF8gDSVs2Qjnek5/MljNzM5zcbpsSTzGJoIR475n07GL5fw0Vi1EhUucn
-         eJ87m+Qv/vh2ylxYx9oZWuzOWjeGL5IN9+OO2Xc25YsFx5WHOicfBJzRducHeOmDA2Gr
-         JskHWm1pC6LlQithcOwZhMJR1IqaHtRFsX8pJURIzFAlHNmBod/COdxh8cir7lAlYmu+
-         wI80i1DK0BLWA5JrXmfPh5NAJMqyB0wU/SfjiZ585pzb2CIs4/8DTJf5J5r0cNOIiu4Q
-         VbiQ==
-X-Gm-Message-State: AOJu0YxH7NCBzXH5ETq8ixZU7DaRPzAdciVL3z5/5CCItm+RZA4I6MyH
-	XjOsIt58iHkl+8B2KZllYXvUKk43qUjeMvvO4y0kwyCrpS0kqCBr
-X-Google-Smtp-Source: AGHT+IGZb5Q9sNjN2heyBvJBV3fX317nvMMuP0Dl+X3lRuAvD486I6K5XFESvB8i1NthCz4JWHHhDA==
-X-Received: by 2002:ac2:5e9c:0:b0:513:c4d9:a0d9 with SMTP id b28-20020ac25e9c000000b00513c4d9a0d9mr5324629lfq.22.1711872676914;
-        Sun, 31 Mar 2024 01:11:16 -0700 (PDT)
-Received: from gmail.com (26.red-88-14-197.dynamicip.rima-tde.net. [88.14.197.26])
-        by smtp.gmail.com with ESMTPSA id fl20-20020a05600c0b9400b00415460607b0sm10356041wmb.31.2024.03.31.01.11.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 Mar 2024 01:11:16 -0700 (PDT)
-Message-ID: <3e35b731-333e-4b46-9c0c-089b5c47fe99@gmail.com>
-Date: Sun, 31 Mar 2024 10:11:08 +0200
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="tJ11lWr/"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:References:Message-ID:
+	In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=btzWsjEItfK1MBEkJIAGvkTnFnw+yhzb0NUT5tK22AA=; b=tJ11lWr/H4PRBzF4rqfOcuquxQ
+	FimZWQwI45EsMM8EtEuQSVEK8GRx+cMMPfYOp0xhbGyUOeXrTnRPfE4wWpPxv6HL7xtLmVbk8m2G5
+	N5Txw6KRkvA8EETlPJezmefJ8z0teTbkYzzbY1w1fyrFV36rEy4pBgGlUpSYj/v/deRGMc5FfR9NR
+	wKZh9gddEfPwHgUBddT62VZ+y6Npdicwb4s/bp2tMJO8RNwjcQEVOn/EnTbwj35c3DURzwPhdGXvK
+	DMCeR9r2yOMdwaGy0f1farZK/L7bW/uqB6YnJmy9N55nN25hG17nhDXUx8MIjpNivl+asq20C7bqd
+	o6bnIpvA==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:48506 helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1rqyhU-00000007vv8-2NLE;
+	Sun, 31 Mar 2024 19:10:32 +0200
+Date: Sun, 31 Mar 2024 18:10:32 +0100 (CET)
+From: Peter Krefting <peter@softwolves.pp.se>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org, 
+    "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
+Subject: Re: [PATCH v2] bisect: Honor log.date
+In-Reply-To: <xmqqh6gni1ur.fsf@gitster.g>
+Message-ID: <5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se>
+References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se> <xmqqh6gni1ur.fsf@gitster.g>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] advice: omit trailing whitespace
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqq4jcooddp.fsf@gitster.g>
- <fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
- <4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com> <xmqqcyraj3z7.fsf@gitster.g>
- <0f43cd7b-a366-4ec2-9577-93708e21f2ff@gmail.com>
-Content-Language: en-US
-In-Reply-To: <0f43cd7b-a366-4ec2-9577-93708e21f2ff@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Relay-Host: 185.114.57.50
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 
-On Sun, Mar 31, 2024 at 09:11:59AM +0200, Rubén Justo wrote:
-> On Sat, Mar 30, 2024 at 11:43:40PM -0700, Junio C Hamano wrote:
-> > Rubén Justo <rjusto@gmail.com> writes:
-> > 
-> > >> >  	for (cp = buf.buf; *cp; cp = np) {
-> > >> >  		np = strchrnul(cp, '\n');
-> > >> > -		fprintf(stderr,	_("%shint: %.*s%s\n"),
-> > >> > +		fprintf(stderr,	_("%shint:%s%.*s%s\n"),
-> > >> >  			advise_get_color(ADVICE_COLOR_HINT),
-> > >> > +			(np == cp) ? "" : " ",
-> > >> >  			(int)(np - cp), cp,
-> > >> >  			advise_get_color(ADVICE_COLOR_RESET));
-> > >
-> > > Thinking again on this I wonder, while we're here, if we could go further
-> > > and move the "hint" literal to the args, to ease the translation work:
-> > > -               fprintf(stderr, _("%shint:%s%.*s%s\n"),
-> > > +               fprintf(stderr, "%s%s:%s%.*s%s\n",
-> > >                         advise_get_color(ADVICE_COLOR_HINT),
-> > > +                       _("hint"),
-> > >                         (np == cp) ? "" : " ",
-> > >                         (int)(np - cp), cp,
-> > >                         advise_get_color(ADVICE_COLOR_RESET));
-> > 
-> > It is not guaranteed that any and all languages want to use a colon
-> > immediately after translation of "hint"; the current message string
-> > with or without my patch allows translators adjust that part to the
-> > target language, but your version will force them to always use only
-> > a colon there.  Is that an improvement?  I somehow do not think so.
-> 
-> I was just thinking if leaving the format open to the translation is a
-> sane option.  Maybe we can move the colon to the literal in the args,
-> too.
+Junio C Hamano:
 
-Just for the record, zh_CN (Chinese) and zh_TW (Traditional Chinese)
-do not use ':' on its translation, but '：'
+> I suspect that log.date is a small tip of an iceberg of the benefit
+> we'll get from this switch.
 
-So, if we go the way I proposed we'll need to move the ':' too.  I
-still think it's an improvement.  But, optional to this series.
+Yeah. I was planning on elaborating a bit on that, but forgot 
+completely by the time I came around to look at it. I will update the 
+message with your suggestions for the next version.
 
-> 
-> In any case, the patch is OK as it is.
+> Some differences in the proposed output and the current output I see
+> are:
+>
+> - the output now goes to the pager
+>
+> - it now honors log.mailmap (which may default to true, so you
+>   could disable it with log.mailmap=false).
+>
+> - it shows the ref decoration by default (when the output goes to
+>   terminal).
+>
+> - the commit object names for the merge parents are abbreviated.
+>
+> - it no longer shows the change summary (creation, deletion,
+>   rename, copy).
+>
+> - it no longer shows the diffstat when the final commit turns out
+>   to be a merge commit.
+>
+> There may be other differences.
+>
+> I personally welcome the first four changes above, which I suspect
+> you didn't intend to make (I suspect that you weren't even aware of
+> making these changes).
+
+I hadn't really noticed that the previous implementation *didn't* 
+display this. For the most part, the final output of 'bisect' looks 
+like what I expect 'show' to display, to me it was mostly missing the 
+other things.
+
+> If there were no existing users of "git bisect" other than me, I
+> would even suggest dropping "--no-abbrev-commit" from the set of
+> hardcoded "git show" options, so that the commit object name itself,
+> just like the commit object names for the merge parents, gets
+> abbreviated.
+
+The full commit hash is shown in the line above anyway, so that entire 
+line is redundant. But since there is no standard format available 
+that omits the commit hash I thought I'd leave it at the full hash to 
+be the most like the previous behaviour as possible.
+
+> The final two changes, lack of diffstat for merges, may or may not
+> be considered a regression, depending on the user you ask.  I was
+> just surprised by them but personally was not too unhappy with the
+> behaviour change, but reactions from other couple of thousands of
+> Git users (we have at least that many users these days, no?) may be
+> different from mine, ranging from "Meh" to "you broke my workflow".
+
+Those two were not intentional. I'll have to do a few test runs to 
+compare the outputs and try to the change as non-intrusive as 
+possible. Thanks.
+
+> If you add --stat, don't you want to add --summary as well?  Try to
+> bisect down to a commit that adds or removes files to see the output
+> difference to decide.
+
+There are a lot of parameters to show that I have haven't used in my 
+14+ years of using Git, --summary is one of them. That's why I didn't 
+add it.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
