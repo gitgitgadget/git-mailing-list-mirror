@@ -1,78 +1,92 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3A01FB2
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 20:49:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB20757EF
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 21:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711918177; cv=none; b=Ha/RQkt40QviWmoJ7wivdF5KHGzTzTNlrecfk0PbExoOx1TnzP04JKAIZVvahC3974UbtO3jAQShbUphsLHOAvEsBVESVK7ALWcWGSc43Y+vaOP121Rgt6KJgA0kDzAo26SJRurOvkTnD9NDNEuy71uodkKU6LWVve3YbzBKw2U=
+	t=1711921442; cv=none; b=CNG47t/Cj8pjCw+N01TtLERkyqHYBTTeKAtuPGHDe0FncTMLTBTkbABqNWNClfXuxUB+V8cZqRG8DMYQJ85HOMiQj/Wuofhzqb90rcgwiNmyNT/JKgHE38HvRfcYA73WbKOdM5bDg+n9DFLLaXctqaw+uOnw2LziOU6ndMOeDow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711918177; c=relaxed/simple;
-	bh=eBUmyx3MBOFgQiytXYAmhTz0mGgEqIMMt+zxYKE9HL4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cDCJDNqmGRQrR8am3pUkmoyfPqlKfy098tCBiiIHqqwWroPA5V5dGwwmtNeDTvYzXc+JthdHwiVRGmadhsEm3ycKJQdG3IM8BKsHq9Ywfdbfb9mhxv9s4RCGmNPG94c8G9OGcVJwyIBCDtB+iiLv/u3Qyv1xMqmqKaxpjodKStI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=e4Eu0RAS; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1711921442; c=relaxed/simple;
+	bh=3delPXyKThWm3GsHwsrtU4puYCKj3GO/EmMg/QRdVqc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FuIH+PybLYg/C9TjbQzgHg8gvQhagAqz5W/BfX/U1Ba4nnZOcSxMd+1sQQqJvgB1W7YugA86zZRS+Feerc2zSxf8VhldD7yqyMt/Ug1LmhjS7pBCblI7Omk1SLqTXVf/Lc8pdUjGLD2LvGza9eLGsVserTtHF3KnF43lpMCWdgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=iHkjlPKH; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="e4Eu0RAS"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1711918172;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=UYth/K0rJ9G660TkJ+OjxnI8hepErhSkPYQYQ/eGrkE=;
-	b=e4Eu0RASb+pxQxMl6A2jZS10y8mLrSu6rS7lasmHFQM1vOPtnC765KcwGne/oQpIrzwCn5
-	dIvheROKypOXpd8NBhTt9+5tp78Z/VXxMD26M2hJgeZGw0If6MgsBeeTC+tNdMDLeWknNI
-	Apj9LMCaQ6QV/gd6nbTNkL3gsf1EwCya1nlEGYW6ktbC18uoNyvidB4Ogl4xk+C5jgf1ut
-	EtndhEAsv0sLl3dpm5GPVgAqETrQ5Ah2OFOzi8IuMjeiDQXG3aB+ZAq/BWhNmi8ERyRKsC
-	MvoL4lyD0LR7Ckef9XEiqj6kvs1cvnKKEEfQ5jnhj7oLW1wmUiRAsYg5SAr5sA==
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH v2] config: fix some small capitalization issues, as spotted
-Date: Sun, 31 Mar 2024 22:49:30 +0200
-Message-Id: <26135b06c48565ee8ac6dcfc1ef5431511e6202c.1711918168.git.dsimic@manjaro.org>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="iHkjlPKH"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 15A405D4AB;
+	Sun, 31 Mar 2024 21:43:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1711921432;
+	bh=3delPXyKThWm3GsHwsrtU4puYCKj3GO/EmMg/QRdVqc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=iHkjlPKH5KhmIC4IzxRLQPtqG9N36YBtmlerM60mwjMd2z+MLCOW7GZakX9nNxxCC
+	 7XvisntOYgwPsmJVzY9h8qPa9QkfO5CFUQfxqaJuuH5l7IV0PHtXCyUoNPBufnaydo
+	 Vsv7IW0INgD7QmPvJ1Kt+AAvxJ/se8KWfT0BlikX7/Gns8OhN35C1dAFcc9YrMcnwF
+	 SYCodE/WV5TB17ipE+VHBFVnHaScM9v/mCCIQu7/LiVRWLZnPAclyVtW2upPH+pOGX
+	 tPfghv+D3LEChdXA1rQUMAQE85tqNB+ky/LNx2Z9TuOOJ4JuYGsn9XjRWRVk5yEYo4
+	 znitVXcnA3R8LZxjAitjY2mN3t8UxFaT0yEKSwFeGBYfAptMd/udeDb97CuSwmjR9L
+	 Oc1UbaUaI9fH/UmRYdeXEelwINbz9Fq7yB2KiwctJdS0YwW+HTLaQtzPTR1BStg/nr
+	 vpLBmidc6Yu1GpJMdUi3zmRVy9YB1iOz9ftcZ/q48V8vhbgEP0h
+Date: Sun, 31 Mar 2024 21:43:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: M Hickford <mirth.hickford@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, mjcheetham@outlook.com
+Subject: Re: [PATCH 06/13] docs: indicate new credential protocol fields
+Message-ID: <ZgnZFTvNyInFGn7Q@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, mjcheetham@outlook.com
+References: <20240324011301.1553072-7-sandals@crustytoothpaste.net>
+ <20240325231609.284-1-mirth.hickford@gmail.com>
+ <ZgIKqJaE79-Erzif@tapette.crustytoothpaste.net>
+ <CAGJzqs=QkoAU300V-6-w7VqQgG01rY-h5N43WkTy+sJgGV5W2Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RWWQHBvYTOHfhmdJ"
+Content-Disposition: inline
+In-Reply-To: <CAGJzqs=QkoAU300V-6-w7VqQgG01rY-h5N43WkTy+sJgGV5W2Q@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Fix some small capitalization issues, as spotted while going through the
-documentation.  In general, a semicolon doesn't start a new sentence, and
-"this" has no meaning of a proper noun in this context.
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
+--RWWQHBvYTOHfhmdJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Notes:
-     * Fix some small capitalization issues in the documentation.
-    
-    Changes in v2:
-        - Changed double spacing before the semicolon to single spacing,
-          as suggested by Junio [1]
-    
-    Link to v1: https://lore.kernel.org/git/6f6f821fc090fb59f632fcdbd061154b897b1244.1711772691.git.dsimic@manjaro.org/
-    
-    [1] https://lore.kernel.org/git/xmqqo7avlaqn.fsf@gitster.g/
+On 2024-03-30 at 13:00:00, M Hickford wrote:
+> Would it be accurate to add "For HTTP, Git concatenates the authtype
+> and credential attributes to determine the Authorization header"?
 
- Documentation/config/core.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yes, I think that would be accurate.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 2d4bbdb25fa3..41b071d8851c 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -688,7 +688,7 @@ core.createObject::
- 	will not overwrite existing objects.
- +
- On some file system/operating system combinations, this is unreliable.
--Set this config setting to 'rename' there; However, This will remove the
-+Set this config setting to 'rename' there; however, this will remove the
- check that makes sure that existing object files will not get overwritten.
- 
- core.notesRef::
+--RWWQHBvYTOHfhmdJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZgnZFQAKCRB8DEliiIei
+gTqSAP97hzFLGhZ1WNiBJtAWgoMnZslm5DZ40dfzwKmSYhQfyQEAoUNysyVqrGYY
+ngNjNK46o5BYUuDnirWAeR5eLDgyXQc=
+=Ro0C
+-----END PGP SIGNATURE-----
+
+--RWWQHBvYTOHfhmdJ--
