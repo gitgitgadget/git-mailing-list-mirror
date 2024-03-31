@@ -1,107 +1,210 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2A579CC
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 07:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFACABE49
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 07:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711869141; cv=none; b=jw4wMVlTZrLUB2N7Tel7LZVU2QHeVOQkWxeQRVNqJgFomm2348tKFRZ/UEDE/1mA5eWAf0v26SZfykgf/wSps7aBmr3X4+HhxB9ZT9LiQ21/HtNYpLeINNSwBfXfFDiVb1EvlgV3naOp92CZ9abdl+3XOKwYHN0mk4yR55TWi/c=
+	t=1711870028; cv=none; b=Uj3lUaSMi1oVbPxBRsPenepT3PKvUhlgupp3cEBx+u+76rSs8MNtovU+se7b7OgEou9uOOTOwWeeG1FC9gVSNeAr9vB3Mxl+CzGiNAuCLdAC+57DsUOjpKuR7JOKaH+QS6LqNoLcubrZ4Fvx0bYsX2CXn40sDgmr/cx8LANrmRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711869141; c=relaxed/simple;
-	bh=tM21bXargaiwJw4P71LxlXRlXF891T64o+nLxDWJzS0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aLh0It2QFKZOx8gv5xWsEOIg6TtIVcZAW1W9OEI1NBpAY2SRIt+zlOEMf3V+yGhH1jt06sgnWPH3tQhUmiKeT4n3YaMb7Mcrt/y4kCJPJsIMm9xnrEayO86eQN1KxdI1KriRTirH6ZK377pkZlAj+VVseJLfuNOdNHXRicZ9iBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9T3afOw; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711870028; c=relaxed/simple;
+	bh=0xupxwIiGTiG+pFbojxURWv5KVCDcsY1pHW2VMl5NZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N8xkUKgI1EKi+SH8dCyXFlX+4s3Q9nR4PZx1G/xgyR8XcWTPQPbTwQfLxacpAtBaalw8iUsEmMjVPtMRflu0GxDiSEUqSwMbwj4MCo7ttKDjQ90cfvcwA1x+DEDwo9j1kdqbZtsfU2albD6LPlonnE9zTsPd07P+ckRvUAPkFqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PHlzbLYa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hbD19q3/; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9T3afOw"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4148c6132b4so23365515e9.1
-        for <git@vger.kernel.org>; Sun, 31 Mar 2024 00:12:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711869139; x=1712473939; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ozmA49dhhoeDc20FXkBigaQGJVDi6TGCfXO+0/40gV0=;
-        b=X9T3afOwhAGQuv43xI6DqvdUu8hQrHS+2l80Llx/cmEEOSSK3c/vtHTiMkp22vKlhz
-         0qR3CAc1sbPo4yCh40SzWsfwL9ORgLwmdpTvsFzgwPlgYFgiAMtHMCD1c+dETJI9+eng
-         HSODfNzsrfZwXocf9KZnXna09ZUfiLWuvi0QEn3b8DjZmWRsNsucV4gOInhSEpcn0wgj
-         Kvs2BCm/4nEtQYgP3siBEB4xO18msNwGkhiDNG5s/XsdhXbCsqlRTJBvPWAhuiXDPo0h
-         dEM4G4Oig4xBwF8K0wSztvUKhnYTYPtaw93aN6IQB+7syhOYhQ6Zh7tMF0d3KyTRNy57
-         Gw4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711869139; x=1712473939;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ozmA49dhhoeDc20FXkBigaQGJVDi6TGCfXO+0/40gV0=;
-        b=nO2Cq5T2mJ4V9atXup4HiGsLFWrphkNffG1jntQyiWKiyQEgRcii3KULP4sDGkqRdM
-         HrKVZuyIe6d2LmElG+h+2nZGL83TlrItaUpdMr6IwSd4bp3Slb65V4lQaI4P/VTEM43u
-         Ypz56G/xgF7ir5R1vAGK8xpLOJe/2+tBpfnIyyzqg0YBFN22Wzhah2OgF3nhqN9tCaMH
-         +WwVeGa06Fk6aXGiRZAYP1Q81J9ccloRURgymUEoiDX5tLkETWZKTbpYTv6q9w0i/bz5
-         /YMvRblKNOm21P0loNIeuiyTycLdn6ZafyM0uGkUeVB1qZOmmoIopBH6YvUpHSXntsN1
-         xTLg==
-X-Gm-Message-State: AOJu0YyJ2UDWSgAZCyFBMmlspgX4obuXyYvCkgilM/gxjZiZ15HDYpWq
-	a/5srQcyNUi0/JyYBJDS30qnDk8Fc0XVcHcSBvRbRY6XhJFDu88TPAnS1rVS
-X-Google-Smtp-Source: AGHT+IFcGPdZRm5RaYdK11UAfAnQbVQIG4mwiMhqw25I84790k2N91gkZDurA3Sy7F8m0mwN0RUHWg==
-X-Received: by 2002:a05:600c:4f85:b0:414:8c84:5f43 with SMTP id n5-20020a05600c4f8500b004148c845f43mr7849298wmq.14.1711869138489;
-        Sun, 31 Mar 2024 00:12:18 -0700 (PDT)
-Received: from gmail.com (26.red-88-14-197.dynamicip.rima-tde.net. [88.14.197.26])
-        by smtp.gmail.com with ESMTPSA id bg3-20020a05600c3c8300b0041481207b23sm10850943wmb.8.2024.03.31.00.12.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 Mar 2024 00:12:18 -0700 (PDT)
-Message-ID: <0f43cd7b-a366-4ec2-9577-93708e21f2ff@gmail.com>
-Date: Sun, 31 Mar 2024 09:11:59 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PHlzbLYa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hbD19q3/"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A3A1413800C0;
+	Sun, 31 Mar 2024 03:27:04 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Sun, 31 Mar 2024 03:27:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711870024; x=1711956424; bh=0xupxwIiGT
+	iG+pFbojxURWv5KVCDcsY1pHW2VMl5NZ8=; b=PHlzbLYal4oly1aMPv83NgS9sZ
+	1+n5qxVvBM+cq//tOWv1HEG90UGmkDaPYHy+nZMXeKDEDag32fg8ddA9dUwqOFKD
+	4qNKzewpqmYwqpY4/0fj+hmFmZuH+dEjpGS6Gnel4cw//M7+YfH4S2QL2qxMIpYQ
+	LOX/keAWRDA98Cp32/oJail6vDk3Spog4mBYuW690JbkzUrxqBjuw2v0tlNNhBGq
+	c1WK+4y0baC844L7n3Ar/ytMh5GUMYA6OkY3kTBJOH6N8uln618AKkT+FPbsVoZb
+	lbz1B6/d/9jysqVhHJrrcQexqIuKdN3193nUoo9W8Ht+hl3QWguzKbMgTkHA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711870024; x=1711956424; bh=0xupxwIiGTiG+pFbojxURWv5KVCD
+	csY1pHW2VMl5NZ8=; b=hbD19q3/dXlNQ8nKWNBl/7u3cfSzXLCuphtq7O81ybvo
+	Bc3OhspZ4AKbL1c5zA7XYbxh9QGabeVSwjCBWUiJBSkSraIDmDBi3lNHgJrCrM1v
+	cTM4qVaKlCCF7vkNHuNu4OXqZzHork34MnoMcKRP8G86cYTlqYtz2IjlUorQY9K5
+	UrOMX7JoiVwYL/qFiGxq7NqQ7h3Pa90BHqZABOf8ZawdMubk0pO08M0DXJbJ6pEt
+	gdHiD+wl9f/B0fX/hV57aeJZ6HP500FNOYC4otYsY7MgllpcmN4/7bYKA65IyRhd
+	o3tepMIOvAprIW9K9zhv8WHij138sFihGvCPhwH8rA==
+X-ME-Sender: <xms:SBAJZrudWvx-AIxfbRgDIWr05y0GtiyYhzrXBpM4RDjAZIU2JSCpOA>
+    <xme:SBAJZsdGpbYorpy-SF5REj54Vs9OxkWCE7Mv8RU6hlqIVHQb95HttO4QLm5UFKfbn
+    brXvBbZnnvAuyJbHA>
+X-ME-Received: <xmr:SBAJZuxEygq_fSdSHJ-2bnwurbBY_Uo90XjS7otWZPK2W4D0Ygwc2KRi62PuTuMiWYED_HwdZ2XCdqC4a_5HdCmEmHwb4xOUTVkuCTRdl1o1zw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddviedguddtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:SBAJZqPMfsijWqoOfeEPg2WP2zs5MaeEoeL12eU4rbWyhsfoyVlvwg>
+    <xmx:SBAJZr9XX4Z8uEMA4n9mdJjDaQD-clldCXMl4llNUdKncqgQzAEhKA>
+    <xmx:SBAJZqWSaOYmoKa_v3fv18UytZr7sMnkmngNeGIGKjNYj6WFq0ffiA>
+    <xmx:SBAJZsc_AMdw2iFvmZDh2Fd4VOqSWUa8rVHJcO94NJ7lWAv2qAz8YQ>
+    <xmx:SBAJZnRAhERXpGRtXTtSBb9E4Qy6jw17P-saXAFZIM7VMdJQLmr9xg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 31 Mar 2024 03:27:02 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 98800c57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 31 Mar 2024 07:26:56 +0000 (UTC)
+Date: Sun, 31 Mar 2024 09:26:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Olliver Schinagl <oliver@schinagl.nl>
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	psteinhardt@gitlab.com, Taylor Blau <me@ttaylorr.com>
+Subject: Re: Git mirror at gitlab
+Message-ID: <ZgkQQhW6GegFNqfB@ncase>
+References: <ZfzUb9HkZLq1UIed@tanuki>
+ <CAP8UFD2LmapWutRpfveL6ChSg8xrCkQXyQaJwHyEp8JA0p_Osw@mail.gmail.com>
+ <Zf2B5oksaJRDH5WT@tanuki>
+ <1d6a282e-afe6-4d43-a61c-d0259131b11c@schinagl.nl>
+ <ZgfK3DoeidDcIaFj@framework>
+ <f283d6ed-54b6-4bbd-8b14-67c9c8d50a2a@schinagl.nl>
+ <ZgfWH_smdZ1jXkLO@ncase>
+ <68563c5e-af74-4300-84c4-a0d75434167f@schinagl.nl>
+ <ZghUu7Ae5PYga-Ji@ncase>
+ <4A3E0E2D-2922-4C90-A306-30A685D11C4D@schinagl.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] advice: omit trailing whitespace
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqq4jcooddp.fsf@gitster.g>
- <fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
- <4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com> <xmqqcyraj3z7.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqcyraj3z7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="N0gaeesGtl0HLRe7"
+Content-Disposition: inline
+In-Reply-To: <4A3E0E2D-2922-4C90-A306-30A685D11C4D@schinagl.nl>
 
-On Sat, Mar 30, 2024 at 11:43:40PM -0700, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> >> >  	for (cp = buf.buf; *cp; cp = np) {
-> >> >  		np = strchrnul(cp, '\n');
-> >> > -		fprintf(stderr,	_("%shint: %.*s%s\n"),
-> >> > +		fprintf(stderr,	_("%shint:%s%.*s%s\n"),
-> >> >  			advise_get_color(ADVICE_COLOR_HINT),
-> >> > +			(np == cp) ? "" : " ",
-> >> >  			(int)(np - cp), cp,
-> >> >  			advise_get_color(ADVICE_COLOR_RESET));
+
+--N0gaeesGtl0HLRe7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Mar 31, 2024 at 12:54:12AM +0100, Olliver Schinagl wrote:
+>=20
+>=20
+> On March 30, 2024 7:06:51=E2=80=AFp.m. GMT+01:00, Patrick Steinhardt <ps@=
+pks.im> wrote:
+> >On Sat, Mar 30, 2024 at 11:59:51AM +0100, Olliver Schinagl wrote:
+> >> On 30-03-2024 10:06, Patrick Steinhardt wrote:
+> >> > On Sat, Mar 30, 2024 at 09:20:22AM +0100, Olliver Schinagl wrote:
+> >> > > On 30-03-2024 09:18, Patrick Steinhardt wrote:
+> >> > > > On Sat, Mar 30, 2024 at 09:14:47AM +0100, Olliver Schinagl wrote:
+> >> > > > > On 22-03-2024 14:04, Patrick Steinhardt wrote:
+> >> > > > > > On Fri, Mar 22, 2024 at 11:08:34AM +0100, Christian Couder w=
+rote:
+> >> > > > > > > (Sorry for initially sending this privately to Patrick.)
+> >> > > > > > >=20
+> >> > > > > > > On Fri, Mar 22, 2024 at 10:41=E2=80=AFAM Patrick Steinhard=
+t <ps@pks.im> wrote:
+> >> > > > > > [snip]
+> >> > > > > > > > I'd personally rather go with the latter, mostly because=
+ it matches our
+> >> > > > > > > > git-scm.com domain. I also like it better than the curre=
+nt git-vcs/git
+> >> > > > > > > > because of that.
+> >> > > > > > > >=20
+> >> > > > > > > > So Chris, would you mind adding me (@pks-t, my non-GitLa=
+b handle) as an
+> >> > > > > > > > additional owner of that group?
+> >> > > > >=20
+> >> > > > > I'll empty out my gitscm group, make it private so that it won=
+'t be
+> >> > > > > accidentally used and transfer ownership to pks-t. You can the=
+n 'do what is
+> >> > > > > needed' with the group. Since gitlab doesn't support aliases (=
+yet? :p) best
+> >> > > > > to park the namespace.
+> >> > > > >=20
+> >> > > > > Olliver
+> >> > > >=20
+> >> > > > By the way, thanks a ton for being this open and helpful during =
+the
+> >> > > > whole process. This is greatly appreciated!
+> >> > >=20
+> >> > > Hey, no problem. I initiated this discussion because I wanted to g=
+et to this
+> >> > > solution. Just because my mirror is not used doesn't mean I don't =
+agree :)
+> >> > >=20
+> >> > > Btw, I can't transfer the group, it's empty, but if I delete it _r=
+ight now_,
+> >> > > you'll have to re-create it, _right_now_ (well within the next 5 m=
+inutes?).
+> >> >=20
+> >> > Shouldn't it be possible to add me as a secondary owner of the group=
+ in
+> >> > [1]? From thereon I could "transfer" the group by removing you from =
+it.
+> >>=20
+> >> Done and done.
+> >>=20
+> >> I'll remove myself, or you can kick me :( one I know you have successf=
+ully
+> >> received ownership. I tried to invite the group git-scm but that could=
+n't be
+> >> found, probably you can do that (and then remove yourself :p)
+> >>=20
+> >> Would have been useful to transfer ownership of a group, iirc you do t=
+hat
+> >> with repo's as well? Under the hood it could use the invite + remove m=
+embers
+> >> thing. Though this works.
 > >
-> > Thinking again on this I wonder, while we're here, if we could go further
-> > and move the "hint" literal to the args, to ease the translation work:
-> > -               fprintf(stderr, _("%shint:%s%.*s%s\n"),
-> > +               fprintf(stderr, "%s%s:%s%.*s%s\n",
-> >                         advise_get_color(ADVICE_COLOR_HINT),
-> > +                       _("hint"),
-> >                         (np == cp) ? "" : " ",
-> >                         (int)(np - cp), cp,
-> >                         advise_get_color(ADVICE_COLOR_RESET));
-> 
-> It is not guaranteed that any and all languages want to use a colon
-> immediately after translation of "hint"; the current message string
-> with or without my patch allows translators adjust that part to the
-> target language, but your version will force them to always use only
-> a colon there.  Is that an improvement?  I somehow do not think so.
+> >Thanks! I've added Christian to this group such that it has a higher bus
+> >factor. I guess it should probably have the same owners as the "git-scm"
+> >one just in case we ever want to do anything with it. I've also removed
+>=20
+> Could you not just invite the git-scm group and have no members at all?
 
-I was just thinking if leaving the format open to the translation is a
-sane option.  Maybe we can move the colon to the literal in the args,
-too.
+In theory yes. In practice though this could cause us to hit the free
+user limit in the "gitscm" group eventually. This could be fine given
+that we don't intend to use the group anyway. But I wasn't a 100% sure
+and wanted to double check first before doing that.
 
-In any case, the patch is OK as it is.
+Patrick
+
+--N0gaeesGtl0HLRe7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYJED0ACgkQVbJhu7ck
+PpSK2g/8CJ54Ih/JcAof2zEDrmjF0jl1Nnr4k0eIdRtHuBfRN3hHRR0Tp2Q1QmU4
+gFM1N6onwEQTVgKC4BiFgamuJ4a8IETVSSN11to98bePrzmtdG7EttiGapY64cul
+jc3L+aaoN+mkzZcbcnhdYcvgw/eBFCRZTDHzsDQyb9b24LEF5Ww4RidAgM1PfjUO
+zIuNCaWsYizZ18wp0LvKJ8X+AuG0ds3HTljKhoAyBW1zMi5v5zGKKhyS6uEGhiBS
+bkOZutuO6eZHwjowEG5UDkQK38T+qnmJN+aBHhec5o9PK3WYoapp4rLB1HFNzLzT
+eNC/G7rtL1P5L3f9EgfJ7cDofHlg9PMpcuJJWudQ08EEXBrAvVvGXZqtBE8Sw4DI
+4kXD4jnNcoc6bhGAYbuUzcjblBLgv2b0D3Ohw+i1+7MWNtRnw/fdtufjU4xLYJMQ
+BtDXUJGdbo/y6dYxe3UfqLEfrR0IfFBNt2kpecKun7Dkke9yYWoG2YfeCbyeMpIb
+yDb73v7ldjigkIw+3SPj9ds/qAqRVTC9ToBSPdAPQkPitobYl8sz0xWoUa3RvbG6
+pRNC1SkojFsWkhTjQX963DKZ8BppK+iEdzzjOj+fY0h+bSPXzrQ0LaPKWVBdqjYJ
+MVOIPxCkHFHkg3CUSvnUw/9H0cVhZt5XIl6lE+vgIlxj6KdhJs4=
+=b3/L
+-----END PGP SIGNATURE-----
+
+--N0gaeesGtl0HLRe7--
