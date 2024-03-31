@@ -1,146 +1,210 @@
-Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F158A1D6AA
-	for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:54:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C771818
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 02:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711842857; cv=none; b=VXmDL2gnZWQb4Fd7/KN14d1f30NxgsRLQpHe7Ro1jaZESxDVbm2PV3dvaVutvkCWE0egDEhBXIZUFxCW6IQ+0UKyLw5Y3wjMJOlukPN2XDYVVOwtyDsDOULzmE0V2D56eVUbf46KvGcGko9/Bm5eDY+CshA8AP0orQcx6cnRb7Q=
+	t=1711851306; cv=none; b=cPiAU0Hwm+IwHGqADMQJnQU2UuJex7ziBrxC/JYPDqe9nk7vZlovDM3aslpUVUwFsH6HmediD+l1ewbZsH5+fbdqaw2V9y/OyXBtx2SFBzI8WCrm+zWSiK/aww5HoC7pR51TFaFZiLbXB7gRD2L70tC+WdPV1vpsxFL27Glbies=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711842857; c=relaxed/simple;
-	bh=wlMHaGlauf6OU8259JDUl2vgOgwWhPbGIdnS+BVFyE4=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=DOJOocjZ7LazTUG7FMxLxV/iHpuGFOfLUgjEG7x0AzncjciIaS6CMzDoxO4fci0HZSYkQDPVp+E2BwCpS5ey9JIgDpIf1N1QsEfUIZPV/LauN+JvuaG1HUs9esscK2D9TpLe4UC/WB5bmC3mzyMoGTZ36A69sChLLQEYjJgWR1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=Vjq2tn1Y; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=PMpGekbE; arc=none smtp.client-ip=185.238.129.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+	s=arc-20240116; t=1711851306; c=relaxed/simple;
+	bh=/oZ05e33eOYVkwmh5Oy5r9Wnwx7Wfcnp5nfDgQjIVqA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=R9zmbiperTJt63IaEjSu0mSMcU+PAgV40J2tRzG8lhTlf7LvURiAl5/UbjJc+ppDomr7pyI/CpanSLceVdw1FzkvYM+Z8vqZ0rBmgvpv7owX3goDhoH95lyk24ZAJMVaA+zXtb7aDV82o4SSqbNMqnn8OZ7zz/OawE0kqYE15WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oW3tsuVP; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="Vjq2tn1Y";
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="PMpGekbE"
-Received: from localhost (7of9.are-b.org [127.0.0.1])
-	by 7of9.schinagl.nl (Postfix) with ESMTP id 666B01A0BE63;
-	Sun, 31 Mar 2024 00:54:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1711842851; bh=wlMHaGlauf6OU8259JDUl2vgOgwWhPbGIdnS+BVFyE4=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References;
-	b=Vjq2tn1YcwNLUve9pITgdTS3M6Hg+n/8QTgO3aLyoHwbtNGcvpwEs17n27NGUENIU
-	 9fQWJ6CAvArv0XywbKkTG2WGbVJy0A6G0n2BywV9pbOKTIrYY8QQSsVG0YNkSRRjah
-	 qkz5qOWeTe0q9fvb+iwzE8ACQg4Mj+M78FIQhURk=
-X-Virus-Scanned: amavisd-new at schinagl.nl
-Received: from 7of9.schinagl.nl ([127.0.0.1])
-	by localhost (7of9.schinagl.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id VA-P4SOWPgML; Sun, 31 Mar 2024 00:54:10 +0100 (CET)
-Received: from [127.0.0.1] (unknown [10.2.12.100])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oW3tsuVP"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E70519AF1;
+	Sat, 30 Mar 2024 22:14:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=/oZ05e33eOYVkwmh5Oy5r9Wnwx7Wfcnp5nfDgQ
+	jIVqA=; b=oW3tsuVPfy71kc6GxKeFJSFeAiDmvoQJ0YzmsG66Z8ml7sp2Dfwwsy
+	wmXpF1cu639DpRBrW3Af6aIHABqAWfFidRsgDjYUp63rDaApPKkz68V3QL2zLkdG
+	hsgvy0W10k6YtfkKfOf2WJUe5rMsmr7RvrmqZN+j9r1/Grk09MQ6o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 16D1019AF0;
+	Sat, 30 Mar 2024 22:14:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by 7of9.schinagl.nl (Postfix) with ESMTPSA id 36AD11A0BE5E;
-	Sun, 31 Mar 2024 00:54:10 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1711842850; bh=wlMHaGlauf6OU8259JDUl2vgOgwWhPbGIdnS+BVFyE4=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References;
-	b=PMpGekbEBWXz56x3RoeGEwyh7Aer6LfrQAnnJQSMhnp+qQlz28+ZSRv0dPpTgHTk7
-	 GhKFXLjKnzX3S7SYebmG4qk2XLYX+mXKsrbLc5YbaXD7qk5F+XoFtzgny5PcqzGZUW
-	 ua7qGYFOjN6MJLWWmF/odPzFD5JR5oGKcee2siC8=
-Date: Sun, 31 Mar 2024 00:54:12 +0100
-From: Olliver Schinagl <oliver@schinagl.nl>
-To: Patrick Steinhardt <ps@pks.im>
-CC: Christian Couder <christian.couder@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
- psteinhardt@gitlab.com, Taylor Blau <me@ttaylorr.com>
-Subject: Re: Git mirror at gitlab
-User-Agent: K-9 Mail for Android
-In-Reply-To: <ZghUu7Ae5PYga-Ji@ncase>
-References: <xmqqy1aba6i6.fsf@gitster.g> <E5C00398-536B-4CE5-AB25-FE7FCD55CCD8@schinagl.nl> <ZfzUb9HkZLq1UIed@tanuki> <CAP8UFD2LmapWutRpfveL6ChSg8xrCkQXyQaJwHyEp8JA0p_Osw@mail.gmail.com> <Zf2B5oksaJRDH5WT@tanuki> <1d6a282e-afe6-4d43-a61c-d0259131b11c@schinagl.nl> <ZgfK3DoeidDcIaFj@framework> <f283d6ed-54b6-4bbd-8b14-67c9c8d50a2a@schinagl.nl> <ZgfWH_smdZ1jXkLO@ncase> <68563c5e-af74-4300-84c4-a0d75434167f@schinagl.nl> <ZghUu7Ae5PYga-Ji@ncase>
-Message-ID: <4A3E0E2D-2922-4C90-A306-30A685D11C4D@schinagl.nl>
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 879BE19AEF;
+	Sat, 30 Mar 2024 22:14:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Peter Krefting <peter@softwolves.pp.se>
+Cc: git@vger.kernel.org,  "Osipov, Michael (IN IT IN)"
+ <michael.osipov@innomotics.com>
+Subject: Re: [PATCH v2] bisect: Honor log.date
+In-Reply-To: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se> (Peter
+	Krefting's message of "Sun, 31 Mar 2024 00:10:24 +0100 (CET)")
+References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
+Date: Sat, 30 Mar 2024 19:14:52 -0700
+Message-ID: <xmqqh6gni1ur.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 76B80A42-EF04-11EE-96E8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+
+Peter Krefting <peter@softwolves.pp.se> writes:
+
+> When bisect finds the target commit to display, it calls git diff-tree
+> to do so. This is a plumbing command that is not affected by the user's
+> log.date setting. Switch to instead use "git show", which does honor
+> it.
+
+I suspect that log.date is a small tip of an iceberg of the benefit
+we'll get from this switch.  There is an untold assumption that
+honoring the user's configuration is a good thing behind the move
+against "plumbing" in the above description, but singling log.date
+out would give a wrong message.  It makes it harder to answer a
+question, "The commit meant to make the command honor `log.date` and
+make no other behaviour changes, but there are many small behaviour
+changes---are they intended?", when somebody reads this commit log
+message after we all forgot about the true motivation behind the
+change.
+
+    Subject: [PATCH vN] bisect: report the final commit with "show"
+
+    When "git bisect" finds the first bad commit and shows it to the
+    user, it calls "git diff-tree", whose output is meant to be
+    stable and deliberately ignores end-user customizations.
+
+    As this output is meant to be consumed by humans, let's switch
+    it to use "git show" so that we honor end-user customizations
+    via the configuration mechanism (e.g., "log.mailmap") and
+    benefit from UI improvements meant for human consumption (e.g.,
+    the output is sent to the pager) in "git show" relative to "git
+    diff-tree".
+
+    We have to give "git show" some hardcoded options, like not
+    showing the patch text at all, as the patch is too much for the
+    purpose of "git bisect" reporting the final commit.
+
+would be how I would explain and justify this change.  If we later
+add more configuration to tweak "git show" output, it will affect
+the output from "git bisect" automatically, which is another thing
+you may want to explain and use as another reason to justify the
+change (in the second paragraph).
+
+Some differences in the proposed output and the current output I see
+are:
+
+ - the output now goes to the pager
+
+ - it now honors log.mailmap (which may default to true, so you
+   could disable it with log.mailmap=false).
+
+ - it shows the ref decoration by default (when the output goes to
+   terminal).
+
+ - the commit object names for the merge parents are abbreviated.
+
+ - it no longer shows the change summary (creation, deletion,
+   rename, copy).
+
+ - it no longer shows the diffstat when the final commit turns out
+   to be a merge commit.
+
+There may be other differences.
+
+I personally welcome the first four changes above, which I suspect
+you didn't intend to make (I suspect that you weren't even aware of
+making these changes).
+
+If there were no existing users of "git bisect" other than me, I
+would even suggest dropping "--no-abbrev-commit" from the set of
+hardcoded "git show" options, so that the commit object name itself,
+just like the commit object names for the merge parents, gets
+abbreviated.  The abbreviation is designed to give us unique prefix,
+so for the purpose of cutting and pasting from the output to some
+other Git command, it should not break my workflow.  If some tool is
+reading the output and blindly assuming that the object names are
+spelled in full, such a change will break it.
+
+The final two changes, lack of diffstat for merges, may or may not
+be considered a regression, depending on the user you ask.  I was
+just surprised by them but personally was not too unhappy with the
+behaviour change, but reactions from other couple of thousands of
+Git users (we have at least that many users these days, no?) may be
+different from mine, ranging from "Meh" to "you broke my workflow".
+
+A good test case to try is to do a bisection that finds c2f3bf07
+(GIT 1.0.0, 2005-12-21) with and without your patch and compare
+the output from them.  I say it is "good test case", not because
+I view any difference is a bug in this patch, but because many
+differences are probably good things that helps us to promote the
+behaviour changes.  They just need to be explained in the proposed
+log message to tell our future developers that we knew about these
+behaviour changes and we meant to make them.
+
+Having said all that.
+
+> +static void show_commit(struct commit *commit)
+>  {
+> -	const char *argv[] = {
+> -		"diff-tree", "--pretty", "--stat", "--summary", "--cc", NULL
+> -	};
+> -	struct rev_info opt;
+> +	struct child_process show = CHILD_PROCESS_INIT;
+
+It is very good that we no longer use the separate argv[] array and
+use the more convenient strvec_pushl() call, which will make it
+easier for us to later tweak the arguments we pass to the command
+invocation dynamically if needed.
+
+> -	git_config(git_diff_ui_config, NULL);
+> -	repo_init_revisions(r, &opt, prefix);
+> -
+> -	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
+> -	log_tree_commit(&opt, commit);
+> -	release_revisions(&opt);
+
+And not doing this in process lets us not have to bother with the
+configuration and other things we did in the original.  We now spawn
+an extra process to show the final commit, but this is done only at
+the very end of a bisection session, so it shouldn't matter.
+
+> +	strvec_pushl(&show.args, "show", "--pretty=medium", "--stat", "--no-abbrev-commit", "--no-patch",
+> +		     oid_to_hex(&commit->object.oid), NULL);
+
+I would write it either like this:
+
+	strvec_pushl(&show.args, "show",
+		     "--pretty=medium", "--stat",
+		     "--no-abbrev-commit", "--no-patch",
+		     oid_to_hex(&commit->object.oid), NULL);
+
+in anticipation for changing the set of options over the evolution
+of this code (but the first "show" line or the last "oid_to_hex()"
+line would have much less chance of needing to change), or even
+spread the middle part one-option-per-line.
+
+As to the exact set of options to pass to "git show", the preference
+would be different from person to person, but I probably would drop
+"--pretty=medium", as it is the default and if/when "git show"
+learns to tweak it via configuration variable, you would want the
+output from here honor it just like you wanted it honor `log.date`.
+I would not be too unhappy to see `--no-abbrev-commit` to go myself,
+but some tool authors might hate you if you did so.  I dunno.
+
+If you add --stat, don't you want to add --summary as well?  Try to
+bisect down to a commit that adds or removes files to see the output
+difference to decide.
+
+Thanks.
 
 
 
-On March 30, 2024 7:06:51=E2=80=AFp=2Em=2E GMT+01:00, Patrick Steinhardt <=
-ps@pks=2Eim> wrote:
->On Sat, Mar 30, 2024 at 11:59:51AM +0100, Olliver Schinagl wrote:
->> On 30-03-2024 10:06, Patrick Steinhardt wrote:
->> > On Sat, Mar 30, 2024 at 09:20:22AM +0100, Olliver Schinagl wrote:
->> > > On 30-03-2024 09:18, Patrick Steinhardt wrote:
->> > > > On Sat, Mar 30, 2024 at 09:14:47AM +0100, Olliver Schinagl wrote:
->> > > > > On 22-03-2024 14:04, Patrick Steinhardt wrote:
->> > > > > > On Fri, Mar 22, 2024 at 11:08:34AM +0100, Christian Couder wr=
-ote:
->> > > > > > > (Sorry for initially sending this privately to Patrick=2E)
->> > > > > > >=20
->> > > > > > > On Fri, Mar 22, 2024 at 10:41=E2=80=AFAM Patrick Steinhardt=
- <ps@pks=2Eim> wrote:
->> > > > > > [snip]
->> > > > > > > > I'd personally rather go with the latter, mostly because =
-it matches our
->> > > > > > > > git-scm=2Ecom domain=2E I also like it better than the cu=
-rrent git-vcs/git
->> > > > > > > > because of that=2E
->> > > > > > > >=20
->> > > > > > > > So Chris, would you mind adding me (@pks-t, my non-GitLab=
- handle) as an
->> > > > > > > > additional owner of that group?
->> > > > >=20
->> > > > > I'll empty out my gitscm group, make it private so that it won'=
-t be
->> > > > > accidentally used and transfer ownership to pks-t=2E You can th=
-en 'do what is
->> > > > > needed' with the group=2E Since gitlab doesn't support aliases =
-(yet? :p) best
->> > > > > to park the namespace=2E
->> > > > >=20
->> > > > > Olliver
->> > > >=20
->> > > > By the way, thanks a ton for being this open and helpful during t=
-he
->> > > > whole process=2E This is greatly appreciated!
->> > >=20
->> > > Hey, no problem=2E I initiated this discussion because I wanted to =
-get to this
->> > > solution=2E Just because my mirror is not used doesn't mean I don't=
- agree :)
->> > >=20
->> > > Btw, I can't transfer the group, it's empty, but if I delete it _ri=
-ght now_,
->> > > you'll have to re-create it, _right_now_ (well within the next 5 mi=
-nutes?)=2E
->> >=20
->> > Shouldn't it be possible to add me as a secondary owner of the group =
-in
->> > [1]? From thereon I could "transfer" the group by removing you from i=
-t=2E
->>=20
->> Done and done=2E
->>=20
->> I'll remove myself, or you can kick me :( one I know you have successfu=
-lly
->> received ownership=2E I tried to invite the group git-scm but that coul=
-dn't be
->> found, probably you can do that (and then remove yourself :p)
->>=20
->> Would have been useful to transfer ownership of a group, iirc you do th=
-at
->> with repo's as well? Under the hood it could use the invite + remove me=
-mbers
->> thing=2E Though this works=2E
->
->Thanks! I've added Christian to this group such that it has a higher bus
->factor=2E I guess it should probably have the same owners as the "git-scm=
-"
->one just in case we ever want to do anything with it=2E I've also removed
 
-Could you not just invite the git-scm group and have no members at all?
-
-
->you from this group now=2E
->
->Patrick
