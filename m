@@ -1,210 +1,174 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C771818
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 02:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E072A567D
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 06:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711851306; cv=none; b=cPiAU0Hwm+IwHGqADMQJnQU2UuJex7ziBrxC/JYPDqe9nk7vZlovDM3aslpUVUwFsH6HmediD+l1ewbZsH5+fbdqaw2V9y/OyXBtx2SFBzI8WCrm+zWSiK/aww5HoC7pR51TFaFZiLbXB7gRD2L70tC+WdPV1vpsxFL27Glbies=
+	t=1711865868; cv=none; b=hmxRR7gIiagt2jjcFpJWZQv3hYW3Q5aZsqVOQPUCm9v1ptrfRxL0dULeKu4sGIqJrD339l8IPC7UF/U/7fE5vHzE/bXZHl8tr2w5Jfb/Dw2kJQQFGL6+KrsViP9U3ndwfxnQz/XGgNAnbpyN8AocuwUU+mgacsSGeU+s28YebxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711851306; c=relaxed/simple;
-	bh=/oZ05e33eOYVkwmh5Oy5r9Wnwx7Wfcnp5nfDgQjIVqA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R9zmbiperTJt63IaEjSu0mSMcU+PAgV40J2tRzG8lhTlf7LvURiAl5/UbjJc+ppDomr7pyI/CpanSLceVdw1FzkvYM+Z8vqZ0rBmgvpv7owX3goDhoH95lyk24ZAJMVaA+zXtb7aDV82o4SSqbNMqnn8OZ7zz/OawE0kqYE15WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oW3tsuVP; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711865868; c=relaxed/simple;
+	bh=PGA8UE8HhnlG5VXAlv8O3HnExzMxXAfg1/f7JVIsaSM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=XVE+0+eZfCmJeysYSLjedUgOUW78yWmDxXpdYxD6Z5HLilo+p0LLJqVpWyxASYImKTqh5BjnxgHOueVac/w2KW2+kijAtqXPa/0T53CJOqUNuj7egrH52km1uhw1wdeIc0YAPERbdEc75gHvsEv8dGoAPo4GC+ovefvfQ12dDyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BjqauLit; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oW3tsuVP"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E70519AF1;
-	Sat, 30 Mar 2024 22:14:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/oZ05e33eOYVkwmh5Oy5r9Wnwx7Wfcnp5nfDgQ
-	jIVqA=; b=oW3tsuVPfy71kc6GxKeFJSFeAiDmvoQJ0YzmsG66Z8ml7sp2Dfwwsy
-	wmXpF1cu639DpRBrW3Af6aIHABqAWfFidRsgDjYUp63rDaApPKkz68V3QL2zLkdG
-	hsgvy0W10k6YtfkKfOf2WJUe5rMsmr7RvrmqZN+j9r1/Grk09MQ6o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 16D1019AF0;
-	Sat, 30 Mar 2024 22:14:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 879BE19AEF;
-	Sat, 30 Mar 2024 22:14:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Peter Krefting <peter@softwolves.pp.se>
-Cc: git@vger.kernel.org,  "Osipov, Michael (IN IT IN)"
- <michael.osipov@innomotics.com>
-Subject: Re: [PATCH v2] bisect: Honor log.date
-In-Reply-To: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se> (Peter
-	Krefting's message of "Sun, 31 Mar 2024 00:10:24 +0100 (CET)")
-References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
-Date: Sat, 30 Mar 2024 19:14:52 -0700
-Message-ID: <xmqqh6gni1ur.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BjqauLit"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-341c9926f98so2028172f8f.1
+        for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:17:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711865865; x=1712470665; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HcxJJ+4M3KTBF33vjM1w7cwO7bwlvC+LOCCv6wZQy/U=;
+        b=BjqauLitjk4uH3HTu9dUC0W6WG515HUPYB+SBq/XbfpJqz5NfBlf7d09J6bMQTxHHw
+         QdXS7l1+EA38hyIhnH2/8+n1rcxyuqKik7Fg15pgHgExodYFfDyOvXv5HHwwyaehLKcP
+         NpezOvfexLxnm0Z9jWBgywin940b4BcpA0zrL8aFQ2fHdWVZYGlu4Zlz2PBjVn27jDMc
+         SZpblogShFuO42+2+yRD0M+hy3eC+u0hqwr1hQMIDEBml70w1XSogI28LUNpUNU+ftM2
+         lUCYRmZ340UKrWTBXERrlAqwILnesDAAF7YySpuTDtphQaJAHe2JDEvkCzIVO26qOK5/
+         w1ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711865865; x=1712470665;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HcxJJ+4M3KTBF33vjM1w7cwO7bwlvC+LOCCv6wZQy/U=;
+        b=LmVS062pmBkopn/4S/vbF8vi0l0Vt3nvEUKfIA+hFk4I+HbbYPxx6euqOArmU75mJJ
+         XlmvtRPA34NwW8hCYVq7bGXES3zIkhAOo6EquPm4/lWf+PHBW3cSZiQa33Yv5ALsZmSo
+         0aSUEmMIMQmgKRCE88V91lssnRif/+pp9ptUec/LQwh66Rg9bTP8lPcwsYwV21HFIdPB
+         YoZ9WY8NIXtFhAjKQBEPuCGhJrLhKfhPeWVIPOKorQi7ccl4bDaa1NdnwtHPyT9jYjvr
+         jHx2ePsgGmwtkgoXDYVeirzlGKFeRRdRDtalSLJenaOwEXJs838hcHJeHTCbmdSUo1zE
+         rW3A==
+X-Forwarded-Encrypted: i=1; AJvYcCWoV7e3UtrqGEs5N5s9KT1Xl/ylJLDZ0Gkp4UdSFawZ4LzUWA+yrXbM5T327uUuYaysvVt0pXtRgnhmbqSHo2d2MY3u
+X-Gm-Message-State: AOJu0Yzs0CZ7WfpYH+5lk1/O/soUy5fcClgbT93LVgAi1fY1VIE17cw+
+	hFLMMBshTCov9/MioSKamtHMgCmRPX0J7lP4a87kUAwUPJv2uvSo
+X-Google-Smtp-Source: AGHT+IF0O6bh8d6eXg7YWP76qlFhqST1prETSir9Ojnkk0lfqiWUN7YegfdC/GWEg6QjayaZ+l5ZxA==
+X-Received: by 2002:adf:f083:0:b0:342:a8e0:6f3f with SMTP id n3-20020adff083000000b00342a8e06f3fmr3911722wro.42.1711865864817;
+        Sat, 30 Mar 2024 23:17:44 -0700 (PDT)
+Received: from gmail.com (26.red-88-14-197.dynamicip.rima-tde.net. [88.14.197.26])
+        by smtp.gmail.com with ESMTPSA id m10-20020a056000008a00b0033ec91c9eadsm8169831wrx.53.2024.03.30.23.17.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Mar 2024 23:17:44 -0700 (PDT)
+Message-ID: <4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com>
+Date: Sun, 31 Mar 2024 08:17:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 76B80A42-EF04-11EE-96E8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] advice: omit trailing whitespace
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq4jcooddp.fsf@gitster.g>
+ <fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
+In-Reply-To: <fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Peter Krefting <peter@softwolves.pp.se> writes:
+On Sat, Mar 30, 2024 at 12:23:41AM +0100, Rubén Justo wrote:
+> On Fri, Mar 29, 2024 at 03:57:06PM -0700, Junio C Hamano wrote:
+> > Git tools all consistently encourage users to avoid whitespaces at
+> > the end of line by giving them features like "git diff --check" and
+> > "git am --whitespace=fix".  Make sure that the advice messages we
+> > give users avoid trailing whitespaces.  We shouldn't be wasting
+> > vertical screen real estate by adding blank lines in advice messages
+> > that are supposed to be concise hints, but as long as we write such
+> > blank line in our "hints", we should do it right.
+> > 
+> > A test that expects the current behaviour of leaving trailing
+> > whitespaces has been adjusted.
+> > 
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> 
+> Yeah, ACK.  This is obviously a good thing.  I'll base my other series
+> in this.  Thanks.
+> 
+> >  advice.c          | 3 ++-
+> >  t/t3200-branch.sh | 4 ++--
+> >  2 files changed, 4 insertions(+), 3 deletions(-)
+> > 
+> > diff --git c/advice.c w/advice.c
+> > index d19648b7f8..75111191ad 100644
+> > --- c/advice.c
+> > +++ w/advice.c
+> > @@ -105,8 +105,9 @@ static void vadvise(const char *advice, int display_instructions,
+> >  
+> >  	for (cp = buf.buf; *cp; cp = np) {
+> >  		np = strchrnul(cp, '\n');
+> > -		fprintf(stderr,	_("%shint: %.*s%s\n"),
+> > +		fprintf(stderr,	_("%shint:%s%.*s%s\n"),
+> >  			advise_get_color(ADVICE_COLOR_HINT),
+> > +			(np == cp) ? "" : " ",
+> >  			(int)(np - cp), cp,
+> >  			advise_get_color(ADVICE_COLOR_RESET));
 
-> When bisect finds the target commit to display, it calls git diff-tree
-> to do so. This is a plumbing command that is not affected by the user's
-> log.date setting. Switch to instead use "git show", which does honor
-> it.
+Thinking again on this I wonder, while we're here, if we could go further
+and move the "hint" literal to the args, to ease the translation work:
 
-I suspect that log.date is a small tip of an iceberg of the benefit
-we'll get from this switch.  There is an untold assumption that
-honoring the user's configuration is a good thing behind the move
-against "plumbing" in the above description, but singling log.date
-out would give a wrong message.  It makes it harder to answer a
-question, "The commit meant to make the command honor `log.date` and
-make no other behaviour changes, but there are many small behaviour
-changes---are they intended?", when somebody reads this commit log
-message after we all forgot about the true motivation behind the
-change.
+--- >8 ---
+diff --git a/advice.c b/advice.c
+index a18bfe776f..5897e62541 100644
+--- a/advice.c
++++ b/advice.c
+@@ -104,8 +104,9 @@ static void vadvise(const char *advice, int display_instructions,
 
-    Subject: [PATCH vN] bisect: report the final commit with "show"
+        for (cp = buf.buf; *cp; cp = np) {
+                np = strchrnul(cp, '\n');
+-               fprintf(stderr, _("%shint:%s%.*s%s\n"),
++               fprintf(stderr, "%s%s:%s%.*s%s\n",
+                        advise_get_color(ADVICE_COLOR_HINT),
++                       _("hint"),
+                        (np == cp) ? "" : " ",
+                        (int)(np - cp), cp,
+                        advise_get_color(ADVICE_COLOR_RESET));
+--- 8< ---
 
-    When "git bisect" finds the first bad commit and shows it to the
-    user, it calls "git diff-tree", whose output is meant to be
-    stable and deliberately ignores end-user customizations.
+Of course, this is completely optional.
 
-    As this output is meant to be consumed by humans, let's switch
-    it to use "git show" so that we honor end-user customizations
-    via the configuration mechanism (e.g., "log.mailmap") and
-    benefit from UI improvements meant for human consumption (e.g.,
-    the output is sent to the pager) in "git show" relative to "git
-    diff-tree".
+> >  		if (*np)
+> > diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
+> > index d3bbd00b81..ccfa6a720d 100755
+> > --- c/t/t3200-branch.sh
+> > +++ w/t/t3200-branch.sh
+> > @@ -1154,9 +1154,9 @@ test_expect_success 'avoid ambiguous track and advise' '
+> >  	hint: tracking ref '\''refs/heads/main'\'':
+> >  	hint:   ambi1
+> >  	hint:   ambi2
+> > -	hint: ''
+> > +	hint:
+> >  	hint: This is typically a configuration error.
+> > -	hint: ''
+> > +	hint:
+> >  	hint: To support setting up tracking branches, ensure that
+> >  	hint: different remotes'\'' fetch refspecs map into different
+> >  	hint: tracking namespaces.
+> 
+> 
+> A quick run tells me that this step also needs, I think:
+> 
+> --- >8 ---
+> 
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index b41a47eb94..03bb4af7d6 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1780,7 +1780,7 @@ test_expect_success 'recursive tagging should give advice' '
+>         sed -e "s/|$//" <<-EOF >expect &&
+>         hint: You have created a nested tag. The object referred to by your new tag is
+>         hint: already a tag. If you meant to tag the object that it points to, use:
+> -       hint: |
+> +       hint:
+>         hint:   git tag -f nested annotated-v4.0^{}
+>         hint: Disable this message with "git config advice.nestedTag false"
+>         EOF
+> 
+> 
 
-    We have to give "git show" some hardcoded options, like not
-    showing the patch text at all, as the patch is too much for the
-    purpose of "git bisect" reporting the final commit.
-
-would be how I would explain and justify this change.  If we later
-add more configuration to tweak "git show" output, it will affect
-the output from "git bisect" automatically, which is another thing
-you may want to explain and use as another reason to justify the
-change (in the second paragraph).
-
-Some differences in the proposed output and the current output I see
-are:
-
- - the output now goes to the pager
-
- - it now honors log.mailmap (which may default to true, so you
-   could disable it with log.mailmap=false).
-
- - it shows the ref decoration by default (when the output goes to
-   terminal).
-
- - the commit object names for the merge parents are abbreviated.
-
- - it no longer shows the change summary (creation, deletion,
-   rename, copy).
-
- - it no longer shows the diffstat when the final commit turns out
-   to be a merge commit.
-
-There may be other differences.
-
-I personally welcome the first four changes above, which I suspect
-you didn't intend to make (I suspect that you weren't even aware of
-making these changes).
-
-If there were no existing users of "git bisect" other than me, I
-would even suggest dropping "--no-abbrev-commit" from the set of
-hardcoded "git show" options, so that the commit object name itself,
-just like the commit object names for the merge parents, gets
-abbreviated.  The abbreviation is designed to give us unique prefix,
-so for the purpose of cutting and pasting from the output to some
-other Git command, it should not break my workflow.  If some tool is
-reading the output and blindly assuming that the object names are
-spelled in full, such a change will break it.
-
-The final two changes, lack of diffstat for merges, may or may not
-be considered a regression, depending on the user you ask.  I was
-just surprised by them but personally was not too unhappy with the
-behaviour change, but reactions from other couple of thousands of
-Git users (we have at least that many users these days, no?) may be
-different from mine, ranging from "Meh" to "you broke my workflow".
-
-A good test case to try is to do a bisection that finds c2f3bf07
-(GIT 1.0.0, 2005-12-21) with and without your patch and compare
-the output from them.  I say it is "good test case", not because
-I view any difference is a bug in this patch, but because many
-differences are probably good things that helps us to promote the
-behaviour changes.  They just need to be explained in the proposed
-log message to tell our future developers that we knew about these
-behaviour changes and we meant to make them.
-
-Having said all that.
-
-> +static void show_commit(struct commit *commit)
->  {
-> -	const char *argv[] = {
-> -		"diff-tree", "--pretty", "--stat", "--summary", "--cc", NULL
-> -	};
-> -	struct rev_info opt;
-> +	struct child_process show = CHILD_PROCESS_INIT;
-
-It is very good that we no longer use the separate argv[] array and
-use the more convenient strvec_pushl() call, which will make it
-easier for us to later tweak the arguments we pass to the command
-invocation dynamically if needed.
-
-> -	git_config(git_diff_ui_config, NULL);
-> -	repo_init_revisions(r, &opt, prefix);
-> -
-> -	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
-> -	log_tree_commit(&opt, commit);
-> -	release_revisions(&opt);
-
-And not doing this in process lets us not have to bother with the
-configuration and other things we did in the original.  We now spawn
-an extra process to show the final commit, but this is done only at
-the very end of a bisection session, so it shouldn't matter.
-
-> +	strvec_pushl(&show.args, "show", "--pretty=medium", "--stat", "--no-abbrev-commit", "--no-patch",
-> +		     oid_to_hex(&commit->object.oid), NULL);
-
-I would write it either like this:
-
-	strvec_pushl(&show.args, "show",
-		     "--pretty=medium", "--stat",
-		     "--no-abbrev-commit", "--no-patch",
-		     oid_to_hex(&commit->object.oid), NULL);
-
-in anticipation for changing the set of options over the evolution
-of this code (but the first "show" line or the last "oid_to_hex()"
-line would have much less chance of needing to change), or even
-spread the middle part one-option-per-line.
-
-As to the exact set of options to pass to "git show", the preference
-would be different from person to person, but I probably would drop
-"--pretty=medium", as it is the default and if/when "git show"
-learns to tweak it via configuration variable, you would want the
-output from here honor it just like you wanted it honor `log.date`.
-I would not be too unhappy to see `--no-abbrev-commit` to go myself,
-but some tool authors might hate you if you did so.  I dunno.
-
-If you add --stat, don't you want to add --summary as well?  Try to
-bisect down to a commit that adds or removes files to see the output
-difference to decide.
-
-Thanks.
-
-
-
-
+Your queued version already fixed this.  So, nothing to worry about.
