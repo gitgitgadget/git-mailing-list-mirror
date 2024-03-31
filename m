@@ -1,91 +1,96 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F856FB2
-	for <git@vger.kernel.org>; Sun, 31 Mar 2024 06:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CD02905
+	for <git@vger.kernel.org>; Sun, 31 Mar 2024 06:49:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711867427; cv=none; b=qh9B0xA9P1FOYMlw7iRDuLze7/bf4qdu18mcgbp1fc4UVqA6RVcq9ioz+ZTCMslS3rK1ul6U061l9pTpINWcqUfHTdvufuRd9nJSEilGl0pL3dAmf/exjauD1Z12pXSXOoGdaubi0Pac8GUZdGtMe/trlFA59j2Q2DeG99PVXg0=
+	t=1711867766; cv=none; b=ozC8mv0v+NfFsG6qwmSglKSpZb/+qH0VYc3lzfI9Zy6plaNCmRczSkConu3LNvbHQ2gUZ6Kk0BokO/IQYoXsqsuyAPqwitu1siMWUg8GFEpNMgLtf5glgwCZ/QFayZOGoR/wlMDH6abMOFtn/kVuDOtg7UsgfoDO50TkMJ2qonc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711867427; c=relaxed/simple;
-	bh=CNddlyyZF0EclzMe2XgjW+PTc2beR7Y5PUnI0ex20Cw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SNCUCrWhRZG2tLzgwiC8e3ueGgGEbKAq4temMCH4I/Vhxe8sPZizzaXuFRU9APgVebIRYO8gp0C/kyVutUsEmVua17Y0hZN2A90ot7ewAkr3WOUTx0Ffm8uriKwlDYcI56ajcKCAZ2gIm1MzCXNf89YVI03DP8I1Ln7yQzOWOcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rAcgSQtC; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rAcgSQtC"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A8D11A5A1;
-	Sun, 31 Mar 2024 02:43:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CNddlyyZF0Ec
-	lzMe2XgjW+PTc2beR7Y5PUnI0ex20Cw=; b=rAcgSQtCboxuZF94UjuQmldwbI71
-	XzjRYTHOiTMqNNhfg+kJjcxQmLvvZnd+SV8DIPXe9qbs4kFgHsgnAqPDKs6puarf
-	zu5t47SEGLBIL/HfR3hyn1AbZM7TNijs6zpaxmToBCpbm2a/uJqQtwvt9+4vsfKg
-	9HFOyU9HjC+JB04=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 536E51A5A0;
-	Sun, 31 Mar 2024 02:43:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D1DE31A59E;
-	Sun, 31 Mar 2024 02:43:41 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] advice: omit trailing whitespace
-In-Reply-To: <4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Sun, 31 Mar 2024 08:17:30 +0200")
-References: <xmqq4jcooddp.fsf@gitster.g>
-	<fc002d62-6efe-42d4-b562-c10d3419fff6@gmail.com>
-	<4c8da56e-974b-474e-aefe-1ced5ee69327@gmail.com>
-Date: Sat, 30 Mar 2024 23:43:40 -0700
-Message-ID: <xmqqcyraj3z7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1711867766; c=relaxed/simple;
+	bh=upfKnI4IE9Jf3vaU4qNbFg+im421qDhXrUhzPZQq22M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ljLK2GpmzIlD/RtdWntOMaey0aB187wd34NqubaO/uSEcv77jxSaHdWlnM42vnF/FWCUSo2ZF7cr+1NpjU4KWJ07KuOHk8HMs240QiP7E+11YPkm3hnMrpR6inVsmdn+adSlpNzxKHecDUF5IBfIClCJRU+qZAslplMJNbAdprY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-69625f89aa2so25171386d6.3
+        for <git@vger.kernel.org>; Sat, 30 Mar 2024 23:49:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711867763; x=1712472563;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ibw84ukGrFCDuFskzzUfLhvNTshksEeXlQE8T0sR/+A=;
+        b=Em6GLq2yn3XGDqWvQ157nr06BOI1nKplZCv35sqs2dZh6uJFEUuT2wtUx6WAkq7bxB
+         +v91GSXR+M9q6IXYSCg5Kh5ndp8/fvsLNA54AhG6GUxBLoSH7mDDh9teN9R3PkWqcGUY
+         9JtkGDhyYYnvt+4vYk1v1EB0QQWkm5XVin4zu32P4mQiVD3kU4N2lw2y8TV80orwVush
+         Gf0d7ZMuoxGq8s+7958zndNHRYIp2qtbPRtAt+RL9aJmQVZ7cx0BGYrZC3zcFgvePxzT
+         bdyfdJ+dojXW5vVaNINZC5vjA6YhVXaMoZlpydDVSsBHlulitu6k+4ydh7Ib+taxjCdI
+         zSlA==
+X-Gm-Message-State: AOJu0YzfzzwpdIAAVoLGKD9obDuxJws3yZ3s8TU9u3/jVxfPIVJafdNG
+	l/6Zc36/yeX/A93NUdQ+hsGVmHOKj4mKm9OWUv7MrDhURtJwxdjGQR7BqNyDdpKQiBy+6tRK5FL
+	rAauzHnom+HhFKT5IEx20bq5AvhA=
+X-Google-Smtp-Source: AGHT+IFkywMT67rYorxRBwz2YhLNaSKYyoXLhZad4M3zgQO5C5Rl5ebG88dILr7adrv76DaiuLabmNapmSjv6Su94Fg=
+X-Received: by 2002:ad4:5fcf:0:b0:696:b0e4:1d55 with SMTP id
+ jq15-20020ad45fcf000000b00696b0e41d55mr6976018qvb.14.1711867763328; Sat, 30
+ Mar 2024 23:49:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 03570EE2-EF2A-11EE-96C3-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
+ <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com> <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
+In-Reply-To: <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 31 Mar 2024 02:49:12 -0400
+Message-ID: <CAPig+cQdFi5zBkDQWTEWXCTt5h9gVFNJv7obf=tWCkOvsaEHEA@mail.gmail.com>
+Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
+To: Tamir Duberstein <tamird@fuseenergy.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+[please reply inline rather than top-posting; I've moved your reply
+inline for this response]
 
->> >  	for (cp =3D buf.buf; *cp; cp =3D np) {
->> >  		np =3D strchrnul(cp, '\n');
->> > -		fprintf(stderr,	_("%shint: %.*s%s\n"),
->> > +		fprintf(stderr,	_("%shint:%s%.*s%s\n"),
->> >  			advise_get_color(ADVICE_COLOR_HINT),
->> > +			(np =3D=3D cp) ? "" : " ",
->> >  			(int)(np - cp), cp,
->> >  			advise_get_color(ADVICE_COLOR_RESET));
+On Thu, Mar 28, 2024 at 1:40=E2=80=AFPM Tamir Duberstein <tamird@fuseenergy=
+.com> wrote:
+> On Thu, Mar 28, 2024 at 5:24=E2=80=AFPM Eric Sunshine <sunshine@sunshinec=
+o.com> wrote:
+> > On Thu, Mar 28, 2024 at 10:54=E2=80=AFAM Tamir Duberstein <tamird@fusee=
+nergy.com> wrote:
+> > > % git branch -d cleanup
+> > > error: cannot delete branch 'cleanup' used by worktree at '<my source=
+ dir>'
+> > > % git worktree list
+> > > <my source dir>  dc46f6d5e [main]
+> > > % git branch
+> > >   cleanup
+> > > * main
+> >
+> > Is this error persistent once it arises? That is, if you invoke `git
+> > branch -d cleanup` again immediately after (or a little while after)
+> > the above sequence, does the problem persist? Or does it "clear up" on
+> > its own at some point?
 >
-> Thinking again on this I wonder, while we're here, if we could go furth=
-er
-> and move the "hint" literal to the args, to ease the translation work:
-> -               fprintf(stderr, _("%shint:%s%.*s%s\n"),
-> +               fprintf(stderr, "%s%s:%s%.*s%s\n",
->                         advise_get_color(ADVICE_COLOR_HINT),
-> +                       _("hint"),
->                         (np =3D=3D cp) ? "" : " ",
->                         (int)(np - cp), cp,
->                         advise_get_color(ADVICE_COLOR_RESET));
+> Yes, the problem is persistent. The branch is never deleted.
 
-It is not guaranteed that any and all languages want to use a colon
-immediately after translation of "hint"; the current message string
-with or without my patch allows translators adjust that part to the
-target language, but your version will force them to always use only
-a colon there.  Is that an improvement?  I somehow do not think so.
+I'd guess that there may be some sort of "ref" still pointing at the
+"cleanup" branch which presumably was, at some point, checked out at
+"<my source dir>". Digging through the code[1,2,3] suggests that you
+might have some stale state from a rebase, bisect, or other sequencer
+operation which still references the "cleanup" branch.
 
+[Cc'ing Phillip who is probably much more familiar with this code than am I=
+.]
+
+By the way, it's not clear from your initial report what you mean when
+you say "then the remote deleted the branch". Also, did you fetch
+and/or pull from the remote after that?
+
+[1]: https://github.com/git/git/blob/d6fd04375f91/branch.c#L454
+[2]: https://github.com/git/git/blob/d6fd04375f91/branch.c#L386
+[3]: https://github.com/git/git/blob/d6fd04375f91/sequencer.c#L6551
