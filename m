@@ -1,126 +1,103 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DC443AC8
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 14:45:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65FD4501C
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 15:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711982756; cv=none; b=kTuizBvqSL4ivsvsI+nuEhOUeBr7Q4viZy7mS2p8PXgmokFYt+UN4k+VMXOm9uHcLNQuq/UDxS0M6/C3gv/hjTxgrhu0zuJ20jl9AcIHFGyp/c7K9lYyzICBVg+vnRmof2cz7xuPBhAop4t21ThPw9YNoSoNsqQog9cGFafXs84=
+	t=1711985487; cv=none; b=evlg4eN3phwBQCJNHKKQ42kHr8JAd1hxz/flvNQM16G4VbpBRXo0k+YNTEfRzClrhPFxTaTVl/9K62x5tFuWDh+qIO/l5SDpL/36hBRUJxQl9G6d2/fXcJ3V7Sn6nYsTHlbrfhIb+DfDh2q3lxKvRzcNP3bemQRynxt2HpgUBuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711982756; c=relaxed/simple;
-	bh=53vEoIpGL//F3Kpsdo4YaRhmKY17vMioQPw66ojePrk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOXuyDTBPEfjrChzTXc/E22KDQoXfK4CyCiUQbHKOebcC0YWuriAIs9gnnOWRLuvBZfW/L+HMKePifcOYXAT3LkgOlP70ukLFlKko01GLpSWC/0b1C3za34xLB8pciti1BVNAZSxrC+xhDSgJYp6izVRsqfLfdxtyHIFbsTd9Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZdTpB/JI; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711985487; c=relaxed/simple;
+	bh=ruRqrD88Kr+Qw+ozFdBGiWpG4baUBSGIYXryvIuy0FI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mw5SuDBO7n6ZUtQmWI5WKiSDOfd+YtaWq8l7s1EWX77o+GPid44ocPZuqgmE8veERYywYwPdw3vq4GMXHLbPRX5t9xH5sPDlZkZrBizdVip9+LtaWBBBi+fPDkgh8gSjeNMHFV4HdpOxFBElmd71eOBrqgMD/l2blmpHUxzcex4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=isSRyfJI; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZdTpB/JI"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-56dd16630d8so761667a12.0
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 07:45:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711982753; x=1712587553; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dShN5lbVlcmIi5FTCG5ExaQwq40xl/azZIHKDfczko4=;
-        b=ZdTpB/JIJRZTXPevaOWS7IhIlniQZEyIZVrjdsD7l8a2QbRt1Fa5FalKBCK4siVI05
-         H3xCIrkECk4yDWSTJmPXwDx3oLt30UguuqyC1dtWMMPvq84CmqzXap2LCrRYpZiniI8T
-         6dbsEZ/33HdYXOQjOkNzSjJEt8mDuyl6jO62lAtFWMETd8F+5sLno/C1qykv6woYtegj
-         PWw42BN7SHpdxAP51c0HMwe29J+An0ISyHXLaB2eecqhE5ZDciMk2UmliCXB60kqINa8
-         2crSZey8BiI1BWQHVSUT7zpHOVuOkRhISq2BP0HOn6IRKxNKl/yzaNA12LWSvAqcviT+
-         +N8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711982753; x=1712587553;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dShN5lbVlcmIi5FTCG5ExaQwq40xl/azZIHKDfczko4=;
-        b=Noe/qW/NkZxkmkbIJCaW6+hifiViZEZJVvp17q0+rmXzeh6r21P31HelDPEY4+l2bN
-         aHBJppQy0atqqZncbN99hb95caBbA4ELKwuHqJmMxD1hjBYRqGrPtWtS/Q+6rvs7DwF4
-         9okCnzuAgLjpdUkRuvHYfR53uqx4NotKZ9UwmNRBM8vfLubYcCcXpM0/6LKzIHS1HfQ7
-         758VXn6qcv6BALiSy9NVYfT6X8dy+z/lfEyERvVxuRCZDNy5itplIvrXBWY+Y5A5QUUY
-         V4v29mWVhRfgoQy4uQHVYCZEnCmL156KLMV6ZVvfmqn93Fel2gPEtxm7aVt9C7Hd9JDk
-         gJ7g==
-X-Gm-Message-State: AOJu0YwBTzgFh8DBm2J+z+xq2Ong9nlV9RWqSNUDeb/y/w1u9lgtn94E
-	OlBaYWAGMAl4qoGi5FeNJVP2j7qu8+UajeT/H3AbrM2YGXzRYbAO0nI8D/pWU4w=
-X-Google-Smtp-Source: AGHT+IHKYQjMLPISEVP34AB3rqcZUyVUnpvj2QsdvyG0nUI8ydUt8cF4E/3mWfrnlqkMhtp06ULE1Q==
-X-Received: by 2002:a50:d74d:0:b0:56b:7f43:5a57 with SMTP id i13-20020a50d74d000000b0056b7f435a57mr4866474edj.15.1711982753058;
-        Mon, 01 Apr 2024 07:45:53 -0700 (PDT)
-Received: from laptop.fritz.box ([2a02:2455:826e:4900:c9f:8d5a:d89b:4ac])
-        by smtp.gmail.com with ESMTPSA id n7-20020a509347000000b0056c24df7a78sm5751170eda.5.2024.04.01.07.45.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 07:45:52 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	chris.torek@gmail.com,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 2/2] githooks: use {old,new}-oid instead of {old,new}-value
-Date: Mon,  1 Apr 2024 16:45:42 +0200
-Message-ID: <20240401144542.88027-3-knayak@gitlab.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240401144542.88027-1-knayak@gitlab.com>
-References: <20240401144542.88027-1-knayak@gitlab.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="isSRyfJI"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9BA9A1E6CD7;
+	Mon,  1 Apr 2024 11:31:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ruRqrD88Kr+Q
+	w+ozFdBGiWpG4baUBSGIYXryvIuy0FI=; b=isSRyfJIZEHOoLzqJq44HOAdQrz+
+	HAUtUhSMdVrdPGoFWFlT3en0y90TSCDqjYw2UsT9Jm83Oq3YEHX15v0Ew1W/LGa4
+	KOHs3FdQat4/ZxR1+ZcpWbnx0JIGOBXBMoGu4KehqPxO3K2+j6Qd7K8G5BAgvj0F
+	NguPEpkz7+/Y4Ts=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 932891E6CD6;
+	Mon,  1 Apr 2024 11:31:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED4D71E6CD5;
+	Mon,  1 Apr 2024 11:31:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
+ nounset mode
+In-Reply-To: <20240401113033.28709-1-ville.skytta@iki.fi> ("Ville
+ =?utf-8?Q?Skytt=C3=A4=22's?=
+	message of "Mon, 1 Apr 2024 11:30:33 +0000")
+References: <20240401113033.28709-1-ville.skytta@iki.fi>
+Date: Mon, 01 Apr 2024 08:31:22 -0700
+Message-ID: <xmqqttklcd6d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ E5D78EA0-F03C-11EE-9A26-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-From: Karthik Nayak <karthik.188@gmail.com>
+Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
 
-Similar to the previous commit, rename {old,new}-value in the 'githooks'
-documentation to {old,new}-oid. This improves clarity and also ensures
-consistency within the document.
+> `GIT_PS1_SHOWCONFLICTSTATE` is a user variable that might not be set,
+> causing errors when the shell is in `nounset` mode.
+>
+> Take into account on access by falling back to an empty string.
+>
+> Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
+> ---
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/githooks.txt | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Obviously a good thing to do.
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 37f91d5b50..ee9b92c90d 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -275,12 +275,12 @@ This hook executes once for the receive operation. It takes no
- arguments, but for each ref to be updated it receives on standard
- input a line of the format:
- 
--  <old-value> SP <new-value> SP <ref-name> LF
-+  <old-oid> SP <new-oid> SP <ref-name> LF
- 
--where `<old-value>` is the old object name stored in the ref,
--`<new-value>` is the new object name to be stored in the ref and
-+where `<old-oid>` is the old object name stored in the ref,
-+`<new-oid>` is the new object name to be stored in the ref and
- `<ref-name>` is the full name of the ref.
--When creating a new ref, `<old-value>` is the all-zeroes object name.
-+When creating a new ref, `<old-oid>` is the all-zeroes object name.
- 
- If the hook exits with non-zero status, none of the refs will be
- updated. If the hook exits with zero, updating of individual refs can
-@@ -503,13 +503,13 @@ given reference transaction is in:
- For each reference update that was added to the transaction, the hook
- receives on standard input a line of the format:
- 
--  <old-value> SP <new-value> SP <ref-name> LF
-+  <old-oid> SP <new-oid> SP <ref-name> LF
- 
--where `<old-value>` is the old object name passed into the reference
--transaction, `<new-value>` is the new object name to be stored in the
-+where `<old-oid>` is the old object name passed into the reference
-+transaction, `<new-oid>` is the new object name to be stored in the
- ref and `<ref-name>` is the full name of the ref. When force updating
- the reference regardless of its current value or when the reference is
--to be created anew, `<old-value>` is the all-zeroes object name. To
-+to be created anew, `<old-oid>` is the all-zeroes object name. To
- distinguish these cases, you can inspect the current value of
- `<ref-name>` via `git rev-parse`.
- 
--- 
-2.43.GIT
+A related tangent is that
 
+    $ git grep -e '$GIT_PS1' -e '${GIT_PS1_[A-Z0-9_]*}' contrib/completio=
+n/
+
+shows a hit for the line with SHOWCONFLICTSTATE, plus two lines with
+GIT_PS1_SHOWUPSTREAM that lack the "if unset then use this value".
+Do you want to do another patch to fix them, or are they good as-is
+for some reason?
+
+Thanks.
+
+>  contrib/completion/git-prompt.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
+prompt.sh
+> index 71f179cba3..3826f52dec 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -528,7 +528,7 @@ __git_ps1 ()
+>  	fi
+> =20
+>  	local conflict=3D"" # state indicator for unresolved conflicts
+> -	if [[ "${GIT_PS1_SHOWCONFLICTSTATE}" =3D=3D "yes" ]] &&
+> +	if [[ "${GIT_PS1_SHOWCONFLICTSTATE-}" =3D=3D "yes" ]] &&
+>  	   [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
+>  		conflict=3D"|CONFLICT"
+>  	fi
