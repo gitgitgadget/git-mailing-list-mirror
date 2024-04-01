@@ -1,107 +1,99 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B32342056
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 19:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9671E42056
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 19:31:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711999661; cv=none; b=RXcibgKWKRijemVw0Wi5P6xGQUdeMyWpiuQ9JLxjgrZN54+Nwl4OpTPtxAVotNw4GVb3KbUfaGSZMHjJqwgkRlPHxpbHlm4Ps7gL8RrA1hPYxIypZdj+Qm9iR13O/sQ5/C64QQJQsM89QkIR0zPYamkYMuOwSPjBexCzXPoqVMg=
+	t=1711999876; cv=none; b=ZJq/IBTgLQSMI5jjpHPTHFQJvhQzEhB6GMELkgG6fjbh673ePN4yINQHfjGM1YKWPTbKZHTjUFApYgz55DlkGRy+iydXmFEBDS0zcmTqXJ+InTFTh6EzjmsyNcNbhG/tzypxkYQq8OAr77vKzihE/SWCHm4PjnmOgYCoF1hDrCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711999661; c=relaxed/simple;
-	bh=0+8yjDsWpYvNNRVdzSW0HwAt/qHPLvc21ePNO7Q2GyM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Vv70iR2usY0sq+csyGfqVre98b7oPjWg8vBCaoS9fUV8DHE06V+hvC2ExpazbrLSx5dDqmAaP3uurLI7HRIP2HC4M+MopM5/6eN19atW7DGuUxdVO4QuBL9SOHYBidcZ/kz5XGmdnKSqjfmoMtWIvOgcT1AZCLXhot7OLmS7bPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFX4FCYV; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1711999876; c=relaxed/simple;
+	bh=uEtkqy7TgJBumWejJRoTifekE3A/oMx6FflRvfudta8=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=FsSmS9aMZ7KzdqZ98IXDflAyz2H5J5KjO/4/S22+4+WWV5ooDgAdjbqo/ZJZ2d+yDdsu+GcTmkz324jTvO7lKg6p7G/weHl3KYdKT/frD3C5CHmFZhw6nK28RVaDVyoIn8lUOhgecbm24Saa8pSRcZNlqtxj3bqG4MSstfpsijw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=D62vk/Hq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BXILCGsr; arc=none smtp.client-ip=64.147.123.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFX4FCYV"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41564adfd5dso7584795e9.1
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 12:27:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711999658; x=1712604458; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p9n9FEd6YIWViy+Mi5QOT0lGxeuUkI3w/aI/2/CJqMw=;
-        b=HFX4FCYV69iEeK1jS9zZzRTG7mphbhxZ+L3lobQKH52aJKoLhYeicki1lXnKo0pUCG
-         T1sjWbvwNRI9tx4L9sBrpBSUj7XU3yQExwDmr4p6C6+6RmXLwDch3uOCeOVPejOEir06
-         78llumjjn3gJkQJeJY4jcK8cqadj9iMWLZlFKDv4zqQXkrhduZuIkP96lJ4iRYfJ7jij
-         xFiPawT8vYgCe6EviBM6Vq4e4c0cF1n2wv0PGm3VHI877OEB5pN1wURUa7g11moAM3wA
-         JCEkoaMdNdeDmXuPZ8Orui/Xpqx5Ec06iyQzVBCba7t4pYmk//a0qF3YCwsaLJp9yDP6
-         1n5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711999658; x=1712604458;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p9n9FEd6YIWViy+Mi5QOT0lGxeuUkI3w/aI/2/CJqMw=;
-        b=wzsBRXg3f11IAEro4EBp+LXriqjMxjka/iIjCN+0NNtHhkovVk/gt4FX+hQI4Qib+9
-         +Sv+T7rkSiXPlaBmXE9I1yUTjKj1LWX2APCZeS9Dud5JC/URE0/My+WGvV4XLMR0CzNS
-         QwRl6xCg9ZYjXnTfHUqsykpXgwfhU31PwYfCfZfmPw9cqRAUH1pmWXUiR/rt6slegZ4K
-         sKME2gHJTgS+FPVzax2vQMWts9kDlQbCgt5KvhPSAcLlcF/YTSHrDV8Lgi9RCu9jFy0y
-         Tbt1oz9txPt7yuvhbkcSD68iuBOJr1JVAhun1nJ94dqLZMy9oLDSiCdJhPApwu6YZ4Bd
-         p2VA==
-X-Gm-Message-State: AOJu0YzTMopiEsQjkLlp/zo6XxZlqFtCVcfPa3mf9ygAf9bVV3pQ3C91
-	NCHRH2si2s1BOvlTHLVJ5bHB1xQ235JHYv9vgvAUzlFn3bV5J+he
-X-Google-Smtp-Source: AGHT+IGckrV+m7LkKCj/fHdsaxzJB0dvCwYmYEOxMxIXr2Sx2LBiGi2bCfoY+L26g/FYcNL7rqkKdA==
-X-Received: by 2002:a05:600c:5207:b0:415:9df2:7405 with SMTP id fb7-20020a05600c520700b004159df27405mr168271wmb.40.1711999657776;
-        Mon, 01 Apr 2024 12:27:37 -0700 (PDT)
-Received: from gmail.com (4.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.4])
-        by smtp.gmail.com with ESMTPSA id w7-20020a05600c474700b004156ca1df95sm1811310wmo.18.2024.04.01.12.27.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Apr 2024 12:27:37 -0700 (PDT)
-Message-ID: <5acafee5-dd65-49f1-bc2d-f959ed4bc9e1@gmail.com>
-Date: Mon, 1 Apr 2024 21:27:31 +0200
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="D62vk/Hq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BXILCGsr"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 7D4FA3200A0D;
+	Mon,  1 Apr 2024 15:31:12 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Mon, 01 Apr 2024 15:31:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1711999872; x=1712086272; bh=kJ0pVPsreMMZdd3w2n3vWiMGKkXgNVJC
+	CqUsYwV16IM=; b=D62vk/Hq6VeKn46or1ecH+LG+gpKAfoxiE4Zr2liYeSqM/YB
+	CZjWVo687K5f9o6Tlnt2PVIIxHWyvLllge9R0FxPYk4K2HZQzkYLv6FVOJ+/fxW3
+	hoAL8ojRjbpiOjbcAnZmf9sQ13lAecIZKnDYNodWJsKVvcLz47+Ff3NifASSNxlT
+	ZdbmvF2ftWb1vhWGUqQB/PuJOZkLOxSkaGX+u30Mwk6/a/gupDMphhPKl/amaOfr
+	Lk6dtDxlJ1kPg3WAIvOTOJDKtP2BR7GktV//Zg82sCPOvww3dFoygp91v49Ksyf4
+	wuDnspccnElnlo4S1zWvaGeCy3uoLb1Clw2BhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1711999872; x=
+	1712086272; bh=kJ0pVPsreMMZdd3w2n3vWiMGKkXgNVJCCqUsYwV16IM=; b=B
+	XILCGsr3Zlu2ZtNW0Ece7qp5PP4E8/ktHAHIxLIuD6ObZGpJQLLehrNsChwORg8r
+	5jv8SD0ADDyfOpi154vhd+nxpDZviBcmwme1NZUHz8jr0yulIXqagu5dydgqdu31
+	wh0qPQ83M6y/xqAHRvGjOaesi4GthQROM8XS1OoA2ddYYbEr6ib/dNXKcv7aDp3k
+	Ywd3RgLEfABS0LrgBRgyI9MddL0Q495OkqpKcxm7kMOpjHy/b+wzzVfDklgef9WP
+	BqnZsIr5p/7ik63Y9moH5MV/8inq6DvB1SOwsgM2cdpmTW3q5Z2dl+EzDVP12RRW
+	wfft13ADE1bBhN26dOK1A==
+X-ME-Sender: <xms:fwsLZi86x-P3lJn-KY9fb5hMt-be0k5hpigJ8XVs_kv2ygSzf80GLuE>
+    <xme:fwsLZiscZKe4ew-I4YxJ9dEU2G3YBSTu9crIiVpnBfe-gRXp6TSmXz4j5hQ4-DPda
+    XSQD8-0dABHUaw_FQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeftddgudefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
+    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:fwsLZoD48m8gA7zm8WoLC3lVdyOEENDGijBbvjm8XPnG3j_k2p-O_Q>
+    <xmx:fwsLZqc6mlCV-wUYzKLoilHXQkBfYufQxVADHDSG_jbt_gddHv_jYA>
+    <xmx:fwsLZnPHlAIh-wmEAvGvDnI-JIZdGa4HAQX3CtuHBsdW_RJLypXVUQ>
+    <xmx:fwsLZknadN3qVOoxow570fDUiSI44spVxaZyuHddVbYm7Ry-Zf8LLw>
+    <xmx:gAsLZt1TyXw1T-6GmBvBDcHkroqL2Y-VZlh4CufrD3VEbCfBQrKFrg>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id D125915A0092; Mon,  1 Apr 2024 15:31:11 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-333-gbfea15422e-fm-20240327.001-gbfea1542
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] improve bugreports
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Git List <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Emily Shaffer <nasamuffin@google.com>
+Message-Id: <bb4cd824-c9ca-4adb-8339-885273aed9bc@app.fastmail.com>
+In-Reply-To: <1117b5b1-fb9e-49b8-b1c3-47b985adce35@gmail.com>
 References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
- <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
- <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <1117b5b1-fb9e-49b8-b1c3-47b985adce35@gmail.com>
+Date: Mon, 01 Apr 2024 21:30:51 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Cc: "Git List" <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] bugreport: add a mark to each proposed questions
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 31, 2024 at 11:09:02PM -0400, Eric Sunshine wrote:
-> On Sun, Mar 31, 2024 at 3:04 AM Rubén Justo <rjusto@gmail.com> wrote:
-> > On Sat, Mar 23, 2024 at 06:32:35PM +0100, Rubén Justo wrote:
-> > > Let's try to improve the readability of the bug reports we receive.
-> >
-> > This series received no response.  One option may be because it went
-> > unnoticed, another because it may not add value.  I'm going to give it
-> > another try and I'll quietly :-) take silence as confirmation of the
-> > second option.
-> >
-> > I'll try to increase the chances of getting a "looks good" by CC'ing
-> > some folks involved in the bugreport tool.
-> 
-> For what it's worth, when I read the cover letter of this series, I
-> thought it was going to clean up the list of questions to eliminate
-> redundancy. In particular, of the three questions:
-> 
->    What did you expect to happen?
->    What happened instead?
->    What's different between what you expected
->         and what actually happened?
-> 
-> the final one seems to repeat what the first two ask, and it is common
-> when answering the third question for people to simply repeat what was
-> said in response to an earlier question.
+On Sat, Mar 23, 2024, at 18:36, Rub=C3=A9n Justo wrote:
+> Include a mark in the questions we provide, to enhance the readability
+> of the reports we receive.
+>
+> Of course, the user has the flexibility to choose a different format or
+> rewrite the report entirely.  However, including these marks in the
+> template may suggest that we value some structure in the message.
+>
+> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
 
-Certainly, a diagnostic questionnaire can always be improved.
-Unfortunately I do not have a better wording to offer here to reduce
-that sense of repetition.
-
-Thanks for your response.
+I like this. The questions and the answers not being differentiated
+makes things harder to read.
