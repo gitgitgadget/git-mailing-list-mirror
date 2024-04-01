@@ -1,151 +1,118 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C962F48CE0
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 17:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991007; cv=none; b=CVWlSmds9jGSpoDlu9jBTrxAWNhrffhldLQzdWHTtthSxyPTIqSQu4GThry1rSLD79RJD7q9Bv+pGQmwnTb1/gfmUQv6zS7oBG1aC2m9HR8DaVvWJTdXe4VArJmlwQSM2Y+1I5SnmAlQaR2SPdkDwXBZH3tcl3SZ/+92MN3unGk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991007; c=relaxed/simple;
-	bh=PvRb5/jl5w2Mgq4pziivjwQyIii/KoUV53E2Raxc+Rs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A/581yAb7jRFJBs/kpY9O52zj8saG9XMj9LjeeHDpdC7ZMzQFCgE9ft5VUxrqf2IVCAoXWBL6s52047vzgaCMq11k7b/oH2LqB5FSJJMDUVm7nEN+Xh3MHa8jNGm22x0zUn4qSAq2Fy5STkIR14LDN6dTbFw8ZaHDCVnrrQMWuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=V1kFOwLJ; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04780481B8
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 17:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711991245; cv=pass; b=OrVmu4PGVJ8tb6SAzmUfJsjTumP8cO4JVDkYyACVC9r2KiwKEyeS4zDx09hrEFinibzyCD24WcsLPP+q/cW2g2b2VD/NdNP99piybX1AMLHQk0sIm0vtAEgBHYs0fUorQBEd+RCD2jPnMY7Ol1EJW/cpfke/105a7ANVrKLn9Bg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711991245; c=relaxed/simple;
+	bh=0tOxD22KQJB0DM32jGUSV3An/VIs9r215P5ii51dn1s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cPvE/wtDF+hhxgFZ/mvxSoqRzuaqOTyl2CNjr6IUNjlcENV/CUulPxgzeQ/mjV9vH//UI81GI5ih2kykOeCebsmB7OQ35fDMWOaXFOyqFuSLuFtIb2/hgfvAFjctn7Rdq54YeXjzplxqQon+HKamVVYK7u8aUbw2/lmsZF8C7Rw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=VlHjjTdz; arc=pass smtp.client-ip=195.140.195.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V1kFOwLJ"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C974E211D1;
-	Mon,  1 Apr 2024 13:03:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PvRb5/jl5w2Mgq4pziivjwQyIii/KoUV53E2Ra
-	xc+Rs=; b=V1kFOwLJMxgiY6n3SiyfmDgdi19+GCErnMFgeT0MCuX/IbSHWg3uNP
-	Hs2+g+8kbtJrj4dK7tzdFw2bgwDMFar8E++G/qS7JTMVApnScKSMGHdy8iiY1LLQ
-	xG/1i/AHp1/LvPuDlg74LhxWlLEkVa4shU42w9pVgBttrXoed/7Og=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C1173211D0;
-	Mon,  1 Apr 2024 13:03:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="VlHjjTdz"
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 38256211CF;
-	Mon,  1 Apr 2024 13:03:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Peter Krefting <peter@softwolves.pp.se>,  git@vger.kernel.org,  "Osipov,
- Michael (IN IT IN)" <michael.osipov@innomotics.com>
-Subject: Re: [PATCH v2] bisect: Honor log.date
-In-Reply-To: <20240401163209.GB3120568@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 1 Apr 2024 12:32:09 -0400")
-References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
-	<xmqqh6gni1ur.fsf@gitster.g>
-	<5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se>
-	<xmqq7chif1pu.fsf@gitster.g>
-	<20240401023225.GA2639800@coredump.intra.peff.net>
-	<c13c0751-0758-e068-282e-eb43496213b8@softwolves.pp.se>
-	<20240401163209.GB3120568@coredump.intra.peff.net>
-Date: Mon, 01 Apr 2024 10:03:13 -0700
-Message-ID: <xmqqmsqd9fse.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	(Authenticated sender: ville.skytta)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4V7crL2qfWzyVF
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 20:07:14 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1711991234;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GVRsjYgln8z2jxqwe3d6MAeIiQEPusuuX8ksO4MtmkY=;
+	b=VlHjjTdzJ26UCx4AP6AzGfj5zYYGPWn9r6/JB6ZRaODqh4hWmR9L8yEEqyLCzpWhSyW28s
+	FEgo24M678Z1qoRY7UF6uOvKOlSwRbM9EajIdNYxSOiK6TsKjkPgjGbnJwRMobQnlsPXnz
+	azY6CzxOqE9AniJewDVDwzR0T2Dqhgk=
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1711991234; a=rsa-sha256; cv=none;
+	b=TDcG0+XI4a94hPEmFF/n4vmtg75fVWQSW/T6oHGDTcNXZobtu/NAYoYxURpZKKI7NnTnDR
+	b6vMokXc7MZzHAXoZ1x9c4imbvBM7f2KH7fG3njaO3Zk58KK3l4z0czpm2sjhqwkFhBX56
+	yMrvDc+EBT9qBe5kVorljolN0opvMPA=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=ville.skytta smtp.mailfrom=ville.skytta@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1711991234;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GVRsjYgln8z2jxqwe3d6MAeIiQEPusuuX8ksO4MtmkY=;
+	b=Cp2lKz39B+fJRI7oDqAKRPAMQxwgzMH85D4W3ZR6VMbX5DBIyC/46ZLu2dfrWGSZu1MXYV
+	wmDCgjsiKVVbvbz5UV4qe2Sd1rBmSR62RZUu8ak0n8/V6O+PvaNNjsYEP6ONhdHLBr3RWI
+	MDTHErmAZIS/YXwGvu+UZvntYzmTFYs=
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-516a97b3139so1096210e87.2
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 10:07:14 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyKfUwJqUsodJ3R4Fz0lfWL/MYHLMUv1yeAUyBrySxLPBloUwFd
+	TBzbQw8galTgIL1VCib1YkMoWPDDR/97K4DL6RjTCQRgNU33awiDMlxVXqZ/LEugWiNU9la+/kC
+	r4UcfMZPLISOno+W8tpIwUG+q2KA=
+X-Google-Smtp-Source: AGHT+IF9uml2+yRvOtTY9ge858FTrVueyNJWBIvuRTYm2bOJXf7+DG3B4sG7uyv43684Rtb8vMkFlstd1GmWHaNF4gA=
+X-Received: by 2002:a05:6512:21ca:b0:516:a04f:d528 with SMTP id
+ d10-20020a05651221ca00b00516a04fd528mr3841167lft.1.1711991233937; Mon, 01 Apr
+ 2024 10:07:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BACEFC5E-F049-11EE-8F6E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <20240401113033.28709-1-ville.skytta@iki.fi> <xmqqttklcd6d.fsf@gitster.g>
+In-Reply-To: <xmqqttklcd6d.fsf@gitster.g>
+From: =?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
+Date: Mon, 1 Apr 2024 17:07:01 +0000
+X-Gmail-Original-Message-ID: <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
+Message-ID: <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
+Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
+ nounset mode
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> So I think this is fine.
+On Mon, 1 Apr 2024 at 15:31, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> > $ git show -s --stat --summary --first-parent v1.0.0^0
->> 
->> Hmm, the git show manual page doesn't document supporting "--first-parent".
+> Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
 >
-> I think that's a documentation bug(-ish). We do not include all of the
-> traversal-related options that "git log" could use because "git show"
-> does not traverse by default. But it does also affect diffs, per the
-> comment added to git-log's documentation in e58142add4
-> (doc/rev-list-options: document --first-parent changes merges format,
-> 2020-12-21).
-
-It's one of the "show is a command in the log family, so some of the
-options that are appropriate to log applies there".  The ones that
-are not useful are the ones about commit walking (e.g., "git show
---no-merges seen" would probably show nothing), but many are still
-relevant.  After all "git show" is a "git log --no-walk --cc" in
-disguise.  The "--first-parent" option affects both traversal (which
-is useless in the context of "git show" that does not walk) and also
-diff generation (which does make it show the diffstat/summary/patch
-relative to the first parent), as you two saw.
-
->> I saw the code that tried to avoid calling one. I don't know the internals
->> well enough here to figure out if we can do without, even when using git
->> show?
+> > `GIT_PS1_SHOWCONFLICTSTATE` is a user variable that might not be set,
+> > causing errors when the shell is in `nounset` mode.
+> >
+> > Take into account on access by falling back to an empty string.
+> >
+> > Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
+> > ---
 >
-> There's not really an easy way.
-
-True, but this is "we show the single commit we found before
-exiting"; executing "git show" as an external program is fine and
-not worth "optimizing out" the cost of starting another process.
-
-> I think the only thing you could do is call cmd_show(), but I'm
-> skeptical of that approach in general. The builtin top-level commands
-> are not designed to be run from other spots. And while it will generally
-> work, there will be corner cases (e.g., loading config that touches
-> globals, affecting the calling command in unexpected ways). I suspect
-> you could largely get away with it here where showing the commit is the
-> last thing we do, but I don't think it's a good pattern to get into.
-
-Exactly.  Anybody who turns run_command("foo") into blindly calling
-cmd_foo() should be shot, twice ;-).  The right way to turn
-run_command("foo") into an internal call is not to call cmd_foo(),
-but to refactor cmd_foo() into the part that sets up the global
-state and the part that does the "foo" thing, and make the latter a
-reusable function.
-
-In the longer run, if we had infinite engineering resources, it
-would be nice to have everything callable by everything else
-internally, is it worth doing for this case?  I dunno.
-
->> That made me realize, if "git show" runs things through a pager, wouldn't it
->> then lose the "%s is the first %s commit\n" message printed by
->> bisect_next_all() before calling the function to show the contents?
->> 
->> Is that fixable?
+> Obviously a good thing to do.
 >
-> Good catch. IMHO we should disable the pager entirely by sticking
-> "--no-pager" at the front of the child argv. But then, maybe somebody
-> would like the output to be paged? I wouldn't.
+> A related tangent is that
+>
+>     $ git grep -e '$GIT_PS1' -e '${GIT_PS1_[A-Z0-9_]*}' contrib/completio=
+n/
+>
+> shows a hit for the line with SHOWCONFLICTSTATE, plus two lines with
+> GIT_PS1_SHOWUPSTREAM that lack the "if unset then use this value".
+> Do you want to do another patch to fix them, or are they good as-is
+> for some reason?
 
-Hardcoded --no-pager is a good workaround.  But if the output is
-long and needs paging, wouldn't we see what was shown before we
-spawned "less" on the screen when we quit it?  Running
+I initially actually changed those very lines too when working on the
+fix for the issue I faced with GIT_PS1_SHOWCONFLICTSTATE. However,
+both occurrences are within __git_ps1_show_upstream, and the only call
+site for that function is protected by a check on the variable that
+does take possible unset state into account; the function will in the
+file's current form never be called with it unset. Additionally, the
+first occurrence is immediately following a line that sets the
+variable, so that one is "doubly protected".
 
-    $ (echo message here ; git log --help)
+Therefore, I decided to undo those changes and not include them here.
+I guess it's a matter of taste whether one finds it desirable to
+protect those accesses nevertheless, but it's not strictly necessary.
 
-and then saying 'q' to exit the pager leaves me "message" after that
-command line.
-
-> If we really wanted to keep the pager for git-show, I guess we'd need to
-> have it print the "%s is the first %s commit" message. The only way I
-> can think to do that is to pass it as a custom --format. But then we'd
-> need to additionally specify all of the usual "medium" format as a
-> custom format, too, which is quite ugly.
-
-;-)  Ugly but fun.
-
-I wonder how hard it is to add %(default-output) placeholder for the
-pretty machinery.
-
-Thanks.
-
+Ville
