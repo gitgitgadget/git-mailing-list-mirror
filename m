@@ -1,118 +1,107 @@
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04780481B8
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 17:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991245; cv=pass; b=OrVmu4PGVJ8tb6SAzmUfJsjTumP8cO4JVDkYyACVC9r2KiwKEyeS4zDx09hrEFinibzyCD24WcsLPP+q/cW2g2b2VD/NdNP99piybX1AMLHQk0sIm0vtAEgBHYs0fUorQBEd+RCD2jPnMY7Ol1EJW/cpfke/105a7ANVrKLn9Bg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991245; c=relaxed/simple;
-	bh=0tOxD22KQJB0DM32jGUSV3An/VIs9r215P5ii51dn1s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cPvE/wtDF+hhxgFZ/mvxSoqRzuaqOTyl2CNjr6IUNjlcENV/CUulPxgzeQ/mjV9vH//UI81GI5ih2kykOeCebsmB7OQ35fDMWOaXFOyqFuSLuFtIb2/hgfvAFjctn7Rdq54YeXjzplxqQon+HKamVVYK7u8aUbw2/lmsZF8C7Rw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=VlHjjTdz; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBE04AEF0
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 17:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711992377; cv=none; b=o+SO3uYd5qAvYF34jbGwXqOMWKKapHB8E7W023/q+NGp+IFZccM/dHOp4mXNyEzh8MUGabKcJwr3Z6Mu9Xt25UlMWKoFFGbkanxYghf7YowSegt1e2qv5DBUw3cnVkCHQBqkpFGWCsdMZ4wW+hizL03pkd1OMHuaWi6dtn44tNQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711992377; c=relaxed/simple;
+	bh=kBm3lArTkA4J47yjkeE04CHBb6P4PF1n6PJSliReCl8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uD/WaYHzD0YEE6EckspsQhGvW4jU9I8EI8D0KB7LYUj3E0eow/aU88WoYD5rOxfj5Hn0gjGsl08rRCLSNer/2ZqJMC89aIqlEYJiUDgVYHKemR5HH+2nxTF5/LmWg209FhP58i795ulM/e+AJTgESDjcpiuEq+G8N+RqOQ1UM9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WmX37u9V; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="VlHjjTdz"
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WmX37u9V"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F83321461;
+	Mon,  1 Apr 2024 13:26:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=kBm3lArTkA4J
+	47yjkeE04CHBb6P4PF1n6PJSliReCl8=; b=WmX37u9VmntuqtJv1/ppNJWZLMxe
+	R2uu1hKEzNkPOIX9DdUU9Se93XvYh/UmuRU7I3GzftfyH0ZKJw+d54k3wiU6AvP2
+	8kpxcXRUlVUx0IACkNhtJd+Xvc3STamMYAwqSvn3XQUcMLpMWWQjQDudr0GloVEj
+	Wy1OAbWm8lhIxhM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4636521460;
+	Mon,  1 Apr 2024 13:26:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: ville.skytta)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4V7crL2qfWzyVF
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 20:07:14 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1711991234;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GVRsjYgln8z2jxqwe3d6MAeIiQEPusuuX8ksO4MtmkY=;
-	b=VlHjjTdzJ26UCx4AP6AzGfj5zYYGPWn9r6/JB6ZRaODqh4hWmR9L8yEEqyLCzpWhSyW28s
-	FEgo24M678Z1qoRY7UF6uOvKOlSwRbM9EajIdNYxSOiK6TsKjkPgjGbnJwRMobQnlsPXnz
-	azY6CzxOqE9AniJewDVDwzR0T2Dqhgk=
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1711991234; a=rsa-sha256; cv=none;
-	b=TDcG0+XI4a94hPEmFF/n4vmtg75fVWQSW/T6oHGDTcNXZobtu/NAYoYxURpZKKI7NnTnDR
-	b6vMokXc7MZzHAXoZ1x9c4imbvBM7f2KH7fG3njaO3Zk58KK3l4z0czpm2sjhqwkFhBX56
-	yMrvDc+EBT9qBe5kVorljolN0opvMPA=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=ville.skytta smtp.mailfrom=ville.skytta@iki.fi
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1711991234;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GVRsjYgln8z2jxqwe3d6MAeIiQEPusuuX8ksO4MtmkY=;
-	b=Cp2lKz39B+fJRI7oDqAKRPAMQxwgzMH85D4W3ZR6VMbX5DBIyC/46ZLu2dfrWGSZu1MXYV
-	wmDCgjsiKVVbvbz5UV4qe2Sd1rBmSR62RZUu8ak0n8/V6O+PvaNNjsYEP6ONhdHLBr3RWI
-	MDTHErmAZIS/YXwGvu+UZvntYzmTFYs=
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-516a97b3139so1096210e87.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 10:07:14 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyKfUwJqUsodJ3R4Fz0lfWL/MYHLMUv1yeAUyBrySxLPBloUwFd
-	TBzbQw8galTgIL1VCib1YkMoWPDDR/97K4DL6RjTCQRgNU33awiDMlxVXqZ/LEugWiNU9la+/kC
-	r4UcfMZPLISOno+W8tpIwUG+q2KA=
-X-Google-Smtp-Source: AGHT+IF9uml2+yRvOtTY9ge858FTrVueyNJWBIvuRTYm2bOJXf7+DG3B4sG7uyv43684Rtb8vMkFlstd1GmWHaNF4gA=
-X-Received: by 2002:a05:6512:21ca:b0:516:a04f:d528 with SMTP id
- d10-20020a05651221ca00b00516a04fd528mr3841167lft.1.1711991233937; Mon, 01 Apr
- 2024 10:07:13 -0700 (PDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D63E32145F;
+	Mon,  1 Apr 2024 13:26:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
+ nounset mode
+In-Reply-To: <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
+	("Ville =?utf-8?Q?Skytt=C3=A4=22's?= message of "Mon, 1 Apr 2024 17:07:01
+ +0000")
+References: <20240401113033.28709-1-ville.skytta@iki.fi>
+	<xmqqttklcd6d.fsf@gitster.g>
+	<CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
+Date: Mon, 01 Apr 2024 10:26:10 -0700
+Message-ID: <xmqqh6gl9eq5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240401113033.28709-1-ville.skytta@iki.fi> <xmqqttklcd6d.fsf@gitster.g>
-In-Reply-To: <xmqqttklcd6d.fsf@gitster.g>
-From: =?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
-Date: Mon, 1 Apr 2024 17:07:01 +0000
-X-Gmail-Original-Message-ID: <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
-Message-ID: <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
-Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
- nounset mode
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ EF5A7176-F04C-11EE-A5E8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 1 Apr 2024 at 15:31, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
->
-> > `GIT_PS1_SHOWCONFLICTSTATE` is a user variable that might not be set,
-> > causing errors when the shell is in `nounset` mode.
-> >
-> > Take into account on access by falling back to an empty string.
-> >
-> > Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
-> > ---
->
-> Obviously a good thing to do.
->
-> A related tangent is that
->
->     $ git grep -e '$GIT_PS1' -e '${GIT_PS1_[A-Z0-9_]*}' contrib/completio=
-n/
->
-> shows a hit for the line with SHOWCONFLICTSTATE, plus two lines with
-> GIT_PS1_SHOWUPSTREAM that lack the "if unset then use this value".
-> Do you want to do another patch to fix them, or are they good as-is
-> for some reason?
+Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
 
-I initially actually changed those very lines too when working on the
-fix for the issue I faced with GIT_PS1_SHOWCONFLICTSTATE. However,
-both occurrences are within __git_ps1_show_upstream, and the only call
-site for that function is protected by a check on the variable that
-does take possible unset state into account; the function will in the
-file's current form never be called with it unset. Additionally, the
-first occurrence is immediately following a line that sets the
-variable, so that one is "doubly protected".
+> I initially actually changed those very lines too when working on the
+> fix for the issue I faced with GIT_PS1_SHOWCONFLICTSTATE. However,
+> both occurrences are within __git_ps1_show_upstream, and the only call
+> site for that function is protected by a check on the variable that
+> does take possible unset state into account; the function will in the
+> file's current form never be called with it unset. Additionally, the
+> first occurrence is immediately following a line that sets the
+> variable, so that one is "doubly protected".
+>
+> Therefore, I decided to undo those changes and not include them here.
+> I guess it's a matter of taste whether one finds it desirable to
+> protect those accesses nevertheless, but it's not strictly necessary.
 
-Therefore, I decided to undo those changes and not include them here.
-I guess it's a matter of taste whether one finds it desirable to
-protect those accesses nevertheless, but it's not strictly necessary.
+I am glad you took a look into it already.  I wonder if we can
+somehow keep this "institutional knowledge" to help the next person
+by saving them from wasting time wondering about the reason why it
+is safe (iow, what you have found out and described above).  Perhaps
+a patch like this?  I dunno.
 
-Ville
+Anyway, thanks again for digging!
+
+ contrib/completion/git-prompt.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git i/contrib/completion/git-prompt.sh w/contrib/completion/git-pr=
+ompt.sh
+index 3826f52dec..b05e4cb049 100644
+--- i/contrib/completion/git-prompt.sh
++++ w/contrib/completion/git-prompt.sh
+@@ -113,6 +113,10 @@ printf -v __git_printf_supports_v -- '%s' yes >/dev/=
+null 2>&1
+=20
+ # stores the divergence from upstream in $p
+ # used by GIT_PS1_SHOWUPSTREAM
++#
++# Note: ${GIT_PS1_SHOWUPSTREAM} is used without the nounset=20
++# protection ${GIT_PS1_SHOWUPSTREAM-}, as the only caller calls
++# only after making sure it is already set.
+ __git_ps1_show_upstream ()
+ {
+ 	local key value
