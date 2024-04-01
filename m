@@ -1,64 +1,63 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC9D54FBD
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 21:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE60454BF7
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 21:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712006205; cv=none; b=Eyl/e8+YPl7J+Wx3B1N8PgTfr8FgBTmTYpaRf5gbhxpN6GHJ2yX4zH+6iUbUqMJhfqOp8/HG6iMEpbju1K6hxFgUfVGeV6rYvbBgeiA/mAs9VuyQLcH9HKoE0ynqgu0EFg7iWsSxeOeAo8wzqqtiMLTdJg1WS5itkJNSt2S7odE=
+	t=1712006209; cv=none; b=Od1mlA/d8dAHF+VZTjEH4hRk4ixgiS+wgLm0kx6UHtj00sQcDnqaNckNH/P46m0CaP7rSBMv3uYh3+BbiX3YsXo9Nb1FnF4Mbp0cmLP82cMr5DqNQhMJ42b+i8HhANqHUYfoAqEkcjBUJeEevX/+0cxXnzpgm/dGite4dqKyw0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712006205; c=relaxed/simple;
-	bh=vz2tBQl0UMbSZXsZsuKDWeVP6ygDPREpIeIdkDDWhyY=;
+	s=arc-20240116; t=1712006209; c=relaxed/simple;
+	bh=tsXqUT4Od414NUeh4egLw/rDXExBz50LrL0A8vM3ZAs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PB1GcP9YakHbXhZc9QTRSgvHnl115gmCq+P5JIDDxBHLjtuIBJoVWCBykqzCOzEgqzGwesh83d0wTC3j5dNnNILOoH9Spj/L48utecn3tCZcN7RDJble+z5ixgIjwqh5NcIgRItSyOhL/hUvGNw5RZWk1dCw3X145y7AKVvNgiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=PhZAfxzv; arc=none smtp.client-ip=209.85.160.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=bgWIyWjqtmRp/5PThlomMC57hb0RZ64Xc0HT040egAwtvJNqjkpqPOWzcGxTWczcX1Yr2rkmwzdeV6tqk1uMguJy3paMttnArShMCqSnhBIEYyo7e3UXzZnwsbVyPMd3uSoudzWReRRTfR9vniM8tOqzBeg1mPXtviZv0AqBeNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Rtupc7gz; arc=none smtp.client-ip=209.85.161.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PhZAfxzv"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-22a8df1df8fso2819494fac.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 14:16:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Rtupc7gz"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5a52c5c96feso1638021eaf.3
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 14:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712006203; x=1712611003; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712006206; x=1712611006; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MzsJuIkSJEK+5iJ5Jl3zSZ2oJLwXLnndaSfXdzuu7uA=;
-        b=PhZAfxzvk2AGUPVANK8/gqvON41u0OJlWokNsUmYFvaaDrsEs90qu5Sa1RnDWySvHP
-         Q/tOVPCq13T/hCnHQJcpM9ermCzs0+OfKCP4+D6JRMwJrcsWTCLzK8AYsguiY0QmxRJs
-         7+ut1NUdC+PLgbLf0zm0whNEmL5y3eHPDTq8oYotWAgOZ5IWlUliFF3awQGwOtmXaAJL
-         w94fIpV+OXKsEtV2v2AtK58HBJ1d0ldZIyC5+uQYQVZUvfHKSLnMmoWTCCYE1hyBnrJd
-         /O2lnNZqQwVETql2ROeocPl2DYsQ0lImkF3hKafkXAe6AvyboIOglZhMDKAlImVzqREg
-         N6Nw==
+        bh=Wqx8E+rnI+2lFpUJ5MY9BuZ8dh8SbM54x9Z3w+hv4LA=;
+        b=Rtupc7gzUXZAfDJFkLJ/usIZgY4JCRoZqf5YldiTvtkmXzxBo+ny1nffLyIFaDGy/P
+         ewoUcWTmy5WlAeR9THKKMSfBDIDf57Yz4KdZjzuRrk2kQ8zsSyNdT6fMgmPxSF5KbHBT
+         aMaRxTiQzLzhu5QNo48lZFDbkZbuEThAqqr/7p8CcdpudsQfLgrb4/9EsGZhuGDQvHkS
+         m3tscRz5tV948brslXeDtCJ8QxkZNTcndObWjhHyrY9xn0zGkG5ipVnoW6tQQ8r4v50r
+         h0DCjElNZsoD6SA10dOFM/LWzJQzmhEe54300quEUniHMjeSWD1/gtTr923dErgIuInr
+         vgeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712006203; x=1712611003;
+        d=1e100.net; s=20230601; t=1712006206; x=1712611006;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MzsJuIkSJEK+5iJ5Jl3zSZ2oJLwXLnndaSfXdzuu7uA=;
-        b=LsQCKEvmbkJhCXo1raTMr/EMBq8LiiK0jOTDNHCxvLmRa+ofiLKVFeFBrDvv42b8Zr
-         A48atVmo/lgASXIbi4CTs8sgA14DciMLi15MsTmqFJ1nIu8oMfXwR0qvjSAPx/caXKWa
-         jNEHQrMocOmtQizvL9q73516IcbjXHTUrj9SiqQO7z8t9TM29JCAOvwM6z44G3fccVPw
-         l+ORdcF+UIBkmLyCKl0pBDCIXSHN1nzp+nXZKhi4DVv9/PTChjQTmL3/Y/0MsSADaXeM
-         I84feLzg3o1bwvko3+HkbxtRMe5hZSb8GXKYqsBezo9Omikfv1lB8AkyMGnu8JRReemp
-         hkxw==
-X-Gm-Message-State: AOJu0YxnJ0X1v+Fr3Va9lSWOVn2GveYKtRHKQ/R2FDWOcBYJHpxuwqNt
-	x1WhKA1NCiZzVYVyCYAL/tWH5Iv9yYB0hDNWOJXf3qSlgKVFO/bOkuvVqPs/QQOhB4GWO74Yfkl
-	kB1M=
-X-Google-Smtp-Source: AGHT+IHztvvwp+fAW0aZh4ir47ZkWn1GnMXr85bbqOl0rxY5lg1ehPTUNE35xLyv04fShLLZyNk/pg==
-X-Received: by 2002:a05:6870:6124:b0:229:eb17:3c19 with SMTP id s36-20020a056870612400b00229eb173c19mr10628422oae.35.1712006203290;
-        Mon, 01 Apr 2024 14:16:43 -0700 (PDT)
+        bh=Wqx8E+rnI+2lFpUJ5MY9BuZ8dh8SbM54x9Z3w+hv4LA=;
+        b=mF3tc3CMXND8KYMbwtfRji8oRkVIZtrnqRLR+xSdnmEKLvmoui/tNmOaaL5F+W73xu
+         FPn33Dl/ntqwTmeftuNmi/7ASZmdqgtoldz6N9Pays7rdqQl91IQBiMd90r8lJESuhdu
+         TiSiFcJ91TBUGwsRVYqHl0CciCNZBs9b+MNZkw/Pd6Nw0od3IJ6Fh2g6Tc0Ay15xwWVS
+         Z7JfYc7DZVy/Wa89GlArvecNe09HsauLLVWlj2cPWsLSv5bmZb0htHVnuhnACSmMMJnG
+         DotuIEd1f3QGZ/St6FccWuCdKjClA0xzXEiywy5CPbPcRtg25RZNzd1GdHUIp+i1j6NT
+         4VCw==
+X-Gm-Message-State: AOJu0Yw2TEoe7koM8NjqRqqXr3bJCicaZCQMLxoWr1/qgfUJgA3DQYuA
+	CmX+zfMr9JMlDjNth6sbdwelMnvyOw3IFh4MOkobyesReBfkEooK9u6TSmwZcq/3ZoXUG+iWrBq
+	IJEg=
+X-Google-Smtp-Source: AGHT+IFTlzXM7h1BQmiFbaGhjrdjORR7RArtQcg355uR8ROvQHFkuY1TMTt7qdgj3Eqc+0UXP2QKKA==
+X-Received: by 2002:a05:6871:a407:b0:221:3bb8:3e26 with SMTP id vz7-20020a056871a40700b002213bb83e26mr12207256oab.15.1712006206646;
+        Mon, 01 Apr 2024 14:16:46 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ex9-20020a05622a518900b00432b5c9b9ecsm4755324qtb.14.2024.04.01.14.16.42
+        by smtp.gmail.com with ESMTPSA id ha13-20020a05622a2b0d00b00432b569506dsm4824068qtb.38.2024.04.01.14.16.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 14:16:42 -0700 (PDT)
-Date: Mon, 1 Apr 2024 17:16:41 -0400
+        Mon, 01 Apr 2024 14:16:46 -0700 (PDT)
+Date: Mon, 1 Apr 2024 17:16:44 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v2 3/4] midx-write.c: check count of packs to repack after
- grouping
-Message-ID: <b121f05a32b6639e6d8d28c8c7eb8fef1c7bfb59.1712006190.git.me@ttaylorr.com>
+Subject: [PATCH v2 4/4] midx-write.c: use `--stdin-packs` when repacking
+Message-ID: <b5d6ba5802aef6ddf1542f1b0efffe43c22436ba.1712006190.git.me@ttaylorr.com>
 References: <cover.1711387439.git.me@ttaylorr.com>
  <cover.1712006190.git.me@ttaylorr.com>
 Precedence: bulk
@@ -71,124 +70,85 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1712006190.git.me@ttaylorr.com>
 
-In both fill_included_packs_all() and fill_included_packs_batch(), we
-accumulate a list of packs whose contents we want to repack together,
-and then use that information to feed a list of objects as input to
-pack-objects.
+When constructing a new pack `git multi-pack-index repack` provides a
+list of objects which is the union of objects in all MIDX'd packs which
+were "included" in the repack.
 
-In both cases, the `fill_included_packs_` functions keep track of how
-many packs they want to repack together, and only execute pack-objects
-if there are at least two packs that need repacking.
+Though correct, this typically yields a poorly structured pack, since
+providing the objects list over stdin does not give pack-objects a
+chance to discover the namehash values for each object, leading to
+sub-optimal delta selection.
 
-Having both of these functions keep track of this information themselves
-is not strictly necessary, since they also log which packs to repack via
-the `include_pack` array, so we can simply count the non-zero entries in
-that array after either function is done executing, reducing the overall
-amount of code necessary.
+We can use `--stdin-packs` instead, which has a couple of benefits:
+
+  - it does a supplemental walk over objects in the supplied list of
+    packs to discover their namehash, leading to higher-quality delta
+    selection
+
+  - it requires us to list far less data over stdin; instead of listing
+    each object in the resulting pack, we need only list the
+    constituent packs from which those objects were selected in the MIDX
+
+Of course, this comes at a slight cost: though we save time on listing
+packs versus objects over stdin[^1] (around ~650 milliseconds), we add a
+non-trivial amount of time walking over the given objects in order to
+find better deltas.
+
+In general, this is likely to more closely match the user's expectations
+(i.e. that packs generated via `git multi-pack-index repack` are written
+with high-quality deltas). But if not, we can always introduce a new
+option in pack-objects to disable the supplemental object walk, which
+would yield a pure CPU-time savings, at the cost of the on-disk size of
+the resulting pack.
+
+[^1]: In a patched version of Git that doesn't perform the supplemental
+  object walk in `pack-objects --stdin-packs`, we save around ~650ms
+  (from 5.968 to 5.325 seconds) when running `git multi-pack-index
+  repack --batch-size=0` on git.git with all objects packed, and all
+  packs in a MIDX.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c | 44 ++++++++++++++++++++------------------------
- 1 file changed, 20 insertions(+), 24 deletions(-)
+ midx-write.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 906efa2169..960cc46250 100644
+index 960cc46250..65e69d2de7 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1367,11 +1367,11 @@ static int want_included_pack(struct repository *r,
- 	return 1;
- }
- 
--static int fill_included_packs_all(struct repository *r,
--				   struct multi_pack_index *m,
--				   unsigned char *include_pack)
-+static void fill_included_packs_all(struct repository *r,
-+				    struct multi_pack_index *m,
-+				    unsigned char *include_pack)
- {
--	uint32_t i, count = 0;
-+	uint32_t i;
- 	int pack_kept_objects = 0;
- 
- 	repo_config_get_bool(r, "repack.packkeptobjects", &pack_kept_objects);
-@@ -1381,18 +1381,15 @@ static int fill_included_packs_all(struct repository *r,
- 			continue;
- 
- 		include_pack[i] = 1;
--		count++;
- 	}
--
--	return count < 2;
- }
- 
--static int fill_included_packs_batch(struct repository *r,
--				     struct multi_pack_index *m,
--				     unsigned char *include_pack,
--				     size_t batch_size)
-+static void fill_included_packs_batch(struct repository *r,
-+				      struct multi_pack_index *m,
-+				      unsigned char *include_pack,
-+				      size_t batch_size)
- {
--	uint32_t i, packs_to_repack;
-+	uint32_t i;
- 	size_t total_size;
- 	struct repack_info *pack_info;
- 	int pack_kept_objects = 0;
-@@ -1418,7 +1415,6 @@ static int fill_included_packs_batch(struct repository *r,
- 	QSORT(pack_info, m->num_packs, compare_by_mtime);
- 
- 	total_size = 0;
--	packs_to_repack = 0;
- 	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
- 		int pack_int_id = pack_info[i].pack_int_id;
- 		struct packed_git *p = m->packs[pack_int_id];
-@@ -1434,23 +1430,17 @@ static int fill_included_packs_batch(struct repository *r,
- 		if (expected_size >= batch_size)
- 			continue;
- 
--		packs_to_repack++;
- 		total_size += expected_size;
- 		include_pack[pack_int_id] = 1;
- 	}
- 
- 	free(pack_info);
--
--	if (packs_to_repack < 2)
--		return 1;
--
--	return 0;
- }
- 
- int midx_repack(struct repository *r, const char *object_dir, size_t batch_size, unsigned flags)
- {
- 	int result = 0;
--	uint32_t i;
-+	uint32_t i, packs_to_repack = 0;
- 	unsigned char *include_pack;
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	FILE *cmd_in;
-@@ -1469,10 +1459,16 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 
- 	CALLOC_ARRAY(include_pack, m->num_packs);
- 
--	if (batch_size) {
--		if (fill_included_packs_batch(r, m, include_pack, batch_size))
--			goto cleanup;
--	} else if (fill_included_packs_all(r, m, include_pack))
-+	if (batch_size)
-+		fill_included_packs_batch(r, m, include_pack, batch_size);
-+	else
-+		fill_included_packs_all(r, m, include_pack);
-+
-+	for (i = 0; i < m->num_packs; i++) {
-+		if (include_pack[i])
-+			packs_to_repack++;
-+	}
-+	if (packs_to_repack <= 1)
- 		goto cleanup;
- 
+@@ -1474,7 +1474,8 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
  	repo_config_get_bool(r, "repack.usedeltabaseoffset", &delta_base_offset);
+ 	repo_config_get_bool(r, "repack.usedeltaislands", &use_delta_islands);
+ 
+-	strvec_push(&cmd.args, "pack-objects");
++	strvec_pushl(&cmd.args, "pack-objects", "--stdin-packs", "--non-empty",
++		     NULL);
+ 
+ 	strvec_pushf(&cmd.args, "%s/pack/pack", object_dir);
+ 
+@@ -1498,16 +1499,15 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+ 	}
+ 
+ 	cmd_in = xfdopen(cmd.in, "w");
+-
+-	for (i = 0; i < m->num_objects; i++) {
+-		struct object_id oid;
+-		uint32_t pack_int_id = nth_midxed_pack_int_id(m, i);
+-
+-		if (!include_pack[pack_int_id])
++	for (i = 0; i < m->num_packs; i++) {
++		struct packed_git *p = m->packs[i];
++		if (!p)
+ 			continue;
+ 
+-		nth_midxed_object_oid(&oid, m, i);
+-		fprintf(cmd_in, "%s\n", oid_to_hex(&oid));
++		if (include_pack[i])
++			fprintf(cmd_in, "%s\n", pack_basename(p));
++		else
++			fprintf(cmd_in, "^%s\n", pack_basename(p));
+ 	}
+ 	fclose(cmd_in);
+ 
 -- 
 2.44.0.330.g158d2a670b4
-
