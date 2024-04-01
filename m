@@ -1,87 +1,129 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66E3DDD9
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 09:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769B41CA80
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 10:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711963775; cv=none; b=DU1smcxSPVJTwiP5AXikMf84LdWPTaPi+G1WUsDQG13+4Xem67KuW66ZwT6qfCedtVZiqXlk8hgCs1osIhlubS7dQlLTSsZ1yVSxSyAPVxECwY4lZgC0PJv3MXAMhyjElq1sSwtoAVXcvwN33EfLidoRo06EZwndAK2VuAf3Y0k=
+	t=1711967908; cv=none; b=aSt+X3T2uJq4jRF0SKsLrIjV9DdIscB5r/cEGGJc4hWiVujLUjQ9Afmmosbb5YEmvzNUb+7ineHNv0I5Xp+1JHn8sbcFPkSE9XU91d94ohbBUu0ZxofBTOQaUCWVHYwYiEi2UqVBQEX12cHNoOQsEti7PBgI/jGEpjqKqfIzZfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711963775; c=relaxed/simple;
-	bh=utDjJocFbLnK/HkWevh+msAzaUUM2KFELTximh61XlA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=efLVtJGIVWTzbMev0gekCeeXCfWydC65k/4a8LXFvee+7ev3WK2WYQGOmaY58FSuj/oFT0WP0uCADS4QdxwHUA2jEXRi79w8t4klcWGufA0cuk6+G9Gqn4GPSExTKdBm+l+3DPH0hlTffWYur++cerXmvpyF2mW6Lk3EzLifu2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tQdGhNU0; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711967908; c=relaxed/simple;
+	bh=n8zni/9fTonXtyLGzBLiUq9nyAjde4Io2Ck8A4+nxOg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iJrCxqDe/XfAWuovRHFEck9bgweiW+L/TyGIDGiBXHzrIOXos11qOrW9Ymg2BDjTpUtogABPo3lvvrrmvR2Med/r4fWHQdsIPtgEmp8OI+G4ib4aCLGIYZl2S59X7Yi6MWiAW2/Njf/MaSJmagYUhn0pHB4GPFzolfbyICCXcaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ancB3vAa; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tQdGhNU0"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B76681E43F8;
-	Mon,  1 Apr 2024 05:29:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=utDjJocFbLnK/HkWevh+msAzaUUM2KFELTximh
-	61XlA=; b=tQdGhNU0eQ9knTyk7daqo2b1NOzODzYKwAD6PSxjdYN1TdsDfsOXK6
-	4l7N9HIPR6MI6PSyUABDsXdbHTE5DSZpL2prj3/tbPKJDVwqluxFrUMnD0vs3Usu
-	/WWJSCX1JV5wvsX7UFngXJVRrrnxqzh/vvOrvK8Rc/vBn0ZqhB1eM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A055D1E43F7;
-	Mon,  1 Apr 2024 05:29:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBE3D1E43F6;
-	Mon,  1 Apr 2024 05:29:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Emily Shaffer
- <nasamuffin@google.com>
-Subject: Re: [PATCH 0/2] improve bugreports
-In-Reply-To: <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 31 Mar 2024 23:09:02 -0400")
-References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
-	<4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
-	<CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
-Date: Mon, 01 Apr 2024 02:29:30 -0700
-Message-ID: <xmqq5xx1e8hx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ancB3vAa"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5a4a14c52fcso2092743eaf.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 03:38:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711967906; x=1712572706; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AV7ai/oTq1SOt97XCYcqSxsIXV2m0qDHpMnaUvIRRIc=;
+        b=ancB3vAaqI4nuLiQJR+ort2aGcAhlbwOqvMnYcdn03xaI+2jsH1Vyj5N1BY7vj3/Tw
+         cf0Ya3ixytcseKITZ9g6BKmC09gtcGs1vrJleiZO0NUkH+FrcPSKdKKV41I+uycJenA7
+         z13ekRg2YTZCyIqcRYFKB5snw6vLj+VHHxZPcc7dyHEjViEwbSFICuGoLjdp2e5x8p2B
+         vwv7kqAdCmWAEnv+WnQMCsNFzqZbAirAOw9p/qKsO0MYP7POQkL1B5c9uT0JHmxzwKX0
+         +BcBmC73qJ4o9ehFqG3i1ZdfSJUignyZ9xaO1AHRDdGJyNsNa8+I18kz9zyddgojSHP1
+         XsFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711967906; x=1712572706;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AV7ai/oTq1SOt97XCYcqSxsIXV2m0qDHpMnaUvIRRIc=;
+        b=MKDXJBysR6r4e42zEVLFHsHjatfTM6BnL9YriFVSWAlRk/30zJiNVJre/rWsGQ8bHB
+         +GFiMyUz0mKWpDbKrFyQazzpNRZ0tznTnER/EZoRd3OIuIQUNOU9DJl6DAFGsRobfSDa
+         ZJJUTxOdQ1yOi1crSPapcDq7NuTpEXiPBDKj+7zBE0/U1nWG3MYNnIs+g6mHB1nEEszK
+         I01I4/YUAvyyrOrRWTpxpolNsr6yP0eeD3/1oy1GVfAQz8T8gxY7qhrwfygMXjCGBtca
+         4TGYTf3tfOFokLt3r43ZdUGefUygkzN4SeDZgi2cBLkxeXyJAoW+o9oXFBShMC1iID+6
+         yqsQ==
+X-Gm-Message-State: AOJu0YzozgiO3IWS2GqY2LzPGJkss7QDz0cFSTsg6RNnBwmcnTa60+mt
+	oY3ne0CSKZYynv7pfmoBLw9HHJyJYj5himbu6D6/uteqwv/TwZ/qYsfd6d1u1amWNKBnZdpkKFz
+	Y0FqTIe+iwdUSI6Q5ijKzgTiamtM=
+X-Google-Smtp-Source: AGHT+IHoCFSpOnYOIZHjAfKxCMbL58vyT6snVeYxe67ikY62ysDSFWP9eQnyalV4+CGKGP8H4bADRUQIbjtlokxt7MA=
+X-Received: by 2002:a05:6870:42:b0:22a:8443:45bb with SMTP id
+ 2-20020a056870004200b0022a844345bbmr6201495oaz.47.1711967906264; Mon, 01 Apr
+ 2024 03:38:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 1 Apr 2024 03:38:25 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAPx1GvdXdH3OdY1nC2ijVSdpWfg8jn5=j0KB+Wgv70wWeCNH5g@mail.gmail.com>
+References: <20240330224623.579457-1-knayak@gitlab.com> <20240330224623.579457-8-knayak@gitlab.com>
+ <xmqqy19yf40l.fsf@gitster.g> <CAPx1GvdXdH3OdY1nC2ijVSdpWfg8jn5=j0KB+Wgv70wWeCNH5g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 58704246-F00A-11EE-88A8-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Date: Mon, 1 Apr 2024 03:38:25 -0700
+Message-ID: <CAOLa=ZRiTVGs9k5O0+RcNSnu=yyVVS8F2TF+VZOtPGg6EaDDLQ@mail.gmail.com>
+Subject: Re: [PATCH 7/8] refs: add 'update-symref' command to 'update-ref'
+To: Chris Torek <chris.torek@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000eb98230615069623"
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+--000000000000eb98230615069623
+Content-Type: text/plain; charset="UTF-8"
 
-> redundancy. In particular, of the three questions:
+Chris Torek <chris.torek@gmail.com> writes:
+
+> Meanwhile, for testing purposes I was curious as to what happens
+> if you ask `git update-ref` to delete an existing symref, so after
+> creating a test repository:
 >
->    What did you expect to happen?
->    What happened instead?
->    What's different between what you expected
->         and what actually happened?
+> $ git branch
+> * main
+>   symref -> main
+> $ git update-ref --stdin
+> delete refs/heads/symref
+> $ git branch
 >
-> the final one seems to repeat what the first two ask, and it is common
-> when answering the third question for people to simply repeat what was
-> said in response to an earlier question.
+> Whoops, this doesn't look good...
+>
 
-The third one may need to be rephrased, but I think it should still
-be there.  The intent is to make the reporter realize how unhelpful
-their answers are when they answer the first two questions with
+This is expected though. Remember that `git-update-ref(1)` by default
+does dereferencing of symlinks. So in your case, 'refs/heads/symref' is
+dereferenced to 'refs/heads/main' and when a delete command is issued,
+'main' is deleted.
 
- - I expected it to work correctly
- - It did not work correctly
+Try the same with the `git update-ref --no-deref --stdin` instead.
 
-They hopefully would realize that "work correctly" needs to be
-elaborated in order to answer the third question in a useful way.
-If the first two questions have been answered in a usable way, the
-third one is often redundant.
+> Restoring the branch name (I had saved the hash ID Just In Case):
+>
+> $ echo d88ee82e6a5c29c95f712030f5efc9d43116ae79 > .git/refs/heads/main
+>
+> brings things back, after which this works properly:
+>
+> $ git branch -d symref
+> Deleted branch symref (was refs/heads/main).
+> $ git branch
+> * main
+>
+
+Here you switch to using 'git-branch(1)' and that doesn't dereference by
+default. So there is a difference in the two attempts.
+
+--000000000000eb98230615069623
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d4643200362750a4_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZS2pwWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md3JTQy85ckRrSVpiamNieVYyb3JBUStsWEFXVlpLdAo3U3grYXBBRHM5
+c1FreWZzS0N3MC9KczFjcTVQdUhycnl2RWhFWGhOYW5Fa0RIWE5VRGVMcFhSM0xJM1pvQjNjCnho
+UmJDMnV1WXJlL2ZTOXRVTm42R09KYWI2ZHRSYW9EV29SSUdPSFNvSlBaMzhRcUR0d3V6NlhINjdj
+R0g5dW8KNjFiOS9NbXliNVZVd1hMSURFTU1WVHE4S2ZHeTRTSDdJUjM3MGhWM3g0WDdiVUxyUCtZ
+Yjg4N2pHRzBwOHpyTQpkWVdZaXZLVHpsOXdEMjdMa1p2c1VGSXErSlNLeENRNGRZanB1ZHZrcnFz
+SUtUZ2lIY01xZ2NITDBlNmtjeis5CittbDR6V1pYR29YcGZvaWQ3TlVKNUxDanJWdFJHY2FnVDRv
+cGhOQk56VldzTUZJVWdGczNVaEN2bDRwTWlTVGUKYjU4L0k2d0RWazh4VDdtTXIweGNLbXp0d0hi
+UUdSQWlIS0oycllsVHF1ZFJ5OFhiZ2RlT2VWRDBHYk5sMGJYdwp3R0U0VWdzTFhxQ0hXaUFuYndv
+ZDgxSXVJV1FMZER3Y2JhUG9WSTFhdUJoYlJWeFFhMk52b29kamliNW5ZTWFvClhYb2p3TVdNR3dB
+NmlBdGE5RGlNYWVqV1AxOW1ocGhlTHR6ME9Udz0KPTdxOFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000eb98230615069623--
