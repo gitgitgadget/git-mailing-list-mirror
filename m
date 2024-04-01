@@ -1,86 +1,87 @@
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44745EED0
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 09:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66E3DDD9
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 09:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711962425; cv=none; b=h4RHiL45kyhJp8bPo5Xl+D5qjfKxYIe+NPQcAhf/IN1VdiWOq0Mv75hwOILL2OzLP8FhE61bvSOZIUw57ssX/RB90uRB7H3K7PdFBeJQPHZdvVjceXPxmegLUh70OrkcV/WXrDVNn2ujpmMjXxPE4GYP0etGQlY30Ab1CTooTME=
+	t=1711963775; cv=none; b=DU1smcxSPVJTwiP5AXikMf84LdWPTaPi+G1WUsDQG13+4Xem67KuW66ZwT6qfCedtVZiqXlk8hgCs1osIhlubS7dQlLTSsZ1yVSxSyAPVxECwY4lZgC0PJv3MXAMhyjElq1sSwtoAVXcvwN33EfLidoRo06EZwndAK2VuAf3Y0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711962425; c=relaxed/simple;
-	bh=C25yADk7tf1+jsS9/RE94cOGL07BlG/d2WaVar9M2SE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CJq6ixYk1RzD0MKaehYHWRJU9skp3xqsEWaneSdFjyGecKb88swMteyok9TjtvmPrnUTORPed8fKvcdi5sq2gXRnFdXbsg8EC8Es8N65sSYSH9yQk0044PMs2lgjibslWH+ODh+mGhm3dZNDRCGWSvJcBKGQDNHlanU3hMG9eFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=wHZ44Rtk; arc=none smtp.client-ip=185.70.40.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
+	s=arc-20240116; t=1711963775; c=relaxed/simple;
+	bh=utDjJocFbLnK/HkWevh+msAzaUUM2KFELTximh61XlA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=efLVtJGIVWTzbMev0gekCeeXCfWydC65k/4a8LXFvee+7ev3WK2WYQGOmaY58FSuj/oFT0WP0uCADS4QdxwHUA2jEXRi79w8t4klcWGufA0cuk6+G9Gqn4GPSExTKdBm+l+3DPH0hlTffWYur++cerXmvpyF2mW6Lk3EzLifu2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tQdGhNU0; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="wHZ44Rtk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
-	s=protonmail3; t=1711962422; x=1712221622;
-	bh=d3MMctHrD5xf4cnUkyw0vt9f6c01SGxZKisG30iZGqU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=wHZ44RtkmipWqLUeo7GXgPtWG5XeyDTVXp5V6xdZypDGMlXg8rip7vuXBN5nuXiQa
-	 mmDhUnhlJwzS6Jw19f82C0Q998+Fny88I8pJ/Ew4HrD7Xou1itMN8o0TfHH0zy574p
-	 tklO3/Q+5L7KsCnqve/wbv6zOYogu4oPnH7Wl6iq3woQWKhlj7xq4+3lltRpbMsvuZ
-	 7+6p0l53ZxV9oqG2p8aKyJnXtEtdr7lXY+WaTe4N43Ohbcc23z73EZDum9BUy/xK3X
-	 kxke6Yl/GZJCFrzhvKFuz83aCa00SWKMzpbaNl95rzRXWunNBhyV/LedxiaDTdNDm0
-	 Hc2Es4r2pXvGQ==
-Date: Mon, 01 Apr 2024 09:06:55 +0000
-To: Patrick Steinhardt <ps@pks.im>
-From: Thalia Archibald <thalia@archibald.dev>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 5/6] fast-import: document C-style escapes for paths
-Message-ID: <4C726A5B-902B-4E2F-BFB1-11660E551187@archibald.dev>
-In-Reply-To: <ZgUog3UFu3WIc0L0@tanuki>
-References: <20240322000304.76810-1-thalia@archibald.dev> <20240322000304.76810-6-thalia@archibald.dev> <ZgUog3UFu3WIc0L0@tanuki>
-Feedback-ID: 63908566:user:proton
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tQdGhNU0"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B76681E43F8;
+	Mon,  1 Apr 2024 05:29:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=utDjJocFbLnK/HkWevh+msAzaUUM2KFELTximh
+	61XlA=; b=tQdGhNU0eQ9knTyk7daqo2b1NOzODzYKwAD6PSxjdYN1TdsDfsOXK6
+	4l7N9HIPR6MI6PSyUABDsXdbHTE5DSZpL2prj3/tbPKJDVwqluxFrUMnD0vs3Usu
+	/WWJSCX1JV5wvsX7UFngXJVRrrnxqzh/vvOrvK8Rc/vBn0ZqhB1eM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A055D1E43F7;
+	Mon,  1 Apr 2024 05:29:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBE3D1E43F6;
+	Mon,  1 Apr 2024 05:29:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Emily Shaffer
+ <nasamuffin@google.com>
+Subject: Re: [PATCH 0/2] improve bugreports
+In-Reply-To: <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 31 Mar 2024 23:09:02 -0400")
+References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
+	<4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
+	<CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
+Date: Mon, 01 Apr 2024 02:29:30 -0700
+Message-ID: <xmqq5xx1e8hx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 58704246-F00A-11EE-88A8-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-(Sending again as plain text)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On Mar 28, 2024, at 01:21, Patrick Steinhardt <ps@pks.im> wrote:
-> On Fri, Mar 22, 2024 at 12:03:47AM +0000, Thalia Archibald wrote:
->>=20
->> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-=
-import.txt
->> index 271bd63a10..4aa8ccbefd 100644
->> --- a/Documentation/git-fast-import.txt
->> +++ b/Documentation/git-fast-import.txt
->> @@ -630,18 +630,23 @@ in octal.  Git only supports the following modes:
->> In both formats `<path>` is the complete path of the file to be added
->> (if not already existing) or modified (if already existing).
->>=20
->> -A `<path>` string must use UNIX-style directory separators (forward
->> -slash `/`), may contain any byte other than `LF`, and must not
->> -start with double quote (`"`).
->> +A `<path>` string may contain any byte other than `LF`, and must not
->> +start with double quote (`"`). It is interpreted as literal bytes
->> +without escaping.
->=20
-> Paths also mustn't start with a space in many cases, right?
+> redundancy. In particular, of the three questions:
+>
+>    What did you expect to happen?
+>    What happened instead?
+>    What's different between what you expected
+>         and what actually happened?
+>
+> the final one seems to repeat what the first two ask, and it is common
+> when answering the third question for people to simply repeat what was
+> said in response to an earlier question.
 
-It talks about starting with double quote, because that's what determines
-whether it's parsed as a quoted or unquoted string.
+The third one may need to be rephrased, but I think it should still
+be there.  The intent is to make the reporter realize how unhelpful
+their answers are when they answer the first two questions with
 
-Containing spaces is different. When unquoted, a path can only contain a sp=
-ace
-if it's the last field on the line; that's all paths except the source path=
-s of
-filecopy and filerename. That note was already remarked in the filecopy and
-filerename sections, but it would help to note it in the general <note> sec=
-tion,
-so I've done that and clarified quoting in patch v2 5/8 (fast-import: impro=
-ve
-documentation for unquoted paths).
+ - I expected it to work correctly
+ - It did not work correctly
 
-Thalia
+They hopefully would realize that "work correctly" needs to be
+elaborated in order to answer the third question in a useful way.
+If the first two questions have been answered in a usable way, the
+third one is often redundant.
