@@ -1,80 +1,92 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801D07F
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 03:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A3F539A
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 03:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711940958; cv=none; b=R4i+ZIC5gsYy7yzDZEkDs71x2VnhI5H9U7Z4DI3SiXvyFFTjtpw0vTNempTNNbP+PxWI+gayYkbWL1HjnP2AjR0mXFq8YSe8XjME3QnFFfPUXr6tJhDLg/LJ/U4gMV2ZBqRV1kLT1t57Cs6Yu4laQFsuB7oNv2mK7WhNXgcbS1M=
+	t=1711942606; cv=none; b=cylFclcyAsUSc2xYtZkRmPp36OeR6ws/FmRKyksSB+d4/p2MYip3Ml0FzfctloAi6t3ULdwjoLgUhN2AAkpy6lKl7rOuR0BcI9UinsbQ3sSbnVP4l1Dh9U7jkGCNNI9fk1nUtwFGuPtX09/QUSls9cysJj+nmpCF1/Z2Mg4V9FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711940958; c=relaxed/simple;
-	bh=C5LqtT97XRKkukXX0TUy+/qR3n2j3ISV3e9ZN0/rODw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cavdOmOEPptkVnotqLMqhIb4UWU0mRxTMMs49kwA5Qaez3m/HLh3a3duRjfee//nv3aHsQcOA6uN/PCyBow8DLwaGDvglslC9fvwsbRcBTujjBXNAqxOiL5ENgBgVvnjHbLYSDxlCSvU6ilPkrnLI9lcZ41cIQlolfTl0KDWLB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-7e307f172efso926477241.1
-        for <git@vger.kernel.org>; Sun, 31 Mar 2024 20:09:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711940955; x=1712545755;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6YhIrpjKY3wPTFxXF9CZdXfX7b1M2Sr5TM2AAyH0vQM=;
-        b=S3vxoK0AgSEa0Wbc4dB3ZKqmC/ACumlnEPMRIQY4GRZ8MQ0ndnjiqhwLxhBbPv3ELe
-         uqU0dBSwnIfHUzu46fhd1mv6fXELz1Z7Lzp4nSBGhANvsdLCXVycg/FnbedkTG2gCBHH
-         TRaIZmXT7+m51qR4/RTLUcwO62vy8ynQGBnVx0y/gTt99ubzxAkyIdT8LBngOOb667LU
-         fS7OZmHQV5LuneCkyJJInbOPkmodBoOoKxYqIeBn/W5q3l4dblIcPNLQ6+R16I9qNLf2
-         /O5xYE9vPlXEOm0KtF7HSjMgp2psqwv4ZsRyGKKxlgKheukPqxgeoMu+CGvo17bnIk+W
-         boRg==
-X-Gm-Message-State: AOJu0Yx0vgkwFhx70rtdG8W6FoRbgvo6aXzdGLFm+Ijr/0CU4YEPRiy5
-	1WXS11n99qy7TV6JNAk8pcEVRWw5FpjUky2bzT23CVCfree3z7JHHnvZkrC82POvhTIJ2NfejiP
-	wWqi4CZpQVl4/GZyUs8aHAp/jdPo=
-X-Google-Smtp-Source: AGHT+IFwIjMA9W8laFOMiNljyxmUyzoRF1OwAIU96DePcv0ODjpPA7Xu6SxUKbM3lWGlGXREubysI4Ouyw3tUw4xMV0=
-X-Received: by 2002:a05:6122:3c4b:b0:4d8:df31:6b34 with SMTP id
- fv11-20020a0561223c4b00b004d8df316b34mr1256055vkb.8.1711940954002; Sun, 31
- Mar 2024 20:09:14 -0700 (PDT)
+	s=arc-20240116; t=1711942606; c=relaxed/simple;
+	bh=kS88JvzmT2x8A82FrdW0TysAU3+w5uUIQxHUd8JIm+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZUROcu7fexhltp0GYYMwD4Zs/JCfz07s7K1Q6pF8L/HfyMZqDyNpXWGjyZGIxIP6f5tSCxd0SdNRj8fc22TP9IanohQKXq3731sLcgk3ARFlFUWRESVataSMFL6OEVjXZe+zSSPx3Oth/6l6yn6oHnNTqpkpN0U8KwMWgHMv7co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 13770 invoked by uid 109); 1 Apr 2024 03:36:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Apr 2024 03:36:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14752 invoked by uid 111); 1 Apr 2024 03:36:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 31 Mar 2024 23:36:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 31 Mar 2024 23:36:42 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] mem-pool: use st_add() in mem_pool_strvfmt()
+Message-ID: <20240401033642.GB2639525@coredump.intra.peff.net>
+References: <bbe00b9e-64d8-4ec8-a2b9-2c6917c72dbd@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com> <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
-In-Reply-To: <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 31 Mar 2024 23:09:02 -0400
-Message-ID: <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] improve bugreports
-To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Emily Shaffer <nasamuffin@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bbe00b9e-64d8-4ec8-a2b9-2c6917c72dbd@web.de>
 
-On Sun, Mar 31, 2024 at 3:04=E2=80=AFAM Rub=C3=A9n Justo <rjusto@gmail.com>=
- wrote:
-> On Sat, Mar 23, 2024 at 06:32:35PM +0100, Rub=C3=A9n Justo wrote:
-> > Let's try to improve the readability of the bug reports we receive.
->
-> This series received no response.  One option may be because it went
-> unnoticed, another because it may not add value.  I'm going to give it
-> another try and I'll quietly :-) take silence as confirmation of the
-> second option.
->
-> I'll try to increase the chances of getting a "looks good" by CC'ing
-> some folks involved in the bugreport tool.
+On Sun, Mar 31, 2024 at 08:53:07PM +0200, René Scharfe wrote:
 
-For what it's worth, when I read the cover letter of this series, I
-thought it was going to clean up the list of questions to eliminate
-redundancy. In particular, of the three questions:
+> If len is INT_MAX in mem_pool_strvfmt(), then len + 1 overflows.
+> Casting it to size_t would prevent that.  Use st_add() to go a step
+> further and make the addition *obviously* safe.  The compiler can
+> optimize the check away on platforms where SIZE_MAX > INT_MAX, i.e.
+> basically everywhere.
 
-   What did you expect to happen?
-   What happened instead?
-   What's different between what you expected
-        and what actually happened?
+Yeah, I think this is a good thing to do. I was confused at first why we
+had an "int" at all, but it's the usual crappy snprintf interface.
 
-the final one seems to repeat what the first two ask, and it is common
-when answering the third question for people to simply repeat what was
-said in response to an earlier question.
+Which, by the way...
+
+> @@ -123,13 +124,14 @@ static char *mem_pool_strvfmt(struct mem_pool *pool, const char *fmt,
+>  	if (len < 0)
+>  		BUG("your vsnprintf is broken (returned %d)", len);
+
+Not new in your patch, and I know this is copied from the strbuf code,
+but I think a BUG() is probably the wrong thing. We added it long ago to
+let us know about broken vsnprintf() implementations, but we'd have
+flushed those out by now, as nothing in Git would work on such a
+platform.
+
+And meanwhile there are legitimate reasons for a non-broken vsnprintf()
+to return -1: namely that it is the only useful thing they can do when
+the requested string is larger than INT_MAX (e.g., "%s" on a string that
+is over 2GB). This is sort of academic, of course. There's no useful
+error to return here, and anybody who manages to shove 2GB into a place
+where we expect a short string fully deserves to have their program
+abort.
+
+I don't have a good example of where you can trigger this (it used to be
+easy with long attribute names, but these days we refuse to parse them).
+But in general probably calling die() is more appropriate.
+
+There's a similar call in vreportf() that tries to keep going, but it
+ends up with lousy results. E.g., try:
+
+  perl -le 'print "create refs/heads/", "a"x2147483648, "HEAD"' |
+  git update-ref --stdin
+
+which results in just "fatal: ", since formatting the error string
+fails. Perhaps we should just print the unexpanded format string
+("invalid ref format: %s" in this case). It's not great, but it's better
+than nothing.
+
+I guess I diverged quite far from reviewing your patch. ;) It obviously
+looks fine, but the snprintf() int return value got me off on a tangent.
+
+-Peff
