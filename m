@@ -1,95 +1,80 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6761362
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 02:44:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801D07F
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 03:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711939455; cv=none; b=WX4yByItIr20WEk7bjWkxt0nUKUxv+r7HfnDapAj5DUHBp365haOM6iSamGKqbl/vm/SsNyTWw+Ym6oB8d9Ih7/oXfdijhIYrDJPu9ZiGbUBJxgaEwKvofttvGZ3oBAlPf1+le/jlIdhSgLXvLsy7GlMwwDjawyX3W0+V3FC/L0=
+	t=1711940958; cv=none; b=R4i+ZIC5gsYy7yzDZEkDs71x2VnhI5H9U7Z4DI3SiXvyFFTjtpw0vTNempTNNbP+PxWI+gayYkbWL1HjnP2AjR0mXFq8YSe8XjME3QnFFfPUXr6tJhDLg/LJ/U4gMV2ZBqRV1kLT1t57Cs6Yu4laQFsuB7oNv2mK7WhNXgcbS1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711939455; c=relaxed/simple;
-	bh=CqvANtSqj2dAczzKxUmwXXfmVD/4FBw49M01Ycj7jN8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qfMUck19OtxPtkk+Pez7fIkqsxj9pNSS54xEytGWl5SoFCxRiMbQdLM2yCIJbJvCpXRRzF1lVrw5q125kA+nts0XqTMXNwUEut718umqQKNdh6izOJZ5Y+H9PBrxX+Nw8B1iQycyae3Wdhq0CKw/XQGk3Kd4Vg9EC2a2o/FCnbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 12991 invoked by uid 109); 1 Apr 2024 02:44:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Apr 2024 02:44:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14335 invoked by uid 111); 1 Apr 2024 02:44:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 31 Mar 2024 22:44:15 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 31 Mar 2024 22:44:11 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "Nude F. Ninja" <nudefninja@gmail.com>, git@vger.kernel.org
-Subject: Re: :/regex syntax picks stash entries over regular commits
-Message-ID: <20240401024411.GA2639525@coredump.intra.peff.net>
-References: <CAOSCdbFg8jY1_0JE0+xf8oxrJjx-Kj0Cb0pPg3oUAXMN5q=kzw@mail.gmail.com>
- <xmqqy19ydmro.fsf@gitster.g>
+	s=arc-20240116; t=1711940958; c=relaxed/simple;
+	bh=C5LqtT97XRKkukXX0TUy+/qR3n2j3ISV3e9ZN0/rODw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cavdOmOEPptkVnotqLMqhIb4UWU0mRxTMMs49kwA5Qaez3m/HLh3a3duRjfee//nv3aHsQcOA6uN/PCyBow8DLwaGDvglslC9fvwsbRcBTujjBXNAqxOiL5ENgBgVvnjHbLYSDxlCSvU6ilPkrnLI9lcZ41cIQlolfTl0KDWLB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-7e307f172efso926477241.1
+        for <git@vger.kernel.org>; Sun, 31 Mar 2024 20:09:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711940955; x=1712545755;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6YhIrpjKY3wPTFxXF9CZdXfX7b1M2Sr5TM2AAyH0vQM=;
+        b=S3vxoK0AgSEa0Wbc4dB3ZKqmC/ACumlnEPMRIQY4GRZ8MQ0ndnjiqhwLxhBbPv3ELe
+         uqU0dBSwnIfHUzu46fhd1mv6fXELz1Z7Lzp4nSBGhANvsdLCXVycg/FnbedkTG2gCBHH
+         TRaIZmXT7+m51qR4/RTLUcwO62vy8ynQGBnVx0y/gTt99ubzxAkyIdT8LBngOOb667LU
+         fS7OZmHQV5LuneCkyJJInbOPkmodBoOoKxYqIeBn/W5q3l4dblIcPNLQ6+R16I9qNLf2
+         /O5xYE9vPlXEOm0KtF7HSjMgp2psqwv4ZsRyGKKxlgKheukPqxgeoMu+CGvo17bnIk+W
+         boRg==
+X-Gm-Message-State: AOJu0Yx0vgkwFhx70rtdG8W6FoRbgvo6aXzdGLFm+Ijr/0CU4YEPRiy5
+	1WXS11n99qy7TV6JNAk8pcEVRWw5FpjUky2bzT23CVCfree3z7JHHnvZkrC82POvhTIJ2NfejiP
+	wWqi4CZpQVl4/GZyUs8aHAp/jdPo=
+X-Google-Smtp-Source: AGHT+IFwIjMA9W8laFOMiNljyxmUyzoRF1OwAIU96DePcv0ODjpPA7Xu6SxUKbM3lWGlGXREubysI4Ouyw3tUw4xMV0=
+X-Received: by 2002:a05:6122:3c4b:b0:4d8:df31:6b34 with SMTP id
+ fv11-20020a0561223c4b00b004d8df316b34mr1256055vkb.8.1711940954002; Sun, 31
+ Mar 2024 20:09:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy19ydmro.fsf@gitster.g>
+References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com> <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
+In-Reply-To: <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 31 Mar 2024 23:09:02 -0400
+Message-ID: <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] improve bugreports
+To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Emily Shaffer <nasamuffin@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 31, 2024 at 04:06:35PM -0700, Junio C Hamano wrote:
+On Sun, Mar 31, 2024 at 3:04=E2=80=AFAM Rub=C3=A9n Justo <rjusto@gmail.com>=
+ wrote:
+> On Sat, Mar 23, 2024 at 06:32:35PM +0100, Rub=C3=A9n Justo wrote:
+> > Let's try to improve the readability of the bug reports we receive.
+>
+> This series received no response.  One option may be because it went
+> unnoticed, another because it may not add value.  I'm going to give it
+> another try and I'll quietly :-) take silence as confirmation of the
+> second option.
+>
+> I'll try to increase the chances of getting a "looks good" by CC'ing
+> some folks involved in the bugreport tool.
 
-> "Nude F. Ninja" <nudefninja@gmail.com> writes:
-> 
-> > What did you do before the bug happened? (Steps to reproduce your issue)
-> > I ran git stash push, which created the stash entry "On main: dark
-> > mode". Then I committed changes before noticing an oversight with the
-> > previous commit. I wrote the fix and ran git commit --fixup :/dark
-> 
-> It is natural that there are multiple commits that match the pattern
-> you give in your repository.
-> 
-> One trick I learned that is effective is to explicitly state where
-> to start searches, e.g. "--fixup 'HEAD^{/dark mode}'", which would
-> be very much in line to what --fixup wants to do.  The commit to be
-> fixed up in a later rebase session by definition must be an ancestor
-> of the current HEAD.
+For what it's worth, when I read the cover letter of this series, I
+thought it was going to clean up the list of questions to eliminate
+redundancy. In particular, of the three questions:
 
-Yeah, the "traverse all commits" aspect of ":/" is well known and
-confusing, and why we introduced the rev ^{/} syntax. But I still wonder
-if it would be better to limit ":/" to something more sensible. Finding
-"refs/stash" or "refs/notes/*" is downright confusing (stash especially
-because we don't walk the reflog, so it sees only stash@{0}, and not the
-others!).
+   What did you expect to happen?
+   What happened instead?
+   What's different between what you expected
+        and what actually happened?
 
-It would be pretty easy to do the equivalent of "--branches --tags
---remotes":
-
-diff --git a/object-name.c b/object-name.c
-index 523af6f64f..5285903f78 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -2002,7 +2002,9 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 
- 			cb.repo = repo;
- 			cb.list = &list;
--			refs_for_each_ref(get_main_ref_store(repo), handle_one_ref, &cb);
-+			refs_for_each_ref_in(get_main_ref_store(repo), "refs/heads/", handle_one_ref, &cb);
-+			refs_for_each_ref_in(get_main_ref_store(repo), "refs/tags/", handle_one_ref, &cb);
-+			refs_for_each_ref_in(get_main_ref_store(repo), "refs/remotes/", handle_one_ref, &cb);
- 			refs_head_ref(get_main_ref_store(repo), handle_one_ref, &cb);
- 			commit_list_sort_by_date(&list);
- 			return get_oid_oneline(repo, name + 2, oid, list);
-
-Or alternatively to skip known-confusing parts of the namespace like
-refs/stash.
-
-I dunno. I have long ago written off :/ as useless, so maybe trying to
-make it slightly less confusing is a fool's errand. Maybe we'd be better
-off putting a note in its documentation that rev^{/} is more likely to
-do what you want.
-
--Peff
+the final one seems to repeat what the first two ask, and it is common
+when answering the third question for people to simply repeat what was
+said in response to an earlier question.
