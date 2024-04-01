@@ -1,53 +1,56 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3656847A57
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 16:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF51A38DD8
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 16:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988268; cv=none; b=Q2Va+S6asSxr9GLJhb9T6WV7ocjy0XylBw3gdQG6jUcDwV8sNXe50dtwxW2NzivbxT+71u15xDRq85IPIshuoprOeuV05/MJ9Mf6FTnG95SxsummZYsz4o+6qjYK/zr4xLVUnWDtDcGaOM7J0vB+cg/U0OZYRy8fa1f9dOdzsAo=
+	t=1711989084; cv=none; b=ljpsOk8yMBtUmW2jFgLOvrQcvv4vkaa/CalWhnQDn1udKEUYssDMay0CgRUc6wTsHDjRuh7P5kzTajt3tXq8brSKSqZF8/lkHDzAw3QI01MJn/fEE/vp+aWAo+IN8QtBPQ1eOSyeQinlIOFJq2S+kAj4DTUhJEU2Qi5H/NY11ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988268; c=relaxed/simple;
-	bh=Oc2YEs5inPtSZHWmuzSBMPtY6euVdJjX0H9wXpJJjZI=;
+	s=arc-20240116; t=1711989084; c=relaxed/simple;
+	bh=IAC5lw1r+q7ZG5NSS7v6o30Xk57go+BoR/05TmAh5GM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UB4N9QAojSSG9WbZ6U+Y+7GYTtcbuDM/MK6kyReRN/7NZwtdRIlhqEKrMnrXoC1GJMcHC8KEun75jmW8gJiUfvXOxyvZjO6YmUhyNjDkYMebQ5oUB4P4fqThpYnx/TE3EzIiV+c8nFv/7BnrBmx/gWS0Vb9OfQYP95enHWRVAtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L+3S9w6t; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=o4YFPUca+iENLIm7a8i5t9JCy/9UrJayekCiXWRdyd9myNn5bIrQApiolXFgngfQ5rSO2ynpdH/lx+E5f+pFXxXR3DK0diuv8hUpwm/gGpVlwDCyutshPk3vpRvTC1SBVEXKAs6q5SQ6vxCg6Orvxc06dy8EhEIzPTXlxwO8zyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vDyF2BRn; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+3S9w6t"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 88AC21D456;
-	Mon,  1 Apr 2024 12:17:46 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vDyF2BRn"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 763571E743B;
+	Mon,  1 Apr 2024 12:31:21 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Oc2YEs5inPtSZHWmuzSBMPtY6euVdJjX0H9wXp
-	JJjZI=; b=L+3S9w6tXp0KNH9sHzYNtKTnp72NG5k61aNpNPQxhJm3uqE2qmbpKt
-	PDjumoioGRmQiGoqFFI+KHrylrba3gdqQYZvjgSHBspUU3oBRp/I/d/Mo6fngxIj
-	kZO+tmV5A9E2NVmDCKERrudHq92d6UE2PN+edZa/vr8ySMYoS0Brw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 805EC1D455;
-	Mon,  1 Apr 2024 12:17:46 -0400 (EDT)
+	:content-type; s=sasl; bh=IAC5lw1r+q7ZG5NSS7v6o30Xk57go+BoR/05Tm
+	Ah5GM=; b=vDyF2BRn8KOfF06n41DheEIaAxGOozuLUvvzCHgfCeUAKjUQ3TWbqj
+	AShRfqAsU9DSCaillEBbDfDGJXKV78/gWME8GHFuzFWPKRGOeiaQY1F3u6jqNOh4
+	ePB4q6++iwWt3bjcWH6bProoYZnQLpVGC7RUJIB/lAiKaZp9Ff9Js=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DEB21E743A;
+	Mon,  1 Apr 2024 12:31:21 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D932D1D451;
-	Mon,  1 Apr 2024 12:17:42 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE1D31E7439;
+	Mon,  1 Apr 2024 12:31:20 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 7/8] refs: add 'update-symref' command to 'update-ref'
-In-Reply-To: <CAOLa=ZTLv39b4Q=AAUA39tXKgOSuu54xk3-r9OUenzxR-6qcag@mail.gmail.com>
-	(Karthik Nayak's message of "Mon, 1 Apr 2024 04:48:02 -0700")
-References: <20240330224623.579457-1-knayak@gitlab.com>
-	<20240330224623.579457-8-knayak@gitlab.com>
-	<xmqqy19yf40l.fsf@gitster.g>
-	<CAOLa=ZTLv39b4Q=AAUA39tXKgOSuu54xk3-r9OUenzxR-6qcag@mail.gmail.com>
-Date: Mon, 01 Apr 2024 09:17:41 -0700
-Message-ID: <xmqqv851awgq.fsf@gitster.g>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] builtin/add: error out when passing untracked
+ path with -u
+In-Reply-To: <h7yk7nk7cwyv35reqzfy7brpbn3xoaarhudteyvxfpkodvltt2@eggaahzrjryq>
+	(Ghanshyam Thakkar's message of "Mon, 1 Apr 2024 18:57:12 +0530")
+References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
+	<20240329205649.1483032-5-shyamthakkar001@gmail.com>
+	<xmqqzfugvhnf.fsf@gitster.g>
+	<b3j7l2ncstdiaxojtollxddmxvkbbeciou25yptguttr5qugmx@y3bzqbdxkyaw>
+	<xmqqh6gnmzqs.fsf@gitster.g>
+	<h7yk7nk7cwyv35reqzfy7brpbn3xoaarhudteyvxfpkodvltt2@eggaahzrjryq>
+Date: Mon, 01 Apr 2024 09:31:19 -0700
+Message-ID: <xmqqjzlhavu0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,110 +60,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 5E3480A0-F043-11EE-91BF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 45BE7B5A-F045-11EE-87F4-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
->> So perhaps we can say "update with a concrete <old-oid> will ensure
->> that the <ref> poitns at <old-oid> before proceeding, but update
->> with 0{40} as <old-oid> to ensure creation is deprecated.  update
->> with 0{40} as <new-oid> as deletion is also deprecated.  Use create
->> and delete for these two deprecated operation modes".
->>
->> This assumes that create and delete currently ensures that what is
->> asked to be created does not exist, and what is asked to be deleted
->> does exist, before the operation.  If we are loosely doing these two
->> operations, then we cannot easily deprecate the checking-update,
->> without breaking existing users.
+> Well I think we should be going 'all-or-none' way as I can't think of
+> any major user-facing command that does partial changes incase of
+> error (besides two testcase below).
 
-Note that I did not (and do not) know if "create" and "delete" have
-such checks; I expected somebody (other than me) to check before
-going forward.
+I agree that in the longer run, all-or-none would be something we
+should aim for, but I'd strongly prefer leaving that outside this
+topic, especially the existing ones that set exit_status to non-zero
+but still commits the index changes.
 
-> But this still means we need to think of the best output for the
-> reference transaction hook (following commit).
+I am OK, as a place to stop for now, if the topic had something like
+
++	if (take_worktree_changes) {
++		if (report_path_error(ps_matched, &pathspec))
++			exit(128);
++	}
+
+in it, though, because this is a new behaviour.
+
+> Doing this, we would need to take care of atleast 4 tests breaking in
+> t3700-add:
+>  error out when attempting to add ignored ones but add others
+>  git add --ignore-errors
+>  git add (add.ignore-errors)
+>  git add --chmod fails with non regular files (but updates the other paths)
 >
-> My current implementation of:
->    <symref-target> SP <ref-name> LF
-> Should be changed to:
->    <old-ref> SP <new-ref> LF
->
-> But this means, for creation of symrefs <old-ref> needs to be "zero"
-> value. Also there is no way for clients to differentiate between regular
-> refs and symrefs here. I wonder if it makes sense to do something like:
->
->    symref SP <old-ref> SP <new-ref> LF
+> while ignore-errors ones would be trivial to fix, fixing other 2 would
+> probably require some more than trivial code changes, as from the title,
+> their behavior seems pretty much set in stone. That's why I did the
+> 'goto cleanup' approach to not break these.
 
-What do clients see for a regular ref?  "<old-oid> SP <new-oid> LF"?
-That would be OK, as "symref" cannot be an object name, I guess?
+I am not sure if these are expecting the right outcome in the first
+place, and the need to examine what the right behaviour should be is
+what makes me say "I do not want to make the all-or-none thing part
+of this topic".
 
-> Where symref is a fixed string at the start, used as a differentiator.
-> This however still would leave us to deal with "zero" values for
-> creation and deletion.
-
-Are these two <old-ref> and <new-ref> values optional in the context
-of your discussion?  The review comment was on input from the end-user
-that made it optional to validate the precondition, but this is what
-you produce as a result---if these are not optional, then an empty
-string can be a reasonable "zero" value.  I am confused...
-
-> Perhaps the best way here to actually be a lot more verbose and have the
-> hook output the following:
->
->    symref-create SP <new-ref> LF
->    symref-delete SP <old-ref> LF
->    symref-update SP <old-ref> SP <new-ref> LF
->    symref-update-forced <new-ref> LF
-
-It is unfortunate that the input to the hook for a normal reference
-update uses syntax different from the "--stdin" input format, i.e.,
-
-    <old-oid> SP <new-oid> SP <ref> LF
-
-but it is way too late to change it now.  So to be consistent,
-
-    symref-create SP <new-ref> SP <ref> LF
-    symref-delete SP <old-ref> SP <ref> LF
-    symref-update SP <old-ref> SP <new-ref> SP <ref> LF
-
-would be the three operations.
-
-But this is not an end-user input that tells Git "I do not care
-about precondition, I did not even bother to learn the current state
-to give you as <old-something>, just force it".  The input to hook
-is what we tell the hook what we are planning to do (so that it can
-decline), and we do not need the ability to say "I do not know what
-the current state is".  So I do not think you need any "zero" value
-in the input to the reference-transaction hook.  And I do not see a
-need for the "symref-update-forced" variant, either.
-
-By the way, if we were to use symref-{create,delete,update} here,
-wouldn't it make more sense to name the command on the "--stdin"
-side the same, i.e., not "update-symref" but "symref-update"?
-
-What I suspect that needs more thought is what should happen when
-you request via "--stdin" to create, update, or delete a symref,
-but <ref> is a regular ref, e.g., "symref-delete <ref>".  For
-"symref-create <ref> <new-ref>", we would fail if <ref> exists,
-whether it is a symref or a normal ref, so that is OK.  For
-"symref-delete <ref> <old-ref>", we would fail if <ref> is *not*
-a symref to <old-ref>, so the case where <ref> is a normal ref
-is already covered. 
-
-Should we support "symref-update <ref> <new-ref> <old-oid>" that
-makes <ref> a symref that points at <new-ref>, but ensures that
-<ref> before the operation is a normal ref that points at <old-oid>?
-
-Or should "symref-update" work only on <ref> that is an existing
-symref?
-
-I think I am OK if the answer was "You can only give a precondition
-in the form of <old-ref>, which means you can only turn an existing
-symref to point at a different ref with precondition protection. If
-you want to turn a normal ref into a symref, you have to force it by
-not having a precondition, or delete the ref and then (re)create it
-as a symref".  But we need to decide the semantics and document it.
+>> The renormalize() thing is not noticing unused pathspec elements,
+>> which we might want to fix, but I suspect it is far less commonly
+>> used mode of operation, so it may be OK to leave it to future
+>> follow-up series.
 
 Thanks.
-
-
