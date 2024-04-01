@@ -1,120 +1,94 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6BB3F8E0
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 13:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2953FBA4
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 14:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711978038; cv=none; b=eNiLF1F3cHunf1WtR+SLqpXRtRKPy6dQ2RJTeyNmDOHVLgFVmFlEq87Bzv9kxLWqBZnMBp/imsKOiVEaWqNs2xzLlWigzSXLHGHgwiOtbeZvAFarE5/8g7rK07JK3UaFZeQailUOWFWLQrepRvozNT6P5XaGtJx4fv+SaQYwXuQ=
+	t=1711982750; cv=none; b=EuOD5I8pNUmo684LITJuFdp5s0w0DuGj8aCL8Iazu9HVC4xPEluhLC36FvJkSt0jMnMTNASdldHLuLs5Vz5U3TlBiR9l4t79WxlC7OzfhSV0G79P330kMneHeBOF+d3L3o/6CPMURy1WiEz+aq8OnkVFhI/7kRBVgtlIxb3ttWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711978038; c=relaxed/simple;
-	bh=uHBWPMQydQEzk19/JDRO95oWrIt6kC2MTklGK2fubt8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l7w6CEhyuoFmH0alUJSLoU2ft381uZ1bxor/AYFadorST671Mr0NlKR8wjs+quAgir9URuAzHWHkLXNaiPhBHtvxKc2Bq9Esplit+g08pJreLc/SbUsKqdJwc7qnZQBDwhXf4ULdhbdrhJTvgKX7F5a3WWiezrYcNdIOYGQS9o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ojy2CWSp; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1711982750; c=relaxed/simple;
+	bh=iucvYqlET8FBmq9ybSQdLzBGqL/XwYCydcF7+v7mpwI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oo78rCc7DBZj7vtwBS3DU3GRF5Vwa6EpEhN2mE/oTCTsrAkPPipq7i4V8KznU+XjekAfMqEYQWQfhV9b9tK7tQywsOzmr3DKwumPOjr6cbEXPJGmt5cKGJ5055lG+fEZNSQTFJMt2b9y2L7TltYiYuZB12TqGvOCDR4HRZRkKkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTguX/z3; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ojy2CWSp"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6eac64f2205so3279676b3a.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 06:27:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTguX/z3"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-515c3eeea5dso4681691e87.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 07:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711978036; x=1712582836; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8MARPPMfsqO2qhxomZVHkvP5UI2JL8hPhCIbbV/CC38=;
-        b=Ojy2CWSpZ9Ya22Xkjo+o6D7qSlIPm2wLoIaInlgfYI4kRR6RtTg4H13HfbheYYvUvi
-         nJbl5mjrei/h2gBQK1rK/DHlUTYuyL+a0wQNRN2HKeujhT/o/X2nGBBt5DkH4zhQDbaF
-         a/3R4+IThZyWSk1OSVgQR3zfYKt69rUMlBgflLX5TEce9Tf7Kup6Fq8fv+Gq9QAXpnVY
-         Nhi3aBSMhYTUl/AydZx06cUQWLaHM/xTBPOSzH24obzKl9k1/AocgQ7gykDQxHAniNex
-         RGC2kXiOoH1hFBkeTzbTS5KjKDQgh2c8o+fc5Ma93gFsvZhOmmGJgj1Krd/lWvhYRGbu
-         A/Zg==
+        d=gmail.com; s=20230601; t=1711982747; x=1712587547; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=u4QpWKO43L6bkkLakLe6mW0mR5cBj/hwJyqM4Pbw9VU=;
+        b=OTguX/z3+h/jnuo6wTS5EFDNo85eiFxhQk1r5C984L0zkOjHREM9Xi+IChlpz7EiIm
+         r8bKESJ5sEYDZzUynBG7/J+pMuPRk3FDTPHAEOvj10TGUmGOkB/uLw/d0N3fWGguacMl
+         es/ZMrDFhxRJd4Ne4zHl5ERP+a7UBlexYs2Fm0PDCJzrIEI7EsOyFVMEFS3LZbKesZb9
+         SsLxpR7HX0LhcJBON9kMKgBq4f3Bw1RMGt+YRQpGYDV3+mbLPHv7nHb992kEHd8c6/x1
+         eB2NhiTvPFEtBCQtw8o/0YXx8rnQZIC5/LxtwE3CY/+/Db2WLhfXxEGepLHuE2TOWDyB
+         sT2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711978036; x=1712582836;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8MARPPMfsqO2qhxomZVHkvP5UI2JL8hPhCIbbV/CC38=;
-        b=BpCzmfH18sKdYsFvH8A8XXIcVLqp/xUWR3GpT9p8zqoPRlQJm+lEzYnPgMOQkFnEkS
-         h9GcIgtG8WRvvWhUZyUyVDgqvWRbHla/+qRlBWVgj3L224mZLBaYgfm4HCcArzKcmHIs
-         6k5zPLGv5M2KquNVuaSPVPP94gZm1T0l0OfTo98Gcc5nuoghp9a0KRzkHZ/F/AESfHw6
-         RhSKjTs3QscAYvSezD+/l4w5AdGFtL8PvU9j9JHL1frcu4oA9IWBUcVQR7Vi1wmYXyyv
-         9/XjrjLlnbpSbYBbtlryV/Fjs/LPjBlY1KnoJad3mq4Lk//KMhXjz8oBKEyyuq6UBG37
-         rvqw==
-X-Gm-Message-State: AOJu0Yy/y2OpglbYp8FmAXKtFlU9vERxbpNhaeJO9F3N/fMhthQutVgJ
-	P+03Zb2231vuQazN3TfVIeBLI8KP09gwK7LgyA8BpOYri19pJu+GmC+eskSeaGs=
-X-Google-Smtp-Source: AGHT+IG+GXvnVSi4XF/+qo36+FO+MnNjNLl3M/+vJqVciYdR7MKmbUlWOf7A+ZBX7GmFvqmqbzTAVw==
-X-Received: by 2002:a05:6a20:72a2:b0:1a7:e98:96e0 with SMTP id o34-20020a056a2072a200b001a70e9896e0mr5011800pzk.5.1711978035940;
-        Mon, 01 Apr 2024 06:27:15 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id t28-20020a056a00139c00b006eac9eb84besm7787958pfg.204.2024.04.01.06.27.14
+        d=1e100.net; s=20230601; t=1711982747; x=1712587547;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u4QpWKO43L6bkkLakLe6mW0mR5cBj/hwJyqM4Pbw9VU=;
+        b=E8PIrql75whG4i25b6X/rDsiPfuXUJ+TNr4qmBVihI+351zwNdaEtRpEFdtoRrw798
+         7C7e8jtIZ9+lqyvPtX0WDBBSaLfpuv85jSbDLyQD2W89WMeL82c0TAI/w0vedSmKMHRc
+         npCmp6JiyTe2SM9Ydp32oURwWIuHX+rAiul3CFra6hG1twNKXnxWJUS3I9B1gfQLuFLr
+         D7iGgFWbM6fEBw3flFVl2Sgv6QUb8pxDMUakei3qr6TaHsJTRFztgUTSi3QdOlF3I+1H
+         /wb6BiXieDJTZ6mRvLm7hd3Rk5iY5gekgYveQOWFad+ZkJ+I7dEFWmeD4LnjzObxRuhT
+         9QpA==
+X-Gm-Message-State: AOJu0Yyld/aAtAKu5JbftH8bURMWhL3BYCGFcus4lR+lzevstnIKrDwi
+	7wqowfirGP3mVxcClVEUpH05Gr/nnBpBjlG/Xwgnv7szSmX++/H7fCWeQ+cNksc=
+X-Google-Smtp-Source: AGHT+IFBDNfKy9HmX6phWw11bPzTs5Z5hGwH6fRCxLeHrYUtVFo23NaRAZYiMR0LclVfauc76PvVSQ==
+X-Received: by 2002:a05:6512:3d90:b0:515:c195:d6b8 with SMTP id k16-20020a0565123d9000b00515c195d6b8mr8348409lfv.60.1711982746502;
+        Mon, 01 Apr 2024 07:45:46 -0700 (PDT)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:c9f:8d5a:d89b:4ac])
+        by smtp.gmail.com with ESMTPSA id n7-20020a509347000000b0056c24df7a78sm5751170eda.5.2024.04.01.07.45.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 06:27:15 -0700 (PDT)
-Date: Mon, 1 Apr 2024 18:57:12 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] builtin/add: error out when passing untracked
- path with -u
-Message-ID: <h7yk7nk7cwyv35reqzfy7brpbn3xoaarhudteyvxfpkodvltt2@eggaahzrjryq>
-References: <20240318155219.494206-2-shyamthakkar001@gmail.com>
- <20240329205649.1483032-5-shyamthakkar001@gmail.com>
- <xmqqzfugvhnf.fsf@gitster.g>
- <b3j7l2ncstdiaxojtollxddmxvkbbeciou25yptguttr5qugmx@y3bzqbdxkyaw>
- <xmqqh6gnmzqs.fsf@gitster.g>
+        Mon, 01 Apr 2024 07:45:45 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	chris.torek@gmail.com,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/2] improve documentation around git-update-ref
+Date: Mon,  1 Apr 2024 16:45:40 +0200
+Message-ID: <20240401144542.88027-1-knayak@gitlab.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh6gnmzqs.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Sat, 30 Mar 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> So, it was a fairly pointless thing that I was wondering about.  The
-> current behaviour, and the new behaviour with the new check, are
-> fine as-is.
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Well I think we should be going 'all-or-none' way as I can't think of
-any major user-facing command that does partial changes incase of
-error (besides two testcase below).
+This patch series was derived out of the discussion [1] around my other
+patch series to add symref support for `git-update-ref(1)` [2].
 
-> If we wanted to make it "all-or-none", I think the way to do so is
-> to tweak the final part of the cmd_add() function to skip committing
-> the updated index, e.g.,
-> 
->          finish:
->         -	if (write_locked_index(&the_index, &lock_file,
->         +	if (exit_status)
->         +		fputs(_("not updating the index due to failure(s)\n"), stderr);
->         +	else if (write_locked_index(&the_index, &lock_file,
->                                        COMMIT_LOCK | SKIP_IF_UNCHANGED))
->                         die(_("unable to write new index file"));
->  
-> And if/when we do so, the existing code (with or without the updates
-> made by the topic under discussion) needs no change.  We can do all
-> steps regardless of the errors we notice along the way with earlier
-> steps, and discard the in-core index if we saw any errors.
+The aim of these patches is to improve clarity around OIDs in the
+documentation. This makes it easier to draw parallels between regular
+ref updates and symref updates. The symref patch series will be rebased
+on top of this in the upcoming version.
 
-Doing this, we would need to take care of atleast 4 tests breaking in
-t3700-add:
- error out when attempting to add ignored ones but add others
- git add --ignore-errors
- git add (add.ignore-errors)
- git add --chmod fails with non regular files (but updates the other paths)
+[1]: https://public-inbox.org/git/20240330224623.579457-1-knayak@gitlab.com/T/#m7bb4d1f44b656d7cfb73ed3220b990aa6d1ac247
+[2]: https://public-inbox.org/git/20240330224623.579457-1-knayak@gitlab.com/T/#t
 
-while ignore-errors ones would be trivial to fix, fixing other 2 would
-probably require some more than trivial code changes, as from the title,
-their behavior seems pretty much set in stone. That's why I did the
-'goto cleanup' approach to not break these.
+Karthik Nayak (2):
+  update-ref: use {old,new}-oid instead of {old,new}value
+  githooks: use {old,new}-oid instead of {old,new}-value
 
-Thanks.
+ Documentation/git-update-ref.txt | 58 ++++++++++++++++----------------
+ Documentation/githooks.txt       | 16 ++++-----
+ builtin/update-ref.c             | 26 +++++++-------
+ 3 files changed, 50 insertions(+), 50 deletions(-)
 
-> The renormalize() thing is not noticing unused pathspec elements,
-> which we might want to fix, but I suspect it is far less commonly
-> used mode of operation, so it may be OK to leave it to future
-> follow-up series.
-> 
-> Thanks.
+-- 
+2.43.GIT
+
