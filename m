@@ -1,100 +1,70 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553AA8480
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 20:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293B01E507
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 20:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712004045; cv=none; b=qyv+ONlGnmKVRffEPyLZmPesK3HVy63dJvyC7psBHiQwX9obpj4X5kNxQRiP3kZ5lKFk+e3N32+wOcGmUTP/GwW3QbtoW54ovtHDggs5YyZmER5WAj9hazCUBCG/AMtsNiMJWQTnjyrOCm1gblM4eVebYBtXuCLgbbTVZmidJ/U=
+	t=1712004201; cv=none; b=KqKsQBNz8Uk6hJJ61g4CpPvCfYP4DCMEqJCMUx5sAVP/F8hhD6/19qZ879km0Y6x7fe9QzG9OswtgwFmh96cfrQtlxSCIm1z+pP6KWHLl7kmozvCxJON1+SYiIC3hlVmu1r4C0BTCcIP7PT8EOrW+FvH9tTABPUhSB1vl+PX28c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712004045; c=relaxed/simple;
-	bh=tBe9nUnvlDVNb/Kdg49/x/l4qm1ABDKkbTM8jztoQRA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HSbIZjs6kILC0Z2OHlC2H6yEWF/b7J3Hcpuh1Hg6tfNmfvl0PvXXcrqu03AONuraf/0XwjKyMOpEvhT5KKSUq+4qDaeGxfTNaV9bdG8FS5b/iN+21MlD5Y6LZa5aTtFGt8tRvMXQJzX48Y27+UUYzHxtX3sDzArVpo7GVSCXWb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gq3qTQKp; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712004201; c=relaxed/simple;
+	bh=2mRo4Cl2SqKqdjA7LqDRrk/TMB+jbj2pFU83LH4kN2A=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=cuWkK+NoF1BZpr2L3bK2bLB2KncvxIFxXUTBlkyVH6/PoW2wIZfGZm5iP5MaNSIMMu+BK2aVZhlArFKet1wdPVA4BDKpMSmm7XhKFoyWhZgbNXrU6CM37/BoH6O3z2yAcPxgkwuUMo4IP7LDTc8aKZJFe0c6kbtWKF/x+72AIWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a1fB9cxS; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gq3qTQKp"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CC4C32288F;
-	Mon,  1 Apr 2024 16:40:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=tBe9nUnvlDVNb/Kdg49/x/l4qm1ABDKkbTM8jz
-	toQRA=; b=gq3qTQKpWuZwPysrUc8tPflCxxpQg0QnDmEQW2YlOFAw8dSEY+lwHY
-	pj0FL188bTDd6T0YQsdnqZ592mcKgMzklIfc5rdyWI81HKHFcNu10ZtKStbMR4WE
-	/KlO4as/eaPo5jaRdB4CR+YytEsYDfsJxte9oNKhaSBCbsMJFFVrM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C4EA22288E;
-	Mon,  1 Apr 2024 16:40:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3CB122288D;
-	Mon,  1 Apr 2024 16:40:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 7/8] refs: add 'update-symref' command to 'update-ref'
-In-Reply-To: <xmqqv851awgq.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	01 Apr 2024 09:17:41 -0700")
-References: <20240330224623.579457-1-knayak@gitlab.com>
-	<20240330224623.579457-8-knayak@gitlab.com>
-	<xmqqy19yf40l.fsf@gitster.g>
-	<CAOLa=ZTLv39b4Q=AAUA39tXKgOSuu54xk3-r9OUenzxR-6qcag@mail.gmail.com>
-	<xmqqv851awgq.fsf@gitster.g>
-Date: Mon, 01 Apr 2024 13:40:38 -0700
-Message-ID: <xmqqsf0495q1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a1fB9cxS"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a44665605f3so497134166b.2
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 13:43:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712004198; x=1712608998; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fBQhd8agA3k1Uu3KS6gA4zhHtDoE2sj4bQ/hS7ZApUY=;
+        b=a1fB9cxSOMTfQ05NRCTwXWu+QLiAAIRQ7M3P2BP9c2hSyaOVVY/Cpv3qZWL07HMXce
+         CJxZVP+pPK9lvKcTlVInTh4mpEVy6MghxcNJ3PVHa1tGj8UvhY4vJRplOzShlRXvM1RN
+         q6TOUGiCv1c6Wi2zf892GoS1hHjDVOy3+6J5lAQspW1TneVulb50hLprMlWXm4OqJHMG
+         LmBgcOA72JeAFsc8yoiqLNbjtkKX1rOojI+3KCMWP33biCQ2VCnIfLWdK+eDpPW6R6qi
+         8JRPm9uqNwXgHBJ6NKFbS03aP+0rLC/TRk2AC8o4aOlLiwYvANhWDy0xPaGhwLxoUuhL
+         KEhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712004198; x=1712608998;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fBQhd8agA3k1Uu3KS6gA4zhHtDoE2sj4bQ/hS7ZApUY=;
+        b=gdtyb+cSd9kh7Tm27vnioQLXgGHU+sintOUpPKLx8bo1lR/hC0xyVjwvBP1zxjl+8N
+         I0S0oN6MmwKUQRj0pyEw1aezgZwByZ34Nl2uuuAf0mP2dC95lKFQ1FDcNRBZOPV/ou84
+         67sD3CtfLqTDZWr+65Q1R/GnO/1PBDGhRmf4BqAi4icqY6k0uDwZM0LtWi79wOTaMFvR
+         p6kOAIfUxXOSRu5H7ZA31N/IrPBZuEFPw60ilOP+3/9bdhui4jflPjLiLHHSVi6yzfIn
+         W8rLvOohBvQmDaP0umpKzglr6nHCkdQKHDgiS3StzwObuNkLSmqNHH9qZP0Xnhr0KALt
+         LHPw==
+X-Gm-Message-State: AOJu0Yw/RDZ8PFeirltsT8yCjKniKTkDFa4Zp4rMHv0ZqRc5nNjyRW8K
+	L4SDKR1PXWp7uvacK6XJfcYm3DxeP/+4AE2GQKZex3zzi4ftrmyrdoak7XEGt2OGhHnwvOUrQ4r
+	5ojIW5cnsyxG38gxhyuAl1WRLiFSODvQEBlS2mA==
+X-Google-Smtp-Source: AGHT+IGaqfUiUXuSqr3tGkxTAhnrtXxwh9rpTJ39599Rdrbm9G/2xSAlmpyWlwMwJVqrMzmPaOdhHgAD2tWLKxQoOe0=
+X-Received: by 2002:a17:906:3a97:b0:a46:966b:ebfe with SMTP id
+ y23-20020a1709063a9700b00a46966bebfemr6047696ejd.46.1712004197845; Mon, 01
+ Apr 2024 13:43:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1A3E7A02-F068-11EE-A7A4-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Mon, 1 Apr 2024 21:42:29 +0100
+Message-ID: <CAGJzqsmOu-2kcOOAoXWkk3W=RQkdTE_AgZiY6Cj10_DdEnUVGQ@mail.gmail.com>
+Subject: Debian packaging for git-credential-libsecret
+To: Git Mailing List <git@vger.kernel.org>
+Cc: vit.kabele@sysgo.com, jrnieder@gmail.com, Anders Kaseorg <andersk@mit.edu>, 
+	debian-devel@lists.debian.org
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi. It'd be great to package Git credential helper
+git-credential-libsecret in Debian. There's a patch prepared, but it
+needs the attention of a Debian developer. Is anyone here able to
+help?  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=878599
 
->> But this still means we need to think of the best output for the
->> reference transaction hook (following commit).
->> ...
-
-One thing I missed.  We are not currently reporting symref updates
-to these hooks.  Are they prepared to take such extra input?  If not,
-are they going to barf when they see "symref-update" while expecting
-to see <old-oid>?
-
-We may need to make it possible for Git to tell which variant of the
-hook script it was given somehow (the easiest cop-out is to introduce
-ref-transaction-hook-v2 as a separate hook, and use it if exists, or
-fall back to the reference-transaction hook, and report symref updates
-only when we are using v2, but there may be better approaches).
-
-> But this is not an end-user input that tells Git "I do not care
-> about precondition, I did not even bother to learn the current state
-> to give you as <old-something>, just force it".  The input to hook
-> is what we tell the hook what we are planning to do (so that it can
-> decline), and we do not need the ability to say "I do not know what
-> the current state is".  So I do not think you need any "zero" value
-> in the input to the reference-transaction hook.  And I do not see a
-> need for the "symref-update-forced" variant, either.
-
-I misspoke here.  We do need "zero" value to indicate that "this
-update is a creation event" and "this update is a deletion event".
-What I meant to say is that there is no need to make the "zero"
-value distinguishable from a "missing optional" value, which was a
-problem on the "--stdin" side with "-z" format, where each command
-is in a format with fixed number of parameters, unlike the textual
-format, where a missing optional argument can be expressed by
-omitting SP before the value and the value itself and it can be
-differentiated from an empty string as an optional value that is not
-missing.
-
-Thanks.
+Kind regards
+-M
