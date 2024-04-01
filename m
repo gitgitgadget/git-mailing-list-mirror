@@ -1,107 +1,277 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBE04AEF0
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 17:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95657481BF
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 17:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711992377; cv=none; b=o+SO3uYd5qAvYF34jbGwXqOMWKKapHB8E7W023/q+NGp+IFZccM/dHOp4mXNyEzh8MUGabKcJwr3Z6Mu9Xt25UlMWKoFFGbkanxYghf7YowSegt1e2qv5DBUw3cnVkCHQBqkpFGWCsdMZ4wW+hizL03pkd1OMHuaWi6dtn44tNQ=
+	t=1711992564; cv=none; b=LX6qYPRa2pz37RRdBWFE63XKXTHSdxD+WkFIqGsKNxUeVHuNJ7H+WYh+TFyZ3JfVxPJ5WgUp4prKtYNtSrsT3EDttNsXGuWBDk01EDjFHhubf/q5VQUSpuFKzYjtaJyZWQV719wS3aKq0uukn/xjm3YT2WVzM2/NSzo1zQ1Vo70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711992377; c=relaxed/simple;
-	bh=kBm3lArTkA4J47yjkeE04CHBb6P4PF1n6PJSliReCl8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uD/WaYHzD0YEE6EckspsQhGvW4jU9I8EI8D0KB7LYUj3E0eow/aU88WoYD5rOxfj5Hn0gjGsl08rRCLSNer/2ZqJMC89aIqlEYJiUDgVYHKemR5HH+2nxTF5/LmWg209FhP58i795ulM/e+AJTgESDjcpiuEq+G8N+RqOQ1UM9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WmX37u9V; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711992564; c=relaxed/simple;
+	bh=hXsjoSW+6rK+LQiHeE/BvFkzS3YeK74yXi0rDU3lgBY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s5MBc7PgVYMNvBDSe4EslxjMI+vsPwN3SLevK796x5ymXTWVkgI3OQaN0gEDh+6HED8JndxpDUfHi4/xmYFkTfWX7J1ClvyDOk27GJPBp9UehPUX5kjjQ88IHgackjKb1XBMt284R6ggy51b+DkuoqzNlEhM+t0D7fj1eOYo8ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZFV+Z2a; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WmX37u9V"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F83321461;
-	Mon,  1 Apr 2024 13:26:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=kBm3lArTkA4J
-	47yjkeE04CHBb6P4PF1n6PJSliReCl8=; b=WmX37u9VmntuqtJv1/ppNJWZLMxe
-	R2uu1hKEzNkPOIX9DdUU9Se93XvYh/UmuRU7I3GzftfyH0ZKJw+d54k3wiU6AvP2
-	8kpxcXRUlVUx0IACkNhtJd+Xvc3STamMYAwqSvn3XQUcMLpMWWQjQDudr0GloVEj
-	Wy1OAbWm8lhIxhM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4636521460;
-	Mon,  1 Apr 2024 13:26:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D63E32145F;
-	Mon,  1 Apr 2024 13:26:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
- nounset mode
-In-Reply-To: <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
-	("Ville =?utf-8?Q?Skytt=C3=A4=22's?= message of "Mon, 1 Apr 2024 17:07:01
- +0000")
-References: <20240401113033.28709-1-ville.skytta@iki.fi>
-	<xmqqttklcd6d.fsf@gitster.g>
-	<CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com>
-Date: Mon, 01 Apr 2024 10:26:10 -0700
-Message-ID: <xmqqh6gl9eq5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZFV+Z2a"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-513e134f73aso5462707e87.2
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 10:29:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711992561; x=1712597361; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cwb8ygan+gE8cPXJbVQ4CsiCfrW/we3kmdSuj31VU3Q=;
+        b=GZFV+Z2a+lREcz81J+PJ1fisFV79yLSApH94dIIyfzTaHC+UugqbyHSVOH0xfYmer6
+         NuCTmuNMX2dofkgYf2SE+pNdqSLG523CFYt1OjfoUa1BVm6V3sylST25susEAH/x2hIq
+         hVl9fq1obW0IUcuE/W47sFKZSmKxq+kpovyyhrLURJNMqvWu1VkfAWgawp2p+r23mY/U
+         EprxUVedfHKrwUTP7tVlKYVBUqROOg0dqS7xGjzJIYocbbEcSusDnFnR1NZRCnCzZVjI
+         /fKCmXtMh+oNaIz0RuR8tjnpkM6EfJSa/ySvs0IpY3qKivku7oPWpOoXmFfB9ZtmFUT5
+         mxFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711992561; x=1712597361;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cwb8ygan+gE8cPXJbVQ4CsiCfrW/we3kmdSuj31VU3Q=;
+        b=r8zXg0dOPORk1CBT5+0AuiusGNpT6wD0e+pN+3yjf4N45orhJBgqxxGG/QL1ygtOA3
+         imHNXnTeuVTIoKoAGIXN3pbv/JKE0Yl5RluV0pdS8aUP30FxC+sRdBldTfs+IGwQ4D7A
+         umd2/YOqErhfpIR7S9yBPtjHoDYA0EgPxveDwd2gkEXv4HCeAM/Oi2BaX+vekOYEfRg4
+         AEKYpzvZ0KdNOU7O+jQ+jeCFX+yS9mbF8z0w1XqjGrt0Y/49a4zSn+RK8EOeDD0nBcCx
+         l+aT1sfBI+lY/KL6ihPo1o/YpVa4ZHy7tSgybMGl3EstzAQCioc7FSyDPvRj0CResGW3
+         1v+w==
+X-Gm-Message-State: AOJu0Yx3PAOr8X28jfAEmw6+fz3JSo68V37PWnzVXN6nI4XK3rfg/6ji
+	AyxpzmX7uCjcK4wbI3qMXzY8Q9tZfTaDqKALbNfotiGB2kuOfTRzLISxfZdLhuandBLs+HORQ+v
+	z5k2Q4mP/xzvJgfidtQ7pCQ9JYwJS8/CCl2I=
+X-Google-Smtp-Source: AGHT+IGfX+iK8lSefHpj9LBbGjCcikccRh4VbmHlt2G8k5ftDqNrEz89Xm8jU9j7JRbLBSya20bH8VrMx9JVznvE/60=
+X-Received: by 2002:a05:6512:2145:b0:515:9dcd:22ae with SMTP id
+ s5-20020a056512214500b005159dcd22aemr6923350lfr.66.1711992560376; Mon, 01 Apr
+ 2024 10:29:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- EF5A7176-F04C-11EE-A5E8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <CAN7Jk_2mMiVjXuF02S14OX6Rjq2jVjNxcUbZvTqhcz_YMnD=gg@mail.gmail.com>
+ <CAN7Jk_0hyjx39rrO1PKbEcJQXLtCYkWP7A4mCv01DZu2ffGHyw@mail.gmail.com> <ZgUdKU5uynGrJ33f@tanuki>
+In-Reply-To: <ZgUdKU5uynGrJ33f@tanuki>
+From: Sanchit Jindal <sanchit1053@gmail.com>
+Date: Mon, 1 Apr 2024 22:59:16 +0530
+Message-ID: <CAN7Jk_3Y+Ls2VjhQqzA3Ymy-WDv8nT+v5bzU2a1YGz+j89vPgw@mail.gmail.com>
+Subject: Re: Fwd: [GSOC][Proposal] Move existing tests to a unit testing framework
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
+Hello,
 
-> I initially actually changed those very lines too when working on the
-> fix for the issue I faced with GIT_PS1_SHOWCONFLICTSTATE. However,
-> both occurrences are within __git_ps1_show_upstream, and the only call
-> site for that function is protected by a check on the variable that
-> does take possible unset state into account; the function will in the
-> file's current form never be called with it unset. Additionally, the
-> first occurrence is immediately following a line that sets the
-> variable, so that one is "doubly protected".
->
-> Therefore, I decided to undo those changes and not include them here.
-> I guess it's a matter of taste whether one finds it desirable to
-> protect those accesses nevertheless, but it's not strictly necessary.
+Thank you for the review and sorry for the late reply.
+I have made the required changes in the document and uploaded the pdf
+to GSOC webpage
 
-I am glad you took a look into it already.  I wonder if we can
-somehow keep this "institutional knowledge" to help the next person
-by saving them from wasting time wondering about the reason why it
-is safe (iow, what you have found out and described above).  Perhaps
-a patch like this?  I dunno.
+Thank You,
+Sanchit Jindal
 
-Anyway, thanks again for digging!
+---------------------------------------------------------------------------=
+-------------------------
+Google Summer Of Code Proposal
+Git (Move existing tests to a unit testing framework)
 
- contrib/completion/git-prompt.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+Personal Information
+Name:          Sanchit Jindal
+Email:           sanchit1053@gmail.com
+Qualification: B.Tech in Computer Science and Engineering
 
-diff --git i/contrib/completion/git-prompt.sh w/contrib/completion/git-pr=
-ompt.sh
-index 3826f52dec..b05e4cb049 100644
---- i/contrib/completion/git-prompt.sh
-+++ w/contrib/completion/git-prompt.sh
-@@ -113,6 +113,10 @@ printf -v __git_printf_supports_v -- '%s' yes >/dev/=
-null 2>&1
-=20
- # stores the divergence from upstream in $p
- # used by GIT_PS1_SHOWUPSTREAM
-+#
-+# Note: ${GIT_PS1_SHOWUPSTREAM} is used without the nounset=20
-+# protection ${GIT_PS1_SHOWUPSTREAM-}, as the only caller calls
-+# only after making sure it is already set.
- __git_ps1_show_upstream ()
- {
- 	local key value
+Greetings,
+
+My name is Sanchit Jindal, currently pursuing my B.E. in Computer
+Science at the Indian Institute of Technology, Bombay, I will complete
+my degree in May 2024. I am writing to put forward my proposal for the
+Git Project to transition the unit tests to the new Unit Testing
+Framework.
+
+
+Throughout my academic journey and internships, I've gained valuable
+experience across diverse domains, ranging from machine learning to
+fundamental system components like compilers and operating systems.
+This breadth of exposure has honed my ability to swiftly grasp new
+concepts and adapt to different codebases. Proficient in both C, C++
+and shell scripting, I am well-equipped to contribute effectively to
+the project.
+
+
+In my internship at Quadeye last summer I worked on building an
+efficient and user-friendly library for creating and maintaining
+network connections. The project included building a layered
+architecture with a modular approach, and C++ meta programming for
+easy transfer of any structure between nodes.
+
+I have also worked on an gdb extension to provide a front end to
+display graphical structures in the program via a web application. The
+program aids in debugging pointer structures and to visualise the
+run-time of the code.
+
+For this GSOC project, I aspire to make meaningful contributions to
+the open-source community. My interest in software development drives
+me to create solutions that will offer utility to others.
+
+## Overview
+
+### Proposed Abstract
+
+Git has a lot of test cases that need to be migrated to use a new unit
+testing framework. This typically involves moving code from both:
+- a =E2=80=9Ct/helper/test-*.c=E2=80=9D test helper in C, and
+- a =E2=80=9Ct/*.sh=E2=80=9D test script in shell that invokes the test hel=
+per
+
+over to a single =E2=80=9Ct/unit-tests/t-*.c=E2=80=9D in C using the unit t=
+esting framework.
+
+### Details
+
+The Project entails porting the current testing framework (which is a
+collection of helper files written in c that provide various
+utilities, and various shell scripts) to using a new Unit-Testing
+Library. The shell scripts in the original code base setup the
+environment and , using the helper functions, test the functionalities
+provided by Git. The new framework utilises the test-lib library that
+will combine the functionality of both the helper functions and the
+shell scripts into one unit-test.
+Advantages of this approach
+- Unit Tests are a great way to check any program and to test all
+possible corner cases and functions
+- Using this new testing framework will provide a more modular
+approach to unit testing, allowing to create more extensive tests, and
+to provide more fine-grained tests when required.
+- Having a testing library also provides various other features such
+as better debug messages or a better CLI to choose and run tests.
+- The tests will also improve the runtime as instead of running
+multiple process (with each use of shell commands), the program can
+compile and run a single process
+- The approach will also future proof the unit testing as having a c
+library will provide a better base than shell scripts to test
+libraries and other internal features
+
+
+### Basic Structure of the Changes
+
+For each file in the helper directory I will create a corresponding
+unit-test file. (Some files which are being used by multiple tests and
+implement more general functionality may not be ported to the new
+library)
+Each test in the script will be corresponding to a function that will
+be called in the format
+
+`TEST(funtion_name(), =E2=80=9CSUCCESS MESSAGE=E2=80=9D);`
+
+The function body will contain the main implementation of the test
+corresponding to the c file ( The helper function will ideally be the
+same with no or minimal changes just to allow it to be called as
+required )
+Where the assert usually given at the end of the test will be made
+using the utility functions such as check_int, check_str and others,
+(or creating more function as they are required)
+The Make files will be updated to remove the use of shell script with
+compiling and running the new c programs
+
+
+
+### Previous Contributions
+
+I have worked on the micro-project
+Use test_path_is_* functions in test scripts
+Thread Link: https://lore.kernel.org/git/b8d0620d4104106210ecf6a34ada591adf=
+01cff8.1711049963.git.gitgitgadget@gmail.com/
+
+Status: Open
+I had some difficulties in understanding the usage of gitgitGadget and
+git send-email which are being employed as the Pull request
+alternatives. Having tried gitgitGadget I am confident that I will be
+able to utilise it hereafter. I am having some trouble using git
+send-email with the network at my institute but I am optimistic that I
+will be able to use it after the completion of my degree.
+
+With the guidance of Eric Sunshine and Junio C Hamano, I have iterated
+through different versions of the pull request, and familiarised
+myself with the git commit pattern and formalities
+
+
+### Deliverables
+
+The plan is to port the helper functions from helper directory to the
+unit-test directory along with the test defined in the shell scripts.
+Some of the helper tools which have a more basic functionality and are
+being used by multiple test scripts can be left untouched.
+As a stretch goal I will try to port the shell scripts to the new
+testing interface creating new functions for the library as required
+I also plan to keep documenting all the changes made and to keep in
+constant contact with the mentors regarding any bugs or reviews
+regarding the code.
+
+
+### Availability
+
+I am expecting to be free from my academic responsibilities by 4th
+May. I have no further commitments for the summer and will be able to
+provide about 40-50 hours of work per week. I will try porting at
+least one file per week, depending on the community feedback and the
+pace of the development process.
+
+### Related Work
+
+The project has been worked on by Achu Luma for the Outreachy Internship
+Test-ctype:
+https://lore.kernel.org/git/20240112102743.1440-1-ach.lumap@gmail.com/#t
+Test-advise:
+https://lore.kernel.org/git/20240112102122.1422-1-ach.lumap@gmail.com/
+Test-data:
+https://lore.kernel.org/git/20240205162506.1835-2-ach.lumap@gmail.com/
+Test-hash:
+https://lore.kernel.org/git/20240229054004.3807-2-ach.lumap@gmail.com/
+Test-strcmp-offset:
+https://lore.kernel.org/git/20240310144819.4379-1-ach.lumap@gmail.com/
+
+Another testcase has also been handled by Ghanshyam Thakkar
+Test=E2=80=93oid-array:
+https://lore.kernel.org/git/20240223193257.9222-1-shyamthakkar001@gmail.com=
+/
+
+
+### Timeline (Tentative)
+
+Community Bonding
+(1 May- 26 May)
+Be in contact with mentors and figure out the best way to migrate the
+test-cases, Familiarise myself with the library and previous work done
+during the outreachy program.
+
+Phase I
+(27 May - 11 July)
+Begin tackling the harder or longer testcases that will require more
+knowledge of the implementation
+
+Phase II
+(12 July - 18 Aug)
+Keep working on the testcases following the mentors and community feedback
+
+Final Week
+(19 Aug - 26 Aug)
+Finish up the remaining testcases, fixing any bugs that may be
+discovered in the earlier implementations
+
+
+### Acknowledgement
+
+I would like to thank Eric Sunshine and Junio C Hamano for helping me
+with the microproject and for the guidance on the gitgitGadget and git
+send-email features, And also helping me get acquainted with the git
+PR guidelines.
+
+Regards
+Sanchit Jindal
