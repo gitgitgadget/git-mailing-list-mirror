@@ -1,41 +1,41 @@
-Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD1D101DE
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 09:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C84B23AD
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 09:05:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711962248; cv=none; b=Q3WinmYXSpKUCft4HntxrBZc1JsWeJHWI66IohDKrD6vVHG9arZrhUKmJQt589ospTQNXvFJj3SM3GVCTvhuSLg3VZTnDAJcUtDc7xnQ5t0H90KLi4VwN9lmOoxmEXY9vjGlUp4cgdiyt0USJ45zvX5PtItzvat3HahoZ7afVWA=
+	t=1711962358; cv=none; b=k1bnyJlBgKpO94vDFiYfZVtg+YPNkLXIJXKnwlwGbuAPhpmTot5vcIWXnpPyWmtFzx2xmV1ALWbfW6slSG8AvY5/Tqj/T4pYHbGZCsXY84gyig+tF6jJ+fXjkymv0kP5kxkcIuANOH2x9KhdJhWCpVzGuxI6sm8K9nrUJzQw/B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711962248; c=relaxed/simple;
-	bh=lxKQiZeAi091TK8XrXF3SjDYsgforJ8wmqtfVzbX8k4=;
+	s=arc-20240116; t=1711962358; c=relaxed/simple;
+	bh=LcfIre2yL87gmXrdRDp+9YJPxCTSjEUcFzkq6ft+7Fg=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lAV88zUVpAhW46W81eFVlNzVtUR6gUPMhS2RMOpq+A14TeYckaNv5HyEbVMI60WZY0ZSw9eXRwnYumikdqET4Iw7e5o+gKVn3TGaiMKR21Ag715azNAcnsPe4AYy9td7mRMZj0dnF1PBD/k1p+CNU4OlwbTS+tMH4y2Qm2zjGLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=NzYV+YU7; arc=none smtp.client-ip=185.70.43.17
+	 MIME-Version:Content-Type; b=PLCJy9ldljBbR+i/4nBLDZfDeWr2x0f9pcpxsyEV7XSuxVHCf8aq26M0uX+PndrrrDWLS1Dsm2EFrKi6lfWLsMlwGQD/l+V1srWFx6k6BPYXgTq0cfY8KPCr+OFO9zeEa8y9bJlx/NkCYykMiFOViwh1pEFMcl7huSJJpduajas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=rQv+KOlj; arc=none smtp.client-ip=185.70.43.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="NzYV+YU7"
+	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="rQv+KOlj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
-	s=protonmail3; t=1711962243; x=1712221443;
-	bh=LbwfwuG5yvnK2WLJSglf4xuZZDIRNeLFqr+TcKdtjgY=;
+	s=protonmail3; t=1711962354; x=1712221554;
+	bh=GvGTS/qRNZ1T4/w52zTe9pJVv2BlkQ+U56/EbjJcafs=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=NzYV+YU7O95cZuCZbRZ3zg6McqVjQlFFyU+qBZGelIUlsPota9fEkctvVachKkRbs
-	 B68jzdpKTpXN0oDBvfMrjMKxOiRL6EeJ9nuHVlc08f0AmTTQuB4KlE9/hAHd6QpTA+
-	 xqHWbv2z9nkE6e2b2atifNWYMUP4D5lGD8COS9eV2yp8wHNtnosfgv5kcLVK5j0Gv4
-	 C7Vb4jjwrs4cF8rTVyP70G4xozcpco3qyaJKnj+hf88f5mD/k7fjL52p2b0u8MyXCj
-	 n/Cu2/ZD1H0eJRPBeAovf3H5L5iJUhnH9H4teoFce+B2/06EB3Sg2P2nSHKsenHZT+
-	 sR5n58an6QTHA==
-Date: Mon, 01 Apr 2024 09:03:58 +0000
-To: git@vger.kernel.org
+	b=rQv+KOljlvJkqx8TUCdK9tIqmqJQPyaM1xCbsa12drn0ZFeBbxv3PNifXmsitYyZT
+	 e1NzTzD7T0VKuN73obKB/7GBz5MofbRreJvMcag69vbItgF6tqzGz5iBz/MjctVWUC
+	 cDOVVOPtlbpyQKL3U/4JceeVOm5KwpOV3pEZecTnxjvgJM69qFLie7gydest+ujPKH
+	 Uemru2AgklmwmPyhxYD/q0xyPzjSajarGMwQgAQ/5vs1f75G+1/i73QdcmBlRCY5g+
+	 Io1pMySmePBSpyof+eTTv5Qo5aTzbVaCtQsmnzf8bRPsO4SNwqPtVBz3V16yp7TKqt
+	 ar5QTBGuQSZWA==
+Date: Mon, 01 Apr 2024 09:05:48 +0000
+To: Patrick Steinhardt <ps@pks.im>
 From: Thalia Archibald <thalia@archibald.dev>
-Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
-Subject: [PATCH v2 8/8] fast-import: make comments more precise
-Message-ID: <a503c55b83bc610aeefd72190b514264aacb8430.1711960552.git.thalia@archibald.dev>
-In-Reply-To: <cover.1711960552.git.thalia@archibald.dev>
-References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/6] fast-import: tighten parsing of paths
+Message-ID: <4523FBB5-68AE-4D98-BB5F-6B498ADF1C25@archibald.dev>
+In-Reply-To: <E01C617F-3720-42C0-83EE-04BB01643C86@archibald.dev>
+References: <20240322000304.76810-1-thalia@archibald.dev> <20240322000304.76810-2-thalia@archibald.dev> <ZgUobnAVRCfyu1k7@tanuki> <E01C617F-3720-42C0-83EE-04BB01643C86@archibald.dev>
 Feedback-ID: 63908566:user:proton
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -46,41 +46,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-The former is somewhat imprecise. The latter became out of sync with the
-behavior in e814c39c2f (fast-import: refactor parsing of spaces,
-2014-06-18).
+(Sorry for first sending as HTML)
 
-Signed-off-by: Thalia Archibald <thalia@archibald.dev>
----
- builtin/fast-import.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Mar 28, 2024, at 01:21, Patrick Steinhardt <ps@pks.im> wrote:
+>=20
+> So this is part of the "filemodify" section with the following syntax:
+>=20
+>    'M' SP <mode> SP <dataref> SP <path> LF
+>=20
+> The way I interpret this change is that <path> could previously be empty
+> (`SP LF`), but now it needs to be quoted (`SP '"' '"' LF). This seems to
+> be related to cases (1) and (3) of your commit messages, where
+> "filemodify" could contain an unquoted empty string whereas "filecopy"
+> and "filerename" would complain about such an unquoted string.
+>=20
+> In any case I don't see a strong argument why exactly it should be
+> forbidden to have an unquoted empty path here, and I do wonder whether
+> it would break existing writers of the format when we retroactively
+> tighten this case. Isn't it possible to instead loosen it such that all
+> three of the above actions know to handle unquoted empty paths?
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 9d0f53fe04..9b66ffd2d0 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2210,7 +2210,7 @@ static int parse_mapped_oid_hex(const char *hex, stru=
-ct object_id *oid, const ch
-  *
-  *   idnum ::=3D ':' bigint;
-  *
-- * Return the first character after the value in *endptr.
-+ * Update *endptr to point to the first character after the value.
-  *
-  * Complain if the following character is not what is expected,
-  * either a space or end of the string.
-@@ -2243,8 +2243,8 @@ static uintmax_t parse_mark_ref_eol(const char *p)
- }
-=20
- /*
-- * Parse the mark reference, demanding a trailing space.  Return a
-- * pointer to the space.
-+ * Parse the mark reference, demanding a trailing space. Update *p to
-+ * point to the first character after the space.
-  */
- static uintmax_t parse_mark_ref_space(const char **p)
- {
---=20
-2.44.0
+At first, I strongly thought that we should forbid this case of unquoted em=
+pty
+paths. It's a somewhat peculiar case in that it refers to the root of the r=
+epo
+and few front-ends use it. I surveyed git fast-export, git-filter-repo,
+Reposurgeon, hg-fast-export, cvs-fast-export (by Eric S. Raymond),
+cvs-fast-export (by Roger Vaughn), svn2git, bzr-fastexport, and bk fast-exp=
+ort,
+but none of them ever target the root of the repo. I assumed that if an unq=
+uoted
+empty path was ever emitted, it was likely an bug that should not be accept=
+ed
+(e.g., a null byte array somehow).
+
+However, most occurrences of <path> in the grammar have allowed unquoted em=
+pty
+strings to mean the root for 14 years and documentation has implied that it=
+'s
+allowed for 13 years. It's just the two cases of the destination paths of
+filecopy and filerename that don't allow it, and those are less-used operat=
+ions,
+so front-ends may never encounter that error.
+
+Some assumed errors in emitting empty paths are caught by validation with f=
+ile
+modes, so even if it's loosened it's still fairly safe. filemodify must be
+040000 when it targets the root, and filecopy and filerename to the root mu=
+st
+have a source path that's a directory. The worst case is filedelete
+unintentionally targeting the root, but that's been allowed to be an unquot=
+ed
+empty path for almost its entire lifetime, so I don't think should be chang=
+ed.
+
+I've changed it to allow unquoted empty paths for all operations in patch v=
+2
+3/8 (fast-import: allow unquoted empty path for root).
+
+> This is loosening the condition so that we also accept unquoted paths
+> now. Okay.
+
+On the contrary, v1 tightens all paths to forbid unquoted empty strings. v2=
+ now
+allows it and should make that change more clear.
+
+> On Fri, Mar 22, 2024 at 12:03:18AM +0000, Thalia Archibald wrote:
+>> +/*
+>> + * Parse the path string into the strbuf. It may be quoted with escape =
+sequences
+>> + * or unquoted without escape sequences. When unquoted, it may only con=
+tain a
+>> + * space if `allow_spaces` is nonzero.
+>> + */
+>> +static void parse_path(struct strbuf *sb, const char *p, const char **e=
+ndp, int allow_spaces, const char *field)
+>> +{
+>> + strbuf_reset(sb);
+>> + if (*p =3D=3D '"') {
+>> + if (unquote_c_style(sb, p, endp))
+>> + die("Invalid %s: %s", field, command_buf.buf);
+>> + } else {
+>> + if (allow_spaces)
+>> + *endp =3D p + strlen(p);
+>=20
+> I wonder whether `stop_at_unquoted_space` might be more telling. It's
+> not like we disallow spaces here, it's that we treat them as the
+> separator to the next field.
+
+I agree, but I=E2=80=99d rather something shorter, so I=E2=80=99ve changed =
+it to `include_spaces`.
+
+>> + else
+>> + *endp =3D strchr(p, ' ');
+>> + if (*endp =3D=3D p)
+>> + die("Missing %s: %s", field, command_buf.buf);
+>=20
+> Error messages should start with a lower-case letter and be
+> translateable. But these are simply moved over from the previous code,
+> so I don't mind much if you want to keep them as-is.
+>=20
+>> + strbuf_add(sb, p, *endp - p);
+>> + }
+>> +}
 
 
+fast-import isn=E2=80=99t a porcelain command, AFAIK, so I thought the conv=
+ention is
+that its output isn't translated?
+
+From po/README.md:
+>=20
+> The output from Git's plumbing utilities will primarily be read by
+> programs and would break scripts under non-C locales if it was
+> translated. Plumbing strings should not be translated, since
+> they're part of Git's API.
+
+
+I would, however, like to improve its error messages. For example, diagnosi=
+ng
+errors more precisely or changing the outdated =E2=80=9CGIT=E2=80=9D to =
+=E2=80=9CGit=E2=80=9D.
+
+To what extent should the exact error messages be considered part of Git's =
+API?
+
+Thalia
