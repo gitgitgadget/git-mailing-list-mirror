@@ -1,108 +1,107 @@
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBF251C44
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 19:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711998647; cv=pass; b=jOEpb8+ME/jYnhT3eVbc5SHxpsWSBYbLqoWE49zrINhXYPTUFuJtxenu0Za6NsXqFODc7esFnmNKAkWui4Aa/KVN0kdbSMYcDg0xQmkFxNC91bDdHxfcQ95Zsb9FxOukHLi0cxqrhgKh+DGaZWVFBoNKlip+Msh2U53VLLyD8Ws=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711998647; c=relaxed/simple;
-	bh=fC9WU+2THryK2n00FNPpWZCdzmmgB9Uf9ykLuOGRr8Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SS39H8PM/GSONJq9EjwHTwipW9G3ySasv0PPTR/2bAQefvXD0ZJaEDhb/s5bL+bJ/uV4KApELKXqPOX+iJXrZmu/29bKEnsE6TZjqqaB6uHJRSvrH+0YcbJueyQpW56eBemwO1qOWMY4p7cctmo6dYmVz3bfNTsrN7bzrJQIVk8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=GF5j7QJH; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B32342056
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 19:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711999661; cv=none; b=RXcibgKWKRijemVw0Wi5P6xGQUdeMyWpiuQ9JLxjgrZN54+Nwl4OpTPtxAVotNw4GVb3KbUfaGSZMHjJqwgkRlPHxpbHlm4Ps7gL8RrA1hPYxIypZdj+Qm9iR13O/sQ5/C64QQJQsM89QkIR0zPYamkYMuOwSPjBexCzXPoqVMg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711999661; c=relaxed/simple;
+	bh=0+8yjDsWpYvNNRVdzSW0HwAt/qHPLvc21ePNO7Q2GyM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vv70iR2usY0sq+csyGfqVre98b7oPjWg8vBCaoS9fUV8DHE06V+hvC2ExpazbrLSx5dDqmAaP3uurLI7HRIP2HC4M+MopM5/6eN19atW7DGuUxdVO4QuBL9SOHYBidcZ/kz5XGmdnKSqjfmoMtWIvOgcT1AZCLXhot7OLmS7bPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFX4FCYV; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="GF5j7QJH"
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: ville.skytta)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4V7gZp5hlHzyRx
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 22:10:42 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1711998642;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qzJY3IPyBqD7WTsu1gGdhT0VTFxwhdLVkmI+LEAtYzM=;
-	b=GF5j7QJHJx9a6Bjr1pru3dn3zIPNArbKvv82sPgUImTS6/U3aqtgPzcZWBZOa+XEww/Ic+
-	itT2bZY05FMw1bipSfLGgRhwEAFPFef2ivZKxqhyIe0YdJ3ufiIMevO6xYjC194jhX1NUE
-	hiGtclQCntypUHC5l4UhhsFjVzxZM4Y=
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1711998642; a=rsa-sha256; cv=none;
-	b=JN6iNKOEDROmjT7df9KKycHwnvyG8CeCY36IGsZaFA7J9gpkEgCrMP/GgoU6aXKWZMRgW1
-	V3or3mDpOPg9KXxafbN9rH1o/2pgy2eZWaECObIZzP3aFcPRy2KKk4Vtlhv29XHuK2uTcg
-	W1KyYBq1RwdCMofX82sRgoic52314Ao=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=ville.skytta smtp.mailfrom=ville.skytta@iki.fi
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1711998642;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qzJY3IPyBqD7WTsu1gGdhT0VTFxwhdLVkmI+LEAtYzM=;
-	b=aOfpj3OBFxU14j0BkbWcI2MiDSgKn7uxuLM4eUFROCvNkBFgHEe3r9CrHH9pwWFE6DY1pr
-	oSqKZYHR0eoZt0OjkR4p8tNppX6Wc3InkKrZMWEfhmJ5PHTfwHi6yaauy8Trg7A53mn8SF
-	KGQOv+HJNLwu4mbmKFCkUCUc95P0sg0=
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5157af37806so4706552e87.0
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 12:10:42 -0700 (PDT)
-X-Gm-Message-State: AOJu0YzWv7fb9l2k7AVu0SveLU/kemaNm4qYGd35BjO+M2Xn+pwrWI+V
-	U49+XhbUiioMi9jFysepxtcTfqIhMHwFR7tBt7pk0fUxcjG8ROAfRB9kf3K1pFqH9bV+ZUFPVuf
-	kj2K9NxX127xCemZEwxUTrkyAm5M=
-X-Google-Smtp-Source: AGHT+IG79TmbevT8HLSSaiZGIYnseoYpD23Yz8OW7eylBNKHD9Wog9gGGwRxS5DXci3cbNDHqoHEXUwAlIabK4uHBOk=
-X-Received: by 2002:a19:ca43:0:b0:513:e369:cc41 with SMTP id
- h3-20020a19ca43000000b00513e369cc41mr6389866lfj.49.1711998642462; Mon, 01 Apr
- 2024 12:10:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFX4FCYV"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41564adfd5dso7584795e9.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 12:27:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711999658; x=1712604458; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p9n9FEd6YIWViy+Mi5QOT0lGxeuUkI3w/aI/2/CJqMw=;
+        b=HFX4FCYV69iEeK1jS9zZzRTG7mphbhxZ+L3lobQKH52aJKoLhYeicki1lXnKo0pUCG
+         T1sjWbvwNRI9tx4L9sBrpBSUj7XU3yQExwDmr4p6C6+6RmXLwDch3uOCeOVPejOEir06
+         78llumjjn3gJkQJeJY4jcK8cqadj9iMWLZlFKDv4zqQXkrhduZuIkP96lJ4iRYfJ7jij
+         xFiPawT8vYgCe6EviBM6Vq4e4c0cF1n2wv0PGm3VHI877OEB5pN1wURUa7g11moAM3wA
+         JCEkoaMdNdeDmXuPZ8Orui/Xpqx5Ec06iyQzVBCba7t4pYmk//a0qF3YCwsaLJp9yDP6
+         1n5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711999658; x=1712604458;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p9n9FEd6YIWViy+Mi5QOT0lGxeuUkI3w/aI/2/CJqMw=;
+        b=wzsBRXg3f11IAEro4EBp+LXriqjMxjka/iIjCN+0NNtHhkovVk/gt4FX+hQI4Qib+9
+         +Sv+T7rkSiXPlaBmXE9I1yUTjKj1LWX2APCZeS9Dud5JC/URE0/My+WGvV4XLMR0CzNS
+         QwRl6xCg9ZYjXnTfHUqsykpXgwfhU31PwYfCfZfmPw9cqRAUH1pmWXUiR/rt6slegZ4K
+         sKME2gHJTgS+FPVzax2vQMWts9kDlQbCgt5KvhPSAcLlcF/YTSHrDV8Lgi9RCu9jFy0y
+         Tbt1oz9txPt7yuvhbkcSD68iuBOJr1JVAhun1nJ94dqLZMy9oLDSiCdJhPApwu6YZ4Bd
+         p2VA==
+X-Gm-Message-State: AOJu0YzTMopiEsQjkLlp/zo6XxZlqFtCVcfPa3mf9ygAf9bVV3pQ3C91
+	NCHRH2si2s1BOvlTHLVJ5bHB1xQ235JHYv9vgvAUzlFn3bV5J+he
+X-Google-Smtp-Source: AGHT+IGckrV+m7LkKCj/fHdsaxzJB0dvCwYmYEOxMxIXr2Sx2LBiGi2bCfoY+L26g/FYcNL7rqkKdA==
+X-Received: by 2002:a05:600c:5207:b0:415:9df2:7405 with SMTP id fb7-20020a05600c520700b004159df27405mr168271wmb.40.1711999657776;
+        Mon, 01 Apr 2024 12:27:37 -0700 (PDT)
+Received: from gmail.com (4.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.4])
+        by smtp.gmail.com with ESMTPSA id w7-20020a05600c474700b004156ca1df95sm1811310wmo.18.2024.04.01.12.27.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Apr 2024 12:27:37 -0700 (PDT)
+Message-ID: <5acafee5-dd65-49f1-bc2d-f959ed4bc9e1@gmail.com>
+Date: Mon, 1 Apr 2024 21:27:31 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240401113033.28709-1-ville.skytta@iki.fi> <xmqqttklcd6d.fsf@gitster.g>
- <CABr9L5A_zz6ZvBWUoX_Px6Upyiur3+SPp8U91uw3OXO0mXZgeg@mail.gmail.com> <xmqqh6gl9eq5.fsf@gitster.g>
-In-Reply-To: <xmqqh6gl9eq5.fsf@gitster.g>
-From: =?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
-Date: Mon, 1 Apr 2024 19:10:30 +0000
-X-Gmail-Original-Message-ID: <CABr9L5CLNCYFcta0aMApkyxr_jW9wycY8GmJsUPr9kg1smv+Kg@mail.gmail.com>
-Message-ID: <CABr9L5CLNCYFcta0aMApkyxr_jW9wycY8GmJsUPr9kg1smv+Kg@mail.gmail.com>
-Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
- nounset mode
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] improve bugreports
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Git List <git@vger.kernel.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Emily Shaffer <nasamuffin@google.com>
+References: <35de2d76-a03e-4a36-9bb7-6b6ffa4ea123@gmail.com>
+ <4f179986-6aca-405a-a122-d0dc058c60d8@gmail.com>
+ <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAPig+cRFqddMqTxCENnknv3Agcq3_bxGmB1sQTmJNb=xNYg1aw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 1 Apr 2024 at 17:26, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
->
-> > I initially actually changed those very lines too when working on the
-> > fix for the issue I faced with GIT_PS1_SHOWCONFLICTSTATE. However,
-> > both occurrences are within __git_ps1_show_upstream, and the only call
-> > site for that function is protected by a check on the variable that
-> > does take possible unset state into account; the function will in the
-> > file's current form never be called with it unset. Additionally, the
-> > first occurrence is immediately following a line that sets the
-> > variable, so that one is "doubly protected".
+On Sun, Mar 31, 2024 at 11:09:02PM -0400, Eric Sunshine wrote:
+> On Sun, Mar 31, 2024 at 3:04 AM Rubén Justo <rjusto@gmail.com> wrote:
+> > On Sat, Mar 23, 2024 at 06:32:35PM +0100, Rubén Justo wrote:
+> > > Let's try to improve the readability of the bug reports we receive.
 > >
-> > Therefore, I decided to undo those changes and not include them here.
-> > I guess it's a matter of taste whether one finds it desirable to
-> > protect those accesses nevertheless, but it's not strictly necessary.
->
-> I am glad you took a look into it already.  I wonder if we can
-> somehow keep this "institutional knowledge" to help the next person
-> by saving them from wasting time wondering about the reason why it
-> is safe (iow, what you have found out and described above).  Perhaps
-> a patch like this?  I dunno.
+> > This series received no response.  One option may be because it went
+> > unnoticed, another because it may not add value.  I'm going to give it
+> > another try and I'll quietly :-) take silence as confirmation of the
+> > second option.
+> >
+> > I'll try to increase the chances of getting a "looks good" by CC'ing
+> > some folks involved in the bugreport tool.
+> 
+> For what it's worth, when I read the cover letter of this series, I
+> thought it was going to clean up the list of questions to eliminate
+> redundancy. In particular, of the three questions:
+> 
+>    What did you expect to happen?
+>    What happened instead?
+>    What's different between what you expected
+>         and what actually happened?
+> 
+> the final one seems to repeat what the first two ask, and it is common
+> when answering the third question for people to simply repeat what was
+> said in response to an earlier question.
 
-TBH, I'd personally just rather patch the "vulnerable" reference to
-guard against this. Sent that approach in another mail with subject
-"[PATCH] completion: protect prompt against unset SHOWUPSTREAM in
-nounset mode".
+Certainly, a diagnostic questionnaire can always be improved.
+Unfortunately I do not have a better wording to offer here to reduce
+that sense of repetition.
+
+Thanks for your response.
