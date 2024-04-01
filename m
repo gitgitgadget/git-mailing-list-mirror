@@ -1,158 +1,166 @@
-Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8042A4778C
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 15:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3656847A57
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 16:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986649; cv=none; b=FDHLIn++XyonxgLfXCF/65ZHxpXnumx2cxFsQ1t79WE0bbFChtYvL34wBPaMEKnu2qJspoBDtuvbe0NQzlgLw+4IAYZdB2OASAhSj67orM8VzDHr8jJEccqHDzQrEkSZvrSKicN9MfwcC1eeCVa8UYelQHmWYIwIUTEJOojfK1o=
+	t=1711988268; cv=none; b=Q2Va+S6asSxr9GLJhb9T6WV7ocjy0XylBw3gdQG6jUcDwV8sNXe50dtwxW2NzivbxT+71u15xDRq85IPIshuoprOeuV05/MJ9Mf6FTnG95SxsummZYsz4o+6qjYK/zr4xLVUnWDtDcGaOM7J0vB+cg/U0OZYRy8fa1f9dOdzsAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986649; c=relaxed/simple;
-	bh=pILgl6313JcSjxFQBzuifqmLmR9OGtP9+McP42RULv4=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=fE/uWjWWgENKkWCqSc/Euf7azSY+kiWwz5TK3l0BcgA2y1Me/ySr8iEzeyNwOb5UoQ9Md3DHVa0iSkBj7NX1MOqnAb9hEHFfUKrg2xz++Mxyn9EEKmc898tjHn7srbR/dYWUDJnfrsv07dtjn7OwmAJFrRzM2ZC2biNhuN2Rg0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=afSIr4P7; arc=none smtp.client-ip=185.114.57.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
+	s=arc-20240116; t=1711988268; c=relaxed/simple;
+	bh=Oc2YEs5inPtSZHWmuzSBMPtY6euVdJjX0H9wXpJJjZI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UB4N9QAojSSG9WbZ6U+Y+7GYTtcbuDM/MK6kyReRN/7NZwtdRIlhqEKrMnrXoC1GJMcHC8KEun75jmW8gJiUfvXOxyvZjO6YmUhyNjDkYMebQ5oUB4P4fqThpYnx/TE3EzIiV+c8nFv/7BnrBmx/gWS0Vb9OfQYP95enHWRVAtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L+3S9w6t; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="afSIr4P7"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:References:Message-ID:
-	In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
-	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Zs3gHccCy547mU7dBYdF93LtjTVpdYBRLoI2mscgZcc=; b=afSIr4P7qEYw6I7Nb6f5H3j2Jj
-	pT/iee5cfRrK9STSuZfLA8Lh6eHMs9C1srhq8P3TOid8PtzGfzWWevmamHIk50U6ZJj9laSiiYppu
-	zppmi/HzfrSEAeNMazs20hlT6C+tebv1mcYyBAZZwF7MYo4XpS+mFpM3BOgenFbKPObtIzxHRrkUC
-	/dxaq4nj/ELV8wDHM+HTB+em04suoJcWzQ5th/jpAqNj2l8J18GKCp3A066TBaBVqYFLftv3nt+Bt
-	CKjL4zQDZiCO/2sWej2TtdP1r0N93sRJQXK5+V65WKgTGDhCtZ8wKGHrWajirsHXe/MXf1UJOmGwM
-	zLoDintQ==;
-Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:60412 helo=mail.nordhost.no)
-	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <peter@softwolves.pp.se>)
-	id 1rrJvd-00000009Imn-01cH;
-	Mon, 01 Apr 2024 17:50:33 +0200
-Date: Mon, 1 Apr 2024 16:50:32 +0100 (CET)
-From: Peter Krefting <peter@softwolves.pp.se>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-cc: git@vger.kernel.org, 
-    "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
-Subject: Re: [PATCH v2] bisect: Honor log.date
-In-Reply-To: <20240401023225.GA2639800@coredump.intra.peff.net>
-Message-ID: <c13c0751-0758-e068-282e-eb43496213b8@softwolves.pp.se>
-References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se> <xmqqh6gni1ur.fsf@gitster.g> <5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se> <xmqq7chif1pu.fsf@gitster.g> <20240401023225.GA2639800@coredump.intra.peff.net>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+3S9w6t"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 88AC21D456;
+	Mon,  1 Apr 2024 12:17:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Oc2YEs5inPtSZHWmuzSBMPtY6euVdJjX0H9wXp
+	JJjZI=; b=L+3S9w6tXp0KNH9sHzYNtKTnp72NG5k61aNpNPQxhJm3uqE2qmbpKt
+	PDjumoioGRmQiGoqFFI+KHrylrba3gdqQYZvjgSHBspUU3oBRp/I/d/Mo6fngxIj
+	kZO+tmV5A9E2NVmDCKERrudHq92d6UE2PN+edZa/vr8ySMYoS0Brw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 805EC1D455;
+	Mon,  1 Apr 2024 12:17:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D932D1D451;
+	Mon,  1 Apr 2024 12:17:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH 7/8] refs: add 'update-symref' command to 'update-ref'
+In-Reply-To: <CAOLa=ZTLv39b4Q=AAUA39tXKgOSuu54xk3-r9OUenzxR-6qcag@mail.gmail.com>
+	(Karthik Nayak's message of "Mon, 1 Apr 2024 04:48:02 -0700")
+References: <20240330224623.579457-1-knayak@gitlab.com>
+	<20240330224623.579457-8-knayak@gitlab.com>
+	<xmqqy19yf40l.fsf@gitster.g>
+	<CAOLa=ZTLv39b4Q=AAUA39tXKgOSuu54xk3-r9OUenzxR-6qcag@mail.gmail.com>
+Date: Mon, 01 Apr 2024 09:17:41 -0700
+Message-ID: <xmqqv851awgq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Relay-Host: 185.114.57.50
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5E3480A0-F043-11EE-91BF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Junio C Hamano:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Yup, that is semi-understandable, but especially given that it is 
-> one of the options used by the original "diff-tree"'s invocation, 
-> and that we are trying to replace it with "show" from the same 
-> family of commands, it is a bit of disappointment.
+>> So perhaps we can say "update with a concrete <old-oid> will ensure
+>> that the <ref> poitns at <old-oid> before proceeding, but update
+>> with 0{40} as <old-oid> to ensure creation is deprecated.  update
+>> with 0{40} as <new-oid> as deletion is also deprecated.  Use create
+>> and delete for these two deprecated operation modes".
+>>
+>> This assumes that create and delete currently ensures that what is
+>> asked to be created does not exist, and what is asked to be deleted
+>> does exist, before the operation.  If we are loosely doing these two
+>> operations, then we cannot easily deprecate the checking-update,
+>> without breaking existing users.
 
-Indeed. I will make the necessary adjustments.
+Note that I did not (and do not) know if "create" and "delete" have
+such checks; I expected somebody (other than me) to check before
+going forward.
 
-> FYI, attached is a comparison between the diff-tree output and 
-> output from show with my choice of options for "show" picked from 
-> the top of my head.
-
-I am trying to run some comparisons, but I'm not entirely certain what 
-the parameters are that were passed to "ls-tree", as it doesn't 
-actually run it through a command line. I tried the v1.0.0^0 and are 
-seeing discrepancies in the line count. I need to check if it is my 
-configuration that causes it, or something else:
-
-   $ git diff-tree --pretty --stat --summary --cc v1.0.0^0 | grep clone-pack.c
-    clone-pack.c                                     | 153 ++----------------
-   $ git show --stat --summary --no-abbrev-commit v1.0.0^0 | grep clone-pack.c
-    clone-pack.c                                     | 151 ++----------------
-
-(these are the options I've currently landed on)
-
-> I do not think I personally like the --stat output applied to a 
-> merge (--stat and --summary do not work N-way like --cc does for 
-> patch text), but I think these options are the closest parallel to 
-> what we have been giving to "diff-tree".
-
-I don't really have a preference here. I usually only look at when 
-something changed (which is why I initially targetted the date format; 
-in Sweden the YYYY-MM-DD date format is the most prevalent) and the 
-commit message (for bug tracker and code-review references and so on), 
-less so the actual diff details (those I can look into later).
-
-> $ git show -s --stat --summary --first-parent v1.0.0^0
-
-Hmm, the git show manual page doesn't document supporting 
-"--first-parent".
-
-Jeff King:
-
-> I guess that commit is what brought me into the cc. I have not been 
-> following this topic too closely, but generally I'm in favor of 
-> using "git show". I even suggested it back then, but I think 
-> Christian preferred not using an external process if we could avoid 
-> it.
-
-I saw the code that tried to avoid calling one. I don't know the 
-internals well enough here to figure out if we can do without, even 
-when using git show?
-
-
-
-That made me realize, if "git show" runs things through a pager, 
-wouldn't it then lose the "%s is the first %s commit\n" message 
-printed by bisect_next_all() before calling the function to show the 
-contents?
-
-Is that fixable?
-
-> The thread from 2019 is here:
+> But this still means we need to think of the best output for the
+> reference transaction hook (following commit).
 >
->  http://lore.kernel.org/git/20190222061949.GA9875@sigill.intra.peff.net
+> My current implementation of:
+>    <symref-target> SP <ref-name> LF
+> Should be changed to:
+>    <old-ref> SP <new-ref> LF
 >
-> which links to the earlier discussion about "git show":
+> But this means, for creation of symrefs <old-ref> needs to be "zero"
+> value. Also there is no way for clients to differentiate between regular
+> refs and symrefs here. I wonder if it makes sense to do something like:
 >
->  https://lore.kernel.org/git/CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com/
+>    symref SP <old-ref> SP <new-ref> LF
 
-These two seems to also get it to honor settings (one to not colorize 
-output, for instance). So this would be a step further.
+What do clients see for a regular ref?  "<old-oid> SP <new-oid> LF"?
+That would be OK, as "symref" cannot be an object name, I guess?
 
-> I do think keeping --summary is important; it's the only place we show
-> mode changes, for example.
+> Where symref is a fixed string at the start, used as a differentiator.
+> This however still would leave us to deal with "zero" values for
+> creation and deletion.
 
-Yes, will fix that. I hadn't realized I lost that, since it wasn't 
-something I have been using myself.
+Are these two <old-ref> and <new-ref> values optional in the context
+of your discussion?  The review comment was on input from the end-user
+that made it optional to validate the precondition, but this is what
+you produce as a result---if these are not optional, then an empty
+string can be a reasonable "zero" value.  I am confused...
 
->  - "--no-patch" is doing nothing (passing --stat is enough to suppress
->    the default behavior of showing the patch).
+> Perhaps the best way here to actually be a lot more verbose and have the
+> hook output the following:
+>
+>    symref-create SP <new-ref> LF
+>    symref-delete SP <old-ref> LF
+>    symref-update SP <old-ref> SP <new-ref> LF
+>    symref-update-forced <new-ref> LF
 
-Indeed. And it also negates "--summary", so I have dropped that.
+It is unfortunate that the input to the hook for a normal reference
+update uses syntax different from the "--stdin" input format, i.e.,
 
->  - "--pretty=medium" is redundant at best (it's the default),
+    <old-oid> SP <new-oid> SP <ref> LF
 
-Dropped.
+but it is way too late to change it now.  So to be consistent,
 
->  - I'm not sure what the intent is in adding --no-abbrev-commit. It is
->    already the default not to abbreviate it in the "commit <oid>" line,
->    and if the user has set log.abbrevcommit, shouldn't we respect that?
+    symref-create SP <new-ref> SP <ref> LF
+    symref-delete SP <old-ref> SP <ref> LF
+    symref-update SP <old-ref> SP <new-ref> SP <ref> LF
 
-I think I added it because the diff-tree command did something 
-similar. I can drop that as well ("bisect" displays the full commit 
-hash anyway). I guess it mostly is for merges where we show the parent 
-hashes?
+would be the three operations.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+But this is not an end-user input that tells Git "I do not care
+about precondition, I did not even bother to learn the current state
+to give you as <old-something>, just force it".  The input to hook
+is what we tell the hook what we are planning to do (so that it can
+decline), and we do not need the ability to say "I do not know what
+the current state is".  So I do not think you need any "zero" value
+in the input to the reference-transaction hook.  And I do not see a
+need for the "symref-update-forced" variant, either.
+
+By the way, if we were to use symref-{create,delete,update} here,
+wouldn't it make more sense to name the command on the "--stdin"
+side the same, i.e., not "update-symref" but "symref-update"?
+
+What I suspect that needs more thought is what should happen when
+you request via "--stdin" to create, update, or delete a symref,
+but <ref> is a regular ref, e.g., "symref-delete <ref>".  For
+"symref-create <ref> <new-ref>", we would fail if <ref> exists,
+whether it is a symref or a normal ref, so that is OK.  For
+"symref-delete <ref> <old-ref>", we would fail if <ref> is *not*
+a symref to <old-ref>, so the case where <ref> is a normal ref
+is already covered. 
+
+Should we support "symref-update <ref> <new-ref> <old-oid>" that
+makes <ref> a symref that points at <new-ref>, but ensures that
+<ref> before the operation is a normal ref that points at <old-oid>?
+
+Or should "symref-update" work only on <ref> that is an existing
+symref?
+
+I think I am OK if the answer was "You can only give a precondition
+in the form of <old-ref>, which means you can only turn an existing
+symref to point at a different ref with precondition protection. If
+you want to turn a normal ref into a symref, you have to force it by
+not having a precondition, or delete the ref and then (re)create it
+as a symref".  But we need to decide the semantics and document it.
+
+Thanks.
+
+
