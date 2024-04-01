@@ -1,103 +1,158 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65FD4501C
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 15:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8042A4778C
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 15:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711985487; cv=none; b=evlg4eN3phwBQCJNHKKQ42kHr8JAd1hxz/flvNQM16G4VbpBRXo0k+YNTEfRzClrhPFxTaTVl/9K62x5tFuWDh+qIO/l5SDpL/36hBRUJxQl9G6d2/fXcJ3V7Sn6nYsTHlbrfhIb+DfDh2q3lxKvRzcNP3bemQRynxt2HpgUBuk=
+	t=1711986649; cv=none; b=FDHLIn++XyonxgLfXCF/65ZHxpXnumx2cxFsQ1t79WE0bbFChtYvL34wBPaMEKnu2qJspoBDtuvbe0NQzlgLw+4IAYZdB2OASAhSj67orM8VzDHr8jJEccqHDzQrEkSZvrSKicN9MfwcC1eeCVa8UYelQHmWYIwIUTEJOojfK1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711985487; c=relaxed/simple;
-	bh=ruRqrD88Kr+Qw+ozFdBGiWpG4baUBSGIYXryvIuy0FI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mw5SuDBO7n6ZUtQmWI5WKiSDOfd+YtaWq8l7s1EWX77o+GPid44ocPZuqgmE8veERYywYwPdw3vq4GMXHLbPRX5t9xH5sPDlZkZrBizdVip9+LtaWBBBi+fPDkgh8gSjeNMHFV4HdpOxFBElmd71eOBrqgMD/l2blmpHUxzcex4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=isSRyfJI; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1711986649; c=relaxed/simple;
+	bh=pILgl6313JcSjxFQBzuifqmLmR9OGtP9+McP42RULv4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=fE/uWjWWgENKkWCqSc/Euf7azSY+kiWwz5TK3l0BcgA2y1Me/ySr8iEzeyNwOb5UoQ9Md3DHVa0iSkBj7NX1MOqnAb9hEHFfUKrg2xz++Mxyn9EEKmc898tjHn7srbR/dYWUDJnfrsv07dtjn7OwmAJFrRzM2ZC2biNhuN2Rg0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=afSIr4P7; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="isSRyfJI"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9BA9A1E6CD7;
-	Mon,  1 Apr 2024 11:31:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ruRqrD88Kr+Q
-	w+ozFdBGiWpG4baUBSGIYXryvIuy0FI=; b=isSRyfJIZEHOoLzqJq44HOAdQrz+
-	HAUtUhSMdVrdPGoFWFlT3en0y90TSCDqjYw2UsT9Jm83Oq3YEHX15v0Ew1W/LGa4
-	KOHs3FdQat4/ZxR1+ZcpWbnx0JIGOBXBMoGu4KehqPxO3K2+j6Qd7K8G5BAgvj0F
-	NguPEpkz7+/Y4Ts=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 932891E6CD6;
-	Mon,  1 Apr 2024 11:31:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED4D71E6CD5;
-	Mon,  1 Apr 2024 11:31:23 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in
- nounset mode
-In-Reply-To: <20240401113033.28709-1-ville.skytta@iki.fi> ("Ville
- =?utf-8?Q?Skytt=C3=A4=22's?=
-	message of "Mon, 1 Apr 2024 11:30:33 +0000")
-References: <20240401113033.28709-1-ville.skytta@iki.fi>
-Date: Mon, 01 Apr 2024 08:31:22 -0700
-Message-ID: <xmqqttklcd6d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="afSIr4P7"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:References:Message-ID:
+	In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Zs3gHccCy547mU7dBYdF93LtjTVpdYBRLoI2mscgZcc=; b=afSIr4P7qEYw6I7Nb6f5H3j2Jj
+	pT/iee5cfRrK9STSuZfLA8Lh6eHMs9C1srhq8P3TOid8PtzGfzWWevmamHIk50U6ZJj9laSiiYppu
+	zppmi/HzfrSEAeNMazs20hlT6C+tebv1mcYyBAZZwF7MYo4XpS+mFpM3BOgenFbKPObtIzxHRrkUC
+	/dxaq4nj/ELV8wDHM+HTB+em04suoJcWzQ5th/jpAqNj2l8J18GKCp3A066TBaBVqYFLftv3nt+Bt
+	CKjL4zQDZiCO/2sWej2TtdP1r0N93sRJQXK5+V65WKgTGDhCtZ8wKGHrWajirsHXe/MXf1UJOmGwM
+	zLoDintQ==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:60412 helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1rrJvd-00000009Imn-01cH;
+	Mon, 01 Apr 2024 17:50:33 +0200
+Date: Mon, 1 Apr 2024 16:50:32 +0100 (CET)
+From: Peter Krefting <peter@softwolves.pp.se>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+cc: git@vger.kernel.org, 
+    "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
+Subject: Re: [PATCH v2] bisect: Honor log.date
+In-Reply-To: <20240401023225.GA2639800@coredump.intra.peff.net>
+Message-ID: <c13c0751-0758-e068-282e-eb43496213b8@softwolves.pp.se>
+References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se> <xmqqh6gni1ur.fsf@gitster.g> <5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se> <xmqq7chif1pu.fsf@gitster.g> <20240401023225.GA2639800@coredump.intra.peff.net>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- E5D78EA0-F03C-11EE-9A26-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Relay-Host: 185.114.57.50
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 
-Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
+Junio C Hamano:
 
-> `GIT_PS1_SHOWCONFLICTSTATE` is a user variable that might not be set,
-> causing errors when the shell is in `nounset` mode.
+> Yup, that is semi-understandable, but especially given that it is 
+> one of the options used by the original "diff-tree"'s invocation, 
+> and that we are trying to replace it with "show" from the same 
+> family of commands, it is a bit of disappointment.
+
+Indeed. I will make the necessary adjustments.
+
+> FYI, attached is a comparison between the diff-tree output and 
+> output from show with my choice of options for "show" picked from 
+> the top of my head.
+
+I am trying to run some comparisons, but I'm not entirely certain what 
+the parameters are that were passed to "ls-tree", as it doesn't 
+actually run it through a command line. I tried the v1.0.0^0 and are 
+seeing discrepancies in the line count. I need to check if it is my 
+configuration that causes it, or something else:
+
+   $ git diff-tree --pretty --stat --summary --cc v1.0.0^0 | grep clone-pack.c
+    clone-pack.c                                     | 153 ++----------------
+   $ git show --stat --summary --no-abbrev-commit v1.0.0^0 | grep clone-pack.c
+    clone-pack.c                                     | 151 ++----------------
+
+(these are the options I've currently landed on)
+
+> I do not think I personally like the --stat output applied to a 
+> merge (--stat and --summary do not work N-way like --cc does for 
+> patch text), but I think these options are the closest parallel to 
+> what we have been giving to "diff-tree".
+
+I don't really have a preference here. I usually only look at when 
+something changed (which is why I initially targetted the date format; 
+in Sweden the YYYY-MM-DD date format is the most prevalent) and the 
+commit message (for bug tracker and code-review references and so on), 
+less so the actual diff details (those I can look into later).
+
+> $ git show -s --stat --summary --first-parent v1.0.0^0
+
+Hmm, the git show manual page doesn't document supporting 
+"--first-parent".
+
+Jeff King:
+
+> I guess that commit is what brought me into the cc. I have not been 
+> following this topic too closely, but generally I'm in favor of 
+> using "git show". I even suggested it back then, but I think 
+> Christian preferred not using an external process if we could avoid 
+> it.
+
+I saw the code that tried to avoid calling one. I don't know the 
+internals well enough here to figure out if we can do without, even 
+when using git show?
+
+
+
+That made me realize, if "git show" runs things through a pager, 
+wouldn't it then lose the "%s is the first %s commit\n" message 
+printed by bisect_next_all() before calling the function to show the 
+contents?
+
+Is that fixable?
+
+> The thread from 2019 is here:
 >
-> Take into account on access by falling back to an empty string.
+>  http://lore.kernel.org/git/20190222061949.GA9875@sigill.intra.peff.net
 >
-> Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
-> ---
-
-Obviously a good thing to do.
-
-A related tangent is that
-
-    $ git grep -e '$GIT_PS1' -e '${GIT_PS1_[A-Z0-9_]*}' contrib/completio=
-n/
-
-shows a hit for the line with SHOWCONFLICTSTATE, plus two lines with
-GIT_PS1_SHOWUPSTREAM that lack the "if unset then use this value".
-Do you want to do another patch to fix them, or are they good as-is
-for some reason?
-
-Thanks.
-
->  contrib/completion/git-prompt.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> which links to the earlier discussion about "git show":
 >
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-> index 71f179cba3..3826f52dec 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -528,7 +528,7 @@ __git_ps1 ()
->  	fi
-> =20
->  	local conflict=3D"" # state indicator for unresolved conflicts
-> -	if [[ "${GIT_PS1_SHOWCONFLICTSTATE}" =3D=3D "yes" ]] &&
-> +	if [[ "${GIT_PS1_SHOWCONFLICTSTATE-}" =3D=3D "yes" ]] &&
->  	   [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
->  		conflict=3D"|CONFLICT"
->  	fi
+>  https://lore.kernel.org/git/CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com/
+
+These two seems to also get it to honor settings (one to not colorize 
+output, for instance). So this would be a step further.
+
+> I do think keeping --summary is important; it's the only place we show
+> mode changes, for example.
+
+Yes, will fix that. I hadn't realized I lost that, since it wasn't 
+something I have been using myself.
+
+>  - "--no-patch" is doing nothing (passing --stat is enough to suppress
+>    the default behavior of showing the patch).
+
+Indeed. And it also negates "--summary", so I have dropped that.
+
+>  - "--pretty=medium" is redundant at best (it's the default),
+
+Dropped.
+
+>  - I'm not sure what the intent is in adding --no-abbrev-commit. It is
+>    already the default not to abbreviate it in the "commit <oid>" line,
+>    and if the user has set log.abbrevcommit, shouldn't we respect that?
+
+I think I added it because the diff-tree command did something 
+similar. I can drop that as well ("bisect" displays the full commit 
+hash anyway). I guess it mostly is for merges where we show the parent 
+hashes?
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
