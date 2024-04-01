@@ -1,107 +1,79 @@
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de [80.237.132.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014922030A
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 11:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.132.163
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A506111A5
+	for <git@vger.kernel.org>; Mon,  1 Apr 2024 11:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711970505; cv=none; b=PFhwMxSPTNbm4JO2DorBjqA+/6UuNk4EVizmCdE1Qe/OGOs0SWX/wmX9AVDYvZoHWeB4h8vy2bQeZ221F26hIrX2KmBFxHWCIA6xC22z+3dpiGaUVf/JAyNcEacOA/hUVhkjWncG5ANnsT4cqwtNqN5w/zMyJ7z8eZ/5kiIjB0c=
+	t=1711971042; cv=none; b=gDHq4wO3snxlBJ8Xg4f3RaFJp/5hSQjgB90yDgc/P6j0Uq5AQ5TBVfhoHn9Eu8ljuLPmf9g4jplir0+9iR2j061gV81FpM6Uaah3rhG46B8rkyvaOnyzOrUg77xr+NLBNi3+oZqqMtygrS1/UOBLga9YKiDm4zDzvosvS01ETPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711970505; c=relaxed/simple;
-	bh=jOi9LohpcVPH1QmvcSe8N7d4hXx9mSZmD8ctUWRM++w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=IYBg3u41UXvxz4/vK+Mtg4QI/O08NSPwnHRnyNZgH/PMe2IFSANLCKg8zCDo2o4Rri3o8uZklXmql3zIUu8ZbaOeghrlHKQfjUGOB9wXPOLGVyjlDczC/rCiXn9HD/+TERjZXBukuwUCed3uOKfh9N+b0Bjh+C6cRy6hhNWb+1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=virtuell-zuhause.de; spf=pass smtp.mailfrom=virtuell-zuhause.de; dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b=Itmf4ZhH; arc=none smtp.client-ip=80.237.132.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=virtuell-zuhause.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuell-zuhause.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b="Itmf4ZhH"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=virtuell-zuhause.de; s=he130322; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=BFBUetY3TE43lGQybCQ2aHe0dLQXh3wsJCNBD6xOKfs=; t=1711970503;
-	x=1712402503; b=Itmf4ZhHovhg3NdG89KQ8abPVLPTSglfunIXq9Q/Fe7IrF7FZLmyL0vBKPuP5
-	HMxzLBQzRDpKKBkuE/3Y0Z5rRikbG9KgyJdA9CPv59YOnMOkSWrewvjnEgWBebPmPQRI3QMuPOxUo
-	4v11m1a5Fycf83bU9mpqmjCKpuUlOAizUJMCQhoq/0BYDt59mN4kUuydMVVXgMaZaSU1vRPYQu7p2
-	O69GMoDAH94U+OzPR511CQpI5+54zz592gGCZM/76iw8tbyrBc41EYox8204Nd4KVoS9IZBS7b6s5
-	kk6YExV7udyJRPKv57GpXLiP3KkZzjUFuzcfkmpqnZiMFrO4ew==;
-Received: from [2003:a:77f:9249:1989:89c9:57e0:e298]; authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1rrFPY-0002gu-Gm; Mon, 01 Apr 2024 13:01:08 +0200
-Message-ID: <17b55da7-42d0-48df-95a6-8433e1c028b0@virtuell-zuhause.de>
-Date: Mon, 1 Apr 2024 13:00:59 +0200
+	s=arc-20240116; t=1711971042; c=relaxed/simple;
+	bh=7GO5fTJp3QXPiOl9HCtkY7Ks+E2pvvXczWjx0JHzAso=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type; b=PqkC13qKai1kavO/pzV2oyFsKitOTwzFGZ1u+58L0NtFK9fqtM2Ij/g/FgZynkv4ZpypNtfljqjR2DyF5SP79Pc3jPdvAEjNEp32jKHNV4aQjAsPQuV971HdRdusg35+C+stlByWrCGC4G5YgPoPvSgt0NFP8DQ2SKxxzouCZD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-343496f8b80so795753f8f.0
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 04:30:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711971038; x=1712575838;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0UPV32U878PtpetZ+i1HJfk82ZoUv8u+Rybc6Kch06I=;
+        b=YbksgT795xkcnqhoaYUJ2+DebWbtbn6cE8BMFCWhormzdzP+i4HldEDBZD2VCnSdFo
+         7h9jlXZ49XML9z2wo+rmMYZEjs9gvg5b7low0hDQk48uemnmq2sLXyfkKJmy+RWEUUjJ
+         LSia3wB0ivjXSvhtw64j0jWZWOcbsysHaEmaunZjJHZ+2Yb8zDbCrGb4tsvFT2WRRG6l
+         EDxxdGhFJ6ilzpTy5KALIQVcZ1i55XTzciNB7q4gcA4Xc7h8ZeTV71tOorQeNmbgJRaS
+         dmAqDacUMBcQIV/gsU3GrRTHBzjlTz35+NJDHGXRYLW7i2Osit3pki0nTKTZ+moycT+t
+         JibA==
+X-Gm-Message-State: AOJu0YweBgS7JrKu+yxNDLRYnLBOfRSyirQBeume4GsrQRlOlo2Yg+WJ
+	IGfhGklB0dGuV5gR+0qAgmM90rjCv9h3y95QXDZy8HGi65K6avaC3NarHJyg4xQ=
+X-Google-Smtp-Source: AGHT+IG9Ig0MzA3SmfFNQhy9PXICtEsEWUy9VWFMaLRIv/Js7VQHkrfqdcssZhWGcEHPulmmVnI95g==
+X-Received: by 2002:a05:6000:508:b0:341:8412:a6e7 with SMTP id a8-20020a056000050800b003418412a6e7mr5886749wrf.18.1711971037665;
+        Mon, 01 Apr 2024 04:30:37 -0700 (PDT)
+Received: from t570.home ([128.65.235.35])
+        by smtp.gmail.com with ESMTPSA id f14-20020adfc98e000000b0033b48190e5esm11364833wrh.67.2024.04.01.04.30.36
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Apr 2024 04:30:37 -0700 (PDT)
+From: =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
+To: git@vger.kernel.org
+Subject: [PATCH] completion: fix prompt with unset SHOWCONFLICTSTATE in nounset mode
+Date: Mon,  1 Apr 2024 11:30:33 +0000
+Message-Id: <20240401113033.28709-1-ville.skytta@iki.fi>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Feature request: a merge strategy that makes any file difference
- a merge conflict
-To: Michael Ernst <mernst@cs.washington.edu>, git@vger.kernel.org
-References: <CAAJCdQQB3_DWOTCTbb-TAkLUX_XVd5TBd3z0M2_KrHxKxr69Kw@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-In-Reply-To: <CAAJCdQQB3_DWOTCTbb-TAkLUX_XVd5TBd3z0M2_KrHxKxr69Kw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1711970503;31551359;
-X-HE-SMSGID: 1rrFPY-0002gu-Gm
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 29.03.2024 20:20, Michael Ernst wrote:
+`GIT_PS1_SHOWCONFLICTSTATE` is a user variable that might not be set,
+causing errors when the shell is in `nounset` mode.
 
-[...]
+Take into account on access by falling back to an empty string.
 
-> What do you think of this feature request?
+Signed-off-by: Ville Skyttä <ville.skytta@iki.fi>
+---
+ contrib/completion/git-prompt.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I wanted to propose to mark the relevant files as binary as that should 
-prevent the merge to happen. But this is not working.
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 71f179cba3..3826f52dec 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -528,7 +528,7 @@ __git_ps1 ()
+ 	fi
+ 
+ 	local conflict="" # state indicator for unresolved conflicts
+-	if [[ "${GIT_PS1_SHOWCONFLICTSTATE}" == "yes" ]] &&
++	if [[ "${GIT_PS1_SHOWCONFLICTSTATE-}" == "yes" ]] &&
+ 	   [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
+ 		conflict="|CONFLICT"
+ 	fi
+-- 
+2.40.1
 
-git init
-
-echo "*.txt binary" > .gitattributes
-git add .gitattributes
-git commit -m ".gitattributes: Add it" .gitattributes
-
-echo "a" > test.txt
-git add test.txt
-git commit -m "test.txt: main" test.txt
-
-git checkout -b feature
-echo "ab" > test.txt
-git commit -m "test.txt: feature" test.txt
-
-git checkout main
-git merge --no-ff --stat --no-edit  feature
-
-Merge made by the 'ort' strategy.
-  test.txt | Bin 22 -> 3 bytes
-  1 file changed, 0 insertions(+), 0 deletions(-)
-
-git log -p test.txt
-commit ec7cab2fa30c26738c6254202a399a616959a661 (feature)
-Author: Thomas Braun <thomas.braun@byte-physics.de>
-Date:   Mon Apr 1 12:56:07 2024 +0200
-
-     test.txt: feature
-
-diff --git a/test.txt b/test.txt
-index 346a56a..81bf396 100644
-Binary files a/test.txt and b/test.txt differ
-
-commit 61e195554351dada7494e4eb4935d96120680420
-Author: Thomas Braun <thomas.braun@byte-physics.de>
-Date:   Mon Apr 1 12:50:29 2024 +0200
-
-     test.txt: main
-
-diff --git a/test.txt b/test.txt
-new file mode 100644
-index 0000000..346a56a
-Binary files /dev/null and b/test.txt differ
-
-I would have expected to see a merge conflict as git can't know how to 
-merge binaries. Or am I misunderstanding something here?
