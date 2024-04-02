@@ -1,80 +1,80 @@
-Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2804A7A158
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 12:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE40F80628
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 12:20:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712060430; cv=none; b=mboUkiXjusFuLjBoN8qmD9L8b+TN/wPZZkWcPJNpMqcw641wKbjTMD2FHzv26KeufuAC2x2XuOcbRyG+O3E7xnyOwW/EtFFmwUGw6x1Mw0Q1y5z5l8IVs9VDb1T5W6ly48m0Pk666uls2Hna4SEwxDbmqGuI+7mw8zyEL1n9Chc=
+	t=1712060435; cv=none; b=SrHt4wferl+yBYaDE3gQdUTf8rmCVRh3JWsTwPgOKRdx5tOlemSh/mT6Np1Bse1SUHR8Ybsb8oqmbaJeEDTD/EZFYxl22TEMie7DZCouE8FaSvmtVrC5xDTa9aKlUr1vEI66GcxuOVG+1Gxi7jW7Yc0R+lOH9UIiJgJ2IbYOuCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712060430; c=relaxed/simple;
-	bh=L9NrzkDds43Jo5+j+f+O2rFzidGLBObLVHekATdvw9I=;
+	s=arc-20240116; t=1712060435; c=relaxed/simple;
+	bh=eN4Xg2EbIo1L1UPZ2cD5PKPIU89r/93nTibVSSqtojQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R1ABDy7Ww3da0o9tASzezITc5a49ohMKAQZF2Gt9lv4Tyrp6BN23zb0ID1b1fZh4ZpqJTrzKORcLVQ7POtw/mmSWIhxuYx37J3k/rdt0DhY1KjkHf0NpyloSLq06Hutcu7Mc+RJGB0cr2YdmLOA2H0mO1v1Qm3ov5SWTooqRMgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qcidqkxo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d0hME4i+; arc=none smtp.client-ip=64.147.123.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=l1Qvr5xnDsk4vtM1Py/HZuf1wYdA6TK9lycO6yDBl0KIYuqJJb0KFKOkKwL716PiecUFj7qBe3OutVNk5PDo28Ooiet4pvxhzN2zx6+slAaeg5g6VjO4dfx8S1naiC3l7o6n005sH/1HKU1Xy2OIEwgxu9QNcCMqNZwWr71K4qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QAtbD64r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ES1KzNk3; arc=none smtp.client-ip=64.147.123.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qcidqkxo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d0hME4i+"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 06C1018000EA;
-	Tue,  2 Apr 2024 08:20:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QAtbD64r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ES1KzNk3"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id D7F4C1C0009B;
+	Tue,  2 Apr 2024 08:20:32 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 02 Apr 2024 08:20:26 -0400
+  by compute5.internal (MEProxy); Tue, 02 Apr 2024 08:20:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712060425; x=1712146825; bh=SRKib10Bh8
-	2WbL6O/18Lyq7pDMG7lmMeCoyfui9QIf4=; b=qcidqkxo0Tt3ds1YYv/PEXU7Hh
-	ABriQ6OFRfIdXSat9WoeaC0R46+o5a+T5ZVoWWvnjgKNcph2VZrSWPq1nQVqo0jM
-	0WhPKT1qJHiboynscMVLpM73nEK4Y+Y0KRnvG4LPa+SCpEwoC9qWYsJ37bUMNALG
-	XNhoI03pbCu4Mnn8xWM2nulkXu7v8i2dsrqlnd7lik1ziMLhTvOKikfvS+faQ5n+
-	LhwYON1jsGNTqa56iILd9IKrrBFNKxwskQ857wLxoVG9O9Tw1MO31ReqJ61Jfb6k
-	vfz42yHTyWuq9AvRYxYw/UMjUHN7qmorkXdeR4Am31bJ90C7qLizUyp58z5g==
+	:subject:to:to; s=fm2; t=1712060432; x=1712146832; bh=TbfORDYtvk
+	WF1qXhRDFhhiogBNPcYg+hgGNREbdenn8=; b=QAtbD64rztGtpirsLd3yjoWq2U
+	ft6KUSmUFJoa84UDfgC4bRo7t1yIVbEkEohuu2cHPCDu9npvxeh1ylgSZIbZ5wkE
+	qxHuNNlTxyhgSy4S5a4EbodbruyBBAAWFUUY80+7kEbH1Djg4zh1Qo0yE5JquoEL
+	/b2QCrolhAPf6j+Yg0LS1fD9xC/sYAgLwEA8oKZVWshdPkQLDWCW8v0+XK1zpPoU
+	4xswzeYH1RXADEOwdwPFXzmahgbLQYjo2mFYAIQWGuO51GTwFBYQWhCKkKMSKYDA
+	dMo6//5Rqiq4w0twZtmFBKVSx55lCN4srSPHTr+peWVOFk9oZIYeFoAFf4xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712060425; x=1712146825; bh=SRKib10Bh82WbL6O/18Lyq7pDMG7
-	lmMeCoyfui9QIf4=; b=d0hME4i+E3Sa1S8lu5UfESZpzZrjVONQn+EimEwaKY2r
-	nvqLw8k1xNhg43koFjsIvD6meHglJjc5cr1pF/eVeO+8EJfJ20m85KOASeypZSGv
-	Mohtri0Wof9WYWVuLMQSxKuwt9t1fDHqTwbjVgdI4VHmLhsi+Ak13lx7vFqi+OcA
-	9vTpJ3BUsuaypFnKHxjKaCl3jujdPCQBAyJ9XyIaWhySh99EjYJbQmS7MyduXAGo
-	4NQgCVK4MdWdKfYGlO8OPKIfR4lW/5VqYq9PTHC4r0Y5twgo3Stvw6djF63MJOfw
-	apvdPuzuI0teMu5mnQFhY9P8PVeF2qBPgy5VPZ9KSg==
-X-ME-Sender: <xms:CfgLZutRy3v5HvFjtbDs3u9kwRDMYyf604YzE9xHM2UvFjj5eu0x9Q>
-    <xme:CfgLZjcfxffyv0QoBetAQ8shOnrenFufIr2psRR0T7OHZKtztB5oL5ikMUs2hcNIX
-    KsLFbtuo7t9proomw>
-X-ME-Received: <xmr:CfgLZpwMDglJIk9vZlrnZm7w5pRwQvRXEjSiKrjS2h8gRYKf1MKuEvxb--_M1SrFFIo8DhcRxG16GwdmtSqeBI8jfif0hUyJb9f-8kLc618VDRI>
+	fm2; t=1712060432; x=1712146832; bh=TbfORDYtvkWF1qXhRDFhhiogBNPc
+	Yg+hgGNREbdenn8=; b=ES1KzNk3V1W1Rb7nzQps7VwD2Vr3Ks7/cBFdRhJVh5eG
+	9DuGx6dV82Y0PfBc/cvTaYAozNWegF1CKdEHpG/G3YMqawKUzixWvfwDAuKfhQmu
+	vAbCr1411MTzlwOhber8OBAb37U6msgFYmDmdGfPlEGyAo7SBv/mMgbZUBlxxrUC
+	pYchHY8gWWUfhTpSZhKzSzFEwuMMBWHtEahVb4XPNJHJNmk/cdjczlEcc77NMEmi
+	X9wBYK4tOzmLY6U95eIKTy63DfilZfXqwNIhcM5BFzMlZaNZg35hAh2fh0z/Lz43
+	/Yd8m7Dv7YcH6hwJQMRblOHotIQtuYJDlExTpG1Vgg==
+X-ME-Sender: <xms:EPgLZlo9wqKjrvNTePSdrs2aNaPZVjVrAX2R5E-ucfCJo6GogknEfw>
+    <xme:EPgLZnoXwbK_HAfKWIloy8Jy13ro6DlLH-kfKaipQMkxe4Y13Iz4hycRN4WQXT0hw
+    cXeqgx4LXQdtqjHiA>
+X-ME-Received: <xmr:EPgLZiPzJv-mAdOxGFsJTR9xCANpWjSPBfE_0SS3fTKoCDmOblxDvnG2YTsAJWLiPj9bYtLHVqdXFznQJIoS0dIM0Dn2f3StM4dL4gyvvO-s2Ak>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddghedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepgeevtdffhedvheehgeeuuefffeetiedtfeehjeehteevieehkeekieefhfdvveeh
-    necuffhomhgrihhnpehuphgurghtvgdrnhgvfienucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:CfgLZpPyAqf7RpoBwARkV1_n2HxZPITuRnj__i2fChg26x1ldLvn5w>
-    <xmx:CfgLZu8e-RcNEBZIp_f1mvOFaUDfJAjxnS2iiLLyvEXqtSfmBPSd0A>
-    <xmx:CfgLZhWCF066y8pDrFLwcL6iWKTvCeoPUWZQa4GdxwwRsb8Uq8R_FA>
-    <xmx:CfgLZnfS2vKlcFx1tG63O2rNvoB5QLXB4ClvlF-0QjHOK1bR8VCOFA>
-    <xmx:CfgLZlY1hGijJxcqkse1mZFyNxLwRP8G26N2sqwFvGuxtLfOwKoxJnUw>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:EPgLZg5kLmUyJ4EMtRsIPB_5XJcUmSa1-7fN3yJwdGH8BheyRMy0XQ>
+    <xmx:EPgLZk7y0F8B6vIfWyvwYaorHFNVKIlUhkBRFhMUuxAFkP8o62L5Ag>
+    <xmx:EPgLZojbdwrvtvSvbNLC4rEaNzIg0pMR2bKcEqcEJrl3ZEJK7kx_mw>
+    <xmx:EPgLZm46Qujpv2Q5rZJcniyndTWLAXSJkDTZR8kUrcijUtYYHKxS1g>
+    <xmx:EPgLZikqHeOVdWE-2Y1uEmvWrzwLTdVTQsrevQCR9i9Evf5dpOOOSs9I>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 08:20:24 -0400 (EDT)
+ 2 Apr 2024 08:20:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 678aeb4b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 12:20:16 +0000 (UTC)
-Date: Tue, 2 Apr 2024 14:20:23 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 60269c4a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 12:20:23 +0000 (UTC)
+Date: Tue, 2 Apr 2024 14:20:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/8] reftable-backend: extract out `write_symref_with_log`
-Message-ID: <Zgv4B7DI9g0vmxea@tanuki>
+Subject: Re: [PATCH 5/8] refs/files-backend: add support for symref updates
+Message-ID: <Zgv4DShrInEE30GA@tanuki>
 References: <20240330224623.579457-1-knayak@gitlab.com>
- <20240330224623.579457-3-knayak@gitlab.com>
+ <20240330224623.579457-6-knayak@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,146 +82,176 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3nGXwZRS8haVz0W7"
+	protocol="application/pgp-signature"; boundary="/jRAy25Lr8gClmRp"
 Content-Disposition: inline
-In-Reply-To: <20240330224623.579457-3-knayak@gitlab.com>
+In-Reply-To: <20240330224623.579457-6-knayak@gitlab.com>
 
 
---3nGXwZRS8haVz0W7
+--/jRAy25Lr8gClmRp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Mar 30, 2024 at 11:46:17PM +0100, Karthik Nayak wrote:
+On Sat, Mar 30, 2024 at 11:46:20PM +0100, Karthik Nayak wrote:
 > From: Karthik Nayak <karthik.188@gmail.com>
 >=20
-> The function `write_create_symref_table`, creates a
-> `reftable_ref_record` for a symref and adds it to the writer. Then it
-> also creates a log entry for the symref. It does all of this while also
-> obtaining and using a new update index.
+> Add support for transactional symbolic reference updates in the files
+> backend. This also adheres to the config of using symlinks for symbolic
+> references.
 >=20
-> We extract out `write_symref_with_log` from this to provide the
-> functionality of creating a symref without making changes to the update
-> index. This will be used to add `update-symref` option to the
-> `git-update-ref` command.
->=20
-> Rename the `create` field to `arg` while we're here, as `create` is a
-> bit misleading.
+> While this commit is setting up the files-backend to support symrefs in
+> transaction's. It will only be used in a consequent commit, when we wire
+> up the `update-symref` option for `git-update-ref`.
 >=20
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
->  refs/reftable-backend.c | 41 +++++++++++++++++++++++++----------------
->  1 file changed, 25 insertions(+), 16 deletions(-)
+>  refs/files-backend.c | 45 +++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 42 insertions(+), 3 deletions(-)
 >=20
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index e206d5a073..282a08e3cb 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1222,23 +1222,22 @@ struct write_create_symref_arg {
->  	const char *logmsg;
->  };
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 4dbe73c106..6b4cc80843 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2323,7 +2323,7 @@ static int split_head_update(struct ref_update *upd=
+ate,
+>  			transaction, "HEAD",
+>  			update->flags | REF_LOG_ONLY | REF_NO_DEREF,
+>  			&update->new_oid, &update->old_oid,
+> -			update->msg, NULL);
+> +			update->msg, update->symref_target);
 > =20
-> -static int write_create_symref_table(struct reftable_writer *writer, voi=
-d *cb_data)
-> +static int write_symref_with_log(struct reftable_writer *writer,
-> +				 struct write_create_symref_arg *arg,
-> +				 uint64_t update_index)
->  {
-> -	struct write_create_symref_arg *create =3D cb_data;
-> -	uint64_t ts =3D reftable_stack_next_update_index(create->stack);
->  	struct reftable_ref_record ref =3D {
-> -		.refname =3D (char *)create->refname,
-> +		.refname =3D (char *)arg->refname,
->  		.value_type =3D REFTABLE_REF_SYMREF,
-> -		.value.symref =3D (char *)create->target,
-> -		.update_index =3D ts,
-> +		.value.symref =3D (char *)arg->target,
-> +		.update_index =3D update_index,
->  	};
+>  	/*
+>  	 * Add "HEAD". This insertion is O(N) in the transaction
+> @@ -2386,7 +2386,7 @@ static int split_symref_update(struct ref_update *u=
+pdate,
+>  	new_update =3D ref_transaction_add_update(
+>  			transaction, referent, new_flags,
+>  			&update->new_oid, &update->old_oid,
+> -			update->msg, NULL);
+> +			update->msg, update->symref_target);
+> =20
+>  	new_update->parent_update =3D update;
+> =20
+> @@ -2396,7 +2396,7 @@ static int split_symref_update(struct ref_update *u=
+pdate,
+>  	 * done when new_update is processed.
+>  	 */
+>  	update->flags |=3D REF_LOG_ONLY | REF_NO_DEREF;
+> -	update->flags &=3D ~REF_HAVE_OLD;
+> +	update->flags &=3D ~(REF_HAVE_OLD|REF_UPDATE_SYMREF);
+> =20
+>  	/*
+>  	 * Add the referent. This insertion is O(N) in the transaction
+> @@ -2567,6 +2567,27 @@ static int lock_ref_for_update(struct files_ref_st=
+ore *refs,
+>  		}
+>  	}
+> =20
+> +	if (update->flags & REF_UPDATE_SYMREF) {
+> +		if (create_symref_lock(refs, lock, update->refname, update->symref_tar=
+get)) {
+> +			ret =3D TRANSACTION_GENERIC_ERROR;
+> +			goto out;
+> +		}
+> +
+> +		if (close_ref_gently(lock)) {
+> +			strbuf_addf(err, "couldn't close '%s.lock'",
+> +				    update->refname);
+> +			ret =3D TRANSACTION_GENERIC_ERROR;
+> +			goto out;
+> +		}
+> +
+> +		/*
+> +		 * Once we have created the symref lock, the commit
+> +		 * phase of the transaction only needs to commit the lock.
+> +		 */
+> +		if (update->flags & REF_UPDATE_SYMREF)
+> +			update->flags |=3D REF_NEEDS_COMMIT;
+
+As far as I can see the `update->flags` aren't ever modified in this
+block, which already is guarded via `update->flags =3D REF_UPDATE_SYMREF`.
+This condition should thus be superfluous, and we can instead set
+`REF_NEEDS_COMMIT` unconditionally here.
+
+> +	}
+> +
+>  	if ((update->flags & REF_HAVE_NEW) &&
+>  	    !(update->flags & REF_DELETING) &&
+>  	    !(update->flags & REF_LOG_ONLY)) {
+> @@ -2862,6 +2883,14 @@ static int files_transaction_finish(struct ref_sto=
+re *ref_store,
+> =20
+>  		if (update->flags & REF_NEEDS_COMMIT ||
+>  		    update->flags & REF_LOG_ONLY) {
+> +			if (update->flags & REF_UPDATE_SYMREF) {
+> +				if (!refs_resolve_ref_unsafe(&refs->base, update->symref_target,
+> +							     RESOLVE_REF_READING, &update->new_oid, NULL)) {
+> +					strbuf_addf(err, "refname %s not found", update->symref_target);
+> +					goto cleanup;
+> +				}
+> +			}
+
+So we try to resolve the symref target here so that we can provide a
+proper new object ID for the reflog entry. What happens though when the
+caller tries to create a dangling symref where the target ref does not
+exist? Wouldn't we raise an error and abort in that case?
+
+I think we should handle this case gracefully and set the new object ID
+to the zero OID. Which is also what happens when deleting the target of
+e.g. the `HEAD` symref.
+
+>  			if (files_log_ref_write(refs,
+>  						lock->ref_name,
+>  						&lock->old_oid,
+> @@ -2879,6 +2908,16 @@ static int files_transaction_finish(struct ref_sto=
+re *ref_store,
+>  				goto cleanup;
+>  			}
+>  		}
+> +
+> +		/*
+> +		 * We try creating a symlink, if that succeeds we continue to the
+> +		 * next updated. If not, we try and create a regular symref.
+> +		 */
+> +		if (update->flags & REF_UPDATE_SYMREF && prefer_symlink_refs)
+> +			if (!create_ref_symlink(lock, update->symref_target))
+> +				continue;
+> +
 > +
 
-Nit: let's remove this superfluous newline.
+There's a superfluous newline here.
+
+>  		if (update->flags & REF_NEEDS_COMMIT) {
+>  			clear_loose_ref_cache(refs);
+>  			if (commit_ref(lock)) {
+
+What is the purpose of `clear_loose_ref_cache()` here, and do we need to
+call it when updating symrefs, too?
 
 Patrick
 
->  	struct reftable_log_record log =3D {0};
->  	struct object_id new_oid;
->  	struct object_id old_oid;
->  	int ret;
-> =20
-> -	reftable_writer_set_limits(writer, ts, ts);
-> -
->  	ret =3D reftable_writer_add_ref(writer, &ref);
->  	if (ret)
->  		return ret;
-> @@ -1251,25 +1250,35 @@ static int write_create_symref_table(struct refta=
-ble_writer *writer, void *cb_da
->  	 * not resolve for new repositories this ordering will ensure that this
->  	 * never happens.
->  	 */
-> -	if (!create->logmsg ||
-> -	    !refs_resolve_ref_unsafe(&create->refs->base, create->target,
-> +	if (!arg->logmsg ||
-> +	    !refs_resolve_ref_unsafe(&arg->refs->base, arg->target,
->  				     RESOLVE_REF_READING, &new_oid, NULL) ||
-> -	    !should_write_log(&create->refs->base, create->refname))
-> +	    !should_write_log(&arg->refs->base, arg->refname))
->  		return 0;
-> =20
->  	fill_reftable_log_record(&log);
-> -	log.refname =3D xstrdup(create->refname);
-> -	log.update_index =3D ts;
-> -	log.value.update.message =3D xstrndup(create->logmsg,
-> -					    create->refs->write_options.block_size / 2);
-> +	log.refname =3D xstrdup(arg->refname);
-> +	log.update_index =3D update_index;
-> +	log.value.update.message =3D xstrndup(arg->logmsg,
-> +					    arg->refs->write_options.block_size / 2);
->  	memcpy(log.value.update.new_hash, new_oid.hash, GIT_MAX_RAWSZ);
-> -	if (refs_resolve_ref_unsafe(&create->refs->base, create->refname,
-> +	if (refs_resolve_ref_unsafe(&arg->refs->base, arg->refname,
->  				    RESOLVE_REF_READING, &old_oid, NULL))
->  		memcpy(log.value.update.old_hash, old_oid.hash, GIT_MAX_RAWSZ);
-> =20
->  	ret =3D reftable_writer_add_log(writer, &log);
->  	reftable_log_record_release(&log);
->  	return ret;
-> +
-> +}
-> +
-> +static int write_create_symref_table(struct reftable_writer *writer, voi=
-d *cb_data)
-> +{
-> +	struct write_create_symref_arg *arg =3D cb_data;
-> +	uint64_t ts =3D reftable_stack_next_update_index(arg->stack);
-> +	reftable_writer_set_limits(writer, ts, ts);
-> +
-> +	return write_symref_with_log(writer, arg, ts);
->  }
-> =20
->  static int reftable_be_create_symref(struct ref_store *ref_store,
 > --=20
 > 2.43.GIT
 >=20
 
---3nGXwZRS8haVz0W7
+--/jRAy25Lr8gClmRp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL+AYACgkQVbJhu7ck
-PpTowRAAjGHFXbOR5qnmDWE0FPqyFsbFuAz7hUktm6WPJ1ohBXAL7XrvB8CXwOsM
-LnoiihCaf3qXwkp5GE0gc5sy5/obHJe9YjE/LbxQWyRNnjolOsEZZ+5H8PbqrPes
-5EJWAtUEXZ5BcQD34XKLD9ic8Gv9H4v12A3sn+Kf0WwA1ZPtcU4WurR3wiZLnynR
-CaJX0St0oM/QMqX2ucQH4mcp3vOD/pz4MaHfxmh1nSmyzBsn7YNa79J4J2bFe1pq
-z0tMXJ1uWrUJlZHQ1tg96kLkqbz+Y1bLFhll3jnMPvMgIAVdZ3G/dp14Yjtfna6c
-hW0y08A7vknG+e793VwSj50M4IZLqxJSdnV065YjTXttGQDSTgHniACIORxBDk6i
-VyglHgc0m05WiV7XHDmWb6fVKx2d+/QBd5DdprM6wks3AoQnGN4DqFaMfFKjk88S
-VVVpHRCjsQ2E66Bw+/oEZ9SmCo8idmw4z4z2QMm3jYlpPJ3AgZy33KL0rf1bE+K2
-uRbr1YqzmsOphFruNcdFMQq0CoMXE4QIX/dDbhaFIWAJMDc4EqjPVuhA9KZJ/WDj
-6gIiYO7Cb6OYTdttMLp8eYEsozDh76iUQZ0RqsAusglhgPzMCwu4wfUEdstDHV5K
-z++YbChn7ANfx23vN+St1+wOMSwjNyi+AUU6ml3anFaxaceeFvA=
-=gPsY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL+AwACgkQVbJhu7ck
+PpS+/w//ZnTLEp4YVur7tGOBYs/5aqwPNSpSh0HZyUBovMq43GLy6yhnKB6yAymd
+vcC3oCXMDPzqQVysN1Q9lT2PuzWoOAfG51fCm0sVds2H+HKubNHOcO/wSJSni/Jn
+jGDWMGzDSQ//AidveJwkd4lNY1hqRllheeBByy/0v/TkXTq9QiR154BcULUwua6T
+RWB0pNmdL89ypTg6VcF+fJ/TtjRZ3iDqyXRWQ/dp+zNZ9tM8RarxOxHp7kD//zLR
+GJaXClKghgoFgF+NOKfNGS9OwulrWOcim/B6mFZJKIJS8DI6fyi+ySB8TMhZUOtA
+slXcP9bvkehziyVh04bWpxB8tY2Hqz8aTnIgbM7L9EUz2dQ7Ki9k+nE8QjuTZ53R
+leb4yEmJ3MtnQDllndEduMFtQfEnZaRt0j7gpAeDNzLkOeLJaqEpl7x04mZket74
+2BbAkgY1kMQCCePqZSc68i9tYU5wnaf2oMbutolI4ddyABnmrWqUWRzQZDyGdnYl
+4iAS4PFDLumrthXV6GAaVBg9ejSK8JmB6vs+8zA+38tiavMPaOoXLkwCbqOZQM4K
+HtUgorOlEuoI8SArr9AXgrLBHh06svpBOLJ8EAooRVOPDp4WZh6FiwUgUaatQgZN
+fNbYAzciYvs4vG9q64IdtTFb4ncfuzAztbeEU5NHetD4eTeUSWg=
+=RhW2
 -----END PGP SIGNATURE-----
 
---3nGXwZRS8haVz0W7--
+--/jRAy25Lr8gClmRp--
