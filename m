@@ -1,90 +1,124 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E68215AAA1
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A03859B41
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712089363; cv=none; b=HgGlgLkA0cPTpUJ8GXNUzJnBWCoRY8CrPGJj1+7VZuFJmmfSheShFUx9MfZsRwrCnsS0HEzSd/9VR91URUM5Ue1wQdWc6AN05N5CYoE/cP1wKVktrBqz4BQp+6ZNbd9C3w/iU3v3lWOfWMaS8n2ml/2rA79HTOgNWgJS00oyg8Y=
+	t=1712089448; cv=none; b=F3EhbOFImBA13uA7gy5lAVI7Vbx6P7wud/nzixbq1IZhGfYMXj9A4kFllATmxVTq2rSZRlb1gqoAAwZ+5SYmKAGMCQ1MxLzQC58DD9dqeSLhlDlq1WIUXP2a1FO7EDYhXyfzRIbRImZrQ+hZMsvLG5fjOtbta9n8MIQ53YYOK2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712089363; c=relaxed/simple;
-	bh=GQNYcaRqYPmgLCez2pTkY+bKIlMgUxuMjdp/XSTnK/w=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Txp16Swl5cvYP3RrC8QBm4ZJ/HOYZMHkQvCs1jix1w+v12w00wkVIn29TvAV8+XJ+pKwG6IUSctN/DOiRoMVRLo6RE8PPGcsDN575/j6HIbld8wluVMhUJjKYq0dOWGMQqUGGeyVQ1bxe1fKq4GlWDQxSX1Y9XSrcZs7EpZFB1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 432KM1Ir2355598
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 20:22:02 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
-Cc: "'Daniel Stenberg'" <daniel@haxx.se>
-References: <20240330000212.GA1261238@coredump.intra.peff.net> <2n7sn76-p413-5632-4o2s-o5n2p1rqnr5@unkk.fr> <20240402200254.GA874754@coredump.intra.peff.net>
-In-Reply-To: <20240402200254.GA874754@coredump.intra.peff.net>
-Subject: RE: [PATCH 0/2] git+curl 8.7.0 workaround
-Date: Tue, 2 Apr 2024 16:21:56 -0400
-Organization: Nexbridge Inc.
-Message-ID: <08c401da853b$6c0b8570$44229050$@nexbridge.com>
+	s=arc-20240116; t=1712089448; c=relaxed/simple;
+	bh=s4xYC8AJVp8m0y/8iyRYtyDiBQ9XPjxt2ULo71PSj58=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HQ4yGwWTBBJiprQvLT9AAplwm0HJQSs/ZwNcDS33RTddC9war/UWX5HZPCxOmZw2QVaply1llBi0Mw1+jCviuqyevH5+m+wJnY8qaGAPb7NUeGxE2aIGtPHoYIUi6ozLYCmFewW9xF+99e3oGVsbh/79n6xZFfS/JVaM13gg3r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 7358 invoked by uid 109); 2 Apr 2024 20:24:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Apr 2024 20:24:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1265 invoked by uid 111); 2 Apr 2024 20:24:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Apr 2024 16:24:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 2 Apr 2024 16:24:05 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t/t7700-repack.sh: fix test breakages with
+ `GIT_TEST_MULTI_PACK_INDEX=1`
+Message-ID: <20240402202405.GC875182@coredump.intra.peff.net>
+References: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
+ <xmqqr0fn4nmx.fsf@gitster.g>
+ <ZgxSSKGdAicfVhGA@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJws1Xu3+P+oB7hpoOMcV1t4cbufAIz/uswAuOIiiuwAFOYoA==
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZgxSSKGdAicfVhGA@nand.local>
 
-On Tuesday, April 2, 2024 4:03 PM, Peff wrote:
->To: git@vger.kernel.org
->Cc: Daniel Stenberg <daniel@haxx.se>
->Subject: [PATCH 0/2] git+curl 8.7.0 workaround
->
->On Sat, Mar 30, 2024 at 09:54:02AM +0100, Daniel Stenberg wrote:
->
->> On Fri, 29 Mar 2024, Jeff King wrote:
->>
->> > I noticed some http-related failures in the test suite on my Debian
->> > unstable system, which recently got an upgraded curl package. It
->> > looks like it's related to cases where we use the remote-curl =
-helper
->> > in "connect" mode (i.e., protocol v2) and the http buffer is small
->> > (requiring us to stream the data to curl). Besides just running
->> > t5551, an easy reproduction is:
->>
->> This smells like a libcurl regression to me. I "imported" this into
->> our issue tracker here: https://github.com/curl/curl/issues/13229
->
->This was all resolved in that issue, but just to summarize for the list
->here: it was a regression in curl and there's a fix already. Thanks =
-Daniel for your (as
->usual) prompt digging into the problem (and likewise to Stefan for the =
-actual fix).
->
->Ultimately the issue will be fixed by moving to a different version of =
-libcurl, but
->here's an easy workaround in the meantime, with a small doc cleanup I =
-found along
->the way.
->
->  [1/2]: http: reset POSTFIELDSIZE when clearing curl handle
->  [2/2]: INSTALL: bump libcurl version to 7.21.3
->
-> INSTALL | 2 +-
-> http.c  | 1 +
-> 2 files changed, 2 insertions(+), 1 deletion(-)
+On Tue, Apr 02, 2024 at 02:45:28PM -0400, Taylor Blau wrote:
 
-Do we have an ETA for this fix? That or do we know when curl is planning =
-on resolving this?
+> I have generally considered the `--write-midx` and
+> `GIT_TEST_MULTI_PACK_INDEX` options to be orthogonal to each other. The
+> latter is a developer-oriented option that forces Git to write a MIDX
+> post-repack regardless of the command-line option.
+> 
+> It predates the `--write-midx` option by a number of years, and IIUC was
+> introduced to enhance test coverage while the MIDX was being originally
+> developed.
+> 
+> I would argue that GIT_TEST_MULTI_PACK_INDEX should be on the list of
+> GIT_TEST_-variables to get rid of as it has served its purpose.
 
-Thanks,
-Randall
+Hmm. Obviously it is of little value in this explicit --write-midx
+test, but I thought the main value was just exercising all of the
+_other_ tests with a midx in place. Doesn't that potentially have value
+(just like testing with SPLIT_INDEX, etc, gets more coverage)?
 
+If it is worth keeping (and I do not really have a strong opinion
+there), the real issue seems to me that it does not behave like
+--write-midx. That is the source of the problem here, but also makes
+test runs with it unrealistic, since the command-line option is how
+real-world users would trigger it.
+
+I.e., I would have expected something like this, so that the variables
+takes precedence over config but under command-line options:
+
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 15e4cccc45..4b02d9cb77 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1197,6 +1197,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(repack_config, &cruft_po_args);
+ 
++	write_midx = git_env_bool(GIT_TEST_MULTI_PACK_INDEX, write_midx);
++	if (write_midx)
++		write_bitmaps = git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP,
++					     write_bitmaps);
++
+ 	argc = parse_options(argc, argv, prefix, builtin_repack_options,
+ 				git_repack_usage, 0);
+ 
+@@ -1214,10 +1219,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		if (!write_midx &&
+ 		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository()))
+ 			write_bitmaps = 0;
+-	} else if (write_bitmaps &&
+-		   git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0) &&
+-		   git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP, 0)) {
+-		write_bitmaps = 0;
+ 	}
+ 	if (pack_kept_objects < 0)
+ 		pack_kept_objects = write_bitmaps > 0 && !write_midx;
+@@ -1515,13 +1516,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (run_update_server_info)
+ 		update_server_info(0);
+ 
+-	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0)) {
+-		unsigned flags = 0;
+-		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP, 0))
+-			flags |= MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX;
+-		write_midx_file(get_object_directory(), NULL, NULL, flags);
+-	}
+-
+ cleanup:
+ 	string_list_clear(&names, 1);
+ 	existing_packs_release(&existing);
+
+But it gets weird because some tests (like t7700.2) explicitly ask for
+bitmaps on the command line and want pack bitmaps but _not_ midx
+bitmaps.
+
+So I dunno. Maybe this is a can of worms that is not worth falling into.
+After all, these are not "real" environment variables that we expect
+users to use. I just wonder if the ci runs with them are buying us
+anything for all of the tests outside of t7700.
+
+-Peff
