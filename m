@@ -1,151 +1,116 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E229615B102
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 18:30:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3A78495
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 18:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712082637; cv=none; b=KhKRbAVbjdH2iYN+fljjTPYZVnO0stvYOlrmEQKOpSD8fk0ZfxPDSj30uTnEysFYbMCg9yLFw0lvkPBre3EOkK7iImcfGO0ffU4ac2yWSl2AAzZelRYopN0jlPjpUB2imwTj9BPyy6cTuvno40mA1zAj8rg97n4SfvSbJ5bEQw4=
+	t=1712083043; cv=none; b=PnzewrA2qtGS0tPNoOo90uyeY9qpvc/8oAvVgqlBXQlj3aQuN6OU4KlMBicU/s58UxnVhyFQEkn8TbRfHNZPe9bgI2CkSuS8o2Nv6qFTy2kbe8TZ7KOAAng2FAoLHlORSW5Cw7k9EMbL2k9zpso0W+VPzKFbKzTq0aq789SbnJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712082637; c=relaxed/simple;
-	bh=Hk62REiBcfBhbecMBBiTl60Vdd431SPRniBaZ29bmdU=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=Ss9mTNeJpC70bEU+Wm78RwwhF2J71hglLGGrw19DA+tloZsyq/0/xqp1Ve/jtr396YgPm57jMprfuZZ3ZUIEG2VArjlKq3cft/Dc1VuBHqrfAOGtZlz33HqKuo+xzNL3KLr3gOIGSs+ja4vlB7FJpF6X0THpe8L6T/wYWX7F+TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=gtEvF8tx; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1712083043; c=relaxed/simple;
+	bh=dx6F0dUW/9CsieKLNjAP3YCTu7nhJaxp//rUFOumtBo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=elI0XlR9ycSYFuPoNjFQk/QraZnurYS41ZMxBDBVvknVN5QcBi7I3h/FoYemHTdhjGD2akHtUHGW0bNW3vFG4+YOLYriAMWlvzTHs9ICDN1ONzgaTcpPmxVs/gMnMo7Vf7bDi1X5FLZvoDU26iC/m+H0V1K2m0kY0x5lBu1GPcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gTCN2Lge; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="gtEvF8tx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1712082632; x=1712687432; i=l.s.r@web.de;
-	bh=mlUhaGmtjrqi3yss2dba0PFiAt1Fv1HEPMpWYEuoDsc=;
-	h=X-UI-Sender-Class:Date:To:From:Subject:Cc;
-	b=gtEvF8tx3/bGDNwCrCW2/p5W2qfxEIShmE+cf4M/YWMKmYBqV0Yz2itmJe9anIOn
-	 YPa9MpbJNRCBxLP7yS4DVg9LE0YbJ4Ct5jCfvZwa9dfu0Qyj4Du0K0jRIlHE0xEbl
-	 ea8bIb1r6nCi7d1p0vMnwWEoOKbJrD2zOg4cyXewhby11tqARrcJQDRt3PyzbXmRM
-	 DNlTXr4idxc6JfysdgyHwPj/eZhffvOyXIERXD4hp+o7t7zKfNVuioal+rkiQ+ABf
-	 IfNwqRz4PZmiGgN/Rm0n60U2CrNGc7hUWLuNxoqy9aFX2sSrPfjssLxB12ZGTdqjp
-	 CtkerbU+k/nDlzkM+A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M6HK6-1rtvpQ06Su-006vwg; Tue, 02
- Apr 2024 20:30:32 +0200
-Message-ID: <520da361-1b80-4ba3-87b2-86d6fdfc18b5@web.de>
-Date: Tue, 2 Apr 2024 20:30:31 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gTCN2Lge"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B20DF2AC02;
+	Tue,  2 Apr 2024 14:37:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=dx6F0dUW/9CsieKLNjAP3YCTu7nhJaxp//rUFO
+	umtBo=; b=gTCN2LgeTO7shDXXj6v0No9PsS7vuZ1u8m80ylQt823VO/EH7u1CWB
+	jEKHZJOM50xrHfMBUESKoBeIrL+egeIfbQhEhKYpG6wffr7vFaDX4c04NzLvcAx8
+	je+zR982RgNuRTL4TlkNwYLu71U98RfkK0ZE49OMA4tMontncjnyI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AAB172AC01;
+	Tue,  2 Apr 2024 14:37:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 33A962AC00;
+	Tue,  2 Apr 2024 14:37:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t/t7700-repack.sh: fix test breakages with
+ `GIT_TEST_MULTI_PACK_INDEX=1`
+In-Reply-To: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Tue, 2 Apr 2024 12:26:34 -0400")
+References: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
+Date: Tue, 02 Apr 2024 11:37:10 -0700
+Message-ID: <xmqqr0fn4nmx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [RFC][PATCH] t-prio-queue: simplify using compound literals
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:EM1E7OoFPFoeXdpjPQDUETNX1ku7yqbywUiYrLLkylniFypNcS1
- QYeHpk0LV6PZE3aKEwLOuASE/5b1Q/whozf+NbwByp3kw626nrKMm3hTWXmlTdD74DGYYFX
- yvec4VaM/cbIR9OYjxya1GgFaejA7cKwatIxkLLzpkoCgMUyYLqSRVOGl24bU8IKHv0sTpm
- D3u6rHmMiANqRwSDYqt4w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:hcygbgXJqvs=;I4cwc8fxmCK1Y8zmEGY3saVFWVv
- 1iTVANzpWFCI+37MD8p46uuA8e4IT7ugc4sPTXBLkZo6IpI1IUtERsAeQGl5XyXQa+xcfRTMT
- KVaPF1FvFmM32aPtk7rtpqk6pRBm00//cJp1E7XTdNNmUIlBVVxJFcztLHVxyamIyFPFQE/+p
- PqoYaBQO7QVefSkdjoI0j74YA+Q/lM+jFCXAEsGxTozW44n9eJRgqvjdMszVNSQMtzqOPf29j
- 2N24Z7VsWwP7Fcnf3Bfn0AGZEmocWmy0X2XFCUowKoxnsZ7ws1aIn1vPQrM+v1JrCWkvXcypl
- N/SUQm+D5mHz6GsbV1rLkM7VHhN8r3qRJ7cNUYr8lrFbeVMnAVbXUMr/KQ1/DBhgDrlh1Wp47
- D/4unoEtETbTNakrrlGVwVDH4iBHeSCiL9mApG/iAtVn5Qu1bnRXW62t0uZTNzkWe4tF610Dw
- 91i+EsZRbh2YMlvvCBbKHll4R8EonlAyBW9etPoFyFCxpkNRMEHmjBIHC2pSqmsJQe3IDlpMJ
- ZtSZC1fcdwc5Xb9+LtYzvAECbmOwD7AANnn7fiJSjqThjgUYZM05FiWPw9e5UQ4/BseGaGHr7
- 9A9psaYKfWIJXRmj6209qTQ8WLyu9dqQU+frDuGHt8yHSbGyLqz+R05zC+EWtseTpdtdn5YpQ
- 84r/bAfRKwUBpnEQnjBMkSeFWGKI7dVNSz3GZckDSPq5OUpggd8zVbt5oFqmrbN+rYMNLWNAl
- +5ZmjYqMG+Dbv9NkVyijfzAJjkzDZtiEnw8Qr0Ft7ZrLed8RZz85XA6PKGpT5C1tVoYwYSO1i
- qSXbBkutLasm4Po6yT+ix5h/wO8n20x1VcZWIfC8r0+uw=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 051FB056-F120-11EE-BEC7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Test names like "basic" are mentioned seven times in the code (ignoring
-case): Twice when defining the input and result macros, thrice when
-defining the test function, and twice again when calling it.  Reduce
-that to a single time by using compound literals to pass the input and
-result arrays via TEST_INPUT to test_prio_queue().
+Taylor Blau <me@ttaylorr.com> writes:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-C99 added compound literals.  Are we ready to use them?
+> There are a handful of related test breakages which are found when
+> running t/t7700-repack.sh with GIT_TEST_MULTI_PACK_INDEX set to "1" in
+> your environment.
+>
+> Both test failures are the result of something like:
+>
+>     git repack --write-midx --write-bitmap-index [...] &&
+>
+>     test_path_is_file $midx &&
+>     test_path_is_file $midx-$(midx_checksum $objdir).bitmap
+>
+> , where we repack instructing Git to write a new MIDX and corresponding
+> MIDX bitamp.
+>
+> The error occurs when GIT_TEST_MULTI_PACK_INDEX=1 is found in the
+> enviornment. This causes Git to write out a second MIDX (after
+> processing the builtin's `--write-midx` argument) which is identical to
+> the first, but does not request a bitmap (since we did not set the
+> GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP variable in the environment).
 
-Test definitions become more compact, but look busier due to the added
-punctuation.  We could hide some of it with a sugary macro like this:
-#define INT_ARRAY(...) ((int []){ __VA_ARGS__ })
+Doesn't it sound more like a bug, though?  If a command line option
+requests something, should we still be honoring a contradicting
+instruction given by environment variable(s)?
 
- t/unit-tests/t-prio-queue.c | 51 +++++++++++++------------------------
- 1 file changed, 17 insertions(+), 34 deletions(-)
+But anyway.
 
-diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
-index 5358346361..7a4e5780e1 100644
-=2D-- a/t/unit-tests/t-prio-queue.c
-+++ b/t/unit-tests/t-prio-queue.c
-@@ -66,43 +66,26 @@ static void test_prio_queue(int *input, size_t input_s=
-ize,
- 	clear_prio_queue(&pq);
- }
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index 94f9f4a1da..127efe99f8 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -629,6 +629,7 @@ test_expect_success '--write-midx with preferred bitmap tips' '
+>  		git log --format="create refs/tags/%s/%s %H" HEAD >refs &&
+>  		git update-ref --stdin <refs &&
+>  
+> +		GIT_TEST_MULTI_PACK_INDEX=0 \
+>  		git repack --write-midx --write-bitmap-index &&
+>  		test_path_is_file $midx &&
+>  		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
 
--#define BASIC_INPUT 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP
--#define BASIC_RESULT 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10
--
--#define MIXED_PUT_GET_INPUT 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP
--#define MIXED_PUT_GET_RESULT 2, 3, 4, 1, 5, 6
--
--#define EMPTY_QUEUE_INPUT 1, 2, GET, GET, GET, 1, 2, GET, GET, GET
--#define EMPTY_QUEUE_RESULT 1, 2, MISSING, 1, 2, MISSING
--
--#define STACK_INPUT STACK, 8, 1, 5, 4, 6, 2, 3, DUMP
--#define STACK_RESULT 3, 2, 6, 4, 5, 1, 8
--
--#define REVERSE_STACK_INPUT STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP
--#define REVERSE_STACK_RESULT 1, 2, 3, 4, 5, 6
--
--#define TEST_INPUT(INPUT, RESULT, name)			\
--  static void test_##name(void)				\
--{								\
--	int input[] =3D {INPUT};					\
--	int result[] =3D {RESULT};				\
--	test_prio_queue(input, ARRAY_SIZE(input),		\
--			result, ARRAY_SIZE(result));		\
--}
--
--TEST_INPUT(BASIC_INPUT, BASIC_RESULT, basic)
--TEST_INPUT(MIXED_PUT_GET_INPUT, MIXED_PUT_GET_RESULT, mixed)
--TEST_INPUT(EMPTY_QUEUE_INPUT, EMPTY_QUEUE_RESULT, empty)
--TEST_INPUT(STACK_INPUT, STACK_RESULT, stack)
--TEST_INPUT(REVERSE_STACK_INPUT, REVERSE_STACK_RESULT, reverse)
-+#define TEST_INPUT(input, result) \
-+	test_prio_queue(input, ARRAY_SIZE(input), result, ARRAY_SIZE(result))
+Is it a viable alternative approach to skip this check (and the
+other one) when GIT_TEST_MULTI_PACK_INDEX is set (i.e., lazy
+prereq).  It will give us a better documentation value, e.g.,
 
- int cmd_main(int argc, const char **argv)
- {
--	TEST(test_basic(), "prio-queue works for basic input");
--	TEST(test_mixed(), "prio-queue works for mixed put & get commands");
--	TEST(test_empty(), "prio-queue works when queue is empty");
--	TEST(test_stack(), "prio-queue works when used as a LIFO stack");
--	TEST(test_reverse(), "prio-queue works when LIFO stack is reversed");
-+	TEST(TEST_INPUT(((int []){ 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP }),
-+			((int []){ 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10 })),
-+	     "prio-queue works for basic input");
-+	TEST(TEST_INPUT(((int []){ 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP }),
-+			((int []){ 2, 3, 4, 1, 5, 6 })),
-+	     "prio-queue works for mixed put & get commands");
-+	TEST(TEST_INPUT(((int []){ 1, 2, GET, GET, GET, 1, 2, GET, GET, GET }),
-+			((int []){ 1, 2, MISSING, 1, 2, MISSING })),
-+	     "prio-queue works when queue is empty");
-+	TEST(TEST_INPUT(((int []){ STACK, 8, 1, 5, 4, 6, 2, 3, DUMP }),
-+			((int []){ 3, 2, 6, 4, 5, 1, 8 })),
-+	     "prio-queue works when used as a LIFO stack");
-+	TEST(TEST_INPUT(((int []){ STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP }),
-+			((int []){ 1, 2, 3, 4, 5, 6 })),
-+	     "prio-queue works when LIFO stack is reversed");
+	test_lazy_prereq FORCED_MIDX '
+                # Features that are broken when GIT_TEST_* forces it
+                # to enable are protexted with this prerequisite.
+		test "$GIT_TEST_MULTI_PACK_INDEX" = 1;
+	'
 
- 	return test_done();
- }
-=2D-
-2.44.0
+	test_expect_success !FORCED_MIDX '--write-midx with ...' '
+		...
+	'
+
+With a single comment, we can annotate any future tests that relies
+on features working correctly even with GIT_TEST_MULTI_PACK_INDEX.
