@@ -1,197 +1,259 @@
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6030218E29
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 06:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0AA383A4
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 06:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712039313; cv=none; b=jkL8rezYyQZq3va5hF95erp0IyQOmfn1dvzPWowFvMkxKFxAszrAF08emUYW6lenQP/j5ud0fbq0btSqNPxXXNeP4PhT6M24NIjEMS7JGe+yfmeeH8QAZ8apbOQ0bdVgfahO5X3Km8GIf+32XxJyaGR2VimnP30zz9sXetpofu8=
+	t=1712040563; cv=none; b=L8YbSPTPD7qWaFs1XNXFfBDXwHzt+eDLbH3VqNdihbaaxrsqWcOmGnSzkdMuyJXlKtIBLH+W6ig5TffZJph8blKtGtSd5ozR9rCNDtGhxZRJwF6vqfK1dKi/6Lc1Dt+AhMX8zzsgJ9vvHHOoJYQxPKnVze+H1laqRtIqReddXQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712039313; c=relaxed/simple;
-	bh=R7scrnjkRT5F3ql3DcKpLVaKGgO680Z74P90rnkBBpg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qjm2WZLjy/xPJtgzPC7IDAB2bjDcQaoVXbt4LoDFJYTzA/LlvvrhiSzPsU84B8gaMpwLpMd3+9ZYoW5ziB2o2wpxbm6ghjzfaNEzEedzEXj9cbxsdSzF1RYEm/U1ckgwzFWOmSv9/Q9SM2aBgUU2DixAnKgz69PtKX9gjymqhDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MhFGZUdE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=La8HB5IR; arc=none smtp.client-ip=64.147.123.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712040563; c=relaxed/simple;
+	bh=kEbB0V95fjwZgjjEy3hOJ40Y6tNb+lHOM3EY7ffY0C8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=avCHW7qT4VqEiEEz+Ub6dLdTsimgW90X6S9ZycumIiRQslKf6Ft0W+wMYiLj2VwcQ5Lo1JUT5/itUxxs2s7zk0PlGvttiUS+bs1+LscTCu2ogtfl/c7mGXtDF9EqalNHwONalVrvWrKzrrVEeraEEZqUP4CGI3TRDyEJqIQwGtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=horwlviy; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MhFGZUdE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="La8HB5IR"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 1A6F732002D8;
-	Tue,  2 Apr 2024 02:28:29 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Tue, 02 Apr 2024 02:28:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712039308; x=1712125708; bh=yHjcAqlmcv
-	6z6GFQVH/l351xTtufG7SabjCq5cjSclA=; b=MhFGZUdEO72AtnN0YjfRQkBZ/j
-	DIjdK75fkvxFe94NOHNP5qYYbnm9EocQOzblrDWqJ8ueJ4xkdHKo+rfZ0KoEk3qT
-	xzz9UIK/yp4PFG2o2WgHf3q3zFw4Zrb6Gv5l/821ODoEatwAJZFIUVIXvrq040te
-	ZumH7sxvwqcF5C4bpRAuR+jzsTzEQ2LezuxhM65VH5pm1mD0+GEjQZCWNiv9nmn0
-	McP5l95bKKHADjjDqm6nQzOeej6gvMFMhfV5Fg9fCv8Z1aNGP2Xsbuup+6qrN0Cq
-	/BIHIsvWfkKTal77NxBzZMaPikHtsFLFwDO/oa7LSC0SPTXfF5cwNJyyxeNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712039308; x=1712125708; bh=yHjcAqlmcv6z6GFQVH/l351xTtuf
-	G7SabjCq5cjSclA=; b=La8HB5IRC4AQwSm04zo3CdfQ2vUDC5vxsIKmY68XFA9o
-	gOx4ptIzuPIZyXy/Rkf5kUT1zSiIBi7P6SzreJdjGY8Z0646E4r+9WhPvVM5kBWo
-	ILUghtbyqXjj9kNg4NkySKWQOthRIKjEUyAFYsI64GTMGrbcyIsJu/QCmHTrr4JS
-	u3eMhkh6062i0rK92yADtA6tPQcv6stMblfPvMXPrTL2DgEcSAcYqnAHK3AVf4j3
-	FRWq5camPZDYe5XcdZbF9XZRbTh1WvEDelL5T+iROCe5StVm553fdTyLCJqtHsHo
-	+bx1wfk1NQK4d8Ez8Jl0luV3IU014U25/031ysRqKw==
-X-ME-Sender: <xms:i6ULZnu5-fmLGQGDmReBhQSh9BFKHoccjvz4O9MF00_UmlY4yGf4XQ>
-    <xme:i6ULZoeXUrvSPSjb5b5Iok8BSHv6d2vKLTUOeOmV8hya6eRCHKcApnL0rVygNFrU2
-    oCu8jpJXNPualc_ow>
-X-ME-Received: <xmr:i6ULZqwmIrDtXYPTqjPknLyZ0Mz220QF3RC-F4zpaek2RI_R9jWrbLR_7tr-nHn6dZyN297XOgyO9IzIclihHlOtTaX1Zjq9E_8QPx5tlUpmTjU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefuddguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeljeetffevheeggeetkeetieduieeiieegieegtdffheegkefhjeehfeekhfev
-    leenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:i6ULZmNrvMAQKL6kU1E1JBhIqdCEhss1dCcnJ6uMluUqWvr6mBQcCQ>
-    <xmx:jKULZn9vPG6RKirlF70q_qUqtYSB4lAp1Jb8_KmhhlWaz4YCzvJABw>
-    <xmx:jKULZmUv4qf7R7ydR1-7ChBTsfREHxl936q6pQLzm6K45jXiyYJAZw>
-    <xmx:jKULZod9nGta28tAq2wqykG5m9Om9k6MnuVYoXDzZSS5_Gz_nYirSg>
-    <xmx:jKULZqXtjrOXAdT-eZl58oYRiZfhmfCdOVI6rmgzmvLUT26OkzyF611zkiF6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 02:28:26 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1aa178b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 06:28:17 +0000 (UTC)
-Date: Tue, 2 Apr 2024 08:28:23 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Tan <jonathantanmy@google.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>,
-	Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>,
-	Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
-	Matthieu MOY <matthieu.moy@univ-lyon1.fr>,
-	Linus Arver <linusa@google.com>
-Subject: Re: [PATCH] docs: recommend using contrib/contacts/git-contacts
-Message-ID: <Zgulh1rxl9Af-iQK@tanuki>
-References: <pull.1704.git.1712017205754.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="horwlviy"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56df42c2773so46589a12.3
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 23:49:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712040560; x=1712645360; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3CtRqjcEi+sax23l1IMLNzursNhOtcBGv23GA4znGgU=;
+        b=horwlviyrlrdv4736aeLM7Uiws2hDcYyXpqfD2X1EtvENpMlk0As/JLNrZnCBAaOxa
+         H8I3bhJDt/g1oJv7lDntyFnku10KccGWI+grLkH9IDnzBlHvIbAGCPJoRgG/rtggfMP8
+         +fBxOSF+T056WBXuLiRvDKY8w/TvwB1ieBvWLFbPVQOYvjUsr2h7jqIUXNhj85Z01bhe
+         jvC5v81KoG7fe9dXDZLgN6otz57MIu3ol0ka8RjX2+jaHrKywoMIep6QiwgHlzyTigK4
+         wsthM549Fd7dLDo0f/i6U5+9COGqmBKzyQsQr1AICNanAbRDgOmXr6UB90kepFwVANAo
+         m+WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712040560; x=1712645360;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3CtRqjcEi+sax23l1IMLNzursNhOtcBGv23GA4znGgU=;
+        b=O0ae7nEVeKwlUYuSp+fVro+HOEisWMHSsfSeW8cMNOPutud9uDUVHiyWczQKgZUF4/
+         HD0sSsgD8Irdhz7J2NZH/3o+DmAA8VOHUVxAGOpzKI9a2umZEHBkLmkFxrviT1PTBW38
+         ts45mD1xcewl+D+40x+5zQgRGVX8b2Qq2NXaqDQd2yGffx9BkNBkmpgbj8GgsGjcaRkX
+         wVxP5F0Pm3q+2jcvshqHjSc9lWXTIPy7k6bMdJWNjMSGecCOu2eSval9MFQS05hC3Ucz
+         bsO2JGc84U/imNPMUGGu4wqFcgjfsw+vz4ZjFi1G5xokS6LgVy1wW+YB/pqcs+irYo2u
+         tnew==
+X-Forwarded-Encrypted: i=1; AJvYcCXHYztgPdE+zMidZBEx6h1xxzW2gwGN5k57FUl6Sk7AZyAqQykacBp87uQ3SBc54cL3h+DW7kIrhyBqxVm6ut0w3zQ1
+X-Gm-Message-State: AOJu0Yx0J80ZPu/KoFq4nd53g1jzVMT6w70UIcoeQTi3DLLnxwG2sKGh
+	wAd/HcbXaOjn7mQrPzUw/J81lbz5y1ZPcaMjtKdNLI/E9YejqjVB
+X-Google-Smtp-Source: AGHT+IEBxBsY8BjLuVT8dgXZO8CIfiHGmlW286RnznAXezpJ8lAyzakfgGMDwWX1rMHt/zos590vHg==
+X-Received: by 2002:a50:8a9e:0:b0:56b:8f6d:8a99 with SMTP id j30-20020a508a9e000000b0056b8f6d8a99mr6343946edj.22.1712040559475;
+        Mon, 01 Apr 2024 23:49:19 -0700 (PDT)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:c3e0:2f8a:1ead:1494])
+        by smtp.gmail.com with ESMTPSA id n7-20020a509347000000b0056c24df7a78sm6582774eda.5.2024.04.01.23.49.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Apr 2024 23:49:18 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
+To: karthik.188@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com
+Subject: [PATCH v2 0/2] improve documentation around git-update-ref
+Date: Tue,  2 Apr 2024 08:49:13 +0200
+Message-ID: <20240402064915.191104-1-knayak@gitlab.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240401144542.88027-1-knayak@gitlab.com>
+References: <20240401144542.88027-1-knayak@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rbRfhJYT9E6JbnPl"
-Content-Disposition: inline
-In-Reply-To: <pull.1704.git.1712017205754.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
+From: Karthik Nayak <karthik.188@gmail.com>
 
---rbRfhJYT9E6JbnPl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch series was derived out of the discussion [1] around my other
+patch series to add symref support for `git-update-ref(1)` [2].
 
-On Tue, Apr 02, 2024 at 12:20:05AM +0000, Linus Arver via GitGitGadget wrot=
-e:
-> From: Linus Arver <linusa@google.com>
->=20
-> Although we've had this script since 4d06402b1b (contrib: add
-> git-contacts helper, 2013-07-21), we don't mention it in our
-> introductory docs. Do so now.
->=20
-> Signed-off-by: Linus Arver <linusa@google.com>
-> ---
->     docs: recommend using contrib/contacts/git-contacts
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1704%2F=
-listx%2Freviewers-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1704/listx=
-/reviewers-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1704
->=20
->  Documentation/MyFirstContribution.txt | 3 +++
->  Documentation/SubmittingPatches       | 4 ++++
->  2 files changed, 7 insertions(+)
->=20
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirs=
-tContribution.txt
-> index f06563e9817..eb1e27a82df 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -1116,6 +1116,9 @@ $ git send-email --to=3Dtarget@example.com psuh/*.p=
-atch
->  NOTE: Check `git help send-email` for some other options which you may f=
-ind
->  valuable, such as changing the Reply-to address or adding more CC and BC=
-C lines.
-> =20
-> +NOTE: Use `contrib/contacts/git-contacts` to get a list of reviewers you=
- should
-> +include in the CC list.
-> +
+The aim of these patches is to improve clarity around OIDs in the
+documentation. This makes it easier to draw parallels between regular
+ref updates and symref updates. The symref patch series will be rebased
+on top of this in the upcoming version.
 
-Should we mention that the script can be passed to git-send-email(1) via
-`--cc-cmd=3D`?
+Changes in v2:
+- Fixed broken tests due to changes in update-ref.c
 
-Thanks!
+Range diff against v1:
+1:  5a315a0aa0 ! 1:  f5cc3738ee update-ref: use {old,new}-oid instead of {old,new}value
+    @@ builtin/update-ref.c: static void parse_cmd_delete(struct ref_transaction *trans
+      		have_old = 1;
+      	}
+      
+    +
+    + ## t/t1400-update-ref.sh ##
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin fails create with no ref' '
+    + test_expect_success 'stdin fails create with no new value' '
+    + 	echo "create $a" >stdin &&
+    + 	test_must_fail git update-ref --stdin <stdin 2>err &&
+    +-	grep "fatal: create $a: missing <newvalue>" err
+    ++	grep "fatal: create $a: missing <new-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin fails create with too many arguments' '
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin fails update with no ref' '
+    + test_expect_success 'stdin fails update with no new value' '
+    + 	echo "update $a" >stdin &&
+    + 	test_must_fail git update-ref --stdin <stdin 2>err &&
+    +-	grep "fatal: update $a: missing <newvalue>" err
+    ++	grep "fatal: update $a: missing <new-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin fails update with too many arguments' '
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin update ref fails with wrong old value' '
+    + test_expect_success 'stdin update ref fails with bad old value' '
+    + 	echo "update $c $m does-not-exist" >stdin &&
+    + 	test_must_fail git update-ref --stdin <stdin 2>err &&
+    +-	grep "fatal: update $c: invalid <oldvalue>: does-not-exist" err &&
+    ++	grep "fatal: update $c: invalid <old-oid>: does-not-exist" err &&
+    + 	test_must_fail git rev-parse --verify -q $c
+    + '
+    + 
+    + test_expect_success 'stdin create ref fails with bad new value' '
+    + 	echo "create $c does-not-exist" >stdin &&
+    + 	test_must_fail git update-ref --stdin <stdin 2>err &&
+    +-	grep "fatal: create $c: invalid <newvalue>: does-not-exist" err &&
+    ++	grep "fatal: create $c: invalid <new-oid>: does-not-exist" err &&
+    + 	test_must_fail git rev-parse --verify -q $c
+    + '
+    + 
+    + test_expect_success 'stdin create ref fails with zero new value' '
+    + 	echo "create $c " >stdin &&
+    + 	test_must_fail git update-ref --stdin <stdin 2>err &&
+    +-	grep "fatal: create $c: zero <newvalue>" err &&
+    ++	grep "fatal: create $c: zero <new-oid>" err &&
+    + 	test_must_fail git rev-parse --verify -q $c
+    + '
+    + 
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin delete ref fails with wrong old value' '
+    + test_expect_success 'stdin delete ref fails with zero old value' '
+    + 	echo "delete $a " >stdin &&
+    + 	test_must_fail git update-ref --stdin <stdin 2>err &&
+    +-	grep "fatal: delete $a: zero <oldvalue>" err &&
+    ++	grep "fatal: delete $a: zero <old-oid>" err &&
+    + 	git rev-parse $m >expect &&
+    + 	git rev-parse $a >actual &&
+    + 	test_cmp expect actual
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z fails create with no ref' '
+    + test_expect_success 'stdin -z fails create with no new value' '
+    + 	printf $F "create $a" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: create $a: unexpected end of input when reading <newvalue>" err
+    ++	grep "fatal: create $a: unexpected end of input when reading <new-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin -z fails create with too many arguments' '
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z fails update with no ref' '
+    + test_expect_success 'stdin -z fails update with too few args' '
+    + 	printf $F "update $a" "$m" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: update $a: unexpected end of input when reading <oldvalue>" err
+    ++	grep "fatal: update $a: unexpected end of input when reading <old-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin -z emits warning with empty new value' '
+    + 	git update-ref $a $m &&
+    + 	printf $F "update $a" "" "" >stdin &&
+    + 	git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "warning: update $a: missing <newvalue>, treating as zero" err &&
+    ++	grep "warning: update $a: missing <new-oid>, treating as zero" err &&
+    + 	test_must_fail git rev-parse --verify -q $a
+    + '
+    + 
+    + test_expect_success 'stdin -z fails update with no new value' '
+    + 	printf $F "update $a" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: update $a: unexpected end of input when reading <newvalue>" err
+    ++	grep "fatal: update $a: unexpected end of input when reading <new-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin -z fails update with no old value' '
+    + 	printf $F "update $a" "$m" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: update $a: unexpected end of input when reading <oldvalue>" err
+    ++	grep "fatal: update $a: unexpected end of input when reading <old-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin -z fails update with too many arguments' '
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z fails delete with no ref' '
+    + test_expect_success 'stdin -z fails delete with no old value' '
+    + 	printf $F "delete $a" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: delete $a: unexpected end of input when reading <oldvalue>" err
+    ++	grep "fatal: delete $a: unexpected end of input when reading <old-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin -z fails delete with too many arguments' '
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z fails verify with too many arguments' '
+    + test_expect_success 'stdin -z fails verify with no old value' '
+    + 	printf $F "verify $a" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: verify $a: unexpected end of input when reading <oldvalue>" err
+    ++	grep "fatal: verify $a: unexpected end of input when reading <old-oid>" err
+    + '
+    + 
+    + test_expect_success 'stdin -z fails option with unknown name' '
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z update ref fails with wrong old value' '
+    + test_expect_success 'stdin -z update ref fails with bad old value' '
+    + 	printf $F "update $c" "$m" "does-not-exist" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: update $c: invalid <oldvalue>: does-not-exist" err &&
+    ++	grep "fatal: update $c: invalid <old-oid>: does-not-exist" err &&
+    + 	test_must_fail git rev-parse --verify -q $c
+    + '
+    + 
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z create ref fails with bad new value' '
+    + 	git update-ref -d "$c" &&
+    + 	printf $F "create $c" "does-not-exist" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: create $c: invalid <newvalue>: does-not-exist" err &&
+    ++	grep "fatal: create $c: invalid <new-oid>: does-not-exist" err &&
+    + 	test_must_fail git rev-parse --verify -q $c
+    + '
+    + 
+    + test_expect_success 'stdin -z create ref fails with empty new value' '
+    + 	printf $F "create $c" "" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: create $c: missing <newvalue>" err &&
+    ++	grep "fatal: create $c: missing <new-oid>" err &&
+    + 	test_must_fail git rev-parse --verify -q $c
+    + '
+    + 
+    +@@ t/t1400-update-ref.sh: test_expect_success 'stdin -z delete ref fails with wrong old value' '
+    + test_expect_success 'stdin -z delete ref fails with zero old value' '
+    + 	printf $F "delete $a" "$Z" >stdin &&
+    + 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
+    +-	grep "fatal: delete $a: zero <oldvalue>" err &&
+    ++	grep "fatal: delete $a: zero <old-oid>" err &&
+    + 	git rev-parse $m >expect &&
+    + 	git rev-parse $a >actual &&
+    + 	test_cmp expect actual
+2:  17950e0693 = 2:  972faccb4a githooks: use {old,new}-oid instead of {old,new}-value
 
-Patrick
+[1]: https://public-inbox.org/git/20240330224623.579457-1-knayak@gitlab.com/T/#m7bb4d1f44b656d7cfb73ed3220b990aa6d1ac247
+[2]: https://public-inbox.org/git/20240330224623.579457-1-knayak@gitlab.com/T/#t
 
->  NOTE: When you are sending a real patch, it will go to git@vger.kernel.o=
-rg - but
->  please don't send your patchset from the tutorial to the real mailing li=
-st! For
->  now, you can send it to yourself, to make sure you understand how it wil=
-l look.
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPa=
-tches
-> index e734a3f0f17..52d11ff510b 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -459,6 +459,10 @@ an explanation of changes between each iteration can=
- be kept in
->  Git-notes and inserted automatically following the three-dash
->  line via `git format-patch --notes`.
-> =20
-> +[[suggested-reviewers]]
-> +Use `contrib/contacts/git-contacts` to get a list of reviewers you should
-> +include in the CC list.
-> +
->  [[attachment]]
->  Do not attach the patch as a MIME attachment, compressed or not.
->  Do not let your e-mail client send quoted-printable.  Do not let
->=20
-> base-commit: c2cbfbd2e28cbe27c194d62183b42f27a6a5bb87
-> --=20
-> gitgitgadget
->=20
+Karthik Nayak (2):
+  update-ref: use {old,new}-oid instead of {old,new}value
+  githooks: use {old,new}-oid instead of {old,new}-value
 
---rbRfhJYT9E6JbnPl
-Content-Type: application/pgp-signature; name="signature.asc"
+ Documentation/git-update-ref.txt | 58 ++++++++++++++++----------------
+ Documentation/githooks.txt       | 16 ++++-----
+ builtin/update-ref.c             | 26 +++++++-------
+ t/t1400-update-ref.sh            | 34 +++++++++----------
+ 4 files changed, 67 insertions(+), 67 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.43.GIT
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYLpYYACgkQVbJhu7ck
-PpTJhg/9FQ3+s/NS76zQCpf7UdOFotdBLsuq4jchqm2jUk5IjY4qOTL4oXevYft/
-bzE6aw+TgISnxjSDcaUyn2BYnmnEjWVSPGWjHkxByzRzZI9FsFETBDh3oczu0PcB
-GbcfDheR/DIcbshfq6DPlnOBVLQQ40zY5qKTxOEpEkps3KLGmjW01nYjmMG4T1bU
-OP++GKEjtIYRKUDelLE0AV/tV6oNWKmiX1/e0lZIBqNthPAML682uebnY6gfu2i0
-yAT0Df+c3zomKuF1bP+8+1aOOYh/q/4d1mf32ZTngWAm32YRMZCWM26vYsQC3BTB
-qhC9CYOV8t4YDoH/M5cHhAktBQFmyv1pa6gmwkEZbNUTYee8S8mTuVwBeVttCtFI
-9lbjMlHVLjUS33e2gN+ID4UFN7yaCdCb1LT6x7NpkADfyKJh8y6ZZvN2QwQW9+sT
-CcN7VhxOEQDYbteal+M2IQ1qIR8QyZfIQgtNdSbmtZKy8iM+f5k4vSmAhtFAT6Zd
-UlGVx9ckbbBZwBfT0gWwVMcp4oI40OfVdgBQEmW5BlXXnP15XTGlc+weWCjjPX3/
-YQLJAjqiQWN0+64RYBmRQqbT0NAkoD2CVb9/kQYT7t1hxpCM4URCJwWiLqOMQhj7
-FX5GxFdnHK5wMafDYA2gekjJZex55L50O2ZJgXD0/xygKXdiJbI=
-=fDAl
------END PGP SIGNATURE-----
-
---rbRfhJYT9E6JbnPl--
