@@ -1,143 +1,208 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00A459151
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FCF5D74E
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712053578; cv=none; b=oytOt5qw9XpMKeLaALy//OET5HgiYUP0svhYe/EJ2GLFN2+TUa48Uw+k+7HJzTaEiV2Fe+T9iKL+e5kAevzkW0oAhsC5iv/2fhOz4t2pImSlOJT6vNHze7ddYLg8enElh9rkS5BByMEhROH76J6ZsGSR4k8zCbJRrpbyiuB2S/8=
+	t=1712054109; cv=none; b=pSyLujoZ0kNqsqnTs07mzEBz50OuJP8wGzEEIJsAkfknjq/EsAgDzUPzR7H/DoFGm6VRb2jp3mV2mQOWScY0xZIozUyTqar/jWOohm6Z9npPOQoeI1NXRd+f/OBVEloqffIA0OiDh30hya1qOb5Weir7M1U+rcbrsIw56SExwcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712053578; c=relaxed/simple;
-	bh=dNRq4gMtMFempbGVc1AdYzsdjdmS3DmePZIy3Pj1uys=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OXdvhWrnvZWzX+skOTBPkB74JniTM1wac9JI19Jj5lJ/rUantU1ABfPo92otzOu8D/acliDlkN2vU0XM5A3l5A8lpPm5U41xF+73n8vxn6+hxToAvHGlpg4/uNs7ARy1Q3etKPR/x7xjBb3oVs+hgGJKmhlM3uaiGdw15Blbw30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com; spf=pass smtp.mailfrom=fuseenergy.com; dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b=U/korkgV; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fuseenergy.com
+	s=arc-20240116; t=1712054109; c=relaxed/simple;
+	bh=Cr87wbwd4QVRIjOtF/8s7BaLcC9ibTBH6Hg8UWGcPVQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o2IrxmE1lZYaBMNLahiCx0VUWhWCrFjEEzVEIN20hHSL5/nfUfxh52IneKaT/gePcZyR4YLXwAhsJLy3a8yJdLBUO/EGxZn4pz/1KfFMeYOisQXD+mAwH0Zq/WpNRnotqN7bI5Yx4WpbUTswasQEr4YDkgzN9oPoR+BEO3s4aq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oQ5WPa7v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bN+0uPYo; arc=none smtp.client-ip=64.147.123.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b="U/korkgV"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a4e40fad4fdso371477366b.2
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 03:26:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fuseenergy-com.20230601.gappssmtp.com; s=20230601; t=1712053574; x=1712658374; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wB4I8Ap0aSptwPGCgVM9TNqfjpHBzijGgLRbLWroPb8=;
-        b=U/korkgVVmgZAQXmLHYLJqw3NZYnQgpiE+wCqA+7KXcxqp0W3ikJ4G5gX5R43mLpfG
-         eVOnRMC2IMss1Vf5RWf5pwLEOkmQAZxTFz6WPF8cKHaEtzjpAcJKx/TMMT96Nbc7nNig
-         yTDkcZ1UD1VEKOH5EasST1qLt1V9YBseNleLDpmMeIy1Qq9ZwV7s/BB1H+l8A3sgrJqr
-         TF+t7/Omc/J8bVSyxeTc38hxezLh8q7cVjab/MY/J+X01MrFcrEXrRjT7nIbjrS09usb
-         kWTmOMRe2USeumBVXiOoVUh6l6azB4CnfqY4Mpda3RA+AiOZOTceVjW7Ndi79PEF2SZT
-         +D3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712053574; x=1712658374;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wB4I8Ap0aSptwPGCgVM9TNqfjpHBzijGgLRbLWroPb8=;
-        b=ulwP3MqCYatN3TnAkYbzf7rPXnnc0ebM9cGbBbqAqr7GScpeK8gDJDEezNH32ogqoz
-         9F6rWlBWrDp8RgGbpbe9FG9N9K/wMJPR6uJa639Kz/vna2bx1fczez53/u1A59rAkRtw
-         NQ2wqtBzKqGjv3QAmoiPDsd0/kP4Or7k5b0DtLtqevRddEcfWcXUVTQtSVfg1t+hJl1/
-         36dQoom43o4rPKExgQR6qr/uwcMijXDvqKs3BA278cTakBBCJyCA4zgqiMEGC4rexega
-         acCYUB0IPAh9fMny4uEJcnCW8dVBm26BUgCKsXWqPzydloL3/qf7Sre14M5WfEJfsStj
-         +diw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqgNECeeu4Xqbmcne3C5RjaQrTgi7UNo/T6S2z2cQ4kfverurzuvRv00rHnSp/XPneFrnxSB1FE2k10TgJKhTeLvHU
-X-Gm-Message-State: AOJu0Yy194i6MCVqNhGiaYaL3tzEQg9z23mYXYIhFSNKCIjDz8NkvZiN
-	Z/SidkjyaLd28pnUhv4/gKnSrFXxj9bHRz/8XFU57S8sbY3JYRTelbGOk7wrj3651JZLFrnTa4T
-	TqEfVbiequHeen+VcjWAeT8Rbj8sS/XcuxwxqwQ==
-X-Google-Smtp-Source: AGHT+IEhw1uxE4070KTrM37t0X9Xuq/RAH2ZVdtX8oSUrnTxcqvTnUdncd2p3du6khSRqAAJP36Qu9r0tswcgaAbT9c=
-X-Received: by 2002:a17:907:78c:b0:a4e:68bc:a46e with SMTP id
- xd12-20020a170907078c00b00a4e68bca46emr4482270ejb.43.1712053573914; Tue, 02
- Apr 2024 03:26:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oQ5WPa7v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bN+0uPYo"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 9F98A1800098;
+	Tue,  2 Apr 2024 06:35:05 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Tue, 02 Apr 2024 06:35:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712054105; x=1712140505; bh=n+1sGQPnST
+	s6v89c/OcRPYk5WtiRpmeXbvpZeQmKbh0=; b=oQ5WPa7vvSCom6ea99uD1Y8Qep
+	Z/KsxWHt/0kbSartsjG1XfAMNipw4Yx0wRNal9J7P2TB9kB4Wpcsbs9/sZFLVyiJ
+	zdZtYioIC0lPra34fsorFKG4upRVCFg82sGvwYONeq4GMtrtcfZ0z9O+DI74oUge
+	Svyv0Z6eUdkcayk1uf0h4UwCvVHArbA3VK4t+9kNRrsERF63cHYBIXO9A0jRBAMk
+	AyMGuIp4RRUsSqLkcECa/G0J2imn0ZJZvgw3ecdRvuDiAy3YzKxhA7lhngoqTsM0
+	+lSF1nsolQomoDh9DzpFW39k1QOduEpAJoFwwb1ybBzes84qtrTR2eoR4GjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712054105; x=1712140505; bh=n+1sGQPnSTs6v89c/OcRPYk5WtiR
+	pmeXbvpZeQmKbh0=; b=bN+0uPYocd7RFqcSCM6P9Lvzq1yheYEdsFv+IFUl4G7G
+	kIgM3xYrQ2X21+sqreg0ZMJmody45H20AftPDAusqOeRb4P7N+Xs3qgfQYNhmKze
+	1bmP9rxBKJrjtqrWxXA/Nw+/QpEicT5NR66v7Aod/kQl7rz/jEFEtozZdlNZ9ZCM
+	+NHgGtLV4p+XLAKC440NlSyFs0lBv1FrIP80cd1WifOmKzjMqPuJ6CNiEqonL2gJ
+	qSggxOc5Gw4qB73t6Ikw2uh/Ie/i2id1Loe80/UX9tv2/Antw79g55SG5wdMJ3PL
+	GS5Y4jlaYEt5YhSJQ5a68t/PkmVtoPQX4SUKDkzQOg==
+X-ME-Sender: <xms:WN8LZgAAbrHrio7hWqEYXSKWsg0tWAeg9NLLX-5ohkgXhFF4teE5wg>
+    <xme:WN8LZigczKd4yEaSOsZ0_bbXhwe6GF6pSRbp5dJdO7l62NrQlh8CypUBxIajYpdSA
+    SrDPgICVJnjJp-TKA>
+X-ME-Received: <xmr:WN8LZjlFdG-vh2dlQP-b4W8bIsVEtEE9CtXcfipc19nrALRJ_4qf8q7HIwFLIxSvDQmxQT9QlipUk7wvXGneTfDst6E5gkeUUB5Ryk8ThtVzhqI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddgfeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:WN8LZmwbIm6sKiZBAthgaad_M8NKBLwSxOW2tgBn450kTo3Lcfzk-g>
+    <xmx:Wd8LZlR5_LTT_-PdqiG53uA-_B864xA2Pid-k0SxbzGDrfeseTKt9Q>
+    <xmx:Wd8LZha91xbaWAdtsRVSXKQqcznva_6lsMfgNEg9FmVUnm2mF9VXyQ>
+    <xmx:Wd8LZuTXomSTh6gEAbsRWZEmZB4YgfbpnjALUZyRkfIJ0e_j_poW_w>
+    <xmx:Wd8LZndvFtSS1_Q0NhCtqqKvOyXzPjcEDlwXoj32E2d8y_HDKAopoe89>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Apr 2024 06:35:04 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3d6a036a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 10:34:54 +0000 (UTC)
+Date: Tue, 2 Apr 2024 12:35:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: vk <g@vkabc.me>
+Cc: Git <git@vger.kernel.org>
+Subject: Re: [GSoC] Microproject help
+Message-ID: <ZgvfVE4ZmOUPri0U@tanuki>
+References: <51647635a10e31e800f87e8bd4a2e62c@vkabc.me>
+ <CAOLa=ZRrmyZ48C5r8MWioyjySWdKtLxhtDBg5F2tRsExHaR-fg@mail.gmail.com>
+ <a344deea98bdd2daa7671fae45c0bf11@vkabc.me>
+ <ZgO-W3E-CeT3n7vl@tanuki>
+ <80f0bb12243eedbc4ad6580cb06abeb2@vkabc.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
- <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
- <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
- <CAPig+cQdFi5zBkDQWTEWXCTt5h9gVFNJv7obf=tWCkOvsaEHEA@mail.gmail.com> <4041487e-d8d8-481c-b490-884e31f533a8@gmail.com>
-In-Reply-To: <4041487e-d8d8-481c-b490-884e31f533a8@gmail.com>
-From: Tamir Duberstein <tamird@fuseenergy.com>
-Date: Tue, 2 Apr 2024 11:26:02 +0100
-Message-ID: <CAEYvasmb1TjwWpSbfSAogbOiB64sZQiHVoUhxvY+NoLmXnRuHA@mail.gmail.com>
-Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
-To: phillip.wood@dunelm.org.uk
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nKumNmHoIhafPZeW"
+Content-Disposition: inline
+In-Reply-To: <80f0bb12243eedbc4ad6580cb06abeb2@vkabc.me>
+
+
+--nKumNmHoIhafPZeW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Phillip
+On Fri, Mar 29, 2024 at 11:57:31AM +0800, vk wrote:
+> On 2024-03-27 14:36, Patrick Steinhardt wrote:
+> > On Tue, Mar 26, 2024 at 07:56:19PM +0800, vk wrote:
+> > > On 2024-03-26 02:25, Karthik Nayak wrote:
+> > > > vk <g@vkabc.me> writes:
+> > > >
+> > > > Hello!
+> > > >
+> > > > > Hello all,
+> > > > >
+> > > > > I'm Vk and I work as a software engineer. I am interested in
+> > > > > contributing to git repository. Apologies for the late start as I=
+ only
+> > > > > stumbled upon GSoC recently and git project interested me as I us=
+e it
+> > > > > everyday at work and it would be meaningful for me to contribute =
+to
+> > > > > it.
+> > > > > Even if I am not chosen, it will be great if I can start learning=
+ to
+> > > > > contribute to git open source.
+> > > > >
+> > > > > For the microproject, I have looked into the lists for 2024 and it
+> > > > > seems
+> > > > > that all the projects have been taken except for `Replace a
+> > > > > run_command*() call by direct calls to C functions`. However, it =
+seems
+> > > > > that the issue has been solved. The command I ran to search throu=
+ghout
+> > > > > the repo is `git grep 'run_command*('` and the search result retu=
+rns
+> > > > > run_command functions which I assume are essential.
+> > > > >
+> > > >
+> > > > When I ran the same, I saw around 135 results. Are you saying that
+> > > > they're all essential?
+> > > >
+> > > > For e.g. In `builtin/gc.c:maintenance_task_pack_refs`, shouldn't yo=
+u be
+> > > > able to replace the `run_command`?
+> > > >
+> > >=20
+> > > My bad as the example uses `run_command_v_opt` and upon further
+> > > inspection
+> > > it seems that there might be similar situations like the example
+> > > that can
+> > > save an external process. However, for the
+> > > maintenance_task_pack_refs, the
+> > > command being run is `git pack-refs` which is a write process unlike
+> > > the
+> > > example which is a simple read only process of `git show-branch` to
+> > > get the
+> > > current commit? I will be searching the codebase for similar read only
+> > > `run_command` and see if I can replace them.
+> >=20
+> > Hint: the `maintenance_task_pack_refs()` can in fact be converted to use
+> > `refs_pack_refs()` instead. I was briefly considering doing that in [1],
+> > but then didn't want to do such an unrelated refactoring in an already
+> > long patch series.
+> >=20
+> > So if you decide to do that you should probably build on top of my patch
+> > series to avoid conflicts. The patch series is available e.g. at [2],
+> > branch "ps/pack-refs-auto". So if you decide to give it a try you should
+> > build on top of that branch.
+>=20
+>=20
+> Hello all,
+>=20
+> For the build on top of ps/pack-refs-auto, do I commit to this branch
+> locally and get the diff for submitting the patch?
 
-On Tue, Apr 2, 2024 at 11:10=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Tamir
->
-> On 31/03/2024 07:49, Eric Sunshine wrote:
-> > [please reply inline rather than top-posting; I've moved your reply
-> > inline for this response]
-> >
-> > On Thu, Mar 28, 2024 at 1:40=E2=80=AFPM Tamir Duberstein <tamird@fuseen=
-ergy.com> wrote:
-> >> On Thu, Mar 28, 2024 at 5:24=E2=80=AFPM Eric Sunshine <sunshine@sunshi=
-neco.com> wrote:
-> >>> On Thu, Mar 28, 2024 at 10:54=E2=80=AFAM Tamir Duberstein <tamird@fus=
-eenergy.com> wrote:
-> >>>> % git branch -d cleanup
-> >>>> error: cannot delete branch 'cleanup' used by worktree at '<my sourc=
-e dir>'
-> >>>> % git worktree list
-> >>>> <my source dir>  dc46f6d5e [main]
-> >>>> % git branch
-> >>>>    cleanup
-> >>>> * main
-> >>>
-> >>> Is this error persistent once it arises? That is, if you invoke `git
-> >>> branch -d cleanup` again immediately after (or a little while after)
-> >>> the above sequence, does the problem persist? Or does it "clear up" o=
-n
-> >>> its own at some point?
-> >>
-> >> Yes, the problem is persistent. The branch is never deleted.
-> >
-> > I'd guess that there may be some sort of "ref" still pointing at the
-> > "cleanup" branch which presumably was, at some point, checked out at
-> > "<my source dir>". Digging through the code[1,2,3] suggests that you
-> > might have some stale state from a rebase, bisect, or other sequencer
-> > operation which still references the "cleanup" branch.
-> >
-> > [Cc'ing Phillip who is probably much more familiar with this code than =
-am I.]
->
-> Thanks Eric. I'd have thought that "git worktree list" would say
-> something about the branch being rebased if there was enough state lying
-> around to prevent the branch being deleted, but lets see. What does
->
->      ls $(git rev-parse --git-path rebase-merge) $(git rev-parse
-> --git-path rebase-apply)
->
-> show when you run it in <my source dir>? Also is <my source dir> the
-> only worktree?
+Yes. Generally, what I do is:
 
-% ls $(git rev-parse --git-path rebase-merge) $(git rev-parse
---git-path rebase-apply)
-ls: .git/rebase-apply: No such file or directory
-ls: .git/rebase-merge: No such file or directory
+    1. Check out the `master` branch.
 
-Yes, it's the only worktree.
+    2. Merge the topic branch you want to build upon into the `master`
+       branch.
 
-> Best Wishes
->
-> Phillip
->
-> > By the way, it's not clear from your initial report what you mean when
-> > you say "then the remote deleted the branch". Also, did you fetch
-> > and/or pull from the remote after that?
-> >
-> > [1]: https://github.com/git/git/blob/d6fd04375f91/branch.c#L454
-> > [2]: https://github.com/git/git/blob/d6fd04375f91/branch.c#L386
-> > [3]: https://github.com/git/git/blob/d6fd04375f91/sequencer.c#L6551
+    3. Build your topic on top of that merge commit.
+
+When sending the patches to the mailing list you would mention that
+dependency e.g. in the cover letter and then only send patches from the
+merge commit to the tip of your own topic branch.
+
+Note though that, as Junio mentioned, this is becoming more involved
+than the typical microproject. You can of course still continue to work
+on it if you want to, but definitely feel free to switch to an "easier"
+target to work on.
+
+Patrick
+
+--nKumNmHoIhafPZeW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL31MACgkQVbJhu7ck
+PpQ1VhAApa90H30PWG2Shz8IwSHPwUAafPNXAucJPD9XgCVmBfe+Mpgijil8y4sg
+WRxeS7+d4cg7+hjwbvHEWgdt5EPCLoDBMPH1R8fWthZOB3m/DVJizkf7uiRAQ+3c
+coHVcfXpmYsVCi9CyTR/ULYBJas3BpVzlbpdO1YCOyjqEGYQ33+M2skgiJKFJLaa
+RXx4I4x9CKVTlI6HR1w1jz2oW/CWVvSq0AqkBIFgrFHvoDICxoj5Y/bGH+M6pZUl
+XPkG6InSmhuRINHS9WjgGUc/Cw/sz4jHaLQQAzKKq5eOQVWgGpH9x2FRhMzkNfpy
+UiBat4cQypFk3KJHcVXiqJ7A2i705DgRnw6oyhAbjw0LFRrn8F0NJ3IfzNP97Hlo
+J1Y1c9rk7cCG9Z6FnL4SS8KdPMWT8W6DbYQJbiyGS0hPqaTHKbhjjMKSCkpBBSr1
+3XuRskKvcQqFymkA6XN/SG3vuBg4nw9fkOxLbkCmqxckfp+A7oseUifl/fVWIzO9
+Aw3ZwNFCEbt9WTrb6CVp0rSiptossohCk51UyZti5zGIE1ceLjRb39TJFsf1f2NK
+n9cnaXqwZBWbGt8tEqX4r9blL/09oYqvwttKKKM2HPfJ0rHgFGGG6LI6Non2/RCJ
+fJbdCTqgV2yAOxGEp9TW6iNjnWmZ24Ra9MqCGxI0rNYujDQ4y+U=
+=kj7H
+-----END PGP SIGNATURE-----
+
+--nKumNmHoIhafPZeW--
