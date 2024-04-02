@@ -1,285 +1,127 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C571A8801
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 00:13:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F71440C
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 00:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712016836; cv=none; b=R16q6QMGs08aQLQ5/gTSEBefbgoIAYKnofthS7vKOhjfqUzUp+yxfks1g30sMjLbMxXIJyd0n5yqeT9c5BkKCwi91hNaTwjB3qe/gB12rdEm4srYR+7z0M9oSL8wN1BZZBhgRSl/yamBn2gPwd7Pb8q6L4UUx1BHSP9xRapuCdE=
+	t=1712017211; cv=none; b=s/mYDbyYfRHVuduzp8WkD66Efy901S1sDn4ZgJG47L6Mb15PafXAb9F+abEvW1cbDVXHSMg3P/8z4uh5gJ+ZQqXFA3gAzKQmVJDIjvEmm5pyWCCsQ03BlI2/JjTJC7VWTsYUNzAnr2jqfYXpWjwqBf8Y/+tHQR0q4IieJZ8QjGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712016836; c=relaxed/simple;
-	bh=ZX+YRPUjIlVf6PrYiURBdOGVt8y2SE1WfF4/8xL5qSo=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CnJ+6lTNPiavdYgvqihNA/xZGlTkbaxZ8O0Ab7Na1mSvapOaDqdFD7vCYmhawlyzedV8ykTnl7bobWkAylU2Hxs6WwVxVcdfTit4FWawUcMqVVaq2vB4+ZO9uxZKl0JMh3P75UWmkW0FTM+NdITdQHiA0R/g2md/7KetBz8SbSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=DdAegd0r; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1712017211; c=relaxed/simple;
+	bh=WhDToBpmrXDtrl/F+j0CXm1ViWhhkDskm7tDG5MN6tg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=cEa6e+xE+RZ/kO80E6RurM5/TMPtzgQc0awTCr0CMQn3B4/zNY/RrJLAy8ej2FSObD16GSMsMMH78J/xUT2Fj6GoNHlUBx0Z5bBGObusmTgqUkI01VNeStplSZCJeiaakY8dhBFPvbi59Zf6T23CA0zUsakniSaVsa3ShkKBhvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iZP3qCAA; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="DdAegd0r"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1712016829;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hxMub3Cx9PW3Za2SwFkQJudLmX+41CN4i8jLXJGEXcA=;
-	b=DdAegd0rtQfALx+QZmuGQIYK7AzXuym/FYkAuKfmkCA9OvEXYIlZOEWC1JnTPB2OYzdWBv
-	o6TYh3aEe08QVsc1OCxJkf5OrelXUZbQ1zuJM4DRkbaIADaagwsyS3AxHQL0OX5sAEEOxC
-	ukVUSgvZOILFi8NuumfjBtArGhfftJCJhGpr9IBHVhLDG9QaUFBjcl2/g+mc4EcJ6Qq4A/
-	fsy72sm9MgdihtxeZ2UVjXE1Ar0/fYxHAYFBFUXo7OC+9ng/ddvITtS7qOCKYpwod0IZ/a
-	ztI3j4zNTnnBm/FQCLeRnAI/t262VkaUYjOItekiSvlJKGHAE9lMJByvj0UnuA==
-To: git@vger.kernel.org
-Subject: [PATCH 1/3] diff: support additional whitespace in diff.{dirstat,wsErrorHighlight}
-Date: Tue,  2 Apr 2024 02:13:42 +0200
-Message-Id: <c26393897753e5899431ae527a594bb457eb73b8.1712016667.git.dsimic@manjaro.org>
-In-Reply-To: <cover.1712016667.git.dsimic@manjaro.org>
-References: <cover.1712016667.git.dsimic@manjaro.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iZP3qCAA"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-415694c83b7so7313855e9.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2024 17:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712017207; x=1712622007; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=HMT+E6/5rHvyxeVnSFdJuIvUtVI03R1+AFkEc7bwOY8=;
+        b=iZP3qCAAhfujrlq2wX1DwbPGakzCDkelhhJuwu7p2TSkiIjFYK8vRHkD97YN4lODP1
+         pLzqUmydii2sqd/bntxw0mdbmqU5U7dQWqOjKF+OGnDww5ho23uHQF+ANIBQzoGZwSgK
+         Hxfu9oH+5SvW8IpnlC6tec6SRggPCQcmtgKn3UhDoRWic4C1HrJpUURY03rp//jnYvlz
+         PWGscTz9Iufpt0+rfIYyfteXO+EDe+vRZyyu/5dk5HU+PqmewhDIgzyyJRHdT6vIVF0q
+         XKpbGRttxWMqQMTZJGoEw8G8gN6KAZSes06E+/G1aXvuT+jeIxc8HHDQPZEw3+jMOcCF
+         FVCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712017207; x=1712622007;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HMT+E6/5rHvyxeVnSFdJuIvUtVI03R1+AFkEc7bwOY8=;
+        b=oTQq7O3QilAs+t0Pf1QOugXqk2CFAyPv20yVxhdUODzCUpjX1isTYg/HotZfUAqnvt
+         Rspy8zEtHzz9SBpIx+iUrnumuIT4v3sgB/4g2WGnBmZ0Ury4eIlklVcqWXOjGvhYOMYV
+         fIOq+SHCstWs1LMT0jlTPXFtfhcb6ldJ5qYj6IyQGkhQjMPuatEm6TbDdSZetWsFGEqX
+         K/320eXahrpa5Xh4wS71amkzDPvC56CUykJXpCzCLBPvMCNdLtBGMxi1IdvfQHwgriyK
+         Ma0X1NHla4NKzcwPYvWfMfM0dEVYPyP9NT7jgfjRNIlXZirB6kTn5SHL5g8UxS78uy2v
+         wGGw==
+X-Gm-Message-State: AOJu0YyND51wXqJ4jSqbX9gAGVqM5RTV7vHvv5fKsA6p2AJLcG4TjvFX
+	K8NwSpoA/oD/NTQ34HaOipkz7ppT6sy3h6x4yk5Q7w42INsw0GaofFGPD+ih
+X-Google-Smtp-Source: AGHT+IH2YZUBy7d2WROS7j5z2/MNRTptu5ixSjg0Pida9jNh+axLKHgkRljr9oMbmklNiRrkDosqbA==
+X-Received: by 2002:a05:600c:1c97:b0:414:759a:71d5 with SMTP id k23-20020a05600c1c9700b00414759a71d5mr7022409wms.34.1712017206820;
+        Mon, 01 Apr 2024 17:20:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r11-20020a05600c35cb00b004149530aa97sm16194522wmq.10.2024.04.01.17.20.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Apr 2024 17:20:06 -0700 (PDT)
+Message-Id: <pull.1704.git.1712017205754.gitgitgadget@gmail.com>
+From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 02 Apr 2024 00:20:05 +0000
+Subject: [PATCH] docs: recommend using contrib/contacts/git-contacts
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Jonathan Tan <jonathantanmy@google.com>,
+    Emily Shaffer <nasamuffin@google.com>,
+    Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>,
+    Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>,
+    Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
+    Matthieu MOY <matthieu.moy@univ-lyon1.fr>,
+    Linus Arver <linusa@google.com>,
+    Linus Arver <linusa@google.com>
 
-Allow additional whitespace characters to be placed around the commas
-in the multi-(sub)value, comma-separated values for the "diff.dirstat" and
-"diff.wsErrorHighlight" configuration options.  This makes the way multi-value
-configuration options can be specified more consistent, because exactly the
-same additional whitespace characters are already allowed for some of the
-configuration options, including "core.whitespace", "log.graphColors" and
-"color.blame.highlightRecent".
+From: Linus Arver <linusa@google.com>
 
-Besides improving the consistency of the configuration syntax, being able
-to include additional whitespace characters into the values of a couple more
-of the comma-separated configuration values may also make the configuration
-files more readable to some users.
+Although we've had this script since 4d06402b1b (contrib: add
+git-contacts helper, 2013-07-21), we don't mention it in our
+introductory docs. Do so now.
 
-This optional support for the additional whitespace around the commas also
-extends to the equivalent comma-separated values for the "--dirstat" and
-"--ws-error-highlight" command-line options.
-
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Linus Arver <linusa@google.com>
 ---
- builtin/gc.c                |  4 ++--
- diff.c                      | 14 ++++++++++----
- notes.c                     |  2 +-
- refs/packed-backend.c       |  2 +-
- string-list.c               | 27 +++++++++++++++++++++------
- string-list.h               | 10 ++++++----
- t/helper/test-hashmap.c     |  2 +-
- t/helper/test-json-writer.c |  2 +-
- t/helper/test-oidmap.c      |  2 +-
- t/helper/test-string-list.c |  4 ++--
- 10 files changed, 46 insertions(+), 23 deletions(-)
+    docs: recommend using contrib/contacts/git-contacts
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index cb80ced6cb5c..5c6a3b5f65c3 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1702,11 +1702,11 @@ static int get_schedule_cmd(const char **cmd, int *is_available)
- 	if (is_available)
- 		*is_available = 0;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1704%2Flistx%2Freviewers-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1704/listx/reviewers-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1704
+
+ Documentation/MyFirstContribution.txt | 3 +++
+ Documentation/SubmittingPatches       | 4 ++++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index f06563e9817..eb1e27a82df 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -1116,6 +1116,9 @@ $ git send-email --to=target@example.com psuh/*.patch
+ NOTE: Check `git help send-email` for some other options which you may find
+ valuable, such as changing the Reply-to address or adding more CC and BCC lines.
  
--	string_list_split_in_place(&list, testing, ",", -1);
-+	string_list_split_in_place(&list, testing, ",", "", -1);
- 	for_each_string_list_item(item, &list) {
- 		struct string_list pair = STRING_LIST_INIT_NODUP;
- 
--		if (string_list_split_in_place(&pair, item->string, ":", 2) != 2)
-+		if (string_list_split_in_place(&pair, item->string, ":", "", 2) != 2)
- 			continue;
- 
- 		if (!strcmp(*cmd, pair.items[0].string)) {
-diff --git a/diff.c b/diff.c
-index 108c1875775d..bf3aa148aeed 100644
---- a/diff.c
-+++ b/diff.c
-@@ -141,7 +141,7 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
- 	int i;
- 
- 	if (*params_copy)
--		string_list_split_in_place(&params, params_copy, ",", -1);
-+		string_list_split_in_place(&params, params_copy, ",", " \t\n\r", -1);
- 	for (i = 0; i < params.nr; i++) {
- 		const char *p = params.items[i].string;
- 		if (!strcmp(p, "changes")) {
-@@ -232,10 +232,16 @@ long parse_algorithm_value(const char *value)
- 
- static int parse_one_token(const char **arg, const char *token)
- {
-+	const char ignored[] = " \t\n\r";
- 	const char *rest;
--	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
--		*arg = rest;
--		return 1;
++NOTE: Use `contrib/contacts/git-contacts` to get a list of reviewers you should
++include in the CC list.
 +
-+	*arg += strspn(*arg, ignored);
-+	if (skip_prefix(*arg, token, &rest)) {
-+		rest += strspn(rest, ignored);
-+		if (!*rest || *rest == ',') {
-+			*arg = rest;
-+			return 1;
-+		}
- 	}
- 	return 0;
- }
-diff --git a/notes.c b/notes.c
-index fed1eda80cd7..b6d4b7d7cd0f 100644
---- a/notes.c
-+++ b/notes.c
-@@ -962,7 +962,7 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
- 	char *globs_copy = xstrdup(globs);
- 	int i;
+ NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
+ please don't send your patchset from the tutorial to the real mailing list! For
+ now, you can send it to yourself, to make sure you understand how it will look.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index e734a3f0f17..52d11ff510b 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -459,6 +459,10 @@ an explanation of changes between each iteration can be kept in
+ Git-notes and inserted automatically following the three-dash
+ line via `git format-patch --notes`.
  
--	string_list_split_in_place(&split, globs_copy, ":", -1);
-+	string_list_split_in_place(&split, globs_copy, ":", "", -1);
- 	string_list_remove_empty_items(&split, 0);
- 
- 	for (i = 0; i < split.nr; i++)
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 4e826c05ff2b..65ccbcf9475f 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -676,7 +676,7 @@ static struct snapshot *create_snapshot(struct packed_ref_store *refs)
- 					 snapshot->buf,
- 					 snapshot->eof - snapshot->buf);
- 
--		string_list_split_in_place(&traits, p, " ", -1);
-+		string_list_split_in_place(&traits, p, " ", "", -1);
- 
- 		if (unsorted_string_list_has_string(&traits, "fully-peeled"))
- 			snapshot->peeled = PEELED_FULLY;
-diff --git a/string-list.c b/string-list.c
-index 954569f381d8..bdf731b3c209 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -309,21 +309,36 @@ int string_list_split(struct string_list *list, const char *string,
- }
- 
- int string_list_split_in_place(struct string_list *list, char *string,
--			       const char *delim, int maxsplit)
-+			       const char *delim, const char *ignored,
-+			       int maxsplit)
- {
- 	int count = 0;
--	char *p = string, *end;
-+	char *p = string, *trim, *end;
-+	size_t length = strlen(string);
- 
- 	if (list->strdup_strings)
- 		die("internal error in string_list_split_in_place(): "
- 		    "list->strdup_strings must not be set");
++[[suggested-reviewers]]
++Use `contrib/contacts/git-contacts` to get a list of reviewers you should
++include in the CC list.
 +
- 	for (;;) {
- 		count++;
--		if (maxsplit >= 0 && count > maxsplit) {
--			string_list_append(list, p);
--			return count;
-+		if (*ignored) {
-+			trim = p + strspn(p, ignored);
-+			while (p != trim)
-+				*p++ = '\0';
-+		}
-+		if (maxsplit >= 0 && count > maxsplit)
-+			end = NULL;
-+		else
-+			end = strpbrk(p, delim);
-+		if (*ignored) {
-+			if (end)
-+				trim = end - 1;
-+			else
-+				trim = string + length - 1;
-+			while (trim >= string && strchr(ignored, *trim))
-+				*trim-- = '\0';
- 		}
--		end = strpbrk(p, delim);
- 		if (end) {
- 			*end = '\0';
- 			string_list_append(list, p);
-diff --git a/string-list.h b/string-list.h
-index 122b31864198..1219f7f72778 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -274,11 +274,13 @@ int string_list_split(struct string_list *list, const char *string,
- 
- /*
-  * Like string_list_split(), except that string is split in-place: the
-- * delimiter characters in string are overwritten with NULs, and the
-- * new string_list_items point into string (which therefore must not
-- * be modified or freed while the string_list is in use).
-+ * delimiter characters in string and the optionally ignored characters
-+ * that surround the substrings after splitting are overwritten with NULs,
-+ * and the new string_list_items point into string (which therefore must
-+ * not be modified or freed while the string_list is in use).
-  * list->strdup_strings must *not* be set.
-  */
- int string_list_split_in_place(struct string_list *list, char *string,
--			       const char *delim, int maxsplit);
-+			       const char *delim, const char *ignored,
-+			       int maxsplit);
- #endif /* STRING_LIST_H */
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index 0eb0b3d49cec..7cc62bcc1b78 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
-@@ -167,7 +167,7 @@ int cmd__hashmap(int argc, const char **argv)
- 
- 		/* break line into command and up to two parameters */
- 		string_list_setlen(&parts, 0);
--		string_list_split_in_place(&parts, line.buf, DELIM, 2);
-+		string_list_split_in_place(&parts, line.buf, DELIM, "", 2);
- 		string_list_remove_empty_items(&parts, 0);
- 
- 		/* ignore empty lines */
-diff --git a/t/helper/test-json-writer.c b/t/helper/test-json-writer.c
-index afe393f59741..6a54bac1e971 100644
---- a/t/helper/test-json-writer.c
-+++ b/t/helper/test-json-writer.c
-@@ -490,7 +490,7 @@ static int scripted(void)
- 
- 		/* break line into command and zero or more tokens */
- 		string_list_setlen(&parts, 0);
--		string_list_split_in_place(&parts, line, " ", -1);
-+		string_list_split_in_place(&parts, line, " ", "", -1);
- 		string_list_remove_empty_items(&parts, 0);
- 
- 		/* ignore empty lines */
-diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
-index bd30244a54cc..0861afedb11e 100644
---- a/t/helper/test-oidmap.c
-+++ b/t/helper/test-oidmap.c
-@@ -44,7 +44,7 @@ int cmd__oidmap(int argc UNUSED, const char **argv UNUSED)
- 
- 		/* break line into command and up to two parameters */
- 		string_list_setlen(&parts, 0);
--		string_list_split_in_place(&parts, line.buf, DELIM, 2);
-+		string_list_split_in_place(&parts, line.buf, DELIM, "", 2);
- 		string_list_remove_empty_items(&parts, 0);
- 
- 		/* ignore empty lines */
-diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
-index e2aad611d1c8..116469c2621b 100644
---- a/t/helper/test-string-list.c
-+++ b/t/helper/test-string-list.c
-@@ -65,7 +65,7 @@ int cmd__string_list(int argc, const char **argv)
- 		const char *delim = argv[3];
- 		int maxsplit = atoi(argv[4]);
- 
--		i = string_list_split_in_place(&list, s, delim, maxsplit);
-+		i = string_list_split_in_place(&list, s, delim, "", maxsplit);
- 		printf("%d\n", i);
- 		write_list(&list);
- 		string_list_clear(&list, 0);
-@@ -111,7 +111,7 @@ int cmd__string_list(int argc, const char **argv)
- 		 */
- 		if (sb.len && sb.buf[sb.len - 1] == '\n')
- 			strbuf_setlen(&sb, sb.len - 1);
--		string_list_split_in_place(&list, sb.buf, "\n", -1);
-+		string_list_split_in_place(&list, sb.buf, "\n", "", -1);
- 
- 		string_list_sort(&list);
- 
+ [[attachment]]
+ Do not attach the patch as a MIME attachment, compressed or not.
+ Do not let your e-mail client send quoted-printable.  Do not let
+
+base-commit: c2cbfbd2e28cbe27c194d62183b42f27a6a5bb87
+-- 
+gitgitgadget
