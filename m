@@ -1,88 +1,93 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E62EC4
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 00:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0297FD
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 00:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712017624; cv=none; b=AJFbioqwcrDNClyCqLMNGWas6BLwKF6ns9K9gpG+xu8KSzzPjgqvDjU4G2yp4J0LK8FCAlUZzXWAtPpG2aHxyrE3MvCRV+k3Vf4VuPRo5T0HEWjfBDKGOFtqPjZD9PA7pXhYmlbQ9XHddBisFX1uaTJC5DrzBxX0DQf6oh+Nsxk=
+	t=1712017874; cv=none; b=EHQAOGgyVPbT4MBrY+pn+sQs/t2Zej7wueOHuBox5/+GSeQMf+gOZJgwM8ajCaD0z9xcRrc3F89bzcMlAf1oWdXjxJaaYAQb2krTnV+PI1Zcw2h0XmTudN3o//Zg6QZWUUsSjCMFUarfnBg/M2aNpY+zd0YdFBGNSZgODT5TEcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712017624; c=relaxed/simple;
-	bh=HVn7mCxjR37oBGjrCg+vBXSAfaVbPNb3QWa7KAzgOEo=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=G+d2Az3rfFuF/5ZENslkTQn+v3Qky7tScrONwRgHSjzirivsg4ydbninZnQ9oQXAlELtJohkACo6tLOH0uWOU2YxMLXUw+KaRVqNn+TnR4WvrlzuOyWPbna6Q/wqwjJU7fODpp7gztJvAEMkJTIAYnoKLf2endyq9qbwii+6jsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qn9kwacP; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1712017874; c=relaxed/simple;
+	bh=o+/OncVIYW6QfANI6o4qeEu7ES6LdMPSLWRxaboJEW0=;
+	h=MIME-Version:Date:From:To:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=nizszc8jcYjJANXVQZ+JirS/7Ixq0yaOGJUP+MEe9m9HLJ5MbYp+vixlcQoDQfokzKeqU+OlyKOIxu/TNljjemcXJ7uihg6K3pZfcvgZG5xZW4bT+vLiky7Wzt8fuRTbpjUsYED3xdCaIeJUPvS36HoQ+mArQ1M0JY1JdFTy2o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=A2PWP53O; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qn9kwacP"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc6b269686aso6442547276.1
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 17:27:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712017622; x=1712622422; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qu0MuhUmFawyprwSs37glj/+btekTXC/40QYFp7Ib7M=;
-        b=qn9kwacPxeCGXqlG08SP9yKOMlgMNbUuzQALdyQRrleWJRF4rNEPjCQFcyi1FpDpAQ
-         S5Om2KpDo7By2xz1e7b2hWxelBS1eRJi4acbcZh/KvHShqxNFASUPrSjn0zvxp+x7D5q
-         pyb+9xAaKDHu1Icou3sBETvmm7o30WjIvLfLBYyiR1JWRgVAhbx5n9mb6x8UTFhnDd69
-         IIRltryHoGhs3wwMTZW6QGKS99nfubsPRRnHPQ/wvKF+Vjb3rDfaoLoCC49Buf8R8huV
-         ydj+KYzTjUOzh3ghpENoLVTVDxgNDCPMmXGE7/C/QwCHTJB5ScOhC212r/jAUwAKvglC
-         dsug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712017622; x=1712622422;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qu0MuhUmFawyprwSs37glj/+btekTXC/40QYFp7Ib7M=;
-        b=t6AssZLhujNRNbp78qg645yaCXCubfNySbKZnogskTkspsIy8ZoBOh3FaZQrWbGul3
-         BE/RDbJplszaWSez+Bj6JcgKugBhK8J7F396YQgxSk4n6YQ+/+vbyODC8XIy/Ga2bpwW
-         pFzOvMkq6NdeS49l/37whtQqkdGFN5ThumlCs00arrbUGd7Lb8Dx4XVEM0wPirspfn4n
-         YqBqOSQn/qa9K4yUW8TnhOuHWWy09eF4hDdn8eZ7v0KQ6uzsaODRpHm5xBiPgVjhI+aE
-         5aVYcTKbtrUgbwfFXrhUwLnfqj1X16eQLwDlCVNEC3Pwh77D/pTTEwQuNdWvNSpacJuQ
-         3olg==
-X-Forwarded-Encrypted: i=1; AJvYcCVZC3y/AInA147XCusqYgC2aLfyJJt45rOfk2MA26t3kUZS4ek3B51ELcOqlLUZZQgVElVEwLrcQLECw0IriwA/ypjw
-X-Gm-Message-State: AOJu0YzDBe6vDHAVWU3TXae+R7s42XLTB6FMoLT+vanpebMinPuwOehZ
-	GPa0Zmwznyopt8GU5yHECgkJ1WV4lTCGct2byKMEaQKorfabroukg5EdIWHthYYtNtrK1j79+kw
-	bFQ==
-X-Google-Smtp-Source: AGHT+IGE2NSRuMhTPE75/nFtLfvzzzHwqo66VUSJg2/mv3PFTL7tLsvzXK2dRdwPI9VFQMGRDK7uXSMciCM=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:2302:b0:dd9:2d94:cd8a with SMTP id
- do2-20020a056902230200b00dd92d94cd8amr879438ybb.9.1712017622041; Mon, 01 Apr
- 2024 17:27:02 -0700 (PDT)
-Date: Mon, 01 Apr 2024 17:27:00 -0700
-In-Reply-To: <xmqqplvg7j1y.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="A2PWP53O"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1694.git.1710485706.gitgitgadget@gmail.com> <xmqqplvg7j1y.fsf@gitster.g>
-Message-ID: <owlyjzlg623v.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 0/5] Unify trailer formatting functions
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, Christian Couder <chriscool@tuxfamily.org>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>, Hariom Verma <hariom18599@gmail.com>, 
-	"=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1712017870;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hMOVheujdBsRhpmwyqySZWbyVIxN/ME+ItgqTQ9NJh0=;
+	b=A2PWP53OQX+ojipKTPsZfC6PVHfprnJf7gST4eKQQfGCe9D4FEB45vp7XxMD4tWyxEcFdp
+	37kH/9NsrXC+0GpcY9fP6K/sTXwHfnoYHFZw7qb9J8J/TQIsyMfZNLAp1MEGUgiNvq61Do
+	cqihpsaEIegTtEGqIbdgLLkgcW4se8FDrTbv0kd5PoKDDCLHEoaxHtxGnS99pSVtCFXDU9
+	zKsdlF2RI3E0PE1limIMMrMZ+TxUQy9kN08fIp6QuQrAqJ2cwsgcwHGvW+mDUrQZdKAIDH
+	S3P3LpLzpD0w4Aye/S8Y6j9nqRxoSYMYST7/uvvi1fOnS99HPjG50XFkdTW1eQ==
+Date: Tue, 02 Apr 2024 02:31:10 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Make support for multi-value configuration options
+ more consistent
+In-Reply-To: <cover.1712016667.git.dsimic@manjaro.org>
+References: <cover.1712016667.git.dsimic@manjaro.org>
+Message-ID: <833011f0a807b6176de6fd8a8389b1bf@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+On 2024-04-02 02:13, Dragan Simic wrote:
+> This series adds support for optional placing of additional whitespace
+> characters around the commas in the multi-value, comma-separated values
+> for the "diff.dirstat" and "diff.wsErrorHighlight" configuration 
+> options,
+> and the "--dirstat" and "--ws-error-highlight" command-line options.
+> 
+> This makes the way multi-(sub)value configuration options can be 
+> specified
+> more consistent, because exactly the same additional whitespace 
+> characters
+> are already allowed for some of the configuration options.  It may also
+> make the configuration files more readable to some users.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Meh, somehow I managed to forget to include the brief summary for the
+"what's cooking".  Here's what might be used for that purpose:
 
-> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> This series is based on the initial series [1], notably the v4 version of
->> patches 10-16 as suggested by Christian [2]. This version addresses the
->> review comments for those patches, namely the avoidance of (temporary) test
->> breakages.
->
-> It has been 10 days but we haven't seen any reviews on this one.  It
-> could be that it did not get to intended mailboxes due to the header
-> corruption (I manually fixed in this message), but without reviews
-> we cannot move forward.
+  * Allow additional whitespace around the commas in 
+"diff.dirstat=<multi-value>",
+    "diff.wsErrorHighlight=<multi-value>", "git diff 
+--dirstat=<multi-value>"
+    and "git diff --ws-error-highlight=<multi-value>".
 
-Adding a couple more folks to the CC list according to the
-contrib/contacts/git-contacts script. Thanks!
+> Dragan Simic (3):
+>   diff: support additional whitespace in 
+> diff.{dirstat,wsErrorHighlight}
+>   t4015: whitespace in diff.wsErrorHighlight and --ws-error-highlight
+>   t4047: whitespace in diff.dirstat and --dirstat
+> 
+>  builtin/gc.c                |  4 ++--
+>  diff.c                      | 14 ++++++++++----
+>  notes.c                     |  2 +-
+>  refs/packed-backend.c       |  2 +-
+>  string-list.c               | 27 +++++++++++++++++++++------
+>  string-list.h               | 10 ++++++----
+>  t/helper/test-hashmap.c     |  2 +-
+>  t/helper/test-json-writer.c |  2 +-
+>  t/helper/test-oidmap.c      |  2 +-
+>  t/helper/test-string-list.c |  4 ++--
+>  t/t4015-diff-whitespace.sh  | 36 ++++++++++++++++++++++++++++++++++--
+>  t/t4047-diff-dirstat.sh     | 33 ++++++++++++++++++++++++++++++---
+>  12 files changed, 110 insertions(+), 28 deletions(-)
