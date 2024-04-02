@@ -1,85 +1,80 @@
 Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D126878B49
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 12:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC1B78B63
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 12:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712060453; cv=none; b=m6hm7UzMQHW1aAUKRovc+FWv0affYXTR+XJ9h5+2a7z9XC/bJwDvfR3xBqceYw/TWYQZtK5JKlS/p1WwEPao/4VwWCHwIWnSJcrbzTAYs7hNyNVhyaXm24GAdvX8ZtSK/fhvFhOJ5e8EBgpGr1SZOCT3+Nz+vqV9jHZqjKu4R28=
+	t=1712060459; cv=none; b=fBaJeJnoeGbBOV8MMrVb0oNYJrv1KwR0upZkRJ3IRgGsE/dUIEf2V0uOBURWOqyW/WakNaSkY6bbAHm4X0xsuDtVvFaoLjEs96yH0E91CI2ds+8tZOpjsUZf/K03XAPL4w8RF+icZABKh7WsqR/L05n9ER6rgq4QZ/vHmk4Dqvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712060453; c=relaxed/simple;
-	bh=d72OZDvsicrixv9r11K5bDigI1wVnMyI9Y7S9n8Ousc=;
+	s=arc-20240116; t=1712060459; c=relaxed/simple;
+	bh=HNTlBCbxyDAg2yhfkIRg24DBzywS5XvrvauBAWc8w9A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T5QkiHP8NQ7+TsvWjeav4JX74gsCjqWcPnKHfa91AaE7aZ1cgKxL89fm97vJMxvF0REvUedLVALDtvPB+tyTyzya9I5w6JkoJ/hwBJPmwd7UlxeVaf5wYwMvFQm14l5+r8SKqW/1AlG4TMBtgqHfjHbYnAdPGKaCiHwbh4mpTic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Aqk5RWDa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WhHQg6If; arc=none smtp.client-ip=64.147.123.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=VXBHxjwp2fOvnDXe7bhRqvVSkzPl8JbWgCtUZW3TxuEVEr3NL05cTsaV9JMx3zsLiyXGMQegU2VwrmTaRiJTfi1bxWbtT8pN8+OH1BgATa47HoMkMilN22zjX4maV87hwu9NLz2qUigV7qq2+2WC6BC2lpHEJCMGIjOCygThWfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ew1lyH+e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vZFXZXt/; arc=none smtp.client-ip=64.147.123.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Aqk5RWDa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WhHQg6If"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ew1lyH+e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vZFXZXt/"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id D5BA81C000F3;
-	Tue,  2 Apr 2024 08:20:50 -0400 (EDT)
+	by mailfout.west.internal (Postfix) with ESMTP id E2DF81C000F8;
+	Tue,  2 Apr 2024 08:20:56 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 02 Apr 2024 08:20:51 -0400
+  by compute1.internal (MEProxy); Tue, 02 Apr 2024 08:20:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712060450; x=1712146850; bh=bgfpEZJJJn
-	XqYD4l4YPIB7Yo6ptYc/Zm2MzxKq/CZBY=; b=Aqk5RWDaER8K7elGCwOO82liHH
-	wk8pQWmRSOY3MHfHNdsgP86jRQG4YsqNwnBFeQ3y/OTxtEqdC2rHpdZxgj1Y4N7N
-	Dnre6iLkV7O5QjTALwvGRUsk0gZ3P5JHEUKQ0ALVYup31/TMk+tLkHplU0Ku1o6o
-	w0VmoKzL2VaosXxReUtCDifO8YaAEu3xSxO0SIebQlUcVtgytaQYAnJUdFV7dx9P
-	QKzKsJZ+U5FfEVRRIFoA9VtMPeNJQWcxDcxr/xGOMPWFUbAFH1568HMd9OqbK0/K
-	PrK+Nf81V1ylB05S0lIdc/TxgXKioyP5Dz8jgcgYND4TtPwSKS41BXJYZcHw==
+	:subject:to:to; s=fm2; t=1712060456; x=1712146856; bh=BdXr104n6J
+	h9F5A/c4M0YSr/ZZmuZ627UI48ZUz0HF4=; b=Ew1lyH+espZTDxr2/hTWEf5PRi
+	JCjnp28csKXFsAZdXd8tneBAGgg7WaQN3Ag4rZ5tIpUgKcwUEm5iQjilQPWkaWzR
+	Q1xHFJGAW1FRLZps9QKRNq0JU6Lst3Uio0HStHxxX1lmUQWBdWjKf0WX1omY0iBc
+	LoRvQ1EVMxuYagpOCTk0bdMTWtMzH/DXYfsd/2ReiDhPIw0n7jWALN41ZBW3rzNI
+	pTJWNk6GcRbrmV1k8nmBVZ6QXthAhNywo0UT3eLBKJ0xb7utfqVDwuLRQuNrdk4s
+	ZpSSbj9U62e8ApgEVEU9WjII0UIyWkqMabU8fiFvSUE91/Ii2/k1vDkbzARQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712060450; x=1712146850; bh=bgfpEZJJJnXqYD4l4YPIB7Yo6ptY
-	c/Zm2MzxKq/CZBY=; b=WhHQg6IfC8yGMibzmDBHxc+Ib61VdlyMIEhhnqnn+wi2
-	HiZr0oFFFdc8n5+tJN1Lt3DCUj9YBIoFacJcNznrhyWNCXzmO5W7UkZhNPRkd5vr
-	6opqlkxyzJq8gFqnAYS3tNwBlawncW0QosR4DlvlqZbJlgJ5Cpqb8JWLoeqUc6yS
-	IkIEUqhCYkij4HCYwYyeseghBTzR3QUNmCPQa13/gXAQ9zLfA4NES/eHqkyNInDE
-	VUhBXgNrqmwjANqpP8xdSfd5CKbI5OM2xYjIGBSZgPrUJR+EkDpjgCmqHQRIYW2P
-	y91sw6zLeWo2buoyi9Yj0CTUSe3FrW19u3pD+8QcGA==
-X-ME-Sender: <xms:IvgLZpxfhew-lQM9JDDSkk_EIv_RrjCsesC0heYG_pmWu1X9Al5fFQ>
-    <xme:IvgLZpT5dTw_3lVfpE2_bGc6OcRXs-0JAQbUXvW6fhcHkkya4OiCl_uKYJXNfd-pv
-    U-LVS5fUxy87QChGA>
-X-ME-Received: <xmr:IvgLZjWURiDPEZP0K3E7KWCHbmVy2ohcEu4UYmkZelLZeh74XHuQReI8DBWortglsnDorRSqHjg1eRs7N71w5uaFN9VP4vX7pwbBPitTsOMe2us>
+	fm2; t=1712060456; x=1712146856; bh=BdXr104n6Jh9F5A/c4M0YSr/ZZmu
+	Z627UI48ZUz0HF4=; b=vZFXZXt/t2K6ZEAyM3GEMDwFNDPUkdxm434sWIbYP4Uo
+	CaPr8zY3XGmG6ZXymEPtunnqOHn/aTXtiUiaKedH0LbHzdAO/JHqtTx6eAV9OXDR
+	CCuyQIcD+rHkGZ1v2ept8Iqi1LcBqkmBLIrGP8vgZsj4gukJZBzmG5BtE/XNMZ2+
+	381skjI+MYqdERC18seLRL8Aky/0TC9C6Jv8Y4RgjmTjaw0/e07gZilt7zaaO2Ea
+	Qz9Jj47kxEX3BsKvqvuKTtteY2cX+xCEJ0QSd9uQkJ8d4qiS0BA9QEbq3jGafMSG
+	qc2bir3MVSxHVqAN6NGPeMLXerPtjA4pnWjWhCE9Bg==
+X-ME-Sender: <xms:KPgLZoSENDLOQgI0FJYHb8wqRaxe2glpptao75XLB-f_Q2nwvvyS4g>
+    <xme:KPgLZlwgEXmirFJhb7nttBaGgXxmO-G-IKqBcqZNBrUyOTF1EvyvY4QxaqG_IT0nE
+    xEuNg8oS7kHD9vF9w>
+X-ME-Received: <xmr:KPgLZl3HjYM5zYdEKrzzLj2odPIg-IH3JuQR9ShfdISuuH3BrWyz49b7Mgh5Z9z0z87-ExDPi-B90bh0ZIokG2PLyUpLQ9LIA8Q5QhttQ-gmvXU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:IvgLZrgk9AJz4qIRyXOf9SsNlw56f0Ye1gFLpnNt0yzPMJRxFnQdJQ>
-    <xmx:IvgLZrC21EDdvZzuW8-Kz7pOwaIZD2kcK3SWTBdKasKzsXPFfitCgA>
-    <xmx:IvgLZkKF2kF2Wc4V5k0-ZvTmMN3x3Q5WQpBSjgeYR5Ggt_wdSoG3Qw>
-    <xmx:IvgLZqCaOeU9N_mYpG278AVjTwSiJOSCG9lg4kg_lV6rSFSfiyjuGQ>
-    <xmx:IvgLZm74ZzD9xDKWEquSs0kyVkd3VnNGlL8qswQTKOwVadrgc7wwqoYB>
+X-ME-Proxy: <xmx:KPgLZsDcGhmxbbRricZWZAYdp-ojtIbVn0WFE-iBDIKCUqMXo_wO1g>
+    <xmx:KPgLZhhCCBCDE8zpunGlQYRObVBm6wKHs0NNYWQ3xwuBj1ogNegebg>
+    <xmx:KPgLZopQ7H3VHq3v9wA6qNOLuq4tijdaxYKqLr0-nu5s0p8tsvWs6g>
+    <xmx:KPgLZkjYz0tRy5lB3ly5j7xM1xaHruzmORe4P8wc_QJP14vlYQalmg>
+    <xmx:KPgLZmt9FkE0TZpECKWksJCE1kAzpJMfTNmVY5yN37_q-BZxJYjYID6d>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 08:20:49 -0400 (EDT)
+ 2 Apr 2024 08:20:55 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 92b71b3a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 12:20:41 +0000 (UTC)
-Date: Tue, 2 Apr 2024 14:20:47 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1670d480 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 12:20:47 +0000 (UTC)
+Date: Tue, 2 Apr 2024 14:20:53 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chris Torek <chris.torek@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 7/8] refs: add 'update-symref' command to 'update-ref'
-Message-ID: <Zgv4H66NmLZ_o1IC@tanuki>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 8/8] refs: support symrefs in 'reference-transaction' hook
+Message-ID: <Zgv4JbwM3HNX_Ftp@tanuki>
 References: <20240330224623.579457-1-knayak@gitlab.com>
- <20240330224623.579457-8-knayak@gitlab.com>
- <xmqqy19yf40l.fsf@gitster.g>
- <CAPx1GvdXdH3OdY1nC2ijVSdpWfg8jn5=j0KB+Wgv70wWeCNH5g@mail.gmail.com>
- <xmqqplvadmeq.fsf@gitster.g>
- <xmqqle5xeun1.fsf@gitster.g>
+ <20240330224623.579457-9-knayak@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,88 +82,180 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bq5a7hVlJ9ItzUQ6"
+	protocol="application/pgp-signature"; boundary="YtjZpfWlWPEwyfDE"
 Content-Disposition: inline
-In-Reply-To: <xmqqle5xeun1.fsf@gitster.g>
+In-Reply-To: <20240330224623.579457-9-knayak@gitlab.com>
 
 
---bq5a7hVlJ9ItzUQ6
+--YtjZpfWlWPEwyfDE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 31, 2024 at 06:31:14PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Mar 30, 2024 at 11:46:23PM +0100, Karthik Nayak wrote:
+> From: Karthik Nayak <karthik.188@gmail.com>
 >=20
-> > Chris Torek <chris.torek@gmail.com> writes:
-> >
-> >> For these reasons, I'd suggest that the all-zero hash be officially
-> >> deprecated in favor of create/delete and of course create-symref
-> >> and delete-symref. Of course, compatibility requires some sort
-> >> of support for the old system for some time.  As to whether that
-> >> means something like the suggestion of ".missing" etc, I have no
-> >> particular opinion -- but since the symref options are new, they
-> >> would not *need* symmetric options, if we just say that "update-symref"
-> >> cannot create or delete a symref.
-> >
-> > I love that simplicity.
+> The 'reference-transaction' hook runs whenever a reference update is
+> made to the system. In the previous commit, we added support for the
+> `update-symref` command in `git-update-ref`. While it allowed us to now
+> create symbolic refs via `git-update-ref`, it didn't activate the
+> 'reference-transaction' hook.
 >=20
-> Having said that, the loose "update that can create or delete" may
-> actually be used by applications that do not care about overwriting
-> competing operation, so I am not sure if we can easily deprecate
-> that mode of operation.  Saying "update refs/heads/next to point at
-> this object" and have it created if it does not exist may be handy
-> for some loosely written applications.
+> Let's activate the hook for symbolic reference updates too. This takes
+> the form `<symref-target> SP <ref-name> LF`, which deviates from the
+> form for regular updates since this only contains two fields.
+>=20
+> While this seems to be backward incompatible, it is okay, since the only
+> way the `reference-transaction` hook outputs this syntax is when
+> `git-update-ref` is used with `update-symref` command. The command was
+> only introduced in the previous commit and hence only users of this
+> command will face this incompatibility.
+>=20
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  Documentation/githooks.txt       | 13 +++++++++++--
+>  refs.c                           | 17 +++++++++--------
+>  t/t1416-ref-transaction-hooks.sh | 27 +++++++++++++++++++++++++++
+>  3 files changed, 47 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 37f91d5b50..ae9f02974d 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -485,8 +485,7 @@ reference-transaction
+> =20
+>  This hook is invoked by any Git command that performs reference
+>  updates. It executes whenever a reference transaction is prepared,
+> -committed or aborted and may thus get called multiple times. The hook
+> -does not cover symbolic references (but that may change in the future).
+> +committed or aborted and may thus get called multiple times.
+> =20
+>  The hook takes exactly one argument, which is the current state the
+>  given reference transaction is in:
+> @@ -513,6 +512,16 @@ to be created anew, `<old-value>` is the all-zeroes =
+object name. To
+>  distinguish these cases, you can inspect the current value of
+>  `<ref-name>` via `git rev-parse`.
+> =20
+> +For each symbolic reference update that was added to the transaction,
+> +the hook receives on standard input a line of the format:
+> +
+> +  <symref-target> SP <ref-name> LF
 
-I wouldn't say "loosely written here". I certainly know that we do use
-these implicit modes in Gitaly, and we have conciously chosen them
-because they have been supported by Git all along. It simply makes our
-lifes easier when we don't have to special-case creations and deletions
-in any way.
+I was wondering whether we want the format to be a bit more explicit.
+The proposed format works alright because refnames must not contain any
+spaces, and thus it can be disambiguated from normal ref updates. But
+it's rather easy to miss for authors of this hook.
 
-So I'd really not want those to go away or become deprecated.
+I don't really know of a better format though. We could of course prefix
+things with "symref:" or something like this, but that might not be a
+good idea either. In hindsight it would've been clever to have a
+specific prefix for every single ref update in the reference-transaction
+hook. But well, here we are.
 
 Patrick
 
-> So perhaps we can say "update with a concrete <old-oid> will ensure
-> that the <ref> poitns at <old-oid> before proceeding, but update
-> with 0{40} as <old-oid> to ensure creation is deprecated.  update
-> with 0{40} as <new-oid> as deletion is also deprecated.  Use create
-> and delete for these two deprecated operation modes".
->=20
-> This assumes that create and delete currently ensures that what is
-> asked to be created does not exist, and what is asked to be deleted
-> does exist, before the operation.  If we are loosely doing these two
-> operations, then we cannot easily deprecate the checking-update,
-> without breaking existing users.
->=20
-> As {create,update,delete,verify}-symref do not exist yet, we can
-> start with the right semantics from day one.  "update-symref" will
-> accept a <old-ref> only to ensure that the symref is pointing to
-> that ref and there is no "zero" value based creation/deletion
-> validation offered via "update-symref".  "create-symref" will error
-> out if the ref asked to be created already exists, "delete-symref"
-> will error out if the ref asked to be deleted does not exist.
+> +where `<symref-target>` is the target of the symbolic reference update
+> +passed into the reference transaction, `<ref-name>` is the full name of
+> +the ref being updated. To distinguish from the regular updates, we can
+> +note that there are only two fields.
+> +
+>  The exit status of the hook is ignored for any state except for the
+>  "prepared" state. In the "prepared" state, a non-zero exit status will
+>  cause the transaction to be aborted. The hook will not be called with
+> diff --git a/refs.c b/refs.c
+> index 706dcd6deb..d0929c5684 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2342,16 +2342,17 @@ static int run_transaction_hook(struct ref_transa=
+ction *transaction,
+> =20
+>  	for (i =3D 0; i < transaction->nr; i++) {
+>  		struct ref_update *update =3D transaction->updates[i];
+> +		strbuf_reset(&buf);
+> =20
+> -		// Reference transaction does not support symbolic updates.
+>  		if (update->flags & REF_UPDATE_SYMREF)
+> -			continue;
+> -
+> -		strbuf_reset(&buf);
+> -		strbuf_addf(&buf, "%s %s %s\n",
+> -			    oid_to_hex(&update->old_oid),
+> -			    oid_to_hex(&update->new_oid),
+> -			    update->refname);
+> +			strbuf_addf(&buf, "%s %s\n",
+> +				    update->symref_target,
+> +				    update->refname);
+> +		else
+> +			strbuf_addf(&buf, "%s %s %s\n",
+> +				    oid_to_hex(&update->old_oid),
+> +				    oid_to_hex(&update->new_oid),
+> +				    update->refname);
+> =20
+>  		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+>  			if (errno !=3D EPIPE) {
+> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-h=
+ooks.sh
+> index 2092488090..fac5d5fc6d 100755
+> --- a/t/t1416-ref-transaction-hooks.sh
+> +++ b/t/t1416-ref-transaction-hooks.sh
+> @@ -83,6 +83,33 @@ test_expect_success 'hook gets all queued updates in c=
+ommitted state' '
+>  	test_cmp expect actual
+>  '
+> =20
+> +test_expect_success 'hook gets all queued symref updates' '
+> +	test_when_finished "rm actual" &&
+> +	test_hook reference-transaction <<-\EOF &&
+> +		echo "$*" >>actual
+> +		while read -r line
+> +		do
+> +			printf "%s\n" "$line"
+> +		done >>actual
+> +	EOF
+> +	cat >expect <<-EOF &&
+> +		prepared
+> +		refs/heads/test TESTSYMREF
+> +		refs/heads/test refs/heads/symref
+> +		committed
+> +		refs/heads/test TESTSYMREF
+> +		refs/heads/test refs/heads/symref
+> +	EOF
+> +	git update-ref --no-deref --stdin <<-EOF &&
+> +		start
+> +		update-symref TESTSYMREF refs/heads/test
+> +		update-symref refs/heads/symref refs/heads/test
+> +		prepare
+> +		commit
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'hook gets all queued updates in aborted state' '
+>  	test_when_finished "rm actual" &&
+>  	git reset --hard PRE &&
+> --=20
+> 2.43.GIT
 >=20
 
---bq5a7hVlJ9ItzUQ6
+--YtjZpfWlWPEwyfDE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL+B4ACgkQVbJhu7ck
-PpRBRg/+MghB7xrqZBpP7EZxXwhmN9yqjNju8ec30rL+Ec9h7yUop+soAMaixTJv
-kuuBFKGvAphZDUm9QRcGxwR41YEtbM5XY+Pmr3TJ+IVDG9KLsjosa8WDllTWwD3j
-hWHuBnQInxAnp1mBRArSd16jbhMnkR0ls1YGNKVakc15RC1Tlm66eocbjn/HnXA/
-JfS9ANRXkOfYP74GOIuxgE2SxCKe9tCerB0ofyuTAb56/VeHuWjMObRCxobsa8gw
-WdRIkbZWNhQc+2HyqEGA1xtFeoX2nyjtDeONcIpFEy1/SaUDN7KlGeeY+LbOKxkv
-M7520x+RftavA/7vYerC602JM2dbJeDdee2IeHOVy10bvPbXmXWtxANn42uITnYZ
-5AK1m2GSSaUeZ9mOWrVP25efWZt4snXkByM+jy7LSs798irQ+RBwopujdztfHhz0
-SNBXPjk7kCFc+I2XOnRr3+23Y4mWQY8J6SN6iFQO8IkLBssWjQpD80vc5eVvl11J
-IbzhO3SJqwhS2ETWwpjdYqpirEkAiGsri4Jzyw1EBYlyuHtGtNs9ri+dHtskj+q7
-RZEgQ7+TreufH5VskddLykbAWRo4+K55Wbf6HU64hiU3eaY8pmvqvAf9oGWEGCHU
-ibvUbhDFiSc6/YikI5oFPTHbs3KAJQoGQZFHer9GLFJy7+6u/s8=
-=EoJH
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL+CQACgkQVbJhu7ck
+PpQLaQ/+Oi7v/dIm+pkOy1V9M22rQ6+K35X1ZOvXSYDE8R6vd/B69fopWpvvybM3
+9eYtJF47C0GH8Esr9U6pf3ByqxlcMCFN0k0zQPtQVwNxJPJR4kZoUci8Q0oBlGfy
+upRPhXNFS3UBBK8RzyxOs3MSIxxvMs/22qpXTE3kdEDms1o5tVT0YKp+MV2GX53U
+MrHRH13NY/wfI9hGljWW9eBc+I10VmOCNcLW80o0q087dB9LYjNMl6WIuZpmM9QU
+2JXGTvC5AUpV2yuwZvi3z04iBNDv3YunvuQAORo+q2dMKowjGAXylhDApq4uh4N7
+USctEFmzbSaZRqQWnUI2K+kb+jwZMDhkp8Mjvt++GOwknvJNsXM5BUSeYdH0LSgY
+okF3t+oCcEBiIiaMTkBswdNrR/iryxgCrEBr36tz5uDqVvf88AcsSuypzvZ8oToM
+jpxL0LOh3dfOZ+R69iYbejx+1HYClIZCDIGjicekg+QmR9mYF6BPOOtZ3Ew1Ocyf
+TGRTZpTgZpSfJCZv/5GHrPCK9a7GOL1Xtg9F35NhuA+D5F4y6T6fTzVNNpRLYIRa
+YeTUboPSFBZY4yeeYXJDZ91ItpAP+oh3BetWTqo3iVPRjDP98np0zwjqgXNxFcUU
+xejEX4V2xeep422ndaoplVG/qAu92MUEKZMhusjrYa29vbIwIpY=
+=4aIt
 -----END PGP SIGNATURE-----
 
---bq5a7hVlJ9ItzUQ6--
+--YtjZpfWlWPEwyfDE--
