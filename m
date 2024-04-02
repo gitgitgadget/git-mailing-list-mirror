@@ -1,36 +1,59 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC081AB6
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 14:56:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BAD12BF23
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 15:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712069792; cv=none; b=o2l2teoIbqIZ/VMCOdpCler6+++NGhVpbaT4KZdloMlHNPShnU7Rujmi/Pei9tgaAhCNBk6Iln8J+JOxigIlftSmfQW9+5O076inO37c+Be0YnOlt9dMaHhTXxctAYsPpXis8ml/t/918Rah6iVqvgyKBRJxEstiS9cW66XBefw=
+	t=1712070942; cv=none; b=AAoYI2OA9AqVurebNx8rKYPmV+wXNZQAaPdDDbmAmRYxXXcT1O9iS7PoYwVeqLPrmXpb/iPjLm/pMwCVvZlJ4Uif2Ebr8TSxrowXAzWWQZyOPFP+hUQwaO4WLsBQLhkhCoIBmXzeP4TTQV8y8GqVd3Oikq77ePYLpmI/JAZKLQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712069792; c=relaxed/simple;
-	bh=FiL3QM0HZ4UZ251jS+gr/5JRzUHvwv91iY9Wd5MACXM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=VXwH4RM1NfXJ2aCe9TI+m96qBnO1Dw4MBvpLatcTVUPp9ie+XcnrVGH36HnmdgIlIKtAZghOMM5OmSTtEkEUqRFaMwGE0vidushhX/69cNIg4I7LbWuiFTV7X+Qhdp8zRqgMD5Kc71zPKNZuVIOhessUtKK3A2C07hznVruXx6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=LAufnEWg; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1712070942; c=relaxed/simple;
+	bh=lsG8EdfHeKfudi18ovM597BpnewULwAmgmmwHyqL7WQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=de430S+E3JHY8WquZSAjWY+dO9rd5TuRaeYGE4njsEPMxKNZKqGGJMO1U/+6BfppQXOnM7aJbcCPeFTuX8YVcuHOwBrUkozKXwqBMLJOgGss0eUgq8YthVoDa7LeZHN5eQPMDiviIRFlVcBWha4QSwRzK/zY7pKHB2KBK+n4qtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mgHmrh7a; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="LAufnEWg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1712069788; x=1712674588; i=l.s.r@web.de;
-	bh=oXAI8veZHTAhGJMwDwXvKjRTaWRolhlunxonZ8sWRhU=;
-	h=X-UI-Sender-Class:Date:From:Subject:To:Cc;
-	b=LAufnEWgceO7wnm34LXyS+0FcFkKBNqgs8ccvMW7ge4bAzfrk0lh8UlJzcwbwqsV
-	 G4LuiMMlRzqaCQf+s9mM7397hjtVNkmBXilpsgg4qvhujJETk4rf4jvEJFNQI8hrj
-	 9x5oy8f16s+arul6KWsvmXVgecANuErq891iZR7mLMSihGp4T1lP/csmoVyu25VGk
-	 b3MrUunDAknqfcNH1StUeQgsiiFgmUAblFHVKjK3VzV49VfZROSnAjMTrNCze8zF2
-	 TuvGMVM8NT/eN5waW9OISIB379+I7AV/LrecnuSe4TWGMyU5bxLflc/DxYKG8K0oH
-	 lPvJX1O3HXWkbHrcRQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rTG-1rpSYE1YIi-002XJ3; Tue, 02
- Apr 2024 16:51:06 +0200
-Message-ID: <f9ad9f41-5b9b-474e-9818-f91fc937daae@web.de>
-Date: Tue, 2 Apr 2024 16:51:05 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mgHmrh7a"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41551639550so24231715e9.2
+        for <git@vger.kernel.org>; Tue, 02 Apr 2024 08:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712070939; x=1712675739; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vF6OEKZKsRr/cR5HbhS95keZf201CG6q4i/Y3XbqheY=;
+        b=mgHmrh7amuvE/aowLdMefoxwCQUtGrqP4gaaq+vdkGcFaHZHXQH/PSDLM/MTlf0ZRq
+         11WbBH9HN4X0BoLhBnWIXdNDyRnbzoPM1XxLq8W22c30B1HDu0HaBtujqm0g7c+xa8GP
+         sMlB14pvoYmNJj0xNmKmi9xNJUY7nDOgTiTt4k2NBcV3iL6yc6giYEzwrdpp6DlogBBq
+         gWIWnz2YzExe/3x1LeeZoqsIKjq46LIPHg9JScZpSJlcdCggkMT8PoYj75Wzu0icsUM3
+         pK8E1I6OT7Cw6RgIHmpJnBqGwwEI5pIxTePQbsieTg04DhJyT64PLspJTDoyz+x0LZ+b
+         KnDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712070939; x=1712675739;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vF6OEKZKsRr/cR5HbhS95keZf201CG6q4i/Y3XbqheY=;
+        b=OoHyoaLjKaI4oqGNFsMRwJ6XpId5f9l9ZUm/iQpl5J3QhMgnpvXFi3Gun+YoVr1xo6
+         JCWI1LyaqHpI2teXgj3Mr8vqtRIrgtSIntyVuia7lYtcU90EeBApY7fbSa/pPoSKjDIX
+         cvDkY3p5JMTcG2GY/RR5snseKcVo3tHp2OwZZ1wmYtgPB8PtpA0nTXEkm9KLHIgquZIM
+         NparLijcFU1CzmkMRgYyPfhXqNTb+RaUfqT9Lr0D9LNxmbNeWc625POWWM/+fD/qkaN5
+         Lx31hAy344Q7mRPoPkG6h1CmFinemNCXwPn3rnZSif6K7b/EU5Jn21aTVPu4JiHFBGLv
+         lQGw==
+X-Forwarded-Encrypted: i=1; AJvYcCUTZHWN53a4oE1bE+/0eBdCSRe4e5ODieWO4GlHwoZ3VkGt7GIR+OAF7jfXsMpzUSZJOTa+7vS/KEzevbQl3V0zfme7
+X-Gm-Message-State: AOJu0YwXISGfXaPgiMH+TYUl7H/RAM9DEKVaVvkj4VmZWzWNHxmFLMVu
+	t9yP88alTXbUXbR+xtwKhhZUz0i7znnc3bmXLurLvuW/K2FIPxz2
+X-Google-Smtp-Source: AGHT+IFEvfoOF9SfEHOnEnZm7dPjYkTEeNcSZJqFIXjZfZp/YzoaaRL8Q6tH5zR9FTM4Y/oGFur6GQ==
+X-Received: by 2002:a05:600c:4583:b0:414:7198:88a7 with SMTP id r3-20020a05600c458300b00414719888a7mr9974617wmo.34.1712070939057;
+        Tue, 02 Apr 2024 08:15:39 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
+        by smtp.gmail.com with ESMTPSA id r8-20020adfb1c8000000b0033e206a0a7asm14460214wra.26.2024.04.02.08.15.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Apr 2024 08:15:38 -0700 (PDT)
+Message-ID: <566bc6ac-d4d6-45e2-9875-575e187280a7@gmail.com>
+Date: Tue, 2 Apr 2024 16:15:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,103 +61,61 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] imap-send: use xsnprintf to format command
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
+To: Tamir Duberstein <tamird@fuseenergy.com>, phillip.wood@dunelm.org.uk
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+ Christian Couder <christian.couder@gmail.com>
+References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
+ <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
+ <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
+ <CAPig+cQdFi5zBkDQWTEWXCTt5h9gVFNJv7obf=tWCkOvsaEHEA@mail.gmail.com>
+ <4041487e-d8d8-481c-b490-884e31f533a8@gmail.com>
+ <CAEYvasmb1TjwWpSbfSAogbOiB64sZQiHVoUhxvY+NoLmXnRuHA@mail.gmail.com>
+ <740d1f1a-40ce-4714-91bd-1ba448e9d672@gmail.com>
+ <CAEYvaskG0BBVr+nsQ+iof=AXu3dcQHx0aRRrKRrf8e_NFANL9A@mail.gmail.com>
 Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-Cc: Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:IQMdw3Z7i3ZrG3X+r7e5XnmwR65mOvItsD7qQ8JXyzGaMUtbctA
- OqG8WcWLuR5xVnRkwe6ms0wYe77lucRQJ8H4GO8JBzqAKVUgam8l0ZTR7EBL87DWnoVBnqb
- DgqvirPNRxj8jbwj3xeHa6PLGTVFyDVutZIvgLg0sA6GpETKfh4GPr7EheRIl6b5OKiOAPE
- ILwky4TDQYLiwTXKtfm1Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Wsi+lQErZI4=;AL/Aw9ja6pyTKRX5usdegW9NJew
- dw+IqWACqwzmoQHBlkpQ8WCJlQLnq0aTDGPLYC8KoQyNbs4M2GmRfqQ7NhBfPzBeswOohgrq6
- S374BH7OSpSi2TFDyp9/DA8xmmzLcEi4P59xi+ausCjAvbwtMF3OmfG0d7hxYRHR6PcBxRqjZ
- 4RUMsCEQSWqHPWUllpTbySESBBvNVYDOo+Lc87dj0hIG/eD6+OmNzvrmS7UwOLSZ9deFsqLMW
- MlO8rK+SMMGAU723Hj1j86pSdRbUUc6b3XEs1k2H+sMQfEU/5SeyoXP8IfCVTcL+GyTgpS9Lx
- vKJpwCg/SvJC5rp1tA92OByj1GB/m0tJWjH0cQt+vqNLucJKwIAmZyhjH+BrMHmTE1ve5z0Nz
- dXDtGINzt80qw5JOolxLVvQJaeMRxONxNCIm134dHQHi8EYSMK08tfwGieJqPypeIVknXbko/
- 0Of2viJw5lE2ovD2gO/77iQfh2AeXB3d0fz/xF1LGJMkSoGoSRa71IJg7xhmN0lDc5fYo0z2B
- iPDn5JAwlmFbOyMWcJb93whw1f+z+yVrqHX1+ftMDLYe9W1eBDQxKxY/vFriD6Atc7KfT8VWc
- Y/hUGzmHbnM/y7BP3Ou76/Sf8FVDAHj4MsP8M/5lL3Kl1gQ7WRtnX6/MQrk9+hQtXLE6nu2Q1
- C8c0wVi9FtSkNXDvHMzfGuVCoDHTUnq4ylkmhZiYYuLQOQeTWtlsaLkzDmLHaVw7cveEAAetp
- JGnu5hsUsbwYdFN3+seb+dIjE1MhOWQeD69LXVyrFAwilyResVwiDDBpN/SbuBgLqg6d6a6EI
- d5YQCtJRYRk2jdxQzE23qWSmaEQHugoFx26ujcmrWoADw=
+In-Reply-To: <CAEYvaskG0BBVr+nsQ+iof=AXu3dcQHx0aRRrKRrf8e_NFANL9A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-nfsnprintf() wraps vsnprintf(3) and reports attempts to use too small a
-buffer using BUG(), just like xsnprintf().
+On 02/04/2024 12:56, Tamir Duberstein wrote:
 
-It has an extra check that makes sure the buffer size (converted to int)
-is positive.  vsnprintf(3) is supposed to handle a buffer size of zero
-or bigger than INT_MAX just fine, so this extra comparison doesn't make
-us any safer.  If a platform has a broken implementation, we'd need to
-work around it in our compat code.
+[cc'ing Christian who knows more about "git bisect" than me]
 
-Call xsnprintf() instead to reduce code duplication and make the caller
-slightly more readable by using this more common helper.
+> On Tue, Apr 2, 2024 at 12:29 PM <phillip.wood123@gmail.com> wrote:
+>> On 02/04/2024 11:26, Tamir Duberstein wrote:
+>>> On Tue, Apr 2, 2024 at 11:10 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>>> On 31/03/2024 07:49, Eric Sunshine wrote:
+>> Thanks for trying that - at least we know it isn't a problem with
+>> rebase. Lets check if there is a stale bisect (sorry I forgot about that
+>> earlier). What do
+>>
+>>       cat .git/BISECT_START
+>>       ls .git | grep -i bisect
+>>
+>> show?
+> 
+> This was the culprit! There was indeed a ` .git/BISECT_START`
+> containing "cleanup". After deleting this file I am able to remove the
+> branch.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Uploaded this message using the patched command, but that's all the
-testing I did.
+Oh good I'm glad we've found the problem.
 
- imap-send.c | 24 ++++--------------------
- 1 file changed, 4 insertions(+), 20 deletions(-)
+> I guess the only action item would be to improve the error message.
 
-diff --git a/imap-send.c b/imap-send.c
-index f2e1947e63..4caa8668e6 100644
-=2D-- a/imap-send.c
-+++ b/imap-send.c
-@@ -68,9 +68,6 @@ static void imap_warn(const char *, ...);
+Yes, there was some discussion about that relatively recently when the 
+message was changed to say "in use" rather than "checked out". Adding 
+the appropriate command name into the message would help.
 
- static char *next_arg(char **);
+When bisecting "git switch" prints a warning but still switches 
+branches, "git checkout" performs the checkout with no warning. I wonder 
+if (a) "git switch" should refuse to run without "--detach" when there 
+is a bisection in progress and (b) if "git bisect" could be more helpful 
+when it finds the broken commit by telling the user that they should run 
+"git bisect reset" to clean up.
 
--__attribute__((format (printf, 3, 4)))
--static int nfsnprintf(char *buf, int blen, const char *fmt, ...);
--
- static int nfvasprintf(char **strp, const char *fmt, va_list ap)
- {
- 	int len;
-@@ -500,19 +497,6 @@ static char *next_arg(char **s)
- 	return ret;
- }
+Best Wishes
 
--__attribute__((format (printf, 3, 4)))
--static int nfsnprintf(char *buf, int blen, const char *fmt, ...)
--{
--	int ret;
--	va_list va;
--
--	va_start(va, fmt);
--	if (blen <=3D 0 || (unsigned)(ret =3D vsnprintf(buf, blen, fmt, va)) >=
-=3D (unsigned)blen)
--		BUG("buffer too small. Please report a bug.");
--	va_end(va);
--	return ret;
--}
--
- static struct imap_cmd *issue_imap_cmd(struct imap_store *ctx,
- 				       struct imap_cmd_cb *cb,
- 				       const char *fmt, va_list ap)
-@@ -535,11 +519,11 @@ static struct imap_cmd *issue_imap_cmd(struct imap_s=
-tore *ctx,
- 		get_cmd_result(ctx, NULL);
-
- 	if (!cmd->cb.data)
--		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cmd);
-+		bufl =3D xsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cmd);
- 	else
--		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s{%d%s}\r\n",
--				  cmd->tag, cmd->cmd, cmd->cb.dlen,
--				  CAP(LITERALPLUS) ? "+" : "");
-+		bufl =3D xsnprintf(buf, sizeof(buf), "%d %s{%d%s}\r\n",
-+				 cmd->tag, cmd->cmd, cmd->cb.dlen,
-+				 CAP(LITERALPLUS) ? "+" : "");
-
- 	if (0 < verbosity) {
- 		if (imap->num_in_progress)
-=2D-
-2.44.0
+Phillip
