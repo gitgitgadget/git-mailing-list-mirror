@@ -1,65 +1,65 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638B115E1FD
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 21:58:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F5215E1FE
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 22:00:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712095129; cv=none; b=cYei7qCOH2jS91XQMUKmAynLZjm5smqEf6qTNW7Pu0NHGZouv5nFiUzb7DiisfcmEnaVyUhjdJSMhLJ78vdwHrQ02TjA80mUFPxFvyKIyv/RsMSLo8+MQy53JqFB+w0kq0XCIufhojWnNm53oQsm5L0u/NqPqG8uY8+ucB3INow=
+	t=1712095237; cv=none; b=NI4iThM/W5zyvYIVEhXRGkrSm+bzxUQrR8AnFqKsmGeJcFH03ii7i9Qmr+mAy+pR+lrI17SRlhs5gq15T72klnP4xVj2tDGgwkf7ZYOi9bAvq4oydsGg5Xa2h5IwC96TBtNtXfhfbMl1s/Rlwa9F8pXkMlFSKzqxptrPeAEVn7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712095129; c=relaxed/simple;
-	bh=rouObz+vgwjAglG0Km+I1QyFr58bHXeqAyrTTw5lvvc=;
+	s=arc-20240116; t=1712095237; c=relaxed/simple;
+	bh=Sob3gH9KWLkZdW2LDB1Ca1A2NfEHewO55Ym3mKRUBhs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dsjIykaesxpHC+I6UIA+7zX5GM2UvzFHdXBcnO7VkdEIQHyJrlcr1+k4LmI4n6wlty3tuXxX2iYVMref9ub2sfqg/VtsrA62pwbNEWB3QvGq2epevJtYS2oJRSAdTi7s6vYSb6FaHeGPJmgAJElC90rJTpLDvJYWyUDWmHZSG0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gc6JZnBd; arc=none smtp.client-ip=209.85.210.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=iS0mMu/3RKm2hc1IFuZyxyVdaEbMx1nkSMudIBfC/n1p/jHHt97pr6yUqEYGy9YB02eo9XjiOzMIryZKwhc+YE+29YRhk0QtUYYAIOLL9+ScVNojNgZIx15SpZtTdjkY11PN19aDJsKKEDmYREhaAl6Hl/JTOp5tjp64ZyTIxOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Veu+xYwS; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gc6JZnBd"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e6f69e850bso6341579b3a.0
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 14:58:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Veu+xYwS"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6eaf7c97738so2602115b3a.2
+        for <git@vger.kernel.org>; Tue, 02 Apr 2024 15:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712095127; x=1712699927; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1712095236; x=1712700036; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WpxkcxNzJYRghHpzbOtIoRkHNqzGYlogkajxD35wlDw=;
-        b=Gc6JZnBdor+YdNejdjgTVmho6DQ8rIYhLnlKlOoBmo2cwTUi/E80eM38zW3boWU3JL
-         d1idI8El9Q4pMS90C5KR0ACJH7ZU0bT2pgx6o6IBxP1x1Sz6nKJQ+OxVmgh7wCEt9Gah
-         aVxFNVzoyrhszawC33Ikg1d9tFIp2/jl+ep3mGrMFe99l0hVjnbAMpa2idp40YD3P8Ow
-         DTAepB8aghrlpvs2bi1b9KByl70JewjiYse42ZmS5VBnBZWJRFMhY/FoUwdzTfec0pT/
-         A9bTLlXd6NImrImQYWw84hdUjBoC/zhZLOwx8GtzKyzhGs0kBMKmXe4V7bp9AqDe6wdj
-         49bg==
+        bh=+dt/rhJilhQBeQdSTDymC5Q5FXal6uuQVXV2z1z2CpM=;
+        b=Veu+xYwSKl3rY9Xo5Ah+cVUxz2j2YFMAm8Hk2uGTPCcqpaYaUOR3oKTaI309UZA6Xq
+         Lh4+ROBD2Dkl2cM7UOZgBO99jtKl9NEV73p5RwIpNg8BqYCnf+FFMUXRR1hCnyIvjIRj
+         W8ohtkwhhxl5AU3ifVjhPw4x1tdlO7DRWq5U2vLeF6fOqJWSiKDvv4dY+v1mMbcfhghu
+         zBihKczOiwkW39n8cO+PU0g0N+sH1ffvvSzI5H6h1W5TohehmHXZoJne/OsabJGyROaN
+         +AFksZKoNk3buAiR+cMesdARbsirtX3eRjoX5ppJicNpICnQrEXJM+uT1bhi2Jf5YE5X
+         30/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712095127; x=1712699927;
+        d=1e100.net; s=20230601; t=1712095236; x=1712700036;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WpxkcxNzJYRghHpzbOtIoRkHNqzGYlogkajxD35wlDw=;
-        b=OjZQrfsu/8vHIYeuoAFCGrZZ5XazFAuib0nmEE81Mk4/shvaICRN9mRG4u+S/sTji0
-         YeKuvfqOgbu+7lhqulI+ipAkCZlSM0mitqyF6oNfh3M07fCUDiXaTo96trKGcYwQarM9
-         wtjqZVkS87qpUvIhz2JHyEeuWYz7z5wDexiWg/ebVYuUM5rWXj93FrFAZMfF4r+pLAM6
-         oVlrTy9rMplp1U1X1VZz1UqbFWtSa90EgiG5LJp9UHOKuDxCBl6t0u7AHwvpCdkakq4A
-         mAMYpzKPDbesgADT/JhHLeS2Eq0BHqAgrjvlXoxppRZZcsuW/ICdJy2qGy1TlDCvRnKM
-         AxAg==
-X-Gm-Message-State: AOJu0YwjX+NJMOJb0sDePv+yGJR1z5Y3jMW/S7TyTZeGqrhADLSDZxG6
-	TWpPvHyOK+RPLRYy1YD9+xoskzhTA2nceVbCjpAIy8L3oWkcFz4GxdXqmQ8D
-X-Google-Smtp-Source: AGHT+IEFuQjovlV0hV2Pf8D17X7nYraZZz3w8RVEENqfN8NrJkkRArrCE335RcoygNA+TbjWYcReIA==
-X-Received: by 2002:a05:6a00:27a1:b0:6ea:baed:a134 with SMTP id bd33-20020a056a0027a100b006eabaeda134mr1210219pfb.2.1712095127507;
-        Tue, 02 Apr 2024 14:58:47 -0700 (PDT)
+        bh=+dt/rhJilhQBeQdSTDymC5Q5FXal6uuQVXV2z1z2CpM=;
+        b=DslUI03Hnww2SyHcaVukdzHb7tGGD1CbpTfxVj8RsLN7Qo/RdIExenJImBXUljZux8
+         DCDk1ed9CmAz5jV7Wd50I3d0LqGHc9SnBrvMk3bP6UvJlLxCNThqJJKK4y0rH/+1/S6t
+         2o+VLW5c4gjCkp6hqfjFVIeGL/ajOsYfkDqaxgUCB2K6e1nJAM1yyobXnzhag+mFir8R
+         nzqjNyZEKChig0vtkHke9qEZbEVZHr7jaaLlzxoFEFt+DQtPztNgqeBg07R/o0CHc93h
+         PteyHMW9RAot4+JAXEBjzldjhw9T3TwG+HPZqlamDnB60IyJa9UZZ8dZW+PV4NHny7G8
+         pEUA==
+X-Gm-Message-State: AOJu0YxOgVjxhfFr5+wXJQQPImATBDtAa5htFO0vVUs9KKjzBZOCKOLy
+	cdKfd7Pnn7x1pkh3hwzfLuGZ2nefQBVjwPZYO8ewK0eQItO/5HCYf/NKQa8G
+X-Google-Smtp-Source: AGHT+IG/VOJfw3VrksbOhy+Qsc/BXL1Zq/fY0oIHrsciJHYon/tswkNwIywG29FqVCOpR2mS1uxdQw==
+X-Received: by 2002:a05:6a20:4321:b0:1a3:c266:e7bd with SMTP id h33-20020a056a20432100b001a3c266e7bdmr1341117pzk.38.1712095235566;
+        Tue, 02 Apr 2024 15:00:35 -0700 (PDT)
 Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id w18-20020a63af12000000b005e83b64021fsm10261548pge.25.2024.04.02.14.58.46
+        by smtp.gmail.com with ESMTPSA id v16-20020a62a510000000b006ead6e28ee6sm10281912pfm.58.2024.04.02.15.00.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Apr 2024 14:58:47 -0700 (PDT)
-Date: Wed, 3 Apr 2024 03:28:43 +0530
+        Tue, 02 Apr 2024 15:00:35 -0700 (PDT)
+Date: Wed, 3 Apr 2024 03:30:32 +0530
 From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] builtin/commit: error out when passing untracked
- path with -i
-Message-ID: <gvb4jewvfu733mnrqvna4ulbinep5cjs5b4tw5vr2zet7p2bky@2hg2nmq6gnvz>
+Subject: Re: [PATCH v3 3/3] builtin/add: error out when passing untracked
+ path with -u
+Message-ID: <rrt3yuhd7sjhgqhra75w43dp2okrx5h4urqiyopxe4dmnwunnk@tifrkksvm3ak>
 References: <20240329205649.1483032-2-shyamthakkar001@gmail.com>
- <20240402213640.139682-5-shyamthakkar001@gmail.com>
- <xmqqmsqb30a1.fsf@gitster.g>
+ <20240402213640.139682-7-shyamthakkar001@gmail.com>
+ <xmqqh6gj305n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,47 +68,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqmsqb30a1.fsf@gitster.g>
+In-Reply-To: <xmqqh6gj305n.fsf@gitster.g>
 
 On Tue, 02 Apr 2024, Junio C Hamano <gitster@pobox.com> wrote:
 > Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 > 
-> > diff --git a/builtin/commit.c b/builtin/commit.c
-> > index 8f31decc6b..09c48a835a 100644
-> > --- a/builtin/commit.c
-> > +++ b/builtin/commit.c
-> > @@ -441,10 +441,17 @@ static const char *prepare_index(const char **argv, const char *prefix,
-> >  	 * (B) on failure, rollback the real index.
-> >  	 */
-> >  	if (all || (also && pathspec.nr)) {
-> > +		char *ps_matched = xcalloc(pathspec.nr, 1);
-> >  		repo_hold_locked_index(the_repository, &index_lock,
-> >  				       LOCK_DIE_ON_ERROR);
-> >  		add_files_to_cache(the_repository, also ? prefix : NULL,
-> > -				   &pathspec, NULL, 0, 0);
-> > +				   &pathspec, ps_matched, 0, 0);
-> > +		if (!all && report_path_error(ps_matched, &pathspec)) {
-> > +			free(ps_matched);
-> > +			exit(1);
+> > When passing untracked path with -u option, it silently succeeds.
+> > There is no error message and the exit code is zero. This is
+> > inconsistent with other instances of git commands where the expected
+> > argument is a known path. In those other instances, we error out when
+> > the path is not known.
+> >
+> > Fix this by passing a character array to add_files_to_cache() to
+> > collect the pathspec matching information and report the error and
+> > exit if a pathspec does not match any cache entry. Also add a testcase
+> > to cover this scenario.
+> >
+> > Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> > ---
+> >  builtin/add.c         | 11 ++++++++++-
+> >  t/t2200-add-update.sh | 10 ++++++++++
+> >  2 files changed, 20 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/builtin/add.c b/builtin/add.c
+> > index dc4b42d0ad..88261b0f2b 100644
+> > --- a/builtin/add.c
+> > +++ b/builtin/add.c
+> > @@ -370,6 +370,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+> >  	int add_new_files;
+> >  	int require_pathspec;
+> >  	char *seen = NULL;
+> > +	char *ps_matched = NULL;
+> >  	struct lock_file lock_file = LOCK_INIT;
+> >  
+> >  	git_config(add_config, NULL);
+> > @@ -549,13 +550,20 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+> >  
+> >  	begin_odb_transaction();
+> >  
+> > +	ps_matched = xcalloc(pathspec.nr, 1);
+> >  	if (add_renormalize)
+> >  		exit_status |= renormalize_tracked_files(&pathspec, flags);
+> >  	else
+> >  		exit_status |= add_files_to_cache(the_repository, prefix,
+> > -						  &pathspec, NULL,
+> > +						  &pathspec, ps_matched,
+> >  						  include_sparse, flags);
+> >  
+> > +	if (take_worktree_changes && !add_renormalize &&
+> > +	    report_path_error(ps_matched, &pathspec)) {
+> > +		free(ps_matched);
+> > +		exit(1);
+> > +	}
 > 
-> No need to free(ps_matched) immediately before exiting.  There are
-> other recources (like pathspec) we are holding and not clearing, and
-> we do not want to bother cleaning them all.
+> Shouldn't we pay attention to ignore_add_errors?  The same comments
+> about free'ing and exit code from the review on the previous step
+> apply here, too.
 
-Understood.
-
-> As we have another "if failed, die()" immediately after this hunk,
-> adding another exit() would be OK.  Shouldn't we be exiting with 128
-> to match what die() does, though?
-
-I tried to match the exit code with the existing invocations of the same
-when doing partial commit and reporting path errors. In
-builtin/commit.c:
-
-511	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
-512		exit(1);
-
-list_paths() returns the return value of report_path_error().
+Will update.
 
 > Other than that, looking good.
 
