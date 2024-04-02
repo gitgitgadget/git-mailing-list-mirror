@@ -1,139 +1,188 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3825114B065
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 16:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EE014AD1D
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 16:27:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712075204; cv=none; b=h7bFYzS/7BrFwS7oXn98owWxIeUJkZ6M23B1xrrSESmBArPeGd3dftCW9/gs6ynXtzhB0mYUa/d470McNqjso/lQ/PszTohcf6ZD9hYMkvwwSZfcASDzDAKVm3w7rNf62kwotJYOvb3BvcKhgsmTXRxaC3cWt+3CXfy2IVajJTA=
+	t=1712075281; cv=none; b=sYMqfYIh10Wk5aCHMVULzz85LbiLk9ILcWx+MoE3gi6mokBpeBhChnnyO8zDxA1Rc8qlL3lns9AKidmCCkMbPb5obOUHn3U94ILuz9eJHgYSsHeDZHq2uwPDJVT4SjCJYgZVqlFJEZz9zVa2v/65V/CysyjlW7h/iyEEpl7D2zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712075204; c=relaxed/simple;
-	bh=02ngZJ+jOKJQJnOyXerxczmrFfrMhBBG7B8eXlI64No=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=qwOoQO8FGhyV7CE4TCKz9Un8jRrxRSgX/NbhSR2GVZI8hQ0TkXFvdW+pQ9SskX2HEUN14Fp7IKFIKpG6sjYtsq4pYXy2aXIYADVsce6Kx6xhFBMHeHAZlo4IR+4GAh/HF+qbbkOudNprcJywVZAn9nXKdPEZD6wHus4PTOxfb+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=xLqLv5f4; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1712075281; c=relaxed/simple;
+	bh=t9O6lhjGv7Ko36Q47n9k5qNv853auGIkeaAMVfdknNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MDtJKj11CHd+vLhMVU5MumsBG3d5N/aQ2R5Rwj3Wt/vGEG/5tzSOZ0PSJnrTioU6hSfb7SngHk7UlqtxtNblvIGbq9JpMlWAG6dxswfROn/gzzpFPy2BS1n2qxI1Nb9e+4QPOkTcn+6k9G0LZ7qRw8P9XzSd/bA63ibRkS5DN6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5CE8mR+; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xLqLv5f4"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-78a5580333bso380276885a.2
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 09:26:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5CE8mR+"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5a7c3dd2556so1003999eaf.1
+        for <git@vger.kernel.org>; Tue, 02 Apr 2024 09:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712075201; x=1712680001; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n0FJwZtvvJ4dsBw/HWIVWrfmMGrstd2+LncpnJqteuc=;
-        b=xLqLv5f45K27cn3192dxFu/7hiAZ5zURwieD3uA7l72LnpEW+z4aatv0rzTNrxCAY7
-         oYZBs4waV9HGhGirJh+GF6R7AOQuTDztXOB7PUr1C0dBMYbrk5fc/0bdyYMM0Z600tyX
-         8rLi4Ss22xu7jBb3GylRZGv8PYJ9/wEC/ulTiAgUWftbzLw+FnBEnAFU5F+jC6xXxabj
-         zXcnPo3y/zGg5ZNTebBEs4bG4zn+1WpZGUxa/hY7OWYTEu/kikgNRoF5YBys9495jURj
-         NQO6/DwiaD+RJAUKTUYIdzFDaCQ1JT56v9azPumsk2GyctDi96BKTptI3Lwet43+eSM1
-         eYVQ==
+        d=gmail.com; s=20230601; t=1712075278; x=1712680078; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aO+TnTxITWRrbEPK5eNMgNmoddtF+nLKY3HxU9XLVI8=;
+        b=X5CE8mR+uqHiuGaBRPgcyG4zyhOomCmww1/WpZl4UrcTW0B9ERC/AKqoF9rbrPKa0p
+         GMLhBST2z19FtZbCuDtypFMFkWdMAWrbm/prWXS9sthcYYAl44jdi02xz60wvVKbFWVm
+         1ws4AmD2USI8SGkIMY8fqAj/45nMhKsmfmxFY8Pijpz/+v3LxvRHUX8Fr0eIQ8nnj+cR
+         P1ovS27jyHruBPsb5rW+8GemiAxamzpR0voNNyJzIM9kfkYbLO7T3ndfCNCXJk9uqYdC
+         h0ENckV//RkzQdANeGSR8BDrmtiGQ3lxTg8JxrldR2m7lA0ysh6DVRh07jM8ROU31w1u
+         Gksw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712075201; x=1712680001;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1712075278; x=1712680078;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n0FJwZtvvJ4dsBw/HWIVWrfmMGrstd2+LncpnJqteuc=;
-        b=ReE9JVFxT1F8emJEkJWuZ8qVDPymnZaSu74VcEIwNN1e4aSOYmy6jgFejf5i8kOIXV
-         ePKv7tS5CWVVvuk3Q1PIv2qvHjmEBUh/Y1oHkw0FBoN4Sv1T92st1yh/vpHPEHUsFEBZ
-         CRzK4hv//ZNENeReBG7WU+RLCGclpIDEOapT9x9GP/f0mGM8Noe2OmAVrdfpa5MA48bE
-         bYmCOun4kCSgw1C1MVHbaVw686QWdMr1bywQ+QxelMQsCxIE3/As+CV63rYV4F/Gr+sw
-         Bn+V9mYETTUexFkghAJXmdqQ5R4soBaaahDre+pmteXI+JV0ANQJiUyfgFOakBC8zepP
-         ONmw==
-X-Gm-Message-State: AOJu0YwU9dvy0vNuDCpKQLTwy01IVp7zS/x0woY1lWUbw9A5piRmUEXj
-	wwdDnekvJcutLWaN+jhfK+W+bO+MfFN84eDVRtmjQr/cPFyBnsOsvVBzLU0yU26P8g2nhaLSvSI
-	ai0M=
-X-Google-Smtp-Source: AGHT+IHM4nDC8pAoP60mUENxj5VYO1X9D2hnY1bDM3pG2AeJDRWRKcZ7iSY1C0UUKT5Cf66hdze2/w==
-X-Received: by 2002:a05:620a:45a9:b0:78b:ba82:d131 with SMTP id bp41-20020a05620a45a900b0078bba82d131mr16665441qkb.36.1712075200837;
-        Tue, 02 Apr 2024 09:26:40 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u9-20020a05620a022900b0078be2f2ab7asm1823995qkm.70.2024.04.02.09.26.40
+        bh=aO+TnTxITWRrbEPK5eNMgNmoddtF+nLKY3HxU9XLVI8=;
+        b=DSM3z/eX6Vt77z5DTLdsCzPud4mJddaYiC5cXa8R5x2vSfmE5GJHXj+nc+6CcfzEER
+         mT8nP9P7Llel9rpeP1crBbUW4ovhbTELwEZBtGzWCgD3M5J03PjOmthLLP0rtbQmvIxp
+         ZgXmZC/8i2/YVJyzh8BtEf0WddEP0lNI3PmdJH8Sc/dZhgk7t2tOEK9zVzamk/YPz2F3
+         NsTXkkzr41FbwKy7JuFNCIasPVLfFEXOHOP/vv946DF06gvmak+YYVL+riDDfhb9W6Eq
+         1f7Rebtz/fTV8aJrfvGZ5eqgWfxyZAEMwpxBJtsqltV2sYJoOxIo14m+/MgTvaYSriYR
+         5NzQ==
+X-Gm-Message-State: AOJu0YxSSexeesFNxzJQ2DFbvU9Nxxxoz93PNqrnp8TOvetDA9T8kkOV
+	Jpr8DiZJPu6BZiv1A5yNDbCo9kLA1/oLvasPHrVp2y2y5xw42BM053XbG6Xz
+X-Google-Smtp-Source: AGHT+IFM7MvZ8bszLw03FrTjMhSW5Osm7Z2JtmGHfhk19m9gl7CuBpDZq9havpkOEebp4mR1JJQXoA==
+X-Received: by 2002:a05:6820:c87:b0:5a5:2714:7df5 with SMTP id ei7-20020a0568200c8700b005a527147df5mr462215oob.5.1712075278437;
+        Tue, 02 Apr 2024 09:27:58 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id dh17-20020a0568201e1100b005a48e64c699sm2803855oob.40.2024.04.02.09.27.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Apr 2024 09:26:40 -0700 (PDT)
-Date: Tue, 2 Apr 2024 12:26:34 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t/t7700-repack.sh: fix test breakages with
- `GIT_TEST_MULTI_PACK_INDEX=1`
-Message-ID: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
+        Tue, 02 Apr 2024 09:27:58 -0700 (PDT)
+Date: Tue, 2 Apr 2024 11:27:01 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/7] reftable/refname: refactor binary search over
+ refnames
+Message-ID: <zvw6ezlchqyl5tq4zuia7az5b3i4swwvtm42muwe4i7gngswgz@ztujhb4ruewm>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <cover.1711109214.git.ps@pks.im>
+ <cover.1711361340.git.ps@pks.im>
+ <9ffcf45c32f22245c9978436affcefa914fc6927.1711361340.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <9ffcf45c32f22245c9978436affcefa914fc6927.1711361340.git.ps@pks.im>
 
-There are a handful of related test breakages which are found when
-running t/t7700-repack.sh with GIT_TEST_MULTI_PACK_INDEX set to "1" in
-your environment.
+On 24/03/25 11:10AM, Patrick Steinhardt wrote:
+> It is comparatively hard to understand how exactly the binary search
+> over refnames works given that the function and variable names are not
+> exactly easy to grasp. Rename them to make this more obvious. This
+> should not result in any change in behaviour.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/refname.c | 44 ++++++++++++++++++++++----------------------
+>  1 file changed, 22 insertions(+), 22 deletions(-)
+> 
+> diff --git a/reftable/refname.c b/reftable/refname.c
+> index 64eba1b886..9ec488d727 100644
+> --- a/reftable/refname.c
+> +++ b/reftable/refname.c
+> @@ -12,15 +12,15 @@
+>  #include "refname.h"
+>  #include "reftable-iterator.h"
+>  
+> -struct find_arg {
+> -	char **names;
+> -	const char *want;
+> +struct refname_needle_lesseq_args {
+> +	char **haystack;
+> +	const char *needle;
+>  };
+>  
+> -static int find_name(size_t k, void *arg)
+> +static int refname_needle_lesseq(size_t k, void *arg)
+>  {
+> -	struct find_arg *f_arg = arg;
+> -	return strcmp(f_arg->names[k], f_arg->want) >= 0;
+> +	struct refname_needle_lesseq_args *f_arg = arg;
 
-Both test failures are the result of something like:
+nit: Looks like the `f_arg` variable name is a remnant from when the
+type was called `find_arg`. Do we want to rename this to `args`? We 
+could also rename `void *arg` to `void *_args`.
 
-    git repack --write-midx --write-bitmap-index [...] &&
+> +	return strcmp(f_arg->needle, f_arg->haystack[k]) <= 0;
+>  }
+>  
+>  static int modification_has_ref(struct modification *mod, const char *name)
+> @@ -29,21 +29,21 @@ static int modification_has_ref(struct modification *mod, const char *name)
+>  	int err = 0;
+>  
+>  	if (mod->add_len > 0) {
+> -		struct find_arg arg = {
+> -			.names = mod->add,
+> -			.want = name,
+> +		struct refname_needle_lesseq_args arg = {
+> +			.haystack = mod->add,
+> +			.needle = name,
+>  		};
+> -		size_t idx = binsearch(mod->add_len, find_name, &arg);
+> +		size_t idx = binsearch(mod->add_len, refname_needle_lesseq, &arg);
+>  		if (idx < mod->add_len && !strcmp(mod->add[idx], name))
+>  			return 0;
+>  	}
+>  
+>  	if (mod->del_len > 0) {
+> -		struct find_arg arg = {
+> -			.names = mod->del,
+> -			.want = name,
+> +		struct refname_needle_lesseq_args arg = {
 
-    test_path_is_file $midx &&
-    test_path_is_file $midx-$(midx_checksum $objdir).bitmap
+nit: In the other commits we use `args`. Do we want to be consistent?
 
-, where we repack instructing Git to write a new MIDX and corresponding
-MIDX bitamp.
+-Justin
 
-The error occurs when GIT_TEST_MULTI_PACK_INDEX=1 is found in the
-enviornment. This causes Git to write out a second MIDX (after
-processing the builtin's `--write-midx` argument) which is identical to
-the first, but does not request a bitmap (since we did not set the
-GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP variable in the environment).
+> +			.haystack = mod->del,
+> +			.needle = name,
+>  		};
+> -		size_t idx = binsearch(mod->del_len, find_name, &arg);
+> +		size_t idx = binsearch(mod->del_len, refname_needle_lesseq, &arg);
+>  		if (idx < mod->del_len && !strcmp(mod->del[idx], name))
+>  			return 1;
+>  	}
+> @@ -71,11 +71,11 @@ static int modification_has_ref_with_prefix(struct modification *mod,
+>  	int err = 0;
+>  
+>  	if (mod->add_len > 0) {
+> -		struct find_arg arg = {
+> -			.names = mod->add,
+> -			.want = prefix,
+> +		struct refname_needle_lesseq_args arg = {
+> +			.haystack = mod->add,
+> +			.needle = prefix,
+>  		};
+> -		size_t idx = binsearch(mod->add_len, find_name, &arg);
+> +		size_t idx = binsearch(mod->add_len, refname_needle_lesseq, &arg);
+>  		if (idx < mod->add_len &&
+>  		    !strncmp(prefix, mod->add[idx], strlen(prefix)))
+>  			goto done;
+> @@ -90,11 +90,11 @@ static int modification_has_ref_with_prefix(struct modification *mod,
+>  			goto done;
+>  
+>  		if (mod->del_len > 0) {
+> -			struct find_arg arg = {
+> -				.names = mod->del,
+> -				.want = ref.refname,
+> +			struct refname_needle_lesseq_args arg = {
+> +				.haystack = mod->del,
+> +				.needle = ref.refname,
+>  			};
+> -			size_t idx = binsearch(mod->del_len, find_name, &arg);
+> +			size_t idx = binsearch(mod->del_len, refname_needle_lesseq, &arg);
+>  			if (idx < mod->del_len &&
+>  			    !strcmp(ref.refname, mod->del[idx]))
+>  				continue;
+> -- 
+> 2.44.GIT
+> 
 
-Since c528e179662 (pack-bitmap: write multi-pack bitmaps, 2021-08-31),
-the MIDX machinery will drop an existing MIDX bitmap when rewriting an
-identical MIDX which does not itself request a corresponding bitmap,
-which is similar to the way repack itself behaves in the pack-bitmap
-case.
 
-Correct these issues (which date back to [1] and [2], respectively) by
-explicitly setting GIT_TEST_MULTI_PACK_INDEX to zero before running each
-command.
-
-In the future, we should consider removing GIT_TEST_MULTI_PACK_INDEX,
-and in general clean up unused GIT_TEST_-variables. But that is a larger
-effort, and this ensures that we can cleanly run:
-
-    $ GIT_TEST_MULTI_PACK_INDEX=1 make test
-
-in the meantime.
-
-[1]: 324efc90d1b (builtin/repack.c: pass `--refs-snapshot` when writing
-  bitmaps, 2021-10-01)
-
-[2]: 197443e80ab (repack: don't remove .keep packs with
-  `--pack-kept-objects`, 2022-10-17).
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/t7700-repack.sh | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 94f9f4a1da..127efe99f8 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -629,6 +629,7 @@ test_expect_success '--write-midx with preferred bitmap tips' '
- 		git log --format="create refs/tags/%s/%s %H" HEAD >refs &&
- 		git update-ref --stdin <refs &&
- 
-+		GIT_TEST_MULTI_PACK_INDEX=0 \
- 		git repack --write-midx --write-bitmap-index &&
- 		test_path_is_file $midx &&
- 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-@@ -749,6 +750,7 @@ test_expect_success '--write-midx with --pack-kept-objects' '
- 		keep="$objdir/pack/pack-$one.keep" &&
- 		touch "$keep" &&
- 
-+		GIT_TEST_MULTI_PACK_INDEX=0 \
- 		git repack --write-midx --write-bitmap-index --geometric=2 -d \
- 			--pack-kept-objects &&
- 
--- 
-2.44.0.414.g7e8d435d58e
