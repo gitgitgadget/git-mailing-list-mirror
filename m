@@ -1,51 +1,55 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3A78495
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 18:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652C715B104
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 18:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712083043; cv=none; b=PnzewrA2qtGS0tPNoOo90uyeY9qpvc/8oAvVgqlBXQlj3aQuN6OU4KlMBicU/s58UxnVhyFQEkn8TbRfHNZPe9bgI2CkSuS8o2Nv6qFTy2kbe8TZ7KOAAng2FAoLHlORSW5Cw7k9EMbL2k9zpso0W+VPzKFbKzTq0aq789SbnJE=
+	t=1712083270; cv=none; b=BhPqz2s0cNs0R3xsDtGzJHeRtRNSeDRL5rvHztBPmccfOuJ+pj5SniyKeJvC7Ow1ZM6+LPsSrSzyrAeczdEDKg+YTDAY7iiNh7J14mAU1Au6M3vGB2UH+kdvZGeqYHINIGyMNP3WAjnwyj/SbptGnbmkDQg1Dy8A4w7P0+qXJCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712083043; c=relaxed/simple;
-	bh=dx6F0dUW/9CsieKLNjAP3YCTu7nhJaxp//rUFOumtBo=;
+	s=arc-20240116; t=1712083270; c=relaxed/simple;
+	bh=yF8G0CLZmsgi05kC6edzNtFU3ERngv4T6mH7RDuyXSs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=elI0XlR9ycSYFuPoNjFQk/QraZnurYS41ZMxBDBVvknVN5QcBi7I3h/FoYemHTdhjGD2akHtUHGW0bNW3vFG4+YOLYriAMWlvzTHs9ICDN1ONzgaTcpPmxVs/gMnMo7Vf7bDi1X5FLZvoDU26iC/m+H0V1K2m0kY0x5lBu1GPcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gTCN2Lge; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=pZR1iefIf6/XoFq9u62NmQccxFdHeyO6YH6VUvVv/zJahSaEjU+EshHwnTeN1r4tYlWHk6sW94RU7N+a/qMTRasTvtbbUGze7fBQCNbuwwbsc5hyeUvacGTXSncpET7iBPz4ztMjGwOy3FVVjDrk8BPMlU+NhEV5iKkBILh9KCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jjds4fKa; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gTCN2Lge"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jjds4fKa"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B20DF2AC02;
-	Tue,  2 Apr 2024 14:37:15 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id ED25E2AC2F;
+	Tue,  2 Apr 2024 14:41:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dx6F0dUW/9CsieKLNjAP3YCTu7nhJaxp//rUFO
-	umtBo=; b=gTCN2LgeTO7shDXXj6v0No9PsS7vuZ1u8m80ylQt823VO/EH7u1CWB
-	jEKHZJOM50xrHfMBUESKoBeIrL+egeIfbQhEhKYpG6wffr7vFaDX4c04NzLvcAx8
-	je+zR982RgNuRTL4TlkNwYLu71U98RfkK0ZE49OMA4tMontncjnyI=
+	:content-type; s=sasl; bh=yF8G0CLZmsgi05kC6edzNtFU3ERngv4T6mH7RD
+	uyXSs=; b=Jjds4fKa4+trPsQWzP9oBPH5qQhYiE28n153ZS1SvWmNtQcpmMRaqi
+	YXB75wEIX5gvvQQ74zvRaiZKV/SMr9TymLZNZi+Ln1NVMYuRAtCJ6/3OXiQNCVNa
+	OxYoW7tpv49BycaaaBUAin3bFm/J4ywb0AnfDq8MRd51Shme0CGfk=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AAB172AC01;
-	Tue,  2 Apr 2024 14:37:15 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E691E2AC2E;
+	Tue,  2 Apr 2024 14:41:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 33A962AC00;
-	Tue,  2 Apr 2024 14:37:12 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 01FAD2AC2D;
+	Tue,  2 Apr 2024 14:41:04 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/t7700-repack.sh: fix test breakages with
- `GIT_TEST_MULTI_PACK_INDEX=1`
-In-Reply-To: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Tue, 2 Apr 2024 12:26:34 -0400")
-References: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
-Date: Tue, 02 Apr 2024 11:37:10 -0700
-Message-ID: <xmqqr0fn4nmx.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  Aishwarya Narayanan
+ <aishnana.03@gmail.com>,  git@vger.kernel.org
+Subject: Re: GSoC 2024 [PATCH v2] Fix Git command exit code suppression in
+ test script t2104-update-index-skip-worktree.sh
+In-Reply-To: <Zgw_KJ3wO-x2LXI0@tanuki> (Patrick Steinhardt's message of "Tue,
+	2 Apr 2024 19:23:52 +0200")
+References: <CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3DodreYoL7g@mail.gmail.com>
+	<ZgvmoSOPs6FG4jGZ@tanuki>
+	<CAPig+cRtzbv57=k7ti0YcsRR05gz4v_gExgwi6qCtT6f0i2oKA@mail.gmail.com>
+	<Zgw_KJ3wO-x2LXI0@tanuki>
+Date: Tue, 02 Apr 2024 11:41:03 -0700
+Message-ID: <xmqqmsqb4ngg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,62 +59,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 051FB056-F120-11EE-BEC7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 8FE1EE2A-F120-11EE-AFC3-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Taylor Blau <me@ttaylorr.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> There are a handful of related test breakages which are found when
-> running t/t7700-repack.sh with GIT_TEST_MULTI_PACK_INDEX set to "1" in
-> your environment.
+>> Micro correction: Documentation/CodingGuidelines says this:
+>> 
+>>     We use tabs to indent, and interpret tabs as taking up
+>>     to 8 spaces.
 >
-> Both test failures are the result of something like:
->
->     git repack --write-midx --write-bitmap-index [...] &&
->
->     test_path_is_file $midx &&
->     test_path_is_file $midx-$(midx_checksum $objdir).bitmap
->
-> , where we repack instructing Git to write a new MIDX and corresponding
-> MIDX bitamp.
->
-> The error occurs when GIT_TEST_MULTI_PACK_INDEX=1 is found in the
-> enviornment. This causes Git to write out a second MIDX (after
-> processing the builtin's `--write-midx` argument) which is identical to
-> the first, but does not request a bitmap (since we did not set the
-> GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP variable in the environment).
+> Huh, that's even weirder. The diff changes indentation from four spaces
+> to two spaces for me.
 
-Doesn't it sound more like a bug, though?  If a command line option
-requests something, should we still be honoring a contradicting
-instruction given by environment variable(s)?
+Indeed, the original is already flawed.
 
-But anyway.
+----- >8 --------- >8 --------- >8 --------- >8 ----
+Subject: t2104: style fixes
 
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index 94f9f4a1da..127efe99f8 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -629,6 +629,7 @@ test_expect_success '--write-midx with preferred bitmap tips' '
->  		git log --format="create refs/tags/%s/%s %H" HEAD >refs &&
->  		git update-ref --stdin <refs &&
->  
-> +		GIT_TEST_MULTI_PACK_INDEX=0 \
->  		git repack --write-midx --write-bitmap-index &&
->  		test_path_is_file $midx &&
->  		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+We use tabs to indent, not two or four spaces.  
 
-Is it a viable alternative approach to skip this check (and the
-other one) when GIT_TEST_MULTI_PACK_INDEX is set (i.e., lazy
-prereq).  It will give us a better documentation value, e.g.,
+These days, even the test fixture preparation should be done inside
+test_expect_success block.
 
-	test_lazy_prereq FORCED_MIDX '
-                # Features that are broken when GIT_TEST_* forces it
-                # to enable are protexted with this prerequisite.
-		test "$GIT_TEST_MULTI_PACK_INDEX" = 1;
-	'
+Address these two style violations in this test.
 
-	test_expect_success !FORCED_MIDX '--write-midx with ...' '
-		...
-	'
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t2104-update-index-skip-worktree.sh | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-With a single comment, we can annotate any future tests that relies
-on features working correctly even with GIT_TEST_MULTI_PACK_INDEX.
+diff --git c/t/t2104-update-index-skip-worktree.sh w/t/t2104-update-index-skip-worktree.sh
+index 0bab134d71..7ec7f30b44 100755
+--- c/t/t2104-update-index-skip-worktree.sh
++++ w/t/t2104-update-index-skip-worktree.sh
+@@ -11,27 +11,27 @@ TEST_PASSES_SANITIZE_LEAK=true
+ sane_unset GIT_TEST_SPLIT_INDEX
+ 
+ test_set_index_version () {
+-    GIT_INDEX_VERSION="$1"
+-    export GIT_INDEX_VERSION
++	GIT_INDEX_VERSION="$1"
++	export GIT_INDEX_VERSION
+ }
+ 
+ test_set_index_version 3
+ 
+-cat >expect.full <<EOF
+-H 1
+-H 2
+-H sub/1
+-H sub/2
+-EOF
++test_expect_success 'setup' '
++	cat >expect.full <<-\EOF &&
++	H 1
++	H 2
++	H sub/1
++	H sub/2
++	EOF
+ 
+-cat >expect.skip <<EOF
+-S 1
+-H 2
+-S sub/1
+-H sub/2
+-EOF
++	cat >expect.skip <<-\EOF &&
++	S 1
++	H 2
++	S sub/1
++	H sub/2
++	EOF
+ 
+-test_expect_success 'setup' '
+ 	mkdir sub &&
+ 	touch ./1 ./2 sub/1 sub/2 &&
+ 	git add 1 2 sub/1 sub/2 &&
