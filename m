@@ -1,115 +1,136 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-of-o55.zoho.com (sender4-of-o55.zoho.com [136.143.188.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8594E80631
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 13:21:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712064099; cv=none; b=jqUzhKyU8CfEnh/uEEYCxJU3D2rcsSFOaWriJpVHP54G/zbBzU30TkKQ0I9Ie+Zd68nHIjTVsadQEMrRLp1MyutxuzNxxL2oEQ2zhLGFZn2D/Fh9xUHWFvzAimDw4rmtKBX5+rfVec6oAcZogDcTADXLE2YPugQGqxuta4exuwI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712064099; c=relaxed/simple;
-	bh=UNGP3J306Vu4saQgE4rDQw9Pqn3iMD5slyoFZufmWIM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RVDXp4AEVKI8BqC3yTj31QAEwiyZetsAQgYCHHPafYj/8mpNoQUd8ChZ6Ysv02UombOeoBejzV7y+o1d+dpM1BhrGjeWzKPN9vD7r+VuIicRpUDCwI+5zzt4/4HZRBZbFfTGeikHeszFXwAhUdzg2cupg+8Ns0GWlPvGLRpwN6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=koordinates.com; spf=pass smtp.mailfrom=koordinates.com; dkim=pass (2048-bit key) header.d=koordinates.com header.i=@koordinates.com header.b=zzqroSYi; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=koordinates.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=koordinates.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DD383CC3
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 13:53:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712066010; cv=pass; b=ZEYyeiLoXz7MDsvz4XMjrNj/4xrd34d2RpO5jdtUxPVwiWNhUcVpjeOKbc4ki8zeWARFQBmVDSPqEJhw5NMdnrzJkURUXflF9hiKqfahIupdD9b8vCIzjbjKsCRZCs+QQejegJxXLpcFkIR2KNuM8WlRKc+Z9N8uwI2I1vLiA/w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712066010; c=relaxed/simple;
+	bh=lfo/zO2eiLZO2nXvXQrOkUey0oUhM5mOrPGtwobg43I=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=SL8C0WTCgpwaJCbC+m4PmpPO9+TSa+oa2TsMxDoXjh4EhHF4EXVw1JiV6VpIQqoBrMQ3xnamdP5mPpmBJGPrzmwYHOufNa3L2KB8f8OsytftOETQAWljJsYVAQn4cWB7bu1IBEiep+FYRiN+KS8MupAKeAVSFSgtfdDz9ShFcuM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me; spf=pass smtp.mailfrom=boanderson.me; dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b=RFIIRSMI; arc=pass smtp.client-ip=136.143.188.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=boanderson.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=koordinates.com header.i=@koordinates.com header.b="zzqroSYi"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a4a393b699fso778227266b.0
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 06:21:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=koordinates.com; s=google; t=1712064096; x=1712668896; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wQ+R8lpSK8WhdkU5y+Z+6a7mJSVGErZg8hpyIglOaCw=;
-        b=zzqroSYi2527KxGU46Z2QBv1RoNgiyCy9iCze+2+iEghHzAnZ3kQsUmC3gzzG9hD+h
-         ijzlNV/Ky1jBIgV72wZy3kP0dRU3dlJQlfrWrZ3TKOlbmttPvq1OMq8wF8WGHcR6iLQl
-         pcJsvPyfAHHPfOyYFPRs8TBYYNxIjkZ8AIDpJnn+xCnQjpJj1oekl57+TOnUxgE4QJSM
-         Z+QXnY1nrzD1QEf/XHWA5r8/Hbo5lV4N6ez9D/WsqF0/B77OSLjRRE/iNOCT39XAbM3e
-         WH3XC4m3x2FiVV45NfDHM6FuhbYFQ+F/SJUo60Sdc5yblB5dBR96DXph1R0OHRYZiDpz
-         aa7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712064096; x=1712668896;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wQ+R8lpSK8WhdkU5y+Z+6a7mJSVGErZg8hpyIglOaCw=;
-        b=KcY8kQQleR8xXI8/8Bl8m4AM0fRHVGxceTMgeHMOfG4BmeXpd3OSL6k0RUXlr3tFOg
-         K99Qoevo2pcVHa/RQFhcpmv3zOc2FhgNUcjqTLUkZ7vB0r6O/Nl5a4xgJ/EgGKrWAXRS
-         xpL0VheF6WERsOd7FCxgLH/CbIiU7uSqev8uCNkiiGrxhLWl5vwzbe9QI0Qjy+Vghx0P
-         DFNSetrtBsOKFz8z4aY64/YQ+jVQh+dJcFXmCV5BwSaq2medHpheW6Pgbhc7nWOE/FJo
-         SmyrYZQE/tUtmRuV6P9TKkPoc3eDOwoDjGMePkl0dHS4OsoMKLmJlJbGO8ApZ3PogIfO
-         cRxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXLz1Zmy2L+LceSgYA7eWboBurIEISZFXXiC/u0McOcaDk/KDlK+e8pNE/XXNWUbEdCZWA+ruf1u262hRbZbn4LCv9V
-X-Gm-Message-State: AOJu0Yy7mt9WViq0qavUjKy2LCa6SPlNGx3k3gcnSKDSecmhDXTy8Hkw
-	7rEupGLMk3n28ML+YbfUGE8vhvrH6r6ByEb6ZXTpb75K/gKURWI2fdpGc7jDvTORgpsztXycv5c
-	tTCeeFXr756C/dUMOyKCz8W7nL4pr/bk+lSsiZA==
-X-Google-Smtp-Source: AGHT+IG0ZZ0jtLNlPp/Mb/X8x1D4kd6cT8qAFLJsrFOfiMLk8q3nSXgDwFtzn5/U8Aw0nszXUNgOWBFGpReKuINAG9A=
-X-Received: by 2002:a17:906:5614:b0:a4e:24e6:9880 with SMTP id
- f20-20020a170906561400b00a4e24e69880mr12478539ejq.33.1712064095579; Tue, 02
- Apr 2024 06:21:35 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b="RFIIRSMI"
+ARC-Seal: i=1; a=rsa-sha256; t=1712065999; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=DhJPzQnx7xBGk/owtJEpwAB9wrqH4ydAo9n0cg0rF10TIneXbnFfe431+lwV+UFA0H890MqqG4FcySkXsVhRdGHRcaS3u5U9/KRIr2Wwbw06he8ITDHe4HOph3VQlXOHuAkN2V9V7Oo4K4Q0PEnIyFNj2Gl9TRgyH++NvKP+iME=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1712065999; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=6sgQQcLcRMXqM2cIR2jKEfPc/5DKgTBf4m4NAgbxiJs=; 
+	b=NwEUSOokju+FJRzGuwWmQH/t68+5M5aWdWoVXXDFj+icW5bIjDoxiW9pwiLuqvgOG+d0rYWcXph1hhsbj1JIIMLNLLok5PwMXMvkSl/I1x7ml9r1FGk2HpleB1SS5g3zryk4sPLXBEmS0HJACj3V6AdaI8W33g2yh1GZ8GmPdhQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=boanderson.me;
+	spf=pass  smtp.mailfrom=mail@boanderson.me;
+	dmarc=pass header.from=<mail@boanderson.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1712065999;
+	s=zoho; d=boanderson.me; i=mail@boanderson.me;
+	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
+	bh=6sgQQcLcRMXqM2cIR2jKEfPc/5DKgTBf4m4NAgbxiJs=;
+	b=RFIIRSMIJfw21gr1ozO4LdoUxDJ1tjqMKkwlpmpld1wH4Wq8WYoh3dZrmwXkjY9I
+	JB2dAKBYC+aftSjYwCF5UoRhV/YiQsq6UuFk5SC6FRYT6TzBo6k1dZGopSk0QMh8rdO
+	661C53/yWLfWPKDcKx4OUtLyqQGzPKE56HCNCoHI=
+Received: from smtpclient.apple (w-65.cust-u5093.ip.static.uno.uk.net [212.105.168.65]) by mx.zohomail.com
+	with SMTPS id 1712065996946245.04260396798134; Tue, 2 Apr 2024 06:53:16 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
+Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential
+ helpers
+From: Bo Anderson <mail@boanderson.me>
+In-Reply-To: <CAFLLRpJZg3UhBRfihtjUsXcGSod4FhDCs8fD1k-=5SLnAdHeQw@mail.gmail.com>
+Date: Tue, 2 Apr 2024 14:53:03 +0100
+Cc: Jeff King <peff@peff.net>,
+ M Hickford <mirth.hickford@gmail.com>,
+ Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <98F1A6E9-4553-48BE-830C-8FDA9F3B5744@boanderson.me>
 References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
- <20240218204044.11365-1-mirth.hickford@gmail.com> <CFC1A507-A9EF-4330-8C98-34C2B73BC036@boanderson.me>
- <CAGJzqs=wQA=t4CMVu-kap1ga4DX+KnaVMGy71ewmZ7QkFHF8sg@mail.gmail.com> <20240307094708.GA2650063@coredump.intra.peff.net>
-In-Reply-To: <20240307094708.GA2650063@coredump.intra.peff.net>
-From: Robert Coup <robert.coup@koordinates.com>
-Date: Tue, 2 Apr 2024 14:21:19 +0100
-Message-ID: <CAFLLRpJZg3UhBRfihtjUsXcGSod4FhDCs8fD1k-=5SLnAdHeQw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential helpers
-To: Jeff King <peff@peff.net>
-Cc: M Hickford <mirth.hickford@gmail.com>, Bo Anderson <mail@boanderson.me>, 
-	Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ <20240218204044.11365-1-mirth.hickford@gmail.com>
+ <CFC1A507-A9EF-4330-8C98-34C2B73BC036@boanderson.me>
+ <CAGJzqs=wQA=t4CMVu-kap1ga4DX+KnaVMGy71ewmZ7QkFHF8sg@mail.gmail.com>
+ <20240307094708.GA2650063@coredump.intra.peff.net>
+ <CAFLLRpJZg3UhBRfihtjUsXcGSod4FhDCs8fD1k-=5SLnAdHeQw@mail.gmail.com>
+To: Robert Coup <robert.coup@koordinates.com>
+X-Mailer: Apple Mail (2.3774.500.171.1.1)
+X-ZohoMailClient: External
 
-Hi all,
+The test script does not interact well with the env filtering. This was =
+the case before this change too.
 
-> All that said, I'd be surprised if testing osxkeychain in the CI
-> environment worked. Back when I worked on it in 2011, I found that I had
-> to actually run the tests in a local terminal; even a remote ssh login
-> could not access the keychain. It's possible that things have changed
-> since then, though, or perhaps I was imply ignorant of how to configure
-> things correctly.
+To interact with your default keychain, you will need:
 
-I have gotten keychain working in Github Actions before: there's some
-helpers for it, but you can also basically do it manually via the
-steps from [1]. Basically anyone who needs to do Apple code-signing in
-CI has to make it work.
+GIT_TEST_CREDENTIAL_HELPER_SETUP=3D"export HOME=3D$HOME=E2=80=9D
 
-@Bo, how are you actually testing this manually? Following these steps:
+This is because the default macOS user keychain is local to your home =
+directory - that=E2=80=99s why it=E2=80=99s giving errors about not =
+finding any.
 
-$ make
-$ (cd contrib/credential/osxkeychain && make)
-$ ln -s contrib/credential/osxkeychain/git-credential-osxkeychain .
-$ cd t
-$ make GIT_TEST_CREDENTIAL_HELPER=osxkeychain t0303-credential-external.sh
+Bo
 
-I get 'A keychain cannot be found to store "store-user".' in a popup
-dialog when #2 runs; then similar for other tests in 0303. For #14 I
-get a slight alternative with "A keychain cannot be found". There's a
-"Reset To Defaults" button, but that wipes everything. AFAIK I have a
-relatively normal setup, with a login keychain as default. macOS
-14.3.1; arm64.
+> On 2 Apr 2024, at 14:21, Robert Coup <robert.coup@koordinates.com> =
+wrote:
+>=20
+> Hi all,
+>=20
+>> All that said, I'd be surprised if testing osxkeychain in the CI
+>> environment worked. Back when I worked on it in 2011, I found that I =
+had
+>> to actually run the tests in a local terminal; even a remote ssh =
+login
+>> could not access the keychain. It's possible that things have changed
+>> since then, though, or perhaps I was imply ignorant of how to =
+configure
+>> things correctly.
+>=20
+> I have gotten keychain working in Github Actions before: there's some
+> helpers for it, but you can also basically do it manually via the
+> steps from [1]. Basically anyone who needs to do Apple code-signing in
+> CI has to make it work.
+>=20
+> @Bo, how are you actually testing this manually? Following these =
+steps:
+>=20
+> $ make
+> $ (cd contrib/credential/osxkeychain && make)
+> $ ln -s contrib/credential/osxkeychain/git-credential-osxkeychain .
+> $ cd t
+> $ make GIT_TEST_CREDENTIAL_HELPER=3Dosxkeychain =
+t0303-credential-external.sh
+>=20
+> I get 'A keychain cannot be found to store "store-user".' in a popup
+> dialog when #2 runs; then similar for other tests in 0303. For #14 I
+> get a slight alternative with "A keychain cannot be found". There's a
+> "Reset To Defaults" button, but that wipes everything. AFAIK I have a
+> relatively normal setup, with a login keychain as default. macOS
+> 14.3.1; arm64.
+>=20
+> $ security list-keychains
+>    "/Users/rc/Library/Keychains/login.keychain-db"
+>    "/Library/Keychains/System.keychain"
+> $ security default-keychain
+>    "/Users/rc/Library/Keychains/login.keychain-db"
+> $ security unlock-keychain
+> password to unlock default: ...
+>=20
+> I don't see any settings or code for setting which keychain the
+> credential helper uses, so I guess it's the default one?
+>=20
+> Cheers,
+>=20
+> Rob :)
+>=20
+> [1] =
+https://docs.github.com/en/actions/deployment/deploying-xcode-applications=
+/installing-an-apple-certificate-on-macos-runners-for-xcode-development
 
-$ security list-keychains
-    "/Users/rc/Library/Keychains/login.keychain-db"
-    "/Library/Keychains/System.keychain"
-$ security default-keychain
-    "/Users/rc/Library/Keychains/login.keychain-db"
-$ security unlock-keychain
-password to unlock default: ...
-
-I don't see any settings or code for setting which keychain the
-credential helper uses, so I guess it's the default one?
-
-Cheers,
-
-Rob :)
-
-[1] https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
