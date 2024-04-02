@@ -1,238 +1,316 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D9560EC3
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E66E604DD
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 11:06:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712054362; cv=none; b=dLIOtAr5LUCIYLkDQ8C6NbCjZl4Vg1MjoYS29kveLTth+iYu+FSJ0hZgiiBGEFe4L6wAeoxfRA1dO6NacDB5jgTYXSIcfPVp5oxnkSwYi3Oi4CCBqniREj2dmW0vWSMTqKa5eYhgTqxGENnrD9pQqdfJEzpD7xxwdvwDCu9JIRE=
+	t=1712055979; cv=none; b=PlNEQ0opXY7TY45923yII387qcivzedStfysERsV1mkycrQBO8fwxmuucbusSxvrJRbFzP3L+LVu4KWClqpftFf1mrt6oY7rxIPVbSzlPwRCrR7NF0HyLVl8rToaGDc9nLXn+KqH2H2+vvJXpo5KzGJE3UC8j3kH6FO1ZXBOGfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712054362; c=relaxed/simple;
-	bh=b7bYQzfUjD07Rud66omUozd/kiz/OyWuPS1Mf+zfz6Q=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=LsyGTWtAgtDb8X7DeZ116lSr1s83SZ5AHE9NnpFSZbgQve1uuOT4jsZ5wvwJHWOiDRft3phRYuMTBgZbK9Yh1sOPQbELpAqQgrrComhVMLD6dnoIIcOeC0PWOSozS+CkM+pT9FQodD6bD1pKkhcvrboe9n9qXKmQNI5REXAc2xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ShtyoNqv; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712055979; c=relaxed/simple;
+	bh=p/BW6ES1VFyjVfHnfzHwYUzYgCCqluqrvkDT0x+Z9kk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fFRSzoil6B5w8CbxdH8wMof7wwPU8zjStE9sz9fAUXehekS6PBRlwLzZLfkKllVnGvavBl7w8W8kQQ0TQXr8q5xCIwidmS0/8ETHZvgaKxgK/XCO/uARMNFOrmf/01Wg6Lm9G7r1plAl0vuxaYA4YQpFH1i7iNv+0N9d6ohGaPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GPFEM3cg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=anNMkVXJ; arc=none smtp.client-ip=64.147.123.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ShtyoNqv"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-22a1e72f683so3747884fac.0
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 03:39:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712054360; x=1712659160; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0N9Y9JNvuXw+qvmNPqPzqp7lhQBUZmqkRShvKl5OBoI=;
-        b=ShtyoNqv5hAKH3SljXRICZQ4BanogZPPST3UmBNGuBZN191ANTldNzH1et8x2keRTk
-         uq0pdXj3U5NVVWgLwCZm9aCfx5R8Yy7TDflknOdU3iW2D237vbseKQVeUOSNxq96sUOT
-         X4S6xAhSIlWndBXkBRPeRv/DZOTIW1h9hfktlN5nP7af5d4/cxeGcfbyPWoFoL6wguoc
-         Pv5NZetnaRIYyTLHcQRsD/OV7lmRM8zbldkL+JKg0FNo3nbd7NQMai4gru98LRqv4KVl
-         m0HFPvjC1yN8oAcUND4VstWiMLUyjr5bhgjhkYya/4xH0Za9+igdMI2UUrvKpNWkH3QJ
-         +jgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712054360; x=1712659160;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0N9Y9JNvuXw+qvmNPqPzqp7lhQBUZmqkRShvKl5OBoI=;
-        b=FgcXjRShWvwyq96SsK4LR1afWD8WcQbYckkzarBZSC9ee+yenJThRjR2N6oYeJeXK8
-         l09yNbjf8O6BWeUAbtfeqoYQ1viuLVMJS9kxxyqX56tVsLDRwUjQc4FEbCOKd0AeueNx
-         opNFVYDMs+h1GLFHfFnaTnZ/jHnaNCeQGTBpRDHy4vazXpeDtkLdRGpa8ZuzHVeJXpNG
-         HkZpKRRIDagV9T3neKLlgAp8UWOu4/+UOC73vDn2kKuvUQTTQq37E9kU5hazgmMEfNSX
-         zq9B5ZBvhDvVWPJ+Mr2cL6NE1YGHDnlRHWW9K+QkA+lx5NF8AgYk9HAyNb2ZeMyVA4uo
-         5oQw==
-X-Forwarded-Encrypted: i=1; AJvYcCVOrSZIcebH6GyjxcBBoe++mRvzIY/Vyuwm+DM2uAa1WL68euMXycRLCzGIVj/VnVdzIAwhipKg51uoetoj4GP2KOzj
-X-Gm-Message-State: AOJu0Yy4Ef6RsmYERK8uAkDMNPD7IQuEsHWeO0LFJtLLyeESYYUlylrI
-	w0brDF7jUufAq0KkU2JULcy1XmCaa7Ws54IDEZmuj9RManL5bwdnuxA6vTB6FS+AUKL7H5wKRLD
-	1/EIvFELHHAdgwlhm2EEonPsGGylILJxW
-X-Google-Smtp-Source: AGHT+IFLX0X4ADP2k3N6bHN9KN2LkvqZ0KWQKl2aqWIIqhJaXkunQjfgsAyBDoNPVN9L1ArUC4EaTFNuxuE1NVG9K28=
-X-Received: by 2002:a05:6871:48e:b0:220:b839:4bb0 with SMTP id
- f14-20020a056871048e00b00220b8394bb0mr14229066oaj.19.1712054359775; Tue, 02
- Apr 2024 03:39:19 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Apr 2024 03:39:18 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAHCXyj2y131B6C+EA9fn2zPhx+LBsL9csHgJSy4GmK9xjdMQSg@mail.gmail.com>
-References: <CAHCXyj2y131B6C+EA9fn2zPhx+LBsL9csHgJSy4GmK9xjdMQSg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GPFEM3cg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="anNMkVXJ"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 3C15D18000C2;
+	Tue,  2 Apr 2024 07:06:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 02 Apr 2024 07:06:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712055974; x=1712142374; bh=rGXVMhM2Xp
+	WULnYlY39uhI752NuaecezZWDSiFdkejw=; b=GPFEM3cgYcZzQ/2obkuXxMcjgF
+	Pm4tdotNzna2CDP/zhovD8jD60Xt50/vuhaMxsZVPeVx25s8i6+xIl3pfdAsL+sy
+	nXrA6+cbpjbYhSO7Pe0EF0a7GGV2qfsYYJbKEb1FxAiACa+FjM6MyQJHQh5q7mWB
+	HCMaOOkv8fl8QS6K0Kzp+T85V78QAaQscCMnrlUubDdptnQST+9MQo5rO45/Dvbr
+	r+UOmvfiInnYeUBjq4G0P+8ewgJqo07qXouE99cMnPDwSuzef9Qc5J+NIyRKHHL9
+	hAGUW6LZ6J71spAzjeXPxgcaKLFFoBZ36fsyXwEYwyxkgBaNMZHQlfU88KVw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712055974; x=1712142374; bh=rGXVMhM2XpWULnYlY39uhI752Nua
+	ecezZWDSiFdkejw=; b=anNMkVXJVSUKKzpYb/OmzK4UWdkketMQEL3QOsyfgouQ
+	59la9PRGGQxWJF55zt8X3eIgjL6sl/vwcwzkkM2eLv7v1E0fHxQWhsM0oMUXt5/q
+	kuSGdENNQOz+B0jOY2DQ3nhRgzx8xSPW7XbhBRymNBPlrKYKB33uL2asX7c1jeoT
+	45/WUiOJha6PjYwxesMw8HfzHihbC3aVYoHD3hISF3+2BbX8u2HPeSubNii9Rx2T
+	tYplDIc/m5mlgR7p0UdzAoAD/1rskF1sCVS9ku6lnRZXfpu/UUDR4XTW5SpUt/ME
+	Rx7Cf7E9CXhe2EJEI9BT6vqFzhlkDrGWz5risEjDdA==
+X-ME-Sender: <xms:puYLZnPinaQXVQ9bxpGj3ZC9ziEnKuqGZ-t48I6xIE1LeeVMgCIBQA>
+    <xme:puYLZh_ZprQ7Ju4WZ1uHJCg9Jtjkztl8a8206cbtKNXxeTXu8YgmDi3BFt899i0dP
+    89EI44S3BBOR3hkeg>
+X-ME-Received: <xmr:puYLZmSkENSVuto0goKc1C0xDZ4Rqk0f2uRkZmZ1dbiLAHOHEmhjH_W72ERInPKEfl034UwN4mrAbBxTW9UCSBeNprjbiJgmktklUYIsFYIeufk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddgfeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
+    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:puYLZrtC28fnQui6s06dlCo72DIQCfJxSHJMtpoUPKJcR6OLOJLJ3Q>
+    <xmx:puYLZvcv9wC8AwUcuCBVSUyYnLCTWi6_lF7wXRIIx3ilLieqOXo-yg>
+    <xmx:puYLZn3y8WgaVBff63Q6WlbFb-cUiQaKFxNbI-TVN5qMCSU7ykQHxQ>
+    <xmx:puYLZr8eunLdX5O9vXWROdnF58lAEXh5uYIFM_WLcOdQxBhdXe_OXw>
+    <xmx:puYLZr5KhWEEu7xqNT8OfW2V16lMaT-9r79Dc06KKOUBfdVGx3__EVHF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Apr 2024 07:06:13 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id f05d652f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 11:06:02 +0000 (UTC)
+Date: Tue, 2 Apr 2024 13:06:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Aishwarya Narayanan <aishnana.03@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: GSoC 2024 [PATCH v2] Fix Git command exit code suppression in
+ test script t2104-update-index-skip-worktree.sh
+Message-ID: <ZgvmoSOPs6FG4jGZ@tanuki>
+References: <CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3DodreYoL7g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Apr 2024 03:39:18 -0700
-Message-ID: <CAOLa=ZS_pZEU+BHXoTpQyJy6Sn7j+ap5J+mZWOgnL39HKhK1Ww@mail.gmail.com>
-Subject: Re: [GSoC 2024][v2 Proposal]Move existing tests to a unit testing framework
-To: Aishwarya Narayanan <aishnana.03@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000f3766a06151ab771"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="A8vTga8epWTpt48S"
+Content-Disposition: inline
+In-Reply-To: <CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3DodreYoL7g@mail.gmail.com>
 
---000000000000f3766a06151ab771
-Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+--A8vTga8epWTpt48S
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Aishwarya Narayanan <aishnana.03@gmail.com> writes:
-> Dear Git Organization,
-> I'm writing to follow up on my Google Summer of Code proposal, "Move
-> Existing Tests to a Unit Testing Framework."
-> After careful consideration and based on our discussions, I've refined
-> the project summary and deliverables to focus specifically on Move
-> existing tests to a unit testing framework.This email aims to gather
-> feedback and initiate a discussion on the
-> feasibility and implementation of this idea.
+On Fri, Mar 29, 2024 at 12:17:25AM +0530, Aishwarya Narayanan wrote:
 
-It's always better to send updates as responses to your previous emails.
-This allows for reviewers to contain context in a single thread.
+The subject of this mail is not in line with how we typically write
+commit subjects. For one it is overly long, we typically don't want them
+to be longer than 72 characters. Second, commit subjects are expected to
+start with a scope.
 
-> Related Works
->
-> https://lore.kernel.org/git/CAHCXyj3U69qyhYewOLY9hN2rvi_5ZuSxQEBJbDxrKefm9MzVWg@mail.gmail.com/
-> - Microproject Approach
->
-> https://lore.kernel.org/git/ZgQffea0krKmZUEt@tanuki/ - [RFC PATCH]
->              Description: While printf might be unlikely to fail
-> here,I felt the change aligns with the project's goal of ensuring Git
-> command exit codes are captured. This approach is more robust and
-> avoids potential issues in the future.
->                Status: Declined
->
+> This commit addresses an issue in the `test_expect_success 'setup'` test
+> where the exit code of `git ls-files -t` was being suppressed. This could
+> lead to the test passing even if the Git command failed.
+> The change ensures the output is captured and the exit code is checked
+> correctly.
+> Additionally, the commit message follows recommended coding guidelines
+> by using `test` instead of `[]` for conditionals and proper indentation.
 
-It would be nice if you could also add a summary on the approach and
-what went wrong and why.
+We typically don't say things like "This commit", but rather use an
+imperative style ("Address this issue..."). Also, we typically start
+with the problem description before we say how the problem is being
+adddressed.
 
-> https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/ - [RFC PATCH]
-> Fix Git command exit code suppression in test script
-> t2104-update-index-skip-worktree.sh
-> Description: This patch increases the robustness of Git's testing
-> framework by guaranteeing that Git commands' exit codes are
-> appropriately examined during test execution. Previously, suppressed
-> exit codes allowed tests to pass despite Git command failures. This
-> fix stores the output of Git commands in variables and examines their
-> exit codes to detect errors.The discussion focuses on improvements to
-> the patch submission process, such as adhering to coding principles
-> and referencing appropriate documentation for proper formatting and
-> test script adjustments.
-> Status: Declined
->
+> Signed-off-by: Aishwarya Narayanan <aishnana.03@gmail.com>
 
-This patch actually was reviewed by Junio [1] and there was no follow up
-from your side. I'm not sure how this was considered Declined, so it
-would be nice to have some reasoning about it.
+Paragraphs should be separated by an empty line. Most importantly, the
+trailer lines need to be split from the remainder of the body or
+otherwise they won't even be recognized as such.
 
->
->  https://public-inbox.org/git/CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3DodreYoL7g@mail.gmail.com/
->   - GSoC 2024 [PATCH v2] Fix Git command exit code suppression in test
-> script t2104-update-index-skip-worktree.sh
->                                  Description: This patch resolves an
-> issue in Git test scripts in which the exit code of git ls-files -t
-> may be disregarded, resulting in tests passing despite Git command
-> failures. The new version guarantees that Git commands used in
-> pipelines produce captured output and perform adequate exit code
-> checks. It also enhances code style by adhering to established rules.
-> This adds to more robust Git testing by ensuring the identification
-> and reporting of Git command errors within test scripts.
-> Status: Under Review
-
-This seems to be the same patch as the previous. A new thread was
-created here instead of replying to the previous thread.
-
-> Porting Unit Tests:
->
-> [1]https://lore.kernel.org/git/cover.1692297001.git.steadmon@google.com/
->
-> This patch series provides unit test functionality for the Git project.
-> The series includes the following patches:
-> A project plan document that outlines the goals for introducing unit
-> tests, as well as a review of potential frameworks and the features
-> used to assess them.
-> An implementation of the TAP unit test framework with a sample unit
-> test and Makefile integration.
-> Changes were made to the Git build system so that the unit tests could
-> be run in CI.
-> The TAP framework was selected because of the following advantages:
-> Simple to use and comprehend.
-> Widely used and integrates seamlessly with existing Git tools.
->
-> The project plan document mentions a number of outstanding TODOs,
-
-Maybe I missed it, but where are the TODOs stated?
-
-> Next Steps:
->
-> A following commit will port the relevant code from
-> t/helper/test-date.c to the new unit test file t/unit-tests/t-date.c,
-> using the newly introduced functions for pre-requisite checks.
->
-> [5]Unit Testing in Git:
->
-> https://github.com/git/git/blob/master/Documentation/technical/unit-tests.txt
-> discusses unit testing for the Git project. This gives an idea of the
-> background and importance of unit testing in the project applying to.
->
->
->
-> During GSoc
-> The main goals of this project are:
-> 1. Understand the existing "reftable" unit tests: Examine the present
-> implementation of the "reftable" unit tests in
-> 't0032-reftable-unittest.sh' to ensure that you understand their
-> functionality and purpose.
-> 2. Learn the new unit testing framework: Get a thorough grasp of Git's
-> new unit testing framework, including setup, usage, and recommended
-> practices.
-> 3.Ensuring test coverage and reliability: Check that the converted
-> tests have sufficient code coverage and accurately simulate the
-> expected behaviour of the "reftable" capability. Test and validate the
-> new tests thoroughly to ensure their reliability.
-> 4. Documentation and code comments: Document the conversion process,
-> including any issues encountered and the reasoning behind design
-> decisions. Update the code comments and documentation to reflect the
-> changes to the tests.
-> Deliverables
-
-Kaartic's review in the previous version mentions [2]:
-
-    Your project summary and the deliverables below seem to mention that
-    you're going to work on migration of the reftable unit tests but the
-    project title seems to be "Move existing tests to a unit testing
-    framework'.
-
-It seems this version is the same...
-
-> Closing Remarks
-> Finally, I'd like to express my gratitude to the community and, in
-> particular, my mentors, Patrick Steinhardt,Christian Couder,Kaartic
-> Sivaraam,Karthik Nayak,Junio C Hamano. They did and continue to do an
-> exceptional task of maintaining and empowering the Git open-source
-> community, as well as offering much-needed and kind assistance to a
-> new contributor like me.
 > ---
+>=20
+> Dear Git Maintainers,
+>=20
+> I'm writing to submit a patch that addresses an issue in the test
+> script t2104-update-index-skip-worktree.sh. The issue involves the
+> inadvertent suppression of exit codes from Git commands when used in
+> pipelines. This could potentially lead to false positives in test
+> results, masking actual bugs or regressions.
+>=20
+> This patch modifies instances of git ls-files -t and similar Git
+> commands used in pipelines to ensure their exit codes are correctly
+> evaluated. It achieves this by:
+> Capturing the command output in a variable.
+> Applying checks for the exit code immediately after command execution.
+> Adjusting related test cases to work with the new method of capturing
+> and evaluating Git command outputs.
+>=20
+> I've carefully reviewed the Documentation/SubmittingPatches document
+> and ensured the patch adheres to the recommended guidelines. The patch
+> file itself is attached to this email.
+>=20
+> Thank you for your time and consideration. I welcome any feedback or
+> questions you may have.
+>=20
+>  t/t2104-update-index-skip-worktree.sh | 98 ++++++++++++++-------------
+>  1 file changed, 52 insertions(+), 46 deletions(-)
+>=20
+> diff --git a/t/t2104-update-index-skip-worktree.sh
+> b/t/t2104-update-index-skip-worktree.sh
+> index 674d7de3d3..8fdf0e0d82 100755
+> --- a/t/t2104-update-index-skip-worktree.sh
+> +++ b/t/t2104-update-index-skip-worktree.sh
+> @@ -2,67 +2,73 @@
+>  #
+>  # Copyright (c) 2008 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+>  #
+> -test_description=3D'skip-worktree bit test'
+>=20
+> -TEST_PASSES_SANITIZE_LEAK=3Dtrue
+> -. ./test-lib.sh
+> +test_description=3D'skip-worktree bit test'
+>=20
+> -sane_unset GIT_TEST_SPLIT_INDEX
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+> +. ./test-lib.sh
+>=20
+> -test_set_index_version () {
+> -    GIT_INDEX_VERSION=3D"$1"
+> -    export GIT_INDEX_VERSION
+> -}
+> +sane_unset GIT_TEST_SPLIT_INDEX
+>=20
+> -test_set_index_version 3
+> +test_set_index_version () {
+> +  GIT_INDEX_VERSION=3D"$1"
+> +  export GIT_INDEX_VERSION
+> +}
+
+Sorry, but this patch seems to be completely broken and rewrites almost
+the whole file. It's basically impossible for a reviewer to figure out
+what exactly has changed.
+
+I assume two things happened:
+
+  - Your patch may have changed line endings. Please make sure that your
+    editor writes Unix-style line endings ("\n"), only.
+
+  - You seem to have changed indentation from four spaces to two spaces.
+
+It would be great to pay more attention to such details and review your
+own patches before sending them out to the mailing list.
+
+Patrick
+
+> -cat >expect.full <<EOF
+> -H 1
+> -H 2
+> -H sub/1
+> -H sub/2
+> -EOF
+> +test_set_index_version 3
+>=20
+> -cat >expect.skip <<EOF
+> -S 1
+> -H 2
+> -S sub/1
+> -H sub/2
+> -EOF
+> +cat >expect.full <<EOF
+> +H 1
+> +H 2
+> +H sub/1
+> +H sub/2
+> +EOF
+> +cat >expect.skip <<EOF
+> +S 1
+> +H 2
+> +S sub/1
+> +H sub/2
+> +EOF
+>=20
+> +# Good: capture output and check exit code
+>  test_expect_success 'setup' '
+> -   mkdir sub &&
+> -   touch ./1 ./2 sub/1 sub/2 &&
+> -   git add 1 2 sub/1 sub/2 &&
+> -   output=3D$(git ls-files -t)
+> -   echo "$output" | test_cmp expect.full -
+> -   if [ $? -ne 0 ]; then
+> -       exit 1
+> -   fi
+> +  mkdir sub &&
+> +  touch ./1 ./2 sub/1 sub/2 &&
+> +  git add 1 2 sub/1 sub/2 &&
+> +  git ls-files -t >actual &&
+> +  test_cmp expect.full actual
+>  '
+>=20
+> +test_expect_success 'index is at version 2' '
+> +  test "$(git update-index --show-index-version)" =3D 2
+> +'
+> +
+> +# Good: pipe only after Git command
+>  test_expect_success 'update-index --skip-worktree' '
+> -   git update-index --skip-worktree 1 sub/1 &&
+> -   output=3D$(git ls-files -t)
+> -   echo "$output" | test_cmp expect.skip -
+> -   if [ $? -ne 0 ]; then
+> -       exit 1
+> -   fi
+> +  git update-index --skip-worktree 1 sub/1 &&
+> +  git ls-files -t | test_cmp expect.skip -
+> +'
+> +
+> +test_expect_success 'index is at version 3 after having some
+> skip-worktree entries' '
+> +  test "$(git update-index --show-index-version)" =3D 3
+>  '
+>=20
+>  test_expect_success 'ls-files -t' '
+> -   output=3D$(git ls-files -t)
+> -   echo "$output" | test_cmp expect.skip -
+> -   if [ $? -ne 0 ]; then
+> -       exit 1
+> -   fi
+> +  git ls-files -t | test_cmp expect.skip -
+>  '
+>=20
+> +# Good: separate command for exit code check
+>  test_expect_success 'update-index --no-skip-worktree' '
+> -   git update-index --no-skip-worktree 1 sub/1 &&
+> -   output=3D$(git ls-files -t)
+> -   echo "$output" | test_cmp expect.full -
+> -   if [ $? -ne 0 ]; then
+> -       exit 1
+> -   fi
+> +  git update-index --no-skip-worktree 1 sub/1
+> +  if [ $? -ne 0 ]; then
+> +    echo "Failed to update-index --no-skip-worktree"
+> +    exit 1
+> +  fi
+> +  git ls-files -t | test_cmp expect.full -
+>  '
+> +
+> +test_expect_success 'index version is back to 2 when there is no
+> skip-worktree entry' '
+> +  test "$(git update-index --show-index-version)" =3D 2
+> +'
+> +
+> +test_done
+> --=20
 > Sincerely,
 > Aishwarya Narayanan
->
+>=20
 
-It would also be nice if you mentioned what exactly is different in this
-version compared to the previous.
-
-[1]: https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/
-[2]: https://lore.kernel.org/git/CA+ARAtpqD0um9bVrjRKG0DmrxVR-46uSKfDKnO+H1rUp0i+4Ww@mail.gmail.com/#t
-
---000000000000f3766a06151ab771
+--A8vTga8epWTpt48S
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e784d684475c7e87_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZTDRGSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meWJ6Qy80eEx6QTN4NGtuakRuWC84S0I1c0l3Nk9oWAo1bktuT21PSzdJ
-ajJPcGJubUM2dzh2Mk9KVmNvUUdWbW1oaXNscFRZTElIdUVHQ2JyTmVNMDlnU0lXanRMZjNECmx6
-Tm1EaWd5NG0wV084cEhCVXRreDA3UDYrTVB3S1g1a2J3T1ZkNkFWSVM2ZzF1RXdXblQxNGxTQ2pQ
-bENDNC8KY3lYMmRkaEhVL01wT0kzMjZMSVdnODlmYXFLVWc1WEEzZFJxYkdzK1FTOWx1Z1hXVTVU
-c1F0bzRVQ2Z0bE16Qwp1MlFwNlhocnVCdGNlRzZuWG90YVFQYmoxR3JheUYwZ0VTT0RoWitmdE51
-UCsrdk1aS2Fxc0J2UmtCUC9JZ2JYCjlKalVxNERlK3NsLzN0QjBxd2s0Zys2TjFPcUxUcXdEczEw
-RVgwWGJHQ29aaEIvVms4QWZyWUFnSGYzNUptVGgKVXpWM3V0bVlpa0xRWWlWUG1IMHBQWXdDUmVI
-Z2RQZGNseXRDQVZqSUZnaWpFMm5iZmx0VmFxYjRTM01ITHFBbAoyQVNyMy8vL01xT2VsQWFyT1d2
-Q3c5S0ZrUWRWWjVseGxOeXFoeVFQWnhCRHB3M1pqd2Q3cklWWWhPZUJ1VkZwCkx0eUJtbDNIVm5T
-Zm4zVkgxN1hFUm5yUVMzVkk5OEcweGlVaVc5dz0KPTY1dDcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f3766a06151ab771--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL5qAACgkQVbJhu7ck
+PpR2RBAAi9hCi6a9C0uPns1slwjBGKmcLj+USeVadYEvLS7rBhDGrBNxZnggIgGz
+klGMCDCni4PokcewOFwb2jJIL+04MQ001qXwSL6Q32t2tbOaZQh9eUm30xeSRjBB
+K0wTkZGhTuPwSrRGZpd5MURtIsWxpV1joaBAamwSbu+VOCtJljiM1ebIgzX3jW7u
+cFg2V8hkAXNV075YXpsenzt9vcHUhXEYdpzop2/I7cp3Ey+F1u41zZD4S5oxiwFC
+VYkAtMbc/unMOS3Y5Vhu5eYbWoEAna+wISj9mzkka53viifW6vKYoNLW3CsMoKxN
+FBWZeLD+QPTqHVye7JcW4RX/zTsLtYNAqw0hatWU77oN9abyIyxC9A8Bq+YMO09Q
+GtZjZUyJ1H5UNPPx/FZ8J+9KVBG5cx42jMUhfz/arKDff5BFFmFzp65FHI6oA6+F
+mNO1GXpclwwC6GtqH2zcNdaGJmnAZuzGMi7pED48mgmb/wBhEA9w/Aj5GZpF/mq1
+DWFcbhT9W4JYW8tnbL+FNUmQUzfQARaJhMXXLRCMRvJitsXgL3pQHuxOI9BVqDBw
+7t/L/BVP3smw+EVGjlpr+1otPBvXYQUbFIGpyu7Wt3uE7cpCMBrnkf3mwKitKijj
+Lwn5mVCrgb2Wu1uUjbjsIVFTyzNAPCDUNt7qzHQf+z1qkFtf3Q4=
+=+U9J
+-----END PGP SIGNATURE-----
+
+--A8vTga8epWTpt48S--
