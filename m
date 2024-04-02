@@ -1,106 +1,238 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B983E47F
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D9560EC3
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:39:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712054345; cv=none; b=QR9jmO+bObAi5WVY748UiDwqo+P+Bv7FZd8xdARvlYFlIfp65gnY0X8Pppso3tdd58S9Qexz0mUNhVFi1BRjWlCa6I13bNHEwrStsyfcHUmFuTujMT+OadNTx9fJnysy1+waZXaH/o6cxxEJ4Nm46Gaq7KpXiZ7W1O3xq3kGwUs=
+	t=1712054362; cv=none; b=dLIOtAr5LUCIYLkDQ8C6NbCjZl4Vg1MjoYS29kveLTth+iYu+FSJ0hZgiiBGEFe4L6wAeoxfRA1dO6NacDB5jgTYXSIcfPVp5oxnkSwYi3Oi4CCBqniREj2dmW0vWSMTqKa5eYhgTqxGENnrD9pQqdfJEzpD7xxwdvwDCu9JIRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712054345; c=relaxed/simple;
-	bh=ZZ5CegorOe39dRveCfZhgya0rwl8oTdQPa2iQbH/k+8=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=fg7FD+3LPTVRHWkjSVgCsgKht2MYN20zZIpvgXC1glGPu2UVmgNn8FW35UnMVYYtDheTabvVEo0nwncFlkGxFEpjK28NsBNPHi5tIdJXm+NF8kX2tHgqAiVxORxMt82A/E+K4DVcpa8nHgNHAeVU6S3owLFwwE3jh8/nxPsScsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=oO2qpy8q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KtZ88D2u; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1712054362; c=relaxed/simple;
+	bh=b7bYQzfUjD07Rud66omUozd/kiz/OyWuPS1Mf+zfz6Q=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=LsyGTWtAgtDb8X7DeZ116lSr1s83SZ5AHE9NnpFSZbgQve1uuOT4jsZ5wvwJHWOiDRft3phRYuMTBgZbK9Yh1sOPQbELpAqQgrrComhVMLD6dnoIIcOeC0PWOSozS+CkM+pT9FQodD6bD1pKkhcvrboe9n9qXKmQNI5REXAc2xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ShtyoNqv; arc=none smtp.client-ip=209.85.160.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="oO2qpy8q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KtZ88D2u"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 4260C13800AF;
-	Tue,  2 Apr 2024 06:39:02 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 02 Apr 2024 06:39:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1712054342; x=
-	1712140742; bh=Pds2SivP8oXOYNyZ8atLfBwXO4l1x7Qojj91Yvonmzw=; b=o
-	O2qpy8qp3GbUj5dM5pIkyJQ3b2jRJAAjTVzAdU+mE/MH1AxBQRlBhWP321rDq2d0
-	zHD3kFzgqCfPPgCdI7D/nXRpiVk9PUku7kOt45p2uWi7U/y79EOYCc6caHfAJDUf
-	lnDpe8em0UqmUOoDrChKYDYXHggP6W/Xv7w+CknAo/YpimJx9rhm9ZY5KdtazgE4
-	x+XLABLLDCv1fx5fcgTBBhH0gsc0KMcYmlpP5+4Rnrl2hPhCX66kLgfTno0riQva
-	m2nN3SDUdqO3gOF/koFluGuNA7MFQj6LLgzbghG42mQaNpJIZsZ8BpXNuqI6/8FB
-	sQNR/emJZio95PCWsth5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712054342; x=1712140742; bh=Pds2SivP8oXOYNyZ8atLfBwXO4l1
-	x7Qojj91Yvonmzw=; b=KtZ88D2uMI06IB+3IZDJEEV/V8pp3WXoToKr/sUOYzzX
-	5Vnyvwqp1HlWa4rKJeIj7m7/GchR4H6VuDspr3U8l4PxUMs5UAwrxLgxoQsbhFa+
-	Yz4cs/TvWuxSP+hfLkjF3xXr/tghgvlrTKxiMsr0RVIAPZSVFUVyBOyoP5GT9025
-	iPd2HiReRk/VAu/k89hCLvY/KTRZlo6FilEG9aZrpJrVzfXz4Uc0pc3iGlRCRR+T
-	mdih3L+s3wCie2Zpn1BOUePRk38FpP7g+BE+EHbmUuCjsJBiJAgHTETQ5RTc6ljX
-	OZZgrebT6paa5dzF2moVsvmlXT7VGPTMB/BqRSqGXw==
-X-ME-Sender: <xms:ReALZqsq3VAGniMSJ5sa5CrXJOIXtXJvay5-scffqkaYWSwd_uuI5u4>
-    <xme:ReALZvfoGgphnMEhQNDRQcVJbdSuGJd7OiE--uKJ_7eW_0STkrFFXLmD1cz52gKoa
-    0pdHvc4Zdnm_Hvrkw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddgfeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfeh
-    leeufedtjeekueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:ReALZlxz12eOj-icfc7oaUpUivv3auLKif3xGcOT7wUUMluNBEJPZQ>
-    <xmx:ReALZlMyFC6_QZLgxL3i25WSpTIf6fIgl30Bd6jXGNfHnS6e76-iWg>
-    <xmx:ReALZq_Dl17uo47Rb3QfiJ15YKDEiXAJbLsSDgJjebQX272KwIwOxg>
-    <xmx:ReALZtUnqEgRMKTMAgZK1KL6fWHvc-ePwOSrQc-NFh7g7m5-qAMb8A>
-    <xmx:RuALZuZDGiJ0IXF3yNMnHq8rfxu2LX8a-DeG-YENp1z09M29eFt66_ML>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id AF62F15A0092; Tue,  2 Apr 2024 06:39:01 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-333-gbfea15422e-fm-20240327.001-gbfea1542
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ShtyoNqv"
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-22a1e72f683so3747884fac.0
+        for <git@vger.kernel.org>; Tue, 02 Apr 2024 03:39:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712054360; x=1712659160; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0N9Y9JNvuXw+qvmNPqPzqp7lhQBUZmqkRShvKl5OBoI=;
+        b=ShtyoNqv5hAKH3SljXRICZQ4BanogZPPST3UmBNGuBZN191ANTldNzH1et8x2keRTk
+         uq0pdXj3U5NVVWgLwCZm9aCfx5R8Yy7TDflknOdU3iW2D237vbseKQVeUOSNxq96sUOT
+         X4S6xAhSIlWndBXkBRPeRv/DZOTIW1h9hfktlN5nP7af5d4/cxeGcfbyPWoFoL6wguoc
+         Pv5NZetnaRIYyTLHcQRsD/OV7lmRM8zbldkL+JKg0FNo3nbd7NQMai4gru98LRqv4KVl
+         m0HFPvjC1yN8oAcUND4VstWiMLUyjr5bhgjhkYya/4xH0Za9+igdMI2UUrvKpNWkH3QJ
+         +jgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712054360; x=1712659160;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0N9Y9JNvuXw+qvmNPqPzqp7lhQBUZmqkRShvKl5OBoI=;
+        b=FgcXjRShWvwyq96SsK4LR1afWD8WcQbYckkzarBZSC9ee+yenJThRjR2N6oYeJeXK8
+         l09yNbjf8O6BWeUAbtfeqoYQ1viuLVMJS9kxxyqX56tVsLDRwUjQc4FEbCOKd0AeueNx
+         opNFVYDMs+h1GLFHfFnaTnZ/jHnaNCeQGTBpRDHy4vazXpeDtkLdRGpa8ZuzHVeJXpNG
+         HkZpKRRIDagV9T3neKLlgAp8UWOu4/+UOC73vDn2kKuvUQTTQq37E9kU5hazgmMEfNSX
+         zq9B5ZBvhDvVWPJ+Mr2cL6NE1YGHDnlRHWW9K+QkA+lx5NF8AgYk9HAyNb2ZeMyVA4uo
+         5oQw==
+X-Forwarded-Encrypted: i=1; AJvYcCVOrSZIcebH6GyjxcBBoe++mRvzIY/Vyuwm+DM2uAa1WL68euMXycRLCzGIVj/VnVdzIAwhipKg51uoetoj4GP2KOzj
+X-Gm-Message-State: AOJu0Yy4Ef6RsmYERK8uAkDMNPD7IQuEsHWeO0LFJtLLyeESYYUlylrI
+	w0brDF7jUufAq0KkU2JULcy1XmCaa7Ws54IDEZmuj9RManL5bwdnuxA6vTB6FS+AUKL7H5wKRLD
+	1/EIvFELHHAdgwlhm2EEonPsGGylILJxW
+X-Google-Smtp-Source: AGHT+IFLX0X4ADP2k3N6bHN9KN2LkvqZ0KWQKl2aqWIIqhJaXkunQjfgsAyBDoNPVN9L1ArUC4EaTFNuxuE1NVG9K28=
+X-Received: by 2002:a05:6871:48e:b0:220:b839:4bb0 with SMTP id
+ f14-20020a056871048e00b00220b8394bb0mr14229066oaj.19.1712054359775; Tue, 02
+ Apr 2024 03:39:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 2 Apr 2024 03:39:18 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAHCXyj2y131B6C+EA9fn2zPhx+LBsL9csHgJSy4GmK9xjdMQSg@mail.gmail.com>
+References: <CAHCXyj2y131B6C+EA9fn2zPhx+LBsL9csHgJSy4GmK9xjdMQSg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <b331feb8-6af3-4361-9822-31c7440e65f8@app.fastmail.com>
-In-Reply-To: 
- <CAEYvasmb1TjwWpSbfSAogbOiB64sZQiHVoUhxvY+NoLmXnRuHA@mail.gmail.com>
-References: 
- <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
- <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
- <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
- <CAPig+cQdFi5zBkDQWTEWXCTt5h9gVFNJv7obf=tWCkOvsaEHEA@mail.gmail.com>
- <4041487e-d8d8-481c-b490-884e31f533a8@gmail.com>
- <CAEYvasmb1TjwWpSbfSAogbOiB64sZQiHVoUhxvY+NoLmXnRuHA@mail.gmail.com>
-Date: Tue, 02 Apr 2024 12:38:16 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Tamir Duberstein" <tamird@fuseenergy.com>
-Cc: "Eric Sunshine" <sunshine@sunshineco.com>, git@vger.kernel.org,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
-Content-Type: text/plain
+Date: Tue, 2 Apr 2024 03:39:18 -0700
+Message-ID: <CAOLa=ZS_pZEU+BHXoTpQyJy6Sn7j+ap5J+mZWOgnL39HKhK1Ww@mail.gmail.com>
+Subject: Re: [GSoC 2024][v2 Proposal]Move existing tests to a unit testing framework
+To: Aishwarya Narayanan <aishnana.03@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000f3766a06151ab771"
 
-On Tue, Apr 2, 2024, at 12:26, Tamir Duberstein wrote:
+--000000000000f3766a06151ab771
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+Aishwarya Narayanan <aishnana.03@gmail.com> writes:
+> Dear Git Organization,
+> I'm writing to follow up on my Google Summer of Code proposal, "Move
+> Existing Tests to a Unit Testing Framework."
+> After careful consideration and based on our discussions, I've refined
+> the project summary and deliverables to focus specifically on Move
+> existing tests to a unit testing framework.This email aims to gather
+> feedback and initiate a discussion on the
+> feasibility and implementation of this idea.
+
+It's always better to send updates as responses to your previous emails.
+This allows for reviewers to contain context in a single thread.
+
+> Related Works
 >
-> % ls $(git rev-parse --git-path rebase-merge) $(git rev-parse
-> --git-path rebase-apply)
-> ls: .git/rebase-apply: No such file or directory
-> ls: .git/rebase-merge: No such file or directory
+> https://lore.kernel.org/git/CAHCXyj3U69qyhYewOLY9hN2rvi_5ZuSxQEBJbDxrKefm9MzVWg@mail.gmail.com/
+> - Microproject Approach
 >
-> Yes, it's the only worktree.
+> https://lore.kernel.org/git/ZgQffea0krKmZUEt@tanuki/ - [RFC PATCH]
+>              Description: While printf might be unlikely to fail
+> here,I felt the change aligns with the project's goal of ensuring Git
+> command exit codes are captured. This approach is more robust and
+> avoids potential issues in the future.
+>                Status: Declined
+>
 
-Have you tried `git worktree repair`?
+It would be nice if you could also add a summary on the approach and
+what went wrong and why.
 
--- 
-Kristoffer Haugsbakk
+> https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/ - [RFC PATCH]
+> Fix Git command exit code suppression in test script
+> t2104-update-index-skip-worktree.sh
+> Description: This patch increases the robustness of Git's testing
+> framework by guaranteeing that Git commands' exit codes are
+> appropriately examined during test execution. Previously, suppressed
+> exit codes allowed tests to pass despite Git command failures. This
+> fix stores the output of Git commands in variables and examines their
+> exit codes to detect errors.The discussion focuses on improvements to
+> the patch submission process, such as adhering to coding principles
+> and referencing appropriate documentation for proper formatting and
+> test script adjustments.
+> Status: Declined
+>
 
+This patch actually was reviewed by Junio [1] and there was no follow up
+from your side. I'm not sure how this was considered Declined, so it
+would be nice to have some reasoning about it.
+
+>
+>  https://public-inbox.org/git/CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3DodreYoL7g@mail.gmail.com/
+>   - GSoC 2024 [PATCH v2] Fix Git command exit code suppression in test
+> script t2104-update-index-skip-worktree.sh
+>                                  Description: This patch resolves an
+> issue in Git test scripts in which the exit code of git ls-files -t
+> may be disregarded, resulting in tests passing despite Git command
+> failures. The new version guarantees that Git commands used in
+> pipelines produce captured output and perform adequate exit code
+> checks. It also enhances code style by adhering to established rules.
+> This adds to more robust Git testing by ensuring the identification
+> and reporting of Git command errors within test scripts.
+> Status: Under Review
+
+This seems to be the same patch as the previous. A new thread was
+created here instead of replying to the previous thread.
+
+> Porting Unit Tests:
+>
+> [1]https://lore.kernel.org/git/cover.1692297001.git.steadmon@google.com/
+>
+> This patch series provides unit test functionality for the Git project.
+> The series includes the following patches:
+> A project plan document that outlines the goals for introducing unit
+> tests, as well as a review of potential frameworks and the features
+> used to assess them.
+> An implementation of the TAP unit test framework with a sample unit
+> test and Makefile integration.
+> Changes were made to the Git build system so that the unit tests could
+> be run in CI.
+> The TAP framework was selected because of the following advantages:
+> Simple to use and comprehend.
+> Widely used and integrates seamlessly with existing Git tools.
+>
+> The project plan document mentions a number of outstanding TODOs,
+
+Maybe I missed it, but where are the TODOs stated?
+
+> Next Steps:
+>
+> A following commit will port the relevant code from
+> t/helper/test-date.c to the new unit test file t/unit-tests/t-date.c,
+> using the newly introduced functions for pre-requisite checks.
+>
+> [5]Unit Testing in Git:
+>
+> https://github.com/git/git/blob/master/Documentation/technical/unit-tests.txt
+> discusses unit testing for the Git project. This gives an idea of the
+> background and importance of unit testing in the project applying to.
+>
+>
+>
+> During GSoc
+> The main goals of this project are:
+> 1. Understand the existing "reftable" unit tests: Examine the present
+> implementation of the "reftable" unit tests in
+> 't0032-reftable-unittest.sh' to ensure that you understand their
+> functionality and purpose.
+> 2. Learn the new unit testing framework: Get a thorough grasp of Git's
+> new unit testing framework, including setup, usage, and recommended
+> practices.
+> 3.Ensuring test coverage and reliability: Check that the converted
+> tests have sufficient code coverage and accurately simulate the
+> expected behaviour of the "reftable" capability. Test and validate the
+> new tests thoroughly to ensure their reliability.
+> 4. Documentation and code comments: Document the conversion process,
+> including any issues encountered and the reasoning behind design
+> decisions. Update the code comments and documentation to reflect the
+> changes to the tests.
+> Deliverables
+
+Kaartic's review in the previous version mentions [2]:
+
+    Your project summary and the deliverables below seem to mention that
+    you're going to work on migration of the reftable unit tests but the
+    project title seems to be "Move existing tests to a unit testing
+    framework'.
+
+It seems this version is the same...
+
+> Closing Remarks
+> Finally, I'd like to express my gratitude to the community and, in
+> particular, my mentors, Patrick Steinhardt,Christian Couder,Kaartic
+> Sivaraam,Karthik Nayak,Junio C Hamano. They did and continue to do an
+> exceptional task of maintaining and empowering the Git open-source
+> community, as well as offering much-needed and kind assistance to a
+> new contributor like me.
+> ---
+> Sincerely,
+> Aishwarya Narayanan
+>
+
+It would also be nice if you mentioned what exactly is different in this
+version compared to the previous.
+
+[1]: https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/
+[2]: https://lore.kernel.org/git/CA+ARAtpqD0um9bVrjRKG0DmrxVR-46uSKfDKnO+H1rUp0i+4Ww@mail.gmail.com/#t
+
+--000000000000f3766a06151ab771
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e784d684475c7e87_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZTDRGSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meWJ6Qy80eEx6QTN4NGtuakRuWC84S0I1c0l3Nk9oWAo1bktuT21PSzdJ
+ajJPcGJubUM2dzh2Mk9KVmNvUUdWbW1oaXNscFRZTElIdUVHQ2JyTmVNMDlnU0lXanRMZjNECmx6
+Tm1EaWd5NG0wV084cEhCVXRreDA3UDYrTVB3S1g1a2J3T1ZkNkFWSVM2ZzF1RXdXblQxNGxTQ2pQ
+bENDNC8KY3lYMmRkaEhVL01wT0kzMjZMSVdnODlmYXFLVWc1WEEzZFJxYkdzK1FTOWx1Z1hXVTVU
+c1F0bzRVQ2Z0bE16Qwp1MlFwNlhocnVCdGNlRzZuWG90YVFQYmoxR3JheUYwZ0VTT0RoWitmdE51
+UCsrdk1aS2Fxc0J2UmtCUC9JZ2JYCjlKalVxNERlK3NsLzN0QjBxd2s0Zys2TjFPcUxUcXdEczEw
+RVgwWGJHQ29aaEIvVms4QWZyWUFnSGYzNUptVGgKVXpWM3V0bVlpa0xRWWlWUG1IMHBQWXdDUmVI
+Z2RQZGNseXRDQVZqSUZnaWpFMm5iZmx0VmFxYjRTM01ITHFBbAoyQVNyMy8vL01xT2VsQWFyT1d2
+Q3c5S0ZrUWRWWjVseGxOeXFoeVFQWnhCRHB3M1pqd2Q3cklWWWhPZUJ1VkZwCkx0eUJtbDNIVm5T
+Zm4zVkgxN1hFUm5yUVMzVkk5OEcweGlVaVc5dz0KPTY1dDcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f3766a06151ab771--
