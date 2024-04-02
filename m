@@ -1,250 +1,271 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C14A5D479
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBF259154
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 10:04:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712052137; cv=none; b=H1P4LXOAPP7tgsrSFswRUAKBURq7dvFWpiZvLZFhtxvqQcInYTg4u2Ku0V8Hjt6QNmSed1K8xAj1yd31+l1nnBFWastN7WMZ8TGCkhg4jlXB3xAqCthts0SifEZtXtxp48BUsUobgtmRD4c1EcP6eiVaub0IqAcvkNZuAqcDzko=
+	t=1712052282; cv=none; b=QbEJ9HjNYXzZLuEpiYvFmVVET78LdwjdHs1yZiZ1dMxm9lNykJ51gt1Q9BAKB0EOnGkTRT4ZafocqStHyjrJBx7PJVUjWcasfhjXUzOnnR/EWRd0OiesiMCL0X5oo4SSfQvIZYkm1czaGTGuGYqttC+dWvNEmiI3G4ROnYUpOW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712052137; c=relaxed/simple;
-	bh=QFejOxEfnY44w825jrB24oPgVXQ+/o9Qp5eGb/OS6YA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kjN6wBXxIp3rNmgT3qlBUMcYL4Ix5OfQtKvd0ojHYqvPtYaebDcaGHIPN5rIO4dZU1eBk8hefiP39AmtkoDF8URrwidr6UOMj6UV5QdM3rf5h5vC08OK+ditZ6fuDill+HksJOiMidtivq9DUD32YG2Wk3DRrRewbL1jzGl6Mu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mYPZirPt; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712052282; c=relaxed/simple;
+	bh=0QPpOehE24ka5umaTgBwirzQsNPW+N9wZZAZleho4Yw=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VcqEazaH6sUudYuAnyDNhcccVEVcUzrxe6PpzerKCZw9vilDDPCJ29iErpvMeQI3wBcmKQvYAWQ7wfWM9qPVlyuYibP3N4muMX1ncLDNdmsjtiRXWtWseZ9PYMQb1HsAPzHBgHj0NS+qs1pue00LIMW17Rq6GIMH5B+tJnaHThM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=md1VEW2o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xpsKfYgS; arc=none smtp.client-ip=64.147.123.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mYPZirPt"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-56b0af675deso5528249a12.1
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 03:02:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712052133; x=1712656933; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OjEbYblZKrl0CG+m753a58lhpGKTv+P90XqbAa23qmU=;
-        b=mYPZirPtf6KJLrck9evyFoeiF/7GAzufOAtIu5Zzzit9Mzfogg+q79Z4C56uHuAbmP
-         o2vZ2Z5lu2OcKCAwX/JFAiSXMm/rWCZvAgP/JlJNiSKjz+UZcdU2Gx9eVIQAsKOVqozQ
-         D4Xsqj9vu5wOWkjA6GsTvCTJN8NX38QPl6HPNvYmIcFzxNW9hL+MipTvuBqp9mPGLB5N
-         xBlLa7CrssWX7vLCBC1oSUtibvg0ttPavKAjhDBAccZGKUdqoRD3ibSxBIt3ZnsH+FqN
-         iuXAwuFGVUEyJXMRKVIjvELPPpEp7cDJaebZVZeGRAkhmEFAXUhKn8rWH8FOuLINEpZu
-         yKnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712052133; x=1712656933;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OjEbYblZKrl0CG+m753a58lhpGKTv+P90XqbAa23qmU=;
-        b=k/BhnRFYmZD1YbI6dBY0BY9FmVgfzce6AW0FuGU+FXH+hGepSzCm+sSZs+dx/soJOd
-         JgOUzX8Cy8BZw5WI69eQaTlEUKFpIQrcFVIgXxY1TATuFzdShYdnJhmynRteGmXZ1CKS
-         va+3n89+ILJ21DbtItGo58P1LtKzFvlF/6byYlONnPUfOC5yQuSeiULnnjeUwjmNZkEf
-         jeTt8MezS10VzDTUh2+uoA/rQeEQMen3k6GRRWp23Xa44Cdfpayca9lhCHmrw/kYjtWD
-         XyFbXnPWfEFnGZJQrez/XZcqLHmw81WAeqN8gbgq662K/SVMY61lrIeJd9CRJ14OX6B6
-         yV6g==
-X-Forwarded-Encrypted: i=1; AJvYcCVPVrD1opcOojVFkGUUhijIFLUk+oTglaiP482r73KP9bud+VoDsgpdO4QiMhM9TPHj2D41zx/6HN/fKpBMJvdWEgck
-X-Gm-Message-State: AOJu0YxlAkr/rGkLtERdL/dYD/4BjvHZRcRwO/J/1y5rlvmIE32JVkLj
-	7uGrzXcfBDrkbKa4D8gffDKkYbR/wHgxYMKsglc/3+YhK23xzbcFT+LReVNwB4OLhwmmepQ7z9O
-	uzu+8Opq1X6m3X2Oa63uOSOSH2/M=
-X-Google-Smtp-Source: AGHT+IE8zvd0/cWAn12AS2KgoJgkOT40LvJUJA98VA4dJjZ+D/hqTCBFs3HAixVvQIxsSR/NpD2oGW/PIrDjKWSCCps=
-X-Received: by 2002:a17:906:274f:b0:a4e:2178:d91a with SMTP id
- a15-20020a170906274f00b00a4e2178d91amr7823038ejd.59.1712052132317; Tue, 02
- Apr 2024 03:02:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="md1VEW2o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xpsKfYgS"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.west.internal (Postfix) with ESMTP id DE3091C0008B;
+	Tue,  2 Apr 2024 06:04:37 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Tue, 02 Apr 2024 06:04:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712052277; x=1712138677; bh=+UW+EQYOjh
+	hLHwIynToS+kYlTjuke+IRBiXNeYs43rk=; b=md1VEW2oFw+gObMdvM1F4n5cOU
+	976BKNj/pZCLGa4VcRvqzmZkborEA8DCNLLShQXIvQionXKbSGGA6L/l/oB9Gyt/
+	ngrpNZSS86iL8ARhgvT7pcdHCyqrbV9qdpKA9TAhgOJNWwTlgcu599iu8WmizgDv
+	viMITotD4tCw9QG6PnSwVGlR4tQAaFlYEsCZPkjunbW61+HxZq2ZTAvTgRI/1R3K
+	egl1Ytj2yOaH9GHYFe+di8DNIDbSAzQWbAVyLMWYz8AZXOCvtuGbcn2kyiFS0kJk
+	gKoexFgIFKbcDKj1DBiGaQT0zLp5wZIrz1JBmDDzFRmYeWINERnDBU8KLkDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712052277; x=1712138677; bh=+UW+EQYOjhhLHwIynToS+kYlTjuk
+	e+IRBiXNeYs43rk=; b=xpsKfYgSe1TT3TKAIROobTnyqslz8xK6+LIaJ2dyxrRM
+	zu8U7Z4sGdRTEOmaYJIsau5v2MSxBjVNcd75KdLxdMuuLZo00qsrpnq0qtleLo3C
+	Wwn0708yQNw3i3FRUi/bVeNa5BFVHQ9i/tIDLLAywC/A1u3WskrxUkltJCBnBGrc
+	E6+RYw2LQ+KbmpQiDwUn2+/QolE/T3+2iYVGSCVEMcoTNJxotBnb5HkMF0MpBzY0
+	12y4oukLnWmALIiqnAmhq1dTOT2jcfk0dpq3M9F/YVzjQPplrTVBg58TeOjZfxMo
+	ua0OGUl2QU0O6XiCQ77YNehBYJq+E87sN9Ji+XwA8A==
+X-ME-Sender: <xms:NdgLZsFHfO_g7yWW7LlWYAm0AunnFcvrNfQB_Iijv3R-751cCCv5HQ>
+    <xme:NdgLZlUPRGzDRgXdfWEieQoEV5PEJQ0-KQXbi5TXIhgxCz8eE7moRvIcPeNDmHcbB
+    hjYxtoMshq245VW-w>
+X-ME-Received: <xmr:NdgLZmI9fQ6OdokAO_o1iKrsije_lURrg-h3IQkOzls9aJhJq7DfeShL5CXl1Y1Vq-Vgmcr3MQy9qGA480IpiZN4YLL83vGiixzM4yJ2pE0j5F4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:NdgLZuGatIewVhI64GsXRiKMczPg5SVWJr5nSmXd5vbUxpI_tQyVsw>
+    <xmx:NdgLZiXcuyzPf3LtIUlXNyfj1rH3MmmDm97OqTXGivof6vwjdsGN1w>
+    <xmx:NdgLZhOWyFyaqZuSG72ygywREVnKsjbEmDtODsAnMiH29Hta8IJj8A>
+    <xmx:NdgLZp2JXv4yelKdQw6skynExVNsmhIyzXQcPlO-vUBHLFwUZqNU4g>
+    <xmx:NdgLZkIf_1U-LsItufL6zjC-gvpJgkYdkquTqEnYsc4pILtufCZ6Q579>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Apr 2024 06:04:35 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a2053b74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 10:04:25 +0000 (UTC)
+Date: Tue, 2 Apr 2024 12:04:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH 05/13] credential: gate new fields on capability
+Message-ID: <ZgvYLxfNwBcOB_s1@tanuki>
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+ <20240324011301.1553072-6-sandals@crustytoothpaste.net>
+ <ZgPSn_D8luXQyZGf@tanuki>
+ <ZgSQr7uQdIA8oVNn@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6f0a3c13-c8d9-4f89-8c62-9c031f0a064e@gmail.com>
- <CAP8UFD3Rb0kN=g=EPcSqYBb3U=OgW_06jqwafF=vRYhetZ9hdQ@mail.gmail.com>
- <ZfwnrL6Zl_lcV09y@tanuki> <63059d3b-e883-4fa2-8364-64f7bbd064f7@gmail.com>
-In-Reply-To: <63059d3b-e883-4fa2-8364-64f7bbd064f7@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 2 Apr 2024 12:01:59 +0200
-Message-ID: <CAP8UFD26BzjOdJPjcbVy-xGD7nBhFsfSu9CyureCLdHp9eUMZg@mail.gmail.com>
-Subject: Re: [RFC][GSoC] Proposal v2: Move and improve reftable tests in the
- unit testing framework
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>, 
-	karthik nayak <karthik.188@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fMF4nnydMnnhe0wS"
+Content-Disposition: inline
+In-Reply-To: <ZgSQr7uQdIA8oVNn@tapette.crustytoothpaste.net>
+
+
+--fMF4nnydMnnhe0wS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 29, 2024 at 8:08=E2=80=AFAM Chandra Pratap
-<chandrapratap3519@gmail.com> wrote:
->
-> Thanks for the feedback, Christian and Patrick! With your advice, I
-> decided to split my original proposal into two to conform to what was
-> suggested by the SoC 2024 Ideas page.
->
-> This is the proposal for the reftable tests migration project. However,
-> I am unsure of what would be a good project size for this project.
-> I have quite a long summer vacation and don't really have any other
-> plans other than GSoC as of now so I decided to go with large project
-> size on GSoC's website but please let me know if another size would
-> be more appropriate.
+On Wed, Mar 27, 2024 at 09:33:35PM +0000, brian m. carlson wrote:
+> On 2024-03-27 at 08:02:39, Patrick Steinhardt wrote:
+> > On Sun, Mar 24, 2024 at 01:12:53AM +0000, brian m. carlson wrote:
+> > > +static int credential_has_capability(const struct credential_capabil=
+ity *capa, int op_type)
+> > > +{
+> > > +	/*
+> > > +	 * We're checking here if each previous step indicated that we had =
+the
+> > > +	 * capability.  If it did, then we want to pass it along; conversel=
+y, if
+> > > +	 * it did not, we don't want to report that to our caller.
+> > > +	 */
+> > > +	switch (op_type) {
+> > > +	case CREDENTIAL_OP_HELPER:
+> > > +		return capa->request_initial;
+> > > +	case CREDENTIAL_OP_RESPONSE:
+> > > +		return capa->request_initial && capa->request_helper;
+> > > +	default:
+> > > +		return 0;
+> > > +	}
+> > > +}
+> >=20
+> > I think I'm missing the bigger picture here, so please bear with me.
+> >=20
+> > What you provide here is simply an `op_type` that indicates the phase we
+> > are currently in and thus allows us to check whether all of the
+> > preceding phases had the capability set. But to me it seems like a phase
+> > and the actual capability should be different things. So why is it that
+> > the capability seems to be a mere boolean value instead of something
+> > like a bitfield indicating whether a specific capability is supported or
+> > not? Or is all of this infra really only to support a single capability,
+> > namely the credential capability?
+> >=20
+> > I'm mostly coming from the angle of how capabilities work with remote
+> > helpers. When asked, the helper will announce a set of capabilities that
+> > it supports, e.g. "capabilities stateless-connect". So from thereon the
+> > client of the helper knows that it can assume "stateless-connect" to be
+> > understood by the helper.
+> >=20
+> > I would have expected capabilities to work similarly for the credential
+> > helper, where it announces "I know to handle pre-encoded credentials".
+> > But given that I have basically no clue at all for how the credential
+> > helper works there may very well be good reasons why things work so
+> > differently here.
+>=20
+> Let me explain a little bit.  There are two possible flows that we can
+> have for a credential request:
+>=20
+>   git-credential input -> credential.c -> helper -> credential.c -> git-c=
+redential output
+>=20
+>   git-http-backend -> credential.c -> helper -> credential.c -> git-http-=
+backend
+>=20
+> Let's look at the first one (which might, say, come from Git LFS or
+> another external tool), but the second one works similarly.  When we get
+> a request from `git credential fill`, we need to know first whether the
+> requester supports the capability.  If we're using an external tool from
+> last decade, it's not going to do so.
+>=20
+> If it _does_ support that, then we want to pass that along to the
+> helper, but if it doesn't, we don't.  That's because if the caller
+> doesn't support `credential` and `authtype`, the helper might
+> legitimately want to provide a username and password (or token) instead,
+> knowing that that's more likely to work.
+>=20
+> Similarly, in the final response, we want to indicate to the external
+> caller whether the capability was in fact supported.  That's useful to
+> know in case we want to pass the response back to `git credential
+> store`, and it also discloses functionality about what the credential
+> helper in use supports.
+>=20
+> We can't assume that the helper does or doesn't support the same
+> capabilities as Git because it might come from outside Git (e.g., Git
+> Credential Manager Core, or a site-specific credential helper) or it
+> just might not be capable of storing or handling that kind of
+> credential.  By not making the assumption that the helper is implicitly
+> capable, we allow users to continue to use very simple shell scripts as
+> credential helpers.
 
-On our Idea page, we have "Expected Project Size: 175 hours or 350
-hours" for this project. So it's fine for us if you pick one of those
-(medium or large).
+The intent of this is quite clear to me, but thanks for re-explaining
+the bigger picture :)
 
-> Before GSoC
-> -----------
->
-> -----Synopsis-----
->
-> A new unit testing framework was introduced to the Git mailing list last
-> year with the aim of simplifying testing and improving maintainability
-> by moving the current testing setup from shell scripts and helper files
-> to a framework written wholly in C. The idea was accepted and merged
-> into master on 09/11/2023. The choice of testing framework and the
-> rationale behind the choice is thoroughly described in
-> Documentation/technical/unit-tests.txt.
->
-> This project aims to extend that work by moving the reftable tests from
-> the current setup to the new unit testing framework and improving the
-> tests themselves. The difficulty for the project should be medium
-> and it should take somewhat around 175-350 hours.
+> As to why this functionality exists, it exists to support the two new
+> capabilities in this series, `credential` and `state`.  A pie in the sky
+> goal for the future is to support additional request signing
+> functionality, so it might learn things like method, URI, and TLS
+> channel binding info, which would be an additional capability.  (I might
+> implement that, or I might not.)  All of those are boolean: they either
+> are supported, or not.  If folks in the future want to expose
+> non-boolean capabilities, I don't think that should be a problem.
 
-It's fine to give information about the project that is already in the
-Idea page (or even to just copy from that page), but we are more
-interested to know how you approach the project, and how you want to
-work on it. So if you give information that is already in the Idea
-page, please say it clearly, so we can easily skip reading that if we
-don't have much time.
+I think you misunderstood my confusion. I didn't meant to say that there
+should be non-boolean capabilities. I was rather missing the picture of
+how exactly you can advertise multiple capabilities with the infra that
+currently exists, and why the infra supports per-phase capabilities.
 
-As we prefer that you give information specific to your approach, I
-think it would have been more interesting to say that you decided to
-go with a "large" project size for example.
+Basically, what I would have expected is a protocol where both Git and
+the credential helper initially did a single "handshake" that also
+announces capabilities. So something like:
 
-> In GSoC
-> -------
->
-> -----Background for reftable-----
->
-> Git=E2=80=99s internals consist of mainly three objects: blobs, tree obje=
-cts and
-> commit objects. The blobs and tree objects are responsible for storing a
-> repository=E2=80=99s content while the commit objects store information a=
-bout
-> commits in the repo and are responsible for capturing the repo=E2=80=99s
-> history.
+    HELPER: capability foobar
+    HELPER: capability barfoo
+       GIT: capability foobar
 
-When explaining refs with as much detail, I think tag objects are
-important too, as refs often point to them too. On the contrary, blobs
-and tree objects are very rarely pointed to by refs. So it's a bit
-strange that you don't talk about tag objects, but that you talk about
-blobs and trees which are less important than tag objects in this
-context.
+Git would only acknowledge capabilities that it both understands and
+that have been announced by the helper. So at the end of this both have
+agreed on a single capability "foobar".
 
-> Every one of these objects can be accessed through a unique key
-> generated by a SHA-256 (previously SHA-1) algorithm.
+This is roughly how the remote helper capability subsystem works. What
+this patch is introducing seems quite a bit more complicated than that
+though because we have "staged" capabilities. I assume there is good
+reason for this complexity, but I didn't yet manage to figure out the
+reasoning behind it.
 
-Actually both SHA-256 and SHA-1 are supported.
+To ask more specifically: why would one side ever announce a capability
+in phase 1, but not in phase 2? Is the reason that capabilities are in
+fact tied to credentials?
 
-> To make life
-> easier, instead of remembering the hash key for commit objects, we can
-> assign a simple name to them, store these names in a file and use that
-> file whenever we need access to the commits. These names are called
-> =E2=80=98references=E2=80=99 or =E2=80=98refs=E2=80=99.
->
-> Since a repository can contain a lot of commits and branches and hence,
-> a lot of refs, Git used packed-refs to save space by storing unused refs
-> in a single file. However, this arrangement doesn=E2=80=99t scale well in=
- terms
-> of both space and performance. This is where reftable comes in. A
-> reftable file is a portable binary file format customized for storing
-> references. Some objectives of reftable are:
-> -  Sorted references enabling advanced scans like binary search.
-> -  Near constant time lookup for any single reference.
-> -  Efficient enumeration of an entire namespace like refs/tags/
-> -  Combined reflog storage with ref storage for small transactions and
->    separate reflog storage for base refs and historical logs.
-> -  Near constant time verification if an object name is referred to by at
->    least one reference.
->
-> -----Plan-----
->
-> The reftable tests are different from other tests in the test directory
+Patrick
 
-Not sure which "test directory" you are talking about. I guess it's "t/".
+> > > +/*
+> > > + * These values define the kind of operation we're performing and the
+> > > + * capabilities at each stage.  The first is either an external requ=
+est (via git
+> > > + * credential fill) or an internal request (e.g., via the HTTP) code=
+=2E  The
+> > > + * second is the call to the credential helper, and the third is the=
+ response
+> > > + * we're providing.
+> > > + *
+> > > + * At each stage, we will emit the capability only if the previous s=
+tage
+> > > + * supported it.
+> > > + */
+> > > +#define CREDENTIAL_OP_INITIAL  1
+> > > +#define CREDENTIAL_OP_HELPER   2
+> > > +#define CREDENTIAL_OP_RESPONSE 3
+> >=20
+> > Is there any specific reason why you're using defines instead of an enum
+> > here? I think the latter would be more self-explanatory when you see
+> > that functions take `enum credential_op` as input instead of an `int`.
+>=20
+> I think an enum would be a nice improvement.  I'll include that in a
+> reroll.
+> --=20
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
 
-> because they perform unit testing with the help of a custom test framewor=
-k
-> rather than the usual =E2=80=98helper file + shell script=E2=80=99 combin=
-ation.
 
-There are actually already unit tests in t/unit-tests which don't need
-a shell script.
 
-I think it would have been clearer if this paragraph was started with
-something like "Compared to unit tests that use both a "t/*.sh" test
-script in shell and a test-tool helper in "t/helper/", ..."
+--fMF4nnydMnnhe0wS
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Reftable tests do have a helper file and a shell script invoking the
-> helper file, but rather than performing the tests, this combination is
-> used to invoke tests defined in the reftable directory.
+-----BEGIN PGP SIGNATURE-----
 
-It looks like you are talking about the "reftable/*_test.c" files, but
-I think it would be clearer if you spelled that out.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL2C4ACgkQVbJhu7ck
+PpSNeA/9HtQoogU4oH8D9h1NOTDIMy/vDoXKUIFasLhORvOmp33UkvMUjpZ8ZcPr
+yFKoitBzvYEWSzoirRVZcqRLflKl845AExFI8MK3KuruTcz/wrh6jih6eCmKK7M4
+R7jwB+OkHTh5tCqIQhcdAsRDeqB9ukE844+9nuUyQiU4QHsVZg6gUchOBA9A6Hjl
+PC3cJxNRm78QGbdlCPSb/9sw3p7c+Chyk0jPR9wWFlI6VRcvw5wplMgWBF6y2bx3
+mnlv9JNF3jlcyN6sydUaOzpGHHr6Qx6dCmqP9qOsSwy4Khj3+RBR2goXkZSX4mmg
+SCtjXf734U2jMIBRTmDlezw5ii0T3kA18yCbez6EcBR62dd/EET5aCn2fozToq3L
+rD01ouScb1dXmmByiy8PWxRWv1dflOLYXtijLGIBblC0cnf4QevSKAPqRj4uAaSG
+OoeYROVHrOIfAsqGPR2zF89NXu3N37lQgOv3UvTWkeogaOOufs3CnwS0s5kN7KDr
+z4SdCHpnvtvql47i8Z7hCycw7URJfmSh4ASk2tr0vT5xL2pXwam9CZy7A1T+loP0
+HZnRTbO/LsxZEdIRn4QlPxURjewHiZFtC/fvxs2x/6QwAyFZ1quF3KK12akWfc3c
+aJ7cfTkA4YfOO2pG6RU2NCY9JgdrUBrFlovpmo+bF59+X48Qa28=
+=dR++
+-----END PGP SIGNATURE-----
 
-> The reftable directory consists of nine tests:
-
-I think using "contains" instead of "consists" would be a bit better,
-as there are other things than the nine tests in the "reftable/"
-directory.
-
->
-> =E2=80=A2  basics test
-> =E2=80=A2  record test
-> =E2=80=A2  block test
-> =E2=80=A2  tree test
-> =E2=80=A2  pq test
-> =E2=80=A2  stack test
-> =E2=80=A2  merged test
-> =E2=80=A2  refname test
-> =E2=80=A2  read-write test
-
-Yeah, this corresponds to the output of `ls reftable/*_test.c`.
-
-> Each of these tests is written in C using a custom reftable testing
-> framework defined by reftable/test_framework (also written in C).
-
-Using "reftable/test_framework.{c,h}" would be a bit clearer as there
-is no "reftable/test_framework" file.
-
-> Since the reftable test framework is written in C like the unit testing
-> framework, we can create a direct translation of the features mentioned
-> above using the existing tools in the unit testing framework with the
-> following plan:
->
-> =E2=80=A2  EXPECT_ERR(c): Can be replaced by check(!c) or check_int(c, =
-=E2=80=9C=3D=3D=E2=80=9D, 0).
->
-> =E2=80=A2  EXPECT_STREQ(a, b): Can be replaced by check_str(a, b).
->
-> =E2=80=A2  EXPECT(c): Can be replaced by check_int(), similar to EXPECT_E=
-RR.
->    E.g. expect(a >=3D b) --> check_int(a, =E2=80=9C>=3D=E2=80=9D, b)
->
-> =E2=80=A2  RUN_TEST(f): Can be replaced by TEST(f(), =E2=80=9Cmessage exp=
-laining the test=E2=80=9D).
->
-> The information contained in the diagnostic messages of these macros is
-> replicated in the unit testing framework by default. Any additional
-> information can be displayed using the test_msg() functionality in the
-> framework. The additional functions set_test_hash() and strbuf_add_void()
-> may be moved to reftable/stack.c and reftable/refname.c respectively.
->
-> The plan itself is basic and does need improvements, but using this plan,
-> I have already created a working albeit primitive copy for two out of the
-> nine tests (basics test and tree test) as can be seen here:
-> (link: https://github.com/gitgitgadget/git/pull/1698)
-
-Nice, but it looks like "unit-tests/bin/t-reftable-tree" sometimes
-fails, perhaps because it's missing a call to test_done().
-
-The rest of your proposal LGTM.
-
-Thanks!
+--fMF4nnydMnnhe0wS--
