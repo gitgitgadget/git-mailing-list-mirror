@@ -1,106 +1,124 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B415D5B3
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531AC5914D
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:27:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712089474; cv=none; b=ErrlI6Bw6M1P9X96v4L9i2icWGy41Is77XCM36lQDqE1qeVMZaX+skQeutuQddYvAfLe4dgvuTyLTajwTPwdTyG1a4HoCdRzHErYRjJTuWtC9+baTxTTC0i6kjUTU5gGkxx/9IHBrkF0NE5sqYZG2fdOY1dv2pdAvracWzHLzu8=
+	t=1712089635; cv=none; b=GiNE8O+NP2vx0ooJiqcrrjVEX829itmrPddMr0p8kGCQIr4gWZbhyJm5RDIrJ4b2FYhSuEh43VXuKAjCTO/Xaq7C5vc1yDe+4V8mu/RKCDBMR5zu1pUJAzlcHsefJAdmAWGDYuPFhLkh7ds3ToeHqm6tNmyovheyfCcHSGJvZNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712089474; c=relaxed/simple;
-	bh=jrBc6VI0pgLvJ7UoNM7cj0olZZzhXNnSr61zmqLAstE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=APWstgWY6wotcLF1BZrvn92UHFInNdT/IX6Xg1mKrh/kS9ZFejI89hYBl1hifAfhXF1U7IZPqB3oK4QBGac664jgGp/xQE4CXgqK0HCZY3zbA3BWJ89lkUY37BYTiNuALoyJjr4BAz6JCXLisX7CisJow7+fOWK+EX9rOGjn62k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=h0X2kZ0O; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1712089635; c=relaxed/simple;
+	bh=t22fst+/2C0kQIS3ttV8IJaN3GWiRh3qIlCnaNSwvI4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AnecIbIIowSqCdSlQB/41gvGLinxaPIFDqDgioxYHlLPep9F5y2IpybYukwRzvzLf2r5EXj34NEjXNAjyq6XcIa5wBOjYDV5dsp4hk2Xv6zHzUMUX1qObik7Ls6/EueDKCy6dAkhlgCPI+dIddZth23LkkbmjV2LPcKFv9bhLw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=h83mFk6j; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="h0X2kZ0O"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1712089464; x=1712694264; i=l.s.r@web.de;
-	bh=HpKY72yZb/YbIMDmImX4VbX6ovTTAuBHZTM7YUrA06s=;
-	h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
-	b=h0X2kZ0OyJNM77ecfN6QjJY7F3DN3q4UO9whwMvEhKvYpskAbk5j2ovuwIarfPr/
-	 HQItYo513TO10UGg+t/mzDPxaQNYGkLZ3p2BpROUp73wXZ8ggUftg3y32AAXjAfTT
-	 2TY2G4wS0Dveox0/E5KaCE85TMvZHbY5CadMQZp6suByy3hIRbxcebgM4TILfcD6m
-	 XyliaP0OiMF+yTEb4mlO92vnpZgRsHSvN/i1m80kahtoAnstfAi2oyyUdEZd5jpxq
-	 Zlj9S0kqmaCXbV5C40xB3eFksxQ8VbeiGK6ZtJmvmn8NhgmsfQOrVNCjVJlotSyjf
-	 cfCBDC69891pV6MP5Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MxpiO-1skHZO0Ci6-00zHnt; Tue, 02
- Apr 2024 22:24:24 +0200
-Message-ID: <9b184d3e-412c-4357-83f6-5aad51a8e3d2@web.de>
-Date: Tue, 2 Apr 2024 22:24:23 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h83mFk6j"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id BE9622B66D;
+	Tue,  2 Apr 2024 16:27:13 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=t22fst+/2C0kQIS3ttV8IJaN3GWiRh3qIlCnaN
+	SwvI4=; b=h83mFk6jHphvVBY1NhbShXjAOlEccmtY0B13oVGcOIXf26i8Lp4Ck2
+	X99uxDiFeakMVSTdj9HFeIWkN7qjm/8JRxJaoRndGj1lWBMI4GlQQHyVK9IKxBns
+	ZEJKHVhQ3TCNyl5ZfNowEx44g1Xie7ynPEo/jh0iS8lCdmM8zl3sY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B6F982B66C;
+	Tue,  2 Apr 2024 16:27:13 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 43FCA2B66B;
+	Tue,  2 Apr 2024 16:27:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH 1/2] http: reset POSTFIELDSIZE when clearing curl handle
+In-Reply-To: <20240402200517.GA875182@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 2 Apr 2024 16:05:17 -0400")
+References: <20240402200254.GA874754@coredump.intra.peff.net>
+	<20240402200517.GA875182@coredump.intra.peff.net>
+Date: Tue, 02 Apr 2024 13:27:08 -0700
+Message-ID: <xmqqcyr74ijn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] "git range-diff" does not know X^! is a valid range
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq7chf64l1.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq7chf64l1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+4NPPMqNuxYJkegfV2f35SoQh6M/TrdUwu5bxMhabSVbB7x1lH3
- XK1LJDmXX+0HYOkmMln3FpnD6k5N1eikuqGxExYhz4mRezx69nLWDfaJrwIDFGW1N1HZIG4
- LXuiXBEROasID/DMVraDedGZRzbjDOluW86tRxsMvDrjmnvnFeRbtingLtH3AzrGHdfm2Nd
- r6klolC5/gYJAQdQ1xd6A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:xkLP6Y0ns74=;KRqdNJvWZle/phd8oXehB7DjRUf
- 0UlnnWJWLQY8PMGc4dm5c3Thk5Swql/CDuGKLEdSvIe24hMeiAzgSgXZX4Kt/Uot3MAlJIcvF
- kymde8oltRvQKI+L4A69mQwBRI3WE97lMGCuAuEKYMFxmaWLTMwJVADxqENDaO7+YKcWobjQ8
- zNiusIRwFULzIMM55Ia0RztBjuBz2zAvGCwIsxOpxL2yhdVHsEJkZNXBiYB+wNIbfCawI2ayB
- PN+JuGMQBcprHJEKS0OLtssxSzg4aQsDDW8jC7izyX9tkJADj3HDH2SSkeuWCAkci2Gkeg+lI
- 8eZViYI46AFNs9nUAfSnK6JW8L/omZpz5DMrS3l1hEmrga56RPezFZhRFeLQq0D1OGiUnmxjL
- tkIDcYpUrhm3QoQwsAE8MSJS60jvnIz2DCcZTW2BwTcHTFSo7er+iRZoOJ7sKk3Eh0/U32O8h
- V3c/w1QBmtLOH/1JPtqISj7teW+5l5oqsypkbE+PZH8tSx7Jsmdh6LTOmaO3xw+3P+hzBjiFV
- cB5KCDZPz/V8z2cTU7F1U4JsuWQETXEPOhEqLLkyujdI4X/AaWIp1tjK0tw7ChwNWqE2NBHDT
- aVTpp8a19G7SatwaGSPVekODyw6FOsszZWZ4K3s6EQjJw4Wp/KReCzXfeBwUc5oBC2s7uVXlb
- 4biF2kqe9Th+/PTM8QOhladJ2FZC4o69lkfi/azMcayHJvCixLHjQ/OItDjI8LCcSwf0Orfwf
- JJy2+LMmbq6mVBUxcS1hjrZSqHAq8TZUYJgB4c84bzDleGkQP9eZtJVMdJvhdf0LRvZAF0owe
- 6FF18j3BxgdpoGn4YXgpUlyyGU0tFm2PrhANYVXeawToY=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 61E0BA6A-F12F-11EE-B0FC-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Am 02.04.24 um 19:45 schrieb Junio C Hamano:
-> When cherry-picking an existing commit X to a different base, which
-> may have resulted in conflicts that needed a fix-up, you would want
-> to be able to compare X~1..X and HEAD~1..HEAD and naturally, we
-> would expect "range-diff" to have a handy way to allow giving the
-> command without having to type the overly long branch name X twice.
+Jeff King <peff@peff.net> writes:
+
+> In get_active_slot(), we return a CURL handle that may have been used
+> before (reusing them is good because it lets curl reuse the same
+> connection across many requests). We set a few curl options back to
+> defaults that may have been modified by previous requests.
 >
-> Individual "diff" for these two ranges are easy to obtain without
-> repeating X:
+> We reset POSTFIELDS to NULL, but do not reset POSTFIELDSIZE (which
+> defaults to "-1"). This usually doesn't matter because most POSTs will
+> set both fields together anyway. But there is one exception: when
+> handling a large request in remote-curl's post_rpc(), we don't set
+> _either_, and instead set a READFUNCTION to stream data into libcurl.
 >
->     $ git diff X^!
->     $ git diff HEAD^!
+> This can interact weirdly with a stale POSTFIELDSIZE setting, because
+> curl will assume it should read only some set number of bytes from our
+> READFUNCTION. However, it has worked in practice because we also
+> manually set a "Transfer-Encoding: chunked" header, which libcurl uses
+> as a clue to set the POSTFIELDSIZE to -1 itself.
 >
-> The "git range-diff" however does not understand that X^! is a valid
-> range X~1..X.  This command throws an error and ...
+> So everything works, but we're better off resetting the size manually
+> for a few reasons:
 >
->     $ git range-diff refs/merge-fix/ew/khash-to-khashl^! HEAD^!
->     fatal: need two commit ranges
+>   - there was a regression in curl 8.7.0 where the chunked header
+>     detection didn't kick in, causing any large HTTP requests made by
+>     Git to fail. This has since been fixed (but not yet released). In
+>     the issue, curl folks recommended setting it explicitly to -1:
+>
+>       https://github.com/curl/curl/issues/13229#issuecomment-2029826058
+>
+>     and it indeed works around the regression. So even though it won't
+>     be strictly necessary after the fix there, this will help folks who
+>     end up using the affected libcurl versions.
+>
+>   - it's consistent with what a new curl handle would look like. Since
+>     get_active_slot() may or may not return a used handle, this reduces
+>     the possibility of heisenbugs that only appear with certain request
+>     patterns.
+>
+> Note that the recommendation in the curl issue is to actually drop the
+> manual Transfer-Encoding header. Modern libcurl will add the header
+> itself when streaming from a READFUNCTION. However, that code wasn't
+> added until 802aa5ae2 (HTTP: use chunked Transfer-Encoding for HTTP_POST
+> if size unknown, 2019-07-22), which is in curl 7.66.0. We claim to
+> support back to 7.19.5, so those older versions still need the manual
+> header.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  http.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-Seems to work fine in this example:
+As always, well articulated.  Thanks.  Will queue.
 
-   $ git range-diff refs/remotes/origin/maint^! HEAD^!
-   -:  ---------- > 1:  c2cbfbd2e2 The thirteenth batch
-
-Are your refs valid?  Does "git rev-parse" resolve them properly?
-
-is_range_diff_range() uses setup_revisions(); not sure how it could
-misparse "X^!". :-?
-
-> ... to add insult to injury, it shows the huge "git range-diff -h"
-> output after that.
-
-Yeah, that's annoying in general, I guess to anyone who has seen it
-before or knows that -h or --help will list options.  Drowns out the
-actual signal.
-
-Ren=C3=A9
-
+> diff --git a/http.c b/http.c
+> index e73b136e58..3d80bd6116 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1452,6 +1452,7 @@ struct active_request_slot *get_active_slot(void)
+>  	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, NULL);
+>  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, NULL);
+>  	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, NULL);
+> +	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, -1L);
+>  	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
+>  	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+>  	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1);
