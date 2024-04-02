@@ -1,253 +1,124 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A63184037
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 14:22:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D90081AB6
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 14:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712067765; cv=none; b=oZWXBHTHDp48s/i4fs+vD2/tLr9PLO+xWgNFVDXjDsOpqyMBPR1muhOblm13BLuS3490aA94zsn8ZDoSw0m3tZ1SELjvCnyp7TBz67q6MdO0TUGP6qzJ5euttCiIu7Snev88yjsssDRTFwe/keXQlbCBxQ1NNPTjLLF1MM4nPI8=
+	t=1712069691; cv=none; b=m6zePM5J5pyvCZk2VQYZdpQ3Zi3oIm1/iSDDX6I05VdpkN8VQmEGX63sk3DgciuxUdvw/bBMC/jj29oGBx5BHRUxy2r4Y9OL4/byPeszse+L9N+4DMIjbY+xgAl71xy5gSwhcjcYNrw/Pf9HqxzQRi6xn4Ii/wefTRIfmfndfvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712067765; c=relaxed/simple;
-	bh=tsaFA7tQrgNzj4zp+8JwLPwsoX8ypMQ5zCiGV5AgV28=;
+	s=arc-20240116; t=1712069691; c=relaxed/simple;
+	bh=mtuYsJjzWBQKuD6TU2Isc1MCYdAzRmb0sh++OjtMc1U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=poImqL/mRmDStatgCsuTlhSQ/Fo7LbRo94RxFR1Em7LrUWqW7V8Zs51r8Kq6FKqHiMCANVuac8kZdz9PiTfq3MFsZY5jHvhc4kN2Cr023WYoo4h0dxMY1ILRUay76l1ZTcc+e2NAmzcYwUWuMCp6VOiheiG1kkq8QDH8ntGqyU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=igSoQHMU; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=HEd+UVmS8NCGmJS8It+hGIREsg07+EHyP6VHg6eUo0tt/GdbUe5v1StAzBB/2axPkEIrEjw/Kw5tFv6EHm+ssHKFQqL+o0ylN7u20V4qXVsYm/gxEKjlZOG0A+riRTHUMVUq0GOw3G3VmWIBeySiR99I57eIaXYT7U1HHyv9tMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=koordinates.com; spf=pass smtp.mailfrom=koordinates.com; dkim=pass (2048-bit key) header.d=koordinates.com header.i=@koordinates.com header.b=jb7XylgM; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=koordinates.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=koordinates.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igSoQHMU"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d475b6609eso56556731fa.2
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 07:22:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=koordinates.com header.i=@koordinates.com header.b="jb7XylgM"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a44ad785a44so597679266b.3
+        for <git@vger.kernel.org>; Tue, 02 Apr 2024 07:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712067761; x=1712672561; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RavnMSiX85oqnYolv/HlU+JJ2cFDnEYrXSQ2TnQ8/No=;
-        b=igSoQHMUrjkJteiTkcQT62DNaGq+m24jsEh23suxYJ/0Yo+2sG96lXBnLC/0+jC0/M
-         +PhD89++CfV72D5BNpZAWqE1ZHT0E4uxTG8dR7yoIjr7xGBdI8fSNdRMkUq69zJslxg5
-         rtneIxvO1RrZRqu1w25Bp3wemtnIRnvFl5Fca45NOSaF1qg/OaPHIoGxvSxfwTiD4hEH
-         P48q5/0Z0DAsR4LANV/AkU+owatAv0eF+XcD/01oSUcUueeHiUnGoaeavw3uBqKo24gq
-         lgemAA8hMw1vpblGZ8JB351Y6NV1abpU9BPsHNpO4y44TczP6MEjh/jPryA2ZX4naT8r
-         sF5w==
+        d=koordinates.com; s=google; t=1712069688; x=1712674488; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zWsKi5POs+Bia6j2LnQuyomI27cqYUYHQDXTGcMSHGo=;
+        b=jb7XylgMrH7KCy+KCM7QG0SUBqz/lNbKjGO97V/GycbLB+V1JZIOvccQDkydUXXnlM
+         knaY6ahYXOWZ6MeeIGEdsTTzubGc8GaqPioye3RbmYslBdvkqaDDOSjOe9FbxGGTMP0Y
+         YdLDZitCGjB/553fzSDcKoe57/0bXxtQ9sJZYLaMpL95bbLcbH3efiTWHZOB3km0TRsW
+         TrOb284pANWhdTwN9hlsndG5eaEvYG8XT9xXjf7rnAJ4dAt8BnGygw76TB8iAdw5heki
+         Tw+jdYM/Yhhp4Q6VJyfBmsL0TWUhw8GZV9eu5319HYAYS0eCKIaYiH9otbeqRS4nNtIm
+         KBPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712067761; x=1712672561;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RavnMSiX85oqnYolv/HlU+JJ2cFDnEYrXSQ2TnQ8/No=;
-        b=PkQCC5+J+MblH2Zs/UFQWAb8mnFlJ6HFumYbZfkXT/j4RcVEXgApYzuuBWyUXF59bT
-         2HtkAcMK6jACMDxWultWgFsAlhcB36xBBczMYW65Zks3vo2RL/XZPvgQWCpfWpCs4DYY
-         7HrAJl4sQ7tlbe1351N9Nd8kvYBWStI5OAsx2sbtuqao8Ewz9a0JxhGmWx4ur7ess6Po
-         HdAyKZ51pUlBrjasAevMhx4ekvOc7qi4YMayq6kGE0i6CE1BKVOM7Wphv5jW0aZX2Dz8
-         qseat3jc0oqQdBLewUbiTLzfXNiMzlP/LgySBebmrj1my/sn2YxcNHqQ3nycpgCmG51e
-         fQkg==
-X-Gm-Message-State: AOJu0YxcKZzhu7l8xZvReqdAKWhaGzDi9TAgtkebZ2YE2r2XoT2tlYLc
-	/9zk0g36Jd5ws7wDzCXaru/xJGo0rFt7u2YdAKhSQKTBk+OG+dOnVfhR3XdnimlpOrcUaBscNeE
-	62B4r8Qs5Emi7G4u8Qx/RRCdQrBw=
-X-Google-Smtp-Source: AGHT+IE1ryVQADFBo+U8/0sK3BQXJtjcaOXpKsw7KWyaMnkmFtjW2jLFLX7m27YS/WR6RIS7OFbToNbIhoyQNGnqChE=
-X-Received: by 2002:a2e:a486:0:b0:2d6:c051:d29d with SMTP id
- h6-20020a2ea486000000b002d6c051d29dmr8226762lji.44.1712067760717; Tue, 02 Apr
- 2024 07:22:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712069688; x=1712674488;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zWsKi5POs+Bia6j2LnQuyomI27cqYUYHQDXTGcMSHGo=;
+        b=DMTw+aDSFx+2v+v5lahnIaJOUTRDUC0IkINV4f/+xkExAahRfhDNfGu7wgJMLGAfSl
+         9rXFRvEkT+UDbhX1u/gfZJ3F9wOjYPYEjNUTVPVIzZE2XsUg/E5Dq+OenhjsbPVv7AMc
+         tr8+IBSQZKuhAsTU7QzoNQslrUR7fgf149InEP3S1m/2ARtyXpwNoJ+i6XROQq1SmQgI
+         1ELA4XAR8pQ7ghEp1pUy5mVZFMay1xq9wSndgvpRYzDY2meDO6xO1mr1mv9IZyzIZipS
+         oOnm6uWLEGcsnf4VsoTeRbKuvhx9FDJiUckArX4+CsWHM6ee+RY5oNrRufB6qMrzBjps
+         D0ig==
+X-Forwarded-Encrypted: i=1; AJvYcCUck7a49vostTxAKFSARbBau9y5Wu4UbuidgHotLdWKkNklKZP4Q01nDEOQP02+JjUMP0LPaOblhl+tdKnuf3lJ4sdi
+X-Gm-Message-State: AOJu0YzEvyyORMKjlj5AdLF+eInJ9kdYjX2pynvwDBlHNg7LYxuoEnLS
+	KjI9nmgywfoT9S4/YQHdgWSyUHt/8QqwelbpYSwHAuNWeRQsmr6t1BPE7OkMuIZLqrfKkVHFRlD
+	7ZXXyX8bK5NoFw/QIHV+XnG+Z4xzxL1FJQQGAvQ==
+X-Google-Smtp-Source: AGHT+IG38YgcE2do4k5b4H1Z/TrrtrbKEvOvaJLbrTFJ324gs4jHcuDUcph3r/ntdh2zaUkNKNA9HS8JJJRWHiRK/tc=
+X-Received: by 2002:a17:907:7da7:b0:a4e:6a49:c09b with SMTP id
+ oz39-20020a1709077da700b00a4e6a49c09bmr4740251ejc.29.1712069687673; Tue, 02
+ Apr 2024 07:54:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAHCXyj2y131B6C+EA9fn2zPhx+LBsL9csHgJSy4GmK9xjdMQSg@mail.gmail.com>
- <CAOLa=ZS_pZEU+BHXoTpQyJy6Sn7j+ap5J+mZWOgnL39HKhK1Ww@mail.gmail.com>
-In-Reply-To: <CAOLa=ZS_pZEU+BHXoTpQyJy6Sn7j+ap5J+mZWOgnL39HKhK1Ww@mail.gmail.com>
-From: Aishwarya Narayanan <aishnana.03@gmail.com>
-Date: Tue, 2 Apr 2024 19:52:34 +0530
-Message-ID: <CAHCXyj0UjP5hxh4sk-bqMmh70SUM-FTg-Tv1FWp9+0c9aVGh2g@mail.gmail.com>
-Subject: Re: [GSoC 2024][v2 Proposal]Move existing tests to a unit testing framework
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
+References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
+ <20240218204044.11365-1-mirth.hickford@gmail.com> <CFC1A507-A9EF-4330-8C98-34C2B73BC036@boanderson.me>
+ <CAGJzqs=wQA=t4CMVu-kap1ga4DX+KnaVMGy71ewmZ7QkFHF8sg@mail.gmail.com>
+ <20240307094708.GA2650063@coredump.intra.peff.net> <CAFLLRpJZg3UhBRfihtjUsXcGSod4FhDCs8fD1k-=5SLnAdHeQw@mail.gmail.com>
+ <98F1A6E9-4553-48BE-830C-8FDA9F3B5744@boanderson.me>
+In-Reply-To: <98F1A6E9-4553-48BE-830C-8FDA9F3B5744@boanderson.me>
+From: Robert Coup <robert.coup@koordinates.com>
+Date: Tue, 2 Apr 2024 15:54:31 +0100
+Message-ID: <CAFLLRp+Dd5M5Y+uoSpPk8-xpFHc_kBJJQfiHr4rt34ey0HAXbg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential helpers
+To: Bo Anderson <mail@boanderson.me>
+Cc: Jeff King <peff@peff.net>, M Hickford <mirth.hickford@gmail.com>, 
+	Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Dear Git Maintainers,
->It's always better to send updates as responses to your previous emails.
->This allows for reviewers to contain context in a single thread.
-Thanks for the feedback.
+Hi Bo,
 
->This patch actually was reviewed by Junio [1] and there was no follow up
->from your side. I'm not sure how this was considered Declined, so it
->would be nice to have some reasoning about it.
-I apologize for the confusion and inconvenience caused by creating a
-new thread for this patch. I'm still under development in my Git
-contribution workflow and should have replied to the original thread
-reviewed by Junio [1]. Additionally, Junio mentioned that exiting from
-the test_expect_success block is not recommended. I wasn't aware of
-this best practice.
+On Tue, 2 Apr 2024 at 14:53, Bo Anderson <mail@boanderson.me> wrote:
+>
+> The test script does not interact well with the env filtering. This was t=
+he case before this change too.
 
->It would also be nice if you mentioned what exactly is different in this
->version compared to the previous.
-In essence, the changed version project summary provides a more
-comprehensive overview of the legacy test migration project, while the
-previous project summary offers a more targeted perspective on the
-"reftable" test case as an example.
-The project summary in the above version of the proposal addresses an
-approach encompassing all legacy tests, including shell scripts
-(t/.sh) and helper C files (t/helper/test-.c). "Reftable" tests might
-not be part of this group; they're not explicitly mentioned. This
-proposal solely focuses on the process of migrating all legacy tests
-and the advantages of a unified testing approach. It highlights
-codebase consistency and the potential for expanded testing
-capabilities.
+I guess without writing a helper-specific test or having some
+per-helper-setup thing it's a bit tricky.
 
-Thanks again for your time and patience.
+> To interact with your default keychain, you will need:
+>
+> GIT_TEST_CREDENTIAL_HELPER_SETUP=3D"export HOME=3D$HOME=E2=80=9D
+>
+> This is because the default macOS user keychain is local to your home dir=
+ectory - that=E2=80=99s why it=E2=80=99s giving errors about not finding an=
+y.
 
-Sincerely,
-Aishwarya Narayanan
+And with that, the tests all pass :-) Comparing with master where 7/21 fail=
+ed.
 
-.
+Tested-by: Robert Coup <robert.coup@koordinates.com>
 
-On Tue, 2 Apr 2024 at 16:09, Karthik Nayak <karthik.188@gmail.com> wrote:
->
-> Hello,
->
-> Aishwarya Narayanan <aishnana.03@gmail.com> writes:
-> > Dear Git Organization,
-> > I'm writing to follow up on my Google Summer of Code proposal, "Move
-> > Existing Tests to a Unit Testing Framework."
-> > After careful consideration and based on our discussions, I've refined
-> > the project summary and deliverables to focus specifically on Move
-> > existing tests to a unit testing framework.This email aims to gather
-> > feedback and initiate a discussion on the
-> > feasibility and implementation of this idea.
->
-> It's always better to send updates as responses to your previous emails.
-> This allows for reviewers to contain context in a single thread.
->
-> > Related Works
-> >
-> > https://lore.kernel.org/git/CAHCXyj3U69qyhYewOLY9hN2rvi_5ZuSxQEBJbDxrKefm9MzVWg@mail.gmail.com/
-> > - Microproject Approach
-> >
-> > https://lore.kernel.org/git/ZgQffea0krKmZUEt@tanuki/ - [RFC PATCH]
-> >              Description: While printf might be unlikely to fail
-> > here,I felt the change aligns with the project's goal of ensuring Git
-> > command exit codes are captured. This approach is more robust and
-> > avoids potential issues in the future.
-> >                Status: Declined
-> >
->
-> It would be nice if you could also add a summary on the approach and
-> what went wrong and why.
->
-> > https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/ - [RFC PATCH]
-> > Fix Git command exit code suppression in test script
-> > t2104-update-index-skip-worktree.sh
-> > Description: This patch increases the robustness of Git's testing
-> > framework by guaranteeing that Git commands' exit codes are
-> > appropriately examined during test execution. Previously, suppressed
-> > exit codes allowed tests to pass despite Git command failures. This
-> > fix stores the output of Git commands in variables and examines their
-> > exit codes to detect errors.The discussion focuses on improvements to
-> > the patch submission process, such as adhering to coding principles
-> > and referencing appropriate documentation for proper formatting and
-> > test script adjustments.
-> > Status: Declined
-> >
->
-> This patch actually was reviewed by Junio [1] and there was no follow up
-> from your side. I'm not sure how this was considered Declined, so it
-> would be nice to have some reasoning about it.
->
-> >
-> >  https://public-inbox.org/git/CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3DodreYoL7g@mail.gmail.com/
-> >   - GSoC 2024 [PATCH v2] Fix Git command exit code suppression in test
-> > script t2104-update-index-skip-worktree.sh
-> >                                  Description: This patch resolves an
-> > issue in Git test scripts in which the exit code of git ls-files -t
-> > may be disregarded, resulting in tests passing despite Git command
-> > failures. The new version guarantees that Git commands used in
-> > pipelines produce captured output and perform adequate exit code
-> > checks. It also enhances code style by adhering to established rules.
-> > This adds to more robust Git testing by ensuring the identification
-> > and reporting of Git command errors within test scripts.
-> > Status: Under Review
->
-> This seems to be the same patch as the previous. A new thread was
-> created here instead of replying to the previous thread.
->
-> > Porting Unit Tests:
-> >
-> > [1]https://lore.kernel.org/git/cover.1692297001.git.steadmon@google.com/
-> >
-> > This patch series provides unit test functionality for the Git project.
-> > The series includes the following patches:
-> > A project plan document that outlines the goals for introducing unit
-> > tests, as well as a review of potential frameworks and the features
-> > used to assess them.
-> > An implementation of the TAP unit test framework with a sample unit
-> > test and Makefile integration.
-> > Changes were made to the Git build system so that the unit tests could
-> > be run in CI.
-> > The TAP framework was selected because of the following advantages:
-> > Simple to use and comprehend.
-> > Widely used and integrates seamlessly with existing Git tools.
-> >
-> > The project plan document mentions a number of outstanding TODOs,
->
-> Maybe I missed it, but where are the TODOs stated?
->
-> > Next Steps:
-> >
-> > A following commit will port the relevant code from
-> > t/helper/test-date.c to the new unit test file t/unit-tests/t-date.c,
-> > using the newly introduced functions for pre-requisite checks.
-> >
-> > [5]Unit Testing in Git:
-> >
-> > https://github.com/git/git/blob/master/Documentation/technical/unit-tests.txt
-> > discusses unit testing for the Git project. This gives an idea of the
-> > background and importance of unit testing in the project applying to.
-> >
-> >
-> >
-> > During GSoc
-> > The main goals of this project are:
-> > 1. Understand the existing "reftable" unit tests: Examine the present
-> > implementation of the "reftable" unit tests in
-> > 't0032-reftable-unittest.sh' to ensure that you understand their
-> > functionality and purpose.
-> > 2. Learn the new unit testing framework: Get a thorough grasp of Git's
-> > new unit testing framework, including setup, usage, and recommended
-> > practices.
-> > 3.Ensuring test coverage and reliability: Check that the converted
-> > tests have sufficient code coverage and accurately simulate the
-> > expected behaviour of the "reftable" capability. Test and validate the
-> > new tests thoroughly to ensure their reliability.
-> > 4. Documentation and code comments: Document the conversion process,
-> > including any issues encountered and the reasoning behind design
-> > decisions. Update the code comments and documentation to reflect the
-> > changes to the tests.
-> > Deliverables
->
-> Kaartic's review in the previous version mentions [2]:
->
->     Your project summary and the deliverables below seem to mention that
->     you're going to work on migration of the reftable unit tests but the
->     project title seems to be "Move existing tests to a unit testing
->     framework'.
->
-> It seems this version is the same...
->
-> > Closing Remarks
-> > Finally, I'd like to express my gratitude to the community and, in
-> > particular, my mentors, Patrick Steinhardt,Christian Couder,Kaartic
-> > Sivaraam,Karthik Nayak,Junio C Hamano. They did and continue to do an
-> > exceptional task of maintaining and empowering the Git open-source
-> > community, as well as offering much-needed and kind assistance to a
-> > new contributor like me.
-> > ---
-> > Sincerely,
-> > Aishwarya Narayanan
-> >
->
-> It would also be nice if you mentioned what exactly is different in this
-> version compared to the previous.
->
-> [1]: https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/
-> [2]: https://lore.kernel.org/git/CA+ARAtpqD0um9bVrjRKG0DmrxVR-46uSKfDKnO+H1rUp0i+4Ww@mail.gmail.com/#t
+Could we document that setup step somewhere? I guess the simplest is
+probably just to put it in the header of
+t/t0303-credential-external.sh; maybe along the lines of the patch
+below.
+
+Rob :)
+
+
+diff --git a/t/t0303-credential-external.sh b/t/t0303-credential-external.s=
+h
+index 095574bfc6..e4e693b233 100755
+--- a/t/t0303-credential-external.sh
++++ b/t/t0303-credential-external.sh
+@@ -27,6 +27,13 @@ timeout, you can test that feature with:
+ If your helper requires additional setup before the tests are started,
+ you can set GIT_TEST_CREDENTIAL_HELPER_SETUP to a sequence of shell
+ commands.
++
++- osxkeychain:
++
++  Because the default macOS user keychain is local to your home
++  directory, you will need:
++
++    GIT_TEST_CREDENTIAL_HELPER_SETUP=3D"export HOME=3D$HOME=E2=80=9D
+ '
+
+ . ./test-lib.sh
