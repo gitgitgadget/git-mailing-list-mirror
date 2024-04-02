@@ -1,79 +1,79 @@
 Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D931615A490
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 17:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC2615A490
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 17:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712078707; cv=none; b=ugbON9Sv3h63MTVzqufj7fATBKeql6AFOvnNeNONPnyIJq1tpPChzv0Q16D0imtbW7pHqVxyMRWmO4V8Dq/EJbYN95d368aWnPycUGEkb8dKk7dDyemKJ++BPUjTYIDq4u2UGlpoxw3l/u10voW6IBo4owz2CRw9mV6o3QPmC9I=
+	t=1712078711; cv=none; b=JqnA6uWJa0VQEOc7fgfhldqzlSJOJZEjqVPvdyXRwIYemlFuQlL1wazX0I9zm2lxVd1YGXZN5VDOdOHQHbHq2mvMsJso3Iq7df/VGn7Z7jreDodZE/vgkjLSd4FvfEeNK9E/a/ySp5VSNQVfqfn7opfNk62Iyrh/cTLIYXtcRss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712078707; c=relaxed/simple;
-	bh=LmNFZ3PZCR+5LJJS/esdb890aP5IYavm2vBpUMQH2Ws=;
+	s=arc-20240116; t=1712078711; c=relaxed/simple;
+	bh=uMq6t6NVH4lJMZY5uov8S6RAJOurLE3oNLxyyUUf4zQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o0WTFscGKMPMDcgjEd359g+FJDQEcq7YaMcSXhJeE6i8I0BMCeUcZXOauMBFMS2j9qNdP3pyYtklUPKvBRy0GCDVYjhfzQC/bFjEN80k+yoals5x+CfTuc84kF8WNje1KyDAffUSV255I1g9mJdt5U2ZGctP/wXLesZgScNssmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LTQMVGSx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TqNjIKjK; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=ln2nEYxjALUY7vq5juEVXgOxhdO45Vm9vbNaDVdPEEwzi7H2GQKxmcgitxk+x+P2nkejMsFEtgmeeoLhesUyKgDTuyvcZrq8bnB4UrJX0XIVqpdQx5ZyzcSbO2ZJUySDEITHZuVcROi5KjIs39Intl07DbBy2cvwwGEckIzbdgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ffeSOYbH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aaMFZGVm; arc=none smtp.client-ip=64.147.123.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LTQMVGSx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TqNjIKjK"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id 1F6E81C000C1;
-	Tue,  2 Apr 2024 13:25:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ffeSOYbH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aaMFZGVm"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id 2164A1C000CA;
+	Tue,  2 Apr 2024 13:25:09 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 02 Apr 2024 13:25:05 -0400
+  by compute2.internal (MEProxy); Tue, 02 Apr 2024 13:25:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712078704; x=1712165104; bh=Rs53Dc6qX5
-	t1TqKa1D4KWsI0X6rRwidagARDSD3qn3o=; b=LTQMVGSxonvJWjbz0uxgdmjzme
-	XiJtdM5pEf7hoBvkLR9KOq/hDgkYXcGLhdbYgdJtPJZiEyzepi5dc7vFmATRB5kU
-	z14mXxlYUkT4H4iHhAH0p6teOiIPV+makY0lEBcJDVuHIbdGImcxRDeEl59QMBuy
-	SEqjDjTu6flR8Sn2Q//V2JjkJOGE8WWIXlp9uF6PQDQjvqc9rSVVpdsuNGm4Ellz
-	z/gXeuM/w8ekfqX6KCAmWhFAbn0FvNb+2AzIyQ0LyQIpmtThbdYocYaHc5Oqw0fQ
-	PpIxrV2b7+u2IaIbUvCGT+DE/RyxYgMtuAo9msoepnWu8u2wU4i5MCE+pSyQ==
+	:subject:to:to; s=fm2; t=1712078708; x=1712165108; bh=HqbeboZThC
+	WuHJSg+lFcs523NEz2UpsfohZvsPTLGyY=; b=ffeSOYbHmDFpQm184T/OCsiND5
+	NN2ZR1MN6HR++L56g629msgkSpxsq5JPm0fQya+Nx/Xu6y+Yt/uEPLd9RoCSX7+9
+	RjokDMremHrYtZIbvkuK2jaYG5scvmDqpR1M/nLtGvr2sg+Ru7bQHIHXttXPcUSN
+	ILgtTN7UQRvXMReSz0GTQ4O3kPASe1X0IGb/LUv5dnja1VM9oA7NzleYqImqzBWN
+	IMpr0xBn2YC0UCz4u53veq+hEEK0hjZX7XnnEFBTplkX8Y/gLQ4AnJgC+jWGv/aJ
+	JN+fvb8CHr9uLSmcGxxc3Ugr0oyY5MYxrIlUWiJX5O6gIuaSCRm7umdRacZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712078704; x=1712165104; bh=Rs53Dc6qX5t1TqKa1D4KWsI0X6rR
-	widagARDSD3qn3o=; b=TqNjIKjK6CZo8XeK2psUDYUi+vfNGFW7kw7Q3KsALT7R
-	kg0GLaegSM8KlIxjpTg6JVqwWRgLq2UCw/SxigrJVC9mkcKqyMAEaN9Pzve6gT8H
-	ilrJLaQ7pxXTfSnQiKiRXjO1PQAMTeDwb1eZMzdR/tBn04VPDDCJwf+Mj8oNfDk+
-	0hs6VSb1ONfuFtjSgVPZ0pmJzaeSUGjG6vLNpnawj3PN2iM5yIY75Cv/GqNp2nfB
-	TYue5GIzmC3IN5tdOTmkPUUVMcoRnmfTHUqbnBvEA5e08NvErUrGkPQEcUsT86nG
-	mCr1OB0HvIbS9IWj7N1XZtuSuEhiGeUyAxgotbyGhw==
-X-ME-Sender: <xms:cD8MZvmR8wT5gd_Ozs_dX4aKAdkqGK2fX_v4OoKMNMZQN1GL4Wdmgw>
-    <xme:cD8MZi35XLgP03wfBpBT1iPIC9CK9TxpdqyFzGxNMUc8i0lrwt5IATGz2lGGYI3ey
-    dLYv8M-XGSrZupc6w>
-X-ME-Received: <xmr:cD8MZlreULqQI2swGLOlvkUe7k9ev-qX9Z1J9G9kfHvPYyvgvHKQ_NTqF01oXGcTKBzabmdmYj3Auwh1x4IQof79CTSXU702UNA9aPndKwtxMQs>
+	fm2; t=1712078708; x=1712165108; bh=HqbeboZThCWuHJSg+lFcs523NEz2
+	UpsfohZvsPTLGyY=; b=aaMFZGVmC3yGHAviOrVFumKqSkaklpSQX6PSZXfBsFtW
+	ZrXUHJoWKh/I92NgcdpewGyCtAi9GEUNKdq1eLQiQ2MWva5IB5qDpSY+Ui6EnpEM
+	I4C4/LV2c+3aFHolvEUKg2BGgQOzyzjljTDTBCivo0wP+WuVlCT9KsiD4OKbSxVU
+	iv2R2EXdTjBL+hmB7weJbL1WOxrKxZUOhesyqWPCTuvTz26qfc4QRB2xqwXdvayn
+	/3GtNyauo7dESz5sK+xnKkKrWZvyKRt2nOOQC3AdH4Ao5LOZZrgTfRI4uXggjYCt
+	/BTm5cXd5Kxw1cO4SzJ6HZLm4Xb2RiV4/DCZxPmsaw==
+X-ME-Sender: <xms:dD8MZjiQMKVjQ_pU5iAmsxGiHDm1vNxTbRIOzdxGdhMAQra7HGZb9Q>
+    <xme:dD8MZgDU1cJDjXE44W0WJXJok88oEkIcmHKbjvdrBSn-YzaKjeKwaaWQNRkAvWw4K
+    lTg0V3BZmLwyn7LHg>
+X-ME-Received: <xmr:dD8MZjGc43hTnZBIv2B-pXJj-XAMcp9DfuHSJQq18o6HQ8OR6dmpRuzfUzXa2xGU6irWKkDZvvMv5DWILKPw93RplEO9hDBNEszH--yEQIMy5ac>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddguddufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:cD8MZnn0DkiUlX-i9wVN3tb-bYFGXq-wv9ywU9WQs2G-iOXSgUDmUQ>
-    <xmx:cD8MZt2R0qcgl1IPUG2MNwjoU8dB5Wau51MSL6l8yiL9QzORQZKN_A>
-    <xmx:cD8MZmtFV0LCzA4IpQBZzLI_e7rHA9C_O9tkl2iPTsAbSrCUWe0prw>
-    <xmx:cD8MZhVCyOLzqjsZJ9gi4N0L9enxfHnv_3r4djYYZS98zBc7B4H34A>
-    <xmx:cD8MZmzNfCRdkiNjdbR_zw2neYKa9wYaJw2aeEuTsilJdDmu-PNhFStg>
+X-ME-Proxy: <xmx:dD8MZgTzTLddNlcc-vjJMnONtcNy4Kqzr8mCr4ppoUxaNbqBHhQOuQ>
+    <xmx:dD8MZgzVDOpcl3pEQXktk_zwGFGF8aeuspMWKWIiMztR6layukrEvw>
+    <xmx:dD8MZm4a1n5gxpuW3HEppeDL96Oj0dY4kgmanWrDO8hlvwxw4X0Bkw>
+    <xmx:dD8MZlym7ZBRgCBbbo4ADhsFVZ58whd_bDBX8D7vdnNkxjt4tryIug>
+    <xmx:dD8MZs8fkl2p-QXv0g2DQeEnyVRV6zIgxPs9YK3TQyO0g7HGM88ZfKKJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 13:25:03 -0400 (EDT)
+ 2 Apr 2024 13:25:07 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1ee72962 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 17:24:54 +0000 (UTC)
-Date: Tue, 2 Apr 2024 19:25:01 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7efabf8f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 17:24:58 +0000 (UTC)
+Date: Tue, 2 Apr 2024 19:25:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 6/7] reftable/record: extract function to decode key
- lengths
-Message-ID: <f87f7ad01a5789b77a695c6e4e246dcb2b740000.1712078263.git.ps@pks.im>
+Subject: [PATCH v3 7/7] reftable/block: avoid decoding keys when searching
+ restart points
+Message-ID: <f53bf9e1ccc27c6d0a0fc320c36ca58f24e2d204.1712078263.git.ps@pks.im>
 References: <cover.1711109214.git.ps@pks.im>
  <cover.1712078263.git.ps@pks.im>
 Precedence: bulk
@@ -83,126 +83,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="udQuBSUk35Lx8jqw"
+	protocol="application/pgp-signature"; boundary="YKw11p1NoGu7aqAz"
 Content-Disposition: inline
 In-Reply-To: <cover.1712078263.git.ps@pks.im>
 
 
---udQuBSUk35Lx8jqw
+--YKw11p1NoGu7aqAz
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to refactor the binary search over restart points so that it
-does not need to fully decode the record keys anymore. To do so we will
-need to decode the record key lengths, which is non-trivial logic.
+When searching over restart points in a block we decode the key of each
+of the records, which results in a memory allocation. This is quite
+pointless though given that records it restart points will never use
+prefix compression and thus store their keys verbatim in the block.
 
-Extract the logic to decode these lengths from `refatble_decode_key()`
-so that we can reuse it.
+Refactor the code so that we can avoid decoding the keys, which saves us
+some allocations.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/record.c | 34 +++++++++++++++++++++++++---------
- reftable/record.h |  6 ++++++
- 2 files changed, 31 insertions(+), 9 deletions(-)
+ reftable/block.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/reftable/record.c b/reftable/record.c
-index 23b497adab..5506f3e913 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -159,26 +159,42 @@ int reftable_encode_key(int *restart, struct string_v=
-iew dest,
- 	return start.len - dest.len;
+diff --git a/reftable/block.c b/reftable/block.c
+index ca80a05e21..8bb4e43cec 100644
+--- a/reftable/block.c
++++ b/reftable/block.c
+@@ -287,23 +287,32 @@ static int restart_needle_less(size_t idx, void *_arg=
+s)
+ 		.buf =3D args->reader->block.data + off,
+ 		.len =3D args->reader->block_len - off,
+ 	};
+-	struct strbuf kth_restart_key =3D STRBUF_INIT;
+-	uint8_t unused_extra;
+-	int result, n;
++	uint64_t prefix_len, suffix_len;
++	uint8_t extra;
++	int n;
+=20
+ 	/*
+-	 * TODO: The restart key is verbatim in the block, so we can in theory
+-	 * avoid decoding the key and thus save some allocations.
++	 * Records at restart points are stored without prefix compression, so
++	 * there is no need to fully decode the record key here. This removes
++	 * the need for allocating memory.
+ 	 */
+-	n =3D reftable_decode_key(&kth_restart_key, &unused_extra, in);
+-	if (n < 0) {
++	n =3D reftable_decode_keylen(in, &prefix_len, &suffix_len, &extra);
++	if (n < 0 || prefix_len) {
+ 		args->error =3D 1;
+ 		return -1;
+ 	}
+=20
+-	result =3D strbuf_cmp(&args->needle, &kth_restart_key);
+-	strbuf_release(&kth_restart_key);
+-	return result < 0;
++	string_view_consume(&in, n);
++	if (suffix_len > in.len) {
++		args->error =3D 1;
++		return -1;
++	}
++
++	n =3D memcmp(args->needle.buf, in.buf,
++		   args->needle.len < suffix_len ? args->needle.len : suffix_len);
++	if (n)
++		return n < 0;
++	return args->needle.len < suffix_len;
  }
 =20
--int reftable_decode_key(struct strbuf *last_key, uint8_t *extra,
--			struct string_view in)
-+int reftable_decode_keylen(struct string_view in,
-+			   uint64_t *prefix_len,
-+			   uint64_t *suffix_len,
-+			   uint8_t *extra)
- {
--	int start_len =3D in.len;
--	uint64_t prefix_len =3D 0;
--	uint64_t suffix_len =3D 0;
-+	size_t start_len =3D in.len;
- 	int n;
-=20
--	n =3D get_var_int(&prefix_len, &in);
-+	n =3D get_var_int(prefix_len, &in);
- 	if (n < 0)
- 		return -1;
- 	string_view_consume(&in, n);
-=20
--	n =3D get_var_int(&suffix_len, &in);
-+	n =3D get_var_int(suffix_len, &in);
- 	if (n <=3D 0)
- 		return -1;
- 	string_view_consume(&in, n);
-=20
--	*extra =3D (uint8_t)(suffix_len & 0x7);
--	suffix_len >>=3D 3;
-+	*extra =3D (uint8_t)(*suffix_len & 0x7);
-+	*suffix_len >>=3D 3;
-+
-+	return start_len - in.len;
-+}
-+
-+int reftable_decode_key(struct strbuf *last_key, uint8_t *extra,
-+			struct string_view in)
-+{
-+	int start_len =3D in.len;
-+	uint64_t prefix_len =3D 0;
-+	uint64_t suffix_len =3D 0;
-+	int n;
-+
-+	n =3D reftable_decode_keylen(in, &prefix_len, &suffix_len, extra);
-+	if (n < 0)
-+		return -1;
-+	string_view_consume(&in, n);
-=20
- 	if (in.len < suffix_len ||
- 	    prefix_len > last_key->len)
-diff --git a/reftable/record.h b/reftable/record.h
-index 826ee1c55c..d778133e6e 100644
---- a/reftable/record.h
-+++ b/reftable/record.h
-@@ -86,6 +86,12 @@ int reftable_encode_key(int *is_restart, struct string_v=
-iew dest,
- 			struct strbuf prev_key, struct strbuf key,
- 			uint8_t extra);
-=20
-+/* Decode a record's key lengths. */
-+int reftable_decode_keylen(struct string_view in,
-+			   uint64_t *prefix_len,
-+			   uint64_t *suffix_len,
-+			   uint8_t *extra);
-+
- /*
-  * Decode into `last_key` and `extra` from `in`. `last_key` is expected to
-  * contain the decoded key of the preceding record, if any.
+ void block_iter_copy_from(struct block_iter *dest, struct block_iter *src)
 --=20
 2.44.GIT
 
 
---udQuBSUk35Lx8jqw
+--YKw11p1NoGu7aqAz
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYMP2wACgkQVbJhu7ck
-PpST8g//U+r/BusCGSW0WJndPR9oh4kfrkZkkzf55Ouh/edlMHvqHv0+gz0tQDym
-I0TH64jtu+dVnBwgH0zd3mx9SW1q90zloR/AItShT+sIdKMtEnS8gsdqj1p/K53M
-niH4WLwZVCZ/F4CO/P/YkdVXLtAlpRzCIGCNzB+QxWKOevQ7Htvw5bgMGAii898h
-kokDOApQe0Cv30F8g7Mgml9z8DfG0Q8jAIRjbiahB79q/g4q3a+zqMSJoCNHDTIu
-Dx/mIN7uEbT9w05rzZSsNgAXxZcGphJXa9YyvbIy2tZ+ViRdQ7YG/K7sro/xc+f+
-mOpA7ouC11tljXwjnf8uf+NmS7TKrgy3Wq7EXtB5ddEEcaaRM+Gie1BwbcsbLEvd
-Hn/QyZPy7j8ogSx/atYHUNl8jPabVhtLbwJSD5Y4zsD9hwJyJR3jeM0KqOl1V9tO
-GEpszGaaPhIzsAIYTrqVgqeXbkiY0+vwpwbfp2BIiPD5+i0T6urtbpC0t42R4kIv
-YcF/lDl+LbtQnqo+i/iZMrN9rEdRj1PYOw0IYdMduSVeo9L20E6codkVXI7axSA/
-D3Y3+yvLZRhrjKxIK8YMDkKtnxIpo4ry5K8g2zqayb9clYnqQ0HRgYaKJ7hlRhtm
-UcyjB5t+v4nKEQ41okZn7xX50fdQMMmfG3o+FmJnEBNIPqD+cvQ=
-=0DNZ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYMP3AACgkQVbJhu7ck
+PpQSrA/9EXCgnqKRHl74mEiXRlKlx5NEAb0PHs5Xa2GH1PYUzR6hq/qr0ZUp0+pX
+HRER9zh8ql6+Qf8LlI1VgBXpaur6lnDIRPU03ejNhZYQfVjHYIJ/kaOTawKmCbOJ
+Mdjt4BQIXAxXKO6Bi70I9kX3PRJ5LN1wfUrjPgyBbExpjlST24datcReXRAqDotz
+oBobXgn4zSrmGHcL4rDp0/9+oSI9CPH0dXZDt8m5bZUJ/9y6JQ2dZv/C5Vu/4eSu
+JKjIIkhyPxNparS+SZJ4eZwg0rxosakDslXNv54N3VSwZp4KVxlHXRTJvSdjaEYI
+V4p4mqLN2GcZDb/D47AcKrIOZ1W08zhqb3KfuctvkW6K8ZLu6JCPJ3oq1JWMPMTJ
+0YblPfsDzjE6NCPngsM665/frCXmvHbi4dH567lCXDEJbgFEOKygXLuYoevN9xrv
+ebjAA3WIHZOX2+lM0SySZvXic6VjMk+mOpJnnsbR/i7sr0W8wQ5Y+5QTZlUHgJry
+lYVgV6I5iLDqWd2lg7NZsPpw5PrysOZbxpJ9GaN9wf7AYqLrcEbQ46kI4uCnH98b
+YKcMq+rZ6JjhAMxpl5XZ2+5Ld6KpSMt3M4D0fR4RG43KuBlo362pMyfpZr2jcXFp
+OR1XmWVdF8TUWl3GKGApUNNKsnti/n1/+yzSgb6g3yBvjdCF+1A=
+=8VVl
 -----END PGP SIGNATURE-----
 
---udQuBSUk35Lx8jqw--
+--YKw11p1NoGu7aqAz--
