@@ -1,72 +1,73 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B66415D5A4
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 19:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CDC15AAA1
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712087747; cv=none; b=BjOyAfLdqoLSHSo6ZzzKwQKjPRYIyiBnHHXO+fT/PKQC92NzET/s13KOVwWSuG2hln1owCmf0QRsY4R7kPY6Y6JlyFYcwIYuir1jjPRTo46b/arGzISr0MiEucBuKlSMxgAdxsp669HZ48C0Jt8wgnsmjxQy6R3yvr7LDcxB288=
+	t=1712088184; cv=none; b=mE2TwP0vim89aJ0dQGCeeK6RbXEtICFdu/t2FwM0HjPh9iu+bfyCfVqQbOUUyDEq5xn/W4hJKwhXBy63iL2xC+By5S7tZRJsUTftH7VGF530WZhjmXIJycU7Fm9miqlqHGybNIIo+e0XOucs3udU7l0yu9Kfb6qwR5XhEBvx5A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712087747; c=relaxed/simple;
-	bh=klsMKkiyuEVxKR0j4s2GG14niNPbTKks1Zl5dSPlo3w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ctLCNuNzMJ4ZmHdch2oXFP0D+fWj/7GA3StbIuiT1SpOo5cAAY1In7r9mv0g7Q14eqXCt+/MIvSzfMWc9w6W0Mj6bSBbcVatImDSXbdOKLN+bIkITXlZubIighCCLPi7PVwRkQa5+WOkyAfaIxiHCRwXzpSMOX0ml4nnZN594cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ehz4k4G9; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ehz4k4G9"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 18E492B317;
-	Tue,  2 Apr 2024 15:55:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=klsMKkiyuEVxKR0j4s2GG14niNPbTKks1Zl5dS
-	Plo3w=; b=ehz4k4G9R6OiQsU+JaWkhF4Hgr/3LzgLKFlaciTaqWwSz4cQDlTWy+
-	Z77FwIjKu5n1yTy4lVrP0V9l12/Rspv9aS7pPcTaRUSapJQhM26YkbqMQZtrbpV+
-	WcaXcHwzAGWycUQve2nk8BlE0dsEQfcoHKYrMkVVEsRro8C7rja+4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1153E2B316;
-	Tue,  2 Apr 2024 15:55:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 900082B315;
-	Tue,  2 Apr 2024 15:55:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/t7700-repack.sh: fix test breakages with
- `GIT_TEST_MULTI_PACK_INDEX=1`
-In-Reply-To: <ZgxSSKGdAicfVhGA@nand.local> (Taylor Blau's message of "Tue, 2
-	Apr 2024 14:45:28 -0400")
-References: <7e8d435d58eea19d2aae0be366720f5956d29a5d.1712075189.git.me@ttaylorr.com>
-	<xmqqr0fn4nmx.fsf@gitster.g> <ZgxSSKGdAicfVhGA@nand.local>
-Date: Tue, 02 Apr 2024 12:55:39 -0700
-Message-ID: <xmqqh6gj4k04.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1712088184; c=relaxed/simple;
+	bh=Bkwf42Ig+32X65e4gyEp0fLHm7PUVd5ypAcghbbjLCA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PnElHrFa48pdY4wA7ph7q6FptzwabLL7KpreaUdsOJND8xY6N0PcDUUajR3Ig0c6hyAYKsv6Fp9FuF2LWVTuzkmcVe+Lq0V57eKUP/VlJ4gtm9TnV3xjlv3gzw0ArpOKrC6Jz2yKGTFwQ3aFyTUO/nsAAO78pJkSVuZIpWR/r48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 7274 invoked by uid 109); 2 Apr 2024 20:02:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Apr 2024 20:02:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1057 invoked by uid 111); 2 Apr 2024 20:02:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Apr 2024 16:02:56 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 2 Apr 2024 16:02:54 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Daniel Stenberg <daniel@haxx.se>
+Subject: [PATCH 0/2] git+curl 8.7.0 workaround
+Message-ID: <20240402200254.GA874754@coredump.intra.peff.net>
+References: <20240330000212.GA1261238@coredump.intra.peff.net>
+ <2n7sn76-p413-5632-4o2s-o5n2p1rqnr5@unkk.fr>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- FB88CA5E-F12A-11EE-B7C4-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2n7sn76-p413-5632-4o2s-o5n2p1rqnr5@unkk.fr>
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Sat, Mar 30, 2024 at 09:54:02AM +0100, Daniel Stenberg wrote:
 
-> I would argue that GIT_TEST_MULTI_PACK_INDEX should be on the list of
-> GIT_TEST_-variables to get rid of as it has served its purpose.
->
-> Like I said, I'd like to get rid of this (and many other)
-> GIT_TEST-related variables, but that is a larger effort than this single
-> patch.
-Yup, that sounds like a good longer-term goals.  While it does not
-smell like it is consistent with that goal to add more instances of
-use of it to the test, it may inevitably be a "few steps backward in
-preparation to jump big forward", perhaps.
+> On Fri, 29 Mar 2024, Jeff King wrote:
+> 
+> > I noticed some http-related failures in the test suite on my Debian
+> > unstable system, which recently got an upgraded curl package. It looks
+> > like it's related to cases where we use the remote-curl helper in
+> > "connect" mode (i.e., protocol v2) and the http buffer is small
+> > (requiring us to stream the data to curl). Besides just running t5551,
+> > an easy reproduction is:
+> 
+> This smells like a libcurl regression to me. I "imported" this into our
+> issue tracker here: https://github.com/curl/curl/issues/13229
+
+This was all resolved in that issue, but just to summarize for the list
+here: it was a regression in curl and there's a fix already. Thanks
+Daniel for your (as usual) prompt digging into the problem (and likewise
+to Stefan for the actual fix).
+
+Ultimately the issue will be fixed by moving to a different version of
+libcurl, but here's an easy workaround in the meantime, with a small doc
+cleanup I found along the way.
+
+  [1/2]: http: reset POSTFIELDSIZE when clearing curl handle
+  [2/2]: INSTALL: bump libcurl version to 7.21.3
+
+ INSTALL | 2 +-
+ http.c  | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+-Peff
