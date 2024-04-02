@@ -1,79 +1,79 @@
 Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB315A490
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 17:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D931615A490
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 17:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712078703; cv=none; b=dkWXkWtIBTVfXf8YPD4eToPoGRqTd4q7JzieRxCN6oCKC9P6jGz/HscUFpMQUiIehhvW9EzuM8ZbwGoaCO0/J5x30UYfJPJBdrXN+ujv0MKS6opsBWGpKq5VEZpZzRFl7R27eTl4itHJ6HzArpVVSVsNoitaKxesFNSIj+g0Lok=
+	t=1712078707; cv=none; b=ugbON9Sv3h63MTVzqufj7fATBKeql6AFOvnNeNONPnyIJq1tpPChzv0Q16D0imtbW7pHqVxyMRWmO4V8Dq/EJbYN95d368aWnPycUGEkb8dKk7dDyemKJ++BPUjTYIDq4u2UGlpoxw3l/u10voW6IBo4owz2CRw9mV6o3QPmC9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712078703; c=relaxed/simple;
-	bh=L0Ooahn24qRgmke3x24cQ7gKXm99Gg5RrSaYFSddWgM=;
+	s=arc-20240116; t=1712078707; c=relaxed/simple;
+	bh=LmNFZ3PZCR+5LJJS/esdb890aP5IYavm2vBpUMQH2Ws=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jmt4LzyLSnRuPZ6e/BdV4Y4KOo0T1ivQlyoyloKbQtZXDl8WNQ/6MPa0zXS/Ox9CN0hTC3U+dStV8qgnP1GAd/7ZffmwX2aY9uhKvNlvPOkDSonGpT5vX1+xXsK8y0dgV++1cNSffbnSBY9QtcuhESKHphSrG/YnqrBVNvZLO8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Thws7rMI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ow71kjvF; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=o0WTFscGKMPMDcgjEd359g+FJDQEcq7YaMcSXhJeE6i8I0BMCeUcZXOauMBFMS2j9qNdP3pyYtklUPKvBRy0GCDVYjhfzQC/bFjEN80k+yoals5x+CfTuc84kF8WNje1KyDAffUSV255I1g9mJdt5U2ZGctP/wXLesZgScNssmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LTQMVGSx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TqNjIKjK; arc=none smtp.client-ip=64.147.123.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Thws7rMI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ow71kjvF"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id 23E5E1C00082;
-	Tue,  2 Apr 2024 13:25:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LTQMVGSx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TqNjIKjK"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.west.internal (Postfix) with ESMTP id 1F6E81C000C1;
+	Tue,  2 Apr 2024 13:25:05 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 02 Apr 2024 13:25:01 -0400
+  by compute4.internal (MEProxy); Tue, 02 Apr 2024 13:25:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712078700; x=1712165100; bh=4l780Fj1tW
-	toWc5SttetCfM0k5q6C9whrYdd52mhBvc=; b=Thws7rMI4K7Uqjf7GiS8GR/e82
-	XSm3zOySX2czPbJ0nxSWioXRyBglQmpFo9yuv/As/L9L2u4/NFy+2cWpfUKWQ2JB
-	b5W4jykwU/CXhC4EZ9qIl8i9aQM6K94HTfUiAI19pkWPjawYYcWeMt4b60j4+qLY
-	bRm2V9JXfz9WgwnjomRNtEgrcwad0w6SDJRMYwpVZB3ft394A/lDa9Kw3TM8ENCz
-	yTUBMp4Be/feCp2mGWEM/dcOHKS+zVofzKZJUMzsJ7OK+U7XDMHC5bwORKHhWtzn
-	fieEaUMYnvC9LyuFFDD5l9pDsXCRXAR8teI0p6oZSW9Dt+6IukQHrg9+merg==
+	:subject:to:to; s=fm2; t=1712078704; x=1712165104; bh=Rs53Dc6qX5
+	t1TqKa1D4KWsI0X6rRwidagARDSD3qn3o=; b=LTQMVGSxonvJWjbz0uxgdmjzme
+	XiJtdM5pEf7hoBvkLR9KOq/hDgkYXcGLhdbYgdJtPJZiEyzepi5dc7vFmATRB5kU
+	z14mXxlYUkT4H4iHhAH0p6teOiIPV+makY0lEBcJDVuHIbdGImcxRDeEl59QMBuy
+	SEqjDjTu6flR8Sn2Q//V2JjkJOGE8WWIXlp9uF6PQDQjvqc9rSVVpdsuNGm4Ellz
+	z/gXeuM/w8ekfqX6KCAmWhFAbn0FvNb+2AzIyQ0LyQIpmtThbdYocYaHc5Oqw0fQ
+	PpIxrV2b7+u2IaIbUvCGT+DE/RyxYgMtuAo9msoepnWu8u2wU4i5MCE+pSyQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712078700; x=1712165100; bh=4l780Fj1tWtoWc5SttetCfM0k5q6
-	C9whrYdd52mhBvc=; b=Ow71kjvFXzPBdvySMohKzMfrWUcxt04Hx5h5CDTuwieW
-	M2Cex0T7FK9x3XYI6HTs2LTFhUoayH/90xhp7H7P9F6XD/CWbczN9KwQjokd0erR
-	YWIe8P3T/Oiu46RyYD8ZKrWcy/5nEe9lFD3HyCWyoHpYzu9HNTZpXSAjBINLsjiV
-	Crmn8qsB2fdhXeG/z98lendQIaW/QVccFkaN5OIliJ7nSTe0NTzDYd9SvTaeZbrT
-	luaFTcQtLa2T4eaQNKgo/ijKr1LVwUv3I1F+hCHbg1Fuw1zWaYgp2Wg6XHcW3UWC
-	IKEW5uL2K5H3wtTgiOztmkU0Qq9xsuIYPCj20+OWeA==
-X-ME-Sender: <xms:bD8MZonfoKh0qF7Nq34-G6fy0Uqmha8oq2DNMelGoCbqZUene_-E-w>
-    <xme:bD8MZn1fln19WXY_0XuXEOnbYIifxy0gpeEtq_zRHTIOlws2rMbWj29fGAYe7tOre
-    oZJkSgO0ZAauxTteQ>
-X-ME-Received: <xmr:bD8MZmpObffFwIvD6TRoNhQm4uWdJ2uwzYVSNOAi92MUKEgPmD3QsioNahZrtXwhTerpEf1ro6vb6sW_-Lz0O9H7YqSPY36_xfCDK2mNiGNc_8Q>
+	fm2; t=1712078704; x=1712165104; bh=Rs53Dc6qX5t1TqKa1D4KWsI0X6rR
+	widagARDSD3qn3o=; b=TqNjIKjK6CZo8XeK2psUDYUi+vfNGFW7kw7Q3KsALT7R
+	kg0GLaegSM8KlIxjpTg6JVqwWRgLq2UCw/SxigrJVC9mkcKqyMAEaN9Pzve6gT8H
+	ilrJLaQ7pxXTfSnQiKiRXjO1PQAMTeDwb1eZMzdR/tBn04VPDDCJwf+Mj8oNfDk+
+	0hs6VSb1ONfuFtjSgVPZ0pmJzaeSUGjG6vLNpnawj3PN2iM5yIY75Cv/GqNp2nfB
+	TYue5GIzmC3IN5tdOTmkPUUVMcoRnmfTHUqbnBvEA5e08NvErUrGkPQEcUsT86nG
+	mCr1OB0HvIbS9IWj7N1XZtuSuEhiGeUyAxgotbyGhw==
+X-ME-Sender: <xms:cD8MZvmR8wT5gd_Ozs_dX4aKAdkqGK2fX_v4OoKMNMZQN1GL4Wdmgw>
+    <xme:cD8MZi35XLgP03wfBpBT1iPIC9CK9TxpdqyFzGxNMUc8i0lrwt5IATGz2lGGYI3ey
+    dLYv8M-XGSrZupc6w>
+X-ME-Received: <xmr:cD8MZlreULqQI2swGLOlvkUe7k9ev-qX9Z1J9G9kfHvPYyvgvHKQ_NTqF01oXGcTKBzabmdmYj3Auwh1x4IQof79CTSXU702UNA9aPndKwtxMQs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddguddufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:bD8MZkkLmQhZHLBSkjDP5bhcl32-FE61y5m1v5UbK1OuG6zT9v7E_Q>
-    <xmx:bD8MZm0o3Rp8IHkhxpSjcJ6pY0ZdyXlKdnrrf-zxHYOcDCNBXdIgWw>
-    <xmx:bD8MZrvA3m0gvPrbp1l_sbA7JpeAfRKRhGIM5_UwZrQzLexAUmPL1A>
-    <xmx:bD8MZiWjATL0Fa7OQ2NBfqHCog1ofv8oJCaH0WZ8TuTm4Oc29qnocQ>
-    <xmx:bD8MZrxiGmmswfsk4rCkrwY-rnm7c6ZXHxUaKQeLze7DYum4YcdlxkbH>
+X-ME-Proxy: <xmx:cD8MZnn0DkiUlX-i9wVN3tb-bYFGXq-wv9ywU9WQs2G-iOXSgUDmUQ>
+    <xmx:cD8MZt2R0qcgl1IPUG2MNwjoU8dB5Wau51MSL6l8yiL9QzORQZKN_A>
+    <xmx:cD8MZmtFV0LCzA4IpQBZzLI_e7rHA9C_O9tkl2iPTsAbSrCUWe0prw>
+    <xmx:cD8MZhVCyOLzqjsZJ9gi4N0L9enxfHnv_3r4djYYZS98zBc7B4H34A>
+    <xmx:cD8MZmzNfCRdkiNjdbR_zw2neYKa9wYaJw2aeEuTsilJdDmu-PNhFStg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 13:24:59 -0400 (EDT)
+ 2 Apr 2024 13:25:03 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3ab0864e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 17:24:50 +0000 (UTC)
-Date: Tue, 2 Apr 2024 19:24:57 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1ee72962 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 17:24:54 +0000 (UTC)
+Date: Tue, 2 Apr 2024 19:25:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 5/7] reftable/block: fix error handling when searching
- restart points
-Message-ID: <8d8abfd2907e9e128fc7fa4a462be18312f105bc.1712078263.git.ps@pks.im>
+Subject: [PATCH v3 6/7] reftable/record: extract function to decode key
+ lengths
+Message-ID: <f87f7ad01a5789b77a695c6e4e246dcb2b740000.1712078263.git.ps@pks.im>
 References: <cover.1711109214.git.ps@pks.im>
  <cover.1712078263.git.ps@pks.im>
 Precedence: bulk
@@ -83,122 +83,126 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qTlBaCqlZbwvMNJC"
+	protocol="application/pgp-signature"; boundary="udQuBSUk35Lx8jqw"
 Content-Disposition: inline
 In-Reply-To: <cover.1712078263.git.ps@pks.im>
 
 
---qTlBaCqlZbwvMNJC
+--udQuBSUk35Lx8jqw
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When doing the binary search over restart points in a block we need to
-decode the record keys. This decoding step can result in an error when
-the block is corrupted, which we indicate to the caller of the binary
-search by setting `args.error =3D 1`. But the only caller that exists
-mishandles this because it in fact performs the error check before
-calling `binsearch()`.
+We're about to refactor the binary search over restart points so that it
+does not need to fully decode the record keys anymore. To do so we will
+need to decode the record key lengths, which is non-trivial logic.
 
-Fix this bug by checking for errors at the right point in time.
-Furthermore, refactor `binsearch()` so that it aborts the search in case
-the callback function returns a negative value so that we don't
-needlessly continue to search the block.
+Extract the logic to decode these lengths from `refatble_decode_key()`
+so that we can reuse it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c | 5 ++++-
- reftable/basics.h | 5 +++--
- reftable/block.c  | 9 ++++-----
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ reftable/record.c | 34 +++++++++++++++++++++++++---------
+ reftable/record.h |  6 ++++++
+ 2 files changed, 31 insertions(+), 9 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 2c5f34b39e..fea711db7e 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -39,8 +39,11 @@ size_t binsearch(size_t sz, int (*f)(size_t k, void *arg=
-s), void *args)
- 	 */
- 	while (hi - lo > 1) {
- 		size_t mid =3D lo + (hi - lo) / 2;
-+		int ret =3D f(mid, args);
-+		if (ret < 0)
-+			return sz;
+diff --git a/reftable/record.c b/reftable/record.c
+index 23b497adab..5506f3e913 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -159,26 +159,42 @@ int reftable_encode_key(int *restart, struct string_v=
+iew dest,
+ 	return start.len - dest.len;
+ }
 =20
--		if (f(mid, args))
-+		if (ret > 0)
- 			hi =3D mid;
- 		else
- 			lo =3D mid;
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 2672520e76..523ecd5307 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -22,8 +22,9 @@ uint32_t get_be24(uint8_t *in);
- void put_be16(uint8_t *out, uint16_t i);
+-int reftable_decode_key(struct strbuf *last_key, uint8_t *extra,
+-			struct string_view in)
++int reftable_decode_keylen(struct string_view in,
++			   uint64_t *prefix_len,
++			   uint64_t *suffix_len,
++			   uint8_t *extra)
+ {
+-	int start_len =3D in.len;
+-	uint64_t prefix_len =3D 0;
+-	uint64_t suffix_len =3D 0;
++	size_t start_len =3D in.len;
+ 	int n;
 =20
+-	n =3D get_var_int(&prefix_len, &in);
++	n =3D get_var_int(prefix_len, &in);
+ 	if (n < 0)
+ 		return -1;
+ 	string_view_consume(&in, n);
+=20
+-	n =3D get_var_int(&suffix_len, &in);
++	n =3D get_var_int(suffix_len, &in);
+ 	if (n <=3D 0)
+ 		return -1;
+ 	string_view_consume(&in, n);
+=20
+-	*extra =3D (uint8_t)(suffix_len & 0x7);
+-	suffix_len >>=3D 3;
++	*extra =3D (uint8_t)(*suffix_len & 0x7);
++	*suffix_len >>=3D 3;
++
++	return start_len - in.len;
++}
++
++int reftable_decode_key(struct strbuf *last_key, uint8_t *extra,
++			struct string_view in)
++{
++	int start_len =3D in.len;
++	uint64_t prefix_len =3D 0;
++	uint64_t suffix_len =3D 0;
++	int n;
++
++	n =3D reftable_decode_keylen(in, &prefix_len, &suffix_len, extra);
++	if (n < 0)
++		return -1;
++	string_view_consume(&in, n);
+=20
+ 	if (in.len < suffix_len ||
+ 	    prefix_len > last_key->len)
+diff --git a/reftable/record.h b/reftable/record.h
+index 826ee1c55c..d778133e6e 100644
+--- a/reftable/record.h
++++ b/reftable/record.h
+@@ -86,6 +86,12 @@ int reftable_encode_key(int *is_restart, struct string_v=
+iew dest,
+ 			struct strbuf prev_key, struct strbuf key,
+ 			uint8_t extra);
+=20
++/* Decode a record's key lengths. */
++int reftable_decode_keylen(struct string_view in,
++			   uint64_t *prefix_len,
++			   uint64_t *suffix_len,
++			   uint8_t *extra);
++
  /*
-- * find smallest index i in [0, sz) at which f(i) is true, assuming
-- * that f is ascending. Return sz if f(i) is false for all indices.
-+ * find smallest index i in [0, sz) at which `f(i) > 0`, assuming that f is
-+ * ascending. Return sz if `f(i) =3D=3D 0` for all indices. The search is =
-aborted
-+ * and `sz` is returned in case `f(i) < 0`.
-  *
-  * Contrary to bsearch(3), this returns something useful if the argument i=
-s not
-  * found.
-diff --git a/reftable/block.c b/reftable/block.c
-index 6cd4c053df..ca80a05e21 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -387,11 +387,6 @@ int block_reader_seek(struct block_reader *br, struct =
-block_iter *it,
- 	int err =3D 0;
- 	size_t i;
-=20
--	if (args.error) {
--		err =3D REFTABLE_FORMAT_ERROR;
--		goto done;
--	}
--
- 	/*
- 	 * Perform a binary search over the block's restart points, which
- 	 * avoids doing a linear scan over the whole block. Like this, we
-@@ -405,6 +400,10 @@ int block_reader_seek(struct block_reader *br, struct =
-block_iter *it,
- 	 * too many record.
- 	 */
- 	i =3D binsearch(br->restart_count, &restart_needle_less, &args);
-+	if (args.error) {
-+		err =3D REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-=20
- 	/*
- 	 * Now there are multiple cases:
+  * Decode into `last_key` and `extra` from `in`. `last_key` is expected to
+  * contain the decoded key of the preceding record, if any.
 --=20
 2.44.GIT
 
 
---qTlBaCqlZbwvMNJC
+--udQuBSUk35Lx8jqw
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYMP2gACgkQVbJhu7ck
-PpRDDA//cHzpFmYteMOOmIjDj2ofwYrO/0eF/sOoTsSfzG1QFqdKrQ8UxJTTAf6r
-JaP0OlB/U8X0jAPr2fysRQfGSKOr7+i05O3TqY/mmfproEeEeph8SRmCNvLeO7gk
-guGgdfaKa/lsFXJRx9qB7KBtcJURM2YDk6llep2BoXwYgHAJKGpDvlKKAossweFG
-j9ebZV6qUpYbx2YY68t+VrTVX3c4XQDY2nOceOsHgiRciRhZCYP2M7kngLUwiAes
-pOr1QhXW1Pa4Cnz9VHLgfCAfGf+hJSNqZpzvn4VxCcP1QSS+EeQ/kwzvY2rueIak
-XBTBH5WvO/tuOEQw5o50bOR/7zAuarF4yxP1C1T7r2B6ZcPezUog6M34lJOv8naR
-fL6vmg9hRDW8/jE8YuK09BcHtY+PTlIRg4TNyWJvUVAuSRLMCZmcpB0hBiZCWEjw
-ls1KGV9IBZdCZEIqchRynYot7T9fUndm1genS4rfqtaLCcnvWKPo2R9d4wedxy/Z
-9odtT3HvXZ7trbawnxlcwkdd7zfwoU82s4ckRIkGY3JLwU6HOW7ynZi+li8ZuO0q
-zNsojFc+TZkZh3VeGvhLRtKuXsvgEhZOli5vWUJhJgPhOAiHcWMmOK0m8yqUDnQW
-zYEpgnR+y7eI57ZPSzeruaxyDoSQZv/IbMFIM6MO9n4T7t4EUQ8=
-=ny0u
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYMP2wACgkQVbJhu7ck
+PpST8g//U+r/BusCGSW0WJndPR9oh4kfrkZkkzf55Ouh/edlMHvqHv0+gz0tQDym
+I0TH64jtu+dVnBwgH0zd3mx9SW1q90zloR/AItShT+sIdKMtEnS8gsdqj1p/K53M
+niH4WLwZVCZ/F4CO/P/YkdVXLtAlpRzCIGCNzB+QxWKOevQ7Htvw5bgMGAii898h
+kokDOApQe0Cv30F8g7Mgml9z8DfG0Q8jAIRjbiahB79q/g4q3a+zqMSJoCNHDTIu
+Dx/mIN7uEbT9w05rzZSsNgAXxZcGphJXa9YyvbIy2tZ+ViRdQ7YG/K7sro/xc+f+
+mOpA7ouC11tljXwjnf8uf+NmS7TKrgy3Wq7EXtB5ddEEcaaRM+Gie1BwbcsbLEvd
+Hn/QyZPy7j8ogSx/atYHUNl8jPabVhtLbwJSD5Y4zsD9hwJyJR3jeM0KqOl1V9tO
+GEpszGaaPhIzsAIYTrqVgqeXbkiY0+vwpwbfp2BIiPD5+i0T6urtbpC0t42R4kIv
+YcF/lDl+LbtQnqo+i/iZMrN9rEdRj1PYOw0IYdMduSVeo9L20E6codkVXI7axSA/
+D3Y3+yvLZRhrjKxIK8YMDkKtnxIpo4ry5K8g2zqayb9clYnqQ0HRgYaKJ7hlRhtm
+UcyjB5t+v4nKEQ41okZn7xX50fdQMMmfG3o+FmJnEBNIPqD+cvQ=
+=0DNZ
 -----END PGP SIGNATURE-----
 
---qTlBaCqlZbwvMNJC--
+--udQuBSUk35Lx8jqw--
