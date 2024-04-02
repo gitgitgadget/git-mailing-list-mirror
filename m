@@ -1,136 +1,152 @@
-Received: from sender4-of-o55.zoho.com (sender4-of-o55.zoho.com [136.143.188.55])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DD383CC3
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 13:53:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712066010; cv=pass; b=ZEYyeiLoXz7MDsvz4XMjrNj/4xrd34d2RpO5jdtUxPVwiWNhUcVpjeOKbc4ki8zeWARFQBmVDSPqEJhw5NMdnrzJkURUXflF9hiKqfahIupdD9b8vCIzjbjKsCRZCs+QQejegJxXLpcFkIR2KNuM8WlRKc+Z9N8uwI2I1vLiA/w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712066010; c=relaxed/simple;
-	bh=lfo/zO2eiLZO2nXvXQrOkUey0oUhM5mOrPGtwobg43I=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=SL8C0WTCgpwaJCbC+m4PmpPO9+TSa+oa2TsMxDoXjh4EhHF4EXVw1JiV6VpIQqoBrMQ3xnamdP5mPpmBJGPrzmwYHOufNa3L2KB8f8OsytftOETQAWljJsYVAQn4cWB7bu1IBEiep+FYRiN+KS8MupAKeAVSFSgtfdDz9ShFcuM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me; spf=pass smtp.mailfrom=boanderson.me; dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b=RFIIRSMI; arc=pass smtp.client-ip=136.143.188.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=boanderson.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B141E65BBB
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 13:54:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712066055; cv=none; b=KC+gaqf0gZFjMeNTROGeAfUgiJwQcFpcM3oPatLAjCNGBF1EBDgibQtVX3/3ZBBIvaqjNafuDeJnq7WI6b5FxaobR3xFAbpK8zwiDTZhkcaCZHJYQB/WZG9//2kVoy2XIwvou5ZnxUc8tCUq9wSPgPYIq6gFbXi2agWZuLqe0Kg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712066055; c=relaxed/simple;
+	bh=3F9lxDeYSZ6na8UIwrCc95dwHHt7uknCVMuSjrfowdw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cEFxJ5XHvprbbwBwTOnWiPe2G+sGR55kQ/f63no1pqdopIs+kUcylp0iI1EJdwOX+bGawGK0qUyp8+FJRFm1mcp7KoTuOd/Un56X8V3/EraHLbfcdjxDjiheYQIQoSXHIBpSWDKC/ZnyLb3UFLkAJQk5a57O6RmeOOoy7FPUvd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=awM+S0XJ; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b="RFIIRSMI"
-ARC-Seal: i=1; a=rsa-sha256; t=1712065999; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=DhJPzQnx7xBGk/owtJEpwAB9wrqH4ydAo9n0cg0rF10TIneXbnFfe431+lwV+UFA0H890MqqG4FcySkXsVhRdGHRcaS3u5U9/KRIr2Wwbw06he8ITDHe4HOph3VQlXOHuAkN2V9V7Oo4K4Q0PEnIyFNj2Gl9TRgyH++NvKP+iME=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1712065999; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=6sgQQcLcRMXqM2cIR2jKEfPc/5DKgTBf4m4NAgbxiJs=; 
-	b=NwEUSOokju+FJRzGuwWmQH/t68+5M5aWdWoVXXDFj+icW5bIjDoxiW9pwiLuqvgOG+d0rYWcXph1hhsbj1JIIMLNLLok5PwMXMvkSl/I1x7ml9r1FGk2HpleB1SS5g3zryk4sPLXBEmS0HJACj3V6AdaI8W33g2yh1GZ8GmPdhQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=boanderson.me;
-	spf=pass  smtp.mailfrom=mail@boanderson.me;
-	dmarc=pass header.from=<mail@boanderson.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1712065999;
-	s=zoho; d=boanderson.me; i=mail@boanderson.me;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
-	bh=6sgQQcLcRMXqM2cIR2jKEfPc/5DKgTBf4m4NAgbxiJs=;
-	b=RFIIRSMIJfw21gr1ozO4LdoUxDJ1tjqMKkwlpmpld1wH4Wq8WYoh3dZrmwXkjY9I
-	JB2dAKBYC+aftSjYwCF5UoRhV/YiQsq6UuFk5SC6FRYT6TzBo6k1dZGopSk0QMh8rdO
-	661C53/yWLfWPKDcKx4OUtLyqQGzPKE56HCNCoHI=
-Received: from smtpclient.apple (w-65.cust-u5093.ip.static.uno.uk.net [212.105.168.65]) by mx.zohomail.com
-	with SMTPS id 1712065996946245.04260396798134; Tue, 2 Apr 2024 06:53:16 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="awM+S0XJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1712066045; x=1712670845; i=l.s.r@web.de;
+	bh=2UpthESSUDIxZEquoTXqQbRzfhUaF3wotQY03rBV2HM=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=awM+S0XJw1x5XzEs+4nElZ3V/5qtm0mQqTGtY3hdYq1cQucKOUrtxs57fQPLQzGq
+	 aEL5oCwG8MbjDPOvJ3d3VzSMPl/+eP8bEvh6AZyld9HNzmG61xR/+DT55NxGXz+v3
+	 UnNNgDx2fbe7ThahuMAO5wBDCbAL1RT13t+95oZ7iT+QqewHkDJV7mgEHAKxIu87g
+	 nBsr0SL3oSoE+DVRvfZN4bVQphha1YKtJUIH7PX9/eji0cd+7s3tkM1IiWz0hUlZ8
+	 RYcQJqD5MUyLXJ81iu/L4Pk9o6ZI73hXgilwC3Bfiycbj0QQF14vnlour8g5qO2z3
+	 0vSM8pPPk6SzQCa0ZQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mo6Jl-1scrCv0csF-00pJ0j; Tue, 02
+ Apr 2024 15:48:46 +0200
+Message-ID: <9f26b9f0-f8d7-4988-b6d4-e0446dab30b1@web.de>
+Date: Tue, 2 Apr 2024 15:48:45 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential
- helpers
-From: Bo Anderson <mail@boanderson.me>
-In-Reply-To: <CAFLLRpJZg3UhBRfihtjUsXcGSod4FhDCs8fD1k-=5SLnAdHeQw@mail.gmail.com>
-Date: Tue, 2 Apr 2024 14:53:03 +0100
-Cc: Jeff King <peff@peff.net>,
- M Hickford <mirth.hickford@gmail.com>,
- Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mem-pool: use st_add() in mem_pool_strvfmt()
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>
+References: <bbe00b9e-64d8-4ec8-a2b9-2c6917c72dbd@web.de>
+ <20240401033642.GB2639525@coredump.intra.peff.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20240401033642.GB2639525@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <98F1A6E9-4553-48BE-830C-8FDA9F3B5744@boanderson.me>
-References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
- <20240218204044.11365-1-mirth.hickford@gmail.com>
- <CFC1A507-A9EF-4330-8C98-34C2B73BC036@boanderson.me>
- <CAGJzqs=wQA=t4CMVu-kap1ga4DX+KnaVMGy71ewmZ7QkFHF8sg@mail.gmail.com>
- <20240307094708.GA2650063@coredump.intra.peff.net>
- <CAFLLRpJZg3UhBRfihtjUsXcGSod4FhDCs8fD1k-=5SLnAdHeQw@mail.gmail.com>
-To: Robert Coup <robert.coup@koordinates.com>
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-X-ZohoMailClient: External
+X-Provags-ID: V03:K1:h4cz+qSLSqDG2hnN5vs3USiM6JHDNCbZKUCMjdq+mqg+V0UVHVb
+ kmiBZ3JHexHg8iWXe0L5AccWmbTFvNN6INnYJY/P491Ym5OOfxFhLePUV62Y5UcrGWdVr8t
+ OOxHxlGhr3mvB8cTp6WEqenU27qeCfDIFOQFCt9keQZgd1Pme8C6S2ol3kshiL05HtQyZ6+
+ m1kD1uEmszKCPKXGQvhvA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:TR/fyrpjo7k=;UGLm4EIbQyTclEe+4EX+rkiOBPj
+ MF6vYie5HIargnrdjRbwAbNyRLVNYyD/vImAPTj3iRg6ndglsQwVRvdRAzi+l7/oGHTlyEPnH
+ w6aUhmH+TEOeONkBP7oh6Mr4+NTP3jtm9lY0F9zPN3FueZrS/gehxLuENgu3E8w+qxgpK737E
+ kHJSzYzVKMVIcs83oZ2xiddCwMIuQ7LqXoWFef1Vvvk8j7SSSNlbCCIwmb+/6AoXO6/cqymhm
+ ++AazpP276qsr3EvUpDUeMhAFvJKMVPsUIiW1V1Wv8OPJVvJEm/me2vK5Uw6z7ziHfKXSIuPR
+ JC9fRIkGWhTWBx7fdjHLKqQRuLWII3Lzg9x835o8j2rEw54LExzE58XJsr8uHpIcgAoSQWoTw
+ Qs2Ans36NJfWfSTM1nzas8P485vrVhdBle0SIICbn2WFclB6MMVmn4+cFj8JVF+OtrGa16FfT
+ E7cFXr0tecCHB9WeHK3O2LmYWd7lozlYKiRULo5XBZC+K5KCFdeJnm84TsZ9QbwC4TLGU5Wyr
+ y8VcJWl0XuYkU/8ro2w27fGXvWcWVu8/iQ3XSH+zKKPCztPo/zI/P+NQILVS92loOZ+obNXmB
+ oSCAWDzlytlWSwyaUZPibqIN+jS16MuKOmNrPYtAa1mLa3dnxCozJE+y1wvKF12rxm9ud3JMC
+ EfN9PLkG9+6dvk9U9WVV+VAptU8D7Dc9Mz3PYmuG/CuA/xXeSPpjkcUmkOd86oB/gdS8Q9qnj
+ ZS3FGYMP4d9ZTBTziKKo/ywuKGdmmxDeLg9X8jQVg2618BJUZvMPMuXFgqKS1kHhPUC8f+42o
+ 7bhull70CjYQzcH+nb+lncJRwFWRUgvf42quBrIv7E6pM=
 
-The test script does not interact well with the env filtering. This was =
-the case before this change too.
+Am 01.04.24 um 05:36 schrieb Jeff King:
+> On Sun, Mar 31, 2024 at 08:53:07PM +0200, Ren=C3=A9 Scharfe wrote:
+>
+> Which, by the way...
+>
+>> @@ -123,13 +124,14 @@ static char *mem_pool_strvfmt(struct mem_pool *po=
+ol, const char *fmt,
+>>  	if (len < 0)
+>>  		BUG("your vsnprintf is broken (returned %d)", len);
+>
+> Not new in your patch, and I know this is copied from the strbuf code,
+> but I think a BUG() is probably the wrong thing. We added it long ago to
+> let us know about broken vsnprintf() implementations, but we'd have
+> flushed those out by now, as nothing in Git would work on such a
+> platform.
+>
+> And meanwhile there are legitimate reasons for a non-broken vsnprintf()
+> to return -1: namely that it is the only useful thing they can do when
+> the requested string is larger than INT_MAX (e.g., "%s" on a string that
+> is over 2GB). This is sort of academic, of course. There's no useful
+> error to return here, and anybody who manages to shove 2GB into a place
+> where we expect a short string fully deserves to have their program
+> abort.
+>
+> I don't have a good example of where you can trigger this (it used to be
+> easy with long attribute names, but these days we refuse to parse them).
+> But in general probably calling die() is more appropriate.
 
-To interact with your default keychain, you will need:
+Makes sense.  Could be rolled into a new wrapper, xvsnprintf();
+imap-send.c::nfvasprintf() could call it as well.
 
-GIT_TEST_CREDENTIAL_HELPER_SETUP=3D"export HOME=3D$HOME=E2=80=9D
+There are also callers of vsnprintf(3) that use its return value without
+checking for error: builtin/receive-pack.c::report_message(),
+path.c::mksnpath() and arguably imap-send.c::nfsnprintf().
 
-This is because the default macOS user keychain is local to your home =
-directory - that=E2=80=99s why it=E2=80=99s giving errors about not =
-finding any.
+> There's a similar call in vreportf() that tries to keep going, but it
+> ends up with lousy results. E.g., try:
+>
+>   perl -le 'print "create refs/heads/", "a"x2147483648, "HEAD"' |
+>   git update-ref --stdin
+>
+> which results in just "fatal: ", since formatting the error string
+> fails. Perhaps we should just print the unexpanded format string
+> ("invalid ref format: %s" in this case). It's not great, but it's better
+> than nothing.
 
-Bo
+We can throw in errno to distinguish between EILSEQ (invalid wide
+character) and EOVERFLOW.  And we'd better not call die_errno() to avoid
+triggering a recursion warning.  We can open-code it instead:
 
-> On 2 Apr 2024, at 14:21, Robert Coup <robert.coup@koordinates.com> =
-wrote:
->=20
-> Hi all,
->=20
->> All that said, I'd be surprised if testing osxkeychain in the CI
->> environment worked. Back when I worked on it in 2011, I found that I =
-had
->> to actually run the tests in a local terminal; even a remote ssh =
-login
->> could not access the keychain. It's possible that things have changed
->> since then, though, or perhaps I was imply ignorant of how to =
-configure
->> things correctly.
->=20
-> I have gotten keychain working in Github Actions before: there's some
-> helpers for it, but you can also basically do it manually via the
-> steps from [1]. Basically anyone who needs to do Apple code-signing in
-> CI has to make it work.
->=20
-> @Bo, how are you actually testing this manually? Following these =
-steps:
->=20
-> $ make
-> $ (cd contrib/credential/osxkeychain && make)
-> $ ln -s contrib/credential/osxkeychain/git-credential-osxkeychain .
-> $ cd t
-> $ make GIT_TEST_CREDENTIAL_HELPER=3Dosxkeychain =
-t0303-credential-external.sh
->=20
-> I get 'A keychain cannot be found to store "store-user".' in a popup
-> dialog when #2 runs; then similar for other tests in 0303. For #14 I
-> get a slight alternative with "A keychain cannot be found". There's a
-> "Reset To Defaults" button, but that wipes everything. AFAIK I have a
-> relatively normal setup, with a login keychain as default. macOS
-> 14.3.1; arm64.
->=20
-> $ security list-keychains
->    "/Users/rc/Library/Keychains/login.keychain-db"
->    "/Library/Keychains/System.keychain"
-> $ security default-keychain
->    "/Users/rc/Library/Keychains/login.keychain-db"
-> $ security unlock-keychain
-> password to unlock default: ...
->=20
-> I don't see any settings or code for setting which keychain the
-> credential helper uses, so I guess it's the default one?
->=20
-> Cheers,
->=20
-> Rob :)
->=20
-> [1] =
-https://docs.github.com/en/actions/deployment/deploying-xcode-applications=
-/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+        if (vsnprintf(p, pend - p, err, params) < 0) {
+                fprintf(stderr, _("%sunable to format message '%s': %s\n")=
+,
+                        _("fatal: "), err, strerror(errno));
+                exit(128);
+        }
 
+But when I ran your test command (on macOS 14.4.1) ten times with this
+change I got:
+
+fatal: unable to format message 'invalid ref format: %s': Invalid argument
+fatal: unable to format message 'invalid ref format: %s': Undefined error:=
+ 0
+fatal: unable to format message 'invalid ref format: %s': Invalid argument
+fatal: unable to format message 'invalid ref format: %s': Undefined error:=
+ 0
+fatal: unable to format message 'invalid ref format: %s': Invalid argument
+fatal: unable to format message 'invalid ref format: %s': Undefined error:=
+ 0
+fatal: unable to format message 'invalid ref format: %s': Invalid argument
+fatal: unable to format message 'invalid ref format: %s': Undefined error:=
+ 0
+fatal: unable to format message 'invalid ref format: %s': Undefined error:=
+ 0
+fatal: unable to format message 'invalid ref format: %s': Undefined error:=
+ 0
+
+Which scares me.  Why is errno sometimes zero?  Why EINVAL instead of
+EOVERFLOW?  O_o
+
+Ren=C3=A9
