@@ -1,130 +1,115 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848DE22096
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 07:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+Received: from smtp.bit-artificer.com (smtp.bit-artificer.com [172.105.170.90])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668753839A
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 07:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.170.90
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712041234; cv=none; b=eJmA8SwXmNrntMfghWDp8BKjyii+xQ4V0ak2A2r16kXvhaFl2tYMoAcFGo8bg6hYyIxkHdo38dCo8kMiO1V/p4N+UzYsGQ1RV2tEhlUszIB/yq2OpPG0Yz96VPCIDJS8AUpGk3mVYnzfkwrgLM2UqCCI2eIYzjgoVOYYSMjsokQ=
+	t=1712041810; cv=none; b=WxJHy3+LvDVl1iO8wWy/XgAs2nIhvAaeVAgjHN86qmEoMr2YnQb+owsOJyMv5jbjPxy6Pf07W8g8JYExk41KbU7Uhj5ZeHpGUL29Q08AStMK2qUD6dfQX7UPdfr5yVU1/eZTbJCXdA6IsKHc8X0bbVMdPHA6bXwS6YXqxK6DD6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712041234; c=relaxed/simple;
-	bh=bI5ZpoJ83PJg5dkpzjmX1MWna/KUnW5rWuR4zu5lRaQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eivN9w6puf4YiI9HWabBYCDevKvpN53EaSG0+KRKLZfWKzplCaQW6gkUYIARLDFzXeZ/fHZE1Jo196GOSscqGDbFtKjRaoBZ6mSa66ER/aAasw/keukf+pX5cqxdXX1Ue6EjS+B4IzWpbKMnx7qT6KXaVJ1qltvyOWPiSLDN4Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T9oOEbDj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vfserxmj; arc=none smtp.client-ip=64.147.123.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712041810; c=relaxed/simple;
+	bh=LpwJq5dLEOvmorbuwq8oCLwY8RE0sojo6fMRvmFYs1M=;
+	h=Mime-Version:Content-Type:Date:Message-Id:References:In-Reply-To:
+	 Cc:Subject:From:To; b=G8WWPjRs6PkXkP2FkUGrUXSV4Xu0EeohiTc36iZ4Uzi/pAY8dw6rO6QSpGY/mnx66q7b3q6RfM7j2N9ieMLyQOZp/86fiGRz6bRaLNGI9hUu1JKuc4nc77nmIKpAXCV3i82Dnv6F6hm1ASe4ly0Z4pSRFSrYuwB5prXWpIRyMug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bit-artificer.com; spf=pass smtp.mailfrom=bit-artificer.com; dkim=pass (2048-bit key) header.d=bit-artificer.com header.i=@bit-artificer.com header.b=DEKp90N0; arc=none smtp.client-ip=172.105.170.90
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bit-artificer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bit-artificer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T9oOEbDj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vfserxmj"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 4817618000CC;
-	Tue,  2 Apr 2024 03:00:31 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 02 Apr 2024 03:00:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712041230; x=1712127630; bh=bI5ZpoJ83P
-	Jg5dkpzjmX1MWna/KUnW5rWuR4zu5lRaQ=; b=T9oOEbDjUZGa7Vcn9443Zk+ZLZ
-	wShKX3E8IdwBbg9cBGwR6weaty/IGaXXEXLJvvICAbdwAuEAgJnhcKw2NomHv0E0
-	WB/3cP1AA5zXBwALe/za09PVfmYvCp1JUTA+PrittND+tPtKuaKW6zR1Oa4sfR+Z
-	7wLxCMjTebq07y+1nwQYvHSpOSxWnqV5zhEb1D7icZJHO76KnS0m2vmWFjrSvyD+
-	WXmMJet/u9kUZtOt+ZVfpSbfwwVr2MLxYKbzoW3VXRIzVqa4enW5CM6NdT0b/gw2
-	InZ8KvoXdLQpcaCGKLXpQbKqnD/bPSjkx5d7PfjyiA5+mldy3Ttyk8IGt7Nw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712041230; x=1712127630; bh=bI5ZpoJ83PJg5dkpzjmX1MWna/KU
-	nW5rWuR4zu5lRaQ=; b=vfserxmj1lmQWGvxKwgCdADD8n/lkL1RpxyDA+rPauMA
-	vrqi9rAkUU1XREhhZTTatKY2l8/gU8CLyWKcy0/NsIsxDUITOBhotCX5bbxcibua
-	Ch9yIlGsVG4TIok+wRjiuUrh5pG6Q6NBg3JSJrzNRzFJ94Vs+h2cOVGht9ZsM70+
-	HjabDHViBTCKL8fGqxL592qxwUbUZeC8C4mFRaZ+3+JHKva4t1JZk01XtMcck8BW
-	lbCQMWeWSLXA00Ag3+KtsVYVKRmid8h7SbX1SyY/r8Jghy1jEUXF2DHgytLsLYbs
-	S/TtwSvEX0VY9y7eUvUtO43BzYWmhNje0QsTSuQFaw==
-X-ME-Sender: <xms:Dq0LZpFux3PK5TINn2pguxlAiv9mykP2HgMwULCi-82TGdmHX4V7gQ>
-    <xme:Dq0LZuV14mwah55d6SKY5SQD4NXjki_P89RGUjmGTEcldqXyJCvg_hENnBzrNhdV2
-    PAM9UHmkGyfOJe0Lg>
-X-ME-Received: <xmr:Dq0LZrJI1A4-gLluLG6SDjtO3tq9m8OeXlKwDOK2UiE2RSzqz5-_qA2-smTE_mlCZd38UEdo4L5CYIRaI8xihb6Bb5m--AuuTQ8jHG6rsVP6PFs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefuddgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:Dq0LZvFLrq6Mr_FtUJ-VrsKJXa3K2AYJNEvKtDj-_M6KRQFb2Yjszg>
-    <xmx:Dq0LZvWf4DQ3FToV3sy5ed4c5hOU2JGO9ieQzgV4HzW5h193Fr-rhQ>
-    <xmx:Dq0LZqPVHMDxJCMy5mQPP0gck5YLanpIgY4_CkOibWP1_a3MnIZbyQ>
-    <xmx:Dq0LZu35GHMn2yQZf-DTy-ZLmfKOb7VYlTYuD7HA4WOxUFi2OT85Lg>
-    <xmx:Dq0LZlfKX1ujbKzG3fhTj7QanoxpKhUTe62z0NLzC5VJWl-axHbGLooj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 03:00:29 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 275419e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 07:00:21 +0000 (UTC)
-Date: Tue, 2 Apr 2024 09:00:27 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Linus Arver <linusa@google.com>,
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] RFC: add MAINTAINERS file
-Message-ID: <ZgutC_ddW_Psmlcl@tanuki>
-References: <pull.1694.git.git.1711164460562.gitgitgadget@gmail.com>
- <xmqqsf0gvjrg.fsf@gitster.g>
- <owly7cho1eh4.fsf@fine.c.googlers.com>
- <xmqq4jcr6bx2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=bit-artificer.com header.i=@bit-artificer.com header.b="DEKp90N0"
+Received: from localhost (193-115-84-163.tpgi.com.au [193.115.84.163])
+	by smtp.bit-artificer.com (Postfix) with ESMTPSA id B9E823C498;
+	Tue,  2 Apr 2024 07:03:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bit-artificer.com;
+	s=20230529; t=1712041407;
+	bh=LpwJq5dLEOvmorbuwq8oCLwY8RE0sojo6fMRvmFYs1M=;
+	h=Date:References:In-Reply-To:Cc:Subject:From:To:From;
+	b=DEKp90N0hY0bZd/kb/0mpcww9F6a/XJzRX2y6+mFXIYL7L3empDCFOE9bRECBCIU+
+	 jBEtGcyD+N0r1CwmrSiqain61H+155aj+JSO5oqLFuZRjd8bwI6WJ427mxFa7o37Vq
+	 TmWrlES9lxjBSK4Vx9SNAsQM6Yipo7TWqJTiGib/wLsLdqlk5PLtTNGJ9Wzsn4K1h8
+	 VXCIWCaCIUCkBDmEW3XfkNfxQyKdyV5mTk5sdoVbFK3hGtWImQh70xctK9VtUW92d5
+	 HengFwS2P59cJl8GZdJxqIrfJ4rMhbww12+3ogSigUmHEzIcBOo8mlyKC4aZVsOb7m
+	 TWwdJi6YcJxgw==
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AzdPhtNhXLq8jou4"
-Content-Disposition: inline
-In-Reply-To: <xmqq4jcr6bx2.fsf@gitster.g>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 02 Apr 2024 17:33:26 +1030
+Message-Id: <D09G10B0SW3P.3ORJXEY5FUUU0@bit-artificer.com>
+References: <CZU56XWOUT4P.1WZ2BSE0VLN01@bit-artificer.com>
+In-Reply-To: <CZU56XWOUT4P.1WZ2BSE0VLN01@bit-artificer.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: Expanded worktree tooling?
+From: "Thomas Lowry" <thomas@bit-artificer.com>
+To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+X-Mailer: aerc 0.15.2
 
+Sorry for the slow reply but thank you for your thoughts, I'd love to
+hear others thoughts but it doesn't seem like this has caught very many
+people's attention.
 
---AzdPhtNhXLq8jou4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> For these two I use branches and commits. Like a WIP commit similar to
+> stashing if I want to get the changes out of the way quickly. I don=E2=80=
+=99t
+> use worktrees for this.
 
-On Wed, Mar 27, 2024 at 06:29:13AM -0700, Junio C Hamano wrote:
-> The development community has been fairly loosely organized so far,
-> but I'd like to see responsibility and authority spread a bit more
-> widely yet still not too thinly to compromise the project integrity.
+I'm pretty sure no one uses worktrees for these scenarios, the main
+question is more "IF improved tooling existed what kind of workflows
+could be streamlined?" ie things that you can already do another way.
+Thinking of brand new things you could do with a tool is a bit too
+open-ended, plus if someone is claiming that git would be so much better
+with feature X then they may just be happier using something else
+anyways.
 
-I guess the main motivation of this statement is to reduce your load in
-particular, right? If so, do you have any particular pain points that
-can be spread across the community that would help you? Or is it really
-only spreading the review load by relying more on subsystem-maintainers?
+> I really like worktrees. I might use them for two very different
+> versions of the app. so that Intellij and other tools won=E2=80=99t get a=
+ll
+> confused about their build state and indexing. Or a dedicated =E2=80=9Cde=
+ploy=E2=80=9D
+> worktree for deploying the app with Docker (so that I can do whatever
+> else in the main worktree while it builds). There are a lot of
+> use-cases. And for the hotfix scenario: I might use a worktree when I
+> have to both commit some hotfixes and deploy them so that I can have a
+> dedicated scratchpad for that while I work on other things. (But also
+> not too much: too much multitasking is bad for me.)
 
-Patrick
+I haven't played much with these kind of long running worktrees, mostly
+because my projects don't currently have months old active
+feature/refactor branches that I'm slowly working through, also my CI/CD
+processes are fairly short so I don't know if I would be saving much
+time yet. Maybe in the future.
 
---AzdPhtNhXLq8jou4
-Content-Type: application/pgp-signature; name="signature.asc"
+> But I don=E2=80=99t see how worktrees enter into the picture in these spe=
+cific
+> outlined scenarios for me. In particular I don=E2=80=99t understand movin=
+g hunks
+> between worktrees. Moving uncommitted hunks like that seems like a
+> version control layer on top of the Git database, like an extra step.
 
------BEGIN PGP SIGNATURE-----
+Well in practical terms moving hunks is just a stash followed by a pop,
+so its not an exra layer on top of git just a recontextualization of a
+toolset git already gives you.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYLrQoACgkQVbJhu7ck
-PpQyiBAAhuSiUzwJzjz6EQSOqsHJsM73F69UmgWegQcuLgkgCbniz67B4vOtKG9r
-q8KIy+2Xzs/CsJQ4JOyLCZ2FBXLiIrDMbNIGr75Pqyd4kYyttIcPkWUQU3P9/SHT
-0RvW00wDm68ORPtuGrhzWRpgN7hh3YlMh80QFDDW/KX4KglXmvnsPEDMKbF733NO
-bekunW06dPi0HdBz6x201Ym7SbfWT5lTwmLN7kgavkW6JZGm2Gl893xiDPudm7+i
-IzeZ5sNOVTMc5J5GcO/QHNKbUvVzqvrbarVa41utoVznCSWaUDfzaph4nYKbnTP/
-s17NFtjzN7QKd51K1GWkQ1HkCOTr7CHt4c1/N9BKJksEMebaKUL4qNiWDY2j/OyL
-jUNhe1JOfWIoqLgIz/CyqxZHf5lbKRwhZS3rAtmZFEgLDDdn8NHTTwAUlCgIOb4h
-uAixddm5ZpRfNnldDLh43dVAPxk5FLHFMVDtpEyYugRM56A9s6q4KV1PpqSgyifb
-KCapvpKO4qvm0q7bvZOQCruIpeYpmOvJPPk+3N9on9+fmC6njAFN8eEwnDQ2a+eH
-stEvhAIO+y8wB7K8UqJ/RDIS8FsP6/TmlK27CCZNxe7wss727+8ATAA6u4EMT9Tm
-dS5z6yN5HRF61roWfBQAiXzlToejSwmbj6E9aYFLlKgt5ZSFFUk=
-=Oj2h
------END PGP SIGNATURE-----
+Maybe another way to describe the use case is that someone is creating a
+worktree in order to commit a fix they already have instead of debug the
+problem since they were able to debug and test the fix on top of
+whatever else they happened to be doing at the time (yes sometimes work
+in progress will conflict with debugging but everyone has they're own
+strategy for dealing with that)
 
---AzdPhtNhXLq8jou4--
+A fundamental question is whether expanded worktree tooling is even
+needed, I'd say that there is existing evidence that it could be useful,
+for example https://gitbutler.com/ is arguably taking the core
+idea/problem of worktree's and turning it into a dedicated solution on
+top of Git.
+
+I'd also just like to note that whether intended or not Git is a
+toolbox, not every tool has to be useful to everyone. For example it can
+be argued that the primary use case of git (linux kernel development) is
+actually a minority use case because of how many people just use git
+with github and so tools like git-am have valid reasons for existing but
+is useful to almost none of the total population of developers.
+
+Regards,
+Thomas
