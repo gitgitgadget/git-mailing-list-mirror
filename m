@@ -1,488 +1,473 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C516F3B299
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 07:23:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA83BBE3
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 08:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712042637; cv=none; b=Sqe37iJLh9okrWAZfwNKlrKjhUaO0c5rcGeTHUrj7Tqnb1M1PDauQZEbmcRlRbXV+Tfw48njJE3YXedmJC1k2FeK7vREQ+omoKn/BgcWQzj0y6rSJ5lft7SKnZMVkzaF4e6jxMc9ExXiAfIiG6S6g2SKZ6bloRamINGV3EeTif8=
+	t=1712045353; cv=none; b=Ddw6aatF/8Xej4YH9+3LLmJ6ildWx4KVe4zMqc0wo40OJ03oBRsW1gu41DHOeDBcJpgBDvesxGnN9n84niD+RNWGjwdJR+kygk51FdCumuxfofELawp0dANgIUrre7rNSWOJeY4Q4e17o3RnfE0wbH58eo9Dge5lrfoXCxpGg0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712042637; c=relaxed/simple;
-	bh=w9CIL94r0dOEQH7VpjdXlL//r2ATG6Xkdl6NG1AKJ6U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gdv3JKnlQgtHS0x7QqfI5Ju4uyhex6erK7/F97ysco1EY1Er70gMJdYtf+SmtiXocroYMUTxQ4ACdpDnty3DwFvuS5mp4o7cns/CM69zgOPAhofD9+PzoiYbp5WB8IAI+ncSyk5rgUNFuXCkmGuS52XJsZJrwZY+PFr+zLn+Kms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gT284i+r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GN2RzRPs; arc=none smtp.client-ip=64.147.123.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712045353; c=relaxed/simple;
+	bh=WL5V4G5vQeHmlPEDYhCWxeOV56jYYj8z9agP4qrcNJk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=SE7Z5A4q5lz1xH+4lCSRdPoSG8nJlwgYF1qoT1SyTKTvX+j9kuY8uzfC0PVruLDjTSVWngl1u32TTJbJDTNvzjOqSSkafd4hDFqNqnmTdprp8TgVAgYvTatQn6W4wonoKNMAOzDZw87vd/kj0cnd8wQ98WSNnm8cfzU8I5knO8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YF3r2czN; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gT284i+r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GN2RzRPs"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id 72EEE1C0007C;
-	Tue,  2 Apr 2024 03:23:54 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 02 Apr 2024 03:23:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712042633; x=1712129033; bh=T981OUnN7o
-	BIGaZOtGwo62T6cVFuU3zJoo51c13nPNY=; b=gT284i+r0y1bkuh445lNL0+7xK
-	PS/YQgCQzuYvek5lYv1/3aNVCh/5knbiIfnnAgApJFVL0Xe0iPu+D6Cvu7JtcfC8
-	0LNp7i2hKMgKUcAktXSf4uJ4GhFH5OqIYQKk5c+/GKo3fD3WVGu0G0k8OXo2ehuU
-	72761StzfJY4u6UHrWGMEmv8I03cl7CsRY75jvHophBElXsgtGQYN8TXspMe4MFK
-	3kOEScU76J0c9QnKQfVGfuccFK4minET4TPcTeI3t+c58CJ0Q+b/tpkY/0sYF5md
-	vvuAsFWiW3TG1c12lj5ybMn1nUzu2Nw8d+wExw9FcJGLfqGkRBLMsjCqHHjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712042633; x=1712129033; bh=T981OUnN7oBIGaZOtGwo62T6cVFu
-	U3zJoo51c13nPNY=; b=GN2RzRPsmCMR/veLv1cDPyg6wU6r2BNCN2SM/RIp/w8/
-	strGxD2poFziv9HompkkLUZrK8vs21OZoYdyV0q2kipCXSTf6Z5j6M0J6ovUisBk
-	7j+6ZZUQruTEse/Ce4//WGg8uY+r57FsnD1c5RWqpnujWXJRR+OkjRGuGGKDKpOo
-	elJpovsVy2KcRrrK/JKdveRXPGs1xmLKOCQc9D5xyl4CaRXlrz4l8i5M72F+94JH
-	tbpxPelOwKi8QfhqvuTqFo1mNVxcriRS963fxmzCJVty5ZoAGlq2viBQzlyqMYKh
-	uCC00zZzBHCGdHXcIL40XqN5F2Z0W6g50R0LZvaWfw==
-X-ME-Sender: <xms:ibILZju9iQQVhOpixf7jhJhWrE6qPJlER1zn_xx_jPb07TFdTxIFcw>
-    <xme:ibILZkewApNVP8cmJ03ywhp9W4pOXWobyhPp8f3Oj2Votm6V8HPhp6gxunt-fsuRR
-    L6GaF1SkqsV8pcXmQ>
-X-ME-Received: <xmr:ibILZmwwWQ3ejR_aGxHHf9xtTH0r2xFSFeqHVBNDopbvOC2J2IQ0pb9L0SqQtoNjAAIO3Tvp5twW8UKzD-NEo-InqdsX6e_1I-9fHZ4V3TDLen8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefuddguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:ibILZiMS7mCjgMfmycNn5XZo8AurG0S5mvqlcsUY_c39I1lf-Tdwgg>
-    <xmx:ibILZj_vMHhsbfkQnxIev83GBEHUv1tSTGujUYvIVfA9qyDCW4K2Zw>
-    <xmx:ibILZiUUw9Qoj6UI8y1Hu0vLuTHe66TIEJawnq9d3a-Etvi1yOfZGg>
-    <xmx:ibILZkdj4vUh4mtlROjIh4DSWzmGZlcing1uZD_HD5fKS2lcXtAcig>
-    <xmx:ibILZulZjZXBzQ-fGEiR80txUtzqU1RaUSn_NgBrWf9AZjsfkPjY62Sn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Apr 2024 03:23:52 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d2d208fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Apr 2024 07:23:44 +0000 (UTC)
-Date: Tue, 2 Apr 2024 09:23:50 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 2/3] reftable/stack: use geometric table compaction
-Message-ID: <Zguyhhyot0ZphACv@tanuki>
-References: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
- <pull.1683.v3.git.1711685809.gitgitgadget@gmail.com>
- <7e62c2286ae9c63368f1508f065b33422ca24bc8.1711685809.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YF3r2czN"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-515ac73c516so4730279e87.0
+        for <git@vger.kernel.org>; Tue, 02 Apr 2024 01:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712045348; x=1712650148; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkzWSfRW35lXhLq5lAYHzpLJS6Fk2uwg6jE1s8/Xv+Q=;
+        b=YF3r2czNZP+zBrPg2AVnF11a0/MniD2l0R/E80aU5el4d4mLJrcY3/n8BWLkzZ/OK4
+         fJ8kmmcQ/Iz8P4gxujBV137Paz1pvYbecgYA4h5plll/9DlccpDZ33CuhlpgKyaLZCZx
+         jHgbtrtw8/x6CG7jj5YTMzERe6jDyOuYarA001ArKQnHgPSx+hxPELXHqAgEXUnyPkwq
+         xaR+wONISuwS/JXtXV3bEPnoh+zQJCWBWeWsUfsNaw6ZgGmTqwbpl9E0RDmB5OA5zZ1I
+         jllXccJAwpP1iXTzLUoiHRwcQesg6jdZ4Hy10T09Cv6Ed/fPwJhqQNv0uHac+Q+ChESG
+         pfvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712045348; x=1712650148;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LkzWSfRW35lXhLq5lAYHzpLJS6Fk2uwg6jE1s8/Xv+Q=;
+        b=XOppa0RWTWh6Bx+V6aoSIuzoP8jVQsGZ3XE6faR6rGou/pvCwxuJZuC6aXh6HBLMS1
+         kemeet4QSM/tLwu/Pw5M6tD6KRLM0NiwUdRGV7E47TKuauLR8mXLNQVqIU9tWTJ6lmQw
+         WQ2yRbo1vEedQQ+/Ha37gFkpW8alctpL+/WcV9at7KvJR4e69hKJQs6q+O1fM4tibBy5
+         jHdmJkYXaY+Al/V6YfIXmuXgOK4A3yWqyax9rWLCEA9Mgtdw6Ne32JwZu/tCtQhPloXH
+         9JrzKwXmJBzCaUH1PfdkcGgLeec0qISNRRS4hIHGNLyWoEhW9hKcZMaYqXVrXcEKHEPy
+         BS2A==
+X-Gm-Message-State: AOJu0Yykw4RL4NHO8rFdMuAu/iqrA2jQuJ0BV1gyRYL3NGjJuUvE5Yy/
+	Qjhv8d2UTHyKSaYPIIo6kk9tDOgixg3oakTuckeU3le6VTWh/DVkEQdTbxGK/Q5RguftScL7UYT
+	iXuHYCQ4z4wfc+qDLgKgNDn0YpDp5IzqfZkwKVQ==
+X-Google-Smtp-Source: AGHT+IGdqA4o9vNfX5+Gf0AVisCNqQ6mvBazAgxg/FyD5C4E0SXjvPheyop+vgIS5lYDEG5Q6Cpsv46ZO5qmMXVTnb4=
+X-Received: by 2002:a2e:81c5:0:b0:2d7:11:6793 with SMTP id s5-20020a2e81c5000000b002d700116793mr4282362ljg.7.1712045347735;
+ Tue, 02 Apr 2024 01:09:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oeneywtiiNbPiQ9u"
-Content-Disposition: inline
-In-Reply-To: <7e62c2286ae9c63368f1508f065b33422ca24bc8.1711685809.git.gitgitgadget@gmail.com>
-
-
---oeneywtiiNbPiQ9u
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: Aishwarya Narayanan <aishnana.03@gmail.com>
+Date: Tue, 2 Apr 2024 13:39:02 +0530
+Message-ID: <CAHCXyj2y131B6C+EA9fn2zPhx+LBsL9csHgJSy4GmK9xjdMQSg@mail.gmail.com>
+Subject: [GSoC 2024][v2 Proposal]Move existing tests to a unit testing framework
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 29, 2024 at 04:16:48AM +0000, Justin Tobler via GitGitGadget wr=
-ote:
-> From: Justin Tobler <jltobler@gmail.com>
->=20
-> To reduce the number of on-disk reftables, compaction is performed.
-> Contiguous tables with the same binary log value of size are grouped
-> into segments. The segment that has both the lowest binary log value and
-> contains more than one table is set as the starting point when
-> identifying the compaction segment.
->=20
-> Since segments containing a single table are not initially considered
-> for compaction, if the table appended to the list does not match the
-> previous table log value, no compaction occurs for the new table. It is
-> therefore possible for unbounded growth of the table list. This can be
-> demonstrated by repeating the following sequence:
->=20
-> git branch -f foo
-> git branch -d foo
->=20
-> Each operation results in a new table being written with no compaction
-> occurring until a separate operation produces a table matching the
-> previous table log value.
->=20
-> Instead, to avoid unbounded growth of the table list, the compaction
-> strategy is updated to ensure tables follow a geometric sequence after
-> each operation by individually evaluating each table in reverse index
-> order. This strategy results in a much simpler and more robust algorithm
-> compared to the previous one while also maintaining a minimal ordered
-> set of tables on-disk.
->=20
-> When creating 10 thousand references, the new strategy has no
-> performance impact:
->=20
-> Benchmark 1: update-ref: create refs sequentially (revision =3D HEAD~)
->   Time (mean =C2=B1 =CF=83):     26.516 s =C2=B1  0.047 s    [User: 17.86=
-4 s, System: 8.491 s]
->   Range (min =E2=80=A6 max):   26.447 s =E2=80=A6 26.569 s    10 runs
->=20
-> Benchmark 2: update-ref: create refs sequentially (revision =3D HEAD)
->   Time (mean =C2=B1 =CF=83):     26.417 s =C2=B1  0.028 s    [User: 17.73=
-8 s, System: 8.500 s]
->   Range (min =E2=80=A6 max):   26.366 s =E2=80=A6 26.444 s    10 runs
->=20
-> Summary
->   update-ref: create refs sequentially (revision =3D HEAD) ran
->     1.00 =C2=B1 0.00 times faster than update-ref: create refs sequential=
-ly (revision =3D HEAD~)
->=20
-> Some tests in `t0610-reftable-basics.sh` assert the on-disk state of
-> tables and are therefore updated to specify the correct new table count.
-> Since compaction is more aggressive in ensuring tables maintain a
-> geometric sequence, the expected table count is reduced in these tests.
-> In `reftable/stack_test.c` tests related to `sizes_to_segments()` are
-> removed because the function is no longer needed. Also, the
-> `test_suggest_compaction_segment()` test is updated to better showcase
-> and reflect the new geometric compaction behavior.
->=20
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  reftable/stack.c           | 120 ++++++++++++++++++-------------------
->  reftable/stack.h           |   3 -
->  reftable/stack_test.c      |  67 +++++----------------
->  t/t0610-reftable-basics.sh |  45 +++++++++-----
->  4 files changed, 103 insertions(+), 132 deletions(-)
->=20
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index 07262beaaf7..e7b9a1de5a4 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -1202,75 +1202,73 @@ static int segment_size(struct segment *s)
->  	return s->end - s->start;
->  }
-> =20
-> -int fastlog2(uint64_t sz)
-> -{
-> -	int l =3D 0;
-> -	if (sz =3D=3D 0)
-> -		return 0;
-> -	for (; sz; sz /=3D 2) {
-> -		l++;
-> -	}
-> -	return l - 1;
-> -}
-> -
-> -struct segment *sizes_to_segments(size_t *seglen, uint64_t *sizes, size_=
-t n)
-> -{
-> -	struct segment *segs =3D reftable_calloc(n, sizeof(*segs));
-> -	struct segment cur =3D { 0 };
-> -	size_t next =3D 0, i;
-> -
-> -	if (n =3D=3D 0) {
-> -		*seglen =3D 0;
-> -		return segs;
-> -	}
-> -	for (i =3D 0; i < n; i++) {
-> -		int log =3D fastlog2(sizes[i]);
-> -		if (cur.log !=3D log && cur.bytes > 0) {
-> -			struct segment fresh =3D {
-> -				.start =3D i,
-> -			};
-> -
-> -			segs[next++] =3D cur;
-> -			cur =3D fresh;
-> -		}
-> -
-> -		cur.log =3D log;
-> -		cur.end =3D i + 1;
-> -		cur.bytes +=3D sizes[i];
-> -	}
-> -	segs[next++] =3D cur;
-> -	*seglen =3D next;
-> -	return segs;
-> -}
-> -
->  struct segment suggest_compaction_segment(uint64_t *sizes, size_t n)
->  {
-> -	struct segment min_seg =3D {
-> -		.log =3D 64,
-> -	};
-> -	struct segment *segs;
-> -	size_t seglen =3D 0, i;
-> -
-> -	segs =3D sizes_to_segments(&seglen, sizes, n);
-> -	for (i =3D 0; i < seglen; i++) {
-> -		if (segment_size(&segs[i]) =3D=3D 1)
-> -			continue;
-> +	struct segment seg =3D { 0 };
-> +	uint64_t bytes;
-> +	size_t i;
-> =20
-> -		if (segs[i].log < min_seg.log)
-> -			min_seg =3D segs[i];
-> -	}
-> +	/*
-> +	 * If there are no tables or only a single one then we don't have to
-> +	 * compact anything. The sequence is geometric by definition already.
-> +	 */
-> +	if (n <=3D 1)
-> +		return seg;
-> =20
-> -	while (min_seg.start > 0) {
-> -		size_t prev =3D min_seg.start - 1;
-> -		if (fastlog2(min_seg.bytes) < fastlog2(sizes[prev]))
-> +	/*
-> +	 * Find the ending table of the compaction segment needed to restore the
-> +	 * geometric sequence.
-> +	 *
-> +	 * To do so, we iterate backwards starting from the most recent table
-> +	 * until a valid segment end is found. If the preceding table is smaller
-> +	 * than the current table multiplied by the geometric factor (2), the
-> +	 * current table is set as the compaction segment end.
-> +	 *
-> +	 * Tables after the ending point are not added to the byte count because
-> +	 * they are already valid members of the geometric sequence. Due to the
-> +	 * properties of a geometric sequence, it is not possible for the sum of
-> +	 * these tables to exceed the value of the ending point table.
-> +	 *
-> +	 * Example table size sequence requiring no compaction:
-> +	 * 	64, 32, 16, 8, 4, 2, 1
-> +	 *
-> +	 * Example compaction segment end set to table with size 3:
-> +	 * 	64, 32, 16, 8, 4, 3, 1
-> +	 */
-> +	for (i =3D n - 1; i > 0; i--) {
-> +		if (sizes[i - 1] < sizes[i] * 2) {
-> +			seg.end =3D i + 1;
-> +			bytes =3D sizes[i];
->  			break;
-> +		}
-> +	}
-> =20
-> -		min_seg.start =3D prev;
-> -		min_seg.bytes +=3D sizes[prev];
-> +	/*
-> +	 * Find the starting table of the compaction segment by iterating
-> +	 * through the remaining tables and keeping track of the accumulated
-> +	 * size of all tables seen from the segment end table. The previous
-> +	 * table is compared to the accumulated size because the tables from the
-> +	 * segment end are merged backwards recursively.
-> +	 *
-> +	 * Note that we keep iterating even after we have found the first
-> +	 * starting point. This is because there may be tables in the stack
-> +	 * preceding that first starting point which violate the geometric
-> +	 * sequence.
-> +	 *
-> +	 * Example compaction segment start set to table with size 32:
-> +	 * 	128, 32, 16, 8, 4, 3, 1
-> +	 */
-> +	for (; i > 0; i--) {
-> +		uint64_t curr =3D bytes;
-> +		bytes +=3D sizes[i - 1];
-> +
-> +		if (sizes[i - 1] < curr * 2) {
-> +			seg.start =3D i - 1;
-> +			seg.bytes =3D bytes;
-> +		}
->  	}
-> =20
-> -	reftable_free(segs);
-> -	return min_seg;
-> +	return seg;
->  }
-> =20
->  static uint64_t *stack_table_sizes_for_compaction(struct reftable_stack =
-*st)
-> diff --git a/reftable/stack.h b/reftable/stack.h
-> index d919455669e..656f896cc28 100644
-> --- a/reftable/stack.h
-> +++ b/reftable/stack.h
-> @@ -33,12 +33,9 @@ int read_lines(const char *filename, char ***lines);
-> =20
->  struct segment {
->  	size_t start, end;
-> -	int log;
->  	uint64_t bytes;
->  };
-> =20
-> -int fastlog2(uint64_t sz);
-> -struct segment *sizes_to_segments(size_t *seglen, uint64_t *sizes, size_=
-t n);
->  struct segment suggest_compaction_segment(uint64_t *sizes, size_t n);
-> =20
->  #endif
-> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-> index 7336757cf53..21541742fe5 100644
-> --- a/reftable/stack_test.c
-> +++ b/reftable/stack_test.c
-> @@ -717,59 +717,13 @@ static void test_reftable_stack_hash_id(void)
->  	clear_dir(dir);
->  }
-> =20
-> -static void test_log2(void)
-> -{
-> -	EXPECT(1 =3D=3D fastlog2(3));
-> -	EXPECT(2 =3D=3D fastlog2(4));
-> -	EXPECT(2 =3D=3D fastlog2(5));
-> -}
-> -
-> -static void test_sizes_to_segments(void)
-> -{
-> -	uint64_t sizes[] =3D { 2, 3, 4, 5, 7, 9 };
-> -	/* .................0  1  2  3  4  5 */
-> -
-> -	size_t seglen =3D 0;
-> -	struct segment *segs =3D
-> -		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
-> -	EXPECT(segs[2].log =3D=3D 3);
-> -	EXPECT(segs[2].start =3D=3D 5);
-> -	EXPECT(segs[2].end =3D=3D 6);
-> -
-> -	EXPECT(segs[1].log =3D=3D 2);
-> -	EXPECT(segs[1].start =3D=3D 2);
-> -	EXPECT(segs[1].end =3D=3D 5);
-> -	reftable_free(segs);
-> -}
-> -
-> -static void test_sizes_to_segments_empty(void)
-> -{
-> -	size_t seglen =3D 0;
-> -	struct segment *segs =3D sizes_to_segments(&seglen, NULL, 0);
-> -	EXPECT(seglen =3D=3D 0);
-> -	reftable_free(segs);
-> -}
-> -
-> -static void test_sizes_to_segments_all_equal(void)
-> -{
-> -	uint64_t sizes[] =3D { 5, 5 };
-> -	size_t seglen =3D 0;
-> -	struct segment *segs =3D
-> -		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
-> -	EXPECT(seglen =3D=3D 1);
-> -	EXPECT(segs[0].start =3D=3D 0);
-> -	EXPECT(segs[0].end =3D=3D 2);
-> -	reftable_free(segs);
-> -}
-> -
->  static void test_suggest_compaction_segment(void)
->  {
-> -	uint64_t sizes[] =3D { 128, 64, 17, 16, 9, 9, 9, 16, 16 };
-> -	/* .................0    1    2  3   4  5  6 */
-> +	uint64_t sizes[] =3D { 512, 64, 17, 16, 9, 9, 9, 16, 2, 16 };
->  	struct segment min =3D
->  		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes));
-> -	EXPECT(min.start =3D=3D 2);
-> -	EXPECT(min.end =3D=3D 7);
-> +	EXPECT(min.start =3D=3D 1);
-> +	EXPECT(min.end =3D=3D 10);
->  }
-> =20
->  static void test_suggest_compaction_segment_nothing(void)
-> @@ -880,6 +834,17 @@ static void test_empty_add(void)
->  	reftable_stack_destroy(st2);
->  }
-> =20
-> +static int fastlog2(uint64_t sz)
-> +{
-> +	int l =3D 0;
-> +	if (sz =3D=3D 0)
-> +		return 0;
-> +	for (; sz; sz /=3D 2) {
-> +		l++;
-> +	}
+Dear Git Organization,
+I'm writing to follow up on my Google Summer of Code proposal, "Move
+Existing Tests to a Unit Testing Framework."
+After careful consideration and based on our discussions, I've refined
+the project summary and deliverables to focus specifically on Move
+existing tests to a unit testing framework.This email aims to gather
+feedback and initiate a discussion on the
+feasibility and implementation of this idea.
+---
+Google Summer of Code
 
-Nit: we could drop the curly braces while at it.
+2024
 
-> +	return l - 1;
-> +}
-> +
->  static void test_reftable_stack_auto_compaction(void)
->  {
->  	struct reftable_write_options cfg =3D { 0 };
-> @@ -1068,7 +1033,6 @@ static void test_reftable_stack_compaction_concurre=
-nt_clean(void)
->  int stack_test_main(int argc, const char *argv[])
->  {
->  	RUN_TEST(test_empty_add);
-> -	RUN_TEST(test_log2);
->  	RUN_TEST(test_names_equal);
->  	RUN_TEST(test_parse_names);
->  	RUN_TEST(test_read_file);
-> @@ -1088,9 +1052,6 @@ int stack_test_main(int argc, const char *argv[])
->  	RUN_TEST(test_reftable_stack_update_index_check);
->  	RUN_TEST(test_reftable_stack_uptodate);
->  	RUN_TEST(test_reftable_stack_validate_refname);
-> -	RUN_TEST(test_sizes_to_segments);
-> -	RUN_TEST(test_sizes_to_segments_all_equal);
-> -	RUN_TEST(test_sizes_to_segments_empty);
->  	RUN_TEST(test_suggest_compaction_segment);
->  	RUN_TEST(test_suggest_compaction_segment_nothing);
->  	return 0;
-> diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-> index 434044078ed..b95626549e7 100755
-> --- a/t/t0610-reftable-basics.sh
-> +++ b/t/t0610-reftable-basics.sh
-> @@ -293,7 +293,7 @@ test_expect_success 'ref transaction: writes cause au=
-to-compaction' '
->  	test_line_count =3D 1 repo/.git/reftable/tables.list &&
-> =20
->  	test_commit -C repo --no-tag A &&
-> -	test_line_count =3D 2 repo/.git/reftable/tables.list &&
-> +	test_line_count =3D 1 repo/.git/reftable/tables.list &&
-> =20
->  	test_commit -C repo --no-tag B &&
->  	test_line_count =3D 1 repo/.git/reftable/tables.list
-> @@ -308,12 +308,24 @@ test_expect_success 'ref transaction: environment v=
-ariable disables auto-compact
->  	do
->  		GIT_TEST_REFTABLE_NO_AUTOCOMPACTION=3Dtrue git -C repo update-ref bran=
-ch-$i HEAD || return 1
->  	done &&
-> -	test_line_count =3D 23 repo/.git/reftable/tables.list &&
-> +	test_line_count =3D 22 repo/.git/reftable/tables.list &&
-> =20
->  	git -C repo update-ref foo HEAD &&
->  	test_line_count =3D 1 repo/.git/reftable/tables.list
->  '
-> =20
-> +test_expect_success 'ref transaction: alternating table sizes are compac=
-ted' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	test_commit -C repo A &&
-> +	for i in $(test_seq 20)
+Name: Aishwarya N
 
-Nit: we could reduce the number of iterations here so that we don't have
-to spawn 40 Git commands. Using something like 10 or even 5 iterations
-should be sufficient to demonstrate the problem, no?
+University: SASTRA University
 
-Patrick
+Program: B.Tech Electrical and Electronics Engineering
 
---oeneywtiiNbPiQ9u
-Content-Type: application/pgp-signature; name="signature.asc"
+Organization: Git
 
------BEGIN PGP SIGNATURE-----
+Project Idea: Move existing tests to a unit testing framework
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYLsoUACgkQVbJhu7ck
-PpTWUhAAjlMmjBQZuZxdbHZLkS/0hVq9SfmWgRNMLUpeGbEzhFKMCVdf0Cek6q6G
-4qNDyTA/gHe5gF9ijB1gOUeINzOD9DreMl4N1VXGT/BSXyOH5IZGL7jbddvOsqtn
-hoOXX4FiZ8mzyh6d4fS9SZisgZsAo0nEqi94qke6gWktwgixds46GO94YWLmcu+i
-JxTYvrwP12PXi82Xl/kXkI9d1MFnYTg6NglxdBAu7oLXz8dgYoJDsZb9edifN7oX
-P+0g0AoRizjL/8wA0RRuG5QY71ZiVBFmwobtksRA81dOJYmT2QulYmZ+1CW2D8Tk
-PbTQNGqVegERieBr5uAFYE4Itz2upG9o4cZCI+U1TJwQa8zyYOZhw8kwou/QbvKa
-qCATRqpYIezaOpHc2IaSZBx2MCKl6a3AywUSh46azJv/Akl8mhPKkab2osA6qUWY
-NuoXBtXuNVA4B2j/eyYfc8JDdirHecnnHkFudNZL/00/LXnVIgAZsWJn8cAEMO40
-uxWhErYROsvHJcKkPKSMsArYjIZxYJ+iOcQWaRVDGIWW86SR+QrLUb0AhDwb3J/j
-2HOpC5cPoN+YSFaVB7Dr7f120DOK4DVq92O6hfky0s/V6dEq09e86G/JvrSixZ/O
-eDvRCCfvVn9S43j7E8Z9byckWpnG6ykP6RCnJ5qODGktxBkWBp8=
-=6ETG
------END PGP SIGNATURE-----
+GitHub: https://github.com/Aishwarya-Narayanan03
 
---oeneywtiiNbPiQ9u--
+Email: aishnana.03@gmail.com
+
+Timezone: IST (GMT+5:30)
+
+
+
+About Me
+
+My name is Aishwarya N., and I am soon to graduate from SASTRA Deemed
+University in Thanjavur, India, with a B.Tech. in Electrical and
+Electronics Engineering. With graduation only two months away, I'm
+ready to plunge into the exciting world of open source and offer my
+expertise to a project that enables developers. The power of building
+something from nothing through programming is a truly special and
+empowering feeling. It's no wonder it resonates with me! The Git
+project particularly appeals to me. Contributing to the tool that
+supports innumerable software developments provides an opportunity to
+have a genuine, global impact.
+
+Why Me?
+
+Adaptable and Open to Challenges: I thrive in lively surroundings and
+see new challenges as opportunities to learn and progress. I
+acknowledge that mistakes are unavoidable on the route to mastery, and
+I am not afraid to learn from them.
+
+An avid learner: My thirst for knowledge is boundless. I'm always
+looking for new methods to improve myself and push the boundaries of
+technology.
+Collaborative Spirit: While I'm quite satisfied working independently,
+I believe that collaborating is crucial for accomplishing ambitious
+goals. I am an adept communicator who is eager to work with the
+brilliant Git community.
+
+Why Git?
+The fast-paced world of software piques my curiosity, and Git, a basic
+tool for collaboration and version control, is a necessary skill set
+for success in this area of expertise. But, beyond its functionality,
+Git is fascinating.I'm excited to contribute to the project that
+underpins numerous developer workflows.
+
+Project Summary
+The Git project has recently implemented a new unit testing framework
+to improve code quality and maintainability. Currently, numerous
+legacy test cases are stored in separate test helper files
+(t/helper/test-*.c) written in C, as well as test scripts (t/*.sh)
+created in the shell to call these helpers. This project focuses on
+migrating these existing tests to a unified format using the new
+framework within dedicated C source files (t/unit-tests/t-*.c).This
+conversion will offer various advantages:
+By unifying tests in the new framework, the codebase structure becomes
+more consistent.
+Improved test readability and maintainability: The new framework makes
+it easier to write clear and maintainable tests.
+By utilising the new framework, we can expand our testing capabilities
+and features beyond the current approach.
+
+Before GSoC
+
+Microproject:Avoiding suppressing git's exit code in test scripts
+
+Learning Git Codebase
+
+1. Understanding Test Scripts: Exploring the test scripts in the Git
+project's t- directory provided personal experience with real-world
+Shell scripting used for integration testing. This helpd me understand
+how Git's features are tested and confirmed.
+2.Reading Commits: The reference to commit c6f44e1da5 demonstrated how
+to handle Git commands in test scripts. Analysing this commit allowed
+me to examine the adjustments done to address the issue of suppressing
+Git's exit code, as well as get insight into the codebase's structure
+and convention.
+3.Navigating the Git Repository: Searching for instances of
+problematic code and finding solutions within the Git repository
+enhanced my ability to successfully navigate and search a big
+codebase.
+
+Best Practices
+
+1. Avoiding Pitfalls:Avoiding typical mistakes in test scripts, such
+as suppressing exit codes, can lead to more dependable testing
+infrastructure.
+2.Understanding Pipe Usage: Knowing when and how to use pipes in Shell
+scripting is critical. This microproject describes circumstances in
+which pipes may mistakenly suppress exit codes and provides
+suggestions for proper use.
+Connecting With Mentors:
+1.Engaging with Git contributors: This microproject allowed me to
+connect with mentors and Git project contributors. Seeking clarity on
+specific code practices or debating changes to test scripts encourages
+involvement in the open-source community.
+2.Receiving comments: Submitting updates or queries about the
+microproject helped in receving useful comments from experienced
+developers.This feedback helped me learn the Git codebase and improve
+my scripting skills.
+3.Community Involvement: Participating in discussions about the
+microproject on platforms such as Git email lists or forums allowed me
+to communicate with a diverse community of developers while sharing
+information and experiences.
+
+Related Works
+
+https://lore.kernel.org/git/CAHCXyj3U69qyhYewOLY9hN2rvi_5ZuSxQEBJbDxrKefm9M=
+zVWg@mail.gmail.com/
+- Microproject Approach
+
+https://lore.kernel.org/git/ZgQffea0krKmZUEt@tanuki/ - [RFC PATCH]
+             Description: While printf might be unlikely to fail
+here,I felt the change aligns with the project's goal of ensuring Git
+command exit codes are captured. This approach is more robust and
+avoids potential issues in the future.
+               Status: Declined
+
+https://public-inbox.org/git/xmqqttkqwfwe.fsf@gitster.g/ - [RFC PATCH]
+Fix Git command exit code suppression in test script
+t2104-update-index-skip-worktree.sh
+Description: This patch increases the robustness of Git's testing
+framework by guaranteeing that Git commands' exit codes are
+appropriately examined during test execution. Previously, suppressed
+exit codes allowed tests to pass despite Git command failures. This
+fix stores the output of Git commands in variables and examines their
+exit codes to detect errors.The discussion focuses on improvements to
+the patch submission process, such as adhering to coding principles
+and referencing appropriate documentation for proper formatting and
+test script adjustments.
+Status: Declined
+
+ https://public-inbox.org/git/CAHCXyj1hUVNNuCOgsNv4GJUi79_o9iWZDvV8Ocz3Dodr=
+eYoL7g@mail.gmail.com/
+  - GSoC 2024 [PATCH v2] Fix Git command exit code suppression in test
+script t2104-update-index-skip-worktree.sh
+                                 Description: This patch resolves an
+issue in Git test scripts in which the exit code of git ls-files -t
+may be disregarded, resulting in tests passing despite Git command
+failures. The new version guarantees that Git commands used in
+pipelines produce captured output and perform adequate exit code
+checks. It also enhances code style by adhering to established rules.
+This adds to more robust Git testing by ensuring the identification
+and reporting of Git command errors within test scripts.
+Status: Under Review
+
+Porting Unit Tests:
+
+[1]https://lore.kernel.org/git/cover.1692297001.git.steadmon@google.com/
+
+This patch series provides unit test functionality for the Git project.
+The series includes the following patches:
+A project plan document that outlines the goals for introducing unit
+tests, as well as a review of potential frameworks and the features
+used to assess them.
+An implementation of the TAP unit test framework with a sample unit
+test and Makefile integration.
+Changes were made to the Git build system so that the unit tests could
+be run in CI.
+The TAP framework was selected because of the following advantages:
+Simple to use and comprehend.
+Widely used and integrates seamlessly with existing Git tools.
+
+The project plan document mentions a number of outstanding TODOs,
+including how to ensure tests run on various OS platforms and how to
+gather unit test statistics.
+This is a well-written patch series with a straightforward and logical
+approach. The documentation is comprehensive and instructive, and the
+code is well-organized and simple to grasp.
+Here are some extra factors to consider:
+The patch series discusses collecting unit test statistics. We could
+clarify on the type of statistics we want to collect?
+How do we intend to deal with flaky tests?
+
+[2]https://lore.kernel.org/git/20240112102743.1440-1-ach.lumap@gmail.com/
+
+This is an email thread about a patch series submitted by Achu Luma to
+port the unit tests for C character classification functions from the
+legacy helper tool to the new unit testing framework
+([Outreachy][PATCH v5] Port helper/test-ctype.c to
+unit-tests/t-ctype.c).
+
+Here are the major changes implemented in the patch series:
+The unit tests for C character classification routines (isdigit(),
+isspace(), etc.) are moved from the historical approach, which used
+the test-tool command test-tool ctype in t/helper/test-ctype.c, to the
+new unit testing framework (t/unit-tests/test-lib.h).
+Refactors the tests to use the framework's testing macros (TEST() and
+check_*()).
+Added tests for handling EOF (end-of-file).
+Overall, the patch series was well received and thought to be a
+positive development. The reviewers made various suggestions for
+improvement, such as expanding on the types of statistics the author
+is interested in gathering for the unit tests and how to deal with
+flaky tests.
+
+[3] https://lore.kernel.org/git/20240112102122.1422-1-ach.lumap@gmail.com/
+
+This patch migrates unit tests for the advise_if_enabled functionality
+from the legacy approach to a new unit testing framework. Here's a
+breakdown of the changes:
+
+Legacy approach:
+
+Used the test-tool advise command in t/helper/test-advise.c.
+
+Relied on helper functions from test-tool.h.
+
+Tests were written in shell script (t/t0018-advice.sh).
+
+New approach:
+
+Uses the new unit testing framework with TEST() macros
+(t/unit-tests/t-advise.c).
+
+Includes necessary headers for advise.h, config.h, and setup.h.
+
+Tests are written in C code.
+
+The patch removes the following files from the legacy approach:
+
+t/helper/test-advise.c
+
+t/t0018-advice.sh
+
+The new unit test file t/unit-tests/t-advise.c includes three tests
+covering different scenarios:
+
+Advice is printed when the configuration variable is unset.
+
+Advice is printed when the configuration variable is set to true.
+
+Advice is not printed when the configuration variable is set to false.
+
+Overall, this patch improves the codebase by using a more standardized
+and maintainable approach for unit testing.
+
+[4]https://lore.kernel.org/git/20240205162506.1835-1-ach.lumap@gmail.com/
+
+Refactoring 64-bit Pre-requisite Checks in date.h
+
+This is a patch for the Linux kernel which refactors pre-requisite
+checks for 64-bit systems into reusable functions in the date.h header
+file.
+
+Context:
+
+The codebase recently added a unit testing framework.
+
+Some shell tests use a helper tool that checks for 64-bit
+prerequisites (TIME_IS_64BIT and TIME_T_IS_64BIT).
+
+These checks are also needed in the new unit tests.
+
+To avoid duplication, the patch moves these checks to date.h as inline
+functions.
+
+Changes:
+
+Two new inline functions are added to date.h:
+
+check_prereq_TIME_IS_64BIT: Checks if the size of timestamp_t is 8
+bytes (indicating a 64-bit system).
+
+check_prereq_TIME_T_IS_64BIT: Checks if the size of time_t is 8 bytes
+(indicating a 64-bit system).
+
+The shell test functions in t/helper/test-date.c are modified to use
+the new functions instead of directly checking the sizes.
+
+Benefits:
+
+Reduces code duplication.
+
+Improves code maintainability.
+
+Simplifies porting shell test code to the new unit test framework.
+
+Next Steps:
+
+A following commit will port the relevant code from
+t/helper/test-date.c to the new unit test file t/unit-tests/t-date.c,
+using the newly introduced functions for pre-requisite checks.
+
+[5]Unit Testing in Git:
+
+https://github.com/git/git/blob/master/Documentation/technical/unit-tests.t=
+xt
+discusses unit testing for the Git project. This gives an idea of the
+background and importance of unit testing in the project applying to.
+
+
+
+During GSoc
+The main goals of this project are:
+1. Understand the existing "reftable" unit tests: Examine the present
+implementation of the "reftable" unit tests in
+'t0032-reftable-unittest.sh' to ensure that you understand their
+functionality and purpose.
+2. Learn the new unit testing framework: Get a thorough grasp of Git's
+new unit testing framework, including setup, usage, and recommended
+practices.
+3.Ensuring test coverage and reliability: Check that the converted
+tests have sufficient code coverage and accurately simulate the
+expected behaviour of the "reftable" capability. Test and validate the
+new tests thoroughly to ensure their reliability.
+4. Documentation and code comments: Document the conversion process,
+including any issues encountered and the reasoning behind design
+decisions. Update the code comments and documentation to reflect the
+changes to the tests.
+Deliverables
+
+=C3=BC All legacy test cases previously residing in t/helper/test-*.c and
+t/*.sh files will be converted to the new unit testing framework
+within dedicated C source files in t/unit-tests/t-*.c.
+
+=C3=BC The migrated tests will be thoroughly executed and validated to
+ensure complete coverage of all existing test functionalities.
+
+=C3=BC Documentation explaining the migration procedure, as well as
+revisions to existing documentation.
+
+=C3=BC The final report summarises the project's accomplishments, problems,
+and future recommendations.
+
+Expected timeline
+Community bonding period (May 1 - May 26)
+
+Familiarise myself with the Git project's code and contribution standards.
+Discuss the project plan and milestones with mentors.
+Establish the development environment and tools required for the project.
+
+Phase 1: Analysis and Planning (May 27 - June 15)
+Examine the current reftable unit tests and the unit testing framework
+documentation.
+Plan the migration process by identifying the test cases and
+capabilities that will be covered.
+Break down tasks and establish a precise project timeline.
+
+Phase 2: Transition to C-based Unit Tests (June 16=E2=80=93July 15)
+Begin rebuilding the existing shell scripts as C-based unit tests.
+Ensure that the migration process is accurate and comprehensive, while
+retaining test coverage.
+Communicate with mentors on a regular basis to receive feedback and guidanc=
+e.
+
+Phase 3: Testing and Validation (July 16=E2=80=93August 5)
+Evaluate the migrated unit tests against different scenarios and edge
+situations.
+Debug and resolve any errors or anomalies that arise during testing.
+Before finalising, ensure that the unit tests are proper and reliable.
+
+Phase 4: Documentation and Reporting (August 6=E2=80=93August 26)
+Document the migration process, including the obstacles encountered
+and solutions implemented.
+Update the relevant documentation to reflect the modifications to the
+reftable unit tests.
+Prepare a detailed report summarising the project's results and contributio=
+ns.
+
+Availability
+My university holidays begin on June 30. However, considering this is
+my final year with only three classes and major project, I believe it
+will not be a problem. I intent to work 6 hours a day, 5 days a week
+this summer.I have no scheduled trips except for GIM-SRIP from May 6th
+to 31st. I will inform Mentors advance notice of any changes in
+availability.
+
+ After GSoC
+I realise that it would be much more beneficial if our GSoC
+participants could stay after the event. And that is exactly what I
+want to do. I think doing open-source, especially with a community
+that fuels a popular development tool, is simply fascinating. And, in
+addition to being refreshing, such a community allows me to learn and
+grow, with the possibility of making more significant contributions if
+I continue to participate.While this is my first foray into
+open-source development and GSoC, I am excited by the prospect of
+contributing to the ongoing success of Git. I have been actively
+learning and gaining a strong foundation in Git commands, programming
+languages, and version control concepts.
+
+Closing Remarks
+Finally, I'd like to express my gratitude to the community and, in
+particular, my mentors, Patrick Steinhardt,Christian Couder,Kaartic
+Sivaraam,Karthik Nayak,Junio C Hamano. They did and continue to do an
+exceptional task of maintaining and empowering the Git open-source
+community, as well as offering much-needed and kind assistance to a
+new contributor like me.
+---
+Sincerely,
+Aishwarya Narayanan
