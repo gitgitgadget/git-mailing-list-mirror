@@ -1,82 +1,90 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F32315CD72
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:06:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E68215AAA1
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 20:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712088364; cv=none; b=tBKNT7Bh5eKnRwZ5Jhnrarn7ZB17thv6NnVIVyKsljMUt3eM+BaSWTkvhslsY38HwDfjynKUVv5zz0kpVRMJZDTmLluWrOvxeZKh9FqkcEljXiUcYx0B1fGCI25I5UF0jv7NsTF6uFh6SLeba2qZeandYDGZQ9SrjJ01ONb5k6w=
+	t=1712089363; cv=none; b=HgGlgLkA0cPTpUJ8GXNUzJnBWCoRY8CrPGJj1+7VZuFJmmfSheShFUx9MfZsRwrCnsS0HEzSd/9VR91URUM5Ue1wQdWc6AN05N5CYoE/cP1wKVktrBqz4BQp+6ZNbd9C3w/iU3v3lWOfWMaS8n2ml/2rA79HTOgNWgJS00oyg8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712088364; c=relaxed/simple;
-	bh=p05KChR3sxLxXfYCqerzwB+SJeU2RZbMsaPxr73tYzU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GuBzMWEPz70G3kwv7pwmxUzod3GoQT95xHfvRfUZMb5BBvd7/t5nkXNbsdTVTj32OV64Vr/M1zD51/ZEqrH8Vue5mlD6bXXrXlQa9Oaycm34JssbHvlEq9e69CPSeob32OKhuqs7GjJ/feuhOt4QRMSaOuiHTs/2a3rwP/3HQAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7296 invoked by uid 109); 2 Apr 2024 20:06:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Apr 2024 20:06:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1113 invoked by uid 111); 2 Apr 2024 20:06:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Apr 2024 16:06:03 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 2 Apr 2024 16:06:00 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Daniel Stenberg <daniel@haxx.se>
-Subject: [PATCH 2/2] INSTALL: bump libcurl version to 7.21.3
-Message-ID: <20240402200600.GB875182@coredump.intra.peff.net>
-References: <20240402200254.GA874754@coredump.intra.peff.net>
+	s=arc-20240116; t=1712089363; c=relaxed/simple;
+	bh=GQNYcaRqYPmgLCez2pTkY+bKIlMgUxuMjdp/XSTnK/w=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Txp16Swl5cvYP3RrC8QBm4ZJ/HOYZMHkQvCs1jix1w+v12w00wkVIn29TvAV8+XJ+pKwG6IUSctN/DOiRoMVRLo6RE8PPGcsDN575/j6HIbld8wluVMhUJjKYq0dOWGMQqUGGeyVQ1bxe1fKq4GlWDQxSX1Y9XSrcZs7EpZFB1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 432KM1Ir2355598
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Apr 2024 20:22:02 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
+Cc: "'Daniel Stenberg'" <daniel@haxx.se>
+References: <20240330000212.GA1261238@coredump.intra.peff.net> <2n7sn76-p413-5632-4o2s-o5n2p1rqnr5@unkk.fr> <20240402200254.GA874754@coredump.intra.peff.net>
+In-Reply-To: <20240402200254.GA874754@coredump.intra.peff.net>
+Subject: RE: [PATCH 0/2] git+curl 8.7.0 workaround
+Date: Tue, 2 Apr 2024 16:21:56 -0400
+Organization: Nexbridge Inc.
+Message-ID: <08c401da853b$6c0b8570$44229050$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240402200254.GA874754@coredump.intra.peff.net>
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJws1Xu3+P+oB7hpoOMcV1t4cbufAIz/uswAuOIiiuwAFOYoA==
+Content-Language: en-ca
 
-Our documentation claims we support curl versions back to 7.19.5. But we
-can no longer compile with that version since adding an unconditional
-use of CURLOPT_RESOLVE in 511cfd3bff (http: add custom hostname to IP
-address resolutions, 2022-05-16). That feature wasn't added to libcurl
-until 7.21.3.
+On Tuesday, April 2, 2024 4:03 PM, Peff wrote:
+>To: git@vger.kernel.org
+>Cc: Daniel Stenberg <daniel@haxx.se>
+>Subject: [PATCH 0/2] git+curl 8.7.0 workaround
+>
+>On Sat, Mar 30, 2024 at 09:54:02AM +0100, Daniel Stenberg wrote:
+>
+>> On Fri, 29 Mar 2024, Jeff King wrote:
+>>
+>> > I noticed some http-related failures in the test suite on my Debian
+>> > unstable system, which recently got an upgraded curl package. It
+>> > looks like it's related to cases where we use the remote-curl =
+helper
+>> > in "connect" mode (i.e., protocol v2) and the http buffer is small
+>> > (requiring us to stream the data to curl). Besides just running
+>> > t5551, an easy reproduction is:
+>>
+>> This smells like a libcurl regression to me. I "imported" this into
+>> our issue tracker here: https://github.com/curl/curl/issues/13229
+>
+>This was all resolved in that issue, but just to summarize for the list
+>here: it was a regression in curl and there's a fix already. Thanks =
+Daniel for your (as
+>usual) prompt digging into the problem (and likewise to Stefan for the =
+actual fix).
+>
+>Ultimately the issue will be fixed by moving to a different version of =
+libcurl, but
+>here's an easy workaround in the meantime, with a small doc cleanup I =
+found along
+>the way.
+>
+>  [1/2]: http: reset POSTFIELDSIZE when clearing curl handle
+>  [2/2]: INSTALL: bump libcurl version to 7.21.3
+>
+> INSTALL | 2 +-
+> http.c  | 1 +
+> 2 files changed, 2 insertions(+), 1 deletion(-)
 
-We could add #ifdefs to make this work back to 7.19.5. But given that
-nobody noticed the compilation failure in the intervening two years, it
-makes more sense to bump the version in the documentation to 7.21.3
-(which is itself over 13 years old).
+Do we have an ETA for this fix? That or do we know when curl is planning =
+on resolving this?
 
-We could perhaps go forward even more (which would let us drop some
-cruft from git-curl-compat.h), but this should be an obviously safe
-jump, and we can move forward later.
+Thanks,
+Randall
 
-Note that user-visible syntax for CURLOPT_RESOLVE has grown new features
-in subsequent curl versions. Our documentation mentions "+" and "-"
-entries, which require more recent versions than 7.21.3. We could
-perhaps clarify that in our docs, but it's probably not worth cluttering
-them with restrictions of ancient curl versions.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- INSTALL | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/INSTALL b/INSTALL
-index c6fb240c91..2a46d04592 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -139,7 +139,7 @@ Issues of note:
- 	  not need that functionality, use NO_CURL to build without
- 	  it.
- 
--	  Git requires version "7.19.5" or later of "libcurl" to build
-+	  Git requires version "7.21.3" or later of "libcurl" to build
- 	  without NO_CURL. This version requirement may be bumped in
- 	  the future.
- 
--- 
-2.44.0.789.g5ea01f6724
