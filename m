@@ -1,92 +1,132 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C85256B89
-	for <git@vger.kernel.org>; Mon,  1 Apr 2024 23:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827248BEA
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 00:13:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712014043; cv=none; b=KJJlajngtIKf5uXDQnTjNJFix85xAkUTJLjOMzvffCKilxOylreO99/S0JIskTK2IVpHMkwXLxTNrZwVLsje6sHgF6m3Frm8chNz+a1s9cyg20rFmXAIkshTPKexolSqeyRWP77sz2kD60PY/ZXn6cqlSZdM+gSDgCoQVYGtneU=
+	t=1712016834; cv=none; b=CYsW1/WVrJKTiZs5Aot0BhSruNOy/3nB+LoD5AQm3Gb8ITBvjSGEc6vaz8fGBAAKTm+2Y49ikSs67bErU7zktrrv1faQoLMYbI5Z8r5TmmVi98bh+7W1IbjBk+rDwJeGnahXrlxsoAfsOWL/hLXB5M4CJ3x+pzUDWgWZRtlDigI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712014043; c=relaxed/simple;
-	bh=ls7jZ8iJLo1UVY3eMrM65diNvx/ozqScscUuJO7C4hM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eOmG9hg0czSovRL+1XG9XSnPbdFesNi5hWN7ODXRBEvca2ttAo3la4fzoQ46I231eTboMU2DzBPUCDpVFE4Y+B/uZi/jx/cs8NAQBRnc2JYZQxb1EaOI/hJXCLlYK5g7rDlKFu4UgmYVrF4c+sYJ7FPhDNPmumh+UfD76uYk+z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=DalmVtl+; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1712016834; c=relaxed/simple;
+	bh=7/2M6qKgDqyT4jgYAwa3ZyouVYl3Nt0fQdYicD6Ygt4=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=SXXD+W1YPE29ys4+BNwJOrPxQnvtBeVyEG6VJ6fRmKdbONPxC2FZpa+sUyKhTQGq0X6lcU08gOWM5PtYy40/dx62gmA5cYlgYmnWb2pL8eTuuLSc1ywJEapyXXshZ0tsFk9G34LDGYqpflobWN5Ay91q9HnmZ8R2roGU1gF3kt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=JKjgURfI; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DalmVtl+"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3c35c4d8878so1900338b6e.1
-        for <git@vger.kernel.org>; Mon, 01 Apr 2024 16:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712014041; x=1712618841; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ls7jZ8iJLo1UVY3eMrM65diNvx/ozqScscUuJO7C4hM=;
-        b=DalmVtl+My3ZqKIIruMfZfGaKiZAyLiJjnF/3cMLToQ5+r6VQ7dk4hT4g9qUEdw23K
-         V98CZtBS4sZWzdf1GT93D+pPhS5DCwESuKhbuZFO+VOw9MVld9uuGA89JVh74CMkwV9+
-         dygtjky1497e71UCo3J5THYCxmhIvbnE6lCkJSSLOQPgmyCA7k+xqC3uHbEQ5uSLbNsc
-         g4vyxM/msf2pWL7XaNXLXKvDnTQif/MwArTAa5B7tXBh2X15zCjVNLbZLtWFOKmlzPPy
-         UqKC7Jw3RpmBb54bmvXpjmXMib2EZAHdc13xK/c5jGVU6r9UN9qaF9TlxdrEVKF966DK
-         n0VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712014041; x=1712618841;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ls7jZ8iJLo1UVY3eMrM65diNvx/ozqScscUuJO7C4hM=;
-        b=M5k1eUAKGRmWA2zrMNGu6Z53ySl1BRn75rEhpnJIwq8zxZVJoZsviYjpt0QAm63ZXP
-         Ylyl/NNUKWYt48SFbgoYUvSy+ZmiSdo6QAoo/RrX0C76jmcJvJjzIYAnAJ/yUyGnLRBw
-         C7T9a0KkRRm/owieUJVM56zC8Vz8UXPSGIGTaFdIIWBU5BRkbIH7Js1UiYPHprm3iOPQ
-         WD03Z3usq5FcyNhZjeQxislOFOmLyDpl1MZn4dBO0IrPWkW/w1xMfcUXIO8BmNNzt8Az
-         IZ49/yosg5SwA7FrosB3RkxibrffZOriI3duK+cJgY80RjJhku3idvWNEE/myNnR1NSU
-         xH6w==
-X-Gm-Message-State: AOJu0YyoJw1W8BnPPxxVgqdmMndt7I1vKbUgc3ZV4kv17M8REW07LIfg
-	67n7lP9CnEf2QLOPz6wUK0OvI1Q529pcbHJC9g0XgiVUtvEZKFwDMiCiCtH8loU=
-X-Google-Smtp-Source: AGHT+IEreN0Z7rZMstQWXJIs1AWHUqS4OXhwMmgfzy8SYU3hTG8oyOrZ+8VT9E95XLO+kR7shWpIkA==
-X-Received: by 2002:a05:6808:23c8:b0:3c3:eed1:adde with SMTP id bq8-20020a05680823c800b003c3eed1addemr13531817oib.14.1712014041464;
-        Mon, 01 Apr 2024 16:27:21 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v4-20020a05620a090400b0078be9e0f9adsm574452qkv.43.2024.04.01.16.27.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 16:27:21 -0700 (PDT)
-Date: Mon, 1 Apr 2024 19:27:19 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2024, #01; Mon, 1)
-Message-ID: <ZgtC1+26c67PBOH7@nand.local>
-References: <xmqq4jckaoid.fsf@gitster.g>
- <Zgskgeg6kXJsb3/c@nand.local>
- <xmqq7chg91ma.fsf@gitster.g>
- <xmqqmsqc7kby.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="JKjgURfI"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1712016830;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KuwXhKmRuYt8Elvjb1SUGnHUDNGQVyT6VW65PCZbUSE=;
+	b=JKjgURfIm5Z7TFxY4AyWwMONI/SSDxftMCuWrA8Sw3QgA/HHoetwpmkfV7/TIaEq7iLheH
+	qIRUqWdvaffWVnVnnteFG4fE5KhocAHni0octlPSj6WBO76uI7RDpMa5D9GUDePbCKyeK9
+	4OrdJEQftR+zpyFA9eLLzNulPOvUQFlGb9+xqofZf9fc+Frg+2DZ0YcuQuqdr8ncubvj8h
+	mavLi67ceKsu0CCeDFsZ/u/jy+5oc+oVxCE4hY91uehptsOzACCbgUIAiMR4od1JJfcUbx
+	6C5h0fvJvmuRgI4+Yf3pix3A0q8Qd1FRkM18E1Zqw0Siaf7rSbWwYDC2v+/BwQ==
+To: git@vger.kernel.org
+Subject: [PATCH 3/3] t4047: whitespace in diff.dirstat and --dirstat
+Date: Tue,  2 Apr 2024 02:13:44 +0200
+Message-Id: <09d6260ffb717dd85ce6f041402ed9a5e1cfe039.1712016667.git.dsimic@manjaro.org>
+In-Reply-To: <cover.1712016667.git.dsimic@manjaro.org>
+References: <cover.1712016667.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmsqc7kby.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Mon, Apr 01, 2024 at 04:08:01PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> >>> * tb/pseudo-merge-reachability-bitmap (2024-03-20) 24 commits
-> >>> ...
-> >> Thanks updating the description. I am waiting to reroll until after it
-> >> has received a little bit of review on the technical front.
-> >
-> > In the meantime I've dropped it as it interacts with tb/midx-write
-> > and Eric's khash-to-khashl update.
->
-> I think I got merge-fix for integrating this topic with the rest, so
-> I'll be resurrecting it and queuing it to 'seen' again.
+Add a few more tests to cover the support for optional placing of additional
+whitespace characters around the commas in the multi-value, comma-separated
+values for the "diff.dirstat" configuration option and the "--dirstat"
+command-line option.
 
-Thanks. I'll look at what has settled by the time it is ready to be
-rerolled and rebase it forward appropriately to try and make your life a
-little easier ;-).
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
+ t/t4047-diff-dirstat.sh | 33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
 
-Thanks,
-Taylor
+diff --git a/t/t4047-diff-dirstat.sh b/t/t4047-diff-dirstat.sh
+index 7b73462d53d2..715b3579539e 100755
+--- a/t/t4047-diff-dirstat.sh
++++ b/t/t4047-diff-dirstat.sh
+@@ -707,24 +707,42 @@ test_expect_success '--dirstat-by-file --cumulative' '
+ 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
+ '
+ 
+-test_expect_success '--dirstat=files,cumulative' '
++test_expect_success '--dirstat=files,cumulative with no spaces' '
+ 	git diff --dirstat=files,cumulative HEAD^..HEAD >actual_diff_dirstat &&
+ 	test_cmp expect_diff_dirstat actual_diff_dirstat &&
+ 	git diff --dirstat=files,cumulative -M HEAD^..HEAD >actual_diff_dirstat_M &&
+ 	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
+ 	git diff --dirstat=files,cumulative -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
+ 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
+ '
+ 
+-test_expect_success 'diff.dirstat=cumulative,files' '
++test_expect_success '--dirstat=files,cumulative with spaces' '
++	git diff --dirstat="files, cumulative" HEAD^..HEAD >actual_diff_dirstat &&
++	test_cmp expect_diff_dirstat actual_diff_dirstat &&
++	git diff --dirstat="files , cumulative" -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
++	git diff --dirstat=" files , cumulative " -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
++'
++
++test_expect_success 'diff.dirstat=cumulative,files with no spaces' '
+ 	git -c diff.dirstat=cumulative,files diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
+ 	test_cmp expect_diff_dirstat actual_diff_dirstat &&
+ 	git -c diff.dirstat=cumulative,files diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
+ 	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
+ 	git -c diff.dirstat=cumulative,files diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
+ 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
+ '
+ 
++test_expect_success 'diff.dirstat=cumulative,files with spaces' '
++	git -c "diff.dirstat= cumulative,files " diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
++	test_cmp expect_diff_dirstat actual_diff_dirstat &&
++	git -c "diff.dirstat= cumulative ,files" diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
++	git -c "diff.dirstat= cumulative , files" diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
++'
++
+ cat <<EOF >expect_diff_dirstat
+   27.2% dst/copy/
+   27.2% dst/move/
+@@ -766,15 +784,24 @@ test_expect_success '--dirstat=files,cumulative,10' '
+ 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
+ '
+ 
+-test_expect_success 'diff.dirstat=10,cumulative,files' '
++test_expect_success 'diff.dirstat=10,cumulative,files with no spaces' '
+ 	git -c diff.dirstat=10,cumulative,files diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
+ 	test_cmp expect_diff_dirstat actual_diff_dirstat &&
+ 	git -c diff.dirstat=10,cumulative,files diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
+ 	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
+ 	git -c diff.dirstat=10,cumulative,files diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
+ 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
+ '
+ 
++test_expect_success 'diff.dirstat=10,cumulative,files with spaces' '
++	git -c "diff.dirstat= 10,cumulative,files " diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
++	test_cmp expect_diff_dirstat actual_diff_dirstat &&
++	git -c "diff.dirstat=10, cumulative, files" diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
++	git -c "diff.dirstat=10 , cumulative , files" diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
++'
++
+ cat <<EOF >expect_diff_dirstat
+   27.2% dst/copy/
+   27.2% dst/move/
