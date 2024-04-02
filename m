@@ -1,52 +1,52 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF2E15E81A
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 21:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722B679DD4
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 21:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712094434; cv=none; b=GZV3z79xyOpRdziBOPkkXKH++cbIb03ag7zpnNrmxpOhhc0HSLswY59tEqFuAr/NjWD2YwIgLyVLrvlxSPIFU7I5+U0wn47h0TksfuaTVmjdLsuzWwdM/JjITbCj//fnLmswDM+kRwpeLbWeEEj6WVn5q/e6PYRZbc+r42ND6lM=
+	t=1712094584; cv=none; b=AYMQ39KJjsvo5+5NEVBwK05fgeDmXECPtvcMu7WTg75bo2z0BkkSvlNFiVrBmaqIjcdL7l/LfbV9nSu5r88h4gp6JmbOCiBlsrgr0mXPP30VllRHtMWFZeZKbP8FCvI7V4NIW1qn5DoWzS6q2DV3mLTsyUKNmbLd6oFc+MVSBz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712094434; c=relaxed/simple;
-	bh=V76lM3d4+ez8plvaY8AZfrhY3VCuvJyZeOUtR6WW8pI=;
+	s=arc-20240116; t=1712094584; c=relaxed/simple;
+	bh=5EHBg0XO1rSR64ZcgdLFN/jo24dP83BR4ArKApDQ88w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YdzDHhLZVE+TDmj7KrhD5BJTUL9Q4OBTP34Klttfq5aCvunm2p8kJqk7w39H0EAii8XevAP1L3MOCriWgTECtFUjd1WZoLNNxGNM/J9geJp/LemNRAu3Zklnl/Sh6vEylGdjReNJMFKNKcFhC10hNysGB5mNn3bKbTFNZjXUtJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oa1KUaVe; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=ZRxOhWEpFueJ4XsBPAWFNvSuoAvsBnvYQnyy/wpDNe05fuq9xaMfBGMB6S0MN4X8Y+9KARwKFlxxbyc1bzjCZ+bCeWHFGjyQ1Z7BSgDhF7TyXJTDRYKzA8pX0GN34TyCNnaLxWjla8+nU6UdBmkDiF2OO2Harf6LsT8QHXGb7/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Uc/ZHDSE; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oa1KUaVe"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uc/ZHDSE"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A49AD1E41A7;
-	Tue,  2 Apr 2024 17:47:05 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A1101E436E;
+	Tue,  2 Apr 2024 17:49:42 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=V76lM3d4+ez8plvaY8AZfrhY3VCuvJyZeOUtR6
-	WW8pI=; b=oa1KUaVe5hVrhJqAX3sl5S3IhMtSgA8XYB5kUU9mQ7Pd5FCKron063
-	tHGgND9oWm7F1P3TD4maC0oysz1sFdLAUSH5Okb9l76U5T8P6z7Hfv/JHpT2JkAk
-	Ia9q8crMMZfYsaQ48zC+HkRUhIN7VNKe1Zfv1Q+bjeq9GXsFxYOic=
+	:content-type; s=sasl; bh=5EHBg0XO1rSR64ZcgdLFN/jo24dP83BR4ArKAp
+	DQ88w=; b=Uc/ZHDSEOf+2qimVUFu09k+BcLVAbyZA0Kx+k5Y7laO/2usOj1zLa0
+	wUTYR9ugxZJfmNRZsJYol0TQ19ZLHqTjNprrtaFjOmfu7GBR1iyXqVJWUGyVI4yt
+	J+xFq1BlMz6JDU9t2GckxDTLFEI83Wy5FxQQlmtFXk7SIjv8CuCYs=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ACAB11E41A6;
-	Tue,  2 Apr 2024 17:47:04 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 406EE1E436D;
+	Tue,  2 Apr 2024 17:49:42 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAD761E41A3;
-	Tue,  2 Apr 2024 17:47:03 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9834B1E436C;
+	Tue,  2 Apr 2024 17:49:41 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] builtin/commit: error out when passing untracked
- path with -i
-In-Reply-To: <20240402213640.139682-5-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Wed, 3 Apr 2024 03:06:24 +0530")
+Subject: Re: [PATCH v3 3/3] builtin/add: error out when passing untracked
+ path with -u
+In-Reply-To: <20240402213640.139682-7-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Wed, 3 Apr 2024 03:06:26 +0530")
 References: <20240329205649.1483032-2-shyamthakkar001@gmail.com>
-	<20240402213640.139682-5-shyamthakkar001@gmail.com>
-Date: Tue, 02 Apr 2024 14:47:02 -0700
-Message-ID: <xmqqmsqb30a1.fsf@gitster.g>
+	<20240402213640.139682-7-shyamthakkar001@gmail.com>
+Date: Tue, 02 Apr 2024 14:49:40 -0700
+Message-ID: <xmqqh6gj305n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,34 +56,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8B050F30-F13A-11EE-A411-25B3960A682E-77302942!pb-smtp2.pobox.com
+ E91C2F86-F13A-11EE-A3E9-25B3960A682E-77302942!pb-smtp2.pobox.com
 
 Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 8f31decc6b..09c48a835a 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -441,10 +441,17 @@ static const char *prepare_index(const char **argv, const char *prefix,
->  	 * (B) on failure, rollback the real index.
->  	 */
->  	if (all || (also && pathspec.nr)) {
-> +		char *ps_matched = xcalloc(pathspec.nr, 1);
->  		repo_hold_locked_index(the_repository, &index_lock,
->  				       LOCK_DIE_ON_ERROR);
->  		add_files_to_cache(the_repository, also ? prefix : NULL,
-> -				   &pathspec, NULL, 0, 0);
-> +				   &pathspec, ps_matched, 0, 0);
-> +		if (!all && report_path_error(ps_matched, &pathspec)) {
-> +			free(ps_matched);
-> +			exit(1);
+> When passing untracked path with -u option, it silently succeeds.
+> There is no error message and the exit code is zero. This is
+> inconsistent with other instances of git commands where the expected
+> argument is a known path. In those other instances, we error out when
+> the path is not known.
+>
+> Fix this by passing a character array to add_files_to_cache() to
+> collect the pathspec matching information and report the error and
+> exit if a pathspec does not match any cache entry. Also add a testcase
+> to cover this scenario.
+>
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+>  builtin/add.c         | 11 ++++++++++-
+>  t/t2200-add-update.sh | 10 ++++++++++
+>  2 files changed, 20 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index dc4b42d0ad..88261b0f2b 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -370,6 +370,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  	int add_new_files;
+>  	int require_pathspec;
+>  	char *seen = NULL;
+> +	char *ps_matched = NULL;
+>  	struct lock_file lock_file = LOCK_INIT;
+>  
+>  	git_config(add_config, NULL);
+> @@ -549,13 +550,20 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  
+>  	begin_odb_transaction();
+>  
+> +	ps_matched = xcalloc(pathspec.nr, 1);
+>  	if (add_renormalize)
+>  		exit_status |= renormalize_tracked_files(&pathspec, flags);
+>  	else
+>  		exit_status |= add_files_to_cache(the_repository, prefix,
+> -						  &pathspec, NULL,
+> +						  &pathspec, ps_matched,
+>  						  include_sparse, flags);
+>  
+> +	if (take_worktree_changes && !add_renormalize &&
+> +	    report_path_error(ps_matched, &pathspec)) {
+> +		free(ps_matched);
+> +		exit(1);
+> +	}
 
-No need to free(ps_matched) immediately before exiting.  There are
-other recources (like pathspec) we are holding and not clearing, and
-we do not want to bother cleaning them all.
-
-As we have another "if failed, die()" immediately after this hunk,
-adding another exit() would be OK.  Shouldn't we be exiting with 128
-to match what die() does, though?
+Shouldn't we pay attention to ignore_add_errors?  The same comments
+about free'ing and exit code from the review on the previous step
+apply here, too.
 
 Other than that, looking good.
