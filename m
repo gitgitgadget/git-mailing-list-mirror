@@ -1,128 +1,217 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF225A4C7
-	for <git@vger.kernel.org>; Tue,  2 Apr 2024 11:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FF52032C
+	for <git@vger.kernel.org>; Tue,  2 Apr 2024 12:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712059028; cv=none; b=k7QxiAKKZWcjqidhBuNHQtW3Tp6VYCI5BvK8pNApAm9UWYCfbHviUM7rIU0HftUiWsgMmTbGxu8OyiRxN+LNTLsbrglb/h8iJHGH6AALTrx1PwScolVZ1yQ5AJ/K7tZdfmhyQERfG9TsxNFaAcCRUIt7KpftqrA26Z9NwjsG4bg=
+	t=1712060422; cv=none; b=HIro8XI0J/9p43cJPV2PdLILhAyWTx8wAGUcdQSQUpiYpp8SgXXvIfSscHuLzuk7CR3GNqTlGAKDyt70MIM/gQeJHt7HAgFcFwGsqbdIGFbIbHPiukSi1ScXN1hrtNHy0ARMsDqDGzQs8YgbO1BatXOojicCiQjpE4M3URxK1wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712059028; c=relaxed/simple;
-	bh=s38PCSPxEkfXZRJQsR69HpdtXShCxoL0W8qoImKApps=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DRnKTtjo8OHvWSOV/jMNHIWiLRps6lc+xaBBXM51mOQUwScL1dr+QciFBx299lCYR72aHpKAEz0v1lkqP0aiXBIXYUB9DisxOq0UHAyLenScT2chZSTgpH++Miz3TcUQjjV7G7V+smCo3gBfPGc1C5hCZvtx0VEUbdmnWo5ey/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com; spf=pass smtp.mailfrom=fuseenergy.com; dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b=U7sJXJq6; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fuseenergy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fuseenergy.com
+	s=arc-20240116; t=1712060422; c=relaxed/simple;
+	bh=bHRHTbIHANozijBlW2kiQfnixLuJxyMLw/3ybYqQWAs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=luTWFfN8B39Zgl8CV7gXHyIuJU04g7mpwmR391XEItOZ9YXOoZ8ojMs+7gLAP5b7+owxTdZuEAmHNtciGcqtdq53UWcuChIvllncrJOF0WSuOV4x2VNzL0OLnryQY1iNkmEJ6hXZcC7erYc5Bd/lRKgZG6tfIQv7hUS4E8ktKz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PO6me6dv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obGUXmnC; arc=none smtp.client-ip=64.147.123.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fuseenergy-com.20230601.gappssmtp.com header.i=@fuseenergy-com.20230601.gappssmtp.com header.b="U7sJXJq6"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a472f8c6a55so639764966b.0
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 04:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fuseenergy-com.20230601.gappssmtp.com; s=20230601; t=1712059024; x=1712663824; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L31DDcaA0+k0Zj5XFrFwjoW5YAiCbmV4Fuw2a/SAyz4=;
-        b=U7sJXJq6py9yjBoKMEqvmcISjTo1N4W/jcwwAu4AXeMCZD3HrXvwt23OsJBzgEX32v
-         fMoC5vnke/73D6KzJf3C5vxwbFPGC14b2bQsIGQpyfuB3u/3ToUFsZ4xmLRyqifFVck7
-         ePSjQBKzxYWzlzGeMEpKgupYbHSQsProRHUIqrqrm4C/hVWonWz/rmMalRK0RVAvnn1s
-         BMzGQTzjmW8iJ3Yhso8okRqn+WJgdQhCFq0soL4uS5ylbCuwRnURh1ZZHnHbGxlZzc6g
-         XvASIHBkgVHyvzSHqljD1ZIpx+xkghofK9Ht7fYBuxiBBe85MmdX65PtFdxFw//s6SJ3
-         I+Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712059024; x=1712663824;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L31DDcaA0+k0Zj5XFrFwjoW5YAiCbmV4Fuw2a/SAyz4=;
-        b=kQJT4mZQZhZVjBG38nmE+7LoOiByYgmVc9HDQGzKIhKzVs10902etYhIC4arz5lY4N
-         Y1z/3bhM5aS4w79W5u7j67FOga7f55vVTBYve7y2jrPopfeCf/hwdoADpZOv5THbOvLL
-         6H2QsK8faPAOYJXeUkiqJMRjFgusH+roaAixb2VzaH4pbXU0I+Zo2ZJ8vG/UjgRy/hmS
-         3YIgkuz5T6nYloa9FLZM9Ru3vdBN2RkPvcn2CyPAhxG0z+sW7HD4HaQytreXWroKp3v5
-         sBvnSsJAXnwYQc4wCX1HqKHAH0roqawtzi7mYKxjjbFCktXgg0712Z8xFjZhoXF8xB+R
-         PAdg==
-X-Forwarded-Encrypted: i=1; AJvYcCUILBk4r99P1Suxqns5fk2KSd4y9r2KLlo3r0lUw+jU9vTRXI7LyW2qDoxvcKyNMEVqlUcVn1kaQQcJV8f8UWsI/s9G
-X-Gm-Message-State: AOJu0YyTGEjnlbWfzIgnVkC3RUWejzSXV+mlWvMwpCv5bdU5qONnhkqK
-	nbv58grR1HIjxe4lxVt7lf4/f5xQmmVwwlmAFdlrl+8J6etGOkuZiIGMcUbOpuzep2AYBO2WRUf
-	gXifX0R+5z7iDqvow3u0YV03Q+PXQrV8w9A9VSw==
-X-Google-Smtp-Source: AGHT+IGYGWsXkmV6AT+/cFRGgv+tSL6nHlFWnTMAA/bDI+XHCT7gZmDnmladKIP5CD5hZhH0+kqkvSzStWVtOYfLvsw=
-X-Received: by 2002:a17:906:aac4:b0:a4a:859e:97b8 with SMTP id
- kt4-20020a170906aac400b00a4a859e97b8mr6687065ejb.24.1712059024497; Tue, 02
- Apr 2024 04:57:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PO6me6dv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obGUXmnC"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 22DE61C000D0;
+	Tue,  2 Apr 2024 08:20:18 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 02 Apr 2024 08:20:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712060417; x=1712146817; bh=EhVGnLoDfR
+	dSPMuqAINchO2h+1x/5BbqJdB7M8qFIl4=; b=PO6me6dvbKqCXAXhBo54lPclim
+	/AwzuNEaYeTji3DTtQ6DFhOzbqfcMlPDaWa6hcbO8a44QYAE0Nz8ZBFMniJj8Ixy
+	WFRmdU42NTImWMDUSH1zTbzOcFoX7D8csm0gtOrFs7Ye6MCHTNkGejKaz+vn71/v
+	WR959ysMVEDWYLxbmdiQ8M9t8Jl841Fz5pXFjidpX6rFgQ8Sr6sM1yO41KLf+YRX
+	Nigp3FyQ9A9V40GuaL7+M832JkjX66TOdDeWAy4LBwSQfGh4TwfFIpcP8G+++WzQ
+	dkdTHOlRXKl0tl/6wMWrWFvR6s3kJsjyjk2SfGv5eqqQDkBmxnrd2+1N2bcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712060417; x=1712146817; bh=EhVGnLoDfRdSPMuqAINchO2h+1x/
+	5BbqJdB7M8qFIl4=; b=obGUXmnCHZGsY99iO3vazviaTdXv4k5lk2GK22FVa1W9
+	KBZ5uEKB7I5m3EMYcV0FJrg8Cy5km1iM7CoLgz96YVYjRShwZrEyS99NjH+WnZ2A
+	hrVE7nL8vC8mOD4DmRvjpCXq7HP+DG43ci/HBlXxLi7XJ17tHmMXtndEcWlwfFc6
+	tu4v9w+sc6Sfdo1HfTcHyLVrFRFPmz54ozFUg0Uf5sntdxucIe+0U/iD8hvNQ5zI
+	N5xs1j7/KkPmb7yTbOfZ7Ah8aZ0/w+M1gvFJ6hrS7VJDbKqb6f0HAGeyId8odtTP
+	tFeFFqZQ7t3+U0F/QkbYq/5rGzYuXkDrtUNtlBf1Kg==
+X-ME-Sender: <xms:AfgLZt33etYgRMHBAZB9wsGK_ydM6-dYZeOFQErI9dpvhT9pzgFxcQ>
+    <xme:AfgLZkEzvjp9xMf-XPTfTl25FuWf8aAGjrVo8m4wCR2EL1sqbrz9UszkYbuuUhV6w
+    Zam1SaboWu7cyOAoA>
+X-ME-Received: <xmr:AfgLZt6QVHrXiTcn1X7vzY78G4loWHV2TsLcgEgpdi2syk0U9-E5v6zTUreObFKWWvh09IWZWQ7v0Nse_kh2zeMgYfl1Stta65gWpFIdZ2f9IjI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefvddgheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:AfgLZq2OtGXqfw5g6DJDYW6YllTOSXD_FS66Mm-ThZyLFnpEb6j_lw>
+    <xmx:AfgLZgHyz0__Kc2heBDi2MqHpI20g61xMYTYOLmb7wtDXek7X8mdIA>
+    <xmx:AfgLZr-MyUZ7OhaiFhdx1ZOd6xWhIuOSmot1Thq3xnrc_F9atpFVrg>
+    <xmx:AfgLZtkY9gygD8os-nIgPh7mfnPczUpQaPzvHnAW-JjFN7sTxAjhQw>
+    <xmx:AfgLZkArqSy6A9e9B-Kw5bm8VijXur4yRFcnnd8FRhnFvE9A_-9rEogi>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Apr 2024 08:20:16 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7dc681a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Apr 2024 12:20:06 +0000 (UTC)
+Date: Tue, 2 Apr 2024 14:20:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/8] files-backend: extract out `create_symref_lock`
+Message-ID: <Zgv3_K_gCkPyZvRQ@tanuki>
+References: <20240330224623.579457-1-knayak@gitlab.com>
+ <20240330224623.579457-2-knayak@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEYvaskGHYrQgke=gf1sXYhrwbd+SeTpcjGF0fpxK3hQbyPFKg@mail.gmail.com>
- <CAPig+cQWW1sLXyTBvk6D+1h15sZCtQO1opfhtFfiHr_kX0y82g@mail.gmail.com>
- <CAEYvaskXRyxNTLNeRPPyawFrBVRgCbSnJiuF7D7cOGiaDq=V2Q@mail.gmail.com>
- <CAPig+cQdFi5zBkDQWTEWXCTt5h9gVFNJv7obf=tWCkOvsaEHEA@mail.gmail.com>
- <4041487e-d8d8-481c-b490-884e31f533a8@gmail.com> <CAEYvasmb1TjwWpSbfSAogbOiB64sZQiHVoUhxvY+NoLmXnRuHA@mail.gmail.com>
- <740d1f1a-40ce-4714-91bd-1ba448e9d672@gmail.com>
-In-Reply-To: <740d1f1a-40ce-4714-91bd-1ba448e9d672@gmail.com>
-From: Tamir Duberstein <tamird@fuseenergy.com>
-Date: Tue, 2 Apr 2024 12:56:53 +0100
-Message-ID: <CAEYvaskG0BBVr+nsQ+iof=AXu3dcQHx0aRRrKRrf8e_NFANL9A@mail.gmail.com>
-Subject: Re: bug report: spurious "cannot delete branch '%s' used by worktree"
-To: phillip.wood@dunelm.org.uk
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TaJg66gZSbzeNuDw"
+Content-Disposition: inline
+In-Reply-To: <20240330224623.579457-2-knayak@gitlab.com>
+
+
+--TaJg66gZSbzeNuDw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 2, 2024 at 12:29=E2=80=AFPM <phillip.wood123@gmail.com> wrote:
->
-> Hi Tamir
->
-> On 02/04/2024 11:26, Tamir Duberstein wrote:
-> > On Tue, Apr 2, 2024 at 11:10=E2=80=AFAM Phillip Wood <phillip.wood123@g=
-mail.com> wrote:
-> >> On 31/03/2024 07:49, Eric Sunshine wrote:
-> >> Thanks Eric. I'd have thought that "git worktree list" would say
-> >> something about the branch being rebased if there was enough state lyi=
-ng
-> >> around to prevent the branch being deleted, but lets see. What does
-> >>
-> >>       ls $(git rev-parse --git-path rebase-merge) $(git rev-parse
-> >> --git-path rebase-apply)
-> >>
-> >> show when you run it in <my source dir>? Also is <my source dir> the
-> >> only worktree?
-> >
-> > % ls $(git rev-parse --git-path rebase-merge) $(git rev-parse
-> > --git-path rebase-apply)
-> > ls: .git/rebase-apply: No such file or directory
-> > ls: .git/rebase-merge: No such file or directory
->
-> Thanks for trying that - at least we know it isn't a problem with
-> rebase. Lets check if there is a stale bisect (sorry I forgot about that
-> earlier). What do
->
->      cat .git/BISECT_START
->      ls .git | grep -i bisect
->
-> show?
+On Sat, Mar 30, 2024 at 11:46:16PM +0100, Karthik Nayak wrote:
+> From: Karthik Nayak <karthik.188@gmail.com>
+>=20
+> The function `create_symref_locked` creates a symref by creating a
+> '<symref>.lock' file and then committing the symref lock, which creates
+> the final symref.
+>=20
+> Split this into two individual functions `create_and_commit_symref` and
+> `create_symref_locked`. This way we can create the symref lock and
+> commit it at different times. This will be used to provide symref
+> support in `git-update-ref(1)`.
+>=20
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  refs/files-backend.c | 40 +++++++++++++++++++++++++++-------------
+>  1 file changed, 27 insertions(+), 13 deletions(-)
+>=20
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index a098d14ea0..3f0f9521cb 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -1920,26 +1920,39 @@ static void update_symref_reflog(struct files_ref=
+_store *refs,
+>  	}
+>  }
+> =20
+> -static int create_symref_locked(struct files_ref_store *refs,
+> -				struct ref_lock *lock, const char *refname,
+> -				const char *target, const char *logmsg)
+> +static int create_symref_lock(struct files_ref_store *refs,
+> +			      struct ref_lock *lock, const char *refname,
+> +			      const char *target)
+>  {
+> +	if (!fdopen_lock_file(&lock->lk, "w"))
+> +		return error("unable to fdopen %s: %s",
+> +			     get_lock_file_path(&lock->lk), strerror(errno));
+> +
+> +	/* no error check; commit_ref will check ferror */
+> +	fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target);
+> +	return 0;
+> +}
+> +
+> +static int create_and_commit_symref(struct files_ref_store *refs,
+> +				    struct ref_lock *lock, const char *refname,
+> +				    const char *target, const char *logmsg)
+> +{
+> +	int ret;
+> +
+>  	if (prefer_symlink_refs && !create_ref_symlink(lock, target)) {
+>  		update_symref_reflog(refs, lock, refname, target, logmsg);
+>  		return 0;
+>  	}
+> =20
+> -	if (!fdopen_lock_file(&lock->lk, "w"))
+> -		return error("unable to fdopen %s: %s",
+> -			     get_lock_file_path(&lock->lk), strerror(errno));
+> +	ret =3D create_symref_lock(refs, lock, refname, target);
+> +	if (!ret) {
+> +		update_symref_reflog(refs, lock, refname, target, logmsg);
 
-This was the culprit! There was indeed a ` .git/BISECT_START`
-containing "cleanup". After deleting this file I am able to remove the
-branch.
+I feel like the resulting code here is a bit hard to read because the
+successful path is now nested into the condition. This does not really
+conform to our typical coding style. Exiting early in case the function
+returns an error would be easier to read.
 
-> > Yes, it's the only worktree.
-> In that case can you check that
->
->      ls .git/worktrees
->
-> fails because the directory is missing or shows an empty directory please=
-.
+> -	update_symref_reflog(refs, lock, refname, target, logmsg);
+> +		if (commit_ref(lock) < 0)
+> +			return error("unable to write symref for %s: %s", refname,
+> +				     strerror(errno));
+> +	}
+> =20
+> -	/* no error check; commit_ref will check ferror */
+> -	fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target);
+> -	if (commit_ref(lock) < 0)
+> -		return error("unable to write symref for %s: %s", refname,
+> -			     strerror(errno));
+>  	return 0;
 
-% cat .git/worktrees
+Also, is it correct to `return 0` here in case `create_symref_lock()`
+returns an error? If so it certainly requires an in-code comment to
+explain what is going on. If this is a bug I feel like we have
+identified a test gap that we might want to plug.
 
-cat: .git/worktrees: No such file or directory
+Patrick
 
-> Thanks
->
-> Phillip
+>  }
+> =20
+> @@ -1960,7 +1973,8 @@ static int files_create_symref(struct ref_store *re=
+f_store,
+>  		return -1;
+>  	}
+> =20
+> -	ret =3D create_symref_locked(refs, lock, refname, target, logmsg);
+> +	ret =3D create_and_commit_symref(refs, lock, refname, target, logmsg);
+> +
+>  	unlock_ref(lock);
+>  	return ret;
+>  }
+> --=20
+> 2.43.GIT
+>=20
 
-I guess the only action item would be to improve the error message.
+--TaJg66gZSbzeNuDw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYL9/sACgkQVbJhu7ck
+PpRTXA//W8c/Agf1xcrJAbTnveDaHKckCuOV1uzp8RwcJLSTEY8MCvS49h7MWVFr
+NnF2wcppUr8Xkpq+3EDFd3219Z9QVqLu80dzXow5MQ05Qz4JDLCoqC4GUBoabjYe
+TKYl4g/dUx0jjaaI5/Eml+x/dS/2EVCaB9sX/ZmxYkjdamz++m3h2VhWyP1eQWyB
+8zQjcyZ5BYvAR3IpvstRWBcokTfBDAnb6q8IdS+/ZXmZtoyvVSepgwmfOEsAM7G4
+iylrIiGcxMgHBdE7m3WATA/PxVD+NxttTSqaVucGOoXbnh+KLd1yxmdZg0r7AuO8
+ZclABHBX8+AZ0lJSSMSPDCyyO0qdPr4ghf/J1QTx0IACGK6HJpTzL9kl142cMGzJ
+KVNrHCbBO2zGbUxp/KycJYLJsuYYQc+wgRWRSk95pcRXrCD9STCoaWlCrCBba66i
+4fJE//6W49c1q3MJ8m9AXytirsGkzIs6lMMiiqadjiLg3mj3QX12sUkM81ukvkv+
+lraZO24nzPGrjzNjGh9X6QHtVlp+Ql0E3pYfy77UrR1aU5EJEoSY5wWjPbBZ7CoY
+n/O7ZOzA22JhzDmWvgSxhukJSmBdMYeMWPp2rtDb6hSqFl88hLNB7gWjHBeR8f0N
+7zNby0EeAO7NzRnuhgLE49OK3ohyBmYgSUfSj/FmcXT0p4Wd39c=
+=UYfX
+-----END PGP SIGNATURE-----
+
+--TaJg66gZSbzeNuDw--
