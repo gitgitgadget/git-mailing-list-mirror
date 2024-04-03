@@ -1,146 +1,120 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED93F136674
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 10:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BB513A417
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 11:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712141243; cv=none; b=NKfjlUaKcphAHS4jTOzMpIdSmV/fzY3CU4c+AlcuIZWMQ968hsijn90r5sjwq2nfmAEBU+5rLbRBwYD5p+nuQxPIp3koX7WH37/sfC6MC73rGTVg6tCdDO6tJoNgBlcYUMypLUGXqvgE84+52YAbkXA1lJ4hBtvcFx3lJOoHAM4=
+	t=1712142737; cv=none; b=ZyZaoOxafpunHU3FMClhnUYOOcPlblLDIzDADCv7M5vDBRCdR2CIcSlM7VbGirD3aU0ae6VzeSzDoX/oWS2z0KyVqexQsJ2Aiu+aCpLsRp/pUkln3CtpBGgij3aVoIYktsXZqSF/Hwnod6X00a20vACMSCAUu/oFVoFvKpGO2QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712141243; c=relaxed/simple;
-	bh=G0IK5j4V7PSqWIvYRAX2UaJmCK7rbVbkM0HP3/VETWA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hi0Q4KYGjBzRTYyEgRflqgpr2Kmi/NjtslaDZFEXjxHZPDBMI27EGGUds+q0d/fshi/hD5840LRnAWFTvvRIL3fKnDyaO4r2UCutpRImmIrUxx6L5V6RfQ4K2xNk2dOE955S1/jAJBJQNmOCGF4Uw/iSvFUxPXlakL4bkQgTWrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Er7wkkQY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gqndwr0J; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712142737; c=relaxed/simple;
+	bh=nLW9lcOn7fLMmWe8REy5U7NV0ZSJCYA4jCnAje2yU3w=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nQ4/3sV1F495ZWUp5ZXvvSpxCwQ7ERRFu9fVkUZfqxQ9MLUr5N2Yk/gSrDdDwETgEAGB0igtCoN7tkKVLCD6ThRovkUYz61gYCWy1tkw9DKioP6kqEdrs/84N7YUvKk9TbbcHPaTqQtAspn6uKYEb1ebh8D5nOzBsPTS/HweQbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M1q5C9c4; arc=none smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Er7wkkQY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gqndwr0J"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 01DF81140142;
-	Wed,  3 Apr 2024 06:47:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 03 Apr 2024 06:47:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712141239; x=1712227639; bh=VHqD9C2/jk
-	/eg1CIfdfTwTJQx7CqqahFD5wu7TT/d8k=; b=Er7wkkQYorYVCm4MFMAYyIOr/O
-	N2Tfvf6+ibNjT+EYf5LWaCdGgzlUGnJ8YuhlXwlYLvGVZo93C5VMvcDygy25A7eN
-	OuOeqcPSuGZ23L4YzCBB5N4Ue7qbIHihisL3Ujxv+AHVqiF8K1l9HoYSkNRLt+kv
-	CSsaccT8gglaMtTPWBjyIS0nZ1wtCuxejREhN/O+qZtdU2OpFqXHNtEeu8ghkY1a
-	zcAXRjfgovywqA5KMy6Fm5t0ZFvgolkhLnuanlHLw5f2aGHw5rESnTY5+sHF7sJo
-	WbZC/eUvWYwWkQQ3D0J5HSg+cC758KYXoDakPBdd1jeuHx7RCW8XwNNhoFdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712141239; x=1712227639; bh=VHqD9C2/jk/eg1CIfdfTwTJQx7Cq
-	qahFD5wu7TT/d8k=; b=gqndwr0Ja8mBY9mL5DZ082is26SzqzMiLuPbtUEnzEtr
-	eI5NXkEJAP3VcIubCRw9lmS8lZW4yfOOFII/VT8Cz8ULGGe444dtM7dWql+Hzaum
-	drJgtTJ7uRI38J2wIxRSveK+nC34Z4ur4qJZTMeuiSoWFUoCmuCZ0TJ+S9UIdMdy
-	kNulKGPQzqzbtTUcJtgHOllUdCuadZLG2o2wBU9HUj4ur3rdT08bJc9oQbIf2bcq
-	yLJYh6C1uBlBe2P0lIrb88eoWvrRbuGT27stXHjDA7NpofkjzdvJCoebNtef5yW6
-	yJkgXYrjxJLHrZWAgq4OybsyXqkP0z00Wp8cy4lhPg==
-X-ME-Sender: <xms:tzMNZoXjP1I5W3sgTYPWnhyE_AD4XMslGHLDxCOBkQ5nUy55BHXpLw>
-    <xme:tzMNZsl5L8gQ6nm5VoDlsPYqDRIOlbQ_WzpWq6zmrqO9-9jjT2QKGVa-_ZmOyztCh
-    Mz40Ac4gzaawv5UdQ>
-X-ME-Received: <xmr:tzMNZsbITW5svl0Fe4cpDlJPZbKQxd5uIMewj3kiBcwDNcM10tPX600nfx6i60VA_wuJlgMACBi4mgq8nmEplid9KytEcpftyaXAwQm5ttaA4Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefhedgtddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:tzMNZnXM6-ggDk95ixlo9nZ42cadFYVjbJrUw2CNz67-K1q6zRce6w>
-    <xmx:tzMNZinwNjShxn5uFh-bB9D3eueLKvdOhMhl_EZJjpVlbQXrjXe_tA>
-    <xmx:tzMNZsez2wu-C8vur_zk2_tgvUU3Hj62hzIhYmg9E1ih_HUqdWhCAw>
-    <xmx:tzMNZkHnITCF5RT_7R-pJMkE_hbLjCf-H49bz2jsiepSoi9taAiEGg>
-    <xmx:tzMNZjC9VmPOlduYoZ0tZtoNw6fscV8qHcxcPo3M5NA5fDDm3HxFDnEO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Apr 2024 06:47:18 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0ecc6b2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Apr 2024 10:47:07 +0000 (UTC)
-Date: Wed, 3 Apr 2024 12:47:15 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Han-Wen Nienhuys <hanwenn@gmail.com>
-Cc: git <git@vger.kernel.org>, Josh Steadmon <steadmon@google.com>
-Subject: Re: reftable & jgit compatibility
-Message-ID: <Zg0zs2_QLpXv2PwT@tanuki>
-References: <CAOw_e7Z_10b73n91ihsaao_S-XPkNqvY7gTcHvqUODKD-SwPSA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M1q5C9c4"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-22a353217c3so3706606fac.1
+        for <git@vger.kernel.org>; Wed, 03 Apr 2024 04:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712142735; x=1712747535; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=53zsoCeZ0ikdQpetuUO2minf7lPg4iweZf1Wep6UmkA=;
+        b=M1q5C9c4w+UzwFdQz2/Z9RWdNjmDWW+gO2pOqRlIcQXaoPvPOeOsOK4+m3/RaudHpB
+         J7cvB35eCkjncyQPvtrx4NP0QW+0QDtonZQ+nsmtPbMOYKIeAPsf5NZjv+gJuOrkRszm
+         zdmZilpcJeBcTxu+BNsJMXbVes8Y90KEShHaC7CYXz4IhJfitrmHoV2oLihcQ8C+paeb
+         XIvHgig109X1vsxqpK7f2MydgS+gh3JKdU+JWlKLSm1jnVPUR7DGC2Yq5/ZTrf3BP0G9
+         lccA/Am9bt7d6AiCLiE5hDW/QOCJkrqR1vu6ilkADBUo7lR6KDQ41gi/PRp19dRCAKkx
+         9KIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712142735; x=1712747535;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=53zsoCeZ0ikdQpetuUO2minf7lPg4iweZf1Wep6UmkA=;
+        b=noFDtN3ZpSaOAgoJEfnsaiO0mNtP9C4EmQw1fTsSCyFc0NKQUOmgZ1RcnE27/hgnJJ
+         HCWXwD3T+7VnE9u7Oku1qDIqr18+sek71joMzrjak/6In6B3S7iH4zLMJlKwbiGw0Zr1
+         dei4xLmICBE9/7Va0rW8k5QgShlL6qWIvn1meSkJCH9QrBeRuPpcMzA20FBysX3V3HpW
+         fRoUO8EHCV2i2S2w91Fg8HlRZceJtqtHhR2wOu/EQi0vCjgYXP8S0o+UxlEaPzz8AS1s
+         ctGoSJAWYeCxo4IGiWeYUXwJWPhiOCa2Xp8rzmjchbUi2Ul6xilAL4+u6SORYyGI8IGx
+         OgGg==
+X-Forwarded-Encrypted: i=1; AJvYcCWkMSrgxWI+7N0aqs8LvRMIoCmrWYlbK2X76g8apalH6cVBYIYqyZV3WBdPNfIBxZs8H2DGzqKW6WPs/JckGr7Cx5qW
+X-Gm-Message-State: AOJu0YxG1aNx4hsh1GcxCbIbOZuZpe1cyugSeYXvDw740T3yEK3e4W9F
+	jws/INTMsVO5ln5QofMLKxRDXH9TBMt8/zzbNXgEbh6mWVHvmTQphhnyEu56zOxOcb6G2Vv9lxZ
+	IJCSEy5xQIZ6J8e2BvD9bv0ZXKwg=
+X-Google-Smtp-Source: AGHT+IHdxPekRGo0Em5EeXs0toqPL3gtT8kE+Pb3+vezkCyzbKvgoDif+TXBo019pp5XqigOyPLG6/1MHeBWeaYU4ls=
+X-Received: by 2002:a05:6871:80c9:b0:22a:2876:833f with SMTP id
+ sm9-20020a05687180c900b0022a2876833fmr16098916oab.53.1712142735411; Wed, 03
+ Apr 2024 04:12:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Apr 2024 04:12:14 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <pull.1683.v4.git.1712103636.gitgitgadget@gmail.com>
+References: <pull.1683.v3.git.1711685809.gitgitgadget@gmail.com> <pull.1683.v4.git.1712103636.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0IxymOLnhm+j069l"
-Content-Disposition: inline
-In-Reply-To: <CAOw_e7Z_10b73n91ihsaao_S-XPkNqvY7gTcHvqUODKD-SwPSA@mail.gmail.com>
+Date: Wed, 3 Apr 2024 04:12:14 -0700
+Message-ID: <CAOLa=ZR0odWdoVBDTN+0j5d4f=s1z5zGcTNK+2tBgDX7RjXX2Q@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] reftable/stack: use geometric table compaction
+To: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000008ca3af06152f4bbe"
 
+--0000000000008ca3af06152f4bbe
+Content-Type: text/plain; charset="UTF-8"
 
---0IxymOLnhm+j069l
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-On Wed, Apr 03, 2024 at 12:36:04PM +0200, Han-Wen Nienhuys wrote:
-> Thanks again for taking up this work.
->=20
-> As I'm browsing over your patches (and realizing how much of the
-> arcana of the format I've forgotten), I hope that I did not make any
-> errors in implementing the spec (and/or that Shawn didn't deviate his
-> implementation from the spec). It would be extremely unfortunate if an
-> incompatibility between CGit and JGit were discovered after it is
-> released.
->=20
-> So far I have always been able to read JGit reftables using the C / Go
-> code, but it would be good to systematically test this, ie. generate a
->  bunch of tables using JGit and check that passing them through the C
-> code (read & write) leaves them unchanged. Or perhaps check in some
-> tables as golden reference data.
->=20
-> Josh can probably connect you to the right folks to help with this on
-> the JGit side.
+"Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> Hello again,
+>
+> This is the fourth version my patch series that refactors the reftable
+> compaction strategy to instead follow a geometric sequence. Changes compared
+> to v3:
+>
+>  * Changed env name from GIT_TEST_REFTABLE_NO_AUTOCOMPACTION to
+>    GIT_TEST_REFTABLE_AUTOCOMPACTION and set the default to false. This
+>    should hopefully be a bit more intuitive since it avoids the double
+>    negative.
+>  * Updated the corresponding env var test in t0610-reftable-basics.sh to
+>    assert on the number of tables added and be overall less fragile.
+>  * Folded lines that were too long.
+>  * Updated some comments in stack.c to more accurately explain that table
+>    segment end is exclusive.
+>  * Dropped reftable/stack: make segment end inclusive commit to keep segment
+>    end exclusive and better follow expectations.
+>
+> Thanks for taking a look!
+>
+> -Justin
+>
 
-I very much agree, this thought has crossed my mind multiple times while
-working on the whole reftable saga. Ideally, we would have integration
-tests that write reftables with one of the implementations and then read
-them with the respective other implementation. I wouldn't really know
-where to put those though. CGit is very unlikely to pull in JGit as a
-test dependency. Does JGit have any tests that already use CGit?
+Just a note that this doesn't merge nicely with nice because of
+conflicts with a2f711ade0c4816a59155d72559cbc4759cd4699.
 
-Adding a bunch of reftables pre-generated by JGit might be an okayish
-tradeoff, I guess. I also don't really expect the format to evolve
-significantly, so these should be reasonably static over the long term.
-
-Patrick
-
---0IxymOLnhm+j069l
+--0000000000008ca3af06152f4bbe
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fb8decf6e12a26e_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYNM7IACgkQVbJhu7ck
-PpSLpQ/+L0WLnnEIQ6nY/dK4abXbpTKhrM8ZNuUlP80GAJRrp6hzR6MxpItdTZqQ
-KniHcEAS5T/yvqYiOw8IR2VX8EmzLRMFAjZyc2tQSHzw/tz92h/H2J9/vV+UUp5T
-ns1nAtDCbz9aq+vJgkAMM8RZLFtVx6z+OMjEQQ44YtpvE3Aap4JoSdncq82EtKLM
-pNnn+DoyM9GWPAW+NlTTfyLr/rkIO6x+Q1PULrOQprM8sdJG0MEqj/FuA/yJfrtY
-W/TkSDRgLzzPAftlgKDEt1fvlFx0BsO7krqUsSx1iBwmOgo3Z968KhVMMoyCkdm4
-K3MRt/tjoDqE0jzDYPii5Vd+aeXGLwXBeFgZvGbT7mU26a/mbnhxH/RSLwovMbk5
-pOi+8NgRGIFPJTKMuGLEomjMcau8fp3oMf7rL0tXMJ4uiuJYiAjJpDlFHsEOQC44
-laKETxTVjU4uFpsQtZYer4jVOtEyj+OLX7ukFdU+xqLS3VIKcsCrHQcj8Nxbv3E1
-A35Y0+67a8sKprZ4kiP/OqZPAKFiSQR5D6HHeuZGyTLguH1lAWnPcxP1Pctb/uYi
-2U3Mjr5O7lO/A/Faxi5YORHiZIRJSOVInw+Xp2wJPIkZuJaYzpnvQXsmgG+a4/eg
-ydZUOGTNb79nBv2/KlwDggliEoYf+LjDMhPyN7iDcVGLhMbSuNQ=
-=QWOb
------END PGP SIGNATURE-----
-
---0IxymOLnhm+j069l--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZTk9Zd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meTg0Qy85Y25UNi9mYkxkK2xmdDladGFjWCs0SCtyYgo0Um1WaEFwamVH
+WktDMlJ4WmN3V0lFSTlsajl3Z3JNaFJzems5UVNJTHNHNG5PMGtKZFlJQTNKc2tud1FOVWJUCklR
+Q3A4TTBuNnJINFZOVGRZWVRUUEp4Rmp6c2srcERyeElKSDZUU2w1a3JxU296ai9LNkFqRXVreDBp
+YlNwYVQKbklwcHgveHVPQy9CQU9TUTJKTlNvN1NoZ0UwcWduSmIwelNzd3hLMGprQ1NQQzAwbWh5
+bDFvbEo4ZHJ6c25wUApLT01ETmZsS1FYa29LYzBIOUZ6ZGM3cE1GdHh5S3hoblh3UWVnemtIZk1R
+Sm4za00wa2FvRS9vTWxmZkNFemF4ClpDYXhlZDA5Q0Z6eWgvd0dXQ3dNNkxHbzZGa3lyVWsySll0
+ZUZiOGk2YndrZmY4ekNPUnpSWHRaTjdwNGkrSGgKejRzQ0kyVitJQlVER1RzVjZZaTVLR0V3N1R4
+T0JWeldyWFlZRTkvdmRQOTRLdWVVdXNJMkdoUUJSejkzRWRiNApWeGlvQ3IwbUhUQ2J6c1cxS1NO
+eFNIVEltTlliMUMvV0RiTUd0WmJkbFpOV2hSN2dVT1RkYmNIQUJuMlk2NHRpClVsT3FsSjFkY0ZI
+SnQ3TkdYbmpJOFg3em5YeXRQQ2hlUlFTbXUzbz0KPUtiUGIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008ca3af06152f4bbe--
