@@ -1,165 +1,148 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDA47172B
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 14:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851F2B66E
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 14:52:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712154406; cv=none; b=RaJ5ZHaDQ9uoVBwLNA/7h2l0IVtSsYWqXPJsQfVtNdB1IgOsMte8mEihVMHChnTXBuaja3xkvZTY1Q0roXN1u9CE2EbOfJ+El1g67vM2dcLcxs/KFigmJAiF53vQ0AC61GY0JRtQTaQnYpfoB4AMNeJ7Avy1/IeL6Rauo5ozpKQ=
+	t=1712155928; cv=none; b=E29uLK7Ekasf+JQS1hQIPTY1PjjMl9k6GPZtqG/w5smiWPdQyzPhXof20Hi/f30GSUvTXa9RzhOcTvsdGeDStlORgrXL337LPfg7XRtOJ/yYJd+oL1UmWT7RodwogUmJ3vTHF59mXihkp2Jpy7h7WpS8W6rwYEG20uyjIHS1tvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712154406; c=relaxed/simple;
-	bh=Fp3fLHNdY/cXkiuwtS1+QgNv7I/lrl708yA+P+r7pk0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gnvROEo6UPFkmzo/BtGkrlXuG0+YPWyhiAaN+hai7iqAECakRV+vtNtICUUU5IwNb2+A7l4jEZ8uzd66rTaONCaKBN+7I8JvkEgR/T5+ZXFIpJe2aeQ9NGg8EXa7a9XfnH8WgdXaIXH3h3b7qAiDPaZhZlGKN8P6rFTliqZ5f4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ktQbroAr; arc=none smtp.client-ip=209.85.160.47
+	s=arc-20240116; t=1712155928; c=relaxed/simple;
+	bh=bjSIZI48k/m04bjATIKtJOh7W1Bzas7bRVsu8QAhc2U=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GPH/qrKh+I5IYN5e7UfNm2HhaI5Nr9RdcIlz34BNeG0hQSo0ESap6fqpFdenI9gnl6RKfmG4Lz6YfxHfvouF32mecda3UDDLwiRxxNtIR6KL4VyxUi6I6WUdqopFCGUpA+SlwVCugt4+c6JXnh+zE6vC5n55EeJT3JEbWflVZQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jcnIJnY9; arc=none smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ktQbroAr"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-222a9eae9a7so3705641fac.3
-        for <git@vger.kernel.org>; Wed, 03 Apr 2024 07:26:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jcnIJnY9"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-22e7444c5a0so929321fac.2
+        for <git@vger.kernel.org>; Wed, 03 Apr 2024 07:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712154404; x=1712759204; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ces6jawGhNfQxP+/lxNE5bMMOCIJee0OGkyEuzPutIQ=;
-        b=ktQbroArK3lodpo/X1Kku3jNAAhTHmfqr2XW8HSCZ1NeQzSD5vn0QNZvzd//ZdRKqV
-         vmQHLvxkkAfdi2lDzYxAknQn0t7YIlPVucG/iA/6pPPjcjPBBTxFpDj0n9GujznX1Iuk
-         Vq89uqwOrTTks/LMFlXcAJXxs2ezllvQmL4yAqVODk4sj4qmPoLKoRU2nqvkAclN6Ogc
-         MZ697mNI5FHhbia3sC5g3VdwqH2VbXld8U+jG/sy0Ho5dWh1hWLiDaEegMBYeZrTMYSD
-         /4xs8de5yxW3zs24EH3GyodYDmZQeeCX1PCkxxTmdsg+jjlfUkVcV8h/tuYLL5gQOyoJ
-         coPA==
+        d=gmail.com; s=20230601; t=1712155925; x=1712760725; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bF+V3MQ1TC2qrfyUitQ/w1SJAoUK4OCSPVjZBK9ZY/0=;
+        b=jcnIJnY9GfPoPNjfiKhbZnM3Auq3bESNuLHgiHI9kgGa1BN/X562Uo0YgiLW2QvRV6
+         Fi3PUeAhjarSwXc3NhhoSll+t/pGOMQB2wGgFyl7aB1lFUfPppDwYVyjHyis0jhVvuAK
+         r0YJCG8kUflSbzQvRseMI+eozPAWUMMRi7r7uG+YpOm7oL5jbwQNksGT5Li4vuFTk2EI
+         vv6P9kTN4k//bZ2y50QJz79nGeNtU3swS0Z/H7U6D86jcgJ9a8YGO6dnM/HDNcNlV2Zb
+         VtJew91iUHf0BJhi2ALI8SLlN4c7mfp2OaTqvMAE6bjJlKB/LDjXCpfOQ99UT0ShKT+9
+         cilw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712154404; x=1712759204;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ces6jawGhNfQxP+/lxNE5bMMOCIJee0OGkyEuzPutIQ=;
-        b=b1/P1R0CmhSl7OBP9BuIaep/O+ou8IFi9jcTK/P+qiRCLISSr27ASu05M5BNB1rCxv
-         PSDdTV8JRbUMihi0aKX4xzWSgL24AwyYpWEOPqPKxcaBRlCMdjZm6NKu+xZYkPYlqvYO
-         q4qmSXv842pp6T+jSc4J6foVXyDu05mI7HK/nHi8QfHRZx8jPIPKWsHzBQPWlKtTNu+W
-         088Rn+H2qOFeTN6FRBO29xivSyXHKX0jr8wThLc8s6Rp7FgO5hIxmnsS3x+JRU6PLhu7
-         uEjVwbBFM8irMxKjAtfmXnA/c4Z4kZ9wUWGCx38bWT/E3sF6TFSnvMUzOS8cvP/SMb+l
-         hOOA==
-X-Gm-Message-State: AOJu0Yx7RY95RdHNyVM4+vdrjLG/nZIltQcoG+XiJTEwDYvf9m+55Psa
-	QKXuk/NqPugVFooUviWEeRS3L8Csm/3PI5anCHQ6Cy3oGZOJvFKpNXi/UVU/MfLYb4NnM/3OZ50
-	kOobCqy2edXHRgpzipOfCa2VTncj441Ba1i8=
-X-Google-Smtp-Source: AGHT+IGvqkxsXDfqMS2thyNE4N0r9OekphBcqjhRXuMfVYqmP0AwsM2cJF2TasGc/U07SJzFqh3KPOj6bdvUEMnE7Fk=
-X-Received: by 2002:a05:6871:a117:b0:229:f445:d6b3 with SMTP id
- vs23-20020a056871a11700b00229f445d6b3mr19087320oab.5.1712154404042; Wed, 03
- Apr 2024 07:26:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712155925; x=1712760725;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bF+V3MQ1TC2qrfyUitQ/w1SJAoUK4OCSPVjZBK9ZY/0=;
+        b=HsYw/UU71y8b+YPw4Ql16tc9xldP+L8k7eJ5JV978BCLKPjmbMXgbQkK5tNkrNTu4S
+         xClcwyJWq+ZlF/FyZHx4rt31nqYjjLDGYEmc2F/8t9wPER0IXANILRFDX+N+OdKJKjL9
+         r8K7ZWcAU+vq1KkCtOx0KYLDX2pZqjlga+RieJefW2Ov2aGnFcHBMifUShWUX/aXfiKY
+         RbUIomYUVFyBEWnZ8v0PWRuZUb3YbYqYAMVDEfImuqv4ldSBZXm/SqnHJSn3KdUsUDaH
+         Iw4Aa3LhaHmKvZqR+HxJHByo50g8dFCVGlkaNYeEhGcHz6z0u0tMyXz3QMQdCx+0P30m
+         5fEg==
+X-Gm-Message-State: AOJu0Yzw5VpQVYP93Jt4YmQ4sNSbv6e2N1H7DcLm6P19NE1z+D94/K0h
+	386ctnb6dNTm9ScRiL2HUOrPbPYx0WskR3lO87acZgkc3mN3If+6sVQNB/dTgQQslgxCEyKUmq0
+	eCJKfhXAPAuwVx1wUPEPbvScQNpLxARn9
+X-Google-Smtp-Source: AGHT+IHVb8giSBhLGVNv4+/UB8yq88zyhgpI2ppyzHoRn82CI7PUwjuKsXZDXuh4CfnaRtMjittTdB0dGS6Do8//JLI=
+X-Received: by 2002:a05:6870:702a:b0:229:e281:49c8 with SMTP id
+ u42-20020a056870702a00b00229e28149c8mr3314546oae.15.1712155925580; Wed, 03
+ Apr 2024 07:52:05 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Apr 2024 07:52:04 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Zgv3_K_gCkPyZvRQ@tanuki>
+References: <20240330224623.579457-1-knayak@gitlab.com> <20240330224623.579457-2-knayak@gitlab.com>
+ <Zgv3_K_gCkPyZvRQ@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
- <0f65aae3-15a1-456d-8285-7923a880deea@app.fastmail.com>
-In-Reply-To: <0f65aae3-15a1-456d-8285-7923a880deea@app.fastmail.com>
-From: Bill Wallace <wayfarer3130@gmail.com>
-Date: Wed, 3 Apr 2024 10:26:34 -0400
-Message-ID: <CA+2m0i_zGcFBd2+L_Q_foMQ=eJbXqUZGqDeOwfefg=Y4GMBRWw@mail.gmail.com>
-Subject: Re: Worktree shares a common remote with main checkout
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Date: Wed, 3 Apr 2024 07:52:04 -0700
+Message-ID: <CAOLa=ZS5czBhvE88sK-mQTeYBsRTn9MWnFQeAD5Nxu-uDpe3qQ@mail.gmail.com>
+Subject: Re: [PATCH 1/8] files-backend: extract out `create_symref_lock`
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000bea8630615325d0b"
+
+--000000000000bea8630615325d0b
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-The problem is that one wants different default remotes for different
-worktrees - for example, suppose I'm creating a worktree for two
-different projects, plus the base repository is on the "origin"
-default remote.  I then have:
-base_repository - a directory with the base/default origin (call it
-'origin' for now as the remote name)
-project1 - currently checked out with 'feat/1'
-project2 - current checkout out with 'feat/2'
-
-Now, project1 is being developed against a remote repository
-'project1-origin' and project2 is being developed against a remote
-repository 'project2-origin'
-However, both are getting merges from origin/main on their own
-projectX-origin/main branches
-
-Now, when I'm the directory for project1 and I do any of:
-   git fetch
-   git checkout X
-   git push
-
-I want the correct default to be chosen for the remote - for the
-base_repository that should be 'origin', while for project1 it should
-be 'project1-origin' etc.
-I KNOW I can specify those manually, and git push will give a
-suggestion, but I WANT all of them to default to the correct remote
-associated with that worktree so that I don't accidentally pick the
-wrong one or forget to update the correct repository.  This is to fix
-dumb fingers that sometimes do the wrong thing without thinking, and
-to try to reduce the number of things that don't get done
-accidentally.
-
-What I'm doing now is to create a new non-worktree version against the
-projects directories, but that then doesn't share any data.
-
-git remote add ... has nothing to do with this, but I want something like:
-
-git worktree add project1 --default-remote project1-origin
-
-The idea is to make the expectations of what happens to be consistent
-with cloning a new directory, or at least as close as possible to
-that.
-
-Bill.
-
-On Fri, 22 Mar 2024 at 13:29, Kristoffer Haugsbakk <code@khaugsbakk.name> w=
-rote:
+Patrick Steinhardt <ps@pks.im> writes:
+>> +static int create_and_commit_symref(struct files_ref_store *refs,
+>> +				    struct ref_lock *lock, const char *refname,
+>> +				    const char *target, const char *logmsg)
+>> +{
+>> +	int ret;
+>> +
+>>  	if (prefer_symlink_refs && !create_ref_symlink(lock, target)) {
+>>  		update_symref_reflog(refs, lock, refname, target, logmsg);
+>>  		return 0;
+>>  	}
+>>
+>> -	if (!fdopen_lock_file(&lock->lk, "w"))
+>> -		return error("unable to fdopen %s: %s",
+>> -			     get_lock_file_path(&lock->lk), strerror(errno));
+>> +	ret = create_symref_lock(refs, lock, refname, target);
+>> +	if (!ret) {
+>> +		update_symref_reflog(refs, lock, refname, target, logmsg);
 >
-> On Fri, Mar 22, 2024, at 15:50, Bill Wallace wrote:
-> > This issue is just to fix an easy to make mistake when working with
-> > multiple remote origins and worktrees, where it is too easy to push to
-> > the wrong remote origin because one can't set the default origin on a
-> > per-worktree basis.
-> >
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> > Used
-> > * git worktree to create a worktree
-> > * git remote add to add a custom repository
-> > * git commit/push to try to push changes
-> >
-> > What did you expect to happen? (Expected behavior)
-> > Expected to have the git push recommend a remote origin that matched
-> > the worktree, but it defaults to 'origin' all
-> > the time, which means I need to checkout a clean clone from the
-> > specific origin I'm making changes for so that I don't accidentally
-> > push to the default origin.
-> >
-> > What happened instead? (Actual behavior)
-> > Suggests 'origin' as the default origin - which is CORRECT for the
-> > main git branch, but I want to use worktrees to allow working against
-> > several remote origins, with the default being determined by which
-> > worktree I'm in.
-> >
-> > What's different between what you expected and what actually happened?
-> > Suggested 'origin' for the --set-default rather than allowing me to
-> > define the origin I want, for example 'wayfarer' as teh name of my own
-> > remote that I have cloned on github.  The default origin is still
-> > supposed to be 'origin' for pulls/naming, but when I push, it needs to
-> > recommend the matching origin.
-> >
-> > Anything else you want to add:
-> > This is a bit of feature request, but the reason I'm listing it as a
-> > bug is it makes it very easy to make a mistake by pushing to the wrong
-> > origin for a new branch.
+> I feel like the resulting code here is a bit hard to read because the
+> successful path is now nested into the condition. This does not really
+> conform to our typical coding style. Exiting early in case the function
+> returns an error would be easier to read.
+
+Agreed, will modify this to exit early.
+
+>> -	update_symref_reflog(refs, lock, refname, target, logmsg);
+>> +		if (commit_ref(lock) < 0)
+>> +			return error("unable to write symref for %s: %s", refname,
+>> +				     strerror(errno));
+>> +	}
+>>
+>> -	/* no error check; commit_ref will check ferror */
+>> -	fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target);
+>> -	if (commit_ref(lock) < 0)
+>> -		return error("unable to write symref for %s: %s", refname,
+>> -			     strerror(errno));
+>>  	return 0;
 >
-> I don=E2=80=99t understand the expectation. git-worktree(1) just gives yo=
-u a new
-> worktree to work on a branch, do a bisect, maybe a rebase and so on. I
-> expect `git remote add <remote>` to have nothing to do with the current
-> worktree that I am in. A remote ref is for the repository, not
-> per-worktree.
+> Also, is it correct to `return 0` here in case `create_symref_lock()`
+> returns an error? If so it certainly requires an in-code comment to
+> explain what is going on. If this is a bug I feel like we have
+> identified a test gap that we might want to plug.
 >
-> If you are creating a local branch based on this so-called
-> worktree-specific remote and this branch exists on this remote (and
-> *only* on that one) then you can use `git worktree --add --guess-remote`
-> to automatically track the remote branch.
+
+It's wrong, we should definitely be catching and returning that error.
+Regarding fixing the test gap, it is kinda hard to do so, since this
+is capturing a filesystem error. It would be easier to do so in the
+upcoming commits where I could possibly do:
+
+1. Start transaction
+2. Add symref creation to transaction
+3. Before preparing the transaction, manually create the lock file.
+4. This should hit this error.
+
+I'll add something in corresponding commit.
+
+--000000000000bea8630615325d0b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ca1a29a49295351d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZTmJSSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMVcrQy85SmZyYmFyalBiR2ZNdEdRNWMyeUd2MVRNbwpUSjFFOUc0OFFT
+ci9GN3J4czVXTlQ5S3BnMWs5K3J3UG9NNHRtMTVkVmptdkpsMnNyWkVYMU1hRnlMQzVNWHdOCmxZ
+YXZUcEN1eXE5dFgvUVB5NnUxcmpxcE9MTytpdUtQUzVpVXlSTTlzN1VOREVkNHVuME5HeEtBWkNu
+aEtiZ00KejZiN09iaUlWaDFuWUFGRDNmL21aNzJYdG4wbXJoSjJGeHBwa09ubndoWFRXUS9xNHRS
+ckMyNkdPcXdsWXBxSgpiZmNiQWlnZGZpVzlDdVM2VTI0dTU0RUs2NElDS1pXS2RKOWxONlg4ayto
+eHNnZWZEbmZhV0p2OWltUjBXVUZzCmJENjYxUDVwaUpqcGpTYjQrYzZwWFg4NjkrUGxzZnBYbW10
+N1dDTllhM3B1cUhiSU5WNGQ4cDdjempPc2hoRWMKTmU0T3Q1Ullvc3BQSXh0TDdVN1FINGhhdWE2
+ZSs5VEtJUEZsd2dYSzFtZjNXczRtSVRBYlF4VWhKMUM1eHFMRwo5RGV4bmh0ZmtUTnRqREtDSmE2
+K0t0aGZydW9uREJ3RUJJVndyN3RUNEJjZmI1YTlpa2NMNitkd3VlMC9VallaCk5wK1Bxc3lVeWR0
+dmlLNEcvWDJPZHJEeFZCUlpDWjFSNms0WlVXYz0KPXUxT24KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000bea8630615325d0b--
