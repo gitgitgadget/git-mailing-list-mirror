@@ -1,51 +1,53 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9FC154BE9
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 18:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C18353A7
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 19:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712170721; cv=none; b=a0gG8/5XNI2Rtq9Uu07TWxhI1MYNDza+7azY9GQ2LTAFJuhcJ3loKuZF2MFQ9ZbjuJSKzeRP8uW6OyGTe/aI/Izcjj1UkES7qYf87AJ4Xq4eHcjRl9Q+Tsjrsy4cocZy9uBtv63OCPwwpI1/FeAfR9HWHwTtF8rdjaLlTxCbec8=
+	t=1712171557; cv=none; b=rzU1CyQ7J+4eZtzH7NmjhEJ/UOaZ55eGljeoj+480HvEa0hd3FUHhXLuQsMK8EJEitP2FJyhZv5unJpE5DgJMEuZs3P1ZBkZMIEn//MR8CT8cWA3Nw3uyQPFaf+sbzC3aBQci7KG+QO2vZ9SeqADcey4knUK8hcRqCWGrb1zjvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712170721; c=relaxed/simple;
-	bh=UPfzMq7Wsg8AHSS38N3KsJdMFhuf3OfobUUSJ5NZjL4=;
+	s=arc-20240116; t=1712171557; c=relaxed/simple;
+	bh=E3dSVQqFl5gFN5q4rM40Va7GMpw0sEfPIGoy4lI9yiA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RYI+DQMhsLZN6bRh1OhesglF9tRSI0jnB0j0HvaftjtRsEETBoKxqomlOaydNyBR9rwYOUNE8dq2E+3/AHs2E1Qb02/tJLfdq6LKRoaN4FCMddqidE4/fIMzRhT7U7Is/q70H6FjupXkRL/eNfhKYv28arJWNhTWjq8QoiIcniI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vGH/1BYD; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=keLNBQSnSti0a+UMdTNzZlzB6DGRfEP/qnBMSPvX+aFb/WkCcOtqoYiUQr3zIcqj4eeQRujv0HZGnW3UbdxvGPd6wJEhyaM6iJHAYyzxURTYrRUWT9GI6g9y30a/aCgtKtdjhzP2LBGGVV1CSzSS+8nqDQJrN244kGu1rJOy7Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dDAcgI+X; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vGH/1BYD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dDAcgI+X"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BDB0D1DC563;
-	Wed,  3 Apr 2024 14:58:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E3F11DC695;
+	Wed,  3 Apr 2024 15:12:34 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=UPfzMq7Wsg8AHSS38N3KsJdMFhuf3OfobUUSJ5
-	NZjL4=; b=vGH/1BYDP3Uldq5PEIKJw19AsDg6R0edAHXvDqRUFcn4Yb6RCPkd3r
-	PprtGxSPRZ+0svPFUd+Pf702liND10uCjyuN8DJBJZZoEJ8juKGJI27wEcd3fQbU
-	sQQinoLeES9EhOEDZjkyy7gdTAMtGW5aY5TdkKm/SIgzTgmqWmhfY=
+	:content-type; s=sasl; bh=E3dSVQqFl5gFN5q4rM40Va7GMpw0sEfPIGoy4l
+	I9yiA=; b=dDAcgI+XStTvmFQe7hFDOh+LXdXBvigedZeSfOSeLJpmp9rhapgSmN
+	ViSn48Dfm0/vrruwkmL4d1RO/S4UzABm/NvDRXXSWs7o+rinC1OxX5JYBai8Teel
+	E94qmxl3xxJGXczzWCQ3Kn2DzA73IyXq3kHAAM++g1Ipg7XnLpcss=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B5FEA1DC562;
-	Wed,  3 Apr 2024 14:58:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 162F31DC694;
+	Wed,  3 Apr 2024 15:12:34 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21A181DC55C;
-	Wed,  3 Apr 2024 14:58:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7AB221DC693;
+	Wed,  3 Apr 2024 15:12:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/9] refs/reftable: don't recompute committer ident
-In-Reply-To: <a9a6795c025b23035bfdd3e23b0113df9f6c5e4b.1712078736.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 2 Apr 2024 19:30:04 +0200")
-References: <cover.1712078736.git.ps@pks.im>
-	<a9a6795c025b23035bfdd3e23b0113df9f6c5e4b.1712078736.git.ps@pks.im>
-Date: Wed, 03 Apr 2024 11:58:36 -0700
-Message-ID: <xmqqedbm6zoj.fsf@gitster.g>
+To: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v2 0/3] reftable/stack: use geometric table compaction
+In-Reply-To: <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com> (Justin
+	Tobler via GitGitGadget's message of "Thu, 21 Mar 2024 22:40:16
+	+0000")
+References: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
+	<pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
+Date: Wed, 03 Apr 2024 12:12:32 -0700
+Message-ID: <xmqq5xwy6z1b.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,26 +57,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 2E02482C-F1EC-11EE-BE36-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 1FED2728-F1EE-11EE-947A-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> In order to write reflog entries we need to compute the committer's
-> identity as it becomes encoded in the log record itself. In the reftable
-> backend, computing the identity is repeated for every single reflog
-> entry which we are about to write in a transaction. Needless to say,
-> this can be quite a waste of effort when writing many refs with reflog
-> entries in a single transaction.
+> This is the second version my patch series that refactors the reftable
+> compaction strategy to instead follow a geometric sequence. Changes compared
+> to v1:
+>
+>  * Added GIT_TEST_REFTABLE_NO_AUTOCOMPACTION environment variable to disable
+>    reftable compaction when testing.
+>  * Refactored worktree tests in t0610-reftable-basics.sh to properly assert
+>    git-pack-refs(1) works as expected.
+>  * Added test to validate that alternating table sizes are compacted.
+>  * Added benchmark to compare compaction strategies.
+>  * Moved change that made compaction segment end inclusive to its own
+>    commit.
+>  * Added additional explanation in commits and comments and fixed typos.
 
-It would have been nice to mention which caller benefits from this
-rewrite in the above.
+Has anybody took a look at recent failures with this series present
+in 'seen' [*1*] and without [*2*] in osx-reftable jobs for t0610?
 
-There are four callers of the fill_reftable_log_record() function.
-The patch moves the split_ident() call from the callee to these four
-callers.  The write_transaction_table() function calls it in a loop,
-which should give us a big boost.  For other three callers, they
-call it at most twice (i.e. write_copy_table() when deleting the old
-one), so their contribution to the boost should be minimal.
 
-Makes sense.
 
+*1* https://github.com/git/git/actions/runs/8543205866/job/23406512990
+*2* https://github.com/git/git/actions/runs/8543840764/job/23408543876
