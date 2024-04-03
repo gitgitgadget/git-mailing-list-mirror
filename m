@@ -1,340 +1,165 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16C0147C6C
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 13:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDA47172B
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 14:26:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712151747; cv=none; b=HXoKS2NAthpJFKpAfH5puZwoSYH38W8iRTEbbBymhRUYb8EyOymdggCWBCAsSxVe4HXkKkwpahHN3QTU0jF+Xw8KiwpBl8mH+NP4hht3qVn10dXkqJ/Mg2hsnCDE2gwfxQgSvNsHdL/HSFINNI+eCzw9Fuq285sVOe+eB78yQ30=
+	t=1712154406; cv=none; b=RaJ5ZHaDQ9uoVBwLNA/7h2l0IVtSsYWqXPJsQfVtNdB1IgOsMte8mEihVMHChnTXBuaja3xkvZTY1Q0roXN1u9CE2EbOfJ+El1g67vM2dcLcxs/KFigmJAiF53vQ0AC61GY0JRtQTaQnYpfoB4AMNeJ7Avy1/IeL6Rauo5ozpKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712151747; c=relaxed/simple;
-	bh=FUC4e2FwLRxwJ8oGEThLFwPQ0YATrdNbFQWVvywA/uY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=N5SVC0BMlwW/rxXQrnNy7+0RGwVQtQ4k5Z7hpR1jd9QQbhgsMU/UuFYAgv2mvFJ2OWcv6/I/u9HySwFu9LHquosinepYBgcG7N9DxkiyZ6zfWxgu6XqdsPDwUxTjQAxyAB+HjnVjdAyjGdf4FRxBdfnhPaeGu/g7OK7NaCzIFkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g/5Zmn2F; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1712154406; c=relaxed/simple;
+	bh=Fp3fLHNdY/cXkiuwtS1+QgNv7I/lrl708yA+P+r7pk0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gnvROEo6UPFkmzo/BtGkrlXuG0+YPWyhiAaN+hai7iqAECakRV+vtNtICUUU5IwNb2+A7l4jEZ8uzd66rTaONCaKBN+7I8JvkEgR/T5+ZXFIpJe2aeQ9NGg8EXa7a9XfnH8WgdXaIXH3h3b7qAiDPaZhZlGKN8P6rFTliqZ5f4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ktQbroAr; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g/5Zmn2F"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-515c3eeea5dso7614073e87.1
-        for <git@vger.kernel.org>; Wed, 03 Apr 2024 06:42:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ktQbroAr"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-222a9eae9a7so3705641fac.3
+        for <git@vger.kernel.org>; Wed, 03 Apr 2024 07:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712151744; x=1712756544; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UG5iQYcHULhGXUV0rnY9XOlpuq5RkGW4jeXX/DROYWA=;
-        b=g/5Zmn2Fod5jAURxnnif1Kk1frnR5SQytB3/RF5jEadNCUeJTiiqo4lUl5QxOh7W1T
-         +FjYLoj3EY4oDz5S+k/SJdgpB++x/qtPPyDz+bMBRj3xcJ+CZcIjY5mvpcdHnv9lu6Oy
-         05xhjpyYoqKZvl3o8SHOUnDuMjhHKqqpIR92rEnCm5y+FgUtSL/2zXH6BEQiokTbn+QE
-         F+5DnwU7UHBaT61+A6SNg+F3vI3rrq+3+Mc1H5WmCYFNKOBN1C/D0LHhi+1uGXHDL6n6
-         jjLJIaYn2Dm0Zs4gWxbCjM6TXofQYPi2f2LKNe7e5xlS2YvsQfiu6YZr/n2fYuytQrnc
-         L+5A==
+        d=gmail.com; s=20230601; t=1712154404; x=1712759204; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ces6jawGhNfQxP+/lxNE5bMMOCIJee0OGkyEuzPutIQ=;
+        b=ktQbroArK3lodpo/X1Kku3jNAAhTHmfqr2XW8HSCZ1NeQzSD5vn0QNZvzd//ZdRKqV
+         vmQHLvxkkAfdi2lDzYxAknQn0t7YIlPVucG/iA/6pPPjcjPBBTxFpDj0n9GujznX1Iuk
+         Vq89uqwOrTTks/LMFlXcAJXxs2ezllvQmL4yAqVODk4sj4qmPoLKoRU2nqvkAclN6Ogc
+         MZ697mNI5FHhbia3sC5g3VdwqH2VbXld8U+jG/sy0Ho5dWh1hWLiDaEegMBYeZrTMYSD
+         /4xs8de5yxW3zs24EH3GyodYDmZQeeCX1PCkxxTmdsg+jjlfUkVcV8h/tuYLL5gQOyoJ
+         coPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712151744; x=1712756544;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UG5iQYcHULhGXUV0rnY9XOlpuq5RkGW4jeXX/DROYWA=;
-        b=OqNBH6jM/4cPXllQElFoex2+Q/mQGjXgR43LOsWJqhmYNjCAFrR2XTxA/BK/kND+cf
-         5Wpal6HAw+baklxogV30nB40hfs3UiIpexBIIdfjq8fXpsmC7+SDDgcbWQFvzBj66J0h
-         FTlecAe9nTo44yH7Fufhy3R1f90E9R518s16DERcjzfWquGD7gHZX24vLvCmSvSXdhtu
-         BWK90/WmSQomVpK3IvyJfO8k4pegcaLRrFqLGrG0fcphzW2HdZ6XJxxdOc2ZD79aENoI
-         Q25kre2gP7Ua0QcWaD0Vt/RBQrBZrnKmI1LaJeCYCOuYy+2sLsdexA0ghAiDmZm+Wjgs
-         dyhg==
-X-Forwarded-Encrypted: i=1; AJvYcCVb2sR/ayULt0pWj78sbWXkBsCYHQxLmUNYh/aY93kRyjxzL6mUEiX4nMCe3hjIqRq622xc6kj9doBJJFbdGPvTgvXx
-X-Gm-Message-State: AOJu0YztPuV7RUpPzn8y7se7W9bvriPuNXqLt3s/PJqrBM1WcfElUEUR
-	/SbOv1WQz32vZBtWaUhXdVYB+K3/OEiXk3u8RdMbbgANf7bRiqF4
-X-Google-Smtp-Source: AGHT+IEvkwld//3Kjwul28ILtdqEBVX7eL9zFpF7MwSlE8kRajP6g6cBK4v2CNMej2NKLCdda1rRAw==
-X-Received: by 2002:a05:6512:4893:b0:513:d0e2:8a1e with SMTP id eq19-20020a056512489300b00513d0e28a1emr9588332lfb.54.1712151743310;
-        Wed, 03 Apr 2024 06:42:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id p18-20020a05600c359200b0041543b57ca2sm21696465wmq.21.2024.04.03.06.42.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Apr 2024 06:42:22 -0700 (PDT)
-Message-ID: <db27d746-5b83-45fa-a8e7-d88022ce1ca5@gmail.com>
-Date: Wed, 3 Apr 2024 14:42:19 +0100
+        d=1e100.net; s=20230601; t=1712154404; x=1712759204;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ces6jawGhNfQxP+/lxNE5bMMOCIJee0OGkyEuzPutIQ=;
+        b=b1/P1R0CmhSl7OBP9BuIaep/O+ou8IFi9jcTK/P+qiRCLISSr27ASu05M5BNB1rCxv
+         PSDdTV8JRbUMihi0aKX4xzWSgL24AwyYpWEOPqPKxcaBRlCMdjZm6NKu+xZYkPYlqvYO
+         q4qmSXv842pp6T+jSc4J6foVXyDu05mI7HK/nHi8QfHRZx8jPIPKWsHzBQPWlKtTNu+W
+         088Rn+H2qOFeTN6FRBO29xivSyXHKX0jr8wThLc8s6Rp7FgO5hIxmnsS3x+JRU6PLhu7
+         uEjVwbBFM8irMxKjAtfmXnA/c4Z4kZ9wUWGCx38bWT/E3sF6TFSnvMUzOS8cvP/SMb+l
+         hOOA==
+X-Gm-Message-State: AOJu0Yx7RY95RdHNyVM4+vdrjLG/nZIltQcoG+XiJTEwDYvf9m+55Psa
+	QKXuk/NqPugVFooUviWEeRS3L8Csm/3PI5anCHQ6Cy3oGZOJvFKpNXi/UVU/MfLYb4NnM/3OZ50
+	kOobCqy2edXHRgpzipOfCa2VTncj441Ba1i8=
+X-Google-Smtp-Source: AGHT+IGvqkxsXDfqMS2thyNE4N0r9OekphBcqjhRXuMfVYqmP0AwsM2cJF2TasGc/U07SJzFqh3KPOj6bdvUEMnE7Fk=
+X-Received: by 2002:a05:6871:a117:b0:229:f445:d6b3 with SMTP id
+ vs23-20020a056871a11700b00229f445d6b3mr19087320oab.5.1712154404042; Wed, 03
+ Apr 2024 07:26:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase -i: improve error message when picking merge
-To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Stefan Haller <lists@haller-berlin.de>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Philippe Blain <levraiphilippeblain@gmail.com>,
- Brian Lyles <brianmlyles@gmail.com>
-References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CA+2m0i8E5Qnj520LXitoE49U_8V17v_NUnrqcRfzHz0cA_ONSQ@mail.gmail.com>
+ <0f65aae3-15a1-456d-8285-7923a880deea@app.fastmail.com>
+In-Reply-To: <0f65aae3-15a1-456d-8285-7923a880deea@app.fastmail.com>
+From: Bill Wallace <wayfarer3130@gmail.com>
+Date: Wed, 3 Apr 2024 10:26:34 -0400
+Message-ID: <CA+2m0i_zGcFBd2+L_Q_foMQ=eJbXqUZGqDeOwfefg=Y4GMBRWw@mail.gmail.com>
+Subject: Re: Worktree shares a common remote with main checkout
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If anyone has time to review this I'd be very grateful. I've added a 
-couple of people to the cc list who have recently contributed to the 
-sequencer but if anyone else fancies taking a look please do.
+The problem is that one wants different default remotes for different
+worktrees - for example, suppose I'm creating a worktree for two
+different projects, plus the base repository is on the "origin"
+default remote.  I then have:
+base_repository - a directory with the base/default origin (call it
+'origin' for now as the remote name)
+project1 - currently checked out with 'feat/1'
+project2 - current checkout out with 'feat/2'
 
-Thanks
+Now, project1 is being developed against a remote repository
+'project1-origin' and project2 is being developed against a remote
+repository 'project2-origin'
+However, both are getting merges from origin/main on their own
+projectX-origin/main branches
 
-Phillip
+Now, when I'm the directory for project1 and I do any of:
+   git fetch
+   git checkout X
+   git push
 
-On 26/02/2024 10:58, Phillip Wood via GitGitGadget wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> The only todo commands that accept a merge commit are "merge" and
-> "reset". All the other commands like "pick" or "reword" fail when they
-> try to pick a a merge commit and print the message
-> 
->      error: commit abc123 is a merge but no -m option was given.
-> 
-> followed by a hint about the command being rescheduled. This message is
-> designed to help the user when they cherry-pick a merge and forget to
-> pass "-m". For users who are rebasing the message is confusing as there
-> is no way for rebase to cherry-pick the merge.
-> 
-> Improve the user experience by detecting the error when the todo list is
-> parsed rather than waiting for the "pick" command to fail and print a
-> message recommending the "merge" command instead. We recommend "merge"
-> rather than "exec git cherry-pick -m ..." on the assumption that
-> cherry-picking merges is relatively rare and it is more likely that the
-> user chose "pick" by a mistake.
-> 
-> It would be possible to support cherry-picking merges by allowing the
-> user to pass "-m" to "pick" commands but that adds complexity to do
-> something that can already be achieved with
-> 
->      exec git cherry-pick -m1 abc123
-> 
-> The change is relatively straight forward but is complicated slightly as
-> we now need to tell the parser if we're rebasing or not.
-> 
-> Reported-by: Stefan Haller <lists@haller-berlin.de>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->      rebase -i: improve error message when picking merge
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1672%2Fphillipwood%2Frebase-reject-merges-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1672/phillipwood/rebase-reject-merges-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1672
-> 
->   builtin/rebase.c              |  2 +-
->   rebase-interactive.c          |  7 ++---
->   sequencer.c                   | 49 ++++++++++++++++++++++++++++++-----
->   sequencer.h                   |  2 +-
->   t/t3404-rebase-interactive.sh | 33 +++++++++++++++++++++++
->   5 files changed, 81 insertions(+), 12 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 5b086f651a6..a33e41c44da 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -297,7 +297,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
->   	else {
->   		discard_index(&the_index);
->   		if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
-> -						&todo_list))
-> +						&todo_list, 1))
->   			BUG("unusable todo list");
->   
->   		ret = complete_action(the_repository, &replay, flags,
-> diff --git a/rebase-interactive.c b/rebase-interactive.c
-> index d9718409b3d..78d5ed1a41d 100644
-> --- a/rebase-interactive.c
-> +++ b/rebase-interactive.c
-> @@ -114,7 +114,8 @@ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
->   	 * it.  If there is an error, we do not return, because the user
->   	 * might want to fix it in the first place. */
->   	if (!initial)
-> -		incorrect = todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list) |
-> +		incorrect = todo_list_parse_insn_buffer(r, todo_list->buf.buf,
-> +							todo_list, 1) |
->   			file_exists(rebase_path_dropped());
->   
->   	if (todo_list_write_to_file(r, todo_list, todo_file, shortrevisions, shortonto,
-> @@ -134,7 +135,7 @@ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
->   	if (initial && new_todo->buf.len == 0)
->   		return -3;
->   
-> -	if (todo_list_parse_insn_buffer(r, new_todo->buf.buf, new_todo)) {
-> +	if (todo_list_parse_insn_buffer(r, new_todo->buf.buf, new_todo, 1)) {
->   		fprintf(stderr, _(edit_todo_list_advice));
->   		return -4;
->   	}
-> @@ -234,7 +235,7 @@ int todo_list_check_against_backup(struct repository *r, struct todo_list *todo_
->   	int res = 0;
->   
->   	if (strbuf_read_file(&backup.buf, rebase_path_todo_backup(), 0) > 0) {
-> -		todo_list_parse_insn_buffer(r, backup.buf.buf, &backup);
-> +		todo_list_parse_insn_buffer(r, backup.buf.buf, &backup, 1);
->   		res = todo_list_check(&backup, todo_list);
->   	}
->   
-> diff --git a/sequencer.c b/sequencer.c
-> index 91de546b323..cf808c24d20 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2550,8 +2550,37 @@ static int check_label_or_ref_arg(enum todo_command command, const char *arg)
->   	return 0;
->   }
->   
-> +static int error_merge_commit(enum todo_command command)
-> +{
-> +	switch(command) {
-> +	case TODO_PICK:
-> +		return error(_("'%s' does not accept merge commits, "
-> +			       "please use '%s'"),
-> +			     todo_command_info[command].str, "merge -C");
-> +
-> +	case TODO_REWORD:
-> +		return error(_("'%s' does not accept merge commits, "
-> +			       "please use '%s'"),
-> +			     todo_command_info[command].str, "merge -c");
-> +
-> +	case TODO_EDIT:
-> +		return error(_("'%s' does not accept merge commits, "
-> +			       "please use '%s' followed by '%s'"),
-> +			     todo_command_info[command].str,
-> +			     "merge -C", "break");
-> +
-> +	case TODO_FIXUP:
-> +	case TODO_SQUASH:
-> +		return error(_("cannot squash merge commit into another commit"));
-> +
-> +	default:
-> +		BUG("unexpected todo_command");
-> +	}
-> +}
-> +
->   static int parse_insn_line(struct repository *r, struct todo_item *item,
-> -			   const char *buf, const char *bol, char *eol)
-> +			   const char *buf, const char *bol, char *eol,
-> +			   int rebasing)
->   {
->   	struct object_id commit_oid;
->   	char *end_of_object_name;
-> @@ -2655,7 +2684,12 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->   		return status;
->   
->   	item->commit = lookup_commit_reference(r, &commit_oid);
-> -	return item->commit ? 0 : -1;
-> +	if (!item->commit)
-> +		return -1;
-> +	if (rebasing && item->command != TODO_MERGE &&
-> +	    item->commit->parents && item->commit->parents->next)
-> +		return error_merge_commit(item->command);
-> +	return 0;
->   }
->   
->   int sequencer_get_last_command(struct repository *r UNUSED, enum replay_action *action)
-> @@ -2686,7 +2720,7 @@ int sequencer_get_last_command(struct repository *r UNUSED, enum replay_action *
->   }
->   
->   int todo_list_parse_insn_buffer(struct repository *r, char *buf,
-> -				struct todo_list *todo_list)
-> +				struct todo_list *todo_list, int rebasing)
->   {
->   	struct todo_item *item;
->   	char *p = buf, *next_p;
-> @@ -2704,7 +2738,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
->   
->   		item = append_new_todo(todo_list);
->   		item->offset_in_buf = p - todo_list->buf.buf;
-> -		if (parse_insn_line(r, item, buf, p, eol)) {
-> +		if (parse_insn_line(r, item, buf, p, eol, rebasing)) {
->   			res = error(_("invalid line %d: %.*s"),
->   				i, (int)(eol - p), p);
->   			item->command = TODO_COMMENT + 1;
-> @@ -2852,7 +2886,8 @@ static int read_populate_todo(struct repository *r,
->   	if (strbuf_read_file_or_whine(&todo_list->buf, todo_file) < 0)
->   		return -1;
->   
-> -	res = todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list);
-> +	res = todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list,
-> +					  is_rebase_i(opts));
->   	if (res) {
->   		if (is_rebase_i(opts))
->   			return error(_("please fix this using "
-> @@ -2882,7 +2917,7 @@ static int read_populate_todo(struct repository *r,
->   		struct todo_list done = TODO_LIST_INIT;
->   
->   		if (strbuf_read_file(&done.buf, rebase_path_done(), 0) > 0 &&
-> -		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done))
-> +		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done, 1))
->   			todo_list->done_nr = count_commands(&done);
->   		else
->   			todo_list->done_nr = 0;
-> @@ -6286,7 +6321,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->   	strbuf_release(&buf2);
->   	/* Nothing is done yet, and we're reparsing, so let's reset the count */
->   	new_todo.total_nr = 0;
-> -	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
-> +	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo, 1) < 0)
->   		BUG("invalid todo list after expanding IDs:\n%s",
->   		    new_todo.buf.buf);
->   
-> diff --git a/sequencer.h b/sequencer.h
-> index dcef7bb99c0..ed2c4b38514 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -136,7 +136,7 @@ struct todo_list {
->   }
->   
->   int todo_list_parse_insn_buffer(struct repository *r, char *buf,
-> -				struct todo_list *todo_list);
-> +				struct todo_list *todo_list, int rebasing);
->   int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
->   			    const char *file, const char *shortrevisions,
->   			    const char *shortonto, int num, unsigned flags);
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 64b641002e4..20b8589ad07 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -2203,6 +2203,39 @@ test_expect_success 'bad labels and refs rejected when parsing todo list' '
->   	test_path_is_missing execed
->   '
->   
-> +test_expect_success 'non-merge commands reject merge commits' '
-> +	test_when_finished "test_might_fail git rebase --abort" &&
-> +	git checkout E &&
-> +	git merge I &&
-> +	oid=$(git rev-parse HEAD) &&
-> +	cat >todo <<-EOF &&
-> +	pick $oid
-> +	reword $oid
-> +	edit $oid
-> +	fixup $oid
-> +	squash $oid
-> +	EOF
-> +	(
-> +		set_replace_editor todo &&
-> +		test_must_fail git rebase -i HEAD 2>actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	error: ${SQ}pick${SQ} does not accept merge commits, please use ${SQ}merge -C${SQ}
-> +	error: invalid line 1: pick $oid
-> +	error: ${SQ}reword${SQ} does not accept merge commits, please use ${SQ}merge -c${SQ}
-> +	error: invalid line 2: reword $oid
-> +	error: ${SQ}edit${SQ} does not accept merge commits, please use ${SQ}merge -C${SQ} followed by ${SQ}break${SQ}
-> +	error: invalid line 3: edit $oid
-> +	error: cannot squash merge commit into another commit
-> +	error: invalid line 4: fixup $oid
-> +	error: cannot squash merge commit into another commit
-> +	error: invalid line 5: squash $oid
-> +	You can fix this with ${SQ}git rebase --edit-todo${SQ} and then run ${SQ}git rebase --continue${SQ}.
-> +	Or you can abort the rebase with ${SQ}git rebase --abort${SQ}.
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->   # This must be the last test in this file
->   test_expect_success '$EDITOR and friends are unchanged' '
->   	test_editor_unchanged
-> 
-> base-commit: c875e0b8e036c12cfbf6531962108a063c7a821c
+I want the correct default to be chosen for the remote - for the
+base_repository that should be 'origin', while for project1 it should
+be 'project1-origin' etc.
+I KNOW I can specify those manually, and git push will give a
+suggestion, but I WANT all of them to default to the correct remote
+associated with that worktree so that I don't accidentally pick the
+wrong one or forget to update the correct repository.  This is to fix
+dumb fingers that sometimes do the wrong thing without thinking, and
+to try to reduce the number of things that don't get done
+accidentally.
+
+What I'm doing now is to create a new non-worktree version against the
+projects directories, but that then doesn't share any data.
+
+git remote add ... has nothing to do with this, but I want something like:
+
+git worktree add project1 --default-remote project1-origin
+
+The idea is to make the expectations of what happens to be consistent
+with cloning a new directory, or at least as close as possible to
+that.
+
+Bill.
+
+On Fri, 22 Mar 2024 at 13:29, Kristoffer Haugsbakk <code@khaugsbakk.name> w=
+rote:
+>
+> On Fri, Mar 22, 2024, at 15:50, Bill Wallace wrote:
+> > This issue is just to fix an easy to make mistake when working with
+> > multiple remote origins and worktrees, where it is too easy to push to
+> > the wrong remote origin because one can't set the default origin on a
+> > per-worktree basis.
+> >
+> > What did you do before the bug happened? (Steps to reproduce your issue=
+)
+> > Used
+> > * git worktree to create a worktree
+> > * git remote add to add a custom repository
+> > * git commit/push to try to push changes
+> >
+> > What did you expect to happen? (Expected behavior)
+> > Expected to have the git push recommend a remote origin that matched
+> > the worktree, but it defaults to 'origin' all
+> > the time, which means I need to checkout a clean clone from the
+> > specific origin I'm making changes for so that I don't accidentally
+> > push to the default origin.
+> >
+> > What happened instead? (Actual behavior)
+> > Suggests 'origin' as the default origin - which is CORRECT for the
+> > main git branch, but I want to use worktrees to allow working against
+> > several remote origins, with the default being determined by which
+> > worktree I'm in.
+> >
+> > What's different between what you expected and what actually happened?
+> > Suggested 'origin' for the --set-default rather than allowing me to
+> > define the origin I want, for example 'wayfarer' as teh name of my own
+> > remote that I have cloned on github.  The default origin is still
+> > supposed to be 'origin' for pulls/naming, but when I push, it needs to
+> > recommend the matching origin.
+> >
+> > Anything else you want to add:
+> > This is a bit of feature request, but the reason I'm listing it as a
+> > bug is it makes it very easy to make a mistake by pushing to the wrong
+> > origin for a new branch.
+>
+> I don=E2=80=99t understand the expectation. git-worktree(1) just gives yo=
+u a new
+> worktree to work on a branch, do a bisect, maybe a rebase and so on. I
+> expect `git remote add <remote>` to have nothing to do with the current
+> worktree that I am in. A remote ref is for the repository, not
+> per-worktree.
+>
+> If you are creating a local branch based on this so-called
+> worktree-specific remote and this branch exists on this remote (and
+> *only* on that one) then you can use `git worktree --add --guess-remote`
+> to automatically track the remote branch.
