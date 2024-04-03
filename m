@@ -1,59 +1,56 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED4D13A88B
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 16:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B431465BD
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 16:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712162370; cv=none; b=VGgGTsQERb28eJyi2lsb9Uk9kxRcH+HN15jZSj4DvLpARjhmwOZxcmtz98YZcwfYC9uaenpZ0MdAmgO65jdlnaxJdExQv8Zors3/by2pks+RcH4vhvMVicldMFtEEIxBweboemKoaLuCTwR7q/J+QupXeIquKOMMyC9kFoC931g=
+	t=1712162464; cv=none; b=cmK59Pt15+ATC+KdvnvqVPJ0pudt0V/VbWCK9LRohqESFRg3QJYd1wpZ/ww7Octl/qCSzy/2wa47OFT/fihHyb1ypaZL3VU4IQZPRkF03Jtq1YOrFbDIWgD2PBT7CnPOtbyUULPivdrxhsWjaE57MM8Q+DbY7h/N98tr0PTji5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712162370; c=relaxed/simple;
-	bh=yjUjLmNCLHIFLsiiAkjXhDgSYf0zWJaI4/iGXWEX9OE=;
+	s=arc-20240116; t=1712162464; c=relaxed/simple;
+	bh=i7XE+XywW1GFHFiAgD9+Z0pi2QZ3hykcYYHOznH/SqM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QFx40ZqNQ7YlFQ/b0WQOyrWVtRiWXzlt8D6qLmLyyO2UlGwMAOsGfNyZhu9eggv1eMn+LF8WHLh94QrD1HQt770u1QqYW26bQprgSGvE5EyX5Clm2sehmeF/hWWaEMKEuUw4Huk1bunU1hqW06tiQ0h7mufWWMvrhmhFS9FdKrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tx/+4Ugl; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=uA8u8yWpoqufShVaP3Wu9Kz9dyU15cdX64rRWLj113e/4dakSNYzaPYfS6dhuxoDSIlXESQbzWFLd0llple5aAXJMvnQF8m26pYP8KbMc5DjP30SbEtyUZOaiUQAIF45+lumvQp7VaZQsozoO89/tesheEtx01M80T7mw1TRuSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gROWy72Y; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tx/+4Ugl"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gROWy72Y"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E47AE1DB295;
-	Wed,  3 Apr 2024 12:39:21 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 589C11DB2A5;
+	Wed,  3 Apr 2024 12:41:01 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yjUjLmNCLHIF
-	LsiiAkjXhDgSYf0zWJaI4/iGXWEX9OE=; b=tx/+4Ugl3jkc6n8mySwAsoM9Acl+
-	kVra+4fFJP7suRNsfx5riB3ZKQLH7aUQMiutVUgWG25J6K0AAZbUNXuBUVSWRhS8
-	dj6YsrsEFum5/TTMrZ7fK51+VBMPVH/zOY2KrN5nTt57SyKxNbhHnOYahEsuDoPb
-	g9iVm+YTacNZIng=
+	:content-type; s=sasl; bh=i7XE+XywW1GFHFiAgD9+Z0pi2QZ3hykcYYHOzn
+	H/SqM=; b=gROWy72YuX5WdbFwoSTsyceShyX3WqfO/84tP8DA41ywCgcZWqY6A9
+	eTYjLMzi1RDANPB1ezIzjPpkedpbnIzWDfsH8McJQexSOobHCRBEh6rbUQYsJbji
+	n5sLEAuwD0pdcMzNZqSYJ/lrcm3A9RoxlL4+nNasowwPS/9ofOTkE=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DAD301DB294;
-	Wed,  3 Apr 2024 12:39:21 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D9061DB2A4;
+	Wed,  3 Apr 2024 12:41:01 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 45B4C1DB293;
-	Wed,  3 Apr 2024 12:39:21 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 87F261DB2A2;
+	Wed,  3 Apr 2024 12:41:00 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
- <nasamuffin@google.com>,  Matthieu MOY <matthieu.moy@univ-lyon1.fr>,
-  Linus Arver <linusa@google.com>
-Subject: Re: [RFC] git-contacts: exclude list
-In-Reply-To: <DB9P250MB06923CE0F60A117A5CA5B028A53D2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-	("Matthias =?utf-8?Q?A=C3=9Fhauer=22's?= message of "Wed, 3 Apr 2024
- 12:11:47 +0200
-	(CEST)")
-References: <pull.1704.git.1712017205754.gitgitgadget@gmail.com>
-	<35192e61-c442-6719-caf0-1019bf3e44c9@live.de>
-	<DB9P250MB06923CE0F60A117A5CA5B028A53D2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-Date: Wed, 03 Apr 2024 09:39:20 -0700
-Message-ID: <xmqqsf028kp3.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,  Justin Tobler via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Justin Tobler
+ <jltobler@gmail.com>,  Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v2 0/3] reftable/stack: use geometric table compaction
+In-Reply-To: <Zg0tEa7DDEuub09Q@tanuki> (Patrick Steinhardt's message of "Wed,
+	3 Apr 2024 12:18:57 +0200")
+References: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
+	<pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
+	<Zfzd8YdAwzYRYkA3@tanuki>
+	<CAOw_e7az+S4nkG1HKDcqXkK0BOhs6cBpkb=QEGBoZW8MSEEvGg@mail.gmail.com>
+	<Zg0tEa7DDEuub09Q@tanuki>
+Date: Wed, 03 Apr 2024 09:40:59 -0700
+Message-ID: <xmqqo7aq8kmc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,45 +58,16 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- B8EFD63E-F1D8-11EE-AABD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ F41BDB68-F1D8-11EE-8597-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Matthias A=C3=9Fhauer <mha1993@live.de> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Would it make sense to have a way to teach `git-contacts` to exclude a
-> user defined list of known-bad recipient adresses? This could
-> potentiallly be an extension of mailmap or a separate file.
+> But I'm definitely supportive of lifting it out of the reftable library
+> and into the reftable backend so that it is specific to Git, not to the
+> reftable library.
 
-The contacts script already uses "check-mailmap". =20
-
-Unfortunately it only uses the default mailmap, which may not be
-suitable for our purpose here, but it shouldn't be too hard to run
-"git -c mailmap.file=3D<custom> check-mailmap", ship a custom mailmap
-file with the contacts script to map defunct addresses to something
-that is clearly invalid, and then filter them out from the output.
-
-We want to add a mechanism to allow "including" another mailmap, so
-that "../../.mailmap" is included from contrib/contacts/mailmap or
-something like that.
-
-On the other hand, if we want to use our primary mailmap to also
-mark the defunct addresses, then we do not have to do anything
-special.  Mark these defunct addresses to the primary mailmap to
-map them to "$HumanReadableName <$name@defunct.invalid>" and then
-doing something like the attached.
-
-diff --git i/contrib/contacts/git-contacts w/contrib/contacts/git-contact=
-s
-index 85ad732fc0..00e77c4125 100755
---- i/contrib/contacts/git-contacts
-+++ w/contrib/contacts/git-contacts
-@@ -197,6 +197,7 @@ $contacts =3D mailmap_contacts($contacts);
-=20
- my $ncommits =3D scalar(keys %commits);
- for my $contact (keys %$contacts) {
-+	next if $contact =3D~ /\@defunct.invalid>$/;
- 	my $percent =3D $contacts->{$contact} * 100 / $ncommits;
- 	next if $percent < $min_percent;
- 	print "$contact\n";
+Absolutely.  Thanks for bringing up a good point and a nice
+solution.  I do think it makes sense to handle the environment
+variable on the Git side.
