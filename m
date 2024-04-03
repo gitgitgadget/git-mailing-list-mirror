@@ -1,37 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFC6BE4D
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 20:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C543D962
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 20:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712175548; cv=none; b=T6XQKDjDQ2e5TNDecOEOlkShUrPmUSRkgkgqcfp71RY6TytLc8pRdk1Z3FzK1IYNJugLrFoySx2IP0ToE3+9tgEwYl7C2Nv/M+jPgrnLaKRk48ESPDAL4PaYjitN9H4BkSdeVIhKQOuhW6Lt0p8uQWe2Cs+VsDs/rZoQ1ylHelo=
+	t=1712176345; cv=none; b=jxuC9kvaaBZ83n1+ApQwvWqiMCOoUQfh08T6e7qkfUorXAkEZ3uHKypiVF7H6a7bqO2VQ8LBhfZz3C0uBb0XqlGAcvHAg2xhuIZAgWw6KCm3Etpq06V5ZpSiZAROrkx0nA2aPCtnSC0kdcd4OGNiYsB/JSr5LmRQqDyE4tLGxWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712175548; c=relaxed/simple;
-	bh=eFFRpJoe+uow1YB1yrde21gnOaAeLiuD/Xk4i5Y/uTE=;
+	s=arc-20240116; t=1712176345; c=relaxed/simple;
+	bh=vsnG0rxsPitteS8xKe+64QK+R2yuUF9D+Ut10yDvHnE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bGReIIKooGLDKyGY6irGdYURb7Gtc8zGqJAMHKQT7mjyH38xb5bTT0Buu/punoQWgSqeG1cZQ7yzJG6L3pabl12KkVnIOKMSRupJ6HP4SeMsmY6Z+bHzDMDkUNcL3cnnkpjFANk6EEOgQOBoH3z7k3+JAOP1CvcUVQrr77r0GM0=
+	 Content-Type:Content-Disposition:In-Reply-To; b=sd1dOhS2Wmqr67lRmAHnAfrg5uK1jstKW/9phKSGHWl8JEJ47zB8Dr4/mTwedMUxNx3q8RcsaXsy1r91+YY9RZc6CMhPZR+B1CtW/Y1Zz6N+THNtc3BpI0MirxmKYW4dIQPM8HNzG4S6kMmydUS0Y1AAmMM6T0vJHgzC/LZHQ5E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 26588 invoked by uid 109); 3 Apr 2024 20:19:00 -0000
+Received: (qmail 26670 invoked by uid 109); 3 Apr 2024 20:32:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Apr 2024 20:19:00 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Apr 2024 20:32:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11403 invoked by uid 111); 3 Apr 2024 20:19:01 -0000
+Received: (qmail 11564 invoked by uid 111); 3 Apr 2024 20:32:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 03 Apr 2024 16:19:01 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 03 Apr 2024 16:32:24 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 3 Apr 2024 16:18:58 -0400
+Date: Wed, 3 Apr 2024 16:32:21 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH 1/2] http: reset POSTFIELDSIZE when clearing curl handle
-Message-ID: <20240403201858.GA1949464@coredump.intra.peff.net>
-References: <20240402200254.GA874754@coredump.intra.peff.net>
- <20240402200517.GA875182@coredump.intra.peff.net>
- <Zgz3nvMLg4ts2rRI@tanuki>
- <Zgz4fTJg2iL07W_h@tanuki>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] imap-send: use xsnprintf to format command
+Message-ID: <20240403203221.GB1949464@coredump.intra.peff.net>
+References: <f9ad9f41-5b9b-474e-9818-f91fc937daae@web.de>
+ <20240403004751.GA892394@coredump.intra.peff.net>
+ <970c27ec-c377-4034-853a-0251733ec50c@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,44 +39,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zgz4fTJg2iL07W_h@tanuki>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <970c27ec-c377-4034-853a-0251733ec50c@web.de>
 
-On Wed, Apr 03, 2024 at 08:34:37AM +0200, Patrick Steinhardt wrote:
+On Wed, Apr 03, 2024 at 11:25:42AM +0200, René Scharfe wrote:
 
-> > Can't we refactor this code to instead use `curl_easy_reset()`? That
-> > function already resets most of the data we want to reset and would also
-> > end up setting `POSFIELDSIZE = -1` via `Curl_init_userdefined()`. So
-> > wouldn't the following be a more sensible fix?
-> [...]
-> Oh well, the answer is "no", or at least not as easily as this, as the
-> failing tests tell us. I guess it resets more data than we actually want
-> it to reset, but I didn't dig any deeper than that.
+> From reading the code I assumed the static buffer is there to stay
+> within some IMAP limit.  RFC 9051 mentions the distinction between
+> synchronizing and non-synchronizing literals.  The latter have a maximum
+> length of 4096 bytes.
+> 
+> But those are transferred after the command, so have no relevance for
+> the command buffer size.  I see no other limits, and I don't see us
+> respecting that non-synchronizing literals limit, either.  I guess that
+> means messages longer than 4096 bytes could be rejected by a conforming
+> IMAP server?  Hmm.
 
-Yeah. The curl setup is really in two parts:
+It can also just be a quoted string, which likewise has no limit defined
+in that section. That's what we send for LOGIN (you have to go back to
+the imap_exec() command which uses a format string). It also looks like
+that would barf completely on a username or password that contains a
+double-quote. Yup:
 
-  1. we make a handle in get_curl_handle(), which also sets up a bunch
-     of options. We use that to make a single "curl_default" handle, and
-     then when we want a new handle we curl_easy_duphandle() that
+  $ git format-patch -1 --stdout |
+    git -c imap.user='my"user"' -c imap.pass=foo imap-send --no-curl
+  [...]
+  IMAP command 'LOGIN <user> <pass>' returned response (BAD) - Invalid characters in atom
+  IMAP error: LOGIN failed
 
-  2. when we want to make a request we call get_active_slot(), which
-     will either return an already-used handle or duphandle() a new one.
-     And then reset some options, but also do some more setup.
+> > Likewise imap-send's nfvasprintf() is basically xstrfmt(), except it
+> > takes a va_list. So it would have to be replaced by strbuf_vaddf().
+> 
+> Looking closer I notice that the result of the single nfvasprintf() call
+> is fed into the 1024 bytes buffer.  So we could replace it with
+> strbuf_vaddf() or xstrvfmt() and still stay within that strange limit,
+> as it's enforced later.
 
-Your patch touches spot (2), so it's erasing all of the setup done in
-(1). I don't think there's a way to say "go back to state when we called
-duphandle(), but keep reusing connections, etc".
+Oh, I forgot we had xstrvfmt(). That would obviously be the right match.
 
-Possibly it could be solved by pushing all of the setup from (1) into
-(2). Though that would probably require separating out some config
-handling, etc, from the actual curl_easy_setopt() calls (we wouldn't
-want to complain about invalid config for _every_ request, for example,
-just once per program run).
+> Its own 8192 buffer shields us from huge allocations e.g. due to long
+> usernames or paths, but we probably don't need this protection as such
+> and "attack" would originate and be felt only locally.
 
-This is all also a bit more complicated than it needs to be for
-smart-http. The dumb-http code may want to have several handles going at
-once to do individual object/pack downloads. Whereas for smart http, we
-really are only working with one handle, and doing one request at a
-time. I don't know if we'll ever drop dumb-http support, but there would
-probably be a lot of cleanup possibilities if we did.
+Yeah, I think all of the data here is user controlled. Even if you
+didn't trust the patch itself, this is all username, mailbox name, etc.
+
+> > I wouldn't be surprised if there are other opportunities for string
+> > cleanup, but I generally hoped that if we waited long enough imap-send
+> > would just go away. ;) Either because we could get rid of the tool
+> > entirely (though from a recent-ish search, there did not seem to be a
+> > lot of good other tools) or because we'd just drop the old code and rely
+> > on curl to do the heavy lifting.
+> 
+> Oh, my build uses curl, so my earlier test run was even worth less than
+> I thought.
+
+Heh.
 
 -Peff
