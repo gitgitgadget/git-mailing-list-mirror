@@ -1,189 +1,228 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF7C17997
-	for <git@vger.kernel.org>; Wed,  3 Apr 2024 04:53:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F4745941
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 06:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712120039; cv=none; b=Nj5FOG36FniYNxeeZKzHsOENYExSPg0ZIhByouMQfGWKH0z+PLU2SOngNWrPfPT0Jl+xfCB7dspidP2+wgPWRraQa3hJwS3z7Fp0zNzRaeBpqE9vaOngABAYCX4giLhUMmQ45JLLMIdiwOu9PYVkJt4VDFTr7vNm3IOYTJCadso=
+	t=1712124115; cv=none; b=cBWieUN6XjNhDibn/SCP04QGawuCDnvfRJWwWVENkzq2CGuyY23kBi77UzkGIZB01lkTLRKgY7JuF3SmEdKBdaRRWtbwYD24a0ZUhtdSRKAEQauYvAaa2SUo9PLL08YOysOuoftZgtmqVza2doSCIQZKhNcO8mNomGKRkD330xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712120039; c=relaxed/simple;
-	bh=348DkX0Sh3Yv+tIhunseIfZ0SbRQSD5i0WtY0+anDHw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SMKvJEVHqzeRV73Zqsz2PwX0KkBpaH2+N29gVJPszaY+e+NZpRiaJq5t/VVcbbxXDvU+6P3+mbitzE0V6+VdvSlfFwkuMJqyLCNGGMHzDHZdgxFMrDr0J5hiJe3k7XfRZ3HXv2f7Y6KA2vUNvLoJtq0EdCj3EKrBcfe/e/T4vWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KY/wjLt3; arc=none smtp.client-ip=209.85.161.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712124115; c=relaxed/simple;
+	bh=W4VKfYCrb0FvDN2/hAJ9yXzD5uam6cJ5a0lWUalIAwc=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wl0c4/wn2lqBIzO0adYvafoBerSrqKU7JkzvO04FFp3aKX2+TSYydMwNFeuEnoIfkT9f1dHU0p7sUOrYHL5hgQHr2Q9Y/LRI3CwY3OlR3Lp4eKv/QwhN5b/A/I4VVp5rqmSJcfL7X+K2M9P/n1sdOhbxTw9QZKzNuEq3DX4J/8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FaxGbzcG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pShpkvrd; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KY/wjLt3"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5a7a4119d02so2032674eaf.1
-        for <git@vger.kernel.org>; Tue, 02 Apr 2024 21:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712120037; x=1712724837; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3YjnfbxbfZUXV5Vkuq4fiD4p0ZBFxSq3eCZIhN91RsE=;
-        b=KY/wjLt3JzV8zP0/PqaoJdlX1gBxqAXJWv/zGjHx/0dSb9e4DW8TWMZYsp4Ilb0yKT
-         eMPsDCzWvFkBF8oGIR7DIBsSD1Mp5wCaeq/kUTko8w8t9AnFJ160vusKwVtF2HPjqHzD
-         a7M7+DbNTR0wjtsf+FLI8o+OwWchCUEDGfhd5Y2zhzaeq020Fa0UdNwhxLwPg9pcW4rP
-         W3upuPV9L5y5JFPw5N1KEk4wFP7pCGF9oD1TDHdaRp6CL+fn9EWjtZB7SpgrBGgnnBWM
-         LnKNS3qQ8xV/96i1P0dJ40KCgz5ziBO1Qw37szZni//eCUxusQRMKP8eMU4SsHknC7Yk
-         kIuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712120037; x=1712724837;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3YjnfbxbfZUXV5Vkuq4fiD4p0ZBFxSq3eCZIhN91RsE=;
-        b=oS9WkNfxRaoodUVdroz7gsDgjyn7gk2LUs+vzxDJcLZZbE5gtpl6p1xm412K0b2bta
-         z3/GkMUGj8o2nE/UNs+b2Tlfq7LJwWP9VqHPNO5olbc0OQdeup3+U4ddjBW+cpwXJLsP
-         Ok6ET37xd8Toqf5y+vttsufKngZ4xCqr0Kh7hrzwy6grNlCM1whTB4y58tX0PpGkBxjA
-         1IekILitAKZneFy1zyVAvw5YuuKT0K4Oov5I5eo1uFYFqwJvbGy9LIxSW3vSFztehGHd
-         rK2H5U19OklPxBh8CdicxVsZyS75b7cxJ6mBu3bBCtdU8u+auW6Z3hO3gaMGbGtSsCNH
-         A4Sg==
-X-Gm-Message-State: AOJu0Yw0dXs6YPIwZ20lG9B2UkmMz2YI5wf61CXO30xp13VDoGooWafU
-	k2ctJN1knpE+ZBGce6CCAhhli3U35IyLdSmdJtUVuFzsp2Wy5goAloBSIcXW
-X-Google-Smtp-Source: AGHT+IECs3L+Z2iwpW6NlxVjr05TLmLW1VP87BEoEZOv783ScAEWGGhvJbaA8NJ9kzGIwpV7jCsXyg==
-X-Received: by 2002:a05:6820:270a:b0:5a5:2105:f209 with SMTP id db10-20020a056820270a00b005a52105f209mr15306144oob.6.1712120036919;
-        Tue, 02 Apr 2024 21:53:56 -0700 (PDT)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id eo8-20020a0568200f0800b005a58b8e4b1csm3067414oob.7.2024.04.02.21.53.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Apr 2024 21:53:56 -0700 (PDT)
-Date: Tue, 2 Apr 2024 23:52:58 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/9] reftable/block: move ownership of block reader into
- `struct table_iter`
-Message-ID: <hwfkdfilniy46usnc3vnksaphdxboi5bxep4ek7aj2qxfhu332@6ym7dnn35k7z>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1711519925.git.ps@pks.im>
- <f10882a0840a77f2569cf891374b70d1e84ceb4b.1711519925.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FaxGbzcG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pShpkvrd"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 3C59F1380097
+	for <git@vger.kernel.org>; Wed,  3 Apr 2024 02:01:52 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 03 Apr 2024 02:01:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712124112; x=1712210512; bh=coK+ZJyQch
+	qmoz+PfyQmljsbNEIfpEZE37lKymUECD4=; b=FaxGbzcG6CAgQuVhBJ2wQKU/Yi
+	8RXONhukN2ZVIaQVsKpiZkXMwsqZWPXImRze5SO/8AJHXbh5/VG8cVWMOyM3KL/X
+	wWEnXQNewjY90/sI30gCs4qJ2BPb6w0qlpDlBrZ+C1hMOV55dqy4F1I6E9VRxmf8
+	fKuuKAkwlujMlzsLLWyE7QdMJn62rtXHMHjuerhCuR75lsPG4EkGDBv3korCzxuQ
+	n5i/XGlCwu3nNZgyiLaiaTL4QSaZB2fRQxLf55HqMn6KEC6yd5LzfuYVcfvJBznB
+	8fy5lbfZv9pDuaSZjOJ7+Nk4+miC/ePDzXCIE+5FjZLgwJLN7+hT5UwG4D5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712124112; x=1712210512; bh=coK+ZJyQchqmoz+PfyQmljsbNEIf
+	pEZE37lKymUECD4=; b=pShpkvrdI8rdYtCZneOP/kVlLtBjUoPnclSwTdSGK3b6
+	QNZe1hs7KJzi6GJWbJxG2lxJQecnGyFE0Y9j4iJGVs4rV6jn8rNbPegERQbEw1ET
+	pAu/DCRP/YjISofE+OEGsB6IkG3oWNDdYH5cjPoitr9OeOc/IPhcbdovZWxBMFSn
+	R2aNFZbwhln7sFSg10cERfRZWaobGjCWTpcRzt4e8AXf3LL1nUmNQ1a2BgSMQCrz
+	MC6vImyQ7WpFjwNLDnYHkwmKPijX30qrLg15+W7/Xdj9UnEv3Q5mJPL0gNlUmrsL
+	8GfNzoN0A8jlgvKfone1u/DrU38/Hhhtw5FIcx+3/Q==
+X-ME-Sender: <xms:0PAMZjoa8pt09LIf1Yc0RduxGr3zV7oBdFTgIw3JKzb1cKCyS3ulgw>
+    <xme:0PAMZtpiE6sZBjOo9QlcZUA7zpuiKz8ueZ4m9ZbHymq0-gw60iCgQFax8SIFQQSpa
+    a4yLXAaWhsgPQO7wg>
+X-ME-Received: <xmr:0PAMZgNLaWYwp3uJhScQ1nKj_kT2kZjaE6kJv4nLssI_Ifq6gja5FxcspClJBGtAGk_XpfAZoBshUX42nUyt10uAdoyoJfMirKJzpMuLzQnKVA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeffedguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:0PAMZm4O4Tn8iRIRYzHlke5K-OejoUPEholykP5ls6TG1Od9SgoWwA>
+    <xmx:0PAMZi69dcWtcWc4mBrJfCZnCVo5VLLouiJcxsky1RdaTIGB3Jmcng>
+    <xmx:0PAMZuh8Z6ZX_WzkCb-0honLOD1EpQr9XKB6x1ubr5KhgoWWgjpiMA>
+    <xmx:0PAMZk4wxpyKwizxuTlFZt7sPWOnDO2xQX1Isf-9JK-vWdmqxekH2w>
+    <xmx:0PAMZiECHjsnOQIaevNdl6ByamHGjyIlN8E5uSa4wiqgwSvSBTtchEqg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 3 Apr 2024 02:01:51 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b01ac259 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 3 Apr 2024 06:01:39 +0000 (UTC)
+Date: Wed, 3 Apr 2024 08:01:46 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: Re: [PATCH v2 4/7] reftable/block: refactor binary search over
+ restart points
+Message-ID: <Zgzwyjwo780Ry1XL@tanuki>
+References: <cover.1711109214.git.ps@pks.im>
+ <cover.1711361340.git.ps@pks.im>
+ <5e20d93ae000359f2231bf950a930cfc4898ced2.1711361340.git.ps@pks.im>
+ <45v2z6uszlkanwl5qhvio4ikrrytztohbmdpnmdwiefyznclum@xhbvlvnfmkmq>
+ <Zgw9PlgGDcmwLnDB@tanuki>
+ <ympg3oam4pty53qnxhtnla2xac73gdqsoclwsuzcmjd4dn4xre@j64veypnecrj>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Npp7oF3JHXYPJLW5"
+Content-Disposition: inline
+In-Reply-To: <ympg3oam4pty53qnxhtnla2xac73gdqsoclwsuzcmjd4dn4xre@j64veypnecrj>
+
+
+--Npp7oF3JHXYPJLW5
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f10882a0840a77f2569cf891374b70d1e84ceb4b.1711519925.git.ps@pks.im>
+Content-Transfer-Encoding: quoted-printable
 
-On 24/03/27 07:37AM, Patrick Steinhardt wrote:
-> The table iterator allows the caller to iterate through all records in a
-> reftable table. To do so it iterates through all blocks of the desired
-> type one by one, where for each block it creates a new block iterator
-> and yields all its entries.
-> 
-> One of the things that is somewhat confusing in this context is who owns
-> the block reader that is being used to read the blocks and pass them to
-> the block iterator. Intuitively, as the table iterator is responsible
-> for iterating through the blocks, one would assume that this iterator is
-> also responsible for managing the lifecycle of the reader. And while it
-> somewhat is, the block reader is ultimately stored inside of the block
-> iterator.
-> 
-> Refactor the code such that the block reader is instead fully managed by
-> the table iterator. Instead of passing the reader to the block iterator,
-> we now only end up passing the block data to it. Despite clearing up the
-> lifecycle of the reader, it will also allow for better reuse of the
-> reader in subsequent patches.
-> 
-> The following benchmark prints a single matching ref out of 1 million
-> refs. Before:
-> 
->   HEAP SUMMARY:
->       in use at exit: 13,603 bytes in 125 blocks
->     total heap usage: 6,607 allocs, 6,482 frees, 509,635 bytes allocated
-> 
-> After:
-> 
->   HEAP SUMMARY:
->       in use at exit: 13,603 bytes in 125 blocks
->     total heap usage: 7,235 allocs, 7,110 frees, 301,481 bytes allocated
-> 
-> Note that while there are more allocation and free calls now, the
-> overall number of bytes allocated is significantly lower. The number of
-> allocations will be reduced significantly by the next patch though.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-...
-> @@ -340,14 +344,14 @@ void block_iter_copy_from(struct block_iter *dest, struct block_iter *src)
->  int block_iter_next(struct block_iter *it, struct reftable_record *rec)
->  {
->  	struct string_view in = {
-> -		.buf = it->br->block.data + it->next_off,
-> -		.len = it->br->block_len - it->next_off,
-> +		.buf = (unsigned char *) it->block + it->next_off,
+On Tue, Apr 02, 2024 at 12:46:30PM -0500, Justin Tobler wrote:
+> On 24/04/02 07:15PM, Patrick Steinhardt wrote:
+> > On Tue, Apr 02, 2024 at 11:42:29AM -0500, Justin Tobler wrote:
+> > > On 24/03/25 11:10AM, Patrick Steinhardt wrote:
+> > > > When seeking a record in our block reader we perform a binary search
+> > > > over the block's restart points so that we don't have to do a linear
+> > > > scan over the whole block. The logic to do so is quite intricate th=
+ough,
+> > > > which makes it hard to understand.
+> > > >=20
+> > > > Improve documentation and rename some of the functions and variable=
+s so
+> > > > that the code becomes easier to understand overall. This refactoring
+> > > > should not result in any change in behaviour.
+> > > >=20
+> > > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > > > ---
+> > > ... =20
+> > > > -	i =3D binsearch(br->restart_count, &restart_key_less, &args);
+> > > > +	/*
+> > > > +	 * Perform a binary search over the block's restart points, which
+> > > > +	 * avoids doing a linear scan over the whole block. Like this, we
+> > > > +	 * identify the section of the block that should contain our key.
+> > > > +	 *
+> > > > +	 * Note that we explicitly search for the first restart point _gr=
+eater_
+> > > > +	 * than the sought-after record, not _greater or equal_ to it. In=
+ case
+> > > > +	 * the sought-after record is located directly at the restart poi=
+nt we
+> > > > +	 * would otherwise start doing the linear search at the preceding
+> > > > +	 * restart point. While that works alright, we would end up scann=
+ing
+> > > > +	 * too many record.
+> > > > +	 */
+> > > > +	i =3D binsearch(br->restart_count, &restart_needle_less, &args);
+> > > > +
+> > > > +	/*
+> > > > +	 * Now there are multiple cases:
+> > > > +	 *
+> > > > +	 *   - `i =3D=3D 0`: The wanted record must be contained before t=
+he first
+> > > > +	 *     restart point. We will thus start searching for the record=
+ in
+> > > > +	 *     that section after accounting for the header offset.
+> > >=20
+> > > To clarify my understanding, does a restart_offset not exist at the
+> > > beginning of a block? I was originally under the impression that the
+> > > first reset point would be at the beginning of the block (or just aft=
+er
+> > > the header). If this was the case, the first restart point being grea=
+ter
+> > > would indicate that the wanted record is not contained within the blo=
+ck.
+> >=20
+> > It wouldn't make much sense to include it as a restart point. A restart
+> > point is a point where the prefix compression will be reset such that
+> > the record at that point can be read without reading preceding records.
+> > This is always implicitly true for the first record in a block as it is
+> > never prefix-compressed. Consequently, writing a restart point for the
+> > first record would be a waste of disk space.
+>=20
+> Thanks Patrick! Good to know :)
+>=20
+> From Documentation/technical/reftable.txt:
+>=20
+> > As the first ref block shares the first file block with the file
+> > header, all restart_offset in the first block are relative to the
+> > start of the file (position 0), and include the file header. This=20
+> > forces the first restart_offset to be 28.
+>=20
+> I'm assumming this is out-of-date.
 
-Would it be best to use the `uint8_t *` type instead of `unsigned char *`
-to match `string_view.buf`? Not sure if it matters in this case.
+That paragraph actually made me re-check my own assumptions. Turns out
+my claim is wrong. The function responsible for registering restarts is
+`block_writer_register_restart()`, which gets a parameter `is_restart`
+that is determined by `reftable_encode_key()`. And that function in turn
+will set `restart =3D 1` whenever `prefix_len =3D=3D 0`. And given that the
+first record always has `prefix_len =3D=3D 0`, it will thus have a restart
+point, as well.
 
-> +		.len = it->block_len - it->next_off,
->  	};
-...  
-> diff --git a/reftable/block.h b/reftable/block.h
-> index 601a1e0e89..b41efa5042 100644
-> --- a/reftable/block.h
-> +++ b/reftable/block.h
-> @@ -84,16 +84,18 @@ int block_reader_init(struct block_reader *br, struct reftable_block *bl,
->  void block_reader_release(struct block_reader *br);
->  
->  /* Returns the block type (eg. 'r' for refs) */
-> -uint8_t block_reader_type(struct block_reader *r);
-> +uint8_t block_reader_type(const struct block_reader *r);
->  
->  /* Decodes the first key in the block */
-> -int block_reader_first_key(struct block_reader *br, struct strbuf *key);
-> +int block_reader_first_key(const struct block_reader *br, struct strbuf *key);
->  
->  /* Iterate over entries in a block */
->  struct block_iter {
->  	/* offset within the block of the next entry to read. */
->  	uint32_t next_off;
-> -	struct block_reader *br;
-> +	const unsigned char *block;
+I'll update the comment like this:
 
-Same question here. Would it be better to use `uint8_t *`? Or does it not
-really matter?
+diff --git a/reftable/block.c b/reftable/block.c
+index 8bb4e43cec..298e8c56b9 100644
+--- a/reftable/block.c
++++ b/reftable/block.c
+@@ -417,9 +417,12 @@ int block_reader_seek(struct block_reader *br, struct =
+block_iter *it,
+ 	/*
+ 	 * Now there are multiple cases:
+ 	 *
+-	 *   - `i =3D=3D 0`: The wanted record must be contained before the first
+-	 *     restart point. We will thus start searching for the record in
+-	 *     that section after accounting for the header offset.
++	 *   - `i =3D=3D 0`: The wanted record is smaller than the record found at
++	 *     the first restart point. As the first restart point is the first
++	 *     record in the block, our wanted record cannot be located in this
++	 *     block at all. We still need to position the iterator so that the
++	 *     next call to `block_iter_next()` will yield an end-of-iterator
++	 *     signal.
+ 	 *
+ 	 *   - `i =3D=3D restart_count`: The wanted record was not found at any of
+ 	 *     the restart points. As there is no restart point at the end of
 
-> +	size_t block_len;
-> +	int hash_size;
->  
->  	/* key for last entry we read. */
->  	struct strbuf last_key;
-> @@ -106,17 +108,22 @@ struct block_iter {
->  }
->  
->  /* Position `it` at start of the block */
-> -void block_iter_seek_start(struct block_iter *it, struct block_reader *br);
-> +void block_iter_seek_start(struct block_iter *it, const struct block_reader *br);
->  
->  /* Position `it` to the `want` key in the block */
-> -int block_iter_seek_key(struct block_iter *it, struct block_reader *br,
-> +int block_iter_seek_key(struct block_iter *it, const struct block_reader *br,
->  			struct strbuf *want);
->  
-> -void block_iter_copy_from(struct block_iter *dest, struct block_iter *src);
-> +void block_iter_copy_from(struct block_iter *dest, const struct block_iter *src);
->  
->  /* return < 0 for error, 0 for OK, > 0 for EOF. */
->  int block_iter_next(struct block_iter *it, struct reftable_record *rec);
->  
-> +/*
-> + * Reset the block iterator to pristine state without releasing its memory.
-> + */
+Thanks for making me challenge my own assumptions!
 
-Do we want to make the comment a single line to match the other adjacent
-examples?
+Patrick
 
-> +void block_iter_reset(struct block_iter *it);
-> +
->  /* deallocate memory for `it`. The block reader and its block is left intact. */
->  void block_iter_close(struct block_iter *it);
->  
-...
+--Npp7oF3JHXYPJLW5
+Content-Type: application/pgp-signature; name="signature.asc"
 
--Justin
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYM8MkACgkQVbJhu7ck
+PpSoFA//QgwuqyyhowzB2TxvfEKd9HxpWr09CQu34ZZsKy9LYwq3GvN3AiY8UHtR
+he/dsuhGkK8/XeurAb2tBe2jLeEXHWuHWgeeur65h/ojocFbeh2tjRlUu3w/NCGn
+UWUI+QtCdPPql5E0PQJV8b3EIYyqfWagcjgizG4uYLulGB+JR9oUIsXlHjc/l9P2
+h3X3USGtlRm1o5v26P5agdcMB86ynYnTILDW48YugCaY6CPHwVfL1YJTQwlPow8v
+EA2nsyy2qFp18nantDkj/e1Fm6FeG2f7aQ8BIm99WpX8Do+NdQnTs9DIaR5vPi/2
+3SUPhbDZw6p4Rl+8NDGMJJMN7Ka6OLxZe1KBAigQnkL3PnqJP6r08LLnD9+0tKO7
+/tmGnul1ctAAY5KumcMUIFk9Bd8aMjSb/4/riVjCQFJWvJHo0e4xKcQFW+p5Phyq
+zCxTJVjj1RTT5KCqKJ49dK4nFigHKTYp3M5SbskUAxrgOrgu+Lk4CT7NbTdruJHQ
+8QAB7p25y1lA8PIlvzXIIf1WAQ5YY1XU0SYAMGhQa251o7TusjMtwigWVti/Ihsd
+3jNWrYv1FxcqH3u5Z1LE3m1/5+Tytscf23HVxKnRzG56vi4c4mAiJlijC2ZhrSxD
+19gZRkNiWRPZHcCkv1ym6LCmdV8U5/fPvui7RARgL4lVG3JucCU=
+=MuMH
+-----END PGP SIGNATURE-----
+
+--Npp7oF3JHXYPJLW5--
