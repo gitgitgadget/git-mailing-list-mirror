@@ -1,89 +1,166 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2185B13BC09
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 21:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2C56F510
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 22:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712266843; cv=none; b=tja9iJdnfPVXyafdrSxmZrLfQjke86FuAIiTZ10lCatTV7ksS6YGSx408kP6ilUdZOhbsMDUIphJrncYfdW4gBVrYr03RzJVK1TENhkLAWgiib3uK7oUFLKSRZh4Eu07nVHD3J96l7Qttflp9/4EtiBLGiAELNr5Uf1TPNi3TcE=
+	t=1712271158; cv=none; b=HbDZ4jbfyEs5oyQ9DS7yQgwWkCXt/h/gR/WNVIfcKijrc0S2GeyM/VT2A6BGeKFuXqSfdovAn6HSXGK6D8WTNaRheP+aO37O2CuylwOIIas4RzRRqNG/Yk+gYWFkO/qwrQNaXjX6CBh1EqriU3LFUpY0+2JKi/ZKW4j3UH1X8pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712266843; c=relaxed/simple;
-	bh=a/SiryKOfW1B+y2C4yKT06BvFeGQHQIXnLSmuxPHpvo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gMPnztW69ggmP5B7cTBaru2FEkrJJD3REol9mj/ljr35uiD66+C2jQg/xARXt6gAKkZOUFqOlJEDW9FR/ll504Damu+Cgzg5xYEC6QPqWAOGZSk4UzC+vuU9kWstk5lR7ksspulJIXbiyaT5w/AXTmS+OQWpFl/1lQEbV0LsLn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jzPVeTtT; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712271158; c=relaxed/simple;
+	bh=MZisWWMSjEqZpb74t8MoJAVdNaNZXOovuvTgQgB2Cb8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PdoeztsPdZEG+P4ddAG0EyP62e+jUD30w0cOnPn5f2/pK36M6h9/TOUyMHDxdOKdM7DGfdjKcV+aSfuoThGkuvVfoxNp7Lm25dwBesXombpmV9fka/2Jmrv2NrP/Y9QPA00WU/YUPJfW0U1xP/OuUyZMkLcJLdR9SycpqGnh2co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CjLBKWGb; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jzPVeTtT"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6eced1dab1fso1038325b3a.1
-        for <git@vger.kernel.org>; Thu, 04 Apr 2024 14:40:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712266841; x=1712871641; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cQD0dIpPRCFqv84BnaEmmJnasf5tXZEbCBxUXAyaSHs=;
-        b=jzPVeTtTevfqh72UZ5EHWlsmIjOv+AFLuNpMXKYk/Y6XYphXimODV9Tr0WNw3At92z
-         3kEeMMZsYAgfl0RYW122N16Uth/Pc9IFz+qHFfYcQ/JsGwK+IrhMLJG3D6CWtV+JALL5
-         K9VX7X/ZnVnjAtXScrvceE1xOVYafj14IzmvK4nL88l1OklGCjNoWMzV18jiaNkKrTHn
-         pic927AdKQof8XHkR4sUrJVAO2dr/Ioaj1SnYrCPccM1436oQ8Gnl/rRpnwXvjZPqDty
-         gs+aeulJlSrCGd0IShRhJe84/aBxCShvELWOSQt6mj4ZQ2kaB65/gLdsOJU9uG3kTERT
-         j2hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712266841; x=1712871641;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cQD0dIpPRCFqv84BnaEmmJnasf5tXZEbCBxUXAyaSHs=;
-        b=jG1AAkC2raXW/w9iKbo1l9+wqh/0gXsGzSnR27YQ8I+FAccrLQc7+fLMtKap7cLNFi
-         D2mymGKJcdxBsa9ybncxE6dZkLlfz6E2r6OygTczcB+vPpdP5XvAz5g1lYW0Yo4KtRKD
-         00i0D2YoYDyk6R4cz1vf/16dAfTL97iT5dVnM7UhhJkDSxF5khckF62pwo8SYaw4eY/P
-         n6cz5AFnIu2EugMfMCFvjZB+gakWsfWzsnCUHm3HygA1YU0NB+ulAB6HItID5sOwHMLb
-         7sspS3N74YIlv2PUbLjQyIr2+qlzkx7o97XPsGxWPqjH3Ew9PYQW1qWXQGke3Tu07XH2
-         rj7A==
-X-Gm-Message-State: AOJu0YzWH3d8nkEWI5gpxLFR4P/zyM+ZWDPTEbCQIfbNJas3qxj6Yv8e
-	X5NnIFmnoT0RM1AE/wGkDz2A2Y1jtHaVM6vepInKN/LPBvV3pD+Wo5dEquH4gqhZfgn235v13+6
-	nktqD9sPMe43TDMxPd2n4ON8nBXk=
-X-Google-Smtp-Source: AGHT+IFU2o7mivAjMV3qvKNcitEJSrvyCeUZ2mAfSVG4FbNovuptGRZRtDG1V8vW1riu96qxaJfv4Yie2H48Tbh/dcY=
-X-Received: by 2002:a05:6a20:3d90:b0:1a5:6ae4:dc38 with SMTP id
- s16-20020a056a203d9000b001a56ae4dc38mr4139291pzi.40.1712266841345; Thu, 04
- Apr 2024 14:40:41 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CjLBKWGb"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 73E691E7AA;
+	Thu,  4 Apr 2024 18:52:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=MZisWWMSjEqZpb74t8MoJAVdNaNZXOovuvTgQg
+	B2Cb8=; b=CjLBKWGbSXVAQ0TUGl0bvex2DCYBfJiHFSoaWRvlQ40Boes7uJF0uW
+	QvRGV2sg99UPH7G6651zegaqLHcFh7abz8VYFdzJffMRGAFm7VLgiK8iqi4kf6g0
+	6nvP9o+/HV53bprRZ0FRgQst4nMlCVv6Dw6ngd+i9Eq+cbqUf5dz8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D6AF1E7A9;
+	Thu,  4 Apr 2024 18:52:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EAF2E1E7A8;
+	Thu,  4 Apr 2024 18:52:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] send-email: make it easy to discern the messages for
+ each patch
+In-Reply-To: <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Thu, 4 Apr 2024 22:34:28 +0200")
+References: <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
+Date: Thu, 04 Apr 2024 15:52:31 -0700
+Message-ID: <xmqqzfu8yc40.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1712235356.git.ps@pks.im> <db66dd4155d80b714719e80ff90f64c1d36b97d0.1712235356.git.ps@pks.im>
-In-Reply-To: <db66dd4155d80b714719e80ff90f64c1d36b97d0.1712235356.git.ps@pks.im>
-From: Han-Wen Nienhuys <hanwenn@gmail.com>
-Date: Thu, 4 Apr 2024 23:40:29 +0200
-Message-ID: <CAOw_e7b5wDKOcY9hSty+c+z-NWVUgri3h3ScF0qd1Y6cmfsyVA@mail.gmail.com>
-Subject: Re: [PATCH 12/12] t0612: add tests to exercise Git/JGit reftable compatibility
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Josh Steadmon <steadmon@google.com>, 
-	Luca Milanesio <luca.milanesio@gmail.com>, JGit Developers list <jgit-dev@eclipse.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 05D40558-F2D6-11EE-BD9F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Thu, Apr 4, 2024 at 5:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
-:
-> +
-> +test_same_refs () {
-> +       git show-ref --head >cgit.actual &&
-> +       jgit show-ref >jgit-tabs.actual &&
+Dragan Simic <dsimic@manjaro.org> writes:
 
-This seeks to the start and then iterates to the end, likely skipping
-indexes. If you want to test for indexes etc. you should also sample
-random refs from the namespace and see if they are returned correctly.
+>  		if ($smtp) {
+>  			print __("Result: "), $smtp->code, ' ',
+> -				($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
+> +				($smtp->message =~ /\n([^\n]+\n)$/s);
+>  		} else {
+> -			print __("Result: OK\n");
+> +			print __("Result: OK");
+>  		}
+> +		# Make it easy to discern the messages for each patch
 
-> +test_expect_success 'JGit repository can be read by CGit' '
-> +       test_when_finished "rm -rf repo" &&
-> +       # JGit does not provide a way to create a reftable-enabled reposi=
-tory.
+I do not think we want this comment.  
 
-You can do "jgit init && jgit convert-refstorage --format=3Dreftable"
+Before printing the "Result: OK" line, we do not give an obvious and
+pointless comment e.g., "# Report success".  What this comment says
+something similarly obvious.  Both choices in the preceding if/else
+emit an incomplete line, hence it is clear that we need to terminate
+the line here, and this is the last line of output about the message
+we just processed.
 
---=20
-Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
+>  	}
+>  
+>  	return 1;
+
+You didn't ran t9001 before sending this version (or any of the
+previous rounds) out, did you?  Among ~200 tests 10 of them now fail
+with this patch applied.
+
+Do we know when we are sending either the first or the last message
+of a sequence at this point in the code?  It would be superb if you
+can make this extra blank line a separator, not a terminator [*], as
+there needs no extra blank line after emitting the last message.
+
+    [Side note]
+
+     * When showing a list of 3 things A B C, you can separate them by
+       inserting a gap between A and B, and another gap between B and C,
+       and you are using the "separator" (this is similar to how "git
+       log --pretty=format:..." works).  But you can be lazy and instead
+       append a gap after each element, in which case you are using the
+       "terminator" (similar to how "git log --pretty=tformat:..."
+       works).
+
+But it is harder to do separator correctly if the output is
+conditional (e.g., you have 5 input messages, but you may somehow
+skip some messages depending on conditions---now your code to decide
+if you emit an extra newline needs to take it into account.  After
+sending the 4th message and showing an extra newline, because you
+expect that there is another message to be sent and it needs a gap
+before, you may realize that some logic causes you to drop 5th and
+final message but then it is too late for you to take that extra
+blank line back), and obviously a buggy separator implementation is
+worse than a terminator implementation.
+
+Here is my attempt on top of your patch to implement the separator
+semantics.  After showing a message, we remember that fact, and
+before showing the next message, we emit an extra blank line.  With
+it, all tests in t9001 pass, but you may want to double check how
+different ways to leave send_message() would affect the output.  I
+just randomly decided that there needs no extra blank line before
+emitting the message that was edited and that is why in the
+following patch, I assign 0 to $want_separator_before_send_message
+in that case, but it may not be the right choice (I never "edit"
+inside send-email myself, so I would be a wrong person to decide
+without second opinion), for example.
+
+
+ git-send-email.perl | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git c/git-send-email.perl w/git-send-email.perl
+index ac0c691d3a..d4bbc73f1f 100755
+--- c/git-send-email.perl
++++ w/git-send-email.perl
+@@ -1689,8 +1689,7 @@ sub send_message {
+ 		} else {
+ 			print __("Result: OK");
+ 		}
+-		# Make it easy to discern the messages for each patch
+-		print "\n\n";
++		print "\n";
+ 	}
+ 
+ 	return 1;
+@@ -1918,16 +1917,21 @@ sub pre_process_file {
+ # Prepares the email, prompts the user, and sends it out
+ # Returns 0 if an edit was done and the function should be called again, or 1
+ # on the email being successfully sent out.
++my $want_separator_before_send_message = 0;
++
+ sub process_file {
+ 	my ($t) = @_;
+ 
+         pre_process_file($t, $quiet);
+ 
++	print "\n" if ($want_separator_before_send_message);
+ 	my $message_was_sent = send_message();
+ 	if ($message_was_sent == -1) {
+ 		do_edit($t);
++		$want_separator_before_send_message = 0;
+ 		return 0;
+ 	}
++	$want_separator_before_send_message = $message_was_sent;
+ 
+ 	# set up for the next message
+ 	if ($thread) {
