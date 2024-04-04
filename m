@@ -1,51 +1,50 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35721BDCD
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 16:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53E817BA8
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 16:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712249158; cv=none; b=ljAJYxoEY6LP1g9noiweiAHXAvUfdqCo4Ov4jQyBCRoAqhlMeKB9vIeyiWXXGxEPo6/pXHWsSLCESCWqw4uhGYqYhhQ4O0AOHgLGvEX5uDc/WHt6xfVbtFnJgDUHE7wqLRcLFJzR0uKTGkjsCr59V42fBrvUYXdTwXxaS7Mlokc=
+	t=1712249801; cv=none; b=f/rWbcbTDzxv/depNKUTi/I1JYQhfLWg5rKl4INKGwZJj2H53zCVsR0EpWwOeIkmOVt6J6oic6GylXVFDQem6Etfg4YqjafaMU+5ZNpPL+QTdqpPUvPy1IBsCp5ufdfWTiPgGWEp/WzFUbPdSZjRhHMXz5r4qUakYEais3bciEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712249158; c=relaxed/simple;
-	bh=cGFvrXR8bkZ2h4G/Umipptjp6qrjT+1qcyFGAay74lk=;
+	s=arc-20240116; t=1712249801; c=relaxed/simple;
+	bh=lPeuB0vvocqviv6hRqIh9MhjG1TSuMaH0K9mAB3s6tA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sHTrCbK86A48joQEZuA04ZVbLSa54BroKLCYjpR3a4ooqHGumgrbvj+nyY6MwSzHh0ySKTP+AuvwxGzOZeDseEP2b7Y51ZkK9Zy2RNqU5BwV2CGE7qymYniVC1Wk8BUZbTj9y4f45/Wujm8MQcRMgsUAbVZ8EVW2eSErYdrknDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vrTLQfGx; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=dCrs5XdAJQbuHOK/YgmiowYAzEhJfk5gVsduN26wyqbEvyBwax1yuc8jR0qUUArIknDUFFO7Zk7hXyJTYBSTBrpiRhkIgdcKNE41nCZ3PNsR18aBsFyIpYsyi8/IM44tO0zvrpoR8C5xqS1uSXGUTOScvJdjQapNcIeH469uv1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dV05G8Zv; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vrTLQfGx"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 12B021BF79;
-	Thu,  4 Apr 2024 12:45:57 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dV05G8Zv"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39A361E5D0A;
+	Thu,  4 Apr 2024 12:56:32 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=cGFvrXR8bkZ2h4G/Umipptjp6qrjT+1qcyFGAa
-	y74lk=; b=vrTLQfGxmRYNBBsSPau9cKaMQG93J566OdUpsmkZ1OK5GlNr/+1OvG
-	3fg6kmALj01Jy3LM+dilgTA44DBfPSSsxmZO8W2JSt/AMP82wSuC/0npVHbYpQ7y
-	04inFovc+CfniHUgzfynh7+G6PJxByeUpb7C07LKGITr5JmeVD3OY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0A73D1BF78;
-	Thu,  4 Apr 2024 12:45:57 -0400 (EDT)
+	:content-type; s=sasl; bh=lPeuB0vvocqviv6hRqIh9MhjG1TSuMaH0K9mAB
+	3s6tA=; b=dV05G8Zv6dasB2UHNr+znbuyYJQi5ibjjTMKv/kZIBZpSCHvg21F1O
+	jPmyE3DswfQB+K+hKHAD31mHgtFcbaBPp2VCV1/GCTKIxWY+3ea7PfGjX/bwl3+M
+	5C98OHoeNQ04TEWkwteDjOAHUh8kPL3LU8TDX1pfcuxIkw5V6l6Dw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3124B1E5D09;
+	Thu,  4 Apr 2024 12:56:32 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6C16E1BF77;
-	Thu,  4 Apr 2024 12:45:52 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90A3C1E5D06;
+	Thu,  4 Apr 2024 12:56:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "David Bimmler via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  David Bimmler <david.bimmler@isovalent.com>
-Subject: Re: [PATCH] sequencer: honor signoff opt in run_git_commit
-In-Reply-To: <xmqqzfu914jc.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	04 Apr 2024 09:22:31 -0700")
-References: <pull.1707.git.1712223572933.gitgitgadget@gmail.com>
-	<xmqqzfu914jc.fsf@gitster.g>
-Date: Thu, 04 Apr 2024 09:45:50 -0700
-Message-ID: <xmqqr0fl13gh.fsf@gitster.g>
+To: Alexandre Badez <alexandre@badez.eu>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: Git log --decorate show prefetch objects
+In-Reply-To: <5a16d4e3-6fa4-45f3-ae79-576f3fa80d44@badez.eu> (Alexandre
+	Badez's message of "Thu, 4 Apr 2024 12:16:20 +0200")
+References: <5a16d4e3-6fa4-45f3-ae79-576f3fa80d44@badez.eu>
+Date: Thu, 04 Apr 2024 09:56:30 -0700
+Message-ID: <xmqqh6gh12yp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,42 +54,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CC7F5574-F2A2-11EE-8F2F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 49762B10-F2A4-11EE-8822-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Alexandre Badez <alexandre@badez.eu> writes:
 
->> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
->> +	test_cmp expected-signed-after-conflict actual
+> # What did you do before the bug happened? (Steps to reproduce your issue)
 >
-> Running any git command on the left hand side of a pipe is frowned
-> upon, as it will hide exit status from it when it fails.
+> <on a git repository not fetch from a "long" time so you have missing
+> branches and/or objects>
 >
-> In this case, the primary thing we care about is that we have added
-> the sign off that did not exist in the original, so I wonder
+> git maintenance run --task=prefetch
 >
-> 	git cat-file commit HEAD >actual &&
-> 	test_grep "Signed-off-by: " actual
->
-> would be sufficient?
+> git log --oneline --decorate --all --graph
 
-The answer is No.  It is plausible that somebody else in a future
-may think that a better fix is to always prepare the final commit
-message inside sequencer.c and call append_signoff(), and use it in
-both the "in-process commit" codepath in try_to_commit() and in the
-code that was fixed in the patch we are discussing.  If such a
-future update is done carelessly, we might end up adding duplicate
-sign off.  A "at least one instance must be there" test_grep would
-not be a good tool to catch such a breakage.
+I do not use the prefetch stuff, but unfortunately the person who
+was most familiar with "maintenance" are no longer active on this
+list, so let me take a crack.
 
-	git show -s --format=%B HEAD >actual &&
-	test_cmp expect actual
+I think your complaint is that "--all" really means "all", not just
+"heads" and "tags" but also includes "prefetch", while the prefetch
+hierarchy is not included in the "--decorate" sources.
 
-may be a good replacement.
+What does
 
-But having said that, and then after having looked at the existing
-tests in the file, I see that it is littered with the same "do not
-run git on the upstream of the pipe" violation.  So let's not worry
-about this one.  The whole t3428 script needs to be cleaned up after
-the dust settles.
+    $ git log --oneline --branches --tags --decorate --graph
+
+show, and is it closer to what you expected (note: this is not a
+direct suggestion of a workaround---trying to gauge what the
+direction is to move forward)?
 
 Thanks.
