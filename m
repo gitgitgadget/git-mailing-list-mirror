@@ -1,131 +1,111 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E633C1339AB
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 19:45:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CF712D76B
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 20:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712259903; cv=none; b=HOUrDQ3xxIvVmgEZcZbsiEVU9g3OSjwwlOCvy2DjKf7cVo0JLxtnJ3zUEI8Qcq1DvN8PcfDBixJs9+DVHP7KBJfG8a0JIC+jeCVKxfvuEDCQV+wolP2y5yeYSxKjPnePwqvQdfjJCHtqC02fAopyi+W7ZSbwNteGoJpn9mauThQ=
+	t=1712260820; cv=none; b=ahsCwAlFYjtb52hWkbh2+KbxLyuSVfoSpDGnT8mL2AhEJAX0wruRTxFiO3otKgJTFcLn2jwlbzp6UfCXRL71hNXYyLh8hWRPfcloSUAfTocMUMo6F2MbVRHhuvPHNdRTRa+HljsVI2Rj5y186sLHKDk41jsxGvR/w+UPreHYEeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712259903; c=relaxed/simple;
-	bh=5AgX0Iubq+jEXk6wP8S9aEHY/Tz8gUUVGfmiq+yGHwE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RJ1GKZMcVbEkHmzhcNPO8/RLbu9Rgvqdy3YoKkSk9LY22Yq1WrnebaBd0Bh+tYRS5uvOSeYCURgx6CcD3N/bkSgTgB8rdfdiBxQk04ocvrqcjHSq3bG+Hen0HYR0PvIsd6wPKtlTUQvwq/Sge7cgY3KcKY5q3hbbO0nLPUcuEcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cfs7qTJ2; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712260820; c=relaxed/simple;
+	bh=8CyOMJJDNn2+WSCi/lcJAUmI13OPBXw74MoFpDmWdik=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=fw8xDYaW1Qn5lYKKQidOoWbKDV+oghU1vwtkem/PwkWSdDzLjOEbglU3VSTGdX5ePtFB6VJv2w/u+O1kFbliPide5B5MsYuJhv5oobfJsHw4clv2hYDUcIIPxyXh8/EYt0SPXDe3TOXf6/gD8mYTRFpv7Lfop1ujMqcdC4/jBQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zbo0yivb; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cfs7qTJ2"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-343b92e54f5so740855f8f.0
-        for <git@vger.kernel.org>; Thu, 04 Apr 2024 12:45:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zbo0yivb"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6ecbb44ddc7so1431873b3a.2
+        for <git@vger.kernel.org>; Thu, 04 Apr 2024 13:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712259899; x=1712864699; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FpOTBXlNMebsPrR2Cpioe+/ry+moi0pH2OInT40J1uw=;
-        b=Cfs7qTJ2puU089dNnIuT3JJJRxbqKAj4r1oW9q3SA0EYwMCh7BlBJHvG/4CUVn36Zd
-         ZwucjgfUHYVRsgy2bl0O3ycG8jm1B2ajdoXzrDEsxjEyEmKgUsDwVRV1qmt6ff4cKv+k
-         wsKhiVyRnFrCN/7lD4tuf/0LgQmhyj3j/42Nhy3hclQoRy0whBsKaIRz2ZgMQnYyO10/
-         2bpnYqZrvfXW8n2ihX1vdQWhSlbP2wSM00zSf5Wncl1g1tycPG4/St+66Yh5AysGjzfS
-         rSvphXTqBm4+UctpeV4kxe6ExLkmYyVJubSZnvuXjMTNaqfOR3jCaURq5GItA7dEwefQ
-         vmsw==
+        d=google.com; s=20230601; t=1712260818; x=1712865618; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rABYbetPK8hhjBZFzfVRQ47eC4uT7qwMFXsutg9oFUg=;
+        b=zbo0yivb8vTXRNk5SogOTgsHPar/5WQMF2d+VVwwxpcYXWlfsM1A+uSF0+tnrY5k7+
+         gP/kE6uCF74h4MLZGKPfxiMlLxIlKNA3ROKbkSVan0CPnwoUMaHE0aVArUw+BHqKjsWL
+         FADqrjNkSz0+a0MJM/d4MlE2y/kwVHZV/eqj5sv3B31Y6MJDyC/stI1JcE3E421PA9d9
+         jz7QFnZOjJlV1lrhxgZRk5EDyI60pVUV2gqM3VLKFFayRlanpNV/AxUi3Xkv2neC6afj
+         9dk/97keKqlRH7owV1T+Hv/KTkl6lEODV7u+cCzC7mzZgwjE5Bv7PyH4kRsdDYDpxPB5
+         AMLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712259899; x=1712864699;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FpOTBXlNMebsPrR2Cpioe+/ry+moi0pH2OInT40J1uw=;
-        b=AQmgII9n+iVSRmyCM1IcdGqJb6XIBiD3ve4vh3Qghrh6uc1/MdZfCi5BV804RA5Mj7
-         qspv37M2vXXJs4xFt3b8OH7pm0Tbs1JSbwBDPn3w1p2/Ge9rk7Y+h1yanu9x8lTbz2kt
-         nfBLH7PopkHakctIwA/1KbmmTdf/9lfn/gFVqrjVCVwr0+hvwJH1kjohOSdpWZ/UrCZM
-         N4MJU8T0o1C1s7m2BQsFE/31BPdw+vnUw0uf07vSlnQ5JzKUrwgNTolaahPfu0OaEtLD
-         3LkL8HN99Vnp4kHovmaflUP0WI4W5PLvAbrSiOBVvhWgSChSNX7T+liJ8KPjzLwVMlCK
-         3kRw==
-X-Forwarded-Encrypted: i=1; AJvYcCVE0OQea+5IfuWTGsThX9Lm4wTNDXBmvGernNpcUe0OwpnZT1c0EAgOsXjCCMPgO650Dmdl+WEKQceHqxNBZ30hMWZz
-X-Gm-Message-State: AOJu0Yyelzxm2hvRbhIv2a+IHtK999WWp9+0ak33AnOdLWCfkXetU83S
-	k3s73Pfw3RM/32aOiW1ME2m0k/q2GaM3eB8CDywfuOf6Ep/lDOez
-X-Google-Smtp-Source: AGHT+IEsFG/wvPnmmtCbX2Nv71Knm96iv1EQf4oA74C+j0yiOEySA8Y5/mKi7QqtK7c8R7kN++seWg==
-X-Received: by 2002:adf:e38e:0:b0:343:94a8:8edc with SMTP id e14-20020adfe38e000000b0034394a88edcmr357264wrm.56.1712259898847;
-        Thu, 04 Apr 2024 12:44:58 -0700 (PDT)
-Received: from gmail.com (4.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.4])
-        by smtp.gmail.com with ESMTPSA id n6-20020a5d6606000000b0033e745b8bcfsm143614wru.88.2024.04.04.12.44.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Apr 2024 12:44:58 -0700 (PDT)
-Message-ID: <57462d2e-e255-4d35-b778-176f03675df0@gmail.com>
-Date: Thu, 4 Apr 2024 21:44:53 +0200
+        d=1e100.net; s=20230601; t=1712260818; x=1712865618;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rABYbetPK8hhjBZFzfVRQ47eC4uT7qwMFXsutg9oFUg=;
+        b=gDAMdBaFX9otgKLeLR0LYe6KMll4gfaTagRpmi6FpjFPa3Oi+uvsX4HU29v669foC8
+         nUN8cnWYtD7Bu1zo7jplmz/S/Y5rAIZ338QlrIpI45d2ZyAioIwHRNv9wJa5bg4hSskW
+         3MT4wYDwMZf+7KU+0crtVVhfhSoyF3j2IEJOKEDnBIgTtyHyYMNuiOOhGA/6jsxch72u
+         DoBDvbhZheGlNZQ4LE/mIwwEGq2NXGLmUtBbG/L8OJktpZnKJDX/UvPz7O9kE70+k41P
+         TdtDvvdzlW0hRH/JTE3H3IfphzzsvN249GsYt6CpBI+Wgyiwi+6roqVERTq2y+0GdkHg
+         jDdw==
+X-Gm-Message-State: AOJu0YzQP5XDTHw9ekqslnpMd808OLlXFYDNx3ulswFD7PG5IlahkWLM
+	rmGvgOtdLy/N/EmoTiOpKg6PrEXlO+sPKBhxJBoM/LKgxClTYKUUmeyoSLJsGR8WqN6nRNbhhl6
+	V4Q==
+X-Google-Smtp-Source: AGHT+IGnzJHtNan7VpL+FfCJ6vesY4H5+rJlcav4sQr6pPX+MaF2ZSG9QGns5qyhFvcfcgYkiU811Cfcvvs=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:9298:b0:6ea:afd1:90e7 with SMTP id
+ jw24-20020a056a00929800b006eaafd190e7mr43435pfb.6.1712260817660; Thu, 04 Apr
+ 2024 13:00:17 -0700 (PDT)
+Date: Thu, 04 Apr 2024 13:00:16 -0700
+In-Reply-To: <Zgulh1rxl9Af-iQK@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rebase -i: improve error message when picking merge
-Content-Language: en-US
-To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Stefan Haller <lists@haller-berlin.de>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <pull.1704.git.1712017205754.gitgitgadget@gmail.com> <Zgulh1rxl9Af-iQK@tanuki>
+Message-ID: <owlyv84wsxtb.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] docs: recommend using contrib/contacts/git-contacts
+From: Linus Arver <linusa@google.com>
+To: Patrick Steinhardt <ps@pks.im>, Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>, 
+	Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>, 
+	Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>, 
+	Matthieu MOY <matthieu.moy@univ-lyon1.fr>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Feb 26, 2024 at 10:58:07AM +0000, Phillip Wood via GitGitGadget wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> The only todo commands that accept a merge commit are "merge" and
-> "reset". All the other commands like "pick" or "reword" fail when they
-> try to pick a a merge commit and print the message
-> 
->     error: commit abc123 is a merge but no -m option was given.
-> 
-> followed by a hint about the command being rescheduled. This message is
-> designed to help the user when they cherry-pick a merge and forget to
-> pass "-m". For users who are rebasing the message is confusing as there
-> is no way for rebase to cherry-pick the merge.
-> 
-> Improve the user experience by detecting the error when the todo list is
-> parsed rather than waiting for the "pick" command to fail and print a
-> message recommending the "merge" command instead. We recommend "merge"
-> rather than "exec git cherry-pick -m ..." on the assumption that
-> cherry-picking merges is relatively rare and it is more likely that the
-> user chose "pick" by a mistake.
-> 
-> It would be possible to support cherry-picking merges by allowing the
-> user to pass "-m" to "pick" commands but that adds complexity to do
-> something that can already be achieved with
-> 
->     exec git cherry-pick -m1 abc123
-> 
-> The change is relatively straight forward but is complicated slightly as
-> we now need to tell the parser if we're rebasing or not.
-> 
-> Reported-by: Stefan Haller <lists@haller-berlin.de>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
+Patrick Steinhardt <ps@pks.im> writes:
 
-Hi Phillip.
+> On Tue, Apr 02, 2024 at 12:20:05AM +0000, Linus Arver via GitGitGadget wrote:
+>> From: Linus Arver <linusa@google.com>
+>> 
+>> Although we've had this script since 4d06402b1b (contrib: add
+>> git-contacts helper, 2013-07-21), we don't mention it in our
+>> introductory docs. Do so now.
+>> 
+>> Signed-off-by: Linus Arver <linusa@google.com>
+>> ---
+>>     docs: recommend using contrib/contacts/git-contacts
+>> 
+>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1704%2Flistx%2Freviewers-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1704/listx/reviewers-v1
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/1704
+>> 
+>>  Documentation/MyFirstContribution.txt | 3 +++
+>>  Documentation/SubmittingPatches       | 4 ++++
+>>  2 files changed, 7 insertions(+)
+>> 
+>> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+>> index f06563e9817..eb1e27a82df 100644
+>> --- a/Documentation/MyFirstContribution.txt
+>> +++ b/Documentation/MyFirstContribution.txt
+>> @@ -1116,6 +1116,9 @@ $ git send-email --to=target@example.com psuh/*.patch
+>>  NOTE: Check `git help send-email` for some other options which you may find
+>>  valuable, such as changing the Reply-to address or adding more CC and BCC lines.
+>>  
+>> +NOTE: Use `contrib/contacts/git-contacts` to get a list of reviewers you should
+>> +include in the CC list.
+>> +
+>
+> Should we mention that the script can be passed to git-send-email(1) via
+> `--cc-cmd=`?
 
-The change makes sense, but this is confusing to me:
+Ack, will do. I think I can just copy/paste the existing guidance from
+git-contact.txt which has this example:
 
-With this ...
-
-	$ GIT_EDITOR='echo pick 17381ab62a >' ./git rebase -i HEAD
-	error: 'pick' does not accept merge commits, please use 'merge -C'
-	error: invalid line 1: pick 17381ab62a
-	You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-	Or you can abort the rebase with 'git rebase --abort'.
-
-... I find these repeated messages confusing:
-
-	$ GIT_EDITOR=: ./git rebase --edit-todo
-	error: 'pick' does not accept merge commits, please use 'merge -C'
-	error: invalid line 1: pick 17381ab62a
-	error: 'pick' does not accept merge commits, please use 'merge -C'
-	error: invalid line 1: pick 17381ab62a
-	You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-	Or you can abort the rebase with 'git rebase --abort'.
+    git send-email --cc-cmd='git contacts' feature/*.patch
