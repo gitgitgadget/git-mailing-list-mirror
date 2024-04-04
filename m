@@ -1,153 +1,141 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44663134721
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 20:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFDB135A57
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 20:34:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712260874; cv=none; b=Iwoxt9xZr0px13OoPrLHKN8/P2fXuPkDFGFDm2KD2pEysGrdEEPNepYK6gpVGdBJS/t4omeHfj/BJrnKR21Nx8K2AVWW84Io15S9kUlX1m+3Cjd8K515Py3A8PzF/gdAPTm4UDwhixwgO3Fmm5jgKkDpuAgYKdygKxADyTQ0kTA=
+	t=1712262877; cv=none; b=gjcLB1vI+/VNiFy4Gkk9t3dqmuKEjWiLLuh6C0ReNItAOkmaQnGBIFih/1Zcu0TG5BifGJTe7f7VE+nIDMJtaJGj0xfJawd1d4XrgAHm4i+njzdMYCL/mUqksiyd1Fj9MZ2TeDQgsRiSJNxgxmdm9X4/2/hd9wcRipAPAt7aOdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712260874; c=relaxed/simple;
-	bh=+ZaW8A34Dge3jPkqN7infhbYRQ6H4rNrlmfMkB3ms1g=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=kC8BKZ9teXEf0MYmlpBnr4LRY3lNHUWlWKXNC70SZb4EI5dzaAp06TcH+j+BaaxVJXKfpcwjfKCpBr5YhRwatd402aHvyM0GBP1osOdtEjslZokB76N1k5yxkDPwBnppfxo8cjTx6vQORkcLbP02p6D5HiKrGoxWCi7kSeLKbyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KvFtl/v6; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1712262877; c=relaxed/simple;
+	bh=G1kjw8Rwf1wjDf9zKecuCtTbuog/KA7u0bgwFtEzdcU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mI3jyaCzVr+pVpN8niNPeayIx2vW9v+CKLihrVezj/TqGPYixQV4u8vRAsh4ZqFvXahNbzrNaDcGFQ4ubc4SLtKsqEpiM5b3Dt/IGJ/0wOTNohq+uXN6K/R7Zo6xagEfK6o4eYG8MX3yuQUMdHccmUCAtrSXaoqasVSRgGAlc4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=ZSBeTBg6; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KvFtl/v6"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-615404edc5fso15551907b3.0
-        for <git@vger.kernel.org>; Thu, 04 Apr 2024 13:01:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712260872; x=1712865672; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dArNbHeId40MufDfT2pKY/f0hWLCO/dS0LV3O1jOQ+o=;
-        b=KvFtl/v6HvqWm95xuQiqKDgH6XJMq/ICHPgNL7yBNbw1Zi1aySf6LBrxxLDU+L+tYu
-         yHgagDFy0Ya7ZQm4k1gKkTYQ9L8PGyd7PpBUz0iC9VanSJS205XbMdxe5qZP6JWvTFGU
-         HGqfDjNf8JrBv/GxpI3tFyfzqG68Eg6S0GN59pRLRC4+b31sW1sEyO3z4UUXkP8I9huE
-         gDdzGQUMhkEDwByhJa3mfjkN+kXabHCOZQSusIKJ+8eu4nCyhxkgh5OqwBjRw1htfWq0
-         rUBcVNqrhUdGtHzu8CX3+C+5sJvwIVZyCVeYWE6IW1Ru3d0EH4AHBjXFxctk1AwuTlrP
-         SNAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712260872; x=1712865672;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=dArNbHeId40MufDfT2pKY/f0hWLCO/dS0LV3O1jOQ+o=;
-        b=GlJ6C/CnuNPaKd8dhdIH4MKm/Pbu6EJ40MgYzDIW4Mw9QHxUqjPRykwAzOTm2ORcVv
-         HpS+qXh0H6fYDAhI8jZdIRnVH9SkoSeBiXVjlbRWUCGcdLwpSdwlAl0BeoXE6aNv2geN
-         TqziAoZ3s5Sw7tnDFCb6MZGsYXeBipgdhhNjF+mU+ZgU9asMo4Mi3HumljqvE85B+Hkh
-         /llHBm0qvsZUVOG1UMMHMdLon/PH7lyPm4Zv5EPi4qV7E7F63LZg/ruEZ5B25b5XIVaV
-         qAwrB5kmGpd8VKY/Rc+oEROhLfPZV6aCtJJAuro+7x1CnoGrRhnngBAkydArCjjivyUo
-         CmSA==
-X-Gm-Message-State: AOJu0YwnD6AoD5NoDywJnQ6M9WSA4BBCGHlNiT7VtJPAbKC21pP85AWh
-	oUZrKTmglQ5w04FBSwS1uyaM+yKUVmPVjcTDsqE8NrKY5Z9kDItgI0+kActNQhlAczP516RzEOi
-	fLA==
-X-Google-Smtp-Source: AGHT+IF0AWrzpBKoFsTV2PNBl7vuPnHh9cHi3SQCSyzlZ9pzI5xh1WywugZR8qjEZqehgHzWoMzT1svllfY=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a0d:eb8f:0:b0:611:3077:2de7 with SMTP id
- u137-20020a0deb8f000000b0061130772de7mr125945ywe.3.1712260872365; Thu, 04 Apr
- 2024 13:01:12 -0700 (PDT)
-Date: Thu, 04 Apr 2024 13:01:10 -0700
-In-Reply-To: <DB9P250MB0692A99BBDC70A0E65B18A1FA53D2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="ZSBeTBg6"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1712262872;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ry+nryYzK3Wiaqk6ctwYFwnHYXmkpQMnxFgJrXtwP4c=;
+	b=ZSBeTBg6s0ClKHqzsSvGaXyM9AyfT7vCMPn/Vxcy1GRaTZr32nMkf0ZSpoO0xTg4ULvU4u
+	IJMEVqkj+QCUquayzHkXdHIrNy7a1gtngTpYvBfgW7k//gecs2DgXlfB+9JBikfHJbAe3C
+	rdFv5/jA/3l8yrPYWXTeNOTjClwQ3skHAr4Ovuxg7y/jidB4GYFw8g1fZmNjWkM73PVkQ/
+	zQdbGJoXtZ8jJAAxS4tbXk5xbBdI+/ThTaZwlBUetfzq22NfrckRfbwrIreUtVzGGkD66W
+	4ytUDOXtSOHMtCWU60zKIdD6wIJ6oxdZ3Fr+ZeEUDZ8W/NqYzoFHnn1lcUFINg==
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Subject: [PATCH v2] send-email: make it easy to discern the messages for each patch
+Date: Thu,  4 Apr 2024 22:34:28 +0200
+Message-Id: <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1704.git.1712017205754.gitgitgadget@gmail.com> <DB9P250MB0692A99BBDC70A0E65B18A1FA53D2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-Message-ID: <owlysf00sxrt.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] docs: recommend using contrib/contacts/git-contacts
-From: Linus Arver <linusa@google.com>
-To: "Matthias =?utf-8?Q?A=C3=9Fhauer?=" <mha1993@live.de>, Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>, 
-	Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>, 
-	Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>, 
-	Matthieu MOY <matthieu.moy@univ-lyon1.fr>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Matthias A=C3=9Fhauer <mha1993@live.de> writes:
+When sending multiple patches at once, without confirming the sending of each
+patch separately, the displayed result statuses of sending each patch become
+bunched together with the messages produced for the subsequent patch.  This
+unnecessarily makes discerning each of the result statuses a bit difficult,
+as visible in the sample output excerpt below:
 
-> On Tue, 2 Apr 2024, Linus Arver via GitGitGadget wrote:
->
->> From: Linus Arver <linusa@google.com>
->>
->> Although we've had this script since 4d06402b1b (contrib: add
->> git-contacts helper, 2013-07-21), we don't mention it in our
->> introductory docs. Do so now.
->>
->> Signed-off-by: Linus Arver <linusa@google.com>
->> ---
->>    docs: recommend using contrib/contacts/git-contacts
->>
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1704%2=
-Flistx%2Freviewers-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1704/list=
-x/reviewers-v1
->> Pull-Request: https://github.com/gitgitgadget/git/pull/1704
->>
->> Documentation/MyFirstContribution.txt | 3 +++
->> Documentation/SubmittingPatches       | 4 ++++
->> 2 files changed, 7 insertions(+)
->>
->> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFir=
-stContribution.txt
->> index f06563e9817..eb1e27a82df 100644
->> --- a/Documentation/MyFirstContribution.txt
->> +++ b/Documentation/MyFirstContribution.txt
->> @@ -1116,6 +1116,9 @@ $ git send-email --to=3Dtarget@example.com psuh/*.=
-patch
->> NOTE: Check `git help send-email` for some other options which you may f=
-ind
->> valuable, such as changing the Reply-to address or adding more CC and BC=
-C lines.
->>
->> +NOTE: Use `contrib/contacts/git-contacts` to get a list of reviewers yo=
-u should
->> +include in the CC list.
->> +
->> NOTE: When you are sending a real patch, it will go to git@vger.kernel.o=
-rg - but
->> please don't send your patchset from the tutorial to the real mailing li=
-st! For
->> now, you can send it to yourself, to make sure you understand how it wil=
-l look.
->> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingP=
-atches
->> index e734a3f0f17..52d11ff510b 100644
->> --- a/Documentation/SubmittingPatches
->> +++ b/Documentation/SubmittingPatches
->> @@ -459,6 +459,10 @@ an explanation of changes between each iteration ca=
-n be kept in
->> Git-notes and inserted automatically following the three-dash
->> line via `git format-patch --notes`.
->>
->> +[[suggested-reviewers]]
->> +Use `contrib/contacts/git-contacts` to get a list of reviewers you shou=
-ld
->> +include in the CC list.
->> +
->
-> There is already a paragraph about this in Documentation/SubmittingPatche=
-s=20
-> just a few paragraphs below.
->
->> Send your patch with "To:" set to the mailing list, with "cc:" listing
->> people who are involved in the area you are touching (the `git
->> contacts` command in `contrib/contacts/` can help to
->> identify them), to solicit comments and reviews.  Also, when you made
->> trial merges of your topic to `next` and `seen`, you may have noticed
->> work by others conflicting with your changes.  There is a good possibili=
-ty
->> that these people may know the area you are touching well.
->
-> Could we improve the existing paragraph instead of duplicating this=20
-> information?
+    ...
+    MIME-Version: 1.0
+    Content-Transfer-Encoding: 8bit
 
-Ah, yes of course (somehow I missed that existing guidance). Will update.
+    Result: 250
+    OK. Log says:
+    ...
+
+As visible above, bunching the "Result: <status-code>" lines together with
+the messages produced for the subsequent patch makes the output unreadable.
+Thus, let's add a newline after each displayed result status, to make the
+outputs more readable, as visible in the sample output excerpt below:
+
+    ...
+    MIME-Version: 1.0
+    Content-Transfer-Encoding: 8bit
+
+    Result: 250
+
+    OK. Log says:
+    ...
+
+This change also adds a newline after the last produced result status, which
+may be seen as redundant.  Though, it doesn't look too bad, and making that
+last newline not displayed would make the code much more complex, which would
+not be worth neither the time and effort now, nor the additional maintenance
+burden in the future.
+
+The way the additional newline separators are introduced to the source code
+also moves the already existing newline characters out of the translatable
+strings, which should help a bit with the translation efforts.
+
+While there, remove one spotted stray newline in the source code.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
+
+Notes:
+     * send-email: make produced outputs more readable by separating
+       the result statuses from the subsequent patch outputs
+    
+    Changes in v2:
+        - Improved the way additional newline separators are introduced to
+          the source code, as suggested by Junio, [1], to help a bit with
+          the translation efforts
+        - Improved the patch subject and description a bit, to provide some
+          additional information, as suggested by Junio [1]
+    
+    Notes for v1:
+        - This is a resubmission of the patch I submitted about a week and
+          a half ago. [2]  The patch subject in the original submission was
+          selected in a bit unfortunate way, which this submission corrects,
+          and also improves the patch description a bit.
+        - There are no changes to the patch itself, vs. the original patch.
+    
+    Link to v1: https://lore.kernel.org/git/62553db377c28458883b66bcdc0c58cc0f32d15b.1712250366.git.dsimic@manjaro.org/T/#u
+    
+    [1] https://lore.kernel.org/git/xmqqy19tylrm.fsf@gitster.g/
+    [2] https://lore.kernel.org/git/6ee28707b9eb8bd8fdfc8756c351455c6bc3bb62.1711447365.git.dsimic@manjaro.org/
+
+ git-send-email.perl | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 821b2b3a135a..ac0c691d3a46 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1576,7 +1576,6 @@ sub send_message {
+ 		print $sm "$header\n$message";
+ 		close $sm or die $!;
+ 	} else {
+-
+ 		if (!defined $smtp_server) {
+ 			die __("The required SMTP server is not properly defined.")
+ 		}
+@@ -1686,10 +1685,12 @@ sub send_message {
+ 		print $header, "\n";
+ 		if ($smtp) {
+ 			print __("Result: "), $smtp->code, ' ',
+-				($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
++				($smtp->message =~ /\n([^\n]+\n)$/s);
+ 		} else {
+-			print __("Result: OK\n");
++			print __("Result: OK");
+ 		}
++		# Make it easy to discern the messages for each patch
++		print "\n\n";
+ 	}
+ 
+ 	return 1;
