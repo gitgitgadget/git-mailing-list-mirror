@@ -1,80 +1,84 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BDC22611
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 05:48:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84494C637
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 06:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712209736; cv=none; b=m1dDPzuK5nH9TQdQrNCeXaPkfS8k97Oyo65a2ZUgskE1O2a0td5MD3DSXNrYvsn5AKRqw0ynGem6OSOLKD/ALm+5uTawRlf7nPbMDkaTluDNhPqlQ6MJqeU/OUuWaUBodE+7RBCFRO7YcGy/9skoep9VINEHh6dncQ1IBYpXa9Y=
+	t=1712210910; cv=none; b=KyIZQeV4iCGDwhukRb7DHwUF7T01EvXXnWK4qHBQ18kHS3xmY4Empl1n08xQ3anANgWXzxWu6BJXeB5cfOUPGjfan7vKFFs4NbTqee7CGnYx6tuSs1F4Yxsg2ssye/MRMSnFQqfKTmJyx+elFuHfAMpzywJA5eWi4J7EbZWrhOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712209736; c=relaxed/simple;
-	bh=a4QBV8+nvnVkWm+S8zbN/S2t1q4Ijxthi66TyZjCkYs=;
+	s=arc-20240116; t=1712210910; c=relaxed/simple;
+	bh=U7eblgBPkzyak/v1oX8/mBJEKlL2j8ek4cLXqNILSGw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tyPOq0JE4b+1Z8hdF2C8re7UN1JwhdEpfJ6BhiLfp/QJAtPfxIAlm/OORWM2eh+3X/WODplXD0NDlHlzCBnsn0SOL1pd7w70LsgnSBotRhPxrHTbXltFMGMWNLrCF8n/Iz1RXwtZcvQCak4U7J2iFu9AD9nc9uEoSHV9SZcjomQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DXS7Jy6J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gp/3TUed; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=WWZdnr5HiOlTTubdueu2cT3gyXmnoleTA/wgl/DgcphSPyzhGPqJFz/tS9ESZCfy2JRXqCmbkGdWXos2suTm2nKTH1PfDAdJ4MT+loNZTSqdihzgWMNe+lWUSOD0O3zYf4g5/cVOmAd8DJ5OZiAzmE5iI4gE5f7r5fhNHYFeDwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NGZca9QK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kcDJVrWZ; arc=none smtp.client-ip=66.111.4.27
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DXS7Jy6J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gp/3TUed"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 8756C1380157;
-	Thu,  4 Apr 2024 01:48:53 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 04 Apr 2024 01:48:53 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NGZca9QK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kcDJVrWZ"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id D12785C0086;
+	Thu,  4 Apr 2024 02:08:27 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Thu, 04 Apr 2024 02:08:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712209733; x=1712296133; bh=j9siwjcGbJ
-	ldVveFjy4pgnHFWAphQ6kjpMqLNdYw+GQ=; b=DXS7Jy6JpF1CSGgQxE3kdAHZF8
-	CcldyxMs2KrVxUz8iQiAnPdD8THRatQOznEU0ToQf/UYaKnixqPkUCb6UsdiRDzy
-	LJG5Y1bTuJO64pUZHhazCAOSL79YvRTZ5DqDv1l0kXsDLvkjIOi0qIfb1OEuwIQp
-	iUNLnpjecne4kwAQfJL4skIe8/MMEFttOHQcKwnzA2jU/8e2d31rq/9rq3Me7zpX
-	9H8LDt8m/teGIzhwmZcBYauj0NEW5JiZir6Z/YgOxKCMQmh4PmYWewbLJBcCv7Eq
-	smUGz9/DLP3uahuOGQo3G4BFh7n4PQj3ZSqH5MuJL1RHdCTEIIk+N9KvJ+cA==
+	:subject:to:to; s=fm2; t=1712210907; x=1712297307; bh=U7eblgBPkz
+	yak/v1oX8/mBJEKlL2j8ek4cLXqNILSGw=; b=NGZca9QKlpcUhQT6hWzzw9R8oI
+	+FPJr0EaL4DL8GZxMgQq2u3B5pYpG+4r2h/DLDsUnDoTVT3JfbLKtyk9vCTQS4Ew
+	7W5kFxg+1K1+QBhJsFF35KvQIbWr5tnqpxusZRGtoffMD7wHRJYjLGtLBjW0odbU
+	4nJRUuUyZv5/CFCoattEQq9xKHa4n0CN0ICa7BTVF5OsHzwHtMRjBNNHG6ZDUFG+
+	QVeHjPUwapK5bAduxwSJRsYGxtGajr/SsZ8x3dkZDsfD/J0pLGjDrEJnwv+wRFEs
+	miO0nPr8Ihje9qKaRH8iFTtjhG2Wn+w+eDL9dRMKIbVabljn2kj2bx3+IdcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712209733; x=1712296133; bh=j9siwjcGbJldVveFjy4pgnHFWAph
-	Q6kjpMqLNdYw+GQ=; b=Gp/3TUedGOMDbvQEyx558EGUslvlZhANHcBcHeBEf/ZT
-	QwAyZMyDESijXOuRjyluaJZGL4FN+6/nb1BjoVh9U5MaqBnfdbMmCI0E4np6a+oO
-	lKu5qpHxw0dH5RX0K386wLm8RIGv9GccDJDyEz5WSi+YbAFn8jeQ1Pqjn6YgFmYw
-	xpPQCquFmHLfYLvb1zer47eS22CGTAbyA4/z/lXVeCC8tkl6JMkpFjDpU0BkuwP0
-	8ufFpxKu63wEQ+lm/rw13bmGH1DWCfuf+9XwRm6Cu9ZBf9h0kLpk1vDfdYJ8NeJm
-	PAMUOgfYj5pAqW48+WTW4ax9OhhjgKlNe/FZLmpdRA==
-X-ME-Sender: <xms:RT8OZsf4jmO17-OESeo_8IlEE8ei-IWtX3eu-NSXZ9VCLuSBrJ2v5w>
-    <xme:RT8OZuPSzAhvkhuuvT92aPhbJ9IWIJb5qmYm6bK6mW2IQ4uBm3V30aRuRe_09W6h5
-    tpoSC5w7NOAhBegFg>
-X-ME-Received: <xmr:RT8OZtgUUv8URe22hWyvwAAgLnelou6a76gMutXBbWUdTLg9MYEywGRxPIbwKnwjg6GBEbV_g6_DsWnU8MXUZ4X8Y_IMRdjORNySYV7NppVxigJS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefjedguddttdcutefuodetggdotefrod
+	fm2; t=1712210907; x=1712297307; bh=U7eblgBPkzyak/v1oX8/mBJEKlL2
+	j8ek4cLXqNILSGw=; b=kcDJVrWZ9hVjcOYwNEKrwOtv9p3IipH08dVFBsIS9its
+	NG3jC1GoUHZZrdD2SOWhb6XE9kmPwl0In8oLOYpzcJpOfJyq4onsYaaB/DXaXk3a
+	BaJ+fvRc0meUq4sZdVG5UvQGpBQ1Aia2ciBAGrEIbu0bCoXisGY4TqY1b2j+g25h
+	ehvD6UQO+7SOh2kM161ecJ8Uec3Qz5vIZoq0vLUy4OxEmNx0M2tMBdwU5VEoy7xZ
+	TleIR9zL5Sn2VD5zH2VfCk1tK70IJmPh8Js/hY/jtWuGVs1uXs4l2fqXGAJQB1ad
+	G+Ig2QlQTy177sneKyhYJWW3+Cq191vpGS0aAkVDcg==
+X-ME-Sender: <xms:20MOZuDh9fG9v6dQvUQd5747JBuzXSCn020gbFvrfr-Ksn3iY6rv-A>
+    <xme:20MOZoiIFrHM8oYRVNgUqJCknM2IDYSsn6ft7TMUqvn9QvAHhpQWlk5JJ0WCmpR0d
+    sA1wzutdVT9HbRaVA>
+X-ME-Received: <xmr:20MOZhmqAmpNoVI6HJWpo4E3tzq0xwfcBzOdBNeWbuPeFPa2sJvshz0q4k5yKvOp4Ygn8mki5kBhc-Iar3wbudnJtNpGyaL5bNzD_an1g8yPtaLH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefjedguddtgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepudenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:RT8OZh9csECN_HbmU2NbBqhHRZPiz_iu_nX-wH4_hFI27hLJYYOErQ>
-    <xmx:RT8OZovXsgitqqLMtFGUP54YS2_S3zBxQ0dKBJH7MhNB2vAxCwV3TA>
-    <xmx:RT8OZoFE1yAnSNsXIhu0jhCH-2TfV_QwBvYT2oEpyjIEygGS4jInJg>
-    <xmx:RT8OZnOivdobXxfMTOAfFRBTvOgz385arE5apjThMVnLZqoAGmfGlg>
-    <xmx:RT8OZqLs5zZcnmTeS1jAVm1rF3GeGM9rkhmSVmuocBQvE5f49nsQXG29>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:20MOZsxO5Eng5p7m4PI__9A1uDEljLrn4tC_9R6a0PpcJf89qpojSg>
+    <xmx:20MOZjSZVF1RsUyGGDDLuIkPjTivkOtfUDjDh-2lHhAiW49NnoKT6w>
+    <xmx:20MOZnaPgJM57pDeXCEHGnPOkVsTMjjOD7ro5pprUfdWk4fIaJx9Vg>
+    <xmx:20MOZsSqBlbqUDjVrsTtx4EgKhGZ9cjqHbZTbTT8ZcRzjmuvHMDFvA>
+    <xmx:20MOZuFKBJsLFy7G6Wsjfq7ojVIoYcUTacbb0pAd7DOWCa-ODrDWP-Ex2wMC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Apr 2024 01:48:52 -0400 (EDT)
+ 4 Apr 2024 02:08:25 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f8fe8f20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Apr 2024 05:48:50 +0000 (UTC)
-Date: Thu, 4 Apr 2024 07:48:50 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 53f1ab33 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Apr 2024 06:08:21 +0000 (UTC)
+Date: Thu, 4 Apr 2024 08:08:22 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: [PATCH v2 11/11] reftable/block: reuse compressed array
-Message-ID: <4f9df714da95a10a5d89225b3ceb8ca42e61ac93.1712209149.git.ps@pks.im>
-References: <cover.1712078736.git.ps@pks.im>
- <cover.1712209149.git.ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Philippe Blain <levraiphilippeblain@gmail.com>,
+	Brian Lyles <brianmlyles@gmail.com>
+Subject: Re: [PATCH] rebase -i: improve error message when picking merge
+Message-ID: <Zg5D1qnKd9bGiXBw@tanuki>
+References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
+ <db27d746-5b83-45fa-a8e7-d88022ce1ca5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,135 +86,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gT/OTKzgla5sAreg"
+	protocol="application/pgp-signature"; boundary="LM/Eo48L47v09uf/"
 Content-Disposition: inline
-In-Reply-To: <cover.1712209149.git.ps@pks.im>
+In-Reply-To: <db27d746-5b83-45fa-a8e7-d88022ce1ca5@gmail.com>
 
 
---gT/OTKzgla5sAreg
+--LM/Eo48L47v09uf/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Similar to the preceding commit, let's reuse the `compressed` array that
-we use to store compressed data in. This results in a small reduction in
-memory allocations when writing many refs.
+On Wed, Apr 03, 2024 at 02:42:19PM +0100, phillip.wood123@gmail.com wrote:
+> If anyone has time to review this I'd be very grateful. I've added a coup=
+le
+> of people to the cc list who have recently contributed to the sequencer b=
+ut
+> if anyone else fancies taking a look please do.
+>=20
+> Thanks
+>=20
+> Phillip
 
-Before:
+I ain't got much of a stake in this, but I've put in my 2c anyway. :)
 
-  HEAP SUMMARY:
-      in use at exit: 671,931 bytes in 151 blocks
-    total heap usage: 22,620,528 allocs, 22,620,377 frees, 1,245,549,984 by=
-tes allocated
+Patrick
 
-After:
-
-  HEAP SUMMARY:
-      in use at exit: 671,931 bytes in 151 blocks
-    total heap usage: 22,618,257 allocs, 22,618,106 frees, 1,236,351,528 by=
-tes allocated
-
-So while the reduction in allocations isn't really all that big, it's a
-low hanging fruit and thus there isn't much of a reason not to pick it.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/block.c | 14 +++++---------
- reftable/block.h |  3 +++
- 2 files changed, 8 insertions(+), 9 deletions(-)
-
-diff --git a/reftable/block.c b/reftable/block.c
-index 9129305515..f190c05520 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -150,7 +150,6 @@ int block_writer_finish(struct block_writer *w)
- 	if (block_writer_type(w) =3D=3D BLOCK_TYPE_LOG) {
- 		int block_header_skip =3D 4 + w->header_off;
- 		uLongf src_len =3D w->next - block_header_skip, compressed_len;
--		unsigned char *compressed;
- 		int ret;
-=20
- 		ret =3D deflateReset(w->zstream);
-@@ -163,9 +162,9 @@ int block_writer_finish(struct block_writer *w)
- 		 * is guaranteed to return `Z_STREAM_END`.
- 		 */
- 		compressed_len =3D deflateBound(w->zstream, src_len);
--		REFTABLE_ALLOC_ARRAY(compressed, compressed_len);
-+		REFTABLE_ALLOC_GROW(w->compressed, compressed_len, w->compressed_cap);
-=20
--		w->zstream->next_out =3D compressed;
-+		w->zstream->next_out =3D w->compressed;
- 		w->zstream->avail_out =3D compressed_len;
- 		w->zstream->next_in =3D w->buf + block_header_skip;
- 		w->zstream->avail_in =3D src_len;
-@@ -177,21 +176,17 @@ int block_writer_finish(struct block_writer *w)
- 		 * guaranteed to succeed according to the zlib documentation.
- 		 */
- 		ret =3D deflate(w->zstream, Z_FINISH);
--		if (ret !=3D Z_STREAM_END) {
--			reftable_free(compressed);
-+		if (ret !=3D Z_STREAM_END)
- 			return REFTABLE_ZLIB_ERROR;
--		}
-=20
- 		/*
- 		 * Overwrite the uncompressed data we have already written and
- 		 * adjust the `next` pointer to point right after the
- 		 * compressed data.
- 		 */
--		memcpy(w->buf + block_header_skip, compressed,
-+		memcpy(w->buf + block_header_skip, w->compressed,
- 		       w->zstream->total_out);
- 		w->next =3D w->zstream->total_out + block_header_skip;
--
--		reftable_free(compressed);
- 	}
-=20
- 	return w->next;
-@@ -450,6 +445,7 @@ void block_writer_release(struct block_writer *bw)
- 	deflateEnd(bw->zstream);
- 	FREE_AND_NULL(bw->zstream);
- 	FREE_AND_NULL(bw->restarts);
-+	FREE_AND_NULL(bw->compressed);
- 	strbuf_release(&bw->last_key);
- 	/* the block is not owned. */
- }
-diff --git a/reftable/block.h b/reftable/block.h
-index 1375957fc8..657498014c 100644
---- a/reftable/block.h
-+++ b/reftable/block.h
-@@ -19,6 +19,9 @@ license that can be found in the LICENSE file or at
-  */
- struct block_writer {
- 	z_stream *zstream;
-+	unsigned char *compressed;
-+	size_t compressed_cap;
-+
- 	uint8_t *buf;
- 	uint32_t block_size;
-=20
---=20
-2.44.GIT
-
-
---gT/OTKzgla5sAreg
+--LM/Eo48L47v09uf/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYOP0IACgkQVbJhu7ck
-PpQX/A/5AUVXZGGpPUxFvbI4mPYDEbtGg+yTiw4EOjxj/xehKPP71RGiDb7eS64O
-GEX0OJIEM9lZ3k+8wZQhi09gcukK4r0uFlvxZJmDw2OkIvJQmcIwQhjPaNOm7Xlh
-/78ycZ17yixpa3zGM5wuWfB6Uh6aLDJyLayfKC7UhFcyJ1cAwibWeykqc3Vf3lEt
-kHmkEcH81Uu8QLkXh6EDPtAXOciqUh8CUs/CfC4Fi2ps30uQekb+rA62b2KNv9x1
-+k/mVBNHaIcH1uEUzMUhyHy2S5UhL/AmChAiECFR3+NobcwAomsjsAoZB8fo2ILZ
-1WKjl1XWlNHiGXIApqDkeJ4+2emc/CHa377mRt6P0PjqhIrRjeeEzqD5oMP68/45
-zq8ZvFeeChpvEfMjoe4+gVMw4Z1al8LVb1QHE04yhlxjuVRyX0Q3aE6KKKEh1+hO
-tZgTS95X4H+5i/cyWsgl2AqTrjS4HYRAnEQoPeyfQGJ/KS/rjqS/Zbjit50QQySY
-OlSuAih2MsyZUOmj0IzlSVNj7MCvEXEjmvHDmIbWJNNQ++a1eNIwL3Yfmnjr38CU
-0M6X6PcTJnK1kxbIA6PA5CIU1zDWq8EgBiFYzSPzAd97LmhclKaOhwnoViMZIVHQ
-ABvh49/ff/sU2cv+fjtnzSTSHa9/rRs4tJt/NCgvdZLDFsyTePE=
-=HwHn
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYOQ9UACgkQVbJhu7ck
+PpRN/Q//bYQXwHS1CgTq70IxgeGTtuLfSEtcaKtyUKUBilYQDvhLpYwy8093FDyp
+OQBI3gyaiFfQCE0N1sMdAzWXXyQNssLils5RQCgZCAiW6GYCOP62m3jQwQa5H/Fx
+Jav74WU/koQBjBidZ5CLa5+zjhwd2bV9ROxg6aUFlJbU72JdgJzdxxs/w5Qus3F5
+GUB/OAKhki15gkY7wtEToT5W9qWpRTLpt3AGNXjExw8zPRY5/uRq8mO/WCBvg+OJ
+fC0tSyxNJJifTsY2GgKzEdtPihZI+cy6Sa9mg+fiO6KfrGcfPaA7NpRXUzmEggrX
+eyxeZB0S41mJHk76ZN+TEpVARy585D8VYbv6NH1Wgw2wHp207bOAB6f2D9Fu7ze8
+J+TYvz12cRL3shW6veaKwwKfY5se+WDrkaKjjdaRb7XHF+eV5HisOC5Ig/ykII2W
+nGyL9o+HuESI+dea00cJW4WZklsU1/FCRqxj/cMsF1Kkh8K2tMKf5YhuYynuwz41
+lubkyLNH8h9bInA5APVXgqjuM/Ojw/zVY47ZS8Qru/vbtdNvx9Nsu/AZfFmGJ4+K
+pa8HNa5jUUbGxTnUajkrDZBZd8kO4WksRvOHqbygswrNEGxXVVqeHbHhnttj0TiY
+yoFkQqfoIDI3GDpvOMTCmbLxFJ8znjiB9CmeaN8UfUmsbzZt7rA=
+=gcPu
 -----END PGP SIGNATURE-----
 
---gT/OTKzgla5sAreg--
+--LM/Eo48L47v09uf/--
