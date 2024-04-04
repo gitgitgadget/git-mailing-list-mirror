@@ -1,146 +1,126 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9F3130A58
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 18:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499CE131BDD
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 18:29:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712255377; cv=none; b=LOlLZYX+QdLVMqbGxFyDfquKj2AaihpZDchrhHK3UewN1Fkh18DbVvwhNUyNLJgDpX2GxSyuvrUx+NhuVzlVdtGhIgeJxNLGK0zMW/OgzkNUA0ZOn73txqUgMCyA4Wh9MVoc6wIPxybbm9hJ+a0aO2PEVCLJtVtr/NH1ZcUsIek=
+	t=1712255379; cv=none; b=nTKFRyOGTA2r8/zdu8VfuZZhDF8wucdOl6Lp9zERJu/FLQGhfHZJnWbCB9W7n/dSoguzyEU5vC+fJ7mmQJLt8sIGnNnoNKmaaEfAj8bqKrr5u4rEwR+/bCuQlZcsWs9BBfVqGRVU8S8kAnKt4OMnnnu8p6EA/fzaqFRl+iS6n6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712255377; c=relaxed/simple;
-	bh=SGRoB3Ls4NSX8DFUeyjq2hUNeDsu0sOmDj8QzzpWxtQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tiwG7KqG6sKAmQSI1wDcvSrkZGcel8tZxf3EsVto2ahlHkRn9M8hkuT1BFoWzb8oYsOeE3fogyCWueHNs9jWklVAxaTLCW8m3j+LTVbUN/63L3O5QwLrQ11VFtDc66pEk09mDKedA5sNW5RmI9pxp8I4sfTKZt/mE3GhUEX/Cdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wva7UqRZ; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1712255379; c=relaxed/simple;
+	bh=5kKEnAgChSPZB3BZaLXfiZdESoVwQUokNtYm1Tq8Tqg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V5Q88jJIaXKiru5F6tdamGXDXokrX7TyZFPoZt3whGhuGKzS+HKtul5rC9elNAuS7M4K4CVs7RyR0NE8Q27fVQmiCyOBGK22Mc9eOinvYajBf09geqQ1J8rMlPrk65s1Suq7n896zaaG+etwZ/kdCxbR6i+sy6tm6G17QIz2Sqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VwsdkyGO; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wva7UqRZ"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-415584360c0so9815155e9.1
-        for <git@vger.kernel.org>; Thu, 04 Apr 2024 11:29:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VwsdkyGO"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5a4a14c52fcso766826eaf.1
+        for <git@vger.kernel.org>; Thu, 04 Apr 2024 11:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712255374; x=1712860174; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KXd5dyR56DSwC7VqXb+akUfx07s4BGr6g8LRyw/vigM=;
-        b=Wva7UqRZCRyPjvpUm84vh/V7LsMjkMjccw8oKa+skEK77UiwmljgN7hRMhJMXGtQuy
-         8F6XcR1IOh1OcPUlTn/PN3HGZxtIXSh3UOeRNScdmHa9Ly3gmZsstw/6pP3jUVYxvWTP
-         tsmcmUMcgpQeM+4Cy/jjB0oMkis5GhAwhS21B+ZrOG4JVkj3YnkeERuEh6QDfzi4xi9v
-         xEumg/W7a6ljuurGP8Y4culw3noolMnULS15RLBfRdtcle+Ye968VAfBwasd1khVwsoR
-         h226SnMmEEuWvppIN9frnv3kv9G09/oEoHnz9ka/TH5am0s+9LihDuYQ9WNEQgnXPCEv
-         k2WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712255374; x=1712860174;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20230601; t=1712255377; x=1712860177; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KXd5dyR56DSwC7VqXb+akUfx07s4BGr6g8LRyw/vigM=;
-        b=l2+/mDTCs/mG7kALmrItReAmZlHfk0RPnR4PdSnefQ7gZPHYm0qp4NMqsMpMs/6Eef
-         vkseOdKDzdkT610k9bd78D1AZki9J6to0rzSBZaVOQ06RHjrnkS0ORqC1gmjus+aEizE
-         y6gujUGZBu4/i306y7GTmztArVzv8XPwm97amoDwOV+9D8qMsx8NAW0MWRd9VMiPbjVh
-         TXm4hCUq3NrxFWd/wFhUZBU3u9jUen9zw5XkPEvekkC/PHg9TrMqJF2wj7yl0/Slwin8
-         HNI5v0FEDXFVXwwzsDBPOiIleq6CphfJ5MSoKQhV5mjndym/D/m2sbqQaTjyVnoEhAK9
-         zaeA==
-X-Gm-Message-State: AOJu0YyEFdP1iJXD7weJLXpOi7gJc2X+rkUsCxX/leZADC1zfsB2nnJm
-	4zlgsW1vopPYfdH4xh/Ykl6hqp9blIxQ3cEC/OTUYrBVgEaGM0rHdkCvcQJg
-X-Google-Smtp-Source: AGHT+IGecg1owiHQSqj6Tg1OGMRP1XUF/+FanQjM4gTCjpntS5woMy+F8t93TJlhOVNdwBFc/g2iLw==
-X-Received: by 2002:adf:fac6:0:b0:343:68ea:c0a8 with SMTP id a6-20020adffac6000000b0034368eac0a8mr2493413wrs.34.1712255373756;
-        Thu, 04 Apr 2024 11:29:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id dr20-20020a5d5f94000000b0033ea499c645sm27063wrb.4.2024.04.04.11.29.32
+        bh=a8xhok4rPCn6kzxHNysjpAtUfvQPgqdIBac6Omi3nn8=;
+        b=VwsdkyGObNvRwQG54JuAyQjHu070Nr17YN2/3SzmRWl3OvZLMVO0IDx7UFdDzdP91l
+         UW2A4jFYN8kl9zw55YOjL9Aj27BD8/xpeyZyr1YTEOqIdOwaDq8eYLoIS+O5AAwJcqmU
+         nA5QXJAxvBAouoM/GYQBo2mB3CE3ezKABzSqFzR2eFQ8bwVuGu40B6dN8+ByHbcemr9e
+         NiBcEghfnXZMxe3vyt6cfL0QnTbpMkNXg9QQdORohYnUnQ/XhvffYkxaWQVUulnmAR8P
+         IZFXOC3aPGKDK5+tqRS0Y0EHm8OWegtkNqq6m+VIh7E0+8Xvl1pp2fww3Sjv/ETslSwM
+         2iPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712255377; x=1712860177;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a8xhok4rPCn6kzxHNysjpAtUfvQPgqdIBac6Omi3nn8=;
+        b=uw5WfhPyqrw1bQndmuByPwD2J/++PbwSdX7dU9HXcLoVpNtE9BUYW8fRonzXBnQ4pW
+         OqRBatK0W5VeTL99DoCB4MdkjtAxAmluahGfpeTFK5wgnDrrJc1pKG9J3hJE9GUIUWSu
+         ghfwHVPx8YQbATnE8cI5BbGxLA/rdOg+0IllFEZggs1NAEEJSDXzuEqvVR97sK3Hc04b
+         wSf2oBZAE8VrA6FdVH8x98sB/j+y6f/lVrtOs72eyTVTHAEIGLCd/Zy9hMf5NVS/VBuu
+         4xJINb5jgH+rxxIFV3l937exJw7pFDP/iGLxkpVW7NS5X1H4ozUiYLUq2soXSLb0RXDV
+         4UGw==
+X-Forwarded-Encrypted: i=1; AJvYcCVaAph5TYVG9eLGa2dtcakwTLeLU7lwsQsIK1C4AZfy4cwCd9+vq4A0IefQSUB46/heJE0nJPdpLK5kOyoMR+gDECrY
+X-Gm-Message-State: AOJu0Yyv1Fc0nt9GsTS/wi5oUh5ylO7zeVwEh6blU3cK1pi1SP7cOTXx
+	MubLKxtcvBkZSsgZdIjRUCCHVKKwFQe9jSWYAynw5uJ/pnBlzLLG
+X-Google-Smtp-Source: AGHT+IHyL21AE0sLcZVX5A4P7ruUN6W7VllDN1vfRXPFbDoDOMWridZEkQQyoaFB/a2PAgy5gXLNIQ==
+X-Received: by 2002:a05:6820:1986:b0:5a5:639a:2fa7 with SMTP id bp6-20020a056820198600b005a5639a2fa7mr3544087oob.1.1712255377256;
+        Thu, 04 Apr 2024 11:29:37 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id bv5-20020a0568201b0500b005a4799f5428sm3734608oob.21.2024.04.04.11.29.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Apr 2024 11:29:32 -0700 (PDT)
-Message-Id: <7c4fe0e9ec597203ee37d2c2503be319e87ff5ee.1712255369.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1683.v5.git.1712255369.gitgitgadget@gmail.com>
-References: <pull.1683.v4.git.1712103636.gitgitgadget@gmail.com>
-	<pull.1683.v5.git.1712255369.gitgitgadget@gmail.com>
-From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 04 Apr 2024 18:29:28 +0000
-Subject: [PATCH v5 2/3] reftable/stack: add env to disable autocompaction
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 04 Apr 2024 11:29:36 -0700 (PDT)
+Date: Thu, 4 Apr 2024 13:28:39 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] reftable/stack: use geometric table compaction
+Message-ID: <u47s7kwjrbcdseqb72nuplhs3tuaac5bl5dk6qqu7z3ptma5gn@qlrggnkip3yu>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, 
+	Junio C Hamano <gitster@pobox.com>, Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org
+References: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
+ <pull.1683.v2.git.1711060819.gitgitgadget@gmail.com>
+ <xmqq5xwy6z1b.fsf@gitster.g>
+ <Zg2uS5JXjQZsVZhJ@framework>
+ <Zg472uByuW6domfh@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Karthik Nayak <karthik.188@gmail.com>,
-    Han-Wen Nienhuys <hanwenn@gmail.com>,
-    Justin Tobler <jltobler@gmail.com>,
-    Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zg472uByuW6domfh@tanuki>
 
-From: Justin Tobler <jltobler@gmail.com>
+On 24/04/04 07:34AM, Patrick Steinhardt wrote:
+> On Wed, Apr 03, 2024 at 09:30:19PM +0200, Patrick Steinhardt wrote:
+> > On Wed, Apr 03, 2024 at 12:12:32PM -0700, Junio C Hamano wrote:
+> > > "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > > 
+> > > > This is the second version my patch series that refactors the reftable
+> > > > compaction strategy to instead follow a geometric sequence. Changes compared
+> > > > to v1:
+> > > >
+> > > >  * Added GIT_TEST_REFTABLE_NO_AUTOCOMPACTION environment variable to disable
+> > > >    reftable compaction when testing.
+> > > >  * Refactored worktree tests in t0610-reftable-basics.sh to properly assert
+> > > >    git-pack-refs(1) works as expected.
+> > > >  * Added test to validate that alternating table sizes are compacted.
+> > > >  * Added benchmark to compare compaction strategies.
+> > > >  * Moved change that made compaction segment end inclusive to its own
+> > > >    commit.
+> > > >  * Added additional explanation in commits and comments and fixed typos.
+> > > 
+> > > Has anybody took a look at recent failures with this series present
+> > > in 'seen' [*1*] and without [*2*] in osx-reftable jobs for t0610?
+> > > 
+> > > *1* https://github.com/git/git/actions/runs/8543205866/job/23406512990
+> > > *2* https://github.com/git/git/actions/runs/8543840764/job/23408543876
+> > 
+> > I noticed that both `seen` and `next` started to fail in the GitLab
+> > mirror today. Unless somebody else beats me to it I'll investigate
+> > tomorrow what causes these.
+> 
+> Things work on GitLab CI again, all pipelines are green there now. Which
+> probably also is because you have evicted this series from "seen". On
+> GitHub most of the failures I see are still related to the regression in
+> libcurl.
+> 
+> But your first link definitely is specific to the changes in this patch
+> series and comes from a bad interaction with "ps/pack-refs-auto". That
+> series added a few tests where the exact number of tables that exist is
+> now different.
+> 
+> Justin wanted to make that series a dependency anyway, so I assume that
+> he'll then address those issues.
 
-In future tests it will be neccesary to create repositories with a set
-number of tables. To make this easier, introduce the
-`GIT_TEST_REFTABLE_AUTOCOMPACTION` environment variable that, when set
-to false, disables autocompaction of reftables.
+Yes, I've made this series depend on "ps/pack-refs-auto" and have
+updated the conflicting tests in the next version :)
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- refs/reftable-backend.c    |  4 ++++
- t/t0610-reftable-basics.sh | 21 +++++++++++++++++++++
- 2 files changed, 25 insertions(+)
-
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 0bed6d2ab48..6b6191f89dd 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -18,6 +18,7 @@
- #include "../reftable/reftable-merged.h"
- #include "../setup.h"
- #include "../strmap.h"
-+#include "parse.h"
- #include "refs-internal.h"
- 
- /*
-@@ -248,6 +249,9 @@ static struct ref_store *reftable_be_init(struct repository *repo,
- 	refs->write_options.hash_id = repo->hash_algo->format_id;
- 	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
- 
-+	if (!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1))
-+		refs->write_options.disable_auto_compact = 1;
-+
- 	/*
- 	 * Set up the main reftable stack that is hosted in GIT_COMMON_DIR.
- 	 * This stack contains both the shared and the main worktree refs.
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 931d888bbbc..c9e10b34684 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -299,6 +299,27 @@ test_expect_success 'ref transaction: writes cause auto-compaction' '
- 	test_line_count = 1 repo/.git/reftable/tables.list
- '
- 
-+test_expect_success 'ref transaction: env var disables compaction' '
-+	test_when_finished "rm -rf repo" &&
-+
-+	git init repo &&
-+	test_commit -C repo A &&
-+
-+	start=$(wc -l <repo/.git/reftable/tables.list) &&
-+	iterations=5 &&
-+	expected=$((start + iterations)) &&
-+
-+	for i in $(test_seq $iterations)
-+	do
-+		GIT_TEST_REFTABLE_AUTOCOMPACTION=false \
-+		git -C repo update-ref branch-$i HEAD || return 1
-+	done &&
-+	test_line_count = $expected repo/.git/reftable/tables.list &&
-+
-+	git -C repo update-ref foo HEAD &&
-+	test_line_count -lt $expected repo/.git/reftable/tables.list
-+'
-+
- check_fsync_events () {
- 	local trace="$1" &&
- 	shift &&
--- 
-gitgitgadget
+-Justin
 
