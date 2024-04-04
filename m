@@ -1,53 +1,53 @@
 Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2925D724
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 07:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E976E1CD3C
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 07:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712215949; cv=none; b=AGJF5m4DEDJyPRhSfN2R5DW9NgrcYM3+ynrc+VviRQHhPXeRpUJzi9lAmyU77CLv/B3KzUVzUh3REEtgoMQakl0V+Ylkgr/NDsCaennsjCAg8ZBTMRTvHoo5I2T3XlMqvppFp18iYpecBrLw1rs1yxk0ytl2y0Jcm+e5hmyglas=
+	t=1712215976; cv=none; b=jqElcR8xrFTLofV1SG7fUHzwlx4Do6u1Nb3b0+yA1m8mnylCRrnWk7ZEgN3ClKduZETTKeIZbCqrBTUhJUCVXGm232EO54+sghCP63jer+ZEKB1uLz0BJcXev0BJDMibCrNTlDpIv9fjV8ifp/ObfbMZdmmx4Rurjazxu8ZYXIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712215949; c=relaxed/simple;
-	bh=sA7JHwcN4P0GQBYMS/HK2dE/mALNwJLyECAlS/BePmU=;
+	s=arc-20240116; t=1712215976; c=relaxed/simple;
+	bh=rVSXXaK5khbICr0CjeO7lxDEfMdSghZOcv29ravLdmM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dxHihMNXwRtB2FnMXlOvXUWAaWzGgPlza2xnuvcVGmhRHVy8FeiFvi602GajH4ONK+8ef/s0wKOR22BGDoHbQQoRtCnKs5k+Cwkwq4WKRRjEfgwL0dAeWfjEKTTefIM4HINP7o2qAVG+2mmZW1wNfQnuzAVPbVqB7Y9QqZSLQ+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ozyLN9qA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hiQt2pi9; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=pZzNqIU5JzOPD66FCEQXq/uOxEq0EYUI91P4FJZS10c18riHbtlu7082eFON+b9H4AAC2lhSBKJeiWyEFv5GMYKJo3WWQBP448Vf433sOdT/b3tapgl+U9ODld6KVD2Jqnz2fpQ+beZg3iEvtjGpPRvnR1sfUa9e+MT8VsXAFzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ByYIO9Kg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=alNsAMqQ; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ozyLN9qA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hiQt2pi9"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id BCB6E11400DF;
-	Thu,  4 Apr 2024 03:32:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ByYIO9Kg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="alNsAMqQ"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id B9CC811400E8;
+	Thu,  4 Apr 2024 03:32:53 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 04 Apr 2024 03:32:26 -0400
+  by compute5.internal (MEProxy); Thu, 04 Apr 2024 03:32:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712215946; x=1712302346; bh=m3NmzXCpAO
-	ZJ8ystAyYXH7ox8YPO7rDUHDCZyaqMga0=; b=ozyLN9qAu6/pZbI53aywmZG48U
-	e52HLkd2Sdkc3plCPSOWqs+oGkVcAjMKkcVnbwPnHmy2OujuIw+tOOhEEG8TnBY/
-	WyPhaplBiIMBo5g6cjbwZoNjyfL7V7/5ZNYdBmYUQbm9vBJFwwvGE5AFpJ4IqGBF
-	0l7RTnF9iCZko6FKvsVoYGo/EinWePnTlIO8vIkEcr9o5pXtFLEz894CgAIfmv+6
-	ucc+Hq6IpeZ4g3mNrfv/tbOPhkjoRYx4IXoLRQ7jkBMc7fgu/ZOnR5Kj6PzbL/cR
-	Ww6nZCuhmckgATG7SXg2sRK3ZGT4+fDEspEd8+Zn7RGzxtZX2RDUAh9f1Tiw==
+	:subject:to:to; s=fm2; t=1712215973; x=1712302373; bh=HUcvxQ8ZoP
+	hzn27u2d3QM7vXI2ed8kxkCQgfUPXUums=; b=ByYIO9KgS7pvpV92mIN0Nm3fBF
+	uj+F0tPutbDec4nS6KEW3+w5sShPJy3DLoggeYui/3i4qCTapjXKqXhJGv8pv/XV
+	XovHsCl3PF5IzzerAj38nsmWArXelAZf0IrXmr7MMqeQep59JwAzhwH1jIVRCLS3
+	0yNxPTLw6n72qmwer1NQ0a4Mf/6R4RfbDZnAUT7kVAoC2l+5GtyS6cxoL1TJEjby
+	wMqjZWsPBo+dRqnHaAudXlmiZ5/GZnWsmBCCBacqHuwRtMnfYe/kv0/IWFIgFn4d
+	k6FvyY9K37C3VVJDnqNTQ4DWDGIOf89C6+6gLuhw5/SliYI1pu2+Xh4mDIxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712215946; x=1712302346; bh=m3NmzXCpAOZJ8ystAyYXH7ox8YPO
-	7rDUHDCZyaqMga0=; b=hiQt2pi9D8rPlv/n1kkbXWf7kvPlklH7u5YQ58ZnPdc3
-	kbFGjm5nyZQzGITDXKjjVLm3nzjInQqQEyGu71JmqR1GSndGHNATzvbSK4WJaYHf
-	X0GC59tnYxoghV3FJ5FwLEuYJhgbbB07BFbPNq0h093/MagbeOy0r8w9o3bZIUDC
-	In3DcTRDM+Re4vgT31cPW0tO28ZOQ7MbqsXZ3X+lLFkeQtsuu/ca0oXf9E+26+eb
-	2IkErQHL6JtBHeHz5YxAB/BnA1tzxU8815y4P1Mvl7XXR1xZpRcdgQFJL5BeVhZm
-	Ezqo3MhvBY8NihIqric7WHEPgjnESMk91bXRDGtS1A==
-X-ME-Sender: <xms:ilcOZo4wgnJ2vdIJkfu4GTLBF1BV4fGkPLoyJy7a2S5qQia1f5ksQQ>
-    <xme:ilcOZp5c7OclkhJRpXTa_zicjiYjJHk2wJJlADHTJSu5u4UAz4pjibQ78TBMhuVcz
-    FT-43FvVHrPo7gBvw>
-X-ME-Received: <xmr:ilcOZne74XdN3m8_KshYBcFCwidPbj8iMZ3IbtzEaATnT_o-wqkt2h_7tFZR9H9QZaFtdZGTBbv-4VggMQBhxbzruX3mLXiKdXlelLR_HLY3JN9J>
+	fm2; t=1712215973; x=1712302373; bh=HUcvxQ8ZoPhzn27u2d3QM7vXI2ed
+	8kxkCQgfUPXUums=; b=alNsAMqQIH0jR14DONIapIadeBqOc6QGj+4sNPIHhV9x
+	f/fbCm2nBCtVph75RjmqX44BjK2FQVGR+0nwZKB1QaFdtdoS+deNVyOWwSMGv4zy
+	dziGaTg+ciaLrFsm64Kb1pwlqWAA+G6FF5zoJ5DTZaUlXvnkn77c3BBwpaH5jaJy
+	MZMkilcaep6dT8ZDLhLx/zwmN2aHdK+kn7SNyhUvTvR9Wt/t+0CZCkZXH1eWHJEf
+	sg8bgDUaPYaSLbzLcJiZAnqMEj7BoaIKVfFzbMRHZwDPYetlxXYaGTRSeyueFTz9
+	LAa8e81fz9deWHmKFz47LJifNTbQL+pSk2tZVTKiuw==
+X-ME-Sender: <xms:pVcOZgkOdMhdW13ieNZgWdDnj_vhYkLNjZgqpRaH2V7IkK1kYqqH3A>
+    <xme:pVcOZv0rSKSGFWrWYvFoJcTlnvDAgC4vKcV-VI9q4tW-EdoYNNYYoFvAKhKbSz1nF
+    QUz3T60xu1c2CUzRA>
+X-ME-Received: <xmr:pVcOZupg3LRdxpeqWlsSs8XlJoRzpYiiaq08XYBohGuhAA6k--7J2vC2-emFr6jBxCdEnk6e4QI9G4h7wnoZnHcOw7K33zZN77k3AxrIdP3AW1J3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefjedguddvudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
@@ -55,28 +55,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefjedguddvudcutefuodetgg
     sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtd
     fhgeeftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ilcOZtInISKL0VXvZxB3vTeIkwx7s57P6TY-UpklidpXmpaRwjj-sg>
-    <xmx:ilcOZsJkwF_wTozLfz1hoLKL3b8aH71QRVE1BMEMrbOHpIZKcV3F2A>
-    <xmx:ilcOZuzOLz8L5XbjwhAOsK-SgJouUL3wPBjQIBqb0ZE-bfzh0v0snQ>
-    <xmx:ilcOZgK0cLc9Y0KVTKJLFJiFANXJCS7msBqRgz5pKY9RkGLS8Fyftg>
-    <xmx:ilcOZhEBkDwWujSshhEZ29849FPMkm5HmTfytoG92BDe0UD4RBlbBNqo>
+X-ME-Proxy: <xmx:pVcOZsnrgonwx_Zgahh8e02C3AYa_Ggrd2_omX2xk5T9T165quEqNw>
+    <xmx:pVcOZu2-JBT3IGXCwhvwenIkBVgp3z7Suv16-nt4jy_7Xq0c5A1GwA>
+    <xmx:pVcOZjvVkKDlIPxbimx6JJpEG10Jnfht_LvWfWTaJanEciLB31ezpA>
+    <xmx:pVcOZqVdP6xbL3FTd_Ycv98UQkd6BMzUm6zQPF4PcoAC9HLH4EG0Kg>
+    <xmx:pVcOZhQcH-g9FEoZskUFC85jSDFvEnW-K6Vx_xNV6MmpqjHgwrnEvP7Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Apr 2024 03:32:25 -0400 (EDT)
+ 4 Apr 2024 03:32:52 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 19f815f6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Apr 2024 07:32:20 +0000 (UTC)
-Date: Thu, 4 Apr 2024 09:32:21 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 5ee6e3f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Apr 2024 07:32:49 +0000 (UTC)
+Date: Thu, 4 Apr 2024 09:32:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Han-Wen Nienhuys <hanwenn@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/11] reftable/writer: refactorings for
- `writer_add_record()`
-Message-ID: <Zg5XhYq802lG4AgU@tanuki>
+Subject: Re: [PATCH v2 08/11] reftable/writer: unify releasing memory
+Message-ID: <Zg5Xorz75NMRqONI@tanuki>
 References: <cover.1712078736.git.ps@pks.im>
  <cover.1712209149.git.ps@pks.im>
- <4877ab39212867e91058c60f99fe0dc2a592d583.1712209149.git.ps@pks.im>
- <CAOw_e7YeqEK4O=KWowMYGtRVMLwL3y6bWw2LRfC9TqJz06Esyg@mail.gmail.com>
+ <41db7414e17201f85b476af5e0183e72de450310.1712209149.git.ps@pks.im>
+ <CAOw_e7aBPF1vPvF7iYXCM5VBQu-Nw00dO2pRC_6DU3PtdDUsbg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,63 +83,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bsrRYwkZm8WzcXdn"
+	protocol="application/pgp-signature"; boundary="GfWZWrvgCPbFhJJH"
 Content-Disposition: inline
-In-Reply-To: <CAOw_e7YeqEK4O=KWowMYGtRVMLwL3y6bWw2LRfC9TqJz06Esyg@mail.gmail.com>
+In-Reply-To: <CAOw_e7aBPF1vPvF7iYXCM5VBQu-Nw00dO2pRC_6DU3PtdDUsbg@mail.gmail.com>
 
 
---bsrRYwkZm8WzcXdn
+--GfWZWrvgCPbFhJJH
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 04, 2024 at 08:58:08AM +0200, Han-Wen Nienhuys wrote:
+On Thu, Apr 04, 2024 at 09:08:46AM +0200, Han-Wen Nienhuys wrote:
 > On Thu, Apr 4, 2024 at 7:48=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
 te:
-> > +       /*
-> > +        * Try to add the record to the writer again. If this still fai=
-ls then
-> > +        * the record does not fit into the block size.
-> > +        *
-> > +        * TODO: it would be great to have `block_writer_add()` return =
-proper
-> > +        *       error codes so that we don't have to second-guess the =
-failure
-> > +        *       mode here.
-> > +        */
+> > There are two code paths which release memory of the reftable writer:
+> >
+> >   - `reftable_writer_close()` releases internal state after it has
+> >     written data.
+> >
+> >   - `reftable_writer_free()` releases the block that was written to and
+> >     the writer itself.
 >=20
-> The Go code returns a (size, boolean) tuple for the write routines
-> here, but that does not really work in the Git C style.
->=20
-> If you make the routines return error codes it suggests that the
-> in-memory write can fail for other reasons beyond "does not fit". Not
-> sure if that is really an improvement.
+> The bifurcation is there so you can read the stats after closing the
+> writer. The new method makes it harder to misuse, but now you have two
+> ways to end a writer. Suggestion: drop reftable_writer_{free,close}
+> from reftable-writer.h (rename to remove the reftable_ prefix because
+> they are no longer considered public) and find another way to read out
+> the stats. Either pass an optional reftable_writer_stats into the
+> construction of the writer, return the stats from the close function,
+> or drop stats altogether.  IIRC They are only used in the unit tests.
 
-In reality, `block_writer_add()` already can fail because of different
-reasons: it returns `REFTABLE_API_ERROR` if the passed-in record has an
-empty key. This shouldn't ever happen, but it demonstrates that this is
-certainly an area which needs some further cleanups.
+But even with these refactorings the stats remain intact after calling
+`reftable_writer_close()` or `reftable_writer_release()`, right? So it
+basically continues to work as expected.
+
+It might not be the cleanest way to handle this, but I think this patch
+is an improvement over the previous state because we plug a memory leak
+and deduplicate the cleanup logic. So I would suggest to defer your
+proposed refactorings to a later point, if you're okay with that.
+
+Thanks!
 
 Patrick
 
---bsrRYwkZm8WzcXdn
+--GfWZWrvgCPbFhJJH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYOV4QACgkQVbJhu7ck
-PpQR5A/+ImxSbyv4hw2Xc9bKfd2UqY5nqdNkMBKlm2QK+ByueJCMcERPzGhuy2L4
-bF8vPNsuW6joEbcGsMgmy15silZL6/RLPpWjjQF5Z6WLsbBxpCnJuS2bd/NtjX4G
-gpo5YEYz4YcmNq7HnuANaD1yluE/aiyjfjA+dcA6Wtv7ZXyTjb7KOEdcNc7ZJJWS
-S3KKaH+1sIi36mwB2Nf2ZGQyaJ/I2dR99s1BfLrpvEYOTmmPAX1eUG3CV6AbuN7S
-n1BSTmHuzUn7EZ22B7S3KX41CcyFB9SSVBDb+9P1bZbvVkjw2HOs/UxTyFEaKir4
-qtxcg26btDZ2SleYcJ2z8UgwbjVnd+Qfilm3t81u97foTfQn+JwwGvb8HQX2l1Ss
-/UkyO2RXzCQbUPvhaiXqQ5KiZHiwC4y7ZPQJ06OW8wTexYHMthfvGdUG9FygtJzh
-wge0/tl3S5D936+wzwyScOZWML5vn2IxY9xw6XsaYiA+5MjTG8H2QrqIC8PlC8GA
-f69GQKICCHptg4mjB17HVJCeD7rSvdg/iuygRNZ2V59D03h+HL6UwuxTmtQuuIOB
-fKy5CS6xIaAevbvtw9XN0FCRPX8Wnvyjkc2uZsjZlxaFDZbGXwMNmaRuG+dd2Dk5
-d40EUiz8q9bY3OMtSjUjy24V/YJyPLzDDqqkY0JipQIh6jZH7MY=
-=g6uE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYOV6EACgkQVbJhu7ck
+PpTnaA//SPuo6Ehd/S3VnEz9R5N6SwGogXQR8D/4oRnif5RPsb+tLMtvXt+rcrEt
+SAaWWOI/JJIUWEo7BXQ3BXPR0L8WVP32mT+60AFOKcDqfGJ86A2mgVFbGf4bvi4Q
+A/RxzkS9WD9wglO3qly68fRAXVKzohnwLSPOMGXHcrWJWovPHkdfsvc619HZmfeM
+5WBxigDxOi4rckGd6Kxc3nTHVDIaYofa79QhxWR4EuWivHDSnVRzIin4goDsT7jy
+JFK8kPhXHKbRe5/DOD+9bj2QlcYt5bIPaL5YVcXmWhDvuXV2HqhwVl1qo+s6xnqM
+mPWFHiyiZDQEjkqT0756UAs6xp004P7RYfDxJmioRDjcpW4AAdkfOUaJ7evINTYZ
+JpDEnQqoFbgdSZb1epllW7aSu6oIbDGxo+7Uf2Yk2xwSV6B0GQJtY8q5To77GleW
+oBwjDCfXjO7N4REM4ABadCkqZ4kCoI8Qj/P9DPMu5xb/9yk4Fg3fmoSFBJBfJ/+C
+z3Hu4UNwkiSdrS0yfavINTmqvjfZ6VhNC6Og7E27wr53VUodqN0fM8ftSvwluOCc
+PFs+TZ+3SxBx7X6S1GDMEm/iyd4BkdSMZAFMkDD7N3kNOb7mZYMRf5l/+qU9TVRt
+xSJYK21J4CvTycWtfPJqRwRnPLxDBTgV4UxRTJSVST0K5/TeOSg=
+=0F/N
 -----END PGP SIGNATURE-----
 
---bsrRYwkZm8WzcXdn--
+--GfWZWrvgCPbFhJJH--
