@@ -1,131 +1,85 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A861CD3C
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 07:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046345C903
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 08:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712215982; cv=none; b=PZbkPA5lmnH2aSZ/VSfaOcdj+XQNO3u/wZk88pONhQvM8ZAk/YIH+VkAkKzCqlietXTHzMd9Xr3I75cE77jC2rRlzH9OxIFq/Jd+vkr3q4hizPEbxitSKGWK/jDhRfPV8ohzK7CpbJ1mAxV+Rxo6HB1X5+vbZfeI6qvOu47vUU8=
+	t=1712219790; cv=none; b=Zt0IaEiR0aaPS+tYqxcuUJpRI6+kERHaBuGv00MuuVoipvRkxbiP1q6DrdHHONliTLEWM5L0APXclbPvcQ+gmCY256RNqZs+AKNecskhsRi4msJkXZaUbPZHlox8liXJ3b0x278b2W3gisX6EGQw7hzVqmFu+wXzDrLjTmIbnZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712215982; c=relaxed/simple;
-	bh=2mQVeD+pGp1bvVnpPshMWKxpsIpIKI8+VVZCugxpAlw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OzBBpJHAoQJdeDKCpBA/wa67Occp5OgPCUFB3CDu8t1m0ECIVrAaBMk8tGxIJggT88ofuSn6QItQ60XhvXHAvV1T4Q9SANXIfLisUO5r6lXrXHKXRQGafUknVLVVf3g511p9j1gP9luL9PdlpmCnJxbl3P7eSclwq9K1FhlEl2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MnXQK+75; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W2h7RdAK; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712219790; c=relaxed/simple;
+	bh=P0ipYxxlpoBGfM0e+flGzFvq54vfjvDBy8pk2H/YRPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WzZ6jjBcXEBO766/eagrYzSaop4Lv0Jx9OMwciJjCtJZKrhFhEhfS2LXl714b8eSEAFznicLC97/qcxk4PUSn28ReicojwxGnQgqnjjQGySz3QWVZAagrbBaUrtPXDLkoJ6YTa1eFOCP+a6Vd5TFIq6EVsYel/faUxJ7PB2wLbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ivAfbLmx; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MnXQK+75";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W2h7RdAK"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CF0F01140112;
-	Thu,  4 Apr 2024 03:32:59 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 04 Apr 2024 03:32:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712215979; x=1712302379; bh=2mQVeD+pGp
-	1bvVnpPshMWKxpsIpIKI8+VVZCugxpAlw=; b=MnXQK+75Pv1qb8ZPVD1EdCeCvs
-	rNAFRKSNYZ4ROIsPh2Tj073NZ38sb7Ib24GRQ28BnEJlih8uT/kW1+PJN/Q/typn
-	DZpIWWTTDIboTLVbHi4jJpWB9aUVyaf3gX+ZRbpH+pOoEGZqBSEhVoQaa9N74F+p
-	QkiAAP5/M1a+GbUkQZutsUS7Z6bgsY94+js/ipnqNaL3xuWCnQVJOKyLXmWYhq2W
-	JKbKuavjveRD1yxUXpjLm9aS0DYUk4reCsOfUJiIJyBJUouZqTHKkBZxel44Nd5S
-	CXwMxxQbGPDVN2lG1qjTq48CXbAHVa9q8gY/4P+WiuUuLPOASqDVLqrVUXtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712215979; x=1712302379; bh=2mQVeD+pGp1bvVnpPshMWKxpsIpI
-	KI8+VVZCugxpAlw=; b=W2h7RdAKqShGu1E/EX71wvd0tLWTyvzJwEi9949V7J0M
-	MXQD+IvkuA2vbQpDNWkuBZi34ZnOgiUtSZRZCQYcYO2tSSjF7j6j57FsSykCJsNH
-	Cw/n9md+lbH34Q+Wdofwfkp2nQN0eqs3WjYXBlldg32Lcgcc8pS/eqA8YWF5OUD0
-	sWNVBfZkXGPNS7NGMreGfnOupfo29+DxE0mt7Db/XHE2zAQfgZtTajo7FSHoro9i
-	r9+BRUOF4B+YVF//FDnmO5oWdX+QFARA1Cf8TcOybE0lNAWR1h43VXtqbGihlupm
-	baU/XYtYu/9rUyLvew+MqPv6mNBxEI5akKD9OToZwQ==
-X-ME-Sender: <xms:q1cOZuybgsUIUi0qhmr2DjuqQKJzGmduQvUGloAgIDjcVxk5a6KJmA>
-    <xme:q1cOZqSHOB7quddOa8PvjUDnJjBwBMDhMUQLxXxp94-YKMXE0c1PHIEGU1VijIXbX
-    rXsb2asYQLLtr3Zpw>
-X-ME-Received: <xmr:q1cOZgVxf-LtEmi6BxO6krBCOeOwPMPR4070olN7tV58D4bq2lAMoUbrkeTN9QTQ0Hs8XzOEdNxAeY8e4xwNOfrJ5HVasmToBztKwsZyECYpH7Qx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefjedguddvudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtd
-    fhgeeftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgepudenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:q1cOZkgJTbvhch2h7OpLZKqzp7A9nnQhQy4RWTxqlSehbS4Ms_FyVg>
-    <xmx:q1cOZgBoxzBffnlijepL5uPBpYdnI8mmsx8BHOooKI_DPubMjnG11w>
-    <xmx:q1cOZlLkPU2pI3Yt4AFdhrBD7QmpajNmmcaSjO4sJGIdvK55wly1FA>
-    <xmx:q1cOZnB0sYju9rrQ8AQbL-JBY7kHFo6aNl38pEtpdQLN2eCQfRpG4w>
-    <xmx:q1cOZj8hU49Jae2m1gBasYtNg8kq3dp5iMJAa7HcUoYrYcvW6fQE1Bbq>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Apr 2024 03:32:58 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 9a5b4a0a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Apr 2024 07:32:55 +0000 (UTC)
-Date: Thu, 4 Apr 2024 09:32:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Han-Wen Nienhuys <hanwenn@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/11] reftable: optimize write performance
-Message-ID: <Zg5XqI-MCiGsux8o@tanuki>
-References: <cover.1712078736.git.ps@pks.im>
- <cover.1712209149.git.ps@pks.im>
- <CAOw_e7ZFJVwV-vCP65kaT5jrvHeigWRyfsC0vfnk3B-S_dXz2A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivAfbLmx"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-5e152c757a5so529443a12.2
+        for <git@vger.kernel.org>; Thu, 04 Apr 2024 01:36:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712219788; x=1712824588; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P0ipYxxlpoBGfM0e+flGzFvq54vfjvDBy8pk2H/YRPc=;
+        b=ivAfbLmxLwr8RayrZcfCKGfg3FVBZ8+f8d6xvgIMX10FVyaYHBRteX6ClNtG8kHNb9
+         4sWG8TI5O7Ct9/r/lTWUYtE6W+kEdJT4G946RdzjdZxEvu4adqQXkziVcm68w4D7koxB
+         A3FtdvMv3NNBh4SozL6KiQO/KlSyaxycMFY4DgPMUWPE4zdQGrUq/3j1BU3HaTp10WDl
+         6XNkIXmDJ6HuKSyt5dCrR4xbSRi/T+RisvUj9cOV8VJhfSFnJ3CNyw0pYh5/fzGbul32
+         umXc6AanHq5kE7vI0kwv0ziwYqsz0NHD6ZRcSJv5iT/N3c8sXEvz+vJEiJld05zKZuol
+         jdMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712219788; x=1712824588;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P0ipYxxlpoBGfM0e+flGzFvq54vfjvDBy8pk2H/YRPc=;
+        b=p48ZdO07qNLM2lRQyxwbxVRT0DSLLtwBVWhOPiZgkToKJGkhGv3LTxArpGCONU4K1i
+         lWxzFvCIJ+npcKaWa4FuPFLb52VRcM6Uq2YNR7BcYM97DHm6QzuzdMBYGvRI4b2Laa75
+         Ic8AOC5P5j5aGk30x3AV7CB1BENS2/JD6SDV3XMgTvNHNpdfh4GNTErreXrSjgRbKLcc
+         CUWIXENoLAIVwkvxKa/5CJhDtGZO1a2E8WWaMxD2nMhBjL2Q80qTHbh2lVe7bPO0ht/o
+         Vxjn4tCsVlxroli7dURGHT6maA7l3OmzP3BMqn52Jc4AxlYEB3LwauRh1cd5+DlBIGIu
+         +XtA==
+X-Gm-Message-State: AOJu0YyaMkU0SNiTBjCkzswWepCccmDqO0NE7TB/jUDBrHHbh/lCKrS0
+	YiQtLy47EuvbRh9QcEpeRxpZILxAzeb7oHsaPwViNf+3VY7PaiGyjjEZxtISPxsa3QwVQCGFEyP
+	J54ooZldjZkODT5vdIiwJu4MDFXg=
+X-Google-Smtp-Source: AGHT+IGBVYKm3fq8POQwPfxxE0CJX9dYC7ajLXAW8Gw6LngxCXhyOGsVeIzjecy01KWH4ywo2+YZf6PW8uMvamKQDV0=
+X-Received: by 2002:a17:90b:1081:b0:29b:b5a4:c040 with SMTP id
+ gj1-20020a17090b108100b0029bb5a4c040mr1636788pjb.46.1712219788212; Thu, 04
+ Apr 2024 01:36:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LGcNeTdlYtSA6xIj"
-Content-Disposition: inline
-In-Reply-To: <CAOw_e7ZFJVwV-vCP65kaT5jrvHeigWRyfsC0vfnk3B-S_dXz2A@mail.gmail.com>
-
-
---LGcNeTdlYtSA6xIj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <CAOw_e7Z_10b73n91ihsaao_S-XPkNqvY7gTcHvqUODKD-SwPSA@mail.gmail.com>
+ <Zg0zs2_QLpXv2PwT@tanuki> <CAOw_e7Y_MwgrrJzuHk7tzBR9a2kDfTnwCzC-7_rgj8UJPKqp9g@mail.gmail.com>
+ <Zg5HXZrL_4BsyzfG@tanuki> <CAOw_e7Zzc2uLX0FtkJ3fB+wuNJt5piMmoYVes+ayApe8BEN3+g@mail.gmail.com>
+ <Zg5Up_kSvOmQODO3@tanuki>
+In-Reply-To: <Zg5Up_kSvOmQODO3@tanuki>
+From: Han-Wen Nienhuys <hanwenn@gmail.com>
+Date: Thu, 4 Apr 2024 10:36:16 +0200
+Message-ID: <CAOw_e7b-zTZVGW_u6_ZY-CboHGOSWHbW7mxnqmxh+uuQa-VsTw@mail.gmail.com>
+Subject: Re: reftable & jgit compatibility
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git <git@vger.kernel.org>, Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 04, 2024 at 09:09:53AM +0200, Han-Wen Nienhuys wrote:
-> On Thu, Apr 4, 2024 at 7:48=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> >
-> > Hi,
-> >
-> > this is the second version of my patch series that aims to optimize
-> > write performance in the reftable backend. I've made the following
-> > changes compared to v2:
->=20
-> Looks OK overall; I had a cursory glance.
+On Thu, Apr 4, 2024 at 9:20=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> Different blocksizes is definitely a bit of a sore spot right now. I do
+> plan to expose write options via Git config options in the future, e.g.
+> something like "reftable.blockSize" or "reftable.restartCount". But for
+> all I know the CGit reftable library doesn't yet play nice with block
+> sizes other than 4k.
 
-Thanks!
+It shouldn't be too bad. Many unittests use blocksizes other than 4k
+simply because populating a multi-block table takes less space at
+smaller blocksizes.
 
-Patrick
-
---LGcNeTdlYtSA6xIj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYOV6cACgkQVbJhu7ck
-PpSjbQ/9GAT2PQeYHFBTqZ/VcKRvoQMdJuvmi5aAay4y2aPGerIChCvS7MLWqnZn
-71Lbw+S7APaYjVUH7v7VidvShTc0Z91SZceHlhxDsPrL8mgZ0JclrXZ8wDxlHjGx
-xMFLx/TNVjbWLrlenIE0/sI/r4kLTU5yCQzXRDDF9CBho9fEL4C68cquVy2xNlRy
-KdBmVzuLd+l6UR/zacGLHVyjiahXZBAo5JLByQDf7eisAL29DfWPfu7n8WCkJaXB
-JlJJB/BAM6fej4d9nt+uHfi/O8uqWNF2FCPKEUBAOX/bz7pwTlVrkQmrfPrYU9v7
-zcUCa3fUMtjg7otrziTyCxMMCtqZ87OgmKtd0mQQskHJRdkweN9YLj3ISoglm3XT
-2neNjbEtDt5WPjBLBaHxxYk6+Wfxr6zchj1GaAAZwVUu3UXAZfdLIhSGJqNfTFKV
-6Rinwyy199I4Au6f1gzKOiN/MXKonGV1Rg+HTtjRKteWtD8cK32OAHZfnnFVlc/q
-Osd28Lus6F+TvqOsyaw9tb5fq6kSJgQoaRBeC3r90HkXXwhGOEgRfR1/njmRDJIu
-GFq27rV8wjQLMfZ4lF5xHhfwnZD1v42vZ4+SxvEF5aD9Hz7wx4WakEAptlgJ5ofz
-eIkaJq1gs3uB0VGyK333GIe2HLgmOd7fvwcd9tOg+JisW5Eklho=
-=MuJN
------END PGP SIGNATURE-----
-
---LGcNeTdlYtSA6xIj--
+--=20
+Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
