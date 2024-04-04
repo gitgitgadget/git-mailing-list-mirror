@@ -1,93 +1,89 @@
-Received: from smtp-8fab.mail.infomaniak.ch (smtp-8fab.mail.infomaniak.ch [83.166.143.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F2B71733
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 21:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.166.143.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2185B13BC09
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 21:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712266684; cv=none; b=afYe1T25uKDME1ipQeWARcBMzls1SIAYj+n7ppRLOQpZXhH48z7X4K7vDdkHu+VXr/z/zpVnhnKYSgSLgIWO9YNXPO1WdJC+7EGFmbFDDnw4Lsm3WZVuuP2ZrUj0TyAKZHReS/oLxDfXGsdjbcCOlkS4dA0pSEr9/acv5hY+BD0=
+	t=1712266843; cv=none; b=tja9iJdnfPVXyafdrSxmZrLfQjke86FuAIiTZ10lCatTV7ksS6YGSx408kP6ilUdZOhbsMDUIphJrncYfdW4gBVrYr03RzJVK1TENhkLAWgiib3uK7oUFLKSRZh4Eu07nVHD3J96l7Qttflp9/4EtiBLGiAELNr5Uf1TPNi3TcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712266684; c=relaxed/simple;
-	bh=ImlHVbEcu2+DaRMdppBxCCHS8unO2qIpsg64Iz82xMY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ez+wtk0iLe7Qmw+2edDDGqOa/pxGsR2SQhMSpe7EYIlvat00hJ3NZP9JsXVvihdMpAYS3RoJX4YoluJIMxXcCiFI2T3nYUH3KnUNAjje31jAiS0HEUNyjIoUOq6zns91Lbq39Q22PUBjIwsUNkceHKKwN2O7fJvezmvjcPcB8Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=badez.eu; spf=pass smtp.mailfrom=badez.eu; dkim=pass (2048-bit key) header.d=badez.eu header.i=@badez.eu header.b=nTHFWL07; arc=none smtp.client-ip=83.166.143.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=badez.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=badez.eu
+	s=arc-20240116; t=1712266843; c=relaxed/simple;
+	bh=a/SiryKOfW1B+y2C4yKT06BvFeGQHQIXnLSmuxPHpvo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gMPnztW69ggmP5B7cTBaru2FEkrJJD3REol9mj/ljr35uiD66+C2jQg/xARXt6gAKkZOUFqOlJEDW9FR/ll504Damu+Cgzg5xYEC6QPqWAOGZSk4UzC+vuU9kWstk5lR7ksspulJIXbiyaT5w/AXTmS+OQWpFl/1lQEbV0LsLn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jzPVeTtT; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=badez.eu header.i=@badez.eu header.b="nTHFWL07"
-Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch [10.4.36.107])
-	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4V9ZjH01Wtzj85;
-	Thu,  4 Apr 2024 23:37:55 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=badez.eu; s=20230704;
-	t=1712266674; bh=ImlHVbEcu2+DaRMdppBxCCHS8unO2qIpsg64Iz82xMY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nTHFWL071sPkDqWzQNDZfqTlBGEyTRgVx4shJrd0SeNR2WZS1zcOYx7Ff1wXRZ4pe
-	 rZq16LW3frdkiiJR/pQbK5+y/yvEc/X9yBeuGIMyc6q9WAS5YGihv5tHorlGdGM00l
-	 /ov5julTa2Y9R4nL9yECN60vPr7vp6psaohBRxwiI+9E29uMTIQoNQMXfhO1xZ1Luw
-	 btinqxGbMYtW3Py/b0Cf+MCA/toB+zx25oBk70OnN7NXvvHUPIWZuZlLK2FLz8j+vu
-	 7kvmFQoWrGADZr9FqPQfrVzPt5yM6qQMCnptOQgX9n5nGa4YNfuGVRZaKVY8WHLmif
-	 YUhouGhNdtXtA==
-Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4V9ZjG3MHRz9BQ;
-	Thu,  4 Apr 2024 23:37:54 +0200 (CEST)
-Message-ID: <a8c030bb-b7ff-4628-a104-65e64a1feb93@badez.eu>
-Date: Thu, 4 Apr 2024 23:37:53 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jzPVeTtT"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6eced1dab1fso1038325b3a.1
+        for <git@vger.kernel.org>; Thu, 04 Apr 2024 14:40:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712266841; x=1712871641; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cQD0dIpPRCFqv84BnaEmmJnasf5tXZEbCBxUXAyaSHs=;
+        b=jzPVeTtTevfqh72UZ5EHWlsmIjOv+AFLuNpMXKYk/Y6XYphXimODV9Tr0WNw3At92z
+         3kEeMMZsYAgfl0RYW122N16Uth/Pc9IFz+qHFfYcQ/JsGwK+IrhMLJG3D6CWtV+JALL5
+         K9VX7X/ZnVnjAtXScrvceE1xOVYafj14IzmvK4nL88l1OklGCjNoWMzV18jiaNkKrTHn
+         pic927AdKQof8XHkR4sUrJVAO2dr/Ioaj1SnYrCPccM1436oQ8Gnl/rRpnwXvjZPqDty
+         gs+aeulJlSrCGd0IShRhJe84/aBxCShvELWOSQt6mj4ZQ2kaB65/gLdsOJU9uG3kTERT
+         j2hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712266841; x=1712871641;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cQD0dIpPRCFqv84BnaEmmJnasf5tXZEbCBxUXAyaSHs=;
+        b=jG1AAkC2raXW/w9iKbo1l9+wqh/0gXsGzSnR27YQ8I+FAccrLQc7+fLMtKap7cLNFi
+         D2mymGKJcdxBsa9ybncxE6dZkLlfz6E2r6OygTczcB+vPpdP5XvAz5g1lYW0Yo4KtRKD
+         00i0D2YoYDyk6R4cz1vf/16dAfTL97iT5dVnM7UhhJkDSxF5khckF62pwo8SYaw4eY/P
+         n6cz5AFnIu2EugMfMCFvjZB+gakWsfWzsnCUHm3HygA1YU0NB+ulAB6HItID5sOwHMLb
+         7sspS3N74YIlv2PUbLjQyIr2+qlzkx7o97XPsGxWPqjH3Ew9PYQW1qWXQGke3Tu07XH2
+         rj7A==
+X-Gm-Message-State: AOJu0YzWH3d8nkEWI5gpxLFR4P/zyM+ZWDPTEbCQIfbNJas3qxj6Yv8e
+	X5NnIFmnoT0RM1AE/wGkDz2A2Y1jtHaVM6vepInKN/LPBvV3pD+Wo5dEquH4gqhZfgn235v13+6
+	nktqD9sPMe43TDMxPd2n4ON8nBXk=
+X-Google-Smtp-Source: AGHT+IFU2o7mivAjMV3qvKNcitEJSrvyCeUZ2mAfSVG4FbNovuptGRZRtDG1V8vW1riu96qxaJfv4Yie2H48Tbh/dcY=
+X-Received: by 2002:a05:6a20:3d90:b0:1a5:6ae4:dc38 with SMTP id
+ s16-20020a056a203d9000b001a56ae4dc38mr4139291pzi.40.1712266841345; Thu, 04
+ Apr 2024 14:40:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git log --decorate show prefetch objects
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-References: <5a16d4e3-6fa4-45f3-ae79-576f3fa80d44@badez.eu>
- <xmqqh6gh12yp.fsf@gitster.g>
-Content-Language: fr
-From: Alexandre Badez <alexandre@badez.eu>
-In-Reply-To: <xmqqh6gh12yp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Infomaniak-Routing: alpha
+References: <cover.1712235356.git.ps@pks.im> <db66dd4155d80b714719e80ff90f64c1d36b97d0.1712235356.git.ps@pks.im>
+In-Reply-To: <db66dd4155d80b714719e80ff90f64c1d36b97d0.1712235356.git.ps@pks.im>
+From: Han-Wen Nienhuys <hanwenn@gmail.com>
+Date: Thu, 4 Apr 2024 23:40:29 +0200
+Message-ID: <CAOw_e7b5wDKOcY9hSty+c+z-NWVUgri3h3ScF0qd1Y6cmfsyVA@mail.gmail.com>
+Subject: Re: [PATCH 12/12] t0612: add tests to exercise Git/JGit reftable compatibility
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Josh Steadmon <steadmon@google.com>, 
+	Luca Milanesio <luca.milanesio@gmail.com>, JGit Developers list <jgit-dev@eclipse.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 04/04/2024 18:56, Junio C Hamano wrote:
+On Thu, Apr 4, 2024 at 5:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> +
+> +test_same_refs () {
+> +       git show-ref --head >cgit.actual &&
+> +       jgit show-ref >jgit-tabs.actual &&
 
-> Alexandre Badez <alexandre@badez.eu> writes:
->
->> # What did you do before the bug happened? (Steps to reproduce your issue)
->>
->> <on a git repository not fetch from a "long" time so you have missing
->> branches and/or objects>
->>
->> git maintenance run --task=prefetch
->>
->> git log --oneline --decorate --all --graph
-> I do not use the prefetch stuff, but unfortunately the person who
-> was most familiar with "maintenance" are no longer active on this
-> list, so let me take a crack.
->
-> I think your complaint is that "--all" really means "all", not just
-> "heads" and "tags" but also includes "prefetch", while the prefetch
-> hierarchy is not included in the "--decorate" sources.
->
-> What does
->
->      $ git log --oneline --branches --tags --decorate --graph
->
-> show, and is it closer to what you expected (note: this is not a
-> direct suggestion of a workaround---trying to gauge what the
-> direction is to move forward)?
->
-> Thanks.
+This seeks to the start and then iterates to the end, likely skipping
+indexes. If you want to test for indexes etc. you should also sample
+random refs from the namespace and see if they are returned correctly.
 
+> +test_expect_success 'JGit repository can be read by CGit' '
+> +       test_when_finished "rm -rf repo" &&
+> +       # JGit does not provide a way to create a reftable-enabled reposi=
+tory.
 
-Indeed, I missed the --branches (and --remotes) options; they do a 
-better job in my case.
+You can do "jgit init && jgit convert-refstorage --format=3Dreftable"
 
-Maybe --all have a "legacy behaviour" so it's on me to move to new and 
-better options.
-
-Thanks.
-
-
+--=20
+Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
