@@ -1,173 +1,295 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F53012882E
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 13:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A244F1BDC4
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 15:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712237864; cv=none; b=TWQOANCjJwuWuFUFWtzJ0DvtrcboKTRXDe6mjr6ojfeLKdGDKwwVEBh/OfMUf4r19d5WZt7D9Bly0f6WwcfcS2uG/uwdgeHMQqo+QROF9UcaM3SiRGqYzT7X4e2RleoHgcdf35GgVeKsOx0Vs6tbaX0aS5sOdXYMMTogWi5xMgU=
+	t=1712244582; cv=none; b=JItOcI2qlbIBrF2dIvkTqM8v7eL2020glegkaeY9FBs5zw/mPev/4xHMiBrJGKShBwsJ9x/aa0UQ5IrpVIgWGt6N6NdCZNnGGFjoIH05G4MeSas1EvqW+FdSm6kVYmruuJVh7RsQHaXhtpb4ngy+EaeR2z0C6oUyfeBeiaF9j2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712237864; c=relaxed/simple;
-	bh=wL51VYcK+ZV2wsx6g/U5B9Z2M0RFoAIz3zZdJymmjNY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ES69uhbxWF1m/+9QHMJ79Hz70EotDxtSamX9OkDuPLh53BAUhFJaY6RCBI1qfYwboGCQi9xqkcFFY+BfVca0ZJ50tPbexGVTcGx+2W/5m1GmsHgmo702RG1KRn8wk4dBejR4bcJvtwvKDGu7KGZ2kJ1vG5XJlw0PF483mkDYmwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=biEOxSPu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s+vzdN/S; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712244582; c=relaxed/simple;
+	bh=gsUxiLUgWF4nCWqc7HMJZpOhicpY/Q9NOJretGJmXeY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=nTV9iMDsvH7aDlCkkAYbJuOtIUh4Pfo5gGPp60oaXfArmXCgNT1edCwsAbveNM7ojDxB6w2Y4+cuyfAl3LBlFhwP0C84Lafk5lgUhFYt1f+uHWi7E+TZgWyunV3V2Q2h4QEGFhHrvUHKAleGWRbX5FKUGouaWSd+Jy9uW76Ok0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TG6OhHCp; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="biEOxSPu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s+vzdN/S"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3A07311400BF;
-	Thu,  4 Apr 2024 09:37:42 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 04 Apr 2024 09:37:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712237862; x=1712324262; bh=eXC8B1ZTR/
-	6cuorjswpusm7TZXe9Zt6mXnS7G/BJJEs=; b=biEOxSPuDUZVS6E6xEuhO78zJD
-	jcDxkAftZv8BFU6LKuKc21G06X/yZaQkaeBytNTIdVGMYehEjQg9iAAhS6vYhh+u
-	tbK6HFq77XHkm5V9OjbosHrCpQ99NSr2DYO4v5JNpMoJkOzSkFhmnibox+pMS3nE
-	632PVZ4Q9TcuswJUSYFbhHgCAKh1LOI+qrK4DCLR7g0AemiY704a92JGGpZXKAWX
-	SbpkOyIiTy80GmiYAvYSaq81Mw7s9SUEifen23ryI2kOz7IHfeYqelhpbyZf3Nqr
-	8mYzGJTWaj64b3+X9fzpOmjmaa/kVe9sXXoRJDUAhXO7EDliPSNKSp8ZIlxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712237862; x=1712324262; bh=eXC8B1ZTR/6cuorjswpusm7TZXe9
-	Zt6mXnS7G/BJJEs=; b=s+vzdN/SOmYLpCKJ8OkSLMO7cOGJ69lJMpWrEXch1/O8
-	iE1cN4EBgujFTMoHj7I9U6QFkM3ZjvgtSTT28tnprdcChvGIRah1YrTkE/3A8uPS
-	TMm+0mjh/5hPoSkTu3tk3IQkqivC2+xAkB0tt4IknkYv9d4vgFEJ/h5Q4f+SEcIy
-	oGgAd1OZWC9Q0X4cOLKJHDaVbzdFMBcferWcnnfWOQmvIvC4Cej9BcBrGuSVKBg5
-	j0jH24fPd1VCCfEE45ifRBiBdiLAdOSq16uSbfP756YeU5zDi74xgxiJqL7ve+MH
-	oyichMJJGiz6+1lVIEzQKtZZRJF7KHaOJPqAPR2HUQ==
-X-ME-Sender: <xms:Ja0OZpMuCZrCL2y-1GYJQNgcmtlnKXaJRaYFPzzYy6X-DDCOz-2Mdw>
-    <xme:Ja0OZr8CO4eX31XVIfTEvn14qScxaaIkLJ63fdiHKXy53qyrhfjepqQe0oOdSmt9d
-    NGGIR70hEexJDkkIg>
-X-ME-Received: <xmr:Ja0OZoQdDLrsPo4WuFjxKDsv49Sx-kw_t4STyYzfwmc6O9jpJdhP6a8aAvFcOhXVzX_4MdiOM9Dq3kAV9VQipDy8YIkwXBEu4tui9kZFLa9-8Edf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefkedgieejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepgffgieffueeiieeujeffffduvdegjeefvdeghfdvudeiieekfeffjeeiteejjeej
-    necuffhomhgrihhnpehgihhtlhgrsgdrtghomhdpghhithhhuhgsrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mh
-X-ME-Proxy: <xmx:Jq0OZluVQAzalJSV63huRWdRQCR-B6R0WsNno8j72XjSKkNJDQVq_Q>
-    <xmx:Jq0OZhce1xNHleHpyLRuLuTDj8RPsD2qK_2ENCi7IG0cHZKT9cap9w>
-    <xmx:Jq0OZh0Wu-dWCsBoyaLoWwVtwbs-9kZ0upOmitQ8uLixNmuUyhUZRA>
-    <xmx:Jq0OZt8J4LtW4BaQr3mIPCyi3xUwAFtCZyvA4X8Jy8Y9DjDPH7qa1Q>
-    <xmx:Jq0OZpReuxQ9ihQvAwuiFzCQBg2pYvi-7P9WQZ3OE9qdF-QPNPMWb6LX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Apr 2024 09:37:40 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6da30fb9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Apr 2024 13:37:36 +0000 (UTC)
-Date: Thu, 4 Apr 2024 15:37:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>,
-	JGit Developers list <jgit-dev@eclipse.org>
-Subject: Re: [PATCH 00/12] t: exercise Git/JGit reftable compatibility
-Message-ID: <Zg6tIZa5SfSfuIU0@tanuki>
-References: <cover.1712235356.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TG6OhHCp"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4162a3e2d22so6762645e9.1
+        for <git@vger.kernel.org>; Thu, 04 Apr 2024 08:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712244579; x=1712849379; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1jgeGUIp4pq2b4x/wmWVc6JH7XFuN8LHV/jpUwyR/Ks=;
+        b=TG6OhHCpEEn/hdHmTYiF6Y0RYyG/hXYdlGe9TMUDiMYWUxoYXLyUE+aaxDA+3mbwvs
+         ZPKYTdCFCNv9Xp8tp0gLPtRCEgvYI/rDErd2lxPlf55VkWr+BvGeMGk4HzfjARRya4hY
+         oa9VPBgimjrGy3zbK7tgvf0zjJsaFmdPisd7Ua2rS6xd9l8wNupM2h97OiDLuG97CRgb
+         w5wgd2ttqOOSbF828XhZyQp5ZpB2/0OS6Hs+XuotuReQzxiIcn/cdik8DYwaRMypKyZF
+         Pdxq56sja426VzVDZTPMsczxVnydnOzRBplOLiBY14WYj3enYZv6MHtYqahEqLRtsAKb
+         vJeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712244579; x=1712849379;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1jgeGUIp4pq2b4x/wmWVc6JH7XFuN8LHV/jpUwyR/Ks=;
+        b=TxRjXU+AR5RmG6153dC8KI6+z9vr0kZ0kEpOMs5VQ5Xo9ah1pNv2Z0m+LRzZ3eEd5n
+         C9s0keLqd1kd0vf7+YlU8jRtSMQV/bas5rFyuigbbgsUkA+arcPYluI1OXoVE2wUQC8d
+         ECJu5v3Cb9x3Q1Fdn2pGrhT8mVDoTUxFsRxEZd6ZEggusLPY+2lhlIMEAJZYT8tbBtKF
+         DQwfXnw9EfyZo0YlA1HVi/+Y/vUpxMK29zRjKqolHeeZq82fGZkYhyTeSQILHL689EeZ
+         5NrPR/fxodvpk9WWvkEwPIdFf1O8YLo7DUCvaxNH3mD4T1mEuT0CmGUsGSaEXjOo1njA
+         7hOw==
+X-Gm-Message-State: AOJu0YwB+ibAxqr4EF789t6qYhF1MwLHhJJey4U5/FqGhA/HyU2jcRiW
+	QMSLL38MYcTQz07hSOq8qmcF2rIKUdGebxDrhNajPE7LS8GeaH0k
+X-Google-Smtp-Source: AGHT+IFUnrZig8O06tc6I/5s4fXyu4Bgs7kvr03dZu01u66b/4bAx8ehqXgtFTRbHWMv7TDy7eOBEA==
+X-Received: by 2002:a05:600c:1c87:b0:414:63c2:23cc with SMTP id k7-20020a05600c1c8700b0041463c223ccmr95938wms.2.1712244578695;
+        Thu, 04 Apr 2024 08:29:38 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
+        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b0041569a819dbsm3054019wmo.1.2024.04.04.08.29.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Apr 2024 08:29:38 -0700 (PDT)
+Message-ID: <875639c6-1efc-4fb2-b80c-2205b67c263b@gmail.com>
+Date: Thu, 4 Apr 2024 16:29:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pSvbUyAYMZPc8qa+"
-Content-Disposition: inline
-In-Reply-To: <cover.1712235356.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase -i: improve error message when picking merge
+To: Patrick Steinhardt <ps@pks.im>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
+ <Zg5D3dXYFM2SONE-@tanuki>
+Content-Language: en-US
+In-Reply-To: <Zg5D3dXYFM2SONE-@tanuki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Patrick
 
---pSvbUyAYMZPc8qa+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 04/04/2024 07:08, Patrick Steinhardt wrote:
+> On Mon, Feb 26, 2024 at 10:58:07AM +0000, Phillip Wood via GitGitGadget wrote:
+> [...]
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 5b086f651a6..a33e41c44da 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -297,7 +297,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>>   	else {
+>>   		discard_index(&the_index);
+>>   		if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+>> -						&todo_list))
+>> +						&todo_list, 1))
+> 
+> I think these booleans are somewhat hard to read. I may be
+> overengineering this, so please feel free to push back, but would it
+> make more sense to introduce a `unsigned flags` field and then have a
+> `PARSE_INSN_IS_REBASING` flag?
 
-On Thu, Apr 04, 2024 at 03:25:00PM +0200, Patrick Steinhardt wrote:
-> Hi,
->=20
-> while the reftable backend is a recent addition to Git, it has been part
-> of JGit since 2017 already. Given that there are essentially two
-> different implementations of the reftable format now there is a very
-> real risk of these two diverge and become incompatible with each other,
-> which would be a shame.
->=20
-> This patch series addresses this risk by introducing compatibility tests
-> which assert that both Git and JGit can access reftables written by the
-> respective other implementation.
->=20
-> The patch series is structured as follows:
->=20
->   - Patches 1-8 merge "install-docker-dependencies.sh" into
->     "install-dependencies.sh". This is done so that both CI job flavors
->     have the same dependencies and thus the same test coverage available
->     without always having to maintain them both.
->=20
->   - Patch 9 makes JGit available.
->=20
->   - Patch 10 starts running backend-specific tests in all jobs, and
->     patch 11 addresses a portability issue surfaced by this.
->=20
->   - Patch 12 adds a very basic compatibility test suite for Git/JGit
->     reftables. I mostly consider this as a proof of concept, it should
->     likely be extended over time.
->=20
-> These compatibility tests surface three findings:
->=20
->   - JGit does not support reftables format v2, which was added to
->     support the SHA256 object format.
->=20
->   - JGit cannot read reflogs written by itself when starting from an
->     unborn branch. This smells like a bug in JGit to me where it
->     misinterprets reflog entries with a zero object ID as new OID, but I
->     didn't dig any deeper yet.
->=20
->   - JGit is incompatible with split indices because it cannot handle
->     'link' DIRC entries. This is unrelated to reftables though.
->=20
-> I have tested the CI changes against both GitLab [1] and GitHub [2]. The
-> macOS test failures on GitHub are caused by the recent curl regression.
->=20
-> [1]: https://gitlab.com/gitlab-org/git/-/merge_requests/123
-> [2]: https://github.com/git/git/pull/1696
->=20
+I agree the boolean is a bit opaque, I don't think they are that unusual 
+in the code base but that doesn't mean they're readable. I had hoped to 
+pass an instance of 'struct replay_opts' to parse_insn_line() and then 
+call is_rebase_i() which there which would have been nicer. 
+Unfortunately "git rebase --edit-todo" does not instantiate an instance 
+of that struct as it is not needed for editing the todo list so I went 
+with a boolean instead. There are one or two places where we need to use 
+is_rebase_i() for this when calling parse_insn_line() which makes using 
+an unsigned flags argument a bit messy. I'll have a look and see how 
+hard it would be to ensure we always have a valid 'struct replay_opts' 
+when calling parse_insn_line().
+
+>> +static int error_merge_commit(enum todo_command command)
+>> +{
+>> +	switch(command) {
+>> +	case TODO_PICK:
+>> +		return error(_("'%s' does not accept merge commits, "
+>> +			       "please use '%s'"),
+>> +			     todo_command_info[command].str, "merge -C");
+> 
+> I wonder how actionable these commands are. Can we give the full command
+> that the user can use instead, including the commit ID?
+
+The calling function also prints the offending line so the user can see 
+the commit details there.
+
+> That raises another question though: how exactly is the user supposed to
+> perform the merge? Should they merge the merge commit, resulting in two
+> merge commits? Should they pick one of the sides, and if so, which one?
+> I guess the answer is "it depends", which makes it harder for us to come
+> up with actionable advice here.
+
+I agree it would be nice to be more precise but I'm not sure we can tell 
+what the user is actually trying to do so I think the best we can do is 
+point them in the direction of the 'merge' command.
+
+>> +	case TODO_REWORD:
+>> +		return error(_("'%s' does not accept merge commits, "
+>> +			       "please use '%s'"),
+>> +			     todo_command_info[command].str, "merge -c");
+> 
+> I was about to suggest that the above two cases should be merged. But
+> then I realized that it's "merge -c" here, but "merge -C" in the first
+> case.
+
+Yes, it is a subtle difference.
+
+Thanks very much for taking a look at this
+
+Phillip
+
 > Patrick
-
-Hrmpf, Cc'ing the jgit-dev@ list didn't work out as all my mails got
-refused there due to myself not being signed up. Oh, well..
-
-Patrick
-
---pSvbUyAYMZPc8qa+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYOrSAACgkQVbJhu7ck
-PpRCbA//VK+gvaekBI7Pn+nOGU+igxMOEggkMceFSTl+6/iMkG9cp7HN+2MVF4kV
-VSM2TEL7klK9GVmxH03LJ5gZ/qlMTR8/ED5yfJSVsNQsNjBzU7vxBdHDAp8EcR+v
-y1mvlYZySR3Wy+/uz0TNPxHgBC76kjPVaHsD/74X/adMYRYsNcqf8hxFBQtE8IiC
-yk0oha0PVDeHUNdw/smtSGjFQgFbVlIOXfG4CsGdq5khSibDgLkUuYu4HKGtbExM
-R3O/7X2ROoQw8F9oxiZzcCK1QApXhva5iRrp5Be7MnS4de2dVfrldx3lQikIrPmw
-XhmyTmLFa39YR708MNXaxAgY28ZyZDhwg+/PspbDaWLjYbqCjGL1/6HbecehRgLB
-Kb+vBF8dLrEN/7em8uX4kV58VJ9lM/bnwLTHQtq0p7u/2O6bFxEO0ZZFO2TsY8VH
-4FAQH2UAvwNkfc5e1MPhsPdCzNiiYOpwZS5p4UuEmkN+A2Kc9Sht36BNqQyFTdO/
-vIdIsWXL2YAIruiTElndxONgMs7xjvHDrrgMIHHomMzTvY2XoNmwv+k2IocSTB6l
-EcSELfgiBKIQ5ngM4b1+olmBxvnO+w5a97giIgI3QmDtrqBgL9jHl4e0/BXweYgZ
-qToqn/WUCwrZsdh8BoEC0URH1APE/gI2e6Y47Bu/lBkjlVvzEHQ=
-=iarT
------END PGP SIGNATURE-----
-
---pSvbUyAYMZPc8qa+--
+> 
+>> +	case TODO_EDIT:
+>> +		return error(_("'%s' does not accept merge commits, "
+>> +			       "please use '%s' followed by '%s'"),
+>> +			     todo_command_info[command].str,
+>> +			     "merge -C", "break");
+>> +
+>> +	case TODO_FIXUP:
+>> +	case TODO_SQUASH:
+>> +		return error(_("cannot squash merge commit into another commit"));
+>> +
+>> +	default:
+>> +		BUG("unexpected todo_command");
+>> +	}
+>> +}
+>> +
+>>   static int parse_insn_line(struct repository *r, struct todo_item *item,
+>> -			   const char *buf, const char *bol, char *eol)
+>> +			   const char *buf, const char *bol, char *eol,
+>> +			   int rebasing)
+>>   {
+>>   	struct object_id commit_oid;
+>>   	char *end_of_object_name;
+>> @@ -2655,7 +2684,12 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>>   		return status;
+>>   
+>>   	item->commit = lookup_commit_reference(r, &commit_oid);
+>> -	return item->commit ? 0 : -1;
+>> +	if (!item->commit)
+>> +		return -1;
+>> +	if (rebasing && item->command != TODO_MERGE &&
+>> +	    item->commit->parents && item->commit->parents->next)
+>> +		return error_merge_commit(item->command);
+>> +	return 0;
+>>   }
+>>   
+>>   int sequencer_get_last_command(struct repository *r UNUSED, enum replay_action *action)
+>> @@ -2686,7 +2720,7 @@ int sequencer_get_last_command(struct repository *r UNUSED, enum replay_action *
+>>   }
+>>   
+>>   int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>> -				struct todo_list *todo_list)
+>> +				struct todo_list *todo_list, int rebasing)
+>>   {
+>>   	struct todo_item *item;
+>>   	char *p = buf, *next_p;
+>> @@ -2704,7 +2738,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>>   
+>>   		item = append_new_todo(todo_list);
+>>   		item->offset_in_buf = p - todo_list->buf.buf;
+>> -		if (parse_insn_line(r, item, buf, p, eol)) {
+>> +		if (parse_insn_line(r, item, buf, p, eol, rebasing)) {
+>>   			res = error(_("invalid line %d: %.*s"),
+>>   				i, (int)(eol - p), p);
+>>   			item->command = TODO_COMMENT + 1;
+>> @@ -2852,7 +2886,8 @@ static int read_populate_todo(struct repository *r,
+>>   	if (strbuf_read_file_or_whine(&todo_list->buf, todo_file) < 0)
+>>   		return -1;
+>>   
+>> -	res = todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list);
+>> +	res = todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list,
+>> +					  is_rebase_i(opts));
+>>   	if (res) {
+>>   		if (is_rebase_i(opts))
+>>   			return error(_("please fix this using "
+>> @@ -2882,7 +2917,7 @@ static int read_populate_todo(struct repository *r,
+>>   		struct todo_list done = TODO_LIST_INIT;
+>>   
+>>   		if (strbuf_read_file(&done.buf, rebase_path_done(), 0) > 0 &&
+>> -		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done))
+>> +		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done, 1))
+>>   			todo_list->done_nr = count_commands(&done);
+>>   		else
+>>   			todo_list->done_nr = 0;
+>> @@ -6286,7 +6321,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>>   	strbuf_release(&buf2);
+>>   	/* Nothing is done yet, and we're reparsing, so let's reset the count */
+>>   	new_todo.total_nr = 0;
+>> -	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
+>> +	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo, 1) < 0)
+>>   		BUG("invalid todo list after expanding IDs:\n%s",
+>>   		    new_todo.buf.buf);
+>>   
+>> diff --git a/sequencer.h b/sequencer.h
+>> index dcef7bb99c0..ed2c4b38514 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -136,7 +136,7 @@ struct todo_list {
+>>   }
+>>   
+>>   int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>> -				struct todo_list *todo_list);
+>> +				struct todo_list *todo_list, int rebasing);
+>>   int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
+>>   			    const char *file, const char *shortrevisions,
+>>   			    const char *shortonto, int num, unsigned flags);
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> index 64b641002e4..20b8589ad07 100755
+>> --- a/t/t3404-rebase-interactive.sh
+>> +++ b/t/t3404-rebase-interactive.sh
+>> @@ -2203,6 +2203,39 @@ test_expect_success 'bad labels and refs rejected when parsing todo list' '
+>>   	test_path_is_missing execed
+>>   '
+>>   
+>> +test_expect_success 'non-merge commands reject merge commits' '
+>> +	test_when_finished "test_might_fail git rebase --abort" &&
+>> +	git checkout E &&
+>> +	git merge I &&
+>> +	oid=$(git rev-parse HEAD) &&
+>> +	cat >todo <<-EOF &&
+>> +	pick $oid
+>> +	reword $oid
+>> +	edit $oid
+>> +	fixup $oid
+>> +	squash $oid
+>> +	EOF
+>> +	(
+>> +		set_replace_editor todo &&
+>> +		test_must_fail git rebase -i HEAD 2>actual
+>> +	) &&
+>> +	cat >expect <<-EOF &&
+>> +	error: ${SQ}pick${SQ} does not accept merge commits, please use ${SQ}merge -C${SQ}
+>> +	error: invalid line 1: pick $oid
+>> +	error: ${SQ}reword${SQ} does not accept merge commits, please use ${SQ}merge -c${SQ}
+>> +	error: invalid line 2: reword $oid
+>> +	error: ${SQ}edit${SQ} does not accept merge commits, please use ${SQ}merge -C${SQ} followed by ${SQ}break${SQ}
+>> +	error: invalid line 3: edit $oid
+>> +	error: cannot squash merge commit into another commit
+>> +	error: invalid line 4: fixup $oid
+>> +	error: cannot squash merge commit into another commit
+>> +	error: invalid line 5: squash $oid
+>> +	You can fix this with ${SQ}git rebase --edit-todo${SQ} and then run ${SQ}git rebase --continue${SQ}.
+>> +	Or you can abort the rebase with ${SQ}git rebase --abort${SQ}.
+>> +	EOF
+>> +	test_cmp expect actual
+>> +'
+>> +
+>>   # This must be the last test in this file
+>>   test_expect_success '$EDITOR and friends are unchanged' '
+>>   	test_editor_unchanged
+>>
+>> base-commit: c875e0b8e036c12cfbf6531962108a063c7a821c
+>> -- 
+>> gitgitgadget
+>>
