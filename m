@@ -1,125 +1,222 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7843F28FA
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 16:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21DB82D90
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 16:22:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712247380; cv=none; b=LRsQGztrA8ATRD9e+gw1PRg5ADNaeaEjKKKTx0eWg/N2BrqsgmzFCQzeIwz8VPhd66HD9n5/HWUPGmik05v1DB4Cc1yfz+xydmCOZzO28T5P/W6euWTAjjLZAE8JuSBzwbq/ViQFUUfKJPbPcHDTNQQLVa66ePgeO1ABaZ8w4u0=
+	t=1712247764; cv=none; b=cylhVIAdEWvt39+ojVuhEkd3B4r+lYanqfEpaCXkviqlkXW+nwOXZzmDZ9Wp7KVlraEZXyy0gEpMa6G4BuvGyooN+gloxMtfqF5zt+sfmz24cC45JZXlQHdtT2N9rq0AB1WbskmZ4WXl7K7crbauEsJROtB229968vLjyyH484w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712247380; c=relaxed/simple;
-	bh=o9D3l13SsZ5xn7rgSrk1fR7v1LVWLJx0SCufB+XoGZk=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=t5q1pFpULNf6h+zh7MXAqw+E/vhOvP2LtKhe4iRhODjnbe+H77XIog+6SFY7cjLz9T8pqbOmWe9tTuWSa5cs5TylHhppA61WE4aEzB60x4/MIyvVNVbbkSDmtfgb1aPsnRDdi4NGO/C59C3RpuOYoznYag0quubQtdlZdkDU1Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gearset.com; spf=pass smtp.mailfrom=gearset.com; dkim=pass (2048-bit key) header.d=gearset.com header.i=@gearset.com header.b=IveRyznx; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gearset.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gearset.com
+	s=arc-20240116; t=1712247764; c=relaxed/simple;
+	bh=FrNrJ4C1O6GCp9D8cPsowUDdolYfB/7oI2DKHQpUTMM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZNYxnOBRocDEVX0m7jidY+kklQ7lhK+fLHd56yR4gOBXB45mAPIEouh8MVqo0ijBtKw2yRb9z/QlFVNUhUwDmrGulQJZedA7DE8+5x/VH+g55rtFbnv+hLFVdkqb8i6RraYOP11VjURByLV7iLX2oaSdGn82m3eGGfJFcL8KU8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PkUk0x8l; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gearset.com header.i=@gearset.com header.b="IveRyznx"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4162c9cd7cfso2223525e9.2
-        for <git@vger.kernel.org>; Thu, 04 Apr 2024 09:16:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gearset.com; s=google; t=1712247375; x=1712852175; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o9D3l13SsZ5xn7rgSrk1fR7v1LVWLJx0SCufB+XoGZk=;
-        b=IveRyznxZY16ldaMehXl9lvplEmd5XLQHtYy6s0MUqMTZAi52TBiECBtRi9shDyjh5
-         mRKF13q5JuP+W5mNACdZCQeFVr3wyT4fdjaRrQy8mkHtAUOrjgj3LRy7V+BYkruulM4z
-         ODMo7NtZmOUXbiJ5Uji3JxGhgb1bUb/SDOEx6Io7YBNzjArWBk56Yy0W0ndYFnuTZZdo
-         o+4XVQ821A6HoNyqhcIocdl3EfzsviW0RYqteEiFDZeOrfK7L/lnmEFFn5abLHRqf3HK
-         ZlLJlp7zDxmH38hgh4ihyTG/y7CbiJOvtFNgIjZQMeM4uLh3PAG/aMocpXOuUFHRJD20
-         WNpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712247375; x=1712852175;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o9D3l13SsZ5xn7rgSrk1fR7v1LVWLJx0SCufB+XoGZk=;
-        b=Y/lC/CN67lzY9oiLRmk89FSnUAGASBENU4uJ28Zf1wEfAP/KSxkSEsINLQ7yl0RnPG
-         EjvpejvtxhhprbP05MUvDtKV2fa7pgAnVLAckXAdL+3CHS/XaFmyBmqgUCJprDaB7BA0
-         fA5poqTihNtAtO81Svopau0r2ZhpDuFhJP/t2gJpVwLLVUabx8lJ83Et28KO+1UUMaaT
-         GnoQ/tss2RwUeKDwyWjiXDYflLHMSwXdwQ9FDYBUXPQhZg9aHYERneif2MrV9ZkysaOx
-         O106JO95i6SW2fF82Nts9Ws/7X7T7vr7ni66gupWHTsOmu45Lv4bFClTp1toNU+WFvzv
-         FUrg==
-X-Gm-Message-State: AOJu0Yzp0uziqyzp++Z3lvZ1fSI3NAtEpaue0l9+BkY78LqQXYr6JEcL
-	KjpNVpUOhAz3dTxA058Nt7lOL/nlVRqx1iAzrz/6LF14YKkJYPuC+24izQcy2XjCHzBvz28p+Sc
-	M6oE=
-X-Google-Smtp-Source: AGHT+IHDHoRW7x+3uGdkQrJLEwRPXT5cCKyjRBtyWDfHZ7YJJreP4nG5z2TXqj/h9z/n6Ek9vnSoOg==
-X-Received: by 2002:a05:600c:3c92:b0:415:5fe4:bdb4 with SMTP id bg18-20020a05600c3c9200b004155fe4bdb4mr2793124wmb.7.1712247374636;
-        Thu, 04 Apr 2024 09:16:14 -0700 (PDT)
-Received: from smtpclient.apple ([185.140.18.131])
-        by smtp.gmail.com with ESMTPSA id o11-20020a05600c4fcb00b0041488895a37sm3177597wmq.33.2024.04.04.09.16.14
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Apr 2024 09:16:14 -0700 (PDT)
-From: Matt Cree <matt.cree@gearset.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PkUk0x8l"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 66EBD1BCA2;
+	Thu,  4 Apr 2024 12:22:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=FrNrJ4C1O6GCp9D8cPsowUDdolYfB/7oI2DKHQ
+	pUTMM=; b=PkUk0x8llLk1VX4NrB9TCmNm7SfWjGPGBwb3/hQ/1OyXqNDt4B9vNh
+	JA8VjTtMW29ztq0Wx396tvnTpb0ku3WCuwqGKWQQlkXOQqsCQJvoakdWXVj5M4W1
+	qAoa7a1nFgHq1GDAD82yhT+iIrrLHLxiQgo6/JFmKL3lVTjj6VW2g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5EF511BCA1;
+	Thu,  4 Apr 2024 12:22:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DDC4A1BCA0;
+	Thu,  4 Apr 2024 12:22:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "David Bimmler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  David Bimmler <david.bimmler@isovalent.com>
+Subject: Re: [PATCH] sequencer: honor signoff opt in run_git_commit
+In-Reply-To: <pull.1707.git.1712223572933.gitgitgadget@gmail.com> (David
+	Bimmler via GitGitGadget's message of "Thu, 04 Apr 2024 09:39:32
+	+0000")
+References: <pull.1707.git.1712223572933.gitgitgadget@gmail.com>
+Date: Thu, 04 Apr 2024 09:22:31 -0700
+Message-ID: <xmqqzfu914jc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Unexpected git merge exit code when killing merge driver during
- ancestor merge
-Message-Id: <75F8BD12-7743-4863-B4C5-049FDEC4645E@gearset.com>
-Date: Thu, 4 Apr 2024 17:16:05 +0100
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8A4F7380-F29F-11EE-B8AA-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hello all. I have observed some strange behaviour when exiting a custom =
-merge driver that I was wondering if there=E2=80=99s any reason for =E2=80=
-=94 I think it may be a bug but I=E2=80=99ll leave that to you to =
-decide.
+"David Bimmler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I=E2=80=99m configuring that merge driver to exit during a merge at the =
-first sign of conflicts =E2=80=94 the exact nature of the rules for the =
-decision to exit early isn=E2=80=99t too important I think though so =
-given it=E2=80=99s =E2=80=98work stuff=E2=80=99 I=E2=80=99ll leave some =
-details out.
+> From: David Bimmler <david.bimmler@isovalent.com>
+>
+> When rebasing interactively, --signoff would not take effect for commits
+> which conflict. That is, commits applying cleanly would be signed off,
+> but commits requiring intervention would miss the sign off trailer.
 
-Here is my current understanding of how the ort strategy will deal with =
-this.
+Good finding.
 
-- Ort runs the merge driver with the parameters for the current file to =
-be merged
-- When the driver returns exit code 0 is returned it is treated as =
-having no conflicts
-- When the driver returns exit code 1-128 is returned it is treated as =
-having conflicts
-- When the driver returns exit code 129+ is returned it is treated as =
-some kind of error scenario
+> The reason is that run_git_commit did not check for the signoff replay
+> opt, and hence even though the option was picked up and passed
+> correctly, the actual committing dropped the ball.
 
+We record and read back the initial "--signoff" given from the
+command line (and options.signoff from the "options sheet" when not
+REPLAY_INTERACTIVE_REBASE) in opts->signoff, but that piece of
+information is used only to decide if we call append_signoff().
+When do_commit(), after try_to_commit() punts, calls "git commit",
+the invocation lacks "--signoff" on the command line.
 
-Then subsequently
-- If all files returned exit code 0 during the merge git will return =
-exit code 0 i.e. no conflicts
-- If any file returned exit code 1-128 during the merge git will return =
-exit code 1 i.e. conflicts
-- At any time if the driver returns 129+, git will stop merging and =
-return exit code 2 i.e. error?
+    Side note: the "let's avoid spawning 'git commit' and duplicate
+    it in-process" codepath in try_to_commit() does not seem to pay
+    attention to opts->signoff at all, and it does not do the
+    append_signoff() to add the trailer.  Is this something this
+    patch needs to fix as well, or am I misreading the control flow
+    (e.g., perhaps opts->signoff is set we somehow refrain from
+    doing the "let's do it in-process" logic)?
 
-However, when setting up a criss-cross merge scenario and =E2=80=98short =
-circuiting=E2=80=99 the merge during an ancestor merge, I get exit code =
-134
+If we forgot to tell "git commit" that we want the result
+signed-off, of course it would not add the trailer.  Perhaps
 
-Here=E2=80=99s a couple of quick scripts that help recreate the =
-situation =
-https://gist.github.com/mattcree/c6d8cc95f41e30b5d7467e9d2b01cd3d
+    -correctly, the actual committing dropped the ball" 
+    +correctly to run_git_commit(), it failed to pass it to
+    +underlying 'git commit'
 
-The logs also show=20
+is less misleading.
 
-```
-Assertion failed: (opt->priv =3D=3D NULL), function =
-merge_switch_to_result, file merge-ort.c, line 4661. =
-./run-recursive-merge.sh: line 162: 78797 Abort trap: 6 git merge =
-$featureC --no-ff --no-commit
-```
+> The patch adds a test specifically for this case, as well as amending a
+> squash test which codified the broken behaviour.
 
-I thought it might be worth raising as a bug here but I=E2=80=99m not =
-too sure really =E2=80=94 I suppose the short circuiting logic I have =
-introduced may not be a desirable use case from the git elders point of =
-view, but I reckon the difference in behaviour depending on whether =
-it=E2=80=99s an ancestor merge or a final merge seems to indicate to me =
-that this is not intentional.
-Hopefully someone knows a bit more about this.
+"The patch adds" -> "Add"
+
+I love this kind of test update that corrects a mistaken expectation
+after a careful analysis of how the commands should behave.
+
+Very good job.  Nicely done.
+
+> diff --git a/sequencer.c b/sequencer.c
+> index fa838f264f5..16595e26a17 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1121,6 +1121,8 @@ static int run_git_commit(const char *defmsg,
+>  		strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+>  	else
+>  		strvec_push(&cmd.args, "--no-gpg-sign");
+> +	if (opts->signoff)
+> +		strvec_push(&cmd.args, "--signoff");
+>  	if (defmsg)
+>  		strvec_pushl(&cmd.args, "-F", defmsg, NULL);
+>  	else if (!(flags & EDIT_MSG))
+
+This is straight-forward and obviously correct.
+
+> diff --git a/t/t3428-rebase-signoff.sh b/t/t3428-rebase-signoff.sh
+> index e1b1e947647..fcecdf41978 100755
+> --- a/t/t3428-rebase-signoff.sh
+> +++ b/t/t3428-rebase-signoff.sh
+> @@ -27,6 +27,13 @@ first
+>  Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
+>  EOF
+>  
+> +# Expected signed off message after resolving the conflict
+> +cat >expected-signed-after-conflict <<EOF
+> +update file on side
+> +
+> +Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
+> +EOF
+> +
+
+The t3428 script uses ancient style to prepare these expectations
+outside the test_expect_success blocks, and following the pattern
+is fine (until we clean-up the style of the whole script).  Cleaning
+it up is better done as a separate series, and when the dust settles
+after this fix lands.  #leftoverbits 
+
+>  # Expected commit message after rebase without --signoff (or with --no-signoff)
+>  cat >expected-unsigned <<EOF
+>  first
+> @@ -82,4 +89,30 @@ test_expect_success 'rebase -m --signoff fails' '
+>  	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+>  	test_cmp expected-signed actual
+>  '
+> +
+> +test_expect_success 'rebase -i signs commits even if a conflict occurs' '
+> +	git branch -M main &&
+> +
+> +	git branch side &&
+> +	echo "b" >file &&
+> +	git add file &&
+> +	git commit -m"update file" &&
+
+Have a SP between "-m" and its value, imitating existing tests.
+
+> +	test_tick &&
+
+Why?  Does the rest of the test depend on commits to have different
+timestamps?
+
+If you want to use test_tick, the pattern to follow is to call it
+_before_ creating a commit, not after.  Up to this point in the
+original script nobody calls it (or test_commit that by default
+calls it), so "test_tick && git_commit" would be OK.
+
+But if there is no dependency on exact sequence of timestamps,
+letting the commit share the same initial timestamp (hardcoded in
+test-lib.sh for better reproducibility) is more preferable, as use
+of test_tick sends a wrong message that the test results may be
+affected by the exact timestamps.
+
+> +	test_must_fail git rebase -i --signoff main &&
+> +
+> +	echo "merged" >file &&
+> +	git add file &&
+> +	git rebase --continue &&
+> +
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	test_cmp expected-signed-after-conflict actual
+
+Running any git command on the left hand side of a pipe is frowned
+upon, as it will hide exit status from it when it fails.
+
+In this case, the primary thing we care about is that we have added
+the sign off that did not exist in the original, so I wonder
+
+	git cat-file commit HEAD >actual &&
+	test_grep "Signed-off-by: " actual
+
+would be sufficient?
+
+> +'
+> +
+>  test_done
+> diff --git a/t/t3437/expected-squash-message b/t/t3437/expected-squash-message
+> index ab2434f90ed..d74af0bcf6b 100644
+> --- a/t/t3437/expected-squash-message
+> +++ b/t/t3437/expected-squash-message
+> @@ -48,4 +48,6 @@ edited 1
+>  edited 2
+>  
+>  edited 3
+> +
+> +Signed-off-by: Rebase Committer <rebase.committer@example.com>
+>  squashed
+
+This defines the expected outcome from
+
+    git rebase -ik --signoff A
+
+in t3437-rebase-fixup-options.sh; I am not sure if the location the
+sign-off is inserted is sensible, though.
+
+Thanks.
