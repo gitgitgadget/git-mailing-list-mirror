@@ -1,109 +1,135 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4FF134404
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 19:27:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAED29403
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 19:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712258868; cv=none; b=mCJ3j4Nt+88BX8tvn8/tZNXBPzDBBmhLFf9+G4VadKeLbUAztFar9qhMvs0SlY3K3jIOWhYC1FMSYrSUXKYgtSoYYmTXLtrx/9CYv0rAVup+ypLM71ZweI6GInwfROT2WOV3ZdmiMJeM+tlPRKTXSiqHAKDs0eh7u46+LncSH4Y=
+	t=1712259638; cv=none; b=Wh5Sw3vBar5319+KKIU1+/TlowFu3M9kLyyks03w5+G3w49LQKvTbq+ApSKu06Z/bOQty5XeHAL2yivDETbN+DDZIsyQs1Z0pXAoAsNT5I+zAC218uLV87zpluxtPWMtLurTJ3xcJUlMlJNZguzakccvN+dxOMlvBYJ+AdFf4Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712258868; c=relaxed/simple;
-	bh=ycue1c7lUWUppymEfgQI/YbQRREM0PlOiS9teXTaW+A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sB0myCZet9W24CzMWEdiQLS/RiBix2v69LwZ7xg4VYke70d5St9KyiLr5QxQX0qbQGG/TbdrMvYmeus67QRHGxPntUAmtX17DAvn4hMxOEJ0EbyQYt5n9UKcfyWa1DrZZbv9PUb2qPfoAjuKGY6SLJAgF4BblOFukAf0ApS1qR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yMsUOFX8; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712259638; c=relaxed/simple;
+	bh=eLoVUZjkvSgYBlkpVoncbP/2SnOZfepyOqTN89gBM14=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=tutYxGyHZvqyrUWgSzxOLoFUOpSlIKWWFqvcdmXjAd3IC3kMzjDpTWIWHocCdvgobms9dK036uTZAJ3ngKcQz5U/V44m+EH8QbmERyP9i+3f6+ER+hXy5OzL93oDmPgHa9wME2gShp/es4FD4L9r8R4VKhaJAtnX0VYTAm+e44Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=VAoZvuOI; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yMsUOFX8"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B7F61F65F8;
-	Thu,  4 Apr 2024 15:27:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ycue1c7lUWUppymEfgQI/YbQRREM0PlOiS9teX
-	TaW+A=; b=yMsUOFX8qyCB1bJ/aDHoqlMHz/Z//E4m2ezgtqhOR3BNK2dDy0Z8WV
-	pkIhdkg/zXHpVBZ9j8DU69lK4e0rke09/Ph4fguUzwBdAe8OFxBzNA7464GaywV5
-	66JiIwznSAKonLY2vv7W4Nw9+HCb8+4hTq30/TmZEzrhjEQbRRxjs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 32DD61F65F7;
-	Thu,  4 Apr 2024 15:27:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 910C81F65F6;
-	Thu,  4 Apr 2024 15:27:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Philip <philip.c.peterson@gmail.com>
-Cc: Philip Peterson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 1/2] apply: add unit tests for parse_range and rename to
- parse_fragment_range
-In-Reply-To: <CAJ6X7_Uc0OdzYToJSs15+vbydraKAB8x4DPj7UsL1PKLzyY0dQ@mail.gmail.com>
-	(Philip's message of "Wed, 3 Apr 2024 23:53:27 -0400")
-References: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
-	<2c60c4406d4eb1307a32f23604f3ef8e34ad56d6.1708317938.git.gitgitgadget@gmail.com>
-	<xmqqil2k5e8u.fsf@gitster.g>
-	<CAJ6X7_Uc0OdzYToJSs15+vbydraKAB8x4DPj7UsL1PKLzyY0dQ@mail.gmail.com>
-Date: Thu, 04 Apr 2024 12:27:44 -0700
-Message-ID: <xmqqsf01yllb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="VAoZvuOI"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 69FD0D80-F2B9-11EE-8614-25B3960A682E-77302942!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1712259632;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7R7B1CSGjfliKyZgsFfycSEQNHYSL+Q/WXeC2UYiQr8=;
+	b=VAoZvuOIEV2Ov4qEtJsKRvg/L5j/QfviBVkW82H2bbQWZHi00hEHLUng9OWP8PeHKlLOaV
+	1xvClosxao+S/cPvwTmCz++EOvsF04gLf0EGcWnrqsqlD5faVTowvK4HcJq3vBgg6PZ7Fs
+	SOQpmDrFIozPNEaNUK0+vwErpaTB91oTQOXgfaXF/4/iVqb8MYhCm341nkJ/5RxMIZ9pyd
+	vJ68zqg/V6Zzz4ydJ+EZNpBohqK6ry7sYZ6ehZhqjP+liL2B31nptjmd1O7U8qmXZqOu/G
+	AkcnRRQmVfkTYpgTsY1iXygI0MZyMznCc5LNUFNlDKbwA011b7l9b/JsBBgUqw==
+Date: Thu, 04 Apr 2024 21:40:32 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH RESEND] send-email: make produced outputs more readable
+In-Reply-To: <xmqqy19tylrm.fsf@gitster.g>
+References: <62553db377c28458883b66bcdc0c58cc0f32d15b.1712250366.git.dsimic@manjaro.org>
+ <xmqqy19tylrm.fsf@gitster.g>
+Message-ID: <44ed7af52e2968993d9b2b99faec1f64@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Philip <philip.c.peterson@gmail.com> writes:
+Hello Junio,
 
-> On Mon, Feb 19, 2024 at 4:35 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2024-04-04 21:23, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Notes:
+>>      * send-email: make produced outputs more readable by separating
+>>        the result statuses from the subsequent patch outputs
+>> 
+>>     This is a resubmission of the patch I submitted about a week and a 
+>> half
+>>     ago. [1]  The patch subject in the original submission was 
+>> selected in
+>>     a bit unfortunate way, which this submission corrects, and also 
+>> improves
+>>     the patch description a bit.  There are no changes to the patch 
+>> itself.
+> 
+> I tried to cram a bit more information than "output more readable"
+> that lacks in what way the result is easier to read.
+> 
+>     send-email: make boundaries between messages easier to spot
+> 
+> perhaps?
 
-It's quite a blast from a long time ago that I no longer remember.
+Looking good to me, will use that as the patch subject in v2.
 
->> Alternatively we could do something like this to make the blast
->> radius of this patch smaller.
->>
->> -static int parse_range(const char *line, int len, int offset, const char *expect,
->> +#define apply_parse_fragment_range parse_range
->> +int parse_range(const char *line, int len, int offset, const char *expect,
->>                         unsigned long *p1, unsigned long *p2)
->
-> From what I understand, this still creates a new extern symbol
-> called parse_range.
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> index 821b2b3a135a..62505ab2707c 100755
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>> @@ -1576,7 +1576,6 @@ sub send_message {
+>>  		print $sm "$header\n$message";
+>>  		close $sm or die $!;
+>>  	} else {
+>> -
+>>  		if (!defined $smtp_server) {
+>>  			die __("The required SMTP server is not properly defined.")
+>>  		}
+>> @@ -1686,9 +1685,9 @@ sub send_message {
+>>  		print $header, "\n";
+>>  		if ($smtp) {
+>>  			print __("Result: "), $smtp->code, ' ',
+>> -				($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
+>> +				($smtp->message =~ /\n([^\n]+\n)$/s), "\n\n";
+>>  		} else {
+>> -			print __("Result: OK\n");
+>> +			print __("Result: OK\n\n");
+>>  		}
+> 
+> It would be nicer to instead add a single separate
+> 
+> 		print "\n";
+> 
+> after these if/else alternatives, without touching the existing
+> message lines, I would think.  That way, existing message
+> translations do not have to change.
+> 
+> If we were to change the translatable string anyway, it would be
+> even better to remove the newline from the translatable part of the
+> message, rendering the thing to:
+> 
+> 	if ($smtp) {
+> 		print __("Result: "), ..., ($smtp->message =~ /.../);
+>   	} else {
+> 		print __("Result: OK");
+> 	}
+> 	print "\n\n";
+> 
+> Strictly speaking, that is an orthogonal clean-up, so it may have to
+> make it into two patch series, one for preliminary clean-up "to
+> excise terminating newline out of translatable strings" patch that
+> adds a separate print that adds a single newline, plus the "make it
+> easier to spot where a message ends and another one starts" patch
+> that makes the new print statement that adds a single newline to
+> instead add two.  In a patch as simple as this one, however, I think
+> killing two birds with a stone, i.e., directly go to the "if we were
+> to change the translatable string anyway" final shape in a single
+> patch, would be fine.
 
-Sorry, I misspoke.  The direction of #define is the other way
-around.  That is, we may have to give the function a name that is
-overly long because it needs to be externally linkable only to
-support for your test, but we would want to locally rename that long
-name down to the name currently used by the primary callers of that
-function, so that the patch does not have to touch these existing
-calling sites.  After all, this function is a small implementation
-detail and not a part of the official apply.c API, and the only
-reason why we are making it extern is because some new tests want to
-link with it from the side.
-
-So, in the <apply.h> header file you'll do
-
-	/* 
-	 * exposed only for tests; do not call this as it not
-	 * a part of the API
-	 */
-	extern int apply_parse_fragment_range(...);
-
-and then in the original file that used to have "static int
-parse_range(...)", you'd add
-
-	#define parse_range apply_parse_fragment_range
-
-near the top, after the header files are included.
-
-Thanks.
+Thank you very much for such a detailed review!  I also think that
+putting everything into a single patch is a better option, because
+the changes are rather small.  Will do that in v2.
