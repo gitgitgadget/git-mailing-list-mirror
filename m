@@ -1,166 +1,149 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2C56F510
-	for <git@vger.kernel.org>; Thu,  4 Apr 2024 22:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A1D70CC9
+	for <git@vger.kernel.org>; Thu,  4 Apr 2024 22:53:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712271158; cv=none; b=HbDZ4jbfyEs5oyQ9DS7yQgwWkCXt/h/gR/WNVIfcKijrc0S2GeyM/VT2A6BGeKFuXqSfdovAn6HSXGK6D8WTNaRheP+aO37O2CuylwOIIas4RzRRqNG/Yk+gYWFkO/qwrQNaXjX6CBh1EqriU3LFUpY0+2JKi/ZKW4j3UH1X8pY=
+	t=1712271204; cv=none; b=O3YSOysyQSPamJkutTWljSFTem0X59HLeRI8qodUNygo+EgJf4LaZGZ00xxGsF3N35WDg844V93kQKlIAINgXTx2EriAp/lSm3HvqsytDPgSeKD8ZeCDDay9p7IHYnE25cyfW5geTHbx1gSTe76JHuWAmezF8QPAeK2kzJjaJOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712271158; c=relaxed/simple;
-	bh=MZisWWMSjEqZpb74t8MoJAVdNaNZXOovuvTgQgB2Cb8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PdoeztsPdZEG+P4ddAG0EyP62e+jUD30w0cOnPn5f2/pK36M6h9/TOUyMHDxdOKdM7DGfdjKcV+aSfuoThGkuvVfoxNp7Lm25dwBesXombpmV9fka/2Jmrv2NrP/Y9QPA00WU/YUPJfW0U1xP/OuUyZMkLcJLdR9SycpqGnh2co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CjLBKWGb; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CjLBKWGb"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 73E691E7AA;
-	Thu,  4 Apr 2024 18:52:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=MZisWWMSjEqZpb74t8MoJAVdNaNZXOovuvTgQg
-	B2Cb8=; b=CjLBKWGbSXVAQ0TUGl0bvex2DCYBfJiHFSoaWRvlQ40Boes7uJF0uW
-	QvRGV2sg99UPH7G6651zegaqLHcFh7abz8VYFdzJffMRGAFm7VLgiK8iqi4kf6g0
-	6nvP9o+/HV53bprRZ0FRgQst4nMlCVv6Dw6ngd+i9Eq+cbqUf5dz8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D6AF1E7A9;
-	Thu,  4 Apr 2024 18:52:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EAF2E1E7A8;
-	Thu,  4 Apr 2024 18:52:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] send-email: make it easy to discern the messages for
- each patch
-In-Reply-To: <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Thu, 4 Apr 2024 22:34:28 +0200")
-References: <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
-Date: Thu, 04 Apr 2024 15:52:31 -0700
-Message-ID: <xmqqzfu8yc40.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1712271204; c=relaxed/simple;
+	bh=1cVClsV3AQPsSvBx5Zs71O2SzivytsdAPoL4QOK1Ii0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Csj99eulO3uu4QIV4Q05j99Vfd11pch8FGzxneMIi8Kta84ZipHJ+BY8tqRqjexTEDcy58Vs3S1cUB3BV8EB4DZIYePLsiEW8jPTRyRlmScqIls8Kd60KjkeTHh1Ny6zn43uKoVeIItHjRsxCXqI509GnTrjr8yPeb76uRIsN08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 9911 invoked by uid 109); 4 Apr 2024 22:53:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Apr 2024 22:53:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23124 invoked by uid 111); 4 Apr 2024 22:53:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Apr 2024 18:53:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 4 Apr 2024 18:53:13 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: free and errno, was Re: [PATCH] apply: replace mksnpath() with a
+ mkpathdup() call
+Message-ID: <20240404225313.GA2512966@coredump.intra.peff.net>
+References: <df774306-f29b-4a75-a282-59db89812b9a@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 05D40558-F2D6-11EE-BD9F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <df774306-f29b-4a75-a282-59db89812b9a@web.de>
 
-Dragan Simic <dsimic@manjaro.org> writes:
+On Thu, Apr 04, 2024 at 11:08:38PM +0200, René Scharfe wrote:
 
->  		if ($smtp) {
->  			print __("Result: "), $smtp->code, ' ',
-> -				($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
-> +				($smtp->message =~ /\n([^\n]+\n)$/s);
->  		} else {
-> -			print __("Result: OK\n");
-> +			print __("Result: OK");
->  		}
-> +		# Make it easy to discern the messages for each patch
+> Support paths longer than PATH_MAX in create_one_file() (which is not a
+> hard limit e.g. on Linux) by calling mkpathdup() instead of mksnpath().
+> Remove the latter, as it becomes unused by this change.  Resist the
+> temptation of using the more convenient mkpath() to avoid introducing a
+> dependency on a static variable deep inside the apply machinery.
+> 
+> Suggested-by: Jeff King <peff@peff.net>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
 
-I do not think we want this comment.  
+Heh, so obviously I had the same patch stewing. But one thing that gave
+me pause is: do we need to worry about preserving errno across free()
+boundaries?
 
-Before printing the "Result: OK" line, we do not give an obvious and
-pointless comment e.g., "# Report success".  What this comment says
-something similarly obvious.  Both choices in the preceding if/else
-emit an incomplete line, hence it is clear that we need to terminate
-the line here, and this is the last line of output about the message
-we just processed.
+Traditionally touching errno was something free() was allowed to do, and
+there were definitely cases where glibc would do so (mostly due to
+munmap). But recent versions of POSIX clarify that it should not touch
+errno, and glibc as of 2.33 does not (which dates to 2021).
 
->  	}
->  
->  	return 1;
+This issue from 2015 talks about "the next version of POSIX" making that
+change:
 
-You didn't ran t9001 before sending this version (or any of the
-previous rounds) out, did you?  Among ~200 tests 10 of them now fail
-with this patch applied.
+  https://sourceware.org/bugzilla/show_bug.cgi?id=17924
 
-Do we know when we are sending either the first or the last message
-of a sequence at this point in the code?  It would be superb if you
-can make this extra blank line a separator, not a terminator [*], as
-there needs no extra blank line after emitting the last message.
+but it looks to me from:
 
-    [Side note]
+  https://www.austingroupbugs.net/view.php?id=385
 
-     * When showing a list of 3 things A B C, you can separate them by
-       inserting a gap between A and B, and another gap between B and C,
-       and you are using the "separator" (this is similar to how "git
-       log --pretty=format:..." works).  But you can be lazy and instead
-       append a gap after each element, in which case you are using the
-       "terminator" (similar to how "git log --pretty=tformat:..."
-       works).
+that the change wasn't accepted there until 2020 (and AFAICT that hasn't
+resulted in a new published spec yet).
 
-But it is harder to do separator correctly if the output is
-conditional (e.g., you have 5 input messages, but you may somehow
-skip some messages depending on conditions---now your code to decide
-if you emit an extra newline needs to take it into account.  After
-sending the 4th message and showing an extra newline, because you
-expect that there is another message to be sent and it needs a gap
-before, you may realize that some logic causes you to drop 5th and
-final message but then it is too late for you to take that extra
-blank line back), and obviously a buggy separator implementation is
-worse than a terminator implementation.
+Now it would be pretty darn useful to not have to worry about preserving
+errno. It's subtle code that's hard to remember is needed, and sometimes
+hard to get right depending on the rest of the flow control.
 
-Here is my attempt on top of your patch to implement the separator
-semantics.  After showing a message, we remember that fact, and
-before showing the next message, we emit an extra blank line.  With
-it, all tests in t9001 pass, but you may want to double check how
-different ways to leave send_message() would affect the output.  I
-just randomly decided that there needs no extra blank line before
-emitting the message that was edited and that is why in the
-following patch, I assign 0 to $want_separator_before_send_message
-in that case, but it may not be the right choice (I never "edit"
-inside send-email myself, so I would be a wrong person to decide
-without second opinion), for example.
+Years like "2020" and "2021" are too recent for us to say "oh, that's
+ancient history, we don't have to care anymore". But I wonder if we can
+be a little cavalier here for two reasons:
 
+  - it's rare; for the most part free() isn't going to touch errno.
+    Failures from munmap() are pretty rare, and small allocations like
+    this are probably done with sbrk() anyway. Of course that's just
+    talking about glibc, and there are other platforms. But it still
+    seems like it should be a rarity for any free() implementation to
+    fail or to want to touch errno.
 
- git-send-email.perl | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+  - the stakes are usually pretty low; the outcome in most cases would
+    be a misleading error message as we clobber errno. But note that it
+    does sometimes affect control flow (this patch is an example; we are
+    checking for EEXIST to break out of the loop).
 
-diff --git c/git-send-email.perl w/git-send-email.perl
-index ac0c691d3a..d4bbc73f1f 100755
---- c/git-send-email.perl
-+++ w/git-send-email.perl
-@@ -1689,8 +1689,7 @@ sub send_message {
- 		} else {
- 			print __("Result: OK");
- 		}
--		# Make it easy to discern the messages for each patch
--		print "\n\n";
-+		print "\n";
- 	}
- 
- 	return 1;
-@@ -1918,16 +1917,21 @@ sub pre_process_file {
- # Prepares the email, prompts the user, and sends it out
- # Returns 0 if an edit was done and the function should be called again, or 1
- # on the email being successfully sent out.
-+my $want_separator_before_send_message = 0;
-+
- sub process_file {
- 	my ($t) = @_;
- 
-         pre_process_file($t, $quiet);
- 
-+	print "\n" if ($want_separator_before_send_message);
- 	my $message_was_sent = send_message();
- 	if ($message_was_sent == -1) {
- 		do_edit($t);
-+		$want_separator_before_send_message = 0;
- 		return 0;
- 	}
-+	$want_separator_before_send_message = $message_was_sent;
- 
- 	# set up for the next message
- 	if ($thread) {
+So would it be that unreasonable to assume the modern, desired behavior,
+and mostly shrug our shoulders for other platforms? We could even
+provide:
+
+  #ifdef FREE_CLOBBERS_ERRNO
+  void git_free(void *ptr)
+  {
+        int saved_errno = errno;
+        free(ptr);
+        errno = saved_errno;
+  }
+  #define free(ptr) git_free(ptr)
+  #endif
+
+if we really wanted to be careful, though it's hard to know which
+platforms even need it (and again, it's so rare to come up in practice
+that I'd suspect people could go for a long time before realizing their
+platform was a problem). I guess the flip side is that we could use the
+function above by default, and disable it selectively (the advantage of
+disabling it being that it's slightly more efficient; maybe that's not
+even measurable?).
+
+>  		for (;;) {
+> -			char newpath[PATH_MAX];
+> -			mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
+> +			char *newpath = mkpathdup("%s~%u", path, nr);
+>  			res = try_create_file(state, newpath, mode, buf, size);
+> -			if (res < 0)
+> +			if (res < 0) {
+> +				free(newpath);
+>  				return -1;
+> +			}
+>  			if (!res) {
+> -				if (!rename(newpath, path))
+> +				if (!rename(newpath, path)) {
+> +					free(newpath);
+>  					return 0;
+> +				}
+>  				unlink_or_warn(newpath);
+> +				free(newpath);
+>  				break;
+>  			}
+> +			free(newpath);
+>  			if (errno != EEXIST)
+>  				break;
+>  			++nr;
+
+At any rate, you can probably see the places where free() clobbering
+errno would be a problem here. Our return when "res < 0" (though I don't
+think any of the callers actually care about errno after that), the
+check for EEXIST at the bottom of the loop, and after we break out of
+the loop, we use error_errno() to report it.
+
+-Peff
