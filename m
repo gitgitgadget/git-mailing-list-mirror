@@ -1,99 +1,109 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2B172BD4
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 19:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200B2173336
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 20:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712345778; cv=none; b=uNi9tgRBo9ZcXsyp08RJqyRFn8UUhRKyOG+Fl6awu+Bs0sYJxJllXAU38dIxb7Vcyqa9OEkZeWeZWE86vpJw1L4rB3wII36I0j3nzdikRgWUarBrxgmmdVyVkDz8kydRSp/i/Sc2Ts/TmFjImpQRNJuaBp42Mpop3vdin7Txooo=
+	t=1712347322; cv=none; b=Q0/6SkVjylLgrY72bPnW+1LwCzzF8AWdOP2MdWJOHQ7B3c1mAC0TyRsYQd/NiohUvbSfFQ1UuYog+5qwKV3PTYvc275gqHe2RU5/UCtsaU1W1bNoq46T6cjcCJs53uzmql8UENod20J/gIz0842vf+Hbod+84N7oD0TEExuRwpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712345778; c=relaxed/simple;
-	bh=nVA9ev9it3qBQEbrC6EKl3lLb8y/kHpZCu07KpeAdeo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u3JanD7UXAZY26P6hh5ofdFcvDG0myzfa2p8F8FZ1zLLyKbEYO1MevmSOu1TqjKICccjkmY4nIyewZgXtz3CdaB0mqh2EyYa4wMyAeFS7oIUNLBWi6m8lPpn2G/ddGbnVXHt+xeROKpkdev/N+VF2Tai9tb+HiKFkdY3lpERnMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=i7YUQHTx; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712347322; c=relaxed/simple;
+	bh=LqCLYNvt2ztrfiVNReqLGw720htc4w8PvvyOvkxbXKY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Co80sIYTmUWlmcMhgqY7sbzaJUNSALXpPyhFbfPKzvJ+MFXPGyYW+uPSbgUcibZ/7kopYkUZyO0IqzQnU1T13SN95TPnQknxBLehm7IusUarMNzT5jL3tKtMA4CYfxoMnYVkFEgH1gFCCrSdDkJqXiXq3lwalBB3MnnZS4VeyC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sRgGD3eE; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i7YUQHTx"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1649426057;
-	Fri,  5 Apr 2024 15:36:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=nVA9ev9it3qBQEbrC6EKl3lLb8y/kHpZCu07Kp
-	eAdeo=; b=i7YUQHTx1SuMOZB67knz0fPCecSXyS/YskZCtbmUF0YMTJgcnkq7o3
-	tFY9nDqy5EFHOjLOCIRL6NqMAViMM8pnP4viBuE82m0UjOeb+1/TQlCCgsR36NVH
-	GvIf9NA3R3hTgy1Aq46yb0xpdYWvR419W2Zez1PhGWLDSt7QiXJ2A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0E3BF26056;
-	Fri,  5 Apr 2024 15:36:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 94A1126055;
-	Fri,  5 Apr 2024 15:36:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
- <sunshine@sunshineco.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] CodingGuidelines: quote assigned value with "local" and
- "export"
-In-Reply-To: <20240405174859.GE2529133@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 5 Apr 2024 13:48:59 -0400")
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sRgGD3eE"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6ead4093f85so2258558b3a.3
+        for <git@vger.kernel.org>; Fri, 05 Apr 2024 13:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1712347320; x=1712952120; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oKhrafAfEPDRNJCkCvwOHhZwA6cZE4v1lYdWL8BBZJg=;
+        b=sRgGD3eE4k4nrTrItoNU5u/iaQvLLSz5gjLq7hDgrHmE9naygAmr9Y6+cW16618HJz
+         p4gnkz+RlAgRE5wbHKj47foepXuGyUd7w5V92rYcmLt/SkyVZAxsXVdDGe4thmStalSS
+         3WU4yS8eOfCHtAk8HdpQoOwTPsxvCfgex1FjCn2L4PNmG9NPvQVisf8kDDHS0IaRBFWg
+         IKZV/VXVhVZfekn+aR5tiLe0HGB8+gWPrZ0aOFthcxILHDN2l3glSUTA0DDryssgLcC0
+         cQi7mPGVamslz+sFeOZ7hT/w0TV3pFA5y7g5WS3zDZQuYVO/jTLzbm6KDaa4+s2VMwlL
+         Sb4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712347320; x=1712952120;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oKhrafAfEPDRNJCkCvwOHhZwA6cZE4v1lYdWL8BBZJg=;
+        b=JKHuEJ1UTA6lEExX2ZoLst1oVE2f7srhqv6MT43ZlKqg4PAsr72QWwmNcWTrgtiuDi
+         zGRH16/trrFE6Ep/rKIoGxmwJReC/WVzvM+LxaHD4gCG7IbmCYwsZxtQG5JdGtNQCeLw
+         XtAJREDHo3D72AdxAP4gxe5BVcZSemcY/I2ooO5m5BAqt/8vaFVMIhI4N3kTwrLIqi3D
+         CLJ+UVlbMW96/uek6mWdqP7+p4FkkjaQhmvLUqTorbbp0S75c68lfvdFq5XRCVyzWE1y
+         lYLNFOFlPNJTwxQ7NGl+Lz/dmIWHWlW9Uh1a43gXIqNqbj+cOOsnbxuRS7k9Z+hejeix
+         kxzA==
+X-Gm-Message-State: AOJu0YxIW6T8lXkbaOOYY3KSas5M/sKuUHB60Mjpng2puUJubMFTArao
+	CdPmZlvislnmKwB3aJHSv/6oRK8mb/PyAdhMXLIRIAhqm2JzfR61GtLeCwOVoQ==
+X-Google-Smtp-Source: AGHT+IGEQdLuJZ3QhDaHXm55kaMPfBskDih+DpEN9Rl/7a95PVPHJup3rLKXcMUVUrfCESkXX1rIeg==
+X-Received: by 2002:a05:6a20:d49a:b0:1a7:42cd:b207 with SMTP id im26-20020a056a20d49a00b001a742cdb207mr2718290pzb.19.1712347320149;
+        Fri, 05 Apr 2024 13:02:00 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:3cd2:bed3:a312:d0b9])
+        by smtp.gmail.com with ESMTPSA id o9-20020a056a00214900b006ead1509847sm1878221pfk.216.2024.04.05.13.01.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Apr 2024 13:01:58 -0700 (PDT)
+Date: Fri, 5 Apr 2024 13:01:52 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	JGit Developers list <jgit-dev@eclipse.org>
+Subject: Re: [PATCH 08/12] ci: make Perforce binaries executable for all users
+Message-ID: <ZhBX7REqotKKHpWg@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	JGit Developers list <jgit-dev@eclipse.org>
 References: <cover.1712235356.git.ps@pks.im>
-	<c2c2747ff57f68ccad8b509af037e1fc4a524fa1.1712235356.git.ps@pks.im>
-	<xmqqmsq7yezc.fsf@gitster.g> <xmqqbk6nyej1.fsf_-_@gitster.g>
-	<20240405174859.GE2529133@coredump.intra.peff.net>
-Date: Fri, 05 Apr 2024 12:36:05 -0700
-Message-ID: <xmqqr0fjtxei.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <22f86f8ccb9f3fb7f98ff57ddd09724fc9e44628.1712235356.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BF0728AE-F383-11EE-BE26-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <22f86f8ccb9f3fb7f98ff57ddd09724fc9e44628.1712235356.git.ps@pks.im>
 
-Jeff King <peff@peff.net> writes:
+On 2024.04.04 15:25, Patrick Steinhardt wrote:
+> The Perforce binaries are only made executable for the current user. On
+> GitLab CI though we execute tests as a different user than "root", and
+> thus these binaries may not be executable by that test user.
+> 
+> Fix the setup so that we set the executable bits for all users.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  ci/install-dependencies.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index f4eb125fd2..068c478025 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -47,7 +47,7 @@ ubuntu-*)
+>  	mkdir --parents "$CUSTOM_PATH"
+>  	wget --quiet --directory-prefix="$CUSTOM_PATH" \
+>  		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
+> -	chmod u+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
+> +	chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
+>  
+>  	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+>  	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$CUSTOM_PATH" --strip-components=1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
+> -- 
+> 2.44.GIT
+> 
 
->> + - Some versions of dash has broken variable assignment when prefixed
->> +   with "local", "export", and "readonly", in that the value to be
->> +   assigned goes through field splitting at $IFS unless quoted.  
->> +
->> +   DO NOT write:
->> +
->> +     local variable=$value           ;# wrong
->> +     export variable=$(command args) ;# wrong
->> +
->> +   and instead write:
->> +
->> +     local variable="$value"
->> +     export variable="$(command args)"
->
-> I think that is a good rule for "local", but I thought we did not allow
-> "export foo=bar" at all, and required:
->
->   foo=bar
->   export foo
->
-> If that was only because of this bug, it would be nice to loosen the
-> rules a bit.
-
-That rule in Documentation/CodingGuidelines predates the discovery
-of this bug.  I have this vague feeling that it was for the shell on
-old Solaris, which would not matter to us anymore, but I do not
-remember.
-
-As we are not showing "readonly" in the "DO NOT/DO" example above,
-we should probably drop the "export" example and discuss it
-separately and decide if it makes sense to loosen the "export var"
-vs "export var=val" rule.
-
-Thanks.
+Do we break CI in patch 6 and 7 until we get this fix? Perhaps we should
+just squash this into patch 6?
