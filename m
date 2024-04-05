@@ -1,38 +1,38 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD294161906
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 10:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0255816ABCF
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 10:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712314419; cv=none; b=SN0Ql70HypVoazJwT1CmEPxWgHmK3auA9HfXTV5/f6s7MNxohvYdQVoaW+hnHpLoUKXl22quvFS47erBEFVmBdSW0LaJfMBc2ZMiN0Qv1GlWbWbp3xCLToPG62dNQE7pqE7ke9Cg2kKD9NAPGD92kL8zXh84OfzGYqJR6OKhUdo=
+	t=1712314615; cv=none; b=SUcymrhM0jX/wSMD9WwJuxso/El2SIdvzmFPFDPu5GihcjARFVH/i9uuF3SsfX1VF6RFoGLkhhOmxrmmNKar5makv+D0+1F7v3Ss5Lsf2DNTPNv36KwBTTu/TTAxVNSKi3c+e4z71ELUajMAr/fctZmoD4HuIXYdzusXA5VoNU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712314419; c=relaxed/simple;
-	bh=tQK3lUl4rPNVIN3lnLVB8VH7z7fPQp0chQ96IyIU5+M=;
+	s=arc-20240116; t=1712314615; c=relaxed/simple;
+	bh=vvOv02FKxkchpPk8mTtFZ2NW0ZVcmLqT4ZL1OlT59JE=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RBu1hh5JF2oEl2p4543OOZUjnVnZzv2FW/Cv1YrzfEF8b8Q+5Z8mlYawd7zHPnTdiKD82xMPBWcvjbqrv30dkB8I0hd4brdbrWQra6L6w+6yHBIz0TH3yo3lTWkH2dKZsPWhlQ57PxMLHyG2wlQ10xw+xdyZE6InBtFgqahN2Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=se6ICRwO; arc=none smtp.client-ip=217.72.192.78
+	 In-Reply-To:Content-Type; b=D2F6Yl3oflMN5ac70fVgLPLo3lGshMu7wTn/A4WgdaT4f6FB2xw1O6A6lI6DWQG4e0E4yKldG+OrI60PeSEKLGnTF91R9n2sRhU8JYvV9XfJiCy0jrwyWJhlTZafASLJJNgT5S8hTSqnUzAD03VcJkG1FAZl9J/SO4uj9dEOZe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ZFNS0wmb; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="se6ICRwO"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ZFNS0wmb"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1712314404; x=1712919204; i=l.s.r@web.de;
-	bh=2H9BrIZKtnTVO0z60FxxiO9DbTzpX8uHAPhG4eizMYI=;
+	s=s29768273; t=1712314608; x=1712919408; i=l.s.r@web.de;
+	bh=KHJB/I2whF5aCBvemvhuMyWJObsgNcYeRFUA7mSdfPM=;
 	h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:
 	 In-Reply-To;
-	b=se6ICRwORnoVH5wwfFnCjSrgyap66WEsZg0ofgHSoVPyLuV0WzE2KonpI82L3Ri3
-	 Herr0IxPNRwYSZyDqRNlY7JdIC4PJHH+SzEBjIOQE+sE5NrSaq7WV9XkR3yEUkR4e
-	 wZdf8Y7eDqdDwWJ7TyEAw3jD/lc2B2hk7wFqL8cfqx0jn8Y+U9BzpfbDxgvnrXYn3
-	 NILW328K4fcQ71D9uOmgeS7poIphXc7zpTdy5OgXCZhUBwyHx6vFubXXkoXJl8qmI
-	 DMhsY8aQQ1u26Tr1K/bOo1UCWSaa/4KUge6pRVFqDEDH/boBAjvORPgPaxE7aGX7n
-	 vNRGGbpZhRKVfRM/VA==
+	b=ZFNS0wmbQUdy9Qs46GG4CEQ2EiOFAKUJAJciJsldbU+Ft0IzsjRiguvn9rmsI2Lr
+	 oV6rqxrWUSjxekTBUNt0OoPdHVbNSMjTFAAnAtvkQk+JJK/UP8rnVvRaSJj15Fbjn
+	 sw4JJk8qfdJHqYl9t5ZSOmvAKg8xsAQn3gCH6iaCwkSds2BqDqqlTwZdPlWlKzZKQ
+	 xKnbYdrQ4iIm0qbA5y5k6tzmmABzpjoYkOfGgTaWEILua5dXZQu5IObyd9V9RcQFB
+	 F5kTQ0M/m79JoDMYm46YQa/Moi/eg7Bg/JTMTTrH14FfsRC03bbKCldA63J414pFE
+	 EK1TGiYoTL6LfWkhOQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.147.225]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MuVKK-1sijt01H6I-00rsl2; Fri, 05
- Apr 2024 12:53:24 +0200
-Message-ID: <1b5f3b1d-60e2-4fe7-9ac8-a63ad861cd16@web.de>
-Date: Fri, 5 Apr 2024 12:53:23 +0200
+Received: from [192.168.178.29] ([91.47.147.225]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MbkSC-1sNu8c3QTu-00dEl6; Fri, 05
+ Apr 2024 12:56:48 +0200
+Message-ID: <c085abab-2f10-488d-87d4-65e92e0ea24b@web.de>
+Date: Fri, 5 Apr 2024 12:56:48 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,103 +40,111 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 1/2] apply: avoid fixed-size buffer in create_one_file()
+Subject: [PATCH v2 2/2] path: remove mksnpath()
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Jeff King <peff@peff.net>
 References: <df774306-f29b-4a75-a282-59db89812b9a@web.de>
+ <1b5f3b1d-60e2-4fe7-9ac8-a63ad861cd16@web.de>
 Content-Language: en-US
-In-Reply-To: <df774306-f29b-4a75-a282-59db89812b9a@web.de>
+In-Reply-To: <1b5f3b1d-60e2-4fe7-9ac8-a63ad861cd16@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PPyVy47fretU9KdJ9L91qSG3aYCOeCAEZYTZLK/GfXTuMsfhSR+
- QYi+1Sv+iiMsOlpacDBJV+JEfOQBX/iOwL4ISx2pZJVeaIZfk8K1WtM9I9J9bM58NDdUKmy
- 6O26kkyQ8zioAKZ/gn+qQS0e4SzGXt2JsB5SC0F9u01BXKGqYolVwkMOgy3ZO1JpjgDJGnb
- qspOd8Pg7k4Uvgp9iRKhw==
+X-Provags-ID: V03:K1:CP8o1DHaIMEzIcTJVMHlOMybAYMuOb2eBCOpKmpCqCGZqocjFeS
+ Gntmp2tvI6MZjxAaHsSz+6/r1dGSS3C3IaoIj4v5jhH/ifDWG66w8hUy4DMy7xH7FcfiOdZ
+ Fa4UX9fi8FzmdRQ0tj05wDaDVdRfhfhzsXAk6XW9noHkLijNxfpnKy772oG+aVr/CvmN6IU
+ RjpUIJqLQxl2flckE8vEQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:hWWRv892mjY=;d2LFvEPK+t93ymlwNhyoVZ5rcVO
- mLBaWipAGeorpKIWz+COtKdqkVA7d1MlVZpswkMoakwOmTg7yvAceQ3l8s/L/4Bztmhsrpp4Y
- d/5/s4UocgCwTNKxlkyK9TEravS6fVSAmKAIbtD8eMKeDVKAQbgfWRKCuLKljPHrcCkwOUNmL
- 1RkV+Ea5qAzoMLXx89xIzYrAsDiArjQPNhPVWWGa6UusI3OvNbOJu+JBhEEYAM2Rc4ciTCwFS
- pi+uPJ5lnstPCuSExitJ9G59MrjIe2FAVkUiFJ+tl+0LJ6MGPNC7Zxyjv2ywzi1TidSKuJaen
- h37WcUSgZ+w+TTtnkcOVJCx7qm3C+Qcux7kOPMvM1a0yuiU4h1rsiewVHglCxJTVSNnPTevza
- sP5DzFukGoCUNcKpkpx6VkVRdLFGr6u+xa5xfV9CdwuQKVTn2DoYPl+1UFA8x32cgaHpQb5ww
- b07kzALg0maSXNIGVoNaJdwq3xYCsk/l76EFbiFggf+SKu0bIfd7JNHlEbmy2atZzSFgmpe6a
- RF/5kl5CFX5k0Z4XsLMb8RapkeIkoWdH3IeWmY8xK9qIGaEQG1RUNte0xngdnI0IOx9EJjK32
- Nr0jPyKNUinxC/HTcgZROW+AD1Y8F4a5Or30IIg7vJSgxk4zP+K6bKzcESMR+RODg5pkjEHNr
- 19XLTHZt8qZ1+hcfCNC96gHwb2zbVk1OoJzak1/yAMiKWAJ1K5Jg+knt5aKKzFr4/Ywg2hGiF
- mh0AAPuUGNLQ3uOh1XSmoFYFLLjGrVPQgSLb+/Ts6t/lCUxxKTAnDw/JGqIFKScIui4sADgZe
- 7oOEabAn8SB0qMdEV+xKnq++Pw+WoyEgw3wuoxzRbE8Q4=
+UI-OutboundReport: notjunk:1;M01:P0:YOkaDJ1MbSI=;ywtg1MZAzcoJdDm7vNQEG/PmmbL
+ fZw5NHxGTCvz37tgxU1CZ3QGaYR7VewwqdF1swkk5jFPtuYpyReH057X5PZdk28YxOKr/0xzr
+ PNOQh7cWIfz+k//bH69RqtZSzusQ2lH0hDGvDwi6rjDGtSLj73L6wtTCK4dA5AhnEeCcHgoaa
+ VUz7YwzcqKSxOcz/WXwa78M4t+L764JcyROxGQafAtKYNNjWJ3QSOt4sGikwbr+SNclmgUkF6
+ pOihIGgrmPEWd3sZrcTlV4pptTtkRodZLd9HBU5vMDxagwEG0pfFRp8qafiHzrA8CxR+6F3se
+ OgEWvr0YUYiwJxxoxVRR5joLMa7Qgi6AyA9Z+E5kmIznXoZ33gTnqraSwVOeUTVQ0yibJrycz
+ 8OyjXARVIT2m4p6Um9WBRhaGjl67L1awcInYzMSKZcMAMJc6qzUl3GvxJ5sf75gKWz8BM8GPa
+ 3X8PemeJmucACXqR8EcHr+mck5FsytqP1XsveI6R+zSgc8GV+89d4XEgNHBKPPOPjGrwhx8LN
+ qfj9L2QPf8q/7FuTU11urJ0gSDX52G5JW+9YhQePOP7pIspnsI+HF7SawDfrgzc/DKNAsmSz+
+ W7yqrXg48Pln2QKruX7SqPPzr0MzLcu5a9V86tkD37svyrywQS8/XAKnoTyaagfn3dpYLFE2G
+ i0OWWADOMf3jcEysTfUpOV6UYmyt7E4IoflkvjAB9lRAN3WqoQf1CmPhHoSOXp6vRx9OhXcr2
+ nRov4BUXyfBSapz9b7z40JGcuW5frKckLvWLK2/egqLQ1rHbyVv2aYet7YL80wswV60jD7qaj
+ D3EaWSU1gQMN/9FPePbUy4FGxszL9fLR2Tg6dKLiJwXh4=
 
-PATH_MAX is not always a hard limit and 'path' in create_one_file()
-could be longer -- it's taken from the patch file and allocated
-dynamically.  Allocate the name of the temporary file on the heap as
-well instead of using a fixed-size buffer to avoid that arbitrary limit.
+Remove the function mksnpath(), which has become unused.
 
-Resist the temptation of using the more convenient mkpath() to avoid
-introducing a dependency on a static variable deep inside the apply
-machinery.
-
-Take care to work around (arguably buggy) implementations of free(3)
-that modify errno, by calling it only after using the errno value.
-
-Suggested-by: Jeff King <peff@peff.net>
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
 Changes since v1:
-- Split out removal of mksnpath() into a separate patch.
-- Use errno only before calling free(3).
+- Split out removal of mksnpath() into a separate patch, this one.
+- Remove occurrence in contrib/vscode/init.sh as well.
 
- apply.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ contrib/vscode/init.sh |  1 -
+ path.c                 | 17 -----------------
+ path.h                 |  6 ------
+ 3 files changed, 24 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 432837a674..e171b42904 100644
-=2D-- a/apply.c
-+++ b/apply.c
-@@ -4441,6 +4441,7 @@ static int create_one_file(struct apply_state *state=
-,
- 			   const char *buf,
- 			   unsigned long size)
- {
-+	char *newpath =3D NULL;
- 	int res;
-
- 	if (state->cached)
-@@ -4502,24 +4503,26 @@ static int create_one_file(struct apply_state *sta=
-te,
- 		unsigned int nr =3D getpid();
-
- 		for (;;) {
--			char newpath[PATH_MAX];
--			mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
-+			newpath =3D mkpathdup("%s~%u", path, nr);
- 			res =3D try_create_file(state, newpath, mode, buf, size);
- 			if (res < 0)
--				return -1;
-+				goto out;
- 			if (!res) {
- 				if (!rename(newpath, path))
--					return 0;
-+					goto out;
- 				unlink_or_warn(newpath);
- 				break;
- 			}
- 			if (errno !=3D EEXIST)
- 				break;
- 			++nr;
-+			FREE_AND_NULL(newpath);
- 		}
- 	}
--	return error_errno(_("unable to write file '%s' mode %o"),
--			   path, mode);
-+	res =3D error_errno(_("unable to write file '%s' mode %o"), path, mode);
-+out:
-+	free(newpath);
-+	return res;
+diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+index 521d303722..f2d61bb0e6 100755
+=2D-- a/contrib/vscode/init.sh
++++ b/contrib/vscode/init.sh
+@@ -92,7 +92,6 @@ cat >.vscode/settings.json.new <<\EOF ||
+         "isexe",
+         "iskeychar",
+         "kompare",
+-        "mksnpath",
+         "mktag",
+         "mktree",
+         "mmblob",
+diff --git a/path.c b/path.c
+index 8bb223c92c..67229edb9c 100644
+=2D-- a/path.c
++++ b/path.c
+@@ -28,8 +28,6 @@ static int get_st_mode_bits(const char *path, int *mode)
+ 	return 0;
  }
 
- static int add_conflicted_stages_file(struct apply_state *state,
+-static char bad_path[] =3D "/bad-path/";
+-
+ static struct strbuf *get_pathname(void)
+ {
+ 	static struct strbuf pathname_array[4] =3D {
+@@ -59,21 +57,6 @@ static void strbuf_cleanup_path(struct strbuf *sb)
+ 		strbuf_remove(sb, 0, path - sb->buf);
+ }
+
+-char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+-{
+-	va_list args;
+-	unsigned len;
+-
+-	va_start(args, fmt);
+-	len =3D vsnprintf(buf, n, fmt, args);
+-	va_end(args);
+-	if (len >=3D n) {
+-		strlcpy(buf, bad_path, n);
+-		return buf;
+-	}
+-	return (char *)cleanup_path(buf);
+-}
+-
+ static int dir_prefix(const char *buf, const char *dir)
+ {
+ 	int len =3D strlen(dir);
+diff --git a/path.h b/path.h
+index e053effef2..ea96487b29 100644
+=2D-- a/path.h
++++ b/path.h
+@@ -23,12 +23,6 @@ const char *mkpath(const char *fmt, ...)
+ char *mkpathdup(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+
+-/*
+- * Construct a path and place the result in the provided buffer `buf`.
+- */
+-char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+-	__attribute__((format (printf, 3, 4)));
+-
+ /*
+  * The `git_common_path` family of functions will construct a path into a
+  * repository's common git directory, which is shared by all worktrees.
 =2D-
 2.44.0
