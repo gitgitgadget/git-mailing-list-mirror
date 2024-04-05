@@ -1,76 +1,73 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E8D1C6A8
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 22:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154A3174EE9
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 22:10:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712354586; cv=none; b=tHDscFKerQMqCijNMbYC1rucO5eE5MGlURLMQnWtoEjsGgi3QfEIyUgCukYSIv3jHmvfAAvTOJ6qQnLLzAyZSpUP3pNei3wb0Q8tzcvfT+anUfxCEONNtY1Cx8kfZU9iljYmPvPNKG3tVLDJzDOHRJr8V9VAQFIz/WvCv0aUFHQ=
+	t=1712355012; cv=none; b=tHCy2yZ9ojMjBgK5g1sJ7Ut9MSfowgtcYHvAupJeRuMxllQfupEn6MSBJ+KT714jDzrEn19g9upG7FTInFF1KPDJMihi2+ozorlRE1s6sglt8ZzO5xoT5eg+2Z3cyrZCvkvfMxMEmS1CJjEdTzL8wUJ+PF2pbKKkjZijwkR7uMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712354586; c=relaxed/simple;
-	bh=p8quWmahFrD9HT9UCiJKS4K5xi4+NUOX6xbgviyoxVU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h2lGV8rzJRIBWT7GHe1BNZvDTCbA/SQSsJNv4iER7ofpKjpcFSoYgO48TS/XtQhzWg0OV5G4bazf0RQDNY24z/oZsDs3pL9eH0JRtr6tFJFChl43M2Fuzy1KFez16V1coFNAxTLFKMAgz0jZhGrB6GBZQqR/CmdKarCRbnBWmnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.104])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4VBCCj11Spz5v6N
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 00:02:57 +0200 (CEST)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4VBCCW5CxvzRnmN;
-	Sat,  6 Apr 2024 00:02:47 +0200 (CEST)
-Message-ID: <c2154457-3f2f-496e-9b8b-c8ea7257027b@kdbg.org>
-Date: Sat, 6 Apr 2024 00:02:47 +0200
+	s=arc-20240116; t=1712355012; c=relaxed/simple;
+	bh=23UMO7MjOBw2A75S/tx1gXCdKyWWtSPF0aqm5tPG7tc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RJTPK0wUb51BW/PxV1QKo0wykP+ys4UtBuL16+gyEwWJl11UmbkoZ0WAJ77qNtWcWxtSV/gokLrDeOr3GCOwS150kd9wNma4s+mkThuEdcMyQuvP5kYSmJVZ1KBNRw6XRrs/IWKs5OfME/JDIcmVeN6N7Jxt9KFlaTgQG7QP1Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IrlPqVoR; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IrlPqVoR"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 90CA827084;
+	Fri,  5 Apr 2024 18:10:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=23UMO7MjOBw2A75S/tx1gXCdKyWWtSPF0aqm5t
+	PG7tc=; b=IrlPqVoRyBmSvwDV6r+gJ6VUfbTMFVwS9VW3+35/N3Y4BE6Wk2t57f
+	AoypDiTiSUxeCvGWYBi3BKUsbKsvBv6WSht0eYMFXxZHmygvzt9gH9xq3km2T++8
+	hnmrgoGouZ5eHTxLH29/lDAJ/L8tGhTrLEKPTfU4nkps0mAWmIbQE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7FAFA27083;
+	Fri,  5 Apr 2024 18:10:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 08D902707F;
+	Fri,  5 Apr 2024 18:10:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Steven Jeuris via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  Jeff
+ King <peff@peff.net>,  Linus Arver <linusa@google.com>,  Steven Jeuris
+ <steven.jeuris@gmail.com>,  Steven Jeuris <steven.jeuris@3shape.com>
+Subject: Re: [PATCH v5] userdiff: better method/property matching for C#
+In-Reply-To: <c2154457-3f2f-496e-9b8b-c8ea7257027b@kdbg.org> (Johannes Sixt's
+	message of "Sat, 6 Apr 2024 00:02:47 +0200")
+References: <pull.1682.v4.git.git.1711653257043.gitgitgadget@gmail.com>
+	<pull.1682.v5.git.git.1712180564927.gitgitgadget@gmail.com>
+	<c2154457-3f2f-496e-9b8b-c8ea7257027b@kdbg.org>
+Date: Fri, 05 Apr 2024 15:10:05 -0700
+Message-ID: <xmqqa5m7tq9u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] userdiff: better method/property matching for C#
-To: Steven Jeuris via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Jeff King <peff@peff.net>, Linus Arver <linusa@google.com>,
- Steven Jeuris <steven.jeuris@gmail.com>,
- Steven Jeuris <steven.jeuris@3shape.com>
-References: <pull.1682.v4.git.git.1711653257043.gitgitgadget@gmail.com>
- <pull.1682.v5.git.git.1712180564927.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1682.v5.git.git.1712180564927.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 42C07D2A-F399-11EE-9184-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Am 03.04.24 um 23:42 schrieb Steven Jeuris via GitGitGadget:
-> From: Steven Jeuris <steven.jeuris@3shape.com>
-> 
-> - Support multi-line methods by not requiring closing parenthesis.
-> - Support multiple generics (comma was missing before).
-> - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
-> - Remove `instanceof` keyword, which isn't C#.
-> - Also detect non-method keywords not positioned at the start of a line.
-> - Added tests; none existed before.
-> 
-> The overall strategy is to focus more on what isn't expected for
-> method/property definitions, instead of what is, but is fully optional.
-> 
-> Signed-off-by: Steven Jeuris <steven.jeuris@gmail.com>
+Johannes Sixt <j6t@kdbg.org> writes:
 
->     Change since v4:
->     
->      * Better matching of at least two "words".
->      * Better handling of generics by restricting commas within < ... >.
->      * Allow any spaces around commas in generics.
->      * Because of stricter use of comma, Johannes' identified failing cases
->        now pass.
->      * Updated tests to cover all of the above.
+> Am 03.04.24 um 23:42 schrieb Steven Jeuris via GitGitGadget:
+>> From: Steven Jeuris <steven.jeuris@3shape.com>
+>>  ...
+> The proposed patterns look reasonable and are an improvement over the
+> existing patterns, so I think we can move this patch forward.
 
-The proposed patterns look reasonable and are an improvement over the
-existing patterns, so I think we can move this patch forward.
-
-Thank you,
--- Hannes
-
+Thanks, both.  Let me mark the topic for 'next'.
