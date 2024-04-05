@@ -1,36 +1,58 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B381316ABC9
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 10:58:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EF033993
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 11:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712314701; cv=none; b=VD4Y+ERGZ2FfTa7kS2LbT3ak1KgATJUr4347plN0jhPlRtX56VwTcJzpRuU4sqwiT0ppSrs00Q2jx81EttuOkxRy44XJ1g9ujTTj3yfPUm9UNdBSk58bpo8212+o8O/4FdI3u24sifeB56VITwuoe9Mwth4duBI4QId6P2nBNjk=
+	t=1712317846; cv=none; b=BZD87AVG02vR1dOqy/18RTsDYHuEeMEZLbNop+msq35gThJHOlL+ubeurYS3p/Rb7VL9HDxEe2WTwh81wsDFKY+sWM1J4saBTUqPD+IucOjeT8mA9j4sLHBLvYZNAWW5+A8RdEMmR6Kl4qxw6Ac3rMAyLmcVvldYbigtEbSglpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712314701; c=relaxed/simple;
-	bh=4e8DfZ+dvBb1Ue4bV/S1qhJX8ssIJcCkns71v9hqThc=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=alKNv9JGL4BpL1B9900t5KnHAuVlFhPymsHRTbWnGtvHGH8zb+xFOchjYfO7hdTUEMS1sHPSNP+cndeA0XKCFu1NNM8xZlhyWuXaWQT8J0ik2tQUFVLwk4o1ZqWm0gWZaaR1/qu0TYcHO6WzNx2+TkuBEABdvfOzF5XI9jkMlmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=SOqpkaHo; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1712317846; c=relaxed/simple;
+	bh=F8EMPs+753RAc6ttNLGxpp3iHVZB8JAVFmton0EMkLU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j7/xdXJ++dms0Rf4FAviRA2Rc+ce2Z7gdTFWxXgGDdhi41CNQ73y1sEd0UnhhsJ431PLgTLUIxyMb00crTyhQfKy12kC5LCh1EpRe9WV8sUwLdB5f4bFfy+UhrDGi5lVELqa3GZoCPcFuoDO+dWBndWSMcGloG4/9991DUqq1i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=isovalent.com; spf=pass smtp.mailfrom=isovalent.com; dkim=pass (2048-bit key) header.d=isovalent.com header.i=@isovalent.com header.b=ZR1qtd0p; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=isovalent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=isovalent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="SOqpkaHo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1712314696; x=1712919496; i=l.s.r@web.de;
-	bh=56u6P8gaHJI7T4sP0xdjqm0KVEH8W/dIAXUlZj3k3p8=;
-	h=X-UI-Sender-Class:Date:To:From:Subject;
-	b=SOqpkaHoTfc+xMBtmLF+/6zqbdO70Uhi8ubuC3xhwKfrxgHjdNODZyw4nWQNWUUA
-	 k8xqnM6Wk9kMIOxhVVeqClNwGdQVw94yuXJWq17iHrHxyxDNLI6AiUlS+AmMe/f4y
-	 mlrktLSL/VjHnijeRmJ7zV0raaFklCV+geIDP+3VF6ZRQU5tp+Y1wCAZW2QcTlRAc
-	 mqDJCKrBDG+AqgZHTZV5ltFEpE58jCgwU5jxhYnieLhuHrq0ic8/o21AUxTjyXYFt
-	 5UBJw/pp8fFddPco7Gh5ep/6NhNOfI4BIYo+KC6CWCqU7vwYm3ntX2M0mbiFDtU6O
-	 EjCyHCkv30jt/qrbWg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.147.225]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N5Ug4-1stkQc2nog-016wjf for
- <git@vger.kernel.org>; Fri, 05 Apr 2024 12:58:16 +0200
-Message-ID: <5ba55ee4-94c7-4094-a744-584fc623b391@web.de>
-Date: Fri, 5 Apr 2024 12:58:16 +0200
+	dkim=pass (2048-bit key) header.d=isovalent.com header.i=@isovalent.com header.b="ZR1qtd0p"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-34356f794a5so1749197f8f.1
+        for <git@vger.kernel.org>; Fri, 05 Apr 2024 04:50:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isovalent.com; s=google; t=1712317843; x=1712922643; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bUGeDtHiZ0mdpEt3P/G931QAClnDoaxOYfdNg9scskY=;
+        b=ZR1qtd0poocO7PA7RO3d9zLEGOSV2KR0QIe4jeuX5TOzC8R7MOnXdJyJq+/IoXCxjE
+         WkBYWFaR8TlgbDllik8d0ik8h2QYkaHDTjetAgdg9625ljt5kbIDSN2wvkvcPgp9aE3s
+         gJC355EwAr3br9qbS6+A4j+FdaObQQH5vN5AEqaOKpBFTtUfPbNCko0Z/kGpvD0Oyilv
+         hitcV6QPSuMftsrwIy/jNQzINANXaVax4d3ZB+5oq/LIkvInaGM+4NgAizYDuagmU0mR
+         90AvPxmiNeLc+eCZ87IYlu6QOEqJk2GVm9POXZ09n6g/P8/aHHecAONaPZ4AdeJSR31i
+         KxuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712317843; x=1712922643;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bUGeDtHiZ0mdpEt3P/G931QAClnDoaxOYfdNg9scskY=;
+        b=SS1f6lJaWAsaB/Vkr/QIt6a/Y7nzv0+T5u4uno5QII7V6Ss2vVLEZxae53Kfh5mgFg
+         GNVSZo+iF19ED0wUpuASqhem40sipXoq89gDdKpvnLe0Quf11f2ZgzG43sB1VyRTZxK4
+         3h7fygmRiq7o6HlEZMrSoeP0OXjdOXOS0+AQJ1TAhTEbwAkBRL8Wuolpu8wCY86Beu72
+         M3t/EsKkXtLcQrKkGoOfE8feOdYcSGqt2BYY3oi6qHQcRar5iH4Qvhgkku7Br+f+ChRz
+         kx2DnjVrn6bkva7qtfVC9IHTBfzodA/FDvDM5tigHzveI2NN2gAl1+zmkFVooHRIS232
+         CjLg==
+X-Gm-Message-State: AOJu0Yzm93Bvp59sglqnVotOsXB/6TVqqs1wbCE6D9RDcQaOn2JSVXnl
+	N4L9eu00tjKdbn/W7bOgm/PZe0Yu4gMKobrLi7MX7V+NzROnBmG9dxtOLR9p0sM=
+X-Google-Smtp-Source: AGHT+IF66ySEWHU7j6wI8Mg+cVo/Mcv5ReibtAIrxfItJyNSM06sKn2ZId85LQEy7z8E+c+rVWqOuw==
+X-Received: by 2002:a5d:608a:0:b0:341:e367:e7bf with SMTP id w10-20020a5d608a000000b00341e367e7bfmr1166844wrt.69.1712317842657;
+        Fri, 05 Apr 2024 04:50:42 -0700 (PDT)
+Received: from ?IPV6:2a02:168:f656:0:3ff1:2631:ae27:b706? ([2a02:168:f656:0:3ff1:2631:ae27:b706])
+        by smtp.gmail.com with ESMTPSA id t20-20020a0560001a5400b003434c6d9916sm1833050wry.110.2024.04.05.04.50.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Apr 2024 04:50:42 -0700 (PDT)
+Message-ID: <6e40f19c-21c3-4a7b-876f-b8161a85e603@isovalent.com>
+Date: Fri, 5 Apr 2024 13:50:41 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,54 +60,35 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] sequencer: honor signoff opt in run_git_commit
+To: phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+ David Bimmler via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1707.git.1712223572933.gitgitgadget@gmail.com>
+ <xmqqzfu914jc.fsf@gitster.g> <a80a5aa9-34f4-4bfe-9e32-7b5e878554ba@gmail.com>
 Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] apply: don't leak fd on fdopen() error
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:dVPfHHZSKOcoPZR1DnCM8AmIuj7QcmZKqAP1oFmUBC0rqflv+vW
- CjssJjUZA2eP9tKVaqVht1aJMIw16hVxi6BiXXG3cqzEI+e6tG++AdCmIhnSZWdaXrevzJk
- r69CHT/SZZDMO0hW/SU841dCZ6BukbAO1EJLZEL6S7tKO7nmnchUER63sNkW/CCj9+hAm3o
- UJbxDUIMGeQjnyzpaftNA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tIJc/1tMQ+0=;hXW/l/kYGtX9zFBlrH4W6qdeYpe
- PdiaAUzrbLryBwDlzU4YkXEL29LkKsdoEd4613VMk6PljIwyueq29/NYQUDj+Kfb997YnPEcU
- fTyfEeqUjdUdkmQ/SHZXYEUPha7Mx3MuyYxc5KT/hGTIWuqGvFIdXmc0DhyOsIA4q9x3Dlxlq
- W68DUaslc3HV7CdtX6y9Ymd7IbeZ2B2UkIp3/uklYOHfXam2Enain7NIyg0i5cfEaIfGZsD0W
- Fxe+0p08Tr6SuYyQwUJ1P4NXcHlaQoNkI1NoPTJnku9/RNlBxm/6Ii2y3Rp4aEQfPAPMOui1Q
- WjdeHoegLMDu4obbCDc1KwMSBb63Hqi0hR2pHVgRHjHqT9QI4dwA5eCNkh2r+Wl9giSK6UUlB
- YYUNlf6ZuhLbXgiqy+vhHBw2UPqJpkVKnh3drLN7DKbQR46/KEPoc9AB++jvFtbp3+Est4k92
- KirTCgK13veW+0nyjlj54l18DokHcWJfNsHJRi54OZGaXK5j5SgMbcaOlOyXAg9H0cCPG5/bX
- ltRUe1nufD35adpEqZ1eljetcAJY5pOFIUbvijqAs9WbAmZ9iuXt7ChJL3cG97EjCBql8iFRd
- T8j2joeWAyPT6W07CtZJEV/9pd8zClByBfOsZSDAomVWPcg/4DHnv8ovHaN5nxdfk1Y5GMW6U
- nXMLn1viKOLzPlwAR6Nq9WqFx8BSERU7XWuYub5LWonIyOqEt/huL8D1XYwV4jTGd8WoPZsAI
- zXbumPscTx728B4wApdcr5C+MR0aBP5oLcdO/rOU9/tIqx7X/DWUypZUBwmUZa6TiCf7z6qoG
- EwSqEBoFeCvrkjkB3l5+xE+yprmbNtGBrlOBTjJ43z8ow=
+From: David Bimmler <david.bimmler@isovalent.com>
+In-Reply-To: <a80a5aa9-34f4-4bfe-9e32-7b5e878554ba@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- apply.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+On 04.04.24 21:21, Phillip Wood wrote:
 
-diff --git a/apply.c b/apply.c
-index 432837a674..1cfbc2f074 100644
-=2D-- a/apply.c
-+++ b/apply.c
-@@ -4655,8 +4655,11 @@ static int write_out_one_reject(struct apply_state =
-*state, struct patch *patch)
- 			return error_errno(_("cannot open %s"), namebuf);
- 	}
- 	rej =3D fdopen(fd, "w");
--	if (!rej)
--		return error_errno(_("cannot open %s"), namebuf);
-+	if (!rej) {
-+		error_errno(_("cannot open %s"), namebuf);
-+		close(fd);
-+		return -1;
-+	}
+> I think it is more complicated than that. We do not use the "--signoff" 
+> option of "git commit" because we do not want to append the 
+> "Signed-off-by:" trailer when processing "fixup" and "squash" commands. 
+> The trailer is appended to the commit message by the sequencer in 
+> do_pick_commits(). The problem is that when we commit a conflict 
+> resolution we end up using the original commit message rather than the 
+> file containing the commit message that we would have used if we had not 
+> stopped for conflicts. I've got some patches which need their commit 
+> messages cleaning up at 
+> https://github.com/phillipwood/git/commits/wip/fix-rebase-signoff-with-conflicts/ which use the correct file when committing conflict resolutions. I'll try and clean them up next week.
 
- 	/* Normal git tools never deal with .rej, so do not pretend
- 	 * this is a git patch by saying --git or giving extended
-=2D-
-2.44.0
+Took a look at that series, I agree that they fix the issue too. I 
+wasn't aware of the intended behaviour for signoffs in squash and fixup, 
+I'll thus not pursue this patch further.
+
+Thanks for the context and review,
+David
+
