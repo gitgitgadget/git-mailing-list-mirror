@@ -1,90 +1,99 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED94A171E5C
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 19:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2B172BD4
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 19:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712344828; cv=none; b=e4Q0W55buEM+M9t2pyLHGRqzhQhQid5UJB0l5Cu+jWz8ccJmT4wMojaT7NrUdBcfwN3b1AYa5pvo+tKmKjuavDHG5fAeMsbWHSka9GZuJFsrDF4MqyKNaCMWqQkGGq1Tb/L4Eel3S1d/9lV+F+DW1NIfbGIwMDXkONLfSELFWZ0=
+	t=1712345778; cv=none; b=uNi9tgRBo9ZcXsyp08RJqyRFn8UUhRKyOG+Fl6awu+Bs0sYJxJllXAU38dIxb7Vcyqa9OEkZeWeZWE86vpJw1L4rB3wII36I0j3nzdikRgWUarBrxgmmdVyVkDz8kydRSp/i/Sc2Ts/TmFjImpQRNJuaBp42Mpop3vdin7Txooo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712344828; c=relaxed/simple;
-	bh=zRGYBtobDQ5buugLC15Nb0vtwaPriyMTtaP0OMzupuA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d4+hWRAEe82ZyWPybMFva4xQKrO+gNZ745/5hbTItaCkOFBzBBYO0G81pbo+5O4Nu1O1tCEkEAaNEebtT6rHBfp+OWsW8zInFOlOLkKywYfj/l8F8V2WhDZXRfhmf2fJZwJm8eZVkGcmrJKOr2iTj5tjjFsHGJzffAPA4gi9Zz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 19332 invoked by uid 109); 5 Apr 2024 19:20:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Apr 2024 19:20:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31620 invoked by uid 111); 5 Apr 2024 19:20:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Apr 2024 15:20:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 5 Apr 2024 15:20:24 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] usage: report vsnprintf(3) failure
-Message-ID: <20240405192024.GB2561807@coredump.intra.peff.net>
-References: <3da13298-b6a6-4391-b8e8-5dae9a28b860@web.de>
+	s=arc-20240116; t=1712345778; c=relaxed/simple;
+	bh=nVA9ev9it3qBQEbrC6EKl3lLb8y/kHpZCu07KpeAdeo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=u3JanD7UXAZY26P6hh5ofdFcvDG0myzfa2p8F8FZ1zLLyKbEYO1MevmSOu1TqjKICccjkmY4nIyewZgXtz3CdaB0mqh2EyYa4wMyAeFS7oIUNLBWi6m8lPpn2G/ddGbnVXHt+xeROKpkdev/N+VF2Tai9tb+HiKFkdY3lpERnMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=i7YUQHTx; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i7YUQHTx"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1649426057;
+	Fri,  5 Apr 2024 15:36:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=nVA9ev9it3qBQEbrC6EKl3lLb8y/kHpZCu07Kp
+	eAdeo=; b=i7YUQHTx1SuMOZB67knz0fPCecSXyS/YskZCtbmUF0YMTJgcnkq7o3
+	tFY9nDqy5EFHOjLOCIRL6NqMAViMM8pnP4viBuE82m0UjOeb+1/TQlCCgsR36NVH
+	GvIf9NA3R3hTgy1Aq46yb0xpdYWvR419W2Zez1PhGWLDSt7QiXJ2A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0E3BF26056;
+	Fri,  5 Apr 2024 15:36:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 94A1126055;
+	Fri,  5 Apr 2024 15:36:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH] CodingGuidelines: quote assigned value with "local" and
+ "export"
+In-Reply-To: <20240405174859.GE2529133@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 5 Apr 2024 13:48:59 -0400")
+References: <cover.1712235356.git.ps@pks.im>
+	<c2c2747ff57f68ccad8b509af037e1fc4a524fa1.1712235356.git.ps@pks.im>
+	<xmqqmsq7yezc.fsf@gitster.g> <xmqqbk6nyej1.fsf_-_@gitster.g>
+	<20240405174859.GE2529133@coredump.intra.peff.net>
+Date: Fri, 05 Apr 2024 12:36:05 -0700
+Message-ID: <xmqqr0fjtxei.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3da13298-b6a6-4391-b8e8-5dae9a28b860@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BF0728AE-F383-11EE-BE26-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Fri, Apr 05, 2024 at 08:59:52PM +0200, René Scharfe wrote:
+Jeff King <peff@peff.net> writes:
 
-> vreportf(), which is used e.g. by die() and warning() by default, calls
-> vsnprintf(3) to format the message to report.  If that call fails, it
-> only prints the prefix, e.g. "fatal: " or "warning: ".  This at least
-> informs users that they were supposed to get a message and reveals its
-> severity, but leaves them wondering what it may have been about.
-> 
-> Here's an example where vreportf() tries to print a message with a 2GB
-> string, which is too much for vsnprintf(3):
-> 
->   $ perl -le 'print "create refs/heads/", "a"x2**31' | git update-ref --stdin
->   fatal:
-> 
-> At least report the formatting error along with the offending message
-> (unformatted) to indicate why that message is empty.  Use fprintf(3)
-> instead of error() to get the message out directly and avoid recursing
-> back into vreportf().
-> 
-> With this patch we get:
-> 
->   $ perl -le 'print "create refs/heads/", "a"x2**31' | git update-ref --stdin
->   error: unable to format message: invalid ref format: %s
->   fatal:
-> 
-> ... which allows users to at least get an idea of what went wrong.
+>> + - Some versions of dash has broken variable assignment when prefixed
+>> +   with "local", "export", and "readonly", in that the value to be
+>> +   assigned goes through field splitting at $IFS unless quoted.  
+>> +
+>> +   DO NOT write:
+>> +
+>> +     local variable=$value           ;# wrong
+>> +     export variable=$(command args) ;# wrong
+>> +
+>> +   and instead write:
+>> +
+>> +     local variable="$value"
+>> +     export variable="$(command args)"
+>
+> I think that is a good rule for "local", but I thought we did not allow
+> "export foo=bar" at all, and required:
+>
+>   foo=bar
+>   export foo
+>
+> If that was only because of this bug, it would be nice to loosen the
+> rules a bit.
 
-Thanks, I think this is a good change and you've nicely summarized the
-situation above. And the patch itself:
+That rule in Documentation/CodingGuidelines predates the discovery
+of this bug.  I have this vague feeling that it was for the shell on
+old Solaris, which would not matter to us anymore, but I do not
+remember.
 
-> diff --git a/usage.c b/usage.c
-> index 09f0ed509b..7a2f7805f5 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -19,8 +19,11 @@ static void vreportf(const char *prefix, const char *err, va_list params)
->  	}
->  	memcpy(msg, prefix, prefix_len);
->  	p = msg + prefix_len;
-> -	if (vsnprintf(p, pend - p, err, params) < 0)
-> +	if (vsnprintf(p, pend - p, err, params) < 0) {
-> +		fprintf(stderr, _("error: unable to format message: %s\n"),
-> +			err);
->  		*p = '\0'; /* vsnprintf() failed, clip at prefix */
-> +	}
+As we are not showing "readonly" in the "DO NOT/DO" example above,
+we should probably drop the "export" example and discuss it
+separately and decide if it makes sense to loosen the "export var"
+vs "export var=val" rule.
 
-is nice and simply, and shouldn't have any unexpected side effects.
-
--Peff
+Thanks.
