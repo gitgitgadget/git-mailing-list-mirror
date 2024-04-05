@@ -1,303 +1,103 @@
-Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BA91CA9E
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 06:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BA023759
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 06:52:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712299850; cv=none; b=dT+1WgHsN8BEzw/078Z+ynkbA+IQtn4ghygT6ejqIXbs5909GuvGUlegSu4ngCd3hpvUyXD+AryRBvpMHjddawMfkTolsJM9Pg3PNDeoanHwbcv4JuzYY912GYEsthmXnznNXXGJtmI0t36sHewElkxA6SDgxDSexxd0Ut8e5M0=
+	t=1712299946; cv=none; b=jb7ON3uG0H8m1KWZIEAaP9RVcZk2aXO4k3+B+CrI8EOhTlt3xlvbZqtGjpTCEXK47N7oXMfSq8fkvw16BxEylo20kVudzsPX/vhM8mbqD5aa/q4RZ22Hz4x9vNR8oHStlV/QoGcDHvw/LJCrRN5IdnAYFp/xUG0hUFl9RPzy0Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712299850; c=relaxed/simple;
-	bh=HZHZbwuPLx3NVo8gJmhUvJO1S/MHVvAl0REa3QvNw4g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QXfxHgYNYhB/7EDuyRAi1B55i28bDcYxihZkRnHcKs3FaRhodvVvs7921mLrxhtJ8AnO93Ugcy8pX1lP0D5MikdlmXbokK1j8jVYdK1/q/lEjPlJEGcRHc49dmXfNT9K1TJ/6qEenYVe9dEB62YnIBuZY78Ee3zkoiCvoNaOWjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=BcblKZ3C; arc=none smtp.client-ip=185.238.129.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+	s=arc-20240116; t=1712299946; c=relaxed/simple;
+	bh=l5zQwIPX8LyWBRYekyQ92ShIigT/P4S+y0FbyV+0oDk=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=eJpE2Fq+l+t+OuftbExZYPV2H6PtyDtbXpxg5H21Z+4RT9zbyPWskFNcNlepLmUDTNmnpoZZSVGn0JcE8JRjncEaJEdimcRsaeMN8QsA1tMwb7lI3jWEzzxFrOHsDzDx1ndSEAW4NzH1d8smEp84WMoqaO8je8Ai98G2icGXviY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=gG+fSOdB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tPQ+Mzfw; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="BcblKZ3C"
-Received: from [10.2.12.77] (unknown [10.2.12.77])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by 7of9.schinagl.nl (Postfix) with ESMTPSA id CCD921A15508;
-	Fri,  5 Apr 2024 08:50:38 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1712299839; bh=HZHZbwuPLx3NVo8gJmhUvJO1S/MHVvAl0REa3QvNw4g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=BcblKZ3C6he150TBB1Sq0MGraEXl09mkjshHHpRBkBWhYLqF1ikxyjg6/bzti/Ebz
-	 cLP86PvOKlbkcT3EWNx++n3ZAZXQi3mfHTXa8u28BGiAFOy7XQvZI4CUh2WHQAotTO
-	 AYlKVbYFoGxxasU6QJQSaAiwUY0B/iD8KJC5KFrk=
-Message-ID: <864b0f22-b07b-469b-8fc2-56940fd89a8b@schinagl.nl>
-Date: Fri, 5 Apr 2024 08:50:38 +0200
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="gG+fSOdB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tPQ+Mzfw"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id EE2C711400FD;
+	Fri,  5 Apr 2024 02:52:22 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Fri, 05 Apr 2024 02:52:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1712299942; x=1712386342; bh=px6rWCJAXQjwuvS1q1Pq4Xrb78VgKuPR
+	XRAXuoGu1DA=; b=gG+fSOdBF9phzoHc4/rapMAVxOocSoAQzmK5i/g5zXWGHoGw
+	oXhM5Kuou/k41RzU6oCeVLOx+vEs6p+OTyI2GUTQkUdQd0YFhDsbOpDRn5SEp6pB
+	h0xhaJ/UouFnEyoapHjjKlK/65TgKylueOwuFocCefptQTWd7AXOQXHBq6/lRGHY
+	mydkgm0/5KZZQy9EQOr9lCuqEazzztt4Z/WMWy5Em89wyNdZ9uI7q0Fpf+m1GUjf
+	YBGzZb6NvXHQ0tbmR+PN5dF+kZybEKML27q9/1pDNDAbSp6CS6fSWuW+Hx9+mJxh
+	drz47ymHDoc555FlPTtua0CtVoNHy06TDFy3zg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1712299942; x=
+	1712386342; bh=px6rWCJAXQjwuvS1q1Pq4Xrb78VgKuPRXRAXuoGu1DA=; b=t
+	PQ+MzfwwXdDT72IQU8Af3CGU8pMzyppkxdTO8FtxVHotZ5pEL0IV0k1UnJHSWqq6
+	y31BCyxmkxdAesSKGWQu4hA2Uk93iUFj6/RtsPTc4x0BpGYAZOQtbscfsAwIudgh
+	AWHYXfbK79UyCHzgSG/dekoEtsEE4zVlBAq7MaNSVkL9DZ//cB1a72OyJgDQZPg9
+	X0RnnhXoKxZGBOLrTYIxHqNOx1UrlzU+/qXSHCtkWyDBBz48Y7rwroV8JW4r2lwR
+	KKpq36LwUfhm8ma9Dj/JqUGn18NvposxtnN/hbBm0qvClY2txSFBf2t2Lc/ktWFL
+	zrM9y1Qz5gKMQOdaVzurg==
+X-ME-Sender: <xms:pp8PZhPe9d91-BQ_L0RMrxCzkHYshrKemgArmete1lXsJYVIlLys0fE>
+    <xme:pp8PZj-8rrxRFlTQVpTUaCmhQ2QwVZzbLuFTN6DPiiomJntrAb0RUGQEvcSRDvXSh
+    yOvoSC_J0wHuof1WQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefledguddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
+    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:pp8PZgQZ-3Y-wCXfoGFWWgiWNxgpnkmjkDKfDYbHJ7GhVjL7l2gBfA>
+    <xmx:pp8PZtuq9g0vU5cImhecBS_3yGc3vp9V9Pr0cSt6kZeet3IxLtRSZg>
+    <xmx:pp8PZpdFrzdj9GKZ_83bcj_IDdU-6Dmw3GAkrF4A322LmRk2FxeBSg>
+    <xmx:pp8PZp3nQMguNiN9Ad38GuQt9X01dkH7AaEuD-Lpz-76edTGUa4hKw>
+    <xmx:pp8PZt7DkQLn9CnK5wd0vF_Tjo2VupOpuXbjT9i5OzspaoM2qlIyWimx>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 79FBA15A0092; Fri,  5 Apr 2024 02:52:22 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-333-gbfea15422e-fm-20240327.001-gbfea1542
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] bisect: Introduce skip-when to automatically skip commits
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- Christian Couder <christian.couder@gmail.com>,
- Stefan Haller <lists@haller-berlin.de>
-References: <20240330081026.362962-2-oliver@schinagl.nl>
-Content-Language: nl
-From: Olliver Schinagl <oliver@schinagl.nl>
-In-Reply-To: <20240330081026.362962-2-oliver@schinagl.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Message-Id: <70c97d51-b26a-43f3-9856-af405f396576@app.fastmail.com>
+In-Reply-To: 
+ <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
+References: 
+ <0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org>
+Date: Fri, 05 Apr 2024 08:52:02 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Dragan Simic" <dsimic@manjaro.org>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] send-email: make it easy to discern the messages for each patch
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hey all,
+Hi
 
-I've also got my work on a branch in my repo, if that helps to look at 
-things, https://gitlab.com/olliver/git/-/tree/skip_bisect
+On Thu, Apr 4, 2024, at 22:34, Dragan Simic wrote:
+> may be seen as redundant.  Though, it doesn't look too bad, and making=
+ that
+> last newline not displayed would make the code much more complex, whic=
+h would
+> not be worth neither the time and effort now, nor the additional maint=
+enance
+> burden in the future.
 
-Also included is a script to be used as an example. I opted to use `git 
-show`, which is nice because it works both on commits, but also on notes.
-
-Anyway, any thoughts on the bellow before I send the full series?
-
-Olliver
-
-
-On 30-03-2024 09:10, Olliver Schinagl wrote:
-> Before I go dig myself in deeper, I'd like some feedback and opinions on
-> whether this is the correct direction.
->
-> If I got it right, do say so, as then I can start adding some tests and
-> update the documentation.
->
-> Olliver
->
-> ---
->
-> In some situations, it is needed to skip certain commits when bisecting,
-> because the compile doesn't work, or tests are known to fail.
->
-> For this purpose, we introduce the `--skip-when` flag which takes a
-> script as an input and is expected to return exit code 125 if a commit
-> is to be skipped, which uses a regular `git bisect skip` and the commit
-> thus ends up on the skipped pile.
->
-> In addition we also offer a git-hook, to make this as predictable and
-> painless as possible.
->
-> The script can do whatever it wants to to determine if a commit is to be
-> skipped; From comparing the hash against a known list, to checking git
-> notes for a keyword or, as the included example, the commit body.
->
-> Signed-off-by: Olliver Schinagl <oliver@schinagl.nl>
-> ---
->   bisect.c                                 |  2 +
->   builtin/bisect.c                         | 93 +++++++++++++++++++++++-
->   templates/hooks--bisect-skip_when.sample | 10 +++
->   3 files changed, 101 insertions(+), 4 deletions(-)
->   create mode 100755 templates/hooks--bisect-skip_when.sample
->
-> diff --git a/bisect.c b/bisect.c
-> index 60aae2fe50..185909cca9 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -476,6 +476,7 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
->   static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
->   static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
->   static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-> +static GIT_PATH_FUNC(git_path_bisect_skip_when, "BISECT_SKIP_WHEN")
->   static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
->   static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
->   static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
-> @@ -1179,6 +1180,7 @@ int bisect_clean_state(void)
->   	unlink_or_warn(git_path_bisect_log());
->   	unlink_or_warn(git_path_bisect_names());
->   	unlink_or_warn(git_path_bisect_run());
-> +	unlink_or_warn(git_path_bisect_skip_when());
->   	unlink_or_warn(git_path_bisect_terms());
->   	unlink_or_warn(git_path_bisect_first_parent());
->   	/*
-> diff --git a/builtin/bisect.c b/builtin/bisect.c
-> index 9891cf2604..6870142b85 100644
-> --- a/builtin/bisect.c
-> +++ b/builtin/bisect.c
-> @@ -4,6 +4,7 @@
->   #include "environment.h"
->   #include "gettext.h"
->   #include "hex.h"
-> +#include "hook.h"
->   #include "object-name.h"
->   #include "oid-array.h"
->   #include "parse-options.h"
-> @@ -14,19 +15,21 @@
->   #include "revision.h"
->   #include "run-command.h"
->   #include "strvec.h"
-> +#include "wrapper.h"
->   
->   static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
->   static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
->   static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-> +static GIT_PATH_FUNC(git_path_bisect_skip_when, "BISECT_SKIP_WHEN")
->   static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
->   static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
->   static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
->   static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
->   
->   #define BUILTIN_GIT_BISECT_START_USAGE \
-> -	N_("git bisect start [--term-(new|bad)=<term> --term-(old|good)=<term>]" \
-> -	   "    [--no-checkout] [--first-parent] [<bad> [<good>...]] [--]" \
-> -	   "    [<pathspec>...]")
-> +	N_("git bisect start [--term-(new|bad)=<term> --term-(old|good)=<term>]\n" \
-> +	   "                 [--no-checkout] [--first-parent] [--skip-when=<script>]\n" \
-> +	   "                 [<bad> [<good>...]] [--] [<pathspec>...]")
->   #define BUILTIN_GIT_BISECT_STATE_USAGE \
->   	N_("git bisect (good|bad) [<rev>...]")
->   #define BUILTIN_GIT_BISECT_TERMS_USAGE \
-> @@ -89,6 +92,7 @@ static const char vocab_bad[] = "bad|new";
->   static const char vocab_good[] = "good|old";
->   
->   static int bisect_autostart(struct bisect_terms *terms);
-> +static enum bisect_error bisect_skip(struct bisect_terms *terms, int argc, const char **argv);
->   
->   /*
->    * Check whether the string `term` belongs to the set of strings
-> @@ -680,14 +684,74 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
->   	return res;
->   }
->   
-> +static int get_skip_when(const char **skip_when)
-> +{
-> +	struct strbuf str = STRBUF_INIT;
-> +	FILE *fp = NULL;
-> +	int res = 0;
-> +
-> +	fp = fopen(git_path_bisect_skip_when(), "r");
-> +	if (!fp) {
-> +		res = -1;
-> +		goto finish;
-> +	}
-> +
-> +	strbuf_getline_lf(&str, fp);
-> +	*skip_when = strbuf_detach(&str, NULL);
-> +
-> +finish:
-> +	if (fp)
-> +		fclose(fp);
-> +	strbuf_release(&str);
-> +
-> +	return res;
-> +}
-> +
->   static enum bisect_error bisect_auto_next(struct bisect_terms *terms, const char *prefix)
->   {
-> +	int no_checkout = ref_exists("BISECT_HEAD");
-> +	enum bisect_error res;
-> +	struct object_id oid;
-> +
->   	if (bisect_next_check(terms, NULL)) {
->   		bisect_print_status(terms);
->   		return BISECT_OK;
->   	}
->   
-> -	return bisect_next(terms, prefix);
-> +	res = bisect_next(terms, prefix);
-> +	if (res)
-> +		return res;
-> +
-> +	if (!read_ref(no_checkout ? "BISECT_HEAD" : "HEAD", &oid)) {
-> +		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-> +		char *rev = oid_to_hex(&oid);
-> +		const char *skip_when = NULL;
-> +		int ret = 0;
-> +
-> +		get_skip_when(&skip_when);
-> +		if (skip_when != NULL) {
-> +			struct child_process cmd = CHILD_PROCESS_INIT;
-> +
-> +			cmd.use_shell = 1;
-> +			cmd.no_stdin = 1;
-> +			strvec_pushl(&cmd.args, skip_when, rev, NULL);
-> +
-> +			printf(_("running '%s'\n"), skip_when);
-> +			ret = run_command(&cmd);
-> +		}
-> +
-> +		strvec_push(&opt.args, rev);
-> +		if ((ret == 125) ||
-> +		    (run_hooks_opt("bisect-skip_when", &opt) == 125)) {
-> +			struct strvec argv = STRVEC_INIT;
-> +
-> +			printf(_("auto skipping commit [%s]...\n"), rev);
-> +			sq_dequote_to_strvec("skip", &argv);
-> +			res = bisect_skip(terms, argv.nr, argv.v);
-> +		}
-> +	}
-> +
-> +	return res;
->   }
->   
->   static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
-> @@ -703,6 +767,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
->   	struct strbuf start_head = STRBUF_INIT;
->   	struct strbuf bisect_names = STRBUF_INIT;
->   	struct object_id head_oid;
-> +	char *skip_when = NULL;
->   	struct object_id oid;
->   	const char *head;
->   
-> @@ -727,6 +792,15 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
->   			no_checkout = 1;
->   		} else if (!strcmp(arg, "--first-parent")) {
->   			first_parent_only = 1;
-> +		} else if (!strcmp(arg, "--skip-when")) {
-> +			i++;
-> +
-> +			if (argc <= i)
-> +				return error(_("'' is not a valid skip-when script"));
-> +
-> +			skip_when = xstrdup(argv[i]);
-> +		} else if (skip_prefix(arg, "--skip-when=", &arg)) {
-> +			skip_when = xstrdup(arg);
->   		} else if (!strcmp(arg, "--term-good") ||
->   			 !strcmp(arg, "--term-old")) {
->   			i++;
-> @@ -867,11 +941,22 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
->   		goto finish;
->   	}
->   
-> +	if (skip_when) {
-> +		if (access(skip_when, X_OK)) {
-> +			res = error(_("%s: no such path in the working tree.\n"), skip_when);
-> +			goto finish;
-> +		}
-> +		write_to_file(git_path_bisect_skip_when(), "%s\n", skip_when);
-> +	}
-> +
->   	res = bisect_append_log_quoted(argv);
->   	if (res)
->   		res = BISECT_FAILED;
->   
->   finish:
-> +	if (skip_when)
-> +		free(skip_when);
-> +
->   	string_list_clear(&revs, 0);
->   	string_list_clear(&states, 0);
->   	strbuf_release(&start_head);
-> diff --git a/templates/hooks--bisect-skip_when.sample b/templates/hooks--bisect-skip_when.sample
-> new file mode 100755
-> index 0000000000..ff3960841f
-> --- /dev/null
-> +++ b/templates/hooks--bisect-skip_when.sample
-> @@ -0,0 +1,10 @@
-> +#!/bin/sh
-> +#
-> +# usage: ${0} <commit_object_name>
-> +# expected to exit with 125 when the commit should be skipped
-> +
-> +if git cat-file commit "${1:-HEAD}" | grep -q "^GIT_BISECT_SKIP=1$"; then
-> +	exit 125
-> +fi
-> +
-> +exit 0
-
-
+=E2=80=9CNot worth neither=E2=80=9D looks like a double negative. A doub=
+le negative in
+mainstream English leads to cancellation, unlike in some regional
+dialects where it acts as an intensifier of sorts.
