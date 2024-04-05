@@ -1,108 +1,82 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8493016C858
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 17:45:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A552816C690
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 17:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712339141; cv=none; b=q8h4dEK51KVBh8tVUcaeQe1usQEfOsKpDAei3QFDDftMptxL5njlvE/Ecf0FKeQs2ynww5ccaeGh8L0vFY36dj79crmtNAIEUAxbrfEUjHScfmmr3nbgRiywx2HyKaJM1j/7INQT1VDiJVCULyO2TV3dMu7a8s24hXOHrr/hUyw=
+	t=1712339228; cv=none; b=MN2GN5HoAL/fIyzyhcRD4vKkdLSEBMoUdQP/NHDSMlK5ok1mxMGj8n8ggqQe/HZWw1QP13iRWmtGDyr0FufGAUVYe+h/qTaWUG4Oq0yg6oHNOOVCmMzyvIBpRITURI44jCTDzAzLMSk99PHCFIKC439Hcs2vegESrmMaZecZmWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712339141; c=relaxed/simple;
-	bh=tH5SgAqcczvKSs+ZxzSHkeA+Eq4oYN7ZeM7mqFZJLUI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TeZh/nRFreCLW1rlkrS7pwyLAHZfxk3vd8pUQDtCxqz7NyGKHyLI3euXOn6YMh9rMQ02THvCdMwiuvnVr8Pg7phx/IbA5fCrBS+j+IrmMsSYJWkyyEF1Xh4AJCagWFKN5DZ6Z7wz8SS+BDgL46dxIrUZJJ53wEZUgLcjzs0MXoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 18188 invoked by uid 109); 5 Apr 2024 17:45:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Apr 2024 17:45:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30929 invoked by uid 111); 5 Apr 2024 17:45:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Apr 2024 13:45:39 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 5 Apr 2024 13:45:37 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] mem-pool: use st_add() in mem_pool_strvfmt()
-Message-ID: <20240405174537.GD2529133@coredump.intra.peff.net>
-References: <bbe00b9e-64d8-4ec8-a2b9-2c6917c72dbd@web.de>
- <20240401033642.GB2639525@coredump.intra.peff.net>
- <9f26b9f0-f8d7-4988-b6d4-e0446dab30b1@web.de>
- <20240403011818.GB892394@coredump.intra.peff.net>
- <b48fd3ee-2975-481f-aa0e-8ec4d07ea705@web.de>
- <20240403204836.GC1949464@coredump.intra.peff.net>
- <6f727926-a901-4d9f-8a7f-d966f222f15d@web.de>
+	s=arc-20240116; t=1712339228; c=relaxed/simple;
+	bh=rUkCIT73Y4FyflEpJlQtV4jNf7fIz71LSZvPZObtH+o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SS37LcO+aQQftHW7HYC9GNSeyGHQuvy32kkt2ncHKBA30v6Y4/ZgBeMMO11pgufGfb7DA8mNVlkbTjAz7mBAb0+pZrsTlXtKcXRMCN5eK3JUWQHZ8Slfd+M3wo9KULQ618vsCF8GnEkDcJxSjDtWG4bKMate2MGb0HkbMKxFL1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wBtFz7Fo; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wBtFz7Fo"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 279D021A8A;
+	Fri,  5 Apr 2024 13:47:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=rUkCIT73Y4FyflEpJlQtV4jNf7fIz71LSZvPZO
+	btH+o=; b=wBtFz7Fo+64QWvVB/dTz7q2E7pWpmkv5HVYrcZvnnbOEQ++fbhgW0G
+	cVx4fotWpAMg7aeV6i10NfENWkY/CDbI8EUaS6FicI70nQwyq9NVmsUlm52HQsw8
+	dTcqfvL/dNDwd2qLqHRHtbwQPsTltgv4xe7a1hpTHFpz12Q6Pk82M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1BE7C21A89;
+	Fri,  5 Apr 2024 13:47:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8A46621A86;
+	Fri,  5 Apr 2024 13:47:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Utsav Parmar <utsavp0213@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] userdiff: add builtin driver for typescript language
+In-Reply-To: <20240404163827.5855-1-utsavp0213@gmail.com> (Utsav Parmar's
+	message of "Thu, 4 Apr 2024 22:08:27 +0530")
+References: <20240324174423.55508-1-utsavp0213@gmail.com>
+	<20240404163827.5855-1-utsavp0213@gmail.com>
+Date: Fri, 05 Apr 2024 10:47:01 -0700
+Message-ID: <xmqqa5m7vh0q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f727926-a901-4d9f-8a7f-d966f222f15d@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8278F5DE-F374-11EE-AFB5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Apr 05, 2024 at 03:10:33PM +0200, René Scharfe wrote:
+Utsav Parmar <utsavp0213@gmail.com> writes:
 
-> >>>  	memcpy(msg, prefix, prefix_len);
-> >>>  	p = msg + prefix_len;
-> >>> -	if (vsnprintf(p, pend - p, err, params) < 0)
-> >>> +	if (vsnprintf(p, pend - p, err, params) < 0) {
-> >>> +		if (snprintf(p, pend - p, "could not format error: %s", err) < 0)
-> >>>  		*p = '\0'; /* vsnprintf() failed, clip at prefix */
-> >>> +	}
-> >>>
-> >>>  	for (; p != pend - 1 && *p; p++) {
-> >>>  		if (iscntrl(*p) && *p != '\t' && *p != '\n')
-> >>>
-> >>> Though most of the rest of the function is not that useful (it is mostly
-> >>> removing unreadable chars, and hopefully we do not have any of those in
-> >>> our format strings!).
-> 
-> Hmm, this might be worth doing to avoid messing up the terminal if
-> 'err' points into the weeds for some reason.
+>...
+> diff --git a/t/t4034/typescript/expect b/t/t4034/typescript/expect
+> new file mode 100644
+> index 0000000000..19605fec4d
+> --- /dev/null
+> +++ b/t/t4034/typescript/expect
+> @@ -0,0 +1,33 @@
+> +<BOLD>diff --git a/pre b/post<RESET>
+> +<BOLD>index e4a51a2..9c56465 100644<RESET>
+> +<BOLD>--- a/pre<RESET>
+> +<BOLD>+++ b/post<RESET>
+> +<CYAN>@@ -1,16 +1,16 @@<RESET>
+> +log("Hello World<RED>!\n<RESET><GREEN>?<RESET>")
+> +<GREEN>(<RESET>1<GREEN>) (<RESET>-1e10<GREEN>) (<RESET>0xabcdef<GREEN>) u<RESET>'<RED>x<RESET><GREEN>y<RESET>'
+> +!<RED>a<RESET><GREEN>x<RESET> ~<RED>a a<RESET><GREEN>x x<RESET>++ <RED>a<RESET><GREEN>x<RESET>-- <RED>a<RESET><GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>&<RED>b
+> <RESET>
 
-I think we have bigger problems if "err" is messed up, because we'll be
-interpreting garbage as a format string and almost certainly triggering
-undefined behavior. And in general if we are not using a constant string
-as the format it's a potential security vulnerability. So I think we can
-mostly rely on the compile-time -Wformat checks for this.
+There is a funny line-wrapping around here that corrupts the patch.
 
-> OK, right, a format error doesn't have to be fatal and we can keep
-> running and possibly provide more details.
-> 
-> But mixing the format error with the actual payload message is not ideal.
-> At least we should give the format error its proper prefix, while still
-> reporting the prefix of the original message, e.g. like this:
-> 
->    error: unable to format message: unable to open loose object %s
->    fatal:
-> 
-> ... or this:
-> 
->    error: unable to format message: fatal: unable to open loose object %s
-> 
-> I tend to like the first one slightly better, even though the empty
-> message looks silly.  It doesn't mix the two and answers the questions
-> that I would have:  Why did the program stop?  Due to a fatal error.
-> Why is the fatal message silent?  The preceding error explains it.
-> 
-> While the second one only reveals the fatality somewhere in the middle
-> of the text, weakening the meaning of prefixes.
-
-Yeah, I think your first one is good. It's _ugly_, but it's easy to
-figure out what happened, and this is not something people generally see
-(and the status quo is just "fatal:", so you're easily 50% less ugly).
-
-> I still don't know why the error code varies between runs, but it
-> clearly does not come from vsnprintf(3) -- if I set errno to some
-> arbitrary value before the call, it is kept.  Which is enough to
-> convince me to ignore errno here.
-
-Agreed. Thanks for digging into it.
-
--Peff
+> +<RED>a<RESET><GREEN>y
+> <RESET>
