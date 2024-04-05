@@ -1,69 +1,96 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2382339A8
-	for <git@vger.kernel.org>; Fri,  5 Apr 2024 23:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA2E339AC
+	for <git@vger.kernel.org>; Fri,  5 Apr 2024 23:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712358493; cv=none; b=BKLaGnWJc2w1NLeAesRc+2xVkPa6KUriItpmC8/L36MHCZjMnIMP7O9qF4GOhyukc3TR6FXg5R+ag8zJAVfXFV8itUNPK3jq5lfj7W3T6aHif0CPvCL3Zj8RPye8qRhAYYDC795fRIS+VVYE7gJHF0OlbqA2qCtvslHbgeueYD4=
+	t=1712358964; cv=none; b=OymYfXZFscwTzgmLfFUNoy5oKny9NJnf+lCdihoEzJb9Ie+GlHQGP7mBPdlPxpy5sUy8AzjuqYy8gKiudKCY8+vXl40tnSH5Y9U6yEi0VL1LeaOQ6/Tn9GuNZkg4jVxDZXIHGl6lE9KpdqmWjo5o9jEKRyIr2p7oGLdzClIEyKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712358493; c=relaxed/simple;
-	bh=geCjL0QPHZMVfc8sTn7KX5Rb66T55LXppSrfSJkhbPc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iPERqu4me1FdfSrYtjp7n9fbBzmbhxwb35HvssbY9sXxALnedJK65QtiHBp+dG8kDGxFjz+A0M023kqb1GXdP2xDQGOqBuprU4m92GirsGDkUhQQMqDZ/8s+YWDjr/XyOIzJHm/kiPH4Wrvu3fQWJd96vXoTPXIkgEodqj0hiRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IW7Bem9l; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712358964; c=relaxed/simple;
+	bh=TtO5vt+4E9srpHTX9qsL1uvgxiRvx036YxwJOdv5+kc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GTppGsXPs4ldXHNZJ0AcyOld0NXYDLVO3nc175sBR6S0Xwk0WwaJyb8Lopm/cOWi+jH483zPN+gmCpvilXXjRiBskpmIva3RwneduafbBKXkPRYZa8t8Ra/x5YozyL3h4iQQDzgSRW5f+mpmuSz3+hWp7ysWBrAq5+W1gjq+UHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SUZ/yq4d; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IW7Bem9l"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3416a975840so1987122f8f.0
-        for <git@vger.kernel.org>; Fri, 05 Apr 2024 16:08:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712358490; x=1712963290; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=geCjL0QPHZMVfc8sTn7KX5Rb66T55LXppSrfSJkhbPc=;
-        b=IW7Bem9ljo7balj3+GIag7ASyzyBq6AKPC5A5HZt4Y8Y6++UNNIeMj67Oc5pvIEUgX
-         +98wQbcbVr1NVDhp2qof55NsXdYVvHntx/spjIpf+3UeUurMnQPlbIXGk2Ype91mOzCC
-         +C9XVoH87OaOCvg2B/srXZHtXRNiirN2uVP+FG/s4X4iupGniE7oAPuWJFYi0CYbzwOX
-         sA3tL4qL4y6Z+uJ7x7VkbPIh41ExVz98tokIPXGMIo5Qnv9C/TZE9nCIx3WZv+Yq/+BQ
-         tfm2yFCiMqTGaHreGhiLmkaFmcBl5g0se/S672ZxUdgv8WoPxGFa8qUiPpMPae6Mb8Es
-         rusg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712358490; x=1712963290;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=geCjL0QPHZMVfc8sTn7KX5Rb66T55LXppSrfSJkhbPc=;
-        b=aAkQfB/eT6P0yhVkPSeAiegN4HCJ1NvwUiLglgu4ueuRZ0T96YpxCcC6k+O/rMX2jJ
-         B49r8TV27aB5v6KynAhvpqtkvJCiJLm1dSo5oKniD5rmZGYUioKhhh2pkshTMtoA+iq6
-         GzPf5PEQeti7Vnp3cFSg3XhJ0MGvzoySFjr816QrHQlrJjDzU74zJib9/ZHeuGXm94z0
-         Ij/fgbz05q101U5L9AaterR/t32PuMUaMt2q2zhoKAqwXO45MctEsT+CrFkIOvTNhZM0
-         911zHHEyPMLhYsBZaZmrDWIx47nlE5rxDTTPVlMKEEg0Nq0p4PIdnG2XhOQulXJhc5sx
-         47Yg==
-X-Gm-Message-State: AOJu0Yy/h6g+/oDXHbbEKnrZ77R/rZ8IKimfncTkAermJldcpN0luX4h
-	OG7zNgXQUmQNeXSP6rpniRz+UvKTiPQMkCDBLH1s4UR3KH3VDuOFOi1NJU89iAA0bgqSeq0dazz
-	pV+oX7bQeU1mAAUXlzI3aD/LbafzjEsBZVdo=
-X-Google-Smtp-Source: AGHT+IHQs3dM2fY3scaqxSoeJedqK4gQ+duUxWC/HIJr4B0gvjdwGjaQzIlDN9y3gL+STEXMAO/uZRY2vBW6YRAkmsA=
-X-Received: by 2002:a5d:4007:0:b0:343:78a6:ff with SMTP id n7-20020a5d4007000000b0034378a600ffmr2193168wrp.48.1712358489745;
- Fri, 05 Apr 2024 16:08:09 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SUZ/yq4d"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7B28723C62;
+	Fri,  5 Apr 2024 19:16:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=TtO5vt+4E9srpHTX9qsL1uvgxiRvx036YxwJOd
+	v5+kc=; b=SUZ/yq4dbzJ6j5U+yrJ4qq9RYZo2r2wIjeY6MNkOF0DgSLpCvKV/40
+	888TwSOxdKhp0TPHuI2LxOTVHoW63tqXnYekY4QqzrGtqLnKB2xAT3jUejnOLAd7
+	iZPpNZjg+ufIo1OfZvdJql3GwdPOKsYN30fvUUW3a5icIDE/ZdguI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7355923C61;
+	Fri,  5 Apr 2024 19:16:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BE57123C5F;
+	Fri,  5 Apr 2024 19:15:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH] CodingGuidelines: quote assigned value with "local" and
+ "export"
+In-Reply-To: <xmqqr0fjtxei.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	05 Apr 2024 12:36:05 -0700")
+References: <cover.1712235356.git.ps@pks.im>
+	<c2c2747ff57f68ccad8b509af037e1fc4a524fa1.1712235356.git.ps@pks.im>
+	<xmqqmsq7yezc.fsf@gitster.g> <xmqqbk6nyej1.fsf_-_@gitster.g>
+	<20240405174859.GE2529133@coredump.intra.peff.net>
+	<xmqqr0fjtxei.fsf@gitster.g>
+Date: Fri, 05 Apr 2024 16:15:57 -0700
+Message-ID: <xmqq4jcftn82.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Aleks Todorov <aleks.todorov.1337@gmail.com>
-Date: Sat, 6 Apr 2024 00:07:58 +0100
-Message-ID: <CAO0eup=KqHe68OkHqYWtDgsTx0cAwg5Y5HSqK4s_BNbZhr8hVw@mail.gmail.com>
-Subject: Add Commit Summary in blame?
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 762CF298-F3A2-11EE-AD86-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Hi folks,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Would people be interested in seeing a patch that adds an option to
-see the commit message summary line in the git blame output? I imagine
-I'm not the first person to come up with this, is there a reason why
-it wasn't already implemented? The porcelain already has it, so the
-change is trivial.
+>> I think that is a good rule for "local", but I thought we did not allow
+>> "export foo=bar" at all, and required:
+>>
+>>   foo=bar
+>>   export foo
+>>
+>> If that was only because of this bug, it would be nice to loosen the
+>> rules a bit.
+>
+> That rule in Documentation/CodingGuidelines predates the discovery
+> of this bug.  I have this vague feeling that it was for the shell on
+> old Solaris, which would not matter to us anymore, but I do not
+> remember.
 
-Thanks
+Heh, I do not even see any such rule in the guidelines.  What
+enforces it is actually in t/check-non-portable-shell.pl script.  It
+came from 9968ffff (test-lint: detect 'export FOO=bar', 2013-07-08),
+which in turn comes from https://lore.kernel.org/git/201307081121.22769.tboegi@web.de/
+
+We make multiple uses of it in ci/*.sh but the environments ci/
+scripts are used in are rather sterile, so they do not quite count
+as a proof that the problematic shells no longer exist.
+
+We may instead want to add a separate rule e.g.,
+
+	/\blocal\s+[a-zA-z0-9_]*=\$/ and err q(quote "$val" in 'local var=$val');
+
+to the check script.
+
+
