@@ -1,84 +1,98 @@
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
+Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F3922EF4
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 09:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05CD134AC
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 10:06:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712395388; cv=none; b=I86pVtwCVYWvc424D3ZztCcY6hFMTI7qETDLLUJSkr84g4dJWQDQOT7CAwCafGF+4yCC6/Y1QvNMBneS1Rg9PBowqaXNinCRraTkkxPFTYYCR02AnE8rwA0u7GhYYpUwdvWiUEE2NWNpWgqsOSOLjUU6s1R9PPN6bArQn9IAtEw=
+	t=1712397998; cv=none; b=Q/16cfmDfi9H79agREb/KwpK8TFh+1Bit9PhlXlZEs6hldGhl6bjrUShGQB75Ja7ShQHGfmAJUfnHF6iUMEp36/md/TlDY9aqdRgiOpRgqGRIcrdyiKVbBvluXB1l0sJ6yrFyUpxeatcQAYN9/Pf0rnOYhHhrAUnCFydk3yNWYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712395388; c=relaxed/simple;
-	bh=HsP1l+5HISfAzuqUZeDLkCv4dPG9/ojpT7rwWRrR0Lo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WIYnSZNO7veGpu73857o+FBLR1aI7ZvMGip8jRLuumUmQ/JSJuguFZuRsXLefriAbciDJrEiuEMstT9168/wFHt4/eO3w+uG/DkhstY8/YId0WPZJUaYKMMEuVTnXhiw8FfNw+7VZF3Ldbh0tNdyyRbC9N30BVUniySa1ft3KKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4VBV7l335yz1syCY;
-	Sat,  6 Apr 2024 11:15:29 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 4VBV7j5M8Rz1qqlW;
-	Sat,  6 Apr 2024 11:15:29 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id ajxl5inBwdEg; Sat,  6 Apr 2024 11:15:28 +0200 (CEST)
-X-Auth-Info: tI/gqynf4a9dG11C29xXCuEozVMAWU//C/t7mwa/FuWaGk9CAwU5qP+R9nSGVaJ9
-Received: from tiger.home (aftr-62-216-202-57.dynamic.mnet-online.de [62.216.202.57])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	s=arc-20240116; t=1712397998; c=relaxed/simple;
+	bh=Uj4MIBI1gVSmS6vORMDTr1iV3zjZZX+7gjwfwq8KosU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NeVY3QOvGC34vuGoo7artYUv4THmatRRRXhcRtIueA8y62/xZPLQQnKIkKoO7x7wx7zxg/2M/qBesSfmKEi9JtiBXL0GB4f4rXNnEL+TsAB9RgRf+CQ5TS9lOU6X0X1HEps5UXT6jLgibCx/lKFlwmTPO7/rHi5RJ5s+61ffIYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=u/n//hmY; arc=none smtp.client-ip=185.238.129.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="u/n//hmY"
+Received: from [10.2.12.48] (unknown [10.2.12.48])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Sat,  6 Apr 2024 11:15:28 +0200 (CEST)
-Received: by tiger.home (Postfix, from userid 1000)
-	id 53C622736E7; Sat,  6 Apr 2024 11:15:28 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/6] CodingGuidelines: describe "export VAR=VAL" rule
-In-Reply-To: <CAPig+cRjqe-rgYf5UZr9KXmfSw98ZoYjPo5PKhwzRaC-svwshA@mail.gmail.com>
-	(Eric Sunshine's message of "Sat, 6 Apr 2024 01:11:29 -0400")
-References: <20240406000902.3082301-1-gitster@pobox.com>
-	<20240406000902.3082301-2-gitster@pobox.com>
-	<CAPig+cRjqe-rgYf5UZr9KXmfSw98ZoYjPo5PKhwzRaC-svwshA@mail.gmail.com>
-X-Yow: I wish I was on a Cincinnati street corner holding a clean dog!
-Date: Sat, 06 Apr 2024 11:15:28 +0200
-Message-ID: <87bk6mc0nj.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by 7of9.schinagl.nl (Postfix) with ESMTPSA id BEAE91A17625;
+	Sat,  6 Apr 2024 12:06:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1712397985; bh=Uj4MIBI1gVSmS6vORMDTr1iV3zjZZX+7gjwfwq8KosU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=u/n//hmY1Tgreyd/gbUtPcAQVAmpbE0fKBFM4bzpUCyXEqze4OqAXGkvl2zIoA/Qi
+	 3VYNrz1DURNYcpgI3SIgf8qdEozTVyL41kxn8dnm7oBasHbO/eMfURaz2b5bYNyUvC
+	 48pJIsTHH5v/6odx4N+A6K98kzpmbIAJv1pnrCm0=
+Message-ID: <b194ba7c-454b-494f-bef2-e9eac7ca87f1@schinagl.nl>
+Date: Sat, 6 Apr 2024 12:06:25 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] bisect: Introduce skip-when to automatically skip commits
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+ Stefan Haller <lists@haller-berlin.de>
+References: <20240330081026.362962-2-oliver@schinagl.nl>
+ <864b0f22-b07b-469b-8fc2-56940fd89a8b@schinagl.nl>
+ <xmqqcyr3s3gj.fsf@gitster.g>
+Content-Language: nl
+From: Olliver Schinagl <oliver@schinagl.nl>
+In-Reply-To: <xmqqcyr3s3gj.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Apr 06 2024, Eric Sunshine wrote:
-
-> On Fri, Apr 5, 2024 at 8:09 PM Junio C Hamano <gitster@pobox.com> wrote:
->> https://lore.kernel.org/git/201307081121.22769.tboegi@web.de/
->> resulted in 9968ffff (test-lint: detect 'export FOO=bar',
->> 2013-07-08) to add a rule to t/check-non-portable-shell.pl script to
->> reject
+On 06-04-2024 03:08, Junio C Hamano wrote:
+> Olliver Schinagl <oliver@schinagl.nl> writes:
+> 
+>> Hey all,
 >>
->>         export VAR=VAL
+>> I've also got my work on a branch in my repo, if that helps to look at
+>> things, https://gitlab.com/olliver/git/-/tree/skip_bisect
 >>
->> and suggest us to instead write it as "export VAR" followed by
->> "VAR=VAL".  This however was not spelled out in the CodingGuidelines
->> document.
->
-> I suspect you meant:
->
->    ... and suggest us to instead write it as "VAR=VAL" followed by
->    "export VAR".
+>> Also included is a script to be used as an example. I opted to use
+>> `git show`, which is nice because it works both on commits, but also
+>> on notes.
+>>
+>> Anyway, any thoughts on the bellow before I send the full series?
+>>
+>> Olliver
+> 
+> I would not write get_skip_when() before studying the same file to
+> see if there already is a helper to read the whole file used in the
+> vicinity (like strbuf_read_file(), perhaps).
 
-There is no difference between them.  The export command only marks the
-variable for export, independent of the current or future value of the
-variable.  The exported value is always the last assigned one.
+Fair enough. I'm a little worried about optimization vs readability. I 
+think it makes it mre clear what the code does in its current form; but 
+I'll investigate. Bisecting shouldn't be a computational often happening 
+thing, so I'm not to worried about performance. But I'm not too familiar 
+with the git code base, so I don't know either :p
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+> 
+> I do not have enough concentration to follow changes to
+> bisect_auto_next() is reasonable.  Especially I do not know why
+> "bisect-skip_when" wants to exist and what it is trying to do,
+> besides the fact that its name looks horrible ;-).
+> 
+naming things, sure. I can look into this absolutly :)
+
+But in short, bisect_auto_next was returning just after checkout It 
+seemed. So after checkout, running the script seemed sensible. But I 
+look at it as a normal git user. So you checkout, test your commit, skip 
+to the next one if applicable.
+
+
+I'll think of your two comments, and see if I can address them as you 
+regain your concentration :p
+
+But seeing that these are your main concerns, I'm more confident I'm not 
+completly on the wrong path here.
+
+Olliver
