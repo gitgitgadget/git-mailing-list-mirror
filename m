@@ -1,70 +1,88 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FF1BE6C
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 17:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55E833CF5
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 17:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712423340; cv=none; b=RrbQk0RJM2y9WDmszuFiyuVdCa2kZY3rnkwl8SXoNV07BWF46kGTsvkhIUOtWU/kBaen3PRMAR/Sg8Nl/yKjoOihp7tjl0RPr7NH/V/e4wzXH0byxLb3vM9KOrS2rhNze07+7loll5zUH2WQL6b8Q2lF4mh1mC1FxxpLO5UX9+I=
+	t=1712424910; cv=none; b=GBvD7VXNviHai8cOUwYL+d0yhBbouXY7XtAa5XsbqvbOKRPB0lanYItXxn5a3j+7fhvrk8KCaFT/a+NbzNrgL3RV8HJ26NmcLYED9cLQe9vnqmzGMsR2MI7zceEg2qr9QxTSqonay8gDMayGV6yWXw/vTajub8A6EsxBVlP/IKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712423340; c=relaxed/simple;
-	bh=MKexqY+3+CBUjF9yIV1Uy1lFHRyz9xqovLhrNbONGsk=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=CGAOwh/xB9xLqlJX+HAIR09Wu1gZiR8gE9SEZTChu4+tFMDxSpGu17cNHyfjbS2l/kAfjpowPn4h4RLFCaE31MpfNlsboFn1Mis3Qfs+ZOvEymxihsLm1o/RT06LqiBa0y6Pxs4zsHK8QxvZFumHBnolHCHmNxzLfpgxNnZ4dZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=xfLFCZN1; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="xfLFCZN1"
+	s=arc-20240116; t=1712424910; c=relaxed/simple;
+	bh=Gk7zj+pbV+/Riqyj9gdMsdisPgBxFZhI9rino/fANU4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p8ZY8VWragUdS3/7tnBqAW96Ob+6tsiBl4C+XN8+CREyeFyIhIhDCZFw5RdFdWcfg5to5HMDLjBLTQ/YuqvXcVtLjUCNEoMwDsHF9YthKDC/xhhg6vG7GHvA1Q/Qe59Ss5cvVtqQbp71PRA2nSL5L5IKI/m9tT1fd7d0V48LPMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-69935d567a0so18407396d6.1
+        for <git@vger.kernel.org>; Sat, 06 Apr 2024 10:35:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712424907; x=1713029707;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tzidn0xMsVI3EcKrBdlqtSjrC7n0U8gBZRt7gIX7IrU=;
+        b=a7+C03JoYo0RQDSfDdovErO3ydE/LKNh0DZxZSjHVdD4ml+8LuDIRRPMlohbTIHcb7
+         mj5Cpy1HPCQ1CkeP1jDBpUrlkovXCVfbgAEZJpvzLXlv3E0Ze7Zfp0ltBA+Vez5iAzcM
+         +glI/ZoLYFjWmi7SxuQmiXI2/LAoZ/Qf5VYdi2LHDuAhIbBYbXtu531FXXQhQ5xrlvOJ
+         YRauhdOvt7GVh6AlfxSiUg+hgKMhmVUSR3T4OZqPdh3SDG15/qnqJzKRJLIRBExP3778
+         ZSYKNNbjcQwQrJVJb2nPkUunF6wfKpmiaChbnrrrmR3lLpIiLv07kSt6q6JpqHNaKdS2
+         f10g==
+X-Forwarded-Encrypted: i=1; AJvYcCUp5JzbYMxTRAveueqOT6mmSQWVtt791ZU3DLuYPW67WNkZIqrZcpiiufUFAouy0RX4eQ9f6qhQ5CN7i8xxXkKnTvkO
+X-Gm-Message-State: AOJu0Ywa0yGDRDyU4lzUIH8lnE3KHbWGjSBFC8egwdbXt5hkUCKFLjSg
+	qzcREXhfJwNHqPwIQyPNIdMss+rEooFA1uEP/V1axYTZxMyLEs5rks4xj+nC2YagJMldivRqWb5
+	MsdoJhaqeuyH00z3eLXCPMHAx4S4deB+X
+X-Google-Smtp-Source: AGHT+IHA/o94AVkOMXTDd71PDFWWkNW5YXxLXbvvdCcnjNdBMGf+7CxiKBeXL7YSWWI+CYGMAHaXMImKUxdjwb6ztRc=
+X-Received: by 2002:ad4:4491:0:b0:699:4b0b:421a with SMTP id
+ m17-20020ad44491000000b006994b0b421amr2253648qvt.35.1712424907603; Sat, 06
+ Apr 2024 10:35:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1712423336;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QbkgA4fW3itToPZtxupFz3/jTSRS1X5bzxVcy3Ywzuc=;
-	b=xfLFCZN17JQMXbXl09LS/93Br6fychdVuCMyKyNYQtt7BbyIPg8EGpH1lU3JGTjEdWMMwk
-	edU06QB8M0LsaNPJuV28cjsaWha+ep8stZd+bthd3+EYchCVPBfTrtH7HZg0eo4abQ6SmC
-	2hl+liQMndun4oR/IDhrdADGYvvHpgOA5jLPh0/lgN6Lc8XLN9D2PgH3tiyEVJq12hCnxv
-	qDB+VAslFjBOwJD6d22ZvKQS95OkJhjnMhki+kdyfRiyeLnJCoWenjcoF8G87ZBhkdaiSi
-	G8krulBMM9c+uDMC1WQD/vJBuxrV+YW2edQDdGQjW8rLpy3o4KO87UyUzp/OOQ==
-Date: Sat, 06 Apr 2024 19:08:55 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, code@khaugsbakk.name
-Subject: Re: [PATCH v4] send-email: make it easy to discern the messages for
- each patch
-In-Reply-To: <xmqq5xwul8vn.fsf@gitster.g>
-References: <8a9f4927aab96f2f62e2467e59fb6150d7e931fc.1712367983.git.dsimic@manjaro.org>
- <xmqqwmpbm4lp.fsf@gitster.g> <xmqq5xwul8vn.fsf@gitster.g>
-Message-ID: <6cd48321180195e7070825dbc3f49578@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <20240406000902.3082301-1-gitster@pobox.com> <20240406000902.3082301-2-gitster@pobox.com>
+ <CAPig+cRjqe-rgYf5UZr9KXmfSw98ZoYjPo5PKhwzRaC-svwshA@mail.gmail.com> <87bk6mc0nj.fsf@linux-m68k.org>
+In-Reply-To: <87bk6mc0nj.fsf@linux-m68k.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 6 Apr 2024 13:34:55 -0400
+Message-ID: <CAPig+cQurykHFWvPY7jRKSPARMDyUhJJHH8fL6zffE6ke8b1mA@mail.gmail.com>
+Subject: Re: [PATCH 1/6] CodingGuidelines: describe "export VAR=VAL" rule
+To: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-04-06 19:05, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> The whole thing deserves to be a three-patch series, the first one
->> being a preliminarly "let's move the final newline out of the
->> translatable string" step, followed by "let's have a gap between
->> output for each patch sent out".  Perhaps another "even during
->> sending a single patch, we may want extra blank lines when use of
->> editor and other user interation is involved" patch on top.
-> 
-> Or the latter two could be done in a single patch.  I'll have to
-> re-review the thing (if I were the only reviewer of the topic) so
-> doing so would delay the completion of the topic, though.
+On Sat, Apr 6, 2024 at 5:15=E2=80=AFAM Andreas Schwab <schwab@linux-m68k.or=
+g> wrote:
+> On Apr 06 2024, Eric Sunshine wrote:
+> > On Fri, Apr 5, 2024 at 8:09=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> >> https://lore.kernel.org/git/201307081121.22769.tboegi@web.de/
+> >> resulted in 9968ffff (test-lint: detect 'export FOO=3Dbar',
+> >> 2013-07-08) to add a rule to t/check-non-portable-shell.pl script to
+> >> reject
+> >>
+> >>         export VAR=3DVAL
+> >>
+> >> and suggest us to instead write it as "export VAR" followed by
+> >> "VAR=3DVAL".  This however was not spelled out in the CodingGuidelines
+> >> document.
+> >
+> > I suspect you meant:
+> >
+> >    ... and suggest us to instead write it as "VAR=3DVAL" followed by
+> >    "export VAR".
+>
+> There is no difference between them.  The export command only marks the
+> variable for export, independent of the current or future value of the
+> variable.  The exported value is always the last assigned one.
 
-Huh, I've already separated this patch into three patches, and IMHO
-they look nice and make everything less error prone.  Would you agree
-with the three-patch approach, please?
+Yes, I know, but it is customary in this code-base to write it as:
+
+    VAR=3DVAL &&
+    export VAR
+
+not the other way around, so it makes sense for CodingGuidelines to
+illustrate it in a fashion consistent with its use in the project.
