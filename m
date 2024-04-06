@@ -1,89 +1,75 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16772C1B9
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 16:12:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476EC2137E
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 16:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712419960; cv=none; b=McRCMLtAXkwMovTUZzF+cbQ7EYF0cZswhLYO/ASJkAFi/em1UgJZcMutbo67MdYiwz5onE3d3UINoEsfcW8YgwtVjTlAidKAfnbKtQ+RFGvfQCth5X1mpYQI2CcPq2vlx5/tA1ba3SsO1+VbaH7D4Bq9lXNA2bOUgw0VxQhiqv0=
+	t=1712422528; cv=none; b=hRwxu16LEerndoMSRLde/QFXwlxrCLSTbTUfvGalAWxs6MHEgJmWU2Fb7XPfKLyQYQGJJSKE98TisLWqUFj/kRN9TuJhPMF33pEFwXDlVtYvGSDhz+q7rTuFBGlDOlqeryomnVR1MvJfaMEvanFkP+jhfSyOHHqTvJZ6b+q7nsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712419960; c=relaxed/simple;
-	bh=ejheFGyTiyt7wY63FteIinxygfFUTS5YO23joJzUChg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=nRsSYuh4aKv/eRLzPjd19iwsiEl1Ujb5cTQrVm2cUkc05kFPQZne9zbVbGHDOVLVrP3QGKAp5bh2BAIBR4zLyUm/Fkh+yr9UvkCG5YWyNU0D5RmUoq7fmheMtpXT7UiTSkxK6h4c069PgWehLkMgIN6LfH7ZQ9qUvCc5C7NzEdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=KwySwvu3; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1712422528; c=relaxed/simple;
+	bh=eBT4PGaucfY9mR8Voov9ef3LqbeDkxdhgDBe0iIJ53Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YQWEEQnu93tr2vOg/2VZvraxjGty19K2fdMk/GXStlvVeuRElhjvdx58rKIbmbwN6di7kI1wFxPbBmIuueFETyWGiM6wQsnmUQJYhm2rv6SLCeKbAYyz0KnwPtRVLIRzWeq9mN9RAxHd2n0hGpYebkk/FA8LAYa8FhT6sQhVWeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=u6+4Eppx; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="KwySwvu3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u6+4Eppx"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2336C1F81F3;
+	Sat,  6 Apr 2024 12:55:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=eBT4PGaucfY9mR8Voov9ef3LqbeDkxdhgDBe0i
+	IJ53Y=; b=u6+4EppxeL5sRS+aVUoE3afONAAQ2NtMas218rXawLCzDTDTmkP7lK
+	jwZxCzO0wBpDG6vvUSABdpA87dExQcdUD2h300DO4H/8rTqo3qEg7FcaVka0VScF
+	NGQVlsysu+VX9GCC13Eqf3Leh04FCQ8hhOTzOThUmnTzG6KPUe4T8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B8711F81F2;
+	Sat,  6 Apr 2024 12:55:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E2781F81F1;
+	Sat,  6 Apr 2024 12:55:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2024, #03; Fri, 5)
+In-Reply-To: <de15fc1ca9b5abe694196f4d468d4226@manjaro.org> (Dragan Simic's
+	message of "Sat, 06 Apr 2024 10:37:09 +0200")
+References: <xmqqy19rtygr.fsf@gitster.g>
+	<36f7e1b7122b0bdeb2e8b70f69abd331@manjaro.org>
+	<xmqqr0fjnkul.fsf@gitster.g>
+	<de15fc1ca9b5abe694196f4d468d4226@manjaro.org>
+Date: Sat, 06 Apr 2024 09:55:24 -0700
+Message-ID: <xmqqmsq6l9c3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1712419954;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=70s9F1mB41hzKPe9md+cta2oo4dL9Pnbcz5vOfvMdNQ=;
-	b=KwySwvu3Gsn1aMVqhAQxDluhmopqRZ+Od7FokZI+SPaKZza/bNiIennBolQXnFdN7X4YFa
-	GoL7eTMyx4KU4nbLWKdFYpENnuXYPnQ3a/F49xZOknNVV0ZXGfY37SXEY0WSV2Q4VHEfmo
-	7fAn4Lf8vDQ9wRPBcTMcxWcYKYE5pdEr7iY+EeXTSBWwlVakgQ1d68KzQAJVwPzZgC1dhi
-	NjAbZNCQi9eU2zVOia0rksY8iL4PozZEmU8wsWi4Sair6rnHRkW1ytzlhpJcEO/3+SBvw3
-	ilVogpt/w04oTZyTxX8Prq2Icvt8SLeTrk5Xf+wYk3L0JOXeFd2JnESY32Pddw==
-Date: Sat, 06 Apr 2024 18:12:34 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: prpr 19xx <prpr19xx@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Warning message in remote.c when compiling
-In-Reply-To: <CAA1Aqdvj6Eyp9jGaAxTf8p0Eh_rCPydOpin3D5QYHy8sqOoOsw@mail.gmail.com>
-References: <CAA1Aqdvj6Eyp9jGaAxTf8p0Eh_rCPydOpin3D5QYHy8sqOoOsw@mail.gmail.com>
-Message-ID: <7f0da057773d39add4ede71667e9ff70@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 76E6F1F4-F436-11EE-AB0E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Hello,
+Dragan Simic <dsimic@manjaro.org> writes:
 
-On 2024-04-06 16:21, prpr 19xx wrote:
-> I get this warning message when compiling remote.c:
-> 
-> ...
->     CC remote.o
-> remote.c:596: warning: 'remotes_remote_get' declared inline after being 
-> called
-> remote.c:596: warning: previous declaration of 'remotes_remote_get' was 
-> here
->     CC replace-object.o
-> ...
+> Ah, sorry, I wasn't precise enough, please let me explain.  When
+> I wrote "prefix", I had its use by humans in mind, e.g. for searching
+> the "what's cooking" emails by hand, to see the statuses of one's
+> patches.  I mean, that's what I do -- by searching for "ds/", I can
+> easily find the statuses of my patches in "what's cooking" emails.
+> Does that make sense?
 
-Could you, please, provide more details about your environment,
-i.e. the operating system and compiler?
-
-> This is from the "master" branch, but it's the same on "next". It's
-> easily fixed with this patch:
-> 
-> diff --git a/remote.c b/remote.c
-> index 2b650b8..347f504 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -592,7 +592,7 @@ const char *pushremote_for_branch(struct branch
-> *branch, int *explicit)
->                                              branch, explicit);
->  }
-> 
-> -static struct remote *remotes_remote_get(struct remote_state 
-> *remote_state,
-> +static inline struct remote *remotes_remote_get(struct remote_state
-> *remote_state,
->                                          const char *name);
-> 
->  const char *remote_ref_for_branch(struct branch *branch, int for_push)
-> 
-> Thanks.
+Yes, and the fan-out reduces the search space by a lot, but like the
+birthday paradox, given sufficiently large number of people, the
+chances of two people falling into the same shard increases.  It of
+course does not help that the first and the last capital letters in
+people's names are not evenly distributed ;-).
