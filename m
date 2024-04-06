@@ -1,124 +1,92 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A048F374EA
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 14:04:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7252E64C
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 14:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712412282; cv=none; b=if0W2NjnBBiPHnPaV3ibQ/DI53Up2Pf1qjEhGg5mMxun4TvK64gRsAgh9nj4WJVWpo7x0EEjvQIzGp+FWuYe+9VXnDpBuT3r6IciHJlE6yReXB4wng/Rl0lLOJvzyxeLDKw/xkg4+VRGrvG6DvrMge58rJr+aMBg5MUU0shQ4JU=
+	t=1712413329; cv=none; b=VgVxRd86o5dQ2A4cdBlRwFi0HDz7OdAazHeEq4T/uxl3HgYSfNa+XN3iZkJ+qAFDNUZSoTkHSnScjlTnuXBYrNO2o0hPMcCzBY9JKAuwvx1KWmYUpJ4VF+H9soiRa/JpJx8sTsLgZknVI1RBMG0s99Y+RZE8M76epYszZd2jI+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712412282; c=relaxed/simple;
-	bh=DCh1yl8755Bk2NLtPMrP+AaQhx4xokmEGPUoadAU2+4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PF0Xr9sjrVlMUiSWux0C9eCvVy6BKIC0ixAsMTsJstgrfYRG3sfYJ3OlFi0biia/c2xFCdP1LtjKudGaeblwUmQ6We0l8iHt3QGPxzag/xz2OLirgozpsIkcn5OWAZWi0rsn1PkGIrwTRsyjrSWyNG5QdRdB+QnZ6LAJGR9hzXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uglah68Q; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1712413329; c=relaxed/simple;
+	bh=aGXoev1vs/c1kNIO8+fZfeq8C7BP9EqiF+MzJdScaMg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VgAO0c6YET8gMqEqRBpEW+pFxMiuJZRy2OkbqCOM6ZbUEPOmiv+ouizq9tn3GhR1/K5FfFPmtCD0gnEPDiG3dHLto6K77NZwxkjsTwC1kc9X+9lxw1Yq+SYDCHIVKkU3pBthjD5/Cu2m5UFO+4a8gLo2jQbPmWlJA/WILv9T8gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kHlEonfX; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uglah68Q"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4163de6d2afso2199505e9.0
-        for <git@vger.kernel.org>; Sat, 06 Apr 2024 07:04:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHlEonfX"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56e2e09fc27so3047905a12.0
+        for <git@vger.kernel.org>; Sat, 06 Apr 2024 07:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712412279; x=1713017079; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=gp/AtswJpFQYJmq2bKc21Z5YUfiLLsMgSuxv0seE+Os=;
-        b=Uglah68QMGxX8z39bn5nXeuCfMtmS1wRK22xCNXXyzOrHK3Q9f6XBw29uFLGAHzcq3
-         JHINT4Hvz/oON67o6nrXNBtGhRg3LPZ+10h+wrUDqd9mvvZGgx5AlGu8Hf2fsLYGeyjp
-         O5iBs0dugk01exyCvxw6JbU4cm3OL0IZ3/Ly2zeWE0NEWEvvcS3aHk0S6hnXfUSvfZH/
-         VHhpXsj1txM6GrBGmcbexFlPInsOhtlJPw3f8/1eQtF37Lf+BleuB6RstRYXCFDHWlam
-         1ojLob1BxbMD/HdHayO/A3TiC+CQjJqP6KiUnYZD712LhwvYvcO1k9bnJ0LLHdXlkNfz
-         wOmg==
+        d=gmail.com; s=20230601; t=1712413326; x=1713018126; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dMt+vFkxPGBlAO+ngsiuItSMCTEXeadDp+uzTBeTWmY=;
+        b=kHlEonfXkhS6Quefd3acvZDplMZMsg3ogWuaNq5CMmClTOTn2fePyAUjstb5MgjYL/
+         aNfcm+gG3pIydVS84C4hDVGD/BRuO6pyjl2wBqyVC8/YhBIZGcmqUmGq9rajT3Yza/5d
+         s2xBn5olDhgvtPQoxbiAd3pgNl8Q95w6dpAHQURKmrDS9mC0VxF9Ryr6KvqzKAUAvXEU
+         tUqXVDYjhcvBl6AyBTiPp5nAYJdPISKpCuF6hFSzP3COxWvhp0EpD7OdyL4uRiRKySOt
+         mjInJ68mDhqwKgyJlEfyCIPEOV86PPXQbDsBc2QmLHe+Hb5TIK3lZRp7XdQUt2q/vM5U
+         So4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712412279; x=1713017079;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gp/AtswJpFQYJmq2bKc21Z5YUfiLLsMgSuxv0seE+Os=;
-        b=WsjHmRTr8FAcy9U97B9qoaTwxjfAInwgUd1O7tvGrDBoL9Tqo2jQvJ/BMCFQtZn6uE
-         yePpsABItmuW9OFUhP9Q1rldm1Jfy1Jxn15un503jTCmLJYQDU3jGRM997z0lEtPn6kQ
-         0MOkWiCjmUmU4LqhppO9+arVZFNjnpwtYGE9Be6ml/nWwprISlocjlyF8gILPpj+Mr57
-         XiOTzoRvS2MnJ64ghmM6Tztyvh9QwE7kRVTEr2Qn9EOX+/AgoLxfJuH2YubaL5EDC3uv
-         N9yE+qdvR+ZSpA+j5KCfTrhil8eZ+WsKfGSz9iQIIqRRQVgXOE3++4EZfz0Tt3ctAxqm
-         LaXA==
-X-Forwarded-Encrypted: i=1; AJvYcCVnD+P0IHyrvSTnIF3PNS8B0eR9OTuWUNl1v3Q1laBS1/Hz55WpguYSeRhafVjhpxncTyRj1G3FFGs/36YGlJkgoHEq
-X-Gm-Message-State: AOJu0Yz8Fr7ZKbJbicHZMfzs4ZNhcvzuJaxmLlwFB2VWqFRR+RGVwaqY
-	RagKJws1Hh/o9W+qWJNYrolJcDGILM8/Rj58fcwD9h+r6PrO1FUJjy5rAdmN
-X-Google-Smtp-Source: AGHT+IGA77dME+tt9UeIB3P9+FDlzUilPRmGq28j+6De0GPVMxwUaT9hH0WLLD3gXfp9oI/ua2jJiQ==
-X-Received: by 2002:a05:600c:358f:b0:415:4853:f722 with SMTP id p15-20020a05600c358f00b004154853f722mr3309909wmq.10.1712412278746;
-        Sat, 06 Apr 2024 07:04:38 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id p10-20020a05600c468a00b00415f496b9b7sm7543734wmo.39.2024.04.06.07.04.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Apr 2024 07:04:38 -0700 (PDT)
-Message-ID: <c93817ba-5945-4ec0-9775-5621481b972c@gmail.com>
-Date: Sat, 6 Apr 2024 15:04:37 +0100
+        d=1e100.net; s=20230601; t=1712413326; x=1713018126;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dMt+vFkxPGBlAO+ngsiuItSMCTEXeadDp+uzTBeTWmY=;
+        b=vGIZCVoyjZPQnCu+SjaXSu7KMRuBl9lLFqxxg7qy0G+zgVxJTqWGkPj/oIq/i2drOc
+         p8TOjK+xX9uA6Dm7RzqSAgZTFAzUvTW1j/fqleZfAuJ7G1G1b+gh3mcD5wwYgG1eD+RO
+         Jy+SOTTmI45UNyzOHFXpTvFDJPpmbht/jMZYiakt86N85SdSNeAgnjoe6c3+WVglfebK
+         HEv4fhM1dSTognd2LQsFG6I9UJ9SLdl4Wi3sXKg+qU8BjglYuqJDSHtMLJ9x9kCO8k05
+         uQqwKTon9qHNU/y0pKsTf/9z3ffFouUYEZvBVDSGbsH4YSu6D77+GaFFjD1GYZRhz7N/
+         kj9A==
+X-Gm-Message-State: AOJu0YzVJpTH9g1yIJjzoB2EQACVGHXyvb6NhVLs++4rz0zPn13bMCWJ
+	JYJFpVoK4EAVCVvPsgS6fn84X5fK7Ermz8g8TwiC7n+f1GGX7uek05RdHOnNAcj0Qse3uXiN9I1
+	saA/mlzT4tT7c5Nu8KH8eZ638XVkRbywBBbs=
+X-Google-Smtp-Source: AGHT+IGbWi5J22skQkLybUlVHg17iRJn4dWD73G/1Bm3Stk83No9/KRzgzneKXVZVhybjU5bKn+aQyeuEQgDkgSJk3g=
+X-Received: by 2002:a50:9f4e:0:b0:56e:2e77:169e with SMTP id
+ b72-20020a509f4e000000b0056e2e77169emr3594264edf.20.1712413326041; Sat, 06
+ Apr 2024 07:22:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] feat(log): add option to search for header or body to
- `git log`
-To: Max Coplan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Max Coplan <mchcopl@gmail.com>
-References: <pull.1710.git.1712353687464.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.1710.git.1712353687464.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: prpr 19xx <prpr19xx@gmail.com>
+Date: Sat, 6 Apr 2024 15:21:55 +0100
+Message-ID: <CAA1Aqdvj6Eyp9jGaAxTf8p0Eh_rCPydOpin3D5QYHy8sqOoOsw@mail.gmail.com>
+Subject: Warning message in remote.c when compiling
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Max
+Hi,
 
-On 05/04/2024 22:48, Max Coplan via GitGitGadget wrote:
-> From: =?UTF-8?q?Max=20=F0=9F=91=A8=F0=9F=8F=BD=E2=80=8D=F0=9F=92=BB=20Copl?=
->   =?UTF-8?q?an?= <mchcopl@gmail.com>
-> 
-> Note to reviewer: I hate the name `--header-or`!  Please help me come up
-> with a better name.
-> 
-> Summary:
-> This change adds a new option to `git log` that allows users to search
-> for commits that match either the author or the commit message. This is
-> useful for finding commits that were either authored or co-authored by a
-> specific person.
+I get this warning message when compiling remote.c:
 
-I think that having a way to find all the commits that are authored by, 
-or have a specific trailer naming someone is a good idea. I'm not sure 
-about combining "--author" with "--grep" to do it though. Perhaps we 
-could design a new option (tentatively called "--indent") that allows 
-the user to specify a name and which trailers and commit headers (author 
-and/or committer) to match.
+...
+    CC remote.o
+remote.c:596: warning: 'remotes_remote_get' declared inline after being called
+remote.c:596: warning: previous declaration of 'remotes_remote_get' was here
+    CC replace-object.o
+...
 
-A couple of house keeping notes. We do not use the "feat(...)" style of 
-commit messages in this project. The subject line should just start with 
-"log: " the rest of the subject looks fine. I think everything under the 
-"Summary:" line above does a good job of explaining why the change is 
-useful which is great. We tend to avoid emoji's in peoples names as well.
+This is from the "master" branch, but it's the same on "next". It's
+easily fixed with this patch:
 
- > [...]
-> +test_expect_success 'log --grep --author --header-or uses union' '
-> +	# grep matches only third and fourth
-> +	# author matches only initial and third
+diff --git a/remote.c b/remote.c
+index 2b650b8..347f504 100644
+--- a/remote.c
++++ b/remote.c
+@@ -592,7 +592,7 @@ const char *pushremote_for_branch(struct branch
+*branch, int *explicit)
+                                             branch, explicit);
+ }
 
-I'm a bit confused by this comment as we seem to only expect "third" and 
-"fourth" below - what happened to "initial"?
+-static struct remote *remotes_remote_get(struct remote_state *remote_state,
++static inline struct remote *remotes_remote_get(struct remote_state
+*remote_state,
+                                         const char *name);
 
-> +	git log --author="A U Thor" --grep=r --header-or --format=%s >actual &&
-> +	{
-> +	    echo fourth && echo third
-> +	} >expect &&
+ const char *remote_ref_for_branch(struct branch *branch, int for_push)
 
-We have a test helper to help with this
-
-     test_write_lines fourth third >expect
-
-Best Wishes
-
-Phillip
+Thanks.
