@@ -1,90 +1,75 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADDAC8E9
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 01:29:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA4212B89
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 01:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712367001; cv=none; b=QkagzY9dEviOYQLrM/UeF/HLHtnGA5txGQIW6ATrTcrHrfokEXO6zzZkf8YXIXMtqctdqNzFyUHbPwGz3Op/7kjWDo3rTpiLrCDcL5WB71HYOcUtzzWlQyNJy+F0ZzpWMpg62NnwHwRVVmKLTj/8HIQz+hxb/lvE4ZDQX4rUXVM=
+	t=1712367012; cv=none; b=Qnew4BR7H8JkgXyZ3gzIRnENnVZUxhRRDtS7ovUwuQXFMlT2HUt8auEJ1geF8GFtxvqGBm9QV/IIxjhzKU154XAa/RoCMeC73/eae2zwZeehF/DkVVwRRvgJweMXWVYE2kfnB5hXnALx5h4YCDe64ol2hyh4bpKVYIQQvHoFd8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712367001; c=relaxed/simple;
-	bh=A/NO+ILHtxiJfKoGjg200z5SNUQn64zuVWniSjtnJXU=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yjehj9GOhLc+T5CyQ/3NLfq81HVa6Kh9NRDYvNzjsKszWRz4yHoqjkGLmuwEkItEqjFsxwO1ufx9k6V94ftMLBtcnSbAJ81xso+h4eiKBjHFxNkQSPRx+Essgx8Zq2HDXcVf+/0HTVGKvqbQZAVEriAug4PSbgXIeFFTPhKl8Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4361TmU73141758
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 6 Apr 2024 01:29:48 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <20240406000902.3082301-1-gitster@pobox.com> <20240406000902.3082301-3-gitster@pobox.com>
-In-Reply-To: <20240406000902.3082301-3-gitster@pobox.com>
-Subject: RE: [PATCH 2/6] CodingGuidelines: quote assigned value in 'local var=$val'
-Date: Fri, 5 Apr 2024 21:29:44 -0400
-Organization: Nexbridge Inc.
-Message-ID: <02c801da87c1$eac025f0$c04071d0$@nexbridge.com>
+	s=arc-20240116; t=1712367012; c=relaxed/simple;
+	bh=kZHvLfYNvmS2XjWcEzmM7B1IjJBIokxG3iQkhyCjiAs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q9NPYqFL6/UMiTU3BaJLLOf0CPP3vCDuF6MO5lNgKeq7rjAoqeZQvOTMDWP2KdRUqTaWhxYy+YxX+CAlSwVLbl66moTAOJ/ugP2c4q7Ha6lqa3iE7HTmr5zTej+FLBvy26tUMLE+yAVFbM7xIs0VDxzdl1ean2NALMjSAw9qjT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nGGGbrky; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nGGGbrky"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97FF41DBB58;
+	Fri,  5 Apr 2024 21:30:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=kZHvLfYNvmS2XjWcEzmM7B1IjJBIokxG3iQkhy
+	CjiAs=; b=nGGGbrkyAgND80iFhwQSF7xOukmkgCe75l0C0/ky1LUXZWak9rTs7i
+	lNC/Y8QTXF02uyY/SGOu0sZOYXFgkUyXTTJaXX2XgsLSqyRVLBO0jw43fMuUYJ8c
+	eSFCyMNEqaSN5uTZ23jEVo5eU8kqz+ASbxOS42edz+SRFWD7xHpPs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DED621DBB56;
+	Fri,  5 Apr 2024 21:30:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 845511DBB53;
+	Fri,  5 Apr 2024 21:30:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  code@khaugsbakk.name
+Subject: Re: [PATCH v3] send-email: make it easy to discern the messages for
+ each patch
+In-Reply-To: <235fa26a0803f7a8868fe908e4689bda@manjaro.org> (Dragan Simic's
+	message of "Sat, 06 Apr 2024 03:17:56 +0200")
+References: <e3212c0a4ad331685c68c13afcdbced20982ab32.1712364420.git.dsimic@manjaro.org>
+	<xmqq8r1rs39g.fsf@gitster.g>
+	<235fa26a0803f7a8868fe908e4689bda@manjaro.org>
+Date: Fri, 05 Apr 2024 18:30:05 -0700
+Message-ID: <xmqqttkfqnvm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIcRoOxtIvZzKcRwpuxodxZI2FCSwIN7BUfsMaHFsA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 33BF6B62-F3B5-11EE-8BB6-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Friday, April 5, 2024 8:09 PM, Junio C Hamano wrote:
->Dash bug https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097
->lets the shell erroneously perform field splitting on the expansion of a
-command
->substitution during declaration of a local or an extern variable.
->
->The explanation was stolen from ebee5580 (parallel-checkout: avoid dash
-local bug
->in tests, 2021-06-06).
->
->Signed-off-by: Junio C Hamano <gitster@pobox.com>
->---
-> Documentation/CodingGuidelines | 14 ++++++++++++++
-> 1 file changed, 14 insertions(+)
->
->diff --git a/Documentation/CodingGuidelines
-b/Documentation/CodingGuidelines
->index 0a39205c48..1cb77a871b 100644
->--- a/Documentation/CodingGuidelines
->+++ b/Documentation/CodingGuidelines
->@@ -194,6 +194,20 @@ For shell scripts specifically (not exhaustive):
->    have changed since then.  We'd need to re-evaluate this rule,
->    together with the rule in t/check-non-portable-shell.pl script.
->
->+ - Some versions of dash have broken variable assignment when prefixed
->+   with "local", "export", and "readonly", in that the value to be
->+   assigned goes through field splitting at $IFS unless quoted.
->+
->+   DO NOT write:
->+
->+     local variable=$value           ;# wrong
->+     local variable=$(command args)  ;# wrong
->+
->+   and instead write:
->+
->+     local variable="$value"
->+     local variable="$(command args)"
->+
->  - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
->    "\xc2\xa2") in printf format strings, since hexadecimal escape
->    sequences are not portable.
+Dragan Simic <dsimic@manjaro.org> writes:
 
-I can confirm, at least for the set of platforms I work on, that printf with
-hex values is definitely not portable.
---Randall
+> According to my research, the "->ornaments(0)" call should work in
+> all environments as expected.  It's also officially documented. [1]
+>
+> [1] https://perldoc.perl.org/Term::ReadLine#ornaments
+
+Go back to the DESCRIPTION section and realize that it is a
+front-end for different implementations.  The functions are listed
+in separate sections, the first section being "Minimal set of
+supported functions", the other one being "Additional" that may or
+may not be available/effective for everybody.  Which side does
+ornaments fall in that page?
 
