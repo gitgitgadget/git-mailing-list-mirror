@@ -1,68 +1,100 @@
-Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8653032A
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 20:28:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C1141C67
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 20:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712435310; cv=none; b=t8kM77VtlQTwaVgBlXt8qzEV8tcoHWwGjrlmGsdgGam7RXgeVgIh0NREDC56qCcImqgQc0MUbcHx84D3H0mslrUw8RSyiAKS7A4kCYGFMmulymtjMWS5iG1NzlFN178R1Ey6yla6EuRojIvu1TahXz8865GzvFJ7H1iuDG4Pz8w=
+	t=1712435890; cv=none; b=ifU8hm0e3l311A44QMl1+2J1U7tftR6tSIqdAYmZ9bzdZfm2h8OoWL8rJiz5nM/U2sHbP4x33tL/PgX4KbQeBmn/c02k3WCJ+jPxw5Q8QTIxqnxtA18+f4NK/yyu5QpX6Qqxb/NaEen1TELRD88h4I1A7DjUFlJIoHe+6h81gnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712435310; c=relaxed/simple;
-	bh=0ZSKvC89XMPJ18k+ijJbYkyidtl4YZFnuGFXc+Prk1U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T1zJB/h/neAiVWC5023epjUlITgjJBJrHfwp23jxIEqpspltisw9hYYUuJcx/YzvXCwhC6Z8gN69QIN9uDnrQhw9pow6LOWMHm5TB1SpVZF+Tdi4Eo0MT2Z3pbD19pc6yvt5VEGk9JaFS4ak3QGmcVDwAbv9KV29sb5ZDl0eJO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=GoGTXQ4N; arc=none smtp.client-ip=46.232.251.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
+	s=arc-20240116; t=1712435890; c=relaxed/simple;
+	bh=P7sq7xrb1Jw67hi8jtjDAB9PfCH4tv45f4KafnTS3xU=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=gKycB2zzK4RyhEvHG/B5zHzRTJ9yFDcNqQ8Lm8qD+QNavSGixqY6o/luxH5z7NYcY/zeos/64fua+95K7AsfowRbdyG9bgFUsVBp+wVcr0rCOThNr01G+Rzhxjd4rP4urXfSb6gF1orSvKm95L5DZLNm7P0HFJ1hjG4llFfk8Ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=CVDeTEA+; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="GoGTXQ4N"
-Received: from localhost (unknown [IPv6:2a01:41e1:2fb4:7500:559e:51ce:db99:6a71])
-	by smtp.roethke.info (Postfix) with ESMTPA id 7019A1E0004A;
-	Sat,  6 Apr 2024 20:21:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
-	s=20200807; t=1712434892;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0ZSKvC89XMPJ18k+ijJbYkyidtl4YZFnuGFXc+Prk1U=;
-	b=GoGTXQ4NCnpqWNGl0vcUAIQ1pfvMh+6RaBfRzzv8OJXNvllzr+D/SfvmixhnId1r1LZxdW
-	spDy4sm/dl2k3C18m2dDU373MROYgrguWzqVAPEYZldapRyH7VHYzz++YDYE5WJ2aCL6Dm
-	IM+v6KUvuoZlsJqKz5BrhxpnBHYck9F8AXS62+cm7vM1ilhxzo42x3+6NlufmZMizmgb+P
-	YyXRA6itiAH9UvXUMOkpDBs3N8q4uRvHgOvNrGDB82ZqVl+59IwQkB8wYLI061I/Gmieow
-	c8BjjBNswKdTkuYp6a03ua+zxyDW68I6/5PLmrxTo78StN2ZDGALGtReTSaQbsB/uKFb7Q
-	d38nKXIr9nxwYBnFAr3CCd6J1FgWfQd2MepMMtedXAaW2X/K8MjIHRaqF7uf0DrmjjlTqa
-	Rzy3qZ8NMJN6PX/iyZuqLRNF4hpaNz8g440UKHJ6jt4aGZtJ4hq99mEHfI696EDUB7ccey
-	zhjQKAzZGpLJ9A2nGgP+xNnOxTqE/pqBRmUntkkqs2V9X55pfp9KhFvpySyFMKY/pVKeQ3
-	PaideZGTTgKNpg/JHJgjpfYSwFTBqLmIpNv/xvKDDPSlc+gRQwsivTDy50EkSALYZHc/dE
-	qG/OCKcqCCqVuWzwZ0PHYm+3pWCifyEIkyBjBJCh9qLr64nDt2j8U=
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
-Date: Sat, 6 Apr 2024 22:21:29 +0200
-From: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Wolfgang Rohdewald <wolfgang@rohdewald.de>, git@vger.kernel.org
-Subject: Re: segfault with git rebase --abort
-Message-ID: <ZhGuyeJp28heaITM@roethke.info>
-References: <88a694de4a7f767613475ef1d19292a69eaccb07.camel@rohdewald.de>
- <xmqqle67pa7a.fsf@gitster.g>
- <7df26e3813ef76ee90c1fb02847bbb4b9bad630d.camel@rohdewald.de>
- <xmqqfrwehweg.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="CVDeTEA+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1712435876; x=1713040676; i=l.s.r@web.de;
+	bh=B3RvkvPkbjo087rv7GZ9syTaRx5CoKFVvEr7gD4hgV4=;
+	h=X-UI-Sender-Class:Date:To:From:Subject:Cc;
+	b=CVDeTEA+nF2rRzNgD5Qrb/MnWmpi8E4Ttx76FPaVkzGKDtK6AkPLuiTCxyvktYzK
+	 yG/EjZjf/STuuXsDnV9V8JxBcT46/dKcMSwZm+IM868rXE7/RaHEqQifEieq+GlZQ
+	 ukLGLwIY4Aw49MEJO7tbtNkUcl8k6FRZahaWlSjHTTOUmcKYz+vNtDfREOgUwwKY8
+	 ZAe0kRcIZVJekmtMT64b79P06fGlkcOahazRufGEizIwB/jXtuJSNaKXScK6nHX48
+	 MwY9r9ZFtt81LekydzUcBpepS1iRhTRtIXcVrOilGOkLCF1hwxWCmjUIv1mKlJbTs
+	 SL1WQRgxnGZMSIFAGw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.147.225]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MaHSp-1sG3Gb0o2n-00VyId; Sat, 06
+ Apr 2024 22:37:56 +0200
+Message-ID: <963961ee-0f1d-42b8-8dda-5838e7a2ed94@web.de>
+Date: Sat, 6 Apr 2024 22:37:55 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfrwehweg.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] reftable: use xmalloc() and xrealloc()
+Cc: Han-Wen Nienhuys <hanwen@google.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:de/a0te3nUHNHKZzslhK7eXtJ5RYeMk7M8dGlle7fmL8sGLzT6L
+ WH5hblCmw3oq02DtWDmitd6YYHlsaxIsnZsQ0leqPAXOlkAoyq9+4n9yuD3d0FwtV4MskTh
+ El70EHTjrkgl+afWtm0kqjSGtIZabedLq/jbp7Ww2Ll/MYfIVDpMCCectoYcYnVQuSd7DHG
+ wau//JFEDmb6R4Dd/jkQg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:uBcnCUk4oQI=;iSKRHPmpEi0u3eV5nqIsMo6ZLoH
+ lFv4fFER6lXl3wvmyhoTe5zgfX75UpFMtwIbTjI/tuss4NnbUu7SujU/jNj7KXLSmx0CzAGQd
+ TxdI+c6ohnhzcUwkonB8sIZss2VN3QHZ4vl+hmLFiJBNe2tkTkYhpwy+7LLtuQuAWAQOItv4D
+ R1jOFJ5E/4oYXvX1eq5kIwLhROzKri7n9AKJz2S2MYDxjgWRnKS6wC2x9Slo1EqfbYXYnYY87
+ wlHCg04pjtM6xkYvVSSws76ZHP9tE7wQHddb6QfqGFONg+z7iodHcwcxgXUfCOntU9d0uJSq5
+ T20r/wqS2NQFndR+NCn15a3MqyYuVcWv/i6XcBRVx/jrWByejC1WkvlfZWtsS4Q5rjuo53rlw
+ vLJuW5vtCUtxysjRkJfU04pxvqwsfdtKZLCFEMJKprvqY0/GRc4NwQe4avGw50XDYZAgF5OHa
+ lGf0ZjXk8GrSnGphnlEASC8VBC42BsLrrO3Rpos9SEcHT6zGGLUiGSLssTsaIIhEAcW4PYD48
+ cZaFhl9gclbVwVam/hjOpp2bjPj+rT1romf0noBMNeTrkObt1nh1NUUbWbBDsAU5Wrk+NtyHL
+ 3vRFVvQSlNMnBL58aHFWQcdrzH1xY+1XR6Ku+cn7HkOWJgfIzsDXYT4MgmxzQbqE8xuKbZPip
+ 1fq67d2Q25tT1/bKbyDFZMsqSaRS2pLuCNR3QNpsVNo61OsjPdBk2FoTC1bfLbg0L7JMG9XmG
+ 4W6HF/4h3OoT9Zr/IiVcOpYejtus+hTl+eG8cbk9r8kYek2wjqoFqstV60TsSP9dxSnJormd7
+ Vb6gPFOz9aGuwEVoUiZSdtkbMpei/YYqo6+MlBFn2C0qk=
 
-On 2024-03-25 13:46:47, Junio C Hamano wrote:
-> Wolfgang Rohdewald <wolfgang@rohdewald.de> writes:
-> I think I forgot to remove one line of "<<<<<<< HEAD" before doing the first git add.
+malloc(3) and realloc(3) can fail and return NULL.  None of the reftable
+code checks for that possibility and would happily dereference NULL
+pointers.  Use xmalloc() and xrealloc() instead like in the rest of Git
+to report allocation errors and exit cleanly, and to also honor the
+environment variable GIT_ALLOC_LIMIT.
 
-This was the missing piece in my reproduction attempts!
-When you leave that line in and have another conflict in the same file
-later in the rebase, rerere falls on its nose.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ reftable/publicbasics.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I will do some more poking and update my patch accordingly.
+diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
+index 44b84a125e..f33a65df34 100644
+=2D-- a/reftable/publicbasics.c
++++ b/reftable/publicbasics.c
+@@ -19,14 +19,14 @@ void *reftable_malloc(size_t sz)
+ {
+ 	if (reftable_malloc_ptr)
+ 		return (*reftable_malloc_ptr)(sz);
+-	return malloc(sz);
++	return xmalloc(sz);
+ }
+
+ void *reftable_realloc(void *p, size_t sz)
+ {
+ 	if (reftable_realloc_ptr)
+ 		return (*reftable_realloc_ptr)(p, sz);
+-	return realloc(p, sz);
++	return xrealloc(p, sz);
+ }
+
+ void reftable_free(void *p)
+=2D-
+2.44.0
