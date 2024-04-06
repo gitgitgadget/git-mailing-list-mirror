@@ -1,72 +1,86 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EAD2137E
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 17:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01E81CAAC
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 17:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712422924; cv=none; b=r2DCxuyz/JLeBQLJcZx8hWcBE/mhK0AYqQS8XW7udtltkIq8UBD9/Df0r2NyzPEPydjrq5Vz4CYuw6stTEiVYQsOYnlZtNYLa9g++Sx8fn+3Qry5B5LHrxpQMLc7PITu4j+gx50qnN0WtYDPnBPlMvCcZ1YMF5mbsPiEaQdMy1w=
+	t=1712423027; cv=none; b=E7R1UF8hTyqYkMqQBbN1Kqd2P7kgJWgu4dhf1VvlNtq3NngR3mqDhwlgCPPq+zsKqwQQG+iqExZbkdkBzSiobllzrlg6h5GXW9Qli0cA6JAZm8go7yNQoBO9DOxpa8uw2/66cSJYHIQZiK6EYF0rwl1XJhWEA69AbR3DODuNUSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712422924; c=relaxed/simple;
-	bh=9HZoUigajkVZvLiH9QryZ4IZyMmOUCwVaijhr8zNiuw=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=ax+H1DVufIMoksKtn0wWfkCqYT4dCM5SO1kDwgPDkw2By6qsCc92WLGk0iFqYV0/mMdX9mTB6bAys5GYt7GTi/Pr1Fdy8kCHt5Ak/YdBijsAcMeybxHQHktgYdMpRKWhUc1I0+eFWUCcDkRY/uELFC/LbsUlWHNMBhBhScCxz3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=TgLdEa6E; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1712423027; c=relaxed/simple;
+	bh=uDNL1Evm+gcizgAytVImERRHYQLjS1KlDqcuhISQOHA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rnrOYncXAa4fyxm7b5Otc8jCSX9yTdqyUJhvfz4gJ/MRsmI8IYa2+ttbMdzj3ti0xcTJCk36T9ffDsQiQb5eHSOhtrllgiBJoVT2Xxc6YgHeS5k/liWC1TPqYqaM6H3l7YMIjub2WRjpYaMaRUfhmDpPiVb4Cuk0vbaMNZK5vts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=R0I+M3zf; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="TgLdEa6E"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R0I+M3zf"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82F091F8278;
+	Sat,  6 Apr 2024 13:03:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=uDNL1Evm+gcizgAytVImERRHYQLjS1KlDqcuhI
+	SQOHA=; b=R0I+M3zflyaBce+gQfrOUm/UvlolmN9ahQOeh438VUCQBxUH9AduhZ
+	8nDxYl7t1jV0ew5QuoocofiUDwD81XHO+A37cWGmHUEPcty4sQ8hlRalAW8bfQhH
+	y5DRSDKaQOVzmq7r/8EeCTCu54AP8pxhMFzYWkxz67giPT9GkkLa0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7ADA41F8277;
+	Sat,  6 Apr 2024 13:03:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D97951F8276;
+	Sat,  6 Apr 2024 13:03:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/6] CodingGuidelines: describe "export VAR=VAL" rule
+In-Reply-To: <87bk6mc0nj.fsf@linux-m68k.org> (Andreas Schwab's message of
+	"Sat, 06 Apr 2024 11:15:28 +0200")
+References: <20240406000902.3082301-1-gitster@pobox.com>
+	<20240406000902.3082301-2-gitster@pobox.com>
+	<CAPig+cRjqe-rgYf5UZr9KXmfSw98ZoYjPo5PKhwzRaC-svwshA@mail.gmail.com>
+	<87bk6mc0nj.fsf@linux-m68k.org>
+Date: Sat, 06 Apr 2024 10:03:42 -0700
+Message-ID: <xmqqa5m6l8y9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1712422918;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+oGgnQB8Ne636Q7MbcBsJFKj54M/tjwPhs8AJzWJlmc=;
-	b=TgLdEa6ElRhnP3oSntO4K+vYLmQxbkv2HpV05jfk9TlLAjzkBPQGyVGFNUnlrTwmon8N/U
-	1V2clQ1lt5CFQeqCN+1UYq/w4H3W/7jTx1OxoGV+dH3vLpw6HdTs/Ws2HJP5ygGZIfL0A+
-	eG8bypTd4DvKjFQ5iTiv9Vj6nH8jQtB4TOrHVxP/qqGO2/qMv3K5Su78cSBwDp1SfflCXI
-	5/CTFS1ph+8+SP9qOSlDx+TT/Jm2wcmSwWWEZQP0EwwXcsDnskQx8wr7OrbWCeMYObFfYO
-	YLnjM3Nh3S/3RL8w0KoTiMhYKrXNnT8YCA1N2Y9BN3sWEch8QS8fpr5JFt2J1w==
-Date: Sat, 06 Apr 2024 19:01:58 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2024, #03; Fri, 5)
-In-Reply-To: <xmqqmsq6l9c3.fsf@gitster.g>
-References: <xmqqy19rtygr.fsf@gitster.g>
- <36f7e1b7122b0bdeb2e8b70f69abd331@manjaro.org> <xmqqr0fjnkul.fsf@gitster.g>
- <de15fc1ca9b5abe694196f4d468d4226@manjaro.org> <xmqqmsq6l9c3.fsf@gitster.g>
-Message-ID: <ceddded683e20b87236e1d4880786881@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9FF52AF6-F437-11EE-90BD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 2024-04-06 18:55, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> Ah, sorry, I wasn't precise enough, please let me explain.  When
->> I wrote "prefix", I had its use by humans in mind, e.g. for searching
->> the "what's cooking" emails by hand, to see the statuses of one's
->> patches.  I mean, that's what I do -- by searching for "ds/", I can
->> easily find the statuses of my patches in "what's cooking" emails.
->> Does that make sense?
-> 
-> Yes, and the fan-out reduces the search space by a lot, but like the
-> birthday paradox, given sufficiently large number of people, the
-> chances of two people falling into the same shard increases.  It of
-> course does not help that the first and the last capital letters in
-> people's names are not evenly distributed ;-).
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Exactly.  Actually, such collisions/overlaps are a good problem
-to have, because it means that the number of contributors is large
-enough to cause such issues. :)
+>> I suspect you meant:
+>>
+>>    ... and suggest us to instead write it as "VAR=VAL" followed by
+>>    "export VAR".
+>
+> There is no difference between them.  The export command only marks the
+> variable for export, independent of the current or future value of the
+> variable.  The exported value is always the last assigned one.
+
+Correct.
+
+But we are talking about working around sub-standard (read: buggy)
+implementations and it is of dubious value to assume a compliant
+implementation when devising a workaround.
+
+It is easily imaginable that a sub-standard implementation uses a
+symbol table with a single "is it exported?" bit in addition to
+(name, value), without a way to say "this parameter is not set
+(yet)" (IOW, never value==NULL), and such an implementation would
+not be capable to have "this name is exported but nobody set the
+value to it yet".  Using an assignment to make sure it is known
+before setting the exported bit is safer to protect against such an
+implementation.
