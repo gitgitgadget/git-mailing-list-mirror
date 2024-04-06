@@ -1,74 +1,68 @@
-Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDB0446A0
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 19:19:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8653032A
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 20:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712431183; cv=none; b=clWlwkRB0Yxxk7FN5T2DH9/C+invcI00OGmGRftRCGGuCzBK7WVwwn+HrP3mNcRUG1jurujBlsxKFQJqkp6BBSmeokhR4miYMWo+uH095ZGpf7yWIYTNXapeGJleMWpO+5a+c4kUeXtH4Y6gST4JsPgbd0cNldC45LhClMbXZ58=
+	t=1712435310; cv=none; b=t8kM77VtlQTwaVgBlXt8qzEV8tcoHWwGjrlmGsdgGam7RXgeVgIh0NREDC56qCcImqgQc0MUbcHx84D3H0mslrUw8RSyiAKS7A4kCYGFMmulymtjMWS5iG1NzlFN178R1Ey6yla6EuRojIvu1TahXz8865GzvFJ7H1iuDG4Pz8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712431183; c=relaxed/simple;
-	bh=8DdM/pufJERwtGtMqUzferK0OXgDD9hkFGpt8iAK0eM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ho1ZnGrXzsAULkp1huBM7AtXGzhVsuXLfFqXZphYUYsGlZvdfpulZDZBExxOioUC6PWaHCBXxI34n8WYSj94CsV5iDG4uUSQANct7s1LWODffSdPIlsWjjDedeARdrcgJNx1IxUQaPcWjftzj1T6SrTLytUDemOf8ot0vIz8Niw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=ELF6lcfw; arc=none smtp.client-ip=185.238.129.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
+	s=arc-20240116; t=1712435310; c=relaxed/simple;
+	bh=0ZSKvC89XMPJ18k+ijJbYkyidtl4YZFnuGFXc+Prk1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T1zJB/h/neAiVWC5023epjUlITgjJBJrHfwp23jxIEqpspltisw9hYYUuJcx/YzvXCwhC6Z8gN69QIN9uDnrQhw9pow6LOWMHm5TB1SpVZF+Tdi4Eo0MT2Z3pbD19pc6yvt5VEGk9JaFS4ak3QGmcVDwAbv9KV29sb5ZDl0eJO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=GoGTXQ4N; arc=none smtp.client-ip=46.232.251.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="ELF6lcfw"
-Received: from [10.2.12.48] (unknown [10.2.12.48])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by 7of9.schinagl.nl (Postfix) with ESMTPSA id E3A2B1A181AD;
-	Sat,  6 Apr 2024 21:19:38 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
-	t=1712431179; bh=8DdM/pufJERwtGtMqUzferK0OXgDD9hkFGpt8iAK0eM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ELF6lcfwZJ0Kv/TwHQz80K3mzgmqMDLozcO0ojjQ+0+tEUEazYuCFhflo+7EY2U/3
-	 RG6KIOfOCVCMK+gKImlwW8FvUS3Rhpl7idVoXPKPM1f45+oEZ4LBxY5JD5+jePBud1
-	 2aHzhGcCwcbpNl/6KX2DZXm84w3czUp6pURual8M=
-Message-ID: <a861341d-4550-4729-8f86-c3378b1c3c6e@schinagl.nl>
-Date: Sat, 6 Apr 2024 21:19:39 +0200
+	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="GoGTXQ4N"
+Received: from localhost (unknown [IPv6:2a01:41e1:2fb4:7500:559e:51ce:db99:6a71])
+	by smtp.roethke.info (Postfix) with ESMTPA id 7019A1E0004A;
+	Sat,  6 Apr 2024 20:21:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
+	s=20200807; t=1712434892;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0ZSKvC89XMPJ18k+ijJbYkyidtl4YZFnuGFXc+Prk1U=;
+	b=GoGTXQ4NCnpqWNGl0vcUAIQ1pfvMh+6RaBfRzzv8OJXNvllzr+D/SfvmixhnId1r1LZxdW
+	spDy4sm/dl2k3C18m2dDU373MROYgrguWzqVAPEYZldapRyH7VHYzz++YDYE5WJ2aCL6Dm
+	IM+v6KUvuoZlsJqKz5BrhxpnBHYck9F8AXS62+cm7vM1ilhxzo42x3+6NlufmZMizmgb+P
+	YyXRA6itiAH9UvXUMOkpDBs3N8q4uRvHgOvNrGDB82ZqVl+59IwQkB8wYLI061I/Gmieow
+	c8BjjBNswKdTkuYp6a03ua+zxyDW68I6/5PLmrxTo78StN2ZDGALGtReTSaQbsB/uKFb7Q
+	d38nKXIr9nxwYBnFAr3CCd6J1FgWfQd2MepMMtedXAaW2X/K8MjIHRaqF7uf0DrmjjlTqa
+	Rzy3qZ8NMJN6PX/iyZuqLRNF4hpaNz8g440UKHJ6jt4aGZtJ4hq99mEHfI696EDUB7ccey
+	zhjQKAzZGpLJ9A2nGgP+xNnOxTqE/pqBRmUntkkqs2V9X55pfp9KhFvpySyFMKY/pVKeQ3
+	PaideZGTTgKNpg/JHJgjpfYSwFTBqLmIpNv/xvKDDPSlc+gRQwsivTDy50EkSALYZHc/dE
+	qG/OCKcqCCqVuWzwZ0PHYm+3pWCifyEIkyBjBJCh9qLr64nDt2j8U=
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
+Date: Sat, 6 Apr 2024 22:21:29 +0200
+From: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Wolfgang Rohdewald <wolfgang@rohdewald.de>, git@vger.kernel.org
+Subject: Re: segfault with git rebase --abort
+Message-ID: <ZhGuyeJp28heaITM@roethke.info>
+References: <88a694de4a7f767613475ef1d19292a69eaccb07.camel@rohdewald.de>
+ <xmqqle67pa7a.fsf@gitster.g>
+ <7df26e3813ef76ee90c1fb02847bbb4b9bad630d.camel@rohdewald.de>
+ <xmqqfrwehweg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] bisect: Introduce skip-when to automatically skip commits
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
- Stefan Haller <lists@haller-berlin.de>
-References: <20240330081026.362962-2-oliver@schinagl.nl>
- <864b0f22-b07b-469b-8fc2-56940fd89a8b@schinagl.nl>
- <xmqqcyr3s3gj.fsf@gitster.g>
- <b194ba7c-454b-494f-bef2-e9eac7ca87f1@schinagl.nl>
- <xmqq1q7il8re.fsf@gitster.g>
-Content-Language: nl, en-US
-From: Olliver Schinagl <oliver@schinagl.nl>
-In-Reply-To: <xmqq1q7il8re.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfrwehweg.fsf@gitster.g>
 
-Hey Junio,
+On 2024-03-25 13:46:47, Junio C Hamano wrote:
+> Wolfgang Rohdewald <wolfgang@rohdewald.de> writes:
+> I think I forgot to remove one line of "<<<<<<< HEAD" before doing the first git add.
 
-On 06-04-2024 19:07, Junio C Hamano wrote:
-> Olliver Schinagl <oliver@schinagl.nl> writes:
-> 
->> But seeing that these are your main concerns, I'm more confident I'm
->> not completly on the wrong path here.
-> 
-> Mind you that they are not "MAIN" concerns.  They were the ones that
-> jumped out at me from your sketch.  After seeing the real thing, I
-> may find completely different issues that I could have spotted in
-> this version as well---it is natural that people notice things they
-> did not initially notice with a richer context.
+This was the missing piece in my reproduction attempts!
+When you leave that line in and have another conflict in the same file
+later in the rebase, rerere falls on its nose.
 
-I completely understand and agree. Just as I changed my design 3 times 
-now already after learning new/more things.
-
-Thank you for your time, patience and feedback however, it is much 
-appreciated!
-
-Olliver
+I will do some more poking and update my patch accordingly.
