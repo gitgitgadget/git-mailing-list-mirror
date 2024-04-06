@@ -1,126 +1,80 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0301617BAA
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 03:29:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2B01CAAC
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 05:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712374159; cv=none; b=PtGfbVyTGoWoM7ZK5EkOJfA5/IlCmTEXZR9LEvuhu3eFaO+V5UmeCkwSfmm1ii040lzFrzOiFPoVW0yeVJRDZUp9XQ9Vn5rdinKgbX6kDIvZbzepKtWbgFNPhqa4AB0D7SKJy4/dHohUlWPfKPdXfsiToumBP9XVMO5QMFhpddw=
+	t=1712379833; cv=none; b=NL8BIiV4tpdCChpy5lZZYJcZDcEnn/MSaPzAoEc21Qc2gzCpFdJs6D5+lCHlcAYZGpTTgVFsQGLU+5k6DPot8Y0m+7jSSDtdXIvf+RAETjigdmgTcaSJD4UqI/GUP1GrfETkHrSNH7XINlnomll3scJzlomTyQM3WIC8g4UzMs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712374159; c=relaxed/simple;
-	bh=5YBq19aMBx9qzypUw3R0dXm18wuSkijAI06jGZhe/I4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aiYqvkjcEU7Ipdw7URQtiehFvx2tT78pW63G1VH6lwKlWzPVRLFDCIP3LJy5yvUJApGSeUhrCjGnYaaCplBGr2boNkfjsN/HsfHS7Eyz4OvhjHGDt6VAfRm4z0BPne1KyuDWsPc6cyo/yt9AbF8H2udoO07Xugo6zPFaZ3lo94M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBPXymx6; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712379833; c=relaxed/simple;
+	bh=z2lAyMt/8sWbizZazqxFQa+EZb+rccC1KznH8q2635w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=m3vvHQH4Lbs1NHFLNRnRuKvBkrwQ493Z80Aq6+k7m+AI8NTMs3mj5Aj3t8EDT0++spC1zlpkL9agGj/pGEmizarplF3KtqGjnvQIZ0nDsiJpiDvTqCfb2IV61rMinGMFSRFi/NT4PgM+RnJdWkyUVdMXVNCcnf74g/aUYryz06k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IaWNwaW2; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBPXymx6"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-5bdbe2de25fso2156887a12.3
-        for <git@vger.kernel.org>; Fri, 05 Apr 2024 20:29:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712374157; x=1712978957; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PVqldlooswL3Ui59nprlaDQHhOG5AO+Di0cX3U6b1AM=;
-        b=fBPXymx6Q2DMmKbw2uNmbBTOOP1Thf9JwyisFpUr+4OdareBSDUc33C+7XB9jaW8WI
-         w+oy4GSYXtjDwHsm0ZzgMPlFl6qEZmykNkMtHSteN/j7WCsq1AYSTp2ffG1OJvWiod72
-         d0lfBnzYHGSsvOzQRSpAI0QFvZSlezEq5flxygak1nU5ks9Tmp+TvgCmC0Nqqd3NLbA1
-         jGlBCnizWuUS+pZ1BAIHo9ammGmN9yqKzknJwjWwd7KyvkV6QY1Qip/FbxdqzDvbAz31
-         +HOA29lMsKiWibDu7KL0VL8LzTyKOHvDWqhE7A/P1wP8Em3IasYwh1xs9lGhlTlr9T0R
-         Lb5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712374157; x=1712978957;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PVqldlooswL3Ui59nprlaDQHhOG5AO+Di0cX3U6b1AM=;
-        b=wQnS2Iuq+UTRgH/k0TxKPJr7spns1qrKabSyrgCJCc3PROt723dQZAhfyGiPYyLTaK
-         Fet2c7xbj714ox4ya4Tgb4tAFfNJNumNWjz+t1fdvwdHmLIZHdvWpvR63v4HFLXq9H7k
-         kr6nrpzYhkkppJCK3YN1vxIso/vitoIMSC6UHvxeWsWKbCpElTcLuwYaUyznZ+bOrzBn
-         JOToAX5RgtdgjOsnJpvkv3Dx22ZDxF2V326LeUfTgDWevCs7gc/bVnkj2gAJ267IJGfW
-         2hp9eeueuQP49quMVYMRnrdT3vhkpASSYlJmETKsKRZGPg4WD4VAWHH0ZqilxSAd/rt6
-         Lszg==
-X-Gm-Message-State: AOJu0YwoT2Hichk9DYR4gRqQXn+GA0JMuwMeHOzFC9Xm2AUD9VCaMj09
-	1ZBDEVNiSJ7bGrqgPOjipZqV0j7dNRjBSe1g+w3UuydcVY7OGpp6oZ8zhDcy
-X-Google-Smtp-Source: AGHT+IG933Ui7FR4i9gIGkCf9Akgn26aFZh+XmsWQ/cJ+FQ8Lg1W+BGMTa3Ryz2k6gn7aD+PdOh5cg==
-X-Received: by 2002:a05:6a20:9784:b0:1a3:e0b5:418 with SMTP id hx4-20020a056a20978400b001a3e0b50418mr2949565pzc.36.1712374157195;
-        Fri, 05 Apr 2024 20:29:17 -0700 (PDT)
-Received: from thubon.lan ([14.191.223.174])
-        by smtp.gmail.com with ESMTPSA id d14-20020a170903230e00b001defa712890sm2379922plh.72.2024.04.05.20.29.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 20:29:16 -0700 (PDT)
-From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
-Subject: [PATCH] t9604: Fix test for musl libc and new Debian
-Date: Sat,  6 Apr 2024 10:29:10 +0700
-Message-ID: <23a4298eababe54ca4b43d7b675b858605d20ec5.1712374021.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e9588666f
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IaWNwaW2"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7EA80296B3;
+	Sat,  6 Apr 2024 01:03:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=z2lAyMt/8sWbizZazqxFQa+EZb+rccC1KznH8q
+	2635w=; b=IaWNwaW2CQChQDyIM75F0ufMdJs1Czl0x73OK22XJzF8RoWC+yrDfP
+	z0xTn/xtPWwuImGUNX/C51ff1Y9kprae3OCc0p50QhLE7rrjG+dMI55Lk7Dyvo4C
+	XI+xK7YJSy70Tajun0Vw/Gy2Be/7gqyfwoLFYsfJjhPhDD7ASLrLM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7707C296B2;
+	Sat,  6 Apr 2024 01:03:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 00BDB296B1;
+	Sat,  6 Apr 2024 01:03:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2024, #03; Fri, 5)
+In-Reply-To: <36f7e1b7122b0bdeb2e8b70f69abd331@manjaro.org> (Dragan Simic's
+	message of "Sat, 06 Apr 2024 03:11:14 +0200")
+References: <xmqqy19rtygr.fsf@gitster.g>
+	<36f7e1b7122b0bdeb2e8b70f69abd331@manjaro.org>
+Date: Fri, 05 Apr 2024 22:03:46 -0700
+Message-ID: <xmqqr0fjnkul.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0D3366C4-F3D3-11EE-AF1D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-CST6CDT and the like are POSIX timezone, with no rule for transition.
-And POSIX doesn't enforce how to interpret the rule if it's omited.
-Some libc resorted back to IANA (formerly Olson) db rules for those
-timezones.  Other libc (e.g. musl) interpret that as no transition at
-all [1].
+Dragan Simic <dsimic@manjaro.org> writes:
 
-In addition, distributions (notoriously Debian-derived, which uses IANA
-db for CST6CDT and the like) started to split "legacy" timezones
-like CST6CDT, EST5EDT into `tzdata-legacy', which will not be installed
-by default [2].
+>> * ds/fetch-config-parse-microfix (2024-04-05) 1 commit
+>>  - fetch: return when parsing submodule.recurse
+>>  A config parser callback function fell through instead of returning
+>>  after recognising and processing a variable, wasting cycles, which
+>>  has been corrected.
+>>  Will merge to 'next'.
+>>  source: <pull.1709.git.1712285542303.gitgitgadget@gmail.com>
+>
+> Isn't this an example of a prefix collision, i.e. "ds/" points
+> to two different contributors?
 
-In those cases, t9604 will run into failure.
+"ls .git/objects/" would tell you that no object is important enough
+to squat on a single "prefix" and exclude others, and two objects in
+00/ hierarchy are by no means closer together than an object in 00/
+hierarchy and another object in 01/ hiearchy.  The idea to use the
+fan-out in the ref namespace is pretty much the same.
 
-Let's switch to POSIX timezone with rules to change timezone.
 
-1: http://mm.icann.org/pipermail/tz/2024-March/058751.html
-2: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1043250
-
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
-* Note that since our tests are pre-2007, I use the old rules in the timezone.
-* We can also use IANA notations, which I believe is better, but that mean we
-  will depends on IANA db
- t/t9604-cvsimport-timestamps.sh | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps.sh
-index 2ff4aa932df44..07560d4779872 100755
---- a/t/t9604-cvsimport-timestamps.sh
-+++ b/t/t9604-cvsimport-timestamps.sh
-@@ -5,9 +5,10 @@ test_description='git cvsimport timestamps'
- 
- setup_cvs_test_repository t9604
- 
--test_expect_success PERL 'check timestamps are UTC (TZ=CST6CDT)' '
-+test_expect_success PERL 'check timestamps are UTC (TZ=America/Chicago)' '
- 
--	TZ=CST6CDT git cvsimport -p"-x" -C module-1 module &&
-+	TZ=CST6CDT,M4.1.0,M10.5.0 \
-+	git cvsimport -p"-x" -C module-1 module &&
- 	git cvsimport -p"-x" -C module-1 module &&
- 	(
- 		cd module-1 &&
-@@ -38,9 +39,9 @@ test_expect_success PERL 'check timestamps with author-specific timezones' '
- 
- 	cat >cvs-authors <<-EOF &&
- 	user1=User One <user1@domain.org>
--	user2=User Two <user2@domain.org> CST6CDT
--	user3=User Three <user3@domain.org> EST5EDT
--	user4=User Four <user4@domain.org> MST7MDT
-+	user2=User Two <user2@domain.org> CST6CDT,M4.1.0,M10.5.0
-+	user3=User Three <user3@domain.org> EST5EDT,M4.1.0,M10.5.0
-+	user4=User Four <user4@domain.org> MST7MDT,M4.1.0,M10.5.0
- 	EOF
- 	git cvsimport -p"-x" -A cvs-authors -C module-2 module &&
- 	(
--- 
-2.44.0.rc0.258.g7320e9588666f
 
