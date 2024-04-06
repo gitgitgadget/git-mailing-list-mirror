@@ -1,76 +1,113 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F420711CAF
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 01:49:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0630911CA9
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 02:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712368155; cv=none; b=hMhTjHWCgEiEf08i6RruGb+pGMx60caVELo3e0j6MIA0nGqXzi0+yG8JYwMDLIio+poGuurd0ymuF92OIPDRaUPlCLsZkl6X7Myo/xTFgxk5w++9rb5JPCkz7PxKwTC8FHHZnNddxb/SD589PqJgRIo2yLR+PEni2TziuGLK8tg=
+	t=1712370143; cv=none; b=gVyuDnlmzakpNUmHQkRnmA2QAawxImZz64qmHEUof+lGkwx8HTe+MdNh1gOLW5x8HrtDks8XiuyG0RKnFI1PXJMLI7cJqXJqY3DUu4GNdkCUFMLuFxKSHip3d6RStx6Q4SV+Xw8XByIG1yIcqvciEOAupzW7iuk8bDXZ8qoDmvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712368155; c=relaxed/simple;
-	bh=sJfCUdRixkkEOJwFje3KYOwDvSEtlutbbojzGY+Nx8M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b1ENmAzpLOYAAOAArJA/VYKgnzDuNBUEZj96BwTWCN/T7u9qqTj0129whXTGnGSAyMBzG7HOR0PlFZPJjOsZSue/u0czeAq00tG2oqRNXAWJ42RpoEXkWnhhZWlEecQuRq0MsTryB4x78GtqKdN0wLgc3NwY8uQTW9jEKKtRziI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1e2c725e234so11375285ad.1
-        for <git@vger.kernel.org>; Fri, 05 Apr 2024 18:49:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712368152; x=1712972952;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UhMmAa/1737Y5q6Pfj1arJVsgvU0rd/S89CIeM0EQ1I=;
-        b=JYc8mXGTsJ9t3azLE6hXzRTyMYpouLj2ppkwHXQFTb67n4h/N14G3FgnkxyR5HEvWq
-         TXs5cmTMDrjT8lrIOgCtCPMGHQxNCZPlyEpMuQPhxSSLerF3jvbsj3BlW5cEa75273e/
-         P63x5+tBkJ/YmOb13NNcofnMFu03pLFcdXMUPlYKvebZaWaJQw7EIW/sihtlU01NXRET
-         1qF8IBMpKFeRjq5UYIFGsNUD1eM7qVuZrsXWHkoF67tUuuG1IQ25dzC4pjDx7jERq71z
-         4ZdIK2RKdCbtFn7VYVGNab9P8c+lFNTv8GdN9vlLtYN4Ym9LWWroTdhqZHi8Gi3Cfk6g
-         Xi8g==
-X-Gm-Message-State: AOJu0Yzp0/f4RYSQn8XbjRi+LzQuRB6Ns5/14Zn32g533rH2YgzudKK3
-	uyvUGL3+tfLVyEdGzxeZvpr89x+qsjWnGTBoi5MB5s5gTmmuk9nxNLM+t6Ue4AtTzwKR2Q3f9Hc
-	kJoaFNy3mFOOPv3fkBFNLvzns9qHv+8Vb
-X-Google-Smtp-Source: AGHT+IEdSwI98hHUtivT3u4hfsQjhXvnVsrcfixAAz7Y2bVTJaAQdFvgTF4eZ2aHADac11sSlqBFFyaW7uOTmZ/OyTU=
-X-Received: by 2002:a17:90a:b382:b0:2a2:9d4c:2166 with SMTP id
- e2-20020a17090ab38200b002a29d4c2166mr5772007pjr.4.1712368152285; Fri, 05 Apr
- 2024 18:49:12 -0700 (PDT)
+	s=arc-20240116; t=1712370143; c=relaxed/simple;
+	bh=LdSpUy9qJwWoufqU3Hry8/EWk4jAgeGl4tnm8Do633M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=E1VXwc9C0Xrw/bujU9W/sd+3Qxcdi4QSXM6Gx648p6E5somr/xhWmr13uAZme5XldjvyqeXO9BV3LdB5D4dM4XsvNU5orr2qD9Mio+3HQ0u3PH1T443oIQtvInoGjOFnGCgu7a2DxluIqghsm48l8NFxV4IDN1tp3Q+YLADqSes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rxTH/4p7; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rxTH/4p7"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6A90624D61;
+	Fri,  5 Apr 2024 22:22:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=LdSpUy9qJwWoufqU3Hry8/EWk4jAgeGl4tnm8D
+	o633M=; b=rxTH/4p73DVqQ4Emdq4HQpxb2Am5M60Q3JwNcMMUiz/KWYvSuvoS55
+	baFotHjFHwTpNUBSNO+FsPeGoq09K10IeRsczc33cP7gcBQo0zeGwFppQXbY990L
+	+J5KLXrpXRqCpW+cGhGci60FzmkRgki0RPRDu1exCkc7YM/2YM3Oc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6350724D60;
+	Fri,  5 Apr 2024 22:22:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DD98724D5F;
+	Fri,  5 Apr 2024 22:22:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
+ <nasamuffin@google.com>,  Patrick Steinhardt <ps@pks.im>,  Matthieu Moy
+ <git@matthieu-moy.fr>,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v2 1/8] MyFirstContribution: mention
+ contrib/contacts/git-contacts
+In-Reply-To: <3817e7f3cd007fe26b8bfdec6babed1c17ec3795.1712366536.git.gitgitgadget@gmail.com>
+	(Linus Arver via GitGitGadget's message of "Sat, 06 Apr 2024 01:22:09
+	+0000")
+References: <pull.1704.git.1712017205754.gitgitgadget@gmail.com>
+	<pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
+	<3817e7f3cd007fe26b8bfdec6babed1c17ec3795.1712366536.git.gitgitgadget@gmail.com>
+Date: Fri, 05 Apr 2024 19:22:16 -0700
+Message-ID: <xmqq8r1rqlgn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1711398665.git.dsimic@manjaro.org> <CAPig+cTia_gXkpNw6jo8VHg=ODqX71Nvff4Qfq0oMWqShv5TWg@mail.gmail.com>
- <92cb6c057591c7192fd7eb7097336f66@manjaro.org> <CAPig+cRECapN-9_u0JoESaS7KTi-==ri7Oy+sjff-VHL7p+vHQ@mail.gmail.com>
- <a3bc4829036f5803da513fee52267c2c@manjaro.org> <f5c2c3af9813d56adf85393f0e8fde0e@manjaro.org>
-In-Reply-To: <f5c2c3af9813d56adf85393f0e8fde0e@manjaro.org>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 5 Apr 2024 21:49:00 -0400
-Message-ID: <CAPig+cToJgRn-ao9c9wXf7g99_TL3aRfwEasA9U3e4qNC3cVMg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Assorted improvements salvaged from an earlier series
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org, gitster@pobox.com, jn.avila@free.fr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7D747D22-F3BC-11EE-931B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Apr 5, 2024 at 8:52=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> wr=
-ote:
-> On 2024-03-25 21:54, Dragan Simic wrote:
-> > On 2024-03-25 21:49, Eric Sunshine wrote:
-> >> The range-diff is particularly valuable exactly for this case (new
-> >> versions of old patches) since it is a "diff" between the old patches
-> >> and the new patches. Thus, it provides reviewers with a precise
-> >> summary of what changed between, say, v2 and v3 of a series, and
-> >> manifests as a concrete representation of what your prose explanation
-> >> describes.
-> >
-> > I see, and I do understand the purpose of range-diffs:  they make
-> > reviewing new patch versions significantly easier, by relieving the
-> > reviewers from the need to track down what has been changed in the
-> > current patch version.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Linus Arver <linusa@google.com>
 >
-> As a note, I kept my promise :) and have started providing range-diffs
-> in patch submissions. [1]
+> Although we've had this script since 4d06402b1b (contrib: add
+> git-contacts helper, 2013-07-21), we don't mention it in our
+> introductory docs. Do so now.
+>
+> Signed-off-by: Linus Arver <linusa@google.com>
+> ---
+>  Documentation/MyFirstContribution.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index f06563e9817..ad3989f53e5 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -1116,6 +1116,11 @@ $ git send-email --to=target@example.com psuh/*.patch
+>  NOTE: Check `git help send-email` for some other options which you may find
+>  valuable, such as changing the Reply-to address or adding more CC and BCC lines.
+>  
+> +NOTE: Use `contrib/contacts/git-contacts` to get a list of reviewers you should
+> +include in the CC list. In addition, you can do `git send-email --cc-cmd='git
+> +contacts' feature/*.patch` to automatically pass this list of emails to
+> +`send-email`.
+> +
+>  NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
+>  please don't send your patchset from the tutorial to the real mailing list! For
+>  now, you can send it to yourself, to make sure you understand how it will look.
 
-Glad to hear. Thanks.
+Nice.  
+
+I personally find "you should" a bit too strong and authoritative,
+though.  Is the tool precise enough that we are confident that we do
+not end up spamming those who are not actively helping others?
+
+As I prefer not to be too assertive, something like
+
+    The `contrib/contacts/git-contacts` script may help you coming
+    up people you may want to ask to review your patch by adding
+    them to the Cc: header.
+
+is as far as I would go, but for those who are not familiar enough
+with the project, perhaps it would be OK to assume that the script
+would do a much better job than these contributors would do
+themselves, I guess.
+
+Thanks.
