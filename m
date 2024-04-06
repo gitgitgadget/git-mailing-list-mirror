@@ -1,96 +1,99 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CBE19479
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 05:16:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1436AA50
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 05:40:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712380591; cv=none; b=jeV4pvY9RmAFGsNXevoCzV9aVffgM7pcj1QBe4r+qTZ7QTG7f0fX/koHHDGcLSzvsMZKmDcsQp+AQboOCZeEJKW1zcvGarqb+ZF4cEECLQS3u9FJOkee+BLFEo7cD8nOxm85K5lMqFcBmqLYTo8C3YuSLFrYFyiLu6uNvPyeplE=
+	t=1712382007; cv=none; b=EhBfaxwHwdW1e0rs0ZLVzq4XVKoYrDxnC0PabvdovIUgMhbvcwWhtUJkvsNIiZ5XZcDZfSoc+P5bZKAMcI78IKbG9W6eGIVo8M8KneZMakSehB+nh5qQc9MmqdBOlwO8GwxgRjGs4PyReQsprHl1+L/WAWxwcIralrPcMLqcoIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712380591; c=relaxed/simple;
-	bh=7rEFb6/07ivibav8QPFlP7af2b+SsC7VVplv5fQzDxY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EskkVbeNVsijfHbqpdf8f3w+JmzBK4zdyx3UZZ0Ty8gMF82NtRljO/df5bHQqLUr0fLHKB8Gyl2saAX5HQNP30wMH5FqSXWxZyCw8dXQYWYWJRGrevbyWr6LWFJyCmcfkWBr9cphCiKsXXDdrZsBnzCsgIcc8V94RDeBvooetwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-696315c9da5so19264666d6.2
-        for <git@vger.kernel.org>; Fri, 05 Apr 2024 22:16:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712380588; x=1712985388;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IoTfGtldp0oZLH4tWOMrOEsAk8O8Uw43f19ubBFvboA=;
-        b=JenHLwZXg6zMjrflmgANqjYwNmdsxKfzxZmVVjcf8AitMYQ5rXzbEnqHbiSSrA276j
-         +Zn6TYc/8iNCrk3+S90XH0QpTgQszxq60txotX5NWTWiL3jh4j8vn32XL/YIHefRgzsA
-         EfJaxlKgHHqAgXzchW8YHxvzNo380bhp/NR0Y6GcQubhjUld8qLgpzQIaJFRP80JhbZu
-         A+l0w36iODKSQKkMBCOXVkYS14OJLB5h/jMdcNFGoghUP7d3w7yjnDlx70YF8Pdyp34E
-         3OgbLeOQ9+vy06aZ5t/rjTIo2MWm4rIFbuSNiLE6Gdy4JVsi3cssOl6mUW2uLuU3+K7r
-         pVlA==
-X-Gm-Message-State: AOJu0YxcGGQbz0TjAHBiEVd1lqjaaedlhGsbihJQIRcOot+ZKsPqX+1l
-	4nX0UYqZ31sVRwK8/l2N+FMZEk0k2jaLOcPVJ6l0VoDPbj7qhnwptVGZJYMb5ea5xaN5YoUxnmS
-	kYyvV8aK3/GS9ocK2P0T9JCajmDs=
-X-Google-Smtp-Source: AGHT+IFen8XV8HdoVje8lJaI3b45LjqE8h6y/fru/qGLBPZxHPciEY9yt4WuG67A+4pSPcKBPqD+8spePa6F4WOwj0Y=
-X-Received: by 2002:a05:6214:2629:b0:690:d21c:abe1 with SMTP id
- gv9-20020a056214262900b00690d21cabe1mr3563073qvb.62.1712380588543; Fri, 05
- Apr 2024 22:16:28 -0700 (PDT)
+	s=arc-20240116; t=1712382007; c=relaxed/simple;
+	bh=v7P9S0jCYlkk496N51aiPxKNy7IE4iU9njRkcGLfXl8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=f+6IrvrbbSq0SCV10qzSCE5xQfDE19Y6mFusjFNFWmvRGyJzBSUdSRfsG9QVl6DVY5ZVUEJ3V2AhY5IWfypgIjRrqMgVwFEh/l+A2qYj3s/V2g+SudCUq5MT4q7vkrD2aB6cup7neFxr1sbMXyjoLOeMpXEMphQKrFYk5D6tBy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g9Jln636; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g9Jln636"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AF1561F4641;
+	Sat,  6 Apr 2024 01:40:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=v7P9S0jCYlkk496N51aiPxKNy7IE4iU9njRkcG
+	LfXl8=; b=g9Jln63648xwcNg/mNykCtJN2GoC3AAOSBHsOxqs6cRAYeuo3bTl3X
+	DidS1NhdisI0f/Zd1plWG64ir01g9oyD69OZZLmmINgzFODFd8lH1gMbQ/9yhshv
+	5un+U+PJKayF70P/lOaOYd2MCFabENeKzFEPx3IvvfTBfFaN2sP5w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E2041F463F;
+	Sat,  6 Apr 2024 01:40:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AFA151F463E;
+	Sat,  6 Apr 2024 01:40:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  code@khaugsbakk.name
+Subject: Re: [PATCH v4] send-email: make it easy to discern the messages for
+ each patch
+In-Reply-To: <8a9f4927aab96f2f62e2467e59fb6150d7e931fc.1712367983.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Sat, 6 Apr 2024 03:48:28 +0200")
+References: <8a9f4927aab96f2f62e2467e59fb6150d7e931fc.1712367983.git.dsimic@manjaro.org>
+Date: Fri, 05 Apr 2024 22:40:02 -0700
+Message-ID: <xmqqwmpbm4lp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240406000902.3082301-1-gitster@pobox.com> <20240406000902.3082301-3-gitster@pobox.com>
-In-Reply-To: <20240406000902.3082301-3-gitster@pobox.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 6 Apr 2024 01:16:17 -0400
-Message-ID: <CAPig+cR8HxO5ZeZrJQ4PtpgsqM__cvieZ6g37F1m_=ng6xvSPA@mail.gmail.com>
-Subject: Re: [PATCH 2/6] CodingGuidelines: quote assigned value in 'local var=$val'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1E0FA1C4-F3D8-11EE-9406-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Fri, Apr 5, 2024 at 8:09=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> Dash bug https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097
-> lets the shell erroneously perform field splitting on the expansion
-> of a command substitution during declaration of a local or an extern
-> variable.
->
-> The explanation was stolen from ebee5580 (parallel-checkout: avoid
-> dash local bug in tests, 2021-06-06).
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
-nes
-> @@ -194,6 +194,20 @@ For shell scripts specifically (not exhaustive):
-> + - Some versions of dash have broken variable assignment when prefixed
-> +   with "local", "export", and "readonly", in that the value to be
-> +   assigned goes through field splitting at $IFS unless quoted.
-> +
-> +   DO NOT write:
-> +
-> +     local variable=3D$value           ;# wrong
-> +     local variable=3D$(command args)  ;# wrong
-> +
-> +   and instead write:
-> +
-> +     local variable=3D"$value"
-> +     local variable=3D"$(command args)"
-> +
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Every other example in the shell-script section of this document is
-written like this:
+> Following the approach of making the produced output more readable, also
+> emit additional vertical whitespace after the "Send this email [y/n/...]?"
+> prompt.
 
-    (incorrect)
-    local variable=3D$value
-    local variable=3D$(command args)
+Hmph.  I'd prefer to see you try not to endlessly extend the scope
+of a topic.
 
-    (correct)
-    local variable=3D"$value"
-    local variable=3D"$(command args)"
+By including the above change, the patch no longer is small and
+focused enough, which was the reason why we said that the "let's
+move the final newline out of the translatable string" can be done
+as a "while at it" change.
 
-Should this patch follow suit for consistency?
+Besides, because of the switch to separator semantics, that hunk
+lost the reason to exist as part of the "use a blank line between
+output for each message"---the change no longer is needed to support
+the feature.
+
+Even though it is a good change to have, and it deserves to be
+justified by its merit alone.
+
+The whole thing deserves to be a three-patch series, the first one
+being a preliminarly "let's move the final newline out of the
+translatable string" step, followed by "let's have a gap between
+output for each patch sent out".  Perhaps another "even during
+sending a single patch, we may want extra blank lines when use of
+editor and other user interation is involved" patch on top.
+
+I haven't formed an opinion on that last step, and I do not think I
+can spend any time to think about that new part of the feature for
+some time (others can review that part and give their opinion on it,
+of course, while I'll be working on other topics).  It would mean
+you are adding yet another feature to delay the base improvement to
+stabilize.  You really do not want to do that.
+
+In any case, this [v4], as a single ball of wax, is not something I
+can confidently say "I reviewed this and looks OK".
+
+Thanks.
