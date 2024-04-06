@@ -1,59 +1,58 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B752914
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 14:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F51B3771C
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 14:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712413470; cv=none; b=Q3k1esVxuX9ywSESoRkiVmpdqIQAnkaLf0dkMB5aaAyktaFhDJzThAWg9vRgs91cBE+P3eqmVu/2uq7ovzLJ1nMn7ZRnwsN7YmhscwtMExASPmNvtzkvH7oBRvKa2riGdVQ+JgT/gga7hmYglfZhAvpdHv6CfllnzqYcAs16lCk=
+	t=1712413751; cv=none; b=SYnqt25hw3DICm7SKgUXOPCLCDQIpO3yoAOWUu6+x5cohQiEoItKdImBD93k5z7ZvH7QP4wKijR1zCZGV8y+SDUfEiO/IZE2zlinc7mJACH9qPL6Jshv+cX1z2Q6WD5dTt9pVQn6UQqRy0rmbzziIDx2pp7NAtQ/BjQBzTRwWtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712413470; c=relaxed/simple;
-	bh=YAiU8R6CEA3FNfDe+N37JTn5psIR/yxtjhVKoDN4JhA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pjmQaTyIo3MkIyHDuV6Ia14DZRLPQwTiLlcKPQKLJNgb3wGwlFBtza+nv2vKkVlfip1+QCn+X1fxG7Ty2vcNbDy9fyUYxcKESuOf8t1e7FEv1vXFjYWevSMmtvLTeQl9e8qjFPBbMiaFjt+LH/aAiHaxPkJGz9cijLWgFm6xH/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMW3bM04; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1712413751; c=relaxed/simple;
+	bh=2R3PWY9vsAYgg8EewIulwc/ZMJ8CXwBLyLmle3cfIQc=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=ldz9X/cOoHpNrUssnc5GAMF8mlY26DPZadX0w5MTohekDvmZERL7UZPRmGzY6zoQ9ERABRibiZulFICqgzLc8id2X1UVnAWT0gzhngl1GuNEURzT8Y9TwirulwvuXWOS4ZMWfA1h0DqxPJHW6SkGazRKyf+bAhL+CrWh72jHnj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GKzHfY5p; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMW3bM04"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-343d6b55c42so1719347f8f.2
-        for <git@vger.kernel.org>; Sat, 06 Apr 2024 07:24:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GKzHfY5p"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33ff53528ceso2299770f8f.0
+        for <git@vger.kernel.org>; Sat, 06 Apr 2024 07:29:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712413467; x=1713018267; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0cX0/OsZbv72WxvmRmSSprjwTOmTFTGCNEiyukCWMyM=;
-        b=eMW3bM04mIX4OyAdXAElWdPGZn1IVZsYYGcBE5oTayJK0DoMeY2KQnrftJsPrsJiuz
-         BA3UoEkXJLcu6jpQQVsRKeTlePgS/fQq8eg+/EByeHbcpl49zy+BlD45YsujlZGdwxtz
-         pNp6VOYoTLFYNwRcsKJZMeDJyDwsK5LTxlwKEvI7JRIX1MFPvdXM3UP2RL0yMr4/J4Xz
-         VSJHHVX5fPBA89TuAugxT0+pfAfxte8+m8Jxu4llOKsEiUR5jQvtYWWtIFFGD2AOIOb1
-         p9bIF7V9AR9LK0svwODehEG+QPzRWX9T7GV0ORtSCLQCGBmcXTWcVsZSfoJcaTPN6uGg
-         qoIw==
+        d=gmail.com; s=20230601; t=1712413748; x=1713018548; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:content-language:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uY+2ZxobusVxSavx6qkTwuGz2esKFUTnJppntr/6I6Q=;
+        b=GKzHfY5pHgy6qvnZPWKXzAdQJsCSbzswPVWsqNFE9KMUQree+IiaGXkQBEAkBkH0Lf
+         mjywfLO9/Cd3Ga9YNKx1tFk57qrASKoJN4ZV6JVpxiNp6X8mT5v7Zw/wMQ0rxVJ3GFcO
+         8DJoJSlWu5IaRDxC/obOVltIYW0O+AZJhwHAVmFuWC28Ok1ivenlUWuF5MAbonOl5gYA
+         fxvDCQdZJ9OO1cfb168tcVwnwOYtVpnyDQMas0S4nKf/qxEKrW5L1VE5oQMSMNd0X2cR
+         8h+MFTzbh8FpYFUmlhjYjLCi20mPWL8l0uaUg2tXsGcja4HurudEpWkepYHrjQSi0Rnv
+         KxHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712413467; x=1713018267;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0cX0/OsZbv72WxvmRmSSprjwTOmTFTGCNEiyukCWMyM=;
-        b=k8YUrVjaGQx6dLujAdqiUM0fxQ8Y31poalDpFLtk5HcJEKkMT4bMATi7n8Dv7CNq+x
-         EGsZZPeSNRSMW/2wKKdeoSWsUdoEw/szljJc+W/vm+LsFj1jCpwMvDGnQ14ZjAUhcI1F
-         onv+XQLltIZxJWHTRis5kR3WvNQYJhZM3BfXuPha1DSnRVD9yCQNieNu4ILQQMFXfOJb
-         HSXRfcXkPA/slKVIXZhC8jjeyISUE3t+J9DnJK8pqoH+gCZwVA+PivbOXWC0/I4XtbCo
-         TeouCURHTFDQhbYCBzKVS1a0ZPF7wG4Ec1MnUUQ2CLP9n67cixA+oyl+dKoHfEfNR9Y/
-         q8sA==
-X-Forwarded-Encrypted: i=1; AJvYcCVGTPnQozT9zQI9MkJyPJO01pL5dPHF69SgOUj4k3PTkfHZqGTAoUmKgRkSynTMq+N4CKVwbZRFf1AU2BxpJx5nwIlj
-X-Gm-Message-State: AOJu0YzJ6B3urFATPxJVA/T7NK6E4NdvGkOJkux7y8Tmizv1lrQTm+N0
-	L9M8kJa0+DB+P+uq6hglSkjrOm6kDo0u6qVS7gGyxDC/5pPqyX5R
-X-Google-Smtp-Source: AGHT+IGD46rn5wjmN6b+SOWDgLvK7AiwcAXSpm/lwXuY8DFuOcWaC5MZpSQkv9WTPbve0Sih9K4//Q==
-X-Received: by 2002:adf:ee46:0:b0:343:81ea:c539 with SMTP id w6-20020adfee46000000b0034381eac539mr3870877wro.28.1712413466768;
-        Sat, 06 Apr 2024 07:24:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712413748; x=1713018548;
+        h=content-transfer-encoding:subject:to:content-language:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uY+2ZxobusVxSavx6qkTwuGz2esKFUTnJppntr/6I6Q=;
+        b=ZVhfCt1yhAxzRRop2Ss7/oGKyd9wpJ/AAZiByqr2jktGNnK5x5LKZhKMWY+VTk7o4B
+         SD6WuBZQX0j4gx+0iFsfXALOAeelWeunlxc/XByKpyvxrjftTV4e/XbkrATEa77MjCbb
+         gq1SYWEa4LR2hlRKhzrm3jSym82CSI3ZsuThzfXLuUzk9PVf8n77Kfa98NOnlW0VBBfw
+         meOiYGKN8jJ4RuDGkqgprOfwvITkz6QjnoO43sQ+Vkpf3cbHDyrxXmd6q0kseUDJJUpB
+         ntjnhJrOk/XXNpTR/u8pcwfbvkBi400wAa/AoCsGmxje0roJlncfhzXhpzPMOnEeV4Ps
+         n3eA==
+X-Gm-Message-State: AOJu0YxtPymRTXZmfH9pCLC99emazfmVAOxPnxXnE2Qxdafb4DNocWT3
+	bnD6zWkZX/Rlp+dPajL13nzyhBS9h8MAM0NYO8rxEVeXACZvLK87lvoWi5fz
+X-Google-Smtp-Source: AGHT+IE+vBn8M7UyCWoPh6dMy6Ex88FtfljMJ44BLe0horbY+R1mqxj1otW+oRhfrAXZ3n23KCu50Q==
+X-Received: by 2002:a5d:55d0:0:b0:343:8a84:85f0 with SMTP id i16-20020a5d55d0000000b003438a8485f0mr2740647wrw.29.1712413748378;
+        Sat, 06 Apr 2024 07:29:08 -0700 (PDT)
 Received: from gmail.com (4.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.4])
-        by smtp.gmail.com with ESMTPSA id q1-20020adfb181000000b00341c3071c93sm4628509wra.73.2024.04.06.07.24.25
+        by smtp.gmail.com with ESMTPSA id p17-20020adfe611000000b003433e5cab4bsm4559866wrm.103.2024.04.06.07.29.07
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Apr 2024 07:24:26 -0700 (PDT)
-Message-ID: <7e4eae67-8db9-4be3-8b96-e2e89fa82abf@gmail.com>
-Date: Sat, 6 Apr 2024 16:24:23 +0200
+        Sat, 06 Apr 2024 07:29:08 -0700 (PDT)
+Message-ID: <f4af1e88-5bd9-4b3c-8691-84dbf0ca3ee2@gmail.com>
+Date: Sat, 6 Apr 2024 16:29:04 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,77 +60,98 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rebase -i: improve error message when picking merge
-Content-Language: en-US
-To: phillip.wood@dunelm.org.uk,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Stefan Haller <lists@haller-berlin.de>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
- <57462d2e-e255-4d35-b778-176f03675df0@gmail.com>
- <dbb4615c-443f-474f-a33c-cfb4486d436b@gmail.com>
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <dbb4615c-443f-474f-a33c-cfb4486d436b@gmail.com>
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Subject: [PATCH 0/4] fix a leak with excludes_file
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, Apr 05, 2024 at 10:30:37AM +0100, phillip.wood123@gmail.com wrote:
-> Hi Rubén
-> 
-> Thanks for trying this out.
-> 
-> On 04/04/2024 20:44, Rubén Justo wrote:
-> > On Mon, Feb 26, 2024 at 10:58:07AM +0000, Phillip Wood via GitGitGadget wrote:
-> > The change makes sense, but this is confusing to me:
-> > 
-> > With this ...
-> > 
-> > 	$ GIT_EDITOR='echo pick 17381ab62a >' ./git rebase -i HEAD
-> > 	error: 'pick' does not accept merge commits, please use 'merge -C'
-> > 	error: invalid line 1: pick 17381ab62a
-> > 	You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-> > 	Or you can abort the rebase with 'git rebase --abort'.
-> > 
-> > ... I find these repeated messages confusing:
-> > 
-> > 	$ GIT_EDITOR=: ./git rebase --edit-todo
-> > 	error: 'pick' does not accept merge commits, please use 'merge -C'
-> > 	error: invalid line 1: pick 17381ab62a
-> 
-> The two lines above are printed when "rebase --edit-todo" loads the todo
-> list for the user to edit. With a real editor rather than ":" we would then
-> print
-> 
->     hint: Waiting for your editor to close the file ...
-> 
-> Then hopefully the user would fix the errors. If not then when the editor
-> had finished we'd print the remaining errors  as below.
-> 
-> > 	error: 'pick' does not accept merge commits, please use 'merge -C'
-> > 	error: invalid line 1: pick 17381ab62a
-> > 	You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-> > 	Or you can abort the rebase with 'git rebase --abort'.
-> 
-> I think that printing the error messages when the todo list is parsed before
-> it is given to the user to edit is helpful as it reminds the user what the
-> problem is. Your test looks confusing because it doesn't really simulate the
-> user editing the todo list.
+Having ...
+	[core]
+        	excludesFile = /some/global/path/.gitignore
 
-Certainly, the test was not clear to express my confusion.
+... this triggers a leak:
 
-The ones that are printed _before_ the editor is run are the ones that
-confuse me, because when the user exits the editor we leave those
-lines there:
+	$ GIT_EDITOR=: git rebase -i HEAD
+	Successfully rebased and updated detached HEAD.
 
-	$ GIT_EDITOR='sed -i s/pick/merge/' ./git rebase --edit
-	error: 'pick' does not accept merge commits, please use 'merge -C'
-	error: invalid line 1: pick 17381ab62a
+	=================================================================
+	==...==ERROR: LeakSanitizer: detected memory leaks
 
-But maybe it is my interpretation.  Your reasoning of giving it as a
-help to the user makes sense.
+	Direct leak of 60 byte(s) in 1 object(s) allocated from:
+	    #0  ... in realloc 
+	    #1  ... in xrealloc wrapper.c:137
+	    #2  ... in strbuf_grow strbuf.c:112
+	    #3  ... in strbuf_add strbuf.c:311
+	    #4  ... in strbuf_addstr strbuf.h:310
+	    #5  ... in interpolate_path path.c:771
+	    #6  ... in git_config_pathname config.c:1352
+	    #7  ... in git_default_core_config config.c:1588
+	    #8  ... in git_default_config config.c:1791
+	    #9  ... in rebase_config builtin/rebase.c:801
+	    #10 ... in configset_iter config.c:2161
+	    #11 ... in repo_config config.c:2540
+	    #12 ... in git_config config.c:2663
+	    #13 ... in cmd_rebase builtin/rebase.c:1187
+	    #14 ... in run_builtin git.c:469
+	    #15 ... in handle_builtin git.c:724
+	    #16 ... in run_argv git.c:788
+	    #17 ... in cmd_main git.c:923
+	    #18 ... in main common-main.c:62
 
-Thank you for your explanations.
+It happens because we parse twice the configuration: 
 
-> Best Wishes
-> 
-> Phillip
+	$ GIT_EDITOR=: gdb --ex "break git_config" --ex "run" --args git rebase -i HEAD
+	(gdb) bt
+	#0  git_config () at config.c:2663
+	#1  ... in cmd_rebase () at builtin/rebase.c:1187
+	#2  ... in run_builtin () at git.c:469
+	#3  ... in handle_builtin () at git.c:724
+	#4  ... in run_argv () at git.c:788
+	#5  ... in cmd_main () at git.c:923
+	#6  ... in main () at common-main.c:62
+	(gdb) c
+	(gdb) bt
+	#0  git_config () at config.c:2663
+	#1  ... in sequencer_init_config () at sequencer.c:291
+	#2  ... in get_replay_opts () at builtin/rebase.c:161
+	#3  ... in do_interactive_rebase () at builtin/rebase.c:271
+	#4  ... in run_sequencer_rebase () at builtin/rebase.c:339
+	#5  ... in run_specific_rebase () at builtin/rebase.c:705
+	#6  ... in cmd_rebase () at builtin/rebase.c:1830
+	#7  ... in run_builtin () at git.c:469
+	#8  ... in handle_builtin () at git.c:724
+	#9  ... in run_argv () at git.c:788
+	#10 ... in cmd_main () at git.c:923
+	#11 ... in main () at common-main.c:62
+
+We call twice to git_config(): first to get the main git-branch(1) options,
+and second to get the ones related to the sequencer.
+
+Due to how git_config() works the global configuration is parsed twice,
+therefore if core.excludesFile is set, it will be allocated twice.
+
+A free() before the git_config_pathname() can be a simpler fix, but I
+think this series offers a better approach, perhaps applicable to other
+potential similar leaks.
+
+Rubén Justo (4):
+  path.c: introduce strbuf_interpolate_path
+  config.c: introduce git_config_strbuf_pathname
+  environment.c: convert excludes_file to struct strbuf
+  t7300: mark as leak-free
+
+ config.c         | 12 +++++++++++-
+ config.h         |  2 ++
+ dir.c            | 13 +++++++++----
+ environment.c    |  2 +-
+ environment.h    |  2 +-
+ path.c           | 20 ++++++++++++++------
+ path.h           |  1 +
+ t/t7300-clean.sh |  1 +
+ 8 files changed, 40 insertions(+), 13 deletions(-)
+
+-- 
+2.44.0.697.g9b33b46f29
+
