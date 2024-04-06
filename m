@@ -1,64 +1,64 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08CDBE4F
-	for <git@vger.kernel.org>; Sat,  6 Apr 2024 01:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CFB1BF31
+	for <git@vger.kernel.org>; Sat,  6 Apr 2024 01:22:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712366550; cv=none; b=hfo7YjlXS7ZF1PI+fvRIe5OTiw4xVDjyw1/AdrpVNiJFfi0imrrB3vliA88V7F+ysBr5dqiw+AXLSCTt5nsGLLOXqQTDSwVh4IqzaDnrgejxkdeXwYN8N+lsx0dQ+LE3GbhDb2TV+TeLA9vy9dd+Dgdvx1zw38G+jMSdtxLVda8=
+	t=1712366551; cv=none; b=DmnNJaTSwk+bFHFN6kAOr+R//HCG+TK++c+3YVm+q56uOaYpKj1lDPvcPtOZBA4w7v4WVXuBY2j3EC/trTBoRzCuB0qwbirHgGpK4pcC7fRQ4ANalWaB8rHOCZCPlPwWBz9Dg4YQBeE9j+aD/xQgaavMIr3aZdi4T7Q00sXstdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712366550; c=relaxed/simple;
-	bh=jZKRm+2mEdekboNrU7z5B7zDXHMsJR3ygUNr2bizhGU=;
+	s=arc-20240116; t=1712366551; c=relaxed/simple;
+	bh=A9u0dvzLwFmWjdg1odRVfFFjXVFBaShVixUOJj2OmdQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nQkWOP27UIX/lZ45s3+NUyM6Ejy6z3PLiLAq8jmOgsS+iG6dQxY57s60CmuzvOi7uLTZhfTQwDNhwqYa4EW69yWDA7Q7+FNp9JSvJ+TZFx+GY8Ta/2urEVBlJJb/Z31GGfUFWBG8r8VFAfN1RZfAsefrypbxzW+z8F0WE9tO3HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CPmy1aZJ; arc=none smtp.client-ip=209.85.208.175
+	 MIME-Version:To:Cc; b=pZ9sbJLfsHdQ50Cff7ryXTh3iyi+C+6iX7PEMe9dayKeNGr0tNYZq8tevu+x+cw9geEEfaKn7QYKV/gOfzYzSL1WYytKDzlSTpBoeYwY6Dtf6y82ecsBVBzNrlIakt1ejitLOESVbMQJZycaa5pcEQBJf0J+GvHw05R2zJoxUQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AgWvP113; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CPmy1aZJ"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d47a92cfefso35998811fa.1
-        for <git@vger.kernel.org>; Fri, 05 Apr 2024 18:22:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AgWvP113"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4162b0e21b0so14857905e9.0
+        for <git@vger.kernel.org>; Fri, 05 Apr 2024 18:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1712366547; x=1712971347; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qM96Pg+v2WSlmqea84VoJywARHIirt8ccQRhuqk6neE=;
-        b=CPmy1aZJCCPJgoYDdkzwtPvBrflR8ifvuMVXphU0MojBqx7cFel1I7Yi6DJJ/JjFXj
-         KgwbRqYNxR/oe/obPLJWGxBzSLnFQPsIgoasG1zIINiX17ZCRAjVWea8ekgUu4zIK9+1
-         twAqyeDnqkMR11Om1XYnOktpdDxBQH4X5uvT0W2fgN+nOffcUkQBe+rSndDAn+RNCzvo
-         kn/JnrwAEDhb9ybC/UEdZFf1bE8+s+6n6qmdQ3sWMKvnIlbzapcEUyBm8kLwP+w7zZhy
-         yU7RNB6t3e79u750s9clqB64n7eWIDeQ6/KsZd7SdAiVTIRKjVwd5+pMOqwe8wJN//oa
-         WE2g==
+        bh=ArzzgeZqp6f/ie1rMicJVmVBDZpVN+vnuC5DQMBVDwQ=;
+        b=AgWvP113Hm1ETy8w7uCFHV/eWFxjsWRvhfxrwPmTNZRuGeAoj4Qe7VXDRdOhMD+0bi
+         DZ/1RjYW2ODpFmM20PFGYYGxXZm7VY4Krk2rc0A79/JNi8CWN2y3VeN/ip6Zwy7sHjYw
+         UfmaAnesb6s6/FQdpR+4ErJY8GsQNhbeWZi/vqATP4IHhYCXUs8hAzpD0Xs7RPZFR0T8
+         wSczmPBLnMmCWavCa2uz51OojKgHQ1u2//0AZSDRajJWe8ytrFroXOZWuC+akVXZZcZt
+         RpBUbElN+5V/pvCFflbPZ5xzbSzaLxgWnUOuOXybmJbvTDmI3jV1ZSQ86Bgy72sbRKCF
+         kCdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1712366547; x=1712971347;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qM96Pg+v2WSlmqea84VoJywARHIirt8ccQRhuqk6neE=;
-        b=D72FlbP0TKyvMclqgMOXK45V3WS7ORwoet+4Nd6VMXN6nt9wBOU0PmRYLMrjMfnPcC
-         QDmS11AYXePmT+vB3eCVJvB32V0+qAD2KIHU+M2bCIvUy+YygXpV6qqWefFH7eVO2cwy
-         gsDWWBbMNldZnf0cO+XygQmKM7Cqd+3/XXy/fxfXKyndiq6LOKsqVUBjHTFBWqnWQh80
-         GzOERUvn3/klp8wdNkDF4rddj+CmylOPfbYg89BhEThRZZpruno57y4c5xDoGxBL1Wx9
-         Tf5RQGZxUl52t3p0VCy31YOTCUkq8rQrxVUKyanKSm8xpbnyLv6n9lVe0lkTdHZLWVji
-         tdRQ==
-X-Gm-Message-State: AOJu0Yzqrrc1MqbJ2Ly1VzMoAJ2lIMy7j4XD1lhn2UsDx/nLUj1tp1hc
-	Ck6S9OODszksXJoB4syPDbLSTfhqurCZxNGl/yfyqi2MQ3IXE2H6UNA3EjrM
-X-Google-Smtp-Source: AGHT+IFp/0l0tefahCaseMXQW8i7BmveSRsuvW2+LzL1Pir2SFQ/gE49jZ9+RaSZv05HYcTKa8zjyQ==
-X-Received: by 2002:a2e:7d15:0:b0:2d8:63a2:50dc with SMTP id y21-20020a2e7d15000000b002d863a250dcmr2152900ljc.48.1712366546423;
-        Fri, 05 Apr 2024 18:22:26 -0700 (PDT)
+        bh=ArzzgeZqp6f/ie1rMicJVmVBDZpVN+vnuC5DQMBVDwQ=;
+        b=M3KubhZr8o4TciqiJU4GjjHkgnPo61oYsYhdDx/0xee4lmObJaehldrzUfw1mfPpZF
+         925psIcN5vH98K5VEf+840NQA7t1FA+RVXEoWcKQ1D41E7oAxMz27WKKvmja0j1NwH2o
+         Gf1foNzt133RsLBLikoStJr6oEVTXnSbTGSs8PNKsbmCzY2khIfxXbfj+L0kNNwdZj77
+         eOpbEfvPUIUjq2m65gffY5ArB1WWes+KWji0UelvedZDOhCaPrKfFEp7xhdxzxh1iCJq
+         C4L9NicQIznq6G7DBC83iT5I9h8f1gauLnVULDWqDigkSUPe3k349cnmUPQmGQFgOzdP
+         0wjw==
+X-Gm-Message-State: AOJu0Yy3fmAQFT/NM5doJ/JQDnfZ7HGm2x0Hmn90pj0B6BrNM7Nfn9nI
+	s44JPCy/YboS9fELNLaac1RyQt/lxJYo24FzW00lgu6e8cOAM7BkKAox1+4N
+X-Google-Smtp-Source: AGHT+IE+2ZwxkzKUuHzYYKjhiNufQFU9wEKWqS37a3OQq4alFb58iGzZweWTNfX+HNzA6PhMeBjbbw==
+X-Received: by 2002:a05:600c:a0f:b0:416:33e9:1e5 with SMTP id z15-20020a05600c0a0f00b0041633e901e5mr503783wmp.0.1712366547232;
+        Fri, 05 Apr 2024 18:22:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h7-20020a05600c350700b004154399fbd9sm8319569wmq.45.2024.04.05.18.22.25
+        by smtp.gmail.com with ESMTPSA id bg35-20020a05600c3ca300b004162020cee2sm8458286wmb.4.2024.04.05.18.22.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 18:22:25 -0700 (PDT)
-Message-Id: <09f4e7ad123b7359d29981b9a61243e9554487c6.1712366536.git.gitgitgadget@gmail.com>
+        Fri, 05 Apr 2024 18:22:26 -0700 (PDT)
+Message-Id: <b35748f0cf8d7c501428794d555ab79a7a59ae33.1712366536.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
 References: <pull.1704.git.1712017205754.gitgitgadget@gmail.com>
 	<pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 06 Apr 2024 01:22:15 +0000
-Subject: [PATCH v2 7/8] SubmittingPatches: add heading for format-patch and
- send-email
+Date: Sat, 06 Apr 2024 01:22:16 +0000
+Subject: [PATCH v2 8/8] SubmittingPatches: demonstrate using git-contacts with
+ git-send-email
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,22 +82,26 @@ From: Linus Arver <linusa@google.com>
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/SubmittingPatches | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/SubmittingPatches | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 311f306394b..48224e745ff 100644
+index 48224e745ff..11c3e94d4a5 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -426,6 +426,8 @@ Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:` and
- `Tested-by:` lines as necessary to credit people who helped your
- patch, and "cc:" them when sending such a final version for inclusion.
+@@ -413,6 +413,13 @@ trial merges of your topic to `next` and `seen`, you may have noticed
+ work by others conflicting with your changes.  There is a good possibility
+ that these people may know the area you are touching well.
  
-+==== `format-patch` and `send-email`
++If you are using `send-email`, you can feed it the output of `git contacts` like
++this:
 +
- Learn to use `format-patch` and `send-email` if possible.  These commands
- are optimized for the workflow of sending patches, avoiding many ways
- your existing e-mail client (often optimized for "multipart/*" MIME
++....
++	git send-email --cc-cmd='git contacts' feature/*.patch
++....
++
+ :current-maintainer: footnote:[The current maintainer: gitster@pobox.com]
+ :git-ml: footnote:[The mailing list: git@vger.kernel.org]
+ 
 -- 
 gitgitgadget
-
