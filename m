@@ -1,34 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CCF812
-	for <git@vger.kernel.org>; Sun,  7 Apr 2024 00:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10939812
+	for <git@vger.kernel.org>; Sun,  7 Apr 2024 00:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712451427; cv=none; b=JlboYeWsdXIYdGodQQnuDEmD3hmNnRAZ5bA+W7Kf/3+V9eHgdQMrIU4kjfAOv0OVMmjsvLL4nhAv2iPgrGq+9qAyHrXX74+F9Lbt+kuCbIg7TvKg/sxCUKLp47PTnI9uXvWhG6plbqK3JlkfP9MSdJsfbdAicbmvpp/RmlsiON4=
+	t=1712451515; cv=none; b=hhvryCmlYBG+W0Dv4KfZ9iVhSaHirCfa9zAZo8U248VXMaqwlhI+E5F07vrzeodv7BGnjxor+SfoRlL7wJa0igCKFQyDkuTcwey26unEy9CxSHQyyJwTMm/arHJctVxp5qadSmCSvLuurPxKCFdQZG/1uCDEzy8wTcEIJKCDTSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712451427; c=relaxed/simple;
-	bh=1AFy6Fyd4qmvDRoA47IgQyayOmFZbySvFhRsnPdRQzI=;
+	s=arc-20240116; t=1712451515; c=relaxed/simple;
+	bh=rqVGd55dbd4HmjfQh20bnVInRKG1qk+lmsHWL5zDcHg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EFy4YfO6ue334+8pOKWfjTLWwU4RUAOo872xifV7t3Tf1qokh3QQgMqixVba8KvkNc1C2W51d0pdY67Rcq67AlVtgxsaaqSogY/JE9CXH1RBvFSCbBZMjPR8IGd59g6+hvku+kOgUHS5RT+zM+pv+vM5IIBXxcj2vl6/TwfXMO4=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dk/sDzI7RMaol7hlQmvGy0X/sI72Ilj8Q8GoK1ID1ZGqxYOxs1zHkowg9S7qAYgamaUM+5DhWxmirU8Gs5AwB8vEqPYoRxQQN3Z+OOwELvsQKXc5rWIhn0mDQZVfC+6X5PUe2KXY47fxJFCwmf9tB6SzMkUAEhX052BEz+HBGW0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7243 invoked by uid 109); 7 Apr 2024 00:56:57 -0000
+Received: (qmail 7267 invoked by uid 109); 7 Apr 2024 00:58:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 07 Apr 2024 00:56:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 07 Apr 2024 00:58:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11175 invoked by uid 111); 7 Apr 2024 00:56:59 -0000
+Received: (qmail 11184 invoked by uid 111); 7 Apr 2024 00:58:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Apr 2024 20:56:59 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Apr 2024 20:58:34 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 6 Apr 2024 20:56:56 -0400
+Date: Sat, 6 Apr 2024 20:58:31 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Subject: [PATCH 0/12] git_config_string() considered harmful
-Message-ID: <20240407005656.GA436890@coredump.intra.peff.net>
-References: <xmqqttkeicov.fsf@gitster.g>
+Subject: [PATCH 01/11] config: make sequencer.c's git_config_string_dup()
+ public
+Message-ID: <20240407005831.GA868358@coredump.intra.peff.net>
+References: <20240407005656.GA436890@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,100 +38,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqttkeicov.fsf@gitster.g>
+In-Reply-To: <20240407005656.GA436890@coredump.intra.peff.net>
 
-On Sat, Apr 06, 2024 at 11:11:12AM -0700, Junio C Hamano wrote:
+Just about every caller of git_config_string() has a possible leak in
+it: if we parse a config variable twice, it will overwrite the pointer
+that was allocated the first time, leaving the memory unreferenced.
 
-> The excludes_file variable is marked "const char *", but all the
-> assignments to it are made with a piece of memory allocated just
-> for it, and the variable is responsible for owning it.
-> 
-> When "core.excludesfile" is read, the code just lost the previous
-> value, leaking memory.  Plug it.
-> 
-> The real problem is that the variable is mistyped; our convention
-> is to never make a variable that owns the piece of memory pointed
-> by it as "const".  Fixing that would reduce the chance of this kind
-> of bug happening, and also would make it unnecessary to cast the
-> constness away while free()ing it, but that would be a much larger
-> follow-up effort.
+Unfortunately we can't just fix this directly in git_config_string().
+Some callers do something like:
 
-As you noticed in your follow-up, this is just the tip of the iceberg.
-And it's not just git_config_pathname(), but really git_config_string(),
-and it is a potential problem for almost every call.
+   const char *foo = "default_value";
+   ...
+   git_config_string(&foo, var, value);
 
-I have a series that I started a few months ago to try to improve this,
-but I never sent it in because I didn't have a good solution for the
-long tail of variables where we assign a string literal as the default.
+And we must _not_ free that initial value, as it's a string literal. We
+can't help those cases easily, as there's no way to distinguish a
+heap-allocated variable from the default one. But let's start by at
+least providing a helper that avoids the leak. That will let us convert
+some cases right away, and give us one potential path forward for the
+more complex ones.
 
-But that doesn't mean we can't incrementally make things better. So I
-polished it up a bit, and will send the result in a minute.
+It turns out we already have such a helper, courtesy of 03a4e260e2
+(sequencer: plug memory leaks for the option values, 2016-10-21). The
+problem is more acute in sequencer.c, which may load config multiple
+times. Hence the solution was limited to that file back then. But this
+really is a more general problem within our config callbacks.
 
-Looking at your sketch, I think I glossed over the parse-options
-OPT_FILENAME_DUP() issue. In practice it's OK because we wouldn't
-generally re-read the config after parsing the options. But leaving it
-does seem rather ugly, and your solution looks reasonable. I'm not sure
-if there's an easy way to get the compiler to point to spots which need
-it; the type information is all lost when parse-options passes
-everything through a void pointer.
+Note that the new helper takes a "char *" rather than a const pointer.
+This is more appropriate, since we tend to use "const" as a signal for
+a lack of memory ownership (and this function is most certainly
+asserting ownership over the pointed-to memory).
 
-(I remember a while ago looking at retaining type annotations for
-parse-options; this could be another use case for that).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ config.c    |  9 +++++++++
+ config.h    | 12 ++++++++++++
+ sequencer.c | 10 ----------
+ 3 files changed, 21 insertions(+), 10 deletions(-)
 
-I think it would also be useful if we could enable -Wwrite-strings to
-catch cases where string literals are assigned to non-const pointers.
-But there's some cleanup/refactoring to get that to compile cleanly.
+diff --git a/config.c b/config.c
+index eebce8c7e0..2194fb078a 100644
+--- a/config.c
++++ b/config.c
+@@ -1345,6 +1345,15 @@ int git_config_string(const char **dest, const char *var, const char *value)
+ 	return 0;
+ }
+ 
++int git_config_string_dup(char **dest, const char *var, const char *value)
++{
++	if (!value)
++		return config_error_nonbool(var);
++	free(*dest);
++	*dest = xstrdup(value);
++	return 0;
++}
++
+ int git_config_pathname(const char **dest, const char *var, const char *value)
+ {
+ 	if (!value)
+diff --git a/config.h b/config.h
+index f4966e3749..cdffc14ccf 100644
+--- a/config.h
++++ b/config.h
+@@ -279,9 +279,21 @@ int git_config_bool(const char *, const char *);
+ /**
+  * Allocates and copies the value string into the `dest` parameter; if no
+  * string is given, prints an error message and returns -1.
++ *
++ * Note that this function does _not_ free the memory referenced by the
++ * destination pointer. This makes it safe to use on a variable that initially
++ * points to a string literal, but it also means that it leaks if the config
++ * option is seen multiple times.
+  */
+ int git_config_string(const char **, const char *, const char *);
+ 
++/**
++ * Like git_config_string(), but frees any previously-allocated
++ * string at the destination pointer, avoiding a leak when a
++ * config variable is seen multiple times.
++ */
++int git_config_string_dup(char **, const char *, const char *);
++
+ /**
+  * Similar to `git_config_string`, but expands `~` or `~user` into the
+  * user's home directory when found at the beginning of the path.
+diff --git a/sequencer.c b/sequencer.c
+index 2c19846385..3e5d82e0e5 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2920,16 +2920,6 @@ static int read_populate_todo(struct repository *r,
+ 	return 0;
+ }
+ 
+-static int git_config_string_dup(char **dest,
+-				 const char *var, const char *value)
+-{
+-	if (!value)
+-		return config_error_nonbool(var);
+-	free(*dest);
+-	*dest = xstrdup(value);
+-	return 0;
+-}
+-
+ static int populate_opts_cb(const char *key, const char *value,
+ 			    const struct config_context *ctx,
+ 			    void *data)
+-- 
+2.44.0.872.g288abe5b5b
 
-  [01/11]: config: make sequencer.c's git_config_string_dup() public
-  [02/11]: config: add git_config_pathname_dup()
-  [03/11]: config: prefer git_config_string_dup() for temp variables
-  [04/11]: config: use git_config_string_dup() for open-coded equivalents
-  [05/11]: config: use git_config_string_dup() to fix leaky open coding
-  [06/11]: config: use git_config_string() in easy cases
-  [07/11]: config: use git_config_pathname_dup() in easy cases
-  [08/11]: http: use git_config_string_dup()
-  [09/11]: merge: use git_config_string_dup() for pull strategies
-  [10/11]: userdiff: use git_config_string_dup() when we can
-  [11/11]: blame: use "dup" string_list for ignore-revs files
-
- alias.c                |   3 +-
- archive-tar.c          |  10 ++--
- attr.c                 |   2 +-
- attr.h                 |   2 +-
- builtin/blame.c        |   7 +--
- builtin/commit.c       |   8 ++--
- builtin/config.c       |   6 +--
- builtin/help.c         |   7 +--
- builtin/log.c          |  16 +++----
- builtin/merge.c        |  12 ++---
- builtin/receive-pack.c |  10 ++--
- builtin/repack.c       |  16 +++----
- compat/mingw.c         |   7 +--
- config.c               |  48 ++++++++++++-------
- config.h               |  19 ++++++++
- convert.c              |  12 ++---
- delta-islands.c        |   4 +-
- diff.c                 |  12 ++---
- environment.c          |  14 +++---
- environment.h          |  14 +++---
- fetch-pack.c           |   6 +--
- fsck.c                 |   6 +--
- gpg-interface.c        |   9 ++--
- http.c                 | 105 +++++++++++++++++++----------------------
- imap-send.c            |  20 ++++----
- mailmap.c              |   4 +-
- mailmap.h              |   4 +-
- merge-ll.c             |  17 +++----
- pager.c                |   4 +-
- promisor-remote.c      |   2 +-
- promisor-remote.h      |   2 +-
- remote.c               |  45 +++++++++---------
- remote.h               |   8 ++--
- sequencer.c            |  12 +----
- setup.c                |  11 ++---
- upload-pack.c          |   4 +-
- userdiff.c             |   6 +--
- userdiff.h             |   6 +--
- 38 files changed, 251 insertions(+), 249 deletions(-)
-
--Peff
