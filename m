@@ -1,178 +1,206 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E343BBE2
-	for <git@vger.kernel.org>; Sun,  7 Apr 2024 17:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159AA26AE3
+	for <git@vger.kernel.org>; Sun,  7 Apr 2024 18:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712512690; cv=none; b=F5IOr3nJEAzoADnFQkZRvyrjTjv9rg0Z5EzJJLvFfOZpNH0FVriLvLzOi7+7FuwRT8osBgY61ynJU4dxMcQ1maoh6HNnK8xcuXmMBQBkh2RTLGyyqANS9YKoAK4Cvf9GH3x2BKP1xIdlgY9ToSH1qrws123yPoVAWxa/qcLOHzo=
+	t=1712512942; cv=none; b=HIcmK7TOyM7gPu+rMLAts+Yg9Uo0mMHECU8bZySxto6h37cRCboizuaIvcUdcEHhq97Kikdg7NX+BPww40uqZp2gzBitVnlktEZDKtNat6yX4K8XZY4T2DnMBWJHoGdJ0eSnuQTs27wk3NJ9TCM6KlrHw+dTPhdUk75swKR+cHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712512690; c=relaxed/simple;
-	bh=2JWscO0K471PlElQa0ZIeKOI0Ga5LuVXOXa1Fvp+Cs4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BGoTtnALJ9CQFoJpbjeYYnn6dyg0/frGRTZ6nQ2bfnvfXAvnlv7AyuwJ3RNamwep0fSoa1snzk2q1+MsdWPvxvXuFlmQPAz4kELxddZoHPpZUdGhl1IPXtuBjAVZtPH0YaZNJNcMGtSvDuVacw99AqCpqT4H83RUyO4Cuz+o+CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dIHC/Neg; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712512942; c=relaxed/simple;
+	bh=g/1n2nJhUlK5XHgeot43xM5gKhglduuDaONm/2SZvEA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dHswLBKXkfsM74zIQOINYcjeEY9eHmA7b9W6WJiS+FDYMR4FlB82We05H6I7KD8ksrs/fIP0HqFjiEvXtCqo/CmVFwWMsLKTVnxzNae4zpPpgcdnkiXSv/YNbBv5Q7vorzEZ9fmPZJxDKqh+Cy3NSMQDezUpbUfvuN0pNDliGcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=zohiM9YN; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dIHC/Neg"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41650de9e1eso3181295e9.1
-        for <git@vger.kernel.org>; Sun, 07 Apr 2024 10:58:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="zohiM9YN"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4345f35daa7so8228981cf.0
+        for <git@vger.kernel.org>; Sun, 07 Apr 2024 11:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712512687; x=1713117487; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=42D4Dg1Tyd5F9tPTZG4pDCHt7wAuxpWpm/bDlD/xUAI=;
-        b=dIHC/Negpl3OAl77kzQYUqWEBDseeoOSvcqRgdtCoSH7wULDhJnJmNpHM22Dl12Xge
-         H81PqDZflOVk4CzgQ/qfdrRxqw+E823l/v4ykmEuBXr1amKi7TXeounsRedSiq1PUyjq
-         2A2ivINKIdT1Mu9q/Ryi3ZrobVEK13qcz9omsiyszkOAy0zF6YCZkfHAs4USn4/1ms/h
-         Qao8aDthCKPYvMzzAQAWDrPiLlJDVtuQLad88D1CTa6Wdp+nQ9SAwcBg15psN7PxPt1l
-         qcT7jmJ8pc6tSp2kD7TMXlqQVzmE4Q1ZjCtHWzxA5QJy8Z1mpYyPMKyh9OEIlIdtDgPz
-         eLbA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712512940; x=1713117740; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=iwuypd+Y0tCKNFC8nmQ/rBfcnk4QYvrY7OulDopsDK4=;
+        b=zohiM9YNuSu08cp3b59zqEuoYsDo7tuLp8CJTUQQ0/zy8akMK5SviIJJQhVa+9NTOu
+         upPjfNaUzIbbOdXYrlvNhTcebQ8yAh9jK37dczJ+IemRGTfAf/tY8E0Cx9JA+It0/py6
+         DpXi607d9jmM07hPRctdALWLqlgYDqKBlbUemOp04lMZEm2eRXYfLjQ5KZpMRN4cuWVH
+         7oXkHgT3de5bPn1sWCJS3SI7TXPI0tfyAiEqX/eF5ZFNV+vmdMZLXFO99GqRlrSNlsOG
+         4fi21JPgiU5jqnSijJdEZMJCEnipBhUT+z8f42eGCIkl2HQi1cIGDjzgxd4MOhz8uzzd
+         boWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712512687; x=1713117487;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=42D4Dg1Tyd5F9tPTZG4pDCHt7wAuxpWpm/bDlD/xUAI=;
-        b=JDN2XqELQAA2PlYCYoT49Q1yOI3JBVTWuOPm4+v9mFIgd86iaahLK71wjRaPins7bY
-         fnT+8Uv2e8PXYbInEn5vzteLbK/N1ibe/6kFIvQ8+xnouuXjidX0KiNrHvI2IZirnWgY
-         yIh+laOjJBKaU7I56F+Ff6u4wxwT924uVKZBPS05O1R5h6SEv/ruEflM1rJj576d6k7h
-         FTSBJZOwPj03Fnv1RdMo9Q7WZFSjfLLW6sLCL9iH+ewmOoi8/ELawxNePXYhVErKnvzv
-         QAArTlqpMimypofmRtFWetd/1KPB77yTIkrrWq3OvxCa9rZCN5++UqNnvSBgrU79xquz
-         TE5g==
-X-Gm-Message-State: AOJu0Yy4CZXDcNk4K3Ufp6p7WNX/UCKykrRAWN2g2BSeGcjHOjxQqKTH
-	qoeHw/lrdnSamxhUoVuK3gTYAerBR2pLaCoNhcKhhweHBpRHb8R2
-X-Google-Smtp-Source: AGHT+IGlgQT6S2O+tU2mG4wOsIGfWhY75fv08SEfbMt/B8mZyeVrvI38ueVR/KWUMyArLH2d50/ubg==
-X-Received: by 2002:a05:600c:4448:b0:414:8ffb:a6bf with SMTP id v8-20020a05600c444800b004148ffba6bfmr6683059wmn.18.1712512687267;
-        Sun, 07 Apr 2024 10:58:07 -0700 (PDT)
-Received: from gmail.com (4.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.4])
-        by smtp.gmail.com with ESMTPSA id v9-20020a05600c470900b0041568e91c41sm14054118wmo.41.2024.04.07.10.58.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Apr 2024 10:58:06 -0700 (PDT)
-Message-ID: <ef8e5f43-5f27-4f0a-acf5-cf4f8281a8f8@gmail.com>
-Date: Sun, 7 Apr 2024 19:58:02 +0200
+        d=1e100.net; s=20230601; t=1712512940; x=1713117740;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iwuypd+Y0tCKNFC8nmQ/rBfcnk4QYvrY7OulDopsDK4=;
+        b=kOpBdw7+M4bea4IkCsS5w2gnIv6BwxendAbcCO1Je/vrcNOZ2MNdzs6WvZuHneplNt
+         1cSy9FrKoFPCfO1FUaMIuVgxT+RVtyrr3TfSnHQoXK8Z85It1j10EIsWLEtm1SnPY2Zw
+         SgbLskFNSbgVSTswfPUknRZWtrwv5OAjCRSB6ApOtrtHGOF8C3n+tZyZQ4RZsHGkEyEn
+         z68WH5OX/NffgnhKyEVSM2KWL2Yg9CuokWH+w5wnAV2aeOGh2wPiHVwtMUAUNBiY4R8H
+         ae3MvoN0EheSjnGImem81LQqTPjMfW0nJx99017K3J4F+DFvBFKKiSg8aw/Ab8y2tVUt
+         r4WA==
+X-Gm-Message-State: AOJu0YwHUufCf5OYn3GI2jwB9ua+KqYzanzshID3jsvQAIYxb/xbC+lb
+	8CBwoeVjAw8eH5KfVEQWxUHdwHwkrXBzdBoyqrmd9qqcqv5qGBdtqJ8QnELf1Ec=
+X-Google-Smtp-Source: AGHT+IEm2WZGhQXpg36ZR5k3A9GrqGQVGfeRPBws8Zl/LLMwKZUVkwxDGo+VYR5lIo0tAc5robeuiw==
+X-Received: by 2002:ac8:7d52:0:b0:432:bfac:a0b4 with SMTP id h18-20020ac87d52000000b00432bfaca0b4mr8910416qtb.59.1712512939914;
+        Sun, 07 Apr 2024 11:02:19 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f20-20020ac840d4000000b00434a5dba537sm105259qtm.3.2024.04.07.11.02.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Apr 2024 11:02:19 -0700 (PDT)
+Date: Sun, 7 Apr 2024 14:02:17 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: blanet via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, blanet <bupt_xingxin@163.com>,
+	Xing Xin <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH] midx: disable replace objects
+Message-ID: <ZhLfqU9VNUW+2mmV@nand.local>
+References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
+ <ZhKqvA1NQwrVfnfE@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/12] git_config_string() considered harmful
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqqttkeicov.fsf@gitster.g>
- <20240407005656.GA436890@coredump.intra.peff.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20240407005656.GA436890@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZhKqvA1NQwrVfnfE@nand.local>
 
-On Sat, Apr 06, 2024 at 08:56:56PM -0400, Jeff King wrote:
+On Sun, Apr 07, 2024 at 10:16:28AM -0400, Taylor Blau wrote:
+> , I can still produce the failure that you are seeing here. So I suspect
+> that while it's entirely possible that there is a bug in the MIDX/bitmap
+> code, that this test is not exercising it.
+>
+> I think the first step to demonstrate a bug in the MIDX/bitmap machinery
+> would be to provide a reproducer that fails only when using a MIDX
+> and/or bitmap.
 
-> And it's not just git_config_pathname(), but really git_config_string(),
+I had a some more time to look into this, and I think that your original
+fix is correct.
 
-Indeed.
+The issue is, as you suggest, due to the following (from your original
+patch):
 
-After Junio's series and yours, I'm on the fence now, but my envision was
-to introduce:
+> After some investigation we found that all repositories experiencing
+> failures contain replace references, which seem to be improperly
+> acknowledged by the MIDX bitmap generation logic.
 
---- >8 ---
-diff --git a/config.c b/config.c
-index eebce8c7e0..7322bdfb94 100644
---- a/config.c
-+++ b/config.c
-@@ -1345,6 +1345,15 @@ int git_config_string(const char **dest, const char *var, const char *value)
- 	return 0;
- }
- 
-+int git_config_strbuf(struct strbuf *dest, const char *var, const char *value)
-+{
-+	if (!value)
-+		return config_error_nonbool(var);
-+	strbuf_reset(dest);
-+	strbuf_addstr(dest, value);
-+	return 0;
-+}
-+
- int git_config_pathname(const char **dest, const char *var, const char *value)
- {
- 	if (!value)
-diff --git a/config.h b/config.h
-index f4966e3749..46e3137612 100644
---- a/config.h
-+++ b/config.h
-@@ -282,6 +282,12 @@ int git_config_bool(const char *, const char *);
-  */
- int git_config_string(const char **, const char *, const char *);
- 
-+/**
-+ * Copies the value string into the `dest` parameter; if no
-+ * string is given, prints an error message and returns -1.
-+ */
-+int git_config_strbuf(struct strbuf *, const char *, const char *);
-+
- /**
-  * Similar to `git_config_string`, but expands `~` or `~user` into the
-  * user's home directory when found at the beginning of the path.
+Indeed, the pack-bitmap-write machinery does not itself call
+disable_replace_refs(). So when it generates a reachability bitmap, it
+is doing so with the replace refs in mind. You can see that this is
+indeed the cause of the problem by looking at the output of an
+instrumented version of Git that indicates what bits are being set
+during the bitmap generation phase.
+
+With replace refs (incorrectly) enabled, we get:
+
+    [2, 4, 6, 8, 13, 3, 6, 7, 3, 4, 6, 8]
+
+and doing the same after calling disable_replace_refs(), we instead get:
+
+    [2, 5, 6, 13, 3, 6, 7, 3, 4, 6, 8]
+
+Single pack bitmaps are unaffected by this issue because we generate
+them from within pack-objects, which does call disable_replace_refs().
+
+It is tempting to instead do something like:
+
 --- 8< ---
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index c6c8f94cc5..cbc543caad 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -17,6 +17,7 @@
+ #include "trace2.h"
+ #include "tree.h"
+ #include "tree-walk.h"
++#include "replace-object.h"
 
-To allow uses like:
+ struct bitmapped_commit {
+ 	struct commit *commit;
+@@ -223,6 +224,8 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
+ 	memset(bb, 0, sizeof(*bb));
+ 	init_bb_data(&bb->data);
 
++	parsed_object_pool_clear(the_repository->parsed_objects);
++
+ 	reset_revision_walk();
+ 	repo_init_revisions(writer->to_pack->repo, &revs, NULL);
+ 	revs.topo_order = 1;
 --- >8 ---
-diff --git a/config.c b/config.c
-index 7322bdfb94..03884fa782 100644
---- a/config.c
-+++ b/config.c
-@@ -1572,7 +1572,7 @@ static int git_default_core_config(const char *var, const char *value,
- 	}
- 
- 	if (!strcmp(var, "core.editor"))
--		return git_config_string(&editor_program, var, value);
-+		return git_config_strbuf(&editor_program, var, value);
- 
- 	if (!strcmp(var, "core.commentchar") ||
- 	    !strcmp(var, "core.commentstring")) {
-diff --git a/editor.c b/editor.c
-index b67b802ddf..618c193249 100644
---- a/editor.c
-+++ b/editor.c
-@@ -27,8 +27,8 @@ const char *git_editor(void)
- 	const char *editor = getenv("GIT_EDITOR");
- 	int terminal_is_dumb = is_terminal_dumb();
- 
--	if (!editor && editor_program)
--		editor = editor_program;
-+	if (!editor && editor_program.len)
-+		editor = editor_program.buf;
- 	if (!editor && !terminal_is_dumb)
- 		editor = getenv("VISUAL");
- 	if (!editor)
-diff --git a/environment.c b/environment.c
-index a73ba9c12c..b5073ff972 100644
---- a/environment.c
-+++ b/environment.c
-@@ -58,7 +58,7 @@ size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
- size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
- size_t delta_base_cache_limit = 96 * 1024 * 1024;
- unsigned long big_file_threshold = 512 * 1024 * 1024;
--const char *editor_program;
-+struct strbuf editor_program = STRBUF_INIT;
- const char *askpass_program;
- const char *excludes_file;
- enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
-diff --git a/environment.h b/environment.h
-index 05fd94d7be..c20898345e 100644
---- a/environment.h
-+++ b/environment.h
-@@ -220,7 +220,7 @@ const char *get_commit_output_encoding(void);
- extern const char *git_commit_encoding;
- extern const char *git_log_output_encoding;
- 
--extern const char *editor_program;
-+extern struct strbuf editor_program;
- extern const char *askpass_program;
- extern const char *excludes_file;
+
+But by then it is too late, because the replace refs have already been
+taken into account for parsed objects.
+
+An alternative is to clear the parsed_object_pool before (or after)
+calling disable_replace_refs(), but I think that approach that feels
+sub-optimal for a couple of reasons:
+
+  - We're wasting time re-parsing objects that we've already seen
+
+  - We're banking on the fact that the MIDX generation does not lookup
+    objects with the OBJECT_INFO_LOOKUP_REPLACE flag set, which would
+    cause the MIDX to be broken in the same way.
+
+So I think that disabling replace refs at the outset within the
+multi-pack-index builtin is the right way to go. In addition to the test
+fixes I suggested earlier, I would instead demonstrate the bug by
+showing a clone (which fails with MIDXs, but doesn't without MIDXs) like
+so:
+
+--- 8< ---
+diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+index 5e4cdef6a8..1fb3b0f9d7 100755
+--- a/t/t5326-multi-pack-bitmaps.sh
++++ b/t/t5326-multi-pack-bitmaps.sh
+@@ -442,19 +442,16 @@ test_expect_success 'do not follow replace objects for MIDX bitmap' '
+ 		cd repo &&
+
+ 		test_commit A &&
+-		A=$(git rev-parse HEAD) &&
+ 		test_commit B &&
+-		B=$(git rev-parse HEAD) &&
+-		git checkout --orphan=orphan $A &&
++		git checkout --orphan=orphan A &&
+ 		test_commit orphan &&
+-		C=$(git rev-parse HEAD) &&
+-		git rev-list --objects --no-object-names $B |sort >expected &&
+
+-		git replace $A $C &&
+-		git repack -ad &&
+-		git multi-pack-index write --bitmap &&
+-		git rev-list --objects --no-object-names --use-bitmap-index $B |sort >actual &&
+-		test_cmp expected actual
++		git replace A HEAD &&
++		git repack -ad --write-midx --write-bitmap-index &&
++
++		# generating reachability bitmaps with replace refs
++		# enabled will result in broken clones
++		git clone --no-local --bare . clone.git
+ 	)
+ '
+--- >8 ---
+
+With the change in your patch to call disable_replace_refs() in
+builtin/multi-pack-index.c, this test passes as expected. With that
+change compiled out, we instead get:
+
+[...]
++ git clone --no-local --bare . clone.git
+Cloning into bare repository 'clone.git'...
+remote: Enumerating objects: 8, done.
+remote: Total 8 (delta 0), reused 0 (delta 0), pack-reused 8 (from 1)
+Receiving objects: 100% (8/8), done.
+fatal: did not receive expected object da5497437fd67ca928333aab79c4b4b55036ea66
+fatal: fetch-pack: invalid index-pack output
+error: last command exited with $?=128
+not ok 352 - do not follow replace objects for MIDX bitmap
+
+as expected.
+
+Thanks,
+Taylor
+
