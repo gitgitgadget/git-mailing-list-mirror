@@ -1,121 +1,170 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CA82B9D6
-	for <git@vger.kernel.org>; Sun,  7 Apr 2024 14:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131092D60A
+	for <git@vger.kernel.org>; Sun,  7 Apr 2024 14:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712499001; cv=none; b=VHVVbR86/a6CTnKAIo7OSn3P/e/PEoI+hIJTzXU5WLcG8My/WidmzhviBo4UoEiz6iMimtXX2/JyG6Vuk4yiUwqnen6t12uwKUp/Q+L9LXe/6hiT/rMRxBFnRMs+AGBu2K7uxZAOAOkE0apyxqpgR2H6Tq58qP+jdh/U/Ai3WBw=
+	t=1712499407; cv=none; b=b4fq/oiDTdrwagdOaqIj0+CFYFyq1mGPF8SWFFAGDyY472OgLeRriRdQxyNX2hGoR20wHyzaK3HL3/ZF/jH2zhjIoVksTKNH1NlN+NMhXsqWwlI2OhsvFwbYwndBUKeVNP17rOMG5kh7pY0/GMte6Npt4DcNVFbVPTcmtm2pCsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712499001; c=relaxed/simple;
-	bh=0NQ2HcipOg6+3w19tfbNGb0afzi8qShqq1ppTakXuIQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fGgcTeEfKpnYTNeLUCG8b4EcFb/Bnw0BeVNkG3pUqoF97MPJ6JcnTZAhWRCn+CIoOnjyUlfe98Owl257eXEVGlK4Esbh9IF38wdL8ZDW4dfdDOfRsLSA318CFSvTty6wQLJBTE5Z3cwLCeC3fnHiPfaqd2XWDXFxhQlzd0o+EbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IUZkbXti; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712499407; c=relaxed/simple;
+	bh=y5ZBIIhLksqQLFwLDmzPvB/FV5opntPXnZlQBcnTpxA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EqSJPT+0fJgaVN0UOE7cfV+XUpR0W5PYxsoNRLpw4mhJBkizcg8LHsVso3uxMvLixSrEhfsvXWGBR0mG87zOF3L8Tf5L21M96j7fcxaQespMV0MRCjO8DvXsp+57Qt6lJ141dWNtyz/PNV715lttGMYUNzUzFC3Qd3iD1dwGRrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NiJyC/3y; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IUZkbXti"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41638a0a87bso5526255e9.3
-        for <git@vger.kernel.org>; Sun, 07 Apr 2024 07:09:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NiJyC/3y"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-78d575054c8so64544385a.3
+        for <git@vger.kernel.org>; Sun, 07 Apr 2024 07:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712498998; x=1713103798; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uG6/eJ9yDOZDgsJbJ96UN1JLpMjIT/h8pky8nI56WOs=;
-        b=IUZkbXtiIMAAiTHI1/urQk4juU+AbXCwWnrPiKeOcV1ATPqXfahQmMIZaxxnpPrcNr
-         uoQYzmmkdZgv/8/GDdWXUnbkl9a6+IIr92IJ6HwGc0+r1nYSXdqSyj2dd8DTCgA9k/hh
-         AIoz5haiiSsq0i/28krnO8hDjT6iChenUfDsqsjq45LiXNsHpK5jUpdlvT64iwW/J0c5
-         UIzgj7k+noUAec48OZ/pMXg5tz+dVhoukDj5r66EMEHORzN96yL0W8SHz+P98lSy/Aha
-         rpkkUJEjT+eH/J6m2DJuJwefgbTtp1u7eNJnVz7yfp3eVaK6aTRZWTOD+geGTjZMO4k5
-         1KPA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712499405; x=1713104205; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7dZdG11xR76edph+9cckbQKQJeTd8HGmqQmo0fgHRHM=;
+        b=NiJyC/3yv+ARwVXlbRGx+xyD8S4IrzHGT2pN/XIZBFSkEBUeYCv8VmHQWXb50NNShD
+         0LqfCINspB63bpd2FLxXI/lLGdw2S71zdfOsBCuYUJ06++jNj1Juo4fZdij5XT2q7HP7
+         sZZeGcebNPQAi6pZI1NPTq0hJigphCPVoyXt4c9PtYlitMD1nbhq/O7cvfD6F74eV+dv
+         YeCweAQXuzHIHU9sEIkoaVUZ/otmpmHRhHoq5duehxPhAep1WowpnkFBvoV7gaNyYJQ3
+         3DJpdMYBugmPoxJZh06jkTq+T+y+WWyGOdBMkwXx7TevOPcaOPJFKq7QjOWHOZn6nHUL
+         N4uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712498998; x=1713103798;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uG6/eJ9yDOZDgsJbJ96UN1JLpMjIT/h8pky8nI56WOs=;
-        b=Y1qvJSwrceIXhFnGlDKmRhAanyCw/VKDM37qkKe+oM5nUQd4mgXZkxsBCbEFw12Nov
-         AWsZGAfnpwZ9R/f4S20V/Yy6Oj1vSgUk+UbbCTkFyVbEs4wbJwGZtIXERorLVRkB5NLV
-         lS9UvOfbiyBkerL7c2pEgAl0FgJ84d/wojHtLREWhQ0Wvn3gmFr3m74gxSHyNz1iai+j
-         T0tGDFLsonTyj4dwS8ED+4CW7pKwjIeVD28HdDtYNKJa81jGepdR1z8ZFNsD8uQEocT3
-         mkyR7/+I4X5TgFp66LuBtgpRA8wolSomnVU5h3m1KzIB5MUwuENAdgzYZWe4UD1Qd0LM
-         +zAw==
-X-Gm-Message-State: AOJu0Yx3WyMhNe+yoH0DAlbGbTvWWW3sPrDTEGv6PTrEgDImbFOvm12P
-	BDUCl8lx083j5AZfWn4WrO/jjsKZenIsruZJYbIX9+Oew3Dc1TwJ
-X-Google-Smtp-Source: AGHT+IFzyjbvL+Umb/DnlZKHdi5FcRJapkTyPATIn6R/v0H3nvr6hjXCTg5HKRLK9Y5Tb9jxnIH2Jg==
-X-Received: by 2002:a05:600c:1e1c:b0:416:6bd7:cd88 with SMTP id ay28-20020a05600c1e1c00b004166bd7cd88mr290594wmb.8.1712498997499;
-        Sun, 07 Apr 2024 07:09:57 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id fc9-20020a05600c524900b004162a9f03a6sm13159698wmb.7.2024.04.07.07.09.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Apr 2024 07:09:57 -0700 (PDT)
-Message-ID: <d10bd772-2cf1-4838-bec2-ea2a639cabab@gmail.com>
-Date: Sun, 7 Apr 2024 15:09:56 +0100
+        d=1e100.net; s=20230601; t=1712499405; x=1713104205;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7dZdG11xR76edph+9cckbQKQJeTd8HGmqQmo0fgHRHM=;
+        b=tDpWMRf89MF+Ymv38SYaEAifFZBbYc5YqfrjLWXsKEKDL5Vn/qMvr9+jKLRX9PStRn
+         7bi9bCCEo9T5S6wtr5/nhFfzKeyJ5Etdj2Hbs1SGsjW6OL/aVH7b5RPxWNGIGd0UDA5e
+         WFlFMq2LbS3+AFIHZ6Lz4baLkEpDwDayVnfvmQE9uQ7yziG2t7jIWkfEw1HFq9UDCnfi
+         mtO9dWecueGff2Px2svldcjT9m4pYdcrhWpu5BgIEWoXbad3UwHnSu+wNzCug/aFNdgu
+         kyC6MpU56dPbrvNs8j3BQAnAvW3GRLehUa6yjGDezLTDftLfaXuO760273nSlXmtm7DI
+         o73g==
+X-Gm-Message-State: AOJu0YycjtChV0mbIPheOSkHrW/xJ0xMaWpSrXAmeaOL63hFaFJIiz1Z
+	TW4B+QqteSPtQhFwqKeYMaOWIP6fwcL4adqwWgK+0stxbMJzGoq0t6RkY2nW7f0=
+X-Google-Smtp-Source: AGHT+IESNi9ogSVsj4Oh7QDt4z3BBBsD/Rtq3tzTvzlTCKvTx2BfCeiZ/9m4HWqxDuiLRQAcDMtKwg==
+X-Received: by 2002:a37:e114:0:b0:78b:c6c4:b0bc with SMTP id c20-20020a37e114000000b0078bc6c4b0bcmr6210455qkm.48.1712499404867;
+        Sun, 07 Apr 2024 07:16:44 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u13-20020a05620a022d00b0078d5ffa723asm873540qkm.94.2024.04.07.07.16.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Apr 2024 07:16:36 -0700 (PDT)
+Date: Sun, 7 Apr 2024 10:16:28 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: blanet via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, blanet <bupt_xingxin@163.com>,
+	Xing Xin <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH] midx: disable replace objects
+Message-ID: <ZhKqvA1NQwrVfnfE@nand.local>
+References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC] bisect: Introduce skip-when to automatically skip commits
-To: Olliver Schinagl <oliver@schinagl.nl>, phillip.wood@dunelm.org.uk,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
- Stefan Haller <lists@haller-berlin.de>
-References: <20240330081026.362962-2-oliver@schinagl.nl>
- <864b0f22-b07b-469b-8fc2-56940fd89a8b@schinagl.nl>
- <xmqqcyr3s3gj.fsf@gitster.g>
- <b194ba7c-454b-494f-bef2-e9eac7ca87f1@schinagl.nl>
- <4bedcad2-218a-4b16-88a7-cc70cc126af3@gmail.com>
- <6dd4a5a4-9999-4c04-a854-09fc238c91bb@schinagl.nl>
-Content-Language: en-US
-In-Reply-To: <6dd4a5a4-9999-4c04-a854-09fc238c91bb@schinagl.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
 
-On 06/04/2024 20:17, Olliver Schinagl wrote:
-> Hey Phillip,
-> 
-> On 06-04-2024 15:50, Phillip Wood wrote:
->> Hi Olliver
->>
->> On 06/04/2024 11:06, Olliver Schinagl wrote:
->>> On 06-04-2024 03:08, Junio C Hamano wrote:
->>>> Olliver Schinagl <oliver@schinagl.nl> writes:
->> If you search builtin/bisect.c you'll see some existing callers of 
->> strbuf_read_file() that read other files like BISECT_START. Those 
->> callers should give you an idea of how to use it.
-> 
-> Yeah, I found after Junio's hint :) What threw me off, as I wrote 
-> earlier, get_terms(). I wonder now, why is get_terms() implemented as it 
-> is, and should it not use the same functions? Or is it because terms is 
-> a multi-line file, whereas the others are all single line (I didn't 
-> look, though I see addline functions for the strbuf functions. Should 
-> this be refactored?
+On Sun, Apr 07, 2024 at 01:11:47PM +0000, blanet via GitGitGadget wrote:
+> From: Xing Xin <xingxin.xx@bytedance.com>
+>
+> We observed a series of clone failures arose in a specific set of
+> repositories after we fully enabled the MIDX bitmap feature within our
+> Codebase service. These failures were accompanied with error messages
+> such as:
+>
+>   fatal: did not receive expected object ...
+>   fatal: fetch-pack: invalid index-pack output
+>
+> Temporarily disabling the MIDX feature eliminated the reported issues.
+> After some investigation we found that all repositories experiencing
+> failures contain replace references, which seem to be improperly
+> acknowledged by the MIDX bitmap generation logic.
 
-get_terms() wants to read the first line into `term_bad` and the second 
-line into `term_good` so it makes sense that it uses two calls to 
-`strbuf_getline()` to do that. It does not want to read the whole file 
-into a single buffer as we do here.
+I was suspicious that this might be related to the MIDX or MIDX bitmap,
+but noticed something curious upon digging in. Applying the following on
+top of your patch:
 
-> So with the name, I started to think some more about it, and after 
-> playing with some names, I settled on 'bisect-post-checkout'. Things 
-> then sort of fell more into place. It is still a hook/commandline 
-> option, but it's a much smaller change (since we don't have any special 
-> code to check the exit code anymore) as we can (obviously) run `git 
-> bisect skip` instead of `exit 125` as well of course.
+--- 8< ---
+diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+index 5e4cdef6a8..8543f8d097 100755
+--- a/t/t5326-multi-pack-bitmaps.sh
++++ b/t/t5326-multi-pack-bitmaps.sh
+@@ -451,9 +451,7 @@ test_expect_success 'do not follow replace objects for MIDX bitmap' '
+ 		git rev-list --objects --no-object-names $B |sort >expected &&
 
-Does that mean you will be starting "git bisect skip" from the script 
-run by the current "git bisect" process. I don't think calling git 
-recursively like that is a good idea as you'll potentially end up with a 
-bunch of "git bisect" processes all waiting for their post checkout 
-script to finish running.
+ 		git replace $A $C &&
+-		git repack -ad &&
+-		git multi-pack-index write --bitmap &&
+-		git rev-list --objects --no-object-names --use-bitmap-index $B |sort >actual &&
++		git rev-list --objects --no-object-names $B |sort >actual &&
+ 		test_cmp expected actual
+ 	)
+ '
+--- >8 ---
 
-Best Wishes
+, I can still produce the failure that you are seeing here. So I suspect
+that while it's entirely possible that there is a bug in the MIDX/bitmap
+code, that this test is not exercising it.
 
-Phillip
+I think the first step to demonstrate a bug in the MIDX/bitmap machinery
+would be to provide a reproducer that fails only when using a MIDX
+and/or bitmap.
+
+> @@ -273,6 +274,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
+>  	};
+>  	struct option *options = parse_options_concat(builtin_multi_pack_index_options, common_opts);
+>
+> +	disable_replace_refs();
+> +
+
+Supposing for a moment that this issue is in the MIDX, we know that
+regardless of what replace refs might be in place, the MIDX should only
+be storing the objects that are in the packs being indexed, not the
+objects which are their replacements.
+
+Are we storing objects in the MIDX that are replacements? Looking
+at midx.c::fill_pack_entry(), I think the answer is "no", since we're
+looking up packed objects by calling nth_packed_object_id(), which is
+just a table read into the .idx, all of which is beneath the level of
+replace refs.
+
+> @@ -434,6 +434,30 @@ test_expect_success 'tagged commits are selected for bitmapping' '
+>  	)
+>  '
+>
+> +test_expect_success 'do not follow replace objects for MIDX bitmap' '
+> +	rm -fr repo &&
+> +	git init repo &&
+> +	test_when_finished "rm -fr repo" &&
+> +	(
+> +		cd repo &&
+> +
+> +		test_commit A &&
+> +		A=$(git rev-parse HEAD) &&
+
+It's possible that much of this will be moot if the current test gets
+rewritten, but here are a couple of suggestions for writing tests in
+Git's suite:
+
+- test_commit will create a tag for you, so there is no need to store
+  "$A", "$B", and "$C".
+
+> +		test_commit B &&
+> +		B=$(git rev-parse HEAD) &&
+> +		git checkout --orphan=orphan $A &&
+> +		test_commit orphan &&
+> +		C=$(git rev-parse HEAD) &&
+> +		git rev-list --objects --no-object-names $B |sort >expected &&
+
+- We do not allow Git invocations on the left-hand side of a pipe, since
+  doing so will squelch its exit code. Instead, try:
+
+    git rev-list --objects --no-object-names B >expect.raw &&
+    sort expect.raw >expect &&
+
+Thanks,
+Taylor
