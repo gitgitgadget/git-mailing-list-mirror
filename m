@@ -1,186 +1,159 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632DF3CF7E
-	for <git@vger.kernel.org>; Sun,  7 Apr 2024 21:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F3F44C63
+	for <git@vger.kernel.org>; Sun,  7 Apr 2024 21:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712524881; cv=none; b=RE8v1b6pdHCdBZyMDEAuzBJY+RF2Z+3vmamHFXjiIg29mBmez1dCgkezLVte9422FGTqW716uTOuoDRknRRQQeMjY/05zfxFIgNzJVxMdjngHymU/rg75EYn0oQg3JtkRVm+wVfkTvvR6N6NXCANzAEbGUZFsDCnZsdtF/s8Bto=
+	t=1712525636; cv=none; b=oJ3nJ6T/LUn2t3x3dRBsiEPtMCfdaf2GXRoJUP8sbRBtFFnEQwjzQei50mCN3TnJTXvMgZdQZACTMe/EKTZhrEyIkWwUoLbmwgCXIFV2oS6RUZ6sm0sBU1ejt9h8IN/Nggrn98EcGC6O/eVBOULcJYJa6aWRN+sGgYrvO03RG5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712524881; c=relaxed/simple;
-	bh=HScXwx8hpXzUJF8KA5i0XV/BQz1jMq5D3cGNcEEe+ZU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CBUeS+gS79bKyfwjdWlAIV5oXC6laN/2DWw7GCqMxE710O/7S03nmJaB3T626q++DnvzVF7zVjc5GOpliM0gY9S0ny9vSl3gAnD/hxElq/H+uh5P6PRGHEHc6yYKYkQ1tvSIos2nte3MS+l/qp2Q/iSJbqRfyG6CGG6yLKGA758=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvKyev3U; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712525636; c=relaxed/simple;
+	bh=dO8ZnqmKnEb0wi85sqxBI6rdxtJW8XBI9K5njt4EyDA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CKyIz0VWkWDP6XD+DACc+GwXR157HVXPiIHoSk2fwj0SlGVX97dffHCaoofHxHBmdbEF3eWnHA74avwvUjUDLi6403XCsdOQ8OVpcAkRwdJwiLSNYPxwpa94YOMpKBSY9O9Bn1jRLVrgNfv0knb2jqNCsQyfebvmIdyo57G2ZFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=tlAasgkS; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvKyev3U"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc25e12cc63so4338566276.0
-        for <git@vger.kernel.org>; Sun, 07 Apr 2024 14:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712524878; x=1713129678; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mGk8t4MSQA3PfUL5OiePS0TRYaIr9noLdW4c3m+3v+w=;
-        b=NvKyev3URy1knzpWQGAZ3pUgzyp6EkhessFLNeSnQOmeURq6pQmQsJRPh0GTvH4V+Z
-         WG5EoceJMbn2BI43KLZcyX5CbIsB3DAAqCPhX4/nlbiY/UiSivmp0LaR3eIlGgLjPx+s
-         iyqmkP7EAwkKE7ht4lf4s/LN7vrjNEZ2UHBfTX+ZPLZUEOe3ECotq6RMWmz/EH9M40y3
-         rtr4x9LPTQJwd5CFRcgW8NYxGEhkpo5Ra5G1fMGSO6ZLn29QSiR4kynbJWvxX4UZaqpI
-         CJ0BieeWXdqMt4DTCb52bpGZqVLHDniXzraqHiRxzuVapfWhnoV4LZpfCU2Vnhn1okjt
-         elsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712524878; x=1713129678;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mGk8t4MSQA3PfUL5OiePS0TRYaIr9noLdW4c3m+3v+w=;
-        b=rBUITf0TqIx+T/s+JTn8R7P6fwo6B4xkiDbXowh3byd4ZiMhMWobYB7bauNJsc+8n3
-         TELiTRJiAAoIZYxWile8Tul6bCGYuh7YdPKvgyG+ix7jrguckPCN6BILXq3NiaCF4hv0
-         ChE3LkohNYhmmdI0xN7K4Ccboe1OXnBjjRNic0vY5cbihUQgjmpnCEun81sdGyaA0DvZ
-         0IDmu69cBTrlYqZeDRZhoCVLUFawK+DXhIHEBG/jpUb2mWlgiIdfSCcxLjwQrQuwhklz
-         IzA+9VuUAVlnF1ji0Q8rejfXLzCJ2hOZICIcZAhUlwi6kmTvzlcG9jNGvPSmvMdXIeX9
-         XDuQ==
-X-Gm-Message-State: AOJu0Yyto8yzD53K4MkZuE0tRfRpCbbWrkSXeHVX0poiMTOFKIx8lM0j
-	90/I6bukOB45t8aj1HT9gQzEiijwshAKRcj3DzSDPIXRKt756Z0+v5L+HX5n
-X-Google-Smtp-Source: AGHT+IE/1Pl5KeurGLENN+Sq0mldL4bzzk03lsd9tkONPy8OR4Av7hUuJDwx9gbutQGLYJRnYE4gIg==
-X-Received: by 2002:a25:680a:0:b0:dc6:16b7:7d6f with SMTP id d10-20020a25680a000000b00dc616b77d6fmr4977904ybc.10.1712524878223;
-        Sun, 07 Apr 2024 14:21:18 -0700 (PDT)
-Received: from localhost.localdomain (35.91.249.216.dyn.smithville.net. [216.249.91.35])
-        by smtp.gmail.com with ESMTPSA id 63-20020a251642000000b00dcf27be1d1bsm1182908ybw.28.2024.04.07.14.21.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Apr 2024 14:21:17 -0700 (PDT)
-From: Pi Fisher <pi.l.d.fisher@gmail.com>
-X-Google-Original-From: Pi Fisher <Pi.L.D.Fisher@gmail.com>
-To: git@vger.kernel.org
-Cc: glencbz@gmail.com,
-	Pi Fisher <Pi.L.D.Fisher@gmail.com>
-Subject: [PATCH] typo: Replace 'commitish' with 'committish'
-Date: Sun,  7 Apr 2024 17:21:08 -0400
-Message-ID: <20240407212111.55362-1-Pi.L.D.Fisher@gmail.com>
-X-Mailer: git-send-email 2.44.0.501.g19981daefd
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="tlAasgkS"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 2CFE25D4CA;
+	Sun,  7 Apr 2024 21:33:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1712525626;
+	bh=dO8ZnqmKnEb0wi85sqxBI6rdxtJW8XBI9K5njt4EyDA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=tlAasgkSd0CmRfnynrKRnaQzhvX2PtbbypKOQKZ/HS1Ow6TSFwobpF7F6R68XnsEk
+	 L3YHSxhjKyx+2+U7fu7gTwlqr5PtAJn9LDBaO22xrdWrqfCsMp4fdnYOxuGbqDrK0r
+	 uDooRWb/vfQgCIZ3EfZqSh0VdFlI2tGYDyVP26ycWmzEIMczaZDK3v3UJSiciwTiid
+	 b8h3kHZIkTkhA/LasnXBuksw3FF2Sxr3Emg43B6LH3HlXlr5CY49sqnSOtU1Lg7qKT
+	 zgGhjaS5ZNCrjGvU5SkQIT1uvWvOqWJ9PUzyZ/KKmg1zRdA6A1MO9dkyGv6EjbKmDr
+	 JEV1gqewg4svhAu9L07sRpMbHU0RjSAbnzyV47gUfXTmI9buBSUi5Nrgxybb40nM5G
+	 hMiOZf1glLm9yRALCLrtDki+1D07r+TbefZXsgb5xvIJdA7kmkHn0QX7nINkNsT4Jp
+	 nfQUspSpeYtPepX80GUVl7uf6qHrXhkxO3nExrPSnR0EzAnQ8Vx
+Date: Sun, 7 Apr 2024 21:33:43 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Calvin Wan <calvinwan@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFD] Libification proposal: separate internal and external
+ interfaces
+Message-ID: <ZhMRNxgwRJ25P4Ud@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Calvin Wan <calvinwan@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+References: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EeW4gWbS/SpQuSvg"
+Content-Disposition: inline
+In-Reply-To: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Across only three files, comments and a single function name used
-'commitish' rather than 'commit-ish' or 'committish' as the spelling.
-The git glossary accepts a hyphen or a double-t, but not a single-t.
-Despite the typo in a translation file, none of the typos appear in
-user-visible locations.
 
-Signed-off-by: Pi Fisher <Pi.L.D.Fisher@gmail.com>
----
-The function name was renamed to use 'committish', preferring to avoid a
-hyphenated word. Comments referencing this function were rewritten to
-match the new name. In the translation file, 'commit-ish' appeared
-multiple times, but 'committish' appeared only once, so I changed the
-comment to match the more popular option.
+--EeW4gWbS/SpQuSvg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- branch.c | 10 +++++-----
- branch.h | 14 +++++++-------
- po/tr.po |  2 +-
- 3 files changed, 13 insertions(+), 13 deletions(-)
+On 2024-04-02 at 14:18:51, Calvin Wan wrote:
+> Issues
+> ------
+> - Symbol name collisions: Since C doesn't have namespacing or other
+>   official name mangling mechanisms, all of the symbols inside of the
+>   library that aren't static are going to be at risk of colliding with
+>   symbols in the external project. This is especially a problem for
+>   common symbols like "error()".
 
-diff --git a/branch.c b/branch.c
-index 6719a181bd..b8f8fd4979 100644
---- a/branch.c
-+++ b/branch.c
-@@ -734,7 +734,7 @@ static int submodule_create_branch(struct repository *r,
- }
- 
- void create_branches_recursively(struct repository *r, const char *name,
--				 const char *start_commitish,
-+				 const char *start_committish,
- 				 const char *tracking_name, int force,
- 				 int reflog, int quiet, enum branch_track track,
- 				 int dry_run)
-@@ -744,8 +744,8 @@ void create_branches_recursively(struct repository *r, const char *name,
- 	struct object_id super_oid;
- 	struct submodule_entry_list submodule_entry_list;
- 
--	/* Perform dwim on start_commitish to get super_oid and branch_point. */
--	dwim_branch_start(r, start_commitish, BRANCH_TRACK_NEVER,
-+	/* Perform dwim on start_committish to get super_oid and branch_point. */
-+	dwim_branch_start(r, start_committish, BRANCH_TRACK_NEVER,
- 			  &branch_point, &super_oid);
- 
- 	/*
-@@ -768,7 +768,7 @@ void create_branches_recursively(struct repository *r, const char *name,
- 				submodule_entry_list.entries[i].submodule->name);
- 			if (advice_enabled(ADVICE_SUBMODULES_NOT_UPDATED))
- 				advise(_("You may try updating the submodules using 'git checkout --no-recurse-submodules %s && git submodule update --init'"),
--				       start_commitish);
-+				       start_committish);
- 			exit(code);
- 		}
- 
-@@ -783,7 +783,7 @@ void create_branches_recursively(struct repository *r, const char *name,
- 			    name);
- 	}
- 
--	create_branch(r, name, start_commitish, force, 0, reflog, quiet,
-+	create_branch(r, name, start_committish, force, 0, reflog, quiet,
- 		      BRANCH_TRACK_NEVER, dry_run);
- 	if (dry_run)
- 		return;
-diff --git a/branch.h b/branch.h
-index 30c01aed73..ec2f35fda4 100644
---- a/branch.h
-+++ b/branch.h
-@@ -78,26 +78,26 @@ void create_branch(struct repository *r,
-  * those of create_branch() except for start_name, which is represented
-  * by two different parameters:
-  *
-- * - start_commitish is the commit-ish, in repository r, that determines
-+ * - start_committish is the commit-ish, in repository r, that determines
-  *   which commits the branches will point to. The superproject branch
-- *   will point to the commit of start_commitish and the submodule
-- *   branches will point to the gitlink commit oids in start_commitish's
-+ *   will point to the commit of start_committish and the submodule
-+ *   branches will point to the gitlink commit oids in start_committish's
-  *   tree.
-  *
-  * - tracking_name is the name of the ref, in repository r, that will be
-  *   used to set up tracking information. This value is propagated to
-  *   all submodules, which will evaluate the ref using their own ref
-- *   stores. If NULL, this defaults to start_commitish.
-+ *   stores. If NULL, this defaults to start_committish.
-  *
-- * When this function is called on the superproject, start_commitish
-+ * When this function is called on the superproject, start_committish
-  * can be any user-provided ref and tracking_name can be NULL (similar
-  * to create_branches()). But when recursing through submodules,
-- * start_commitish is the plain gitlink commit oid. Since the oid cannot
-+ * start_committish is the plain gitlink commit oid. Since the oid cannot
-  * be used for tracking information, tracking_name is propagated and
-  * used for tracking instead.
-  */
- void create_branches_recursively(struct repository *r, const char *name,
--				 const char *start_commitish,
-+				 const char *start_committish,
- 				 const char *tracking_name, int force,
- 				 int reflog, int quiet, enum branch_track track,
- 				 int dry_run);
-diff --git a/po/tr.po b/po/tr.po
-index 19d6661bbe..5837752d0b 100644
---- a/po/tr.po
-+++ b/po/tr.po
-@@ -20,7 +20,7 @@
- # clone                       | klon(lamak)                 #
- # commit (ad)                 | işleme                      #
- # commit (eyl.)               | işlemek                     #
--# commitish                   | işlememsi                   #
-+# commit-ish                  | işlememsi                   #
- # conflict                    | çakışma                     #
- # cruft                       | süprüntü                    #
- # dangling object             | sallanan nesne              #
+Yes, I think this is important.  We'll want to avoid the mistake that
+OpenSSL and Perl made by just exporting random symbols or using more
+than one namespace.
 
-base-commit: 3c2a3fdc388747b9eaf4a4a4f2035c1c9ddb26d0
--- 
-2.34.1
+We'll also need to consider that libgit2 is currently using `git_` and
+thus we'll either need to use something different or avoid conflicts.
+Perhaps `gitlib_` might be useful.
 
+I might also suggest that we enable symbol versioning on platforms that
+support it, which is a nice way to avoid conflicts.
+
+> - Header files: This is actually several related problems:
+>   - Git codebase's header files assume that anything that's brought in
+>     via <git-compat-util.h> is available; this includes system header
+>     files, but also macro definitions, including ones that change how
+>     various headers behave. Example: _GNU_SOURCE and
+>     _FILE_OFFSET_BITS=3D64 cause headers like <unistd.h> to change
+>     behavior; _GNU_SOURCE makes it provide different/additional
+>     functionality, and _FILE_OFFSET_BITS=3D64 makes types like `off_t` be
+>     64-bit (on some platforms it might be 32-bit without this define).
+
+I should point out that _FILE_OFFSET_BITS=3D64 is effectively standard
+these days.  Nobody wants their files limited to 2 GiB.
+
+> - Tolerant. The header files probably won't be the first/only #include
+>   in the external project's translation unit, and they should still
+>   work. This means not using types like `off_t` or `struct stat` in the
+>   interfaces provided, since their sizes are dependent on the execution
+>   environment (what's been included, #defines, CFLAGS, etc.)
+
+Sure.  If we need a file size type, it should be something like
+`int64_t` or `uint64_t` and not `off_t`.
+
+> - Limited Platform Compatibility. The external interfaces are able to
+>   assume that <stdint.h> and other C99 (or maybe even C11+)
+>   functionality exists and use it immediately, without weather balloons
+>   or #ifdefs. If some platform requires special handling, that platform
+>   isn't supported, at least initially.
+
+I think this is fine.  It's 2024.  We should assume that C11 (a
+13-year-old spec) is available and so is POSIX 1003.1-2008 (except for
+Windows).  We may want to have a nice `#ifdef __STDC__ < 200112L` (and a
+similar check for POSIX) to just produce an `#error` if the system is
+too old.
+
+We should therefore also assume that threading is available because
+POSIX 1003.1-2008 requires it as part of the base specification (and
+Windows obviously also supports it).  Because this is a library, we'll
+want to avoid interfaces that are clearly not thread safe and document
+the requirements for thread safety (either that the object must be
+externally synchronized or that it is internally synchronized).
+
+> - Non-colliding. Symbol names in these external interface headers should
+>   have a standard, obvious prefix as a manual namespacing solution.
+>   Something like `gitlib_`. (Prior art: cURL uses a `curl_` prefix for
+>   externally-visible symbols, libgit2 uses `git_<module_name>_foo`
+>   names; for internal symbols, they use `Curl_` and `git_<module>__foo`
+>   (with a double underscore), respectively)
+
+Yeah, I think we came up with the same idea.  I do like the
+`gitlib_module_foo` approach.
+
+Overall, I read through this and I didn't see anything I obviously
+disagreed with.  Everything seemed to be either reasonable or something
+I didn't have a strong opinion on.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--EeW4gWbS/SpQuSvg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZhMRNgAKCRB8DEliiIei
+gftMAP9lWIov7pHttlSFtUH1KSmMAmtDTJU4XQqy8VqVdoeppQD/S4dx6wAz2Hos
+2NNMwd6s98JbPjF1wcrD01ck1cERhgk=
+=lJh6
+-----END PGP SIGNATURE-----
+
+--EeW4gWbS/SpQuSvg--
