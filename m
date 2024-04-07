@@ -1,170 +1,117 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 7of9.schinagl.nl (7of9.schinagl.nl [185.238.129.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131092D60A
-	for <git@vger.kernel.org>; Sun,  7 Apr 2024 14:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77571EF15
+	for <git@vger.kernel.org>; Sun,  7 Apr 2024 14:52:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.238.129.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712499407; cv=none; b=b4fq/oiDTdrwagdOaqIj0+CFYFyq1mGPF8SWFFAGDyY472OgLeRriRdQxyNX2hGoR20wHyzaK3HL3/ZF/jH2zhjIoVksTKNH1NlN+NMhXsqWwlI2OhsvFwbYwndBUKeVNP17rOMG5kh7pY0/GMte6Npt4DcNVFbVPTcmtm2pCsQ=
+	t=1712501569; cv=none; b=PId2sa6O4gbLDf8R151SICLZNl9DNpfyRzvoH9ADdtS+YWpG4Njg0itEqcV8x7LKsmA+ZJdax3QVLvKsE5Vue0J6P0QR+JirxaHmmUQFwgM6ZgHEkCy8qQQHNeLcnUHayQjLELbGPTkgoJocqFVj+YOuZS92QEKy41+fGQStzx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712499407; c=relaxed/simple;
-	bh=y5ZBIIhLksqQLFwLDmzPvB/FV5opntPXnZlQBcnTpxA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EqSJPT+0fJgaVN0UOE7cfV+XUpR0W5PYxsoNRLpw4mhJBkizcg8LHsVso3uxMvLixSrEhfsvXWGBR0mG87zOF3L8Tf5L21M96j7fcxaQespMV0MRCjO8DvXsp+57Qt6lJ141dWNtyz/PNV715lttGMYUNzUzFC3Qd3iD1dwGRrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NiJyC/3y; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1712501569; c=relaxed/simple;
+	bh=K6IVbIS/UEXPJJIhHuSvpwjkC8o4xeQvdev93PP12nk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bkWVgXqYat/c1RuQcYPtmMa80RdQkkI0l6V5AesPdk/zrmBEIs4QsPNMc66G8+hRWY8zLWSkLhsX3XeKRxEh8DInQqz5NNwVeqiDYLGouPfOXcfvGt9ef1QUZPVecisnFuOtQPu1VCALCiBDrD/lr9xrtCoMCmNHTDXY4HLYtoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl; spf=pass smtp.mailfrom=schinagl.nl; dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b=aODCX4Oe; arc=none smtp.client-ip=185.238.129.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schinagl.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schinagl.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NiJyC/3y"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-78d575054c8so64544385a.3
-        for <git@vger.kernel.org>; Sun, 07 Apr 2024 07:16:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712499405; x=1713104205; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7dZdG11xR76edph+9cckbQKQJeTd8HGmqQmo0fgHRHM=;
-        b=NiJyC/3yv+ARwVXlbRGx+xyD8S4IrzHGT2pN/XIZBFSkEBUeYCv8VmHQWXb50NNShD
-         0LqfCINspB63bpd2FLxXI/lLGdw2S71zdfOsBCuYUJ06++jNj1Juo4fZdij5XT2q7HP7
-         sZZeGcebNPQAi6pZI1NPTq0hJigphCPVoyXt4c9PtYlitMD1nbhq/O7cvfD6F74eV+dv
-         YeCweAQXuzHIHU9sEIkoaVUZ/otmpmHRhHoq5duehxPhAep1WowpnkFBvoV7gaNyYJQ3
-         3DJpdMYBugmPoxJZh06jkTq+T+y+WWyGOdBMkwXx7TevOPcaOPJFKq7QjOWHOZn6nHUL
-         N4uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712499405; x=1713104205;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7dZdG11xR76edph+9cckbQKQJeTd8HGmqQmo0fgHRHM=;
-        b=tDpWMRf89MF+Ymv38SYaEAifFZBbYc5YqfrjLWXsKEKDL5Vn/qMvr9+jKLRX9PStRn
-         7bi9bCCEo9T5S6wtr5/nhFfzKeyJ5Etdj2Hbs1SGsjW6OL/aVH7b5RPxWNGIGd0UDA5e
-         WFlFMq2LbS3+AFIHZ6Lz4baLkEpDwDayVnfvmQE9uQ7yziG2t7jIWkfEw1HFq9UDCnfi
-         mtO9dWecueGff2Px2svldcjT9m4pYdcrhWpu5BgIEWoXbad3UwHnSu+wNzCug/aFNdgu
-         kyC6MpU56dPbrvNs8j3BQAnAvW3GRLehUa6yjGDezLTDftLfaXuO760273nSlXmtm7DI
-         o73g==
-X-Gm-Message-State: AOJu0YycjtChV0mbIPheOSkHrW/xJ0xMaWpSrXAmeaOL63hFaFJIiz1Z
-	TW4B+QqteSPtQhFwqKeYMaOWIP6fwcL4adqwWgK+0stxbMJzGoq0t6RkY2nW7f0=
-X-Google-Smtp-Source: AGHT+IESNi9ogSVsj4Oh7QDt4z3BBBsD/Rtq3tzTvzlTCKvTx2BfCeiZ/9m4HWqxDuiLRQAcDMtKwg==
-X-Received: by 2002:a37:e114:0:b0:78b:c6c4:b0bc with SMTP id c20-20020a37e114000000b0078bc6c4b0bcmr6210455qkm.48.1712499404867;
-        Sun, 07 Apr 2024 07:16:44 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u13-20020a05620a022d00b0078d5ffa723asm873540qkm.94.2024.04.07.07.16.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Apr 2024 07:16:36 -0700 (PDT)
-Date: Sun, 7 Apr 2024 10:16:28 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: blanet via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, blanet <bupt_xingxin@163.com>,
-	Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH] midx: disable replace objects
-Message-ID: <ZhKqvA1NQwrVfnfE@nand.local>
-References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=schinagl.nl header.i=@schinagl.nl header.b="aODCX4Oe"
+Received: from [10.2.12.48] (unknown [10.2.12.48])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by 7of9.schinagl.nl (Postfix) with ESMTPSA id CF40D1A197A2;
+	Sun,  7 Apr 2024 16:52:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schinagl.nl; s=7of9;
+	t=1712501558; bh=K6IVbIS/UEXPJJIhHuSvpwjkC8o4xeQvdev93PP12nk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=aODCX4Oeq0FX7MWErIiIbdSojY2eXnm5I0zCt/KScnOcGXkNSyN/Udz+ptqaLT+g/
+	 Y+ksI7hbw7SEJQ6Xpx7ZvApOQtGIeDXV71gjsr751RLVecqKSWp5gswBmpgplj15B8
+	 d0OOxB2qYtlBWzVzPD/OdVrDt6AzIscs7J9Z4OPU=
+Message-ID: <2542ebd6-11ce-496b-b10b-b55c3a211705@schinagl.nl>
+Date: Sun, 7 Apr 2024 16:52:37 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] bisect: Introduce skip-when to automatically skip commits
+To: phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+ Stefan Haller <lists@haller-berlin.de>
+References: <20240330081026.362962-2-oliver@schinagl.nl>
+ <864b0f22-b07b-469b-8fc2-56940fd89a8b@schinagl.nl>
+ <xmqqcyr3s3gj.fsf@gitster.g>
+ <b194ba7c-454b-494f-bef2-e9eac7ca87f1@schinagl.nl>
+ <4bedcad2-218a-4b16-88a7-cc70cc126af3@gmail.com>
+ <6dd4a5a4-9999-4c04-a854-09fc238c91bb@schinagl.nl>
+ <d10bd772-2cf1-4838-bec2-ea2a639cabab@gmail.com>
+Content-Language: nl, en-US
+From: Olliver Schinagl <oliver@schinagl.nl>
+In-Reply-To: <d10bd772-2cf1-4838-bec2-ea2a639cabab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Apr 07, 2024 at 01:11:47PM +0000, blanet via GitGitGadget wrote:
-> From: Xing Xin <xingxin.xx@bytedance.com>
->
-> We observed a series of clone failures arose in a specific set of
-> repositories after we fully enabled the MIDX bitmap feature within our
-> Codebase service. These failures were accompanied with error messages
-> such as:
->
->   fatal: did not receive expected object ...
->   fatal: fetch-pack: invalid index-pack output
->
-> Temporarily disabling the MIDX feature eliminated the reported issues.
-> After some investigation we found that all repositories experiencing
-> failures contain replace references, which seem to be improperly
-> acknowledged by the MIDX bitmap generation logic.
+Hey Phillip,
 
-I was suspicious that this might be related to the MIDX or MIDX bitmap,
-but noticed something curious upon digging in. Applying the following on
-top of your patch:
+On 07-04-2024 16:09, phillip.wood123@gmail.com wrote:
+> On 06/04/2024 20:17, Olliver Schinagl wrote:
+>> Hey Phillip,
+>>
+>> On 06-04-2024 15:50, Phillip Wood wrote:
+>>> Hi Olliver
+>>>
+>>> On 06/04/2024 11:06, Olliver Schinagl wrote:
+>>>> On 06-04-2024 03:08, Junio C Hamano wrote:
+>>>>> Olliver Schinagl <oliver@schinagl.nl> writes:
+>>> If you search builtin/bisect.c you'll see some existing callers of 
+>>> strbuf_read_file() that read other files like BISECT_START. Those 
+>>> callers should give you an idea of how to use it.
+>>
+>> Yeah, I found after Junio's hint :) What threw me off, as I wrote 
+>> earlier, get_terms(). I wonder now, why is get_terms() implemented as 
+>> it is, and should it not use the same functions? Or is it because 
+>> terms is a multi-line file, whereas the others are all single line (I 
+>> didn't look, though I see addline functions for the strbuf functions. 
+>> Should this be refactored?
+> 
+> get_terms() wants to read the first line into `term_bad` and the second 
+> line into `term_good` so it makes sense that it uses two calls to 
+> `strbuf_getline()` to do that. It does not want to read the whole file 
+> into a single buffer as we do here.
 
---- 8< ---
-diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-index 5e4cdef6a8..8543f8d097 100755
---- a/t/t5326-multi-pack-bitmaps.sh
-+++ b/t/t5326-multi-pack-bitmaps.sh
-@@ -451,9 +451,7 @@ test_expect_success 'do not follow replace objects for MIDX bitmap' '
- 		git rev-list --objects --no-object-names $B |sort >expected &&
+Right, but I why not use strbuf_getline()?
 
- 		git replace $A $C &&
--		git repack -ad &&
--		git multi-pack-index write --bitmap &&
--		git rev-list --objects --no-object-names --use-bitmap-index $B |sort >actual &&
-+		git rev-list --objects --no-object-names $B |sort >actual &&
- 		test_cmp expected actual
- 	)
- '
---- >8 ---
+> 
+>> So with the name, I started to think some more about it, and after 
+>> playing with some names, I settled on 'bisect-post-checkout'. Things 
+>> then sort of fell more into place. It is still a hook/commandline 
+>> option, but it's a much smaller change (since we don't have any 
+>> special code to check the exit code anymore) as we can (obviously) run 
+>> `git bisect skip` instead of `exit 125` as well of course.
+> 
+> Does that mean you will be starting "git bisect skip" from the script 
+> run by the current "git bisect" process. I don't think calling git 
+> recursively like that is a good idea as you'll potentially end up with a 
+> bunch of "git bisect" processes all waiting for their post checkout 
+> script to finish running.
 
-, I can still produce the failure that you are seeing here. So I suspect
-that while it's entirely possible that there is a bug in the MIDX/bitmap
-code, that this test is not exercising it.
+Well the process is inherently recursive, though that's up to the user 
+depending on what they put in their script of course. I don't think git 
+is 'waiting' is it? In that, git bisect runs the command, the command 
+runs git bisect, git bisect stores the commit hash in the skip file and 
+'exists', which goes then back to the bisect job, which then continues 
+as it normally would.
 
-I think the first step to demonstrate a bug in the MIDX/bitmap machinery
-would be to provide a reproducer that fails only when using a MIDX
-and/or bitmap.
+So technically, we're not doing anything bad in git, but a user might do 
+something bad.
 
-> @@ -273,6 +274,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
->  	};
->  	struct option *options = parse_options_concat(builtin_multi_pack_index_options, common_opts);
->
-> +	disable_replace_refs();
-> +
+Thank you,
 
-Supposing for a moment that this issue is in the MIDX, we know that
-regardless of what replace refs might be in place, the MIDX should only
-be storing the objects that are in the packs being indexed, not the
-objects which are their replacements.
+Olliver
 
-Are we storing objects in the MIDX that are replacements? Looking
-at midx.c::fill_pack_entry(), I think the answer is "no", since we're
-looking up packed objects by calling nth_packed_object_id(), which is
-just a table read into the .idx, all of which is beneath the level of
-replace refs.
-
-> @@ -434,6 +434,30 @@ test_expect_success 'tagged commits are selected for bitmapping' '
->  	)
->  '
->
-> +test_expect_success 'do not follow replace objects for MIDX bitmap' '
-> +	rm -fr repo &&
-> +	git init repo &&
-> +	test_when_finished "rm -fr repo" &&
-> +	(
-> +		cd repo &&
-> +
-> +		test_commit A &&
-> +		A=$(git rev-parse HEAD) &&
-
-It's possible that much of this will be moot if the current test gets
-rewritten, but here are a couple of suggestions for writing tests in
-Git's suite:
-
-- test_commit will create a tag for you, so there is no need to store
-  "$A", "$B", and "$C".
-
-> +		test_commit B &&
-> +		B=$(git rev-parse HEAD) &&
-> +		git checkout --orphan=orphan $A &&
-> +		test_commit orphan &&
-> +		C=$(git rev-parse HEAD) &&
-> +		git rev-list --objects --no-object-names $B |sort >expected &&
-
-- We do not allow Git invocations on the left-hand side of a pipe, since
-  doing so will squelch its exit code. Instead, try:
-
-    git rev-list --objects --no-object-names B >expect.raw &&
-    sort expect.raw >expect &&
-
-Thanks,
-Taylor
+> 
+> Best Wishes
+> 
+> Phillip
