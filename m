@@ -1,72 +1,108 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9F97460
-	for <git@vger.kernel.org>; Sun,  7 Apr 2024 05:52:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AED1C0DFA
+	for <git@vger.kernel.org>; Sun,  7 Apr 2024 06:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712469176; cv=none; b=AiKhPNhgbKAfHD1Jmg7+mhNhCJCTdkFapjqerwgifPuEdvvrQ33WxrNF7cWKeQWV7f4AccTFkzl4RN2jfctgclT9JgZl0/Ze0WOqm5P5VUBQLruCsvlclsis8NM73xxPlaCZt0+dTx8lksMRJKk9DgIDC2W94gQB6l+nV/S51BM=
+	t=1712470104; cv=none; b=YMHvKWVyQ+fiJ1ynZm9mxRgayXTtZ0XQRCZ+Or/px2ORP2ZRVR32pNAvWpyQWslbuK3ATnvBTy8mrezTDhSNPVwpgRP2iSLo4zqWFJTvWDb97RuJzKUAGcSyZ50EoG+qKeeNyLZ8M+VGApyAPPEG6ilprK3rPl4T9rTWWtNqjVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712469176; c=relaxed/simple;
-	bh=eyExn1GRv6gj9xEgBvadb3qAClu4t+6hyvwJarTkKyU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TWpLFzN1z0SyAzQix6tdOKWVorblHHwYxzUywy5sCW/kJyAWA9pFd7iOlqr7vuhjc2xkl167MeiaE9EjS8We42EwUQ2fwZYUhHjKXvGGaTQT8i+FQNjKdPLTfBEU32z+4gyX/mA9Ps5UInGUi/k2y+K6AeJ0HyOAol8VoQy1ySU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6994c36365fso8460366d6.2
-        for <git@vger.kernel.org>; Sat, 06 Apr 2024 22:52:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712469173; x=1713073973;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hK1/9lJyEKs7QSqCdJMFgZwGYw3GHvdoDsUIZQfP5yI=;
-        b=Y/nonUqwK8kYaLhMouo23ZLWFCIqri9P4iYOLoC/JahRVf484C2rxnIlU9Z7k2XPBA
-         NYLoCK+E5BrWahftacOiJpWipALJVZj57QkMsZRKDbR99FGU7dLCD3D54PnYsW8pYTN3
-         hr3Xz3k3ysFvOn9XPdZxX033GQxWEekJqhzMfYSdlUmsn17YdcVlrOOtm8k8W7buNHQO
-         cDX3EB2wB2O/Gm/8s8QjReaHybqGWauJmJKhoZ+Lu+iC02wLnzMJUQXaOY0gYsJAI4aK
-         Cw7/WVp8gmNjG15fYaKSVeWR9ft+2M8YkMsqadh4U3MdSSZOo3AEnRa49VMoqtFZYqU/
-         KxEg==
-X-Gm-Message-State: AOJu0Yy0BP8DMaFkkweXiIP68ytHrby1nuH8Wt7d6wXrJz/UHKOsWuKg
-	rc98Ea19VF1fdFdWS1uLxyK2LvXfsf1yfi/MyV1X0AwuHOwMQxWiL/woAVuDEAhNMI/yK2Gr3MU
-	rjNwekVTv5DPMXdkbJt4etwFtcQh/XUpqvOk=
-X-Google-Smtp-Source: AGHT+IFi5HaFsHyxbpCL+9eGc3BlREl0l2voga2CGMxoAG4MHhlFs2Wmw/J67Og5y0B/APQvn22clRvzrx/B2oxPSq4=
-X-Received: by 2002:a05:6214:2422:b0:699:2d85:6437 with SMTP id
- gy2-20020a056214242200b006992d856437mr6337739qvb.42.1712469173588; Sat, 06
- Apr 2024 22:52:53 -0700 (PDT)
+	s=arc-20240116; t=1712470104; c=relaxed/simple;
+	bh=CnLvIi9NNgULUh1+jy1aWfiNP0Vh6fO/sWe8qUV2yz8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ugNmP+jsWWCiSwc+rnI72KssBS2QX1wfjKAOSKC3scOlFcA3BuB2+UM3w2yxJB3kmIat0bE/fqhRzhpyOjTpVvTdMGj7s/seSLXYbQYOA4CpRN0sssx6wtgE9NLQwgjsPFRP6PKX9QhcMVHgWxdcIThI/FnevC0LSQlXFUphc/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OnVV/Gpk; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OnVV/Gpk"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7362B1E68FF;
+	Sun,  7 Apr 2024 02:08:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=CnLvIi9NNgULUh1+jy1aWfiNP0Vh6fO/sWe8qU
+	V2yz8=; b=OnVV/GpkfW+09T6Edi4tIxYmuXQbHRb+VYgCXxCLCty6IvZuOhmzXK
+	kzKV6aP/FmBl808sgRWfnloEMh7y/Hlh8dmCAe1ZKIMSmauNCgQon6LGr+f260dF
+	mo4qgWyuG7/7/Ca71mAzwiXt/YInU6TM0ZT9xWQfs8H7wjvdEYN9g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5BC5E1E68FC;
+	Sun,  7 Apr 2024 02:08:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E6961E68FB;
+	Sun,  7 Apr 2024 02:08:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Max Coplan via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  strager
+ <strager.nds@gmail.com>,  me <mchcopl@gmail.com>
+Subject: Re: [PATCH v2] log: add option to search for header or body
+In-Reply-To: <pull.1710.v2.git.1712460247516.gitgitgadget@gmail.com> (Max
+	Coplan via GitGitGadget's message of "Sun, 07 Apr 2024 03:24:07
+	+0000")
+References: <pull.1710.git.1712353687464.gitgitgadget@gmail.com>
+	<pull.1710.v2.git.1712460247516.gitgitgadget@gmail.com>
+Date: Sat, 06 Apr 2024 23:08:14 -0700
+Message-ID: <xmqq4jcdhfht.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240407051031.6018-1-leduyquang753@gmail.com>
- <20240407051031.6018-2-leduyquang753@gmail.com> <CAPig+cROH8Ebu9CgR87-48+Rk0H3maN+dwB+Y-N2FTvy5shE1Q@mail.gmail.com>
-In-Reply-To: <CAPig+cROH8Ebu9CgR87-48+Rk0H3maN+dwB+Y-N2FTvy5shE1Q@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 7 Apr 2024 01:52:42 -0400
-Message-ID: <CAPig+cSfpWaanknSqMGEza7rPhXwgQ0k3V9svfuBsZ_C2EaCmw@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] Add separator lines into `git log --graph`.
-To: =?UTF-8?Q?L=C3=AA_Duy_Quang?= <leduyquang753@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 38E989BA-F4A5-11EE-BFDE-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Sun, Apr 7, 2024 at 1:47=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
-> I'm not particularly a user of --graph, so I don't necessarily have an
-> opinion about the utility of this change or its mechanics, but I can
-> make a few observations to help you improve the patch to improve the
-> chances of it being accepted.
+"Max Coplan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I forgot to mention that application of your patch results in some warnings=
-:
+> This change adds a new option to `git log` that allows users to search
+> for commits that match either the author or the commit message. This is
+> useful for finding commits that were either authored or co-authored by a
+> specific person.
 
-    % git am add-sep-lines.patch
-    Applying: Add separator lines into `git log --graph`.
-    .git/rebase-apply/patch:61: trailing whitespace.
-    .git/rebase-apply/patch:147: trailing whitespace.
-    .git/rebase-apply/patch:151: trailing whitespace.
-    .git/rebase-apply/patch:160: trailing whitespace.
-    warning: 4 lines add whitespace errors.
+I have this feeling that the "solution" presented is not quite
+addressing the use case in a more useful and direct way than it
+could be.  When I designed how the --author/--committer restriction
+and --grep in the body of the message interact, I made a concious
+decision that "among those commits that were authored by person X,
+find the ones that mention Y" is far more useful than "done by X, or
+done by anybody that mention Y", especially when Y is just a text
+search in the free form.  There was nothing that limits the mention
+of Y to those specifically involved in the commit---the mention could
+just have been part of text, like "earlier Max Coplan sent a patch,
+but this commit is not related to it".
+
+But these days, we have a more established "convention" that lists
+people at the end in the form of "trailers", and that changes the
+picture quite a lot from how the world order was back then.
+
+In other words, if the true objective is to find commits that
+involved person X, Y or Z (which is very common and would be a lot
+more useful than finding those that involve all of them), shouldn't
+we be limiting the --grep side even further so that a random mention
+of person Y is excluded and hit is counted only when person Y is
+mentioned on a trailer (while loosening the --author side so that it
+is OR'ed instead of AND'ed)?
+
+I am imagining a pair of new options to name people (all OR'ed) and
+to name places the names of these people should appear (again, all
+OR'ed).  I am not good at naming, so the option names in the example
+is not more than illustration of an idea and not my recommendation,
+but a command:
+
+    git log --by="Max Coplan" --by="Junio C Hamano" \
+	    --by-where=author,Signed-off-by,Co-authored-by
+
+would find a commit that has one (or more) of the given names
+in one (or more) of the places that are specified, where the places
+can be either "author", "committer" to specify these headers in the
+commit object, or random other string to specify trailer lines with
+given keys.
+
+Hmm?
