@@ -1,83 +1,82 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E4023770
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 06:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413F21773A
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 06:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712558794; cv=none; b=WXu24cd91vZGqget0VddFqsYKZ/wB4XMJK0fe4GtqbfFsqVuMh8UOzL1MkfbU7xNByHonmDQ18JUFdVFIAs8WGNRD2wvh5B5WlD/VwvSrDsoT2WgIFBw4nG55WkpaZHfAAXbQYAbkSksYcuWiSL3w9vh8m2PB6DH0Ro20+dfuuk=
+	t=1712558797; cv=none; b=YlWhCCw0/Z7JzDzy8qtdBsC3yU1FV0+5zT6xHXQxjX2R8uAuB6ecklEGk8ovygAzf3VndipMl3owjKYXenCJS3IVuvkyXPkV/kwVowF/oRoHFPwYqQY+v68vbZkLPaAYaYnomEo4RovyRH/eqU+rLtqhaeJ+y6tvMiOhZ0+TlV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712558794; c=relaxed/simple;
-	bh=iwIQnd+ZQeYpyYhaGJrAx3jqwhl7nBK3ghUiYt5trbE=;
+	s=arc-20240116; t=1712558797; c=relaxed/simple;
+	bh=i6Fptd2okvUmdXYWADhIoDu+gLEimpu3r4x5uZC7K8s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CvrdLwZDfMCzKbDMMJy+xUpiS/zrmY2YQbrquVdItrr12t6VYxkmzl+fJhKtDUVm8kfsKAwIZa3rHmAvTjay60TlKOjHumtsX8WYSZlKwCTQaF2LmfKQf99yEy5+iJU8o0qJmCZ2KwNPyh+spveJwaGQIR5Hl87MX/JqNu7PQ08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=itjj/Cr5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BIBJmhiT; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=hFa+zoNLjR2UIzxY7tMG+28YPSecQkoHEGwPJsu+VPyZQoRgKZmDUPEOmQpGeJzZUk3FAUIyWLPl9axfFJlexE6OA1feBSnmrW9KfOb7apzadqICHbjSpfvp/VIUyhWFTcmvV1uhY0XpmCWdX1eWG68unwGT7Ma+I0AJ06nBgE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H/QRfxUH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TuvyywYV; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="itjj/Cr5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BIBJmhiT"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H/QRfxUH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TuvyywYV"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id ED9F913800C0;
-	Mon,  8 Apr 2024 02:46:30 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 568021380059;
+	Mon,  8 Apr 2024 02:46:35 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 08 Apr 2024 02:46:30 -0400
+  by compute6.internal (MEProxy); Mon, 08 Apr 2024 02:46:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712558790; x=1712645190; bh=SVhOfi8sQu
-	TFXlecowHMEVCQ1okrByEhItVZ25Hs5Vg=; b=itjj/Cr5s6r8+xKH12oTHgd24K
-	SQvSR0JZq+wGXvLx98oyL18MSUKpFsSWYHqMLpJpRnGpYdf10hRZCTqS7dbw6Q4T
-	XNBx7616Gl7RzGv1zXHb9P9g5+FhY9SPQLOJAmRcUVY/CLa7M5yxOgsgd5MZCU79
-	LkEqOgiYqwCfavpixQ2bfwDgK5o5U3AQKBFPfaPejJzlNZWbvOlXBy72YEDBE6pj
-	+MSBsDqJjETheggsc4adsfazHkubcnVPFbsSQbyEad+3BZITe7fl+Qr1vIWfrqaD
-	JqBulxxvABVAEHTeANPPj0kgP7EjS4Pkrm8H+0qEUM3SwnJhKLJl2AzXlsVw==
+	:subject:to:to; s=fm2; t=1712558795; x=1712645195; bh=S2GikXBjJ0
+	6VrzQwCNzilQ8rcbZnqL8jFqOtoFBoB6Q=; b=H/QRfxUH/vZMumB1QGLzCG8Zug
+	+qB0GDXYcJIRu7cOpoAi/XLycYaasakokVyKjeaSuUlpTEvJLS3EyVZgj3oO3j6i
+	zhQiLNyYCehbaK5pMIXtGWYOwxqgack/CGxEVVn07/pDVaFLZb3t7ITPj3g+r1QY
+	IQu1AAo/edjmurKXBKgNlwqlt33LXexCScK64scrAwT3gNQfkquJ2pNMq0RTOBbM
+	cjwJiSEoQH7q0ou3busY+zO8VS6p8YIteldF4UWi7CVtUbj7ABzj7ZHVROi/OndS
+	ITRssdCHfk8HJj+Fe9A5nFQ1+iipn3S6PfCCUIesKmaKSI3tpJ2iCrisNpLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712558790; x=1712645190; bh=SVhOfi8sQuTFXlecowHMEVCQ1okr
-	ByEhItVZ25Hs5Vg=; b=BIBJmhiTTGFhzbL+NQhN0VdKo08pVrppmOGWF7y1vG+k
-	FfFfbbxSYCqEI0YtboTVkPWXHLOhsUpaRudt+wBAo+T52ZdsSY8vAOjvSsbf4wwh
-	7ahg6w7iNmweQTwO547W4JYTqHgwU396H37kOyzjBijizDQd3xe5BxlgFhZUUzWG
-	rZWvsPiB0hM+cRWpF76+wXYMz80zNPvBLxmF6TE/Fk1nUaYAsX7P+w8Yp3YRLvFX
-	SeK7kMN5hDG/u6hhOXqFBLQniJU+GEQHrfFLlNRgLMM+6dNnFB48Q7GCMKKkB4a8
-	aeiLXyO5V/YEOp12vLzd5ZaV+LFND99QTcE5+eBcLw==
-X-ME-Sender: <xms:xpITZqgrxmDZ_Faccn4ZIen7J-HRQoWsaAnkzMXWrU-uGXAXyzUPkg>
-    <xme:xpITZrCib3ZBOvqaiPeKNyswIEcVHXcTpUvLUzVFKhtaFaiPROjlc55XpMtgYUSXi
-    o9sHhhiAQFjca7zAg>
-X-ME-Received: <xmr:xpITZiG9Uksnb7RLA-9C1dasB6DhQFRLud24ydCWktdUs8My5ohwBZLYZ5baBBPLnOWb6z3o34pjYB9V_-m91NQ9NlbXqvm_yiC6mQqmRU0jd4G5-A>
+	fm2; t=1712558795; x=1712645195; bh=S2GikXBjJ06VrzQwCNzilQ8rcbZn
+	qL8jFqOtoFBoB6Q=; b=TuvyywYVnmLgEUndTMvMZBI/4IpM3Og1sN0lV7dQRcsu
+	zU0iMy0draI/pIhIpzl2oaFefp1UT/b/0HPtE7MHGfHO9/zRwehetmcQpUzEyPST
+	nghNbawZjjG8MKajS9F0uf5uvP/I8//olHOWtlpE0TXc6+cuB6zTsn2KPRdbWTde
+	veYFDKTr56ozukwZBKXwYbU2rv3ihxc/5m0SRD5nqPQzEDn+aFKHI67bPTkNA/ip
+	dO2Fgsu5x4owhSOepzDZ+0IvQTOSaaIWDRE6+6nVP2rVpErfCjm+gqEIjN43iCpS
+	EQg1+KHWrxMGpME0SnqAlz/PaxtkS61KSw7Bpb/88w==
+X-ME-Sender: <xms:y5ITZlMOsWQ03lYuQ2F8Ekk0g8zW63d9fIxyKbUbPTEud57AcKij8Q>
+    <xme:y5ITZn_Hu2jWlgTpasDvJVJ5Xyf1DbdvAsB0jQ4HfLmme_XwhCVGCfCBseeAgPnj5
+    aPDmgOnEIjlE4FnAw>
+X-ME-Received: <xmr:y5ITZkRjpE8fO89QnvxF3UYEnSBdDcyS1NsIWEKPhc7-e-gpsqtf_cBk-6xaOTo67mIfHNBMHdTE8qgrCRKCzSG0lEoqS37C-9SHDe-HKdM9FlvvFA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeghedguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeejffefvdfglefhjeekfeetfffhjeduhffhvddtveejvdehgfdvudfhudeggeek
-    gfenucffohhmrghinhepphgvrhhfohhrtggvrdgtohhmpdhgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhk
-    shdrihhm
-X-ME-Proxy: <xmx:xpITZjSZdaUTCkdrJQFn5K7RdMTJo9zYA2oPOldj9RYcV35uI8RRwg>
-    <xmx:xpITZny36qqPxBaHQ9xaGGsPib5tOiwkNpe9wfdpS4YDj2-pSiocoA>
-    <xmx:xpITZh4kANa6GBTD3NuY9R6IlLHGG7vFLpYRSNcpQxPqECh02ecIBA>
-    <xmx:xpITZkzmxwClMvWIS3S8T0P7J0V4A_IFbZtBFc9q0jZ4axw7ZTFPbg>
-    <xmx:xpITZioE9BRng7yDymJXnP70pnazkiBkcSJuJD_JCueHYBiwJb9Kc2IT>
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:y5ITZhvIwFlQwV-NFMCCLcntwNRAff1goCLRxLfIowyusYsbfmlaYg>
+    <xmx:y5ITZtc5BYqUPqW4-ulJU13TKTGiNYptm8oSenmB3_ol4Mp4PFCmpA>
+    <xmx:y5ITZt1mS7u6KoXYMlua76zBztuT8bU9iWQpKbQh1k_O1He9d5ekzQ>
+    <xmx:y5ITZp_r3mlHcFXumdt8cuh-XN5C1OkPBmZ4tqbHr-gbIH6XgIqbmQ>
+    <xmx:y5ITZmGu-3c0Be5y3BPdjXfb7An4qsu8exYSnzlVv2noEnhKw5lXTPAN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 02:46:29 -0400 (EDT)
+ 8 Apr 2024 02:46:34 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ad1b1dda (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Apr 2024 06:46:23 +0000 (UTC)
-Date: Mon, 8 Apr 2024 08:46:27 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ef9896ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 06:46:28 +0000 (UTC)
+Date: Mon, 8 Apr 2024 08:46:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 04/12] ci: drop duplicate package installation for
- "linux-gcc-default"
-Message-ID: <b4f6d6d3bfe28164f74ac927a0ac67950827d7df.1712555682.git.ps@pks.im>
+Subject: [PATCH v2 05/12] ci: convert "install-dependencies.sh" to use
+ "/bin/sh"
+Message-ID: <6abc53bf5173e7de3fa271d175145c1672f17a88.1712555682.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712555682.git.ps@pks.im>
 Precedence: bulk
@@ -87,103 +86,110 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1SOMDaed9SQ8Emwg"
+	protocol="application/pgp-signature"; boundary="WjvCW5WJ1mnAo3sL"
 Content-Disposition: inline
 In-Reply-To: <cover.1712555682.git.ps@pks.im>
 
 
---1SOMDaed9SQ8Emwg
+--WjvCW5WJ1mnAo3sL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "linux-gcc-default" job installs common Ubuntu packages. This is
-already done in the distro-specific switch, so we basically duplicate
-the effort here.
+We're about to merge the "install-docker-dependencies.sh" script into
+"install-dependencies.sh". This will also move our Alpine-based jobs
+over to use the latter script. This script uses the Bash shell though,
+which is not available by default on Alpine Linux.
 
-Drop the duplicate package installations and inline the variable that
-contains those common packages.
+Refactor "install-dependencies.sh" to use "/bin/sh" instead of Bash.
+This requires us to get rid of the pushd/popd invocations, which are
+replaced by some more elaborate commands that download or extract
+executables right to where they are needed.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ ci/install-dependencies.sh | 28 +++++++++++-----------------
+ 1 file changed, 11 insertions(+), 17 deletions(-)
 
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 7dfd3e50ed..fad53aac96 100755
+index fad53aac96..7bcccc96fd 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -7,9 +7,6 @@
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env bash
++#!/bin/sh
+ #
+ # Install dependencies required to build and test Git on Linux and macOS
+ #
+@@ -30,19 +30,14 @@ ubuntu-*)
+ 		$CC_PACKAGE $PYTHON_PACKAGE
 =20
- P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r21.2
- LFSWHENCE=3Dhttps://github.com/github/git-lfs/releases/download/v$LINUX_GI=
-T_LFS_VERSION
--UBUNTU_COMMON_PKGS=3D"make libssl-dev libcurl4-openssl-dev libexpat-dev
-- tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
-- libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
-=20
- # Make sudo a no-op and execute the command directly when running as root.
- # While using sudo would be fine on most platforms when we are root alread=
-y,
-@@ -25,8 +22,13 @@ fi
- case "$distro" in
- ubuntu-*)
- 	sudo apt-get -q update
--	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
--		$UBUNTU_COMMON_PKGS $CC_PACKAGE $PYTHON_PACKAGE
-+	sudo apt-get -q -y install \
-+		language-pack-is libsvn-perl apache2 \
-+		make libssl-dev libcurl4-openssl-dev libexpat-dev \
-+		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl=
- \
-+		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl \
-+		$CC_PACKAGE $PYTHON_PACKAGE
-+
  	mkdir --parents "$P4_PATH"
- 	pushd "$P4_PATH"
- 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
-@@ -34,6 +36,7 @@ ubuntu-*)
- 		chmod u+x p4d
- 		chmod u+x p4
- 	popd
-+
- 	mkdir --parents "$GIT_LFS_PATH"
- 	pushd "$GIT_LFS_PATH"
- 		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.=
-gz"
-@@ -83,10 +86,6 @@ Documentation)
- 	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
- 	sudo gem install --version 1.5.8 asciidoctor
- 	;;
--linux-gcc-default)
--	sudo apt-get -q update
--	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS
--	;;
- esac
+-	pushd "$P4_PATH"
+-		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+-		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4"
+-		chmod u+x p4d
+-		chmod u+x p4
+-	popd
++	wget --quiet --directory-prefix=3D"$P4_PATH" \
++		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
++	chmod u+x "$P4_PATH/p4d" "$P4_PATH/p4"
 =20
- if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
+ 	mkdir --parents "$GIT_LFS_PATH"
+-	pushd "$GIT_LFS_PATH"
+-		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.=
+gz"
+-		tar --extract --gunzip --file "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSIO=
+N.tar.gz"
+-		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
+-	popd
++	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.g=
+z"
++	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$GIT_LFS=
+_PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
++	rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+ 	;;
+ macos-*)
+ 	export HOMEBREW_NO_AUTO_UPDATE=3D1 HOMEBREW_NO_INSTALL_CLEANUP=3D1
+@@ -53,11 +48,10 @@ macos-*)
+ 	brew link --force gettext
+=20
+ 	mkdir -p "$P4_PATH"
+-	pushd "$P4_PATH"
+-		wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
+-		tar -xf helix-core-server.tgz &&
+-		sudo xattr -d com.apple.quarantine p4 p4d 2>/dev/null || true
+-	popd
++	wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
++	tar -xf helix-core-server.tgz -C "$P4_PATH" p4 p4d &&
++	sudo xattr -d com.apple.quarantine "$P4_PATH/p4" "$P4_PATH/p4d" 2>/dev/nu=
+ll || true
++	rm helix-core-server.tgz
+=20
+ 	if test -n "$CC_PACKAGE"
+ 	then
 --=20
 2.44.GIT
 
 
---1SOMDaed9SQ8Emwg
+--WjvCW5WJ1mnAo3sL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTksIACgkQVbJhu7ck
-PpRgChAAj9F/DGuar8MjF6vk/dQlrJsvXKcpztKWT8+c8ULvUD6rGKl47qUXl06R
-XWriEiRg71iJIDkJuPdVaKAXlT5RME6iC+hPvsXgZL/HAKVRWfDDpQJVVQ6bdmez
-rYAGDPjNza8IKHAEDsSweGzlAY5XA8yXdbpTXLbc4LK9RptExF6TOHeQAC3yzjwc
-RtcdGA2zPqmsX9lZoMoc4tZZZqWjHFFmEij2Qf1O6I3M0ef2krP4yOgxTLpRUrkb
-MsvVXsUy/30ASh+a3lq7wc+Ghc9fKQQH1gO3SiPfeh4WMJzUNg9iGPP1asbAXOHs
-UhRlU3fPfgUaclWESrvQaMIPBo9Gmz51wptTfvj2dACqZ/B0etsoUAwHIvp52y40
-5YuJrtWzylhelPVIKN+AR0z6QEBNE8YRnKYu2ynMMzqAWY2t050D8ogkjKFw56x9
-KhU3q8v29i/AxN61sjef65cHRHWr01VpXGa/jW9BNakuCCA60jEjkgLZhf0WLWV0
-XrIO3FEz+jU+RGaeVfhfxhevg/NRfKOHXWmOei/WqqnCMhHTJPYcOw8hia1AURlZ
-WoAcqLIKJx8ABD0IYtmlGUOLcZANBNA3N6bsnFOGVWtZNmYfUzZXAe/0sDIWWulK
-g3/BhIoKbmkAPrmTPRNLLjPJfYtQjE5+ynzjGxsFhJIAvVRqKiQ=
-=QAQL
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTksYACgkQVbJhu7ck
+PpTebg//T0T3wxyJgs1+6cg/JLjwyo1vt/wdZgvzvGiy82cG3FRK+kqJhvr62E2W
+ai+Yn5n/WTGxl0P9kVofNdB2iTrCkAX0owZ0vkZbCZ7n8BCmgBgeOHc6qdjFZzpL
+GAb3zBMywsXaWRHN+ISyEYQLNEv1R0B2Cg/KLHe+9vB9bOSChGZ4xVpI5ZePQAel
+WoN3HwIaCh3lxiU0Skc8z1sn5Pz04+qaiplhKTk/gLyscEqqSJ/75pdp8e4Lc5cJ
+gigTq15ZAFN6EN2uwhhsnAmSk7B7/zfA3NjCvekd6NCfQbCl9PGLZJp8P5ASAB2R
+QIkCnvzA1THzlXnhtiW/WdtHtvkOk1PzkDPLyw4UIIf+tlw8u8q1n8fv9TEyYeUD
+/92zwFEhR2bZunVj2FNHBalgUCd8d/Jw94raIXVEZ4iE6pm7Vf5Ypvo/gGPr58pG
+FqeCIHwmSfBmJDAr+EhjAEnM/j7Qw9F05Oouy1aG+4YmpxP4gQpVIp4YCuDhbrO7
+xrD2IpWvkMY5Lj+eUsLigsKaMKZCfrFRMkCRyF9dgn0eBQVt1OD7FJK7tS+mK+lE
+s7Ur7oJUkgX219JYyfXfyc8wpbU/RFhwSbIQWstpwNCyhNeNPWQXWAYTn/72sbzm
+PbC2czBN09ZyNArJPbam+k6U8udn2bqIRjDdM1rVfDvr4lLNxnw=
+=VL/F
 -----END PGP SIGNATURE-----
 
---1SOMDaed9SQ8Emwg--
+--WjvCW5WJ1mnAo3sL--
