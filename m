@@ -1,82 +1,81 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413F21773A
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 06:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8760328DD5
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 06:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712558797; cv=none; b=YlWhCCw0/Z7JzDzy8qtdBsC3yU1FV0+5zT6xHXQxjX2R8uAuB6ecklEGk8ovygAzf3VndipMl3owjKYXenCJS3IVuvkyXPkV/kwVowF/oRoHFPwYqQY+v68vbZkLPaAYaYnomEo4RovyRH/eqU+rLtqhaeJ+y6tvMiOhZ0+TlV4=
+	t=1712558802; cv=none; b=AgqdV5464AoOYE5YcR2rcRI9CCvOdCxNlGajXUvr7CVnnmeTHJGjavQXSqA0gval0C7ntgdJznSRAAyzcSezCwB839fZ4FRGo05+/8UIzl0zMWJTk6bT3323O8O2A62MJyxHYtNN7qE7tz4ZmW5T6qUXLJJ11zDZjVhuW8eRVDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712558797; c=relaxed/simple;
-	bh=i6Fptd2okvUmdXYWADhIoDu+gLEimpu3r4x5uZC7K8s=;
+	s=arc-20240116; t=1712558802; c=relaxed/simple;
+	bh=fM8Uktwcdv82QiLc5fngDGdwSfnwi+pN+zAooCRn1n4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hFa+zoNLjR2UIzxY7tMG+28YPSecQkoHEGwPJsu+VPyZQoRgKZmDUPEOmQpGeJzZUk3FAUIyWLPl9axfFJlexE6OA1feBSnmrW9KfOb7apzadqICHbjSpfvp/VIUyhWFTcmvV1uhY0XpmCWdX1eWG68unwGT7Ma+I0AJ06nBgE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H/QRfxUH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TuvyywYV; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=IdKs8rfyYNVdI+ivDexPq8yvLelB6nITldsDTExiu1tEBLNiG++aEkpWhCF+2gddDEmBWYKRU/4he6dZu6bef2DqnRlE/PNSmi6YtpJrmj1kPgQcaU9f5vtRxLWGUl5u39QtO94bPERolE5UD6Y5qHngSct6JUABmbwhU6RRtzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IGP7Rges; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D+FdeeRM; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H/QRfxUH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TuvyywYV"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 568021380059;
-	Mon,  8 Apr 2024 02:46:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IGP7Rges";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D+FdeeRM"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id AD6F81380059;
+	Mon,  8 Apr 2024 02:46:39 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 08 Apr 2024 02:46:35 -0400
+  by compute2.internal (MEProxy); Mon, 08 Apr 2024 02:46:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712558795; x=1712645195; bh=S2GikXBjJ0
-	6VrzQwCNzilQ8rcbZnqL8jFqOtoFBoB6Q=; b=H/QRfxUH/vZMumB1QGLzCG8Zug
-	+qB0GDXYcJIRu7cOpoAi/XLycYaasakokVyKjeaSuUlpTEvJLS3EyVZgj3oO3j6i
-	zhQiLNyYCehbaK5pMIXtGWYOwxqgack/CGxEVVn07/pDVaFLZb3t7ITPj3g+r1QY
-	IQu1AAo/edjmurKXBKgNlwqlt33LXexCScK64scrAwT3gNQfkquJ2pNMq0RTOBbM
-	cjwJiSEoQH7q0ou3busY+zO8VS6p8YIteldF4UWi7CVtUbj7ABzj7ZHVROi/OndS
-	ITRssdCHfk8HJj+Fe9A5nFQ1+iipn3S6PfCCUIesKmaKSI3tpJ2iCrisNpLw==
+	:subject:to:to; s=fm2; t=1712558799; x=1712645199; bh=chTZxDSNeW
+	nYeefDlJMPh+RGS1KmX9It8WS/bbf3UdE=; b=IGP7RgesMXSV5bHskcDqJXydor
+	vzvJmMSbgIkBm3U03qOhiDnBeLvV7kJRRoYnd/b/9E3rQjPYd6ariP6xbEcaWMlf
+	CB44U7HU23sagpCMCHfynbArM4ZRCAxvEGm8p8e9Hrl/WNsXNrQdbcrzWoZ44NOL
+	ZmPtm4EGd4HRVkflDtQv13epeQsroILvQ6vUeq+ncbBT7arvdUPF6cSIvPFuMI32
+	Ru0eGSNwYfEHQZ196ZscUV10OdVManBJgaC0t0VJR7iiHvg7AErnDNGe5txtmcFU
+	lOLN3l2pXCJ8b7PPSwg2t2XCReI6NErrkSr/cIyZ7Mck/8wUpwvUoWMv8z1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712558795; x=1712645195; bh=S2GikXBjJ06VrzQwCNzilQ8rcbZn
-	qL8jFqOtoFBoB6Q=; b=TuvyywYVnmLgEUndTMvMZBI/4IpM3Og1sN0lV7dQRcsu
-	zU0iMy0draI/pIhIpzl2oaFefp1UT/b/0HPtE7MHGfHO9/zRwehetmcQpUzEyPST
-	nghNbawZjjG8MKajS9F0uf5uvP/I8//olHOWtlpE0TXc6+cuB6zTsn2KPRdbWTde
-	veYFDKTr56ozukwZBKXwYbU2rv3ihxc/5m0SRD5nqPQzEDn+aFKHI67bPTkNA/ip
-	dO2Fgsu5x4owhSOepzDZ+0IvQTOSaaIWDRE6+6nVP2rVpErfCjm+gqEIjN43iCpS
-	EQg1+KHWrxMGpME0SnqAlz/PaxtkS61KSw7Bpb/88w==
-X-ME-Sender: <xms:y5ITZlMOsWQ03lYuQ2F8Ekk0g8zW63d9fIxyKbUbPTEud57AcKij8Q>
-    <xme:y5ITZn_Hu2jWlgTpasDvJVJ5Xyf1DbdvAsB0jQ4HfLmme_XwhCVGCfCBseeAgPnj5
-    aPDmgOnEIjlE4FnAw>
-X-ME-Received: <xmr:y5ITZkRjpE8fO89QnvxF3UYEnSBdDcyS1NsIWEKPhc7-e-gpsqtf_cBk-6xaOTo67mIfHNBMHdTE8qgrCRKCzSG0lEoqS37C-9SHDe-HKdM9FlvvFA>
+	fm2; t=1712558799; x=1712645199; bh=chTZxDSNeWnYeefDlJMPh+RGS1Km
+	X9It8WS/bbf3UdE=; b=D+FdeeRMOzlUpqu1WhkX/5hy76dpflUJX+izOjuia8tm
+	mAsT6+CGl3J2mku2E2Hq12olumTNUg6sBoocCq9nWslhi/4/BotSs5UlzD3kcDpF
+	g/OEybbLe/rygWKyP7hX87kXjBL/HuV3/5TRKtVRXB72gIUKr72jVtc2/9VtHy5Y
+	WEAej03mnLkYvqZLLlwN5dSBP1ooDBJ+/p0yuZl4HgMFGpI1GOYUP+RqFksWpLaI
+	LkpEjbrc52N6jXCb5w587LDxLqdedhqqz1TbMHgNBImZ/T4DNiFi4bPqXpKmwsvU
+	Wrvptd9Q4EGiu51YRgDgM7pn2Q2AwzxD7PMUQYjggQ==
+X-ME-Sender: <xms:z5ITZrJm4l03gWmuoTJWTkjYyAkCyZkFA9gntKFoyjglwa8NSaoA_g>
+    <xme:z5ITZvLBt7HRot6W14I_zPVMmSLzkJS1ybxJKRr5OzSHQi5vDh8VaVHIYO6PBdhsK
+    ag2Wl_wi75qF_89nw>
+X-ME-Received: <xmr:z5ITZjtY9WFElOk8NUCdbMCcXnpSGuPe69nP28saGS1TUDlw10unX2Oqy6PTcEBlqr1gZ7o32B8qzzS5ZwjdytGxB4HMCA-zNB1a5T4UWtCTzYgqlA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeghedguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:y5ITZhvIwFlQwV-NFMCCLcntwNRAff1goCLRxLfIowyusYsbfmlaYg>
-    <xmx:y5ITZtc5BYqUPqW4-ulJU13TKTGiNYptm8oSenmB3_ol4Mp4PFCmpA>
-    <xmx:y5ITZt1mS7u6KoXYMlua76zBztuT8bU9iWQpKbQh1k_O1He9d5ekzQ>
-    <xmx:y5ITZp_r3mlHcFXumdt8cuh-XN5C1OkPBmZ4tqbHr-gbIH6XgIqbmQ>
-    <xmx:y5ITZmGu-3c0Be5y3BPdjXfb7An4qsu8exYSnzlVv2noEnhKw5lXTPAN>
+X-ME-Proxy: <xmx:z5ITZkb_AuiO3jElS8DvHiVyjDiT7u0fZViDnU-2t0vk8csaIQVT8w>
+    <xmx:z5ITZiZZa7_jC7tHAk2KYiFVeFquHfdQWKcXH3sqNDGhxTv25eocOw>
+    <xmx:z5ITZoC1u5akb_xHCxYuyi2z3HdEbmGWAXMCG_DCXdZGERx2sDxJTQ>
+    <xmx:z5ITZgbZmpdjws9Ti5IQ5ENdiMPda1HSCpX2MUqFkCLFywjFAX-kdw>
+    <xmx:z5ITZpwt4_jMX6XCwgpkUUg8g14Z0JHNYYkEhIMB89NYhWByNtKDyYci>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 02:46:34 -0400 (EDT)
+ 8 Apr 2024 02:46:38 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ef9896ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Apr 2024 06:46:28 +0000 (UTC)
-Date: Mon, 8 Apr 2024 08:46:31 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 59dddd31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 06:46:33 +0000 (UTC)
+Date: Mon, 8 Apr 2024 08:46:36 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 05/12] ci: convert "install-dependencies.sh" to use
- "/bin/sh"
-Message-ID: <6abc53bf5173e7de3fa271d175145c1672f17a88.1712555682.git.ps@pks.im>
+Subject: [PATCH v2 06/12] ci: merge custom PATH directories
+Message-ID: <d9be4db56fa028c96fb316413e87d3c37c3ba602.1712555682.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712555682.git.ps@pks.im>
 Precedence: bulk
@@ -86,110 +85,125 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WjvCW5WJ1mnAo3sL"
+	protocol="application/pgp-signature"; boundary="HxFIwHGt62hX0uTX"
 Content-Disposition: inline
 In-Reply-To: <cover.1712555682.git.ps@pks.im>
 
 
---WjvCW5WJ1mnAo3sL
+--HxFIwHGt62hX0uTX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to merge the "install-docker-dependencies.sh" script into
-"install-dependencies.sh". This will also move our Alpine-based jobs
-over to use the latter script. This script uses the Bash shell though,
-which is not available by default on Alpine Linux.
+We're downloading various executables required by our tests. Each of
+these executables goes into its own directory, which is then appended to
+the PATH variable. Consequently, whenever we add a new dependency and
+thus a new directory, we would have to adapt to this change in several
+places.
 
-Refactor "install-dependencies.sh" to use "/bin/sh" instead of Bash.
-This requires us to get rid of the pushd/popd invocations, which are
-replaced by some more elaborate commands that download or extract
-executables right to where they are needed.
+Refactor this to instead put all binaries into a single directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh | 28 +++++++++++-----------------
- 1 file changed, 11 insertions(+), 17 deletions(-)
+ ci/install-dependencies.sh | 15 +++++++--------
+ ci/lib.sh                  | 10 +++-------
+ 2 files changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index fad53aac96..7bcccc96fd 100755
+index 7bcccc96fd..46b9efb2d5 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -1,4 +1,4 @@
--#!/usr/bin/env bash
-+#!/bin/sh
- #
- # Install dependencies required to build and test Git on Linux and macOS
- #
-@@ -30,19 +30,14 @@ ubuntu-*)
+@@ -29,14 +29,13 @@ ubuntu-*)
+ 		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl \
  		$CC_PACKAGE $PYTHON_PACKAGE
 =20
- 	mkdir --parents "$P4_PATH"
--	pushd "$P4_PATH"
--		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
--		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4"
--		chmod u+x p4d
--		chmod u+x p4
--	popd
-+	wget --quiet --directory-prefix=3D"$P4_PATH" \
-+		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
-+	chmod u+x "$P4_PATH/p4d" "$P4_PATH/p4"
+-	mkdir --parents "$P4_PATH"
+-	wget --quiet --directory-prefix=3D"$P4_PATH" \
++	mkdir --parents "$CUSTOM_PATH"
++	wget --quiet --directory-prefix=3D"$CUSTOM_PATH" \
+ 		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
+-	chmod u+x "$P4_PATH/p4d" "$P4_PATH/p4"
++	chmod u+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
 =20
- 	mkdir --parents "$GIT_LFS_PATH"
--	pushd "$GIT_LFS_PATH"
--		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.=
-gz"
--		tar --extract --gunzip --file "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSIO=
-N.tar.gz"
--		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
--	popd
-+	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.g=
+-	mkdir --parents "$GIT_LFS_PATH"
+ 	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.g=
 z"
-+	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$GIT_LFS=
+-	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$GIT_LFS=
 _PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
-+	rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
++	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$CUSTOM_=
+PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
+ 	rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
  	;;
  macos-*)
- 	export HOMEBREW_NO_AUTO_UPDATE=3D1 HOMEBREW_NO_INSTALL_CLEANUP=3D1
-@@ -53,11 +48,10 @@ macos-*)
+@@ -47,10 +46,10 @@ macos-*)
+ 	brew install $BREW_INSTALL_PACKAGES
  	brew link --force gettext
 =20
- 	mkdir -p "$P4_PATH"
--	pushd "$P4_PATH"
--		wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
--		tar -xf helix-core-server.tgz &&
--		sudo xattr -d com.apple.quarantine p4 p4d 2>/dev/null || true
--	popd
-+	wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
-+	tar -xf helix-core-server.tgz -C "$P4_PATH" p4 p4d &&
-+	sudo xattr -d com.apple.quarantine "$P4_PATH/p4" "$P4_PATH/p4d" 2>/dev/nu=
+-	mkdir -p "$P4_PATH"
++	mkdir -p "$CUSTOM_PATH"
+ 	wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
+-	tar -xf helix-core-server.tgz -C "$P4_PATH" p4 p4d &&
+-	sudo xattr -d com.apple.quarantine "$P4_PATH/p4" "$P4_PATH/p4d" 2>/dev/nu=
 ll || true
-+	rm helix-core-server.tgz
++	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
++	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2=
+>/dev/null || true
+ 	rm helix-core-server.tgz
 =20
  	if test -n "$CC_PACKAGE"
+diff --git a/ci/lib.sh b/ci/lib.sh
+index d882250db5..4cce854bad 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -340,10 +340,6 @@ ubuntu-*)
+ 	# image.
+ 	# Keep that in mind when you encounter a broken OS X build!
+ 	export LINUX_GIT_LFS_VERSION=3D"1.5.2"
+-
+-	P4_PATH=3D"$HOME/custom/p4"
+-	GIT_LFS_PATH=3D"$HOME/custom/git-lfs"
+-	export PATH=3D"$GIT_LFS_PATH:$P4_PATH:$PATH"
+ 	;;
+ macos-*)
+ 	MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
+@@ -351,12 +347,12 @@ macos-*)
  	then
+ 		MAKEFLAGS=3D"$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=3DYes"
+ 	fi
+-
+-	P4_PATH=3D"$HOME/custom/p4"
+-	export PATH=3D"$P4_PATH:$PATH"
+ 	;;
+ esac
+=20
++CUSTOM_PATH=3D"$HOME/path"
++export PATH=3D"$CUSTOM_PATH:$PATH"
++
+ case "$jobname" in
+ linux32)
+ 	CC=3Dgcc
 --=20
 2.44.GIT
 
 
---WjvCW5WJ1mnAo3sL
+--HxFIwHGt62hX0uTX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTksYACgkQVbJhu7ck
-PpTebg//T0T3wxyJgs1+6cg/JLjwyo1vt/wdZgvzvGiy82cG3FRK+kqJhvr62E2W
-ai+Yn5n/WTGxl0P9kVofNdB2iTrCkAX0owZ0vkZbCZ7n8BCmgBgeOHc6qdjFZzpL
-GAb3zBMywsXaWRHN+ISyEYQLNEv1R0B2Cg/KLHe+9vB9bOSChGZ4xVpI5ZePQAel
-WoN3HwIaCh3lxiU0Skc8z1sn5Pz04+qaiplhKTk/gLyscEqqSJ/75pdp8e4Lc5cJ
-gigTq15ZAFN6EN2uwhhsnAmSk7B7/zfA3NjCvekd6NCfQbCl9PGLZJp8P5ASAB2R
-QIkCnvzA1THzlXnhtiW/WdtHtvkOk1PzkDPLyw4UIIf+tlw8u8q1n8fv9TEyYeUD
-/92zwFEhR2bZunVj2FNHBalgUCd8d/Jw94raIXVEZ4iE6pm7Vf5Ypvo/gGPr58pG
-FqeCIHwmSfBmJDAr+EhjAEnM/j7Qw9F05Oouy1aG+4YmpxP4gQpVIp4YCuDhbrO7
-xrD2IpWvkMY5Lj+eUsLigsKaMKZCfrFRMkCRyF9dgn0eBQVt1OD7FJK7tS+mK+lE
-s7Ur7oJUkgX219JYyfXfyc8wpbU/RFhwSbIQWstpwNCyhNeNPWQXWAYTn/72sbzm
-PbC2czBN09ZyNArJPbam+k6U8udn2bqIRjDdM1rVfDvr4lLNxnw=
-=VL/F
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTkssACgkQVbJhu7ck
+PpREfA//Sm9CHcPwXDGHoVVlNCs20aFAsHhOrYBLwIT2c7vpHmExV6CvPITp6D6y
+cNuqG+qYnVm3klTJ6NlgBYPh2STQqTaCRabCBUCdNIxbNqTLT3REDqEViBJ+T4HA
+bSceWA0y1qCwqmpLymwxGU5FfdjBjnGKt/Rg4E3bskB60mAwcx/WNrIbD89Ql5yR
+T7jr4X3e/n2V9HLGz5rVT3SvAqaDDJNPjRziW2X8XcNdffDElq/wi0E1juWJoupa
+cXDljCAZ7DZ+b5ioViqIx6gigdI/Cz2dhRGZTS9d/DED+imAvyRR/OMSPo38tNSc
++CfhZ9M4QdNM75uwg5KwgJbGCKgojzOvmF6y41uOmcOJsY2/z/Qetj7k7y+K1qOX
+DLqNDMQ2vlrgJtB/8Tr4I5UhwY0eqMvm8PMTQ4nsme6WxGr3jSrxljHWo1zD3Wz+
+fzS7ULdDFPFwyhmsS3uLF1cu2emzX/GQtnBInCZKIezSQOD0844ZpL1JDiu9lxpW
+ZyC+kN3AQQ3UoFcmkldW2qs6U0Cntt02dsDdSKgYWs25XVKyI8Si+dRoKrRGOsu4
+p3G3eRYMqdvdiDCLDyjUMCilJgHtTVVAs7od6kQbm34bTm1mNz/ieT5h+lJh2x+N
+OzHbvq6rtV+2Yi35c9mKn31s58JGytm4tXnnvSmBm2kPXp/EOIQ=
+=QFKI
 -----END PGP SIGNATURE-----
 
---WjvCW5WJ1mnAo3sL--
+--HxFIwHGt62hX0uTX--
