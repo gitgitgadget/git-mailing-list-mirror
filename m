@@ -1,74 +1,114 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.astos.de (mail.astos.de [217.110.68.46])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E646F13F451
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 15:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99552140E2F
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 15:25:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.110.68.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712589506; cv=none; b=mSi6w1jOyDPV9fqL18B86CmDyd44H5DohvnaXmcBFs/y79zCFwQDGQDZnS3hoe+Qto3yezpoKAr9NlJOm6gN1GbzsLvUK5pT8foRhyGjzsDgWY4BIuoN/XpKD/I1M53aNX5VoPAasNTMIKSYxPNTcevdVnnr2KIT7yTae9zyyXo=
+	t=1712589929; cv=none; b=E4VUkYOZIQpKa+sMbGmS8z7UBQ3pOgpQ1ERJkEslGFr5YLIJElMW9tuY2BVjBpwoaRpc+V53TuHosM57URTzHKKcLSWLtuWs/y6oV+m15b3TvAqgn0UzBkejs0bHGyuZtE7lCPIBdmdFcSC8T6A4FPGCy+twx6qCAaM1cgcpBO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712589506; c=relaxed/simple;
-	bh=5yZDpSWuWJ7XWXZkMDzFfTBTMYKx2TWl/ONYtKSbXZM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gcbHsG9TsU5mHOXoH1UdAL0Nhoba/4hPf1QCmsq9S3AbBL2VtwG3giKGwv4UyFIi5L5RGn0HS1Gf+1FFjBqFYdcQgI97YjZOSG/bNgfovnN2PYwM9CtgyK+oQXMO82fw7Vi9lnPPaD5nDKee4Rl65Q0tGEqCsl0dH7u7lY8fd5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TJvd7Boj; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712589929; c=relaxed/simple;
+	bh=8BIIhvkhy0srkTXVVCfEEBjqAvf8Fi9gVxr9aMbRK78=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=rKu3KY02a4JbK31AfDrtpWZQ0wYXCdCJuGS1E3eYqhx7Ugs4jz8oLDjWtQM3c600Hc6fooXALv3JN66Cyj7bF35mfjPIGZfkGRouWGla/18oyjotRkSHzK6jU05qR53DUfmtaFor1OXE2fyR5JlxvXaAC6K489yep5oTpb/rXUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=astos.de; spf=pass smtp.mailfrom=astos.de; dkim=pass (2048-bit key) header.d=astos.de header.i=@astos.de header.b=mGaF06wn; arc=none smtp.client-ip=217.110.68.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=astos.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=astos.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TJvd7Boj"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 706451F27FA;
-	Mon,  8 Apr 2024 11:18:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5yZDpSWuWJ7X
-	WXZkMDzFfTBTMYKx2TWl/ONYtKSbXZM=; b=TJvd7BojBvIxYNX7oBxqUzC0Mfnk
-	sVhYF5AJxSeksrishoumAtjmJgwCLF0ErrUc03vIM4GLLcVJek5o9928qkljIACx
-	DxACg2n07Hnv0GWHCZvutfte8W9tWgb2zWkJetiOVBVBzZwDobOhIGPk3mVQaMEK
-	vl/rLNy0sstIzgY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 691661F27F9;
-	Mon,  8 Apr 2024 11:18:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D0E081F27F8;
-	Mon,  8 Apr 2024 11:18:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] rerere: fix crash during clear
-In-Reply-To: <ZhL-Jt_Nb5egpKfx@roethke.info> ("Marcel =?utf-8?Q?R=C3=B6thk?=
- =?utf-8?Q?e=22's?= message of
-	"Sun, 7 Apr 2024 22:12:22 +0200")
-References: <xmqqplvjpacq.fsf@gitster.g> <ZhL-Jt_Nb5egpKfx@roethke.info>
-Date: Mon, 08 Apr 2024 08:18:15 -0700
-Message-ID: <xmqqle5ng9xk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=astos.de header.i=@astos.de header.b="mGaF06wn"
+Message-ID: <d8415e36-bdd6-4e74-8240-eb71b669f178@astos.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=astos.de;
+	s=astos-dkim-2020; t=1712589459;
+	bh=8BIIhvkhy0srkTXVVCfEEBjqAvf8Fi9gVxr9aMbRK78=;
+	h=Date:To:From:Subject;
+	b=mGaF06wnDlwwyjqwIETpAsh+AcHbj4DlJipfGwhrFhkcXn8TA5ISDOpLqpfOLExEo
+	 7ROiCbzRVd4s0bCsp0NpaUYTD/og2kT9Hp9WFiF1IycGnwBiPWJ9VV/0jqN4CHVin9
+	 9pNTjUUt6kw0umpFcfksFPkU08E7mpWcQMBz8kSIhly31KSh7e3SDcsLqD4XnkfVX7
+	 zdRiScVA9SCpBVNHGvuvQyXMXN/E9EwPCSiRv2xdVybMt+MsbQ2oMhSS6Wfd1tsppc
+	 KhQvUU5yH1R1FEjgweMH2nbYWOdwMwm6M80bMO7AZjumYvq8BGcb9x8Ol2MD6o3o56
+	 9Cy7vj0t2MIyg==
+Date: Mon, 8 Apr 2024 17:18:04 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 3993BC84-F5BB-11EE-86BA-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Content-Language: de-DE, en-US
+From: Marc Becker <marc.becker@astos.de>
+Subject: [BUG] fast-import crash on refs to in-flight commit SHA1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------gqrgzvCOQQownUqC3npXeCVJ"
 
-Marcel R=C3=B6thke <marcel@roethke.info> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------gqrgzvCOQQownUqC3npXeCVJ
+Content-Type: multipart/mixed; boundary="------------r20utrleWA0BfLKahQ0TQhL9";
+ protected-headers="v1"
+From: Marc Becker <marc.becker@astos.de>
+To: git@vger.kernel.org
+Message-ID: <d8415e36-bdd6-4e74-8240-eb71b669f178@astos.de>
+Subject: [BUG] fast-import crash on refs to in-flight commit SHA1
 
-> After reproducing this without manually corrupting the database, I
-> noticed that the summary line is no longer accurate. Because it fixes
-> two SEGFAULTs and one of them does not happen during clear. Can I chang=
-e this
-> in v3 or should I start a new thread?
+--------------r20utrleWA0BfLKahQ0TQhL9
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Updating the title in the course of evolution of a topic/patch is
-perfectly normal.  Please do so in v3 as continuation of the
-previous round.
+VXNpbmcgYGZyb21gIHdpdGggKG5vdC15ZXQtcGVyc2lzdGVudCkgY29tbWl0IFNIQTEgY3Jh
+c2hlcyBmYXN0LWltcG9ydC4NCg0KV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhh
+cHBlbmVkPyAoU3RlcHMgdG8gcmVwcm9kdWNlIHlvdXIgaXNzdWUpDQogIC0gdXNlIGdpdC1m
+YXN0LWltcG9ydCBvbiBhIG5ldyByZXBvc2l0b3J5DQogIC0gY3JlYXRlIGFuIGFyYml0cmFy
+eSAobWFya2VkKSBpbml0aWFsIGNvbW1pdA0KICAtIHJlZmVyZW5jZSB0aGlzIGNvbW1pdCBi
+eSBtYXJrIHZpYSBgZnJvbWAgaW4gYGNvbW1pdGAgb3IgYHJlc2V0YA0KICAtIHJlZmVyZW5j
+ZSBzYW1lIGNvbW1pdCBieSBTSEExIChvdXRwdXQgb2YgYGdldC1tYXJrYCkNCg0KV2hhdCBk
+aWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikNCiAgLSBpbi1m
+bGlnaHQgY29tbWl0IFNIQTEgaXMgdXNhYmxlIGluIGBmcm9tYCAoc2VlIGRvYyBmb3IgPGNv
+bW1pdC1pc2g+KQ0KDQpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3Ip
+DQogIC0gZmFzdC1pbXBvcnQgY3Jhc2hlcyB3aGVuIHVzaW5nIFNIQTEgZm9ybWF0LCBjbGFp
+bXMgaW52YWxpZCBjb21taXQgSUQNCg0KV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQg
+eW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPw0KICAtIGluLWZsaWdo
+dCBjb21taXQgU0hBMSBpcyB1c2FibGUgaW1tZWRpYXRlbHkgKG5vIG5lZWQgZm9yIG1pdGln
+YXRpb24pDQoNCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOg0KICAtIHJlZmVyZW5j
+aW5nIGFuIGluLWZsaWdodCBjb21taXQgdmlhIFNIQTEgaW4gYGxzYCB3b3JrcyAoc2VlIGJl
+bG93KQ0KICAtIHJlcnVubmluZyBmYXN0LWltcG9ydCBzdWNjZWVkcyAoY29tbWl0IGFscmVh
+ZHkgaW4gaW5pdGlhbCBkYXRhKQ0KICAtIHVzaW5nIGluLWZsaWdodCBjb21taXQgU0hBMSBB
+RlRFUiBpc3N1aW5nIGBjaGVja3BvaW50YCBzdWNjZWVkcw0KDQouLi4NCmdpdCBpbml0DQpn
+aXQgZmFzdC1pbXBvcnQgPDxFT0YNCiMgaW5wdXQgdG8gdHJpZ2dlciBHaXQgZmFzdC1pbXBv
+cnQgYnVnDQpjb21taXQgcmVmcy9oZWFkcy9tYWluDQptYXJrIDoxMjM0DQpjb21taXR0ZXIg
+QnVnIDxidWdzQGdpdC1zY20uY29tPiAxNzEyNTYzMjAwICswMDAwDQpkYXRhIDE0DQpjb21t
+aXQgbWVzc2FnZQ0KTSA2NDQgaW5saW5lIHRlc3QgZmlsZQ0KZGF0YSAxNA0KZHVtbXkgY29u
+dGVudA0KDQpnZXQtbWFyayA6MTIzNA0KIyBjcmVhdGUgbmV3IHJlZiBmcm9tIGV4aXN0aW5n
+IG1hcmsNCnJlc2V0IHJlZnMvaGVhZHMvb3RoZXINCmZyb20gOjEyMzQNCiMgcmVmZXJlbmNl
+IGZpbGUgaW4gZXhpc3RpbmcgY29tbWl0IChTSEExIGlzIHZhbGlkKQ0KbHMgN2YyODM5ZDI5
+ZDQ2YjVhOWZmZjU1NzIxNDNmNTM3MGYxNTJmN2IzMyB0ZXN0IGZpbGUNCiMgY2hlY2twb2lu
+dCBuZWVkZWQgdG8gdXNlIGluLWZsaWdodCBjb21taXQgdmlhIFNIQTENCiNjaGVja3BvaW50
+DQojIGNyZWF0ZSBuZXcgcmVmIGZyb20gZXhpc3RpbmcgY29tbWl0DQpyZXNldCByZWZzL2hl
+YWRzL2ZhaWxlZA0KZnJvbSA3ZjI4MzlkMjlkNDZiNWE5ZmZmNTU3MjE0M2Y1MzcwZjE1MmY3
+YjMzDQojIHVzZSBwbGFpbiByZWYgaW4gY29tbWl0DQpjb21taXQgcmVmcy9oZWFkcy93b3Jr
+cw0KY29tbWl0dGVyIEJ1ZyA8YnVnc0BnaXQtc2NtLmNvbT4gMTcxMjU2MzMwMCArMDAwMA0K
+ZGF0YSAxOA0KbmV3IGNvbW1pdCBtZXNzYWdlDQpmcm9tIDdmMjgzOWQyOWQ0NmI1YTlmZmY1
+NTcyMTQzZjUzNzBmMTUyZjdiMzMNCiMgZmluaXNoIGltcG9ydA0KZG9uZQ0KRU9GDQoNCg0K
+W1N5c3RlbSBJbmZvXQ0KZ2l0IHZlcnNpb246DQpnaXQgdmVyc2lvbiAyLjM5LjINCmNwdTog
+eDg2XzY0DQpubyBjb21taXQgYXNzb2NpYXRlZCB3aXRoIHRoaXMgYnVpbGQNCnNpemVvZi1s
+b25nOiA4DQpzaXplb2Ytc2l6ZV90OiA4DQpzaGVsbC1wYXRoOiAvYmluL3NoDQp1bmFtZTog
+TGludXggNC40LjAtMTkwNDEtTWljcm9zb2Z0ICMzOTk2LU1pY3Jvc29mdCBUaHUgSmFuIDE4
+IDE2OjM2OjAwIA0KUFNUIDIwMjQgeDg2XzY0DQpjb21waWxlciBpbmZvOiBnbnVjOiAxMi4y
+DQpsaWJjIGluZm86IGdsaWJjOiAyLjM2DQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3Rp
+dmUgc2hlbGwpOiAvYmluL2Jhc2gNCg0K
 
-Thanks.
+--------------r20utrleWA0BfLKahQ0TQhL9--
+
+--------------gqrgzvCOQQownUqC3npXeCVJ
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQQmrT0REuiUGVWZb1iEnjq1zqJcyQUCZhQKrAUDAAAAAAAKCRCEnjq1zqJcyTxZ
+AP4m2N55+1OW4JX03U6iu979rRukw81lK3fGZJKEMkZe5gD9EhEkxVo/21S8ans8QNNOFgGOzJHY
+tZTnUlSDnWdoyQw=
+=Sugl
+-----END PGP SIGNATURE-----
+
+--------------gqrgzvCOQQownUqC3npXeCVJ--
