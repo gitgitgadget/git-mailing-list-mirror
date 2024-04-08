@@ -1,158 +1,163 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E443C2F
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 05:45:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60D79E0
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 05:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712555119; cv=none; b=nowztwYrewmhSip+SK0ATKzUyXCyy7HMMJdgu1o1cgA9P4BrbjsTP7cyPUC5JnZ8SCybKB6P+j4301OD2v4bxQoKplPvVa5JYDlExXM6qr+gc1DEb4/ZoLm5u2L7qDCKTpW5ESPZL5U0UJKzJWIgGsOh1Y9/VQ31wl4U73lFvDY=
+	t=1712555318; cv=none; b=POrfIaS4yhG4eF4cfpGBm3zvgZtUMa2jJDiIuegltSR5AxQQoemjuDb8msEnuiPEYtRLxLbsABsVt7URd5etbAvtNt6/owqzMXqHqp8YX5QVUs2DD7H+RQolvg9JxA1/4XVj3QpjVLNaQWBcFoR3XJT04cQ1Xr9OhB5mu7+q0P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712555119; c=relaxed/simple;
-	bh=0+L75spDFAtmEwtz29vdM3xHNAX6oHhr4rfJxP1a/B0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K0NHw+a23sWCgOulodSHFYtyen1qxvcnPWKIDJRlRWD1wIwyU0qlgqnY7DbtLlwPiCyd56ORDFSTWjuGhHC6rcKQ5PL018H6YIGk4HNsvtcBDMBMEAz0fCGiHZ3ok9whvYcCTuKk5oaEltH4f3PJX/0DAD+IxTMxNynkNTLsVF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=DYBQR6Rh; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1712555318; c=relaxed/simple;
+	bh=MaEpV0S2lsx/xER55rXiShm4NIy8T0Ad7E94Hftc0fE=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hDFazUcx4sVH1xgAJMlV8loAtohhkkd6M/iatqhuq+6GU+mBoaGr6FZIADhqBggJokarZBzQQc9fdey4NgBICY7/09ITRxh7tLWZ4ta+IXl+atk7XynUdVk4Q/MYZck4A3Z4f1mTco/X1nNplSsad0fcwcjP6Ei0yrjdDHEs8rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JfvIp5Qr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oazQMOUL; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="DYBQR6Rh"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a51d05c50b2so92948366b.0
-        for <git@vger.kernel.org>; Sun, 07 Apr 2024 22:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1712555115; x=1713159915; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GgtkMel8lTa75UoNurEppHvdIPB2weSOLB86I2g8KUw=;
-        b=DYBQR6RhPcsMZqxZVmH2f2JMCgD5YAAowGwpFfTFHnaGZ8yDomuCZ+RQKlVMb+8niR
-         UF/R3Rz1xnzAoR+mCyOxUmCPBRNi6Wu32E+5bm36j/eFWK43AE7BX1dtlg7diMpM+YMR
-         JlWFi7xj3q8+kdo3JiB7YEDCeY0CeP+bGzoWZ+CUgYiMVeN6/v0kZZL3YyFOV4ZXtQ2n
-         TKFP5ctWWFQudlvgS2aTPXOO4XnMac1uI/QAAdBtD7j3VdcjJVAD0Zqqh8jMx+bq0Kuz
-         eOIWzo91bDlSRKXZhzGhCBRBckd22S/dJKjhz1a7IJJ90YWt664xJxkqZqsCxkGK2+bD
-         7+Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712555115; x=1713159915;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GgtkMel8lTa75UoNurEppHvdIPB2weSOLB86I2g8KUw=;
-        b=SiDSoRAbRy6U/QZEr7NLFbaaeqlXivttNLmhLe4fUchg7CeuM5a1MRVdYGlhFQbodS
-         8qG5ykbJ9TdZQZlAY6EGre6An6wz1nsG6vJmhKg8tO6PoGdVb4CQi8ddpRcVAr8CHUA4
-         CRSRHI6L1JdTuWTQN00eK49KRHs16SgNTC8oTl2ZHGWOIsoyCeIf0kZaBaSj748yNmWU
-         FspodUOPi9QoN1IeHIKD7Lzfbsk0/hCcfIgX11lEbr6TS3ZwvsjXeuJEPkXrez5xXnuc
-         cK5xhSM/PimXUHLvh8oQO5qR2Y3s8FxzHUWkM46elPjJiMCsYbrt87fn1sSns6cVmsA9
-         4EdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXS0VuyixVeEGL1me4o/Ie0BXqq7wKXzfkbFdSW3KZeJnGgaaLqPa2xNGbU8JX/RM4aR8LJStL+OJKq8cdfvIdiN+XU
-X-Gm-Message-State: AOJu0YyPLCbnBKHXLAJtQ+Bz/KcOW86pHC9yvIiUzZn+V/sON7tySXp3
-	7tbhf0l/i9XcZgsGZqj1XnIRZl28UOdxP2+m+nV809zL+PFv8UrUpKLgKVq9NDO9akkt9ijgCfK
-	b1t9y+WcsHsEQh9mcUTXyJqFJECWyNESiURJ6dg==
-X-Google-Smtp-Source: AGHT+IE1717JJHIppDDGNzuyLjeinXndDM2XM79ab3PLQ5nmPJPhMGQ5pHAPswUrGZG2x8UMzZdF225uc4k3UQjiTNc=
-X-Received: by 2002:a17:907:60d0:b0:a51:d49f:b6e3 with SMTP id
- hv16-20020a17090760d000b00a51d49fb6e3mr1334148ejc.54.1712555115070; Sun, 07
- Apr 2024 22:45:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JfvIp5Qr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oazQMOUL"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8BF071380078;
+	Mon,  8 Apr 2024 01:48:35 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Mon, 08 Apr 2024 01:48:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712555315; x=1712641715; bh=HsBhuqCbsd
+	7i/W+CjiAyN0YBWQkeatOw9UuL9TtpqvM=; b=JfvIp5QrWamv+mNKfaX3xJp6Ry
+	F5OR08DDjUwAlRO7KALWPDue+647llVKF5YXG6AiDGRWCzTXxHjvWzPsSHpMs+Jl
+	NemheNynX3Ag0Kx4j5AdXpu36f4ICMEF35mFEOikMxglE/OlisA4R+zQe2sXc9h7
+	ca84YbrOSz3pgdDdUJ/pWR/71YzgJE7GSXFor/qCnKqHfa1400kTLRvum0WxMg3R
+	2stMqdpx5ek26Sd68CrI0lHXEWkPOyKow6zmbplYbx4hQiIKsdMlZksa+VVowRw0
+	6OBaLMPq/7xu9/uYkDE5ZJwN0k8D4JrAD45gF7HXX//1GPdRSgVNzHjz6DvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712555315; x=1712641715; bh=HsBhuqCbsd7i/W+CjiAyN0YBWQke
+	atOw9UuL9TtpqvM=; b=oazQMOULQXN/ymYAjVC6i3xSZUbAQ/FF3bdOYkJUJEjg
+	kfbquRMuMNju7HafuvFSPdZFqEOq47ufLI/UcO/uQsMxXmP1JNO2S9v4BdoaEpMH
+	Jibv+PONWscBzAR2ePBOmN9H1rav4ryZMAaN/XnCjZPa0gZxjKIhUBo95zgyqvAG
+	kGUyCagdE2UGaTO8zIV94y0TJgOmn2fR3g2B94CDMdUg9UIHv9n14Srkshy8eGeY
+	opjQieN4HXR/2zOtyl6RQaMCcnDT665jnS5JVaXz6X0JziO2W8uAP5zUmWeRB3FB
+	fzlnNqKonznbCrkIUbycSpJMlLKzcPnxW15TUr5Q+w==
+X-ME-Sender: <xms:M4UTZgxqGvtt3hwYMwYzUBECT2q7PGqArx2CquMNO_6taNGotHe7wA>
+    <xme:M4UTZkQLjBgrDjvENNQHWn-7DSDgsdy4bjyUO2gaiKUaemNvp8AT2PSde0Fv-lPSX
+    d3n8RzPqQMV3RLx4A>
+X-ME-Received: <xmr:M4UTZiU80JfQkypCx_VAZYwdqB-_oYzEkVx6e2rhyGJnj_7CzP33y5vimZK1xi8fqR5xZbrsbzRuMcGUuh0iIls9DFVHsp2ub4SX-27BCslpRrKpMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeghedgleelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:M4UTZuhFsoYTD7QDmGsz72bLLDpTlSRlp0d7pyihw_CmCrp62VO7_A>
+    <xmx:M4UTZiD42WJFvNKXQ80G5NG_R97kbejkwNjU5zGlUxlWV5xajlx4jg>
+    <xmx:M4UTZvIBIuo04ejDEu7CATDU-UtdwnTMUzXK5jwk0feOyruu3Hwm3Q>
+    <xmx:M4UTZpDR71fEAKkxySbRlQTvgMlvTnxUnI5Z3GPr-XFsEnYv3mLVVw>
+    <xmx:M4UTZp5SQ6UZS2J-DdqD1fycMnnvBvWx6OJYa_HX5QFC8ZHuuJLxBrkw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Apr 2024 01:48:34 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 4dbe57c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 05:48:27 +0000 (UTC)
+Date: Mon, 8 Apr 2024 07:48:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	JGit Developers list <jgit-dev@eclipse.org>
+Subject: Re: [PATCH 08/12] ci: make Perforce binaries executable for all users
+Message-ID: <ZhOFLsfVg-dpQJ4w@tanuki>
+References: <cover.1712235356.git.ps@pks.im>
+ <22f86f8ccb9f3fb7f98ff57ddd09724fc9e44628.1712235356.git.ps@pks.im>
+ <ZhBX7REqotKKHpWg@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
- <ZhKqvA1NQwrVfnfE@nand.local> <ZhLfqU9VNUW+2mmV@nand.local>
-In-Reply-To: <ZhLfqU9VNUW+2mmV@nand.local>
-From: =?UTF-8?B?6ZGr6YKi?= <xingxin.xx@bytedance.com>
-Date: Mon, 8 Apr 2024 13:45:03 +0800
-Message-ID: <CAER=4vi71KWKJUJF4Qg8eMax8D6xr4+pxTuE1_Pw6-yv40EOiw@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH] midx: disable replace objects
-To: Taylor Blau <me@ttaylorr.com>
-Cc: blanet via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	blanet <bupt_xingxin@163.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nlzoHVrJ/tHcRZl2"
+Content-Disposition: inline
+In-Reply-To: <ZhBX7REqotKKHpWg@google.com>
 
-> I had a some more time to look into this, and I think that your original
-> fix is correct.
->
-> The issue is, as you suggest, due to the following (from your original
-> patch):
->
-> > After some investigation we found that all repositories experiencing
-> > failures contain replace references, which seem to be improperly
-> > acknowledged by the MIDX bitmap generation logic.
->
-> Indeed, the pack-bitmap-write machinery does not itself call
-> disable_replace_refs(). So when it generates a reachability bitmap, it
-> is doing so with the replace refs in mind. You can see that this is
-> indeed the cause of the problem by looking at the output of an
-> instrumented version of Git that indicates what bits are being set
-> during the bitmap generation phase.
->
-> With replace refs (incorrectly) enabled, we get:
->
->     [2, 4, 6, 8, 13, 3, 6, 7, 3, 4, 6, 8]
->
-> and doing the same after calling disable_replace_refs(), we instead get:
->
->     [2, 5, 6, 13, 3, 6, 7, 3, 4, 6, 8]
->
-> Single pack bitmaps are unaffected by this issue because we generate
-> them from within pack-objects, which does call disable_replace_refs().
 
-Thank you for the comprehensive investigation. I have quoted them in the
-commit message to provide a clearer explanation of the patch.
+--nlzoHVrJ/tHcRZl2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> In addition to the test fixes I suggested earlier, I would instead demonstrate
-> the bug by showing a clone (which fails with MIDXs, but doesn't without
-> MIDXs) like so:
->
-> --- 8< ---
-> diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-> index 5e4cdef6a8..1fb3b0f9d7 100755
-> --- a/t/t5326-multi-pack-bitmaps.sh
-> +++ b/t/t5326-multi-pack-bitmaps.sh
-> @@ -442,19 +442,16 @@ test_expect_success 'do not follow replace objects for MIDX bitmap' '
->                 cd repo &&
->
->                 test_commit A &&
-> -               A=$(git rev-parse HEAD) &&
->                 test_commit B &&
-> -               B=$(git rev-parse HEAD) &&
-> -               git checkout --orphan=orphan $A &&
-> +               git checkout --orphan=orphan A &&
->                 test_commit orphan &&
-> -               C=$(git rev-parse HEAD) &&
-> -               git rev-list --objects --no-object-names $B |sort >expected &&
->
-> -               git replace $A $C &&
-> -               git repack -ad &&
-> -               git multi-pack-index write --bitmap &&
-> -               git rev-list --objects --no-object-names --use-bitmap-index $B |sort >actual &&
-> -               test_cmp expected actual
-> +               git replace A HEAD &&
-> +               git repack -ad --write-midx --write-bitmap-index &&
-> +
-> +               # generating reachability bitmaps with replace refs
-> +               # enabled will result in broken clones
-> +               git clone --no-local --bare . clone.git
->         )
->  '
-> --- >8 ---
->
-> With the change in your patch to call disable_replace_refs() in
-> builtin/multi-pack-index.c, this test passes as expected. With that
-> change compiled out, we instead get:
->
-> [...]
-> + git clone --no-local --bare . clone.git
-> Cloning into bare repository 'clone.git'...
-> remote: Enumerating objects: 8, done.
-> remote: Total 8 (delta 0), reused 0 (delta 0), pack-reused 8 (from 1)
-> Receiving objects: 100% (8/8), done.
-> fatal: did not receive expected object da5497437fd67ca928333aab79c4b4b55036ea66
-> fatal: fetch-pack: invalid index-pack output
-> error: last command exited with $?=128
-> not ok 352 - do not follow replace objects for MIDX bitmap
->
-> as expected.
->
+On Fri, Apr 05, 2024 at 01:01:52PM -0700, Josh Steadmon wrote:
+> On 2024.04.04 15:25, Patrick Steinhardt wrote:
+> > The Perforce binaries are only made executable for the current user. On
+> > GitLab CI though we execute tests as a different user than "root", and
+> > thus these binaries may not be executable by that test user.
+> >=20
+> > Fix the setup so that we set the executable bits for all users.
+> >=20
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  ci/install-dependencies.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > index f4eb125fd2..068c478025 100755
+> > --- a/ci/install-dependencies.sh
+> > +++ b/ci/install-dependencies.sh
+> > @@ -47,7 +47,7 @@ ubuntu-*)
+> >  	mkdir --parents "$CUSTOM_PATH"
+> >  	wget --quiet --directory-prefix=3D"$CUSTOM_PATH" \
+> >  		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
+> > -	chmod u+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
+> > +	chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
+> > =20
+> >  	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.t=
+ar.gz"
+> >  	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$CUS=
+TOM_PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
+> > --=20
+> > 2.44.GIT
+> >=20
+>=20
+> Do we break CI in patch 6 and 7 until we get this fix? Perhaps we should
+> just squash this into patch 6?
 
-Applied! The test looks much clearer now, thanks!
+No, this was broken before already as we had the same "chmod u+x" even
+without this patch series. This doesn't lead to a broken CI system
+though as Perforce is an optional dependency. Instead it causes us to
+skip all Perforce tests because we won't be able to look up these
+binaries via PATH.
 
-Xing Xin
+I'll try to clarify the commit message.
+
+Patrick
+
+--nlzoHVrJ/tHcRZl2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYThS0ACgkQVbJhu7ck
+PpTapA/+KKxVEA+YhdgbLN//IWQhHp3VejmeMsQq0rstZ/2MWx7HlujKeHpsN8Sy
+n7aDef4b7jvJYF6mcQ04WJXJdcOvKX5jTiUs2leK7EgoAfix6N75rzVcg7guxGwc
+HzkgOb/YuZ+kRNP8idDgNQakhZCghvP1y/GiKfIcp2A+zfP3PsXwQiXV7r5X1ekm
+/dgTOb0EzIt3lC7ZU0RkmKaUFnjGG/XJpnNKRwZaJdnjeFJFWKeY7i62VoJnHTKK
+7RAI/TtXk3C58NeEI0lncf5yK41R/s00jou5yqcM+VjW2veB3yfLYX7ddmoSRGnM
+yrPp5LppwHoZqb05680XwBrw6JFaNKTyJOq2YQTHMF8d8wdladlT8H++lezq9Rb2
+8MuCnNd8Ur9L1ZF++LfNzk8X9KLcjfqKMJJ4R4EMyVJz49qKz95CK2uo84mzxe9I
+D++U+Utskq3XCu2SFAdk1ymv/tB73/3cIs89BuhGpiCYwWKtNJXOkRs9A5nSCh64
+MDZA1Fe6yr6egzs94tk+D8WTEiUgrZbWHFZfnnqnSIn0oiu9XkIvydw0o6/BtIGW
+2d/Eq2AwmdEX6ry8JGIE/LhobjOGO4PQP6tQYg1zinMBdhGKlBL48c384hTXGte6
+Ft5/wUL5DACU4vJK1ffs7EmQjdiDdaZjqDKSYnTX9hNSHruW50g=
+=S3AX
+-----END PGP SIGNATURE-----
+
+--nlzoHVrJ/tHcRZl2--
