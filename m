@@ -1,81 +1,82 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8760328DD5
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 06:46:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE102BAE1
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 06:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712558802; cv=none; b=AgqdV5464AoOYE5YcR2rcRI9CCvOdCxNlGajXUvr7CVnnmeTHJGjavQXSqA0gval0C7ntgdJznSRAAyzcSezCwB839fZ4FRGo05+/8UIzl0zMWJTk6bT3323O8O2A62MJyxHYtNN7qE7tz4ZmW5T6qUXLJJ11zDZjVhuW8eRVDw=
+	t=1712558807; cv=none; b=PwM192COrix09eCuOhd5NWMRE4K2MLw3+O087ifvbhJ1lfRKi1f5HDMsGIKBehKhEBVxU00W+ksaZbYTU1O/oXr8/QPwbT4Tf0O2GmHTk8BbtM1jaetu/UTPmZPQxUdlu8jIHuJEB3BpKAB29uBDYXZsRNBzSKkatUBdXS0GSuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712558802; c=relaxed/simple;
-	bh=fM8Uktwcdv82QiLc5fngDGdwSfnwi+pN+zAooCRn1n4=;
+	s=arc-20240116; t=1712558807; c=relaxed/simple;
+	bh=ys/Dzq9cdwdsRy64f+2Ocu161rwyowM/yTnYp8DYTyQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IdKs8rfyYNVdI+ivDexPq8yvLelB6nITldsDTExiu1tEBLNiG++aEkpWhCF+2gddDEmBWYKRU/4he6dZu6bef2DqnRlE/PNSmi6YtpJrmj1kPgQcaU9f5vtRxLWGUl5u39QtO94bPERolE5UD6Y5qHngSct6JUABmbwhU6RRtzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IGP7Rges; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D+FdeeRM; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=dIK/t4R/afPBFM/43iLi7oklwTVVXcNgJ8gxDD89A+N4v+iNxPbCkIn27PgunPx8RfM2JQyG15kezxq/7d3sHe8VnfNZR/gkV1CamcvmrQ2efL4+MckaxgsW24RzVxO8f4zRwdIKlvsE86rk11+fsD/KddG9SGM+YCeXw6iwLCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Cl8UAhiv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EzEi/i5J; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IGP7Rges";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D+FdeeRM"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id AD6F81380059;
-	Mon,  8 Apr 2024 02:46:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Cl8UAhiv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EzEi/i5J"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 13D9611400CD;
+	Mon,  8 Apr 2024 02:46:45 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 08 Apr 2024 02:46:39 -0400
+  by compute7.internal (MEProxy); Mon, 08 Apr 2024 02:46:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712558799; x=1712645199; bh=chTZxDSNeW
-	nYeefDlJMPh+RGS1KmX9It8WS/bbf3UdE=; b=IGP7RgesMXSV5bHskcDqJXydor
-	vzvJmMSbgIkBm3U03qOhiDnBeLvV7kJRRoYnd/b/9E3rQjPYd6ariP6xbEcaWMlf
-	CB44U7HU23sagpCMCHfynbArM4ZRCAxvEGm8p8e9Hrl/WNsXNrQdbcrzWoZ44NOL
-	ZmPtm4EGd4HRVkflDtQv13epeQsroILvQ6vUeq+ncbBT7arvdUPF6cSIvPFuMI32
-	Ru0eGSNwYfEHQZ196ZscUV10OdVManBJgaC0t0VJR7iiHvg7AErnDNGe5txtmcFU
-	lOLN3l2pXCJ8b7PPSwg2t2XCReI6NErrkSr/cIyZ7Mck/8wUpwvUoWMv8z1g==
+	:subject:to:to; s=fm2; t=1712558805; x=1712645205; bh=3dfRJXK48z
+	79mbOfImFYAPZmX00osM8gmkmHoWdEINg=; b=Cl8UAhivttwPyOuO160QUToL3P
+	M3QWJxZ2yFibmAW7mlrHf1fxX/+Hl8zi30hfL24JlGioRT/1wA8czWkOC2lMT8lF
+	s24IcceRYi9VgdTRJGkeFwA3n7vMD/1gpO3ZMacy2AlZGFxwknwn26gcc15cNSof
+	+m5hCs9VO0D4GNJEojsO/VmX7sTYnERsuDQtEP97/Jc63CKF8H/hwiS2ebEvgBn5
+	qr7RgaX5JIqN73HxLYFR6X024xQERGAGk6CII4O5iWZOwrXZbRnPr4JVlqRfk0aE
+	4NDRxVPVFzsm+NzJjFlcy3IDzvkAFdIjvI+D9UuEdNbrFskkgVozl+8i+DUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712558799; x=1712645199; bh=chTZxDSNeWnYeefDlJMPh+RGS1Km
-	X9It8WS/bbf3UdE=; b=D+FdeeRMOzlUpqu1WhkX/5hy76dpflUJX+izOjuia8tm
-	mAsT6+CGl3J2mku2E2Hq12olumTNUg6sBoocCq9nWslhi/4/BotSs5UlzD3kcDpF
-	g/OEybbLe/rygWKyP7hX87kXjBL/HuV3/5TRKtVRXB72gIUKr72jVtc2/9VtHy5Y
-	WEAej03mnLkYvqZLLlwN5dSBP1ooDBJ+/p0yuZl4HgMFGpI1GOYUP+RqFksWpLaI
-	LkpEjbrc52N6jXCb5w587LDxLqdedhqqz1TbMHgNBImZ/T4DNiFi4bPqXpKmwsvU
-	Wrvptd9Q4EGiu51YRgDgM7pn2Q2AwzxD7PMUQYjggQ==
-X-ME-Sender: <xms:z5ITZrJm4l03gWmuoTJWTkjYyAkCyZkFA9gntKFoyjglwa8NSaoA_g>
-    <xme:z5ITZvLBt7HRot6W14I_zPVMmSLzkJS1ybxJKRr5OzSHQi5vDh8VaVHIYO6PBdhsK
-    ag2Wl_wi75qF_89nw>
-X-ME-Received: <xmr:z5ITZjtY9WFElOk8NUCdbMCcXnpSGuPe69nP28saGS1TUDlw10unX2Oqy6PTcEBlqr1gZ7o32B8qzzS5ZwjdytGxB4HMCA-zNB1a5T4UWtCTzYgqlA>
+	fm2; t=1712558805; x=1712645205; bh=3dfRJXK48z79mbOfImFYAPZmX00o
+	sM8gmkmHoWdEINg=; b=EzEi/i5JbQ8Xj7Jo2kqFlcBEsM/3mZmhE04TCe311eZt
+	vg5GohGwg21EMirv3lVrPsHA/nuL15whpXTG4P2xKvDhq4zd+7o8ZixAaXNhp+ah
+	jCgaz0esCbOx2oKHbUIuQi7XpPEG+BdP2J512ccN7rTbFrHy+9pYYQHkC0Ai9DTm
+	fIlKQIRLCbvyPQqZ6yNm2mI9/Tv/7mDXbaRcFcUGU74XmJo7HR6+V+xFspzex1lw
+	1h2tapNG4D1XHKraA4bG8gyUJm8jw7wVgeISYexwaSkR/DXL3Y9Y3NaHgwtk9SeQ
+	tDay4vYhTClgtSzaSvzorm08bclGlef8yR8qVFrGBQ==
+X-ME-Sender: <xms:1JITZtQEDg177rL-7NMxzy-lxqk1Z2eHhhgQ6F0ZfTohnBKLALpbcA>
+    <xme:1JITZmyitLpYGtEHoiItXsLV6e2VT0IIOFsA1ZZccXVjDqm3gWwkJVZ9XaD30o-ya
+    S-IykXqW1t42CoE-Q>
+X-ME-Received: <xmr:1JITZi2IxiOoarr5rjrLliAhyhPUIB_Kn4VDH_G5uzQ7IJ2EKGfpDGBJEj31kGldW67dsQ5GYKNKu86pe2gWHYY6zkeL-1hhWiUFlL1PgiA7pZ4j9w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeghedguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:z5ITZkb_AuiO3jElS8DvHiVyjDiT7u0fZViDnU-2t0vk8csaIQVT8w>
-    <xmx:z5ITZiZZa7_jC7tHAk2KYiFVeFquHfdQWKcXH3sqNDGhxTv25eocOw>
-    <xmx:z5ITZoC1u5akb_xHCxYuyi2z3HdEbmGWAXMCG_DCXdZGERx2sDxJTQ>
-    <xmx:z5ITZgbZmpdjws9Ti5IQ5ENdiMPda1HSCpX2MUqFkCLFywjFAX-kdw>
-    <xmx:z5ITZpwt4_jMX6XCwgpkUUg8g14Z0JHNYYkEhIMB89NYhWByNtKDyYci>
+    gvrhhnpeevuedvueejheeuuedtteekffeftdeutedufeeiieeikeduveduffffkeehjeef
+    ueenucffohhmrghinhepshhhqddrtghipdhinhhsthgrlhhlqdguvghpvghnuggvnhgtih
+    gvshdrshhhpdhpvghrfhhorhgtvgdrtghomhdpghhithhhuhgsrdgtohhmnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:1JITZlDVP259TZV1pjI_cpLadl-8KF8RAZozjBnIoFgYsAIGk9bmyw>
+    <xmx:1JITZmh314xTda1jTK91Q07HmkQEvd6zBu1FQt0qNKvGM0mZ2616rw>
+    <xmx:1JITZprjy1FlaM24cZcXdpawN9swH3b2Gh2fOhM5SEXAIQSihAb5Qg>
+    <xmx:1JITZhjW4dKJ5AqvdmPJdPWKBU1gPkBEOL44OcvJComgFyP2OPoSkA>
+    <xmx:1ZITZoZFoBrXsfKdXhm8WHCsl-5zJDypj14r0E6-ERzERlY7ZXD8caBX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 02:46:38 -0400 (EDT)
+ 8 Apr 2024 02:46:43 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 59dddd31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Apr 2024 06:46:33 +0000 (UTC)
-Date: Mon, 8 Apr 2024 08:46:36 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id df05c5c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 06:46:38 +0000 (UTC)
+Date: Mon, 8 Apr 2024 08:46:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 06/12] ci: merge custom PATH directories
-Message-ID: <d9be4db56fa028c96fb316413e87d3c37c3ba602.1712555682.git.ps@pks.im>
+Subject: [PATCH v2 07/12] ci: merge scripts which install dependencies
+Message-ID: <4a90c003d1cdbf1e38efe5f7b78badf96a61b8d7.1712555682.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712555682.git.ps@pks.im>
 Precedence: bulk
@@ -85,125 +86,222 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HxFIwHGt62hX0uTX"
+	protocol="application/pgp-signature"; boundary="FO6A8oW7iFV4wtW+"
 Content-Disposition: inline
 In-Reply-To: <cover.1712555682.git.ps@pks.im>
 
 
---HxFIwHGt62hX0uTX
+--FO6A8oW7iFV4wtW+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're downloading various executables required by our tests. Each of
-these executables goes into its own directory, which is then appended to
-the PATH variable. Consequently, whenever we add a new dependency and
-thus a new directory, we would have to adapt to this change in several
-places.
+We have two different scripts which install dependencies, one for
+dockerized jobs and one for non-dockerized ones. Naturally, these
+scripts have quite some duplication. Furthermore, either of these
+scripts is missing some test dependencies that the respective other
+script has, thus reducing test coverage.
 
-Refactor this to instead put all binaries into a single directory.
+Merge those two scripts such that there is a single source of truth for
+test dependencies, only.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh | 15 +++++++--------
- ci/lib.sh                  | 10 +++-------
- 2 files changed, 10 insertions(+), 15 deletions(-)
+ .github/workflows/main.yml        |  2 +-
+ .gitlab-ci.yml                    |  4 +--
+ ci/install-dependencies.sh        | 32 ++++++++++++++++++---
+ ci/install-docker-dependencies.sh | 46 -------------------------------
+ 4 files changed, 31 insertions(+), 53 deletions(-)
+ delete mode 100755 ci/install-docker-dependencies.sh
 
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 71cd4e5486..5838986895 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -359,7 +359,7 @@ jobs:
+       if: matrix.vector.jobname !=3D 'linux32'
+     - uses: actions/checkout@v1 # cannot be upgraded because Node.js Actio=
+ns aren't supported in this container
+       if: matrix.vector.jobname =3D=3D 'linux32'
+-    - run: ci/install-docker-dependencies.sh
++    - run: ci/install-dependencies.sh
+     - run: ci/run-build-and-tests.sh
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index c0fa2fe90b..8ce0e1b4bd 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -10,7 +10,7 @@ workflow:
+ test:linux:
+   image: $image
+   before_script:
+-    - ./ci/install-docker-dependencies.sh
++    - ./ci/install-dependencies.sh
+   script:
+     - useradd builder --create-home
+     - chown -R builder "${CI_PROJECT_DIR}"
+@@ -98,7 +98,7 @@ static-analysis:
+   variables:
+     jobname: StaticAnalysis
+   before_script:
+-    - ./ci/install-docker-dependencies.sh
++    - ./ci/install-dependencies.sh
+   script:
+     - ./ci/run-static-analysis.sh
+     - ./ci/check-directional-formatting.bash
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 7bcccc96fd..46b9efb2d5 100755
+index 46b9efb2d5..f4eb125fd2 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -29,14 +29,13 @@ ubuntu-*)
- 		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl \
- 		$CC_PACKAGE $PYTHON_PACKAGE
+@@ -5,6 +5,8 @@
 =20
--	mkdir --parents "$P4_PATH"
--	wget --quiet --directory-prefix=3D"$P4_PATH" \
-+	mkdir --parents "$CUSTOM_PATH"
-+	wget --quiet --directory-prefix=3D"$CUSTOM_PATH" \
- 		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
--	chmod u+x "$P4_PATH/p4d" "$P4_PATH/p4"
-+	chmod u+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
+ . ${0%/*}/lib.sh
 =20
--	mkdir --parents "$GIT_LFS_PATH"
- 	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.g=
-z"
--	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$GIT_LFS=
-_PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
-+	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$CUSTOM_=
++begin_group "Install dependencies"
++
+ P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r21.2
+ LFSWHENCE=3Dhttps://github.com/github/git-lfs/releases/download/v$LINUX_GI=
+T_LFS_VERSION
+=20
+@@ -20,14 +22,27 @@ then
+ fi
+=20
+ case "$distro" in
++alpine-*)
++	apk add --update shadow sudo build-base curl-dev openssl-dev expat-dev ge=
+ttext \
++		pcre2-dev python3 musl-libintl perl-utils ncurses \
++		apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-util-=
+dbd_sqlite3 \
++		bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
++	;;
++fedora-*)
++	dnf -yq update >/dev/null &&
++	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-de=
+vel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
++	;;
+ ubuntu-*)
++	# Required so that apt doesn't wait for user input on certain packages.
++	export DEBIAN_FRONTEND=3Dnoninteractive
++
+ 	sudo apt-get -q update
+ 	sudo apt-get -q -y install \
+-		language-pack-is libsvn-perl apache2 \
+-		make libssl-dev libcurl4-openssl-dev libexpat-dev \
++		language-pack-is libsvn-perl apache2 cvs cvsps git gnupg subversion \
++		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo \
+ 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl=
+ \
+-		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl \
+-		$CC_PACKAGE $PYTHON_PACKAGE
++		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sq=
+lite3-perl libcgi-pm-perl \
++		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
+=20
+ 	mkdir --parents "$CUSTOM_PATH"
+ 	wget --quiet --directory-prefix=3D"$CUSTOM_PATH" \
+@@ -38,6 +53,13 @@ ubuntu-*)
+ 	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$CUSTOM_=
 PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
  	rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
  	;;
++ubuntu32-*)
++	sudo linux32 --32bit i386 sh -c '
++		apt update >/dev/null &&
++		apt install -y build-essential libcurl4-openssl-dev \
++			libssl-dev libexpat-dev gettext python >/dev/null
++	'
++	;;
  macos-*)
-@@ -47,10 +46,10 @@ macos-*)
- 	brew install $BREW_INSTALL_PACKAGES
- 	brew link --force gettext
-=20
--	mkdir -p "$P4_PATH"
-+	mkdir -p "$CUSTOM_PATH"
- 	wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
--	tar -xf helix-core-server.tgz -C "$P4_PATH" p4 p4d &&
--	sudo xattr -d com.apple.quarantine "$P4_PATH/p4" "$P4_PATH/p4d" 2>/dev/nu=
-ll || true
-+	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-+	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2=
->/dev/null || true
- 	rm helix-core-server.tgz
-=20
- 	if test -n "$CC_PACKAGE"
-diff --git a/ci/lib.sh b/ci/lib.sh
-index d882250db5..4cce854bad 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -340,10 +340,6 @@ ubuntu-*)
- 	# image.
- 	# Keep that in mind when you encounter a broken OS X build!
- 	export LINUX_GIT_LFS_VERSION=3D"1.5.2"
--
--	P4_PATH=3D"$HOME/custom/p4"
--	GIT_LFS_PATH=3D"$HOME/custom/git-lfs"
--	export PATH=3D"$GIT_LFS_PATH:$P4_PATH:$PATH"
- 	;;
- macos-*)
- 	MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
-@@ -351,12 +347,12 @@ macos-*)
- 	then
- 		MAKEFLAGS=3D"$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=3DYes"
- 	fi
--
--	P4_PATH=3D"$HOME/custom/p4"
--	export PATH=3D"$P4_PATH:$PATH"
- 	;;
- esac
-=20
-+CUSTOM_PATH=3D"$HOME/path"
-+export PATH=3D"$CUSTOM_PATH:$PATH"
+ 	export HOMEBREW_NO_AUTO_UPDATE=3D1 HOMEBREW_NO_INSTALL_CLEANUP=3D1
+ 	# Uncomment this if you want to run perf tests:
+@@ -97,3 +119,5 @@ then
+ else
+ 	echo >&2 "WARNING: git-lfs wasn't installed, see above for clues why"
+ fi
 +
- case "$jobname" in
- linux32)
- 	CC=3Dgcc
++end_group "Install dependencies"
+diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependen=
+cies.sh
+deleted file mode 100755
+index eb2c9e1eca..0000000000
+--- a/ci/install-docker-dependencies.sh
++++ /dev/null
+@@ -1,46 +0,0 @@
+-#!/bin/sh
+-#
+-# Install dependencies required to build and test Git inside container
+-#
+-
+-. ${0%/*}/lib.sh
+-
+-begin_group "Install dependencies"
+-
+-case "$jobname" in
+-linux32)
+-	linux32 --32bit i386 sh -c '
+-		apt update >/dev/null &&
+-		apt install -y build-essential libcurl4-openssl-dev \
+-			libssl-dev libexpat-dev gettext python >/dev/null
+-	'
+-	;;
+-linux-musl)
+-	apk add --update shadow sudo build-base curl-dev openssl-dev expat-dev ge=
+ttext \
+-		pcre2-dev python3 musl-libintl perl-utils ncurses \
+-		apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-util-=
+dbd_sqlite3 \
+-		bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
+-	;;
+-linux-*|StaticAnalysis)
+-	# Required so that apt doesn't wait for user input on certain packages.
+-	export DEBIAN_FRONTEND=3Dnoninteractive
+-
+-	apt update -q &&
+-	apt install -q -y sudo git make language-pack-is libsvn-perl apache2 libs=
+sl-dev \
+-		libcurl4-openssl-dev libexpat-dev tcl tk gettext zlib1g-dev \
+-		perl-modules liberror-perl libauthen-sasl-perl libemail-valid-perl \
+-		libdbd-sqlite3-perl libio-socket-ssl-perl libnet-smtp-ssl-perl ${CC_PACK=
+AGE:-${CC:-gcc}} \
+-		apache2 cvs cvsps gnupg libcgi-pm-perl subversion
+-
+-	if test "$jobname" =3D StaticAnalysis
+-	then
+-		apt install -q -y coccinelle
+-	fi
+-	;;
+-pedantic)
+-	dnf -yq update >/dev/null &&
+-	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-de=
+vel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+-	;;
+-esac
+-
+-end_group "Install dependencies"
 --=20
 2.44.GIT
 
 
---HxFIwHGt62hX0uTX
+--FO6A8oW7iFV4wtW+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTkssACgkQVbJhu7ck
-PpREfA//Sm9CHcPwXDGHoVVlNCs20aFAsHhOrYBLwIT2c7vpHmExV6CvPITp6D6y
-cNuqG+qYnVm3klTJ6NlgBYPh2STQqTaCRabCBUCdNIxbNqTLT3REDqEViBJ+T4HA
-bSceWA0y1qCwqmpLymwxGU5FfdjBjnGKt/Rg4E3bskB60mAwcx/WNrIbD89Ql5yR
-T7jr4X3e/n2V9HLGz5rVT3SvAqaDDJNPjRziW2X8XcNdffDElq/wi0E1juWJoupa
-cXDljCAZ7DZ+b5ioViqIx6gigdI/Cz2dhRGZTS9d/DED+imAvyRR/OMSPo38tNSc
-+CfhZ9M4QdNM75uwg5KwgJbGCKgojzOvmF6y41uOmcOJsY2/z/Qetj7k7y+K1qOX
-DLqNDMQ2vlrgJtB/8Tr4I5UhwY0eqMvm8PMTQ4nsme6WxGr3jSrxljHWo1zD3Wz+
-fzS7ULdDFPFwyhmsS3uLF1cu2emzX/GQtnBInCZKIezSQOD0844ZpL1JDiu9lxpW
-ZyC+kN3AQQ3UoFcmkldW2qs6U0Cntt02dsDdSKgYWs25XVKyI8Si+dRoKrRGOsu4
-p3G3eRYMqdvdiDCLDyjUMCilJgHtTVVAs7od6kQbm34bTm1mNz/ieT5h+lJh2x+N
-OzHbvq6rtV+2Yi35c9mKn31s58JGytm4tXnnvSmBm2kPXp/EOIQ=
-=QFKI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTktAACgkQVbJhu7ck
+PpRrxA/+LUfgYf76/NDILdfKORuaoxf/7WQYZ0fNAJGIKOmPeJJE7bF1bdgIjfsl
+gdFp9pnaTCrsfpL0sGV6LFE/0/cWMoXQ4DYX2Bv6xLW8h16KmiS/uNZZGy+gBGBn
+raDH2z+IlYejlFkuxQvzdmE86HyQ7G3R+2i74m9fdgRYiLHgyPVDrXVjdbc+tVNb
+Jsfql1d+6QQ4E/DHlFcRXoaUyJWvwooEUqxHPK/CWBtgjBCUvcoqol5Dk7a3K3kv
+soCAqlop7ku+ww7+o8dM2SUeRoVN0R4DabdnjkrvB2hIdDX8v98702KmqfyOo93V
++oiqmRpUOTU2dWVphhguU+sRltBGKVXK0iSBHD5yjisE3aW1vpooWKhW8cVXQek1
+MlgBrFR19sS/7Tgsy6EMX8NLNbLwLvUB7Cw93nTCgud28ptmFHU0FT9Wspoahg5f
+JNjqYWIhLRUPXeGYj8vKU4rs/YbObw0/26lBCY9pt2MklvNrUFpxRN7wRoZi3wXY
+EwZVoGr/M7Edx0lKAuJi1L2HtQhNbBN0YJ4tnmZXCwJCfnmZTDdSaIJK1Zni6RjZ
+1bbn5RH71zxR2E4x6DGW1eluug6EEMFIIz8ebALTC+i6uYJyD/xa8a4cZoHHn7lp
+dhIDNRQdQ8xkmoj4Bsf30BRIQjaRELzW5q/FMfm16R/E1yfgAnM=
+=Fwd7
 -----END PGP SIGNATURE-----
 
---HxFIwHGt62hX0uTX--
+--FO6A8oW7iFV4wtW+--
