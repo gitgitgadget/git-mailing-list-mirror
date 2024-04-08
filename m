@@ -1,79 +1,78 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021EB6A8AD
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 12:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F436A340
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 12:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712579042; cv=none; b=ZN7TSPfxdGr9QGOZxRUuUNt0DFARe5AIYekgp26bw4O/ERskNywUQWHbhww6VhoFrkL/e6g6JUnvwNYldXI5rtAfb+aA4QniNAJJ4OA5nc3jypt22ynwqTUFTpcPweJ7DuAlzrN81/UO0x4mwEuQan7dTfSAAvXXw+cTPtI/3Ic=
+	t=1712579047; cv=none; b=eP39zZSt9oZX/e6vQNjkcm+c1aHTs/c5Q9M8FNwqld3BqnSyQGYtr+eMVNWT3WT2nacJOLeabvfNvpgGJX/gLs9exbr9sYS9lkq8Avp6rCwDXnZL8ojRlR7tPbJ6xmSuYvwIwc/f1sJhKRMLt6orEYWCUcfhmITyL+EVci0tJjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712579042; c=relaxed/simple;
-	bh=8UEk3P16u8wm7vxHESNtofyoU/W56N/LhrF0GXD0cTE=;
+	s=arc-20240116; t=1712579047; c=relaxed/simple;
+	bh=PzM9mGZBtv/60xeuQhgpBNrEVg+fyyEsHxSvMmJALSY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KixxgaL1khwpTHivzcsNQxZwbxDzsV63KIHDwIt52ozRIzp1Fgme0Fyvx1Rpk7kge6w+n4rXYOwKKXFHPhnQUKjVV2z9v1Beq+oDZL8vo7VkDR88OcKKN4hGyOdB7rVGum8+3DgsDkE90yo7xtKrdQ5WAWX9GzYQbb5+wnJHylU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p1mOzCqs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b711VvMp; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oz4l3p4q2gfh0dm8HfMuxEY88Ieo0OO2b1KZN+g8oWEr2q0TzCYZx0yTAHa/ZhK48KKYdhJRx7wYwHRzt2IfBD81sR15fyQ1/ia9gYuSS59cIrPSLx1+D5K+B8FpH88vxllsusU0em7FmVRMLyOcAFr3yuWGf+4uknVCSa36Rzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sz3Uuzxg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GqiD2aP+; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p1mOzCqs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b711VvMp"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 173A013800D5;
-	Mon,  8 Apr 2024 08:24:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sz3Uuzxg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GqiD2aP+"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 369EE138010B;
+	Mon,  8 Apr 2024 08:24:05 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 08 Apr 2024 08:24:00 -0400
+  by compute1.internal (MEProxy); Mon, 08 Apr 2024 08:24:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712579040; x=1712665440; bh=P6xXQdSZK2
-	A5GAunZCCBmZl6zF+TSASzbY/6+1qtQXo=; b=p1mOzCqsdc/A34JSGdQYn1NtZO
-	eR5U7qaCZCLTHcs1NPRPftRlyl0KMw0c661J6Y7SE2khi1MOrsVesHZJSldHzLqB
-	c5JS9eWjLTn2YkII0jEJuh4vzu+yh/Zf71/6nib/phDVitbS/v5OTYF81fVTIIrY
-	fclBwbzce/kH7Rk7nwzzP4ZCUIoct6EY790rsE4QJVJQandAwjMTT5TGBLMyJTE1
-	k5R3S5NB5ues2RMwRGEL3k8pvnFvrU7Hw3jET+5zfIXImKtF4dVVWOB5LcSVHUnV
-	C1Lhbrcy2+jJk7K975ar29VtGqyfGrMLwMJWyp2z6PpCwYTVDgMdTTBe5IAQ==
+	:subject:to:to; s=fm2; t=1712579045; x=1712665445; bh=6VkoQ0LeaP
+	fr1rq2ORipEk5JxrHckoUW4dtch2bJmtw=; b=Sz3UuzxgsyenmdfN8I1Fr9Cw80
+	R719tLVfwvfpSGqHlcAbJE7diprSpLFJST1RVsjs/CarUjgqWaJws6YPHzv/kQKn
+	XXxir0918BimHXrZrW4DZXMhqTc8XXLs0+BUXFEoceuGOU2FYlULM5f6NthGDjnD
+	LJeE7FXE+FrduKWwVrRqkvtnbRZnpXUn99EYXMmkhzV9Wafsuy5B+pY4JqSSsZzb
+	wNr629f9IqVdXfG+oEAPhgk4/H5pDomnIU9PQt1Z+2taAKAjSGAdONKP20Q7dkNa
+	sCHD8gOc5hw1va6nYy7L1mZu3gL1tiGcQWPm+k5kBtate1BP6pEjlgT/HudA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712579040; x=1712665440; bh=P6xXQdSZK2A5GAunZCCBmZl6zF+T
-	SASzbY/6+1qtQXo=; b=b711VvMpg7VLmiYQ2pCQ7MYUiTZ7FPbte857Xd3vSj9U
-	zlMPhyE0Amy3Wb4VHIw/EaJ+7nX8oJYE5w+fMJO041GSXzZzV4RWxToI+zDFwYge
-	rxRyLi+GYa9oCkUkqYkgY5o2hVHSbSaq8yxF20YRFcnk85IjrNQnA42sFdF1mjW/
-	6oVFwUVpkT1+Lvu5hextaPeW8+zozdh/xiZTGMgvuCLcqAOhQi/ea7buJ27GuUyS
-	AJRwBbvfwXN3eg/Nure7uiNLt1G3/Iy2S25HeyDq85zcrqKEczedxrl3eFl/NpG/
-	e5xicHo8JO6ovzOiB3wSypFI/cCBMEDJ2Qh8epi71g==
-X-ME-Sender: <xms:3-ETZlESM8DwYL8gzTH8YaPgdAf5qtCTr9nlTndQ6iBeYMSI4QZ5uQ>
-    <xme:3-ETZqWu1SB49-XpGTLotejcae8bp_M0CvMfBcJc4V4FBZ-V5Yq-SdhS8mHruQ6dh
-    mEustYfKX1vTdsZNg>
-X-ME-Received: <xmr:3-ETZnLyXwPtBb4t64BnKojDju31FbnONPBGAs8isIxG7mVBTJ1VLlmuHJSZ3cs4LPgMx5KmRhXDD0KLQdF527a8_NL6k-Zf5GUewgSW9HT96pRgEA>
+	fm2; t=1712579045; x=1712665445; bh=6VkoQ0LeaPfr1rq2ORipEk5JxrHc
+	koUW4dtch2bJmtw=; b=GqiD2aP++n1/7qGtWPkHCL3r/npVILiJc2MCV9DwDWQt
+	Rg7iXKU40zhW4nvO4vTIVwkgBvIZLTFjR1/RKcdU8KnjTIQ/XyPVZ6AENx2yOJeO
+	pZknOKESVTwgDShVq5dykNgNadVjQ/b56iZmz0LSQwZPDC2cAmc/ICEZ1kYiIS+a
+	SpKNKR1Q6Yr2mkBJi53dwgsquu+a7WG7bghNyPaQT90tYUI0PAQfSahqvLNCUVSF
+	jhaNIXABtZKCZK4NV2EJnqHOdjnhVsCbTPTWyaKOWBeMc3wwsycJ6NfvhbxRYI9X
+	E7+acpADiiaVCfCkd8j8DCQvVOub49ERxQ7TQpHuBw==
+X-ME-Sender: <xms:5OETZg4fsamzJQGE2oyk1GDlCz8cvphvp41m8mcEmpXUyfFhpdN6MA>
+    <xme:5OETZh7pLm_jmnFwrqTXVhWd2kOJymVvB-trztSbCz_h9Qww7gzV57xPOnrea-YfH
+    iHRvu-ikzPngpb4dQ>
+X-ME-Received: <xmr:5OETZveNcl_SI8KmZu4CH9Ncy0ku-vzxGmwOtlUCPawrprNA17gtJU9aiCbnv9hvgQANEpK89XStUaZWFcghHJbjidRMNGIO5AvThpGvjSpNPHO2sA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegiedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
+    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
+    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:3-ETZrESqEU3XNtrVJIDfRHVEHdRmJpKk9uGNrKs6JtRMs3-V1ZrPA>
-    <xmx:3-ETZrW_yp6uEvZPNR9FzL9gSVkAniqZNSTbbljKB779euhZdWkUNg>
-    <xmx:3-ETZmPaUvYD0q9mXOK1BbrOCMj6D0Rt1x19rSxvQXQoXtMU92WdEg>
-    <xmx:3-ETZq1_XfGZLo5D4oJY73BsngoSihSSocX07T2BS8fsszSCCqmsRQ>
-    <xmx:4OETZmQJSSk0JrxLnRtjGOjJLlFeV66d7Y65mMQdHmTgLO_M12G2RpID>
+X-ME-Proxy: <xmx:5eETZlLI6eWQAnT71jozHeJKoi0wflrVEQdTmpNl_r1dunMuS0x2FA>
+    <xmx:5eETZkK7X_Jp1XFUDxihDlTURcB9zx3qapcGR_0dt98nlTsf4gAwAQ>
+    <xmx:5eETZmyjvpIBezQW7FMiiXg2_hkuT8UiyPXqZrc7OtqzMqrrx0goEg>
+    <xmx:5eETZoIuLIQXaewGdp1ZT3NA9ZTGd0G7dQRKlj2LulTXxBqCzGpjNA>
+    <xmx:5eETZo2KV-pmKCIFj9OvaSc2sVfuLOGyMjJ9J1RRZ3fmt4L5wYOrT5rB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 08:23:59 -0400 (EDT)
+ 8 Apr 2024 08:24:04 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b793b8a1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Apr 2024 12:23:53 +0000 (UTC)
-Date: Mon, 8 Apr 2024 14:23:56 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2fb0d75b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 12:23:57 +0000 (UTC)
+Date: Mon, 8 Apr 2024 14:24:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: [PATCH v3 02/11] refs/reftable: perform explicit D/F check when
- writing symrefs
-Message-ID: <fe3f00d85a15da3b2b81dde27a016d1edcb72c2b.1712578837.git.ps@pks.im>
+Subject: [PATCH v3 03/11] refs/reftable: skip duplicate name checks
+Message-ID: <763c6fdfcd93651dac46de9c308c66f10d73d3d2.1712578837.git.ps@pks.im>
 References: <cover.1712078736.git.ps@pks.im>
  <cover.1712578837.git.ps@pks.im>
 Precedence: bulk
@@ -83,133 +82,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Ps1sdvtHuuevStsx"
+	protocol="application/pgp-signature"; boundary="MDTlKFdoCed72LD1"
 Content-Disposition: inline
 In-Reply-To: <cover.1712578837.git.ps@pks.im>
 
 
---Ps1sdvtHuuevStsx
-Content-Type: text/plain; charset=us-ascii
+--MDTlKFdoCed72LD1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We already perform explicit D/F checks in all reftable callbacks which
-write refs, except when writing symrefs. For one this leads to an error
-message which isn't perfectly actionable because we only tell the user
-that there was a D/F conflict, but not which refs conflicted with each
-other. But second, once all ref updating callbacks explicitly check for
-D/F conflicts, we can disable the D/F checks in the reftable library
-itself and thus avoid some duplicated efforts.
+All the callback functions which write refs in the reftable backend
+perform D/F conflict checks via `refs_verify_refname_available()`. But
+in reality we perform these D/F conflict checks a second time in the
+reftable library via `stack_check_addition()`.
 
-Refactor the code that writes symref tables to explicitly call into
-`refs_verify_refname_available()` when writing symrefs.
+Interestingly, the code in the reftable library is inferior compared to
+the generic function:
+
+  - It is slower than `refs_verify_refname_available()`, even though
+    this can probably be optimized.
+
+  - It does not provide a proper error message to the caller, and thus
+    all the user would see is a generic "file/directory conflict"
+    message.
+
+Disable the D/F conflict checks in the reftable library by setting the
+`skip_name_check` write option. This results in a non-negligible speedup
+when writing many refs. The following benchmark writes 100k refs in a
+single transaction:
+
+  Benchmark 1: update-ref: create many refs (HEAD~)
+    Time (mean =C2=B1 =CF=83):      3.241 s =C2=B1  0.040 s    [User: 1.854=
+ s, System: 1.381 s]
+    Range (min =E2=80=A6 max):    3.185 s =E2=80=A6  3.454 s    100 runs
+
+  Benchmark 2: update-ref: create many refs (HEAD)
+    Time (mean =C2=B1 =CF=83):      2.878 s =C2=B1  0.024 s    [User: 1.506=
+ s, System: 1.367 s]
+    Range (min =E2=80=A6 max):    2.838 s =E2=80=A6  2.960 s    100 runs
+
+  Summary
+    update-ref: create many refs (HEAD~) ran
+      1.13 =C2=B1 0.02 times faster than update-ref: create many refs (HEAD)
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c    | 20 +++++++++++++++++---
- t/t0610-reftable-basics.sh |  2 +-
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ refs/reftable-backend.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 0358da14db..8a54b0d8b2 100644
+index 8a54b0d8b2..7515dd3019 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -1217,6 +1217,7 @@ static int reftable_be_pack_refs(struct ref_store *re=
-f_store,
- struct write_create_symref_arg {
- 	struct reftable_ref_store *refs;
- 	struct reftable_stack *stack;
-+	struct strbuf *err;
- 	const char *refname;
- 	const char *target;
- 	const char *logmsg;
-@@ -1239,6 +1240,11 @@ static int write_create_symref_table(struct reftable=
-_writer *writer, void *cb_da
+@@ -247,6 +247,11 @@ static struct ref_store *reftable_be_init(struct repos=
+itory *repo,
+ 	refs->write_options.block_size =3D 4096;
+ 	refs->write_options.hash_id =3D repo->hash_algo->format_id;
+ 	refs->write_options.default_permissions =3D calc_shared_perm(0666 & ~mask=
+);
++	/*
++	 * We verify names via `refs_verify_refname_available()`, so there is
++	 * no need to do the same checks in the reftable library again.
++	 */
++	refs->write_options.skip_name_check =3D 1;
 =20
- 	reftable_writer_set_limits(writer, ts, ts);
-=20
-+	ret =3D refs_verify_refname_available(&create->refs->base, create->refnam=
-e,
-+					    NULL, NULL, create->err);
-+	if (ret < 0)
-+		return ret;
-+
- 	ret =3D reftable_writer_add_ref(writer, &ref);
- 	if (ret)
- 		return ret;
-@@ -1280,12 +1286,14 @@ static int reftable_be_create_symref(struct ref_sto=
-re *ref_store,
- 	struct reftable_ref_store *refs =3D
- 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "create_symref");
- 	struct reftable_stack *stack =3D stack_for(refs, refname, &refname);
-+	struct strbuf err =3D STRBUF_INIT;
- 	struct write_create_symref_arg arg =3D {
- 		.refs =3D refs,
- 		.stack =3D stack,
- 		.refname =3D refname,
- 		.target =3D target,
- 		.logmsg =3D logmsg,
-+		.err =3D &err,
- 	};
- 	int ret;
-=20
-@@ -1301,9 +1309,15 @@ static int reftable_be_create_symref(struct ref_stor=
-e *ref_store,
-=20
- done:
- 	assert(ret !=3D REFTABLE_API_ERROR);
--	if (ret)
--		error("unable to write symref for %s: %s", refname,
--		      reftable_error_str(ret));
-+	if (ret) {
-+		if (err.len)
-+			error("%s", err.buf);
-+		else
-+			error("unable to write symref for %s: %s", refname,
-+			      reftable_error_str(ret));
-+	}
-+
-+	strbuf_release(&err);
- 	return ret;
- }
-=20
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 055231a707..12b0004781 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -255,7 +255,7 @@ test_expect_success 'ref transaction: creating symbolic=
- ref fails with F/D confl
- 	git init repo &&
- 	test_commit -C repo A &&
- 	cat >expect <<-EOF &&
--	error: unable to write symref for refs/heads: file/directory conflict
-+	error: ${SQ}refs/heads/main${SQ} exists; cannot create ${SQ}refs/heads${S=
-Q}
- 	EOF
- 	test_must_fail git -C repo symbolic-ref refs/heads refs/heads/foo 2>err &&
- 	test_cmp expect err
+ 	/*
+ 	 * Set up the main reftable stack that is hosted in GIT_COMMON_DIR.
 --=20
 2.44.GIT
 
 
---Ps1sdvtHuuevStsx
+--MDTlKFdoCed72LD1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYT4dwACgkQVbJhu7ck
-PpQNQA/+KpShqDAghIdGB4dsyL6RzguOhfKXgyZuJWC4R6ONNYgvVfEhjoD7ndTo
-KV3kvSDtkZVZKAAIP9o5clLxwA7gwuQKG8li5y4o4DoW8ga3dndmc40Na8sFJzUU
-3YQeevqmPFzmsA/oAMZytq+MyaDsq/PUWXOXsepTC36vsUnoPULBaNBvFT1sq1N8
-myA/TGd4hOendx3cXoI4HBgns7Lzu69opyQDFNokElpa2rdntM6JDhYH4/FTgXw8
-BflP/EcgUGCTN+n4Aya7+e0U83Tm+EHNJ0Vx2rQTCPJhucTnfKoEda86ZeH72OUY
-nKeNXBwmSwJ95whRd9vZACzQdeh+TlBZ3PdRW0hSd1I/IL4xReXfsn6e/kSfPBHd
-CVz/rN5yMduvPspJa3CEsQWSi8iUb2qe3wyouYp9/sabC6whPksTjdYFFadofW6m
-6JT0mX//WdXCQzeMMmxxcg5U0IXjvGZZggm8RZbX/cW6OTvgKq/AkMPef6ttxBep
-KwsSbVCNRvkVRNFIUUABQqHhrGaqJLbkFPDd2IeI+d0SAuDoz5JZq/xS0pv+AGsY
-R1GsAvUaDPHsRHAp39jBqYBVj2L6xn/53HkJ4NPe+WKsAEUuhkEQ5XKsSxQf+XHv
-9gxmogDOVIwPoRTUgKDlTkjVmdFH9JxOznPTdlwcdcGAJnT0OEU=
-=D81w
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYT4eAACgkQVbJhu7ck
+PpSfLA//cuVk1ub3TbF33157GRXdqVw361I1qKCts/tAHp8Z9RpGyPvq3oYiTEsR
+aESZ3EiUtB380cRXVsOdjYmACqjHDQLX3n8ZI+ZD12MRubgbBnxiQ3kBQs28K8rv
+lY3jEYJ/4V3mbzMBIcrFJTAqUhomRhUOjAEz0rqGU3NIxqy31btkQuf2u56awYK+
+gJ9xvzhZ3j8WYxBNbcSeBYL42qsOnSGyo+oJJBUhNQGHP6EU/kQgkYeNMRe6UPTn
+/CS01qgIW6ko2zwuzZPL27hvIusqcHh0QLy8oq2RyVLBQ526IJHfFnYDeZ7SxTFQ
+2hD6MGehmY9Ws/FKJ80zx0o3g8ybDKMS5OaXyw2yU1hBLVWbloZk8RBH1CHdfSdD
+fr2XkMGvuN7niI8IDtvP1pBZRTql7/pidn5TXakE0JpQHYTt4HsKp1jFBTsjooJb
+c0u13Jq50RXGv3pNWNGzFg9iUvm+kRywyjT4PX7ss7eez8Ew1MC+b6a6LRvmHc6F
+kpK0DZfZMGHzq8kOl30s45xKoBOXGfiV26XNWe4oCMnBq1MYXqVlAQumg4UtLBF7
+65teOaC4Onhje3O4muh2cduRM7cyKy4phrrYuA77iUUZEW5Xw/9YCUkRd3ieLViv
+cLeA5l0pxjqt4P+IUu5JhcgMtSzMjeShuom/7P4EU9hWI3d598g=
+=Rpou
 -----END PGP SIGNATURE-----
 
---Ps1sdvtHuuevStsx--
+--MDTlKFdoCed72LD1--
