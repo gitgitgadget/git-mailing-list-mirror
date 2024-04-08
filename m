@@ -1,82 +1,79 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3914A6E61E
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 12:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13B82D057
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 12:23:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712578638; cv=none; b=rgDgCtf1vF/kehwB2LJWZAEwJaFgZ1hKXS/7v6GHQ2gC7xpejhyTeHQ+3vQmCbCH3vIfScxnHnoL81O9oeDBpz8Kv5npiaz9pItHvKV5ekPG3WvGtRAJmChbbC2XGUca1FjB2CHQUT4kZoBk/aNwQT+yDziE1EqMzmoVdN+uVBM=
+	t=1712579035; cv=none; b=q3DPLKZdDbS/SoKN6prxXAYMzRjQD7lLTf1//oVrUX+9tiSMeV/FnvdJ4pjqN78ohPq7pG2wk89zu22t8L3SfI9FrzWkga067fMCkHMUyxDlyaE/3dteDWyRK1fIfjuTtitn8nE7oNLqa6lbQgAxrZJZK3C10lUQemHomQvzL8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712578638; c=relaxed/simple;
-	bh=ImNBMPFLQf8y3OfW+NCLr717VJ2AFGbDeNQQpwFiSnA=;
+	s=arc-20240116; t=1712579035; c=relaxed/simple;
+	bh=RU6az3oGjnq05sIv9iA5Ugh6nQcAkzzeIZhUFrvX6T8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ooTd1mNZ+5s8coOxcNmW6PgS7ZTicAQjIa1tdv6m9pUfH7s3XISpVxKZ68U+RXVSpiTMkWA/6ZCqmxF66gcPyTGJba0qLhXBsXeLp8PpeALmx+TKi5orcBoOnHWPP141v6zGCt+bjTsZe1Tggn2LUjo+54+Afrvj47ZKPJhDpwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KNx5sHmf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rcvnEKRP; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hr835fRWbcCCk5j+OkMt4SAeReZd5x+y0i/2orqpdr/2iMZqDdd+A3XQglRCFwxeEeMwl/UJQo30a4znRvxcWMyIWJ/2w3+7YR1eMSzPoDWJgp8SXP9MxWauSopMmCxL8EtuEmxoztFVexEZ7ljvN6y6ZL3jOM4kbUWeFbhepCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Uf4onUut; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BLB+53A0; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KNx5sHmf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rcvnEKRP"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A692413800FB;
-	Mon,  8 Apr 2024 08:17:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 08 Apr 2024 08:17:07 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Uf4onUut";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BLB+53A0"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id CD19C11400D6;
+	Mon,  8 Apr 2024 08:23:52 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Mon, 08 Apr 2024 08:23:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712578627; x=1712665027; bh=1Vi5Jga9Pn
-	UJOTCViUQmQae+eorRDZowKA43a11mwhY=; b=KNx5sHmfz5qgERdehOpDd9bNG3
-	Eq+e/Tq5K9EpRsQUQUynpPn8yQuINSXxuAQcBZmamLSplDddMZNJ0vCRf4GxfFlf
-	lvcfXkzNimxWUt18Ni2nScg6UfkYmXJlEJuto8+aZ32AIvFrhENCW+snbzYZFRd9
-	xqsJtDAbu4OskLcpqDbyFItv/eSAM9owmFDVNmIbYzpvSHizx0khXjPul5kcrRJ7
-	Ov0VNZ0Hzaw2zLyLe64yUv94PYC8WDpBNHszhEFk3rxbBqkoLkjVl1fephtQWux2
-	854x9pJcOR6xw1iqFmUrXe2wTCffvqZwpQbm7uL0dFAIRdhvNoc7ncq8bHbg==
+	:subject:to:to; s=fm2; t=1712579032; x=1712665432; bh=3lRd/wOlwc
+	bzSV23ZlYltmNFYy7Ip7CzaiRjQKDQx8k=; b=Uf4onUutiwNyUFnAjXCwf6dod7
+	W9bxBnUebpmYKMEdFAmWcf37+W6C7JooN+/dpuwpa5uITAQJxUR9/BLknZanlfRw
+	coPculsqyXgodngiy2L4R/EuyE+DGoq6KZZ+6FjcRtlMsSQRJHADiR9FHdycbLVM
+	RoL7IHD3t11lgtlztDq3zfI0UVqhPQw/3cyzbzUni3NPBpi1v9WWSrNg6R0wR+b5
+	b6jpymV4Z41agUV1bO6XW3quIebEJM2FBzWdKqFlAMzChWift28+15siJWUfBw6X
+	kDORtmldfB6nMGJJ+ZzEEYgwjKfXtulNeePcJpe/krMhcA+6cfTf+aadJgtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712578627; x=1712665027; bh=1Vi5Jga9PnUJOTCViUQmQae+eorR
-	DZowKA43a11mwhY=; b=rcvnEKRPRrErb7jriUr1WhuNndB1AzXELWWlAZ1/eEnn
-	z6dccY/h1L0gwspc/gYfu7PT2bySOrffXLwi4OOeqRtyEX/G7KjFk+DhMs5JxXJ2
-	1y5FPXOg2tpe2g1LESIeeJwKABtXOjlySP9hOyCF6jSPht09k4DA73QL0d029OPe
-	26dqdgWnHitwWQkhF9yozXENs2P7GFCI4FSmOpA4LK/iTG89gL4fPduEzy9IV6xf
-	X4mn3WOmDYg5iq/+zUipXJ6p23qOP4eE9iQS5RcNpWfWJx8SUPFmECCxajBcFS9I
-	e4NeaPSj0tLmQFQzgITDv5sGMFBW/nIrb+lyRGu6yw==
-X-ME-Sender: <xms:Q-ATZgPmzAT694Tg6FnejVYq_LcsAz6yb8DnKfxpO9N3avgSiAnfgA>
-    <xme:Q-ATZm-9ng5OoC800sr0q0PrPoOmv_LUNdk4UtOiAG9CqEw4Q_p_jpT2I6BMmluot
-    mRbKmjJSQoVTbQH-Q>
-X-ME-Received: <xmr:Q-ATZnS6fLNwK_SbYrDrTCn0RWs-pMKCfSHS7KN5lHwb5cdTI9d9pJBjfKFXFSACMiwIwmhL9-RwJ6jTUBM20YLnHlZn6pk_mFwpf6Lb3wX8moQtFw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegiedghedtucetufdoteggodetrfdotf
+	fm2; t=1712579032; x=1712665432; bh=3lRd/wOlwcbzSV23ZlYltmNFYy7I
+	p7CzaiRjQKDQx8k=; b=BLB+53A09ZWfgGkYmcUUvWmyCPob25jgZckw22LwONVP
+	1ZUU/RPiDX9CzkPmBFnjr28VCeklVZeo50dPDLkBv/NZFTKQiD4xTIhO3NZmNX3J
+	oDpxRL/oHEJZpVLEzH9HPGgokbFUPtPLoYLiadz61LRqafCJS8dDqYO2k7w81sQJ
+	QjfZsTD97A4iU5ddeSUK7uByQmEWGz+6UgW/K2SyaiCBMcw+abM//xJq/HDnquZl
+	AIu++aJJJRgnetJ1tWORkWhMiQFlxZXmieiCLGJvn2cnrnNYi9th8r3GfLXB8Hdy
+	5OPocBRHo4vX1JI5B0/bb/TM8q10mo+YYdQdN4RPew==
+X-ME-Sender: <xms:2OETZhJxfAj4Lgz5-HqwIN7U194Rmhk6EPoWTjZeyehkWUM8UHjvLw>
+    <xme:2OETZtJsIIsdxz04vwKE4MsVTcEhlRSzC5CjzP-s_j7c2Iznq9vBkY42VH5AQAew1
+    sIia-rAzLz-E2gpiQ>
+X-ME-Received: <xmr:2OETZptZi8PxzOI6RJSaB75cZywHaNsAIugDM5Fg1_v8c9WG3BxhBjBA9CUhVYcTwosenitM4QuSQ_oR3iaESC-J8sl8rD18aFKyH4ZH3YbvxmqUTA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegiedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Q-ATZosHczskaQzNaK6-Tr4KTUQLggVL8GtOrOsQpoLCggJxpifnzw>
-    <xmx:Q-ATZofcKGNMntABfJRj5AFIpieyqFrmQPxYs_jG1I2u3M5olor5OQ>
-    <xmx:Q-ATZs3L4c3cIwaX5FEzFZARWAzK1Y4RNxc18kRqHSwcjM5naC_e_g>
-    <xmx:Q-ATZs-F15-HVyhFqNw7R1Y49PejAV6_WE-zPsfh8fnVNaxYWCGZaw>
-    <xmx:Q-ATZn5fwLPCIUX3rRaCrhrj0vf5PSexuCCEXcu0grznNzHkqwKSCY4M>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:2OETZibVnb7wOt6BsDWSM0GW3PId0fAs3Dqj2jMCTDA95H7SXfIa1w>
+    <xmx:2OETZoap_6WSlSWTLU3-tup8C8vgvuAe4sfEhHOOGUWUzRYWacS94g>
+    <xmx:2OETZmAumFw3IGHR27ejJF2hGbHeGIMsg6CuV3X6D3t6Wq8m1CY0BA>
+    <xmx:2OETZmaQk5lBDPI6pLdpLKoVa7rajjS0a1gEuCDgjLGm29NaxXAMIQ>
+    <xmx:2OETZgEA9K2HXmfmM0EJC7aX3haNaSvX4Ts3Mquns-Fa13woYbH-88RU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 08:17:06 -0400 (EDT)
+ 8 Apr 2024 08:23:51 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 790c45c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Apr 2024 12:17:00 +0000 (UTC)
-Date: Mon, 8 Apr 2024 14:17:04 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id d8b2f583 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 12:23:43 +0000 (UTC)
+Date: Mon, 8 Apr 2024 14:23:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 09/10] reftable/block: reuse `zstream` state on inflation
-Message-ID: <587b5601c0c51a8f041258a27e693a2590468eed.1712578376.git.ps@pks.im>
-References: <cover.1711519925.git.ps@pks.im>
- <cover.1712578376.git.ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: [PATCH v3 00/11] reftable: optimize write performance
+Message-ID: <cover.1712578837.git.ps@pks.im>
+References: <cover.1712078736.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,186 +81,243 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="H+LM8Y8YHth/A9ul"
+	protocol="application/pgp-signature"; boundary="Zjhon+F/s4R2Qwic"
 Content-Disposition: inline
-In-Reply-To: <cover.1712578376.git.ps@pks.im>
+In-Reply-To: <cover.1712078736.git.ps@pks.im>
 
 
---H+LM8Y8YHth/A9ul
+--Zjhon+F/s4R2Qwic
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When calling `inflateInit()` and `inflate()`, the zlib library will
-allocate several data structures for the underlying `zstream` to keep
-track of various information. Thus, when inflating repeatedly, it is
-possible to optimize memory allocation patterns by reusing the `zstream`
-and then calling `inflateReset()` on it to prepare it for the next chunk
-of data to inflate.
+Hi,
 
-This is exactly what the reftable code is doing: when iterating through
-reflogs we need to potentially inflate many log blocks, but we discard
-the `zstream` every single time. Instead, as we reuse the `block_reader`
-for each of the blocks anyway, we can initialize the `zstream` once and
-then reuse it for subsequent inflations.
+this is the first version of my patch series that aims to optimize write
+performance with the reftable backend.
 
-Refactor the code to do so, which leads to a significant reduction in
-the number of allocations. The following measurements were done when
-iterating through 1 million reflog entries. Before:
+Changes compared to v2:
 
-  HEAP SUMMARY:
-      in use at exit: 13,473 bytes in 122 blocks
-    total heap usage: 23,028 allocs, 22,906 frees, 162,813,552 bytes alloca=
-ted
+    - The series now deepends on ps/reftable-binsearch-update at
+      d51d8cc368 (reftable/block: avoid decoding keys when searching
+      restart points, 2024-04-03). This is to resolve a merge conflict
+      with that other series which has landed in "next" already.
 
-After:
+    - Dropped the "reftable_" prefix from newly introduced internal
+      reftable functions.
 
-  HEAP SUMMARY:
-      in use at exit: 13,473 bytes in 122 blocks
-    total heap usage: 302 allocs, 180 frees, 88,352 bytes allocated
+Thanks!
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/block.c  | 25 +++++++++++++++----------
- reftable/block.h  |  3 +++
- reftable/reader.c |  1 +
- 3 files changed, 19 insertions(+), 10 deletions(-)
+Patrick
 
-diff --git a/reftable/block.c b/reftable/block.c
-index 435922b569..c6c4a68ea1 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -198,7 +198,6 @@ int block_reader_init(struct block_reader *br, struct r=
-eftable_block *block,
- 		uint32_t block_header_skip =3D 4 + header_off;
- 		uLong dst_len =3D sz - block_header_skip;
- 		uLong src_len =3D block->len - block_header_skip;
--		z_stream stream =3D {0};
-=20
- 		/* Log blocks specify the *uncompressed* size in their header. */
- 		REFTABLE_ALLOC_GROW(br->uncompressed_data, sz,
-@@ -207,16 +206,21 @@ int block_reader_init(struct block_reader *br, struct=
- reftable_block *block,
- 		/* Copy over the block header verbatim. It's not compressed. */
- 		memcpy(br->uncompressed_data, block->data, block_header_skip);
-=20
--		err =3D inflateInit(&stream);
-+		if (!br->zstream) {
-+			REFTABLE_CALLOC_ARRAY(br->zstream, 1);
-+			err =3D inflateInit(br->zstream);
-+		} else {
-+			err =3D inflateReset(br->zstream);
-+		}
- 		if (err !=3D Z_OK) {
- 			err =3D REFTABLE_ZLIB_ERROR;
- 			goto done;
- 		}
-=20
--		stream.next_in =3D block->data + block_header_skip;
--		stream.avail_in =3D src_len;
--		stream.next_out =3D br->uncompressed_data + block_header_skip;
--		stream.avail_out =3D dst_len;
-+		br->zstream->next_in =3D block->data + block_header_skip;
-+		br->zstream->avail_in =3D src_len;
-+		br->zstream->next_out =3D br->uncompressed_data + block_header_skip;
-+		br->zstream->avail_out =3D dst_len;
-=20
- 		/*
- 		 * We know both input as well as output size, and we know that
-@@ -225,15 +229,14 @@ int block_reader_init(struct block_reader *br, struct=
- reftable_block *block,
- 		 * here to instruct zlib to inflate the data in one go, which
- 		 * is more efficient than using `Z_NO_FLUSH`.
- 		 */
--		err =3D inflate(&stream, Z_FINISH);
--		inflateEnd(&stream);
-+		err =3D inflate(br->zstream, Z_FINISH);
- 		if (err !=3D Z_STREAM_END) {
- 			err =3D REFTABLE_ZLIB_ERROR;
- 			goto done;
- 		}
- 		err =3D 0;
-=20
--		if (stream.total_out + block_header_skip !=3D sz) {
-+		if (br->zstream->total_out + block_header_skip !=3D sz) {
- 			err =3D REFTABLE_FORMAT_ERROR;
- 			goto done;
- 		}
-@@ -242,7 +245,7 @@ int block_reader_init(struct block_reader *br, struct r=
-eftable_block *block,
- 		reftable_block_done(block);
- 		block->data =3D br->uncompressed_data;
- 		block->len =3D sz;
--		full_block_size =3D src_len + block_header_skip - stream.avail_in;
-+		full_block_size =3D src_len + block_header_skip - br->zstream->avail_in;
- 	} else if (full_block_size =3D=3D 0) {
- 		full_block_size =3D sz;
- 	} else if (sz < full_block_size && sz < block->len &&
-@@ -275,6 +278,8 @@ int block_reader_init(struct block_reader *br, struct r=
-eftable_block *block,
-=20
- void block_reader_release(struct block_reader *br)
- {
-+	inflateEnd(br->zstream);
-+	reftable_free(br->zstream);
- 	reftable_free(br->uncompressed_data);
- 	reftable_block_done(&br->block);
- }
-diff --git a/reftable/block.h b/reftable/block.h
-index 12414eb642..c1bd1892cb 100644
---- a/reftable/block.h
-+++ b/reftable/block.h
-@@ -56,6 +56,8 @@ int block_writer_finish(struct block_writer *w);
- /* clears out internally allocated block_writer members. */
- void block_writer_release(struct block_writer *bw);
-=20
-+struct z_stream;
-+
- /* Read a block. */
- struct block_reader {
- 	/* offset of the block header; nonzero for the first block in a
-@@ -67,6 +69,7 @@ struct block_reader {
- 	int hash_size;
-=20
- 	/* Uncompressed data for log entries. */
-+	z_stream *zstream;
- 	unsigned char *uncompressed_data;
- 	size_t uncompressed_cap;
-=20
-diff --git a/reftable/reader.c b/reftable/reader.c
-index aacd5f1337..481dff10d4 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -459,6 +459,7 @@ static int reader_seek_linear(struct table_iter *ti,
- 		 * we would not do a linear search there anymore.
- 		 */
- 		memset(&next.br.block, 0, sizeof(next.br.block));
-+		next.br.zstream =3D NULL;
- 		next.br.uncompressed_data =3D NULL;
- 		next.br.uncompressed_cap =3D 0;
-=20
+Patrick Steinhardt (11):
+  refs/reftable: fix D/F conflict error message on ref copy
+  refs/reftable: perform explicit D/F check when writing symrefs
+  refs/reftable: skip duplicate name checks
+  reftable: remove name checks
+  refs/reftable: don't recompute committer ident
+  reftable/writer: refactorings for `writer_add_record()`
+  reftable/writer: refactorings for `writer_flush_nonempty_block()`
+  reftable/writer: unify releasing memory
+  reftable/writer: reset `last_key` instead of releasing it
+  reftable/block: reuse zstream when writing log blocks
+  reftable/block: reuse compressed array
+
+ Makefile                   |   2 -
+ refs/reftable-backend.c    |  75 ++++++++++----
+ reftable/block.c           |  80 ++++++++------
+ reftable/block.h           |   4 +
+ reftable/error.c           |   2 -
+ reftable/refname.c         | 206 -------------------------------------
+ reftable/refname.h         |  29 ------
+ reftable/refname_test.c    | 101 ------------------
+ reftable/reftable-error.h  |   3 -
+ reftable/reftable-tests.h  |   1 -
+ reftable/reftable-writer.h |   4 -
+ reftable/stack.c           |  67 +-----------
+ reftable/stack_test.c      |  39 -------
+ reftable/writer.c          | 137 +++++++++++++++---------
+ t/helper/test-reftable.c   |   1 -
+ t/t0610-reftable-basics.sh |  35 ++++++-
+ 16 files changed, 230 insertions(+), 556 deletions(-)
+ delete mode 100644 reftable/refname.c
+ delete mode 100644 reftable/refname.h
+ delete mode 100644 reftable/refname_test.c
+
+Range-diff against v2:
+ 1:  926e802395 =3D  1:  bb735c389a refs/reftable: fix D/F conflict error m=
+essage on ref copy
+ 2:  6190171906 =3D  2:  fe3f00d85a refs/reftable: perform explicit D/F che=
+ck when writing symrefs
+ 3:  80008cc5e7 =3D  3:  763c6fdfcd refs/reftable: skip duplicate name chec=
+ks
+ 4:  3497a570b4 !  4:  2a5f07627a reftable: remove name checks
+    @@ reftable/refname.c (deleted)
+     -#include "refname.h"
+     -#include "reftable-iterator.h"
+     -
+    --struct find_arg {
+    --	char **names;
+    --	const char *want;
+    +-struct refname_needle_lesseq_args {
+    +-	char **haystack;
+    +-	const char *needle;
+     -};
+     -
+    --static int find_name(size_t k, void *arg)
+    +-static int refname_needle_lesseq(size_t k, void *_args)
+     -{
+    --	struct find_arg *f_arg =3D arg;
+    --	return strcmp(f_arg->names[k], f_arg->want) >=3D 0;
+    +-	struct refname_needle_lesseq_args *args =3D _args;
+    +-	return strcmp(args->needle, args->haystack[k]) <=3D 0;
+     -}
+     -
+     -static int modification_has_ref(struct modification *mod, const char =
+*name)
+    @@ reftable/refname.c (deleted)
+     -	int err =3D 0;
+     -
+     -	if (mod->add_len > 0) {
+    --		struct find_arg arg =3D {
+    --			.names =3D mod->add,
+    --			.want =3D name,
+    +-		struct refname_needle_lesseq_args args =3D {
+    +-			.haystack =3D mod->add,
+    +-			.needle =3D name,
+     -		};
+    --		int idx =3D binsearch(mod->add_len, find_name, &arg);
+    --		if (idx < mod->add_len && !strcmp(mod->add[idx], name)) {
+    +-		size_t idx =3D binsearch(mod->add_len, refname_needle_lesseq, &args=
+);
+    +-		if (idx < mod->add_len && !strcmp(mod->add[idx], name))
+     -			return 0;
+    --		}
+     -	}
+     -
+     -	if (mod->del_len > 0) {
+    --		struct find_arg arg =3D {
+    --			.names =3D mod->del,
+    --			.want =3D name,
+    +-		struct refname_needle_lesseq_args args =3D {
+    +-			.haystack =3D mod->del,
+    +-			.needle =3D name,
+     -		};
+    --		int idx =3D binsearch(mod->del_len, find_name, &arg);
+    --		if (idx < mod->del_len && !strcmp(mod->del[idx], name)) {
+    +-		size_t idx =3D binsearch(mod->del_len, refname_needle_lesseq, &args=
+);
+    +-		if (idx < mod->del_len && !strcmp(mod->del[idx], name))
+     -			return 1;
+    --		}
+     -	}
+     -
+     -	err =3D reftable_table_read_ref(&mod->tab, name, &ref);
+    @@ reftable/refname.c (deleted)
+     -	int err =3D 0;
+     -
+     -	if (mod->add_len > 0) {
+    --		struct find_arg arg =3D {
+    --			.names =3D mod->add,
+    --			.want =3D prefix,
+    +-		struct refname_needle_lesseq_args args =3D {
+    +-			.haystack =3D mod->add,
+    +-			.needle =3D prefix,
+     -		};
+    --		int idx =3D binsearch(mod->add_len, find_name, &arg);
+    +-		size_t idx =3D binsearch(mod->add_len, refname_needle_lesseq, &args=
+);
+     -		if (idx < mod->add_len &&
+     -		    !strncmp(prefix, mod->add[idx], strlen(prefix)))
+     -			goto done;
+    @@ reftable/refname.c (deleted)
+     -			goto done;
+     -
+     -		if (mod->del_len > 0) {
+    --			struct find_arg arg =3D {
+    --				.names =3D mod->del,
+    --				.want =3D ref.refname,
+    +-			struct refname_needle_lesseq_args args =3D {
+    +-				.haystack =3D mod->del,
+    +-				.needle =3D ref.refname,
+     -			};
+    --			int idx =3D binsearch(mod->del_len, find_name, &arg);
+    +-			size_t idx =3D binsearch(mod->del_len, refname_needle_lesseq, &arg=
+s);
+     -			if (idx < mod->del_len &&
+    --			    !strcmp(ref.refname, mod->del[idx])) {
+    +-			    !strcmp(ref.refname, mod->del[idx]))
+     -				continue;
+    --			}
+     -		}
+     -
+     -		if (strncmp(ref.refname, prefix, strlen(prefix))) {
+ 5:  f892a3007b =3D  5:  1ca7d9b6cf refs/reftable: don't recompute committe=
+r ident
+ 6:  4877ab3921 =3D  6:  deabf82186 reftable/writer: refactorings for `writ=
+er_add_record()`
+ 7:  8f1c5b4169 =3D  7:  d47ad49d49 reftable/writer: refactorings for `writ=
+er_flush_nonempty_block()`
+ 8:  41db7414e1 !  8:  76d4a1f73b reftable/writer: unify releasing memory
+    @@ reftable/writer.c: void reftable_writer_set_limits(struct reftable_w=
+riter *w, ui
+      	w->max_update_index =3D max;
+      }
+     =20
+    -+static void reftable_writer_release(struct reftable_writer *w)
+    ++static void writer_release(struct reftable_writer *w)
+     +{
+     +	if (w) {
+     +		reftable_free(w->block);
+    @@ reftable/writer.c: void reftable_writer_set_limits(struct reftable_w=
+riter *w, ui
+     -	if (!w)
+     -		return;
+     -	reftable_free(w->block);
+    -+	reftable_writer_release(w);
+    ++	writer_release(w);
+      	reftable_free(w);
+      }
+     =20
+    @@ reftable/writer.c: int reftable_writer_close(struct reftable_writer =
+*w)
+     -	block_writer_release(&w->block_writer_data);
+     -	writer_clear_index(w);
+     -	strbuf_release(&w->last_key);
+    -+	reftable_writer_release(w);
+    ++	writer_release(w);
+      	return err;
+      }
+     =20
+ 9:  e5c7dbe417 =3D  9:  722ab0ee28 reftable/writer: reset `last_key` inste=
+ad of releasing it
+10:  26f422703f =3D 10:  962a96003b reftable/block: reuse zstream when writ=
+ing log blocks
+11:  4f9df714da =3D 11:  323892841a reftable/block: reuse compressed array
+
+base-commit: 7774cfed6261ce2900c84e55906da708c711d601
 --=20
 2.44.GIT
 
 
---H+LM8Y8YHth/A9ul
+--Zjhon+F/s4R2Qwic
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYT4D8ACgkQVbJhu7ck
-PpQUTQ/9HS6HWPUtqF7khuk8Ytecc/EcaW4wA+HrkXa/Ju35LuHAbgTMuWu4Undd
-PaE+SvM8Lt3VL0DRPHY0l5miHcEwHyZG0gBCUAAXUYEa/QJvAnmZpYIqbhoOOY2R
-A0bshI7i/UbmyOI5lmlGxDFw56VCnpDc4tkpC6UE4VMjjSSIPA1wmPGgxGq1Scjm
-C7yfw1HSaJ8FXyN+FnHn1IiUTdBBUV/9Jvqo+MbTu9S/IBF3Ck+4usKFBTAZwmlW
-8D0f2dN+cqOsmSTkCuho4CEaovC/k8QUJ5ht7v1f1oO1Jb+LbqodEyoSqDEn+aZ2
-t2ziGJoeISuZHKKsbhm0ztv6QX4UWeiY5VsSwF7W6DQ0Qk/XpHDDYsQ4RaLewpX/
-EcDaqWmpwR8RDyiPIS10nPb42Xq7zZwBOUbymc99nwqoOtQa3cGCH6j/chyYWgN1
-HhqO30zXcCLKsjSzGPWlnt7DYhUnsNvA+Wt2nJFuwUPQmkvR4x2Nw6rX+R0x5C6n
-hOsdMK7F+Oe7UbrYhQbMTxxIdmQYXnIJlTxUKe5krmHOYE9a3Iv5nZoD+jpdPceU
-nkLb94qJfijk/Yc9RBPxQFOpIbuwkzgTnnplal/OW7VUNsFXDf5WW/aNV7CiK3MR
-/85LZFJopT4i98bFiCW+bo7008c3O7Egf4ehB65V8PMuMVmNMW0=
-=x4yX
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYT4dIACgkQVbJhu7ck
+PpRnlg/+OJ5zMwVx0y/JVs8Pt7gcdF9cJ2OXsUAlZW1rX5QxzSLGcsrw6ADUGllr
+5harU4djQwCneyb25g/mbJhvhajs3jANaa+DzK+NHaIH7clVin7EVpmeRxPy1ZFL
+HgQGcJqwjTS/X1tYUwLdOMfU9GD1yqGMBJ9q3CNYYP2Far5Y1WYLUf0paR/MwT4R
+6BOanvNc2XTfYnymm9SGI3Kg184XkwYj9tm9VyOo4bdlm96Tr4NtkIVHlRkhK7R0
+yrsue3cNaTuabtjzSgzKUMLWk9xpeKiXiteSbV+8QtBBOAoFuKO5fOn2TFwQicn0
+PmHPDYhUQreYwVTPbBLKA3In+BgoybIOUBLcSvRaM3QT8Dw92SvnTy5cdiWQCdYV
+zVBKZW4EXJs04AROZ1+GUgxjomPggQfxRqNOjhE5LwE2anK0mIl3bHxwp1va/fQJ
+VcrDsvCMhrflbGG4RZ1zXbHX8rcIdeDpM3Q969eSZtFAZogkxxf7m30QqhpZChRR
+STNS04ixKxeNOYpejhxMUBZ1Vd+6FUMB5YYOKEJFwxJ28e8kf3qZxWdH2C3rAZbI
+mXSvAjqv/t3WxhC/zX6vc8+UQzXM6skrVm10xVNgZsNhOnjQoLY7n7YXRZukSQV5
+nFIKxJPRRDUCoem8XdpyZhgheLBBSE/Wh1+HTpYcS0+67gYkF9c=
+=Nx1Q
 -----END PGP SIGNATURE-----
 
---H+LM8Y8YHth/A9ul--
+--Zjhon+F/s4R2Qwic--
