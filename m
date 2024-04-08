@@ -1,89 +1,87 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703D15B1E0
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 16:18:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EAB5B1E0
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 16:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712593120; cv=none; b=AG2DaG/1JzMvpL9rfRb5nylTAgtkORGritQOv2XtFTL1996sq9DYF0VOASQvA1HRZrzXurEoA7BR9K9VIT5gj8c3Uh8LddpNrfB1QqaLy2jwl6sb0yc1N2IUzLFEg1kdj0Ub4NY/+vUjKpYuCuF/33bFYrAOT498CGGmNbSq1a4=
+	t=1712593195; cv=none; b=EB8+9c997j+HJuVYssu7R8rKiSrEZBnagkkaG7zXpuFXpdnbpBUGwGsmJMBBm4BATnW/dMqtgCDVWafXbBntZnxdVadP4qudwygVH5Ccnbw3HkfiGinfIW6Uo1TM7i2PNsPSMyRE5r5ALIac4KFCIq/JFDpt9CiivxTv9HVLeNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712593120; c=relaxed/simple;
-	bh=4F2g2W7AcBoE1ACXHbsFXfb/qmTvCM/wWToclh1Equk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m4DCAsZxjJwkgkawyDTBy+5tklAo8VGnFM01xGcQdIOkpoXal20T2zNDzlHdkmRr9eqNWgYvLrLnS1TpVZee6cAJqgZsR8GEYWfasTbAodKurTxyGq0faX6Mdnw2JkSAnxob7lJWiOei1IVf/NizHJNa/CfL+Agg1kbDy91T9XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nkEP6Fqm; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nkEP6Fqm"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 60AEE1DB06;
-	Mon,  8 Apr 2024 12:18:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=4F2g2W7AcBoE1ACXHbsFXfb/qmTvCM/wWToclh
-	1Equk=; b=nkEP6FqmzRVq56t9rK2UQH8QWllqTz3r3zLXZ1xa1zp3tg/oTyq0W6
-	B9RxXgj5kO/1GKWAdIhVlkgkqjNgo5L5mSEOblzStRZ+Puf5/Bd+89KODYc2o16J
-	+4JBBBqPX1vxkoKIjqIBPtFclkr0/HTWiKCaZRr1aADNq0gTDrxeQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 58BE81DB05;
-	Mon,  8 Apr 2024 12:18:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CDD6F1DB04;
-	Mon,  8 Apr 2024 12:18:29 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Han-Wen
- Nienhuys <hanwenn@gmail.com>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v5 2/3] reftable/stack: add env to disable autocompaction
-In-Reply-To: <ZhOK262a5WCxS9MN@tanuki> (Patrick Steinhardt's message of "Mon,
-	8 Apr 2024 08:12:43 +0200")
-References: <pull.1683.v4.git.1712103636.gitgitgadget@gmail.com>
-	<pull.1683.v5.git.1712255369.gitgitgadget@gmail.com>
-	<7c4fe0e9ec597203ee37d2c2503be319e87ff5ee.1712255369.git.gitgitgadget@gmail.com>
-	<ZhOK262a5WCxS9MN@tanuki>
-Date: Mon, 08 Apr 2024 09:18:28 -0700
-Message-ID: <xmqqjzl7eskr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1712593195; c=relaxed/simple;
+	bh=xMrM+44W8i6zTcxzea4RlMDJc02LlnBQjhzRcMZsX14=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LXhvRThkz32vS+zWy7HjkShuQ3Lj4G/71ClwFkXc6SwAnbhRhnMwpmk/Q8wYp1LIKis9Mf/4p0rd1yFIygqmUCX4o4yWaxS8AH7z1ROfOKNsjqxHM6eYjQF3cWsOCh2BP3Gj/7XWZZtaoCy5Okm33nm8PJWvpFnzAR6qoEQS6Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-69629b4ae2bso37539006d6.3
+        for <git@vger.kernel.org>; Mon, 08 Apr 2024 09:19:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712593192; x=1713197992;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aHauppU+DBFzNlHZEd+0RxtB/wKAOB3Hj4wyqRgq+Ho=;
+        b=oNtLMC6Dc2UBTDWBeBBXZ6xFxwFN2e3MKT+ObK3IJJ2Nq03b7VmWttJt7LJWfGcQJK
+         5mNllmCfn1V/W4YVrjGbuiEIFeFySLTD/jmrm3/0RsrM7xUdxN0K5YF/eTsvKOwmojBe
+         bYBRfg4k8djsOG2sl9KQAiP9ER9tmos30JtlxFo2imBzknMndQ/LhlizgaIDU6M3lVGB
+         LKwVWFTKHXYlhL1nrNwV0R8NAupA2AlNkebTuixuPgrUby7oGoZVx8tE/BLYgwhfR0TH
+         DlzPmgwEsFvCVEyavNqzryGzg2b/4/ANJyjrgdoG/0RVDZmCUiR41lj32KYMMEBQi5ZW
+         a53g==
+X-Forwarded-Encrypted: i=1; AJvYcCVVOi+fCnrSU6fZp5sC8Mk75oJRNQK/fz8VxhuDOl/ClwVU+Hnz1f7L5Cgusqf5uxRDyFYyqT6VJ4RKbBhvk1PDY0zO
+X-Gm-Message-State: AOJu0YxhxloEgAYt4hzkie4GwND10iAFXdM6g4u85jCr89zAchQXibrx
+	Muq725Tb+yB+YVBS75d3jUJ5YEZ93z5vjwzcEQesSNdu3c0rJ5662dZi+QvgTu2e+Ab7hRgnbZY
+	syoHSP6cVXYldRFJ0F4bYFM+6IdU=
+X-Google-Smtp-Source: AGHT+IFQO4dXNahW32Y4/Bsb7UGpQYdqtjJPLRTEh/mkoW8qNSu8AvRD6PxH/Hr9p+JBE4EAujezjT9gWsYsVZ3BcU4=
+X-Received: by 2002:a05:6214:c86:b0:699:16c8:8517 with SMTP id
+ r6-20020a0562140c8600b0069916c88517mr9252236qvr.6.1712593192522; Mon, 08 Apr
+ 2024 09:19:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A3159BCA-F5C3-11EE-B3DB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <cover.1712235356.git.ps@pks.im> <cover.1712555682.git.ps@pks.im>
+ <160b026e69547739a526fb6276a895904a4d33a8.1712555682.git.ps@pks.im>
+ <CAPig+cT3kvvHL+wLTFj58e5BnB7yBA=HD3C4vWC4zQhys3GCHA@mail.gmail.com> <xmqqpluzet2z.fsf@gitster.g>
+In-Reply-To: <xmqqpluzet2z.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 8 Apr 2024 12:19:40 -0400
+Message-ID: <CAPig+cQd7yfVVr+yZDxYY_oe8wC5OGt-SKtCnhCzZqJ0avP-Jg@mail.gmail.com>
+Subject: Re: [PATCH v2 12/12] t0612: add tests to exercise Git/JGit reftable compatibility
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>, 
+	Josh Steadmon <steadmon@google.com>, Luca Milanesio <luca.milanesio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
->> @@ -248,6 +249,9 @@ static struct ref_store *reftable_be_init(struct repository *repo,
->>  	refs->write_options.hash_id = repo->hash_algo->format_id;
->>  	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
->>  
->> +	if (!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1))
->> +		refs->write_options.disable_auto_compact = 1;
->> +
+On Mon, Apr 8, 2024 at 12:07=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > I was going to suggest that you could accomplish this more easily
+> > directly in shell (without employing `awk`):
+> >
+> >     {
+> >         echo start &&
+> >         printf "create refs/heads/branch-%d HEAD\n" $(test_seq 0 9999) =
+&&
+> >         echo commit
+> >     } >input &&
+> >
+> > but then I realized that that could potentially run afoul of
+> > command-line length limit on some platform due to the 0-9999 sequence.
 >
-> This could be simplified to:
+> As xargs is supposed to know the system limit, perhaps
 >
->     ```
->     refs->write_options.disable_auto_compact =
->             !git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
->     ```
+>         test_seq 0 9999 | xargs printf "...%d...\n"
+>
+> should work?
 
-I presume that the .disable_auto_compact member is off initially,
-given that this is inside reftable_be_init(), but your rewrite makes
-it easier on readers, as they do not have to know what value the
-member originally has at this point in the flow.  So even though it
-replaces two lines of code with another two lines of code, it does
-count as a valuable simplification at the conceptual level.
+Hmm, yes, that should work nicely.
 
-Thanks.
-
+Whether or not such a change is worthwhile is a different matter.
+Although it is perhaps simpler and easier to read, Windows folk might
+not appreciate it since it spawns at least three processes (and
+perhaps more depending upon how test_seq is implemented), whereas the
+`awk` approach spawns a single process.
