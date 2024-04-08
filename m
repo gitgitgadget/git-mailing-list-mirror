@@ -1,133 +1,102 @@
-Received: from eggs.gnu.org (eggs.gnu.org [209.51.188.92])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5501B1DA5E
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 23:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.51.188.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9F1171B0
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 23:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712618661; cv=none; b=B2ZQmib/9Q/CLa+uCNnLZ/zu9kWrufeGK5yUpQD2tHpErW1zDjSEGblASBB+/6cKheWA3ibQPIITHmvbKPf9dMI79BY/f+J1fgX/qPe4S9gxfVZ6D9yh4zTdj9a0qst75yfsXw1UVlJW+wSHT/AECBj+eNc36IhUzXO/V1MHZTk=
+	t=1712618911; cv=none; b=j+/Hdbu8/m0MusCAAJgNZfMluzuQPBEWVaxZdFdSEmdTTOfP9M5tnqE/OU7qucpVzJyo2kVWat01nYiopojuvveEGgGC83YoWV5eZOlTK4NrU9ZyTVzVd9Q46NpMnavFJ46VPVQf6FDNKFqhaK7wEEQrZq6t6hNMj9saLjI3FkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712618661; c=relaxed/simple;
-	bh=WCaYJUg3Ngv2nbCN5ZuX7+Yfr+XqD3jCJs5ZKTx9MnY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=EcWllRP6zPkpGZGbUVghM2KkGo6BVtlGR4z0hnQKRmoto0YvPHsO8nXf1ZHfprEg/3V0LQ4vSJnB4AqIWC9svt1eixN11lqide0eMCfDw4SHCkXvd9SveQ0gAaUCwaT6fuTBTvOso85bJaPJpBLkB/zKWZ8QLh30SGvOHiUFgpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gnu.org; spf=pass smtp.mailfrom=gnu.org; dkim=pass (2048-bit key) header.d=gnu.org header.i=@gnu.org header.b=IjqJUqHV; arc=none smtp.client-ip=209.51.188.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gnu.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gnu.org
+	s=arc-20240116; t=1712618911; c=relaxed/simple;
+	bh=h125aJfDQKNbTXrF3ryHCDYahoS82KTGH/zJCGuwltU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rzRHvxhjCEQWzfzFe24p0idfk4Mikz2FMmUvwWudYsAYdmZR+s8kidZ3h0QziKKviZcu4Bs3hSDnGtHdt/euZVtg905KBkY3KS3zZg1lXTJjroff3O62BGdOS6aBeQO6boZqq0EceD/r3yJeWon+s5v82Q+4dXNaZ3+gqLBLxcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MIEX5fuM; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gnu.org header.i=@gnu.org header.b="IjqJUqHV"
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
-	by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.90_1)
-	(envelope-from <psmith@gnu.org>)
-	id 1rtyLZ-000841-Lp; Mon, 08 Apr 2024 19:24:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
-	s=fencepost-gnu-org; h=MIME-Version:References:In-Reply-To:Date:To:From:
-	Subject; bh=Z2k7h9yMiX4lVFUzJuo7wrkPXir6mZTycb72pSSZnhk=; b=IjqJUqHVVj65fjz5b
-	y6if2GGKdnyowezMK1pBCLiFtL/sNJnBt21zbaVHKok/EcmA58O6Uh8XPW3a7EJdzvhCgSYpz0FY5
-	6TYwOuuaCTJt1RothK6yP2yrrp7/arOUYt0k9CjsykF2nwJqfIzU+KQ88lD8g1gRKD24lgyKfR7+9
-	6Z4NSk7t9SULAXLl2+1RJimJezd7UOghvwUhyMmtpc94Rp/tdFCrYmnDA0gTtypyVB9SEpkUXCwya
-	QgKPBbeioXn4O2Eg+w3dhDVFXPmU8ghxY8nDWM3p0NviDhAPVjp9ICkj6uxAURFDY8E3FAFJdqRiu
-	VmUqzNWEwVH0hMrWA==;
-Message-ID: <606990048585347654f3b4b187ec27f4dc1b85e3.camel@gnu.org>
-Subject: Re: [PATCH] Makefile(s): avoid recipe prefix in conditional
- statements
-From: Paul Smith <psmith@gnu.org>
-Reply-To: psmith@gnu.org
-To: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Dario Gjorgjevski <dario.gjorgjevski@gmail.com>, 
- Jeff King <peff@peff.net>
-Date: Mon, 08 Apr 2024 19:24:16 -0400
-In-Reply-To: <xmqqle5n8rcr.fsf@gitster.g>
-References: 
-	<CAJm4QYOxn_s8ktJiC6ju2j4OyEYaM2ay7Ca--ZWFWa7APVnTbA@mail.gmail.com>
-	 <9d14c08ca6cc06cdf8fb4ba33d2470053dca3966.1712591504.git.me@ttaylorr.com>
-	 <xmqqle5n8rcr.fsf@gitster.g>
-Organization: GNU's Not UNIX!
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.0 (by Flathub.org) 
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MIEX5fuM"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 890B3208F4;
+	Mon,  8 Apr 2024 19:28:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=h125aJfDQKNbTXrF3ryHCDYahoS82KTGH/zJCG
+	uwltU=; b=MIEX5fuMIQthNQbvRzaXJc9MfU7toHI7wDoNjud3PNYTdfWuZ2Vo0t
+	64bRGvg3mMym2ZR15R6Jsh5jyXDIqHeNtsmQ7piZhGvSXc+NZxMGDRA9WibAGHTJ
+	9o2n+UbMmSJgJWFb8zOmpDihN1dw5KcOw3WuugbVuUoPSlp5rsQ60=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 82BAE208F3;
+	Mon,  8 Apr 2024 19:28:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 089E6208F2;
+	Mon,  8 Apr 2024 19:28:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Dario Gjorgjevski <dario.gjorgjevski@gmail.com>,
+  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Makefile(s): avoid recipe prefix in conditional statements
+In-Reply-To: <xmqqle5n8rcr.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	08 Apr 2024 14:41:24 -0700")
+References: <CAJm4QYOxn_s8ktJiC6ju2j4OyEYaM2ay7Ca--ZWFWa7APVnTbA@mail.gmail.com>
+	<9d14c08ca6cc06cdf8fb4ba33d2470053dca3966.1712591504.git.me@ttaylorr.com>
+	<xmqqle5n8rcr.fsf@gitster.g>
+Date: Mon, 08 Apr 2024 16:28:24 -0700
+Message-ID: <xmqqpluz5t9j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B2D02AE4-F5FF-11EE-BDA8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Mon, 2024-04-08 at 14:41 -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Taylor Blau <me@ttaylorr.com> writes:
->=20
-> > When a conditional word (ifeq, ifneq, ifdef, etc.) is preceded by
-> > one or
-> > more tab characters, replace each tab character with 8 space
-> > characters
-> > with the following:
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0 find . -type f -not -path './.git/*' -name Mak=
-efile -or -name
-> > '*.mak' |
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xargs perl -i -pe '
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s/(\t+)(ifn?eq|ifn?def=
-|else|endif)/" " x (length($1) * 8)
-> > . $2/ge unless /\\$/
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '
->=20
+>
+>> When a conditional word (ifeq, ifneq, ifdef, etc.) is preceded by one or
+>> more tab characters, replace each tab character with 8 space characters
+>> with the following:
+>>
+>>     find . -type f -not -path './.git/*' -name Makefile -or -name '*.mak' |
+>>       xargs perl -i -pe '
+>>         s/(\t+)(ifn?eq|ifn?def|else|endif)/" " x (length($1) * 8) . $2/ge unless /\\$/
+>>       '
+>
 > Yuck, it means auto indenting Makefile and its pieces almost
-> impossible X-<.=C2=A0 I'll take the patch as there is no way to revert
+> impossible X-<.  I'll take the patch as there is no way to revert
 > the change to GNU make, though.
 
-I am considering whether to turn this error into a warning, for the
-next release only, since it seems to be causing problems.  I have not
-decided for sure yet since the change is needed to avoid a very real
-parsing error (see the Savannah bug for details) which then could not
-be fixed in this release.
+We'd need something like this on top.  Our top-level .gitattributes
+defines the default whitespace rules with !indent-with-non-tab and
+enables indent-with-non-tab for specific file suffixes like .[ch],
+but git-gui/.gitattributes enforces indent-with-non-tab for all
+files.
 
-Just to note that this usage clearly contravenes the documentation,
-which states that preprocessor statement lines cannot begin with a TAB.
-It was a bug that this was allowed by the GNU Make parser.
+Another thing with this series (and this follow-up) is if we want to
+start treating git-gui/ as just a subdirectory without no plan to
+feed our changes to the "upstream".  I am actually OK with that, as
+the "upstream" we merge (with -Xsubtree merge strategy) from does
+not seem to be very active and responsive these days.
 
-I understand that in many projects (Linux, probably Git :)) if the
-documentation and behavior disagreed then the documentation would be
-changed, not the behavior.
+ git-gui/.gitattributes | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'd love to do that as well but unfortunately there's just no way to
-get coherent behavior out of GNU Make if this TAB prefix is allowed.=20
-If the original authors of GNU Make had followed the lead of the BSD
-make folks (or C) and used some reserved character to introduce
-preprocessor statements (BSD make uses ".if"/".else" etc. which would
-work) then we wouldn't be in this predicament.  But make's parser is so
-ad hoc that it's impossible to fix issues like this in a completely
-backward-compatible manner.
-
-I know that the coding style in some projects is to use TAB for each
-level of indentation, but I do not think it's possible to extend that
-same coding style from C into makefiles.  In makefiles, a TAB is not
-just whitespace it's a meaningful token and has to be reserved for use
-only in places where that meaning is required: to introduce a recipe
-line.  Hopefully everyone's editors have the concept of separate modes
-for different types of files, with different indentation styles for
-each.
-
-My personal recommendation is that you do not take this patch as-is,
-and instead request a patch that converts every TAB character that
-indents a GNU Make preprocessor statement into TWO spaces rather than
-8.  Or even THREE spaces (to avoid indentation that matches a TAB in
-width which could cause visual confusion).  However of course that's up
-to you all.
-
-
-If you wanted to make an even bigger change, which might save some
-hair-pulling down the road but is a very serious decision, you could
-introduce the use of the .RECIPEPREFIX [1] variable to change the
-recipe prefix from TAB to some other character (as it should have been
-when make was created back in the 1970's).
-
-.RECIPEPREFIX was introduced in GNU Make 3.82, which was released in
-2010 FYI.
-
-
-Again, apologies for the churn... :(
-
-
-[1] https://www.gnu.org/software/make/manual/html_node/Special-Variables.ht=
-ml#index-_002eRECIPEPREFIX-_0028change-the-recipe-prefix-character_0029
+diff --git c/git-gui/.gitattributes w/git-gui/.gitattributes
+index 59cd41dbff..118d56cfbd 100644
+--- c/git-gui/.gitattributes
++++ w/git-gui/.gitattributes
+@@ -3,3 +3,4 @@
+ git-gui.sh  encoding=UTF-8
+ /po/*.po    encoding=UTF-8
+ /GIT-VERSION-GEN eol=lf
++Makefile    whitespace=!indent,trail,space
