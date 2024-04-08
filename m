@@ -1,83 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8FB142E9C
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 17:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67BB14388F
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 17:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712596190; cv=none; b=eO2dzVMDTVK6BMV/iRhBZFcbUnJULz+HnQVx7movn6iIYYs4Q9qDT43Yy6FPoUcKanGEwhOc11fs+2O9gDcXn1QjUDrOwn7Gbojkl3eEcI6GOJX9sF/gIchtAIQ0GK282fNpuVARv/RO5G1UcnJ1hsslfrSwdA2xsdrjavNc+9Q=
+	t=1712597026; cv=none; b=Nk56wTt6A71RsMqILB9QR6BlBuADfRvB9TLpyWMhrTNGOusH/A885+VlTi7tC5zhqPOP+0khuqVhMh4qk9WDMbZ0Kx+SQixXN+KLYcDtr2CHXKIKN+nThLlHjFmahepFV2qqD14MH9axtiPj55b04yOv4k7daV4MQ/Rz84my5sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712596190; c=relaxed/simple;
-	bh=eTNqC5Q8n2t+BwVlCQBqR5uPdGuglZh4DCVOEJDTf3I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IkUr92+irKaPNN2h+Y4Jv9wyp9iy7EHz2YUZPtGJ+xU0OBabuqRelJywu411c9L1LYKoPinMRTt9wEDPGVQbIQqg/DfebQi9Xd+xc6kcZZpi6FM87wHx1AxT7KrieUkPG4Ydtmvnt8jYV0lqO35NjiqfoSRB6JrSunHh5X5ovKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 30837 invoked by uid 109); 8 Apr 2024 17:09:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Apr 2024 17:09:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27255 invoked by uid 111); 8 Apr 2024 17:09:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Apr 2024 13:09:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 8 Apr 2024 13:09:38 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [RFC][PATCH] t-prio-queue: simplify using compound literals
-Message-ID: <20240408170938.GA1629595@coredump.intra.peff.net>
-References: <520da361-1b80-4ba3-87b2-86d6fdfc18b5@web.de>
- <20240402204153.GE875182@coredump.intra.peff.net>
- <c6cb255a-72f0-4ac2-81a2-1d8e95570a81@web.de>
- <20240405191714.GA2561807@coredump.intra.peff.net>
- <xmqqedbjtqnr.fsf@gitster.g>
- <20240407012844.GC1085004@coredump.intra.peff.net>
- <xmqqo7ajdc6y.fsf@gitster.g>
+	s=arc-20240116; t=1712597026; c=relaxed/simple;
+	bh=orVe00HxiHZN+KiDRsZxr78jzbGsSwLawcXhh8DJUhA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GgNNdor55PITGB0UJCmWYH5vhW9H0t7aO3ccAnyMohK2UIM1J2jkCqXFvHeOLLO3aSVCLIX/Q37cPiwgTqsggzwYKeiDJGVDEfAviXP18Lq2bFGxEATAooKCQh62rW3EcUrBLYev1PYU8AhTIQDk70vD6SZLRpBXv27oPvOYacY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LEHBrIu1; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LEHBrIu1"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A2AF41DA2C7;
+	Mon,  8 Apr 2024 13:23:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=orVe00HxiHZN+KiDRsZxr78jzbGsSwLawcXhh8
+	DJUhA=; b=LEHBrIu144s2oInDgDxvqvxNsVFkYe755ag8wUjju0Ie5NaKkFWC7T
+	ElljwkRAiK75XIIgoOzIE7LyZzbUx2obt4RUrzXxtDqKPN9zIDcp57/UR+yQo6DU
+	evU+1Re4KBkDRBcjOliwKATD3K+ZN9iEMdVgo06aM+zaxa56iP7Vs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9875E1DA2C5;
+	Mon,  8 Apr 2024 13:23:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B5F11DA2C4;
+	Mon,  8 Apr 2024 13:23:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/6] t: local VAR="VAL" (quote positional parameters)
+In-Reply-To: <ZhQNq4ITp68ikVVy@tanuki> (Patrick Steinhardt's message of "Mon,
+	8 Apr 2024 17:30:51 +0200")
+References: <20240406000902.3082301-1-gitster@pobox.com>
+	<20240406000902.3082301-4-gitster@pobox.com> <ZhQNq4ITp68ikVVy@tanuki>
+Date: Mon, 08 Apr 2024 10:23:41 -0700
+Message-ID: <xmqqil0rdazm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo7ajdc6y.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BF88CBAC-F5CC-11EE-9DE1-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Mon, Apr 08, 2024 at 09:57:41AM -0700, Junio C Hamano wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> We should still be hesitant against the practice to the same degree
-> >> that we are hesitant against struct assignment, especially when the
-> >> struct is of nontrivial size, or the struct has a pointer member
-> >> whose memory ownership semantics goes against shallow copying of the
-> >> struct.
-> >
-> > Good point. There are really two thresholds: is this something that
-> > should be totally forbidden, and is this something that is generally a
-> > good idea. I think the answers here are "no" and "yes" respectively.
-> 
-> I agree with your conclusion but I found the above a bit confusing.
-> 
-> Between "totally horrible, do not even think about it" (0%) and
-> "that is of course an excellent idea" (100%), you want to have two
-> points "might have some merit but not acceptable" (33%) and
-> something else that is less than "of course an excellent idea" but
-> still acceptable (66%)?  I would not phrase the last threshold "is
-> generally a good idea", though.  "It is not generally a good idea,
-> but in this case, it is an adequate solution", maybe.
+> On Fri, Apr 05, 2024 at 05:08:59PM -0700, Junio C Hamano wrote:
+>> Future-proof test scripts that do
+>> 
+>> 	local VAR=VAL
+>> 
+>> without quoting VAL (which is OK in POSIX but broken in some shells)
+>> that is a positional parameter, e.g. $4.
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  t/lib-parallel-checkout.sh | 2 +-
+>>  t/t2400-worktree-add.sh    | 2 +-
+>>  t/t4210-log-i18n.sh        | 4 ++--
+>>  t/test-lib-functions.sh    | 2 +-
+>>  4 files changed, 5 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+>> index acaee9cbb6..8324d6c96d 100644
+>> --- a/t/lib-parallel-checkout.sh
+>> +++ b/t/lib-parallel-checkout.sh
+>> @@ -20,7 +20,7 @@ test_checkout_workers () {
+>>  		BUG "too few arguments to test_checkout_workers"
+>>  	fi &&
+>>  
+>> -	local expected_workers=$1 &&
+>> +	local expected_workers="$1" &&
+>>  	shift &&
+>
+> I was wondering a bit why this is a problem in t0610, but not over here.
+> As far as I understand it these statements are fine in practice because
+> the expanded values cannot be split, right? So if "$1" expanded to
+> something with spaces in between things would start to break.
 
-Sorry, yes, I flipped the boolean on the second one. I should have said
-"is it forbidden" and "is it generally a bad idea", in which case the
-answers are "no" and "yes".
+Correct.
 
-Or if you prefer, as I stated it, the answers to both are "no". ;)
+> In any case, changing all of these to be quoted feels like the right
+> thing to do regardless of whether or not it happens to work with the
+> current values of "$1". Otherwise it's simply a confusing failure
+> waiting to happen.
 
-I.e., it is OK to use here but it is not something we should be doing
-all the time. Sorry for the confusion.
+Again, agreed.  That is where my "Future-proof" comes from.
 
--Peff
+The true objective of this change is so that the last patch does not
+have to learn too much exceptions ;-)  As long as expected_workers
+is expected to be a number (an unbroken sequence of digits), even if
+we add more callers to this helper in the future, $1 we see here is
+expected to be $IFS safe.  So in that sense my "future-proof" is a
+white lie.
