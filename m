@@ -1,56 +1,58 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E108814884C
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 22:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA8F1A5A2
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 23:02:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712615389; cv=none; b=Qwuq0pFSiloyRKHSDKIa68j5S1oddneSv/GBDgn9lpLjX9Hn+kjPmwdK1ut1w+xjOJW92HO9JH/tLSaT8hOin7NNePfKlyFjK8K6Xux7kyQOioZMErc8In/8DJqflEMVdReI9tf4mMneyCgDiUJLpgPbEtGIx0TKA897kh583/4=
+	t=1712617354; cv=none; b=qhMBoI/yZ55lcw7HqYrYQEpBIThnTILGA006vinapk1hWOmiflLTru50ipYazGQIUqhi1vU98BTqmL2Jf4qdVG62faAQqG8RZ6SaA3PdOcZg6TSb4Only4R9L7Y88efOfT8eyp/TSn/V5/FX0BFyiPKi0/y8H0hkmwI/pkJu2hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712615389; c=relaxed/simple;
-	bh=Hd86yeDy/c2FPyEroelr+KD1zLH+vHF+hVuCB428ye0=;
+	s=arc-20240116; t=1712617354; c=relaxed/simple;
+	bh=CbCtkmVoUa5T7NbJoznHEmytOA+tg53gkfNLApehBTc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SFyRck5cuSzgOyhEQVVjmf8cPWsg4FbY7ds+gtAxa6NZ1hAvZIsuBbyiyAT9A3DPmW2FYVv/IfTl14wRSDYsiT26HQeQWF3k5Gg+1Uu0bzo0CL61lWMeIT2cvhgD7gmE4lfzG+DLNOPfRxR0C7K66HWMSSFqo03DVD+8W15bPFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NDagkw/U; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=KOn2xwbf0yVTKtl6gvOI7EWwXdXp7ZdmBb5QaJsyBHcS43qFMBa3fb0L84d646VG2NYm+mDXImdlrK2JXjuJjXyRjAfw7pbpJN9z4DYkFeJVLOiZR/BOfGnacWWrFy8j5zYizk9aZ5hm3tmzpBvnPAjtq1aWKUDJLi1dEVIfv+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SIUqIVGs; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NDagkw/U"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 248733B5BE;
-	Mon,  8 Apr 2024 18:29:47 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SIUqIVGs"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AAB1620652;
+	Mon,  8 Apr 2024 19:02:30 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Hd86yeDy/c2FPyEroelr+KD1zLH+vHF+hVuCB4
-	28ye0=; b=NDagkw/UtMwZco1z+PqgifFpAsOTF8SCOk3d7DjVqm8vH14XNPnL/6
-	KIdDkubB2nP6CF8LcmNsVWaBw60OSrzg+D7nNa2yPck7IjN1wdRWFeKL3SAtSBw/
-	bzSxTg78dUOt94gDO5rjhg9+SVg7h9gi7/Ul+SM7r0p/STTJ/tfBY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1BDB43B5BD;
-	Mon,  8 Apr 2024 18:29:47 -0400 (EDT)
+	:content-type; s=sasl; bh=CbCtkmVoUa5T7NbJoznHEmytOA+tg53gkfNLAp
+	ehBTc=; b=SIUqIVGsTk7V6T+QMO+q6SoG+r/pnAqFAOUjqtHyZZpreqegJoA+F5
+	wWbnA0QZS0kPP3JgakPhhiDeSsf/p097G/A5eMwtxW1XUMUb20fjQyOHW8i6CaB5
+	jE+vYLjn3qrd+88PUCoVdSQqzjvtIXu1MUpl9Jeqf4482INYt9bTI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A22CC20651;
+	Mon,  8 Apr 2024 19:02:30 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B9453B5BC;
-	Mon,  8 Apr 2024 18:29:43 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 26CF12064F;
+	Mon,  8 Apr 2024 19:02:27 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Stefan Haller <lists@haller-berlin.de>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
-  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 2/2] rebase -i: improve error message when picking merge
-In-Reply-To: <fbc6746e0188ed7b69c238935ec85b69112ddd79.1712585788.git.gitgitgadget@gmail.com>
-	(Phillip Wood via GitGitGadget's message of "Mon, 08 Apr 2024 14:16:27
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff King <peff@peff.net>,
+  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <avila.jn@gmail.com>,
+  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/3] refs: keep track of unresolved reference value
+ in iterator
+In-Reply-To: <6adc9dd26da4459d246591ce148c960b33bde336.1712597893.git.gitgitgadget@gmail.com>
+	(John Cai via GitGitGadget's message of "Mon, 08 Apr 2024 17:38:11
 	+0000")
-References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
-	<pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
-	<fbc6746e0188ed7b69c238935ec85b69112ddd79.1712585788.git.gitgitgadget@gmail.com>
-Date: Mon, 08 Apr 2024 15:29:42 -0700
-Message-ID: <xmqqle5n7ajt.fsf@gitster.g>
+References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
+	<pull.1684.v2.git.git.1712597893.gitgitgadget@gmail.com>
+	<6adc9dd26da4459d246591ce148c960b33bde336.1712597893.git.gitgitgadget@gmail.com>
+Date: Mon, 08 Apr 2024 16:02:25 -0700
+Message-ID: <xmqq34rv791a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,139 +62,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 7F4CA9B6-F5F7-11EE-B962-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 11A7A9F6-F5FC-11EE-989C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> diff --git a/refs.h b/refs.h
+> index 298caf6c618..2e740c692ac 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -71,9 +71,10 @@ struct pack_refs_opts {
+>  	struct ref_exclusions *exclusions;
+>  	struct string_list *includes;
+>  };
+> -
+>  const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+> +
+>  				    const char *refname,
+> +				    char **referent,
+>  				    int resolve_flags,
+>  				    struct object_id *oid,
+>  				    int *flags);
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> The only todo commands that accept a merge commit are "merge" and
-> "reset". All the other commands like "pick" or "reword" fail when they
-> try to pick a a merge commit and print the message
->
->     error: commit abc123 is a merge but no -m option was given.
->
-> followed by a hint about the command being rescheduled. This message is
-> designed to help the user when they cherry-pick a merge and forget to
-> pass "-m". For users who are rebasing the message is confusing as there
-> is no way for rebase to cherry-pick the merge.
->
-> Improve the user experience by detecting the error when the todo list is
-> parsed rather than waiting for the "pick" command to fail and print a
-> message recommending the "merge" command instead. We recommend "merge"
-> rather than "exec git cherry-pick -m ..." on the assumption that
-> cherry-picking merges is relatively rare and it is more likely that the
-> user chose "pick" by a mistake.
+If referent is meant to be an out-parameter, it should sit next to
+oid that is also an out-parameter.  And as a late-comer sibling, it
+should sit after its elder brother.
 
-Now, the mention of "all the other commands" makes me curious what
-should happen when your "squash" and "fixup" named a merge commit.
-I think it should just error out without any recourse, but it is
-more than likely that I am missing some use cases where it is useful
-to "squash" or "fixup" a merge commit on top of an existing commit?
+Also, I do not see the reason for the shuffling of blank lines.
+Shouldn't it be the other way around, even?  After an unrelated
+definition of "struct pack_refs_opts", there is (and should be)
+a blank line, then the first line of the declaration of function.
 
-> It would be possible to support cherry-picking merges by allowing the
-> user to pass "-m" to "pick" commands but that adds complexity to do
-> something that can already be achieved with
->
->     exec git cherry-pick -m1 abc123
+Perhaps some fat-fingering.
 
-I have no strong opinions between this and "merge" for "pick",
-"edit", and "reword".
-
-> Reported-by: Stefan Haller <lists@haller-berlin.de>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  sequencer.c                   | 37 +++++++++++++++++++++++++++++++++--
->  t/t3404-rebase-interactive.sh | 33 +++++++++++++++++++++++++++++++
->  2 files changed, 68 insertions(+), 2 deletions(-)
-
-So, having thought about my version of a solution from the problem
-description above without looking at your answers, let's see how you
-solved it.
-
-> diff --git a/sequencer.c b/sequencer.c
-> index a3154ba3347..4012c6f88d9 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2573,7 +2573,35 @@ static int check_label_or_ref_arg(enum todo_command command, const char *arg)
->  	return 0;
->  }
+> @@ -1928,6 +1928,7 @@ int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refname,
 >  
-> -static int parse_insn_line(struct repository *r, struct replay_opts *opts UNUSED,
-> +static int error_merge_commit(enum todo_command command)
-> +{
-> +	switch(command) {
-> +	case TODO_PICK:
-> +		return error(_("'%s' does not accept merge commits, "
-> +			       "please use '%s'"),
-> +			     todo_command_info[command].str, "merge -C");
-> +
-> +	case TODO_REWORD:
-> +		return error(_("'%s' does not accept merge commits, "
-> +			       "please use '%s'"),
-> +			     todo_command_info[command].str, "merge -c");
-> +
-> +	case TODO_EDIT:
-> +		return error(_("'%s' does not accept merge commits, "
-> +			       "please use '%s' followed by '%s'"),
-> +			     todo_command_info[command].str,
-> +			     "merge -C", "break");
-
-OK.  And when hitting the "break", they know that they are supposed
-to say "git commit --amend" and then "git rebase --continue"?
-
-> +	case TODO_FIXUP:
-> +	case TODO_SQUASH:
-> +		return error(_("cannot squash merge commit into another commit"));
-
-OK, this is as I expected.
-
-> +	default:
-> +		BUG("unexpected todo_command");
-> +	}
-> +}
-> +
-> +static int parse_insn_line(struct repository *r, struct replay_opts *opts,
->  			   struct todo_item *item, const char *buf,
->  			   const char *bol, char *eol)
->  {
-> @@ -2679,7 +2707,12 @@ static int parse_insn_line(struct repository *r, struct replay_opts *opts UNUSED
->  		return status;
+>  const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+>  				    const char *refname,
+> +				    char **referent,
+>  				    int resolve_flags,
+>  				    struct object_id *oid,
+>  				    int *flags)
+> @@ -1989,6 +1990,8 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+>  		}
 >  
->  	item->commit = lookup_commit_reference(r, &commit_oid);
-> -	return item->commit ? 0 : -1;
-> +	if (!item->commit)
-> +		return -1;
-> +	if (is_rebase_i(opts) && item->command != TODO_MERGE &&
-> +	    item->commit->parents && item->commit->parents->next)
-> +		return error_merge_commit(item->command);
+>  		*flags |= read_flags;
+> +		if (referent && read_flags & REF_ISSYMREF && sb_refname.len > 0)
+> +			*referent = sb_refname.buf;
 
-This is good for now, but we may see command other than TODO_MERGE
-learn how to handle a merge commit, and when that happens, I wonder
-what we want to do here.  One thought is to do this:
+Is this safe?  After this assignment, which "return" in this loop
+are you expecting to return from this function?  If you fail to
+return from the function during this iteration, you'll clobber the
+same strbuf with the next refs_read_raw_ref(), but I do not see how
+you are ensuring that you'll return from the function without such
+corruption happening.
 
-	if (is_rebase_i(opts) && is_merge_commit(item->commit))
-        	return error_merge_commit(item);
+This assignment happens only when read_flags has REF_ISSYMREF set,
+so the next "if it is not, then return refname" would not even
+trigger.  If RESOLVE_REF_NO_RECURSE bit is on in resolve_flags,
+then we'd return without further dereferencing, but if that is the
+only safe exit from the function, shouldn't you be guarding the
+function with something like
 
-and teach error_merge_commit() to silently return 0 on TODO_MERGE.
-Other commands, when they learn how to deal with a merge commit,
-will then update their entries in error_merge_commit().
+	if (referent && !(resolve_flags & RESOLVE_REF_NO_RECURSE))
+		BUG("recursive dereference can will clobber *referent");
 
-Would we want to customize the message from error_merge_commit() to
-make it closer to cut-and-paste ready?  For that, something like
+to protect its callers from their own mistakes?
 
-	int error_merge_commit(struct todo_item *item)
-	{
-		switch (item->command) {
-		case TODO_PICK:
-			return error(_("'%s'" is bad, plase use "
-				       '%s %s'"),
-				todo_command_info[item->command].str,
-				"merge -C",
-				oid_to_hex(item->commit->oid));
-		...
-		}
-	}
+Another return before we start the next iteration of the loop and
+clobber sb_refname with another call to refs_read_raw_ref() is the
+error return codepath at the end of the loop, but that is a totally
+uninteresting case.
 
-might go in a more friendly way.
-
+Or am I totally confused?
