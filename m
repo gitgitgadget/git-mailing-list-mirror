@@ -1,144 +1,107 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134FB1442F2
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 17:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3627460
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 17:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712597202; cv=none; b=SuQeHBVMk9HkJGpLnDImuqNYqq7SArK+JUXGMeWUxYD/aXl8vBznbu5mZvKOdLg1MqH3Bdibwpg1ea63NyI8+ZScLhvThDZmn8vLW+I+rqNK8P70p5CqTvtJV77HQA3aeizethAMma2sZwFSaZSih2DeAHPciA5qc4/+M7yy+3g=
+	t=1712597498; cv=none; b=HJNoErCrMy8HxSC4c3iUE8jV47PbI/KzlkwvBWQwZ/JmWfFc5jzcIKFTnIK0zQQiGf+XAJ988orFM7RSV3uNqruutAByq/KkoD+aMgVMnoUFQ9Efg4dhE8TzRKBp59vAfFhO+gOB7vH+JeeZCMo1bxA1acPkrZLuJ6IOhrSVYMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712597202; c=relaxed/simple;
-	bh=C6OvtjYTlA047KXbfQkJF9Vg3JAa1Isi7bsu/lr/NdY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ODy/E+jHTlfytQYrQEWX8KbfePRcgSEvJm+8335Gcw4h/aMSiPeOHvTCcasJ/ZP+S6xA6zYGJgxnT8VksFUJV4s6eJ+bx7qPhMXqot6tuscEXfVDiIygxGfobtYraMPgelGt5j3qeFszgR0UqMgnhkn5SQxVUWbp72px6B6XWhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 30931 invoked by uid 109); 8 Apr 2024 17:26:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Apr 2024 17:26:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27358 invoked by uid 111); 8 Apr 2024 17:26:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Apr 2024 13:26:39 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 8 Apr 2024 13:26:38 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>
-Subject: Re: [PATCH v2 12/12] t0612: add tests to exercise Git/JGit reftable
- compatibility
-Message-ID: <20240408172638.GB1629595@coredump.intra.peff.net>
-References: <cover.1712235356.git.ps@pks.im>
- <cover.1712555682.git.ps@pks.im>
- <160b026e69547739a526fb6276a895904a4d33a8.1712555682.git.ps@pks.im>
- <CAPig+cT3kvvHL+wLTFj58e5BnB7yBA=HD3C4vWC4zQhys3GCHA@mail.gmail.com>
- <xmqqpluzet2z.fsf@gitster.g>
- <ZhQZsq5_NyXmWM-b@tanuki>
+	s=arc-20240116; t=1712597498; c=relaxed/simple;
+	bh=vThvb3Uu6zWA7xi0MG6etQJOsFHWUMVs+tQES5gDgk0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KKzYgFqgGDuOERBQcjppBXibSeditbC+amUlfACbj0tnmpaKpld8gsxX1h4HGlTcgOrJkqT/XmjcTJOCIv7Q6Mgt3lg3IWFK9LM/oNBzbcdAnX7KuyyF4kK/wakjWblvty5S9T8oh8Feso01WAC933ZrkDogClkBeclBtOHy2+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eC79iad4; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eC79iad4"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8D3F1DA381;
+	Mon,  8 Apr 2024 13:31:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=vThvb3Uu6zWA7xi0MG6etQJOsFHWUMVs+tQES5
+	gDgk0=; b=eC79iad4AVXbUAaJCJXhAjaTn6OYo5zQpoSBYDRmQSSUuqdk67J8VE
+	Anshom2WRqBTxNXbVKdZShUiC3WIkz/eRzHUs9tq7YQK7jvxHoU4gjPDc5FIYDR2
+	o9nrBtd4LfP0krfer6C0tPKnMQPhcSWPO9ZBq88jSTEZ7wFsuWT/U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C15981DA37E;
+	Mon,  8 Apr 2024 13:31:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 318B41DA37C;
+	Mon,  8 Apr 2024 13:31:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/6] t: teach lint that RHS of 'local VAR=VAL' needs to
+ be quoted
+In-Reply-To: <20240407014344.GF1085004@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 6 Apr 2024 21:43:44 -0400")
+References: <20240406000902.3082301-1-gitster@pobox.com>
+	<20240406000902.3082301-7-gitster@pobox.com>
+	<20240407014344.GF1085004@coredump.intra.peff.net>
+Date: Mon, 08 Apr 2024 10:31:34 -0700
+Message-ID: <xmqqa5m3damh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZhQZsq5_NyXmWM-b@tanuki>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D8F66FDA-F5CD-11EE-9140-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Mon, Apr 08, 2024 at 06:22:10PM +0200, Patrick Steinhardt wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Apr 08, 2024 at 09:07:32AM -0700, Junio C Hamano wrote:
-> > Eric Sunshine <sunshine@sunshineco.com> writes:
-> > 
-> > > I was going to suggest that you could accomplish this more easily
-> > > directly in shell (without employing `awk`):
-> > >
-> > >     {
-> > >         echo start &&
-> > >         printf "create refs/heads/branch-%d HEAD\n" $(test_seq 0 9999) &&
-> > >         echo commit
-> > >     } >input &&
-> > >
-> > > but then I realized that that could potentially run afoul of
-> > > command-line length limit on some platform due to the 0-9999 sequence.
-> > 
-> > As xargs is supposed to know the system limit, perhaps
-> > 
-> > 	test_seq 0 9999 | xargs printf "...%d...\n"
-> > 
-> > should work?
-> 
-> Is there a reason why we want to avoid using awk(1) in the first place?
-> We use it in several other tests and I don't think that the resulting
-> code is all that bad.
+> On Fri, Apr 05, 2024 at 05:09:02PM -0700, Junio C Hamano wrote:
+>
+>> Teach t/check-non-portable-shell.pl that right hand side of the
+>> assignment done with "local VAR=VAL" need to be quoted.  We
+>> deliberately target only VAL that begins with $ so that we can catch
+>> 
+>>  - $variable_reference and positional parameter reference like $4
+>>  - $(command substitution)
+>>  - ${variable_reference-with_magic}
+>> 
+>> while excluding
+>> 
+>>  - $'\n' that is a bash-ism freely usable in t990[23]
+>>  - $(( arithmetic )) whose result should be $IFS safe.
+>>  - $? that also is $IFS safe
+>
+> Hmm. Just porting over my comment from the other thread (before I
+> realized you'd written this series), this misses:
+>
+>   local foo=bar/$1
+>
+> etc. Should we look for the "$" anywhere on the line? I doubt we can get
+> things foolproof, but requiring somebody to quote:
+>
+>   local foo=$((1+2))
+>
+> does not seem like the worst outcome. I dunno.
 
-Using awk is fine, but I think in general if we can do something just as
-easily without an extra process, that is preferable. Using xargs here
-does not to me count as "just as easily". However, using a shell loop
-might actually be more readable because you'd avoid the extra quoting.
-I.e. either:
+Looking at the output from
 
-  for i in $(test_seq 10000)
-  do
-	echo "create refs/heads/branch-$i HEAD"
-  done
+    $ git grep -E -e 'local [a-zA-Z0-9_]+=[^"]*[$]' t/
 
-or:
+the listed ones in the proposed commit log message are the false
+positives.  Luckily we didn't have anything that tries to
+concatenate parameter reference to something else.
 
-  i=0
-  while test $i -lt 10000
-  do
-	echo "create refs/heads/branch-$i HEAD"
-	i=$((i+1))
-  done
+But with the pattern we do miss
 
-I think the first one actually incurs an extra process anyway because of
-the $(). The second one would not. Of course, the second one probably
-needs &&-chaining and a "|| return 1" to work in our test snippet.
+    local var=$*
 
-IMHO the nicest thing would be if our test_seq could take a format
-parameter, like:
+and possibly many others.  So I am not sure.  The false positives
+do look moderately bad, so I'd rather start with the simplest one
+proposed in the patch.
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 2eccf100c0..c8f32eb409 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1404,6 +1404,13 @@ test_cmp_fspath () {
- # from 1.
- 
- test_seq () {
-+	local fmt="%d"
-+	case "$1" in
-+	-f)
-+		fmt="$2"
-+		shift 2
-+		;;
-+	esac
- 	case $# in
- 	1)	set 1 "$@" ;;
- 	2)	;;
-@@ -1412,7 +1419,7 @@ test_seq () {
- 	test_seq_counter__=$1
- 	while test "$test_seq_counter__" -le "$2"
- 	do
--		echo "$test_seq_counter__"
-+		printf "$fmt\n" "$test_seq_counter__"
- 		test_seq_counter__=$(( $test_seq_counter__ + 1 ))
- 	done
- }
-
-Then you could just write:
-
-  test_seq -f "create refs/heads/branch-%d HEAD" 0 9999
-
-and I suspect there are several other spots which could be simplified as
-well.
-
-Anyway, I don't think it is worth derailing your series for this, but
-just general food for thought.
-
--Peff
