@@ -1,79 +1,79 @@
 Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989EA7B3EB
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 12:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7486E61B
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 12:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712579062; cv=none; b=dPCY7UplvTozc+5+7AWk9QhU+H+vBjuSTyoJW3VChkDkjlRAgoMoVUC/rzxqpBAuD97vj5yZQthIpiPGCTsY+IrdAS+ReAV7Xr/DiowTbeL1fdPbXr1+8y316/Y2xmAabyXA1HPJTZuImG1rOY2All4arbVqTwnqRaMQs8Qt7SU=
+	t=1712579066; cv=none; b=cr4sLwI5v8XKafKbl2L+Giaek5Gd0Nz2I+MYTQZFfpzuYA8tnZFnyXg85bbPVIEDbd9tr550Pa+pbZ742H3WMgrjsJuOoWaRJurXdb2GRaMN+nKlXG5n/HFmkteamaVoD7PDa0a4x7dvLwP3f9ZXx8X7TuRLqN0n5f+2+IpsIoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712579062; c=relaxed/simple;
-	bh=P20/KeVieAHPSyhApAVgZGqz2EEikN3uMe+hXD1H9Ow=;
+	s=arc-20240116; t=1712579066; c=relaxed/simple;
+	bh=uegcfR614/E+bVvj4mocBYU+y1tmIt+NxF/gibYhXBI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BjYRJiYn51CZsWJyEj2oUNyUNNF6tYhJ6o4JRxY4srLAdNcFNAU+g5hOtUGmMi5VVRrcauvgIIMdhULPCL1OsbK55f3/kPK6Zcw4Oe6JPn+SK1IZB6vvuVFH742YwAcNORi+r5opz+lz+IGsP+UEozB7vRQEGMVP8vV5CGpAxok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FUiep67z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E5o2JYuc; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=oloIbm7HHlGJUUdCLvDnnnBnI9e9bTiUqYSK8POK+oMisoLwy6C/eFM0U6qEMZDnFcEZP+1wzyl4t4D9Gd/dw5cqkJ2itFtkAGXs/SxaISLh6X13qNBAwKBbhhe/zt5CGicFNlKpluWKPE4WgknQAIS9TeKpKphaCZZNfvbFWTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sop9FdP5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OesvhYR6; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FUiep67z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E5o2JYuc"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sop9FdP5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OesvhYR6"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id AAAC01140118;
-	Mon,  8 Apr 2024 08:24:19 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D4F3A1140121;
+	Mon,  8 Apr 2024 08:24:23 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 08 Apr 2024 08:24:19 -0400
+  by compute2.internal (MEProxy); Mon, 08 Apr 2024 08:24:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712579059; x=1712665459; bh=RYdmMcH0l9
-	DAgvcx45US1gMYgfiMKVsYfGmgWtM9TzE=; b=FUiep67zLwmPF0QtUSTZIiNyaW
-	amuKP9DQyTzT0r9PHrTEwtNw+ZPDgDg3Hlwb+PkYN1/yLak1Q+FYGRBooJVMfMah
-	AOHjTwczLfvKxh9GUc8ibTxbSSq8AxuD908j54fhhrCdpepCk9a8n5wWLfaCJGas
-	vBeLnHfSPM6KYp0X0b2lbKbrDr0LLoXG8lY6Dxxq1CD+791LAKRGFaTNYuLjSAZv
-	quhGODi4x6MZUU+PSeNWIp7QeliHwLqY9gYCoAn3B4X4HOxll3lv6N+pAkEZRuiz
-	RQpkTGP7eobHF7sfco60rvK4RUEwgNQaE0Jtxvrs+pyGYU+jh/nwJdwhbUuw==
+	:subject:to:to; s=fm2; t=1712579063; x=1712665463; bh=pUUn7C4MOC
+	YYeERrdAVCms0J6BU7raCL+zMX9QM+5jA=; b=Sop9FdP5wNIpnxwK8DH/Tzy0s0
+	DujKHLqne7pGI2xvtlc6psNiPEM1lxcce+T1oT7ef4pUcmeLNKqkAgz4YTT+XYLm
+	rOWS6+VWi6EDnZl8GsdftKEyPTBU5hlC6Ui1FEwqltTa6Un2oBwNKK1LeCr9NRYz
+	jUsG3kuqhOLY2kwU0MSJXW+c3RiByyWyTx59HX6KsAzdG11KXi5O59X408vcuynd
+	hVN4Rz+9AQbQ4wznnW3laT65RAbJwiRY/Vql/YoUGGZW4XQs/RkjZPRWSpPwzv4w
+	i51RvuJaXE1VDyOmLJgHc86mR6Exar0/0wGEZu/JZJlPrVbSNuLn/xoVaTYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712579059; x=1712665459; bh=RYdmMcH0l9DAgvcx45US1gMYgfiM
-	KVsYfGmgWtM9TzE=; b=E5o2JYuc8yZT+sHiOdX+UhYbRIetdo6Cpmq/8Gi81pDs
-	VOpWLjJR/+TujhgR+IF7LihemC5+NOG33Jk+gM3A/6qRKa0QGRbfAR0pRM/2o3DE
-	UKND3H7/YRK6bavRqgFoPuNHSSN855ijuR4dL+Y986ggcEM3lxExecUsRDJmHqYA
-	bkVF1LgUSKBhiIIfuTWtJAUbqkb8pCzK3RIl4DHYYiL67eWaYtlG9c0ufu7C0Ihl
-	tXqQrDRmqo/accCzwLMfPBDzyf1YWbaKB0+TZi3h/YeSSTp31wee/bXkSvB1OmF+
-	rNu52DmGvpOhQzZbtvnToyoKPM6URSN3T+LBMD6xvQ==
-X-ME-Sender: <xms:8-ETZl8KhA8cjsESNc9j8ftvMF1cxG-Svav_B2mAu16jtXkzn66n9w>
-    <xme:8-ETZpvgE3bEPyrQDuU3iYYuWYJeLq2mhdCoa23deVW6DeGGxt9mis5pgdCgm1il_
-    aqgR9WEePuN_faM8A>
-X-ME-Received: <xmr:8-ETZjA8hpL2qwJF3QYBXS50Ci8Wgb2GOymvRBNuIExwrxs3Qn5BTL8iS0Up34mpx8cJ9-_kuLm7K8IgIzL96q5I1DKNAhEsyhyOcy0g5sk_L23oBA>
+	fm2; t=1712579063; x=1712665463; bh=pUUn7C4MOCYYeERrdAVCms0J6BU7
+	raCL+zMX9QM+5jA=; b=OesvhYR6j7PNIf5sMj08Du5UKzscopC2lluLJ6Aomh0t
+	S1B+I52SfrJTNAhC70k5UuV5esFxQbkjhkfo6ioRb+j3yYdbPDDG8HAPocnApdOb
+	VBo3Lu6+yNo6alE1hszWHTIjceq9WKFqCBKYiRqjHUEZF1XkmPWseXBWunoKNAj0
+	9AW+/6pMAJi8ta3TitGuLyXd64iRJoGlCI0l2j8DoxmPhLZUooIwFQT+HnVrB060
+	svtCfp+TTjefBux12tiEJWvWTXixEwJexKmeYWSo38TwlJs6St1LlD/hCcDXEwSk
+	H0UNWIbYhJ6cwfpD2dNgRVXvLvw1XMkRo5Koo/YFPg==
+X-ME-Sender: <xms:9-ETZpKz2c2wSGkfcZgS78pb9qHD_Kwz0mf6mkBknvaAfA7fr_lXUw>
+    <xme:9-ETZlK9lKuFCPjX_AVE6NdvkiURmzvTVXU1lNwYqUjufWD3VY_A-_ppF8slSd8KO
+    DG_wEBlrK9OZt4O1A>
+X-ME-Received: <xmr:9-ETZhugZEtp5WbS9X9Ar0-RhNygqMMVLsW2VqS0fJPMb249Z-SBLxXIIRWSe3JT9PhmCf9G_rs57I04GGQ0vKkggj8ij1VxN6YZhXt_1qon-zAHJw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegiedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:8-ETZpcsXl4F0bc5cFsjSb0Sg25AC_Rz_CVcHfJlNCvzFTlTuLdkww>
-    <xmx:8-ETZqNqoBOVGklVCQQXEtrOS79Bq2TzSSTQUAzMUmvqHuAxxZqxFw>
-    <xmx:8-ETZrl1RqQtg_Ln0t29kPg0JEbfT2MCrtofZB4i8jGY7yJ4mjBN0Q>
-    <xmx:8-ETZkvn7aZBD2mPtVxog6p1yafgWtjzd4sg62rIh5x9zq1fZgIzTQ>
-    <xmx:8-ETZnp5mMC3OrtweYFpAcIQjaB54RgLrgI8LTiaObwSVrYHPYnqZ23q>
+X-ME-Proxy: <xmx:9-ETZqbZd8m5uwGF3_FRp_0um0I2-T2V61GcVUn3P-bU4SmErP_KgA>
+    <xmx:9-ETZgaU3krmm_FAhiuMFrf2gAMC2G-_AZIRg9aJ6WB229NJdmDQdQ>
+    <xmx:9-ETZuAGMQT7B5TWbFuqWmSApyRV7qkFe6tNQKZ-O9PMtUL_L99u8g>
+    <xmx:9-ETZua-Kt7kk0vm5GB4I25I7rK0yOi32o1FD7GxvofLsCZwpGXiiQ>
+    <xmx:9-ETZoFonwHAH1ZnId3kp9Ci3nicA2ybi2FZgdAKin4QlbfMrypS16xr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 08:24:18 -0400 (EDT)
+ 8 Apr 2024 08:24:22 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 8078336e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Apr 2024 12:24:12 +0000 (UTC)
-Date: Mon, 8 Apr 2024 14:24:16 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 6f892efb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 12:24:17 +0000 (UTC)
+Date: Mon, 8 Apr 2024 14:24:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: [PATCH v3 06/11] reftable/writer: refactorings for
- `writer_add_record()`
-Message-ID: <deabf821867e11f3f63f406ff88198a8f898b289.1712578837.git.ps@pks.im>
+Subject: [PATCH v3 07/11] reftable/writer: refactorings for
+ `writer_flush_nonempty_block()`
+Message-ID: <d47ad49d49916d02b8e62ee34404c025fa030845.1712578837.git.ps@pks.im>
 References: <cover.1712078736.git.ps@pks.im>
  <cover.1712578837.git.ps@pks.im>
 Precedence: bulk
@@ -83,117 +83,156 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kfo6A/wkfKiObpRJ"
+	protocol="application/pgp-signature"; boundary="LZNCkYZbgVPF7E5t"
 Content-Disposition: inline
 In-Reply-To: <cover.1712578837.git.ps@pks.im>
 
 
---kfo6A/wkfKiObpRJ
+--LZNCkYZbgVPF7E5t
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Large parts of the reftable library do not conform to Git's typical code
-style. Refactor `writer_add_record()` such that it conforms better to it
-and add some documentation that explains some of its more intricate
-behaviour.
+style. Refactor `writer_flush_nonempty_block()` such that it conforms
+better to it and add some documentation that explains some of its more
+intricate behaviour.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/writer.c | 38 +++++++++++++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 11 deletions(-)
+ reftable/writer.c | 72 +++++++++++++++++++++++++++++------------------
+ 1 file changed, 44 insertions(+), 28 deletions(-)
 
 diff --git a/reftable/writer.c b/reftable/writer.c
-index 1d9ff0fbfa..0ad5eb8887 100644
+index 0ad5eb8887..d347ec4cc6 100644
 --- a/reftable/writer.c
 +++ b/reftable/writer.c
-@@ -209,7 +209,8 @@ static int writer_add_record(struct reftable_writer *w,
- 			     struct reftable_record *rec)
- {
- 	struct strbuf key =3D STRBUF_INIT;
--	int err =3D -1;
-+	int err;
-+
- 	reftable_record_key(rec, &key);
- 	if (strbuf_cmp(&w->last_key, &key) >=3D 0) {
- 		err =3D REFTABLE_API_ERROR;
-@@ -218,27 +219,42 @@ static int writer_add_record(struct reftable_writer *=
-w,
+@@ -659,58 +659,74 @@ static void writer_clear_index(struct reftable_writer=
+ *w)
+ 	w->index_cap =3D 0;
+ }
 =20
- 	strbuf_reset(&w->last_key);
- 	strbuf_addbuf(&w->last_key, &key);
--	if (!w->block_writer) {
-+	if (!w->block_writer)
- 		writer_reinit_block_writer(w, reftable_record_type(rec));
+-static const int debug =3D 0;
+-
+ static int writer_flush_nonempty_block(struct reftable_writer *w)
+ {
++	struct reftable_index_record index_record =3D {
++		.last_key =3D STRBUF_INIT,
++	};
+ 	uint8_t typ =3D block_writer_type(w->block_writer);
+-	struct reftable_block_stats *bstats =3D
+-		writer_reftable_block_stats(w, typ);
+-	uint64_t block_typ_off =3D (bstats->blocks =3D=3D 0) ? w->next : 0;
+-	int raw_bytes =3D block_writer_finish(w->block_writer);
+-	int padding =3D 0;
+-	int err =3D 0;
+-	struct reftable_index_record ir =3D { .last_key =3D STRBUF_INIT };
++	struct reftable_block_stats *bstats;
++	int raw_bytes, padding =3D 0, err;
++	uint64_t block_typ_off;
++
++	/*
++	 * Finish the current block. This will cause the block writer to emit
++	 * restart points and potentially compress records in case we are
++	 * writing a log block.
++	 *
++	 * Note that this is still happening in memory.
++	 */
++	raw_bytes =3D block_writer_finish(w->block_writer);
+ 	if (raw_bytes < 0)
+ 		return raw_bytes;
+=20
+-	if (!w->opts.unpadded && typ !=3D BLOCK_TYPE_LOG) {
++	/*
++	 * By default, all records except for log records are padded to the
++	 * block size.
++	 */
++	if (!w->opts.unpadded && typ !=3D BLOCK_TYPE_LOG)
+ 		padding =3D w->opts.block_size - raw_bytes;
 -	}
 =20
--	assert(block_writer_type(w->block_writer) =3D=3D reftable_record_type(rec=
-));
-+	if (block_writer_type(w->block_writer) !=3D reftable_record_type(rec))
-+		BUG("record of type %d added to writer of type %d",
-+		    reftable_record_type(rec), block_writer_type(w->block_writer));
-=20
--	if (block_writer_add(w->block_writer, rec) =3D=3D 0) {
-+	/*
-+	 * Try to add the record to the writer. If this succeeds then we're
-+	 * done. Otherwise the block writer may have hit the block size limit
-+	 * and needs to be flushed.
-+	 */
-+	if (!block_writer_add(w->block_writer, rec)) {
- 		err =3D 0;
- 		goto done;
- 	}
-=20
-+	/*
-+	 * The current block is full, so we need to flush and reinitialize the
-+	 * writer to start writing the next block.
-+	 */
- 	err =3D writer_flush_block(w);
--	if (err < 0) {
-+	if (err < 0)
- 		goto done;
+-	if (block_typ_off > 0) {
++	bstats =3D writer_reftable_block_stats(w, typ);
++	block_typ_off =3D (bstats->blocks =3D=3D 0) ? w->next : 0;
++	if (block_typ_off > 0)
+ 		bstats->offset =3D block_typ_off;
 -	}
 -
- 	writer_reinit_block_writer(w, reftable_record_type(rec));
-+
+ 	bstats->entries +=3D w->block_writer->entries;
+ 	bstats->restarts +=3D w->block_writer->restart_len;
+ 	bstats->blocks++;
+ 	w->stats.blocks++;
+=20
+-	if (debug) {
+-		fprintf(stderr, "block %c off %" PRIu64 " sz %d (%d)\n", typ,
+-			w->next, raw_bytes,
+-			get_be24(w->block + w->block_writer->header_off + 1));
+-	}
+-
+-	if (w->next =3D=3D 0) {
 +	/*
-+	 * Try to add the record to the writer again. If this still fails then
-+	 * the record does not fit into the block size.
-+	 *
-+	 * TODO: it would be great to have `block_writer_add()` return proper
-+	 *       error codes so that we don't have to second-guess the failure
-+	 *       mode here.
++	 * If this is the first block we're writing to the table then we need
++	 * to also write the reftable header.
 +	 */
- 	err =3D block_writer_add(w->block_writer, rec);
--	if (err =3D=3D -1) {
--		/* we are writing into memory, so an error can only mean it
--		 * doesn't fit. */
-+	if (err) {
- 		err =3D REFTABLE_ENTRY_TOO_BIG_ERROR;
- 		goto done;
- 	}
++	if (!w->next)
+ 		writer_write_header(w, w->block);
+-	}
+=20
+ 	err =3D padded_write(w, w->block, raw_bytes, padding);
+ 	if (err < 0)
+ 		return err;
+=20
++	/*
++	 * Add an index record for every block that we're writing. If we end up
++	 * having more than a threshold of index records we will end up writing
++	 * an index section in `writer_finish_section()`. Each index record
++	 * contains the last record key of the block it is indexing as well as
++	 * the offset of that block.
++	 *
++	 * Note that this also applies when flushing index blocks, in which
++	 * case we will end up with a multi-level index.
++	 */
+ 	REFTABLE_ALLOC_GROW(w->index, w->index_len + 1, w->index_cap);
+-
+-	ir.offset =3D w->next;
+-	strbuf_reset(&ir.last_key);
+-	strbuf_addbuf(&ir.last_key, &w->block_writer->last_key);
+-	w->index[w->index_len] =3D ir;
+-
++	index_record.offset =3D w->next;
++	strbuf_reset(&index_record.last_key);
++	strbuf_addbuf(&index_record.last_key, &w->block_writer->last_key);
++	w->index[w->index_len] =3D index_record;
+ 	w->index_len++;
++
+ 	w->next +=3D padding + raw_bytes;
+ 	w->block_writer =3D NULL;
++
+ 	return 0;
+ }
+=20
 --=20
 2.44.GIT
 
 
---kfo6A/wkfKiObpRJ
+--LZNCkYZbgVPF7E5t
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYT4e8ACgkQVbJhu7ck
-PpT1fA/+IJuoRdzbwiQXyYqLC2EpP1XcQ+ilqR6jV8tQLrxh4mMG589rlvAwc6it
-UxQ0Obea5X3U2Ke7gpAQ1rcGDUCHLNcE+E6lkT1WpE3UiPV9G5TBlbdMmLrWyD33
-m9AMj60tW98sKJiZKIPkgfOD4ufMTwA7itmodVjCwESpuS0bJmysJp8or6s2bCA0
-iBR7yjhKFJZuHd4g9V/CLhC7Uf3KdYjakVmuCQjGnUF0xCzwv+tWUPDj0xdyrRWF
-02CEucxQn8e19byaq33M5bD5qlj41dj+RF/Kfc4x+ZfZDkzuY9gwjBrdYXYi8Egm
-ofcz7SsCxMYWVzaxHwUHnVFKAYJx+VtCUbfQLn+jTRwdbFcOn0kYxddYdHWSlK2o
-F4uc8FWnBuAtP44+e/bG3OFli7dp8buXzz+YHzrl9uiX2/G4oUYy+41pZmAO+93H
-vIEq7qAuLrwrJNeotn2As7ZrQXKDyIw5B0cEogrCA6tLx6e5erCm3CXxbxCXmO4f
-dm57sAXS5aOUkw5sD5ABLajtRIK/r1z4bvG3QZU9DvqFWDULElhYJysYQVeMbQtJ
-NBgKqJmepCKduJHjHW0bSoMzyjD9LUmUKCjA5MmVCeTRgMF8iz3v43OaHdHkVzXm
-fjogjFiGLxO46OXUzKZM1fiTPKX7cOAikw8nYJTZwq/09ZDtmTQ=
-=P9oA
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYT4fMACgkQVbJhu7ck
+PpQv8w/+NKeYiqKOd4Fe9L8DbML2/v7PBKy1XnlNwe7h+ZyVm9Kt+xTxtOQDyTPU
+mekqjBdH0dGSiFl0CJ2wMeFaq1W3AzwZp9sLnbgcWmBbMjDHI1Uw3YLVhWZAsMPc
+EbRBy9xmQjQkI0zy5j867n+VQVFJK239S4fv9nvoIV4SKdSJuOvRI0Y0Gprwjl8U
+gE7jF2vLMDDxqkUE0QywMDLsDr79NhMxmTO9JPbXfPk1eIwYe817d0y297mECWS7
+ex/2TNeZvAJwRPomroduoNdJX2br4oILm5zlWOphKkfW6Iz07yIOcN7ccXaOaTtP
+HsyW2E5oMP6Ta9G63cCvcBwJ36v2+ozSoBjQVztNgtxpgZrhq6wMst6K4ASjEZXG
+4u3VfELj5hLxbnQcyhEbUH9vmWvSyYXxwiUXpXeSyDLwHSmX4GOoXIdB3FvwA6Cw
+59IFEqSqaqH8SW9vOPFZthGwEGb7zhx0aVQ9nru05N0I7cGG9QSeh1gSSE7y5klk
+Smsibo7ReqxpovgI7h2Q8T6AmDvStQtKAOIQVx594hTTpXIPRlSCy61uZr+A2+Gg
+WiCWeabVk9Sz6iU4cn7BfYrJLTblEkMdTd82ZzACxE4xbQbFekOtTJug/ijR3xY+
+Mxrh+B5Ys9pjAVDSeO5HJOOVPfByOzFL5vHL5hpV9vHjZRh/GNM=
+=d3cp
 -----END PGP SIGNATURE-----
 
---kfo6A/wkfKiObpRJ--
+--LZNCkYZbgVPF7E5t--
