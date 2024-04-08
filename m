@@ -1,56 +1,84 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC551852
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 01:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649C179C0
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 05:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712538596; cv=none; b=KsBhz7wA4CXuaEysKF6uJB8COgvem009TKfAtaoAzbS/vMKQ64Vgq3bD3YALi14C9ps2TBi9TKAUjF1hKcXJCVDCuU154ZAInPcYeuPghpZZ8yT2kt9wfy05D8OrG6SdGCBHjNvweTUfLDuhmrNmjsUvyq9LeK9lw6gXc0SwKmY=
+	t=1712553881; cv=none; b=LGL7AGU5YoOw8ZmQkJWSp1i6ahefUsrBRBMMuvRiW/bnkJMZRCjvidswWgHEhUwKy7+b/lOIRbY76+DMaHwOn9YvPf/fpszOJEL3lGliFdLYVJyQDw6R/j0oNcFCj7V6eL029FvaXdXfXZvXZUszvamFJ/dS5xUPB+zPFWXkBlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712538596; c=relaxed/simple;
-	bh=CF5w6R8siAgdlJa++FgAiQ3UJGQEKlcTQe2gsCgCK/4=;
+	s=arc-20240116; t=1712553881; c=relaxed/simple;
+	bh=DlT0aR3FeLz5kYSXIlYbOjG9tvYGTGq+p7AoyBIuHZ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j3lWGNT2fNfeKl9X2mbMJgYxth85OEszWQFwdLwyJ6jShJ+LKiv6fOUXr5iYjxP+48KvvnSUo2O6GxjhVnO703U6fqea6E309hMoZhAcU39bxTGnWM76/SJQJDPHkhvPmQ8bmzitIThGXZt+kGb2F2VKkpYqpKI6z4AeQMoNMG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=eabV+4G2; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=HqrLRZ4kjTorR9THRoTaqybn+mfkx43YdPWwXdtaIgadcuhqBG6Hiz8vd3b1eP4abROVcA2WUnbcOKk36y2xr/kA2ln68bexpoIdOXU2DrA1jYFjpTX+UGbTyI94hxZN+cxP0TMYf5Pxw3qZ0U9NVqSrvkKogok22Ex9cWyzCLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gfcBUljw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E1vyIxrE; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eabV+4G2"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 8E3775D4CC;
-	Mon,  8 Apr 2024 01:09:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1712538592;
-	bh=CF5w6R8siAgdlJa++FgAiQ3UJGQEKlcTQe2gsCgCK/4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=eabV+4G2fz+MpGpBwZxrkh3++WHsGFk7SnuYmP18MuiRH5NdDoFmKz1klfiNZvZOA
-	 ahZgFClZaFuC4OjY9ap3TLZhLHvpSXiLY1Fm8VgAPEr1+BFI6Z0xtCfeVuRFpOaWSK
-	 0Z7RvjEeIXNCv9BfWwPCehXCJi2SX0JP0ekDyGhH5SWVoJBHrPP58jUBXaBuqZs3G3
-	 GyGqWc1o1HHSXtm9zAtpoeZ1QHQcCRPfrRDt35QxWs6wFAQ5P40eNHYHmYN23wmFWX
-	 NDjxhmYVW4NZhZIEciFCRM2krWxPFmHZaCcoqDvbLEBLZP5Rcz4K0GQufdnGKf4gWf
-	 OqbxmplwCDnXnr0NmPTmH5hJZ+PtWKmnCLUEAzZz1+4+TyxNPzZ8KxrZQsLDCiiCjv
-	 5vFGVbnPY3DQvR4Gf+qKNyjF9xQt68CNuWQFBIah6YdPRK8sGtXGPBuGpnnvm0oL9B
-	 ODUmT/k9mRxCe1STWxWNpQUZeS3VF42iumWDBunedJehWx6a/lb
-Date: Mon, 8 Apr 2024 01:09:50 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: rsbecker@nexbridge.com
-Cc: 'Calvin Wan' <calvinwan@google.com>,
-	'Git Mailing List' <git@vger.kernel.org>
-Subject: Re: [RFD] Libification proposal: separate internal and external
- interfaces
-Message-ID: <ZhND3hZXlzDxff5e@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	rsbecker@nexbridge.com, 'Calvin Wan' <calvinwan@google.com>,
-	'Git Mailing List' <git@vger.kernel.org>
-References: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
- <ZhMRNxgwRJ25P4Ud@tapette.crustytoothpaste.net>
- <037001da8935$4a6e3720$df4aa560$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gfcBUljw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E1vyIxrE"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 22FB81140092;
+	Mon,  8 Apr 2024 01:24:37 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 08 Apr 2024 01:24:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712553877; x=1712640277; bh=TV7aY1emiE
+	1zaKp75vXzL5Yk3Scd8eWHiU9g8C0zMPI=; b=gfcBUljw+fIz/3c2yVYmzCWNLn
+	IhQFPfOziUlqtYsUUrzdpjB4ZSQcsNyXQqNtv5WgNHiH+7XFEhW3u8wPBovsRU1u
+	mgksI2fAK3sgPYN/BybP1dq9rHdzJ6LsxnPha1j3QsvAFsZe74uGmbT3CRlJvroS
+	NhqYXmRVBXz1N0k9aFgHSfARi/q5Bx/c4L1trlWzCu0WwaOi0yreEjo+2bMHEkgg
+	XjbC96JphtDB9W0kDcFSjJXxH2DXYwGr2uZ+5wQ22EoEQ2eyWqawT1WxY1JVvEG5
+	RY3LiIUMbdePwyakwPyg6fk0JoiCC1Feui32T5dRdpB3JK7Tpi20+g3o3voQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712553877; x=1712640277; bh=TV7aY1emiE1zaKp75vXzL5Yk3Scd
+	8eWHiU9g8C0zMPI=; b=E1vyIxrEwsrnoHDsAKJiUeQ0MJ0x+JZvPHUKnqLUCgBI
+	HPxirzteIUQLWZixCZctmFdM9KkOBSqgRHkUSRS1p8C+aC6JmmyfBtwGC6GZpg/1
+	E96zUEVqSFvfrifRBDkIdUw4F01HawuSINxqP1RFIDk+t4NRiXAv6mdI4FRmA9j+
+	7ixgsvlXXvnbWMI3Dwr4Lh/E6OkhgBVXouuJRnY0Dn270kIjD5RBGvQGiIy6/fdn
+	SR3vvnEjcxzwEpFGyWUCKnN4CHFJ9I9GjltN1weEjoXWwbAl1tJPZph8Xz9IJofm
+	RmgFZ0uUFixqYkFPBHnLnu2pUwLpsc35EZD9PU0igA==
+X-ME-Sender: <xms:lH8TZoQxQ2U5dEiG4Hl3P0WEMmd0A9nAmzXrTe5xbWQfqfqKxpWZDw>
+    <xme:lH8TZlzJvuEMl1QAwIZ9oH1NNVq9i_-hnC9pjN7jVuvrRkomC5l1IoGlbibzPVwNZ
+    TYBOWqI8zSGtnPhkw>
+X-ME-Received: <xmr:lH8TZl28VOfoHvcU3H7GpFQf2owmxrDORvs_gxtONuPOQgo_Qdjiqz5RoITRszEgqvOZoPBFU5TmquY2VD7V45XR47d12wk9XX4YTdbylImb_g_FXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeghedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:lH8TZsAt7zDNNjlxnRqSGKOjHrR1QRtLgyzeOUaPxoC_8aJccRctfg>
+    <xmx:lH8TZhi_NKKAM5pdV9cMlJllH0Vf25juNpNfsk1wThhwjCXSkh4KrA>
+    <xmx:lH8TZoqJK-9Z7G1F-z_3OfX5LF3jeTlX_TUQ8p87Uier1uhyEfsnxQ>
+    <xmx:lH8TZkgd8dx5d-t93suZtgtJhxFXd1e-FhjqlGP4-ZCsxAI_gleKrg>
+    <xmx:lX8TZvYyi66uP_VczIcdZ_AI6zmS0A-eal6JHWMfGjQbiH_JlMURSO-0>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Apr 2024 01:24:35 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 950c7cff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Apr 2024 05:24:27 +0000 (UTC)
+Date: Mon, 8 Apr 2024 07:24:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Han-Wen Nienhuys <hanwenn@gmail.com>
+Cc: git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	JGit Developers list <jgit-dev@eclipse.org>
+Subject: Re: [PATCH 12/12] t0612: add tests to exercise Git/JGit reftable
+ compatibility
+Message-ID: <ZhN_jwNAcR7UhCc3@tanuki>
+References: <cover.1712235356.git.ps@pks.im>
+ <db66dd4155d80b714719e80ff90f64c1d36b97d0.1712235356.git.ps@pks.im>
+ <CAOw_e7b5wDKOcY9hSty+c+z-NWVUgri3h3ScF0qd1Y6cmfsyVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,138 +86,51 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6Ow1Cjs3IPvqisUf"
+	protocol="application/pgp-signature"; boundary="37dh4cwywA8ZhFfH"
 Content-Disposition: inline
-In-Reply-To: <037001da8935$4a6e3720$df4aa560$@nexbridge.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+In-Reply-To: <CAOw_e7b5wDKOcY9hSty+c+z-NWVUgri3h3ScF0qd1Y6cmfsyVA@mail.gmail.com>
 
 
---6Ow1Cjs3IPvqisUf
+--37dh4cwywA8ZhFfH
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-04-07 at 21:48:07, rsbecker@nexbridge.com wrote:
-> On Sunday, April 7, 2024 5:34 PM, brian m. carlson wrote:
-> >We'll also need to consider that libgit2 is currently using `git_` and t=
-hus we'll either
-> >need to use something different or avoid conflicts.
-> >Perhaps `gitlib_` might be useful.
+On Thu, Apr 04, 2024 at 11:40:29PM +0200, Han-Wen Nienhuys wrote:
+> On Thu, Apr 4, 2024 at 5:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
+> > +test_expect_success 'JGit repository can be read by CGit' '
+> > +       test_when_finished "rm -rf repo" &&
+> > +       # JGit does not provide a way to create a reftable-enabled repo=
+sitory.
 >=20
-> Or `GITL_`
+> You can do "jgit init && jgit convert-refstorage --format=3Dreftable"
 
-It's more common to use lowercase, so I think we should do that.
+By the way, the above command does not work as-is as it will end up with
+a repository that has no "HEAD" reference. I can work around that
+though by first writing the default branch and then converting the ref
+storage.
 
-> >I should point out that _FILE_OFFSET_BITS=3D64 is effectively standard t=
-hese days.
-> >Nobody wants their files limited to 2 GiB.
->=20
-> This is not the default on some platforms. It is still required but can b=
-e put into a knob.
+Patrick
 
-True, but everyone compiles with it.  If you're a software vendor and
-your build only supports 2 GiB files, everyone's going to be mad.  We
-should be able to assume that vendors are prudent and reasonable people
-who will compile their binaries accordingly and not have to return an
-error if a requested file size is larger than 32 bits.
-
-> >Sure.  If we need a file size type, it should be something like `int64_t=
-` or `uint64_t`
-> >and not `off_t`. Not all platforms have explicit 64-bit APIs compiles. N=
-onStop and S/390 do require explicit controls to make this work.
->=20
-> This will result in compile warnings with some platforms with APIs
-> that do use off_t for arguments and results.
-
-There will need to be a cast.  Our APIs should use a standard 64-bit
-type and not expose the platform `off_t`.
-
-> >
-> >> - Limited Platform Compatibility. The external interfaces are able to
-> >>   assume that <stdint.h> and other C99 (or maybe even C11+)
-> >>   functionality exists and use it immediately, without weather balloons
-> >>   or #ifdefs. If some platform requires special handling, that platform
-> >>   isn't supported, at least initially.
-> >
-> >I think this is fine.  It's 2024.  We should assume that C11 (a 13-year-=
-old spec) is
-> >available and so is POSIX 1003.1-2008 (except for Windows).  We may want=
- to
-> >have a nice `#ifdef __STDC__ < 200112L` (and a similar check for POSIX) =
-to just
-> >produce an `#error` if the system is too old.
->=20
-> I wish this were the case. I have 2 years before C11 is guaranteed to
-> be available on platforms that I maintain. Can we wait until mid-late
-> 2025 before doing this? I do not want to lose access to git.
-
-As mentioned in the original proposal, we don't have to support all
-platforms in the libified code.  The main Git binaries will continue to
-function and be supported, but the new libified code will rely on newer
-features.  You will still be able to have all the Git binaries and
-functionality, but if you want the new shared library to compile
-against, you'll have to furnish a newer compiler.
-
-As a side note, I don't think requiring porters to support a 13-year-old
-spec is unreasonable for new, independent parts of the codebase.  As a
-side note, if your platform supported GCC or LLVM, then this would be an
-easy goal to achieve.  I know it doesn't right now, but it might be an
-incentive to get it there.
-
-> This is not a particularly good assumption. Some architectures do not
-> support kernel-level threading. PUT threading is possible on some
-> platforms but attempts to port git to PUT require that all
-> dependencies also support PUT, which is not a good assumption. Most of
-> the dependencies that I have to work with actually do not support PUT
-> or any other form of threading.
-
-I don't believe this is true.  Every architecture which supports Linux
-or any other modern Unix has threading support.  You're compiling on
-ia64 and x86, which definitely do support threading and have had it on
-Linux and NetBSD for years (before they removed ia64 support).
-
-Threading is a reasonable thing to have on a modern operating system,
-and if we're adding new, independent functionality, that should be able
-to safely work with threading.  You can continue to use the binaries
-without threading, just not the new shared libraries.
-
-I'll add on that I'm not opposed to continuing to support NonStop in
-principle, but I _am_ opposed to having to continue to support really
-ancient versions of common standards[0].  POSIX 1003.1-2008 is about 16
-years old; it could drive a car in much of North America.  I think it's
-the responsibility of porters to provide this functionality, and in
-general most open source OSes do this with little or no paid staff, so
-it should be reasonable to expect corporate-backed operating systems to
-do so.
-
-I would strongly recommend that NonStop start supporting modern compiler
-and POSIX standards, as well at least one of GCC or LLVM, and that you
-push very hard to make that happen.  It's not just Git that's pushing
-forward here; there's a lot of open source software that simply will not
-compile with the functionality you support, including the increasing
-amount of software written in Go or Rust, and it's unreasonable to
-expect people not to want to use standard functionality that's over a
-decade old.  If NonStop doesn't move in that direction, I anticipate we
-will eventually drop support for it sooner or later.
-
-[0] This is not just NonStop; Microsoft's long-time refusal to implement
-C99 or a newer version of C really ground my gears and I basically gave
-up on supporting it for all personal projects as a result.  Fortunately,
-they've now come up to a modern standard.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---6Ow1Cjs3IPvqisUf
+--37dh4cwywA8ZhFfH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZhND3gAKCRB8DEliiIei
-gdv7AP9t41JooFAcBdTbOtATl1PyEp9RsRZauQSxiAceKZ59QwEA4NN17d1XtQQD
-q6P/9skt2WerQG0svkFIAsTNBRioYAU=
-=bQ8a
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYTf44ACgkQVbJhu7ck
+PpQkdhAAgjYe10XC43WPMKWcRsrvYDVCN7tHn46+M3uz9XWGKS6xgqDC34WkD5TP
+OYKCeXY3N/iCY18sZV33oEeDWuit7gz7VeKd38kegWj5CiUVhUK4H66b8pEKfYy5
+BmEkRxTolw5NmE3JFhe11OpzoLaNiyVbF+2bhQdd7oa+Vb7rD5p2LW5PhOjP3pXI
+KLVTJdLoFe4pXwQD+wmsFrlqFOqwZhd7Z8TX6Gj3F9/R9Sbyt+mkklebMaRVaQCg
+TJc3978980zvikfNUl/wbnbqAvb2o0tJBj962oEUOm5u1myYii1t80KChjnWJh2E
+c/+YE1LW2kc2OqavEuNgMbpCbnV0djbM8FhwDU4b6TqLX0yE3Ywt2p++gO6+2aOF
+UxAW/ZA6uqN2MJRw7t4mloUH4DrMQOrXy1ik8+dUKPlQfbgTcAwru6iZDTsbQzd8
+m1sDdSONmG1S/396O+MHIkUGZmjAruJ6JcoYIS5dKoyEec1Nqj/rAVX9tl/1vtFe
+XdNaHsLCgkyDvBioO9asdWYI75/E9fKfMmlUNxYlutCmwJ+DGrYF0u2Spe6g0g2U
+h9cZexGXfzBcJwQFAZFjdF1d4PDENYJgYG8BtnAjDVWPG3UyBiWuN4CAeFm8DX5C
+ZsSUoqID8AS9iG1LqIZistC1n7g6fvTrNBb8ItqD8ieKcwCarpA=
+=U0jZ
 -----END PGP SIGNATURE-----
 
---6Ow1Cjs3IPvqisUf--
+--37dh4cwywA8ZhFfH--
