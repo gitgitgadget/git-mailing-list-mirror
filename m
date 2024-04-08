@@ -1,63 +1,64 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E6B14262C
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 16:17:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30364140386
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 16:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712593027; cv=none; b=aoqTGxQ+hklGfprJISs8ozUTPAjKd7Ro/keGbP0oX08JvAA42zA5GTtQox825wwDL1CA6R+skp3Fxmz2ePm2ZWJS3UOQFNNIs9XCgNwzVQSpRi3zKaWn42hWVyavNc5X4imEDDQwXoiccKVB95RUps+NARKZ9Xkxc/4pJgEg+tU=
+	t=1712593026; cv=none; b=nud3yt8/QT0AiIEG3mM0BJv1qdOgfaI0AJkcOebXYEDEcn160RWejlFyrdX2AQDSErW/Glbu38vmsHRihIvJieQ0amP/kzPKkyEauC37JcdohsRU6qiISPqTKg/6tFlZx3yAtLveOAHVGMcb96MVLniurUGNlX43m94YKbrQxrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712593027; c=relaxed/simple;
-	bh=vbNBvkdrGKCcNnJiGvMHmIEcN79GtkKwXJqd9PWudK4=;
+	s=arc-20240116; t=1712593026; c=relaxed/simple;
+	bh=lDcTbEshzPX9Q9GzNBEIhQPLw45DqIjU2UzSFZAphCA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WWTA5QjVzGvJzTlOQDHD1godQLTwxm685JKvzdX7Nt1Jruo9mWSwiHfzzW2A9JBuW7kLt8FvdEv98MUo0rnK58UqwLqd+6SnaxLrWC3voEkRhbBhq3uvJ2ysc5vl7dJGP93iwlsSk54PtbRLgVG0+bcAdGE1CE6JvDzZAtC1W/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UBQEHfXw; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:To:Cc; b=W2TYkDn1ssa2J/+c8MV8WxIl+3nsnL4/e42EEcGO/obbROToT9Qrw7pHevZSkcCIvpHkfu9TtAlqRyefjxkowa5SKpGszSdq80aJDG4ZgI1/Q1sqKncgK1LpQ8TkBnmG6DY6MBHN05arosE2U0eRVxkW0JYCFhHrqB1G0DaUQFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bI+lEhvV; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBQEHfXw"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-343d1003106so2782394f8f.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bI+lEhvV"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-416511f13aaso10719885e9.1
         for <git@vger.kernel.org>; Mon, 08 Apr 2024 09:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1712593019; x=1713197819; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CbBSaV2toufpZjzIivSjI10z+Fp2kgqi4DhTCaAdHt0=;
-        b=UBQEHfXwR9pb+6Qeoou13gzqV+n5hF64IxkUlN4KFBod08Zcb419ZEkBpDakTRNI4V
-         ksSZkSoZki4nmjzLNrLaYcUsoX6umBNpTDMZpjF6F7uS7u/f3ZJXK9DrmFei7bOfovDY
-         oQW0FoDwA642smbTY4a+F4BRPpGxTN4iiwDOaT8FjsKG8Dkh/aFZ++6swLVff/Ed05eU
-         l9mA4K9TXeTYujf11isY3ry1NP9B5dssFF+Qp+5dqaIc4ETbn2ZmMcxKLrzcQt8jaUPs
-         TNND1BxvDgwna20s2tlZuBw7E0TpGzmQV8R8G40Nf/4n7ncSYPqCGX0DIrQ7o4YMHra9
-         Jtpg==
+        bh=haAH7RPGDGXrPMNWd5MpiDXlapJDFBYn8Gm0/3RlgVM=;
+        b=bI+lEhvVOl8nIev58ju3Brn1MJ2Jt1+yPJAwE377VybFT4kn66XKlR44ftNB5r3evR
+         vTn+pqVRPIsfV6WNUuIj4a9LfWoyBGR10/RMoPvm3rXRuwfjRMIfrlJJyqG2QAtAc2Ug
+         C2+d75iASecU3ZLgPOycQx0Iz9Txrnk4WjPQzYNrBF8a2ndZcm9pSn8Dlg2TaYpzyQoZ
+         vRb+fyqD7BPCYzoz7a7XRgJM9mX8vKRt3W4CnrUyHcka8wU8WDxiPrYiiQFmoB/WQUal
+         KqhMbKpRoGfN0bVOf2fnNKzJ9uZeKMx+nJkT24QzrWm9bDlGMRBqfPUu8eN9BkgepGml
+         qa5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1712593019; x=1713197819;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CbBSaV2toufpZjzIivSjI10z+Fp2kgqi4DhTCaAdHt0=;
-        b=Abl7HxyE7kwXSJmuCxouADeIp3luT+kmyuoOeM0a3OXreGRNq1UokHrSHMLk7YXWfv
-         GZ4QsU6y2d2cFe4kMzvyd5eKe0LESbkATZvaHky/XM2DSEqhl2Nh8MDANe7kx9wyWBrU
-         9eXIWm/xH0DS+Ltd4sKwDcPzMwuIhyBCEJTY3GgPfv8divP0f4clOCEYNtTXfbrmYXrg
-         jWGuAtrQOF7EP5VemG/mgI0EnzvzirciKyzn42unLERYKpP6MRJ+cSGdZMtbeEQh8mPe
-         XTMFMf7YezuufpJx3Cr+RyKj8d+p9sAM2fuaYsPDESuUqjDa67Q5p1CUPqaW1g50wre4
-         U1dw==
-X-Gm-Message-State: AOJu0YwahhYCAxUfxy3KjPj+zwbVH9KtxhGKW9InGEvCRYVyrugG8uF4
-	L7msW9PqIb1psBZV0EouvuvWZKqliKn8W/pB25gUa5k7Xb+QrG5H1++pxGIn
-X-Google-Smtp-Source: AGHT+IEepHH5XkYp33v/lyl6EGqkm35/0tm05O+3fU212cwhSSIMuREtg+ICfQkkMGrjm0Q58Rfupg==
-X-Received: by 2002:a05:6000:e49:b0:343:41ef:ab30 with SMTP id dy9-20020a0560000e4900b0034341efab30mr6936207wrb.47.1712593019169;
-        Mon, 08 Apr 2024 09:16:59 -0700 (PDT)
+        bh=haAH7RPGDGXrPMNWd5MpiDXlapJDFBYn8Gm0/3RlgVM=;
+        b=Wk7ZOuwZNIICIQKQmGej7fWDoLdp902H4xdyUUFiv/wPyZQb8yDUt5Ef5ydDeLQda4
+         MF1zF8JQvyI5WzaaZtJjVEMuHfr5sK0OnJTkltK+6/syqZUWmFX8ti8ht+oMt6ikLuHc
+         YYJvlU/EwvfnTw84YG/F3DnbNQb/Uo20HxrEhG3ZK15KONjOJqYXvWFJlqaAl1IPKst3
+         EtLAkN6DS8WzFEQZcGQ5/OuAiGHh5xeKiECK+lPYf8LYsCzUbwO1n4J0+ApXm1GK3+QF
+         Vcq6NuPaF1vrFx4u1OaAo6BoaDiM3qxLe+q42pZj683C67rTkZi8zr3Z80i5GkcZf0mu
+         IFBQ==
+X-Gm-Message-State: AOJu0YxKZS5clVEaCCOaJQWKUEdLDiKsV4sb1TjuzIlKn09CKfI/rY4m
+	YsS9iQLjazkWXb8xkswC6P2JQkWy4k04SlDfcLAeylT41L6CXxCjw0NXhrZ/
+X-Google-Smtp-Source: AGHT+IGA+Rygk3rsm+Uiz8ovbAQZr4MdkK5g3A/e0Wv8vpBb6zLBD5AxP4ohrIY+CkPrwuMIbxV4fA==
+X-Received: by 2002:a05:600c:4750:b0:416:3de5:133d with SMTP id w16-20020a05600c475000b004163de5133dmr5081966wmo.7.1712593018456;
+        Mon, 08 Apr 2024 09:16:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j31-20020a5d6e5f000000b0033fc06f2d84sm9314881wrz.109.2024.04.08.09.16.58
+        by smtp.gmail.com with ESMTPSA id i21-20020a05600c355500b0041665b6e111sm5159761wmq.12.2024.04.08.09.16.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 08 Apr 2024 09:16:58 -0700 (PDT)
-Message-Id: <c7bc734654009a5275ac0bf5297782a846f6ad01.1712593016.git.gitgitgadget@gmail.com>
+Message-Id: <9c8f6b336ecea50b1c0476cd274481560aa79740.1712593016.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1683.v6.git.1712593016.gitgitgadget@gmail.com>
 References: <pull.1683.v5.git.1712255369.gitgitgadget@gmail.com>
 	<pull.1683.v6.git.1712593016.gitgitgadget@gmail.com>
 From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 08 Apr 2024 16:16:54 +0000
-Subject: [PATCH v6 2/3] reftable/stack: add env to disable autocompaction
+Date: Mon, 08 Apr 2024 16:16:53 +0000
+Subject: [PATCH v6 1/3] reftable/stack: expose option to disable
+ auto-compaction
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,70 +77,119 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Justin Tobler <jltobler@gmail.com>
 
-In future tests it will be neccesary to create repositories with a set
-number of tables. To make this easier, introduce the
-`GIT_TEST_REFTABLE_AUTOCOMPACTION` environment variable that, when set
-to false, disables autocompaction of reftables.
+The reftable stack already has a variable to configure whether or not to
+run auto-compaction, but it is inaccessible to users of the library.
+There exist use cases where a caller may want to have more control over
+auto-compaction.
+
+Move the `disable_auto_compact` option into `reftable_write_options` to
+allow external callers to disable auto-compaction. This will be used in
+a subsequent commit.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- refs/reftable-backend.c    |  3 +++
- t/t0610-reftable-basics.sh | 21 +++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ reftable/reftable-writer.h |  3 +++
+ reftable/stack.c           |  2 +-
+ reftable/stack.h           |  1 -
+ reftable/stack_test.c      | 11 ++++++-----
+ 4 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 0bed6d2ab48..1cda48c5046 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -18,6 +18,7 @@
- #include "../reftable/reftable-merged.h"
- #include "../setup.h"
- #include "../strmap.h"
-+#include "parse.h"
- #include "refs-internal.h"
+diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
+index 7c7cae5f99b..155bf0bbe2a 100644
+--- a/reftable/reftable-writer.h
++++ b/reftable/reftable-writer.h
+@@ -46,6 +46,9 @@ struct reftable_write_options {
+ 	 *   is a single line, and add '\n' if missing.
+ 	 */
+ 	unsigned exact_log_message : 1;
++
++	/* boolean: Prevent auto-compaction of tables. */
++	unsigned disable_auto_compact : 1;
+ };
  
- /*
-@@ -247,6 +248,8 @@ static struct ref_store *reftable_be_init(struct repository *repo,
- 	refs->write_options.block_size = 4096;
- 	refs->write_options.hash_id = repo->hash_algo->format_id;
- 	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
-+	refs->write_options.disable_auto_compact =
-+		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
+ /* reftable_block_stats holds statistics for a single block type */
+diff --git a/reftable/stack.c b/reftable/stack.c
+index dde50b61d69..1a7cdad12c9 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -680,7 +680,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 	if (err)
+ 		goto done;
  
- 	/*
- 	 * Set up the main reftable stack that is hosted in GIT_COMMON_DIR.
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 931d888bbbc..c9e10b34684 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -299,6 +299,27 @@ test_expect_success 'ref transaction: writes cause auto-compaction' '
- 	test_line_count = 1 repo/.git/reftable/tables.list
- '
+-	if (!add->stack->disable_auto_compact) {
++	if (!add->stack->config.disable_auto_compact) {
+ 		/*
+ 		 * Auto-compact the stack to keep the number of tables in
+ 		 * control. It is possible that a concurrent writer is already
+diff --git a/reftable/stack.h b/reftable/stack.h
+index d919455669e..c862053025f 100644
+--- a/reftable/stack.h
++++ b/reftable/stack.h
+@@ -19,7 +19,6 @@ struct reftable_stack {
+ 	int list_fd;
  
-+test_expect_success 'ref transaction: env var disables compaction' '
-+	test_when_finished "rm -rf repo" &&
-+
-+	git init repo &&
-+	test_commit -C repo A &&
-+
-+	start=$(wc -l <repo/.git/reftable/tables.list) &&
-+	iterations=5 &&
-+	expected=$((start + iterations)) &&
-+
-+	for i in $(test_seq $iterations)
-+	do
-+		GIT_TEST_REFTABLE_AUTOCOMPACTION=false \
-+		git -C repo update-ref branch-$i HEAD || return 1
-+	done &&
-+	test_line_count = $expected repo/.git/reftable/tables.list &&
-+
-+	git -C repo update-ref foo HEAD &&
-+	test_line_count -lt $expected repo/.git/reftable/tables.list
-+'
-+
- check_fsync_events () {
- 	local trace="$1" &&
- 	shift &&
+ 	char *reftable_dir;
+-	int disable_auto_compact;
+ 
+ 	struct reftable_write_options config;
+ 
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 351e35bd86d..4fec823f14f 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -325,7 +325,7 @@ static void test_reftable_stack_transaction_api_performs_auto_compaction(void)
+ 		 * we can ensure that we indeed honor this setting and have
+ 		 * better control over when exactly auto compaction runs.
+ 		 */
+-		st->disable_auto_compact = i != n;
++		st->config.disable_auto_compact = i != n;
+ 
+ 		err = reftable_stack_new_addition(&add, st);
+ 		EXPECT_ERR(err);
+@@ -497,6 +497,7 @@ static void test_reftable_stack_add(void)
+ 	struct reftable_write_options cfg = {
+ 		.exact_log_message = 1,
+ 		.default_permissions = 0660,
++		.disable_auto_compact = 1,
+ 	};
+ 	struct reftable_stack *st = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+@@ -508,7 +509,6 @@ static void test_reftable_stack_add(void)
+ 
+ 	err = reftable_new_stack(&st, dir, cfg);
+ 	EXPECT_ERR(err);
+-	st->disable_auto_compact = 1;
+ 
+ 	for (i = 0; i < N; i++) {
+ 		char buf[256];
+@@ -935,7 +935,9 @@ static void test_empty_add(void)
+ 
+ static void test_reftable_stack_auto_compaction(void)
+ {
+-	struct reftable_write_options cfg = { 0 };
++	struct reftable_write_options cfg = {
++		.disable_auto_compact = 1,
++	};
+ 	struct reftable_stack *st = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 
+@@ -945,7 +947,6 @@ static void test_reftable_stack_auto_compaction(void)
+ 	err = reftable_new_stack(&st, dir, cfg);
+ 	EXPECT_ERR(err);
+ 
+-	st->disable_auto_compact = 1; /* call manually below for coverage. */
+ 	for (i = 0; i < N; i++) {
+ 		char name[100];
+ 		struct reftable_ref_record ref = {
+@@ -994,7 +995,7 @@ static void test_reftable_stack_add_performs_auto_compaction(void)
+ 		 * we can ensure that we indeed honor this setting and have
+ 		 * better control over when exactly auto compaction runs.
+ 		 */
+-		st->disable_auto_compact = i != n;
++		st->config.disable_auto_compact = i != n;
+ 
+ 		strbuf_reset(&refname);
+ 		strbuf_addf(&refname, "branch-%04d", i);
 -- 
 gitgitgadget
 
