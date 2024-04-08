@@ -1,96 +1,91 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75A7144D02
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 17:50:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349451420D8
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 18:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712598661; cv=none; b=HZjmpXjsa6Iqb2umDtNrCvmg61vaewbW60sKo9NZxnRGM3AI2z+0Lb+wfMWv3icR7h73+bXw3BQzNWkkHUDBnS8+mUftyXZS8WoqaKLNDjsHaHh+N2bZ4GeEU2H5oxqEOtmwn9pcurAGqP+hdAuRyGSBmx9DEWX2rOAq7itwiNQ=
+	t=1712601794; cv=none; b=nhsAFB4Z2Z0NOKwjjNT7jPpIilBrznFDZcKxk51ROdVUGV5sado6uBtXaoNKlOMvfBf0foFsodsxXrWJlfRACiM1gGZj4Re+Nzw1F6ebikWPm30aECbo1mjdEIZFGZo2TdoAOy7L8c0kJct/rp8fN6YmjUS5zQ+Zpt8d5Xjztso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712598661; c=relaxed/simple;
-	bh=O7w/nL0A0vz7JIb4x3Tb2FiYTnIwA2OQxERShEvl+Vo=;
+	s=arc-20240116; t=1712601794; c=relaxed/simple;
+	bh=we8Q+JqahWRGjbK7I8ljnoAYLLfEtT+3wiHrSLPXLH8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A5TajCzlKF46USuRw7PvQfr55EWJKxI6x4kt+Gj+CBApLygK+Sks3hoF+ta+VJ8cFe9tk7pnjagqaFzGHxBkHXGh/S/xc4E/Z+0peHshP10MfbvL40CRSswqaCxXzklRVBs5I2cjn9lTmVQxmEGIhhHYa/Agozs5tNFm2Su2LlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N+pMOyL7; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Content-Type; b=Z684y+49ewBy6TzgJwsRzgNwvdaR0aE8SkRDMysUMezCNuJ8bKNHum+odppKtyZKW8YzUxR1sCc55TaoR0rK4TcdXuRFgzGZJIujqdYfiwdC9XkjcDZ8HkiSGZUJ0uUWgE3C5XEjOdfkehG9QCu0pSuoccBgHPnL3CMhileeVWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dGBGMgHp; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N+pMOyL7"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2a53eda3272so608298a91.2
-        for <git@vger.kernel.org>; Mon, 08 Apr 2024 10:50:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dGBGMgHp"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-516c3e0e8d7so458e87.0
+        for <git@vger.kernel.org>; Mon, 08 Apr 2024 11:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712598659; x=1713203459; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ymBXqGL26t3qYXEZ0TFXEQcX+Okq6LPFuRHLxBLYlLo=;
-        b=N+pMOyL7QbKlJPXVkC15D3UT3ZIFukLiR4P+y4ydKY1laHX41KFdQXrtNf01FzjWn1
-         u76JJTPpQe8AggneaIfMolhOcVGyzjvANmlabzv2JKdjb6BzWvlgcxW5ir9lKpCs1Kmi
-         7l5pqv/wJXeyvonjDfyie/hrt5vUWoicdCm9RynBrcIUPHbrypv+PYPkD7rfjPehRRoE
-         KCBU03p9WMxzyjw66GtOIo2/PAXKcLA7VEZQxrIDhNISOXyuQToh5cPMiYXjF0sRfvV2
-         +z2bcIiGNU1+K+U9X79FZndm7pYlqB9b0PR+FmzBVB0LGvTIV1eru2XxJmceh7fQ0SUW
-         sW6g==
+        d=google.com; s=20230601; t=1712601790; x=1713206590; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=we8Q+JqahWRGjbK7I8ljnoAYLLfEtT+3wiHrSLPXLH8=;
+        b=dGBGMgHpWMJ7NovFOSyBgwILMMDVXe5SvNBWnPJ1zVYWZhkLTXJPfMkM/bI9Q9V0ao
+         G2cA9ePTahSYKdMFcOZwDCLfSbDA86MIldM5VyCBSsKK/ahbau7slc1UPqdXxXcoMTci
+         imeX+cNaNPFHI7d9diwqKTtvBLtx0H2ykqsJvhT9pfqHQDJB8cAW7EnRlt2Q0PkdAMA6
+         52NUZ5YF0RzhUV89dSmm5L6iR/D8JwmeRxUkdEu8fOOM3HV8OBTH+xiFXCZD4ULZwgdA
+         4e45hNodbkcv7lGmrMYmmUdFnSY/92EMUHRY59ilVetSh7NfhFe7KbxK8lzEVM3wucqS
+         JnPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712598659; x=1713203459;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ymBXqGL26t3qYXEZ0TFXEQcX+Okq6LPFuRHLxBLYlLo=;
-        b=Lze4QAT9e/gfu9LZ5W0BZA/OSjmvSh0K0oFaD7eMO0wgQVZgj49TvqzdwuN6P+PM86
-         /Ch+BRR1AeTkIhPdscu7uyeFzhcKJ/2uaIskAUDRXZlxpzt5VuPwduOxev/m8KPrePdG
-         SnZTiQfi7rEIP57ocsU0Ku2/2aVMd3voKpg6ycrRWLFzIuskDV48c8B2+OzbbZL+FsrT
-         7s5MaIt52JpWZWGTtFRsqDBZkVqXG/eLEO8sQQap6ORcy8UhIA7VODETQcx2mHx8hUpu
-         e/0D0zGSVjMfkkUs5SuCIZtDfcOoD2PrC1h9CV1UDfWu28rnue4IFoGQI2nqDHnkelNG
-         TpKg==
-X-Forwarded-Encrypted: i=1; AJvYcCXro4DTf8RQxzUZg/6Ux7LZ478l/7vmbTXKxrn+gFwa+7gGCkrioRSy/DUC1C9JWGvWWJx/DJW3/eT7YNMT5vUeDO2H
-X-Gm-Message-State: AOJu0YztVvz/MrUyla+6brfz2V9BwaXlGH6R4PZf0Us/pbT2sjmgJTWZ
-	Z1n0f+SjzJTCYDJCT0G2sJvdJ9MZFe15Wa3bzIvIYBwdwxamND+MBRmY4w8dfazJcaMUPNocUHH
-	jPahBK+PgR9WS/fuphy7KbARmoxI=
-X-Google-Smtp-Source: AGHT+IHjxL2gh3E9aSf0HzDehOd2FU4dFwFIBGyYa5YVY1jYBxMhNH1mBBNWvlo9374hXGz9FiHmVH9iHrfn7YSslaQ=
-X-Received: by 2002:a17:90a:4bc6:b0:2a2:7817:f591 with SMTP id
- u6-20020a17090a4bc600b002a27817f591mr7205383pjl.48.1712598658954; Mon, 08 Apr
- 2024 10:50:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712601790; x=1713206590;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=we8Q+JqahWRGjbK7I8ljnoAYLLfEtT+3wiHrSLPXLH8=;
+        b=iSgra0wX/WYBFnNjThSazt7hz1B7TTROD0HfoacsN/8tPlGO2UITsyCZCRqMpMRUx7
+         MyEWEGUYPxIwVcLSpKKeL1xer2DjsB/v2R8FbEZTOJWwC1o96WlFUtNwtBn1FQjoFoyk
+         fn+VQVtPW9r/9Laxaa2UnYL0TQD/vf2yucrfmmy+IlPGPtvd4GQdLyqpCcCCtdNArk86
+         O3uUXusVgDNY+L1IJTJwN3Kf3b0i8y/jp7j229xAI/NECe+WKdpNNVCkPaa4dN82e8q9
+         lpvNRLEo5BABxhUYco68Y8MwvYNfrm/mnChiONDHT6O4Tj8DxHQLMsn3OlxY6gUsPUSx
+         +Omg==
+X-Forwarded-Encrypted: i=1; AJvYcCWm1OgzryYRrV5/ZeWyfNlsh8xgh1apxC7jPLHiSYrJ964mb1ng+KTHmk+ptxpTXktq6TTAgINR4mlbd58MJbhQQ7kP
+X-Gm-Message-State: AOJu0YzHBx5ju/HKX9w2/0NkbsYV8IMPL7ouc6Oloit82buE/iM99jiB
+	TzR9WoZioVNQfQBc/uqSNLYImVKdoxyYCtc3pt3HXhd9tZHGhaXSahv0tmGQuswWNwdFMr0kc6S
+	ozqA7+9/nCdA9KYQenwiqElcgSBFWuXyB5BLA
+X-Google-Smtp-Source: AGHT+IHv/lFwaO0pgGxDuYiXbp+7qVYahZgzaE3Lfum4zglytApeBrRiXCKEaJoDAbE+6PDDs27g1/9/xye/rAAeq48=
+X-Received: by 2002:a05:6512:158b:b0:513:cfba:744b with SMTP id
+ bp11-20020a056512158b00b00513cfba744bmr9048lfb.4.1712601790121; Mon, 08 Apr
+ 2024 11:43:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <963961ee-0f1d-42b8-8dda-5838e7a2ed94@web.de> <ZhOETox9FTIOAShN@tanuki>
-In-Reply-To: <ZhOETox9FTIOAShN@tanuki>
-From: Han-Wen Nienhuys <hanwenn@gmail.com>
-Date: Mon, 8 Apr 2024 19:50:47 +0200
-Message-ID: <CAOw_e7Z9dGeVU399D6o37L3am0abnYUrZnNQEFKhyUv=A2=j8g@mail.gmail.com>
-Subject: Re: [PATCH] reftable: use xmalloc() and xrealloc()
-To: Patrick Steinhardt <ps@pks.im>
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Git List <git@vger.kernel.org>, nasamuffin@google.com
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+ <20240402222619.2212650-1-calvinwan@google.com> <Zg38BLxLe193zYss@tapette.crustytoothpaste.net>
+In-Reply-To: <Zg38BLxLe193zYss@tapette.crustytoothpaste.net>
+From: Jackson Toeniskoetter <jackdt@google.com>
+Date: Mon, 8 Apr 2024 11:42:56 -0700
+Message-ID: <CAD0vCJ=4-QoqUovaOuw6gPTfPEa+d6uJBaO_Vq9R9Btn_YXzwg@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Support for arbitrary schemes in credentials
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Calvin Wan <calvinwan@google.com>, 
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Matthew John Cheetham <mjcheetham@outlook.com>, M Hickford <mirth.hickford@gmail.com>, 
+	Jackson Toeniskoetter <jackdt@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Op ma 8 apr 2024 07:44 schreef Patrick Steinhardt <ps@pks.im>:
->
-> It does raise the question what to do about the generic fallbacks. We
-> could start calling `abort()` when we observe allocation failures. It's
-> not exactly nice behaviour in a library though, where the caller may in
-> fact want to handle this case. But it may at least be better than
-> failing on a `NULL` pointer exception somewhere down the road. So it
-> might be the best alternative for now. We could then conver the reftable
-> library over time to handle allocation failures and, once that's done,
-> we can eventually drop such a call to `abort()`.
+Just to clarify, we at Google do not use extraheader to pass along
+credentials. Instead we use the .gitcookies file[1], which iiuc gets
+read by the git process directly. I'm not a security expert but I
+imagine the risk surface of extraheader and .gitcookies is similar.
 
+Reading your post on
+https://lore.kernel.org/git/20240324011301.1553072-1-sandals@crustytoothpaste.net/,
+it's unclear to me why the credential helper protocol needs to be
+updated. If the goal is to support Bearer tokens, can that not just be
+implemented using extraheader? It seems like the goal of getting
+credentials out of the config file can be accomplished without
+updating the credential helper protocol. So is the bigger goal to
+support more robust and modern auth schemes which require multiple
+steps? That would be useful to Google; multi-step auth would probably
+be a more elegant way for us to stop using .gitcookies than other
+solutions we were considering.
 
-I must admit that I didn't think this part through very much; I
-believe someone told me that libgit2 has pluggable memory allocation
-routines, so I tried to make the malloc pluggable here too. Handling
-OOM better for the malloc calls themselves doesn't seem too difficult,
-
-  hanwen@fedora:~/vc/git/reftable$ grep [cme]alloc *c | wc
-     57     276    3469
-
-However, it is probably pointless as long as strbuf_* functions do not
-signal OOM gracefully. There was some talk of libifying strbuf. Did
-that work include returning OOM error codes in case malloc returns
-null? A quick look at strbuf.h suggests not.
-
-I would just call xmalloc as default, rather than calling
-reftable_set_alloc, because it might be tricky to ensure it is called
-early enough.
+[1] This is actually only for external contributors. Google employees
+have a more robust authentication mechanism. Concerns have been raised
+internally about our usage of gitcookies, but it hasn't been made a
+priority to address because a leaked credential would not allow an
+attacker to commit bad code, only read it or initiate a code review.
