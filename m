@@ -1,98 +1,94 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998E41448FB
-	for <git@vger.kernel.org>; Mon,  8 Apr 2024 20:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B127482
+	for <git@vger.kernel.org>; Mon,  8 Apr 2024 20:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712608608; cv=none; b=c/1K8vTFB9gW703JoogwrWUJBzbGVyqlKTtyoimCTQITTbWPFib8UyhEk3GcwwJFG4pPUi6TT6QMgKa4jg8/5vPczLQ2NGrsNe7l8jv/cW9TU9weDZEj3A5NUevTV9P5qwVvOBnB8fUXRfZ3sNcn60fASsYdflitry2JDoD564Y=
+	t=1712608840; cv=none; b=EarfeB0iZF42HUtKL4QyjjwBIQyDcsXYNM40uVuAbIInbEKwy49L/O9D7cljFz062DZDMAyB073JPCWFoTQ6RArus3Y/01BK/nETQkc9tfmU+OkXHUdTpctRnOifoYC7TI3RD3frJgM9SXwS+8OUd6kj/+eROfdAZZFzqfntJ+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712608608; c=relaxed/simple;
-	bh=4HHUos4OOEgI/Ph2HhkhJDlYUlUouXYFXIpQfohj//s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RzyxBqLmLI96t12ijyJGYVujEVklTX0YEhkLKJH5W9KQYc1icByA1101wilwp51LZmboArbZu3NsQ58J42NkYLyROFnzeApBKOn+JBtNHrxngy9LEzaUx+FHUPECrU9Y3TQtDvpdQHeIuqIl5+GI1xTolBJXlqC76R5XA73AJP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ATBVPPnd; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ATBVPPnd"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id F0E083AA93;
-	Mon,  8 Apr 2024 16:36:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=4HHUos4OOEgI/Ph2HhkhJDlYUlUouXYFXIpQfo
-	hj//s=; b=ATBVPPndSwtV1ehgJj+wtM/pRTDf2kfpCMZOwkape6PFNttCFaR3oZ
-	9gSfhjx2/qJl2X1IeVzkY+VHc0oCeCdx7TyqsjlsEAQ+TcGKkb1eVzDxkVQTac37
-	WehwI8NcM2LE0Z9+bpuER5QHxJQ/HyG0TQqT4vK5dIxna0hpTfhOA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E8ECA3AA92;
-	Mon,  8 Apr 2024 16:36:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 784EE3AA8F;
-	Mon,  8 Apr 2024 16:36:42 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Han-Wen Nienhuys <hanwenn@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  Git List
- <git@vger.kernel.org>,  nasamuffin@google.com
-Subject: Re: [PATCH] reftable: use xmalloc() and xrealloc()
-In-Reply-To: <CAOw_e7Z9dGeVU399D6o37L3am0abnYUrZnNQEFKhyUv=A2=j8g@mail.gmail.com>
-	(Han-Wen Nienhuys's message of "Mon, 8 Apr 2024 19:50:47 +0200")
-References: <963961ee-0f1d-42b8-8dda-5838e7a2ed94@web.de>
-	<ZhOETox9FTIOAShN@tanuki>
-	<CAOw_e7Z9dGeVU399D6o37L3am0abnYUrZnNQEFKhyUv=A2=j8g@mail.gmail.com>
-Date: Mon, 08 Apr 2024 13:36:40 -0700
-Message-ID: <xmqqzfu3a8x3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1712608840; c=relaxed/simple;
+	bh=2Rhf67hcbG1yEFCNpAiBik6GPnnRo32i6+Q9mgHrV/M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aicebaA/MkqiWafWnDu1pz+FPC9uGki0cg9yGQXA2ROYXwOlV0FVvwbe9KkcjzRxbKlUjD2bhE8QNmPlwCxuz/hNV8w1KAGZWyvfv2Xu5EgjoL180oqNsUwlakXdAWE36/Z+eP9NRQv2Ls1VVgeD5KaEjjv3GabQMYMsosEIiqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 31418 invoked by uid 109); 8 Apr 2024 20:40:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Apr 2024 20:40:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28965 invoked by uid 111); 8 Apr 2024 20:40:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Apr 2024 16:40:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 8 Apr 2024 16:40:36 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/6] t: teach lint that RHS of 'local VAR=VAL' needs to
+ be quoted
+Message-ID: <20240408204036.GA1639295@coredump.intra.peff.net>
+References: <20240406000902.3082301-1-gitster@pobox.com>
+ <20240406000902.3082301-7-gitster@pobox.com>
+ <20240407014344.GF1085004@coredump.intra.peff.net>
+ <xmqqa5m3damh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B56C5790-F5E7-11EE-93DA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa5m3damh.fsf@gitster.g>
 
-Han-Wen Nienhuys <hanwenn@gmail.com> writes:
+On Mon, Apr 08, 2024 at 10:31:34AM -0700, Junio C Hamano wrote:
 
-> However, it is probably pointless as long as strbuf_* functions do not
-> signal OOM gracefully. There was some talk of libifying strbuf. Did
-> that work include returning OOM error codes in case malloc returns
-> null? A quick look at strbuf.h suggests not.
+> > Hmm. Just porting over my comment from the other thread (before I
+> > realized you'd written this series), this misses:
+> >
+> >   local foo=bar/$1
+> >
+> > etc. Should we look for the "$" anywhere on the line? I doubt we can get
+> > things foolproof, but requiring somebody to quote:
+> >
+> >   local foo=$((1+2))
+> >
+> > does not seem like the worst outcome. I dunno.
+> 
+> Looking at the output from
+> 
+>     $ git grep -E -e 'local [a-zA-Z0-9_]+=[^"]*[$]' t/
+> 
+> the listed ones in the proposed commit log message are the false
+> positives.  Luckily we didn't have anything that tries to
+> concatenate parameter reference to something else.
+> 
+> But with the pattern we do miss
+> 
+>     local var=$*
+> 
+> and possibly many others.  So I am not sure.  The false positives
+> do look moderately bad, so I'd rather start with the simplest one
+> proposed in the patch.
 
-I would expect not.
+Yeah, I think a regex is probably going to end up with either false
+positives or false negatives. It probably does not matter too much which
+way we err, if we expect them to be rare on either side.
 
-The "libified" strbuf (aka "strbuf API in the Git std lib") will
-have to be different from what we internally use from <strbuf.h>.
-<gitstdlib/strbuf.h> will export gitstdlib_strbuf_addstr(), which is
-"properly" libified and signals an allocation failure to its caller.
+My thinking was mostly that false negatives are worse, because they only
+matter on old buggy versions of dash (and only if the tests actually
+pass a value with spaces). And so most developers will not notice them
+immediately. Whereas false positives, while annoying, are reported to
+them immediately by the linter. And generally, dealing with problems
+closer to the time of writing means less work overall.
 
-When that happens, I would expect that strbuf_addstr() would be a
-thin wrapper around gitstdlib_strbuf_addstr(), and still just dies
-with "we ran out of memory", i.e.
+But I am happy to take your series as-is and we can see which cases (if
+any!) we miss in practice.
 
-	/* strbuf.h */
-	#include <strbuf.h>
-	#include <gitstdlib/strbuf.h>
+I do hope that eventually we could just say "that buggy version of dash
+does not matter anymore", but I think it is too soon for that (it sounds
+like it is still being used in CI).
 
-	void strbuf_addstr(struct strbuf *sb, const char *s)
-	{
-		int err = gitstdlib_strbuf_addstr(sb, s);
-                if (!err)
-			return; /* happy */
-		switch (err) {
-		case GITLIB_OOM: /* there may be others */
-			die("Out of memory");
-			...
-		}
-	}
-
-which would keep the damage to Git codebase to the minimum when we
-become the first client of the "Git std lib".
+-Peff
