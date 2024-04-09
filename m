@@ -1,139 +1,90 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655C112F367
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 15:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAA1135411
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 15:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712676319; cv=none; b=r7R0AycTigq6H08RTQT9NGHJ36GNbrpahLTslIK4kNsinA4JtJNvugp7P7ZswFbgusA6c0OEl0e0E/G3z0o3vFRX6fAU8/nNDuk3tvrwI0bTUm3+9FBPlRdaCsQ/5QNMJLYUAaQKmYh0wAestL21/GqbFK6tLqNwbn3Ki6HH7PI=
+	t=1712676450; cv=none; b=H/DQoYwrcbe9wJJ9yuBRDcHMFnSnCV/1gRykNKXtlotg1hg2Yu+KMKTvdqvMYNiRc7AxEXpLfP8IGEo7/E9wnXDLgllJj6Cj/nAF/2oQ+BRdWs+jiZ1PfZBjmQlHvsctTJOYngNswyv3OgTBfJiZBYKjKabCtby2a2F4FY2JIho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712676319; c=relaxed/simple;
-	bh=S+sqRFB7Y9xB3Rzolsz+S7jXDf7y9twBoTHldqSp2Yw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t6jdNU1CjCFx3JEBhamftFbqqL0zHz2qlzhUIN9BAKHmRTRnX9NLDVf9h+ElWFckDeOcwzxrWZ3DzfMZw5zR0gpeQubj0Fb0xsDJ3rbj2+iNVay5dthpHAp4wUL1vOQf5Rnsp55ZhZnJNByuXrT49Hyfyms74+8UHiABD0nWeDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qy8wbGui; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1712676450; c=relaxed/simple;
+	bh=Fvp+jV5dcCoSraiPZRUSvTJexKX7HgmmFaBNhRg9EuM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=nhC7v9UUF8XhesKzbxxRnnsGpDvAMp8yL01jiR7eVwtOFh3curugwLtMqHYWk/luCU+4nbquQEZxPgTWVkxmgGJNfqoSVcZoa5j9QFsbCTByK55NalsNDoW5tHB/ztO6Ck0TryEDnqRwlAJdUPhmlmb4r/rvU6iZszwPyq33OUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AsVbPa5n; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qy8wbGui"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-343eb6cc46bso2828572f8f.2
-        for <git@vger.kernel.org>; Tue, 09 Apr 2024 08:25:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AsVbPa5n"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d8863d8a6eso41028461fa.3
+        for <git@vger.kernel.org>; Tue, 09 Apr 2024 08:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712676315; x=1713281115; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1712676446; x=1713281246; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JsvF+dd3i6oXXw856ufImRoxGuuf5PXe6uhRGA4C3J8=;
-        b=Qy8wbGuiffzIrgjVJMNTGKit2PcE8k9npOut2dlWrA18u0ddWLF1kGc9ukptZ1nnAs
-         FUacOhDoJpPLT7sCT8WXeaHvem4H/JKdps7+sR4URl7dae8Q9w7LKpu3XKu5IYNiVnXH
-         iq1n9/3/c+c8yt4yjlf7x0YjaSFx1xi2rUsJwbjlEAci212hn4X7eSjL/Tf6+O0swRdR
-         4K1TY9wmBs3UkWVRpLDugcM/adWmqDw/9kiL358DfIysM55EXfX+o+mbCjUm8yyG58H2
-         zwvhG/sCwArnl1taS6NUSZm/UpKyExpzTow2Ho8kfBqjoRbVCzYxutQ9snOHxtQQiRZq
-         ZZ3Q==
+        bh=Spf4KseZOKa7yc0CJ/49ClieC0jhWewmGaRTN9irJqY=;
+        b=AsVbPa5nzryPJKaq4RIuE3S5V78IkDmYo/9ifPsuN6A/PjT3aNK8vydIrxy2Pf4ajw
+         UOJ82B83z1Q1qSpZiQD5ncGRezOFmAK+MnOR/bt6Fn70fU/FcR1/xlRuZFO0ZUWprieH
+         5bq6hvYU4o+ZpkZFvc3DpO5YZIYNl6BiKIIDpwfIkK5aBe1dspA0FMvZwmg8/LYgYxn3
+         WMGYA9hni/T6nFD+4hqkGCOrXukhtRaLgqnImkdyx3Kc50AQKAt2QP28fPsbSrAlQSJ3
+         XQHcOzgnVaN63Ho7aUAQbjivth57L9YcKNPYIVu7ukXqT70u22KwvN/OESPadTZ+kepj
+         bzkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712676315; x=1713281115;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1712676446; x=1713281246;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JsvF+dd3i6oXXw856ufImRoxGuuf5PXe6uhRGA4C3J8=;
-        b=tLhK4lePkksKwIvk/PKnibrZbGZpJy9O/gNeVD1lUWu7NzxzT74U+MlRgdfhyTaX1r
-         QLBBIdnFD9jiyIFoYIZ/tk2efjTY4kJP5WkB2Tyzux5ofdlJzRkwZUIFDqZEIQkuwtDT
-         0T4pYFdz5HXyJQsIa6ffa9DwVLNLAhHNrw0a7I5rEdpPmoyKoDi+JT1cjAru+zB+6wMb
-         k4mQmUjheGH6xOJ3N+UD5hFC+RGskRG76cVVq7R+Y7tQkonJZ4sF0LiN/udC/YX7A5QD
-         atzOKCiFCr3KLsNWWqDql2HwKR8o9yoMJQC+T74PLgAT62RLBpIWQXU8fLiR3OJo5JWw
-         jSxw==
-X-Forwarded-Encrypted: i=1; AJvYcCV0n+RTANgl2H3yaBMoHHJQimZHDZLByh++c9aIMAwwvPPYzGNjh60XbO//SKgRGwS+E1+UMGmGxH5lHlLBCJu6qdmY
-X-Gm-Message-State: AOJu0YzWnoSxMQoOYqELxelyeKegn/U5GhoTe9GWwF2fD8Mde3pJGDs+
-	toS7nY+h7nzRVqEDOTZXNh4wg5WvTgxx6JgsbpEKBr1538QF0P5fv39KFSXY
-X-Google-Smtp-Source: AGHT+IFGcwejo5GhcRvzNUthd5keDzje+tH25qLrbOyua50rUL3MXgDhbdDtnViF9yERItwkBAiTdQ==
-X-Received: by 2002:a5d:560b:0:b0:343:81ea:c534 with SMTP id l11-20020a5d560b000000b0034381eac534mr23886wrv.64.1712676315328;
-        Tue, 09 Apr 2024 08:25:15 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id b9-20020a5d5509000000b003418364032asm11688277wrv.112.2024.04.09.08.25.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 08:25:15 -0700 (PDT)
-Message-ID: <a9ccd0db-2e52-4521-9d72-49d2a85656f5@gmail.com>
-Date: Tue, 9 Apr 2024 16:25:13 +0100
+        bh=Spf4KseZOKa7yc0CJ/49ClieC0jhWewmGaRTN9irJqY=;
+        b=ACI86OzeHwWYxQyLcr+jfZpijoolLdV9gLYes5CCgfwqgHy2Wn1s/qpcEHD189DLhX
+         SmZ7c4p6w5vGsnaREzOXhwaGQkYG3kSUzv4KfE2fk1g5KrvBBMNNZaE8ddpkFYqjtwoV
+         MrgEiR8wkQ3IQHsF56FMgrK6ds/CunX4I4ArwBlRbtpwmUIcE0wJpHqqnIcprfkjf7Ve
+         UDAeGmThMKHYvepKuMG+ANdohXTtMtGgAIs2tommgj2R7Zqk/IdfciDMMDBBKoPgJK52
+         22KQUs91hS7iWAoxTKh/Fq58a9WHk07DmNlOEhTpYjC8Mn9l67jaX+JH3swA9KHh3zng
+         KD/w==
+X-Gm-Message-State: AOJu0YwbjgDtICLR+6SMLJidZGOYW2CQru6M2cWSQf/cI2rwwS2GAhsK
+	fLm81acfg9ieI6dPdkxPhhyvj78Tkb8Slub00veaGIy3qgnYRvgJWUAOY+I8
+X-Google-Smtp-Source: AGHT+IGn3MLPEYtrHY5icdYSKISOC6p7OTGbHgV0rixk/9bkaFShuNgvxNyeeni1sp4vp8NQOgr6iA==
+X-Received: by 2002:a2e:8449:0:b0:2d8:7293:631e with SMTP id u9-20020a2e8449000000b002d87293631emr115262ljh.48.1712676445860;
+        Tue, 09 Apr 2024 08:27:25 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j31-20020a05600c1c1f00b004163de5135dsm12832743wms.34.2024.04.09.08.27.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Apr 2024 08:27:25 -0700 (PDT)
+Message-Id: <pull.1713.git.1712676444.gitgitgadget@gmail.com>
+From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 09 Apr 2024 15:27:21 +0000
+Subject: [PATCH 0/3] Cleanup rebase signoff tests
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/3] show-ref: add --symbolic-name option
-To: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, Jeff King <peff@peff.net>,
- Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Jean-No=C3=ABl_Avila?=
- <avila.jn@gmail.com>, John Cai <johncai86@gmail.com>
-References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
- <pull.1684.v2.git.git.1712597893.gitgitgadget@gmail.com>
- <a9e6644327a04f1d309eca812ace9c4159781353.1712597893.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <a9e6644327a04f1d309eca812ace9c4159781353.1712597893.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Hi John
+This series cleans up the tests for "git rebase --signoff" in preparation
+for extending them and fixing a couple of bugs in a future series. The
+cleanups are:
 
-On 08/04/2024 18:38, John Cai via GitGitGadget wrote:
- > +--symbolic-name::
- > +
- > +	Print out the value the reference points to without dereferencing. This
- > +	is useful to know the reference that a symbolic ref is pointing to.
+ * move test setup into "test_expect_success"
+ * stop running git upstream of a pipe
+ * restore "git rebase --apply --signoff" coverage
 
-It would be helpful to clarify that this prints the contents of the 
-symbolic ref without dereferencing but also prints the OID after 
-dereferencing the given ref.
+Phillip Wood (3):
+  t3428: modernize test setup
+  t3428: use test_commit_message
+  t3428: restore coverage for "apply" backend
 
- > +When using `--symbolic-name`, the output is in the format:
- > +
- > +-----------
- > +<oid> SP <ref> SP <symbolic-name>
- > +-----------
- > +
- > +For example,
- > +
- > 
-+-----------------------------------------------------------------------------
- > +$ git show-ref --symbolic-name
- > +b75428bae1d090f60bdd4b67185f814bc8f0819d refs/heads/SYMBOLIC_REF 
-ref:refs/heads/main
-
-Do we really need the "ref:" prefix? It is not specified above and I 
-think anyone calling this would have to remove the prefix before they 
-could use the value.
+ t/t3428-rebase-signoff.sh | 67 ++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 37 deletions(-)
 
 
-> +test_expect_success '--symbolic-name with symbolic ref' '
-> +	test_when_finished "git symbolic-ref -d refs/heads/SYMBOLIC_REF_A" &&
-> +	commit_oid=$(git rev-parse refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME) &&
-> +	cat >expect <<-EOF &&
-> +	$commit_oid refs/heads/SYMBOLIC_REF_A ref:refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +	EOF
-> +	git symbolic-ref refs/heads/SYMBOLIC_REF_A refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
-> +	git show-ref --symbolic-name SYMBOLIC_REF_A >actual &&
-> +	test_cmp expect actual
-> +'
-
-I think it would be nice to see a test along the lines of
-
-	git symbolic-ref refs/symref-c refs/heads/master
-	git symbolic-ref refs/symref-b refs/symref-c &&
-	git symbolic-ref refs/symref-a refs/symref-b &&
-	git show-ref --symbolic-name refs/symref-a >actual &&
-	cat >expect <<\EOF &&
-	$(git show-ref -s --verify refs/heads/master) refs/heads/symref-a 
-refs/heads/symref-b
-	EOF
-	test_cmp expect actual
-
-to show what this command is expected to return when there is a chain of 
-symbolic references.
-
-Best Wishes
-
-Phillip
+base-commit: 19981daefd7c147444462739375462b49412ce33
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1713%2Fphillipwood%2Fcleanup-rebase-signoff-tests-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1713/phillipwood/cleanup-rebase-signoff-tests-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1713
+-- 
+gitgitgadget
