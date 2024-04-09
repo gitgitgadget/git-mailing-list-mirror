@@ -1,55 +1,70 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35C379D0
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 01:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC7954659
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 01:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712626082; cv=none; b=bkQjocmygNlxPujCNFWZEkOJXEvGxbH5BGnOtD5+DqpFH2vTcScQX62ZOAmUymMIy4gUH/7owkkRA6+amdKUgmqiX+L/H0+vaShIvx6ZBv86CIkpPk9HOcOsRFBgnZXzwQzppen4WGRdjBnnTTiHn0YPKvxNOD1hNYVxn0ODNBw=
+	t=1712626216; cv=none; b=GJ4vQ8awPiXeAMlaNvSQXQGp7S7MrL7KNIGG+BzMEkG0O9wDJi8AS+ucXZU6+p3IgvMcPuyUiHvyjmxvh/Th6Q+dN2zoATM3Z5ExsWlezc8H2pz9HYNVXKURAgivcDgV3KoWdFWhcBes9t/SG2vDKLMZ2F8nOaYZQPFT/fpApP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712626082; c=relaxed/simple;
-	bh=QpnCmYfvCwgN0OBfvDw7oA5RqgOZirU5XkoTDr55sjU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R5H0KtaveDuQgJKa0K7+hmlB3rg/PfDg703pBKm/g+JDBHP5ZNOEvi0nsabTwsEFjFffL9vTpbvKGhtfvbdlpS8ILQO3B2+e5QUoK9YXuqcwuZR9EAD6fsL9o4npNGZUYl+T1CHQkPWPF8rCvkhjJ3QKowy0y7ZSzALUUoHHQuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ozCgV96e; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712626216; c=relaxed/simple;
+	bh=eZIicArIGwmij39nN1PtC/8Dhsj6OoZ2hjbeCWCcUTI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NvqONVQeLABQ3+/IBpIqYMsAZn1+iuZM0UAeuGJL+XVm76dl+xymmKlXH0DtnRyU3pRRKOVWVxJlhpImYEWBMTRObL5KMoL36YLLm39evmt85AKMSQNkUzQ0b3VxryR69V50OZCVK3nsomdSp6T7CiCxPoaUrG6dy+v9UHYJjz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JIq9TfJU; arc=none smtp.client-ip=209.85.161.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ozCgV96e"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6622D1F6887;
-	Mon,  8 Apr 2024 21:27:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QpnCmYfvCwgN
-	0OBfvDw7oA5RqgOZirU5XkoTDr55sjU=; b=ozCgV96eBM+tg/fCiNJlWMQAdY43
-	9cL9w96AM3oXPXlyyhMKN2oqUVitkWiNlNa357S+wZ+YifSbYdy/LHCO2ciV/y8z
-	9fEu6NB2PtYrkIB2rE5+ZdFE+KtZbx4af6v3cx2o8L0Zy2ldY6eMvGZ68YNqJBfg
-	HPth13pc0Q4VyBY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E5C51F6886;
-	Mon,  8 Apr 2024 21:27:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C32391F6884;
-	Mon,  8 Apr 2024 21:27:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] launch_editor: waiting message on error
-In-Reply-To: <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 9 Apr 2024 01:09:21 +0200")
-References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
-	<96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
-	<0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
-Date: Mon, 08 Apr 2024 18:27:57 -0700
-Message-ID: <xmqq4jcb495u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIq9TfJU"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5aa25e99414so1374041eaf.3
+        for <git@vger.kernel.org>; Mon, 08 Apr 2024 18:30:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712626214; x=1713231014; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aCHvLtgAgUv9iB9FRl7Xq7qrRYhSvpHePuRVir1oZ0A=;
+        b=JIq9TfJUlkzhYCIG0L1QrXgfH2bh56zzsAfyUkjsnLqQHrmgPsRl9MPf5NNIG86Rz1
+         IW5hC0c70XoMNIXFxK60RcR0gw1wSHczz6tMK0qiM/inY9/AJhxK+49JMgoO+rP21xF+
+         WhVUVI59aYyb0vrMg2OYFljthPqcahhgFDu8UWsTMRpCEsPwUdAvPyH5LGtuKrHVLAcJ
+         jZaprONbtBk5fu8wv2Jvm/a4xKOV2x8vRlM/ZoEklMWyKkQQO8svcelKEtlSxAH3/Mi4
+         KhGyj8/T2XOOUGNbbNhl+nQJH4Crsw8urLHGDS/nv9pYp/bDrqaobmyb3lzAOeWDqTwh
+         Rfng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712626214; x=1713231014;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aCHvLtgAgUv9iB9FRl7Xq7qrRYhSvpHePuRVir1oZ0A=;
+        b=Gwh79fTLHgWYxi7gbLJ0W9O/8OEkgmKQbSFQk6VkPp+Rz25+M6quGoCYgmKin1Eu70
+         suviQJaBou6UMl/Bag7bGeHkOzjqYu4nM7bkD5Vq6FZlt5vzLstj28koLBWl81DyrqG6
+         PYYF/7HlaVvovn78mtERY+cXAbRzpj5erHSiiRgjEftd2OWPRmMs30TIC6AnrtZKjU/f
+         fr5U2TTlVgoIw25Ou8ckd4t9dP++3IdnMpy/qo4Nsdz8kMyd00zN728xo6NlitANg/wR
+         zAhMNomOVTBCqIdJemVef3z/HZ+utDyrEs7zOhyYjjtSGfe96WxyOmoSsytB4mXCJEsF
+         yveA==
+X-Gm-Message-State: AOJu0Yw+oWjgw6orqIXquKcIfamVVCEEAwD2vygpPho9n8gu7IYoVd0F
+	XpRcnAJxT0Jc412LCG+21bhDpBSlhtZ39M6dJ/+GQWRlGGe305f+
+X-Google-Smtp-Source: AGHT+IGRAGGnECKwPzvIwN8KKq73jkbXlPLKJ7D0c8+d4lFpjokfw7gC0ACsiI4sGTlETvw1wd/3Aw==
+X-Received: by 2002:a05:6870:392b:b0:22e:a12c:ab4c with SMTP id b43-20020a056870392b00b0022ea12cab4cmr10245543oap.57.1712626213765;
+        Mon, 08 Apr 2024 18:30:13 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id s19-20020a0568301e1300b006ea228af12asm208469otr.11.2024.04.08.18.30.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Apr 2024 18:30:13 -0700 (PDT)
+Date: Mon, 8 Apr 2024 20:29:14 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>, 
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 10/10] reftable/block: avoid copying block iterators
+ on seek
+Message-ID: <vab3mzg3meohikmfl5v57uxj6w7w2odrx7cvhmoto7am2bl2yt@6l4salel4ko5>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Han-Wen Nienhuys <hanwenn@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
+References: <cover.1711519925.git.ps@pks.im>
+ <cover.1712578376.git.ps@pks.im>
+ <cc5ff0d5988691043206f9e912f5ffa1bcfee94e.1712578376.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,105 +72,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 661CC91C-F610-11EE-8F9E-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cc5ff0d5988691043206f9e912f5ffa1bcfee94e.1712578376.git.ps@pks.im>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On 24/04/08 02:17PM, Patrick Steinhardt wrote:
+> When seeking a reftable record in a block we need to position the
+> iterator _before_ the sought-after record so that the next call to
+> `block_iter_next()` would yield that record. To achieve this, the loop
+> that performs the linear needs to restore the previous position once it
 
-> However, even with a short message, feeding that LF makes the following
-> "error: There was a problem with the..." clearer, separating it from
-> possible messages that the editor could have printed.  So, add that LF.
+Did we mean to say "linear seek" here? Otherwise this looks good to me.
 
-Sounds sensible.
+-Justin
 
-> +		if (print_waiting_for_editor && !is_terminal_dumb()) {
-> +			if (!ret)
-> +				/*
-> +				 * Erase the entire line to avoid wasting
-> +				 * the vertical space.
-> +				 */
-> +				term_clear_line();
-
-I know this was inherited from the original, but overly verbose
-comment is not being very useful here.
-
-> +			else
-> +				/*
-> +				 * We don't want term_clear_line() here
-> +				 * because the editor could have written
-> +				 * some useful messages to the user.
-> +				 */
-> +				fprintf(stderr, "\n");
-
-But I do not think this is emitting the newline at the right place.
-The sequence would be (1) we say "we are waiting" on an incomplete
-line, and then (2) the editor may say "There was a problem" without
-first adding LF _before_ saying so.  Isn't adding a LF here too late
-to let the editor emit its message on its own line, instead of
-having it _after_ the short "hint" message?
-
-Of course, after these two messages (one from us, and then the
-error message from the editor) concatenated on the same line, we
-would want to have the next error message on its own line, but
-do we need to add an extra newline here for that purpose?  Unlike
-our "hint: we are waiting" that we fully intend to clean-up by
-using term_clear_line(), the editor that exits upon failure has no
-reason to keep its final error message "There was a problem" on an
-incomplete line without emitting the terminating LF before giving
-control back to us.
-
-The "I do not know if it is bad enough to have these two on the same
-line" you seem to refer to indirectly by citing Lars's message
-<20171127134716.69471-1-lars.schneider@autodesk.com> is my
-<20171127134716.69471-1-lars.schneider@autodesk.com>, I think.  But
-in that utterance, "these two" refers to "hint: we are waiting..."
-and whatever the message the editor emits upon seeing an error.  The
-suggestion I made 7 years ago has nothing to do with the behaviour
-change this patch is making.
-
-I think the code is doing the right thing.  It is doing something
-different from what the proposed commit log message said it is
-doing.  Let me try to summarize what I think this patch does:
-
-	When advice.waitingForEditor configuration is not set to
-	false, we show a hint telling that we are waiting for user's
-	editor to close the file when we launch an editor and wait
-	for it to return control back to us.  We give the message on
-	an incomplete line, expecting that we can go back to the
-	line and clear the message when the editor returns
-	successfully.
-
-	However, it is possible that the editor exits with an error
-	status, in which case we show an error message and then
-	return to our caller.  In such a case, the error message is
-	given where the terminal cursor happens to be, which is most
-	likely after the "we are waiting for your editor" message on
-	the same line.
-
-	Only clear the line when the editor returned cleanly, and
-	otherwise, complete the message on the incomplete line with
-	a newline before giving the error message.
-
-Hopefully the above is a more reasonable explanation of what is
-happening in this patch, I think?
-
-Actually, having thought it through in order to write the above
-explanation, I wonder if we can just call term_clear_line()
-regardless of the value of ret.  Either case, the waiting is already
-over and in the error case, we show another message after it.
-
-There is another error message when we fail to start the editor.
-Doesn't that codepath have the same problem?
-
-I wonder:
-
- - moving the code to show "hint" down below start_command() where
-   it could return error("unable to start");
-
- - moving the "if (ret) return error("There was a problem")" after
-   the block that calls term_clear_line();
-
-would be a better and sufficient fix?
-
-Thanks.
+> has found the record.
+> 
+> This is done by advancing two `block_iter`s: one to check whether the
+> next record is our sought-after record, and one that we update after
+> every iteration. This of course involves quite a lot of copying and also
+> leads to needless memory allocations.
+> 
+> Refactor the code to get rid of the `next` iterator and the copying this
+> involves. Instead, we can restore the previous offset such that the call
+> to `next` will return the correct record.
+> 
+> Next to being simpler conceptually this also leads to a nice speedup.
+> The following benchmark parser 10k refs out of 100k existing refs via
+> `git-rev-list --no-walk`:
+> 
+>   Benchmark 1: rev-list: print many refs (HEAD~)
+>     Time (mean ± σ):     170.2 ms ±   1.7 ms    [User: 86.1 ms, System: 83.6 ms]
+>     Range (min … max):   166.4 ms … 180.3 ms    500 runs
+> 
+>   Benchmark 2: rev-list: print many refs (HEAD~)
+>     Time (mean ± σ):     161.6 ms ±   1.6 ms    [User: 78.1 ms, System: 83.0 ms]
+>     Range (min … max):   158.4 ms … 172.3 ms    500 runs
+> 
+>   Summary
+>     rev-list: print many refs (HEAD) ran
+>       1.05 ± 0.01 times faster than rev-list: print many refs (HEAD~)
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+...
