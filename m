@@ -1,101 +1,94 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DF613666C
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 15:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074B813D885
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 16:11:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712676452; cv=none; b=cu/Xd60LZz16VxJTt1RoK5e63hiX4GPazU6KPkiBKGoYjA1hzWWKrH1ozzmkpEvzDymMern2IwO2k3B4ceQtp031Y0CFFiJY8ALOxSRDNMTfr6NQG8ez/svBOlGDyl+7ma4qoU7EWEApQpg0CFs7fY3ubSFUppei+n5TPcioE8Y=
+	t=1712679110; cv=none; b=fszYKdX/vEKypY0VTlLEjZJZ1b3GXiKCKbRkRUfrC1kehHKt5ctRh5SBWNmRVwmW0o9EZ4sDiwrJygnN/F52UK3ordE7o/wsq0nmwfglx7TVYIolaQFsFyZ7B8j+JekyZsszh/kaeml2ubFSBWkP2U1kwkP2C9213pBFGNoSAKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712676452; c=relaxed/simple;
-	bh=bVlNJ1upc4nkSJLc7LiPjDdnQCJTCb+XcJxAe0jtdCA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=p4CNjXf1axhJCP3GqPSooVg7C5d8Nky9pp9815oLMGrecA7q7n0l5Ve+qjsgfRg0OHvfj7gxJ7a1bOq0caYz7WU7U9JIkpcjG+BLGWlzqX+K+x5cUqXyC6Ip3IFhQIlSkyi4hQ087W0WknA+tL2TTqwbGQPMcx532Tay2bj2w8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lJcWALET; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712679110; c=relaxed/simple;
+	bh=DrMC9JDSqFHGloXGHP98sMNv0Y3tZSBlHOXOcfp0W4Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EL71eLs9ViSjvMngRXviE+4mVE5dZ7pczHEB5vwN91s3s7WGnUKR/U2sFaQddzJCIIU505bmCf5LkXz0FeR+fPyhIbG6TPosCh5KeW5baBIL0bFy9sUr8dWFhFzzDTaDb+SsWU3vGXKPubZhPXecfSMuA8CaarOXTHRfmzr6j18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eYpnZBBI; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJcWALET"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3455ff1339dso2041765f8f.0
-        for <git@vger.kernel.org>; Tue, 09 Apr 2024 08:27:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712676448; x=1713281248; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0KcOBl2WV1JSS54lzJoJy+oNGcpVou5d+bWNc95IFz0=;
-        b=lJcWALETHpuZaBRMyDBgXGW0S3kDwtjCHWKFbpVIyFanpcKVIgk1lSPnmUXw7LI8UG
-         1kgOW1AZGAvTfQZqtKOpye6kBw6QEnDkP6igJsLGyD8AZDdgfaulRad4qjUcLmvT42vn
-         AV5o3jK6E7o75MTUpcjV2jwLctls521MqNGIp3DZhnUk7QJEQav2ou5qtWssDZTd3Nef
-         nsU1Msn910dsyHqWtN1Y4KcSss6PhJYPNNNIC2JiA2PjNhwafosvNejLysr9upqkvYNC
-         X78oOFTpcMzTWztX0TopfaPZhmG3CamKoYMmpGTMKMNEtkuondEXV2q+EFNlhJowZDWB
-         m/oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712676448; x=1713281248;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0KcOBl2WV1JSS54lzJoJy+oNGcpVou5d+bWNc95IFz0=;
-        b=uSvU3p+9InvgQOP3apwgiao9a60OaeaEYIdfyyEBXCtUozz64WkloajiayQxgyzSdw
-         VpI6b9v7mftnOYkA72TSA4VDCuuJ+Ctu+xEA2gtoA5WUIwB+CGTXGhGW7h/rBb/jkNxw
-         Ioi4UIcUr1GFu/CgG1zoS7Z/9R6auSk8skwkSiU7laNoJwZcnGietkoDD4V1ir7GAnnM
-         toK/vhMcn0JK2i5+/ybtEqZfEgpoUjxY1zCM4ryB/+hv42AtLCTNzjxEPbL3B/8iAVGy
-         bjV9t5FPj/iErDTPP5mnvucfzDmMCsk240G6B5LzXgZ6ZZ4xeQy1Y2pVJdpzYPzFTEjD
-         fSmg==
-X-Gm-Message-State: AOJu0YzZilB12Z0B12Al8y+gzkkSOitVAZTnq3G9LhxbXKvcdPOst4h9
-	SDy8w+S4lXQyc/rwMR373p+HM/YOjOTynlXuRgQHvlLtYomeps/PBm0VxCJc
-X-Google-Smtp-Source: AGHT+IFT0nhCDEoizUte26ftNCmLVHe0tGnOc/LF5IsVABA1RH9Xt8r2UTdJp8KWsEDMGf+PtiVvqA==
-X-Received: by 2002:adf:f3d0:0:b0:341:8412:a6e7 with SMTP id g16-20020adff3d0000000b003418412a6e7mr45978wrp.18.1712676448196;
-        Tue, 09 Apr 2024 08:27:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6-20020a5d44c6000000b003438f4eef2dsm11715741wrr.63.2024.04.09.08.27.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Apr 2024 08:27:27 -0700 (PDT)
-Message-Id: <b45af37e3c0a22cc9e0514eb681300be0b968e02.1712676444.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1713.git.1712676444.gitgitgadget@gmail.com>
-References: <pull.1713.git.1712676444.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 09 Apr 2024 15:27:24 +0000
-Subject: [PATCH 3/3] t3428: restore coverage for "apply" backend
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eYpnZBBI"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EBC51E41AF;
+	Tue,  9 Apr 2024 12:11:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=DrMC9JDSqFHGloXGHP98sMNv0Y3tZSBlHOXOcf
+	p0W4Y=; b=eYpnZBBI/elRzSpZo5XGeWsA81Z9WOu92KeS+uONbVTUdCvochT/OZ
+	Td4Xjk8vXmJGw2/hxN20Jptb9jA3mfiMkC/BQ2HJtgz5wFoyn+0+CxD95W+yUZs7
+	evXPYlC4PlRJ3N9mrQD+n6/cigEjkQcJhxPaC55w0aEYZMuVvRl4U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 368401E41AE;
+	Tue,  9 Apr 2024 12:11:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9AB471E41AD;
+	Tue,  9 Apr 2024 12:11:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Benji Fisher <benji@fisherfam.org>
+Cc: git@vger.kernel.org,  nasamuffin@google.com
+Subject: Re: [PATCH] MyFirstContribution: use switch for changing branches
+In-Reply-To: <CANc=FSNXzsFqzbgGs3CVAPxtxske_DEorNrk66gvYe2+1d_PAQ@mail.gmail.com>
+	(Benji Fisher's message of "Tue, 9 Apr 2024 08:26:58 -0400")
+References: <20240407212109.35131-1-benji@FisherFam.org>
+	<xmqqr0ffbvjq.fsf@gitster.g>
+	<CANc=FSNXzsFqzbgGs3CVAPxtxske_DEorNrk66gvYe2+1d_PAQ@mail.gmail.com>
+Date: Tue, 09 Apr 2024 09:11:40 -0700
+Message-ID: <xmqqwmp61poj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DA2FDA3A-F68B-11EE-855D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Benji Fisher <benji@fisherfam.org> writes:
 
-This test file assumes the "apply" backend is the default which is not
-the case since 2ac0d6273f (rebase: change the default backend from "am"
-to "merge", 2020-02-15). Make sure the "apply" backend is tested by
-specifying it explicitly.
+> I was under the impression that the new "git switch" and "git restore"
+> commands were recommended in most cases instead of "git checkout".
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3428-rebase-signoff.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+These two were added so that eventually we have something we can
+recommend to new users, but as a pair of experimental commands, we
+reserve the rights to update their UI in backward incompatible ways
+(meaning: those who use them may need to retrain their fingers and
+update their scripts if they used them---not that using these
+Porcelain commands in scripts is a good idea to begin with).
 
-diff --git a/t/t3428-rebase-signoff.sh b/t/t3428-rebase-signoff.sh
-index 133e54114f6..1bebd1ce74a 100755
---- a/t/t3428-rebase-signoff.sh
-+++ b/t/t3428-rebase-signoff.sh
-@@ -38,8 +38,8 @@ test_expect_success 'setup' '
- 
- # We configure an alias to do the rebase --signoff so that
- # on the next subtest we can show that --no-signoff overrides the alias
--test_expect_success 'rebase --signoff adds a sign-off line' '
--	git rbs HEAD^ &&
-+test_expect_success 'rebase --apply --signoff adds a sign-off line' '
-+	git rbs --apply HEAD^ &&
- 	test_commit_message HEAD expected-signed
- '
- 
--- 
-gitgitgadget
+So your justification could be
+
+    We want to evantually be able to recommend restore/switch to new
+    users, and want to take advantage of every opportunity to polish
+    them.
+
+    Because this document is not exactly for totally new users, and
+    the readers are expected to be knowledgeable enough and highly
+    motivated in improving git, let's have them use these
+    experimental commands and report newbie-issues they found using
+    them, so that we can gain more experience and chances to polish
+    the command and eventually make them recommendable to new users.
+
+Note that the "WHY?" in my response was not "I see no reason to do
+this", but "You need to say why you think this is a good idea here
+in the proposed commit log message".  Without your version of
+reasoning, my conclusion was "I do not see a point", but with a
+justification like this (there could be others---it is contributor's
+job to explain why a proposed change is a good idea, not mine), I
+can understand the reasoning why this change may be a good one.
+
+Thanks.
