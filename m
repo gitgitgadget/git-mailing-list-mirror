@@ -1,116 +1,85 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5215C370
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 00:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F7118E
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 00:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712621358; cv=none; b=ROyXUlt06P4U7VI1pEiEV021lgVbChoo+KjDQCJ6H7tsghmIM9FAmnmDh8J/+ze0vABZTvGFMOCsR1WFY+7ZnqvJbu9b51ZJ8Cj1uz6ZimepNM2zywGLAd5osDayAihqPcOyuESAxi/bFnP7e91u+AHgIwyND3ZbfOXnEGF3FDY=
+	t=1712621852; cv=none; b=P9Rkj6ohM+4Hhr+3Jg6zjjrQAuLdOc6u42ERon3j6rykZeS2g90zJrcRtJb5abyd0sAFgtfgVBFKFZqUIVRmOBVeUntvyDWMFMD3sJclKI7zd6J5DqgE1z9Odn7x3RElWJxF/dlcdtu04h1SyRIVx3Qn4TfCpxFIt903SYPO6B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712621358; c=relaxed/simple;
-	bh=wYgmYHmR6j9Yoylgou2em+nIAj3PqXs8aJBdb80nK0s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bQhwt8GApcX2Yf6zdsYP5K97WOG9iNTRt7lExlZWxqgUj+l4msr5/Lm6cXpDJFU5s2ltj+0RD4JuM0Wf6VrKXwoqBv/MgmQVNblFre/iWyTF2473pI5RO2Vg9Nrf+6+c7tdE9A97jfIm0nSA9y6mH7bHe8GBtQJGz7lG4RbNPr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pHbK/lQS; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pHbK/lQS"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 416A71DD6AA;
-	Mon,  8 Apr 2024 20:09:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wYgmYHmR6j9Yoylgou2em+nIAj3PqXs8aJBdb8
-	0nK0s=; b=pHbK/lQSltOkaIwO2KvuJ9Fo90x1qylapXFgq/+Y0hrOLkOVn4yaoi
-	ZfkJKTRi7Fr8ZfWOs0cQbhNaHcfzPLcMbFVhUQESx/3066MBnZzFV+91iXmvhNsy
-	4c2eA4o5yPS2uSIH9O7fceWXGWeOW4RnuYsUePb+uOcWtEyD4mNGo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 394B51DD6A8;
-	Mon,  8 Apr 2024 20:09:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9EB9D1DD6A6;
-	Mon,  8 Apr 2024 20:09:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v3 00/11] reftable: optimize write performance
-In-Reply-To: <cover.1712578837.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Mon, 8 Apr 2024 14:23:47 +0200")
-References: <cover.1712078736.git.ps@pks.im> <cover.1712578837.git.ps@pks.im>
-Date: Mon, 08 Apr 2024 17:09:13 -0700
-Message-ID: <xmqq8r1n5rdi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1712621852; c=relaxed/simple;
+	bh=8cDZoM7mdtWX4sz0nCRZlAzwsKgt4ZZYvfcAVK3FSvM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rr72002U5KjG1KYr4T2dsQ8Af6tB6uHT6KciRZUsnzTaIXTh12C76gKCmsmglaK06xSSzOg4VE9NWHqD1Tloagt6fy67rNtJfQrqG2woQ19p61eXUlkCmedI0znBGHmQ/SCEBMUMeGajfs5KZWjn/tgjjjkAr9tJtAIM7vu++UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 32228 invoked by uid 109); 9 Apr 2024 00:17:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 09 Apr 2024 00:17:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30617 invoked by uid 111); 9 Apr 2024 00:17:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Apr 2024 20:17:32 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 8 Apr 2024 20:17:28 -0400
+From: Jeff King <peff@peff.net>
+To: Paul Smith <psmith@gnu.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org,
+	Dario Gjorgjevski <dario.gjorgjevski@gmail.com>
+Subject: Re: [PATCH] Makefile(s): avoid recipe prefix in conditional
+ statements
+Message-ID: <20240409001728.GB1647304@coredump.intra.peff.net>
+References: <CAJm4QYOxn_s8ktJiC6ju2j4OyEYaM2ay7Ca--ZWFWa7APVnTbA@mail.gmail.com>
+ <9d14c08ca6cc06cdf8fb4ba33d2470053dca3966.1712591504.git.me@ttaylorr.com>
+ <xmqqle5n8rcr.fsf@gitster.g>
+ <606990048585347654f3b4b187ec27f4dc1b85e3.camel@gnu.org>
+ <20240409000414.GA1647304@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 664CDE32-F605-11EE-9CDE-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240409000414.GA1647304@coredump.intra.peff.net>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Apr 08, 2024 at 08:04:14PM -0400, Jeff King wrote:
 
-> this is the first version of my patch series that aims to optimize write
-> performance with the reftable backend.
->
-> Changes compared to v2:
->
->     - The series now deepends on ps/reftable-binsearch-update at
->       d51d8cc368 (reftable/block: avoid decoding keys when searching
->       restart points, 2024-04-03). This is to resolve a merge conflict
->       with that other series which has landed in "next" already.
->
->     - Dropped the "reftable_" prefix from newly introduced internal
->       reftable functions.
+> I do find it curious that in:
+> 
+> ifdef FOO
+> 	SOME_VAR += bar
+> endif
+> 
+> the tab is significant for "ifdef" but not for SOME_VAR (at least that
+> is implied by Taylor's patch, which does not touch the bodies within the
+> conditionals).
+> 
+> I may just be showing my ignorance of the parsing issue, though. For
+> anybody else digging into the details, I think the correct link is:
+> 
+>   https://savannah.gnu.org/bugs/index.php?64185
+> 
+> (the commit has the wrong bug number, 64815).
 
-Well, since I resolved the conflict and my rerere database already
-knows the resolution, you did not have to do the rebasing yourself.
-After undoing the rebase and recreating the merge of this topic into
-'seen', i.e. db20edbf (Merge branch 'ps/reftable-write-optim' into
-jch, 2024-04-05), the difference I see between the previous version
-and this iteration I see are the following.  Please tell me if that
-is the only change you are expecting, and please yell at me if that
-is not the case---it would serve as a sanity check of my previous
-conflict resolution that will also be applied going forward.
+Answering my own question (at least what I think the answer is): there's
+basically two levels of parsing going on. The outer layer is respecting
+conditionals to decide which lines to care about at all, and the inner
+one is figuring what are assignments, rules, recipes, etc.
 
-Thanks, queued.
+So the outer parser cares about things that look like conditionals, but
+nothing else. The inner one has more context and can more easily realize
+that "\tSOME_VAR += bar" is not part of a recipe.
 
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 32438e49b4..10eccaaa07 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -149,7 +149,7 @@ void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
- 	w->max_update_index = max;
- }
- 
--static void reftable_writer_release(struct reftable_writer *w)
-+static void writer_release(struct reftable_writer *w)
- {
- 	if (w) {
- 		reftable_free(w->block);
-@@ -163,7 +163,7 @@ static void reftable_writer_release(struct reftable_writer *w)
- 
- void reftable_writer_free(struct reftable_writer *w)
- {
--	reftable_writer_release(w);
-+	writer_release(w);
- 	reftable_free(w);
- }
- 
-@@ -653,7 +653,7 @@ int reftable_writer_close(struct reftable_writer *w)
- 	}
- 
- done:
--	reftable_writer_release(w);
-+	writer_release(w);
- 	return err;
- }
- 
+I'd guess it's _possible_ to fix the case discussed in the bug by
+letting the outer parser know more of the inner-parser context (i.e.,
+whatever rules it uses to decide that the assignment line is not a
+recipe line could similarly be used for a line like "\telse"). But I
+also wouldn't be at all surprised if it would involve a substantial
+rewrite.  At any rate, I'd certainly defer to you on such matters. I'm
+mostly just thinking out loud from my peanut-gallery perspective.
+
+-Peff
