@@ -1,83 +1,81 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149CB54FAB
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 03:18:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96B1657D4
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 03:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712632732; cv=none; b=AI7m13hO0/exi+16nJa3Rv2X3DAld7fFYxIU7p9uhjHEU+yBMy4dn3tVs/8DTyjtWd25C/x+J5PfAknSZMgOpn+W7D9bmhJeQkn4l2n4r3zo5dOgG2ueB3Vvp7spjuAizVCHB9zrmYxAMSpthp9BaoGuAbI7mV0dPjejeRq+Ocg=
+	t=1712633050; cv=none; b=PEvETK7cvmiu7QNiTIotgX7VFK1ZeFMVfzjFvasZOiwOG2ZkLtHY+xce2ehLIZqyTD8CbO2l40H9IX4WN90+qDAZ8Do5NKaw/l9t7HQDwwhigiJ4HlwSSjJ/9f5FDClJD1bwwFmCAKSXRycRk6oeACb8eSKzbtFdAe24Bvu1Yxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712632732; c=relaxed/simple;
-	bh=Kr0eZdx0ZbGRGGnLu24M5hjhyKo2+lwRjm5U41xOjE8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ov35zUEBiklLqLkXP0tEwMIn7mkkm0EzIlSaBS+szKQENGiJrKIez0E2ZgHNtltKMg+LQtB5RsXqoxdK69Fgx6qikrg709fv41MnLvtakex1EzNSq1ZKYuKPdeB8o0ZSwDRI9SZmCXwd8ae8ytS/5SKKbvWmprL2/W4o2WUYZns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O9DW2HAi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HdqGlFHD; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1712633050; c=relaxed/simple;
+	bh=WO20K4oMIvViambGTkSdC2SIximnIZ9rShr63ts+RgI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UdV01w6p8jo8RrKNwuCu32/dpsFhOwzbLk4+g/GKApSShwohJyOIhKS2usYvR1d4E/jAN2kQu5b2aJ8IuIpEVAfTFEUFHNxnKh6Wa9lTM0M5Ps9QdiH/JayOlgfwBO9ckxBEWnnacLamjU+t4A/Sq7SApqzFrvzXHq7EF5dCHbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LQq+Zsz4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ITXn/SPE; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O9DW2HAi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HdqGlFHD"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id C6AB01380231;
-	Mon,  8 Apr 2024 23:18:49 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 08 Apr 2024 23:18:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LQq+Zsz4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ITXn/SPE"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id F15DF1140187;
+	Mon,  8 Apr 2024 23:24:07 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 08 Apr 2024 23:24:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712632729; x=1712719129; bh=3faNcniEwS
-	9R+u2JHYpkup16+HvysckuQGuF0bepS9w=; b=O9DW2HAiTWf6t7tVr1VKEzHVxj
-	VZ/jOcqxdfnm2ujluWgmOOvIxe2fcacPNfAvAoa4n+CVLKawAqTMoYKAKrWNSFIQ
-	xvcrG0csLx4pe3GmKPhDp+wNPeubDBo2SkknDxvdZOp9vG/ltl1xOWD4CRTlscF1
-	oLyOIm5g6As1bB1boIV4+h74GbPyij2O8Ry+7uWYfLdtx/3r/4yQnoXRTzYcVQSb
-	OObpcVbJrURrPBh8dL6ZUCjUEJmP5NiLnlwrc+YSt+0pPQXYCPg+lWrDXW8asz0c
-	+ugP+Hv+MS1bcfyQTlLYgX031oSq3TfOCL+cG+Rv/hEipaFQaF/OnsiRvcdA==
+	:subject:to:to; s=fm2; t=1712633047; x=1712719447; bh=SnS6MTZ/tr
+	k2Oc8QDBhWofUT35ErFCqnlYtCfccP2Os=; b=LQq+Zsz4dZoLajYzAqUKWRobIX
+	LbcoQna3ASvD54PQH3jnmituOYokzIK46JNyeZfH2r6s4vSFb56HUhf1pvjleOwA
+	2kUpNvfzGubDqO6keIN+1n3y03XfDR/rFfazb+SPNHHcX503UFpGhN9yApHcWi9M
+	sNR6qZKUissZaaz8sknPPyu4/lhPTYUs0dfAzb3DYM/kF4LcJhb2mojdZF80FdfO
+	y5zV0hOYH3Gg+7v6XtCvQEHywSNgRJNTUxmlBUHJUPqepMziyf4wB/UY2yg/J4ZN
+	MsY9cEX7GMrCBfnUdSHqw7C5KI1mV8O6nBImGOfdQoPH6y0vRA9oAqsUqZHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712632729; x=1712719129; bh=3faNcniEwS9R+u2JHYpkup16+Hvy
-	sckuQGuF0bepS9w=; b=HdqGlFHDYhBXnlJP29s2M1pvYLHZWil505ZnSOM7mJbI
-	SfyxvIiCE3PMl4Kw7IJ5UghgYjopmA2Kso0x9mMTig31jCxFEu3MRHYryM5zec36
-	d2VFg/iHTGWafBYZTA8YEWHL9dMpy2JN/tUKppTI1GWGrsCL0zi5QFEplTA5IT5E
-	bp2gLpUAa897DoYA94SWy1RuRZ+mCq3GXngiF6pqqmIxqBj1jr/sB5dR75W0vblr
-	dGEKuuEuRDHcDno/oFg2oTNmg6xDDE+acSdgE1kBHnSDu05Q6MKMT/NfKBEGzeNc
-	42i1dWI1BlSriCdC/nbaXeMCPhT4WvauCrlaA3z9+A==
-X-ME-Sender: <xms:mbMUZg3Jhf3rNSYI5N2Zq__zlIP4c5iXqN-KB9gVdGaNIrmVFEn4DQ>
-    <xme:mbMUZrFkigqOju4QoOXc2SAjIBTVWVN93cSnM0lxYycOIE0YjIE-SfDqXTMB4Q7zT
-    HPSl5dmjtKXvmhB5Q>
-X-ME-Received: <xmr:mbMUZo498Bvp7fjY4yXiI6jJGQRV6VpPmRVUDYbHjpOWvp4NBAQECzxpicVvn5Wn7ZIQYR6dubTcRLaFWBLs_ac0sr2IZ6beNrC9a47vKxG0tQlW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegkedggeegucetufdoteggodetrfdotf
+	fm2; t=1712633047; x=1712719447; bh=SnS6MTZ/trk2Oc8QDBhWofUT35Er
+	FCqnlYtCfccP2Os=; b=ITXn/SPE9nP281XuvNzBlXq/zooI5tmqZTEH6VHTdg6T
+	AwNy/OhBeub/fMWtQfRm8XvEOSK+R4suQzedbc+rIhgdqSsSETiNX6UdSPwMYEkR
+	lFcsbYzrYorG7Z1iB1WMLLq89KcYDSzCd2hHeF6D3k84cAHeGeO7mG8begxSmpn/
+	eBNUSIdYrtxceTBrKN/Z0SDJsktwkwOWHHQWkSddxCiGM1mgpkjcvj+PuAZlmlhS
+	jw+cdA2BJpM2meW2vs/10yEN+EFKg3lb5oE82VJ7xGLGjJkKzSuI2y3gj8MCyWTv
+	jPt5/J0JfTA5oITT5NYGjDYO8LLyRvC2Vs5WLFLl5w==
+X-ME-Sender: <xms:17QUZo0G5Jq7uSYLk6V4ijp-he5vAhTTYsjqpTk1aUYxlRKuCaaXmA>
+    <xme:17QUZjGU62j8fh6cEY446qJW13x9asebHjlylR00ZMOqYIkrcpYR-lKdtyL1tgcKs
+    tvHE0Ex6qpwpjeTbw>
+X-ME-Received: <xmr:17QUZg53_mXMmqRmRyEBMkAU5qNk0GrjJopor5YJDkfoBZOH53VsA0XyaJ2wKKIH4F0qNPf136hzCo8LldDe-QeNTGnGLJpHbMlRnmjpapmFr18R>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegkedggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgfejueevjeetudehgffffeffvdejfeejiedvkeffgfekuefgheevteeufeelkeen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:mbMUZp01Y-SEqZT0LkBhhZM5Rleyv6eSbLnljDW6D87N9r2yOFr4sA>
-    <xmx:mbMUZjGmaC-psw0SHM9NgCIuWvpbrGsjypFfCH9ORkXNa-tW0iJiVw>
-    <xmx:mbMUZi9l8Wj87qbRpDRDVLfJYXwIwaUKiLvGXv95i8WH5JjayadlFw>
-    <xmx:mbMUZongoQtfe_OrPERgg_wgMkLXQqhkibrr_EEdxSr_kk3jvx9Y-g>
-    <xmx:mbMUZrChaSuKKtbVNiLP6_KYgP39eIqwGddh7ku0jjLrt-mZj4dz_82j>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:17QUZh2xGjak02vEy_L6FRJGmLs6Jebdp_TCB-hPGhxGwJpMjYpiuQ>
+    <xmx:17QUZrE7fa2u00z9MA3J6Mg_4_LGS9D-xys9HnfL54dvrypQ8nl9hw>
+    <xmx:17QUZq8MBmgs2Qtb7m0Bm6aZ61IiYwpkAHUl_k_oWC4NuvAXuSgluw>
+    <xmx:17QUZgky6p-fTvQwVE07EVluIKKmNtEX3g7uMn2Lwr0bMuZOK-ysPA>
+    <xmx:17QUZviYgjnOWUnvbIWnTcKo8FXQD7HRSeYyf7TLuUBDji2zobGaCOlH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Apr 2024 23:18:48 -0400 (EDT)
+ 8 Apr 2024 23:24:06 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a4e512f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 9 Apr 2024 03:18:40 +0000 (UTC)
-Date: Tue, 9 Apr 2024 05:18:45 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id db7c2834 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Apr 2024 03:23:58 +0000 (UTC)
+Date: Tue, 9 Apr 2024 05:24:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 10/10] reftable/block: avoid copying block iterators
- on seek
-Message-ID: <ZhSzla7GwfdokQbG@tanuki>
-References: <cover.1711519925.git.ps@pks.im>
- <cover.1712578376.git.ps@pks.im>
- <cc5ff0d5988691043206f9e912f5ffa1bcfee94e.1712578376.git.ps@pks.im>
- <vab3mzg3meohikmfl5v57uxj6w7w2odrx7cvhmoto7am2bl2yt@6l4salel4ko5>
+To: Han-Wen Nienhuys <hanwenn@gmail.com>
+Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>, nasamuffin@google.com
+Subject: Re: [PATCH] reftable: use xmalloc() and xrealloc()
+Message-ID: <ZhS000b12DNoQ2pw@tanuki>
+References: <963961ee-0f1d-42b8-8dda-5838e7a2ed94@web.de>
+ <ZhOETox9FTIOAShN@tanuki>
+ <CAOw_e7Z9dGeVU399D6o37L3am0abnYUrZnNQEFKhyUv=A2=j8g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,82 +83,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5ZjEtHhyaDZYrKwi"
+	protocol="application/pgp-signature"; boundary="kTfNeoJctf3ts5so"
 Content-Disposition: inline
-In-Reply-To: <vab3mzg3meohikmfl5v57uxj6w7w2odrx7cvhmoto7am2bl2yt@6l4salel4ko5>
+In-Reply-To: <CAOw_e7Z9dGeVU399D6o37L3am0abnYUrZnNQEFKhyUv=A2=j8g@mail.gmail.com>
 
 
---5ZjEtHhyaDZYrKwi
-Content-Type: text/plain; charset=utf-8
+--kTfNeoJctf3ts5so
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 08, 2024 at 08:29:14PM -0500, Justin Tobler wrote:
-> On 24/04/08 02:17PM, Patrick Steinhardt wrote:
-> > When seeking a reftable record in a block we need to position the
-> > iterator _before_ the sought-after record so that the next call to
-> > `block_iter_next()` would yield that record. To achieve this, the loop
-> > that performs the linear needs to restore the previous position once it
+On Mon, Apr 08, 2024 at 07:50:47PM +0200, Han-Wen Nienhuys wrote:
+> Op ma 8 apr 2024 07:44 schreef Patrick Steinhardt <ps@pks.im>:
+> >
+> > It does raise the question what to do about the generic fallbacks. We
+> > could start calling `abort()` when we observe allocation failures. It's
+> > not exactly nice behaviour in a library though, where the caller may in
+> > fact want to handle this case. But it may at least be better than
+> > failing on a `NULL` pointer exception somewhere down the road. So it
+> > might be the best alternative for now. We could then conver the reftable
+> > library over time to handle allocation failures and, once that's done,
+> > we can eventually drop such a call to `abort()`.
 >=20
-> Did we mean to say "linear seek" here? Otherwise this looks good to me.
 >=20
-> -Justin
+> I must admit that I didn't think this part through very much; I
+> believe someone told me that libgit2 has pluggable memory allocation
+> routines, so I tried to make the malloc pluggable here too.
 
-Oh, yes, of course. Thanks for reading this carefully!
+That was me probably back when I was writing the libgit2 backend.
+
+> Handling OOM better for the malloc calls themselves doesn't seem too
+> difficult,
+>=20
+>   hanwen@fedora:~/vc/git/reftable$ grep [cme]alloc *c | wc
+>      57     276    3469
+>=20
+> However, it is probably pointless as long as strbuf_* functions do not
+> signal OOM gracefully. There was some talk of libifying strbuf. Did
+> that work include returning OOM error codes in case malloc returns
+> null? A quick look at strbuf.h suggests not.
+
+Yeah, `strbuf` also crossed my mind. And there are some other systems
+that the reftable library calls into, like the tempfiles framework, that
+would continue to use `xmalloc()` and related functions.
+
+> I would just call xmalloc as default, rather than calling
+> reftable_set_alloc, because it might be tricky to ensure it is called
+> early enough.
+
+I don't think it should be particularly tricky to call
+`reftable_set_alloc()` early enough. The reftable code won't do any
+allocations before we set up the refdb. So calling this in our `main()`
+function in "common-main.c" should be sufficient.
 
 Patrick
 
-> > has found the record.
-> >=20
-> > This is done by advancing two `block_iter`s: one to check whether the
-> > next record is our sought-after record, and one that we update after
-> > every iteration. This of course involves quite a lot of copying and also
-> > leads to needless memory allocations.
-> >=20
-> > Refactor the code to get rid of the `next` iterator and the copying this
-> > involves. Instead, we can restore the previous offset such that the call
-> > to `next` will return the correct record.
-> >=20
-> > Next to being simpler conceptually this also leads to a nice speedup.
-> > The following benchmark parser 10k refs out of 100k existing refs via
-> > `git-rev-list --no-walk`:
-> >=20
-> >   Benchmark 1: rev-list: print many refs (HEAD~)
-> >     Time (mean =C2=B1 =CF=83):     170.2 ms =C2=B1   1.7 ms    [User: 8=
-6.1 ms, System: 83.6 ms]
-> >     Range (min =E2=80=A6 max):   166.4 ms =E2=80=A6 180.3 ms    500 runs
-> >=20
-> >   Benchmark 2: rev-list: print many refs (HEAD~)
-> >     Time (mean =C2=B1 =CF=83):     161.6 ms =C2=B1   1.6 ms    [User: 7=
-8.1 ms, System: 83.0 ms]
-> >     Range (min =E2=80=A6 max):   158.4 ms =E2=80=A6 172.3 ms    500 runs
-> >=20
-> >   Summary
-> >     rev-list: print many refs (HEAD) ran
-> >       1.05 =C2=B1 0.01 times faster than rev-list: print many refs (HEA=
-D~)
-> >=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ...
-
---5ZjEtHhyaDZYrKwi
+--kTfNeoJctf3ts5so
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYUs5QACgkQVbJhu7ck
-PpRBiQ/8Du/9DzlaZo0XTyq56Ps3B3kSS1u8mNHYTf1ylr4Dj2yja/V/npr77cxU
-VeVlE/jAmw3cBMYGGIEye99fDLgQKESFg566JI9Fwo0s9953ek3aovoaKbJMaZIL
-eV5asQjzQjAhZbsLaslFZK5ZfU2m3AO3eil0/45mVzWOlEc2OCAiWQIbeVuj+zLy
-s/RKBP3agku16O5J+LbqeCMAuQhg5JzRGQfH6qMqNvhjGf/acxbSGNTEL40XQ7Og
-ccfai/LuxSGqIj0scfq8cjylxgmUGbVUkFGAbuKl3wvyHkuV+O4YZ08l0/LkKHbM
-q9BxV4SwdFqZaJcApEXD49CfiKSb4gNhCkxmn8UOcmvwPHk1j/9CtJ+R5EPQKL86
-T4j4n2Ag0QmR7sqfZMDiEWhSJ9Ithe0rIITpLbuJX8mEsObF8pxi7AMSmJJ/i2Qb
-YvfC+1VilcgL3Mc3SdARz5ov6FG4gAji43XU4ICxTmU+M8vXv5vVyPVUudMM3vOv
-hViPmS6erUFCn1uvVjPv/+tPdySdN+h8YJM14PtjzAc47ddpdFSUfBaZ1EZz4o0c
-zTUJFjKLABGkFzz9VK9y8XZqDQyUi7lYBPlAirBV9IO5Z1GGqfJXt36B/g2QGaF0
-SdObK1Xw8W54j5z7LSZWKv0N5udii58BCHNV8IJy7LbIwMQP58g=
-=xyg+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYUtNIACgkQVbJhu7ck
+PpSj1A//d2bNmBQjzF2GHQElffMryt/eFOlWtifpfqtgIFP83eYmW+br/KS+iN4J
+1IvOd+Y/th9NLbRV7rZn6zSJqLpIe/StckMn1YOuHHhFy5lRtasVltQpCZxHU5EQ
+DlTCSrZVgx7XSAXaen2KfbMJnZ6b7zbTokzfHNHJjRfSLTnClXYhA+EXtwQAKyk9
+KwpdydTyfXxKbyLXHOpAXmlqnfIftln0mR39IBTIFxXFDrxSFE27omzaImn/RKTU
+4pNoSrSFaLBSLTfsKOq01txQmycsZ7+dhGDlrKZt5Fp/Hz5waHkQmj7ZBOgF+HRC
+KujxXM7Owyf4HV/DvLTOoYK56ona/Jwn64cpzmYhBFDc8lPHnPqi5g9TGCXlv9Ry
+SWIvaFB0m/+ZkThSEdd8FPwTg6dQUNH4DkmGmSvv7ktrEax8/xdc+nFgQ2I5cjWO
+X7DZXbsIuLTSqtihXXGBMRAzQLWIn0xkhCHGYLJwQng7Vl8umuAgIHJ+Vn9xmeFW
+g9/VijoqoAIwkSDHHav+8j/Q8lx9LoDG3WKONwvQsHJhfaqX25YBcAWDlcVdfcmE
+WxBX7SACGb2rkbostsiVZF9Vt0X6cjPGFeWUJP7vPepuaid1mcjIkuI3UVmkDdLX
+3isnzqumc9MVUEe8AIWCi2D9+9tNcmPaDJIMCAmWmvnEZRDKUIM=
+=iD4a
 -----END PGP SIGNATURE-----
 
---5ZjEtHhyaDZYrKwi--
+--kTfNeoJctf3ts5so--
