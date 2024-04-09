@@ -1,249 +1,74 @@
-Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8526412D1E7
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 12:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E373E12D1FD
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 12:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712665245; cv=none; b=mWmXUkUcaQjP5A0MDMICVyjFovd/Gz4F4HOrMQAtBTkkUm62BqKz/bKGSc5cSqPe7hp+gjk90VLMYnAS9q7FBofvXQH8jKXH6ct8I1LdDTfAkh3cFD2P6bIavvMheolSBQxE2mhneuMYzkbQI8qKamlbP1fDziumw9ZFpkTZrLc=
+	t=1712665633; cv=none; b=kSoj+gQGmtRMlmgdpCv4sU5OpietuRTKGhftVWG0GTzfSZ4HGahca/3UgZ3RNyctfj5ZTiGVZlJxQHG+8VFHYYs6+7SSChkpWuNRALZU35AWrUhW4NsisOrpN21CMTu1sFt9Ks7RP/Hapbdk08W3aZWlndiYTecJiFX2z6x3XIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712665245; c=relaxed/simple;
-	bh=dU0Z15geqm/DMs/YNzI0OWF7uPmNmWIm/XwIPZp8p98=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TwDPokd519NGFGRbU50YsMLNgVs/qyEslPtk6fMpFQb0fIHhIlT9bOx/bnsp2RVvbqRcMH+2uCvoderUdxC7gSReVHf/MZB53pLXaVlutWYLMSZONtHVYT3xXYyAo6Wc717DbPfZyqTA4ef9uy8ECSLXDoDhNOzLpazgpIJDqcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=XHMSJQvH; arc=none smtp.client-ip=46.232.251.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="XHMSJQvH"
-Received: from localhost (unknown [IPv6:2a01:41e1:151f:e600:8468:9962:e0b9:9e30])
-	by smtp.roethke.info (Postfix) with ESMTPA id A65061E0004A;
-	Tue,  9 Apr 2024 12:20:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
-	s=20200807; t=1712665235;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gcqzsYbw/BLdXVRUJNEWp2foL1JjAPrmC+SgNAa4P4Y=;
-	b=XHMSJQvHOQGHW9DTRGuy+UJ9oh04dJ1eHCEenhW6ChtbmmOFyC4RPJDLzfjOwvG/FnUo8o
-	us0JrGsdvWChyrjm/a8wyY4TECsWVl6RhFXV2MelvcStKbzs2XyGpWmG+qMmoLmByLeFp2
-	BkHsRdwgrB3gMoI4Kx5Mr6Gh3EFo0pcYROKdbvu4VTOtvsYeBu0OX12LTTrMcEpzktKigc
-	lXUxCVvvUsbMHXCWWKVhgW3TZl9s6oZGmJF28ykVBTPMVebX6AXbSawkaL4KG21Vs6NviW
-	rKuJuiB34+30s0WR21IKOeHIZh9PbfD57X3hTHUkS9Jg/yNN9h4amgu2WvWqJAiJ0NXQH+
-	+k+6ZMKEnD0eAnF/SSe28MRrSaf+S5KSjUhTaSvAY+hU8WSCc2oDNuwos3K75B13q0koyr
-	H1twtVl8i5EaW1DPqG+grY5wUJwQflYOp4drdCFuklFbKGPrE65aPMyBX9B4M1NW2XzP0r
-	Kz+/ebvCuWW8/GnrSYE0TmCnh7eherw/Fb7VWcB2wnaQlTfcrLba8xzPIEO8YSVt9cFGmZ
-	cl8HDx+uHo5v6D8NURJjA/RQPG4EfbFxI/rTl2xFtXlN9tfeGg7zKjP33YJ8Nkcn4sdvLh
-	aHqxSrwArO78oZJ+zocykL55tzFZwpdl7Wj/SNHODfPVmKDfe7VGE=
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
-From: =?UTF-8?q?Marcel=20R=C3=B6thke?= <marcel@roethke.info>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Marcel=20R=C3=B6thke?= <marcel@roethke.info>
-Subject: [PATCH v3] rerere: fix crashes due to unmatched opening conflict markers
-Date: Tue,  9 Apr 2024 14:13:51 +0200
-Message-ID: <20240409121708.131542-2-marcel@roethke.info>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240218194603.1210895-1-marcel@roethke.info>
-References: <20240218194603.1210895-1-marcel@roethke.info>
+	s=arc-20240116; t=1712665633; c=relaxed/simple;
+	bh=O943G0HahG3fQaycyBmbkYrhxuovKRfH0X7DFdd+Olw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gMwVsa1c+kzRln2uAg+n2c9pJPZ+DT3Scwrr5p3a93UE/ArKqgXu8RBqSHfRmIFGaD9/J9X7athL6x0avlidJMpO6i2RR4sWJMPW7zll34B+CeIBvPMlZX0aKJCHD0zC/dLdV66Fn01V7aas0m3cNVv1+UljTG/UyTmxxzDW/II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fisherfam.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fisherfam.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcc84ae94c1so5788227276.1
+        for <git@vger.kernel.org>; Tue, 09 Apr 2024 05:27:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712665631; x=1713270431;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M+kPhAwFDpXtrRYbT4cVa4wOq4cCqLgVVG9Y+aNgdl4=;
+        b=CGK6IPQrT9pncLNowD4Flhxdgd7VCaQ6ONyhrPAEQYiZgh2lBjl05+mrSzPNYtI7MJ
+         Um1nNnQ0sgt77hPWLtc1A1w2c3V4Hs710RLyK1GvBMT6vfAJDM6hX06hENSU8koblxAH
+         8EqbJeQrOeWno0dZqfwrYRlNl7pv2CyqKXn4or75U56eLDbRNDfzMwQ9XbaExD2nO7v2
+         CkAjSLOfHZ5/rzgbkJytXpjPOROCfOT86OeMSYLD7v4kzzN/w+EILxEg1jQPkOg/PVbX
+         uso6h01QIRUeok+jR8sWmqij9nDW0rJcpuXNR5hMu7W/IMd+U4V7f81f5LZqte9Fx71m
+         drIw==
+X-Gm-Message-State: AOJu0YyuPbHIFqR56ByxsOFa+2vl0k0R7FHjdPFjdpuGder4P5O0vPX5
+	UbX15h6p7qiZy+gfq3Fm3kEOXdj9dTbSrfqsGV/CljZSVMLvzIF654MCBAnf/bvgOGgQ5tV045h
+	Kc/MSQUSgbeXpItDUB5Y9fpNKz2s=
+X-Google-Smtp-Source: AGHT+IFWdpu7Xo6dc6ivdXIJQ6zygfsiPqMa0Yl3U7nMqHQQ+m9V7zeeEc25fjb9Lqxm5OF+hIjL/HbSirxPWp+BA/A=
+X-Received: by 2002:a05:6902:1101:b0:dda:a4ba:2a5 with SMTP id
+ o1-20020a056902110100b00ddaa4ba02a5mr9627307ybu.63.1712665630881; Tue, 09 Apr
+ 2024 05:27:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240407212109.35131-1-benji@FisherFam.org> <xmqqr0ffbvjq.fsf@gitster.g>
+In-Reply-To: <xmqqr0ffbvjq.fsf@gitster.g>
+From: Benji Fisher <benji@fisherfam.org>
+Date: Tue, 9 Apr 2024 08:26:58 -0400
+Message-ID: <CANc=FSNXzsFqzbgGs3CVAPxtxske_DEorNrk66gvYe2+1d_PAQ@mail.gmail.com>
+Subject: Re: [PATCH] MyFirstContribution: use switch for changing branches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, nasamuffin@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When rerere handles a conflict with an unmatched opening conflict marker
-in a file with other conflicts, it will fail create a preimage and also
-fail allocate the status member of struct rerere_dir. Currently the
-status member is allocated after the error handling. This will lead to a
-SEGFAULT when the status member is accessed during cleanup of the failed
-parse.
+On Mon, Apr 8, 2024 at 1:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> For this particular patch, I do not see a compelling reason why we
+> should make these changes.  It is not like MyFirst* documents
+> consistently uses "git switch" (and "git restore") in other places
+> and these three are the exceptions (in which case that would be a
+> very good justification you would describe in the "observation"
+> paragraph of your proposed log message).  We are not deprecating
+> "git checkout", either.
 
-Additionally, in subsequent executions of rerere, after removing the
-MERGE_RR.lock manually, rerere crashes for a similar reason. MERGE_RR
-points to a conflict id that has no preimage, therefore the status
-member is not allocated and a SEGFAULT happens when trying to check if a
-preimage exists.
+I was under the impression that the new "git switch" and "git restore"
+commands were recommended in most cases instead of "git checkout". If
+not, then I withdraw my suggestion. I apologize for making noise on
+this list.
 
-Solve this by making sure the status field is allocated correctly and add
-tests to prevent the bug from reoccurring.
+Thanks for considering my patch. Thanks even more for maintaining git.
 
-This does not fix the root cause, failing to parse stray conflict
-markers, but I don't think we can do much better than recognizing it,
-printing an error, and moving on gracefully.
-
-Signed-off-by: Marcel Röthke <marcel@roethke.info>
----
-Interdiff against v2:
-  diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-  index fb53dddf79..1e80f76860 100755
-  --- a/t/t4200-rerere.sh
-  +++ b/t/t4200-rerere.sh
-  @@ -671,4 +671,67 @@ test_expect_success 'test simple stage 1 handling' '
-   	)
-   '
-
-  +test_expect_success 'rerere does not crash with missing preimage' '
-  +	git config rerere.enabled true &&
-  +
-  +	echo bar >test &&
-  +	git add test &&
-  +	git commit -m "one" &&
-  +	git branch rerere_no_crash &&
-  +
-  +	echo foo >>test &&
-  +	git add test &&
-  +	git commit -m "two" &&
-  +
-  +	git checkout rerere_no_crash &&
-  +	echo "bar" >>test &&
-  +	git add test &&
-  +	git commit -m "three" &&
-  +
-  +	test_must_fail git rebase main &&
-  +	rm .git/rr-cache/*/preimage &&
-  +	git rebase --abort
-  +'
-  +
-  +test_expect_success 'rerere does not crash with unmatched conflict marker' '
-  +	git config rerere.enabled true &&
-  +
-  +	echo bar >test &&
-  +	git add test &&
-  +	git commit -m "one" &&
-  +	git branch rerere_no_preimage &&
-  +
-  +	cat >test <<-EOF &&
-  +	test
-  +	bar
-  +	foobar
-  +	EOF
-  +	git add test &&
-  +	git commit -m "two" &&
-  +
-  +	git checkout rerere_no_preimage &&
-  +	echo "bar" >>test &&
-  +	git add test &&
-  +	git commit -m "three" &&
-  +
-  +	cat >test <<-EOF &&
-  +	foobar
-  +	bar
-  +	bar
-  +	EOF
-  +	git add test &&
-  +	git commit -m "four" &&
-  +
-  +	test_must_fail git rebase main &&
-  +	cat >test <<-EOF &&
-  +	test
-  +	bar
-  +	<<<<<<< HEAD
-  +	foobar
-  +	bar
-  +	EOF
-  +	git add test &&
-  +	git rebase --continue
-  +'
-  +
-   test_done
-
- rerere.c          |  5 ++++
- t/t4200-rerere.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
-
-diff --git a/rerere.c b/rerere.c
-index ca7e77ba68..4683d6cbb1 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -219,6 +219,11 @@ static void read_rr(struct repository *r, struct string_list *rr)
- 		buf.buf[hexsz] = '\0';
- 		id = new_rerere_id_hex(buf.buf);
- 		id->variant = variant;
-+		/*
-+		 * make sure id->collection->status has enough space
-+		 * for the variant we are interested in
-+		 */
-+		fit_variant(id->collection, variant);
- 		string_list_insert(rr, path)->util = id;
- 	}
- 	strbuf_release(&buf);
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index fb53dddf79..1e80f76860 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -671,4 +671,67 @@ test_expect_success 'test simple stage 1 handling' '
- 	)
- '
-
-+test_expect_success 'rerere does not crash with missing preimage' '
-+	git config rerere.enabled true &&
-+
-+	echo bar >test &&
-+	git add test &&
-+	git commit -m "one" &&
-+	git branch rerere_no_crash &&
-+
-+	echo foo >>test &&
-+	git add test &&
-+	git commit -m "two" &&
-+
-+	git checkout rerere_no_crash &&
-+	echo "bar" >>test &&
-+	git add test &&
-+	git commit -m "three" &&
-+
-+	test_must_fail git rebase main &&
-+	rm .git/rr-cache/*/preimage &&
-+	git rebase --abort
-+'
-+
-+test_expect_success 'rerere does not crash with unmatched conflict marker' '
-+	git config rerere.enabled true &&
-+
-+	echo bar >test &&
-+	git add test &&
-+	git commit -m "one" &&
-+	git branch rerere_no_preimage &&
-+
-+	cat >test <<-EOF &&
-+	test
-+	bar
-+	foobar
-+	EOF
-+	git add test &&
-+	git commit -m "two" &&
-+
-+	git checkout rerere_no_preimage &&
-+	echo "bar" >>test &&
-+	git add test &&
-+	git commit -m "three" &&
-+
-+	cat >test <<-EOF &&
-+	foobar
-+	bar
-+	bar
-+	EOF
-+	git add test &&
-+	git commit -m "four" &&
-+
-+	test_must_fail git rebase main &&
-+	cat >test <<-EOF &&
-+	test
-+	bar
-+	<<<<<<< HEAD
-+	foobar
-+	bar
-+	EOF
-+	git add test &&
-+	git rebase --continue
-+'
-+
- test_done
---
-2.44.0
-
+--=20
+Benji Fisher
