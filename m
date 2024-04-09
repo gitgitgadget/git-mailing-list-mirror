@@ -1,161 +1,144 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AE454743
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 03:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB916A00B
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 03:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712633869; cv=none; b=jJYmfB/4DvQFsgrkFCs+V1QUy+1nZ78s60Dj2/zm8sulWkMA5vKyFlw7M7n/8IKjA7E69Ba/AfVWkpwpVuseERBmNsOy/ECu5DHydgYlrG2ZNfbygWFm7j/0z2sRVaXPjvTg1hoavQ/wBDzKE3kQTnf/UEkk2NJBM5N2GCqbkXs=
+	t=1712634211; cv=none; b=WVe6hbK1HUkFTeLOppt1Xq33KJ6zwhytEncRVbCTAzPCFSqw94g/ZNkojHwtWx+Ggbxc1vhctIUvkYDGKYYc2FOM4cXKj7bVtGLOVKWmDwciKYCLXCeRgJnudJte3JP/e9CcfN1hNlkAL5oQceByUuV76iP2ixL/rWRoN45v9Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712633869; c=relaxed/simple;
-	bh=aq9TVOEN6u9RU3w4VY/WColFKwbJV563RA+6wXR9ywg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=r8PnfZ9byTE+gCDK0tuNqSNfuED+P/cv5uGUqpzf7gHhFre81EvJzmnN0xo6VpFhujCtri8qhjYS/FmSxKRkJ0TrkFw9/B307jR3IK/BFOpFMGeIFoUdTTEo+e/n8GP0rg+h9OzsKF2OPmFBh8bg98GI51RdLVkglHHyP5WOadY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=OrBgDvBG; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1712634211; c=relaxed/simple;
+	bh=wDbhXQ/PWVcVNno/FXLSd6fgYR4RkacP5yxsVKrn+jg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uMSIPzKfJXxWBkgh5c3oV9600v+o9zNBqVOxnuSwdlYBwaQYZaPaJOa0nKJVbbUBLOchu4uCh1aFP4Nhd7GBZoyVeDVmuzxSHTKl9wlqYsAr+idI5haylIi/HIDZTD9zao6TN3cNV5FDbXyoVkadaVRp0FeQnZLg5jhpHHFPhMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QYUlkhA9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J/oFzzBL; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="OrBgDvBG"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QYUlkhA9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J/oFzzBL"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 5BCC11380138;
+	Mon,  8 Apr 2024 23:43:29 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Mon, 08 Apr 2024 23:43:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712634209; x=1712720609; bh=IbfPsLf3Bg
+	dnbO7SSS+rcJMHVlAfE44HpP6HLQp8VPo=; b=QYUlkhA9ryV9YDjon5+lCcSO8m
+	48+t9FGR1one6c+TxI4/AQsa9Q4rbsFnUhO9Sgp5ZwgKpAJpou8ycAtv97uPuoGr
+	SAilpIzXUjM4DRBkBPZx6nB9lV6Z5vMcFCsP1aXsboO3m8AmRvB+UFcS/15xTzi5
+	o2gHLkk4QFXAlL4/zR1tuRbRPt4kpyRI3TURuGOSg5e7b6BzA4HjoB6jhmQxgLO8
+	pZ73aaBSqRPHVNILgifr8Rd6Knz3fOSewhzGnEdEbMrGRurF3GNBBcvgxGnYm0/G
+	MNO46rGwErgFa3ZnDQrwptbHDjBbrijiF5SJYv12inCYX55X10A1sm8wBCfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712634209; x=1712720609; bh=IbfPsLf3BgdnbO7SSS+rcJMHVlAf
+	E44HpP6HLQp8VPo=; b=J/oFzzBLe1EkGapcxVcz4gSBYi/QPrFj1J1934sXtcly
+	HV0WFaoXFc8c+rudzOV2PBQmj0vjmRzkSaK4XtGaAmelPgZN6b65cvy+KNrePOra
+	qSBpinWCDV0cx1QfuhCg1O6DzgvKGFofdGNKeW07bG7i3DHm6eZCRsRoBtF5kdFO
+	Q76M1d7+xPSlhshSnB7/fxmT2Ct4SN8dXvRteZpQy4zIG2DR6kHE0bJr1JPlofAY
+	QqCRIv5riFYz8wMRF5CAK1yYg4U1a3ttsuCI4dqvj0wbEM7uTE+PidSDA76ieGAb
+	3Vw4Z7sI3xPEcbnDYiT8gRrU1hfYhifcLw5n46KXjA==
+X-ME-Sender: <xms:YbkUZhrlSMA3iPRq3him7fvzRRM3IYLaPipVa8Pb40OCkYmjZ3gJXA>
+    <xme:YbkUZjoEzWRYQkooAfwT73BYxCdZKlPKg2308ovWv90DT_JrjaX280rs08sGOzD1f
+    -DMKW74UTzBKW3AbA>
+X-ME-Received: <xmr:YbkUZuNA70XNGFH_kuoqmotnTcAyClGODd7mzKRXGxRGr70VSsSvHK5G7iZQ2laIOje69XKzg_PTNStq-YK-FFbrQBW5qhumm_cfCQ-spqbyI9MCF5o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegkedggeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepvdfgveeuffffgefhuedvgeetkeegffetgfetgfehudetvddvvdeuieefleelffef
+    necuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mh
+X-ME-Proxy: <xmx:YbkUZs7-UavwnzmvzVLLKM8Isopi-E-80FHpZPQg7lOLOzOP-fK_Ng>
+    <xmx:YbkUZg5WAmMgMSR7pfk885EJisi7X3lmMa4Vd7-TR2q6CR6KkJDDow>
+    <xmx:YbkUZkjUHTvIOfn2LDEb5kUxoaoZ64pkhevwLnQ2AGZLzLdRz_JDhA>
+    <xmx:YbkUZi6kaY1BwkYNS5-iEPT57hEceE5hGa1cFDUYR1wYsgJ1-PUPCQ>
+    <xmx:YbkUZtvEgZ8QeGE7h_Rn_fMHEOx8JyEAhabfsqrzf1x3HY7tWq7S7wyk>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Apr 2024 23:43:27 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 1d85361c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Apr 2024 03:43:17 +0000 (UTC)
+Date: Tue, 9 Apr 2024 05:43:22 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 00/12] t: exercise Git/JGit reftable compatibility
+Message-ID: <ZhS5Ws7e0tjwlW6y@tanuki>
+References: <cover.1712235356.git.ps@pks.im>
+ <cover.1712555682.git.ps@pks.im>
+ <xmqqle5n2sbf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1712633864;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wUzEklmF0XTYa8pWh7Rvg4zpcSDTk1apOERZyL7Ag1o=;
-	b=OrBgDvBGfzUHwQzmXrJroEH9lqqCV/P05SYFBs0WHITGZeE+G5GmP2f1lDE2W35yPKLgU4
-	edpx5eR6NBm6u+Ypw3hPf8G4CCukhB6OFWthcr4WMWtzAdAcHpE3eB2y8TW9efDglexZZK
-	oK0QTzKQyrfO5nkiFbhlgBHO6UAvVEvWYXdqLiF98bIj80lR4wvJeBttTvL20KA2I3MQNd
-	UQMx6UDdLphmvkn3gwGaYPUse/FmoCt8kFEHIm8/EzzJ0Zf60xEwH2OhZ/oa7Cz5eNxYNq
-	0HqR/aPs/j7ccWX4gn5qAMxVXfPiIJO3FvxfsYKFkY9D0fNGh4b8Na4B+QZh4Q==
-Date: Tue, 09 Apr 2024 05:37:43 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, code@khaugsbakk.name
-Subject: Re: [PATCH v5 2/3] send-email: make it easy to discern the messages
- for each patch
-In-Reply-To: <xmqq7ch7a7gt.fsf@gitster.g>
-References: <cover.1712486910.git.dsimic@manjaro.org>
- <7f87383089011a98b0347d885b3b9d76cfddb91d.1712486910.git.dsimic@manjaro.org>
- <xmqq7ch7a7gt.fsf@gitster.g>
-Message-ID: <2b24b9e8f0fcb4f6df595c1b0be06359@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qrmU6BXoQJOhGHFL"
+Content-Disposition: inline
+In-Reply-To: <xmqqle5n2sbf.fsf@gitster.g>
 
-On 2024-04-08 23:08, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> ...  To make the produced outputs more readable, add vertical
->> whitespace (more precisely, a newline) between the displayed result 
->> statuses
->> and the subsequent messages, as visible in ...
-> 
-> The above feels a bit roundabout way to say "the logic is that we
-> need to add a gap before showing the next message, if we did things
-> that cause the smtp traces to be shown", but OK.
 
-Yeah, the wording I used isn't perfect, but I think it's still
-understandable.  I'll see to possibly improve it in the v6.
+--qrmU6BXoQJOhGHFL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> These changes don't emit additional vertical whitespace after the 
->> result
->> status produced for the last processed patch, i.e. the vertical 
->> whitespace
->> is treated as a separator between the groups of produced messages, not 
->> as
->> their terminator.  This follows the Git's general approach of not 
->> wasting
->> the vertical screen space whenever reasonably possible.
-> 
-> I do not see this paragraph is relevant to the target audience.  It
-> may be a good advice to give to a reader who attempts to solve the
-> problem this patch solved themselves, botches the attempt and ends
-> up with a code with the terminator semantics.  But for other readers
-> of "git log" and reviewers of the patch, "I did not make a silly
-> mistake, and instead correctly chose to use the separator semantics"
-> is not something worth boasting about.
+On Mon, Apr 08, 2024 at 07:17:08PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > CI runs for this series:
+> >
+> >     - https://github.com/git/git/actions/runs/8595241646/
+> >     - https://gitlab.com/gitlab-org/git/-/pipelines/1243766428
+>=20
+> Thanks.
+>=20
+> When this is queued on 'seen', I seem to be getting test errors from
+> t0610.  I suspect that it is not a breakage in this series, but the
+> fact that this series enables reftable tests without setting any
+> GIT_TEST_ environment variables, that causes an existing breakage
+> (or two) more visible.  I did not have time to locate which (other)
+> topic introduces the breakage, though.
 
-Makes sense, will delete that paragraph in the v6.
+Interesting, I cannot reproduce any failures with the current state of
+seen (17ff004052 (Merge branch 'ps/ci-test-with-jgit' into seen,
+2024-04-08)). Was this on your local machine or in CI? Which platform
+are you using? Could you maybe provide logs of the failing tests?
 
->> While there, remove a couple of spotted stray newlines in the source 
->> code
->> and convert one indentation from spaces to tabs, for consistency.
->> 
->> The associated test, t9001, requires no updates to cover these 
->> changes.
-> 
-> These are worth recording.
+Patric
 
-Thanks.
+--qrmU6BXoQJOhGHFL
+Content-Type: application/pgp-signature; name="signature.asc"
 
->> @@ -1554,7 +1554,10 @@ sub send_message {
->>  			exit(0);
->>  		} elsif (/^a/i) {
->>  			$confirm = 'never';
->> +			$needs_separator = 1;
->>  		}
->> +	} else {
->> +		$needs_separator = 1;
->>  	}
-> 
-> If you do not add this "else" clause to the outer "are we doing
-> confirmation?" if statement, and instead just set $needs_separator
-> *after* it, it would make it even more obvious what is going on.
-> The codeflow would become
-> 
-> 	sub send_message {
-> 		do bunch of things that do not yet send e-mail
-> 	        and possibly return or die
-> 
-> 		$needs_separator = 1;
-> 
-> 		do things that cause the smtp exchange and trace
-> 		to be emitted
-> 	}
-> 
-> That makes it obvious that the purpose of $needs_separator is to
-> record the fact that "this" message has already been sent and we
-> need to add a "gap" before attempting to send the "next" message.
+-----BEGIN PGP SIGNATURE-----
 
-Very good point, thanks!  I've somehow managed to miss that while
-iterating through a few code variants and the associated testing.
-Will be improved in the v6.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYUuVkACgkQVbJhu7ck
+PpRj6g/8CbCdB+td8YUrY3nbNEb4yZ+tFMF+FnoqvGujCQNkJak207u6PWe5rNAm
+UuBBQLsfxo9KY32U5sXgLvI494VCT2ScjFrvLsd3pVLAqpW0WSiDERpRBkQ/IYai
+IrXjj4aztBpniSstf5YUFhdNKejFHUZCe26oBKs6liqgyJMwjILjb4sRPCD1PQCj
+nge4ee9UGceEc68RbaUQYfDG25BNmBT7I3GqoEChTVM6DCmDmfTBySqMbepKdcep
+2IsLYiG3eMOCJNH4BvWXau94GJqq88TkZ58603uGqWOTbA0cUrmLBfEmGvqMAlJO
+addHQIUflnmfhCG76tXS/dr0U6r+qRfZ8aySRsLMEE5UsCK+jENz6jrYgig/oSDD
+BeADGEgKBoTN0BqvnfzrlMGZmbuC+MXTU76Z8+RS95r9xrCx759/3y76yc2DIktS
++3QzHfQp0w0FzLNpfaxfGLfgJ4DO8+n/dO8LKNic2l3Ea8d8uznnJKvHHP+p7yud
+Kk/zDPVi5jV3N5lNsb1hPHitDkSc1EWEWHH4Z1rkZdKeK8cXjc/4z3gr+brVaQxE
+fxsMtWcJb9rcJ3Whc5jMyKX3JpHfLTebE0S/rrHv95Z/vb4BYfO7O5a0IJbCIsSw
+ljtbuhUQiTOXNfftJHK7onfabxjcSWpL3jdBXuSS4Y4ssFRjD7g=
+=RnSC
+-----END PGP SIGNATURE-----
 
-> Other than the above points, very well done.
-
-Thank you! :)
-
->>  	unshift (@sendmail_parameters, @smtp_server_options);
->> @@ -1576,7 +1579,6 @@ sub send_message {
->>  		print $sm "$header\n$message";
->>  		close $sm or die $!;
->>  	} else {
->> -
->>  		if (!defined $smtp_server) {
->>  			die __("The required SMTP server is not properly defined.")
->>  		}
->> @@ -1921,7 +1923,8 @@ sub pre_process_file {
->>  sub process_file {
->>  	my ($t) = @_;
->> 
->> -        pre_process_file($t, $quiet);
->> +	pre_process_file($t, $quiet);
-> 
-> nice ;-)
-
-It had to be fixed, IMHO. :)
-
->> +	print "\n" if ($needs_separator);
->> 
->>  	my $message_was_sent = send_message();
->>  	if ($message_was_sent == -1) {
+--qrmU6BXoQJOhGHFL--
