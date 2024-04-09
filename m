@@ -1,89 +1,87 @@
 Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B974C69
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 06:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F494C69
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 06:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712642657; cv=none; b=bamxyfXL+DRf263mGi3yIElJaolCDesSKCvXn6DO/ADl+HsB8fLx2ISnIw8J8PZ0KQcGQ+nO3/4BcPGJEKgNQ7VJ84vqebuKms8wf5jPwG2lTwSHzoBTsjdzXjSHKvlt7n6kcA+cWjFzgdL2UbG2BZp+IsaoFxCpIfnn8ejTysY=
+	t=1712642828; cv=none; b=ndxTPJqjuK/HMgN4Mv1yt7Z3EK21t76bdIG+sTXLTmTjxP2Kg/v5CM0L9gkiKuPirXHTwm/9+g594rMSV/TaDwuACi4w6JDrPBu84nppp7FipPYEzdMduvJDP4r64c7fvg/H+nOn+PgS3spBm1KlfOFBeOR0RuO+Pj3yfHIOifk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712642657; c=relaxed/simple;
-	bh=RK03XWElM9292hkz27Z140Z2N+6MndRmp6z0wiMfRUU=;
+	s=arc-20240116; t=1712642828; c=relaxed/simple;
+	bh=OE/TrCanZPnzaXWXokXvaE4VvF0+9KOPEZDmxTumA8w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZwIt0WnZgNlvBsazfus1zaubXvTCijXrWeEgytIXcoOYcep6FhUU3FFoYaLlmiX4yyczEdz9SU3H50dgWeiR7F16uKJAhQE902UekwZ8gr+VvXXhb3UT5nYXAEN3rpkIm5Y1iN7Djn6E74Bt81JFFAj7O8Xq1heotQ3QNIbXC+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AfvuEAoj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r82FvFwE; arc=none smtp.client-ip=64.147.123.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=FcfRwQZBr9Q+siGd3LTdL3dqVjqOJdf5Xd0F/5QrSxc71ILvKVvz0ErnhfthJ8daC6q1lGMCCViblUB9JVSI0wWdu4oY1IdUaUwvoHJ7ubCQXiM5JQYH2CYBZ4LbiGFJ8AEJJNTXJmmKHsGuTp5tSzjaLC7RQ1vE/JWNFBXLT0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PM+KoCWS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wYLAVlV0; arc=none smtp.client-ip=64.147.123.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AfvuEAoj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r82FvFwE"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 082511C000F2;
-	Tue,  9 Apr 2024 02:04:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PM+KoCWS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wYLAVlV0"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 6025C1C000FB;
+	Tue,  9 Apr 2024 02:07:05 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 09 Apr 2024 02:04:15 -0400
+  by compute6.internal (MEProxy); Tue, 09 Apr 2024 02:07:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712642654; x=1712729054; bh=RK03XWElM9
-	292hkz27Z140Z2N+6MndRmp6z0wiMfRUU=; b=AfvuEAojwJW5RlXSa63vQ44Ht2
-	eJQTwiJc3EoePFCYHYDVg9aMYzBwu1VwlZxT6Hsa6FGtZ75+bcL9VpUGsGJs9vJY
-	JYZVPowAFl+PKdLL8wGgYJ0g2w/Fp2YryGm/2FZouGJQQoJz62R4s9pKaVIDwqW/
-	5kmpB3EhW/ShZ45nSB4dDVdpfPdYTAerBdgP/kbGsmAbr3+xgx6uPLRwp9aybrm6
-	aQUBJJca+Z7YMVocn4daZfVAfsBpEk8u4gtL6+uyvoJPiubZtNibisubXg5A66vS
-	PG6RTBrD6Jq/Pow9sWGa4oOjzMrcooUgFxo4+I4IbTqm50yV0SZj0IGlPB2Q==
+	:subject:to:to; s=fm2; t=1712642824; x=1712729224; bh=hZHIZto8nC
+	X4DEoO56vxVK9dTEs9TLMtEjhcraE2Gwo=; b=PM+KoCWS2LYlKH9L0tN5q0+ccs
+	cfzbqCnGcxlvzXWjfaJ40eHJ5GTE6Owwa+ulSrqBWbQ59dADjjvug6fm6UthD9tj
+	wFeShvxkUjReESZ3RcZ22p0o3npXu2HAWSjsoK3bLT51/FrsKlE9GgqyWtleNFU4
+	UM4a1WKp5aUGXdTp8g8K5CLVL2qZbKab6UCi4/ijl0bn8cDOSGHFkO3XuAix69OC
+	Iu2W81kKWGCXOu8mmGqsxs0ETBzHZfEJcLm8fu5YDSzrxTOMBNe7E9MoEVloMFYq
+	f4TXHz8V49wcRP+mOi7/D+SSWRGSjCmFPe0e8cD1vT8ePGyOCLcHXHnR2L8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712642654; x=1712729054; bh=RK03XWElM9292hkz27Z140Z2N+6M
-	ndRmp6z0wiMfRUU=; b=r82FvFwECOvmyHDyFlsDD/WeYQzXW2IM64ikHe0WMjT9
-	vU97YX7Y1fMICimkwBlCQpdnemFgzsouTUYykfo1QKEjhSTPQPSpMNO34wL975CZ
-	j138X/K0K2Gr6Xt06I5g1QC35ngB8Rie9rz16gXQNXVIEVLAtI8hKoitPEp3HV30
-	8eG6bw31+SvasX7JueSCPC9tu+Xf67+QVahqFfnOQrlk+LilPUekE9jaq/ZBNjUv
-	0gkvTB0WqWNhuVal0oCd+oULkRt3Vf7bhHhrg7eJOlYQDQcjHEn7llD/rQlDDj3u
-	ZA2ILB21FmnQpV4rxIWIIo6vXAsWzGjLZnkaas8ohA==
-X-ME-Sender: <xms:XdoUZoyTA77LILX3PA-9LhOJE0Far-SwMkZ4Lhu9eW_ToC1YEhxvyw>
-    <xme:XdoUZsS2G9MGvrfZvWfPoe_c1vP6sWCkSvujosQQP3IHlgBPR5tsMmPrgjTpVFqsv
-    F7cvtHySHAszBy1DQ>
-X-ME-Received: <xmr:XdoUZqVBETXrmuoIgdJa2-PQ8MZ1adnsDSyfX5LdhHbukmPcAazZZGXbrDrAjJV4yv5LQa9b-LxxVKWAUr4NSAiYvVYfZQJnewxYJ3RLyf_5lzroFFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegkedgjeejucetufdoteggodetrfdotf
+	fm2; t=1712642824; x=1712729224; bh=hZHIZto8nCX4DEoO56vxVK9dTEs9
+	TLMtEjhcraE2Gwo=; b=wYLAVlV01Pcp5E5L5I7NR1aHAa4tjECJP+9OD1jg9koJ
+	bssaPMv6mYfGjyJcJ10LynOQKLYC2Eo45KyQS6qm93Cd47tW3GhsxFaPtrcY2v8D
+	d+pTQTW49tSRHQ/E0/tSHrEt91PBQLXNyckSONyH7/VUKb+WgWy/gJg/TcUNm9h4
+	L/dgCX8Nj11KCLNS1Uvd9+maQW76owS26iEZDaXvWZ+qURdsNKgO1hhfSi0tA9Qw
+	cqGweV2TRKf86JQjWSKw1vSGmz3BN//YzJyr95H/1MQjaLBtFWNtlRufDxa5hcyI
+	Gl52pTyMWmLG4p39psGB22oYHHWgNygBhrAgGChhwA==
+X-ME-Sender: <xms:CNsUZgxSOyxMfqpX0mVH6oqqC4js8HceQ65WZK02kl7lLv1A4y1jGw>
+    <xme:CNsUZkTT_nMf3nO4e3RWEEXoUC6EtgytaNYRvZqD1IDwRK5cn3w8Z9SJFRodP7XDJ
+    nUlKwhGPpVVbpIkyQ>
+X-ME-Received: <xmr:CNsUZiVkXwd8py77U6V1F6sQNzrQltFifoE-ZXcZgx2HmR6V21mZtC41GHDrg5KyNWZgQKSbr_Jqcw9QzFUGmj7lnH7Lsl5APgvY4bTGDBOpE-DLzxI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegkedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:XdoUZmidUviDNMxW-_nR0u8JwGZvG_6DTRMXyAJXOOCcFnrp2AZZYQ>
-    <xmx:XdoUZqA5vHz2R8CGWLo6SdxMiQOa93uUp4_L0ak3E86uS3k4FbNcmg>
-    <xmx:XdoUZnLlUJghyfXtdXpV4dFDAzQsaEOVekX87RZsZ-24xtQGLoPf5w>
-    <xmx:XdoUZhCvS1wPNyGOwIbKoV5ia-FGQQDFl5UFhqwbDPq_3we2wIz7nw>
-    <xmx:XtoUZgB6sBQSsAU7zAQim_8AEcffV5TyCRJn6MEDNqpUlX4U7j-_pzZ0>
+    hrnhepvdfgveeuffffgefhuedvgeetkeegffetgfetgfehudetvddvvdeuieefleelffef
+    necuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mh
+X-ME-Proxy: <xmx:CNsUZuhNloSg9zYf7x9FaeyOBiJx74viqEfRdmdWD-kxF5LMiQ2kjA>
+    <xmx:CNsUZiBgIbzkVz5IxWY3lZ_-LyX4Iu7-OsDj5L5Ufl6epgnwVaTlgg>
+    <xmx:CNsUZvJJ-fTlk8dP-Pkc5JYb6Ja9ppuSJUjBNkbh9DM4v4SSCOp0XQ>
+    <xmx:CNsUZpB5ScA9eu_fDula9XXWeMfBiTN8Hwlx0WOsVkA6PF9KEjdb1w>
+    <xmx:CNsUZk1SkQqq3q2vH4LOQE8625GxufLMOhc13b-PPjideTZ--oQo42T9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Apr 2024 02:04:12 -0400 (EDT)
+ 9 Apr 2024 02:07:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id fbd884d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 9 Apr 2024 06:04:00 +0000 (UTC)
-Date: Tue, 9 Apr 2024 08:04:05 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id d86fe65d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Apr 2024 06:06:54 +0000 (UTC)
+Date: Tue, 9 Apr 2024 08:07:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?iso-8859-1?Q?Rub=E9n?= Justo <rjusto@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 2/2] rebase -i: improve error message when picking
- merge
-Message-ID: <ZhTaVfEEza0Z00em@tanuki>
-References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
- <pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
- <fbc6746e0188ed7b69c238935ec85b69112ddd79.1712585788.git.gitgitgadget@gmail.com>
- <xmqqle5n7ajt.fsf@gitster.g>
- <ZhS-IllueSZa1NXs@tanuki>
- <xmqqh6gb2kdz.fsf@gitster.g>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 00/12] t: exercise Git/JGit reftable compatibility
+Message-ID: <ZhTbBIdYrKdodL8M@tanuki>
+References: <cover.1712235356.git.ps@pks.im>
+ <cover.1712555682.git.ps@pks.im>
+ <xmqqle5n2sbf.fsf@gitster.g>
+ <ZhS5Ws7e0tjwlW6y@tanuki>
+ <xmqqbk6j2j5u.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,54 +89,81 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GtsckzvyIeyZGubd"
+	protocol="application/pgp-signature"; boundary="oKREhdAMcJanrrOZ"
 Content-Disposition: inline
-In-Reply-To: <xmqqh6gb2kdz.fsf@gitster.g>
+In-Reply-To: <xmqqbk6j2j5u.fsf@gitster.g>
 
 
---GtsckzvyIeyZGubd
+--oKREhdAMcJanrrOZ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 08, 2024 at 10:08:24PM -0700, Junio C Hamano wrote:
+On Mon, Apr 08, 2024 at 10:34:53PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > So I think it's okay to not mention the exact commit here because we
-> > cannot reliably second-guess the ultimate extent. My basic assumption is
-> > that in many cases the user may not even be aware of them trying to pick
-> > a merge commit, and that it may not have been their intent.
+> > On Mon, Apr 08, 2024 at 07:17:08PM -0700, Junio C Hamano wrote:
+> >> Patrick Steinhardt <ps@pks.im> writes:
+> >>=20
+> >> > CI runs for this series:
+> >> >
+> >> >     - https://github.com/git/git/actions/runs/8595241646/
+> >> >     - https://gitlab.com/gitlab-org/git/-/pipelines/1243766428
+> >>=20
+> >> Thanks.
+> >>=20
+> >> When this is queued on 'seen', I seem to be getting test errors from
+> >> t0610.  I suspect that it is not a breakage in this series, but the
+> >> fact that this series enables reftable tests without setting any
+> >> GIT_TEST_ environment variables, that causes an existing breakage
+> >> (or two) more visible.  I did not have time to locate which (other)
+> >> topic introduces the breakage, though.
+> >
+> > Interesting, I cannot reproduce any failures with the current state of
+> > seen (17ff004052 (Merge branch 'ps/ci-test-with-jgit' into seen,
+> > 2024-04-08)). Was this on your local machine or in CI? Which platform
+> > are you using? Could you maybe provide logs of the failing tests?
 >=20
-> Hmph, if that assumption is really true, would suggesting "merge -C"
-> be the right thing in the first place?
+> Local execution on some variant of Debian testing.
 >=20
-> I do not deal with non-linear stuff in "rebase -i" or sequencer, so
-> I may not be a good person to judge how good your basic assumption
-> is, though.
+> The tests that fail are t0610.29 and t0610.30, both of which are
+> "honors core.sharedRepository" with umask 002 and umask 022.
+> They expect "-rw-rw-r--", but actually get "-rw-rw----" when
+> the user's umask is 077 (or 007 for that matter).
+>=20
+> If you add "umask 002" or "umask 022" near the beginning of the
+> script (e.g. before including test-lib.sh), the tests pass even when
+> the user's umask is 077 or 007 when the tests are run, of course, so
+> there is something the test must be doing in the test repository
+> before it forces the umask to 002/022.
 
-Yeah, neither do I. The assumption really only comes from my own gut
-feeling, which can certainly be quite wrong.
+Indeed, I can reproduce the failures when I change my own umask. This
+issue is unrelated to this patch series -- as you mentioned, it is only
+being unmasked now because we increase test exposure by dropping the
+prereq.
+
+I'll send a separate patch series to fix this. Thanks!
 
 Patrick
 
---GtsckzvyIeyZGubd
+--oKREhdAMcJanrrOZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYU2lQACgkQVbJhu7ck
-PpT/kg//UG3886oR4XhSggDEBYafkd/18QDW1lSIdC6V7jWltUViFtieR3sh2TRH
-FjJp6hoy+8LaAU6MxTecJMpzxugZZdzL8tXe+pBU1836d+gO9h5u5BYBgryR6vIW
-rB8YaSTTg84WLcQRtlPCdaGAYB66PME9/oDFN2nG65D3HVcKnO/ltMVcKi9N3iIS
-RhyHMI3di0QGolVYtzHrfA9NZlzWYsvdqz+ScgqOFre71CzoROB7h3eLak4ggbcG
-11as5Y9UtxGj9Cd1tSB+8Wj2a6sWlz0dA/vbedWBW2FPpQyvZN6GipQKsA85cbwU
-BRcaZt3ewiqbqf/Ilk/vd3zx/RNYkWJke1Rn2QmOEApbYaU/AbA1u+D58fQmVr/y
-zvvD9VnoBNhl0heC4kPy8vfiZZYE21IjYhQU6q5dH40Jr6FsN4zvJ8viNpnNn+J2
-Ny3Y9LLsUsNB3U6iFcoGxeqTCPk1Q1XPjw3LxTyDAuIyeBZtTsNpZ10oJZTSGnMV
-uDfVhO+rf6qWDi0RMW+noLmocRw2ilM58Kqeu2Il9X30YJ5sKemShCOjNPT8C4Kd
-m5wrHLP3n/f9jRlrHu+kfuElleDT71to/Nl9HYJucTSeX07PGN0zogvfEh3el/+E
-fxKBl/fQFPJs87p4PQT9OJuORTVIE0zaWJKR1uePn+PpLEgODJs=
-=+KfF
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYU2wMACgkQVbJhu7ck
+PpQ7fA/5AckmEh+gWZSZFbK/UlYJrkx+fQVQr4JKj65aOKWgHQUyYDJcQMu62EIS
+nSOZdmXam+rqCe9Y3561qaBPcLMtbY5qmAYxTyM6efVSHjsJ0OHq5JwCEWzYyVin
+YF7YlY5pKlJR2j7s8T4Kz7K+QVSSU1fDm6IWzcAZsapeLI2lYHBpDufxPRVH2u7F
+hEUek71UTjfOSXKc+YQFWKuAvrOJ1cDXBgUjJoCLSmL19wKnin0AQEwizQbyRaCr
+DgD92L8fmfzUnoUn35PtKo8RtdLvCyayy+Q3QKsXaM6XjGHChJHGNORlwF4M8+XX
+k6jtfjGnxzByqjYor2TfLmRhDewVraYxxw0++eDVgk3facgsq7oF1p2O6kPQ5pqE
+GSIyfoQCUeG2JPv4oHbZqBJynOmurBDQZCPoCRc6F6Gl0G7RMNVjGr2OT7dC9CaM
+EfpxEc42WhTfZd0Jn4G9SYEmWjtgJTx+zaVzhlIrz3JScic9nlx/xWZzv1f3nCbk
+iwm/qgE9qlnalykoORKPbS7I8XoRIhD4hY1dhmU6f6KEJtWD+w1S4AnUwHintYIY
+fX5kXU93QRlL8cVTztvnR81wQk84IhDAaM6FJYFZh9EZsNmJMo3anHrt3V/oX5FL
+o8yFXVjUyGxcV1kvNXSIU5oYrUuN8rVwJ0+sU/tzztMpFxiQsZY=
+=MOuq
 -----END PGP SIGNATURE-----
 
---GtsckzvyIeyZGubd--
+--oKREhdAMcJanrrOZ--
