@@ -1,112 +1,132 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907EC158A28
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 23:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCB41591E1
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 23:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712705902; cv=none; b=FjSXeWbFmYucMojXja17cJMo0xNHXn/CTZdBrRZA6lgvMh10szrwRBMBv0deoCpde8JTopj5KX1ercuj18dFCJCY+AxHgzLuGEBU05QdO8wXPtuJClUCnjCFHeRNHftNioBIkAkBrczPnd4ixW/6/ykOc4cknuHQk2KZik6P9co=
+	t=1712706169; cv=none; b=RB7aeEjyCH2OUXD5LG+7mfokYGUVfopQ8YrV4wfqePfQyHrZpr4mrJBT8ILo8LMAZYHIPoQwxrjNFB4AXJI1fjzQW0EhTfRX1MqQ2ZHJXoBJbAxzbfdk4OvzyaAkdynrJjDomk3cMNK/eGsmZ/TkTsZjCxM7O4J5A9wluqgZnFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712705902; c=relaxed/simple;
-	bh=ud5LxYheJFSQeiKYipA9F8jZTJjdaRp1gH7LWMo6BdM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cjua1Oz5REsI53InTelQ+E4YVXY0oy0XAypxuVdD1mjCQ5exAGuYUhQhsLD7JJ9Q+BN1gBC8FWtqSqkuWSBLOS+ywcgoebYvC58ZUKCUw/Hg2jwgUcOE0N/B5N5o/cpGy2Hq5VusYE6hVu/yX8GerfQHKwYVDnLVzGr4WtzwhuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QmTf5LYb; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712706169; c=relaxed/simple;
+	bh=ttLj+EdO7hVF3Gnt29ocQw+Nsp2etBLP8QqQbrDBVpU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=OD25nsr101wLnOJPLFkQCKuYxl+CsaI9VS772FTuLMn6W3IklDsCiamHSCCeb+r6ZRBL2WT3Zc0gWneAJSjWIb0xTTsuaL3Xx0/rp9I2da4KJAl4C4R3wZA5uDnucKc+yj0AbKn2/dOHszru4ml31M5NSxlx7v5sJBSUmKDDfPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SmBiQUOz; arc=none smtp.client-ip=209.85.128.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QmTf5LYb"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-416a8ec0239so6852145e9.0
-        for <git@vger.kernel.org>; Tue, 09 Apr 2024 16:38:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SmBiQUOz"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6150dcdf83fso120348507b3.2
+        for <git@vger.kernel.org>; Tue, 09 Apr 2024 16:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712705898; x=1713310698; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KLUq+6IU0ohuoWuSbprVEvfyb+ZTBAo9vWhquVrIq10=;
-        b=QmTf5LYbtxDC7yBwfWM3och9lDCPmiJx1Vc1hLZUy8SYd42Ps5tB3ou7oEJ1gDkJDb
-         BBLDLf7MRHFOOSIf3SN+gOqMM8qECaz6CmziPRzMbH8Vsm2OE0r9YXxWjzf2FBfvpXoV
-         W/OQC99fcV9EFH30hjy//NhutvP7umx57/XTmB769zNFSc5EhH59Z+U7Mfewm9i633wi
-         Hf8S8Hu7c1OP9Qa3feF1h1HE0zhudgzjXj6NO+asGKmp0bOEvAUQHAs8BS9LeG4n5RR2
-         zSDcvHo/oXMStMU8XtnSHpeRcZqehEJ24k3vfEGGUhJcVfzrMh1uMHRswurCEP1srY9t
-         CXCA==
+        d=google.com; s=20230601; t=1712706166; x=1713310966; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9jEQpsSmrN0Kik2RI9iPQS8U9dimP8Zw2f0URW6zYiw=;
+        b=SmBiQUOzuwBOj1FfDyxXGqwCGpVq5RMDErwF7QNDr0SLdzY2uhvy3bEZGGK7hCYy56
+         v7e0JONVkVKcH/mszZOJ0GvQrLsKbnf7A0z1ld2PTlfYyprbb1WBVXoKKbmyavPz1kop
+         9fFJYXtTK/xWfGrwaqq72kRGXToEeHbsh4rPABy3+aXI+tQvlEMZFI8eJZSh9axYZbtF
+         Cj7NTxnfkF4Ib1s9AAGherYdLqiLkAamZhI9egJ5PHrOy1bMg+ZGxBsKI0sBiPV9wZBT
+         sHdxmxumeg1DAefVdHatoGHdt/XI5PJOAKtNfq4c3bk/H8/HXd4duXNBamzI0zM69HBa
+         YH3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712705898; x=1713310698;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KLUq+6IU0ohuoWuSbprVEvfyb+ZTBAo9vWhquVrIq10=;
-        b=aFoIv5Cq7Ww8kNquopSO/6rsZVoqfxsqOHrv9lABL6iqGdozcAz4lnAoT+HGWXOoXK
-         17aZUpFEXHc8Bv3v88pKFjus4sh8cuCJQ98VMHQb5eW6+XpnvjduAj75cioxatmVJYp2
-         /T0l5g+3n5OxWHkkcgi9ypqlqCbTAjPVXre6BneZMCEFxxaW393UgYwkSQ4z76MbLXwS
-         8c4yxwZ8pqzyB3OLqvWW+uyvemTTzuI6I2YDmhBpvdDLfFJetMAaM1E708uu3I4y5VCz
-         WbwVmVbzTheJGJg2OscX09DUPQjZzE5LclhhnlOsP+bHsS1Jj+maelwzTz1zolIQwsPr
-         sUlQ==
-X-Gm-Message-State: AOJu0Yxb/NI8IHZ6UpKhDUIp3l/Q+v12YZkI0PPoiQ8/lm5W7byymp+L
-	ybrgPfN0LJsHAqrT2LNojvPcaMl1pAfT9/zyygUX7lfIXSw7jss1v1ySDx3z
-X-Google-Smtp-Source: AGHT+IGHmLtXi2FuW28i8GAKM/HlMK1X00Ps9gdfhUsKu5xvot8VVjxIfDvaU4QIp+v4JSPljqx6Yg==
-X-Received: by 2002:a05:600c:4f08:b0:416:259d:b250 with SMTP id l8-20020a05600c4f0800b00416259db250mr927260wmq.18.1712705898084;
-        Tue, 09 Apr 2024 16:38:18 -0700 (PDT)
-Received: from gmail.com (158.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.158])
-        by smtp.gmail.com with ESMTPSA id hg6-20020a05600c538600b0041690a1c9desm443367wmb.30.2024.04.09.16.38.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 16:38:17 -0700 (PDT)
-Message-ID: <54dcd4f1-5a79-47ba-9650-7115b7170a84@gmail.com>
-Date: Wed, 10 Apr 2024 01:38:10 +0200
+        d=1e100.net; s=20230601; t=1712706166; x=1713310966;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9jEQpsSmrN0Kik2RI9iPQS8U9dimP8Zw2f0URW6zYiw=;
+        b=bNn9QXWtwxRGLoMzyOngJR+Q0GPgDWAFU4UwVE/Z6itSRBJZen0HZ2qXLFDZiZsmiy
+         j2sYdIOZDr9edSAdBc6Mv5fAjnoAukTA6I2yB5gJTsFSGsfgJELim/iK4616GlxcgJRH
+         5byHBDYesxH6DApezXqzpxk70gJdx6bUqLss1L5zMTh4CfatxNsieM2VVvrniRV+o00E
+         tTW16oitam69kkpw1mJdGp72VAKOvGl5G+8GRopV7cYsvtrGGwgvUNqCzH4JU3uyET2u
+         BgDkov+U7rAgTT2qPG+gJe+1s4Dz7NEqVOlgoML5HlDS1faKJVDl28vx14/U6yDamMWc
+         AWmg==
+X-Forwarded-Encrypted: i=1; AJvYcCVnfzb3iYWZ3fTaFTicRu9GaliNZnCW2vtdnw06KtRrNTwepw+GjQXgRwhB0Rk3McT+wtQSiScCXnbFtbtpzTGk3x2v
+X-Gm-Message-State: AOJu0YxuNpg6gCNb7BvQ5moB3BjMxbbxaXfKRMcEYNVGAQfR0CcoLMn0
+	0+ucBXHY7joRMTZYzRUKBIF/U6TQvGnwhPz8km8xaSvbTaRxM0Scisk9pxdip1kWUMASZB9ORmW
+	cjA==
+X-Google-Smtp-Source: AGHT+IG3/m7qTkxhS3C9yvA7dfsZaA+flsxhAMPKRX1bXXnWESEdJX0hVxVKq3ZC/jBSpUqlfJlAudyqmak=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a0d:e2c6:0:b0:615:4805:4ab3 with SMTP id
+ l189-20020a0de2c6000000b0061548054ab3mr289682ywe.8.1712706166571; Tue, 09 Apr
+ 2024 16:42:46 -0700 (PDT)
+Date: Tue, 09 Apr 2024 16:42:45 -0700
+In-Reply-To: <xmqq8r1m16n1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] launch_editor: waiting message on error
-Content-Language: en-US
+Mime-Version: 1.0
+References: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
+ <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com> <1f65dc5ba3ded5b90ed929aa3884574e8b26cd9b.1712699815.git.gitgitgadget@gmail.com>
+ <owlyil0qrxev.fsf@fine.c.googlers.com> <xmqq8r1m16n1.fsf@gitster.g>
+Message-ID: <owlyfrvurtl6.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 1/8] MyFirstContribution: mention contrib/contacts/git-contacts
+From: Linus Arver <linusa@google.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
-References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
- <96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
- <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com> <xmqq4jcb495u.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqq4jcb495u.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Apr 08, 2024 at 06:27:57PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I wonder if we can just call term_clear_line()
-> regardless of the value of ret.  Either case, the waiting is already
-> over and in the error case, we show another message after it.
+> Linus Arver <linusa@google.com> writes:
+>
+>>> +NOTE: If you're not sure who to CC, use `contrib/contacts/git-contacts` to get a
+>>> +list of reviewers you should include in the CC list. In addition, you can do
+>>
+>> I just realized that I could also do s/should/could here, but I assume
+>> you'd prefer to modify in-place instead of me rerolling for a v4 just
+>> for this change. Thanks.
+>
+> We do not even know if there are other things people find issues
+> with in this iteration, so it is a bit too early to say that.
 
-My concern is that perhaps term_clear_line() might clear some useful
-information for the user.  Although I am not sure that this concern is
-sensible.
+True.
 
-Stepping back a bit, how painful it would be to drop the
-term_clear_line() and start using advice_if_enabled() here?
+FTR I should have added "I don't want to reroll this right now so soon
+to correct just this error, seems a bit premature" because that's what I
+meant to convey.
 
-This is what I'm thinking about now.
+> In a
+> case like this, if you do not feel so strongly about it (which I am
+> guessing from your "I could also") either way, staying mum would
+> probably be the best.
 
-	$ GIT_EDITOR=false git commit -a
-	hint: A-good-explanation-to-say-we-run-'editor'
-	hint: Disable this message with "git config advice.waitingForEditor false"
-	error: There was a problem with the editor 'false'.
-	Please supply the message using either -m or -F option.
+Ack.
 
-> There is another error message when we fail to start the editor.
-> Doesn't that codepath have the same problem?
+> If you feel more strongly than that, saying
+> "I plan to update 'should' -> 'could' if I end up doing v4" right
+> now would be fine.
 
-Of course.
+In hindsight this is what I shoould have said.
 
-My itch is:
+> Then when there are other things you'd need to
+> update after waiting for others' input, you could keep that promise.
+> If there are no other things you'd want to update after waiting,
+> that would be the good time to say "Here is a fixup! commit; squash
+> into topic X. There is no other changes".
 
-	$ GIT_EDITOR=false git commit -a
-	hint: Waiting for your editor to close the file... error: There was a problem with the editor 'false'.
-	Please supply the message using either -m or -F option.
+Makes sense, thanks. I need to set up `send-email` so that I can start
+sending individual patches like in your hypothetical scenario (I don't
+know how to do that with GGG, or if it is even possible).
 
-But, yes, while we're here we can also fix:
+> For now, I inserted this extra commit between [1/8] and [2/8].
+> Thanks.
+>
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index 00f4c63cb9..bb7e4174e8 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -1116,8 +1116,8 @@ $ git send-email --to=target@example.com psuh/*.patch
+>  NOTE: Check `git help send-email` for some other options which you may find
+>  valuable, such as changing the Reply-to address or adding more CC and BCC lines.
+>  
+> -NOTE: If you're not sure who to CC, use `contrib/contacts/git-contacts` to get a
+> -list of reviewers you should include in the CC list. In addition, you can do
+> +NOTE: If you're not sure whom to CC, running `contrib/contacts/git-contacts`
+> +can list potential reviewers to put on the CC list. In addition, you can do
 
-	$ GIT_EDITOR=falso git commit -a
-	hint: Waiting for your editor to close the file... error: cannot run falso: No such file or directory
-	error: unable to start editor 'falso'
-	Please supply the message using either -m or -F option.
+Nice. I think you can also remove the trailing "to put on the CC list"
+clause because it's somewehat redundant.
