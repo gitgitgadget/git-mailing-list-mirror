@@ -1,169 +1,103 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F494C69
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 06:07:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE516E5EF
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 06:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712642828; cv=none; b=ndxTPJqjuK/HMgN4Mv1yt7Z3EK21t76bdIG+sTXLTmTjxP2Kg/v5CM0L9gkiKuPirXHTwm/9+g594rMSV/TaDwuACi4w6JDrPBu84nppp7FipPYEzdMduvJDP4r64c7fvg/H+nOn+PgS3spBm1KlfOFBeOR0RuO+Pj3yfHIOifk=
+	t=1712645589; cv=none; b=rCXkkQmIfoEboiLlwCTSozpMFgGhA3AitEDjSamV4NB3FI2yfe2ApZo7REbaJm0u5bh0rbK09y7eVs99QOBgQO+sdK8B6WSDKGEA6CgoY5yto6+cyPG/Ml+/aic9cxEc3Kk996mLxtonfgeI7oEFerJLfUAf0ULbRX5eX+Q7eEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712642828; c=relaxed/simple;
-	bh=OE/TrCanZPnzaXWXokXvaE4VvF0+9KOPEZDmxTumA8w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FcfRwQZBr9Q+siGd3LTdL3dqVjqOJdf5Xd0F/5QrSxc71ILvKVvz0ErnhfthJ8daC6q1lGMCCViblUB9JVSI0wWdu4oY1IdUaUwvoHJ7ubCQXiM5JQYH2CYBZ4LbiGFJ8AEJJNTXJmmKHsGuTp5tSzjaLC7RQ1vE/JWNFBXLT0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PM+KoCWS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wYLAVlV0; arc=none smtp.client-ip=64.147.123.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712645589; c=relaxed/simple;
+	bh=fgrcIbNpmrn8zHi0j+0m7Ys1hXg0MUiFtM3SbIhl94k=;
+	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=sd95FRBIEiPLdrknUMyUQ9ZYismjPQ3HYRZeunwKGZ5WhsidLRQydgLGiHVyIkQuJIP6WcvbCJIILZvK/OSXJ9tYShiV3nJcWDvS9M0aJOyilZEa49r+y4gQCYpkCXffbq0nw0Z1WzJhM7mRXcLDh0xTU85NhAtCyenQcuFdocE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=e3OoIRGr; arc=none smtp.client-ip=162.62.57.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PM+KoCWS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wYLAVlV0"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 6025C1C000FB;
-	Tue,  9 Apr 2024 02:07:05 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 09 Apr 2024 02:07:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712642824; x=1712729224; bh=hZHIZto8nC
-	X4DEoO56vxVK9dTEs9TLMtEjhcraE2Gwo=; b=PM+KoCWS2LYlKH9L0tN5q0+ccs
-	cfzbqCnGcxlvzXWjfaJ40eHJ5GTE6Owwa+ulSrqBWbQ59dADjjvug6fm6UthD9tj
-	wFeShvxkUjReESZ3RcZ22p0o3npXu2HAWSjsoK3bLT51/FrsKlE9GgqyWtleNFU4
-	UM4a1WKp5aUGXdTp8g8K5CLVL2qZbKab6UCi4/ijl0bn8cDOSGHFkO3XuAix69OC
-	Iu2W81kKWGCXOu8mmGqsxs0ETBzHZfEJcLm8fu5YDSzrxTOMBNe7E9MoEVloMFYq
-	f4TXHz8V49wcRP+mOi7/D+SSWRGSjCmFPe0e8cD1vT8ePGyOCLcHXHnR2L8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712642824; x=1712729224; bh=hZHIZto8nCX4DEoO56vxVK9dTEs9
-	TLMtEjhcraE2Gwo=; b=wYLAVlV01Pcp5E5L5I7NR1aHAa4tjECJP+9OD1jg9koJ
-	bssaPMv6mYfGjyJcJ10LynOQKLYC2Eo45KyQS6qm93Cd47tW3GhsxFaPtrcY2v8D
-	d+pTQTW49tSRHQ/E0/tSHrEt91PBQLXNyckSONyH7/VUKb+WgWy/gJg/TcUNm9h4
-	L/dgCX8Nj11KCLNS1Uvd9+maQW76owS26iEZDaXvWZ+qURdsNKgO1hhfSi0tA9Qw
-	cqGweV2TRKf86JQjWSKw1vSGmz3BN//YzJyr95H/1MQjaLBtFWNtlRufDxa5hcyI
-	Gl52pTyMWmLG4p39psGB22oYHHWgNygBhrAgGChhwA==
-X-ME-Sender: <xms:CNsUZgxSOyxMfqpX0mVH6oqqC4js8HceQ65WZK02kl7lLv1A4y1jGw>
-    <xme:CNsUZkTT_nMf3nO4e3RWEEXoUC6EtgytaNYRvZqD1IDwRK5cn3w8Z9SJFRodP7XDJ
-    nUlKwhGPpVVbpIkyQ>
-X-ME-Received: <xmr:CNsUZiVkXwd8py77U6V1F6sQNzrQltFifoE-ZXcZgx2HmR6V21mZtC41GHDrg5KyNWZgQKSbr_Jqcw9QzFUGmj7lnH7Lsl5APgvY4bTGDBOpE-DLzxI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudegkedgjeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepvdfgveeuffffgefhuedvgeetkeegffetgfetgfehudetvddvvdeuieefleelffef
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mh
-X-ME-Proxy: <xmx:CNsUZuhNloSg9zYf7x9FaeyOBiJx74viqEfRdmdWD-kxF5LMiQ2kjA>
-    <xmx:CNsUZiBgIbzkVz5IxWY3lZ_-LyX4Iu7-OsDj5L5Ufl6epgnwVaTlgg>
-    <xmx:CNsUZvJJ-fTlk8dP-Pkc5JYb6Ja9ppuSJUjBNkbh9DM4v4SSCOp0XQ>
-    <xmx:CNsUZpB5ScA9eu_fDula9XXWeMfBiTN8Hwlx0WOsVkA6PF9KEjdb1w>
-    <xmx:CNsUZk1SkQqq3q2vH4LOQE8625GxufLMOhc13b-PPjideTZ--oQo42T9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Apr 2024 02:07:03 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d86fe65d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 9 Apr 2024 06:06:54 +0000 (UTC)
-Date: Tue, 9 Apr 2024 08:07:00 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 00/12] t: exercise Git/JGit reftable compatibility
-Message-ID: <ZhTbBIdYrKdodL8M@tanuki>
-References: <cover.1712235356.git.ps@pks.im>
- <cover.1712555682.git.ps@pks.im>
- <xmqqle5n2sbf.fsf@gitster.g>
- <ZhS5Ws7e0tjwlW6y@tanuki>
- <xmqqbk6j2j5u.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="e3OoIRGr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+	s=s201512; t=1712645582;
+	bh=fgrcIbNpmrn8zHi0j+0m7Ys1hXg0MUiFtM3SbIhl94k=;
+	h=From:To:Subject:Date;
+	b=e3OoIRGrtGZyiyPZava2jrQgukl8mba5jsuCHlZtuAj3OcVNCTRpUnwJYWtS5LYoH
+	 0CSMvi9i7TjYbgJBeYL8ilu+vz6wUaZoSiELWhIYNfdUkraNi5U7ceWt+V6GlB9ieL
+	 gqVPvtYLUHQRRZr9kJwNlHJoZ/EjLnGsgGp6jET0=
+X-QQ-FEAT: oHWrrGTW1dCni6VLWI7Xi3lwP5c1dnPf
+X-QQ-SSF: 00000000000000F0000000000000
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-XMAILINFO: N0JG5d2dvsRDR5j+walb2+tOIrSQaKtu3s8abVYIcceN1sLAYAmBleEQKFfD0M
+	 hFdRM1prhGcnS25+64VqeF0CnbIrf4g2pmtLJlBBw/QdZyw5ZgyvkoY5XqUlatqLRG1EjRcRk3Q0r
+	 C07AM9yCA9fVipv2TboDnDVGun5N274mt6uSRCaC1/abU5iF6hhBw63HZJuUPEhHz6Srgji+wmOnL
+	 PQhusmMctBiRXHn1kC0gTWW/5D1bOWdIEKDxZo6t9p0ncVnwnavo/kJ7aCwi5fjah8L1M01Xr4kkP
+	 6N9i5WsxQ9OAyvEThmCHcGcuBIcUUAhx5fqjo7dEMZ/j98OZW2xnFRM/oI5RAiJShc3KA06ndFyLy
+	 tb52Yz32jsdVAHs7lWe40ueP5iUPs7o8fvMBCf4wxRN08g673cU5rnwgUqDp7evr94c9/T+vrDbmd
+	 ZvBu75mKzNmRJpeqG7YGF+Rzku6xHRAJYPQEv9Dk5xByd+8rb7asdEbphsG2fq7/EbPANV2z28Hmx
+	 VaaBUXrWQfoJgS5teeKwjG9mXKBmWFYNWZTl1cvnEH/Di50IOGUt3unKS8Ls0in11pibXJQenCe+W
+	 X7qSoRVymyj5zLdsbFnGa0jBQcNEe/YOC8Us2o7dfEglrDdy2P0JWugfvwWBYlgfH0Lq18gMo2zBF
+	 lxVMTaLcyEjlisWygcQtgxRk8pKJHthVYOYDZY+AUlkPNDg2Lc/igY4vqAcXPmjzhtPqvtyD5QHji
+	 Zg4kkUpI3G/LC7F40E+8OCFOFM3ZarcJc6jRWgMPpp8Q99loHhazLw9ZUvP7l+HnTzNq6vMdnBulx
+	 8Xb2Nj2K2NxobaqAkjQZ7U+RaNQBMO+aWtYXa6a68YVVLhnhG8hXTLhZOLlwxpPQUhvINgjZR9OQ/
+	 AzVp3Cg1wprmZtNAzmxoMKZ9tQtcvn6UUyZd3TNWGthEr3RLZE68BcKMM+bbJigkMgM3wP4doD/RS
+	 uu36xLy+ygsGdvNGyK/aCCjYEJ8IEUWJVRLoYEu1CydEFKHYR66W31K5sBVks=
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-STYLE: 
+X-QQ-mid: webmail431t1712645582t5641427
+From: "=?gb18030?B?Z29yZG9ud3dhbmc=?=" <gordonwwang@foxmail.com>
+To: "=?gb18030?B?Z2l0?=" <git@vger.kernel.org>
+Subject: git bug Report: Inconsistent behavior caused by [] in.gitignore
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oKREhdAMcJanrrOZ"
-Content-Disposition: inline
-In-Reply-To: <xmqqbk6j2j5u.fsf@gitster.g>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
+Date: Tue, 9 Apr 2024 14:53:02 +0800
+X-Priority: 3
+Message-ID: <tencent_A24B502465766F850E47E415283861089809@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
 
+MS4gV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8g
+cmVwcm9kdWNlIHlvdXIgaXNzdWUpCkNyZWF0ZSBhIGdpdCByZXBvc2l0b3J5IGluIHRoZSBm
+b2xsb3dpbmcgZGlyZWN0b3J5OgouCnwtLSBmb2xkZXIxCnwgICBgLS0gYS50eHQKfC0tIGZv
+bGRlcjEzCnwgICBgLS0gYy50eHQKfC0tIGZvbGRlcjIKfCAgIGAtLSBiLnR4dApgLS0gZm9v
+LnR4dAoKMyBkaXJlY3RvcmllcywgNCBmaWxlcyIKClRoZW4gZWRpdCAuZ2l0aWdub3JlIGFu
+ZCBlbnRlciB0aGUgZm9sbG93aW5nOiIKIyAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAt
+LSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAt
+LSAtCiMgSU5WQUxJRCBGSUxFUwojIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0t
+IC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0K
+Zm9sZGVyMVsvXQpmb2xkZXIyLwpmb2xkZXIxWzNdCiIuCgoyLiBXaGF0IGRpZCB5b3UgZXhw
+ZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9yKQpFeGVjdXRlIGBnaXQgc3RhdHVz
+YCBhbmQgb2JzZXJ2ZSB0aGF0IG9ubHkgZm9vLnR4dCBpcyBiZWluZyB0cmFja2VkLgoKMy4g
+V2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpFeGVjdXRlIGBnaXQg
+c3RhdHVzYCBhbmQgb2JzZXJ2ZSB0aGF0IGZvbGRlcjEvLCBmb28udHh0IGFyZSBhbGwgdHJh
+Y2tlZC4KCjQuIFdoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlvdSBleHBlY3RlZCBh
+bmQgd2hhdCBhY3R1YWxseSBoYXBwZW5lZD8KRXhlY3V0ZSBgZ2l0IHN0YXR1c2AsICBmb2xk
+ZXIxLyBzaG91bGQgYmUgaWdub3JlZC4KCjUuIEFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8g
+YWRkOgpXZSBzZXQgdXAgdHdvIGNvbnRyb2xsZWQgdHJpYWxzIGluLmdpdGlnbm9yZToKMS4g
+Zm9sZGVyMVsvXSBhbmQgZm9sZGVyMVszXS4gVGhlIGZvbGRlcjEzIGRpcmVjdG9yeSBpcyBp
+Z25vcmVkLCBpbmRpY2F0aW5nIHRoYXQgdGhlIHBhcmVudGhlc2VzIFtdIHdvcmtlZCBmb3Ig
+dGhlIG51bWJlciAzLCBvbmx5IGZvciB0aGUgc2xhc2ggLy4gKFRoZSByb2xlIG9mIHRoZSBw
+YXJlbnRoZXNlcyBbXSBpcyB0byBzZWxlY3Qgb25lIG9mIHRoZSBjaGFyYWN0ZXJzLCBpbiBv
+cmRlciB0byBzaG93IGEgc2hhcnAgY29udHJhc3QsIEkgb25seSB3cm90ZSBvbmUgY2hhcmFj
+dGVyLCBwbGVhc2UgaWdub3JlIHRoaXMgc21hbGwgZGV0YWlsKTsKMi4gZm9sZGVyMVsvXSBh
+bmQgZm9sZGVyMi8uIFRoZSBmb2xkZXIyLyBkaXJlY3RvcnkgaXMgaWdub3JlZCwgYW5kIHRo
+ZSBmb2xkZXIxLyBkaXJlY3RvcnkgaXMgbm90IGlnbm9yZWQgYXMgZXhwZWN0ZWQuCgpNeSBv
+cGluaW9uOgpJbi5naXRpZ25vcmUsIHNldCChsGZvbGRlcjFbL10KZm9sZGVyMi+hsSwgdGhl
+aXIgYmVoYXZpb3Igc2hvdWxkIGJlIGNvbnNpc3RlbnQsIHRoYXQgaXMsIGZvbGRlcjEvIGRp
+cmVjdG9yeSBhbmQgZm9sZGVyMi8gZGlyZWN0b3J5IGFyZSBub3QgdHJhY2tlZC4KV2hlbiBs
+b2dpYyBpcyBpbmNvbnNpc3RlbnQsIHVzZXJzIHdpbGwgZmluZCBpdCBkaWZmaWN1bHQgdG8g
+dW5kZXJzdGFuZCBhbmQgYmVjb21lIHVubmVjZXNzYXJ5IGJ1Z3MuCgoKW1N5c3RlbSBJbmZv
+XQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40MS4wCmNwdTogeDg2XzY0Cm5vIGNvbW1p
+dCBhc3NvY2lhdGVkIHdpdGggdGhpcyBidWlsZApzaXplb2YtbG9uZzogOApzaXplb2Ytc2l6
+ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gKdW5hbWU6IExpbnV4IDYuNi42LTI0MDEuMC4x
+LjEub2NzMjMueDg2XzY0ICMxIFNNUCBQUkVFTVBUX0RZTkFNSUMgVGh1IEphbiAxOCAwOTo0
+Mjo0OCBDU1QgMjAyNCB4ODZfNjQKY29tcGlsZXIgaW5mbzogZ251YzogMTIuMwpsaWJjIGlu
+Zm86IGdsaWJjOiAyLjM4CiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6
+IC9iaW4vYmFzaA==
 
---oKREhdAMcJanrrOZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Apr 08, 2024 at 10:34:53PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > On Mon, Apr 08, 2024 at 07:17:08PM -0700, Junio C Hamano wrote:
-> >> Patrick Steinhardt <ps@pks.im> writes:
-> >>=20
-> >> > CI runs for this series:
-> >> >
-> >> >     - https://github.com/git/git/actions/runs/8595241646/
-> >> >     - https://gitlab.com/gitlab-org/git/-/pipelines/1243766428
-> >>=20
-> >> Thanks.
-> >>=20
-> >> When this is queued on 'seen', I seem to be getting test errors from
-> >> t0610.  I suspect that it is not a breakage in this series, but the
-> >> fact that this series enables reftable tests without setting any
-> >> GIT_TEST_ environment variables, that causes an existing breakage
-> >> (or two) more visible.  I did not have time to locate which (other)
-> >> topic introduces the breakage, though.
-> >
-> > Interesting, I cannot reproduce any failures with the current state of
-> > seen (17ff004052 (Merge branch 'ps/ci-test-with-jgit' into seen,
-> > 2024-04-08)). Was this on your local machine or in CI? Which platform
-> > are you using? Could you maybe provide logs of the failing tests?
->=20
-> Local execution on some variant of Debian testing.
->=20
-> The tests that fail are t0610.29 and t0610.30, both of which are
-> "honors core.sharedRepository" with umask 002 and umask 022.
-> They expect "-rw-rw-r--", but actually get "-rw-rw----" when
-> the user's umask is 077 (or 007 for that matter).
->=20
-> If you add "umask 002" or "umask 022" near the beginning of the
-> script (e.g. before including test-lib.sh), the tests pass even when
-> the user's umask is 077 or 007 when the tests are run, of course, so
-> there is something the test must be doing in the test repository
-> before it forces the umask to 002/022.
-
-Indeed, I can reproduce the failures when I change my own umask. This
-issue is unrelated to this patch series -- as you mentioned, it is only
-being unmasked now because we increase test exposure by dropping the
-prereq.
-
-I'll send a separate patch series to fix this. Thanks!
-
-Patrick
-
---oKREhdAMcJanrrOZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYU2wMACgkQVbJhu7ck
-PpQ7fA/5AckmEh+gWZSZFbK/UlYJrkx+fQVQr4JKj65aOKWgHQUyYDJcQMu62EIS
-nSOZdmXam+rqCe9Y3561qaBPcLMtbY5qmAYxTyM6efVSHjsJ0OHq5JwCEWzYyVin
-YF7YlY5pKlJR2j7s8T4Kz7K+QVSSU1fDm6IWzcAZsapeLI2lYHBpDufxPRVH2u7F
-hEUek71UTjfOSXKc+YQFWKuAvrOJ1cDXBgUjJoCLSmL19wKnin0AQEwizQbyRaCr
-DgD92L8fmfzUnoUn35PtKo8RtdLvCyayy+Q3QKsXaM6XjGHChJHGNORlwF4M8+XX
-k6jtfjGnxzByqjYor2TfLmRhDewVraYxxw0++eDVgk3facgsq7oF1p2O6kPQ5pqE
-GSIyfoQCUeG2JPv4oHbZqBJynOmurBDQZCPoCRc6F6Gl0G7RMNVjGr2OT7dC9CaM
-EfpxEc42WhTfZd0Jn4G9SYEmWjtgJTx+zaVzhlIrz3JScic9nlx/xWZzv1f3nCbk
-iwm/qgE9qlnalykoORKPbS7I8XoRIhD4hY1dhmU6f6KEJtWD+w1S4AnUwHintYIY
-fX5kXU93QRlL8cVTztvnR81wQk84IhDAaM6FJYFZh9EZsNmJMo3anHrt3V/oX5FL
-o8yFXVjUyGxcV1kvNXSIU5oYrUuN8rVwJ0+sU/tzztMpFxiQsZY=
-=MOuq
------END PGP SIGNATURE-----
-
---oKREhdAMcJanrrOZ--
