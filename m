@@ -1,85 +1,105 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F7118E
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 00:17:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF8D3236
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 00:35:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712621852; cv=none; b=P9Rkj6ohM+4Hhr+3Jg6zjjrQAuLdOc6u42ERon3j6rykZeS2g90zJrcRtJb5abyd0sAFgtfgVBFKFZqUIVRmOBVeUntvyDWMFMD3sJclKI7zd6J5DqgE1z9Odn7x3RElWJxF/dlcdtu04h1SyRIVx3Qn4TfCpxFIt903SYPO6B8=
+	t=1712622921; cv=none; b=oJtr9sEKRhbzxMaZkDM8BU+fKigl0LcofQUcGFQ3ch4FngnGR2W3Qogf4jmuxy+VD0/ZoofT6FyPf+frBROsvupIi6cdvXnMVWCc0quokUREYU4Pq0nCeEU1ZuQnAXlsF5v2trRRBJb7DqBqEmgs+luhjp5IlFzhmIWyhLHlftk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712621852; c=relaxed/simple;
-	bh=8cDZoM7mdtWX4sz0nCRZlAzwsKgt4ZZYvfcAVK3FSvM=;
+	s=arc-20240116; t=1712622921; c=relaxed/simple;
+	bh=leasB8oLp/g/+djVbpdcPsSNY7nnmq7lphr88DS5CpY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rr72002U5KjG1KYr4T2dsQ8Af6tB6uHT6KciRZUsnzTaIXTh12C76gKCmsmglaK06xSSzOg4VE9NWHqD1Tloagt6fy67rNtJfQrqG2woQ19p61eXUlkCmedI0znBGHmQ/SCEBMUMeGajfs5KZWjn/tgjjjkAr9tJtAIM7vu++UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 32228 invoked by uid 109); 9 Apr 2024 00:17:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 09 Apr 2024 00:17:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30617 invoked by uid 111); 9 Apr 2024 00:17:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Apr 2024 20:17:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 8 Apr 2024 20:17:28 -0400
-From: Jeff King <peff@peff.net>
-To: Paul Smith <psmith@gnu.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org,
-	Dario Gjorgjevski <dario.gjorgjevski@gmail.com>
-Subject: Re: [PATCH] Makefile(s): avoid recipe prefix in conditional
- statements
-Message-ID: <20240409001728.GB1647304@coredump.intra.peff.net>
-References: <CAJm4QYOxn_s8ktJiC6ju2j4OyEYaM2ay7Ca--ZWFWa7APVnTbA@mail.gmail.com>
- <9d14c08ca6cc06cdf8fb4ba33d2470053dca3966.1712591504.git.me@ttaylorr.com>
- <xmqqle5n8rcr.fsf@gitster.g>
- <606990048585347654f3b4b187ec27f4dc1b85e3.camel@gnu.org>
- <20240409000414.GA1647304@coredump.intra.peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=HxWZJir/w5vAIWj9YhfxjFIsQesDJ6ah7NrwhCjHTWyvcwdBgI6WNUrPkqBA6jEB5ZrlNHWcto0t/rpLYEDp9xtDRfVbK/GhYf1LrYqjstbIYiQNw0oYdfSSPWH0bwuLRgJm6ytrTGdBDBNb73G6kjqTJmaTQsGpaQppHjBV3qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uID+vlLm; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uID+vlLm"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1759A5D4D0;
+	Tue,  9 Apr 2024 00:35:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1712622911;
+	bh=leasB8oLp/g/+djVbpdcPsSNY7nnmq7lphr88DS5CpY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=uID+vlLm+1wMMfDeo8Clbc/iiU2fd0//eSnXfsuq+c+bF45Ir1O92eiTfNUYni3z7
+	 ePp1ZcX5CQ8fzw8gXG81EsS+MyyJySlkPknpDcYkuHv9WFR3W8Sc2YDvLgHlmLq/t4
+	 XoCZYHvLvyNWAk24JBjtBsYxdlT3m2QpcLRy1EhRi4h8IRr2I9V8Ypikf+9j2FLwdv
+	 LA5ZsLx4/hIc0C8mpn/02r/V/T40kPbFILKoeWA/lRQKs1qkB8gLit/IXmJMkw9jqi
+	 L+zOtq3BoWDOeWyodXU1ygdFYcCcrSpRlzL6FSqHhxwbGBDGN1h1mE/HEJP2kzPKzT
+	 T70VnT3opzRLuvS0FjEM9s69/XTS4kRYK1a46p/MB2FOPbV2MvKOU74O0ce+4HSUNt
+	 xMJlU4SLRrUCTHG+zj3PBb5w+VBfepyJxJKcR2zpmtyq/krFM8t8QR9c43H66AoP6A
+	 KptwyHTfuZz+eDt2fIg5OBbO3bBu5sH1Ag41U4TyYGk9WHg/Qha
+Date: Tue, 9 Apr 2024 00:35:09 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: rsbecker@nexbridge.com, 'Calvin Wan' <calvinwan@google.com>,
+	'Git Mailing List' <git@vger.kernel.org>
+Subject: Re: [RFD] Libification proposal: separate internal and external
+ interfaces
+Message-ID: <ZhSNPTiaPbfekOrJ@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+	'Calvin Wan' <calvinwan@google.com>,
+	'Git Mailing List' <git@vger.kernel.org>
+References: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
+ <ZhMRNxgwRJ25P4Ud@tapette.crustytoothpaste.net>
+ <037001da8935$4a6e3720$df4aa560$@nexbridge.com>
+ <ZhND3hZXlzDxff5e@tapette.crustytoothpaste.net>
+ <xmqqr0ff8rwo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EQPpYxtDSb8A0kqQ"
+Content-Disposition: inline
+In-Reply-To: <xmqqr0ff8rwo.fsf@gitster.g>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--EQPpYxtDSb8A0kqQ
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240409000414.GA1647304@coredump.intra.peff.net>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 08, 2024 at 08:04:14PM -0400, Jeff King wrote:
+On 2024-04-08 at 21:29:27, Junio C Hamano wrote:
+> I thought one of the yardstick to gauge the success of this
+> "libification" effort, if not the purpose of this effort, is to
+> allow Git to be its first client.
+>=20
+> I am not sure how it would supposed to work.  Unless you are giving
+> parallel implementations of "main Git binaries", one with the native
+> code and the other replaced the native code with thin wrappers
+> around the library calls, that is.
 
-> I do find it curious that in:
-> 
-> ifdef FOO
-> 	SOME_VAR += bar
-> endif
-> 
-> the tab is significant for "ifdef" but not for SOME_VAR (at least that
-> is implied by Taylor's patch, which does not touch the bodies within the
-> conditionals).
-> 
-> I may just be showing my ignorance of the parsing issue, though. For
-> anybody else digging into the details, I think the correct link is:
-> 
->   https://savannah.gnu.org/bugs/index.php?64185
-> 
-> (the commit has the wrong bug number, 64815).
+I think the plan as proposed in the original file was to have an
+internal and external library and to have the binaries use the internal
+library.  However, perhaps I misunderstood the proposal, in which case
+clarification on the part of the proposers would be helpful.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Answering my own question (at least what I think the answer is): there's
-basically two levels of parsing going on. The outer layer is respecting
-conditionals to decide which lines to care about at all, and the inner
-one is figuring what are assignments, rules, recipes, etc.
+--EQPpYxtDSb8A0kqQ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-So the outer parser cares about things that look like conditionals, but
-nothing else. The inner one has more context and can more easily realize
-that "\tSOME_VAR += bar" is not part of a recipe.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-I'd guess it's _possible_ to fix the case discussed in the bug by
-letting the outer parser know more of the inner-parser context (i.e.,
-whatever rules it uses to decide that the assignment line is not a
-recipe line could similarly be used for a line like "\telse"). But I
-also wouldn't be at all surprised if it would involve a substantial
-rewrite.  At any rate, I'd certainly defer to you on such matters. I'm
-mostly just thinking out loud from my peanut-gallery perspective.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZhSNPAAKCRB8DEliiIei
+gWM5AP9yGsPzM2cnRupyD1BKzeVJ0Ecv9Jpsor+hUxmOihR2ogD9Ho01k382y2Yq
+B09WaCOg/PU4LVxu5qLsIiZaleI+GA0=
+=+eoW
+-----END PGP SIGNATURE-----
 
--Peff
+--EQPpYxtDSb8A0kqQ--
