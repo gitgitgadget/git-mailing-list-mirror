@@ -1,117 +1,101 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC7954659
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 01:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DB1E566
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 01:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712626216; cv=none; b=GJ4vQ8awPiXeAMlaNvSQXQGp7S7MrL7KNIGG+BzMEkG0O9wDJi8AS+ucXZU6+p3IgvMcPuyUiHvyjmxvh/Th6Q+dN2zoATM3Z5ExsWlezc8H2pz9HYNVXKURAgivcDgV3KoWdFWhcBes9t/SG2vDKLMZ2F8nOaYZQPFT/fpApP4=
+	t=1712626424; cv=none; b=cFH4Vov/GOtsVO0nXKkK8vvWq5+8dzDsikg416Qzhoda4kX7KevoSvxIhXiVSZbALgfkiv1E3xa3VRRHWdL8YoOc6pqX26RWt60Q7HRpVowtQy7A8/WU4tTBVyVzxgmtZK/VORzdJ67i88M8UEGI6DaubNN2DCbhzVswoplo/iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712626216; c=relaxed/simple;
-	bh=eZIicArIGwmij39nN1PtC/8Dhsj6OoZ2hjbeCWCcUTI=;
+	s=arc-20240116; t=1712626424; c=relaxed/simple;
+	bh=OQD0XM4DBGiOcq4FhzHhWY+hVK/Vv80yPzfAazpMgPQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NvqONVQeLABQ3+/IBpIqYMsAZn1+iuZM0UAeuGJL+XVm76dl+xymmKlXH0DtnRyU3pRRKOVWVxJlhpImYEWBMTRObL5KMoL36YLLm39evmt85AKMSQNkUzQ0b3VxryR69V50OZCVK3nsomdSp6T7CiCxPoaUrG6dy+v9UHYJjz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JIq9TfJU; arc=none smtp.client-ip=209.85.161.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=I8Pk7VOMgK7Fg10je9+ekIQV/TBSUQgbubj4Efm42cFMSemQvUWS9ru8/4PUyeIr+WwSPm6HT3HvJnZFYHgAcDTdNmRlysFgPvAhwTB1GzZVoeUESO69B1K11mH3aUbSJFyE47I3uZx/UJWL6N7K9ayVO12hBefM8zlZN3RRw0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gdEBxOe5; arc=none smtp.client-ip=209.85.210.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIq9TfJU"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5aa25e99414so1374041eaf.3
-        for <git@vger.kernel.org>; Mon, 08 Apr 2024 18:30:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gdEBxOe5"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6e0f43074edso3363881a34.1
+        for <git@vger.kernel.org>; Mon, 08 Apr 2024 18:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712626214; x=1713231014; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aCHvLtgAgUv9iB9FRl7Xq7qrRYhSvpHePuRVir1oZ0A=;
-        b=JIq9TfJUlkzhYCIG0L1QrXgfH2bh56zzsAfyUkjsnLqQHrmgPsRl9MPf5NNIG86Rz1
-         IW5hC0c70XoMNIXFxK60RcR0gw1wSHczz6tMK0qiM/inY9/AJhxK+49JMgoO+rP21xF+
-         WhVUVI59aYyb0vrMg2OYFljthPqcahhgFDu8UWsTMRpCEsPwUdAvPyH5LGtuKrHVLAcJ
-         jZaprONbtBk5fu8wv2Jvm/a4xKOV2x8vRlM/ZoEklMWyKkQQO8svcelKEtlSxAH3/Mi4
-         KhGyj8/T2XOOUGNbbNhl+nQJH4Crsw8urLHGDS/nv9pYp/bDrqaobmyb3lzAOeWDqTwh
-         Rfng==
+        d=gmail.com; s=20230601; t=1712626422; x=1713231222; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vK2QaKhTddNYZ0txuOALbDuw163xb8FAZG+T71fFuT8=;
+        b=gdEBxOe5oB+rzYM7Jp/ZgcOcYuNjgedrgHWRt6lVJuW+kT9gn4d5bustze0T4gf4vS
+         ceHa1pn8+BjV5f2ZL6BdUviupc2qfGbaP2cw48e0RuXsm+Dx0Nj5XexqB79Hzsgm7YCJ
+         cwFzQeKUVKPkyfZs9+BBqx3ZCAhf5S/TzEY78auroEkRCT3MQflMf1pghsDaxLOfHQDO
+         /KGCztrz0HvAXPBcXUENGgEtQ3eIE8WychaqFT6isZfRUCO2NlG+rKqEfGkMMfozNlux
+         hrJnf7YhEIfFmytZly3linshQkKIQtcy5ggrpDo8PxfkyzANfXvX9HMhHopwpU8/TshD
+         G2HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712626214; x=1713231014;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aCHvLtgAgUv9iB9FRl7Xq7qrRYhSvpHePuRVir1oZ0A=;
-        b=Gwh79fTLHgWYxi7gbLJ0W9O/8OEkgmKQbSFQk6VkPp+Rz25+M6quGoCYgmKin1Eu70
-         suviQJaBou6UMl/Bag7bGeHkOzjqYu4nM7bkD5Vq6FZlt5vzLstj28koLBWl81DyrqG6
-         PYYF/7HlaVvovn78mtERY+cXAbRzpj5erHSiiRgjEftd2OWPRmMs30TIC6AnrtZKjU/f
-         fr5U2TTlVgoIw25Ou8ckd4t9dP++3IdnMpy/qo4Nsdz8kMyd00zN728xo6NlitANg/wR
-         zAhMNomOVTBCqIdJemVef3z/HZ+utDyrEs7zOhyYjjtSGfe96WxyOmoSsytB4mXCJEsF
-         yveA==
-X-Gm-Message-State: AOJu0Yw+oWjgw6orqIXquKcIfamVVCEEAwD2vygpPho9n8gu7IYoVd0F
-	XpRcnAJxT0Jc412LCG+21bhDpBSlhtZ39M6dJ/+GQWRlGGe305f+
-X-Google-Smtp-Source: AGHT+IGRAGGnECKwPzvIwN8KKq73jkbXlPLKJ7D0c8+d4lFpjokfw7gC0ACsiI4sGTlETvw1wd/3Aw==
-X-Received: by 2002:a05:6870:392b:b0:22e:a12c:ab4c with SMTP id b43-20020a056870392b00b0022ea12cab4cmr10245543oap.57.1712626213765;
-        Mon, 08 Apr 2024 18:30:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712626422; x=1713231222;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vK2QaKhTddNYZ0txuOALbDuw163xb8FAZG+T71fFuT8=;
+        b=AnycuBYXU7yuy324y52C8mJV2a4xypmMj7j7ukHwB9g2sG3USBh2aiegp5+A968/1Z
+         BuO7aBFzgmluVdBZY1xSGAckrsSo2G5AH7LpzP7Aj6wY76VklyqfkE1k2sbzMzlFNhwX
+         xCZPqk+rynVnDJlNdVvPjq6ClwsCALMMkfYLdZk062+UmqLGaEOh3yG2fEUL52qMMoDa
+         SQBuB/Vasi5lxZ/t5LTLkmkaxiPsJioAcdqHeywvF40AYF0vrFCOPlrRfpsaYXkVrAX0
+         oeeeCirShwUEm+ag2IC3g8kx+2mTssgaMjA/ByWqgFxyNv63kqsSxvuA1hcDKAx/HiDB
+         F/gA==
+X-Gm-Message-State: AOJu0YxOOz3eIQFhfC7xHVvAjX7VSvnznZMhfJnoGKbHOoo8sanWRB2Y
+	8CZwHQGXYZwW+w40bo+ZNQnqbb205tt7ZMZ+ftC0f9VnGTBlna1n
+X-Google-Smtp-Source: AGHT+IEZLA1UTlWpqxHN6TrWirfdXR+PbZjIZLStXQ09itKFiK38MOjRsy7spwvSMtbgcy3GbHlCoQ==
+X-Received: by 2002:a05:6830:1384:b0:6e5:23d8:a4c5 with SMTP id d4-20020a056830138400b006e523d8a4c5mr10340111otq.34.1712626421800;
+        Mon, 08 Apr 2024 18:33:41 -0700 (PDT)
 Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id s19-20020a0568301e1300b006ea228af12asm208469otr.11.2024.04.08.18.30.13
+        by smtp.gmail.com with ESMTPSA id w17-20020a056830111100b006ea2013b948sm283082otq.58.2024.04.08.18.33.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Apr 2024 18:30:13 -0700 (PDT)
-Date: Mon, 8 Apr 2024 20:29:14 -0500
+        Mon, 08 Apr 2024 18:33:41 -0700 (PDT)
+Date: Mon, 8 Apr 2024 20:32:42 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>, 
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 10/10] reftable/block: avoid copying block iterators
- on seek
-Message-ID: <vab3mzg3meohikmfl5v57uxj6w7w2odrx7cvhmoto7am2bl2yt@6l4salel4ko5>
+Subject: Re: [PATCH v2 00/10] reftable: optimize table and block iterators
+Message-ID: <wpkr5pmz53zp3nuzezfmqme3b3ymtnwx2noeto6ioi77q67z4y@7k7qg6s2eehr>
 Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
 	Han-Wen Nienhuys <hanwenn@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 References: <cover.1711519925.git.ps@pks.im>
  <cover.1712578376.git.ps@pks.im>
- <cc5ff0d5988691043206f9e912f5ffa1bcfee94e.1712578376.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cc5ff0d5988691043206f9e912f5ffa1bcfee94e.1712578376.git.ps@pks.im>
+In-Reply-To: <cover.1712578376.git.ps@pks.im>
 
-On 24/04/08 02:17PM, Patrick Steinhardt wrote:
-> When seeking a reftable record in a block we need to position the
-> iterator _before_ the sought-after record so that the next call to
-> `block_iter_next()` would yield that record. To achieve this, the loop
-> that performs the linear needs to restore the previous position once it
+On 24/04/08 02:16PM, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the second version of my patch series that aims to optimize
+> the reftable table and block iterators.
+> 
+> Changes compared to v1:
+> 
+>     - The series now deepends on ps/reftable-binsearch-update at
+>       d51d8cc368 (reftable/block: avoid decoding keys when searching
+>       restart points, 2024-04-03). This is to resolve a merge conflict
+>       with that other series which has landed in "next" already.
+> 
+>     - Rewrote a comment to be single-line to fit into the style of other
+>       comments better.
+> 
+>     - A new patch on top that avoids copying block iterators altogether
+>       for another speedup.
+> 
+> Thanks!
+> 
+> Patrick
 
-Did we mean to say "linear seek" here? Otherwise this looks good to me.
+Thanks, other than a small question about one of the commit messages,
+this version looks good to me.
 
 -Justin
-
-> has found the record.
-> 
-> This is done by advancing two `block_iter`s: one to check whether the
-> next record is our sought-after record, and one that we update after
-> every iteration. This of course involves quite a lot of copying and also
-> leads to needless memory allocations.
-> 
-> Refactor the code to get rid of the `next` iterator and the copying this
-> involves. Instead, we can restore the previous offset such that the call
-> to `next` will return the correct record.
-> 
-> Next to being simpler conceptually this also leads to a nice speedup.
-> The following benchmark parser 10k refs out of 100k existing refs via
-> `git-rev-list --no-walk`:
-> 
->   Benchmark 1: rev-list: print many refs (HEAD~)
->     Time (mean ± σ):     170.2 ms ±   1.7 ms    [User: 86.1 ms, System: 83.6 ms]
->     Range (min … max):   166.4 ms … 180.3 ms    500 runs
-> 
->   Benchmark 2: rev-list: print many refs (HEAD~)
->     Time (mean ± σ):     161.6 ms ±   1.6 ms    [User: 78.1 ms, System: 83.0 ms]
->     Range (min … max):   158.4 ms … 172.3 ms    500 runs
-> 
->   Summary
->     rev-list: print many refs (HEAD) ran
->       1.05 ± 0.01 times faster than rev-list: print many refs (HEAD~)
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-...
