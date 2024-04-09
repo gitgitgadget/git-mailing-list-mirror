@@ -1,62 +1,64 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8353A156F4E
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 21:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869F1158A37
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 21:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712699821; cv=none; b=gNo7fdP7sQ4oRO8tvxpAqRqSf+0PMUQx92v7pFIzWnKuC8wGypaAq8WNgSS8V1JpZMj3AMMuSdFwJ9wnT+2le9hwp6/KKmE5pdyVN9OhGfimPNsRzBT0IWv5WhPR0AUxfrW+N4zqQSlfl9nJfUYxuRNlremwOpp8ylksQCipydU=
+	t=1712699822; cv=none; b=g9/IqJtOjpbjsJdFnm/OQrN6teEJGh9aNnkOx4yWPrMrBywvDqQY7x9RqqwEpKlW7vCxC8T6xZClIQM4rIq5ceDkVhgw7ygKJv/CRzoeXKBQvO9vFIWMu9ZlZn9NzVkS2jc5SVUZ9OlRlsBbyOPucdNNd+b1Yv2OYX7V+gFY3M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712699821; c=relaxed/simple;
-	bh=62KA4t2sxwFrOYMtUOgehYcpuDUXgLeTd/RyMsUQ7L4=;
+	s=arc-20240116; t=1712699822; c=relaxed/simple;
+	bh=3hy5UwOtuFS4dIc6nIIiKvN+c/YITts//vNu261p+aU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uJt/Gqf/avipl6toxN2b9sDODmgS0MYe12mIvin0wojGm6hID3equZshUGTYogF11g24+g9KRIXLHUlmaRPLCmnO6oZb2/jLd1pRBY1iDgVIsQl4PhfiA7IjMCnJGJ2afltRlLSejKQ4ztwza378zNtObB36HEBsxAPGU4yxH0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LxcPr8L/; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version:To:Cc; b=QNip5ItLlaLxB4PyYem8InztyHt/Gvgmh3u/bOnxdIsnRqzDWdL4EjrMb4asm+UQMvRtRS2tlH/kEH4vwJrwrA/heiAT4wmz9NccUVzEIxpQ5DZz5dxSMqVzHfKLEQdnV4D5Iu30IOf2LMWfvQTMeZGQ0f7Hpot3vuPkBDsko+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9iBzSbO; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LxcPr8L/"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-343f62d8124so3076061f8f.2
-        for <git@vger.kernel.org>; Tue, 09 Apr 2024 14:56:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9iBzSbO"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-416c4767b07so1720185e9.0
+        for <git@vger.kernel.org>; Tue, 09 Apr 2024 14:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712699817; x=1713304617; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1712699818; x=1713304618; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tP532l6gyyq/cZ/MAwJWsrmoopdNgNTRDPIdfJGxnY8=;
-        b=LxcPr8L/ndC4Zo9yWkcoL5/pehaYLfMXNXMB1z0iPehAbMWwBcnIatuKC5pQ05IXTe
-         Nigf2HwZk0th16YI3sj7+y2/a/LZHdT9FN5dtJYEYJoNZTz4cl24NXlzV9us9p92SfrR
-         CW6xLNqa+l+u5QtH676oHOoYZ6CeJd5Fs2Ni2wuEjq//xcfFhNbPrO4nMWAJF6S1wsIg
-         Xv8ygai04M+pino7NyM379nmo18NpHGFv+CXrYRDD0lk+YV9SfAWTfAncjwMy9WS67QR
-         a1tZo2B2gs0eTxCaNtrb2vvAz9mtMBT8pgl40IlkT+YPhxG5V1qrjjxnu63hE3dQeuAs
-         nF8Q==
+        bh=Lux/KgFIK1lW6Byknm7s+RfYwSbjJEEB4IGrwl4tIrE=;
+        b=X9iBzSbOg2+wpGezbkxJOIhtBajaK1nch1k0b63SWWQbs40oTi7uFWV3cbPXx+6cgz
+         7TyyIXNQ++NWAzWJeGWgo7CXJDDWI4Gg6529MiUAW90A18fGIwR7QBqM10zf4gkZ3Vog
+         4Ul71JIlNpUGbToxn/d79iJt9u8lxiRaqHNSuziMTe0Bmz11q993vKRY3brAHdxFWFFm
+         XJKyCJZYH3Ci5xwDLCeg8xB+5GY9FpQVpExdtSa0OLZ24BFTdVEUAkRxWwcCnMfKSS7X
+         ewsRYb76o0lkb40rW9dav8AIZkTLTXMDP3ljkKpUgCp/mR8m/SL7czZ5SXRT2f68SVTa
+         Gatw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712699817; x=1713304617;
+        d=1e100.net; s=20230601; t=1712699818; x=1713304618;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tP532l6gyyq/cZ/MAwJWsrmoopdNgNTRDPIdfJGxnY8=;
-        b=So3CBmsQfrbPWhiosy0DVMRGaV0Tmu/5337IZus3yIjN9yR+CVyK9ufRAV/5Ke6hcM
-         FitgJS7JNRsHjqgPapTDs5psbjuZI4xjDJemD7+WAn3G5a8+Cija6Sy2rI/B/84dUP0K
-         6lcuUpqC116j/RhoW9MFHLTAx7Q6qHrdv8hjSAxN8OViFPl6bXV0+V8zw2V4SCjyKFsJ
-         w3bPcdHiESt3SyAP0sF2rkscO2iCjthYqycXjn9eG7re9+3MIWewgWGJsISiJvEK1jGa
-         Bd8FPk6HiEgQWY64KA+Q2i3/imJoKlppe8wZ+/ZRIhsYKQEjaU0maew1qOqqU5os/rbz
-         vl3A==
-X-Gm-Message-State: AOJu0Yy8gvte6VL9oP4ou69LKbIOxgsPO+skvfOWBVYhnGP/TPS3XSrG
-	dP/X57mS0Jvd5DhzQm9RzxaccS15awoLs9UABo2HUPz2oGth8LNDmpTmMlmh
-X-Google-Smtp-Source: AGHT+IHosg1F8Q5nn1pFfp/tlWNrzSJrO5nyn7Dy6jfXni+lHqFqmjcH3q1uuyZY5pzN/E3YZWgtFg==
-X-Received: by 2002:adf:ffcb:0:b0:343:ef64:e0fd with SMTP id x11-20020adfffcb000000b00343ef64e0fdmr500357wrs.52.1712699817135;
+        bh=Lux/KgFIK1lW6Byknm7s+RfYwSbjJEEB4IGrwl4tIrE=;
+        b=q4JD/N9xJKdia1AKbjwxfVS4s1rryGZfrFRK9U9lPYC9KrKFOWyB7ThxFQ0JaSwqs3
+         pXRh5QLVbAU1VCkLdY4aB8EPu4lg7Si1On8vnZ7vsHKqPCvuhhZFpK1ks4QGdD+0/iUq
+         l1hTyAAGOI6uzSAiq46Xwi5KtcBpk1tknNnTrQEUEQrweRRL9VQzVzMxkQfn2Ipo7n8T
+         tIkmjp3p6upUbMcirn1eus3Ww2cHVPVdEo0eB8nsly1e/vnt1vcGhk0XtvbLxWBkDXCx
+         w6XaTPBBSVESv6N3Rahiirou+6lWifXwnGWudfnzIZ7kdkCrubSLAgm+7MRBSQmfcmSp
+         7O0g==
+X-Gm-Message-State: AOJu0YxKbuyXIRT62uhcYJv8s8cD0s5oF968QjftmDmpqIXexDVB4+9V
+	cWB9dDIv7jxnLwIX66IW2ZsHoL05rPz5KyOtQbh1tbJzbkQHjl0KN3iJRMaw
+X-Google-Smtp-Source: AGHT+IGaD0fHZJp6UYKb2bbWusnDCs4r+M6Kr/Y4zEHP4B5SEh8mQKhrxWyYL+/e7jPVCejbNMSPKw==
+X-Received: by 2002:a05:600c:4e88:b0:416:a6ff:bba0 with SMTP id f8-20020a05600c4e8800b00416a6ffbba0mr672383wmq.11.1712699817906;
         Tue, 09 Apr 2024 14:56:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r12-20020a5d498c000000b00343e8968917sm11981264wrq.1.2024.04.09.14.56.56
+        by smtp.gmail.com with ESMTPSA id i7-20020a05600c354700b00416928e239csm213391wmq.35.2024.04.09.14.56.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Apr 2024 14:56:56 -0700 (PDT)
-Message-Id: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
+        Tue, 09 Apr 2024 14:56:57 -0700 (PDT)
+Message-Id: <1f65dc5ba3ded5b90ed929aa3884574e8b26cd9b.1712699815.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
 References: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
+	<pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 09 Apr 2024 21:56:47 +0000
-Subject: [PATCH v3 0/8] docs: recommend using contrib/contacts/git-contacts
+Date: Tue, 09 Apr 2024 21:56:48 +0000
+Subject: [PATCH v3 1/8] MyFirstContribution: mention
+ contrib/contacts/git-contacts
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,86 +75,36 @@ Cc: Junio C Hamano <gitster@pobox.com>,
     Emily Shaffer <nasamuffin@google.com>,
     Patrick Steinhardt <ps@pks.im>,
     Matthieu Moy <git@matthieu-moy.fr>,
+    Linus Arver <linusa@google.com>,
     Linus Arver <linusa@google.com>
 
-Make git-contacts more prominent in our docs.
+From: Linus Arver <linusa@google.com>
 
+Although we've had this script since 4d06402b1b (contrib: add
+git-contacts helper, 2013-07-21), we don't mention it in our
+introductory docs. Do so now.
 
-Notable changes in v3
-=====================
+Signed-off-by: Linus Arver <linusa@google.com>
+---
+ Documentation/MyFirstContribution.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
- * Refer to GitGitGadget via a link to MyFirstContribution (instead of
-   sending readers to GGG's homepage directly)
- * Soften the advice for using git-contacts
-
-
-Notable changes in v2
-=====================
-
- * Improve existing mention of git-contacts in SubmittingPatches (instead of
-   adding a separate, entirely new paragraph)
- * Add example usage of integrating git-contacts with git-send-email with
-   the latter's --cc-cmd flag.
- * Various smaller fixes to SubmittingPatches
-
-Linus Arver (8):
-  MyFirstContribution: mention contrib/contacts/git-contacts
-  SubmittingPatches: make 'git contacts' grep-friendly
-  SubmittingPatches: mention GitGitGadget
-  SubmittingPatches: quote commands
-  SubmittingPatches: discuss reviewers first
-  SubmittingPatches: dedupe discussion of security patches
-  SubmittingPatches: add heading for format-patch and send-email
-  SubmittingPatches: demonstrate using git-contacts with git-send-email
-
- Documentation/MyFirstContribution.txt |  5 ++
- Documentation/SubmittingPatches       | 68 +++++++++++++++------------
- 2 files changed, 43 insertions(+), 30 deletions(-)
-
-
-base-commit: c2cbfbd2e28cbe27c194d62183b42f27a6a5bb87
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1704%2Flistx%2Freviewers-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1704/listx/reviewers-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1704
-
-Range-diff vs v2:
-
- 1:  3817e7f3cd0 ! 1:  1f65dc5ba3d MyFirstContribution: mention contrib/contacts/git-contacts
-     @@ Documentation/MyFirstContribution.txt: $ git send-email --to=target@example.com
-       NOTE: Check `git help send-email` for some other options which you may find
-       valuable, such as changing the Reply-to address or adding more CC and BCC lines.
-       
-     -+NOTE: Use `contrib/contacts/git-contacts` to get a list of reviewers you should
-     -+include in the CC list. In addition, you can do `git send-email --cc-cmd='git
-     -+contacts' feature/*.patch` to automatically pass this list of emails to
-     -+`send-email`.
-     ++NOTE: If you're not sure who to CC, use `contrib/contacts/git-contacts` to get a
-     ++list of reviewers you should include in the CC list. In addition, you can do
-     ++`git send-email --cc-cmd='git contacts' feature/*.patch` to automatically pass
-     ++this list of emails to `send-email`.
-      +
-       NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
-       please don't send your patchset from the tutorial to the real mailing list! For
- 2:  82e5e05288d = 2:  6e8b1b50ac5 SubmittingPatches: make 'git contacts' grep-friendly
- 3:  6e6950afa6e ! 3:  7f8fdc053f7 SubmittingPatches: mention GitGitGadget
-     @@ Documentation/SubmittingPatches: are optimized for the workflow of sending patch
-       your existing e-mail client (often optimized for "multipart/*" MIME
-       type e-mails) might render your patches unusable.
-       
-     -+NOTE: You can also use GitGitGadget (https://gitgitgadget.github.io/) to send in
-     -+your patches. The discussion here focuses on using `format-patch` and
-     -+`send-email`.
-     ++NOTE: Here we outline the procedure using `format-patch` and
-     ++`send-email`, but you can instead use GitGitGadget to send in your
-     ++patches (see link:MyFirstContribution.html[MyFirstContribution]).
-      +
-       People on the Git mailing list need to be able to read and
-       comment on the changes you are submitting.  It is important for
- 4:  fb06d5ce247 = 4:  ef26bdb75c5 SubmittingPatches: quote commands
- 5:  a8abcf45881 = 5:  6f71b1731f2 SubmittingPatches: discuss reviewers first
- 6:  326afe13315 = 6:  f5e44f69941 SubmittingPatches: dedupe discussion of security patches
- 7:  09f4e7ad123 = 7:  e64fc5c888a SubmittingPatches: add heading for format-patch and send-email
- 8:  b35748f0cf8 = 8:  4fcab0d3319 SubmittingPatches: demonstrate using git-contacts with git-send-email
-
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index f06563e9817..00f4c63cb9f 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -1116,6 +1116,11 @@ $ git send-email --to=target@example.com psuh/*.patch
+ NOTE: Check `git help send-email` for some other options which you may find
+ valuable, such as changing the Reply-to address or adding more CC and BCC lines.
+ 
++NOTE: If you're not sure who to CC, use `contrib/contacts/git-contacts` to get a
++list of reviewers you should include in the CC list. In addition, you can do
++`git send-email --cc-cmd='git contacts' feature/*.patch` to automatically pass
++this list of emails to `send-email`.
++
+ NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
+ please don't send your patchset from the tutorial to the real mailing list! For
+ now, you can send it to yourself, to make sure you understand how it will look.
 -- 
 gitgitgadget
+
