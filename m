@@ -1,85 +1,108 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E6D156248
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 17:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098E815749A
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 19:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712683867; cv=none; b=nmj6UsbGaZ7G+LuFf6vSn0PX6SVhMTuYoOUY8R/6PHgM6fFfdAXnHAD/R9JUPZTXv6RacDb013TP/LEndb7OE2HJgMQCtlr1b4wC8TVRrIiH/mHYl/AGFEiD3SIWP9i42uu+feRAiRHStUrR3kzMrNxnMdV+nKNTmrHukACu19Q=
+	t=1712692610; cv=none; b=p5+QwLrVc0GyONKRir7M8TUYIJLAp5gobdvxc89z8ay2v30kWBiPhZLZBI03SgdmFG5EXKibIovQWN0dbmUsf2wyer4k/KhfGRFH0DsCO5mfAheL5/I6M8RhAZPVOsvPKw/qLV5RjDTweRXBWKWKeBBScyus7GgJ/cx/IuBOJtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712683867; c=relaxed/simple;
-	bh=OFowAFFXw34SjGI7EvwswvJaTjG0+159AzLFntMj/uI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=alY/e822otss2zdC+wJb1W2oIM4V8SNoaHtmhuyQfj6onG8ZewtN9OmkN0KAPhF49qkB4skSIJH+6WLM83AwYm4GCOQ6tk11LTfphyXVK1EMFD7xPqFwCZ2lw1106xCSMT7zhG1ojjtTS4drINJdG3eiSxzSBv8KZM+EJkOBrSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OOtQwR25; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1712692610; c=relaxed/simple;
+	bh=+UIHxuBZd2asz0yPl6l/xQ/ct2iy+Rng8+BOP1yy/1w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KUYgZSpPxxhLcvaQM3LlNcXBGpRpn3xLxSdL+8blSDAyGQyiucwKKAgtceyoA6tpKO6pJbDS+6EmuQ4gKkcC12JP3GDZ/VfO0N0se4bqftgD5lUEB5yB1plbIjY55QYsfCvr5yj9kaHltxaFgEM7d7CDk8xwu2EfrThWEdBGtR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=V/x3sPEv; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OOtQwR25"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4348110e888so17431cf.1
-        for <git@vger.kernel.org>; Tue, 09 Apr 2024 10:31:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712683865; x=1713288665; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OFowAFFXw34SjGI7EvwswvJaTjG0+159AzLFntMj/uI=;
-        b=OOtQwR25hyq6azoNs84GlHZuDWk1cqqh8vcvP0fCaHWAfrmrAMP8wjfl9EPIG5BtCs
-         7yZAPKbEOy/29lpIm84cHnuzAZAMoxkNpRECeAl42tDISO1351rdAIKrYqzFfKnqWdz/
-         9GrZIOC2Oo5GI/lYvgfUpxYWlc5kZ5yVuP6q/w4YTHQO3Fldnn2qsIRgazONAHD6kKOI
-         t7MoNkWBZum3wamc46ZU+C7ygKyuT3uRkCekXD+JrQIFuaaz5BWp6Tb0Tgkjr0fsQX5E
-         6UwEEoQjzzIkgN7AFsXd9VharJYSmdR5cTBKYdG2D0j7N+X+i/F0/gYTBsf1541vk5Cm
-         7Rmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712683865; x=1713288665;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OFowAFFXw34SjGI7EvwswvJaTjG0+159AzLFntMj/uI=;
-        b=BCpi+KsxPy2lJf28y5RqXm3Bs1Zsg8Q8xR5Kp1mmdQyquSHWmwj3b0GUufHW0/8Sjf
-         64Es9O87MTLmxNeE+9Ndjq3xR4/HYoH6v8QqIvqZG/wE3MQSl2shXEatvQ48wRqFsE7t
-         9YB86pxGPIITqTfrnXSc7dwguhLV71JSJiz4Ldsq9xhQivF4NJwAn+jg3GOEsxmPJdsa
-         hgQY4KJMM0T2P0enddydDYe8oRy9zu6NgEDPxiDIKCx2gxf4FRsEBue1ReOq4+0h4ag4
-         y7NSL5NCBHnLgIbdmyFjCuEQPw5VLmpJVYm0TLtM7Ws25YR1/PTW/3G08MpapMARC0Mc
-         qriA==
-X-Forwarded-Encrypted: i=1; AJvYcCWajjOiNvVfX3INRej5T49KRJnJRxcCCAMs/djAJjSZwuUbKByww8q2Lsnx8rzaKp/dKJTefUbJAKCFQ3f1iVf2WEKD
-X-Gm-Message-State: AOJu0YzZXCBW3O+bkWvFVe4g+TLDjbBYQUQmzfA99RpzbFF8LpPsLe+D
-	3imRPd8InmnRGgmI+lnip3M1MJNiMFUnijBFPU1mTgovXBWPNtSffZ1dXTj5UPur1iquFhb5DjP
-	sbV5+XNtNEF/c7cFHsli5Rg/IY9moDOkCq2zb
-X-Google-Smtp-Source: AGHT+IEZPpgbPRcs+dS1Oh7G9/TAYUWL0PX5JKTNXMP0DTHRDPSi6vaC4K5+yxhTsy90+wDxchmyMLHG2CmtVOX4Pfw=
-X-Received: by 2002:a05:622a:4888:b0:430:ed37:bad0 with SMTP id
- fc8-20020a05622a488800b00430ed37bad0mr322865qtb.13.1712683865123; Tue, 09 Apr
- 2024 10:31:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V/x3sPEv"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B267B1E5B73;
+	Tue,  9 Apr 2024 15:56:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+UIHxuBZd2asz0yPl6l/xQ/ct2iy+Rng8+BOP1
+	yy/1w=; b=V/x3sPEvUWhuJ/g+I66acwsRP5QhiojZCVJcueGq3iSt9Dl/WLALT/
+	sQLCIyBZyGp7NELbka8uRQotzuQAQjfiVvzZCqEpMRyMR4aWfsSf7nUN0l0lCty/
+	79dJUgMIciK9e+aS2eqPf8dhS4iuqvtATEbH2Ov2OnZJGLA0QX3FU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA8EB1E5B72;
+	Tue,  9 Apr 2024 15:56:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F0551E5B71;
+	Tue,  9 Apr 2024 15:56:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Stefan Haller <lists@haller-berlin.de>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
+  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 2/2] rebase -i: improve error message when picking merge
+In-Reply-To: <1b74f6f9-f4b9-4909-82b3-26f19b7a1347@gmail.com> (Phillip Wood's
+	message of "Tue, 9 Apr 2024 16:04:33 +0100")
+References: <pull.1672.git.1708945087691.gitgitgadget@gmail.com>
+	<pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
+	<fbc6746e0188ed7b69c238935ec85b69112ddd79.1712585788.git.gitgitgadget@gmail.com>
+	<xmqqle5n7ajt.fsf@gitster.g>
+	<1b74f6f9-f4b9-4909-82b3-26f19b7a1347@gmail.com>
+Date: Tue, 09 Apr 2024 12:56:45 -0700
+Message-ID: <xmqqpluy1f9e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
- <ZhMRNxgwRJ25P4Ud@tapette.crustytoothpaste.net> <037001da8935$4a6e3720$df4aa560$@nexbridge.com>
- <ZhND3hZXlzDxff5e@tapette.crustytoothpaste.net> <xmqqr0ff8rwo.fsf@gitster.g> <5663500c-ea40-45a6-bb7d-c906aee4350c@gmail.com>
-In-Reply-To: <5663500c-ea40-45a6-bb7d-c906aee4350c@gmail.com>
-From: Calvin Wan <calvinwan@google.com>
-Date: Tue, 9 Apr 2024 10:30:54 -0700
-Message-ID: <CAFySSZBC6RMC3rqcMVNKUbzM_a6n5sAnKCo2rqpHmwTS4R0=GQ@mail.gmail.com>
-Subject: Re: [RFD] Libification proposal: separate internal and external interfaces
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	rsbecker@nexbridge.com, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4C16746E-F6AB-11EE-993A-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, Apr 9, 2024 at 2:40=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+>>> +		return error(_("'%s' does not accept merge commits, "
+>>> +			       "please use '%s' followed by '%s'"),
+>>> +			     todo_command_info[command].str,
+>>> +			     "merge -C", "break");
+>> OK.  And when hitting the "break", they know that they are supposed
+>> to say "git commit --amend" and then "git rebase --continue"?
 >
-> Indeed, the last set of patches allow git to be built with the same
-> library that external programs can use which I thought was very welcome.
-> This proposal seems to be backing away from that.
+> Yes. I guess we could add a hint to that effect if you think its worth it.
 
-One of the questions I was grappling with was, do we want to expose
-all functions to external users? While it is debatable whether we
-would like that exposure for some of the files in libstdgit, functions
-in wrapper.c and usage.c seem like clear candidates for functions that
-have no value being exposed externally while also making it more
-difficult to maintain such a library in the future.
+As I said elsewhere, I do not deal with non-linear stuff using
+sequencer, so I _may_ be missing something obvious to the target
+audience of this message.  But if I were dipping my toes to try
+mucking with sequencer and edit the todo myself by inserting a random
+merge commit there and got this message, I would have probably
+appreciated if the message were a bit more explicit _why_ I would
+want to use the 'break' there.  Otherwise, I probably would be lost
+sitting in front of the shell command prompt.  If it were
+
+	'pick' does not take a merge commit.  If you wanted to
+	replay the merge, use 'merge -C' on the commit, and then
+	'break' to give the control back to you so that you can
+	do 'git commit --amend && git rebase --continue'.
+
+that would have given me 70% of what I needed (the other 30% is why
+I would want to "--amend", instead of just taking the result of
+'merge -C' as-is, though).
+
+We can formulate the message in such a way that a succinct first
+part is sufficient for people who know the command, while the latter
+more verbose and prescriptive part can be hidden behind the advice
+mechanism.
+
+> It feels funny to call error_merge_commit() for a command that we know
+> supports merges but I can see that would make it easier to extend in
+> the future.
+
+Yes, I think that it is just a sign that the function is misnamed.
+"Gee we have a merge commit, please tell me what you want to do with
+it" is what the caller is asking, and the error messages are side
+effects the caller does not have to care too much about.
