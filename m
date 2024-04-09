@@ -1,103 +1,114 @@
-Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE516E5EF
-	for <git@vger.kernel.org>; Tue,  9 Apr 2024 06:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805C433CE
+	for <git@vger.kernel.org>; Tue,  9 Apr 2024 09:40:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712645589; cv=none; b=rCXkkQmIfoEboiLlwCTSozpMFgGhA3AitEDjSamV4NB3FI2yfe2ApZo7REbaJm0u5bh0rbK09y7eVs99QOBgQO+sdK8B6WSDKGEA6CgoY5yto6+cyPG/Ml+/aic9cxEc3Kk996mLxtonfgeI7oEFerJLfUAf0ULbRX5eX+Q7eEg=
+	t=1712655623; cv=none; b=OE7L3tGHXW8UynKs+7vCcTYw5Ldg0VoPduCbddk6MNouk9qCmEZ7zTxmKvKROwECfjf7VxC8+MqDhuU/yZ8bMjfjl4fYDr7eV5Y47JR7J1vqHNmsDREc73KokiXt3ABUZqSbFonXY1MZgL2iz8CetPX+jp2iE/nW7zjNbjOtY7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712645589; c=relaxed/simple;
-	bh=fgrcIbNpmrn8zHi0j+0m7Ys1hXg0MUiFtM3SbIhl94k=;
-	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=sd95FRBIEiPLdrknUMyUQ9ZYismjPQ3HYRZeunwKGZ5WhsidLRQydgLGiHVyIkQuJIP6WcvbCJIILZvK/OSXJ9tYShiV3nJcWDvS9M0aJOyilZEa49r+y4gQCYpkCXffbq0nw0Z1WzJhM7mRXcLDh0xTU85NhAtCyenQcuFdocE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=e3OoIRGr; arc=none smtp.client-ip=162.62.57.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	s=arc-20240116; t=1712655623; c=relaxed/simple;
+	bh=zeYwIw9t7vpCoy3wuq3UJoYtdw/vCRe89uHAzx8WkbM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DmDWS2d83e8Jl1224yzNRQ6IdvC9JLqVAxo5IrxhVUZxB+6ZNG08iPfKhaPJCZxQwqTABrWkZRip7G7S5ozQLIun87WZya6Kjvdj4XL2QOMe+UhbE29NxkKDWEqNSaaAS2W8vAKQntWo4VbmKUgEzOVcRtznqzcsS/dY/3zyPaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fu+q+5SG; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="e3OoIRGr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1712645582;
-	bh=fgrcIbNpmrn8zHi0j+0m7Ys1hXg0MUiFtM3SbIhl94k=;
-	h=From:To:Subject:Date;
-	b=e3OoIRGrtGZyiyPZava2jrQgukl8mba5jsuCHlZtuAj3OcVNCTRpUnwJYWtS5LYoH
-	 0CSMvi9i7TjYbgJBeYL8ilu+vz6wUaZoSiELWhIYNfdUkraNi5U7ceWt+V6GlB9ieL
-	 gqVPvtYLUHQRRZr9kJwNlHJoZ/EjLnGsgGp6jET0=
-X-QQ-FEAT: oHWrrGTW1dCni6VLWI7Xi3lwP5c1dnPf
-X-QQ-SSF: 00000000000000F0000000000000
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
-X-QQ-XMAILINFO: N0JG5d2dvsRDR5j+walb2+tOIrSQaKtu3s8abVYIcceN1sLAYAmBleEQKFfD0M
-	 hFdRM1prhGcnS25+64VqeF0CnbIrf4g2pmtLJlBBw/QdZyw5ZgyvkoY5XqUlatqLRG1EjRcRk3Q0r
-	 C07AM9yCA9fVipv2TboDnDVGun5N274mt6uSRCaC1/abU5iF6hhBw63HZJuUPEhHz6Srgji+wmOnL
-	 PQhusmMctBiRXHn1kC0gTWW/5D1bOWdIEKDxZo6t9p0ncVnwnavo/kJ7aCwi5fjah8L1M01Xr4kkP
-	 6N9i5WsxQ9OAyvEThmCHcGcuBIcUUAhx5fqjo7dEMZ/j98OZW2xnFRM/oI5RAiJShc3KA06ndFyLy
-	 tb52Yz32jsdVAHs7lWe40ueP5iUPs7o8fvMBCf4wxRN08g673cU5rnwgUqDp7evr94c9/T+vrDbmd
-	 ZvBu75mKzNmRJpeqG7YGF+Rzku6xHRAJYPQEv9Dk5xByd+8rb7asdEbphsG2fq7/EbPANV2z28Hmx
-	 VaaBUXrWQfoJgS5teeKwjG9mXKBmWFYNWZTl1cvnEH/Di50IOGUt3unKS8Ls0in11pibXJQenCe+W
-	 X7qSoRVymyj5zLdsbFnGa0jBQcNEe/YOC8Us2o7dfEglrDdy2P0JWugfvwWBYlgfH0Lq18gMo2zBF
-	 lxVMTaLcyEjlisWygcQtgxRk8pKJHthVYOYDZY+AUlkPNDg2Lc/igY4vqAcXPmjzhtPqvtyD5QHji
-	 Zg4kkUpI3G/LC7F40E+8OCFOFM3ZarcJc6jRWgMPpp8Q99loHhazLw9ZUvP7l+HnTzNq6vMdnBulx
-	 8Xb2Nj2K2NxobaqAkjQZ7U+RaNQBMO+aWtYXa6a68YVVLhnhG8hXTLhZOLlwxpPQUhvINgjZR9OQ/
-	 AzVp3Cg1wprmZtNAzmxoMKZ9tQtcvn6UUyZd3TNWGthEr3RLZE68BcKMM+bbJigkMgM3wP4doD/RS
-	 uu36xLy+ygsGdvNGyK/aCCjYEJ8IEUWJVRLoYEu1CydEFKHYR66W31K5sBVks=
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-STYLE: 
-X-QQ-mid: webmail431t1712645582t5641427
-From: "=?gb18030?B?Z29yZG9ud3dhbmc=?=" <gordonwwang@foxmail.com>
-To: "=?gb18030?B?Z2l0?=" <git@vger.kernel.org>
-Subject: git bug Report: Inconsistent behavior caused by [] in.gitignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fu+q+5SG"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-516f2e0edb7so2666499e87.1
+        for <git@vger.kernel.org>; Tue, 09 Apr 2024 02:40:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712655619; x=1713260419; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8/+g54xnS5MinWK3DA16e5dxRTWvJotzLYdA5Twha80=;
+        b=fu+q+5SGz6EXx8GZVt8SKT0RZEAHMgZbAQx+gGpUz2exJQU6aqQtru0kcrhJ4CBagZ
+         8JQhEZ9ji+8XSDos3zWNQjzFDXi5OUbRkW7q5MAJpGeUH7RNhu33oaNEQMKIbIsYHCBn
+         ITbXDkkkEUKjhgqRdYI+qSRRMiJ8claErzGws2DmxM2qma9yAuV0uKoi0NZVSSLR7s8G
+         sn0G/IqJscmWQ9PuyH6iJKQzsYLmbs9Pp/4iQgek39wpPhtpPXn9NlhyqMHnPLqScbNt
+         0cfrf27MvmNBnamt1BvPE5CWJGLOHaMv7NOtmYjjiTQpjlS4SY9NLHX4CYelJyt4PKGt
+         l4/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712655619; x=1713260419;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8/+g54xnS5MinWK3DA16e5dxRTWvJotzLYdA5Twha80=;
+        b=lHKK1F+SlBqy3HgvAnekmdvaZqRM+4FDn3TI/eiaJsZ8/zO+tc/1KWfInEsN+Kx4Y1
+         xm7hExNn+KvRUxBNoLneZDfWcQ4WpCtR+ZPcZXb6Vh6NP4iOhDNKjDfeUBVpg8iCAqiI
+         SqT+aPJ8eJSwaQq02zRxcWlNj6edezXER5GWsiRzRdozXnHScLJv1oXV2ymTZZ9QYdzP
+         wi6oIcySKHq4UL/MNnGhXTsNR8nRGlhFSI29/FHdWLT10HrQCGAUTJQroZV38gQt9JIG
+         ROfUEOV7A4p9nHg2VRKDVVuyyVP6D1UASby74WZOjvdf7cPcw7/xPSp7gguWrng/XUWM
+         EP3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXuLJDjrhsqA16hhxjAhrBtOYTUS2eo9dTcXg/5nIbeLKl5uodidGhSaGlfDakKpq9eMSY7ktk2VxcLUHq7F8vhTa9Z
+X-Gm-Message-State: AOJu0Yx3oBA85yhtg8UI5cBDtkMQYzgVxp9TGiJ7kuCBdDBWCvKtXCrB
+	IltUHXIGWcb6mVEiLBC3Ex0H37jSrgu6nB2KfD86M6F+t+hw6QBE
+X-Google-Smtp-Source: AGHT+IFu6BxPPwcTXPRIL3F2Wjtm2RFN3GTujo2ZhI7yQPfZhn+rlefAUy0NZ7MruOcD/1D9Xw2V1g==
+X-Received: by 2002:a19:431a:0:b0:513:2b35:2520 with SMTP id q26-20020a19431a000000b005132b352520mr6508744lfa.58.1712655619318;
+        Tue, 09 Apr 2024 02:40:19 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
+        by smtp.gmail.com with ESMTPSA id dr20-20020a5d5f94000000b0033ea499c645sm11204398wrb.4.2024.04.09.02.40.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Apr 2024 02:40:19 -0700 (PDT)
+Message-ID: <5663500c-ea40-45a6-bb7d-c906aee4350c@gmail.com>
+Date: Tue, 9 Apr 2024 10:40:17 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-Date: Tue, 9 Apr 2024 14:53:02 +0800
-X-Priority: 3
-Message-ID: <tencent_A24B502465766F850E47E415283861089809@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFD] Libification proposal: separate internal and external
+ interfaces
+To: Junio C Hamano <gitster@pobox.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: rsbecker@nexbridge.com, 'Calvin Wan' <calvinwan@google.com>,
+ 'Git Mailing List' <git@vger.kernel.org>
+References: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
+ <ZhMRNxgwRJ25P4Ud@tapette.crustytoothpaste.net>
+ <037001da8935$4a6e3720$df4aa560$@nexbridge.com>
+ <ZhND3hZXlzDxff5e@tapette.crustytoothpaste.net> <xmqqr0ff8rwo.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqr0ff8rwo.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-MS4gV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8g
-cmVwcm9kdWNlIHlvdXIgaXNzdWUpCkNyZWF0ZSBhIGdpdCByZXBvc2l0b3J5IGluIHRoZSBm
-b2xsb3dpbmcgZGlyZWN0b3J5OgouCnwtLSBmb2xkZXIxCnwgICBgLS0gYS50eHQKfC0tIGZv
-bGRlcjEzCnwgICBgLS0gYy50eHQKfC0tIGZvbGRlcjIKfCAgIGAtLSBiLnR4dApgLS0gZm9v
-LnR4dAoKMyBkaXJlY3RvcmllcywgNCBmaWxlcyIKClRoZW4gZWRpdCAuZ2l0aWdub3JlIGFu
-ZCBlbnRlciB0aGUgZm9sbG93aW5nOiIKIyAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAt
-LSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAtLSAt
-LSAtCiMgSU5WQUxJRCBGSUxFUwojIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0t
-IC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0tIC0K
-Zm9sZGVyMVsvXQpmb2xkZXIyLwpmb2xkZXIxWzNdCiIuCgoyLiBXaGF0IGRpZCB5b3UgZXhw
-ZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9yKQpFeGVjdXRlIGBnaXQgc3RhdHVz
-YCBhbmQgb2JzZXJ2ZSB0aGF0IG9ubHkgZm9vLnR4dCBpcyBiZWluZyB0cmFja2VkLgoKMy4g
-V2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpFeGVjdXRlIGBnaXQg
-c3RhdHVzYCBhbmQgb2JzZXJ2ZSB0aGF0IGZvbGRlcjEvLCBmb28udHh0IGFyZSBhbGwgdHJh
-Y2tlZC4KCjQuIFdoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlvdSBleHBlY3RlZCBh
-bmQgd2hhdCBhY3R1YWxseSBoYXBwZW5lZD8KRXhlY3V0ZSBgZ2l0IHN0YXR1c2AsICBmb2xk
-ZXIxLyBzaG91bGQgYmUgaWdub3JlZC4KCjUuIEFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8g
-YWRkOgpXZSBzZXQgdXAgdHdvIGNvbnRyb2xsZWQgdHJpYWxzIGluLmdpdGlnbm9yZToKMS4g
-Zm9sZGVyMVsvXSBhbmQgZm9sZGVyMVszXS4gVGhlIGZvbGRlcjEzIGRpcmVjdG9yeSBpcyBp
-Z25vcmVkLCBpbmRpY2F0aW5nIHRoYXQgdGhlIHBhcmVudGhlc2VzIFtdIHdvcmtlZCBmb3Ig
-dGhlIG51bWJlciAzLCBvbmx5IGZvciB0aGUgc2xhc2ggLy4gKFRoZSByb2xlIG9mIHRoZSBw
-YXJlbnRoZXNlcyBbXSBpcyB0byBzZWxlY3Qgb25lIG9mIHRoZSBjaGFyYWN0ZXJzLCBpbiBv
-cmRlciB0byBzaG93IGEgc2hhcnAgY29udHJhc3QsIEkgb25seSB3cm90ZSBvbmUgY2hhcmFj
-dGVyLCBwbGVhc2UgaWdub3JlIHRoaXMgc21hbGwgZGV0YWlsKTsKMi4gZm9sZGVyMVsvXSBh
-bmQgZm9sZGVyMi8uIFRoZSBmb2xkZXIyLyBkaXJlY3RvcnkgaXMgaWdub3JlZCwgYW5kIHRo
-ZSBmb2xkZXIxLyBkaXJlY3RvcnkgaXMgbm90IGlnbm9yZWQgYXMgZXhwZWN0ZWQuCgpNeSBv
-cGluaW9uOgpJbi5naXRpZ25vcmUsIHNldCChsGZvbGRlcjFbL10KZm9sZGVyMi+hsSwgdGhl
-aXIgYmVoYXZpb3Igc2hvdWxkIGJlIGNvbnNpc3RlbnQsIHRoYXQgaXMsIGZvbGRlcjEvIGRp
-cmVjdG9yeSBhbmQgZm9sZGVyMi8gZGlyZWN0b3J5IGFyZSBub3QgdHJhY2tlZC4KV2hlbiBs
-b2dpYyBpcyBpbmNvbnNpc3RlbnQsIHVzZXJzIHdpbGwgZmluZCBpdCBkaWZmaWN1bHQgdG8g
-dW5kZXJzdGFuZCBhbmQgYmVjb21lIHVubmVjZXNzYXJ5IGJ1Z3MuCgoKW1N5c3RlbSBJbmZv
-XQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40MS4wCmNwdTogeDg2XzY0Cm5vIGNvbW1p
-dCBhc3NvY2lhdGVkIHdpdGggdGhpcyBidWlsZApzaXplb2YtbG9uZzogOApzaXplb2Ytc2l6
-ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gKdW5hbWU6IExpbnV4IDYuNi42LTI0MDEuMC4x
-LjEub2NzMjMueDg2XzY0ICMxIFNNUCBQUkVFTVBUX0RZTkFNSUMgVGh1IEphbiAxOCAwOTo0
-Mjo0OCBDU1QgMjAyNCB4ODZfNjQKY29tcGlsZXIgaW5mbzogZ251YzogMTIuMwpsaWJjIGlu
-Zm86IGdsaWJjOiAyLjM4CiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6
-IC9iaW4vYmFzaA==
+On 08/04/2024 22:29, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> 
+>> As mentioned in the original proposal, we don't have to support all
+>> platforms in the libified code.  The main Git binaries will continue to
+>> function and be supported, but the new libified code will rely on newer
+>> features.  You will still be able to have all the Git binaries and
+>> functionality, but if you want the new shared library to compile
+>> against, you'll have to furnish a newer compiler.
+> 
+> I thought one of the yardstick to gauge the success of this
+> "libification" effort, if not the purpose of this effort, is to
+> allow Git to be its first client.
 
+Indeed, the last set of patches allow git to be built with the same 
+library that external programs can use which I thought was very welcome. 
+This proposal seems to be backing away from that.
+
+We could have a single version of the library with a set of external 
+headers that export a limited set of functions in a gitlib_ namespace 
+and are wrapped internally with definitions like
+
+static inline int foo(int x)
+{
+	return libgit_foo(x);
+}
+
+but that still leaves the problem of symbol visibility for the symbols 
+that are consumed internally but not exposed in the external headers.
+
+Best Wishes
+
+Phillip
