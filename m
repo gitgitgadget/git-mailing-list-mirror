@@ -1,64 +1,94 @@
-Received: from mail02.ukr.de (mail02.ukr.de [193.175.194.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3137413CAB4
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 07:27:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.175.194.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6678582883
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 08:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712734075; cv=none; b=oYUU+Q+4FHiaZgAcwXk8vZeMbkwRu+ID+gSNnmncS0O9WCkDVpt2qO+czaEJrQ+GnfThPSizoMYZKYaGjPrsxRD6PKu4FXkKYXfQTO3DDyLvGzV1tAmpwYjkfbS6VlFLlXbe9ZkISD6E/JBbgkBxkKiV2hr4ug1SbqoOi54eHDE=
+	t=1712737106; cv=none; b=t05kFUQ5ecjAHzvkp8570XvrKBcC9rT9ZJccjEzOG4aWqQVj8syPluwlp+lTdDcjkAM7k51Ey+GmcJeVPP6YO1oLgB0SDY66AbxX+zlntjQdnESii1iNTMVHNBku+8K26Aq6e+irKqwTOQDuuudTyrsiRKSV8N+mdKToxxxDWaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712734075; c=relaxed/simple;
-	bh=pnOElpbaiOkKczrRh4MxZSYOc4Bo5mDaBFPc4jXJK7k=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=TAqO+gC2fSwlQG03JA3JiKpOKFTzZ0m7x2csBoztfdh9a3DEmGfVa4dj71lH+GoA5bbWZ6fAbSiwmskfqaobReJ7QTiJbcYm/W/64Vkyy7BuclBVghi51v02ZUtFS6fTIWgcbAZdTQmdlluJEszDaGJwsZ4vfu77JQQbQA76L0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ukr.de; spf=pass smtp.mailfrom=ukr.de; arc=none smtp.client-ip=193.175.194.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ukr.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ukr.de
-X-CSE-ConnectionGUID: dC+6TydgQpebvqmjGBbp+g==
-X-CSE-MsgGUID: vgIW7sXTSR6TWSPSyPquqw==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=McAfee;i="6600,9927,11039"; a="732415"
-X-IronPort-AV: E=Sophos;i="6.07,190,1708383600"; 
-   d="scan'208";a="732415"
-Received: from unknown (HELO ukr-excmb02.ukr.local) ([172.24.6.62])
-  by dmz-infcsg02.ukr.dmz with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2024 09:27:50 +0200
-Received: from ukr-excmb03.ukr.local (172.24.6.63) by ukr-excmb02.ukr.local
- (172.24.6.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.37; Wed, 10 Apr
- 2024 09:27:49 +0200
-Received: from ukr-excmb03.ukr.local ([fe80::1cb4:6e0c:6da4:a8a0]) by
- ukr-excmb03.ukr.local ([fe80::1cb4:6e0c:6da4:a8a0%4]) with mapi id
- 15.01.2507.037; Wed, 10 Apr 2024 09:27:49 +0200
-From: "Windl, Ulrich" <u.windl@ukr.de>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: "git stash pop -k"
-Thread-Topic: "git stash pop -k"
-Thread-Index: AdqLGIyhCb+MJtn9TiGgQehp7jLEoQ==
-Date: Wed, 10 Apr 2024 07:27:49 +0000
-Message-ID: <7192686e00724d5eb4991887c11089b5@ukr.de>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1712737106; c=relaxed/simple;
+	bh=k2pec06IIf7C7sySDrZ5EULaaRSys+PkSqpKncjXBgU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qx/OewpGzssvGinz56IWEeYDHkAty0PuF9XSsx68/CpkV1uegNQh8aaZ0+Cihf7bKi77ux9gHjo9+up3njPOJ9g/jRNxUYkmmiXsTtlw0ukWwgyxxMH3GpzajQe5S1GO5klQMpIikQ6Lqu8C4cezjRItzzPwSgxcr2Vn6+cFm/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FNcOFxwQ; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FNcOFxwQ"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a51a1c8d931so608540866b.0
+        for <git@vger.kernel.org>; Wed, 10 Apr 2024 01:18:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712737104; x=1713341904; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NvJJAJqwSFS/Yu3yjAc8yoyaHXHcuh1oR2Dj/jSx0eQ=;
+        b=FNcOFxwQkBsYSRBZIW7mMZlGuvUtN5QHZwJLJP5KyCARH7k6mKA4sfgCxoVZWzepje
+         QCvMZ3quuUK/PZqLB+IojtWGM0oul/tkcOXnFHjV8c+N3YZNBto7tHMHE+OgGIY9zaRO
+         HVHSCP3Ey9l9E90QJ1LGjC8sCUzJnfRfOjt4ZgJOW8d8ZRKPBW4t5azeksQLcToQ/qAj
+         O+MncJSJoYpAZG9uJ7SKY740Ryinz/j3g1fumCCFLx9CfLY7qv/bfcG7QEN3RbrTMZTh
+         K7vBJFecRXvDbcZXa+10STgbX1Vhv5qmV3EMYRbhXi8WjVLFwA6tMI+4mnzpfEaSxdS6
+         J2lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712737104; x=1713341904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NvJJAJqwSFS/Yu3yjAc8yoyaHXHcuh1oR2Dj/jSx0eQ=;
+        b=YRf/4CYN9zS9ncnpjDBha6D7nKMxW+kfF5hO3NFSnJv54NHMPCYcgVh6OL4A1eB/Mj
+         W0ioZd4DlqPsB/zbAvqPq/8+x3iWiPTHeBHKW6ifleoVDqMoVZq20b3WKgKRPsADVhf9
+         jd1Vl3eN0uud35C6n1XzDE1IDwG9Iso6+4mUjXnqQjrSutx/Lv2tIsZ1NZvMXzWLVNXI
+         kZSZgh7CPkA+HFBsPBSQ5EqqXykRK5JhP0R1mTC/zkupNQtH4yAMkRJopJ97nM9qU65f
+         2jOimin+PN1xNfIytjLBe/Pi5KDBsRt8NrYmOFtPvtQ9IjpUWCWGdOFxvdM8j+J1TF/t
+         mRMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHCgfNRB+u56UORUADeMD/z865/KrEeBzSjSnOzGQ6H9YYhijrHaH6GQKetZbPY6q0JIwW51rl1au6vKavzq9sp5sm
+X-Gm-Message-State: AOJu0YylOfdXmq9ISUT/EXUZZNWArvKimYirb01V6uMLCwM+MK65Qp1H
+	MjIY0of16s8yDrurUSIq2yJw4vtK/ZCBWZI4+ApgHq/63K/i2hvq80PP5Q9fSK7gMELcYo2cVfO
+	ILmNrWHEHiQsjC8uR6MWMl7aUzXQ=
+X-Google-Smtp-Source: AGHT+IGSdaLLyndrloSL6JJk0DSK/cmbi0ZYLXRARDfmuweel6CtiiVBMCGKqhCM0tPwmePxd+9Me/mL3vXDLf2XjoI=
+X-Received: by 2002:a17:907:1ca0:b0:a52:3d1:6769 with SMTP id
+ nb32-20020a1709071ca000b00a5203d16769mr1341480ejc.14.1712737103602; Wed, 10
+ Apr 2024 01:18:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev>
+ <e790bdf714bb4c2a67708c016a97cf4f9e79ac48.1711960552.git.thalia@archibald.dev>
+ <ZhYxNYR33ftEfcPk@tanuki>
+In-Reply-To: <ZhYxNYR33ftEfcPk@tanuki>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Wed, 10 Apr 2024 01:18:12 -0700
+Message-ID: <CAPx1GvfgC46n_5fk3dHxg7dn393UVMi0CtHKqQ_GAaqnV_ECCQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] fast-import: tighten path unquoting
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Thalia Archibald <thalia@archibald.dev>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-KFRoaXMgaXMgYSByZXNlbmQgZnJvbSAyMDI0LTAyLTAxIGFuZCBmcm9tIHRvZGF5KQ0KSGkhDQoN
-ClVzaW5nIGdpdC0yLjI2LjIgKHByb2JhYmx5IHF1aXRlIG9sZCksIEkgZnJlcXVlbnRseSBkbzoN
-Cg0KZ2l0IGFkZCDigJNpbnRlcmFjdGl2ZQ0KZ2l0IHN0YXNoIC1rDQojIHRlc3Qgd2hldGhlciB0
-aGUgc3RhZ2VzIHN0dWZmIGxvb2tzIE9LDQpnaXQgY29tbWl0DQpnaXQgc3Rhc2ggcG9wDQojIHNv
-bWV0aW1lcyBJ4oCZbSBnZXR0aW5nIGNvbmZsaWN0IHMgdG8gcmVzb2x2ZSBpbiBzb21lIGZpbGVz
-DQojLi4uY29udGludWUgd29ya+KApg0KZ2l0IGFkZCDigJNpbnRlcmFjdGl2ZQ0KZ2l0IGNvbW1p
-dA0KDQpVbmZvcnR1bmF0ZWx5IEkgbWFueSBjYXNlcyBJIG92ZXJsb29rZWQgdGhhdCDigJxnaXQg
-c3Rhc2ggcG9w4oCdIGRvZXMgY2hhbmdlIHRoZSBpbmRleCAoaS5lLjogaXQgZG9lcyDigJxnaXQg
-YWRk4oCdIGZvciBzb21lIGZpbGVzKS4NCkkgZG91YnQgd2hldGhlciB0aGlzIGlzIHVzZWZ1bCBh
-dCBhbGwsIGFuZCBzcGVjaWZpY2FsbHkgSSB3b25kZXIgd2h5IEkgY2Fubm90IHVzZSBvcHRpb24g
-LWsgZm9yIOKAnGdpdCBzdGFzaCBwb3DigJ0gdG8ga2VlcCB0aGUgaW5kZXgsIHRvby4NCg0KU2Vl
-IGFsc28gaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xLzYzODQzNTUyLzY2MDc0OTcNCg0KU28g
-SeKAmW0gc3VnZ2VzdGluZyBhIG5ldyBmZWF0dXJlIPCfmIkNCg0KS2luZCByZWdhcmRzLA0KVWxy
-aWNoDQoNCg==
+On Tue, Apr 9, 2024 at 11:30=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> > +             if (include_spaces)
+> > +                     *endp =3D p + strlen(p);
+> > +             else
+> > +                     *endp =3D strchr(p, ' ');
+> > +             strbuf_add(sb, p, *endp - p);
+>
+> strchr(3P) may return a NULL pointer in case there is no space, which
+> would make us segfault here when dereferencing `*endp`. We should
+> probably add a testcase that would hit this edge case.
+
+Note that you can do:
+
+    *endp =3D p + strcspn(p, " ");
+
+(though `strcspn` is a fundamentally harder operation since it
+takes a string argument). Everything depends on whether you
+want to test for an explicit "there was no space at all" case of
+course; performance considerations are secondary.
+
+Chris
