@@ -1,128 +1,75 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5EB15920B
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 21:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDE015AAD6
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 21:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712783658; cv=none; b=Yf9Dh0POkRWpa2HgySxVRzl+EflZw3IW4WpQWXHq3b26JxFYm8W73oV+uyY2m2TicUzuszT6P1CZ2GD+l9GWzLD804aatILPrvyzkegIuEm5vdUkohKBL/RccuQBBzxi23gF9/MdGIDNki/7rnPyJH3+dHUGr+RCEusQADJrj1I=
+	t=1712783742; cv=none; b=Hk9LE17Hv+0utS6BXgqqrI6SMMmLwMXB/PjT86MEYOfduL5CU90w5YWr2iDzhS8OUm+FGscAML/cUxWrfoWnTgmx1KAyBSyr1jC9P/73Ipq/SaZl3WhKbp9bJzzGfptYTFGQRwMdcrUKmRr+dHD2OlyXZg3ico52G7xpRo/20t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712783658; c=relaxed/simple;
-	bh=J4OAoZkgRdIqfAap9XiZRDm8eivYXrwavWZRKJBQATQ=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=s+n4fUaryCrz/wQB5CnRGwR75sXXDdpbhoNZYHHvIxUwl0NHOJZZIcnQHHcK/T2yXAUdtpfWI1ZOzAX4AiN3uJ6hM+u4gHpA5bazCup2ym41jwaHk+wHKqC3301qlU8X6j6DHSdMhBFRKWPMTskVSKAA1/1LMS6paRc4yL45i48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KDjhsv3z; arc=none smtp.client-ip=209.85.217.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1712783742; c=relaxed/simple;
+	bh=18e8TnVXv76+34HwhiFpaCbR3ObTt+F3n1Y8tlzJ+q4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MrSgTuMagC4KlC/1dLZx63h69YjNolIBdn6WEyAcLf9wDPN6i2CNp2iFTeTdcCBFPKw0UuisxmRue5605sP7QL37f8Ker0L5VjGbf5wiunG/zGFxVkrjoqw4UHqOr+cKOTffweViwjPsEseL8to8bHyC9letmdqlTHuJsKJDYKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=udYmlHuU; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KDjhsv3z"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-479dbcdba2dso2347979137.3
-        for <git@vger.kernel.org>; Wed, 10 Apr 2024 14:14:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712783656; x=1713388456; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EQVLznUfuwgeXPH6JshEuM6gZMb4ncAksBSUewMhv/8=;
-        b=KDjhsv3zrPvtESCk3sKrOwZJ+TtxPakX7Wj8zsImdOmz2Y35bYybD1PYPrcnMEoICW
-         FNvCCD5kVP34mZFGcLnvAXO14FUuxRW9hiGSYBPwet4Rx2Ynl5t9COA8FndavqRI9zqM
-         XltzZ3Ue92095tMlxaEjpDmUkUq4BAKCwbJU9fiSI57+uCVY7yi+rsFJ68iI2J4LFvoW
-         Tl4ahNUBmn03hV4O1tVqZj4jiodHUdLyK5nv8IKUXfsdIHHtj3mgGXEjM4szDC4bCLqK
-         GnTsTWejGslKaupHlsFgjDkDQuv1oBOeHrI92VbBtzPnJ7LZ2tBx4av7bcwVFzrGv2dB
-         O0Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712783656; x=1713388456;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EQVLznUfuwgeXPH6JshEuM6gZMb4ncAksBSUewMhv/8=;
-        b=JZfobXheuswqDpLFm1tJ2WYkJeS6/6QobmuFBzLv0e1e6izFsbztOrgf+z8qh8FPfx
-         arxLC/UD3vZ7s79ln202NVxEPb5a7pNfjgJhWOcX/ZYB9p0R0PY6rS5l3MjCPVqgXzG7
-         AcJyu2YPioO39gDlMm2ffhueQdtVvyM6jwF0OXpdV6hPbNbaPdtMhWyswmXYdFcXj1WC
-         mBecrEW0kA13y+NCjr5ka0zP9rLIat+ZRjKyReDj+K9M7b9rjE+oeY2L0bT5266/SbHp
-         n1YOBALeHc23KbzWm7Id8DbRVMqxlkKzpp4mFG2It7Tv3wIdpkF2r/EdU1DwGxJZcEYA
-         HLRw==
-X-Gm-Message-State: AOJu0YzS75VESMHTnCEy93fQ4Ct3URsIc9AYhcpPckhlrIevzxCEO2U7
-	m87eFn0nFZxxG8tP7V4eG8HWSWIloVY4NvDbfdUNsxfN1dUmwVv1HdzWrlZ6ownhBNq0GFCdUPa
-	dMcc=
-X-Google-Smtp-Source: AGHT+IHED3gu0/aeDJaXgM6t7fVD8UYPE1L++F2Erwls7y+yC5nG73jfLY+z9i+/nL2/0q/YXuUz7Q==
-X-Received: by 2002:a05:6102:32d1:b0:47a:31f9:163b with SMTP id o17-20020a05610232d100b0047a31f9163bmr951597vss.13.1712783655653;
-        Wed, 10 Apr 2024 14:14:15 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ej6-20020ad45a46000000b00696b1050be8sm19303qvb.133.2024.04.10.14.14.14
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Apr 2024 14:14:15 -0700 (PDT)
-Date: Wed, 10 Apr 2024 17:14:13 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Subject: [ANNOUNCE] Virtual Contributor's Summit 2024
-Message-ID: <ZhcBJSP4MxX0AMFM@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="udYmlHuU"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 14D8E1EFA72;
+	Wed, 10 Apr 2024 17:15:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=18e8TnVXv76+34HwhiFpaCbR3ObTt+F3n1Y8tl
+	zJ+q4=; b=udYmlHuU3ghWj7ZoLSMYrkQD65kreg70U+wqqIRVg6FOQGtneG9v4i
+	Jy0hEq/Fp3Yk5v/60o6FcT6WX9fzO2yruK6XV2vhjQy32HMaW00v5UJT/SZHjJsl
+	ZEzhecq95WSTKEUnqx2sNPYexw2eLoI2tzw72UPxEBO4LaLgeJc9I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C5411EFA71;
+	Wed, 10 Apr 2024 17:15:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71A5F1EFA70;
+	Wed, 10 Apr 2024 17:15:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pi Fisher <pi.l.d.fisher@gmail.com>
+Cc: git@vger.kernel.org,  glencbz@gmail.com
+Subject: Re: [PATCH] typo: Replace 'commitish' with 'committish'
+In-Reply-To: <20240407212111.55362-1-Pi.L.D.Fisher@gmail.com> (Pi Fisher's
+	message of "Sun, 7 Apr 2024 17:21:08 -0400")
+References: <20240407212111.55362-1-Pi.L.D.Fisher@gmail.com>
+Date: Wed, 10 Apr 2024 14:15:38 -0700
+Message-ID: <xmqqcyqwsyv9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7B31AFA0-F77F-11EE-B35B-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Hi everybody,
+Pi Fisher <pi.l.d.fisher@gmail.com> writes:
 
-I've been thinking that it would be a good time to gather informally via
-another Virtual Contributor's Summit.
+> Across only three files, comments and a single function name used
+> 'commitish' rather than 'commit-ish' or 'committish' as the spelling.
+> The git glossary accepts a hyphen or a double-t, but not a single-t.
+> Despite the typo in a translation file, none of the typos appear in
+> user-visible locations.
+>
+> Signed-off-by: Pi Fisher <Pi.L.D.Fisher@gmail.com>
+> ---
+> The function name was renamed to use 'committish', preferring to avoid a
+> hyphenated word. Comments referencing this function were rewritten to
+> match the new name. In the translation file, 'commit-ish' appeared
+> multiple times, but 'committish' appeared only once, so I changed the
+> comment to match the more popular option.
 
-I had been waiting to see whether GitHub was going to host a Git Merge
-event in person this year, but it looks like the answer to that is
-"probably not" (though I am hopeful for next year[^1]).
-
-In lieu of meeting in person, I think it might make sense to meet
-sometime in either this upcoming May or June (though we could extend
-further depending on folks' availability) in the same style/format as
-our last Summit [2], the details were as follows:
-
-  - We'll host the Contributor's Summit on either Zoom or any other
-    conferencing platform that works for folks. (I spoke with Emily
-    Shaffer off-list and they mentioned that some Google folks were
-    interested in Discord for a few reasons, so we could do that, too).
-
-  - The schedule/duration is not fixed, and there are options to vote on
-    preferred days, length, and timezones in the form(s) below. Last
-    year we did two four-hour days, so we could do that again (or
-    anything else that works better).
-
-  - Like last time, in order to participate, you must be either (a) an
-    active Git contributor, (b) planning on contributing soon, or (c)
-    working on a Git-related project that has interest in Git's
-    internals. If you aren't sure whether or not you are welcome, please
-    ask!
-
-Participants should fill out the following forms:
-
-  - https://forms.gle/VVrJ7RbHVxurxZH99 (participants)
-  - https://forms.gle/iGnfexF4hDuK6MQe9 (topics)
-  - https://www.when2meet.com/?24557185-cHKWv (When2meet)
-
-New this year is the When2meet, since this seems like a more efficient
-way to collect which dates are open for folks within the next couple of
-months.
-
-The participants and topics lists are being recorded in the
-spreadsheet below, and this is also the place to record your vote(s)
-on topic selection.
-
-  https://bit.ly/git-contributors-summit-2024
-
-Please feel free to send any feedback or suggestions you have for this
-year's Contributor's Summit to me on- or off-list. Like last year, my
-hope is to have a small, remote-friendly, diverse, and efficient
-discussion.
-
-As we get closer to the date, we'll finalize the schedule, make sure
-we have volunteers to take notes, etc.
-
-I'm looking forward to seeing everybody (virtually) soon :-).
-
-Thanks,
-Taylor
-
-[^1]: Coinciding with the project's 20th anniversary!
-[2]: https://lore.kernel.org/git/ZMATKIaU1A1D0wJg@nand.local/
+Sounds good.  Thanks.
