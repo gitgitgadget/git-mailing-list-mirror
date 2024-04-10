@@ -1,39 +1,39 @@
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F73A8BE8
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 09:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214E11552F7
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 09:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712742964; cv=none; b=jVkNmLK5zaZJc964rhBiNey7TKOxmRyap2kfRQ6+nlgNMt619FBNxtIDpaLtqyD3d4aFADteK6/dRNyhqybCcZXywiYb5A4B1G7P1s5MZqLclCLcedkMBMfomQoAwHSYr7p9Y1Yciyrex6RSp4r+vHQs3e4mTfd+AX8vLscFepY=
+	t=1712742970; cv=none; b=LtXxNsuNKybjJHzyi8MdTQsfQpNUcIkHj8naSv9ekWnkh1GKX1n37GfTa482TXFzzAl/Sp/Un5BrqrgSjYjzX9llaDTH8iv2vyMP27Vsth5KCDa/Lfzb2or9Awir2lHdRF0u7yd5SA34ymGKsn4tLSl9JaKYWCpJGGA9xtZpEuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712742964; c=relaxed/simple;
-	bh=Re5XJaOtWNr1Takorx92HfSH+qzhR01lsbCg/GYSprs=;
+	s=arc-20240116; t=1712742970; c=relaxed/simple;
+	bh=WPzqEvQpU4C2O5x6yCuxGCvax9aBUfOqE3w3ExSwJHg=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d7ir94XTiVQY0UiN0L5cWYKLX5uj0skMu7I+e0ZTUGZaz9w44PhaDmP9hO0IGSHvxe7oOQ52eg32O0mGZyGC/Vykl5elitgBqCFMtvH+BAcbZg0mGc1Wlhv2B9eI/qkYKsU2zQSfu8eroY3DDe/1Juhqhuk7qQ/b/tzatt0TtXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=CMDBFWvX; arc=none smtp.client-ip=185.70.40.18
+	 MIME-Version:Content-Type; b=GTcqjXg3ZILGrm4fZ/t+ZZ6mQLZIPvkOF1RHMFvSKxwCMg03NKe8PXGpHWL2/QmeW94ey8Qxt2fgxlXwQl0b5vichpcmRU4Du9N+fmjp48Rcp2j5eLEfPFdmZoD1YcRZ+7TRKy5fRc7KOXTCj6a1qtpIf0oTUjLab52wt6+m/fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=tibs8qwf; arc=none smtp.client-ip=185.70.43.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="CMDBFWvX"
+	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="tibs8qwf"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
-	s=protonmail3; t=1712742959; x=1713002159;
-	bh=monV4BdOZ+dINwnH/aA3DMNNJNEPQh+LuAqPLhrpNzE=;
+	s=protonmail3; t=1712742967; x=1713002167;
+	bh=N8XgjHlZHmADcp4IaJMk7NLtAcvIzKo5zzwBmK4XP6I=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=CMDBFWvXHwYExkzFhgaEbTXeYxqjNFcJE5zg99VskLpzISzLmhGIb9z973Wa9Ul8z
-	 Ux7fc8ejZxO/0p2pvENVr7decmCaDG3y80tPrZux/hMNrvT1xgDxuNMoTTen7pSKvL
-	 Wt8aiKrLkPUHjE2wLd6z7zdFUvOyIQpvvSC1GPtorC9rCOmwslHiwva488ylVzszhu
-	 QE7Y3W7awmsEfJgITaTs5k6NUqxdnnmACTnqKV/vEybdP60pSemSy2rGzzGbXHMMzP
-	 PYvILK7JfNJqIG6tBEZFGtFXP3sNivVRuQdf1GqK9hjo8i8Y61Tu13xuTCc6Y7qb2C
-	 oo6u11igwqtMA==
-Date: Wed, 10 Apr 2024 09:55:41 +0000
+	b=tibs8qwfevFP+Pl0WpiZIkiNF8JqVza9pVAnBc/rNemQc6clzXCav+WJkXEqeQ3SK
+	 IqqgVIjlToUj39auTMps9NIciNs1+bJPKzTiBz1oys3Big6RBsmDoKZONbaQvuYunq
+	 biL42W80hK3bVfH7pwHbZ8jk9LjVXpWJ3hfqH5glpXGdPQ26gxJqcPqrL1ImzrPpFq
+	 9c41Cf5bLtCqbklFsbUJzSKx8x27NsnjFWVlapfgXfonP5N/MUGbB2w7ajYnZEVsr3
+	 /7q2rc6W4Q4reJHVPnWzZYR6Afh+L1PsYViCAK4Kwc9LyGEyE/q9q3QEnpVMfA08/W
+	 2pJmljtBjHAAg==
+Date: Wed, 10 Apr 2024 09:55:56 +0000
 To: git@vger.kernel.org
 From: Thalia Archibald <thalia@archibald.dev>
 Cc: Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>, Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
-Subject: [PATCH v3 3/8] fast-import: allow unquoted empty path for root
-Message-ID: <39879d0a6627b62f685b38b9afcfe19e4c14c38e.1712741871.git.thalia@archibald.dev>
+Subject: [PATCH v3 5/8] fast-import: improve documentation for unquoted paths
+Message-ID: <2e78690023f653436ec2eba0c5fb9dfa6bb62624.1712741871.git.thalia@archibald.dev>
 In-Reply-To: <cover.1712741870.git.thalia@archibald.dev>
 References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev> <cover.1712741870.git.thalia@archibald.dev>
 Feedback-ID: 63908566:user:proton
@@ -46,524 +46,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Ever since filerename was added in f39a946a1f (Support wholesale
-directory renames in fast-import, 2007-07-09) and filecopy in b6f3481bb4
-(Teach fast-import to recursively copy files/directories, 2007-07-15),
-both have produced an error when the destination path is empty. Later,
-when support for targeting the root directory with an empty string was
-added in 2794ad5244 (fast-import: Allow filemodify to set the root,
-2010-10-10), this had the effect of allowing the quoted empty string
-(`""`), but forbidding its unquoted variant (``). This seems to have
-been intended as simple data validation for parsing two paths, rather
-than a syntax restriction, because it was not extended to the other
-operations.
+It describes what cannot be in an unquoted path, but not what it is.
+Reframe it as a definition of unquoted paths. The requirement that it
+not start with `"` is the core element that implies the rest.
 
-All other occurrences of paths (in filemodify, filedelete, the source of
-filecopy and filerename, and ls) allow both.
-
-For most of this feature's lifetime, the documentation has not
-prescribed the use of quoted empty strings. In e5959106d6
-(Documentation/fast-import: put explanation of M 040000 <dataref> "" in
-context, 2011-01-15), its documentation was changed from =E2=80=9C`<path>` =
-may
-also be an empty string (`""`) to specify the root of the tree=E2=80=9D to =
-=E2=80=9CThe
-root of the tree can be represented by an empty string as `<path>`=E2=80=
-=9D.
-
-Thus, we can assume that some front-ends have depended on this behavior.
-
-Remove this restriction for the destination paths of filecopy and
-filerename and change tests targeting the root to test `""` and ``.
+The restriction that the source paths of filecopy and filerename cannot
+contain SP is only stated in their respective sections. Restate it in
+the <path> section.
 
 Signed-off-by: Thalia Archibald <thalia@archibald.dev>
 ---
- builtin/fast-import.c  |   3 -
- t/t9300-fast-import.sh | 363 +++++++++++++++++++++--------------------
- 2 files changed, 190 insertions(+), 176 deletions(-)
+ Documentation/git-fast-import.txt | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 8f6312fbaf..0da7e8a5a5 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2419,9 +2419,6 @@ static void file_change_cr(const char *p, struct bran=
-ch *b, int rename)
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-imp=
+ort.txt
+index b2607366b9..f26d7a8571 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -630,18 +630,23 @@ in octal.  Git only supports the following modes:
+ In both formats `<path>` is the complete path of the file to be added
+ (if not already existing) or modified (if already existing).
 =20
- =09strbuf_reset(&source);
- =09parse_path_space(&source, p, &p, "source");
--
--=09if (!*p)
--=09=09die("Missing dest: %s", command_buf.buf);
- =09strbuf_reset(&dest);
- =09parse_path_eol(&dest, p, "dest");
+-A `<path>` string must use UNIX-style directory separators (forward
+-slash `/`), may contain any byte other than `LF`, and must not
+-start with double quote (`"`).
++A `<path>` can be written as unquoted bytes or a C-style quoted string:
 =20
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index de2f1304e8..13f98e6688 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1059,30 +1059,33 @@ test_expect_success 'M: rename subdirectory to new =
-subdirectory' '
- =09compare_diff_raw expect actual
- '
+-A path can use C-style string quoting; this is accepted in all cases
+-and mandatory if the filename starts with double quote or contains
+-`LF`. In C-style quoting, the complete name should be surrounded with
++When a `<path>` does not start with double quote (`"`), it is an
++unquoted string and is parsed as literal bytes without any escape
++sequences. However, if the filename contains `LF` or starts with double
++quote, it must be written as a quoted string. Additionally, the source
++`<path>` in `filecopy` or `filerename` must be quoted if it contains SP.
++
++A `<path>` can use C-style string quoting; this is accepted in all cases
++and mandatory in the cases where the filename cannot be represented as
++an unquoted string. In C-style quoting, the complete name should be surrou=
+nded with
+ double quotes, and any `LF`, backslash, or double quote characters
+ must be escaped by preceding them with a backslash (e.g.,
+ `"path/with\n, \\ and \" in it"`).
 =20
--test_expect_success 'M: rename root to subdirectory' '
--=09cat >input <<-INPUT_END &&
--=09commit refs/heads/M4
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09rename root
--=09COMMIT
-+for root in '""' ''
-+do
-+=09test_expect_success "M: rename root ($root) to subdirectory" '
-+=09=09cat >input <<-INPUT_END &&
-+=09=09commit refs/heads/M4
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09rename root
-+=09=09COMMIT
+-The value of `<path>` must be in canonical form. That is it must not:
++A `<path>` must use UNIX-style directory separators (forward slash `/`)
++and must be in canonical form. That is it must not:
 =20
--=09from refs/heads/M2^0
--=09R "" sub
-+=09=09from refs/heads/M2^0
-+=09=09R $root sub
-=20
--=09INPUT_END
-+=09=09INPUT_END
-=20
--=09cat >expect <<-EOF &&
--=09:100644 100644 $oldf $oldf R100=09file2/oldf=09sub/file2/oldf
--=09:100755 100755 $f4id $f4id R100=09file4=09sub/file4
--=09:100755 100755 $newf $newf R100=09i/am/new/to/you=09sub/i/am/new/to/you
--=09:100755 100755 $f6id $f6id R100=09newdir/exec.sh=09sub/newdir/exec.sh
--=09:100644 100644 $f5id $f5id R100=09newdir/interesting=09sub/newdir/inter=
-esting
--=09EOF
--=09git fast-import <input &&
--=09git diff-tree -M -r M4^ M4 >actual &&
--=09compare_diff_raw expect actual
--'
-+=09=09cat >expect <<-EOF &&
-+=09=09:100644 100644 $oldf $oldf R100=09file2/oldf=09sub/file2/oldf
-+=09=09:100755 100755 $f4id $f4id R100=09file4=09sub/file4
-+=09=09:100755 100755 $newf $newf R100=09i/am/new/to/you=09sub/i/am/new/to/=
-you
-+=09=09:100755 100755 $f6id $f6id R100=09newdir/exec.sh=09sub/newdir/exec.s=
-h
-+=09=09:100644 100644 $f5id $f5id R100=09newdir/interesting=09sub/newdir/in=
-teresting
-+=09=09EOF
-+=09=09git fast-import <input &&
-+=09=09git diff-tree -M -r M4^ M4 >actual &&
-+=09=09compare_diff_raw expect actual
-+=09'
-+done
-=20
- ###
- ### series N
-@@ -1259,49 +1262,52 @@ test_expect_success PIPE 'N: empty directory reads =
-as missing' '
- =09test_cmp expect actual
- '
-=20
--test_expect_success 'N: copy root directory by tree hash' '
--=09cat >expect <<-EOF &&
--=09:100755 000000 $newf $zero D=09file3/newf
--=09:100644 000000 $oldf $zero D=09file3/oldf
--=09EOF
--=09root=3D$(git rev-parse refs/heads/branch^0^{tree}) &&
--=09cat >input <<-INPUT_END &&
--=09commit refs/heads/N6
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09copy root directory by tree hash
--=09COMMIT
-+for root in '""' ''
-+do
-+=09test_expect_success "N: copy root ($root) by tree hash" '
-+=09=09cat >expect <<-EOF &&
-+=09=09:100755 000000 $newf $zero D=09file3/newf
-+=09=09:100644 000000 $oldf $zero D=09file3/oldf
-+=09=09EOF
-+=09=09root_tree=3D$(git rev-parse refs/heads/branch^0^{tree}) &&
-+=09=09cat >input <<-INPUT_END &&
-+=09=09commit refs/heads/N6
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09copy root directory by tree hash
-+=09=09COMMIT
-=20
--=09from refs/heads/branch^0
--=09M 040000 $root ""
--=09INPUT_END
--=09git fast-import <input &&
--=09git diff-tree -C --find-copies-harder -r N4 N6 >actual &&
--=09compare_diff_raw expect actual
--'
-+=09=09from refs/heads/branch^0
-+=09=09M 040000 $root_tree $root
-+=09=09INPUT_END
-+=09=09git fast-import <input &&
-+=09=09git diff-tree -C --find-copies-harder -r N4 N6 >actual &&
-+=09=09compare_diff_raw expect actual
-+=09'
-=20
--test_expect_success 'N: copy root by path' '
--=09cat >expect <<-EOF &&
--=09:100755 100755 $newf $newf C100=09file2/newf=09oldroot/file2/newf
--=09:100644 100644 $oldf $oldf C100=09file2/oldf=09oldroot/file2/oldf
--=09:100755 100755 $f4id $f4id C100=09file4=09oldroot/file4
--=09:100755 100755 $f6id $f6id C100=09newdir/exec.sh=09oldroot/newdir/exec.=
-sh
--=09:100644 100644 $f5id $f5id C100=09newdir/interesting=09oldroot/newdir/i=
-nteresting
--=09EOF
--=09cat >input <<-INPUT_END &&
--=09commit refs/heads/N-copy-root-path
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09copy root directory by (empty) path
--=09COMMIT
-+=09test_expect_success "N: copy root ($root) by path" '
-+=09=09cat >expect <<-EOF &&
-+=09=09:100755 100755 $newf $newf C100=09file2/newf=09oldroot/file2/newf
-+=09=09:100644 100644 $oldf $oldf C100=09file2/oldf=09oldroot/file2/oldf
-+=09=09:100755 100755 $f4id $f4id C100=09file4=09oldroot/file4
-+=09=09:100755 100755 $f6id $f6id C100=09newdir/exec.sh=09oldroot/newdir/ex=
-ec.sh
-+=09=09:100644 100644 $f5id $f5id C100=09newdir/interesting=09oldroot/newdi=
-r/interesting
-+=09=09EOF
-+=09=09cat >input <<-INPUT_END &&
-+=09=09commit refs/heads/N-copy-root-path
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09copy root directory by (empty) path
-+=09=09COMMIT
-=20
--=09from refs/heads/branch^0
--=09C "" oldroot
--=09INPUT_END
--=09git fast-import <input &&
--=09git diff-tree -C --find-copies-harder -r branch N-copy-root-path >actua=
-l &&
--=09compare_diff_raw expect actual
--'
-+=09=09from refs/heads/branch^0
-+=09=09C $root oldroot
-+=09=09INPUT_END
-+=09=09git fast-import <input &&
-+=09=09git diff-tree -C --find-copies-harder -r branch N-copy-root-path >ac=
-tual &&
-+=09=09compare_diff_raw expect actual
-+=09'
-+done
-=20
- test_expect_success 'N: delete directory by copying' '
- =09cat >expect <<-\EOF &&
-@@ -1431,98 +1437,102 @@ test_expect_success 'N: reject foo/ syntax in ls a=
-rgument' '
- =09INPUT_END
- '
-=20
--test_expect_success 'N: copy to root by id and modify' '
--=09echo "hello, world" >expect.foo &&
--=09echo hello >expect.bar &&
--=09git fast-import <<-SETUP_END &&
--=09commit refs/heads/N7
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09hello, tree
--=09COMMIT
-+for root in '""' ''
-+do
-+=09test_expect_success "N: copy to root ($root) by id and modify" '
-+=09=09echo "hello, world" >expect.foo &&
-+=09=09echo hello >expect.bar &&
-+=09=09git fast-import <<-SETUP_END &&
-+=09=09commit refs/heads/N7
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09hello, tree
-+=09=09COMMIT
-=20
--=09deleteall
--=09M 644 inline foo/bar
--=09data <<EOF
--=09hello
--=09EOF
--=09SETUP_END
-+=09=09deleteall
-+=09=09M 644 inline foo/bar
-+=09=09data <<EOF
-+=09=09hello
-+=09=09EOF
-+=09=09SETUP_END
-=20
--=09tree=3D$(git rev-parse --verify N7:) &&
--=09git fast-import <<-INPUT_END &&
--=09commit refs/heads/N8
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09copy to root by id and modify
--=09COMMIT
-+=09=09tree=3D$(git rev-parse --verify N7:) &&
-+=09=09git fast-import <<-INPUT_END &&
-+=09=09commit refs/heads/N8
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09copy to root by id and modify
-+=09=09COMMIT
-=20
--=09M 040000 $tree ""
--=09M 644 inline foo/foo
--=09data <<EOF
--=09hello, world
--=09EOF
--=09INPUT_END
--=09git show N8:foo/foo >actual.foo &&
--=09git show N8:foo/bar >actual.bar &&
--=09test_cmp expect.foo actual.foo &&
--=09test_cmp expect.bar actual.bar
--'
-+=09=09M 040000 $tree $root
-+=09=09M 644 inline foo/foo
-+=09=09data <<EOF
-+=09=09hello, world
-+=09=09EOF
-+=09=09INPUT_END
-+=09=09git show N8:foo/foo >actual.foo &&
-+=09=09git show N8:foo/bar >actual.bar &&
-+=09=09test_cmp expect.foo actual.foo &&
-+=09=09test_cmp expect.bar actual.bar
-+=09'
-=20
--test_expect_success 'N: extract subtree' '
--=09branch=3D$(git rev-parse --verify refs/heads/branch^{tree}) &&
--=09cat >input <<-INPUT_END &&
--=09commit refs/heads/N9
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09extract subtree branch:newdir
--=09COMMIT
-+=09test_expect_success "N: extract subtree to the root ($root)" '
-+=09=09branch=3D$(git rev-parse --verify refs/heads/branch^{tree}) &&
-+=09=09cat >input <<-INPUT_END &&
-+=09=09commit refs/heads/N9
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09extract subtree branch:newdir
-+=09=09COMMIT
-=20
--=09M 040000 $branch ""
--=09C "newdir" ""
--=09INPUT_END
--=09git fast-import <input &&
--=09git diff --exit-code branch:newdir N9
--'
-+=09=09M 040000 $branch $root
-+=09=09C "newdir" $root
-+=09=09INPUT_END
-+=09=09git fast-import <input &&
-+=09=09git diff --exit-code branch:newdir N9
-+=09'
-=20
--test_expect_success 'N: modify subtree, extract it, and modify again' '
--=09echo hello >expect.baz &&
--=09echo hello, world >expect.qux &&
--=09git fast-import <<-SETUP_END &&
--=09commit refs/heads/N10
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09hello, tree
--=09COMMIT
-+=09test_expect_success "N: modify subtree, extract it to the root ($root),=
- and modify again" '
-+=09=09echo hello >expect.baz &&
-+=09=09echo hello, world >expect.qux &&
-+=09=09git fast-import <<-SETUP_END &&
-+=09=09commit refs/heads/N10
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09hello, tree
-+=09=09COMMIT
-=20
--=09deleteall
--=09M 644 inline foo/bar/baz
--=09data <<EOF
--=09hello
--=09EOF
--=09SETUP_END
-+=09=09deleteall
-+=09=09M 644 inline foo/bar/baz
-+=09=09data <<EOF
-+=09=09hello
-+=09=09EOF
-+=09=09SETUP_END
-=20
--=09tree=3D$(git rev-parse --verify N10:) &&
--=09git fast-import <<-INPUT_END &&
--=09commit refs/heads/N11
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09copy to root by id and modify
--=09COMMIT
-+=09=09tree=3D$(git rev-parse --verify N10:) &&
-+=09=09git fast-import <<-INPUT_END &&
-+=09=09commit refs/heads/N11
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09copy to root by id and modify
-+=09=09COMMIT
-=20
--=09M 040000 $tree ""
--=09M 100644 inline foo/bar/qux
--=09data <<EOF
--=09hello, world
--=09EOF
--=09R "foo" ""
--=09C "bar/qux" "bar/quux"
--=09INPUT_END
--=09git show N11:bar/baz >actual.baz &&
--=09git show N11:bar/qux >actual.qux &&
--=09git show N11:bar/quux >actual.quux &&
--=09test_cmp expect.baz actual.baz &&
--=09test_cmp expect.qux actual.qux &&
--=09test_cmp expect.qux actual.quux'
-+=09=09M 040000 $tree $root
-+=09=09M 100644 inline foo/bar/qux
-+=09=09data <<EOF
-+=09=09hello, world
-+=09=09EOF
-+=09=09R "foo" $root
-+=09=09C "bar/qux" "bar/quux"
-+=09=09INPUT_END
-+=09=09git show N11:bar/baz >actual.baz &&
-+=09=09git show N11:bar/qux >actual.qux &&
-+=09=09git show N11:bar/quux >actual.quux &&
-+=09=09test_cmp expect.baz actual.baz &&
-+=09=09test_cmp expect.qux actual.qux &&
-+=09=09test_cmp expect.qux actual.quux
-+=09'
-+done
-=20
- ###
- ### series O
-@@ -3067,6 +3077,7 @@ test_expect_success 'S: ls with garbage after sha1 mu=
-st fail' '
- # There are two sorts of ways a path can be parsed, depending on whether i=
-t is
- # the last field on the line. Additionally, ls without a <dataref> has a s=
-pecial
- # case. Test every occurrence of <path> in the grammar against every error=
- case.
-+# Paths for the root (empty strings) are tested elsewhere.
- #
-=20
- #
-@@ -3321,16 +3332,19 @@ test_path_eol_quoted_fail 'ls (without dataref in c=
-ommit)' 'ls ' path
- ###
- # Setup is carried over from series S.
-=20
--test_expect_success 'T: ls root tree' '
--=09sed -e "s/Z\$//" >expect <<-EOF &&
--=09040000 tree $(git rev-parse S^{tree})=09Z
--=09EOF
--=09sha1=3D$(git rev-parse --verify S) &&
--=09git fast-import --import-marks=3Dmarks <<-EOF >actual &&
--=09ls $sha1 ""
--=09EOF
--=09test_cmp expect actual
--'
-+for root in '""' ''
-+do
-+=09test_expect_success "T: ls root ($root) tree" '
-+=09=09sed -e "s/Z\$//" >expect <<-EOF &&
-+=09=09040000 tree $(git rev-parse S^{tree})=09Z
-+=09=09EOF
-+=09=09sha1=3D$(git rev-parse --verify S) &&
-+=09=09git fast-import --import-marks=3Dmarks <<-EOF >actual &&
-+=09=09ls $sha1 $root
-+=09=09EOF
-+=09=09test_cmp expect actual
-+=09'
-+done
-=20
- test_expect_success 'T: delete branch' '
- =09git branch to-delete &&
-@@ -3432,30 +3446,33 @@ test_expect_success 'U: validate directory delete r=
-esult' '
- =09compare_diff_raw expect actual
- '
-=20
--test_expect_success 'U: filedelete root succeeds' '
--=09cat >input <<-INPUT_END &&
--=09commit refs/heads/U
--=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DAT=
-E
--=09data <<COMMIT
--=09must succeed
--=09COMMIT
--=09from refs/heads/U^0
--=09D ""
-+for root in '""' ''
-+do
-+=09test_expect_success "U: filedelete root ($root) succeeds" '
-+=09=09cat >input <<-INPUT_END &&
-+=09=09commit refs/heads/U-delete-root
-+=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
-DATE
-+=09=09data <<COMMIT
-+=09=09must succeed
-+=09=09COMMIT
-+=09=09from refs/heads/U^0
-+=09=09D $root
-=20
--=09INPUT_END
-+=09=09INPUT_END
-=20
--=09git fast-import <input
--'
-+=09=09git fast-import <input
-+=09'
-=20
--test_expect_success 'U: validate root delete result' '
--=09cat >expect <<-EOF &&
--=09:100644 000000 $f7id $ZERO_OID D=09hello.c
--=09EOF
-+=09test_expect_success "U: validate root ($root) delete result" '
-+=09=09cat >expect <<-EOF &&
-+=09=09:100644 000000 $f7id $ZERO_OID D=09hello.c
-+=09=09EOF
-=20
--=09git diff-tree -M -r U^1 U >actual &&
-+=09=09git diff-tree -M -r U U-delete-root >actual &&
-=20
--=09compare_diff_raw expect actual
--'
-+=09=09compare_diff_raw expect actual
-+=09'
-+done
-=20
- ###
- ### series V (checkpoint)
+ * contain an empty directory component (e.g. `foo//bar` is invalid),
+ * end with a directory separator (e.g. `foo/` is invalid),
 --=20
 2.44.0
 
