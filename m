@@ -1,124 +1,152 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0B515820B
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 10:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB7D158D8A
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 10:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712744159; cv=none; b=C9hS9d0pZlQX3KdR6HyRfN9lIn4QknO9R4EXWj2pLvTpt43fcMP7T5q18aC2XzdrvgN87ktY4Xt3MK7ZE9xE+S2IejMyKksjivuaSUI2ZwuOeAzGPSHFRXb5jeIDVGjpENevCoSKFNKFgtG0vzzmX4qmjmhO7W8srVeclzQI3c8=
+	t=1712744326; cv=none; b=RCqtL/TdwRrLHfNR2TCAsIX+xNjNsReEUq//RLQQug3HwI74KFwmHjTzm5LAwQHTTAaBvtWcFA0h/luhqZcTXd6Zu+BpL8pCe7cz90VH6hmsBCORooOMrChN/fblAdN2qMSh4/+yCHLONiB5502us1dkEEqcro3OiY6sRiM/89U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712744159; c=relaxed/simple;
-	bh=tRCM2utPFZU2mjKjltZvhlYuKwzX/cdYbpFRA6WC9jU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=du3WWHUruqo/Q0WTr8BGHJkQDO7nM1vNXxvSBzMGV2f4lzR/9URt7ju8hyaV5WBaf5Cheu+zz8u0ODZvOhUE3l1iSgu/KgN8BXco6/CY4xgUlD6gOAh7NNqRAwfvc3Hu+ylcEwRmL2rph1e3XlFYc6o1fmOoYnlrAMFHZbeW2HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5geQax+; arc=none smtp.client-ip=209.85.161.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712744326; c=relaxed/simple;
+	bh=KLujglKe3I+eauhotLfRem1owVlSIOd69eeYUhS9o2g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WDf/BADqo5cP7zYA/ersqge8mA8tB0sHHbO0q0zlfiZuYP3+y1OzleOPtjUi3Ta4Y7M+7Kz3fHojAOrWdZpf7H6N60SZsFYRH2u09GwwqXqOPaFz47ZzxE6lQ2RpmLYuzssJyvL2WTQWq/o9DXm9EYXCcwREuKI1KP2O88id3Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e2MIsZRc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KN//dbLk; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5geQax+"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5aa369179e1so2429167eaf.3
-        for <git@vger.kernel.org>; Wed, 10 Apr 2024 03:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712744157; x=1713348957; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vJeXAlXympZ3fGNAigYcYIKbq79Uk9zmaGjanfGy4uc=;
-        b=S5geQax+YEkDkldijF4fzUeREqsRUf50i6cCMoFQuD6LWwHT7VoXKsuFB9sM9Mdbkt
-         E1u/Z2N9Rm8YMhHa+9D64jo2BykO0jWT4dFhNXRWiGQPtFEB98cLf8mz1O2XycQJYDjY
-         lmmiJyc5IvgKcKa/BDtwwfElRBNLzbcMMmO2UJibW6M8ppCUOlB46k/N9yt9Nv+WhRHe
-         OuH9VXXCnkzGNOnLsDdKqXoAcc1i9+0Nano8rtqNy0sKui3hAVgHxoawWxWxSiDPAUqg
-         rur0yNHl+oLaOeO4ZNiH0EZruIlBNwzQWcr7jguW7ERx5WqINPKjcgbL4aQ/m7vZ+5PN
-         2Jkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712744157; x=1713348957;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vJeXAlXympZ3fGNAigYcYIKbq79Uk9zmaGjanfGy4uc=;
-        b=gKLNUHOluGqcdvumS1U6INqopCUCFvXb0//2BGmroN6dqJ5LX2qeAJMqnuc6GGRODo
-         Hax6/AWqIET5USHibGXMpKMNz9rYE7uPwQbglvUyRc8isCkDdJOUP3ZHdDFxYvY7DSP0
-         DVnjnYC+aejeOjW3dmxpnQcTd5oOorxSs7iT0FfTuIdJ5Ed6/eI1mTelyKtHD4RzAL9U
-         wjFKowGZ3uncNenV2BBuTx2ywwSG6CP0CU7zSXgql7iuihzvfWhC4Ne0T9VuEF2/75BM
-         H2JtZ453328MhOJMn6+dXo4SZ2ai8efazj/J4KxWycXAkaHTM7dZdNAkJlyYoJTdbqhB
-         +UFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQ6mrc0zRPUhF/dEOD9tqbxBJJpoa134mEHD/qsTRLIUlI8sSQxjN6kRh5U7nYf9c+iUp0DtjLzNzHDKLcjZS1S3Yg
-X-Gm-Message-State: AOJu0Yw90IspuFjwIiN12vV7R6VOZ4nVwbkoKeUO47z8/yyqaDQAsXmC
-	PKhYdgpeZShU/qR/vMs3wI6vbLgqVao2rtFdfp5o+S1SK0E6j5g0I6h+LyijYwSKJ3Hi7k5fNWi
-	AG514XOzWIdeNqPtohRLUDsSEzes=
-X-Google-Smtp-Source: AGHT+IEDmGoiaZVFjQU9mM4A+TQFRml/wLobmTrk4K99245aZzNcAkbtE28SyDXInpqT+tYsvK/FlsVf6yptqHQs428=
-X-Received: by 2002:a05:6871:6d83:b0:232:f9da:5cf3 with SMTP id
- zl3-20020a0568716d8300b00232f9da5cf3mr1452279oab.15.1712744157026; Wed, 10
- Apr 2024 03:15:57 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Apr 2024 03:15:56 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <587b5601c0c51a8f041258a27e693a2590468eed.1712578376.git.ps@pks.im>
-References: <cover.1711519925.git.ps@pks.im> <cover.1712578376.git.ps@pks.im> <587b5601c0c51a8f041258a27e693a2590468eed.1712578376.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e2MIsZRc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KN//dbLk"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D4E39114017D;
+	Wed, 10 Apr 2024 06:18:43 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 10 Apr 2024 06:18:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1712744323; x=1712830723; bh=KLujglKe3I
+	+eauhotLfRem1owVlSIOd69eeYUhS9o2g=; b=e2MIsZRcBMSaqfVktW/sCh9TQI
+	k9Q82u3oId2yMfZ6woX9KSqzoVNN49yUE/rjFRNS7DDT/y2Ox+r9se+mnt0/LQp5
+	f6LvEqqxfk0lcP84U9bvcZIZHLCXwgtBc813AuTNKORZ17KvFhdu+rLm3k5kiN7B
+	CpG4Yj8jPgoH52XagizL3i+XnXobKsoc5u/qUd47u0m0LZT1QmSlS8bYfIjDZ7+N
+	tLiss7yjhKGtHbRi6OIxsRi22A852vgLWpKNei7C5xBqc5mQkl0QPFboENK/Cqlf
+	xnudVPAd4p6iD3VQPUR2HPK1839l3JypTAHXnl1R8xnFo1daFZyL4qVgHA/Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712744323; x=1712830723; bh=KLujglKe3I+eauhotLfRem1owVlS
+	IOd69eeYUhS9o2g=; b=KN//dbLkCtKdYUhDZY+fRbzUqkObjn6WDOCYT6PDN6d+
+	avlSC6UQ8F8/ItfHOK3mFks73DkKHZcnd5xw7spD8+J+rKWO2iAkrCtPdpYqJTOM
+	3TmTEqM0/CL9NKYdn/flvQXoCrkZkVvwimwwsybahARH4SzYRIgPNVX2LwU0RbQQ
+	TvRDkqWzB4Jq/3B5rUWGmRjVUMbrKN9yxJsDH1Xe3AIqUzrZw4kZwR6drBMTV4Su
+	uNbGDHxYzsYVkz+fY8VdnfiGY5mcTUuAHLqMZzcjzH/rIuvTAc6Qos9mb+ZbyHYa
+	7tOLfX1Xil3TzGG1qtsrDCA3TxDgtMiD/C9AbEJWEQ==
+X-ME-Sender: <xms:g2cWZqvF_F_RBoo6joViMvZ0PNOR1NbGDXxO04cx-UvM2utYxWNHUg>
+    <xme:g2cWZvfn0cOs6tE0TKwfIdX1Ylh1HpPxnNhI03zB4jN-Fcn3DfHe-ActiMS2wvQPO
+    kPPi-fDkWODDcb_ow>
+X-ME-Received: <xmr:g2cWZlwG3PfP0axygMAy0xZMbFfCqiR26V9ZxPjKRhqUFi4c0mTibN0GCZP1G52bz29_hewSZVdhWlY-2oFeqZHLmdiWM3k0LzHodfbS0Curxt4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehiedgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnheptdeiffelledvfffgtdejgfevvefhleetjeduhfeuhfeiledvleetiefgkeejueff
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:g2cWZlPJGCCM3dPMANtt1nBtkJlkzHovC4ufLY5xhxZtnGlll3NfBA>
+    <xmx:g2cWZq8ONr6OLbQqmh6e858S7K-tlXF5gbdvJ41UIZlqdQbWhzWjng>
+    <xmx:g2cWZtUWcFrBSRbcf0aKxXUC-aumtEVZ_KWNYFuPdyf-xUJQkrgGwQ>
+    <xmx:g2cWZjeoNmu_edauDEMqrFolxf78fGZdPTceJTYgIPP9ziM5rfYu8g>
+    <xmx:g2cWZhaiEsRIDwLM5ssiaS0GcAU9vC7te9iLjuVF6Ja8gmT7bHQcb96e>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Apr 2024 06:18:42 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id baaca9cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Apr 2024 10:18:29 +0000 (UTC)
+Date: Wed, 10 Apr 2024 12:18:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Thalia Archibald <thalia@archibald.dev>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 2/8] fast-import: directly use strbufs for paths
+Message-ID: <ZhZnfHqMD-KtIsF2@tanuki>
+References: <20240322000304.76810-1-thalia@archibald.dev>
+ <cover.1711960552.git.thalia@archibald.dev>
+ <82a6f53c1326a420348eb70461f5929340a930d3.1711960552.git.thalia@archibald.dev>
+ <ZhYxP42Br2h1mq5r@tanuki>
+ <17089372-8AF1-49A5-A582-8153E87380AE@archibald.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 10 Apr 2024 03:15:56 -0700
-Message-ID: <CAOLa=ZTnnmBvwXMbHqJ+58kPGe4jwLhu_GaEfkAXyfVa5imeYA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/10] reftable/block: reuse `zstream` state on inflation
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000001239c50615bb532b"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="OxTuwT5DC2BHaxR5"
+Content-Disposition: inline
+In-Reply-To: <17089372-8AF1-49A5-A582-8153E87380AE@archibald.dev>
 
---0000000000001239c50615bb532b
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--OxTuwT5DC2BHaxR5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> When calling `inflateInit()` and `inflate()`, the zlib library will
-> allocate several data structures for the underlying `zstream` to keep
-> track of various information. Thus, when inflating repeatedly, it is
-> possible to optimize memory allocation patterns by reusing the `zstream`
-> and then calling `inflateReset()` on it to prepare it for the next chunk
-> of data to inflate.
->
-> This is exactly what the reftable code is doing: when iterating through
-> reflogs we need to potentially inflate many log blocks, but we discard
-> the `zstream` every single time. Instead, as we reuse the `block_reader`
-> for each of the blocks anyway, we can initialize the `zstream` once and
-> then reuse it for subsequent inflations.
->
-> Refactor the code to do so, which leads to a significant reduction in
-> the number of allocations. The following measurements were done when
-> iterating through 1 million reflog entries. Before:
->
->   HEAP SUMMARY:
->       in use at exit: 13,473 bytes in 122 blocks
->     total heap usage: 23,028 allocs, 22,906 frees, 162,813,552 bytes allocated
->
-> After:
->
->   HEAP SUMMARY:
->       in use at exit: 13,473 bytes in 122 blocks
->     total heap usage: 302 allocs, 180 frees, 88,352 bytes allocated
->
+On Wed, Apr 10, 2024 at 10:07:13AM +0000, Thalia Archibald wrote:
+> On Apr 9, 2024, at 23:27, Patrick Steinhardt <ps@pks.im> wrote:
+> > On Mon, Apr 01, 2024 at 09:03:06AM +0000, Thalia Archibald wrote:
+> >>=20
+> >> + parse_path_eol(&path, p
+> >> , "path");
+> >=20
+> > This looks weird. Did you manually edit the patch or is there some weird
+> > character in here that breaks diff generation?
+> >=20
+> >> + tree_content_get(&b-
+> >>> branch_tree, source.buf, &leaf, 1);
+> >=20
+> > Same here. Is your mail agent maybe wrapping lines?
+> >=20
+> >> - s
+> >> trbuf_reset(&uq);
+> >=20
+> > And here.
+> >=20
+> > Other than those formatting issues this patch looks fine to me.
+>=20
+> I=E2=80=99m not able to reproduce these rewrapping issues anywhere I view=
+ this email: in
+> my outbox, inbox, or the archive. I think it=E2=80=99s on your end.
+>=20
+> https://lore.kernel.org/git/82a6f53c1326a420348eb70461f5929340a930d3.1711=
+960552.git.thalia@archibald.dev/
 
-Really nice how just reusing the data structure has such a significant
-impact.
+Could be that this is happening because the mails you sent to me are
+actually encrypted.
 
---0000000000001239c50615bb532b
+Patrick
+
+--OxTuwT5DC2BHaxR5
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 2530bd00765ffc61_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZV1p0b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNG9ZQy9zR3hIY1oxNWM1V3NRM2NQdmVnMElpNE9WYgpsWElLZVdvdml1
-aGNMMHBqeHRSNk04cTdUSWFIRXZQMHVvZ0xPazlINGc2RExZeVZvUmRqenFHdXBEbFdhSnFaCmR5
-SC9nUFlTaHBqTUV0bUhZOHR1QlZhL3Y1Mkg3NkRwbHBGV3hDQkRoWWIzOU9KMFhJR0licFJUL09D
-c3AxNEkKWXNmamdMdDRVNEpNd2dUWVhuYzFTSmp1dTlFVldCRTZ6ck05S0hTdHhoSHVmVHVIWVVG
-ZE1OTnB5RkhwdUZxZgpnbHlxeEgrRzUzNzMrNjhIOUNPekt6L0lpT0c5UlhGN3ZBMzJmY1pDU2NB
-cTk0WUsreFRQQVcvVHVMcUlGblJSCklSa3VLdkY5aHpaa0ovK0U3bUU0REhqMEJSLzUybXZwb0xG
-VmQzdUdpUldZdkNCcUFnTEpFSjJ4TTl4NkRCdmYKWE9sS2szbGZJQk45NU9XclcvUDZ3UGo3Q0FV
-alh2VFJOcUdZRW1rdkVFbWg3TWI3UFlCZnhOblFwdGhtbmlFVwpIYnk3ZmFnNHJtMjFPNHJVajVj
-eUxDOWc2Ull2T0JEdW14VXBzc0xkTXZEUUxCZTBYUHhHQTZ0WjFjNUs4ZGV0CkY0eHpsWks4Sk9S
-Q1FCSUZVSnlwTWZ1d3VoUlprYmx4dWpCaUVJOD0KPVhld2EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001239c50615bb532b--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYWZ3wACgkQVbJhu7ck
+PpQg3A/8CRicf5A4Q327T5/VdHV+2UuaqAk2cJqt67UM9Po0e5tiHjiDfQsaDg4T
+4ZNR+u740xuSRoCI1mBofKAZq4k9xPUMFJm63xpfTgBohEOUs5VxKA6IDWe8DLyX
+Zxx+YOA4baB9c/BguajzZZ4XRTUsC/rV6vPQTcsO/WT6NnsUXLEWiKGVtT1mB5ZO
+bpymp3L1OavRYsNNhhD4vHDLapnAD4Nmh5Khqa6vHNC7PVJLhC7qrvxxrKoAV2ye
+jciTFPuCqwLutmDL+7n6BE9ZzZv5xP9TIXV/INEV0ndQd4bB/m60ghS8wzLYvJMo
+V0XV9K7deDrYM5Ue431Ky1p5OOzCs2Nx6cc/IEkiWIYLD/vKIZ6JVAzYJMKujGue
+LCT7UVH5joe6MZP6JUcDWsRElao4iFdMxWewYQcdxQnt8l+XRa4nIijpcQLnJj2S
+wEV2VBpSyRei4lPuLxcrIlEX6Gnoi1+xIeKBnDcQSLcrA1uGYMqSLN3GLp+JTJae
+LGVixWZdqNZU5xOSLyMyMGqEsBRDAlXbrBRYMnUSfzsRicA/hM6Rni+2+Wa7DwH1
+QDUckRRdtFMUpelkboY18K2liFS5X+glqfZyNSjXNzwwDBn2Wjp82LZV6nZr8oZs
+5FRc/liwC3Tc9lKwyt10TZa+BffJgJyvA7yGMb+GvKoLPq2TKKk=
+=ZYCB
+-----END PGP SIGNATURE-----
+
+--OxTuwT5DC2BHaxR5--
