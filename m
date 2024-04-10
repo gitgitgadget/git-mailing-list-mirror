@@ -1,87 +1,116 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B31519E
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 00:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B608B38D
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 01:13:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712709405; cv=none; b=erpNkkuqGRLIwPCcL6Uu5isCpoPkrmXN6LlC2zZyC6nJW2R5RdoWfo3shEt7gSCkippadvLyfpjhkOeiABlfwX3CaGn76QjxxDJEcxCNrQQCrCF7L91UfVZVpooWcFBrWIsFYv/JKY+Vr4QhilAvxEES8CLQrO12jy0+cC6yzM4=
+	t=1712711621; cv=none; b=J0XMl9O3TvDOgJXe2nVPNhcCG0inplXIIWDddOCN6oB+dF+qGTqozSAx/wKSHMyk7hw1fLhlh/9X+Gy5gLGkU9ilvKqW1TJB5pW+K4tIUHoQmsK9u4pAnirnqvi//M4lS+3qoSB7fBcqIEmdAoY0kzMQNtQ23TxWNIC8XyfHOEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712709405; c=relaxed/simple;
-	bh=pa5GxEqzObTILbgf62D50h/JQzLw4cPazJi3nvw02v4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KzOkyP4HNlr1bqwV3szbmWrcaq9pJr5XpNZACDYFPgN84Ihs6m/qSE7w5F1H+WvUiPHdFKEIRjhdWIffLz+zHItn9A1L8ZnwjcXpKKk4ZhxBTsmu7dS/CAgJHDx4VFWp7OMRepDJFlyWqb3OiqptwTcbtLXtGm/v6gSTdaw0GTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fKoyhYHA; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712711621; c=relaxed/simple;
+	bh=h/eh5Kf+J6J7HVWwayp1+OTxriSW7UB9GTcgyk3gFh0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=WUu7CTbHO11+Q9q5qY7TUoZUiscr5K2/udw+J43wY7QR/4/3u5vp7D+wXuujvJZSxDPIktsK6wuEZHcZqWBxkYBYsKQJBAyqJMijGKixX6uAMCo/OIYjFXhgYJnSJtQP1jDGErAIh2BRQNOtUGN47+e5hBQbKRbbXwO4BRD4iws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=l0mZsq+x; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fKoyhYHA"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C93A329D01;
-	Tue,  9 Apr 2024 20:36:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pa5GxEqzObTILbgf62D50h/JQzLw4cPazJi3nv
-	w02v4=; b=fKoyhYHATCVMCnvs/CL4+PImDBVYRVGowQs80y7ubymxRQoMV+Gsga
-	yjTACljrt+PmlPxbKrJjGIaCeJR/TzX+mz+Z2lMOuuBgIT91VEgbmiJ3hRpyfU7B
-	Vt6z5L/87zglIOYlPyhD5ktoUZc6vijudPhVtQbc5RmnCPik7hugM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C104429D00;
-	Tue,  9 Apr 2024 20:36:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 08BF129CFF;
-	Tue,  9 Apr 2024 20:36:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
- <nasamuffin@google.com>,  Patrick Steinhardt <ps@pks.im>,  Matthieu Moy
- <git@matthieu-moy.fr>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v3 5/8] SubmittingPatches: discuss reviewers first
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l0mZsq+x"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-1e3c14a60e3so37508025ad.0
+        for <git@vger.kernel.org>; Tue, 09 Apr 2024 18:13:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1712711619; x=1713316419; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RsusbrCJK1Tzll14w3eQPYMTCqDp61VlVAvT3yj+NUw=;
+        b=l0mZsq+xO/B8fdVq//WdREZ+fnpF52oAkgN/NHsBZbaRewUVMD+IJYAq35DW0hlEbJ
+         n5ZjEGitsD9j8EXFRu1CQaAfbMKBhUH+gnYFeihiEX4fKR8ioUx7zOCTllxy2US8n8Dp
+         c38qVXL/rzkbEwsWTMZdyMJkyIsEa0y+aNLwQ8x0TZhG66BGPwK2rWl95i7usM8b3aeL
+         lJ/xReTJhZ6czPPMnl79cv4Gfj87qmk7YFkQNOtxuFLggzuq4OVqPOtKRoLfT4ZFuhGz
+         queqyJ+rC4sPgiI9jSpgYz8vNUBDp4rrJRSV/NpErmZDmppRVZrkT7erTuYU1pNX8yrG
+         DyTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712711619; x=1713316419;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RsusbrCJK1Tzll14w3eQPYMTCqDp61VlVAvT3yj+NUw=;
+        b=U3kgKCLiokqsWMsHn95lUnLjXl0wZZYigGROCxgtLdW0IDKvH4lBw6ElzMxBq+QlpS
+         6oOhYBkcPqe1BFwYoFs4bOrMEcFCeybcCFGCfr9t8MHZH+RlczhARho5rJ72ttG7r5EW
+         kshP+PNLNUBx0gxsi4QssT8ShHjSQ+xeWVruhdSd+lxHoa1nyUUCsX6rbQDcgWCpxojq
+         Bl5mBOMQdJqqEvuaoljMGjOboO3Rwu0yYVUCHe1Tg4ZiZr7L3nvG8bqSOpJstn4oPBvj
+         xMNOA4Jdu0B8OJ6wpDleWGWYTXvjIY9/s7yZR+g6qYNtXS1t1wUhOgcmHtKVERAJ1Q1r
+         NSZQ==
+X-Gm-Message-State: AOJu0YyhCdmWB3/PHOZprFbacBqhxOcl4DehXM1zxH/dJxjuL9vkku0M
+	Skg8vdSF4aWQgf1PvpgZr+ozYcUxwPrM+HLXDixYGfwAoL+A2EteF9uzFZt+BEAUhal1ceb0rVO
+	PxA==
+X-Google-Smtp-Source: AGHT+IHMkg6dboNpnnSM1HaRUHcQT2Vi53K52tx4/GEz6u6BBhhYoSxOwWlrP1Ob0TyehlVM0R9quWbzERY=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:902:f54e:b0:1e3:d11b:5368 with SMTP id
+ h14-20020a170902f54e00b001e3d11b5368mr4358plf.12.1712711618835; Tue, 09 Apr
+ 2024 18:13:38 -0700 (PDT)
+Date: Tue, 09 Apr 2024 18:13:37 -0700
 In-Reply-To: <CAPig+cSw5wsYpm4Szk6HzgT3u+wMVz77NfqR1rLJrmCzejxvmg@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 9 Apr 2024 20:27:13 -0400")
-References: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
-	<pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
-	<6f71b1731f2aed9c2f4dc101bf4349344b575d73.1712699815.git.gitgitgadget@gmail.com>
-	<CAPig+cSw5wsYpm4Szk6HzgT3u+wMVz77NfqR1rLJrmCzejxvmg@mail.gmail.com>
-Date: Tue, 09 Apr 2024 17:36:38 -0700
-Message-ID: <xmqqo7aiyrxl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 65708B44-F6D2-11EE-9342-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Mime-Version: 1.0
+References: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
+ <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com> <6f71b1731f2aed9c2f4dc101bf4349344b575d73.1712699815.git.gitgitgadget@gmail.com>
+ <CAPig+cSw5wsYpm4Szk6HzgT3u+wMVz77NfqR1rLJrmCzejxvmg@mail.gmail.com>
+Message-ID: <owlycyqyrpdq.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 5/8] SubmittingPatches: discuss reviewers first
+From: Linus Arver <linusa@google.com>
+To: Eric Sunshine <sunshine@sunshineco.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
 Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> +Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:` and
->> +`Tested-by:` lines as necessary to credit people who helped your
->> +patch, and "cc:" them when sending such a final version for inclusion.
+> On Tue, Apr 9, 2024 at 5:57=E2=80=AFPM Linus Arver via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> No matter how well someone configures their email tooling, understanding
+>> who to send the patches to is something that must always be considered.
+>> So discuss it first instead of at the end.
+>>
+>> In the following commit we will clean up the (now redundant) discussion
+>> about sending security patches to the Git Security mailing list.
+>>
+>> Signed-off-by: Linus Arver <linusa@google.com>
+>> ---
+>> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingP=
+atches
+>> @@ -397,6 +397,36 @@ letter.
+>> +After the list reached a consensus that it is a good idea to apply the
+>> +patch, re-send it with "To:" set to the maintainer{current-maintainer}
+>> +and "cc:" the list{git-ml} for inclusion.  This is especially relevant
+>> +when the maintainer did not heavily participate in the discussion and
+>> +instead left the review to trusted others.
 >
-> Again, not a new problem introduced by this patch, but it seems like
-> all of these are actively wrong. In every case, these trailers are
-> _given_ by reviewers _after_ a series has been submitted (thus, too
-> late for the author to add them), ...
+> This isn't a new problem since you're merely relocating this text
+> (thus, very likely may be outside the scope of this series), but is
+> this recommendation still accurate?
 
-Well, this is another instance that I may be trying to be too
-helpful and over extending myself, which does not make the process
-scale well (the other one being the "one final resend after the
-list reached a consensus").
+I don't have much history on this list to know one way or the other, but
+it would certainly help to double-check all of the advice contained in
+here for accuracy.=20
 
-If the authors collect Acks and Reviewed-by's and resend after the
-list reached the concensus, it may take one extra iteration, but I
-no longer have to keep track of these trailers myself, which could
-be a big win.
+I also think that we need to add some more structure to the
+SubmittingPatches doc. It is currently pretty long and could use some
+help in being broken up a bit more.=20
 
-So, I dunno.
+One thing I noticed while drafting this series was that we don't really
+separate minutiae from what is _really_ important. For example even the
+advice around adding "Acked-by:" and other trailers --- is it really
+critical? Other than the "Signed-off-by: " of the patch author (required
+for legal reasons), it's not the end of the world if someone forgot to
+add a "Reviewed-by: ". We should do a better job of separating
+absolutely critical things that must be done correctly to ensure smooth
+function of the review process, from the rest that are not so important.
