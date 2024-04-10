@@ -1,140 +1,519 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EAB125CD
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 09:42:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2261154C0F
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 09:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712742177; cv=none; b=HSD8f2B8tlYu+W65PLe2om55J9VNDZ0Iy/jlYkFzoHhtwAg55Gyxh2xvOcxWe9mrp/DBrCU3/vsIXLtDULfwVZxEi/Moew7vNu9MVlk/z3qCT0rl06x06XoxaYxeYYxfuBtukKiOKMcs3n99xvJTYhc07F82K2vJRDYV7kwIfdo=
+	t=1712742915; cv=none; b=ny/mBk6CKYFDMB3+GGIHHYe5W0AXNPi38KGUXUBb4aD4bNfmHSQtUKSjsr0i8ozOOWV+2Y9I1cPd4vDpbm/vG7cRq+XyLyhN0PdMtRwbUs+I0eBkoqSxWETYtPcA42d2/TNM9nbIJiW0v0/CqdrInWnmwQuMLKv9AGaE+9q198c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712742177; c=relaxed/simple;
-	bh=TSfGIcu4Tn6g4TtVPMmDWgT9Q1EdvUTnLHZW8akPfBk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WRNqxxy9x3HeiByQzf/SoVxU8zqeJVGI+L2wqeIY31ZlBW3Ecz0uo7XvXzzft+gb+jzJO1uS8LcMp1f/Vll5n+Z3dd7LyA/oqK4VF5TmJmrfg9T5I9M4RUUa9IECgicsPz4wssGkLVq5Z1/0devLuzYBF2S6+myzUoZfyCHe72E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L8QCcwDT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EKRPjNq2; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1712742915; c=relaxed/simple;
+	bh=EhCZnxme7jwhJHVRVa3vUHQFAWYw3X6e4WGXGf/Mmr0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EkLwyReqgPxjYpvNAo3mdfFk0KVGPKPXXszqDURrqLn4Z6zzgE6iTPzMdtK+u6ko8ecbDjznNdGrJfKmtP7nGEDVOnBj+3miEGlrAQbw1QDWJtRxoh7iUgLTA6n8CVU2c0NJFyOFp3mov6A+rgYZhTXOA7WMW8TpJ70i37+HDmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=I89hYoG2; arc=none smtp.client-ip=185.70.43.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L8QCcwDT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EKRPjNq2"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2B22911401A0;
-	Wed, 10 Apr 2024 05:42:54 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 10 Apr 2024 05:42:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712742174; x=1712828574; bh=TSfGIcu4Tn
-	6g4TtVPMmDWgT9Q1EdvUTnLHZW8akPfBk=; b=L8QCcwDTXsp0acQ7zq1Ui3gZJl
-	zcVql5XArqo64ocDSlh59ZQiTCvQYQmUgkOqjHecFHuTP+C1w4MGP7vKt8fUVUP+
-	1SWh1tSkCPEx4/RsBcbKzyVYB0KOTvpDF2sCHKp9ADKK6+0m2MCjoTuErGLWQKSG
-	m8qly0g8TvUhFJgLMEoLNadjGfYAGaLZqLxmmMn1cP04Ec1fW1Omn1xkaB1jDUn9
-	wHm/KylAGc1nVx3hLGI5VCrIQUPORBLUTldRcALI2oqFMKXFBg/XjEFM3XjY8XLW
-	/Wj/2rzbh2wu+JD4UVlGDa280UWj17APbBykD59A5bh3MIPec+xN4saehUuA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712742174; x=1712828574; bh=TSfGIcu4Tn6g4TtVPMmDWgT9Q1Ed
-	vUTnLHZW8akPfBk=; b=EKRPjNq27U+O9u66PrTHG5FhOwKsAMY9rvuiILRocgKm
-	Ix/cZ+2caX8RteaMDMSZpgCzYTBpHRq0/K9Wbki17S3kO0KRahhDHLO73tpJD7a6
-	ARXTqNxhnYaemIK2ukbKp0ZYF+A14HmsY01ZBa8s87Flxw3PSum/zuq2NqKisK/d
-	O2KjWdrP++r5NH8X1TmNNlwbzoHYixAOlm6+8sYfkQTe/6zS2NJdGMG+zo5kf9rW
-	uCWcaeDiQpgQz33zoZx6FGaItWNVorde1J/L5mnJrzWekQQMw7A/IB8Q1KH0XYCO
-	12YgcHRREujjC4F9XXUX0jMO5dI4mZEE9gDzcKr0Uw==
-X-ME-Sender: <xms:HV8WZmlSL3v9BItctzcZWwvlssqzfPTHZ38JhuLibG9OLXqjWuVH0Q>
-    <xme:HV8WZt2I8kWpCUbVKepUv7cWrxl9jCL72lPZ8E-Lz4zLJ7bVZaKFTx5WZySup4nNQ
-    DSMC9dl2qwJ3iRB-g>
-X-ME-Received: <xmr:HV8WZkosV3i46nwCvmgX5qcFwF5HAsiTheRBKHe_-LmIsn1rCDMbbSSr5GhhpzfMm1VNaKNZGVNzK7ThqPJ3N-HquJaF77VoK-KrMZhwr6iLABs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehiedgudejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:HV8WZqnDA9Q0Cyv9T_kLpYT3tIwUP3YD46MU8cBbvzdMPMu757zyTQ>
-    <xmx:HV8WZk3pc9FJ_c4qwvjo9BVJqwJm4Ql7lOtVC37aJK5ekeQo0UTPJw>
-    <xmx:HV8WZhsg2KvmAo3m0FA4T--tobYpyRfj-hrXP-8-BZ6ot8dPHSLEEQ>
-    <xmx:HV8WZgV_X81bjqvDq7o8YP7MJZ6j-djshaebLlFNRr1rquifCKeWVw>
-    <xmx:Hl8WZnQJ3pTzjRD0J8Tl-x0FUuY-tfQ2A_yK5enphptxvYr3C7YweHIW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Apr 2024 05:42:52 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6214c3ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 10 Apr 2024 09:42:39 +0000 (UTC)
-Date: Wed, 10 Apr 2024 11:42:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Thalia Archibald <thalia@archibald.dev>
-Cc: Chris Torek <chris.torek@gmail.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/8] fast-import: tighten path unquoting
-Message-ID: <ZhZfF5YH-uwx-wYb@tanuki>
-References: <20240322000304.76810-1-thalia@archibald.dev>
- <cover.1711960552.git.thalia@archibald.dev>
- <e790bdf714bb4c2a67708c016a97cf4f9e79ac48.1711960552.git.thalia@archibald.dev>
- <ZhYxNYR33ftEfcPk@tanuki>
- <CAPx1GvfgC46n_5fk3dHxg7dn393UVMi0CtHKqQ_GAaqnV_ECCQ@mail.gmail.com>
- <784B5318-F155-4D93-8085-62ACA63432E5@archibald.dev>
- <CAPx1GvfUs-dR_RbqnBT3YhDJPMB7b=+fzyow8qjJgJQnJwg0Pw@mail.gmail.com>
- <6C467327-0DB1-4E1F-8CB5-23DE45271348@archibald.dev>
+	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="I89hYoG2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
+	s=protonmail3; t=1712742909; x=1713002109;
+	bh=JF3DAmftT4PTsUNPerUeoT31Z9ImVGCFWsHyIZAwHr0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=I89hYoG2mtLb/lU4e7RTp0/vQtM9TRWTIdlRz/ZzHoUObQ4DD1h7Rj6rrcbq1buFt
+	 JUHcES0hMuDjbzLPFuTpfzv9aDEvl9UVw6JIslIOus9RbqI4PInVZ1wQ26du2tPhSk
+	 +jCEY2mWr3A9db4V9e73vK09NOsYk1oVG9FCPuPUaX6CQtw6jV1PUwbqSl0XFXWDHS
+	 UWiP+VBRswi8bigpZhw0PQeZjZGmIWP+BltrEv+eqkRvSfluUUxWXlAYg3+iSwsu8c
+	 Xs3LwV/6sYrVsXz6M9pJhPA/EvqV5zU9c+yLt5K192YkCKdqqTIxnMzZX8rdd+yWeI
+	 LfS2ixUUmQfLg==
+Date: Wed, 10 Apr 2024 09:54:57 +0000
+To: git@vger.kernel.org
+From: Thalia Archibald <thalia@archibald.dev>
+Cc: Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>, Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
+Subject: [PATCH v3 0/8] fast-import: tighten parsing of paths
+Message-ID: <cover.1712741870.git.thalia@archibald.dev>
+In-Reply-To: <cover.1711960552.git.thalia@archibald.dev>
+References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev>
+Feedback-ID: 63908566:user:proton
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TKRT0P4y6AuxYG/c"
-Content-Disposition: inline
-In-Reply-To: <6C467327-0DB1-4E1F-8CB5-23DE45271348@archibald.dev>
-
-
---TKRT0P4y6AuxYG/c
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 10, 2024 at 09:14:16AM +0000, Thalia Archibald wrote:
-> On Apr 10, 2024, at 01:51, Chris Torek <chris.torek@gmail.com> wrote:
-> > On Wed, Apr 10, 2024 at 1:47=E2=80=AFAM Thalia Archibald <thalia@archib=
-ald.dev> wrote:
-> >> strchrnul does what I want here and I=E2=80=99ve replaced it with that.
-> >=20
-> > `strchrnul` is a GNU extension (found on a lot of systems, but not
-> > part of C90 or C99).
->=20
-> I can=E2=80=99t speak to Git standards, but it seems broadly used in Git,=
- including
-> three times already in fast-import:
+> fast-import has subtle differences in how it parses file paths between ea=
+ch
+> occurrence of <path> in the grammar. Many errors are suppressed or not ch=
+ecked,
+> which could lead to silent data corruption. A particularly bad case is wh=
+en a
+> front-end sent escapes that Git doesn't recognize (e.g., hex escapes are =
+not
+> supported), it would be treated as literal bytes instead of a quoted stri=
+ng.
+>
+> Bring path parsing into line with the documented behavior and improve
+> documentation to fill in missing details.
 
-It's fine to use `strchrnul()` in Git. In case libc doesn't provide it
-we have a fallback implementation in "git-compat-util.h".
+Updated to address review comments. Thanks, Patrick!
 
-Patrick
+Changes since v2:
+* Fix NUL overrun by replacing `strchr(p, ' ')` with `strchrnul(p, ' ')` in
+  patch 1/8
+* Fix "Missing dest" error condition in patch 1/8
+* Test missing space after unquoted path
+* Substitute shell parameters in test_expect_success call, instead of with
+  string splicing
+* Reformat (-subshells
+* Rewrap long lines in `parse_path` and `parse_path_space`
 
---TKRT0P4y6AuxYG/c
-Content-Type: application/pgp-signature; name="signature.asc"
+Hopefully, this series sends without any rewrapped lines. I use Proton Mail=
+ via
+Proton Mail Bridge and Apple Mail. I have no idea how to control this, or i=
+f I
+even can, and see no relevant-looking settings in any of the three. In v2 a=
+nd
+now v3, I only manually modified the cover letter after using format-patch,=
+ not
+any of the others.
 
------BEGIN PGP SIGNATURE-----
+Thalia
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYWXxIACgkQVbJhu7ck
-PpQidhAApH9Ff1yCt6LzMwawU22WsJzPNcGW1nPUxMilRU+tm/k/TrNdUbw2yVhF
-ESP6Z/wJFUfybMGmis1YEFCngZ70P6kHCG3tR1tNPdbY27HZ4HqGpbNSPDx/gbYP
-XmnQe13f9PI2WUwubKDe2MQPFAPNrdRoJNJN+66RQXt+IaA1oNeUcug4KrsaSzzY
-2TUx+1rtV5vZa44P0LrA+KYkrJfTXHFyKQKJ8KdNrkFpsGlAlxzZ3l2Nxa+tFScb
-Ik7WGhpJDyHBwF3whT5AgDGTf4cGWcPlO4ussENrVEh9IgahE+uPQbCVmqyVJeB3
-wvyN4XNAYcsTqR6MTerqV6MOJzmaatrXkOL+pTecIEiFgsN0IfpOqFr31vx3RoU6
-kDh6OLY5vkXgIA5g5nsMtwIG++Ue+FVGplD9MljN2tbN236MiHjxfkH03wxObe46
-lKwgFnrPNzIpE3WuqGiWhgNvxwMZwo/2PzlAbFaDYjkynhnbiGVrFsNCBUCjx0dk
-4H7V+MontwGbPAgLB80wI1i9ADQBiZplTFJh5WCg0v+ePYESrDDf0r6HetMmH4ni
-6xMmmlx5SUcKvZ1ZIxiY+R8V1ZtoqzYBba6LXQ2M6/DDeyV2cL5GpA/fIynZwYDH
-XPEsUWPylcB6TR7FvLNP47iVUeek2DmpxBm/MFceGtAWTjE7L1g=
-=/v0r
------END PGP SIGNATURE-----
 
---TKRT0P4y6AuxYG/c--
+Thalia Archibald (8):
+  fast-import: tighten path unquoting
+  fast-import: directly use strbufs for paths
+  fast-import: allow unquoted empty path for root
+  fast-import: remove dead strbuf
+  fast-import: improve documentation for unquoted paths
+  fast-import: document C-style escapes for paths
+  fast-import: forbid escaped NUL in paths
+  fast-import: make comments more precise
+
+ Documentation/git-fast-import.txt |  30 +-
+ builtin/fast-import.c             | 158 ++++----
+ t/t9300-fast-import.sh            | 624 +++++++++++++++++++++---------
+ 3 files changed, 550 insertions(+), 262 deletions(-)
+
+Range-diff against v2:
+1:  e790bdf714 ! 1:  d9ab0c6a75 fast-import: tighten path unquoting
+    @@ builtin/fast-import.c: static uintmax_t parse_mark_ref_space(const c=
+har **p)
+     + * or unquoted without escape sequences. When unquoted, it may only c=
+ontain a
+     + * space if `include_spaces` is nonzero.
+     + */
+    -+static void parse_path(struct strbuf *sb, const char *p, const char *=
+*endp, int include_spaces, const char *field)
+    ++static void parse_path(struct strbuf *sb, const char *p, const char *=
+*endp,
+    ++=09=09int include_spaces, const char *field)
+     +{
+     +=09if (*p =3D=3D '"') {
+     +=09=09if (unquote_c_style(sb, p, endp))
+    @@ builtin/fast-import.c: static uintmax_t parse_mark_ref_space(const c=
+har **p)
+     +=09=09if (include_spaces)
+     +=09=09=09*endp =3D p + strlen(p);
+     +=09=09else
+    -+=09=09=09*endp =3D strchr(p, ' ');
+    ++=09=09=09*endp =3D strchrnul(p, ' ');
+     +=09=09strbuf_add(sb, p, *endp - p);
+     +=09}
+     +}
+    @@ builtin/fast-import.c: static uintmax_t parse_mark_ref_space(const c=
+har **p)
+     + * It may not contain spaces when unquoted. Update *endp to point to =
+the first
+     + * character after the space.
+     + */
+    -+static void parse_path_space(struct strbuf *sb, const char *p, const =
+char **endp, const char *field)
+    ++static void parse_path_space(struct strbuf *sb, const char *p,
+    ++=09=09const char **endp, const char *field)
+     +{
+     +=09parse_path(sb, p, endp, 0, field);
+     +=09if (**endp !=3D ' ')
+    @@ builtin/fast-import.c: static void file_change_m(const char *p, stru=
+ct branch *b
+     =20
+     -=09endp++;
+     -=09if (!*endp)
+    -+=09if (!p)
+    ++=09if (!*p)
+      =09=09die("Missing dest: %s", command_buf.buf);
+     -
+     -=09d =3D endp;
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit filemodify
+     +=09=09COMMIT
+     +=09=09from :301
+    -+=09=09M 100644 :402 '"$path"'
+    ++=09=09M 100644 :402 $path
+     +
+     +=09=09commit refs/heads/S-path-eol
+     +=09=09mark :303
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit filedelete
+     +=09=09COMMIT
+     +=09=09from :302
+    -+=09=09D '"$path"'
+    ++=09=09D $path
+     +
+     +=09=09commit refs/heads/S-path-eol
+     +=09=09mark :304
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit filecopy dest
+     +=09=09COMMIT
+     +=09=09from :301
+    -+=09=09C hello.c '"$path"'
+    ++=09=09C hello.c $path
+     +
+     +=09=09commit refs/heads/S-path-eol
+     +=09=09mark :305
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit filerename dest
+     +=09=09COMMIT
+     +=09=09from :301
+    -+=09=09R hello.c '"$path"'
+    ++=09=09R hello.c $path
+     +
+    -+=09=09ls :305 '"$path"'
+    ++=09=09ls :305 $path
+     +=09=09EOF
+     +
+     +=09=09commit_m=3D$(grep :302 marks.out | cut -d\  -f2) &&
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09blob1=3D$(grep :401 marks.out | cut -d\  -f2) &&
+     +=09=09blob2=3D$(grep :402 marks.out | cut -d\  -f2) &&
+     +
+    -+=09=09( printf "100644 blob $blob2\t'"$unquoted_path"'\n" &&
+    -+=09=09  printf "100644 blob $blob1\thello.c\n" ) | sort >tree_m.exp &=
+&
+    ++=09=09(
+    ++=09=09=09printf "100644 blob $blob2\t$unquoted_path\n" &&
+    ++=09=09=09printf "100644 blob $blob1\thello.c\n"
+    ++=09=09) | sort >tree_m.exp &&
+     +=09=09git ls-tree $commit_m | sort >tree_m.out &&
+     +=09=09test_cmp tree_m.exp tree_m.out &&
+     +
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09git ls-tree $commit_d >tree_d.out &&
+     +=09=09test_cmp tree_d.exp tree_d.out &&
+     +
+    -+=09=09( printf "100644 blob $blob1\t'"$unquoted_path"'\n" &&
+    -+=09=09  printf "100644 blob $blob1\thello.c\n" ) | sort >tree_c.exp &=
+&
+    ++=09=09(
+    ++=09=09=09printf "100644 blob $blob1\t$unquoted_path\n" &&
+    ++=09=09=09printf "100644 blob $blob1\thello.c\n"
+    ++=09=09) | sort >tree_c.exp &&
+     +=09=09git ls-tree $commit_c | sort >tree_c.out &&
+     +=09=09test_cmp tree_c.exp tree_c.out &&
+     +
+    -+=09=09printf "100644 blob $blob1\t'"$unquoted_path"'\n" >tree_r.exp &=
+&
+    ++=09=09printf "100644 blob $blob1\t$unquoted_path\n" >tree_r.exp &&
+     +=09=09git ls-tree $commit_r >tree_r.out &&
+     +=09=09test_cmp tree_r.exp tree_r.out &&
+     +
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09data <<COMMIT
+     +=09=09initial commit
+     +=09=09COMMIT
+    -+=09=09M 100644 :401 '"$path"'
+    ++=09=09M 100644 :401 $path
+     +
+     +=09=09commit refs/heads/S-path-space
+     +=09=09mark :302
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit filecopy source
+     +=09=09COMMIT
+     +=09=09from :301
+    -+=09=09C '"$path"' hello2.c
+    ++=09=09C $path hello2.c
+     +
+     +=09=09commit refs/heads/S-path-space
+     +=09=09mark :303
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit filerename source
+     +=09=09COMMIT
+     +=09=09from :301
+    -+=09=09R '"$path"' hello2.c
+    ++=09=09R $path hello2.c
+     +
+     +=09=09EOF
+     +
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit_r=3D$(grep :303 marks.out | cut -d\  -f2) &&
+     +=09=09blob=3D$(grep :401 marks.out | cut -d\  -f2) &&
+     +
+    -+=09=09( printf "100644 blob $blob\t'"$unquoted_path"'\n" &&
+    -+=09=09  printf "100644 blob $blob\thello2.c\n" ) | sort >tree_c.exp &=
+&
+    ++=09=09(
+    ++=09=09=09printf "100644 blob $blob\t$unquoted_path\n" &&
+    ++=09=09=09printf "100644 blob $blob\thello2.c\n"
+    ++=09=09) | sort >tree_c.exp &&
+     +=09=09git ls-tree $commit_c | sort >tree_c.out &&
+     +=09=09test_cmp tree_c.exp tree_c.out &&
+     +
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09=09commit with bad path
+     +=09=09COMMIT
+     +=09=09from :2
+    -+=09=09'"$prefix$path$suffix"'
+    ++=09=09$prefix$path$suffix
+     +=09=09EOF
+     +
+    -+=09=09test_grep '"'$err_grep'"' err
+    ++=09=09test_grep "$err_grep" err
+     +=09'
+     +}
+     +
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+     +=09test_path_fail "$change" "invalid escape in quoted $field" "$prefi=
+x" '"hello\xff"' "$suffix" "Invalid $field"
+     +}
+     +test_path_eol_quoted_fail () {
+    -+=09local change=3D"$1" prefix=3D"$2" field=3D"$3" suffix=3D"$4"
+    -+=09test_path_base_fail "$change" "$prefix" "$field" "$suffix"
+    -+=09test_path_fail "$change" "garbage after quoted $field" "$prefix" '=
+"hello.c"x' "$suffix" "Garbage after $field"
+    -+=09test_path_fail "$change" "space after quoted $field"   "$prefix" '=
+"hello.c" ' "$suffix" "Garbage after $field"
+    ++=09local change=3D"$1" prefix=3D"$2" field=3D"$3"
+    ++=09test_path_base_fail "$change" "$prefix" "$field" ''
+    ++=09test_path_fail "$change" "garbage after quoted $field" "$prefix" '=
+"hello.c"' 'x' "Garbage after $field"
+    ++=09test_path_fail "$change" "space after quoted $field"   "$prefix" '=
+"hello.c"' ' ' "Garbage after $field"
+     +}
+     +test_path_eol_fail () {
+    -+=09local change=3D"$1" prefix=3D"$2" field=3D"$3" suffix=3D"$4"
+    -+=09test_path_eol_quoted_fail "$change" "$prefix" "$field" "$suffix"
+    ++=09local change=3D"$1" prefix=3D"$2" field=3D"$3"
+    ++=09test_path_eol_quoted_fail "$change" "$prefix" "$field"
+     +}
+     +test_path_space_fail () {
+    -+=09local change=3D"$1" prefix=3D"$2" field=3D"$3" suffix=3D"$4"
+    -+=09test_path_base_fail "$change" "$prefix" "$field" "$suffix"
+    -+=09test_path_fail "$change" "missing space after quoted $field" "$pre=
+fix" '"hello.c"x' "$suffix" "Missing space after $field"
+    ++=09local change=3D"$1" prefix=3D"$2" field=3D"$3"
+    ++=09test_path_base_fail "$change" "$prefix" "$field" ' world.c'
+    ++=09test_path_fail "$change" "missing space after quoted $field"   "$p=
+refix" '"hello.c"' 'x world.c' "Missing space after $field"
+    ++=09test_path_fail "$change" "missing space after unquoted $field" "$p=
+refix" 'hello.c'   ''          "Missing space after $field"
+     +}
+     +
+    -+test_path_eol_fail   filemodify       'M 100644 :1 ' path   ''
+    -+test_path_eol_fail   filedelete       'D '           path   ''
+    -+test_path_space_fail filecopy         'C '           source ' world.c=
+'
+    -+test_path_eol_fail   filecopy         'C hello.c '   dest   ''
+    -+test_path_space_fail filerename       'R '           source ' world.c=
+'
+    -+test_path_eol_fail   filerename       'R hello.c '   dest   ''
+    -+test_path_eol_fail   'ls (in commit)' 'ls :2 '       path   ''
+    ++test_path_eol_fail   filemodify       'M 100644 :1 ' path
+    ++test_path_eol_fail   filedelete       'D '           path
+    ++test_path_space_fail filecopy         'C '           source
+    ++test_path_eol_fail   filecopy         'C hello.c '   dest
+    ++test_path_space_fail filerename       'R '           source
+    ++test_path_eol_fail   filerename       'R hello.c '   dest
+    ++test_path_eol_fail   'ls (in commit)' 'ls :2 '       path
+     +
+     +# When 'ls' has no <dataref>, the <path> must be quoted.
+    -+test_path_eol_quoted_fail 'ls (without dataref in commit)' 'ls ' path=
+ ''
+    ++test_path_eol_quoted_fail 'ls (without dataref in commit)' 'ls ' path
+     +
+      ###
+      ### series T (ls)
+2:  82a6f53c13 ! 2:  696ca27bb7 fast-import: directly use strbufs for paths
+    @@ Commit message
+         Signed-off-by: Thalia Archibald <thalia@archibald.dev>
+    =20
+      ## builtin/fast-import.c ##
+    -@@ builtin/fast-import.c: static void parse_path_space(struct strbuf *=
+sb, const char *p, const char **endp
+    +@@ builtin/fast-import.c: static void parse_path_space(struct strbuf *=
+sb, const char *p,
+     =20
+      static void file_change_m(const char *p, struct branch *b)
+      {
+    @@ builtin/fast-import.c: static void file_change_m(const char *p, stru=
+ct branch *b
+     +=09strbuf_reset(&source);
+     +=09parse_path_space(&source, p, &p, "source");
+     =20
+    - =09if (!p)
+    + =09if (!*p)
+      =09=09die("Missing dest: %s", command_buf.buf);
+     -=09strbuf_reset(&d_uq);
+     -=09parse_path_eol(&d_uq, p, "dest");
+3:  893bbf5e73 ! 3:  39879d0a66 fast-import: allow unquoted empty path for =
+root
+    @@ Commit message
+    =20
+      ## builtin/fast-import.c ##
+     @@ builtin/fast-import.c: static void file_change_cr(const char *p, st=
+ruct branch *b, int rename)
+    - =09struct tree_entry leaf;
+     =20
+      =09strbuf_reset(&source);
+    --=09parse_path_space(&source, p, &p, "source");
+    + =09parse_path_space(&source, p, &p, "source");
+     -
+    --=09if (!p)
+    +-=09if (!*p)
+     -=09=09die("Missing dest: %s", command_buf.buf);
+      =09strbuf_reset(&dest);
+    -+=09parse_path_space(&source, p, &p, "source");
+      =09parse_path_eol(&dest, p, "dest");
+     =20
+    - =09memset(&leaf, 0, sizeof(leaf));
+    =20
+      ## t/t9300-fast-import.sh ##
+     @@ t/t9300-fast-import.sh: test_expect_success 'M: rename subdirectory=
+ to new subdirectory' '
+    @@ t/t9300-fast-import.sh: test_expect_success 'M: rename subdirectory =
+to new subdi
+     -=09from refs/heads/M2^0
+     -=09R "" sub
+     +=09=09from refs/heads/M2^0
+    -+=09=09R '"$root"' sub
+    ++=09=09R $root sub
+     =20
+     -=09INPUT_END
+     +=09=09INPUT_END
+    @@ t/t9300-fast-import.sh: test_expect_success PIPE 'N: empty directory=
+ reads as mi
+     -=09compare_diff_raw expect actual
+     -'
+     +=09=09from refs/heads/branch^0
+    -+=09=09M 040000 $root_tree '"$root"'
+    ++=09=09M 040000 $root_tree $root
+     +=09=09INPUT_END
+     +=09=09git fast-import <input &&
+     +=09=09git diff-tree -C --find-copies-harder -r N4 N6 >actual &&
+    @@ t/t9300-fast-import.sh: test_expect_success PIPE 'N: empty directory=
+ reads as mi
+     -=09compare_diff_raw expect actual
+     -'
+     +=09=09from refs/heads/branch^0
+    -+=09=09C '"$root"' oldroot
+    ++=09=09C $root oldroot
+     +=09=09INPUT_END
+     +=09=09git fast-import <input &&
+     +=09=09git diff-tree -C --find-copies-harder -r branch N-copy-root-pat=
+h >actual &&
+    @@ t/t9300-fast-import.sh: test_expect_success 'N: reject foo/ syntax i=
+n ls argumen
+     -=09test_cmp expect.foo actual.foo &&
+     -=09test_cmp expect.bar actual.bar
+     -'
+    -+=09=09M 040000 $tree '"$root"'
+    ++=09=09M 040000 $tree $root
+     +=09=09M 644 inline foo/foo
+     +=09=09data <<EOF
+     +=09=09hello, world
+    @@ t/t9300-fast-import.sh: test_expect_success 'N: reject foo/ syntax i=
+n ls argumen
+     -=09git fast-import <input &&
+     -=09git diff --exit-code branch:newdir N9
+     -'
+    -+=09=09M 040000 $branch '"$root"'
+    -+=09=09C "newdir" '"$root"'
+    ++=09=09M 040000 $branch $root
+    ++=09=09C "newdir" $root
+     +=09=09INPUT_END
+     +=09=09git fast-import <input &&
+     +=09=09git diff --exit-code branch:newdir N9
+    @@ t/t9300-fast-import.sh: test_expect_success 'N: reject foo/ syntax i=
+n ls argumen
+     -=09test_cmp expect.baz actual.baz &&
+     -=09test_cmp expect.qux actual.qux &&
+     -=09test_cmp expect.qux actual.quux'
+    -+=09=09M 040000 $tree '"$root"'
+    ++=09=09M 040000 $tree $root
+     +=09=09M 100644 inline foo/bar/qux
+     +=09=09data <<EOF
+     +=09=09hello, world
+     +=09=09EOF
+    -+=09=09R "foo" '"$root"'
+    ++=09=09R "foo" $root
+     +=09=09C "bar/qux" "bar/quux"
+     +=09=09INPUT_END
+     +=09=09git show N11:bar/baz >actual.baz &&
+    @@ t/t9300-fast-import.sh: test_expect_success 'S: ls with garbage afte=
+r sha1 must
+      #
+     =20
+      #
+    -@@ t/t9300-fast-import.sh: test_path_eol_quoted_fail 'ls (without data=
+ref in commit)' 'ls ' path ''
+    +@@ t/t9300-fast-import.sh: test_path_eol_quoted_fail 'ls (without data=
+ref in commit)' 'ls ' path
+      ###
+      # Setup is carried over from series S.
+     =20
+    @@ t/t9300-fast-import.sh: test_expect_success 'U: validate directory d=
+elete result
+     +=09=09must succeed
+     +=09=09COMMIT
+     +=09=09from refs/heads/U^0
+    -+=09=09D '"$root"'
+    ++=09=09D $root
+     =20
+     -=09INPUT_END
+     +=09=09INPUT_END
+4:  cb05a184e6 =3D 4:  1cef05e59a fast-import: remove dead strbuf
+5:  1f34b632d7 =3D 5:  2e78690023 fast-import: improve documentation for un=
+quoted paths
+6:  82a4da68af =3D 6:  1b07ddffe0 fast-import: document C-style escapes for=
+ paths
+7:  c087c6a860 ! 7:  dc67464b6a fast-import: forbid escaped NUL in paths
+    @@ Documentation/git-fast-import.txt: and must be in canonical form. Th=
+at is it mus
+      `filedelete`
+    =20
+      ## builtin/fast-import.c ##
+    -@@ builtin/fast-import.c: static void parse_path(struct strbuf *sb, co=
+nst char *p, const char **endp, int
+    +@@ builtin/fast-import.c: static void parse_path(struct strbuf *sb, co=
+nst char *p, const char **endp,
+      =09if (*p =3D=3D '"') {
+      =09=09if (unquote_c_style(sb, p, endp))
+      =09=09=09die("Invalid %s: %s", field, command_buf.buf);
+    @@ t/t9300-fast-import.sh: test_path_base_fail () {
+     +=09test_path_fail "$change" "escaped NUL in quoted $field"    "$prefi=
+x" '"hello\000"' "$suffix" "NUL in $field"
+      }
+      test_path_eol_quoted_fail () {
+    - =09local change=3D"$1" prefix=3D"$2" field=3D"$3" suffix=3D"$4"
+    + =09local change=3D"$1" prefix=3D"$2" field=3D"$3"
+8:  a503c55b83 =3D 8:  5e02d887bc fast-import: make comments more precise
+--=20
+2.44.0
+
+
