@@ -1,37 +1,61 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2634016E87A
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 21:11:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5EB15920B
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 21:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712783464; cv=none; b=jYXTz6TzULkA9OmlWSJwhvxbRa9MdU1aSASmXPek7Zqv+Bmu9NnT+GQ52vayFsSxT4qlgNvjONwnnYxqV3VSw8xPGHSNMlpcAgw+6qLpjYQkdPtvF68s4AD2S5n/F/Sy7SpUG8fMQa9dQ0gGr+qVQMJifQOYwqFjO93ZhfHU5hg=
+	t=1712783658; cv=none; b=Yf9Dh0POkRWpa2HgySxVRzl+EflZw3IW4WpQWXHq3b26JxFYm8W73oV+uyY2m2TicUzuszT6P1CZ2GD+l9GWzLD804aatILPrvyzkegIuEm5vdUkohKBL/RccuQBBzxi23gF9/MdGIDNki/7rnPyJH3+dHUGr+RCEusQADJrj1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712783464; c=relaxed/simple;
-	bh=yJl5UWlZR1530qoRMfYkwmJ3oVD5Cx4280hu6Mvzv18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ENmvOAk0PhbRa7v095kkxZSPPhP7JB2N72UWIa06VcnLH+0wSgcSsZh0W1M3NeX+nb4fYNv86yVc+v8NuWs+esfO2VwGEa38Adek9X3hVnhDQJD0pma73tqpy6d3/U3EsYqDV5pdAcXpsPO5fFkhesq2htEnFkKir4u4ugd9X5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 18691 invoked by uid 109); 10 Apr 2024 21:11:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Apr 2024 21:11:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20186 invoked by uid 111); 10 Apr 2024 21:11:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Apr 2024 17:11:02 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 10 Apr 2024 17:11:00 -0400
-From: Jeff King <peff@peff.net>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fuzz: link fuzz programs with `make all` on Linux
-Message-ID: <20240410211100.GA2276041@coredump.intra.peff.net>
-References: <cover.1709673020.git.steadmon@google.com>
- <eef15e3d3da3ca6953fa8bf3ade190da8e68bf46.1709673020.git.steadmon@google.com>
- <xmqqplw8z73y.fsf@gitster.g>
- <ZhW6BM9V-Rto_CW4@google.com>
+	s=arc-20240116; t=1712783658; c=relaxed/simple;
+	bh=J4OAoZkgRdIqfAap9XiZRDm8eivYXrwavWZRKJBQATQ=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=s+n4fUaryCrz/wQB5CnRGwR75sXXDdpbhoNZYHHvIxUwl0NHOJZZIcnQHHcK/T2yXAUdtpfWI1ZOzAX4AiN3uJ6hM+u4gHpA5bazCup2ym41jwaHk+wHKqC3301qlU8X6j6DHSdMhBFRKWPMTskVSKAA1/1LMS6paRc4yL45i48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KDjhsv3z; arc=none smtp.client-ip=209.85.217.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KDjhsv3z"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-479dbcdba2dso2347979137.3
+        for <git@vger.kernel.org>; Wed, 10 Apr 2024 14:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1712783656; x=1713388456; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EQVLznUfuwgeXPH6JshEuM6gZMb4ncAksBSUewMhv/8=;
+        b=KDjhsv3zrPvtESCk3sKrOwZJ+TtxPakX7Wj8zsImdOmz2Y35bYybD1PYPrcnMEoICW
+         FNvCCD5kVP34mZFGcLnvAXO14FUuxRW9hiGSYBPwet4Rx2Ynl5t9COA8FndavqRI9zqM
+         XltzZ3Ue92095tMlxaEjpDmUkUq4BAKCwbJU9fiSI57+uCVY7yi+rsFJ68iI2J4LFvoW
+         Tl4ahNUBmn03hV4O1tVqZj4jiodHUdLyK5nv8IKUXfsdIHHtj3mgGXEjM4szDC4bCLqK
+         GnTsTWejGslKaupHlsFgjDkDQuv1oBOeHrI92VbBtzPnJ7LZ2tBx4av7bcwVFzrGv2dB
+         O0Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712783656; x=1713388456;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EQVLznUfuwgeXPH6JshEuM6gZMb4ncAksBSUewMhv/8=;
+        b=JZfobXheuswqDpLFm1tJ2WYkJeS6/6QobmuFBzLv0e1e6izFsbztOrgf+z8qh8FPfx
+         arxLC/UD3vZ7s79ln202NVxEPb5a7pNfjgJhWOcX/ZYB9p0R0PY6rS5l3MjCPVqgXzG7
+         AcJyu2YPioO39gDlMm2ffhueQdtVvyM6jwF0OXpdV6hPbNbaPdtMhWyswmXYdFcXj1WC
+         mBecrEW0kA13y+NCjr5ka0zP9rLIat+ZRjKyReDj+K9M7b9rjE+oeY2L0bT5266/SbHp
+         n1YOBALeHc23KbzWm7Id8DbRVMqxlkKzpp4mFG2It7Tv3wIdpkF2r/EdU1DwGxJZcEYA
+         HLRw==
+X-Gm-Message-State: AOJu0YzS75VESMHTnCEy93fQ4Ct3URsIc9AYhcpPckhlrIevzxCEO2U7
+	m87eFn0nFZxxG8tP7V4eG8HWSWIloVY4NvDbfdUNsxfN1dUmwVv1HdzWrlZ6ownhBNq0GFCdUPa
+	dMcc=
+X-Google-Smtp-Source: AGHT+IHED3gu0/aeDJaXgM6t7fVD8UYPE1L++F2Erwls7y+yC5nG73jfLY+z9i+/nL2/0q/YXuUz7Q==
+X-Received: by 2002:a05:6102:32d1:b0:47a:31f9:163b with SMTP id o17-20020a05610232d100b0047a31f9163bmr951597vss.13.1712783655653;
+        Wed, 10 Apr 2024 14:14:15 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ej6-20020ad45a46000000b00696b1050be8sm19303qvb.133.2024.04.10.14.14.14
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Apr 2024 14:14:15 -0700 (PDT)
+Date: Wed, 10 Apr 2024 17:14:13 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Subject: [ANNOUNCE] Virtual Contributor's Summit 2024
+Message-ID: <ZhcBJSP4MxX0AMFM@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,53 +64,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZhW6BM9V-Rto_CW4@google.com>
 
-On Tue, Apr 09, 2024 at 02:58:28PM -0700, Josh Steadmon wrote:
+Hi everybody,
 
-> > It would have been easier on the eyes if we had the fuzz things
-> > together, perhaps like this simplified version?  We build FUZZ_OBJS
-> > either way, and when the LINK_FUZZ_PROGRAMS is requested, we follow
-> > the fuzz-all recipe, too.
-> 
-> We need the LINK_FUZZ_PROGRAMS conditional to happen after we import
-> config.mak.uname (line 1434 in my V1). We also need to define FUZZ_OBJS
-> prior to adding it to OBJECTS (line 2698 in V1). I can move all of the
-> fuzz-definition within that range, keeping everything in one place at
-> the cost of a larger diff. I'll do that for V2, but if you prefer
-> otherwise please let me know.
-> 
-> Although I'm not 100% sure that we even need to add FUZZ_OBJS to
-> OBJECTS, so let me check that tomorrow. If not, then I can move
-> everything to the bottom of the Makefile where we also define fuzz-all
-> and the build rules for FUZZ_PROGRAMS.
+I've been thinking that it would be a good time to gather informally via
+another Virtual Contributor's Summit.
 
-The conditional has to be read handled while reading the Makefile, but
-as a "simple" variable, OBJECTS isn't expanded until the whole Makefile
-has been read. So for example this out-of-order definition works:
+I had been waiting to see whether GitHub was going to host a Git Merge
+event in person this year, but it looks like the answer to that is
+"probably not" (though I am hopeful for next year[^1]).
 
-diff --git a/Makefile b/Makefile
-index 533eaae612..5dbf1935a1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -755,6 +755,7 @@ ETAGS_TARGET = TAGS
- # If you add a new fuzzer, please also make sure to run it in
- # ci/run-build-and-minimal-fuzzers.sh so that we make sure it still links and
- # runs in the future.
-+OBJECTS += $(FUZZ_OBJS)
- FUZZ_OBJS += oss-fuzz/dummy-cmd-main.o
- FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
- FUZZ_OBJS += oss-fuzz/fuzz-config.o
-@@ -2695,7 +2696,6 @@ OBJECTS += $(SCALAR_OBJS)
- OBJECTS += $(PROGRAM_OBJS)
- OBJECTS += $(TEST_OBJS)
- OBJECTS += $(XDIFF_OBJS)
--OBJECTS += $(FUZZ_OBJS)
- OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
- OBJECTS += $(UNIT_TEST_OBJS)
- 
+In lieu of meeting in person, I think it might make sense to meet
+sometime in either this upcoming May or June (though we could extend
+further depending on folks' availability) in the same style/format as
+our last Summit [2], the details were as follows:
 
-Now whether that is useful for organizing the Makefile, I don't know,
-but I thought I'd throw it out there in case it helps you.
+  - We'll host the Contributor's Summit on either Zoom or any other
+    conferencing platform that works for folks. (I spoke with Emily
+    Shaffer off-list and they mentioned that some Google folks were
+    interested in Discord for a few reasons, so we could do that, too).
 
--Peff
+  - The schedule/duration is not fixed, and there are options to vote on
+    preferred days, length, and timezones in the form(s) below. Last
+    year we did two four-hour days, so we could do that again (or
+    anything else that works better).
+
+  - Like last time, in order to participate, you must be either (a) an
+    active Git contributor, (b) planning on contributing soon, or (c)
+    working on a Git-related project that has interest in Git's
+    internals. If you aren't sure whether or not you are welcome, please
+    ask!
+
+Participants should fill out the following forms:
+
+  - https://forms.gle/VVrJ7RbHVxurxZH99 (participants)
+  - https://forms.gle/iGnfexF4hDuK6MQe9 (topics)
+  - https://www.when2meet.com/?24557185-cHKWv (When2meet)
+
+New this year is the When2meet, since this seems like a more efficient
+way to collect which dates are open for folks within the next couple of
+months.
+
+The participants and topics lists are being recorded in the
+spreadsheet below, and this is also the place to record your vote(s)
+on topic selection.
+
+  https://bit.ly/git-contributors-summit-2024
+
+Please feel free to send any feedback or suggestions you have for this
+year's Contributor's Summit to me on- or off-list. Like last year, my
+hope is to have a small, remote-friendly, diverse, and efficient
+discussion.
+
+As we get closer to the date, we'll finalize the schedule, make sure
+we have volunteers to take notes, etc.
+
+I'm looking forward to seeing everybody (virtually) soon :-).
+
+Thanks,
+Taylor
+
+[^1]: Coinciding with the project's 20th anniversary!
+[2]: https://lore.kernel.org/git/ZMATKIaU1A1D0wJg@nand.local/
