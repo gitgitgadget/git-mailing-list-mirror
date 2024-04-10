@@ -1,71 +1,71 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CE617F37A
-	for <git@vger.kernel.org>; Wed, 10 Apr 2024 20:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645CF15959F
+	for <git@vger.kernel.org>; Wed, 10 Apr 2024 20:47:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712781900; cv=none; b=BhmCOlbPn5iK5gE/pfqDlH1gS7+aC4aICMMgNHTzi2GyOf8nsZoB2hm3mQoOzWGS0uFfbHK+cJEGxvk6w5+p/badQOh4LS5xop2M9GFh8q3ZB58HrLZlEc2g9suS3ZuzOOQCWNb5b3vj3dmrcTnj17NS6rgp63qoIBBYnCpyMS4=
+	t=1712782071; cv=none; b=nqVhC8mQ/tIPDH0iUgjijBTfmOpa9mgq5w4P3alyxxwRBIYip8C12zROwXc9Lm5hIZA4BFbeoG+WEwAr0E6+G6E1kj5kC58g27qiHKFUJF8H/bAmdlK99ge1F7o8SftkXWrmr0xhByOEoTMaEHIpLT0KPAmu26Ikw3f9K92jDUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712781900; c=relaxed/simple;
-	bh=IZ12B8ei5TBDkRmiW9R7oHFvuYYvRb6koh0RuvnXAAc=;
+	s=arc-20240116; t=1712782071; c=relaxed/simple;
+	bh=IDiXhS/eeBtMGBkprBJDys5cBRccFSsWECFo0zwJGsQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l+eHYKiyrFkwOdz2fy6qO2PmARE6VbBN4PPg3jQwC7sEtuaq9PfBqfJVEfNchcjoq9K7BEKwT9WZoJpMhrpcKaHJQ6eUE1zoTFBCZvxHKqWTbjiqDMt65Sddrvwoab2E8qqeTkH1Evh4AXqsxZcGEomsFXXY5z7bY+LL4sFdCNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KVnGNsRB; arc=none smtp.client-ip=209.85.160.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=fawLf6UJ3/+4qOk56Zjc6ZJXryfb/ZNghSO9y9v4QS8URtgyMv6TxmOfjTu58dxXyN6S+NgXfflWWLtm7UizQbCtQ6+zXrRLnPPBErXx7Rv1LSg7TuIe3tEajjAxixQq0Bt3TSxfbpVBgbIoA5RtvlLnWFlToHh6kyJkY4R5PnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dg54xcxu; arc=none smtp.client-ip=209.85.160.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KVnGNsRB"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-2228c4c5ac3so4199958fac.0
-        for <git@vger.kernel.org>; Wed, 10 Apr 2024 13:44:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dg54xcxu"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2228c4c5ac3so4201316fac.0
+        for <git@vger.kernel.org>; Wed, 10 Apr 2024 13:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712781898; x=1713386698; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1712782069; x=1713386869; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VS+k8lhFPdmidF8hT7FFUVoV2UKLn+x8HnR2jIWKZCc=;
-        b=KVnGNsRBWNiGKY9fWRk5zwmreZSGMXeg+HhUx7w5oTPO+WVBbWtBdLKbHeZuFvrg0l
-         Q6Vx45RJovbOOn8zDFL0Sre0fMG+PAu/z52nf9LrV+vZb8Vtrqlu07xE38eMtA3SPCHj
-         Rzj/DIM6iFZ7A3nHHsi3be/aWIwqk9EIC/sZZ+HzW9E+7FWel1YbUR5q5WxUJ8xSj8du
-         ar2vwZOT4NM4w6hTgOJNsd5GAjxwOcFxmc1flGT4ShA/15aixbGbFtEjE6QGbe7SFY+j
-         QFVlyprOmEQYf84ivjx5V5soqiEVsO+GqVQBX+QFWIoMpeQJVuszZsXsjCzXskHhb2zr
-         z5cQ==
+        bh=kXZfs5RCg3mKTEPxLDrp9yyXgLMTleKPjCWv2gmSh/Y=;
+        b=dg54xcxuIjBCVwnI+uH2VburMbQT5XLY1CBvt3AURYQP1UbQzZizJ0XCo3dpWsxNDP
+         WDk//Tkb6ldfNjm+Y53qLGUG9LKsUI7Ww6HD0UvI7yojMbP4/jMt9+6bDpvvlV3mcOK9
+         vKqjyJ5MNkxNGJh+us/8RhiQpjUfTfDkPluHkoNuKL4IrAFLhxywNSiaKM120so/WS7+
+         37ECJEXWpro2q49OLWMLafdwy8y9aY/6NuSlDVoHOnLD574MCK21m3J+sMzT1DTZu24r
+         gljFJN66Or3n117029LMbNkw/0do+wYiennFVj/gDliG+SFk1EWso2cCbmzFDoB+y/dG
+         l2mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712781898; x=1713386698;
+        d=1e100.net; s=20230601; t=1712782069; x=1713386869;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VS+k8lhFPdmidF8hT7FFUVoV2UKLn+x8HnR2jIWKZCc=;
-        b=JOSVSK0BsANGGdXNz/tVwCnG3jKDSS0TOTFtGaHWquy/7lyAzq8xrl2n9zc6HTY2ir
-         timarkzcQrLsT7c51Yw6zcPAC/UpWBDpGwNlsTGXf17/Xrj10FFVGNKMfrFLf45rYYMf
-         6B3RG0kkQQyLGFgUBWiP4SoErqelgYXr2IKVIkMZog8S+p4m12QNFvza67/wy5g0jm0X
-         rrN/eWDDSS3poqWXDIjr7/0fHP22oLHEuukJ0LDApgV79P14OoZBJZyJ1E7QlPNragnh
-         eeKr1kKTU6uITlT9JR2CIsV1L+mmxys/UZgwmaaxMOw/ejlR6Ya5Nhn8m8RsRsMKv6yg
-         CVKg==
-X-Gm-Message-State: AOJu0YzD69MHv0t1VhCIsQ8JSVON5J/p5gI5oVzKMvGhpdlk6AbSMAhp
-	Bh0WIrj0fL5PUT0Qyeexlfs6h9VDJUkFKnRNHeMzPqWraahfoZRT
-X-Google-Smtp-Source: AGHT+IFG93rc6lntNiPjL9o+vfDNE63DnUSwYdZZ1ekiwrk08kbQW7O4krxZQPLENPoc4+V2Of17YA==
-X-Received: by 2002:a05:6870:2e07:b0:22e:b3c6:96cf with SMTP id oi7-20020a0568702e0700b0022eb3c696cfmr4145835oab.49.1712781897955;
-        Wed, 10 Apr 2024 13:44:57 -0700 (PDT)
+        bh=kXZfs5RCg3mKTEPxLDrp9yyXgLMTleKPjCWv2gmSh/Y=;
+        b=GqFXK0z3q73oiA3sKIY8P06ErOH7NlZc3WiE5KeK1+fodxpnJL83F1jd3yOeOLVWnT
+         NPMnSdgdWvT7GNybmrJ86PestdN7S8MiiDZef5lpZjU6H0UBXi+uvtKKGteF2yKpVHdg
+         DNaMmXMrBQ1GK/BPXA8yFUPcsidP2stxxo8xLGk+KejbQAYp2i/vMckfuRzIrb5Rk+cF
+         0B1bj3gehoXMzG+3WD+8kt6q+lJB5Ffqcl2SmDm53d3gcF8RfHSKnCC24Sa6MCf9qeGu
+         ZsTX2GZwvk5oJJn/8StLbpFTpRfQgTpwfJ8ibDiJ2ncif/5R8ifjm7Y/2cyGwubJG2Rr
+         Y7pA==
+X-Gm-Message-State: AOJu0Yx/7OZu4Y+6jjxgl2MxWLCq0Z/gmHLbTUF4zMsbjFc67DgoJWVW
+	TosjsfBj8q0aY4+u9j7FcUiAGhM55TYN3EnE2gTSER/SZzxw5zMl
+X-Google-Smtp-Source: AGHT+IF0t8gx4iDz05qgimr3l09n9BqICl2ruoQu/eaE3uXDoaJkQyeV7lSmeyRbNIH8/ug5Q9oMfg==
+X-Received: by 2002:a05:6871:b24:b0:22a:6d7f:6171 with SMTP id fq36-20020a0568710b2400b0022a6d7f6171mr4326854oab.36.1712782069353;
+        Wed, 10 Apr 2024 13:47:49 -0700 (PDT)
 Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id ak11-20020a056871918b00b0022ea736b093sm28334oac.57.2024.04.10.13.44.57
+        by smtp.gmail.com with ESMTPSA id ry5-20020a056871208500b0022f7268ec29sm29651oab.54.2024.04.10.13.47.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Apr 2024 13:44:57 -0700 (PDT)
-Date: Wed, 10 Apr 2024 15:43:58 -0500
+        Wed, 10 Apr 2024 13:47:48 -0700 (PDT)
+Date: Wed, 10 Apr 2024 15:46:49 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>, 
 	Josh Steadmon <steadmon@google.com>, Luca Milanesio <luca.milanesio@gmail.com>, 
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 12/12] t0612: add tests to exercise Git/JGit reftable
- compatibility
-Message-ID: <t4powjtw4yapbivatafkez5e2ha5gcssintxam47ibkvjlb4le@ob5deeaxpzqr>
+Subject: Re: [PATCH v2 05/12] ci: convert "install-dependencies.sh" to use
+ "/bin/sh"
+Message-ID: <powdcoghaz226mefeeoinoyryzhooiqifrix76hocdd7scu42x@xbfkvqu5aa4b>
 Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
 	Han-Wen Nienhuys <hanwenn@gmail.com>, Josh Steadmon <steadmon@google.com>, 
 	Luca Milanesio <luca.milanesio@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712555682.git.ps@pks.im>
- <160b026e69547739a526fb6276a895904a4d33a8.1712555682.git.ps@pks.im>
+ <6abc53bf5173e7de3fa271d175145c1672f17a88.1712555682.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,55 +74,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <160b026e69547739a526fb6276a895904a4d33a8.1712555682.git.ps@pks.im>
+In-Reply-To: <6abc53bf5173e7de3fa271d175145c1672f17a88.1712555682.git.ps@pks.im>
 
-On 24/04/08 08:47AM, Patrick Steinhardt wrote:
-> While the reftable format is a recent introduction in Git, JGit already
-> knows to read and write reftables since 2017. Given the complexity of
-> the format there is a very real risk of incompatibilities between those
-> two implementations, which is something that we really want to avoid.
+On 24/04/08 08:46AM, Patrick Steinhardt wrote:
+> We're about to merge the "install-docker-dependencies.sh" script into
+> "install-dependencies.sh". This will also move our Alpine-based jobs
+> over to use the latter script. This script uses the Bash shell though,
+> which is not available by default on Alpine Linux.
 > 
-> Add some basic tests that verify that reftables written by Git and JGit
-> can be read by the respective other implementation. For now this test
-> suite is rather small, only covering basic functionality. But it serves
-> as a good starting point and can be extended over time.
+> Refactor "install-dependencies.sh" to use "/bin/sh" instead of Bash.
+> This requires us to get rid of the pushd/popd invocations, which are
+> replaced by some more elaborate commands that download or extract
+> executables right to where they are needed.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/t0612-reftable-jgit-compatibility.sh | 132 +++++++++++++++++++++++++
->  1 file changed, 132 insertions(+)
->  create mode 100755 t/t0612-reftable-jgit-compatibility.sh
+>  ci/install-dependencies.sh | 28 +++++++++++-----------------
+>  1 file changed, 11 insertions(+), 17 deletions(-)
 > 
-> diff --git a/t/t0612-reftable-jgit-compatibility.sh b/t/t0612-reftable-jgit-compatibility.sh
-> new file mode 100755
-> index 0000000000..222464e360
-> --- /dev/null
-> +++ b/t/t0612-reftable-jgit-compatibility.sh
-> @@ -0,0 +1,132 @@
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index fad53aac96..7bcccc96fd 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -1,4 +1,4 @@
+> -#!/usr/bin/env bash
 > +#!/bin/sh
-> +
-> +test_description='reftables are compatible with JGit'
-> +
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +GIT_TEST_DEFAULT_REF_FORMAT=reftable
-> +export GIT_TEST_DEFAULT_REF_FORMAT
-> +
-> +# JGit does not support the 'link' DIRC extension.
-> +GIT_TEST_SPLIT_INDEX=0
-> +export GIT_TEST_SPLIT_INDEX
-> +
-> +. ./test-lib.sh
-> +
-> +if ! test_have_prereq JGIT
+>  #
+>  # Install dependencies required to build and test Git on Linux and macOS
+>  #
+> @@ -30,19 +30,14 @@ ubuntu-*)
+>  		$CC_PACKAGE $PYTHON_PACKAGE
+>  
+>  	mkdir --parents "$P4_PATH"
+> -	pushd "$P4_PATH"
+> -		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+> -		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4"
+> -		chmod u+x p4d
+> -		chmod u+x p4
+> -	popd
+> +	wget --quiet --directory-prefix="$P4_PATH" \
+> +		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
+> +	chmod u+x "$P4_PATH/p4d" "$P4_PATH/p4"
+>  
+>  	mkdir --parents "$GIT_LFS_PATH"
+> -	pushd "$GIT_LFS_PATH"
+> -		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+> -		tar --extract --gunzip --file "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+> -		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
+> -	popd
+> +	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+> +	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" -C "$GIT_LFS_PATH" --strip-components=1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
 
-Do we want these tests to run in CI? As far as I can tell these tests
-would always be skipped.
+Do we want to fold this line since it is rather long?
 
 -Justin
 
-> +then
-> +	skip_all='skipping reftable JGit tests'
-> +	test_done
-> +fi
-...
