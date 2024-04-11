@@ -1,74 +1,73 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B42B142642
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 09:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AA3142642
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 09:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712826661; cv=none; b=F8tTvo04OmmfOhOXMthrNhPFM6QB6j4n2Jw8EJaB+ID8BmUeE/lx/wL2nqAxE0ACnkfDHXr3DblfqGkvREqbBm7yazxo4xNSwm5FYhIC/QQLepgSlo1avJTMWAVpGT4zR5DLjrYnV1dqIjC6b9aAzEzj2p1Q8oyFc/QuVXUuNuI=
+	t=1712826667; cv=none; b=WORn13Ak8p9M7QiqUlSO3PaS7YC6DRp0b9Tx8jdNeSZawSU/yuFG+ifN+M9iNRsfd1H416UeZTs4RIoJ2dcX4wAgPiEkqMtdkGWOSpghSNFUJvtJS+BRtUWG3k+mKtei3bEQanw2wnE6iWFqz8A5wdertSLjoMTsXKRbrm8RUAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712826661; c=relaxed/simple;
-	bh=JE9ozeDEYqIUn2wB0SBRnXMiAYeu6gv3ILaB00aA4jw=;
+	s=arc-20240116; t=1712826667; c=relaxed/simple;
+	bh=jPc0YsuC4LLQyf6iVtPQq3oStMVa/OHFaVsiqJpgc7g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pOEi7CUWqLevc6tJE/K4WWG3wU3nI094lzxVvYVxDgmCqvedlGu3EbnItZYfkyxY7x1UNpwxS39AMSAVaV5bqtbOowEYym/DAIu9MEFtBtRVVa+SJnGL/guD6E8VQnPGZSDt/qQMFJLJpOFLdQUqLWpklOS1vrDFyzOza/2quYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l8DZitej; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ADaxLXsa; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=V2mMB0Z5o0Xh5wOWQYD1nUL95e1+m/u2ywvaXbrrW0UrEyv+ANKXvVgpegjAce9ntjxnwR18Idu+85Uy8tTTXlACWKC3jnAYGVHCoO2n45tiK/oYAQJtp5C0psvE5m30FNKfF/TwWFdyORWUKDb1108lEz/TGAi9LyL+ALlN2Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kok5oDj6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d395STEm; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l8DZitej";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ADaxLXsa"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2D31A1140177;
-	Thu, 11 Apr 2024 05:10:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kok5oDj6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d395STEm"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id EF4A0114019B;
+	Thu, 11 Apr 2024 05:11:04 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 11 Apr 2024 05:10:59 -0400
+  by compute7.internal (MEProxy); Thu, 11 Apr 2024 05:11:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712826659; x=1712913059; bh=mFiOi/9RE2
-	f+hS8raagOqiNSDlcylZ/bhaQgwEQsLm8=; b=l8DZiteju2PBGelmCSEYtIpRBY
-	9fi+nPEOk0QXBMg0MNjXp+lRbTQYX16C9T/U8t0HV5maKYIhjVLc8IU3Prib12F3
-	+EwCMmnDPtVr1YxfmTUyZdsF9Sdt8wn8omSuPCt6aOkCTblannOS7rhG6bVbxM0x
-	/sj+BsPw8DU7/xEdvTMEPf0ZujMcv/IIgr8W3WXkwn6rrSlE/XEdbNom+KcFozFd
-	7gja3bbyadrHtiuprkeq47ZFITtN63okch1wR0F0KV9AEUPGUdGsl4ekD88A6/y3
-	M6+UtHEVhTcLACvfS0bmrAqhGmI0bQgYDN3NCW87JbES3pHY3O9EvbDWnisA==
+	:subject:to:to; s=fm2; t=1712826664; x=1712913064; bh=AiR2HOz3pZ
+	FFeGTEOdOMw01Mclv/3za2GVTmpUX0R0s=; b=Kok5oDj6akU/W3T5u+ZiislexT
+	HoFvDlBJOXt0S007ok7KRi5CiGgmj9lzKS8flJ0nDxZAEJ48K8Wg5JEsSfsrjase
+	6wulvrvfFV1iVXNTQTeAeHgu3h1LWcF6pXkJzh6Vu67/SjuF3smhojxGptZ5KBm1
+	kHoL/cwQJWbJovIcv1g4XvLTPFwyDFtRnq/jdvpOIKksuvyI2Dwt+ClEJ3ul8ydU
+	U7cr9hNi+l6U1kiCviZLLpWxiujDdKeBvQMkRvTpDhpAQpvDJjQMDy+U5OKZIZ4R
+	CUv3TGnaEz+K2/6dfEX4rvVXibtY2LjpaQoaNJ1h1t097yJRYEUqnQxTTEPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712826659; x=1712913059; bh=mFiOi/9RE2f+hS8raagOqiNSDlcy
-	lZ/bhaQgwEQsLm8=; b=ADaxLXsa4uENk4JP1eGFDMtzFO0fF3wgORFqnJ/MrvxR
-	PJNL5rS5Olzw2LN4R+v3E94+p3jBKILxMzEJ1SGGfvSkMm72u+y085xpbtrGrvFB
-	LVNfXVmwhmXgdl6vnOTPTPGKOMvO8mmeDFdp0hXk2bV1TErZJzNnvjMlSmLfFB1M
-	dx6i0DNKNanJjOPhzS3wEmnb4shEM+Hg7KtMjVvAa6OI12ioHr4xPorTeZjW3hxv
-	EEtQPwnkAnxGBbYAtnXW0Kg96orVYU4Gtsk54Cm4IYRgEZumo6rZ/K7d3E4kDjwk
-	cV/ujupE/I9q1UgQqAhy3kumXommohNf289kt6L0sQ==
-X-ME-Sender: <xms:IqkXZqUqBHYtXnU14InKay8hyj3frGC8VzqYqhqoNL9jYYsYRlxmqw>
-    <xme:IqkXZmmCKKygCpHdb62ES8J7_wA6gSDRsfOzoGTSwfx42C87XrF5ArfrPvx1wX3ge
-    YF_zM9dUz68L9Ng5w>
-X-ME-Received: <xmr:IqkXZuY0lvAhoGfaHbWvSipUBGc19DXmNDFqOLD7mzJNJzOJ6JrLzVxeV5QC7J2uPrsXcYyXGhphqTPSstiCi8dVDmCkXkKPIaWcKOjmOPJ0_AFg>
+	fm2; t=1712826664; x=1712913064; bh=AiR2HOz3pZFFeGTEOdOMw01Mclv/
+	3za2GVTmpUX0R0s=; b=d395STEmZL+zZpCRKhVL7YEKThDlhaspef4hEneyQIO6
+	FDYaCGBoFbiOP7F2aZkVIE4bJY8HVdy2Y5YagDTq/Y+mJBwTo+tcGoTFhDTRoyG5
+	lt+35Bnjj/ho/4YudfSHjWPQCSDismrW16FLLq2m9yjrI0Z5cwmFO0YH/eWW3NV7
+	Rj6RIivBkPbJ0/nWxMwb1LbO5hCY4EqDQrfA/dGLg46JJMkDUMv+MOdFBGIRxSUB
+	7rR6G2w05gdEn/OL/0pNFM9nq9tPIANDrEYBgjo4uVN0OXKIdFuaSfc6SBRgd1Co
+	OGCdjARP/6FhMpgc5mk5T59X8Z6B8QCufvZO1b7Mkw==
+X-ME-Sender: <xms:KKkXZjATSQ-vh2WUb518xpRe93HJua1ZwWD1nzLMak1h-4YO4vFjDA>
+    <xme:KKkXZphnkMHQTsHucu12dzK87eefAzs22M472TW5VwLKjCxzeks9TdKEd5YPlyLBY
+    hxjPZOJRCBI6ZIZyw>
+X-ME-Received: <xmr:KKkXZukDD28cgrmvJYid8zoXjRYUgQuox8xWU-i52DVa4jAsHQWmbrKv_WyU7GOkSwpeK4rONcT_fJuVEZnXoxOGGsNOw66hAg1Dd0prwvgcK3Py>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhephefgvdeuhfduudffuedufffgffehgedugeeivddvjeeugfejudeikedvgffgteei
-    necuffhomhgrihhnpehpvghrfhhorhgtvgdrtghomhdpghhithhhuhgsrdgtohhmpdgvtg
-    hlihhpshgvrdhorhhgpddvtddvfeduuddvledugeehtddqrhdrshhhnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:IqkXZhWWZuD71JAXKKx46q9kFlaf-b9wwrc78gplqilwEqFvmtdxFw>
-    <xmx:IqkXZkmJJIRmeU-nu963bthsMSKUVYPrc82KaE5wayL_WdG-EEriXA>
-    <xmx:IqkXZmemGHVeenRYZ-D4L30fAVuHLhOziWRQ9TsgrH405scYpUtYcQ>
-    <xmx:IqkXZmH1kCww_itXZj4CY1pFzl6CfkEDWgLbm57_Tf62VH890Nyi5g>
-    <xmx:I6kXZuV4S3ElcOQBPBjl5C4W3TOih0TuclFqr9hq0j4q2NIDp4i6Itpx>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:KKkXZlxsl7QBPuh8tZ-y9jtAXWNAQ33nvQyREvGgscx32W_tBxy7Nw>
+    <xmx:KKkXZoSP59jS6p_YHdvSvxkcituZKOn22NxL9K6zNznL6UrM1ygqyQ>
+    <xmx:KKkXZoZPH6zAQa1UoyflYQ-bWI-v9JslCsOYRg5WAuCrKqEfT3dwFQ>
+    <xmx:KKkXZpTR7GDcKeons5lspd-bktvScGlMXKS_yYGRWAy2qFB0BlJwlg>
+    <xmx:KKkXZtQHwykv8698vXUeFXI9yiPrwhrdjZrJyu2K6dqu77Gn0PMpPSvE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Apr 2024 05:10:57 -0400 (EDT)
+ 11 Apr 2024 05:11:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6ba03b42 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Apr 2024 09:10:45 +0000 (UTC)
-Date: Thu, 11 Apr 2024 11:10:54 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 59e0a155 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Apr 2024 09:10:50 +0000 (UTC)
+Date: Thu, 11 Apr 2024 11:11:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
@@ -76,8 +75,8 @@ Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 10/13] ci: install JGit dependency
-Message-ID: <b835ff8b78e74ac7ff5ffd69aa0ba65576f76331.1712825204.git.ps@pks.im>
+Subject: [PATCH v3 11/13] t06xx: always execute backend-specific tests
+Message-ID: <7136c8b6c21457515118c5084a715fed92b427e8.1712825204.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712825204.git.ps@pks.im>
 Precedence: bulk
@@ -87,110 +86,144 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hJDk1UItZ7AwMw8p"
+	protocol="application/pgp-signature"; boundary="+o1sKsLAFl3JjHLn"
 Content-Disposition: inline
 In-Reply-To: <cover.1712825204.git.ps@pks.im>
 
 
---hJDk1UItZ7AwMw8p
+--+o1sKsLAFl3JjHLn
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have some tests in t5310 that use JGit to verify that bitmaps can be
-read both by Git and by JGit. We do not execute these tests in our CI
-jobs though because we don't make JGit available there. Consequently,
-the tests basically bitrot because almost nobody is ever going to have
-JGit in their path.
+The tests in t06xx exercise specific ref formats. Next to probing some
+basic functionality, these tests also exercise other low-level details
+specific to the format. Those tests are only executed though in case
+`GIT_TEST_DEFAULT_REF_FORMAT` is set to the ref format of the respective
+backend-under-test.
 
-Install JGit to plug this test gap.
+Ideally, we would run the full test matrix for ref formats such that our
+complete test suite is executed with every supported format on every
+supported platform. This is quite an expensive undertaking though, and
+thus we only execute e.g. the "reftable" tests on macOS and Linux. As a
+result, we basically have no test coverage for the "reftable" format at
+all on other platforms like Windows.
+
+Adapt these tests so that they override `GIT_TEST_DEFAULT_REF_FORMAT`,
+which means that they'll always execute. This increases test coverage on
+platforms that don't run the full test matrix, which at least gives us
+some basic test coverage on those platforms for the "reftable" format.
+
+This of course comes at the cost of running those tests multiple times
+on platforms where we do run the full test matrix. But arguably, this is
+a good thing because it will also cause us to e.g. run those tests with
+the address sanitizer and other non-standard parameters.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ t/t0600-reffiles-backend.sh   | 8 ++------
+ t/t0601-reffiles-pack-refs.sh | 9 +++------
+ t/t0610-reftable-basics.sh    | 9 +++------
+ 3 files changed, 8 insertions(+), 18 deletions(-)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 0b9bb686d8..c196e56762 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -9,6 +9,7 @@ begin_group "Install dependencies"
+diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+index 64214340e7..a390cffc80 100755
+--- a/t/t0600-reffiles-backend.sh
++++ b/t/t0600-reffiles-backend.sh
+@@ -4,16 +4,12 @@ test_description=3D'Test reffiles backend'
 =20
- P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r21.2
- LFSWHENCE=3Dhttps://github.com/github/git-lfs/releases/download/v$LINUX_GI=
-T_LFS_VERSION
-+JGITWHENCE=3Dhttps://repo.eclipse.org/content/groups/releases//org/eclipse=
-/jgit/org.eclipse.jgit.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.=
-202311291450-r.sh
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++GIT_TEST_DEFAULT_REF_FORMAT=3Dfiles
++export GIT_TEST_DEFAULT_REF_FORMAT
 =20
- # Make sudo a no-op and execute the command directly when running as root.
- # While using sudo would be fine on most platforms when we are root alread=
-y,
-@@ -39,7 +40,7 @@ ubuntu-*)
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install \
- 		language-pack-is libsvn-perl apache2 cvs cvsps git gnupg subversion \
--		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo \
-+		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo default-jre \
- 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl=
- \
- 		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sq=
-lite3-perl libcgi-pm-perl \
- 		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
-@@ -53,6 +54,9 @@ ubuntu-*)
- 	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
- 		-C "$CUSTOM_PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION=
-/git-lfs"
- 	rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
-+
-+	wget --quiet "$JGITWHENCE" --output-document=3D"$CUSTOM_PATH/jgit"
-+	chmod a+x "$CUSTOM_PATH/jgit"
- 	;;
- ubuntu32-*)
- 	sudo linux32 --32bit i386 sh -c '
-@@ -113,6 +117,7 @@ then
- else
- 	echo >&2 "WARNING: perforce wasn't installed, see above for clues why"
- fi
-+
- if type git-lfs >/dev/null 2>&1
- then
- 	echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
-@@ -121,4 +126,12 @@ else
- 	echo >&2 "WARNING: git-lfs wasn't installed, see above for clues why"
- fi
+ TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
 =20
-+if type jgit >/dev/null 2>&1
-+then
-+	echo "$(tput setaf 6)JGit Version$(tput sgr0)"
-+	jgit version
-+else
-+	echo >&2 "WARNING: JGit wasn't installed, see above for clues why"
-+fi
+-if ! test_have_prereq REFFILES
+-then
+-	skip_all=3D'skipping reffiles specific tests'
+-	test_done
+-fi
+-
+ test_expect_success 'setup' '
+ 	git commit --allow-empty -m Initial &&
+ 	C=3D$(git rev-parse HEAD) &&
+diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
+index 7d4ab0b91a..60a544b8ee 100755
+--- a/t/t0601-reffiles-pack-refs.sh
++++ b/t/t0601-reffiles-pack-refs.sh
+@@ -9,18 +9,15 @@ test_description=3D'git pack-refs should not change the b=
+ranch semantic
+ This test runs git pack-refs and git show-ref and checks that the branch
+ semantic is still the same.
+ '
 +
- end_group "Install dependencies"
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++GIT_TEST_DEFAULT_REF_FORMAT=3Dfiles
++export GIT_TEST_DEFAULT_REF_FORMAT
+=20
+ TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+-if ! test_have_prereq REFFILES
+-then
+-	skip_all=3D'skipping reffiles specific tests'
+-	test_done
+-fi
+-
+ test_expect_success 'enable reflogs' '
+ 	git config core.logallrefupdates true
+ '
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 931d888bbb..fd0ddb96ae 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -4,17 +4,14 @@
+ #
+=20
+ test_description=3D'reftable basics'
++
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable
++export GIT_TEST_DEFAULT_REF_FORMAT
+=20
+ . ./test-lib.sh
+=20
+-if ! test_have_prereq REFTABLE
+-then
+-	skip_all=3D'skipping reftable tests; set GIT_TEST_DEFAULT_REF_FORMAT=3Dre=
+ftable'
+-	test_done
+-fi
+-
+ INVALID_OID=3D$(test_oid 001)
+=20
+ test_expect_success 'init: creates basic reftable structures' '
 --=20
 2.44.GIT
 
 
---hJDk1UItZ7AwMw8p
+--+o1sKsLAFl3JjHLn
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYXqR0ACgkQVbJhu7ck
-PpS1Jg/8DGdFMPGAOAEdweyKKwvJWmWFqGNKKLVmYWC3N8pRKbnEVFTlInQnofMc
-oHTNyZD6drOt54sFTDYA2tnt1bNAh3crxlZeLyU3oYNB/G0s+kYyAiqxg/V2rLT/
-RfjEPzwLAcLKZULB2iJMWSL3jfIT7FHYoMyI3LAv05r7S0UZ5N4xUBr00eqgrL0n
-cyYw8ETyJgKkLST2T6haoozs5SAQl27fRre4A4RwWNvl2/yjqMEo0tqsAbO3CNDn
-inc3OtI3mCsskT4TrgduvSPD2tSTxb6MjQVe+yLIZ0ZbSSXLrgzOpiOq9X07iTa7
-djgKfK9DstjkUzTmBzguYbURmHBcGH1RnaoZlSGhrarwhanmzsGR/TrTMt7vdxej
-pf638k3hWw3JSYHdWgFtL9+D5KqthzLdjJU5jVVeaaMK7ZQzyUP4ifVnrA+znqDE
-XidiZMCJxLYnmQzKqjYy125pbTTc98UW6XYL4vM8mNEY1j/ksRRz69GvHWM9dF0E
-Wts2i2gDyFYQI0h1md5M7d/n6RkJs9NKtjCnvQrihCT2/s6bdUibGod74LKsyTmy
-UTzE7GoOwBsAXOf/gXueEjVLkDxJLgtx1D1YjyOUF+CKZZK5H2cIZJR0lZCrdZOA
-GtHpgunrBcj/uL6gtnr/VzKsFRloAvZbaLO9Liq/M0rG5AL7sog=
-=u2I+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYXqSMACgkQVbJhu7ck
+PpRwyA//XT80yRe93356w5DsFn8mxHAo/tUNdbQExq71TyEpzGnhyrifC2XSgqbs
+UUsgKk1RYHdXQnOGy+32BglDBgBV7R0G9SEZVPx+PHafUCAL5Fg8UykCs7dflyxw
+6m6UUQIz2QlF6LvWcs38Au04sB9n5Y2IQws1mRyvOfygTEIpXHhJ2joPj9FQ6Ct+
+CVFL4efCrtNDLbkxkAKMgefYG1LfmAbvXBs0mjKEb2fztUQAeqIVXrkMdD1cc16n
+hX3Lc0zDhwLSZ1dLdzMgHxvZMgl/77BbyHhyPqF+S8UB+tuox/IucHll3ShgUeG9
+fQNipovbcNkf/lbnnLh6vTNrdKH/gT7ztXS+JhR1BRSNOV+9/Phnv6lWh1wWEa5/
+aSMPY7EhCBmYsxwW7rsBCcTTC7Alj5iM446dAx3oNMI8fr2HT78hQ5CozkQlXBlv
+GO3ROhwJjHAXcQmsFctyz8Z6zu/8dpsFsS7ikCQ9/V1m1uy9pN8eg0TyLlU6is1U
+ZT62sb2pfLTqqVqiT3L7e0UgPOrYXKM8NddnrgsKeq7LSXfy/NNL+npcH4fKGfDX
+WLQe0QEnYwDBCxqO1dsDmvqGpURa9Z0BYDvaZwOz3Pk21Mj8T6jA4aw6Y+RnjMIN
+uxNhqBdObHIs64yGiEHLnojnUCbAgW58/GIRvP6DJWxR88bMnx0=
+=sWaO
 -----END PGP SIGNATURE-----
 
---hJDk1UItZ7AwMw8p--
+--+o1sKsLAFl3JjHLn--
