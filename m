@@ -1,126 +1,65 @@
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193D61D6389
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 17:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6FA53388
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 17:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712855036; cv=none; b=NKnmOmSHhhb+WgM0ISFirikPvzZPNeoTve4D40tWb8D3WSJNdGK2yGOEqj2zpEzjQdVWafRNNg3FWZSroV35Guznp8t3JLqAyxPbg/62l+ncRq5TNeEM56kurBRIjxm88M+a6OIkI7SakgKiZ0SVM59cofG/tV48u2tkumLwWdI=
+	t=1712855799; cv=none; b=H4qMCG1SHvkux4i2f54QLDbXZufTL4KVer0YxjCibHWw6pyHyx/GrGGMECpQg7fsu0Sql01OOOqJ2bfQ/eSfPmll2Gj+EOvh6Oa8fleWW+taTyz5OtT9y5PoxIY8t3oSyYFDXV4O1KvFuyO0VZELlLE1j7nGvq8k3gh60DKVXs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712855036; c=relaxed/simple;
-	bh=7PEz5yY4hpmXL1mimT5s75UNnSyrXWxtGzFGDKmbTGE=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=RIv/y9QgvGHOZA/pYdRWYp8YvVYtTDs+cgDzcVrLsfbUCXmSA6B4VWCpDysOtxK3TRO7s6KBxQeCHrLxaMBx/9LVaF3N2Sis7bEubizqmS1fgLwOXJiwchJc2+fq6Lxd/cs2ZRZZVarxZcTe1z4748GCagvMtVaDkqsC/lcPLMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amyspark.me; spf=pass smtp.mailfrom=amyspark.me; dkim=pass (2048-bit key) header.d=amyspark.me header.i=@amyspark.me header.b=V77zq/EL; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amyspark.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amyspark.me
+	s=arc-20240116; t=1712855799; c=relaxed/simple;
+	bh=kwJEog5Hqn+hI7h85AQbOcRtdU967uDKh9LHpeUXd90=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=T5U39KxxUhMWwPelNwKmzpEKCl96VJeGrckoNFxfPuJCywQ3cpPvPcyfOiYC8V1edVvdxWbCuSGevtH7sV9tIqKrqmBIu63kw/bQGL5mDoGz5o5OmylnQa4AjevejIEeLQb0GTrur9GdlX9++IhXSOZ/cN8xQ+eApposgzST1h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KNa9Lu6+; arc=none smtp.client-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amyspark.me header.i=@amyspark.me header.b="V77zq/EL"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 846D140003;
-	Thu, 11 Apr 2024 17:03:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amyspark.me; s=gm1;
-	t=1712855032;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=9vGpi1DgkCatbCw14JyhJYtcq8i9tGnyL2ceRl//dhA=;
-	b=V77zq/ELfR8gmzu6zfmg5YsuFPnwnv6PilMWtopPd8cI/+IJRy+oZR+1XjlOjk3C7oYONB
-	YcuT1jJNOaROYrrSt2yChnzT6qJ2wJSu3Nqf+dlYaZcDXJw91BKuKRxV8WQS1YHOJNDAni
-	FWtV5r9U9e2zy//3KwrACAa3h/A/KVx6xbXCqjXfvVQlTpMCvWoXp2Apw/FVpSOJUcTpJl
-	wjcywv5fPx1vFGSnvUpU89bPd4mU5OK6AlcewYu34JMer1q8A8fhDflTgNCGEEPcfeWlpA
-	f1an1lKWtICSMQm6ibbb05ULQRYIilEmN817XW3c9P4Yy8SLpTlhAbrhimwjSw==
-Message-ID: <44020a6a-707f-4505-adde-e79cda63d711@amyspark.me>
-Date: Thu, 11 Apr 2024 14:03:43 -0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KNa9Lu6+"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6ea1a55b0c0so57224a34.3
+        for <git@vger.kernel.org>; Thu, 11 Apr 2024 10:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712855797; x=1713460597; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kwJEog5Hqn+hI7h85AQbOcRtdU967uDKh9LHpeUXd90=;
+        b=KNa9Lu6+WprVnafVJvQ9P7Rm9CVjMnqbuUOJCKiV/fh60s6HHtI93xSBxWsS1iPEDH
+         W64XYsbx+deoEQ6Mr1vCdC1oN1gbaKZeVQXIGIoesQgrGKxz3ZXzD9+Rv80TVZIrKkD0
+         xOpNvkBA5xG6jdZCnWKJDdcY3eHhOtnH+2q5dfAWkb1dPsn+Yc+IFK4nbhEIaOcpoCS6
+         R+UoUTn7gDI28xKM1S4m5jMxHNDDiPizIxFYxALKiOMQFzhpxqXJ9qYBEDM87DsEDkfy
+         T1/QJBJ4++rydkotvMZIYcuHjgaAzMu8lcWwg0sVBcPizzY8++JCHPOHvK9+GLCWCvI2
+         sZPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712855797; x=1713460597;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kwJEog5Hqn+hI7h85AQbOcRtdU967uDKh9LHpeUXd90=;
+        b=KVQwOgImuT7rOc87BLgrshKPuGZELgj/7i7iOeB+wLZgUOFqkE4Hwr9/zL9wVBp3H2
+         8ZAubUO9SFL4FZZnCtADdrBbKqAgYUtFDGKyMH84nwVHttb4lX202axfqvpWXenkMmQA
+         H6eRYYPwMAWjOJUuvfYXvIQa8pHOBVjU47pIdOWecdYJRmaBXsnkZ4595Eee500axp6E
+         5LsBqn8dtpflgi0escfzFyBK/M5Zadznt9G4IibjoY7z2NRyRmgJfmJ1BrScMfQYraGG
+         82t2t5/l2Jc7NpE0vxF1g9PK3HEL1uxLROXavZ7R4ko/rqRf4O/UC0aSKyxHHZgb3uIc
+         TMww==
+X-Gm-Message-State: AOJu0Yzefe3llxblnyP/GUIPA/YZgirgiTWCe1+ctJVXEr7uzK4P9h8P
+	ZQOvxL5VBskAe3cRr7JGo/weBnu+80chL21qmhp1Zaw1qwF58gF+wapzOiciH7ErkiKPWFOs5JC
+	eIGiHHgeARbVkOo4LoxxjMwAiwljbsw==
+X-Google-Smtp-Source: AGHT+IGD+IOnZ+kwYPslcLdTypg0ONDZElVbBBkcXQT8uE/zIk4yqe8fAjfBoj9QK0SUJaxR2cPb8YEI3HiDCJhYgXs=
+X-Received: by 2002:a9d:3e0c:0:b0:6ea:20d5:5459 with SMTP id
+ a12-20020a9d3e0c000000b006ea20d55459mr260153otd.17.1712855796866; Thu, 11 Apr
+ 2024 10:16:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Content-Language: en-US
+From: Wyatt Carpenter <wyattscarpenter@gmail.com>
+Date: Thu, 11 Apr 2024 13:16:26 -0400
+Message-ID: <CADwVmK293eQ5VFkn-J68tXQ=64u3H79ScMW7H_ukSmtwLwA4wA@mail.gmail.com>
+Subject: Short form of --force-with-lease
 To: git@vger.kernel.org
-From: "L. E. Segovia" <amy@amyspark.me>
-Subject: [BUG] Clones from local repositories do not work correctly under
- Windows
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: amy@amyspark.me
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-Under Windows 10 21H2, I cloned a Git repository off an existing local
-copy, then applied a patch to it using `git am`.
-
-What did you expect to happen? (Expected behavior)
-
-Operations on the repo like `git status` and `git log` should work out
-of the box.
-
-What happened instead? (Actual behavior)
-
-I keep getting this error:
-
-> error: unable to normalize alternate object path:
-/c/Users/Amalia/.cache/cerbero-sources/librsvg-2.40.20/.git/objects
-
-With `git status` it happens only once, but with `git log` it's a wall
-worth of that error before the log is actually generated and paged.
-
-This error makes Git complain, but tools depending on it (in particular
-Cargo) outright crash. For instance, this is the error I got when
-attempting to build the Rust crate above:
-
-> Error: CliError { error: Some(failed to determine package fingerprint
-for build script for librsvg v2.58.0-beta.1
-(E:\cerbero\build\sources\msvc_x86_64\librsvg-2.40.20\rsvg)
->
-> Caused by:
->     0: failed to determine the most recently modified file in
-E:\cerbero\build\sources\msvc_x86_64\librsvg-2.40.20\rsvg
->     1: failed to determine list of files in
-E:\cerbero\build\sources\msvc_x86_64\librsvg-2.40.20\rsvg
->     2: object not found - no match for id
-(32467a0191907fd571b502e395d033a06dfee655); class=Odb (9); code=NotFound
-(-3)), exit_code: 101 }
-
-What's different between what you expected and what actually happened?
-
-It seems that under Windows, the code in
-https://github.com/git/git/blame/436d4e5b14df49870a897f64fe92c0ddc7017e4c/object-file.c#L525
-is not able to resolve the absolute path of the "remote" (the original
-copy) at all. I checked if it was a filesystem traversal issue by
-issuing the clone against a folder in the same drive, but there was no
-change.
-
-Anything else you want to add:
-
-Possibly introduced in 2.39.0:
-https://github.com/git/git/commit/199337d6ec5c656e52b914b5dac3820cc5e363f3
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.44.0.windows.1
-cpu: x86_64
-built from commit: ad0bbfffa543db6979717be96df630d3e5741331
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19045
-compiler info: gnuc: 13.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-
--- 
-amyspark 🌸 https://www.amyspark.me
-
+I often use git push --force-with-lease; it does exactly what I need.
+Is there a short form of the flag, like -f is for --force? If not, I
+would like to propose -l be added as one. I don't believe git push has
+an -l flag currently, and l is of course the first letter of lease.
