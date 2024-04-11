@@ -1,109 +1,168 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABA04D9F4
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 23:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76E941207
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 23:36:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712878353; cv=none; b=kN/PTZB51OtyfHXBZ/038CW2uYtpgrhwvn33hMCa1jcXtRwT6CDx8IERv+4xww1j0CZ/TWHzb+3jIttppqCDsddIm2Mzi3oh/2oy0Np+xZsgcZ48KQPsjqei9p0m/oc5hk3x10jeYg0yCsdr5/gqwLPPfTOjbKR1QzyYX8JOkvY=
+	t=1712878611; cv=none; b=c6+aD5fnOjMa0ZEjxwUaSAL3tKnVyCbU0PqNGVUXJZJ6URCq+H4G6EfG8oiexK7uRwkaZ8tEWrh0N/FOK+UcgRdHnALLPI4syimsFgEcP89VqV6WV16QxDMoB5Npa+QGKSuIP1u1g+2t4/s5+RM8zQjmFx2TmaCCQxEiG+Ag/sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712878353; c=relaxed/simple;
-	bh=97ZmeyhwahwA2ZW805pXSdSYH/7vhmkQn4p3rhC3agQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BwcbWgTnTirbuU1ONQ+YgcOwO9Tnr10mgg16u4Ts/933bwc1+ubM1o52DWO/PHOvL8IQjW63w6OaxLrPfVd4fMN68E/+m3TKIA0g8u1EUtiuhlQ3MoG+qAxhWuoWJEJE/2U7GaTuFQuLzbsWN8HDXMTJ8SH4moVbea0WVzChzhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gKA8Qvir; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1712878611; c=relaxed/simple;
+	bh=jKZlFrhb4LnTY3SuZNP+EN3Rd+It/6tchoMfxKWl2FI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FyXijcubbikGQc/8y6u1dGNGKTkgTJdicTwTqRdhK2J6SFXdFKokRVZviG/J/57OEaJEyRgL5Re35Nk95VDFP8MQufnLfFjKEu82Al1/6xJOmJkvdcw3yh7V4vo+Fa6N5R6qFlvyQxQnaJXZelcPtrQLPuSNYIpqxtjRCVv250M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OUuXd0qH; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gKA8Qvir"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-416c4767b07so2722925e9.0
-        for <git@vger.kernel.org>; Thu, 11 Apr 2024 16:32:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OUuXd0qH"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-417d029bee7so2662345e9.1
+        for <git@vger.kernel.org>; Thu, 11 Apr 2024 16:36:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712878350; x=1713483150; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KQHtztpLYBisKit05nkkC2rkf/Moh7swzkOTWhRGuc4=;
-        b=gKA8QvirwLzRmz159RGBYhqNd13/66pQMijpn9e7z1EUGv0lc8oAHSVnqCBXStQL7M
-         F4lSU2ng6d7rFGY6pWMBwb3EApylxFHisCn6jkNUV1LW0cTKCsOPP+cTYXrY0P0+s9+q
-         S0gm1bx4ZIJiFt15AfbNqwRyC8MXPBESbKVKVzBhTFAWSN4xRrfgy9gcoHytRnTSWCj3
-         ySDvLzxxwKnAMISapujn6wfOPA2q2faFDOZkKieP62uCejoKFbWmJtcVEbUcVKLuWDba
-         za5vLrc4qvU27YTglMor1moO2IZnwQvVjJ7NohFNgJ1PHgR36LxJ7zyeMXBv+omVJFyz
-         rWzQ==
+        d=gmail.com; s=20230601; t=1712878608; x=1713483408; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=novsrEnBq89VCJIv77ox8aHOlvCP6kPuVR2y9fWNKN0=;
+        b=OUuXd0qHYq/BnGo3lJa+uvNFEN46CalKo5IhFUj/hRftcrHin5KyqLuR+BjDpaHCLY
+         fSHaZBYC0mnvgjhXSUgORsXbJ8LxJHnVLQbnBfmE/EQAldkbXjIqNrnWHtv6jPnuFtNH
+         A/Rn8Bxy3o8PeE0wqRQIBxXuseXjYHYgJIk145z9Rgvff0SVnUHyyokdY0V0ePL/zGMc
+         gkWz+PVwkpvxi4Fhh7zSebTfkEGDAW2Yq//DKht09TkewSlHPIXE+ImL1NZ2Spe0Gpuz
+         BJlc9VU+CQRsI00lnpi0MVCyDzC83CoD10gvaoqhNuNkSTb2XitHzKHS/1GTb7Dml84F
+         u3Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712878350; x=1713483150;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KQHtztpLYBisKit05nkkC2rkf/Moh7swzkOTWhRGuc4=;
-        b=EZ6vuyqVaR9hPjO2MZfvbb6Ip7Nbzr2WqkbnQ8nEH4c0aZ7kNGmZOvueabE0YW924O
-         3vktRXsBT82lalmt/P2kaxKuKKSzdkKwGsPiPO1IT85k3LFSknfB2Eef/dYD2jLU3i8A
-         3TkVOy+JfclnojdgmxF/SCyS9iv7qIdG+Rfc+W5V8/PTWlICMk04OqrYY1jyMu/MXidh
-         5+0VITTQ+5absCxDUpgsH7u3QLyEm1B9RFL/xJow/0coEuyHY6eDlpWEBvO0XQq8s+01
-         wWZMhtXy8ohvU8MMFHWEdZmzpTaPTQhsOZUnhqw5rnrd4zhyJMt8pzEV2oAUWrWmV0fP
-         CJlw==
-X-Gm-Message-State: AOJu0YxZNWG1Ue2NCFBtSBWhhxignznul0fcJAwqMuNhpoCGO1kSNeTS
-	LUn9ZCdvVE5/NPsL6U9DnncunUiYYpD1/GGRlpQYXIvEylHe1QfiQvy2VA==
-X-Google-Smtp-Source: AGHT+IE2CDUlgs4zWpmULr5Vx17XIdYvEBfW2tfYItMExq7c/z1yMg0ntzFz5yI9T6m7jlpxN1GBbQ==
-X-Received: by 2002:a05:600c:3b29:b0:417:fde2:abd5 with SMTP id m41-20020a05600c3b2900b00417fde2abd5mr73353wms.7.1712878349733;
-        Thu, 11 Apr 2024 16:32:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f19-20020a05600c4e9300b0041628f694dfsm3781929wmq.23.2024.04.11.16.32.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Apr 2024 16:32:29 -0700 (PDT)
-Message-Id: <84b1cf3f914067f8c2d056578e58d5b38bef7b45.1712878339.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com>
-References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
-	<pull.1704.v4.git.1712878339.gitgitgadget@gmail.com>
-From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 11 Apr 2024 23:32:19 +0000
-Subject: [PATCH v4 8/8] SubmittingPatches: demonstrate using git-contacts with
- git-send-email
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1712878608; x=1713483408;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=novsrEnBq89VCJIv77ox8aHOlvCP6kPuVR2y9fWNKN0=;
+        b=ma7qyY+fJNMOV1V674SUI3tSAMxaBfIqekfT/QGKe927A/p6hF9BTp2WWb7A9iNB3D
+         Ln0J+kFsWLDhekEEJNfuccdRXhEdBADQbdlfndkI1OcyHBYoBRN9je95XPznyRCf9dDW
+         TGWg7XGxSO0RFx4bkzdojuoImq4oMzoB12pQaj/i8AXnr0geqEupnhhoR+Sx5smMjAbH
+         E/Br640pIz2Z7dcj5s9lMybOk4qiYYk2eMZhkT1jL4312vgkc0bzz4UwqVg5cLFjB5oW
+         DSTi8S37GliXRn0ed2IXUYK1UTu5XA5FcBniXN+CYu1ltq9NG+0dMKI1mY2Xfx/jjvek
+         8Cmw==
+X-Forwarded-Encrypted: i=1; AJvYcCX+RIxRsG2STsT9aOqfJYUF5V9Y185X2042c8N7aVMo0+InJSP4DyQO9ahkoPxXlIF+taU4XXlWiSJieam5iv/gtW+g
+X-Gm-Message-State: AOJu0YxUgwF0k5oRcqyFOam7AqbW6G45Gqmg/LaAZytsoZDTb3wpJ0rB
+	7efjcXgtbC0AwxcOngluMPp8H56D14xAsvcMZ5Tf5z3R57bPmeKD
+X-Google-Smtp-Source: AGHT+IEB5RMB6O72/83QESJGoGDR5GnyF3K+w83GVRqZExtlJ1ta+ZCf7Nb/V5hNsbo8Wv+W+ThhKA==
+X-Received: by 2002:a05:600c:4511:b0:415:43f2:332b with SMTP id t17-20020a05600c451100b0041543f2332bmr897304wmo.2.1712878608058;
+        Thu, 11 Apr 2024 16:36:48 -0700 (PDT)
+Received: from gmail.com (188.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.188])
+        by smtp.gmail.com with ESMTPSA id p1-20020a05600c358100b00416b28651e1sm3763074wmq.36.2024.04.11.16.36.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Apr 2024 16:36:47 -0700 (PDT)
+Message-ID: <f4dbc3e7-5b8c-46d4-a7d6-122e34e0d922@gmail.com>
+Date: Fri, 12 Apr 2024 01:36:46 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Jonathan Tan <jonathantanmy@google.com>,
-    Emily Shaffer <nasamuffin@google.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Matthieu Moy <git@matthieu-moy.fr>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Kipras Melnikovas <kipras@kipras.org>,
-    Linus Arver <linusa@google.com>,
-    Linus Arver <linusa@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/12] git_config_string() considered harmful
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqttkeicov.fsf@gitster.g>
+ <20240407005656.GA436890@coredump.intra.peff.net>
+ <ef8e5f43-5f27-4f0a-acf5-cf4f8281a8f8@gmail.com>
+ <20240408205511.GB1639295@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20240408205511.GB1639295@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Linus Arver <linusa@google.com>
+On Mon, Apr 08, 2024 at 04:55:11PM -0400, Jeff King wrote:
+> On Sun, Apr 07, 2024 at 07:58:02PM +0200, Rubén Justo wrote:
+> 
+> > After Junio's series and yours, I'm on the fence now, but my envision was
+> > to introduce:
+> > 
+> > --- >8 ---
+> > diff --git a/config.c b/config.c
+> > index eebce8c7e0..7322bdfb94 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -1345,6 +1345,15 @@ int git_config_string(const char **dest, const char *var, const char *value)
+> >  	return 0;
+> >  }
+> >  
+> > +int git_config_strbuf(struct strbuf *dest, const char *var, const char *value)
+> > +{
+> > +	if (!value)
+> > +		return config_error_nonbool(var);
+> > +	strbuf_reset(dest);
+> > +	strbuf_addstr(dest, value);
+> > +	return 0;
+> > +}
+> > +
+> >  int git_config_pathname(const char **dest, const char *var, const char *value)
+> >  {
+> >  	if (!value)
+> 
+> Hmm. I think that is nice in some ways, because it is a much bigger
+> signal about memory ownership than just dropping "const" from the
+> pointer.
+> 
+> But it is less nice in other ways. Every _user_ of the value now needs
+> to care that it is a strbuf, and use foo.buf consistently (which you
+> obviously noticed). Likewise, any downstream writers of the variable
+> need to treat it like a strbuf, too. So the parse-options OPT_FILENAME()
+> macro, for example, needs to be replaced with a strbuf-aware variant
+> (though arguably that is an improvement, as using the wrong one would
+> fail catastrophically, whereas using a non-const pointer with
+> OPT_FILENAME() creates a subtle bug).
+> 
+> I'm also not sure what the solution is for setting default values, like:
+> 
+>   const char *my_config = "default";
+> 
+> Of course that is a problem with my solution, too. Perhaps in the long
+> run we need to accept that they should always default to NULL, and
+> readers of the variable need to fill in the default when they look at it
+> (possibly with an accessor function).
+> 
+> Or I guess the alternative is to stop using bare pointers, and carry a
+> bit which tells us if something is heap-allocated. Which starts to look
+> an awful lot like a strbuf. ;)
+> 
+> I think in the past we've talked about being able to initialize a strbuf
+> like:
+> 
+>   struct strbuf foo = STRBUF_INIT_VAL("bar");
+> 
+> That would use "bar" instead of the usual slopbuf, but we can still tell
+> it's not a heap buffer by the fact that foo.alloc is 0.
+> 
+> -Peff
 
-Signed-off-by: Linus Arver <linusa@google.com>
----
- Documentation/SubmittingPatches | 7 +++++++
- 1 file changed, 7 insertions(+)
+Hi Peff.
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index fd40a444f95..eac086133bc 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -420,6 +420,13 @@ trial merges of your topic to `next` and `seen`, you may have noticed
- work by others conflicting with your changes.  There is a good possibility
- that these people may know the area you are touching well.
- 
-+If you are using `send-email`, you can feed it the output of `git contacts` like
-+this:
-+
-+....
-+	git send-email --cc-cmd='git contacts' feature/*.patch
-+....
-+
- :current-maintainer: footnote:[The current maintainer: gitster@pobox.com]
- :git-ml: footnote:[The mailing list: git@vger.kernel.org]
- 
--- 
-gitgitgadget
+Thanks for your ideas.
+
+For the globals we have in environment.h, maybe we can keep them const
+and avoid the other inconveniences, doing something like:
+
+diff --git a/config.c b/config.c
+index 146856567a..ead3565c27 100644
+--- a/config.c
++++ b/config.c
+@@ -1671,8 +1671,13 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+                return 0;
+        }
+
+-       if (!strcmp(var, "core.editor"))
+-               return git_config_string(&editor_program, var, value);
++       if (!strcmp(var, "core.editor")) {
++               static struct strbuf editor_program_ = STRBUF_INIT;
++               if (git_config_strbuf(&editor_program_, var, value))
++                       return -1;
++               editor_program = editor_program_.buf;
++               return 0;
++       }
+
+        if (!strcmp(var, "core.commentchar")) {
+                if (!value)
+
