@@ -1,110 +1,118 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E51413C806
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 05:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3608C13DDB7
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 07:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712814951; cv=none; b=id4SvHOh3DnOtfOE9F6aEHeX45ihUHFg+IKNRLCitRE3Niiih8bW6W55HsJifC/YkHrlqnOSFa0RShUgEXZyyQLZ7+o+7wWxBVZqPqCn1W472BgffXV5SDfTRiP1RR4Kuc525EQowwzwjkiUKvb+ZyK50dNCtjdOFbadVUk2EVs=
+	t=1712818921; cv=none; b=VrFPbm1d/6zP+35LXpuH95Jzzpl1wF9UVMBjeK4u/wKang+gcZ6sgU1lQZZK9uKgNRGMuHBBbsDK6H0zOdBFxSY0rCLyvnIjLcr+10lxHUaObHfc+FgNm2LFqS0PAyF+jghKq3o6kuAS/9jTAMfBhlaLwNgHuSZVHl9vroJe6uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712814951; c=relaxed/simple;
-	bh=y1yYjH/IYyRlanLz/eZIi/XCV+tHbfyQKyUva2PO284=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N5ePIniKNXGhiiypi2+EPZihwhjnB4jxiiqixNU7cGkLzONREoW8Ofk98XtIiVwn0prgrenPU1pFDP0NNGKC0lGZ615Ng/NHPd31jB8WpXmBmNR/VsMErzW0PYGimRsA90HWg+TJh6Mk88Yu5ChxcoBcPpCGKV5qeot2rcQzi7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YTv97yvv; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712818921; c=relaxed/simple;
+	bh=ptnLAZRmo5cqPQaAY7c+V42rj36SMOR/O3UEPcg2iho=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MvLNJprP4eqXrY5Untn+UvF5Dm5HlpEQd8Cw+lTai2Yd3R82UJYL9EqWnhfLtTnsT6+fQbm4pJCvEWHigJXwaf95Ivza02QgSXOsppcAkML8ceIpcumGtVsURTYgQEMh0YRFtetzMg25iHJHH9dpJukjeWwZzbgbTtvhN0sEtLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F3b2F4sL; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YTv97yvv"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 420E4348D9;
-	Thu, 11 Apr 2024 01:55:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=y1yYjH/IYyRlanLz/eZIi/XCV+tHbfyQKyUva2
-	PO284=; b=YTv97yvvFMlBS5kdx0fwMe9IHqHYzMUmrpWFAhMSdqtDfSqDhaH0jC
-	9l3vctYvn4M8gawmkO8x8wYiqgVJsTHaL0Uyi64W2At1iXvyG3cOUTJSgHz4El0P
-	DBoDJSgeMQKDDae6DBueOsUlRcVsSaazviAeUbbxXn+M/a/Bm5jhc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A428348D8;
-	Thu, 11 Apr 2024 01:55:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B732C348D7;
-	Thu, 11 Apr 2024 01:55:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] mailsplit add option to include sanitized subject in
- filename
-In-Reply-To: <CA+P7+xooa08Y-D8CXDGK7_aZ5c2b9iXM6+rFS5qNLyZaG0Kh3A@mail.gmail.com>
-	(Jacob Keller's message of "Wed, 10 Apr 2024 20:22:02 -0700")
-References: <20240409000546.3628898-1-jacob.e.keller@intel.com>
-	<xmqqpluz2tau.fsf@gitster.g>
-	<CA+P7+xooa08Y-D8CXDGK7_aZ5c2b9iXM6+rFS5qNLyZaG0Kh3A@mail.gmail.com>
-Date: Wed, 10 Apr 2024 22:55:39 -0700
-Message-ID: <xmqqedbcqw84.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F3b2F4sL"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-56e2ac1c16aso7722320a12.0
+        for <git@vger.kernel.org>; Thu, 11 Apr 2024 00:01:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712818918; x=1713423718; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ptnLAZRmo5cqPQaAY7c+V42rj36SMOR/O3UEPcg2iho=;
+        b=F3b2F4sLdgPhHmnRtcPiEm5sIE+vm9KV5eTPwrS3NQtBIvDmcuQzkZd0wMoVgxC3bv
+         Bw7kBY0P/Orqkhe1QEyZaPSXhnm0s54p5EeTkFici5KO97xbcCKUCwUs1qQ+Kozt6s01
+         zyh2EeKgBfe4sZJyLg/YW2Y7SI/QWR+tafuE8f3lPrx52TxFUrhH0DXwpeUdIcGmoAZd
+         kWKmwHDlWjrkolrMpRPT09HO3sEkmK6Z95dXluhbkXMoOQZMS2ejkP4NNXcwlXkgeKkU
+         Lyo2iBjRkN9GefdvAkXTTWtplwQFaHfxRnXxKB/AJfDyvp/PHuksoETYGCKsBAn1OfNV
+         5A9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712818918; x=1713423718;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ptnLAZRmo5cqPQaAY7c+V42rj36SMOR/O3UEPcg2iho=;
+        b=cbB9nVIV8lPdazWjFbTkBg2UAuMRBLHodgL9rK7Vwa3N16pvvgfvQyz94Y/TlDvxoF
+         871ZcRO8jeJtutosUrCZ3J4ELCvCecaEZfa7NIEG2Vdf5piycsNzH+uhiTXqUTPiNsqk
+         O65vxg6de6xEFPeZPTIaTl+YY3mLZCcefdY1paVZmTduNNxqKxVVB/11pGUo6X5lI0oh
+         X+wdzK0O+ZNiyfG0au1K2KXd5uPQEll4s+jXxxx3Cumr5G3AsTlPaomdLupKuBO0UWs4
+         28WTLfRbau9YWP3gC99BbBBLvSZUiHGKPqJd9LXdlJmdbDSzG1YgxTo2yc7LJvIC7gdw
+         p/GA==
+X-Forwarded-Encrypted: i=1; AJvYcCWTkCg0CR/9I3crlWwzNAXuijYoe0Vpr4GGeO+4duJl45QbHLOa7DT9Bi2sL3PbzMGtFJg8Y+KkT/YYf8PCD96Id3Lp
+X-Gm-Message-State: AOJu0Yw+pOH4Xq2usOEb6XH/VDluRj5KsgKrdNVHd1xMGEldEmezPpgc
+	wuvMJsCRHyBTAXEJOlgLrRJckDnKnv0Pn8ustBq7dRR0ZPIw/nGhEJGaOjLJRnky6yXDzdetpzu
+	Mrni/ERQ1/bUkJpCWljcCBn8xcBQ=
+X-Google-Smtp-Source: AGHT+IEAzgI5nXz5J/Ele/YTkLg4CspTNNOueFya71lxPjOBHknCXgT4GVVRf20AAzImjxIrFiaY92RbmBc7USUMc/w=
+X-Received: by 2002:a17:907:72d6:b0:a52:1b7e:b019 with SMTP id
+ du22-20020a17090772d600b00a521b7eb019mr1301665ejc.40.1712818918226; Thu, 11
+ Apr 2024 00:01:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 209BC366-F7C8-11EE-908B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+ <20240402222619.2212650-1-calvinwan@google.com> <Zg38BLxLe193zYss@tapette.crustytoothpaste.net>
+ <CAD0vCJ=4-QoqUovaOuw6gPTfPEa+d6uJBaO_Vq9R9Btn_YXzwg@mail.gmail.com>
+In-Reply-To: <CAD0vCJ=4-QoqUovaOuw6gPTfPEa+d6uJBaO_Vq9R9Btn_YXzwg@mail.gmail.com>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Thu, 11 Apr 2024 08:00:00 +0100
+Message-ID: <CAGJzqs=PJX_ydB911QqBxf41wnNXaT0LZRwjDqfTw_vTTMPLow@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Support for arbitrary schemes in credentials
+To: Jackson Toeniskoetter <jackdt@google.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Calvin Wan <calvinwan@google.com>, 
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Matthew John Cheetham <mjcheetham@outlook.com>, M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Mon, 8 Apr 2024 at 19:43, Jackson Toeniskoetter <jackdt@google.com> wrote:
+>
+> Just to clarify, we at Google do not use extraheader to pass along
+> credentials. Instead we use the .gitcookies file[1], which iiuc gets
+> read by the git process directly. I'm not a security expert but I
+> imagine the risk surface of extraheader and .gitcookies is similar.
 
->> > I originally wanted to avoid the need for an option, but git-am
->> > currently depends on the strict sequence number filenames.  It is
->> > unclear how difficult it would be to refactor git-am to work with
->> > names that include the extra subject data.
+Hi Jackson. To clarify, are you describing hosts *.googlesource.com
+such as https://go.googlesource.com/? It always confused me that the
+'generate password' feature gives you something different to a
+password.
 
-The change may be a bit involved but depending on where you decide
-to stop, it may not be too bad.
+https://www.googlesource.com/new-password
+https://gerrit-review.googlesource.com/Documentation/user-upload.html
 
-What is your design goal of this topic?  IOW, what is the maximum
-corrupted ordering of patches in a single mailbox do you want to
-recover from?
+Have you tried OAuth credential helper git-credential-oauth
+https://github.com/hickford/git-credential-oauth? It can authenticate
+to *.googlesource.com without setup. OAuth has security advantages
+over .gitcookies because the OAuth access tokens expire after 2 hours
+and the OAuth refresh tokens are single use. These credentials are
+stored in the user's choice of secure storage such as
+git-credential-cache, git-credential-libsecret, git-credential-wincred
+or git-credential-osxkeychain.
 
-The easiest and cleanest would be if you assume that the messages
-are in scrambled order, but are all from the same series, correctly
-numbered, without anything missing.  A mbox may have 8 patches from
-a 8-patch series, with their subject lines having [1/8] to [8/8]
-without duplicates or droppages, without any other message that does
-not belong to the series.  If that is where you are willing to stop,
-then you can still name the individual messages with just numbers
-(but taken out of the subject line, not the order the input was
-splitted into).  "am" does not have to even know or care what you
-are doing in mailsplit in this case.
+I encourage you to try it out. You'll need a local web browser because
+Google's OAuth configuration currently forbids device authorization
+grant for the relevant scope
+https://issues.gerritcodereview.com/issues/300279941
 
-THe next level would be to still assume that you stop at the same
-place (i.e. you do not support patches from multiple series in the
-same mailbox), but use the number-santized-subject format.  This
-would be a bit more involved, but I think all you need to update on
-the "am" side is where the am_run() assigns the message file to the
-local variable "mail".  You know the temporary directory where you
-told "mailsplit" to create these individual messages, so you should
-be able to "opendir/readdir/closedir" and create a list of numbered
-files in the directory very early in "git am".  Knowing msgnum(state)
-at that point in the loop, it should be trivial to change the code
-that currently assumes the 4-th file is named "0004" to check for
-the file whose name begins with "0004-".
-
-I personally am not at all interested in doing that myself, because
-I do not see a reasonable way to lift the limitation of allowing a
-mailbox holding patches from only one series, and if we assume that
-a tool (i.e. "am" driving "mailsplit" in the new mode) with such a
-limitation is still useful, the source of such a scrambled mailbox
-must be quite a narrow and common one.  At that point, I suspect
-that fixing the scrambling at that narrow and common source (e.g.
-your "t.mbox.gz from public inbox server that cannot be told to sort
-the messages in any order other than the arrival timestamp") would
-be a much better use of our engineering resource.
-
+>
+> Reading your post on
+> https://lore.kernel.org/git/20240324011301.1553072-1-sandals@crustytoothpaste.net/,
+> it's unclear to me why the credential helper protocol needs to be
+> updated. If the goal is to support Bearer tokens, can that not just be
+> implemented using extraheader? It seems like the goal of getting
+> credentials out of the config file can be accomplished without
+> updating the credential helper protocol. So is the bigger goal to
+> support more robust and modern auth schemes which require multiple
+> steps? That would be useful to Google; multi-step auth would probably
+> be a more elegant way for us to stop using .gitcookies than other
+> solutions we were considering.
+>
+> [1] This is actually only for external contributors. Google employees
+> have a more robust authentication mechanism. Concerns have been raised
+> internally about our usage of gitcookies, but it hasn't been made a
+> priority to address because a leaked credential would not allow an
+> attacker to commit bad code, only read it or initiate a code review.
