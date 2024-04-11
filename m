@@ -1,103 +1,97 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1982E3D969
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 21:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E109205E0D
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 21:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712870645; cv=none; b=TUlmMkr066cRXdhd3MgFzRB3yDUA55hVTy+Q2VoBEQYw8d9h6U2JcNlshk0gT6XCK8YohEWBjASQY1LjfOeF0chQ0LLRDrAVSQdt/2S/mXrbH6Z6CdZCpsB/U00LYCBNx7ZCeOFEQSv09+MNDxibI9HYTrIDdgKdIvRC+BWYAF0=
+	t=1712870760; cv=none; b=pZYcl/w/V+K3smhbFjunTwCp5oOOW5nRhluNueynjFOqs8a+Six4l9ivbYqXw1reNoXQALOwglJxSsaqGkl7vz/5sxiFBJD367u6d1geEApU3jNyvBKjXfi1gI3IF/LHLwQE+8t7mpqNs7HkbX9hhiHv4+8A1ablrQECl75Uxak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712870645; c=relaxed/simple;
-	bh=tpdNCNOUIBaA7K3u0SG3NCRHIf3iZb8Zu8gEKMaikkw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SZ0tjwpFVkkg41x3sv4UCSnoc4qfct/AhSHl+AxhQ+xsVAM0ajRPigP2NNR3osDoGovyhMh2WP7D2bxftGKlaNpNj9wZyZ9FkgUiOVZSW5hn8yPAe3Urxu/JUmCopr4sn2kbCDlh8j5GDTWwpuwlH/WwsmvOVefPELEKXHtD87k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JV03P48r; arc=none smtp.client-ip=209.85.210.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1712870760; c=relaxed/simple;
+	bh=8RCAfeRxBOMAiPh3I8Tkt4qjBy1inY2tL2KzHBDZC5M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rObu9yIUNMHRKoMFX9CHDtGs/Aw2PWcICqMEeyTQzRNTZLGWtXrq3mibseSU6jyQkl2LHut16hJiJ2tmxUq6h9axuV5TJYZicU2KIsacxgWdABmU9tf15m/S80RG0ecVvl9tyujspDwWWcNTp75MwDD+bqIlfRWY063KflBNqcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OzHVf+W4; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JV03P48r"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6ea1f98f3b9so166066a34.1
-        for <git@vger.kernel.org>; Thu, 11 Apr 2024 14:24:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712870642; x=1713475442; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mjb1+C5fr3/gM8/7puo6PR9/fpswTy5FsZIPqPOJQCI=;
-        b=JV03P48rF72gQn+o6n/BgjVCctM4vqdKZTc/v15Fd7wUEi5luA/VCQsX8TCdcW5g9O
-         ZMHob21G+KzsMEepaOOlZbs2rYJEr6iPomwi4fRS6EC9ISL7dfAyLsRtR7IQjO7fQLID
-         43L1AJ6NAfWepVTQ3AnffCYX22PfaU+1EjHv/KeFroF43Vovx/fpyX18dJIWxfbkvWfC
-         lNiVrNQYGqMn83sAojSmb2K7zRXxENE0S9o/ixmkG9gZ4vXCJY5G8iYMagcifCJqR3qg
-         3+4GGt8O3qqrAvj9uCxXrW21L1iEBY5YDEY4Z8ohp//DsqZpxMB/IqYe+hz/WcJLrPlf
-         phcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712870642; x=1713475442;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Mjb1+C5fr3/gM8/7puo6PR9/fpswTy5FsZIPqPOJQCI=;
-        b=HYWTJ1v8ek/3/E4jR6C1G/0OV4dS5iqBXewhEEkQFB3l92+7FMT0e2ZQ5oeI4BLDFc
-         /4hIV7fHxv/hGvSiUXngKJRjKdU69hVtBFNXIKb4BcRnCx4dFyhjS5u2vXCFtUp8dJxT
-         NSDarz1WH3C1qeJ80Wxp9RbQhgNS5WbdYQyF8fdP2X0uUD2/n8Hd/Vdx41EvQcwG+F0Y
-         FZoFpWPkCo1wJzPtCJRI3/EMA4ulqWaDAYQGEJ7dRyVyxFvWe1aESVkTBzEWljGRwOte
-         7wHEdGXdR64scBEejcantVqsZSha43YwdLZ36dTYzh3nqRR7dRdphYdB5FqdvomPUXAN
-         p2Xg==
-X-Gm-Message-State: AOJu0YwvF7Vs/ifuJiCcN98JsQVdJ6eqtbYE19qMY+mpM3mIDBR4ycF/
-	3NrVtCVM9yxSkifRw5KJLOGJPO8SX+syO+fmRpJ6G+VDSjkjspoP2dYCjMNgvdJxSWHup/260q+
-	Xtg==
-X-Google-Smtp-Source: AGHT+IF6QAFZpS40AzKt7LWcialHNN/bnAiurHpBePHxC+gKX6PrmfsOY2ykAmtzLlqYXlY1hBpS5A==
-X-Received: by 2002:a05:6870:9d15:b0:22e:92b1:5697 with SMTP id pp21-20020a0568709d1500b0022e92b15697mr787760oab.6.1712870642104;
-        Thu, 11 Apr 2024 14:24:02 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:5d8a:5a85:8673:4f76])
-        by smtp.gmail.com with ESMTPSA id gm7-20020a056a00640700b006ecfdcc2de9sm1674495pfb.10.2024.04.11.14.24.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Apr 2024 14:24:01 -0700 (PDT)
-Date: Thu, 11 Apr 2024 14:23:57 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [RFC][PATCH] t-prio-queue: simplify using compound literals
-Message-ID: <ZhhU7YBY6brbyZDm@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-References: <520da361-1b80-4ba3-87b2-86d6fdfc18b5@web.de>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OzHVf+W4"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E0B283A4EC;
+	Thu, 11 Apr 2024 17:25:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8RCAfeRxBOMAiPh3I8Tkt4qjBy1inY2tL2KzHB
+	DZC5M=; b=OzHVf+W4RAHqhZ51y3v7y6w30mXiNuXGFluJ49Z7urnjjWTcNDlnxe
+	7G9d+IcA4/nnPufe2qNJ96W9BX/CM02D/yZcDYRXOkWQDM2ZGpS326847i+e0Fi+
+	K5yDw8dsIviDFOaGjJlkIQGsPUQxUnvSS5Zl7wvvFhc+8foIL7NQE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D8D2B3A4EB;
+	Thu, 11 Apr 2024 17:25:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0A2AD3A4EA;
+	Thu, 11 Apr 2024 17:25:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Jacob Keller <jacob.keller@gmail.com>,  <git@vger.kernel.org>
+Subject: Re: [PATCH] mailsplit add option to include sanitized subject in
+ filename
+In-Reply-To: <5a25d75c-cc27-49d9-a49d-39f657fd17f4@intel.com> (Jacob Keller's
+	message of "Thu, 11 Apr 2024 11:52:23 -0700")
+References: <20240409000546.3628898-1-jacob.e.keller@intel.com>
+	<xmqqpluz2tau.fsf@gitster.g>
+	<CA+P7+xooa08Y-D8CXDGK7_aZ5c2b9iXM6+rFS5qNLyZaG0Kh3A@mail.gmail.com>
+	<xmqqedbcqw84.fsf@gitster.g>
+	<5a25d75c-cc27-49d9-a49d-39f657fd17f4@intel.com>
+Date: Thu, 11 Apr 2024 14:25:52 -0700
+Message-ID: <xmqqfrvrr3q7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <520da361-1b80-4ba3-87b2-86d6fdfc18b5@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 13EBDFAC-F84A-11EE-83F2-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On 2024.04.02 20:30, René Scharfe wrote:
-> Test names like "basic" are mentioned seven times in the code (ignoring
-> case): Twice when defining the input and result macros, thrice when
-> defining the test function, and twice again when calling it.  Reduce
-> that to a single time by using compound literals to pass the input and
-> result arrays via TEST_INPUT to test_prio_queue().
-> 
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
-> C99 added compound literals.  Are we ready to use them?
-> 
-> Test definitions become more compact, but look busier due to the added
-> punctuation.  We could hide some of it with a sugary macro like this:
-> #define INT_ARRAY(...) ((int []){ __VA_ARGS__ })
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-I definitely like this approach. Reading the original test involved a
-lot of jumping around to see which TEST() checked which set of
-arguments, now they're all right there in the TEST() call.
+>> THe next level would be to still assume that you stop at the same
+>> place (i.e. you do not support patches from multiple series in the
+>> same mailbox), but use the number-santized-subject format.  This
+>> would be a bit more involved, but I think all you need to update on
+>> the "am" side is where the am_run() assigns the message file to the
+>> local variable "mail".  You know the temporary directory where you
+>> told "mailsplit" to create these individual messages, so you should
+>> be able to "opendir/readdir/closedir" and create a list of numbered
+>> files in the directory very early in "git am".  Knowing msgnum(state)
+>> at that point in the loop, it should be trivial to change the code
+>> that currently assumes the 4-th file is named "0004" to check for
+>> the file whose name begins with "0004-".
+>
+> Yea, we pretty much just have to get the git-am process to work with the
+> new names. I can look at using opendir/readdir here instead.
 
-Agreed that an INT_ARRAY macro or similar would make it look a bit
-nicer, but even without that I think this is a good improvement.
+Not "here", but probably just after you called "mailsplit" and saw
+it return.  After that nobody should be adding more split mail
+messages to the directory, so you do it once to grab all filenames.
 
-I am in favor of expanding our C99 usage, and ISTM that a unit test is a
-friendlier test balloon than production code (although perhaps one that
-is easier to miss).
+> Ya I don't care much about multiple series. I care more about making it
+> handle scrambled series better than it does now. I download series off
+> of lore.kernel.org (public-inbox based) and those seem to routinely have
+> series out-of-order. I suspect this is because it bases them on arrival
+> date and sometimes certain mailers get it out of order when sending.
+
+Yeah, and that is why I said it would be a better use of the
+engineering resource to fix it at the source.  Such a fix will
+benefit folks with existing versions of "git am", not needing to
+wait for your improved version.
+
+Thanks.
