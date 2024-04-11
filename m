@@ -1,68 +1,95 @@
-Received: from mailhost.m5p.com (mailhost.m5p.com [74.104.188.4])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC6F3CF72
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 22:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.104.188.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95D7481D5
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 22:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712874833; cv=none; b=XgAuaMDCokDUdVrshHnCxQ842GipGIzRBsvRdXGHZoyncasoJLVF0kRaNo02WnpFWYUvkjRBHFnxgMEORi8gofOGfwSiY6VnGwH9N6x3yCUzSpnbOI70a4kxm+D0uov0MYk5T6aLCsdhZmEcltl1fQacqIPC/VPEoPNkQ+kN+Kg=
+	t=1712876038; cv=none; b=q4Ir8irbh/scSfbBvYHb6xNFqMov4VYJfOsOLSeKb8wbasRG2/jG/scWC6Q4P1BvE3r/m8PgHQ2R8kSmmOaZ0/rfOYJofd28iJCBRxASLEpcuxjHsYJGadgq1Qe7JtSohu7eVDG4WiYWMym2AmhPPKP/Alace8fhOhvnsrdrvNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712874833; c=relaxed/simple;
-	bh=oNwUqXPsEn3OEWrWRoEyN291+qPDbzdYDo2CsfLrAXQ=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=gcSnfm4vYAndCXNsdpT8ytXP0JumeTlFZ0AcDdYw7bFsCYESyy8KXXqC8FP+NKoyJmDYWe0BSW4QOtxzTtOIGShgtxcRjK+O07PsccR6JcFAjz2SC1dyyQn080rmL072BTFQ489Sdb282f3vD7qSYTWNdOlN4KcIXGuWMMF6fQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=m5p.com; spf=pass smtp.mailfrom=m5p.com; arc=none smtp.client-ip=74.104.188.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=m5p.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=m5p.com
-Received: from m5p.com (mailhost.m5p.com [IPv6:2001:470:1f07:15ff:0:0:0:f7])
-	by mailhost.m5p.com (8.17.1/8.17.1) with ESMTPS id 43BMI2B0069636
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 18:18:08 -0400 (EDT)
-	(envelope-from ehem@m5p.com)
-Received: (from ehem@localhost)
-	by m5p.com (8.17.1/8.15.2/Submit) id 43BMI2ZV069635
-	for git@vger.kernel.org; Thu, 11 Apr 2024 15:18:02 -0700 (PDT)
-	(envelope-from ehem)
-Date: Thu, 11 Apr 2024 15:18:02 -0700
-From: Elliott Mitchell <ehem+git-scm@m5p.com>
-To: git@vger.kernel.org
-Subject: fast-import interface issues
-Message-ID: <ZhhhmvjuYfWc535m@mattapan.m5p.com>
+	s=arc-20240116; t=1712876038; c=relaxed/simple;
+	bh=71jvKbFFh85OcsaKd9+w998yO5IFxUS+YpzCajog/u4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=cIrv/TAm/LvQXKYKex3Wv/kHXc4dr8n8xlLz6Y5mvEiIJiprp0G2TpyNbeQjanKCjDxd1BIE//sR7TS4Dkr+E+rDa31NZ716XEnEBb0J5Izo7cdHrO9oPUf3frWklIzqGRCGjFSH7pMxC+D8OGE+fkYeNXhaXYkfm9a+h2bJl+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=i0/zFxXW; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="i0/zFxXW"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6ed34f8b3c8so391865b3a.1
+        for <git@vger.kernel.org>; Thu, 11 Apr 2024 15:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1712876036; x=1713480836; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AVIkQPKgDVIcs45GR5C+JeBoHOgsO/EtvNv3iRLJ29U=;
+        b=i0/zFxXWct4X0xUxmKfkcOL56DbnrZgH0XpgsnPULOZB0WyvkHGuQ29pXwobpaxALt
+         +R3XvrPbcp1PdZxk6YMSxn3nyaBmwgsttlnKh0KarPub8Hf+pxeipZEtnZ65VoVp1/UM
+         fyr7kjrc2ixgl++YpspdQbXRMBelGIU507w+Gyi/pOtWo5mJy/O//Pt+I2yoscJYZCgt
+         0cFrVOx0Z3UimpnamQFbnFoQ+Pn2nONp3Rtw7apXV16vDUNqlT/4kflMb9XxGTEWD2QB
+         oyMNh0MywVJSlBUsZow79pIC1OkBAtkJCkR1XsMc8Es0pc5sLezBz2maD00Q1lrAC6Qh
+         qqGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712876036; x=1713480836;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AVIkQPKgDVIcs45GR5C+JeBoHOgsO/EtvNv3iRLJ29U=;
+        b=sfkcFtkd81xjtCJZVK3m8EFN0H5CTxJ+3iBK9px3fg3KbXkMWMoXVWQFe39TWuWBpq
+         2HxxVvVwbpsllLaCe+cBeXzNvtKVCaYGV/zaNqPBpJ+WyV5Syce0BZVZCjgbc8CEYoux
+         jHJEYwedVcBqnotY3ZkivAaC8mpj16UgVx8fzQgyrIEw2cGvxXYokx8iBgwBKhdiRnbe
+         g5ZyBFGbMdkRmc+VbLSj31LY8EihEIWBfaDiMP5t92z5Rn1sENh5qWJZ3TdNIPMDCfzx
+         X3IyJzHFxdy4ZXj1eWJjUeeh0x0w/9XKLMwQ/fnqXEwJCWgnkg3gYNa0g4sVWIeAtSGP
+         Xnpg==
+X-Forwarded-Encrypted: i=1; AJvYcCVa8ed0YOswtc84VnmS+kHc/NiF4O3Fj82gJ9a+0Cq/4TEEVGU5B4Scd0VB1By8ospp7nWfhuVW4ERVCT4fsPoI7lM4
+X-Gm-Message-State: AOJu0Yz0RANLArGYozoubVfIapKQiMK7oYnyUf1s37UaimTPp9XiLZNv
+	9KvQRRr31H31FF7VLVuQCy036VI782N0cLfHdw9lN/z0YpRBxHQGyEZU2uaHSnthqcEMD6dccPg
+	Ldw==
+X-Google-Smtp-Source: AGHT+IGEj3h6u3h+iJAM7V50SNubOQMIW/wnLGY8aoDOvNeu1URZ5lpnN4KHNRYUnRrGzsmtUN64mYTXnqY=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:3995:b0:6ea:aafa:815c with SMTP id
+ fi21-20020a056a00399500b006eaaafa815cmr43860pfb.1.1712876035973; Thu, 11 Apr
+ 2024 15:53:55 -0700 (PDT)
+Date: Thu, 11 Apr 2024 15:53:54 -0700
+In-Reply-To: <owlyfrvurtl6.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0
+References: <pull.1704.v2.git.1712366536.gitgitgadget@gmail.com>
+ <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com> <1f65dc5ba3ded5b90ed929aa3884574e8b26cd9b.1712699815.git.gitgitgadget@gmail.com>
+ <owlyil0qrxev.fsf@fine.c.googlers.com> <xmqq8r1m16n1.fsf@gitster.g> <owlyfrvurtl6.fsf@fine.c.googlers.com>
+Message-ID: <owly5xwnse7x.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 1/8] MyFirstContribution: mention contrib/contacts/git-contacts
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>
+Content-Type: text/plain; charset="UTF-8"
 
-I've ended up trying to use `git fast-import` for a task and have ended
-up observing issues with the current interface.
+Linus Arver <linusa@google.com> writes:
 
-First item, why is there no -0 option?  Due to any string being a valid
-filename, most Unix utilities have evolved a -0 option (sometimes other
-characters).  `find -print0`, `xargs -0`, `grep -z`, `grep -Z`,
-`tar -T --null`.  Yet there is no `git fast-import -0`.  I suspect this
-could work better with unusual filenames.
+> Junio C Hamano <gitster@pobox.com> writes:
+> [...]
+>> For now, I inserted this extra commit between [1/8] and [2/8].
+>> Thanks.
+>>
+>> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+>> index 00f4c63cb9..bb7e4174e8 100644
+>> --- a/Documentation/MyFirstContribution.txt
+>> +++ b/Documentation/MyFirstContribution.txt
+>> @@ -1116,8 +1116,8 @@ $ git send-email --to=target@example.com psuh/*.patch
+>>  NOTE: Check `git help send-email` for some other options which you may find
+>>  valuable, such as changing the Reply-to address or adding more CC and BCC lines.
+>>  
+>> -NOTE: If you're not sure who to CC, use `contrib/contacts/git-contacts` to get a
+>> -list of reviewers you should include in the CC list. In addition, you can do
+>> +NOTE: If you're not sure whom to CC, running `contrib/contacts/git-contacts`
+>> +can list potential reviewers to put on the CC list. In addition, you can do
+>
+> Nice. I think you can also remove the trailing "to put on the CC list"
+> clause because it's somewehat redundant.
 
-Second, forced use of quotes for 'ls' SP <path> LF seems a poor choice.
-Using the empty string as a dataref or the mark of the WIP commit seem
-better choices.  In particular 'ls' SP SP <path> \0 could be readily
-distinguished from a sha1 or other existing data references.
-
-Third, why is 'cat-blob' limited to blob data?  `cat-file --batch` isn't
-limited to blobs, so why is `fast-import`'s equivalent so limited?
-
-Alas, I'm already involved in too many things at once and cannot hope to
-implement these myself.  Yet they do seem obvious limitations in what
-`git fast-import` can be used for.
-
-
--- 
-(\___(\___(\______          --=> 8-) EHM <=--          ______/)___/)___/)
- \BS (    |         ehem+sigmsg@m5p.com  PGP 87145445         |    )   /
-  \_CS\   |  _____  -O #include <stddisclaimer.h> O-   _____  |   /  _/
-8A19\___\_|_/58D2 7E3D DDF4 7BA6 <-PGP-> 41D1 B375 37D0 8714\_|_/___/5445
-
-
+I will incorporate this into the next reroll.
