@@ -1,53 +1,53 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AA3142642
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 09:11:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7532142642
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 09:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712826667; cv=none; b=WORn13Ak8p9M7QiqUlSO3PaS7YC6DRp0b9Tx8jdNeSZawSU/yuFG+ifN+M9iNRsfd1H416UeZTs4RIoJ2dcX4wAgPiEkqMtdkGWOSpghSNFUJvtJS+BRtUWG3k+mKtei3bEQanw2wnE6iWFqz8A5wdertSLjoMTsXKRbrm8RUAo=
+	t=1712826671; cv=none; b=OBmnZDWAV1N6XpejA+QYAThQMBi0s9NJJ6ghakbWqqRLX6Zo8grLjHNGFBb6UzolVsKb/uat628AdJgSj9QaBFjuDx1JhWxYDggfgvAFt7xSyxN8W4OeC5FH/CEn5ndutEQLc20lIaB7AcEvjEPm6h2WxsoY7cPbFRRh8AiFU2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712826667; c=relaxed/simple;
-	bh=jPc0YsuC4LLQyf6iVtPQq3oStMVa/OHFaVsiqJpgc7g=;
+	s=arc-20240116; t=1712826671; c=relaxed/simple;
+	bh=uHd+CRm64yrilAsejITRSIG5pxeOjd5S68kSZwpJrD0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V2mMB0Z5o0Xh5wOWQYD1nUL95e1+m/u2ywvaXbrrW0UrEyv+ANKXvVgpegjAce9ntjxnwR18Idu+85Uy8tTTXlACWKC3jnAYGVHCoO2n45tiK/oYAQJtp5C0psvE5m30FNKfF/TwWFdyORWUKDb1108lEz/TGAi9LyL+ALlN2Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kok5oDj6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d395STEm; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=FBfRh2kt0h6GgdUGiFuYRN+J/16G2hXPpe1xnqTC+Rks8HQZr8RLB3JjYl/AAgTKqGWoMRmMu5uiAvf3LdJrl9gOdWtTiV5V5oTxivu6Ob2kiR+uo4Y7oU9vDE0OkFDmwg6MX/LX9XEEzI8BI3r/upSLoGqfnXZ2htMusyklYNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CLzedELG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j7zzEaRv; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kok5oDj6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d395STEm"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EF4A0114019B;
-	Thu, 11 Apr 2024 05:11:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CLzedELG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j7zzEaRv"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C543A1380249;
+	Thu, 11 Apr 2024 05:11:08 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Thu, 11 Apr 2024 05:11:04 -0400
+  by compute2.internal (MEProxy); Thu, 11 Apr 2024 05:11:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712826664; x=1712913064; bh=AiR2HOz3pZ
-	FFeGTEOdOMw01Mclv/3za2GVTmpUX0R0s=; b=Kok5oDj6akU/W3T5u+ZiislexT
-	HoFvDlBJOXt0S007ok7KRi5CiGgmj9lzKS8flJ0nDxZAEJ48K8Wg5JEsSfsrjase
-	6wulvrvfFV1iVXNTQTeAeHgu3h1LWcF6pXkJzh6Vu67/SjuF3smhojxGptZ5KBm1
-	kHoL/cwQJWbJovIcv1g4XvLTPFwyDFtRnq/jdvpOIKksuvyI2Dwt+ClEJ3ul8ydU
-	U7cr9hNi+l6U1kiCviZLLpWxiujDdKeBvQMkRvTpDhpAQpvDJjQMDy+U5OKZIZ4R
-	CUv3TGnaEz+K2/6dfEX4rvVXibtY2LjpaQoaNJ1h1t097yJRYEUqnQxTTEPg==
+	:subject:to:to; s=fm2; t=1712826668; x=1712913068; bh=p17Hk86N1S
+	Qdz9j034h2CkWHBQhy2eKA2Ri7IFVYdmI=; b=CLzedELGnSUmxvGjvt7S7sFD4K
+	uK5EP8AlFcqh8xeh9aIqGVmRVNkBNn7BKtCUk7T8gX1s6M1a1fDxs8AYxSugvoYv
+	7lsIwwIcq3H27YDEGsD954nodRD1+6D5YqpFndCVYwJyPwOyHBJTJ4Er9+/MPyy6
+	zsRvI4k4GssgbC6cbydUBBkLBkdv2clT1wDNsDWndZeJkT8615c9fGHb/F7/6wk0
+	sSIEvEFQSTtK/8HER4wB7iBCnhNoBx70bBMlSkCB5DCunm0yyvmrUIpC127d/APN
+	IoxCyRMlHREL8t7zE8QS6AsU4MMluO+g9ahyRuBxjqwsiNKQ/PVFJh5y3Huw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712826664; x=1712913064; bh=AiR2HOz3pZFFeGTEOdOMw01Mclv/
-	3za2GVTmpUX0R0s=; b=d395STEmZL+zZpCRKhVL7YEKThDlhaspef4hEneyQIO6
-	FDYaCGBoFbiOP7F2aZkVIE4bJY8HVdy2Y5YagDTq/Y+mJBwTo+tcGoTFhDTRoyG5
-	lt+35Bnjj/ho/4YudfSHjWPQCSDismrW16FLLq2m9yjrI0Z5cwmFO0YH/eWW3NV7
-	Rj6RIivBkPbJ0/nWxMwb1LbO5hCY4EqDQrfA/dGLg46JJMkDUMv+MOdFBGIRxSUB
-	7rR6G2w05gdEn/OL/0pNFM9nq9tPIANDrEYBgjo4uVN0OXKIdFuaSfc6SBRgd1Co
-	OGCdjARP/6FhMpgc5mk5T59X8Z6B8QCufvZO1b7Mkw==
-X-ME-Sender: <xms:KKkXZjATSQ-vh2WUb518xpRe93HJua1ZwWD1nzLMak1h-4YO4vFjDA>
-    <xme:KKkXZphnkMHQTsHucu12dzK87eefAzs22M472TW5VwLKjCxzeks9TdKEd5YPlyLBY
-    hxjPZOJRCBI6ZIZyw>
-X-ME-Received: <xmr:KKkXZukDD28cgrmvJYid8zoXjRYUgQuox8xWU-i52DVa4jAsHQWmbrKv_WyU7GOkSwpeK4rONcT_fJuVEZnXoxOGGsNOw66hAg1Dd0prwvgcK3Py>
+	fm2; t=1712826668; x=1712913068; bh=p17Hk86N1SQdz9j034h2CkWHBQhy
+	2eKA2Ri7IFVYdmI=; b=j7zzEaRv+5weI6xUbvRjojwU/gxqr6SkyZKp7g7G7UiA
+	kuTUBVD1FLWxfWkYlpnCq8Oq8pN9Gjyi3mndO+qi0kr7aGTb0c/xkkXl0LxLt+Cz
+	SIOG1hn/kOeijFbVinubEL+g+AqY8dp39mgRp9UE/TkaY37Cz79Qmr9QGu/5mwXb
+	KMazXvyvCm6Mzdk0G8CxXao6Op5dAy5YAndNtgcSkKh3zQRKNTzbKn9+hF4pR2YH
+	kN7OR4t6F6Tq1qW8RJgfavINyelbbozDtgXPUTd4BagHYmce0npTVI4rO91QGH0x
+	ExfOJdwGNhZ1DeSn4ySBN0hMBX9inu7YY7GBLEpXRQ==
+X-ME-Sender: <xms:LKkXZpw24cZr8hybxrPjLugC6qWjJdn-UCRw4AN29rd5fSg7weG9cQ>
+    <xme:LKkXZpSEuuxoCPzJTw0vC6NB_UvfWhXBsYK3xLl6f19jcNkP1W82sCU2suOHzg0Ft
+    8GPk8zBRDKsUXr7QQ>
+X-ME-Received: <xmr:LKkXZjXDV-aysU254wZGvfTHibhSP9k-Hws9hpu5K8efI0HpvHPVcujs8KbL4yqpUMk9wk2tssTy3mKb4xrjQ-nDvU3RlwfatvB9Zo1UMz67iCAk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,18 +56,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudefucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:KKkXZlxsl7QBPuh8tZ-y9jtAXWNAQ33nvQyREvGgscx32W_tBxy7Nw>
-    <xmx:KKkXZoSP59jS6p_YHdvSvxkcituZKOn22NxL9K6zNznL6UrM1ygqyQ>
-    <xmx:KKkXZoZPH6zAQa1UoyflYQ-bWI-v9JslCsOYRg5WAuCrKqEfT3dwFQ>
-    <xmx:KKkXZpTR7GDcKeons5lspd-bktvScGlMXKS_yYGRWAy2qFB0BlJwlg>
-    <xmx:KKkXZtQHwykv8698vXUeFXI9yiPrwhrdjZrJyu2K6dqu77Gn0PMpPSvE>
+X-ME-Proxy: <xmx:LKkXZrgnfxzy2nvCaKOQ9r4r7DgEkjYpDRdUbstm9RXezNXl7HVniQ>
+    <xmx:LKkXZrD9tskHeNfHlUKEpcfJ-_Ks9qVcvsblY84rbL4avhETgjcEWg>
+    <xmx:LKkXZkLA_EndXbas7QDOyLoivHmtEVOU94D61FgN5PrHJTLqrYB-zg>
+    <xmx:LKkXZqC5zoDfKifJZA7FcDenHo7NqnEkIQnBmVUyfFDHad4LGRl3IA>
+    <xmx:LKkXZtBb3hUDi60JzxWedaU7R4f19eEGFlXtMKJVzZNifGupCzR1zdWg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Apr 2024 05:11:03 -0400 (EDT)
+ 11 Apr 2024 05:11:07 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 59e0a155 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Apr 2024 09:10:50 +0000 (UTC)
-Date: Thu, 11 Apr 2024 11:11:00 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 9604cf71 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Apr 2024 09:10:55 +0000 (UTC)
+Date: Thu, 11 Apr 2024 11:11:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
@@ -75,8 +75,8 @@ Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 11/13] t06xx: always execute backend-specific tests
-Message-ID: <7136c8b6c21457515118c5084a715fed92b427e8.1712825204.git.ps@pks.im>
+Subject: [PATCH v3 12/13] t0610: fix non-portable variable assignment
+Message-ID: <cf4ee9c427b45491b191fa1d4bc06cdd7844467b.1712825204.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712825204.git.ps@pks.im>
 Precedence: bulk
@@ -86,144 +86,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+o1sKsLAFl3JjHLn"
+	protocol="application/pgp-signature"; boundary="C6RitZ9mXvZAQ/r7"
 Content-Disposition: inline
 In-Reply-To: <cover.1712825204.git.ps@pks.im>
 
 
---+o1sKsLAFl3JjHLn
+--C6RitZ9mXvZAQ/r7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The tests in t06xx exercise specific ref formats. Next to probing some
-basic functionality, these tests also exercise other low-level details
-specific to the format. Those tests are only executed though in case
-`GIT_TEST_DEFAULT_REF_FORMAT` is set to the ref format of the respective
-backend-under-test.
+Older versions of the Dash shell fail to parse `local var=3Dval`
+assignments in some cases when `val` is unquoted. Such failures can be
+observed e.g. with Ubuntu 20.04 and older, which has a Dash version that
+still has this bug.
 
-Ideally, we would run the full test matrix for ref formats such that our
-complete test suite is executed with every supported format on every
-supported platform. This is quite an expensive undertaking though, and
-thus we only execute e.g. the "reftable" tests on macOS and Linux. As a
-result, we basically have no test coverage for the "reftable" format at
-all on other platforms like Windows.
+Such an assignment has been introduced in t0610. The issue wasn't
+detected for a while because this test used to only run when the
+GIT_TEST_DEFAULT_REF_FORMAT environment variable was set to "reftable".
+We have dropped that requirement now though, meaning that it runs
+unconditionally, including on jobs which use such older versions of
+Ubuntu.
 
-Adapt these tests so that they override `GIT_TEST_DEFAULT_REF_FORMAT`,
-which means that they'll always execute. This increases test coverage on
-platforms that don't run the full test matrix, which at least gives us
-some basic test coverage on those platforms for the "reftable" format.
-
-This of course comes at the cost of running those tests multiple times
-on platforms where we do run the full test matrix. But arguably, this is
-a good thing because it will also cause us to e.g. run those tests with
-the address sanitizer and other non-standard parameters.
+We have worked around such issues in the past, e.g. in ebee5580ca
+(parallel-checkout: avoid dash local bug in tests, 2021-06-06), by
+quoting the `val` side. Apply the same fix to t0610.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0600-reffiles-backend.sh   | 8 ++------
- t/t0601-reffiles-pack-refs.sh | 9 +++------
- t/t0610-reftable-basics.sh    | 9 +++------
- 3 files changed, 8 insertions(+), 18 deletions(-)
+ t/t0610-reftable-basics.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index 64214340e7..a390cffc80 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -4,16 +4,12 @@ test_description=3D'Test reffiles backend'
-=20
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+GIT_TEST_DEFAULT_REF_FORMAT=3Dfiles
-+export GIT_TEST_DEFAULT_REF_FORMAT
-=20
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
--if ! test_have_prereq REFFILES
--then
--	skip_all=3D'skipping reffiles specific tests'
--	test_done
--fi
--
- test_expect_success 'setup' '
- 	git commit --allow-empty -m Initial &&
- 	C=3D$(git rev-parse HEAD) &&
-diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
-index 7d4ab0b91a..60a544b8ee 100755
---- a/t/t0601-reffiles-pack-refs.sh
-+++ b/t/t0601-reffiles-pack-refs.sh
-@@ -9,18 +9,15 @@ test_description=3D'git pack-refs should not change the b=
-ranch semantic
- This test runs git pack-refs and git show-ref and checks that the branch
- semantic is still the same.
- '
-+
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+GIT_TEST_DEFAULT_REF_FORMAT=3Dfiles
-+export GIT_TEST_DEFAULT_REF_FORMAT
-=20
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
--if ! test_have_prereq REFFILES
--then
--	skip_all=3D'skipping reffiles specific tests'
--	test_done
--fi
--
- test_expect_success 'enable reflogs' '
- 	git config core.logallrefupdates true
- '
 diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 931d888bbb..fd0ddb96ae 100755
+index fd0ddb96ae..b6e67724ce 100755
 --- a/t/t0610-reftable-basics.sh
 +++ b/t/t0610-reftable-basics.sh
-@@ -4,17 +4,14 @@
- #
+@@ -78,9 +78,9 @@ test_expect_success 'init: reinitializing reftable with f=
+iles backend fails' '
+ '
 =20
- test_description=3D'reftable basics'
-+
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable
-+export GIT_TEST_DEFAULT_REF_FORMAT
+ test_expect_perms () {
+-	local perms=3D"$1"
+-	local file=3D"$2"
+-	local actual=3D$(ls -l "$file") &&
++	local perms=3D"$1" &&
++	local file=3D"$2" &&
++	local actual=3D"$(ls -l "$file")" &&
 =20
- . ./test-lib.sh
-=20
--if ! test_have_prereq REFTABLE
--then
--	skip_all=3D'skipping reftable tests; set GIT_TEST_DEFAULT_REF_FORMAT=3Dre=
-ftable'
--	test_done
--fi
--
- INVALID_OID=3D$(test_oid 001)
-=20
- test_expect_success 'init: creates basic reftable structures' '
+ 	case "$actual" in
+ 	$perms*)
 --=20
 2.44.GIT
 
 
---+o1sKsLAFl3JjHLn
+--C6RitZ9mXvZAQ/r7
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYXqSMACgkQVbJhu7ck
-PpRwyA//XT80yRe93356w5DsFn8mxHAo/tUNdbQExq71TyEpzGnhyrifC2XSgqbs
-UUsgKk1RYHdXQnOGy+32BglDBgBV7R0G9SEZVPx+PHafUCAL5Fg8UykCs7dflyxw
-6m6UUQIz2QlF6LvWcs38Au04sB9n5Y2IQws1mRyvOfygTEIpXHhJ2joPj9FQ6Ct+
-CVFL4efCrtNDLbkxkAKMgefYG1LfmAbvXBs0mjKEb2fztUQAeqIVXrkMdD1cc16n
-hX3Lc0zDhwLSZ1dLdzMgHxvZMgl/77BbyHhyPqF+S8UB+tuox/IucHll3ShgUeG9
-fQNipovbcNkf/lbnnLh6vTNrdKH/gT7ztXS+JhR1BRSNOV+9/Phnv6lWh1wWEa5/
-aSMPY7EhCBmYsxwW7rsBCcTTC7Alj5iM446dAx3oNMI8fr2HT78hQ5CozkQlXBlv
-GO3ROhwJjHAXcQmsFctyz8Z6zu/8dpsFsS7ikCQ9/V1m1uy9pN8eg0TyLlU6is1U
-ZT62sb2pfLTqqVqiT3L7e0UgPOrYXKM8NddnrgsKeq7LSXfy/NNL+npcH4fKGfDX
-WLQe0QEnYwDBCxqO1dsDmvqGpURa9Z0BYDvaZwOz3Pk21Mj8T6jA4aw6Y+RnjMIN
-uxNhqBdObHIs64yGiEHLnojnUCbAgW58/GIRvP6DJWxR88bMnx0=
-=sWaO
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYXqSgACgkQVbJhu7ck
+PpRSFw/7B3yfWuWXsHmi8ZpCore9OxtuoNjzzkBXyM9zUY6karZSI4YjPjitLoNa
+a7EU8hK0JdLKlf3Wv5lD1AjGWkSU2hlaBJXBzSALHa2p0Nau+5LzH+X17XjebYsn
+s01xVCtFLnFANGClhMxspn/lRtdYnxWibgrVC0LhPoPGg5s5pgPtM2K8hbtOL4u0
+Velx6nmaNwxbn/6Lmd0qBVXeqNYpc6u7K0YlDyDs3tm9KOe3MIR9xxOqxxV7WKWZ
+KFVAth/W/BqlXcY0O3Xte1h7DGFnqVgsYy+jIVNKiYq2UogGxdAiOLxhJ49gC+XT
+j9nRwjZsqcpCYFif1F6Exh+obLasT3boS1r0+0g2S7MtguXWR2sMiEWQ1DJesM/N
+4IPpT/xjthUHQ/2QUAmH+HmBbVRRQZjoCu/f6gW8MJgd2TDt7CWRYEptZ4jNMr76
+My8cbDzrKRi8h8GL+Pz2WbzTK1LdBneT3UoXq/WSKWm9wDZMiqrqKUuOIQpAoO2I
+IXn2CKNbjv1mZbkFSz5K8incOSqPIY2GxYXI/GCdTM4H0AjkI8D4iDIGB1WUU4nj
+unh86RtHObkNiZ3wd8asn34C1LrY99R9gT3Lf5Qur4U9m3kpq+2oWceIuW//C24L
+LAuiOveV/aOn0e86/r2ME0kwOzIvWf1Mmq0iaEaI5EPYkp+rS1Q=
+=S9hT
 -----END PGP SIGNATURE-----
 
---+o1sKsLAFl3JjHLn--
+--C6RitZ9mXvZAQ/r7--
