@@ -1,73 +1,73 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7086FB5
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 09:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6896FB5
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 09:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712826633; cv=none; b=JRfbH9r1WK4TwQzfNtNW4z7mPjqbxm1IoTSEHQelVn1u1BGzrQRuQZdCMz0gSVmsBDAcn2CVRcGBx6+NzLxCCjjVai+0aJFuHiZ8gpTvKRRvMeel/N26CNAhwj6IziCwK2TtZnWfvBwPm9HQY8o+E0HOO3wbMvnDrwRkNDcfK0s=
+	t=1712826637; cv=none; b=dQH/o/yilu6WuBUQt3bHJZ1JTwlIAAjN6UL+qexPMdZDgYWHNdx/k+giNbE/8vKzc1dpzJ+X+pZzLX6lMksNQhnzyEGQQ5iaxI7wYEfWj8bvohJ+HcAakRxf8gkuLLw0P0kyiVJZz4dnyIix132fgNR0SwOo41Byg1TOAkJFJHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712826633; c=relaxed/simple;
-	bh=o07hlBR34doZ58FGQCHU5vvc/lDxMkeTagg0+WkE75U=;
+	s=arc-20240116; t=1712826637; c=relaxed/simple;
+	bh=q/8hdGUJzUJjvwLRKYxQDbZ+r2p2ceZmQsj9DhQINE4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S709oSUM4C7uSoU6999XaLHkLMl1OWqXVl0sVC75AxMg9+NcqyOZMoiNApYqweamFBYxk+gUR+8Z+mUFj1QOFAQs5CjguKApB3JWVZqzaBuIN9Ck+mOMPDFwsoj40SON/PELKK8exl7c1QPpl8DJ7FPIE13neojGcEh/XEu4B6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W0+kIkFU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rcZcEdlh; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=nSxCqBnBOfocf/i6ApEnoIh1HXP0tSMbTDUNEiUWHaig/aei9pSwLU00/d8VFwrqoOPOWY4gfDC0aL30DkU3iJhvS4MepjbuUkW4LBYdSH8ELbjLYxpRXxa7+yRgc+5PJFbLb6sdIyy/ojGfWFJ1rAkPIz/YNDe19GABtRZxOP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oc5mTQN4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hV5r13TV; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W0+kIkFU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rcZcEdlh"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 674DD1140152;
-	Thu, 11 Apr 2024 05:10:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oc5mTQN4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hV5r13TV"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4B8021140178;
+	Thu, 11 Apr 2024 05:10:35 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 11 Apr 2024 05:10:30 -0400
+  by compute1.internal (MEProxy); Thu, 11 Apr 2024 05:10:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712826630; x=1712913030; bh=/Wjh96nBV1
-	QyjAWT6NqfSNlHTEyrDyUMxIAWUSFuRYw=; b=W0+kIkFU5ugViLUJ418jOroHfL
-	CxCetK+WZ4DuVX8WWWKRH8zguHfMwTeqYkqgQRhVG9ijJqB7+Ci7i8WaTRP/3aIc
-	qb7QfNQy3A1zfStGjDV6bJrZsZ2qimy37ysxtlKP2FkWPcyCKdgKLPM85WaPM0w8
-	0IOO3mnadlyg54d03qSHbZ1chU0PIXYRsiUIcErgyRIRCNyLJLbW2+Q+6YDwlmAp
-	sIA9j8hO5RxvjHuDGDOBX0WQSkVh3KIef/zQurixSRwo3NpC+2znpEFKNbnyPq52
-	ArLtvw7PJ40at1Qk0Hb1XWkjwEzJLdMbe0E0wUm1eYxuElUesbKrWdQwB3YA==
+	:subject:to:to; s=fm2; t=1712826635; x=1712913035; bh=muFuvoCvxD
+	IQlfRh+fbK5XFYE0T0D4cEG72UiDyyRXo=; b=oc5mTQN48ZLZiZ5iLVGGXE97cn
+	Airz4wcNNEJkXmoKLSW4KHjQ06mGq+angul909PwEcDvRXshN84qOQH1Jqr5N83V
+	MVNSANjya2Prom3Vepiig8IK7MB5golrWJmkYSRY0UH2Sp8pXvA+IxLR7zUjBzHi
+	AHIX2BwM0spv+kOz7BYCk5Sj6wpMk2neQJb2mfUXREke2JbhuFZcCTmb0mbWw2La
+	dJgE7BNA71AyWBD5cepvdsgsIGXTPcsjFoXnRUJ5dpy+ikhG8eSt7gI698s+tQVk
+	CYsWIIQYqJQ35mgnxaLin8vTA2MndwIknEuzcf2a/pgGwabuf5z6xqhskn9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712826630; x=1712913030; bh=/Wjh96nBV1QyjAWT6NqfSNlHTEyr
-	DyUMxIAWUSFuRYw=; b=rcZcEdlhJUFdeO4+2Bz+9ZMeniNEsd7A/oDx1oluhj8M
-	Ao9Hk061Zxid1//YvVKoiVbWBF5TKNauwkwB+zKg5hfnWjBEMEfP0JGRv42PDb/L
-	ZxzaarBKW/j+RZ7EweeBqllRCJEvFKWn1OA+mwwyjDGJtkmO4qi3tLNgovpnNL9t
-	7tF3PqdrU6MxlqM1s9vjsv2XL2UV/JkhDa9PyQS/TmWmoQUkiqR5FGmuQo8kRdpb
-	7Mfu0rOp+G6Q2Pr6MUYzDIbxPVqxF9CuxJlquZ/P//y/+fexpt0ST7qNYyELO4zc
-	iGelqZHW/GMWp4/YcTtPyzkNwH8cpRzFLuz/dKzgtg==
-X-ME-Sender: <xms:BqkXZjbX12W7aqGXufAHIozx7jqt8KxT1oFYr1IczvgjIIhNAKsmFg>
-    <xme:BqkXZiZC_8lGcYWCf6zn6qZfjaPIJKioE-Zb8-p9x-A87usVFsNpsNvAb2R0enrZO
-    FehTH7DumgYmt2g0A>
-X-ME-Received: <xmr:BqkXZl-mhT0XD2p3IWzgTqCGLW4vqaWPT_Vo5ya2v-h3vgywz8ou8QfTSWLWXRVoJbKOdxRm9yQtbnHXadB13z4e-5-Zvb3uu56YmcPZP86IcI0L>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudefucetufdoteggodetrfdotf
+	fm2; t=1712826635; x=1712913035; bh=muFuvoCvxDIQlfRh+fbK5XFYE0T0
+	D4cEG72UiDyyRXo=; b=hV5r13TVR+6URkAUnq+YEF3+6rik9An2VNddHqEjWlXn
+	6+7fO/HzPaP2neTV37DVoQBa+u2wBVSmhHvLmNJQ+vx4KB+9MWCzXsKSde42SoS7
+	MiXrLUcnq/Nhe5QtXPft89Wi5t3mqYQCqPXi7B2XXukMeR/kI0thyPrgm/Pl6k9Q
+	KRoGSRp7v6Tf5i5B/TqawZ+zy8sPvnWqS78VTMwYuHa89HzgZ9avtaL5fBvC7geq
+	7QyJEp4LqnI7W+dkZHgeCVR/zslc/qOL/nlrCWFsoYi4NDE12GwRys8ZkblVVYd2
+	XF/nVWaQq5lkhlMmHAEyJYFWyS6cOYTAvtsDlCozvA==
+X-ME-Sender: <xms:C6kXZiG3tGtEk0rZqv7IpU1szVjWDcLzKrTvh_6QWthYkniIZNHExg>
+    <xme:C6kXZjW72_B3DNwm6w3DNKNmNf7gFN_H_YHUMlvXlTcmARsBmMAC5LZs4_TlKVokg
+    RW-MqpEFs4zEHYwyQ>
+X-ME-Received: <xmr:C6kXZsKr_HlA_CjLuHbtn7285Nck4R-dhY6bziDTlwtcyNps2B0K0kHEz2WA9KBfwrI2l5OfgjOt28U7fky-OhNkej3zUiocwgiWIpVtW3WKAPI1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:BqkXZpqc2Eudm8Hz-rVeZ2kz7tkpGHG4VrHDcxie8-iF3pOuG1zIYQ>
-    <xmx:BqkXZurNKA6gfKE8ifZ7gxJoJjBmQFDvHkKc9TUe1tdqObYGqY82aw>
-    <xmx:BqkXZvSE_vAjmZPybu_ZWscfZQRJc_VwSOgcMuRazH_GstXclTigBA>
-    <xmx:BqkXZmplX-OzWFD5evvVi1Xf2MvnsVYTAIsG67GFroAQdGiS4eySPA>
-    <xmx:BqkXZuKh9XPMG_C0VMem-Xm-TslvfKix8nElACxQoDGVHZjMTVv_XsQi>
+X-ME-Proxy: <xmx:C6kXZsHZoMo4DCyboc3MLQrbh40daOMaKdsp2qQyXlqJQHjyS1NPXg>
+    <xmx:C6kXZoXhTyJqe1AoAFr5RNHVukyBorrjaP-cthrbl8udBVMeDmeGsA>
+    <xmx:C6kXZvMfIx593jSv1cdMY2N5UYtjKJZY9zmiYctTX8pVrDOmGF1T9Q>
+    <xmx:C6kXZv19SgTO3ZcfpIbj1n2vI6OqJmGFA47YVG20BKZcSLV6IKVJ2w>
+    <xmx:C6kXZrF8roXJB5Jm-SWKqd-D1zRR75dA1nADjcT_qhWGNeviuxfNBFjh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Apr 2024 05:10:28 -0400 (EDT)
+ 11 Apr 2024 05:10:33 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6cf832b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Apr 2024 09:10:17 +0000 (UTC)
-Date: Thu, 11 Apr 2024 11:10:26 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 92f5c85e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Apr 2024 09:10:21 +0000 (UTC)
+Date: Thu, 11 Apr 2024 11:10:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
@@ -75,8 +75,8 @@ Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 06/13] ci: merge custom PATH directories
-Message-ID: <61f108d95463f94b3921669a276472bd01fdc606.1712825204.git.ps@pks.im>
+Subject: [PATCH v3 07/13] ci: fix setup of custom path for GitLab CI
+Message-ID: <ef61b578da84dbd8087bf22c43029acf6983e547.1712825204.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712825204.git.ps@pks.im>
 Precedence: bulk
@@ -86,126 +86,82 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HKYE5NrFoB6nOCeF"
+	protocol="application/pgp-signature"; boundary="5X5zxCjyLw5nvazF"
 Content-Disposition: inline
 In-Reply-To: <cover.1712825204.git.ps@pks.im>
 
 
---HKYE5NrFoB6nOCeF
+--5X5zxCjyLw5nvazF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're downloading various executables required by our tests. Each of
-these executables goes into its own directory, which is then appended to
-the PATH variable. Consequently, whenever we add a new dependency and
-thus a new directory, we would have to adapt to this change in several
-places.
+Part of "install-dependencies.sh" is to install some binaries required
+for tests into a custom directory that gets added to the PATH. This
+directory is located at "$HOME/path" and thus depends on the current
+user that the script executes as.
 
-Refactor this to instead put all binaries into a single directory.
+This creates problems for GitLab CI, which installs dependencies as the
+root user, but runs tests as a separate, unprivileged user. As their
+respective home directories are different, we will end up using two
+different custom path directories. Consequently, the unprivileged user
+will not be able eto find the binaries that were setu up as root user.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Fix this issue by allowing CI to override the custom path, which allows
+GitLab to set up a constant value that isn't derived from "$HOME".
 ---
- ci/install-dependencies.sh | 15 +++++++--------
- ci/lib.sh                  | 10 +++-------
- 2 files changed, 10 insertions(+), 15 deletions(-)
+ .gitlab-ci.yml | 2 ++
+ ci/lib.sh      | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 2d6af876d6..bafe37f2d1 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -29,15 +29,14 @@ ubuntu-*)
- 		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl \
- 		$CC_PACKAGE $PYTHON_PACKAGE
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index c0fa2fe90b..3a0ef4d4d4 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -9,6 +9,8 @@ workflow:
 =20
--	mkdir --parents "$P4_PATH"
--	wget --quiet --directory-prefix=3D"$P4_PATH" \
-+	mkdir --parents "$CUSTOM_PATH"
-+	wget --quiet --directory-prefix=3D"$CUSTOM_PATH" \
- 		"$P4WHENCE/bin.linux26x86_64/p4d" "$P4WHENCE/bin.linux26x86_64/p4"
--	chmod u+x "$P4_PATH/p4d" "$P4_PATH/p4"
-+	chmod u+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4"
-=20
--	mkdir --parents "$GIT_LFS_PATH"
- 	wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.g=
-z"
- 	tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
--		-C "$GIT_LFS_PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSIO=
-N/git-lfs"
-+		-C "$CUSTOM_PATH" --strip-components=3D1 "git-lfs-$LINUX_GIT_LFS_VERSION=
-/git-lfs"
- 	rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
- 	;;
- macos-*)
-@@ -48,10 +47,10 @@ macos-*)
- 	brew install $BREW_INSTALL_PACKAGES
- 	brew link --force gettext
-=20
--	mkdir -p "$P4_PATH"
-+	mkdir -p "$CUSTOM_PATH"
- 	wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
--	tar -xf helix-core-server.tgz -C "$P4_PATH" p4 p4d &&
--	sudo xattr -d com.apple.quarantine "$P4_PATH/p4" "$P4_PATH/p4d" 2>/dev/nu=
-ll || true
-+	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-+	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2=
->/dev/null || true
- 	rm helix-core-server.tgz
-=20
- 	if test -n "$CC_PACKAGE"
+ test:linux:
+   image: $image
++  variables:
++    CUSTOM_PATH: "/custom"
+   before_script:
+     - ./ci/install-docker-dependencies.sh
+   script:
 diff --git a/ci/lib.sh b/ci/lib.sh
-index d882250db5..4cce854bad 100755
+index 4cce854bad..473a2d0348 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -340,10 +340,6 @@ ubuntu-*)
- 	# image.
- 	# Keep that in mind when you encounter a broken OS X build!
- 	export LINUX_GIT_LFS_VERSION=3D"1.5.2"
--
--	P4_PATH=3D"$HOME/custom/p4"
--	GIT_LFS_PATH=3D"$HOME/custom/git-lfs"
--	export PATH=3D"$GIT_LFS_PATH:$P4_PATH:$PATH"
- 	;;
- macos-*)
- 	MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
-@@ -351,12 +347,12 @@ macos-*)
- 	then
- 		MAKEFLAGS=3D"$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=3DYes"
- 	fi
--
--	P4_PATH=3D"$HOME/custom/p4"
--	export PATH=3D"$P4_PATH:$PATH"
+@@ -350,7 +350,7 @@ macos-*)
  	;;
  esac
 =20
-+CUSTOM_PATH=3D"$HOME/path"
-+export PATH=3D"$CUSTOM_PATH:$PATH"
-+
+-CUSTOM_PATH=3D"$HOME/path"
++CUSTOM_PATH=3D"${CUSTOM_PATH:-$HOME/path}"
+ export PATH=3D"$CUSTOM_PATH:$PATH"
+=20
  case "$jobname" in
- linux32)
- 	CC=3Dgcc
 --=20
 2.44.GIT
 
 
---HKYE5NrFoB6nOCeF
+--5X5zxCjyLw5nvazF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYXqQEACgkQVbJhu7ck
-PpQAWg/9E+wRbg1FXkfjhZm8ST6A0rNn3xABAAcwktGU7NxgM9lNGk7slcG1YWGi
-rIfPnWi+gaP0bYvZ1Wn7ZA6dUzyTXeBGYQ4/5uQKApbT3xMj5UMqOP/4VbxppYjF
-ZMuPk6e+hMOkU9iwKF1laoIOX/+9UKyuQ16Y2f4Gs4shkLk959UcMjZrojRcWAJa
-9vgI6WhI1r5Ac/PP1p2WXelyRq9IDqQX5hWTHrVwy+R+X6Z34blM3bva9XTeEQnW
-JoaAWwheu5g1I8ygqngJLnT0L8jV9TFdNnCV5Bmn+D3OwgCDgVdSnQGwNdVZG5l+
-L4azkk1Ui6C4YmcK1ZNeKWVDrCNs/QxhJjZGWjMzll6UnZEcrDACVUKAInSotEQ3
-660sYxJKSR+Y62IuPYIO7rpmONrgMEEgUzwikkSHgBsgTDxxIAd2L3p5jL8ep4xq
-BlYfBggovlnqVBor0dbpXyr1z6eHVBxI2DDU3Ur0cyJerk/2OSmsWMLFb9VIbyb3
-nKQw1vuat0WUjXf9tvypv5VBAOO/RNatc1iYu6rU+c8hHl5h7npvrndfCGk0lpAz
-f6H6X/iyRt7l6dfrMX9u+UkuXqQ96PDxA3zgk3plHkQanM+rt0SLN9fPUbHLvSFb
-XbhPJVs6Vn+rsC5uVH6vLQxC4LUBDPXshvOh00Dyf/N21slQJQs=
-=8kfr
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYXqQYACgkQVbJhu7ck
+PpR56A/+JVQ6DZ9LGAkqpQmM0epdhVelQvI+ut+Uwh1jqk7vMvZFtuZUmOdwXKsJ
+g84r86UI5RzM6acfgQ7CjPmuYPcsow3Sl2NJJFNeLo0cl21XrgkHaG0Zp995tQ28
+ucj7QXhrTKfin/gkHpcKNCkBeN/wV6NghSsJTkKTIIGCekR8xJDA1jMi/QPmo6Ii
+te+73ou9vX2YF2pm/aziAutDVlTerXQTolrdtuD+86NMIAt6IqDQHgBn8JLKApZy
+qbZNVrzURc7g1t7/FoCP2hiot5IpT1b6c1EkgX6SMnUxvYsjWJTk+gdzeghzSri9
+7SYKicd14p6G5IlMtlHF5SOq8zqGMj6P6Ez7qlRBwOJJr3loJWua45KQF6J0jOTj
+xYviIbuE0HEQpoKaO6yh3k2Uui0VkxgKKmX743XPbMZs4j6V8HiY6ka/RppKdSOj
+u0MfMLLY2cA4SMWSeIk615B1q8+6m1ledXT++9YeWLi05bkyoDOGDqZhm4Iw8tUc
+RdM61iKVFOqtK0K0c7DQIZCCAcIXlfiJZqc4WX6J5zXlqYe/pR3mVWe/dJk7TEaH
+jAQFl9DxdeiABqix1/3Pieqvw6yOQG4+pVBkTJ613Tgu+rM6ZrncFGEORdybySiQ
+3KWXtpUPp2p27IC0K3/VVAeFe7srHMiZrewqtIdbrzuIKOuAWlw=
+=T6Ro
 -----END PGP SIGNATURE-----
 
---HKYE5NrFoB6nOCeF--
+--5X5zxCjyLw5nvazF--
