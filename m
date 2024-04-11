@@ -1,225 +1,119 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBF213AA3C
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 18:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30821E491
+	for <git@vger.kernel.org>; Thu, 11 Apr 2024 18:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712859273; cv=none; b=s0oAyE0Rortw/kxxI056I8ZdT3Uuyzu3VciVjIq3zp9gPdrDoJva0YMs+zia68OK3wrRpLbIK6IG6gH4jf50800G4ujYIu5ew1c4sOIMvxA8qWj//lWZ+7v9QYEuBgFcyHpKPUl3G45vbzQ1oUO/Sq0JNx54IxitzHuZZRWna/M=
+	t=1712861058; cv=none; b=DX48ppLjh3/YoBYKuIhs93GxfcbFpCuwS9Uch9Ls0DOFy2CjgwKI1jTqY37nNwIMYR96KktRv+dIML1Rz2VZVgyCFgQUb83jlz8mXDddiTRASZNRDgOn46D11EufOYf8kgK3uDkDAeQ517EHNVZabQW3rvtb+TTOJRafvGlEFGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712859273; c=relaxed/simple;
-	bh=D5szERKR40zHZ46Nmeg14E7DtGJyF3tOTnqMDsn6H1Q=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=rAkiw1PsKT+ktIT96NqSIKD5oTz2ZwueOeNpuRjxHSfwlonb4s1LMntGgNGgntfJZfTpO3123ke4xDYWhZIt2b5mvyfkvOjjM4sfP0/XHl5YBjUvMdFAueL8veqKX8FynIXad6L3DPVqXkOHWRS65/lcw/AQ48CY4c71jNf4Vng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZKzQPPOM; arc=none smtp.client-ip=209.85.128.202
+	s=arc-20240116; t=1712861058; c=relaxed/simple;
+	bh=vT7RhImPYFHmQoybFgFgo4wGb3WFt7r1rhfxx+1EeoQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fHxcP4XD/vbfeP8Inga0l04Nl1ysJjvEckzcdoAC1eSJ+vJL5e93Y8LHSlWycyrRrU7V3i03FSaSk94nnMcCvr3CUlIlrp8K0Ff+iUNB2eQ5/fAiq6Z3FtjKvfFZFQx5kgTVFWmh7F80+UJteFLEmg/nabCPnw/9xa6XqH2BuVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=t3VGsy+X; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZKzQPPOM"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6156cef8098so900117b3.0
-        for <git@vger.kernel.org>; Thu, 11 Apr 2024 11:14:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="t3VGsy+X"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6eddff25e4eso169493b3a.3
+        for <git@vger.kernel.org>; Thu, 11 Apr 2024 11:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712859271; x=1713464071; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ed++p66JXGPUWfHXQT3Hlh+XY93+I+hwqpUniCBguNI=;
-        b=ZKzQPPOMiXKxHy6Zq37h2vjXTw1NVO3dX2X6Te7XVZxV624kygWwxqNhKJFUeFXmR9
-         0iS0JevIwkhJBTYg2D6A/fmo+3QUH/QRESw1ZhyyxlkpJB2qGQwn85I0jyBTbU36ZTYS
-         ssdB29c5sSmSuqwSBlSpi/WCkQsiW+9cm7oXYh9aNQlLJWujtj6AUaHj95WQ/Jbcptj9
-         xETGSHnbkBhgRsXp4O3nVouUhsSllYRXEWKX3KL/Zq8fK+6eJRqPJWEgC9IDOEaUEIt/
-         WvbvglLQ6hST3+G5UFdCU4bJQpmy4NfYVrDLFu8fzNw+Y2fjk1e9FAdtwlNWabjEvhjd
-         Waiw==
+        d=google.com; s=20230601; t=1712861056; x=1713465856; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZcuMTTkyrEu/u38FVXck6h3r++39i4e2oYCRd9P7b+k=;
+        b=t3VGsy+XTGv09xhI8LywSkuVcaesFJXP2BtMT/HvnKskTUh2Rs7f2UNRFGi8bhgLkE
+         +qOOlRBofk7X8eqVz6aeLzeX33ly5Bt1tiHSmXGn3DXcCYjocZV8zMDo+3ingarh2ENv
+         4dE/gKA73cjHdQ7t3U6Vow4uIA58ciOexjEw6vK7aGxCfWsp0m6ie3pPIo7Lp+VN2ILt
+         NV14PTjaA7d8wj/FoWfpNS+jmm3Hs3mR3Q0MGcECfpQtsGzU5dnIX9uleosMw+Be3aey
+         DtjA3n0VMHaeNNEaQjBE6As8q+uu2yW7ufzmzmt2HJbcc4gwUgAWZLS9c1Vcs+3LYeMU
+         /zJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712859271; x=1713464071;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ed++p66JXGPUWfHXQT3Hlh+XY93+I+hwqpUniCBguNI=;
-        b=XYi0yZojw46QCxTb2ip63uFTEN4FvbL8g3C8Dp+RpTjvWoH4uwYgLfybnr+fFq3RGa
-         LsZv2/qXQxpb2OoRYjPdHWQ/YtZV00sl8cP5wspeD3W59Wx8/SzTyUcIyd8xGuvzmaGV
-         1y1wRYou7y8rSQyTh7roNWJSqq+C20qdKVY9RynEwEg/iixV7CottkOC7eOkJuSVWZCH
-         5LWq6OjDNMFMFTZx6OxQd18YdF7h7vCgeEcbAbc0jGYse+eFir6XBUQZc8tegNRDYjCD
-         yCIP8VqJV0PNzdPoZ2llrHKf7BMbPnJdZTJ64KZJeuDpzKvPrhWt4VCAJeK/Eaycuptb
-         DY+A==
-X-Gm-Message-State: AOJu0YwxZc1HRK8PFDoUEKUrtMy8B4furnv5O6ACkBW3fIANT6PbL+vL
-	B+VvNjAbT3+RJzLO05cVkTUggr92TndSCE6gH+sXLSqwWIyfg6PrmEy1kPDDQgmFxGy2yZSo5rl
-	0GTd5Q+SrYbQIfHusWStE1/29ydPH+a7EuEneocca0KiJCRP9xblUzLNeDvPjcN86s5dGCUWUgI
-	U5ABKtcW5ZXJ0dqN9EaBMyKEDbJPVAZgLRmUQIkFA=
-X-Google-Smtp-Source: AGHT+IErsG50RNwftoiOnHbuFVDZ2A+pD6hFe+erfIr3EBccJf/pTUtoyU157viuQApjv+cxnV1HE0wR8TGZkA==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:5d8a:5a85:8673:4f76])
- (user=steadmon job=sendgmr) by 2002:a05:6902:114b:b0:dcc:c57c:8873 with SMTP
- id p11-20020a056902114b00b00dccc57c8873mr81167ybu.9.1712859270770; Thu, 11
- Apr 2024 11:14:30 -0700 (PDT)
-Date: Thu, 11 Apr 2024 11:14:25 -0700
-In-Reply-To: <cover.1712858920.git.steadmon@google.com>
+        d=1e100.net; s=20230601; t=1712861056; x=1713465856;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZcuMTTkyrEu/u38FVXck6h3r++39i4e2oYCRd9P7b+k=;
+        b=cDRZl42bwru39N7GW5mJPjuy0FcYlx5UD2ZgUMatVX+KhQaIFDQPoWoj5Qujv4K6no
+         KK5CBlemoe0Hk7kiwhF4ild3sIGIsdFioVAljVOUn7xyL7IDY4/CFgepGs4DbbRNgkwz
+         sQ5atAIcfGTPKLkjMydLkAkbZzLshefFAw5jFA5Ih1IPEQ2X/qadJw8CAgJXWYgeogfV
+         u6m1KPD5T8wpPS3JpybbtQ1cPKK/5gy5YsXHJifvprW9zlvDHmBqRkXsg+taKsvvclEe
+         r4o0+KBjnZSKUMHiBekRG3XStz84VKwNMGfv3XbMcPUWW7SVSg4YYLsa1klQXh3hY0ES
+         ncfw==
+X-Gm-Message-State: AOJu0YwuziEGNB/gOvtPLX3awd16Xy/lvQZsxpSAC8IMRiwcQ0E1wCnL
+	eahw/EOYGZCECs+0FIkcIpOuoqIaXmm0v8a+rXoqrmd4+yVZoO4ijd/bqeKCN88+bSsRstFXkYK
+	vfg==
+X-Google-Smtp-Source: AGHT+IFGhOPZZGtqt+Gdy51PvePq6dO3JRdMJsER4ARxj9LEO4PpUGM1+i/D0h1RnWux0Wqk9Ixh/A==
+X-Received: by 2002:a05:6a00:4b55:b0:6ec:f566:6eb0 with SMTP id kr21-20020a056a004b5500b006ecf5666eb0mr592245pfb.17.1712861055920;
+        Thu, 11 Apr 2024 11:44:15 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:5d8a:5a85:8673:4f76])
+        by smtp.gmail.com with ESMTPSA id v1-20020aa799c1000000b006eb3c3db4afsm1476613pfi.186.2024.04.11.11.44.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Apr 2024 11:44:15 -0700 (PDT)
+Date: Thu, 11 Apr 2024 11:44:09 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
+	phillip.wood@dunelm.org.uk, gitster@pobox.com
+Subject: Re: [PATCH v3 6/7] t/Makefile: run unit tests alongside shell tests
+Message-ID: <ZhgvefDKhTQ6rfnD@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, phillip.wood@dunelm.org.uk,
+	gitster@pobox.com
+References: <cover.1705443632.git.steadmon@google.com>
+ <cover.1708728717.git.steadmon@google.com>
+ <cfcc4bd427318fed1cacc8457381d5a0c408460a.1708728717.git.steadmon@google.com>
+ <20240327085827.GA846805@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1709673020.git.steadmon@google.com> <cover.1712858920.git.steadmon@google.com>
-X-Mailer: git-send-email 2.44.0.683.g7961c838ac-goog
-Message-ID: <8846a7766a1e14373272f7115d37a3b774f51a71.1712858920.git.steadmon@google.com>
-Subject: [PATCH v2 2/2] fuzz: link fuzz programs with `make all` on Linux
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240327085827.GA846805@coredump.intra.peff.net>
 
-Since 5e47215080 (fuzz: add basic fuzz testing target., 2018-10-12), we
-have compiled object files for the fuzz tests as part of the default
-'make all' target. This helps prevent bit-rot in lesser-used parts of
-the codebase, by making sure that incompatible changes are caught at
-build time.
+On 2024.03.27 04:58, Jeff King wrote:
+> On Fri, Feb 23, 2024 at 03:33:55PM -0800, Josh Steadmon wrote:
+> 
+> > diff --git a/t/run-test.sh b/t/run-test.sh
+> > new file mode 100755
+> > index 0000000000..c29fef48dc
+> > --- /dev/null
+> > +++ b/t/run-test.sh
+> > @@ -0,0 +1,13 @@
+> > +#!/bin/sh
+> > +
+> > +# A simple wrapper to run shell tests via TEST_SHELL_PATH,
+> > +# or exec unit tests directly.
+> > +
+> > +case "$1" in
+> > +*.sh)
+> > +	exec ${TEST_SHELL_PATH:-/bin/sh} "$@"
+> > +	;;
+> > +*)
+> > +	exec "$@"
+> > +	;;
+> > +esac
+> 
+> An earlier step required that runs via "test-tool run-command" have
+> TEST_SHELL_PATH set correctly. So defaulting to /bin/sh here is
+> pointless, I'd think? This is used only for the in-Makefile "prove"
+> invocation, so running individual tests or even a manual "prove" outside
+> of the Makefile (where the user might not have set TEST_SHELL_PATH)
+> would not apply.
 
-However, since we never linked the fuzzer executables, this did not
-protect us from link-time errors. As of 8b9a42bf48 (fuzz: fix fuzz test
-build rules, 2024-01-19), it's now possible to link the fuzzer
-executables without using a fuzzing engine and a variety of
-compiler-specific (and compiler-version-specific) flags, at least on
-Linux. So let's add a platform-specific option in config.mak.uname to
-link the executables as part of the default `make all` target.
+Actually, I think the "manual prove outside of the Makefile" situation
+is worth keeping this. I know I sometimes copy commands from Makefiles
+and run them manually when debugging issues, so it could be annoying for
+folks if we remove the default here.
 
-Since linking the fuzzer executables without a fuzzing engine does not
-require a C++ compiler, we can change the FUZZ_PROGRAMS build rule to
-use $(CC) by default. This avoids compiler mis-match issues when
-overriding $(CC) but not $(CXX). When we *do* want to actually link with
-a fuzzing engine, we can set $(FUZZ_CXX). The build instructions in the
-CI fuzz-smoke-test job and in the Makefile comment have been updated
-accordingly.
-
-While we're at it, we can consolidate some of the fuzzer build
-instructions into one location in the Makefile.
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Makefile                            | 51 +++++++++++++++++------------
- ci/run-build-and-minimal-fuzzers.sh |  2 +-
- config.mak.uname                    |  1 +
- 3 files changed, 32 insertions(+), 22 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index c43c1bd1a0..b9e97ad3b9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -409,6 +409,9 @@ include shared.mak
- # to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
- # that implements the `fsm_os_settings__*()` routines.
- #
-+# Define LINK_FUZZ_PROGRAMS if you want `make all` to also build the fuzz test
-+# programs in oss-fuzz/.
-+#
- # === Optional library: libintl ===
- #
- # Define NO_GETTEXT if you don't want Git output to be translated.
-@@ -752,23 +755,6 @@ SCRIPTS = $(SCRIPT_SH_GEN) \
- 
- ETAGS_TARGET = TAGS
- 
--# If you add a new fuzzer, please also make sure to run it in
--# ci/run-build-and-minimal-fuzzers.sh so that we make sure it still links and
--# runs in the future.
--FUZZ_OBJS += oss-fuzz/dummy-cmd-main.o
--FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
--FUZZ_OBJS += oss-fuzz/fuzz-config.o
--FUZZ_OBJS += oss-fuzz/fuzz-date.o
--FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
--FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
--.PHONY: fuzz-objs
--fuzz-objs: $(FUZZ_OBJS)
--
--# Always build fuzz objects even if not testing, to prevent bit-rot.
--all:: $(FUZZ_OBJS)
--
--FUZZ_PROGRAMS += $(patsubst %.o,%,$(filter-out %dummy-cmd-main.o,$(FUZZ_OBJS)))
--
- # Empty...
- EXTRA_PROGRAMS =
- 
-@@ -2372,6 +2358,29 @@ ifndef NO_TCLTK
- endif
- 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
- 
-+# If you add a new fuzzer, please also make sure to run it in
-+# ci/run-build-and-minimal-fuzzers.sh so that we make sure it still links and
-+# runs in the future.
-+FUZZ_OBJS += oss-fuzz/dummy-cmd-main.o
-+FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
-+FUZZ_OBJS += oss-fuzz/fuzz-config.o
-+FUZZ_OBJS += oss-fuzz/fuzz-date.o
-+FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
-+FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
-+.PHONY: fuzz-objs
-+fuzz-objs: $(FUZZ_OBJS)
-+
-+# Always build fuzz objects even if not testing, to prevent bit-rot.
-+all:: $(FUZZ_OBJS)
-+
-+FUZZ_PROGRAMS += $(patsubst %.o,%,$(filter-out %dummy-cmd-main.o,$(FUZZ_OBJS)))
-+
-+# Build fuzz programs when possible, even without the necessary fuzzing support,
-+# to prevent bit-rot.
-+ifdef LINK_FUZZ_PROGRAMS
-+all:: $(FUZZ_PROGRAMS)
-+endif
-+
- please_set_SHELL_PATH_to_a_more_modern_shell:
- 	@$$(:)
- 
-@@ -3857,22 +3866,22 @@ cover_db_html: cover_db
- #
- # An example command to build against libFuzzer from LLVM 11.0.0:
- #
--# make CC=clang CXX=clang++ \
-+# make CC=clang FUZZ_CXX=clang++ \
- #      CFLAGS="-fsanitize=fuzzer-no-link,address" \
- #      LIB_FUZZING_ENGINE="-fsanitize=fuzzer,address" \
- #      fuzz-all
- #
-+FUZZ_CXX ?= $(CC)
- FUZZ_CXXFLAGS ?= $(ALL_CFLAGS)
- 
- .PHONY: fuzz-all
-+fuzz-all: $(FUZZ_PROGRAMS)
- 
- $(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
--	$(QUIET_LINK)$(CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
-+	$(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
- 		-Wl,--allow-multiple-definition \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
- 
--fuzz-all: $(FUZZ_PROGRAMS)
--
- $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS
- 	$(call mkdir_p_parent_template)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
-diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal-fuzzers.sh
-index a51076d18d..797d65c661 100755
---- a/ci/run-build-and-minimal-fuzzers.sh
-+++ b/ci/run-build-and-minimal-fuzzers.sh
-@@ -7,7 +7,7 @@
- 
- group "Build fuzzers" make \
- 	CC=clang \
--	CXX=clang++ \
-+	FUZZ_CXX=clang++ \
- 	CFLAGS="-fsanitize=fuzzer-no-link,address" \
- 	LIB_FUZZING_ENGINE="-fsanitize=fuzzer,address" \
- 	fuzz-all
-diff --git a/config.mak.uname b/config.mak.uname
-index d0dcca2ec5..9107b4ae2b 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -68,6 +68,7 @@ ifeq ($(uname_S),Linux)
- 	ifneq ($(findstring .el7.,$(uname_R)),)
- 		BASIC_CFLAGS += -std=c99
- 	endif
-+	LINK_FUZZ_PROGRAMS = YesPlease
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	HAVE_ALLOCA_H = YesPlease
--- 
-2.44.0.683.g7961c838ac-goog
-
+> It obviously is not hurting anything, but I wonder if you'd want to have
+> it complain loudly to catch any instance where your assumption is not
+> true.
+> 
+> -Peff
