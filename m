@@ -1,168 +1,119 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76E941207
-	for <git@vger.kernel.org>; Thu, 11 Apr 2024 23:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FD8161
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 00:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712878611; cv=none; b=c6+aD5fnOjMa0ZEjxwUaSAL3tKnVyCbU0PqNGVUXJZJ6URCq+H4G6EfG8oiexK7uRwkaZ8tEWrh0N/FOK+UcgRdHnALLPI4syimsFgEcP89VqV6WV16QxDMoB5Npa+QGKSuIP1u1g+2t4/s5+RM8zQjmFx2TmaCCQxEiG+Ag/sg=
+	t=1712880593; cv=none; b=HB8cFsT7JHWDdVR1CZiSXEeA5/MRqoQjDvwpiNdkGCXjv/F49rNv2vBxZpHM4BP67tNaZu3M0SugyRwk6KuXx+VG2fSHmw5EK7P+wybnvsd47xRAYx7jLcP54GHRMO3Z4VYeaHUgBr4WVoSzdsqBQUiwj0xfxsE2r5xWorelfMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712878611; c=relaxed/simple;
-	bh=jKZlFrhb4LnTY3SuZNP+EN3Rd+It/6tchoMfxKWl2FI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FyXijcubbikGQc/8y6u1dGNGKTkgTJdicTwTqRdhK2J6SFXdFKokRVZviG/J/57OEaJEyRgL5Re35Nk95VDFP8MQufnLfFjKEu82Al1/6xJOmJkvdcw3yh7V4vo+Fa6N5R6qFlvyQxQnaJXZelcPtrQLPuSNYIpqxtjRCVv250M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OUuXd0qH; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712880593; c=relaxed/simple;
+	bh=iPsOIyiaPcBcMGAV/AGvhlR27+K8hnegFuOrDuY6EJc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dvTpgvHia7lehX2R3RqSAVIC0Q8LhVxcYEvOQVT6FzMpp60/Me8GfJsCwB9Yzf/aEhNjcvfWQ9BZKr7gmDkXzt2jG6eGNjcbzriZQHL5LtN1+0Wgw1l6s8VLJ1G7ilTaBQYarIWR1oHYcVTDKReEVV/16GwbM1Rpz6DiuCGo/18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=cpMXs3ME; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OUuXd0qH"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-417d029bee7so2662345e9.1
-        for <git@vger.kernel.org>; Thu, 11 Apr 2024 16:36:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712878608; x=1713483408; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=novsrEnBq89VCJIv77ox8aHOlvCP6kPuVR2y9fWNKN0=;
-        b=OUuXd0qHYq/BnGo3lJa+uvNFEN46CalKo5IhFUj/hRftcrHin5KyqLuR+BjDpaHCLY
-         fSHaZBYC0mnvgjhXSUgORsXbJ8LxJHnVLQbnBfmE/EQAldkbXjIqNrnWHtv6jPnuFtNH
-         A/Rn8Bxy3o8PeE0wqRQIBxXuseXjYHYgJIk145z9Rgvff0SVnUHyyokdY0V0ePL/zGMc
-         gkWz+PVwkpvxi4Fhh7zSebTfkEGDAW2Yq//DKht09TkewSlHPIXE+ImL1NZ2Spe0Gpuz
-         BJlc9VU+CQRsI00lnpi0MVCyDzC83CoD10gvaoqhNuNkSTb2XitHzKHS/1GTb7Dml84F
-         u3Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712878608; x=1713483408;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=novsrEnBq89VCJIv77ox8aHOlvCP6kPuVR2y9fWNKN0=;
-        b=ma7qyY+fJNMOV1V674SUI3tSAMxaBfIqekfT/QGKe927A/p6hF9BTp2WWb7A9iNB3D
-         Ln0J+kFsWLDhekEEJNfuccdRXhEdBADQbdlfndkI1OcyHBYoBRN9je95XPznyRCf9dDW
-         TGWg7XGxSO0RFx4bkzdojuoImq4oMzoB12pQaj/i8AXnr0geqEupnhhoR+Sx5smMjAbH
-         E/Br640pIz2Z7dcj5s9lMybOk4qiYYk2eMZhkT1jL4312vgkc0bzz4UwqVg5cLFjB5oW
-         DSTi8S37GliXRn0ed2IXUYK1UTu5XA5FcBniXN+CYu1ltq9NG+0dMKI1mY2Xfx/jjvek
-         8Cmw==
-X-Forwarded-Encrypted: i=1; AJvYcCX+RIxRsG2STsT9aOqfJYUF5V9Y185X2042c8N7aVMo0+InJSP4DyQO9ahkoPxXlIF+taU4XXlWiSJieam5iv/gtW+g
-X-Gm-Message-State: AOJu0YxUgwF0k5oRcqyFOam7AqbW6G45Gqmg/LaAZytsoZDTb3wpJ0rB
-	7efjcXgtbC0AwxcOngluMPp8H56D14xAsvcMZ5Tf5z3R57bPmeKD
-X-Google-Smtp-Source: AGHT+IEB5RMB6O72/83QESJGoGDR5GnyF3K+w83GVRqZExtlJ1ta+ZCf7Nb/V5hNsbo8Wv+W+ThhKA==
-X-Received: by 2002:a05:600c:4511:b0:415:43f2:332b with SMTP id t17-20020a05600c451100b0041543f2332bmr897304wmo.2.1712878608058;
-        Thu, 11 Apr 2024 16:36:48 -0700 (PDT)
-Received: from gmail.com (188.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.188])
-        by smtp.gmail.com with ESMTPSA id p1-20020a05600c358100b00416b28651e1sm3763074wmq.36.2024.04.11.16.36.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 16:36:47 -0700 (PDT)
-Message-ID: <f4dbc3e7-5b8c-46d4-a7d6-122e34e0d922@gmail.com>
-Date: Fri, 12 Apr 2024 01:36:46 +0200
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cpMXs3ME"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A6D715D4D7;
+	Fri, 12 Apr 2024 00:09:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1712880583;
+	bh=iPsOIyiaPcBcMGAV/AGvhlR27+K8hnegFuOrDuY6EJc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=cpMXs3MESWG6iGjh1XscAuJ3ar9Dv0XSfXfNj8hhaKajRHSxfI5Yoyn8isrQqOFCR
+	 7jAXcBO1SdrNuKCNpA0FytKh0H6oH8i+6LBT+CiZ5mMj7NVkBj22zw3myVBIfQcY6Z
+	 6OIyFjbrqOCzG9CWmFCT9N3XC7VjmVXCSBAoCAtEIOAhAwzwdCrseWn3WCYqE9Wwsi
+	 yyeow5kJByDga7vGmxRRiwhhj8Bdc3UErN+0SXYbo9/6dgvEWq3NquDKLxlqbVN9sE
+	 Tk1eRjHjkySxsTu6e5Q7HBzjMExciL6tQp9eSH5l5k8xyrKf8/7Xs9dYl8/DtoXJD7
+	 ZfrVypfTdfhrU/RASkrF0gRzG2xYQU4124k9HIXmg2eKt8vS8V8RPmqSuGrMYuL67l
+	 JqjPcA6cJK90wyklh+XrAKlkPqpr5zy37k4GbF4dPfwKSuYgvWN968eLQrCVbZpOVv
+	 tLwAvMSWju/GBSNIIqjPbcMzUcxQl3qOxezNn9qpABxKLvSs49u
+Date: Fri, 12 Apr 2024 00:09:41 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jackson Toeniskoetter <jackdt@google.com>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH 00/13] Support for arbitrary schemes in credentials
+Message-ID: <Zhh7xZ3mVOxqUGL3@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jackson Toeniskoetter <jackdt@google.com>,
+	Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	M Hickford <mirth.hickford@gmail.com>
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+ <20240402222619.2212650-1-calvinwan@google.com>
+ <Zg38BLxLe193zYss@tapette.crustytoothpaste.net>
+ <CAD0vCJ=4-QoqUovaOuw6gPTfPEa+d6uJBaO_Vq9R9Btn_YXzwg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/12] git_config_string() considered harmful
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqttkeicov.fsf@gitster.g>
- <20240407005656.GA436890@coredump.intra.peff.net>
- <ef8e5f43-5f27-4f0a-acf5-cf4f8281a8f8@gmail.com>
- <20240408205511.GB1639295@coredump.intra.peff.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20240408205511.GB1639295@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="29DchZvp8Om2yKHu"
+Content-Disposition: inline
+In-Reply-To: <CAD0vCJ=4-QoqUovaOuw6gPTfPEa+d6uJBaO_Vq9R9Btn_YXzwg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-On Mon, Apr 08, 2024 at 04:55:11PM -0400, Jeff King wrote:
-> On Sun, Apr 07, 2024 at 07:58:02PM +0200, Rubén Justo wrote:
-> 
-> > After Junio's series and yours, I'm on the fence now, but my envision was
-> > to introduce:
-> > 
-> > --- >8 ---
-> > diff --git a/config.c b/config.c
-> > index eebce8c7e0..7322bdfb94 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -1345,6 +1345,15 @@ int git_config_string(const char **dest, const char *var, const char *value)
-> >  	return 0;
-> >  }
-> >  
-> > +int git_config_strbuf(struct strbuf *dest, const char *var, const char *value)
-> > +{
-> > +	if (!value)
-> > +		return config_error_nonbool(var);
-> > +	strbuf_reset(dest);
-> > +	strbuf_addstr(dest, value);
-> > +	return 0;
-> > +}
-> > +
-> >  int git_config_pathname(const char **dest, const char *var, const char *value)
-> >  {
-> >  	if (!value)
-> 
-> Hmm. I think that is nice in some ways, because it is a much bigger
-> signal about memory ownership than just dropping "const" from the
-> pointer.
-> 
-> But it is less nice in other ways. Every _user_ of the value now needs
-> to care that it is a strbuf, and use foo.buf consistently (which you
-> obviously noticed). Likewise, any downstream writers of the variable
-> need to treat it like a strbuf, too. So the parse-options OPT_FILENAME()
-> macro, for example, needs to be replaced with a strbuf-aware variant
-> (though arguably that is an improvement, as using the wrong one would
-> fail catastrophically, whereas using a non-const pointer with
-> OPT_FILENAME() creates a subtle bug).
-> 
-> I'm also not sure what the solution is for setting default values, like:
-> 
->   const char *my_config = "default";
-> 
-> Of course that is a problem with my solution, too. Perhaps in the long
-> run we need to accept that they should always default to NULL, and
-> readers of the variable need to fill in the default when they look at it
-> (possibly with an accessor function).
-> 
-> Or I guess the alternative is to stop using bare pointers, and carry a
-> bit which tells us if something is heap-allocated. Which starts to look
-> an awful lot like a strbuf. ;)
-> 
-> I think in the past we've talked about being able to initialize a strbuf
-> like:
-> 
->   struct strbuf foo = STRBUF_INIT_VAL("bar");
-> 
-> That would use "bar" instead of the usual slopbuf, but we can still tell
-> it's not a heap buffer by the fact that foo.alloc is 0.
-> 
-> -Peff
 
-Hi Peff.
+--29DchZvp8Om2yKHu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your ideas.
+On 2024-04-08 at 18:42:56, Jackson Toeniskoetter wrote:
+> Just to clarify, we at Google do not use extraheader to pass along
+> credentials. Instead we use the .gitcookies file[1], which iiuc gets
+> read by the git process directly. I'm not a security expert but I
+> imagine the risk surface of extraheader and .gitcookies is similar.
+>=20
+> Reading your post on
+> https://lore.kernel.org/git/20240324011301.1553072-1-sandals@crustytoothp=
+aste.net/,
+> it's unclear to me why the credential helper protocol needs to be
+> updated. If the goal is to support Bearer tokens, can that not just be
+> implemented using extraheader? It seems like the goal of getting
+> credentials out of the config file can be accomplished without
+> updating the credential helper protocol. So is the bigger goal to
+> support more robust and modern auth schemes which require multiple
+> steps? That would be useful to Google; multi-step auth would probably
+> be a more elegant way for us to stop using .gitcookies than other
+> solutions we were considering.
 
-For the globals we have in environment.h, maybe we can keep them const
-and avoid the other inconveniences, doing something like:
+Bearer authentication certainly can be implemented using
+http.extraheader and the config file is also not a secure way to store
+credentials, which is why the credential helper protocol is being
+updated, since then people will be able to store the credentials in a
+password manager or other secure store.  Other HTTP schemes will also be
+supported as long as they don't require headers other than Authorization
+and the credential helper can implement them on behalf of Git.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-diff --git a/config.c b/config.c
-index 146856567a..ead3565c27 100644
---- a/config.c
-+++ b/config.c
-@@ -1671,8 +1671,13 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
-                return 0;
-        }
+--29DchZvp8Om2yKHu
+Content-Type: application/pgp-signature; name="signature.asc"
 
--       if (!strcmp(var, "core.editor"))
--               return git_config_string(&editor_program, var, value);
-+       if (!strcmp(var, "core.editor")) {
-+               static struct strbuf editor_program_ = STRBUF_INIT;
-+               if (git_config_strbuf(&editor_program_, var, value))
-+                       return -1;
-+               editor_program = editor_program_.buf;
-+               return 0;
-+       }
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-        if (!strcmp(var, "core.commentchar")) {
-                if (!value)
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZhh7xQAKCRB8DEliiIei
+gTiVAQDoD742HC+GUCGJlQ8Z0LzK7rufykGYloFmYKLaTn7lbwD7BW0xRDzkDN1k
+iqBkMzFFi4Uwg9SPfjhutsYUvsGl/AQ=
+=JFZe
+-----END PGP SIGNATURE-----
 
+--29DchZvp8Om2yKHu--
