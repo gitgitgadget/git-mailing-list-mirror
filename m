@@ -1,105 +1,168 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C1B3D393
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 12:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F70F5B694
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 13:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712923846; cv=none; b=GZlLaJJxTGjx/TxwS3F/ER15J20tXshbE9SQoDhzzUwkIs84InRCoPeS4ZyvNUR3dLVeDZnNCCZe3uQsncXWrKM4apUAk/0BnwynJC8HCZSsNRg6WelDK2uY+pdv2s5YVDtK0PFI2gR2KNb8GhA/0vRiMTutypYLNshwrYwicoI=
+	t=1712927151; cv=none; b=NW6YaBPaiMR/bm1EnE6SRmjiyAHx6iOWh2bfTJ5GAAmIPsIZk98W3/r3njbuUvFtbv/55mknxw5FMecQB2gJN2b+3G+uR0yQv3w2UTueiRfB1YvaP0yoTmDq0P4YEk6oimlShgtXGj89KK25FIqWcvj3iHJjPTw23Ta/5xKelT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712923846; c=relaxed/simple;
-	bh=eJre5Hygid85NlKbxHbeId4BaergKiPt0Wu/xJH0RR0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=o+F32d3o4RZ+yrpEyyrU/LFfoz5HskGfbeADd9qdNFZWejJboTwlc9oPcol2CA1/i51+2EMCWd4z6JfuspsjXAAVO+Xdhyy8VDsvjkt9y+YPtPtZ5WejTQUfVY+LnUHY2P2HVO7LpaRI9w/VaalxL/LYGqs/9CXa5oWfZt1s+YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jhlcIpcl; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712927151; c=relaxed/simple;
+	bh=Ko6W13Lh53L1Mnq1M3n4h6lxvIo5WehwK3WTqH0ixWw=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=g5/LdLWiIZkgSRn/hzsn8tNEAddGbM7URPsYdglMf4a8zvV8wAqN5ras7UxWkmqQwObv9M19+lN+t/tCGCU/1PSshmjnIa1rTqpBxu6zIkmrC8Voshg4FupHF2VlD/kFuZDGS3/Yp+COKFTVamP7ssuwtLJ2Axfv3A11pOI3S/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amyspark.me; spf=pass smtp.mailfrom=amyspark.me; dkim=pass (2048-bit key) header.d=amyspark.me header.i=@amyspark.me header.b=HjxByJBT; arc=none smtp.client-ip=217.70.183.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amyspark.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amyspark.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jhlcIpcl"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d8b194341eso7179581fa.3
-        for <git@vger.kernel.org>; Fri, 12 Apr 2024 05:10:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712923843; x=1713528643; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=iE/5aCsVQ867L9biHbRJmyQ01xmIAQhyp9xWShihnME=;
-        b=jhlcIpclEkQptEM79QvX5ki9RD/2TQCQfpEeIVfm5AlDqFmcwYBpdhZ2WI4dDW77oQ
-         lPNO9UkSwQr67oFeHMQntkY/tCAkDG0/qnU4Co2rXLXj1kw/RBn7PGH7PWBAWUvtZH2u
-         38uYS2cRfh5L0FBH5VDNuAgAHIHgN+gGZt/Ou/JtIQG40jBXwuP0aPgfneBdfyRDjppD
-         p2lhrfWdRCJn4TiTvjRt8/mcumFCXGfqn82d3ALSRsosNsVVuyyhT8G2ZTkrvSeb/SJ6
-         SJZ5kL928r0ISIDhm/mou0NdO/TZLaInr0mwC0RQeLTD5TuRXljJ2Ttzfw1offGHfKDT
-         INDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712923843; x=1713528643;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iE/5aCsVQ867L9biHbRJmyQ01xmIAQhyp9xWShihnME=;
-        b=cCMUDFekc1ST8k3gZGdSBu5L8UFf2REBHAwqOaRjLmDeJHUnfG23fSNIPPW89Okn0i
-         7UWc17COuHhHFSFXisq9XJWnogGcnp1vuAz5q6r/EFwWgnrLmNO4jkTtu7Kp8LdiUsFY
-         aVQzLVc7FQbQBbqP62znpDccd6jLkX1qQk79CMVjvnSFKru59f6kI/GLlH8hpZQeQWeX
-         7yOzOxCJ1MArDckt2UT8jP0XEJwcQLnxWXy7LWhkpd792QAXrUlVsYxje4brAjgDSWi9
-         V81R3yNrnJRy43wuY/7DMMoUPcrrFVBj2kGWR9RuMAfgy5AMyLcv3d+WJYyDji7sahQI
-         fLZg==
-X-Gm-Message-State: AOJu0YyiZS6Jk08n6IhMnIu+D7n+ewEe2ReS4a1VrC6hcr40UDBlPe93
-	UHkEBPCETjnqHJaExoQpl4PxubrZNN0mlDL3v+2PG8uvdkJhbFewFTHHyg==
-X-Google-Smtp-Source: AGHT+IHenSGl794+2EvKBpePViNzL6nwLjGzjWE9FTQE8K8V31u0/Dr3D1xe5M5thcnR1VYiO/Hh8Q==
-X-Received: by 2002:a05:651c:508:b0:2d8:1946:3025 with SMTP id o8-20020a05651c050800b002d819463025mr1524425ljp.22.1712923842474;
-        Fri, 12 Apr 2024 05:10:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f12-20020a05600c154c00b00417319c802asm8222448wmg.10.2024.04.12.05.10.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Apr 2024 05:10:41 -0700 (PDT)
-Message-Id: <pull.1717.git.1712923841235.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 12 Apr 2024 12:10:40 +0000
-Subject: [PATCH] merge-tree: fix argument type of the `--merge-base` option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=amyspark.me header.i=@amyspark.me header.b="HjxByJBT"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 82CE160006;
+	Fri, 12 Apr 2024 13:05:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amyspark.me; s=gm1;
+	t=1712927142;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RDXigxZWvA75o7JdmPvg9QZWt2+WJEJEcA/ljXV/VoI=;
+	b=HjxByJBTNhuDAH2RLSmOGJAiwzstUPNUywkqu303hScC7M+hPSIg+9cU6fmHwDxX5yY4q0
+	pi5q6d8lWdiJqqYwSA1Vm4EksTZOymm9CYqoiO2Q4Gt051I6Ury91sO1J5EQKA8gOwhHq0
+	D8QtEY5WKPPc1gVWdunsU6RlGPskiyRNW74uWe5b58cdSDIUtJLxBBngXvu1NECpDcBAWo
+	Esf5lYFSRzgPzVFarhmRKiNxXtK5EvMWcK6ww/9hcZ23QJ8nl+Y4ZR5wHB/KP+dmCPzuzm
+	8FZEV4rUpYqr+CSEYxf7EiiQqE05jLdywtO1xnWA6tsPwbfTxwgynsaT0CcyzA==
+Content-Type: multipart/mixed; boundary="------------nhvUbryoJ0hIMbLB41nNCMpg"
+Message-ID: <e25bbce7-8338-430b-865f-690fe3c94fb6@amyspark.me>
+Date: Fri, 12 Apr 2024 10:05:36 -0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [BUG] Clones from local repositories do not work correctly under
+ Windows
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+References: <44020a6a-707f-4505-adde-e79cda63d711@amyspark.me>
+ <2f069d1f-aa4a-4259-9cc5-dcf912f59a17@kdbg.org>
+Content-Language: en-US
+From: "L. E. Segovia" <amy@amyspark.me>
+In-Reply-To: <2f069d1f-aa4a-4259-9cc5-dcf912f59a17@kdbg.org>
+X-GND-Sasl: amy@amyspark.me
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This is a multi-part message in MIME format.
+--------------nhvUbryoJ0hIMbLB41nNCMpg
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-In 5f43cf5b2e4 (merge-tree: accept 3 trees as arguments, 2024-01-28), I
-taught `git merge-tree` to perform three-way merges on trees. This
-commit even changed the manual page to state that the `--merge-base`
-option takes a tree-ish rather than requiring a commit.
+Hi Johannes,
 
-But I forgot to adjust the in-program help text. This patch fixes that.
+Under a MSYS2 shell, follow these steps (feel free to replace the choice
+of remote repo with any other supporting a Rust crate):
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    merge-tree: adjust argument type of the --merge-base option
+1. `cd` to a directory of your choice (let's call it `dirA`).
+2. `git clone https://gitlab.gnome.org/GNOME/librsvg.git .`
+3. `git checkout -b cerbero_build`.
+4. `cd ..`
+5. `git clone <full path to dirA> -s -b cerbero_build dirB`
+6. `cd dirB`
+7. `git status`
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1717%2Fdscho%2Fmerge-tree-document-merge-base-treeish-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1717/dscho/merge-tree-document-merge-base-treeish-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1717
+Now switch to any other shell of your choice, such as Git Bash, CMD, or
+PowerShell, and try issuing commands such as `git status`. It will
+result in a wall of "error: unable to normalize..."
 
- builtin/merge-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+To further the error state, try `git am` the attached diff to the repo
+under the MSYS2 shell. It will succeed, but afterwards you'll also start
+to get fatal errors from `git status`:
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 3492a575a6c..60eaf0ca9f1 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -563,7 +563,7 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			   PARSE_OPT_NONEG),
- 		OPT_STRING(0, "merge-base",
- 			   &merge_base,
--			   N_("commit"),
-+			   N_("tree-ish"),
- 			   N_("specify a merge-base for the merge")),
- 		OPT_STRVEC('X', "strategy-option", &xopts, N_("option=value"),
- 			N_("option for selected merge strategy")),
+> error: unable to normalize alternate object path: <dirA>
+> error: Could not read 819d81aefc255dee9d8845363038f7fdec809673
+> fatal: Failed to traverse parents of commit
+90042c71ef79cebeba782c98b26f0532de0e6a25
 
-base-commit: 342990c7aaef5ac645e89101cb84569caf64baf4
+Attempting to build the repo using the well-known pair `meson setup
+build; meson compile -C build` (assuming you have all the dependencies
+around) will, at this step, crash at the very start with the following
+Rust stacktrace:
+
+> Error: CliError { error: Some(failed to determine package fingerprint for build script for librsvg v2.58.0-beta.1 (<dirB>/rsvg)
+> 
+> Caused by:
+>     0: failed to determine the most recently modified file in <dirB>\rsvg
+>     1: failed to determine list of files in <dirB>\rsvg
+>     2: object not found - no match for id (32467a0191907fd571b502e395d033a06dfee655); class=Odb (9); code=NotFound (-3)), exit_code: 101 }
+
+It should be noted, however, than exchanging the shells (cloning in Git
+Bash, but then checking and patching under MSYS) appears to not cause
+any errors. That leads me to believe there's some part of Git that is
+not handling line separators under MSYS specifically.
+
+> What is this .cache here?
+
+This is part of the Cerbero package management system, used by GStreamer
+to craft its SDK:
+
+https://gitlab.freedesktop.org/gstreamer/cerbero.git
+
+The above mentioned steps were reverse engineered from its caching steps.
+
+Hope this is of use.
+
+Best,
+
+amyspark
+
+On 12/04/2024 03:56, Johannes Sixt wrote:
+> Am 11.04.24 um 19:03 schrieb L. E. Segovia:
+>> Thank you for filling out a Git bug report!
+>> Please answer the following questions to help us understand your issue.
+>>
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>>
+>> Under Windows 10 21H2, I cloned a Git repository off an existing local
+>> copy, then applied a patch to it using `git am`.
+> 
+> This is an imprecise description of what you did. I did my best to
+> follow these instructions, but could not reproduce the problem mentioned
+> below.
+> 
+> You should post the commands you have given with their output.
+> 
+>>
+>> What did you expect to happen? (Expected behavior)
+>>
+>> Operations on the repo like `git status` and `git log` should work out
+>> of the box.
+>>
+>> What happened instead? (Actual behavior)
+>>
+>> I keep getting this error:
+>>
+>>> error: unable to normalize alternate object path:
+>> /c/Users/Amalia/.cache/cerbero-sources/librsvg-2.40.20/.git/objects
+> 
+> What is this .cache here?
+> 
+> -- Hannes
+> 
+
 -- 
-gitgitgadget
+amyspark 🌸 https://www.amyspark.me
+
+--------------nhvUbryoJ0hIMbLB41nNCMpg
+Content-Type: text/plain; charset=UTF-8; name="0001-test.patch"
+Content-Disposition: attachment; filename="0001-test.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA2NTE5YWYyZmJhYjE3Y2Q0YjE4NjFlNmI5Y2JmYmIyYzc2OTA2ZWRmIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiAiTC4gRS4gU2Vnb3ZpYSIgPGFteUBhbXlzcGFyay5t
+ZT4KRGF0ZTogRnJpLCAxMiBBcHIgMjAyNCAwOTo0Mzo1MSAtMDMwMApTdWJqZWN0OiBbUEFU
+Q0hdIHRlc3QKCi0tLQogQVVUSE9SUyB8IDEgKwogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0
+aW9uKCspCgpkaWZmIC0tZ2l0IGEvQVVUSE9SUyBiL0FVVEhPUlMKaW5kZXggOTk3MWNlNTgu
+LjdiMmE5MjY2IDEwMDY0NAotLS0gYS9BVVRIT1JTCisrKyBiL0FVVEhPUlMKQEAgLTY4LDYg
+KzY4LDcgQEAgS3Vyb3Nhd2EgVGFrZXNoaQogbGl1Y291Z2FyCiBMUk4KIExhc3psbyBQZXRl
+cgorTC4gRS4gU2Vnb3ZpYQogTHVpcyBNZW5pbmEKIE1hYXJ0ZW4gQm9zbWFucwogTWFjaWVq
+IFBpZWNob3RrYQotLSAKMi40NC4wLndpbmRvd3MuMQoK
+
+--------------nhvUbryoJ0hIMbLB41nNCMpg--
