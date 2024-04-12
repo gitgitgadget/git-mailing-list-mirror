@@ -1,53 +1,53 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C40279DC
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA9718EA2
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712897099; cv=none; b=epRYanE+CaGkrwb548beeHQAEud/nZJkY/4KtFL1sJdjWiGTj2dyXNZ3gqOaT1EnFoL9ebN1CTco8+mTT9xjIRi0FiGRoQvUiSXDpU7urZi3cJwK7N9isbzV/OnoTyW3Kfp4O9troG3py0Iz7dBCqZao28ndkoGndClYksr6gMA=
+	t=1712897104; cv=none; b=ho0ztqZrXYztMq8JDglo/BJQCrS7zSF3I0bfpSOSHpVk6FcX9JduoivCTp3CI2h3+OBxfOM9ZmuLy7QMmt2G2/rq2B+4RFaA0ES3gSph/4rOVWyfBQcCcF0L79RRT+bzHRuVk3y5R6uMQtgreaTYwC/KIt+VEFtI17y7JkEmPTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712897099; c=relaxed/simple;
-	bh=NabVWjCW093tNGt84x85NEyBYtHlDAkiJEk56F5IRzo=;
+	s=arc-20240116; t=1712897104; c=relaxed/simple;
+	bh=lSqZf9aAteGN24eAYu57TtyLvkF99VDzp1D9yg6dPAo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O4e5yejNRrSBrw+l8R/pY8bVWQn9SI/xf+EYSssuMl5fteApLbHMwVdNK6Ptv5cB0Dx1jjemuaNopd55YBUMSkEyeHxp2guImN0omLTSY7YjQpVuXsk6KHyMGBH9ut318ufXSxrXI/hP1DqoMyGZAKt0cdAWNpOMw87IO+ZP+I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qfp/iGb0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z0wvOahU; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=h1qTQozfJHueN0haZ2fdYAEKo01gcPcJItAAiDQMekCHomMqp4M8IP6Zy67f3KPdKiuZgr/udBL06dhT5Q8m7nMUxp5BDIyVOEFd1flxPIjSb1N37czFsvbLeQ5whym0bmALBbMSKoiGEHURbgOOMGIoyiPomQaxmLfhEtztkeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pXu8rmcE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HQxZD0o4; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qfp/iGb0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z0wvOahU"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id CBB0413802C9;
-	Fri, 12 Apr 2024 00:44:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pXu8rmcE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HQxZD0o4"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7EDFC11401DA;
+	Fri, 12 Apr 2024 00:45:02 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 12 Apr 2024 00:44:56 -0400
+  by compute7.internal (MEProxy); Fri, 12 Apr 2024 00:45:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712897096; x=1712983496; bh=WgPu7k6hps
-	5GanXDBZLr+JJaZ6JBzHbeq9bPCLRt/Io=; b=qfp/iGb0B8zzuhJXqecWU08mxe
-	oDW9klzyF3AKQyRFyeHZLkuIQLApWGEnHd+T/5+OwUPsQjrdjMgMq60oYOrR637y
-	WtTDDWJOU88ZRRThvx1ZROKdHO9bFuWtmN7l/ARmHgu96nQo1dLcPJ6qtg5YV5KZ
-	wH8AEyE5+okWJI8m7YJSLvkTcT5w9pDx9HAXxqsaCFskY03fhVkrGMBE7+SRac7Q
-	reg6TC5/Ljh/PLMqKtl8w+6fybDbENWZ0tJ59TSLAJYMeScqk2ZQgUaqlMca8Txv
-	MGaZryvZUzrMdQ79xgMZemWOrFTIyck05SwniDOqVWg1NeHPVqkAKRaIGKFw==
+	:subject:to:to; s=fm2; t=1712897102; x=1712983502; bh=H6+tF51ceJ
+	weVHaz1C6GUTRMhy2yYczLBWou38X9bcE=; b=pXu8rmcELYTTTOjXXvwKJfLOmF
+	dcS2zaaogTsoSqq8wEnB5k3iN0FJi3qKtwB8JJ3LDp9aZSMwzV4TaDXP8VY+o9Sr
+	mm1537x/s+41kHLVPbJwVVjVxVwO9tGYt+Kxt1d7qjehsKRljJdj7KReBQxtIAn+
+	2jPP0fGJE+a5SPV1/JtXSGrrkMBhAEEu+T9X1Z4Fs9XoWRXV5HUl3OWuud6EmDEp
+	aNuFe2efQVgZywX/M4FZbusJy558eAPFJ+JAmLAhL7MlyMCHOb1uD8IDoP8CDvRK
+	jggHwoCVQ+O/Vk5XxJW56btLemC+ZmBnelI4d3VCnvMwVQNOR8vrd0raTG4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712897096; x=1712983496; bh=WgPu7k6hps5GanXDBZLr+JJaZ6JB
-	zHbeq9bPCLRt/Io=; b=Z0wvOahUE7dH22b0pBxNQWMyZAJxPii0vh1KhadjphIS
-	UcZgk+CIqVq+yg1swcpn4ap+Qt5wst8jiP98J1WRN3RqTjuDoto7a+lkUwAFMLm5
-	NqLJE8GnLU505u7rXq8xhxm2vHjmYpvJy4cOgqXQxQ/V9mPPyuMqeQGDN3IvG7sI
-	ZpPHhHe26BffYROZInMFs8emqEWhRpyWqldwR5ARJeOyFjgwNdBAAx8HEQ9tkZ7m
-	5X0QpuBROOXalKZYsXf7UUBbEBP8K2H9hTPdebQmxUYbSOgfQttek3DEDmh4Ot0C
-	XY8ONlhIkMyFj8q5bBp3hSrlxpKeM++0nL6dYeSCmA==
-X-ME-Sender: <xms:SLwYZnzlbw0LFIc41OI0jpmo2cdqph6AZb7FMHjPTkf3KMI1vzZsUg>
-    <xme:SLwYZvQ5GJ8HlAUbWr6t9p8NPPyeQEmknDYyBlIWyUc4LH-0R75DQ46vk89mIUwlI
-    0bDRUyo6AVWtCTWqQ>
-X-ME-Received: <xmr:SLwYZhU9sn1SM0anvCm8s3bQUBmauowumxJcxY0QYY2p695_GFsdA1ukev5G-4k96yvKJQrUM96JvvMo4XZKv9ugZMonuKPbXPTmsay7yOszlNwRxSE>
+	fm2; t=1712897102; x=1712983502; bh=H6+tF51ceJweVHaz1C6GUTRMhy2y
+	YczLBWou38X9bcE=; b=HQxZD0o4UmvAMk/hXjYj7+3NVEp1YnSq9XiSXPK3LsWk
+	SULKuoFyPIiD83dRbhxMvnX5n6K1GjK8tyc2VqGuxF2tMzZFIig8cS4jLx7dXCO1
+	I7ZHjKJpDZ2ZrNVv5gf62pk0Y0xq0SkQjdpWaE5tI7wy85gOMYUyPEPq6RypzqqI
+	zDA2ahAquMhGmAk6yTgrwbk6uf6FXEEr+rrwYIbLFOoq9GIVikttDzVuf63Uqnf3
+	HLxpespa/2P0SD5H29P6ti6XPa02BIcdWyYoVorqHhFOuaWKNBlmjIimawiUfy0R
+	j55RRNB0NhxiAx2iP8U4Z2DLSiLyvA/oqXiSmlmheA==
+X-ME-Sender: <xms:TrwYZmiF7qyEvGzOUCR_pMBs03RxEEDu_jDvqxRRyaMCil3XtUauQA>
+    <xme:TrwYZnBZQGF0HMWokRVuU2kDM_lP-iZxH3RrZ6Lc4evaqw5WVMRz7oRgxnxtiPEo9
+    7T87JL9GhCRcqm7XA>
+X-ME-Received: <xmr:TrwYZuEMYcMY7jydt7Ybs-nVx6CEGFiJnOJMfiQzmVmcc7q3FTd6U33Lochn3VMtFjrddO2mGCRx8VWn8_GCtGnTcNgM48Jqus0TU7EaIELjl9TCiKE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddghedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,18 +56,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddghedvucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:SLwYZhhMBHJ_QHHB7rAr5qGItzMRhZbddymbi5GTE6Hi5w-jFPN5lA>
-    <xmx:SLwYZpC6lZpVSxn4tzpHDFFFlem_b3hnqzJySE5EHRDeGChs-mQidg>
-    <xmx:SLwYZqJrBLUAm7luJF3flbJeT9fqOVquy3ZJN_BfEp87H0U8bxXKhw>
-    <xmx:SLwYZoDxijMpx8coLPQo2z_BfNuYeb2l9oDb708UMsflLrTpc6w8Zg>
-    <xmx:SLwYZjAplEqhlHkR4tSqwxsc1UltsPz7jRZaGvsurgVAC1cYxxV9K2Ea>
+X-ME-Proxy: <xmx:TrwYZvQNNKRRiGTiCXstKeiySmTw9LopJR_DZP03R6vuzrSOThEuUg>
+    <xmx:TrwYZjzt5l8t94UjgY2PlITxgAJzA2x1ydsWRPajAeofr_hNiWMqNw>
+    <xmx:TrwYZt6GrYqmDTXYVc7ZItXiHsbbie0zY37lKY456jxbbeukkXsp4w>
+    <xmx:TrwYZgxyUz4qVjqreewRZROnYJ14st6oPiVERYnfURUHCa8ctwFEiA>
+    <xmx:TrwYZqwfM6v59xjkEJ6hXCQXLndSlm_CvJQPA0-vcs7UwWjwR5fcYLsS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Apr 2024 00:44:55 -0400 (EDT)
+ 12 Apr 2024 00:45:00 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f5ecadd9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Apr 2024 04:44:42 +0000 (UTC)
-Date: Fri, 12 Apr 2024 06:44:53 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id d5230237 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Apr 2024 04:44:47 +0000 (UTC)
+Date: Fri, 12 Apr 2024 06:44:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
@@ -75,8 +75,9 @@ Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 12/13] t0610: fix non-portable variable assignment
-Message-ID: <a9b71e8eeabee42378312c860c7af49aee641491.1712896869.git.ps@pks.im>
+Subject: [PATCH v4 13/13] t0612: add tests to exercise Git/JGit reftable
+ compatibility
+Message-ID: <218c694d2e1230b7b4f231e83feafc945820a26c.1712896869.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712896868.git.ps@pks.im>
 Precedence: bulk
@@ -86,77 +87,195 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+2ElJG9+CaOSTdFV"
+	protocol="application/pgp-signature"; boundary="MTBP//NvGLAecIEp"
 Content-Disposition: inline
 In-Reply-To: <cover.1712896868.git.ps@pks.im>
 
 
---+2ElJG9+CaOSTdFV
+--MTBP//NvGLAecIEp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Older versions of the Dash shell fail to parse `local var=3Dval`
-assignments in some cases when `val` is unquoted. Such failures can be
-observed e.g. with Ubuntu 20.04 and older, which has a Dash version that
-still has this bug.
+While the reftable format is a recent introduction in Git, JGit already
+knows to read and write reftables since 2017. Given the complexity of
+the format there is a very real risk of incompatibilities between those
+two implementations, which is something that we really want to avoid.
 
-Such an assignment has been introduced in t0610. The issue wasn't
-detected for a while because this test used to only run when the
-GIT_TEST_DEFAULT_REF_FORMAT environment variable was set to "reftable".
-We have dropped that requirement now though, meaning that it runs
-unconditionally, including on jobs which use such older versions of
-Ubuntu.
-
-We have worked around such issues in the past, e.g. in ebee5580ca
-(parallel-checkout: avoid dash local bug in tests, 2021-06-06), by
-quoting the `val` side. Apply the same fix to t0610.
+Add some basic tests that verify that reftables written by Git and JGit
+can be read by the respective other implementation. For now this test
+suite is rather small, only covering basic functionality. But it serves
+as a good starting point and can be extended over time.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0610-reftable-basics.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t0612-reftable-jgit-compatibility.sh | 132 +++++++++++++++++++++++++
+ 1 file changed, 132 insertions(+)
+ create mode 100755 t/t0612-reftable-jgit-compatibility.sh
 
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index fd0ddb96ae..b6e67724ce 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -78,9 +78,9 @@ test_expect_success 'init: reinitializing reftable with f=
-iles backend fails' '
- '
-=20
- test_expect_perms () {
--	local perms=3D"$1"
--	local file=3D"$2"
--	local actual=3D$(ls -l "$file") &&
-+	local perms=3D"$1" &&
-+	local file=3D"$2" &&
-+	local actual=3D"$(ls -l "$file")" &&
-=20
- 	case "$actual" in
- 	$perms*)
+diff --git a/t/t0612-reftable-jgit-compatibility.sh b/t/t0612-reftable-jgit=
+-compatibility.sh
+new file mode 100755
+index 0000000000..d0d7e80b49
+--- /dev/null
++++ b/t/t0612-reftable-jgit-compatibility.sh
+@@ -0,0 +1,132 @@
++#!/bin/sh
++
++test_description=3D'reftables are compatible with JGit'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable
++export GIT_TEST_DEFAULT_REF_FORMAT
++
++# JGit does not support the 'link' DIRC extension.
++GIT_TEST_SPLIT_INDEX=3D0
++export GIT_TEST_SPLIT_INDEX
++
++. ./test-lib.sh
++
++if ! test_have_prereq JGIT
++then
++	skip_all=3D'skipping reftable JGit tests; JGit is not present in PATH'
++	test_done
++fi
++
++if ! test_have_prereq SHA1
++then
++	skip_all=3D'skipping reftable JGit tests; JGit does not support SHA256 re=
+ftables'
++	test_done
++fi
++
++test_commit_jgit () {
++	touch "$1" &&
++	jgit add "$1" &&
++	jgit commit -m "$1"
++}
++
++test_same_refs () {
++	git show-ref --head >cgit.actual &&
++	jgit show-ref >jgit-tabs.actual &&
++	tr "\t" " " <jgit-tabs.actual >jgit.actual &&
++	test_cmp cgit.actual jgit.actual
++}
++
++test_same_ref () {
++	git rev-parse "$1" >cgit.actual &&
++	jgit rev-parse "$1" >jgit.actual &&
++	test_cmp cgit.actual jgit.actual
++}
++
++test_same_reflog () {
++	git reflog "$*" >cgit.actual &&
++	jgit reflog "$*" >jgit-newline.actual &&
++	sed '/^$/d' <jgit-newline.actual >jgit.actual &&
++	test_cmp cgit.actual jgit.actual
++}
++
++test_expect_success 'CGit repository can be read by JGit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_same_refs &&
++		test_same_ref HEAD &&
++		test_same_reflog HEAD
++	)
++'
++
++test_expect_success 'JGit repository can be read by CGit' '
++	test_when_finished "rm -rf repo" &&
++	jgit init repo &&
++	(
++		cd repo &&
++
++		touch file &&
++		jgit add file &&
++		jgit commit -m "initial commit" &&
++
++		# Note that we must convert the ref storage after we have
++		# written the default branch. Otherwise JGit will end up with
++		# no HEAD at all.
++		jgit convert-ref-storage --format=3Dreftable &&
++
++		test_same_refs &&
++		test_same_ref HEAD &&
++		# Interestingly, JGit cannot read its own reflog here. CGit can
++		# though.
++		printf "%s HEAD@{0}: commit (initial): initial commit" "$(git rev-parse =
+--short HEAD)" >expect &&
++		git reflog HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'mixed writes from JGit and CGit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		test_commit A &&
++		test_commit_jgit B &&
++		test_commit C &&
++		test_commit_jgit D &&
++
++		test_same_refs &&
++		test_same_ref HEAD &&
++		test_same_reflog HEAD
++	)
++'
++
++test_expect_success 'JGit can read multi-level index' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		test_commit A &&
++		awk "
++		    BEGIN {
++			print \"start\";
++			for (i =3D 0; i < 10000; i++)
++			    printf \"create refs/heads/branch-%d HEAD\n\", i;
++			print \"commit\";
++		    }
++		" >input &&
++		git update-ref --stdin <input &&
++
++		test_same_refs &&
++		test_same_ref refs/heads/branch-1 &&
++		test_same_ref refs/heads/branch-5738 &&
++		test_same_ref refs/heads/branch-9999
++	)
++'
++
++test_done
 --=20
 2.44.GIT
 
 
---+2ElJG9+CaOSTdFV
+--MTBP//NvGLAecIEp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvEQACgkQVbJhu7ck
-PpQW8xAAhHqze9v7U6e1cmxcsc5FOQc3cwdh3GlUFpa2kOwSX9Law9U10Z7gVYjo
-k1MNp7nBqtMd2t9kmvGcDMkurbw5wEWnV2l/KV1v0sfITTJxuk7n6uHxiJpO9b0P
-LtrKmXPdCLXN6oVYXtwSJYjZmmCQleornSgc8j7NCU6vxtwLZaadj+dW6avPxiaY
-j4pGCBHiB6a29A/SJSLAUrCtKCKdCXZIvxDE2wGFiqaMHwpm93DwgZUxD4XPCYTM
-hYTGLM9YDLxH3+Q9dosyMugT2Q1uqruvoD40sPlcbwPOz+42XG+S0BdIM0gNlVob
-afJlWWda5TCPEwG1tE2GMAyyqFsx4hDVT3TT9wxjL7rr2PkSQkwocRBWm34EQMoh
-Ye3QCpCG4qUUwT53mwCLvEvx7oAfaWj0kzYoTA/td7IgHX6u/IBxOUbWBzRRheyX
-rJKz/bJMGOuFesvJIE7S7FWS9X4nS+jh78E0nIrro4M6z4pAvlV8Sm4xWNyATDw5
-Q7jMKctoQ2IQmaimk6cdR+fcEpxPlEeXwiskJO3Il7cz/BeUJ1prcUsFFpP5hNfP
-D7IXNDMOHhcrtaqJZZ09nnydGqFtSe+DCsjIDRDFzs7NK+6arrUwYCvyzBF8gMxU
-aqGKpJRQrXs3kGfyq4kyIXvjzBtHSBLH8RaWCzZG6CgC0S+BWQ4=
-=rHZP
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvEkACgkQVbJhu7ck
+PpRiMBAAiY4pWsLqlag5L33k7ReXRl7XpPqs/814wjdNhd9inHvFiIvrOA45Qyrl
+nSYBVhRxjZ9mk8yX7bnqQcpLjaRLt5cmpfW5OUONNQi3DzP6epri2HaDZhQMSEX2
+WWYwaJSJZmna59Su/IfEGV7O1+dFSjAzunmd6IlxCh7CRyQK1Av/d5S4IHbxubll
+xO/2VPVtSxAk13UW2F2nuUsITepNWdEzqaOrR6er0uqRS1n+ufuifVQ/X/OMDVsQ
+YASvraOSQoJdtJ9sTQ43YwM7wmez4uuInt8awVs1In54xhMVMgKQK1kQIxUaaUiQ
+2C2/H+AnM8o9VAtcFUcY8wwnO0AYwMj9fhwybfurp+SYzwFUTbCFH6/wMGW/MFoX
+WD32Ak7xRtjs1yJOTLLMnuOrUGvrn9hiA+LQCzR1ma8ZYneRhf3TvYzhBpp6w5rZ
+Vk+rtoHrkuB1a+a2qbPd2uny5TVfzO15o7XKGg16ZMDU7bcq6GKLU80ZaY7zSRzA
+VJct0Mq0W5KhEtDetjN1BwJdHOybKudzfEh0TUirI3ubNCfRbE0lOAak6Qqt1Wxz
+BvIDR36f0UCOPc+THFGN5MbetyeAttbh9jnnuTbqQp5ZYv5bTg+emmOclpb6tzIn
+ul3spCpTJvVrsoIOGVDTfuTmx0c0iocgqtvWxSkKG/XwAUoM9fI=
+=CIrD
 -----END PGP SIGNATURE-----
 
---+2ElJG9+CaOSTdFV--
+--MTBP//NvGLAecIEp--
