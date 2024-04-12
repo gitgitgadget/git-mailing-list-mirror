@@ -1,85 +1,84 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA9718EA2
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:45:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C6B1D6AA
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 05:27:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712897104; cv=none; b=ho0ztqZrXYztMq8JDglo/BJQCrS7zSF3I0bfpSOSHpVk6FcX9JduoivCTp3CI2h3+OBxfOM9ZmuLy7QMmt2G2/rq2B+4RFaA0ES3gSph/4rOVWyfBQcCcF0L79RRT+bzHRuVk3y5R6uMQtgreaTYwC/KIt+VEFtI17y7JkEmPTg=
+	t=1712899656; cv=none; b=i/HdbuWKsZc0lp79eFe+QwZn4vdpOt36zB1OFfgElN66NZvEQjMoETc90nS2H9sV6PZfYZsBIgB3U4suCOQIlNE1GTNRkv0AgqPKSgiXmOa4q7okcCTuwuW3h9Z5U8OrFO8KaVhpZ+0fh74211kP4+bG98eGqg9QMABEC2xa09I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712897104; c=relaxed/simple;
-	bh=lSqZf9aAteGN24eAYu57TtyLvkF99VDzp1D9yg6dPAo=;
+	s=arc-20240116; t=1712899656; c=relaxed/simple;
+	bh=CegrTLbURdGgJBK9fNMI0wGBzJvAPFXWmr5u8+f5xZ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h1qTQozfJHueN0haZ2fdYAEKo01gcPcJItAAiDQMekCHomMqp4M8IP6Zy67f3KPdKiuZgr/udBL06dhT5Q8m7nMUxp5BDIyVOEFd1flxPIjSb1N37czFsvbLeQ5whym0bmALBbMSKoiGEHURbgOOMGIoyiPomQaxmLfhEtztkeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pXu8rmcE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HQxZD0o4; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=pH0utK8rZENHxklwHaDWk6xSwFI51/RnxNRKrt5pUWrqcZdOxyCQpbk7HcOjvVlJ3rP/7vAVVB30NkEmMuDZyw9fKBTPMRiPLSi9SHP6D8PtnZur5y3M7b6NgmhPziZ9qUZW6gICXGRJWtIVrF+yuxMVxLCqyCY1j8Ihl61OPag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TQyqaF2U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iRAxolKg; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pXu8rmcE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HQxZD0o4"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7EDFC11401DA;
-	Fri, 12 Apr 2024 00:45:02 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 12 Apr 2024 00:45:02 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TQyqaF2U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iRAxolKg"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 2FE8913800CB;
+	Fri, 12 Apr 2024 01:27:33 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Fri, 12 Apr 2024 01:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712897102; x=1712983502; bh=H6+tF51ceJ
-	weVHaz1C6GUTRMhy2yYczLBWou38X9bcE=; b=pXu8rmcELYTTTOjXXvwKJfLOmF
-	dcS2zaaogTsoSqq8wEnB5k3iN0FJi3qKtwB8JJ3LDp9aZSMwzV4TaDXP8VY+o9Sr
-	mm1537x/s+41kHLVPbJwVVjVxVwO9tGYt+Kxt1d7qjehsKRljJdj7KReBQxtIAn+
-	2jPP0fGJE+a5SPV1/JtXSGrrkMBhAEEu+T9X1Z4Fs9XoWRXV5HUl3OWuud6EmDEp
-	aNuFe2efQVgZywX/M4FZbusJy558eAPFJ+JAmLAhL7MlyMCHOb1uD8IDoP8CDvRK
-	jggHwoCVQ+O/Vk5XxJW56btLemC+ZmBnelI4d3VCnvMwVQNOR8vrd0raTG4A==
+	:subject:to:to; s=fm2; t=1712899653; x=1712986053; bh=ARMvT7tZ7q
+	9imDXA/ehfstPE2RtnuKa3W5zZGsZflCE=; b=TQyqaF2U1c2Kfc8uazditH5zJ9
+	bI3N05IHAdfc0JRNBOK8aBQt9B5Zf4nzOyskLAv5HoQYPo6gloSeMy9C7j2rzCWF
+	vcM7/KSBb0eQfFTs9nQTRP/vUF8+sCTv3GpI6OE70cGGjFQhkXgHDCDa5GH2RsWw
+	50USpyBDU1905ukWAlqQrC4ySkNq96vRp/7y5mZtziYaQ9VwOMtDcYiDbSgyx/aC
+	/xF7qub9a1DMcOta3qE+WpmKqrZWhLy9UlAhiR12+SnlEiL7H4lV0bTY0yAQv+na
+	3IyvUppimL6A38QwWT7rkVppolVpZqQcI083Mhzbm5g7phEA2XPnnRE5JIag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712897102; x=1712983502; bh=H6+tF51ceJweVHaz1C6GUTRMhy2y
-	YczLBWou38X9bcE=; b=HQxZD0o4UmvAMk/hXjYj7+3NVEp1YnSq9XiSXPK3LsWk
-	SULKuoFyPIiD83dRbhxMvnX5n6K1GjK8tyc2VqGuxF2tMzZFIig8cS4jLx7dXCO1
-	I7ZHjKJpDZ2ZrNVv5gf62pk0Y0xq0SkQjdpWaE5tI7wy85gOMYUyPEPq6RypzqqI
-	zDA2ahAquMhGmAk6yTgrwbk6uf6FXEEr+rrwYIbLFOoq9GIVikttDzVuf63Uqnf3
-	HLxpespa/2P0SD5H29P6ti6XPa02BIcdWyYoVorqHhFOuaWKNBlmjIimawiUfy0R
-	j55RRNB0NhxiAx2iP8U4Z2DLSiLyvA/oqXiSmlmheA==
-X-ME-Sender: <xms:TrwYZmiF7qyEvGzOUCR_pMBs03RxEEDu_jDvqxRRyaMCil3XtUauQA>
-    <xme:TrwYZnBZQGF0HMWokRVuU2kDM_lP-iZxH3RrZ6Lc4evaqw5WVMRz7oRgxnxtiPEo9
-    7T87JL9GhCRcqm7XA>
-X-ME-Received: <xmr:TrwYZuEMYcMY7jydt7Ybs-nVx6CEGFiJnOJMfiQzmVmcc7q3FTd6U33Lochn3VMtFjrddO2mGCRx8VWn8_GCtGnTcNgM48Jqus0TU7EaIELjl9TCiKE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddghedvucetufdoteggodetrfdotf
+	fm2; t=1712899653; x=1712986053; bh=ARMvT7tZ7q9imDXA/ehfstPE2Rtn
+	uKa3W5zZGsZflCE=; b=iRAxolKgY8Hd1c/uy7AJ2ABEbhklkkUS3fJ1ikeqcRGz
+	CiSLT2TvKsxUEEk5EW8+Z1v1aiLBG7WXQd9JWquNaNzrWLYKGcZ7DDQVmgavO69/
+	dy4cWaErYpNygWjdWnhQF0cEVXwiuAGlj8+xF/HDE+mhpkPYdKIXdMAUajVQJH4E
+	4itVy54CVuPpDhmkO6m/LHYlTNoI3p7cYGgJc+ERlaePy3TaYEcZys7mRcCEd2G9
+	WNw4KrxX1VH036xvgsSumANrqenbS8QZIgiwX0MulTUQ7ES3WGjPn+LP+G1XvW92
+	qUw96TjSViP4Kv7vgXn7qPZVRGErolUNb6TVD2OVww==
+X-ME-Sender: <xms:RMYYZgQ88qjQEFQuD4aYqCIvr0Zr6eeRT7OS1u8HayBIP2AhcEhW6A>
+    <xme:RMYYZtxBtaQWT_teHQJ334kbZAJtXPxQ9G0OSv7hlMD7sBQtJbdSV-sRo1_rpgdGR
+    1LsLR5hhZoISE8OHA>
+X-ME-Received: <xmr:RMYYZt0KiXDTQBpy6CTRMVrQJpZSunuuubatrcAYLZmnKKHTBM8xHzXep7RM2pXkT54L1sXzfIT8ME98g2R3FGrnD0CnDMl_8UohehjYHJ4sxTeaJHM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddgiedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:TrwYZvQNNKRRiGTiCXstKeiySmTw9LopJR_DZP03R6vuzrSOThEuUg>
-    <xmx:TrwYZjzt5l8t94UjgY2PlITxgAJzA2x1ydsWRPajAeofr_hNiWMqNw>
-    <xmx:TrwYZt6GrYqmDTXYVc7ZItXiHsbbie0zY37lKY456jxbbeukkXsp4w>
-    <xmx:TrwYZgxyUz4qVjqreewRZROnYJ14st6oPiVERYnfURUHCa8ctwFEiA>
-    <xmx:TrwYZqwfM6v59xjkEJ6hXCQXLndSlm_CvJQPA0-vcs7UwWjwR5fcYLsS>
+    goufhushhpvggtthffohhmrghinhculdegledmnecujfgurhepfffhvfevuffkfhggtggu
+    jgesghdtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuc
+    eophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdfgtdeuffehteevhfefjedv
+    geefheevveehfefhfedutddtffdujeeutdettefhnecuffhomhgrihhnpehmrghrtgdrih
+    hnfhhopdhfohhrmhhsrdhglhgvpdifhhgvnhdvmhgvvghtrdgtohhmpdgsihhtrdhlhidp
+    khgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:RcYYZkCau_jGLF7AvbFHbRqSMSWkuRvC0SRPrGshsBf5U35yqLCsUg>
+    <xmx:RcYYZpjxuWNvSG5l7Iyxl4kQShXaYWQaXUUhHg9qu16btd73UFlv2Q>
+    <xmx:RcYYZgoKQY54x4HmcOru6PPLRCMfNMajXS3DqWopNfzADYhp5MmiMQ>
+    <xmx:RcYYZsjTi2DllRSc_4XUbPZ1CsMwS0kz1kPsEKBJXxEXMWWCfECczA>
+    <xmx:RcYYZpcTaXP2aYWOoNLk7xEL93KuTYtwX8jbjhL4bVMcFp-dtNDyPqPh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Apr 2024 00:45:00 -0400 (EDT)
+ 12 Apr 2024 01:27:31 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d5230237 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Apr 2024 04:44:47 +0000 (UTC)
-Date: Fri, 12 Apr 2024 06:44:58 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 6457a14c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Apr 2024 05:27:16 +0000 (UTC)
+Date: Fri, 12 Apr 2024 07:27:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 13/13] t0612: add tests to exercise Git/JGit reftable
- compatibility
-Message-ID: <218c694d2e1230b7b4f231e83feafc945820a26c.1712896869.git.ps@pks.im>
-References: <cover.1712235356.git.ps@pks.im>
- <cover.1712896868.git.ps@pks.im>
+To: Scott Chacon <schacon@gmail.com>
+Cc: John Cai <johncai86@gmail.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [ANNOUNCE] Virtual Contributor's Summit 2024
+Message-ID: <ZhjGQDJSxcxf3mIr@tanuki>
+References: <ZhcBJSP4MxX0AMFM@nand.local>
+ <A7406B15-8DF1-4B3E-80F3-BC56A9AC4D85@gmail.com>
+ <CAP2yMaLpJqZ+aC=rNPjkw2ybW7PjfbW5QuHnZ9mYs1NhJ1L5mw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,195 +86,171 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MTBP//NvGLAecIEp"
+	protocol="application/pgp-signature"; boundary="Cal27hwMCyEtfx+k"
 Content-Disposition: inline
-In-Reply-To: <cover.1712896868.git.ps@pks.im>
+In-Reply-To: <CAP2yMaLpJqZ+aC=rNPjkw2ybW7PjfbW5QuHnZ9mYs1NhJ1L5mw@mail.gmail.com>
 
 
---MTBP//NvGLAecIEp
-Content-Type: text/plain; charset=us-ascii
+--Cal27hwMCyEtfx+k
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-While the reftable format is a recent introduction in Git, JGit already
-knows to read and write reftables since 2017. Given the complexity of
-the format there is a very real risk of incompatibilities between those
-two implementations, which is something that we really want to avoid.
+On Thu, Apr 11, 2024 at 05:37:52PM +0200, Scott Chacon wrote:
+> Heya,
+>=20
+> I was about to come in and say roughly the same thing. GitButler /
+> myself personally would be happy to help organize an in-person,
+> recorded talks Git Merge style shindig in the fall. I'm also happy to
+> help with some of the core team / speakers with travel costs if
+> needed.
+>=20
+> I helped organize the first Git Merge in 2013 in Berlin [1] and would
+> love to do the same thing again this year (my my, have 10 years gone
+> by since then?)
+>=20
+> If everyone would prefer Chicago again, then I'm happy to just attend
+> and help out however I can. If we think it might be nice to bring it
+> back to Europe this year, I would love to take care of it.
+>=20
+> What does everyone think?
 
-Add some basic tests that verify that reftables written by Git and JGit
-can be read by the respective other implementation. For now this test
-suite is rather small, only covering basic functionality. But it serves
-as a good starting point and can be extended over time.
+Given that I am based in Berlin myself I would certainly be happy to
+see a summit in Europe once again. I would be glad to help out with
+organizing things.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t0612-reftable-jgit-compatibility.sh | 132 +++++++++++++++++++++++++
- 1 file changed, 132 insertions(+)
- create mode 100755 t/t0612-reftable-jgit-compatibility.sh
+Patrick
 
-diff --git a/t/t0612-reftable-jgit-compatibility.sh b/t/t0612-reftable-jgit=
--compatibility.sh
-new file mode 100755
-index 0000000000..d0d7e80b49
---- /dev/null
-+++ b/t/t0612-reftable-jgit-compatibility.sh
-@@ -0,0 +1,132 @@
-+#!/bin/sh
-+
-+test_description=3D'reftables are compatible with JGit'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable
-+export GIT_TEST_DEFAULT_REF_FORMAT
-+
-+# JGit does not support the 'link' DIRC extension.
-+GIT_TEST_SPLIT_INDEX=3D0
-+export GIT_TEST_SPLIT_INDEX
-+
-+. ./test-lib.sh
-+
-+if ! test_have_prereq JGIT
-+then
-+	skip_all=3D'skipping reftable JGit tests; JGit is not present in PATH'
-+	test_done
-+fi
-+
-+if ! test_have_prereq SHA1
-+then
-+	skip_all=3D'skipping reftable JGit tests; JGit does not support SHA256 re=
-ftables'
-+	test_done
-+fi
-+
-+test_commit_jgit () {
-+	touch "$1" &&
-+	jgit add "$1" &&
-+	jgit commit -m "$1"
-+}
-+
-+test_same_refs () {
-+	git show-ref --head >cgit.actual &&
-+	jgit show-ref >jgit-tabs.actual &&
-+	tr "\t" " " <jgit-tabs.actual >jgit.actual &&
-+	test_cmp cgit.actual jgit.actual
-+}
-+
-+test_same_ref () {
-+	git rev-parse "$1" >cgit.actual &&
-+	jgit rev-parse "$1" >jgit.actual &&
-+	test_cmp cgit.actual jgit.actual
-+}
-+
-+test_same_reflog () {
-+	git reflog "$*" >cgit.actual &&
-+	jgit reflog "$*" >jgit-newline.actual &&
-+	sed '/^$/d' <jgit-newline.actual >jgit.actual &&
-+	test_cmp cgit.actual jgit.actual
-+}
-+
-+test_expect_success 'CGit repository can be read by JGit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit A &&
-+		test_same_refs &&
-+		test_same_ref HEAD &&
-+		test_same_reflog HEAD
-+	)
-+'
-+
-+test_expect_success 'JGit repository can be read by CGit' '
-+	test_when_finished "rm -rf repo" &&
-+	jgit init repo &&
-+	(
-+		cd repo &&
-+
-+		touch file &&
-+		jgit add file &&
-+		jgit commit -m "initial commit" &&
-+
-+		# Note that we must convert the ref storage after we have
-+		# written the default branch. Otherwise JGit will end up with
-+		# no HEAD at all.
-+		jgit convert-ref-storage --format=3Dreftable &&
-+
-+		test_same_refs &&
-+		test_same_ref HEAD &&
-+		# Interestingly, JGit cannot read its own reflog here. CGit can
-+		# though.
-+		printf "%s HEAD@{0}: commit (initial): initial commit" "$(git rev-parse =
---short HEAD)" >expect &&
-+		git reflog HEAD >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'mixed writes from JGit and CGit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		test_commit A &&
-+		test_commit_jgit B &&
-+		test_commit C &&
-+		test_commit_jgit D &&
-+
-+		test_same_refs &&
-+		test_same_ref HEAD &&
-+		test_same_reflog HEAD
-+	)
-+'
-+
-+test_expect_success 'JGit can read multi-level index' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		test_commit A &&
-+		awk "
-+		    BEGIN {
-+			print \"start\";
-+			for (i =3D 0; i < 10000; i++)
-+			    printf \"create refs/heads/branch-%d HEAD\n\", i;
-+			print \"commit\";
-+		    }
-+		" >input &&
-+		git update-ref --stdin <input &&
-+
-+		test_same_refs &&
-+		test_same_ref refs/heads/branch-1 &&
-+		test_same_ref refs/heads/branch-5738 &&
-+		test_same_ref refs/heads/branch-9999
-+	)
-+'
-+
-+test_done
---=20
-2.44.GIT
+> Scott
+>=20
+> [1]: https://marc.info/?l=3Dgit&m=3D135896927120693&w=3D2
+>=20
+> On Thu, Apr 11, 2024 at 5:18=E2=80=AFPM John Cai <johncai86@gmail.com> wr=
+ote:
+> >
+> > Hi everyone,
+> >
+> > I'm grateful for the chance to gather virtually like this, and for Tayl=
+or's
+> > willingness to host these each time!
+> >
+> > I also wanted to throw out the possibility of an __in person__ Git cont=
+ributor's
+> > summit in the Fall!
+> >
+> > GitLab might be able to host this, which would be an awesome chance to =
+get together
+> > in person like we did in Chicago a couple of years ago. That was a valu=
+able time
+> > to talk about cool topics, but an invaluable chance to get to connect w=
+ith each
+> > other personally.
+> >
+> > It will likely be a two day conference in October of 2024. Location is =
+TBD, and
+> > depends on the level of interest and location of those interested. Requ=
+irements
+> > for attendance will be the same as for the Virtual Contributor's Summit.
+> >
+> > We wanted to first gather interest before determining more details. Ple=
+ase fill
+> > out this form to express your interest: https://forms.gle/hTcsYM4fomEqa=
+KU59
+> >
+> > Feel free to also email me off list with any questions
+> >
+> > Thanks!
+> > John
+> >
+> > On 10 Apr 2024, at 17:14, Taylor Blau wrote:
+> >
+> > > Hi everybody,
+> > >
+> > > I've been thinking that it would be a good time to gather informally =
+via
+> > > another Virtual Contributor's Summit.
+> > >
+> > > I had been waiting to see whether GitHub was going to host a Git Merge
+> > > event in person this year, but it looks like the answer to that is
+> > > "probably not" (though I am hopeful for next year[^1]).
+> > >
+> > > In lieu of meeting in person, I think it might make sense to meet
+> > > sometime in either this upcoming May or June (though we could extend
+> > > further depending on folks' availability) in the same style/format as
+> > > our last Summit [2], the details were as follows:
+> > >
+> > >   - We'll host the Contributor's Summit on either Zoom or any other
+> > >     conferencing platform that works for folks. (I spoke with Emily
+> > >     Shaffer off-list and they mentioned that some Google folks were
+> > >     interested in Discord for a few reasons, so we could do that, too=
+).
+> > >
+> > >   - The schedule/duration is not fixed, and there are options to vote=
+ on
+> > >     preferred days, length, and timezones in the form(s) below. Last
+> > >     year we did two four-hour days, so we could do that again (or
+> > >     anything else that works better).
+> > >
+> > >   - Like last time, in order to participate, you must be either (a) an
+> > >     active Git contributor, (b) planning on contributing soon, or (c)
+> > >     working on a Git-related project that has interest in Git's
+> > >     internals. If you aren't sure whether or not you are welcome, ple=
+ase
+> > >     ask!
+> > >
+> > > Participants should fill out the following forms:
+> > >
+> > >   - https://forms.gle/VVrJ7RbHVxurxZH99 (participants)
+> > >   - https://forms.gle/iGnfexF4hDuK6MQe9 (topics)
+> > >   - https://www.when2meet.com/?24557185-cHKWv (When2meet)
+> > >
+> > > New this year is the When2meet, since this seems like a more efficient
+> > > way to collect which dates are open for folks within the next couple =
+of
+> > > months.
+> > >
+> > > The participants and topics lists are being recorded in the
+> > > spreadsheet below, and this is also the place to record your vote(s)
+> > > on topic selection.
+> > >
+> > >   https://bit.ly/git-contributors-summit-2024
+> > >
+> > > Please feel free to send any feedback or suggestions you have for this
+> > > year's Contributor's Summit to me on- or off-list. Like last year, my
+> > > hope is to have a small, remote-friendly, diverse, and efficient
+> > > discussion.
+> > >
+> > > As we get closer to the date, we'll finalize the schedule, make sure
+> > > we have volunteers to take notes, etc.
+> > >
+> > > I'm looking forward to seeing everybody (virtually) soon :-).
+> > >
+> > > Thanks,
+> > > Taylor
+> > >
+> > > [^1]: Coinciding with the project's 20th anniversary!
+> > > [2]: https://lore.kernel.org/git/ZMATKIaU1A1D0wJg@nand.local/
+> >
+>=20
 
-
---MTBP//NvGLAecIEp
+--Cal27hwMCyEtfx+k
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvEkACgkQVbJhu7ck
-PpRiMBAAiY4pWsLqlag5L33k7ReXRl7XpPqs/814wjdNhd9inHvFiIvrOA45Qyrl
-nSYBVhRxjZ9mk8yX7bnqQcpLjaRLt5cmpfW5OUONNQi3DzP6epri2HaDZhQMSEX2
-WWYwaJSJZmna59Su/IfEGV7O1+dFSjAzunmd6IlxCh7CRyQK1Av/d5S4IHbxubll
-xO/2VPVtSxAk13UW2F2nuUsITepNWdEzqaOrR6er0uqRS1n+ufuifVQ/X/OMDVsQ
-YASvraOSQoJdtJ9sTQ43YwM7wmez4uuInt8awVs1In54xhMVMgKQK1kQIxUaaUiQ
-2C2/H+AnM8o9VAtcFUcY8wwnO0AYwMj9fhwybfurp+SYzwFUTbCFH6/wMGW/MFoX
-WD32Ak7xRtjs1yJOTLLMnuOrUGvrn9hiA+LQCzR1ma8ZYneRhf3TvYzhBpp6w5rZ
-Vk+rtoHrkuB1a+a2qbPd2uny5TVfzO15o7XKGg16ZMDU7bcq6GKLU80ZaY7zSRzA
-VJct0Mq0W5KhEtDetjN1BwJdHOybKudzfEh0TUirI3ubNCfRbE0lOAak6Qqt1Wxz
-BvIDR36f0UCOPc+THFGN5MbetyeAttbh9jnnuTbqQp5ZYv5bTg+emmOclpb6tzIn
-ul3spCpTJvVrsoIOGVDTfuTmx0c0iocgqtvWxSkKG/XwAUoM9fI=
-=CIrD
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYxj8ACgkQVbJhu7ck
+PpSTxA//czMPeh+ruhW2ucmix6WmRz1AVndzSy4tMla/s+74XMJ8nXkCjFnd61o2
+RoBsoaQi5XhWfwVn79b/KyYOVxas0OxCGZzLbjJ8Q4Hq78+6i8B61aHB1LVcV/tt
+DVh5LZrdNdQw4b5Y2YRafGK8otIAkEvLwJeTLN5qjQb/H0/zcx7sB+Z29bgvzLSX
+cClY2HeCW3z6E+YUeqIO8ymfAwPyAqmsQh/KGSvSC4WVQc5unPxvjz3DsVYizTr+
+0acVyh5z2wjzdb03Ax9Uid+DIOIDI9s0y/n7dHaiTAfXITIczfE3X2TqT4ZqDny/
+nGJKWLdbopDMuHydidGJ0yc2zML8avQj9Uiqw56mwY99C5rD67swQgU/xyv6+i3y
+6Zl56CUfE66M5uDc59aTov/C2hGnLCES/nsCtXyv8hu8+uPEgKVwMkjBuY00/RpG
+lDPsBPvDrIAHKEPBPrP1+R7eoPrvvyCruCT2nioElMJ70K7YX6t1pZE6ANOYKcxa
+DuaI78+XyO5lukfzQkqhnv1Wgk+EnpNRvw1SeKJcpNRs1Jqg42NNB1ty/C1ctIaq
+Syh317qkhTgslmbEKnQz246qpwMLbXoq7b0dzYBET5olK1Oajdb9Xkcjne+Nvrvw
+bVofHnQzarTBrvmTg1Z64/FI1Ljy0iy1+ORz7+cQUGJri+BEN2E=
+=hVld
 -----END PGP SIGNATURE-----
 
---MTBP//NvGLAecIEp--
+--Cal27hwMCyEtfx+k--
