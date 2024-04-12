@@ -1,73 +1,73 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEC21BC23
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3761C2B3
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712897045; cv=none; b=I6UoIQ9231CCUdyRC6BnFemccYzKHK5QOCJuerRO5XhvI7Dwh/Wk4bLgizIxGbe5f/vuuQjvVOyU49245Klg/kgkOhWM/8Xwh5UeOkZQI1631LwtxqAt2HpWtP4vERBjvChn6IFj0W6CmEQ8dLcfwpiwJncmQYScq2aA74LkucE=
+	t=1712897049; cv=none; b=X0R3ZH3v1Cs1DIpLDU4QQ6adOVcEY6k2cwXIbF3mfsx3L/7hwJ+NnnCvpeoLZSO6aJeX5z13IM5+Y90u7+7anMXhzgonx5nO7N9JmG9lM02rYwUuZZgYjMkO6tYc0ss2OM4xlvxi+4umJtPVx3lp3j7AhLuR8HltFeu0Q9c6mAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712897045; c=relaxed/simple;
-	bh=ycbp+YcUsmXszMOkQCbJL8Db/GaF8D/ZugsGC59cX10=;
+	s=arc-20240116; t=1712897049; c=relaxed/simple;
+	bh=HjiV6nbLoBvFdEXnMaFm8/Z7Zsx9cLEr2PFXf2GGOC0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J9+70lTifAqHThW46BAIYhw+K+91UpNbqKj6QnBB2NoGvv4rXrj7ogjDXiLr/pu7kk/v8zSUreAR344XamKsi3OJRgT306QtkPyg1SGMdxXr880klc4xxfHVFCB65o6U7+FGo6eebwnRma4rQxdGMyZQ8eBsI625i1sr/u7O7dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aMRbKAMe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kAocKsQD; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=IFS3+NTKmri1VFe3sJI1Qtf0x7ZFCXkmmFUPH4FXwBjfXKDzsoqxP7cK4j/jEYOL3mXtgj6WOXiSd0XE9xtZWocltfvFsnxOPJiS5gWyC34hjEtIQFjBETF/lTQqPelIXPotQCJMYNjUnCTXZMxLR+rMv/guoAR1CbU0tYot3us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LFH4CxTf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DFNViOlq; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aMRbKAMe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kAocKsQD"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id C871011401D1;
-	Fri, 12 Apr 2024 00:44:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LFH4CxTf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DFNViOlq"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 7A71813802F7;
+	Fri, 12 Apr 2024 00:44:06 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Fri, 12 Apr 2024 00:44:01 -0400
+  by compute4.internal (MEProxy); Fri, 12 Apr 2024 00:44:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712897041; x=1712983441; bh=fUFQu0AMvW
-	FG37/QXKbinhWw+OzgpQ2+yU7ty1t79wk=; b=aMRbKAMevgbP0oK+nInPXi3QuZ
-	/H8lzqSNiF9Ys1tSqVltSBDd6VWeO6DzIwzjV9v+64Tcx5/zl5chnIiRrAXFheGr
-	4Dtr5P0Sysb9GQMiOrPxp53MWUx1xgEAGv5bDrTxiNQVfIgiWlcOCV2nfIY+kxtP
-	UjMxEGHTHMgcI7M9ijLzvPMJYO9RtEAzaQ2u7Mcpr/+h13JExflap7sncKWFZxd9
-	xR8nCseAkW8RIx0mEdN6WPtvnU+GQS3Ung9iZEwwhA44o+5ufKQsxpcnex+54H27
-	THYG2MyDEHTClH4DPRAqnPicc0Qq5eC/Q80t1c7eyvaZuWwUTMxuzYMC67HQ==
+	:subject:to:to; s=fm2; t=1712897046; x=1712983446; bh=3iiJbImMl6
+	qe07299cG5yYdsDcYU6AQFCKtMofwCUWg=; b=LFH4CxTfBACtRLlu6ZGkMDlDCa
+	+V74tw4VJXcu/eqnALPahb1KK7Z2zoiOWbe0OQ6J+CF5WyoGwTBIqtBvHeyTOA64
+	2z/fUDsSaOO8l1n07/RulDiFmFbOucfOyDtAfdqkPZFacMm/dk2BQrn3M94kJzNS
+	Tkoom5HN/CQj/JCWzSV+VMkN7ONyJrfkwSoUt3ba09yt5dx/jMru4YPumjrwOSEv
+	xuP9niumKIZtUxyi0mMF5vRbUqly7gV3z5WX7i/kn3kkGwQP8x22ZWk9H3bpOe8B
+	yCxEQ4AMzBnfo/ASz0WSDbqnj6GGthknnd2zJyvUrITxKSiXTCu/+kmyu9Qw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712897041; x=1712983441; bh=fUFQu0AMvWFG37/QXKbinhWw+Ozg
-	pQ2+yU7ty1t79wk=; b=kAocKsQDzP8ZSqnexSc7ZqqMgRbYORT5YZZWy0QMialM
-	53xbC49gwsMI2xNV5LoR4qF4+j6yST18gmxjTOxrEkIuzJ1SzkxnyrJfjADEhuU/
-	c7GWG+ap6hzINx5HC8zAjuSkKpH0f8xrA9zj3gb+3ybdM6F8T20AvAI/aCchgrBt
-	vX3yobt+hvT4r0hlAbcHZtY+4ehrcg0ubYA32U1jFgg4jTsLj/SV3VC8qy6f1bIG
-	rO1s504N9Iesm2oauEFK8a+S/yMx4cFCmw9a3tmTdDN36KZNHoFbvXoahd1Uv4eP
-	IFX4WSEKDKM2tcj/tQj9BHa6lGtEeH3eOeGeOTIqKw==
-X-ME-Sender: <xms:EbwYZvvoXEG03seWiZfdEjtOLOfSwqpmfRWLF7J3sHQce8zeNPQqbw>
-    <xme:EbwYZgfROgflaLNgfbjUqM83o6kqXqw8_kkZBnqOfHXwB8enFnE7aY47-ewykvebE
-    v4UUoHoNuoJ6KBKpw>
-X-ME-Received: <xmr:EbwYZiyiq6dNjqSRzK0gn37d3iv4vb-nL9B7QFOIoMwjeyzoLBqyd_W2yfnp_t6TCecKAyRT1-U7jbvOapXxyY1Yk9aRdnSgNCHikkLfmVx0rglD18Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddgheduucetufdoteggodetrfdotf
+	fm2; t=1712897046; x=1712983446; bh=3iiJbImMl6qe07299cG5yYdsDcYU
+	6AQFCKtMofwCUWg=; b=DFNViOlqbUQQyKkllgGp+6Bia/xdpI9Q/jxHSQpo2Yr2
+	OY6osGuzYlQnEJJWj5nFNkvK5I56nW7mJnorfn4zVPztuKjScNHZnxCtfz982Cl4
+	p4xoJjM4mri8OPDwdqwX+VyKyIoFJRkTUb1A2fu7sNi6ZCCdFgYra6SlKi3QqOCj
+	DZ4wJHA3xSWVEAwm6F+rnOir8I84RYm64qejxsD2JMIkuK8cjF+kgXG6Vft5wAF2
+	L5vy1y0taJ6zmcByyZSgvyZvwyfwfJc/1DIGZ4uDQ0YhceA3/V17FwgLTJm5k/4a
+	P1kgKk6P3a4Y5ErKvgyARarDRHZChdY/DSO7uii2rA==
+X-ME-Sender: <xms:FrwYZn0dC1fUOlQ73TEkJhkLVO6MtSz5sHriTPWTFtbxyxP5w1MRNA>
+    <xme:FrwYZmH4a-kyAjqaik7RJE61kwCjf9kjATM3qFOXuvGk-dXpvPnam8AzZvRpXA2fv
+    JD9AXkp9E9uQ45GRA>
+X-ME-Received: <xmr:FrwYZn4_7HK3kOM3IKhX_B_OhIFRS11UJY0fylbTZ5IbcFOMaibTivC9ClYgKtpDyPcfEepleUjgQt7d577dk7eDT_3AsamP5lXYN8UraIHj2F-p5vg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddghedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepieefvdehgfekieejueektdelhfeiheeltddtleekieevieehleektdfgveetkeet
-    necuffhomhgrihhnpehvvggtthhorhdrtggtnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:EbwYZuMAO4Vd0ZUnvwJCCTIpN6dri13dYuDyTPtzJgibTrSpcTvdlQ>
-    <xmx:EbwYZv8Wc6TL9H8NOKZFQoCGq3Y4a2ShWy9bOagvZgv1EyzbFeC1EQ>
-    <xmx:EbwYZuWApEEcXcVVjPPJdZ2qdXbj-AVZ8WetUjFCQ3OixNZpGeFn2A>
-    <xmx:EbwYZgcxkprfChDOftT69PLN392Gs6B_lBTZjVyL5BdI6j_OGiSaFA>
-    <xmx:EbwYZgOrJpWmCbuObybOiUQu0gXmGg6r2PZHyeByKEc2bWsBVPcxRQZv>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:FrwYZs2orUDw2sTSGCBuVSettuKH5RRaPu2loscqyRJUTY51UDsvOA>
+    <xmx:FrwYZqHR2C6bFrZ7L-59YsK8Cy7cRaF-vh6nDOeo39O5S2mc8Kurvg>
+    <xmx:FrwYZt-D-h0_l2HSP_UiixfmIfdV8QdPudndzaUhsU_5t-EF8FmTqA>
+    <xmx:FrwYZnkRVjyc85mXXpxgaEa7C1BdGmF5GXgmOBTNjHGlxz_6bvpojQ>
+    <xmx:FrwYZt1cuPpZ2Gio7OzkXWU1Be5qHroy0H4C-6rmrcbh8Ci-pFDQh5To>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Apr 2024 00:44:00 -0400 (EDT)
+ 12 Apr 2024 00:44:04 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b1588bd1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Apr 2024 04:43:46 +0000 (UTC)
-Date: Fri, 12 Apr 2024 06:43:57 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2090888f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Apr 2024 04:43:51 +0000 (UTC)
+Date: Fri, 12 Apr 2024 06:44:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
@@ -75,8 +75,8 @@ Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 01/13] ci: rename "runs_on_pool" to "distro"
-Message-ID: <99b0b60359c1466fd291e890b8403d9cbfd706c8.1712896869.git.ps@pks.im>
+Subject: [PATCH v4 02/13] ci: expose distro name in dockerized GitHub jobs
+Message-ID: <e1d4e1320d8834de3c37e3c0e9a6e4682aa79a0b.1712896869.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
  <cover.1712896868.git.ps@pks.im>
 Precedence: bulk
@@ -86,100 +86,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DEAvc2d83fRv0Hlp"
+	protocol="application/pgp-signature"; boundary="lv/g1EE+tNb0lyn1"
 Content-Disposition: inline
 In-Reply-To: <cover.1712896868.git.ps@pks.im>
 
 
---DEAvc2d83fRv0Hlp
+--lv/g1EE+tNb0lyn1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "runs_on_pool" environment variable is used by our CI scripts to
-distinguish the different kinds of operating systems. It is quite
-specific to GitHub Actions though and not really a descriptive name.
-
-Rename the variable to "distro" to clarify its intent.
+Expose a distro name in dockerized jobs. This will be used in a
+subsequent commit where we merge the installation scripts for dockerized
+and non-dockerized jobs.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 2 +-
- ci/install-dependencies.sh | 2 +-
- ci/lib.sh                  | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ .github/workflows/main.yml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 3428773b09..684ef5c00d 100644
+index 684ef5c00d..71cd4e5486 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -303,7 +303,7 @@ jobs:
-       CC: ${{matrix.vector.cc}}
-       CC_PACKAGE: ${{matrix.vector.cc_package}}
+@@ -342,12 +342,16 @@ jobs:
+         vector:
+         - jobname: linux-musl
+           image: alpine
++          distro: alpine-latest
+         - jobname: linux32
+           image: daald/ubuntu32:xenial
++          distro: ubuntu32-16.04
+         - jobname: pedantic
+           image: fedora
++          distro: fedora-latest
+     env:
        jobname: ${{matrix.vector.jobname}}
--      runs_on_pool: ${{matrix.vector.pool}}
-+      distro: ${{matrix.vector.pool}}
-     runs-on: ${{matrix.vector.pool}}
++      distro: ${{matrix.vector.distro}}
+     runs-on: ubuntu-latest
+     container: ${{matrix.vector.image}}
      steps:
-     - uses: actions/checkout@v4
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index b4e22de3cb..7d247b5ef4 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -11,7 +11,7 @@ UBUNTU_COMMON_PKGS=3D"make libssl-dev libcurl4-openssl-de=
-v libexpat-dev
-  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
-  libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
-=20
--case "$runs_on_pool" in
-+case "$distro" in
- ubuntu-*)
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 0a73fc7bd1..d882250db5 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -279,7 +279,7 @@ then
-=20
- 	cache_dir=3D"$HOME/none"
-=20
--	runs_on_pool=3D$(echo "$CI_JOB_IMAGE" | tr : -)
-+	distro=3D$(echo "$CI_JOB_IMAGE" | tr : -)
- 	JOBS=3D$(nproc)
- else
- 	echo "Could not identify CI type" >&2
-@@ -318,7 +318,7 @@ export DEFAULT_TEST_TARGET=3Dprove
- export GIT_TEST_CLONE_2GB=3Dtrue
- export SKIP_DASHED_BUILT_INS=3DYesPlease
-=20
--case "$runs_on_pool" in
-+case "$distro" in
- ubuntu-*)
- 	if test "$jobname" =3D "linux-gcc-default"
- 	then
 --=20
 2.44.GIT
 
 
---DEAvc2d83fRv0Hlp
+--lv/g1EE+tNb0lyn1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvAwACgkQVbJhu7ck
-PpRE/hAAiWBp4GdVmBXo4m/75LCPAVZv3g7noHkUS1IZl2jaHUJuoPadXQdhMlS1
-lSqYwaR83Pz45wsaZgIBzoKmccFLtVr7iYueRPdTBZvFKVVNhT1JuiWfiQURayo5
-f6BTHOqKMxFd0sT567VGIVD71QjizY4/SCSTdmXUslM7rlAmh6cKbu30ZKeSF8GW
-dV1CW3NSEUWL5HIdtr1ltAmFMFLtPP/of8ptxXKdmtw5PYXYPRTPKFWGkG+5hmKG
-SXP4xSzSzCNSUGs9gQPx0AuKumunpwVNsYuPJbv3MmisFsRVnIJ7upmaJJ4ggpca
-UMMxdHl+gJjuDXnYld5WHSqfj7G5ojLE7c8CHwkZILTQIkmjeDkhLQ/iSbqf2BBJ
-USiwjJGgD3gLRZoSR0XUkNuFljDzvzjLZB55OmbcHT3gtjZyipobi2EkfkEDbugU
-4EZYG7piK2yK1X/p58QmH1hvbJvi5IWkuvLA2YPcCA10rJSOqsV2THn0PPYxSL02
-mTDTjr965GML/C/nB8lBKaE1xvooEzPdbNDEORraHWERIOUVmaZ2ntIF+8CoRzm5
-afIERkT59kHLfLnLYjrAx7uKGZJpZUuJPWvE4kcKoIXTiRaMhmwIfzA4Z/kYLfsz
-bCzGJ+0BoVsWrVnWUAq/A+2JXYris2o7ZhHe0x1vtFEfsSCWDl0=
-=C3xD
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvBEACgkQVbJhu7ck
+PpQo+xAAqQ0AibGpKArHWiPZ6jZWegWEauXdOkbBVcGu+OPfNE68W1zZ3m9mwX6V
+WfnO5lkfqBQXy/P+ZrfHOoOResw5pvMydCyyIQmTGJTP0Vc4yoV9216rOZUKCUm/
+fHbeRKMm+X9KgiRycHA3qm4jZ6AiqeLtpUNXl347QSGe5eULczbZqtuzWPS2zCHh
+KbnLW7mJryTp6NFDRan+rVqN/g6yZ8WtjcFrRU0fYhL9+Jr1kF8feKbhORn1FyIL
+NkD7wAhw/8Y3boMJ8SKvwJ7k5ntjqxELa1GA9jcbkciw7RhSBdpyn+qpFxUssHRy
+EdnLIJtaEoEjzc7HIvIK8P794lwvtFtZzOsiIt2wKNrgxMcTAZ+fCsh0rn+N9GbC
+yg+jrGOALLKIXCWW/hpiFqi5+SZCix3voqhL0jJSoAq0mxTh91qg70uNXhh0o+ep
+pJxl9Sw0yGQ8gwvlfqHuvP+2MHrSLZxJTpCEXGyBRXI4z0um+wIa4zUg0/YRKCkR
+hE4pmG+1XMs9Q+PTZ/JoeCfj4+dKeCORIDzoriN0vlpJjtBn2wBhgy3f2JMn/ce6
+ug0Ceama2rWDaNajHGeA1I3889zUu5ePed1Ufexqln0dumNeSaJemlKYo/elNeL/
+jVXQ3OMGZbdqxTTjoMdX/LeIUhMn/gNUCd1Tov1lwNtdqSnBGCI=
+=LqhT
 -----END PGP SIGNATURE-----
 
---DEAvc2d83fRv0Hlp--
+--lv/g1EE+tNb0lyn1--
