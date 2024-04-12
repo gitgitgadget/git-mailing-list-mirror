@@ -1,36 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29121754B
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEF8182C3
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712895778; cv=none; b=s5YxifLagffsuORluSxtfG6zve3OF6ugQbn4DYp9QG/rrK1RmgDjEsJ7JwH9oA03oktIqAYVx35uvBNT0jkVh2WF6s2D7jXlwj9xgz3F6s0silSgH2exJ5SvWqIPopLwVcYczVDBC5/1o9iemNw71Sx/JqFXtwUMVvRZ4kwB8RY=
+	t=1712896166; cv=none; b=SFQ957xJV6QCjP1DO05AvzEwmQqC/8OoaJrcQT/sUAyoUQJ8FapEQMZmVNCoWJq/Llmd8khFaT6/CkofD1xtOBwj9DDKjTjq8mxSj23zhZBytq8Avfu8noLQM++poxYY/SwIa7rtwZAdhoE6cZDk3peqAIKUIsv1AopBAeSBvMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712895778; c=relaxed/simple;
-	bh=Ska5duMWTHAroe3WFa1I41qlNpqSMHtoi1cRsmOqbA4=;
+	s=arc-20240116; t=1712896166; c=relaxed/simple;
+	bh=C8SXvupo1hKWkuDTUOcMjLmeKWy6SRGPPZThgMKjR98=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nYtS7TA9pM/nIF/QW0yhiLT+e7ESuk7bgl3qL02TQopjmIUjMxMg8n4JgaH8LZ6qfS5osSwHi7cmeQ8SWejQtk25zm8eBlCpqEXuCFhIsDqrN9lX6P/FSp6SVO7kF6yhqUxpYBpjgf09JmAAIOQFxTmZQWuuZL9sZ3GoiKdhc8o=
+	 Content-Type:Content-Disposition:In-Reply-To; b=ROiOxDZUrEKc1Zy1NkxaNthDRMwI8Lk3AttaFOq7/JdsuJjZ46vM1/+lW/bQ7Q69onZVV1ew+P5/ElOjj1ABi42YNnLEDT3cgV46mbixXHiTgSXDfPgyYoHvXldu244Pm80V7ztGzaigwiNYTbnDDjcVhVW2ez+aH6RRm7zl18U=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 10842 invoked by uid 109); 12 Apr 2024 04:22:48 -0000
+Received: (qmail 11727 invoked by uid 109); 12 Apr 2024 04:29:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Apr 2024 04:22:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Apr 2024 04:29:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2544 invoked by uid 111); 12 Apr 2024 04:22:52 -0000
+Received: (qmail 2584 invoked by uid 111); 12 Apr 2024 04:29:26 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 12 Apr 2024 00:22:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 12 Apr 2024 00:29:26 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 12 Apr 2024 00:22:47 -0400
+Date: Fri, 12 Apr 2024 00:29:22 -0400
 From: Jeff King <peff@peff.net>
 To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 1/2] ci: also define CXX environment variable
-Message-ID: <20240412042247.GA1077925@coredump.intra.peff.net>
-References: <cover.1709673020.git.steadmon@google.com>
- <cover.1712858920.git.steadmon@google.com>
- <e55b6912725fa478134c7a67a9e4aeab7dca2c57.1712858920.git.steadmon@google.com>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
+	phillip.wood@dunelm.org.uk, gitster@pobox.com
+Subject: Re: [PATCH v3 6/7] t/Makefile: run unit tests alongside shell tests
+Message-ID: <20240412042922.GB1077925@coredump.intra.peff.net>
+References: <cover.1705443632.git.steadmon@google.com>
+ <cover.1708728717.git.steadmon@google.com>
+ <cfcc4bd427318fed1cacc8457381d5a0c408460a.1708728717.git.steadmon@google.com>
+ <20240327085827.GA846805@coredump.intra.peff.net>
+ <ZhgvefDKhTQ6rfnD@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,21 +42,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e55b6912725fa478134c7a67a9e4aeab7dca2c57.1712858920.git.steadmon@google.com>
+In-Reply-To: <ZhgvefDKhTQ6rfnD@google.com>
 
-On Thu, Apr 11, 2024 at 11:14:24AM -0700, Josh Steadmon wrote:
+On Thu, Apr 11, 2024 at 11:44:09AM -0700, Josh Steadmon wrote:
 
-> In a future commit, we will build the fuzzer executables as part of the
-> default 'make all' target, which requires a C++ compiler. If we do not
-> explicitly set CXX, it defaults to g++ on GitHub CI. However, this can
-> lead to incorrect feature detection when CC=clang, since the
-> 'detect-compiler' script only looks at CC. Fix the issue by always
-> setting CXX to match CC in our CI config.
+> > An earlier step required that runs via "test-tool run-command" have
+> > TEST_SHELL_PATH set correctly. So defaulting to /bin/sh here is
+> > pointless, I'd think? This is used only for the in-Makefile "prove"
+> > invocation, so running individual tests or even a manual "prove" outside
+> > of the Makefile (where the user might not have set TEST_SHELL_PATH)
+> > would not apply.
+> 
+> Actually, I think the "manual prove outside of the Makefile" situation
+> is worth keeping this. I know I sometimes copy commands from Makefiles
+> and run them manually when debugging issues, so it could be annoying for
+> folks if we remove the default here.
 
-Since you took my suggestion in patch 2, this "which requires a C++
-compiler" is no longer true, is it? And I don't think we'd even look at
-the CXX variable at all, since it's now FUZZ_CXX.
+Hmm, by "manually running prove" I meant running:
 
-So this patch can just be dropped, I'd think.
+  prove t0001-init.sh
+
+and so on. Or even "prove --state=failed" to re-run failed tests. But
+neither of those would even use this script, because there's no --exec
+option.
+
+But it sounds like you mean literally cutting and pasting the "prove
+--exec" line from the Makefile. That seems to me like a weird thing to
+want to do, but OK, I'll try not to judge your workflow. ;)
+
+But if you are worried about making debugging more confusing, it seems
+like silently defaulting to /bin/sh might make things worse. It is not
+necessarily what "make test" did, and complaining loudly might be more
+helpful than trying to run with an alternate shell.
+
+I don't feel too strongly about it, though. I'd generally just run
+single tests as "./t0001-init.sh", which runs into the same issue. I've
+been working on Git long enough that I know it is one of the possible
+gotchas when a test failure does not reproduce. :)
 
 -Peff
