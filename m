@@ -1,152 +1,170 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FF951016
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 09:37:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3D851C36
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 09:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712914640; cv=none; b=HPGofUgnkdxWE9sSTXCj30PvQzhlUxM20pnl89PWE8teS7gd6ovv/qAzuIY8KcJk5XC1NW7NAVRi/C5UKrPC8xKdJ8QvukkFj7A7meGQHRA+FUwdndPAqnrK/IZEocWpmcLCLv2YnaB24W2FxAKJzqeAjOldmak6eCEACd6hbBU=
+	t=1712915962; cv=none; b=gGe45lW7IADNDRkMemOMwAugp2oUi08fimCkY4oYuM8JjphLOc+O+u1gTKoc0B/NJM85rEwHRYTPXMp/gP87kQ20cKYWBeIHjhV/e+2kYoY4kHN8lPQw62nLbecOcs93ujoBFXvgQPrkoHmzsDLiBsopcsPl/KAetEOr+Z9ST/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712914640; c=relaxed/simple;
-	bh=iE7pNP2NPTss5gnMfQhzwwVjiP4h8ma3q1K3yAfjGu8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=K3r+3zSuLkNaBTZXI0WGl2m8uUkkZzEZiOvYgD2x0aBbVWfnNh/QQiMqXoohG8/CFIUj8zq6Ex8hKw2K4UrEKvYCdH0mgIh+Ovpxektfc/+ple80pWE5f9uws621BUC378ZXEosfFl/yfDL76+wL1kZKF9rfM8fls/C2Zzjw4xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XA2RHrSh; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1712915962; c=relaxed/simple;
+	bh=19Q7BrB1zz2cpYqfBIJdrihsooDvd92R0leMWbaw4sU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OrITf/KJY4ZQJMPKl8iPL47YVG1dw1Kdm51QnHKUoatwzdfZW6kJv5n6fTem4eFVwGAAlFZ0c/4yWkKhtiCFNe/WeSpm4E4E8lgOJj80P3Iu0nyKPu5iJesQWXO2tn4tJZ6pXBipA4N3VKJEflsV4IKFRQPlA8BwdGKrMnyQuSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LRmNNqCB; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XA2RHrSh"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-417c3296643so5566895e9.0
-        for <git@vger.kernel.org>; Fri, 12 Apr 2024 02:37:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LRmNNqCB"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5700106506fso348797a12.0
+        for <git@vger.kernel.org>; Fri, 12 Apr 2024 02:59:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712914637; x=1713519437; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S3+X2TqjnS4uOoe5qshm3zNNzWnek3RM4eo8YAus+UE=;
-        b=XA2RHrShU3W3WGjyGlklf7tGNhuSqwOzcAjixMpU/K5Cv7EQUjMpbSXSWKcorf6d7C
-         l3Lx91ZnGHOTnalE2JfXmKvELr1TjaliiFjpLtKGG1kq5VBdOEBDb0ul3+TjS1y/wTGH
-         20me6d+wVR5FTKuEBTvFQ17zWynVk40tm09moNzGGXdQuYJEWiNmh7g5dHMubZzYXHH+
-         txxZwxXKog4zA5U1naLqoopbHCgsaGipzGecdNgq2oojZXw/G1EAvgO1tihlftqqUUBc
-         NJ1RfcsmQxTU2nzK8EsVV9DJbmrCG1RP4T9H1R/r9D88IuDczmc9RE6ySf8k9ZG7F9ON
-         ZylQ==
+        d=gmail.com; s=20230601; t=1712915959; x=1713520759; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/RUwR39EG8L5ywVobgSQ6HZRf1En08bGbvKG/EIdXbs=;
+        b=LRmNNqCBcRlhSH7BCKwZszQP7ZS/9BqqQN7O34Qv9pm2MNYkhGlosDQzM4YIQzADVZ
+         XDep6fl5dtFDX71p1WnsyabyG7f38okT5L6ajjF7fSZWkar8oyyXBGpk0anfY0hTaM5Q
+         IaLVI3RnpWg8NM5SlqoPClPQSSojnkEM/3tQ/ub31NFHEfkLacH3FPtjiPdlLq7tHaxg
+         L4yuukmKPAuQuPVwJr9kKguUl33IrCiDerUjw2ocQuXQHDkeD8IvStDSXpcW9HBaQpxT
+         oO7xBfqkU9HIOQGZMLlEGlZ0yHftg937XNpiku9yOo9Ae5KTDe1z1AR3x7psvgqzaQLC
+         xf3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712914637; x=1713519437;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S3+X2TqjnS4uOoe5qshm3zNNzWnek3RM4eo8YAus+UE=;
-        b=kIl9clBvqpewtBSDF17NhLEoL8soadDrTle0itFlPQEsy9/2LEwg8R6FAM53XJsdzU
-         6MPJ0QKG2Qa4Jn9nAxDD8O+5px4xBrX0bPOeP7qbiifbHNF/F3c4vXHx6eiDjLPcIMJx
-         nUdrqWZmJzbU/2Fq2aJGUPyI2Jug2YsuHqw8Xh1b/ge4Pim0H7zAxZL6aD85UxSlsE+D
-         DjjH0AV5F8HfU5kzE+iaJovfQZCnLbQTSd41eh+4ynzaPPyLHD3SN9n8rEQz8Gg1Bc7a
-         qlZHYmu5yIpJSV2L7bhFW0TwcIK1v6VD8Fr+hpz6zHixhKQnPTofDpICs7pOvLwI+QQg
-         MbJg==
-X-Forwarded-Encrypted: i=1; AJvYcCUBsm4Dm/kT2sg/+c7D55ZkqCvnmcPAJVrjM58qkFynrDA+zsEZ+HIZ+IdIlcUnDCTcmKT10PQ9A9K/UQ5wg3cgj/vC
-X-Gm-Message-State: AOJu0Yw06/ouzuKWNBS0dVyGkyUBJNcvY+58ypbFbHO+ACrrXFRYXKf+
-	Td50APMlVf1eckl26Jk74iMijIvz1dV9coWkYFM/eJKS/G1MgGuM
-X-Google-Smtp-Source: AGHT+IHWi4ShTUHrYhxBPuyHkkjoQLAC/Xi3O23iro1PT87J1i0Nbdrixpuy4gx227rID9M3nuWfZQ==
-X-Received: by 2002:a05:600c:444a:b0:418:cae:5086 with SMTP id v10-20020a05600c444a00b004180cae5086mr242866wmn.10.1712914637052;
-        Fri, 12 Apr 2024 02:37:17 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id f20-20020a05600c155400b0041665d968f1sm5032441wmg.47.2024.04.12.02.37.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Apr 2024 02:37:16 -0700 (PDT)
-Message-ID: <4c0b6da2-56d3-4441-aaed-8d9a2d28d9c0@gmail.com>
-Date: Fri, 12 Apr 2024 10:37:16 +0100
+        d=1e100.net; s=20230601; t=1712915959; x=1713520759;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/RUwR39EG8L5ywVobgSQ6HZRf1En08bGbvKG/EIdXbs=;
+        b=BZolAkRWgwgcjMVLdhuo0x8OuBtNtefb/uiBaSafgPhkyz5zHkW8OLO8uwCcIAPoco
+         zcQpUSi+PPGO6p2BOpWMbQy7eejSdgVQn3iWBCpfTQe95k526HaS/fUbhZyaI+AHmTcN
+         sZpTP55md2rUqf4bahBIsudRCI1Er36c8gLMTcyThI4F+wyI8aKmyvUT7k9nJLEmxnXJ
+         k60xpf0o0WcCDy2Anwzm6SBi1pyclN7PeKvEIPg2LT94rFCJyoCdtAdt2GCByWMyHgPk
+         7Vvcc4TgA+MYDlV0eB4eXJgg0NSYL1QHwrq+tHLlOJ9PAqNNpfeSvVwW5BD7U+8guXcS
+         ZS3A==
+X-Forwarded-Encrypted: i=1; AJvYcCVqj5fDLPQAZgava3GSRtyxBRtvfuX8nKJARZeLqdlV4oh3cZlIiasgXooyhd6XafIqyTZWWZ6vJTuBxAz7tK2qb3E6
+X-Gm-Message-State: AOJu0YxSlQ6RQlR1amMFXPjGey07pNWFhmGzX2qzJ3lcJ4nCzxJ5sxc/
+	129mx+PjxH0mKN+3L+Ws+DYEE1+S1zUwe7LhVr9myNE2nj6fZ8SJ
+X-Google-Smtp-Source: AGHT+IH/s+9YLutmfWVxdw9wRHUffFKmzUOp7Vtk96zSB6gZDgbiHrzMwknumo2FAXbTxR8gdV5kfw==
+X-Received: by 2002:a50:8ad3:0:b0:56f:d910:4b7 with SMTP id k19-20020a508ad3000000b0056fd91004b7mr1942297edk.15.1712915958760;
+        Fri, 12 Apr 2024 02:59:18 -0700 (PDT)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:355c:c013:66aa:c838])
+        by smtp.gmail.com with ESMTPSA id et4-20020a056402378400b0056e67f9f4c3sm1498552edb.72.2024.04.12.02.59.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Apr 2024 02:59:17 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
+To: karthik.188@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	ps@pks.im
+Subject: [PATCH v2 0/7] update-ref: add symref oriented commands
+Date: Fri, 12 Apr 2024 11:59:01 +0200
+Message-ID: <20240412095908.1134387-1-knayak@gitlab.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240330224623.579457-1-knayak@gitlab.com>
+References: <20240330224623.579457-1-knayak@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/3] show-ref: add --symbolic-name option
-To: John Cai <johncai86@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Kristoffer Haugsbakk <code@khaugsbakk.name>, Jeff King <peff@peff.net>,
- Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Jean-No=C3=ABl_Avila?=
- <avila.jn@gmail.com>
-References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
- <pull.1684.v2.git.git.1712597893.gitgitgadget@gmail.com>
- <a9e6644327a04f1d309eca812ace9c4159781353.1712597893.git.gitgitgadget@gmail.com>
- <a9ccd0db-2e52-4521-9d72-49d2a85656f5@gmail.com>
- <F53A2B72-D089-4C0A-92D0-E96EDD410A74@gmail.com>
-Content-Language: en-US
-In-Reply-To: <F53A2B72-D089-4C0A-92D0-E96EDD410A74@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi John
+From: Karthik Nayak <karthik.188@gmail.com>
 
-On 11/04/2024 20:57, John Cai wrote:
-> On 9 Apr 2024, at 11:25, Phillip Wood wrote:
->>> +When using `--symbolic-name`, the output is in the format:
->>> +
->>> +-----------
->>> +<oid> SP <ref> SP <symbolic-name>
->>> +-----------
->>> +
->>> +For example,
->>> +
->>> +-----------------------------------------------------------------------------
->>> +$ git show-ref --symbolic-name
->>> +b75428bae1d090f60bdd4b67185f814bc8f0819d refs/heads/SYMBOLIC_REF ref:refs/heads/main
->>
->> Do we really need the "ref:" prefix? It is not specified above and I think anyone calling this would have to remove the prefix before they could use the value.
-> 
-> I can see how it would be more ergonimic to just have the value without the
-> "ref: " prefix. I kept it because that's how the refs are represented on disk
-> and git-symbolic-ref prints them out with the "ref: " prefix.
-> 
-> I don't have a strong preference, but I lean a bit towards keeping it consistent
-> with the output of other commands.
+The 'git-update-ref(1)' command allows transactional reference updates.
+But currently only supports regular reference updates. Meaning, if one
+wants to update HEAD (symbolic ref) in a transaction, there is no tool
+to do so.
 
-I agree it is a good idea to keep things consistent, and dropping the 
-"ref:" prefix is consistent with other commands:
+One option to obtain transactional updates for the HEAD ref is to
+manually create the HEAD.lock file and commit. This is intrusive, where
+the user needs to mimic internal git behavior. Also, this only works
+when using the files backend.
 
-$ git symbolic-ref HEAD
-refs/heads/rebase-fix-signoff
+At GitLab, we've been using the manual process till date, to allow users
+to set and change their default branch. But with the introduction of
+reftables as a reference backend, this becomes a necessity to be solved
+within git.
 
-Best Wishes
+This patch series goes about introducing a set of commands
+symref-{create,verify,delete,update} to work with symrefs complimenting
+the existing commands for the regular refs within 'git-update-ref(1)'.
 
-Phillip
+The 'symref-verify' command can be used to verify if a symref exists and
+its existing value.
 
-> 
->>
->>
->>> +test_expect_success '--symbolic-name with symbolic ref' '
->>> +	test_when_finished "git symbolic-ref -d refs/heads/SYMBOLIC_REF_A" &&
->>> +	commit_oid=$(git rev-parse refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME) &&
->>> +	cat >expect <<-EOF &&
->>> +	$commit_oid refs/heads/SYMBOLIC_REF_A ref:refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->>> +	EOF
->>> +	git symbolic-ref refs/heads/SYMBOLIC_REF_A refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
->>> +	git show-ref --symbolic-name SYMBOLIC_REF_A >actual &&
->>> +	test_cmp expect actual
->>> +'
->>
->> I think it would be nice to see a test along the lines of
->>
->> 	git symbolic-ref refs/symref-c refs/heads/master
->> 	git symbolic-ref refs/symref-b refs/symref-c &&
->> 	git symbolic-ref refs/symref-a refs/symref-b &&
->> 	git show-ref --symbolic-name refs/symref-a >actual &&
->> 	cat >expect <<\EOF &&
->> 	$(git show-ref -s --verify refs/heads/master) refs/heads/symref-a refs/heads/symref-b
->> 	EOF
->> 	test_cmp expect actual
->>
->> to show what this command is expected to return when there is a chain of symbolic references.
-> 
-> good point, will add this in the next series.
-> 
->>
->> Best Wishes
->>
->> Phillip
-> 
-> thanks for the review!
-> John
+The 'symref-create' command can be used to create a new symref.
+
+The 'symref-delete' command can be used to delete an existing symref while
+optionally checking its existing value.
+
+The 'symref-update' command can be used to update a symref, create a symref,
+delete a symref or even convert an existing regular ref to a symref. Wherein
+like the regular 'update' command, the zero OID can be used to create/delete
+a symref.
+
+V1 of the patch series can be found here:
+https://lore.kernel.org/git/20240330224623.579457-1-knayak@gitlab.com/
+
+I'm not adding a range diff here, cause I redid the whole series, things which
+have changed:
+1. The earlier series simply propagated a 'symref_target' and only supported the
+'symref-update' command, without checks for existing values and such. Now we
+support the entire fleet of commands with support for checking old_values.
+2. The flow is now changedc to send an old_ref, new_ref pair in supplement to
+the existing old_oid, new_oid pair to the reference backends. This allows the
+backends to simply do a combination of changes based on what values are set.
+This allows us to do symref-update's where we change a regular ref to a symref
+while also validating its old OID.
+3. I added a lot more tests to cover reflog checks and also '-z' input.
+4. The entered <old-ref> and <new-ref> values are checked within update-ref, to
+ensure we don't create dangling refs. This could be extended in the future with
+a flag, maybe "REF_ALLOW_DANGLING_SYMREF" and a corresponding option within
+update-ref.
+5. Removed some commits where reftable backend code was reused for symref creation.
+This actually caused issues since the reused code also created a reflog along with
+the symref but we should defer reflog creations only after all ref creations have
+taken place. There is a bit of DRY here, but I think overall its still much cleaner.
+
+Thanks all for the review and discussion in the previous version. Patrick, I did
+incorporate the changes you suggested, but I just noticed that I didn't reply to
+your emails.
+
+Karthik Nayak (7):
+  refs: accept symref values in `ref_transaction[_add]_update`
+  update-ref: add support for symref-verify
+  update-ref: add support for symref-delete
+  files-backend: extract out `create_symref_lock`
+  update-ref: add support for symref-create
+  update-ref: add support for symref-update
+  refs: support symrefs in 'reference-transaction' hook
+
+ Documentation/git-update-ref.txt |  25 +++
+ Documentation/githooks.txt       |  13 +-
+ branch.c                         |   2 +-
+ builtin/clone.c                  |   2 +-
+ builtin/fast-import.c            |   5 +-
+ builtin/fetch.c                  |   4 +-
+ builtin/receive-pack.c           |   4 +-
+ builtin/replace.c                |   2 +-
+ builtin/tag.c                    |   1 +
+ builtin/update-ref.c             | 202 +++++++++++++++++--
+ refs.c                           |  74 +++++--
+ refs.h                           |  15 +-
+ refs/files-backend.c             | 143 +++++++++++---
+ refs/refs-internal.h             |  21 ++
+ refs/reftable-backend.c          |  51 ++++-
+ sequencer.c                      |   9 +-
+ t/t0600-reffiles-backend.sh      |  32 ++++
+ t/t1400-update-ref.sh            | 320 ++++++++++++++++++++++++++++++-
+ t/t1416-ref-transaction-hooks.sh |  41 ++++
+ walker.c                         |   2 +-
+ 20 files changed, 886 insertions(+), 82 deletions(-)
+
+-- 
+2.43.GIT
+
