@@ -1,84 +1,132 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E59414C58A
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 17:05:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69C884A37
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 17:09:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712941545; cv=none; b=DHYdB9ain7j6iu8HkiROJG2Gy0FUl/NQ1ffp5lkZFXaga4gNIYEmmlWbp6AW/PsGSG8qlZ431WgP1G0rzZpv2u2Rk/wwX9hCi6f1i0bj1lhLUyxCFXlR057lxKDljs7qMIeG/e6yk4EaYvlHeuVv+HOpx/02wWrJ1y/wpEypUuM=
+	t=1712941748; cv=none; b=kReAz3PqVe0BBF3tenTrQPqsu4elYrnnphhTCQXQii+AE9jsK6v6QtKsTQsvrITSpuYjyf5N4W7VidhY8LOAKAv7+UgBWf60gYEIz/gDFB9CF6jiWtaUwOBdksQcXogY2adgXzl8oYy99P0Nipm5Fx5Ax+IW/SmUS60FswxIk1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712941545; c=relaxed/simple;
-	bh=FILHa6jnvl0HIpt/oolnftSh+860/k0pB64nWztgqJo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=QRm83Z+myHHnd2pj1y6UlnPcy/ebQB/FtXAsPBXXagE0+N5CHfOGi5hoF4ljPWSahLA4G+mY45sb75IAPUmCl4DZaUOVgVwpSeWxqRdtLhLpVWiPXgQ0caeedfVJ5NkSPdF8VmkSh/OzWujXyHuSBF4xYi726Hgc8AfOpKYncXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WZAwOgmi; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712941748; c=relaxed/simple;
+	bh=7tphMLAC19jz8oZDXT4hUsEexwcdhToglAcNU5zFLso=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V2uxZflNtFqsf9BsP5TlLeVw5aYj6LNNgI3n6EZu/x0qMLSC+Ov2Tjkob+u35HZl9bJ2gxq5nCKlc9B3RXM4CTXdz3Y4gvAcN6vi5KuqbQ0U1XBPxRZdSJ/ck0jkIQDvERPSyXi/MzS9+3lfVi/RmeNsMm2rfonUHGDZH6Ux/Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YpkrJIPH; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZAwOgmi"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-343cfe8cae1so686531f8f.3
-        for <git@vger.kernel.org>; Fri, 12 Apr 2024 10:05:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712941542; x=1713546342; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DZtcAHAvXbwHOCJH2rpWzwci7ZDQodYg5Tw63u4joQM=;
-        b=WZAwOgmi3IrShj93tmZvTBPyLY0R2oG5DSyxC4R/4cBlwPP5gstifF84gClu7jjuxV
-         /NASOegA1keE0Ia1+Ocprz+QVuUabNuSEMigmdDwgIr/j6CgIHzWo6Vs6ayLqm5q+uqJ
-         MegDPpt6fbXGLsJJBpG25KSN/ywdRX1ZWlbNFMRzHSSLOlPJOE46R1ZRzFb4RXKnqAbm
-         NCEYBfbqyIwYeycmDzFaLX5FLm3bJUVO2Skt76TGX8Fb1oG26JW1B80JTPEr/U27t7so
-         717Z3KfrLDpQ59EqACsCF73MlzSd4lWqNHRgL4TlXowjOBkmDJ90M6Dz9EPMKURGVxSC
-         CP3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712941542; x=1713546342;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DZtcAHAvXbwHOCJH2rpWzwci7ZDQodYg5Tw63u4joQM=;
-        b=XZSpOA7k2/no9YC+QjQBeEcSNbkkoyGkVvUb4dUVDb8Byo8ZdNV/UAADw5/DSmQE/+
-         MWcOwLItEzPzhEA/yzdBd26fsSLQfdzgHG6sCqDHfvOPpVS6Bj3i7GagFxkP4DTsGPEG
-         7yNF5szkz+Bv+nMfzQhH6i42MLOY6f7upiX1tvqctzFooKRb6Qtct/VtmneKsnj5H5eD
-         wU1SXHVWYEXueSlBCpZF3bYFEiZU4ojb6RPr9gtkJY9lXsMvyQbNU5o7fhNpKm9o0UAE
-         rVzcyPSsPC2R2v9LmflcIrFzo0jJ3q/GFtgpeg/USOsf693MdE4HZdq0FSuB8Lw9yBsC
-         xp8Q==
-X-Gm-Message-State: AOJu0Yynwe5kwQ+QnaYqWmfDpM/jgdUPjRq7mOxGm6v7UdaxFrJjh4/r
-	do6EA7uRBHiHpy1TOL9rmy3USwLmGZGzJCtSjdZ3XdW2cU84WtcCyc2zdw==
-X-Google-Smtp-Source: AGHT+IEoxPX58Fl6T9mJ8Jd/rJfXOkW0iupn35idRZHV9PP16QyvsH72XnxRwqFO9X2BHM2f7LfKIg==
-X-Received: by 2002:a05:6000:18c1:b0:343:7cef:993d with SMTP id w1-20020a05600018c100b003437cef993dmr2142577wrq.61.1712941542499;
-        Fri, 12 Apr 2024 10:05:42 -0700 (PDT)
-Received: from gmail.com (188.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.188])
-        by smtp.gmail.com with ESMTPSA id o18-20020a5d6852000000b00343e8968917sm4697053wrw.1.2024.04.12.10.05.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Apr 2024 10:05:42 -0700 (PDT)
-Message-ID: <ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
-Date: Fri, 12 Apr 2024 19:05:41 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YpkrJIPH"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97B7B1E135C;
+	Fri, 12 Apr 2024 13:09:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7tphMLAC19jz8oZDXT4hUsEexwcdhToglAcNU5
+	zFLso=; b=YpkrJIPHs++CG6s9VQQJnWgz5KtfCkMcf/1SBo3l9LgvnVvN9shcai
+	jEGg6ijN2BZlVMoOb62rfgEGiw3DBe6Bw4njHUsQqU21whxLdNaFzqcuZ9qU/x1Q
+	DSVyg9tHoCgiMv7DULUxa62bdnHfQMOLUTApTDALjmHCRf+ePvSOs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8979D1E135B;
+	Fri, 12 Apr 2024 13:09:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D26D91E1359;
+	Fri, 12 Apr 2024 13:09:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
+ <nasamuffin@google.com>,  Patrick Steinhardt <ps@pks.im>,  Matthieu Moy
+ <git@matthieu-moy.fr>,  Eric Sunshine <sunshine@sunshineco.com>,  Kipras
+ Melnikovas <kipras@kipras.org>,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
+In-Reply-To: <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
+	(Linus Arver via GitGitGadget's message of "Thu, 11 Apr 2024 23:32:13
+	+0000")
+References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
+	<pull.1704.v4.git.1712878339.gitgitgadget@gmail.com>
+	<c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
+Date: Fri, 12 Apr 2024 10:09:02 -0700
+Message-ID: <xmqqsezqmrtd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3 0/2] launch_editor: waiting message
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
- <96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
- <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
-In-Reply-To: <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5D27FB06-F8EF-11EE-A970-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Improve the hint message we have in editor.c.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Rubén Justo (2):
-  launch_editor: waiting for editor message
-  launch_editor: waiting message on error
+> From: Linus Arver <linusa@google.com>
+>
+> Use a dash ("git-contacts", not "git contacts") because the script
+> is not a core builtin command that is compiled into the `git` binary.
 
- editor.c | 54 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 32 insertions(+), 22 deletions(-)
+Pedantic, but "git mergetool" is how it is spelled even though it is
+not a core builtin command and is not compiled into the binary.  The
+reason why "git-contacts" is better is because we do not install it
+to be usable by user's "git".
 
--- 
-2.44.0.771.gbd07cf668b
+    ... because the script is not installed as part of "git"
+    toolset.
+
+An obvious alternative of course is to promote "contacts" out of
+"contrib/" and install it as part of the standard toolset.  I gave a
+brief scan of the script and did not find anything (other than "only
+the recent 5 years worth of history matters") that is too specific
+to our project and I suspect it should do a reasonable job when run
+in any repository/working tree of a git-managed project.
+
+But it is outside the scope of this series.  I'd still welcome the
+thought to do that after the dust settles, though.
+
+> This also puts the script on one line, which should make it easier to
+> grep for with a loose search query, such as
+>
+>     $ git grep git.contacts Documentation
+>
+> . Also add a footnote to describe where the script could actually be
+
+Let's drop ". "; it may leave the previous sentence appear hanging
+unterminated, but the capital A that begins a new sentence is a good
+enough sign that we finished the previous sentence, isn't it?
+
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index e734a3f0f17..8b6e4bf0300 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -493,9 +493,16 @@ security relevant should not be submitted to the public mailing list
+>  mentioned below, but should instead be sent privately to the Git
+>  Security mailing list{security-ml-ref}.
+>  
+> +:contrib-scripts: footnoteref:[contrib-scripts,Scripts under `contrib/` are not +
+> +part of the core `git` binary and must be called separately. Consult your +
+> +package manager to determine where it is located. For example&#44; on Ubuntu-based +
+> +systems it could be installed under +
+> +`/usr/share/doc/git/contrib/contacts/git-contacts` and may need to be called +
+> +with `perl ...` if it does not have the executable bit set.]
+
+I wouldn't call anything in /usr/share/doc/ "installed", though.
+
+In the context of _this_ document where the user is working on _git_
+project towards submitting patches to _us_, it is far simpler to
+drop the above paragraph and tell them how to run the script in
+contrib/, e.g.
+
+    $ perl contrib/contacts/git-contacts <args>...
+
+without hinting there is anything platform/distro specific, and
+instead to have them all work from our sources.
+
+I am assuming that any user who are reading this part of the
+document would have a reasonably recent version of our sources
+checked out (after all, they already have a patch or two to send but
+they are learning the way to find whom to send them to).
