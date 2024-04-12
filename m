@@ -1,57 +1,57 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F87753373
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2697151C36
 	for <git@vger.kernel.org>; Fri, 12 Apr 2024 09:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712915965; cv=none; b=hFSEJM7bHJQtDllNlVMnU60BuJ1kR5LSR3Pd+Jwr/h7MIinlAZFGzPBryLBpl8Iho5ivpNQR68F7eko17BF4VftU9QpgX6Tzt1culz8bVung3YcJLq92R4yCiLqsEtqTp9NuOOVQKnhUHHKmGsqIMdXpkhV7xE/Je9bgXw7wEc4=
+	t=1712915966; cv=none; b=A7jq8pXLC4bBfp/gcI86Md00GYJbTOTlpjgFzTjELb8Hg5ueMLlB5dnzuZ5q5m1RofdFfFea/5rn/7k2Gh3HEPbI8JksagUhRWK+oAsRym1egQAbg3hmzbwHHCghmnsS2rcgGqItdX8C0jM9K+hu/yk14unv1yEyw/0GF3cMyGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712915965; c=relaxed/simple;
-	bh=3NrmtR3rKpwMbAW4C52M6pu9wC5/xrn/55U/DVJiFvg=;
+	s=arc-20240116; t=1712915966; c=relaxed/simple;
+	bh=36/OR6e0Ux8u+mL6Pq+tyf201+v7xZpeUgyMuRHH+2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssw7ZpzvesnhA2y3dH9ZWgGWd7f6Xak8DPLBiguTOBjubU9E3rnCVUylyiB3aQMGkixIjd422Q3WEkzfRD9d5M+VoyjOMgqFmCRjMow2j4XMQ2soG/R77xX3q9Gi9cXoe+9G5NyA3MCPNLrJij7zwAQIZaPXbhUqALOdzmlcHX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fn644sU/; arc=none smtp.client-ip=209.85.208.44
+	 MIME-Version; b=M1fMws+SeZ5KQ3BRtjKaN25hGeEy41vwXah9dM+UNB1SQ5I2ertbiT9Gtm8vj8E2dT3D3KDYhn2HJfuKXE4H5l3FtxZ7BVjWq+FKAVs4lzmwaiuVfKRPRoiFpbZRzTmO3ryyVgcbtk9KAOr7YMdffcva1aIzrtz1DMlwEWXh2sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lQ1bqcQN; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fn644sU/"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-56829f41f81so999174a12.2
-        for <git@vger.kernel.org>; Fri, 12 Apr 2024 02:59:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lQ1bqcQN"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-56e56ee8d5cso952884a12.2
+        for <git@vger.kernel.org>; Fri, 12 Apr 2024 02:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712915961; x=1713520761; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1712915962; x=1713520762; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FK2sjj03Q9An4nxlyyFUBDx9sq4Y16Ay4hpRN1KWrLY=;
-        b=fn644sU/E/+agh2yfsEWivSgLbu6gMBKn9q1jyxWR6ZcAw6Vq6nZy8iDfoqzgQCBPc
-         yyfroWQ1m1Fkz5pwZUZ7VvQrMDM9XN9/GYylMpp3/aLmNMeSf+eC4XQOAzXIcMKrNdE+
-         KfkqNPrtHgzOEIJVcL39fvPzdGLAU9PU8LyH5+HM7Vf9qWDitMqr+0bff8nuNYz9EL8Y
-         DtwOaDGEY3McAHtTQ4HbC5u6c/Xw3s2YdivuMMYPe04NdPJceTD6v4lrLEiiXPjPT4hH
-         uUuBZGYCQ7fY+IFkkjAzRyWmGpDR6o2WEsFvoU+F4DGGxDGMiJP7rtJEEHKuvpIVfl/a
-         GKoA==
+        bh=wLX5r1EDDCIedTdBkAXz1fDSm9fYX1S4eN8FpC3vSYY=;
+        b=lQ1bqcQNlWv1Lev0b02a94PcbrfriuKEtD3YMm3udfXGJE1oP85Gs0DJTc3mr5yUuL
+         Wk4BlQ6l0TvFjtUfvvlgvkpcnjmLTZerUacJuVfO5z5u00qWDhOF6MGOF3bzoAmlVGFA
+         f5qf7re0K297j8wVcnT2JGChBsR8pKQm3NqPFNIqfgMTJnyieFNgeyhlBgAj0qizcvNo
+         PUa9AhxetNLpsUzbHv+UX0sS91SPmW2+qwNWvDmQt3xjlSTVC95ndyrB9VhLy1IfBUaP
+         syGTzp7LKkzU50Oo0o8y8P5EjrbhP7do8QzbK2K3fZBUt9gSLUWPi+aL3KuS0H2XUYEk
+         wbiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712915961; x=1713520761;
+        d=1e100.net; s=20230601; t=1712915962; x=1713520762;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FK2sjj03Q9An4nxlyyFUBDx9sq4Y16Ay4hpRN1KWrLY=;
-        b=hoMSY9yNDH5Fq0hyfg943SkwKx84tUcpIi8sQzACscLtc5+Isc+6ZBpdypJWPgD4ic
-         FBpiAkMfiisRzMCbeqhPLOak9NDAYBQBBTPJ9GKPRxZQuD46Jx7wSqwHKX619PxSQU7c
-         vjt60svR+Gwoavr5Cwwort1sd3pGPYTr5mBxe5dzYLn3VtnOqeLAuiMa5SD4nMr1KgTL
-         /P37RFnWKIDaHC2oAQRJqms72FJo7QwH4Sel3IBEjpxkcUGCXsynj0mT8WnTwfxv6UjB
-         oxNGAT6XhomiSlkLK5EAdM0ouGHk9xEDh2cmupWMyh1tYV7c7xoM5w3jbETa63BwJJxs
-         1PBA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZRbIyOE7DSPQB+/2f6E9FxM2gPXjrOOS+kRf71769+mDQJWdIm/+IdDPxn9pApKwHY0Xmrk0eyvoOvPjJZNqCLxb5
-X-Gm-Message-State: AOJu0YzrfCB0foOl5emGR53lSgvRee+19B2K/BQgaJ4gGTuzUVUYEZyh
-	6wZB0nvq/vF4pBr+e27mEERIk33gZTYppT4tVcwLva6zbL6H8UrFxCwiag==
-X-Google-Smtp-Source: AGHT+IEHdPqVb+mvvTSEoXgYEaHYrflU5I4nIsFTZzvOGs02NO8u6+gUulzZMjrnXWumd+5x8qOJ5g==
-X-Received: by 2002:a50:9b1a:0:b0:56d:f3a7:60e with SMTP id o26-20020a509b1a000000b0056df3a7060emr1594294edi.22.1712915961192;
-        Fri, 12 Apr 2024 02:59:21 -0700 (PDT)
+        bh=wLX5r1EDDCIedTdBkAXz1fDSm9fYX1S4eN8FpC3vSYY=;
+        b=umhQfbbLU058xBaBqWNT/eTuGh1zNuKeWfskPdv6T+sYAgR6niuiRLZxa4gGjBHmCk
+         zxn4d1oSggMuPoXbL6wQ59hNrNvKGwK2+65zXOWMITSZUWZHXGxuyBtsoincPGS9su0V
+         kgbcgRC4mI1WGvkYE/O4M6ogt6JN6X/QT2abJW+CIO8Ijb8UDthyp8uFa7KI28MBlBol
+         gbFD9ED9QyYcyuvvyzv28t6hijdAuOfWqR3C/LMG5k4pyPKwdQrFZugcpn9MY3ahhjNd
+         NSVn9Q+4atzVNDxAbhT6gy22+Qsr5wYz8Q0+7fHhBl887Dr/KsqiVKdFh6OrCC4mDqjn
+         IPfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUXB4EaUu1DEUH0VwJUnElS0z3zbEwa+TtWbg7lxUf+fGG6Fd+MHAKC/p56kiUbi6+Kp0byg460w7MtNj7eYOy3dUHy
+X-Gm-Message-State: AOJu0Yzj66Iy5Nmpl4gRrAQRFJkNq1sFzrrsSG/k15c7nEH3RL3xu2cT
+	UdhIX2ILviY80wyecvSSCvL6FLiyW2nQWO8aEwtA9LKPm3vXkvaZ
+X-Google-Smtp-Source: AGHT+IFoeBR/cI4C+o3XtHQdxNd0ueKFiKklqOcQ0PzhUYQEYba5jeDNwNv9n4ASQLtoHEPsquD5dA==
+X-Received: by 2002:a50:cddd:0:b0:56b:b6a2:2048 with SMTP id h29-20020a50cddd000000b0056bb6a22048mr1445447edj.24.1712915962438;
+        Fri, 12 Apr 2024 02:59:22 -0700 (PDT)
 Received: from laptop.fritz.box ([2a02:2455:826e:4900:355c:c013:66aa:c838])
-        by smtp.gmail.com with ESMTPSA id et4-20020a056402378400b0056e67f9f4c3sm1498552edb.72.2024.04.12.02.59.20
+        by smtp.gmail.com with ESMTPSA id et4-20020a056402378400b0056e67f9f4c3sm1498552edb.72.2024.04.12.02.59.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Apr 2024 02:59:20 -0700 (PDT)
+        Fri, 12 Apr 2024 02:59:21 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
@@ -59,9 +59,9 @@ Cc: chris.torek@gmail.com,
 	git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im
-Subject: [PATCH v2 2/7] update-ref: add support for symref-verify
-Date: Fri, 12 Apr 2024 11:59:03 +0200
-Message-ID: <20240412095908.1134387-3-knayak@gitlab.com>
+Subject: [PATCH v2 3/7] update-ref: add support for symref-delete
+Date: Fri, 12 Apr 2024 11:59:04 +0200
+Message-ID: <20240412095908.1134387-4-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412095908.1134387-1-knayak@gitlab.com>
 References: <20240330224623.579457-1-knayak@gitlab.com>
@@ -76,536 +76,291 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-In the previous commit, we added the required base for adding symref
-support in transactions provided by the 'git-update-ref(1)'. This commit
-introduces the 'symref-verify' command which is similar to the existing
-'verify' command for regular refs.
-
-The 'symref-verify' command allows users to verify if a provided <ref>
-contains the provided <old-ref> without changing the <ref>. If <old-ref>
-is not provided, the command will verify that the <ref> doesn't exist.
-Since we're checking for symbolic refs, this command will only work with
-the 'no-deref' mode. This is because any dereferenced symbolic ref will
-point to an object and not a ref and the regular 'verify' command can be
-used in such situations.
-
-This commit adds all required helper functions required to also
-introduce the other symref commands, namely create, delete, and update.
-We also add tests to test the command in both the regular stdin mode and
-also with the '-z' flag.
-
-When the user doesn't provide a <old-ref> we need to check that the
-provided <ref> doesn't exist. And to do this, we take over the existing
-understanding that <old-oid> when set to its zero value, it refers to
-the ref not existing. While this seems like a mix of contexts between
-using <*-ref> and <*-oid>, this actually works really well, especially
-considering the fact that we want to eventually also introduce
-
-    symref-update SP <ref> SP <new-ref> [SP (<old-oid> | <old-rev>)] LF
-
-and here, we'd allow the user to update a regular <ref> to a symref and
-use <old-oid> to check the <ref>'s oid. This can be extrapolated to the
-user using this to create a symref when provided a zero <old-oid>. Which
-will work given how we're setting it up.
-
-We also disable the reference-transaction hook for symref-updates which
-will be tackled in its own commit.
-
-Add required tests for 'symref-verify' while also adding reflog checks for
-the pre-existing 'verify' tests.
+Similar to the previous commit, add 'symref-delete' to allow deletions
+of symbolic refs in a transaction via the 'git-update-ref' command. The
+'symref-delete' command can when given with an <old-ref>, deletes the
+provided <ref> only when it points to <old-ref>.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-update-ref.txt |  7 +++
- builtin/update-ref.c             | 82 ++++++++++++++++++++++++++++----
- refs.c                           | 37 +++++++++++---
- refs.h                           |  1 +
- refs/files-backend.c             | 46 +++++++++++++++++-
- refs/refs-internal.h             |  7 +++
- refs/reftable-backend.c          | 23 ++++++++-
- t/t1400-update-ref.sh            | 80 ++++++++++++++++++++++++++++++-
- 8 files changed, 262 insertions(+), 21 deletions(-)
+ Documentation/git-update-ref.txt |  6 +++++
+ builtin/fetch.c                  |  2 +-
+ builtin/receive-pack.c           |  3 ++-
+ builtin/update-ref.c             | 34 +++++++++++++++++++++++++++-
+ refs.c                           | 16 +++++++++----
+ refs.h                           |  4 +++-
+ refs/files-backend.c             |  2 +-
+ refs/reftable-backend.c          |  2 +-
+ t/t1400-update-ref.sh            | 39 ++++++++++++++++++++++++++++++++
+ 9 files changed, 97 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index 374a2ebd2b..749aaa7892 100644
+index 749aaa7892..ef22a1a2f4 100644
 --- a/Documentation/git-update-ref.txt
 +++ b/Documentation/git-update-ref.txt
 @@ -65,6 +65,7 @@ performs all modifications together.  Specify commands of the form:
  	create SP <ref> SP <new-oid> LF
  	delete SP <ref> [SP <old-oid>] LF
  	verify SP <ref> [SP <old-oid>] LF
-+	symref-verify SP <ref> [SP <old-ref>] LF
++	symref-delete SP <ref> [SP <old-ref>] LF
+ 	symref-verify SP <ref> [SP <old-ref>] LF
  	option SP <opt> LF
  	start LF
- 	prepare LF
-@@ -86,6 +87,7 @@ quoting:
+@@ -87,6 +88,7 @@ quoting:
  	create SP <ref> NUL <new-oid> NUL
  	delete SP <ref> NUL [<old-oid>] NUL
  	verify SP <ref> NUL [<old-oid>] NUL
-+	symref-verify SP <ref> [NUL <old-ref>] NUL
++	symref-delete SP <ref> [NUL <old-ref>] NUL
+ 	symref-verify SP <ref> [NUL <old-ref>] NUL
  	option SP <opt> NUL
  	start NUL
- 	prepare NUL
-@@ -117,6 +119,11 @@ verify::
+@@ -119,6 +121,10 @@ verify::
  	Verify <ref> against <old-oid> but do not change it.  If
  	<old-oid> is zero or missing, the ref must not exist.
  
-+symref-verify::
-+	Verify symbolic <ref> against <old-ref> but do not change it.
-+	If <old-ref> is missing, the ref must not exist.  Can only be
-+	used in `no-deref` mode.
++symref-delete::
++	Delete <ref> after verifying it exists with <old-ref>, if
++	given.
 +
- option::
- 	Modify the behavior of the next command naming a <ref>.
- 	The only valid option is `no-deref` to avoid dereferencing
+ symref-verify::
+ 	Verify symbolic <ref> against <old-ref> but do not change it.
+ 	If <old-ref> is missing, the ref must not exist.  Can only be
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 66840b7c5b..d02592efca 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1383,7 +1383,7 @@ static int prune_refs(struct display_state *display_state,
+ 		if (transaction) {
+ 			for (ref = stale_refs; ref; ref = ref->next) {
+ 				result = ref_transaction_delete(transaction, ref->name, NULL, 0,
+-								"fetch: prune", &err);
++								NULL, "fetch: prune", &err);
+ 				if (result)
+ 					goto cleanup;
+ 			}
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index ebea1747cb..6b728baaac 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1576,7 +1576,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 		if (ref_transaction_delete(transaction,
+ 					   namespaced_name,
+ 					   old_oid,
+-					   0, "push", &err)) {
++					   0, NULL,
++					   "push", &err)) {
+ 			rp_error("%s", err.buf);
+ 			ret = "failed to delete";
+ 		} else {
 diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 21fdbf6ac8..4ae6bdcb12 100644
+index 4ae6bdcb12..3be9ae0d00 100644
 --- a/builtin/update-ref.c
 +++ b/builtin/update-ref.c
-@@ -76,6 +76,30 @@ static char *parse_refname(const char **next)
- 	return strbuf_detach(&ref, NULL);
+@@ -294,7 +294,7 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
+ 
+ 	if (ref_transaction_delete(transaction, refname,
+ 				   have_old ? &old_oid : NULL,
+-				   update_flags, msg, &err))
++				   update_flags, NULL, msg, &err))
+ 		die("%s", err.buf);
+ 
+ 	update_flags = default_flags;
+@@ -302,6 +302,37 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
+ 	strbuf_release(&err);
  }
  
-+
-+
-+/*
-+ * Wrapper around parse_refname which skips the next delimiter.
-+ */
-+static char *parse_next_refname(const char **next)
++static void parse_cmd_symref_delete(struct ref_transaction *transaction,
++				    const char *next, const char *end)
 +{
-+        if (line_termination) {
-+                /* Without -z, consume SP and use next argument */
-+                if (!**next || **next == line_termination)
-+                        return NULL;
-+                if (**next != ' ')
-+                        die("expected SP but got: %s", *next);
-+        } else {
-+                /* With -z, read the next NUL-terminated line */
-+                if (**next)
-+                        return NULL;
-+        }
-+        /* Skip the delimiter */
-+        (*next)++;
++	struct strbuf err = STRBUF_INIT;
++	char *refname, *old_ref;
 +
-+        return parse_refname(next);
-+}
++	if (!(update_flags & REF_NO_DEREF))
++                die("symref-delete: cannot operate with deref mode");
 +
- /*
-  * The value being parsed is <old-oid> (as opposed to <new-oid>; the
-  * difference affects which error messages are generated):
-@@ -297,11 +321,48 @@ static void parse_cmd_verify(struct ref_transaction *transaction,
- 		die("verify %s: extra input: %s", refname, next);
- 
- 	if (ref_transaction_verify(transaction, refname, &old_oid,
--				   update_flags, &err))
-+				   NULL, update_flags, &err))
++	refname = parse_refname(&next);
++	if (!refname)
++		die("symref-delete: missing <ref>");
++
++        old_ref = parse_next_refname(&next);
++	if (old_ref && read_ref(old_ref, NULL))
++		die("symref-delete %s: invalid <old-ref>", refname);
++
++	if (*next != line_termination)
++		die("symref-delete %s: extra input: %s", refname, next);
++
++	if (ref_transaction_delete(transaction, refname, NULL,
++				   update_flags | REF_SYMREF_UPDATE,
++				   old_ref, msg, &err))
 +		die("%s", err.buf);
 +
 +	update_flags = default_flags;
 +	free(refname);
++	free(old_ref);
 +	strbuf_release(&err);
 +}
 +
-+static void parse_cmd_symref_verify(struct ref_transaction *transaction,
-+                                    const char *next, const char *end)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	struct object_id old_oid;
-+	char *refname, *old_ref;
-+
-+	if (!(update_flags & REF_NO_DEREF))
-+		die("symref-verify: cannot operate with deref mode");
-+
-+	refname = parse_refname(&next);
-+	if (!refname)
-+		die("symref-verify: missing <ref>");
-+
-+	/*
-+	 * old_ref is optional, but we want to differentiate between
-+	 * a NULL and zero value.
-+	 */
-+	old_ref = parse_next_refname(&next);
-+	if (!old_ref)
-+		old_oid = *null_oid();
-+	else if (read_ref(old_ref, NULL))
-+		die("symref-verify %s: invalid <old-ref>", refname);
-+
-+	if (*next != line_termination)
-+		die("symref-verify %s: extra input: %s", refname, next);
-+
-+	if (ref_transaction_verify(transaction, refname, old_ref ? NULL : &old_oid,
-+				   old_ref, update_flags | REF_SYMREF_UPDATE, &err))
- 		die("%s", err.buf);
- 
- 	update_flags = default_flags;
- 	free(refname);
-+	free(old_ref);
- 	strbuf_release(&err);
- }
- 
-@@ -380,15 +441,16 @@ static const struct parse_cmd {
- 	unsigned args;
- 	enum update_refs_state state;
- } command[] = {
--	{ "update",  parse_cmd_update,  3, UPDATE_REFS_OPEN },
--	{ "create",  parse_cmd_create,  2, UPDATE_REFS_OPEN },
--	{ "delete",  parse_cmd_delete,  2, UPDATE_REFS_OPEN },
--	{ "verify",  parse_cmd_verify,  2, UPDATE_REFS_OPEN },
--	{ "option",  parse_cmd_option,  1, UPDATE_REFS_OPEN },
--	{ "start",   parse_cmd_start,   0, UPDATE_REFS_STARTED },
--	{ "prepare", parse_cmd_prepare, 0, UPDATE_REFS_PREPARED },
--	{ "abort",   parse_cmd_abort,   0, UPDATE_REFS_CLOSED },
--	{ "commit",  parse_cmd_commit,  0, UPDATE_REFS_CLOSED },
-+	{ "update",        parse_cmd_update,        3, UPDATE_REFS_OPEN },
-+	{ "create",        parse_cmd_create,        2, UPDATE_REFS_OPEN },
-+	{ "delete",        parse_cmd_delete,        2, UPDATE_REFS_OPEN },
-+	{ "verify",        parse_cmd_verify,        2, UPDATE_REFS_OPEN },
-+	{ "symref-verify", parse_cmd_symref_verify, 2, UPDATE_REFS_OPEN },
-+	{ "option",        parse_cmd_option,        1, UPDATE_REFS_OPEN },
-+	{ "start",         parse_cmd_start,         0, UPDATE_REFS_STARTED },
-+	{ "prepare",       parse_cmd_prepare,       0, UPDATE_REFS_PREPARED },
-+	{ "abort",         parse_cmd_abort,         0, UPDATE_REFS_CLOSED },
-+	{ "commit",        parse_cmd_commit,        0, UPDATE_REFS_CLOSED },
- };
- 
- static void update_refs_stdin(void)
+ static void parse_cmd_verify(struct ref_transaction *transaction,
+ 			     const char *next, const char *end)
+ {
+@@ -445,6 +476,7 @@ static const struct parse_cmd {
+ 	{ "create",        parse_cmd_create,        2, UPDATE_REFS_OPEN },
+ 	{ "delete",        parse_cmd_delete,        2, UPDATE_REFS_OPEN },
+ 	{ "verify",        parse_cmd_verify,        2, UPDATE_REFS_OPEN },
++	{ "symref-delete", parse_cmd_symref_delete, 2, UPDATE_REFS_OPEN },
+ 	{ "symref-verify", parse_cmd_symref_verify, 2, UPDATE_REFS_OPEN },
+ 	{ "option",        parse_cmd_option,        1, UPDATE_REFS_OPEN },
+ 	{ "start",         parse_cmd_start,         0, UPDATE_REFS_STARTED },
 diff --git a/refs.c b/refs.c
-index 967c81167e..124b294c9f 100644
+index 124b294c9f..6d98d9652d 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -19,6 +19,7 @@
- #include "object-store-ll.h"
- #include "object.h"
- #include "path.h"
-+#include "string.h"
- #include "tag.h"
- #include "submodule.h"
- #include "worktree.h"
-@@ -29,6 +30,7 @@
- #include "date.h"
- #include "commit.h"
- #include "wildmatch.h"
-+#include "wrapper.h"
- 
- /*
-  * List of all available backends
-@@ -1217,6 +1219,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
- 
+@@ -981,7 +981,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
+ 	transaction = ref_store_transaction_begin(refs, &err);
+ 	if (!transaction ||
+ 	    ref_transaction_delete(transaction, refname, old_oid,
+-				   flags, msg, &err) ||
++				   flags, NULL, msg, &err) ||
+ 	    ref_transaction_commit(transaction, &err)) {
+ 		error("%s", err.buf);
+ 		ref_transaction_free(transaction);
+@@ -1220,6 +1220,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
  	for (i = 0; i < transaction->nr; i++) {
  		free(transaction->updates[i]->msg);
-+		free((void *)transaction->updates[i]->old_ref);
+ 		free((void *)transaction->updates[i]->old_ref);
++		free((void *)transaction->updates[i]->new_ref);
  		free(transaction->updates[i]);
  	}
  	free(transaction->updates);
-@@ -1242,10 +1245,19 @@ struct ref_update *ref_transaction_add_update(
- 
- 	update->flags = flags;
- 
--	if (flags & REF_HAVE_NEW)
--		oidcpy(&update->new_oid, new_oid);
--	if (flags & REF_HAVE_OLD)
--		oidcpy(&update->old_oid, old_oid);
-+	/*
-+	 * The ref values are to be considered over the oid values when we're
-+	 * doing symref operations.
-+	 */
-+	if (update->flags & REF_SYMREF_UPDATE) {
-+		if (old_ref)
-+			update->old_ref = xstrdup(old_ref);
-+	} else {
-+		if (flags & REF_HAVE_NEW)
-+			oidcpy(&update->new_oid, new_oid);
-+		if (flags & REF_HAVE_OLD)
-+			oidcpy(&update->old_oid, old_oid);
-+	}
- 	update->msg = normalize_reflog_message(msg);
- 	return update;
- }
-@@ -1280,6 +1292,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 	flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
- 
- 	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
-+	flags |= (new_ref ? REF_HAVE_NEW : 0) | (old_ref ? REF_HAVE_OLD : 0);
- 
- 	ref_transaction_add_update(transaction, refname, flags,
- 				   new_oid, old_oid, new_ref, old_ref, msg);
-@@ -1318,14 +1331,17 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- int ref_transaction_verify(struct ref_transaction *transaction,
+@@ -1252,6 +1253,8 @@ struct ref_update *ref_transaction_add_update(
+ 	if (update->flags & REF_SYMREF_UPDATE) {
+ 		if (old_ref)
+ 			update->old_ref = xstrdup(old_ref);
++		if (new_ref)
++			update->new_ref = xstrdup(new_ref);
+ 	} else {
+ 		if (flags & REF_HAVE_NEW)
+ 			oidcpy(&update->new_oid, new_oid);
+@@ -1317,14 +1320,17 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ int ref_transaction_delete(struct ref_transaction *transaction,
  			   const char *refname,
  			   const struct object_id *old_oid,
+-			   unsigned int flags, const char *msg,
++			   unsigned int flags,
 +			   const char *old_ref,
- 			   unsigned int flags,
++			   const char *msg,
  			   struct strbuf *err)
  {
--	if (!old_oid)
-+	if (flags & REF_SYMREF_UPDATE && !old_ref && !old_oid)
-+		BUG("verify called with old_ref set to NULL");
-+	if (!(flags & REF_SYMREF_UPDATE) && !old_oid)
- 		BUG("verify called with old_oid set to NULL");
+-	if (old_oid && is_null_oid(old_oid))
++	if (!(flags & REF_SYMREF_UPDATE) && old_oid &&
++	    is_null_oid(old_oid))
+ 		BUG("delete called with old_oid set to zeros");
  	return ref_transaction_update(transaction, refname,
- 				      NULL, old_oid,
--				      NULL, NULL,
-+				      NULL, old_ref,
- 				      flags, NULL, err);
+ 				      null_oid(), old_oid,
+-				      NULL, NULL, flags,
++				      NULL, old_ref, flags,
+ 				      msg, err);
  }
  
-@@ -2342,6 +2358,9 @@ static int run_transaction_hook(struct ref_transaction *transaction,
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
+@@ -2748,7 +2754,7 @@ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
  
-+		if (update->flags & REF_SYMREF_UPDATE)
-+			continue;
-+
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "%s %s %s\n",
- 			    oid_to_hex(&update->old_oid),
-@@ -2795,3 +2814,9 @@ int copy_existing_ref(const char *oldref, const char *newref, const char *logmsg
- {
- 	return refs_copy_existing_ref(get_main_ref_store(the_repository), oldref, newref, logmsg);
- }
-+
-+int null_new_value(struct ref_update *update) {
-+	if (update->flags & REF_SYMREF_UPDATE && update->new_ref)
-+		return 0;
-+	return is_null_oid(&update->new_oid);
-+}
+ 	for_each_string_list_item(item, refnames) {
+ 		ret = ref_transaction_delete(transaction, item->string,
+-					     NULL, flags, msg, &err);
++					     NULL, flags, 0, msg, &err);
+ 		if (ret) {
+ 			warning(_("could not delete reference %s: %s"),
+ 				item->string, err.buf);
 diff --git a/refs.h b/refs.h
-index 645fe9fdb8..a988e672ff 100644
+index a988e672ff..60e6a21a31 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -772,6 +772,7 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- int ref_transaction_verify(struct ref_transaction *transaction,
+@@ -758,7 +758,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ int ref_transaction_delete(struct ref_transaction *transaction,
  			   const char *refname,
  			   const struct object_id *old_oid,
+-			   unsigned int flags, const char *msg,
++			   unsigned int flags,
 +			   const char *old_ref,
- 			   unsigned int flags,
++			   const char *msg,
  			   struct strbuf *err);
  
+ /*
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index e4d0aa3d41..8421530bde 100644
+index 8421530bde..f74ea308b5 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2411,6 +2411,37 @@ static const char *original_update_refname(struct ref_update *update)
- 	return update->refname;
- }
+@@ -2501,7 +2501,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
  
-+/*
-+ * Check whether the REF_HAVE_OLD and old_ref values stored in update
-+ * are consistent with ref, which is the symbolic reference's current
-+ * value. If everything is OK, return 0; otherwise, write an error
-+ * message to err and return -1.
-+ */
-+static int check_old_ref(struct ref_update *update, char *ref,
-+			 struct strbuf *err)
-+{
-+	if (!(update->flags & REF_HAVE_OLD) ||
-+	    !strcmp(update->old_ref, ref))
-+		return 0;
-+
-+	if (!strcmp(update->old_ref, ""))
-+		strbuf_addf(err, "cannot lock ref '%s': "
-+			    "reference already exists",
-+			    original_update_refname(update));
-+	else if (!strcmp(ref, ""))
-+		strbuf_addf(err, "cannot lock ref '%s': "
-+			    "reference is missing but expected %s",
-+			    original_update_refname(update),
-+			    update->old_ref);
-+	else
-+		strbuf_addf(err, "cannot lock ref '%s': "
-+			    "is at %s but expected %s",
-+			    original_update_refname(update),
-+			    ref, update->old_ref);
-+
-+	return -1;
-+}
-+
- /*
-  * Check whether the REF_HAVE_OLD and old_oid values stored in update
-  * are consistent with oid, which is the reference's current value. If
-@@ -2464,8 +2495,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 			       struct strbuf *err)
- {
- 	struct strbuf referent = STRBUF_INIT;
--	int mustexist = (update->flags & REF_HAVE_OLD) &&
--		!is_null_oid(&update->old_oid);
-+	int mustexist = (update->flags & REF_HAVE_OLD) && !is_null_oid(&update->old_oid);
- 	int ret = 0;
- 	struct ref_lock *lock;
+ 	files_assert_main_repository(refs, "lock_ref_for_update");
  
-@@ -2514,6 +2544,18 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 					ret = TRANSACTION_GENERIC_ERROR;
- 					goto out;
- 				}
-+			}
-+
-+			/*
-+			 * For symref verification, we need to check the referent value
-+			 * rather than the oid. If we're dealing with regular refs or we're
-+			 * verifying a dereferenced symref, we then check the oid.
-+			 */
-+			if (update->flags & REF_SYMREF_UPDATE && update->old_ref) {
-+				if (check_old_ref(update, referent.buf, err)) {
-+					ret = TRANSACTION_GENERIC_ERROR;
-+					goto out;
-+				}
- 			} else if (check_old_oid(update, &lock->old_oid, err)) {
- 				ret = TRANSACTION_GENERIC_ERROR;
- 				goto out;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 4c5fe02687..21c6b940d8 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -749,4 +749,11 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
-  */
- struct ref_store *maybe_debug_wrap_ref_store(const char *gitdir, struct ref_store *store);
+-	if ((update->flags & REF_HAVE_NEW) && is_null_oid(&update->new_oid))
++	if ((update->flags & REF_HAVE_NEW) && null_new_value(update))
+ 		update->flags |= REF_DELETING;
  
-+/*
-+ * Helper function to check if the new value is null, this
-+ * takes into consideration that the update could be a regular
-+ * ref or a symbolic ref.
-+ */
-+int null_new_value(struct ref_update *update);
-+
- #endif /* REFS_REFS_INTERNAL_H */
+ 	if (head_ref) {
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 6104471199..7a03922c7b 100644
+index 7a03922c7b..935bf407df 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -938,7 +938,28 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 		 * individual refs. But the error messages match what the files
- 		 * backend returns, which keeps our tests happy.
- 		 */
--		if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
-+		if ((u->flags & REF_HAVE_OLD) &&
-+		    (u->flags & REF_SYMREF_UPDATE) &&
-+		    u->old_ref) {
-+			if   (strcmp(referent.buf, u->old_ref)) {
-+				if (!strcmp(u->old_ref, ""))
-+					strbuf_addf(err, "cannot lock ref '%s': "
-+						    "reference already exists",
-+						    original_update_refname(u));
-+				else if (!strcmp(referent.buf, ""))
-+					strbuf_addf(err, "cannot lock ref '%s': "
-+						    "reference is missing but expected %s",
-+						    original_update_refname(u),
-+						    u->old_ref);
-+				else
-+					strbuf_addf(err, "cannot lock ref '%s': "
-+						    "is at %s but expected %s",
-+						    original_update_refname(u),
-+						    referent.buf, u->old_ref);
-+				ret = -1;
-+				goto done;
-+			}
-+		} else if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
- 			if (is_null_oid(&u->old_oid))
- 				strbuf_addf(err, _("cannot lock ref '%s': "
- 					    "reference already exists"),
+@@ -1122,7 +1122,7 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+ 		if (u->flags & REF_LOG_ONLY)
+ 			continue;
+ 
+-		if (u->flags & REF_HAVE_NEW && is_null_oid(&u->new_oid)) {
++		if (u->flags & REF_HAVE_NEW && null_new_value(u)) {
+ 			struct reftable_ref_record ref = {
+ 				.refname = (char *)u->refname,
+ 				.update_index = ts,
 diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index ec3443cc87..d8ffda4096 100755
+index d8ffda4096..cf01c5d867 100755
 --- a/t/t1400-update-ref.sh
 +++ b/t/t1400-update-ref.sh
-@@ -890,17 +890,23 @@ test_expect_success 'stdin update/create/verify combination works' '
+@@ -1715,6 +1715,45 @@ test_expect_success "stdin ${type} symref-verify fails for mistaken null value"
+ 	test_cmp expect actual
  '
  
- test_expect_success 'stdin verify succeeds for correct value' '
-+	test-tool ref-store main for-each-reflog-ent $m >before &&
- 	git rev-parse $m >expect &&
- 	echo "verify $m $m" >stdin &&
- 	git update-ref --stdin <stdin &&
- 	git rev-parse $m >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test-tool ref-store main for-each-reflog-ent $m >after &&
-+	test_cmp before after
- '
- 
- test_expect_success 'stdin verify succeeds for missing reference' '
-+	test-tool ref-store main for-each-reflog-ent $m >before &&
- 	echo "verify refs/heads/missing $Z" >stdin &&
- 	git update-ref --stdin <stdin &&
--	test_must_fail git rev-parse --verify -q refs/heads/missing
-+	test_must_fail git rev-parse --verify -q refs/heads/missing &&
-+	test-tool ref-store main for-each-reflog-ent $m >after &&
-+	test_cmp before after
- '
- 
- test_expect_success 'stdin verify treats no value as missing' '
-@@ -1641,4 +1647,74 @@ test_expect_success PIPE 'transaction flushes status updates' '
- 	test_cmp expected actual
- '
- 
-+create_stdin_buf ()
-+{
-+	if test "$1" = "-z"
-+	then
-+		shift
-+		printf "$F" "$@" >stdin
-+	else
-+		echo "$@" >stdin
-+	fi
-+}
-+
-+for type in "" "-z"
-+do
-+
-+test_expect_success "stdin ${type} symref-verify fails without --no-deref" '
++test_expect_success "stdin ${type} symref-delete fails without --no-deref" '
 +	git symbolic-ref refs/heads/symref $a &&
-+	create_stdin_buf ${type} "symref-verify refs/heads/symref" "$a" &&
++	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" &&
 +	test_must_fail git update-ref --stdin ${type} <stdin 2>err &&
-+	grep "fatal: symref-verify: cannot operate with deref mode" err
++	grep "fatal: symref-delete: cannot operate with deref mode" err
 +'
 +
-+test_expect_success "stdin ${type} symref-verify fails with too many arguments" '
-+	create_stdin_buf ${type} "symref-verify refs/heads/symref" "$a" "$a" &&
-+	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err  &&
++test_expect_success "stdin ${type} fails symref-delete with no ref" '
++	create_stdin_buf ${type} "symref-delete " &&
++	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
++	grep "fatal: symref-delete: missing <ref>" err
++'
++
++test_expect_success "stdin ${type} fails symref-delete with too many arguments" '
++	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" "$a" &&
++	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
 +	if test "$type" = "-z"
 +	then
 +		grep "fatal: unknown command: $a" err
 +	else
-+		grep "fatal: symref-verify refs/heads/symref: extra input:  $a" err
++		grep "fatal: symref-delete refs/heads/symref: extra input:  $a" err
 +	fi
 +'
 +
-+test_expect_success "stdin ${type} symref-verify succeeds for correct value" '
++test_expect_success "stdin ${type} symref-delete ref fails with wrong old value" '
++	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$m" &&
++	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
++	grep "fatal: cannot lock ref '"'"'refs/heads/symref'"'"'" err &&
 +	git symbolic-ref refs/heads/symref >expect &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/symref >before &&
-+	create_stdin_buf ${type} "symref-verify refs/heads/symref" "$a" &&
-+	git update-ref --stdin ${type} --no-deref <stdin &&
-+	git symbolic-ref refs/heads/symref >actual &&
-+	test_cmp expect actual &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/symref >after &&
-+	test_cmp before after
-+'
-+
-+test_expect_success "stdin ${type} symref-verify succeeds for missing reference" '
-+	test-tool ref-store main for-each-reflog-ent refs/heads/symref >before &&
-+	create_stdin_buf ${type} "symref-verify refs/heads/missing" &&
-+	git update-ref --stdin ${type} --no-deref <stdin &&
-+	test_must_fail git rev-parse --verify -q refs/heads/missing &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/symref >after &&
-+	test_cmp before after
-+'
-+
-+test_expect_success "stdin ${type} symref-verify fails for wrong value" '
-+	git symbolic-ref refs/heads/symref >expect &&
-+	create_stdin_buf ${type} "symref-verify refs/heads/symref" "$b" &&
-+	test_must_fail git update-ref --stdin ${type} --no-deref <stdin &&
-+	git symbolic-ref refs/heads/symref >actual &&
++	echo $a >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success "stdin ${type} symref-verify fails for mistaken null value" '
-+	git symbolic-ref refs/heads/symref >expect &&
-+	create_stdin_buf ${type} "symref-verify refs/heads/symref" &&
-+	test_must_fail git update-ref --stdin ${type} --no-deref <stdin &&
-+	git symbolic-ref refs/heads/symref >actual &&
-+	test_cmp expect actual
++test_expect_success "stdin ${type} symref-delete ref works with right old value" '
++	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" &&
++	git update-ref --stdin ${type} --no-deref <stdin &&
++	test_must_fail git rev-parse --verify -q $b
 +'
 +
-+done
-+
+ done
+ 
  test_done
 -- 
 2.43.GIT
