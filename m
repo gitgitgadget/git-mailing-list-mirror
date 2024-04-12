@@ -1,109 +1,81 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0606F84A35
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 17:37:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E620914D2B1
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 17:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712943441; cv=none; b=Hhr71UxtEL04F6qTRMPSzHugI3XU6HVQKzrTSWded4j4ZbXd/egqgS0127lshYcbcbW6swXeikbtmR35jF5pIIGAcHnhco56WeltRxOXy/1BrtwemCz+nXWL2bFee5du0llaaA25IGgHbmHX+SWdWPe7sIDSVOT3GZ5lzkzENMo=
+	t=1712943719; cv=none; b=J1mYsFP7Wdd6rIoh7+cr+oH7YKg+Z+FNgPBHcusd0r6Z8lCdWf1BA5M5tmqoXlUnaYD07CDCPXL1OWMbSUz98U27U5QJWA72Qq7ZEiuWNoeobQaPY2SW43c7EBgkFTs2Ykm8r0t+XyNa9i44UEYGFYSOyoz4MuZdUJgiB/gCVH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712943441; c=relaxed/simple;
-	bh=c4qDCsWsKDKxuHUXKqXdpNujlvkkKZbsOk8tRGjd3ck=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=iijjAKPP8mJ920zxc/3ifmHPsUdHgjp7rPKJ0pH3cS6zVTNr7hrVJ/oXbcERpIanq2z1XbhI+lRACM0n0fpTfMwkY1qHACv7fzEg7m3n63VQPr0irkEDtYPLlUr2DRNLbwGmwViMA/PUUZOEOyqTArB3dCmpqc8FnZgNrHNDRe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VyxaLfKd; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VyxaLfKd"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-343f1957ffcso708170f8f.0
-        for <git@vger.kernel.org>; Fri, 12 Apr 2024 10:37:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712943438; x=1713548238; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CnxKdnnZRfMp36/+V20VqmRf+yO0Rh14KUlcaByeuOE=;
-        b=VyxaLfKdyxci8ScnIGgBNa3NrkHLMG9Ftd8E5mJmnGCqCyjVLZz1qN4ixVawFkKQAS
-         Siljj9FEMgNXFVGcSdqIwb7xcZCpERGo8nFZCPQUOsYPphNGLFCDUr2GzNkYnuq0rFsR
-         PzJ19OdwoO10FAd7ciyZcxnzLdhzeVWaH+SvEohXt6BW2ohzydzBOz0vPMlRq9XwmREz
-         6+LD3HcNFGcZl5TenfgM4wbpWGfptPVUk8JWKbFJiewJK96zB2t0/BNGfdlAlRMlIqTK
-         vbEh3QyOxkllqxM6G1weJeFfSc9kTa/vEC26DcWWet+EYGRnIp3uUBO4OXH24aO+A8tA
-         HIrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712943438; x=1713548238;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CnxKdnnZRfMp36/+V20VqmRf+yO0Rh14KUlcaByeuOE=;
-        b=caw3Drl9mAjyj+P2xcwRctDQTXp75z9j04vTYAksbAdHWYzrWxhDcHVhuzoR7y3bn8
-         GXux3bnYZ/CPIkNflnB+V82wWhycsCdwdRMQrdpoMnrroyZ0Wka60+baV6CFQfcbEA34
-         Ccwcd4XR207+HVLnKG2br8tkzahsWwlWyQGJpJBgQEH0hlyGwA5NLsG9GcxddjdF+R0k
-         PD4oEJ/dXZCA8F5bZvp+dVg4m+GIw19SZLFaf9tWnL8F2bjNAjF8DCduiRj/bR5gwr2c
-         2nMb1kLhrfVqQTV/5PRQSQvbhfOtvQebpDZI2UflnbYlEls00LZbDkFWmOSaucswLK5I
-         Y7Og==
-X-Forwarded-Encrypted: i=1; AJvYcCUyL+EkPtKzC2kQDrdziyf23n42XfDJw62OEk/fTYTdr647xEvMMhGNvmS0ujGBUKllVshu8xjm6eEaHXlvoCnjwQDm
-X-Gm-Message-State: AOJu0YxbIEzpjogQacfxSUO3kESKYTwTlYcy0j0m0gvhE5vv4s4RElIV
-	SUeEl0o2rlGDDrX9AZrCHO8Q1uR0mgA94cyLmmFn2T+PsapWLFhf
-X-Google-Smtp-Source: AGHT+IHt8pK1eOYnLh2ZtU7y++1YqP/JD5cAbiOS2XZKXU+6sHwOpkQH630+uML9A/N6NFgEzGeWng==
-X-Received: by 2002:adf:e28a:0:b0:346:e2f:a21f with SMTP id v10-20020adfe28a000000b003460e2fa21fmr2659263wri.8.1712943438242;
-        Fri, 12 Apr 2024 10:37:18 -0700 (PDT)
-Received: from gmail.com (188.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.188])
-        by smtp.gmail.com with ESMTPSA id q4-20020adff504000000b0034635bd6ba5sm4689017wro.92.2024.04.12.10.37.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Apr 2024 10:37:17 -0700 (PDT)
-Message-ID: <f473894d-caf9-4a50-962e-dc884f29e174@gmail.com>
-Date: Fri, 12 Apr 2024 19:37:16 +0200
+	s=arc-20240116; t=1712943719; c=relaxed/simple;
+	bh=GbRvfoHwu9Eh4hx2ZTGWTuXRUg6E99C2aioMSbagMjY=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Js9WynGWCFT4bcBO980MaGx2XIj7J9YDnW/wfWmjimjFMQB5wBjTev2RtI8PXf1tRl2HQj2Gj4sAuuzlMIqDsR9eaiiLtt/5EnULkpRhtl/mJTKeewKijSqsL7neeBVkMNibV3AJJ+9348BGbLeEsIrFaK3l6lWc09woxbQsK88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-251-108.cpe.net.cable.rogers.com [99.228.251.108])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 43CHfmIN498125
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 17:41:49 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>, "'Johannes Sixt'" <j6t@kdbg.org>
+Cc: "'L. E. Segovia'" <amy@amyspark.me>, <git@vger.kernel.org>
+References: <44020a6a-707f-4505-adde-e79cda63d711@amyspark.me>	<2f069d1f-aa4a-4259-9cc5-dcf912f59a17@kdbg.org>	<e25bbce7-8338-430b-865f-690fe3c94fb6@amyspark.me>	<01cf64db-2ff5-4be5-8968-d280ab0ffc50@kdbg.org> <xmqqil0mmqpx.fsf@gitster.g>
+In-Reply-To: <xmqqil0mmqpx.fsf@gitster.g>
+Subject: RE: [BUG] Clones from local repositories do not work correctly under Windows
+Date: Fri, 12 Apr 2024 13:41:43 -0400
+Organization: Nexbridge Inc.
+Message-ID: <02b801da8d00$b2c5b9f0$18512dd0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] launch_editor: waiting for editor message
-Content-Language: en-US
-To: rsbecker@nexbridge.com, 'Git List' <git@vger.kernel.org>,
- 'Junio C Hamano' <gitster@pobox.com>
-References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
- <96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
- <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
- <ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
- <83b34572-498b-438c-8437-dfbb837e60ba@gmail.com>
- <02b701da8cfe$59be3370$0d3a9a50$@nexbridge.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <02b701da8cfe$59be3370$0d3a9a50$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIexDfdOFOIpsIe/2oTJHhmBsmNgAKLJmfsAWQx2MUB8WA43gGCLP4MsKFgeSA=
+Content-Language: en-ca
 
-On Fri, Apr 12, 2024 at 01:24:55PM -0400, rsbecker@nexbridge.com wrote:
-> On Friday, April 12, 2024 1:15 PM, Rubén Justo wrote:
-> >Subject: [PATCH v3 1/2] launch_editor: waiting for editor message
-> >
-> >We have a hint shown when we are waiting for user's editor since
-> >abfb04d0c7 (launch_editor(): indicate that Git waits for user input, 2017-12-07).
-> >
-> >After showing the hint, we call start_command() which can return with an error.
-> >Then we'll show "unable to start editor...", after having said "Waiting for your
-> >editor...", which may be confusing.
-> >
-> >Move the code to show the hint below the start_command().
-> 
-> My thought on this move is for esoteric (but commonly used) terminal
-> emulators. If one is on a t6530, tn3270, or w3270/9 emulator, for
-> example, the emulator switches modes from text on the POSIX side to
-> block/full screen mode when the editor is launched. Printing a message
-> after the editor has launched has the potential to dump the message
-> into the terminal emulation buffer and get caught in the commit text
-> comment. This is not desirable. This change could have seriously
-> undesirable side-effects.
+On Friday, April 12, 2024 1:33 PM, Junio C Hamano wrote:
+>Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> alternate: C:/Temp/repoorig/.git/objects
+>> alternate: /c/Temp/repoorig/.git/objects
+>>
+>> This is the MSYS2/Cygwin absolute path with a "drive letter".
+>> Unfortunately, this kind of path is unintelligible for Git for Windows.
+>> It expects absolute paths to begin with drive letter-colon or a
+>> double-slash or double-backslash. For this reason, it reports "unable
+>> to normalize alternate object path".
+>>
+>> The conclusion is: Do not use two different flavors of Git on a
+>> repository that is set up with a link to an alternate repository.
+>
+>I do not complain to the conclusion, and I do not use Windows, but it makes
+me
+>wonder if there is a way to spell that full path that can be understood by
+both
+>implementations.  The two implementations are not incompatible in the
+actual
+>object contents and refnames and other things in .git/ directory, are they?
+>
+>In short, does MSYS2/Cygwin understand paths in "C:/Temp/..." style, and if
+so,
+>writing that out, even though it may not what it considers the native
+format, would
+>make the world a happier place.
 
-That's a good point.  Thanks for bringing it up.
+I'm my environment (<2 month old Cygwin update), the path would be
+/cygdrive/c/temp... I have not had issues using that style with git. Cygwin
+itself does not understand C:\Temp (resolves to C:temp), but does understand
+C:/Temp in bash and various utilities. It also understands (and expects) ~
+to mean /home/user (C:\Cygwin64\home\user) in the Cygwin space, not relative
+to C:\Users\user for resolving .gitconfig.
 
-Of course, in such a situation the user has the opportunity to disable
-the hint.
-
-However, can you think of a way in which we could do this, not showing
-the "Waiting..." before the "unable to start", better?
-
-Thanks.
