@@ -1,73 +1,73 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711941BC20
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:44:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEC21BC23
+	for <git@vger.kernel.org>; Fri, 12 Apr 2024 04:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712897044; cv=none; b=W6LU0aGALYdu/H/65oHSp3XUw6F6u3KazGaBsuZT8auLjWAwN0qsRmMhhYX8BxlAHpTmvkiGHfsar7nhS8gEX5wkOpZLg3KCXM6NXe5clbP7tdNyxi6txcU2lUUaiputpGscuplnsILGLVESmlfp9L3PW5i5ZtNRCi5bEvZylyY=
+	t=1712897045; cv=none; b=I6UoIQ9231CCUdyRC6BnFemccYzKHK5QOCJuerRO5XhvI7Dwh/Wk4bLgizIxGbe5f/vuuQjvVOyU49245Klg/kgkOhWM/8Xwh5UeOkZQI1631LwtxqAt2HpWtP4vERBjvChn6IFj0W6CmEQ8dLcfwpiwJncmQYScq2aA74LkucE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712897044; c=relaxed/simple;
-	bh=v8bZufYaDK91f6ZgUGZF0eRI4DMD/VHiYDK3dmGAKUI=;
+	s=arc-20240116; t=1712897045; c=relaxed/simple;
+	bh=ycbp+YcUsmXszMOkQCbJL8Db/GaF8D/ZugsGC59cX10=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gW1ekAbamtOqrmux6bXI1Iy233/uKLuTz3K9rkZvmVCjUyvolIJXXFOElSix/9Xa+fKCFDfCv3wswQT9F7+J4WVtUwtXecakX9CoClsJC2JXr9dSIHA7W+11Jxx0JanhB1mfoLhHPl0vQ5nY0FlPtPcgQwF2GMkBn6wxYNwWyOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GUzBtH3L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x0nvqCta; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=J9+70lTifAqHThW46BAIYhw+K+91UpNbqKj6QnBB2NoGvv4rXrj7ogjDXiLr/pu7kk/v8zSUreAR344XamKsi3OJRgT306QtkPyg1SGMdxXr880klc4xxfHVFCB65o6U7+FGo6eebwnRma4rQxdGMyZQ8eBsI625i1sr/u7O7dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aMRbKAMe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kAocKsQD; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GUzBtH3L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x0nvqCta"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 178E713802C9;
-	Fri, 12 Apr 2024 00:44:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aMRbKAMe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kAocKsQD"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id C871011401D1;
+	Fri, 12 Apr 2024 00:44:01 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 12 Apr 2024 00:44:00 -0400
+  by compute6.internal (MEProxy); Fri, 12 Apr 2024 00:44:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712897040; x=1712983440; bh=w2PiDLnzlC
-	j7tn6Yx6N4n/UzkDz6lFfvLPDrdZkqIi0=; b=GUzBtH3L+rdlVMjFNmTCxlEhVy
-	IJDDrBUbmb3t6qHPsUYmahlX2BFQRWg6bghDULsuctvbHUCnyi+KN5ho/TzY5HHg
-	lXxfoE+xtX+4AF4lFrBs4CrIzEZWgJv2z7NkHrQV+nxeuwhHqS0QRsjY+s4q0jWc
-	tmHM082DjkGX1Xaq3mF0or/DxnH4A7f+mrmwh/uAULNZ8ObIh70N9m4AR+xp4+WW
-	+Z1ZTWJsL11bvfroH64W/D32ZFhQVTF5AHrz57DUkKtwTxz6ERRdkMcT2L57hvJH
-	j4sP5E1SXBq39OXAq4/n7ZvWZC3M33/fJInGn2VdbJeDN47YT8UEYZs4TB9g==
+	:subject:to:to; s=fm2; t=1712897041; x=1712983441; bh=fUFQu0AMvW
+	FG37/QXKbinhWw+OzgpQ2+yU7ty1t79wk=; b=aMRbKAMevgbP0oK+nInPXi3QuZ
+	/H8lzqSNiF9Ys1tSqVltSBDd6VWeO6DzIwzjV9v+64Tcx5/zl5chnIiRrAXFheGr
+	4Dtr5P0Sysb9GQMiOrPxp53MWUx1xgEAGv5bDrTxiNQVfIgiWlcOCV2nfIY+kxtP
+	UjMxEGHTHMgcI7M9ijLzvPMJYO9RtEAzaQ2u7Mcpr/+h13JExflap7sncKWFZxd9
+	xR8nCseAkW8RIx0mEdN6WPtvnU+GQS3Ung9iZEwwhA44o+5ufKQsxpcnex+54H27
+	THYG2MyDEHTClH4DPRAqnPicc0Qq5eC/Q80t1c7eyvaZuWwUTMxuzYMC67HQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712897040; x=1712983440; bh=w2PiDLnzlCj7tn6Yx6N4n/UzkDz6
-	lFfvLPDrdZkqIi0=; b=x0nvqCtaJvjtBOf5AV8KzXQ4icoY2baknJgvG89489Ez
-	XSkHxdsWD/XEio/sjJVnxyT8eS4Md1ZaDzF6A4pY8B3Oa0Kgs0j5s90Xg6SmsOBn
-	q6Iskt0dPHPTzi2QuZzfYjjdIwhhZMnqVW6wM8/2Cseb39po/M+1pn8WE3D+BpPx
-	gpRDZx5kPmgUKRx1wmbvM5/3UWRdPmKBGaJjPMuXdnJUldIIQSSXeiL81X01PxZX
-	UXUtR6dh7Jq87qbwQ0cPShyZwjV8z6gA5e64YFBqQTRE3SByJ/WhFjoLLgWFgER0
-	GxOfCMamMfjv3FswzPFup+2zF9up79mXfvkrprlJtQ==
-X-ME-Sender: <xms:D7wYZhB3OABceptjveRXBYL8rPJxAgMBZTOC76CWRXcV-hIR7QXLdQ>
-    <xme:D7wYZvgtub2Irxw-Th1o6gn5cnyvYcUDClTkY7Ein-VTzJ5Kr-mzBgKq1Y2yyiprv
-    VIzmCQ25Eh5nhePpg>
-X-ME-Received: <xmr:D7wYZsm6JY-9DRYtDPSaWAsh2P1Z1fOYO7QkaW5m76piLQYquEsrttAVYlmqIwfLVxqstTN0QFBRqKCwbSE4QP2_a9FDWZEtcHEH4_wUw6eU3I6vOAU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddghedvucetufdoteggodetrfdotf
+	fm2; t=1712897041; x=1712983441; bh=fUFQu0AMvWFG37/QXKbinhWw+Ozg
+	pQ2+yU7ty1t79wk=; b=kAocKsQDzP8ZSqnexSc7ZqqMgRbYORT5YZZWy0QMialM
+	53xbC49gwsMI2xNV5LoR4qF4+j6yST18gmxjTOxrEkIuzJ1SzkxnyrJfjADEhuU/
+	c7GWG+ap6hzINx5HC8zAjuSkKpH0f8xrA9zj3gb+3ybdM6F8T20AvAI/aCchgrBt
+	vX3yobt+hvT4r0hlAbcHZtY+4ehrcg0ubYA32U1jFgg4jTsLj/SV3VC8qy6f1bIG
+	rO1s504N9Iesm2oauEFK8a+S/yMx4cFCmw9a3tmTdDN36KZNHoFbvXoahd1Uv4eP
+	IFX4WSEKDKM2tcj/tQj9BHa6lGtEeH3eOeGeOTIqKw==
+X-ME-Sender: <xms:EbwYZvvoXEG03seWiZfdEjtOLOfSwqpmfRWLF7J3sHQce8zeNPQqbw>
+    <xme:EbwYZgfROgflaLNgfbjUqM83o6kqXqw8_kkZBnqOfHXwB8enFnE7aY47-ewykvebE
+    v4UUoHoNuoJ6KBKpw>
+X-ME-Received: <xmr:EbwYZiyiq6dNjqSRzK0gn37d3iv4vb-nL9B7QFOIoMwjeyzoLBqyd_W2yfnp_t6TCecKAyRT1-U7jbvOapXxyY1Yk9aRdnSgNCHikkLfmVx0rglD18Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeitddgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:D7wYZryJEJ3VcINpLysFq_I-p8JmvvMrIWSe562ET7UdjAIdOHgNRA>
-    <xmx:D7wYZmRRXfnUF6ycWRHbmkdCIj6AiMbqD8o4r7gUy9erZo00NcAgVw>
-    <xmx:D7wYZuYb8kScbQpA0ExAPRJ_G42cl6BnI5De4cQjXDD0z29s4PJx-A>
-    <xmx:D7wYZnQWzH5L7Nyys865S1KSbkAjsCxHJ3QM6hNcoYKvpHiVVyRC8w>
-    <xmx:ELwYZjQmKmVJ1cmZ9j5ZbofITjziDn8fuWogxEsPa2ynLCS0RrDgsdpr>
+    hrnhepieefvdehgfekieejueektdelhfeiheeltddtleekieevieehleektdfgveetkeet
+    necuffhomhgrihhnpehvvggtthhorhdrtggtnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:EbwYZuMAO4Vd0ZUnvwJCCTIpN6dri13dYuDyTPtzJgibTrSpcTvdlQ>
+    <xmx:EbwYZv8Wc6TL9H8NOKZFQoCGq3Y4a2ShWy9bOagvZgv1EyzbFeC1EQ>
+    <xmx:EbwYZuWApEEcXcVVjPPJdZ2qdXbj-AVZ8WetUjFCQ3OixNZpGeFn2A>
+    <xmx:EbwYZgcxkprfChDOftT69PLN392Gs6B_lBTZjVyL5BdI6j_OGiSaFA>
+    <xmx:EbwYZgOrJpWmCbuObybOiUQu0gXmGg6r2PZHyeByKEc2bWsBVPcxRQZv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Apr 2024 00:43:57 -0400 (EDT)
+ 12 Apr 2024 00:44:00 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 63836125 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Apr 2024 04:43:41 +0000 (UTC)
-Date: Fri, 12 Apr 2024 06:43:52 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id b1588bd1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Apr 2024 04:43:46 +0000 (UTC)
+Date: Fri, 12 Apr 2024 06:43:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
@@ -75,9 +75,10 @@ Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Luca Milanesio <luca.milanesio@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 00/13] t: exercise Git/JGit reftable compatibility
-Message-ID: <cover.1712896868.git.ps@pks.im>
+Subject: [PATCH v4 01/13] ci: rename "runs_on_pool" to "distro"
+Message-ID: <99b0b60359c1466fd291e890b8403d9cbfd706c8.1712896869.git.ps@pks.im>
 References: <cover.1712235356.git.ps@pks.im>
+ <cover.1712896868.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,120 +86,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VKPI+shQkDHPNtgR"
+	protocol="application/pgp-signature"; boundary="DEAvc2d83fRv0Hlp"
 Content-Disposition: inline
-In-Reply-To: <cover.1712235356.git.ps@pks.im>
+In-Reply-To: <cover.1712896868.git.ps@pks.im>
 
 
---VKPI+shQkDHPNtgR
+--DEAvc2d83fRv0Hlp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The "runs_on_pool" environment variable is used by our CI scripts to
+distinguish the different kinds of operating systems. It is quite
+specific to GitHub Actions though and not really a descriptive name.
 
-here's the (hopefully last) version of my patch series that introduces
-Git/JGit compatibility tests for the reftable format. Only a single
-commit changed, where I fixed two typos and added a missing signoff.
+Rename the variable to "distro" to clarify its intent.
 
-Thanks!
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ .github/workflows/main.yml | 2 +-
+ ci/install-dependencies.sh | 2 +-
+ ci/lib.sh                  | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-Patrick
-
-Patrick Steinhardt (13):
-  ci: rename "runs_on_pool" to "distro"
-  ci: expose distro name in dockerized GitHub jobs
-  ci: skip sudo when we are already root
-  ci: drop duplicate package installation for "linux-gcc-default"
-  ci: convert "install-dependencies.sh" to use "/bin/sh"
-  ci: merge custom PATH directories
-  ci: fix setup of custom path for GitLab CI
-  ci: merge scripts which install dependencies
-  ci: make Perforce binaries executable for all users
-  ci: install JGit dependency
-  t06xx: always execute backend-specific tests
-  t0610: fix non-portable variable assignment
-  t0612: add tests to exercise Git/JGit reftable compatibility
-
- .github/workflows/main.yml             |   8 +-
- .gitlab-ci.yml                         |   6 +-
- ci/install-dependencies.sh             | 101 +++++++++++++------
- ci/install-docker-dependencies.sh      |  46 ---------
- ci/lib.sh                              |  14 +--
- t/t0600-reffiles-backend.sh            |   8 +-
- t/t0601-reffiles-pack-refs.sh          |   9 +-
- t/t0610-reftable-basics.sh             |  15 ++-
- t/t0612-reftable-jgit-compatibility.sh | 132 +++++++++++++++++++++++++
- 9 files changed, 229 insertions(+), 110 deletions(-)
- delete mode 100755 ci/install-docker-dependencies.sh
- create mode 100755 t/t0612-reftable-jgit-compatibility.sh
-
-Range-diff against v3:
- 1:  46502bbe22 =3D  1:  99b0b60359 ci: rename "runs_on_pool" to "distro"
- 2:  d076ed9857 =3D  2:  e1d4e1320d ci: expose distro name in dockerized Gi=
-tHub jobs
- 3:  cc0c29052f =3D  3:  44a0e07600 ci: skip sudo when we are already root
- 4:  803f5020e0 =3D  4:  8e58ce38d9 ci: drop duplicate package installation=
- for "linux-gcc-default"
- 5:  d2745e9438 =3D  5:  b8f56a5e67 ci: convert "install-dependencies.sh" t=
-o use "/bin/sh"
- 6:  61f108d954 =3D  6:  ce4f0c766c ci: merge custom PATH directories
- 7:  ef61b578da !  7:  9fc462b578 ci: fix setup of custom path for GitLab CI
-    @@ Commit message
-         root user, but runs tests as a separate, unprivileged user. As the=
-ir
-         respective home directories are different, we will end up using two
-         different custom path directories. Consequently, the unprivileged =
-user
-    -    will not be able eto find the binaries that were setu up as root u=
-ser.
-    +    will not be able to find the binaries that were set up as root use=
-r.
-    =20
-         Fix this issue by allowing CI to override the custom path, which a=
-llows
-         GitLab to set up a constant value that isn't derived from "$HOME".
-    =20
-    +    Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    +
-      ## .gitlab-ci.yml ##
-     @@ .gitlab-ci.yml: workflow:
-     =20
- 8:  7748f87f8c =3D  8:  e7a17d57e7 ci: merge scripts which install depende=
-ncies
- 9:  f7399382f2 =3D  9:  720d5a4682 ci: make Perforce binaries executable f=
-or all users
-10:  b835ff8b78 =3D 10:  77f6d6ecaa ci: install JGit dependency
-11:  7136c8b6c2 =3D 11:  acf0c28550 t06xx: always execute backend-specific =
-tests
-12:  cf4ee9c427 =3D 12:  a9b71e8eea t0610: fix non-portable variable assign=
-ment
-13:  a9cd20eebc =3D 13:  218c694d2e t0612: add tests to exercise Git/JGit r=
-eftable compatibility
-
-base-commit: 436d4e5b14df49870a897f64fe92c0ddc7017e4c
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 3428773b09..684ef5c00d 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -303,7 +303,7 @@ jobs:
+       CC: ${{matrix.vector.cc}}
+       CC_PACKAGE: ${{matrix.vector.cc_package}}
+       jobname: ${{matrix.vector.jobname}}
+-      runs_on_pool: ${{matrix.vector.pool}}
++      distro: ${{matrix.vector.pool}}
+     runs-on: ${{matrix.vector.pool}}
+     steps:
+     - uses: actions/checkout@v4
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index b4e22de3cb..7d247b5ef4 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -11,7 +11,7 @@ UBUNTU_COMMON_PKGS=3D"make libssl-dev libcurl4-openssl-de=
+v libexpat-dev
+  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+  libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
+=20
+-case "$runs_on_pool" in
++case "$distro" in
+ ubuntu-*)
+ 	sudo apt-get -q update
+ 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 0a73fc7bd1..d882250db5 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -279,7 +279,7 @@ then
+=20
+ 	cache_dir=3D"$HOME/none"
+=20
+-	runs_on_pool=3D$(echo "$CI_JOB_IMAGE" | tr : -)
++	distro=3D$(echo "$CI_JOB_IMAGE" | tr : -)
+ 	JOBS=3D$(nproc)
+ else
+ 	echo "Could not identify CI type" >&2
+@@ -318,7 +318,7 @@ export DEFAULT_TEST_TARGET=3Dprove
+ export GIT_TEST_CLONE_2GB=3Dtrue
+ export SKIP_DASHED_BUILT_INS=3DYesPlease
+=20
+-case "$runs_on_pool" in
++case "$distro" in
+ ubuntu-*)
+ 	if test "$jobname" =3D "linux-gcc-default"
+ 	then
 --=20
 2.44.GIT
 
 
---VKPI+shQkDHPNtgR
+--DEAvc2d83fRv0Hlp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvAEACgkQVbJhu7ck
-PpRClQ/9FM1zDAzlTPpoqggTMtdJFu2wZPQDRqN1McjHWt5DzOTNzIvwDVccOzFw
-VS2ur3W9o0gQwnC0fNIkooYFC9DQmsRr7gm3DdU5IPDV2WiTD6TMTr/LprTVZX7F
-dt5K4sHkdgOYZlcbvE/EsxT/F6BDf4I5tdYjkPwXCE2xNNUungO9UdRPJ2HX/PrQ
-skYqbvM6+AU3QrMRVFzaCG9sJQ5EuHTcA0itN8DiZaewMODggrlwU5Cq2/Fbd1aZ
-e1Zz1GLvHFYDftcZpMAGQ2hUs7/mP/Pjn6u8KpRyy8826jc7LnJNLtfrMkrGu3Qh
-IQuE6yAKPOUhb7Taiv3XR9hrdYuYL8WSI4NTiVp6LILnZBLiAHz6n1lU50HZxO/7
-/low5aEvaUT6uq8xtthMnyJjkttmB3HnQ1/JkX5/lnCfnJyXgqr4qz9YhAVbuAh4
-wtPicfp9TkCoxwJjrMJE8dplxYFtwWZAgGQnAS1dFVcJns2x/QPIWG0SBk0oNVH0
-6XO9w8S0bdHu4WJRFRCDAu2F+T8ERZmsd5kSqn3CHTZywknW+LuttidKsK2DG6Jq
-G184JQEhBulaad7Ebx2PB51fMyon3XOulUBg0VIzO6OaIJ/IDFFeYegFGMnsO29s
-95TvxibWuOELcq27A1h1JfoIUhpKvzO4Y+Kko5Ox/uVg2K7uZ9E=
-=amaB
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYYvAwACgkQVbJhu7ck
+PpRE/hAAiWBp4GdVmBXo4m/75LCPAVZv3g7noHkUS1IZl2jaHUJuoPadXQdhMlS1
+lSqYwaR83Pz45wsaZgIBzoKmccFLtVr7iYueRPdTBZvFKVVNhT1JuiWfiQURayo5
+f6BTHOqKMxFd0sT567VGIVD71QjizY4/SCSTdmXUslM7rlAmh6cKbu30ZKeSF8GW
+dV1CW3NSEUWL5HIdtr1ltAmFMFLtPP/of8ptxXKdmtw5PYXYPRTPKFWGkG+5hmKG
+SXP4xSzSzCNSUGs9gQPx0AuKumunpwVNsYuPJbv3MmisFsRVnIJ7upmaJJ4ggpca
+UMMxdHl+gJjuDXnYld5WHSqfj7G5ojLE7c8CHwkZILTQIkmjeDkhLQ/iSbqf2BBJ
+USiwjJGgD3gLRZoSR0XUkNuFljDzvzjLZB55OmbcHT3gtjZyipobi2EkfkEDbugU
+4EZYG7piK2yK1X/p58QmH1hvbJvi5IWkuvLA2YPcCA10rJSOqsV2THn0PPYxSL02
+mTDTjr965GML/C/nB8lBKaE1xvooEzPdbNDEORraHWERIOUVmaZ2ntIF+8CoRzm5
+afIERkT59kHLfLnLYjrAx7uKGZJpZUuJPWvE4kcKoIXTiRaMhmwIfzA4Z/kYLfsz
+bCzGJ+0BoVsWrVnWUAq/A+2JXYris2o7ZhHe0x1vtFEfsSCWDl0=
+=C3xD
 -----END PGP SIGNATURE-----
 
---VKPI+shQkDHPNtgR--
+--DEAvc2d83fRv0Hlp--
