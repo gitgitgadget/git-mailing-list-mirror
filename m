@@ -1,128 +1,123 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2987D10F4
-	for <git@vger.kernel.org>; Fri, 12 Apr 2024 23:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D78F641
+	for <git@vger.kernel.org>; Sat, 13 Apr 2024 00:07:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712965085; cv=none; b=CO0N6yp/E1mM3j2XZ9I6hBFsq+Lh5i+jefcHxFwERRyPtLqs0p4q+VGKKYDlC0PYxMT/NO69vm24OfdsYSJ3OK4zsnyJPQPAcL8/zBprOM+93MOxoaOpvvFuA234sbIo4ps8p+oy3eCuNFuK7ssEqu4GenXBnU3ALdn38AQ4+68=
+	t=1712966856; cv=none; b=WeGzrkoORxDnyFQXr3bFiZynKpq7VBkazVDJAL9qfNsCu+OLV57HZYO5v21ZKf2kVn59F22u371pWErfbdb9+m6nHHmRYYDg5p2y259LiL8y5xD7uz7aOqQTPBMxHnzUOXJCEYfHeT6xjPPhbextpSBNDvVqPYgZsNIWEz9wWKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712965085; c=relaxed/simple;
-	bh=eQqZ5vdr+r2R97d+NyaMuSSSc1nyJiEe44jk7kBYrCA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nyKIcrqmm6RAslkN8FsXginZs0pLYmaNHks1YphZDI4GINh1fRIciEZr712Gn2S9iZvqXZsQ29eyX1okEswInFqkGxhCxDZ24YzpnEFGe+BL8tTXWjuaswVpxc+67oqWf4RRlorDIjjETkWWqJf3mo/2+9G8R0QT5doND1wdz3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HZ2eq7xJ; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1712966856; c=relaxed/simple;
+	bh=rdU3zIIqoB8327ft3T8iF/+kZBxtWvbHIk47V3/kakI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fw0NySl5PqWnRJoKa6GEnAqkqpJ1/d8WwGK+B61DNPCSTbsld36Z/VW7i8mHjY3xLOM0sSzcSPqsfuMfmgp2kAChNL1JklxLIFl4F+voS7Dp86dqmWaWG5a3orwa1ptszY98jGPM5+a+f5RHCj/H1POo2/cGt0an87ZCrt98nLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kx1MIScv; arc=none smtp.client-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HZ2eq7xJ"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 988F932C65;
-	Fri, 12 Apr 2024 19:38:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=eQqZ5vdr+r2R
-	97d+NyaMuSSSc1nyJiEe44jk7kBYrCA=; b=HZ2eq7xJfWjSgy46N64sAedq1iCq
-	Tj45wd4uoLS4H3z1P+8uaTkD9DDrOr41OGmLiq3+FfKBx4Q50WSIx1aP/vUqp+XT
-	vkzOZp4S0kfEXyYd8CIuGcregikSLwAqbrkTBJ2VTq7JYWDhoc1pXwIQZBwScPYl
-	u5ymoE39uI5MYk0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9005832C64;
-	Fri, 12 Apr 2024 19:38:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 07F4432C61;
-	Fri, 12 Apr 2024 19:37:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] rerere: fix crashes due to unmatched opening
- conflict markers
-In-Reply-To: <20240409121708.131542-2-marcel@roethke.info> ("Marcel
- =?utf-8?Q?R=C3=B6thke=22's?=
-	message of "Tue, 9 Apr 2024 14:13:51 +0200")
-References: <20240218194603.1210895-1-marcel@roethke.info>
-	<20240409121708.131542-2-marcel@roethke.info>
-Date: Fri, 12 Apr 2024 16:37:58 -0700
-Message-ID: <xmqqr0fai23t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kx1MIScv"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5a7d6bc81c6so1097473eaf.2
+        for <git@vger.kernel.org>; Fri, 12 Apr 2024 17:07:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712966854; x=1713571654; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SDS2CYBBlCs1zujSYVmwHFcrITpYE+wNtfJC7VnL2MU=;
+        b=Kx1MIScvduUn5QAqRndCeDK1SBajK1kvDDixmy9JMp3/ZzcLvPO++f6oVXnot2MvUE
+         tY3wPgV2ePJfcx6iHR6LHqAkils8hbaS/cQkLZE+PT3MuNoqYhn258tdVhD0lHhVet+h
+         uHWySmXYKXVMz87ZLDlg0MqkrbwBB9PnkKfKAp1aojxTzeHdWNxKxcfEICa6r7svmjJ9
+         tyLcUiD3pfPiip2RMw1akP8ph08Iqw3BCqORUIn++uovBOaQ8xzUAf+6vLwWXSva8RuC
+         UVsSzRcSL4foX6VYMFj6GKiYLZ5ptJm5kPGYAOE6mcbYyVf/MD9Tay8iKkqO6XyeecP7
+         jiYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712966854; x=1713571654;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SDS2CYBBlCs1zujSYVmwHFcrITpYE+wNtfJC7VnL2MU=;
+        b=uV9c29gvP6ca3ymLVe3Ljfk46unZ2612FQ5IhY6LAZntX+8QJuxoMw8HQjmM9zD9Zh
+         h1TvDTV00Sn32IFvC/h5mOVSfn6wMsJcQG4LgQVHyGbAlWCtxkeEYwlv23LCj55AgAjb
+         iJEXoELQvTBGOGAgIeALRzjfBLe3++UaLFLVO7jAXYPxiv/4xXYTVuygurNaT9hhzzve
+         hi/KiAJ9Nd3W0gPJIzOhz6XMUH13pTB/769SBZd/9Ru3b2PMOaZr6Kjb8o60co2fBQzn
+         rly3W1Rhh2Wv2xMFrPYPmmy1slNoKQBWn9XcwxFSWXHpT1KhNsbMJ3r0SmzMbEfba4ZR
+         ESSw==
+X-Forwarded-Encrypted: i=1; AJvYcCVhI4AupLbsiSxSgT/j9vZ1YT4Qme59zLz+tu/q/YruZBYTWcrMXup9ZNHH47BLeNbnKmSp7lCKAV078O34aW8l1f3i
+X-Gm-Message-State: AOJu0YzTQYyxvgjt5++CoAjVD0c5GHc/A9T2Gp9EBRBZcdsPmFNM8gL2
+	XXQcVCpBklv/94RFMMTOQBQRRU018JXpHk2GO2aZlP8tzRjinEezLca04Iv2hf/9hke+4/A/XEF
+	d3VsV7ewqW7ixr6Ksy2QcH254tGw=
+X-Google-Smtp-Source: AGHT+IEFZqto4o2wRcK8IKMwWHSLrMzTU2QF03zsdvIpCOOKuKp557I8aG6oDkItSqLv6447wB22R8vGdKPVBWDYHEo=
+X-Received: by 2002:a05:6820:986:b0:5aa:3c6a:c5f3 with SMTP id
+ cg6-20020a056820098600b005aa3c6ac5f3mr4318117oob.9.1712966854512; Fri, 12 Apr
+ 2024 17:07:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- B2985636-F925-11EE-8C26-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <20240409000546.3628898-1-jacob.e.keller@intel.com>
+ <xmqqpluz2tau.fsf@gitster.g> <CA+P7+xooa08Y-D8CXDGK7_aZ5c2b9iXM6+rFS5qNLyZaG0Kh3A@mail.gmail.com>
+ <xmqqedbcqw84.fsf@gitster.g> <5a25d75c-cc27-49d9-a49d-39f657fd17f4@intel.com> <xmqqfrvrr3q7.fsf@gitster.g>
+In-Reply-To: <xmqqfrvrr3q7.fsf@gitster.g>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Fri, 12 Apr 2024 17:07:23 -0700
+Message-ID: <CA+P7+xqkTHrBy0adVC3Wmn6aqgGkdZyk7BdHPKsowBCyKWg11w@mail.gmail.com>
+Subject: Re: [PATCH] mailsplit add option to include sanitized subject in filename
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Marcel R=C3=B6thke <marcel@roethke.info> writes:
-
-> When rerere handles a conflict with an unmatched opening conflict marke=
-r
-> in a file with other conflicts, it will fail create a preimage and also
-> fail allocate the status member of struct rerere_dir. Currently the
-> status member is allocated after the error handling. This will lead to =
-a
-> SEGFAULT when the status member is accessed during cleanup of the faile=
-d
-> parse.
-
-Nicely diagnosed.  Yes, such a corrupt preimage should not enter the
-rerere database as it is unusable for future replaying of the
-resolution.  rerere should be prepared to deal with such an input
-more gracefully.
-
-> Additionally, in subsequent executions of rerere, after removing the
-> MERGE_RR.lock manually, rerere crashes for a similar reason. MERGE_RR
-> points to a conflict id that has no preimage, therefore the status
-> member is not allocated and a SEGFAULT happens when trying to check if =
-a
-> preimage exists.
+On Thu, Apr 11, 2024 at 2:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Solve this by making sure the status field is allocated correctly and a=
-dd
-> tests to prevent the bug from reoccurring.
-
-Thanks.
-
-> This does not fix the root cause, failing to parse stray conflict
-> markers, but I don't think we can do much better than recognizing it,
-> printing an error, and moving on gracefully.
-
-I somehow doubt that "parse stray markers" is something we _want_ to
-do in the first place.  Is it "the root cause" that we refuse/reject
-such a corrupt input from entering the rerere database?  To me, it
-seems like that the issue is that we do not do a very good job
-rejecting them, keeping the internal state consistent.
-
->  rerere.c          |  5 ++++
->  t/t4200-rerere.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 68 insertions(+)
+> Jacob Keller <jacob.e.keller@intel.com> writes:
 >
-> diff --git a/rerere.c b/rerere.c
-> index ca7e77ba68..4683d6cbb1 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -219,6 +219,11 @@ static void read_rr(struct repository *r, struct s=
-tring_list *rr)
->  		buf.buf[hexsz] =3D '\0';
->  		id =3D new_rerere_id_hex(buf.buf);
->  		id->variant =3D variant;
-> +		/*
-> +		 * make sure id->collection->status has enough space
-> +		 * for the variant we are interested in
-> +		 */
-> +		fit_variant(id->collection, variant);
->  		string_list_insert(rr, path)->util =3D id;
->  	}
->  	strbuf_release(&buf);
+> >> THe next level would be to still assume that you stop at the same
+> >> place (i.e. you do not support patches from multiple series in the
+> >> same mailbox), but use the number-santized-subject format.  This
+> >> would be a bit more involved, but I think all you need to update on
+> >> the "am" side is where the am_run() assigns the message file to the
+> >> local variable "mail".  You know the temporary directory where you
+> >> told "mailsplit" to create these individual messages, so you should
+> >> be able to "opendir/readdir/closedir" and create a list of numbered
+> >> files in the directory very early in "git am".  Knowing msgnum(state)
+> >> at that point in the loop, it should be trivial to change the code
+> >> that currently assumes the 4-th file is named "0004" to check for
+> >> the file whose name begins with "0004-".
+> >
+> > Yea, we pretty much just have to get the git-am process to work with th=
+e
+> > new names. I can look at using opendir/readdir here instead.
+>
+> Not "here", but probably just after you called "mailsplit" and saw
+> it return.  After that nobody should be adding more split mail
+> messages to the directory, so you do it once to grab all filenames.
+>
+> > Ya I don't care much about multiple series. I care more about making it
+> > handle scrambled series better than it does now. I download series off
+> > of lore.kernel.org (public-inbox based) and those seem to routinely hav=
+e
+> > series out-of-order. I suspect this is because it bases them on arrival
+> > date and sometimes certain mailers get it out of order when sending.
+>
+> Yeah, and that is why I said it would be a better use of the
+> engineering resource to fix it at the source.  Such a fix will
+> benefit folks with existing versions of "git am", not needing to
+> wait for your improved version.
+>
+> Thanks.
 
-Both the fix, and the newly added tests, look great to me.
+I went and talked to the public-inbox folks, and discovered that there
+is a known problem and solution, with a utility called b4 intended for
+downloading mbox files from the public-inbox
 
-Thanks.  Will queue.
+https://b4.docs.kernel.org/
+
+Thought I'd mention that here if anyone else reading this thread was
+curious about an ultimate solution.
+
+b4 will find patches in the series, sort them, remove the replies and
+can do some other common cleanup operations including things like
+applying tags from other messages on the list.
