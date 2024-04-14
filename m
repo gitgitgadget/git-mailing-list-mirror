@@ -1,145 +1,164 @@
-Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990B51EB31
-	for <git@vger.kernel.org>; Sat, 13 Apr 2024 21:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB37DDDB8
+	for <git@vger.kernel.org>; Sun, 14 Apr 2024 01:11:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713043284; cv=none; b=KSl1DT21Jk77pV5HsSyqPG2Uv4NjQjPHeCudgkc30kiFgMc+sNWx4R1bOs6xj90oNbNQ3bMSZK2QxiQnq6kmSsGk56pehHc7HIliHAv77eNaPWlCCCIShbvbhpn66DQvZ7Pa+C2CjI5eTiO52yiD/gD3tQg29hqEsjXzeMEeGOc=
+	t=1713057103; cv=none; b=PaF+j0b2wl7giK/f44j6LFpjNORRZBvzOYEEM0/30HWLDgCSBgRoF3KQvIWrLr50Q6YxWvY8GuwM+a97H5dgAQEb+C+BhE8MS226Ypu331pEXNtroYEc1QFCD8+tpHZYBMeQaERc8eTKu1IdRg1dhGvEXLRiXswS4xqTqYKeoC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713043284; c=relaxed/simple;
-	bh=jaD7WgCg8EbhmeImOsq2Qv80kp2cL1/qMqzWHQ+rwKM=;
-	h=Date:From:To:cc:Subject:Message-ID:MIME-Version:Content-Type; b=U33DULfUDfDp+N3M1K/V0PmRYlQjjiBtlAA19nSBLmazkAgJaB8SaEAOXQrd+s2RfIXo1N1npO0EywxY20nuTCBimVNNuihYKlNNweu0zL1zPWE0/6NTghLiMcvt7grQwERHvRiewmV/b0CJDHS0VBxv0cuFbH3fZi3p+sS4XJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=O6tiZCo0; arc=none smtp.client-ip=185.114.57.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
+	s=arc-20240116; t=1713057103; c=relaxed/simple;
+	bh=sSij8iuiqqYU7E37FgUizkBVKzS1O/LGP5srry0ispA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=u5IvaSkJeALqGXoJA6WdnGQuxMou2xyGDGcQcWV5fZjySqm2vQnaNt9PFSRus49Pbs8TdJL0H8rv0hElWw5O6UMKNmwTJ1Tq7nk/pgU9NLcZJUSpj59p+8gHUJU7QhTXN0OnbZrGD7MEuhHYOgFzRwBbKTTAjWpuyelDgrohWMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=Pf39BxpA; arc=none smtp.client-ip=185.70.40.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="O6tiZCo0"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:Message-ID:Subject:cc:To
-	:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=7n1IjJsU/ucAr7txbgqINVhrGUgOrfvtUhr/NQcFMTo=; b=O6tiZCo0ixBUHrBzaoZSN1You/
-	ZAIIB6oOr2AB3alOx6dzfGoTQs6B69SK/orIAzW2PZ8cl169B1Ho2ypPckTleMtUK+fO6zg512ex6
-	7m5TtE3Mn5Bk5g/s65hIBe7MwoAHHar9kjYBp5hV3DAhwbz4QpyK5jmRTDNXkiuF4uDDh2IShtMek
-	WI6b9DG6rK/ibq7uGWoyM6kGqlntRBiHNrw+pGne5A0RmB7H1Avl9Tulm2R6A2QLwgfv8YOEdU5ia
-	kXIMTIYfz6TBcS/Afi67j/D0svBQ+6u7u/JZ55R53RKe6CBlc1E08o2bziNEQJxi+/9pbEu9wqnLg
-	WoDTGLpA==;
-Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:51096 helo=mail.nordhost.no)
-	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <peter@softwolves.pp.se>)
-	id 1rvjlw-000000098cf-2JrE;
-	Sat, 13 Apr 2024 22:14:48 +0200
-Date: Sat, 13 Apr 2024 21:14:48 +0100 (CET)
-From: Peter Krefting <peter@softwolves.pp.se>
+	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="Pf39BxpA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
+	s=protonmail3; t=1713057097; x=1713316297;
+	bh=v/bMgWMXnujUrrBAYom0Y+D8eJC66qvLQl8HFV2qtJ8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Pf39BxpAdhHeNRuugL5SmmrfyXsP6G9trhOvai2BkP7HMustPyB9WH4KMtbuvENEG
+	 Gp+mF9Hd7IWd8XG4T0rWYVWVIdwAeJoJSN+sW+Cat+0P6tp1qSc20YiVFH8iw2Gzb7
+	 tSm7vd5KPOj1foKiKmeKtOXx4KIKkQZ2jJqhJZ+aFhsYmeapdi9y4i18G8A4EOdRR+
+	 fKNZvlSR97ky3c/ceWk+hPfNNSqXwvc+Fqt1EBtg5NonuQP9BevNn7opu5ytR7ayQH
+	 6jqzZdXAzTKqd/o/gKzIn4KswJBSkY6Jzj18CNvT1Nxs5p1luQ+1+ehKgg+POMvt8W
+	 964itWRK+hFrA==
+Date: Sun, 14 Apr 2024 01:11:32 +0000
 To: git@vger.kernel.org
-cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-    Christian Couder <christian.couder@gmail.com>, 
-    Michael Osipov <michael.osipov@innomotics.com>
-Subject: [PATCH v3] bisect: report the found commit with "show"
-Message-ID: <965ae345-fd58-c46c-5a7a-de181e901f21@softwolves.pp.se>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+From: Thalia Archibald <thalia@archibald.dev>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>, Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
+Subject: [PATCH v5 0/8] fast-import: tighten parsing of paths
+Message-ID: <cover.1713056559.git.thalia@archibald.dev>
+In-Reply-To: <cover.1712907684.git.thalia@archibald.dev>
+References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev> <cover.1712741870.git.thalia@archibald.dev> <cover.1712907684.git.thalia@archibald.dev>
+Feedback-ID: 63908566:user:proton
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Relay-Host: 185.114.57.50
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-When "git bisect" finds the first bad commit and shows it to the user,
-it calls "git diff-tree" to do so, whose output is meant to be stable
-and deliberately ignores end-user customizations.
+> fast-import has subtle differences in how it parses file paths between ea=
+ch
+> occurrence of <path> in the grammar. Many errors are suppressed or not ch=
+ecked,
+> which could lead to silent data corruption. A particularly bad case is wh=
+en a
+> front-end sent escapes that Git doesn't recognize (e.g., hex escapes are =
+not
+> supported), it would be treated as literal bytes instead of a quoted stri=
+ng.
+>
+> Bring path parsing into line with the documented behavior and improve
+> documentation to fill in missing details.
 
-As the output is supposed to be consumed by humans, replace this with
-a call to "git show". This command honors configuration options (such
-as "log.date" and "log.mailmap") and other UI improvements (renames
-are detected).
+Changes since v4:
+* Refine C comments and parameter name.
 
-Pass some hard-coded options to "git show" to make the output similar
-to the one we are replacing, such as showing a patch summary only.
+Thalia
 
-Reported-by: Michael Osipov <michael.osipov@innomotics.com>
-Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
-Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>
-Cc: Christian Couder <christian.couder@gmail.com>
----
-  bisect.c | 37 ++++++++++++++++++++++---------------
-  1 file changed, 22 insertions(+), 15 deletions(-)
 
-Changes compared to v2:
-- Adds --no-pager and a comment stating why we do so.
-- Adds --diff-merges=first-parent, as per previous discussion.
+Thalia Archibald (8):
+  fast-import: tighten path unquoting
+  fast-import: directly use strbufs for paths
+  fast-import: allow unquoted empty path for root
+  fast-import: remove dead strbuf
+  fast-import: improve documentation for path quoting
+  fast-import: document C-style escapes for paths
+  fast-import: forbid escaped NUL in paths
+  fast-import: make comments more precise
 
-This seems to generate a final output as close to the previous one as 
-possible, while honouring the user's settings for how to display log 
-entries and calculating diffs.
+ Documentation/git-fast-import.txt |  31 +-
+ builtin/fast-import.c             | 162 ++++----
+ t/t9300-fast-import.sh            | 624 +++++++++++++++++++++---------
+ 3 files changed, 555 insertions(+), 262 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 8487f8cd1b..3be2460c65 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -959,23 +959,30 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
-  }
+Range-diff against v4:
+1:  d6ea8aca46 ! 1:  2c18fe5fe9 fast-import: tighten path unquoting
+    @@ builtin/fast-import.c: static uintmax_t parse_mark_ref_space(const c=
+har **p)
+      }
+     =20
+     +/*
+    -+ * Parse the path string into the strbuf. It may be quoted with escap=
+e sequences
+    -+ * or unquoted without escape sequences. When unquoted, it may only c=
+ontain a
+    -+ * space if `include_spaces` is nonzero.
+    ++ * Parse the path string into the strbuf. The path can either be quot=
+ed with
+    ++ * escape sequences or unquoted without escape sequences. Unquoted st=
+rings may
+    ++ * contain spaces only if `is_last_field` is nonzero; otherwise, it s=
+tops
+    ++ * parsing at the first space.
+     + */
+     +static void parse_path(struct strbuf *sb, const char *p, const char *=
+*endp,
+    -+=09=09int include_spaces, const char *field)
+    ++=09=09int is_last_field, const char *field)
+     +{
+     +=09if (*p =3D=3D '"') {
+     +=09=09if (unquote_c_style(sb, p, endp))
+     +=09=09=09die("Invalid %s: %s", field, command_buf.buf);
+     +=09} else {
+    -+=09=09if (include_spaces)
+    -+=09=09=09*endp =3D p + strlen(p);
+    -+=09=09else
+    -+=09=09=09*endp =3D strchrnul(p, ' ');
+    ++=09=09/*
+    ++=09=09 * Unless we are parsing the last field of a line,
+    ++=09=09 * SP is the end of this field.
+    ++=09=09 */
+    ++=09=09*endp =3D is_last_field
+    ++=09=09=09? p + strlen(p)
+    ++=09=09=09: strchrnul(p, ' ');
+     +=09=09strbuf_add(sb, p, *endp - p);
+     +=09}
+     +}
+     +
+     +/*
+     + * Parse the path string into the strbuf, and complain if this is not=
+ the end of
+    -+ * the string. It may contain spaces even when unquoted.
+    ++ * the string. Unquoted strings may contain spaces.
+     + */
+     +static void parse_path_eol(struct strbuf *sb, const char *p, const ch=
+ar *field)
+     +{
+    @@ builtin/fast-import.c: static uintmax_t parse_mark_ref_space(const c=
+har **p)
+     +
+     +/*
+     + * Parse the path string into the strbuf, and ensure it is followed b=
+y a space.
+    -+ * It may not contain spaces when unquoted. Update *endp to point to =
+the first
+    ++ * Unquoted strings may not contain spaces. Update *endp to point to =
+the first
+     + * character after the space.
+     + */
+     +static void parse_path_space(struct strbuf *sb, const char *p,
+2:  9499f34aae =3D 2:  4e9f3aa52c fast-import: directly use strbufs for pat=
+hs
+3:  9b1e6b80f5 =3D 3:  cae5764cec fast-import: allow unquoted empty path fo=
+r root
+4:  1a2b0dc616 =3D 4:  96ff70895a fast-import: remove dead strbuf
+5:  fb0d870d53 =3D 5:  e1a1b0395d fast-import: improve documentation for pa=
+th quoting
+6:  4b6017ded8 =3D 6:  08e6fb37be fast-import: document C-style escapes for=
+ paths
+7:  5b464f4b01 =3D 7:  a01d0a1b25 fast-import: forbid escaped NUL in paths
+8:  6eb66fce45 =3D 8:  65d7896e39 fast-import: make comments more precise
+--=20
+2.44.0
 
-  /*
-- * This does "git diff-tree --pretty COMMIT" without one fork+exec.
-+ * Display a commit summary to the user.
-   */
--static void show_diff_tree(struct repository *r,
--			   const char *prefix,
--			   struct commit *commit)
-+static void show_commit(struct commit *commit)
-  {
--	const char *argv[] = {
--		"diff-tree", "--pretty", "--stat", "--summary", "--cc", NULL
--	};
--	struct rev_info opt;
-+	struct child_process show = CHILD_PROCESS_INIT;
 
--	git_config(git_diff_ui_config, NULL);
--	repo_init_revisions(r, &opt, prefix);
--
--	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
--	log_tree_commit(&opt, commit);
--	release_revisions(&opt);
-+	/* Call git show with --no-pager, as it would otherwise
-+	 * paginate the "git show" output only, not the output
-+	 * from bisect_next_all(); this can be fixed by moving
-+	 * it into a --format parameter, but that would override
-+	 * the user's default options for "git show", which we
-+	 * are trying to honour. */
-+	strvec_pushl(&show.args,
-+	             "--no-pager",
-+	             "show",
-+	             "--stat",
-+	             "--summary",
-+	             "--no-abbrev-commit",
-+	             "--diff-merges=first-parent",
-+	             oid_to_hex(&commit->object.oid), NULL);
-+	show.git_cmd = 1;
-+	if (run_command(&show))
-+		die(_("unable to start 'show' for object '%s'"),
-+		    oid_to_hex(&commit->object.oid));
-  }
-
-  /*
-@@ -1092,7 +1099,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
-  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
-  			term_bad);
-
--		show_diff_tree(r, prefix, revs.commits->item);
-+		show_commit(revs.commits->item);
-  		/*
-  		 * This means the bisection process succeeded.
-  		 * Using BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND (-10)
--- 
-2.39.2
