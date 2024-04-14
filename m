@@ -1,58 +1,38 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165791C6A8
-	for <git@vger.kernel.org>; Sun, 14 Apr 2024 07:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6D5224CC
+	for <git@vger.kernel.org>; Sun, 14 Apr 2024 15:17:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713080390; cv=none; b=cx045Vsb0Q3OahtSNTbXk4wAJc1hMXTcqwAhP5L4iu0t/CcMIYCk2XJzhb6l2TYiOkns0OJlsIs5vDSqLgcpSXKC7QZGKp84ggwhCacuWTIDzP3Gk7cEVeRAg0+87swJY3Abv9P9N26MTIrPE2vHXDBAgvUoRUYqQf8eiBO4vvg=
+	t=1713107865; cv=none; b=a5/FPfXYy0UH91sXSpR0AMR+4yQ6bdA1HfaMIaUvOyCUuINzeZo+R2USbA4Iocc0NlCn82B/Lm871YlNK7VK4Cc2vTL5SUnfSOIx78GbmX/dF24J2Q6jLhedtUBGWA0a+FPSw6rlYjZb3TNNS7yrgwpmA77iTKJGO/IH8Nh2BiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713080390; c=relaxed/simple;
-	bh=+o88yCM35yDwAGsFjyHA7VYcTLLFkk6wBUkEvwyCOJU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=XTGiHDfvjSu8Ge+xUQJrWBHIlpOdH6lqv3VxmpldSP/n8gr9Jf7WFrE91iPbViliWNYWoXCMHX3E7GLSVun60vVgVVUG/5uDDKJlkaT+tD1HSwM5RpWuRM4kSHDK7/8CRvi5FA3fqhlUQF0YVwr9KJcKPFPFBRnc2UIidl1xgPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jpnukXXu; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713107865; c=relaxed/simple;
+	bh=w5oAaAT3T20vTdRaWM38Mp+3b1HXR1Ft0uSJoDVBYXg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PUKmSSxNgOXkbexzmPCrEuDciwHBdNHsWaMqBLS99q4yonNf/yqLx8JzmkkVHkiNRMahHIYzvYe1VwjsoRE6mc60hiInO2sUi5N28TKzuPFhIj8SP5qfilc9kwFHP7eGqnd/xSn+0cOACfdg1Gsye5YS3A2UmajpjpRj3ILR0Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=YiPvBLNU; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jpnukXXu"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-343d2b20c4bso1649938f8f.2
-        for <git@vger.kernel.org>; Sun, 14 Apr 2024 00:39:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713080387; x=1713685187; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wAiTt8bXJya5R3vXctQ//hB2zYKtntSTMtJuyWZhjuA=;
-        b=jpnukXXu07rjlpNNnqLXRb8KWTxq+nWgPB9SIOkagpj9LnY4R37GBZMQqnYfcLBvpD
-         T6QwlFTvLP/WvXZ+d01QD5M/H3wBV9J4vVDNDrUD3prdUuaIC0NThBwr2ldM9CF26ttN
-         MC+6KFeObv+UHdCPmbUIyLosWYLTsh6VI7lgP50KAAHT6fPuxSaAQUkP8NBcxtKkzs3x
-         hGfEIsHJdizReYyUk6EeHWW1i2fpa5MTRVigVmGTn69VTHYsYcl3twhhqkEm7GkSqT9O
-         NDuDntOUEO7BrNR44usAc5vmF71ncxDnKhPfPZ7/19GebeMEcfumNPwvOFpwf5pxOebJ
-         3ppg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713080387; x=1713685187;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wAiTt8bXJya5R3vXctQ//hB2zYKtntSTMtJuyWZhjuA=;
-        b=SGhXNTQoNO8oTtlMw+u60jMvMJhhYS1heXPC4dyGDg3cSI63laCJwv3UAVVCQMaQqF
-         aTCL6eAH0MGJfHz0JUznIGTMAb2zToFoDrUrN1HzY2Z7jaKZkvzbgZ6Ac+mvauFkAJnF
-         0VcpWGidc221ZPL7Z4iDnYx+QTcl9oC3kGNP+yAky8VzEs0dr+aZbQ0lcEMHAxruG3/N
-         Vlv/HNKLskmoW2m/8JqQDKyNyw0WNVhZjwkzQEzWz4RMbmB/zVfM0xeSr7D+XOkuHLRR
-         a+lxPTc2ly0r+IxVRCgXfQ+FaFiOBpPVHVtPas1KEizarlCsHeKP5bHXvG13vI+jAYxs
-         yM7g==
-X-Gm-Message-State: AOJu0YyEugvr3OoSZPKgsKksNgcWNaQo6UFDKCv/tyrNBOWbLwMv7GEt
-	u/kCCfNVNqLsKv+t/jEHJTfqg6fTigmTjy90Qgl+P71M7X/xkg5W29u5Lw==
-X-Google-Smtp-Source: AGHT+IGOdw9B67GtbhQYkyIzlfOOS6BulgdLKzK9aW26SIpslVAq0EBRcMaF22K1WMJTE1hS6Oe7Wg==
-X-Received: by 2002:adf:f305:0:b0:343:3eb9:b287 with SMTP id i5-20020adff305000000b003433eb9b287mr4406297wro.36.1713080387165;
-        Sun, 14 Apr 2024 00:39:47 -0700 (PDT)
-Received: from gmail.com (91.red-88-14-45.dynamicip.rima-tde.net. [88.14.45.91])
-        by smtp.gmail.com with ESMTPSA id di7-20020a0560000ac700b003439d2a5f99sm8388308wrb.55.2024.04.14.00.39.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 Apr 2024 00:39:46 -0700 (PDT)
-Message-ID: <e208da74-8f16-44ae-912e-ae968da82057@gmail.com>
-Date: Sun, 14 Apr 2024 09:39:44 +0200
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="YiPvBLNU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1713107845; x=1713712645; i=l.s.r@web.de;
+	bh=0WcE1UZMJkD5zPB4voT/SLFYHe/5ZpfHTrR+nKZIiME=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=YiPvBLNUp1XzM19ZoJuNPVzAeZXVq/mfG+QX+Yr5RnAdq010neJebn3zdh1AJmap
+	 3l4kWU6LO8GJWhCTfPF+Lgp29bzO5bKfvTduuSYNiGBvwKt0bYrWQ0tdNIkeB3Sv3
+	 gfS7Wgzkp3e9CtMaCi7LvfWpOvcMXOKfUl31P8zso4JWYtJqdmiq0Ynhv8MBJBQlt
+	 9oL7j769PG4picMrUnRXM8IR8CkXn4KeYLCxliw9h5waHXXwjBfvgiCM4z5zrgQz1
+	 oh+fHveQoHbimE90dvTb/j4DgB07I4CCOnz9o6mpZs7v5AHYmJ3exvO3UNUXp5fpw
+	 N34GhgacySmbtTTGFg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N14tM-1ssdY63VIg-012r3l; Sun, 14
+ Apr 2024 17:17:24 +0200
+Message-ID: <10b7fff3-7a2c-4555-9210-8000aae43583@web.de>
+Date: Sun, 14 Apr 2024 17:17:23 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,63 +40,151 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v4] launch_editor: waiting message on error
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
- <96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
- <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
- <ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
+Subject: Re: free and errno, was Re: [PATCH] apply: replace mksnpath() with a
+ mkpathdup() call
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+References: <df774306-f29b-4a75-a282-59db89812b9a@web.de>
+ <20240404225313.GA2512966@coredump.intra.peff.net>
+ <14c99998-cc4a-4581-aab3-607d7fac7edb@web.de>
+ <20240405173517.GA2529133@coredump.intra.peff.net>
+ <0fc77134-94fb-4d60-95b4-509c3582e20f@web.de>
+ <20240407011834.GA1085004@coredump.intra.peff.net>
 Content-Language: en-US
-Cc: rsbecker@nexbridge.com, Phillip Wood <phillip.wood@dunelm.org.uk>
-In-Reply-To: <ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20240407011834.GA1085004@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:XQ7lTMZ/y3g0KVjEIjs3lp3cMDIus9ZdC0/AbdawTdTY4tHIUZF
+ lD7/lEBsTzp3rDL5aMWlJOUu69egLN4QL0Wb5TDvXUTSSo386zPxdCreHuqKPod2ewCrXuV
+ cVvkwga2aPqM12vxdqNJxUAJcti1Dr1Pw5Z2ynF12WaitHN1WyIzLXnMhVopNf6SxVueZV4
+ TVIsXrdpGYvH3yT9Lavjw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:kTlTAdxKUVE=;1n6uUqZM5W0WmXyOtVoqZMhIE93
+ Ip5HcLPUOXXczYlzH1VjkpOy7tYIHI3AN4rgTRuBmNcOSdkcvhBemt5nw9fH6rTmFtz5UJ3OT
+ qoB2xFWioznm4SdcALKnIfn0IGI8ZSdIKypYAz4Lkv4hKzaAfPmFQRVubkyv1dS4NXwFVXPOM
+ xxfp4NzCxtBiWa5sRqoXGIkoBOn83GzhRB8xeWyC22t1ZY06mOsbHTOC9yfDSbfwBogwdq2qv
+ yRWZevGpMA7Uc6l0+JR4TWrGzsozMj6g4hl10F9rmNFYps1dKubaeDt5SfGgtwRO2bmFBiT31
+ BkmAwzwmUCQkLwF7/u5+3K9KN8hKvA7kagAViAVlHzo+oOg9Q9DI1RwUMoQeE3LtY1tSkfXim
+ AjimXwb2eMErvMvgXHMz07P5CWc8yYvd9S2ewlzIg/9LRIl2mt9E56UIKTZnhIXo5a5wbWVsz
+ z47kBmeughOdePMDJ2rPnAV3656PwWVY5yzzax4rA0YxLil8uzTuhl+1y5rrTAeyfAFrdseGi
+ d61MqWNxuxDN5iyWpphc7oCuC0vCLYU78Vh7BTtJNStD7LZo4rZUWgqnZbmzG6kbAjYMDTHJL
+ 8FMTOC3cQt8I5meh5h/nn2QEiwvWStAFPo51Uq9tsyglqt8mWuATY50YW6v6ppEWSsF5IK8Gu
+ zE1nZzIbuMX+ghOLnAdlu3MZmhjmDilKTU5Ic0voSuw/WCnXnK5wJOoupPXVRZRphhlBB2wkr
+ 9iCYeGfVM4/Rpqc9NUnwvuwUsx6+i5K8dDPQbPuLH69Uzz4Y94nbU5OqRuHeTXgB5uLrizJXz
+ p3OTXNo9lT/3X7GbZ9DmjbGPPAZb/bHXRcpSRjP1pCAm4=
 
-When advice.waitingForEditor configuration is not set to false, we show
-a hint telling that we are waiting for user's editor to close the file
-when we launch an editor and wait for it to return control back to us.
-We give the message on an incomplete line, expecting that we can go back
-to the line and clear the message when the editor returns.
+Am 07.04.24 um 03:18 schrieb Jeff King:
+> On Sat, Apr 06, 2024 at 07:45:17PM +0200, Ren=C3=A9 Scharfe wrote:
+>
+>> I calmed down a bit now.  And ask myself how widespread the issue actua=
+lly
+>> is.  Used the following silly Coccinelle rule to find functions that us=
+e
+>> errno after a free(3) call:
+>>
+>> @@
+>> @@
+>> - free(...);
+>>   ...
+>>   errno
+>>
+>> Found only a handful of places, and they all set errno explicitly, so
+>> they are fine.
+>
+> Is that enough, though? Imagine I have:
+>
+>   int foo(const char *x)
+>   {
+>      char *y =3D xstfrmt("something/%s", x);
+>      int fd =3D open(y, ...);
+>      free(y);
+>      return fd;
+>   }
+>
+> Then errno is important if some caller of foo() checks errno after foo()
+> returns an error. And that caller might not even be in the same file.
 
-However, it is possible that the editor exits with an error status, in
-which case we show an error message and then return to our caller.  In
-such a case, the error message is given where the terminal cursor
-happens to be, which is most likely after the "we are waiting for your
-editor" message on the same line.
+Yes.
 
-Clear the line before showing the error.
+> In other words, it really depends on the contract of foo() with respect
+> to errno. And I don't think there is a way in C to specify that
+> contract in away that the compiler can understand.
 
-While we're here, make the error message follow our CodingGuideLines.
+The context attribute of sparse could be used, I guess.  We'd have to
+duplicate the declaration of all library functions, though, to tag them
+with a may_have_changed_errno attribute.  And we'd need to clear it on
+success, so we'd have to modify all callers.  On the flip side it would
+allow detecting consecutive errno changes, e.g. by two I/O functions
+with no error checking in between.  But the implementation effort seems
+way too high.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- editor.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+It would be easier if the error information was in one place instead of
+one bit in the return value (NULL or less than 0) and the rest in errno.
 
-diff --git a/editor.c b/editor.c
-index b67b802ddf..d1ba2d7c34 100644
---- a/editor.c
-+++ b/editor.c
-@@ -104,16 +104,15 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		sigchain_pop(SIGQUIT);
- 		if (sig == SIGINT || sig == SIGQUIT)
- 			raise(sig);
--		if (ret)
--			return error("There was a problem with the editor '%s'.",
--					editor);
--
- 		if (print_waiting_for_editor && !is_terminal_dumb())
- 			/*
- 			 * Erase the entire line to avoid wasting the
- 			 * vertical space.
- 			 */
- 			term_clear_line();
-+		if (ret)
-+			return error("there was a problem with the editor '%s'",
-+					editor);
- 	}
- 
- 	if (!buffer)
--- 
-2.44.0.782.g038d277106
+>> No idea how to match any use of errno except assignment.  And no idea h=
+ow
+>> to find indirect callers of free(3) that use errno with no potential
+>> assignment in between.
+>
+> Yeah, I guess the indirect callers of free() are really the flip-side.
+> My example was indirect users of errno. ;)
+
+Indeed.
+
+>>> The other reason is that macros (especially of system names) can creat=
+e
+>>> their own headaches.  We could require xfree() everywhere as a
+>>> complement to xmalloc (or maybe even just places where the errno
+>>> preservation seems useful), but that's one more thing to remember.
+>>
+>> An xfree() to go along with xmalloc()/xrealloc()/xcalloc()/xstrdup() wo=
+uld
+>> fit in nicely and might be easier to remember than free() after a while=
+.
+>> Having to convert thousands of calls is unappealing, though.
+>
+> My biggest concern with it is that we'd have to remember to use it, and
+> there's not good compiler enforcement. But I guess coccinelle can help
+> us there.q
+
+Yes, converting all free(3) calls is easy with Coccinelle, and the same
+semantic patch can be used to enforce the use of xfree().  Still the
+initial diff would be huge (2000+ changed lines in 300+ files).
+
+> My secondary concern is that it might make people think that xmalloc()
+> and xfree() are always paired, and thus you can do clever things in one
+> as long as the other matches it. But we sometimes free memory from
+> system routines like getline(). Maybe a scary comment would be enough?
+
+Amazing foresight!  Currently we only use getline(3) (which can act like
+realloc(3)) in contrib/credential/, though.  Any others?
+
+The "x" prefix doesn't promise exclusivity (hermetic seal?), but it
+certainly suggests there are some shared feature between the allocator
+functions and xfree(), while they only have in common that the are
+wrapped.  We could call the latter errno_preserving_free() instead or so.
+
+I'm more worried about the overhead.  For a 0-1% slowdown (in the case of
+git log) git_free() or xfree() give us accurate error numbers on all
+platforms.  Non-misleading error codes are worth a lot (seen my share of
+cursed messages), but xfree() is only necessary in the error handling
+code.  The happy path can call free(3) directly without harm.
+
+But how to classify call sites accordingly?  It's easy for programmers
+once they know it's necessary.  Is there a way in C, macro or Coccinelle
+to have our cake and only eat it if really needed?  I don't see any. :-|
+
+>> Found four places that did not expect free(3) to mess up their errno by
+>> running the test suite with that.  Patch below.
+>
+> These are perhaps worth fixing (though not if we come up with a
+> universal solution). But I'd be surprised if they are the only ones. By
+> its nature, this problem only manifests when there are actual errors,
+> and our test suite is mostly checking happy paths. So I'd assume there
+> are a ton of "if (ret < 0) { free(foo); return -1; }" spots that are
+> simply not exercised by the test suite at all.
+
+Makes sense.
+
+Ren=C3=A9
