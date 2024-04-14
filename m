@@ -1,86 +1,102 @@
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496091C696
-	for <git@vger.kernel.org>; Sun, 14 Apr 2024 01:12:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4E012B82
+	for <git@vger.kernel.org>; Sun, 14 Apr 2024 01:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713057161; cv=none; b=vCf/jFWYPWBxlxO9PX5xzo83w0RDzG/Fzc1MdyxundUlFat0T1WovxQTAUCTNLjPjRHKaj582cPIji6C0qE/ChByeLDBNc8Rc/EfwciVD64uH3pcJQEngxXZQYOXt3SCGUpNmhEymWgVjssZipuiyhQmtv8q35EQfTXR1gs0sNU=
+	t=1713058134; cv=none; b=nza2jF7CRzmFGglohxU6Oce8XeX5q3e9VLag9SrBDs0y93I4CFjjJzX3UZ7U2ZaVMelWMBe7C2B/eweuKo/Oa2XXyO5TnP3ws2jahBSGOzOSbo+lVfp0G/Gy6e+BpXXuSjXFnwVUvQdS9C320xbEjGuZwwXKMqhspkFa8Xji53s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713057161; c=relaxed/simple;
-	bh=GOMzc9A2sJhD5DOVQIUZe6v2ySQySH/j2AgC1HtJX0o=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hhcZzhyKCUUcFrsmUT6Mm1ZACkyEdCJlhPRbu0DzAGqD+hmhve72fv7fxiMoypNPITUn5XRr1e/ihRWA0cp69gB4Lx++w+rWNdc+3jg9mjyqNGwVyJtcjEnFUc6TRomKpy92IFIo51jZEfLn+oqgaK2c1pMumt7iWZp/ZnXRXic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=slhmpFjL; arc=none smtp.client-ip=185.70.40.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="slhmpFjL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
-	s=protonmail3; t=1713057158; x=1713316358;
-	bh=1P8Aq3RGnwXV5fAQESvxnzs78mtemBjYAyvkGom4DPc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=slhmpFjLgI0+pvMz8WvAwO5XRCZisWoooGG050LXw2xKPMwYO1E8wxFKtv8Rln97K
-	 Ljbz6h0U9nqIn6aa9Ejw9GoQK4t7fccPoGd+X6rcOQGknBxCW4LNBqGhz1Qhm1lVdH
-	 hnka0SRyiE8Up8cv1tD48ND0RiP8jyyLgFJHakTUwzAoMYCFQY0snzsZSSUBGNoR5P
-	 5ZPW4PK6irnniWNx0f7v6G4yHNvkK6G5neXICbblX/uo8Mbx9sv20nMp2jIU3x+1c6
-	 EEzyc273gctkUW94Q6/GXZmkUEUqg+2eTw+wG1fOsPNiXa5slhirL8dpSOoBceiFp5
-	 s+biiEP6ijggg==
-Date: Sun, 14 Apr 2024 01:12:27 +0000
-To: git@vger.kernel.org
-From: Thalia Archibald <thalia@archibald.dev>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>, Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
-Subject: [PATCH v5 8/8] fast-import: make comments more precise
-Message-ID: <65d7896e399a64670a71fc3fbde6e39dd0dc299d.1713056559.git.thalia@archibald.dev>
-In-Reply-To: <cover.1713056559.git.thalia@archibald.dev>
-References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev> <cover.1712741870.git.thalia@archibald.dev> <cover.1712907684.git.thalia@archibald.dev> <cover.1713056559.git.thalia@archibald.dev>
-Feedback-ID: 63908566:user:proton
+	s=arc-20240116; t=1713058134; c=relaxed/simple;
+	bh=2XiTZOpZZkvbSd/UYXacV2TxtPs2kzE2MyqBp5N4ytE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mrHQeBZ0QJ0K3jowfth4QwSsF7LY4c1BXDLaZf14L5TRRhangJXhJgdWDXlfGEJ8LNGAo6HTmTNFAu17Rv2dpEQZq9+FOJy7bkB35xafbvxmdj5K5WnUuSlQh8NqE4zJ7TcFq3dR11qo/uS270qZBKylfrCOVnmY3mbzUd+KgjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-69b0f08a877so11751206d6.0
+        for <git@vger.kernel.org>; Sat, 13 Apr 2024 18:28:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713058131; x=1713662931;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6npP+TwQRCPkF4Pid21BOry1a32iqB61Q0+bjHwXMDw=;
+        b=PyYBmU7/JNKsTeHMvcvXByFCplCjg9J1pHvIA37zzFglLE3mud9W5Y4qSxUfwONqe0
+         estydjZpCsDZnsYVYp3gwy10VUgGYcgAjRapnQn2O9dz0YxYZBMzlnT3od8kYmUl+MHX
+         WdSzMrDpXld1vLbdjHikVw8JENScqU+7At74Hm2wvPaT2NVb3bBmfYeVKvLpoucfvveE
+         nH2A2pkvo/SxqDOO6cdMSjm58ApQUB66c1VaAzB+Ng4cwYmPK6OwBmfJXjbgteyGNEEm
+         +u+Th3mzcy05OKEWL2AJ7J7CiAwZRhS2yod2b8hyRr9DyLEW49W7Vkn4iCSTpLOgUKW3
+         zmfQ==
+X-Gm-Message-State: AOJu0YwX2MgJG88tOplwrg9aEoukPHij5SyG4VWwOK+KiHLdj+kt8JOw
+	d35lnhAHNN33W9vaN4a/kvbgnIGdHjItpr4fPgyAMKoxnDxhseMrWxYLAFpqL7HBBdIX5tUzdeU
+	xjRQ9uEoEKWjpJqlteatFaN7q5Ri62A==
+X-Google-Smtp-Source: AGHT+IH7fx6+QL7JtJe7VWD/iJlEnuJtiFOiFN9Ax49dH1ziY9WSVDPJNv8lkGd/kCoaQM77GSM03J0Gb3ATNQpI8uk=
+X-Received: by 2002:a05:6214:3211:b0:69b:54b0:2d0c with SMTP id
+ qj17-20020a056214321100b0069b54b02d0cmr9873603qvb.2.1713058131214; Sat, 13
+ Apr 2024 18:28:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <965ae345-fd58-c46c-5a7a-de181e901f21@softwolves.pp.se>
+In-Reply-To: <965ae345-fd58-c46c-5a7a-de181e901f21@softwolves.pp.se>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 13 Apr 2024 21:28:40 -0400
+Message-ID: <CAPig+cQu15HzZkeT3+oG3U7iFax5_GYUB=uqwuJxshw-PD=VHQ@mail.gmail.com>
+Subject: Re: [PATCH v3] bisect: report the found commit with "show"
+To: Peter Krefting <peter@softwolves.pp.se>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	Christian Couder <christian.couder@gmail.com>, Michael Osipov <michael.osipov@innomotics.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-The former is somewhat imprecise. The latter became out of sync with the
-behavior in e814c39c2f (fast-import: refactor parsing of spaces,
-2014-06-18).
+On Sat, Apr 13, 2024 at 5:21=E2=80=AFPM Peter Krefting <peter@softwolves.pp=
+.se> wrote:
+> When "git bisect" finds the first bad commit and shows it to the user,
+> it calls "git diff-tree" to do so, whose output is meant to be stable
+> and deliberately ignores end-user customizations.
+>
+> As the output is supposed to be consumed by humans, replace this with
+> a call to "git show". This command honors configuration options (such
+> as "log.date" and "log.mailmap") and other UI improvements (renames
+> are detected).
+>
+> Pass some hard-coded options to "git show" to make the output similar
+> to the one we are replacing, such as showing a patch summary only.
+>
+> Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
+> ---
+> diff --git a/bisect.c b/bisect.c
+> @@ -959,23 +959,30 @@ static enum bisect_error check_good_are_ancestors_o=
+f_bad(struct repository *r,
+> +static void show_commit(struct commit *commit)
+>   {
+> +       /* Call git show with --no-pager, as it would otherwise
+> +        * paginate the "git show" output only, not the output
+> +        * from bisect_next_all(); this can be fixed by moving
+> +        * it into a --format parameter, but that would override
+> +        * the user's default options for "git show", which we
+> +        * are trying to honour. */
+> +       strvec_pushl(&show.args,
+> +                    "--no-pager",
+> +                    "show",
+> +                    "--stat",
+> +                    "--summary",
+> +                    "--no-abbrev-commit",
+> +                    "--diff-merges=3Dfirst-parent",
+> +                    oid_to_hex(&commit->object.oid), NULL);
 
-Signed-off-by: Thalia Archibald <thalia@archibald.dev>
----
- builtin/fast-import.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Style nit: On this project, multi-line comments are formatted like this:
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 419ffdcdb5..dc5a9d32dd 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2210,7 +2210,7 @@ static int parse_mapped_oid_hex(const char *hex, stru=
-ct object_id *oid, const ch
-  *
-  *   idnum ::=3D ':' bigint;
-  *
-- * Return the first character after the value in *endptr.
-+ * Update *endptr to point to the first character after the value.
-  *
-  * Complain if the following character is not what is expected,
-  * either a space or end of the string.
-@@ -2243,8 +2243,8 @@ static uintmax_t parse_mark_ref_eol(const char *p)
- }
-=20
- /*
-- * Parse the mark reference, demanding a trailing space.  Return a
-- * pointer to the space.
-+ * Parse the mark reference, demanding a trailing space. Update *p to
-+ * point to the first character after the space.
-  */
- static uintmax_t parse_mark_ref_space(const char **p)
- {
---=20
-2.44.0
+    /*
+     * This is a multi-line
+     * comment.
+    */
 
-
+It also feels slightly odd to place each option on its own line in the
+call to strvec_pushl() but then place the terminating NULL on the same
+line as the oid_to_hex() call. But that's a minor and subjective point
+hardly worth mentioning.
