@@ -1,175 +1,111 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D652636121
-	for <git@vger.kernel.org>; Sun, 14 Apr 2024 16:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23CC29B0
+	for <git@vger.kernel.org>; Sun, 14 Apr 2024 17:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713113284; cv=none; b=UbzCps39FotUL9LXQzpkbsyp1fO9d/2zzHiiupkjIgy5r7giTxytmO3GRzqUkWArkM4EC8OmONfplWXo6NQepP+VG7lpFuY0ri8wSpRPAHcEpX8JFLydgPpzNg2IOh/s5cbX7nK6IIFEhasl/oh4tUtu/yLqXLSSDP4bzH2D7YU=
+	t=1713116659; cv=none; b=EjzwVP/vRepURdQnwqMToDX+fVOOQDPdwk49zWXy4EGuNAXlQeIuNAhcxzAIICJnPmhHC0irUlvjkNN+ZmNM1npxbnx8zzMczZapLSX8/7Es7rMeC5cEwqASIP81UB0Vkncu/BMYpH+hUHdPrYxMQJ1iOkyya30VCMWNfJHa+mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713113284; c=relaxed/simple;
-	bh=r1IV2BkB4ADmssy58b8Loi859z04lKh66CbgdKmkXUI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=iNXNZUzFQi1NivlzsamUmY3JYjw4QEiXK/9/KBHZI3MW0GcWuZtzxhwe92ihZHIlLrEjEmglkpWUKAO9uK207KIOI0KV8kmeOp7RWeU2u+RwsInsBFaIkPvuQ6ddVUIbh8iZqcpqsNIRi9gW71M8fn05CYopU1UdQYpfJUyJhls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=usCDdJhe; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1713116659; c=relaxed/simple;
+	bh=jq+NyhHAs0mFqJs/UKiOSN2cdLkpuoyRWW5HC+T6Er0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fu5v3xdrwz4yxWI+bD/3how0qCzwh1mDtMDBhMjk5ZPxoFY2F5D1KJ99sNlG9F7ZsjVv+Cocy7HJgMbCy9GlR1pEptg8hAk0IVHOCZgfcXgh7pwnILWEycs/ByxUW+m/RwMD93VMlRV63Z7cx3vKkjImnQq/RObXNKCq2Qz0ZzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0zlLQE6r; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="usCDdJhe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1713113273; x=1713718073; i=l.s.r@web.de;
-	bh=mcK3u7RlWr/YBcWf1U6+epwqyUoxnqaqar0wG2q7wpU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
-	 Cc:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=usCDdJhe3WuppsDQjssptLq6aGN2ga1E18E5dQ/pAZ+xGhcix/PxTvq2WofLS6hO
-	 6kA2yOt62Ecjz/WwulbIHb8+aAkUk9+hP4ITGC35BFN8Z5i4PNWo68r0H2ZhusLPA
-	 05ZAGdXE4sE5c7fWF8wx+mSrR+SVOT2DW6YoaBXgvQhoWGjlsaxwimXvosLUA9vHc
-	 UUtTRGUd2yr74HKXyTPJIKxbV+ATk5HnbHEjsvqk553T8DS0TEupExg9OyXN7pm+d
-	 /8bZEG8DoK5H2tpxJrU3mhbug4hfv6iQ13Q+2/p8Mj7LY5y6wp6Iq2f1YmrZYRZj4
-	 iv9AiC6UnsdzNn27fg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MY5bT-1sF8ei1gBp-00YBNo; Sun, 14
- Apr 2024 18:47:53 +0200
-Message-ID: <7026075c-db4e-4d43-bbd1-d2edb52da9b7@web.de>
-Date: Sun, 14 Apr 2024 18:47:52 +0200
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0zlLQE6r"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 29E385D4D9;
+	Sun, 14 Apr 2024 17:44:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1713116650;
+	bh=jq+NyhHAs0mFqJs/UKiOSN2cdLkpuoyRWW5HC+T6Er0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=0zlLQE6rqImxLBsd5dGFz3cecwPMGeOInPDfRYZvJdLKjToeaMJ4PBCJB0NmPzFtl
+	 53Q+p3ORWD/xyQmqe0REJs0dq7hud1cVN52d8bfOgUMWx3Tnj5M9cUdzO3yTxskB3B
+	 BFGVdatvtxX97/2QwMRejpA/tF0cYh+kd26snnzwplb/hvKVo+cmk+pWVosWoBbDQf
+	 IMA27BgTKwAhPMR2qR95FzMQVYEPd28FWy4wm7cMZQufjeDsIeof/ruXWMHAFKL4Hm
+	 XofM1TU4vsmCVdNevCEMUJ7enaH8/7wUobsc1jb0lSLYLlgcc9RzYl18kCpWXuBokW
+	 97u7pdJf+RKmcsjb/lepv+zEFmkxzBOHdyU1ZNHeC0JrB9mHlNLwbkm8M/U8KLmc89
+	 734R957oSU9nsK1/FhkM8pcQhsORZOwquYJiQ/i116xCgBB/I+iUxqQLtyxwTX5Xpi
+	 SHmTqODp+tYkumyppM1Dmr6X+DpscJrI5J+tspO5w1FjsOsv0fT
+Date: Sun, 14 Apr 2024 17:44:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] imap-send: increase command size limit
+Message-ID: <ZhwV6CmcC8zeSJ-7@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+References: <7026075c-db4e-4d43-bbd1-d2edb52da9b7@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] imap-send: increase command size limit
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-Cc: Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="avYaioHjZqwCi4gR"
+Content-Disposition: inline
+In-Reply-To: <7026075c-db4e-4d43-bbd1-d2edb52da9b7@web.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--avYaioHjZqwCi4gR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:R1keMgAg7visskGi6wDnQj2AnYjTbBSS+HK+KpF02qpwd/jgxMv
- PODBxT0f+liOyUKRd4fOZHX+uo7PqE1q2q4UMBxr3PMG0eX2tBQolftEpDY9nyfl0UXjjxq
- VNtZoXYWqTdV4tDBeT6rwbU5qznKwDTm3hwjR6Y681R29tg26WLxAZ975gYcUfb4cf7awjw
- BQ92OWVRME6BcTojV/VTg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lc8x0ptYEgc=;hdx8zeWK+iA+r8W7V2K1UUcE7LL
- qgEOYlVB+kYRLXOXdfyBFzSlE82mcBZGVPLL+wHl9PyBi8JNQvAR3zSd+e0gff24rTF7hk5kK
- +PJcJpgCHiaq95HtuZK2xmiWZIgUqRDGffzN7B49v64X8XOwixVmH4DMfJsd1InVGqGTC8RNP
- Q2D4XH5VFJv/9CloFcVKGOnWQLhktm5ldnCvZh5Bp1OiQOk3vG7ZdaVNdk6+4i8rsgyLinubl
- O0VQWaHrN0G5CdrTawg5EEYdMREZwMgGxLfoaPtydBALfGhuAILljawhutAsZKZcgCI9Q5t2t
- duN9Aj2/Cs/4j9PwRnEfzN1qs10weGVWWMWL6C7zxZr8vgHC1RedSMkqv990hdekEplqaqbiW
- 1Wi93UjJgTYMYSY7Mpu0aReGmQHGlW/DiYv4QcBpVD0ZgTHLKSt6QxOf26re+kp96N8tUCcWa
- m635eiF6WRC1ohEejpPrhpmtPNSJZOCeFJ4lo/z2p6+5epqrMi0Dky4KgEUfaTkKCmncMGWLj
- vOLHiukv8G7oD3vtdLICRLNJwWtcwrwmkEw6XXkw0wmfGaCTZzOGwgVGzBLR71BiRwYIIvCi3
- KRWWMQCoAJWHo3ZPK/qzxhcojgSqOBF14r+wNnEoSsvAkSThDsDcij35Y6kWNOiXcC5yPrEkf
- Vs99ZQd+UYLZTrLRueAmn+oCmX6zsv8D2yEL9U58RnWxJp9ZcDX3yd7LrKmYhBSYyRSDiQs9v
- KS+gj+wpjlKSAjgBM5Zv8RLMd0DRHKmoeatTBVb7DprT0fVJAhvLJNJFl5SLp4kZsnpK4iYTr
- hFhqNUNV5AwMwlvzIOkUavzmZhTtJ7H9/n8Zuixuxne+E=
 
-nfvasprintf() has a 8KB limit, but it's not relevant, as its result is
-combined with other strings and added to a 1KB buffer by its caller.
-That 1KB limit is not mentioned in RFC 9051, which specifies IMAP.
+On 2024-04-14 at 16:47:52, Ren=C3=A9 Scharfe wrote:
+> nfvasprintf() has a 8KB limit, but it's not relevant, as its result is
+> combined with other strings and added to a 1KB buffer by its caller.
+> That 1KB limit is not mentioned in RFC 9051, which specifies IMAP.
+>=20
+> While 1KB is plenty for user names, passwords and mailbox names,
+> there's no point in limiting our commands like that.  Call xstrvfmt()
+> instead of open-coding it and use strbuf to format the command to
+> send, as we need its length.  Fail hard if it exceeds INT_MAX, because
+> socket_write() can't take more than that.
+>=20
+> Suggested-by: Jeff King <peff@peff.net>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+> This time I compiled with NO_CURL=3D1 and NO_APPLE_COMMON_CRYPTO=3D1 and
+> verified with a silly printf that the changed code was actually used
+> and wrote the present message to an IMAP folder whose name is 1006
+> characters log, which required a 1026 bytes long APPEND command.  Yay,
+> freedom!
 
-While 1KB is plenty for user names, passwords and mailbox names,
-there's no point in limiting our commands like that.  Call xstrvfmt()
-instead of open-coding it and use strbuf to format the command to
-send, as we need its length.  Fail hard if it exceeds INT_MAX, because
-socket_write() can't take more than that.
+I'm curious, is there a particular problem that you (or someone else)
+ran into that caused you to make this change?  I agree it seems prudent
+in general, but if there's a particular real-world broken case that this
+hits (e.g., mailbox names in a given language), I think the commit
+message would be a great place to mention this real-world impact, which
+would lend support to your argument that this is a valuable change to
+make.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-This time I compiled with NO_CURL=3D1 and NO_APPLE_COMMON_CRYPTO=3D1 and
-verified with a silly printf that the changed code was actually used
-and wrote the present message to an IMAP folder whose name is 1006
-characters log, which required a 1026 bytes long APPEND command.  Yay,
-freedom!
+--avYaioHjZqwCi4gR
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Ran into a build issue, will send a separate patch for that.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
- imap-send.c | 35 ++++++++++++-----------------------
- 1 file changed, 12 insertions(+), 23 deletions(-)
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZhwV5wAKCRB8DEliiIei
+gUmDAP4vIVCT6/opdsJGrCLYFya60lRtIVOOTUnqY0pMauCgHAD/SGCFvKZNFtGc
+tYSedwPi5zzFa2WxOTuIQNF+fIxEnAg=
+=Xj4B
+-----END PGP SIGNATURE-----
 
-diff --git a/imap-send.c b/imap-send.c
-index 4caa8668e6..0afd088d8a 100644
-=2D-- a/imap-send.c
-+++ b/imap-send.c
-@@ -68,20 +68,6 @@ static void imap_warn(const char *, ...);
-
- static char *next_arg(char **);
-
--static int nfvasprintf(char **strp, const char *fmt, va_list ap)
--{
--	int len;
--	char tmp[8192];
--
--	len =3D vsnprintf(tmp, sizeof(tmp), fmt, ap);
--	if (len < 0)
--		die("Fatal: Out of memory");
--	if (len >=3D sizeof(tmp))
--		die("imap command overflow!");
--	*strp =3D xmemdupz(tmp, len);
--	return len;
--}
--
- struct imap_server_conf {
- 	const char *name;
- 	const char *tunnel;
-@@ -503,11 +489,11 @@ static struct imap_cmd *issue_imap_cmd(struct imap_s=
-tore *ctx,
- {
- 	struct imap *imap =3D ctx->imap;
- 	struct imap_cmd *cmd;
--	int n, bufl;
--	char buf[1024];
-+	int n;
-+	struct strbuf buf =3D STRBUF_INIT;
-
- 	cmd =3D xmalloc(sizeof(struct imap_cmd));
--	nfvasprintf(&cmd->cmd, fmt, ap);
-+	cmd->cmd =3D xstrvfmt(fmt, ap);
- 	cmd->tag =3D ++imap->nexttag;
-
- 	if (cb)
-@@ -519,27 +505,30 @@ static struct imap_cmd *issue_imap_cmd(struct imap_s=
-tore *ctx,
- 		get_cmd_result(ctx, NULL);
-
- 	if (!cmd->cb.data)
--		bufl =3D xsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cmd);
-+		strbuf_addf(&buf, "%d %s\r\n", cmd->tag, cmd->cmd);
- 	else
--		bufl =3D xsnprintf(buf, sizeof(buf), "%d %s{%d%s}\r\n",
--				 cmd->tag, cmd->cmd, cmd->cb.dlen,
--				 CAP(LITERALPLUS) ? "+" : "");
-+		strbuf_addf(&buf, "%d %s{%d%s}\r\n", cmd->tag, cmd->cmd,
-+			    cmd->cb.dlen, CAP(LITERALPLUS) ? "+" : "");
-+	if (buf.len > INT_MAX)
-+		die("imap command overflow!");
-
- 	if (0 < verbosity) {
- 		if (imap->num_in_progress)
- 			printf("(%d in progress) ", imap->num_in_progress);
- 		if (!starts_with(cmd->cmd, "LOGIN"))
--			printf(">>> %s", buf);
-+			printf(">>> %s", buf.buf);
- 		else
- 			printf(">>> %d LOGIN <user> <pass>\n", cmd->tag);
- 	}
--	if (socket_write(&imap->buf.sock, buf, bufl) !=3D bufl) {
-+	if (socket_write(&imap->buf.sock, buf.buf, buf.len) !=3D buf.len) {
- 		free(cmd->cmd);
- 		free(cmd);
- 		if (cb)
- 			free(cb->data);
-+		strbuf_release(&buf);
- 		return NULL;
- 	}
-+	strbuf_release(&buf);
- 	if (cmd->cb.data) {
- 		if (CAP(LITERALPLUS)) {
- 			n =3D socket_write(&imap->buf.sock, cmd->cb.data, cmd->cb.dlen);
-=2D-
-2.44.0
-
+--avYaioHjZqwCi4gR--
