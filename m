@@ -1,39 +1,39 @@
-Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
+Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A9812B8B
-	for <git@vger.kernel.org>; Sun, 14 Apr 2024 01:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C5112B93
+	for <git@vger.kernel.org>; Sun, 14 Apr 2024 01:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713057113; cv=none; b=pn/ESNjOf7e0TFMRJcv6SdMBBL3OfjlqumuTpolVI3rfaZBtK9kyzgX63tFZi8ZYrtDiLxDj/7QXuAjfHWEltJStnB7kyLjCQ1C42pJqA+qu4QpKlH5XGjbAanCpka+NXGiWJ23+Jf7BwGZ1pxeK5NRE0izviVa8Ec50ikgA9AU=
+	t=1713057115; cv=none; b=gsTMK4BOgUmEwlTKqLujYfSzf7Y8a7M6FQg0T7Ex5z/l5Rp+0m6NqGD/K8l0sZeGFkZjFAsKONhBeHgu56KPCKXspaffwnF50zMcK6r6WLFyzaWHWO4S64ksfrYV5ByBN5s/N4z6chZKLFY1iiGOAO015gP3BlrW8QRtQttejvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713057113; c=relaxed/simple;
-	bh=ZUkeS7weO92OdrdwdKpIR3sIrKVQ3lkeFSBblIJjqFA=;
+	s=arc-20240116; t=1713057115; c=relaxed/simple;
+	bh=e8aR756vghLgDcBeVPHyniXZ9zLy1QzKMXbdiKRaKc4=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NWZIhh2NKD7FNypTV0wWa+CmB3lE95LJPyt+fSnV/tXfrY5fPRJPJX4Qb/scpfGibyh/t+PtqlXpX1a7z7lfmiijR0LGaQ3glBHkHPaC9bpo4eCSIYGHKr/GByh/Gzx/JI/IWbdHYaFM8gR+H7QFUwAwe5A0KLb00jrTKFNb/L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=mTXDmxEk; arc=none smtp.client-ip=185.70.40.136
+	 MIME-Version:Content-Type; b=NGrlwfNMqlBd7vlCMFVfgwTwzrJ9HU/wnA4bS+tbDm0w9ZtJhrWLm+NJEaP1DagftoATfUMA546n8MScF0i2wLHldCa8pmwcpAZ/uREpvWo9CBd48X+oRLiIZM2GzuFFPMKL3hJ4VKYaCxLJ5g4edCqQSbrPeawafO8QbYLI+FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev; spf=pass smtp.mailfrom=archibald.dev; dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b=OnQSX7D/; arc=none smtp.client-ip=185.70.43.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archibald.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="mTXDmxEk"
+	dkim=pass (2048-bit key) header.d=archibald.dev header.i=@archibald.dev header.b="OnQSX7D/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archibald.dev;
-	s=protonmail3; t=1713057109; x=1713316309;
-	bh=mEneZhKSjrN1s8ES01mDdLU+AMjOOLensLvcHJPh8HA=;
+	s=protonmail3; t=1713057103; x=1713316303;
+	bh=03ZjVR4Cm5VC2BUDFhfsUcpribEUal0HbTr7LB4g3TI=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=mTXDmxEk5D8Tz07Qmk067hPLraZ4C8IfuybZrGai5lsNB6745T1cQAyoKMR5rihIY
-	 UQ4+x/Rhm1OGQms6bvjrRY51vl/fw/4AC3f/4qoxN4F11z3Yka15LkzDz/xB2eahHu
-	 4ENpmQaCCfKKMnuyTd9sdNw9oM3HOATMTIxrhqoivhY9G6n8h7IlJ1WE3M3+uasEc4
-	 N7P5eiXGTdNdsqz6BSYHVxJQPFNlU3/6imFY5CVjZbw1TJNy2cDmLSW9IUPkkhiiL/
-	 ncqP3YUQ059QUDDTRA+iyaNvQBCAc4FQuolsUlzoO2to8kk/2nICVBFoflIVie102j
-	 OQ9O6Y4taW2vA==
-Date: Sun, 14 Apr 2024 01:11:44 +0000
+	b=OnQSX7D/HNk9i0kFYCPKsDhwuj5mGSG2zE3QsOt91vARdzS5kP3quk0Il3EgupURq
+	 /nhU4bAUu6cwA2OgUbCfoUHrjj6at7MYKNWK3uodl8gVvtiIe0+xVsv0knlRZVDA2n
+	 CfsmY5kA5W4OntsCErwDPq3mw9/ynW6lAIBQSIhCFZCN2juL9GNh9O2SsD432uZaim
+	 A26xyuiZPLF3EjOFdmshuXMXa3GVicktvL6oaxfVIbRbVnuKTETaDIk54b90k+bCIS
+	 dY7Tz3lx8+xyL4q1725fgfB/vWK9s5iGC0BDhmkUlYQYKS5ZylOmqOrr5GLKPb4oxp
+	 tGuhiLdmnbiCw==
+Date: Sun, 14 Apr 2024 01:11:37 +0000
 To: git@vger.kernel.org
 From: Thalia Archibald <thalia@archibald.dev>
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>, Elijah Newren <newren@gmail.com>, Thalia Archibald <thalia@archibald.dev>
-Subject: [PATCH v5 2/8] fast-import: directly use strbufs for paths
-Message-ID: <4e9f3aa52cf1e5169d74142772e693c7b487c39e.1713056559.git.thalia@archibald.dev>
+Subject: [PATCH v5 1/8] fast-import: tighten path unquoting
+Message-ID: <2c18fe5fe9b67a0650f72be7a7196644fe6e2131.1713056559.git.thalia@archibald.dev>
 In-Reply-To: <cover.1713056559.git.thalia@archibald.dev>
 References: <20240322000304.76810-1-thalia@archibald.dev> <cover.1711960552.git.thalia@archibald.dev> <cover.1712741870.git.thalia@archibald.dev> <cover.1712907684.git.thalia@archibald.dev> <cover.1713056559.git.thalia@archibald.dev>
 Feedback-ID: 63908566:user:proton
@@ -46,178 +46,567 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Previously, one case would not write the path to the strbuf: when the
-path is unquoted and at the end of the string. It was essentially
-copy-on-write. However, with the logic simplification of the previous
-commit, this case was eliminated and the strbuf is always populated.
+Path parsing in fast-import is inconsistent and many unquoting errors
+are suppressed or not checked.
 
-Directly use the strbufs now instead of an alias.
+<path> appears in the grammar in these places:
 
-Since this already changes all the lines that use the strbufs, rename
-them from `uq` to be more descriptive. That they are unquoted is not
-their most important property, so name them after what they carry.
+    filemodify ::=3D 'M' SP <mode> (<dataref> | 'inline') SP <path> LF
+    filedelete ::=3D 'D' SP <path> LF
+    filecopy   ::=3D 'C' SP <path> SP <path> LF
+    filerename ::=3D 'R' SP <path> SP <path> LF
+    ls         ::=3D 'ls' SP <dataref> SP <path> LF
+    ls-commit  ::=3D 'ls' SP <path> LF
 
-Additionally, `file_change_m` no longer needs to copy the path before
-reading inline data.
+and fast-import.c parses them in five different ways:
+
+1. For filemodify and filedelete:
+   Try to unquote <path>. If it unquotes without errors, use the
+   unquoted version; otherwise, treat it as literal bytes to the end of
+   the line (including any number of SP).
+2. For filecopy (source) and filerename (source):
+   Try to unquote <path>. If it unquotes without errors, use the
+   unquoted version; otherwise, treat it as literal bytes up to, but not
+   including, the next SP.
+3. For filecopy (dest) and filerename (dest):
+   Like 1., but an unquoted empty string is forbidden.
+4. For ls:
+   If <path> starts with `"`, unquote it and report parse errors;
+   otherwise, treat it as literal bytes to the end of the line
+   (including any number of SP).
+5. For ls-commit:
+   Unquote <path> and report parse errors.
+   (It must start with `"` to disambiguate from ls.)
+
+In the first three, any errors from trying to unquote a string are
+suppressed, so a quoted string that contains invalid escapes would be
+interpreted as literal bytes. For example, `"\xff"` would fail to
+unquote (because hex escapes are not supported), and it would instead be
+interpreted as the byte sequence '"', '\\', 'x', 'f', 'f', '"', which is
+certainly not intended. Some front-ends erroneously use their language's
+standard quoting routine instead of matching Git's, which could silently
+introduce escapes that would be incorrectly parsed due to this and lead
+to data corruption.
+
+The documentation states =E2=80=9CTo use a source path that contains SP the=
+ path
+must be quoted.=E2=80=9D, so it is expected that some implementations depen=
+d on
+spaces being allowed in paths in the final position. Thus we have two
+documented ways to parse paths, so simplify the implementation to that.
+
+Now we have:
+
+1. `parse_path_eol` for filemodify, filedelete, filecopy (dest),
+   filerename (dest), ls, and ls-commit:
+
+   If <path> starts with `"`, unquote it and report parse errors;
+   otherwise, treat it as literal bytes to the end of the line
+   (including any number of SP).
+
+2. `parse_path_space` for filecopy (source) and filerename (source):
+
+   If <path> starts with `"`, unquote it and report parse errors;
+   otherwise, treat it as literal bytes up to, but not including, the
+   next SP. It must be followed by SP.
+
+There remain two special cases: The dest <path> in filecopy and rename
+cannot be an unquoted empty string (this will be addressed subsequently)
+and <path> in ls-commit must be quoted to disambiguate it from ls.
 
 Signed-off-by: Thalia Archibald <thalia@archibald.dev>
 ---
- builtin/fast-import.c | 64 ++++++++++++++++++-------------------------
- 1 file changed, 27 insertions(+), 37 deletions(-)
+ builtin/fast-import.c  | 108 ++++++++++-------
+ t/t9300-fast-import.sh | 258 ++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 322 insertions(+), 44 deletions(-)
 
 diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 8eba89689b..765429a66c 100644
+index 782bda007c..8eba89689b 100644
 --- a/builtin/fast-import.c
 +++ b/builtin/fast-import.c
-@@ -2311,7 +2311,7 @@ static void parse_path_space(struct strbuf *sb, const=
- char *p,
+@@ -2258,10 +2258,60 @@ static uintmax_t parse_mark_ref_space(const char **=
+p)
+ =09return mark;
+ }
 =20
++/*
++ * Parse the path string into the strbuf. The path can either be quoted wi=
+th
++ * escape sequences or unquoted without escape sequences. Unquoted strings=
+ may
++ * contain spaces only if `is_last_field` is nonzero; otherwise, it stops
++ * parsing at the first space.
++ */
++static void parse_path(struct strbuf *sb, const char *p, const char **endp=
+,
++=09=09int is_last_field, const char *field)
++{
++=09if (*p =3D=3D '"') {
++=09=09if (unquote_c_style(sb, p, endp))
++=09=09=09die("Invalid %s: %s", field, command_buf.buf);
++=09} else {
++=09=09/*
++=09=09 * Unless we are parsing the last field of a line,
++=09=09 * SP is the end of this field.
++=09=09 */
++=09=09*endp =3D is_last_field
++=09=09=09? p + strlen(p)
++=09=09=09: strchrnul(p, ' ');
++=09=09strbuf_add(sb, p, *endp - p);
++=09}
++}
++
++/*
++ * Parse the path string into the strbuf, and complain if this is not the =
+end of
++ * the string. Unquoted strings may contain spaces.
++ */
++static void parse_path_eol(struct strbuf *sb, const char *p, const char *f=
+ield)
++{
++=09const char *end;
++
++=09parse_path(sb, p, &end, 1, field);
++=09if (*end)
++=09=09die("Garbage after %s: %s", field, command_buf.buf);
++}
++
++/*
++ * Parse the path string into the strbuf, and ensure it is followed by a s=
+pace.
++ * Unquoted strings may not contain spaces. Update *endp to point to the f=
+irst
++ * character after the space.
++ */
++static void parse_path_space(struct strbuf *sb, const char *p,
++=09=09const char **endp, const char *field)
++{
++=09parse_path(sb, p, endp, 0, field);
++=09if (**endp !=3D ' ')
++=09=09die("Missing space after %s: %s", field, command_buf.buf);
++=09(*endp)++;
++}
++
  static void file_change_m(const char *p, struct branch *b)
  {
--=09static struct strbuf uq =3D STRBUF_INIT;
-+=09static struct strbuf path =3D STRBUF_INIT;
+ =09static struct strbuf uq =3D STRBUF_INIT;
+-=09const char *endp;
  =09struct object_entry *oe;
  =09struct object_id oid;
  =09uint16_t mode, inline_data =3D 0;
-@@ -2348,13 +2348,12 @@ static void file_change_m(const char *p, struct bra=
-nch *b)
- =09=09=09die("Missing space after SHA1: %s", command_buf.buf);
+@@ -2299,11 +2349,8 @@ static void file_change_m(const char *p, struct bran=
+ch *b)
  =09}
 =20
--=09strbuf_reset(&uq);
--=09parse_path_eol(&uq, p, "path");
--=09p =3D uq.buf;
-+=09strbuf_reset(&path);
-+=09parse_path_eol(&path, p, "path");
+ =09strbuf_reset(&uq);
+-=09if (!unquote_c_style(&uq, p, &endp)) {
+-=09=09if (*endp)
+-=09=09=09die("Garbage after path in: %s", command_buf.buf);
+-=09=09p =3D uq.buf;
+-=09}
++=09parse_path_eol(&uq, p, "path");
++=09p =3D uq.buf;
 =20
  =09/* Git does not track empty, non-toplevel directories. */
--=09if (S_ISDIR(mode) && is_empty_tree_oid(&oid) && *p) {
--=09=09tree_content_remove(&b->branch_tree, p, NULL, 0);
-+=09if (S_ISDIR(mode) && is_empty_tree_oid(&oid) && *path.buf) {
-+=09=09tree_content_remove(&b->branch_tree, path.buf, NULL, 0);
- =09=09return;
- =09}
-=20
-@@ -2375,10 +2374,6 @@ static void file_change_m(const char *p, struct bran=
-ch *b)
- =09=09if (S_ISDIR(mode))
- =09=09=09die("Directories cannot be specified 'inline': %s",
- =09=09=09=09command_buf.buf);
--=09=09if (p !=3D uq.buf) {
--=09=09=09strbuf_addstr(&uq, p);
--=09=09=09p =3D uq.buf;
--=09=09}
- =09=09while (read_next_command() !=3D EOF) {
- =09=09=09const char *v;
- =09=09=09if (skip_prefix(command_buf.buf, "cat-blob ", &v))
-@@ -2404,55 +2399,51 @@ static void file_change_m(const char *p, struct bra=
+ =09if (S_ISDIR(mode) && is_empty_tree_oid(&oid) && *p) {
+@@ -2367,48 +2414,29 @@ static void file_change_m(const char *p, struct bra=
 nch *b)
- =09=09=09=09command_buf.buf);
- =09}
-=20
--=09if (!*p) {
-+=09if (!*path.buf) {
- =09=09tree_content_replace(&b->branch_tree, &oid, mode, NULL);
- =09=09return;
- =09}
--=09tree_content_set(&b->branch_tree, p, &oid, mode, NULL);
-+=09tree_content_set(&b->branch_tree, path.buf, &oid, mode, NULL);
- }
-=20
  static void file_change_d(const char *p, struct branch *b)
  {
--=09static struct strbuf uq =3D STRBUF_INIT;
-+=09static struct strbuf path =3D STRBUF_INIT;
+ =09static struct strbuf uq =3D STRBUF_INIT;
+-=09const char *endp;
 =20
--=09strbuf_reset(&uq);
--=09parse_path_eol(&uq, p, "path");
--=09p =3D uq.buf;
--=09tree_content_remove(&b->branch_tree, p, NULL, 1);
-+=09strbuf_reset(&path);
-+=09parse_path_eol(&path, p, "path");
-+=09tree_content_remove(&b->branch_tree, path.buf, NULL, 1);
+ =09strbuf_reset(&uq);
+-=09if (!unquote_c_style(&uq, p, &endp)) {
+-=09=09if (*endp)
+-=09=09=09die("Garbage after path in: %s", command_buf.buf);
+-=09=09p =3D uq.buf;
+-=09}
++=09parse_path_eol(&uq, p, "path");
++=09p =3D uq.buf;
+ =09tree_content_remove(&b->branch_tree, p, NULL, 1);
  }
 =20
- static void file_change_cr(const char *p, struct branch *b, int rename)
+-static void file_change_cr(const char *s, struct branch *b, int rename)
++static void file_change_cr(const char *p, struct branch *b, int rename)
  {
--=09const char *s, *d;
--=09static struct strbuf s_uq =3D STRBUF_INIT;
--=09static struct strbuf d_uq =3D STRBUF_INIT;
-+=09static struct strbuf source =3D STRBUF_INIT;
-+=09static struct strbuf dest =3D STRBUF_INIT;
+-=09const char *d;
++=09const char *s, *d;
+ =09static struct strbuf s_uq =3D STRBUF_INIT;
+ =09static struct strbuf d_uq =3D STRBUF_INIT;
+-=09const char *endp;
  =09struct tree_entry leaf;
 =20
--=09strbuf_reset(&s_uq);
--=09parse_path_space(&s_uq, p, &p, "source");
--=09s =3D s_uq.buf;
-+=09strbuf_reset(&source);
-+=09parse_path_space(&source, p, &p, "source");
+ =09strbuf_reset(&s_uq);
+-=09if (!unquote_c_style(&s_uq, s, &endp)) {
+-=09=09if (*endp !=3D ' ')
+-=09=09=09die("Missing space after source: %s", command_buf.buf);
+-=09} else {
+-=09=09endp =3D strchr(s, ' ');
+-=09=09if (!endp)
+-=09=09=09die("Missing space after source: %s", command_buf.buf);
+-=09=09strbuf_add(&s_uq, s, endp - s);
+-=09}
++=09parse_path_space(&s_uq, p, &p, "source");
+ =09s =3D s_uq.buf;
 =20
- =09if (!*p)
+-=09endp++;
+-=09if (!*endp)
++=09if (!*p)
  =09=09die("Missing dest: %s", command_buf.buf);
--=09strbuf_reset(&d_uq);
--=09parse_path_eol(&d_uq, p, "dest");
--=09d =3D d_uq.buf;
-+=09strbuf_reset(&dest);
-+=09parse_path_eol(&dest, p, "dest");
+-
+-=09d =3D endp;
+ =09strbuf_reset(&d_uq);
+-=09if (!unquote_c_style(&d_uq, d, &endp)) {
+-=09=09if (*endp)
+-=09=09=09die("Garbage after dest in: %s", command_buf.buf);
+-=09=09d =3D d_uq.buf;
+-=09}
++=09parse_path_eol(&d_uq, p, "dest");
++=09d =3D d_uq.buf;
 =20
  =09memset(&leaf, 0, sizeof(leaf));
  =09if (rename)
--=09=09tree_content_remove(&b->branch_tree, s, &leaf, 1);
-+=09=09tree_content_remove(&b->branch_tree, source.buf, &leaf, 1);
- =09else
--=09=09tree_content_get(&b->branch_tree, s, &leaf, 1);
-+=09=09tree_content_get(&b->branch_tree, source.buf, &leaf, 1);
- =09if (!leaf.versions[1].mode)
--=09=09die("Path %s not in branch", s);
--=09if (!*d) {=09/* C "path/to/subdir" "" */
-+=09=09die("Path %s not in branch", source.buf);
-+=09if (!*dest.buf) {=09/* C "path/to/subdir" "" */
- =09=09tree_content_replace(&b->branch_tree,
- =09=09=09&leaf.versions[1].oid,
- =09=09=09leaf.versions[1].mode,
- =09=09=09leaf.tree);
- =09=09return;
- =09}
--=09tree_content_set(&b->branch_tree, d,
-+=09tree_content_set(&b->branch_tree, dest.buf,
- =09=09&leaf.versions[1].oid,
- =09=09leaf.versions[1].mode,
- =09=09leaf.tree);
-@@ -3180,7 +3171,7 @@ static void print_ls(int mode, const unsigned char *h=
+@@ -3152,6 +3180,7 @@ static void print_ls(int mode, const unsigned char *h=
 ash, const char *path)
 =20
  static void parse_ls(const char *p, struct branch *b)
  {
--=09static struct strbuf uq =3D STRBUF_INIT;
-+=09static struct strbuf path =3D STRBUF_INIT;
++=09static struct strbuf uq =3D STRBUF_INIT;
  =09struct tree_entry *root =3D NULL;
  =09struct tree_entry leaf =3D {NULL};
 =20
-@@ -3197,10 +3188,9 @@ static void parse_ls(const char *p, struct branch *b=
+@@ -3168,16 +3197,9 @@ static void parse_ls(const char *p, struct branch *b=
 )
  =09=09=09root->versions[1].mode =3D S_IFDIR;
  =09=09load_tree(root);
  =09}
--=09strbuf_reset(&uq);
--=09parse_path_eol(&uq, p, "path");
--=09p =3D uq.buf;
--=09tree_content_get(root, p, &leaf, 1);
-+=09strbuf_reset(&path);
-+=09parse_path_eol(&path, p, "path");
-+=09tree_content_get(root, path.buf, &leaf, 1);
+-=09if (*p =3D=3D '"') {
+-=09=09static struct strbuf uq =3D STRBUF_INIT;
+-=09=09const char *endp;
+-=09=09strbuf_reset(&uq);
+-=09=09if (unquote_c_style(&uq, p, &endp))
+-=09=09=09die("Invalid path: %s", command_buf.buf);
+-=09=09if (*endp)
+-=09=09=09die("Garbage after path in: %s", command_buf.buf);
+-=09=09p =3D uq.buf;
+-=09}
++=09strbuf_reset(&uq);
++=09parse_path_eol(&uq, p, "path");
++=09p =3D uq.buf;
+ =09tree_content_get(root, p, &leaf, 1);
  =09/*
  =09 * A directory in preparation would have a sha1 of zero
- =09 * until it is saved.  Save, for simplicity.
-@@ -3208,7 +3198,7 @@ static void parse_ls(const char *p, struct branch *b)
- =09if (S_ISDIR(leaf.versions[1].mode))
- =09=09store_tree(&leaf);
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 60e30fed3c..de2f1304e8 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2142,6 +2142,7 @@ test_expect_success 'Q: deny note on empty branch' '
+ =09EOF
+ =09test_must_fail git fast-import <input
+ '
++
+ ###
+ ### series R (feature and option)
+ ###
+@@ -2790,7 +2791,7 @@ test_expect_success 'R: blob appears only once' '
+ '
 =20
--=09print_ls(leaf.versions[1].mode, leaf.versions[1].oid.hash, p);
-+=09print_ls(leaf.versions[1].mode, leaf.versions[1].oid.hash, path.buf);
- =09if (leaf.tree)
- =09=09release_tree_content_recursive(leaf.tree);
- =09if (!b || root !=3D &b->branch_tree)
+ ###
+-### series S
++### series S (mark and path parsing)
+ ###
+ #
+ # Make sure missing spaces and EOLs after mark references
+@@ -3060,6 +3061,261 @@ test_expect_success 'S: ls with garbage after sha1 =
+must fail' '
+ =09test_grep "space after tree-ish" err
+ '
+=20
++#
++# Path parsing
++#
++# There are two sorts of ways a path can be parsed, depending on whether i=
+t is
++# the last field on the line. Additionally, ls without a <dataref> has a s=
+pecial
++# case. Test every occurrence of <path> in the grammar against every error=
+ case.
++#
++
++#
++# Valid paths at the end of a line: filemodify, filedelete, filecopy (dest=
+),
++# filerename (dest), and ls.
++#
++# commit :301 from root -- modify hello.c (for setup)
++# commit :302 from :301 -- modify $path
++# commit :303 from :302 -- delete $path
++# commit :304 from :301 -- copy hello.c $path
++# commit :305 from :301 -- rename hello.c $path
++# ls :305 $path
++#
++test_path_eol_success () {
++=09local test=3D"$1" path=3D"$2" unquoted_path=3D"$3"
++=09test_expect_success "S: paths at EOL with $test must work" '
++=09=09test_when_finished "git branch -D S-path-eol" &&
++
++=09=09git fast-import --export-marks=3Dmarks.out <<-EOF >out 2>err &&
++=09=09blob
++=09=09mark :401
++=09=09data <<BLOB
++=09=09hello world
++=09=09BLOB
++
++=09=09blob
++=09=09mark :402
++=09=09data <<BLOB
++=09=09hallo welt
++=09=09BLOB
++
++=09=09commit refs/heads/S-path-eol
++=09=09mark :301
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09initial commit
++=09=09COMMIT
++=09=09M 100644 :401 hello.c
++
++=09=09commit refs/heads/S-path-eol
++=09=09mark :302
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit filemodify
++=09=09COMMIT
++=09=09from :301
++=09=09M 100644 :402 $path
++
++=09=09commit refs/heads/S-path-eol
++=09=09mark :303
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit filedelete
++=09=09COMMIT
++=09=09from :302
++=09=09D $path
++
++=09=09commit refs/heads/S-path-eol
++=09=09mark :304
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit filecopy dest
++=09=09COMMIT
++=09=09from :301
++=09=09C hello.c $path
++
++=09=09commit refs/heads/S-path-eol
++=09=09mark :305
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit filerename dest
++=09=09COMMIT
++=09=09from :301
++=09=09R hello.c $path
++
++=09=09ls :305 $path
++=09=09EOF
++
++=09=09commit_m=3D$(grep :302 marks.out | cut -d\  -f2) &&
++=09=09commit_d=3D$(grep :303 marks.out | cut -d\  -f2) &&
++=09=09commit_c=3D$(grep :304 marks.out | cut -d\  -f2) &&
++=09=09commit_r=3D$(grep :305 marks.out | cut -d\  -f2) &&
++=09=09blob1=3D$(grep :401 marks.out | cut -d\  -f2) &&
++=09=09blob2=3D$(grep :402 marks.out | cut -d\  -f2) &&
++
++=09=09(
++=09=09=09printf "100644 blob $blob2\t$unquoted_path\n" &&
++=09=09=09printf "100644 blob $blob1\thello.c\n"
++=09=09) | sort >tree_m.exp &&
++=09=09git ls-tree $commit_m | sort >tree_m.out &&
++=09=09test_cmp tree_m.exp tree_m.out &&
++
++=09=09printf "100644 blob $blob1\thello.c\n" >tree_d.exp &&
++=09=09git ls-tree $commit_d >tree_d.out &&
++=09=09test_cmp tree_d.exp tree_d.out &&
++
++=09=09(
++=09=09=09printf "100644 blob $blob1\t$unquoted_path\n" &&
++=09=09=09printf "100644 blob $blob1\thello.c\n"
++=09=09) | sort >tree_c.exp &&
++=09=09git ls-tree $commit_c | sort >tree_c.out &&
++=09=09test_cmp tree_c.exp tree_c.out &&
++
++=09=09printf "100644 blob $blob1\t$unquoted_path\n" >tree_r.exp &&
++=09=09git ls-tree $commit_r >tree_r.out &&
++=09=09test_cmp tree_r.exp tree_r.out &&
++
++=09=09test_cmp out tree_r.exp
++=09'
++}
++
++test_path_eol_success 'quoted spaces'   '" hello world.c "' ' hello world.=
+c '
++test_path_eol_success 'unquoted spaces' ' hello world.c '   ' hello world.=
+c '
++
++#
++# Valid paths before a space: filecopy (source) and filerename (source).
++#
++# commit :301 from root -- modify $path (for setup)
++# commit :302 from :301 -- copy $path hello2.c
++# commit :303 from :301 -- rename $path hello2.c
++#
++test_path_space_success () {
++=09local test=3D"$1" path=3D"$2" unquoted_path=3D"$3"
++=09test_expect_success "S: paths before space with $test must work" '
++=09=09test_when_finished "git branch -D S-path-space" &&
++
++=09=09git fast-import --export-marks=3Dmarks.out <<-EOF 2>err &&
++=09=09blob
++=09=09mark :401
++=09=09data <<BLOB
++=09=09hello world
++=09=09BLOB
++
++=09=09commit refs/heads/S-path-space
++=09=09mark :301
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09initial commit
++=09=09COMMIT
++=09=09M 100644 :401 $path
++
++=09=09commit refs/heads/S-path-space
++=09=09mark :302
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit filecopy source
++=09=09COMMIT
++=09=09from :301
++=09=09C $path hello2.c
++
++=09=09commit refs/heads/S-path-space
++=09=09mark :303
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit filerename source
++=09=09COMMIT
++=09=09from :301
++=09=09R $path hello2.c
++
++=09=09EOF
++
++=09=09commit_c=3D$(grep :302 marks.out | cut -d\  -f2) &&
++=09=09commit_r=3D$(grep :303 marks.out | cut -d\  -f2) &&
++=09=09blob=3D$(grep :401 marks.out | cut -d\  -f2) &&
++
++=09=09(
++=09=09=09printf "100644 blob $blob\t$unquoted_path\n" &&
++=09=09=09printf "100644 blob $blob\thello2.c\n"
++=09=09) | sort >tree_c.exp &&
++=09=09git ls-tree $commit_c | sort >tree_c.out &&
++=09=09test_cmp tree_c.exp tree_c.out &&
++
++=09=09printf "100644 blob $blob\thello2.c\n" >tree_r.exp &&
++=09=09git ls-tree $commit_r >tree_r.out &&
++=09=09test_cmp tree_r.exp tree_r.out
++=09'
++}
++
++test_path_space_success 'quoted spaces'      '" hello world.c "' ' hello w=
+orld.c '
++test_path_space_success 'no unquoted spaces' 'hello_world.c'     'hello_wo=
+rld.c'
++
++#
++# Test a single commit change with an invalid path. Run it with all occurr=
+ences
++# of <path> in the grammar against all error kinds.
++#
++test_path_fail () {
++=09local change=3D"$1" what=3D"$2" prefix=3D"$3" path=3D"$4" suffix=3D"$5"=
+ err_grep=3D"$6"
++=09test_expect_success "S: $change with $what must fail" '
++=09=09test_must_fail git fast-import <<-EOF 2>err &&
++=09=09blob
++=09=09mark :1
++=09=09data <<BLOB
++=09=09hello world
++=09=09BLOB
++
++=09=09commit refs/heads/S-path-fail
++=09=09mark :2
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit setup
++=09=09COMMIT
++=09=09M 100644 :1 hello.c
++
++=09=09commit refs/heads/S-path-fail
++=09=09committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_=
+DATE
++=09=09data <<COMMIT
++=09=09commit with bad path
++=09=09COMMIT
++=09=09from :2
++=09=09$prefix$path$suffix
++=09=09EOF
++
++=09=09test_grep "$err_grep" err
++=09'
++}
++
++test_path_base_fail () {
++=09local change=3D"$1" prefix=3D"$2" field=3D"$3" suffix=3D"$4"
++=09test_path_fail "$change" 'unclosed " in '"$field"          "$prefix" '"=
+hello.c'    "$suffix" "Invalid $field"
++=09test_path_fail "$change" "invalid escape in quoted $field" "$prefix" '"=
+hello\xff"' "$suffix" "Invalid $field"
++}
++test_path_eol_quoted_fail () {
++=09local change=3D"$1" prefix=3D"$2" field=3D"$3"
++=09test_path_base_fail "$change" "$prefix" "$field" ''
++=09test_path_fail "$change" "garbage after quoted $field" "$prefix" '"hell=
+o.c"' 'x' "Garbage after $field"
++=09test_path_fail "$change" "space after quoted $field"   "$prefix" '"hell=
+o.c"' ' ' "Garbage after $field"
++}
++test_path_eol_fail () {
++=09local change=3D"$1" prefix=3D"$2" field=3D"$3"
++=09test_path_eol_quoted_fail "$change" "$prefix" "$field"
++}
++test_path_space_fail () {
++=09local change=3D"$1" prefix=3D"$2" field=3D"$3"
++=09test_path_base_fail "$change" "$prefix" "$field" ' world.c'
++=09test_path_fail "$change" "missing space after quoted $field"   "$prefix=
+" '"hello.c"' 'x world.c' "Missing space after $field"
++=09test_path_fail "$change" "missing space after unquoted $field" "$prefix=
+" 'hello.c'   ''          "Missing space after $field"
++}
++
++test_path_eol_fail   filemodify       'M 100644 :1 ' path
++test_path_eol_fail   filedelete       'D '           path
++test_path_space_fail filecopy         'C '           source
++test_path_eol_fail   filecopy         'C hello.c '   dest
++test_path_space_fail filerename       'R '           source
++test_path_eol_fail   filerename       'R hello.c '   dest
++test_path_eol_fail   'ls (in commit)' 'ls :2 '       path
++
++# When 'ls' has no <dataref>, the <path> must be quoted.
++test_path_eol_quoted_fail 'ls (without dataref in commit)' 'ls ' path
++
+ ###
+ ### series T (ls)
+ ###
 --=20
 2.44.0
 
