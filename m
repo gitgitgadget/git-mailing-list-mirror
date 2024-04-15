@@ -1,60 +1,60 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBE373189
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 14:01:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F8774420
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 14:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713189706; cv=none; b=Kehr2LOXpSnMOodek9I4kuaALaEQ2FSh3X1nUCFBCKX3oCoUwiNY2d2tlnMigWteL4+H6AWLD6Tw2ASJynpmluJk+TsXmLDI9Xe0uLntnZwx/GdqpH7MbWU8xoJWUPeLQ/uWs+3vKnGzn5pWF+OfQ1c2wQMJ+0vdPME6ltVEap4=
+	t=1713189948; cv=none; b=C/SjjFxt2/IKKP/Y42k5rRgV9ElA3kWoQe8rp+WmEwZ4Pam3RGAWkjmIWffP+ReNkkSYeX6IEwRWBKg++VuFbDjzyY6u7HXAfwEv5gR7iXgffMnI3tTMPPGKLHzE89qhFN8SPLxlmSwYUAaAR7rzRXkyrFcRU9DCW1bPjDleuEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713189706; c=relaxed/simple;
-	bh=9Cb094JIIMa+IFRWkvX+kUSbo4cMvw81Q6HeqFG7vE0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=gPe3r531A9uwhXpJNTbWPVuS5PzLUU4165gJMaRAHQlhBbgKd4N1cG+OguX/MvZyl/aQx0qQ3cqEi4S/RFHDOIvAAhY7nMsPWtxD3LBBgU/o6XUUNsjchZFHSXiFXF95706U1n+lje0Ehn74GdnrMYAMCX9QagYvtlzKRc8ABU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGBox8eX; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1713189948; c=relaxed/simple;
+	bh=V+iM9bfu6xlJLR0yofY5RqIY4SuLKrrP2U54OIzq9eY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dPfBiB54n3ebAx3Ahe3NLjeglYR/ouEcaoPsB8Dt8EUneGmtULKYxM918O3t3mxN1WbJgXLBU2ZytM2+xBGIHb+32l/hmb6kd/H33y9eWLu43VuFAZDuYW+7CIiTauuUjoMcdXB/11ov25WrvcZ9gMtPXQkMl/5mLIWHGBG9gBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DJVNggMV; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGBox8eX"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41864cf2f5aso3603585e9.0
-        for <git@vger.kernel.org>; Mon, 15 Apr 2024 07:01:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DJVNggMV"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d895138ce6so38231961fa.0
+        for <git@vger.kernel.org>; Mon, 15 Apr 2024 07:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713189703; x=1713794503; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1713189945; x=1713794745; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aviWnPyZeyunlfAJDdt3aTgdslEcnIj/Ib4UaqdxQbs=;
-        b=JGBox8eXCr7jXLfW+dt89ef6KO65E7rX9hpupuMBZ6phj50ha9CD+Vp4NskGg+3Oj8
-         Intkl3MZusXs6BrGm9dFetl4EY9X8Ad3bOMQeK3yiotpsNgxqIS/44RRoNAes2/nwb7p
-         ray4xBcCBc/5fxTGk2pP5RUah3IS1UdTMLaUmrkT1y/4CoGVnTgJ3fkS+qdSupNyLU2g
-         Glae5AfU2Zc+oQWgJQpAgQhS6X5rIgzyYbXQbxasfxNaRYMOq1jR4S8j6mEyJrAYvtF9
-         fiZ2JdNTy2SU4lFicubEhQjGNsdeqiFrkuQ7KE6TMYpgPbEYWFeNCNkjH97cuZ4u8MUf
-         /07Q==
+        bh=JkpzZx3esbNi2+Avdzx5+NAoc1NLRz3hKat9ia6IaVg=;
+        b=DJVNggMVyRG1E99HpGOBQE6J628sci41+TsDz1O/7igyYFulwXwpLnS0H/kTpZ5VKK
+         zjKgC+rpSoKjAQ8HcLJxkAK6HGpzzsChHJrKoKYLAdUWy72Nu2caoD4zV0s97TN05/wt
+         JDHHY+3hQudrEiyZX5Vx2QaHoJyA3dLzzJyl3m2shQGxx91QQA0P5Pv83FGS5qmTRRGk
+         9xWH471E3yocza9EZh/QxnrdqYJ/XfanC/LR0J/nA2ArgqujLwMeaN3hWOVoI4QBcH4l
+         MDKN/2vmppOIP5Gmmw0qAv54Rm8LIk18rIJ+hk3xCeTzTeXaKJmyeRkKL19Zr2Y83Mc0
+         AsZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713189703; x=1713794503;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1713189945; x=1713794745;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aviWnPyZeyunlfAJDdt3aTgdslEcnIj/Ib4UaqdxQbs=;
-        b=ksBxA95GCHwOB3HeovQOqKwHQKpzltO1bk6GBKoBPXHT0zR1CJooypiy7o2B3WlVIT
-         poCc+5c5aJqMwle4c/zXryd9ZsEH9dU7y2sZS4hGPDiXOI+aIdxRf/cZtF3QFKXPDxv4
-         IjGn+zeCweWB+tmIS6F6lApKquf19xAqG6lUwEaftFrkCVo126AVjS/HziNtpfibkKST
-         k4AEJrYVkRKb0dgaFhuZEAG+UpxQLs0GtuMJBePYOLROBTAbd+FfoSGUkLcXC5DN1wTW
-         X5XEc3LbvDBxpM/1VJij+MfU1EsPvs2Bbhmg4WAo/IWpx63ps8+NYp/g+5jbFJ7317RM
-         26vQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU7+KjKO7haaoGk1zYr4meororjg9XYjU8iHWsNoIf3O1OidX0UVHUi/YDuythz/PIXlvn/SwpBpH9ANQ8PwHXb6ow4
-X-Gm-Message-State: AOJu0YzlHLKX3+5ay6eAeucazue/uFr6FD26qupASJbG8E3tHAOgymsB
-	7D8WY76zfGAHIbfDBHS+CdjOm7LmVZbYMDmGm41vnhmT5zgwz8iNkHBpDQ==
-X-Google-Smtp-Source: AGHT+IETyTv/FueLHFr83l3aQyQ8KdPxc3m+lWsReqUbSzMbNoQymL6hpoH5M6YqCsXIEiT0jeCASA==
-X-Received: by 2002:a05:600c:c2:b0:416:c63c:5f74 with SMTP id u2-20020a05600c00c200b00416c63c5f74mr7461348wmm.18.1713189703083;
-        Mon, 15 Apr 2024 07:01:43 -0700 (PDT)
+        bh=JkpzZx3esbNi2+Avdzx5+NAoc1NLRz3hKat9ia6IaVg=;
+        b=Ynm+8C4rRlJfIp8gfk/q4xboJtW/fzeYEZNf8WpYoL7+mzTwJdFVQkCu+2C/Kv9Mjl
+         7oJ8vlvltgQn0KU11aEUAJLy86ssiMLrokwErpyZ/J89XcaqVc9yNZ/NJuMvdQvxn/30
+         GMJ2pD7NSehT43tm4uGs6KMM5IBI9O7SfJQLMf/DXkA4fX/R9ai/WqOf3FkMxfvHkeJg
+         jjmnjw77obA21AKnRcovOUPk5GLXLkRo6zjbUL0DTPOUYarIzmO4EzxHE1NdHc75wgq5
+         tYvidHJfU5p2j1YJQN3s8leF0QRgeD6Phv7ZjcT44XoOn0HtLppifreft4GgRHfIBSDL
+         AXrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUUqwaQm4UI8UBSkAmAVFuNarS0Cgi+fES931CfyJxJZjG18Z2eBTvZtJ8ZvWGZaEpDR+PzMz/rn6H3w2amxwZdHQqw
+X-Gm-Message-State: AOJu0Yyg3Tx++ccKRD1aUAypU4HA0hsdRHN9rBrfmlHYFNL28ORBRdHn
+	iMh+CRq9g4d48zKbVJMYne5ofu9O+b1pQw+RTptleGqVIp/GJxzx
+X-Google-Smtp-Source: AGHT+IHJLtQd5b1vogLlfflE9OYrTfmBXZPtUWWBu0JQr00ONOjXlaNt215mEF5ZRJMheyQuQzZk0Q==
+X-Received: by 2002:a2e:a0c9:0:b0:2d8:5fb1:4b80 with SMTP id f9-20020a2ea0c9000000b002d85fb14b80mr5922950ljm.24.1713189944556;
+        Mon, 15 Apr 2024 07:05:44 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id g7-20020a05600c310700b00417e4add806sm15108280wmo.7.2024.04.15.07.01.42
+        by smtp.gmail.com with ESMTPSA id j14-20020a05600c190e00b00418296091d3sm9066401wmq.19.2024.04.15.07.05.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Apr 2024 07:01:42 -0700 (PDT)
-Message-ID: <bf27ed3a-dc6c-4716-95c6-9e6c60604bd3@gmail.com>
-Date: Mon, 15 Apr 2024 15:01:31 +0100
+        Mon, 15 Apr 2024 07:05:44 -0700 (PDT)
+Message-ID: <beebf170-31d0-4ecf-b029-d6bc499f6da8@gmail.com>
+Date: Mon, 15 Apr 2024 15:05:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,60 +63,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: prepare-commit-msg hook during rebase
-To: Michael J Gruber <git@grubix.eu>, Git List <git@vger.kernel.org>
-References: <CAA19uiQip=EsbT8uQCs+98brYSTbOqyHX1ZBhssi4df3dZmZ6Q@mail.gmail.com>
-Content-Language: en-US
+Subject: Re: [PATCH v4] launch_editor: waiting message on error
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc: rsbecker@nexbridge.com, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
+ <96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
+ <0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
+ <ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
+ <e208da74-8f16-44ae-912e-ae968da82057@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAA19uiQip=EsbT8uQCs+98brYSTbOqyHX1ZBhssi4df3dZmZ6Q@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <e208da74-8f16-44ae-912e-ae968da82057@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Michael
+Hi Rubén
 
-On 15/04/2024 11:36, Michael J Gruber wrote:
-> Hi there
+On 14/04/2024 08:39, Rubén Justo wrote:
+> When advice.waitingForEditor configuration is not set to false, we show
+> a hint telling that we are waiting for user's editor to close the file
+> when we launch an editor and wait for it to return control back to us.
+> We give the message on an incomplete line, expecting that we can go back
+> to the line and clear the message when the editor returns.
 > 
-> For a while now, I thought I was using prepare-commit-msg hook wrong
-> but finally took the time to analyse this further. Per the doc, the
-> hook receives the source of the commit message as $2
-> (message/template/merge/squash/commit or empty).
-> 
-> I notice the following with `rebase -i`:
-> - When rb applies a patch to be edited/reworded, the hook is called
-> with `commit` as the message source.
-> - When rb applies a patch merely to be picked, the hook is called with
-> `message` as the message source.
-> 
-> The latter also happens when non-interactive rebase applies commits.
-> 
-> I find this confusing for two reasons:
-> - Whether edit/reword or pick, there is always a commit being applied,
-> and it's the source of the message. So why not `commit` in both cases?
-> - The doc says that `message` is for inputs from `-m` or `-F`. So,
-> certainly this should not apply when the message comes from a picked
-> commit.
-> 
-> Also, I'm not sure whether the claim about `-m` is true, but that's
-> another issue; we even might want to distinguish between `-m` and `-F`
-> here.
-> 
-> Does the source `message` during rb pick occur due to an
-> implementation detail, maybe since the rewrite to sequencer?
+> However, it is possible that the editor exits with an error status, in
+> which case we show an error message and then return to our caller.  In
+> such a case, the error message is given where the terminal cursor
+> happens to be, which is most likely after the "we are waiting for your
+> editor" message on the same line.
 
-All of the hook behavior in rebase is an accident of the implementation 
-and stems from the scripted implementation. I'm not sure if the source 
-passed to the hook has changed over time but it is quite possible that 
-it has. I agree "commit" would be a more logical source. Personally I'm 
-not sure it makes sense to run this hook for ordinary picks, though 
-perhaps it makes sense to run it when the message is to be edited. Do 
-you have a use for this hook while rebasing or are you just confused by 
-the source argument?
+As I've said before I'm not sure how likely that is as I think the 
+editor will probably have printed a message if there was an error. 
+Assuming the message from the editor ends with a newline the proposed 
+change wont do any harm so I don't object to it.
 
 Best Wishes
 
 Phillip
 
-> Cheers
-> Michael
+> Clear the line before showing the error.
 > 
+> While we're here, make the error message follow our CodingGuideLines.
+> 
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
+> ---
+>   editor.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/editor.c b/editor.c
+> index b67b802ddf..d1ba2d7c34 100644
+> --- a/editor.c
+> +++ b/editor.c
+> @@ -104,16 +104,15 @@ static int launch_specified_editor(const char *editor, const char *path,
+>   		sigchain_pop(SIGQUIT);
+>   		if (sig == SIGINT || sig == SIGQUIT)
+>   			raise(sig);
+> -		if (ret)
+> -			return error("There was a problem with the editor '%s'.",
+> -					editor);
+> -
+>   		if (print_waiting_for_editor && !is_terminal_dumb())
+>   			/*
+>   			 * Erase the entire line to avoid wasting the
+>   			 * vertical space.
+>   			 */
+>   			term_clear_line();
+> +		if (ret)
+> +			return error("there was a problem with the editor '%s'",
+> +					editor);
+>   	}
+>   
+>   	if (!buffer)
