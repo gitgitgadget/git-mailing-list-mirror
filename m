@@ -1,145 +1,93 @@
-Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180021DFEB
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 20:42:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBF7154452
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 21:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713213738; cv=none; b=khCtkFSZBynrd2AhzB9xLOZ8xif7IXMYI3tcLhjRBTmoPY2IRQOz5PnjbQaItv7EUkiEbsl/E996CImFhXUJpC6/X/845aqWiOiltbosm8ctAbA1ZEquYyXoEWcGsfXMZupUV5xkAivBmP4PJx1MecKkk5ingL6JTS/iYLomj9w=
+	t=1713214945; cv=none; b=kHL7gdW4LDZ5XuWvV5qmjMPec48Bgqew2ptOcZ5jKZZJ2XwPsH4s/PZkRlNYN/msAe96TXUSmltIkpEA+ANxKOVYTJk6u/xN0Ae8uB1oCUXcMH3iIGxoY5rKRObv9xqxN8s7CWegHWM+ceV2ivhUB3jau41eruxBDzzxKXLqFYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713213738; c=relaxed/simple;
-	bh=afi3ad8dNIBl19PCxjt18crCLPln/XTawEUCw7qSWN0=;
-	h=Date:From:To:cc:Subject:Message-ID:MIME-Version:Content-Type; b=gSFySrmxowm5R01b9D07YmPAwi2TZCduFVGeV3MZd7Gm6vnboyvIM0d6LF6K9eEtx0hm3e4KQGDxAUNHO4pwqTTyqafX2MdtwcG9bve2YaeI6qYQ//cZhaWaKIDMPgkLtx85QfkaJPEBfabknJ4qd+onp+hKv0EQFIinL+jc2LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=AMfTGLLl; arc=none smtp.client-ip=185.114.57.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
+	s=arc-20240116; t=1713214945; c=relaxed/simple;
+	bh=Luqh/ruKkgNTb7QN14Gj7X2G5LDaKLWRiwSEUqxZx+E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rUt2+B/hcu0RgYwwMgfUDH6DD+V0FHNqWaPfRVmkze9Aee67i8PDUY/c6wSxPOZAHmXa6IP4e1zqeTA9zvayJ/rf25U3uH4v4VdR2HvoaF+LmCL30E4RpGGSu3jXyEMQk7FeskyaJh+hT8qPh02ka5dI7ICTwigFFW9f4KEKPLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qDSQKGRF; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="AMfTGLLl"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:Message-ID:Subject:cc:To
-	:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=kVqwuOsmy8wMji7VL2J9KJcfWNd3MWQYudfcG/4eU/g=; b=AMfTGLLlHkg+5NgygM/vjROnU9
-	aXsR4Apapy58BsT0y38tKfWrRPJz7OJSvwdQsIbi/HSUwQl0+ha9XQYKknS/tUZwFjz+vh7ggCBz7
-	zG2Zm+OSIvL6pLe3Xia1Y7UkRL/UbU1wsRObBMLkUWaGj0zsJ3Cuu3JFlOiAh3KVGYCnTihqqW3lJ
-	1fW9rOV4L6pGKTp6ysXYjT93ScKqKa6UekiBMUlIoGuxhnjqmCRIYGvLrFWSghjyAjYsn4SPOVInn
-	3RTLcYLvfKJBi1SJtsbdziyCybMkKsKpD05hDOcRukB+0NPSYTULIy9qLq+2xo5IZEtABuY2WL3hQ
-	dN90gjLQ==;
-Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:36428 helo=mail.nordhost.no)
-	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <peter@softwolves.pp.se>)
-	id 1rwT9M-0000000BqUF-1w4l;
-	Mon, 15 Apr 2024 22:42:00 +0200
-Date: Mon, 15 Apr 2024 21:42:00 +0100 (CET)
-From: Peter Krefting <peter@softwolves.pp.se>
-To: git@vger.kernel.org
-cc: Junio C Hamano <gitster@pobox.com>, 
-    Michael Osipov <michael.osipov@innomotics.com>, Jeff King <peff@peff.net>, 
-    Christian Couder <christian.couder@gmail.com>, 
-    Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4] bisect: report the found commit with "show"
-Message-ID: <234e8039-0000-d2c9-f3d7-9b5c3202f878@softwolves.pp.se>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qDSQKGRF"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C7981F1162;
+	Mon, 15 Apr 2024 17:02:22 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Luqh/ruKkgNTb7QN14Gj7X2G5LDaKLWRiwSEUq
+	xZx+E=; b=qDSQKGRFv/IGIpNxF6wjIJwS2l/lQUwbl0PsE34leZxDLvXhJGi/No
+	DxU9HUJ+7oCa+VM4P8iZNwSpr+1g3k4aMPArE4WBXtO0PdPNgngA8OTk3DnsOHV7
+	P8YmfPJ1NqDDGHqXq7vl2N9FACCt9oCFv2Uf8EzuDEBZkaebPPEIs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 61D871F1160;
+	Mon, 15 Apr 2024 17:02:22 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A650E1F115F;
+	Mon, 15 Apr 2024 17:02:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: git@vger.kernel.org,  Linus Arver via GitGitGadget
+ <gitgitgadget@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>,
+  Emily Shaffer <nasamuffin@google.com>,  Josh Steadmon
+ <steadmon@google.com>,  "Randall S. Becker" <rsbecker@nexbridge.com>,
+  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  Hariom Verma <hariom18599@gmail.com>,
+  =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
+Subject: Re: [PATCH 0/5] Unify trailer formatting functions
+In-Reply-To: <owlyjzlg623v.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Mon, 01 Apr 2024 17:27:00 -0700")
+References: <pull.1694.git.1710485706.gitgitgadget@gmail.com>
+	<xmqqplvg7j1y.fsf@gitster.g> <owlyjzlg623v.fsf@fine.c.googlers.com>
+Date: Mon, 15 Apr 2024 14:02:19 -0700
+Message-ID: <xmqqedb6l4pw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Relay-Host: 185.114.57.50
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 73BE9C70-FB6B-11EE-8960-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-When "git bisect" finds the first bad commit and shows it to the user,
-it calls "git diff-tree" to do so, whose output is meant to be stable
-and deliberately ignores end-user customizations.
+Linus Arver <linusa@google.com> writes:
 
-As the output is supposed to be consumed by humans, replace this with
-a call to "git show". This command honors configuration options (such
-as "log.date" and "log.mailmap") and other UI improvements (renames
-are detected).
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> This series is based on the initial series [1], notably the v4 version of
+>>> patches 10-16 as suggested by Christian [2]. This version addresses the
+>>> review comments for those patches, namely the avoidance of (temporary) test
+>>> breakages.
+>>
+>> It has been 10 days but we haven't seen any reviews on this one.  It
+>> could be that it did not get to intended mailboxes due to the header
+>> corruption (I manually fixed in this message), but without reviews
+>> we cannot move forward.
+>
+> Adding a couple more folks to the CC list according to the
+> contrib/contacts/git-contacts script. Thanks!
 
-Pass some hard-coded options to "git show" to make the output similar
-to the one we are replacing, such as showing a patch summary only.
+As we saw no responses after two weeks, I took some time to scan
+these patches myself for the final time.  I didn't see anything
+gravely wrong in it and am tempted to merge it down to 'next'.
 
-Reported-by: Michael Osipov <michael.osipov@innomotics.com>
-Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
-Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>
-Cc: Christian Couder <christian.couder@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>
----
-  bisect.c | 40 +++++++++++++++++++++++++---------------
-  1 file changed, 25 insertions(+), 15 deletions(-)
+Unless I hear objections in the next few days, that is.
 
-This version code style issues in v3.
+Thanks.
 
-diff --git a/bisect.c b/bisect.c
-index 8487f8cd1b..dd768ce3f0 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -959,23 +959,33 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
-  }
-
-  /*
-- * This does "git diff-tree --pretty COMMIT" without one fork+exec.
-+ * Display a commit summary to the user.
-   */
--static void show_diff_tree(struct repository *r,
--			   const char *prefix,
--			   struct commit *commit)
-+static void show_commit(struct commit *commit)
-  {
--	const char *argv[] = {
--		"diff-tree", "--pretty", "--stat", "--summary", "--cc", NULL
--	};
--	struct rev_info opt;
-+	struct child_process show = CHILD_PROCESS_INIT;
-
--	git_config(git_diff_ui_config, NULL);
--	repo_init_revisions(r, &opt, prefix);
--
--	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
--	log_tree_commit(&opt, commit);
--	release_revisions(&opt);
-+	/*
-+	 * Call git show with --no-pager, as it would otherwise
-+	 * paginate the "git show" output only, not the output
-+	 * from bisect_next_all(); this can be fixed by moving
-+	 * it into a --format parameter, but that would override
-+	 * the user's default options for "git show", which we
-+	 * are trying to honour.
-+	 */
-+	strvec_pushl(&show.args,
-+	             "--no-pager",
-+	             "show",
-+	             "--stat",
-+	             "--summary",
-+	             "--no-abbrev-commit",
-+	             "--diff-merges=first-parent",
-+	             oid_to_hex(&commit->object.oid),
-+	             NULL);
-+	show.git_cmd = 1;
-+	if (run_command(&show))
-+		die(_("unable to start 'show' for object '%s'"),
-+		    oid_to_hex(&commit->object.oid));
-  }
-
-  /*
-@@ -1092,7 +1102,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
-  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
-  			term_bad);
-
--		show_diff_tree(r, prefix, revs.commits->item);
-+		show_commit(revs.commits->item);
-  		/*
-  		 * This means the bisection process succeeded.
-  		 * Using BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND (-10)
--- 
-2.39.2
 
