@@ -1,54 +1,58 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A1641C66
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 18:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DD21E877
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 18:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713206315; cv=none; b=l+jR4K2UG2ugk9x/aUoH9KUx9f7vcYxYWrNtHeglDbZBz9hlFEn6vASPpydR+7FLTgOOxl5b/vRI6g9LjrRSnp11nYgyWBA/fCvNsdFsopBb9yR4pERrUaMcNVunedryDnve45re321ojb94NtRzSUUt0rSFYDlgmccKpHC++90=
+	t=1713206686; cv=none; b=pMlDKovf7UBr9TqGVaBgzWGiawqAQr9hvQjJxQadVc4kvCDvHeLYRUqISy0P3ncIrfnmtgbehkxLUBxXor8GNYANhM5ozKEJSLIcQR7GD91Ms+9lMQ3TlVHXl/EOy41QmkyiZFxxojiK4wchDHTHeGtIm2HnmFKde2FgE3Fnc8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713206315; c=relaxed/simple;
-	bh=0ffKk+Xx2KkoUlUgUalq6OgoUJmxwESUtY1jP8L7DuY=;
+	s=arc-20240116; t=1713206686; c=relaxed/simple;
+	bh=3sAzW7YKF8nZhUB9tYlLDuTC/P08kkpdc1P+c2rQoIY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Mka+4sD2HvFc4ZMFQlzUwLBm+74n/uiqMXiS7SURI2A0D2RsFdprQJUjwRbmx3FN1zjT+JbGa/XF6cH9ofeyUJafLXMulg/4i8dGs8/UZCOM4KBOO1rbDKB1k9a7rijt1pE1td3Mhtg7M3yaNgQdILGdojxkaA07+h/kMjTgckQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UfG+2IZD; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=PCd01jwse20fg+YtnYL+ND60eC/c7nbb+qD5WIIUjy7oBlZNNpVLMQTIvcVr7ZvrZ2gexr9KKp34Fb0aXx37quNiYHaqUHpqYVAfQ6Ca8R+hgdypa4eXUTcqP6i8dO3+T/yH35e+Fb3q7mv8rlq2tNJHAD/cz2rZnsjcgC68MeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OnjQGK57; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UfG+2IZD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OnjQGK57"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5BCCA32BE1;
-	Mon, 15 Apr 2024 14:38:33 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AD24E32C2D;
+	Mon, 15 Apr 2024 14:44:43 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0ffKk+Xx2Kko
-	UlUgUalq6OgoUJmxwESUtY1jP8L7DuY=; b=UfG+2IZDEmq5rNvpYD0voQExFz7g
-	cBVASfL74k9ezuiGlu806HZYBRf8OkC9BuOdFkQnEkF+PsH9I6FE6ZyxOd57Y1sk
-	sfxvzL2kT7Pm9R5DJUKI3ZUEeOwYxZMVgmiFAZQHc7+Meds98xsWErUK+3lc9CEp
-	jzyuUNOtYwlOPjc=
+	:content-type:content-transfer-encoding; s=sasl; bh=3sAzW7YKF8nZ
+	hUB9tYlLDuTC/P08kkpdc1P+c2rQoIY=; b=OnjQGK57n3uqsgPrCPs9eqPKfqZM
+	99VEiGQfVlO4LxED9tqSsGb4fWkiwLcjJUNua2wfN/w1cSpoJnqYzer53AcA8010
+	abhCPC23xwPNBFaTGEhf9iTNOnRCArWD1LcpXNCbTCpcUvvHm6z9gWNMHEWX7IZb
+	RtcuH93IpLDdK90=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 52C1F32BE0;
-	Mon, 15 Apr 2024 14:38:33 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A5FD032C2C;
+	Mon, 15 Apr 2024 14:44:43 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5BA4E32BDF;
-	Mon, 15 Apr 2024 14:38:30 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9CEF032C28;
+	Mon, 15 Apr 2024 14:44:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
- <git@vger.kernel.org>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH] imap-send: increase command size limit
-In-Reply-To: <ZhwV6CmcC8zeSJ-7@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Sun, 14 Apr 2024 17:44:08 +0000")
-References: <7026075c-db4e-4d43-bbd1-d2edb52da9b7@web.de>
-	<ZhwV6CmcC8zeSJ-7@tapette.crustytoothpaste.net>
-Date: Mon, 15 Apr 2024 11:38:28 -0700
-Message-ID: <xmqqil0impy3.fsf@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  rsbecker@nexbridge.com,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4] launch_editor: waiting message on error
+In-Reply-To: <8ef912a9-78f2-411a-a055-f86f69d78b90@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Mon, 15 Apr 2024 19:07:14 +0200")
+References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
+	<96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
+	<0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
+	<ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
+	<e208da74-8f16-44ae-912e-ae968da82057@gmail.com>
+	<8ef912a9-78f2-411a-a055-f86f69d78b90@gmail.com>
+Date: Mon, 15 Apr 2024 11:44:39 -0700
+Message-ID: <xmqqedb6mpns.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,40 +62,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 5B151334-FB57-11EE-A9FB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 37C758AA-FB58-11EE-B85F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
->>  ...
->> Suggested-by: Jeff King <peff@peff.net>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->> This time I compiled with NO_CURL=3D1 and NO_APPLE_COMMON_CRYPTO=3D1 a=
-nd
->> verified with a silly printf that the changed code was actually used
->> and wrote the present message to an IMAP folder whose name is 1006
->> characters log, which required a 1026 bytes long APPEND command.  Yay,
->> freedom!
+> - term_clear_line() is now used in all cases as it is unlikely that any
+>   sane editor emits an error message without ending it with a newline.
 >
-> I'm curious, is there a particular problem that you (or someone else)
-> ran into that caused you to make this change?  I agree it seems prudent
-> in general, but if there's a particular real-world broken case that thi=
-s
-> hits (e.g., mailbox names in a given language), I think the commit
-> message would be a great place to mention this real-world impact, which
-> would lend support to your argument that this is a valuable change to
-> make.
+>   This:
+>
+> 	$ GIT_EDITOR=3Dfalse git commit -a
+> 	hint: Waiting for your editor to close the file... error: There was a =
+problem with the editor 'false'.
+> 	Please supply the message using either -m or -F option.
+>
+>   becomes:
+>
+> 	$ GIT_EDITOR=3Dfalse git commit -a
+> 	error: There was a problem with the editor 'false'.
+> 	Please supply the message using either -m or -F option.
 
-I personally am not curious about real-world problem in this case,
-but I won't stop you asking ;-)
+Nobody uses 'false' as their editor, but as you said ':cq' in vim
+may be a real-world example of a use case that may benefit from this
+change.
 
-I view this more about code simplification.  We no longer need a
-custom nfvasprintf() helper nobody else cares about, leaving the
-resulting code easier to read.
-
-Will queue but will wait for a day or two to see if Ren=C3=A9 wants to
-add clarification to the proposed commit log message before merging
-it to 'next'.
-
-Thanks, both.
+Will queue.  Thanks.
