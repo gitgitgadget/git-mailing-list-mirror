@@ -1,114 +1,79 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F03156969
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 21:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F74156F4B
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 21:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713216245; cv=none; b=dt3iUXVhQdEY3VGWgVgXvv/ioXZq2Zlhl/Q3N+Wn8jtqrbtKnDEjUJkeXIAN0lzPx9eh/ohF8Z2rJmM8Owj+3IbUkrMTBgUGmv8RWW5SKwwXjQpU4zETxCeCvK1Hl0OQ5GsYZ7M3ve+E3RewgLM2WMAsP3vCSeGhyjaJCZzZ9jM=
+	t=1713216823; cv=none; b=KcUv4WJl05A3gCIQwhPos1lZIGTWv/WqNsTMtvN1UjZzjByGBtYW/uzip6LIFgPieLdi0r4SoYw/ziKCJRiraRRR+KiWdvbu7GwjaYkgln8JUR4SdNMvuWIsp0rqYqlQwJDv0lzaIPgbg0fwNuw9zk6x/yiiJ/6oMAfp8iXsmdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713216245; c=relaxed/simple;
-	bh=ByJt2IfKdmvbNY3XpPb++FXbAoeF/ZUOuOtavh7PXYI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NhLbbhZo65AZ4OAXLiD+9jvzjN2XKjAaRQzheYIiNn2JYBjcmgMgjc1ssDgQRkEQ3SzoF40E9Bj7bgsH9jGGadCpXPYzRWLptmTr7ALxFs/4+1Df716yJZN35iuaErPFdLtVq8GvbPUuadv8goQPnZRd+WkyIwua7aGIYEEQy1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gL/2qiis; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gL/2qiis"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ACF6C1F1459;
-	Mon, 15 Apr 2024 17:24:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ByJt2IfKdmvbNY3XpPb++FXbAoeF/ZUOuOtavh
-	7PXYI=; b=gL/2qiispOB+pNXqQIxZe2lXGcywtQzLQfTrbMtWPTOnY4GKTez9Wa
-	Ia5Um5UFAfLISQ4My0SPiedeVCO9YzDDJ+C/H+uGh9/E06GwJoRpyRR2CVX4kXoj
-	LM1cM/dZhFH+Ey1iOescd5GghomsX6/Wquty+Wjc6D5Yj2bj34H+U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A39F81F1458;
-	Mon, 15 Apr 2024 17:24:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 60AD11F1455;
-	Mon, 15 Apr 2024 17:24:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Peter Krefting <peter@softwolves.pp.se>,  git@vger.kernel.org,  Jeff
- King <peff@peff.net>,  Christian Couder <christian.couder@gmail.com>,
-  Michael Osipov <michael.osipov@innomotics.com>
-Subject: Re: [PATCH v3] bisect: report the found commit with "show"
-In-Reply-To: <CAPig+cQu15HzZkeT3+oG3U7iFax5_GYUB=uqwuJxshw-PD=VHQ@mail.gmail.com>
-	(Eric Sunshine's message of "Sat, 13 Apr 2024 21:28:40 -0400")
-References: <965ae345-fd58-c46c-5a7a-de181e901f21@softwolves.pp.se>
-	<CAPig+cQu15HzZkeT3+oG3U7iFax5_GYUB=uqwuJxshw-PD=VHQ@mail.gmail.com>
-Date: Mon, 15 Apr 2024 14:24:00 -0700
-Message-ID: <xmqq7cgyl3pr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1713216823; c=relaxed/simple;
+	bh=jpKEr22L/ZkhtQV+DfoiBMGiB+v+mNzkSS6Jr5BNlZU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lE4M/mh1YxqeyRLEUkwyDlZmtwXNdl9XrPhGQfTLkrIqulIpfQTNQJRvy7A6jwnXlqZT2WsvrPdCSJsMJ03zCvDyT9cGLDPXdMi/pCxWSJSkdn/ohfz5wzzapKShEZD99Pv3TABGu7yaCpRDlTDyKXC51atDWUK/Ih1gedZ5naY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-69b2f6d31c1so8805806d6.0
+        for <git@vger.kernel.org>; Mon, 15 Apr 2024 14:33:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713216820; x=1713821620;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jpKEr22L/ZkhtQV+DfoiBMGiB+v+mNzkSS6Jr5BNlZU=;
+        b=cXK6cv3uZnkuAuQ0y2XzQwADbvmOMde4/mH7kvY2pd6yObBynV9ec7gJvEacpIEbyz
+         NtVqvQkEjqMkUr9oqyUAmI6ir1g5XI7PiFVhayC7LiCNJbvzI+EDverGaNno75aHLFXh
+         EGxDhyWaPgsGwRrb4gtpsik4548oWZvT0+A/fGfneNlqHwyrajevxpvee3riEbLd6lPM
+         xY/7C3CXSOpZgVC4qKscFoPO4spgafkwEGi9VTdktnBE0YceqdaeyiugsWavxfwCPI2E
+         6ZoMH2VPulwNrUAc2uPQwxCqAY3/RMLdqbtOThHHtXMc7qw+l/0gxzLFgXqjA2kULBGz
+         QDTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXASQxjdPJSnoxvAbHXM9nXonMsChgxXcbkx+/Q34cDAn5nKaBKD1npBwEwfKSQsNjFI2HPrvEfmAeg2Sh+2RheCala
+X-Gm-Message-State: AOJu0YyjPXafWJXxUpu1+IvPGWkUM+mm0Ht3BeJXMYCEMERcuDkEQqEj
+	DWnwbPtfz4qnC74L+DewRxZaYWiF7np9AjMHDnGi94Jh9YlDFF7+/dYj/RkxViFb1yCz8x+Ku1S
+	xJT9xb3kCxTCBNQLhaegmX+C+rkA=
+X-Google-Smtp-Source: AGHT+IFTK90cjMXPVtcLevVMw/1YT9ALmp7tm86ETCQW/Aa1jGByvoBg6CM23L+gw1qeCy687I0gXxHDteOpjQ4depg=
+X-Received: by 2002:ad4:4d90:0:b0:69b:24f2:c2eb with SMTP id
+ cv16-20020ad44d90000000b0069b24f2c2ebmr9533585qvb.59.1713216820569; Mon, 15
+ Apr 2024 14:33:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7A78B444-FB6E-11EE-8F4C-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <965ae345-fd58-c46c-5a7a-de181e901f21@softwolves.pp.se>
+ <CAPig+cQu15HzZkeT3+oG3U7iFax5_GYUB=uqwuJxshw-PD=VHQ@mail.gmail.com> <xmqq7cgyl3pr.fsf@gitster.g>
+In-Reply-To: <xmqq7cgyl3pr.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 15 Apr 2024 17:33:29 -0400
+Message-ID: <CAPig+cSY3vp6V=4SWmxyCi+7QY74eGnzPM6bu5LU5j00n8-j5g@mail.gmail.com>
+Subject: Re: [PATCH v3] bisect: report the found commit with "show"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Christian Couder <christian.couder@gmail.com>, Michael Osipov <michael.osipov@innomotics.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->> Pass some hard-coded options to "git show" to make the output similar
->> to the one we are replacing, such as showing a patch summary only.
->>
->> Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
->> ---
-
-Curious how you trimmed the trailers from the submitted patch ;-)
-
-Although we do not use Cc: in this project, we do recommend use of
-the "Reported-by" trailer in Documentation/SubmittingPatches.
-
->> diff --git a/bisect.c b/bisect.c
->> ...
-
-> Style nit: On this project, multi-line comments are formatted like this:
+On Mon, Apr 15, 2024 at 5:24=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >> Pass some hard-coded options to "git show" to make the output similar
+> >> to the one we are replacing, such as showing a patch summary only.
+> >>
+> >> Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
+> >> ---
 >
->     /*
->      * This is a multi-line
->      * comment.
->      */
+> Curious how you trimmed the trailers from the submitted patch ;-)
+>
+> Although we do not use Cc: in this project, we do recommend use of
+> the "Reported-by" trailer in Documentation/SubmittingPatches.
 
-True.
-
-> It also feels slightly odd to place each option on its own line in the
-> call to strvec_pushl() but then place the terminating NULL on the same
-> line as the oid_to_hex() call. But that's a minor and subjective point
-> hardly worth mentioning.
-
-I think that is because we may want to tweak the list of options,
-but no matter what change we make to them in the future, the object
-name as the last parameter is likely to remain the last one, and
-with that reasoning, I agree with the layout in the patch as posted.
-
-What is more problematic is that the message is sent with
-
-	Content-Type: text/plain; format=flowed; charset=US-ASCII
-
-and the contents of the message is in that flawed format, possibly
-corrupting whitespaces in irrecoverable ways.
-
-I _think_ "git am" (actually, "git mailsplit" that is called from
-it) did a reasonable job this time, but I do not have a lot of
-confidence in the resulting commit---I would not be surprised if it
-is not identical to what Peter wanted to give us.
-
-Peter, if the resulting commit I push out later today botches some
-whitespaces due to this issue, please complain.  I'll fix the
-multi-line comment thing on my end before pushing the today's
-integration result out.
-
-Thanks.
+Sorry if that caused any confusion. I wasn't trying to make some sort
+of implicit suggestion to the patch author (such as "don't use Cc:
+trailers"). Rather, to ease the reading burden for others, I
+habitually trim off chunks of the email which aren't relevant to the
+portions about which I'm commenting. So, although I always leave the
+Signed-off-by: intact, I often trim off other trailers, sometimes even
+parts of the commit message (replacing with "[...]"), and, of course,
+entire chunks of the patch body.
