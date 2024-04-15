@@ -1,59 +1,38 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DD21E877
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 18:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6D21553A7
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 18:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713206686; cv=none; b=pMlDKovf7UBr9TqGVaBgzWGiawqAQr9hvQjJxQadVc4kvCDvHeLYRUqISy0P3ncIrfnmtgbehkxLUBxXor8GNYANhM5ozKEJSLIcQR7GD91Ms+9lMQ3TlVHXl/EOy41QmkyiZFxxojiK4wchDHTHeGtIm2HnmFKde2FgE3Fnc8M=
+	t=1713207157; cv=none; b=XCuNTvVZituqV9iVPd4Lk+OCaF8SCTcuJXPyV+VJxMT2jWR0hdlFfDpsrILiFerL0dBJitn2AvB5LRgpwEgtMcnisoaUQUOdmizf2Wix5eYP4aZfm9IaPr14MEVwTcJbKL9pabkhFpl9HOuA18I3z0uPBZmmCUczT07qiFg/YxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713206686; c=relaxed/simple;
-	bh=3sAzW7YKF8nZhUB9tYlLDuTC/P08kkpdc1P+c2rQoIY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PCd01jwse20fg+YtnYL+ND60eC/c7nbb+qD5WIIUjy7oBlZNNpVLMQTIvcVr7ZvrZ2gexr9KKp34Fb0aXx37quNiYHaqUHpqYVAfQ6Ca8R+hgdypa4eXUTcqP6i8dO3+T/yH35e+Fb3q7mv8rlq2tNJHAD/cz2rZnsjcgC68MeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OnjQGK57; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OnjQGK57"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AD24E32C2D;
-	Mon, 15 Apr 2024 14:44:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3sAzW7YKF8nZ
-	hUB9tYlLDuTC/P08kkpdc1P+c2rQoIY=; b=OnjQGK57n3uqsgPrCPs9eqPKfqZM
-	99VEiGQfVlO4LxED9tqSsGb4fWkiwLcjJUNua2wfN/w1cSpoJnqYzer53AcA8010
-	abhCPC23xwPNBFaTGEhf9iTNOnRCArWD1LcpXNCbTCpcUvvHm6z9gWNMHEWX7IZb
-	RtcuH93IpLDdK90=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A5FD032C2C;
-	Mon, 15 Apr 2024 14:44:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9CEF032C28;
-	Mon, 15 Apr 2024 14:44:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  rsbecker@nexbridge.com,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4] launch_editor: waiting message on error
-In-Reply-To: <8ef912a9-78f2-411a-a055-f86f69d78b90@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Mon, 15 Apr 2024 19:07:14 +0200")
-References: <e60c1217-aeb6-48ce-9aa5-7c0b13396e33@gmail.com>
-	<96bef5f9-1286-4938-99ec-6beed13ee68d@gmail.com>
-	<0258a583-a90a-4434-bb4e-a1672d574b9c@gmail.com>
-	<ccbd77a1-d334-4d8f-8de0-b542c79330fd@gmail.com>
-	<e208da74-8f16-44ae-912e-ae968da82057@gmail.com>
-	<8ef912a9-78f2-411a-a055-f86f69d78b90@gmail.com>
-Date: Mon, 15 Apr 2024 11:44:39 -0700
-Message-ID: <xmqqedb6mpns.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1713207157; c=relaxed/simple;
+	bh=EALvrIXe+eLVooq6EfJi/bucIlxqepB1BknwLCXCF2s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U/dAEGGSIYm3FuPu0N42KDzvI0cJMb0RjmDs83hAx0xOOLMHb9mio4Pkfd+MPrI6WJp9EiR5YiMaXxf+3cmPAt+XWIAtM8fowuYQMWYZ/8nqJhIC+JytYHFCSpBJ7vPlnoeh8RX8i+ZmnHZDQCdIXFV0BePXzPuQIdFzW3DcHhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 30889 invoked by uid 109); 15 Apr 2024 18:45:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Apr 2024 18:45:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22544 invoked by uid 111); 15 Apr 2024 18:45:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Apr 2024 14:45:54 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 15 Apr 2024 14:45:52 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] imap-send: increase command size limit
+Message-ID: <20240415184552.GA1709228@coredump.intra.peff.net>
+References: <7026075c-db4e-4d43-bbd1-d2edb52da9b7@web.de>
+ <ZhwV6CmcC8zeSJ-7@tapette.crustytoothpaste.net>
+ <xmqqil0impy3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,30 +40,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 37C758AA-FB58-11EE-B85F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqil0impy3.fsf@gitster.g>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On Mon, Apr 15, 2024 at 11:38:28AM -0700, Junio C Hamano wrote:
 
-> - term_clear_line() is now used in all cases as it is unlikely that any
->   sane editor emits an error message without ending it with a newline.
->
->   This:
->
-> 	$ GIT_EDITOR=3Dfalse git commit -a
-> 	hint: Waiting for your editor to close the file... error: There was a =
-problem with the editor 'false'.
-> 	Please supply the message using either -m or -F option.
->
->   becomes:
->
-> 	$ GIT_EDITOR=3Dfalse git commit -a
-> 	error: There was a problem with the editor 'false'.
-> 	Please supply the message using either -m or -F option.
+> > I'm curious, is there a particular problem that you (or someone else)
+> > ran into that caused you to make this change?  I agree it seems prudent
+> > in general, but if there's a particular real-world broken case that this
+> > hits (e.g., mailbox names in a given language), I think the commit
+> > message would be a great place to mention this real-world impact, which
+> > would lend support to your argument that this is a valuable change to
+> > make.
+> 
+> I personally am not curious about real-world problem in this case,
+> but I won't stop you asking ;-)
+> 
+> I view this more about code simplification.  We no longer need a
+> custom nfvasprintf() helper nobody else cares about, leaving the
+> resulting code easier to read.
+> 
+> Will queue but will wait for a day or two to see if René wants to
+> add clarification to the proposed commit log message before merging
+> it to 'next'.
 
-Nobody uses 'false' as their editor, but as you said ':cq' in vim
-may be a real-world example of a use case that may benefit from this
-change.
+Yeah, as the suggested-by person, I can affirm that this is not
+something I saw in real life. I agree the primary motivation is the code
+simplification, and dropping a pointless limit is the bonus. I'd
+probably have written it in that style, but I'm OK either way.
 
-Will queue.  Thanks.
+-Peff
