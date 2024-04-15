@@ -1,172 +1,198 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F55028DB3
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 07:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6177424A06
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 07:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713165763; cv=none; b=KFeH12GvE7nCEZpot6wrgmGdDfm7Lv03xqPF0v8mMzv7jw5RPw0HWPXczD216gJMxrxJ2wh50F/bIB0Ygc10ltUGGEDkso3xWum/gHyIswsq+q7AZzTHWUccGSf7MnMm56ElYToCoky3u6xwyDK25JAAQeJWztmuVMD6dD31qUw=
+	t=1713165797; cv=none; b=spy3nKmWg8xr7i8eVnhvEsp7W3zefLDvA0zJzxvciRWytUFd3ZLcFmCOEXtsv4rk4l1Ihh4MbGLRdAyy3nkIKGJpo/YurQXUYcIEAbLLXgP309JuCcbrMeYkA0YGfdotEPFPKTrnfxkm9xFgyNbtIiHBRlBBD09/3/XHg+D+CsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713165763; c=relaxed/simple;
-	bh=O+dpVs2yF8rxDjauiY6RDw/csWHOortJMnpE7LK1DxM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Ha/Nhy5mRG5C/jjU6rB3+wu5VuV+g+FJwlkuZkCCRmq925/3cujZRYNRQnH9aEg3uGkQiovwdW9rEmndDPZxL8RqWodhnHKkUCZiTCN1DWZgHEHDTtIvpcY5tZyIBsS/v51awj4oXeVMS9gifc0vznSKtJFYBqCh8mhHo7Iy4h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O35qkcf1; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713165797; c=relaxed/simple;
+	bh=9xtAQBknX+5iZpK/TWi/otvbT5tA+77tClxgvi0H/qE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P4LbIgKLu+3p60E1r/QWkmK5kbF8GDbQCkk59etnifkDscjGp1pLeLfGdA3zSbO8HR0wgcRwKqvLErkGXCPFKvBAw80yEiD/R+KnaxHp9mEbTWVfLJN28cviwp3PZtzNp84euYCzk2FBpQ6wmkWiM65ViSKIqvRh3wvLZl43B34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NQaIGcOB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hxGgSABp; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O35qkcf1"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5e152c757a5so1429899a12.2
-        for <git@vger.kernel.org>; Mon, 15 Apr 2024 00:22:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713165760; x=1713770560; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TN455AMdPojrQH5k+UL829ZE6GlhMGegqZJgDQWb6X0=;
-        b=O35qkcf1GLiHT4iPHS0haDn5xNGayxXYTRbE3Prpuh9gaSjdSTEf8Mt2VUZfnUY8ia
-         HvqnevP35YGGTplgyWTt1Y+VkBWg6FGWZe0hH3NWBicleitysGuwUep0s0zzOh0APAhM
-         sMplNFogcfkiz+yVIap6WaKvhpWiDfxsHWyerhsReaN613Hefbl5uMnCUbOApgj9oODG
-         kZurlWQtzLSagbnsn2qgg+1lWJbVgAOSuvkzVxrHthrt3F1WqZw9Kg1LhkL169sAsrp8
-         m82ad+x8K/Sk/H/P1W2VMWfGQR59Yn9IAzD1eheq5Loo5n2HUNeeQ4pm/ai4UwZHAPN0
-         zRfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713165760; x=1713770560;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TN455AMdPojrQH5k+UL829ZE6GlhMGegqZJgDQWb6X0=;
-        b=gONDdpfSseZ0X6UqBhpuDDLC1I7lTm12itPgvUVS9rRcpoR0kjReL6Ef+ovH5OpsvC
-         4O8cDdCqSXKto5gfgMeKmTIDldUE4csQAhc2I95PB0LBssnb2OcVkQaPvwnJtV0fPEFV
-         Dd9gU1tL1LHAmzkq5qs7id7mrkUQTkHo9POyhxn4LVValXjqmbnvJ+V7cHGit6DnH+Eb
-         Wo2T6wRy0p4jctTYlfcLKVkOgyvDq2WvD0NmsMrdmVZbfXnAUpHDvZwaCgkgXvXWNEil
-         kKESX4IhR9M2PYM96qt4hL7p+4BhAma4ke7sFLS8EhJQBPBpnhuv/RNAtrj881UG8K/U
-         EwHQ==
-X-Gm-Message-State: AOJu0YwnBCNwi4c6nW+DR7kgnBoeD0TNneg5xSr+utwD+hnkSckrjlUL
-	kWUrLtP9LUB+P9pY++gh+YfpfyQ9tG7uzBmWIMdpewRcIe0qnoQEyyuB91Pf
-X-Google-Smtp-Source: AGHT+IGHxmRHE25RP/1lBxaTXEUUjlhs/RGEgSEGfmPpIRhyzAqBYhVyJ5rEWHa1Apl33D8OTK0h6Q==
-X-Received: by 2002:a05:6a20:4326:b0:1a3:a984:4b8b with SMTP id h38-20020a056a20432600b001a3a9844b8bmr9436461pzk.50.1713165760439;
-        Mon, 15 Apr 2024 00:22:40 -0700 (PDT)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id gm7-20020a056a00640700b006ecfdcc2de9sm6816553pfb.10.2024.04.15.00.22.39
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2024 00:22:40 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Jordi Mas <jmas@softcatala.org>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	Jimmy Angelakos <vyruss@hellug.gr>,
-	=?UTF-8?q?Christopher=20D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Alessandro Menti <alessandro.menti@alessandromenti.it>,
-	Gwan-gyeong Mun <elongbug@gmail.com>,
-	Arusekk <arek_koz@o2.pl>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= <vnwildman@gmail.com>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>,
-	Git l10n discussion group <git-l10n@googlegroups.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.45.0
-Date: Mon, 15 Apr 2024 15:22:26 +0800
-Message-Id: <20240415072226.15005-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NQaIGcOB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hxGgSABp"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6D27B13803E7;
+	Mon, 15 Apr 2024 03:23:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Mon, 15 Apr 2024 03:23:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1713165795; x=1713252195; bh=jjtwSvYnpK
+	/iWz2myYgX7NkX+jdJw2krxhdeqBPKMmA=; b=NQaIGcOBmVCXosCTJGR/VWn3fG
+	5JkrrfQYWP8VY6Zj3+h4dROPAjqtOnoh1T4cr72R8JBng4El1EFI6qEl9JzkkplN
+	xH4Te+WQeF4jZJDvv8PD2PYiV/nAhR0Fb7UbJ19YmRT5U2xjQl0HTFNzRVAAj4lj
+	BRk+7KV5RRjKmFCqcegjIEYoi7l1aOTg4m6geAKHJgpdPkN+K4T1GLGtGp4fxshy
+	f2Eff6h1YsRmvJdtq0hgquppoudeJ8PT2RLBRF/SgJpcFnEPN8+as4hq1uZiAivS
+	j4af3UuvS7KIcoVMoUA5FhxysjvJZI/qsfVgtlMi29YfFczNkKYgPrwXjPbA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1713165795; x=1713252195; bh=jjtwSvYnpK/iWz2myYgX7NkX+jdJ
+	w2krxhdeqBPKMmA=; b=hxGgSABpMfflNhj16vZyHcSY9o+dZXIXcj4epdai6j6r
+	r/VZFzCByjHF4kc733HOATDGEYwEmbnCmpijnnAhjhemeaETK9sAa3Lmux277Hss
+	kMVwZbHpUdsVxe9jgkQ9PAw/OHOxQG79Vu2mKKaMdC3oLP2cXvL2YQYB2VhXFOHa
+	WZAMiYHiDEwgRSrO0b25k76wxJxjwl2drJdUXUVRFqexB8sHVyi31TEw1SeWXI4z
+	/EV9kwX2pOcFQHGJ7fVRrJybc3aN6irAP25Nr3f77qo7UxpfpWK/UDmMSOTS7ghe
+	mg5iIXUIwhC50LflnRXiD6pS/qeOIGY2j/mcpmf/Zg==
+X-ME-Sender: <xms:49UcZr6EB2migk5Me6nTUgf4BRW0XOlLf2-2v0BmqfHxKouDjMwlMw>
+    <xme:49UcZg5VlOQsqJTVKs7J1BeEXM24G_6qJ3XyAjRsbuepfwABkg9zyHCaOs8qHX85C
+    1sZntnAtAE5A5IRJw>
+X-ME-Received: <xmr:49UcZicj2xtkSb4yq1Kl_Qb0P-GJrisp8pk_hOnDyM9I0Pe6ziryj0NtFGOqJs6PbXe-sGf5Y8nphSd_UyL19B5TryeNz1Ftw34xeuwd7VJ_VnBrRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejuddgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpedtieetveevudekkeehieeuvedtiefggf
+    ethfekleegvedtjeeuleelffetueeiueenucffohhmrghinhepphhkshdrihhmnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himh
+X-ME-Proxy: <xmx:49UcZsJtujyb9t4cvEaWeuxBBL1XLfn3lWL3QqF1-sX-L6quuQ_V6g>
+    <xmx:49UcZvLLGAGR63mz2ltpz9MvDkvravsfFWkhsIdqk-1bw8o1oH2cNQ>
+    <xmx:49UcZlzeyB6fsarQ7ZxqUxOqP3cFdVff_0E_-LJ5Upkam-uYE5zVcQ>
+    <xmx:49UcZrLmusp7RZSgi_xemU_Xg88are9zkFwMFl2Hh8Z7QkS4GwA4zQ>
+    <xmx:49UcZmWlog_Q7ZKUJID-YdLrg9ZnULcN1B43XznhqvxXJeUzcEfo8OSn>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Apr 2024 03:23:14 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 9c89636c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Apr 2024 07:22:54 +0000 (UTC)
+Date: Mon, 15 Apr 2024 09:23:11 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2024, #05; Fri, 12)
+Message-ID: <ZhzV38Ga1Lg99bUF@tanuki>
+References: <xmqqfrvqhwlg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-Before the upcoming release of v2.45.0-rc0, let's start a new round of
-l10n for Git 2.45.0.  This time there are 78 updated messages need to be
-translated since the last release. Please send your pull request to the
-l10n coordinator's repository below before this update window closes on
-Sun, 28 Apr 2024.
-
-    https://github.com/git-l10n/git-po/
-
-The following description of our l10n workflow is from the "po/README.md"
-file.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BpT/0zIwK1qemavP"
+Content-Disposition: inline
+In-Reply-To: <xmqqfrvqhwlg.fsf@gitster.g>
 
 
-## The "po/git.pot" file is a generated file, no longer in the repository
+--BpT/0zIwK1qemavP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+On Fri, Apr 12, 2024 at 06:36:59PM -0700, Junio C Hamano wrote:
+> * ta/fast-import-parse-path-fix (2024-04-12) 8 commits
+>  - fast-import: make comments more precise
+>  - fast-import: forbid escaped NUL in paths
+>  - fast-import: document C-style escapes for paths
+>  - fast-import: improve documentation for path quoting
+>  - fast-import: remove dead strbuf
+>  - fast-import: allow unquoted empty path for root
+>  - fast-import: directly use strbufs for paths
+>  - fast-import: tighten path unquoting
+>=20
+>  The way "git fast-import" handles paths described in its input has
+>  been tightened up and more clearly documented.
+>=20
+>  Will merge to 'next'?
+>  source: <cover.1712907684.git.thalia@archibald.dev>
 
-Everyone can generate the "po/git.pot" file with the command below:
+Yeah, I think the series is good to be merged now.
 
-    make po/git.pot
+> * ps/reftable-block-iteration-optim (2024-03-27) 9 commits
+>  - reftable/block: reuse `zstream` state on inflation
+>  - reftable/block: open-code call to `uncompress2()`
+>  - reftable/block: reuse uncompressed blocks
+>  - reftable/reader: iterate to next block in place
+>  - reftable/block: move ownership of block reader into `struct table_iter`
+>  - reftable/block: introduce `block_reader_release()`
+>  - reftable/block: better grouping of functions
+>  - reftable/block: merge `block_iter_seek()` and `block_reader_seek()`
+>  - reftable/block: rename `block_reader_start()`
+>=20
+>  The code to iterate over reftable blocks has seen some optimization
+>  to reduce memory allocation and deallocation.
+>=20
+>  Needs review.
+>  source: <cover.1711519925.git.ps@pks.im>
 
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
+This series received two favorable reviews [1][2]. Justin pointed out
+one typo in a commit message that can be fixed like this:=20
 
+ 1:  eb487557a8 =3D  1:  eb487557a8 reftable/block: rename `block_reader_st=
+art()`
+ 2:  d0b318b8ee =3D  2:  d0b318b8ee reftable/block: merge `block_iter_seek(=
+)` and `block_reader_seek()`
+ 3:  c3f928d1e9 =3D  3:  c3f928d1e9 reftable/block: better grouping of func=
+tions
+ 4:  35f1bf5072 =3D  4:  35f1bf5072 reftable/block: introduce `block_reader=
+_release()`
+ 5:  e8e8bbae62 =3D  5:  e8e8bbae62 reftable/block: move ownership of block=
+ reader into `struct table_iter`
+ 6:  685f0a40bc =3D  6:  685f0a40bc reftable/reader: iterate to next block =
+in place
+ 7:  a7906a3383 =3D  7:  a7906a3383 reftable/block: reuse uncompressed bloc=
+ks
+ 8:  6635c7b986 =3D  8:  6635c7b986 reftable/block: open-code call to `unco=
+mpress2()`
+ 9:  587b5601c0 =3D  9:  587b5601c0 reftable/block: reuse `zstream` state o=
+n inflation
+10:  cc5ff0d598 ! 10:  935860c567 reftable/block: avoid copying block itera=
+tors on seek
+    @@ Commit message
+         When seeking a reftable record in a block we need to position the
+         iterator _before_ the sought-after record so that the next call to
+         `block_iter_next()` would yield that record. To achieve this, the =
+loop
+    -    that performs the linear needs to restore the previous position on=
+ce it
+    +    that performs the linear seeks to restore the previous position on=
+ce it
+         has found the record.
+    =20
+         This is done by advancing two `block_iter`s: one to check whether =
+the
 
-## Update the "po/XX.po" file, and start to translate
+I don't really feel like it is worth it to reroll the whole series just
+to fix this one typo, but can do so if preferred by you. Just let me
+know.
 
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
+Thanks!
 
-    git pull --rebase git@github.com:git/git.git master
+Patrick
 
-Then update the cooresponding "po/XX.po" file using the following command:
+[1]: <vab3mzg3meohikmfl5v57uxj6w7w2odrx7cvhmoto7am2bl2yt@6l4salel4ko5>
+[2]: <CAOLa=3DZRxQPnPxM+sZtuL-a5DVJL8Xx+D7t2d4cLoPT-hLaK_UA@mail.gmail.com>
 
-    make po-update PO_FILE=po/XX.po
+--BpT/0zIwK1qemavP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Translate the uptodate "po/XX.po" file, and create a new commit.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYc1d4ACgkQVbJhu7ck
+PpTELg//f4R/SMd9dIeYlELF30lYFudbLx4MEI1+pI7I7mrmlFLYo9JR4qn1mMTU
+VyFFtFxD0CNAvrYMMN2Oz/YRQrLpLqQvmeE/3KU2xXPvHHnfK9n1/0sImNndEpFs
+2MOLZIK173ihdlG/9PzCL0haOyf1kp6T+JKVWVzd9sM3czpyBNRSq93kkTr+9z3r
+CH15S5kkS3q42PoR8RxzcCV0tcdxYEJ8Qkr4sO6gViDR7uIXO0CP75iVwLaRpjsr
+Cr4emegUvVF/SENA3YEk9DmsIcIQ15NfA/9FPtrX3WkLp8jz1jiBUuN5/a+A/Ewc
+JURoLWJDEOnDauKaEvnWwHHuhGP4xVlHn5s0zqx196VBWtwREcMkiHJT4XYMTxqB
+M9AGgCmrnIfqKevDqGuFYetIzLBQ4HEDl/wnWgelsySHhaZkR5IwYAPB1t+ZyV9S
+GAEGNzSXRyoQ3Yyt+cCr9QcqasjrDkp/cFGiP2I7nHimcWChWn1geR1Q6L2ElfuF
+wW7iUFBaRsq7qzBLZUs9GauSuwOvyYdIKZAsCVeDGxyn1bJdB3ZUtaG+q5r3UPTB
+RY663zA6l0V279bfPyHgjEICR+/ZJrxG0+0SJGQElhGyUG+XQ+9Xy0Gw2sIgXlgy
+Ee2rXm8lSkLxTdm3NrHN3ILuQ5I71/+/8tSwoHrRXRCV9BRTCuY=
+=Po7o
+-----END PGP SIGNATURE-----
 
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Sun, 28 Apr 2024. **
-
-
---
-Jiang Xin
+--BpT/0zIwK1qemavP--
