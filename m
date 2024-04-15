@@ -1,94 +1,174 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2330157A61
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 22:51:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43631272B8
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 23:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713221513; cv=none; b=TqGLoCCiAkiumgPTFq097SpEWgZyfgSDTnfb/e4RqObccPiZeGBAnVSK8UnTcF7an1F8zoxNCv8y3v5K0lySKSsp7pJeLd2uHFUopXFklkaSgXUnePNQ1oxF9b/rzMxP5bA83lkLUpF3CAW1zxeaQyHT1rLTnbpcVH7Nw53fw2Q=
+	t=1713223210; cv=none; b=payp1l8rfxYwZbFCfMO3STMnh9mRWF+6aHyUGaTapDGi9tXwsRxLnrMBp+LdYYtIFAQALr5xzmH4k8ugs7JRRc0xmp69r+0XBWTuoNAJiFLa6a9DzsfDsOfhX3ZS2zNJrcBplHyR6j6gD+KT8xCZ9qMheBZJfZx83bDAY4/riV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713221513; c=relaxed/simple;
-	bh=QgH6Tdj92n8rBsfTLjbRRVoEF2GORXiMcDGfmIr6CDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bxopO5oE7pHQ8n4QpeSsiTbAfaCgzEq1co/+qCZyhBbKJnQ7ccWvtCL7k6pdEGNwaHArnyn1DadipsFerZSzuDyFLM99euMVVw2mvvoV0dOqjSibRTw/bju0oZX+mj5AjUh0QeK3+ChiQOC805OxXZNd8BEWvledUHX9YH+tH08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=pKLAAmV7; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1713223210; c=relaxed/simple;
+	bh=kDk7ultIYBGd8M3FoqTaeufeg5ZjYwzmN6CB22yCDso=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=RVQzGhtuJgqNmv/LmLgmUTs7j3SMkyskw1eATHs6DeLxcYHPRJ/ke/7h+G94aF7CiTSM+0RICqXaa7p38VACXZZ7mbBzYMK3fqx0egkOmTWPpqo6qtYBdHvrsd7yIztnl8qI3BfycAGMx+l8eXcOb9FTc1Hw2h2Cd4lJhqmq1BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VvVJO/w5; arc=none smtp.client-ip=209.85.128.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="pKLAAmV7"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-61aaf71c495so22917267b3.1
-        for <git@vger.kernel.org>; Mon, 15 Apr 2024 15:51:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VvVJO/w5"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-61aecbcb990so4767397b3.1
+        for <git@vger.kernel.org>; Mon, 15 Apr 2024 16:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1713221511; x=1713826311; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+x/ExmjYwvDGsnwkhVw1RODynpaHL2E16hfYOXBQ0Kk=;
-        b=pKLAAmV7NA9u3+8FGqCy6ZWaRvWvBVwNZ8JFNXZnKJHz7kpV5l3hrMjjR5To/FVTPl
-         UC5ml+zhkLFR4MGpIfsOVmKjEdgCNZWvOou/HJV5oiNVXQQMyeZrdespKq+0wpt6B6nk
-         CtwbhkeeosbMTkCbuQSYD5aIwXtG9CqxoT9bwj98M6RwySeyLrQ6kfshRjUmSgswks8z
-         wzOMD+wio15mEWf41KsOe0AIvKTncrIUHXG/Zx/GHOCLiS5hQhu5rpb1JSqZBFSyhuUf
-         Wq+pleZ5qHjcpZwL6TVEqTylrfpyRM67wDrkcyxSCnBm1Z0ZV6sk/bMnn1+x9aR3pzRP
-         U2Cw==
+        d=google.com; s=20230601; t=1713223207; x=1713828007; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=QBVprKjqhzaSlM799uOkR4TJ83hTSrJAcZeVppxLfDA=;
+        b=VvVJO/w5R2cjR/yMSBCq9q1rdOmEK3oe7aDofhm8T2aWL4EKxlV/tPW5sdjS15SV17
+         9kdFk9gcjC4UYGl2Kaz2XKKaSGKS7kY8RErfbbx7ZB0yUzi3+ut48ip9bjEHJpj+wJL4
+         ntqKu5GhDXhSBxCSEE9HkE549fRzfx8JMrKo/lGl/hsq/C60u6LDz7szpuyNbu6PzLs1
+         CSnUzrsRj1kE+I32ahkoJuy1pRGczcwp5WqzTxnG8Wn0BqPvwwkSjWL4p1eI+OdlXP7l
+         y0CMUXsY8K/5j0THA0/US1JEi5NYl30eMhwWfjs7wA8TemsOMQFnQn6A+OB4gpa6AS+T
+         zYqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713221511; x=1713826311;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+x/ExmjYwvDGsnwkhVw1RODynpaHL2E16hfYOXBQ0Kk=;
-        b=HGGcWJfvfm+evzhaEXKF3g79sV9P33g/As1uTGfZOwcJ86bf2/A4XW9C9WLPPeSWtI
-         Q73Xcy4EVaDhM+T5IutmrYMKFmvUQ4Ase0U1Li8Rl231XrczgCYUrN9DlzJhDak+HwSk
-         wDEFut6r0sDi92chnT/VDAm7/3T6GWgWeTe/r0ua0IFAnx+9IWkpzL5jnCUpfnUHS4sd
-         gReaS2UYGHD4HjJLrL/KxDrI+L79V067EMeMJI1naC1YOkd53znUdP5TxIx7Gv3Gh7Y2
-         r3yxRDLhEb+Hq4D4kCbOG6ruNGTM2SgokT/PY738S7Ms36YjXte2WLpPDVNc3LijRnHw
-         5ukA==
-X-Forwarded-Encrypted: i=1; AJvYcCXMAXpfJCdcqYmS382W8RbIFrU3oIWiaAs7dFk7S2Q8oYfv244INruJHWoY3tdBzwmJIpk6/PAAOTcBbmf0PPHMk14g
-X-Gm-Message-State: AOJu0Yy/i6+K7A0pT+EqyrMsPUwK4EVMWTX45BjLPxV2tGq87CV0OkYJ
-	jML3yLpcBYgGdBKmxv2863gje5ZmRnJ1PEypuQPICl+aIMoXU5o9WpcYzrxvroJO7lcTexaSs3h
-	kgUA=
-X-Google-Smtp-Source: AGHT+IHoXu2Oqfkalul5Tl+ZLAbZK7kNx6k3H1oXU3bf8pZ8W5vsGoYuNT0za5CxleQvL8y3XNy/4A==
-X-Received: by 2002:a81:4fd1:0:b0:618:4077:fe22 with SMTP id d200-20020a814fd1000000b006184077fe22mr10301464ywb.10.1713221510185;
-        Mon, 15 Apr 2024 15:51:50 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id fq9-20020a05690c350900b0061813dec952sm2270961ywb.1.2024.04.15.15.51.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Apr 2024 15:51:49 -0700 (PDT)
-Date: Mon, 15 Apr 2024 18:51:48 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH v2] pack-bitmap: gracefully handle missing BTMP chunks
-Message-ID: <Zh2vhDraCnqw4YFL@nand.local>
-References: <5933a302b581670183a6f3c881f62e96f61ff192.1712642313.git.ps@pks.im>
- <a8251f8278ba9a3b41a8e299cb4918a62df6d1c7.1713163238.git.ps@pks.im>
- <ZhzqeRIcyR3lmBme@tanuki>
- <xmqqil0io762.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1713223207; x=1713828007;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QBVprKjqhzaSlM799uOkR4TJ83hTSrJAcZeVppxLfDA=;
+        b=hmZnViwff1U+tJuWqn4YJH0L1WR/xzynivIqSqK1GmWs4XIF6KVvKIwhfd2oz5H4Zo
+         xz8Oh68OPikTOCYDvSX/cg8pnsT3Pjworg6opwwLdVjCiiIcbCyBhE+jEYBnELDuI2X/
+         nGAmi/eb8DfsHhuHkqF+Hl3z0WqD6zZIyIKvWmF9FlMrttc9w3QseOmZxTiwtRtRJFqa
+         X9aLQSD/QAkBlv9lnxNRfuaGTq6YyFVO8z2L2coW5a1ADaQXbApTBEu/kk/LBpUytdkI
+         2BWZGCLCKq1O4wpfNe/cQwAQ6pHSrTsLEMFjOamYTBlKBXkdKSgQdj9TzB005HOYpVCS
+         FSlw==
+X-Gm-Message-State: AOJu0YyFphyjX4eEWypHxNkmizEwcXK64IN7kNsfmDPtR1Gjhmnpzpcq
+	DAHfeUYZT+tqaTqh2USTATU6wC4I42VcXMXQ4EqwiMCoO4UgUCKVybdDVTXY8Du9noke92VP6lI
+	OItiohJkTpCuEgyKT9vNmhDPxa8aMDr0w0ko1jJo5shYeTgfm6WbzlNP/SN7LWuXLvIMHayBw8u
+	l40hlrmXE97cdUJDbvclr02ZwU6yYkE2UiTq1ecxk=
+X-Google-Smtp-Source: AGHT+IGjn5xkw7ZFnzPvWOj+tSpXjAsPRGI7r/VgRM0gC+uDC1HGUME4+dux6Lq70JdLvWB/6Z6MN4u42siU7g==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:29d4:b452:bd4b:5464])
+ (user=steadmon job=sendgmr) by 2002:a81:a04b:0:b0:61a:e319:b0 with SMTP id
+ x72-20020a81a04b000000b0061ae31900b0mr557720ywg.1.1713223207606; Mon, 15 Apr
+ 2024 16:20:07 -0700 (PDT)
+Date: Mon, 15 Apr 2024 16:20:05 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqil0io762.fsf@gitster.g>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.44.0.683.g7961c838ac-goog
+Message-ID: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+Subject: [RFC PATCH] doc: describe the project's decision-making process
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Cc: avarab@gmail.com, christian.couder@gmail.com, gitster@pobox.com, 
+	me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Apr 15, 2024 at 10:41:09AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> >> Helped-by: Taylor Blau <me@ttaylorr.com>
-> >> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> >
-> > Junio, it would be great if we could still land this fix in Git v2.45
-> > given that it is addressing a regression in Git v2.44. This of course
-> > assumes that the current version of this patch looks good to Taylor.
->
-> Indeed.  It would be nice to see an acked by or something.
->
-> Will queue, in the meantime.  Thanks for a ping.
+The Git project currently operates according to informal, unstated norms
+when it comes to making bigger-picture decisions (above and beyond
+individual patches and patch series). Document these norms so that
+newcomers to the project can learn what to expect.
 
-I took a look, and I think the patch is good. I have a couple of notes
-on the test that I would prefer to see addressed before merging it down,
-though.
+This document explicitly does not aim to impose a formal process to
+decision-making, nor to change pre-existing norms. Its only aim is to
+describe how the project currently operates today.
 
-Thanks,
-Taylor
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+This doc represents my impression of how the community operates. I have
+obviously not been around as long as many other community members, so I
+would welcome feedback if you feel that this misses or misrepresents any
+aspect of how we make decisions.
+
+One particular blind spot for me is how the Project Leadership Committee
+operates, or if that's even relevant to this doc.
+
+Unfortunately, I will be away from the list for a few days for $LIFE
+reasons, but I will try to address feedback promptly once I get back.
+
+ Documentation/DecisionMaking.txt | 58 ++++++++++++++++++++++++++++++++
+ Documentation/Makefile           |  1 +
+ 2 files changed, 59 insertions(+)
+ create mode 100644 Documentation/DecisionMaking.txt
+
+diff --git a/Documentation/DecisionMaking.txt b/Documentation/DecisionMaking.txt
+new file mode 100644
+index 0000000000..80fc732551
+--- /dev/null
++++ b/Documentation/DecisionMaking.txt
+@@ -0,0 +1,58 @@
++Decision-Making Process in the Git Project
++==========================================
++
++Introduction
++------------
++This doc aims to describe the current decision-making process in the Git
++project. It is a descriptive rather than prescriptive doc; that is, we want to
++describe how things work in practice rather than explicitly recommending any
++particular process or changes to the current process.
++
++We want to describe how the project makes larger-scale decisions. We won't be
++discussing how decisions are made for individual patches or patch series,
++although the process is similar at a high level.
++
++Starting a Discussion
++---------------------
++Proposals are made on the mailing list. Because members of the Git community
++have a wide variety of experience, backgrounds, and values, proposals are
++expected to include as much context as possible.
++
++If the proposer is aware of individuals with an interest in the topic being
++discussed, it is polite to CC them on the proposal to make sure they are aware
++of the discussion.
++
++Engaging in Discussion
++----------------------
++Once a proposal has been made, the community will discuss it on-list. While the
++maintainer will often participate in discussions, it is not the maintainer's
++responsibility to guide discussion; the proposer and any other interested
++parties are expected to stay engaged in the discussion and ensure progress is
++made.
++
++Anyone with an interest in the topic is welcome to discuss the matter. It is
++expected that all discussion will adhere to the Code of Conduct rules.
++
++Other Discussion Venues
++~~~~~~~~~~~~~~~~~~~~~~~
++Occasionally decision proposals are presented off-list, e.g. at the semi-regular
++Contributors' Summit. While higher-bandwidth face-to-face discussion is often
++useful for quickly reaching consensus among attendees, generally we expect to
++summarize the discussion in notes that can later be presented on-list, so that
++the full community has opportunity to engage in discussion.
++
++Finalizing a Decision
++---------------------
++After a suitable period of time has passed, the maintainer will judge whether or
++not consensus has been reached. If so, the consensus decision will be
++implemented. Otherwise, discussion may continue, or the proposal may be
++abandoned.
++
++In general, it is not the maintainer's responsibility to implement any
++particular decision. For decisions that require code changes, it is often the
++case that the original proposer will make the necessary changes to implement the
++decision, although it is also common for other interested parties to provide an
++implementation.
++
++For non-technical decisions such as community norms or processes, it is up to
++the community as a whole to implement and sustain agreed-upon changes.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3f2383a12c..a04da672c6 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -103,6 +103,7 @@ SP_ARTICLES += howto/coordinate-embargoed-releases
+ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+ SP_ARTICLES += $(API_DOCS)
+ 
++TECH_DOCS += DecisionMaking
+ TECH_DOCS += ReviewingGuidelines
+ TECH_DOCS += MyFirstContribution
+ TECH_DOCS += MyFirstObjectWalk
+
+base-commit: 436d4e5b14df49870a897f64fe92c0ddc7017e4c
+-- 
+2.44.0.683.g7961c838ac-goog
+
