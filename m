@@ -1,154 +1,98 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from mailproxy06.manitu.net (mailproxy06.manitu.net [217.11.48.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41557581B
-	for <git@vger.kernel.org>; Mon, 15 Apr 2024 14:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1787581F
+	for <git@vger.kernel.org>; Mon, 15 Apr 2024 14:32:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.11.48.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713190515; cv=none; b=pUKT2JIoGix4KwthoTt8rVFSIGi4RT8EtUWvGhuR3yOxpZXD4E64T7vThEPRX1JSb3/IT/LC3ksgEINfordbPB4RmeuGZjR5z+0YEOj+DS6qBhPVkOrr6AVOQnRDG/EONqnBjD7KYTPrQGyvlwhk37zVYM6Panl8xy81PnCF4yg=
+	t=1713191567; cv=none; b=cY5Rwgxy26/glBdebFynmkkKeo1afyyitNEQWGiBMzCAxUT/wBYt31NyniPiHdEtIawMFgLrloTZ4eHVqwj95OcaG3wtF381HtTza7ks/xWVGhhB3uDBqCDvRChmxaRiHhaTRPMLtlcxiNhucIfAvebvtilZzy8qQRVcvl8BvPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713190515; c=relaxed/simple;
-	bh=gaOEU9qYoEZ4bVkdM9vWOpbE/x4NVPwu4HoHzi4Vr/I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dFl/7wanze7cWexS5ieZ2ayms7xPytjVmCCKK2yZnevFFAkuMiOQyjNJ6jjTTyxN4LfFo8BtHsLMuX394XcHUzpaHaPMxgFHSwIdo2n+czAeKVfMrm1kjmZXIeCdErNLmn1aZEp+iLvnZHr45tdXAD4OkakT9hPi3PwTEClovQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cqTOMk/b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XawwtljN; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cqTOMk/b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XawwtljN"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 89E5718000B4;
-	Mon, 15 Apr 2024 10:15:10 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 15 Apr 2024 10:15:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1713190510; x=1713276910; bh=gaOEU9qYoE
-	Z4bVkdM9vWOpbE/x4NVPwu4HoHzi4Vr/I=; b=cqTOMk/b5PhqiSFdDdbikGU7iZ
-	X7a/GXNsBiKZfRcDU5voayKKPkXn9+N+L5G2ldAP7WGzFxXwbDY8HHnIyi69TLWG
-	l2ViWMamt6uBD4vQkUzpH1EKPH8+23PV6Rr+W0sewt5O/RAC/0hnlKDhYxnN7xd8
-	EYmrLAuAbjsSa/+ITGRk35yPyz7ajzGNEaqCHVB06dxrEpH4n5oviEiO3ZSZ2KPH
-	52lb/s7k3YueF9sW7oOASlEYMN+Z8EU+KTx8nAJaeWcG5zI8d+foz6FqVHyDo0qx
-	6RqcgAlX0I1XG+SoMSdM522gwRcKJKdWzmzrl76NwrHlWCkD5vIXSgjEkt3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1713190510; x=1713276910; bh=gaOEU9qYoEZ4bVkdM9vWOpbE/x4N
-	VPwu4HoHzi4Vr/I=; b=XawwtljNoe6tPwCTRcbTQijszUcHzR8wlKTR7LYStLP3
-	jKSpXodspv1HGTJ+uQiHtasdYEhBPmubcK/tvOTXP8Uq0/SZXP0iDFr4VnNdiFej
-	jYAWSduPCOMPmMMlBYlM7FCYNKrN/A8cxLvSVTarsTGByvV1XlsuziJ6g6F++Gc0
-	UPg2FAZebfLPrGQAh4qK12ivPW4odfaF4mpQv2KCBCGiJSde37pPUhGQmdpwDVqB
-	ntOfP45Z0mcolqHfnYjXHajOr1crUVgZVBeH8ulrCl5kJUSHaBXXk5hvkDKyhrZ9
-	JWibsMXS5M4CvflRGqeAr3oqScGIl3Fr6xioU7P9nA==
-X-ME-Sender: <xms:bTYdZpXrR7eAEUm4G2CML-mc08mLExUcOgFjFYoELorqHWMakEu1TA>
-    <xme:bTYdZplImVLtso2VVTJWE-YX5wNYaGD7utDdsIPlO1Kvzzk_et5GJi_gaoy5OoDdF
-    10Vt0-4Jxa_GnUyNg>
-X-ME-Received: <xmr:bTYdZla36XQQREwd56PYnuCkCTO-uPMIoMP1QrCV8GX1b-5W7J_6-Qz4HZZo-vamLa5qWPM7g-ROBKq-xYjnt2fHHRu5IQrjKdpQ3z_9UHo52zlBtA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejvddgjeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:bTYdZsW_ZZ4I_IYg3UvVrw3emdWZMz_kSd5cpiS6eroTraO_fj6bCQ>
-    <xmx:bTYdZjlpfbe3pOSGdUHoQnnFr_RTkVxRHD14XNp7Hvp54NoITI215A>
-    <xmx:bTYdZpefYbzA5oTwPTkW8MAF_eJoJ-NlgGx1Yi-zCuD6kVfpVp6rOg>
-    <xmx:bTYdZtEuxG5iSXmPAfwdEcniw7AFz_Qd5YnaE9mrAQ9CiXBJwiqYEA>
-    <xmx:bjYdZowEjeTKXUG-X5J5R9ZE229xSwKQ4UYkEZy8jXCqdOx9KpW8hmpB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Apr 2024 10:15:08 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 39a01e19 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Apr 2024 14:14:44 +0000 (UTC)
-Date: Mon, 15 Apr 2024 16:15:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/5] global: drop external `the_index` variable
-Message-ID: <Zh02ZpS8x9H7FpHJ@tanuki>
-References: <cover.1713180749.git.ps@pks.im>
- <28541f00-9054-4aa0-8e47-348043b5f863@gmail.com>
+	s=arc-20240116; t=1713191567; c=relaxed/simple;
+	bh=TPi6M9QAJtL4v5mVo6zAAl65bcw7+i5GlNcAyMy75LA=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:To:
+	 Message-ID:Date; b=ZswVocgVrshCEPLRI7MfDlxzAtfV9SANfTEeo297yMFM88ZMZ4UoyWwBZ0PPBWG3tfJF0rcAwkeWxSuo22bPDag+zbfQXnWeJNpl7kjYHOJ1nsDdqHrGVyr16EjjGECxPxg3Z/aKvCH4O1uo0FXwkyoNcH6T8jJG1F06GQ6fWhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu; spf=pass smtp.mailfrom=grubix.eu; arc=none smtp.client-ip=217.11.48.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grubix.eu
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="h9/gum44lhBNeNem"
-Content-Disposition: inline
-In-Reply-To: <28541f00-9054-4aa0-8e47-348043b5f863@gmail.com>
-
-
---h9/gum44lhBNeNem
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <bf27ed3a-dc6c-4716-95c6-9e6c60604bd3@gmail.com>
+References: <CAA19uiQip=EsbT8uQCs+98brYSTbOqyHX1ZBhssi4df3dZmZ6Q@mail.gmail.com> <bf27ed3a-dc6c-4716-95c6-9e6c60604bd3@gmail.com>
+Subject: Re: prepare-commit-msg hook during rebase
+From: Michael J Gruber <git@grubix.eu>
+To: Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk
+Message-ID: <171319155563.9055.10218254775303206647.git@grubix.eu>
+Date: Mon, 15 Apr 2024 16:32:35 +0200
 
-On Mon, Apr 15, 2024 at 02:55:07PM +0100, Phillip Wood wrote:
-> Hi Patrick
+Phillip Wood venit, vidit, dixit 2024-04-15 16:01:31:
+> Hi Michael
 >=20
-> On 15/04/2024 12:42, Patrick Steinhardt wrote:
-> > The motivation of these patches comes from the introduction of the ref
-> > format extension. I found it really hard to reason about the state of
-> > `the_repository` and would like to continue its deprecation in favor of
-> > explicitly passing down a `struct repository *`. Getting rid of
-> > `the_index` is a first easy step into that direction to make things more
-> > self-contained.
+> On 15/04/2024 11:36, Michael J Gruber wrote:
+> > Hi there
+> >=20
+> > For a while now, I thought I was using prepare-commit-msg hook wrong
+> > but finally took the time to analyse this further. Per the doc, the
+> > hook receives the source of the commit message as $2
+> > (message/template/merge/squash/commit or empty).
+> >=20
+> > I notice the following with `rebase -i`:
+> > - When rb applies a patch to be edited/reworded, the hook is called
+> > with `commit` as the message source.
+> > - When rb applies a patch merely to be picked, the hook is called with
+> > `message` as the message source.
+> >=20
+> > The latter also happens when non-interactive rebase applies commits.
+> >=20
+> > I find this confusing for two reasons:
+> > - Whether edit/reword or pick, there is always a commit being applied,
+> > and it's the source of the message. So why not `commit` in both cases?
+> > - The doc says that `message` is for inputs from `-m` or `-F`. So,
+> > certainly this should not apply when the message comes from a picked
+> > commit.
+> >=20
+> > Also, I'm not sure whether the claim about `-m` is true, but that's
+> > another issue; we even might want to distinguish between `-m` and `-F`
+> > here.
+> >=20
+> > Does the source `message` during rb pick occur due to an
+> > implementation detail, maybe since the rewrite to sequencer?
 >=20
-> Maybe I've got the wrong end of the stick but my impression is that it is
-> the use of "the_repository" in library code (i.e. the files outside
-> builtin/) that causes most of the pain. With that in mind would be we bet=
-ter
-> focusing contributor and reviewer effort on eliminating "the_repository"
-> from those files instead? It would need to be done in carefully in stages
-> but would bring real benefits.
+> All of the hook behavior in rebase is an accident of the implementation=20
+> and stems from the scripted implementation. I'm not sure if the source=20
+> passed to the hook has changed over time but it is quite possible that=20
+> it has. I agree "commit" would be a more logical source. Personally I'm=20
+> not sure it makes sense to run this hook for ordinary picks, though=20
+> perhaps it makes sense to run it when the message is to be edited. Do=20
+> you have a use for this hook while rebasing or are you just confused by=20
+> the source argument?
 
-I see these two things as orthogonal. Overall, the target is to have as
-few global state as possible. This requires us to over time remove both
-`the_repository`, but also `the_index`. Removing the latter is a ton
-easier to achieve than removing the former, and so I took the easier
-step first.
+It is run during a rebase, and I don't have a use for it there, in
+particular not for picked commits which I do not amend. That is what
+triggered my investigation (unintended runs).
 
-Whatever we do, we have to do things gradually anyway and thus we have
-to start somewhere. I've already got more things in the pipeline, where
-the next step for me is to touch up "refs.h" so that we always pass in
-the `struct ref_store *`. And here we will be introducing more uses of
-`the_repository`, as well. But I think this is okay, and by working from
-the bottom up we will over time get to a state where the lower levels of
-Git don't require globals anymore, whereas higher levels like e.g. the
-builtins still do use them.
+In fact, my hook messes up commits during a rebase if I run rebase from
+a subdirectory, and I am sure that it didn't (quite) some time in the
+past. But this can have several reasons:
 
-Eventually, we can then introduce a macro `USE_THE_REPOSITORY_VARIABLE`,
-similar to `USE_THE_INDEX_VARIABLE` that I have just removed in this
-patch series.
+- prepare-commit-msg was not run for rebase picks at all in the past
+- prepare-commit-msg was run with source "commit" in the past
+- prepare-commit-msg was run from the topdir (not cwd) in the past
 
-Patrick
+I can avoid the mess by detecting the rebase state in the hook (or
+cd'ing to topdir before the rebase), but I'm wondering what changed and
+what is the right behaviour (to which I would adjust, of course).
 
---h9/gum44lhBNeNem
-Content-Type: application/pgp-signature; name="signature.asc"
+Also, looking at sequencer.c from line 6545, sequencer_determine_whence()
+looks funny: FROM_CHERRY_PICK_MULTI from the first if will always be
+overwritten by the second if/else. I'm not saying this is strictly
+related, but we do have untested code paths in that area. whence is part
+of what makes commit decide on hooks being run and arguments passed to
+them.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYdNmIACgkQVbJhu7ck
-PpR2xQ//fvXy8+sWS2NnfEWwAu145GAl4C7tdpJZZgbwdgnRfXpHoS0walBycaaA
-rI1p5SPlMUJArnuSUkcMo3XN8emi8bVxFnbLx5TMJ8ACmWbSjEmXpGmFrjguYkXu
-ok4CSeHwEQd25s0O0z6yeDHQXB61hM8X9k6OWeh4XnigngYCS7+hZZonuPGAGEa2
-MZa2MZU1yZeQUxyMmnE+VyuhSN2rO+/qjwONk6Am5m2RXyQecifN7jt1nc0Br2ht
-CzPlYQqC4VmjZQo/NtdN7AD4dL3QJAeALtzwxVAYI8Mv+ravEFEH6n13ta1P9dlo
-AXCXXje80rVAs3NSqtBRSg/V2BKaUOgFhNF0iJtCEG+s5ukiFwEHX+jZwsM4dZSv
-M5K4FgOyS8yCmHpo89+HgO95A/H377QQIS4LKGXdPrGOMWCcEY5afOgDvEKY1Vi/
-u/MuR353P8w4Phij9gemSh7aHIHUnQR1P1nuy3gmnoqRm7jBWTzn7ml+EsNbyhRv
-ZxJCGKf50Vjwm8V3g9Uxt4nxVZgdR+aQBm8bE1meuWLANmWC9AnL9fz4JI5xKyo3
-5riJCzW0shA1vgo00zwAuQf4TRzBdRFCSvO3QCegl37ha4zHKq44krpCt8Sped+d
-ctkDVkQK3K7T9vh6W7C9X0WJLgrsLlN1Y3RNtXD4kr6yHjxslIM=
-=o7Mw
------END PGP SIGNATURE-----
-
---h9/gum44lhBNeNem--
+Michael
