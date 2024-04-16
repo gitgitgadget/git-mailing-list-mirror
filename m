@@ -1,121 +1,129 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45F7127B7E
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 15:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C27131196
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 15:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713282139; cv=none; b=STFHzUGt2tunfYvPxXOmK8LhsyVBY0DbA7J2t+6Jo7321y8TYlEa5L6XJm78++pHX0URkAMLyOyU27LesED/YZCPQeWmWpYDv0TuNTo2W6DTuoETlwb00DhV/K+89XPHAm2ILb+1iEagqBwy+SCTZ6QRIIKYpBwgqXEz6rK4PD8=
+	t=1713282424; cv=none; b=FB1HMyOWEaPbkj2HNXaWNSkoubfoA/TlRR/MGbT5t430a+5kUU4ar5aBdrKJ4NVO1y1nzgeK6QjxBFwNfb6P25jEwkoQuD1Yl4RR8ol7n8UaJMOqEOSQomPUsDyVlPFqE7MGThvEkZRPuoCrGHJI6XTnKQ0ijt44pZXzLad2K6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713282139; c=relaxed/simple;
-	bh=22q0YLoS/iQauaOmYUgUSeRyr1mWWUrQrWozOOrBmNQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dSTJCuICNtkVHseX0Fee66Puaf23mlrjlegpnKGBsP3mLw2QAu14eHkwEN/yFUFCBTmcM8dKJfhqAtcA9ewG+B59GoQhZ9WUt6snYKirl/0Fk4RQrDP4XidE+orWHF7tRIeJhODiy9FHqPVmzUq49d32Zwv89mU/wk6Lgu7qOnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lYCweUcA; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713282424; c=relaxed/simple;
+	bh=4lB6Z67z78/Zo0jl+Px0+zLuZ69eMhnhbXEFmh+AE74=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TwWIX9Fs1yDAw7FzCNp0//ka2KOKsxesaztzTMgVMDM4tnYl68VCbHjSKECoaXFM7tvEXU2DmlBCoegPiMQaLNGyN93Z7AwCxTIfnRmsM4mxOORl/HyRXkGO9IXy4IfJC6BFNXa/rrK3tRvX2bHYAN51qtMxtxC0kiGXXlahKzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cVBXSD3P; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lYCweUcA"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2D9961836F;
-	Tue, 16 Apr 2024 11:42:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=22q0YLoS/iQauaOmYUgUSeRyr1mWWUrQrWozOO
-	rBmNQ=; b=lYCweUcAHG1r5+6Zn1ryKzQ7uuzcE3KOZDWP2h7AvwNvCEDH1EkNlu
-	TLBaoGZkMiAPlFmbumUY5346uQ2E9EOhxvrEo/+ljOQMM2s5qrcPDvvjxEgq+O1l
-	bTi/0G/h68t/9AKsZb00bVcMQt7y5nxTedqF1U7qfmmovCiOXjrW8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 243F51836E;
-	Tue, 16 Apr 2024 11:42:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 753A21836C;
-	Tue, 16 Apr 2024 11:42:12 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Peter Krefting <peter@softwolves.pp.se>,
-  git@vger.kernel.org,  "Osipov, Michael (IN IT IN)"
- <michael.osipov@innomotics.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] bisect: Honor log.date
-In-Reply-To: <CAP8UFD0W7PUHTg2NwuVkQJik2+HqTDF6KRZZ8tA_dW7-YZtsbQ@mail.gmail.com>
-	(Christian Couder's message of "Tue, 16 Apr 2024 13:01:34 +0200")
-References: <3ec4ec15-8889-913a-1184-72e55a1e0432@softwolves.pp.se>
-	<xmqqh6gni1ur.fsf@gitster.g>
-	<5ea0837f-2668-028d-4094-c9400e92fceb@softwolves.pp.se>
-	<xmqq7chif1pu.fsf@gitster.g>
-	<20240401023225.GA2639800@coredump.intra.peff.net>
-	<CAP8UFD0W7PUHTg2NwuVkQJik2+HqTDF6KRZZ8tA_dW7-YZtsbQ@mail.gmail.com>
-Date: Tue, 16 Apr 2024 08:42:10 -0700
-Message-ID: <xmqq8r1dfh65.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cVBXSD3P"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41550858cabso28758105e9.2
+        for <git@vger.kernel.org>; Tue, 16 Apr 2024 08:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713282421; x=1713887221; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rsfDU21FhKxenabgsyKIoy7AJYDiW4oFU7sVZ4mGsPE=;
+        b=cVBXSD3PTHbRlDVQQh09g54/q48/HdG9M4VysRU1XLbPpFCPtT2nsR+tYaTSxYEy/C
+         m1mJRF8n9uacq41aoAXUji71/ceVzbASQ9SERnuPx91aw9vbsGk0ZQOcXyW1HAsMl6oa
+         LuBkqgYbwRtjhuLPUFZxep4xf2DVl7dX22AedcP+QHrLApIIBnuB2gZ6JGd7/fuilWkJ
+         WnknWs5RtlbcPixKFv6ISGlcZs+faSotx59W8m+SLtxcaHTPcAueZ9QE8e5fU3j3PWj2
+         40Uj3ENhPvsyI6wKub5yR3qH/5Up9cj3btnq6bnXHfhvHTWBiIjdAwUCFQTJDsmLNj0O
+         tJNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713282421; x=1713887221;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rsfDU21FhKxenabgsyKIoy7AJYDiW4oFU7sVZ4mGsPE=;
+        b=gXc/e4bzvUQw+FVYlAVdBwtCSjpRKFr/S4RHrLeyR9iTL+IPgqAJMmdjpJZ58sBVyP
+         Xj79Bt/L13aVWxoZfV4b3PVtzjFjCNznu9Ar2OpxxR1iOFkKhJo1LvXglHxz4QeMw+u4
+         z5w0PkCM2eKEuqcpL5Mj6xLKNepQUPO/UQmfPs5vlpE+3o3lanQ4pgedZ9w2DslwysLX
+         K9fXN7dTqYKnuxqbpJ/DXR6DTsoB+tuotv7vMnTsylmYF2uOLAim6Ns0YycRfwVh/PHu
+         sjZLiUj25TpKK2L6EeqALJezkgEl+yPrOYxE+SY5oLR2Az2Ib/68RxRyD2OXlJNs2bLh
+         cuCA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDoicH8K/jqD/KPHA4kJcPJhv4PWZEKWeQN/UE6JDuAt2WCLZ72z5rDyMACvNvdbIpjbBGfKHQ8eco2yQcsvS2KwW9
+X-Gm-Message-State: AOJu0Yy1t39v9bkUTY0SZQLL7YfaXT/6xJveQ/etklvdfgy1EfhtSdXM
+	xlpcbs7n75r4MvHIR/Q7JhlOX+qZMPsIKXkr0U5pMD/v7cgSfRRF
+X-Google-Smtp-Source: AGHT+IFxJgFI4iTKz7ge4dBvUGaEvRCmD2ZkTBCK5OOVyN1fIv5Hg+Qq1jrPiS+X7jG9MGV+sVFABA==
+X-Received: by 2002:a5d:584a:0:b0:341:aec7:c583 with SMTP id i10-20020a5d584a000000b00341aec7c583mr10636141wrf.53.1713282421212;
+        Tue, 16 Apr 2024 08:47:01 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
+        by smtp.gmail.com with ESMTPSA id x11-20020adfcc0b000000b0034658db39d7sm15283835wrh.8.2024.04.16.08.47.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Apr 2024 08:47:00 -0700 (PDT)
+Message-ID: <e2e72c39-2975-4307-a356-19e661cafb75@gmail.com>
+Date: Tue, 16 Apr 2024 16:46:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E4946A1E-FC07-11EE-AAA1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add-patch: response to invalid option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+ <xmqq5xwhhacm.fsf@gitster.g> <64d4ba8e-0dfe-407c-9b32-d02f1ce40393@gmail.com>
+ <xmqqr0f5fi2b.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqr0f5fi2b.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 16/04/2024 16:22, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> That flow of thought makes sort-of sense, if the choices that are
+>>> offered are too numerous (say, around a dozen or more), but with the
+>>> current command set, I am not sure if this change is an improvement
+>>> (note: I did not say "I do not think that"---I simply am not sure).
+>>
+>> The complete list of help is 15 lines long (we don't always print
+>> everything but if you're in the middle of staging several hunks from
+>> the same file we do)
+> 
+> Ah, OK.  Even though I was the one who stole this feature from
+> elsewhere, I forgot that we had that many commands, and it makes the
+> decision a lot simpler ;-)
 
->> IMHO this config thing is a good example of the strength of the separate
->> "show" process. If our goal is to trigger all the niceties of "git
->> show", it is tricky to catch them all. The revision machinery is pretty
->> reusable, but there's no easy way to figure out which config affects
->> git-show and so on. Of course if we had a way to invoke git-show
->> in-process that would work, but I suspect there are unexpected corner
->> cases that might trigger.
->
-> Sorry for not following the topic closely and for replying to this so
-> late, but I think that by now we should have some kind of guidelines
-> about when forking a new process is Ok and when it's not.
+Yes, it always surprises me how many there are when the help is printed.
 
-I thought we had passed that stage long ago.  A case like this one
-we see in this patch, where it is run just once immediately before
-we give control back to the end-user (as opposed to "gets run each
-time in a tight loop"), I would see it a no-brainer to discount the
-"fork+exec is so expensive" objection more than we would otherwise,
-especially when the upside of running an external command is so much
-bigger.
+> So the log message may want a bit of rewrite in the title and the
+> introductory part, with a clarification that '?' is what we already
+> had and not what this adds (from Patrick's comment), and there may
+> be other small improvements we want to see that I may have missed,
+> but other than these small-ish points, the basic direction of this
+> patch is good?
 
-There actually should be a different level of "running it as a
-separate command" that we do not have.  If we can split out and
-encapsulate the global execution context sufficiently into a "bag of
-state variables" structure, and rewrite cmd_foo() for each such
-command we wish to be able to run from inside an executing Git into
-two parts:
+I think so.
 
- - cmd_foo() that prepares the global execution context to a
-   "pristine" state, calls into cmd__foo() with that "bag of state
-   variables" structure as one of the parameters, and exits when
-   everything is done.
+> This is a tangent, but I think we _mostly_ take these commands case
+> insensitively (e.g., you can say 'Q' to quit the program, as well as
+> 'q' that is listed above).  But 'k' and 'j' (there may be others)
+> act differently when given in the uppercase.
 
- - cmd__foo() that does the rest, including reading the
-   configuration files, parsing of the command line arguments to
-   override them, doing the actual work.
+'J' and 'K' are the only keys where we have different actions for upper 
+and lowers cases. The implementation looks a bit confused though - we 
+treat y,n,q,a,d case insensitively but not g,s,e,p. As no one has 
+complained about the latter we should perhaps leave them as is in case 
+we ever want to add upper case variants.
 
-then the codepath we are changing from using diff-tree to show can
-do something like:
+>  This would limit our
+> ability to later add capitalized variant of an already used lower
+> case letter without retraining users---should we find it disturbing,
+> or is "add -p" mostly done and we do not have to worry?
 
-	struct git_global_state state = GIT_GLOBAL_STATE_INIT;
-	struct strvec args = STRVEC_INIT;
+I think its mostly done. I'd like a way of selecting lines from a hunk 
+that does not involve making the user edit the hunk and I wish the 
+search remembered the last string but I don't think we're in danger of 
+running out of keys for new commands.
 
-        strvec_pushl(&args, ...);
-        cmd__show(&state, args.nr , args.v);
+Best Wishes
 
-and expect that cmd__show() will do the _right thing_, right?
+Phillip
 
-And to reach that ultimate goal, I do not think using run_command()
-API in the meantime poses hindrance.  The real work should be in the
-implementation of cmd__show(), not the open-coded use of revisions
-API at each such point where you are tempted to spawn an external
-command via run_command() API, which will have to be consolidated
-and replaced with a call to cmd__show() anyway.
