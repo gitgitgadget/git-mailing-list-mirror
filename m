@@ -1,89 +1,148 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F85A84FDE
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 08:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7B585948
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 09:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713255998; cv=none; b=Uo4fR6yqAoNmZbGQm2jmJeCgy0LpozkjQaCPJ3ktXm+KJSvv1pXLwek8h40HP7dtXflRkN0NmR/ydCm6sA4SxwTAvZ3yEwzVtTPe5Ihu4vbQjS6CCGb2/etRYtoZCtJWoOwaQogpKJhmle42fEcJ8XiNmMdRYqkjmaz57eN4jdc=
+	t=1713260498; cv=none; b=g+oijIMiXKaPLuuiQ5DVH4yojOlf5KfULXpNXWxf4UfATTeKbWX3yua296rkanB+I1UCY0DZVRNzL2Wt0YO7RbnaH+5DxSc5HcSOEhJYHjYIRENXD8SQuJAZMp8V0JSJhL1EOQuw2kjnpqTGljCjxvv1JMzt1lto1/YoKWub9Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713255998; c=relaxed/simple;
-	bh=aQ5ZWDEsjEy0Kui4DbZmRefWw6ALkn+JcNL4Ij4kDDM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eSwyWXZ83Oxm4h5f5ihrSAEI3+c1fcQ1H48CKHDxaQ4u1eCQqSULN0tWdT53UfJoIC6yeX1udm2mE2qHY/k0zS69nvRV4m4+868cRWu6hYfqT8uFKadPnAnBfbRTYrlVq30BTZ20fODzgr4TA0Twplf4fLgZRgP6Sb44oX2dczI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=n0ZN2PFr; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713260498; c=relaxed/simple;
+	bh=4GA5i9fEt+TDwMPD5xPEBLp9AqO6NuQUW3INVWS8B1Q=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:Cc:
+	 In-Reply-To:Content-Type; b=PipiFA7nBaCxO9TcYkBbSOcMnDQr9AAwS3jhIWJTe9W02WLqTIeCEyrz3Frj1naNZyhqMAmmZAucSV+MChzCX2EcPUIXaOs6FbGpjyPMM/kfGYV6mmmG+mManGbGsBRHgrxr9/KpJ1JXXMVng45dLdBB5m8PAlh9uBLU+Me7vKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hOMbzVL0; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n0ZN2PFr"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC1D41D1525;
-	Tue, 16 Apr 2024 04:26:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=aQ5ZWDEsjEy0Kui4DbZmRefWw6ALkn+JcNL4Ij
-	4kDDM=; b=n0ZN2PFrrrzXG1vMmLEVCHL4LhfbmY2RBomrNQAS3aE4JjK7/baY3g
-	snx54dRg1y69PhKzYtVT3breWurGQDIdrr3YR0pGPejEOoE2uXytEbUv6oCJbJU1
-	Wo/G15fO0HRJcbEhFl23BWUqdG3PCrCNTT9U04PZ557Cx0hhQyGZg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C40611D1522;
-	Tue, 16 Apr 2024 04:26:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 276E41D1521;
-	Tue, 16 Apr 2024 04:26:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2024, #05; Fri, 12)
-In-Reply-To: <Zh3K3aDxWMPCNlOA@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 16 Apr 2024 00:48:29 +0000")
-References: <xmqqfrvqhwlg.fsf@gitster.g>
-	<Zh3K3aDxWMPCNlOA@tapette.crustytoothpaste.net>
-Date: Tue, 16 Apr 2024 01:26:33 -0700
-Message-ID: <xmqqbk69hfwm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOMbzVL0"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41890fd335fso3113655e9.3
+        for <git@vger.kernel.org>; Tue, 16 Apr 2024 02:41:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713260495; x=1713865295; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=QhWcL3wCfb2RGqmNZHeY7ZSCZ6vNNk3N3WhKVSiTVY4=;
+        b=hOMbzVL0rY23bTH87NL4Wf50l+yrl4+hp1lGaB3gw37Ruenaxj4VyTg1VnRKgf854z
+         Hr7+oWGKagzgYJnDD49zmSdzJ6goNFfOc1Iw6/XANxkWsR/a5rNUCfJcnd4qGkgTz/XB
+         gNUxIwDYJX7+VIFweZTckMB+IeQQyLoZWEEv1h8SNFz1QDgwA0DQ+3hVKnmBJg4cpU7b
+         R+gnSlgEdzn8qm/V7nubMF0FRdGgG11HgqRs+wxkRFGj4ZakbqqZgKr6GgVmPwwYDzdV
+         GWVFvHp3N1AG0wrF3po5e5dCFDbaKI/A5kA2llFueZ90PNY1yK/t9Lnu6/D10yDD3Pie
+         9Qow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713260495; x=1713865295;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QhWcL3wCfb2RGqmNZHeY7ZSCZ6vNNk3N3WhKVSiTVY4=;
+        b=F6jSgrbZLyCrO3cPvqPpRtzsO6XG3k+eEoOPRQUGJDFXJKfqHeyjzOp30mdL2DyRJG
+         2SbIDHs1S/GC1K7NZ2egUM7o3AUk0DXsW7PGT1JTghLSSmd7Bdg6XWKjCvupihMLwQHz
+         fKNekQmpr7RselSp+fdCVBa/ic0VrlNT+RLnpuJ6JOHb3wF9MaENWpjtTqjEZbzFw9B0
+         lTxYJ43cYU6XxHqkXaPUWm3AQQuX3VzC+2SLzKxzop+gpMjsOGEJzpE/q8BEK5xrZ0cs
+         Q5aBUBpozR0XkHt78f1+gyvgb4o2+fLE18T6e9iJYNnIl/RSHsj1NwyopCylSkl+vtdn
+         +zfw==
+X-Forwarded-Encrypted: i=1; AJvYcCXb5S4H9bnaLG25nxpb6PtXkdP6LqiqGOL+BthK4ikvweI/Vrr5towKYR+ymWNc68LIyDM3sQPuUzKeKDezclGqs5eO
+X-Gm-Message-State: AOJu0YwAowiY+S88/uCeSiJe9x4gIV6nzbhEVw9ZOo8QyfT7dlyUGCHS
+	TZ7cDxKkqtgya29W+rb+hO9bVA5bidQtTmq7TLuEIvwWnCZzBHd8HBJdeA==
+X-Google-Smtp-Source: AGHT+IFOwijCaM9Gwcl3EFrATdtD1Qa5ffjmX73njopavLMTNwEZG3lcxkjnwQcds3j1ogJwQ+oHgw==
+X-Received: by 2002:a05:600c:3148:b0:418:42d0:15cf with SMTP id h8-20020a05600c314800b0041842d015cfmr4838231wmo.35.1713260495340;
+        Tue, 16 Apr 2024 02:41:35 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
+        by smtp.gmail.com with ESMTPSA id fl16-20020a05600c0b9000b00418631f91c1sm6914458wmb.28.2024.04.16.02.41.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Apr 2024 02:41:35 -0700 (PDT)
+Message-ID: <15f9252c-212f-43eb-84f3-6046fb2fab38@gmail.com>
+Date: Tue, 16 Apr 2024 10:41:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 08ED22BC-FBCB-11EE-80C4-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add-patch: response to invalid option
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+Content-Language: en-US
+Cc: Patrick Steinhardt <ps@pks.im>
+In-Reply-To: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Hi Rubén
 
-> On 2024-04-13 at 01:36:59, Junio C Hamano wrote:
->> * bc/credential-scheme-enhancement (2024-03-27) 12 commits
->>  . credential: add support for multistage credential rounds
->>  . t5563: refactor for multi-stage authentication
->>  . docs: set a limit on credential line length
->>  . credential: enable state capability
->>  . credential: add an argument to keep state
->>  . http: add support for authtype and credential
->>  . docs: indicate new credential protocol fields
->>  . credential: gate new fields on capability
->>  . credential: add a field for pre-encoded credentials
->>  . http: use new headers for each object request
->>  . remote-curl: reset headers on new request
->>  . credential: add an authtype field
->> 
->>  The credential helper protocol, together with the HTTP layer, have
->>  been enhanced to support authentication schemes different from
->>  username & password pair, like Bearer and NTLM.
->> 
->>  Expecting a reroll.
->>  cf. <ZgSQ5o_KyqDaxz1m@tapette.crustytoothpaste.net>
->>  source: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+Thanks for working on this, it is a nice follow up to your last series.
+
+On 15/04/2024 20:00, Rubén Justo wrote:
 >
-> I'm working on a reroll and expect to send it out a little later this
-> week.  I believe it's currently finished and I'm running the tests with
-> `git rebase -x` now, so assuming that passes v2 should be out soon.
+> +		} else {
+> +			err(s, _("Unknown option '%s' (use '?' for help)"),
 
-Thanks.
+As this is an interactive program I think "Unknown key" would be clearer.
+
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index bc55255b0a..b38fd5388a 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -61,6 +61,16 @@ test_expect_success 'setup (initial)' '
+>   	echo more >>file &&
+>   	echo lines >>file
+>   '
+> +
+> +test_expect_success 'invalid option' '
+> +	cat >expect <<-EOF &&
+> +	Unknown option ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
+> +	EOF
+> +	test_write_lines W |
+> +	git -c core.filemode=true add -p 2>actual &&
+> +	test_cmp expect actual
+> +'
+
+I was confused by this test as "add -p" doesn't seem to be printing
+anything apart from the error. That's because it only captures stderr
+(quite why an interactive program is writing its some of its output to
+stderr and the rest to stdout is another question). I think we want to
+capture the whole output otherwise we can't assert that the help isn't
+printed. Something like this (which also adds coverage for '?' and 'p')
+
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index bc55255b0a8..0fc7d4b5d89 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -1130,4 +1130,26 @@ test_expect_success 'reset -p with unmerged files' '
+          test_must_be_empty staged
+  '
+  
++test_expect_success 'invalid key' '
++        echo changed >file &&
++        test_write_lines æ \? p q | force_color git add -p >actual.colored 2>&1 &&
++        test_decode_color <actual.colored >actual &&
++        force_color git diff >diff.colored &&
++        test_decode_color <diff.colored >diff.decoded &&
++        cat diff.decoded >expect &&
++        cat >>expect <<-EOF &&
++        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET><BOLD;RED>Unknown key ${SQ}æ${SQ}. Use ${SQ}?${SQ} for help<RESET>
++        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET><BOLD;RED>y - stage this hunk
++        n - do not stage this hunk
++        q - quit; do not stage this hunk or any of the remaining ones
++        a - stage this hunk and all later hunks in the file
++        d - do not stage this hunk or any of the later hunks in the file
++        <RESET><BOLD;RED>e - manually edit the current hunk<RESET>
++        <BOLD;RED>p - print the current hunk<RESET>
++        <BOLD;RED>? - print help<RESET>
++        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET>$(sed -n "/@/,\$ p" diff.decoded)
++        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET>
++        EOF
++        test_cmp expect actual
++'
++
+  test_done
+
+Best Wishes
+
+Phillip
