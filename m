@@ -1,127 +1,87 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7847513777C
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 22:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD580139CE6
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 22:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713307942; cv=none; b=IRTy8siTCxHLwBca5O2DrhGjdHZozv/zxlfequn9eyaN4fODMnwmeHx2fcLMbGO1YJUP+pX1i1g1UmhbNelVXwNqtBwSwjE/AKEslxoeeHmIE/cOClMj/Bz33PWvUBjXdn35fRe3gzStC5FsttqVLc8dTElJEDfiVcQIhEVlTyE=
+	t=1713308229; cv=none; b=m/aInDacsPV9I723m+tDZhGtPBTf8XqIOTpOVrYxybxRzMalCpc7qG3le5ZMzLiQGVeqzDK8SYbsw7oTp9K5XFQ6sl5SPhWPKJH3XiWjt9gQZH81xvY6Et362cQjmM/WS19Ra7YBQgVD6T2gClXOwduvN3bsA8xmu16zSPcjKKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713307942; c=relaxed/simple;
-	bh=/QZHoML9WRUCBTuRw9vg+UnwmcHuXFi1+fzxFkS9Xv4=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k2UpybnqQuNJlQsX857shbBHkjBLB+Ku8hcEOfxH09txOdT4GIlFprrUNRfJKSdZyw4bU8duFQX6RbR/ALiiPcyJHI48YaGAwleguboBSsCaqFO6P50K2NEx1Uy/jI/xVnFNZkhhhT0XcIFOrnt13zcYLi+bWjcuX89lPT+Jh2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-251-108.cpe.net.cable.rogers.com [99.228.251.108])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 43GMqFTg1513343
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Apr 2024 22:52:16 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-Cc: "'Josh Triplett'" <josh@joshtriplett.org>, <git@vger.kernel.org>
-References: <0a7b9172add0a0107e0765a59a798b92161788dd.1708921148.git.josh@joshtriplett.org>	<Zh7NZhB1n2o1k7jI@localhost> <xmqq7cgxdp0i.fsf@gitster.g>	<046c01da903e$d6d97ac0$848c7040$@nexbridge.com> <xmqqv84hc53e.fsf@gitster.g>
-In-Reply-To: <xmqqv84hc53e.fsf@gitster.g>
-Subject: RE: [PATCH] advice: Add advice.scissors to suppress "do not modify or remove this line"
-Date: Tue, 16 Apr 2024 18:52:11 -0400
-Organization: Nexbridge Inc.
-Message-ID: <047301da9050$bae58b80$30b0a280$@nexbridge.com>
+	s=arc-20240116; t=1713308229; c=relaxed/simple;
+	bh=hxT9AG58M5/laAbOn4wsBbjUnfM38baa9B9et88erH4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=R9YwC/QOgge06KHCmgdfPBkQLQBEpFIQlzV9jdidvTRvJASaoLsIcSPSq2ZPzUWGhjq7hcSsUAHYHtI9fEjLPw6ibTuZfCRC/IUzIQxL7yAYjF4PglWfYDNAc4QP49EKoGK1MgkAV5uu8KVayb3YiaOb/rW5iDfZFmMP8BjaqBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BtCdoRT2; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BtCdoRT2"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3FAD71D36E5;
+	Tue, 16 Apr 2024 18:57:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=hxT9AG58M5/laAbOn4wsBbjUnfM38baa9B9et8
+	8erH4=; b=BtCdoRT2aIDPoKzS2l4huFBUOphXqFCO1CxEG7v6HOdVwoD5jPW2X7
+	2dsg12ocDJhNABU+HC48J87/6ehYi6qrpr0fOWiLcZ0/gm5c4f/av5SKr9MOP2ca
+	SxTZy3eWFmo5vWwd+Ln+XeSsCBGHFypXwQL6+Ie18IiBt3J1l/MTw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D7B01D36E4;
+	Tue, 16 Apr 2024 18:57:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6661E1D36E2;
+	Tue, 16 Apr 2024 18:57:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
+ <nasamuffin@google.com>,  Patrick Steinhardt <ps@pks.im>,  Matthieu Moy
+ <git@matthieu-moy.fr>,  Eric Sunshine <sunshine@sunshineco.com>,  Kipras
+ Melnikovas <kipras@kipras.org>
+Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
+In-Reply-To: <owly34rl53mr.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Tue, 16 Apr 2024 15:44:44 -0700")
+References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
+	<pull.1704.v4.git.1712878339.gitgitgadget@gmail.com>
+	<c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
+	<xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
+Date: Tue, 16 Apr 2024 15:57:04 -0700
+Message-ID: <xmqqjzkwdigv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQH15YgOsnvE2GL/LQgkW5nkEwXIMQIpP8J+AiodRQUCWWLU1gKQtLtesOrpxMA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A52FDEF2-FC44-11EE-BAEF-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Tuesday, April 16, 2024 6:31 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
->
->>>>> This is useful advice for new users, but potentially redundant for
->>>>> experienced users, who might instead appreciate seeing two more
->>>>> lines of information in their editor.
->>>>>
->>>>> Add advice.scissors to suppress that explanation.
->>>>
->>>> Following up on this patch. Happy to rework if needed.
->>>
->>>I am not personally interested in the feature myself, and I doubt it
->>>would
->> help the
->>>end-user experience very much.  You'd need to find somebody else to
->>>cheer
->> for the
->>>topic ;-)
+Linus Arver <linusa@google.com> writes:
+
+>> In the context of _this_ document where the user is working on _git_
+>> project towards submitting patches to _us_, it is far simpler to
+>> drop the above paragraph and tell them how to run the script in
+>> contrib/, e.g.
 >>
->> I am having a bit of trouble understanding the use-case for this. Is
->> it limited to linkgit? Under what circumstances would I need to use
->> such capabilities?
+>>     $ perl contrib/contacts/git-contacts <args>...
+>>
+>> without hinting there is anything platform/distro specific, and
+>> instead to have them all work from our sources.
 >
->When you run "git commit" from the command line without specifying any
->message, you'd get an editor spawned for you with something like this in
-the file ("--
->- >8 ---" and "--- 8< ---" are for illustration purposes in this message).
->
->    --- >8 ---
->
->    # Please enter the commit message for your changes. Lines starting
->    # with '#' will be ignored, and an empty message aborts the commit.
->    #
->    # On branch next
->    # Untracked files:
->    #	+runme.sh
->    #	P
->    #
->    --- 8< ---
->
->But when you run "git commit --cleanup=scissors" (or use the equivalent
->configuration variables), you'd get this instead.
->
->    --- >8 ---
->
->    # ------------------------ >8 ------------------------
->    # Do not modify or remove the line above.
->    # Everything below it will be ignored.
->    #
->    # On branch next
->    # Untracked files:
->    #	+runme.sh
->    #	P
->    #
->    --- 8< ---
->
->The new advice configuration is to suppress the two lines from that message
->template.
->
->I agree that a bit more background information should be given in the
-proposed log
->message to help readers.  It should mention when this new setting is
-relevant (e.g.,
->when the "--cleanup=scissors"
->option is in effect), at least.
->
->I suspect that the same configuration variable wants to also control the
-"helpful"
->comment in the "normal" case, in which case the name of the configuration
-variable
->would need to be rethought.
+> Indeed. One small change is that the script already has the execute bit
+> set so I can drop `perl` as $0 (the execute bit is removed when it is
+> copied into /usr/share/... on my system).
 
-Thanks. I hope that the default "helpful" comment in the "normal" case would
-not change anything. I personally have course material that references
-examples with the current commit message structure that would be impacted -
-No problem changing it, but I am not sure what the new result would be.
+We want to be a bit careful here, though.
 
-As a comment on this, the scissors option might need some NLS consideration
-in organizations where there are more than one languages/encodings in use. I
-could see some global settings conflicting with local, but that would need
-documentation.
-
+The script begins with "#!/usr/bin/perl", but on some systems ther
+eis no such command (but /usr/local/bin is on user's PATH and perl
+exists there).
