@@ -1,101 +1,99 @@
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D91D139D04
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 23:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9304713A41B
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 23:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713308824; cv=none; b=UPz8GbKKvQIC5/Vw8O4KOho3etZv938nB3fHmXetjBaBkAtTjBR1jKLkse8/0AFIl/VRh1UW8gexoVB1cA17vUcg2m7VnNDLUZwFG2xUByQS0Du9A3CA3ZNul+V3TNAwHcBse4WpFsTqFveqv5+JwNzzKepbAK4sFN5irPGpbdk=
+	t=1713309716; cv=none; b=TO802nk9uN9cnM7L7jEk83G2D2Whp3BIOJzZ5CbeOdToIhVR4ki/z+DJ01/7EboyZf40vTqKKhCyg2Fo6Uu/AVOUA1VjCbNDDbye0QUKCptc1ylEgViIjsI/pEVuNOdl+pqfAZvhwE0iqY+ljQYfalihQ6KAnpVNwAaTPw3Z4PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713308824; c=relaxed/simple;
-	bh=u8SOLMCc8Br0Y4q4sraNcihAlwhTRxi1zw1vEXqnPrc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=d2AWdihMziS1DVEm4Am1pUV9VosxM7vS/VdgSndd87wzU+z3ByLIRR2qcpNd3YU8SaxMCgc62ekjswoefX2uJiVaS5SBm95GomgTH2gI9pPIp6WE7vDbp3S0cBTWnhUPcmDJijvviJGV3NgzskBq/MvhabqE2o07R+//3RDrFU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mk5x6u8/; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1713309716; c=relaxed/simple;
+	bh=XfLNxvKN0rUslLVP7bMviWsZMp8NKOOlFQ/Ie1MkV7w=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ogYfpDo/WXPDagtGZStxLFaQ5lIiQtD2CYwkTRFF9l8J75thClyPDSj2xGN7dxtzwaZ95B7i1baBTM+VETz5OsVIZLDwvn3M6oAEcCMxEEGaVaK92pnUR6swba2aPHUIuedzJ+zQgeG7xL9Bp5dFoSzdUNgyG7E59rUtdILn+BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ffmdRPgZ; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mk5x6u8/"
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2a517457163so4598483a91.3
-        for <git@vger.kernel.org>; Tue, 16 Apr 2024 16:07:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ffmdRPgZ"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-347e635b1fcso1805494f8f.1
+        for <git@vger.kernel.org>; Tue, 16 Apr 2024 16:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713308822; x=1713913622; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LcYgPfnK6JFXU8LnazCJD+3BaDmao76xIzWEjFVNZko=;
-        b=mk5x6u8/o0vzufSmeWlv/itssmCfPk04Ikl248b0uwtGniXsUGJyKidspXNVzuLZp9
-         tjF2PAnGdodn84CPeoOy/Kl2KKh6mBn8fwjQg3ccaYq6oPgB5EmMZDy8DD81VwvDEF6l
-         kppFpaqNA3Nca+8hm0Rm+Wsxn2yDqLe3sxc/70aqYmE0439jSwZIMBO/mB3OY/Fd+gZu
-         4foerE5KmwxLhcOs8E93ecx38iWWYGf8vdWJDRoXaDHz10KC1UA6xXVGmg5IlsYbIXYV
-         gBtQRKIoYmAt6M8Aw/+tNOPDc+IC+yp3Pt0bcT0UlJMPpYkIvfMb1PEItNYqWH2JSAmI
-         F5Uw==
+        d=gmail.com; s=20230601; t=1713309712; x=1713914512; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GEhZrlk2IMrp1WpY3jsU314GTeqhyVm+JURLrJ0sDGo=;
+        b=ffmdRPgZz5XMz545Flf6AeUfIh5HIDhwj0SUfe59ZvF1PA4OAzoJ99IKZuVeboyOLm
+         75DIOk170waW1tcRjBZKuWwkyvdMJoo4jLypqA39VQ5dMXUToPU1dpkTaPD1OpArmmzZ
+         IiKfceniH8K7o3yvy2HKllsa9cSmCVZlc4IisRhV5bI4Ms3EumtOxII9uHTNKHrpJE1G
+         M17BbRJ15KgB0FC+GIONtZOyUafa1E5jAZWOsicVkQkctmXksUuLDgFtP18HdrmGlSmD
+         AQfqqVv/yx6KhNL4BRPL0+zcj7eiK0py+gNznVNMk8Z34xwNprRGUbg0T6hhK9txEZpW
+         cN8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713308822; x=1713913622;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LcYgPfnK6JFXU8LnazCJD+3BaDmao76xIzWEjFVNZko=;
-        b=JMP9JfL8tCZuKDNxc15P5Eti0FxtrX7iFVTKYwS5BkRMcR5rSROpyiZBxdbAmnVZA9
-         vgZLcVcLv6zuqkBtL5oL5ftIGdsn3R7dvxvx3OmOPcH8Gt2hZlI1xfkKSyUVIE6EuedO
-         Qbzm0bVB+A9921ZuiNWuMJ07b7Bpmm0Gh+tZYCdzbY9qekMRP0B8oMgzn5EdpUHR5S8i
-         WSJpn230N2yaIGUWr5Us40cDwfAOKsIxtKMeSslce+nyx+60vwrf7XWkGLZoiiwN/ckT
-         bD2AsfiPJlk7GMbcSz7lLMrtYPOTjT+0G4caodcwtim7Ukv0TU7tXajpfcGgGHKQcC5z
-         e3mQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUvP9oCDMbyxcYgz/lg6iY/fTu8s350ZHCDTCD1a9wTcBNmZd/mj4LBESSbanFT2WihYXClhBXa3kxaxjlOQv3iqxdu
-X-Gm-Message-State: AOJu0YwY31QfZbgBmeDyvm24OeEehAkgVYrUZRY5RvJaWSOv1Fi2uufr
-	+1+ElccauU/w8xDay/j3sysuMBoPmUv2B/waeGeA4WYegWZ1Lha8X0JQCxht6LhxOmnGETH42Z5
-	foA==
-X-Google-Smtp-Source: AGHT+IFFQi8X/2dCYJ8OO1lwG75EsQ7Bx9PB5CAlnyaSLapKfWI6+M8ov8C/762Eff/if6PJi2E2CzZ9no4=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90b:180d:b0:2a5:22cd:25f3 with SMTP id
- lw13-20020a17090b180d00b002a522cd25f3mr88092pjb.2.1713308822381; Tue, 16 Apr
- 2024 16:07:02 -0700 (PDT)
-Date: Tue, 16 Apr 2024 16:07:00 -0700
-In-Reply-To: <xmqqjzkwdigv.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1713309712; x=1713914512;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GEhZrlk2IMrp1WpY3jsU314GTeqhyVm+JURLrJ0sDGo=;
+        b=WK/iIuvs52av7DWOD6/xZ/p0eO29cyvovtyboUV6fA/KPTe00StBsBRiRxcSnDvki/
+         0SgOrni1v6TE2Cr6KW7wvbtC9dnhPjWFJeYuc0AuzYWCuiUEiJ2Vjwi5abJTqVV85d+S
+         U29hhPzsMOVPRzGTK/BfolIFhqxZ58bqH93a+RirKIXSMXLf+6rvml4RTlGSD3xVCzyE
+         8RPESutkrn860PlK4rMR8D2WwvN9MSg48B08kdY6d8P7VTUypeMWqsWJaZoEwq5xzKXp
+         YZ0vK9vt2zzKKT5tNV+k+0zVqNip+pYlxov3n7RZ4e1AqG5XlX/FoA2cVXFQXqTqwK37
+         qF/g==
+X-Gm-Message-State: AOJu0YxrFGuXcxCduw0v6tmwuoxhrhST8wZDKDzLbTDBaXdCUJXo1TIq
+	7GNF2SJnV7/Gux4jgdTZnRLdA4dkQMutp5cx1QOyu0x+2KicpUB6q1uMxw==
+X-Google-Smtp-Source: AGHT+IEpzEWAIEh3OtP60i8dJfm+2xF+EQPVoPmlj+a+4DVdjFJPwycYj9HB+Y/XeQ51xo8aJoAeUw==
+X-Received: by 2002:a5d:59a5:0:b0:343:b295:4d99 with SMTP id p5-20020a5d59a5000000b00343b2954d99mr12447131wrr.56.1713309712068;
+        Tue, 16 Apr 2024 16:21:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p12-20020a05600c358c00b004187f537394sm446547wmq.8.2024.04.16.16.21.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Apr 2024 16:21:51 -0700 (PDT)
+Message-Id: <pull.1720.git.1713309711217.gitgitgadget@gmail.com>
+From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 16 Apr 2024 23:21:51 +0000
+Subject: [PATCH] mailmap: change primary address for Linus Arver
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
- <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com> <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
- <xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com> <xmqqjzkwdigv.fsf@gitster.g>
-Message-ID: <owlyzfts52ln.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Linus Arver <linusa@google.com>,
+    Linus Arver <linusa@google.com>
+
 From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Kipras Melnikovas <kipras@kipras.org>
-Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus will lose access to his work email soon.
 
-> Linus Arver <linusa@google.com> writes:
->
->>> In the context of _this_ document where the user is working on _git_
->>> project towards submitting patches to _us_, it is far simpler to
->>> drop the above paragraph and tell them how to run the script in
->>> contrib/, e.g.
->>>
->>>     $ perl contrib/contacts/git-contacts <args>...
->>>
->>> without hinting there is anything platform/distro specific, and
->>> instead to have them all work from our sources.
->>
->> Indeed. One small change is that the script already has the execute bit
->> set so I can drop `perl` as $0 (the execute bit is removed when it is
->> copied into /usr/share/... on my system).
->
-> We want to be a bit careful here, though.
->
-> The script begins with "#!/usr/bin/perl", but on some systems ther
-> eis no such command (but /usr/local/bin is on user's PATH and perl
-> exists there).
+Signed-off-by: Linus Arver <linusa@google.com>
+---
+    mailmap: change primary address for Linus Arver
 
-Doh, I already sent a v5. Sorry about that. <wears cone of shame>
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1720%2Flistx%2Fmailmap-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1720/listx/mailmap-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1720
 
-Anyway, should I do something like "#!/usr/bin/env perl" or similar as
-another patch? It should be more portable than the hardcoded path we
-have to /usr/bin/perl.
+ .mailmap | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.mailmap b/.mailmap
+index 82129be449f..18128a1250b 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -152,6 +152,7 @@ Lars Doelle <lars.doelle@on-line ! de>
+ Lars Doelle <lars.doelle@on-line.de>
+ Lars Noschinski <lars@public.noschinski.de> <lars.noschinski@rwth-aachen.de>
+ Li Hong <leehong@pku.edu.cn>
++Linus Arver <linus@ucla.edu> <linusa@google.com>
+ Linus Torvalds <torvalds@linux-foundation.org> <torvalds@evo.osdl.org>
+ Linus Torvalds <torvalds@linux-foundation.org> <torvalds@g5.osdl.org>
+ Linus Torvalds <torvalds@linux-foundation.org> <torvalds@osdl.org>
+
+base-commit: 21306a098c3f174ad4c2a5cddb9069ee27a548b0
+-- 
+gitgitgadget
