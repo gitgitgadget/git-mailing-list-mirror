@@ -1,124 +1,108 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6271386D2
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 19:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35643C099
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 19:44:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713295883; cv=none; b=e/T3You3DiHD6ThljvvgMrGKOOeWMuOOq1x6IKm0LL+Y6easKVXaY4fN2gl9ZxoFWP4sFr2nqIdkH8sZkgs/sInE2WnjZIPb0F1iJTajTqV4QBuL9pLUV0uwWU7cPhRkpMNSvfP+aQjKTq1Z533PrgrnVVnhvMjigxiqAjWevkM=
+	t=1713296675; cv=none; b=FLgUgW42N31ibyt6bAdLOTJHOe2GtFzBp/o3MTAZoBKLSTJfN2znSe9ZNaF6gGAR2S9EQ9JUkFWKpHXJ7m/zm7BNVjRRn/t+I4XdV2UtoH9ansZaKVhUs9OoScZsmfRUo8eT/RecHuQ2W2PMQQjKnBS9+13VwE7nl90swFfzBMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713295883; c=relaxed/simple;
-	bh=5Qz85U8fdSx9tLuu0oCboXzNBahTlZhYpQdzS/mYAp4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EbZWaoYYZJQ+gcIQRb1XkOM/whgBQ46NOjm1mtsM7TM8J4BIY28AHv7V43gKeg8T/CmdLcG88N7XCEWbo6ZPUe42bJujXfLoJ4adecSNAVESBU3+Z16nAextVThXYRRsqqsOGxvHraZoQ4EAt16Y7CtG6zF0k/urJxJaNJFC19E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTi4G4uv; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713296675; c=relaxed/simple;
+	bh=g5+S/z9pa1Ek9EUv7cyBh/H58Oi/24VBTFP1b5b7Eig=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=p/OmKYMPlZ5g7rA4hEb+WPjp13iF2HMy0itFKgy1NgcDdsJkfbZuiRE+Eyw8cwLui09axq59q0hEXXpwQf6/BuGu+gwdKvreufdFXrXq+gCwEsjA8FT8U/qnbq34FAq/+gSeqFEjZaSYewHpJXEHxfF0Ac5xMn6u+2vuZzBw6pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=iHNrD61f; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTi4G4uv"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4189a6a71dcso5680635e9.2
-        for <git@vger.kernel.org>; Tue, 16 Apr 2024 12:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713295880; x=1713900680; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h+BS5HAJ/W1FsxjLy+ADjklRGi1unwtx9QHjMJ4AXWk=;
-        b=YTi4G4uvBJ8XYcVw0paZ33ejzKmGqDDs9gZq6CDMxS1RwhVvo3V/TENjN5J/eZ9sfw
-         5FjBOsQaPrZ8rBPHn+X+xkY/+l3xpOYOu32rivLvCWWJayqXdDrGc79rl/ZHFtYyvRag
-         quNND7Sondh3cDsPmwa0TFwhQ4wcmkaOa4X3vzIsC7KFWcMxMMEUB4vAsl403w4mUOF/
-         Jx4kFuv9i0Qe9Wg5ZYo/wgPPjSsZPLTnW4WitoE206IY7LQhLluSXqlyHSGuvkwvXuOw
-         GZedU3hEp/5qs7tOYED6fXz/LVm7x3Pv9MYujSdsxqSKvU65QrncVLdmiqBSxe1f3ORm
-         Ks/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713295880; x=1713900680;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h+BS5HAJ/W1FsxjLy+ADjklRGi1unwtx9QHjMJ4AXWk=;
-        b=C5e9UtznAzD6L1cr+6POTMTF8rPJvjC99KO6EWGsZCOPGpcvwarDe21+8Zghnn4oMR
-         K5jSZNJLJMkpYEofFatuCw/pVEFbLCYkHXj9ITS+X5lk2V2k2P6HrIyKnh0BcDAR9fee
-         GKJ+m1ByV1PkoirQx+LjLgWcWKcYmU7Lo1EDqUAgS6sNB6Mj2ej/4oRtqloJt6u4T2Ax
-         f9dfC8q5soURtQobFbN35NBFQOtkAaa1XrGkYYUSQjE39NrfU8COPlHma849g50fJmp7
-         Ny21aZNmDz0XxuO8Y3qMp3sZz6vo5/3HjMbTd2sMfuFLKnp7qb/tVNg6mJJZdrleqixX
-         JCJw==
-X-Gm-Message-State: AOJu0Yxk6D+bppVIkG6KOAqV+qYMhoTk7fhOe8BxHkieDhPYWXMSuJ99
-	J+3iLAhYNDRSKIfyLnNTN5Rpr6lyJSbRd9bE1dopCoAQ8pr9g81X
-X-Google-Smtp-Source: AGHT+IGOwGdyNEcMEdHwNHzmfgNi27RT3ZVOPH6zC6w3ZdEmqKtujt0Z1yOu/sCTv4tmfDOK931iyA==
-X-Received: by 2002:a05:600c:35d5:b0:415:6121:5171 with SMTP id r21-20020a05600c35d500b0041561215171mr8723087wmq.32.1713295879955;
-        Tue, 16 Apr 2024 12:31:19 -0700 (PDT)
-Received: from gmail.com (91.red-88-14-45.dynamicip.rima-tde.net. [88.14.45.91])
-        by smtp.gmail.com with ESMTPSA id w5-20020a5d4045000000b00346ceb9e060sm14839538wrp.103.2024.04.16.12.31.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 12:31:19 -0700 (PDT)
-Message-ID: <18640bf4-aefb-4057-a680-3e47f10d88e2@gmail.com>
-Date: Tue, 16 Apr 2024 21:31:18 +0200
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="iHNrD61f"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:References:Message-ID:
+	In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=GKhJp8j/TlW0sJzR5UwUASNyUEHCZVie18oPfCR1C78=; b=iHNrD61fDgXrRJ7qwU1gV5zGhk
+	mWjQr8cMKAEe5Oo2kh2s84/R6HceqUUCJRsKP8EuWHWTju9d8U4lL7vtY8SvhmuoQX9ZHNIa5wwj3
+	socP0cUz3KQLeWiA8eWGYZ4bVSU50VuwtJFnG5OdI7U7jTqr7Qx5pbMJbMpNRfph8ZtRYDjTCbPPI
+	b7fbZ9P5wj43y/D40BlUw6iy4OSHGgXpKErNap4glEPDZhnErQ5XXnKbwGWjQQY+Lf5uaVBNd2vkv
+	J2EFRUBtOeMbfytQC7J9h5StyxTrbVg13unmszNfuYWe2PYa3QjUXKQsgq+bxuBaisWKRHRpr1rqq
+	6XhNM8Mw==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:37128 helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1rwoj7-0000000DCQe-3Wat;
+	Tue, 16 Apr 2024 21:44:21 +0200
+Date: Tue, 16 Apr 2024 20:44:21 +0100 (CET)
+From: Peter Krefting <peter@softwolves.pp.se>
+To: Eric Sunshine <sunshine@sunshineco.com>, 
+    Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
+    Michael Osipov <michael.osipov@innomotics.com>
+Subject: Re: [PATCH v3] bisect: report the found commit with "show"
+In-Reply-To: <20240416051358.GB1745631@coredump.intra.peff.net>
+Message-ID: <70e5d02e-7728-260b-40c3-a19cf68d9b0e@softwolves.pp.se>
+References: <965ae345-fd58-c46c-5a7a-de181e901f21@softwolves.pp.se> <CAPig+cQu15HzZkeT3+oG3U7iFax5_GYUB=uqwuJxshw-PD=VHQ@mail.gmail.com> <xmqq7cgyl3pr.fsf@gitster.g> <CAPig+cSY3vp6V=4SWmxyCi+7QY74eGnzPM6bu5LU5j00n8-j5g@mail.gmail.com>
+ <20240416051358.GB1745631@coredump.intra.peff.net>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] add-patch: response to invalid option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <xmqq5xwhhacm.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqq5xwhhacm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Relay-Host: 185.114.57.50
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 
-On Tue, Apr 16, 2024 at 03:26:33AM -0700, Junio C Hamano wrote:
+Eric sunshine:
 
-> > When the user introduces an invalid option, we respond with the whole
-> > help text.
-> 
-> The verb "introduces" in the first sentence looked weird to me.
+> Style nit: On this project, multi-line comments are formatted like this:
 
-OK.  I'll reword it.
+Indeed. Fixed this in v4.
 
-> > Instead of displaying the long help description, display a short error
-> > message indicating the incorrectly introduced option with a note on how
-> > to get the help text.
+Junio C Hamano:
 
-> Is it worth changing it at this point?  Does it improve the end-user
-> experience in any noticeable way?  I do not think I can answer these
-> two questions with confident "yes".
+>>> Signed-off-By: Peter Krefting <peter@softwolves.pp.se>
+>>> ---
+> Curious how you trimmed the trailers from the submitted patch ;-)
 
-Indeed, this has been with us for a long time.  We're not fixing or
-changing any normal usage here.
+Yeah. I had some extra information in my local commit footer, to make 
+sure I remember add the correct Cc in the outgoing mail. I didn't 
+intend to remove the Reported-by trailer (and in v4 I see that I 
+forgot to trim it at all; so much for posting stuff late in the 
+evening, especially just after pushing a localization update).
 
-I know you know, but let me put it this way;  We are introducing two
-changes here:
+> What is more problematic is that the message is sent with
+>
+> 	Content-Type: text/plain; format=flowed; charset=US-ASCII
+>
+> and the contents of the message is in that flawed format, possibly 
+> corrupting whitespaces in irrecoverable ways.
 
-   - a new error message to inform the user that an invalid option has
-     been entered.  And,
+Right. I need to remember to disable that when posting patches. I 
+haven't come around to trying to get the Git built-in tools for sending 
+patches, as the last patch I submitted this way was in 2009, two mail 
+hosts ago. It oughtn't have been corrupted by that as it was just an 
+import of the git format-patch output file, and...
 
-   - not displaying the help if not requested.
+> Peter, if the resulting commit I push out later today botches some 
+> whitespaces due to this issue, please complain.
 
-Both are improvements to the user experience, but especially the former,
-I think.
+...it comes out just fine (as a v3.5 patch, as my v4 also changed the 
+command-line options, which we should not).
 
-This:
+Eric Sunshine:
 
-	$ echo W | git add -p 
-	diff --git a/add-interactive.c b/add-interactive.c
-	[...]
-	(1/1) Stage this hunk [y,n,q,a,d,e,?]? y - stage this hunk
-	n - do not stage this hunk
-	q - quit; do not stage this hunk or any of the remaining ones
-	a - stage this hunk and all later hunks in the file
-	[...]
+> Sorry if that caused any confusion. I wasn't trying to make some 
+> sort of implicit suggestion to the patch author (such as "don't use 
+> Cc: trailers").
 
-Becomes:
+It was not you, it was me trimming the posted patch a little bit too 
+much.
 
-	$ echo W | ./git add -p
-	diff --git a/add-interactive.c b/add-interactive.c
-	[...]
-	(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? Unknown option 'W' (use '?' for help)
-
-Thanks.
+-- 
+\\// Peter - http://www.softwolves.pp.se/
