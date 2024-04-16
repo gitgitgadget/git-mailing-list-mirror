@@ -1,122 +1,202 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24239D512
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 02:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E31D2D627
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 04:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713236113; cv=none; b=Xw3vo4YKXZg5Cjwdlv8r4fqVpvEYO7UcS9F6exkBhyM8tNiOJ/kOYVegLtBP0tANBCPx7r9fyEib8SCaZFZv/EZhqfxUlf7xT49adnez60ZCmuQXy7xTaSokATyqcBIOxoH3j7AhGeQHvpgkbmrvQYM45cxiUUFF7zywzybUSQE=
+	t=1713242886; cv=none; b=b0x9if1nByDCcCCG7M5ICs5yMN5rRrX2T0H1fd86Tko7ATHhJ3P5Zzun/dTdJMQVPxi0C5oBgxIV9NFw90YQB439opwijq3LWMVbxJF7QCgDMtCchWPzYz5ClJFkybAwhMYt1YCdB8/wzxA1O/EH3vldUo3uYtZLOzat/t2NqA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713236113; c=relaxed/simple;
-	bh=99Hlvh/Avh20aRelmXUe0HejqYEMJTAnZsqWnbhXB7k=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=I40bdmOaNGzObaDRRYIvT7riFPLux7kPCwYtJkx9qr6chLLbZa7FBc0/YiRS4So1/pdI7vk7Qt9IDAJ0H99GEEes0NkqRoouuWKSclJZLvDYmqQqp0+II/VR3AMRiHiX+41+uK7+eIEnBDznoiowE02zG7KPpABifs5ovGx5z80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CfJIOS6n; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713242886; c=relaxed/simple;
+	bh=itcf7YVI2E5E31vvyEKPdXNgI/jIhrI1i9WLuo4FS1A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mdvwYsJq1OuOr1ORNOKg0mVSgkDeJftPA3rK7WwL73LZy62Tcb7a9hUlwcjLvWP0W8zjteoot9MXvpvCOwKt0/tbdu2bHjwZKxl84H9EI3aczg9FHn8qUmyRtw6ZS96AgZQd8r7x6JE6NXAMblffOHEb+wjSmUzarpzZqclYx34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e/Th3yQc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=frpGnq8X; arc=none smtp.client-ip=64.147.123.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CfJIOS6n"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1e5c7d087e1so23708555ad.0
-        for <git@vger.kernel.org>; Mon, 15 Apr 2024 19:55:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713236110; x=1713840910; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CDCtkw6VYnf+1+GN4/1l9tEV0lCXukQFLkQUGUb3BTA=;
-        b=CfJIOS6nxu+K69YcSTiobIyu7wOmv5FGLGg+pJoB57UKSi1mKcvBNOyMPNYofqiiJQ
-         kUHmrxtZTzQbBn3LDUgeifaGwQKHy3E0yCUbwH29qwawB412kTnKVTim8Re4qf05B/Rz
-         PjbefohrG2IzCSeAH/rCzp1cF+W6X0bXKSltGlstJvKd6gvwDuT3j3kV2RBUUSSKaULX
-         1vVD3xXWrSQya/Exuy3OyhqKMS4InNTrfkOLz9u/w5U4Awnl22vk83jIlmYrGSBxWVRQ
-         PXIqrL6zVgbCfxofdlKpLthZfq5C9J7J9vwpMSQrgHg6trn1mYYJn7ofPcKJp0udgJHY
-         5nsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713236110; x=1713840910;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CDCtkw6VYnf+1+GN4/1l9tEV0lCXukQFLkQUGUb3BTA=;
-        b=wD6jaWMpJt8LCigrJxhuTcEw7PBtS7BAdsYRBeNCWbnKKNYscw3jkKbuXugf70nnjO
-         w8PIv14S+1HFcl4XlTncb+JChwbfUbK9elP9EoNjgJXH5Kouo67zMKpNZFYKgUNk5s1z
-         f/xaSU6kEyNdzX6zgoCDDFUloBR8ESbZNqIChJbMjyKJ2+p3HSMFh51Ub8bhRGUlES0R
-         /dd25ocbeqc3dr4h2ZBz+ODef/SIdiyzO3ywzat/hwlK9Y0J+4GZO2CCBB1wlG3lV4mR
-         3ONdGAaCSzp3RVMq54cz/vjqolU341w2MFiIXIIdU9B2CBgOwsAyED0wS9KB6Fwg9hMo
-         ibeg==
-X-Gm-Message-State: AOJu0YzjMtQ4WhGP1sRp8tKgMouRiPeEc8JajjLrzLCaLSg2Pi35lfjG
-	XNyMKSsennxNLa95hfXafp9FFhG51FtWEU/R79y+o7P2CjJF5z23uYUh5w==
-X-Google-Smtp-Source: AGHT+IFEqYWxZonIbB8fm/Sf/nf1azrdocRvjulo+sVohO6bEnsomEcfZt+eVjARlsaiX9+q2Nxd2g==
-X-Received: by 2002:a17:902:b104:b0:1e4:203d:ab80 with SMTP id q4-20020a170902b10400b001e4203dab80mr9840936plr.57.1713236110341;
-        Mon, 15 Apr 2024 19:55:10 -0700 (PDT)
-Received: from gmail.com ([172.56.121.20])
-        by smtp.gmail.com with ESMTPSA id g6-20020a1709026b4600b001e520495f51sm8611193plt.124.2024.04.15.19.55.09
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Apr 2024 19:55:09 -0700 (PDT)
-Date: Mon, 15 Apr 2024 19:55:07 -0700
-From: David Aguilar <davvid@gmail.com>
-To: git@vger.kernel.org
-Subject: [ANNOUNCE] Garden v1.5.0 released!
-Message-ID: <Zh3oi4LL1xt524v7@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e/Th3yQc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="frpGnq8X"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id B88661800101;
+	Tue, 16 Apr 2024 00:47:58 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 16 Apr 2024 00:47:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1713242878; x=1713329278; bh=VRAs8JVBj4
+	dz/xcCwl0HgdFYEpkHNHMA6i2rqDg7N4o=; b=e/Th3yQcXwwavjiGZGssRWvR38
+	OzkqEfch3W++P2gICVIHUJLQlQI7a2ggM3Y1RcwZBAtsTkVABMDEEkYUDB18TY5g
+	yYqFafkVTiDZYP2W215PsTgm5HUH4aOW2fNPWKvIBgjxbLCxSUO4TvMZqhmbYFXJ
+	yN5RlKQBYcr86Y7LhSbm3Geh1QAvpyr1oL+2WuNnj0RO3iduxLTkMEBY/t1y3736
+	RC1wqDlbn/ozmAXA+b/ApHjSGgbCIk2LVTdK/Q8R9FKpsAVS/3w24bL6zkABS/S/
+	xurCASqFC93cuL/85TnfMyUipmDx2KwLA4FfiP6kP8YvPKGJVf0j9NYlcQqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1713242878; x=1713329278; bh=VRAs8JVBj4dz/xcCwl0HgdFYEpkH
+	NHMA6i2rqDg7N4o=; b=frpGnq8XNjnPlSQEkJhS1SPb3P25E3mLI8xmFWTOaoY/
+	8eB5xu38u76d8XYESf4vskwB4eeS7b2Sx0FfA4DmRsT2Oi0l749+5QIcQdU8JS6Y
+	bPNI1Zz87f3Rx6EFojT5Hyn4/rDE/1ZEthq9PgjyNBtFtkT2ta3FrY8a4ojiTTam
+	noAlBkNj2e5kI/EN76AQ//3Cze2OYPnHUDXW8IqhiG/8KKd1mlgaqo2P/3w/bAUu
+	fXlnS8JWNMqMHTYfaHA8VGiZ96Te+h1lmvklItTo696LyisMRvjcVS7rRArg0Cy7
+	SPnRRsasopwrelBhRmnyQ2kQMS2DLqUTD7w7O5IU/g==
+X-ME-Sender: <xms:_gIeZiT7DempYI0TSFxYqG2DHxn41JFG0IzFgBSJQACNQkpkZdT2rQ>
+    <xme:_gIeZnxivM9_tsqwSxIJ3aMjpQ0rrZ-P9DazHdfIt_o4iNXZb5tn7jEWCKQ1eguzM
+    i76ZkT7YSum7wGO4w>
+X-ME-Received: <xmr:_gIeZv2uYf2KIZgY0kVIIx1y7M0mtSRg01COBRf_JKVr6a_2QIZOgCc-sk440N5B43tlThuuX2V7jlX_xAXpjxu-yl8kF3fw6DExwqmM5nX-lYJoyg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejfedgkeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:_gIeZuA77qFaA1AQ1rgR7JfeKDS-07CDmZFKbb4llHpqBM9kiUDsIA>
+    <xmx:_gIeZriC_qr3zD692JYImCjTmK78piyvH1WgRJyI7sldBOD3oxX4aA>
+    <xmx:_gIeZqqUVQrPwE82s3bK5Qd6QnI1lBO2VJIy5BeNCcdMVuSBAe5lNw>
+    <xmx:_gIeZuiZVjXPD94gjClb4s3lHBKivD2iyTEnRJ2ZThYmDjpHymfTkQ>
+    <xmx:_gIeZusuYgfYb7Pcr-rdPpQnKRAtY5VKbaSRpxpbL4FcywBpA7HHV41e>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Apr 2024 00:47:57 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id fc3af948 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 16 Apr 2024 04:47:32 +0000 (UTC)
+Date: Tue, 16 Apr 2024 06:47:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] pack-bitmap: gracefully handle missing BTMP chunks
+Message-ID: <Zh4C9xhOC4BVslyX@tanuki>
+References: <5933a302b581670183a6f3c881f62e96f61ff192.1712642313.git.ps@pks.im>
+ <a8251f8278ba9a3b41a8e299cb4918a62df6d1c7.1713163238.git.ps@pks.im>
+ <Zh2vZB/60QlLYjUZ@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="VdtAe5WAwXGMXUcD"
 Content-Disposition: inline
+In-Reply-To: <Zh2vZB/60QlLYjUZ@nand.local>
 
-Hello Git Developers, I hope you've all been well.
 
-I am pleased to announce that Garden v1.5.0 is now available.
+--VdtAe5WAwXGMXUcD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-- Garden prebuilt binaries: https://github.com/garden-rs/garden/releases
+On Mon, Apr 15, 2024 at 06:51:16PM -0400, Taylor Blau wrote:
+> On Mon, Apr 15, 2024 at 08:41:25AM +0200, Patrick Steinhardt wrote:
+[snip]
+> > diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps=
+=2Esh
+> > index 70d1b58709..5d7d321840 100755
+> > --- a/t/t5326-multi-pack-bitmaps.sh
+> > +++ b/t/t5326-multi-pack-bitmaps.sh
+> > @@ -513,4 +513,21 @@ test_expect_success 'corrupt MIDX with bitmap caus=
+es fallback' '
+> >  	)
+> >  '
+> >
+> > +for allow_pack_reuse in single multi
+> > +do
+> > +	test_expect_success "reading MIDX without BTMP chunk does not complai=
+n with $allow_pack_reuse pack reuse" '
+> > +		test_when_finished "rm -rf midx-without-btmp" &&
+> > +		git init midx-without-btmp &&
+> > +		(
+> > +			cd midx-without-btmp &&
+> > +			test_commit initial &&
+> > +
+> > +			git repack -Adbl --write-bitmap-index --write-midx &&
+>=20
+> `-b` is redundant with `--write-bitmap-index`.
 
-- Garden on crates.io: https://crates.io/crates/garden-tools
+Oops, right.
 
-- Garden source repository: https://gitlab.com/garden-rs/garden
+> > +			GIT_TEST_MIDX_READ_BTMP=3Dfalse git -c pack.allowPackReuse=3D$allow=
+_pack_reuse \
+> > +				pack-objects --all --use-bitmap-index --stdout </dev/null >/dev/nu=
+ll 2>err &&
+>=20
+> A small note here, but setting stdin to read from /dev/null is
+> unnecessary with `--all.`
 
-Please follow the release notes link below for a full list of changes.
+Is it really? Executing `git pack-objects --all --stdout` on my system
+blocks until stdin is closed. It _seems_ to work in the tests alright,
+but doesn't work outside of them. Which is puzzling on its own.
 
-What is Garden?
----------------
+> > +			test_must_be_empty err
+> > +		)
+> > +	'
+> > +done
+> > +
+>=20
+> This test looks like it's exercising the right thing, but I'm not sure
+> why it was split into two separate tests. Perhaps to allow the two to
+> fail separately?
 
-Garden grows and cultivates collections of Git trees.
-Garden is a mashup of a simple yet powerful command runner and a
-multi-repo Git configuration manager.
+Exactly. It makes it easier to see which of both tests fails in case
+only one does.
 
-Garden helps you define development workflows that operate over
-collections of self-contained and inter-dependent Git worktrees.
+> Either way, the repository initialization, test_commit, and repacking
+> could probably be combined into a single step to avoid re-running them
+> for different values of $allow_pack_reuse.
+>=20
+> I would probably have written:
+>=20
+>     git init midx-without-btmp &&
+>     (
+>         cd midx-without-btmp &&
+>=20
+>         test_commit base &&
+>         git repack -adb --write-midx &&
+>=20
+>         for c in single multi
+>         do
+>             GIT_TEST_MIDX_READ_BTMP=3Dfalse git -c pack.allowPackReuse=3D=
+$c pack-objects \
+>               --all --use-bitmap-index --stdout >/dev/null 2>err &&
+>             test_must_be_empty err || return 1
+>         done
+>     )
+>=20
+> TBH, I would like to see this test cleaned up before merging this one
+> down. But otherwise this patch is looking good.
 
-Garden aids in common development setup steps such as setting
-environment variables, configuring search paths, and creating
-arbitrary groupings of repositories for development.
+So I'm a bit torn here. I think your proposed way to test things is
+inferior regarding usability, even though it is superior regarding
+performance. We could move the common setup into a separate test, but
+that has the issue that tests cannot easily be run as self-contained
+units.
 
-Garden's is a tool that helps you,
+Patrick
 
-- Bootstrap Git-based development environments from source.
+--VdtAe5WAwXGMXUcD
+Content-Type: application/pgp-signature; name="signature.asc"
 
-- Apply Git remotes and git configuration to freshly cloned
-  repositories.
+-----BEGIN PGP SIGNATURE-----
 
-- Define arbitrary collections of Git repositories for running commands.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYeAvYACgkQVbJhu7ck
+PpQTyw/9FPWKbxaPAVuurOXGcrHtLtBM3a6rIKgARvqKP8pgajRw8oB6aW+Bh5/d
+tdHMHK3LcLigdDScAn1lgxMIsd0MjwXiDJCjsIaSOAf4hJRPzxPZKW5Xn7b6kNC8
+NptWqliF3PzhHhhgYI+SyeaIbnkz3L7Zj8rFQWrFiU/d2b6CwL1ubuI4cyqZka4r
+1okV6f9Wi06EsdBDvvL2+wuJ2bFqbHL1P/YygV4K/tZqvSc2eDrX3uLnjLJdjBax
+kxhg1JAWwUhVrX+VfmWwErgqRIlW/UWYOU/XdFFqJFy7gr0Nxu6xxzylRBp4wc7S
+AVma83x0J/mqFkXJNJlsgzAA1/4lZEXTNNUADDEGe2M6q8PnQz0M1yo3KTsQyaau
+uzPU5wfR4GFv1Jzg8Lec6Ly+DherrxxQ9l+OoFo//llFG9HYeZ3kp1WtSL6+IcRx
+EuqHNsfoE9NoeIT6m+Dit5PkYXZB2fiSIIK9fqjUEyNhkRHQRi8SA9w1taeEosZr
+vgX34AESf8NRtcKcyUYUtwRUhorStNrHop/Japh18R+Ihy57mPw9S8D1DS5ldyB5
+/yctDnlokvVx6f2pfpp9ERW0McdDgpSvN//xCvnVjfdmQcE7aYZ7d6bPXoUW2sNr
+vB9KpP3hz6X3vSMojB6CtlhaEr7l5XZztx/9Q0/k17QyIbVdSK8=
+=yM3h
+-----END PGP SIGNATURE-----
 
-- Define environment variables scoped to specific projects or trees.
-
-- Define custom commands and workflows.
-
-- Leverage your existing shell scripting knowledge. If you already know
-  (bash/zsh/etc) shell then you can learn to use `garden` with minimal
-  effort.
-
-Garden is configured using YAML files extended with a simple shell
-expression syntax. Garden lets you define (multi-repository) workflows
-using the vast ecosystem of UNIX command-line tools.
-
-Read the Garden User Guide @ https://garden-rs.gitlab.io/
-for details on how to use and configure Garden.
-
-Read the Garden release notes @ https://garden-rs.gitlab.io/changelog.html
-for a full list of new features and enhancements.
-
-Have fun!
--- 
-David
+--VdtAe5WAwXGMXUcD--
