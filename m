@@ -1,94 +1,89 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFE8033998
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 06:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F85A84FDE
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 08:26:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713247352; cv=none; b=Nti78Q6QR/PD1UTmeErUz7shsZbBgLOdXV6rsq0g6PfJZ+/IDb8eHcVxNfUi3oEgxeGZOv/0tLiHOVQYf57PQW1tsgr+mkQAmEsmNHThWRWQV3X7ybJQQXsdJGKEn9+53rTH4Pegy6L4kSDihga337SLY5b1r0LZhQKGWTjFm0g=
+	t=1713255998; cv=none; b=Uo4fR6yqAoNmZbGQm2jmJeCgy0LpozkjQaCPJ3ktXm+KJSvv1pXLwek8h40HP7dtXflRkN0NmR/ydCm6sA4SxwTAvZ3yEwzVtTPe5Ihu4vbQjS6CCGb2/etRYtoZCtJWoOwaQogpKJhmle42fEcJ8XiNmMdRYqkjmaz57eN4jdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713247352; c=relaxed/simple;
-	bh=SH6ZTRrKz15gZG2n7B85izzgL/zdWJfP3ibGbbdupC8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=m3+3ASBTCFoxWKfdGr8iMjVxG46Ds/idJQ8mmpSmtGgRt1Kbay/OzNq2ZoJgXbczfGQI8D5q+B9AjkDia2YDwYL6ea4DYPocOUEOKsAnB2LAO43qLufox+jpk1YT8j0vCjqVSDD6Xqe9cqriVornnK+oLW5hfojXr3meEVt+7lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=b1NHP1P/ reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1713255998; c=relaxed/simple;
+	bh=aQ5ZWDEsjEy0Kui4DbZmRefWw6ALkn+JcNL4Ij4kDDM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eSwyWXZ83Oxm4h5f5ihrSAEI3+c1fcQ1H48CKHDxaQ4u1eCQqSULN0tWdT53UfJoIC6yeX1udm2mE2qHY/k0zS69nvRV4m4+868cRWu6hYfqT8uFKadPnAnBfbRTYrlVq30BTZ20fODzgr4TA0Twplf4fLgZRgP6Sb44oX2dczI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=n0ZN2PFr; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="b1NHP1P/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=HgLtuA+m3j7GGOoxPhymRzg3Yd14KiRB9fXM9aUM7wY=; b=b
-	1NHP1P/jY0ZKYcY2ESBG7cYB7xM9BwTq4A/03yFROwbdNKSv0mySlzl3vS3tuhFB
-	EpyMIVePccDBujV2yxBlGPuJZ6ShbaZLeKABB/8VeMdu9i76MVl5jBZyRg5Ik3jm
-	Zl94r2pdzkHzF4fQo77Cbnb6eCCfqWTK8LD0RJlfhc=
-Received: from ttdlyu$163.com ( [223.221.240.38] ) by
- ajax-webmail-wmsvr-40-117 (Coremail) ; Tue, 16 Apr 2024 14:02:25 +0800
- (CST)
-Date: Tue, 16 Apr 2024 14:02:25 +0800 (CST)
-From: ttdlyu  <ttdlyu@163.com>
-To: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc: 
-	=?UTF-8?Q?=E7=A7=83=E5=A4=B4=E7=81=AF=E7=AC=BC=E9=B1=BC_via_GitGitGadget?= <gitgitgadget@gmail.com>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re:Re: [PATCH v2 1/2] doc: git.txt-Fix inconsistency param
- description
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <CAN0heSpvKFKVnyve0wvcVJ3gvm5H8OggVTKpz2Se4je3iRHwCw@mail.gmail.com>
-References: <pull.1669.git.git.1707479467028.gitgitgadget@gmail.com>
- <pull.1669.v2.git.git.1712822221.gitgitgadget@gmail.com>
- <28a5625f32cca6ef134a385fe9ba66962c40100f.1712822221.git.gitgitgadget@gmail.com>
- <CAN0heSpvKFKVnyve0wvcVJ3gvm5H8OggVTKpz2Se4je3iRHwCw@mail.gmail.com>
-X-NTES-SC: AL_Qu2aAf6fuEsv4yGeZukXnEwRge49XsCzvP4u34JWOps0pyTiwCosUF9hJmPb4c2KEyyokDiGYj5M9PpcU7hZeIJ9QVo52b6/5DxgiC1dJE5n
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n0ZN2PFr"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC1D41D1525;
+	Tue, 16 Apr 2024 04:26:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=aQ5ZWDEsjEy0Kui4DbZmRefWw6ALkn+JcNL4Ij
+	4kDDM=; b=n0ZN2PFrrrzXG1vMmLEVCHL4LhfbmY2RBomrNQAS3aE4JjK7/baY3g
+	snx54dRg1y69PhKzYtVT3breWurGQDIdrr3YR0pGPejEOoE2uXytEbUv6oCJbJU1
+	Wo/G15fO0HRJcbEhFl23BWUqdG3PCrCNTT9U04PZ557Cx0hhQyGZg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C40611D1522;
+	Tue, 16 Apr 2024 04:26:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 276E41D1521;
+	Tue, 16 Apr 2024 04:26:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2024, #05; Fri, 12)
+In-Reply-To: <Zh3K3aDxWMPCNlOA@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Tue, 16 Apr 2024 00:48:29 +0000")
+References: <xmqqfrvqhwlg.fsf@gitster.g>
+	<Zh3K3aDxWMPCNlOA@tapette.crustytoothpaste.net>
+Date: Tue, 16 Apr 2024 01:26:33 -0700
+Message-ID: <xmqqbk69hfwm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <2ee4f6e3.78c1.18ee57fda14.Coremail.ttdlyu@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3f3lxFB5mhxweAA--.47803W
-X-CM-SenderInfo: xwwgz5rx6rljoofrz/1tbiox3CimVOC68YtgABsW
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 08ED22BC-FBCB-11EE-80C4-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-ClRoYXQgbWFrZXMgc2Vuc2UuIEkgdGhpbmsgd2hhdCB5b3Ugc2FpZCBpcyB2ZXJ5IHJlYXNvbmFi
-bGUsIGFuZCBJIGhhZG7igJl0IGNvbnNpZGVyZWQgaXQgdGhvcm91Z2hseS4KCgpJJ3ZlIHJlY2Vu
-dGx5IGJlZW4gd29ya2luZyBvbiB0aGUgQ2hpbmVzZSB0cmFuc2xhdGlvbiBvZiB0aGUgZ2l0bWFu
-cGFnZXMsIGFuZCB3aGVuIEkgY2FtZSBhY3Jvc3MgdGhpcyBpbmNvbnNpc3RlbmN5LCBJIGRpc2N1
-c3NlZCBpdCB3aXRoIHRoZSBtYWludGFpbmVycyBvZiB0aGUgZ2l0LW1hbnBhZ2VzLWwxMG4gcmVw
-b3NpdG9yeS4gQ2xlYXJseSwgbmVpdGhlciBvZiB1cyBoYWQgY29uc2lkZXJlZCB0aGUgZGVzY3Jp
-cHRpb24gaW4gZ2l0bmFtZXNwYWNlcyg3KS4KCgpBbmQgdGhhbmsgeW91IGZvciB5b3VyIHJlcGx5
-LiBJZiBwb3NzaWJsZSwgY291bGQgeW91IHBsZWFzZSBjb3JyZWN0IHRoZSBkZXNjcmlwdGlvbiBp
-biBnaXQudHh0PyBJIGFtIG5vdCB2ZXJ5IGZhbWlsaWFyIHdpdGggdGhlIHByb2Nlc3Mgb2Ygc3Vi
-bWl0dGluZyBwYXRjaGVzLgoKCll1IEppYW4KCihJJ20gbm90IHN1cmUgaWYgeW91J3ZlIHNlZW4g
-dGhlIG1lc3NhZ2Ugb24gR2l0SHViLCBzbyBJJ20gc2VuZGluZyB5b3UgYW4gZW1haWwgc3BlY2lm
-aWNhbGx5LiBJIGFwb2xvZ2l6ZSBpZiBJJ20gYm90aGVyaW5nIHlvdS4pCgpBdCAyMDI0LTA0LTEx
-IDE4OjM5OjU5LCAiTWFydGluIMOFZ3JlbiIgPG1hcnRpbi5hZ3JlbkBnbWFpbC5jb20+IHdyb3Rl
-Ogo+T24gVGh1LCAxMSBBcHIgMjAyNCBhdCAxMDoyMCwg56eD5aS054Gv56y86bG8IHZpYSBHaXRH
-aXRHYWRnZXQKPjxnaXRnaXRnYWRnZXRAZ21haWwuY29tPiB3cm90ZToKPj4KPj4gRnJvbTogPT9V
-VEYtOD9xPz1FNz1BNz04Mz1FNT1BND1CND1FNz04MT1BRj1FNz1BQz1CQz1FOT1CMT1CQz89Cj4+
-ICA8dHRkbHl1QDE2My5jb20+Cj4+Cj4+IFNpZ25lZC1vZmYtYnk6IOeng+WktOeBr+esvOmxvCA8
-dHRkbHl1QDE2My5jb20+Cj4KPj4gLSAgICBbLS1naXQtZGlyPTxwYXRoPl0gWy0td29yay10cmVl
-PTxwYXRoPl0gWy0tbmFtZXNwYWNlPTxuYW1lPl0KPj4gKyAgICBbLS1naXQtZGlyPTxwYXRoPl0g
-Wy0td29yay10cmVlPTxwYXRoPl0gWy0tbmFtZXNwYWNlPTxwYXRoPl0KPgo+VGhpcyBtYWtlcyBp
-dCBjb25zaXN0ZW50IHdpdGggdGhlIGluc3RhbmNlIGxhdGVyIGluIHRoZSBkb2N1bWVudCwgd2hl
-cmUKPml0IGFscmVhZHkgc2F5cyAiLS1uYW1lc3BhY2U9PHBhdGg+Ii4gT2suCj4KPkhvd2V2ZXIs
-IHRoaXMgaXMgZG9jdW1lbnRlZCBhcyAiZXF1aXZhbGVudCB0byBzZXR0aW5nIHRoZSBHSVRfTkFN
-RVNQQUNFCj5lbnZpcm9ubWVudCB2YXJpYWJsZSIuIEFuZCBnaXRuYW1lc3BhY2VzKDcpIHNheXMK
-PiJHSVRfTkFNRVNQQUNFPTxuYW1lc3BhY2U+Iiwgc28gdGhhdCBpcyBzdGlsbCBpbmNvbnNpc3Rl
-bnQuIEkgYWxzbyBzZWUKPnRoaXM6Cj4KPiAgTm90ZSB0aGF0IG5hbWVzcGFjZXMgd2hpY2ggaW5j
-bHVkZSBhIC8gd2lsbCBleHBhbmQgdG8gYSBoaWVyYXJjaHkgb2YKPiAgbmFtZXNwYWNlczsgZm9y
-IGV4YW1wbGUsIEdJVF9OQU1FU1BBQ0U9Zm9vL2JhciB3aWxsIHN0b3JlIHJlZnMgdW5kZXIKPiAg
-cmVmcy9uYW1lc3BhY2VzL2Zvby9yZWZzL25hbWVzcGFjZXMvYmFyLwo+Cj5TbyBmb28vYmFyIGlz
-bid0IGEgZmlsZSBwYXRoLiBnaXRuYW1lc3BhY2VzKDcpIHVzZXMgInBhdGgiLCAibmFtZXNwYWNl
-Igo+YW5kICJuYW1lc3BhY2UgcGF0aCIgc29ydCBvZiBpbnRlcmNoYW5nZWFibHkuIEV2ZW4gc28s
-IEkgdGhpbmsgaXQgY291bGQKPmJlIGEgZ29vZCBpZGVhIHRvIGF2b2lkICJwYXRoIiBzaW5jZSBp
-dCBjb3VsZCBnaXZlIHRoZSB3cm9uZyBraW5kIG9mCj5pZGVhcy4KPgo+SSB3b25kZXIgaWYgdGhp
-cyBwYXRjaCBzaG91bGQgaW5zdGVhZCBjaGFuZ2UgYm90aCAtLW5hbWVzcGFjZT08bmFtZT4gYW5k
-Cj4tLW5hbWVzcGFjZT08cGF0aD4gdG8gLS1uYW1lc3BhY2U9PG5hbWVzcGFjZT4gYW5kIGdpdmUg
-c29tZSBtb3RpdmF0aW9uCj5zdWNoIGFzICJNYWtlIHRoZSBwbGFjZWhvbGRlciBjb25zaXN0ZW50
-IHdpdGggdGhlIGdpdG5hbWVzcGFjZXMKPmRvY3VtZW50LiIgV2hhdCBkbyB5b3UgdGhpbms/Cj4K
-Pk1hcnRpbgo=
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On 2024-04-13 at 01:36:59, Junio C Hamano wrote:
+>> * bc/credential-scheme-enhancement (2024-03-27) 12 commits
+>>  . credential: add support for multistage credential rounds
+>>  . t5563: refactor for multi-stage authentication
+>>  . docs: set a limit on credential line length
+>>  . credential: enable state capability
+>>  . credential: add an argument to keep state
+>>  . http: add support for authtype and credential
+>>  . docs: indicate new credential protocol fields
+>>  . credential: gate new fields on capability
+>>  . credential: add a field for pre-encoded credentials
+>>  . http: use new headers for each object request
+>>  . remote-curl: reset headers on new request
+>>  . credential: add an authtype field
+>> 
+>>  The credential helper protocol, together with the HTTP layer, have
+>>  been enhanced to support authentication schemes different from
+>>  username & password pair, like Bearer and NTLM.
+>> 
+>>  Expecting a reroll.
+>>  cf. <ZgSQ5o_KyqDaxz1m@tapette.crustytoothpaste.net>
+>>  source: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+>
+> I'm working on a reroll and expect to send it out a little later this
+> week.  I believe it's currently finished and I'm running the tests with
+> `git rebase -x` now, so assuming that passes v2 should be out soon.
+
+Thanks.
