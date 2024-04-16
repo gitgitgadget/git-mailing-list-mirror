@@ -1,148 +1,88 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7B585948
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 09:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2F3127B53
+	for <git@vger.kernel.org>; Tue, 16 Apr 2024 10:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713260498; cv=none; b=g+oijIMiXKaPLuuiQ5DVH4yojOlf5KfULXpNXWxf4UfATTeKbWX3yua296rkanB+I1UCY0DZVRNzL2Wt0YO7RbnaH+5DxSc5HcSOEhJYHjYIRENXD8SQuJAZMp8V0JSJhL1EOQuw2kjnpqTGljCjxvv1JMzt1lto1/YoKWub9Ys=
+	t=1713263022; cv=none; b=PH3/ywIkHwU+19tQUlBt9bEKhDTyCpTVeo8rw5EpPdj+N9p9hx8SfnhoCSiw1gUkMItmr//6UnPiIkJR6UUetr6Pr5WTV+qE8GYomouRcw9YhOXWHUhBiyV+d5ee9o3OmND+mljEb6pqBWGq9HT9Q9Cz8e+cSgv/3gtW46qCdlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713260498; c=relaxed/simple;
-	bh=4GA5i9fEt+TDwMPD5xPEBLp9AqO6NuQUW3INVWS8B1Q=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:Cc:
-	 In-Reply-To:Content-Type; b=PipiFA7nBaCxO9TcYkBbSOcMnDQr9AAwS3jhIWJTe9W02WLqTIeCEyrz3Frj1naNZyhqMAmmZAucSV+MChzCX2EcPUIXaOs6FbGpjyPMM/kfGYV6mmmG+mManGbGsBRHgrxr9/KpJ1JXXMVng45dLdBB5m8PAlh9uBLU+Me7vKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hOMbzVL0; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1713263022; c=relaxed/simple;
+	bh=GTZapwnhYCnPBcD/hNnGCg3rC8yDILt9iJHia31MYdg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oiFsNlujU9hnEHqzaytiJN3SNKV3KHn910SWkkljn525x5tkwU/orM4p6FmxtBQHzveDM1JHRlrHp1NsyNZtAdRSW17fRU4Aq5JdqPocCW263591r8IcOQW9VuisKM/pP/Sfu7q/OWz6Rnrxo/Ogq1705zKETVrJdz9xFGPfRCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eies5OVL; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOMbzVL0"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41890fd335fso3113655e9.3
-        for <git@vger.kernel.org>; Tue, 16 Apr 2024 02:41:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eies5OVL"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56e2c1650d8so4148288a12.0
+        for <git@vger.kernel.org>; Tue, 16 Apr 2024 03:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713260495; x=1713865295; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QhWcL3wCfb2RGqmNZHeY7ZSCZ6vNNk3N3WhKVSiTVY4=;
-        b=hOMbzVL0rY23bTH87NL4Wf50l+yrl4+hp1lGaB3gw37Ruenaxj4VyTg1VnRKgf854z
-         Hr7+oWGKagzgYJnDD49zmSdzJ6goNFfOc1Iw6/XANxkWsR/a5rNUCfJcnd4qGkgTz/XB
-         gNUxIwDYJX7+VIFweZTckMB+IeQQyLoZWEEv1h8SNFz1QDgwA0DQ+3hVKnmBJg4cpU7b
-         R+gnSlgEdzn8qm/V7nubMF0FRdGgG11HgqRs+wxkRFGj4ZakbqqZgKr6GgVmPwwYDzdV
-         GWVFvHp3N1AG0wrF3po5e5dCFDbaKI/A5kA2llFueZ90PNY1yK/t9Lnu6/D10yDD3Pie
-         9Qow==
+        d=gmail.com; s=20230601; t=1713263019; x=1713867819; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GTZapwnhYCnPBcD/hNnGCg3rC8yDILt9iJHia31MYdg=;
+        b=eies5OVL2GHiRzrrmttlVvRaLK3bqC2qMxGfhArsZWUqo/JnLOV2NHZzCyE/a2map1
+         7PCYTj1+Ve16LX4wzp9mtpQsfT96XVccZ41cKRZBdyM5SaWdpW76z4HwXxonKT8xrLCs
+         W3QqmB137widnuM9vd1HzG/pPWxCkXkw3VUre7JqMhrecHTDjOlpFHTIIHBrKvAbAQCH
+         QmJyXOdy0iaZm5KV5iV61gGuW+MXKn42PBV6jZzHaiPSRRJVURP0+21Q6uJYCzT4nvGI
+         crQWHsle5Yrdv5WIx3ar71dbwJq1bO4DA6TT55sPBB/SPqYJwL6Z2z/P5ecqvye6yZ1m
+         Ky9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713260495; x=1713865295;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QhWcL3wCfb2RGqmNZHeY7ZSCZ6vNNk3N3WhKVSiTVY4=;
-        b=F6jSgrbZLyCrO3cPvqPpRtzsO6XG3k+eEoOPRQUGJDFXJKfqHeyjzOp30mdL2DyRJG
-         2SbIDHs1S/GC1K7NZ2egUM7o3AUk0DXsW7PGT1JTghLSSmd7Bdg6XWKjCvupihMLwQHz
-         fKNekQmpr7RselSp+fdCVBa/ic0VrlNT+RLnpuJ6JOHb3wF9MaENWpjtTqjEZbzFw9B0
-         lTxYJ43cYU6XxHqkXaPUWm3AQQuX3VzC+2SLzKxzop+gpMjsOGEJzpE/q8BEK5xrZ0cs
-         Q5aBUBpozR0XkHt78f1+gyvgb4o2+fLE18T6e9iJYNnIl/RSHsj1NwyopCylSkl+vtdn
-         +zfw==
-X-Forwarded-Encrypted: i=1; AJvYcCXb5S4H9bnaLG25nxpb6PtXkdP6LqiqGOL+BthK4ikvweI/Vrr5towKYR+ymWNc68LIyDM3sQPuUzKeKDezclGqs5eO
-X-Gm-Message-State: AOJu0YwAowiY+S88/uCeSiJe9x4gIV6nzbhEVw9ZOo8QyfT7dlyUGCHS
-	TZ7cDxKkqtgya29W+rb+hO9bVA5bidQtTmq7TLuEIvwWnCZzBHd8HBJdeA==
-X-Google-Smtp-Source: AGHT+IFOwijCaM9Gwcl3EFrATdtD1Qa5ffjmX73njopavLMTNwEZG3lcxkjnwQcds3j1ogJwQ+oHgw==
-X-Received: by 2002:a05:600c:3148:b0:418:42d0:15cf with SMTP id h8-20020a05600c314800b0041842d015cfmr4838231wmo.35.1713260495340;
-        Tue, 16 Apr 2024 02:41:35 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id fl16-20020a05600c0b9000b00418631f91c1sm6914458wmb.28.2024.04.16.02.41.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 02:41:35 -0700 (PDT)
-Message-ID: <15f9252c-212f-43eb-84f3-6046fb2fab38@gmail.com>
-Date: Tue, 16 Apr 2024 10:41:32 +0100
+        d=1e100.net; s=20230601; t=1713263019; x=1713867819;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GTZapwnhYCnPBcD/hNnGCg3rC8yDILt9iJHia31MYdg=;
+        b=FItIyn4iB4KXB+uk2XjazvUYcuL2PQbIRobpxBnNST2EvmVYeY/dSc/5EyP5x4d6M+
+         TyV4HKUZCJjRNYT8Z4aa3L4RkuoUfWU1LdM657DJs5Vt5yba/m38iTB1GQqv4xZNQJIY
+         DMIkRsebf1Ts+Qhxp1WqvuMQZygMvh7M+ts94EnnqO7XRoNN6exCfetcsSLsWJ5ct6Bb
+         l4GiIJNngdxs2aaVn23516Isj7K5LFEunYPEINb6YNVQersMSq4yoDFVebvt0LWuSgyU
+         PApXPC15nN7RTY6BYAeMQyDQ8uTKY0w7638kelkI6jn9jhUsHUq5s9pqwcH6FM4j4iW6
+         t9ZA==
+X-Forwarded-Encrypted: i=1; AJvYcCVi1PXGzbK7EvzITyQsksbWA3UwIvTf+dxa8fyCTfAp/D7jjaBBElsgZ0PRel9fPQw0kESpOTgHuRaNRlRnbEsBZqAZ
+X-Gm-Message-State: AOJu0YyOHq9f+wTg4wR2lzYSgQNsqx6f/ag+TxcsGC3TR/pOU8rdHYWN
+	vzl1EGxT6ay1oMbiO2mLRv64ys4e+Ixls9bJ4hob+rx67JYDzWM19g/GazrhR8FXwdAxV/ow02Z
+	BtdycNvgvuM50pPCcPOGQO6QAg0U=
+X-Google-Smtp-Source: AGHT+IHdmUhObLhoH4Awpe0QTCiUn8s4DW92FM9cMcED4ekVpvherZUoVtcEozq3dvF8cSGk1XSg7zBnDaZ5o/hWWbo=
+X-Received: by 2002:a17:906:3b99:b0:a52:527c:ea86 with SMTP id
+ u25-20020a1709063b9900b00a52527cea86mr4913691ejf.33.1713263018835; Tue, 16
+ Apr 2024 03:23:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] add-patch: response to invalid option
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
-Content-Language: en-US
-Cc: Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <ZhcBJSP4MxX0AMFM@nand.local> <A7406B15-8DF1-4B3E-80F3-BC56A9AC4D85@gmail.com>
+ <CAP2yMaLpJqZ+aC=rNPjkw2ybW7PjfbW5QuHnZ9mYs1NhJ1L5mw@mail.gmail.com>
+ <a34826be-a16c-ebb4-0450-274dcf75c31f@gmx.de> <xmqqle5epn62.fsf@gitster.g>
+In-Reply-To: <xmqqle5epn62.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 16 Apr 2024 12:23:26 +0200
+Message-ID: <CAP8UFD21rVOep+M5MAm4JeB+=DXYrcWFaFoJ9uEVs=Nw4KCCVw@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Virtual Contributor's Summit 2024
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Scott Chacon <schacon@gmail.com>, 
+	John Cai <johncai86@gmail.com>, git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Rubén
-
-Thanks for working on this, it is a nice follow up to your last series.
-
-On 15/04/2024 20:00, Rubén Justo wrote:
+On Mon, Apr 15, 2024 at 7:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> +		} else {
-> +			err(s, _("Unknown option '%s' (use '?' for help)"),
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > For the record, I would _love_ to join and celebrate the 10-year
+> > anniversary in Berlin.
+>
+> I think 10-year was held around April 9th, 2015 in Paris, France ;-)
 
-As this is an interactive program I think "Unknown key" would be clearer.
-
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index bc55255b0a..b38fd5388a 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -61,6 +61,16 @@ test_expect_success 'setup (initial)' '
->   	echo more >>file &&
->   	echo lines >>file
->   '
-> +
-> +test_expect_success 'invalid option' '
-> +	cat >expect <<-EOF &&
-> +	Unknown option ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
-> +	EOF
-> +	test_write_lines W |
-> +	git -c core.filemode=true add -p 2>actual &&
-> +	test_cmp expect actual
-> +'
-
-I was confused by this test as "add -p" doesn't seem to be printing
-anything apart from the error. That's because it only captures stderr
-(quite why an interactive program is writing its some of its output to
-stderr and the rest to stdout is another question). I think we want to
-capture the whole output otherwise we can't assert that the help isn't
-printed. Something like this (which also adds coverage for '?' and 'p')
-
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index bc55255b0a8..0fc7d4b5d89 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -1130,4 +1130,26 @@ test_expect_success 'reset -p with unmerged files' '
-          test_must_be_empty staged
-  '
-  
-+test_expect_success 'invalid key' '
-+        echo changed >file &&
-+        test_write_lines æ \? p q | force_color git add -p >actual.colored 2>&1 &&
-+        test_decode_color <actual.colored >actual &&
-+        force_color git diff >diff.colored &&
-+        test_decode_color <diff.colored >diff.decoded &&
-+        cat diff.decoded >expect &&
-+        cat >>expect <<-EOF &&
-+        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET><BOLD;RED>Unknown key ${SQ}æ${SQ}. Use ${SQ}?${SQ} for help<RESET>
-+        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET><BOLD;RED>y - stage this hunk
-+        n - do not stage this hunk
-+        q - quit; do not stage this hunk or any of the remaining ones
-+        a - stage this hunk and all later hunks in the file
-+        d - do not stage this hunk or any of the later hunks in the file
-+        <RESET><BOLD;RED>e - manually edit the current hunk<RESET>
-+        <BOLD;RED>p - print the current hunk<RESET>
-+        <BOLD;RED>? - print help<RESET>
-+        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET>$(sed -n "/@/,\$ p" diff.decoded)
-+        <BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,e,p,?]? <RESET>
-+        EOF
-+        test_cmp expect actual
-+'
-+
-  test_done
-
-Best Wishes
-
-Phillip
+The first Git-Merge conference was in May 2013 in Berlin. So Dscho
+might be talking about the 10th anniversary of that first Git-Merge
+conference. But then it should have happened last year (in 2023). Or
+he might be talking about the 20th anniversary of Git which will be in
+April next year (2025), or maybe the 10th anniversary of Git which was
+in April 2015 in Paris.
