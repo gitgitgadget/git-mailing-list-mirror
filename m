@@ -1,79 +1,78 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C118E535C6
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C266F57895
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713334597; cv=none; b=Cj7ktraj10Wua2cFgYJY2AtTeu9nWrR3niyOg0KUKZahu2CsBtIK5XmB7N9zc268AClEVjDPTehzxFhlmsBQiqA2LZ5i8ldZA0yrtkrkPJMOKTFWY3uUsZmvebB6ayZLzCfKgNtDw5nL9pi8KK8aHpBxH9l++sbVh+kiJy7ATXI=
+	t=1713334602; cv=none; b=odLtIxmKuyrjSF9/BAhAzgZyz60KFTkygBqzLgZiViEYNnggHIZh+seixN1KjIFoPA7fIeaZfU9nEUM9Zgb4XAp1Q+cxTd4VZe1p/OdKyvmKesEEVtGQBoaYF5gONnTzMAuVsLIdPP4fe+gqDbUak4UNZ7fXvr0//iftUpESiag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713334597; c=relaxed/simple;
-	bh=JA3yilpB6Vqo3L9RIrIqDKolfLudq0Gb4D06SGlziVc=;
+	s=arc-20240116; t=1713334602; c=relaxed/simple;
+	bh=7gWJGEC3mZmFjNrJqZ5oVIxkmOyiLQjsMcFDe619Ks0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aP5DIkfcb+RieKQULjx3wkbNICY30PWtgUPz7mDM9G5BdXDCosD1zwzrvhh224A9wlLy0Zij1/rPFJAMZTVSwSmyv3zF7NGQc8ByQuNFvIOOInv/PMukE8hOu0PohI8slpyJlzUSDEQbA1OdZBRY5mLJDDMEi3hX8hNRnF6cCI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OE5JhUIn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HVHTuNkM; arc=none smtp.client-ip=64.147.123.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=pZyUK1OXhKEeIt6UJrwTOUJ6EoBkYVk7LGBsjKBbKceWZ/+IYXqQrRwOkNQ+KQxb3jvNdbt+qQ/6sfWCLhkBmy8jWo7gdTNJKPv4xOEhw59VM/FeJuFDdnnBN9kY2u9jayHaZU9o3H0M+V6VkXYokEzgvy5U7+YQoP4z/g8+OE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iwMv5ig+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jUmWbaQh; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OE5JhUIn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HVHTuNkM"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iwMv5ig+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jUmWbaQh"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id A77D9180014F;
-	Wed, 17 Apr 2024 02:16:34 -0400 (EDT)
+	by mailfout.west.internal (Postfix) with ESMTP id B62F71C000BE;
+	Wed, 17 Apr 2024 02:16:39 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 17 Apr 2024 02:16:34 -0400
+  by compute5.internal (MEProxy); Wed, 17 Apr 2024 02:16:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1713334594; x=1713420994; bh=B/cmZpMbaJ
-	fzY1o564OH1C2KfsBe74tRhbGMU+S3ba8=; b=OE5JhUInlZgyUVA4k4Gl0J8xgc
-	MCqZJ9dCQsiIcRKzdq6eSvEe9nZO76JnWbCogmxAh20aIAyuRkOAVBDj5y4oEYPK
-	YmZY3cSshjBjT9TrSuJFvyfSqb8FwC5V3VrIRy05JFJcwJj4fORRolbq2EEaUHXO
-	PymHErOjnuem1l3yVeFwzTngHX5hlL/m0YGQqSJ12sEWAQIvI2b/trL32cn2Odpc
-	Rb5ZnIu05evzVnX3kK6ndYPHBBV/auz3QCcRRLlkesV8Ev7xQIQF0j3ChwHYWAEe
-	1X2vEk3eSNxBHaBuMiKe3ZYoo9j6CS4P162kmURASIy3/wTtvOE+C8hcj4Ew==
+	:subject:to:to; s=fm3; t=1713334599; x=1713420999; bh=qVdZoDr1Vz
+	BEMQdpYadBMCVWjm9b8Y6ofAvq2FGYnaA=; b=iwMv5ig+DBskYcJVtIwGaTZdtb
+	fMx4K1epS4+Sb4gQ+zqpBOLhdoSWhpYWsNs4cAlVvXPvdfuSlceiaN56qgI74Ffm
+	ORTco+5PFlXdFsRgbwu4vo/Lt0mmv9c1lZfFibDDZxWKW1V9Z30dFHjzcxZtXDFz
+	Gd7D6J97BzcJNeBOniYtttcSHoZ29H7dyXltK0vFZXqjjVnEaFyXH1wl2/xgKxxH
+	23p7AebERL1/HWkWzNKlD5EH3GYJIWSamjCsa/3658yBEm+noVLLtovRp3oJknvq
+	ABUGzt6Q1q10w9vtX3oJ9i+QN4mQ7PAMd095dbNuhVTVLRhmvV6LEWw/tCUA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1713334594; x=1713420994; bh=B/cmZpMbaJfzY1o564OH1C2KfsBe
-	74tRhbGMU+S3ba8=; b=HVHTuNkMD+dI+Ew1H+Fub7TtQkvFxxpc+1Pt9b23uy5j
-	mwdzTe2KufkZZmHBM+7G0beIZhPoaw29NUpBNP62U1E3wOxh28URbm9Rfr9NaGh3
-	TGUMyj/dLTJt8mLgOkkOVLFlgyyrcdi5YCPYDqpnyrA5J/bPpmfaj6nCdVDckMdB
-	YVCNsSgq7L0cao15N4C0b8N1rgnHtTwaRJRXRjv/qcmULIUAJ/EB44p+yemo9U2p
-	BwM3WLbyytoT/2236o11YHDuxdOOGpHxSno7awsRsONaZjRV03yMnFIcAdp+K3Eq
-	D+iBi2ZHPNHvEh4tRuBw2BDq1GrzEb717HKtzRFRkg==
-X-ME-Sender: <xms:QWkfZl6X_UP43OX6ex9mCJDmOarwGR3ogxYv2yRSTsxbKuL96Rev-w>
-    <xme:QWkfZi4Dlh_4FBnZd7x5UTQMvxw_pby53XM8DeU5eWQlrl21DkbY3KZnZHejFrRa1
-    KwwY7V6Nz372ChV8w>
-X-ME-Received: <xmr:QWkfZscGgwPu07IzZWNGocWWfCXvaLyQrw_MQRZ3MhkIPBKfXeI8DszWOcgD_yNMhnD-4zV9FkXD0IobOlFKYO_c5QHyA-WXAcg33DXBTahpcD29kA>
+	fm3; t=1713334599; x=1713420999; bh=qVdZoDr1VzBEMQdpYadBMCVWjm9b
+	8Y6ofAvq2FGYnaA=; b=jUmWbaQhV1jnbkoylOo3CCBJO9i8NFvMtg66AjhcElRV
+	ZMOGB07TiYIrIQtZWy8/hwY9j/r04mmck1S/ZaDRhWXIjmbzgGfFxW6/bz5Sdo0L
+	mrSLac0wPIhYySRut6ENvorM+Ff+kL1XY8QDJ2boW2RZfwvhwDxplN7g3AlQZRFj
+	M4xRvnJwGMPgEbNqs07ZzSPxyKSZW2tenIaK7icxuw6Bel7LQqpMmdlVyDRsCRSr
+	a4CxvBZHoH4ypBro0HCcKC7Zyw5BH2D3GyQ6GyoC5SgsW9/Vq3ggF8FrMWDSOXXq
+	RwuPwVcXBOOInGLEFZ1RYkcbfqlteDNuvqw1oFwT/Q==
+X-ME-Sender: <xms:R2kfZhaG-pelKBUA9aFnsNLciIDU-AO-iAg-I108NbDq4RilVt7Thg>
+    <xme:R2kfZob3YMK-ovglU5micyRXe6HBgRaAWD4DhsmSn7pVA3MFbX_iFJApAF-XpPdV-
+    rOG62dmHjD2VA3iRw>
+X-ME-Received: <xmr:R2kfZj8glDxTbK2Rl5bbzLCey122MgMCd5kletiwg5AyLIX_d8pKFaA2eMQcW28YzjxWXt1Vqp0jhn4_PQjYLTr9u3P6xRjYdkhzjg0LJYtt7aNGbw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejjedgleegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:QWkfZuIYOE3FbEqIiz5PF4U1uu6mLO-0IGOyD3QLG-daY0c8rEv1Zg>
-    <xmx:QWkfZpJo2W8I2TArBZUGVCpOcpge0vrKP0CM98-orj3ZdrdCFbEN1A>
-    <xmx:QWkfZnxOA3djSQ9m9CrawaG0WIokHYsXJtb0aumnNgzeG73Vh_kWpQ>
-    <xmx:QWkfZlJk2fma2h0ird5SEC9REI5_B-PapgD809At_SufZ2BJvEhpRw>
-    <xmx:QmkfZp2HwKZ3Z9xt7wIZUs6v14tFhtEXEQgPY1UH0Wer9jJ1FjM-oXHo>
+X-ME-Proxy: <xmx:R2kfZvrAAYHAj7Ksipcysa0PK2QGMK2ZILEuSpo836TzWu7lTfjUzw>
+    <xmx:R2kfZsqK22_Kbm1LahNVPGHem6Ivmo_Wb3_lLcJ5_Vxno562ebbgkQ>
+    <xmx:R2kfZlQwSn6xNVYA5Rjhoe0RKIoLCa4053yXTosn0WzohSVE40FKzQ>
+    <xmx:R2kfZkqdD0WqOp01sJfWbe7CqvarIAhSB1dQJGZePqKWe0ZUAtfLvw>
+    <xmx:R2kfZnXMYGnIe7c9ikAfcAqNVlbnP3sN8mrnJPi0-zaPSXtMPgcOT92y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Apr 2024 02:16:33 -0400 (EDT)
+ 17 Apr 2024 02:16:38 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6f49815b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 17 Apr 2024 06:16:09 +0000 (UTC)
-Date: Wed, 17 Apr 2024 08:16:31 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2dc95281 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 17 Apr 2024 06:16:14 +0000 (UTC)
+Date: Wed, 17 Apr 2024 08:16:35 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] run-command: introduce function to prepare
- auto-maintenance process
-Message-ID: <929b6bfa08132523ee97f5adc376c3600f779a99.1713334241.git.ps@pks.im>
+Subject: [PATCH 2/2] builtin/receive-pack: convert to use git-maintenance(1)
+Message-ID: <c7bcc83d3a96b613db4fba9edfbb6d964b338ed5.1713334241.git.ps@pks.im>
 References: <cover.1713334241.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,111 +81,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="evNYWMJzL59uqaWK"
+	protocol="application/pgp-signature"; boundary="BXj0Qg+obuGweM12"
 Content-Disposition: inline
 In-Reply-To: <cover.1713334241.git.ps@pks.im>
 
 
---evNYWMJzL59uqaWK
+--BXj0Qg+obuGweM12
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `run_auto_maintenance()` function is responsible for spawning a new
-`git maintenance run --auto` process. To do so, it sets up the `sturct
-child_process` and then runs it by executing `run_command()` directly.
-This is rather inflexible in case callers want to modify the child
-process somewhat, e.g. to redirect stderr or stdout.
+In 850b6edefa (auto-gc: extract a reusable helper from "git fetch",
+2020-05-06), we have introduced a helper function `run_auto_gc()` that
+kicks off `git gc --auto`. The intent of this function was to pass down
+the "--quiet" flag to git-gc(1) as required without duplicating this at
+all callsites. In 7c3e9e8cfb (auto-gc: pass --quiet down from am,
+commit, merge and rebase, 2020-05-06) we then converted callsites that
+need to pass down this flag to use the new helper function. This has the
+notable omission of git-receive-pack(1), which is the only remaining
+user of `git gc --auto` that sets up the proccess manually. This is
+probably because it unconditionally passes down the `--quiet` flag and
+thus didn't benefit much from the new helper function.
 
-Introduce a new `prepare_auto_maintenance()` function to plug this gap.
+In a95ce12430 (maintenance: replace run_auto_gc(), 2020-09-17) we then
+replaced `run_auto_gc()` with `run_auto_maintenance()` which invokes
+git-maintenance(1) instead of git-gc(1). This command is the modern
+replacement for git-gc(1) and is both more thorough and also more
+flexible because administrators can configure which tasks exactly to run
+during maintenance.
+
+But due to git-receive-pack(1) not using `run_auto_gc()` in the first
+place it did not get converted to use git-maintenance(1) like we do
+everywhere else now. Address this oversight and start to use the newly
+introduced function `prepare_auto_maintenance()`. This will also make it
+easier for us to adapt this code together with all the other callsites
+that invoke auto-maintenance in the future.
+
+This removes the last internal user of `git gc --auto`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- run-command.c | 19 +++++++++++++------
- run-command.h |  7 +++++++
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ Documentation/config/receive.txt |  2 +-
+ builtin/receive-pack.c           | 21 ++++++++++-----------
+ 2 files changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 0e7435718a..1b821042b4 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1793,20 +1793,27 @@ void run_processes_parallel(const struct run_proces=
-s_parallel_opts *opts)
- 		trace2_region_leave(tr2_category, tr2_label, NULL);
- }
+diff --git a/Documentation/config/receive.txt b/Documentation/config/receiv=
+e.txt
+index c77e55b1cd..36a1e6f2d2 100644
+--- a/Documentation/config/receive.txt
++++ b/Documentation/config/receive.txt
+@@ -8,7 +8,7 @@ receive.advertisePushOptions::
+ 	capability to its clients. False by default.
 =20
--int run_auto_maintenance(int quiet)
-+int prepare_auto_maintenance(int quiet, struct child_process *maint)
- {
- 	int enabled;
--	struct child_process maint =3D CHILD_PROCESS_INIT;
+ receive.autogc::
+-	By default, git-receive-pack will run "git-gc --auto" after
++	By default, git-receive-pack will run "git maintenance run --auto" after
+ 	receiving data from git-push and updating refs.  You can stop
+ 	it by setting this variable to false.
 =20
- 	if (!git_config_get_bool("maintenance.auto", &enabled) &&
- 	    !enabled)
- 		return 0;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 56d8a77ed7..e8d7df14b6 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -2585,17 +2585,16 @@ int cmd_receive_pack(int argc, const char **argv, c=
+onst char *prefix)
+ 		if (auto_gc) {
+ 			struct child_process proc =3D CHILD_PROCESS_INIT;
 =20
--	maint.git_cmd =3D 1;
--	maint.close_object_store =3D 1;
--	strvec_pushl(&maint.args, "maintenance", "run", "--auto", NULL);
--	strvec_push(&maint.args, quiet ? "--quiet" : "--no-quiet");
-+	maint->git_cmd =3D 1;
-+	maint->close_object_store =3D 1;
-+	strvec_pushl(&maint->args, "maintenance", "run", "--auto", NULL);
-+	strvec_push(&maint->args, quiet ? "--quiet" : "--no-quiet");
+-			proc.no_stdin =3D 1;
+-			proc.stdout_to_stderr =3D 1;
+-			proc.err =3D use_sideband ? -1 : 0;
+-			proc.git_cmd =3D proc.close_object_store =3D 1;
+-			strvec_pushl(&proc.args, "gc", "--auto", "--quiet",
+-				     NULL);
+-
+-			if (!start_command(&proc)) {
+-				if (use_sideband)
+-					copy_to_sideband(proc.err, -1, NULL);
+-				finish_command(&proc);
++			if (prepare_auto_maintenance(1, &proc)) {
++				proc.no_stdin =3D 1;
++				proc.stdout_to_stderr =3D 1;
++				proc.err =3D use_sideband ? -1 : 0;
 +
-+	return 1;
-+}
-=20
-+int run_auto_maintenance(int quiet)
-+{
-+	struct child_process maint =3D CHILD_PROCESS_INIT;
-+	if (!prepare_auto_maintenance(quiet, &maint))
-+		return 0;
- 	return run_command(&maint);
- }
-=20
-diff --git a/run-command.h b/run-command.h
-index 1f22cc3827..55f6631a2a 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -217,6 +217,13 @@ int finish_command_in_signal(struct child_process *);
-  */
- int run_command(struct child_process *);
-=20
-+/*
-+ * Prepare a `struct child_process` to run auto-maintenance. Returns 1 if =
-the
-+ * process has been prepared and is ready to run, or 0 in case auto-mainte=
-nance
-+ * should be skipped.
-+ */
-+int prepare_auto_maintenance(int quiet, struct child_process *maint);
-+
- /*
-  * Trigger an auto-gc
-  */
++				if (!start_command(&proc)) {
++					if (use_sideband)
++						copy_to_sideband(proc.err, -1, NULL);
++					finish_command(&proc);
++				}
+ 			}
+ 		}
+ 		if (auto_update_server_info)
 --=20
 2.44.GIT
 
 
---evNYWMJzL59uqaWK
+--BXj0Qg+obuGweM12
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYfaT4ACgkQVbJhu7ck
-PpQNUg/+Loh5oTXnkyfOk+ZLJcYTogyDUghY9ZOqC2nHmfln7vj5hgoElHrgO0gv
-unVI0kjOgcUYq1qZlJm/5wB1OSwnDzm71eIZ4CA4deiefTJQLCWw+29EdFrwO4Zq
-QWwp/otndM8Z7e66zss0lolAthF26ydD7YhJ7hWbYlRzoFQV5jN09QnuCg1RCy9b
-VgdckBac6iBAdawNLOcVILIGkk5obkhI+Sb5QtXgxAh+GJ8fWT/rGuADnzy9occr
-gOUN4X+rG11tCSKr9Z7ngl8J3+QiUNwDh9unar8vusEl2ZBcbBezknjk7QFLVHhf
-FoxXMxpDchhAb/dEBUbVYwqvOCOlQWdHRyTuwk1SNifs6NwgYEVu2sRdugJCPSCE
-E053FuO5AG/2JnGKdR8ddxMBPpZxfzJYE92Ol0hZ0R6vkXFCVQgs33XqPUljp/la
-AxwlzpAQvbGES5SWo+CKYxIywJfsWhNmrGGLgyymJxAuw/BHRmqvsJdpCwHaqk+n
-uFUf0warPxAUhbM5O2dOGDO6aXpqTrBQCF4CtqJV+ZtaF12ZosPQUKq87Okxmv+R
-dlt/uVZN8FhdMqYun9vkPY66+meSoFyVVfsU5ccKqQ/KCb5IQt+uxoeeC+UMI4dk
-qQdBk1tTt4NaJZj9Tg0zVigNrmQtTgFq7Gxp9jI/hER6+12fAmg=
-=AjK+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYfaUMACgkQVbJhu7ck
+PpSUQQ/7Bpujk+cooESSHHD50HUOu3uxB2e2li+jVuJtI7VR1NhTjNef9lEiPcAl
+sN14gXPajOG7A009gGd7wwWmT9KBmXPJC8NMtUia1feHopMwj98k5VUrLLJDfQzz
+Ali1h1ZfZFN52ZZCeIzdArzMlRkYNoxnDPeim7rJ6b18yzOVRD0U72XdBuM/PjKt
+yddp0dpC8SDy37tg2xYwBR06e2hzQ/X4iOB91ukd1Wk3JNum6ha0r0Qs3vUErKWv
+NQwnKZ4d3jIs6shs7Q8eksQNNUe8q7bgY1ipizPlGPPixY9PbLNGHcS94f1tQKqV
+byOE1NxrAB7XBQRGoJYwPoSXjZx7zdzMG697leagR9Y+S6r4tpRcYbSUfvN9dnYS
+0wT20aHJ8iZCbE9y2MJep5K9O/lRDktBgzVl21NRYTqAG61LaLzqAE/lj3Ip/pLs
+8QOc3on3a7xy9BVja25u5YdMm4kggBiAMqlpFjeWllFmr7J6GfJrIUXuCxZixsrJ
+M5kYEwatB1Of3nlGELG16QEAvgIgLffJpzw9vgZjDNqYfqb98ev9tx9fxK2dS25e
+TGlFjDUmFtynyXTmWaLW8niQ9V64OgoMyBsPU8EPLAUSBcZTjqKyche4wSNdAA1w
+/2YQj813M6F4CQ/1Fk+53oZ0lK1zy40udNm1tEGf+5NWILOldCA=
+=fchZ
 -----END PGP SIGNATURE-----
 
---evNYWMJzL59uqaWK--
+--BXj0Qg+obuGweM12--
