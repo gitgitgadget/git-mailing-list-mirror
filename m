@@ -1,106 +1,94 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44846394
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDC7B653
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713336203; cv=none; b=R62cTDVhiT2y7JoAvWd1Nqb1syb56cDZH+vuhVvzPmReXIl0wI5c8KIGSAaJIgSporxOWG26ei8Z9bWaOOD8tOpSZ1ePGp/+0Il7JgAvKhn6tfXElB8f31CJcEY3gjlr+YRIQBUDj8UyGy3rVYMd/jNCwvMkBR6Ae+2Auq5Cvh0=
+	t=1713336506; cv=none; b=OI3jlhiaF7v99JzOv+y32DKzJeRX4TLKLPIYKgwFF+bg96Z2NIoLoMLVyYNcCWfjyzfVT/iNK03A3lYAZ376+yZEYftTSN4mRCLDpBbbhxH/PARQwoqNq0F0M3E/daJ4OB6Wb0zoQ5Ud3/rKzVxBx+mpd5sUwU+/GQ/Rdd/7krE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713336203; c=relaxed/simple;
-	bh=QWYpS4dy+7w26dEKI5EK/ye/TPCpra58yGY+ZTGucbo=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=HEI/VZUPgHq9Ir0eSOWOEUYUMFM9GMU4Ss33WPI9o7GVNBc3EQgSakmHLpbvu8J9V4boUXw8Loq+XB+XQiZ+rEB8LWzVkbTXPr3Pl163AkRKjNL/bcF2UHNkrtrV9LcfpG3foQCOVDhgVBTRIYbzqAkLOgUBts6VpozmTFq7nzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=tVnudNt9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F8r0orWj; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="tVnudNt9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F8r0orWj"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 57B3A13800EA;
-	Wed, 17 Apr 2024 02:43:21 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Wed, 17 Apr 2024 02:43:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1713336201; x=1713422601; bh=HHji1hpXwvkRDc3xb6ehOl9874droTqX
-	8frnzx/2R6I=; b=tVnudNt9Q1RNZ+UEHnloxdNefNfIjgZETAGeOnxsd6ClR9Le
-	RUX97zDO4RF3wghes8W26dGb4My80Onsm7bT9NtQzPkcttDfi9qXc5bOoVJUAHnT
-	gvpTjv2MwLod6ClaMjJf1Kf/LyBmLI2GQ1k3lCh7pMDuIzSJn+5EHbOmhHiz40OJ
-	SkHLRRxPXhh4YUv6U4W+vW+JalDKAv9nzCiCKoFVqYW2IFbrK7wi4WJr/2HpIGA2
-	lTUxozt8lYbN0iOd3EPU5HLrxjwOWTlIv0UuzDzxyr6W1aguLgj+uWmNdoFOMoVD
-	XbudFi1zzuYeopBY/4t/xu922jtQ77Nsh8ypXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1713336201; x=
-	1713422601; bh=HHji1hpXwvkRDc3xb6ehOl9874droTqX8frnzx/2R6I=; b=F
-	8r0orWjIG/wGpfbUFL1xpzLZGra+GyDDrtkb2Q1090K6gF3+/DKOgfJBur1qd7t2
-	2FXfZsOSLMya8miUiXGpTE38ZFh8aUPvpCL4PyBq/UzUQgbD24I2+jzptzRsYoAe
-	hF+BKbq6q36SGd/AVmBd6LQroyDhtNWZ9hweB3JMqqTiSjZjj5JqIzKGrJB3rCCP
-	EmsXcB1tRlheyY4OBBIMJ36GLibusM1xVqA1tnGz9TtL3HFuaZa5/uU4EbsMVfeg
-	O+zrrHgexrASA8IRx3+WygVnUDlVD7OCrkZDmv6iZFzlhQE2T1cdVvo9uD2XB5Yi
-	jVkPdpdaAUW/kMZBLnmbg==
-X-ME-Sender: <xms:iW8fZpYgM8_Dn6P5nzyEm6CZxkpAwFjTPXuzxLwJ2OLIx6b7cwdlo5c>
-    <xme:iW8fZgbASY5PFzoOSkRQ4lF73lA9EKwNh2yE-LK67nsWZS_j3NOCmjvE2YuUwCt-_
-    r-Lrl8qSywtOw_dag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejjedgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:iW8fZr9-1AhoBsNdZ2TzB27PplukF0PKJEF9wUHRs3yqMKX11R4E9w>
-    <xmx:iW8fZnr9UGsBFOImcSGzvpYYtOvqsqzzceQIOCEuUsrdAz9M6-OasA>
-    <xmx:iW8fZkpN8yni4wMcH-plZbdyPQcu0hTRKC4XY9Ibnd1wixtXefr-4w>
-    <xmx:iW8fZtQAJ2EKQqHHWEQICuiQwQAGmfA7Ut95qZEfHnxx9ReNvZP7Sg>
-    <xmx:iW8fZhB-2KZK6x-uuWWK7xbXs5lY6u-j75vb-d6uoO_bP0wEiShgp5f5>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 1419715A0092; Wed, 17 Apr 2024 02:43:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
+	s=arc-20240116; t=1713336506; c=relaxed/simple;
+	bh=LK2cwv6RWR3uFjL1KOViEqQn9ZDCv31h/ZbHvceTdp8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Khw6q6Wbb2iBrPn6nt88YXeIYYUQ4jP4U0ZSVA8VFH13bstefcbWPyi7sGpIY0qmlFvqrWlbccI1eqyI24WPd3UByD3nFMet1hYHoIALwxnYPpnuNtMXs5Eco9JKsdsbL33pyJ8JAnyAu6GEJHCOrybcqqZuAP2ebKnI/oi9ZEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-69b40061bbeso27775556d6.1
+        for <git@vger.kernel.org>; Tue, 16 Apr 2024 23:48:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713336503; x=1713941303;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jQv7WTUabfG2cDE1WZGV4vXC9CfD4E6yoDSweU2DuRk=;
+        b=TVkFWkRkgVLkulWs5j533PlVfjl/fkDfRee97Y6sgPogsqn07w73x2ZiqZfU2q1WB5
+         9QVM/mZB+BD+Y9mGhLTo9QajjIB00+mHFKRMqnejdkgFI7h1YF2J9VCYqgRKILfIQ8nb
+         lu6VzLXeR9kCE6ukmubO4H9NXeR99gEzPwpUIh05/R1lzr1dVjpYZ4Y75ef+qsdN9Pbv
+         xRFnNPncAx/vJpECJYo193/dm7D1wNrRoo9H2Vxc6sXKFLaF5jvcKItcRck5ngguiKwc
+         +Ktp6AbPeChfkJsLX9Lu16qV8J8f+jz9ChwB2ykK/nV7R586+sb74A4mSHIF68nVp8Mu
+         Gn0Q==
+X-Gm-Message-State: AOJu0YyEyBZJNLlz8W/dnCTMU5/DRylLtKjpTp2RbEA7ZiJ5l75nz5Vw
+	AcvdVq2kPboMOaFqMtSRQB1K3A6ZeTiNtHzkW2MZ1QrVCYaxPqJgYcE2OmdEQet5tJdFXdMNE6S
+	PVGjFo72kNVpZ+iS9hOFyhz7rkfY=
+X-Google-Smtp-Source: AGHT+IH3qqcEti1wE2JAEHFR9E439NUThzFmxS1tz8cFbsbThqbMsuxXWPlZj47fuo3aBCEyuFlvpT3+aAMX0ZYPjiI=
+X-Received: by 2002:a05:6214:170a:b0:6a0:423d:88ab with SMTP id
+ db10-20020a056214170a00b006a0423d88abmr2059549qvb.8.1713336503477; Tue, 16
+ Apr 2024 23:48:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <f054eb17-2eea-40f5-b201-92432aa0ad9c@app.fastmail.com>
-In-Reply-To: <4aa0754ee62d78ca9300eb709df561b3@manjaro.org>
-References: <cover.1713324598.git.dsimic@manjaro.org>
- <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
- <556d4baa-14f9-485a-8db3-0c9a966351a7@app.fastmail.com>
- <4aa0754ee62d78ca9300eb709df561b3@manjaro.org>
-Date: Wed, 17 Apr 2024 08:43:00 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Dragan Simic" <dsimic@manjaro.org>
+References: <cover.1713324598.git.dsimic@manjaro.org> <42865d6c6694b9e6b745c328d717ed244dc25a1a.1713324598.git.dsimic@manjaro.org>
+In-Reply-To: <42865d6c6694b9e6b745c328d717ed244dc25a1a.1713324598.git.dsimic@manjaro.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 17 Apr 2024 02:48:12 -0400
+Message-ID: <CAPig+cRBjosyadQHO03fcCz7YBc=T04ytHkpt9UU87tLaiSOgw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] t4014: add tests to cover --resend option and its exclusivity
+To: Dragan Simic <dsimic@manjaro.org>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND" to patch
- subjects
-Content-Type: text/plain;charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 17, 2024, at 08:36, Dragan Simic wrote:
-> It also doesn't use imperative mood.
+On Tue, Apr 16, 2024 at 11:33=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> =
+wrote:
+> Add a few new tests to the t4014 that cover the --resend command-line opt=
+ion
+> for "git format-patch", which include the tests for its exclusivity with =
+the
+> already existing -k and --rfc command-line options.
 
-The sentence describes what the option does (usage). It doesn=E2=80=99t =
-explain
-what the commit message does. In context:
+I'd recommend squashing this patch into [3/4] which introduces the
+--resend option since it's easier to review the tests when the code
+which is being tested is still fresh in one's mind. (For the same
+reason, reviewers like to see documentation added in the same patch
+which changes the code since it's easier to verify that the
+documentation matches the implementation while it's fresh in the
+mind.)
 
-    Teach format-patch about --resend
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> @@ -1401,6 +1401,43 @@ test_expect_success '--rfc and -k cannot be used t=
+ogether' '
+> +test_expect_success '--resend' '
+> +       cat >expect <<-\EOF &&
+> +       Subject: [PATCH RESEND 1/1] header with . in it
+> +       EOF
 
-    --resend adds "RESEND" to the subject prefix (producing "PATCH
-    RESEND" by default).
+In all of the new tests, since it's just a single line body, it could
+just as easily be created with `echo`:
 
---=20
-Kristoffer Haugsbakk
+    echo "Subject: [PATCH RESEND 1/1] header with . in it" >expect &&
 
+On the other hand, if you're following precedent in this script, then
+using a here-doc may be just fine.
 
+At any rate it's somewhat subjective and not worth a reroll.
+
+> +       git format-patch -n -1 --stdout --resend >patch &&
+> +       grep "^Subject:" patch >actual &&
+> +       test_cmp expect actual
+> +'
