@@ -1,56 +1,56 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13881ACC
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 23:08:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5C18563B
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 23:13:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713395298; cv=none; b=Y5Src4/YQEHNG5OVg1ItGLl0Mx53IM4SI3E6M7waoGviwcPCF6LTbL9vuSYPGyIWAA27f2HsTx9qG/r1JJr5Su2QQlQGnUNsgvAK7vM6eef1t+XGmmGEhEJdHnSeZ8KJYCDjcF4T7Ap697vxWdEUC+fq9vDgO3c/2H8UszJTixg=
+	t=1713395617; cv=none; b=dzGMgcvFfZY3SRq2z0YH9RrtGInrp+e8SVZkxVSczQsWZGEng/eKpNS6YGLeszeG3yekuiZjNV/NxyneDM8VZ5ZHCljdb6E0MmlnDBAJBgXxKTMkRXeD7wfY3j/uvdrMAf13Dnj8RBIu28nI49lE1lZ+I+WK2AWB/6plq6aLdI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713395298; c=relaxed/simple;
-	bh=4aauvfeedGTCVobxYZ6ZfWYGXCWj0bvDoLZvgky97Ds=;
+	s=arc-20240116; t=1713395617; c=relaxed/simple;
+	bh=0jIxRIdXmNX9sSC1yqx8XPXhcKS5QVNxyrWCuWuIFFw=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=oNEK8ajLuf2n9bR1Quk4r0BYEA7DRvsqpu9xBrTxqJdXpjSXsnJyrjHWtsvW3HWqRQ35qL1rQklx4RPPMwt8Qm0m8iehzCh1BzQMpyxWHRHXRVtP3+0MxJM1tVzsnTFZOoOdKnfjfBklO1ibhha5v9+hGT5CVPk22sTaXPSYUvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kJGDfA0Y; arc=none smtp.client-ip=209.85.210.201
+	 To:Cc:Content-Type; b=jhqcJzl3XSmG2LaEWqMgEiPyggbd9zuX8w66zs92fzL7S47DK87UZmI4ym6mh8Kqx1c7DcEVGTf+zwEqyFj8M/mNzDoTacBst3iC7sZc4O1sbDRYosaB/6c01OMPSD7qNurgccE9hqnewqcGqgCnlCKdakRoj6ZzLDrCy2DdA1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lYYbiS+e; arc=none smtp.client-ip=209.85.216.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kJGDfA0Y"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6f041e39bc7so472848b3a.1
-        for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:08:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lYYbiS+e"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2a2fdf6eb3bso333026a91.1
+        for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713395296; x=1714000096; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1713395615; x=1714000415; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BmP4Y4yi7N00mS4qNAIHkBIG3h4iAd/CDyV+F5lcBAw=;
-        b=kJGDfA0Y8QEKgXyBZPfpJuYLtwfM2IB2n7vbv9WPJZeaPWSCWzQls7uCfrhYoJrOvF
-         B7bLAbx+SDcs6RBTDu14T2WLI2PspZClRVRwXCKxmqBJ+rBjLFwVzXXdD3DBB6wTEfRx
-         jMjYNWZTjFhUiXP/BgHUBocRLWN88ZDKqeWeI1WfFEKNoPNtyP9bvMWCeNgg+xP6RXO9
-         XWNY/Sv/YHJIqaqXRu12SSrgOzQuAAg+KU9lmnSPJppTI0JN53ubL+U9NKUCSkfv3k7i
-         2QhCAjH4+wvAeGKQMD6yEZNxoLP3B2pPrVGAqbkm5b4HOkOA5EBptmM9dpkxys280EI7
-         Q/Iw==
+        bh=cfp2z6Xggx3vCqZS8L+tqx9xFkhkhZFr0jf/cwegDeg=;
+        b=lYYbiS+eir1h20NZB0Kv73sFt7OTh203DkHTjAyCvHWcMlH1ViCG46I2SFXAjd/TeV
+         rUCYR1u0UKiAmB3zjpn+Hs5hBgpVU7AGf0j/8j8TK/rikhsjxal0Kq3SNKQmiHLcc4uk
+         O+IDSwGNQvV6LaPOlIOHFdpkuPKeXLJuLSzD20AEmm9SsDh7ioDOctAWvOSclcFQD4l8
+         j/bX9U28GF9Y4G3mP2H7SPiwRCgcuZyWygI+BpdxnN6QgJfVqbz4OeRP2SUFvW9rR9xI
+         MtnW6QxviLwa2Az0BXWazTNSatC1gjMbtTLFrOidC4fVnjHwdJrbUFhz3BWtUwhTMRBz
+         UfjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713395296; x=1714000096;
+        d=1e100.net; s=20230601; t=1713395615; x=1714000415;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BmP4Y4yi7N00mS4qNAIHkBIG3h4iAd/CDyV+F5lcBAw=;
-        b=rZedIsxKgkmlG4qUF0/ULjeDPFBjb8Y222Uye9TA7w+XY+BHCWuiGIVzy7jgMbQ06s
-         fvcBAOwU4cJxLVXE6JWfZdQnoUkQ2GK7W4g0AHFdcsm/AxDqqczfNMG3ekqUORHYUiPs
-         AnQUi/2jmPO7DSxJLSH+u9jortaloDuYAIFlZDnfFo4c2AJKsCmTMJ+AfVOg/QFcrGZj
-         QlbqCc/Y/wBz4BB6pWwmVWnAEqNGFBstDEPnb32ySN+aF0dVVfIPcMgMuPWhMDKJUIzS
-         sPLG2TXAaU3nIbU0VyS7gdlt3l6D2w0PTvdzSMgCLhfR54p6/QJT/Luqb+8di3YCE68v
-         g0mA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+3Zy/HMYXrEbqOhcTNjCmXC5o3JpSJsTWxET9XxXYyPbWcjkDmu+ptRxYjg2r+L7/Z2JGU0c8aatOt30cdxpo6lEk
-X-Gm-Message-State: AOJu0YyRvb2e2De+wZ1AozmGBimsUlf3Xb+0bymd1sbEGdKZJymOmd2F
-	24sDBagIOuXwIzo8NEDDawKZDkEtvOwiFnxPnlNuPKV8CoV/lmgNtsHM4jZdS9+0j3QTDCKBtZP
-	+vg==
-X-Google-Smtp-Source: AGHT+IERGgjxSJ5MPx7bkBKLZPwncnTH/np0v+2k9zkjCM5+2UQFGEYltc765Kne5PQ21Cj4YenTA4JRkUc=
+        bh=cfp2z6Xggx3vCqZS8L+tqx9xFkhkhZFr0jf/cwegDeg=;
+        b=p35HuZzHjfYxTxI0rQxAovBwMt0qVVF1kPlYPhpw7GbYQnGTNCIFoYV7J4TjqgQTeq
+         nODYpuf+2jYpLOy6F56pBIEiW0sOX6L/lPzKuV4poEWkJaku2jNXeEVs5G1Dqkcqx5bX
+         fO3xKRdfqOiI9FBdvMyyvCxXBXRiYcU5eCfY3LfcOqOF6/9hTelzbQvsuXdgP6JvRLod
+         ueVSmuIjo/SDSnx3nuyPD3CldlguA7gROeY0yA34fmvjuoCG1gHEp5S0137ePvKrB7T6
+         Qra6p0nh42jh2LtpK2Dd/Z5h5miisLtHo4FtTpGNWDykjltk3f83+crJz5TpVe+rFv15
+         hg6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWpK+ONyunufRsBxZ82trOHJoCLS7vjTSvAv7XOONPVBwT0KW8JymtVJONNxdH/r5lbN2Qy72M23hpEOn8YaZiO/x5i
+X-Gm-Message-State: AOJu0Yx5wcK3cuORk5xUY2Z8uuOdxRjliQUW1zlPJ7+D6MeVW9ss/mGZ
+	SZAC9J7LQ+nWkTkXg/cSU2Gq+JfkpQfh3XvJ6/oX/gJi7OKHP+7hA8SqazIGWVd7toU4re6CkJd
+	0yQ==
+X-Google-Smtp-Source: AGHT+IEiYGFos6XJ3L5YvDNRd7VLpspTKaSHzXcrAFMDKkxxrOPzuInfnl+LRm4z/+Ma/sT4NUoZWSFmUh0=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a00:98f:b0:6ed:344:9faa with SMTP id
- u15-20020a056a00098f00b006ed03449faamr100103pfg.1.1713395295939; Wed, 17 Apr
- 2024 16:08:15 -0700 (PDT)
-Date: Wed, 17 Apr 2024 16:08:14 -0700
-In-Reply-To: <xmqq8r1cczw8.fsf@gitster.g>
+ (user=linusa job=sendgmr) by 2002:a17:90a:7108:b0:2a5:faed:673f with SMTP id
+ h8-20020a17090a710800b002a5faed673fmr2567pjk.0.1713395615313; Wed, 17 Apr
+ 2024 16:13:35 -0700 (PDT)
+Date: Wed, 17 Apr 2024 16:13:34 -0700
+In-Reply-To: <xmqq4jc0cag6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,43 +61,40 @@ References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
  <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com> <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
  <xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
  <xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
- <xmqqfrvkd843.fsf@gitster.g> <xmqq8r1cczw8.fsf@gitster.g>
-Message-ID: <owlywmov4mg1.fsf@fine.c.googlers.com>
+ <xmqqfrvkd843.fsf@gitster.g> <xmqq8r1cczw8.fsf@gitster.g> <CAPig+cQ=xgfExyCM2qyobv7CNRz7=J8S_=w-C-VoCNZ6M6FBbg@mail.gmail.com>
+ <xmqq4jc0cag6.fsf@gitster.g>
+Message-ID: <owlyttjz4m75.fsf@fine.c.googlers.com>
 Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
 From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
 Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
 	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Kipras Melnikovas <kipras@kipras.org>
+	Kipras Melnikovas <kipras@kipras.org>
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
->> We are not installing this thing (yet), so how about giving an
->> instruction to run "perl contrib/contacts/git-contacts", only
->> assuming that the user is intelligent enough to be able to react to
->> "perl: not found" by installing it on their path?
+>>> @@ -1118,12 +1118,12 @@ valuable, such as changing the Reply-to address or adding more CC and BCC lines.
+>>> -codebase and run `contrib/contacts/git-contacts` (you must have Perl installed +
+>>> -in your system).]
+>>> +codebase and run `perl contrib/contacts/git-contacts` (you must have Perl +
+>>> +installed in your system).]
+>>
+>> I wonder if we really need to hand-hold so much to tell people that
+>> they must have Perl installed, especially since the command being run
+>> _is_ `perl`. It might be sufficient simply to say:
+>>
+>>     ... codebase and run `perl contrib/contacts/git-contacts`.]
+>>
+>> Anyhow, it's a minor point.
 >
-> That is, something like this, perhaps.
+> True.  In the original it was a good idea, but once we show the
+> invocation that is explicitly done with 'perl', we no longer need to
+> say that.
 >
-> As the string given to --cc-cmd is stored in $cc_cmd, and is used in
-> this call:
->
-> 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t, $quiet)
->
-> where recipients_cmd takes ($prefix, $what, $cmd, $file, $quiet) and
-> runs execute_cmd($prefix, $cmd, $file).  execute_cmd in turn takes
-> ($prefix, $cmd, $file) and does this:
->
-> 	open my $fh, "-|", "$cmd \Q$file\E"
-> 		or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
->
-> IOW, $cmd is just an early part of a shell command line that takes a
-> filename as its last argument, so I think it would be fine for $cmd
-> to be "perl contrib/contacts/git-contacts".  I did not test it, and
-> it would be appreciated if people can test it.
 
-I should be able to test this later this week.
+Agreed. Will update (but will first try to test the 'perl ...' arg to
+--cc-cmd).
