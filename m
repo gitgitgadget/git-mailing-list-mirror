@@ -1,38 +1,38 @@
 Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187FD3B290
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58785D2F5
 	for <git@vger.kernel.org>; Wed, 17 Apr 2024 03:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713324774; cv=none; b=kD+jPPqAUxb6yEutYdsf7mUyOwMNKts9FvuoZ/LhcTJ3iHiEfoLetAbnxP6I5EriIggvXqlM3oQn4NBrkBVHrYxooIMp5YylZNeSEIZWEA/FPZq7zx9GDoIdd4UBCKy2NYAhx3RLAP3NiQYw6+6ZOtnSYXs8AsrWkcuLKFlxlfk=
+	t=1713324775; cv=none; b=KXOcJNbl+krH/PZY6vr57agCab+if73/TigvL/9wiZAQ36N28jljfjBFp889dLS9T4ho94n4B7pLQFmHC9DSoEXjFcetmCRVy4OFy2SjZRNUQ4imYCA31hidBt+LTZqnGVlHHKzPQH9UILbaZp3pCSBx9dB9/q1CirbLDRVKyAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713324774; c=relaxed/simple;
-	bh=Xdtsv0dzjNtePWXVcfvl0JSzgg7TJc3PM0ecZSAZDG0=;
+	s=arc-20240116; t=1713324775; c=relaxed/simple;
+	bh=w3vZjU2ZukjzPVe/3mE+1zklHfqbFye7FOK63NG+LN8=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aXElE6L4DZu0rx/nzXv8TiZOAG3eOU7CKFMp3wSfK9XlAApN42p6GNKCHjzCGcdb+K6rtXCcmbSW3640oGcfuRRwm9iRWtP1Hx8p3rpFChgfOtFKMZKTFV/yuN2niSOdyVV1iisE6HtZK0yOXN3MydwL9M1f0zqI2SPx8fToO+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=RWB3McLj; arc=none smtp.client-ip=116.203.91.91
+	 MIME-Version; b=ee5CbImu91DFCnMCAD5QvegKSqr3RykMJr7SBpGVwaWXaZd6zrz53T/TFHKHivHpxa/QGdm5tGpO+9z0+LRB+eo6078PC2u95mtY0TOZwKQhm4xKxE8SVxmXnGr8/R0MbwU6xjHUGM9Q6VTJR9vOfPg0Xtv6+CEhXUzzdoHg0Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=HJVHgt0F; arc=none smtp.client-ip=116.203.91.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="RWB3McLj"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="HJVHgt0F"
 From: Dragan Simic <dsimic@manjaro.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1713324769;
+	t=1713324770;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0M6dx4A25saI7CR8lTlaEgybcMSJRsrL/eWIPcfs0L0=;
-	b=RWB3McLjWUmO+ODx7TmpMSqZmlz34kL6dGL1jI11db1D6xuzVgNPvIitXoa623zIzGCFOT
-	XPInJGmgLk17MPcXmpP7+WT8fBLdzTPmpGso0E3VXInjfEcqANXczcFOPmoYfHDHNUd1wk
-	2Ez5gOlLtzfmR+1dXAtRPf7QvnhFcUpGr4Jvwh1VOvpWwit5xef5qcA9dVmPKDBKrfRfEf
-	7U/pxiQz0v325OvqLIwAtc3qYaMG43qJu5WGZB1S14f9icEJzIJwFD9BTil8SfnmbPzrpS
-	jgIQSCUh1WlaA2S+L34MLzVbmaWM4IIzCQHv9qHwO2mbMKu5E+4olBD+MoDqoA==
+	bh=hPtvoofQRoHM1orP9jvIwV7p5cXi991cC80IQiCf8w8=;
+	b=HJVHgt0F3CPMBVTg7OghLBa238Qirep/HzGznPD1zmtltXoUmpAynfwC594WTfWD0lTFkc
+	xkIPxk9QqOIOkH81HiqLmgdp3AZR7gsPks7FnzY6JVibdxf9wvueHevMR0W/iGVDyDlOs7
+	kXwphWN0xm8wmNoDDFCcoimxVGon4AY7e6hrnhbi3O3hO429AnHHiiz3KgTPjBhGX3HADf
+	6Qqw2N6f8KqrwnMThRUlImjkj9GNp15vTpNB3/njWsjujzzdaAZahaQRvQ8cmsAlyzfnxn
+	D+l/hPAjL4m0R6DtnHl7x8aTvzOsV26XUVhJ33BAPw0OHbeDPY7MYfc5TgsQtw==
 To: git@vger.kernel.org
-Subject: [PATCH 1/4] format-patch docs: avoid use of parentheses to improve readability
-Date: Wed, 17 Apr 2024 05:32:41 +0200
-Message-Id: <25b90d065744c01da3f37b6966fd97d699931f6b.1713324598.git.dsimic@manjaro.org>
+Subject: [PATCH 2/4] format-patch: fix a bug in option exclusivity and add a test to t4014
+Date: Wed, 17 Apr 2024 05:32:42 +0200
+Message-Id: <c975f961779b4a7b10c0743b4b8b3ad8c89cb617.1713324598.git.dsimic@manjaro.org>
 In-Reply-To: <cover.1713324598.git.dsimic@manjaro.org>
 References: <cover.1713324598.git.dsimic@manjaro.org>
 Precedence: bulk
@@ -45,27 +45,50 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
 	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-In general, using the parentheses disrupts the flow and reduces readability,
-so they should be avoided whenever possible.  The improved sentence is a clear
-example, in which the adjustment is obvious and simple.
+Fix a bug that allows --rfc and -k options to be specified together when
+executing "git format-patch".  This bug was introduced back in the commit
+e0d7db7423a9 ("format-patch: --rfc honors what --subject-prefix sets"),
+about eight months ago, but it has remained undetected so far, presumably
+because of no associated test coverage.
+
+Add a new test to the t4014 that covers the mutual exclusivity of the --rfc
+and -k command-line options for "git format-patch", for future coverage.
 
 Signed-off-by: Dragan Simic <dsimic@manjaro.org>
 ---
- Documentation/git-format-patch.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/log.c           | 5 ++++-
+ t/t4014-format-patch.sh | 4 ++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 728bb3821c17..a5019ab46926 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -239,8 +239,8 @@ the patches (with a value of e.g. "PATCH my-project").
- 	variable, or 64 if unconfigured.
+diff --git a/builtin/log.c b/builtin/log.c
+index c0a8bb95e983..e5a238f1cf2c 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -2050,8 +2050,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (cover_from_description_arg)
+ 		cover_from_description_mode = parse_cover_from_description(cover_from_description_arg);
  
- --rfc::
--	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
--	default). RFC means "Request For Comments"; use this when sending
-+	Prepends "RFC" to the subject prefix, producing "RFC PATCH" by
-+	default.  RFC means "Request For Comments"; use this when sending
- 	an experimental patch for discussion rather than application.
+-	if (rfc)
++	/* Also mark the subject prefix as modified, for later checks */
++	if (rfc) {
+ 		strbuf_insertstr(&sprefix, 0, "RFC ");
++		subject_prefix = 1;
++	}
  
- -v <n>::
+ 	if (reroll_count) {
+ 		strbuf_addf(&sprefix, " v%s", reroll_count);
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index e37a1411ee24..e22c4ac34e6e 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1397,6 +1397,10 @@ test_expect_success '--rfc is argument order independent' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--rfc and -k cannot be used together' '
++	test_must_fail git format-patch -1 --stdout --rfc -k >patch
++'
++
+ test_expect_success '--from=ident notices bogus ident' '
+ 	test_must_fail git format-patch -1 --stdout --from=foo >patch
+ '
