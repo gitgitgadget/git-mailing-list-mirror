@@ -1,110 +1,77 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F9EAD2F
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 17:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB78381BA
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 19:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713375630; cv=none; b=V48LqMq6+Rm65gIsdfYwEETygn5ylF6N+fFTyhq9Z1OuAGqU/lDiW9BKyASR+WY3Y4Lc/AiTLQyZVdFZL0anIOz3Z7hpso01MR06qxFTNri1mfOXlZ60AerZSrnMsqp2yW6SxwXb2jLA+LlFGjoD2u036N4kIEgHrZA7/+MJ59Q=
+	t=1713382471; cv=none; b=nDt7/mVx3lgkwa1qli23w2hho6I+L3cXOr2Eaa1k2lZmeYt/MzDPWuCdI9r/X0SVsx2KBsW1xJ/067SaUnM0wEjU0Dp0SISzVrEKtX/9Rckrtu6w/9F6nS7Oap8cr00y+fB9vCMtsW+uLRXx+9XxkZNj3lOysfbf3145JSH6WoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713375630; c=relaxed/simple;
-	bh=PHOQpjrZtw2CTr/7mGcMLVbJPH3IKfLYPPxIOfGsYtA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=YDhc2vTVeiP+D17MzEjBaIIdQ7PvYrMceuvvNUCkKnrGa9eE6BWU5BmO1clxNpxDJrmamEnMSbDEFRJagxn99IqMb9RIcM/qd9s7+cTaDk8cdtvqNxTfUupXLedRrcoObMU1zMbcTLOuPynyq6UlkwSpqj02XfTW0r3Y3Wcqskc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OCdQySkH; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713382471; c=relaxed/simple;
+	bh=1Km9PETWBA92YkZ9Xkeh7+d+cHP39h0prUSSkKx+f8M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aMUaxBPOXLF4R0OBEvJmBcCBmkrc10V+Lnb8UelwGcoMjS/LFNbSU3m7hctHZlRpZObHv/ZG076b4lKWa6YIjR0yjNOPrDH9na1+hdoGqcoE0J1bKBZchMSH3+fu0PB4kIaijYqtwhROf45DBWWZzmxXIEU18cJTo2c9TQT4t+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uG8kPxjs; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OCdQySkH"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2dac77cdf43so30485011fa.2
-        for <git@vger.kernel.org>; Wed, 17 Apr 2024 10:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713375627; x=1713980427; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PHOQpjrZtw2CTr/7mGcMLVbJPH3IKfLYPPxIOfGsYtA=;
-        b=OCdQySkHEaXA2/XqCdkZVYvnFnz6JthM+PbDyyhalY48zQwMdpOIBZpIj2F5hKkT+c
-         6wId/AD9LtZCYy4bVtv0bSAaaj3HXdSOWdnVE6ugSdwP/eX2J9J9U0v4XYH6+cfDSym7
-         4LoCOq82jfFB5H/+nYNr/uut2egj32MEDpLTBRhbXYOlqJDlZadz1zoSh5REgtYl9TZw
-         xRYTWdHapW66vnS128eJTEYOmP4CVoTCCTT6LywXo10r+9Ttjgz73zYIhIR7mDpQ0dju
-         4OWUbPwW1htKGBw2jHBz9YQjfSQ+xjOrCEaNj3V2s+/D5lnRerFifNvQ5akVGFsUXqhN
-         CJVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713375627; x=1713980427;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PHOQpjrZtw2CTr/7mGcMLVbJPH3IKfLYPPxIOfGsYtA=;
-        b=ovdzwZY34XkXaKRFitv2BE11CTsblW7U8jyLCkpXbsphECQ1JxNbrVFWiN4lip7uAe
-         fiABJWsTIho57DKwNDsXK2+Sy7/TtC4bwNAKSF8RUiLPnI2CAb+Q/xcLS/mueTr7cE+K
-         UWmo8hEYDeKwm5jqAdGR739FKVa41+bvSx4E8/2yX6E65i58z9a4o1DJSnBGQuJMIzZy
-         /cxTPW8owsdZz4R/AA9HCulYMEZJ6ETMGrr9Cwds5AqRoUs9l15JxhxnTQWhSDMSPcOS
-         UbXFvf19OhKO5McIa7tXy99Eg4/epXjz2zNzs8r6YCUG0ocrmNLh3nokaZhJy2ecYSEc
-         ++dw==
-X-Forwarded-Encrypted: i=1; AJvYcCWuZPnbNJzFBK8KWg3okgQCWP1TBD5eQXUl205qkyTz4QcD+8Rf4kf91ZOce93apB6T1huMy627xl0Rqugq7uxDQcbx
-X-Gm-Message-State: AOJu0Yx86NuOoBX9eLJdxGbjR+J7OnfPV4ihWLpVn7nLFiQAyHZGkp7l
-	qV7WbnBq7+MWxCI1GsCTNG0oO7KMma4Ky8p9WBWt8esTMYS4sAp5z4DGAYuvRS5dtYRPSrbgZxM
-	inZJSI1DLwmAHktdaASvZ5QbphmqcyA==
-X-Google-Smtp-Source: AGHT+IF0auaEJVFafmyK3KlPBl5eA+tPba+fiGi5jCW1X0F/NtBwXUYPzthR16Wxmq4gjUgb/r81KoVMyCzq63nwynE=
-X-Received: by 2002:a2e:731a:0:b0:2d9:fb60:9b0f with SMTP id
- o26-20020a2e731a000000b002d9fb609b0fmr10514828ljc.31.1713375626412; Wed, 17
- Apr 2024 10:40:26 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Apr 2024 10:40:24 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1713180749.git.ps@pks.im>
-References: <cover.1713180749.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uG8kPxjs"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3269A1DC96F;
+	Wed, 17 Apr 2024 15:34:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1Km9PETWBA92YkZ9Xkeh7+d+cHP39h0prUSSkK
+	x+f8M=; b=uG8kPxjswfZQReAo21H6SODGANGPhUFTS4Q7B2cSm2PMKsctzmiGgP
+	WowG0U2svjjvSh70wK7nPng/QSpp7orwsmiUY8yo9qKhtXmKKWJrGa2crms6sfMa
+	llO8aP/xxBpdbJJx5DyNY0N6Pdi1523HUUSd1+cs2bCSkie4szfLw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28E541DC96E;
+	Wed, 17 Apr 2024 15:34:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88AD61DC96D;
+	Wed, 17 Apr 2024 15:34:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  blanet <bupt_xingxin@163.com>,  Xing Xin
+ <xingxin.xx@bytedance.com>, "blanet via GitGitGadget"
+ <gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2] midx: disable replace objects
+In-Reply-To: <pull.1711.v2.git.1712554017808.gitgitgadget@gmail.com> (blanet
+	via GitGitGadget's message of "Mon, 08 Apr 2024 05:26:57 +0000")
+References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
+	<pull.1711.v2.git.1712554017808.gitgitgadget@gmail.com>
+Date: Wed, 17 Apr 2024 12:34:27 -0700
+Message-ID: <xmqqplun6aws.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 17 Apr 2024 10:40:24 -0700
-Message-ID: <CAOLa=ZQmCWh_UHJ+JWbzd_b=Ob=gUE=5wEKy3gpaxu=Bru+Wvg@mail.gmail.com>
-Subject: Re: [PATCH 0/5] global: drop external `the_index` variable
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000945dea06164e5945"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 818B3F20-FCF1-11EE-994B-25B3960A682E-77302942!pb-smtp2.pobox.com
 
---000000000000945dea06164e5945
-Content-Type: text/plain; charset="UTF-8"
+"blanet via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Hello,
+> From: Xing Xin <xingxin.xx@bytedance.com>
+> ...
+> Helped-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+> ---
 
-Patrick Steinhardt <ps@pks.im> writes:
+I think this took the review in
 
-> Hi,
->
-> this patch series converts remaining users of `the_index` to stop using
-> it, instead using `the_repository->index`. This gets rid of one more
-> global variable and brings a project over the finish line that has
-> started back in 2007.
->
-> I realize that this patch series is quite large, and that reviewers will
-> eventually start to just gloss over things because the conversions are
-> kind of boring, too. Also, due to the size it's quite likely to conflict
-> with in-flight topics. So if you think that this is too large, please
-> let me know and I will happily split this up into multiple series.
+  https://lore.kernel.org/git/ZhLfqU9VNUW+2mmV@nand.local/
 
-I gave it a glance review. I also wanted to run the tests on each
-commit, but couldn't apply the series cleanly on either master or next.
+into account and is in good shape?
 
---000000000000945dea06164e5945
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: de9b2c969a8723c8_0.1
+Thanks, both.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZZ0NZY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOEh5Qy85UjVKYzhJcjFCc3kvcHlhM0EwY0pFQ1ptawpqRDRXdWJSL3g4
-MVZ4S2JWZ2pLVGltYlJIWjdQeEU4Z0ViUmJWWXlQWmp5a0ROYSt1TjVPcldLd0NiWStiR0ZvCmtO
-WWUzU3FRVG5tcTg1c002d0IvNDQyZ2ErVnFhZW9uRTN5Yy81TnhpOENaRkU5T3R5TkZPS0JzUld0
-K0tpQW0KQ09LbXdSa1dkb2ppUU1yTEFjdC9JaVZJVjZiTU82MllhcXJDZ0pTVEc3VSt6d1o1TTFp
-STFocGhoRkdKZDk2cwpsSGxVVEZNWlFTa2Jpaml2dmwzMksrZ1B4NXEvSFIvdUxkZEtpZjdQUjU2
-UTN5ZSt6QTZ0UjRwdXc1R0FPNDZkCklnRHJ6Q3dYaGFraldaWjZvdFpnK2lGYWJRcmI0MjB4S1ZV
-c0ZuUktvOEVPdEN3OHR2T2tZVkx3QXk2SEhXSkIKTUhpb0RGZkFqZjhwM3l1K0xFUkUwQ0ZGNm5Q
-QzdFVFVQdWp6Z2V5N2JpYzdOZDN5R0dPT3VveitzSStBVExRMwpUVHFrZ3RRWjV5U2hvalVKWnZU
-aXZOd1RxSEdTRzQrazJVS2w4cGdZMzdrdHcvQkYvdmlmME1jVHZJOUJZb1IyCmM3SGVqclVVRzZR
-Z2o1UUExMjNwSzlxRm1TeWhTRmgrb3kzcWduST0KPWwwZHIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000945dea06164e5945--
