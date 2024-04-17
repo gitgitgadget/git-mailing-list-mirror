@@ -1,103 +1,82 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D329196
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 00:25:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C65680
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 02:40:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713313505; cv=none; b=dhQdC82P4kZLafGsLnYFpabFOYSPTpmcJmOqd9mQN0wD/DECoTm2F3ZH7SlTFHmsCLzhheQfRTgHi829iJ+MQCxit3nkFnJmOe9UKto1cj2hYSwctLXIuVkrvuzAhjI7Guafj+vJsM8tYWEiRgrczLgghqvDAHG8U4LgMDqj9Z8=
+	t=1713321656; cv=none; b=FUNfJRNIlN3AjCPTEYVaz4jKDob+jcY2EafElup69VT3KA0XT69O6AhpeihDkI90oGjxs21c1JUuse5NhT+ryNcYFWhqdEZX+QKo4Cg6smDk70zvF74vHdTgN3s6oELTr52KfAhHeOcAJtjUerhbecszezmxAr6mFQWgn25CcWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713313505; c=relaxed/simple;
-	bh=+u/o4Ca7aBjhIJ4u7L2/wp/j26vVpWlDgbwPPQr+lGk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wn2kkFojiRfj14VLi2RySDzWWiox259txiFjCdPM4cB+xfZ6IMN4PIppX4k4F+FN3PCIohenEpeTJ7YoLnSuYlMIhmZ0q2HjbJp1+IsQZEkBmmLZ5J1tIsE9UyOr4j1qi8bxo8AEpPQBImcgMFsV4prlaPE+t/NyH5BpY7EYt94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 16255 invoked by uid 109); 17 Apr 2024 00:24:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Apr 2024 00:24:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5477 invoked by uid 111); 17 Apr 2024 00:24:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Apr 2024 20:24:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 16 Apr 2024 20:24:54 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] imap-send: increase command size limit
-Message-ID: <20240417002454.GA2305596@coredump.intra.peff.net>
-References: <7026075c-db4e-4d43-bbd1-d2edb52da9b7@web.de>
- <20240415185530.GB1709228@coredump.intra.peff.net>
- <85047e64-044f-4bf8-8de9-33b082255f3e@web.de>
+	s=arc-20240116; t=1713321656; c=relaxed/simple;
+	bh=wpZ8niYJW62Ne6OF/MCiAAN/OOlnc2grSkpaXt18pL4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YCtHelpv+tkC4EyhryHbAGnS+czsg0cGrkcxSO+LFZ8MnhHZCq9odIqc8BmHs4bkFr8103QpnmEH3LtXfsrx7QYIPdRrhIFIzDJeMKcggzToaSeNu2Ffph9PiHXEgRG5qm3bikrt/bImKu57t4M8P/uPHhSyVMuuaEuDxy7IO7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=N2R0v+YC; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N2R0v+YC"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A79A34F13;
+	Tue, 16 Apr 2024 22:40:49 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=wpZ8niYJW62Ne6OF/MCiAAN/OOlnc2grSkpaXt
+	18pL4=; b=N2R0v+YCW7uQs806w74k5THtQgKAGGNaPtS4z9Yk/lEDEKDW5o8nj0
+	hyrWoNDSLJ0bWvvXsulwdrAaO+c/aPQpAprp107cbkFMZhs6iqIslRJ3m1ajI9kL
+	rYPmZISrNT31Ws14jsKtyhE646bCl0VCELFuc1zDrilnSmUk+M7Xk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7467234F12;
+	Tue, 16 Apr 2024 22:40:49 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA28534F09;
+	Tue, 16 Apr 2024 22:40:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
+ <nasamuffin@google.com>,  Patrick Steinhardt <ps@pks.im>,  Matthieu Moy
+ <git@matthieu-moy.fr>,  Eric Sunshine <sunshine@sunshineco.com>,  Kipras
+ Melnikovas <kipras@kipras.org>
+Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
+In-Reply-To: <owlyzfts52ln.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Tue, 16 Apr 2024 16:07:00 -0700")
+References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
+	<pull.1704.v4.git.1712878339.gitgitgadget@gmail.com>
+	<c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
+	<xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
+	<xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
+Date: Tue, 16 Apr 2024 19:40:44 -0700
+Message-ID: <xmqqfrvkd843.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <85047e64-044f-4bf8-8de9-33b082255f3e@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E4729450-FC63-11EE-B7B7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Tue, Apr 16, 2024 at 06:08:05PM +0200, René Scharfe wrote:
+Linus Arver <linusa@google.com> writes:
 
-> > Shouldn't socket_write() just use size_t / ssize_t?
-> 
-> Probably size_t.
+> Anyway, should I do something like "#!/usr/bin/env perl" or similar as
+> another patch? It should be more portable than the hardcoded path we
+> have to /usr/bin/perl.
 
-Yes, but you need ssize_t to handle the negative return values.
+The project preference always has been to replace #!/usr/bin/$prog
+when installing to match the system's path, without having to assume
+that "env" is available and is installed in /usr/bin/
 
-> > In particular, this made me wonder what we would do for larger items.
-> > Like, say, the actual message to be uploaded. And indeed, we use a
-> > strbuf to read in the messages and pass the whole buffer for each to
-> > socket_write(). So we'd possibly quietly truncate such a message.
-> 
-> Hmm, perhaps we should at least sprinkle in some more overflow checks?
+We are not installing this thing (yet), so how about giving an
+instruction to run "perl contrib/contacts/git-contacts", only
+assuming that the user is intelligent enough to be able to react to
+"perl: not found" by installing it on their path?
 
-Perhaps, but...
-
-> > Fixing it is a little more complicated than switching to size_t, because
-> > the underlying SSL_write() uses an int. So we'd probably need some
-> > looping, similar to xwrite().
-> 
-> Or SSL_write_ex(), which takes and returns size_t.  It was added in
-> OpenSSL 1.1.1, which reached its end of life half a year ago.
-> 
-> https://www.openssl.org/docs/man1.1.1/man3/SSL_write.html
-> https://www.openssl.org/blog/blog/2023/03/28/1.1.1-EOL/
-
-You'd think that when I ran "man SSL_write" while writing the other
-email I would have noticed that SSL_write_ex() is mentioned right there
-in the synopsis. But somehow I didn't.
-
-I don't think we document a required version for ssl. That version is
-"only" 5.5 years old, but I think it would be OK here (especially given
-that imap-send is an optional component with a build-time knob).
-
-In which case I think fixing socket_write() would fix this problem, and
-then building your other patch on top, it doesn't need to worry about
-INT_MAX at all.
-
-Looking at the conversion, I think there's a slight gotcha with
-retaining the "0" return value from SSL_write_ex() to pass to
-socket_perror() in the error path. Which makes me wonder about that
-error path at all; it closes descriptors but doesn't handle SSL at all.
-Should it be using socket_shutdown()? And should that function set
-sock->ssl to NULL and the descriptors to -1? The rabbit hole of
-imap-send is infinite.
-
-> > In practice I doubt this is ever an issue. 2GB emails are not likely to
-> > be usable in general.
-> 
-> Tough.  Who likes to get multi-GB patches in their inbox?  Heard of
-> people exchanging CD images by email decades ago, though, so I
-> wouldn't rule this out totally.  Perhaps that's the last puzzle piece
-> to convert game studios to perform email reviews of asset-heavy
-> binary diffs? ;-)
-
-OK, I laughed out loud at this. Perhaps a sign of too much Git.
-
--Peff
