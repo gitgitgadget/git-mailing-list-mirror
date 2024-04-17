@@ -1,82 +1,71 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C65680
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 02:40:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187FD3B290
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 03:32:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713321656; cv=none; b=FUNfJRNIlN3AjCPTEYVaz4jKDob+jcY2EafElup69VT3KA0XT69O6AhpeihDkI90oGjxs21c1JUuse5NhT+ryNcYFWhqdEZX+QKo4Cg6smDk70zvF74vHdTgN3s6oELTr52KfAhHeOcAJtjUerhbecszezmxAr6mFQWgn25CcWY=
+	t=1713324774; cv=none; b=kD+jPPqAUxb6yEutYdsf7mUyOwMNKts9FvuoZ/LhcTJ3iHiEfoLetAbnxP6I5EriIggvXqlM3oQn4NBrkBVHrYxooIMp5YylZNeSEIZWEA/FPZq7zx9GDoIdd4UBCKy2NYAhx3RLAP3NiQYw6+6ZOtnSYXs8AsrWkcuLKFlxlfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713321656; c=relaxed/simple;
-	bh=wpZ8niYJW62Ne6OF/MCiAAN/OOlnc2grSkpaXt18pL4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YCtHelpv+tkC4EyhryHbAGnS+czsg0cGrkcxSO+LFZ8MnhHZCq9odIqc8BmHs4bkFr8103QpnmEH3LtXfsrx7QYIPdRrhIFIzDJeMKcggzToaSeNu2Ffph9PiHXEgRG5qm3bikrt/bImKu57t4M8P/uPHhSyVMuuaEuDxy7IO7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=N2R0v+YC; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713324774; c=relaxed/simple;
+	bh=Xdtsv0dzjNtePWXVcfvl0JSzgg7TJc3PM0ecZSAZDG0=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=aXElE6L4DZu0rx/nzXv8TiZOAG3eOU7CKFMp3wSfK9XlAApN42p6GNKCHjzCGcdb+K6rtXCcmbSW3640oGcfuRRwm9iRWtP1Hx8p3rpFChgfOtFKMZKTFV/yuN2niSOdyVV1iisE6HtZK0yOXN3MydwL9M1f0zqI2SPx8fToO+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=RWB3McLj; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N2R0v+YC"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A79A34F13;
-	Tue, 16 Apr 2024 22:40:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wpZ8niYJW62Ne6OF/MCiAAN/OOlnc2grSkpaXt
-	18pL4=; b=N2R0v+YCW7uQs806w74k5THtQgKAGGNaPtS4z9Yk/lEDEKDW5o8nj0
-	hyrWoNDSLJ0bWvvXsulwdrAaO+c/aPQpAprp107cbkFMZhs6iqIslRJ3m1ajI9kL
-	rYPmZISrNT31Ws14jsKtyhE646bCl0VCELFuc1zDrilnSmUk+M7Xk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7467234F12;
-	Tue, 16 Apr 2024 22:40:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA28534F09;
-	Tue, 16 Apr 2024 22:40:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Linus Arver <linusa@google.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Jonathan Tan <jonathantanmy@google.com>,  Emily Shaffer
- <nasamuffin@google.com>,  Patrick Steinhardt <ps@pks.im>,  Matthieu Moy
- <git@matthieu-moy.fr>,  Eric Sunshine <sunshine@sunshineco.com>,  Kipras
- Melnikovas <kipras@kipras.org>
-Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
-In-Reply-To: <owlyzfts52ln.fsf@fine.c.googlers.com> (Linus Arver's message of
-	"Tue, 16 Apr 2024 16:07:00 -0700")
-References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
-	<pull.1704.v4.git.1712878339.gitgitgadget@gmail.com>
-	<c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
-	<xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
-	<xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
-Date: Tue, 16 Apr 2024 19:40:44 -0700
-Message-ID: <xmqqfrvkd843.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="RWB3McLj"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1713324769;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0M6dx4A25saI7CR8lTlaEgybcMSJRsrL/eWIPcfs0L0=;
+	b=RWB3McLjWUmO+ODx7TmpMSqZmlz34kL6dGL1jI11db1D6xuzVgNPvIitXoa623zIzGCFOT
+	XPInJGmgLk17MPcXmpP7+WT8fBLdzTPmpGso0E3VXInjfEcqANXczcFOPmoYfHDHNUd1wk
+	2Ez5gOlLtzfmR+1dXAtRPf7QvnhFcUpGr4Jvwh1VOvpWwit5xef5qcA9dVmPKDBKrfRfEf
+	7U/pxiQz0v325OvqLIwAtc3qYaMG43qJu5WGZB1S14f9icEJzIJwFD9BTil8SfnmbPzrpS
+	jgIQSCUh1WlaA2S+L34MLzVbmaWM4IIzCQHv9qHwO2mbMKu5E+4olBD+MoDqoA==
+To: git@vger.kernel.org
+Subject: [PATCH 1/4] format-patch docs: avoid use of parentheses to improve readability
+Date: Wed, 17 Apr 2024 05:32:41 +0200
+Message-Id: <25b90d065744c01da3f37b6966fd97d699931f6b.1713324598.git.dsimic@manjaro.org>
+In-Reply-To: <cover.1713324598.git.dsimic@manjaro.org>
+References: <cover.1713324598.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E4729450-FC63-11EE-B7B7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Linus Arver <linusa@google.com> writes:
+In general, using the parentheses disrupts the flow and reduces readability,
+so they should be avoided whenever possible.  The improved sentence is a clear
+example, in which the adjustment is obvious and simple.
 
-> Anyway, should I do something like "#!/usr/bin/env perl" or similar as
-> another patch? It should be more portable than the hardcoded path we
-> have to /usr/bin/perl.
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
+ Documentation/git-format-patch.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The project preference always has been to replace #!/usr/bin/$prog
-when installing to match the system's path, without having to assume
-that "env" is available and is installed in /usr/bin/
-
-We are not installing this thing (yet), so how about giving an
-instruction to run "perl contrib/contacts/git-contacts", only
-assuming that the user is intelligent enough to be able to react to
-"perl: not found" by installing it on their path?
-
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 728bb3821c17..a5019ab46926 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -239,8 +239,8 @@ the patches (with a value of e.g. "PATCH my-project").
+ 	variable, or 64 if unconfigured.
+ 
+ --rfc::
+-	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
+-	default). RFC means "Request For Comments"; use this when sending
++	Prepends "RFC" to the subject prefix, producing "RFC PATCH" by
++	default.  RFC means "Request For Comments"; use this when sending
+ 	an experimental patch for discussion rather than application.
+ 
+ -v <n>::
