@@ -1,97 +1,112 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A4532182
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04DE184D
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:14:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713334055; cv=none; b=hHjbKvdo0g20G35npbvWVG9PPbQviFEhpRRenr2QDjAIYhvNKcSTIgf8B74xhq4cB+3fsyfqgoWdGlpV46uWXfvARTMaDLly1v4CyTO0buWJLo/XiDdjfdT7snkLt1f/4RpkutKmF24PMR7b/hlxccnAHgeS0SY+RzgxhVTbObo=
+	t=1713334487; cv=none; b=Yj8dWRtF4pGexy+G/84MlgPtOhsYi13AlRdXT5FEieUF5zTCKNOANtvocMYW61smgXBNsMB+sqKz0OuMPgfpEcFXDoS+4+3eJtxa97gD2dRGOfFgu35piRfdFR/kEkthfMFW/IYVY6QsP5DZn3DJPjXOP7CfaX4d5PH/LHMGYds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713334055; c=relaxed/simple;
-	bh=V4xn6gy9/cBpBxpsJyv/3KQ7QbNqmCbdHCilDxi19eE=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=V7IEM+QRRtTP/0MuQyIidBc8HAhdrrcQ7IJLyQHNvxaZydNshXWdhJuMUspRnqbZCQJl9l/u3vzvS58q8ESZwa6xysU0uW35fPMMmRHk6lne2lGdDbgxDjt3Gg8KfSWv1BGeUYqKbNLfnDziR7bIs7STa698bkxAmL3zA943Mpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Kn9/+ZJ5; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1713334487; c=relaxed/simple;
+	bh=pnW+tbQdgGI4eO1rLAB5hU2GLDecFuJcNwit901+NP0=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=GRPcwINE4dXinn0RUeeP6bl1MauHdHMfWiwDlhLjtbt0BbgyPnoq8a+PfLQnFzo7xpz65aXtVd1xxtbo6lxqe+J5pI6KLQ1Hk02A+qAIW1TvSSqlwVVzYxvNax+pFY/YLK6JueIRqlxR2kLFfNFXuo+uZ+qFsLDyva40BmkUE/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=qLAyHirT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EIgYKPw0; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Kn9/+ZJ5"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="qLAyHirT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EIgYKPw0"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id E0D2E114010F;
+	Wed, 17 Apr 2024 02:14:43 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Wed, 17 Apr 2024 02:14:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1713334483; x=1713420883; bh=X0b/g9NjcrgEFVkRCP7OI1/LFzC0nrhK
+	ZpFLzekQqF8=; b=qLAyHirTE2u1qfVh+GVnwQ5uas/oIhMj9jz5wpIHd2FVSjOy
+	hWCv4uXPa0VMEErd/khOWnrtw2fC+zugWXZOK3lbppYR9b9KbgABJeHWpbz4U1Gq
+	/E1j67c1i53AwY4fZ5Dk29gJgzhGQtM7NoLiYP00AwrmLkFVMmAoo09vVtm6gln0
+	lxU+yi4U/QTLuVop23yw6MeO4UDSUEzMz7qz/LGL6Eh/Nw7C7bV8mbptsEF0JRim
+	omfSrFFQfUG4IzW8nj/rfzw1JWAmprbN0hJgCa+gA4z4NuPxWI0/K1xXzm8JmnNb
+	52kpJeIWhLQaVgrXlyuQDWh4VWGMyGT/O0+kKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1713334483; x=
+	1713420883; bh=X0b/g9NjcrgEFVkRCP7OI1/LFzC0nrhKZpFLzekQqF8=; b=E
+	IgYKPw03Wk9+zNYO/DhsSE5JQH32noeLvEnojut3yrBewJd/dJXCTJX1nJfKcyVO
+	GX94T23UE40HOX1MdEK24opgZt6VWoRwn0ZMSxuh3ySaOfS7UFS4q7TjpA6zXQmF
+	D0FkbH20U90bMBle95pLJ1DW+W9SPfpbYt49e/e9WnQbT87qHb88Tp2KHd047Mp0
+	t9QWUEeKsJHvc66zitbFUSnp7somRQJfGeFXy8zUULB1Ps8xY32lkCdwldcNNGvG
+	lxS4MZMGu2K8aWdtqWqAHQCEXWW712yXJs0m30ytet+KYZ7Vw7Ps9FjS/Wkc5Cke
+	D6Ui4uOQE56SkwD9RoEGg==
+X-ME-Sender: <xms:02gfZi9QvFR5XFG-V4VJH1kzBuF4JcFguDyflWij0tUpZwlFhPxGNpA>
+    <xme:02gfZit6gjlPi7vY7sTCIwnJT9o8TATo5ajMgDauqQWCRfzws41BrW1MSQNoeDVkL
+    Js49KBrbznOe9EnJA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejjedgleegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:02gfZoD-VJfOKDFdmtCk84vVAKHsI0-cB-jL67xDbTcI7F82HHnXGA>
+    <xmx:02gfZqfIuq7uB9sRN4icK5i1tFvoPp35TQcrxJwv2GIx1Hb2fFayZw>
+    <xmx:02gfZnM9BT4sjC467HmYRPk0h2dBmyRwAxQYLPN7YyJyEFxFeYhloQ>
+    <xmx:02gfZkkYW_75D0p-EqWQQPaD0vyKIWBf8kMd7r8B0fTBVuO3_7pSEQ>
+    <xmx:02gfZt2hLV3NkWCuX4o2MVrW24T7zK8kY90rejBz_3er43y7LQ61TwmE>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 8E6AF15A0092; Wed, 17 Apr 2024 02:14:43 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1713334049;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CWwARNo14q/XAK5f+HsRFHusf9KkyLoRXykNeX9hQWc=;
-	b=Kn9/+ZJ5qKzmutBRX1RD0Cz45p1mr8eAIKOVoQqbPETs2fMo59izfwg2gnTLgbJ2KwGMHd
-	VozoNUZ8yg8975Cd6avD2K+nw15lqxIxBmXwARTcAL9IJsTLKltj7qntKStRUlog10Xa7q
-	mvXAjKCI5VI6laN/dQTahcWXWIiipPjRGQ2vZ/Ko7A4K82PQxqCg/iCMKCon6tH/SH6NK1
-	PKhZKRwVD0Xjx7lgTjZfHpOQ/5RfB/q2dKW8zhfjKtmGofMnz5BbkTZINJHmSe7zrUDTfY
-	DVi3o5YPCoh1SHPKa+9YeVr5jrDyprYEWDoTnIwAi7cSdPKsrgKI/SxGsu5kuA==
-Date: Wed, 17 Apr 2024 08:07:29 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/4] format-patch: fix an option coexistence bug and add
- new --resend option
-In-Reply-To: <CAPig+cRkrMDkQKnwaTGY4djwgC6mGqngB-4HfGQm1TNCq4Q4+w@mail.gmail.com>
+Message-Id: <556d4baa-14f9-485a-8db3-0c9a966351a7@app.fastmail.com>
+In-Reply-To: 
+ <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
 References: <cover.1713324598.git.dsimic@manjaro.org>
- <CAPig+cRkrMDkQKnwaTGY4djwgC6mGqngB-4HfGQm1TNCq4Q4+w@mail.gmail.com>
-Message-ID: <36c4a1e23653c2844a52fd994501287d@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+ <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
+Date: Wed, 17 Apr 2024 08:14:12 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Dragan Simic" <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND" to patch
+ subjects
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello Eric,
+On Wed, Apr 17, 2024, at 05:32, Dragan Simic wrote:
+> Add --resend as the new command-line option for "git format-patch" tha=
+t adds
+> "RESEND" as a (sub)suffix to the patch subject prefix, eventually prod=
+ucing
+> "[PATCH RESEND]" as the default patch subject prefix.
 
-On 2024-04-17 08:02, Eric Sunshine wrote:
-> On Tue, Apr 16, 2024 at 11:33 PM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> This series fixes a bug that allows --rfc and -k options to be 
->> specified
->> together when running "git format-patch".  This bug was introduced 
->> about
->> eight months ago, but it has remained undetected, presumably because 
->> of
->> lacking test coverage.  While fixing this bug, also add a test that 
->> covers
->> this mutual exclusion, for future coverage.
->> 
->> This series also adds --resend as the new option for "git 
->> format-patch"
->> that adds "RESEND" as a (sub)suffix to the patch subject prefix, which
->> eventually produces "[PATCH RESEND]" as the default patch subject 
->> prefix.
->> This subject prefix is commonly used on mailing lists to denote 
->> patches
->> resent after they had attracted no attention for a while.
-> 
-> I'd recommend splitting this into two series, one which fixes the bug,
-> and one which introduces the new feature. Otherwise, the bug fix is
-> likely to be held hostage as reviewers bikeshed over the new feature
-> and opine about whether such a feature is even desirable[*]. As a
-> result, the bug fix may take much longer to get applied than if
-> submitted as a standalone series.
+I think this paragraph is a bit *long*. How about
 
-Thanks for the suggestion!  I'll wait a couple of days for more
-feedback, and I'll then split the series.
+  =E2=80=9C --resend adds "RESEND" to the subject prefix (producing "PAT=
+CH
+    RESEND" by default).
 
-> [*] For instance, my knee-jerk reaction is that we don't want to keep
-> piling on these special-case flags each time someone wants their new
-> favorite word as a lead-in to "PATCH". In addition to --rfc, and
-> --resend, the next person might want --rfd or --tbd, etc. More
-> palatable would be a general-purpose option which lets you specify the
-> prefix which appears in front of "PATCH", but even that can be argued
-> as unnecessary since we already have --subject-prefix.
+(I took this from description of `--rfc`.)
 
-Makes sense, but in that case accepting the --rfc option, back at the
-time, was actually some kind of a mistake, if you agree.
+Probably modified to fit in with the other paragraphs.
+
+> Of course, add the description of the new --resend command-line option=
+ to
+> the documentation for "git format-patch".
+
+This paragraph can be dropped. ;) Adding documentation along with a new
+feature doesn=E2=80=99t need to be called out.
