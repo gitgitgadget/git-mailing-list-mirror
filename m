@@ -1,88 +1,84 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D093253807
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 05:48:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A7F535A4
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713332923; cv=none; b=pPQ8R5ty4zplcAfggbbf/78zRBKVgFZ7zORJRY6ljqDdC0O8WD9HYUrrMZIbCSdjCsFBSuYLkUoVnDkz/IfFc+TFBf4Wzb8s98Ghgw+m0z6qrsmPnarnTd8rp9+zJngF82cbSTMS6hXzEOVL7dESQtCQ65noBkoB4HJiQrXZ+Ts=
+	t=1713333743; cv=none; b=NeKt7Vr3+AC1NWuXMspD5xd2HtQphlVZTueFjX/+gO1WTdUejgDZBQTSmRKdsQ0jKNAicfADUHIh+1n0wtnANfTa2gN4thtqks7myYodeUXmqrtlrNP+pCArW2/jH7o3wDFVP9LEOSb8EwJpIbsHvjWy9k4PhygZxti+svGcDog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713332923; c=relaxed/simple;
-	bh=SgUzli5FoYlXRSz1xB/76HUGYwMltM6PhmG8CC/EPYs=;
+	s=arc-20240116; t=1713333743; c=relaxed/simple;
+	bh=AMuB+57MR91ND9QtmkFyJqDLVbAiTVXNWcqId7y4pGM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SkTWf7euK0wAbapaupuLB8CzBylkEclsrk/LLjWtT0jmLtMQ3SjRPVlCFMls0BfQ3ohesixZQs2vUXQ4I/OinbrSGmrvmk21huYDD+y2Um+gXZKeeCP2QjOOyT/3ZIzjE+ZjrywAwZSL/CIBH58J2vXFptUp+J0MNsS74FiVsV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+	 To:Cc:Content-Type; b=Rm7NIVkHOCCCrzJRs5PJoYWw9iM4Hn5IMvq8gYcNtWV6fNDnbRKD5TYqR/t/Vj+Y1Ho4qdfott4Su2ADUnCoSTBP1C+Kf1dH/Iutp9J4T1JDdJINCptWp8iVlxJpjX8hoHInIS8tr8C2OXI8stkKaorcSJp0FcOAg9xxr+maSFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-69b16b614d7so33465636d6.0
-        for <git@vger.kernel.org>; Tue, 16 Apr 2024 22:48:41 -0700 (PDT)
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-78ef9ce897bso62347485a.0
+        for <git@vger.kernel.org>; Tue, 16 Apr 2024 23:02:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713332921; x=1713937721;
+        d=1e100.net; s=20230601; t=1713333739; x=1713938539;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BAJ0XRuELvwrDgvnnu5gW5di0bipBRrgsEAoCUmmUYo=;
-        b=V3Y1F5wfNw8qKMyGyYWsGtoZgDrPa2YNI7JzKInkSYtiM+LX1KfrOR8vvlExm9zXUZ
-         4B0RchGn2UqO5Ar/XcjFzITewq0Be/dQ71R3VWdYKokcPygVPhNCOM+FibAQ0tgtYY+q
-         eUTSDPpbrcwPOMhz538wucN/RUFb8XIr0mpeeRYGoyKU51cG2Ht8jlJRd8s1iUqThDtU
-         Gj1WGWgPmFycBmgXLIICETYb0JUyIvxR4+36LNVLchre27SHS7zJOqtmgjhLKFpvrlNe
-         n3QugOpaTSuiMLfjU1gOvSO+VHMJ63CSTobNFkWMcnyECsoeMt4JkP/L5yVa6tg57sbP
-         Fd6w==
-X-Forwarded-Encrypted: i=1; AJvYcCVC9HFxlQNd/OHXjwNc5YfRV5yc7mXUS+j1tLEQsDQMUWJv7a+YVZWUODfgVl28/Rxnr1xgJTgZ1piOHTxrk3cHN2k1
-X-Gm-Message-State: AOJu0Yz2OSregvC/d7OchGIUb6SzyIPPVi7gdPz7OlacbEI9YRoyayzS
-	KSz92dv9IdrqDUEOiykSHL+wte6ziOJxHr0jgVj5gLNgkq3wtlaLxvdmG4UD/4Yt1UWYghq1sZX
-	W88/BBoSAmKvqeCX5+cqsE89GRks=
-X-Google-Smtp-Source: AGHT+IGWvpfiEL2fEbOy1xF6TqqcI/i9hTHQrAK2EChWQIOx6PWNdQhbAioNQ0umY58byWqQFhiBTEEWF8V4jL+Ub4k=
-X-Received: by 2002:a05:6214:514f:b0:6a0:49d1:d490 with SMTP id
- kh15-20020a056214514f00b006a049d1d490mr208588qvb.56.1713332920646; Tue, 16
- Apr 2024 22:48:40 -0700 (PDT)
+        bh=IhSVAOsSNGQM6gtp3e3UDkedYu0sTjB9bZ8rfhCQenk=;
+        b=mIkLQkHGuGnu9a5rSr7+EDFIfUdFHZQc0XnZL6S9hRj+/bItkfVy80E7f8NNU5QFPw
+         Qt1px8tlVA0Glvrjtwb98MFogfFqKWUHr/9l7Zl1VJnvDqoenCPIzU4Fxt3JSoVpQmKL
+         ZyC+9HBgaKpd8GUr3AuUGeJL6RgQLgTtkr8grvly5S4nKWUs2emeSB+0KUlQNnnrpFgI
+         n8T1AAUcvN2QoHcnRh58U7ERJh4BPyYl0DfVLuh89YcnbfuXEPX573Lk9TflzOTf4gwB
+         mnQbJC4HFfpywLI+9UaomADOUDAFc9b/DIFftS3WwtrfSooTzyIMVQOTn+tsptKbDiYk
+         pfbA==
+X-Gm-Message-State: AOJu0YzA17QWvgiJGZduiDLb1JuGm+9dPfAFOXWOYFYiA3pvpNuUQ9cZ
+	tJMiQlp++b8YcS8sgwBW1HSR4xNHWMpDJmXKqxFFNrqTu6YESWrbAFG1+c04apUpi/HtGu5ZcI/
+	Un1bum8GnlqFjrE2R7hcziYgxl0eUlfBV
+X-Google-Smtp-Source: AGHT+IE7Ye6rdO3BjJ9TtvnW10HPKYyCwWl8fewAvC3FtuT3KqZhzOhIUxBj8ZgKITZ8Luzu4GNXCBVLp5BdN/gF0K8=
+X-Received: by 2002:a05:6214:9ac:b0:69b:7361:dc08 with SMTP id
+ du12-20020a05621409ac00b0069b7361dc08mr8764180qvb.20.1713333738684; Tue, 16
+ Apr 2024 23:02:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
- <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com> <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
- <xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
- <xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
- <xmqqfrvkd843.fsf@gitster.g> <xmqq8r1cczw8.fsf@gitster.g>
-In-Reply-To: <xmqq8r1cczw8.fsf@gitster.g>
+References: <cover.1713324598.git.dsimic@manjaro.org>
+In-Reply-To: <cover.1713324598.git.dsimic@manjaro.org>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 17 Apr 2024 01:48:29 -0400
-Message-ID: <CAPig+cQ=xgfExyCM2qyobv7CNRz7=J8S_=w-C-VoCNZ6M6FBbg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Linus Arver <linusa@google.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>, 
-	Kipras Melnikovas <kipras@kipras.org>
+Date: Wed, 17 Apr 2024 02:02:07 -0400
+Message-ID: <CAPig+cRkrMDkQKnwaTGY4djwgC6mGqngB-4HfGQm1TNCq4Q4+w@mail.gmail.com>
+Subject: Re: [PATCH 0/4] format-patch: fix an option coexistence bug and add
+ new --resend option
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 17, 2024 at 1:38=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+On Tue, Apr 16, 2024 at 11:33=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> =
 wrote:
-> IOW, $cmd is just an early part of a shell command line that takes a
-> filename as its last argument, so I think it would be fine for $cmd
-> to be "perl contrib/contacts/git-contacts".  I did not test it, and
-> it would be appreciated if people can test it.
+> This series fixes a bug that allows --rfc and -k options to be specified
+> together when running "git format-patch".  This bug was introduced about
+> eight months ago, but it has remained undetected, presumably because of
+> lacking test coverage.  While fixing this bug, also add a test that cover=
+s
+> this mutual exclusion, for future coverage.
 >
-> diff --git c/Documentation/MyFirstContribution.txt w/Documentation/MyFirs=
-tContribution.txt
-> @@ -1118,12 +1118,12 @@ valuable, such as changing the Reply-to address o=
-r adding more CC and BCC lines.
-> -codebase and run `contrib/contacts/git-contacts` (you must have Perl ins=
-talled +
-> -in your system).]
-> +codebase and run `perl contrib/contacts/git-contacts` (you must have Per=
-l +
-> +installed in your system).]
+> This series also adds --resend as the new option for "git format-patch"
+> that adds "RESEND" as a (sub)suffix to the patch subject prefix, which
+> eventually produces "[PATCH RESEND]" as the default patch subject prefix.
+> This subject prefix is commonly used on mailing lists to denote patches
+> resent after they had attracted no attention for a while.
 
-I wonder if we really need to hand-hold so much to tell people that
-they must have Perl installed, especially since the command being run
-_is_ `perl`. It might be sufficient simply to say:
+I'd recommend splitting this into two series, one which fixes the bug,
+and one which introduces the new feature. Otherwise, the bug fix is
+likely to be held hostage as reviewers bikeshed over the new feature
+and opine about whether such a feature is even desirable[*]. As a
+result, the bug fix may take much longer to get applied than if
+submitted as a standalone series.
 
-    ... codebase and run `perl contrib/contacts/git-contacts`.]
-
-Anyhow, it's a minor point.
+[*] For instance, my knee-jerk reaction is that we don't want to keep
+piling on these special-case flags each time someone wants their new
+favorite word as a lead-in to "PATCH". In addition to --rfc, and
+--resend, the next person might want --rfd or --tbd, etc. More
+palatable would be a general-purpose option which lets you specify the
+prefix which appears in front of "PATCH", but even that can be argued
+as unnecessary since we already have --subject-prefix.
