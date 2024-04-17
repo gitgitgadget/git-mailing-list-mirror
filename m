@@ -1,103 +1,95 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C732184E14
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC08316FF30
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:32:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713370787; cv=none; b=RaRL8U/KXeFN+FQbmw74OS6ytfwovwNVBOeYqyNp7MMS1RauHphADBKLIKmHni2p6LxtW6fJrLp8tZNZWsURD4CwnymdKwVzRsYyR1sKYis9n5yKcwcLYLNXqSkbzkKP6K9yufG3dUxrwMlFmPBhXbtMQDGj5cwr6aS+I64ee3Y=
+	t=1713371568; cv=none; b=K1/oIUdFnyIpQWATbNAwjG4rGtZirosvtVIIUDjAMfKq9tb1K3UH67PuG0b0ggmU3/SrGnNFkmsd6k89zrON0lozV0zFnUIeZqjasuSf4+yO7F6o5ZQwG5KYWwYEQiTjtMOgn+wYS254ObSQZSGmxbzeAjpaxFYT+ts2G2VaHtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713370787; c=relaxed/simple;
-	bh=ca+Y105/BunsBWrKCv2XkJWmmZvLlISZ6cj523B16XE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BhQO0kmTkT09Im+cDHdjalzErCebd2bzvt6J5iNUPt4g54XppD/4axmVLnJwxK7kjdGXIbCb8/8JBMvk8jfwiv3j5WkEDwyAsGgP61xHAE+l685UNOyXSxq56y4jorxFKAue1XAhMpaiTz0ySffUg/SqR7crORl0BJmUwaTJCns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W97OGQ09; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713371568; c=relaxed/simple;
+	bh=LGAQOQwxqd/nz45qQ33WWY9WpYKE4pRRmAkX6OxV5yo=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=qzxlG8MhklbzjVo/KqQDJyIa4k2mTJ5oX+BqDjlm5XjsTuU36QOTZnmY956dxWgJ7KhzQV13dE0jb0KP0PrKOS2YJ+yFLWo6YH1pLK8i7vr4c26lDfWZHXETtk1Np2DN2F3L/gdTt+ak8k3MoXy/X64WyysB2G7JzRj0SVestPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--emrass.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zvQcqLKS; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--emrass.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W97OGQ09"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3c5ee4ce695so1721390b6e.0
-        for <git@vger.kernel.org>; Wed, 17 Apr 2024 09:19:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zvQcqLKS"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-ddaf2f115f2so8314968276.3
+        for <git@vger.kernel.org>; Wed, 17 Apr 2024 09:32:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713370785; x=1713975585; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ca+Y105/BunsBWrKCv2XkJWmmZvLlISZ6cj523B16XE=;
-        b=W97OGQ09gEyNGMq25tu+sscCrDlN11PFJSJww6EayW1e272XXdaWkqPuImUhffM0F1
-         ZOz77lNatsJbr0RFyRF8Leqz67yJJzZvpNb2Cv+qDgjmt9tEkXnS93WUQyI9uzY3pbEQ
-         9HsxTZV301ngHKCxdGyzLRTtdk+dH/iV2ys2MB+OcXYr0oGBrHCJr72mhvVo/4BpmMAD
-         Wp3U0ZvXvjh9TXXmXuW/0eTsvuy6EPFIvZMIwFbgwPnwpmmBmZXDP4C5yWgpgPjoIYOA
-         ekypGh9iOHfkhbrEaLxzKUvTV/tRv/u9rkoUrxk5MILWRJzwSjLiouMaI7P4ZxvztgCM
-         y8Ew==
+        d=google.com; s=20230601; t=1713371566; x=1713976366; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LGAQOQwxqd/nz45qQ33WWY9WpYKE4pRRmAkX6OxV5yo=;
+        b=zvQcqLKSYmrkO3/G+XXSxIWdswaGVqRk10edrrRlbSCJHdiRzKKqVKa3YxB1CsnPYG
+         yvymPcv/GxGKfR6nHDWy+s1kqZxk5gvyS1t6U5POOygZmFTPraYZJ0WE7TnPxF9gSVDc
+         zIITdQEMxxFbfAkbBeyaihiJCwmVSS0zP4YC0Jkzv2yKgACcvodqenBPuGPfNPgaWWTc
+         cCdaojOtcUhGg3+iyxlNUNNhvdHLA2sLyG/6hh+0/ML0lex1aP7lRsEscKUr07TnPJ00
+         rSKpgU8IlooCPCiUwXUv1u/8HQkfatfxWTixU/vJZipyF6z50n2llsG9aNypWPYOgjC4
+         9XKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713370785; x=1713975585;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ca+Y105/BunsBWrKCv2XkJWmmZvLlISZ6cj523B16XE=;
-        b=wQw5PiNArVDPSQn0onR7Gi6AnoYgdwGWoEOaNb8gw6ZVNLwajkQVAuuXWhK8DPeatj
-         rajA4c9E09O0Wy8WGps6EU9e1lv9/nJoWdHv+zKbdMZp5KMtVyCNNX8NKXOCuldqq5Qg
-         8NAhsVv237wL5R7wYunnbyz6KtqUYTeGpNjS1Z+Y6GEX3009A/pvhNz3jVvtYSdPRBQd
-         rjXvYU6CV8UjZooLU8Bj8Ct19O4geM1D+bFPdGz0Ls4vFAqvoLDgMVbUHTU8Bo1qnt/C
-         y2zrShRltdR6ILYSKPRC6NcCBUyv1xUtj7pZQ7gmoN1FxIJ6Fx3JYtlPaCGt77N/ibjV
-         54qg==
-X-Forwarded-Encrypted: i=1; AJvYcCVf0NpYykB9iz5PQNqZli/WSwq0ED76M8o9cYmXPWAkUM3dadpNEyh9kWZBqWSFlxT3dCUqKKjSggkk29v5zG8FuX9g
-X-Gm-Message-State: AOJu0YwJareosFAqf/yKyMJnZ70dMMCAKBwLVU8ZagJmhk4uAuISLnr+
-	LXQ/S1Z6WdmlCEJWn3AlPuc3m5tb3qZuKv8sc4odoI/ztxa6zwdFFsrSxWEk/Loe99pdc24AlJ9
-	cw7whdwonI5wwudZvNIh+C6QfbhdBIQ==
-X-Google-Smtp-Source: AGHT+IHK630+Lekdkk9zNt3v7ZAq+v/83GGJmxea9mUSXVejGSfug84x6QdpOdL2rRvuQWjxutpPErDrkKmmhQ8NjSc=
-X-Received: by 2002:a05:6870:1715:b0:22a:582a:9bcc with SMTP id
- h21-20020a056870171500b0022a582a9bccmr18506370oae.53.1713370784628; Wed, 17
- Apr 2024 09:19:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Apr 2024 16:19:43 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1713334241.git.ps@pks.im>
-References: <cover.1713334241.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1713371566; x=1713976366;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LGAQOQwxqd/nz45qQ33WWY9WpYKE4pRRmAkX6OxV5yo=;
+        b=gM3h5vb1xY84+tbH1gZhenchMk8yRx9STqfR/DSWCZg3yoN5Q8O3o0hDG7z5iaTp3F
+         i9R1MYrn13xrHtn+lJjgsXxpc41HVrI2ACJKeGKPzgNmpTFHX1CfZl4Vp0yHGcH2YV/9
+         PH4t5mM+cLS3sIsFFrL24MZlychOp+m5gvW7zagUYztJw4hPwu5zqLxvP5te6aeIXaUI
+         m9A2mtX9rH/eogRCauBkP9LWpCowY2XeYLW/LJYzqoSqER/HiqiLVk+IYMEiC2m3gBAG
+         /4ELA1NP4G4FF6pQK48BhRcl/b+EBHT/8aF0WNCVSzhpleIzSQ4/5yrsu/8JeobYqchm
+         F9WQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVcfOn15tM0LiWUVlFwUDzhT1VOCyv7aGYV2DBbuji8+8PaVd+mg5Hf6/g2cGmi1y5mRKY/9eraxiz+eEa3SCMKSEty
+X-Gm-Message-State: AOJu0YzOTOsVYIpt4WnVGexvZ399HnmWoObqht0eTgO4jIQl+cScMEs6
+	OTyJ01QOXQTKV+HYM04Mz9skxfxKC6vCu8pNcnPd7xwUrCyACM0eyIqBec6Yw+i4XQH9eSfrBUK
+	XVg==
+X-Google-Smtp-Source: AGHT+IG/AIGK2Yyksor6IsX7ioFguguiU4j84CcVGCq7Ch/fspt3Kvsh/7/ZuyDvvUH9h8hJFp9cWXtODK8=
+X-Received: from emrass-cog.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:1f8])
+ (user=emrass job=sendgmr) by 2002:a25:5f01:0:b0:dce:5218:c89b with SMTP id
+ t1-20020a255f01000000b00dce5218c89bmr1207642ybb.5.1713371565739; Wed, 17 Apr
+ 2024 09:32:45 -0700 (PDT)
+Date: Wed, 17 Apr 2024 16:32:44 +0000
+In-Reply-To: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Wed, 17 Apr 2024 16:19:43 +0000
-Message-ID: <CAOLa=ZTRY6hmQqC2BozFkLmLQWnkQ4+sSug_8N1ZY9+aHNqCTg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] builtin/receive-pack: convert to use git-maintenance(1)
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000fc9a7406164d383c"
-
---000000000000fc9a7406164d383c
+Mime-Version: 1.0
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+X-Mailer: git-send-email 2.44.0.683.g7961c838ac-goog
+Message-ID: <20240417163244.651791-1-emrass@google.com>
+Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
+From: Enrico Mrass <emrass@google.com>
+To: steadmon@google.com
+Cc: avarab@gmail.com, christian.couder@gmail.com, git@vger.kernel.org, 
+	gitster@pobox.com, me@ttaylorr.com
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
-> Hi,
->
-> this small patch series adapts git-receive-pack(1) to spawn `git
-> maintenance run --auto` instead of `git gc --auto` like all the other
-> parts of our codebase do nowadays. This removes the last internal user
-> of `git gc --auto`.
->
+> Document these norms so that newcomers to the project can learn what to
+> expect.
 
-I don't have enough context here, so why do this?
+As a newcomer (first reply to the list), I highly appreciate the effort. Thank you!
 
---000000000000fc9a7406164d383c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1dbc83b5b2e34cf3_0.1
+> +After a suitable period of time has passed, the maintainer will judge whether or
+> +not consensus has been reached. If so, the consensus decision will be
+> +implemented. Otherwise, discussion may continue, or the proposal may be
+> +abandoned.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZZjlwd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMGdDREFDZk9LYkU0ZThnbE9oM1RtVWlmOXcwbkJSdwpaMnlNL1UyaFR4
-cmdpZEE1VHdtNjc5WUNoYjlOTVlDcEpEdHU5UjRGMEZ4dnRYK3luTDQwUEQ3NktvanIwSlRMClZT
-V3VJamJwOWpWRFBYVlV1b2IrYk1oWjJ0QmlxOGRiK2IvSDE2U2sxQnpqQ0xOODQ2ZTZnKzB2U1pw
-cTBZVC8KUjNOL05uV0xvNkdZQVJWUU9xRjlUdWVjTE1KdDRIcEFWZlFVRkNWTXM4NzhLM3NHcmMw
-eVNYS2JTTDMyNlVKegpMMDZlb2RnNUtSenJGaTJoQmo3N0w4ZzBxSDN4SXhMcE02RjNCTnVKWDJW
-QzNscDl6MjRGYUN4SkVSa253bHg4CitMWC9uVTFQZHBPWUFQWFJBdk9ZTldQd2ZoS1RvQ0FOenkx
-cjNhZnAyVkFnZWZ6cm5xNWpQNHJIZXdid25UN1kKeThoZkFHY2UvMEl1YkdVRG5HMis3c0IzVjlX
-c1NDQzlTYmEwNTJzVGk1U0hPREN5SkdadWNaSzVhaGRpc3dqMQovenlmcU9DSmhCdDVzb2xxVHYw
-aHZxcUd6RVJIcVlSbmJRZUNpSGR0M0xURUlUUEQ1Y01aMGlzeUVBVUF3enZECkRJZk5mZnhNY2FZ
-S00zNEd0Q3I4MUJObC9LdWoyTmlHWEU1RG9pOD0KPVRTdzAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fc9a7406164d383c--
+I'd be curious to learn about norms or practices applied when no consensus
+could be reached. It seems worth elaborating on that as part of documenting the
+decision-making process.
+
+> making bigger-picture decisions (above and beyond individual patches and
+> patch series)
+
+I understand how bigger-picture decisions (complex, larger scale architectural
+decisions, often involving multiple components, likely requiring a design
+discussion / review) are different from individual patches. However, nothing
+in the current description strikes me as specific to these larger-scale
+decisions. Are there norms / practices that specifically address challenges
+around large-scale changes that are worth documenting here, like encouraging
+a design for discussion in the first place?
