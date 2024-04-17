@@ -1,99 +1,108 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9304713A41B
-	for <git@vger.kernel.org>; Tue, 16 Apr 2024 23:21:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840992913
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 00:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713309716; cv=none; b=TO802nk9uN9cnM7L7jEk83G2D2Whp3BIOJzZ5CbeOdToIhVR4ki/z+DJ01/7EboyZf40vTqKKhCyg2Fo6Uu/AVOUA1VjCbNDDbye0QUKCptc1ylEgViIjsI/pEVuNOdl+pqfAZvhwE0iqY+ljQYfalihQ6KAnpVNwAaTPw3Z4PY=
+	t=1713312183; cv=none; b=qEBAa7HLVFn8qZ/OxIlDw87guNy29ilb2NQSf0phr11AbIL3cb12nm6FdyKvTtgPEHHDqyVUkXFFVfEEUud42oZMIojZIRbeLU6OhCuU1fQL0dqgltyXk24U5J69KvkQBUFhBwSAMcLy0U+AZLYIR+1ariDxXrVFk7EZ0k9jhAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713309716; c=relaxed/simple;
-	bh=XfLNxvKN0rUslLVP7bMviWsZMp8NKOOlFQ/Ie1MkV7w=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ogYfpDo/WXPDagtGZStxLFaQ5lIiQtD2CYwkTRFF9l8J75thClyPDSj2xGN7dxtzwaZ95B7i1baBTM+VETz5OsVIZLDwvn3M6oAEcCMxEEGaVaK92pnUR6swba2aPHUIuedzJ+zQgeG7xL9Bp5dFoSzdUNgyG7E59rUtdILn+BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ffmdRPgZ; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713312183; c=relaxed/simple;
+	bh=/9gJP+E+JQoaZgFAJNZO8fswMIkX3MIP1Cv0Zg/zORY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ttl0eL21+9FHmsm8aHfj6Aa/KqInZqP8C+t8Pw/RJagSydh1Lvs0VQEqkl3CkM4w+lm31PCr5N9+Nfnb2NzkfwzAqciuz4cuSfC+f8ALbFn+y9go7y9HwwnmCuEVsix42KXDmt1kYtBoeOGNVkI7ODf6Hwo8HSHwnxK4HR3Ah4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YJVkmU4L; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ffmdRPgZ"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-347e635b1fcso1805494f8f.1
-        for <git@vger.kernel.org>; Tue, 16 Apr 2024 16:21:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713309712; x=1713914512; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GEhZrlk2IMrp1WpY3jsU314GTeqhyVm+JURLrJ0sDGo=;
-        b=ffmdRPgZz5XMz545Flf6AeUfIh5HIDhwj0SUfe59ZvF1PA4OAzoJ99IKZuVeboyOLm
-         75DIOk170waW1tcRjBZKuWwkyvdMJoo4jLypqA39VQ5dMXUToPU1dpkTaPD1OpArmmzZ
-         IiKfceniH8K7o3yvy2HKllsa9cSmCVZlc4IisRhV5bI4Ms3EumtOxII9uHTNKHrpJE1G
-         M17BbRJ15KgB0FC+GIONtZOyUafa1E5jAZWOsicVkQkctmXksUuLDgFtP18HdrmGlSmD
-         AQfqqVv/yx6KhNL4BRPL0+zcj7eiK0py+gNznVNMk8Z34xwNprRGUbg0T6hhK9txEZpW
-         cN8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713309712; x=1713914512;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GEhZrlk2IMrp1WpY3jsU314GTeqhyVm+JURLrJ0sDGo=;
-        b=WK/iIuvs52av7DWOD6/xZ/p0eO29cyvovtyboUV6fA/KPTe00StBsBRiRxcSnDvki/
-         0SgOrni1v6TE2Cr6KW7wvbtC9dnhPjWFJeYuc0AuzYWCuiUEiJ2Vjwi5abJTqVV85d+S
-         U29hhPzsMOVPRzGTK/BfolIFhqxZ58bqH93a+RirKIXSMXLf+6rvml4RTlGSD3xVCzyE
-         8RPESutkrn860PlK4rMR8D2WwvN9MSg48B08kdY6d8P7VTUypeMWqsWJaZoEwq5xzKXp
-         YZ0vK9vt2zzKKT5tNV+k+0zVqNip+pYlxov3n7RZ4e1AqG5XlX/FoA2cVXFQXqTqwK37
-         qF/g==
-X-Gm-Message-State: AOJu0YxrFGuXcxCduw0v6tmwuoxhrhST8wZDKDzLbTDBaXdCUJXo1TIq
-	7GNF2SJnV7/Gux4jgdTZnRLdA4dkQMutp5cx1QOyu0x+2KicpUB6q1uMxw==
-X-Google-Smtp-Source: AGHT+IEpzEWAIEh3OtP60i8dJfm+2xF+EQPVoPmlj+a+4DVdjFJPwycYj9HB+Y/XeQ51xo8aJoAeUw==
-X-Received: by 2002:a5d:59a5:0:b0:343:b295:4d99 with SMTP id p5-20020a5d59a5000000b00343b2954d99mr12447131wrr.56.1713309712068;
-        Tue, 16 Apr 2024 16:21:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12-20020a05600c358c00b004187f537394sm446547wmq.8.2024.04.16.16.21.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Apr 2024 16:21:51 -0700 (PDT)
-Message-Id: <pull.1720.git.1713309711217.gitgitgadget@gmail.com>
-From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 16 Apr 2024 23:21:51 +0000
-Subject: [PATCH] mailmap: change primary address for Linus Arver
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YJVkmU4L"
+Received: from tapette.tailf784c.ts.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 03B875D4E3;
+	Wed, 17 Apr 2024 00:02:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1713312177;
+	bh=/9gJP+E+JQoaZgFAJNZO8fswMIkX3MIP1Cv0Zg/zORY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=YJVkmU4LZaOYLHlvlkvSAPTsyxqtyfH24pM+wOMF1qtCEV0mnF6jRyMMDqTudavls
+	 8awTMsDlBzkfECbTsHjCj75wWVbqzi69mMrtnkP7/JbMQkDvuw1vxGWy11+kNUqI3u
+	 TbxmbCrBn+Aho0Zng2S/Vs9Q8dLXFf87CWcNr1kI515DIzK5u9uwEsO0qUJ2RQ53ID
+	 ONe6U2+pbWOBOinNIOuuLbcnTyy6o+7Ckvpbhn9uctQyZFJZJtYEMB3ec+4BBUwvtv
+	 8IpeuavN557jmlOUk82TjDt8j29vgA9k54my9PG8Q+t/JTOAC91Uk7GuM3vcqcYvEC
+	 g6BjZ1ALDaWcw3MMnR7FrxXhgnJc3WXJ4tNubsDZkO096QInIzZbRc87qgvUnI/3R0
+	 kjdXs/SFL3ns9VZEUq3le2evsGXzbwRYN8c4tS1ihNMuTAFhy4GwVRQl+J1FH6wzyO
+	 K1NWRYUByC2UdVaSZMJNk5HuaySjx1Q1G4f0Xgk5VvECBief3dt
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	M Hickford <mirth.hickford@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 02/16] remote-curl: reset headers on new request
+Date: Wed, 17 Apr 2024 00:02:26 +0000
+Message-ID: <20240417000240.3611948-3-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
+In-Reply-To: <20240417000240.3611948-1-sandals@crustytoothpaste.net>
+References: <20240324011301.1553072-1-sandals@crustytoothpaste.net>
+ <20240417000240.3611948-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Linus Arver <linusa@google.com>,
-    Linus Arver <linusa@google.com>
+Content-Transfer-Encoding: 8bit
 
-From: Linus Arver <linusa@google.com>
+When we retry a post_rpc request, we currently reuse the same headers as
+before.  In the future, we'd like to be able to modify them based on the
+result we get back, so let's reset them on each retry so we can avoid
+sending potentially duplicate headers if the values change.
 
-Linus will lose access to his work email soon.
-
-Signed-off-by: Linus Arver <linusa@google.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
-    mailmap: change primary address for Linus Arver
+ remote-curl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1720%2Flistx%2Fmailmap-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1720/listx/mailmap-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1720
-
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.mailmap b/.mailmap
-index 82129be449f..18128a1250b 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -152,6 +152,7 @@ Lars Doelle <lars.doelle@on-line ! de>
- Lars Doelle <lars.doelle@on-line.de>
- Lars Noschinski <lars@public.noschinski.de> <lars.noschinski@rwth-aachen.de>
- Li Hong <leehong@pku.edu.cn>
-+Linus Arver <linus@ucla.edu> <linusa@google.com>
- Linus Torvalds <torvalds@linux-foundation.org> <torvalds@evo.osdl.org>
- Linus Torvalds <torvalds@linux-foundation.org> <torvalds@g5.osdl.org>
- Linus Torvalds <torvalds@linux-foundation.org> <torvalds@osdl.org>
-
-base-commit: 21306a098c3f174ad4c2a5cddb9069ee27a548b0
--- 
-gitgitgadget
+diff --git a/remote-curl.c b/remote-curl.c
+index 1161dc7fed..e37eaa17b7 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -893,7 +893,7 @@ static curl_off_t xcurl_off_t(size_t len)
+ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_received)
+ {
+ 	struct active_request_slot *slot;
+-	struct curl_slist *headers = http_copy_default_headers();
++	struct curl_slist *headers = NULL;
+ 	int use_gzip = rpc->gzip_request;
+ 	char *gzip_body = NULL;
+ 	size_t gzip_size = 0;
+@@ -935,6 +935,8 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
+ 			needs_100_continue = 1;
+ 	}
+ 
++retry:
++	headers = http_copy_default_headers();
+ 	headers = curl_slist_append(headers, rpc->hdr_content_type);
+ 	headers = curl_slist_append(headers, rpc->hdr_accept);
+ 	headers = curl_slist_append(headers, needs_100_continue ?
+@@ -948,7 +950,6 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
+ 	if (rpc->protocol_header)
+ 		headers = curl_slist_append(headers, rpc->protocol_header);
+ 
+-retry:
+ 	slot = get_active_slot();
+ 
+ 	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+@@ -1044,6 +1045,7 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
+ 	err = run_slot(slot, NULL);
+ 	if (err == HTTP_REAUTH && !large_request) {
+ 		credential_fill(&http_auth);
++		curl_slist_free_all(headers);
+ 		goto retry;
+ 	}
+ 	if (err != HTTP_OK)
