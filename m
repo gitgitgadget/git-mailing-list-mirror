@@ -1,121 +1,86 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54F1130A4A
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C4717167A
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:58:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713372650; cv=none; b=iaVYIbjRVLY5tVEZh2e91hIxJuOcqhpkIAvt1KxgypvtzbmFsOhPbTAS2V7fC6Et5KPL5vq9/FKy8eygDxYB3iNE5FgRAGz2RHh2AwAR/tWAGZo9U3RF10yMyoosfvBF6J8TBWOjCSEjM4zMpVkqzS0zcYlAjmM0f9jZjLtOW1o=
+	t=1713373094; cv=none; b=HGwmCixpCUMgtpwV8SNm+z1XGJAOBVwOdzQJYyzKWoU46o5ktABaE52JDAbHpN6RKlB9wB0ui3b0oN/F2zWMLfTffIntvKVPUPEZRpcWVQjFK4dk2oGqai+aqgXR9ZSeRuA+k0fKa2s3V2QZOY5U+3OVGqeGlZnLXVa/I7iF80s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713372650; c=relaxed/simple;
-	bh=Liq6NtjExWCStqP0K6jCHS4rKOfxfX2HXzVK8h3BiFc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e/NNHqTHIIzN9gLKsh4EXntdvshaOm/vNcXLlTkuzK3wPdGRo33wkaHXJW7MuWnwvonFbe/lbQVwVooCJMfsAtTBuOlfOLLDSlrzuiBY2wZrD1WrDFGTHyC9Hz8vmFifEHu9oLghGu5hQg5giEjBV69R6x7h6NoqjNCT5tpNQKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BtSJ2h20; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713373094; c=relaxed/simple;
+	bh=JEz++chHYm4wqdV7tzdJCOVYFXoBxqs517dbkffU96Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iQhk8wBJ0VIFm4NoUEH2JOfqkWEnrv7JBuHIc6T9t2WfbNlyypR+/7zif9WKKDQM0P4RAAMoCAfAlGMJHq/8VTWCvR74wjkVeSdwoRQ7ztMzX4lyYnWE9IoRVJI+kxmslI7rXA026HaFbLt5Zw0s+D6NZmb5H6g3nWkObLVNLPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k/h6NAKA; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BtSJ2h20"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-22f746c56a2so1442fac.0
-        for <git@vger.kernel.org>; Wed, 17 Apr 2024 09:50:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713372648; x=1713977448; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Liq6NtjExWCStqP0K6jCHS4rKOfxfX2HXzVK8h3BiFc=;
-        b=BtSJ2h20asOZF7MXpu24Njf+GTxVBLofP1EMfuDO8WTBXICA42vXZQMSV4T0i5kfld
-         ZF9VUrC6YJ4St4gKAfdzdBve30oPJ1t9667psojEC2ry+3SClb2WCSI+bQo+EYkbQWD6
-         yHy/Ci0jJAA3MpTWPFZTe91ihvpElF71d0kZG80hLGkQ4lG5BbZAEJCV3sbkqF1D1yrg
-         MNWFVSLw4Gx6HfzhrZlT5/+hi9cB3DgX4NBxg85qBvP9LtBW21qA71D5o9WXnkxIZlU7
-         1VOzrqPiib27QmbuJ9tLXL4oXt3SSjE+QUcSOVVpnt+ZdvLXPLycY4Y2uHkgswXiEzjx
-         UIlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713372648; x=1713977448;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Liq6NtjExWCStqP0K6jCHS4rKOfxfX2HXzVK8h3BiFc=;
-        b=ClKTNwyhr1/Jlw9leoWQRqLtvN9tV63Bbfa8nsSIYdXb7ReOKFGhYIEEOmeV9XeOtW
-         LwMgA2jYJDCKp50tFXKzV0t6p/e7rKVtojUTF7Jy4h0SSfmrfflAb0SzThbX18cVfZWk
-         tClJ2Lw0gPBmaPJhgZyht0E1n75EnnUJRl6YmAJ5bRf4jBTR6H/srjS2jkB0zzDuWKj7
-         4fXRx6z55lql1T8uLSI5Z3y9QYBNxB0d4BvwPeA0KMv8utmp8Owxxn9PGdggMBY1/eE3
-         t4PiX0DmGzb1r4RfON8wMxpDJIBGBeNTrgEcht0JWEdwD1/JEiBaw2WIeuvofaT6x6q5
-         Nkyw==
-X-Forwarded-Encrypted: i=1; AJvYcCUiVxmo2HKqzeFlSMOhHPXTmVTdYj7oisjQb8Kx+k5+MDcqrW1/0s0/Akv1vuScKRb27cF17uGmupI4foX5THxBPjrk
-X-Gm-Message-State: AOJu0YzLFyLjlxs70ouyjvFD+L0yNeypMNdIcqRLZXFzYGCE9kCTAM2M
-	jpjRguDuw4je55JiZ+94lr2ScBmGu2sUjCWzZxKlv8sOis+Xq1GPkURpEO/B/pBgUTNX0SHamHz
-	DD4UimHfkR9RNQRYRF8UbX3JGX8o9iQ==
-X-Google-Smtp-Source: AGHT+IHItzPjO1JNlJ5iGIWL52yJdZhU3hUM0pPxXJ61W2p7gqN2DcMeJffwIux6UeS8rDNhK+HWIc/ddD35Qas103Q=
-X-Received: by 2002:a05:6870:2308:b0:233:1027:af37 with SMTP id
- w8-20020a056870230800b002331027af37mr89890oao.45.1713372647767; Wed, 17 Apr
- 2024 09:50:47 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Apr 2024 18:50:46 +0200
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <c7bcc83d3a96b613db4fba9edfbb6d964b338ed5.1713334241.git.ps@pks.im>
-References: <cover.1713334241.git.ps@pks.im> <c7bcc83d3a96b613db4fba9edfbb6d964b338ed5.1713334241.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k/h6NAKA"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E4271DB3D2;
+	Wed, 17 Apr 2024 12:54:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=JEz++chHYm4wqdV7tzdJCOVYFXoBxqs517dbkf
+	fU96Y=; b=k/h6NAKAFzM/yqoj5X612qsQIgoYLNXWE2ybYUkoMmvZvgOGHCxt3Y
+	tEcwN0LjgUzIZ5YKJGmR+geyne6ysgpeVYbnU/A+1ojmTQ8mceNYJZAJ+73gCsNU
+	vqk78FhItVtTeUsX0NeXdc6RrPDVZZJ1GTTNnWM4+UcGgkgPPS7fk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 957F31DB3D1;
+	Wed, 17 Apr 2024 12:54:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.229.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0BBED1DB3D0;
+	Wed, 17 Apr 2024 12:53:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH 0/2] builtin/receive-pack: convert to use
+ git-maintenance(1)
+In-Reply-To: <CAOLa=ZTRY6hmQqC2BozFkLmLQWnkQ4+sSug_8N1ZY9+aHNqCTg@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 17 Apr 2024 16:19:43 +0000")
+References: <cover.1713334241.git.ps@pks.im>
+	<CAOLa=ZTRY6hmQqC2BozFkLmLQWnkQ4+sSug_8N1ZY9+aHNqCTg@mail.gmail.com>
+Date: Wed, 17 Apr 2024 09:53:58 -0700
+Message-ID: <xmqqwmow7wwp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 17 Apr 2024 18:50:46 +0200
-Message-ID: <CAOLa=ZQhv5m4RPwsQg1F2zLU86qjE9Ew6FhCpOsPWWM3FoHATw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] builtin/receive-pack: convert to use git-maintenance(1)
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="00000000000009e0c406164da859"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1681B51C-FCDB-11EE-B1A4-25B3960A682E-77302942!pb-smtp2.pobox.com
 
---00000000000009e0c406164da859
-Content-Type: text/plain; charset="UTF-8"
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> In 850b6edefa (auto-gc: extract a reusable helper from "git fetch",
-> 2020-05-06), we have introduced a helper function `run_auto_gc()` that
-> kicks off `git gc --auto`. The intent of this function was to pass down
-> the "--quiet" flag to git-gc(1) as required without duplicating this at
-> all callsites. In 7c3e9e8cfb (auto-gc: pass --quiet down from am,
-> commit, merge and rebase, 2020-05-06) we then converted callsites that
-> need to pass down this flag to use the new helper function. This has the
-> notable omission of git-receive-pack(1), which is the only remaining
-> user of `git gc --auto` that sets up the proccess manually. This is
-> probably because it unconditionally passes down the `--quiet` flag and
-> thus didn't benefit much from the new helper function.
+>> this small patch series adapts git-receive-pack(1) to spawn `git
+>> maintenance run --auto` instead of `git gc --auto` like all the other
+>> parts of our codebase do nowadays. This removes the last internal user
+>> of `git gc --auto`.
 >
-> In a95ce12430 (maintenance: replace run_auto_gc(), 2020-09-17) we then
-> replaced `run_auto_gc()` with `run_auto_maintenance()` which invokes
-> git-maintenance(1) instead of git-gc(1). This command is the modern
-> replacement for git-gc(1) and is both more thorough and also more
-> flexible because administrators can configure which tasks exactly to run
-> during maintenance.
->
-> But due to git-receive-pack(1) not using `run_auto_gc()` in the first
-> place it did not get converted to use git-maintenance(1) like we do
-> everywhere else now. Address this oversight and start to use the newly
-> introduced function `prepare_auto_maintenance()`. This will also make it
-> easier for us to adapt this code together with all the other callsites
-> that invoke auto-maintenance in the future.
+> I don't have enough context here, so why do this?
 
-This commit explains my earlier question. Thanks.
+I think the intent of a95ce124 (maintenance: replace run_auto_gc(),
+2020-09-17) was to update all codepaths that run "git gc --auto" to
+instead run "git maintenance --auto", but only updated the ones that
+used to call run_auto_gc().  The codepath Patrick found runs "git gc
+--auto" without using run_auto_gc() and was left behind when the
+others were converted.
 
---00000000000009e0c406164da859
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9175d75d470474cc_0.1
+So why do this?  I think "To follow through a95ce124 started" would
+probably be a good enough reason, if a reader is on board with what
+a95ce124 wanted to do.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZZi9lUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOXZ3Qy85Q2ROa3lCUmY3MElkYjUvbmhJZFdjNFRsdQpPcDFKZjdnd2Zh
-emJ2bzE2dldTMXV1b2M4a0lHVUJsYW1XN0UrS1RzSld3Zy9iQjBORHBmdkNoS29abDJxazJtCllU
-TnFxcVJmZmowc2NkK3BjMW9VZlAraWZhVHNLd3hFdzhkMG1laTZzZVJicXlCVWw3end1d1NpWUxp
-SkdMcGoKbjJTRGZoSk5vMCtqN3ltOGlKTTEva01obk5zcncxbWljMC91c3FWOWEySzI4clB4b25C
-eHlJM0JwejZxNGhhSQpJL3dtTTJSMHVpU25ZdmxCcHpoNkxkV2hUc3BxL2gxejlRRVRkbGgwRExl
-QXBTVGxOaDBta0t2SnFFRmlQU1l0ClBkbnFyVzduRkpPK1FwTjRLejRJdWNKbG1ZcGFrSWNFdlBl
-YTFBc0Z2UzgxdnNtY09DaDMwZnYvZkJwUEdsdzAKU2t6YVlsMkRqK1B4eG9yOTNCdVpYenlkekV2
-UEdSejd1MzltbWloTWx3ZjNYT2p1dHhDY2s0WTBJbnFHaGhmbgo3UTNEM2lPUEY5MXFUUlNoMitQ
-K09SL0JwRW1GMmdZVnFEbFFNdEwvYnRnK3FuUno1c0loZDVLMCt3NGJMUDhZCnpWay9ONXhRUzJt
-UWkyekhqT3RCaWJJUmJRWjE0WlFoUTRGK2R4ND0KPXMwUnoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000009e0c406164da859--
+Do we have a handy reference that compares "gc --auto" and
+"maintenance --auto"?  Are they essentially the same thing these
+days?  What are the things that is done by one but not by the other?
+
+THanks.
