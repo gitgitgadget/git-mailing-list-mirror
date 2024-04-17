@@ -1,140 +1,180 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696585F861
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9882853E08
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 06:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713335398; cv=none; b=IDjWW0+2jcW9iR14wY40eToB253M8gotxh/1ohDMVaF4u5t6HhsrfAx5uDTYUQrP1CILScjumfQXcgVa4pyKQRyG/3ayIpa/X0WgnpUveAJacS9nn4wrC8APo7mZei+5IJQzkQgtqUFKUf3IeniLRuzoSQTX3AuUJqwvUUXfRvg=
+	t=1713335660; cv=none; b=gGeGtMmBB1AKZ+G0I/4vTdCx3Nk6BM6DGS6NpEKYRG6lnaROUDJWsDS/b5dugu9LErLlSzNLabZ/Y707gYGQf31SV7KyCfSfrxRqztMqiyQpOPJtUQl9h55laST9loq9T8icAnhdxl13kR7OXwLg77XIhF9itnMIB2hKgT/6uco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713335398; c=relaxed/simple;
-	bh=TlpXjDZEiHN/Fh0Q/3ehDA2+LMHgbyU7SMlcMQ+ad5E=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=j+xhxoHqHYfuI/dlU6UBjZZKV42pYQyeSRZIJ0iWaMpk4hS9e9GayYiz9+4bbIwjAFBAeh3+CQpAgmaaV15mYi0Btao4JEhZg/DJycdBl4a394SWvpx64jb4q1RIYQDiwOeDsR2IfSEWazFGex7xdtIxKSYfZ1XKewc4Sz1Jgwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=KiWQp5GO; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1713335660; c=relaxed/simple;
+	bh=YlnGnr8fLZIayJczwrKKQRiQiAWfhTmxvrJJIAgjm+8=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=knfk0rpSeb7VaJ82hH+vj9eOiFIjBHKaGt8jU7Tz2k90/TIBr2l5ELz+eUUuc6yhwzlX+YV+2RrHO65xatt3s09BgEt4dVWHQV//V8lpyDLmq6nYbXP5TQJDNq0EKoKOHjVNJ2L9JdtuY0l6MSXzi90OkA9PWU9D/oOo3MQClPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=feihJj+c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RXl4Foes; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="KiWQp5GO"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="feihJj+c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RXl4Foes"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 9D3271380249;
+	Wed, 17 Apr 2024 02:34:17 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Wed, 17 Apr 2024 02:34:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1713335657; x=1713422057; bh=7docnQ0TU17aXbKDkLI0p/dNYttyLred
+	YH2dkoUuTi8=; b=feihJj+cj/NEg1/uc+SmY4eh3JNI+qCMAJwJz+FKJ/Vgm6Ob
+	wEwRS9rWCIEix7jN+85l6dJgb2VGQ2oNM8Kp1f+8W6yL4OzMttKPTvQ+8vAsPPBi
+	te3dCr56mkgORSUqRRFtgrFwOZYB/F2ylUPhZnnwhJPxEeQuazadACt23B/sEo0S
+	/aRoriC+6rDxJF+KXvpO2JRjKEfSXSiDUJP/gdiZs2gVZoDucKX0C+VtPVwjkwrV
+	oQGwsvO0ivS3NjnLxTpJCpnwLpM9rDgiNXlNyEr8rtkOgYJTIjEIdoARqNOngBCX
+	mn27CyjKgVgk4xgAcLhGTvMM6HsCEk6L5bhWEA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1713335657; x=
+	1713422057; bh=7docnQ0TU17aXbKDkLI0p/dNYttyLredYH2dkoUuTi8=; b=R
+	Xl4Foespu94wMJibGMPHrzYPkwdPxhyceVyDQchA1uKMmY5rA6u0w8y/oyOumyD8
+	781CuAZ55Tl/Lyi5XF4KqaQwwboZGyBF1vabKUEGtEcz7PVAHzHgZa3XlyoATQE/
+	3S+sgaiUayUvfjvZCyCzWsjZLpav3Hea04xAiE+raZeD12lOaC0GDRncXn48uzAN
+	aARCKy1C8EzXZhWiIeE3hNAEglrhr6MLh9EPInwz36rRqR28sB9/ag69By2DDIqu
+	wdMwGegtT04Tp8/uPmtcIcMh2IBZzFls7gwIsJr3zhzARjnbOE4k7IRCgNiSfuiA
+	T132wtdg2flmlXka1081A==
+X-ME-Sender: <xms:aW0fZsgcfeFszlSNrvp1hAFfZ19HlOxOIfBaRpxokfwG8Qfexq0p_W0>
+    <xme:aW0fZlANd6rkeHCKGOR55R_iLTQ82YtY6kOSRF5-eA5yCoN6wzYoI36EhdjWcSqvw
+    k1T4uBl4BPyCHgOZw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejjedgleeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:aW0fZkHjxie2_cM-WzQT1TkwqsCzLEWo3JJdItDvTKVbDFwEE6L5Pg>
+    <xmx:aW0fZtSUqsJj4Wwg5LQqh2vDuvfU7i-Kz-HB6jXG-GucLMjgFT8P0g>
+    <xmx:aW0fZpyaC2wI_6R3lXaQQjC7AZl7BNekkdrBjrXK8vOJapUSDfrOCw>
+    <xmx:aW0fZr6Yj748KoxIyIb3aR8fiv8NkCMmrenxh_nwJU-0vGIb5yfCdg>
+    <xmx:aW0fZqrmZ1Q6Fm7HiKa9INpFglc3WD07WhPZodK4mConhokpAGubUq6L>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 56B9D15A0092; Wed, 17 Apr 2024 02:34:17 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1713335393;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qY4brISG8jNLFsytEHlAp5QRAM4m3M3f/QrKPi3lAWo=;
-	b=KiWQp5GOXLSXZrT/3qexsk1ChKZJYSoGf9nz4wowxzShFxuwmSHwrFbONbmTttnj4Hd54n
-	GxgJvXAJoL6X/gRwNI+TGXVnBwjxKctY8OnlLreAkeuRvswsNzD/gfN33uM0mAyvuDoKEk
-	WgeQykljhxeDvtODFMRJ6a2AFIte3dWkRDU0JaZHUh0x43Ehm31Kk4WpLOEfSB1kRvvYPi
-	P7ZcUwXvzi4nB/JsqWfjNSpOII5BUKfYmUdymIRXHlmjPSgh4O0L41Ljm1Z/1frlZWuKuS
-	do0wcE/TaYJBFG3BuczovjTu/hLKnyiuGM71VRDlDqL5PDzMKbbjgd7IO5jBug==
-Date: Wed, 17 Apr 2024 08:29:53 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] format-patch: fix a bug in option exclusivity and add
- a test to t4014
-In-Reply-To: <CAPig+cTEp799w2-VEACYThW0COyo0SJLRS_sr-PG=LX++Tompw@mail.gmail.com>
+Message-Id: <e4aa5235-c6ad-45c7-930e-de991cc375f2@app.fastmail.com>
+In-Reply-To: 
+ <c975f961779b4a7b10c0743b4b8b3ad8c89cb617.1713324598.git.dsimic@manjaro.org>
 References: <cover.1713324598.git.dsimic@manjaro.org>
  <c975f961779b4a7b10c0743b4b8b3ad8c89cb617.1713324598.git.dsimic@manjaro.org>
- <CAPig+cTEp799w2-VEACYThW0COyo0SJLRS_sr-PG=LX++Tompw@mail.gmail.com>
-Message-ID: <8dd3bf56d595801e0f262329a0000ea4@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Date: Wed, 17 Apr 2024 08:33:42 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Dragan Simic" <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/4] format-patch: fix a bug in option exclusivity and add a test
+ to t4014
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-04-17 08:15, Eric Sunshine wrote:
-> On Tue, Apr 16, 2024 at 11:33 PM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> format-patch: fix a bug in option exclusivity and add a test to t4014
-> 
-> Reviewers assume that a conscientious patch author will add tests when
-> appropriate, so stating that you did so is unnecessary. Thus it's safe
-> to omit "and add a test to t4014" without negatively impacting
-> comprehension of the subject.
-> 
->     format-patch: ensure --rfc and -k are mutually exclusive
+It could be useful to Cc the author of that commit since it=E2=80=99s so
+recent. Like an FYI.
 
-Makes sense, but the previous authors obviously weren't diligent
-enough to include such a test, which presumably made the fixed bug
-remain undetected for so long, so I wanted to put some emphasis on
-the addition of a test.
+On Wed, Apr 17, 2024, at 05:32, Dragan Simic wrote:
+> Fix a bug that allows --rfc and -k options to be specified together wh=
+en
+> executing "git format-patch".  This bug was introduced back in the com=
+mit
+> e0d7db7423a9 ("format-patch: --rfc honors what --subject-prefix sets"),
+> about eight months ago, but it has remained undetected so far, presuma=
+bly
+> because of no associated test coverage.
 
->> Fix a bug that allows --rfc and -k options to be specified together 
->> when
->> executing "git format-patch".  This bug was introduced back in the 
->> commit
->> e0d7db7423a9 ("format-patch: --rfc honors what --subject-prefix 
->> sets"),
->> about eight months ago, but it has remained undetected so far, 
->> presumably
->> because of no associated test coverage.
-> 
-> Everything starting at "...about eight months" through the end of the
-> paragraph could be easily dropped. Reviewers understand implicitly
-> that the bug went undiscovered due to lack of test coverage.
+I don=E2=80=99t think speculating on why the bug is still there improves=
+ the
+commit message.
 
-I have no problems with dropping that part, but IMHO that's nitpicking.
-Also, dropping it would delete some of the context that people might
-find useful later.
+This paragraph could perhaps be rewritten to
 
->> Add a new test to the t4014 that covers the mutual exclusivity of the 
->> --rfc
->> and -k command-line options for "git format-patch", for future 
->> coverage.
-> 
-> Similarly, no need for this paragraph. As a conscientious patch
-> author, reviewers assume that you added the test, so this paragraph
-> adds no information. Also, the body of the patch provides this
-> information clearly without it having to be stated here.
+  =E2=80=9C Fix a bug from e0d7db7423a (format-patch: --rfc honors what
+    --subject-prefix sets, 2023-08-30) that allows --rfc and -k options
+    to be specified together when executing "git format-patch".
 
-With all the respect, I think that having that paragraph is actually
-good, because explaining it clearly provides good context for the
-repository history and people reading it later.
+The extra sentence in the original doesn=E2=80=99t really explain anythi=
+ng more
+about the commit. Except the =E2=80=9Ceight months ago=E2=80=9D, but her=
+e I=E2=80=99ve used the
+=E2=80=9Creference=E2=80=9D style (not the Linux-style) which contains t=
+he date.
 
->> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
->> ---
->> diff --git a/builtin/log.c b/builtin/log.c
->> @@ -2050,8 +2050,11 @@ int cmd_format_patch(int argc, const char 
->> **argv, const char *prefix)
->> -       if (rfc)
->> +       /* Also mark the subject prefix as modified, for later checks 
->> */
->> +       if (rfc) {
->>                 strbuf_insertstr(&sprefix, 0, "RFC ");
->> +               subject_prefix = 1;
->> +       }
-> 
-> I'm not sure that this new comment (/* Also mark... */) adds any value
-> beyond what the code itself already says. It may actually be confusing
-> with its current placement. Had you placed it immediately above the
-> `stubject_prefix = 1` line, it would have been more understandable,
-> but still probably unnecessary since anyone studying this code is
-> going to have to understand the purpose of `subject_prefix` anyhow.
+> Add a new test to the t4014 that covers the mutual exclusivity of the =
+--rfc
+> and -k command-line options for "git format-patch", for future coverag=
+e.
 
-Setting such flags should actually be performed in a callback,
-but in this case creating a callback isn't warranted, IMHO.  Thus,
-that comment tries to explain why a flag is set out of place.
-I have no objections against removing this comment, if you find
-it doing more harm than good.
+I.e. add a regression test. Pretty standard.
 
-I didn't place it immediately above the relevant line because it
-also applies to the adjacent block for the --resend option, and I
-wanted to reduce the code churn that would result from placing it
-immediately before the relevant line, and moving it a couple of
-lines above just a couple of patches later.
+>
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+>  builtin/log.c           | 5 ++++-
+>  t/t4014-format-patch.sh | 4 ++++
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index c0a8bb95e983..e5a238f1cf2c 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -2050,8 +2050,11 @@ int cmd_format_patch(int argc, const char
+> **argv, const char *prefix)
+>  	if (cover_from_description_arg)
+>  		cover_from_description_mode =3D
+> parse_cover_from_description(cover_from_description_arg);
+>
+> -	if (rfc)
+> +	/* Also mark the subject prefix as modified, for later checks */
 
-> At any rate, I doubt that any of these review comments on their own is
-> worth a reroll.
+I think the code speaks for itself in this case.
 
-Well, I need to split the series anyway, so the v2 is pretty much
-inevitable.
+> +	if (rfc) {
+>  		strbuf_insertstr(&sprefix, 0, "RFC ");
+> +		subject_prefix =3D 1;
+> +	}
+>
+>  	if (reroll_count) {
+>  		strbuf_addf(&sprefix, " v%s", reroll_count);
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index e37a1411ee24..e22c4ac34e6e 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1397,6 +1397,10 @@ test_expect_success '--rfc is argument order
+> independent' '
+>  	test_cmp expect actual
+>  '
+>
+> +test_expect_success '--rfc and -k cannot be used together' '
+> +	test_must_fail git format-patch -1 --stdout --rfc -k >patch
+
+I don=E2=80=99t understand why you redirect to `patch` if you only check=
+ the
+exit code. (I don=E2=80=99t expect any stdout since it will fail.)
+
+Although it would be nice with a text comparison or grep on the stderr
+output to make sure that the command died for the expected reason. But I
+haven=E2=80=99t read the associated code.
+
+> +'
+> +
+>  test_expect_success '--from=3Dident notices bogus ident' '
+>  	test_must_fail git format-patch -1 --stdout --from=3Dfoo >patch
+>  '
