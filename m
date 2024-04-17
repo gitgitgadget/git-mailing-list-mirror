@@ -1,53 +1,55 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB78381BA
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 19:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE8911CA0
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 21:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713382471; cv=none; b=nDt7/mVx3lgkwa1qli23w2hho6I+L3cXOr2Eaa1k2lZmeYt/MzDPWuCdI9r/X0SVsx2KBsW1xJ/067SaUnM0wEjU0Dp0SISzVrEKtX/9Rckrtu6w/9F6nS7Oap8cr00y+fB9vCMtsW+uLRXx+9XxkZNj3lOysfbf3145JSH6WoM=
+	t=1713387805; cv=none; b=UJYgUbHQAEeRNEozmipQS/aLrvMO5QgQ9HaBrHzX1DlSCxy6MiuTyW/FehKT2EnDQlagOEgRN8evu7aBiTeLWHe1FtseFXE8pFC5Na+CM9phHd7q5Mr3Uc+/bIir1jGK4EpDjbdZf27k3+R2rHUANJehmV36q7paNcZVWrKBrI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713382471; c=relaxed/simple;
-	bh=1Km9PETWBA92YkZ9Xkeh7+d+cHP39h0prUSSkKx+f8M=;
+	s=arc-20240116; t=1713387805; c=relaxed/simple;
+	bh=rUhlviApOHksDwPEJT/8TtR8SC/CGB0UHoy1B+nuSW8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aMUaxBPOXLF4R0OBEvJmBcCBmkrc10V+Lnb8UelwGcoMjS/LFNbSU3m7hctHZlRpZObHv/ZG076b4lKWa6YIjR0yjNOPrDH9na1+hdoGqcoE0J1bKBZchMSH3+fu0PB4kIaijYqtwhROf45DBWWZzmxXIEU18cJTo2c9TQT4t+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uG8kPxjs; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=fsh2nGp4Q0YGjpso/EPeBAM6O9agDxDGBA3rQbw06jg0SRXXd72BGpPy6GpW1CZbNr8LXav8nuigA8+QEYczXhy/lV8ez2as9pk4qeaftlmY/Q4AA+l2AltdqjMDDUr8nZL/4IReTyM2cvmTAuY2yg6ScJCTcq6WYpa8kc60M08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZMOhLPaY; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uG8kPxjs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZMOhLPaY"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3269A1DC96F;
-	Wed, 17 Apr 2024 15:34:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30EF81DD3ED;
+	Wed, 17 Apr 2024 17:03:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1Km9PETWBA92YkZ9Xkeh7+d+cHP39h0prUSSkK
-	x+f8M=; b=uG8kPxjswfZQReAo21H6SODGANGPhUFTS4Q7B2cSm2PMKsctzmiGgP
-	WowG0U2svjjvSh70wK7nPng/QSpp7orwsmiUY8yo9qKhtXmKKWJrGa2crms6sfMa
-	llO8aP/xxBpdbJJx5DyNY0N6Pdi1523HUUSd1+cs2bCSkie4szfLw=
+	:content-type; s=sasl; bh=rUhlviApOHksDwPEJT/8TtR8SC/CGB0UHoy1B+
+	nuSW8=; b=ZMOhLPaYnURLOFeUPuv7ExWrDMxn3JNq2iMEhD+/NON3w150x/rwo2
+	qfEj0A/hv4G3QSO+RAExMGLPpTHcfetvKWaZzMhcZzPMig+rQHt0wsjZXpgfpgK+
+	hOjLnDvbWo7tl6rnIXEaqz4LXn1LagAshXXxiGHJUq08mRVtea0Ak=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28E541DC96E;
-	Wed, 17 Apr 2024 15:34:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28D661DD3EC;
+	Wed, 17 Apr 2024 17:03:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88AD61DC96D;
-	Wed, 17 Apr 2024 15:34:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 812F31DD3EB;
+	Wed, 17 Apr 2024 17:03:17 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  blanet <bupt_xingxin@163.com>,  Xing Xin
- <xingxin.xx@bytedance.com>, "blanet via GitGitGadget"
- <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2] midx: disable replace objects
-In-Reply-To: <pull.1711.v2.git.1712554017808.gitgitgadget@gmail.com> (blanet
-	via GitGitGadget's message of "Mon, 08 Apr 2024 05:26:57 +0000")
-References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
-	<pull.1711.v2.git.1712554017808.gitgitgadget@gmail.com>
-Date: Wed, 17 Apr 2024 12:34:27 -0700
-Message-ID: <xmqqplun6aws.fsf@gitster.g>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding
+ "RESEND" to patch subjects
+In-Reply-To: <c2cb9268c29ae4a5cac34383b7443763@manjaro.org> (Dragan Simic's
+	message of "Wed, 17 Apr 2024 19:34:09 +0200")
+References: <cover.1713324598.git.dsimic@manjaro.org>
+	<1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
+	<154b085c-3e92-4eb6-b6a6-97aa02f8f07d@gmail.com>
+	<xmqq7cgwau1v.fsf@gitster.g>
+	<c2cb9268c29ae4a5cac34383b7443763@manjaro.org>
+Date: Wed, 17 Apr 2024 14:03:16 -0700
+Message-ID: <xmqqle5b66sr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,21 +59,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 818B3F20-FCF1-11EE-994B-25B3960A682E-77302942!pb-smtp2.pobox.com
+ E9DB40FA-FCFD-11EE-89E9-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-"blanet via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Dragan Simic <dsimic@manjaro.org> writes:
 
-> From: Xing Xin <xingxin.xx@bytedance.com>
-> ...
-> Helped-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
-> ---
+> With all due respect, "--rfc=WIP" looks like a kludge, simply
+> because "--rfc" should, IIUC, be some kind of a fixed shorthand.
 
-I think this took the review in
+I wouldn't use "should" there.  In any case, we are not going to add
+unbounded number of --wip, --resend, etc., on top of what we have
+already.  Introducing --something={WIP,RESEND,RFC,HACK,...} and
+deprecating --rfc is not something I would object to, though.
 
-  https://lore.kernel.org/git/ZhLfqU9VNUW+2mmV@nand.local/
-
-into account and is in good shape?
-
-Thanks, both.
-
+Thanks.
