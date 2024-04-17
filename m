@@ -1,104 +1,94 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C932172773
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 17:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE9D17166F
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 17:34:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713375173; cv=none; b=NpH5zJhAAUzqe4HEW7HTSimbeEoQWRCLvu9Iy4zeI0bCgr/hbLcS5h5d9/8cMWKUs8JqcRS3zBXugYT/kppXQ1uojlrpL+NCXkz5xRTUYNYRe4Kyf8VaNGZmnnZnw0JWRS1qv3ScxWdxHCCKHcXSX7ukRlqGAkmaCfeudFf+ZlU=
+	t=1713375253; cv=none; b=s+odlqsTlni8jK3npY/es2EfNgqIGrI+O21Dpd7v5Sb1oWNo7cIjUj+SU9sw/ZGf+RgcKpsrT1OX6JtT1YT3vdHXWIJlsNM2H7kNt1rC4RAnYpf6cIaBViy6UtMH3lbuiXASvpshOARK3K9/ZxzUxyWId7IxLUsvpkTCKxh+9fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713375173; c=relaxed/simple;
-	bh=jdyhq7c7UFoAGQsN0vxz3a0pPo5HJsZHJeM64NYm39Q=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=ATtG1DNvFmfRGG1JQlGAfJnPmllhmfXevXFrU7BPTAqhQVSWg+/QEfaRm+574lsZKrlB5E+Yivh/Co50/5xbjKkpcGDoR3EKH/mMjMWYOxVcngvOu8dL7BUy55AjoUjpEdIrKVq6SuvjP/9L7dCWrC7IpjmlnfQxHDPwYUJcu64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHp46quB; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713375253; c=relaxed/simple;
+	bh=WAJjCZJnqjClM/h5mgqWDfKKfTKUNd1aahndXPgLv+4=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=nBLcFZCEt+flAmv9lpe7ZjJgJrnCqQ4uYoJloJYUx1U+ebMVuFvBZ2C5hhsPLG3zCKghZ47PPXWrHWOmuKry+m4x2z9mfeO9RhThtDk1UVlVmDqPfTHOjUNnBdCxYnlxqIaclSdFSyFR74933QSNFb7y9nxYfE33HsXJfi0bn1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=ss7eb70E; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHp46quB"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-22ed075a629so9487fac.3
-        for <git@vger.kernel.org>; Wed, 17 Apr 2024 10:32:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713375171; x=1713979971; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fOsBVg/+6uehlCYX1Nsk0Z2LfENiMgU0ulEOGiIPtaA=;
-        b=SHp46quBBAJpkuSi4brTgnB80Zvs9+F+8Fe1UGytd+4DCQbTohIqxTlkN2elbn9lfQ
-         Fczc/fgeiTLPZQQyZVIDnMNhX9PaqbLxNUH4lhiEDFhWrRWPELA0CzVslxKEpQIXaimc
-         1zkBEeX0I0xcsf8ftNE8vcXtjcqJFDNFFdUbaPG1avIvg66Dy9loFTvwNuZcdWyPALvA
-         eNZv17JmCOG1ivlrA36ueyOjtbfC+QfyCKdQFvr9gjcjNsm9kcJaYmPqWTLBVXUm4uWn
-         +kiis6kVxP1MXAW5b2vxvhQFJtFZaYRhhu1LfnzMJLkl1rDNVom5qyNSUV7oNvBEMwTg
-         CA8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713375171; x=1713979971;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fOsBVg/+6uehlCYX1Nsk0Z2LfENiMgU0ulEOGiIPtaA=;
-        b=aYcQyxvIYJjCQA4RoAoJ89BpOijHP5Z7kddRbJlWxhjn3OCihSX6U4kcxNAPn8QiIh
-         e+9igyXHECX1w4V7Xqf2Zo6hAwbU8TyXByAYzA31jK0XPQJDrEkn3jnpFBJlHwai5hm6
-         NyLsda3mcjy/qrNBOvmmNWXxsAmd6JW4DMDMw8weBquDIBJUkQWK9drneJ20v1yDKdPG
-         GFnYGhHyVYs0lJVYjxtDYO8fXzY3Au/mXUziD4D5on1oUhaG4vDwRBJ7prqZiUBV1Goi
-         FgqhswIPWHBiAVkHKbb6U35xdz3ItEVkiud9gL7xo/q501MzbBhRA6CR4QsPKn5+7CM7
-         SglA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7Gt6793gSWnyEjxA2lLIApyVJISJ8BYRWwEHR3hgId8hhjpvB3IyGjn0IAa27iH46lBSK81fYLzFmZDcSM+M+0B27
-X-Gm-Message-State: AOJu0YwiUZ9LzesFmeZdrmyrGbVF1g0yqf7+Hvvt+nc0JouBrQnkRYlT
-	ti2MJuU2DZSbiGlm6Ko0sJkbeCSNeXnlDJBDDbv7SjjyC3ooNEMOuJTBAXJnb8rTQEvxeUVdCyd
-	EE51bJ51hWLt2gSRow7KbceL7IGo=
-X-Google-Smtp-Source: AGHT+IFmaSkIr6NP/8ey0UB4Xvk6DOAixLjfEVnQs5MmaOB691EAZZ+0iIBhd2QzV8NyJBGwAhzsojKxYnEEMCyTfX8=
-X-Received: by 2002:a05:6870:34f:b0:233:1901:7523 with SMTP id
- n15-20020a056870034f00b0023319017523mr235158oaf.55.1713375171616; Wed, 17 Apr
- 2024 10:32:51 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Apr 2024 17:32:50 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <9d5f2eff8ab2a9d7a994a2031a31d4fa6f4791d2.1713180749.git.ps@pks.im>
-References: <cover.1713180749.git.ps@pks.im> <9d5f2eff8ab2a9d7a994a2031a31d4fa6f4791d2.1713180749.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="ss7eb70E"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 17 Apr 2024 17:32:50 +0000
-Message-ID: <CAOLa=ZS2S4=bC=s=vFnSfgvB0jZoKmH2Pi00V1Asyxo_yKSHPA@mail.gmail.com>
-Subject: Re: [PATCH 2/5] builtin: stop using `the_index`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000078b79006164e3e23"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1713375249;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RfPYu5V/KSZ1PwmJ/MmRS662uy6UKfQYh2xnvDKxVhQ=;
+	b=ss7eb70E7L35xGUlS1F6UaA1i4J20UPL56qU7qgAjlZD6b/AaXGR66ABY5dJzs+jyLbO7r
+	pj0jdK+NAVBRCZ4Kt3FYlFTmoH+nb0bXAw8k7LhTtPd95y1PrM2J8lvt1Sk2vz1J92BwAX
+	JbTAVJfrD9/4FA+gPn0GI7Hp4rHApqb5bbl9V1ZuBPLEtsVzLC0xrHaPPxR+w7rJKyZN6Q
+	tGOOMo20iVAmZeY1O5jmTz8bMgZGxS7ivT4q+FApnPJa5lNvCsl04vVz72iAEJmlhukpgZ
+	JMeLDbouLz04ZjHWwyLf9efJKig7i+DAauCVyZkhtd0eTRZH/c2S+2mWGVjeiA==
+Date: Wed, 17 Apr 2024 19:34:09 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND"
+ to patch subjects
+In-Reply-To: <xmqq7cgwau1v.fsf@gitster.g>
+References: <cover.1713324598.git.dsimic@manjaro.org>
+ <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
+ <154b085c-3e92-4eb6-b6a6-97aa02f8f07d@gmail.com>
+ <xmqq7cgwau1v.fsf@gitster.g>
+Message-ID: <c2cb9268c29ae4a5cac34383b7443763@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
---00000000000078b79006164e3e23
-Content-Type: text/plain; charset="UTF-8"
+Hello Junio,
 
-[snip]
+On 2024-04-17 17:27, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> Playing devil's advocate for a minute, is this really common enough to
+>> justify a new option when the user can use "--subject-prefix='PATCH
+>> RESEND'" instead?
+> 
+> The same applies to "--rfc", but the justification goes like this.
+> 
+>  * When you are working on a single subsystem in a larger project,
+>    your patches would want to carry the subsystem name.  You'd use
+>    "--subject-prefix='PATCH frotz'" (and more likely it comes from
+>    format.subjectPrefix in a working repository dedicated to work on
+>    the frotz subsystem) for that.
+> 
+>  * In the context of working on that subsystem, sometimes you would
+>    need to mark your patch as a RFC patch, i.e., "[RFC PATCH frotz]",
+>    and that is done per-invocation basis (i.e., you are not always
+>    constantly sending an RFC) with "--rfc".
+> 
+> Having orthogonal two mechanisms whose results are concatenated
+> together is handy than having to specify the whole thing.
+> 
+> I somehow thought that during the review of the "--rfc" option a few
+> ideas were brought up to deal with adornments other than but similar
+> to RFC.  I still think the approach to make "--rfc" take an optional
+> value, e.g., "--rfc=WIP" from the repository working in "frotz"
+> subsystem would produce "[WIP PATCH frotz v2 2/4]" a reasonable one.
 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 0c948f40fb..fe873807ed 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -3,7 +3,6 @@
->   *
->   * Copyright (C) Linus Torvalds, 2005
->   */
-> -#define USE_THE_INDEX_VARIABLE
+With all due respect, "--rfc=WIP" looks like a kludge, simply
+because "--rfc" should, IIUC, be some kind of a fixed shorthand.
+Perhaps a new option should be added for that purpose, but I'm
+not really sure how it could be called.
 
-Nit: The other changes have a newline after the header.
-
---00000000000078b79006164e3e23
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 294c36d46b8fbfb_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZZ0I4RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNHRZQy80bU5vdFBqYUhKNnUvakNoZ3FmVUIvcUN2cQpGK1hlZGZTdG5n
-V25nT2pES1ZsYWtQWWpwN3lXbmcxR3hGRTVNaVRUMVVtV3Q3NjFQZCtwTUZCOVhxK1hUaW10ClVm
-K1dpWTNWdWlXZHE4ckRYYk9zc0ljMmcyc2RCeVhzL3E3bXpYM1gzUkxrRUh6M1RSbVdIcjgrTE1N
-K2w1aFMKY1FqUXRhWVdmaE95N0FNOHIxMk5RUFhTcmJHVjRKQUhqRzR1eG82T3orN2hueE5NQVlS
-aW9hVHEvMjBXM1ZBeApZbmJHaXQxM1NVaUc1ZXhYQVlvejNBdnZGQnZ0R2pZbDZLcjdtalhab3Z6
-WUFlT3NGU0lLSk9aNTdkQVVJMytwClM4c1RlZTgwclVoUEhZYmZvb1M2ajkzQzF4NnBBbzBDMEQx
-Z3ZhT2pzV0YrajNzMmhETXYzcXVaRTN6eThRTTEKL1VxcGd0NkVKaUFjV2JHNEplbTRpUVAzVzJ3
-ZldFNkZmMUNJWnpwejhHSmZXajB5a2VQWEdJVjhJNThBeE9MaApLTGFuTm1EbXIzZytZS05PMWo3
-bkwyV3dQQkwrb2h0cC9VakZ2SWxBT1lMaGJJZEJoL3VrQzdFWnNxQ1d3c3RaCk5rY21ucXpFTU55
-dnAySVRJTm1zNFQxTFdtREtmbUIxTTRhc3RlRT0KPTZXTkYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000078b79006164e3e23--
+> cf.  https://lore.kernel.org/git/xmqqbkepep9k.fsf@gitster.g/
+> 
+> Thanks.
