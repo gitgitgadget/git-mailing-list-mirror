@@ -1,70 +1,103 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860098F4A
-	for <git@vger.kernel.org>; Wed, 17 Apr 2024 21:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13881ACC
+	for <git@vger.kernel.org>; Wed, 17 Apr 2024 23:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713388149; cv=none; b=hzedcCU1sn/FgLixTPLNsOJ8e2CcFWzbN4IPPe7SmmAfmuFUySqiPk22lZYYAD3en/wMxoDZWSHd723Jq5QT+Pf8SRX8+nBKLQRMMyuH0uq+J3g7MaoMLm4Ok3RyEi9N5/HN95wVKufdp1CRCm6tvaIGsIB8vcGjUSdEw2x4GgQ=
+	t=1713395298; cv=none; b=Y5Src4/YQEHNG5OVg1ItGLl0Mx53IM4SI3E6M7waoGviwcPCF6LTbL9vuSYPGyIWAA27f2HsTx9qG/r1JJr5Su2QQlQGnUNsgvAK7vM6eef1t+XGmmGEhEJdHnSeZ8KJYCDjcF4T7Ap697vxWdEUC+fq9vDgO3c/2H8UszJTixg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713388149; c=relaxed/simple;
-	bh=x0YJ1y6uw7EuaQ/8mF3jUrsOISjvpnXdmrwekjOWrjI=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=AUXb3qjFfagm7jRXQwY6vmqAK36DxwRUK/dKg1EjS5jvvfk6ebPoBzCbvmLRawo4E1HNZuzkdfN+kpc3iNko731wu5PeLIQv8scD0jXyZRCjIUHwEyeX4cDWoh3iOfRQe/CUs1PN6+D1+qUGihUxmwm45LQC7JVapplN1mzGcBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=hRTxgA5r; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1713395298; c=relaxed/simple;
+	bh=4aauvfeedGTCVobxYZ6ZfWYGXCWj0bvDoLZvgky97Ds=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=oNEK8ajLuf2n9bR1Quk4r0BYEA7DRvsqpu9xBrTxqJdXpjSXsnJyrjHWtsvW3HWqRQ35qL1rQklx4RPPMwt8Qm0m8iehzCh1BzQMpyxWHRHXRVtP3+0MxJM1tVzsnTFZOoOdKnfjfBklO1ibhha5v9+hGT5CVPk22sTaXPSYUvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kJGDfA0Y; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="hRTxgA5r"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kJGDfA0Y"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6f041e39bc7so472848b3a.1
+        for <git@vger.kernel.org>; Wed, 17 Apr 2024 16:08:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1713395296; x=1714000096; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BmP4Y4yi7N00mS4qNAIHkBIG3h4iAd/CDyV+F5lcBAw=;
+        b=kJGDfA0Y8QEKgXyBZPfpJuYLtwfM2IB2n7vbv9WPJZeaPWSCWzQls7uCfrhYoJrOvF
+         B7bLAbx+SDcs6RBTDu14T2WLI2PspZClRVRwXCKxmqBJ+rBjLFwVzXXdD3DBB6wTEfRx
+         jMjYNWZTjFhUiXP/BgHUBocRLWN88ZDKqeWeI1WfFEKNoPNtyP9bvMWCeNgg+xP6RXO9
+         XWNY/Sv/YHJIqaqXRu12SSrgOzQuAAg+KU9lmnSPJppTI0JN53ubL+U9NKUCSkfv3k7i
+         2QhCAjH4+wvAeGKQMD6yEZNxoLP3B2pPrVGAqbkm5b4HOkOA5EBptmM9dpkxys280EI7
+         Q/Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713395296; x=1714000096;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BmP4Y4yi7N00mS4qNAIHkBIG3h4iAd/CDyV+F5lcBAw=;
+        b=rZedIsxKgkmlG4qUF0/ULjeDPFBjb8Y222Uye9TA7w+XY+BHCWuiGIVzy7jgMbQ06s
+         fvcBAOwU4cJxLVXE6JWfZdQnoUkQ2GK7W4g0AHFdcsm/AxDqqczfNMG3ekqUORHYUiPs
+         AnQUi/2jmPO7DSxJLSH+u9jortaloDuYAIFlZDnfFo4c2AJKsCmTMJ+AfVOg/QFcrGZj
+         QlbqCc/Y/wBz4BB6pWwmVWnAEqNGFBstDEPnb32ySN+aF0dVVfIPcMgMuPWhMDKJUIzS
+         sPLG2TXAaU3nIbU0VyS7gdlt3l6D2w0PTvdzSMgCLhfR54p6/QJT/Luqb+8di3YCE68v
+         g0mA==
+X-Forwarded-Encrypted: i=1; AJvYcCV+3Zy/HMYXrEbqOhcTNjCmXC5o3JpSJsTWxET9XxXYyPbWcjkDmu+ptRxYjg2r+L7/Z2JGU0c8aatOt30cdxpo6lEk
+X-Gm-Message-State: AOJu0YyRvb2e2De+wZ1AozmGBimsUlf3Xb+0bymd1sbEGdKZJymOmd2F
+	24sDBagIOuXwIzo8NEDDawKZDkEtvOwiFnxPnlNuPKV8CoV/lmgNtsHM4jZdS9+0j3QTDCKBtZP
+	+vg==
+X-Google-Smtp-Source: AGHT+IERGgjxSJ5MPx7bkBKLZPwncnTH/np0v+2k9zkjCM5+2UQFGEYltc765Kne5PQ21Cj4YenTA4JRkUc=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:98f:b0:6ed:344:9faa with SMTP id
+ u15-20020a056a00098f00b006ed03449faamr100103pfg.1.1713395295939; Wed, 17 Apr
+ 2024 16:08:15 -0700 (PDT)
+Date: Wed, 17 Apr 2024 16:08:14 -0700
+In-Reply-To: <xmqq8r1cczw8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1713388143;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=d/UBFcegjRaD2tlnsEFr7M7FutXqUljKKMWA6Cc2flA=;
-	b=hRTxgA5romWEzQ4+zr8vYRfG9PUqpThtg+j7KPvADreNYvYd8DB1aByfOJq36MsrGRNzb/
-	nQTo2Uc7+Q/18/wlYcGXotSsSiMibe8TCS7NmYieJeqp8p9Qkiw36mLBdYYyW84201cfzc
-	tiAOkBlPBOO2mToM/gql43GNUzjFcO7yhJ2/EagUPDORDTUvS3ZZf/hQDeWEf3+a7mi30k
-	FQ/YW3rP5vJeyHu21GcXFrjGNQUIX+k9lBgmTtOJ/J3/y2KFYIndnRTb/mLAScVP00hMxO
-	0LLfkxYwYWbxtUmeJXDe9nIydW2b1Fe/oiG8wr9yztzW9X2+OLFG2HMmCf+fJg==
-Date: Wed, 17 Apr 2024 23:09:03 +0200
-From: Dragan Simic <dsimic@manjaro.org>
+Mime-Version: 1.0
+References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
+ <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com> <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
+ <xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
+ <xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
+ <xmqqfrvkd843.fsf@gitster.g> <xmqq8r1cczw8.fsf@gitster.g>
+Message-ID: <owlywmov4mg1.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
+From: Linus Arver <linusa@google.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND"
- to patch subjects
-In-Reply-To: <xmqqle5b66sr.fsf@gitster.g>
-References: <cover.1713324598.git.dsimic@manjaro.org>
- <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
- <154b085c-3e92-4eb6-b6a6-97aa02f8f07d@gmail.com>
- <xmqq7cgwau1v.fsf@gitster.g> <c2cb9268c29ae4a5cac34383b7443763@manjaro.org>
- <xmqqle5b66sr.fsf@gitster.g>
-Message-ID: <19d5f3d4c99fc1da24c80ac2a9ee8bf8@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Kipras Melnikovas <kipras@kipras.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-04-17 23:03, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> With all due respect, "--rfc=WIP" looks like a kludge, simply
->> because "--rfc" should, IIUC, be some kind of a fixed shorthand.
-> 
-> I wouldn't use "should" there.  In any case, we are not going to add
-> unbounded number of --wip, --resend, etc., on top of what we have
-> already.  Introducing --something={WIP,RESEND,RFC,HACK,...} and
-> deprecating --rfc is not something I would object to, though.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Good to know, thanks.  I'll drop the patches that add "--resend"
-as a new command-line option, and I'll think a bit about the solution
-you described as acceptable.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> We are not installing this thing (yet), so how about giving an
+>> instruction to run "perl contrib/contacts/git-contacts", only
+>> assuming that the user is intelligent enough to be able to react to
+>> "perl: not found" by installing it on their path?
+>
+> That is, something like this, perhaps.
+>
+> As the string given to --cc-cmd is stored in $cc_cmd, and is used in
+> this call:
+>
+> 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t, $quiet)
+>
+> where recipients_cmd takes ($prefix, $what, $cmd, $file, $quiet) and
+> runs execute_cmd($prefix, $cmd, $file).  execute_cmd in turn takes
+> ($prefix, $cmd, $file) and does this:
+>
+> 	open my $fh, "-|", "$cmd \Q$file\E"
+> 		or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
+>
+> IOW, $cmd is just an early part of a shell command line that takes a
+> filename as its last argument, so I think it would be fine for $cmd
+> to be "perl contrib/contacts/git-contacts".  I did not test it, and
+> it would be appreciated if people can test it.
+
+I should be able to test this later this week.
