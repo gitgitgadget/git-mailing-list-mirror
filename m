@@ -1,100 +1,111 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A438715E20F
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 17:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4EC174EF9
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 18:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713460933; cv=none; b=c0jhSauQ+ifOC9LS4xWOjqc8LBFOUE5orqpOi/YB0EGDN14ruvYDEi0M6LYiJXf9JK1wONepk22aQPc6lcXIa8pVnn9NTPIXUVFWT/ARV5JTv8rkcofxJKF+erRan4S14k26zvswE8Tut1sAvbq0nxac4wDp8BicOuR7PVsMYU0=
+	t=1713464030; cv=none; b=hiInURYur5ie1gYbePBwscx2YKdwIhWXjvUCGL0UAIKMwunGSa9bVWDD9QTTcEs93bNrfua8ap/Pqs4RMMtvjpl8/zvG8P9j55M7mSzvUyRUdJzYC7weNMxiAcxyuaSHmJtlQasJs67KWlKJFLNh8lK5tNt/R6HF91LYi1+6+y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713460933; c=relaxed/simple;
-	bh=LIYdoe0cGkFQznn5+IICwrf4on3Bv3hbN3lL2zS+KeM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VVU4Orx/E3ZcNK6eok5zFzRxb2RSs+s/CiaTRWKPYHuyX1g1f7Gpx7CYZ7/gK2pCsZXIwZjW0ASCzDZYODz81SGyml5q4Tu8heATQJs9WQ4t4JlVXfdxl1EYH5zeLbtWbfjfwV9APYs39HYQd04EduVnqnRtc0PWMAtEU0xhHKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-de480576c3cso101805276.2
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 10:22:11 -0700 (PDT)
+	s=arc-20240116; t=1713464030; c=relaxed/simple;
+	bh=gQU5cNvQYcCrfd5ixvdYOd6Z8nQG/Y9SgFCngTUvOVQ=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=IrT1A+QJOGQok4G9sduRZdR4uosyypBfNOYm42C1mt0ze7mDX/BTaeYebgn6Y9CdkXtWFBineOXZ4rp9rwjNZjdtyzWaBQIdauMuKgBuJVK9lkOfeJ+yrEIBkSICnsbT9sq4xN7fjlGOELP4TuePe3ZhlWILogstjvxW9ePUGJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Hhn5lds1; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Hhn5lds1"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dcc0bcf9256so2163986276.3
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 11:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1713464027; x=1714068827; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fXFTBkwf2eSSYXD+DUOuOG2X53nI6aPQXilt2umlBck=;
+        b=Hhn5lds1puqamYZfU8KzrGqamcl9OYy4kznOqc2t1MHyvDGFZh73Jl1aaAZLjDRyfI
+         ceDPuJBrwIe35uhQa6jyhboFC/2k6NasoEACCw4F670MDMK2zW2ixBzr/X8NdYmR/6gh
+         R7eTWMBLXlX1LCC6SEULWKBnFufjarhpvKczVjeY6AC1638jsmqb8AHb5W08njakIeLA
+         m1HwNhoxscb/hBpJOqXWELP+EdPCT7XLxidwFmQBJzflGlvw4z9KulBLktxQrECmTyLQ
+         MtAV7FUQD3WplkGthtIA+4WjBh/lkQuG4y3TFpFnDVovSQc9ASAh00Cxf9fADw3MiTyX
+         xbRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713460930; x=1714065730;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mNna9Ez/kincrcSRBxMEvd4desWCfJVUvrs4B576gHs=;
-        b=v1kQavuzHNRGvLQDFPTS6DuRsfGSeB3XSDBfRJ1wuwEMZzrUES4vCpYi5QwUCjcXs7
-         wMDmZCCn5HvHF9N6uIf5pnzhyyz+vkRDSW0wAg9J9sKpTY4Pyu/xSmEFMsaqGUft3oTC
-         qAfZBZ5FQkCH+KjmAd9tQOnTKJiXjRrBric/StGuZQFyPK4IezrN1cb8pMEvFTwvzYMh
-         dac6cH/XJSLze3pU8k9w94LN+NOg/AMeXehT00qTwKzT/AIcbh7PmsZi4z+HPeb0XeR9
-         xKq2Mv6mOmIQqJV6dYNr0Kr58zV1dzBTmwI3nF3C0J+o19RubuBo9hH9Oexr+OQAK34b
-         pIjw==
-X-Gm-Message-State: AOJu0YxuvsQAIzuqUyU9WyQEPinFvEIu7XiRGRHXaN6GiFgtj04q0ec1
-	4hWuQJux9gzMDQE4YinCIKjaXzm6o2MZnfHAgokV+4WTQ+RJKVLcf642kXpZ/LBQRm5PiXQaiOB
-	W5Xq1MFrxnO/rByP1iAYY6r4p2AM4pORj
-X-Google-Smtp-Source: AGHT+IEPPI/mCISQqHTd4VsxfuNqbR7MLvhkHAKaxYIyiR5E3rXfT+cWdjiLzalKlzCvGpuA2X7dnOfY4JZZ7TNKE4s=
-X-Received: by 2002:a25:941:0:b0:dc6:54c5:285c with SMTP id
- u1-20020a250941000000b00dc654c5285cmr3837342ybm.0.1713460930504; Thu, 18 Apr
- 2024 10:22:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713464027; x=1714068827;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fXFTBkwf2eSSYXD+DUOuOG2X53nI6aPQXilt2umlBck=;
+        b=q2Riu3nPOBZMfLSo7dIL4bZVM+U+Y5+x+QvikrHHUj5ikKKAnihFg2Z1BNFFPoB+0B
+         3b8rafy49Jr4ppJIryb7PkkPuH1SlHgtkfwpntwLlErZybESWKs6z6Y9gr/ubX4kjRb4
+         Fs7Fk4hD7fqwY+s4W3Mo/9uTl6URpH1Dahtfl436wa98Hpc24c9oejRFMfkg3dzd0USp
+         YqPV+QuPhejgcC2j07XdwX9Hj+yXrfWBCaE3Vsf0Ie1vWp2lSrNfNsBH1LeyJ37HLg21
+         SAY3Btu7DuKhA/jZ900RdHcjd41KL37be7RarCBJprkXO76PZJtRrdeqd8dUnbxtcVGo
+         r7CQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX0+sukFyi3BRVbU1eaXCUmbQeLO62xPwIKlkDbsAxwntifmqobmnJnjy4cQuFKmCix3Ow5nDh8Ld1h2/PtA9Rng6SD
+X-Gm-Message-State: AOJu0YwmtmSpUMc4iW+QX0EiZbGxnGQY/twaMzCD3E6Qvo1WztKxiw2T
+	/vtXwQ91npswny9VUdBOjHPgqANUrjc9MhL84PK3lF1OY1HVLPLdpW7jatZ6ykWhZJQ+4HSPfM2
+	16g==
+X-Google-Smtp-Source: AGHT+IHXTSPpMUjMsFEFIXCxa4aQxiyWxItANA8AISK3CYiJ2PtjNlU647z8cfPZSGwFBRFtlZUSbBSpPA8=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:2b88:b0:de4:5eaa:4b67 with SMTP id
+ fj8-20020a0569022b8800b00de45eaa4b67mr293268ybb.11.1713464026995; Thu, 18 Apr
+ 2024 11:13:46 -0700 (PDT)
+Date: Thu, 18 Apr 2024 11:13:45 -0700
+In-Reply-To: <owlywmov4mg1.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <3188f4e2-9744-40b1-8f05-0896b8679d25@web.de>
-In-Reply-To: <3188f4e2-9744-40b1-8f05-0896b8679d25@web.de>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 18 Apr 2024 13:21:59 -0400
-Message-ID: <CAPig+cQr3xcnuoyf58YWbXCekhhRgN+M9=WsN4_PYcK7BydDUg@mail.gmail.com>
-Subject: Re: [PATCH] git-compat-util: fix NO_OPENSSL on current macOS
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
+Mime-Version: 1.0
+References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
+ <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com> <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
+ <xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
+ <xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
+ <xmqqfrvkd843.fsf@gitster.g> <xmqq8r1cczw8.fsf@gitster.g> <owlywmov4mg1.fsf@fine.c.googlers.com>
+Message-ID: <owlyle5a4jza.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Kipras Melnikovas <kipras@kipras.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Apr 14, 2024 at 12:47=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> w=
-rote:
-> b195aa00c1 (git-compat-util: suppress unavoidable Apple-specific
-> deprecation warnings, 2014-12-16) started to define
-> __AVAILABILITY_MACROS_USES_AVAILABILITY in git-compat-util.h.  On
-> current versions it is already defined (e.g. on macOS 14.4.1).  Undefine
-> it before redefining it to avoid a compilation error.
+Linus Arver <linusa@google.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> On my system I can remove the whole ifdef __APPLE__ section, as the OS
-> doesn't include the deprecated OpenSSL anymore.  I get a current version
-> via Homebrew, which doesn't throw any deprecation warnings, of course.
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> We are not installing this thing (yet), so how about giving an
+>>> instruction to run "perl contrib/contacts/git-contacts", only
+>>> assuming that the user is intelligent enough to be able to react to
+>>> "perl: not found" by installing it on their path?
+>>
+>> That is, something like this, perhaps.
+>>
+>> As the string given to --cc-cmd is stored in $cc_cmd, and is used in
+>> this call:
+>>
+>> 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t, $quiet)
+>>
+>> where recipients_cmd takes ($prefix, $what, $cmd, $file, $quiet) and
+>> runs execute_cmd($prefix, $cmd, $file).  execute_cmd in turn takes
+>> ($prefix, $cmd, $file) and does this:
+>>
+>> 	open my $fh, "-|", "$cmd \Q$file\E"
+>> 		or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
+>>
+>> IOW, $cmd is just an early part of a shell command line that takes a
+>> filename as its last argument, so I think it would be fine for $cmd
+>> to be "perl contrib/contacts/git-contacts".  I did not test it, and
+>> it would be appreciated if people can test it.
 >
-> Not sure if this is the right fix, as the no longer needed section still
-> undefines __AVAILABILITY_MACROS_USES_AVAILABILITY at the end, which we
-> may want to keep instead.  But compilation succeeds and tests pass, so
-> perhaps it's fine.
+> I should be able to test this later this week.
 
-I think I added the final `#undef
-__AVAILABILITY_MACROS_USES_AVAILABILITY` in b195aa00c1
-(git-compat-util: suppress unavoidable Apple-specific deprecation
-warnings, 2014-12-16) just for completeness; since I #define'd it, I
-also #undef'd it to ensure a clean state or the C preprocessor.
+Looks like --cc-cmd="perl contrib/contacts/git-contacts" works as
+expected! I tested by setting up a working git-send-mail config and
+running with --dry-run to check the CC list.
 
-However, taking this new situation into account, where
-__AVAILABILITY_MACROS_USES_AVAILABILITY is now defined by default, it
-_probably_ would be more correct to drop that final #undef.
-
-Having said that, though, it doesn't seem that it is likely to matter
-one way or the other as the project stands presently, especially since
-you report that building and testing succeeds. Moreover, the only
-other place in the project where we seem to care about the Apple
-version-compatibility macros is in
-compat/fsmonitor/fsm-listen-darwin.c, but even that isn't a problem
-because it consults a version-compatibility macro before #include'ing
-git-compat-util:
-
-    #ifndef AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER
-    #define kFSEventStreamEventFlagItemCloned 0x00400000
-    #endif
-    #include "git-compat-util.h"
-
-So, this patch can't possibly have any sort of negative interaction
-with that code even if __AVAILABILITY_MACROS_USES_AVAILABILITY somehow
-impacted AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER.
+Will reroll later today. Cheers.
