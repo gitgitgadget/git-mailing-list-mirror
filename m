@@ -1,60 +1,59 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34A0165FB0
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 15:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8562E161935
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 15:11:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713452885; cv=none; b=ZUcDWO2VLAt0yQX+Jvb/XrMqsQ1Tjj2/04/OQxt9t0QTaUqMOFV53QzD/32yfXuH+H3NvCO2FyL9G6HzSeyCGMavK4q9eughk1jJdVCdnkd0S+dkb/cuvSpNv5ZYhS8eTFozMarXDfuINVgefJThkxlX2OA/x6aHHp/or2F7pyA=
+	t=1713453098; cv=none; b=NAguJRjt3RXRzuk6o8xn0Gdt94E2QPXh5SktRS16iwp5HWN4RoZ1WimrZoctl9hQJ87F8Cjr5zp5gWNvUYZv+D2eqK/Zb3PUUfyCOIwsMuhoSrS9quFHnJqlY5qgOi4CfxGVwn7jQZW2UvnFNvEtuwvSeAL7D7SC1rLKZ3R015w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713452885; c=relaxed/simple;
-	bh=H5D5FJ41Y/2QeBHGf//e/pdAI/Qlx5By/5he7TRbjmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LqKFClwQsE57p6hj5zZHbpX2AUaR7WJuGsLLm86N6BIS/N/yYlNDD+De++QbYRy38KrKBPP1BOKeSM5CntKoDPzxfKse1Dp7oMI3+muRFPx71PjVd3i26YbCFaCqSEv4QMn6wRM3zmcACKRW7vndcPA0pRaqNShlxtC++PYEJhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EjgMHsTX; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1713453098; c=relaxed/simple;
+	bh=nre3naf6hHFNwV4Vmmu5+MVzjXfAAFdDAwBRggVUxvQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qhdnY3pSvv6Cvj/mpBRQt7U/hD3iHVKkiBqbYnJUsLDnzNSnHMeD6DqYQFaN9/TEB3Gzt/S297jpvabPh9t6hO1Q6uhYLEl0HIVYAT212svzwV6g1dySUyM+cnSYVHc/g1g7zXNZx5EuQHjyMg/C3XxU1Ml/XSygXvnvpizenOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hSkz7Y5T; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EjgMHsTX"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d8743ecebdso12391491fa.1
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 08:08:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hSkz7Y5T"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-418a02562b3so7911965e9.3
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 08:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713452882; x=1714057682; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6NIHWgiSGv8eMvkVytnidmVyFw8tqiIE/Q8oLLkVAy8=;
-        b=EjgMHsTXBMlE+Tb45Y6dD+tfAlK0cLnOkycmacL+G+HXMhymryWtLOR7t958j1S0Fx
-         MDOgbcahm84tz5YFdfmgfDwA8r/vSFj2Fml4OpIEmhN62MvAlH0/BmTfpmsCK6Lm2W+p
-         xFhsjzK/KlH0r9IxVdqoNc6E2LSPtsnAMAnA7TAjS8EOJsK6QjlUFekrjL5Ff0QCaNBn
-         hCgin4cCc0aULVBJa1CyDgpVJ0p9JjO9VAhSIxgyx/tSNyF81dUpJUkAQYELV9dByrvx
-         J02HMqsKj1+ZTF7ciayh5HUdAXA0wpx9m8UGKuUPFaWykzOidKRm5EHY74ZEuGN1wQ/3
-         CGsA==
+        d=gmail.com; s=20230601; t=1713453095; x=1714057895; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/3jmbp2nUuiN07y6XZkNM07jj8q57x2im521FOcOBRw=;
+        b=hSkz7Y5TEA01nfF/gTs+wwzBHmezHuTO6UEaeIm9OVecpZDn0tb7MXPo8ZYi5NYJq+
+         T3cIJRyoFJ0rRubKEh9XEWqfDvisPe+W7LuBc0SfVBt/lSw8HJq8lrtyW+juz0nMKqzK
+         5S1ZlHIKbdyo0G6tS0L4U1nvNvb7Cs+Kw0GweaJBqQ0QCKpuEtQB5eGJ+p+dbLCrqEtR
+         7YabPKWiMqgH2tX2NtusOu9RiFnYR/l0xnuCFOPlwSpu1kagf5O0I1kgZfhRNFTSBAQQ
+         dRInQL1fuARiDHmPFmWiqg+6fFBfmc0EY4FY/Lg8nPg6+i10jRsRn3dqLp0+qyIFpmD6
+         HkQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713452882; x=1714057682;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6NIHWgiSGv8eMvkVytnidmVyFw8tqiIE/Q8oLLkVAy8=;
-        b=Ab0nQwHj+4IB5YCrlwiYOjXiLWQf3n1hhICI/pHbb3OzWRfIXXZknaHXreUmgly45M
-         Q6GicIqfD+TnD1WbSA0sZ5M6QH4/w5niWfi1sfrITgjigQbyVuef7TavjQOuVN9ok6GU
-         OjemHIE70Ngocc6OlQhkIBR9HRc2lnHz0e3YTebmTzB/ay0ivZWcRJPiJGmnoGV3mHw5
-         +ykUXPrH7E4n/aLubbCr88ew7fNZZSlXRll4v7F+jo7D+GMdWqTYZ3Ls0gaMo5qUaju0
-         bOA0q5Pb8dYog6cWbnLiGgVSeXJPL8wsf6D6TBdpHTpAbijq2WKG+khLJLHX05NTne4g
-         sa8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUu2/J4BCGqxdBYFI/zkvHUp5EXDGHKdHENyWAHtqFH71rZcXGNTIll27H4RPlsBC7BIU9VZpkZN7G9fGH32cw4BlP8
-X-Gm-Message-State: AOJu0YwYL40TBTzMQeGRiXYHJZbfg/er8b6rXQ19e7XOTt0TjDqPftDo
-	LseJ5sB/o0B7dTbiyM0rl7bpmJRvg97zYcl5lApusrVARajNewcF
-X-Google-Smtp-Source: AGHT+IHgq1e+8AVXsGQOe6btYwYItqTGy6WNQAeJdYUfzBGpTr0OblwruOXKEcUyTCGKRMeR9kMptQ==
-X-Received: by 2002:a2e:3217:0:b0:2db:175d:a261 with SMTP id y23-20020a2e3217000000b002db175da261mr1893185ljy.29.1713452881623;
-        Thu, 18 Apr 2024 08:08:01 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713453095; x=1714057895;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/3jmbp2nUuiN07y6XZkNM07jj8q57x2im521FOcOBRw=;
+        b=TXfMQXS/swVT0J1A1l+BJgcWLyVvGArSMWvDu+K2gzcfA/wc1AMe1OjEVbhlDBOcuK
+         WCXOTr0UODegZqRkZpMz5PbyDTG+LamZ99ygUPkp4VgrwIIQemLxVHp7wG7PlehUw7X6
+         7mFrYcRSjs8pAYl3yKfGEZZoOOsZ7mOI3bRlWXhlzAy/3HMyJP1RCS/8Zsf4IiLkX7CJ
+         ZRb5iA+ZP82kQm1PqgQBFeCJTQPEFS/jayjbdbfdTYYLxN+QnDpkCwsuN/B0hEC62hq+
+         +PFmGxFNRngkf3O4HGVCUrBj5lZZotk3ff59VjC7QPe0tSo+6P9P3N43sNhwMsN66mm5
+         gCBA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBFxG+i8qwQ+S0ItKPZurSQUWNHUHH3HiFuBwnTsnxGExk6ytA7saXsbbWr1QupVE4oJbiYpbsyDoYbzRKvs2tZ9Ru
+X-Gm-Message-State: AOJu0YwIhyAkCc6mNx0ThuU6LuZ2OU1ijmkbNpATr/ifa4Lxs4WsnfWR
+	7lmsTwatgJIw8JsguPmnlAcTi4ONTBWJSpSHpIQCNHmveEJgK49I
+X-Google-Smtp-Source: AGHT+IGBMKITbUwEU7KQQBW+VTsx7LW3NP1SkMcJTyUHtkQGg6ug2xXbckfSDYWJVDdYInZdLDltOA==
+X-Received: by 2002:a05:600c:190f:b0:418:2729:35e5 with SMTP id j15-20020a05600c190f00b00418272935e5mr2153013wmq.34.1713453094409;
+        Thu, 18 Apr 2024 08:11:34 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:68c:c401:12ba:addc:3daa:a3e? ([2a0a:ef40:68c:c401:12ba:addc:3daa:a3e])
-        by smtp.gmail.com with ESMTPSA id z6-20020adff1c6000000b00343ad4bca7dsm2043377wro.85.2024.04.18.08.08.01
+        by smtp.gmail.com with ESMTPSA id i9-20020a05600c354900b00418ee62b507sm1767531wmq.35.2024.04.18.08.11.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Apr 2024 08:08:01 -0700 (PDT)
-Message-ID: <c182c68c-77f6-422a-81ed-f6199c6b8a6b@gmail.com>
-Date: Thu, 18 Apr 2024 16:08:00 +0100
+        Thu, 18 Apr 2024 08:11:34 -0700 (PDT)
+Message-ID: <52102ebc-ae57-4000-9990-7def910ba254@gmail.com>
+Date: Thu, 18 Apr 2024 16:11:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,86 +61,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/7] refs: accept symref values in
- `ref_transaction[_add]_update`
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-References: <20240330224623.579457-1-knayak@gitlab.com>
- <20240412095908.1134387-1-knayak@gitlab.com>
- <20240412095908.1134387-2-knayak@gitlab.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] add-patch: response to invalid option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
+ Patrick Steinhardt <ps@pks.im>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+ <15f9252c-212f-43eb-84f3-6046fb2fab38@gmail.com>
+ <20685fa0-815f-4cdf-95e0-7206588552b5@gmail.com>
+ <1d0e98cb-78a4-40d0-9bfe-390a3a30aad8@gmail.com> <xmqqh6g0av28.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <20240412095908.1134387-2-knayak@gitlab.com>
+In-Reply-To: <xmqqh6g0av28.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Karthik
+On 17/04/2024 16:05, Junio C Hamano wrote:
+> phillip.wood123@gmail.com writes:
+> 
+>> I tend to associate "option" with a command-line argument, not
+>> interactive input to a program.
+> 
+> "git add --help" is a bit mixed.  The choices offered by "git add
+> -i" are called "subcommand" (see "INTERACTIVE MODE" section), but
+> the choices you give to the prompt "patch" subcommand gives you are
+> presented with "You can select one of the following options and type
+> return".  So "option" is not too wrong, even though it is a word
+> used in other contexts as well.  I am OK with "option", but if I
+> were adding this new error message, I probably would have said
+> "unknown command".
 
-I agree with Christian's comments on this patch, I've got a couple of 
-additional comments below
-
-On 12/04/2024 10:59, Karthik Nayak wrote:
-> diff --git a/refs.c b/refs.c
-> index 55d2e0b2cb..967c81167e 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1228,6 +1228,7 @@ struct ref_update *ref_transaction_add_update(
->   		const char *refname, unsigned int flags,
->   		const struct object_id *new_oid,
->   		const struct object_id *old_oid,
-> +		const char *new_ref, const char *old_ref,
->   		const char *msg)
->   {
->   	struct ref_update *update;
-> @@ -1253,6 +1254,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
->   			   const char *refname,
->   			   const struct object_id *new_oid,
->   			   const struct object_id *old_oid,
-> +			   const char *new_ref, const char *old_ref,
->   			   unsigned int flags, const char *msg,
->   			   struct strbuf *err)
->   {
-
-Adding these two new parameters is quite disruptive as all the existing 
-callers have to be updated. It makes it easy for callers to misuse this 
-function for example by providing old_oid and old_ref (I'm assuming that 
-is an error but it is hard to know for sure without any documentation). 
-It also makes the calling code harder to read because there are so many 
-parameters it is hard to keep track of exactly what is being passed. An 
-alternative strategy would be to add a new function that takes a struct 
-instead of lots of individual parameters. That would make the calling 
-code more readable as it would be clear which struct members are being 
-set (see reset.h for an example of this). The approach of adding a 
-struct is still prone to setting the wrong combination of options so 
-either way it would be helpful to add some assertions to detect mistakes
-
-	if (old_oid && old_ref)
-		BUG("Only one of old_oid and old_ref should be non NULL");
-	if (new_oid && new_ref)
-		BUG("Only one of new_oid and new_ref should be non NULL");
-
-
-> diff --git a/refs.h b/refs.h
-> index d278775e08..645fe9fdb8 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -696,13 +696,19 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->    */
->   #define REF_SKIP_REFNAME_VERIFICATION (1 << 11)
->   
-> +/*
-> + * The reference update is considered to be done on a symbolic reference. This
-> + * ensures that we verify, delete, create and update the ref correspondingly.
-> + */
-> +#define REF_SYMREF_UPDATE (1 << 12)
-
-I'm confused as to why we need this as I assumed that we could use the 
-presence of old_ref/new_ref to determine that the caller wants to update 
-symbolic ref. Having this flag means that there are more possibilities 
-to misuse the new API setting this flag but providing NULL for old_ref 
-and new_ref.
+I think "unknown command" is a good suggestion, I take your point about 
+"unknown key" not being so clear for users who do not use single-key input.
 
 Best Wishes
 
 Phillip
+
+> In any case, whether you said option, command, or key , it is so
+> obvious from the context that we could even say "error: 'W' not
+> known, use '?' for help" without any noun there, so it would not
+> matter too much which noun you pick.
+> 
+> I'd still avoid "key", though, because to those who do not do
+> single-key input, myself included, it does not match their user
+> experience, and it is even more so if they forgot or do not even
+> know that they could choose to use single-key input.
+> 
+>> The test you are proposing only tests the last of these changes. We
+>> should be aiming to write tests that (a) verify all of the changes
+>> introduced by a commit (b) are likely to detect regressions to those
+>> changes (c) are reasonably efficient, for example if it is possible to
+>> test more than one key with a single "add -p" process we should do
+>> so. As this is an interactive program I have a strong preference for
+>> testing what the user sees printed to their screen, not just what
+>> happens to come out on stderr.
+> 
+> I do agree with these three points, but I do not have a strong
+> opinion on the new test that was added by the patch when judging
+> with them used as a yardstick.
+> 
+> Thanks.
