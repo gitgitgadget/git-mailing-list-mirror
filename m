@@ -1,116 +1,213 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DCC16C6B9
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 21:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C863F199EAF
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 21:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713476837; cv=none; b=ad1svo0wYPDu48MOnajv3N0ZMt7qhckOjWvG7yWWnu4uOxD/6sOlNSPlilK2+hkCkz5mXjKAOdSGc9KN5SxxZ3XZOAm1kkldFG9chg8ksIhXlreha4uqcdQFfbGCq5k1spWPD4AF9WMEOdedc/0n9j5i5Os+cVa0/HbJoBhN/yU=
+	t=1713477131; cv=none; b=G6UsjEsljCXNZE7MJE0munVrPmfODTBDiDYrWzsGAw2qgFAJ42MyZz0xo8BpoB010a1XlB3tmXZA3BI66W8skt4ULy7clTKq23ZMHVwktYYZz0hxTBoB+6TAfKIOXMjf7JEyufEEohqRYAwR51J10dtoQpHvjjQBBXVnwnltEMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713476837; c=relaxed/simple;
-	bh=GC2oVqzardmNsqwwRneUUTwUnsDDbEJ8ipDwCIMOU7U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BDziHHxX+JaA/LfmebdHmBQu2vSGizer8/2kHSuk5+qrICiaZnUd45xvwsz5ZVRQkT5sldRMe9dgN0NKe65JpUjGH3A/eX8TEV++RAXZhXwshsDW8fejErtI/wX9rBRXdyB18INzv4w4k6sNX4P2kN55+6lTSah+AghW2mRO+aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vDZY22Et; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713477131; c=relaxed/simple;
+	bh=K+fmIkekIDp5sPTHPaEvZLjaNbjIzcQYPEMiEKgRx2M=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=LiRiHa8jwOIgv00wCzbYWRUlbbCLykmRGdn2CB/7P+WLBD2lMGuRq2bN6MVuPQPCjYNDbLe7Ym31IO8Mlnmw3hYSyYQwuejcunvOSQJVSkLdYOXlw19Yp1YowX/jbdmGAhVDOc2USxYpf9sHqUP1/D69FzUKF4Cbv6/ymuaOMJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sd2UOsWy; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vDZY22Et"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BD84A2BF21;
-	Thu, 18 Apr 2024 17:47:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GC2oVqzardmNsqwwRneUUTwUnsDDbEJ8ipDwCI
-	MOU7U=; b=vDZY22EtuZjvlxSgaEC61CGF7Ce4bd0MSKxmcnDL2ww5Dduo+6r+nG
-	XeafKKZ6WpTuHKmi6kJqXdO1+fJpU64NgDbqkzd4oCgD5QwTSxIb7KcWA8m7gJKh
-	RrFEsDXL4PC+esft7k8QfAvSz4LDeUYAOK25tc8MHMvO2hvMlch8I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B5F1B2BF20;
-	Thu, 18 Apr 2024 17:47:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AE9AE2BF1D;
-	Thu, 18 Apr 2024 17:47:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/4] missing: support rejecting --missing=print
-In-Reply-To: <20240418184043.2900955-3-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 18 Apr 2024 20:40:41 +0200")
-References: <20240418184043.2900955-1-christian.couder@gmail.com>
-	<20240418184043.2900955-3-christian.couder@gmail.com>
-Date: Thu, 18 Apr 2024 14:47:10 -0700
-Message-ID: <xmqqfrvipcm9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sd2UOsWy"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-343c7fae6e4so1199453f8f.1
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 14:52:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713477128; x=1714081928; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vMHiehbYjFFBdrnTvLdOi6SENwk0PFkyB/EwEssssnw=;
+        b=Sd2UOsWyZQhlgSLvQvDKZSNDS26TxGwOp6rSF+AaoAH9Y+Qexn8ygSBR1dJXbUWDdc
+         OJpaKWhJbpJNS497xqG8cGYmdP7yNu1ZDCrs7f6PyBAcTk4l7GxAKIZXrink8xM89LEv
+         j9zUkd0QFLXNDRKObofzNY9a+/zV5S29Pby/BbEQTayXATv11cL9bb0RoWi+JvR+O8Ys
+         AZD3NaDE/sVrqqEy52z2pjgN2pxDpd2a/oa7pcPjUNttIgn8uahbId36yQdffnFxXlnJ
+         KRCFWff9OjOosdz/hTZMIh1Z4JMaCMgN1S+oOWprmgw81mKhS1d6x+WEP1X7qKZWYYwn
+         FCbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713477128; x=1714081928;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vMHiehbYjFFBdrnTvLdOi6SENwk0PFkyB/EwEssssnw=;
+        b=EDwsaQYDJH6rM53SfK5EkEKAZw5SuMyBDmFBRJmhOedT5Moz0FvfHfbUsYgCDhgWJN
+         dspNHGJoJdm8C/XXQTv2q2+ZAfdOk9YkMaDq09hsQRD9GJZEJhnkE3ltPvApqGfIgMly
+         O74iP4YN7MU2yjRhEuTlTZKmP0IM4etTpgxoSeIFUNMYa1si4VeByXEp70zG7jXHIHzA
+         MqWNeC8AXtCdMP7r4OwJ6xryQ/+xebCvtWTY3xZoB6NJzuQW+MMv7n/xHmc2K/aKSw6p
+         28VRFvxxeD2kejZysI34oBDtd9sVlH3FbOs3hbAGfIjDql2KpbbjXCjjdoGeMmvvQEE3
+         85Aw==
+X-Gm-Message-State: AOJu0YygggAxhyg/G7m6ajDNt4LL8elVOWxW1dQXYxu86CdB8dkuy0OI
+	kmYPDJSBlaolbZERt7Zyk+iNf7L3+oz2zAnwOEci5av6A547cd1yukioZQ==
+X-Google-Smtp-Source: AGHT+IEqyQABN3SfqqSb6kSrjeHd1jUmPqL5S2HBtOE4AkC6gNYhxKLfXaXaL96b/+aRBhDKrZV4IQ==
+X-Received: by 2002:adf:eecf:0:b0:33e:7896:a9d7 with SMTP id a15-20020adfeecf000000b0033e7896a9d7mr81826wrp.67.1713477127402;
+        Thu, 18 Apr 2024 14:52:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id fc14-20020a05600c524e00b004161af729f4sm4055544wmb.31.2024.04.18.14.52.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 14:52:07 -0700 (PDT)
+Message-Id: <pull.1704.v6.git.1713477125.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1704.v5.git.1713308518.gitgitgadget@gmail.com>
+References: <pull.1704.v5.git.1713308518.gitgitgadget@gmail.com>
+From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Apr 2024 21:51:57 +0000
+Subject: [PATCH v6 0/8] docs: recommend using contrib/contacts/git-contacts
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 365DB7BC-FDCD-11EE-90FB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Jonathan Tan <jonathantanmy@google.com>,
+    Emily Shaffer <nasamuffin@google.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Matthieu Moy <git@matthieu-moy.fr>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Kipras Melnikovas <kipras@kipras.org>,
+    Linus Arver <linusa@google.com>,
+    Linus Arver <linusa@google.com>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Make git-contacts more prominent in our docs.
 
-> `git pack-objects` supports the `--missing=<missing-action>` option in
-> the same way as `git rev-list` except when '<missing-action>' is
-> "print", which `git pack-objects` doesn't support.
->
-> As we want to refactor `git pack-objects` to use the same code from
-> "missing.{c,h}" as `git rev-list` for the `--missing=...` feature, let's
-> make it possible for that code to reject `--missing=print`.
->
-> `git pack-objects` will then use that code in a following commit.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/rev-list.c | 2 +-
->  missing.c          | 4 ++--
->  missing.h          | 2 +-
->  3 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> index f71cc5ebe1..a712a6fd62 100644
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -539,7 +539,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  			int res;
->  			if (revs.exclude_promisor_objects)
->  				die(_("options '%s' and '%s' cannot be used together"), "--exclude-promisor-objects", "--missing");
-> -			res = parse_missing_action_value(arg);
-> +			res = parse_missing_action_value(arg, 1);
 
-Hmph, this smells like a horribly unscalable design, as we make the
-vocabulary of missing-action richer, you'd end up piling on "this
-choice is allowed in this call" parameters, wouldn't you?  The first
-person who adds such an ad-hoc parameter would say "hey, what's just
-one extra parameter print_ok between friends", but the next person
-would say the same thing for their new choice and adds frotz_ok, and
-we'd be in chaos.
+Notable changes in v6
+=====================
 
-Rather, shouldn't the _caller_ decide if the parsed value is
-something it does not like and barf?
+ * Prefix the command with "perl" to avoid the need to have it installed at
+   /usr/bin/perl per the shebang line in git-contacts.
+ * Drop "you must have Perl installed in your system" guidance because it's
+   a bit moot now given the explicit call to "perl".
 
-Alternatively, add a _single_ "reject" bitset and do something like
 
-	int parse_missing_action_value(const char *value, unsigned reject)
-	{
-		...
-		if (!(reject & (1<<MA_ERROR) && !strcmp(value, "error")))
-			return MA_ERROR;
-		if (!(reject & (1<<MA_PRINT) && !strcmp(value, "print")))
-			return MA_PRINT;
-		...
+Notable changes in v5
+=====================
 
-which would scale better (but still my preference is to have the
-caller deal with only the values it recognises---do not make the
-caller say "if (res >= 0 && res != MA_PRINT)" as that will not scale
-when new choices that are accepted elsewhere are added.
+ * Drop mention of "/usr/share/..." as an "installed" path for
+   "git-contacts"; instead point users to the script as a relative path
+   inside the Git codebase
+ * Minor wording tweaks to commit messages
+
+
+Notable changes in v4
+=====================
+
+ * Avoid using "should" for guidance around using "git-contacts"
+ * Clarify where to find the "git-contacts" script (because it's not a
+   default builtin command)
+
+
+Notable changes in v3
+=====================
+
+ * Refer to GitGitGadget via a link to MyFirstContribution (instead of
+   sending readers to GGG's homepage directly)
+ * Soften the advice for using git-contacts
+
+
+Notable changes in v2
+=====================
+
+ * Improve existing mention of git-contacts in SubmittingPatches (instead of
+   adding a separate, entirely new paragraph)
+ * Add example usage of integrating git-contacts with git-send-email with
+   the latter's --cc-cmd flag.
+ * Various smaller fixes to SubmittingPatches
+
+Linus Arver (8):
+  MyFirstContribution: mention contrib/contacts/git-contacts
+  SubmittingPatches: clarify 'git-contacts' location
+  SubmittingPatches: mention GitGitGadget
+  SubmittingPatches: quote commands
+  SubmittingPatches: discuss reviewers first
+  SubmittingPatches: dedupe discussion of security patches
+  SubmittingPatches: add heading for format-patch and send-email
+  SubmittingPatches: demonstrate using git-contacts with git-send-email
+
+ Documentation/MyFirstContribution.txt |  9 ++++
+ Documentation/SubmittingPatches       | 72 ++++++++++++++++-----------
+ 2 files changed, 51 insertions(+), 30 deletions(-)
+
+
+base-commit: c2cbfbd2e28cbe27c194d62183b42f27a6a5bb87
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1704%2Flistx%2Freviewers-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1704/listx/reviewers-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1704
+
+Range-diff vs v5:
+
+ 1:  d2c9551ee0e ! 1:  4ced981b82e MyFirstContribution: mention contrib/contacts/git-contacts
+     @@ Documentation/MyFirstContribution.txt: $ git send-email --to=target@example.com
+       
+      +:contrib-scripts: footnoteref:[contrib-scripts,Scripts under `contrib/` are +
+      +not part of the core `git` binary and must be called directly. Clone the Git +
+     -+codebase and run `contrib/contacts/git-contacts` (you must have Perl installed +
+     -+in your system).]
+     ++codebase and run `perl contrib/contacts/git-contacts`.]
+      +
+      +NOTE: If you're not sure whom to CC, running `contrib/contacts/git-contacts` can
+      +list potential reviewers. In addition, you can do `git send-email
+     -+--cc-cmd='contrib/contacts/git-contacts' feature/*.patch`{contrib-scripts} to
+     ++--cc-cmd='perl contrib/contacts/git-contacts' feature/*.patch`{contrib-scripts} to
+      +automatically pass this list of emails to `send-email`.
+      +
+       NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
+ 2:  92d72a8a25a ! 2:  f26f0695f40 SubmittingPatches: clarify 'git-contacts' location
+     @@ Documentation/SubmittingPatches: security relevant should not be submitted to th
+       
+      +:contrib-scripts: footnoteref:[contrib-scripts,Scripts under `contrib/` are +
+      +not part of the core `git` binary and must be called directly. Clone the Git +
+     -+codebase and run `contrib/contacts/git-contacts` (you must have Perl installed +
+     -+in your system).]
+     ++codebase and run `perl contrib/contacts/git-contacts`.]
+      +
+       Send your patch with "To:" set to the mailing list, with "cc:" listing
+      -people who are involved in the area you are touching (the `git
+ 3:  7c4cc5a91f0 = 3:  c201b313644 SubmittingPatches: mention GitGitGadget
+ 4:  621912a64fb = 4:  0a79615cf2f SubmittingPatches: quote commands
+ 5:  8f44343c482 ! 5:  aac5dea0bfa SubmittingPatches: discuss reviewers first
+     @@ Documentation/SubmittingPatches: letter.
+      +
+      +:contrib-scripts: footnoteref:[contrib-scripts,Scripts under `contrib/` are +
+      +not part of the core `git` binary and must be called directly. Clone the Git +
+     -+codebase and run `contrib/contacts/git-contacts` (you must have Perl installed +
+     -+in your system).]
+     ++codebase and run `perl contrib/contacts/git-contacts`.]
+      +
+      +Send your patch with "To:" set to the mailing list, with "cc:" listing
+      +people who are involved in the area you are touching (the `git-contacts`
+     @@ Documentation/SubmittingPatches: patch, format it as "multipart/signed", not a t
+      -
+      -:contrib-scripts: footnoteref:[contrib-scripts,Scripts under `contrib/` are +
+      -not part of the core `git` binary and must be called directly. Clone the Git +
+     --codebase and run `contrib/contacts/git-contacts` (you must have Perl installed +
+     --in your system).]
+     +-codebase and run `perl contrib/contacts/git-contacts`.]
+      -
+      -Send your patch with "To:" set to the mailing list, with "cc:" listing
+      -people who are involved in the area you are touching (the `git-contacts`
+ 6:  fd8ad38cab0 = 6:  333775d4129 SubmittingPatches: dedupe discussion of security patches
+ 7:  b23c73459cc = 7:  ef031e30047 SubmittingPatches: add heading for format-patch and send-email
+ 8:  911d4f2a0e5 ! 8:  f346da95ee2 SubmittingPatches: demonstrate using git-contacts with git-send-email
+     @@ Documentation/SubmittingPatches: trial merges of your topic to `next` and `seen`
+      +this:
+      +
+      +....
+     -+	git send-email --cc-cmd='contrib/contacts/git-contacts' feature/*.patch
+     ++	git send-email --cc-cmd='perl contrib/contacts/git-contacts' feature/*.patch
+      +....
+      +
+       :current-maintainer: footnote:[The current maintainer: gitster@pobox.com]
+
+-- 
+gitgitgadget
