@@ -1,62 +1,63 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A6080604
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 12:53:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539EB1EA8F
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 12:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713444789; cv=none; b=ZJYmBTMDHX/pOAJkgWTdF7268BQ9c3T9rKkzIPncmeeRxURxdFLS1d58pG+6zgw94DqDnB0HFPU8cpJn9rk4GZx55Z4g2mSPwryBaMHgkUgCpQEYlBmW3U27t0n1ENFSbcZGTjkWZ+NhqU0OQ83VhCCRL4Lccb1gjwJiiDV5JFA=
+	t=1713444790; cv=none; b=S7qomdat4tsGlYF39I3EIUwLxpFnHvKOFn179fAyHktjTQ/FnIeP2BzMTq6Y5aL0G+NgZd0ncjsCmXxIm7o4LN270325rFGipfkN5kuqbwx1GgGEKiCDqzkPHyiPqfyw8AhVe3VuDLmnJBjsrtvSBijULwDf/TBMeeb6YNw5nAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713444789; c=relaxed/simple;
-	bh=8QbosqFGGzSE+u9cDj4014cRfEs79aWAK5Ha+LzB35A=;
+	s=arc-20240116; t=1713444790; c=relaxed/simple;
+	bh=VsGHR8JtejI7RaY8DH3G2Y7dWmb8cTypEBG1Tg2oyrc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=k7gyi7VBCbDhDyYEF//BEXLY4EONwoVQLDl0CTJDS0GFa5/kjh7B/ZIn7F+mKO089N3dcf4pfWs10jHtqKtGnneIWlKJXc4ieFrd8GW6W8x3xx2c4niCwKMpgH/Ek0BHu0+5srIiHtT6XqS+XIFAO0kaImg9tglhUzaKZT8X6Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AB09Ml/c; arc=none smtp.client-ip=209.85.208.47
+	 MIME-Version:To:Cc; b=fnEF/4jx3P/Eo6dbHzWUUFwy3+uebm5yrG25K/M1G7MpAf8ZOSktdZkIdls1oloTl7X6lcpfO48N1AnSnMUNUjDayS3t8fGyQHXIsf+TDOyBfKUvKKxFJDZo44rsZGovEi0tiY1VkhZfVHgQ9MABg1fqjrZ6hJF2B4fCHOuDWoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kgrcOqoR; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AB09Ml/c"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-56e48d0a632so1222137a12.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kgrcOqoR"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56fffd131a8so453005a12.0
         for <git@vger.kernel.org>; Thu, 18 Apr 2024 05:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1713444786; x=1714049586; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xVpjCCrQW+yK1HtZP5Ejve8quqWCou5xy4d7lWIPOTY=;
-        b=AB09Ml/c91XyfsbFF1fSRKTUucGfcshK1lNTHsvRlagfX/2qtaq8TLkzb5gTQmtsLq
-         JpZN9fl7RR0curFe/ouNX+1fTyeUwXWb4N0Xjd/P9TZejBhWmrErgTqbMul91j6EjNLM
-         d6pakMkNKyQPmuVbqBk8WYH8wHpeAjQJywq5fcmEWI63HWWjuZNWPGXonNStS8KKXMee
-         YvkxRJPi/OJEz/SpGG41WHSvcgGwT6kapvNOjt2dF7EeMNkKa2KwGkewqGug/nNLhQS7
-         ZkpP3znxAsz5Q2dXQytAUy9FZjnZAydCE4C6FDPZqhBo6AmQ1XcRj2Jiv9AhqpMlQnqx
-         3dAA==
+        bh=ODihVaPj5F0eweDxdKUPKi7wdgyWNVhw2FmSRq2BG/s=;
+        b=kgrcOqoRGue3ZCos2RSzNj928AYcNGC9qrMLN5STKl6JsRDk6OLuoL0zwiflNR8ljf
+         ddulHQTSxkLVfzOUOtlwWdvChDXzDvfT7kc5N3B4q0/QSZaUwTjVtxdoIXalUJqLUbQl
+         zt0Txac5j0/S9Xp1LhPU4aXKnLBwFHXeZXcFW3432PTiZzaRkV+6g1GzUXsg1y9mdDrm
+         kbOT8HK2fB+9Nn9G2DkBjQlE6Ty2ggdml02APhmcGcl6taGBqhRRu7qQoS0TJTeB4Ge1
+         NBKc2emSCgzjcMY97THxSgdhsH0NPMtZbmaJccqMosH5GCET9LMb2bzFvW64QzUEGJIw
+         e94Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1713444786; x=1714049586;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xVpjCCrQW+yK1HtZP5Ejve8quqWCou5xy4d7lWIPOTY=;
-        b=k4VVbgLh1RkttG4uAAQ5wqsy8z1o/alvPVArjQ8cEHDdbLO0xrJDj32A7KPTReacSF
-         Pfg2v0l3Og7XFaUp1+eA/WdHZ/gaQ/vvgbNTuhZnsNllH4efQYP6s2mRH4NJnWUC7alV
-         CPc1oNTdKdGJ+J0UUQPE/krj5vmzs3ik74+ZjaBO6FCUY2btGnmg1Q4dE0SM7niyIiek
-         c9+FWm3amz7tjTHcdqylBF1IHdJzahNcFG3vv6o4ccG3vGoq62pz1HZEZ0ymRsR0IMu2
-         aTLk3G+FlqO4CnPFUT+MB0eH70PTfumhEBOsXnGOX+GQXDZTahuRJyp0vY6AOOfv98JL
-         1GvQ==
-X-Gm-Message-State: AOJu0Yw0u1WTAGSazjyuAO3WlRFGKijtvvPhSWHl0JTsjYFd20zYRzyq
-	Mnn/KHszguzqvPzvvvxsN/imU+QY0X3FvpGBmdbi8TARHuF7C6jRlAb2Bg==
-X-Google-Smtp-Source: AGHT+IEHu91BEgRTnxAC3fPfHECVozMRUfxbm4KqmLcoF8axanoJgeggzfXIg/WjNOVTuwiM/aRwyw==
-X-Received: by 2002:a50:f68e:0:b0:570:377:850a with SMTP id d14-20020a50f68e000000b005700377850amr2225675edn.32.1713444785427;
-        Thu, 18 Apr 2024 05:53:05 -0700 (PDT)
+        bh=ODihVaPj5F0eweDxdKUPKi7wdgyWNVhw2FmSRq2BG/s=;
+        b=ST3whuNvgE2NUBKhDPI+Mep9vKpXPCWLxa3hZeV4U7L9cGWyicRgvebwddUIKlksc9
+         DfJoFQO/7N3Qcn60Hq44y45zlAiE2e2x7Fo4yaa5f8odZgQ07+vOtg1X3fyHTzebwFwR
+         QxUDSnrR/vH/IEv0v0l7P/BzN4akKgeGkkrLevgSSXONKhUxThmfWTGNnASGWUNHz82A
+         Rm3X90azVukt6TpO0r5W5r/W4YzO8rU2w4/43LkHDTNmz/EBt2bLxzW0fYhReDTczjQH
+         D8b5UKvCcjQ/VDvjWQ0VJQITI1NX38tuV19DByc9JmFb0aubN4dmTXBwhUJg7OYhedv1
+         sajg==
+X-Gm-Message-State: AOJu0Yxwr6VR3TbNdltkRwnGb2+PauzuU+hvdScATiAGkyNkj+m2eK9y
+	eJnkKIZaeIYUKmAUAKeKQOFAoI79ubOny2IJ7KSdKXVOekgzDpvh4SRZ5g==
+X-Google-Smtp-Source: AGHT+IFP266awjWlFTY4y1tg6Yya2pJlKW1PIe0KFVoVTCUaVxkj0xKzUIFMVWhC/WqijKuzVrtxIQ==
+X-Received: by 2002:a50:bb08:0:b0:568:a655:49c6 with SMTP id y8-20020a50bb08000000b00568a65549c6mr2323984ede.8.1713444786239;
+        Thu, 18 Apr 2024 05:53:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l3-20020aa7c303000000b005702fc1f92asm835853edq.53.2024.04.18.05.53.04
+        by smtp.gmail.com with ESMTPSA id k25-20020a056402049900b005700ef75274sm841046edv.33.2024.04.18.05.53.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 05:53:04 -0700 (PDT)
-Message-Id: <pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1719.git.1713342535.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2024 05:53:05 -0700 (PDT)
+Message-Id: <abd796894c857fc9ad96b9942089474df01f0506.1713444783.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
 References: <pull.1719.git.1713342535.gitgitgadget@gmail.com>
+	<pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Apr 2024 12:53:01 +0000
-Subject: [PATCH v2 0/2] Use a "best effort" strategy in scheduled maintenance
+Date: Thu, 18 Apr 2024 12:53:02 +0000
+Subject: [PATCH v2 1/2] for-each-repo: optionally keep going on an error
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,71 +69,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Over in https://github.com/microsoft/git/issues/623, it was pointed out that
-scheduled maintenance will error out when it encounters a missing
-repository. The scheduled maintenance should exit with an error, all right,
-but what about the remaining repositories for which maintenance was
-scheduled, and that may not be missing?
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch series addresses this by introducing a new for-each-repo option
-and then using it in the command that is run via scheduled maintenance.
+In https://github.com/microsoft/git/issues/623, it was reported that
+the regularly scheduled maintenance stops if one repo in the middle of
+the list was found to be missing.
 
-Changes since v1 (thanks Eric!):
+This is undesirable, and points out a gap in the design of `git
+for-each-repo`: We need a mode where that command does not stop on an
+error, but continues to try running the specified command with the other
+repositories.
 
- * Changed the option's documentation to reflect the current state (instead
-   of the original design)
- * Fixed grammar issues
+Imitating the `--keep-going` option of GNU make, this commit teaches
+`for-each-repo` the same trick: to continue with the operation on all
+the remaining repositories in case there was a problem with one
+repository, still setting the exit code to indicate an error occurred.
 
-Johannes Schindelin (2):
-  for-each-repo: optionally keep going on an error
-  maintenance: running maintenance should not stop on errors
-
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  Documentation/git-for-each-repo.txt |  4 ++++
  builtin/for-each-repo.c             |  8 ++++++--
- builtin/gc.c                        |  7 ++++---
  t/t0068-for-each-repo.sh            | 16 ++++++++++++++++
- t/t7900-maintenance.sh              |  6 +++---
- 5 files changed, 33 insertions(+), 8 deletions(-)
+ 3 files changed, 26 insertions(+), 2 deletions(-)
 
-
-base-commit: 3c2a3fdc388747b9eaf4a4a4f2035c1c9ddb26d0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1719%2Fdscho%2Ffor-each-repo-stop-on-error-2.44-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1719/dscho/for-each-repo-stop-on-error-2.44-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1719
-
-Range-diff vs v1:
-
- 1:  6721e3ada5d ! 1:  abd796894c8 for-each-repo: optionally keep going on an error
-     @@ Commit message
-      
-          This is undesirable, and points out a gap in the design of `git
-          for-each-repo`: We need a mode where that command does not stop on an
-     -    error, but continues to try the running the specified command with the
-     -    other repositories.
-     +    error, but continues to try running the specified command with the other
-     +    repositories.
-      
-          Imitating the `--keep-going` option of GNU make, this commit teaches
-          `for-each-repo` the same trick: to continue with the operation on all
-          the remaining repositories in case there was a problem with one
-          repository, still setting the exit code to indicate an error occurred.
-      
-     +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Documentation/git-for-each-repo.txt ##
-     @@ builtin/for-each-repo.c: int cmd_for_each_repo(int argc, const char **argv, cons
-       		OPT_STRING(0, "config", &config_key, N_("config"),
-       			   N_("config key storing a list of repository paths")),
-      +		OPT_BOOL(0, "keep-going", &keep_going,
-     -+			 N_("stop at the first repository where the operation failed")),
-     ++			 N_("keep going even if command fails in a repository")),
-       		OPT_END()
-       	};
-       
- 2:  a86bcf2e1a0 = 2:  1ae11553052 maintenance: running maintenance should not stop on errors
-
+diff --git a/Documentation/git-for-each-repo.txt b/Documentation/git-for-each-repo.txt
+index 94bd19da263..8c18001d825 100644
+--- a/Documentation/git-for-each-repo.txt
++++ b/Documentation/git-for-each-repo.txt
+@@ -42,6 +42,10 @@ These config values are loaded from system, global, and local Git config,
+ as available. If `git for-each-repo` is run in a directory that is not a
+ Git repository, then only the system and global config is used.
+ 
++--keep-going::
++	Continue with the remaining repositories if the command failed
++	on a repository. The exit code will still indicate that the
++	overall operation was not successful.
+ 
+ SUBPROCESS BEHAVIOR
+ -------------------
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+index 28186b30f54..9bdf2b34f89 100644
+--- a/builtin/for-each-repo.c
++++ b/builtin/for-each-repo.c
+@@ -32,6 +32,7 @@ static int run_command_on_repo(const char *path, int argc, const char ** argv)
+ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+ {
+ 	static const char *config_key = NULL;
++	int keep_going = 0;
+ 	int i, result = 0;
+ 	const struct string_list *values;
+ 	int err;
+@@ -39,6 +40,8 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+ 	const struct option options[] = {
+ 		OPT_STRING(0, "config", &config_key, N_("config"),
+ 			   N_("config key storing a list of repository paths")),
++		OPT_BOOL(0, "keep-going", &keep_going,
++			 N_("keep going even if command fails in a repository")),
+ 		OPT_END()
+ 	};
+ 
+@@ -55,8 +58,9 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+ 	else if (err)
+ 		return 0;
+ 
+-	for (i = 0; !result && i < values->nr; i++)
+-		result = run_command_on_repo(values->items[i].string, argc, argv);
++	for (i = 0; (keep_going || !result) && i < values->nr; i++)
++		if (run_command_on_repo(values->items[i].string, argc, argv))
++			result = 1;
+ 
+ 	return result;
+ }
+diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
+index 4b90b74d5d5..95019e01ed3 100755
+--- a/t/t0068-for-each-repo.sh
++++ b/t/t0068-for-each-repo.sh
+@@ -59,4 +59,20 @@ test_expect_success 'error on NULL value for config keys' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--keep-going' '
++	git config keep.going non-existing &&
++	git config --add keep.going . &&
++
++	test_must_fail git for-each-repo --config=keep.going \
++		-- branch >out 2>err &&
++	test_grep "cannot change to .*non-existing" err &&
++	test_must_be_empty out &&
++
++	test_must_fail git for-each-repo --config=keep.going --keep-going \
++		-- branch >out 2>err &&
++	test_grep "cannot change to .*non-existing" err &&
++	git branch >expect &&
++	test_cmp expect out
++'
++
+ test_done
 -- 
 gitgitgadget
+
