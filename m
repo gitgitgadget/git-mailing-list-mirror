@@ -1,51 +1,51 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E14177980
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 19:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16668184132
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 19:36:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713468129; cv=none; b=Chomhu+uddP/vl1L4vJmsBdoICmF61pH/OE3GDK+VPgOi3yNTcX2ENcS03vxSm2laJsM+/6Ua6G4QinRE7unRQlvcELwiQ97Gat0axUNaxjhliASb49oQUbh/iQ42eb/Z+4dwv8lpejFV2HeCYNYU+SXNBFNQSMbQ+LVWOqTEOw=
+	t=1713469002; cv=none; b=QLPdo0Pmd/qviGcp1wZs/1duamODkjcUZ3Hww7XRN4aabk5zfrACeTS8cyYgTmhCZK36ek62ekrQUS8VwANaNGltBhjz76sbflLklbu1dVw8FTBcQmMHdG3y1abEIYCKzfgaMLHskghM46lQ+6yrU5z+X521esO7Lit1L0A931w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713468129; c=relaxed/simple;
-	bh=2b6FVzkB47/yLM0gP0ZV2R0MT6Lw27cCZKE3q9la2cI=;
+	s=arc-20240116; t=1713469002; c=relaxed/simple;
+	bh=IYtvmpdlTNyC8c8CdJFNNelq+3UJ4DK7gV4CHJy+CFI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T8z5q8g6XWZMcJSqkglG+mJTS3YGOH0bbSoUijIxSsdgLUijbKu8qRZuOQWvXf3TCVvtV1vjywJ65dfe9a8v9u1b9vpPSsy6y3Lb8Lkz3wYsdL3gS1UbVgTc5ZwgXXpM0cdUAqvvFZ8eVYaSLFoY3LOiHPGoIj1JZo/JIRQYV2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uYTSAeok; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=HJ8j3RWv9/Cs72y1DyzLyiWbqrmPPMwNOsvKEb9G9pfaRMpmjrQlAXM1qaJBBidXZNIEZZmhoJwE44yHxR/rfHcQrqlU4HDJPPQBEJ8YsszVgxYXnBrDOBI8ylSXrpVfAAKE+CQSnJatT/XqK//UYn8T51Ec+vpyNrre5wFYVUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AOjqUTu2; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uYTSAeok"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4615A1EB7E8;
-	Thu, 18 Apr 2024 15:22:01 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AOjqUTu2"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 693611E6DC7;
+	Thu, 18 Apr 2024 15:36:34 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=2b6FVzkB47/yLM0gP0ZV2R0MT6Lw27cCZKE3q9
-	la2cI=; b=uYTSAeok4pqgzAoruSsRHocelNd/EG5aGT24m9xSjRpZOPoiC0sN9M
-	HjHx9dr+UAX1325Ks0rEAetI5/j0977EcZFUlL+EP6GjwDF90+7B4wPFfpy1w144
-	djHr9IAAdgpwxb4T8HL+m1VOzJG+c3NbMPPv/4iMPIBhVKLbOgR2E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 13F741EB7E6;
-	Thu, 18 Apr 2024 15:22:01 -0400 (EDT)
+	:content-type; s=sasl; bh=IYtvmpdlTNyC8c8CdJFNNelq+3UJ4DK7gV4CHJ
+	y+CFI=; b=AOjqUTu2hiq4DPe0uM9sSr/3kQkLCK7rYd4f1O1bKILzWuvt7tYVQS
+	H3Sa7k79vbzMTYGxgaKKHbpDVWog2YAq6hvN9WImD0G1k1UBnLEy4gBU5FDaCiS7
+	fTy+HOww36AeaOFhBeCY+F+KHSi5Zl65G3xio5HDlOdo/xKxksjYY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 602D21E6DC6;
+	Thu, 18 Apr 2024 15:36:34 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.229.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 301581EB7E5;
-	Thu, 18 Apr 2024 15:22:00 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BFF0B1E6DC4;
+	Thu, 18 Apr 2024 15:36:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] upload-pack: support a missing-action
-In-Reply-To: <20240418184043.2900955-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 18 Apr 2024 20:40:39 +0200")
-References: <20240418184043.2900955-1-christian.couder@gmail.com>
-Date: Thu, 18 Apr 2024 12:21:59 -0700
-Message-ID: <xmqqo7a6tr1k.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/6] global: drop `the_index` variable
+In-Reply-To: <cover.1713442061.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Thu, 18 Apr 2024 14:14:04 +0200")
+References: <cover.1713180749.git.ps@pks.im> <cover.1713442061.git.ps@pks.im>
+Date: Thu, 18 Apr 2024 12:36:32 -0700
+Message-ID: <xmqq34ritqdb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,43 +55,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- EDE72C48-FDB8-11EE-8397-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ F6993D8E-FDBA-11EE-9816-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> `git pack-objects` already supports a `--missing=<missing-action>`
-> option, so that it can avoid erroring out if some objects aren't
-> available.
+> this is the second version of my patch series that aims to drop
+> `the_index`.
 >
-> It is interesting to have `git upload-pack` support a similar way to
-> avoid sending some objects in case they aren't available on the
-> server.
+> Changes compared to v1:
+>
+>   - This version goes a bit further now and completely drops the
+>     static `the_index` variable, as well. The repository's index gets
+>     allocated dynamically now, like all the other sub-structures like
+>     the ODB.
+>
+>   - This also allows this series to remove `initialize_the_repository()`
+>     now. Instead, callers call `initialize_repository()` now.
+>
+> There is still quite an ugly hack in `initialize_repository()` which
+> requires us to treat `the_repository` specially. This is because
+> `the_hash_algo` maps to `the_repository->hash_algo`, and we rely on it
+> being initialized to SHA1. So we need call `repo_set_hash_algo()` on
+> `the_repository`. On the other hand, we cannot set the hash algo on
+> repos which are not `the_repository`, because that breaks stuff, as
+> well.
+>
+> I'm currently prepping another patch series that builds on top of this
+> series and cleans up this mess. It surfaces several bugs that got masked
+> by our setup, like for example `git rev-parse --short=` not working
+> correctly with SHA256 because we always truncate to the maximum length
+> of SHA1.
 
-Is it interesting?  In what way?
+I'll take a look, and may even comment on them later, but let me
+otherwise place this series on the back burner, not because I am in
+love with the_index (I am not) and not because I think the "index"
+member in the repository struct is a mistake (I suspect it is, but I
+am not convinced either way), but because I'd prefer to see our tree
+to be quiescent when we apply a tree-wide patch like [2/6], but
+we'll be in -rc period soonish, during which time we'd want to be
+able to concentrate on fixing regressions without having to worry
+about being able to reapply such tree-wide changes to keep 'next'
+and 'seen' building.
 
-> For example, in case both the server and the client are using a
-> separate promisor remote that contain some objects, it can be better
-> if the server doesn't try to send such objects back to the client, but
-> instead let the client get those objects separately from the promisor
-> remote. (The client needs to have the separate promisor remote
-> configured, for that to work.)
-
-It is unclear what the precondition for such an arrangement to work
-reliably, and a lot more importantly, how we can validate that the
-precondition holds when "fetch" talks to "upload-pack".  If you get
-it wrong, you'd have a server that would corrupt repositories that
-fetch from it.
-
-That is where my "Is it really interesting?  I do not find your
-explanation convincing yet." above primarily comes from.
-
-
-Presumably "fetch" could tell "upload-pack" something like:
-
-	I know how to fetch missing objects from this and that
-	promisor remotes, so if you choose to, you may omit objects
-	that you know are available from these promisor remotes when
-	sending objects to me.
-
-using a new capability, and we can allow upload-pack to omit objects
-only when such a new capability tells it to?
+Thanks.
