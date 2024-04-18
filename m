@@ -1,111 +1,117 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4EC174EF9
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 18:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C972317AD6A
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 18:41:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713464030; cv=none; b=hiInURYur5ie1gYbePBwscx2YKdwIhWXjvUCGL0UAIKMwunGSa9bVWDD9QTTcEs93bNrfua8ap/Pqs4RMMtvjpl8/zvG8P9j55M7mSzvUyRUdJzYC7weNMxiAcxyuaSHmJtlQasJs67KWlKJFLNh8lK5tNt/R6HF91LYi1+6+y0=
+	t=1713465665; cv=none; b=Qkeeq8/LRmWgtZJJXPLanYG2OIXA8AVFOC6ygflQHd/WSdMKlcH4H1mKZwzxTusD2qRNqXTEhTUvt9gdCh61fXw229eF6MbKO0xgd8GI60nr9EkmsaIeR5qwkpFqtSPbryGx+ev2Fbrim0/Xsq9gPCQGRPZ/xDrJM0AbEkpz7Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713464030; c=relaxed/simple;
-	bh=gQU5cNvQYcCrfd5ixvdYOd6Z8nQG/Y9SgFCngTUvOVQ=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=IrT1A+QJOGQok4G9sduRZdR4uosyypBfNOYm42C1mt0ze7mDX/BTaeYebgn6Y9CdkXtWFBineOXZ4rp9rwjNZjdtyzWaBQIdauMuKgBuJVK9lkOfeJ+yrEIBkSICnsbT9sq4xN7fjlGOELP4TuePe3ZhlWILogstjvxW9ePUGJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Hhn5lds1; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1713465665; c=relaxed/simple;
+	bh=KmYl7+UI/nO5L3tk9CfRF6t1vwLjsqnrYNB/owRSvOU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kKJ/bVmNyoSisRdKtM1Sd51fGKse18BLcoMBvAOykSH5z1GvYQ6+aqIz8g9m52GH740IzhnLfG8sBq3O3W4gi5/IfaIVtU6Zwv/eAc5RGARebHcaM9BQKe8osEINksrZbDuib3+Z7XvZtZ2m5XUWA8ZbIPVuhzFgf/NKWiQ82U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bMoXRMYh; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Hhn5lds1"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dcc0bcf9256so2163986276.3
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 11:13:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bMoXRMYh"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-417e327773cso13633715e9.1
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 11:41:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713464027; x=1714068827; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fXFTBkwf2eSSYXD+DUOuOG2X53nI6aPQXilt2umlBck=;
-        b=Hhn5lds1puqamYZfU8KzrGqamcl9OYy4kznOqc2t1MHyvDGFZh73Jl1aaAZLjDRyfI
-         ceDPuJBrwIe35uhQa6jyhboFC/2k6NasoEACCw4F670MDMK2zW2ixBzr/X8NdYmR/6gh
-         R7eTWMBLXlX1LCC6SEULWKBnFufjarhpvKczVjeY6AC1638jsmqb8AHb5W08njakIeLA
-         m1HwNhoxscb/hBpJOqXWELP+EdPCT7XLxidwFmQBJzflGlvw4z9KulBLktxQrECmTyLQ
-         MtAV7FUQD3WplkGthtIA+4WjBh/lkQuG4y3TFpFnDVovSQc9ASAh00Cxf9fADw3MiTyX
-         xbRg==
+        d=gmail.com; s=20230601; t=1713465661; x=1714070461; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jv4407WDfigOf9gw1BvYNNViNbgPAVN4FN92zW5jSo4=;
+        b=bMoXRMYhh7/NvktvzkZIN6W0UzXtmtqwqnyYBBhJP5hIiI81Ckyn59rnQfspE3QwAO
+         TyWewVysbbuUf/78db9yWj6QfCHLJlhqmS+eKP5Go9+e4m9N+jmigtHYamW3qhyMFF40
+         u/lQUnGVBy5RGKVLs8bmTVBwB/HI1pD6kYir8/idctCmuv/LyjbwBNrlNc9vk0CpoDFc
+         IuYnjaIovk4mnJUyq3HXaPve8FkrePcK90555I2nE062H3eZzITSOic4cZJ37r4P1jhV
+         ZkkRdOaLEjtgBl53Dq0ZoOTXjZ+8Hcxfs0FgTALT0vCCCIA6iZnpV0dF7Di8HfAyT/An
+         sLAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713464027; x=1714068827;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fXFTBkwf2eSSYXD+DUOuOG2X53nI6aPQXilt2umlBck=;
-        b=q2Riu3nPOBZMfLSo7dIL4bZVM+U+Y5+x+QvikrHHUj5ikKKAnihFg2Z1BNFFPoB+0B
-         3b8rafy49Jr4ppJIryb7PkkPuH1SlHgtkfwpntwLlErZybESWKs6z6Y9gr/ubX4kjRb4
-         Fs7Fk4hD7fqwY+s4W3Mo/9uTl6URpH1Dahtfl436wa98Hpc24c9oejRFMfkg3dzd0USp
-         YqPV+QuPhejgcC2j07XdwX9Hj+yXrfWBCaE3Vsf0Ie1vWp2lSrNfNsBH1LeyJ37HLg21
-         SAY3Btu7DuKhA/jZ900RdHcjd41KL37be7RarCBJprkXO76PZJtRrdeqd8dUnbxtcVGo
-         r7CQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX0+sukFyi3BRVbU1eaXCUmbQeLO62xPwIKlkDbsAxwntifmqobmnJnjy4cQuFKmCix3Ow5nDh8Ld1h2/PtA9Rng6SD
-X-Gm-Message-State: AOJu0YwmtmSpUMc4iW+QX0EiZbGxnGQY/twaMzCD3E6Qvo1WztKxiw2T
-	/vtXwQ91npswny9VUdBOjHPgqANUrjc9MhL84PK3lF1OY1HVLPLdpW7jatZ6ykWhZJQ+4HSPfM2
-	16g==
-X-Google-Smtp-Source: AGHT+IHXTSPpMUjMsFEFIXCxa4aQxiyWxItANA8AISK3CYiJ2PtjNlU647z8cfPZSGwFBRFtlZUSbBSpPA8=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:2b88:b0:de4:5eaa:4b67 with SMTP id
- fj8-20020a0569022b8800b00de45eaa4b67mr293268ybb.11.1713464026995; Thu, 18 Apr
- 2024 11:13:46 -0700 (PDT)
-Date: Thu, 18 Apr 2024 11:13:45 -0700
-In-Reply-To: <owlywmov4mg1.fsf@fine.c.googlers.com>
+        d=1e100.net; s=20230601; t=1713465661; x=1714070461;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jv4407WDfigOf9gw1BvYNNViNbgPAVN4FN92zW5jSo4=;
+        b=r7KNksU2D0fJrSegOPKWh1pW5yuYSwNd2Gz98OevoFKZihmju+bEj/SMW1z8HSavHx
+         uxr8dgQrXhgJJ7/8elBl0sfn+p/1KjI9QxJmm5itFQc651/xt911tZtaiuNqJtwSEiU3
+         UUtDXhlTaC4CiQDKp2vainYP9+m5PPj3IKaiVEWIEdlf2clFj3mNei6qkW6pByEeD1SC
+         h4BlOpwKxzd4np+PIbvNq7VONaUqtuYaAfybE8nUCp/OzneJNFqYPtVAesclK4HavJwk
+         dW7Bv2zrUtyfZwUorSKpNvl3Mn7yFdfgSE1Vry/AmvEnFQ1iGTDLexGXOuyxNmcwDxCw
+         yi5w==
+X-Gm-Message-State: AOJu0YzWUYf0PNYtCtytAB2GVymvuHvJ+exc83E18KEBmRvAf6DGJVc7
+	F3BZs9OP0lde1P9S/WmAv8JAMINokPzspRVsofcBCcoz9+4kmPma94N21Q==
+X-Google-Smtp-Source: AGHT+IFTo3azw34Xl3yICwXz5WXEUpmzNg2UmHojDuBIcXWA6THTD3HPFdLdRo0tcIwasqnbCuggWw==
+X-Received: by 2002:a05:600c:444e:b0:417:f537:42a8 with SMTP id v14-20020a05600c444e00b00417f53742a8mr2289787wmn.20.1713465661290;
+        Thu, 18 Apr 2024 11:41:01 -0700 (PDT)
+Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
+        by smtp.gmail.com with ESMTPSA id t13-20020a05600c450d00b00417f700eaeasm3653670wmo.22.2024.04.18.11.41.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 11:41:00 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Cai <johncai86@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/4] upload-pack: support a missing-action 
+Date: Thu, 18 Apr 2024 20:40:39 +0200
+Message-ID: <20240418184043.2900955-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.44.0.655.g111bceeb19
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1704.v3.git.1712699815.gitgitgadget@gmail.com>
- <pull.1704.v4.git.1712878339.gitgitgadget@gmail.com> <c43de19d867cb5e63fe6689b2b7d645dc4741950.1712878339.git.gitgitgadget@gmail.com>
- <xmqqsezqmrtd.fsf@gitster.g> <owly34rl53mr.fsf@fine.c.googlers.com>
- <xmqqjzkwdigv.fsf@gitster.g> <owlyzfts52ln.fsf@fine.c.googlers.com>
- <xmqqfrvkd843.fsf@gitster.g> <xmqq8r1cczw8.fsf@gitster.g> <owlywmov4mg1.fsf@fine.c.googlers.com>
-Message-ID: <owlyle5a4jza.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 2/8] SubmittingPatches: clarify 'git-contacts' location
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jonathan Tan <jonathantanmy@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Kipras Melnikovas <kipras@kipras.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Linus Arver <linusa@google.com> writes:
+`git pack-objects` already supports a `--missing=<missing-action>`
+option, so that it can avoid erroring out if some objects aren't
+available.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> We are not installing this thing (yet), so how about giving an
->>> instruction to run "perl contrib/contacts/git-contacts", only
->>> assuming that the user is intelligent enough to be able to react to
->>> "perl: not found" by installing it on their path?
->>
->> That is, something like this, perhaps.
->>
->> As the string given to --cc-cmd is stored in $cc_cmd, and is used in
->> this call:
->>
->> 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t, $quiet)
->>
->> where recipients_cmd takes ($prefix, $what, $cmd, $file, $quiet) and
->> runs execute_cmd($prefix, $cmd, $file).  execute_cmd in turn takes
->> ($prefix, $cmd, $file) and does this:
->>
->> 	open my $fh, "-|", "$cmd \Q$file\E"
->> 		or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
->>
->> IOW, $cmd is just an early part of a shell command line that takes a
->> filename as its last argument, so I think it would be fine for $cmd
->> to be "perl contrib/contacts/git-contacts".  I did not test it, and
->> it would be appreciated if people can test it.
->
-> I should be able to test this later this week.
+It is interesting to have `git upload-pack` support a similar way to
+avoid sending some objects in case they aren't available on the
+server.
 
-Looks like --cc-cmd="perl contrib/contacts/git-contacts" works as
-expected! I tested by setting up a working git-send-mail config and
-running with --dry-run to check the CC list.
+For example, in case both the server and the client are using a
+separate promisor remote that contain some objects, it can be better
+if the server doesn't try to send such objects back to the client, but
+instead let the client get those objects separately from the promisor
+remote. (The client needs to have the separate promisor remote
+configured, for that to work.)
 
-Will reroll later today. Cheers.
+Another example could be a server where some objects have been
+corrupted or deleted. It could still be useful for clients who could
+get those objects from another source, like perhaps a different
+client, to be able to fetch or clone from the server.
+
+As `git rev-list` also supports a `--missing=<missing-action>` option,
+the first 3 patches in this series are about refactoring related code
+from both `git rev-list` and `git pack-objects` into new
+"missing.{c,h}" files. Patch 4/4 then adds a new
+`uploadpack.missingAction` configuration variable.
+
+Christian Couder (4):
+  rev-list: refactor --missing=<missing-action>
+  missing: support rejecting --missing=print
+  pack-objects: use the missing action API
+  upload-pack: allow configuring a missing-action
+
+ Documentation/config/uploadpack.txt |   9 ++
+ Makefile                            |   1 +
+ builtin/pack-objects.c              |  46 +++++-----
+ builtin/rev-list.c                  |  41 ++-------
+ missing.c                           |  42 ++++++++++
+ missing.h                           |  20 +++++
+ t/t5706-upload-pack-missing.sh      | 125 ++++++++++++++++++++++++++++
+ upload-pack.c                       |  19 +++++
+ 8 files changed, 244 insertions(+), 59 deletions(-)
+ create mode 100644 missing.c
+ create mode 100644 missing.h
+ create mode 100755 t/t5706-upload-pack-missing.sh
+
+-- 
+2.44.0.655.g111bceeb19
+
