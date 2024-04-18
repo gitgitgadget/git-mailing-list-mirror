@@ -1,82 +1,100 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8C716F837
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 16:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A438715E20F
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 17:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713456402; cv=none; b=CqiNBayod798HkN916qQEo+9/mCT/9olq2dvs5oTGlbMc6IMwZ2merwvvdLq5rQE2RzOZYtSghdH0qmvVcRETd7UYAi5X0UPawub9kiTUM62vh0x21Pbg5C+fMKpX+fHeXYbMJlEpAh45xS4mfnqh80t9Iqfjb7aXPPdyjT4P0k=
+	t=1713460933; cv=none; b=c0jhSauQ+ifOC9LS4xWOjqc8LBFOUE5orqpOi/YB0EGDN14ruvYDEi0M6LYiJXf9JK1wONepk22aQPc6lcXIa8pVnn9NTPIXUVFWT/ARV5JTv8rkcofxJKF+erRan4S14k26zvswE8Tut1sAvbq0nxac4wDp8BicOuR7PVsMYU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713456402; c=relaxed/simple;
-	bh=5VoTxkDeha/HxDpgOxT07ZNfnW90r1ogQ3ssCmvQqsQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BGzg4H8ZNyjd5GV42ogNv6vSUepBobJD/hX6NOTCaH0KQdISUwehL+WGYtYgnN/DAI0Ayv1PChJyDesee8CY22BYSJcyyZcqEjryh3XjMjKMqKlqYd2zsiBmC/1BPvseqb5FHKkBBwP/nc7vZ3XzanIzPwt0nkBmLVGO7qApjbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Awd9DZvX; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Awd9DZvX"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 76E7A29B6D;
-	Thu, 18 Apr 2024 12:06:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5VoTxkDeha/HxDpgOxT07ZNfnW90r1ogQ3ssCm
-	vQqsQ=; b=Awd9DZvXgznMyubTd7R2pqPfM5q/SBEhgIGVVwC3ft1vOruBAhF2hy
-	ETGAAts/Lm1CsrD46h2ykPl7TOpSUqf9b2BNW+kZstd113Gw51lg5OuskhnWxReu
-	3oJn+vQgy7rPf5hpWaltByCI3w0KMmBF4VksVtgsof2enSGDGFON8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F31329B6C;
-	Thu, 18 Apr 2024 12:06:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3524229B6A;
-	Thu, 18 Apr 2024 12:06:30 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  blanet <bupt_xingxin@163.com>,  Xing Xin
- <xingxin.xx@bytedance.com>,  blanet via GitGitGadget
- <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2] midx: disable replace objects
-In-Reply-To: <ZiEee8ySuy6kCvBZ@nand.local> (Taylor Blau's message of "Thu, 18
-	Apr 2024 09:22:03 -0400")
-References: <pull.1711.git.1712495507815.gitgitgadget@gmail.com>
-	<pull.1711.v2.git.1712554017808.gitgitgadget@gmail.com>
-	<xmqqplun6aws.fsf@gitster.g> <ZiEee8ySuy6kCvBZ@nand.local>
-Date: Thu, 18 Apr 2024 09:06:28 -0700
-Message-ID: <xmqq5xwe4pvf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1713460933; c=relaxed/simple;
+	bh=LIYdoe0cGkFQznn5+IICwrf4on3Bv3hbN3lL2zS+KeM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VVU4Orx/E3ZcNK6eok5zFzRxb2RSs+s/CiaTRWKPYHuyX1g1f7Gpx7CYZ7/gK2pCsZXIwZjW0ASCzDZYODz81SGyml5q4Tu8heATQJs9WQ4t4JlVXfdxl1EYH5zeLbtWbfjfwV9APYs39HYQd04EduVnqnRtc0PWMAtEU0xhHKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-de480576c3cso101805276.2
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 10:22:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713460930; x=1714065730;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mNna9Ez/kincrcSRBxMEvd4desWCfJVUvrs4B576gHs=;
+        b=v1kQavuzHNRGvLQDFPTS6DuRsfGSeB3XSDBfRJ1wuwEMZzrUES4vCpYi5QwUCjcXs7
+         wMDmZCCn5HvHF9N6uIf5pnzhyyz+vkRDSW0wAg9J9sKpTY4Pyu/xSmEFMsaqGUft3oTC
+         qAfZBZ5FQkCH+KjmAd9tQOnTKJiXjRrBric/StGuZQFyPK4IezrN1cb8pMEvFTwvzYMh
+         dac6cH/XJSLze3pU8k9w94LN+NOg/AMeXehT00qTwKzT/AIcbh7PmsZi4z+HPeb0XeR9
+         xKq2Mv6mOmIQqJV6dYNr0Kr58zV1dzBTmwI3nF3C0J+o19RubuBo9hH9Oexr+OQAK34b
+         pIjw==
+X-Gm-Message-State: AOJu0YxuvsQAIzuqUyU9WyQEPinFvEIu7XiRGRHXaN6GiFgtj04q0ec1
+	4hWuQJux9gzMDQE4YinCIKjaXzm6o2MZnfHAgokV+4WTQ+RJKVLcf642kXpZ/LBQRm5PiXQaiOB
+	W5Xq1MFrxnO/rByP1iAYY6r4p2AM4pORj
+X-Google-Smtp-Source: AGHT+IEPPI/mCISQqHTd4VsxfuNqbR7MLvhkHAKaxYIyiR5E3rXfT+cWdjiLzalKlzCvGpuA2X7dnOfY4JZZ7TNKE4s=
+X-Received: by 2002:a25:941:0:b0:dc6:54c5:285c with SMTP id
+ u1-20020a250941000000b00dc654c5285cmr3837342ybm.0.1713460930504; Thu, 18 Apr
+ 2024 10:22:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9E48E354-FD9D-11EE-95CF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <3188f4e2-9744-40b1-8f05-0896b8679d25@web.de>
+In-Reply-To: <3188f4e2-9744-40b1-8f05-0896b8679d25@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 18 Apr 2024 13:21:59 -0400
+Message-ID: <CAPig+cQr3xcnuoyf58YWbXCekhhRgN+M9=WsN4_PYcK7BydDUg@mail.gmail.com>
+Subject: Re: [PATCH] git-compat-util: fix NO_OPENSSL on current macOS
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> On Wed, Apr 17, 2024 at 12:34:27PM -0700, Junio C Hamano wrote:
->> "blanet via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > From: Xing Xin <xingxin.xx@bytedance.com>
->> > ...
->> > Helped-by: Taylor Blau <me@ttaylorr.com>
->> > Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
->> > ---
->>
->> I think this took the review in
->>
->>   https://lore.kernel.org/git/ZhLfqU9VNUW+2mmV@nand.local/
->>
->> into account and is in good shape?
+On Sun, Apr 14, 2024 at 12:47=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> w=
+rote:
+> b195aa00c1 (git-compat-util: suppress unavoidable Apple-specific
+> deprecation warnings, 2014-12-16) started to define
+> __AVAILABILITY_MACROS_USES_AVAILABILITY in git-compat-util.h.  On
+> current versions it is already defined (e.g. on macOS 14.4.1).  Undefine
+> it before redefining it to avoid a compilation error.
 >
-> Yes, sorry for not explicitly ack-ing, this version looks good to me.
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+> On my system I can remove the whole ifdef __APPLE__ section, as the OS
+> doesn't include the deprecated OpenSSL anymore.  I get a current version
+> via Homebrew, which doesn't throw any deprecation warnings, of course.
+>
+> Not sure if this is the right fix, as the no longer needed section still
+> undefines __AVAILABILITY_MACROS_USES_AVAILABILITY at the end, which we
+> may want to keep instead.  But compilation succeeds and tests pass, so
+> perhaps it's fine.
 
-Thanks.
+I think I added the final `#undef
+__AVAILABILITY_MACROS_USES_AVAILABILITY` in b195aa00c1
+(git-compat-util: suppress unavoidable Apple-specific deprecation
+warnings, 2014-12-16) just for completeness; since I #define'd it, I
+also #undef'd it to ensure a clean state or the C preprocessor.
+
+However, taking this new situation into account, where
+__AVAILABILITY_MACROS_USES_AVAILABILITY is now defined by default, it
+_probably_ would be more correct to drop that final #undef.
+
+Having said that, though, it doesn't seem that it is likely to matter
+one way or the other as the project stands presently, especially since
+you report that building and testing succeeds. Moreover, the only
+other place in the project where we seem to care about the Apple
+version-compatibility macros is in
+compat/fsmonitor/fsm-listen-darwin.c, but even that isn't a problem
+because it consults a version-compatibility macro before #include'ing
+git-compat-util:
+
+    #ifndef AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER
+    #define kFSEventStreamEventFlagItemCloned 0x00400000
+    #endif
+    #include "git-compat-util.h"
+
+So, this patch can't possibly have any sort of negative interaction
+with that code even if __AVAILABILITY_MACROS_USES_AVAILABILITY somehow
+impacted AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER.
