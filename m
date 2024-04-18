@@ -1,56 +1,56 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0D617AD6D
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 18:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DD31442F4
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 18:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713465666; cv=none; b=hAa+ZEv2+KakF3Tq3LGXeNqM2xKXWvDI0ji7/2HX4oqo4LUr2vCcb4BcVLQtgTUsDWCiM11m24pCI5SNm7CMEDr1Svr7ugr+WNgGjTvU6nYTOuZjRNKu9f8un7qGuPrOV+k/Pebh2qwvbZjTc1bc6WMpkR3fVBBjUQxSO5mNnv0=
+	t=1713465668; cv=none; b=WBbSMZqKVcwC5HRBegpE5QlVGts/JG3bSOXbClo+Or5+7ui1qpbW19dB3itftHu74PZL6xOSoxSYakoGpmh0SzV/7zdC5F+dDWNpTtKoO4ckMTtYlLQ9e80xg4sj1H26ZP/ZDiWXR/CtOwv6ODgReUscZOM3mtlEe1kyLTGj8ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713465666; c=relaxed/simple;
-	bh=eJiIdjd6VUFH7PtnH1HmEzX+CDrSqTqhklS3Yy+QoYc=;
+	s=arc-20240116; t=1713465668; c=relaxed/simple;
+	bh=EVvDz1LlLXbUrD2vKTwc5YSXTSRM10IiSgfejBTEpbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMTv6UUgcDcx6O6ytxuG09D26zymJGE/E+mRGrWEO4CJQNNpm7FWU/w8Lejr7EdzG6QRMpgDDytIex5jqMNg0U7N7S2m4RDEgvbfCZcFuGuElGK4D4Z3nmEkEmjTjEKRolGof7mY8rAFqQkcvMXpEHHesz6b0AjiKShqgJneeSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K8hg/x8m; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version; b=BS/xDDef36XVtvLdCApIinKnwuktTZ1yLEUoXU7vgcCcjsQEwffn5pI8l2dYJszEQ5VmRUMcDSewaFuHJNfe8JMQ1anreKGAyAbGaPz/DGMOEKWV3yIHQpyMxPFdet3ojM2C3YGF1Mo7OjQLYBPouf9os48cI5RvE9LNOwU8zsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XZjBc/MQ; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8hg/x8m"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-415515178ceso9261235e9.0
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 11:41:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZjBc/MQ"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41550858cabso9237895e9.2
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 11:41:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713465662; x=1714070462; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713465664; x=1714070464; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=laVV1Obq0tF6Jin7XzdFzBf2EBgBpO+6tCHi5aSP1wA=;
-        b=K8hg/x8mou2B/jQk2y6DkZ3227p7vilJdD0iqTB4LuHpCgcAlY60EbG2it4a+WJwGm
-         2SRqHLL1rpIBSwK2aLRiYTz+hsex14uebmi5Nanutn3cADdovNJFFbr154TzMZTytHcD
-         Yr+Sr0908pdcOKGh+ANctPSOVKsupUvxE99ZngaQ1YFrSMXHPIZ9q3ut8jgyoTrdnvel
-         IPhxrqyh4bna+SbDIGMaot4X74pxwfZT+aVhLeY50U6iL7NagZoxQ9b+A90ZEW37FV6h
-         WgZLs/e1SqFtsc3aqz1P47mxTmpQxQlc9h5JTWZikgL0VNDfFPrjK6kdso5FdR9jPUpd
-         J7Hw==
+        bh=L7Y0PGMG/OeSnikLwTeetw2v3faGtG5ifwuC7RrJJs4=;
+        b=XZjBc/MQ/uWQJAzHDGZZxhDTSjYOZZ/AqPzCc7sboPGTrSw1ElcbJxp/y+TAqpvVQz
+         PH8Z1y3GBOj08xIvX9l+Ys0ToJuAkKZOWY8IYSri+oLCMqOhPmtHLtJML9jqpaGDSx4n
+         pouDD6xBGfQs8f6MCwYI8gSYnjMVw5wvlbTSNVINaKNzFW2zMUN5bNpa+hY1C59ECDNX
+         4wencrr7ewgbzcJUQvBMNhVCPCiTYxlsyQQpjF6MnaUog18PdcWWLcP2fepn1pdwmXUQ
+         oIfimcpYKAyfFcpD8EfP7C2ZpfN5CNVBn7AImo4x9tpB6OdkkXSL7FceWyX5KfdWVlKe
+         zmJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713465662; x=1714070462;
+        d=1e100.net; s=20230601; t=1713465664; x=1714070464;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=laVV1Obq0tF6Jin7XzdFzBf2EBgBpO+6tCHi5aSP1wA=;
-        b=uEVoQigRp5klUf89Uyn0N1aKjef8vXq35CuPqpemF8sWR4mc6FQs2rS/PRGszUTQjL
-         2WxS0ukDplz5N/yuh50Pf8Cc4frC1+vGqLMPGjpd3vMrtLwLBR+EsjnIFXz1YoS/FEOj
-         2aNe1LBLQiQmGvoHUBTdIu5vNPD06D/zhTIWNX2kYJizEVbbIPy1h+sRbuatGzgoEZ/q
-         +oFe00xHFS9ukc88kkMK4aUxKVbUO6vlh+p4euu/fXDzZtLaz8xGPkoDYHXg+qATls5+
-         s+rQGimJYo1Wmr4sZajnUIFt66MDL8DApnBwnTrnUAowwtjYD9IE1i+YKU4nyHAIU9EN
-         2GAw==
-X-Gm-Message-State: AOJu0YwiZ6chwQt0SD7lPXQo68Lu/Fxg3WTPD6kA5lUejW3Ls9tJpVUb
-	JoV5QArSOuDaXXBnBdm77wJl28lhDoceyoK0f1K6JmMgehOFksGLYBnAVw==
-X-Google-Smtp-Source: AGHT+IEln2OpZmzPbS9EY+UUjSR1pwIRWYbqe2SYnEmUZzy4XVFW0AIpjr/V+d/Rp/PlZtacSB9fjw==
-X-Received: by 2002:a7b:c5c5:0:b0:418:a786:3760 with SMTP id n5-20020a7bc5c5000000b00418a7863760mr2473675wmk.15.1713465661984;
-        Thu, 18 Apr 2024 11:41:01 -0700 (PDT)
+        bh=L7Y0PGMG/OeSnikLwTeetw2v3faGtG5ifwuC7RrJJs4=;
+        b=EPZK6TlJ/OhXzaDBkxdRTQAEZaO6lCuFjDbxF804A87MMR+a3tjJplUdgHVJuJyLMx
+         +c52Rep5bwFzt09UM1YZiXder0s2eIDkyhZcTkVIvmvJ3AilUpGLRHw6SpiKwrpGxQ6v
+         sR3e1wN/VmWZZxNJQChZ1mTggxIfF8oQc6+5wympfcUjDU81bt1IAAo7z4lW3MkJotuQ
+         9FCrfa4ntpPmOE1TTcrnfWd/kOv8uYURXhW0ua9vYfm24Q5rrQ/wm42snpzi3dqnfGKF
+         ap1Xd533N1y/0hD45tGp1oVGPEBgwW9JyAn1245CQXHKCSzAF1CgT5IZVhVaM6Lp1d0p
+         xJ5w==
+X-Gm-Message-State: AOJu0YxpO6d2+NwuD4r8CSp5igd48U8gg1oYw2C2mttRediaa/WPr94M
+	wVB+1f7NL4aNsv/WkUMh45AyNCZ8bcF9cmMqA1if0qdSEUobybveKYQdJg==
+X-Google-Smtp-Source: AGHT+IGlxfG0VbFGRBh7amyf/w8Xm3FiiCLbMyzBn52NIgHM2GGjDPamRGmtA873tP13ta/rdAZk8g==
+X-Received: by 2002:a05:600c:1d12:b0:418:fd27:692 with SMTP id l18-20020a05600c1d1200b00418fd270692mr543151wms.14.1713465664239;
+        Thu, 18 Apr 2024 11:41:04 -0700 (PDT)
 Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id t13-20020a05600c450d00b00417f700eaeasm3653670wmo.22.2024.04.18.11.41.01
+        by smtp.gmail.com with ESMTPSA id t13-20020a05600c450d00b00417f700eaeasm3653670wmo.22.2024.04.18.11.41.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 11:41:01 -0700 (PDT)
+        Thu, 18 Apr 2024 11:41:02 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -58,9 +58,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/4] rev-list: refactor --missing=<missing-action>
-Date: Thu, 18 Apr 2024 20:40:40 +0200
-Message-ID: <20240418184043.2900955-2-christian.couder@gmail.com>
+Subject: [PATCH 2/4] missing: support rejecting --missing=print
+Date: Thu, 18 Apr 2024 20:40:41 +0200
+Message-ID: <20240418184043.2900955-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.44.0.655.g111bceeb19
 In-Reply-To: <20240418184043.2900955-1-christian.couder@gmail.com>
 References: <20240418184043.2900955-1-christian.couder@gmail.com>
@@ -72,179 +72,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Both `git rev-list` and `git pack-objects` support a
-`--missing=<missing-action>` feature, but they currently don't share
-any code for that.
+`git pack-objects` supports the `--missing=<missing-action>` option in
+the same way as `git rev-list` except when '<missing-action>' is
+"print", which `git pack-objects` doesn't support.
 
-In a following commit, we are going to add support for a similar
-'missing-action' feature to another command. To avoid duplicating
-similar code, let's start refactoring the rev-list code for this
-feature into new "missing.{c,h}" files.
+As we want to refactor `git pack-objects` to use the same code from
+"missing.{c,h}" as `git rev-list` for the `--missing=...` feature, let's
+make it possible for that code to reject `--missing=print`.
 
-For now, this refactoring is about moving code from
-"builtin/rev-list.c" into new "missing.{c,h}" files. But in a
-following commit, that refactored code will be used in
-`git pack-objects` too.
-
-As `enum missing_action` and parse_missing_action_value() are moved to
-"missing.{c,h}", we need to modify the later a bit, so that it stops
-updating a global variable, but instead returns either -1 on error or
-the parsed value otherwise.
+`git pack-objects` will then use that code in a following commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile           |  1 +
- builtin/rev-list.c | 41 ++++++-----------------------------------
- missing.c          | 26 ++++++++++++++++++++++++++
- missing.h          | 18 ++++++++++++++++++
- 4 files changed, 51 insertions(+), 35 deletions(-)
- create mode 100644 missing.c
- create mode 100644 missing.h
+ builtin/rev-list.c | 2 +-
+ missing.c          | 4 ++--
+ missing.h          | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 1e31acc72e..75583a71a0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1076,6 +1076,7 @@ LIB_OBJS += merge-recursive.o
- LIB_OBJS += merge.o
- LIB_OBJS += midx.o
- LIB_OBJS += midx-write.o
-+LIB_OBJS += missing.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += negotiator/default.o
- LIB_OBJS += negotiator/noop.o
 diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 77803727e0..f71cc5ebe1 100644
+index f71cc5ebe1..a712a6fd62 100644
 --- a/builtin/rev-list.c
 +++ b/builtin/rev-list.c
-@@ -20,6 +20,7 @@
- #include "reflog-walk.h"
- #include "oidset.h"
- #include "packfile.h"
-+#include "missing.h"
- 
- static const char rev_list_usage[] =
- "git rev-list [<options>] <commit>... [--] [<path>...]\n"
-@@ -71,12 +72,6 @@ static struct oidset omitted_objects;
- static int arg_print_omitted; /* print objects omitted by filter */
- 
- static struct oidset missing_objects;
--enum missing_action {
--	MA_ERROR = 0,    /* fail if any missing objects are encountered */
--	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
--	MA_PRINT,        /* print ALL missing objects in special section */
--	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
--};
- static enum missing_action arg_missing_action;
- 
- /* display only the oid of each object encountered */
-@@ -392,34 +387,6 @@ static void print_disk_usage(off_t size)
- 	strbuf_release(&sb);
- }
- 
--static inline int parse_missing_action_value(const char *value)
--{
--	if (!strcmp(value, "error")) {
--		arg_missing_action = MA_ERROR;
--		return 1;
--	}
--
--	if (!strcmp(value, "allow-any")) {
--		arg_missing_action = MA_ALLOW_ANY;
--		fetch_if_missing = 0;
--		return 1;
--	}
--
--	if (!strcmp(value, "print")) {
--		arg_missing_action = MA_PRINT;
--		fetch_if_missing = 0;
--		return 1;
--	}
--
--	if (!strcmp(value, "allow-promisor")) {
--		arg_missing_action = MA_ALLOW_PROMISOR;
--		fetch_if_missing = 0;
--		return 1;
--	}
--
--	return 0;
--}
--
- static int try_bitmap_count(struct rev_info *revs,
- 			    int filter_provided_objects)
- {
-@@ -569,10 +536,14 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 		if (skip_prefix(arg, "--missing=", &arg)) {
-+			int res;
+@@ -539,7 +539,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			int res;
  			if (revs.exclude_promisor_objects)
  				die(_("options '%s' and '%s' cannot be used together"), "--exclude-promisor-objects", "--missing");
--			if (parse_missing_action_value(arg))
-+			res = parse_missing_action_value(arg);
-+			if (res >= 0) {
-+				arg_missing_action = res;
+-			res = parse_missing_action_value(arg);
++			res = parse_missing_action_value(arg, 1);
+ 			if (res >= 0) {
+ 				arg_missing_action = res;
  				break;
-+			}
- 		}
+diff --git a/missing.c b/missing.c
+index 83e0c5e584..d306dea2d9 100644
+--- a/missing.c
++++ b/missing.c
+@@ -2,7 +2,7 @@
+ #include "missing.h"
+ #include "object-file.h"
+ 
+-int parse_missing_action_value(const char *value)
++int parse_missing_action_value(const char *value, int print_ok)
+ {
+ 	if (!strcmp(value, "error"))
+ 		return MA_ERROR;
+@@ -12,7 +12,7 @@ int parse_missing_action_value(const char *value)
+ 		return MA_ALLOW_ANY;
  	}
  
-diff --git a/missing.c b/missing.c
-new file mode 100644
-index 0000000000..83e0c5e584
---- /dev/null
-+++ b/missing.c
-@@ -0,0 +1,26 @@
-+#include "git-compat-util.h"
-+#include "missing.h"
-+#include "object-file.h"
-+
-+int parse_missing_action_value(const char *value)
-+{
-+	if (!strcmp(value, "error"))
-+		return MA_ERROR;
-+
-+	if (!strcmp(value, "allow-any")) {
-+		fetch_if_missing = 0;
-+		return MA_ALLOW_ANY;
-+	}
-+
-+	if (!strcmp(value, "print")) {
-+		fetch_if_missing = 0;
-+		return MA_PRINT;
-+	}
-+
-+	if (!strcmp(value, "allow-promisor")) {
-+		fetch_if_missing = 0;
-+		return MA_ALLOW_PROMISOR;
-+	}
-+
-+	return -1;
-+}
+-	if (!strcmp(value, "print")) {
++	if (!strcmp(value, "print") && print_ok) {
+ 		fetch_if_missing = 0;
+ 		return MA_PRINT;
+ 	}
 diff --git a/missing.h b/missing.h
-new file mode 100644
-index 0000000000..c8261dfe55
---- /dev/null
+index c8261dfe55..77906691e7 100644
+--- a/missing.h
 +++ b/missing.h
-@@ -0,0 +1,18 @@
-+#ifndef MISSING_H
-+#define MISSING_H
-+
-+enum missing_action {
-+	MA_ERROR = 0,    /* fail if any missing objects are encountered */
-+	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
-+	MA_PRINT,        /* print ALL missing objects in special section */
-+	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
-+};
-+
-+/*
-+  Return an `enum missing_action` in case parsing is successful or -1
-+  if parsing failed. Also sets the fetch_if_missing global variable
-+  from "object-file.h".
-+ */
-+int parse_missing_action_value(const char *value);
-+
-+#endif /* MISSING_H */
+@@ -13,6 +13,6 @@ enum missing_action {
+   if parsing failed. Also sets the fetch_if_missing global variable
+   from "object-file.h".
+  */
+-int parse_missing_action_value(const char *value);
++int parse_missing_action_value(const char *value, int print_ok);
+ 
+ #endif /* MISSING_H */
 -- 
 2.44.0.655.g111bceeb19
 
