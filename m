@@ -1,100 +1,88 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16668184132
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 19:36:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8051216D32C
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 20:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713469002; cv=none; b=QLPdo0Pmd/qviGcp1wZs/1duamODkjcUZ3Hww7XRN4aabk5zfrACeTS8cyYgTmhCZK36ek62ekrQUS8VwANaNGltBhjz76sbflLklbu1dVw8FTBcQmMHdG3y1abEIYCKzfgaMLHskghM46lQ+6yrU5z+X521esO7Lit1L0A931w=
+	t=1713470702; cv=none; b=sUfiHk6dhdV0B5mkOuK8VDycl6v4LvSnt6+RiOrz4xsuX5cOPEBF5VvUyY9f4kGxLruJaZ8NhrP8Vlel1SmYfPPBUBiR3aC14306dJnucBZzxjVR+EEtOqCN6k8Xf0s+Oaf9tEd57tELRQu/a5LFCNQEy6KDge/bxT444cXJqwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713469002; c=relaxed/simple;
-	bh=IYtvmpdlTNyC8c8CdJFNNelq+3UJ4DK7gV4CHJy+CFI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HJ8j3RWv9/Cs72y1DyzLyiWbqrmPPMwNOsvKEb9G9pfaRMpmjrQlAXM1qaJBBidXZNIEZZmhoJwE44yHxR/rfHcQrqlU4HDJPPQBEJ8YsszVgxYXnBrDOBI8ylSXrpVfAAKE+CQSnJatT/XqK//UYn8T51Ec+vpyNrre5wFYVUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AOjqUTu2; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713470702; c=relaxed/simple;
+	bh=l3umERYbRBQE4760lrTBZSbpTCcTPimlJlPCj5V57W4=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=uZQL7ZhQ7N6oix8QzZy8HyTydCwGecIgTG6iXYjfAT023TKmBTO7nnTGs+9EepiJKiqpwKyzf+yX2taT8MzpewsxbDJkRn4f5CGWI4JxfH+jTPdwsPkOr7kcZIS40IGe2kYT0do5u6k5+HqS4SkbEXAOI0p90Ss4Iyd21Y8VQs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Y5yqe6o5; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AOjqUTu2"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 693611E6DC7;
-	Thu, 18 Apr 2024 15:36:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=IYtvmpdlTNyC8c8CdJFNNelq+3UJ4DK7gV4CHJ
-	y+CFI=; b=AOjqUTu2hiq4DPe0uM9sSr/3kQkLCK7rYd4f1O1bKILzWuvt7tYVQS
-	H3Sa7k79vbzMTYGxgaKKHbpDVWog2YAq6hvN9WImD0G1k1UBnLEy4gBU5FDaCiS7
-	fTy+HOww36AeaOFhBeCY+F+KHSi5Zl65G3xio5HDlOdo/xKxksjYY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 602D21E6DC6;
-	Thu, 18 Apr 2024 15:36:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BFF0B1E6DC4;
-	Thu, 18 Apr 2024 15:36:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 0/6] global: drop `the_index` variable
-In-Reply-To: <cover.1713442061.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Thu, 18 Apr 2024 14:14:04 +0200")
-References: <cover.1713180749.git.ps@pks.im> <cover.1713442061.git.ps@pks.im>
-Date: Thu, 18 Apr 2024 12:36:32 -0700
-Message-ID: <xmqq34ritqdb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Y5yqe6o5"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F6993D8E-FDBA-11EE-9816-25B3960A682E-77302942!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1713470697;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qNovI5Iy4vT37IDr9WgwOVfbRCN/dJPgX59HdAVNH54=;
+	b=Y5yqe6o5OQdmML0EkcGkH/aACNsnJQnf/59nYWIGMUKYRWuqc2g9phurKtV9NQnspL27G1
+	7MD57PBf0MPNA0ezGUHTgw8AGwkzXzzkCt4nHH4WjPIfSNi3HrAeeFqsCUipMyvQzU/uX/
+	hFzWaAN0VlXGMyCZ+zYALR/X+b4hxsD8xnzu0Oc5Jp4Fg1JymWEWKIVMTE/gRzA62Y+8kR
+	lJG2KMZIiYWzj3LFZaHu132bTtg3w4yzP+0rGi/AdVwMl5jT5flVden7XJr4c4WwZG2DbE
+	gMuRQBtPiNpKG/XXHVZSCX3sg2pXydpQwRrgFB/FhDywWnz5Xh9MiwzuAplT4w==
+Date: Thu, 18 Apr 2024 22:04:57 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND"
+ to patch subjects
+In-Reply-To: <a0b93341380c2157f6b87e19129abb49@manjaro.org>
+References: <cover.1713324598.git.dsimic@manjaro.org>
+ <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
+ <CAPig+cRzOHROK0VpkLR9fk7Gr0NRH9VKcH4dGXOuoaO5Ky2c2A@mail.gmail.com>
+ <a0b93341380c2157f6b87e19129abb49@manjaro.org>
+Message-ID: <cb2d20938cc9b11e621103575b1bb379@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hello Eric,
 
-> this is the second version of my patch series that aims to drop
-> `the_index`.
->
-> Changes compared to v1:
->
->   - This version goes a bit further now and completely drops the
->     static `the_index` variable, as well. The repository's index gets
->     allocated dynamically now, like all the other sub-structures like
->     the ODB.
->
->   - This also allows this series to remove `initialize_the_repository()`
->     now. Instead, callers call `initialize_repository()` now.
->
-> There is still quite an ugly hack in `initialize_repository()` which
-> requires us to treat `the_repository` specially. This is because
-> `the_hash_algo` maps to `the_repository->hash_algo`, and we rely on it
-> being initialized to SHA1. So we need call `repo_set_hash_algo()` on
-> `the_repository`. On the other hand, we cannot set the hash algo on
-> repos which are not `the_repository`, because that breaks stuff, as
-> well.
->
-> I'm currently prepping another patch series that builds on top of this
-> series and cleans up this mess. It surfaces several bugs that got masked
-> by our setup, like for example `git rev-parse --short=` not working
-> correctly with SHA256 because we always truncate to the maximum length
-> of SHA1.
+On 2024-04-17 09:05, Dragan Simic wrote:
+> On 2024-04-17 08:35, Eric Sunshine wrote:
+>> On Tue, Apr 16, 2024 at 11:33 PM Dragan Simic <dsimic@manjaro.org> 
+>> wrote:
+>>> diff --git a/builtin/log.c b/builtin/log.c
+>>> @@ -2111,7 +2116,9 @@ int cmd_format_patch(int argc, const char 
+>>> **argv, const char *prefix)
+>>>         if (keep_subject && subject_prefix)
+>>> -               die(_("options '%s' and '%s' cannot be used 
+>>> together"), "--subject-prefix/--rfc", "-k");
+>>> +               die(_("options '%s' and '%s' cannot be used 
+>>> together"), "--subject-prefix/--rfc/--resend", "-k");
+>> 
+>> You probably want to be using die_for_incompatible_opt4() from
+>> parse-options.h here.
+> 
+> Thanks for the suggestion.  Frankly, I haven't researched the
+> available options, assuming that the current code uses the right
+> option.  Of course, I'll have a detailed look into it.
 
-I'll take a look, and may even comment on them later, but let me
-otherwise place this series on the back burner, not because I am in
-love with the_index (I am not) and not because I think the "index"
-member in the repository struct is a mistake (I suspect it is, but I
-am not convinced either way), but because I'd prefer to see our tree
-to be quiescent when we apply a tree-wide patch like [2/6], but
-we'll be in -rc period soonish, during which time we'd want to be
-able to concentrate on fixing regressions without having to worry
-about being able to reapply such tree-wide changes to keep 'next'
-and 'seen' building.
+Unfortunately, die_for_incompatible_opt3() cannot be used because
+it also prevents the --subject-prefix and --rfc options from being
+used together, which is expected to be possible.
 
-Thanks.
+>> (And you may want a preparatory patch which fixes the preimage to use
+>> die_for_incompatible_opt3() for --subject-prefix, --rfc, and -k
+>> exclusivity, though that may be overkill.)
+> 
+> I'm not really sure what to do.  Maybe the other reviewers would
+> prefer an orthogonal approach instead?  Maybe that would be better
+> for bisecting later, if need arises for that?
