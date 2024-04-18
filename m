@@ -1,63 +1,64 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539EB1EA8F
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 12:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C26212EBD8
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 12:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713444790; cv=none; b=S7qomdat4tsGlYF39I3EIUwLxpFnHvKOFn179fAyHktjTQ/FnIeP2BzMTq6Y5aL0G+NgZd0ncjsCmXxIm7o4LN270325rFGipfkN5kuqbwx1GgGEKiCDqzkPHyiPqfyw8AhVe3VuDLmnJBjsrtvSBijULwDf/TBMeeb6YNw5nAk=
+	t=1713444791; cv=none; b=NtJl8iza4LW7q9eOuFKaELMvG4vDAZlV1XRSwJns0Ks1NVL68I1Wip3PEpnZ5w9wj62m27ZMgdZ69K+DjqgH+Iv6hDi+wgb5Ppaw43CorwrZGEKQjI0LYqHwxoxv62aK8aD0s/btYOKCORgPmWiEQviAYidCbobkCCgS3S9f5Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713444790; c=relaxed/simple;
-	bh=VsGHR8JtejI7RaY8DH3G2Y7dWmb8cTypEBG1Tg2oyrc=;
+	s=arc-20240116; t=1713444791; c=relaxed/simple;
+	bh=44KQ3EAkN/r9Lpt3Z6TN3KeZHAMWTXNsgYBp9Ne5Afw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fnEF/4jx3P/Eo6dbHzWUUFwy3+uebm5yrG25K/M1G7MpAf8ZOSktdZkIdls1oloTl7X6lcpfO48N1AnSnMUNUjDayS3t8fGyQHXIsf+TDOyBfKUvKKxFJDZo44rsZGovEi0tiY1VkhZfVHgQ9MABg1fqjrZ6hJF2B4fCHOuDWoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kgrcOqoR; arc=none smtp.client-ip=209.85.208.49
+	 MIME-Version:To:Cc; b=jRMLXrRiIVjUZnd4B8rouoNmJXtLBefr44hu+55gN9AG0cMjUyP2G1jV9dfxoTRFULtNIHvMuK9/CE9zmrB5SWtK83prYnM6nSZmBoBM9F1AIYc8jOUk9c6gZk8yDV3l4IUSH7KBKO4gjzteOnUyosDDRTPfiqN3WrH9mg1eE2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZBgQEoml; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kgrcOqoR"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56fffd131a8so453005a12.0
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 05:53:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZBgQEoml"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a526d381d2fso343435766b.0
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 05:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713444786; x=1714049586; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713444787; x=1714049587; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ODihVaPj5F0eweDxdKUPKi7wdgyWNVhw2FmSRq2BG/s=;
-        b=kgrcOqoRGue3ZCos2RSzNj928AYcNGC9qrMLN5STKl6JsRDk6OLuoL0zwiflNR8ljf
-         ddulHQTSxkLVfzOUOtlwWdvChDXzDvfT7kc5N3B4q0/QSZaUwTjVtxdoIXalUJqLUbQl
-         zt0Txac5j0/S9Xp1LhPU4aXKnLBwFHXeZXcFW3432PTiZzaRkV+6g1GzUXsg1y9mdDrm
-         kbOT8HK2fB+9Nn9G2DkBjQlE6Ty2ggdml02APhmcGcl6taGBqhRRu7qQoS0TJTeB4Ge1
-         NBKc2emSCgzjcMY97THxSgdhsH0NPMtZbmaJccqMosH5GCET9LMb2bzFvW64QzUEGJIw
-         e94Q==
+        bh=sgi/Px72RN4U4mvle4UUACuUiAdUWBL0SgFuvVN5L7U=;
+        b=ZBgQEoml1iM6oOvr6X+fToV1jDQIABGJh4TMj6zd2CR0/vZzJTsmjU5BnWEL7LrtZ1
+         IwyPx9u5Cg6iovESXOzzS4i4d/SFONxyTkr7legQGrMhxDv+pGT9OEKnITqndqnRINST
+         wAMVe5DgWgHWIulqXc0bwWqpl5rspUlXlHIiH/wOi7sVSs1XYVnagD0gyEKmN/Wen8ly
+         aVC8F/1zvkTgfjdboxAGyfiJjzUZ7XUI/1aNSyDrzO+Oq5R3c8jgaZ7EOp6dbwhnaJDM
+         OTGu3czIKUgu9WxmjYr1SeIN5ahbc06DCElLjYlycba7K4gcQfQ0MV6N0WBwgLTbVKqS
+         sPwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713444786; x=1714049586;
+        d=1e100.net; s=20230601; t=1713444787; x=1714049587;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ODihVaPj5F0eweDxdKUPKi7wdgyWNVhw2FmSRq2BG/s=;
-        b=ST3whuNvgE2NUBKhDPI+Mep9vKpXPCWLxa3hZeV4U7L9cGWyicRgvebwddUIKlksc9
-         DfJoFQO/7N3Qcn60Hq44y45zlAiE2e2x7Fo4yaa5f8odZgQ07+vOtg1X3fyHTzebwFwR
-         QxUDSnrR/vH/IEv0v0l7P/BzN4akKgeGkkrLevgSSXONKhUxThmfWTGNnASGWUNHz82A
-         Rm3X90azVukt6TpO0r5W5r/W4YzO8rU2w4/43LkHDTNmz/EBt2bLxzW0fYhReDTczjQH
-         D8b5UKvCcjQ/VDvjWQ0VJQITI1NX38tuV19DByc9JmFb0aubN4dmTXBwhUJg7OYhedv1
-         sajg==
-X-Gm-Message-State: AOJu0Yxwr6VR3TbNdltkRwnGb2+PauzuU+hvdScATiAGkyNkj+m2eK9y
-	eJnkKIZaeIYUKmAUAKeKQOFAoI79ubOny2IJ7KSdKXVOekgzDpvh4SRZ5g==
-X-Google-Smtp-Source: AGHT+IFP266awjWlFTY4y1tg6Yya2pJlKW1PIe0KFVoVTCUaVxkj0xKzUIFMVWhC/WqijKuzVrtxIQ==
-X-Received: by 2002:a50:bb08:0:b0:568:a655:49c6 with SMTP id y8-20020a50bb08000000b00568a65549c6mr2323984ede.8.1713444786239;
-        Thu, 18 Apr 2024 05:53:06 -0700 (PDT)
+        bh=sgi/Px72RN4U4mvle4UUACuUiAdUWBL0SgFuvVN5L7U=;
+        b=BWv0UAUPzsR1NgsA/RjbJdh2djPtaV4vVxcp/rNqmXwsr3NXbnIDbvsd7YpjnbEsiS
+         JBhPOGIgbLIO3cvhYYGEuBsxH8JatcpcHB8HqeC7Nb1+npng3gvsy+dGjY8JQ1oYoNGR
+         wHfPvO7aUhzHuyk0M83laCzd0pb48VpeOSh2YYIkGm9sD89McyBFnkrvPXX0Y5h302vv
+         d0P67IMs4/WNKqq6CY/184f+FQSs9w+RV/MIWd5pSAGHi1i4tpHtfGA7fR4DdB7n8qb6
+         oB6QrjnEgD/wLkcHIq7Q7iHYGv+0K9wN9JGFp1+J4/a6bLiEkqjCSRp/VpZFt2bDTGik
+         IdCA==
+X-Gm-Message-State: AOJu0Yx+Dj+ZxssqjvlonvGnm3mp7iQzsyBNxwpbGd8okdpvr+NllPaP
+	iHd1zYTYFEXubBByvWmDrfNZiJKMqwSl/LMGX4VB1Pu4bMniCzdg4RLNWQ==
+X-Google-Smtp-Source: AGHT+IH/SGHzkQoBBX1DibYpgudmxzJIVfaqzdxsYsQvJ4o2b7ny9vXwDrFaioeXYUY9BDnZv/uXwQ==
+X-Received: by 2002:a17:907:2684:b0:a55:7669:8b4a with SMTP id bn4-20020a170907268400b00a5576698b4amr1260801ejc.32.1713444787279;
+        Thu, 18 Apr 2024 05:53:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k25-20020a056402049900b005700ef75274sm841046edv.33.2024.04.18.05.53.05
+        by smtp.gmail.com with ESMTPSA id hx11-20020a170906846b00b00a46d2e9fd73sm846048ejc.222.2024.04.18.05.53.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 05:53:05 -0700 (PDT)
-Message-Id: <abd796894c857fc9ad96b9942089474df01f0506.1713444783.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2024 05:53:06 -0700 (PDT)
+Message-Id: <1ae11553052cb3f48447eb5df6cbf6f185fa81db.1713444783.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
 References: <pull.1719.git.1713342535.gitgitgadget@gmail.com>
 	<pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Apr 2024 12:53:02 +0000
-Subject: [PATCH v2 1/2] for-each-repo: optionally keep going on an error
+Date: Thu, 18 Apr 2024 12:53:03 +0000
+Subject: [PATCH v2 2/2] maintenance: running maintenance should not stop on
+ errors
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,100 +76,81 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
 In https://github.com/microsoft/git/issues/623, it was reported that
-the regularly scheduled maintenance stops if one repo in the middle of
-the list was found to be missing.
+maintenance stops on a missing repository, omitting the remaining
+repositories that were scheduled for maintenance.
 
-This is undesirable, and points out a gap in the design of `git
-for-each-repo`: We need a mode where that command does not stop on an
-error, but continues to try running the specified command with the other
-repositories.
+This is undesirable, as it should be a best effort type of operation.
 
-Imitating the `--keep-going` option of GNU make, this commit teaches
-`for-each-repo` the same trick: to continue with the operation on all
-the remaining repositories in case there was a problem with one
-repository, still setting the exit code to indicate an error occurred.
+It should still fail due to the missing repository, of course, but not
+leave the non-missing repositories in unmaintained shapes.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Let's use `for-each-repo`'s shiny new `--keep-going` option that we just
+introduced for that very purpose.
+
+This change will be picked up when running `git maintenance start`,
+which is run implicitly by `scalar reconfigure`.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-for-each-repo.txt |  4 ++++
- builtin/for-each-repo.c             |  8 ++++++--
- t/t0068-for-each-repo.sh            | 16 ++++++++++++++++
- 3 files changed, 26 insertions(+), 2 deletions(-)
+ builtin/gc.c           | 7 ++++---
+ t/t7900-maintenance.sh | 6 +++---
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-for-each-repo.txt b/Documentation/git-for-each-repo.txt
-index 94bd19da263..8c18001d825 100644
---- a/Documentation/git-for-each-repo.txt
-+++ b/Documentation/git-for-each-repo.txt
-@@ -42,6 +42,10 @@ These config values are loaded from system, global, and local Git config,
- as available. If `git for-each-repo` is run in a directory that is not a
- Git repository, then only the system and global config is used.
+diff --git a/builtin/gc.c b/builtin/gc.c
+index cb80ced6cb5..b069aa49c50 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1858,6 +1858,7 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 		   "<string>%s/git</string>\n"
+ 		   "<string>--exec-path=%s</string>\n"
+ 		   "<string>for-each-repo</string>\n"
++		   "<string>--keep-going</string>\n"
+ 		   "<string>--config=maintenance.repo</string>\n"
+ 		   "<string>maintenance</string>\n"
+ 		   "<string>run</string>\n"
+@@ -2100,7 +2101,7 @@ static int schtasks_schedule_task(const char *exec_path, enum schedule_priority
+ 	      "<Actions Context=\"Author\">\n"
+ 	      "<Exec>\n"
+ 	      "<Command>\"%s\\headless-git.exe\"</Command>\n"
+-	      "<Arguments>--exec-path=\"%s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%s</Arguments>\n"
++	      "<Arguments>--exec-path=\"%s\" for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=%s</Arguments>\n"
+ 	      "</Exec>\n"
+ 	      "</Actions>\n"
+ 	      "</Task>\n";
+@@ -2245,7 +2246,7 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 			"# replaced in the future by a Git command.\n\n");
  
-+--keep-going::
-+	Continue with the remaining repositories if the command failed
-+	on a repository. The exit code will still indicate that the
-+	overall operation was not successful.
+ 		strbuf_addf(&line_format,
+-			    "%%d %%s * * %%s \"%s/git\" --exec-path=\"%s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%%s\n",
++			    "%%d %%s * * %%s \"%s/git\" --exec-path=\"%s\" for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=%%s\n",
+ 			    exec_path, exec_path);
+ 		fprintf(cron_in, line_format.buf, minute, "1-23", "*", "hourly");
+ 		fprintf(cron_in, line_format.buf, minute, "0", "1-6", "daily");
+@@ -2446,7 +2447,7 @@ static int systemd_timer_write_service_template(const char *exec_path)
+ 	       "\n"
+ 	       "[Service]\n"
+ 	       "Type=oneshot\n"
+-	       "ExecStart=\"%s/git\" --exec-path=\"%s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%%i\n"
++	       "ExecStart=\"%s/git\" --exec-path=\"%s\" for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=%%i\n"
+ 	       "LockPersonality=yes\n"
+ 	       "MemoryDenyWriteExecute=yes\n"
+ 	       "NoNewPrivileges=yes\n"
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 0943dfa18a3..8595489cebe 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -639,9 +639,9 @@ test_expect_success 'start from empty cron table' '
+ 	# start registers the repo
+ 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
  
- SUBPROCESS BEHAVIOR
- -------------------
-diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-index 28186b30f54..9bdf2b34f89 100644
---- a/builtin/for-each-repo.c
-+++ b/builtin/for-each-repo.c
-@@ -32,6 +32,7 @@ static int run_command_on_repo(const char *path, int argc, const char ** argv)
- int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
- {
- 	static const char *config_key = NULL;
-+	int keep_going = 0;
- 	int i, result = 0;
- 	const struct string_list *values;
- 	int err;
-@@ -39,6 +40,8 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
- 	const struct option options[] = {
- 		OPT_STRING(0, "config", &config_key, N_("config"),
- 			   N_("config key storing a list of repository paths")),
-+		OPT_BOOL(0, "keep-going", &keep_going,
-+			 N_("keep going even if command fails in a repository")),
- 		OPT_END()
- 	};
- 
-@@ -55,8 +58,9 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
- 	else if (err)
- 		return 0;
- 
--	for (i = 0; !result && i < values->nr; i++)
--		result = run_command_on_repo(values->items[i].string, argc, argv);
-+	for (i = 0; (keep_going || !result) && i < values->nr; i++)
-+		if (run_command_on_repo(values->items[i].string, argc, argv))
-+			result = 1;
- 
- 	return result;
- }
-diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-index 4b90b74d5d5..95019e01ed3 100755
---- a/t/t0068-for-each-repo.sh
-+++ b/t/t0068-for-each-repo.sh
-@@ -59,4 +59,20 @@ test_expect_success 'error on NULL value for config keys' '
- 	test_cmp expect actual
+-	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=daily" cron.txt &&
+-	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=hourly" cron.txt &&
+-	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=weekly" cron.txt
++	grep "for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=daily" cron.txt &&
++	grep "for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=hourly" cron.txt &&
++	grep "for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=weekly" cron.txt
  '
  
-+test_expect_success '--keep-going' '
-+	git config keep.going non-existing &&
-+	git config --add keep.going . &&
-+
-+	test_must_fail git for-each-repo --config=keep.going \
-+		-- branch >out 2>err &&
-+	test_grep "cannot change to .*non-existing" err &&
-+	test_must_be_empty out &&
-+
-+	test_must_fail git for-each-repo --config=keep.going --keep-going \
-+		-- branch >out 2>err &&
-+	test_grep "cannot change to .*non-existing" err &&
-+	git branch >expect &&
-+	test_cmp expect out
-+'
-+
- test_done
+ test_expect_success 'stop from existing schedule' '
 -- 
 gitgitgadget
-
