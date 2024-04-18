@@ -1,55 +1,55 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1098A165FB6
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 14:25:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BDD163A97
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 14:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713450349; cv=none; b=F4ir9oq3ZUpuQNMF90AQKiHIQu3UFwl+xlyDyYjUf+LBwXdKnVdDC2Goc/cniPe60qDtjtQZE3qeINBHmz47IJOTCrxPK9mmR+P3LMxwBi6UYG/xXrG0LVzhpZPuZrD4cW3zbjImH7QxKS0A4msVaEI7tM3yZK9IovuAd/tRJMM=
+	t=1713450424; cv=none; b=h83nYPC1nYliIVSF9z2NParuag8OC2F8lT8v8qD1HIc2/1iZh8LjwureQwsJlwptdzqlttm1BgsFCHDYYuY9pBriXHVpJuzomcnPAu/xxYLwVKo4lWXbh3cmkNfsCHqN9ef4+NfFcrumy4A7jtW29yCCDxMPhm6wyzFLENwgTZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713450349; c=relaxed/simple;
-	bh=f6v3bmB7yaAiSuUR3oP/scWsSSU/dnJiiTItd9LNBWw=;
+	s=arc-20240116; t=1713450424; c=relaxed/simple;
+	bh=ujFqNooTWtIaXNc+OmVMbiSViTMXBFmxf4/DLWPXO9U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=amuUTFsQPdcNEyEvVzMb7NER7Hnj5979JYVS1tO+1LCQYks7rQz06Glkc7QnPKYzazF4GV/A7W9l0U0S7ISg/2n8hBNbYOhT6hdTvuZ20JFS0EpDl5yGwoHCkN5sJlgfqdc/z995nsLnY8TeSMNmGG+SEb8Y5pJxIKBhrM/KbjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VUWLXnpW; arc=none smtp.client-ip=209.85.208.51
+	 To:Cc:Content-Type; b=Z9wJ37GejuGSsSdJgHCTt1CHU4vTVx3I1bqifoKz6AFX6zjWryzbLqpXuXupvs4yLsyb2DyVEZJ+s8adlzc2RHAI7/ddrZaehwZ5pcalSl2iyubpIWjLpn3sj+vZObpEHYIg1Fpfi9ZkXa4NtqtFqiT9/8CSTN6+f0A57PYpGKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l2EG7yw9; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VUWLXnpW"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-571c301760cso329687a12.3
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 07:25:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l2EG7yw9"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56e509baddaso1047482a12.1
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 07:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713450346; x=1714055146; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713450421; x=1714055221; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NOmHJojCfglAx4UG1CxAqwKTkz982xcpwfOP+pDk8w8=;
-        b=VUWLXnpWeSRfg6LI7+CHlWFHHmnYyh0Jp7h1Buib+TnBBPxDGUTZrvKEPZywRoPhM2
-         pdJcVdXVdeL53stkMcSoPXL5nwnBLclDI3GunlRA0k4YkvUsMzLpqCq7iLUcgN0h+/gl
-         jbBXFRK1B2vDx6L8Tg7DLrSLA/GCCdx1KUxD+E/0EnIYB8y5/7V3AghW9j3dwKXMyPWz
-         VguDi48Z8KToK7KAu9vYA5E7Hc/ZLC9SZQJeC5DOjJd1rUcu8a0OJ+O4U6n0xkzi2Gs/
-         mkMGu0Zyhae3gw0ew14yOrGqtVlgiQ6lqgTGWWDAVxLN0nhMOT59fCnqsVQCg+6VCXoj
-         F6Sw==
+        bh=qxU/EcCQFb0UmmRM0Ki8VZ0gh/wv+yHeY3vyzRGw1gY=;
+        b=l2EG7yw9hAI8NvJqcNSuV/+Gw9X2X630cLKURLgwnrw5rK6Vwwe8AuJlb3WcyrzJsQ
+         3NJpVyRUaG1ed2huhiBwlMiLaLo9EvSK7UD+Myw2VfI4Mp5kCIcI2ZnfWfjkeljBz8mJ
+         mNDk14xn2tc/+m4yZd5IXWtQgDESo9PuKbeN62U6QQTiw39N+42PsBYoI6ta3jpiijjt
+         x0/op/fra3X7X9zZ8HRE1Jhzw2nbK/ob6gJaXPpDLRC8Ur5FmiTqNbicjyo0Wp3czTmd
+         npQMLeaVdgagitdBhwgfsbOKT0O7hbGiyd/REuncwTfBG021zTFGI1dQtu5CARzaQH1V
+         CJkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713450346; x=1714055146;
+        d=1e100.net; s=20230601; t=1713450421; x=1714055221;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NOmHJojCfglAx4UG1CxAqwKTkz982xcpwfOP+pDk8w8=;
-        b=lFzFJEc0PmZOrTNxrdJ6aSt4ML1ocpvo9x8hEhr8oRefg3Mxwgqc3Nplhx5Z/iSAut
-         YjGTN4Vio9A5Jqqp3X4mZJFfFn40hBTL4z6uQHfMUx71WbpQsZbqV6Jlv+6D9zu5U/bV
-         WWuDcmHEGhNKCrtlcSvUZ6yQAYb1QHDXpzTBNFHEnjCsXFwE9rbNBzEpyNlIpvJOynGv
-         AOagDGAmK4HKmHSwfrRgiKSHIZBN38E/X66NGiev9Vn7gSe6wBvCRi7li31rlOLpLgjZ
-         Bf0LVFIdLSlyTP+dLkx2VQKZzRuyWwmVAMHz6by2Q59e2AVIAc6s6kedtkrA3pwBG2Wb
-         UpZw==
-X-Forwarded-Encrypted: i=1; AJvYcCUT/GhC0Pjk1MxzXsOwGzkQSUkWp9ggWyHo/CNkktD4yQDxYi14uqdPrQeFwM8WKWHOqfGGzTZupt2dxQ38QfRWq5Ko
-X-Gm-Message-State: AOJu0Yz8S9VWY8oP0GBUKpeanmQF5sV19B/QHFCKTH8EOAkWDK7xdGFD
-	VDy3ptLnE4XjpufrnayXKL962ObaLMyEvMTf/UWXfSkH0t2CMqA/vVzIZgezXFUngseSGZbFxym
-	43HDr2zqsTmoFm4/rJFdxCcV99WI=
-X-Google-Smtp-Source: AGHT+IERz2nEc2KHdESTllMjwhT6As12+QuaBsL+7mo2npKuutgFJ6TH+Uv6wa7YCsfSGpXYyvBKMHDLgP0wcFsWLow=
-X-Received: by 2002:a50:9987:0:b0:56e:368c:b09d with SMTP id
- m7-20020a509987000000b0056e368cb09dmr1790761edb.24.1713450346009; Thu, 18 Apr
- 2024 07:25:46 -0700 (PDT)
+        bh=qxU/EcCQFb0UmmRM0Ki8VZ0gh/wv+yHeY3vyzRGw1gY=;
+        b=jXtHx+XAFBAAWES2IyRIen5H6n4KPh1PA5h2zJFKNyzuKsY9ZAZViyTjuqBn60CT+B
+         kvrAUbKbGP3tUy3CT7nU47c0GjuSnOyIojAPVwP6gkeqSzEFma/rGKkRdIy4fWCVgUQ9
+         ZAy3GL1omEWqj64PYaSRGTpPgAuSCOR58wBAeHiGgDWbkqAMbcgEjqwjKLPJLug/b480
+         fQtPvzNcU9PK/5dhx06JTqMHNu54KxB9KRwKKH+f/ZQcda8cy9VDYuclvScQ0znho9th
+         Zxj9ozlLIna1XvxETkw1xzKkVBeQhS8a0xP3gSJ9osutPAx7eep8Nj3cb7TeMIrdjwAN
+         VdAw==
+X-Forwarded-Encrypted: i=1; AJvYcCVO3XwMJ9778O3Ipz4Sjme70jh2gWa+60CEifqGMEEUaM5cCzwMAr0HJ/+3pzyn3H6YmOrEQU3D7j7FRTc5p+snHIAt
+X-Gm-Message-State: AOJu0Yw4/e1KFnIIgdAkql7iSd2mF+bBRplYvw9J79C56YUJ9XESsQ20
+	qgJTHQd7G62orrDJo+TJNpbsERQ/eU22PRjS9pz+hwGtrUXdt3y/Sd8iL57cWCOvX+4ZI236Q1D
+	xv+WVsnXqHB5bf4nJjSpx6LR3A/k=
+X-Google-Smtp-Source: AGHT+IHrg4luf9HJCvilXfo369lBqMy77xy6LdAq7qkXe+/Mk/W41SsBeaWgj5jcW7S9xllSiRFEVcugDG4UNhvgWEI=
+X-Received: by 2002:a50:d582:0:b0:56e:33fe:5e88 with SMTP id
+ v2-20020a50d582000000b0056e33fe5e88mr1783534edi.34.1713450421364; Thu, 18 Apr
+ 2024 07:27:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,12 +57,12 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240330224623.579457-1-knayak@gitlab.com> <20240412095908.1134387-1-knayak@gitlab.com>
- <20240412095908.1134387-2-knayak@gitlab.com>
-In-Reply-To: <20240412095908.1134387-2-knayak@gitlab.com>
+ <20240412095908.1134387-3-knayak@gitlab.com>
+In-Reply-To: <20240412095908.1134387-3-knayak@gitlab.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 18 Apr 2024 16:25:33 +0200
-Message-ID: <CAP8UFD2s5GZBbZ_oKk6hFCQ+jtjRjx1QgRvLz+1hrBfkWKVCbw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] refs: accept symref values in `ref_transaction[_add]_update`
+Date: Thu, 18 Apr 2024 16:26:49 +0200
+Message-ID: <CAP8UFD2bqdMujHgS9oPn4Xqzu=EhGMPms7ftOB7uf-AHke79AQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] update-ref: add support for symref-verify
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
@@ -73,130 +73,132 @@ om> wrote:
 >
 > From: Karthik Nayak <karthik.188@gmail.com>
 >
-> The `ref_transaction[_add]_update` functions obtain ref information and
-> flags to create a `ref_update` and add it to the transaction at hand.
+> In the previous commit, we added the required base for adding symref
+> support in transactions provided by the 'git-update-ref(1)'. This commit
+
+s/by the 'git-update-ref(1)'/by 'git-update-ref(1)'/
+
+> introduces the 'symref-verify' command which is similar to the existing
+> 'verify' command for regular refs.
 >
-> To extend symref support in transactions, we need to also accept the
-> old and new ref values and process it. In this commit, let's add the
-> required paramaters to the function and modify all call sites.
+> The 'symref-verify' command allows users to verify if a provided <ref>
+> contains the provided <old-ref> without changing the <ref>.
 
-s/paramaters/parameters/
+What if <old-ref> looks like an oid? Will it work if <ref> is a
+regular ref that actually contains this oid?
 
-> The two paramaters added are `new_ref` and `old_ref`. The `new_ref` is
+> If <old-ref>
+> is not provided, the command will verify that the <ref> doesn't exist.
+> Since we're checking for symbolic refs,
 
-s/paramaters/parameters/
+So if <ref> isn't a symbolic ref, it will fail? I guess the answer is
+yes, but I think it would be better to be clear about this.
 
-> used to denote what the reference should point to when the transaction
-> is applied. Some functions allow this parameter to be NULL, meaning that
-> the reference is not changed, or `""`, meaning that the reference should
-> be deleted.
-
-> The `old_ref` denotes the value of that the reference must have before
-
-s/the value of that the reference/the value the reference/
-
-> the update. Some functions allow this parameter to be NULL, meaning that
-> the old value of the reference is not checked, or `""`, meaning that the
-> reference must not exist before the update. A copy of this value is made
-> in the transaction.
+> this command will only work with
+> the 'no-deref' mode. This is because any dereferenced symbolic ref will
+> point to an object and not a ref and the regular 'verify' command can be
+> used in such situations.
 >
-> The handling logic of these parameters will be added in consequent
-> commits as we implement symref-{create, update, delete, verify}.
+> This commit adds all required helper functions required to also
+> introduce the other symref commands, namely create, delete, and update.
+
+Are these helper functions actually used in this commit? If yes, it
+would be nice to say it explicitly. If not, why is it a good idea to
+add them now?
+
+Also I think we prefer imperative wordings like "Add all required..."
+over wordings like "This commit adds all required..."
+
+> We also add tests to test the command in both the regular stdin mode and
+> also with the '-z' flag.
+
+> When the user doesn't provide a <old-ref> we need to check that the
+> provided <ref> doesn't exist.
+
+That the provided <ref> doesn't exist or that it isn't a symref?
+
+> And to do this, we take over the existing
+> understanding that <old-oid> when set to its zero value, it refers to
+> the ref not existing. While this seems like a mix of contexts between
+> using <*-ref> and <*-oid>, this actually works really well, especially
+> considering the fact that we want to eventually also introduce
+>
+>     symref-update SP <ref> SP <new-ref> [SP (<old-oid> | <old-rev>)] LF
+>
+> and here, we'd allow the user to update a regular <ref> to a symref and
+> use <old-oid> to check the <ref>'s oid.
+
+This means that the ref actually exists but isn't a symref.
+
+So if I understand correctly, for now it will work only if the ref
+doesn't exist, but in the future we can make it work also if the ref
+exists but isn't a symref.
+
+> This can be extrapolated to the
+> user using this to create a symref when provided a zero <old-oid>. Which
+> will work given how we're setting it up.
+>
+> We also disable the reference-transaction hook for symref-updates which
+> will be tackled in its own commit.
+
+Why do we need to disable it?
+
+> Add required tests for 'symref-verify' while also adding reflog checks fo=
+r
+> the pre-existing 'verify' tests.
 >
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 
-> diff --git a/refs.h b/refs.h
-> index d278775e08..645fe9fdb8 100644
-> --- a/refs.h
-> +++ b/refs.h
+> +symref-verify::
+> +       Verify symbolic <ref> against <old-ref> but do not change it.
+> +       If <old-ref> is missing, the ref must not exist.
 
-There is the following big comment in this file:
+"must not exist" means that we will need to change this when we make
+it work if the ref exists but isn't a symref. Ok.
 
-/*
- * Reference transaction updates
- *
- * The following four functions add a reference check or update to a
- * ref_transaction.  They have some common similar parameters:
- *
- *     transaction -- a pointer to an open ref_transaction, obtained
- *         from ref_transaction_begin().
- *
- *     refname -- the name of the reference to be affected.
- *
- *     new_oid -- the object ID that should be set to be the new value
- *         of the reference. Some functions allow this parameter to be
- *         NULL, meaning that the reference is not changed, or
- *         null_oid, meaning that the reference should be deleted. A
- *         copy of this value is made in the transaction.
- *
- *     old_oid -- the object ID that the reference must have before
- *         the update. Some functions allow this parameter to be NULL,
- *         meaning that the old value of the reference is not checked,
- *         or null_oid, meaning that the reference must not exist
- *         before the update. A copy of this value is made in the
- *         transaction.
- *
- *     flags -- flags affecting the update, passed to
- *         update_ref_lock(). Possible flags: REF_NO_DEREF,
- *         REF_FORCE_CREATE_REFLOG. See those constants for more
- *         information.
- *
- *     msg -- a message describing the change (for the reflog).
- *
- *     err -- a strbuf for receiving a description of any error that
- *         might have occurred.
- *
- * The functions make internal copies of refname and msg, so the
- * caller retains ownership of these parameters.
- *
- * The functions return 0 on success and non-zero on failure. A
- * failure means that the transaction as a whole has failed and needs
- * to be rolled back.
- */
-
-I would expect the patch to update this comment.
-
-> @@ -722,6 +728,7 @@ int ref_transaction_update(struct ref_transaction *tr=
-ansaction,
->                            const char *refname,
->                            const struct object_id *new_oid,
->                            const struct object_id *old_oid,
-> +                          const char *new_ref, const char *old_ref,
->                            unsigned int flags, const char *msg,
->                            struct strbuf *err);
-
-The patch might also want to update the comment just above the
-ref_transaction_update() declaration as it is changing what the
-function can (or will be able to) do.
-
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index 56641aa57a..4c5fe02687 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -124,6 +124,19 @@ struct ref_update {
->          */
->         struct object_id old_oid;
->
-> +       /*
-> +        * If (flags & REF_SYMREF_UPDATE), set the reference to this
-> +        * value (or delete it, if `new_ref` is an empty string).
-
-What if this value is NULL?
-
-> +        */
-> +       const char *new_ref;
+>  Can only be
+> +       used in `no-deref` mode.
 > +
+
+
 > +       /*
+> +        * old_ref is optional, but we want to differentiate between
+> +        * a NULL and zero value.
+> +        */
+> +       old_ref =3D parse_next_refname(&next);
+> +       if (!old_ref)
+> +               old_oid =3D *null_oid();
+
+So for now we always overwrite old_oid when old_ref is not provided.
+So the ref should not exist and the command will fail if it exists as
+a regular ref. Ok.
+
+> +       else if (read_ref(old_ref, NULL))
+> +               die("symref-verify %s: invalid <old-ref>", refname);
+
+So I guess we die() if old_ref is the empty string.
+
+It's kind of strange as in the previous patch there was:
+
 > +        * If (type & REF_SYMREF_UPDATE), check that the reference
 > +        * previously had this value (or didn't previously exist,
 > +        * if `old_ref` is an empty string).
 
-What if this value is NULL?
+So it said the empty string meant the old_ref didn't previously exist,
+but now it's actually NULL that means the old_ref didn't previously
+exist.
 
-
-> +        */
-> +       const char *old_ref;
+> +       if (*next !=3D line_termination)
+> +               die("symref-verify %s: extra input: %s", refname, next);
 > +
->         /*
->          * One or more of REF_NO_DEREF, REF_FORCE_CREATE_REFLOG,
->          * REF_HAVE_NEW, REF_HAVE_OLD, or backend-specific flags.
+> +       if (ref_transaction_verify(transaction, refname, old_ref ? NULL :=
+ &old_oid,
+> +                                  old_ref, update_flags | REF_SYMREF_UPD=
+ATE, &err))
+>                 die("%s", err.buf);
+>
+>         update_flags =3D default_flags;
+>         free(refname);
+> +       free(old_ref);
+>         strbuf_release(&err);
+>  }
