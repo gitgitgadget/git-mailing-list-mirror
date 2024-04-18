@@ -1,63 +1,63 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0352199E87
-	for <git@vger.kernel.org>; Thu, 18 Apr 2024 21:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC74919DF40
+	for <git@vger.kernel.org>; Thu, 18 Apr 2024 21:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713477132; cv=none; b=YR5Df3slTO+nYFR+0zAIqS0gJ2xiLdB0E1706/daa5HDW99IG/fIIDpksugPq0AnIKwDiIrR8WBgc4h3nOKqbrpYJWZ+34sRGN6P3RTDHVZ4Tweg1SAB6/uxrwfoFHW4A5NLZFMoffSRX5xnVEn5xH5d2B1C4rq/01z2CNIivaw=
+	t=1713477133; cv=none; b=H1gsjLYCmo0d0H8gTK2PrAWLh19LUKBWFJJkkG+WKfn5uwRV+X8ITD2aSf74uj2I2KwdtmmSL6A4tP7Mg1HVqBoJioSRCzh4wf2OIthjd7AVxSOwIo7MwDVfdcryUG8BwrU18W9mUqS5RqLuHxNZHav0+83XR7xMUnNKIDa50bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713477132; c=relaxed/simple;
-	bh=Go1i3gWV7ueko/MvAzRoptBPHsEqivRITvJiUj0BCJs=;
+	s=arc-20240116; t=1713477133; c=relaxed/simple;
+	bh=KaawRCSqIwI3Nz31I1au7IthDncYxXQc+wO0oyYv9b4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=t0W0wSLi1RJJQPV0qn+I7xC9MoPzoCu0/kjuqcvmoj3gueESMXuV3ZFSXiN5UBDWaB3vq/dQeujYwPfCTt3Dq5GcOnDmWNzd/FI9HWovIH9Kz6z1dbRhMBKenyh5jwUuJ5XugPbjzDwFn4p9n998yMXTtsLSPhOxAIPIUwYAxJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TmDVvb7G; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=UYYvEFwm73QJG4+lRqxqsRYZ8mm7w1jUd+8ZXkdgfQRRGidmdtdJkyp2DYPGVv66ZWztdCAA/xql2gXsVZ5tDhQMifGWyXqwWKju3COKd/5kz/3jpRZ/SybcuhogwerYXT2CqFJ6MOWfPHxFlTiRjgit0Hn1dNoYbj11z3uCqBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jP8Roz8e; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmDVvb7G"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41551639550so9707845e9.2
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 14:52:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jP8Roz8e"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-418c979ddf3so10807595e9.0
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 14:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713477129; x=1714081929; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713477130; x=1714081930; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y1QFBaAsqZYFIx/JQD0X57hfvYi+kiS0nMiL94V0cwk=;
-        b=TmDVvb7G3rYS1GMpwC8lxikP8KUnwuNbAoC5MeejeEhMEMc/jR99+Uz9Vszf80/xLw
-         owcO5Vpg+xxEVghRRI5ohUI8vTYOXMgJVPFY2QXfxeWw4BaOrdoYyQPzi8n+ctd7vxae
-         Bw8Y1MH3eEj/houKUo9uAqdfuTSrD+1pTCu18emJ8C0iLCFfvfi27VsuqTDf+V7h9mN1
-         jrOXcJy/GR5+hScB9E1qPpYeAJBpOh54E1q84Gci0okk/l8gJ2rLva5TTEE7mU7Z178l
-         rS+STpqcw6KUKhW22aVsh+smhm96l4hLNU/F2w8jPFhxm53aVobcvwlyIO29oDFsEQu1
-         MXQw==
+        bh=HlY5twN+80OZ4NTMvW6gQ34sTTTkc0q1J4BSPAgByM0=;
+        b=jP8Roz8eKfz/pwad1seNlZLqQleMeSBduMo0DxcOvolJe4aNGW+51Aamp0wow/abPS
+         3AD9Ul1kz0Xc0fL0vNYgOHICOoR122f/0fKrs29mD66AU3Xh+Ge2v1VRIV4D6hhdSoMP
+         NnigxcM2HPorf4f04Bs1ZYMVTfO9vu2VqRgj6GKn7EiCsEobPp1+ssWJg8zZYxGbihQ0
+         QyfmKUwhNn90u4J8XiVpvBFMPTdHsnHVrMMTFV1A9HQ2kyMkynwAtoRhdy5/qCo2Iuly
+         NjZOB5NnSmWC5tsDyplpfn6Le12bPm1YYiPTnKcSJFHoMBPJNxeJY1fYOxoLQJZIgfYT
+         260w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713477129; x=1714081929;
+        d=1e100.net; s=20230601; t=1713477130; x=1714081930;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y1QFBaAsqZYFIx/JQD0X57hfvYi+kiS0nMiL94V0cwk=;
-        b=WG15eGsuhXB3j2bG2S3vl6hIIssL7LueMH8CfPZoFmhV6FZK1yvvpFW4kEVLL7g+OJ
-         bZLcXXBhMMRPwNKPXp1PkMQVBzNEjG2/bhg+GjzBIJ4/sY39SFExnENl4amQ4QBYVGnE
-         cwd4WD11o2OIzphGdndMmLeWfVVHmJDZ1rHOtoUDfaXmFYkU9uM5CatMQY/gB0JqpYM7
-         GvKAMLBie2qd26r0S6NSCr8jWjxH1OX1KSCoR/wEuQ5hD09XuL1ZF3sIpwxwPL/udWf4
-         xQMMEXRY4FYXYyEKDA84oFZCUb8+8AYYrnpQrHxpWe1RUabsZs1XSwJprPQb1753vAAQ
-         VQ0w==
-X-Gm-Message-State: AOJu0YwMWoabahkVNmxu3OL8jP+8+61SzOxngLJG7N6uldPC3k3lZOEx
-	wOW0fVpE8u4wXoOJixLcgFfdBddk5z3XHzTMTfn05cT8majF+mEYqD3bGQ==
-X-Google-Smtp-Source: AGHT+IHRaiBbMaMC5wjrILKCjGMS5ArK5JGTzOlaBSiBnJaslJGw8c6J+hPaPjnPx1LerMSHtSSXxQ==
-X-Received: by 2002:a05:600c:215:b0:418:fa37:60c0 with SMTP id 21-20020a05600c021500b00418fa3760c0mr106024wmi.22.1713477128833;
-        Thu, 18 Apr 2024 14:52:08 -0700 (PDT)
+        bh=HlY5twN+80OZ4NTMvW6gQ34sTTTkc0q1J4BSPAgByM0=;
+        b=D4r33n8q09PDeOiq/71/++CzNVKmNI2uZCxE52V6ZPS8+yvkyKDj3kD9gZIbxT3YXU
+         12vozKvw1dBGwOxdb0LmT00DV9Prs6o2jPBJumgDTyyu71B7iDyTvLeFcufGvMBxBupz
+         HfPAlmGVOGWJjVnfPrUP1ysCc7sz3l/CdpDlNmxfjpIFoiB0fjfMrYyz6TCfPUER8D7w
+         Yv/E+zo5dP/hRiP6qsxAtWerY+jyHgMO9N8GgMP0vPUHMeKLuf7DkzZt413VJgidxIa+
+         jWulykW2ztDWq4jQypcWELwS5ZRPq0lpW1y3N7ZBuGs3PXcJ4WLyLZuGR+cwck4PAwFk
+         Vg3w==
+X-Gm-Message-State: AOJu0Yx6cDhOPJVwgN4oZkNoZb8EupVyCmg8pUt268SrEVdLQgTCB/En
+	ebpX5L8hBZntbB2kYsG78vwkjqkD97SjW+PS6E0kJOmZtqC9gNGQEVaxXQ==
+X-Google-Smtp-Source: AGHT+IFUhdGXEFcMYuFzl1MjSFO+cg49FlNgpyW2ZjdtDlGaPgFfaKrpRDLZeTcYB/vOfXGNhaFM9w==
+X-Received: by 2002:a05:600c:1906:b0:418:5ed2:5aa6 with SMTP id j6-20020a05600c190600b004185ed25aa6mr72460wmq.31.1713477129911;
+        Thu, 18 Apr 2024 14:52:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f18-20020adff592000000b00343a0e2375esm2768455wro.27.2024.04.18.14.52.08
+        by smtp.gmail.com with ESMTPSA id n17-20020a05600c501100b00418f1d77098sm2429531wmr.25.2024.04.18.14.52.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 14:52:08 -0700 (PDT)
-Message-Id: <f26f0695f404f242611e23f645a15af85d72d953.1713477125.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2024 14:52:09 -0700 (PDT)
+Message-Id: <c201b3136446037f4d92cc0010d6f9ffa675202c.1713477125.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1704.v6.git.1713477125.gitgitgadget@gmail.com>
 References: <pull.1704.v5.git.1713308518.gitgitgadget@gmail.com>
 	<pull.1704.v6.git.1713477125.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Apr 2024 21:51:59 +0000
-Subject: [PATCH v6 2/8] SubmittingPatches: clarify 'git-contacts' location
+Date: Thu, 18 Apr 2024 21:52:00 +0000
+Subject: [PATCH v6 3/8] SubmittingPatches: mention GitGitGadget
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,42 +82,26 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 
 From: Linus Arver <linusa@google.com>
 
-Use a dash ("git-contacts", not "git contacts") because the script is
-not installed as part of "git" toolset. This also puts the script on
-one line, which should make it easier to grep for with a loose search
-query, such as
-
-    $ git grep git.contacts Documentation
-
-Also add a footnote to describe where the script is located, to help
-readers who may not be familiar with such "contrib" scripts (and how
-they are not accessible with the usual "git <subcommand>" syntax).
-
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/SubmittingPatches | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index e734a3f0f17..d4173d4fe84 100644
+index d4173d4fe84..26055a1fe2b 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -493,9 +493,13 @@ security relevant should not be submitted to the public mailing list
- mentioned below, but should instead be sent privately to the Git
- Security mailing list{security-ml-ref}.
+@@ -408,6 +408,10 @@ are optimized for the workflow of sending patches, avoiding many ways
+ your existing e-mail client (often optimized for "multipart/*" MIME
+ type e-mails) might render your patches unusable.
  
-+:contrib-scripts: footnoteref:[contrib-scripts,Scripts under `contrib/` are +
-+not part of the core `git` binary and must be called directly. Clone the Git +
-+codebase and run `perl contrib/contacts/git-contacts`.]
++NOTE: Here we outline the procedure using `format-patch` and
++`send-email`, but you can instead use GitGitGadget to send in your
++patches (see link:MyFirstContribution.html[MyFirstContribution]).
 +
- Send your patch with "To:" set to the mailing list, with "cc:" listing
--people who are involved in the area you are touching (the `git
--contacts` command in `contrib/contacts/` can help to
-+people who are involved in the area you are touching (the `git-contacts`
-+script in `contrib/contacts/`{contrib-scripts} can help to
- identify them), to solicit comments and reviews.  Also, when you made
- trial merges of your topic to `next` and `seen`, you may have noticed
- work by others conflicting with your changes.  There is a good possibility
+ People on the Git mailing list need to be able to read and
+ comment on the changes you are submitting.  It is important for
+ a developer to be able to "quote" your changes, using standard
 -- 
 gitgitgadget
 
