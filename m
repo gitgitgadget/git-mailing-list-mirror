@@ -1,77 +1,78 @@
-Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08F17CF17
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 09:51:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965077F499
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 09:51:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713520291; cv=none; b=nMyx9MgCcLPLe3X7/I5FWAvxLPycPeGzAoB9a4Jj1YSPvCYSIMP+Qh6SeRAKm1OEj/Cq56E8H6Mvg0B/I2OCp8qepsKcYDrXrmorBwSjgkng3H0gFvWfQtzvk+1xk2oMYbLf98RgIaDkg8ekY0VreKfKbfQyj3Y+Bf/chyrKB/Y=
+	t=1713520296; cv=none; b=qfc1W33TXsOClWMBRIHt4uS5aJGqmAXBBQkIKPIjd29hUPCrSpFu5Xi9WzHMjKF+RIuTlG6EMO6+EJmz+stebczVrb5tHR1hwQKshR2MhHFRS8jOx/ZA1bMoVSPXCP0Jpe69pEwCokMCoYPTGeDPiAMzMW+ts8CI/Q/q0kc1O3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713520291; c=relaxed/simple;
-	bh=KqXq2Xu+bSPdPJzPxdBlUECFMJvzyExtByOLQ2+gBDY=;
+	s=arc-20240116; t=1713520296; c=relaxed/simple;
+	bh=MJjmsqplFL8VDYSUFuiJ8M4wKfIXj7jSTU+yaF+FGLQ=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nPxHbscZHGmfeO+r5ZrCqz6Vuk7YeK1xohzWWcK+/G8i5w5/FEcbu0RwKsyfOMPHAwmtq58uH6EpdL+o1lTl/3s1gdL5S4KytCaCq6EaaD+UfhkfxKtDp27TZQJtnF0I4vx8w8UjusjTUEi2rA2U1IAe+3DAy0TXmpaMDkQTYi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jsP4qLi4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BeCsm3pq; arc=none smtp.client-ip=64.147.123.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=miuY/beVkAE7MB2240ji17gftIqh3MljgKWRx2zvVljl5A+CZ01/0AjZin1uxB7ffKuPrmFVgNC6I6j4rFcasB/FsJ73xY6jSuXSKc/L586K2R40SvwstUm6ASJ1ajNSR2IELtfg9iAIK8CWSLM6bdEmZ0P4LpWfjNdUGi/ouvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kWsh64Wl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XDPYbCif; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jsP4qLi4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BeCsm3pq"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id 028501C0008A
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kWsh64Wl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XDPYbCif"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.west.internal (Postfix) with ESMTP id B14211800096
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:33 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 19 Apr 2024 05:51:29 -0400
+  by compute5.internal (MEProxy); Fri, 19 Apr 2024 05:51:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1713520288; x=1713606688; bh=6+8uq3MDGQ
-	VjY6pjK00jntgOR1dI8zDflctoRtJ4x1k=; b=jsP4qLi4aPbtYDUtIj0UwYXzNJ
-	TGm8RTMtwOiZM/beIVvh6XVhg1VqsvXWDs83tagGrFluWl2pafbYmsW/F9suHf5H
-	r8Aw/bNXh26Pn1rHdmlhJGchBD5Lr4BuO5feMKzAiUUlqBbgqTTrfwezKsYwfNwJ
-	iUMWGJGp08bpRd+0DXb7ZPkXY9VdKxjSEYwwXldBNsP9frJUkXmAXhAxK+5dL3g1
-	WJbEGGM1JLjTt5TyzweAnU8juZ844bBWS44rXiiqsvIaTaVq+ehUwsJyyZArDtRS
-	zEC29pm2aFU4K6nytHKcpaKhquEK3dW0KMYpzvsak+USgx/tQ1r2RbdCe6/Q==
+	:subject:to:to; s=fm3; t=1713520293; x=1713606693; bh=uxJtBXlUKy
+	MrsIw/cigzKcFa2mOXYyqTNB0W9iCI1uM=; b=kWsh64Wl06mhYeuPlt/+bgeUuE
+	HXGOhssleL60YxBbi8F2mqANzQRNXumwbY2lON8YZsvFcJB5oPKG/H+gP2Kw6lQw
+	TujW6SrLfs3IrKpBk/zqG3GvP63RSDGT4lQGGmlqm2PAr6/W8fr1jZ46GFQah2v0
+	/iXomXfA1kHgLrdxiHdXGx1r/qkByho8QUpzF+8agnVZbtRsA/SgpmMpYnHRgfgp
+	tMel6Dwo0m7ENXTfMCfScM7gOdupqnr9w30gAQfs4Vmr0HZIOqXt0zEmebfxwIRW
+	UfW0vcYiqQZ/LuCLB1QbmgJlT7a8b58VyhPya8rK1yOuRBQfcsed5eZ3rpCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1713520288; x=1713606688; bh=6+8uq3MDGQVjY6pjK00jntgOR1dI
-	8zDflctoRtJ4x1k=; b=BeCsm3pquHXNvMQ9PnEniX3RxpHi9uTkvRK8gLAwvY+i
-	e543+bKFm61eYs2E/F8p605NCEsBtdMwtWcNs8GigFF5TNMxxB+ekp+YEgmqHrIi
-	iJNocb96UF/NVif/i9dxozpXzB8/8n8kBXkEzD8xq5SLgyABK4fEfKx+4mrqvDRW
-	2odyrsEoJlY8YteM4gWU5cZ+Udi7Jifs64aw08IyIexWhEORbEKZOsL47Cmj8qfJ
-	iaSBs2I1h2jnuQn0ZIZeSp/k6S6WOqNtEHz9hboXi9HNEM1/kaCwuhjnlCgiXkOi
-	aAc5g5wo/KNGpy7VN1mVGTfFZmYVk1PeyADrOEdsDw==
-X-ME-Sender: <xms:oD4iZr2Rg-Nz8OJD6tnHy3FC4GxXzH0X1LjhIY6nU0vGPIK982znBg>
-    <xme:oD4iZqH3Jpw2stqwGD_vxtibVTjO8w0neC8M0zWnhiEt1kvQycmTZGQ3trD6kvuBe
-    Y0jdndvIS9yRZVsAw>
-X-ME-Received: <xmr:oD4iZr5t3lxgAFimOFQ2NLFqfKuVeCbY9MDa9XZOAga2lRzIjYo9AkGZ06s_i2YNcMT7NExywtkdfPID0lMwuRstJmcALZnZToH3xFG9Hl-gs8LzWA>
+	fm3; t=1713520293; x=1713606693; bh=uxJtBXlUKyMrsIw/cigzKcFa2mOX
+	YyqTNB0W9iCI1uM=; b=XDPYbCif6e1f5bPWYIFFoKpcpFzw8Z0bl0CqLWmWn77G
+	e7T/CF8B57Fw47hM/eHstWKoYyQK4AhoxLO4VVrNsERc6BCjmtN2NHzV4ccRjHjx
+	9A7ee2lGFrR/zK9jRva9Ijh5YWd5Qu8KU77/diBvMcveYKDCJtHamKVU7WqpzCQl
+	jH5Al3A6ff9Lm/YdgCO5B6/QHPkg11WdEKu33iJGO9PI4aj/yjpWzORCM81iPaUd
+	phDXeCtQS44rLD/sEYssj3OIaJRmgf7SQPYLFtQ7b1JWA1EOiu+4uQ4OStPe47wD
+	I2DWVeeXf76fv+KYMFB204VFzcp9yprTnurHO9QKsw==
+X-ME-Sender: <xms:pT4iZuUmDvSZ37eSGs5ik6Fk9jSXLoZkqywzFp63IPMGRlFoLREXjg>
+    <xme:pT4iZqlpClqEaglJu6uUv9WhXms1TUzc0_hN51sO8xx25aizWqkZQGXImQwWdMSOk
+    gbbYcJDtdRtEkNQmA>
+X-ME-Received: <xmr:pT4iZiYriZ75kVBXpLM93LbUPTP-uKwSZAV5DlJ9-OHS399D5pS0b2gIEqHzdCDPemF2mv0rDDcrf2fXScNM3UTUFG8AHGM7V-r-1eFzsA2B7WI5-w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudekvddgvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:oD4iZg3aWJU5OVCYRQ_QBsOsn5x-m9iMzmFuaCv7IL4mFEORLD5KTg>
-    <xmx:oD4iZuFJ_PA8f3IiReP4OWbnQ_7jQ388UfqC-iptEV-c4GZ4yLIw-A>
-    <xmx:oD4iZh83HgCRY4P_HKl3bohMUrPvVRHTvnRWbl_wp4PtKMxq2F7GhA>
-    <xmx:oD4iZrnjlFeF3iMguAmjiKX7PMbC3dZSXpSuDxLR1352JdHZMVH1pQ>
-    <xmx:oD4iZgM6GiJoIP7z2OQw6bmnj2AjTkjenDoCKkj-eNM3nEQqPxieeFNJ>
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdelgeekfeefjeelfeethefhheetvdejhf
+    ejkeduieffjeeklefgteekieeffeejnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdq
+    ughumhgsrdhshhdphhhtthhpthhrrghnshhpohhrthdrrghsnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:pT4iZlXvFr297n-GNkXJs1j8zWYDXIwPB8TgfQzeD3nkzJavmjSlYw>
+    <xmx:pT4iZokJarKgpelCRaya86EW1t2f-K2BGaZUgOLTc97GnZKFTorYSA>
+    <xmx:pT4iZqfB6VSZ57MRaNMPJm1V2vhd0MlgpnQUWQpmUdDWwPcGox91ug>
+    <xmx:pT4iZqEPFfZvmVx7ltZ8yOB2XxU3tJrWb3n45V56y0J6-x8p1KA4EA>
+    <xmx:pT4iZkuwOhw1uF9fenYHI9cvd-CM52PcFMKvOoI0t1_6tAanFkg7SYhJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:27 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:32 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 419c4ade (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id e731274e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 19 Apr 2024 09:51:00 +0000 (UTC)
-Date: Fri, 19 Apr 2024 11:51:25 +0200
+	Fri, 19 Apr 2024 09:51:05 +0000 (UTC)
+Date: Fri, 19 Apr 2024 11:51:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 04/11] attr: fix BUG() when parsing attrs outside of repo
-Message-ID: <53c8e1cd7c62e641439b19447525194137a9285d.1713519789.git.ps@pks.im>
+Subject: [PATCH 05/11] remote-curl: fix parsing of detached SHA256 heads
+Message-ID: <32a429fb60e4a7e80afdbcf9f874d2b2d921badd.1713519789.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,100 +81,135 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PmZPsRo73tzjERBM"
+	protocol="application/pgp-signature"; boundary="L7b/ikGEhpj5bsvG"
 Content-Disposition: inline
 In-Reply-To: <cover.1713519789.git.ps@pks.im>
 
 
---PmZPsRo73tzjERBM
+--L7b/ikGEhpj5bsvG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-If either the `--attr-source` option or the `GIT_ATTR_SOURCE` envvar are
-set, then `compute_default_attr_source()` will try to look up the value
-as a treeish. It is possible to hit that function while outside of a Git
-repository though, for example when using `git grep --no-index`. In that
-case, Git will hit a bug because we try to look up the main ref store
-outside of a repository.
+The dumb HTTP transport tries to read the remote HEAD reference by
+downloading the "HEAD" file and then parsing it via `http_fetch_ref()`.
+This function will either parse the file as an object ID in case it is
+exactly `the_hash_algo->hexsz` long, or otherwise it will check whether
+the reference starts with "ref :" and parse it as a symbolic ref.
 
-Handle the case gracefully and detect when we try to look up an attr
-source without a repository.
+This is broken when parsing detached HEADs of a remote SHA256 repository
+because we never update `the_hash_algo` to the discovered remote object
+hash. Consequently, `the_hash_algo` will always be the fallback SHA1
+hash algorithm, which will cause us to fail parsing HEAD altogteher when
+it contains a SHA256 object ID.
+
+Fix this issue by setting up `the_hash_algo` via `repo_set_hash_algo()`.
+While at it, let's make the expected SHA1 fallback explicit in our code,
+which also addresses an upcoming issue where we are going to remove the
+SHA1 fallback for `the_hash_algo`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- attr.c                |  6 ++++++
- t/t0003-attributes.sh | 15 +++++++++++++++
- 2 files changed, 21 insertions(+)
+ remote-curl.c              | 19 ++++++++++++++++++-
+ t/t5550-http-fetch-dumb.sh | 15 +++++++++++++++
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/attr.c b/attr.c
-index 9d911aeb31..4bd09bcb4b 100644
---- a/attr.c
-+++ b/attr.c
-@@ -1234,6 +1234,12 @@ static int compute_default_attr_source(struct object=
-_id *attr_source)
- 	if (!default_attr_source_tree_object_name)
- 		return 0;
+diff --git a/remote-curl.c b/remote-curl.c
+index 0b6d7815fd..004b707fdf 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -266,12 +266,23 @@ static struct ref *parse_git_refs(struct discovery *h=
+eads, int for_push)
+ 	return list;
+ }
 =20
-+	if (!startup_info->have_repository) {
-+		if (!ignore_bad_attr_tree)
-+			die(_("cannot use --attr-source or GIT_ATTR_SOURCE without repo"));
-+		return 0;
-+	}
++/*
++ * Try to detect the hash algorithm used by the remote repository when usi=
+ng
++ * the dumb HTTP transport. As dumb transports cannot tell us the object h=
+ash
++ * directly have to derive it from the advertised ref lengths.
++ */
+ static const struct git_hash_algo *detect_hash_algo(struct discovery *head=
+s)
+ {
+ 	const char *p =3D memchr(heads->buf, '\t', heads->len);
+ 	int algo;
 +
- 	if (repo_get_oid_treeish(the_repository,
- 				 default_attr_source_tree_object_name,
- 				 attr_source)) {
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 774b52c298..3efdec54dd 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -428,6 +428,21 @@ test_expect_success 'precedence of --attr-source, GIT_=
-ATTR_SOURCE, then attr.tre
- 	)
++	/*
++	 * In case the remote has no refs we have no way to reliably determine
++	 * the object hash used by that repository. In that case we simply fall
++	 * back to SHA1, which may or may not be correct.
++	 */
+ 	if (!p)
+-		return the_hash_algo;
++		return &hash_algos[GIT_HASH_SHA1];
+=20
+ 	algo =3D hash_algo_by_length((p - heads->buf) / 2);
+ 	if (algo =3D=3D GIT_HASH_UNKNOWN)
+@@ -295,6 +306,12 @@ static struct ref *parse_info_refs(struct discovery *h=
+eads)
+ 		    "is this a git repository?",
+ 		    transport_anonymize_url(url.buf));
+=20
++	/*
++	 * Set the repository's hash algo to whatever we have just detected.
++	 * This ensures that we can correctly parse the remote references.
++	 */
++	repo_set_hash_algo(the_repository, hash_algo_by_ptr(options.hash_algo));
++
+ 	data =3D heads->buf;
+ 	start =3D NULL;
+ 	mid =3D data;
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 4c3b32785d..5f16cbc58d 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -55,6 +55,21 @@ test_expect_success 'list refs from outside any reposito=
+ry' '
+ 	test_cmp expect actual
  '
 =20
-+test_expect_success 'diff without repository with attr source' '
-+	mkdir -p "$TRASH_DIRECTORY/outside/nongit" &&
-+	(
-+		cd "$TRASH_DIRECTORY/outside/nongit" &&
-+		GIT_CEILING_DIRECTORIES=3D"$TRASH_DIRECTORY/outside" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		touch file &&
-+		cat >expect <<-EOF &&
-+		fatal: cannot use --attr-source or GIT_ATTR_SOURCE without repo
-+		EOF
-+		test_must_fail env GIT_ATTR_SOURCE=3DHEAD git grep --no-index foo file 2=
->err &&
-+		test_cmp expect err
-+	)
++
++test_expect_success 'list detached HEAD from outside any repository' '
++	git clone --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
++		"$HTTPD_DOCUMENT_ROOT_PATH/repo-detached.git" &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo-detached.git" \
++		update-ref --no-deref HEAD refs/heads/main &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo-detached.git" update-server-info &&
++	cat >expect <<-EOF &&
++	$(git rev-parse main)	HEAD
++	$(git rev-parse main)	refs/heads/main
++	EOF
++	nongit git ls-remote "$HTTPD_URL/dumb/repo-detached.git" >actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success 'bare repository: with --source' '
- 	(
- 		cd bare.git &&
+ test_expect_success 'create password-protected repository' '
+ 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/" &&
+ 	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
 --=20
 2.44.GIT
 
 
---PmZPsRo73tzjERBM
+--L7b/ikGEhpj5bsvG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYiPpwACgkQVbJhu7ck
-PpSLfA//dq/RL9qS7GRHxhUy+BMXyd0rBCal676i4ZByiy6Ig+NHx1iM07o6CHqg
-z5azJgNQbAVX8D8uWEw+takaHfgaWUKirlUflJXKiHwbeNJfARs2zPh3AQa8quO1
-+RhSl07Ud+9V3N9KxVEzrt9wIpaYU27VGfcLnq6zuG0Gc1+MXfAYFcexjkV/jVpH
-bCssYCnrYXWzvbCS8J1jBNgZ5DPoUseG4CBOJYylCgM1otBhZVs32efnHamqgbKc
-MpflP9R7esE0DPRRPJg594wzu7gH04cTj6tkjzUJiLbJVqKkDwSvOo3s3gBk1OeT
-vg9U5+Tzqd8f64u0GcPkfKGCrIGo9a4jevlyGThKdpvXaqvLWJH+n/CwZ2+gDCkk
-a1wvyTFGzRNrYFzlLv3GvJwajUsO/gfzXWO5q3FXj0i1WYWWwogfzBB2pOHoabCq
-t9+K+UrEAwlS9fuYrVXL8F/pGWYGx1FTezMYBkLOduP/gCkGcvAv/5RUFVxTkXx4
-ZfIe9A/W/PD1gx4hpILyVf4Vv3oakck7zBTlFJu94D541LECkxLY4RQDi1rwempk
-OiBfUIvcUncjaGDHGEIsz1Sf54pPxmAFkAH4k9AusyT5Fp+2bzmAkn+8A/DEByKa
-veMGPtH/nJBiHhjc3aWg+mdAYKkP98ArfG77zXGIYLruvdGCofA=
-=18CK
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYiPqAACgkQVbJhu7ck
+PpSLwQ//dVsVhrTMiqYGvI+1LIMV1c/Yx28QJMDHC9dc5k0PzBc6MWnhaNo/kgVr
+p7JbOI+NS3rAPgf2tWQAQBnkTmWp7cRD8wIGeXV7fePw3gDT2hkPDRabADhGFbq3
+QdJh398nQiTrAejXpwfzSXrE+bEHXLDOd40tpBMmzeJIvAV8oGyN6MHKmTSEQX0i
+f4hb/wN7Kth5WE7vP4fbEqd84kVYgjfON49Qu6m/QLaX5oGN8+ZnAhpqvov90qgU
+x1yJ7cFiK8OYvA/WfnoRkSij3cHY8BQcoc50Wqihzs3IypGWMboVA1RSzMO98y2I
+B6iBC7cAgrlYDVNeP8HltMQb9DZ1k9SXaLFKmab0Z/cLo0w3ptQMnaxymecMM84L
+9eTkUmqsgZuvigaieSaDVz8iOnLwjwm2YZHqNeuuzrhuh6sLxJN9ajj24SK1iBRr
+p/v5KHDnKQ/8GgygGF6d7pGjC0zCtktTiiq3Ph/BaTagg/vO/LxYDCbJajNnAFV8
+E4VvgvPdRnb7eKpm3VWQgTmJ6u89uoketmEzbFgL606K93r+G6ylZsDkr4Y6kKqq
+qssMuNLnvUQRcBe+x8e+L2+yg83zJTsk1zh6hWYq1qUhMmmGoic3aw64OAgElU4K
+V8uxu3z2hcYHhuxudND2tV9L9gImoK8PYxTpKREI0lNq69dowM0=
+=8UUt
 -----END PGP SIGNATURE-----
 
---PmZPsRo73tzjERBM--
+--L7b/ikGEhpj5bsvG--
