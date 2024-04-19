@@ -1,77 +1,78 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594527C08E
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 09:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1906B80BF3
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 09:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713520318; cv=none; b=p2FbEbBqrTtGLAE21RZ4obmzRpiRGSxHMuzW86783TgsCwJF5o3pdg8yv0peBnOtPjmBl0KPzgfwik67dMsmIb2w6JpuA7h1MuZhHFsRt/W5JO2vT9c0Ufg2uOes/1dUhGvot3/sn9x/Q8orYZ+jekVx1dc+Q5S2bcxNtTKEbXI=
+	t=1713520323; cv=none; b=YTXpg2sUHjyw7jg62apwdwYequ+ZvtaohwSVL8w8KjWM14u7Ouj/GiN3I7fO6wTmtJNrzq+jhoTvmZ73Jmyb45a/bFYsg4KGBaIO+0WKTYJ70cjgxOCdbqAMRu/R1hvkzt1jO8UFRa98N8tgOQovy2Gm7K7Us/Z3zYoYlbcDSVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713520318; c=relaxed/simple;
-	bh=BomxAql219KiCcUf2UPYs0hdooTVxeLtzqX3+SWqnbE=;
+	s=arc-20240116; t=1713520323; c=relaxed/simple;
+	bh=5JTYXzFQk62mTmsgeQkqpATIExe8gePNDzfOGW08YRY=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i5HinQIng6XBYF3RBYn7UjFe6x+IWbDbKZHndjURAl223VG21oFdkwP0g3mLBkZp1lXttHcQHyFGMDrQMFTVcqKAlX6nDIlDcXfrII3nsd6abHPA//fL6ONFAsBJ1cKYd+vsTPdvSh9RSVQ2Ik0ZljY0E8VrY2wVupYti5IfU8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nhC5G2FR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bW5vjXww; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=s23SBuctr60nezAvItV5xgm/1G8mWb3a1otAe1L7PG0Heq/IYAhACiuP+KKwnYz3kUyvjnzLA40ZcYiVWcqYIrXgIyamTkkZYCshfNRyGJxlqi3Wa23RYDzETB86N/nkgUcL6WuPOOTEj9bTplpYTWVMpHU4ZLcUNLFHTWE0eT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rxDJLcGc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yuinbsnl; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nhC5G2FR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bW5vjXww"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 70D2418000A7
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rxDJLcGc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yuinbsnl"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 32FB71C00101
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:52:01 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 19 Apr 2024 05:51:56 -0400
+  by compute6.internal (MEProxy); Fri, 19 Apr 2024 05:52:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1713520315; x=1713606715; bh=6vpZf8ZGqW
-	Koa+XaQL0ADDhbgXDCtyX06uA3fpwJzlg=; b=nhC5G2FRlxDOllkkVU9vWsU8wN
-	Pxnw85NBzuEnVOFcqRPXi1vVMNL5wj2X31Obsk1B0SsLioC3zNFqPQxhc32RJBTc
-	2fwrKA4OT3oWJCbSvQ2ZAeBf9bka/F4nyHtyVLzcQ/gUGOqW/6N5jp6EdroFq4f1
-	+9/YL6e1fA+IX9pn9q5uQYzWDF8y6tXWGCcemHlE+9kxxps2NLgede55rOZ8kMDN
-	4cqnLe8fnBP38AX58Rdh2o844QB5FhBk8TgduOoBVLIZZ8pTVVeNh86eh46ZUwtJ
-	lOl3288wmvQDDErtA/flqinAHL2AySe/VL2SrvqPTPjj+u0HrQt0rFc/+mGg==
+	:subject:to:to; s=fm3; t=1713520320; x=1713606720; bh=GSrw647tXA
+	LmlW53RqGKmtmsZCk1pmApVoVZpiGYsfM=; b=rxDJLcGcyoLNMIg6Ps601vkE/X
+	eR6/KAIlNTtduOlwYcCRNJLsWb0ujFSTuoQda4vAsWOMUNLTqPGffG+8i2fJD6xy
+	V5Hs9mJaVHK2QKLTzBVYQbPgp/1asq5gbbS9VHfH93FPAP3QPs1vnIn10d7OlSaw
+	VV7kdWh88DD9zpvwQxE8XyCE/anVBlIZkgbpGVEqeEX+Lf6+d/Fr48TW4u85dhK9
+	doXUyMrQJrLG/KoFbioFs2cJK/eFmrrZrSGxfI/ba0dVol/oryfnhOel2Kheyayb
+	YA1gBkPeAb9lw4K5wFecZdWlnYhY+ggSVMFmBrGpFjFB3qeOlzSAPhlBGQ2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1713520315; x=1713606715; bh=6vpZf8ZGqWKoa+XaQL0ADDhbgXDC
-	tyX06uA3fpwJzlg=; b=bW5vjXwwDLIJeJ/uUqLRlY4E/EMSvJ9nw85CCAwcj5XV
-	6Gc3oN/M70vKqj+x64D1KxcETeGlKv7FBCa9bD4FjPS9z9tACL+Xw58XdYphTIx7
-	E52f0RI3ew0igpn8SroNa5gM8jVLAw8g6C1CncNSCnAFbaYhs4+box03CbnaPEWx
-	UrYjMv9k2192YSR67Vh0VhSLrEPox8rr7JYO8okS7K+Vu14s3ESwbQGmmz3nNUQy
-	9TWt0qE9FwnEm+L5o9O/Wvx9swcJ4azdfhcRovFHAX5O4515K9YnKyxhYH16xutc
-	7oouio4shbk5o68Uq834NcaZsPIBULqYdxKXKLC/1g==
-X-ME-Sender: <xms:uz4iZm2p6j94_UzX_BxZjxGOJ6SlMXRwZcIEW8OaIzSzO_sFxXmS0Q>
-    <xme:uz4iZpEtlAkdq7kQ7A4x5aS4fR34stVvltA1LI2qdA_H-dck0YRIbFEHa0QC7yRNG
-    a6ClOtiVs5LIiLLKQ>
-X-ME-Received: <xmr:uz4iZu4EFOx0KAL6NFmKrDmXrfPowjm39afkZNrL_QpB3bInXrzMBjp7kyMor2Ded6dEtV4dxb2aOOQEkS7kW-k6FkGgwncAuKLVe0BSn0oFI1MU7Q>
+	fm3; t=1713520320; x=1713606720; bh=GSrw647tXALmlW53RqGKmtmsZCk1
+	pmApVoVZpiGYsfM=; b=YuinbsnlVh+S/l4i1oPqLV0xvXGT5yU67z+mkCeKYz53
+	xnGliBBNyJN9liAGGvwy1rMMd/aj9Bhm02YCtDfKs9E6+GwmZaX//2eGh+gw4Oo6
+	AvaHtL0HyUyBTLHG9KjhiVRwBjk/s5UfGA5ev6tV80B2UTNa7Zlg4A43ecEMe78f
+	xqAca6DwfjX/dVaoOVoci+87o5nP4Qw4eUWDpY8nCP6Av1EoQ8tthdl82eiw3Z8t
+	bdTaaDwRXaXlmxL3B9lqeC03QzQ9jMNtwW5tSpEJ0x35kqkiImOKOBWLvOeGdUVl
+	2f049EMtjSRRUIIJgxqCdIFxRgHtV5ZJwlHKnznhsw==
+X-ME-Sender: <xms:wD4iZqB46Ev17OptJAy8kGbfGeT08hJ-arYv4aEaA0i9XxDxPeABvw>
+    <xme:wD4iZkg40Wm1LR7Ui0-2MnK2d3vrof4QkT69RRnZeSqKkCVYgEhvQIGHVbA7yIjRJ
+    G54YDrph4PfjzsV-A>
+X-ME-Received: <xmr:wD4iZtn-ZVAzvmwplG_mjFkcV4uj42w6yi3A8p4cjUuCDnvQcAZF46OfXiF6KK0ec4rNXjGLNseHccrXoySDpi842G0kAnUK31HrVKDl5I_aKOEK7A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudekvddgvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepfeenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:uz4iZn1ZP7V9-hIz1LVA4Rm7YXw0ArnKT9ypd_q-sqhmbFENlF-amg>
-    <xmx:uz4iZpEs3zfJFu3gzhFpvcQMUN6oFaMrUaEMUHGYU55YIgIhDtkwXg>
-    <xmx:uz4iZg_coqC8f3ndFmuXMX4yqOQ3n1-Ue_sTWxSUTjPZF5XDC41Fuw>
-    <xmx:uz4iZum9fgnEC_hMuKusRiQFIXBntJ3UNQb_XwYpX2EjcjTV4p8asA>
-    <xmx:uz4iZnM3J2N2xTK1zWIJyUwMRM_JTjWSubHbjECee9QhGfFw87V2qzCs>
+X-ME-Proxy: <xmx:wD4iZozkU0HJxzRRLlDxeKbkE0goig00dZTwVvrQVbAGQa2QB62Q4w>
+    <xmx:wD4iZvTbYYUwul5w6mE4EmKBkO5vubwfDgjfdFq8OUtxbOt23i0NAw>
+    <xmx:wD4iZjZ7HpSe5UO3s1Kv-Cl1ZyipuTHqpKpJiZOog9SVuaVyh6QUyw>
+    <xmx:wD4iZoSLElCFgUH7IzgNngNP0d-OSgd_Bg9F3-Omyb6wl59Ihd6prw>
+    <xmx:wD4iZmJ1Vp5qx9fIOQlWSkEsEd205ih7Ba2RIj5Pfly_8GUaPXdZsGs8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:55 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:59 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 124f7516 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id ba95ce2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 19 Apr 2024 09:51:28 +0000 (UTC)
-Date: Fri, 19 Apr 2024 11:51:52 +0200
+	Fri, 19 Apr 2024 09:51:33 +0000 (UTC)
+Date: Fri, 19 Apr 2024 11:51:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 10/11] builtin/shortlog: don't set up revisions without repo
-Message-ID: <508e28ed1e21e9c646cec8473a65137d33f1df23.1713519789.git.ps@pks.im>
+Subject: [PATCH 11/11] repository: stop setting SHA1 as the default object
+ hash
+Message-ID: <f86a6ff3ba1b910c4f050598b7187cc917e77428.1713519789.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,70 +81,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bCIRHhOal3+A/18e"
+	protocol="application/pgp-signature"; boundary="hvse01QyOjfPJvV4"
 Content-Disposition: inline
 In-Reply-To: <cover.1713519789.git.ps@pks.im>
 
 
---bCIRHhOal3+A/18e
+--hvse01QyOjfPJvV4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-It is possible to run git-shortlog(1) outside of a repository by passing
-it output from git-log(1) via standard input. Obviously, as there is no
-repository in that context, it is thus unsupported to pass any revisions
-as arguments.
+During the startup of Git, we call `initialize_the_repository()` to set
+up `the_repository` as well as `the_index`. Part of this setup is also
+to set the default object hash of the repository to SHA1. This has the
+effect that `the_hash_algo` is getting initialized to SHA1, as well.
+This default hash algorithm eventually gets overridden by most Git
+commands via `setup_git_directory()`, which also detects the actual hash
+algorithm used by the repository.
 
-Reghardless of that we still end up calling `setup_revisions()`. While
-that works alright, it is somewhat strange. Furthermore, this is about
-to cause problems when we unset the default object hash.
+There are some commands though that don't access a repository at all, or
+at a later point only, and thus retain the default hash function for
+some amount of time. As some of the the preceding commits demonstrate,
+this can lead to subtle issues when we access `the_hash_algo` when no
+repository has been set up.
 
-Refactor the code to only call `setup_revisions()` when we have a
-repository. This is safe to do as we already verify that there are no
-arguments when running outside of a repository anyway.
+Address this issue by dropping the set up of the default hash algorithm
+completely. The effect of this is that `the_hash_algo` will map to a
+`NULL` pointer and thus cause Git to crash when something tries to
+access the hash algorithm without it being properly initialized. It thus
+forces all Git commands to explicitly set up the hash algorithm in case
+there is no repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/shortlog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ repository.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 3c7cd2d6ef..d4daf31e22 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -435,7 +435,7 @@ int cmd_shortlog(int argc, const char **argv, const cha=
-r *prefix)
- 		usage_with_options(shortlog_usage, options);
- 	}
+diff --git a/repository.c b/repository.c
+index e15b416944..b65b1a8c8b 100644
+--- a/repository.c
++++ b/repository.c
+@@ -35,8 +35,6 @@ void initialize_the_repository(void)
+ 	the_repo.parsed_objects =3D parsed_object_pool_new();
 =20
--	if (setup_revisions(argc, argv, &rev, NULL) !=3D 1) {
-+	if (!nongit && setup_revisions(argc, argv, &rev, NULL) !=3D 1) {
- 		error(_("unrecognized argument: %s"), argv[1]);
- 		usage_with_options(shortlog_usage, options);
- 	}
+ 	index_state_init(&the_index, the_repository);
+-
+-	repo_set_hash_algo(&the_repo, GIT_HASH_SHA1);
+ }
+=20
+ static void expand_base_dir(char **out, const char *in,
 --=20
 2.44.GIT
 
 
---bCIRHhOal3+A/18e
+--hvse01QyOjfPJvV4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYiPrgACgkQVbJhu7ck
-PpSUEQ//XZcaMW9OC9KM9GtpL9tnJy520YvIPaUW07Ps7n8Dv1/J/TZOFdhF4k1i
-CTx2ZU+yrbpCPyMTEKJXsUOSH0tDgmTtJlkmUKPcxPX1PBYGYLl77NVflqkDe0Rm
-h1yhtJfxD+XEI/fCjcNBKgv6nqXokt7Ip9PCYAa/jW9M13bnIOgQWVqeW46yNCzc
-nES/DO8z1v02f/HlT+KNUOLKceKyvkE93gqIMA9X0WrZdX2h4Trjy4Kq/FSSrVFY
-13EclfLfsLZutEipe8GVWsYC2SJ3wckBlW64X96Y7gQMuZvejMayWdO1vkfRfDih
-DbfcNlirxer7S6vIOzqH5n0G+PStp8ANY8g2e8Idzdt4eW63C6CQcXGxwpNBypnI
-md5dNG4UIDY5hHKuY6jH8U53+3cukMsMTkQpXTga6vTxOvaSFsBPptLGWgAPvxpb
-eD8rwfx8Y/EXC4/Kr0Uvhv6dpLhK2MRiEmRfJiWmtonZRpebxTZOp0pCIPNVcFjo
-pseeTJy2VUy9jyGDZn7tcgdV3xx3OdfIoqTCh9s6vjopjSeEz9rxprQKBHAtzXbz
-/rgRbEagOpkCfjXM0S74r6RsXdxKUTqXtUI+/oBb5IjaPpj0IToBkGdBijnQSwdL
-xRGZ2Uybs0FTIwS7Wuu6kqkJbJqu11t7D+kdqilU6nExPp/LRkI=
-=D/Ck
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYiPrwACgkQVbJhu7ck
+PpQwiw//a+LVtJ0W1mOb7GqgoMYLkPgAIorQfxXSMiXIawEkKq4d/qVXL2ZqE1CY
+Z759Auy9k9INjJUTztZj3sBYutE1KA8mkzMSAPcINbOdBLGiIYxVSpdIWuEomO5g
+UU7VavFu7ZmNBaaBWmyHwpWolXvQbPkeFPVcfoclcWydb3mmFA9DubSMZs3YP9+h
+cng08dbJiuDGsSjl7WutW96PbhlwvS68i74v6yO9Jccs1nJnhuU7Gqu047d37A1b
+XwEmzq8e1REa9CPBoMZRmirgMK2KcQIfSmdJuPxg2TgZJPKafv/HSzgAV8ZLSNSe
+G2rDvX/Z9lrmFXZ8vSUvOi4Mskvas6LG4k98jLJlYCF6MgdydzXhT1WB+KoEYqdh
+aYOoU2S5IRXiwBNxrg7eflz2SYTVg61YJeAQP2Muqqb0MLXCUY0X7tdf26f46z/h
+1J4xj24mViVEvSZyf3tB8QiGjcj/nvH6UkVNyvdKHa5nRGQkIXZ2BJl6QoM6boLi
+RSstO6Q+IfrGXDS1I6DUJExArOXGR3FETpAUaXu/hOk6NOj69/oxgpF+Ee6cssrA
+/LpkzQ+gu++FKFnyhKEqEAFAs9hVvcdUHKu78LbUc571y9LmgnVvf1aa3VlM90zW
+xJmDFiCS84urFKkZt5/WNCna95LogCyDn8hV7tb68g0D6AzIFlc=
+=DAXC
 -----END PGP SIGNATURE-----
 
---bCIRHhOal3+A/18e--
+--hvse01QyOjfPJvV4--
