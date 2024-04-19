@@ -1,81 +1,78 @@
 Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7C5745D6
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 09:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47527BB01
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 09:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713519656; cv=none; b=Dp2DeisvQpU1O+hQVN2kQYa9+OyKhDA3qBe1y8uIUmTIzt2vLu7D+m4PNShSwoTzCqZ2emsUfFNBtc9dcW1Mj/GCX1eJ5OGHH7QcXHiWoMFn2tmCkVLbSKmsYSfwLmDET2nnBQyL3pI9M60lJXC1iB+cQTpWXSyXpPvN4GwDFAA=
+	t=1713520271; cv=none; b=tA6DKip9RQpk5IFLDjIWJTLmKLpTtRlQUe8V4+ATR89ABQcGdVQFoRo2oHcN5c31UGa8rUlc5UQIMNdP84N1LZGblh2zwEzBe77PQrUfFucmxNQDuSl0gDy/Gq6c1XjarBTVn0Ulth8ga7XAFZTYQqsvHKUHuVPniFLq4u7fsmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713519656; c=relaxed/simple;
-	bh=OSCEZX0geOu854XOBtJ1aXWYFUZwk4wurp5iik7L+Tw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=miteoB/W9QbJL4k7pq20J8aspb5QYvRq3CZydUcPvdeS2Qvb8x6S3iWV4aepQahjCEjm1W1UjWslmLjJ3NJlz8O5Uu5BeQwQcdudQPY5EO7hZHwPtOcTWu/5GYu73dBvh4Ur5Moh9DyjSZf7Dz8395ESgp1q8+W5yvSSf5wjbNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KlEMlBiy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kpxbx9Db; arc=none smtp.client-ip=64.147.123.148
+	s=arc-20240116; t=1713520271; c=relaxed/simple;
+	bh=Whv8bQHUjQCVH4PimFoJmtw2SKoJVe6UfQUKs1XOMWA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=cEv2V3k+6HZCZQJRin8hD5g+JYD0QfU2C/J8WKlFdMVL1n9mv6wJNS37AFDyrDuHZuaDLv47+cnyqQI4heqmStKk36swhpgktn9qFOrEfm58wlgSPVjPI7Q2Vrt21HTlCJ1JdJitl79Q+UI0ztEWl6YZqPmWKLc4g/EoNzcnNgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=diMqhVtR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ihl7TuRv; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KlEMlBiy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kpxbx9Db"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id 9BAE71C00114;
-	Fri, 19 Apr 2024 05:40:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="diMqhVtR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ihl7TuRv"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.west.internal (Postfix) with ESMTP id 25AD01C00142
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:09 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 19 Apr 2024 05:40:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+  by compute4.internal (MEProxy); Fri, 19 Apr 2024 05:51:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1713519652; x=1713606052; bh=KHqKaA8qvK
-	ZE1LLt+WtP9HRzkcIFfwiltxyUzyDoO6A=; b=KlEMlBiyl1OLlFJMUcIbMuhRmY
-	N89XGBf/6eLjA9Z/X6SJeYkJT9xcxLQpeJqGOiNdWcY4767ashnMA1kJg0XUFX1I
-	tOUbjB/OGR2Rtlv0XcqscWTFItGkUaWrHbFgO4/81h0wwrTqVy+uR9EZFb3wOHsi
-	fP/TR5gMyQZJ10J8LPf9IUnJ3Duw0ehnIubFo1Iv8P1mDGnY/OrWHjmYFptzII+y
-	Xt4Vgcomr/hgXPuHV8Szj6xfx2o1Q2ZNFHh8u56Sg5r6zxBsxuu39GrV9Kq/hzkZ
-	n7/aMwpYjjhHPyx/s7adyDNG2xCT4e5Gej2c5TrnrzTfIY54LTlt7Zo3Nnvg==
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1713520268; x=1713606668; bh=G4OajWLufntqnWQKsXwce6R48Xcll55B
+	9/zuAYO1lC8=; b=diMqhVtRhhsWDZgSIRoyp7xAE2PducLZwqYm8qO2nJXxkxQN
+	YtwzoNUPM6P6jmcQvumzglJBEiaS1Qdd54h0yTQQCWbUwHbF6yA/vSn4BWsQ5emj
+	P1SF3QSEmzmZ8ao/yMJVZAWyDo7WulLYI7GT03tYo68t7Ttp8tbf/FfudTejLOGJ
+	CPYljPGcXBBn/YEjugqRoHQLb0Oa/Ih+c2jBCd9zUVDBQSxDkhSvhSmaDgzzX5S0
+	Fz0HsHBU/s/jIB6ARAqccrzHR6EZWoc8p+G+TBHHd1qcWThZlZUu9wgge5rIBy6j
+	JN6160UbSWE8fp+zkaNmN//YCAK+vN9GhhXapQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1713519652; x=1713606052; bh=KHqKaA8qvKZE1LLt+WtP9HRzkcIF
-	fwiltxyUzyDoO6A=; b=kpxbx9DbCeGE8mXEK/QehxAg4MKvWoVnMiVkLMhunnu0
-	f1/hMhKHsHAsXO1uRJ23oIFusVAfR0YD3zWcw3TO0TXtpst1VW5nwtQNCJ90IkRN
-	ABd0S3D+RkYGKwzZRWKSL6KhRKUifyB4XZo2IWogvJHVjEbCzugzwpUQ+FFRdLVa
-	R1YYYnMpyizISQy9yWKdEd+Yq3gk9om8PrKoYAim/T30bVvq+d3jMmKejHqGkZUz
-	PSwUMD4fblKnoTazFbsgz2bovoVkY2dwfZM5skP7EsSbrxkdsF1Yy2IJ3gA5HIuc
-	UXdzLOmknMIqLBh1FQDEPECG/kzdR1e53kjcT8MujQ==
-X-ME-Sender: <xms:IzwiZpl4m-yx5e6O8y7JVgVslTaWCUNfQUkNvxXPw55u1zua-TrgRQ>
-    <xme:IzwiZk3rjY_m160v7SthZfyaivVf1htQg86fM4jQEYsmihccjllvlm9jhjmB1gctA
-    u7VadM1hYLoNEbEgQ>
-X-ME-Received: <xmr:IzwiZvq1MEnxKfJba-jeeyPOpueQizxyr4lvrEcj_W2Ihbzk11d8Bdqi028Vn2aPHZ7d8uty9F2TNhNfPZNWXvgiVTYn8jeYTQwVlo_G-OAq1uve1g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudekvddgudelucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1713520268; x=1713606668; bh=G4OajWLufntqnWQKsXwce6R48Xcll55B9/z
+	uAYO1lC8=; b=ihl7TuRvIeZRxOMVEtOWSomwDXnAxDZUX3NPqK1wNSuhKFW3R6/
+	jeuwRc0cNEwu2cSU9Wfa0ZpTxPHzyJfSiTX9wOwbYkTxrEvOb8C6/2mkF3NcETtP
+	a+5mgimwd0227Hzb+E0OfeYGcCd0z66K1ci1iZjhPsq1QY7yOBVylp0aBOSg1eRL
+	KNglnGlmiRCwYhlkUIuqwqcScC5llYwBnPMB6GGlldSuHeCcK1enHPCLTfR5+Sg/
+	ezAxdZd0FlmJ0Tg01NVvO8w3w3+8keAwsAPk/r+qY2wt+4War7FDg6+LpPYY5myL
+	B1kEudFukKQZE14q1YOleH9EJH3upYMNkcw==
+X-ME-Sender: <xms:jD4iZhju8Oh-ZuEDyjSZ9uKJMnuK2bDRyaAMIP0ivkzeb4oCBlakVw>
+    <xme:jD4iZmAMlTqofAf8DAPKDIVg15f_NfYBrKTwp3xqA2XTjaQH_YIaPCrVunx9Q-DBc
+    mqHsTjv9MhIekSQAQ>
+X-ME-Received: <xmr:jD4iZhHddHob7uTTjZaxmAaTxNX0NTw6bG2F_j5DXOENt-Q7QgaRjvRfjhRG1v_ZZx3lehOzcBvEylsEGSxIGclQ_MeNTdkqGtKpIu9NXceDGP5BaQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudekvddgvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:IzwiZpmDl8DsdMH3f-fzfBe-CZdE0zbioPx1_zhlU1DS4u0Pr9ottw>
-    <xmx:IzwiZn1CDlz6sLjmJgFl7v0hyVxhpFWxjgZun4cHybnUrvZZA63y8Q>
-    <xmx:IzwiZos58TMiDdCiqjihfRdodULU113E3eranBxFKsYu5DQjUaqCkw>
-    <xmx:IzwiZrXzKeB6yVGetIfNeopWxDqbQLXOSVnBgoPl30vn7vjJhmzx8w>
-    <xmx:JDwiZiRk4OxPu-vbaJ4Ulz4ikG4L_repR-9ZSBiGu1uOdVPOEWjeCJgj>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepleehfeegieeuudegfeffhfejtdeukeduieeuud
+    eivdetueeitdekffefffetteejnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdqughu
+    mhgsrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:jD4iZmTS7vDtPsae1k8Y4UQdowwsI7NLb9lYXAlAAYsM0KKLSungVw>
+    <xmx:jD4iZuwwKQ-4bV0JUWDcDDdbUyuWSB2EajMXteeMgRzCELWXvF_WcA>
+    <xmx:jD4iZs549LgbQV8iFu8P7kDP_SeXGeqQSFa5YP1YeXIqGOu9FFJDAw>
+    <xmx:jD4iZjwVJtkITeS2XtT1xENB5wd-_EdB8OlBiU2FcjSbNPBoJeuLeQ>
+    <xmx:jD4iZjpGQAP4PRziBdWVgt2ntxxQQxa0ItF3jnnTaS7hFwNY7Ya-BhtE>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Apr 2024 05:40:51 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 19 Apr 2024 05:51:07 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 64ce13a6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Apr 2024 09:40:24 +0000 (UTC)
-Date: Fri, 19 Apr 2024 11:40:48 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 41d0032f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 19 Apr 2024 09:50:39 +0000 (UTC)
+Date: Fri, 19 Apr 2024 11:51:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 6/7] update-ref: add support for symref-update
-Message-ID: <ZiI8IFdfBHEqr02C@tanuki>
-References: <20240330224623.579457-1-knayak@gitlab.com>
- <20240412095908.1134387-1-knayak@gitlab.com>
- <20240412095908.1134387-7-knayak@gitlab.com>
+To: git@vger.kernel.org
+Subject: [PATCH 00/11] Stop relying on SHA1 fallback for `the_hash_algo`
+Message-ID: <cover.1713519789.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,142 +80,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AjbMZRvjwP696MYi"
+	protocol="application/pgp-signature"; boundary="Hdlsv7kh9xdpDdRA"
 Content-Disposition: inline
-In-Reply-To: <20240412095908.1134387-7-knayak@gitlab.com>
 
 
---AjbMZRvjwP696MYi
+--Hdlsv7kh9xdpDdRA
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 12, 2024 at 11:59:07AM +0200, Karthik Nayak wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
->=20
-> Add 'symref-update' to allow updates of symbolic refs in a transaction
-> via the 'git-update-ref' command. The 'symref-update' command takes in a
-> <new-ref>, which the <ref> will be updated to. If the <ref> doesn't
-> exist it will be created.
->=20
-> It also optionally takes either an <old-ref> or <old-oid>. If the
-> <old-ref> is provided, it checks to see if the <ref> ponints to the
-> <old-ref> before the update. If <old-oid> is provided it checks <ref> to
-> ensure that it is a regular ref and <old-oid> is the OID before the
-> update. This by extension also means that this when a zero <old-oid> is
-> provided, it ensures that the ref didn't exist before.
->=20
-> This command will also support deref mode, to ensure that we can update
-> dereferenced regular refs to symrefs.
->=20
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Documentation/git-update-ref.txt |   6 ++
->  builtin/update-ref.c             |  49 +++++++++++
->  refs.c                           |  24 ++----
->  refs/files-backend.c             |  15 ++--
->  refs/reftable-backend.c          |   7 +-
->  t/t1400-update-ref.sh            | 143 +++++++++++++++++++++++++++++++
->  6 files changed, 220 insertions(+), 24 deletions(-)
->=20
-> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-=
-ref.txt
-> index a5b1f42728..9710c9bc78 100644
-> --- a/Documentation/git-update-ref.txt
-> +++ b/Documentation/git-update-ref.txt
-> @@ -65,6 +65,7 @@ performs all modifications together.  Specify commands =
-of the form:
->  	create SP <ref> SP <new-oid> LF
->  	delete SP <ref> [SP <old-oid>] LF
->  	verify SP <ref> [SP <old-oid>] LF
-> +	symref-update SP <ref> SP <new-ref> [SP (<old-ref> | <old-oid>)] LF
->  	symref-create SP <ref> SP <new-ref> LF
->  	symref-delete SP <ref> [SP <old-ref>] LF
->  	symref-verify SP <ref> [SP <old-ref>] LF
-> @@ -89,6 +90,7 @@ quoting:
->  	create SP <ref> NUL <new-oid> NUL
->  	delete SP <ref> NUL [<old-oid>] NUL
->  	verify SP <ref> NUL [<old-oid>] NUL
-> +	symref-update SP <ref> NUL <new-ref> [NUL (<old-ref> | <old-oid>)] NUL
->  	symref-create SP <ref> NUL <new-ref> NUL
->  	symref-delete SP <ref> [NUL <old-ref>] NUL
->  	symref-verify SP <ref> [NUL <old-ref>] NUL
-> @@ -123,6 +125,10 @@ verify::
->  	Verify <ref> against <old-oid> but do not change it.  If
->  	<old-oid> is zero or missing, the ref must not exist.
-> =20
-> +symref-update::
-> +	Set <ref> to <new-ref> after verifying <old-ref> or <old-oid>,
-> +	if given. Can be used to delete or create symrefs too.
-> +
->  symref-create::
->  	Create symbolic ref <ref> with <new-ref> after verifying
->  	it does not exist.  Can only be used in `no-deref` mode.
-> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-> index 24556a28a8..809c1c7a76 100644
-> --- a/builtin/update-ref.c
-> +++ b/builtin/update-ref.c
-> @@ -238,6 +238,54 @@ static void parse_cmd_update(struct ref_transaction =
-*transaction,
->  	strbuf_release(&err);
->  }
-> =20
-> +static void parse_cmd_symref_update(struct ref_transaction *transaction,
-> +				    const char *next, const char *end)
-> +{
-> +	struct strbuf err =3D STRBUF_INIT;
-> +	char *refname, *new_ref, *old_ref;
-> +	struct object_id old_oid;
-> +	int have_old =3D 0;
-> +
-> +	refname =3D parse_refname(&next);
-> +	if (!refname)
-> +		die("symref-update: missing <ref>");
-> +
-> +	new_ref =3D parse_next_refname(&next);
-> +	if (!new_ref)
-> +		die("symref-update %s: missing <new-ref>", refname);
-> +	if (read_ref(new_ref, NULL))
-> +		die("symref-update %s: invalid <new-ref>", refname);
-> +
-> +	old_ref =3D parse_next_refname(&next);
-> +	/*
-> +	 * Since the user can also send in an old-oid, we try to parse
-> +	 * it as such too.
-> +	 */
-> +	if (old_ref && read_ref(old_ref, NULL)) {
-> +		if (!repo_get_oid(the_repository, old_ref, &old_oid)) {
-> +			old_ref =3D NULL;
-> +			have_old =3D 1;
-> +		} else
-> +			die("symref-update %s: invalid <old-ref> or <old-oid>", refname);
-> +	}
+Hi,
 
-So we first try to parse it as a ref, and then as an object ID? Wouldn't
-it preferable to try it the other way round and first check whether it
-is a valid object ID? That would likely be cheaper, even though it may
-be premature optimization.
+when starting up, Git will initialize `the_repository` by calling
+`initialize_the_repository()`. Part of this is also that we set the hash
+algo of `the_repository` to SHA1, which implicitly sets `the_hash_algo`
+because it is a macro expanding to `the_repository->hash_algo`.
+
+Usually, we eventually set up the correct hash algorithm here once we
+have properly set up `the_repository` via `setup_git_directory()`. But
+in some commands we actually don't require a Git repository, and thus we
+will leave the SHA1 hash algorithm in place.
+
+This has led to some subtle bugs when the context really asks for a
+SHA256 repository, which this patch series corrects for most of the
+part. Some commands need further work, like for example git-diff(1),
+where the user might want to have the ability to pick a hash function
+when run outside of a repository.
+
+Ultimately, the last patch then drops the setup of the fallback hash
+algorithm completely. This will cause `the_hash_algo` to be a `NULL`
+pointer unless explicitly configured, and thus we now start to crash
+when it gets accessed without doing so beforehand. This is a rather
+risky thing to do, but it does catch bugs where we might otherwise
+accidentally do the wrong thing. And even though I think it is the right
+thing to do even conceptually, I'd be okay to drop it if folks think
+that the risk is not worth it.
 
 Patrick
 
---AjbMZRvjwP696MYi
+Patrick Steinhardt (11):
+  path: harden validation of HEAD with non-standard hashes
+  parse-options-cb: only abbreviate hashes when hash algo is known
+  attr: don't recompute default attribute source
+  attr: fix BUG() when parsing attrs outside of repo
+  remote-curl: fix parsing of detached SHA256 heads
+  builtin/rev-parse: allow shortening to more than 40 hex characters
+  builtin/blame: don't access potentially unitialized `the_hash_algo`
+  builtin/bundle: abort "verify" early when there is no repository
+  builtin/diff: explicitly set hash algo when there is no repo
+  builtin/shortlog: don't set up revisions without repo
+  repository: stop setting SHA1 as the default object hash
+
+ attr.c                     | 31 ++++++++++++++++++++++---------
+ builtin/blame.c            |  5 ++---
+ builtin/bundle.c           |  5 +++++
+ builtin/diff.c             |  9 +++++++++
+ builtin/rev-parse.c        |  5 ++---
+ builtin/shortlog.c         |  2 +-
+ parse-options-cb.c         |  3 ++-
+ path.c                     |  2 +-
+ remote-curl.c              | 19 ++++++++++++++++++-
+ repository.c               |  2 --
+ t/t0003-attributes.sh      | 15 +++++++++++++++
+ t/t0040-parse-options.sh   | 17 +++++++++++++++++
+ t/t1500-rev-parse.sh       |  6 ++++++
+ t/t5550-http-fetch-dumb.sh | 15 +++++++++++++++
+ 14 files changed, 115 insertions(+), 21 deletions(-)
+
+--=20
+2.44.GIT
+
+
+--Hdlsv7kh9xdpDdRA
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYiPB8ACgkQVbJhu7ck
-PpQkKw//SIkO8mF06WUvt2cqNld8wPYQxm4eFa6XSYJeGY6oUrffHPFvBOvp3hg3
-h1Yyyqj34DUayKsuq5HONNXm0pB7fqmuBNG6fCn9jmNsNwgz+ZhOnDqWD2u6SGJD
-PQJD53oTlkSEMQmQInQLdb5YfcoNd+tKJJgkBQTX6N8LitwuQiRIAcM7lRbjRveR
-1E7rOGz6xwYdCc1XBdK0hng340gPJJ1idzA0QeyZBHwlkH/rDGynT9p7VnH64Gi+
-uqx9h9ynzXDGcgCn2c9eAyDSBgKQ+4w0QIF/k+RqklpZKLhmZmiRblgDGo3zmypD
-W4rZuN+gWiGFmoykpn9bktF6l+71UYLHJuNIbsr05pSJ+1wl5+0mAOrht4Cim41Y
-ij0OQ0iJigM7EWcFD41fsVacw/2EIrPBidIvYcty99LILJlgfAGsQe7a1Mjs5a59
-2KeFIpoHwX1Y5v6gokVJ0lZ5A7OGz8ap0eAUSNfHJvlps4YmlcD4I56jJFB4B0aj
-T9vI4qyjb0QG1SRK7oDRk0NqMt/jtDz7L1s7wgOFiZ0pXJLXYvSbs9RzXGwpO3EU
-2nAvonZrVVdUX0wqwXB2rnR1wtt3VieFBfBXNwNjyV6OvHyX1Dm8xcCmBN7L1JFE
-uX70EE8lW6retAo8b9wRNO6KFXKB2/P/Q8zTXMs/m9DN/1p5MoM=
-=CQSU
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYiPoYACgkQVbJhu7ck
+PpQZew/9G7/MlHWQ/1JiM54FVBwWSLY9pUQAjf38IavkVdpQGTXYVpYuDlhu2/C2
+amOItPBB+2kQEEniyrvDxq9je0LKAHqvGzsJOGoBpggywySqlLjwfC0BOi0dtdu9
+lg/fBGyfUuvMnTbDhcA2uwiN2EmhtnmgWBlzsresglFyTDyWiuEOvhwdJpfW2NmF
+QyRGeH8MtIonItN31xeyi+t8pgnmIdcqN83e/MEK33jPhxGMWaR+8pHIkxv8HAb7
+YS9GARnCurE2w+14uHBOS4DhP2RT2xzva2cZTBmuLut0dXMi+q3U2PogXzdrs+bU
+20VdSjp6b8F/RNsDBybZ5BDZ042p1FEH7H5QMr83pKmKfhbeVEFn0eCImcziyVjn
+UBen/1wGLTZU8BjFLBIfZ1Ac7q0/tCnLzVZGbOLxwXFc8tjtQSTrleLcU5z0+Bcw
+7/Sh3N2qaS12Ka2/y5nBIb9sCF1LRjhB/VNJu3R3syb3Auuyi8Wfw3rtunzklDLA
+5NMT+dhbl3XkXsKi0RwDcK9w+s3EKnnFJhc99w+e3pRlwawk78lGelWeAuwHo8F4
+tYczzhrNJJG5FNUO+ZNEH7RfslGObqq49ZE8Cj6spV2BF671z2nrnq/lDYwVh2gj
+8yg96VBHCh/REyWFnpMsvKoO6B2oT6Up8pi0Mpv3eDQwcYfkg1M=
+=yJYR
 -----END PGP SIGNATURE-----
 
---AjbMZRvjwP696MYi--
+--Hdlsv7kh9xdpDdRA--
