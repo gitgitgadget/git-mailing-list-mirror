@@ -1,73 +1,72 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352ACDDD5
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0BC10A28
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713504164; cv=none; b=nZp8UHT0mNWooz1mrRKVwr0SEIStl9ZYDa8BoGmtN/7Tm9ZEY723jdOua6VKZ3kw//wZvpog8207Rb8dW9Y8a7+bX+GgXR8BG0dosNOWAkpI4H7De/fU4SbRITeM+kHVQ/6do+fUFMHK23T0Yz87U/7Q3uiTC4g+GnIn5AJnAT0=
+	t=1713504167; cv=none; b=i6zNzAP33Y1JMynKBEFBXF/PFFaXfP4dlbP/ga6g0ixzfZnBTeO5zUbVu3rvq60v6Nt84YiVwE/0gHpT/kgHJxqCWntfgHbgVLPLMGNzbVl3qB+nWoJmoSMOEckbUiQlMomcBE0zAWmEzuWjTprZkWoaO6skEcyCJ0uZnz1X0Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713504164; c=relaxed/simple;
-	bh=es/8xvwikbdf4BTLJ8Qn7X1Yb95TjQhL82KXUPLxrrs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oOHZLUBZ94XuLxkQtL6erA5n1p+qHNIarkQXuU1KubkOUWoMW/C8sfMYPqlHaROBk1Mr3xBP8iRnZ79SKzMgSjwZfUa4xrAIgG3ia7qlCmU8qOlcVZY2HiSCmGMrax3w4F7yTd+dqmNRzT4HZUAOuWGK6FyApJYea08SO2I8z5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=agEOBht9; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1713504167; c=relaxed/simple;
+	bh=jfbRNkQyvPEiLKTtOYB84JTK+sM4Ui6G4u+TROtkgDI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=byJ0UAXrA+GJ4Dw0RUEuKKD5RMYJNFsF/DbhaVg0fdwSzd9dUFCQQvfgxnnhWT4qGUzWp3vo7AfzJuxPKVZjB0BWOpE9TG1nygruRM0ZrTMG7LY0xrhnrhZ0gFFfzR+14hxjSx7MRBVWEo6cYcDA7RiLrUjVTMjDvHoObjBRWvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JcZvZHIs; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="agEOBht9"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56e78970853so4316135a12.0
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 22:22:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JcZvZHIs"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a557044f2ddso159780466b.2
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 22:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713504161; x=1714108961; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=gmail.com; s=20230601; t=1713504163; x=1714108963; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P5jundgRnTRZ1UeFsaoiYa52OHNNlsJEIZK+0TSBpDI=;
-        b=agEOBht90C4kSNZNcE8elB32Ztn0UzO2sMhwMhM3r+CdRFPxkyWZPR0gaMkQh/0/tE
-         szhc79/ibBhN7NlBelrQ2sdPXW5HfZ1t8qrGRyuxWM+LJCCGtUu0bPuxwbMuMawNFHBG
-         F9yvoDAwggxAopjs2ymEkC59v4PABGVFM2jPCs8xYO5GyOgSFwHu4xfwOej600WLM/bf
-         EqAoPnOUDfcho/6KivNCtoLC0tB3mpQVaNdXB2Z7gLyxSR+oZLASk5oWVf5B4SvFnh7L
-         GnNABjujA/jQM6aEVa/hyy+UuLCcDv8/a/L3vdCGL+vz9hHTJ4NbBXcXnLcdDqMyg87S
-         eSLQ==
+        bh=H1m6zhjdREPDDft/nFZ1Z7dW98zExW0HvemFKuR7ZvE=;
+        b=JcZvZHIsQhlFezxwoiZRdVu9TyUYYG5tJQ8EdxmrfivDDCsyD4SCCJFOTlmZBzgVSl
+         GYieaERkTiraZn78r1xVMVyAhGuWlqXMABrED2EkYo/fraKHwvhoSBgRPvlSQc5UoBeT
+         EuEFu26a56QRVPPi08uxPplpYObRid2JPAno2dDAzAJcMnAj2VX8RoHJqKkkEmMVt/3k
+         UBBSrnCu3GALYeBhnX8K6GU774QfEROm/KqyWHdu8cJHmRmmLP6JlCFfpmoosa84462H
+         x24pR+NveXfDfcL8ieoxBR9w3ByMEpH+SL2+95Wt12UKlj30/dFmCqHOZ6GwG4T0qwWL
+         cBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713504161; x=1714108961;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=1e100.net; s=20230601; t=1713504163; x=1714108963;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=P5jundgRnTRZ1UeFsaoiYa52OHNNlsJEIZK+0TSBpDI=;
-        b=vnz+/dLrGxz+ftDyXKv3dg1pRXUTFuf4sryV7YZFi4Cn9q96V8MfdHviH/+Ircbbde
-         z+25ABShqeQyB/BbjFEDsIuP2ZijbpBCZSzCD1W3vK2x8+4+/mQBPXLRtCD+9Uo2tnsa
-         vRylpMwOxfKI3u49Xy4d5lyonz8afZxCUpDpnqbXB3ZGeb7p2D7Z0ov9pM4O2ERstvMl
-         Nzz6/EEGo9iDNbIWXyoCgSjvzqM/uOig7q9pbAQNF2YnsWj4WIKFt4Bqyqct9MAZu2Xd
-         5PSttc+P7mY9j6JKDCCoHk+bTkTNxm7OE78dtP38T57giZIsvzgkyGVS8cOZaSd+602E
-         S9zg==
-X-Gm-Message-State: AOJu0Yx1EdMWIUVjPyoN1ofHaJEheqy0u9YVRMJtc9LCkBkJE3Nunf+C
-	FeOi0TvNXqxOyXXbQOCJ9HV2xFg90IEx8PcGTxBYRK+LwT0QnheQyLFJWg==
-X-Google-Smtp-Source: AGHT+IFW5xWDm93nipAThpSUZk7CUh9J9hUqPuFSScF5sbjcDHP4YS1yRBWiD47eqkWeUo8rv4HnYA==
-X-Received: by 2002:a17:906:c812:b0:a52:a25:2077 with SMTP id cx18-20020a170906c81200b00a520a252077mr3580599ejb.14.1713504161225;
-        Thu, 18 Apr 2024 22:22:41 -0700 (PDT)
+        bh=H1m6zhjdREPDDft/nFZ1Z7dW98zExW0HvemFKuR7ZvE=;
+        b=GTTIT0RA+izhCiKfEZlMk13yfWz0PS47ZN4y8t4H9/GNJpSfqYcfbgkicxRvh0YFbO
+         uSaZ1/pBMnPywtHb8xj+b3CN5CmheCqldf4JqxTfC2HNFHld9F7gVvHfVL55uXx0Mg9q
+         GKQKg36csPQ11S3dPxGZifrgHgAFMQeuaFELQZoTu6mudaj6uEGoEeJcxh1o7Uzfnnx7
+         CmW043yIPqm/pqGt307xyfXzncOAtNQqvJReqoRDSxxnQe4ewQt2AuDssXUTNZC+1yZ9
+         SC5Woo4OGfafrCG0XjcNoD7lZrFQVZgW4M8Qiq+DNU9awgqbz9leLzf/O09NTulaSPTZ
+         jRpg==
+X-Gm-Message-State: AOJu0Yyr8Aj8zgmhoSMpVnHUl29I2j6ObXBpsxuHbNnlZuO9KiL4eb7t
+	6+hl+BA7DZm6hRVfFoKaoPiJXr3atUIeqyfv3esCdiCw1eIgcFfCwWi6rw==
+X-Google-Smtp-Source: AGHT+IGj+Iub6ivOMfOi/PQdC2GXYswUKo04ELWdLggGUEck0HaGTnARyNbcLSD3KPmH/HcFiMXnWA==
+X-Received: by 2002:a17:906:f148:b0:a55:5e89:a158 with SMTP id gw8-20020a170906f14800b00a555e89a158mr713016ejb.68.1713504163412;
+        Thu, 18 Apr 2024 22:22:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k26-20020a1709063e1a00b00a4e533085aesm1699780eji.129.2024.04.18.22.22.40
+        by smtp.gmail.com with ESMTPSA id u7-20020a17090657c700b00a4e07760215sm1727687ejr.69.2024.04.18.22.22.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 22:22:40 -0700 (PDT)
-Message-Id: <e961d49cd40f54f63df64ab0e42b9632d35d7a20.1713504153.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2024 22:22:42 -0700 (PDT)
+Message-Id: <0e9ae049b8861fecf49c097e8d52e734f7a9c9b3.1713504153.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
 References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
 	<pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 19 Apr 2024 05:22:30 +0000
-Subject: [PATCH v2 5/8] interpret-trailers: access trailer_info with new
- helpers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Fri, 19 Apr 2024 05:22:32 +0000
+Subject: [PATCH v2 7/8] trailer: make trailer_info struct private
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
 To: git@vger.kernel.org
 Cc: Christian Couder <chriscool@tuxfamily.org>,
     Junio C Hamano <gitster@pobox.com>,
@@ -81,117 +80,155 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linusa@google.com>
 
-Instead of directly accessing trailer_info members, access them
-indirectly through new helper functions exposed by the trailer API.
+In 13211ae23f (trailer: separate public from internal portion of
+trailer_iterator, 2023-09-09) we moved trailer_info behind an anonymous
+struct to discourage use by trailer.h API users. However it still left
+open the possibility of external use of trailer_info itself. Now that
+there are no external users of trailer_info, we can make this struct
+private.
 
-This is the first of two preparatory commits which will allow us to
-use the so-called "pimpl" (pointer to implementation) idiom for the
-trailer API, by making the trailer_info struct private to the trailer
-implementation (and thus hidden from the API).
+Make this struct private by putting its definition inside trailer.c.
+This has two benefits:
+
+  (1) it makes the surface area of the public facing
+      interface (trailer.h) smaller, and
+
+  (2) external API users are unable to peer inside this struct (because
+      it is only ever exposed as an opaque pointer).
+
+There are a couple disadvantages:
+
+  (A) every time the member of the struct is accessed an extra pointer
+      dereference must be done, and
+
+  (B) for users of trailer_info outside trailer.c, this struct can no
+      longer be allocated on the stack and may only be allocated on the
+      heap (because its definition is hidden away in trailer.c) and
+      appropriately deallocated by the user.
+
+(The disadvantages have already been observed in the two preparatory
+commits that precede this one.) This commit believes that the benefits
+outweigh the disadvantages for designing APIs, as explained below.
+
+Making trailer_info private exposes existing deficiencies in the API.
+This is because users of this struct had full access to its internals,
+so there wasn't much need to actually design it to be "complete" in the
+sense that API users only needed to use what was provided by the API.
+For example, the location of the trailer block (start/end offsets
+relative to the start of the input text) was accessible by looking at
+these struct members directly. Now that the struct is private, we have
+to expose new API functions to allow clients to access this
+information (see builtin/interpret-trailers.c).
+
+The idea in this commit to hide implementation details behind an "opaque
+pointer" is also known as the "pimpl" (pointer to implementation) idiom
+in C++ and is a common pattern in that language (where, for example,
+abstract classes only have pointers to concrete classes).
+
+However, the original inspiration to use this idiom does not come from
+C++, but instead the book "C Interfaces and Implementations: Techniques
+for Creating Reusable Software" [1]. This book recommends opaque
+pointers as a good design principle for designing C libraries, using the
+term "interface" as the functions defined in *.h (header) files and
+"implementation" as the corresponding *.c file which define the
+interfaces.
+
+The book says this about opaque pointers:
+
+    ... clients can manipulate such pointers freely, but they can’t
+    dereference them; that is, they can’t look at the innards of the
+    structure pointed to by them. Only the implementation has that
+    privilege. Opaque pointers hide representation details and help
+    catch errors.
+
+In our case, "struct trailer_info" is now hidden from clients, and the
+ways in which this opaque pointer can be used is limited to the richness
+of <trailer.h>. In other words, <trailer.h> exclusively controls exactly
+how "trailer_info" pointers are to be used.
+
+[1] Hanson, David R. "C Interfaces and Implementations: Techniques for
+    Creating Reusable Software". Addison Wesley, 1997. p. 22
 
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- builtin/interpret-trailers.c | 12 ++++++------
- trailer.c                    | 21 +++++++++++++++++++++
- trailer.h                    |  4 ++++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ trailer.c | 21 +++++++++++++++++++++
+ trailer.h | 23 ++---------------------
+ 2 files changed, 23 insertions(+), 21 deletions(-)
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 11f4ce9e4a2..f3240682e35 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -141,7 +141,7 @@ static void interpret_trailers(const struct process_trailer_options *opts,
- 	LIST_HEAD(head);
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf trailer_block = STRBUF_INIT;
--	struct trailer_info info;
-+	struct trailer_info *info = trailer_info_new();
- 	FILE *outfile = stdout;
- 
- 	trailer_config_init();
-@@ -151,13 +151,13 @@ static void interpret_trailers(const struct process_trailer_options *opts,
- 	if (opts->in_place)
- 		outfile = create_in_place_tempfile(file);
- 
--	parse_trailers(opts, &info, sb.buf, &head);
-+	parse_trailers(opts, info, sb.buf, &head);
- 
- 	/* Print the lines before the trailers */
- 	if (!opts->only_trailers)
--		fwrite(sb.buf, 1, info.trailer_block_start, outfile);
-+		fwrite(sb.buf, 1, trailer_block_start(info), outfile);
- 
--	if (!opts->only_trailers && !info.blank_line_before_trailer)
-+	if (!opts->only_trailers && !blank_line_before_trailer_block(info))
- 		fprintf(outfile, "\n");
- 
- 
-@@ -178,8 +178,8 @@ static void interpret_trailers(const struct process_trailer_options *opts,
- 
- 	/* Print the lines after the trailers as is */
- 	if (!opts->only_trailers)
--		fwrite(sb.buf + info.trailer_block_end, 1, sb.len - info.trailer_block_end, outfile);
--	trailer_info_release(&info);
-+		fwrite(sb.buf + trailer_block_end(info), 1, sb.len - trailer_block_end(info), outfile);
-+	trailer_info_release(info);
- 
- 	if (opts->in_place)
- 		if (rename_tempfile(&trailers_tempfile, file))
 diff --git a/trailer.c b/trailer.c
-index 4700c441442..95b4c9b8f19 100644
+index 9179dd802c6..6167b707ae0 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -952,6 +952,12 @@ static void unfold_value(struct strbuf *val)
- 	strbuf_release(&out);
- }
+@@ -11,6 +11,27 @@
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+  */
  
-+struct trailer_info *trailer_info_new(void)
-+{
-+	struct trailer_info *info = xcalloc(1, sizeof(*info));
-+	return info;
-+}
++struct trailer_info {
++	/*
++	 * True if there is a blank line before the location pointed to by
++	 * trailer_block_start.
++	 */
++	int blank_line_before_trailer;
 +
- /*
-  * Parse trailers in "str", populating the trailer info and "head"
-  * linked list structure.
-@@ -1000,6 +1006,21 @@ void free_trailers(struct list_head *trailers)
- 	}
- }
- 
-+size_t trailer_block_start(struct trailer_info *info)
-+{
-+	return info->trailer_block_start;
-+}
++	/*
++	 * Offsets to the trailer block start and end positions in the input
++	 * string. If no trailer block is found, these are both set to the
++	 * "true" end of the input (find_end_of_log_message()).
++	 */
++	size_t trailer_block_start, trailer_block_end;
 +
-+size_t trailer_block_end(struct trailer_info *info)
-+{
-+	return info->trailer_block_end;
-+}
++	/*
++	 * Array of trailers found.
++	 */
++	char **trailers;
++	size_t trailer_nr;
++};
 +
-+int blank_line_before_trailer_block(struct trailer_info *info)
-+{
-+	return info->blank_line_before_trailer;
-+}
-+
- void trailer_info_get(const struct process_trailer_options *opts,
- 		      const char *str,
- 		      struct trailer_info *info)
+ struct conf_info {
+ 	char *name;
+ 	char *key;
 diff --git a/trailer.h b/trailer.h
-index ebafa3657e4..9ac4be853c5 100644
+index b32213a9e23..a63e97a2663 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -97,6 +97,10 @@ void parse_trailers(const struct process_trailer_options *,
- void trailer_info_get(const struct process_trailer_options *,
- 		      const char *str,
- 		      struct trailer_info *);
-+size_t trailer_block_start(struct trailer_info *);
-+size_t trailer_block_end(struct trailer_info *);
-+int blank_line_before_trailer_block(struct trailer_info *);
-+struct trailer_info *trailer_info_new(void);
+@@ -4,6 +4,8 @@
+ #include "list.h"
+ #include "strbuf.h"
  
- void trailer_info_release(struct trailer_info *info);
++struct trailer_info;
++
+ enum trailer_where {
+ 	WHERE_DEFAULT,
+ 	WHERE_END,
+@@ -29,27 +31,6 @@ int trailer_set_where(enum trailer_where *item, const char *value);
+ int trailer_set_if_exists(enum trailer_if_exists *item, const char *value);
+ int trailer_set_if_missing(enum trailer_if_missing *item, const char *value);
  
+-struct trailer_info {
+-	/*
+-	 * True if there is a blank line before the location pointed to by
+-	 * trailer_block_start.
+-	 */
+-	int blank_line_before_trailer;
+-
+-	/*
+-	 * Offsets to the trailer block start and end positions in the input
+-	 * string. If no trailer block is found, these are both set to the
+-	 * "true" end of the input (find_end_of_log_message()).
+-	 */
+-	size_t trailer_block_start, trailer_block_end;
+-
+-	/*
+-	 * Array of trailers found.
+-	 */
+-	char **trailers;
+-	size_t trailer_nr;
+-};
+-
+ /*
+  * A list that represents newly-added trailers, such as those provided
+  * with the --trailer command line option of git-interpret-trailers.
 -- 
 gitgitgadget
 
