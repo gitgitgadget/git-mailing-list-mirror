@@ -1,137 +1,87 @@
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD4110A03
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC5F63E
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 05:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713504785; cv=none; b=fBH8XLU9MNObzymPPoxKvssmoA4GY4n7jq9H5FQbK8IqMI5h/xjzIFJUUHCk0ay+qvaSOyxk9y63ApRXdnlB0L0s61tt7Q5O086LPFo0mDuPjkCRbcvYz2y/7njbtB4hJPJUhHk7Gn8FQKh5sQdSWIiXmUKehmE/xLlcMQjeouQ=
+	t=1713505009; cv=none; b=Ch9J117UZc2STRbMIsXBTv6bW8XWeb8gIxC/v38/gkCc+wf7vL+FSodSf7vIF+lzDYlOmC5z0tze9GzXxCqLcTZPUw6PHD7VIzyt1oCBz0wR7BimKPSpvodWGSy91pNH4BvleBGC6bEnVZKCKFQKnqnFwQzf3TYg/AAZTkRNgUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713504785; c=relaxed/simple;
-	bh=7iYs1Spfqu/34TNF4eNbUdPyGs/COvi1oVuoQBhsLNs=;
+	s=arc-20240116; t=1713505009; c=relaxed/simple;
+	bh=G+T1uRQPOdodD9KIIkisOI7QvFmLNDJxNihNpF+ObO8=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ckT1XdPOY3q7+hm/iy4xo/zE+y2vZazjobMJXwoC9szeTf9leyQm2/0ro04Vn0u/SHHAUlenVZxA5MOtQeSoRQcmYrO/zbPq/TaBLjoU+qngAK28lGo9dio1LFs0gcmGpC6/3OZ4N8HUu79WBPY9UDtpHYgGTMb+lUG5nw5NFKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=25zhPMSY; arc=none smtp.client-ip=209.85.210.202
+	 To:Cc:Content-Type; b=sVbKXv76Tjtn4IVjM7+H8fBCBQh5B9TpKX1HZRqa+RETXRJf+oKsT0ihsBJJ9TF506Ut6O58Zl/dpy7yi1DK2DSpMqRsuy3HKnYRWPjbep6wxW/TIozAY6nZWvddJ1z+eMB9eRF85CBUxod4MGwot/vu3xlo6dDdKdiaersuLZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0QcKjWz5; arc=none smtp.client-ip=209.85.210.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="25zhPMSY"
-Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6ed25e9b34aso1435604b3a.3
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 22:33:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0QcKjWz5"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6ee09c3404bso2497750b3a.2
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 22:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713504782; x=1714109582; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1713505007; x=1714109807; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zQ2he/GcZvTqzkyrW5ha10sh4uAen6NC4sWpgEbFsos=;
-        b=25zhPMSY/hj6o5iWB/FX5gb4VBcDLlC9Om+nYNfcIjCFa7x0YvDAv0GyqFYMNpshQr
-         E7xL3XdCLoPQpTULFbVtwNhXryqv6Onyfw8y/6igSU0IIYZFkBzyZE5Rwne0k0ASxveI
-         OD8ptRDAr9hGz5T0elE0vfUzqCbMdZ0VTSoyHdMreLwsWZ+FPlZQa6VXUshKSf4kJEfo
-         Nc2Tdzi9G3oJ0qaq6Ugc+h/zb1tSfPfFBpEW78u/Q0KZs3/ZevrP1xIsmg+xtxvz+2fr
-         suQMTZMnFFQSwyyatxZTjDFesMOmGmYgeuv5eS4+1aqIlLQObV2xgqfHkJnDrYQXa93C
-         +sTg==
+        bh=sJGh7xDTbRFHFi7JZSo+1Z4Rcn4EHGmxvkd5pmXEN1g=;
+        b=0QcKjWz5+mOb9sv591EiHSr/4IUwyUWSyJvEkJak8w7L03/7J/JtN4+OTeOMxYeHqD
+         IijHun/Ku4pahfY0dRG9uD4yPGTQbgPEInY4l4Jf5gBc13m0s10fcEdiCF4zLHKj6hFC
+         FANKfwJ351Sa3cAGIMdi3luqR/ZIxj+sBxjbLBkJDYb45RecIrI640Bjk2amd/pF9WEP
+         5yl43CG4T95FjwcDM/ouitXnTVNVboH/m99OZCQ5hotEAcz8m/Pm1OcRvgHUgZiGfT/C
+         8Dn/ed9yxogCIwBs3gKSVX0KJQLsDwSRTZDXvZdOdQX5uDhNOrtgXzInMyV4pDfsKZ1T
+         i6RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713504782; x=1714109582;
+        d=1e100.net; s=20230601; t=1713505007; x=1714109807;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zQ2he/GcZvTqzkyrW5ha10sh4uAen6NC4sWpgEbFsos=;
-        b=fWPDh3jOwhCGIFXSEZszHa7z2/fFWQjVzfpD6syfkv74pVfC3EBQbuktRxpuArpsIb
-         WOv/ine6fZeTEptl45raE0XM15p0kapXnKJgHVLc8G/YTMz+TnpJiCzRSg/IGzU170Cr
-         xNGprB97iGXR++KIkfVlSZjLlEvspg+/Ld9Ln5Kj4XMWQrEo2hH4BInXgmZiEVex0La+
-         79BgZj0aSYIKof+A5AeRWsVmbmYDOynoXFEvP66gCyg1h7yJqiJKqjdnQXiMIfDOvUOD
-         y3YIshTSzaLpf+vGY2yREzOgjfpb3JDz1i5LT8u+Gcxq478Dc5Z8cdE4HTSkLCMaSNKP
-         F1hA==
-X-Forwarded-Encrypted: i=1; AJvYcCUyhQqKVbJY1FCNCPIi7lzRYW8C9ZXdoMDEIMQyzzZkARHe3FHyCUahZQVeiOZoX700UXHWdTeFkahywSrxV1ecXWZe
-X-Gm-Message-State: AOJu0Yy3Q0wOGfLiDgmVhUwjpRHvnsvwgbqd7pemxadtKTt8ZulkUhKZ
-	7D/gPLbqzVhlTUciCYbMttpttAT6VhikGgq0hyXXkDd2SNWtmQ0lzIgFr7xW4tK6a1QKgLsth/B
-	VoQ==
-X-Google-Smtp-Source: AGHT+IGxvljh4q35REOY9ntY4r8dNpzcwf5BVI5w+CnVDx33zpKlyY58xkSddCv1w+Ivok/yYE14/l5GyMw=
+        bh=sJGh7xDTbRFHFi7JZSo+1Z4Rcn4EHGmxvkd5pmXEN1g=;
+        b=nrzMLx2j1Bdqei/ZCE4cIie7Z6FTMsNamh7NlD7WkZ6iOd9tuPxvMpG9cuJblUbqh/
+         p5pPpyKnGJL2pQtP54rPceAiK7tPuexTAZMu/T9VYs2K6Y22+nNQkIOp3Ds93C5ARDxv
+         HeuJJLIEvKHU4OyVYPHudtpwoG90+/QOeKtBMPa4T4EBJeDoW7wm5LP555lSOH2YL/aT
+         8r1UJ9eCJyMK8IAcp1DcTZHNfw3y8GIFONldsYJBW9qaEOPj932hhlf1mp/EHQ5UU58W
+         c4Z7ynIfdNms0zD1UeOFE1tCn6pN3BHkADCO1Q/mq6ptxw2MQ/8IdsbgaxU4nuZ2+aQp
+         Jhjg==
+X-Gm-Message-State: AOJu0YyD4J6Zc9Gi7SpjskuSzGkQphMy9DwtVm+3EVDtoUaYqiHKxh6w
+	LkpkDr1pmTLJE81/3BJvviN4b4IXm9ABp3D8eORljgl9PChshOOULzIkVHiGtuMqFiUwHsEPPN4
+	6AA==
+X-Google-Smtp-Source: AGHT+IGW3vgQJ+UweHocyqqwUP8oI07tqq8gLwWQTp19sySBqxPpC2sf+BYeKApoqC+ItuYisJfDP4swdyA=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a00:2d0e:b0:6ea:f424:85ce with SMTP id
- fa14-20020a056a002d0e00b006eaf42485cemr130339pfb.0.1713504782334; Thu, 18 Apr
- 2024 22:33:02 -0700 (PDT)
-Date: Thu, 18 Apr 2024 22:33:00 -0700
-In-Reply-To: <e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
+ (user=linusa job=sendgmr) by 2002:a05:6a00:4f87:b0:6ea:e2d9:f2af with SMTP id
+ ld7-20020a056a004f8700b006eae2d9f2afmr139454pfb.0.1713505007077; Thu, 18 Apr
+ 2024 22:36:47 -0700 (PDT)
+Date: Thu, 18 Apr 2024 22:36:45 -0700
+In-Reply-To: <xmqqjzlo7ixe.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
- <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com> <e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
-Message-ID: <owly8r19or1v.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 2/8] trailer: add unit tests for trailer iterator
+References: <pull.1696.git.1710570428.gitgitgadget@gmail.com> <xmqqjzlo7ixe.fsf@gitster.g>
+Message-ID: <owly5xwdoqvm.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 0/6] Make trailer_info struct private (plus sequencer cleanup)
 From: Linus Arver <linusa@google.com>
-To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>, Junio C Hamano <gitster@pobox.com>, 
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
 	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
 	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
 	Kristoffer Haugsbakk <code@khaugsbakk.name>
 Content-Type: text/plain; charset="UTF-8"
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Linus Arver <linusa@google.com>
-> [...]
-> +		{
-> +			"with non-trailer lines in trailer block",
-> +			"subject: foo bar\n"
-> +			"\n"
-> +			/*
-> +			 * Even though this trailer block has a non-trailer line
-> +			 * in it, it's still a valid trailer block because it's
-> +			 * at least 25% trailers and is Git-generated.
-> +			 */
- 
-In the next reroll (sometime next week?), I should put the
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> NOTE: This series is based on the la/format-trailer-info topic branch (see
+>> its discussion at [1]).
+>
+> This unfortunately depends on another series, which has seen no
+> reviews after 10 days X-<.  It did not help that this was sent
+> almost immediately after that unreviewed series that it depends on.
+>
+> Any takers?  There must be some folks who know the trailer code very
+> well, no?
+>
 
-    ... (see git_generated_prefixes[] in trailer.c).
-
-comment up here (where we first mention "Git-generated" trailers)
-instead of down in the last test case below.
-
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"Signed-off-by: x\n",
-> +			1
-> +		},
-> +		{
-> +			"with non-trailer lines (one too many) in trailer block",
-> +			"subject: foo bar\n"
-> +			"\n"
-> +			/*
-> +			 * This block has only 20% trailers, so it's below the
-> +			 * 25% threshold.
-> +			 */
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"Signed-off-by: x\n",
-> +			0
-> +		},
-> +		{
-> +			"with non-trailer lines (only 1) in trailer block, but no Git-generated trailers",
-> +			"subject: foo bar\n"
-> +			"\n"
-> +			/*
-> +			 * This block has only 1 non-trailer out of 10 (IOW, 90%
-> +			 * trailers) but is not considered a trailer because the
-> +			 * 25% threshold only applies to cases where there was a
-> +			 * Git-generated trailer (see git_generated_prefixes[]
-> +			 * in trailer.c).
-> +			 */
-> +			"Reviewed-by: x\n"
-> +			"Reviewed-by: x\n"
-> +			"Reviewed-by: x\n"
-> +			"Helped-by: x\n"
-> +			"Helped-by: x\n"
-> +			"Helped-by: x\n"
-> +			"Acked-by: x\n"
-> +			"Acked-by: x\n"
-> +			"Acked-by: x\n"
-> +			"not a trailer line\n",
-> +			0
-> +		},
-> +	};
+I've added some unit test cases in v2 Patch 02 to make this series a bit
+more appealing for reviewers. Cheers.
