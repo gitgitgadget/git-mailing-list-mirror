@@ -1,118 +1,309 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2D75231
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 21:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E548329D08
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 22:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713563764; cv=none; b=lVHe9hznB2zJanIO1GlkUIAsLri2DRM8T6dLcyt2ck1R9Q2SOLXgeCLA2XHry6G72FkDJQAbwGV0E/N9aP6cqRtpu/H+C3iHs0NVYzAkizrRZrpXYcs7ACf/KKx7Ye8parDrNzl//WKBbbo1xOah07bd0OtZOBi5mHqus45tzRA=
+	t=1713564101; cv=none; b=RZXRZGMJUfIHkZqgbPjGh+c89EY3gyX/KRtavjkCW0+vq9+P+wKwx7xNm2lwncYvtUUKGZSzTKc7CkUK3+OUuRpOkngK16OGyMgRkYFqTKkUrZtLKexuD4qxWkMoGXkLyzmPI7uff0u1c7Wf+wa883sqod9VDif2NtT4VuELIl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713563764; c=relaxed/simple;
-	bh=HjFJlpltAC+ik+T6cmHtyT6ZQxjCYLAmMAGBDHZC8b4=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=akB/n0JQKWcBMjaFutzw0hTkaN/FGUjudM1blItKEc+Q1ryDNAx43qVVQ+v/wTyyjPTPWJSkJvmwpUdtUNayjUg52kxTjxiD8QvHZHv5MD1NXn8lTRnPIOto25nmsmSd0P9Huia3sxmIKHhUl3dTaNxTnuTfszciegZlkIdWAiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ZhV35soD; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1713564101; c=relaxed/simple;
+	bh=LXYHgnGrSyQZZm7MoiRXhK+IHLHsv8I6/IYEzrWIkPc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RxsDMbnrPXLusa/1X748mzi+D6QnxdJSMd1S/qOZ0WpccPwjHgfrxuLyNVnvOv9zlkVpApWhj2NoJ4E+iccDD4uTiRhNWVru1rf4kZ9HOlacljkIEU10l0x7sV2NscYJSBLxB3mc1Zz4pzFlmzM1lWfoimxZNSfKgdXGJZDsmuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D/zbEJx9; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ZhV35soD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1713563759; x=1714168559;
-	i=johannes.schindelin@gmx.de;
-	bh=27ApcedhNCr0fJklbzMCgU+lVLAPPnVERiK/HRuQZHI=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 Content-Type:MIME-Version:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ZhV35soDuxlkrt9k7BBzGG8dR/6KieISPLl4wdkinEhLLKPB+F5QKUfwT6giSWJ6
-	 9rZQZHb/BrRhIFq1m9g2Y3AcamSRn3ChwfYQS/TqPcVsO5d110UZH5qw8J55MMRf0
-	 V48gnZZgSRqKzd3z5cQLTM794jnxhoWhGDQJHPfR0C1/UcwRF8Rdh1CT0NryrSPXv
-	 mfGG712CN9TGHizOHq4ctakWuDwyFMfdXoXtTIsfvBZZL15/+s2v1KdJS58DzpifG
-	 N6im4AHchF8hQEU/svRJ5TQpT5YKVo/MDuWIPdNKxRos64GUhkl62Mk+Gk0SzSvRM
-	 8uv+CUCebLMWQGMdrg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1113-401.v4dlmfbwbvlezlyjnbnry1jt3f.cx.internal.cloudapp.net
- ([74.249.5.98]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MEFzr-1rqU5D3dNF-00ADBT; Fri, 19 Apr 2024 23:55:59 +0200
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.45.0-rc0
-Date: Fri, 19 Apr 2024 21:55:56 +0000
-Message-ID: <20240419215556.3579-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.43.2
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D/zbEJx9"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7FC27348CE;
+	Fri, 19 Apr 2024 18:01:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=LXYHgnGrSyQZZm7MoiRXhK+IHLHsv8I6/IYEzr
+	WIkPc=; b=D/zbEJx94Pt2IzqTh5f7foCTiTc35dBFPN3pHq5olzb8Oebs7FPjZS
+	+yIUERX65tZJS6QK0zbRLrfjAvXuGo72Ym2ilGp+u4NVgRBF/X9YvC2JPSLbgMdB
+	srNvR4UYtNSxPyyZcEgzN8rINLkdp8AzsrmqkbR0yPDmMOK+3O458=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 77B63348CD;
+	Fri, 19 Apr 2024 18:01:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C18E4348CB;
+	Fri, 19 Apr 2024 18:01:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Dragan Simic
+ <dsimic@manjaro.org>
+Subject: [PATCH v2] format-patch: allow --rfc to optionally take a value,
+ like --rfc=WIP
+In-Reply-To: <xmqqzftqnuxq.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	18 Apr 2024 15:54:25 -0700")
+References: <xmqqzftqnuxq.fsf@gitster.g>
+Date: Fri, 19 Apr 2024 15:01:34 -0700
+Message-ID: <xmqqy1993tc1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:jAvuaALcfaJPygTWtVWJuidFnsvySQRZJk3RO2Q4RDXXOz5gTOK
- tCfL9SoUWT1ErI+nO19M9ZJeKA+epEIA4+F2W6ho9GXvmJEalJmdizx1oHwSVDmU24Kvu7k
- ZmBIoRuJX3jjYo1PLPIB1E6CTyJDvPiEf2DsYlbPi2KgJEPSsalz+zG9Lm0iSoyXbipow6x
- PlzaGVoWLHLpZshi2kK+w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:WAGxJ/O2jZs=;+x4G7lSHJBg/wsTAS1t7ann/b0j
- 1KYPaAXwMnMdJNdb+ncrKk51pDXG1693+HoIKMErxhKJ2GJbHua3xi2sL1EvV+TW+kOZ5+LJi
- fIMbfdVx/zp4BoRChd+KQ6RkEABFmpjkUZNXFZ8R7Lqw+nA6oL1G99gsZwXvGojwT9OnY6M+W
- kKrn7j669dULpVyH80np1NcDpEMWDL6x8zxvZI31S+4M5TWhkUhSW+FzNsZmOsoyeOrp6DqX3
- 18+ogbOlNc0t7HOVlxB7gSPLoYn9dudt1g0ZQXGGLm1o9exdQ1hJPrPyMqPJ8qbEQRyXRzsul
- 1jGSdk1EIZcalJDh4QVAkq2YsyBAzFtc4f64rV45HLMWdj+smpIzo6Q1+LI4H1mXfqneJ1lLR
- ifBWoqxHzth3BJp+RSMPxqV7s82K8Q8b/hil4HBJbuLKHoA3QecZ+H8k5NRn5s0ULZva8fWlf
- 7AKrvwazxNNPt/eSz6P+j9kEh3nZWMAqIfXsLACWBtl2CU7tQjE3v6rks4TEBols8ZI3EWbMf
- 1nXUT+ehiAc2kZ7JSa7l1wfDlG0hchtCF0dTehTFVB+z6ZTorIQKRu1X8X33cmgYdIOQf8qvu
- Iw/kGiJkU03iDl867Lbe5M6n4LG+/jGmBZLbGhTj5KfetD7ENq+ckQ1I/YiHB85wAcDHz1ph4
- cmx2Zv74QSduqSIh8SSocblNAwg5p+jEJGgY8l4NzN4/zAV/9l+BbfzTPqamycTM8Ydk5/4/5
- LlRzvgWQmhma5G+Zc4WjpGe3W5UMIFCyFXNFEy1t0o3MWf6uQE/Si9MyZ87+/3UT2OINEPNH/
- 2YWzdPaj1DSHcfyX5XaNRSCer9etjewg6aiK//QEucTSQ=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 63CF374A-FE98-11EE-AC31-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Dear Git users,
+With the "--rfc" option, we can tweak the "[PATCH]" (or whatever
+string specified with the "--subject-prefix" option, instead of
+"PATCH") that we prefix the title of the commit with into "[RFC
+PATCH]", but some projects may want "[rfc PATCH]".  Adding a new
+option, e.g., "--rfc-lowercase", to support such need every time
+somebody wants to use different strings would lead to insanity of
+accumulating unbounded number of such options.
 
-I hereby announce that Git for Windows 2.45.0-rc0 is available from:
+Allow an optional value specified for the option, so that users can
+use "--rfc=rfc" (think of "--rfc" without value as a short-hand for
+"--rfc=RFC") if they wanted to.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.45.0-rc0.windows.1
+This can of course be (ab)used to make the prefix "[WIP PATCH]" by
+passing "--rfc=WIP".  Passing an empty string, i.e., "--rfc=", is
+the same as "--no-rfc" to override an option given earlier on the
+same command line.
 
-Changes since Git for Windows v2.44.0 (February 23rd 2024)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Range-diff against v1:
+1:  4077ed52e8 ! 1:  bffe0055d0 format-patch: allow --rfc to optionally take a value, like --rfc=WIP
+    @@ Commit message
+     
+         Allow an optional value specified for the option, so that users can
+         use "--rfc=rfc" (think of "--rfc" without value as a short-hand for
+    -    "--rfc=RFC").
+    +    "--rfc=RFC") if they wanted to.
+     
+         This can of course be (ab)used to make the prefix "[WIP PATCH]" by
+    -    passing "--rfc=WIP".
+    +    passing "--rfc=WIP".  Passing an empty string, i.e., "--rfc=", is
+    +    the same as "--no-rfc" to override an option given earlier on the
+    +    same command line.
+     
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+    @@ Documentation/git-format-patch.txt: the patches (with a value of e.g. "PATCH my-
+     +RFC means "Request For Comments"; use this when sending
+     +an experimental patch for discussion rather than application.
+     +"--rfc=WIP" may also be a useful way to indicate that a patch
+    -+is not complete yet.
+    ++is not complete yet ("WIP" stands for "Work In Progress").
+      
+      -v <n>::
+      --reroll-count=<n>::
+    @@ builtin/log.c: static int subject_prefix_callback(const struct option *opt, cons
+     +{
+     +	struct strbuf *rfc;
+     +
+    -+	BUG_ON_OPT_NEG(unset);
+     +	rfc = opt->value;
+     +	strbuf_reset(rfc);
+    -+	strbuf_addstr(rfc, arg ? arg : "RFC");
+    ++	if (!unset)
+    ++		strbuf_addstr(rfc, arg ? arg : "RFC");
+     +	return 0;
+     +}
+     +
+    @@ builtin/log.c: int cmd_format_patch(int argc, const char **argv, const char *pre
+      		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
+      			    N_("max length of output filename")),
+     -		OPT_BOOL(0, "rfc", &rfc, N_("use [RFC PATCH] instead of [PATCH]")),
+    -+		OPT_CALLBACK_F(0, "rfc", &rfc, N_("extra"),
+    -+			       N_("add <extra> (default 'RFC') before 'PATCH'"),
+    -+			       PARSE_OPT_NONEG|PARSE_OPT_OPTARG, rfc_callback),
+    ++		OPT_CALLBACK_F(0, "rfc", &rfc, N_("rfc"),
+    ++			       N_("add <rfc> (default 'RFC') before 'PATCH'"),
+    ++			       PARSE_OPT_OPTARG, rfc_callback),
+      		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
+      			    N_("cover-from-description-mode"),
+      			    N_("generate parts of a cover letter based on a branch's description")),
+    @@ builtin/log.c: int cmd_format_patch(int argc, const char **argv, const char *pre
+      		strbuf_addf(&sprefix, " v%s", reroll_count);
+     
+      ## t/t4014-format-patch.sh ##
+    -@@ t/t4014-format-patch.sh: test_expect_success '--rfc' '
+    +@@ t/t4014-format-patch.sh: test_expect_success 'empty subject prefix does not have extra space' '
+      	test_cmp expect actual
+      '
+      
+    -+test_expect_success '--rfc=WIP' '
+    +-test_expect_success '--rfc' '
+    ++test_expect_success '--rfc and --no-rfc' '
+    + 	cat >expect <<-\EOF &&
+    + 	Subject: [RFC PATCH 1/1] header with . in it
+    + 	EOF
+    + 	git format-patch -n -1 --stdout --rfc >patch &&
+    + 	grep "^Subject:" patch >actual &&
+    +-	test_cmp expect actual
+    ++	test_cmp expect actual &&
+    ++	git format-patch -n -1 --stdout --rfc --no-rfc >patch &&
+    ++	sed -e "s/RFC //" expect >expect-raw &&
+    ++	grep "^Subject:" patch >actual &&
+    ++	test_cmp expect-raw actual
+    ++'
+    ++
+    ++test_expect_success '--rfc=WIP and --rfc=' '
+     +	cat >expect <<-\EOF &&
+     +	Subject: [WIP PATCH 1/1] header with . in it
+     +	EOF
+     +	git format-patch -n -1 --stdout --rfc=WIP >patch &&
+     +	grep "^Subject:" patch >actual &&
+    -+	test_cmp expect actual
+    -+'
+    -+
+    ++	test_cmp expect actual &&
+    ++	git format-patch -n -1 --stdout --rfc --rfc= >patch &&
+    ++	sed -e "s/WIP //" expect >expect-raw &&
+    ++	grep "^Subject:" patch >actual &&
+    ++	test_cmp expect-raw actual
+    + '
+    + 
+      test_expect_success '--rfc does not overwrite prefix' '
+    - 	cat >expect <<-\EOF &&
+    - 	Subject: [RFC PATCH foobar 1/1] header with . in it
 
-New Features
+ Documentation/git-format-patch.txt | 15 ++++++++++-----
+ builtin/log.c                      | 22 ++++++++++++++++++----
+ t/t4014-format-patch.sh            | 21 +++++++++++++++++++--
+ 3 files changed, 47 insertions(+), 11 deletions(-)
 
-  * Comes with Git v2.45.0-rc0.
-  * Comes with PCRE2 v10.43.
-  * Comes with GNU Privacy Guard v2.4.5.
-  * Comes with Git LFS v3.5.1.
-  * MinGit now supports running git difftool.
-  * Comes with OpenSSH v9.7.P1.
-  * Comes with GNU TLS v3.8.4.
-  * Comes with Tig v2.5.9.
-  * Comes with cURL v8.7.1.
-  * Comes with Git Credential Manager v2.5.0.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 728bb3821c..e553810b1e 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -20,7 +20,7 @@ SYNOPSIS
+ 		   [--in-reply-to=<message-id>] [--suffix=.<sfx>]
+ 		   [--ignore-if-in-upstream] [--always]
+ 		   [--cover-from-description=<mode>]
+-		   [--rfc] [--subject-prefix=<subject-prefix>]
++		   [--rfc[=<rfc>]] [--subject-prefix=<subject-prefix>]
+ 		   [(--reroll-count|-v) <n>]
+ 		   [--to=<email>] [--cc=<email>]
+ 		   [--[no-]cover-letter] [--quiet]
+@@ -238,10 +238,15 @@ the patches (with a value of e.g. "PATCH my-project").
+ 	value of the `format.filenameMaxLength` configuration
+ 	variable, or 64 if unconfigured.
+ 
+---rfc::
+-	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
+-	default). RFC means "Request For Comments"; use this when sending
+-	an experimental patch for discussion rather than application.
++--rfc[=<rfc>]::
++	Prepends the string _<rfc>_ (defaults to "RFC") to
++	the subject prefix.  As the subject prefix defaults to
++	"PATCH", you'll get "RFC PATCH" by default.
+++
++RFC means "Request For Comments"; use this when sending
++an experimental patch for discussion rather than application.
++"--rfc=WIP" may also be a useful way to indicate that a patch
++is not complete yet ("WIP" stands for "Work In Progress").
+ 
+ -v <n>::
+ --reroll-count=<n>::
+diff --git a/builtin/log.c b/builtin/log.c
+index c0a8bb95e9..0e9c84e51d 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1494,6 +1494,18 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
+ 	return 0;
+ }
+ 
++static int rfc_callback(const struct option *opt, const char *arg,
++			int unset)
++{
++	struct strbuf *rfc;
++
++	rfc = opt->value;
++	strbuf_reset(rfc);
++	if (!unset)
++		strbuf_addstr(rfc, arg ? arg : "RFC");
++	return 0;
++}
++
+ static int numbered_cmdline_opt = 0;
+ 
+ static int numbered_callback(const struct option *opt, const char *arg,
+@@ -1907,8 +1919,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	struct strbuf rdiff2 = STRBUF_INIT;
+ 	struct strbuf rdiff_title = STRBUF_INIT;
+ 	struct strbuf sprefix = STRBUF_INIT;
++	struct strbuf rfc = STRBUF_INIT;
+ 	int creation_factor = -1;
+-	int rfc = 0;
+ 
+ 	const struct option builtin_format_patch_options[] = {
+ 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
+@@ -1932,7 +1944,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    N_("mark the series as Nth re-roll")),
+ 		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
+ 			    N_("max length of output filename")),
+-		OPT_BOOL(0, "rfc", &rfc, N_("use [RFC PATCH] instead of [PATCH]")),
++		OPT_CALLBACK_F(0, "rfc", &rfc, N_("rfc"),
++			       N_("add <rfc> (default 'RFC') before 'PATCH'"),
++			       PARSE_OPT_OPTARG, rfc_callback),
+ 		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
+ 			    N_("cover-from-description-mode"),
+ 			    N_("generate parts of a cover letter based on a branch's description")),
+@@ -2050,8 +2064,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (cover_from_description_arg)
+ 		cover_from_description_mode = parse_cover_from_description(cover_from_description_arg);
+ 
+-	if (rfc)
+-		strbuf_insertstr(&sprefix, 0, "RFC ");
++	if (rfc.len)
++		strbuf_insertf(&sprefix, 0, "%s ", rfc.buf);
+ 
+ 	if (reroll_count) {
+ 		strbuf_addf(&sprefix, " v%s", reroll_count);
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index e37a1411ee..645c4189f9 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1368,13 +1368,30 @@ test_expect_success 'empty subject prefix does not have extra space' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success '--rfc' '
++test_expect_success '--rfc and --no-rfc' '
+ 	cat >expect <<-\EOF &&
+ 	Subject: [RFC PATCH 1/1] header with . in it
+ 	EOF
+ 	git format-patch -n -1 --stdout --rfc >patch &&
+ 	grep "^Subject:" patch >actual &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
++	git format-patch -n -1 --stdout --rfc --no-rfc >patch &&
++	sed -e "s/RFC //" expect >expect-raw &&
++	grep "^Subject:" patch >actual &&
++	test_cmp expect-raw actual
++'
++
++test_expect_success '--rfc=WIP and --rfc=' '
++	cat >expect <<-\EOF &&
++	Subject: [WIP PATCH 1/1] header with . in it
++	EOF
++	git format-patch -n -1 --stdout --rfc=WIP >patch &&
++	grep "^Subject:" patch >actual &&
++	test_cmp expect actual &&
++	git format-patch -n -1 --stdout --rfc --rfc= >patch &&
++	sed -e "s/WIP //" expect >expect-raw &&
++	grep "^Subject:" patch >actual &&
++	test_cmp expect-raw actual
+ '
+ 
+ test_expect_success '--rfc does not overwrite prefix' '
+-- 
+2.45.0-rc0
 
-Bug Fixes
-
-  * Since v2.14.0(2), Git for Windows' installer registers the Open Git
-    Bash here and Open Git GUI here context menu items also in the
-    special Libraries folders, but the uninstaller never removed them
-    from those folders, which was fixed.
-  * A regression where git clone no longer worked in the presence of
-    includeIf.*.onbranch config settings has been fixed.
-  * Apparently some anti-malware programs fiddle with the mode of
-    stdout which can lead to problems because expected output is
-    missing, which was fixed.
-
-Git-2.45.0-rc0-64-bit.exe | 63f07d6fc53b0ac836f0667e891378ba7a00c56c5bd2989309ed55c55fb22b74
-Git-2.45.0-rc0-32-bit.exe | 806b4b4ad5ca8bf3c02ac332d3a808bd8b827e9d503489d39378abb5a99133e5
-PortableGit-2.45.0-rc0-64-bit.7z.exe | 17f8be3a2223868f8da1ef0701ed1e1189859e1a9f0354d9d1f1046dd1ea472b
-PortableGit-2.45.0-rc0-32-bit.7z.exe | d98df3750a3265134b909d59310e87d4591d04ba8586c67953b1ca09b75a011e
-MinGit-2.45.0-rc0-64-bit.zip | 05635a6945d160e8cb3ecc33643925184c2732db88c3382a831af07bd1b41248
-MinGit-2.45.0-rc0-32-bit.zip | 590de1226b0e5853ace6c7eb0a7eb75dd4cb70fcc7b91799bcf7cfed0ca3c587
-MinGit-2.45.0-rc0-busybox-64-bit.zip | c978df1eb415822d0ce890191f35dc915d550ca5d8989f82fda831242ec5b784
-MinGit-2.45.0-rc0-busybox-32-bit.zip | 7cb98a1a2fb819dafbde296a805ee87e44a5c2e86bcea43e66982dd3b958b646
-Git-2.45.0-rc0-64-bit.tar.bz2 | 3083bef250da158f5ae1a7e8077b2da57662760d5d5c773ce899362a7442a148
-Git-2.45.0-rc0-32-bit.tar.bz2 | d40fa3708b133c9b4782ff35178cf8a57fad9353b4d7472b3bee8c460e3b42f9
-
-Ciao,
-Johannes
