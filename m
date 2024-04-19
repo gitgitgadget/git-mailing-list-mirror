@@ -1,118 +1,71 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F58313BC08
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 19:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E4A77F13
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 19:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713553984; cv=none; b=iQ60NrrV6XT/5AlzG9cjjn45pe8nTRboMiPIS60YwmImpGPapEoxHC1ESUZNCW5u/W7UibQ/DbDcnTvVKlcKgX9rpWcI7AjOEdNu4s0TCXTK3wqHDrKIzJenrpnhsqDGzktE7b+SQOqG6psEBRg/eoPeBc4ILcBqNPghLmatHTA=
+	t=1713554180; cv=none; b=ILs33uzu2eHwqiNbbFiW7rCYlNwydTzc+hP6cg0wXgwMBCNE8upHmsTT5QgB7sVFWw/f9y5c5ANGUHIi2zXeo2WrPAamKlK6vNZfoDS3KYjecGAsjdGVgQ+tiepj3Y0DIJN3FFtI3E5f7fm/vW2e1F+6XtJYGe5gBj8UXrf0660=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713553984; c=relaxed/simple;
-	bh=JE51tzE2ORZxr03ndcsddvatKdCzhnkcggPuea4ZGVc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ou55TmEEDe5YIFC7k7E+R0KpIELNAjuoEoJ9rXFOmOe8YDImin4IeqXjxHZt7oY/k+k/dTbLAWXEU5++OFaYgYm4942OcZZbB5KzGsB+EPUYE8+0VzuxeSgS1xmwoLfp1WqZ7e0RUbxnEQoOZXEOe//IZ06ZOabzy9LJ2Gwq6TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=1GZNwqOI; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1713554180; c=relaxed/simple;
+	bh=mWQKavsKKc3ckFLQxb+U75nU9XOfTtknqGmHkXObw30=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WbGeq8pVJw3Ko5I+29+ekMxS8M5D81zllBE4ihI+WgO22gjz/n8EmnKn4uAN3p2f3o0hjhel2/kzOzIUNXvj2v9Q0PFogZs2jgPmhA+VEeTXBv+WlDElXBGJikgndpYGw80Q+AmZ92X3PT5U+pn7EY8U+76sMq/6JezKMsqHnqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tpyVm8EQ; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1GZNwqOI"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tpyVm8EQ"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DBD9F1F5132;
+	Fri, 19 Apr 2024 15:16:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=mWQKavsKKc3ckFLQxb+U75nU9XOfTtknqGmHkX
+	Obw30=; b=tpyVm8EQGmUzXcGt/tb9oRQ1zWiZECuPWIGeKeG/UeOmMvE3bn6bdA
+	zCnW6++INdDaxPrHu/Pz1NCA39BAYyhgbkIlpijQGtN0nWQuq316qCqYoyQ9igpY
+	7svhdorhWypOxelPaSIjOt7oKyzwGXfVHyC2f6SYOsxLjSmqSiYys=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D40B51F5131;
+	Fri, 19 Apr 2024 15:16:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 599D15D4E5;
-	Fri, 19 Apr 2024 19:13:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1713553981;
-	bh=JE51tzE2ORZxr03ndcsddvatKdCzhnkcggPuea4ZGVc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=1GZNwqOIm/5rqqGDaHpKq7yqVCsjiw0/Wd+sXv3DdI4h9lH0s7AIjtnlZdFO/czgK
-	 IsiYIF1Kqv6xbo1B+oQ6F1AeAbnFNLEZJYqZC+/tIwbUfEfjva0VZaMBTV12UqHwfb
-	 faW1NigrjwrOdDfg+txf9z13rgaywqngLloGBnDLJrX4qsXGRlWEf7NxtrIcT7Wij5
-	 TBgG7M9d6O4jyfHIZoGLJtNFvt0KoRIQiauZLApI62rqQUD8F2tkl/xJGXq3zQDGtx
-	 Iu54lhlaPI1pDN6sSUEfcZk+z8LcCLZ7XQ3Q1YwEkyYp91RgFdZ8bJZvAOTOEJ+uPi
-	 M417ZHyteqcTt2EDSRBFKTLh2jKey0l3i9F6qO/KfnAcMDfGg7zj+Oiax8bUYQuu/j
-	 nI6HiC4DEyaYkWs00a+w1d3TfMRz47xpES0fFOBgPx/kxtiDyosl+GSj73cZKLC0g5
-	 gyeizv4EYsHQ34Jwz/QohPww+xtfS1FzxqgDpCvRF/znfS4TwSv
-Date: Fri, 19 Apr 2024 19:12:59 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FC091F5130;
+	Fri, 19 Apr 2024 15:16:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
 Subject: Re: [PATCH 00/11] Stop relying on SHA1 fallback for `the_hash_algo`
-Message-ID: <ZiLCO8Wn0-4jyDdp@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+In-Reply-To: <ZiLCO8Wn0-4jyDdp@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Fri, 19 Apr 2024 19:12:59 +0000")
 References: <cover.1713519789.git.ps@pks.im>
+	<ZiLCO8Wn0-4jyDdp@tapette.crustytoothpaste.net>
+Date: Fri, 19 Apr 2024 12:16:16 -0700
+Message-ID: <xmqq34rh6u4f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4JSXm8W/MbQeTigM"
-Content-Disposition: inline
-In-Reply-To: <cover.1713519789.git.ps@pks.im>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4BE79422-FE81-11EE-9275-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---4JSXm8W/MbQeTigM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I've taken a look, and other than the minor typo I noted, this seems
+> fine.  I'm in favour of getting rid of the SHA-1 default, even though my
+> gut tells me we might find a bug or two along the way where things
+> aren't initialized properly.  I still think that'll be okay and it's
+> worth doing, since it'll help us prepare for the case in the future
+> where we want to switch the default and also for libification, where we
+> won't want to make those kinds of assumptions.
 
-On 2024-04-19 at 09:51:03, Patrick Steinhardt wrote:
-> Hi,
->=20
-> when starting up, Git will initialize `the_repository` by calling
-> `initialize_the_repository()`. Part of this is also that we set the hash
-> algo of `the_repository` to SHA1, which implicitly sets `the_hash_algo`
-> because it is a macro expanding to `the_repository->hash_algo`.
->=20
-> Usually, we eventually set up the correct hash algorithm here once we
-> have properly set up `the_repository` via `setup_git_directory()`. But
-> in some commands we actually don't require a Git repository, and thus we
-> will leave the SHA1 hash algorithm in place.
->=20
-> This has led to some subtle bugs when the context really asks for a
-> SHA256 repository, which this patch series corrects for most of the
-> part. Some commands need further work, like for example git-diff(1),
-> where the user might want to have the ability to pick a hash function
-> when run outside of a repository.
->=20
-> Ultimately, the last patch then drops the setup of the fallback hash
-> algorithm completely. This will cause `the_hash_algo` to be a `NULL`
-> pointer unless explicitly configured, and thus we now start to crash
-> when it gets accessed without doing so beforehand. This is a rather
-> risky thing to do, but it does catch bugs where we might otherwise
-> accidentally do the wrong thing. And even though I think it is the right
-> thing to do even conceptually, I'd be okay to drop it if folks think
-> that the risk is not worth it.
-
-I've taken a look, and other than the minor typo I noted, this seems
-fine.  I'm in favour of getting rid of the SHA-1 default, even though my
-gut tells me we might find a bug or two along the way where things
-aren't initialized properly.  I still think that'll be okay and it's
-worth doing, since it'll help us prepare for the case in the future
-where we want to switch the default and also for libification, where we
-won't want to make those kinds of assumptions.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---4JSXm8W/MbQeTigM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZiLCOwAKCRB8DEliiIei
-gSJ4AP0YFbituXV6kLxF7FFplsl84zSmnixXFNVq1xaABlfNWgEAz0AFb7NXLRNM
-znz5a5jsQcpz1rhQyD4r4kWimy5NjwY=
-=Y4u3
------END PGP SIGNATURE-----
-
---4JSXm8W/MbQeTigM--
+Yup, thanks for reviewing (and thanks Patrick for writing the
+series).
