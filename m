@@ -1,82 +1,154 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD41F137E
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 03:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960FB38D
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 04:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713496046; cv=none; b=FNcZpOyvFaraSNpLzpYt+7g+4+G7eQtbLcG4XG6LUBD+0M9jVZ0LfO/efwhdH5cTi9CCoV7AJv6kwNau/4JxG47u42+aYNO0+azGcg1qM85UoHso3j5schIpoSYdAJwFnv2IUh8z//tg3fSeVFnyw/lDGdofLlZBdICZrhZSECc=
+	t=1713500707; cv=none; b=kPJ0Ydu/y73Vh6152G6LgSCybVK6fDOBBhibKyiL5LugUGEci98l/MsZxwDrjFobFX+0eXKhdr4przgmN5DF1BCuJYA3zrLNLiiiXLlKuVdAIfDJ8xKi7hP+jskbB/vHmlcopsKb+RcGNoJcLJoKQFGxItdiEAZP+jiW04gN114=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713496046; c=relaxed/simple;
-	bh=zOkUYyTAJZ89dWPJ+FK99zc+t2UhqKzXbf50ccoAULU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=If3pODQrqZtcR2AVLgPERFhT/FIaSN5iEpws4bTRQTfxbGwDvfWQTsx9SvKFlCzgwOdwy9z2E2Nq4xasY1prgQEnljrj/S1W7OKqAVlKWaMZ6GzqvqddKUeJZ/wSOEHC9LLh+vu/VbB/TPaC2cvaOdUTp+WbupdoLPL342TtQjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-69cb4a046dfso6104996d6.2
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 20:07:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713496044; x=1714100844;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oicPEW1HLiHSEeVfQ5+jUpUzTQ13mYJEQggXo7wq5e8=;
-        b=SpELKJdVZhX2lskqlbhp62B7IEVlDRP2RxfFdJmfU+u8xuQip9wd/2AUDgCowfVBnp
-         wh9PvbxyT4iCZp2Ig0sbU1ILKejOl8jFcLfe8ZGOf4OivfV1ffsBY0KSkySYdANSMOEC
-         TFUAgK0K1poZ8fIwXX7R32MB8SsmVbZYILrZzOIHoJpCKCmHWt5WjJbA/GxEQu7HZN1n
-         Eb5hi+W2a79CdgS8zcNlnfp8c3xTe5Td/LXF3ECMqZElwqCcFACUo4PLEVlghpvyNeRe
-         WonNQ9k/DtS7ni7k52QP4za8+T03csyp9Blz5KsIecj1VFHjFl6wGd2irbKJgHJCGcG3
-         POPw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJHeX1a+puK6a5rt9npwXs9jXzdGDfzQRC8M2Sj2u398CAp+R5gqxVCr9JMEc73WpQwJqQ2M+1zb8GbuTTvHLW9zIp
-X-Gm-Message-State: AOJu0YzDAqycUh/9F7Hs2m7ttrhKHAm1UUXt/I4CjWC17BrZMcVvj77w
-	nTHVhlXoHTerEhOVN9c7rotZX2dI9+7sD1uWcUZ70zxyahSdZmntCeksZWLgFZYLGOLkPPKDpN6
-	QBgHU8Sd53LkDXQNVtjHjKuEvIr0=
-X-Google-Smtp-Source: AGHT+IHOxrbGlj7Om4CfH24xBRsfKhXZ+Jjc5dc0niBmmUL+1XV7B506Db/PesdHUQZTLJywcuKvBxU/tTSHtH87RFk=
-X-Received: by 2002:a05:6214:c63:b0:69f:db85:ee9a with SMTP id
- t3-20020a0562140c6300b0069fdb85ee9amr1125688qvj.59.1713496043809; Thu, 18 Apr
- 2024 20:07:23 -0700 (PDT)
+	s=arc-20240116; t=1713500707; c=relaxed/simple;
+	bh=vHRp118RJtUj8TDoFGAv65DNDFtw518qadvaDGd5jeU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=akcnu/rdMHeTe/W7Z1+1xnTeNlEgdxbc7TMMdyDSiREPVrdG7Gx1ZiuxBzRWtVSM6bxXBex/GBKxLEqdQIUGcOq7nkwoILKqo7S6UTJZOGa7Tgrk0seZQh/7OXfxTwJQBUUN4A7hZGsYBXiqNWHXJXwWHfNEYWUe2Hn8DDFCKeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VWsKe0Iz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VWvE7LFo; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VWsKe0Iz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VWvE7LFo"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 6100B11401B2;
+	Fri, 19 Apr 2024 00:25:03 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Fri, 19 Apr 2024 00:25:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1713500703; x=1713587103; bh=qLgUgJjWZR
+	vtYhte5ym86tAGaxlBrpxhMdcs12oQEU8=; b=VWsKe0IzOKDlLEExKYrpCK1G7G
+	DxP2e1bFaDuYdsRYgiVUvUje9FmQqkAYk26EdJuzDb3AtQMw1vaY5bWrNHUJjCN5
+	brhLp4fOQr8gew+06xiC9huMNYHPdWuRImtuAD6pkhzWVvvxZWtrECZbMeo378p7
+	Q/++kGxFtdPoZxJ4kPXsr5RvWgCl1s6vcmNZ3C4Pl1xA6GU+GbbzU0Qhr3npTkUR
+	qco4ZHsWb19Ww6YZOpfKayTCITY0lb80dP2VqB4ebS4OMUtn7zDo5pEzKHcFoMrB
+	YFLwWaDRoZ90YP2ewbkqHgstbu/ubxRd4FNTpYkRq47m+pi03vpT5RpvQp9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1713500703; x=1713587103; bh=qLgUgJjWZRvtYhte5ym86tAGaxlB
+	rpxhMdcs12oQEU8=; b=VWvE7LFoF7eIOESv+Y77M5KS8ccBXFbB5KVwEXBMmyzY
+	g6RAiddHwZnbNmPj3O13rQAC/C7zgFixxFKgKn5JQt1LrQLD4e/duLnurLXTAAM5
+	85yczXtsOaAUcMYNfzH9IaCqK/ugEdGHUFByFFq6QWKw9qqQu1Nzhcs/vd7EZ2RB
+	Pf4Tif7a5tCxmO5kpoh0hLL1urCOGVxdGn9+FXusTIzAClAkthImQPAAQzQxQAh/
+	W8I0Din5Ne8G4u/fgH6gCldeUBQGIiCnSBhJAaw1v0Msq7Ml0HZOly3f/YFxYcsq
+	tNQ8ptwFYTXO/s0a8VU094cPe8FKN9ZLrEfEYXAtDQ==
+X-ME-Sender: <xms:H_IhZvvzQPshy3vA5VERJt0PNe3tkl0NPU0A1lcKOmEa7nISq4Ff5w>
+    <xme:H_IhZgeANTOY-EizCWUCxzRsjX2DIZqaPDaF0rQr2y9l4AYQSVRuv1DYSzSmlYjd3
+    zEHOocdsssyUXDlbg>
+X-ME-Received: <xmr:H_IhZiwlou7m4N2zb9kz067dt_N3DX7FUTwVByVI3CLzBXWAiPweSB6tuvg2YnXrA71mwRwr9DXefTFXvs4e165QEN7beLkJoHm2fAPHTYEuUs4ntQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudekuddgjeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:H_IhZuPH4vmbuMgjckp67qMSr47sglbooiVGJ6fWF5qV9LFRJYE-7g>
+    <xmx:H_IhZv_RrIAKwikHDxBPx2OQu04GT4ITWayhIS-xuME_THDWxIx_vQ>
+    <xmx:H_IhZuUfO0hGPWn-2HnUWMkIkkmRO7IGsd9FFrB8QmOQd2RyaHAbHg>
+    <xmx:H_IhZgfkjU8n-W1-iPgQCIr2Npgy_hYDpB3baOqkqsBB4njp_qOMrg>
+    <xmx:H_IhZrZM3wR49s6OU6qSj-1XrCRerkeDIhA4LMVCt2GUwctW7RVK_JRT>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Apr 2024 00:25:02 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 149e0983 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Apr 2024 04:24:31 +0000 (UTC)
+Date: Fri, 19 Apr 2024 06:24:56 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/2] for-each-repo: optionally keep going on an error
+Message-ID: <ZiHyGFRPm_pwdGgC@tanuki>
+References: <pull.1719.git.1713342535.gitgitgadget@gmail.com>
+ <pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
+ <abd796894c857fc9ad96b9942089474df01f0506.1713444783.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1713324598.git.dsimic@manjaro.org> <1d9c6ce3df714211889453c245485d46b43edff6.1713324598.git.dsimic@manjaro.org>
- <154b085c-3e92-4eb6-b6a6-97aa02f8f07d@gmail.com> <xmqq7cgwau1v.fsf@gitster.g>
- <c2cb9268c29ae4a5cac34383b7443763@manjaro.org> <xmqqle5b66sr.fsf@gitster.g>
- <19d5f3d4c99fc1da24c80ac2a9ee8bf8@manjaro.org> <84dcb80be916f85cbb6a4b99aea0d76b@manjaro.org>
- <xmqq5xwepafi.fsf@gitster.g> <CAPig+cT9A9N=zGZDXuB+c17L8hZ-h5zvZgD5W-8VYqiM9QaBew@mail.gmail.com>
- <xmqqedb2nlpf.fsf@gitster.g>
-In-Reply-To: <xmqqedb2nlpf.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 18 Apr 2024 23:07:12 -0400
-Message-ID: <CAPig+cRpxvYAJpHahsWxRP=ekr9wwWoxK9_c0vRehDiuzgP72g@mail.gmail.com>
-Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND"
- to patch subjects
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Dragan Simic <dsimic@manjaro.org>, Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="AgFQsG7eK7NmWguP"
+Content-Disposition: inline
+In-Reply-To: <abd796894c857fc9ad96b9942089474df01f0506.1713444783.git.gitgitgadget@gmail.com>
+
+
+--AgFQsG7eK7NmWguP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 18, 2024 at 10:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > I do understand and am sympathetic to the desire to reduce the typing
-> > load (hence, the original `--resend` proposal), but I have difficulty
-> > believing that `git format-patch` is so commonly used throughout the
-> > day that the time saved by typing `--resend` over
-> > `--subject-prefix=3D"RESEND PATCH"` warrants the extra implementation,
-> > documentation, and testing baggage. Likewise, I don't see the value in
-> > `--label=3DWIP` (or `--rfc=3DWIP` or whatever) over the existing more
-> > general `--subject-prefix`.
->
-> I am not interested in adding unbounded number of --wip and the like
-> at all, but the value you seem to be missing of the separate "--rfc"
-> is that there are folks who configure something other than "PATCH"
-> to "format.subjectPrefix".  They do not want to keep typing
-> --subject-prefix=3D"PATCH net-next" on the command line, so they use
-> the configuration variable, which is "set it once and forget".  The
-> stress is on the fact that they can forget about it.
+On Thu, Apr 18, 2024 at 12:53:02PM +0000, Johannes Schindelin via GitGitGad=
+get wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+[snip]
+> @@ -55,8 +58,9 @@ int cmd_for_each_repo(int argc, const char **argv, cons=
+t char *prefix)
+>  	else if (err)
+>  		return 0;
+> =20
+> -	for (i =3D 0; !result && i < values->nr; i++)
+> -		result =3D run_command_on_repo(values->items[i].string, argc, argv);
+> +	for (i =3D 0; (keep_going || !result) && i < values->nr; i++)
+> +		if (run_command_on_repo(values->items[i].string, argc, argv))
+> +			result =3D 1;
 
-Indeed. I was unaware of that behavior.
+One thing that made me stop and think is whether the change in behaviour
+here may negatively impact some usecases. Before this change we would
+error out with the return code returned by the command that we have ran
+in repositories. It makes total sense that we don't do that anymore with
+`--keep-going`, because the result would likely be useless as all we
+could do was to OR the result codes with each other.
+
+But do we maybe want to make this conditional on whether or not the
+`--keep-going` flag is set? So something like this:
+
+```
+for (i =3D 0; (keep_going || !result) && i < values->nr; i++) {
+	int ret =3D run_command_on_repo(values->items[i].string, argc, argv);
+	if (ret)
+		result =3D keep_going ? 1 : ret;
+}
+```
+
+Other than that this patch series looks good to me.
+
+Patrick
+
+--AgFQsG7eK7NmWguP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYh8hIACgkQVbJhu7ck
+PpQz/g//VYgxLsc1s+alpcVBGtUI8IgxYkvmzJlCwfXeQ3T7A3xex0Doy0SRLhcM
+8U2OTxEw/CD+MRD8bVPiJ3LSXa3jXJtrhzFPn9/WRcAn3KxKmO93mKT7nmGMyYpl
+WN5/rxcy/o3aHDCjv65ffBrlkXTb0y/DLXCAf5gEcFS0ZL16fFioVOVdB97LB5+Z
+J03x60X6JHCArgPNlM+DsmTX/1oW32ZVlIfVp/bMIkMssOGEfo/bi9AXoS5v0aHD
+VRZlyQXEZHkGxVJliJ/Y8BN1Yc5dMwekENTz95DDGPY9ZAWh0S0Pjl5/AttKLkMS
+zz9NJ+biSLRvXLdSbYv2Yx/u97j7yisWyXiz0yq5IBj6EkG6OkkUwm0j8o8jm3aF
+cKjUxCjcw2iahJ+XnyyYVjxoV7BqvdcemSNsQNYnXh1v+bOsAkLUQg3aoo/6XgrM
+NBwxwWhWtzu8Aum/k5WAK2sWWG1RdwsTLdrPzysq6AKI8kY9jbLzIl4zXV0J7em+
+1S3XvtVbBZONE6ozEdy0xKa2b3A6vp3SRIjw1KrWS+FVosNQ1UapiW/b9Mo7/L2R
+E/fOQT6rjcvtsXI3NaindlyHPmQ0rdt9siPY7tXH5ofHsVEq2Pj0r/+MparMrnCU
+TCNf/1f3r0dNRVfnIBWKvR3T7nFr9E5qOwsR5WkbmqlgENDKU/M=
+=H5uG
+-----END PGP SIGNATURE-----
+
+--AgFQsG7eK7NmWguP--
