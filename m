@@ -1,154 +1,352 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA3213C913
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 21:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E5F85284
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 21:53:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713563569; cv=none; b=Mj5KDB9zrqrk/I1rpQp6G58d0HDs+1wBcqo/Ka6NBn5f/FGcDXyYov1K9rm6o0q37zL8whF2wiyot6VqAE9YONCokl1SktO3yFbLQhqNOzRv3iy0XX8Y+1eBaaduS2Xsf807Hal4h9EcMN6VQTyQ5cZRkftXfO9jDCwE1bqarVo=
+	t=1713563585; cv=none; b=OffT/3o8ww9X0mqNT+UOy1txJLaFDy3eAnaxTZr7kX8Q4U4e7r/c1sWSHUek+tKM/fs6+IQQYci4cTsBT603mgO2+VofukVDF8YXLMtyiWRghElsMZL7Aev8cn7NkdnrDIDJf7njrhOSJL8M9TBJYeC4RbF6vDnGK0Xqhh5dw5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713563569; c=relaxed/simple;
-	bh=5/KelMztiR3ohcLeLFm5ghThs5m7T6l/2ICvBTT032Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XJX8GQZ2vzSCn2L2Ujd+YiNi0MrdewVLj2OagHe0X6Wsy4y5gLNCmIVBwcsUYkge12DwDphldrixnWUJzBkZ2CJoOqwIPnu/NNybyfPAFtEJGjL6iYAry7vH7MNKw+XULPG+4VPzD4bTaiAM3Nq17Q7iGcjRONz6HSr16iCa8dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=a6Vu84fo; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713563585; c=relaxed/simple;
+	bh=5Ul9eTrfCfexQlE1e4m+JL9kxeHqqVXOsr5RyXXVmzE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=crw6DBdmdXM6EBRyIYNaHKVwXHStQV0foF6oR0b7oyVgm1dWTGN3QA+itSsymk9l96L0/H1Yio/hQR6ENZTKVGecqMg/m3FK8hY6gfbEEG7Yiv4+Wd4uLKKxul1RJnrtaiAtl8NHbYz2m0eyMUljJ2SB5i2p3e8Mk8n2Xh0xdnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CaaYqwv3; arc=none smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a6Vu84fo"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E2C934801;
-	Fri, 19 Apr 2024 17:52:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5/KelMztiR3ohcLeLFm5ghThs5m7T6l/2ICvBT
-	T032Y=; b=a6Vu84fogBh80k4tsu56VtWvrlTgvFtCsM6CGAK6OW8qeW5x+lrrHM
-	7RdP1vYnETYVMDA/h5nPH4SWh+OafiCZufL5KXo6At9QwyrldMGYUJLrTI3V2/g3
-	fg4tzbGKM+RKHbZPOQDm5bXuRjmyjdB9jOGloAQhIfdQL5RyXCsI8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9777634800;
-	Fri, 19 Apr 2024 17:52:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 16EBB347FF;
-	Fri, 19 Apr 2024 17:52:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
- Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
- <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v2 2/8] trailer: add unit tests for trailer iterator
-In-Reply-To: <e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
-	(Linus Arver via GitGitGadget's message of "Fri, 19 Apr 2024 05:22:27
-	+0000")
-References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
-	<pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
-	<e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
-Date: Fri, 19 Apr 2024 14:52:42 -0700
-Message-ID: <xmqq5xwd58b9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CaaYqwv3"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-22efc6b8dc5so1534877fac.0
+        for <git@vger.kernel.org>; Fri, 19 Apr 2024 14:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713563583; x=1714168383; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7cH8igxpbcNRiVPJyRp047lGe0YP5tTsTZ3RChKFHn0=;
+        b=CaaYqwv3+aoX9kMVYYfpNSnP9bVUe/P883q7FoTg6lgw44PFGf8/F4JxyWZu+r85c/
+         XbDyRaxWnkAPcxeVTuJEsZbkgSjx7Jrd2H9rrRMJUKOS/0KkWEc9FY4jc/qvK6lKjczK
+         N+LJ0Ar8inVrAsZ7wau/CsxQ3asvQeAjdIzFMVq4ma5PFNyJK/OKk7rlUyfLhfjnEuiA
+         XHgCZBpIYMUdz0lKzfOS5q6a/WG4UDYYd5ff1i5idbbhI5h0MI+WlqZq9WjUJzW7pgz2
+         odZLG5lnrfyjPC4G4HQQPCeRxTjvoHgZz/7K8rSszHt/wFZQgLFSAFrM9KTDizlCpPjS
+         AJEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713563583; x=1714168383;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7cH8igxpbcNRiVPJyRp047lGe0YP5tTsTZ3RChKFHn0=;
+        b=UgLEMGfIy15qlCLEgkXy86Vtoh+3tD1fQ3e70vnVUgWxqgKrPHrqwHwE33qOzNCzxL
+         6yMzvV8frPzGS1rYokkcIUyAyGJ/1ppK6TGciKgsEcc7UQYnMCw9l6yvDKcTDkPhiIW4
+         8SI0TXEQH1DZqinPxqba5IC5tNCev5ibJHBbp36yHqnG+Yyji0ppEe0jkP0GL5HCECXj
+         TsnxR0d7C3hB4IAcKlcjOZkHUWxsdcgREgYgUQsCBmRtPVhgY64hxMBLcfgrrF6zGJ02
+         1+Qmo8rfAo4ljRr0FqYw/iU1bkBORTnjrdtv90CwpHFSTzG7H4eJm/EwzwBFNUJ5SZjR
+         R08g==
+X-Forwarded-Encrypted: i=1; AJvYcCXCcsW5Ug7SNpRw6Lq3M6mIAmyGROWiN/noaLVQjV+6uvJzYMfi2EUgPO1DhgegkvrSBc+azVC0vZeb5lfxoxA/AOy9
+X-Gm-Message-State: AOJu0Yx54mgTqI1Pp+EXpuS8Bpnx/z4fJE/Plx0rcHLOUkvrsknLxLDT
+	uvdyLqwIyJFmJCQ9TOZkEoYqnLwbEWiZwHDqxEmeaFX+hQgxBRuIcodvgc3A+0nwrGmY+kqwoAN
+	9SGr49flUZ/BOQ0wF5x9gzBZPX6U=
+X-Google-Smtp-Source: AGHT+IHUCd8FHJUtjAd+33B6frAf26hIH3W56qQfmfPtB8LZmE6zCmnbZSgk2dao9xYOauo2j4AQ6OJ6g67jemqXw/E=
+X-Received: by 2002:a05:6870:96a1:b0:221:bf34:b15f with SMTP id
+ o33-20020a05687096a100b00221bf34b15fmr3765831oaq.25.1713563583202; Fri, 19
+ Apr 2024 14:53:03 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 19 Apr 2024 14:53:01 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZiI8DmqrbvdCDWt0@tanuki>
+References: <20240330224623.579457-1-knayak@gitlab.com> <20240412095908.1134387-1-knayak@gitlab.com>
+ <20240412095908.1134387-3-knayak@gitlab.com> <ZiI8DmqrbvdCDWt0@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 26E4DCE6-FE97-11EE-8D5D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Date: Fri, 19 Apr 2024 14:53:01 -0700
+Message-ID: <CAOLa=ZQJmxrQ+n060P0X8BW4ay2XMvOHHyJ3vxrW7C+j+5kWSA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] update-ref: add support for symref-verify
+To: Patrick Steinhardt <ps@pks.im>
+Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000ad618906167a1c3a"
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--000000000000ad618906167a1c3a
+Content-Type: text/plain; charset="UTF-8"
 
-> +UNIT_TEST_PROGRAMS += t-trailer
->  UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
->  UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
->  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+Patrick Steinhardt <ps@pks.im> writes:
+>> +symref-verify::
+>> +	Verify symbolic <ref> against <old-ref> but do not change it.
+>> +	If <old-ref> is missing, the ref must not exist.  Can only be
+>> +	used in `no-deref` mode.
+>
+> Should this say "is zero or missing", like the comment for "verify"
+> does?
+>
 
-Totally offtopic, but does it bother folks who are interested in
-adding more unit tests that they do not seem to interact very well
-with GIT_SKIP_TESTS environment variable?
+We don't allow users to enter OID here, we do convert it to zero OID
+internally. But the user input is expected to be old_ref or nothing.
 
-> diff --git a/t/unit-tests/t-trailer.c b/t/unit-tests/t-trailer.c
-> new file mode 100644
-> index 00000000000..147a51b66b9
-> --- /dev/null
-> +++ b/t/unit-tests/t-trailer.c
-> @@ -0,0 +1,175 @@
-> +#include "test-lib.h"
-> +#include "trailer.h"
-> +
-> +static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
-> +{
-> +	struct trailer_iterator iter;
-> +	size_t i = 0;
-> +
-> +	trailer_iterator_init(&iter, msg);
-> +	while (trailer_iterator_advance(&iter)) {
-> +		i++;
-> +	}
+> [snip]
+>> @@ -297,11 +321,48 @@ static void parse_cmd_verify(struct ref_transaction *transaction,
+>>  		die("verify %s: extra input: %s", refname, next);
+>>
+>>  	if (ref_transaction_verify(transaction, refname, &old_oid,
+>> -				   update_flags, &err))
+>> +				   NULL, update_flags, &err))
+>> +		die("%s", err.buf);
+>> +
+>> +	update_flags = default_flags;
+>> +	free(refname);
+>> +	strbuf_release(&err);
+>> +}
+>> +
+>> +static void parse_cmd_symref_verify(struct ref_transaction *transaction,
+>> +                                    const char *next, const char *end)
+>> +{
+>> +	struct strbuf err = STRBUF_INIT;
+>> +	struct object_id old_oid;
+>> +	char *refname, *old_ref;
+>> +
+>> +	if (!(update_flags & REF_NO_DEREF))
+>> +		die("symref-verify: cannot operate with deref mode");
+>
+> This feels quite restrictive to me. Wouldn't it be preferable to simply
+> ignore `REF_NO_DEREF` here? It basically means that this command can't
+> ever be used in a normal `git update-ref --stdin` session.
+>
 
-Unnecessary {braces} around a single-statement block?
+We do support 'option' with the '--stdin' flag. So technically a user
+should be able to do.
 
-> +	trailer_iterator_release(&iter);
-> +
-> +	check_uint(i, ==, num_expected_trailers);
-> +}
-> +
-> +static void run_t_trailer_iterator(void)
-> +{
-> +	static struct test_cases {
-> +		const char *name;
-> +		const char *msg;
-> +		size_t num_expected_trailers;
+   $ git update-ref --stdin
+   no-deref
+   symref-verify refs/heads/symref refs/heads/master
+   update-ref refs/heads/branch 0b3b55ad0e593ead604f80fe3f621239b34cce7e
 
-This is more like number of lines in the trailer block, not
-limiting its count only to true trailers, no?
+I guess we could make it implicit, but I thought it's better to keep it
+explicit so the user knows that there is no dereferencing taking place
+here, eventhough the default option is to dereference.
 
-> +	} tc[] = {
-> ...
-> +		{
-> +			"with non-trailer lines in trailer block",
-> +			"subject: foo bar\n"
-> +			"\n"
-> +			/*
-> +			 * Even though this trailer block has a non-trailer line
-> +			 * in it, it's still a valid trailer block because it's
-> +			 * at least 25% trailers and is Git-generated.
-> +			 */
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"not a trailer line\n"
-> +			"Signed-off-by: x\n",
-> +			1
-> +		},
+[snip]
+>>
+>>  	update->flags = flags;
+>>
+>> -	if (flags & REF_HAVE_NEW)
+>> -		oidcpy(&update->new_oid, new_oid);
+>> -	if (flags & REF_HAVE_OLD)
+>> -		oidcpy(&update->old_oid, old_oid);
+>> +	/*
+>> +	 * The ref values are to be considered over the oid values when we're
+>> +	 * doing symref operations.
+>> +	 */
+>
+> I feel like this is a statement that should be backed up by a deeper
+> explanation of why that is. I'm still wondering here why we cannot
+> assert that the old value is an object ID when I want to update it to a
+> symref, or alternatively why it would even be possible to have both
+> `REF_SYMREF_UPDATE` and a set of other, incompatible fields set. It
+> feels like this should be a `BUG()` instead if this is supposedly an
+> unsupported configuration rather than silently ignoring it.
+>
+> In any case, I feel like it would be easier to reason about if this was
+> introduced together with the actual user. As far as I can see this code
+> shouldn't ever be hit for "verify-symref", right? Currently, the reader
+> is forced to figure out what is and isn't related to the new command.
+>
 
-It is OK to leave it num_expected_trailers in this step and then
-rename it when you update this "1" (number of real trailer lines)
-to "4" (number of lines in the trailer block).
+I've changed this now to no longer have this condition and also added
+'BUG' for cases where both old_{ref,target} and new_{ref,target} exist.
 
-I wonder if you'd want to make more data available to the test.  At
-least it would be more useful if the number of true trailer lines
-and the number of lines in the trialer block are available
-separately.
+[snip]
+>> @@ -2464,8 +2495,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+>>  			       struct strbuf *err)
+>>  {
+>>  	struct strbuf referent = STRBUF_INIT;
+>> -	int mustexist = (update->flags & REF_HAVE_OLD) &&
+>> -		!is_null_oid(&update->old_oid);
+>> +	int mustexist = (update->flags & REF_HAVE_OLD) && !is_null_oid(&update->old_oid);
+>
+> This change is a no-op, right? If so, let's rather drop it.
+>
 
-The interface into the trailers that is being tested by this code is
-"the caller repeatedly calls the iterator, and the caller can
-inspect the iterator's state available as its .raw, .key and .val
-members and use them as it sees fit", so you could check, if you
-wanted to, the following given the above sample data:
+Yeah, will do.
 
- * the first iteration finds no key/value pair (optionally, the
-   contents found in the .raw member is as expected).
- * the second iteration finds no key/value pair (ditto).
- * the third iteration finds no key/value pair (ditto).
- * the fourth iteration finds key="Signed-off-by" value="x".
- * there is no fifth iteration.
+>>  	int ret = 0;
+>>  	struct ref_lock *lock;
+>>
+>> @@ -2514,6 +2544,18 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+>>  					ret = TRANSACTION_GENERIC_ERROR;
+>>  					goto out;
+>>  				}
+>> +			}
+>> +
+>> +			/*
+>> +			 * For symref verification, we need to check the referent value
+>> +			 * rather than the oid. If we're dealing with regular refs or we're
+>> +			 * verifying a dereferenced symref, we then check the oid.
+>> +			 */
+>> +			if (update->flags & REF_SYMREF_UPDATE && update->old_ref) {
+>> +				if (check_old_ref(update, referent.buf, err)) {
+>> +					ret = TRANSACTION_GENERIC_ERROR;
+>> +					goto out;
+>> +				}
+>>  			} else if (check_old_oid(update, &lock->old_oid, err)) {
+>>  				ret = TRANSACTION_GENERIC_ERROR;
+>>  				goto out;
+>> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+>> index 4c5fe02687..21c6b940d8 100644
+>> --- a/refs/refs-internal.h
+>> +++ b/refs/refs-internal.h
+>> @@ -749,4 +749,11 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
+>>   */
+>>  struct ref_store *maybe_debug_wrap_ref_store(const char *gitdir, struct ref_store *store);
+>>
+>> +/*
+>> + * Helper function to check if the new value is null, this
+>> + * takes into consideration that the update could be a regular
+>> + * ref or a symbolic ref.
+>> + */
+>> +int null_new_value(struct ref_update *update);
+>
+> When adding it to the header we should probably prefix this to avoid
+> name collisions. `ref_update_is_null_new_value()` might be a mouth full,
+> but feels preferable to me.
+>
 
-but the current code only checks the last condition and nothing
-else.  I dunno.
+Makes sense.
+
+>>  #endif /* REFS_REFS_INTERNAL_H */
+>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+>> index 6104471199..7a03922c7b 100644
+>> --- a/refs/reftable-backend.c
+>> +++ b/refs/reftable-backend.c
+>> @@ -938,7 +938,28 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>>  		 * individual refs. But the error messages match what the files
+>>  		 * backend returns, which keeps our tests happy.
+>>  		 */
+>> -		if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
+>> +		if ((u->flags & REF_HAVE_OLD) &&
+>> +		    (u->flags & REF_SYMREF_UPDATE) &&
+>> +		    u->old_ref) {
+>> +			if   (strcmp(referent.buf, u->old_ref)) {
+>
+> s/   / /
+>
+>> +				if (!strcmp(u->old_ref, ""))
+>> +					strbuf_addf(err, "cannot lock ref '%s': "
+>> +						    "reference already exists",
+>> +						    original_update_refname(u));
+>> +				else if (!strcmp(referent.buf, ""))
+>> +					strbuf_addf(err, "cannot lock ref '%s': "
+>> +						    "reference is missing but expected %s",
+>> +						    original_update_refname(u),
+>> +						    u->old_ref);
+>> +				else
+>> +					strbuf_addf(err, "cannot lock ref '%s': "
+>> +						    "is at %s but expected %s",
+>> +						    original_update_refname(u),
+>> +						    referent.buf, u->old_ref);
+>
+> I'd use better-matching error messages here. I know that we talk about
+> "cannot lock ref" in the next branch, as well. But the only reason we
+> did this is to have the same error messages as the "files" backend.
+> Semantically, those errors don't make much sense as the "reftable"
+> backend never locks specific refs, but only the complete stack.
+>
+
+Fair enough, will change.
+
+>> +				ret = -1;
+>> +				goto done;
+>> +			}
+>> +		} else if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
+>>  			if (is_null_oid(&u->old_oid))
+>>  				strbuf_addf(err, _("cannot lock ref '%s': "
+>>  					    "reference already exists"),
+>> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+>> index ec3443cc87..d8ffda4096 100755
+>> --- a/t/t1400-update-ref.sh
+>> +++ b/t/t1400-update-ref.sh
+>> @@ -890,17 +890,23 @@ test_expect_success 'stdin update/create/verify combination works' '
+>>  '
+>>
+>>  test_expect_success 'stdin verify succeeds for correct value' '
+>> +	test-tool ref-store main for-each-reflog-ent $m >before &&
+>>  	git rev-parse $m >expect &&
+>>  	echo "verify $m $m" >stdin &&
+>>  	git update-ref --stdin <stdin &&
+>>  	git rev-parse $m >actual &&
+>> -	test_cmp expect actual
+>> +	test_cmp expect actual &&
+>> +	test-tool ref-store main for-each-reflog-ent $m >after &&
+>> +	test_cmp before after
+>>  '
+>>
+>>  test_expect_success 'stdin verify succeeds for missing reference' '
+>> +	test-tool ref-store main for-each-reflog-ent $m >before &&
+>>  	echo "verify refs/heads/missing $Z" >stdin &&
+>>  	git update-ref --stdin <stdin &&
+>> -	test_must_fail git rev-parse --verify -q refs/heads/missing
+>> +	test_must_fail git rev-parse --verify -q refs/heads/missing &&
+>> +	test-tool ref-store main for-each-reflog-ent $m >after &&
+>> +	test_cmp before after
+>>  '
+>
+> The updated tests merely assert that the refs didn't change, right?
+>
+
+Yes, also that we didn't add anything unexpected to the reflog.
+
+
+>>  test_expect_success 'stdin verify treats no value as missing' '
+>> @@ -1641,4 +1647,74 @@ test_expect_success PIPE 'transaction flushes status updates' '
+>>  	test_cmp expected actual
+>>  '
+>>
+>> +create_stdin_buf ()
+>> +{
+>
+> The curly brace should go on the same line as the function name.
+>
+
+Right, will change.
+
+>> +	if test "$1" = "-z"
+>> +	then
+>> +		shift
+>> +		printf "$F" "$@" >stdin
+>> +	else
+>> +		echo "$@" >stdin
+>> +	fi
+>> +}
+>> +
+>> +for type in "" "-z"
+>> +do
+>
+> We should probably indent all of the tests to make it easier to see that
+> they run in a loop.
+>
+> Patrick
+>
+
+I was a bit confused about this, I saw smaller tests with loops
+indented, while some larger ones not indented. I think its better to do
+so too, let me do that.
+
+--000000000000ad618906167a1c3a
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 81370a2799ccf95d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZaTU3c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFpIREFDUTQwZ25IeWFlNVpJcUx6anVoazl3T1FXTQpjMFZockQvZFdi
+emJNS1pCcU9BdWRMM2dEMVZXMFBWODIzdkU2R2FYUmYxKzhrZklwYWRFMkh6ZWNLZ01mTFYrCmEz
+cVIwZnJpd0ZkYTJCNi8zbXBlV0J0cENkQXN1UTNlMm9IVHZXSk9oWW9TZlFWUnR2QzlsWk1YWnoy
+MXZ0NUUKQ2tPRTR0czJkRmdzbEpwUFh2U0txUWcvNFpNeXdIT3VYUVhSZGpmTFdNc2dVVW9FemR1
+cUdGdDJ6aWpYeUhEbApkNUxQcVZkMGZEenlDY0piWEpyNVFReS9nNTd4OUM4dE5vaVhXQkFlOUZJ
+TmIrZUhmT2E2T0wvQ1BVQzRlWVhzCnNOYkN0anBmV054TnhqbTFDT293N2pzUERjQURMMmxLUzBw
+Kzc1YjFaakFUcG91d3VHK2dwSjRuSXBnQ2VIOVQKSjJESTFhMld3Z244aGdzVjZQaGRONmxuREw5
+eUpwZld2YnlBME04ejRlOW5acHdtdWxIYjBkZmRLYldCQVVuYgp0Mm5EbUl0ZmVtcHRvVWNaNFM3
+SVVLZ2JUaHBaNFRsb0lmckQ0NGgyUnBiQm5mVVBnbWlWMjZjdWluSFBIRndjCjhOcHFIYWRxVVU1
+eGNzdFdBWktBT29XL0gwd3cwU0o2YnRLY1hBVT0KPXUxTC8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ad618906167a1c3a--
