@@ -1,41 +1,41 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECBB137E
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 03:05:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD41F137E
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 03:07:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713495939; cv=none; b=fdjwNL5VHumW1PNytNRh3XyB8ZtvlX7RO2+Qqg2VWavpad2pNQZ/oQsrchyJeDq1e5n5ESl25Uxz26/OYpZNS8BGHocYrGsXHA01Eh97Hl8J+uowMEqc/OXA099n19BJ14TpltmA3iGEgzp5ds5AchG6udIFOa+EYbROCsl6LnI=
+	t=1713496046; cv=none; b=FNcZpOyvFaraSNpLzpYt+7g+4+G7eQtbLcG4XG6LUBD+0M9jVZ0LfO/efwhdH5cTi9CCoV7AJv6kwNau/4JxG47u42+aYNO0+azGcg1qM85UoHso3j5schIpoSYdAJwFnv2IUh8z//tg3fSeVFnyw/lDGdofLlZBdICZrhZSECc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713495939; c=relaxed/simple;
-	bh=aXnnOsBxMqmIE59mMH13oMvjeNScVe4zoTuiXWiG0E8=;
+	s=arc-20240116; t=1713496046; c=relaxed/simple;
+	bh=zOkUYyTAJZ89dWPJ+FK99zc+t2UhqKzXbf50ccoAULU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l3Btac5x0xpDbzKaK5DHWJhHGEcamJ2aNpVIWijUBwxF2GKGBiINRl4lqCudzFyjzglSZo2vvG8eLD3jNW3nvynEEVrwGEPI4TC9iuUwu4SZ9rgzGb79+n9MLx7PX+jtHzMEEvnOKqPajXBTXX6KLdVfzUVVTUNRrJHvNO0iRIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
+	 To:Cc:Content-Type; b=If3pODQrqZtcR2AVLgPERFhT/FIaSN5iEpws4bTRQTfxbGwDvfWQTsx9SvKFlCzgwOdwy9z2E2Nq4xasY1prgQEnljrj/S1W7OKqAVlKWaMZ6GzqvqddKUeJZ/wSOEHC9LLh+vu/VbB/TPaC2cvaOdUTp+WbupdoLPL342TtQjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-69b4454e2f1so7197976d6.0
-        for <git@vger.kernel.org>; Thu, 18 Apr 2024 20:05:36 -0700 (PDT)
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-69cb4a046dfso6104996d6.2
+        for <git@vger.kernel.org>; Thu, 18 Apr 2024 20:07:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713495936; x=1714100736;
+        d=1e100.net; s=20230601; t=1713496044; x=1714100844;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4kzI7KuL0zpZZ0qaRNebfP95omOZGTrwEbXBMDcNzK0=;
-        b=pdAR7bt9USUnuCxq7NCbCYU0YCEVNh99s3NuRMx+MVdu+b2EhlmkLu/E11JG4GozVd
-         I82uhloDg2Dgj6lsaTKas8sPT/hkqZimrbOPNbBzsFcoQUnD1cXU1W6isTdslvJA43qH
-         46bTA1gOOE9FNEpY5S72K5OazYZFc1K08N/zfIoYiS5E59wPXel7mG08iuc0dGryEzQx
-         j/AWr5/p+7fagcN6q2uvf1HiPW1I6b+YSH8CttuFnL6NCARFsJReyG3OxbFQgVd0uDto
-         iuLKGc/yYqvDjCYWP17ruawe6FK7dWaftRFqHGO90D5nzeiJ8NIbUwdrUixDwuoamxYy
-         YEYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWKa+VBfaCTA5MUpVZs1HV2g0FD6EjActuYVOEOEY0WWD8kWrSI/4deoDT5q20qr6DFv9LrDirjxunLPSlgFFiYWsU4
-X-Gm-Message-State: AOJu0Yx4mvc0TWWQhwb23d1GHLAVX0kG6pSLCTjpFKLqbGwNdnvHkXXN
-	eohC3eytubNlORFFrbsWjZDlgInKUWot/yOLfFC97DcOu6yrpDvk5tv+1ADvwjEUJAA9tT9+AAW
-	hYO0MGHTY0hPvx6vz+ZxoMQSWbSM=
-X-Google-Smtp-Source: AGHT+IFEmKukfwPjoYy8EYuuGQkc0tjMtPgrrjkysyo44sVgGtZGAuZ46CwCjlSRBbfb7gkF2Ys/yBeENNqZ5EmiWY8=
-X-Received: by 2002:a05:6214:1101:b0:6a0:584d:3e55 with SMTP id
- e1-20020a056214110100b006a0584d3e55mr953366qvs.7.1713495935848; Thu, 18 Apr
- 2024 20:05:35 -0700 (PDT)
+        bh=oicPEW1HLiHSEeVfQ5+jUpUzTQ13mYJEQggXo7wq5e8=;
+        b=SpELKJdVZhX2lskqlbhp62B7IEVlDRP2RxfFdJmfU+u8xuQip9wd/2AUDgCowfVBnp
+         wh9PvbxyT4iCZp2Ig0sbU1ILKejOl8jFcLfe8ZGOf4OivfV1ffsBY0KSkySYdANSMOEC
+         TFUAgK0K1poZ8fIwXX7R32MB8SsmVbZYILrZzOIHoJpCKCmHWt5WjJbA/GxEQu7HZN1n
+         Eb5hi+W2a79CdgS8zcNlnfp8c3xTe5Td/LXF3ECMqZElwqCcFACUo4PLEVlghpvyNeRe
+         WonNQ9k/DtS7ni7k52QP4za8+T03csyp9Blz5KsIecj1VFHjFl6wGd2irbKJgHJCGcG3
+         POPw==
+X-Forwarded-Encrypted: i=1; AJvYcCUJHeX1a+puK6a5rt9npwXs9jXzdGDfzQRC8M2Sj2u398CAp+R5gqxVCr9JMEc73WpQwJqQ2M+1zb8GbuTTvHLW9zIp
+X-Gm-Message-State: AOJu0YzDAqycUh/9F7Hs2m7ttrhKHAm1UUXt/I4CjWC17BrZMcVvj77w
+	nTHVhlXoHTerEhOVN9c7rotZX2dI9+7sD1uWcUZ70zxyahSdZmntCeksZWLgFZYLGOLkPPKDpN6
+	QBgHU8Sd53LkDXQNVtjHjKuEvIr0=
+X-Google-Smtp-Source: AGHT+IHOxrbGlj7Om4CfH24xBRsfKhXZ+Jjc5dc0niBmmUL+1XV7B506Db/PesdHUQZTLJywcuKvBxU/tTSHtH87RFk=
+X-Received: by 2002:a05:6214:c63:b0:69f:db85:ee9a with SMTP id
+ t3-20020a0562140c6300b0069fdb85ee9amr1125688qvj.59.1713496043809; Thu, 18 Apr
+ 2024 20:07:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,21 +47,21 @@ References: <cover.1713324598.git.dsimic@manjaro.org> <1d9c6ce3df714211889453c24
  <c2cb9268c29ae4a5cac34383b7443763@manjaro.org> <xmqqle5b66sr.fsf@gitster.g>
  <19d5f3d4c99fc1da24c80ac2a9ee8bf8@manjaro.org> <84dcb80be916f85cbb6a4b99aea0d76b@manjaro.org>
  <xmqq5xwepafi.fsf@gitster.g> <CAPig+cT9A9N=zGZDXuB+c17L8hZ-h5zvZgD5W-8VYqiM9QaBew@mail.gmail.com>
- <a24045ae382f91fed6a499d93690e31f@manjaro.org>
-In-Reply-To: <a24045ae382f91fed6a499d93690e31f@manjaro.org>
+ <xmqqedb2nlpf.fsf@gitster.g>
+In-Reply-To: <xmqqedb2nlpf.fsf@gitster.g>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 18 Apr 2024 23:05:24 -0400
-Message-ID: <CAPig+cQHyDbnZGXJ0qjfn6JcOv3V=_RgZGMNnxkd4OcVfaE-sA@mail.gmail.com>
+Date: Thu, 18 Apr 2024 23:07:12 -0400
+Message-ID: <CAPig+cRpxvYAJpHahsWxRP=ekr9wwWoxK9_c0vRehDiuzgP72g@mail.gmail.com>
 Subject: Re: [PATCH 3/4] format-patch: new --resend option for adding "RESEND"
  to patch subjects
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Dragan Simic <dsimic@manjaro.org>, Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 18, 2024 at 8:45=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
-rote:
-> On 2024-04-19 02:15, Eric Sunshine wrote:
+On Thu, Apr 18, 2024 at 10:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 > > I do understand and am sympathetic to the desire to reduce the typing
 > > load (hence, the original `--resend` proposal), but I have difficulty
 > > believing that `git format-patch` is so commonly used throughout the
@@ -71,20 +71,12 @@ rote:
 > > `--label=3DWIP` (or `--rfc=3DWIP` or whatever) over the existing more
 > > general `--subject-prefix`.
 >
-> An additional reason, IMHO, for having "--rfc", "--rfc=3D<string>"
-> or "--resend" is to reuse what's already configured through the
-> "format.subjectPrefix" configuration option.  In the sense of not
-> redefining what's already configured in ~/.gitconfig (in this case,
-> "PATCH" or "PATCH lib", for example), by specifying an additional
-> command-line option.
->
-> If some user configures different values for "format.subjectPrefix"
-> in different local repositories, such as when working on different
-> subsystems, it becomes rather easy to get lost in all those prefixes,
-> if the user needs to remember and type them entirely while using
-> "--subject-prefix=3D<string>" to add more "labels" to a prefix.
->
-> I hope it makes sense the way I wrote it above.
+> I am not interested in adding unbounded number of --wip and the like
+> at all, but the value you seem to be missing of the separate "--rfc"
+> is that there are folks who configure something other than "PATCH"
+> to "format.subjectPrefix".  They do not want to keep typing
+> --subject-prefix=3D"PATCH net-next" on the command line, so they use
+> the configuration variable, which is "set it once and forget".  The
+> stress is on the fact that they can forget about it.
 
-Yes, that makes sense. I wasn't aware of that behavior, as I have
-never had a need to set that configuration.
+Indeed. I was unaware of that behavior.
