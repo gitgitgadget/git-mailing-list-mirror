@@ -1,88 +1,103 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38701E502
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 18:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7577494
+	for <git@vger.kernel.org>; Fri, 19 Apr 2024 18:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713550802; cv=none; b=YZZ99WRqA7j5dfCgyaUIvCdgdejJT10rqJDszpkGHJB6XOOehjoHxza0dldXwzKcj+5vUbOEagcwkYCXLjctOUAxz+uplonP7PUjxjZpMuT9lP1HdpRaEtibDhKa8JZl/24j+Dup0mtVVnBYcz20JDdRPVlK2tv4TeEQG9ZG/tw=
+	t=1713552423; cv=none; b=jq3HDHkqcXHLmLWlWTlEary61LFGPnhhqXnXNwmX+RBqev9fvWnAxFpG9fosJ1xCvVSXBmz63mLAfuGspI3MWeDmE4EsXXBLHnpKjpQ2iwhFPrevpnUzDZfwpn6j1gSFoVcT8v4lVcKJ2G6InNn/y6vMPHLX6j36ZLk3OjL9nvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713550802; c=relaxed/simple;
-	bh=4fKVIdz6xzwDbKlfLKB5Llsy8BbQ5hvA7y22Qx/yFIA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bagz3RkDcY5hdqu2q9gcFymUYq9K9EbNdsSfKYpHWW2p9eFiyFzCuhnbowB43WwRGGh8PYPTQURFa5jRmvomWVulxpl/QbNkcj6vHP801aRKA42mXE9+V0CsWxDyI//TNHW8F7nCY/lT0Ete8oRBpFR8WiluqWC8tBjKmoqCrnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RGzFZxrA; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713552423; c=relaxed/simple;
+	bh=moaylAbfbPmy4ul+prmmtTy3LyPN1fL3zX1LLmHLCuo=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Qe/sjGpIhclZEuXsgKDFG5Upl/ikEynmRsb00ytEb0QwzHhVZQwI36zo1E0ZO9pVLdljdEegNKlks4FRMoqUQvMzOCURZq6NGr/WK/F5+lYMhotuWtaWjl0ipj1SyXfBmtqiYm59/0sUgHjlT0/+UhqAxeomWm/dkT6VWdRgNfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qgExLHoC; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RGzFZxrA"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F817332F3;
-	Fri, 19 Apr 2024 14:20:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=4fKVIdz6xzwDbKlfLKB5Llsy8BbQ5hvA7y22Qx
-	/yFIA=; b=RGzFZxrAdW4gg+G5igMEOIyFcn9QTLe7ie8cwAq86/VKb280KL0QKc
-	g4pRXTTTwPyIuW8GmAQslfGlw5DoVn5hncicMWrlHEjAqXU72cSUZaGOVCuYaNDA
-	FNredkWe668A+JFTQtcibTiLs7cho8qQ4Z6zDILFcvnf4ceSvtCsM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7766A332F2;
-	Fri, 19 Apr 2024 14:20:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.229.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F1793332F1;
-	Fri, 19 Apr 2024 14:19:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Dragan
- Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH] format-patch: allow --rfc to optionally take a value,
- like --rfc=WIP
-In-Reply-To: <20240419180012.GA523357@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 19 Apr 2024 14:00:12 -0400")
-References: <xmqqzftqnuxq.fsf@gitster.g>
-	<20240419180012.GA523357@coredump.intra.peff.net>
-Date: Fri, 19 Apr 2024 11:19:55 -0700
-Message-ID: <xmqq1q71jjuc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qgExLHoC"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2a4b48d7a19so2201104a91.1
+        for <git@vger.kernel.org>; Fri, 19 Apr 2024 11:47:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1713552421; x=1714157221; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=U1/j7gNdC7d5vQvfJo80iF5LlQmxrdZgDvHoBFO6DIo=;
+        b=qgExLHoCkKvuwi6TKJwFZj+4IM2Z9J4RZGi6gXExDNcK/UqIrQyQct/KiHwO1KnXlF
+         cA1HDMm27a9zg9PyY95cBhKRcS1IuTw6+fyO/t8FO27lk2+TfhKkYQP5ItVq6+4lHCeb
+         O90xZhRDxIhd+Uhj7kPiMNjooFgpPUI3x19OXFVXWcaqWCXRzD9NkburGG5GAvJIA6sg
+         7rL1m2nghCBPWc6cJ4m2RQprEO4a7U/kkK5fbuyKhlTPGMeRao7h9cXps5PUoXCB89Gr
+         o7IPc2B3jG3aOxnQPaH7NNB5+uPs852pMo+2f4HSsYWltKEI+EHzVFzdPzNwyV/aIspX
+         zfXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713552421; x=1714157221;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U1/j7gNdC7d5vQvfJo80iF5LlQmxrdZgDvHoBFO6DIo=;
+        b=PXGBdf/DKFMlPtEFbnmV4Gt3lCimkZJzgVoDrDdxITZfu8zzJYr18OpjR/ToLrmuXd
+         +ddl9EIjPBjD4GuxmIfTjrEqJN/Y9dk7Vl2grEafXsFJ9lgtxAlQboi1aLtUYhhZKBwA
+         Lkf9CK+E5FBhbHrPB2Jv+XhmnWjstBlpitHmLSRtx5Yp5NTz//R/CPOy8beCdEKdZ1Q/
+         0ZeSpzX1Rjl/OePcJ4d9WrNgoeufMLHhe9RhAUrNEdyn1hC2TuOXdeNTHkKMHxIgqD08
+         uvzRVGLg1lFhK8vEE24ioE7ZymvxX2IIEZ4R/kY0kSgELfAuFkQfbUOJ19GlI646Ri8b
+         L+SA==
+X-Forwarded-Encrypted: i=1; AJvYcCXAPTy9ZQ0GcNXKW5xPZQ9YOcclPw96sSgQsLkD/gAUdn6lV7rX8Nj1ziP4sK+5Z+EUmGT1LuCHXHDIdiAqS1Qr0ssK
+X-Gm-Message-State: AOJu0YyYPjL3qYbN8JZN/lLl/rg658A8CYhRSb3J175KRMIWHL4+JMOM
+	AoDFagRkD1D8/rPMfF3FjmeyWsm/rzRF6qNkJO1Trs+iwby1+5rJgGPBUqRbpdRPkV0pNR5JSsE
+	AxA==
+X-Google-Smtp-Source: AGHT+IFiEF+SVrpB+Z1bVAM+BjnvX22WvyGW+QXcLGM3qgFdarXgZrsd3h241P5uzJjYfeiik/AnouN/ocE=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:90b:8a:b0:2ab:b450:ea9 with SMTP id
+ bb10-20020a17090b008a00b002abb4500ea9mr34197pjb.4.1713552421267; Fri, 19 Apr
+ 2024 11:47:01 -0700 (PDT)
+Date: Fri, 19 Apr 2024 11:46:59 -0700
+In-Reply-To: <e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6D1AA998-FE79-11EE-8CB3-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Mime-Version: 1.0
+References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
+ <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com> <e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
+Message-ID: <owlya5lp5gws.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 2/8] trailer: add unit tests for trailer iterator
+From: Linus Arver <linusa@google.com>
+To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>, Junio C Hamano <gitster@pobox.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Thu, Apr 18, 2024 at 03:54:25PM -0700, Junio C Hamano wrote:
->
->> ---rfc::
->> -	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
->> -	default). RFC means "Request For Comments"; use this when sending
->> -	an experimental patch for discussion rather than application.
->> +--rfc[=<rfc>]::
->> +	Prepends the string _<rfc>_ (defaults to "RFC") to
->> +	the subject prefix.  As the subject prefix defaults to
->> +	"PATCH", you'll get "RFC PATCH" by default.
->> ++
->> +RFC means "Request For Comments"; use this when sending
->> +an experimental patch for discussion rather than application.
->> +"--rfc=WIP" may also be a useful way to indicate that a patch
->> +is not complete yet.
->
-> It's probably worth spelling out WIP here, too, like:
->
->   ...is not complete yet ("WIP" stands for "Work In Progress").
->
-> These are necessarily going to be project-specific phrases, and readers
-> of the manpage may not be familiar with our conventions.
+> From: Linus Arver <linusa@google.com>
+> 
+> [...]
+> 
+> +		{
+> +			"with non-trailer lines (only 1) in trailer block, but no Git-generated trailers",
+> +			"subject: foo bar\n"
+> +			"\n"
+> +			/*
+> +			 * This block has only 1 non-trailer out of 10 (IOW, 90%
+> +			 * trailers) but is not considered a trailer because the
 
-Good point.  Will squash in.
+s/a trailer/a trailer block
 
+> +			 * 25% threshold only applies to cases where there was a
+> +			 * Git-generated trailer (see git_generated_prefixes[]
+> +			 * in trailer.c).
+> +			 */
+> +			"Reviewed-by: x\n"
+> +			"Reviewed-by: x\n"
+> +			"Reviewed-by: x\n"
+> +			"Helped-by: x\n"
+> +			"Helped-by: x\n"
+> +			"Helped-by: x\n"
+> +			"Acked-by: x\n"
+> +			"Acked-by: x\n"
+> +			"Acked-by: x\n"
+> +			"not a trailer line\n",
+> +			0
+> +		},
