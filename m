@@ -1,309 +1,193 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E548329D08
-	for <git@vger.kernel.org>; Fri, 19 Apr 2024 22:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C447F17C
+	for <git@vger.kernel.org>; Sat, 20 Apr 2024 00:14:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713564101; cv=none; b=RZXRZGMJUfIHkZqgbPjGh+c89EY3gyX/KRtavjkCW0+vq9+P+wKwx7xNm2lwncYvtUUKGZSzTKc7CkUK3+OUuRpOkngK16OGyMgRkYFqTKkUrZtLKexuD4qxWkMoGXkLyzmPI7uff0u1c7Wf+wa883sqod9VDif2NtT4VuELIl0=
+	t=1713572044; cv=none; b=GRWoXi2JlYOz3PG+gisPMFXxKGFsCiqFpT8LiLZCoctBxJZnvGkDkKbyGvU1VoB2TXn2fd6efD9KXSvnyIor+fWddUGvfqfKyIipFP6rZHGWyZ0LVO33JBfUiZE2u3YF+WrqEokLA3XceOFg3ctGrgLO+MzPohDYaLDB7Lz3hPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713564101; c=relaxed/simple;
-	bh=LXYHgnGrSyQZZm7MoiRXhK+IHLHsv8I6/IYEzrWIkPc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RxsDMbnrPXLusa/1X748mzi+D6QnxdJSMd1S/qOZ0WpccPwjHgfrxuLyNVnvOv9zlkVpApWhj2NoJ4E+iccDD4uTiRhNWVru1rf4kZ9HOlacljkIEU10l0x7sV2NscYJSBLxB3mc1Zz4pzFlmzM1lWfoimxZNSfKgdXGJZDsmuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D/zbEJx9; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713572044; c=relaxed/simple;
+	bh=dp3CSnHQ3AkqzSux7yAuBaQzP/ZkiB1Uub6XkwXIjKI=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=QphMDkG/MOop7xr2SyzklutyqmyY4NW/rEFxybVF3C+7Oi9zKe1aItDNX5ffYVoDA8/Y4bihWrAzwTIlhNzOA4110AuDXhfHCv9X+PRacftE/guQvba9o+fhBqYl7x3WPZhEK9Q1wb/3rBMcCa5qdfmcdPWfLXUQ7pbOtLn+wsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FUcj7WTq; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D/zbEJx9"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7FC27348CE;
-	Fri, 19 Apr 2024 18:01:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LXYHgnGrSyQZZm7MoiRXhK+IHLHsv8I6/IYEzr
-	WIkPc=; b=D/zbEJx94Pt2IzqTh5f7foCTiTc35dBFPN3pHq5olzb8Oebs7FPjZS
-	+yIUERX65tZJS6QK0zbRLrfjAvXuGo72Ym2ilGp+u4NVgRBF/X9YvC2JPSLbgMdB
-	srNvR4UYtNSxPyyZcEgzN8rINLkdp8AzsrmqkbR0yPDmMOK+3O458=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 77B63348CD;
-	Fri, 19 Apr 2024 18:01:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C18E4348CB;
-	Fri, 19 Apr 2024 18:01:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Dragan Simic
- <dsimic@manjaro.org>
-Subject: [PATCH v2] format-patch: allow --rfc to optionally take a value,
- like --rfc=WIP
-In-Reply-To: <xmqqzftqnuxq.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	18 Apr 2024 15:54:25 -0700")
-References: <xmqqzftqnuxq.fsf@gitster.g>
-Date: Fri, 19 Apr 2024 15:01:34 -0700
-Message-ID: <xmqqy1993tc1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FUcj7WTq"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-de463fb34c9so5231039276.3
+        for <git@vger.kernel.org>; Fri, 19 Apr 2024 17:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1713572042; x=1714176842; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+irKz1ci5EfkHFjdKN//PQZLljRemUoeHa/5tQB1SAc=;
+        b=FUcj7WTqK1Krxb6ZNUUIUXEbmhiw34RqpDhW1vJ1PAftzK6RmQz1xoiQLw7Tr2tDM6
+         bXJr7Gq6FnZ6EDqiAng/5hVfQpSL8yW73gpLy4xcfUxkRLSiPKBu1nl1wa0R9vF5X6gA
+         vXr+sIFEp0RICT0oUnrnVx1/6f34HIj+uS8NAi5AUEBtZiSaWJT9cDSaTf1w9+HSzuiY
+         aTuTOuA8qJFnrCOvGMgONOuPbaLaKODzz1PCrMRRylLIk2sZTm/fx5eEQY0Fq4HuS5GU
+         d+bc+hczXQyeOczSsdDuV8Hl1+uSq7gcEfHIsuakmSNbCIe5FNyFCtR3cwBzFQJp/pwH
+         AwPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713572042; x=1714176842;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+irKz1ci5EfkHFjdKN//PQZLljRemUoeHa/5tQB1SAc=;
+        b=NDnZb4BqmGqiFdPQ4gdTL0D+TqaQtPqmB0vpGyAa5CAPD/JWnrOxz+1prXx3YWvdyQ
+         hemb1uBwEQU0y+h3CmWWJINUK0iooCkR34Ebg7KugvcjdLH3Y37Xn6xD+smFq0NAbgCA
+         0Qd1Pmn30aXrpD92DcztHRxinYnaGADi7sLKNmp3xHdxFVX5VzktzlLv3q6p3qjlJ4A3
+         fyFkAjI0YcXl0L+8N/1//9bupezgomOS58eJDd1BJViP/i+fYr2JKNzn7KeZcLgryCt1
+         9YoaRHJE0L/u98esK27ya6PuEenUFIu5BRjrMBkLGv0vO4vAIEVJ7qBmrT2oE4NajMDV
+         EiXQ==
+X-Gm-Message-State: AOJu0YwTNfYkvqJpQqFTZ/tv9+QrcXdhVB9fxAr0fupE0JGTjIpeJX7L
+	gXw/eOn57P6PT4fPbQ1zgrGk9DPDLBnMnkcW1inepzPElTq2QZF/ytuGoceKe8wKye9NA2IuXA1
+	fTQ==
+X-Google-Smtp-Source: AGHT+IFCeNTI1hHEUek0010NvQTQf12lbml6yd2hUn6x391DLdOkLk+cfVqczuK329VreKJLrMme0LuL0/M=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:1243:b0:dc6:44d4:bee0 with SMTP id
+ t3-20020a056902124300b00dc644d4bee0mr337358ybu.7.1713572041750; Fri, 19 Apr
+ 2024 17:14:01 -0700 (PDT)
+Date: Fri, 19 Apr 2024 17:14:00 -0700
+In-Reply-To: <xmqq5xwd58b9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 63CF374A-FE98-11EE-AC31-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Mime-Version: 1.0
+References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
+ <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com> <e1fa05143ac63e8fe8dbc8ccb76a89b7a008c412.1713504153.git.gitgitgadget@gmail.com>
+ <xmqq5xwd58b9.fsf@gitster.g>
+Message-ID: <owly7cgs6gc7.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 2/8] trailer: add unit tests for trailer iterator
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
 
-With the "--rfc" option, we can tweak the "[PATCH]" (or whatever
-string specified with the "--subject-prefix" option, instead of
-"PATCH") that we prefix the title of the commit with into "[RFC
-PATCH]", but some projects may want "[rfc PATCH]".  Adding a new
-option, e.g., "--rfc-lowercase", to support such need every time
-somebody wants to use different strings would lead to insanity of
-accumulating unbounded number of such options.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Allow an optional value specified for the option, so that users can
-use "--rfc=rfc" (think of "--rfc" without value as a short-hand for
-"--rfc=RFC") if they wanted to.
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> +UNIT_TEST_PROGRAMS += t-trailer
+>>  UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+>>  UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
+>>  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+>
+> Totally offtopic, but does it bother folks who are interested in
+> adding more unit tests that they do not seem to interact very well
+> with GIT_SKIP_TESTS environment variable?
 
-This can of course be (ab)used to make the prefix "[WIP PATCH]" by
-passing "--rfc=WIP".  Passing an empty string, i.e., "--rfc=", is
-the same as "--no-rfc" to override an option given earlier on the
-same command line.
+FWIW I am not bothered (not that I've actually used GIT_SKIP_TESTS)
+mainly because the unit tests finish so quickly.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-Range-diff against v1:
-1:  4077ed52e8 ! 1:  bffe0055d0 format-patch: allow --rfc to optionally take a value, like --rfc=WIP
-    @@ Commit message
-     
-         Allow an optional value specified for the option, so that users can
-         use "--rfc=rfc" (think of "--rfc" without value as a short-hand for
-    -    "--rfc=RFC").
-    +    "--rfc=RFC") if they wanted to.
-     
-         This can of course be (ab)used to make the prefix "[WIP PATCH]" by
-    -    passing "--rfc=WIP".
-    +    passing "--rfc=WIP".  Passing an empty string, i.e., "--rfc=", is
-    +    the same as "--no-rfc" to override an option given earlier on the
-    +    same command line.
-     
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-    @@ Documentation/git-format-patch.txt: the patches (with a value of e.g. "PATCH my-
-     +RFC means "Request For Comments"; use this when sending
-     +an experimental patch for discussion rather than application.
-     +"--rfc=WIP" may also be a useful way to indicate that a patch
-    -+is not complete yet.
-    ++is not complete yet ("WIP" stands for "Work In Progress").
-      
-      -v <n>::
-      --reroll-count=<n>::
-    @@ builtin/log.c: static int subject_prefix_callback(const struct option *opt, cons
-     +{
-     +	struct strbuf *rfc;
-     +
-    -+	BUG_ON_OPT_NEG(unset);
-     +	rfc = opt->value;
-     +	strbuf_reset(rfc);
-    -+	strbuf_addstr(rfc, arg ? arg : "RFC");
-    ++	if (!unset)
-    ++		strbuf_addstr(rfc, arg ? arg : "RFC");
-     +	return 0;
-     +}
-     +
-    @@ builtin/log.c: int cmd_format_patch(int argc, const char **argv, const char *pre
-      		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
-      			    N_("max length of output filename")),
-     -		OPT_BOOL(0, "rfc", &rfc, N_("use [RFC PATCH] instead of [PATCH]")),
-    -+		OPT_CALLBACK_F(0, "rfc", &rfc, N_("extra"),
-    -+			       N_("add <extra> (default 'RFC') before 'PATCH'"),
-    -+			       PARSE_OPT_NONEG|PARSE_OPT_OPTARG, rfc_callback),
-    ++		OPT_CALLBACK_F(0, "rfc", &rfc, N_("rfc"),
-    ++			       N_("add <rfc> (default 'RFC') before 'PATCH'"),
-    ++			       PARSE_OPT_OPTARG, rfc_callback),
-      		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
-      			    N_("cover-from-description-mode"),
-      			    N_("generate parts of a cover letter based on a branch's description")),
-    @@ builtin/log.c: int cmd_format_patch(int argc, const char **argv, const char *pre
-      		strbuf_addf(&sprefix, " v%s", reroll_count);
-     
-      ## t/t4014-format-patch.sh ##
-    -@@ t/t4014-format-patch.sh: test_expect_success '--rfc' '
-    +@@ t/t4014-format-patch.sh: test_expect_success 'empty subject prefix does not have extra space' '
-      	test_cmp expect actual
-      '
-      
-    -+test_expect_success '--rfc=WIP' '
-    +-test_expect_success '--rfc' '
-    ++test_expect_success '--rfc and --no-rfc' '
-    + 	cat >expect <<-\EOF &&
-    + 	Subject: [RFC PATCH 1/1] header with . in it
-    + 	EOF
-    + 	git format-patch -n -1 --stdout --rfc >patch &&
-    + 	grep "^Subject:" patch >actual &&
-    +-	test_cmp expect actual
-    ++	test_cmp expect actual &&
-    ++	git format-patch -n -1 --stdout --rfc --no-rfc >patch &&
-    ++	sed -e "s/RFC //" expect >expect-raw &&
-    ++	grep "^Subject:" patch >actual &&
-    ++	test_cmp expect-raw actual
-    ++'
-    ++
-    ++test_expect_success '--rfc=WIP and --rfc=' '
-     +	cat >expect <<-\EOF &&
-     +	Subject: [WIP PATCH 1/1] header with . in it
-     +	EOF
-     +	git format-patch -n -1 --stdout --rfc=WIP >patch &&
-     +	grep "^Subject:" patch >actual &&
-    -+	test_cmp expect actual
-    -+'
-    -+
-    ++	test_cmp expect actual &&
-    ++	git format-patch -n -1 --stdout --rfc --rfc= >patch &&
-    ++	sed -e "s/WIP //" expect >expect-raw &&
-    ++	grep "^Subject:" patch >actual &&
-    ++	test_cmp expect-raw actual
-    + '
-    + 
-      test_expect_success '--rfc does not overwrite prefix' '
-    - 	cat >expect <<-\EOF &&
-    - 	Subject: [RFC PATCH foobar 1/1] header with . in it
+>
+>> diff --git a/t/unit-tests/t-trailer.c b/t/unit-tests/t-trailer.c
+>> new file mode 100644
+>> index 00000000000..147a51b66b9
+>> --- /dev/null
+>> +++ b/t/unit-tests/t-trailer.c
+>> @@ -0,0 +1,175 @@
+>> +#include "test-lib.h"
+>> +#include "trailer.h"
+>> +
+>> +static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
+>> +{
+>> +	struct trailer_iterator iter;
+>> +	size_t i = 0;
+>> +
+>> +	trailer_iterator_init(&iter, msg);
+>> +	while (trailer_iterator_advance(&iter)) {
+>> +		i++;
+>> +	}
+>
+> Unnecessary {braces} around a single-statement block?
 
- Documentation/git-format-patch.txt | 15 ++++++++++-----
- builtin/log.c                      | 22 ++++++++++++++++++----
- t/t4014-format-patch.sh            | 21 +++++++++++++++++++--
- 3 files changed, 47 insertions(+), 11 deletions(-)
+Gah, I blame writing too much Go. Will fix.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 728bb3821c..e553810b1e 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -20,7 +20,7 @@ SYNOPSIS
- 		   [--in-reply-to=<message-id>] [--suffix=.<sfx>]
- 		   [--ignore-if-in-upstream] [--always]
- 		   [--cover-from-description=<mode>]
--		   [--rfc] [--subject-prefix=<subject-prefix>]
-+		   [--rfc[=<rfc>]] [--subject-prefix=<subject-prefix>]
- 		   [(--reroll-count|-v) <n>]
- 		   [--to=<email>] [--cc=<email>]
- 		   [--[no-]cover-letter] [--quiet]
-@@ -238,10 +238,15 @@ the patches (with a value of e.g. "PATCH my-project").
- 	value of the `format.filenameMaxLength` configuration
- 	variable, or 64 if unconfigured.
- 
----rfc::
--	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
--	default). RFC means "Request For Comments"; use this when sending
--	an experimental patch for discussion rather than application.
-+--rfc[=<rfc>]::
-+	Prepends the string _<rfc>_ (defaults to "RFC") to
-+	the subject prefix.  As the subject prefix defaults to
-+	"PATCH", you'll get "RFC PATCH" by default.
-++
-+RFC means "Request For Comments"; use this when sending
-+an experimental patch for discussion rather than application.
-+"--rfc=WIP" may also be a useful way to indicate that a patch
-+is not complete yet ("WIP" stands for "Work In Progress").
- 
- -v <n>::
- --reroll-count=<n>::
-diff --git a/builtin/log.c b/builtin/log.c
-index c0a8bb95e9..0e9c84e51d 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1494,6 +1494,18 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
-+static int rfc_callback(const struct option *opt, const char *arg,
-+			int unset)
-+{
-+	struct strbuf *rfc;
-+
-+	rfc = opt->value;
-+	strbuf_reset(rfc);
-+	if (!unset)
-+		strbuf_addstr(rfc, arg ? arg : "RFC");
-+	return 0;
-+}
-+
- static int numbered_cmdline_opt = 0;
- 
- static int numbered_callback(const struct option *opt, const char *arg,
-@@ -1907,8 +1919,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct strbuf rdiff2 = STRBUF_INIT;
- 	struct strbuf rdiff_title = STRBUF_INIT;
- 	struct strbuf sprefix = STRBUF_INIT;
-+	struct strbuf rfc = STRBUF_INIT;
- 	int creation_factor = -1;
--	int rfc = 0;
- 
- 	const struct option builtin_format_patch_options[] = {
- 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
-@@ -1932,7 +1944,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("mark the series as Nth re-roll")),
- 		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
- 			    N_("max length of output filename")),
--		OPT_BOOL(0, "rfc", &rfc, N_("use [RFC PATCH] instead of [PATCH]")),
-+		OPT_CALLBACK_F(0, "rfc", &rfc, N_("rfc"),
-+			       N_("add <rfc> (default 'RFC') before 'PATCH'"),
-+			       PARSE_OPT_OPTARG, rfc_callback),
- 		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
- 			    N_("cover-from-description-mode"),
- 			    N_("generate parts of a cover letter based on a branch's description")),
-@@ -2050,8 +2064,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (cover_from_description_arg)
- 		cover_from_description_mode = parse_cover_from_description(cover_from_description_arg);
- 
--	if (rfc)
--		strbuf_insertstr(&sprefix, 0, "RFC ");
-+	if (rfc.len)
-+		strbuf_insertf(&sprefix, 0, "%s ", rfc.buf);
- 
- 	if (reroll_count) {
- 		strbuf_addf(&sprefix, " v%s", reroll_count);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index e37a1411ee..645c4189f9 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1368,13 +1368,30 @@ test_expect_success 'empty subject prefix does not have extra space' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '--rfc' '
-+test_expect_success '--rfc and --no-rfc' '
- 	cat >expect <<-\EOF &&
- 	Subject: [RFC PATCH 1/1] header with . in it
- 	EOF
- 	git format-patch -n -1 --stdout --rfc >patch &&
- 	grep "^Subject:" patch >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	git format-patch -n -1 --stdout --rfc --no-rfc >patch &&
-+	sed -e "s/RFC //" expect >expect-raw &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect-raw actual
-+'
-+
-+test_expect_success '--rfc=WIP and --rfc=' '
-+	cat >expect <<-\EOF &&
-+	Subject: [WIP PATCH 1/1] header with . in it
-+	EOF
-+	git format-patch -n -1 --stdout --rfc=WIP >patch &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect actual &&
-+	git format-patch -n -1 --stdout --rfc --rfc= >patch &&
-+	sed -e "s/WIP //" expect >expect-raw &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect-raw actual
- '
- 
- test_expect_success '--rfc does not overwrite prefix' '
--- 
-2.45.0-rc0
+I also wonder if there's a C linter that could catch this... I am not
+very familiar with C tooling. Would be great to run that in CI (GGG).
 
+>> +	trailer_iterator_release(&iter);
+>> +
+>> +	check_uint(i, ==, num_expected_trailers);
+>> +}
+>> +
+>> +static void run_t_trailer_iterator(void)
+>> +{
+>> +	static struct test_cases {
+>> +		const char *name;
+>> +		const char *msg;
+>> +		size_t num_expected_trailers;
+>
+> This is more like number of lines in the trailer block, not
+> limiting its count only to true trailers, no?
+
+Yes, but to be even more precise, it would be the number of trailer
+objects in the trailer block (a single trailer could be folded over
+multiple lines). Will update to "num_expected_objects".
+
+>
+>> +	} tc[] = {
+>> ...
+>> +		{
+>> +			"with non-trailer lines in trailer block",
+>> +			"subject: foo bar\n"
+>> +			"\n"
+>> +			/*
+>> +			 * Even though this trailer block has a non-trailer line
+>> +			 * in it, it's still a valid trailer block because it's
+>> +			 * at least 25% trailers and is Git-generated.
+>> +			 */
+>> +			"not a trailer line\n"
+>> +			"not a trailer line\n"
+>> +			"not a trailer line\n"
+>> +			"Signed-off-by: x\n",
+>> +			1
+>> +		},
+>
+> It is OK to leave it num_expected_trailers in this step and then
+> rename it when you update this "1" (number of real trailer lines)
+> to "4" (number of lines in the trailer block).
+>
+> I wonder if you'd want to make more data available to the test.  At
+> least it would be more useful if the number of true trailer lines
+> and the number of lines in the trialer block are available
+> separately.
+
+I purposely did the simplest test possible in order to keep the patch
+simple. Totally OK with expanding the data available to the test though,
+if you'd prefer that (although that could also be in a separate series
+later when we start converting some of the existing shell tests to these
+unit tests).
+
+> The interface into the trailers that is being tested by this code is
+> "the caller repeatedly calls the iterator, and the caller can
+> inspect the iterator's state available as its .raw, .key and .val
+> members and use them as it sees fit", so you could check, if you
+> wanted to, the following given the above sample data:
+>
+>  * the first iteration finds no key/value pair (optionally, the
+>    contents found in the .raw member is as expected).
+>  * the second iteration finds no key/value pair (ditto).
+>  * the third iteration finds no key/value pair (ditto).
+>  * the fourth iteration finds key="Signed-off-by" value="x".
+>  * there is no fifth iteration.
+>
+> but the current code only checks the last condition and nothing
+> else.  I dunno.
+
+Yeah, this sounds like the natural thing to do. Basically have an exact
+list of "this is the linked list of trailer objects I expect to see
+after parsing is complete".
+
+I do plan on making the trailer iterator struct private in a future
+series though, so maybe it's best to do the above after that series (to
+avoid churn)? IDK.
+
+@Christian thoughts?
