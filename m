@@ -1,104 +1,77 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out203-205-221-239.mail.qq.com (out203-205-221-239.mail.qq.com [203.205.221.239])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4787F9
-	for <git@vger.kernel.org>; Sat, 20 Apr 2024 01:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B8779DE
+	for <git@vger.kernel.org>; Sat, 20 Apr 2024 03:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713575597; cv=none; b=QXvXxWht4SbUUcz8lVhyon1jeYijTD2VU8P1fsbzhyqPWISG/dsulDNWP0Yir3oQo12ICfgvIbXZxzy+ulu9O9C05GkklRXEigSpIKleLkmCROhhjIKxwhIMNh8/oGkOf0NzYHbgRZWboURU3npTGUD1BQJyIFEwfjHX6nWYJL8=
+	t=1713582547; cv=none; b=YyyQJCE26YT3iRQVX69gwzM9vDJn9uk3J7NwwUSSutpGddFZCGop5E1fkiAIW+ZCFmzVjWXUAbOXD95c7M+23c2z/e5BCAAyeoy3Pgqi8fM/TLj8drbBku8AlXZFjPwUu7BMvdsNTIZ+94fsY7nTChOVynYz+J++Dg82Sj+AjyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713575597; c=relaxed/simple;
-	bh=gFyY54d+LR3CB7qTEpxSyLqPTGyiaM6K4yC8tZ2s8J0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=h2S8wwLUBbnH0zmLWMRNpIvCLeHfXMSBw5s753xa/rjEC8QmKbHCCGGBbmJLqbli/vPsJBZRhyNOLiQ2psbxkau7tOFTKkiYE057n50upg2HFN6WJNjg9ErA8Gw0iSYq/Fs6jbEZ/gKTJtZ7onXKBPQXfG49jcWBs7M+3XOE76o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kpiSlUyX; arc=none smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713582547; c=relaxed/simple;
+	bh=+LRz0idqs/Lk7dYUAGeYiPAPx6BgBSvqrUQTg/3WJlw=;
+	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=okCf4X7s5KkZTmMuH0A5A6OYfNmto4e7/rP4VNLVCgtnXb8hsNpBJKE9XxA/6ZFfTFgb1wJaibiCFC+2jQ8wg3/qJJKR0dmUsIZqp93QefyhY/ymliuUKt03VBxI7l733YEiyPuneB5TJfgFrB28XSHfEolSsA6/Y5iST7IuLH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=JqCTER9s; arc=none smtp.client-ip=203.205.221.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kpiSlUyX"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-22efc6b8dc5so1611747fac.0
-        for <git@vger.kernel.org>; Fri, 19 Apr 2024 18:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713575594; x=1714180394; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gFyY54d+LR3CB7qTEpxSyLqPTGyiaM6K4yC8tZ2s8J0=;
-        b=kpiSlUyXsPtLxqXYT+5+8DRVYJjPm94OSTaNut06zaJIkfNslORG/0rqq8IvGzBeBG
-         5PFub66PhpKa18Yd+P9Zg/FXtyBfg1o8h9O8T+YvfoP6UtJPmagae6Q3N/SFQCTNnQ0L
-         asQe8X0dYxjUeWzm0GqZihlIFQkJdHrYJLxpqZZB9R3tnqoy5r3VJ6xSlkIoMIUTvEHy
-         qTOsR9Umq1z06iGce1YBln39+ZwtYfracqtzZF/yxZAfvM+DbkHt7NhMxZTKIAFB4YiH
-         nFEpUpcLjy+7i1dfD4w+2A2PlBVLZdKxiqE6Sf6GEeGfon7cCVky2JKgBEYiGzOCaxX2
-         FOjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713575594; x=1714180394;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gFyY54d+LR3CB7qTEpxSyLqPTGyiaM6K4yC8tZ2s8J0=;
-        b=WYi7kztt9TuJ42XhmNjQ/zUiMBQ+nVzFo9upbLHxdHjHbPefcQNN1svMur1CY5UORc
-         jGk5+VXp192P9lHVG7nPVvQCCi2b4kqE4SuN+whtJ8imoPp5p7ME+1C+hxPpRl5Z1kBe
-         93AdiDbCMTXgM9lAcFJFKWLItPMj2G6lpk81Kmn7Lgrj9eBLdN8QEC9P+SOU3KVqiD/c
-         LSnFPs9hUSY1qpPQ8hzHPa7KkTUOWtDHINxqV8Xvuemjexn2t6/9AXIIeetDu9Vd4yZ5
-         A1JOKiITjgkJpipfG9lLtQDB9ZerW8AGR4oOp0nwzSQVyKms6Lr8pL3ZJYypBqHlj7uw
-         aiUw==
-X-Gm-Message-State: AOJu0Yz6xuidScMkpdhdeN1RcXLbV8qWhkB+Hlnu8QD8bxwwr/sNuWN2
-	xs6UvN8vIDTF2XkpdDFYsi4KmpgOIcEedJqVTP5dV9JKStRMXKVvLKCpjtU9LWM3POHRfGGBI8V
-	6N22yYgTRIcefKXu7oKxzla5MADKLcbEu
-X-Google-Smtp-Source: AGHT+IEtbBPOoiJB4lkP124StsoR5838RvTvj9LzCGb/v0L+c7HLLUEnrQ/gGoXXeFco1w6y9q78LTiw4NtiPtZWVmM=
-X-Received: by 2002:a05:6870:e99:b0:222:1353:ad0f with SMTP id
- mm25-20020a0568700e9900b002221353ad0fmr4708373oab.24.1713575594550; Fri, 19
- Apr 2024 18:13:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="JqCTER9s"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+	s=s201512; t=1713582535;
+	bh=+LRz0idqs/Lk7dYUAGeYiPAPx6BgBSvqrUQTg/3WJlw=;
+	h=From:To:Subject:Date;
+	b=JqCTER9s2gYjXHDmC8fSaI/xFaOzbVSp8htoIxoKG1HyG+P7fCBL2gccVk5uBwqLp
+	 r1XSlaDzJFyjXgtdPrq+zV48WfoxGCqj9R3icUZHzngnRDWZSBrNx6+hy7y5x/Uf/7
+	 mK75bgCgcEIXBceyZy0Wni7DsfawTpdGUuWf/8f4=
+X-QQ-FEAT: oHWrrGTW1dDc6WqWDAkbuvNXljmAAGFi
+X-QQ-SSF: 00000000000000F0000000000000
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-XMAILINFO: MYvQTNt/YNi0PyvuhjZO4GYx+qmjetOBOxCuPLxopd2/UJgYrQbZrU+DI5Kk+1
+	 zZdj3cVVzLUYj71ESdNGq9nDoaIdWzOGjjB4WMTYMc105NOvkIs27pE66QmUsSyLpe6U9U7DUerMD
+	 d/2Iw0+yc0BlP9SuTCxxASy5KBBQK5TGQkqZgcacCQdtauUldSheePYG+aivj80bPgGZ2RednuQJI
+	 7OcwAMZZNF8xdmEeV86IdkWN1UmvzK2yImKYD+FzbfdSxAQ/NuPUycj7WECiEGxniOG92d+D7dUtD
+	 K7L3bP1flFvcdamyjfsrbBMWlnhYqgx0e5327+isVis7NU9i6j7BgmkBNmO8tpNV/o0s7HkdKkWFN
+	 1A+q2gU6Zang9lfwa9uoQk1JalyoPdPb3yekrb3E7bzCK717w2VFu9GS5jbC0KUY9jMYlpw8aucqF
+	 ojmBiYSYBeM4t3JXzN/LgumUPb+62IxPC6F/5Mm9XOnUGRoXUCw0lOKq6D9i4CLht+AmprcX9TNeC
+	 GKFmItKwNygZdoLv4FDkDVhYW7cbp33rJNnNhZrUhuMU4s+zRgJoBmFecOvTqotMisqynTU/byB6M
+	 02Ur451vCyj66kN20AEwfRre+jY/cDmJsh0PbMWNlp0lBSedqZnW2cqMahOun3D7aTkSpqPhOn+jP
+	 Gohz6zY+rPNC8sGl5jMYiKRCxdqMKk53zfeNkbMNnRvfDeEV4Z+RJ3ZRG5g6bRsJHytwvW1hBXW1j
+	 7hfLrC7hGDzpkPrBNu1K0xsZTtmR1AmP7qm4rFSq3Dj8xG1QUQ1U9BBxECiWYYiUTzYqGeZOr/eYW
+	 uu8HAY5ZqZ4rMhw+Amx3a9cPc28luZF+ALN7iEB8j8URUh+4nx5bjvfqQDwYkgmLHdA5Qp9KIfxfn
+	 1hmUAH0TjkjTZ0ywehit4pdF0KwDGjz4iNJQBP/I3dj0v5/AYJM0VLHTbka0tOKCJKp65qryle78X
+	 IFsa6x71GuD4oSzkwTsSlk061zomRPE76XhHU4pHqZuIY70ELU
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-STYLE: 
+X-QQ-mid: webmail443t1713582045t2130250
+From: "=?ISO-8859-1?B?d3V6aG91aHVpMTQ=?=" <wuzhouhui14@foxmail.com>
+To: "=?ISO-8859-1?B?Z2l0?=" <git@vger.kernel.org>
+Subject: Why conflict when merge a branch that the directory is unmodified
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: German Lashevich <german.lashevich@gmail.com>
-Date: Sat, 20 Apr 2024 03:13:14 +0200
-Message-ID: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
-Subject: Possible git-diff bug when using exit-code with diff filters
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
+Date: Sat, 20 Apr 2024 11:00:45 +0800
+X-Priority: 3
+Message-ID: <tencent_6FF9636AA4D83460C0CE7C9F1EEC3463CF05@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-
-I configured a diff filter via gitattributes to use a custom script that,
-sometimes, can change the files being compared in a way that there are no
-differences between them.
-Then I used `git diff --exit-code` on the changed file.
-
-> What did you expect to happen? (Expected behavior)
-
-I expected `git diff --exit-code` to return 0, since there are no differences
-between the files after the filter is applied.
-
-> What happened instead? (Actual behavior)
-
-`git diff --exit-code` correctly produces no output, but returns 1.
-
-> What's different between what you expected and what actually happened?
-
-The difference is that `git diff --exit-code`, instead of returning 0, returns
-1 even when there is no output.
-
-> Anything else you want to add:
-
-I have prepared a repository with a test case that reproduces the issue.
-You can find it at https://github.com/Zebradil/git-diff-exit-code-bug-repro
-The Readme file in the repository contains instructions on how to reproduce
-the issue.
-
-[System Info]
-git version: 2.44.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.8.7-arch1-1 #1 SMP PREEMPT_DYNAMIC Wed, 17 Apr 2024
-15:20:28 +0000 x86_64
-compiler info: gnuc: 13.2
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /bin/zsh
-
-Best regards,
-German Lashevich
+SGksCgpTdXBwb3NlIEkgaGF2ZSB0d28gYnJhbmNoZXMgd2l0aCBmb2xsb3dpbmcgY29tbWl0
+IGhpc3RvcmllczoKCkItLS0tQy0tLUQoZGlyZWN0b3J5IGFiYy8gbW9kaWZpZWQpICAgICAg
+ICAgICAgICAgQnJhbmNoMQogICAgLwpMLS1NLS0tTyhkaXJlY3RvcnkgYWJjLyBub3QgbW9k
+aWZpZWQpICAgICAgICAgICAgQnJhbmNoMgoKSW4gcHJldmlvdXMgZ3JhcGgsIHRoZSBCcmFu
+Y2gxIG1lcmdlIEJyYW5jaDIgaW4gY29tbWl0IEMuIEFmdGVyIGNvbW1pdCBDLAp0aGUgQnJh
+bmNoMSBtb2RpZmllZCBzb21lIGNvbnRlbnRzIGluIGRpcmVjdG9yIGFiYy8uIEJyYW5jaDIg
+ZG9lc24ndAptb2RpZnkgZGlyZWN0b3J5IGFiYy8gc2luY2UgY29tbWl0IE0sIHdoaWNoIGhh
+cyBiZWVuIG1lcmdlZCBpbnRvIEJyYW5jaDEuCgpUaGVuLCB3aGVuIEkgZG86CgogIGdpdCBj
+aGVja291dCBCcmFuY2gxCiAgZ2l0IG1lcmdlIEJyYW5jaDIKCnRoZSBkaXJlY3RvciBhYmMv
+IGNvbnRhaW5zIGNvbmZsaWN0cywgd2h5PyBCZWNhdXNlIHRoZSBkaXJlY3RvciBhYmMvIGRv
+ZXNuJ3QKY2hhbmdlZCBzaW5jZSBjb21taXQgTSBpbiBCcmFuY2gyLCBzbyBkaXJlY3Rvcnkg
+YWJjLyBzaG91bGQgbm90IGhhdmUKY29uZmxpY3RzLgoKVGhhbmtzLg==
+á
