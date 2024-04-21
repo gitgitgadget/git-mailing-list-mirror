@@ -1,150 +1,171 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391BE38C
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 10:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE6338C
+	for <git@vger.kernel.org>; Sun, 21 Apr 2024 10:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713696200; cv=none; b=AKWs2TVz/N/xAkCusfP3Qv+fgw6nNgcSl+rAfyjedokkh+iPlufJNeWGe3d+EOXXTJ9woJNcRHAvG+yiUKXyBgLsZjTFGFzMlU/3piZ2hwt9KNxMrflW5cq0adCbWjnwBJD6hA+syCDms7sKAHo4b1NY+NVyppL1F+h44comwXw=
+	t=1713696350; cv=none; b=Z8mLL9UZRX0mBYSqrcvXVHqAUz+R++lPEJi9thpZUlLKY8RWaaH2AhOO+C2iO2WBd0+dHBgzNWp1KkRXXQsFqv6ZBWcmgidHvfIRDWCq0uI+ZFNmlzALShjlg1z9x5e3FMOKTfluGYR1jGuNw++pehJ/XpmvvZn5NT1KNdwG3pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713696200; c=relaxed/simple;
-	bh=7cpyuyDvhZ93JvYV3CZnbcWkww+V5RqnB565DwDumMI=;
+	s=arc-20240116; t=1713696350; c=relaxed/simple;
+	bh=0y/lF31PRr1PH+HGF4KlPq3VjvUfgRdx0joZAsyYF9o=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R/exAU7nu9v+w/PbVoB4O38ozEW+ifBFqHq5/mxrm+uC9Tq7k0ruVAAWDHd5xa25U3gEKesVXqTyWEUU691J/hqjTVgwQzgnKUzPAoEdVOptg+NG9RCI9R5pUsVgiMc7HwwiipgSITfkgyVGaMpn26OPm+oyO6A9Wx/KJkg8DhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UqnJmBFn; arc=none smtp.client-ip=209.85.160.41
+	 To:Cc:Content-Type; b=UozeiwP6H/BpwE2Xx0E7bHX5H3Qf/CEW1iMuFWJ1gwYQa890l36akxkQQrKR/69m1wrgAV+oeTh4fMljXAUUKJfRXGwGN8rn26H1lHtqTpDPNSSp9oJfglXCZd3Nf3vRZrWV1ia+P+PnGFdKZ/WPNfdr/BtZtkjW56/cWhDQ7QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iC4+lIue; arc=none smtp.client-ip=209.85.160.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqnJmBFn"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-22f01274622so1650969fac.1
-        for <git@vger.kernel.org>; Sun, 21 Apr 2024 03:43:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iC4+lIue"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-23333ef4a02so2127877fac.1
+        for <git@vger.kernel.org>; Sun, 21 Apr 2024 03:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713696198; x=1714300998; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713696348; x=1714301148; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UhxsnBKkDmvzlJuDlehr3VuhreK0w1EYNloUR5br99Y=;
-        b=UqnJmBFnu0IY3vzRk69RnGSV8FdXLTVOxFi+Mocm3ychnfCu8EfE/Mji/RkcEf0UDy
-         HZ6wqe41A2APp0AgaVI4iAhy0EDPS85bPNi9REn5vGAWD71pdHjARD7vMgfvWFHL9m0m
-         PySbwrVm/DmJmPZjyiKgft/llqY6d8/+P7waGX2DUpmvHPVMwEzRIiPeTZslVXgAyWDf
-         rOAI2fJ+MjrEBq1WE8hkZ19a0XmvAcn5fTPTngXnjhOSFVrc1z51G5oZFQjI5SssEmgG
-         dnvW557acx0+SgeUEGR+uUrjIs5PIivgJYnTF3n1im+jO++jj1C96e0mnq6bDt2ZOPun
-         dEFw==
+        bh=oCSeWHk/10ufXxMI7jBIT1FbtdUZacDV32vg6XmOy5s=;
+        b=iC4+lIueDEQZbvCVV9sZhOabDsIE933QV/I+eZtvWtFfyNDkOwi0D1U6T+axglbM9I
+         Ap/dEW1BVidpwhqX5Yu5mpSzK6feqXqsl+7Y3KuUVChvdpca+5OCe2o0yiHQtStldLq6
+         Pm2YX+rRwRjL303rfr+nC2ggOhSMXlYHXcgzyrfBFeWH/64KxyEUus/jexfWVePd42Ia
+         ayJs9XC84W8ZEtDUrL3IiNtgRWOnU4RheDJGsNdKthEXGLD5Cb1t1qzUZiRodZ6dyBpQ
+         E5zPnZwuxKBXsSB7FLR7c+kUB5kFJMt3ggUc5VdqzM4YFZ/IxC244WEwrCOnO+9TAQm5
+         acqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713696198; x=1714300998;
+        d=1e100.net; s=20230601; t=1713696348; x=1714301148;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UhxsnBKkDmvzlJuDlehr3VuhreK0w1EYNloUR5br99Y=;
-        b=AVxtPzhL/ksECOk0b8sSbp8UdfUF1QFY5cCLR3/23GV7hocw/vLNZQdTb0H0qcmx56
-         PJlAZFBfaGybFxJSKpzcu8ZEHxGFrG9YNX8lwXZb8GkZhqYGi1sS52m85lLN7H1EXd94
-         QpM/ojbsaGE7khAESG3srta3HuknVEWdjK8xKXOb6G8E4kDSj+MzTIeR52IxB3dgXtlj
-         Y7p/t75VNXhJ5xUURVuUqeJOy4CbhyaL5oJjqL0+AZ01xThaIJeHWT4TCoa0J1QKx6jW
-         d3Y7JwUdAKdbkLvp164rYMKwIzU3/vRElhatEVZ0d3f57gsAqO64icdbipBrpd6qv0YC
-         Erig==
-X-Forwarded-Encrypted: i=1; AJvYcCWFBDxtfzFlKw+7pILhcB/V2xbb+uGiHlyc8b2Cpz0KoAvS0WSCXWsM6bYEGdDXf8CDjFSewce/WUMfskuoKROQr0YD
-X-Gm-Message-State: AOJu0YxJoECKCcpN/ajmWZ4LEHWl+Dit9+SPAWrno5FdT8lvPnLqAdCu
-	Y1hqq6on/DVlKJvM8425MqVubpnRhtMTmdeiyWutPqCrnJO3uZRegyuwWUNW2AarQpdtVCboA5y
-	0tEJIS5xcuxD3t/VtqQOn0X2s3Hg=
-X-Google-Smtp-Source: AGHT+IEoHZnx7cuVVH+eCioSIPyS9v+x8dh/u+4Rk8ZWLX98NZo1M0QRpbfmCrGnwgCIBq7u/RYkWR6PazGlX3rvf2c=
-X-Received: by 2002:a05:6871:79a3:b0:21e:e476:9170 with SMTP id
- pb35-20020a05687179a300b0021ee4769170mr8679364oac.43.1713696198240; Sun, 21
- Apr 2024 03:43:18 -0700 (PDT)
+        bh=oCSeWHk/10ufXxMI7jBIT1FbtdUZacDV32vg6XmOy5s=;
+        b=wc5KUou6eMoK/jce8vMweJvwuiRYAxYop6VYWZM6VaQfFjABxIv/qiBpaMmmSuI2Jq
+         73BnsR3bzCH2ghmUPYb4xXUaLgS7Of92+UQrVlYJEXCk+6STWE77owZl7FluILLK8gqa
+         qpXfwdFVFOnt/sBSuLdlcuiOgqsvVOOh07EWTeA+gea4p93ANAM1ARqDZ3IyP+QAbIe8
+         bLMxP99TsBoyDqjWJry1DFYCRW5PDph+QbABKF+SziL1OUhg+76kN+bV9KOltNNGbvjp
+         MNrdbDALpbMjZB50mxlBpBX/QcOJ+miAHXSWzqgIyU5UMVWFBxNf5upBl3HSwH8DqLup
+         zHtg==
+X-Forwarded-Encrypted: i=1; AJvYcCW4T0Dq82oc5fDhP6AtXM1l47XvgbttxbKXIBbyZwPDxopbL6nbANLSFZMiRZQTuroZWLaNFfd020ImXfr7zcojm8pC
+X-Gm-Message-State: AOJu0Yy9je/94jAPLivGHYVzpCA99lBE5WdAWTE9YFzwYQDoDTzqUSVt
+	A7ldqxGKPnZo+4THLnp2/10xltnHsCgG0ytf5BERDHSUIiff3SUKKQ2a44YPyiaU/AjHbgA0vLH
+	5AIGU9zV8/S6VSkm5vYdf8D+kcGI=
+X-Google-Smtp-Source: AGHT+IHqW1zu1QwwV+iH0KS3NQZPT+Y5gYZrSzXv0jW9VHX1LNt/9sPGKt9BaVrvYlVLK+YI42XbdfO99voI7LHNHTE=
+X-Received: by 2002:a05:6870:858b:b0:235:458e:c8d0 with SMTP id
+ f11-20020a056870858b00b00235458ec8d0mr9309481oal.45.1713696347897; Sun, 21
+ Apr 2024 03:45:47 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 21 Apr 2024 06:43:17 -0400
+ HTTPREST; Sun, 21 Apr 2024 06:45:46 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD1Fwq4exKKz3kyJiwcgtOe4TjQ938C=sAbdWOTsw6241A@mail.gmail.com>
+In-Reply-To: <ZiI8E2ZJT51akoAk@tanuki>
 References: <20240330224623.579457-1-knayak@gitlab.com> <20240412095908.1134387-1-knayak@gitlab.com>
- <20240412095908.1134387-4-knayak@gitlab.com> <CAP8UFD1Fwq4exKKz3kyJiwcgtOe4TjQ938C=sAbdWOTsw6241A@mail.gmail.com>
+ <20240412095908.1134387-4-knayak@gitlab.com> <ZiI8E2ZJT51akoAk@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 21 Apr 2024 06:43:17 -0400
-Message-ID: <CAOLa=ZRATdwogJfWH4y0htOzEK1SzKfK+CWXHjBny7waoodkNg@mail.gmail.com>
+Date: Sun, 21 Apr 2024 06:45:46 -0400
+Message-ID: <CAOLa=ZS7+sqpf2TajahUM95DMVfYyxUOL3BBhT=-EhfnGBi0+w@mail.gmail.com>
 Subject: Re: [PATCH v2 3/7] update-ref: add support for symref-delete
-To: Christian Couder <christian.couder@gmail.com>
-Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000026481c061698fd89"
+To: Patrick Steinhardt <ps@pks.im>
+Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="00000000000011e02e0616990629"
 
---00000000000026481c061698fd89
+--00000000000011e02e0616990629
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, Apr 12, 2024 at 11:59=E2=80=AFAM Karthik Nayak <karthik.188@gmail=
-.com> wrote:
->>
+> On Fri, Apr 12, 2024 at 11:59:04AM +0200, Karthik Nayak wrote:
 >> From: Karthik Nayak <karthik.188@gmail.com>
+> [snip]
+>> @@ -302,6 +302,37 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
+>>  	strbuf_release(&err);
+>>  }
 >>
->> Similar to the previous commit, add 'symref-delete' to allow deletions
->> of symbolic refs in a transaction via the 'git-update-ref' command. The
->> 'symref-delete' command can when given with an <old-ref>, deletes the
->> provided <ref> only when it points to <old-ref>.
+>> +static void parse_cmd_symref_delete(struct ref_transaction *transaction,
+>> +				    const char *next, const char *end)
+>> +{
+>> +	struct strbuf err = STRBUF_INIT;
+>> +	char *refname, *old_ref;
+>> +
+>> +	if (!(update_flags & REF_NO_DEREF))
+>> +                die("symref-delete: cannot operate with deref mode");
 >
-> I have a similar question as with the previous patch about what
-> happens if <old-ref> looks like an oid and <ref> is a regular ref
-> pointing to it.
+> Again, I'm a bit on the fence regarding this restriction. I feel like it
+> ought to be possible to delete both plain and symbolic refs in a single
+> git-update-ref(1) command.
 >
 
-We parse refs passed as <old-ref> and this would fail.
+Yup this is still possible since we have the 'no-deref' option.
 
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> +	refname = parse_refname(&next);
+>> +	if (!refname)
+>> +		die("symref-delete: missing <ref>");
+>> +
+>> +        old_ref = parse_next_refname(&next);
 >
->> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update=
--ref.txt
->> index 749aaa7892..ef22a1a2f4 100644
->> --- a/Documentation/git-update-ref.txt
->> +++ b/Documentation/git-update-ref.txt
->> @@ -65,6 +65,7 @@ performs all modifications together.  Specify commands=
- of the form:
->>         create SP <ref> SP <new-oid> LF
->>         delete SP <ref> [SP <old-oid>] LF
->>         verify SP <ref> [SP <old-oid>] LF
->> +       symref-delete SP <ref> [SP <old-ref>] LF
->>         symref-verify SP <ref> [SP <old-ref>] LF
->>         option SP <opt> LF
->>         start LF
->> @@ -87,6 +88,7 @@ quoting:
->>         create SP <ref> NUL <new-oid> NUL
->>         delete SP <ref> NUL [<old-oid>] NUL
->>         verify SP <ref> NUL [<old-oid>] NUL
->> +       symref-delete SP <ref> [NUL <old-ref>] NUL
->>         symref-verify SP <ref> [NUL <old-ref>] NUL
->>         option SP <opt> NUL
->>         start NUL
+> This line is indented with spaces and not tabs.
 >
-> Also I wonder if there is a test where <old-ref> is an empty string, so w=
-here:
->
->     symref-delete SP <ref> SP LF
->
-> or:
->
->     symref-delete SP <ref> NUL NUL
->
-> are used?
 
-I didn't add such tests, will add.
+There was a bunch of this, I'll have them all fixed.
 
---00000000000026481c061698fd89
+> [snip]
+>> --- a/t/t1400-update-ref.sh
+>> +++ b/t/t1400-update-ref.sh
+>> @@ -1715,6 +1715,45 @@ test_expect_success "stdin ${type} symref-verify fails for mistaken null value"
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success "stdin ${type} symref-delete fails without --no-deref" '
+>> +	git symbolic-ref refs/heads/symref $a &&
+>> +	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" &&
+>> +	test_must_fail git update-ref --stdin ${type} <stdin 2>err &&
+>> +	grep "fatal: symref-delete: cannot operate with deref mode" err
+>> +'
+>> +
+>> +test_expect_success "stdin ${type} fails symref-delete with no ref" '
+>> +	create_stdin_buf ${type} "symref-delete " &&
+>> +	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
+>> +	grep "fatal: symref-delete: missing <ref>" err
+>> +'
+>> +
+>> +test_expect_success "stdin ${type} fails symref-delete with too many arguments" '
+>> +	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" "$a" &&
+>> +	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
+>> +	if test "$type" = "-z"
+>> +	then
+>> +		grep "fatal: unknown command: $a" err
+>> +	else
+>> +		grep "fatal: symref-delete refs/heads/symref: extra input:  $a" err
+>> +	fi
+>> +'
+>> +
+>> +test_expect_success "stdin ${type} symref-delete ref fails with wrong old value" '
+>> +	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$m" &&
+>> +	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
+>> +	grep "fatal: cannot lock ref '"'"'refs/heads/symref'"'"'" err &&
+>
+> You can use "${SQ}" to insert single quotes.
+>
+> Patrick
+>
+
+Neat, this is much better, thanks!
+
+--00000000000011e02e0616990629
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 2f88bf041fdd199b_0.1
+X-Attachment-Id: 1dab280a69e2f093_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZazdjSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOFhEQy85SWpoMnlKR2JHL3BuUDdFeXhESnUyNk1IMApnNXZ4SVJyUWdE
-TVVkK2haaFFKN05ncjZZbUFqNnc5RmVEMUdEeWRBSGx2V0VuLytDZ1FUZXI3RmdaUmFyR2s5CkV0
-YXpuS1lzVFIzaE5UNHVoaDlhK1JhR2w3ZmlIY1ZEZ1hQblRYbEtWaS9mVkJrUHE4Ry9GOU9GUlQv
-NUpRSlEKUDhVMHorKzFVZUlDMzF2eFA1K0tIVWRMYkpXQ29MeVRjLzJabUFhVUc2TVdhMXJPYzFH
-WG05N3FLUWxUYlJSUgpYdmw0TkJibVYxTzk0WEJ2VjY1V3ZLMjg5MHVicXNZcW0zaGR3bWw2ckl1
-OHBKYlFacUtRVWxhdTJ6ZC9NOGZpCnFUUy9pMFlPTS9GK0ZPbXdBV29ma2dNQUlPL29VbHpaQlM5
-bCtxbDdUbTB6QmxNYmtXWGF3QUQzYTJpZHc2eXUKV3NpdUNXdG1jVVRBbGxFVlBMRG1jVktINmlS
-RVkxYzh2aVBQTzNKYXEyejJCZHE5MkRUdCtibzFhYXFGd1l1bgo3R3J0M3dUeU9FT3VDYmxpTWgz
-RDdnWlVSb3VGbEQ2UlQ0S1RIVmVlYnQweXcxOCtyVmRTclZ5bTRPalc2cFJNCldkZ2JFYk4wNGo4
-SzBqSlBHOU5lYnFKUDRBRHNaalQyeEhmNEd2ST0KPURRcXYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1Zazdsa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNlByQy85UXMwM2VEaktVNnV4empDVUoxR0Zmdm1NeApiWHc2dGV6NnM5
+UmNmcGxLaEdwRkl0RGF4TkxEQ2VPVTNCTzVFWUZSUElteHYvRXBXRElHbWFmOVZHejdaTTlPCktB
+WTBHUWZHaXdUUVlsY3VheXVGNlNaM3pyUStwU3dINVZGSmlYaUF6YXBmVmIrcERaTVNqZjZGR3I5
+WUYzRUcKbjRwNlNTL3h6Zkhzc01JL05RNm5oKytBdGl2VVZ0YXpvb0R6TytZWWJwV1YvK2RnK2VQ
+MXA0Ym1nMlJDMytlMApGSTYrR2FVWmRXTlNEa1VxNXhsUS9wc0JQM3ZRRzIxclhCUHZ3SmNjZXdP
+bjNrU0tLZmUyWENzQVVsWlVBMUU1ClBwWm5nbnNWdWJDdG9tQlliSFdMb3NNL04xNHBYL21DVFIy
+aGMvdGpiRksvN3VnbW8zNHNJckF2ZUlLZlNDQWUKdVJ0ZXdmYnJuRGJac1ZnQVhCSHVDY21oQTBx
+U3lJaXZmbEFEdmgxVFBOU1NZTlVjUVdjcTBwNmNKMGJlOHZucgpsb2Z1Z3NYZXVOOWE2WHI3L0Rp
+VnowTElkQ25PdHlmUUdOM2RyV1VlcGZZa0pGamR2citpaFdPK3pQbHBEVDczClN3RDJLVXdBcXBO
+cVpwQVNYczc5NFhiSFN5R05xQ1d5NmxXa0NDND0KPVp3eEkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000026481c061698fd89--
+--00000000000011e02e0616990629--
