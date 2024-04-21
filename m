@@ -1,218 +1,119 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597F23D3A0
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 18:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B9F219F9
+	for <git@vger.kernel.org>; Sun, 21 Apr 2024 19:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713725966; cv=none; b=HHLvRzLjedBHAd1vq8EYp8Zwjd3bFC/i6diMpkZ9o/BAcrIuBlUyeJeF7u4K8iiX5sR+7P2+oAAkGgV1qhoQQDj755hAPpvPCLju5PwO0beHFhxvAMdX3xr1/rnB1bVMpBzmIVnlah17MrieYobpv3ZuKaNiwXXgf/iLIOw+TUE=
+	t=1713726015; cv=none; b=YuJJqV+asE4WPI69TN5wAqbA31V4dr8WuW9UI9awGnV31L+Hqsj7pgZkqoLf2iElDNepCt5FbaAhTENfxQSDOHpTbVgmmCG4Wpnh6j7QyyCi3mU2YeSgVhWrFG6OXa7jtoP2CyuB3wc8nfyB6sDXHHPj12cI4dYcygOSrpXflas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713725966; c=relaxed/simple;
-	bh=HqTWLbTCyKeBIGwSQuYc8s92EO6ZnXAe49X9FgKmGRs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWBCqWCxnswVxilnVQdqR4BCr0mC2M2yy9pZDdiYJnJRvZhHoCkfgH49Onn3RRYikjR6pQnALhxeaEwh59iydAgTbmupbwUTYTAJbOMqRfMajJbaEkUUyaGMeEAGaJ6r7KYFUmwyGCqtb7UqT5fqeZsn5REYVMoeIad2Q4FLiIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P1uMtHqm; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713726015; c=relaxed/simple;
+	bh=peaJMRQF1hX8w7WGpd+DNuzFED5dLIFIMWqqRCp1MDE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EdU4C4pzdlvyO5LQoAN2sDvqrc5jmPHC/2l3Akeyw+pyJz2rnrXyFBeWzqUoohh/xAGWmfcUrs2PLL+O2TRad8Zvdl25gSAktkEfX+ThyEovN95+l0MB+8oy/xfUsT+h/eLiYx/WUN/GU2tfLENKnjEbXyRGEGHWxlX10E92pag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XG8HrxnQ; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P1uMtHqm"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7481B1EF882;
-	Sun, 21 Apr 2024 14:59:18 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=HqTWLbTCyKeBIGwSQuYc8s92E
-	O6ZnXAe49X9FgKmGRs=; b=P1uMtHqm/PRL0Q1BaiXs6Vvqmzkgz2nQzM3qvMRzk
-	eCXGvQf5K5ipPmwAnGkOZwkXUuN1mBU40paV1Mm5bxHsLTrvRoxr17p17cEAo7+R
-	orp9AATFCLYWPH+NQnRKygE4hbF75/vOCx7LwDLHWjpF9JObu/AyNzycQqNFJpui
-	zk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AEA71EF881;
-	Sun, 21 Apr 2024 14:59:18 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D804E1EF880;
-	Sun, 21 Apr 2024 14:59:17 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>
-Subject: [PATCH v3 1/2] format-patch: allow --rfc to optionally take a value, like --rfc=WIP
-Date: Sun, 21 Apr 2024 11:59:14 -0700
-Message-ID: <20240421185915.1031590-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.45.0-rc0
-In-Reply-To: <20240421185915.1031590-1-gitster@pobox.com>
-References: <xmqqy1993tc1.fsf@gitster.g>
- <20240421185915.1031590-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XG8HrxnQ"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-234cbd333f5so2625079fac.0
+        for <git@vger.kernel.org>; Sun, 21 Apr 2024 12:00:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713726012; x=1714330812; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IV3FrQHcZGJxB7z/OReEqg7vh91YwhBmzE6N1PBM+TI=;
+        b=XG8HrxnQg1ODJRXnq9aSlev7e9Zrbv8fpxLeVmcQTGBXVanhONBYo9RLQX9VzAiKmK
+         z1utp9nXnJZV6mj8wtnABmIhmuen/GzWwz9ZXAnxJF56wbAHsKd0atvygaqtxrwUuAQO
+         zVjpPf/pWqFv0EDS8c1ILj1TC2Y8neOfTJksM9kCwIZYf8grfofUTS3ScHxvOUt3qBDj
+         l/5eDLGR6Pytxbs3J8XbPYrwYOojz7sKUQbX16B6gSXqKqT88xxyblK9o+VeyImaICM0
+         O0AKh1LzX/oBG8VaNCbPecqEGwB660ri3tHPkcpH2exFBPTn21T2lbpsc9en8qCf08Sh
+         Tgtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713726012; x=1714330812;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IV3FrQHcZGJxB7z/OReEqg7vh91YwhBmzE6N1PBM+TI=;
+        b=dv4yRu3tjdvOyNd8oYBQ1WSUU0/sH3pR+H7g354Y5Zzctm3kKJ+R/C4/pA6cJ4kd1X
+         Qnqa/ulw+MmCk6w+u3MQm3DZP2oBh6+EX3xgaHvaX/NW3ykd+z5Qb/RrV9qfOHknzvzI
+         kMnfVWecRZh2+i7m1/NOzhsTv0D6loopgxezcrVeXoO2arPjzktmSeBy8uP5Xu8OtpvA
+         4RVi0U8zIWihIXM/Qr57KtHwVHGsU7qXPCIuWR2HkVHlMgqJTgHnfbr5d8MIno8KSHc3
+         n5IGCv+49ntvFD8ttsSTYlC2kFBlyaWpUUJNJfk+8nIts4HoYtKPgiGcrxv1EsYNrBEB
+         S/Ow==
+X-Forwarded-Encrypted: i=1; AJvYcCVMaQ3W+/eu47WWRTZy7WuH2+JNYldXf/VeyvP5ERvXKjwr8SLF3j6XCOd0WPefTDTQKT22HOPmcWaf1rfGk9e/ED7h
+X-Gm-Message-State: AOJu0YwWzGxzj9pIhW7XFI0j6HhKtdM+x3noslfdg+r+IYi93qLFxnIX
+	FqAWD+lJBs+AKnBLel7Zpqjm36Am8Zk0FjJurpjAqauePXHkOjlPsmVx4OaBDced4oN8efgv9ts
+	Tx/3s4C2Dpu5m6MaFdsbZ5Yl3CloATA==
+X-Google-Smtp-Source: AGHT+IHrNQTBqMBRH2zOAmGwvvamCvyeUkH2y14Dvy+gw4K9cSuFWn2EkHzZOzliD7OjpP9fCq7Wn6qMEjmnbeqZ1GU=
+X-Received: by 2002:a05:6870:1613:b0:22a:76ac:5ead with SMTP id
+ b19-20020a056870161300b0022a76ac5eadmr5097688oae.1.1713726012335; Sun, 21 Apr
+ 2024 12:00:12 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 21 Apr 2024 15:00:11 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZiI8IFdfBHEqr02C@tanuki>
+References: <20240330224623.579457-1-knayak@gitlab.com> <20240412095908.1134387-1-knayak@gitlab.com>
+ <20240412095908.1134387-7-knayak@gitlab.com> <ZiI8IFdfBHEqr02C@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- 412285B0-0011-11EF-A3D3-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Date: Sun, 21 Apr 2024 15:00:11 -0400
+Message-ID: <CAOLa=ZTA94HModfa40So7Uk7WAG99G+XabvKfOY93RCL6Xac5Q@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] update-ref: add support for symref-update
+To: Patrick Steinhardt <ps@pks.im>
+Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="00000000000035441706169fee8f"
 
-With the "--rfc" option, we can tweak the "[PATCH]" (or whatever
-string specified with the "--subject-prefix" option, instead of
-"PATCH") that we prefix the title of the commit with into "[RFC
-PATCH]", but some projects may want "[rfc PATCH]".  Adding a new
-option, e.g., "--rfc-lowercase", to support such need every time
-somebody wants to use different strings would lead to insanity of
-accumulating unbounded number of such options.
+--00000000000035441706169fee8f
+Content-Type: text/plain; charset="UTF-8"
 
-Allow an optional value specified for the option, so that users can
-use "--rfc=3Drfc" (think of "--rfc" without value as a short-hand for
-"--rfc=3DRFC") if they wanted to.
+Patrick Steinhardt <ps@pks.im> writes:
+[snip]
+>> +	/*
+>> +	 * Since the user can also send in an old-oid, we try to parse
+>> +	 * it as such too.
+>> +	 */
+>> +	if (old_ref && read_ref(old_ref, NULL)) {
+>> +		if (!repo_get_oid(the_repository, old_ref, &old_oid)) {
+>> +			old_ref = NULL;
+>> +			have_old = 1;
+>> +		} else
+>> +			die("symref-update %s: invalid <old-ref> or <old-oid>", refname);
+>> +	}
+>
+> So we first try to parse it as a ref, and then as an object ID? Wouldn't
+> it preferable to try it the other way round and first check whether it
+> is a valid object ID? That would likely be cheaper, even though it may
+> be premature optimization.
+>
+> Patrick
 
-This can of course be (ab)used to make the prefix "[WIP PATCH]" by
-passing "--rfc=3DWIP".  Passing an empty string, i.e., "--rfc=3D", is
-the same as "--no-rfc" to override an option given earlier on the
-same command line.
+I think the issue is `repo_get_oid` would also parse a refname to an
+OID. Whereas we want to first check and keep refnames and only if it
+isn't a refname, we'd want to parse it as an OID.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-format-patch.txt | 15 ++++++++++-----
- builtin/log.c                      | 19 ++++++++++++++++---
- t/t4014-format-patch.sh            | 21 +++++++++++++++++++--
- 3 files changed, 45 insertions(+), 10 deletions(-)
+Also, why do you say it is cheaper?
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-forma=
-t-patch.txt
-index 728bb3821c..e553810b1e 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -20,7 +20,7 @@ SYNOPSIS
- 		   [--in-reply-to=3D<message-id>] [--suffix=3D.<sfx>]
- 		   [--ignore-if-in-upstream] [--always]
- 		   [--cover-from-description=3D<mode>]
--		   [--rfc] [--subject-prefix=3D<subject-prefix>]
-+		   [--rfc[=3D<rfc>]] [--subject-prefix=3D<subject-prefix>]
- 		   [(--reroll-count|-v) <n>]
- 		   [--to=3D<email>] [--cc=3D<email>]
- 		   [--[no-]cover-letter] [--quiet]
-@@ -238,10 +238,15 @@ the patches (with a value of e.g. "PATCH my-project=
-").
- 	value of the `format.filenameMaxLength` configuration
- 	variable, or 64 if unconfigured.
-=20
----rfc::
--	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
--	default). RFC means "Request For Comments"; use this when sending
--	an experimental patch for discussion rather than application.
-+--rfc[=3D<rfc>]::
-+	Prepends the string _<rfc>_ (defaults to "RFC") to
-+	the subject prefix.  As the subject prefix defaults to
-+	"PATCH", you'll get "RFC PATCH" by default.
-++
-+RFC means "Request For Comments"; use this when sending
-+an experimental patch for discussion rather than application.
-+"--rfc=3DWIP" may also be a useful way to indicate that a patch
-+is not complete yet ("WIP" stands for "Work In Progress").
-=20
- -v <n>::
- --reroll-count=3D<n>::
-diff --git a/builtin/log.c b/builtin/log.c
-index c0a8bb95e9..5c1c6f9b15 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1494,6 +1494,17 @@ static int subject_prefix_callback(const struct op=
-tion *opt, const char *arg,
- 	return 0;
- }
-=20
-+static int rfc_callback(const struct option *opt, const char *arg,
-+			int unset)
-+{
-+	const char **rfc =3D opt->value;
-+
-+	*rfc =3D opt->value;
-+	if (!unset)
-+		*rfc =3D arg ? arg : "RFC";
-+	return 0;
-+}
-+
- static int numbered_cmdline_opt =3D 0;
-=20
- static int numbered_callback(const struct option *opt, const char *arg,
-@@ -1907,8 +1918,8 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	struct strbuf rdiff2 =3D STRBUF_INIT;
- 	struct strbuf rdiff_title =3D STRBUF_INIT;
- 	struct strbuf sprefix =3D STRBUF_INIT;
-+	const char *rfc =3D NULL;
- 	int creation_factor =3D -1;
--	int rfc =3D 0;
-=20
- 	const struct option builtin_format_patch_options[] =3D {
- 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
-@@ -1932,7 +1943,9 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 			    N_("mark the series as Nth re-roll")),
- 		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
- 			    N_("max length of output filename")),
--		OPT_BOOL(0, "rfc", &rfc, N_("use [RFC PATCH] instead of [PATCH]")),
-+		OPT_CALLBACK_F(0, "rfc", &rfc, N_("rfc"),
-+			       N_("add <rfc> (default 'RFC') before 'PATCH'"),
-+			       PARSE_OPT_OPTARG, rfc_callback),
- 		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
- 			    N_("cover-from-description-mode"),
- 			    N_("generate parts of a cover letter based on a branch's descript=
-ion")),
-@@ -2051,7 +2064,7 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 		cover_from_description_mode =3D parse_cover_from_description(cover_fro=
-m_description_arg);
-=20
- 	if (rfc)
--		strbuf_insertstr(&sprefix, 0, "RFC ");
-+		strbuf_insertf(&sprefix, 0, "%s ", rfc);
-=20
- 	if (reroll_count) {
- 		strbuf_addf(&sprefix, " v%s", reroll_count);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index e37a1411ee..645c4189f9 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1368,13 +1368,30 @@ test_expect_success 'empty subject prefix does no=
-t have extra space' '
- 	test_cmp expect actual
- '
-=20
--test_expect_success '--rfc' '
-+test_expect_success '--rfc and --no-rfc' '
- 	cat >expect <<-\EOF &&
- 	Subject: [RFC PATCH 1/1] header with . in it
- 	EOF
- 	git format-patch -n -1 --stdout --rfc >patch &&
- 	grep "^Subject:" patch >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	git format-patch -n -1 --stdout --rfc --no-rfc >patch &&
-+	sed -e "s/RFC //" expect >expect-raw &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect-raw actual
-+'
-+
-+test_expect_success '--rfc=3DWIP and --rfc=3D' '
-+	cat >expect <<-\EOF &&
-+	Subject: [WIP PATCH 1/1] header with . in it
-+	EOF
-+	git format-patch -n -1 --stdout --rfc=3DWIP >patch &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect actual &&
-+	git format-patch -n -1 --stdout --rfc --rfc=3D >patch &&
-+	sed -e "s/WIP //" expect >expect-raw &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect-raw actual
- '
-=20
- test_expect_success '--rfc does not overwrite prefix' '
---=20
-2.45.0-rc0
+--00000000000035441706169fee8f
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 3accae29521d92c1_0.1
 
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZbFlqY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMmRCQy80dDlVaGU1RTRxTXVPNW1nUTBXemhtQlJabwpNVUhEMm9PVU5D
+K3pRZXl2c0tmem1IbEtMTTNKZFNIWTQvNVJiRHVsZExDYnY5THMzQkp5c25WQ2F4aVRlOTlsCjdQ
+dmpJNXltbWVOL1UwTFBwWFIxVE4yRFovZFZGMWQ3NHR5TkdpUGo4RUEyclRrVVJZOUtmd3pyNjk4
+WkxpcE0KMmVlcnljUE11eU1tQWN6WVpiN2dUdmlXaDdpRGZmZms1V1hPSmJMSnY3bHQ1MXBiWVdz
+SjFKVHNuT0MrZXd2UwpXU3JMVURXNkMyN2ZoZ2c3eWNzcC9MOGdERUJJZ0NkVGNUTjAva2RSaC9k
+T1FVeXBFZTBkcy92ZHJObW1iQVhlClBsNVcxYTdmc216b1R2WUlteTlCRFlEMkJsazV2YlJkdFNs
+VHBuVXBiRjJSUWhFTkxYd1JHNTBHRnR6TU5Fd1YKeW9CMWF4Q1VqV3FvN2pwYlRsZVRrS0JVQTgz
+c3AwMmhwcUtyM3N4Um9jMFpENHBNVmNhK2tEU1VQbDhjM0MwSgoyOVA4ZkxLQVNLTVdTcnI0Y2Uy
+eVpFSXJCL2FKbGlRVXh0OXBRZ3g4eTE2N05Za21hV0dwRTFQanJlM1ZPdW1jCms0WGpsUVJlMlZR
+T3FjVlVXRy9wY21PQk1DcGNhWHBkRWNqakRHST0KPWhMa0MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000035441706169fee8f--
