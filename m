@@ -1,59 +1,41 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CE4DF55
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 10:29:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B3C38C
+	for <git@vger.kernel.org>; Sun, 21 Apr 2024 10:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713695352; cv=none; b=BTN5HKTXTqBfO7VQ647Ee4xnGKs9wpMk+tebsOOZ+7dcDFUhitTzALXLNYA99CX72pIgd/a3BGUGIid7ld/bF+/uj4XhZAW0LbVD9Yj10GrmL+hZHie3V5no45oBnV1C7YZD+VuZNYq7Q1kE2M4bem53ZVQRw/CAGZIkcn2Mou8=
+	t=1713696150; cv=none; b=afvHhvcIk/IlGmd5yqA/CY5N7ZUYO01DjcNg89RoO3USwI6tYME28A9oF1D/0GPpr8drF52FG0BvSrfgI9si/SY9j+89AfUfagaToZq5YgKv0yOA7k/evWDixRO4cIRus3lCUIUQe4t2JP1vycQpv7uCd2vfXSyeDJak+1m04Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713695352; c=relaxed/simple;
-	bh=MhKIfkMZ7+uq/eLgZuuSOL+TEqUSDvMN0l7FwtvOibo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=jAcyYViXcTuWsfiXsuAzNbRmt8HQPzTRBWbCAEG3Epy0gXJSRRQaGcFsKf84nWUToJq9aw+2HzB1tZ/FUZ5hO5fJsJfS8pvas01/MJ7Y3piW7HDkMmgcskqTv2hT0UHFKY95mMD1nDrssJXODNKaln/VKLDjxc1FVHPRjudUhCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RWIQ/OyN; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713696150; c=relaxed/simple;
+	bh=Vxb7ANfPOGwtqj8ptT2+mmxf2VC/IXG3J78ndvHvO4g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=HQ8g6DL9PIk69xUEr0Aw9qHc9tLAnq0Oh7DrBuhStwssR5J6XE7wesC/vW521YSHU4oqKYyxdHzREs0x27LH71AvnGwmzPFaCKF9R/Ys/z5oC57OK3FOGrB2OZkax4kGx2YeMi+aP7yHILRjEd+uIYU2Tfw5k7nae3C0VnbLh5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=XFXNRLEB; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RWIQ/OyN"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-343c2f5b50fso2451987f8f.2
-        for <git@vger.kernel.org>; Sun, 21 Apr 2024 03:29:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713695348; x=1714300148; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xTyAD4nrqXUTF0NKc2JwQEYv+kVRtUAID4yUsg2Utjo=;
-        b=RWIQ/OyN4ovF9RolNX6MA3K1pZFTTNuU7SAIi55zxko44UVXpuy/sPrP100ctj6pcb
-         LWYQD8RM95RHAth5BexDkVGKrz2b0GHM8W3ddtUiNRixx2yl4PHPDu2PfuWbddZ8bBlg
-         P3etvWa9pLJ1jen0Lerh1HU9gBdscVbC6hCFfPNwk5zGHCrKQoWLMRWWUR9SaRQLUFpN
-         GT6fww3AOrVZQ6yrdW8Kk7TggaQfkjU6pFbp9i30CuiTfG8nB5aWVAXcw/RVePTCZ9Bu
-         lkxo+X6bDnKXfccUH0VSBN4ThXSDvy92ZpsyF3WCi/N3M6w+Z1KHkd5AlPqi+TqqTLsD
-         yBTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713695348; x=1714300148;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xTyAD4nrqXUTF0NKc2JwQEYv+kVRtUAID4yUsg2Utjo=;
-        b=T3RBJyueTBvyJbBMaTu4EZePgCrdR9I1jJ+O2T9lzh2xBVY85/HttocJhNLHAW0PCc
-         sGtpdducu324AvWw8O17YkhPzJd5JLef8QKtWZDShzA68Tv1nbtrQPBfTieaPIwy0Csb
-         9Wpnjawua0tDyZKO0uJnvLZVOnRwsiIO2Lt6MyXQdiuFx/6D9jSNZNrdCH8y/Nd9OblE
-         ApO64fuTaWYi+oGrlrBGutfizaqZFJsjF9tAjRIjMaGr9XkPJ7NdiwoVxMz1IGg6ZNOn
-         UDiMyM2eBqSjy3/1inPfFjeZhuMd/nI4naGTIgqGiFl5U1tpqe0ZZyR9KHWWWu0QuqGt
-         wljQ==
-X-Gm-Message-State: AOJu0YynIrXqFbdtOcebRsi6v5koBSR+SN46KIHYnOjegh1aEMVQrpw9
-	12aANxJW6/LcPmDtARWCKQXifb0yDBM1buJD0hTZcko1JhPWSwKMdF9gAw==
-X-Google-Smtp-Source: AGHT+IH6uYidvPFItbYFZ3re8Dfy2k2uknEB/RgwEULp4xpZBUCW3WkU8fiQytE1mLuNBVto8+pJ9g==
-X-Received: by 2002:a05:6000:25b:b0:34a:572b:3e15 with SMTP id m27-20020a056000025b00b0034a572b3e15mr3739701wrz.25.1713695348597;
-        Sun, 21 Apr 2024 03:29:08 -0700 (PDT)
-Received: from gmail.com (145.red-88-13-173.dynamicip.rima-tde.net. [88.13.173.145])
-        by smtp.gmail.com with ESMTPSA id u11-20020a5d434b000000b0034a2d0b9a4fsm7854367wrr.17.2024.04.21.03.29.04
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Apr 2024 03:29:08 -0700 (PDT)
-Message-ID: <a886c086-4b2e-4d41-ad40-b3fca20de42a@gmail.com>
-Date: Sun, 21 Apr 2024 12:29:00 +0200
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="XFXNRLEB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1713696139; x=1714300939; i=l.s.r@web.de;
+	bh=CpyQGeb7rtI2NqTBddMxBZ9Z3nWxyjWyaCZB4gzUciI=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=XFXNRLEBJFYPMEicrHdfToSUSPekoX7FqlQP94dcJBUH4eVv1p/6QZrMjlkc302v
+	 3a5RT1BMz87OUAPWHeTzEKjE8En8DrBVtkAbP1FOYIbSoC79IGE2svdqv82CmUluW
+	 2uI9takhmK1ie4crJhZUEbCRWOGT5LqGuzrJGwueJKXpsXxvMULWqLIBAThtWoeE8
+	 gtQzkJWx+BoaG5VCFggu0Jwdm04uqvT2BeED8elaf/pWwBg6EB2FH0yA+xRw0Lc/9
+	 u+DMJRmBZldVoHeNmgp0VwaI1ybzk4JbzyK8ucChh9fygJctFqTO/hpk+tdmE1YfR
+	 PhPr0SX3w+HhISTs8Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjgXH-1sRjjV3h8d-00iVvm; Sun, 21
+ Apr 2024 12:42:18 +0200
+Message-ID: <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
+Date: Sun, 21 Apr 2024 12:42:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,89 +43,147 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 4/4] add: plug a leak on interactive_add
+Subject: Re: Possible git-diff bug when using exit-code with diff filters
+To: German Lashevich <german.lashevich@gmail.com>, git@vger.kernel.org
+References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-References: <b7b2d0d2-245e-440f-a7cc-fa0df1ce73ad@gmail.com>
-In-Reply-To: <b7b2d0d2-245e-440f-a7cc-fa0df1ce73ad@gmail.com>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:76sSd5dEIPc+hd2BFhL1+b0rj5DS0UHp5SvYwyYaVOI46DL4bRi
+ H2IZe6xS932/fsXxPyp8Km5snF2ifu5ewDzz/Mca4kLJ9gzkqqK4rlB6BRbFHAezz87THWk
+ G2i4QkH0Q76TQtEDAF4cUIWXRoJAYzvhVU0KdBJGshK5CCPCx9w66rJ4qFQE68pUqY6erb7
+ iq13gWimPZ8HErbzTX6PA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:v7Qs9eLjoYg=;WhS+hDB+HjJMEF6IwbkkKII4Hee
+ K9fUH8lU9o/cj7MlkpfMEqCMwt7EbmjSVPavhAfDgTodnsDIQ/ZRgIdqZNjnQQvWT/OhI9Wl1
+ ilhu5hBo3Yeg6z0rB1v745sdbeidMEutJ3KAZKEXTNJrg9GeD10bkIWtZ5NVjkETJA3ED9LHO
+ goJiDaBCV11vekyff2gEFCSBqm0i24YaEpX6x0DHyVIKwYSxjBn58RFRpOLodloneFCf3OmSt
+ U4y/d7euuzakOghkoUDHqZHKoD38krjwjtDzN+usri0HIJNCuMEFw4dRTsPUAsokHPTI9A0ls
+ FEmusHbMJ5k9t7nh1cZ8WZJrK97Y20Tnpem/gZw7kd5v+3qw0sH6DsD00Jr7IyV0nfHJSYAZF
+ NCm5dxIaONB4m+k8zvj1V6LyaYVKRgUYym/3zBlaJZ+Hyy9RbEluXGMmhc4uFPQIFky9KvxCC
+ rPi/a5I4zTwlH77WFa6aqFfTF1HPL/X4ND9j+pIeB1sfGWLPJH/Hb/w6wuwhDbkU44l0bB4DV
+ Ww7yllwUrUwOWSE3DS6QALZFO7m07ED+9ZVCB3CUqxy+Cv8rdwoZHuq22JjHtg3n7a+z8+eLQ
+ xZ9vFhTXH9MrUgZOTba9KiOUKrl/2yyVCbBfU+W3fpmODZAdv7rqXjHe1h6u/KbSKtWsdAxTy
+ YhL/94JC1+FrcNYt+V0cn3GkGT1ghFu5rxKuxQS6nVIzAEIMMm6un4ydXZxc7EuxFftWq6Hcb
+ MT/wKP5SzVwT9l1rx93OKIaufNy2TVklky88Dp1zRoLPQlordqzJU6DB3TAYnUPXIi6LPNsEP
+ ECRb0y6688BODP8Z4DH/p7NA8EZUOgzpPk0kqYHknWx+I=
 
-Plug a leak we have since 5a76aff1a6 (add: convert to use
-parse_pathspec, 2013-07-14).
+Am 20.04.24 um 03:13 schrieb German Lashevich:
+>> What did you do before the bug happened? (Steps to reproduce your issue=
+)
+>
+> I configured a diff filter via gitattributes to use a custom script that=
+,
+> sometimes, can change the files being compared in a way that there are n=
+o
+> differences between them.
+> Then I used `git diff --exit-code` on the changed file.
+>
+>> What did you expect to happen? (Expected behavior)
+>
+> I expected `git diff --exit-code` to return 0, since there are no differ=
+ences
+> between the files after the filter is applied.
+>
+>> What happened instead? (Actual behavior)
+>
+> `git diff --exit-code` correctly produces no output, but returns 1.
+>
+>> What's different between what you expected and what actually happened?
+>
+> The difference is that `git diff --exit-code`, instead of returning 0, r=
+eturns
+> 1 even when there is no output.
+>
+>> Anything else you want to add:
+>
+> I have prepared a repository with a test case that reproduces the issue.
+> You can find it at https://github.com/Zebradil/git-diff-exit-code-bug-re=
+pro
+> The Readme file in the repository contains instructions on how to reprod=
+uce
+> the issue.
 
-This leak can be triggered with:
-    $ git add -p anything
+You can more easily reproduce it by setting the environment variable
+GIT_EXTERNAL_DIFF or the configuration setting diff.external -- no
+attributes needed.
 
-Fixing this leak allows us to mark as leak-free the following tests:
+The output of external diffs does not influence the exit code currently.
+We don't even have a way to find out if there was any output.
 
-    + t3701-add-interactive.sh
-    + t7514-commit-patch.sh
+The patch below pipes it through a buffer and sets found_changes only if
+something was written.  It fixes the error code for external diffs
+producing no output, but breaks several am, pull and merge tests (t4150,
+t4151, t5520, t6424, t6430, t7611).  So diff_from_contents doesn't work
+quite as I expected.
 
-Mark them with "TEST_PASSES_SANITIZE_LEAK=true" to notice and fix
-promply any new leak that may be introduced and triggered by them in the
-future.
+And slurping in the whole output of external diffs is inefficient, of
+course.  That could be fixed later by using a small buffer and writing
+directly as we read.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- builtin/add.c              | 9 ++++++---
- t/t3701-add-interactive.sh | 1 +
- t/t7514-commit-patch.sh    | 2 ++
- 3 files changed, 9 insertions(+), 3 deletions(-)
+Ren=C3=A9
 
-diff --git a/builtin/add.c b/builtin/add.c
-index ae723bc85e..b7d3ff1e28 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -150,7 +150,7 @@ static int refresh(int verbose, const struct pathspec *pathspec)
- int interactive_add(const char **argv, const char *prefix, int patch)
- {
- 	struct pathspec pathspec;
--	int unused;
-+	int unused, ret;
- 
- 	if (!git_config_get_bool("add.interactive.usebuiltin", &unused))
- 		warning(_("the add.interactive.useBuiltin setting has been removed!\n"
-@@ -163,9 +163,12 @@ int interactive_add(const char **argv, const char *prefix, int patch)
- 		       prefix, argv);
- 
- 	if (patch)
--		return !!run_add_p(the_repository, ADD_P_ADD, NULL, &pathspec);
-+		ret = !!run_add_p(the_repository, ADD_P_ADD, NULL, &pathspec);
- 	else
--		return !!run_add_i(the_repository, &pathspec);
-+		ret = !!run_add_i(the_repository, &pathspec);
-+
-+	clear_pathspec(&pathspec);
-+	return ret;
+
+diff --git a/diff.c b/diff.c
+index 108c187577..76631644e5 100644
+=2D-- a/diff.c
++++ b/diff.c
+@@ -40,6 +40,7 @@
+ #include "setup.h"
+ #include "strmap.h"
+ #include "ws.h"
++#include "write-or-die.h"
+
+ #ifdef NO_FAST_WORKING_DIRECTORY
+ #define FAST_WORKING_DIRECTORY 0
+@@ -4404,8 +4405,18 @@ static void run_external_diff(const char *pgm,
+ 	diff_free_filespec_data(one);
+ 	diff_free_filespec_data(two);
+ 	cmd.use_shell =3D 1;
+-	if (run_command(&cmd))
+-		die(_("external diff died, stopping at %s"), name);
++	if (o->flags.exit_with_status) {
++		struct strbuf out =3D STRBUF_INIT;
++		if (capture_command(&cmd, &out, 0))
++			die(_("external diff died, stopping at %s"), name);
++		if (out.len)
++			o->found_changes =3D 1;
++		write_or_die(1, out.buf, out.len);
++		strbuf_release(&out);
++	} else {
++		if (run_command(&cmd))
++			die(_("external diff died, stopping at %s"), name);
++	}
+
+ 	remove_tempfile();
  }
- 
- static int edit_patch(int argc, const char **argv, const char *prefix)
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index bc55255b0a..04d8333373 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -4,6 +4,7 @@ test_description='add -i basic tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
- 
-diff --git a/t/t7514-commit-patch.sh b/t/t7514-commit-patch.sh
-index b4de10a5dd..03ba0c0e73 100755
---- a/t/t7514-commit-patch.sh
-+++ b/t/t7514-commit-patch.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='hunk edit with "commit -p -m"'
+@@ -4851,6 +4862,7 @@ void diff_setup_done(struct diff_options *options)
+ 	 */
+
+ 	if ((options->xdl_opts & XDF_WHITESPACE_FLAGS) ||
++	    options->flags.exit_with_status ||
+ 	    options->ignore_regex_nr)
+ 		options->flags.diff_from_contents =3D 1;
+ 	else
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index fdd865f7c3..26430ca66b 100755
+=2D-- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -172,6 +172,14 @@ test_expect_success 'no diff with -diff' '
+ 	grep Binary out
+ '
+
++test_expect_success 'diff.external and --exit-code with output' '
++	test_expect_code 1 git -c diff.external=3Decho diff --exit-code
++'
 +
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup (initial)' '
--- 
-2.45.0.rc0.4.g08f77eb516
++test_expect_success 'diff.external and --exit-code without output' '
++	git -c diff.external=3Dtrue diff --exit-code
++'
++
+ echo NULZbetweenZwords | perl -pe 'y/Z/\000/' > file
+
+ test_expect_success 'force diff with "diff"' '
+
