@@ -1,96 +1,113 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075C61B806
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 15:45:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596EFF4F5
+	for <git@vger.kernel.org>; Sun, 21 Apr 2024 15:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713714353; cv=none; b=dNHx6guHiKxuHIo5yF6xsm8xN94jhlqRuMilJ9y/CkgcHNqc65W4k8YfFOYCSrQT2YAALm3fVlQ4Ue7gRZU0Nx/YAFGxlxRiaZWzqNd6FXjxNK6Pok8PkcCVNISsgUL856Y3W3r7v7k4sUe5x50Jjcc+S34ekSYixTxSH7oFZrI=
+	t=1713715077; cv=none; b=oXhUAKTDcKTeYuq3sozjtik6KAjQiXI2xZ83QBjPopJwjabQzdZQy79aRRUlDTuPuZYFR1tMW97nuvJad8EvKpgiq7UjNfLLVaeASyCTuiDBc/dwCVzmMdcnTnhDt2hzHJ2wSrrP5AXJSZaRRw2QagcNzgQLAmN58tl3QKn5Hg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713714353; c=relaxed/simple;
-	bh=bbPF2QEzf+DWbY+ZW15GbZDN77y/WEzEF0orcroKSN0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=imZE1D5v75zl2/LGhLtEIt8xmKvIqtlREZGgPH62cVa/G0usHRVPricf+BNetA4pV2D4OWNeu+9cZkMOcJ/76+j7k0AB2DMX4FAiUNeyJlgYPYxJFhfFjkCjfXN9zyVrB907PSR1+ttBpBTghuQnZ6g1+gUmH8iPfi3dED7Wo40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkMkT0hn; arc=none smtp.client-ip=209.85.218.45
+	s=arc-20240116; t=1713715077; c=relaxed/simple;
+	bh=HXlk1nf0+/BPz1Tky5Gf+ml1hd1H2R3MU/EDLhiPNMU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VLbBV0nT2Uhsx8gWdSalsxMzXfh3Q8K4W/ceP6XwXNizRmfHnkyh4GhhfOv5wTRHSvLdJqM+Cv+M9bDY0jVFo9WW3Nj/GLh39UOvGXsEyQshh2NXiej4GuEk6i5ARnppW8J/YM4/Hvcp6YwhGKLlEFBQlS1/xrziTWgCzRbivvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyHrJTSx; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkMkT0hn"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a55b0213a0dso46296066b.2
-        for <git@vger.kernel.org>; Sun, 21 Apr 2024 08:45:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyHrJTSx"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5aa2a4dd0ffso1699543eaf.0
+        for <git@vger.kernel.org>; Sun, 21 Apr 2024 08:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713714350; x=1714319150; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0CG3uKISfp8ouFYMkhXdgTfDAYQaKzqX8W6qxFPNd7Q=;
-        b=nkMkT0hnkG8HcC3JnP0mS+Xr8GYCGmMPOHg+rGKUNvl7dzDESE1W8HNAlUto/tLt/z
-         vYlE5k6m7hlJ1D/95LGBc/odSGQWNKvBV2Qlf8fA1foU3zH5UcYtoSI64+UCD/XdTQkI
-         mBeWYeU6HPPYSEbXRDXBaPof5GEogNpV8WHhpgdNlQo7+eHT4JYZGZdrG1EjfiYG1hfw
-         BKNXqny1wUmvTsaDmjHSR2pDc3eY66URjzqkVeAzAgI4I9k8ukKZdfeJDxUJ9uCFcvjp
-         NNAlXX/xFtoEDwGSFObKxODQ93377ggNPF0dzH2CIPUE16epNbuffGtdrto5tSQUV7zV
-         AliA==
+        d=gmail.com; s=20230601; t=1713715075; x=1714319875; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uvEdc+o7F7LWrbj6VY7gx46skmKC2a8dNVw0oIMUvcc=;
+        b=NyHrJTSxSrSUBVYKOzOcG4XyHUWwaqzbZnoAispVsIOwZRmZLDSH+9RUJbIt7eQPqv
+         fFuMROWEY+W5S6HWApYMNEDgb4ggZIeme0EU2x+DZBxopXJkv1IB0oloXRF353gNjLKU
+         6VF0rXYuKd7sFmTycJ+g6QBpIya3b5/cAzMxSplSZ/tPPIASde3aFMh6hUVyy20N3NJr
+         2jYzjWSxU2q8vKSNY3hX+BYppS+MFBKSX/9WKKMjBujAAbOnzK3THDwuHZ0wPe2pwJbs
+         AVRcA6X1QNN5nVOlste2Q3I6+u2hGBqldGB5vI2QCldP8d8KYVuqlRp3csvu6uCq39ZC
+         BJqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713714350; x=1714319150;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0CG3uKISfp8ouFYMkhXdgTfDAYQaKzqX8W6qxFPNd7Q=;
-        b=XDRAsdGdv6wlF2xSMF6Y0MNWEpIY3ir3Y0mVB0lLk1jiX0JHwaSdLokG9a0P82Gff6
-         3eHET09fqL4MzL5q55ZDIkReWm5DNkjQlTqjs83CmZKSc9CLu29F2qrnla64JAGtJ7Pw
-         3KR3Yf5YyJs1irGie/FCuez10cHGYxCpZnJ80tg+fuvGjN2XruFUWvd3UMtMkKwEl4+L
-         JwE/ih35KuGcgnKM5KN8zsmKCayS0wjg5JTL4rJ5oDz/4I2HUxfl4+SK/bmTOrBhfU+O
-         eWRqpiAFIR+UDZBmEsV050Gn7s+nd80M/HFktwokePFKVHBGsPdjsLMsDalivbFke/kP
-         C24Q==
-X-Gm-Message-State: AOJu0YxRdHN7jjIye3TasUEhHfEfFQSqb0Rj7LhSkrIuwp6uBNyfw9gV
-	dL0cvuQOtbmu15obOlTe4dHGgUzW1ACu3lOF6nDUm01tj1TugpqsgnAbSTThkmKTw5quxhLiRv6
-	RLSp5X+ZLLLZ6j1EV0VQza14N86w=
-X-Google-Smtp-Source: AGHT+IFOfyDF7ubMBG4n9qfgLzBeoVo3w7VGbXo9Fh1SHgedhJT4Try26yHd579P78alr3Yp5uQ40BK+imN7PJ6UQdE=
-X-Received: by 2002:a17:906:39c1:b0:a46:3ce4:5acb with SMTP id
- i1-20020a17090639c100b00a463ce45acbmr5020384eje.75.1713714350038; Sun, 21 Apr
- 2024 08:45:50 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713715075; x=1714319875;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uvEdc+o7F7LWrbj6VY7gx46skmKC2a8dNVw0oIMUvcc=;
+        b=Q5+rOor2HeK1dlO/1R0f00DZHlYwn60M94T8aZaRwHZFqR1Vi4vu2dKKGcsBCT6Acg
+         J2sSdZlk6jAd6CHKP0vR6TuoetyLKYgFUtDMb+Q6OnNlrtyhn3JjESIxsRoYqX53Fqeq
+         xBWIvEV8pqQ2OpI5AuD2wxPzf/t9xLH26UXj2GoodFb5yuCJ428iDZgMxD8aa3obfkbC
+         AO5FE5QjS+QdHY+vyX8EFyrf2IQrSijFADz6LlEpKiVd/3PcjNuZ5cSZ5jvw+7RkVYLG
+         3RrUX/wS3ZdPaof/kSccEnwQkrdXBvfAozvukxufBxjfLZ8SRdCTELiRxD/bniNbsKMJ
+         zRdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW9ZrbiRNPOWjexVFdRihw39i5Ju+66Usptj2LeWrwIavM5HPb12fScAr8YrMUskX1KHl8OW/ltkmij8kqBXvY2Q8M1
+X-Gm-Message-State: AOJu0YzThIeh6F7dk2qZMEFgsxGBXowz1ur+nD0IpmZjh7iAsvR3ELKN
+	5U6ArnrLFydKhPDfdpXi9MQpc2PWR6xwTfCH48smByb3/i+uyn5dLZAIJKqVEnBo6WpmPSzUNJ5
+	pQa44d+aSuBoNdXzQk3wEVyjK47s=
+X-Google-Smtp-Source: AGHT+IGtASezusOURhwmXkFORj/dfEd1pybxbYqzUfAIgHJJ6KPqGSrNYl/bN/U74Ni0w+7CygNJ1B9kUnu9xSFzXK8=
+X-Received: by 2002:a05:6870:51b:b0:222:8961:43fa with SMTP id
+ j27-20020a056870051b00b00222896143famr3233687oao.15.1713715075182; Sun, 21
+ Apr 2024 08:57:55 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 21 Apr 2024 11:57:54 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAOLa=ZSvx4bOmJY+P5j3fJTqfjY37teMHQhOYDjTM4oJtnv_qw@mail.gmail.com>
+References: <20240330224623.579457-1-knayak@gitlab.com> <20240412095908.1134387-1-knayak@gitlab.com>
+ <20240412095908.1134387-6-knayak@gitlab.com> <ZiI8GaGupNzbLqnE@tanuki> <CAOLa=ZSvx4bOmJY+P5j3fJTqfjY37teMHQhOYDjTM4oJtnv_qw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <65f32df3f49341bf192b606914d44cc937f7971a.camel@intelfx.name>
-In-Reply-To: <65f32df3f49341bf192b606914d44cc937f7971a.camel@intelfx.name>
-From: Mike Castle <dalgoda@gmail.com>
-Date: Sun, 21 Apr 2024 08:45:38 -0700
-Message-ID: <CA+t9iMwX2anANcpPg15MHwdh1377zMb-k9kCt3jVx_-ggJy=sg@mail.gmail.com>
-Subject: Re: Building with PGO: concurrency and test data
-To: intelfx@intelfx.name
-Cc: git@vger.kernel.org
+Date: Sun, 21 Apr 2024 11:57:54 -0400
+Message-ID: <CAOLa=ZRcXteRGQa82aw+WxfxsufrU2R-6hr7XYu9-SqjtbaS6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 5/7] update-ref: add support for symref-create
+To: Patrick Steinhardt <ps@pks.im>
+Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000004d9b8806169d62b0"
+
+--0000000000004d9b8806169d62b0
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Apr 20, 2024 at 5:53=E2=80=AFPM <intelfx@intelfx.name> wrote:
-> I'm trying to build Git with PGO (for a private distribution) and I
-> have two questions about the specifics of the profiling process.
+Karthik Nayak <karthik.188@gmail.
 
-Generally speaking, there does not need to be a lot of execution to
-generate good profiles.
+[snip]
+>>> +				/* for dangling symrefs we gracefully set the oid to zero */
+>>> +				if (!refs_resolve_ref_unsafe(&refs->base, update->new_ref,
+>>> +							     RESOLVE_REF_READING, &update->new_oid, NULL)) {
+>>> +					update->new_oid = *null_oid();
+>>> +				}
+>>
+>> Can this actually happenn right now? I thought that the `read_ref()`
+>> further up forbids this case.
+>>
+>> Patrick
+>
+> With update-ref, it won't happen anymore, because as you mentioned, we
+> use `read_ref()`. I thought it was still worthwhile to have. But I guess
+> its cleaner to remove this.
 
-Execute the happy paths and collect data from those.  (Which implies
-that unittests are usually a bad source of profile data.)
+Well, just realized that this needs to stay because we also want the
+resolved OID for the reflogs. Will modify the comment though.
 
-Many folks use performance tests to generate profiles because they are
-already written, but often, they are overkill.  Depending on what is
-going on in the real world, more resources are spent on collecting
-data than would be saved by the resulting optimizations.
+--0000000000004d9b8806169d62b0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9b77b54d5c6d83a7_0.1
 
-I'd say, don't worry about it, and just go with what is already provided.
-
-For tools like git, each run is short enough that improvements are not
-likely to be noticed in day-to-day activities.  It is still likely to
-be IO bound.  Most perceived performance issues are more likely to be
-addressed by algorithmic improvements (in general, not just git),
-rather than feedback profiles.
-
-Now, for any busy long running servers, this can make a bigger
-difference, particularly for computationally expensive operations like
-authentication.  But again, IO is likely to dominate.
-
-mrc
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZbE40QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meFN0REFDaHZBTllOdzRYNE5wblhHS3dLcFd4VE5RcgpwS2lRdy9EcTcr
+bEdSbmZGZ3ZIRGdqU2dRcEZ2RmZqWGE1aGJyZjRKeE9MWi9XRmdwR01wMDFzM0t5UG1zNGN6CmpB
+ZEwvSENheVhoTXdPQmRBZlBNa3VKZFhhK1l1QlhpY21BTWxFQlJTY254RzFNKzMwcWJtdkJNb2g0
+T0drRzgKNXh4L1JKcExFR1pZdlZUSGptdXhqSDAzWTRMN3JWcU1vQmRqM1NFV0ZkL0xOSm0zRjRU
+R3dyU2xaOEdEUlNuRgppUE0zc0VFS2lKam93a0xGdGg2L3dGdEZKbmN0RXZBak81MzQzV3JTaWJH
+WG0vNzJKbHdEb25wZDBONUw1dXBaCm9vNXNOUGtWQUY0ZldKWkRHbzZxK09sZUtNa3B6N01TeERL
+TkxHUlQwdnIzeGNDWkxkRGdBL2swWGZFRkFEcEcKUjNoQWxMeHBrVUFjbXJnKzFKZjdZc2F2bjRH
+eVhTY1ppeUZtU25pck5QbUNtc2ZnTzJKUXI5dFR2M3ZjcWJaMApqWnVLMXAwaGFEZ1Y1RmVWRWdW
+eFBHcW8wQXlQQkZ0V0NrVSt2aTNadzNqMGMzVjJXV0pEWVh5THhwdnRvdng4CnIwQktqbExOckIv
+Um5UNVVndjAwNWhqR2RKWnArSkE2UWpscFRlND0KPVE5ZFoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004d9b8806169d62b0--
