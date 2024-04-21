@@ -1,171 +1,152 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE6338C
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 10:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B838579FD
+	for <git@vger.kernel.org>; Sun, 21 Apr 2024 12:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713696350; cv=none; b=Z8mLL9UZRX0mBYSqrcvXVHqAUz+R++lPEJi9thpZUlLKY8RWaaH2AhOO+C2iO2WBd0+dHBgzNWp1KkRXXQsFqv6ZBWcmgidHvfIRDWCq0uI+ZFNmlzALShjlg1z9x5e3FMOKTfluGYR1jGuNw++pehJ/XpmvvZn5NT1KNdwG3pQ=
+	t=1713703245; cv=none; b=QJSm513T0YnwFeJ98p/Rq1n7EGP38aTzpLLWisjq+LRYwIbBIuOApqBELnXYF2spJi2+GTPX0qRtrv9p81eImSJWR1/y+BTqS5tmJNmYrHIi87CRBeaBMp2r3OT5IC1OipraF9znFTOU/PGSFfz4uXlJZm5zN67J2ZdekRzOpH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713696350; c=relaxed/simple;
-	bh=0y/lF31PRr1PH+HGF4KlPq3VjvUfgRdx0joZAsyYF9o=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UozeiwP6H/BpwE2Xx0E7bHX5H3Qf/CEW1iMuFWJ1gwYQa890l36akxkQQrKR/69m1wrgAV+oeTh4fMljXAUUKJfRXGwGN8rn26H1lHtqTpDPNSSp9oJfglXCZd3Nf3vRZrWV1ia+P+PnGFdKZ/WPNfdr/BtZtkjW56/cWhDQ7QQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iC4+lIue; arc=none smtp.client-ip=209.85.160.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713703245; c=relaxed/simple;
+	bh=TfxCA2I5mMxCrpy2qjGoJp1xZmYskrMimTzD7sCI3TQ=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=YDjNJMgU7TVkS4f1Iv/RPC7YVb4VhumgTRTAYi5PT/3UhewhEq/YpatzNBFDXcngoZuUl+jf2S/QPqXmGmSrAOca7eN8ItIkImchZWSM3+IRAplQ8hKyvWdhR6mAuR/Zao+tHyMGHyvyk6anBCGJWSB6Rwvad14M/U394ybym0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=hAbY6jQc; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iC4+lIue"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-23333ef4a02so2127877fac.1
-        for <git@vger.kernel.org>; Sun, 21 Apr 2024 03:45:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713696348; x=1714301148; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oCSeWHk/10ufXxMI7jBIT1FbtdUZacDV32vg6XmOy5s=;
-        b=iC4+lIueDEQZbvCVV9sZhOabDsIE933QV/I+eZtvWtFfyNDkOwi0D1U6T+axglbM9I
-         Ap/dEW1BVidpwhqX5Yu5mpSzK6feqXqsl+7Y3KuUVChvdpca+5OCe2o0yiHQtStldLq6
-         Pm2YX+rRwRjL303rfr+nC2ggOhSMXlYHXcgzyrfBFeWH/64KxyEUus/jexfWVePd42Ia
-         ayJs9XC84W8ZEtDUrL3IiNtgRWOnU4RheDJGsNdKthEXGLD5Cb1t1qzUZiRodZ6dyBpQ
-         E5zPnZwuxKBXsSB7FLR7c+kUB5kFJMt3ggUc5VdqzM4YFZ/IxC244WEwrCOnO+9TAQm5
-         acqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713696348; x=1714301148;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oCSeWHk/10ufXxMI7jBIT1FbtdUZacDV32vg6XmOy5s=;
-        b=wc5KUou6eMoK/jce8vMweJvwuiRYAxYop6VYWZM6VaQfFjABxIv/qiBpaMmmSuI2Jq
-         73BnsR3bzCH2ghmUPYb4xXUaLgS7Of92+UQrVlYJEXCk+6STWE77owZl7FluILLK8gqa
-         qpXfwdFVFOnt/sBSuLdlcuiOgqsvVOOh07EWTeA+gea4p93ANAM1ARqDZ3IyP+QAbIe8
-         bLMxP99TsBoyDqjWJry1DFYCRW5PDph+QbABKF+SziL1OUhg+76kN+bV9KOltNNGbvjp
-         MNrdbDALpbMjZB50mxlBpBX/QcOJ+miAHXSWzqgIyU5UMVWFBxNf5upBl3HSwH8DqLup
-         zHtg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4T0Dq82oc5fDhP6AtXM1l47XvgbttxbKXIBbyZwPDxopbL6nbANLSFZMiRZQTuroZWLaNFfd020ImXfr7zcojm8pC
-X-Gm-Message-State: AOJu0Yy9je/94jAPLivGHYVzpCA99lBE5WdAWTE9YFzwYQDoDTzqUSVt
-	A7ldqxGKPnZo+4THLnp2/10xltnHsCgG0ytf5BERDHSUIiff3SUKKQ2a44YPyiaU/AjHbgA0vLH
-	5AIGU9zV8/S6VSkm5vYdf8D+kcGI=
-X-Google-Smtp-Source: AGHT+IHqW1zu1QwwV+iH0KS3NQZPT+Y5gYZrSzXv0jW9VHX1LNt/9sPGKt9BaVrvYlVLK+YI42XbdfO99voI7LHNHTE=
-X-Received: by 2002:a05:6870:858b:b0:235:458e:c8d0 with SMTP id
- f11-20020a056870858b00b00235458ec8d0mr9309481oal.45.1713696347897; Sun, 21
- Apr 2024 03:45:47 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 21 Apr 2024 06:45:46 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZiI8E2ZJT51akoAk@tanuki>
-References: <20240330224623.579457-1-knayak@gitlab.com> <20240412095908.1134387-1-knayak@gitlab.com>
- <20240412095908.1134387-4-knayak@gitlab.com> <ZiI8E2ZJT51akoAk@tanuki>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="hAbY6jQc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1713703229; x=1714308029; i=l.s.r@web.de;
+	bh=u0/+CsJf+cQBIdfBz1hGhdzAN2uEcReuyj296NMcDfw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
+	 Subject:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=hAbY6jQcLAquJaJd3H7wbi6EyO4zNFS0wWzUJD9132gKZbuZTWbt9xBhlXW55ZY+
+	 3wofdW8TqcULBbbsz2IjmUzI9AClsrEUXS31GLh3c0XE3rFhPUagRVZtaWatI61U0
+	 4Pfvokn7uocCR1VT7/RlA4oBQMm83QV6+8ff3ZsfmBl/4GSryr9/bU0WFN4eLIN+z
+	 1doslATzGm38e2VwTBLU6rQeNz+H3s3fy6nVQ0BDHPeP4+bjnn83wCSDwIInZlAho
+	 FF7+MlOMMOvWhUFT//c+jB4Y2Y8rPc9FOJfL12MS8qNGa3gTXTs3B7Br4nB+EbFlS
+	 QeArLLqZemOlrUE2Xg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MRk4s-1sAAY30pNC-00TDW1; Sun, 21
+ Apr 2024 14:40:29 +0200
+Message-ID: <ea752a2b-9b74-4a59-a037-4782abf7161e@web.de>
+Date: Sun, 21 Apr 2024 14:40:28 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 21 Apr 2024 06:45:46 -0400
-Message-ID: <CAOLa=ZS7+sqpf2TajahUM95DMVfYyxUOL3BBhT=-EhfnGBi0+w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] update-ref: add support for symref-delete
-To: Patrick Steinhardt <ps@pks.im>
-Cc: chris.torek@gmail.com, git@vger.kernel.org, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="00000000000011e02e0616990629"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] don't report vsnprintf(3) error as bug
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:SWy2IhlzYEnjBw4s/xXosGujxatRHaq+b66mY9Ml/Z5efKptKY7
+ LZ0dGDTNsEq8XIoQbVnsO+FVVo5s3HR0CrVYV9Ge+PC8MFdfAduWCdOEJYf6dmr8pw69sw6
+ HoCD3liaBAXardVrj+5hOXM3NA2piKatb62B+sCCmZU26BqCe7GPPnAisGOv6ifhJH0xCrP
+ k3FK4PLKZm3M/tRIEduIg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:hTArNcmjH/w=;PCOZ7fW0Ji4sCONaIJqW6771H73
+ HxHzez9GklGb45KsAGhU/dLAuCKdiBKNZeAygNJnA7MPVYxxRp5mQ5IHr6MJ+xpShR9Ff2hEv
+ PNNtjr0c/zyqt2eJRUpP/z2WRMLk3NDsV454iDQvhHZRb2nhXczGkUqkxgtsjAoG/bALJXXfz
+ 4NFfuQ/UP/7JbaY44e3jC1IWwavz6mEedG/0KB36JRxrnDMuKih3hbQbzHfDTYBbov41PHArS
+ nlZaX7ASspoObDoLs6F8368zyUIyiw37aSBrC8iHKzi5pjTjvC/EhxTqTDJpPCEEpcOTfqmYp
+ lx5RQx5k3krE29+b/+/yu199m+8TCOJhWNcLpMs83OFAT6vuHq7Rw3nXz6BgTGtoQhlZ/qh2M
+ WAh2TDnpqdXY0WxU3M/3neW5OCrBeRDk3C/+vWDcpCveV5IYeGRl5JXTVFDMTCEwnwU9mKPmO
+ KqdxyF4j2jY51HpJG3sgCZd/giUm9R4sYflzyhWAeyg4Gt27rOq/JBWzgO5wUw0Ewivye82uJ
+ nIjsmNAm0SKy2kIy9hE0x8CKfTJdW7Rs9ipvyhN/VMoK6b54SvNJ8kvt5uTeTTbYKJX2YE4Yk
+ gD/wIdEOC4FEAdg51SORL6xuEWEdyL7+fCnu8GnNGnfRjYP8s64kyxXS9ZAzbTV+4/5hdK5mf
+ rDllxXen4ujhRhVo95gQdNgUjvt6rlDF6sy2AO+14GoxVAod3iuC8SoCDPHQ2zTQx7RBO8EUC
+ JzbkgYF5DOxFrsyw6VRgU54181n2t986JvniNHtqw/H5hgnYZ4wTHFVIEwyUzWGyFFxKQn1N+
+ oDJscrpXkoJRmAFIxqMDD5TXeo4apoqNBW06A8aSOpMVo=
 
---00000000000011e02e0616990629
-Content-Type: text/plain; charset="UTF-8"
+strbuf_addf() has been reporting a negative return value of vsnprintf(3)
+as a bug since f141bd804d (Handle broken vsnprintf implementations in
+strbuf, 2007-11-13).  Other functions copied that behavior:
 
-Patrick Steinhardt <ps@pks.im> writes:
+7b03c89ebd (add xsnprintf helper function, 2015-09-24)
+5ef264dbdb (strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`, 2019=
+-02-25)
+8d25663d70 (mem-pool: add mem_pool_strfmt(), 2024-02-25)
 
-> On Fri, Apr 12, 2024 at 11:59:04AM +0200, Karthik Nayak wrote:
->> From: Karthik Nayak <karthik.188@gmail.com>
-> [snip]
->> @@ -302,6 +302,37 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
->>  	strbuf_release(&err);
->>  }
->>
->> +static void parse_cmd_symref_delete(struct ref_transaction *transaction,
->> +				    const char *next, const char *end)
->> +{
->> +	struct strbuf err = STRBUF_INIT;
->> +	char *refname, *old_ref;
->> +
->> +	if (!(update_flags & REF_NO_DEREF))
->> +                die("symref-delete: cannot operate with deref mode");
->
-> Again, I'm a bit on the fence regarding this restriction. I feel like it
-> ought to be possible to delete both plain and symbolic refs in a single
-> git-update-ref(1) command.
->
+However, vsnprintf(3) can legitimately return a negative value if the
+formatted output would be longer than INT_MAX.  Stop accusing it of
+being broken and just report the fact that formatting failed.
 
-Yup this is still possible since we have the 'no-deref' option.
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ mem-pool.c | 3 ++-
+ strbuf.c   | 4 ++--
+ wrapper.c  | 2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
->> +	refname = parse_refname(&next);
->> +	if (!refname)
->> +		die("symref-delete: missing <ref>");
->> +
->> +        old_ref = parse_next_refname(&next);
->
-> This line is indented with spaces and not tabs.
->
+diff --git a/mem-pool.c b/mem-pool.c
+index 3065b12b23..a3ba38831d 100644
+=2D-- a/mem-pool.c
++++ b/mem-pool.c
+@@ -4,6 +4,7 @@
 
-There was a bunch of this, I'll have them all fixed.
+ #include "git-compat-util.h"
+ #include "mem-pool.h"
++#include "gettext.h"
 
-> [snip]
->> --- a/t/t1400-update-ref.sh
->> +++ b/t/t1400-update-ref.sh
->> @@ -1715,6 +1715,45 @@ test_expect_success "stdin ${type} symref-verify fails for mistaken null value"
->>  	test_cmp expect actual
->>  '
->>
->> +test_expect_success "stdin ${type} symref-delete fails without --no-deref" '
->> +	git symbolic-ref refs/heads/symref $a &&
->> +	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" &&
->> +	test_must_fail git update-ref --stdin ${type} <stdin 2>err &&
->> +	grep "fatal: symref-delete: cannot operate with deref mode" err
->> +'
->> +
->> +test_expect_success "stdin ${type} fails symref-delete with no ref" '
->> +	create_stdin_buf ${type} "symref-delete " &&
->> +	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
->> +	grep "fatal: symref-delete: missing <ref>" err
->> +'
->> +
->> +test_expect_success "stdin ${type} fails symref-delete with too many arguments" '
->> +	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$a" "$a" &&
->> +	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
->> +	if test "$type" = "-z"
->> +	then
->> +		grep "fatal: unknown command: $a" err
->> +	else
->> +		grep "fatal: symref-delete refs/heads/symref: extra input:  $a" err
->> +	fi
->> +'
->> +
->> +test_expect_success "stdin ${type} symref-delete ref fails with wrong old value" '
->> +	create_stdin_buf ${type} "symref-delete refs/heads/symref" "$m" &&
->> +	test_must_fail git update-ref --stdin ${type} --no-deref <stdin 2>err &&
->> +	grep "fatal: cannot lock ref '"'"'refs/heads/symref'"'"'" err &&
->
-> You can use "${SQ}" to insert single quotes.
->
-> Patrick
->
+ #define BLOCK_GROWTH_SIZE (1024 * 1024 - sizeof(struct mp_block))
 
-Neat, this is much better, thanks!
+@@ -122,7 +123,7 @@ static char *mem_pool_strvfmt(struct mem_pool *pool, c=
+onst char *fmt,
+ 	len =3D vsnprintf(next_free, available, fmt, cp);
+ 	va_end(cp);
+ 	if (len < 0)
+-		BUG("your vsnprintf is broken (returned %d)", len);
++		die(_("unable to format message: %s"), fmt);
 
---00000000000011e02e0616990629
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1dab280a69e2f093_0.1
+ 	size =3D st_add(len, 1); /* 1 for NUL */
+ 	ret =3D mem_pool_alloc(pool, size);
+diff --git a/strbuf.c b/strbuf.c
+index 1492a08225..0d929e4e19 100644
+=2D-- a/strbuf.c
++++ b/strbuf.c
+@@ -277,7 +277,7 @@ void strbuf_vinsertf(struct strbuf *sb, size_t pos, co=
+nst char *fmt, va_list ap)
+ 	len =3D vsnprintf(sb->buf + sb->len, 0, fmt, cp);
+ 	va_end(cp);
+ 	if (len < 0)
+-		BUG("your vsnprintf is broken (returned %d)", len);
++		die(_("unable to format message: %s"), fmt);
+ 	if (!len)
+ 		return; /* nothing to do */
+ 	if (unsigned_add_overflows(sb->len, len))
+@@ -404,7 +404,7 @@ void strbuf_vaddf(struct strbuf *sb, const char *fmt, =
+va_list ap)
+ 	len =3D vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, cp);
+ 	va_end(cp);
+ 	if (len < 0)
+-		BUG("your vsnprintf is broken (returned %d)", len);
++		die(_("unable to format message: %s"), fmt);
+ 	if (len > strbuf_avail(sb)) {
+ 		strbuf_grow(sb, len);
+ 		len =3D vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
+diff --git a/wrapper.c b/wrapper.c
+index eeac3741cf..f87d90bf57 100644
+=2D-- a/wrapper.c
++++ b/wrapper.c
+@@ -670,7 +670,7 @@ int xsnprintf(char *dst, size_t max, const char *fmt, =
+...)
+ 	va_end(ap);
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1Zazdsa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlByQy85UXMwM2VEaktVNnV4empDVUoxR0Zmdm1NeApiWHc2dGV6NnM5
-UmNmcGxLaEdwRkl0RGF4TkxEQ2VPVTNCTzVFWUZSUElteHYvRXBXRElHbWFmOVZHejdaTTlPCktB
-WTBHUWZHaXdUUVlsY3VheXVGNlNaM3pyUStwU3dINVZGSmlYaUF6YXBmVmIrcERaTVNqZjZGR3I5
-WUYzRUcKbjRwNlNTL3h6Zkhzc01JL05RNm5oKytBdGl2VVZ0YXpvb0R6TytZWWJwV1YvK2RnK2VQ
-MXA0Ym1nMlJDMytlMApGSTYrR2FVWmRXTlNEa1VxNXhsUS9wc0JQM3ZRRzIxclhCUHZ3SmNjZXdP
-bjNrU0tLZmUyWENzQVVsWlVBMUU1ClBwWm5nbnNWdWJDdG9tQlliSFdMb3NNL04xNHBYL21DVFIy
-aGMvdGpiRksvN3VnbW8zNHNJckF2ZUlLZlNDQWUKdVJ0ZXdmYnJuRGJac1ZnQVhCSHVDY21oQTBx
-U3lJaXZmbEFEdmgxVFBOU1NZTlVjUVdjcTBwNmNKMGJlOHZucgpsb2Z1Z3NYZXVOOWE2WHI3L0Rp
-VnowTElkQ25PdHlmUUdOM2RyV1VlcGZZa0pGamR2citpaFdPK3pQbHBEVDczClN3RDJLVXdBcXBO
-cVpwQVNYczc5NFhiSFN5R05xQ1d5NmxXa0NDND0KPVp3eEkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000011e02e0616990629--
+ 	if (len < 0)
+-		BUG("your snprintf is broken");
++		die(_("unable to format message: %s"), fmt);
+ 	if (len >=3D max)
+ 		BUG("attempt to snprintf into too-small buffer");
+ 	return len;
+=2D-
+2.44.0
