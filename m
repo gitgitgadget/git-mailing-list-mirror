@@ -1,68 +1,64 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAB13B1A2
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 18:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13AA1DFD1
+	for <git@vger.kernel.org>; Sun, 21 Apr 2024 18:14:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713722675; cv=none; b=T51v4I9CYHPFcpNjr1xHIOj7zpWsOlFb3kCwiWoFJTsUIClsNYwDUcrv0RpuP17NXaoIqosI+l6FUe47OX9btekbuZzxwrlljX/SFcjKg/md7eqStOQHHCXgt3wvxagWGUU+zHzfD2qGzXdA3CYG8zZCXWpt67Y3j85y5V8KEfw=
+	t=1713723256; cv=none; b=bC7iS3kd5V59KB7goocwjJE0h5hgaln3JZBOxtVkf4jD2KQ9AYfwigz/qJCBDBaZvEOB4X1LCfhWSm9pUg2cYdlWmW7TTS9A/uWyzdi0q9zd0O2rBPbRkE3Z5C3oTANZwuGWEtRuOO2x1zXKdq3tMx5nId/fRxg0CjxzrXlI2+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713722675; c=relaxed/simple;
-	bh=cchItB5b0OHQUhMAWVdBxLeDnZgqoRVrA0kdXs3c5Fk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcn4qlGhN9Yk8MtV6uWofp/Mr7yxejxkNYYzCm2yL/apMbIJadKy/bMN4t8buQlRyq7jqZKGPYebdyP4DJ+PnmVUAg1XTfIogVhDw4uEuV2EjU1a45oxQlSqUIDL3buKGJxjiT1J5vmQ7mQOP5h3/C620CFAAMMsPPP7Cq3jftA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=mT2KSptb; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1713723256; c=relaxed/simple;
+	bh=ewvSRXH/gbKvRH81F3clIBEJNN52BuCWTrlcAE1LsTQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=H6SA5Y8kdaxWvDa9okCmPLLf54D5OkGxns6F6WAh3CTFWnLUovOGl+KH8j984d4K+0bgkqmynLUFgz0NiRjoERRH0v3EQ5PueumPsLRRKaX4WjIjUUQ1W/VhhqL+XewkDKJS5u69zlmyR0Y9/qvfiPmnCAZVoDgBF2bE6l4zRQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=ax45AOXB; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="mT2KSptb"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a51ddc783e3so440281966b.0
-        for <git@vger.kernel.org>; Sun, 21 Apr 2024 11:04:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="ax45AOXB"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a52223e004dso340079866b.2
+        for <git@vger.kernel.org>; Sun, 21 Apr 2024 11:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1713722671; x=1714327471; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JRbInsuykI7oAoDvU7h/X745xXzVT5Q+o1+om/Nkr38=;
-        b=mT2KSptbjbOyjjEJ2oI/YPvpS/UTd/kg/lqCvAnkjBqipdb4p2HK0VzKYzCEbfzHf0
-         07nYamS+9ni++pNyEV61R9RWXTKjzYiSKcU32Q1rI3eiNa32/L6vmbSSZkdFDwLQPswD
-         5ypIMt8ZbQnbqzfNluANiwr1xXJT9cFXkucSTYD9hHWaFCAtdwFC7snlDoQTit5VomTm
-         yV02EZ8Ih/BDK8pmntdVDbKmhK9pn9hjhidD6sz2zLgYQdzFz9yOi2Q89+ZALOn5i9Ch
-         iL+GtHDpebCRj+6B6ExBxqoHFm5OK1E0fOdXoE3DVKZxTYtL0xt5aABQDB/CrYs+35Wh
-         pV9Q==
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1713723252; x=1714328052; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PMRuyxJDaNk3UVAf8fF1qvASGheUlLTkpX3T9o+GlG8=;
+        b=ax45AOXBq1MpYgxcs891iT7dr1q0DEdCH9LXA9q1K3O5CthmkmjlI+p2udghTyf8jZ
+         9/KMGOVUGCrgGvHSySixEDCsg3nUEE9QP4OqEUtOCGnzOPt0XNCzFubs9rCU9MffTn8D
+         88eCxZq0lyVTAOZR7Meo3ltiBu0o78F91BalESA+BPT/XOSWsBF8chhvvPvNCGKNx/Sc
+         YvrIitbRBgRL7LzYK66giRiLxvzOCvdWUSUqnqhvYExE9Nq0SVwvPSKRInz7AmcJ5gkS
+         +LaF9+hlFsxIgK+eVQv1pdQni0kqwxWHoT5JqHDkekeEtp/vnwjK4ZNcXDL3kJLw07t+
+         lbYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713722671; x=1714327471;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JRbInsuykI7oAoDvU7h/X745xXzVT5Q+o1+om/Nkr38=;
-        b=KX0J1wsajtgA+diGVWVsQlzuwws3PjBXG0GiV1qmH7njtp3xx5j9sYLfnI4mASqeKw
-         KG62fCmelCUMnM5XilGCO9xIxYvdozmy7myshM4i7U1hyhkULbFBumuIj6lpo82FRjvh
-         TeMdjIMYclNEWz5gyDCAlqGSLhcrkERm/pLqpl6lZBmwA+W69xSNLRpmPfW2LBqKmgWl
-         UqwvOvGnI/GrXjur0OfPIMXBb1D/aU7xMVyFKynw2cpcn5zL1IUeczFch1fV8YegSW1Y
-         l6Nji8gQ98lPoeB3tjFyig1kT5+q2fPtVrgYkQtyrLvQZyT4iOKq9zX40hLeLV0s1WRd
-         lUNg==
-X-Gm-Message-State: AOJu0YyQHSWDhAbfDwASUqDAvbxYT4D/OVp6ZhRAfC2lyiMieehDneuk
-	gT2fC7oRMvZx4uosxP7+p+2d9V5EBxevww9tXU2KMU1Xu9te/Af3VwzE9QujymuHI8zCCrv4o7G
-	EjPs=
-X-Google-Smtp-Source: AGHT+IErcZ0wj28bEtwXIuevzAkxvn+RQMwTo8pWo4BK/wm77YKnlKhaGOBD/2IX2LeBZzdEpEj3ZA==
-X-Received: by 2002:a17:907:9405:b0:a55:b93d:e284 with SMTP id dk5-20020a170907940500b00a55b93de284mr45786ejc.16.1713722671261;
-        Sun, 21 Apr 2024 11:04:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713723252; x=1714328052;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PMRuyxJDaNk3UVAf8fF1qvASGheUlLTkpX3T9o+GlG8=;
+        b=lC+6hTdooc0gebKeffe+Svhdm6saRCgamVqrNcEq3/qQ4h+NK6pSxyKc3pHPYM46ew
+         QN3qKVHhlhB+651Ip++MXKn5QTYBa2+XLtse827PQBHl6J3GattY24jy6OqslNWv5lpb
+         1cKmzW3Ph+v5Be1CAhZE++KhSsqapvsWJUNsxFKDfzDQBObqglw6TzUGifDJjcNBSvVu
+         wm45D5K2zIkcD7/fUoTaWbYmKgXOaAXyfS4LLzq+PY+3VwKpTaH5O3ebF6QPALEvOXOt
+         yC7SZOTYZHBc5dDq/7/lj/VKnU4QDYBWHXEEqH/+NN1tPRK9G9lNFsWkfietXbXzbY5U
+         W8Nw==
+X-Gm-Message-State: AOJu0YyR9QPS9eDCsCnvD8xpcVgqlHH8+lTC2D4W8bdGwCykkUZn1eVB
+	QpqAYR/XojmNke2DIxfaDv0+r33s+922IiS/bTPjxFvpkg3jMmcL0wzBOBsnactJT4PBuO/hTtw
+	/nTE=
+X-Google-Smtp-Source: AGHT+IF0mLghWE9TluKFNAI1RsvaYupXXnZcuWfnXlK3eO8EB0fpbJq/+Abmvvwe/TvRPUjJr/y9Ug==
+X-Received: by 2002:a17:906:34da:b0:a52:2e08:207e with SMTP id h26-20020a17090634da00b00a522e08207emr6091217ejb.77.1713723252068;
+        Sun, 21 Apr 2024 11:14:12 -0700 (PDT)
 Received: from ashopov-C7P4TNH9MQ.corp.uber.internal ([165.225.240.154])
-        by smtp.gmail.com with ESMTPSA id j18-20020a1709062a1200b00a557616395csm4420974eje.85.2024.04.21.11.04.30
+        by smtp.gmail.com with ESMTPSA id i21-20020a170906091500b00a5216df5d25sm4772043ejd.3.2024.04.21.11.14.11
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 21 Apr 2024 11:04:31 -0700 (PDT)
+        Sun, 21 Apr 2024 11:14:11 -0700 (PDT)
 From: Alexander Shopov <ash@kambanaria.org>
 To: git@vger.kernel.org,
 	gitster@pobox.com,
 	worldhello.net@gmail.com
 Cc: Alexander Shopov <ash@kambanaria.org>
-Subject: [[PATCH] Consistency for substitution hints (i18n) 1/1]  parse-options: use localized substitution hints
-Date: Sun, 21 Apr 2024 20:04:22 +0200
-Message-ID: <20240421180425.78940-2-ash@kambanaria.org>
+Subject: [[PATCH] [RESUBMIT] Consistency for substitution hints (i18n) 0/1]
+Date: Sun, 21 Apr 2024 20:14:04 +0200
+Message-ID: <20240421181408.82736-1-ash@kambanaria.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240421180425.78940-1-ash@kambanaria.org>
-References: <20240421180425.78940-1-ash@kambanaria.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,54 +71,12 @@ i18n: as translators choose substitution hints applicable
 to their writing system, expose the ones in parse-options
 for completeness
 
-Signed-off-by: Alexander Shopov <ash@kambanaria.org>
----
+Alexander Shopov (1):
+  parse-options: use localized substitution hints
+
  parse-options.c | 17 ++++++++++++++---
  1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index 63a99dea6e..93712c6904 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -27,6 +27,7 @@ static void optbug(const struct option *opt, const char *reason)
- }
- 
- static const char *optname(const struct option *opt, enum opt_parsed flags)
-+// FIXME
- {
- 	static struct strbuf sb = STRBUF_INIT;
- 
-@@ -1055,17 +1056,27 @@ int parse_options(int argc, const char **argv,
- }
- 
- static int usage_argh(const struct option *opts, FILE *outfile)
-+/// Fixme
- {
- 	const char *s;
- 	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) ||
- 		!opts->argh || !!strpbrk(opts->argh, "()<>[]|");
- 	if (opts->flags & PARSE_OPT_OPTARG)
- 		if (opts->long_name)
--			s = literal ? "[=%s]" : "[=<%s>]";
-+			s = literal ? "[=%s]" :
-+			  /* TRANSLATORS: keep as is unless you use hints for substitution other than `<>'
-+			     in which case use those */
-+			  _("[=<%s>]");
- 		else
--			s = literal ? "[%s]" : "[<%s>]";
-+			s = literal ? "[%s]" :
-+			  /* TRANSLATORS: keep as is unless you use hints for substitution other than `<>'
-+			     in which case use those */
-+			  _("[<%s>]");
- 	else
--		s = literal ? " %s" : " <%s>";
-+		s = literal ? " %s" :
-+		  /* TRANSLATORS: keep as is unless you use hints for substitution other than `<>'
-+		     in which case use those */
-+		  _(" <%s>");
- 	return utf8_fprintf(outfile, s, opts->argh ? _(opts->argh) : _("..."));
- }
- 
 -- 
 2.44.0
 
