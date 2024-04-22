@@ -1,186 +1,161 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613A22D047
-	for <git@vger.kernel.org>; Sun, 21 Apr 2024 21:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B4AF9EB
+	for <git@vger.kernel.org>; Mon, 22 Apr 2024 04:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713736364; cv=none; b=BfNOc7Gyl4uGjI11NtJcyJ+2+/r/hstCyG5hXvRh/FBCBkYQEhn0r+OHgJFycRYNH0IWdOqVMjup47dURmA1zEbPhUJy1CPQxiO629XrvbYI4PJ1JXyu4C5NcONbrhJwTNcQkncVumByE0vEKJRup2XXo4KBzKpoxAvmV5CBCSc=
+	t=1713761774; cv=none; b=XusdvduDYeCagUEF4CSZCWq86j/1wgQ9yaK2nZZpPWxQYm6yYZ7vCvDxTXBurn8zc18OFn9Fw200/oeuZfPoqq+/TR9Vt9NK+CYMpNf8eWKkndu1xh7zfnroH2yPUuZH0LqNtLArrUKaZU3VYb2WtXzvxFCCb2HRpbhzWVJy1xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713736364; c=relaxed/simple;
-	bh=K8aheKISN9rk0ExjQs+uqMAIyc7sXirNgSyAnY6Vge4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MowdahCE2aYK0E7IfI4Cl1MQCBBC1FUBIsnRLRXqN8MYxCU6BeYXrASOxQWT1JVfBceFM7AF6RPCA6gMPH9XfGNJ+48QUqib8jyZ3ZgGYHummXT9jqzYdQvIctiLab9l+Z/WIzdhRPzko1L9g0cLfOY5IIdWQdQfJPFzv1DDN+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9O4n2kZ; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713761774; c=relaxed/simple;
+	bh=M3UtV0Y7Bm7kh3aJSVb+9TCezvvrq5qdc8r59zyDZgs=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ge20h9jpIGMw00Qcn6YC8whE2I98SN1CGpilF3xHtDAQqYGmeM4/jlOBeJSb34wSCufZUmt6gR5oycmb2JVcx/WTUNEJUGEH+kpkva1zylnzclF9zfI+Kw4nUJqOjqcnN3+sDUpYrquTrfGTXPzd5E/CF8j+Zo8ywRqgr9oJdOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j1h9qJyg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ChjYzFhc; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9O4n2kZ"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41a55be31dfso2158855e9.0
-        for <git@vger.kernel.org>; Sun, 21 Apr 2024 14:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713736361; x=1714341161; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6tQQLHDR4w3I11faq5RAwfvRtYows12lraydcMfZW0c=;
-        b=I9O4n2kZ0kV1eoCj3D/GYlDZnRUJx19jLSjPE/AIfAXtoFkhLknZ9XNrSBt6/EjxS/
-         RAy+F2VSxjYa3ZWrA5S/jLN/irbhZJNDgZXGXK4Z2wNEcEcoe/8h6ZmtF8mQcTCPG4Nz
-         yTZXknStIjd0U+2bcrgd2rvtrJ9toms0OKMJGhWGBjpcUJUf+w+4SsGCi+UoyZgyzEsX
-         NLUtXJlgi8CkYdE2fW8sEABkIW3rtXQW5A6Yyod1hDSJS8b2cTlLvGa8pZu5/rq1qgGx
-         DYkhJh1djhYa3m4tYt7ybe6heUhe5ysomBBVqozzC/JPeLJbpsQxcXk9s4rfY5nt8aMD
-         PlUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713736361; x=1714341161;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6tQQLHDR4w3I11faq5RAwfvRtYows12lraydcMfZW0c=;
-        b=F4ydV8D88VHCniFr+RdcU2DBGgNzzn7qIQ7v/0VI9sk6JnjHO+E8Z/11ejnTGuNYFA
-         gHtKw3SbmLamDCD/zFd5Py2H1pZAEz6a0Mj789tRpg0t+GtgSBpmJZY4BFZwo81QrGn8
-         NsRDnhMf21Rpmghc1U12WxDXrMzgdaBhrUtmEbTVasqasogEnwVHpmy/B7B//KhNsr9m
-         YYu/Ua97+Ke/9r59S7CpcJSo9dHx8wQ6IWXczYyZq4YQxOABuTwramFfHQDUTYWQGU44
-         c2moE+DzvPMS4Etb89EM5VncNBfJVBxgPViAsJoPozWvr0p8szttTowObIIj4ck1saHz
-         dteA==
-X-Gm-Message-State: AOJu0Yz+TiJ7JVDKb1cX9ka+7sbueXy4Sh+m+rBajwuoPhc6tCm7P5fY
-	NUV4Q+IjBZBL0I+IMaxrEldydSqF3cZVsUbN5ql0PWDbmjOgqQP22gPTAw==
-X-Google-Smtp-Source: AGHT+IGYoNtNmVKz2FBU+gYkcWmY6FEKAHOs4cL8HRin+vQ9CL6OasJs55XS5hsAWuq+HusZ1USG1w==
-X-Received: by 2002:a05:600c:1389:b0:418:9cf6:bce2 with SMTP id u9-20020a05600c138900b004189cf6bce2mr4296571wmf.19.1713736360414;
-        Sun, 21 Apr 2024 14:52:40 -0700 (PDT)
-Received: from gmail.com (51.red-88-14-52.dynamicip.rima-tde.net. [88.14.52.51])
-        by smtp.gmail.com with ESMTPSA id o3-20020a05600c4fc300b00418f7605249sm12350549wmq.24.2024.04.21.14.52.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Apr 2024 14:52:40 -0700 (PDT)
-Message-ID: <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
-Date: Sun, 21 Apr 2024 23:52:33 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j1h9qJyg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ChjYzFhc"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id E2E1B13800B1;
+	Mon, 22 Apr 2024 00:56:09 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Mon, 22 Apr 2024 00:56:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1713761769; x=1713848169; bh=Ol0ihctDMq
+	/AyWe56HAvN+XSROw5Di09hCQpU0MIeok=; b=j1h9qJygLVDLytjF+ab+4V2fOk
+	rugyICJRlKQnXAiL+MMEtkG76espbo2EeAzQjEa/YqoN3RioiF9eraVNXr6MqTcg
+	//AWh++Dnye1Hy9libOOssLMzdu2FDjroWLKFl9mJooYo7hvw7MYTsWfBJopLxTD
+	3AUZL0zOisXMGWD/oQH+/rmhfvID//Gp9XuhJtrQ9Kakd1/LOkY4kSWCda8bBkDB
+	3pEMgp7BCZX/5mmR3gI2ziSjKa4KUNbdCFTuBkafLPLDPhwWkXLaWZoFhMVwQhyx
+	jnWJZ/yCZ4U8XAQG2Tkx0T317dimy59EWU1mFJhfP6Vt4yqXew/srAvCqfow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1713761769; x=1713848169; bh=Ol0ihctDMq/AyWe56HAvN+XSROw5
+	Di09hCQpU0MIeok=; b=ChjYzFhcF/kujDpi8rrUhaB0It8JPp6kuWBCQzAjaVNx
+	2gJK4AKsha9KfXUkhlucgakdHPYg26TCoyQZDNB7TEnVm48w34yvxQmOhAXk/LRT
+	5Fr65m74tovDq1uvYpWoTi9vcrIKa5UkJj8ocjidj05zmmQD+7elQ9K6uCbYi4Qi
+	vLSY669dm2kyb3ESHN29Tr4M/QLz+DUzwzcDk398KoNm7vNAOibKLagPdfJyKT8h
+	alcEJkwjNeIupGw8AIIunIB/e/N5+y+B0M12oNY1WUFMuLVh3RGGhA7FzbPKIg1D
+	uPesP7VKtfM1zueprxeea//8N5JkhL32ljcQ9AtXrA==
+X-ME-Sender: <xms:6e0lZtjyh3IAg7TDoiYN3LnUfXlgIFpQ__iE1OP6T1uQlCLP3RvcbQ>
+    <xme:6e0lZiCSJl9bDI6bk8uEaKLX_AsNEqa_TVeoDoX_w-1KqCxVxFGoXbpaIMDVecUD5
+    4VHJFHarzOnei4sHg>
+X-ME-Received: <xmr:6e0lZtFPlZfkrnvlZcmWvVLor_8lIdGzqRyRxMgZS1s_zfXg9Oxq6uJBvI0t_nV6N16SmR6qKU6CFKXRW8AeVoSEF9CuNNRdecnY4Jzqdv3XXwK8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudekkedgkeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:6e0lZiQu2MdHBXhGRB8817xfE3gFzV_Xn_i1AeTUCXGXgXWUfbBp9Q>
+    <xmx:6e0lZqzB802jVz3Lm7CF4eNXZIqWCxR1gxy1zpIahQn6M6q3OXzF8w>
+    <xmx:6e0lZo6aQGRCPX-TA3lAeUKt7F0p4uh1Q2ILj0N9UtlpjP9vnEw1-w>
+    <xmx:6e0lZvzz4svuZlepbWNt6jL9_1UpMW2kQ_vMVSTgO44EDhRbkA92gw>
+    <xmx:6e0lZl_YXABkmWQJ0JHSZYVYqJV7WuaYEbQBQE8zE95VhpgDL5bbajDb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Apr 2024 00:56:08 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 3aeb0633 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Apr 2024 04:56:00 +0000 (UTC)
+Date: Mon, 22 Apr 2024 06:56:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: [PATCH 00/11] Stop relying on SHA1 fallback for `the_hash_algo`
+Message-ID: <ZiXt49eOx5AfLbZb@tanuki>
+References: <cover.1713519789.git.ps@pks.im>
+ <ZiLCO8Wn0-4jyDdp@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v4] add-patch: response to unknown command
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
-In-Reply-To: <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JsAOZCxIsVxlBHC/"
+Content-Disposition: inline
+In-Reply-To: <ZiLCO8Wn0-4jyDdp@tapette.crustytoothpaste.net>
 
-When the user gives an unknown command to the "add -p" prompt, the list
-of accepted commands with their explanation is given.  This is the same
-output they get when they say '?'.
 
-However, the unknown command may be due to a user input error rather
-than the user not knowing the valid command.
+--JsAOZCxIsVxlBHC/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-To reduce the likelihood of user confusion and error repetition, instead
-of displaying the list of accepted commands, display a short error
-message with the unknown command received, as feedback to the user.
+On Fri, Apr 19, 2024 at 07:12:59PM +0000, brian m. carlson wrote:
+> On 2024-04-19 at 09:51:03, Patrick Steinhardt wrote:
+> > Hi,
+> >=20
+> > when starting up, Git will initialize `the_repository` by calling
+> > `initialize_the_repository()`. Part of this is also that we set the hash
+> > algo of `the_repository` to SHA1, which implicitly sets `the_hash_algo`
+> > because it is a macro expanding to `the_repository->hash_algo`.
+> >=20
+> > Usually, we eventually set up the correct hash algorithm here once we
+> > have properly set up `the_repository` via `setup_git_directory()`. But
+> > in some commands we actually don't require a Git repository, and thus we
+> > will leave the SHA1 hash algorithm in place.
+> >=20
+> > This has led to some subtle bugs when the context really asks for a
+> > SHA256 repository, which this patch series corrects for most of the
+> > part. Some commands need further work, like for example git-diff(1),
+> > where the user might want to have the ability to pick a hash function
+> > when run outside of a repository.
+> >=20
+> > Ultimately, the last patch then drops the setup of the fallback hash
+> > algorithm completely. This will cause `the_hash_algo` to be a `NULL`
+> > pointer unless explicitly configured, and thus we now start to crash
+> > when it gets accessed without doing so beforehand. This is a rather
+> > risky thing to do, but it does catch bugs where we might otherwise
+> > accidentally do the wrong thing. And even though I think it is the right
+> > thing to do even conceptually, I'd be okay to drop it if folks think
+> > that the risk is not worth it.
+>=20
+> I've taken a look, and other than the minor typo I noted, this seems
+> fine.  I'm in favour of getting rid of the SHA-1 default, even though my
+> gut tells me we might find a bug or two along the way where things
+> aren't initialized properly.  I still think that'll be okay and it's
+> worth doing, since it'll help us prepare for the case in the future
+> where we want to switch the default and also for libification, where we
+> won't want to make those kinds of assumptions.
 
-Include a reminder about the current command '?' in the new message, to
-guide the user if they want help.
+Yeah, I would expect there to be a few more bugs that I just didn't
+spot. But I think if we do this early in the next release cycle it would
+give us plenty of time to detect any such issues. And in the worst case
+we would still be able to revert the last patch of this series. So all
+in all it hopefully shouldn't be all that bad and prepares us for the
+future.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
+Thanks for your review!
 
-The test now pass with GIT_TEST_DEFAULT_HASH=sha256.
+Patrick
 
-Thanks.
+--JsAOZCxIsVxlBHC/
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Range-diff against v3:
-1:  0317594bce ! 1:  b418b03f15 add-patch: response to unknown command
-    @@ t/t3701-add-interactive.sh: test_expect_success 'warn about add.interactive.useB
-     +	test_when_finished "git reset --hard; rm -f command" &&
-     +	echo W >command &&
-     +	git add -N command &&
-    -+	cat >expect <<-EOF &&
-    -+	diff --git a/command b/command
-    -+	new file mode 100644
-    -+	index 0000000..a42d8ff
-    -+	--- /dev/null
-    -+	+++ b/command
-    -+	@@ -0,0 +1 @@
-    -+	+W
-    ++	git diff command >expect &&
-    ++	cat >>expect <<-EOF &&
-     +	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
-     +	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
-     +	EOF
+-----BEGIN PGP SIGNATURE-----
 
- add-patch.c                |  5 ++++-
- t/t3701-add-interactive.sh | 16 +++++++++++++++-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYl7d0ACgkQVbJhu7ck
+PpTn0g/+PRNNgHFRUiuiJ67+GlO6xG3SZUZskL1BKThkqO2lYFrV4RxbN2v3mPFY
+0dzTUkuxgmje2Sqzh3aZZtMMufanTEew/Bnufni6NIXoFxHEkbQ5U4ThPL4BvEEO
+uNJ25Jh9paA7GxNGmY75tM1y/x1DScObxpGB9dq/0o+K27CiPXblNFQKK3i5S+Zq
+slqpd8//DNgO3RCtxO94DZUHGBHxHVCEeWu2zCT3WrFiJckNc3ttrCh6oYEifpfp
+rA08zqUig4UmmjQRF8Th2Rx9cMBQ/faV597dnB77+NF88LLQ5SDIYg9dxa5ZNbIe
+sD3vTt/IWTJKFkfyaBL1m1wtqUmYAuDOCIH2wv3mFrVCD8omAb+j2cz+e8i9l2Mk
+S7aSjXdZNCyAoMgb7EiDVfSxzTPnkU4KxrSnWpvucuWpVyjPUTEmfnG4YqPIkr2p
+e4nM3CVJYIFskZBwgSj5iILGiKhAInLGTvEDRG1+P38s++31A8i1N56ZR20TjWte
+1Dfk9NnQEkoMezQEsSp5uXopi1/v9lcXCHywj3EFid/0/85TN9A1VvaykBEkThOg
+UE35XGP6/ba+mDJi8VDr3xNi+L8mD5NwDa7rezVYqWCVkqeoQcKvGoYWH/IrvN3U
+cDGckVv4Mdct7XmyptDQrGSDPO4lZsAbwC0Bxw9wQEBY8Of5Lp8=
+=l3jT
+-----END PGP SIGNATURE-----
 
-diff --git a/add-patch.c b/add-patch.c
-index a06dd18985..7be142d448 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1667,7 +1667,7 @@ static int patch_update_file(struct add_p_state *s,
- 			}
- 		} else if (s->answer.buf[0] == 'p') {
- 			rendered_hunk_index = -1;
--		} else {
-+		} else if (s->answer.buf[0] == '?') {
- 			const char *p = _(help_patch_remainder), *eol = p;
- 
- 			color_fprintf(stdout, s->s.help_color, "%s",
-@@ -1691,6 +1691,9 @@ static int patch_update_file(struct add_p_state *s,
- 				color_fprintf_ln(stdout, s->s.help_color,
- 						 "%.*s", (int)(eol - p), p);
- 			}
-+		} else {
-+			err(s, _("Unknown command '%s' (use '?' for help)"),
-+			    s->answer.buf);
- 		}
- 	}
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index bc55255b0a..482d5c117e 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -7,6 +7,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
- 
-+SP=" "
-+
- diff_cmp () {
- 	for x
- 	do
-@@ -55,6 +57,19 @@ test_expect_success 'warn about add.interactive.useBuiltin' '
- 	done
- '
- 
-+test_expect_success 'unknown command' '
-+	test_when_finished "git reset --hard; rm -f command" &&
-+	echo W >command &&
-+	git add -N command &&
-+	git diff command >expect &&
-+	cat >>expect <<-EOF &&
-+	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
-+	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
-+	EOF
-+	git add -p -- command <command >actual 2>&1 &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'setup (initial)' '
- 	echo content >file &&
- 	git add file &&
-@@ -231,7 +246,6 @@ test_expect_success 'setup file' '
- '
- 
- test_expect_success 'setup patch' '
--	SP=" " &&
- 	NULL="" &&
- 	cat >patch <<-EOF
- 	@@ -1,4 +1,4 @@
--- 
-2.45.0.rc0.1.gb418b03f15
+--JsAOZCxIsVxlBHC/--
