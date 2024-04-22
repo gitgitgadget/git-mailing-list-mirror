@@ -1,194 +1,117 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC763152523
-	for <git@vger.kernel.org>; Mon, 22 Apr 2024 16:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34537153BFE
+	for <git@vger.kernel.org>; Mon, 22 Apr 2024 18:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713803191; cv=none; b=WwVkN6ZI0YM0qHmZsUjLpqLvBuvLKilTjv0sFnTvtVmcdwDq7064sde284hIqSbnWZopBTTzNP52MoavsxsRhXFRO9S7Jzl0hsHagoCJh3fT0iI7ezHX6VhA6UWVsIqqDPrZMhs9T1fwUc4hSvATi77aJnKhfALVF4Qwvwmz0aM=
+	t=1713811305; cv=none; b=T1KWeYtrhdHorO1Vrjhs0jA3Lra6rVNEIOmTR7DubvGbtKE6dcfcJfZQRFD4o8/G29h27USH9ysv/R6vTqVTyod1HDpYv7NdThsUeWs/fnJ3pCA5e/GvWnlVzWfvO9Pvx0iI5nxdc7qszdDhGaQ1JRivJ5mETrN11Al8fVViAnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713803191; c=relaxed/simple;
-	bh=+wXIQi0XZxkg+EhvYUoZ9d15AKR2R9GyMKguH/RhsKg=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=PIomJkj3hE6/KKU17O9Jdvl92Xs9XyBhTPIjyU0wgLBlBUR2koN9SKhARp2FNpQAeUJWAQ46XiU/X9ZDyKKB5krEMwjh7J7jDsvi16X2Rn/fYgn3I48ArdpEkvdsRiZ7+3DcT2TIGHpE3RQ4gwsAUd2Frvojs97cCz6+ilPiugE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XFRnDjpn; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
+	s=arc-20240116; t=1713811305; c=relaxed/simple;
+	bh=Buu+Y6P2W+3clan2razB9JkBuFaaS/2bjtiI9b+4pFA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=seaWFjQZqQaM9TixMwS4JUBaZWq9R+G/tUolKa02VY0qNT1i6X7aeWhtXfjF7k7wn1fVKhCn+ry1oSLd2qacmD3kIf0k9Rmh5E50JbNTsdPwWiFtU1+MGoIZjQ7KTh8jkhIIYJgAmfZwktGwDhEtjQtImb9KSf7I5rlvSGvDf8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lrhlOxvu; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XFRnDjpn"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-61b13ce3daaso114078527b3.0
-        for <git@vger.kernel.org>; Mon, 22 Apr 2024 09:26:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713803189; x=1714407989; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Wovq2FdvUI5j0juo+9+BjxmgRhU7cLgdPupNPg0ZuKM=;
-        b=XFRnDjpnyBJZlsShXJf/Fh8cST4ZyACune0Sqi43U6pRPcLy32aq6yi6vgjY7+wF8n
-         4Glr6EsI0Y3QDqRZZUX3cGdDSoxBm18ZfTp9QK1JNRPG8SF/8FzBJ7Es3ZR5VMzGNLAy
-         NFD2fwMKvTszo6mrkQE/z12HLJYo/Byj3+KCiNGOlZ92SJLFCM+1xtTo9NXS7gx/xlS7
-         LPqBKJ80fhvhRzJk9xFgs5wm+Gtn145j4j7/x3JrutOEzjj1hAREM1VQYMUUOuNhqQFX
-         GwzIn0zYfRNy845Zy6QF8g2x1reP35DnYhm8prLxQj3p7PfRqbouBE0QStc0UJbf8qak
-         u7wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713803189; x=1714407989;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wovq2FdvUI5j0juo+9+BjxmgRhU7cLgdPupNPg0ZuKM=;
-        b=rRBdtzsdigMhEJ/lzZ3hMHnhQa8m8uRAmXf1qkhy+q5jWRxtv8tDnshnMcT1r+mYsg
-         ZSqCxKZlktzXzV1o4N0Ly479Pd5TehP/DcwkEr1frTTjuCnXuJcfFdzzFTRm7OstQF5U
-         aQdtfv91Kx58u/OyH1T9LiqPR+gf8507Z5dZD4ckKmiKTKarMDg3cVSLe+wHDuzaPnOo
-         HKgQFzMmQ4larWA4AbsHrEZRCGgM/jty/xkfnaxiLkzgqqCpEb5JkkCFXUIMHpHUTfUh
-         Z5SQ3CAO3baXCp4ApTFXS+OXFn2orviBWU1SrkLLFWhVS1PFVJTElEJZ/U5GPTDVytRj
-         1Acw==
-X-Gm-Message-State: AOJu0Yzjzc+VLZDoi7eO2HwJSVO8oYiyAfU5u4xqqJ4hECMaYlZViiQZ
-	HA1wh0gRpzdCoAt+TM3IB7Gi3v8JnO+ifL1MgfmCPIRPEX9ET2NPy8AQi8aENmj6tU+kt9iHp1Y
-	YtmAy1JQU7TKirw==
-X-Google-Smtp-Source: AGHT+IESqSpp5ma/78Ae3WVtjAOwkUmTVUcX2RCk1+KUEHfGolTDRqNLvwW6QfhRDWhOrB69Gcelkjxwu2OWnkY=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a81:4e04:0:b0:618:92c6:64b1 with SMTP id
- c4-20020a814e04000000b0061892c664b1mr2557855ywb.3.1713803188982; Mon, 22 Apr
- 2024 09:26:28 -0700 (PDT)
-Date: Mon, 22 Apr 2024 16:26:17 +0000
-In-Reply-To: <CAFySSZAB09QB7U6UxntK2jRJF0df5R7YGnnLSsYc9MYhHsBhWA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lrhlOxvu"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EECD81EB1C0;
+	Mon, 22 Apr 2024 14:41:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Buu+Y6P2W+3clan2razB9JkBuFaaS/2bjtiI9b
+	+4pFA=; b=lrhlOxvuYC6bd/MOxYh5twTOPw8sslTpCWI9edSMB0mW2YHYuHD1rU
+	bo4OrjZrSNf0v1LCJR5CNyCjhrs3hrYOmeMSbCDBve0a71whbN0XgwxrGDIVjAfm
+	pcTJdl16pB/wu1vfKbBbijMTOdOtUuwrFDupULi5Yfu8eoDMdZr9c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E59E01EB1BF;
+	Mon, 22 Apr 2024 14:41:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5537C1EB1BE;
+	Mon, 22 Apr 2024 14:41:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 09/11] builtin/diff: explicitly set hash algo when there
+ is no repo
+In-Reply-To: <39e56dab621a2a1e0cbaf67f8de44614c354dcb1.1713519789.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 19 Apr 2024 11:51:48 +0200")
+References: <cover.1713519789.git.ps@pks.im>
+	<39e56dab621a2a1e0cbaf67f8de44614c354dcb1.1713519789.git.ps@pks.im>
+Date: Mon, 22 Apr 2024 11:41:41 -0700
+Message-ID: <xmqqedaxxmsa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.44.0.769.g3c40516874-goog
-Message-ID: <20240422162617.308366-1-calvinwan@google.com>
-Subject: Re: [RFD] Libification proposal: separate internal and external interfaces
-From: Calvin Wan <calvinwan@google.com>
-To: Calvin Wan <calvinwan@google.com>
-Cc: Git Mailing List <git@vger.kernel.org>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	rsbecker@nexbridge.com, phillip.wood@dunelm.org.uk, 
-	Kyle Lippincott <spectral@google.com>, Josh Steadmon <steadmon@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Enrico Mrass <emrass@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F6665AA2-00D7-11EF-BC93-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Thanks everyone for your initial comments on this discussion. I wanted
-to provide some examples of how an internal/external interface could
-look in practice -- originally I had intended to use git-std-lib v6 as
-that example, but found that it fell short due to feedback that only
-being able to expose a smaller subset of functions in that library would
-be insufficient for users since they should have the same tools that we
-have for building Git. In this reply, I have two examples of paths
-forward that such an interface could look like for future libraries
-(both methods would require a non-trivial amount of code change so this
-seemed like a better idea than completely refactoring git-std-lib twice).
+Patrick Steinhardt <ps@pks.im> writes:
 
-Part of the reason for wanting to expose a smaller subset of library
-functions initially was to avoid having to expose functions that do
-things a library function shouldn't, mainly those with die() calls. I
-chose `strbuf_grow()` as the example function to be libified with an
-internal/external interface since it has a die() call and in a library,
-we would want to pass that error up rather than die()ing. I have two
-ideas for how such an interface could look. For reference, this is how
-`strbuf_grow()` currently looks:
+> The git-diff(1) command can be used outside repositories to diff two
+> files with each other. But even if there is no repository we will end up
+> hashing the files that we are diffing so that we can print the "index"
+> line:
+>
+> ```
+> diff --git a/a b/b
+> index 7898192..6178079 100644
+> --- a/a
+> +++ b/b
+> @@ -1 +1 @@
+> -a
+> +b
+> ```
 
-void strbuf_grow(struct strbuf *sb, size_t extra)
-{
-	int new_buf = !sb->alloc;
-	if (unsigned_add_overflows(extra, 1) ||
-	    unsigned_add_overflows(sb->len, extra + 1))
-		die("you want to use way too much memory");
-	if (new_buf)
-		sb->buf = NULL;
-	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-	if (new_buf)
-		sb->buf[0] = '\0';
-}
+This will break "git am"; it is customary to indent such sample
+patch block in a log message.
 
-The first idea involves turning `strbuf_grow()` into a wrapper function
-that invokes its equivalent library function, eg.
-`libgit_strbuf_grow()`:
-
-int libgit_strbuf_grow(struct strbuf *sb, size_t extra)
-{
-	int new_buf = !sb->alloc;
-	if (unsigned_add_overflows(extra, 1) ||
-	    unsigned_add_overflows(sb->len, extra + 1))
-		return -1;
-	if (new_buf)
-		sb->buf = NULL;
-	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-	if (new_buf)
-		sb->buf[0] = '\0';
-        return 0;
-}
-
-void strbuf_grow(struct strbuf *sb, size_t extra)
-{
-        if (libgit_strbuf_grow(sb, extra))
-                die("you want to use way too much memory");
-}
-
-(Note a context object could also be added as a parameter to
-`libgit_strbuf_grow()` for error messages and possibly global variables.)
-
-In this scenario, we would be exposing `libgit_strbuf_grow()` to
-external consumers of the library, while not having to refactor internal
-uses of `strbuf_grow()`. This method would reduce initial churn within
-the codebase, however, we would want to eventually get rid of
-`strbuf_grow()` and use `libgit_strbuf_grow()` internally as well. I
-envision that it would be easier to remove die()'s all at once, from top
-down, once libification has progressed further since top level callers
-do not have to worry about refactoring any callers to accomodate passing
-up error messages/codes. 
-
-The shortfall of this approach is that we'd be carrying two different
-functions for every library function until we are able to remove all of
-them. It would also create additional toil for Git contributors to
-figure out which version of the function should be used.
-
-The second idea removes the need for two different functions by removing
-the wrapper function and instead refactoring all callers of
-`strbuf_grow()` (and subsequently callers of other library functions).
-
-int libgit_strbuf_grow(struct strbuf *sb, size_t extra)
-{
-	int new_buf = !sb->alloc;
-	if (unsigned_add_overflows(extra, 1) ||
-	    unsigned_add_overflows(sb->len, extra + 1))
-		return -1;
-	if (new_buf)
-		sb->buf = NULL;
-	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-	if (new_buf)
-		sb->buf[0] = '\0';
-        return 0;
-}
-
-void strbuf_grow_caller() {
-	strbuf *sb;
-	size_t extra;
-
-	// if only success/failure is passed up
-	if (libgit_strbuf_grow(sb, extra))
-                die("you want to use way too much memory");
-	
-	// if context object is used
-	if (libgit_strbuf_grow(sb, extra, context_obj))
-                die(context_obj->error_msg);
-	
-	// if there are multiple error codes that can be passed up
-	if (libgit_strbuf_grow(sb, extra) == -1)
-                die("you want to use way too much memory");
-	else if (libgit_strbuf_grow(sb, extra) == -2)
-		die("some other error");
-}
-
-One shortcoming of this approach is the need to refactor all callers of
-library functions, but that can be handled better and the churn made
-more visible with a coccinelle patch. Another shortcoming is the need
-for lengthier code blocks whenever calling a library function, however,
-it could also be seen as a benefit since the caller would understand the
-function can die(). These error messages would also ideally be passed up
-as well in the future rather than die()ing.
-
-While I tried to find a solution that avoided the shortcomings of both
-approaches, I think that answer simply does not exist so the ideas above
-are what I believe to be the least disruptive options. I'm wondering
-which interface would be more suitable, and also open to hearing if
-there are any other ideas!
+> We implicitly use SHA1 to calculate the hash here, which is because
+> `the_repository` gets initialized with SHA1 during the startup routine.
+> We are about to stop doing this though such that `the_repository` only
+> ever has a hash function when it was properly initialized via a repo's
+> configuration.
+>
+> To give full control to our users, we would ideally add a new switch to
+> git-diff(1) that allows them to specify the hash function when executed
+> outside of a repository. But for now, we only convert the code to make
+> this explicit such that we can stop setting the default hash algorithm
+> for `the_repository`.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/diff.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/builtin/diff.c b/builtin/diff.c
+> index 6e196e0c7d..58ec7e5da2 100644
+> --- a/builtin/diff.c
+> +++ b/builtin/diff.c
+> @@ -465,6 +465,15 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>  			no_index = DIFF_NO_INDEX_IMPLICIT;
+>  	}
+>  
+> +	/*
+> +	 * When operating outside of a Git repository we need to have a hash
+> +	 * algorithm at hand so that we can generate the blob hashes. We
+> +	 * default to SHA1 here, but may eventually want to change this to be
+> +	 * configurable via a command line option.
+> +	 */
+> +	if (nongit)
+> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+> +
+>  	init_diff_ui_defaults();
+>  	git_config(git_diff_ui_config, NULL);
+>  	prefix = precompose_argv_prefix(argc, argv, prefix);
