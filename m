@@ -1,60 +1,60 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1627C1514E2
-	for <git@vger.kernel.org>; Mon, 22 Apr 2024 15:41:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503F01534E7
+	for <git@vger.kernel.org>; Mon, 22 Apr 2024 15:44:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713800484; cv=none; b=PnyzpS6kYAnacwX3FuGNBLEoedkgKYF/qRJC82dRJ9SNZlyVUPIOugPsIKEow/EuMhQUR3EVeAZBbyCZFi/mW3ZK2LiNqL1MUFhleAx6YYUcPLt6wm9nOZln2RbfmeBRANjJDneNHPMSVkWTDWNnul8fM6mWgTmUuk7L7Ytx17k=
+	t=1713800646; cv=none; b=WCoodNbsx3NvFcnKZXPhWu37yS2Q5Znai3Y2FrZkOFQ4FhYwHHbhJSMOZseG/jdF9RJo5rCebE/AM4OzJXc4cGdn+AWWBP4qnIEfb8wS0v9G8/GrVDv7YFpKTQ0z3PayhC8vmC2CkPD7XYgS76ERdCl2X8qFNGibq5jk9iqmNDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713800484; c=relaxed/simple;
-	bh=Tk/QjJjKEvrPbJVawRWPTuADBMwzSpXPHEwYVCoBaMo=;
+	s=arc-20240116; t=1713800646; c=relaxed/simple;
+	bh=dWXnhJMpqORo8tBpCzL7CSo+ga2/WwYEajKVNYkLNgY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=gYl629N2P5A3LiOVsN5PRX1dxtGItOc/cfuvjYMOd48cz3Ux6EcKLa3cLy+MbdV06Fv92jPrQDtF1UMNBz7c/AzGtROzep2Forw8ODRTSU3WkUh87DLfxV8O7odgTijp67u/1wQJ9tTrg5iVHaxL40mqaD61ZjCS9ZL2eyXfW6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ECwXhbJE; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:Content-Type; b=s8q1knZhW6EYySnFJraOjsIzHN2ChTaeh9dONbaTKBtGV0ua7dC7twOye01f+iA9qqXM3wpIinA5attoS+773418TN/KDxH0Fbwg/zHo+Z22y5ivWSWB4H34hpdTRbo1dNxZQF7DNtRbtFcirJkHsGlf1Vbs06ZWCPylprYVgJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QkHJaSVN; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ECwXhbJE"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-417e327773cso30923875e9.1
-        for <git@vger.kernel.org>; Mon, 22 Apr 2024 08:41:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QkHJaSVN"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-346359c8785so3908586f8f.0
+        for <git@vger.kernel.org>; Mon, 22 Apr 2024 08:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713800481; x=1714405281; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713800643; x=1714405443; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dgupXmaE8T7Q8y3d5lEsFBXg/KHZrEhKBYQ/v0lVNwE=;
-        b=ECwXhbJENk5eYx/1+kP5Al5fJD6G7Ha+yvzisYhC7uZZG12gH1Ek6pWLbkQpmHa57c
-         WhHY461jkREu/6bLwH/+t8Wn/24UGcGqTOUGZu6vlsX/Bl2JUN9fIZ2eolIotTabsCqo
-         HQ+0NddqHWEyTL8XKwqK1v4K5lml53cfUyS7q/zEFjO7MibTi8bih6p9JCS1itdDG5Hi
-         yeIW3xpmlrdxPghc1F1RyOZPJDLFhERdYlQSukJnI9GWdfxNKxCLJHq1rJqfa7xTR8iN
-         xsz8HKMuEQ0IvKfbsx1CcDGdv3REFgrEKKfFBjET5iOCBd0cZa3y96QSMGL7Blr8Zo7V
-         1ueg==
+        bh=9fbAXLbJo3R727S5Er55HPnxCKNlFEkNKlXCe1vHabI=;
+        b=QkHJaSVNGYQcLVKqCNK4824KAlUkFaLqfdZlLzxzc9H/DXxIc+AvyxSm/lPExH3j3b
+         O6kBk/gjyJTay10MbzpUsP3pJTq3UPMXI3DMKbUKUxJLOMcqyswJk/pZySFtndp2JQXZ
+         IVgjsaSwrEAw1fQUICfYf/fTM/vu5ogeo5kOQyqw4ZqDHrXsEdLMKA0g844Q/DLrrLt7
+         eJupQfudgSZou1H0SpT5cU7jw5ICTTWWd3WvwT5uGrfO7/UI+Oc/PuWPOdwJzhaD/k1A
+         sg1iTZdhvDupZeNOrUVSlS1pcTO6IvMJ8YLLnqvn2F6I7iVLHo5UT7CJJBlohdL9koWW
+         TClQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713800481; x=1714405281;
+        d=1e100.net; s=20230601; t=1713800643; x=1714405443;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dgupXmaE8T7Q8y3d5lEsFBXg/KHZrEhKBYQ/v0lVNwE=;
-        b=d0pTuzfdBUqkwEPF9WGve3IDGVuSxSd+QhE2tVX/ROdfxddYHF5kS8mbfTqrPrl0jo
-         RbIDKQHBjO6gwEU5Mnd1YOE5GyMaA8s8afuyiSXcpXuEYLzLYYhY3O6REIqPVFy0Y96n
-         JSLDdYotLNqVtwjhIwNLGimK2T8H1g+V7P0ClXqXnw8WxMIxjlt9amvJUqlw4/PdkEaQ
-         k3yWKfo6kzoa+sUfIxOrw4rAUOBE+jVL/CCf8yv6royBG2WvrbXX8t+5uvl129rcfZrI
-         DfmvkkrOqXDFk79HuTzo3Gtl55xphP0C1aasAA0LIcKCS2OHa6o92tGfuBROWtQchaE3
-         AUSg==
-X-Forwarded-Encrypted: i=1; AJvYcCVTZ0tDgxedv4pBC7YLmdNMjrVm1b0kg+1FH/m016A9QfQ9mwW9U3+wH5l4DIy5tVQB8OT7QwrixJoBjuj22YLhEf/K
-X-Gm-Message-State: AOJu0YxZbnJsV2F5UsNHsC0yB68aZ5QP6XJVkqYBG9zoFAD6RSmgVm2v
-	gsV0nGLzXI8bIukFUiLdxiBsabjWNOcSgTsBjOD2HNHmUEb9ZfQW
-X-Google-Smtp-Source: AGHT+IEELV5zea/uTY88SXsJU5qVp/EwYuhv7FoJO7Os+qecV0+EYy9XYZaC63zYijlBrNiy6zqj8g==
-X-Received: by 2002:a05:6000:241:b0:34a:5d48:a708 with SMTP id m1-20020a056000024100b0034a5d48a708mr48208wrz.0.1713800481298;
-        Mon, 22 Apr 2024 08:41:21 -0700 (PDT)
+        bh=9fbAXLbJo3R727S5Er55HPnxCKNlFEkNKlXCe1vHabI=;
+        b=kgdB/6AXapyvJS6F26TWI7BUPMjjlH499UX8CQEPt2bCozjuEkLhKGWB2OEEcEcEp6
+         AGBGwewYMeovlE+CevMY3+H53yn2K0htSOqEFG8WFiyqDGgLK+yxfuPD0ynQcplBkRmV
+         OVv4Jo9a2YboSptiL3OOXv+YPxvuctz2zvLLkqpwYQeCxAJfqG8GotEzvujiVawTcs1k
+         GdqY1ZteeRXGyMgIDG1CVr/phF+lX+ZAGDL3ekNMfjzPsyP+jqZmbPv3i9LI3ZI5NMiY
+         gLcFEMr9U9PVmkE3bzzPeaR4bmxsPCt81An+hS1WW04F1jjYqekch9wM3a/8LK9TaGiv
+         K/4w==
+X-Forwarded-Encrypted: i=1; AJvYcCXEWt8lglZtR3SroJca/C+COWGtKE0p778RZrxyq2LUKrGHNv8ZDiQ5AlogpdQBIwLptTQ79XRucU1Wi2gBCh9vgsyQ
+X-Gm-Message-State: AOJu0Yw9clyA1q/xi8MGBk4Ro0PNMfMg6x6RamCgHDO9CrCHJxsqLCMW
+	TJRcUQWoIVqFeErnTUDX1K24vdcdReZUyJne+9WaLrwjTe6yR6lc
+X-Google-Smtp-Source: AGHT+IEn3Eu/cKyjAlbwpn6aJpvIOC97S+XTX3PAhdva+XfcF6TfuDT1DFHHlIKWJE5Yir/HY4ERHA==
+X-Received: by 2002:a5d:590f:0:b0:34b:3374:bc26 with SMTP id v15-20020a5d590f000000b0034b3374bc26mr1245036wrd.65.1713800642363;
+        Mon, 22 Apr 2024 08:44:02 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:701:9864:4109:be00:6ff6? ([2a0a:ef40:62a:701:9864:4109:be00:6ff6])
-        by smtp.gmail.com with ESMTPSA id g18-20020adfa492000000b0033e9d9f891csm12499007wrb.58.2024.04.22.08.41.20
+        by smtp.gmail.com with ESMTPSA id t4-20020a5d4604000000b00343826878e8sm12367136wrq.38.2024.04.22.08.44.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Apr 2024 08:41:21 -0700 (PDT)
-Message-ID: <74a6465c-01b6-4a65-8491-751244d37c82@gmail.com>
-Date: Mon, 22 Apr 2024 16:41:18 +0100
+        Mon, 22 Apr 2024 08:44:02 -0700 (PDT)
+Message-ID: <55f1da17-6f07-4b25-9cf2-0de69bfb5005@gmail.com>
+Date: Mon, 22 Apr 2024 16:43:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,194 +63,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/4] apply: plug a leak in apply_data
+Subject: Re: [PATCH 4/4] add: plug a leak on interactive_add
 To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
  Git List <git@vger.kernel.org>
 References: <b7b2d0d2-245e-440f-a7cc-fa0df1ce73ad@gmail.com>
- <8e6ab088-2026-43e7-a869-b1c7185ee765@gmail.com>
+ <a886c086-4b2e-4d41-ad40-b3fca20de42a@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <8e6ab088-2026-43e7-a869-b1c7185ee765@gmail.com>
+In-Reply-To: <a886c086-4b2e-4d41-ad40-b3fca20de42a@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 Hi Rubén
 
-On 21/04/2024 11:28, Rubén Justo wrote:
-> Plug a leak we have since cfb6f9acc3 (apply: accept -3/--3way command
-> line option, 2012-05-08).
+On 21/04/2024 11:29, Rubén Justo wrote:
+> Plug a leak we have since 5a76aff1a6 (add: convert to use
+> parse_pathspec, 2013-07-14).
+> 
+> This leak can be triggered with:
+>      $ git add -p anything
+> 
+> Fixing this leak allows us to mark as leak-free the following tests:
+> 
+>      + t3701-add-interactive.sh
+>      + t7514-commit-patch.sh
+> 
+> Mark them with "TEST_PASSES_SANITIZE_LEAK=true" to notice and fix
+> promply any new leak that may be introduced and triggered by them in the
+> future.
 
-Looking at that commit I see
-
--        if (apply_fragments(&image, patch) < 0)
--                return -1; /* note with --reject this succeeds. */
-+        if (apply_fragments(&image, patch) < 0) {
-+                /* Note: with --reject, apply_fragments() returns 0 */
-+                if (!threeway || try_threeway(&image, patch, st, ce) < 0)
-+                        return -1;
-+        }
-
-So the leak existed before that commit. Indeed it looks
-like the leak predates the introduction of struct image in b94f2eda99
-(builtin-apply.c: make it more line oriented, 2008-01-26) and when
-the patch does not apply we have been leaking the buffer passed to
-apply_fragments() since the beginning of the builtin apply added in
-ac6245e31a3 (Builtin git-apply., 2006-05-23)
-
-The fix itself looks good to me
+This makes me wonder if we're freeing the pathspec properly when using 
+'--patch' in checkout, reset, restore and stash.
 
 Best Wishes
 
 Phillip
 
-
-> This leak can be triggered with:
-> 
->      $ echo foo >file
->      $ git add file && git commit -m file
->      $ echo bar >file
->      $ git diff file >diff
->      $ sed s/foo/frotz/ <diff >baddiff
->      $ git apply --cached <baddiffén
-> 
-> Fixing this leak allows us to mark as leak-free the following tests:
-> 
->      + t2016-checkout-patch.sh
->      + t4103-apply-binary.sh
->      + t4104-apply-boundary.sh
->      + t4113-apply-ending.sh
->      + t4117-apply-reject.sh
->      + t4123-apply-shrink.sh
->      + t4252-am-options.sh
->      + t4258-am-quoted-cr.sh
-> 
-> Mark them with "TEST_PASSES_SANITIZE_LEAK=true" to notice and fix
-> promply any new leak that may be introduced and triggered by them in the
-> future.
-> 
 > Signed-off-by: Rubén Justo <rjusto@gmail.com>
 > ---
->   apply.c                   | 4 +++-
->   t/t2016-checkout-patch.sh | 1 +
->   t/t4103-apply-binary.sh   | 1 +
->   t/t4104-apply-boundary.sh | 1 +
->   t/t4113-apply-ending.sh   | 1 +
->   t/t4117-apply-reject.sh   | 1 +
->   t/t4123-apply-shrink.sh   | 1 +
->   t/t4252-am-options.sh     | 2 ++
->   t/t4258-am-quoted-cr.sh   | 1 +
->   9 files changed, 12 insertions(+), 1 deletion(-)
+>   builtin/add.c              | 9 ++++++---
+>   t/t3701-add-interactive.sh | 1 +
+>   t/t7514-commit-patch.sh    | 2 ++
+>   3 files changed, 9 insertions(+), 3 deletions(-)
 > 
-> diff --git a/apply.c b/apply.c
-> index 34f20326a7..2f752d71a8 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -3712,8 +3712,10 @@ static int apply_data(struct apply_state *state, struct patch *patch,
->   			fprintf(stderr, _("Falling back to direct application...\n"));
+> diff --git a/builtin/add.c b/builtin/add.c
+> index ae723bc85e..b7d3ff1e28 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -150,7 +150,7 @@ static int refresh(int verbose, const struct pathspec *pathspec)
+>   int interactive_add(const char **argv, const char *prefix, int patch)
+>   {
+>   	struct pathspec pathspec;
+> -	int unused;
+> +	int unused, ret;
 >   
->   		/* Note: with --reject, apply_fragments() returns 0 */
-> -		if (patch->direct_to_threeway || apply_fragments(state, &image, patch) < 0)
-> +		if (patch->direct_to_threeway || apply_fragments(state, &image, patch) < 0) {
-> +			clear_image(&image);
->   			return -1;
-> +		}
->   	}
->   	patch->result = image.buf;
->   	patch->resultsize = image.len;
-> diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
-> index c4f9bf09aa..c40b661ac1 100755
-> --- a/t/t2016-checkout-patch.sh
-> +++ b/t/t2016-checkout-patch.sh
-> @@ -2,6 +2,7 @@
+>   	if (!git_config_get_bool("add.interactive.usebuiltin", &unused))
+>   		warning(_("the add.interactive.useBuiltin setting has been removed!\n"
+> @@ -163,9 +163,12 @@ int interactive_add(const char **argv, const char *prefix, int patch)
+>   		       prefix, argv);
 >   
->   test_description='git checkout --patch'
+>   	if (patch)
+> -		return !!run_add_p(the_repository, ADD_P_ADD, NULL, &pathspec);
+> +		ret = !!run_add_p(the_repository, ADD_P_ADD, NULL, &pathspec);
+>   	else
+> -		return !!run_add_i(the_repository, &pathspec);
+> +		ret = !!run_add_i(the_repository, &pathspec);
+> +
+> +	clear_pathspec(&pathspec);
+> +	return ret;
+>   }
 >   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./lib-patch-mode.sh
->   
->   test_expect_success 'setup' '
-> diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
-> index d370ecfe0d..144619ab87 100755
-> --- a/t/t4103-apply-binary.sh
-> +++ b/t/t4103-apply-binary.sh
-> @@ -9,6 +9,7 @@ test_description='git apply handling binary patches
+>   static int edit_patch(int argc, const char **argv, const char *prefix)
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index bc55255b0a..04d8333373 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -4,6 +4,7 @@ test_description='add -i basic tests'
 >   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
 >   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 >   
 > +TEST_PASSES_SANITIZE_LEAK=true
 >   . ./test-lib.sh
+>   . "$TEST_DIRECTORY"/lib-terminal.sh
 >   
->   test_expect_success 'setup' '
-> diff --git a/t/t4104-apply-boundary.sh b/t/t4104-apply-boundary.sh
-> index 71ef4132d1..dc501aac38 100755
-> --- a/t/t4104-apply-boundary.sh
-> +++ b/t/t4104-apply-boundary.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='git apply boundary tests'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   L="c d e f g h i j k l m n o p q r s t u v w x"
-> diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
-> index 66fa51591e..2c65c6a169 100755
-> --- a/t/t4113-apply-ending.sh
-> +++ b/t/t4113-apply-ending.sh
-> @@ -6,6 +6,7 @@
->   test_description='git apply trying to add an ending line.
->   
->   '
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   # setup
-> diff --git a/t/t4117-apply-reject.sh b/t/t4117-apply-reject.sh
-> index c86d05a96f..4d15ccd28e 100755
-> --- a/t/t4117-apply-reject.sh
-> +++ b/t/t4117-apply-reject.sh
-> @@ -7,6 +7,7 @@ test_description='git apply with rejects
->   
->   '
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success setup '
-> diff --git a/t/t4123-apply-shrink.sh b/t/t4123-apply-shrink.sh
-> index 3ef84619f5..3601c0c5dc 100755
-> --- a/t/t4123-apply-shrink.sh
-> +++ b/t/t4123-apply-shrink.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='apply a patch that is larger than the preimage'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   cat >F  <<\EOF
-> diff --git a/t/t4252-am-options.sh b/t/t4252-am-options.sh
-> index e758e634a3..5b680dc755 100755
-> --- a/t/t4252-am-options.sh
-> +++ b/t/t4252-am-options.sh
+> diff --git a/t/t7514-commit-patch.sh b/t/t7514-commit-patch.sh
+> index b4de10a5dd..03ba0c0e73 100755
+> --- a/t/t7514-commit-patch.sh
+> +++ b/t/t7514-commit-patch.sh
 > @@ -1,6 +1,8 @@
 >   #!/bin/sh
 >   
->   test_description='git am with options and not losing them'
+>   test_description='hunk edit with "commit -p -m"'
 > +
 > +TEST_PASSES_SANITIZE_LEAK=true
 >   . ./test-lib.sh
 >   
->   tm="$TEST_DIRECTORY/t4252"
-> diff --git a/t/t4258-am-quoted-cr.sh b/t/t4258-am-quoted-cr.sh
-> index 201915b45a..3573c9147f 100755
-> --- a/t/t4258-am-quoted-cr.sh
-> +++ b/t/t4258-am-quoted-cr.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='test am --quoted-cr=<action>'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   DATA="$TEST_DIRECTORY/t4258"
+>   test_expect_success 'setup (initial)' '
