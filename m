@@ -1,119 +1,95 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA972EAF1
-	for <git@vger.kernel.org>; Mon, 22 Apr 2024 21:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5021EB5C
+	for <git@vger.kernel.org>; Mon, 22 Apr 2024 21:30:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713820346; cv=none; b=MJMkPG05cBBCbiUf3FDIhilczAXy97Hwvtv3JdwYALSRtyMsmq0ddp2HkPoo8DF5uCD+89njreHzn7UyJI32PScfBtDhK/IcsSETKzU6W4nk33uLzcPm93Zh/Kmwx8tKyUUGSwt5IVOz6K7AYUPXtOgWZOTXWXY98zx+/plEDMs=
+	t=1713821454; cv=none; b=dA5acSUbyBPXn4o25cPU8YEqgjHFpGueNlIqXdlsfN9K/J+81qbr9abcCAOE1OfmNBcCMO/gFpZTdc3FbWOI9Qb1S2QFEQglQzUfRsdVttFWSeqYFgtDhlp7EF965rzC+sVe7C0x9QWNHrAxUCXGIctjg1oVCzz1oj04cU8tr8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713820346; c=relaxed/simple;
-	bh=REEWWi20RyyZkN6s9QL6KxcBVTYGWPHgTtOEp5Qnv7A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bmd2WPVObjpZLwQD9zP9OJ0AdV8AHG1zlq33IB5Z5vabBRm57nL6fcpoqrx5rTSNdCtlPnwaDciH0NXmAIaAFOOX5ywbqdP+ac8XnLGrZGe+CBrZ0oQ+rl0rUFyG81jKJqdJNPakI5fBf3NzsIKz3bwa0wZSKgTSjx3iyPRVTHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=s9YL0SjA; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1713821454; c=relaxed/simple;
+	bh=iJaO4g8BykE/SmRI5exNSU0FFSGpF6DOH5vFTVJJ8Cg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fJNVm/eoa4h/w4H68i8h4Mku7lgsQnrW23bV0UdzS5ui8rwLEnk08HHNrG2+KJwqPw8hCSnduDaVaTEXLHl8v78PnwyTxHkjPKtliZ8YufsoIz9AWy1h/hDkqzsqQBWrEHyT/8tl0OX8PhHIoRYN7fk8/H91DZRgfrzngS7upv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xst5pZ2a; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s9YL0SjA"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-43989e6ca42so98351cf.0
-        for <git@vger.kernel.org>; Mon, 22 Apr 2024 14:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713820344; x=1714425144; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PkUxoXv9vi9FYWN2Q3m7Mx35QxdIcLIUHTpcEILakWU=;
-        b=s9YL0SjABPCJsfZEUQ668JGj6aSbIcfvSrgLQLCt79YJ69u0U6XCi84Tqm94w2SzQI
-         7LSZty6/fBv8TUEF3/fJyIwGS6i+X9M/wK8R3Bx6wx81iNT3lbLaUX7Me2NAzTnlhDOb
-         +80WJBv9PIXoRTD/XTGWDb8gbtP51UYaBQU6PBeOxgkHW/cCVpojbO8+VVE50ridp7ji
-         +0ApYAtMRmGPUb4LDqViP9O29mZ0CMcv94vdEFKaKV2ZtLwL5W6ncDZ1fCEvdRabuJuI
-         BEvuPWz+tdkiWZIxi0RgSr0xYaQgNRr/UPrZPH/+Os0hzLb6JGRcqW98AipUP9FPCn9F
-         zIog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713820344; x=1714425144;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PkUxoXv9vi9FYWN2Q3m7Mx35QxdIcLIUHTpcEILakWU=;
-        b=wazhoVbuE++mT81qr/sWWXH9bb6CLBFMLYcbQW7gvoY6btr96EtBFbdQEPWpENBKZ3
-         P06cdsMSpnuWVkzFdqcE4EascNT8Z9/Gm9niZa4tzavKm90W64Ax2coxC4uUSn3o9B/6
-         dUxjreaSB7/BAAxIcz+yf1JipIdV/dbglQDOFopxZP31+NDdi83ovQM3ntVUIZXYsnkC
-         n5QbFgmi+MGIkHQyHE+UnLcf6pBce0r18UKKLZT0cqrEE/ycOD8n2+g3k3NepRDjvGWi
-         picq5QON3FQqb/8UyZ04BPHHY4Ja3IIPzcyEjQ/KWkXI4MXiNsXuoAB6hTpabPW0uS1a
-         iqxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWGLXET2MAGkqGkMPg+5CCLukeWleZ7w7YlfIA5LIyGlfdMWrAA0zi7CDqMTcCXcUm1ihCRO8YUpHef8hQI9lu6pV7g
-X-Gm-Message-State: AOJu0Yyqy4jp5YeazsXpwU0xnNYUpDSFJN9OmmwOzi7BxETGOd6R6k7K
-	Fu93Tj4p5NxKZ696iK0iJbesdR8CEwaYBstLL8lx3kwmaZ0d8tSELclkgX7gwuOStu8Dqh3s5KV
-	TZquPDit97c9vo4yUoFDJpKe1EtND6D1a60NL
-X-Google-Smtp-Source: AGHT+IHZYS7JuMHvNLas+r55Dz/O3MMewG/XT+1zz0Nx9zS/f3ePG7sbC5y20chp0KBWlVHFTgQrK4KhSFdggSszXH4=
-X-Received: by 2002:a05:622a:810b:b0:437:74fd:bd26 with SMTP id
- jx11-20020a05622a810b00b0043774fdbd26mr74294qtb.14.1713820343576; Mon, 22 Apr
- 2024 14:12:23 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xst5pZ2a"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AC2F42B91C;
+	Mon, 22 Apr 2024 17:30:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=iJaO4g8BykE/SmRI5exNSU0FFSGpF6DOH5vFTV
+	JJ8Cg=; b=Xst5pZ2amdo8vqS5iPiMPdAQXf9+K2m6XAf6gHoblVPlnY0xMTQziT
+	oULtF4bFiUgwwtMb4eHaT2KTu/sq2yfqCPiUKlFcCxCOvrXqbfbYuqJrq4gntIYH
+	48+24HT+P6gzOdg0WEdzfs9CE3Mwa7BNii7FopCO/LNRqt8VbPbpw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A2CFF2B91B;
+	Mon, 22 Apr 2024 17:30:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0F7C92B91A;
+	Mon, 22 Apr 2024 17:30:49 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  avarab@gmail.com,  christian.couder@gmail.com,
+  me@ttaylorr.com
+Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
+In-Reply-To: <ZibSUPezSU3ZV1HA@google.com> (Josh Steadmon's message of "Mon,
+	22 Apr 2024 14:10:40 -0700")
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+	<xmqq34rmi28h.fsf@gitster.g> <ZibSUPezSU3ZV1HA@google.com>
+Date: Mon, 22 Apr 2024 14:30:47 -0700
+Message-ID: <xmqqy195t794.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
- <CAJoAoZmOqEd9HcHMrOUwSXNJi2a8DLeO_11gW1h_HuaK79WEVg@mail.gmail.com> <xmqq1q6xw6hv.fsf@gitster.g>
-In-Reply-To: <xmqq1q6xw6hv.fsf@gitster.g>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Mon, 22 Apr 2024 14:12:10 -0700
-Message-ID: <CAJoAoZmR37h5XLa4NnJ+5iZfLNJVfzBgRs4bvaJN4sa=UDtxNw@mail.gmail.com>
-Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, avarab@gmail.com, 
-	christian.couder@gmail.com, me@ttaylorr.com, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 96506578-00EF-11EF-AAD1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Mon, Apr 22, 2024 at 12:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Emily Shaffer <nasamuffin@google.com> writes:
->
-> > Thanks for writing this. I, for one, would love to see the process
-> > evolve a little to account for the scale of work coming through the
-> > list on any given day. However, that's a discussion that will be
-> > easier to have once we have the status quo written and checked in.
-> > ...
-> > So, if nobody disagrees with the content of this document, I think we
-> > should absolutely merge it. It will be great for newbies to see what
-> > they're getting into, and for me to send to my boss to explain why my
-> > predictions for my team's patches landing are so broad.
->
-> Isn't it a bit too late to say "if nobody disagrees with", after it
-> was pointed out that the world around here does not work that way
-> (yet) about a week ago?
+Josh Steadmon <steadmon@google.com> writes:
 
-Well, so far we heard from one person who perceives it as status quo
-(the author), one person new to the project, the maintainer, and me :)
-I think Josh is working on a v2 with links as you asked.
+> While clearly nothing has been decided on those topics, it seems to me
+> at least that they follow a pattern of "discussion now, consensus
+> (hopefully) soon, implementation later".
+>
+> Or do you think it's more accurate to say that we rarely/never make
+> decisions without patches?
 
-I have certainly followed the process Josh described here for a couple
-of large projects coming from my team - to mind, config-based hooks,
-submodules UX proposal, and libification proposal all came with
-discussion before any patches. I'd love to hear from others who have
-been implementing large-scale changes in a different way, like brian,
-or Taylor and the other GitHub folks, too - if this patch is too
-different from what actually happens with their work, let's trim until
-it isn't, instead.
+As I said, I do think it is rare for us to start with only "ideas"
+without anything concrete to comment on, and that is why I asked
+some references (e.g., URLs into the archive) to a discussion in the
+past of a larger decisions where (1) something is proposed, (2)
+discussed, and (3) declaration that a consensus has reached, if a
+document describes the status quo.
 
->
-> If we have an agreeable v2 already posted on the list that I missed,
-> then sorry, please disregard the above comment.
->
-> I still don't think it captures "the status quo", which is what you
-> want this document to be, about "larger-scale decisions", as the
-> Introduction of the document says.  Can we have a set of pointers in
-> the document, when it gets rerolled, to an actual example of how we
-> made such a larger-scale decision?  Without such illustration with a
-> real world example, it looks to me that what it describes is what we
-> wish the process to be (which is not necessarily I would object to),
-> but labeling it as "describing the status quo" is very much
-> objectionable.
->
-> Thanks.
+> Does that mean it's pointless to start a
+> discussion without a patch series attached?
+
+It does not necessarily mean it is not worth trying to do it more
+often that we have done it rarely.  
+
+Is it desirable to make more larger decisions to implement changes
+that take longer effort and deeper commitments?  As long as we can
+have a meaningful discussion, the "anything concrete to comment on"
+I mentioned earlier in the previous paragraph does not have to be a
+patch series.
+
+> I'm trying to decide whether it's worth editing this doc for V2,
+> or just starting over with a much smaller one instead.
+
+And if the lack of documented process is a factor that contributes
+to the rarity of such decisions, it is a reasonable goal to have a
+documented process.  And learning from past sucesses (and failures)
+by starting a document that describes the status quo is a good idea.
