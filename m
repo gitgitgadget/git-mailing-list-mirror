@@ -1,91 +1,105 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4E01BC44
-	for <git@vger.kernel.org>; Mon, 22 Apr 2024 21:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAAB208A5
+	for <git@vger.kernel.org>; Mon, 22 Apr 2024 22:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713821972; cv=none; b=Oc+n0NP90TfvhDk0V5igCb8xwkWv5X4muIcromLovNPl6Q8h+N0MKUJOzPnmW0Bsq+SxPYznUzK1OVFk1E/TfjCdVZCKgfTFRe4ZZKptPtVRUfiuWqaWGfohejLrYhrXHJqaDE+bDtFD9xjDT9nZJiQVQQCntJ4nCsc03swsdIs=
+	t=1713823462; cv=none; b=ROTAkY3z30fXSjgwxOigdR2NSJQuqKwvxGei/41LiUHocNeK4zG13oa4MbeVn9992uZadyr7NyIZSahRFuwNJ7WcO+y7by9qu3LSq1MjP7rXOC//zZe70bciO0gsjaa8LULcDX0oKR79IX97f4MBu7uF55epHwNoHAzCCv0PWSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713821972; c=relaxed/simple;
-	bh=LxaYgEFVZoLXZFNYN710k6JzwZ9z+wqpvS18JBoya/Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=od8+VFZa6U00+vlh8Y2XWuUTk7nYf/bHwRTX/51PZD4NJ5qIrQp+/lvC0bMxifMX7BADVX0/HxCvuFXANzLnN3u/jsjNxjfsrPNmcWOzbkuuoNYcOdoQAE6VKjSS2sbJn9atd0Ct5TTtAtovA9B+bpuZaig+/26SCKuth2jm7jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kLgHKAda; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713823462; c=relaxed/simple;
+	bh=rqCOkMuH7yOzlTK7U4INoeDoJSwiz28ldDvADeaR4V8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=TP6P5LwP1LFkDrm1LRZ0Xi2js5vZNEVeOGPTlwRH6B0eeYl1SJQaccEQdc65XToeww8ijfDHFohKA5MSbgFKZWDStMEbYe/6skAtZFBQkcvXQAotATWAJFRdf+8SjmS9hXcoorShZEEveNtXWr+K4u6vOLxDCM32ckhBIaSFv0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AgzUpPFs; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kLgHKAda"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7816F2B9A5;
-	Mon, 22 Apr 2024 17:39:30 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LxaYgEFVZoLXZFNYN710k6JzwZ9z+wqpvS18JB
-	oya/Q=; b=kLgHKAdaoFfzc3W1Lur+DmGJHZLirHBDq0zr987CMLaQ86ZkV2Wvam
-	+8fUfuqjGI9suRYhTmTDxclo/TCrnvf3PhRhlQwBQTs2zjmPNx0/G9UJ6DO1r/I6
-	0ZVYuTiJfjju0DyMCWgSS3noa7SAOub6hRpGstnpaDpKC0VhsiDhM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FEA22B9A4;
-	Mon, 22 Apr 2024 17:39:30 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28FA42B9A3;
-	Mon, 22 Apr 2024 17:39:25 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  Johannes Schindelin via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] for-each-repo: optionally keep going on an error
-In-Reply-To: <20240419175621.GB14309@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 19 Apr 2024 13:56:21 -0400")
-References: <pull.1719.git.1713342535.gitgitgadget@gmail.com>
-	<pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
-	<abd796894c857fc9ad96b9942089474df01f0506.1713444783.git.gitgitgadget@gmail.com>
-	<ZiHyGFRPm_pwdGgC@tanuki> <xmqqy199l4qf.fsf@gitster.g>
-	<20240419175621.GB14309@coredump.intra.peff.net>
-Date: Mon, 22 Apr 2024 14:39:23 -0700
-Message-ID: <xmqqr0ext6us.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AgzUpPFs"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-41a77836fa6so8810775e9.2
+        for <git@vger.kernel.org>; Mon, 22 Apr 2024 15:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713823458; x=1714428258; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xokP1eb8whOSQ8Zd5txaOHtbsHL7e+25sDNJnMxQmao=;
+        b=AgzUpPFsH2vbBULwz4Zcq8K4bNcIb07NjU9dNwTMg7lFcjjpiycDt4IPZpGPw+ImLs
+         GDXwS4MZ9j0ggmjBCnz0o9ElUDhcRZmnkmrehBR6C39hEQe8vL7N2G3jsopvqP9dtW3+
+         ckDGHrNVJFy9VsFaHBbZ5Tb4VmYc+pOHwUW0qe7zb4zbnC3c89YJ2fFLGgRyD8hU6KHW
+         xGeP9pqleLQSa7Jk1hjqz1eu53cSzljvt5zWCeVuSPCusBSzIGEyDxVyyXrT/DO2zAo3
+         1skWAaMw0Ywahd6jKRCzmBmmgAW6gJYehbeVl6IDdJwKdUvO2ZxMjR4v6eaPVdURRnoz
+         B0nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713823458; x=1714428258;
+        h=content-transfer-encoding:in-reply-to:cc:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xokP1eb8whOSQ8Zd5txaOHtbsHL7e+25sDNJnMxQmao=;
+        b=Wh2azORmJ2OZgC5COuMAkJK+Ifoezu6dsWi6+NpT6ukP2wOFmjXVKOV7G1Z6EwoGPU
+         VmHQgRuaTbLRa5rLNSAKpChXx8uHzJdKplALMxn/xSN8vdWLS6mVNbWysAFCRN6nQqXM
+         Z98KsYX5plnBiKXLkTUj5b4C3X2wRJAOtl7CsPlRO742vNYvdoom70SWI6UFu3QJh2FW
+         3TNpj2CRJxLfclHw5aJENNXvxWsd0FuVeV/gho2PR5LFXGYSyfpj/UCXolJzng1br35Z
+         UyD+VvVlzN3vFMMwKVBa+QznQG3OucC0jCF1tRFCeb6b1dnXEgpv5Dj4uXogR/Gd2jLO
+         zgdA==
+X-Forwarded-Encrypted: i=1; AJvYcCUf1ubXAiH86FuzOC+wtTG2CCsQQaZmjJmsOWU31kebrVu/doVlVlxd31CEQaOTD5iSDqbC3LXuNmFthKD8HZs1veaQ
+X-Gm-Message-State: AOJu0Yx4I//FPVoXxs1ovYI8wUG3Nwh5YT60xPkXjAKhft8KOhWzsJBF
+	2jDwSzUT0qdgHPI1FBvvx2Rs/T/DAzazphzmBt8+c/6QYR9yqSVqQwLkYw==
+X-Google-Smtp-Source: AGHT+IGrRGhHWP3h+d+vE1tbA8zgQ4H6zUoVSRPfLxLeRz/mOEa6IT4bW7xQFvMSPXKAuSUoWQ8nbg==
+X-Received: by 2002:a05:600c:3151:b0:41a:993e:97a2 with SMTP id h17-20020a05600c315100b0041a993e97a2mr1204313wmo.19.1713823458405;
+        Mon, 22 Apr 2024 15:04:18 -0700 (PDT)
+Received: from gmail.com (247.red-88-14-44.dynamicip.rima-tde.net. [88.14.44.247])
+        by smtp.gmail.com with ESMTPSA id o12-20020a05600c4fcc00b00418a6d62ad0sm21761439wmq.34.2024.04.22.15.04.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Apr 2024 15:04:18 -0700 (PDT)
+Message-ID: <78f38e0f-7456-42d7-b0d1-887944bb01c9@gmail.com>
+Date: Tue, 23 Apr 2024 00:04:16 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C9EF4470-00F0-11EF-BB75-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] apply: plug a leak in apply_data
+To: phillip.wood@dunelm.org.uk
+References: <b7b2d0d2-245e-440f-a7cc-fa0df1ce73ad@gmail.com>
+ <8e6ab088-2026-43e7-a869-b1c7185ee765@gmail.com>
+ <74a6465c-01b6-4a65-8491-751244d37c82@gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+In-Reply-To: <74a6465c-01b6-4a65-8491-751244d37c82@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+On Mon, Apr 22, 2024 at 04:41:18PM +0100, Phillip Wood wrote:
 
-> run_command() may also return the exit code of the program run. So
-> imagine a setup like:
->
->   git init
->   git config alias.foo '!exit 123'
->   git config repo.paths "$PWD"
->   git for-each-repo --config=repo.paths foo
->   echo $?
->
-> Before the patch we see "123" and after we see "1".
+> On 21/04/2024 11:28, Rubén Justo wrote:
+> > Plug a leak we have since cfb6f9acc3 (apply: accept -3/--3way command
+> > line option, 2012-05-08).
+> 
+> Looking at that commit I see
+> 
+> -        if (apply_fragments(&image, patch) < 0)
+> -                return -1; /* note with --reject this succeeds. */
+> +        if (apply_fragments(&image, patch) < 0) {
+> +                /* Note: with --reject, apply_fragments() returns 0 */
+> +                if (!threeway || try_threeway(&image, patch, st, ce) < 0)
+> +                        return -1;
+> +        }
+> 
+> So the leak existed before that commit. Indeed it looks
+> like the leak predates the introduction of struct image in b94f2eda99
+> (builtin-apply.c: make it more line oriented, 2008-01-26) and when
+> the patch does not apply we have been leaking the buffer passed to
+> apply_fragments() since the beginning of the builtin apply added in
+> ac6245e31a3 (Builtin git-apply., 2006-05-23)
 
-True, or when the process receives a signal, etc.  With this change,
-we do lose information.
+You are very right.
 
-> I do agree that passing -1 to exit is bad; we maybe should normalize to
-> 127 for not found, though I think we could also see -1 for system errors
-> like fork() failing.
+I saw that commit.  I reviewed again my notes and I recorded the hash of
+the previous hop;  the one that my message, incorrectly, refers to.
+I'll reroll to fix it.
 
-True, but I think that is a separate issue.
-
-So, let's have a (hopefully final reroll to fix the error code when
-stopping at the first error and merge it to 'next'?
-
-Thanks.
+Thank you very much for your attention.
