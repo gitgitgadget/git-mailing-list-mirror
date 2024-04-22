@@ -1,94 +1,96 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6AC45034
-	for <git@vger.kernel.org>; Mon, 22 Apr 2024 23:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4A745978
+	for <git@vger.kernel.org>; Mon, 22 Apr 2024 23:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713827045; cv=none; b=mhomah/KagV6inqj6jcV9eCAr4sUD2dD4DoXs61DB5/8P/fIN9E/GVr4vKSMK0Pr9xhGR4nMOJ1MXzPBf55bDT9o1RCP3/YNzEGCC9Wzb6E4Ylsd69soOgRnFnth0EKWBWvA9ZP8gfWlvIbU/zlZOO3nhsKUHC0L12DNOkK+XEs=
+	t=1713828422; cv=none; b=Bryuate1KWeY2gFTnl4+8+/VacOfXSrxpyu5OrNFZYlEYGUyn3TypQQUImamgvECxtUNV3a8ca1ODk2IksrvI2GqJVnV2EGhhSE/PMXcVTkJ8XUPv/mzUD5TuRwztCqjv+2Debp+qD00wb/CttK9C6BZoxTC2LagfH5mFDAomjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713827045; c=relaxed/simple;
-	bh=tWFf6biBqFuiZOYa0m+Q1dNkFaLW06SF3hV88zYJz5o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=FW0KePfde/yBEsn17sp9qCfpUJOLCnPIst/9w9UCQ0i7BStSW4PKseo2pkOyQ59xa3uqvOUrwKJUJHjeZUQYwZwkuAM3QCIcv+iHs5ZERvpXXVHYvQoeXuGmgk6gBZL+VAgIsnim7M9Ko0h3LK1HU3qHZsmukTBU/a9mUP3FXsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mi4bFOgp; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713828422; c=relaxed/simple;
+	bh=7NhUMLQbTDnyERnTOZApqCovOObx+/mKD/KapyWEMxg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZDBnCnre4AtmdyfsHJwmM75kz4ZLtqZFIhO2WwbKQbPa/2XoIfbms+HA6Qg3bMlfrvl4zpG+si5PjoGelGfwvvMOcXrd45Z6AGlYCkoZjqbEAXf6FR3e56jEiF2OdBmDLGGKyAei+d154P7UMmlmsztmrb/Bb6RdQjlhG2EKp0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DnqH2cUb; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mi4bFOgp"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-344047ac7e4so3510618f8f.0
-        for <git@vger.kernel.org>; Mon, 22 Apr 2024 16:04:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713827042; x=1714431842; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NBBFqXEEHyF/ySWsmsq7Cj1pby+uS8kZpID8fPG5rSc=;
-        b=Mi4bFOgp0ygL7kiS3PjtfCPRTa7PXSgmt+J104c8f7Cg6uzrd5XdEd2v1fgezfJPIQ
-         Yv5ULVZq7G/Ho0EXfkzI+eeevbdomj+5lnDIOxgKN8thknaogdoYV3mSRei0/1Yoxh2t
-         yPBNKqNgEKeEKR8Jl7MdQHwMCmYXU1z9HoY68nsrRztqnQREqDW+OgHbF6VjQbwt0t5y
-         +4S4qbNi7ByJEcSD+qaVDTnwlgoRHJaRQfslnFdCSrV18Hco3Tf2nkxxLKM8QssIQb5c
-         1JMcfsIZ0aW+h6VaqLF6fscAwTi9jTndQTDSm0vLopLk4e64PC3ipc2yWOvLPRdDL08H
-         FfTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713827042; x=1714431842;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NBBFqXEEHyF/ySWsmsq7Cj1pby+uS8kZpID8fPG5rSc=;
-        b=xAJbNgRvYgP9/hj4Hp4SZN8M2Txbodly5R9Cte512Nb7wL6n8l3PHc5UnL0feWkEuf
-         SpA9RoHQMzUbbGlNp/eRbn/O2WcfbCAUdBgfwA9uuc8QRI9W5dKD4MvnBFxv/UKlpQiu
-         Us8hw9kXd7IEtFtDRiAsVEymavimXc8jd7P1hCXRT7Pap6m3aPkRfN1jPmMTU+69BGam
-         3KWbgrJ8vDPie/uZBefO1DPldj2QJd5R5PiBCVjIFSUswcHqvVaPV3ByRDApZQVegx8q
-         lJe/yh9gs25Q4Nw7yLrRf0eCPlxR1s8N1qj57lzsD0x9D++Zb8ILjrDaGeSIlRYpDIFz
-         AOhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUE6D4WyETYWXweQHhIqmtOIrWsKQyCmeysXmtq1ehhc3GMYPbvcL98zt6VJSEkRVNScmBjt9Qk4rFrXQC5zX305j1z
-X-Gm-Message-State: AOJu0YyelT+gdG7zo1KsOyL4vXQ9KvlOjt64pP4ZymKOc/iGp9jyL3Mv
-	iH+bzBwhTDSwYunAkiaon/l5uu4hJ8/EWOPrQFye9dpwcVp5dQURUu3BNQ==
-X-Google-Smtp-Source: AGHT+IE1dmyPgudk9j8/0zBK9Y7vwKzH87zaYIsD0sPBnzR6rAQSj6Mz7r1pauFxOmI/JvqCGbOV+w==
-X-Received: by 2002:a05:6000:50:b0:34a:68aa:e242 with SMTP id k16-20020a056000005000b0034a68aae242mr734762wrx.0.1713827041919;
-        Mon, 22 Apr 2024 16:04:01 -0700 (PDT)
-Received: from gmail.com (247.red-88-14-44.dynamicip.rima-tde.net. [88.14.44.247])
-        by smtp.gmail.com with ESMTPSA id y7-20020a5d6207000000b00346f9071405sm13091328wru.21.2024.04.22.16.04.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Apr 2024 16:04:01 -0700 (PDT)
-Message-ID: <effc5e33-562b-4545-a58e-0c6e9a10ad42@gmail.com>
-Date: Tue, 23 Apr 2024 01:04:00 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DnqH2cUb"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CE0D81ED0ED;
+	Mon, 22 Apr 2024 19:26:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7NhUMLQbTDny
+	ERnTOZApqCovOObx+/mKD/KapyWEMxg=; b=DnqH2cUb/qwTIIKhd/2ZzCPc2OVA
+	mZ6RiHKaLh7NBdCoAV/XEna1mBj+WiqMQYBo6hU4qeDNAQ9yXgxu9qGRpJ++Po8T
+	JET9mFM8tifCNZZi7WqzMubtFImG+eYjnqAyYFYlSH/UgPdC3CPT1IaNFQ7S8HN8
+	0m0a9VtchYvpZl4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C51791ED0EC;
+	Mon, 22 Apr 2024 19:26:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 327CB1ED0EB;
+	Mon, 22 Apr 2024 19:26:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 0/4] mark t3701-add-interactive.sh as leak-free
+In-Reply-To: <69f86760-96ff-4c62-9649-4627652b7c19@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Tue, 23 Apr 2024 00:51:04 +0200")
+References: <b7b2d0d2-245e-440f-a7cc-fa0df1ce73ad@gmail.com>
+	<69f86760-96ff-4c62-9649-4627652b7c19@gmail.com>
+Date: Mon, 22 Apr 2024 16:26:58 -0700
+Message-ID: <xmqq4jbtt1vh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] add: plug a leak on interactive_add
-To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
-References: <b7b2d0d2-245e-440f-a7cc-fa0df1ce73ad@gmail.com>
- <a886c086-4b2e-4d41-ad40-b3fca20de42a@gmail.com>
- <55f1da17-6f07-4b25-9cf2-0de69bfb5005@gmail.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <55f1da17-6f07-4b25-9cf2-0de69bfb5005@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ D0D78086-00FF-11EF-B793-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On 4/22/24 5:43 PM, Phillip Wood wrote:
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
->> Plug a leak we have since 5a76aff1a6 (add: convert to use
->> parse_pathspec, 2013-07-14).
->>
->> This leak can be triggered with:
->>      $ git add -p anything
->>
->> Fixing this leak allows us to mark as leak-free the following tests:
->>
->>      + t3701-add-interactive.sh
->>      + t7514-commit-patch.sh
->>
->> Mark them with "TEST_PASSES_SANITIZE_LEAK=true" to notice and fix
->> promply any new leak that may be introduced and triggered by them in the
->> future.
-> 
-> This makes me wonder if we're freeing the pathspec properly when using '--patch' in checkout, reset, restore and stash.
+> Range-diff against v1:
+> 1:  18e4c7f653 ! 1:  75cb700eab apply: plug a leak in apply_data
+>     @@ Metadata
+>       ## Commit message ##
+>          apply: plug a leak in apply_data
+>     =20
+>     -    Plug a leak we have since cfb6f9acc3 (apply: accept -3/--3way =
+command
+>     -    line option, 2012-05-08).
+>     +    We have an execution path in apply_data that leaks the local s=
+truct
+>     +    image.  Plug it.
 
-I haven't checked it thoroughly, but I think we're fine in those cases.
+This is a nice improvement.
+
+If a bug existed in an ancient version and survived across evolution
+of the code for a long time, naming a random old version that
+happened to already have it does not help very much.
+
+Saying something like
+
+    This is an ancient bug whose moral equivalent existed even
+    before the data & code structure became the current shape in
+    commit X
+
+would give a bit more information, in that X gives a rough estimate
+how far back in the codebase the fix in the patch can be applied
+more or less cleanly.  In this case, X would be where the struct
+image was introduced, I guess?
+
+But the updated text is good enough and I do not see a need for
+reroll.  Will queue.  Thanks.
