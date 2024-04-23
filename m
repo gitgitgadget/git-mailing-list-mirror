@@ -1,40 +1,40 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7074743AB0
-	for <git@vger.kernel.org>; Tue, 23 Apr 2024 23:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A84C2E62F
+	for <git@vger.kernel.org>; Tue, 23 Apr 2024 23:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713914235; cv=none; b=OaxN9gUiPAFbrYBnpUbUhB2E8e10ed7KH1lfwFMd6OX5DZm9uzxIjmOjj7Z4X+dN7NSiMxqwI7B2s1+qMbgj5vhPYAPLaOfKMblfzUpgsOlaNy+AAzKIVxIifuHLrqJBvTq3qEtoC7XaZ+OEydNOIO8RM6KX9x/qvtuyuy5464k=
+	t=1713914835; cv=none; b=bwFNhHh5ywUHyXX9szkOObqenUMH8OtJ+o4a+NskNItAc69FNSRguUQlqmYizzfcNG/r09niMQSjG7ZbGzFD1F1vFwyH4FtjgnrZ4FLQWguIJ2DVDG47Q6SHXCEpWbv4gN86fNohmKgxNFE63cxRDLB5gzKZ0IIqezWW+/FeBcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713914235; c=relaxed/simple;
-	bh=YM1qvC2dz7zgiXjlyhLehi2UQQvKr/SYRxa/rnvjp40=;
+	s=arc-20240116; t=1713914835; c=relaxed/simple;
+	bh=RquOR0SVHntDyp96183gNEIRuNN1kANdbCqG8hoFYJc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MQY5Ivlt5uynQfEebJqhIKj05vDuS4xDhnRGwVpQnr1knqFBiHSfAuQntwrp7UClRGfvipojqTK07lwgPaPaWmz4xQQlfu9YGpVaG2nfYEQBiZ6SE24lERE6SwdiQsI8x7wj4XnB6UDnGzKeLAIuVFLBHEF2RyoPZwyT+0xR85k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FN5LYmiD; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=cF8/QiXoUdm5gA9Z5WUsmFscEHzBuSN5CKAaAZOLjxvsQ3yACtrZHsODv7oScKFRO4Fm5mehnTV2ABiXL53ufpNOjJZSvS9DvIONlTb8lIfJdeW6E2YQ8aUISKsEav3bEteQXfuXTIsuwO5xivpL04Mxze1+4cNnbTyMgvQ+1ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lH0Y5iJ6; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FN5LYmiD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lH0Y5iJ6"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BD22D2EA8B;
-	Tue, 23 Apr 2024 19:17:13 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 79CAA2EAF0;
+	Tue, 23 Apr 2024 19:27:13 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YM1qvC2dz7zgiXjlyhLehi2UQQvKr/SYRxa/rn
-	vjp40=; b=FN5LYmiDzsmIwZdguyevLirKL5hnU099miezcSY8NLCLDjhSD7P2Fl
-	0XkGCNf3IhFG1Iqvo5IeVZot2W/BOvfVvSUQD/aW+R7Mtn1ezH8W37UaEvl6Pfr+
-	9tKtd+qY4stovN0W6/TufTHTPf6Mbag/2ACfHXNLWmp8pAII5Gdbs=
+	:content-type; s=sasl; bh=RquOR0SVHntDyp96183gNEIRuNN1kANdbCqG8h
+	oFYJc=; b=lH0Y5iJ62v/Ta8n9BqakIVZy9mK6PLSUR4kWq712WkufLXJ7DJ4BCF
+	28MaTGOCom7HF+5NWiRaNHPJn+Kgnh74NGRrCJVdKRrQ5htp/A3Dm4vRGiApWRAN
+	YGv72E7cM5MEYQ64x78bFVosLfBkUE+/+H2we7N/+y/C6Q/5eVlVI=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B1DEE2EA8A;
-	Tue, 23 Apr 2024 19:17:13 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 739012EAEF;
+	Tue, 23 Apr 2024 19:27:13 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BA40B2EA87;
-	Tue, 23 Apr 2024 19:17:09 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C967E2EAEE;
+	Tue, 23 Apr 2024 19:27:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
@@ -43,16 +43,15 @@ Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
   "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
  <christian.couder@gmail.com>,  Kristoffer Haugsbakk
  <code@khaugsbakk.name>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v2 6/8] trailer: make parse_trailers() return
- trailer_info pointer
-In-Reply-To: <093f68f365801bc8801f29dc3e6eaa9b07fcd57d.1713504153.git.gitgitgadget@gmail.com>
-	(Linus Arver via GitGitGadget's message of "Fri, 19 Apr 2024 05:22:31
+Subject: Re: [PATCH v2 7/8] trailer: make trailer_info struct private
+In-Reply-To: <0e9ae049b8861fecf49c097e8d52e734f7a9c9b3.1713504153.git.gitgitgadget@gmail.com>
+	(Linus Arver via GitGitGadget's message of "Fri, 19 Apr 2024 05:22:32
 	+0000")
 References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
 	<pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
-	<093f68f365801bc8801f29dc3e6eaa9b07fcd57d.1713504153.git.gitgitgadget@gmail.com>
-Date: Tue, 23 Apr 2024 16:17:08 -0700
-Message-ID: <xmqq8r136557.fsf@gitster.g>
+	<0e9ae049b8861fecf49c097e8d52e734f7a9c9b3.1713504153.git.gitgitgadget@gmail.com>
+Date: Tue, 23 Apr 2024 16:27:08 -0700
+Message-ID: <xmqq34rb64oj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -62,31 +61,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 9BEBBDF6-01C7-11EF-93DB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 0195E266-01C9-11EF-A8F9-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
 "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> ... From the trailer API user's perspective, the call
-> to trailer_info_new() can be replaced with parse_trailers(); do so in
-> interpret-trailers.
+> There are a couple disadvantages:
+>
+>   (A) every time the member of the struct is accessed an extra pointer
+>       dereference must be done, and
+>
+>   (B) for users of trailer_info outside trailer.c, this struct can no
+>       longer be allocated on the stack and may only be allocated on the
+>       heap (because its definition is hidden away in trailer.c) and
+>       appropriately deallocated by the user.
 
-And from the trailer API users' perspective, it would now help to
-have a bit of comment on parse_trailers() function.  The users need
-to know at least:
+    (C) without good documentation on the API, the opaque struct is
+        hostile to programmers by going opposite to "Show me your
+        data structures, and I won't usually need your code; it'll
+        be obvious." mantra.
 
- - what the function returns (i.e. a pointer to an opaque
-   trailer_info structure),
+The comment inside trailer.c does not count (the API users are not
+supposed to peek in it---that's the whole point of making the
+structure opaque).  You'd need to compensate with a bit more doc in
+trailer.h to help the API users.
 
- - what operations can be done to the opaque structure, and 
-
- - what informations can be extracted out of the opaque structure.
-
-When appropriately typed and named members in the structure are
-visible, the latter two are obvious in well written programs, but
-now you are going to hide the data structure, "Show me your data
-structures, and I won't usually need your code; it'll be obvious."
-would no longer work.  You'd need to compensate for making the
-structure opaque to rob the clarity from the readers with good
-comments to the function and the API to help them.
-
-The changes in this patch look more-or-less obvious.  Looking good.
+Other than that, looks "correct".
