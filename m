@@ -1,81 +1,81 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354C81B813
-	for <git@vger.kernel.org>; Tue, 23 Apr 2024 04:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA791CA82
+	for <git@vger.kernel.org>; Tue, 23 Apr 2024 05:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713847826; cv=none; b=QOCoT+V9JCJqJIADXzVID64YnCetD/Sxh3ywK920p9f+LxLxKUT8SFGCsVAt4pOHZWzh9Mr/8GadCLc2pEs7FkKxJzmxj5cjmU6hZqqJTe00djIJias57CFq2mbjbqxmgiImrXIkAIg+Tvtgps58TOnhgRgx4/NzZPToUArZafs=
+	t=1713848849; cv=none; b=f9YO81R9tDKusMPLxOCh6MHqcGPX1V4EDYAn/h4FXYb6sN13iVltq8Pk7rvdF9BHprcEESqjUBuzGXutcB1Xk1/6JrpSJZy34HJ3i/Dq6Un/T69oohoH4sIezQ17fvvEjzQnxtVwABFYN5OCTttp11Kr2Ea2ggwwspElmC6aA0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713847826; c=relaxed/simple;
-	bh=OUYMwQEcw8jRLubxwoHEgjyGqmp1ewBUUMjfS8pGZks=;
+	s=arc-20240116; t=1713848849; c=relaxed/simple;
+	bh=K+8W+CWhkqzv4mRJIslBxQMbfhB5Ozfq1vUsaAcnkYI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I8YTaNe8j82GhOUT5q2vQTI6gZa11KoB+XD2I0P/d/GV2vPBZ9xng52vtEYWRujyXOXcM+QT/C5dbT32VUaSve/aT+pf5gm49D5kPvx2fzG3nUjn7dPLzQceITOJFNlFzRPoiCWwBgXiP6EMU1Ts5HVDy4fIld+UZPnZrhCiIYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OoiuxPmF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IdNYG65F; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=WkuxNluYx/IAeFbub1kEEm+ME+u8Pl707Hc7NkPhK3Ir8AOvtpKj+J7hQkFKMLH/5j7etYKn2ZwoomG5cfOh4JhGHPwkqhyjvXOkptldVHua3rSjGgxgiSbzR/WTVasUcPbGqpLSQqZsUt9agLVQZmHD0St9dBBuQ8aCeCv51gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l5gzSTzF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QMJGIbdO; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OoiuxPmF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IdNYG65F"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 30D411140166;
-	Tue, 23 Apr 2024 00:50:22 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 23 Apr 2024 00:50:22 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l5gzSTzF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QMJGIbdO"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 8DDAA1140163;
+	Tue, 23 Apr 2024 01:07:25 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Tue, 23 Apr 2024 01:07:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1713847822; x=1713934222; bh=5XnWGt9xY8
-	swUzOfDFEhBnSV7HtLWfqUwcDLWVogAsI=; b=OoiuxPmF4DO14Z2Dnsy7jd8r4I
-	8vIaY819esVx9tFqC8ljTf2W3yyZJrx4Sy9GsZVAI41jSqnlesWps8ZspWeKAHgi
-	SZoqfd9YHhBAffN6CevU2jARhedxZFpSmzvbY5FntL2/kQaR1+oBUmynUDUD2/Pd
-	IjTwlXgl0Nhs2MTTbXHtlcLYN9VovzCiQsN/s3WSYNvVluhIkTTkcG0psNAzCm6N
-	Mn8iymoYOXUdTJzi0zBuBTRvTFysvyZN3W5N84AGk9syhS+xbErUdqbwHXM1QzBe
-	2VXn4k9+vW61aa8IHjcGEo00ga3wvNJx3/hQboR3Nht2xM0JU7jbvScb49/w==
+	:subject:to:to; s=fm3; t=1713848845; x=1713935245; bh=5VGdG/uG1V
+	/khdlujrDaP0JgJWHPvmBGbmTv1s6E03Q=; b=l5gzSTzFAnEqgkqsM8XBY/iRBN
+	oUPu+xGlkLSxVxGRoW58hzqT8rPb/NXqRsP1TG/lbrz9Yf8f7I8d5K63AvygXNE/
+	iYWElykivE6cLpR0iCjer/ha3DLNCI7NtpY8OHuZTkHmgGm/PEN3UmlInVmVcCDA
+	blclP2/if2iWWixDb7/pt1h3EIRXLdJsjjmr3jPoPqpKhU/0K8H8/7pfgxcLP2Yp
+	to+0c3+yBgeCE1xF83KC1rngFahlVvOaHcxTknXvr4ID18zWKlxawPLwB9LSfewj
+	Ae3yE7gy1yRyfaMmllN2lpos65TS0MUfAp3QyuAextuUXUm/hsrWbePjZlqA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1713847822; x=1713934222; bh=5XnWGt9xY8swUzOfDFEhBnSV7HtL
-	WfqUwcDLWVogAsI=; b=IdNYG65F1SRXvoh0OGR3Zzg5tt5xNx0MN4/rxwtMwQT2
-	LxRUwuchuSxS+KVBFsxph8yjrRcZkB7+U7eqkRVh4M+bFR7s1vjghq36BX7DOQTU
-	L/DH0af6J/XeuwU0n0gaSQFULYo/EZLgiBt1sPNZPzeMXkk7TDyappgV/3Lac1QO
-	cr371mp2LBnnVhtfYN2vViZVx7kswRTnuf9Q0XKizysDOG5bF65SGNdLj1BGmwgo
-	QstwV3sENMwv48s8SQVAEPNUOLM5BTXz3HJt8eP0Hxs5mk+wYrMRD60XACiKmD4Y
-	DlnliY91U6/kGEjZEw4yHTRMhKI3TXp8rSOziVFUhw==
-X-ME-Sender: <xms:DT4nZn51hVFF9USanSmI09CUEhvkHKYIhmwi_EezD9yB39f2wfvRUQ>
-    <xme:DT4nZs5WgHkTl_KXn8OewKWnLBiFIim--T6XlqYvjHDtIkRotFzYHMoY8Adw48Dc-
-    qKan1aFBrh24bH-8A>
-X-ME-Received: <xmr:DT4nZudh6qox2SCDLkxaLqN24xqvQ91szH-wCFMOsMal8nIwfFfreqCKOB05vWYlR6hHnQw5nJ74hH_zAlczXMxPWESdz8ZDW80gX0h3F5SnXJB8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeltddgleduucetufdoteggodetrfdotf
+	fm3; t=1713848845; x=1713935245; bh=5VGdG/uG1V/khdlujrDaP0JgJWHP
+	vmBGbmTv1s6E03Q=; b=QMJGIbdOhqiTvJLw03lBSG4iwtmmoW4igC0KZ7yKFJTd
+	JO/6jW+ovAhI041EoBTWpeHAszYudYuQxh0jfCFXbruvT9BIHEE7ys1QaslxtBy3
+	2Yjl1dcRiOB/was3lrHslnvMfz8YJfg4To3rjGbDUmT1J2C3aYoL7ixLnr4c4A9c
+	nVTtsqrMpb2Vxl8M9C5MEtCJOMMLmQ8M7MyUu4JRdsiSd7w8CqDe1A12Q15GbnSh
+	YywGXWiph+6N+4zu07ra61voPgZkQnzj6AoCzXp7a2UnQIJBLDrvQEOd+qFyybLQ
+	pI2O6upUqqCtKm+ykd+7wvhMVEfeQ3eFYgLBPIMTdg==
+X-ME-Sender: <xms:DUInZvm5XJAPEUCZG_6gRBcHTJhDKwzqzHRXJepnbugw7wnpwBB3PA>
+    <xme:DUInZi0BE25u1x4Upz6wZGHBrP4llbx7dAxJPmktrVeP1JqhDNp17_SSEwqfjidW3
+    WpFHS9hDS9-wsa2iQ>
+X-ME-Received: <xmr:DUInZlpGAgQrvIkXrot27RA6PfeDputS-gz-ODa-pLaecCmHtuq-wa8RhhSURMiGKPtnb1zhTiJX7XNs8yvthhcs4dC138pGRrXEc_cjY-qu1l83>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeltddgleegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:DT4nZoKlmDHsSauS_jV_KCwF_CMUzU0E98IqiiYfFmiq2Mn-gh0mqQ>
-    <xmx:DT4nZrIIzc4vq1IZ0uWn41bXi3i1Dorfw1m1GJY8i1vYo02WRYD4vw>
-    <xmx:DT4nZhw8GySBgAQypiHSnup9e5I7-AT1xSDVdIVaG33HSjTdmNuC7Q>
-    <xmx:DT4nZnJRB_xcEC6CsABBjq9yfBDkGmV5nF-ERgB2aRStNOenRyT7PQ>
-    <xmx:Dj4nZiW6WY2xZNpf5WrID8IfHvZWegp85UcJKd3A5Fwf3BwFwUUubp7t>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepveeigedvtdeufeetffekkeejueehffdujefhteeuueffheetvedtvdejveekfedv
+    necuffhomhgrihhnpehhthhtphdqfhgvthgthhdqughumhgsrdhshhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:DUInZnk8COyeeK_dTNdfibZJ_pZUpDTghA0UeR3nErczHDGQOnfr2A>
+    <xmx:DUInZt05ps_Y2NX1DkY6kj3IWp8748A78z9dvUz-XFZHDqfEbPK7Iw>
+    <xmx:DUInZmvNZUBLI6gkpBEHuyTVWYDEtPB-Def8Lf5ysDHCUy706bXtKA>
+    <xmx:DUInZhUqKH2fduL2gS-3_fUFSXoAXzA8GpKBpS-icFr2mSOyzoWFmQ>
+    <xmx:DUInZoQGS4k5SVT5hXS_0AG_kMg2Nf1BP6VEOMFpCMRD-2vn1pTWS2Ch>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Apr 2024 00:50:21 -0400 (EDT)
+ 23 Apr 2024 01:07:24 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 40887fa4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 23 Apr 2024 04:50:10 +0000 (UTC)
-Date: Tue, 23 Apr 2024 06:50:15 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id de26459b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 23 Apr 2024 05:07:15 +0000 (UTC)
+Date: Tue, 23 Apr 2024 07:07:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/11] path: harden validation of HEAD with non-standard
- hashes
-Message-ID: <Zic-B7oSlv1PwvOL@tanuki>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2 00/12] Stop relying on SHA1 fallback for `the_hash_algo`
+Message-ID: <cover.1713848619.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
- <aa4d6f508b4af3923813e19ff82a4e8484d5ff11.1713519789.git.ps@pks.im>
- <xmqqjzkpxtjm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,106 +83,210 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="z8hetfjgzd0sl/42"
+	protocol="application/pgp-signature"; boundary="HfytWfSGBIqX8ARz"
 Content-Disposition: inline
-In-Reply-To: <xmqqjzkpxtjm.fsf@gitster.g>
+In-Reply-To: <cover.1713519789.git.ps@pks.im>
 
 
---z8hetfjgzd0sl/42
+--HfytWfSGBIqX8ARz
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 22, 2024 at 09:15:41AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > The `validate_headref()` function takes a path to a supposed "HEAD" file
-> > and checks whether its format is something that we understand. It is
-> > used as part of our repository discovery to check whether a specific
-> > directory is a Git directory or not.
-> >
-> > Part of the validation is a check for a detached HEAD that contains a
-> > plain object ID. To do this validation we use `get_oid_hex()`, which
-> > relies on `the_hash_algo`. At this point in time the hash algo cannot
-> > yet be initialized though because we didn't yet read the Git config.
-> > Consequently, it will always be the SHA1 hash algorithm.
-> >
-> > In practice this works alright because `get_oid_hex()` only ends up
-> > checking whether the prefix of the buffer is a valid object ID. And
-> > because SHA1 is shorter than SHA256, the function will successfully
-> > parse SHA256 object IDs, as well.
-> >
-> > It is somewhat fragile though and not really the intent to only check
-> > for SHA1. With this in mind, harden the code to use `get_oid_hex_any()`
-> > to check whether the "HEAD" file parses as any known hash.
->=20
-> All makes sense, and given the above, I strongly suspect that we
-> would want to make the validate_headref() function a file-scope
-> static in setup.c to make sure it is only called/callable from the
-> repository discovery codepath.  Especially that if somebody calls
-> this function again after we find out that the repository uses
-> SHA-256, we would want to let the caller know that the detached HEAD
-> records SHA-1 and we are in an inconsistent state.
+Hi,
 
-Fair enough, we can definitely do so. It only has a single callsite
-anyway.
+this is the second version of my patch series that causes us to stop
+relying on the SHA1 default hash.
 
-> > It follows that we could just leave the current code intact, as in
-> > practice the code change doesn't have any user visible impact. But it
-> > also prepares us for `the_hash_algo` being unset when there is no
-> > repositroy.
->=20
-> Or perhaps we use get_oid_hex_any() !=3D GIT_HASH_UNKNOWN when
-> the_hash_algo has not been determined, and use !get_oid_hex() after
-> we have determined which algorithm we are using?  It may be what you
-> did in a later step in the series, so let me read on.
+Changes compared to v1:
 
-I didn't, and given that it's only used from `is_git_directory()` it
-would probably not make much sense, either. I'll rather add another
-patch on top that moves the function around to clarify that it is only
-expected to be called from "setup.c".
+    - Various typo fixes in commit messages.
+
+    - Added another patch that moves `validate_headref()` into "setup.c"
+      to clarify that it is only used during repository discovery.
+
+    - Indented a diff in a commit message so that git-am(1) is happy.
+
+Thanks!
 
 Patrick
 
-> Thanks.
->=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  path.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/path.c b/path.c
-> > index 67229edb9c..cc02165530 100644
-> > --- a/path.c
-> > +++ b/path.c
-> > @@ -693,7 +693,7 @@ int validate_headref(const char *path)
-> >  	/*
-> >  	 * Is this a detached HEAD?
-> >  	 */
-> > -	if (!get_oid_hex(buffer, &oid))
-> > +	if (get_oid_hex_any(buffer, &oid) !=3D GIT_HASH_UNKNOWN)
-> >  		return 0;
-> > =20
-> >  	return -1;
+Patrick Steinhardt (12):
+  path: harden validation of HEAD with non-standard hashes
+  path: move `validate_headref()` to its only user
+  parse-options-cb: only abbreviate hashes when hash algo is known
+  attr: don't recompute default attribute source
+  attr: fix BUG() when parsing attrs outside of repo
+  remote-curl: fix parsing of detached SHA256 heads
+  builtin/rev-parse: allow shortening to more than 40 hex characters
+  builtin/blame: don't access potentially unitialized `the_hash_algo`
+  builtin/bundle: abort "verify" early when there is no repository
+  builtin/diff: explicitly set hash algo when there is no repo
+  builtin/shortlog: don't set up revisions without repo
+  repository: stop setting SHA1 as the default object hash
 
---z8hetfjgzd0sl/42
+ attr.c                     | 31 +++++++++++++++-------
+ builtin/blame.c            |  5 ++--
+ builtin/bundle.c           |  5 ++++
+ builtin/diff.c             |  9 +++++++
+ builtin/rev-parse.c        |  5 ++--
+ builtin/shortlog.c         |  2 +-
+ parse-options-cb.c         |  3 ++-
+ path.c                     | 53 --------------------------------------
+ path.h                     |  1 -
+ remote-curl.c              | 19 +++++++++++++-
+ repository.c               |  2 --
+ setup.c                    | 53 ++++++++++++++++++++++++++++++++++++++
+ t/t0003-attributes.sh      | 15 +++++++++++
+ t/t0040-parse-options.sh   | 17 ++++++++++++
+ t/t1500-rev-parse.sh       |  6 +++++
+ t/t5550-http-fetch-dumb.sh | 15 +++++++++++
+ 16 files changed, 167 insertions(+), 74 deletions(-)
+
+Range-diff against v1:
+ 1:  aa4d6f508b !  1:  a986b464d3 path: harden validation of HEAD with non-=
+standard hashes
+    @@ Commit message
+         current version of Git doesn't understand yet. We'd still want to =
+detect
+         the repository as proper Git repository in that case, and we will =
+fail
+         eventually with a proper error message that the hash isn't underst=
+ood
+    -    when trying to set up the repostiory format.
+    +    when trying to set up the repository format.
+    =20
+         It follows that we could just leave the current code intact, as in
+         practice the code change doesn't have any user visible impact. But=
+ it
+         also prepares us for `the_hash_algo` being unset when there is no
+    -    repositroy.
+    +    repository.
+    =20
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    =20
+ -:  ---------- >  2:  a347c7e6ca path: move `validate_headref()` to its on=
+ly user
+ 2:  5daaaed2b9 !  3:  c0a15b2fa6 parse-options-cb: only abbreviate hashes =
+when hash algo is known
+    @@ Commit message
+         parse-options-cb: only abbreviate hashes when hash algo is known
+    =20
+         The `OPT__ABBREV()` option can be used to add an option that abbre=
+viates
+    -    object IDs. When given an length longer than `the_hash_algo->hexsz=
+`,
+    -    then it will instead set the length to that maximum length.
+    +    object IDs. When given a length longer than `the_hash_algo->hexsz`=
+, then
+    +    it will instead set the length to that maximum length.
+    =20
+         It may not always be guaranteed that we have `the_hash_algo` initi=
+alized
+    -    properly as the hash algortihm can only be set up after we have se=
+t up
+    +    properly as the hash algorithm can only be set up after we have se=
+t up
+         `the_repository`. In that case, the hash would always be truncated=
+ to
+         the hex length of SHA1, which may not be what the user desires.
+    =20
+ 3:  ae91a27ffc !  4:  1b5f904eed attr: don't recompute default attribute s=
+ource
+    @@ Commit message
+         variable is the null object ID then we try to look up the attr sou=
+rce,
+         otherwise we skip over it.
+    =20
+    -    This has approach is flawed though: the variable will never be set=
+ to
+    +    This approach is flawed though: the variable will never be set to
+         anything else but the null object ID in case there is no attr sour=
+ce.
+         Consequently, we re-compute the information on every call. And in =
+the
+         worst case, when we silently ignore bad trees, this will cause us =
+to try
+ 4:  53c8e1cd7c =3D  5:  26909daca4 attr: fix BUG() when parsing attrs outs=
+ide of repo
+ 5:  32a429fb60 =3D  6:  0b99184f50 remote-curl: fix parsing of detached SH=
+A256 heads
+ 6:  9cb7baa50c =3D  7:  ccfda3c2d2 builtin/rev-parse: allow shortening to =
+more than 40 hex characters
+ 7:  e189a4ad15 =3D  8:  1813e7eb5c builtin/blame: don't access potentially=
+ unitialized `the_hash_algo`
+ 8:  bc4bda3508 =3D  9:  31182a1fc6 builtin/bundle: abort "verify" early wh=
+en there is no repository
+ 9:  39e56dab62 ! 10:  78e19d0a1b builtin/diff: explicitly set hash algo wh=
+en there is no repo
+    @@ Commit message
+         hashing the files that we are diffing so that we can print the "in=
+dex"
+         line:
+    =20
+    -    ```
+    -    diff --git a/a b/b
+    -    index 7898192..6178079 100644
+    -    --- a/a
+    -    +++ b/b
+    -    @@ -1 +1 @@
+    -    -a
+    -    +b
+    -    ```
+    +        ```
+    +        diff --git a/a b/b
+    +        index 7898192..6178079 100644
+    +        --- a/a
+    +        +++ b/b
+    +        @@ -1 +1 @@
+    +        -a
+    +        +b
+    +        ```
+    =20
+         We implicitly use SHA1 to calculate the hash here, which is because
+         `the_repository` gets initialized with SHA1 during the startup rou=
+tine.
+10:  508e28ed1e ! 11:  51bcddbc31 builtin/shortlog: don't set up revisions =
+without repo
+    @@ Commit message
+         repository in that context, it is thus unsupported to pass any rev=
+isions
+         as arguments.
+    =20
+    -    Reghardless of that we still end up calling `setup_revisions()`. W=
+hile
+    +    Regardless of that we still end up calling `setup_revisions()`. Wh=
+ile
+         that works alright, it is somewhat strange. Furthermore, this is a=
+bout
+         to cause problems when we unset the default object hash.
+    =20
+11:  f86a6ff3ba =3D 12:  e8126371e1 repository: stop setting SHA1 as the de=
+fault object hash
+
+base-commit: 21306a098c3f174ad4c2a5cddb9069ee27a548b0
+--=20
+2.45.0-rc0
+
+
+--HfytWfSGBIqX8ARz
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYnPgEACgkQVbJhu7ck
-PpS0/Q//c1X1iMfarJdwy+MEK1k5HuF5iHb8V+/j9+yUetROQcX8PbGMZrZEd75o
-5ubvU+ouOwyPF3xG/D8z9EOg3yrRyGU3mscNXVBxsT+GNMYewTXNpoh1N3Bf1p4i
-env46PDs/dpQqQpZQDashdn3U4maXQe8pvTqHDQKEI1Oe0bReW3tFzGng41p10f+
-FmRPvuUjIR9RV4w6VxL+dFdbIeKu22vu/gMzYo338RFbCWteoCnxQplKk9r35H+m
-lL5JUGvFFJSCpQ4SmYzCUKPjOmlK86Jf3y3c8HXP/dr2Vy6ly4IA0wN+npJfIxWp
-lLbyq6+iGnU1fmc9jpWlhxC4CHuVXBx2PeNJopG6sSjLVs4FnPNFGzwicXbkBXNv
-vFrLhMII3XvCNd29hES4ZZgU0YNDuyDbo+pjc8AGk55BU/FlGeSFHlf3ZJOg3UYl
-VML0A45fI7qDNpL/QBW7rc+ATcjKnHVbkCgSCX4kP28qU8EWAIpgB2MLFE5IRQub
-kbBZz09/SXQN+OYt8AoYREMnKaBtlZ5EoWOPmXJPNHuAiJM1Z8fzoSTGlgZnldd7
-BeX2EW9Yk5nI8fY1QIo46s1484tTDJzaIhAD6Ih4HksLecK1IWSJezspxLqYVf3e
-u6EGK5a/eMrs8LaLemFx5RExjtcYKuPCq5xVoUkv2z9BIa6/HWM=
-=SKwz
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYnQgcACgkQVbJhu7ck
+PpQuDw/8CeNEem3lpLwOQ5OW4N+6N/dxhTKjaKp0K3Nx8hol4xmmZImFQa9KdKtL
+fzEMdry4Zd23hLs+A+BxKV/A0Kgl6K8JHuVHoLB2IgYJsW9RMko6emchjifi6kQO
+8/tXxdKBX3pdfVpWA3DaL1R2ipKICgCUh4v6Jd5rXUAyD2Zg61WtnAK7RgisaDcD
+C0B10+zHLDVDeScx3Gti7CudUuM5dD4ZLtDJUvNqdOO1cPpVycE5JhQd+iKG98z7
+bRX+Va5MkbXk6HuJpK+isl5VLcvrMx4hhgYZ/TIFoYpkPGNvbIgKli0k4+Kr+UwN
+r+R3RK0Y00PSPalhvQ68oYYlIFqcFAFHZABB6X7OJ1NAm4urbtDW4vxoYTI74GE/
+HS2qhFu4yX2nisGqdm/9AXeJGpH+X5S5JYVSB34FAJCWBfFnx7seQkc9+4JHl/hb
+YUecHCIdtUn4TVRCgSwn2FPesJvlBJV+5+vwm0liXcukL89AnM0tagJ88YLEnog/
+pGHSWpMFeLrTKXybKVWUC8kTyQwfrwnmAmRf0XoEo6h1jYHXzH/fTdOI6C4jqyfv
+d8cW3rXiTgjlD7dZbaD1xXeZOGCBgf8E2S1KQiQrWhmyoz9d6hMVCr7Zw2ujWBCs
+gGZ8dpwUhoYEEEnqM9oiUpDiwVP7TOUx3/gCsqHkWNp5tmbKl8s=
+=2pF6
 -----END PGP SIGNATURE-----
 
---z8hetfjgzd0sl/42--
+--HfytWfSGBIqX8ARz--
