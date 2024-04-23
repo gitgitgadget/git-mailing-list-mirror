@@ -1,101 +1,79 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D7D85274
-	for <git@vger.kernel.org>; Tue, 23 Apr 2024 22:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA6C86254
+	for <git@vger.kernel.org>; Tue, 23 Apr 2024 22:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713911216; cv=none; b=ZS+c+p4AgKt1FJOqGDnAVXi9CKJQlnVlS3YoOYH3GQq0mn8w5btMT3BgRfSU3o2kPzTtNralEbySdz73Q8qJRu2RsmdgzT0fhtfZAmgFoUzeMKpSlAadZS9eGCqni1k+c47OIpOaDhOTxuFCMacBbPDAa01RKzpAdMSeZJvVzLo=
+	t=1713912084; cv=none; b=ugRzs7ofZRBKGjJynLcsOG+v11C5TcDGDj5oPAGP38bS4aT1mTg1+oumefX62I4kEfJS6LXFtkCfmyowGw4Rrkt23+v7LF3QA8z32gTkorWT2NbzyFImb9mX7fqTv7zXGY+IhTjXov6H5KfITAUJqfxcVPW/llJmJTkEGa33Xbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713911216; c=relaxed/simple;
-	bh=oRuoRYAXMQ4JL8K2V1UySMqM4DSy+SInOhsUAOsikQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qw3wRofdkhbPdjguW4RzwxcSOO7IPHs//y41eyZgZxHEjxK16IwmAVvpTisYXgXdIH7xoBQpXOdUdQttf8qfm9n0kP3ISd+2vVygI2aS9tnmV/eOVLMY+Hqom8fA1RJwxI0DdmifTigyN18q1WkbmlbjONjvf4TkidXJFwc7u4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7998 invoked by uid 109); 23 Apr 2024 22:26:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Apr 2024 22:26:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5319 invoked by uid 111); 23 Apr 2024 22:26:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Apr 2024 18:26:55 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 23 Apr 2024 18:26:52 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] don't report vsnprintf(3) error as bug
-Message-ID: <20240423222652.GD1172807@coredump.intra.peff.net>
-References: <ea752a2b-9b74-4a59-a037-4782abf7161e@web.de>
- <xmqqa5lm1pr5.fsf@gitster.g>
+	s=arc-20240116; t=1713912084; c=relaxed/simple;
+	bh=7ee7yPayj9GuPXaNIL+hS7ULkRAiDuNsfP8teCA9/Do=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XnuUhqh99zONEA/XMJQUezQRnmB5OUMcxvckBT/yxtR/i3eDg87yw9NXQ5bdDqzWFcCKh7dsqlN2PdtkWMmFPq+62U5inqidXHiHDD447fZPFiU0vDJYp8hRjE6CyMhtqNSoSLKMODtNkNQqjoC6AQ7RGpc5iH0CEGB4vks4trA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hNbWq76Q; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hNbWq76Q"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B2081A8C9;
+	Tue, 23 Apr 2024 18:41:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7ee7yPayj9GuPXaNIL+hS7ULkRAiDuNsfP8teC
+	A9/Do=; b=hNbWq76QQadTmcoBWPYJgrnspgLrBq4pF/g2PlqLe1IYynwTjboM4M
+	VqwIH2mfxw7meWTcG9Fm8d+HbWYwPUHBr3TdQ7uP8OdV5n0YK638MUm5d6OSJ78S
+	bcGbxa+riBn+qwplZ9AGcIscPWlUEh1FY6uTc/gYjgg+xlmw8AYJI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 828AF1A8C8;
+	Tue, 23 Apr 2024 18:41:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9A8C1A8C7;
+	Tue, 23 Apr 2024 18:41:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  avarab@gmail.com,  christian.couder@gmail.com,
+  me@ttaylorr.com
+Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
+In-Reply-To: <xmqqy195t794.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	22 Apr 2024 14:30:47 -0700")
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+	<xmqq34rmi28h.fsf@gitster.g> <ZibSUPezSU3ZV1HA@google.com>
+	<xmqqy195t794.fsf@gitster.g>
+Date: Tue, 23 Apr 2024 15:41:19 -0700
+Message-ID: <xmqqjzkn66sw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa5lm1pr5.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9B21872A-01C2-11EF-913B-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Sun, Apr 21, 2024 at 12:26:22PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> René Scharfe <l.s.r@web.de> writes:
-> 
-> > strbuf_addf() has been reporting a negative return value of vsnprintf(3)
-> > as a bug since f141bd804d (Handle broken vsnprintf implementations in
-> > strbuf, 2007-11-13).  Other functions copied that behavior:
-> >
-> > 7b03c89ebd (add xsnprintf helper function, 2015-09-24)
-> > 5ef264dbdb (strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`, 2019-02-25)
-> > 8d25663d70 (mem-pool: add mem_pool_strfmt(), 2024-02-25)
-> >
-> > However, vsnprintf(3) can legitimately return a negative value if the
-> > formatted output would be longer than INT_MAX.  Stop accusing it of
-> > being broken and just report the fact that formatting failed.
-> 
-> """ ... function returns the number of characters that would have
-> been written had n been sufficiently large, not counting the
-> terminating null character, or a negative value if an encoding error
-> occurred. Thus, the null-terminated output has been completely
-> written if and only if the returned value is nonnegative and less
-> than n.""" is what I read in some versions of ISO/IEC 9899.  It is
-> curious that it does not say anything about the consequence of a
-> parameter error arising from int (the type snprintf family of
-> functions returns) being narrower than size_t (the type of the
-> parameter n), but your point still stands that vsnprintf() can
-> legitimately fail, and it is not a programming error.
+> As I said, I do think it is rare for us to start with only "ideas"
+> without anything concrete to comment on, and that is why I asked
+> some references (e.g., URLs into the archive) to a discussion in the
+> past of a larger decisions where (1) something is proposed, (2)
+> discussed, and (3) declaration that a consensus has reached, if a
+> document describes the status quo.
 
-POSIX does say:
+FYI, what I readily recall was the discussion that started here.
 
-       The snprintf() function shall fail if:
+  https://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com/
 
-       EOVERFLOW
-              The value of n is greater than {INT_MAX}.
+It did have a few iterations and then near the end the consensus has
+turned into a "patch" that adds the design document to our history,
+but otherwise, it did not involve a "series" level patch reviews.
 
-But mostly the INT_MAX thing is simply the one thing we've seen in
-practice. I wouldn't be surprised if there are other conditions that can
-trigger an error return from vsnprintf. E.g., POSIX says:
-
-  If a conversion specification does not match one of the above forms,
-  the behavior is undefined.
-
-Of course "undefined" is much worse than returning -1, but it seems like
-a reasonable thing for an implementation to choose to do (either that or
-just output the character literally).
-
-We should be immune-ish to such an issue by virtue of -Wformat (we're
-only allowed to pass literal strings, and they must all be understood by
-the compiler). Of course that's platform-specific and we only check
--Werror on some platforms. So gcc allows "%b", but it may be meaningless
-on AIX, and who knows what their libc will do. ;)
-
-That case kind of _is_ a BUG() situation. But I don't think it's worth
-trying to differentiate that. Switching all of these to die() makes the
-most sense (i.e., I like René's patch).
-
--Peff
+HTH..
