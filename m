@@ -1,58 +1,59 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1993D158DC8
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 10:16:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC95415A49E
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 10:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713953764; cv=none; b=iT2LE/hdmAOk4L7677YW3134DGM9DWK1RFAwopokYf/mCXgtSZoQdHHpX25Xb/aIuhxFH75GzkXwXIDu/fc0W/XuUIKzqtpjOAYAmstXXC1uELeLqG9vKPe6BmyRIN0nDV5sFhmlIR/ncdEpGtgWHe0gl2+oUJ8hG0mTcJ+3pmE=
+	t=1713953774; cv=none; b=ag8sIjS/U8X/Yu1NQvVtj3oKrqgrT1Ba/x4Uw6Oz8Se1ePeOMNJ2zqW7j/1y6R1e0slFAGfWpMTC31eBmEZZT8dFl+1QrCo1X3+qqnguT9uhc1a+rgJVGqErF8eQSHB2kwYcERh/9Cxza0ZHd21kpDGluBSvyDSH9YZ/fGvkmKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713953764; c=relaxed/simple;
-	bh=tp3/9dlHv903t2XbZkbbzQIQBWU5hL1o/v6jh0tFnDk=;
+	s=arc-20240116; t=1713953774; c=relaxed/simple;
+	bh=lOiOtHSTKDBRwzOAx3j7B5QPU81AbIXUGobSpEocoXY=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=F6ud9o7aASfb72bP+ZkbHHMYOFm43Q6xHkcdvlFmuLGsqVpFI1nh22lHG6DQUdjuVJ/GmTVS+pCaI9GkOiF9SAbhWIcm4jz1lFm7wogk4PVjYCJ/lTYsrTwLU73TYq7pmAhHiLpVlUZvl0xxcE6EIBNq2pVfJBeptxLChLrW+NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1QKmZNg; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:Content-Type; b=JzmE3T2SmbKxYZ7rRHFbvEbIC/3EPwLOVeMbv4okwoCEFbQ6oKqm1N5rj+uKwgj5q8PKN6fh69rIm3Xwa6oMa8rEssDokuVW0XVlLmYRObhOCyUzDcxV4ry8BghfYEQXbRraWpqJvnFwJ9C5tX4Cn8h44mrxcxKLdLEsD5B/GLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyz/l2u7; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1QKmZNg"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34a7e47d164so4185585f8f.3
-        for <git@vger.kernel.org>; Wed, 24 Apr 2024 03:16:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyz/l2u7"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41a77836f16so24473535e9.3
+        for <git@vger.kernel.org>; Wed, 24 Apr 2024 03:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713953761; x=1714558561; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1713953771; x=1714558571; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vc97f4PFaU4rs3O1f+iCEqUsZht/kZMaiJHJu+FnDlk=;
-        b=C1QKmZNgF1c08I9tO9WziwVnTCxhjWI5RZ8uW1EmbGyqgxbpS6GopXYsfuJodFT5wW
-         emdd4SkVgYj6NMvC5HFAzuZvFOqcHX/ah0dDYd34S3FlUaxn/0k490/k3IlA2nVg0qcw
-         pJLTMN8G3on8ZFfDZSDvYGDp3NMu8NZ6hhxoJX2OC6diGbeX+PStJgI8fKDS3K+ilNlW
-         tK8y7QMw3lPZc5uCTKsLE+YX4Di+DbH4hCIE2wL1wb9O+nnj1a/8KraEWx6VCO8vv9Vk
-         +lVr9ULp4wkjJXetE+x6tE2zNL1q/vTPwIMYvMjMgQuC9PVG/dkDH0agC+K8eZS5lDVI
-         rpHA==
+        bh=MtVE1JGY1brf2Ta5LfkyntMw1pYyFXutzUtJilI++MY=;
+        b=fyz/l2u7SjCDExjMzNZVQnfIeK30/9kjASsBCIunJkSBWTSVe0xTTUkWYXPF09JzM8
+         nnzDqgT8a4/lv99e93NIgdrI0uqdmHWPsZwTZEcpXh5KWUWdyNd39QtqlErvM1XIOaBu
+         PeH8EnPv75g4e3LCMiCeRHxT2/h1UXG/SZFGYWAj7k9vUOiEiVqlo7xfszFaCk66iAN9
+         iiSVgOsIJedJPL3eJhMS5t3FqEYynyHZSXS9KwiE+VVby/xNY/49MjOpMPm8Dyc5YWAc
+         z1vuiDhZri42GDULKy6FyL+msTMKSL2KFVUvw8UarUZXzbA/ZMs6gjxWN+Clsc96XyVC
+         lrFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713953761; x=1714558561;
+        d=1e100.net; s=20230601; t=1713953771; x=1714558571;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vc97f4PFaU4rs3O1f+iCEqUsZht/kZMaiJHJu+FnDlk=;
-        b=MOCFkv6pixWuGep0VVbVUMc4zYjbh9t2sjJqWgf7jwave2iK6NQU+ESn02KNesLvY9
-         wvIj90RqpglMrRWChidkLhgqXRxuNmJeHScRS1TDEm2awlsN9LlrJS4IhX4zTFh+e0Tj
-         p1eKJfDidFQtClZqF75CIJmMAcG4rnDldV8FS6RspvCD4zNm+fniZ/vMFhRHRIbB9Kgo
-         ve+pGskydm7gAoWcKc/7Qc03Vg6aDKegOlPApowEW40wGUA5iNdGVxEPzY/BxZmPukRp
-         54P4Dyfg0L7zPAWEPu3Yaell2/AkyfdBH47pFbLbrpLuZM9Z4wDGr05IwzVLoxbu4LUs
-         W3Vw==
-X-Gm-Message-State: AOJu0YzVCfn7RgG0LEEXLQ5kvATooU19m6EUahBbDAiTGraQdbUp8DGT
-	smUxVGEn64OMxMWRvgMe6QExAJdz8JOWsp2B0/Omv1ANHawipHEH
-X-Google-Smtp-Source: AGHT+IFEZrybTVSGvfBVyfKMUt42C1k4qI5RxBQXR2C1S+hInZfF/7kD6gnufL7sdEVNwySNFT+v5Q==
-X-Received: by 2002:a5d:69d1:0:b0:34a:5bf3:8b9f with SMTP id s17-20020a5d69d1000000b0034a5bf38b9fmr1268372wrw.37.1713953761156;
-        Wed, 24 Apr 2024 03:16:01 -0700 (PDT)
+        bh=MtVE1JGY1brf2Ta5LfkyntMw1pYyFXutzUtJilI++MY=;
+        b=m7CmWKuxqgMndIfAt+8WlGmOt4nc2EbOaUVjX+dQJFm7ROqOUUqTRn4J4prmaD6mxG
+         hXRVrSmZSMC+Sh841m66dxgZ61wo+Rvffm4rG6+YFgf2W+ODCdxEIiZyVhiKWl6wmtON
+         8ZwpdpEX/Q27j4H3m5B0MMxUnziHfO1HKOtcPR9kJmGtxeY8j8l5kG33on+FO8yIUUXc
+         0xGyukTifsQG9v/wDHyjT8aqJy9R482jqBfLOLg1mI2J2CZgpW2i+zPKfH7ILZeMBj6S
+         Sfz5zjAeWY6HjVDrkQJBwcPRuT73/AKeZCa8fon7uD64cNDSmTLA/vhS93+DJ3XrPqrs
+         RcPA==
+X-Forwarded-Encrypted: i=1; AJvYcCXPbnh49IyitLm8LgHuQsjDOmOXXtFzRacsFKO+MWQKRPFCGruhPXpLd//UQRcPB4hNu0EVso270ic41PJqJYM+Ki9C
+X-Gm-Message-State: AOJu0YypKPLCXZbLJ/s/G0WvLpUZO56EwsqybBhgSprpiKhDJQK8Yusj
+	RxeAXlmTLCp8dGiTof2uAlCVqxJB7rVUidEK8AhhnuzguHje0ZJn
+X-Google-Smtp-Source: AGHT+IFNb6bsJbjhOdG5+W7klQ3YF4LVricYMMuxtUO2KsZ2fOL9GzF2w2nmmsNubINwqavL71Z5ew==
+X-Received: by 2002:a05:600c:46cc:b0:418:ed13:302d with SMTP id q12-20020a05600c46cc00b00418ed13302dmr1586684wmo.26.1713953770812;
+        Wed, 24 Apr 2024 03:16:10 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:701:9864:4109:be00:6ff6? ([2a0a:ef40:62a:701:9864:4109:be00:6ff6])
-        by smtp.gmail.com with ESMTPSA id g18-20020adfa492000000b0033e9d9f891csm16955561wrb.58.2024.04.24.03.16.00
+        by smtp.gmail.com with ESMTPSA id q6-20020a05600c46c600b0041892857924sm23364481wmo.36.2024.04.24.03.16.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Apr 2024 03:16:00 -0700 (PDT)
-Message-ID: <41d23496-0bd3-47c7-a470-39334588f520@gmail.com>
-Date: Wed, 24 Apr 2024 11:15:57 +0100
+        Wed, 24 Apr 2024 03:16:10 -0700 (PDT)
+Message-ID: <aa628eba-1545-47ac-9773-8aff47ca4adf@gmail.com>
+Date: Wed, 24 Apr 2024 11:16:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,62 +61,109 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
+From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] add-patch: response to unknown command
-To: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Rub=C3=A9n_Justo?=
- <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com> <xmqqv849xups.fsf@gitster.g>
+Subject: Re: [PATCH v4 2/2] format-patch: "--rfc=-(WIP)" appends to produce
+ [PATCH (WIP)]
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Dragan Simic <dsimic@manjaro.org>
+References: <20240421185915.1031590-1-gitster@pobox.com>
+ <20240423175234.170434-1-gitster@pobox.com>
+ <20240423175234.170434-3-gitster@pobox.com>
 Content-Language: en-US
-In-Reply-To: <xmqqv849xups.fsf@gitster.g>
+In-Reply-To: <20240423175234.170434-3-gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 Hi Junio
 
-On 22/04/2024 16:50, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
+On 23/04/2024 18:52, Junio C Hamano wrote:
+> In the previous step, the "--rfc" option of "format-patch" learned
+> to take an optional string value to prepend to the subject prefix,
+> so that --rfc=WIP can give "[WIP PATCH]".
 > 
->> 1:  0317594bce ! 1:  b418b03f15 add-patch: response to unknown command
->>      @@ t/t3701-add-interactive.sh: test_expect_success 'warn about add.interactive.useB
->>       +	test_when_finished "git reset --hard; rm -f command" &&
->>       +	echo W >command &&
->>       +	git add -N command &&
->>      -+	cat >expect <<-EOF &&
->>      -+	diff --git a/command b/command
->>      -+	new file mode 100644
->>      -+	index 0000000..a42d8ff
->>      -+	--- /dev/null
->>      -+	+++ b/command
->>      -+	@@ -0,0 +1 @@
->>      -+	+W
->>      ++	git diff command >expect &&
->>      ++	cat >>expect <<-EOF &&
->>       +	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
->>       +	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
->>       +	EOF
+> There may be cases in which the extra string wants to come after the
+> subject prefix.  Extend the mechanism to allow "--rfc=-(WIP)" [*] to
+> signal that the extra string is to be appended instead of getting
+> prepended, resulting in "[PATCH (WIP)]".
 > 
-> Interesting.
+> In the documentation, discourage (ab)using "--rfc=-RFC" to say
+> "[PATCH RFC]" just to be different, when "[RFC PATCH]" is the norm.
 > 
-> My first reaction was "how is this different from checking just the
-> last line of the actual output?  The early part of expect and actual
-> both come from an internal invocation of 'git diff', and they must
-> match by definition".
+> [Footnote]
 > 
-> But that may really be the point of this test.
+>   * The syntax takes inspiration from Perl's open syntax that opens
+>     pipes "open fh, '|-', 'cmd'", where the dash signals "the other
+>     stuff comes here".
 
-Yes - we want to make sure that we are not printing the help and the 
-only way to do that is to check the whole output
+I'm not convinced this is a good idea as I'm not sure how adding "RFC" 
+at the end of the subject prefix makes the world better than just having 
+at the start of the prefix and I find using "-" to do that quite confusing.
 
 Best Wishes
 
 Phillip
 
-> That is, we may later decide to tweak the way "git diff" hunks are
-> presented, and we expect that the way "git add -p" presents the
-> hunks would change together with it automatically.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   Documentation/git-format-patch.txt | 6 ++++++
+>   builtin/log.c                      | 8 ++++++--
+>   t/t4014-format-patch.sh            | 9 +++++++++
+>   3 files changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index e553810b1e..369af2c4a7 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -247,6 +247,12 @@ RFC means "Request For Comments"; use this when sending
+>   an experimental patch for discussion rather than application.
+>   "--rfc=WIP" may also be a useful way to indicate that a patch
+>   is not complete yet ("WIP" stands for "Work In Progress").
+> ++
+> +If the convention of the receiving community for a particular extra
+> +string is to have it _after_ the subject prefix, the string _<rfc>_
+> +can be prefixed with a dash ("`-`") to signal that the the rest of
+> +the _<rfc>_ string should be appended to the subject prefix instead,
+> +e.g., `--rfc='-(WIP)'` results in "PATCH (WIP)".
+>   
+>   -v <n>::
+>   --reroll-count=<n>::
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 97ca885b33..4750e480e6 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -2065,8 +2065,12 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>   	if (cover_from_description_arg)
+>   		cover_from_description_mode = parse_cover_from_description(cover_from_description_arg);
+>   
+> -	if (rfc && rfc[0])
+> -		strbuf_insertf(&sprefix, 0, "%s ", rfc);
+> +	if (rfc && rfc[0]) {
+> +		if (rfc[0] == '-')
+> +			strbuf_addf(&sprefix, " %s", rfc + 1);
+> +		else
+> +			strbuf_insertf(&sprefix, 0, "%s ", rfc);
+> +	}
+>   
+>   	if (reroll_count) {
+>   		strbuf_addf(&sprefix, " v%s", reroll_count);
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 645c4189f9..fcbde15b16 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1394,6 +1394,15 @@ test_expect_success '--rfc=WIP and --rfc=' '
+>   	test_cmp expect-raw actual
+>   '
+>   
+> +test_expect_success '--rfc=-(WIP) appends' '
+> +	cat >expect <<-\EOF &&
+> +	Subject: [PATCH (WIP) 1/1] header with . in it
+> +	EOF
+> +	git format-patch -n -1 --stdout --rfc="-(WIP)" >patch &&
+> +	grep "^Subject:" patch >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>   test_expect_success '--rfc does not overwrite prefix' '
+>   	cat >expect <<-\EOF &&
+>   	Subject: [RFC PATCH foobar 1/1] header with . in it
