@@ -1,96 +1,112 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041141598EA
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 16:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8129716C450
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 17:02:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713976458; cv=none; b=ZdBhCXGWoiISJYC5H+eXICNSUgNjP/nmRwhltBgQmkH/Ls/ttKqoJ0UCW48xS14GXFKCgF+jjfSdQSxXtbNEvdSBSXf6rbRevxFk5yOSImf4QaswN7ysbm7gq9aF3OplaJ5bqzYEWxrtHuJ9n+L0aUeKLuf76RR2Th8vDnpVi3I=
+	t=1713978153; cv=none; b=h9bmOhqYnVKXAPps5h0ASzbX+CYCvNDIkdvEvYfsPOJZdsLfelqB1VR2rb1xFZI6zgP1tYNWyQ8Br77UliLv03xFx+vhF4z5WI9EB4CZ8eyXLnlEk8ese8xIb+du9jNeyk/AbABsFpiSGE9DjiJUs6wM8bm6WGyni7chRzQqlxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713976458; c=relaxed/simple;
-	bh=Y/4rvGxviBfJwCMOazcbGZu9dM2tXV+fliL6jYlQtXU=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=ilE6Scr2mJT5u9Wl+sfXgivpkNPFL9leuhKpuTXaoH0EZBAVwPp0j0etHXuqY3vTSrOUs1VUyfvKwFtkek+Uw8h5IjULJIESZGHYeUGEjMG9gSSqIaBGEWYuUvuL5p2sQkIKF2xSED18rMFcipFgrE2hzY11xOona5bXkb1iJMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=QxuImUpP; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1713978153; c=relaxed/simple;
+	bh=J6grFtioy/9x0VLKRn3goFmZCNScMuPfO6WYSUR1Vxg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Bff6X52URBYAQnn+CkGuWTzgrSbj8B1m2HohKz1J/CTAnaaCEx2d6TOnOdfgWusYPpEyrrZVj2AQmOihd0Np7LFjeXuLb0i3boN8qagt/xuPqG37H/h6sboAhzkxAysP0wTRhCV9nkKAkiSiBK0JXbgV7M10d9frGZb6HGOXRlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lo4nFm/Z; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="QxuImUpP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lo4nFm/Z"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1FD491ADB8;
+	Wed, 24 Apr 2024 13:02:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=J6grFtioy/9x0VLKRn3goFmZCNScMuPfO6WYSU
+	R1Vxg=; b=lo4nFm/ZXzmWxfMvPEP6lvuC0mWl4zAWUYCxQCxByWdQ3GprAfFgvr
+	b7+1175wzuCIr7TFXhoIubyfl9a3r/jPN3Xrk49sK23PZxfwjcwVgYgrHBseU7kA
+	g9iKAOJmzrUzLP/yBsHT+WZKeU4Nti6nWRobGy+0y2cLJzsrRLLO0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 175141ADB7;
+	Wed, 24 Apr 2024 13:02:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CBD901ADB6;
+	Wed, 24 Apr 2024 13:02:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/2] for-each-repo: optionally keep going on an error
+In-Reply-To: <39ee6386aab25f28d197a27010b2f80ccd45aab2.1713975300.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Wed, 24 Apr 2024
+	16:14:58 +0000")
+References: <pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
+	<pull.1719.v3.git.1713975299.gitgitgadget@gmail.com>
+	<39ee6386aab25f28d197a27010b2f80ccd45aab2.1713975300.git.gitgitgadget@gmail.com>
+Date: Wed, 24 Apr 2024 10:02:21 -0700
+Message-ID: <xmqqfrvazobm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1713976454;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YNulb0+43nOqJ7W3cHDDyW6HhgTsCMBZWRp+WlIc9TY=;
-	b=QxuImUpP06dXtIvgCLYA36fEjSvzjnr23xXB7TLaaYbfEDmvhu69XFomQ4yY2ivN2+rLtn
-	tuXzyPgoV+REQQ4FJxgUFlCcFmbuWQNePwlLp7i4SDNK9xP9ISG0oN1vPYRfsqLsbGZh03
-	Bd32Eo/LmtItU7QljxSme73jay3xg0SfUqbSdNZGumOGa5vefVLyOqPJaznSUBwfjlKXsU
-	jUgrYVcIciLB5lyrJAd5m8DVAXEzjOsGaeHXYieOJfpNyJfEnjO2BjJljpFKr4jNrMK8w5
-	QCI9j6D8rx1eKP6Hjld/5fMupoExOENjnpEtlCGlSzeom/4BCTULh0RH3g9Xtw==
-Date: Wed, 24 Apr 2024 18:34:13 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] format-patch: "--rfc=-(WIP)" appends to produce
- [PATCH (WIP)]
-In-Reply-To: <xmqqplue2361.fsf@gitster.g>
-References: <20240421185915.1031590-1-gitster@pobox.com>
- <20240423175234.170434-1-gitster@pobox.com>
- <20240423175234.170434-3-gitster@pobox.com>
- <aa628eba-1545-47ac-9773-8aff47ca4adf@gmail.com>
- <xmqqplue2361.fsf@gitster.g>
-Message-ID: <6f379c7c2fcca2194dcb28032216b4b1@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6BAD1B04-025C-11EF-BBFC-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hello Junio,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On 2024-04-24 17:25, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> I'm not convinced this is a good idea as I'm not sure how adding "RFC"
->> at the end of the subject prefix makes the world better than just
->> having at the start of the prefix and I find using "-" to do that
->> quite confusing.
-> 
-> I am not convinced it is a good idea, either.  "PATCH (WIP)" was the
-> best example I could come up with.  I am also a fan of "a list of
-> space separated labels or keywords" you mentioned, but *if* a
-> project convention somewhere is to have them before "PATCH", then it
-> is not entirely unreasonable to wish to have a way to prepend these
-> labels.
-> 
-> But I am fine to drop it for the sake of simplicity.  It would help
-> discourage users from trying to be "original" in a way that does not
-> make a material difference.  If a project comes with a concrete need
-> to prepend, the patch is always resurrectable from the list archive.
+> @@ -55,8 +58,14 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+>  	else if (err)
+>  		return 0;
+>  
+> -	for (i = 0; !result && i < values->nr; i++)
+> -		result = run_command_on_repo(values->items[i].string, argc, argv);
+> +	for (i = 0; i < values->nr; i++) {
+> +		int ret = run_command_on_repo(values->items[i].string, argc, argv);
+> +		if (ret) {
+> +			if (!keep_going)
+> +					return ret;
+> +			result = 1;
+> +		}
+> +	}
+>  
+>  	return result;
+>  }
 
-Yes, it would help with discouraging the users from becoming
-"inventive", but would also promote the rot of English grammar,
-as I already tried to explain. [1][2]
+Hmph, as I wish that more experienced folks to give a good structure
+to the codebase from get-go so that future developers who may be
+less experienced would avoid mistakes, with my maintainer's hat on,
+I would have expected something more like:
 
-I'm always for simplicity, unless it actually results in some
-possibly negative effects.
+	for (i = 0; i < values->nr; i++) {
+		int ret = run_command_on_repo(...);
+		if (!ret)
+			continue;
+		if (keep_going) {
+                	result = 1;			
+		} else {
+                	result = ret;
+                        break;
+		}
+	}
 
-[1] 
-https://lore.kernel.org/git/f9aae9692493e4b722ce9f38de73c810@manjaro.org/
-[2] 
-https://lore.kernel.org/git/115acd1529d9529ef5bb095c074ad83d@manjaro.org/
+That way, clean-up actions, when they need to be added, can go
+before the single "return result" without structural changes,
+future-proofing the shape of the control flow.
 
-> As to the syntax, I think "-" is a fairly good way to indicate
-> whether it goes to the front or back.  When told to "Combine '-RFC'
-> and 'PATCH'", I expect that most people would give 'PATCH-RFC' and
-> not '-RFC PATCH'.
+The loop is simple enough that it is acceptable to leave as the
+responsibility of future developers who wants to do something that
+require resource allocation and release before returning, of course
+;-).
 
-I find the syntax just fine.
+
+
