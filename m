@@ -1,16 +1,15 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C267F745CB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26C8156679
 	for <git@vger.kernel.org>; Wed, 24 Apr 2024 21:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713992763; cv=none; b=tWwwW1WSi0kdav6D1zvxgrLsQDCoAmEl5md+r7/mt+7cLbIa6jc8QohRe+QdLgILDA5d1Zfx8HeYSii35Gf1ous+Z8kOxNXhYeW5RqArlBgXnON0CUt0RdDWoBSbCt0s3A+LIaF0amCZMULfyPN/NVtYlrGcmBemBS+/TCdQJi4=
+	t=1713992765; cv=none; b=K1zybl2WZNIxfIpZ9DY5FddsJaD+RGthuelfpn2JOXL7tvaU1N/Tzn+MgSAQj+SH5wi7ityRE2xQSPylDDDK54qcczXJuYNppFvYNljDN5Fv6Q4O4v0X+FvE1YtlGOnDssHoJ2/j3+vr/7kxy172y/jILrTVz0e0Wzd1Ew/zlAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713992763; c=relaxed/simple;
-	bh=cIV9zCXSXsuAHCWGIhbT+BVo+GhG8bnfaoordIP0v7Q=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mThIvKBaJCsUg1XIwXDpOof5N7UAZfdlY4Z23qEWpRQXHrtlAIi/ah2ubCzeoZEnsN4DJGdXeablsfxWDbJNlbzfxTH+yfrY/l5aH0cKqyltmojg38TEgu+ANYAzKyTKnjxAp5gok6u9fWHkYjuK4Qwo8T0LErBUrln82dNa11E=
+	s=arc-20240116; t=1713992765; c=relaxed/simple;
+	bh=oGEdNlZwfI5MFVxtFEshp6Xs2Plzy7s4hL1tTvm/jKI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Mn2OclqsrabDuYHBmfAnUgWsJYCtbJynVv3+GqnfY7Hk2pwWflqw33UfDSmW8cwYYBrSl+ze9ZCh1syKH1N9jh3+2Be6Nm5yL3NFojSIZlFpISUyZJ2LhImcc4BKscuyFfVc9fC/0W+RKbRRn0fKT0Hq5b8MOjZBbAPqSd9SjgI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -18,27 +17,25 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <rhi@pengutronix.de>)
-	id 1rzjoU-0004eC-I0; Wed, 24 Apr 2024 23:05:58 +0200
+	id 1rzjoU-0004eA-DA; Wed, 24 Apr 2024 23:05:58 +0200
 Received: from [2a0a:edc0:0:1101:1d::ac] (helo=dude04.red.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <rhi@pengutronix.de>)
-	id 1rzjoU-00E9Am-3n; Wed, 24 Apr 2024 23:05:58 +0200
+	id 1rzjoR-00E9Aj-Hv; Wed, 24 Apr 2024 23:05:55 +0200
 Received: from rhi by dude04.red.stw.pengutronix.de with local (Exim 4.96)
 	(envelope-from <rhi@pengutronix.de>)
-	id 1rzjoU-0014hM-0C;
-	Wed, 24 Apr 2024 23:05:58 +0200
+	id 1rzjoR-0014gv-1b;
+	Wed, 24 Apr 2024 23:05:55 +0200
 From: Roland Hieber <rhi@pengutronix.de>
 To: git@vger.kernel.org
 Cc: Roland Hieber <rhi@pengutronix.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/2] completion: add docs on how to add subcommand completions
-Date: Wed, 24 Apr 2024 23:05:48 +0200
-Message-Id: <20240424210549.256256-2-rhi@pengutronix.de>
+	Denton Liu <liu.denton@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] completion: add 'symbolic-ref'
+Date: Wed, 24 Apr 2024 23:05:47 +0200
+Message-Id: <20240424210549.256256-1-rhi@pengutronix.de>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240424210549.256256-1-rhi@pengutronix.de>
-References: <20240424210549.256256-1-rhi@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,34 +48,66 @@ X-SA-Exim-Mail-From: rhi@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: git@vger.kernel.org
 
-It took me more than a few tries and a good lecture of __git_main to
-understand that the two paragraphs above really only refer to adding
-completion functions for executables that are not called through git's
-subcommand magic. Add a few sentences for that case.
+Even 'symbolic-ref' is only completed when
+GIT_COMPLETION_SHOW_ALL_COMMANDS=1 is set, it currently defaults to
+completing file names, which is not very helpful. Add a simple
+completion function which completes options and refs.
 
 Signed-off-by: Roland Hieber <rhi@pengutronix.de>
 ---
- contrib/completion/git-completion.bash | 7 +++++++
- 1 file changed, 7 insertions(+)
+ contrib/completion/git-completion.bash | 11 +++++++++++
+ t/t9902-completion.sh                  | 16 ++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ffcc55484bcd..f0c8353c1cdb 100644
+index 75193ded4bde..ffcc55484bcd 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -40,6 +40,13 @@
- #
- #   __git_complete gk gitk
- #
-+# To add completion for git subcommands that live in external scripts,
-+# define a function of the form '_git_${subcommand}' while replacing all dashes
-+# with underscores, and the main git completion will make use of it.
-+# For example, to add completeion after 'git do-my-stuff' (which could e.g. live
-+# in /usr/bin/git-do-stuff), name the completion function '_git_do_stuff'.
-+# See _git_show, _git_bisect etc. below for more examples.
-+#
- # Compatible with bash 3.2.57.
- #
- # You can set the following environment variables to influence the behavior of
+@@ -3581,6 +3581,17 @@ _git_svn ()
+ 	fi
+ }
+ 
++_git_symbolic_ref () {
++	case "$cur" in
++	--*)
++		__gitcomp "--delete --quiet --short --recurse --no-recurse"
++		return
++		;;
++	esac
++	
++	__git_complete_refs
++}
++
+ _git_tag ()
+ {
+ 	local i c="$__git_cmd_idx" f=0
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 569cf2310434..a34953da6c96 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2518,6 +2518,22 @@ test_expect_success 'complete tree filename with metacharacters' '
+ 	EOF
+ '
+ 
++test_expect_success 'symbolic-ref completes short ref names ' '
++	test_completion "git symbolic-ref foo m" <<-\EOF
++	main Z
++	mybranch Z
++	mytag Z
++	EOF
++'
++test_expect_success 'symbolic-ref completes full ref names' '
++	test_completion "git symbolic-ref foo refs/" <<-\EOF
++	refs/heads/main Z
++	refs/heads/mybranch Z
++	refs/tags/mytag Z
++	refs/tags/A Z
++	EOF
++'
++
+ test_expect_success PERL 'send-email' '
+ 	test_completion "git send-email --cov" <<-\EOF &&
+ 	--cover-from-description=Z
 -- 
 2.39.2
 
