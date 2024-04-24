@@ -1,110 +1,126 @@
-Received: from thechases.com (thechases.com [54.39.151.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3A815E1E3
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 13:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.39.151.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9B315D5A2
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 13:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713966653; cv=none; b=nR3jwJbnCr5uNGSppt8X2Bxs7GOIvc4BuumxhYsUIrYyOQnr6Ab9F0Iscu98gKNrgdkHQbIaUevDxmIp1wcOUabHLjHWE+iFOYxQeIOSVNHP8g2s5BNjsuc9lsj19++XBcHEOuxDxssv1hCF9N2zj0O9H3kN+6xqyyacsMQs4gg=
+	t=1713966766; cv=none; b=l4Z3aZObC1WEsRiPSGJsAB8f0E+Eeh9snMUUVQHm7wcDgvzpELVGoUiba0Y2Uhxiuas+Pesr1mjg0K2VU55EcsW6y4NvzAwJzPJUmCyeH/GuKQyvtPt3uY+IGrIhFzxkXEpvQLgMmiMP5+ar4HEiZb/tW1a12ZXxk5kBcDI9+KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713966653; c=relaxed/simple;
-	bh=ZsTu2f+yT/qt3Tcg2k+1tWX1O0pMj5VV/TzCm35zFN0=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Q1jQkjO3+zjl3V3Dsh1NyzJ/XNO9wO9WAzmh9g+u+eCSOmsypH7CeCbzekHPdMO7U5Vcqy1NVBm6GH2LQy+PQDly1FbTIuNVEwubLgFDmTnELnHu1CWewMe1hoPAMBgiq7684SfyhreYJRag87lGmTWAfWQjMhwTA9ELO4LLsVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tim.thechases.com; spf=pass smtp.mailfrom=tim.thechases.com; arc=none smtp.client-ip=54.39.151.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tim.thechases.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tim.thechases.com
-Received: from localhost (thechases.com [local])
-	by thechases.com (OpenSMTPD) with ESMTPA id 9e153548
-	for <git@vger.kernel.org>;
-	Wed, 24 Apr 2024 13:44:09 +0000 (UTC)
-Date: Wed, 24 Apr 2024 08:44:09 -0500
-From: Tim Chase <git@tim.thechases.com>
-To: git@vger.kernel.org
-Subject: Stashing just index..working-copy rather than HEAD..working-copy?
-Message-ID: <ZikMqXeDnOqK_wlq@thechases.com>
+	s=arc-20240116; t=1713966766; c=relaxed/simple;
+	bh=vCKXIu6ff3VuZOR/lLFCQKTStKdm5HGYH8h7fvY+eMM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tr/j3Pmm0xnK0k5XBnYooDJxeEXMDZvneVSKi8ZvQPIG+C6v+M9aPViN6Kb0zBhaYp9332pNqEtXiL8gUvkEgspuQLSYBkENjwGbDyMVH9Vs3vuJGMnx0yOJ7KFGKhEEvTe/8LZgqckENBPkF8i91yy2aA3+1b9eQ1Nx5zCzOr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MqXOe3gZ; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MqXOe3gZ"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-41adf155cffso10864765e9.2
+        for <git@vger.kernel.org>; Wed, 24 Apr 2024 06:52:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713966763; x=1714571563; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KOOcDJI1aQ0Dt1JtBWYzmP4qPh78rcdf2Papyr8y74k=;
+        b=MqXOe3gZnXPn3XifUISbjhpz8tubsd0kF3St2tS+cDm4p9iVNZdfPaun6XnQOl8emW
+         RXs/uxUeTQ/H9gXOWxqwbpXmxESFbLaqXlpNI+KEMjfLmHqHxbuTWqBAYR4wngRU8etq
+         /aLnKZL9/3TWFC/MjZj3QxfyCChg4T9loYbHkYt4DcPP6P3+HPg87myMiPXK0Wed9Wce
+         YBngWlreYb/yt7nRjlRATMK950INAEVDSner6TBJa6LNeWHeU7jntsuBGY5hxSgAayoL
+         J0BgbpqP83j7k5w668NmBhg2Qe65bVoo391O0oVHIyJDikB01dRcoSZL13QETV+4g7Lu
+         GQ8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713966763; x=1714571563;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KOOcDJI1aQ0Dt1JtBWYzmP4qPh78rcdf2Papyr8y74k=;
+        b=rLUv8lr7lhZa/Mz/P5S+Q43XIXnITfo4isxxcQVciYaWghV3cuu/iokGau3+uEmav4
+         oEihMdtoIE9NXWW50zstaxlTZlQJwRdJZsrnkj9gxpY6SWRFD7EBFRyXuJHD1/cXMseH
+         WmKnzAL4TTJMPACg8xD/HHQhC8pwH6S1/plxVQEKLqUlN5u+hVgZyapHG/YajKnv1z4k
+         KNlbYBpm0iaQnXFpu4M/Dn5ZI42ZSdo/PFJiiHp06ea+EQWbHn9zPDBOGiOVX/F81isf
+         X2mASTCSH0KEswD3SMyJ57C5cKBUHYfC6o6VY5inxMFoQTkClK0Z5b+GeCuPmEBn6EZ3
+         gj8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWH80F2bCx+iSMcCw3FxvvlOy3iyGs7TRFjObqQK3Ny3VACd7PRKkKgc7m+9v5uSzkP9Msfv1YMCotZU+RFNj6q8yX2
+X-Gm-Message-State: AOJu0Yx3y9B/uTf5TnLFybDqdsNiAJxlyKviyn7q8THRp3kinVmeyHDW
+	K18DMRUyYkCmJ4sU2a7u2n8nxahX6iWBWyslASS+t7GwI4hseJrt
+X-Google-Smtp-Source: AGHT+IFkJcEuKd4C30YLTH/QImRUhiWnrNa/OhtDjnAIeA9fG0yW7pJVC7Ri4kAe9yLKclMKn61pmw==
+X-Received: by 2002:a05:600c:4f93:b0:419:cc9b:420a with SMTP id n19-20020a05600c4f9300b00419cc9b420amr2022303wmq.1.1713966762840;
+        Wed, 24 Apr 2024 06:52:42 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:701:9864:4109:be00:6ff6? ([2a0a:ef40:62a:701:9864:4109:be00:6ff6])
+        by smtp.gmail.com with ESMTPSA id g18-20020a05600c4ed200b00418729383a4sm23697913wmq.46.2024.04.24.06.52.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Apr 2024 06:52:42 -0700 (PDT)
+Message-ID: <7d1d2892-d486-4e91-b100-e44c1d76893c@gmail.com>
+Date: Wed, 24 Apr 2024 14:52:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/2] advice: add "all" option to disable all hints
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: James Liu <james@jamesliu.io>, git@vger.kernel.org
+References: <20240424035857.84583-1-james@jamesliu.io>
+ <xmqqo79z2s24.fsf@gitster.g> <ZiirKgXQPLmtrwLT@tanuki>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <ZiirKgXQPLmtrwLT@tanuki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-A while back[1] I'd encountered a situation and sparred my way
-around it, but was hoping there was a better solution.
+Hi Patrick
 
-I'd done a
+On 24/04/2024 07:48, Patrick Steinhardt wrote:
+> On Tue, Apr 23, 2024 at 11:28:03PM -0700, Junio C Hamano wrote:
+>> Do not close that communication channel on us.
+> 
+> While I agree that it might not be a good idea to set it for our users,
+> the usecase mentioned by this patch series is scripting. And here I very
+> much agree with the sentiment that it makes sense to give an easy knob
+> to disable all advice (disclosure: James is part of the Gitaly team at
+> GitLab, and that is where this feature comes from, so I am very much
+> biased).
 
-  $ git add -p
+Maybe an environment variable would be a better fit for turning advice 
+off in scripts?
 
-to selectively add things that I wanted in the next commit.
-So I wanted to stash the changes that appeared in
+> It has happened multiple times to us that new advices were introduced
+> that then subsequently caused regressions in Gitaly because the output
+> of Git commands now looks different. While addressing such breakage is
+> easy enough to do, it does add up if we have to run Git with every
+> single advice that we may hit turned off individually.
 
-  $ git diff
+I'm sure you've considered these suggestions but (a) would it be 
+possible for Gitaly to filter out lines beginning with "hint: " when it 
+captures the output of commands and (b) would it be possible to have a 
+script that parses advice_setting in advice.c to find the list of advice 
+names so Gitaly can disable them? I think (a) would still leave some 
+advice output from code that uses advice_enabled() rather than 
+advise_if_enabled() but it should get rid of most of the advice messages.
 
-and test just the changes I was about to commit so I did a
+Best Wishes
 
-  $ git stash
+Phillip
 
-However, that reset my index and stashed everything HEAD..working-copy.
-Okay, my fault.  There's a --keep-index that isn't default, so I
-carefully re-staged my commit with another
-
-  $ git add -p
-
-and did
-
-  $ git stash --keep-index
-
-to keep the index.  Great.  My index was still good.  But when I went to
-
-  $ git stash pop
-
-as described in `git help stash` under the "Testing partial commits"
-it generated conflicts because it had still stashed HEAD..working-copy
-(as confirmed with a `git stash show -p`) rather than index..working-copy
-and some of those popped changes were already in the working-copy/index.
-
-To work around it, I re-staged my index yet again:
-
-  $ git add -p
-
-and then did
-
-  $ git diff > temp.diff
-  $ git reset --staged
-
-did my testing, and then re-applied the temp.diff patch to the
-working-copy to get back to where I'd been.  Conflict-free as
-expected.
-
-As a slight improvement, /u/splettnet suggested actually committing
-a dummy-commit:
-
-  $ git add -p
-  $ git commit --allow-empty-message
-  $ git stash
-
-at which point I could build/run/test and then resetting to uncommit:
-
-  $ git stash pop
-  $ git reset --soft HEAD~1
-
-which I've been using since.  However, I was wondering if there was
-a better way to instruct git-stash to stash index..working-copy
-instead of HEAD..working-copy (and leave the index alone in the
-process) in the first place.
-
-Thanks,
-
--tkc
-
-[1]
-https://www.reddit.com/r/git/comments/vchu83/stashing_only_unstaged_changes/
-
-
-
-
-
+> Now one could say that we shouldn't execute porcelain tools in our
+> scripts because it is kind of expected that their output may change at
+> any point in time, and that is certainly true. But the reality is that
+> there aren't always good plumbing alternatives available.
+> 
+> Furthermore, we are often forced to parse fragile error messages from
+> such porcelain tools because Git doesn't provide a better way to dissect
+> errors. Error codes are mostly meaningless and there is no other data
+> channel available to us than the error message.
+> 
+> These are problems that run deeper than "We want to disable advices",
+> and we eventually want to address those over time. But it's a long road
+> to get there, and meanwhile disabling all advice would be something that
+> helps us make our scripted uses of Git at least a tiny bit more stable.
+> 
+> Patrick
