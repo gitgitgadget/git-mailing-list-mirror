@@ -1,201 +1,183 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6857A140368
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 03:59:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAB1154BF3
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 05:29:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713931193; cv=none; b=qyuDnAHOzELvVJycE9YPKBE37VsLSRUDfaSomAYmL4hPYAGZ8U4mn+MSdUls/XGnUDh43XDj5dFQJa7qjq36UVX2B/h5zcEQI6xDbEgXuJkUiyb8Ze9UddNzz5Qz5nQJNeFssNVnoQtw4k+dyJRM2wjziOMRU5X9jAkJzDM5PA0=
+	t=1713936547; cv=none; b=uU35JVzx/6Hk5hk8axAT79ra6GD5nlv8L8lXKPaB5tMLCbEH/axwiMAF0k5G1V9XoxPK99GDOKOHoQRKe1CtwZgMSRKIaWLmksNs0Zeu1koZh7r/WJhOOX8QYwMgzbP2bi8YFpv79xr+QyLHHU1NgJg0if7Pe+qxDohw+8kE2rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713931193; c=relaxed/simple;
-	bh=VIJSKWxDzt+vBAWdEpobAIE+v4U/IU3Ibr5LohEG37E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEwcSjX6ID41uo/7Q097Rb4j1mSbRxAtJRF0CIgVFQSa4di1i5b8m5Rmr1QLMChtsyNaVoYDV+N0OQoKF61RbyVYYJihXCAYXLoykffV9lDaDJh+R0YNHcWU6jHW3gNaZBR3wyFX4LeSOQjpZEUmm5z3NaHW5bRJQgKAOGMq0FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=l7N+MxJi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FBSWjVj7; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
+	s=arc-20240116; t=1713936547; c=relaxed/simple;
+	bh=x/3+sluGWAQToLynGSGOR8RYcpuPZru1NPLHfHD8FNo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j2r1Ub0YlHZwJzd61Fc//vYd49a1KfkTrIe/EEPwzOuBbfkQAGwcT8wa1Fh8Yv0juiDo31Bc1+NcwJY/c5Eqyq+WD6AY/LkL/h2HWfFJp8B8iyerEcbyUcQfaiDqJInMeaibe+8ZjrGXfYo/frZ6YNgRSBlbbfZcW6i1LtCmdtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MPSmrcOV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J/v7drP+; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="l7N+MxJi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FBSWjVj7"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7C8FF13800F9;
-	Tue, 23 Apr 2024 23:59:50 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 23 Apr 2024 23:59:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1713931190; x=
-	1714017590; bh=8Rjy5nEAPQAuZy+fC/96rh0MUH6QG2ABKMT+TuHU/uk=; b=l
-	7N+MxJiRwptOza72Y0tPWWsPYXdTa1nl3icdhYikE/W7+mWRsW8VJHPLHQx+OxXq
-	SOQo3tjYe/U4OIMahdbiDkY9huK8xbaF8vjTyVFjVN+nDngDvlD65q+1Ehq8PPqO
-	aZ9SuGh4U59zu6Ui6BhAqJFPl1YXFG5hj9FDCsInnE6PxrJfnN/4kmwuyqw5IbsY
-	Gyc7hjTx3VTAGY7MISQkWs50ESkcuvhk4UdKwuUjyCELt84D2smGasJp/DKC6/DC
-	M41qEyN95FmaLZd77YuyUDbRpK0bX/CoRCz6NNVwEJE8vJiQPgW+lyv0j3TKVUnt
-	GJ9tSGezDBGTWrZWLCwNA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MPSmrcOV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J/v7drP+"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id BE0A41140097;
+	Wed, 24 Apr 2024 01:29:03 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Wed, 24 Apr 2024 01:29:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1713936543; x=1714022943; bh=2KZ9MaLfP/
+	kCXLVlxAhcnIBVWOZUcJAFTNllWZvurQU=; b=MPSmrcOVBHnaEIxcfbNHOlHxw6
+	V1UOs/bxzfIBKDsxgL76sEK4bsWEz0aYrNYmjK3uIpN3kaEW7fRQ1GmykTKInNHo
+	MyD40IjBUExbkHfR/DSBOUTYcaRWQRLNNNDSx7AhUE1Ut9nbkCpPX5CgaJzcfBsI
+	cdjUE71fRXr5lFm0b9m8oM/ndRlC6LGj3f/l7v3wArLwBRLJh7mh0xYQIGVsiUbS
+	m86G+sYWmlxiXgdvFpKborjp1BqEyDcWipphCJhzlmDhza4k7YyJkpNvIwgxzyv6
+	FjPOrtnPmeL0YF8fz0x9AEOja4b8d1k6va8ioNLRnTTT/EtlqGyedcU2Wxzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1713931190; x=
-	1714017590; bh=8Rjy5nEAPQAuZy+fC/96rh0MUH6QG2ABKMT+TuHU/uk=; b=F
-	BSWjVj7SpuKP/46OIjRjM8Yyji0wlTC+jZIx7wv3u2mX/koU4OmqfdZP5W+DbYVI
-	E8fPvjdOuwmy/szlTbyqxnHHOy4J8668vsDm3HS9ySjx8wxiyoOCkGvWPgf7iVJ2
-	dnUIwdFFcCg7XEYShMTxA+kx5BqTeMpo8eBq0YpfXWCP2knlTXk/hV38LvBLJiRb
-	A7TDA6ZS5jZNG0QVLrjt0Wgzo+43R5vzEBQ2qzfyI7A5HoNAxVmcKd8a33hm70VU
-	/cUbIz1jmlAGMEogyM7QI/QrOchUAfkczHd2wRCTbeOrz6w/nRf1gWzmLNqnPe/P
-	RBN9hc1FcYudDz0Ou2D7g==
-X-ME-Sender: <xms:toMoZpD-fhCe8LTdsQVJ5A8mSMxQw8dfEAYqTav9DrDuSwXbzX3QmA>
-    <xme:toMoZnjfffNuJmx6MZv6DAaHnBeZblho82qO8U2iklYOWqjvCUMFeE0bq8wJQ9O0m
-    IQXUMkm8ZiJfsZ_ZA>
-X-ME-Received: <xmr:toMoZklOXs3nN89sS7Wks9zL54uUyjz4YptIfEpkPDKjRzp_I7fRHSJK3uxD4LlzwqSbY60BNQtU3U_yaj7XAaaDoNNiCQqEPowBGnFYb6IA2RQtPQBGncdg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelvddgjedvucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1713936543; x=1714022943; bh=2KZ9MaLfP/kCXLVlxAhcnIBVWOZU
+	cJAFTNllWZvurQU=; b=J/v7drP+avNO9+6v/AMzuVpHxzD+hS6iewljGHVa0e5m
+	Le2ruu+LO7JsNGrbFW0kbhxytfGXFZA6ulSqHJ9Hbhw5DkBacvnSQFsee9gWhgtx
+	rz0IPxXNHZ8WwuvsVzsMC0HYvdj3NrjiVWwQbvmbg/HJYYFq0wY32RZrMFjCQFHQ
+	maIU9FzXxSdAWM+eLZwTdHmyp0np60vYdmFF0lKk0PDHez1W/erCXJeiq6eb9txW
+	7CJJGmW4Us4JXHETQ0sqPZ20qm59axRV0VrTHor40qYcDXh9NT6F2xPYnjswFpgQ
+	WbdUwZH+vFY4BJNaCVrBMIAXTUTeXhJapFfiBeg4Bg==
+X-ME-Sender: <xms:n5goZhWRiUd9HvBAldeYItQCmxUeFzGbheCcG5PAq_3lPW3tdpfrRQ>
+    <xme:n5goZhnAPUuaXJ8LtkJnzif-KSDlg5iMMNnkUzhe-WBdZa5mO3hFmPGzVruxr3OTm
+    LPlcMpGu47SqGZYZA>
+X-ME-Received: <xmr:n5goZtaYTUACaFpX3yzmUKbmCtmnE1bV4AMai1YrVvyf1RAF5_VrPAWaWwjb6RJ0BBG2PRomnlo4AdnS0ntYhn5_re_kFDtHwcIMiRY9x1fL_L__1A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelvddgledtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpeflrghmvghsucfnihhuuceojhgrmhgvshesjhgrmhgvshhl
-    ihhurdhioheqnecuggftrfgrthhtvghrnhepleejtdeuudfgteegfeeiudehleeutedvhf
-    euueeuheevleejkeelteetfeevhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:toMoZjxXrOmzb2DlR90Oig78TizOZgs1H5K1MQPPQeuvATHIuU2n0w>
-    <xmx:toMoZuTQVASGPlEg7ab2m1JaNfpqGVtvr0sGZ8i2ESAy7CvT1uqPEg>
-    <xmx:toMoZmZl4NZGSUAOHv1aLA5VdmW73-n3Aaf8i8zGQL7DZ6R5sRm2zA>
-    <xmx:toMoZvRhSnk38w3Hq1j7yF6Z8rieK5VityJLy8ZFRuIDuZyTMrd0MA>
-    <xmx:toMoZpeWa8blVZMjQKLEbuPE4pwmahm_22rIrTGpsSj6f6-7GxJnQtkk>
-Feedback-ID: i93f149ec:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Apr 2024 23:59:48 -0400 (EDT)
-From: James Liu <james@jamesliu.io>
-To: git@vger.kernel.org
-Cc: James Liu <james@jamesliu.io>
-Subject: [PATCH 2/2] advice: add "all" option to disable all hints
-Date: Wed, 24 Apr 2024 13:58:57 +1000
-Message-ID: <20240424035857.84583-3-james@jamesliu.io>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240424035857.84583-1-james@jamesliu.io>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:n5goZkXDhdY0-Jor0X-8ntmy7Enn4DLrF8UDZIDzKW0rr2SzI2_yYw>
+    <xmx:n5goZrnmQ5qfsUJJVdoFs5gmQAYdb_WCfohYCSabu03DUKliyH_L1w>
+    <xmx:n5goZhcPplGpvBGdI1Y6KDAf9QdmZ0c43ZfSWIN22Ksh3MowgExMow>
+    <xmx:n5goZlGoFEMAvL8E_2T0_ajJXFMiD8MwJNazOq5pLZ3BjDrfJ4Tk5g>
+    <xmx:n5goZgyylQugNpGouA8vfoPb1m5-AJntjd_pyGFpwkz-j0awxDjQu668>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Apr 2024 01:29:02 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 31eaaf86 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Apr 2024 05:28:52 +0000 (UTC)
+Date: Wed, 24 Apr 2024 07:28:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: James Liu <james@jamesliu.io>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] advice: allow advice type to be provided in tests
+Message-ID: <ZiiYmpk4IXg3bcb1@tanuki>
 References: <20240424035857.84583-1-james@jamesliu.io>
+ <20240424035857.84583-2-james@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ffoNpOEXqCXbNO4j"
+Content-Disposition: inline
+In-Reply-To: <20240424035857.84583-2-james@jamesliu.io>
 
-Advice hints must be disabled individually by setting the relevant
-advice.* variables to false in the Git configuration. For server-side
-usages of Git where hints aren't necessary, it can be cumbersome to
-maintain configuration to disable all advice hints. This is especially
-the case if/when new advice hints are added.
 
-Add a new "all" advice variable which acts as a toggle for all advice
-types. When this is being used, individual advice hints can be enabled
-by setting their respective configs to true.
+--ffoNpOEXqCXbNO4j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: James Liu <james@jamesliu.io>
----
- Documentation/config/advice.txt |  5 +++++
- advice.c                        |  8 ++++++++
- advice.h                        |  1 +
- t/t0018-advice.sh               | 33 +++++++++++++++++++++++++++++++++
- 4 files changed, 47 insertions(+)
+On Wed, Apr 24, 2024 at 01:58:56PM +1000, James Liu wrote:
+> advise_if_enabled() has a special branch to handle
+> backwards-compatibility with the `pushUpdateRejected` and
+> `pushNonFastForward` advice types, which went untested.
+>=20
+> Modify the `test-tool advise` command so the advice type can be changed
+> between nestedTag (the previous behaviour) and pushUpdateRejected.
+>=20
+> Signed-off-by: James Liu <james@jamesliu.io>
+> ---
+>  t/helper/test-advise.c | 20 ++++++++++++++------
+>  t/t0018-advice.sh      | 30 +++++++++++++++++++++++++++---
+>  2 files changed, 41 insertions(+), 9 deletions(-)
+>=20
+> diff --git a/t/helper/test-advise.c b/t/helper/test-advise.c
+> index 8a3fd0009a..c18b18e059 100644
+> --- a/t/helper/test-advise.c
+> +++ b/t/helper/test-advise.c
+> @@ -5,18 +5,26 @@
+> =20
+>  int cmd__advise_if_enabled(int argc, const char **argv)
+>  {
+> -	if (argc !=3D 2)
+> -		die("usage: %s <advice>", argv[0]);
+> +	if (argc !=3D 3)
+> +		die("usage: %s nestedTag|pushUpdateRejected <advice>", argv[0]);
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index 0e35ae5240..0516a23b6b 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -5,6 +5,11 @@ advice.*::
- 	that you do not need the help message by setting these to `false`:
- +
- --
-+	all::
-+		Convenience option that allows all advice hints to be
-+		disabled when set to false. When false, individual
-+		advice hints can be enabled by setting them to true.
-+		Setting this to true is a no-op.
- 	addEmbeddedRepo::
- 		Shown when the user accidentally adds one
- 		git repo inside of another.
-diff --git a/advice.c b/advice.c
-index 75111191ad..9f0860f143 100644
---- a/advice.c
-+++ b/advice.c
-@@ -43,6 +43,7 @@ static struct {
- 	const char *key;
- 	enum advice_level level;
- } advice_setting[] = {
-+	[ADVICE_ALL]					= { "all" },
- 	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo" },
- 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec" },
- 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile" },
-@@ -132,6 +133,13 @@ int advice_enabled(enum advice_type type)
- 		return enabled &&
- 		       advice_enabled(ADVICE_PUSH_UPDATE_REJECTED_ALIAS);
- 
-+	/*
-+	 * We still allow for specific advice hints to be enabled if
-+	 * advice.all == false.
-+	 */
-+	if (advice_setting[ADVICE_ALL].level == ADVICE_LEVEL_DISABLED)
-+		return advice_setting[type].level == ADVICE_LEVEL_ENABLED;
-+
- 	return enabled;
- }
- 
-diff --git a/advice.h b/advice.h
-index c8d29f97f3..b5ac99a645 100644
---- a/advice.h
-+++ b/advice.h
-@@ -11,6 +11,7 @@ struct string_list;
-  * Call advise_if_enabled to print your advice.
-  */
- enum advice_type {
-+	ADVICE_ALL,
- 	ADVICE_ADD_EMBEDDED_REPO,
- 	ADVICE_ADD_EMPTY_PATHSPEC,
- 	ADVICE_ADD_IGNORED_FILE,
-diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-index 8010796e1f..19318cc9bb 100755
---- a/t/t0018-advice.sh
-+++ b/t/t0018-advice.sh
-@@ -53,4 +53,37 @@ test_expect_success 'advice should be printed when advice.pushUpdateRejected is
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'advice should not be printed when advice.all is set to false' '
-+	test_config advice.all false &&
-+	test-tool advise nestedTag "This is a piece of advice" 2>actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'advice should not be printed for pushUpdateRejected when advice.all is set to false' '
-+	test_config advice.all false &&
-+	test-tool advise pushUpdateRejected "This is a piece of advice" 2>actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'advice should be printed when advice.all is set to false, but specific advice is set to true' '
-+	cat >expect <<-\EOF &&
-+	hint: This is a piece of advice
-+	EOF
-+	test_config advice.all false &&
-+	test_config advice.nestedTag true &&
-+	test-tool advise nestedTag "This is a piece of advice" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'advice should be printed when advice.all is set to false, but advice.pushUpdateRejected and its alias are set to true' '
-+	cat >expect <<-\EOF &&
-+	hint: This is a piece of advice
-+	EOF
-+	test_config advice.all false &&
-+	test_config advice.pushUpdateRejected true &&
-+	test_config advice.pushNonFastForward true &&
-+	test-tool advise pushUpdateRejected "This is a piece of advice" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.44.0
+We could retain the old behaviour here so that we don't have to update
+all tests. So in case `argc =3D=3D 2` we implicitly use `ADVICE_NESTED_TAG`,
+if `argc =3D=3D 3` we look up the advice passed by the caller. The usage
+would thus essentially become something like this:
 
+    usage: test-advise <msg> [<key>]
+
+> -	if (argc !=3D 2)
+> -		die("usage: %s <advice>", argv[0]);
+> +	if (argc !=3D 3)
+> +		die("usage: %s nestedTag|pushUpdateRejected <advice>", argv[0]);
+
+>  	setup_git_directory();
+>  	git_config(git_default_config, NULL);
+> =20
+>  	/*
+> -	 * Any advice type can be used for testing, but NESTED_TAG was
+> -	 * selected here and in t0018 where this command is being
+> -	 * executed.
+> +	 * Any advice type can be used for testing, but ADVICE_NESTED_TAG and
+> +	 * ADVICE_PUSH_UPDATE_REJECTED were selected here and used in t0018
+> +	 * where this command is being executed.
+> +	 *
+> +	 * This allows test cases to exercise the normal and special branch
+> +	 * within advice_enabled().
+>  	 */
+> -	advise_if_enabled(ADVICE_NESTED_TAG, "%s", argv[1]);
+> +	if (!strcmp(argv[1], "nestedTag"))
+> +		advise_if_enabled(ADVICE_NESTED_TAG, "%s", argv[2]);
+> +	else if (!strcmp(argv[1], "pushUpdateRejected"))
+> +		advise_if_enabled(ADVICE_PUSH_UPDATE_REJECTED, "%s", argv[2]);
+> +	else
+> +		die("advice type should be nestedTag|pushUpdateRejected");
+
+Instead of singling out these specific advices, can we maybe expose the
+`advice_setting[]` array and make this generic? We could for example add
+a new `lookup_advice_by_name()` function that you pass the advice key,
+which then walks through the array to look up the `enum advice_type`.
+
+Patrick
+
+--ffoNpOEXqCXbNO4j
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYomJkACgkQVbJhu7ck
+PpRWuA/+Ns2ctN7LfXQeXkoLZo5yNGwqkWsvgihCzlEcQx1QBtOnaDyng11yy3Ap
+hSC1gvYE0YwUGnKbg4d1ZU9vU0eXUHYksiNhQqR9slAAOLOFnzIMaz2Ob2IU3n51
+6G0lA4J+OKSGTTKhyXa2gfUnoxXBbhB7LRH6BakFXTI9Bgew1R8qAquZO8ljviax
+k8aREFcj+KeXUijUbHLaSxHrwDv3AY/8/cLAnLZlBV9sXftODOb3e8HK9ZEtuAub
+yMOej5HUdScZghtUjqrFG5pHyVIZfYWf1L3qZibj6eDDq1Uy/RyMysIZJS8ig9CW
+BRcAjYqT/hmBUrxrmJo3NgWNDK82oZd6In8WC4FlWAhP4HTNFLPJODJ5spPuTJa4
+Gsbq0kFQRhjmfyWa0L2Vr+4yfyKwoG+vhA9zWk8HIb126Rw8OZgKMyzU5n731WDH
+szLLfsOkt6J3L3kDUfJd51bFq2EsgAcNjs+cdqQX/q86yQ4+EwofUuM3wL8hpsNQ
+fU2Qqgv8mu8dGubVnehYkCXKjnBdOP5ctOWxovu/ZlZsi5Jyq/Dm1qYsZxuoRuYJ
+kTenqEkQRFivoPBdyA1+OMWCMT39RtGiq9tp4z4ud5J9DWJKUIr6xZfxeCnY1AsS
+lvXlPiMjjDXjAVtU5snoPBrudQNXicGslEU4qChLYS+802IzAr0=
+=DXts
+-----END PGP SIGNATURE-----
+
+--ffoNpOEXqCXbNO4j--
