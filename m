@@ -1,69 +1,72 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9550816DEA7
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 18:15:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF8A1BC46
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 18:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713982511; cv=none; b=eoEJ13aQuyhkD9KghIdqS29Jimrcb6o+4/z1AwYkZIU+/S3jBc2wRCobm9tIYSqvbUw/CyeWb9JhGWalHKOC39HRHU1r++8UJTDAGEWMCum7bQt9ITvT2ZwRay6PxqBwLoJXvNih9vD5vb6Pd1EA8OUaUB++O1joKOh68KyB49s=
+	t=1713985070; cv=none; b=gCKaH+RqeCD7Pu/5bvxseDIMd3xHo0v0ajVG23wKiPF+9z/nSIT7wL3807NpFaFh14ICly4Aun9wd7fOdLgW0Xl36d0nypsUJIeBDuYtPpJaWyrjQrruefV6AEcKJq1SpETPoeVlg/2dL5ptD2gnvZTd+QswKy3vmzZyezV3hYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713982511; c=relaxed/simple;
-	bh=LUfVpHE7EQQ36Ou6EJ7D+JHlQcX/BQAyZZ73AijbCmY=;
+	s=arc-20240116; t=1713985070; c=relaxed/simple;
+	bh=cDgybrDcsbjA8FYudmzBXlOK7xgjza/D3DIpbYniuco=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rlCXZkNxeew51C+hA06GlXD+Y0F2Ae6nW/s5mDoLkB4zGxnlAuy8XG9ZmVgf7AZNY5RYqUpFmxBDLsvNHpbhzffgjZloXP7w0SDMKxTPWmaUPHl1gUHS6W2R2/29Mvr31u7DrALMAWN/2HSBIiRkCklppUPbpfx8BJxVINSYDv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=a8tTokaN; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=NocUkM6Nn3BRAC732N6jR0Yt3LTcq73E0SlILpVRszI+DSyqlwQMNj/YkUhP3iMQJq6ccadZfrOXxxs0pJS0DYBgnJKJRmef5GRwx7/dCfuK4YodiEudojdquyBs10ssV4oPb1XUdhJYfMzou9geUk5PGgy9V8KsR33ByCnTHxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xCjIJ7pM; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a8tTokaN"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1e4266673bbso967615ad.2
-        for <git@vger.kernel.org>; Wed, 24 Apr 2024 11:15:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xCjIJ7pM"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-5d42e7ab8a9so137721a12.3
+        for <git@vger.kernel.org>; Wed, 24 Apr 2024 11:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713982509; x=1714587309; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1713985068; x=1714589868; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=44oEB5Pqft6blVG0Ozwi2FLuu4OhGYunyLY/rNDzir4=;
-        b=a8tTokaNs+oP8jh/bP7NFenfHxUsdbK0eo3xy7LfyZ2WrZ7f9o/LYbyhX/4Ak3KHyi
-         uflgMFnuwFn/QSzAM4pfq+qXrBMd5+Jkg3Ezj3oPHVTOTGAJnU2H6zWOaMrt5KHoSaOB
-         51HaKRfsFnH20Fx9mck3Dr154JnHXfCtvzRncPv1g1VMN66AKes2rwaal9MIkgv/ESab
-         U/SC2hHiIkFc3Ac3m+mAfMuNB01kbiCTkit9qmWNVJbSne1Rk2uVv7gx+DOzkrNTj0Xz
-         1QbgyIxwAqpJGBJkfCOTo88JTqItMPVbomDAOozZrXT1w3ScWfpqDc0QcLJXn6Lmq0FK
-         03Yg==
+        bh=4wjpJtRnFG66hZb7Lpii2hdm4VmJCfrBsY0QFxdZrxg=;
+        b=xCjIJ7pMJkyBOLdrxL0H6/boS0rA1o59k9GSn8Q8HIlNL5r72cMIWf+8Cql+/yOAQD
+         +w5yR0bEg7HNZYoL/hkdRwnG4jmUG+TomEg5MF9ffmY6CYDeXjlhuNPT51sM+5Wku1fx
+         rdynp9dkudDNpXNkLnMq32gT2aFB29VYU1CIs7Z/dpHuvdyGsyv/rUNhOEz5R2MmSVft
+         WS0u6Lwqs2Y3DRv3DIudDs0ghDeWVzSE5RUsd+utIph520yT8DhGrYLwIX7L2Ox+uBVb
+         ac20dRK4Lgj/HUXEC6ZCyyMUC61L9+MDDtGKC0c5S3KebU0Wu/Y4gKLM6g3jMEaziSoz
+         1dCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713982509; x=1714587309;
+        d=1e100.net; s=20230601; t=1713985068; x=1714589868;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=44oEB5Pqft6blVG0Ozwi2FLuu4OhGYunyLY/rNDzir4=;
-        b=QqprJWt5z/4sZbFkfgP9ts14ewaSweb6TGbkVpASZgPWCWZTQ2YyM3KKFGewCCzkho
-         ju5wTWpk52jRFI6KN9GjIYgMYmjMUcNfnO2jTjNuTgkVk+FraR+dPc1hQUnicBNRzqSG
-         Gdye6NM029pSAA3bZeu7HBBYrlK8/36AX6BQwvtZ3TiUDxYhSJ6viIegcxux2tFJT9m7
-         kgivdwf6O5opRAnpXBQ41HNcqyu6K9ZSJ5RWpKLyvdjQuI7CclEjq+YkybqgiBYu/vdy
-         KGbVO5h1JaGizIvnV+8QBI5Mpn6dUXUiFvWfhKWQnJwlzncNeFZeXzZpzYV7E4UuOPJ4
-         MUmw==
-X-Gm-Message-State: AOJu0YxlkJQiTAFVrAqsSiaH+pKf2eebSHxpvIjonIen2/rdSA6/QLuU
-	mpFe/q8h9QFMTlM5mtZNIZ+9nPe18SULGPg0Gej7ecUl9xttDsrHdi7KXaz0LsH8twjnK3MkSSd
-	ePQ==
-X-Google-Smtp-Source: AGHT+IEOgInobyt+4GqhdSO6aFdPwRSFPYW4iaDD7FdnQ/5Y9HPwAvFYbCYGvSVP4YtLy5osSJhQQg==
-X-Received: by 2002:a17:903:40cf:b0:1e4:9c2f:d343 with SMTP id t15-20020a17090340cf00b001e49c2fd343mr4208633pld.7.1713982508594;
-        Wed, 24 Apr 2024 11:15:08 -0700 (PDT)
+        bh=4wjpJtRnFG66hZb7Lpii2hdm4VmJCfrBsY0QFxdZrxg=;
+        b=HYv++aHjSGc0FQdCnbuf0CmHOAHPGYTUc3WpREjebmNW0YOwD1i1hXqS4iTZb9iY2a
+         PzlIK80MqdMKaM7PyC1QjpecbWJ32KcZgCPZFZVSReXsCgwzPYsrN+p7pBmUtejTqkPx
+         X3vcbxqtZjRvm4ay+QnioV2u5D9kRgzMhhZdcKpaKkWMVUSOQ5mMLZ3VX89NaqD6O9QM
+         rQsHaWC5vr9sFIJpMn8i4RS+EPVh9fx0BmI30dog4LbRGpIgaU0Y2Vl2AFXP0TdaO6Ph
+         n+mhRfKpK/wpMPY+F/ZhGl9YS5fW8Gtko+6GPcvia+ylPQnZJauRNbKMieojnIDrHVp9
+         qdyA==
+X-Gm-Message-State: AOJu0Yw0xENCruSWELRFVNvA7nMq5DtJ8pAglxp844t1TESB23Cfs+Ia
+	aK/wmZAepHWMSagmoJSJj24PIir8Ad2FegJ6ZQspYCbsJv65/Cwxbrnkni2DSA==
+X-Google-Smtp-Source: AGHT+IHDVy5+Lq9vCty+ve+vbdzlHkVFZ/MXyvkptMpIeEyDndqpRhIIHnerwJ0ba+4p5/ImFXbjnQ==
+X-Received: by 2002:a05:6a21:3e01:b0:1a9:c3ac:c6d4 with SMTP id bk1-20020a056a213e0100b001a9c3acc6d4mr3418282pzc.62.1713985067890;
+        Wed, 24 Apr 2024 11:57:47 -0700 (PDT)
 Received: from google.com ([2620:15c:2d3:204:5580:46bd:98b:ecbb])
-        by smtp.gmail.com with ESMTPSA id i16-20020a17090332d000b001e0c568ae8fsm12168589plr.192.2024.04.24.11.15.07
+        by smtp.gmail.com with ESMTPSA id b3-20020aa78ec3000000b006eadfbdcc13sm11795467pfr.67.2024.04.24.11.57.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Apr 2024 11:15:07 -0700 (PDT)
-Date: Wed, 24 Apr 2024 11:15:03 -0700
+        Wed, 24 Apr 2024 11:57:47 -0700 (PDT)
+Date: Wed, 24 Apr 2024 11:57:42 -0700
 From: Josh Steadmon <steadmon@google.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 1/2] ci: also define CXX environment variable
-Message-ID: <4srqrveqk2f5wwrkfivzx7ipj6txgsohdtl76ybyvg6e2vrrcx@gglr37gka774>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, 
+	phillip.wood@dunelm.org.uk, gitster@pobox.com
+Subject: Re: [PATCH v3 6/7] t/Makefile: run unit tests alongside shell tests
+Message-ID: <j3m7hw2tt5znk6ycriion5qn4usimoxseqv66n7wvpznwh774o@waaxau5hyt5y>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-References: <cover.1709673020.git.steadmon@google.com>
- <cover.1712858920.git.steadmon@google.com>
- <e55b6912725fa478134c7a67a9e4aeab7dca2c57.1712858920.git.steadmon@google.com>
- <20240412042247.GA1077925@coredump.intra.peff.net>
+	Jeff King <peff@peff.net>, git@vger.kernel.org, johannes.schindelin@gmx.de, 
+	phillip.wood@dunelm.org.uk, gitster@pobox.com
+References: <cover.1705443632.git.steadmon@google.com>
+ <cover.1708728717.git.steadmon@google.com>
+ <cfcc4bd427318fed1cacc8457381d5a0c408460a.1708728717.git.steadmon@google.com>
+ <20240327085827.GA846805@coredump.intra.peff.net>
+ <ZhgvefDKhTQ6rfnD@google.com>
+ <20240412042922.GB1077925@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,24 +75,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240412042247.GA1077925@coredump.intra.peff.net>
+In-Reply-To: <20240412042922.GB1077925@coredump.intra.peff.net>
 
-On 2024.04.12 00:22, Jeff King wrote:
-> On Thu, Apr 11, 2024 at 11:14:24AM -0700, Josh Steadmon wrote:
+On 2024.04.12 00:29, Jeff King wrote:
+> On Thu, Apr 11, 2024 at 11:44:09AM -0700, Josh Steadmon wrote:
 > 
-> > In a future commit, we will build the fuzzer executables as part of the
-> > default 'make all' target, which requires a C++ compiler. If we do not
-> > explicitly set CXX, it defaults to g++ on GitHub CI. However, this can
-> > lead to incorrect feature detection when CC=clang, since the
-> > 'detect-compiler' script only looks at CC. Fix the issue by always
-> > setting CXX to match CC in our CI config.
+> > > An earlier step required that runs via "test-tool run-command" have
+> > > TEST_SHELL_PATH set correctly. So defaulting to /bin/sh here is
+> > > pointless, I'd think? This is used only for the in-Makefile "prove"
+> > > invocation, so running individual tests or even a manual "prove" outside
+> > > of the Makefile (where the user might not have set TEST_SHELL_PATH)
+> > > would not apply.
+> > 
+> > Actually, I think the "manual prove outside of the Makefile" situation
+> > is worth keeping this. I know I sometimes copy commands from Makefiles
+> > and run them manually when debugging issues, so it could be annoying for
+> > folks if we remove the default here.
 > 
-> Since you took my suggestion in patch 2, this "which requires a C++
-> compiler" is no longer true, is it? And I don't think we'd even look at
-> the CXX variable at all, since it's now FUZZ_CXX.
+> Hmm, by "manually running prove" I meant running:
 > 
-> So this patch can just be dropped, I'd think.
+>   prove t0001-init.sh
+> 
+> and so on. Or even "prove --state=failed" to re-run failed tests. But
+> neither of those would even use this script, because there's no --exec
+> option.
+> 
+> But it sounds like you mean literally cutting and pasting the "prove
+> --exec" line from the Makefile. That seems to me like a weird thing to
+> want to do, but OK, I'll try not to judge your workflow. ;)
+> 
+> But if you are worried about making debugging more confusing, it seems
+> like silently defaulting to /bin/sh might make things worse. It is not
+> necessarily what "make test" did, and complaining loudly might be more
+> helpful than trying to run with an alternate shell.
+> 
+> I don't feel too strongly about it, though. I'd generally just run
+> single tests as "./t0001-init.sh", which runs into the same issue. I've
+> been working on Git long enough that I know it is one of the possible
+> gotchas when a test failure does not reproduce. :)
 > 
 > -Peff
 
-Done in V3.
+Alright, fixed in V4. We now set TEST_SHELL_PATH when running `prove`,
+and we error out in run-test.sh if TEST_SHELL_PATH is not set.
