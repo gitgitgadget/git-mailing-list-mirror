@@ -1,55 +1,55 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474B75E07E
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 19:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876157442D
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 19:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713986061; cv=none; b=EkbfHJvigkVloGkooFhZxqoIuXdzCDRSeVi5pkKVOVM3GVGp4k7QEnC3EbssYEdBHP3/tJdwYgDE9Hf9LkasHsQJGJmAqxqcccZcJr4BAA8K1aacMdK/jrCJt/2GVfJ3M75piZvbqbmPcKgZiZW3oEkI/MxYCF3JvWGPmQH1+oE=
+	t=1713986063; cv=none; b=ZqzqUwntSOVRk0JR6n5Lnl2Z6pDYU7MduJBP1uSMXxMBCtZMp2dqDUjTIp5dHP8uxlCB1K1cK1HaWTQBopHGDUtYPTIkJ/66VlushUxM6tFZzEwt28tMJQWf3bz/f/lzun827KDjLqK6rOD6+NHRjJ/1/j6+KPwd+ptnBpmOJC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713986061; c=relaxed/simple;
-	bh=lbt9TJAPElNie2SlD/5S4WTeE/79cDloHMdXhhDb7jk=;
+	s=arc-20240116; t=1713986063; c=relaxed/simple;
+	bh=HwlXhseibk7XuU6OSoV6FJp1xhufZ3etSRxMUF+5XyQ=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Jem3EiFk0HTMyJmv2ajMTfjRHSrg6wmytKJASa8TqAoMOql2d8sprRe0p2WrIk3l8C57sL0JDqYMW6z9Zgw2FprkjEZ5ax/ZgkcbJNs/D/9iAEK6EcfxlS8XT6HGTdrwI0QhL41/kOb97qWcpwbxlfVb5YGb7d3AtzisAjukJck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=X6XdiMMI; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=szekgYdv5cF/qeIUJibvwt7z3xyXrO+dQkNxMZreK/z2Os+dfLzAmgTE4hqrPVAPGk8oX36ZCUAxkCy61z4WjmClLWa4uIyHlwrQlJAVN3OKxdVoN1VcrntqADOo8uXi4pOObNtHYfMwkV3iLDKsWRFGaJjUBKko6uRp5YCO2EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dlUnY3fP; arc=none smtp.client-ip=209.85.219.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="X6XdiMMI"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-61ac32822bcso3182537b3.1
-        for <git@vger.kernel.org>; Wed, 24 Apr 2024 12:14:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dlUnY3fP"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-de54be7066bso405818276.0
+        for <git@vger.kernel.org>; Wed, 24 Apr 2024 12:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713986059; x=1714590859; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1713986061; x=1714590861; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GhLNRLpJH1PUCRG33l0/jTFly3a2tm8jftvh3mdfOBk=;
-        b=X6XdiMMIQ3HysEVDo/rE+9DOrEDC0Sh8nuXSWgItkzlCLnL0NOQwjJQfedQ4eNeLCq
-         uc1Bk5cjAQOp1UnN3uiNHfUJrldxQBGaNLT/qClMM/DrxWLWrELxEPx/kazzmEafVWYp
-         vgNQ1KbBACWL/ck7Qld9UnlOM6QRDNbDLBdRHDmkgoblE+5Z6pOxR+jZWD8a4wkyubdz
-         1HB3JrEBLuSv4avuluE/lkL2QzG8rfcMgPH7OAsy/Y54kJLcW3vIft61eSJwcXF775FP
-         eQJyTJ9vMCuEpgZnxYmxyaEbrqzL9CQEGGvjYH9bY+avz8mscI5c82j0X7jlefvDl1KC
-         v7Ww==
+        bh=WXus1Gkcc1750Jiv0uDUx9Fuhc2v2RRkLeZb18hkEbA=;
+        b=dlUnY3fPeCN7FuY8stZs5lpu/zkfeoEzTQe5pCnYRU7Xe+uJMcQnyAATJgIuaM1UqU
+         8CHb8YKmj8mHZQ+KS8ZOqnb1D3VepaBz5rl0NNcjuKuHHV5lL9hv7FeufnYahjnhTBSI
+         0Bi7N2jPXcUjncXy5YbzuAYGHEbihiTdJCCPhS9jdUH9KoQ14k+yzWQONaUSJjmAPLm5
+         WlLmsv1wXwyFamZdTJPNb8dflphQOLbos5Es3MCSr5FhjT79J9DSQgIO0vuIJ8ZUeKgW
+         m8rSHyBYgQj1YWVzjToZrG5C0Q+nZqp6F+CfpcKHVBdS5tem53zCo5MowCb0mWvn84DL
+         01ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713986059; x=1714590859;
+        d=1e100.net; s=20230601; t=1713986061; x=1714590861;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GhLNRLpJH1PUCRG33l0/jTFly3a2tm8jftvh3mdfOBk=;
-        b=TpQNRXto9E8dAEYIYn7B+CYd7h1QKGSiX/FCyxh1MiMHz3tu59CbvIp0FVl79/uBp3
-         z8fIUivIQebFH6hJTDHaVMB0KPSyxLLvhSf7U58lPLN0z3/QP81g+srdopWGT9FX/Tip
-         PBrF9qv2U8Wdqjz00T24oPm47mMgZo6FZa+/tG1gCGTK0tNY18iGyIWWGCBsKrRq8hV8
-         sdHSVHj1DATCPHkAb2Mmz0IGGbTn/z5PQX/kLr/jWGx+FFy3Et7/xIBmY14zmIISJqU8
-         iBgeZ1j1/fj2p3+ym53gxazy6Fug1sRuQbU96WhqyHsyCKoceg4y4ipJhW0KhGlqbUk2
-         gidg==
-X-Gm-Message-State: AOJu0Yy7WkZqUnRu7unxywPEmSsmcKQPponi087nOT44C0nzqkA8VQUK
-	3fCSe0P/mBIozzIxN9CFcFi3qLlRNNZq+IW31ctvgJZGGxTKMIEsPBFqCI06GjKhsublKER2lYS
-	rkGADVQP0mihRB289LVQ2n8u29HZI1rZJZfdVtw2FBvA2WmT6jbvZGKp/QZE6zMtuZ/muLgXoAf
-	ViLxxw694HnPJTfWG/GTXDHOO0SH6PiLG9RxxDnc8=
-X-Google-Smtp-Source: AGHT+IEG5Sbp/f5oNu8yYbHBuPcxr4mXR8noXIQdDiKjOXHmRXDBX4TfVg1n9ASY8VvQq+xnf0Mn7d5DjPduZQ==
+        bh=WXus1Gkcc1750Jiv0uDUx9Fuhc2v2RRkLeZb18hkEbA=;
+        b=dXg+GKbYPm22M1wYEqQsW1r72GpUmfn/jBj2OC6ThTIwtUb1EH4JoIRVMOjOxpPFeu
+         MqABz/oWjMK+y9fFnpoSCyLBB9OHynwGZPGDvMUVnswO/+Yhwa+J3YFGvYKFOm6ZxFBp
+         3TTRACVQleUSbXI3z7XcGh6zoatmj1XIxv/ax/TKwaibmkkax0K3iNKhkOmH7ulVSekt
+         vaelOxukMN0TBvl/9ga1bdr+h2FF1UfUXAkYrz6yf1s5IFLYtger15e9QmQNywqh5KlI
+         bJyAkm1TtWqFzECQPF8uTiLr/LUufJLSrKuejYYiJ4J9BMn5uWJVcZUx3VQ3v4jjXDvy
+         h9xw==
+X-Gm-Message-State: AOJu0Yyb1tPm2oiLggpO9rgJ8GsUkHnN+lhhLweHWgPWO3gpThyQPf3j
+	jRYGxwff27KkjWporISUgH1Xzkk3C20HH4P9o7oVepYTJTxWf1bMjqq3uX5R6/ZPy1ItmGB82oW
+	kfCJ2MhR1rh11usZO52MLuMv8o9f0Ci5eJYlC0BS0uFvKT0NptymtDdGsldUWNNB2IMbSwNwfUr
+	O6q3PjP7LLAhKb1VF8Qg1MemDdm1O06qEmfGozOi4=
+X-Google-Smtp-Source: AGHT+IFVhOYRJjyMKOaHdsTMNyhu1wjIkzksTNvRqJtO5zf2EPdrRgxeYLnp7haq6JwNS6egdtXHz+YgbjYd2w==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:5580:46bd:98b:ecbb])
- (user=steadmon job=sendgmr) by 2002:a81:69c4:0:b0:618:9588:e9db with SMTP id
- e187-20020a8169c4000000b006189588e9dbmr846668ywc.2.1713986059348; Wed, 24 Apr
- 2024 12:14:19 -0700 (PDT)
-Date: Wed, 24 Apr 2024 12:14:08 -0700
+ (user=steadmon job=sendgmr) by 2002:a05:6902:1024:b0:dcc:e1a6:aca9 with SMTP
+ id x4-20020a056902102400b00dcce1a6aca9mr1108889ybt.9.1713986061354; Wed, 24
+ Apr 2024 12:14:21 -0700 (PDT)
+Date: Wed, 24 Apr 2024 12:14:09 -0700
 In-Reply-To: <cover.1713985716.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,69 +59,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1705443632.git.steadmon@google.com> <cover.1713985716.git.steadmon@google.com>
 X-Mailer: git-send-email 2.44.0.769.g3c40516874-goog
-Message-ID: <24f47f8fc7e931c2e15fa985635e3036ec1123ba.1713985716.git.steadmon@google.com>
-Subject: [PATCH v4 2/7] test-tool run-command testsuite: get shell from env
+Message-ID: <4a16a3ec241d83b3de424ce835db24eee6e46f0f.1713985716.git.steadmon@google.com>
+Subject: [PATCH v4 3/7] test-tool run-command testsuite: remove hardcoded filter
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com, peff@peff.net
 Content-Type: text/plain; charset="UTF-8"
 
-When running tests through `test-tool run-command testsuite`, we
-currently hardcode `sh` as the command interpreter. As discussed in [1],
-this is incorrect, and we should be using the shell set in
-TEST_SHELL_PATH instead.
+`test-tool run-command testsuite` currently assumes that it will only be
+running the shell test suite, and therefore filters out anything that
+does not match a hardcoded pattern of "t[0-9][0-9][0-9][0-9]-*.sh".
 
-Add a shell_path field in struct testsuite so that we can pass this to
-the task runner callback. If this is non-null, we'll use it as the
-argv[0] of the subprocess. Otherwise, we'll just execute the test
-program directly. We will use this feature in a later commit to enable
-running binary executable unit tests.
+Later in this series, we'll adapt `test-tool run-command testsuite` to
+also support unit tests, which do not follow the same naming conventions
+as the shell tests, so this hardcoded pattern is inconvenient.
 
-However, for now when setting up the struct testsuite in testsuite(),
-use the value of TEST_SHELL_PATH if it's set, otherwise keep the
-original behavior by defaulting to `sh`.
+Since `testsuite` also allows specifying patterns on the command-line,
+let's just remove this pattern. As noted in [1], there are no longer any
+uses of `testsuite` in our codebase, it should be OK to break backwards
+compatibility in this case. We also add a new filter to avoid trying to
+execute "." and "..", so that users who wish to execute every test in a
+directory can do so without specifying a pattern.
 
-[1] https://lore.kernel.org/git/20240123005913.GB835964@coredump.intra.peff.net/
+[1] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/helper/test-run-command.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ t/helper/test-run-command.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index c0ed8722c8..a41a54d9cb 100644
+index a41a54d9cb..e6bd792274 100644
 --- a/t/helper/test-run-command.c
 +++ b/t/helper/test-run-command.c
-@@ -65,6 +65,7 @@ struct testsuite {
- 	struct string_list tests, failed;
- 	int next;
- 	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
-+	const char *shell_path;
- };
- #define TESTSUITE_INIT { \
- 	.tests = STRING_LIST_INIT_DUP, \
-@@ -80,7 +81,9 @@ static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
- 		return 0;
+@@ -175,9 +175,7 @@ static int testsuite(int argc, const char **argv)
+ 	while ((d = readdir(dir))) {
+ 		const char *p = d->d_name;
  
- 	test = suite->tests.items[suite->next++].string;
--	strvec_pushl(&cp->args, "sh", test, NULL);
-+	if (suite->shell_path)
-+		strvec_push(&cp->args, suite->shell_path);
-+	strvec_push(&cp->args, test);
- 	if (suite->quiet)
- 		strvec_push(&cp->args, "--quiet");
- 	if (suite->immediate)
-@@ -162,6 +165,10 @@ static int testsuite(int argc, const char **argv)
- 	if (max_jobs <= 0)
- 		max_jobs = online_cpus();
+-		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
+-		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
+-		    !ends_with(p, ".sh"))
++		if (!strcmp(p, ".") || !strcmp(p, ".."))
+ 			continue;
  
-+	suite.shell_path = getenv("TEST_SHELL_PATH");
-+	if (!suite.shell_path)
-+		suite.shell_path = "sh";
-+
- 	dir = opendir(".");
- 	if (!dir)
- 		die("Could not open the current directory");
+ 		/* No pattern: match all */
 -- 
 2.44.0.769.g3c40516874-goog
 
