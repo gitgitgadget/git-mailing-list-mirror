@@ -1,67 +1,111 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7364C2F5B
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 01:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189261F5E6
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 03:59:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713921432; cv=none; b=tu8opGZLfcp4oZ66fRBv7JHU4hjI55xlBYOn1w0iDbBKuTeYVKIAoMHcnpCioSwbpBFSYGGJd27X7cbXzdRocKcLg5ffxkLHIy7bWXU+cBb19V3ZU16RQ0upOvsehfiqH5NlRLzecGJnkXobbOFN4400RAyPfM/WkD3F3CFKKDw=
+	t=1713931187; cv=none; b=OptRa2OAC8oL9N4bvcGCbF5pQ2CcRDqwoWnExgNRpUNiM/7oHuX6TwCKtauLjVMWUgIcrGsqzruZ2Wn5b/6yBLPBYq5V1HV9qlwwZPe+34+sBCCMQHKseISU6c2rTtcBIxbj3tzVs5/xcTgxsybem16gHt0+Vj2x2fj/8aICBR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713921432; c=relaxed/simple;
-	bh=6PRb4EMlFQB8VL+kKOOMCW58GFmfn5MJ8lXnMX1ApsM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QG6oRTAhawgvHfJA90e1H+dlXb8haVFRy7CaON+gSBgWFFWg0tvH+OWwASPb2r057W7Y1L7vzp/jzjikU1XF+/YlsVBIen22A/eSXv46eB7d5iorXro8tQfcJCSEHF1S6NpW+05rjTolei2Vmc3koiDbBkEBuSF8ahkNtOr6GaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CHXeDRlN; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1713931187; c=relaxed/simple;
+	bh=I0t+sgkKDhnl2SsSw8I0UakS9kFHgIA/QU00OPQ7kKg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fzUKhx/Gbyklfc+xNExSJuWSHDRZbR/ZLuz7RcFTXqnDWyEbAe5eMPdbl9Gz5+vwuGsLwrIIbaFpfZjRGbNtG3nnwAA6faFxbJzFhsZ88DMix2bRHTXhonoP9OT46Lj1m7vCFrNLS6IQ+3LMwfcKVtoON568bfTO40/x1bscK1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=e7SrrncE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BZO7yYBl; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CHXeDRlN"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 20D841F69FD;
-	Tue, 23 Apr 2024 21:17:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=6PRb4EMlFQB8VL+kKOOMCW58GFmfn5MJ8lXnMX
-	1ApsM=; b=CHXeDRlN/B4GEsFyU2mZ4YT2YMaUwg9V55NJztYC9u6+HCl7vWLN2L
-	kMVz/jWiLQP6DuobzYP55gdXao3OpRdik3SwoICEBKF6ii+FKbzb5IBtuAKJac7O
-	ruoviYSFtk3Vj8qSCWXb72gvH03Fj3TJI3GtH5Fd1Z1f4geCgNuGs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1975D1F69FB;
-	Tue, 23 Apr 2024 21:17:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 66CAB1F69FA;
-	Tue, 23 Apr 2024 21:17:09 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  chris.torek@gmail.com,
-  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 0/8] refs: add symref support to 'git-update-ref'
-In-Reply-To: <20240423220308.GC1172807@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 23 Apr 2024 18:03:08 -0400")
-References: <20240412095908.1134387-1-knayak@gitlab.com>
-	<20240423212818.574123-1-knayak@gitlab.com>
-	<20240423220308.GC1172807@coredump.intra.peff.net>
-Date: Tue, 23 Apr 2024 18:17:08 -0700
-Message-ID: <xmqqcyqf4l0r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="e7SrrncE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BZO7yYBl"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 10915114016A;
+	Tue, 23 Apr 2024 23:59:44 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 23 Apr 2024 23:59:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1713931184; x=1714017584; bh=6r9s0S4HySBXMGYc3GINp
+	hH3AQtPDIZO3GXY8kvdXu0=; b=e7SrrncECwOFgoNeG6TvnAj4GH/YdkOmNDKsu
+	FCia4xkJjJnBn3BBbBIU/QVZpgoI4TRtutQ9iUUfzrknOOV6SDSeq2DSZU+jC1MA
+	9d1gBB7NFwdK4yOAPpYzK4gEVEE/7PtUzzpc6rkm/TjcyceWs0h93mFyiW8Bj5Ax
+	uKYSNQsJwqluQcEYShALlGYDAcOGvMSHb/7Gkh9HjAQ4zZWKwM7G5LvLHnmEyAiV
+	hAWdTW6mCECc/rdJbQToJYmzFcsIG96IkVZiM4UekKHDlXbwoe4v8mVwE8jSqkUF
+	2Q4wy4UGR+TQXiUm7Kaj9tmDo61T387FsGIpEmzkDMkHaL0pA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1713931184; x=1714017584; bh=6r9s0S4HySBXMGYc3GINphH3AQtP
+	DIZO3GXY8kvdXu0=; b=BZO7yYBlZdxwZZTq+9BkPTR0dy/ezhLgZGVpTFisiWpt
+	KR+/MhYjdRjcMoz56r6HNdACURmzCBderxOzCv/oJh4SFHEzbq95W6KdKgGvXiQX
+	KGz12XyKe/18F1WIaUBjsCUJkzH9d+Ha8kdDHWddYFl2ThijfmN1KDGgWMoyCfBd
+	tkXq0K8qYLPOVVwiuj3N1EctAqAPmqfcGCuo5PXOaEtsGOXU7zYmUsvhEjGj8Ful
+	KqqLq6Gn6PeAjlNZqYFAMsSZMVTFFfem+YKxNSWbfZBfWlnAV72NFQeAlao4zkM4
+	BT2bNRVFVA5EzrkNJXuIChm7wM8YJG/cqSjkBK9uig==
+X-ME-Sender: <xms:r4MoZmBQR7O44qNRQTifaxeocyKYQPlruFFZZ_YlcjnWLOpCotimDg>
+    <xme:r4MoZgiVCQiO_3jBo2n450GRplJak2VP6sjcFGkLCxgRXtEgYUMdteDm1AeVptCxp
+    TDeH5d4nsMgsnei3Q>
+X-ME-Received: <xmr:r4MoZpn8uVLnlntkJW7sT19bAhdGmFFSq0H5DttfY_eumOgaqS7356Qm6PM7ix-oxuhcn7TXrMjQyTW8jTVTKN_k0pjIPfXyvMNPTA7iH6UuFe4kDSEKlajd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelvddgjeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffoggfgsedtkeertd
+    ertddtnecuhfhrohhmpeflrghmvghsucfnihhuuceojhgrmhgvshesjhgrmhgvshhlihhu
+    rdhioheqnecuggftrfgrthhtvghrnhepfeetueelkeeuheetudeigeeggeetgeegtdetud
+    egfeefvdetjeehgfelffffheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
+X-ME-Proxy: <xmx:r4MoZkxvESLWjH0QFi6hMMX1U7eb21F1BHSPm1Yj493GH0sUDRZn_Q>
+    <xmx:r4MoZrRvvukpACpAH2uGF400S5ZeDRmsGVihuFi-vzryiS8Po8f2SA>
+    <xmx:r4MoZvbjRzFRc163p1gznJxisqmawcTy3TnMmSskarcP-GXJV3p61g>
+    <xmx:r4MoZkSl0H8XYZ5wn6w7y-Jx2VfkwmCHqo9aRPkW68TQb0hY1JWdFA>
+    <xmx:sIMoZmc_vBZlJMdlQFiDNZivFSe_8H6OqTKSnwBiia2vb4wBDc1wHVtX>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Apr 2024 23:59:42 -0400 (EDT)
+From: James Liu <james@jamesliu.io>
+To: git@vger.kernel.org
+Cc: James Liu <james@jamesliu.io>
+Subject: [PATCH 0/2] advice: add "all" option to disable all hints
+Date: Wed, 24 Apr 2024 13:58:55 +1000
+Message-ID: <20240424035857.84583-1-james@jamesliu.io>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5F407A7A-01D8-11EF-8A26-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Hello,
 
-> That's pretty convoluted. But we can avoid it entirely if there's no
-> ambiguity in the protocol at all.
+This patch series adds an "all" advice hint type that can be used as a
+convenience option for disabling all advice hints. This is useful in a
+server context where advice hints won't be seen by a human, and hints
+that change over time may cause test failures.
 
-;-).
+This value should only be set to "false", at which point all hints will
+be disabled. Individual hints can then be enabled by setting their
+respective types to "true".
+
+The series also modifies the `advise` test tool so it's able to test the
+normal and special case branches in the advice_enabled() function, and
+adds a few more test cases to verify behaviour.
+
+Cheers,
+James
+
+James Liu (2):
+  advice: allow advice type to be provided in tests
+  advice: add "all" option to disable all hints
+
+ Documentation/config/advice.txt |  5 +++
+ advice.c                        |  8 +++++
+ advice.h                        |  1 +
+ t/helper/test-advise.c          | 20 +++++++----
+ t/t0018-advice.sh               | 63 +++++++++++++++++++++++++++++++--
+ 5 files changed, 88 insertions(+), 9 deletions(-)
+
+-- 
+2.44.0
+
