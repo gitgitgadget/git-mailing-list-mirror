@@ -1,54 +1,54 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE5315ECFE
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 14:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0504015ECFA
+	for <git@vger.kernel.org>; Wed, 24 Apr 2024 15:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713970763; cv=none; b=H9aXDfNOmqYAH519IoqBLiPknJ0d+kQhp+oBCZ7SFKBYWuKkoHdoO12lfQhc6EOK+pOisFHHvDcTanj2s5WXe2nqkZUDgNpEU8+iKD8HgO72650keDfX8HGa4dq0ntV1pfFjUJ3Qy6RZRlyik/ZywX4orXgyljup3YtfGtaYyS0=
+	t=1713972347; cv=none; b=lzdlt5ygTl7zhxMzQo8RRFTp5DPs+8pge7+z8dN9ZwFjreDfHBcu4vv7pcrDsR2lSJvM8NDMxalBty0dGW3pMgMkOKyP9eEUjNdsruvaGnY0Ky94y/MsC+FDY5NCXRCPYXu5jMJQNV4iy2lm6c+V0ppfZ3bHJJCbYfYTkQ6TosM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713970763; c=relaxed/simple;
-	bh=yrOL96WQB45BsOIOMe1pCQbL636wLaxuVIMO2PXPzWQ=;
+	s=arc-20240116; t=1713972347; c=relaxed/simple;
+	bh=qKqoJFePLK+GVgFHVVfupoLPNSDzWZa8vrnJHqlCIJ0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=maqnV5AXel2rX7ewF82GpMcr9dzdAFt+Daj7TzIG13n88NcX+ih6kc3QmG9thi6SVo3rkRtd8mUELPkArk7J8OihePhQzijx06O67wTxslq0agJoyfol/b6oHesTxklLY+bhpoe91p/fm5ZUHjUXXS5OGQVpnMSahRx3a1wedcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=juD2uuvF; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=DIT+J6SznoDNbey9zAymNR8zymadHNSw/mS75y8YcE3U6uOU6RdplGzZ6R/d/FXqD0vz3xEUyXG+70yANEqlug/GUlr26wjLR2RQd2JIF8kcFpw9/vrn7DUXxRL4EwN2wFQ1aTBohmqReZjN4jvzJyujIixCecEK1RNS2H9NhVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eOLXojDf; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="juD2uuvF"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A8EE33ED5;
-	Wed, 24 Apr 2024 10:59:22 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eOLXojDf"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D48B1FEB5;
+	Wed, 24 Apr 2024 11:25:44 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=yrOL96WQB45BsOIOMe1pCQbL636wLaxuVIMO2P
-	XPzWQ=; b=juD2uuvF4VcgoR2vSITtSimdfHKpaodYty/Ly47e/85mC9dqYBdIMS
-	+T4cVOum9BDFgwlCmUo0Q9cKziUVcqw78PXGj8DcIDjwMrMZ276608J8oPAcPZYA
-	vrEMLgM96WBS+wNQeKoBCosJdQRJMPJ/N9JyVuwz4KKtHWlLGepsM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 227DB33ED4;
-	Wed, 24 Apr 2024 10:59:22 -0400 (EDT)
+	:content-type; s=sasl; bh=qKqoJFePLK+GVgFHVVfupoLPNSDzWZa8vrnJHq
+	lCIJ0=; b=eOLXojDf7Ei2Qz5sKGU/86knkGCCcoePBJuo6DowNn74I/cYELdAbS
+	KQOeXN0r54Vdopr8KfUbleeMhYI5ADwybwto54tX2tFfdZGSOMt6gcTZFGRk3b61
+	sgkPVwVnt27QUusVX1sfuDwDyKbYafH5OStmsBWNupKhOFKhyhH1s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 85B1D1FEB4;
+	Wed, 24 Apr 2024 11:25:44 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6355133ED3;
-	Wed, 24 Apr 2024 10:59:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4C121FEB3;
+	Wed, 24 Apr 2024 11:25:43 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: phillip.wood@dunelm.org.uk,  James Liu <james@jamesliu.io>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 0/2] advice: add "all" option to disable all hints
-In-Reply-To: <ZikSNSszRzBz715c@ncase> (Patrick Steinhardt's message of "Wed,
-	24 Apr 2024 16:07:49 +0200")
-References: <20240424035857.84583-1-james@jamesliu.io>
-	<xmqqo79z2s24.fsf@gitster.g> <ZiirKgXQPLmtrwLT@tanuki>
-	<7d1d2892-d486-4e91-b100-e44c1d76893c@gmail.com>
-	<ZikSNSszRzBz715c@ncase>
-Date: Wed, 24 Apr 2024 07:59:16 -0700
-Message-ID: <xmqq34ra3iyj.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Dragan Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH v4 2/2] format-patch: "--rfc=-(WIP)" appends to produce
+ [PATCH (WIP)]
+In-Reply-To: <aa628eba-1545-47ac-9773-8aff47ca4adf@gmail.com> (Phillip Wood's
+	message of "Wed, 24 Apr 2024 11:16:08 +0100")
+References: <20240421185915.1031590-1-gitster@pobox.com>
+	<20240423175234.170434-1-gitster@pobox.com>
+	<20240423175234.170434-3-gitster@pobox.com>
+	<aa628eba-1545-47ac-9773-8aff47ca4adf@gmail.com>
+Date: Wed, 24 Apr 2024 08:25:42 -0700
+Message-ID: <xmqqplue2361.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,20 +58,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 399E236C-024B-11EF-B610-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ EA8D1FB8-024E-11EF-95B7-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Filtering out advices would be doable. But we probably wouldn't want to
-> do so unconditionally whenever we execute Git commands.
+> I'm not convinced this is a good idea as I'm not sure how adding "RFC"
+> at the end of the subject prefix makes the world better than just
+> having at the start of the prefix and I find using "-" to do that
+> quite confusing.
 
-Can you elaborate?  Would you only sometimes show advice messages
-that come from "git" you invoke?  Based on what criteria would it
-decide whether to filter or not to?  Is it purely per location in
-your program (i.e., "every time the control flow reaches this call
-to an equivalent of run_command(), we would filter the "hint:"
-messages")?
+I am not convinced it is a good idea, either.  "PATCH (WIP)" was the
+best example I could come up with.  I am also a fan of "a list of
+space separated labels or keywords" you mentioned, but *if* a
+project convention somewhere is to have them before "PATCH", then it
+is not entirely unreasonable to wish to have a way to prepend these
+labels.
 
-In an invocation where you would not filter, what effect does users'
-setting of advice.* configuration variables have, and what effect
-does a new and unseen kind of advice messages have?
+But I am fine to drop it for the sake of simplicity.  It would help
+discourage users from trying to be "original" in a way that does not
+make a material difference.  If a project comes with a concrete need
+to prepend, the patch is always resurrectable from the list archive.
+
+As to the syntax, I think "-" is a fairly good way to indicate
+whether it goes to the front or back.  When told to "Combine '-RFC'
+and 'PATCH'", I expect that most people would give 'PATCH-RFC' and
+not '-RFC PATCH'.
+
+Thanks.
