@@ -1,124 +1,98 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7EB134BC
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 03:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B84C89
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 03:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714014290; cv=none; b=ByFgR2upgqQuJWQtVP1hYOqyQBCUWR+T+La10iZYk/6nRXDRc2dmKcOgoufv8cdqyiRLvE4lRu/Cn9vg6MMVPm89bmE+mzeEdDbYhLNPkham8nrYckKb7rv3RNXTRmKERsZonJi4ELUx9JV7rIT+242vE3VPXsnFjHpQaZgvWrA=
+	t=1714015071; cv=none; b=GQ51hkJtqKzWyBB0oq2y+lSpjVKuhSNO/BVLRBjIbjgJlvS7clZ3I7tjVPTe7164gGsXHcm8kO9FHKtE7ChGJCwHsNThre+bE0IiPwT9frUGWPfb0j48RWbSqhxA/tiZ47Womi2jxGpgP2wO6H14Ftqy52+eA6vWBg658/PZCfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714014290; c=relaxed/simple;
-	bh=Mr+EdSiArRPZg30drtNc1jxItdYB0YBRAh3ffBthpvw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=brVdR3IMDaBalkSCon778VXvvuXxaOSicqN0EKPFdBL3QDbcr0N60ABAzRVt4kZinx4DlhQCriEkWimP8rg+F7DHQrYzuqKqyErMBpoBcbYhEWcoG0tgUj0zsntpcFtlj+u8YbUckEhM3MYD7ciGJaTT125ie86dRYq/bsp/vSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8lOi7Tl; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714015071; c=relaxed/simple;
+	bh=9C+RR/YUgjdaBTo4wWDtIcpTWkd4yKUQnRHZTZo6tyg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=bTvfgZW0k5YF1/XBlRG4WPOgiGxJztd1zrZXJBDHlkVOHEPjwjSCm70fzzqc+BNh/CLG5msS0WA6T1zzZrdu5ECDeDE41NBuNxPXeNdO83771GzeFfLKVKqw/EMOfUTBLIWM83z/MYz8I1zhw+HFKBTE/tUmAqDSEo6VPx0lrUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OM+xSoEJ; arc=none smtp.client-ip=209.85.128.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8lOi7Tl"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4187c47405aso3783365e9.3
-        for <git@vger.kernel.org>; Wed, 24 Apr 2024 20:04:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OM+xSoEJ"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-61acc68c1bdso18271407b3.1
+        for <git@vger.kernel.org>; Wed, 24 Apr 2024 20:17:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714014287; x=1714619087; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AS++PwdPXPtWc20mruHTrYnStWFA9a/bRGPNq3STSPQ=;
-        b=I8lOi7TlvKPNJEA8v0tXDSkcRFSy/XCH/sIx5goINdgLOjCEMfBMhSoFXmuOO0XaTb
-         4526YBPwgapaRZxoS2fxTWhwElmrjGoEWMC/QYHtWo19dFXlxhC1TZ+VhWcgLLzNbb2e
-         YzszfXqmIs1CWCFxv4d1bgaCUKWcpSiELyv5PoyTNj5DcztEK29WhTtKZODduruT14wy
-         oCWf2hWFBV6iuTAMdvPKgFkqY5t+np/d81hooxExTJsWjTUGjJobdYL3OBoY76dE9Y78
-         HWu4KSXbkr6cZVX+VDGhH0bR6Xx2JepE3GHiG4kxxa12XADGhdmy561Gw7HRbghup18D
-         cDxw==
+        d=google.com; s=20230601; t=1714015069; x=1714619869; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ujnqE7IGPNjE4I1HV4Z6NdATneu/GawQHJ60h9B5XXI=;
+        b=OM+xSoEJNGGsP51VoSNofnCt2rT3gXuD9FFCAg5svGp6bo4LBIOrynE8yzse0oDN++
+         5zn1DWHUp8hGAxzyXeMoveNgQzTu4q6G6w1lxc+/49nQN/MGj4ySqBLTvy+pGf1ARbdD
+         8QQbPQrDyZmEBhnSUbtI0t6LmY09R6K13AT/D6zRSJUdlBxDHn57erwpBD+g6D/g5pIV
+         mAbezxAEUtkE9cC1B3fpYoUj18WqpwDx1W64l05awNfW6kqQWzXy+lzT3HjXuxtQ3jCY
+         4o/PTrXcBRBgVFhuBhyuZ/mE0dK8PhzBAS/BwBzKHuLojL95s8URBwGHbUr4SEKddDrt
+         pfGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714014287; x=1714619087;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AS++PwdPXPtWc20mruHTrYnStWFA9a/bRGPNq3STSPQ=;
-        b=Q8AbtXQU/zIYZEZROJzqYjen5fPrjx4z7rMZjiJ86gUBVOr9iVXdVmsW+BfmnipGg5
-         ViNbtMdWYWvfc+70NtGRiapSogAwb7Zkux+zbu91tP/ifEOy8qCMYwYof8P/h6xGUD0E
-         wzZtSFoIwvuFiPd0MnGAuupeg7tvVpHXnLY6C7xkPmKqlkXkdqwKwKnhvXCoUHlPyZ0/
-         CeDzLYECgE4mfovx7fPHpsNZi7DJ3vwk8h9fPdY6OwL5AS3gBvSYYiqULksUYgstgoa+
-         ipjcA1uaLt2/l2ahVu5GQ54tX4QRrxkAQEzu1r5shTnujY+VVIG5NDB4UHY9USyt8v3W
-         Y47Q==
-X-Gm-Message-State: AOJu0YygTgAy2TRbGmD+fHTTkbVbeB+0u811w+kQl2HC5qyQx70Aoolm
-	VFSB+ZWwP+YlVaWb20YMyZVzn9PMG9XopxA/3Y5TYn+1jagvwZt/
-X-Google-Smtp-Source: AGHT+IHfblNk7Q1r5XcdtC203QIH6bf/vYE0algrYadS0AZVfxOhpw+iLuwqgEj9mIWNwTSXXLhNOg==
-X-Received: by 2002:a05:600c:a01:b0:41a:fa9a:d86b with SMTP id z1-20020a05600c0a0100b0041afa9ad86bmr2615472wmp.11.1714014287004;
-        Wed, 24 Apr 2024 20:04:47 -0700 (PDT)
-Received: from gmail.com (244.red-88-14-52.dynamicip.rima-tde.net. [88.14.52.244])
-        by smtp.gmail.com with ESMTPSA id l37-20020a05600c1d2500b004186f979543sm29743908wms.33.2024.04.24.20.04.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Apr 2024 20:04:46 -0700 (PDT)
-Message-ID: <19ff10e9-12be-4a50-9163-1fe71414fd46@gmail.com>
-Date: Thu, 25 Apr 2024 05:04:45 +0200
+        d=1e100.net; s=20230601; t=1714015069; x=1714619869;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ujnqE7IGPNjE4I1HV4Z6NdATneu/GawQHJ60h9B5XXI=;
+        b=cF5PpFl42da5b5UO100F/ahZ3Q9avKOiEjXsAr2TRzFuX9JNn/gaRJbYLHlAS6TjAM
+         EjgxYDa+8mg4QZOwJbRSLMTey+YhpCOgRoIgMfExaZ8hfl/V1pcimSVVNk5aIHIDp5ZC
+         17ZzCi+MN9mEgc04Uw1e9vkWaN4lCPG3C2r4TyX7p1cu7muoSHsS8vZIjxgXvYxdUq3o
+         gDSFv9GZhfXNIUOE+QViafDj5p2iLQBIu6jF83itbXnOEXIjSXGviQbyK3nVNKFR30pg
+         NiD/94U9Lsa90hqGH2LORdnIfhSldqz6aCR+/GfVLpHocjnLU2fElXtlJAdMcsjBvz1z
+         HmAw==
+X-Gm-Message-State: AOJu0YwX/HfgNssZZ278lcnwvpBJkSoHfB752fRM/rRjqKkQlEg1fhwz
+	/Xw33QYnGjuW2fPVovQNpXZRI4lW8tQcs/xQGnQliuGuMWElEipOpYEmk/JrEg1Gl7Sg64aE7Bc
+	AWQ==
+X-Google-Smtp-Source: AGHT+IHLA8jXEWMCSgmNRBJfiXR/e6RBDLy9ZWmfVfbgfvgctBJClmS/pX9OiR/KkrzVOByTIeqEqPIE2uY=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:1203:b0:dc6:e884:2342 with SMTP id
+ s3-20020a056902120300b00dc6e8842342mr521649ybu.5.1714015068709; Wed, 24 Apr
+ 2024 20:17:48 -0700 (PDT)
+Date: Wed, 24 Apr 2024 20:17:47 -0700
+In-Reply-To: <xmqq34rb64oj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] add-patch: response to unknown command
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
- <20240425014432.GA1768914@coredump.intra.peff.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <20240425014432.GA1768914@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
+ <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com> <0e9ae049b8861fecf49c097e8d52e734f7a9c9b3.1713504153.git.gitgitgadget@gmail.com>
+ <xmqq34rb64oj.fsf@gitster.g>
+Message-ID: <owlyzfti3zc4.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 7/8] trailer: make trailer_info struct private
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 24, 2024 at 09:44:32PM -0400, Jeff King wrote:
-> On Sun, Apr 21, 2024 at 11:52:33PM +0200, Rubén Justo wrote:
-> 
-> > +test_expect_success 'unknown command' '
-> > +	test_when_finished "git reset --hard; rm -f command" &&
-> > +	echo W >command &&
-> > +	git add -N command &&
-> > +	git diff command >expect &&
-> > +	cat >>expect <<-EOF &&
-> > +	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
-> > +	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
-> > +	EOF
-> > +	git add -p -- command <command >actual 2>&1 &&
-> > +	test_cmp expect actual
-> > +'
-> 
-> I got a test failure on Windows CI from this.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thank you for testing thoroughly.
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> There are a couple disadvantages:
+>>
+>>   (A) every time the member of the struct is accessed an extra pointer
+>>       dereference must be done, and
+>>
+>>   (B) for users of trailer_info outside trailer.c, this struct can no
+>>       longer be allocated on the stack and may only be allocated on the
+>>       heap (because its definition is hidden away in trailer.c) and
+>>       appropriately deallocated by the user.
+>
+>     (C) without good documentation on the API, the opaque struct is
+>         hostile to programmers by going opposite to "Show me your
+>         data structures, and I won't usually need your code; it'll
+>         be obvious." mantra.
+>
+> The comment inside trailer.c does not count (the API users are not
+> supposed to peek in it---that's the whole point of making the
+> structure opaque).  You'd need to compensate with a bit more doc in
+> trailer.h to help the API users.
 
-> The test_cmp output looks
-> like this:
-> 
->   -(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command 'W' (use '?' for help)
->   -(1/1) Stage addition [y,n,q,a,d,e,p,?]?
->   +(1/1) Stage addition [y,n,q,a,d,e,p,?]? (1/1) Stage addition [y,n,q,a,d,e,p,?]?
->   +Unknown command 'W' (use '?' for help)
-> 
-> which makes me suspect a race. Perhaps because the prompt is going to
-> stdout, but the "Unknown command" message goes to stderr?
-
-I have to read the thread pointed by Eric, but my knee-jerk reaction has
-been to think in something like:
-
-diff --git a/add-patch.c b/add-patch.c
-index 447e8166d2..0090543f89 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -292,6 +292,7 @@ static void err(struct add_p_state *s, const char *fmt, ...)
- {
-        va_list args;
-
-        va_start(args, fmt);
-+       fflush(stdout);
-        fputs(s->s.error_color, stderr);
-        vfprintf(stderr, fmt, args);
+SGTM. I can reroll again by the end of the week to add docs for would-be
+API users. Cheers
