@@ -1,98 +1,107 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B84C89
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 03:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54EC2BB01
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 04:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714015071; cv=none; b=GQ51hkJtqKzWyBB0oq2y+lSpjVKuhSNO/BVLRBjIbjgJlvS7clZ3I7tjVPTe7164gGsXHcm8kO9FHKtE7ChGJCwHsNThre+bE0IiPwT9frUGWPfb0j48RWbSqhxA/tiZ47Womi2jxGpgP2wO6H14Ftqy52+eA6vWBg658/PZCfo=
+	t=1714018398; cv=none; b=Rg4VkcfcbW7zDWzSRXZw4wGjC5I8TVUPxgXMvIZacnxPgWFLfY2ll+shc9g2yNyzlaRxTUm+MEp5Y+JXJuqdoEBPfi69HYkkO4dH4jS9isHPBbq2GyweudWts/x1g6lvmxzslZcu1pi/3d1tHqtUx4JkYdAOYwgikQ3HzV1cZwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714015071; c=relaxed/simple;
-	bh=9C+RR/YUgjdaBTo4wWDtIcpTWkd4yKUQnRHZTZo6tyg=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=bTvfgZW0k5YF1/XBlRG4WPOgiGxJztd1zrZXJBDHlkVOHEPjwjSCm70fzzqc+BNh/CLG5msS0WA6T1zzZrdu5ECDeDE41NBuNxPXeNdO83771GzeFfLKVKqw/EMOfUTBLIWM83z/MYz8I1zhw+HFKBTE/tUmAqDSEo6VPx0lrUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OM+xSoEJ; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1714018398; c=relaxed/simple;
+	bh=5csnHxotV9LT7x6TGnr8y2ks88K+e17iV0UraCPI1X8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aq31S+y1bWVRSVCElGxBUsMWG1i7SJmsEyJLKpr7bJTBC6PC/WUNENfXyDUvc5Y/ZIVpU0h3xPyBNSUejh8wv+GaAtxfUvwhMLyZJOfjmzq3zIeF6ojXyL+fWj9fhbcDd14BLFe8sj2SdAxPYRmin9yb8ssVOWvk7G5p9fI6VwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ib3CDzUy; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OM+xSoEJ"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-61acc68c1bdso18271407b3.1
-        for <git@vger.kernel.org>; Wed, 24 Apr 2024 20:17:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ib3CDzUy"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2a4b457769eso497627a91.2
+        for <git@vger.kernel.org>; Wed, 24 Apr 2024 21:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1714015069; x=1714619869; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ujnqE7IGPNjE4I1HV4Z6NdATneu/GawQHJ60h9B5XXI=;
-        b=OM+xSoEJNGGsP51VoSNofnCt2rT3gXuD9FFCAg5svGp6bo4LBIOrynE8yzse0oDN++
-         5zn1DWHUp8hGAxzyXeMoveNgQzTu4q6G6w1lxc+/49nQN/MGj4ySqBLTvy+pGf1ARbdD
-         8QQbPQrDyZmEBhnSUbtI0t6LmY09R6K13AT/D6zRSJUdlBxDHn57erwpBD+g6D/g5pIV
-         mAbezxAEUtkE9cC1B3fpYoUj18WqpwDx1W64l05awNfW6kqQWzXy+lzT3HjXuxtQ3jCY
-         4o/PTrXcBRBgVFhuBhyuZ/mE0dK8PhzBAS/BwBzKHuLojL95s8URBwGHbUr4SEKddDrt
-         pfGw==
+        d=gmail.com; s=20230601; t=1714018396; x=1714623196; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QpqeUGEdCmmVH9E1iAxQvEqAhPmA3SdS84IYeWKfhJA=;
+        b=ib3CDzUyzJFD2znWiL9/4KPGx2wsSGFuGLgYSYmAPq3qPnJNONHeu9zXhorvL4HKbL
+         jmLNCrWxvtXyT4BpdsRH0ggPFtfjTZKT40fGdip3tHJm6HVMEL0GLwhzOHunDYvTG0Lz
+         rpGboqD7BnBP9FzI2OyfCivRqFGgyqxHSmjTr4sxaKvG6h+SV9fjiRr16Ou+cX6Y7Qgd
+         LcyiO/F6mi25D7Bsce0Ti3pE1u+z/RmyHADOh6y8urt7ZGeiYTF78j0NTqSzKisWSEPM
+         0X2Hjdhh+5YNMtPVIlBTNibBMbSrk9s78fLWb4e5PAVb4+bt/R0zmiGRQrhq/yxDE67U
+         H5Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714015069; x=1714619869;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ujnqE7IGPNjE4I1HV4Z6NdATneu/GawQHJ60h9B5XXI=;
-        b=cF5PpFl42da5b5UO100F/ahZ3Q9avKOiEjXsAr2TRzFuX9JNn/gaRJbYLHlAS6TjAM
-         EjgxYDa+8mg4QZOwJbRSLMTey+YhpCOgRoIgMfExaZ8hfl/V1pcimSVVNk5aIHIDp5ZC
-         17ZzCi+MN9mEgc04Uw1e9vkWaN4lCPG3C2r4TyX7p1cu7muoSHsS8vZIjxgXvYxdUq3o
-         gDSFv9GZhfXNIUOE+QViafDj5p2iLQBIu6jF83itbXnOEXIjSXGviQbyK3nVNKFR30pg
-         NiD/94U9Lsa90hqGH2LORdnIfhSldqz6aCR+/GfVLpHocjnLU2fElXtlJAdMcsjBvz1z
-         HmAw==
-X-Gm-Message-State: AOJu0YwX/HfgNssZZ278lcnwvpBJkSoHfB752fRM/rRjqKkQlEg1fhwz
-	/Xw33QYnGjuW2fPVovQNpXZRI4lW8tQcs/xQGnQliuGuMWElEipOpYEmk/JrEg1Gl7Sg64aE7Bc
-	AWQ==
-X-Google-Smtp-Source: AGHT+IHLA8jXEWMCSgmNRBJfiXR/e6RBDLy9ZWmfVfbgfvgctBJClmS/pX9OiR/KkrzVOByTIeqEqPIE2uY=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:1203:b0:dc6:e884:2342 with SMTP id
- s3-20020a056902120300b00dc6e8842342mr521649ybu.5.1714015068709; Wed, 24 Apr
- 2024 20:17:48 -0700 (PDT)
-Date: Wed, 24 Apr 2024 20:17:47 -0700
-In-Reply-To: <xmqq34rb64oj.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1714018396; x=1714623196;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QpqeUGEdCmmVH9E1iAxQvEqAhPmA3SdS84IYeWKfhJA=;
+        b=odEfVg+dHAdVqDk7x1kO0bfEGtB3MLQoEWuNNleFI67LW3yGZG71h6ciwsDeBb0aZF
+         CYi6zMqZQhL/i+0dK2CzhM527G97gKysd2bu+aMbin38ERcTBRHf6pYGa2QBjbidxz3O
+         aFkcIJVcdneVKXeFQTrv/GLiKHttwXbyy812c40dyqcR5A053oT+DMKiKdFsH+DrJlQO
+         QhdgRcNkdCAEF0eCGlQ1F7hTd2mnYPXNjtVoHGJfsYtNs6Vw1ChlQnOc4zgARIrg9HS2
+         7c7mVWJvFYZRfuGSDwRLptK8aQZYN8Q9AnkWmajXcr8pR4is7z1ahG3IOLUSb1GBrt+R
+         3+nw==
+X-Forwarded-Encrypted: i=1; AJvYcCVAVBz5t0xWVjC4VpcaBn7U8clp8kRt+bhz2giVG+3w1sfsGRBMbBpqMmwemro0gI3d5ysOAXkrkUizV7+F3XwKoTvL
+X-Gm-Message-State: AOJu0YxW9T37JQ8Hw63MdmI/lSPKoTj4otvxgNRi9MYh/zjxkg87E7ms
+	Eclo0V7wBL+skBYR6o6vmeLkl4lpMymuiVDFOb8UhefePZrH9cL+RcZ1ZJ+9KKTqLhTCvCE9rOq
+	4ShPJVdBajeoRGQ3m2GJDcjSKhxjNH7TG
+X-Google-Smtp-Source: AGHT+IF+ZVLaa/jX+2n48ZsijDtQkhNZK332y1nUIow1l+s84CQcr3Fjn7Cn2eMDflJLHJ2gmQHbI8z2fFypx4b1AK4=
+X-Received: by 2002:a17:90a:e502:b0:2af:ff3:e14a with SMTP id
+ t2-20020a17090ae50200b002af0ff3e14amr4461322pjy.16.1714018396033; Wed, 24 Apr
+ 2024 21:13:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1696.git.1710570428.gitgitgadget@gmail.com>
- <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com> <0e9ae049b8861fecf49c097e8d52e734f7a9c9b3.1713504153.git.gitgitgadget@gmail.com>
- <xmqq34rb64oj.fsf@gitster.g>
-Message-ID: <owlyzfti3zc4.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 7/8] trailer: make trailer_info struct private
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
+MIME-Version: 1.0
+References: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com>
+ <Zil_m_1B0wcLejNH@tapette.crustytoothpaste.net> <xmqqedauwgbk.fsf@gitster.g>
+In-Reply-To: <xmqqedauwgbk.fsf@gitster.g>
+From: Dan Demp <drdemp@gmail.com>
+Date: Wed, 24 Apr 2024 23:13:03 -0500
+Message-ID: <CADs5QaY=dJ=MXNYgqyEQA9xmcBkeocZh5z9Tq_iNfnFgCHR_=w@mail.gmail.com>
+Subject: Re: Git Bug Report: git add --patch > "e" makes keyboard unresponsive
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+To be clear, I did close the editor, at which point Git Bash shows me
+the next diff and asks me to choose an option (y, n, a, d, ...). It's
+at that point the keyboard is unresponsive. Not while the editor is
+still open.
 
-> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> There are a couple disadvantages:
->>
->>   (A) every time the member of the struct is accessed an extra pointer
->>       dereference must be done, and
->>
->>   (B) for users of trailer_info outside trailer.c, this struct can no
->>       longer be allocated on the stack and may only be allocated on the
->>       heap (because its definition is hidden away in trailer.c) and
->>       appropriately deallocated by the user.
->
->     (C) without good documentation on the API, the opaque struct is
->         hostile to programmers by going opposite to "Show me your
->         data structures, and I won't usually need your code; it'll
->         be obvious." mantra.
->
-> The comment inside trailer.c does not count (the API users are not
-> supposed to peek in it---that's the whole point of making the
-> structure opaque).  You'd need to compensate with a bit more doc in
-> trailer.h to help the API users.
+If it matters, I'm using Notepad++ as the editor.
 
-SGTM. I can reroll again by the end of the week to add docs for would-be
-API users. Cheers
+On Wed, Apr 24, 2024 at 5:23=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+> > Using the "e" option should invoke your editor and wait until it exits.
+> > The only way Git has to know that you're done editing is that the edito=
+r
+> > process it invokes has exited.
+>
+> Whichever editor was launched, unless the user explicitly said the hint
+> is not necessary by setting advice.waitingForEditor to false, the code
+> should have given something like this:
+>
+>     hint: Waiting for your editor to close the file...
+>
+> so ...
+>
+> > What does "git var GIT_EDITOR" at a Git Bash prompt print?  If you have
+> > your editor configured to open in an existing editor window, does
+> > closing the new editor tab or window that Git causes to be opened fix
+> > the problem?
+>
+> ... I would expect that there may be something more than a silly
+> "the editor is running elsewhere and the user is stuck, expecting
+> something to happen but the editor is waiting for the user" problem
+> here.  For example, could there be funny interaction with "single
+> key" mode with editor on Windows (which I do not use myself but I
+> think I saw the word in the original report)?  Is the configuration
+> "interactive.singlekey" enabled?
