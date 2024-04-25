@@ -1,87 +1,112 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6791414D6F5
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 18:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2A914F9F5
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 18:59:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714068120; cv=none; b=EBiiZ2OXlGX4Z/PSxXkr9lCEXWtiSIFwS6/LQYXzygZOy3Gs5yQO1UibjerSDWShhWstJ0Nrn31ce887hy3MjOr2+vJwKe6NfxgUZNWqDOv7+nX7ZjDt9rQniYjAi9Q8pcDUJCL+O81tqbFMmBtA60XRz0LgbGlxJhRBlujRZYQ=
+	t=1714071596; cv=none; b=MSMBUkzObUxbolTx4hl4+KJay+0AZrPM6GC7dEh2aPbEnfRwGHpY0BWj7+7OzA0+QiIdVGJ8Wj+MPgU4z8Ms2bZMlWigjleUr861CzFUGzG89YuLOqjJz5y/G4hydT3GqCJ3QenAJOaOBDr33os/G3kZuC2dEjxLyIkreCTewSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714068120; c=relaxed/simple;
-	bh=JS24GD77jvmYw82JETIz2YHGbfiYqJKeJjtjAJR6FR8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RSc4AiDboDt3SDI3owt0lzQUiC1gnL/fTu2RuLARlPxFS0E6uu8P2YX7guubXvvB+04qdT2BhPS6Fu+Zpm6A0lvfThtB23DLfkH3LvS1fl5oEjdUp4MFxYS8LswefgfsxIYc+m5QAkvfk4onmaYjsYK0MxBqvfkI72i88RRGLZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=U4v5K+Mr; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714071596; c=relaxed/simple;
+	bh=al02jXA8QfJ+bDykVm9k+V6pH5Qw/1QorpvN4BOXmuw=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=p8oO54IE/jLZeaRNMgGTt2IOtjGJmtMsb/dc/Loq3LcwZKF6VsTOEtK2KrlBv5/Hh2AhNUdr00FPTgJ4kO14DN2MBCB6+zqKYj9kQQP+Xr5YLTdrwu5pbJHuIicWCsJhMivIbxK+aYPVvVx0krrcuM4vQOR382Ifqv3nlRX+ACM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Quh8xU68; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="U4v5K+Mr"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C741B240C7;
-	Thu, 25 Apr 2024 14:01:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JS24GD77jvmYw82JETIz2YHGbfiYqJKeJjtjAJ
-	R6FR8=; b=U4v5K+Mr7lVxvHbBXah90JrCy7AQHGnR0YNq6PwGREM4/WlM4LxjgQ
-	GpRVCFw6YwBdScRQAfCHD8v6Z7Hm7RG0Blr4/LiCnX+6ojQAu2IyDQcGt1uihHbe
-	LkpadI3vEQ5lTcmKmW179nl0cIOXaOTQllUFKCLJjVsYVV2Qbz2ms=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BFE86240C6;
-	Thu, 25 Apr 2024 14:01:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 06C82240C3;
-	Thu, 25 Apr 2024 14:01:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Jeff King <peff@peff.net>,  chris.torek@gmail.com,  git@vger.kernel.org,
-  ps@pks.im
-Subject: Re: [PATCH v3 0/8] refs: add symref support to 'git-update-ref'
-In-Reply-To: <CAOLa=ZRk8QR4qkbkRm6AirapdrAqz6bG-tXfY3zRQU_9XkJM1Q@mail.gmail.com>
-	(Karthik Nayak's message of "Wed, 24 Apr 2024 09:25:27 -0700")
-References: <20240412095908.1134387-1-knayak@gitlab.com>
-	<20240423212818.574123-1-knayak@gitlab.com>
-	<20240423220308.GC1172807@coredump.intra.peff.net>
-	<CAOLa=ZRk8QR4qkbkRm6AirapdrAqz6bG-tXfY3zRQU_9XkJM1Q@mail.gmail.com>
-Date: Thu, 25 Apr 2024 11:01:53 -0700
-Message-ID: <xmqq4jbpgw32.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Quh8xU68"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2db6f5977e1so15330571fa.2
+        for <git@vger.kernel.org>; Thu, 25 Apr 2024 11:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714071593; x=1714676393; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zi9J5x31EviBdM4O5UkQZXhhYRD0XPX6hiCPI52L254=;
+        b=Quh8xU68REjd6A0qIllfxOjhUZybfzWCtxYZ9PcDWRaRIzcHUa6SuYoDOp5glQlHkN
+         3zk/9ORbUkUlHtbv15reav34UcaqbOMf1tmTEKm6MYkGM1xfoUnjGlG74WHQoFP/+edo
+         hpOWvyYb+xhDzcG0ImHV8I383113P2k8afwlxlYHeqS/fRon+I8+0qPV7mWlusU6BT5g
+         TEq46ThCt88sWR9VQP5HzJpa2yNhZEzy9ZpZxBverPd5wbrpyKSypAh9G6eTe7nbBWDn
+         MB2iWfmTfhzI1NQaiKLioupj2EwFJHd5dBouUcByV2N9XflMRHWnfGWyiOTOBc9Y2zSu
+         u0Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714071593; x=1714676393;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zi9J5x31EviBdM4O5UkQZXhhYRD0XPX6hiCPI52L254=;
+        b=ASXEYFGg+UdU+lEi2nUa3QIt1yN4pE3S2ntAL7qdWWvK5zHBG2dm5I7zK4lDLJ/Lur
+         9BSdbm7AjY/pFB91eZqtojYmkWAJxyeP2nRbPAYxp+vxbz+i2HFJUcfP5HQgy/CAKgeN
+         dbplhxyFSoZ9ZK3YMFlI/3xHjbprbPO/Eu9Dr3M/WFLFXkE/n3nM3QY/lcOZo+XmbfT8
+         4iDsDBWqaxEpCnEVl6BqjRAyyzj0vMSyQUk3aOaGL+Ru1rLicBFVla7uq+vTuHxsmJZD
+         E0We6LzjCezj1zbtwb8TCrQz0Rb3uPApEFk1Bjlbt2rz9pXXTIthUXo885s+C3YaX1SH
+         Yphw==
+X-Gm-Message-State: AOJu0YwpsYiD5SrGGSXg8iSgxdUJa3E9upqbFgZh2NXRSbCA2GGR0krQ
+	1CPmqwUQmtfAbcsldr0cELi5ySo+3kyx8CLX/sDggqaKwmvo6mNmWt4viw==
+X-Google-Smtp-Source: AGHT+IFp4yhXflcJ8QFyzXaPCdsKEder63XG/z5f2eOtUEkMM0zzzNbP0sRUbCpjIBir3LQSFLW8wQ==
+X-Received: by 2002:a2e:b05a:0:b0:2d7:1a30:e881 with SMTP id d26-20020a2eb05a000000b002d71a30e881mr163369ljl.12.1714071593270;
+        Thu, 25 Apr 2024 11:59:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v11-20020a05600c470b00b0041a963bf2cdsm12312849wmo.36.2024.04.25.11.59.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Apr 2024 11:59:52 -0700 (PDT)
+Message-Id: <pull.1710.git.git.1714071592035.gitgitgadget@gmail.com>
+From: "Thomas via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 25 Apr 2024 18:59:51 +0000
+Subject: [PATCH] completion: fix zsh parsing $GIT_PS1_SHOWUPSTREAM
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E6AF95E4-032D-11EF-A1E7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+To: git@vger.kernel.org
+Cc: Thomas <thomasqueirozb@gmail.com>,
+    Thomas Queiroz <thomasqueirozb@gmail.com>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+From: Thomas Queiroz <thomasqueirozb@gmail.com>
 
-> 2. We change the syntax to something like
->
->     symref-update SP <ref> SP <new-ref> [SP (ref <old-target> | oid
-> <old-oid>)] LF
->
-> this would remove any ambiguity since the user specifies the data type
-> they're providing.
+Since GIT_PS1_SHOWUPSTREAM is a variable with space separated values and
+zsh for loops do no split by space by default, parsing of the options
+wasn't actually being done. The `-d' '` is a hacky solution that works
+in both bash and zsh. The correct way to do that in zsh would be do use
+read -rA and loop over the resulting array but -A isn't defined in bash.
 
-Yup.  Being explicit helps, especially if you are only dealing with
-programs that do not complain "that's too many keystrokes" like
-pesky humans ;-).
+Signed-off-by: Thomas Queiroz <thomasqueirozb@gmail.com>
+---
+    completion: Fix zsh parsing $GIT_PS1_SHOWUPSTREAM
 
-When the topic's overall title is to add support for symbolic refs
-to the update-ref command, a natural expectation is that in a far
-enough future everything that can be done with "git symbolic-ref"
-can be done with "git update-ref" and we can, if we wanted to,
-depreate "git symbolic-ref".  Is that really what is going on here?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1710%2Fthomasqueirozb%2Fzsh-completion-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1710/thomasqueirozb/zsh-completion-fix-v1
+Pull-Request: https://github.com/git/git/pull/1710
 
-IOW, we should add support for operation modes other than "--stdin"
-as well, shouldn't we?
+ contrib/completion/git-prompt.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 5330e769a72..9c25ec1e965 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -141,14 +141,14 @@ __git_ps1_show_upstream ()
+ 
+ 	# parse configuration values
+ 	local option
+-	for option in ${GIT_PS1_SHOWUPSTREAM-}; do
++	while read -r -d' ' option; do
+ 		case "$option" in
+ 		git|svn) upstream_type="$option" ;;
+ 		verbose) verbose=1 ;;
+ 		legacy)  legacy=1  ;;
+ 		name)    name=1 ;;
+ 		esac
+-	done
++	done <<< "${GIT_PS1_SHOWUPSTREAM-} "
+ 
+ 	# Find our upstream type
+ 	case "$upstream_type" in
 
+base-commit: 21306a098c3f174ad4c2a5cddb9069ee27a548b0
+-- 
+gitgitgadget
