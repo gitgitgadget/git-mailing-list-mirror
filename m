@@ -1,96 +1,75 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C44156964
-	for <git@vger.kernel.org>; Wed, 24 Apr 2024 23:31:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B917107B3
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 01:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714001507; cv=none; b=Ht8OGri4aVySv3hG0aeZlOP5U+JDTSXG6rnnDocJqPZSdTYbg4nzo5JGQArgaJbnQ3Pi8qnbyewPpD1I6ibHxApE7p6V+ejf4bCWSbRjXIycwpWuik9QPzzDN9PUpHtqPUp8T1UYsp6qKrV7URNQDCobRgEBXcJP0BH4c9by5mo=
+	t=1714009482; cv=none; b=MIiSHCAkazttDPPgiCvwkJTvG7afisQdqd0UWDL/5czoRf70k/yqZGyv5AkF30Os2R/C9SHHiFVS2WHcWNp1a4riM1uKaLEfNHiQBQVWnRCZ9WaBi1FH7yhpfhbLibZHHTBAIpRAYweC4Lph98tfxNdDK9hB0ZrzbA/WBxiECOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714001507; c=relaxed/simple;
-	bh=ssXCvoGiFo5soCkpzpana/bHgoswHSy/dE8MU6fr1Ew=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NYHSYFIHyGEnavj/UNQ2t3lTivrJzPJdBvhuwv9JTmqTuS8xoCBe8H5vykOOEDO2DtjycCPti+F19xjlrlt3iBdyQYKRIBsAL5pPhnBiRKisiqhVElNbpVdwYcG/iD/3+hhTpjt+YOemikMhuTJ44/TZuGmaWYQTybSgzRpTNcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mZ2a1ayQ; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mZ2a1ayQ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CD12B1E2DD;
-	Wed, 24 Apr 2024 19:31:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ssXCvoGiFo5soCkpzpana/bHgoswHSy/dE8MU6
-	fr1Ew=; b=mZ2a1ayQinAX9iXkIV6/dnXxJesEXBRflgc1cBblr7koeXx8jj6rcQ
-	KOKG8GzYaEYGEonHIiVzT+blwdTEaBY1aPCGx/lGYZrTmgSHM8q4pjULjv2vF576
-	jQ6onrfw0Ab4r1EdQSNAxEuwZtr55uXkqWpI11yLMmkAgZy8TmMWQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C52981E2DC;
-	Wed, 24 Apr 2024 19:31:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34E6F1E2DB;
-	Wed, 24 Apr 2024 19:31:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Tim Chase <git@tim.thechases.com>,  git@vger.kernel.org
-Subject: Re: Stashing just index..working-copy rather than HEAD..working-copy?
-In-Reply-To: <CAPx1GvcxyDDQmCssMjEnt6JoV6qPc5ZUpgPLX3mpUC_4PNYA1w@mail.gmail.com>
-	(Chris Torek's message of "Wed, 24 Apr 2024 15:17:41 -0700")
-References: <ZikMqXeDnOqK_wlq@thechases.com>
-	<CAPx1GvcxyDDQmCssMjEnt6JoV6qPc5ZUpgPLX3mpUC_4PNYA1w@mail.gmail.com>
-Date: Wed, 24 Apr 2024 16:31:37 -0700
-Message-ID: <xmqq1q6uwd5y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1714009482; c=relaxed/simple;
+	bh=zmDcAykbhUjcQPs00npCOMpMzE5qnB9KQRTR7oZEXu8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ez6wf7RlfBOUss2/NehfJ8oC9ySJsQ3eEeqNiT3DaWy2lZtXKwRRT2rBJR2TTlrWXf7ypuHLHnaGfcXEVBfyy9P9fPr3GwgCwBF2xFJEMHmpgXe64ZOudSFmtMnnLhWLw+zG5LOBeNz62xDXcJHvM8jMv507DL2faO08WOvS1jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 22750 invoked by uid 109); 25 Apr 2024 01:44:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Apr 2024 01:44:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16908 invoked by uid 111); 25 Apr 2024 01:44:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Apr 2024 21:44:36 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 24 Apr 2024 21:44:32 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] add-patch: response to unknown command
+Message-ID: <20240425014432.GA1768914@coredump.intra.peff.net>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+ <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+ <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+ <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CBF8CD74-0292-11EF-91C5-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
 
-Chris Torek <chris.torek@gmail.com> writes:
+On Sun, Apr 21, 2024 at 11:52:33PM +0200, Rubén Justo wrote:
 
-> With all that said, I'd like to make one last suggestion, which
-> I think is a lot simpler: *stop using `git stash`*.  Just make
-> a commit!
+> +test_expect_success 'unknown command' '
+> +	test_when_finished "git reset --hard; rm -f command" &&
+> +	echo W >command &&
+> +	git add -N command &&
+> +	git diff command >expect &&
+> +	cat >>expect <<-EOF &&
+> +	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
+> +	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
+> +	EOF
+> +	git add -p -- command <command >actual 2>&1 &&
+> +	test_cmp expect actual
+> +'
 
-;-)
+I got a test failure on Windows CI from this. The test_cmp output looks
+like this:
 
-If I recall correctly, the original design of "git stash" was "I
-save everything in the working tree, so that I can start working on
-an urgent request immediately, and then later restore everything",
-and there was no "--index" option for application, even though the
-stash entries were the W commit that is a merge of the I (index)
-commit and the B (base) commit.  The "apply/pop --index" was a mere
-afterthought that does not work very well and made things more
-confusing.  It wasn't meant to be used in anything complex, for
-which a separate branch with real commits were the way to go.
+  -(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command 'W' (use '?' for help)
+  -(1/1) Stage addition [y,n,q,a,d,e,p,?]?
+  +(1/1) Stage addition [y,n,q,a,d,e,p,?]? (1/1) Stage addition [y,n,q,a,d,e,p,?]?
+  +Unknown command 'W' (use '?' for help)
 
-There were some reasons (like, working tree side post-commit hooks
-that are not well written to distinguish temporary commits from real
-ones and send out notifications outside) that some folks wanted to
-avoid making a commit on a temporary branch and to them, having a
-bit more complex "stash" may have been a way for them to avoid
-triggering those poorly designed workflow around post-commit hooks.
-But with modern Git in this age with workflows and disciplines
-better understood, I agree that we should encourage use of more
-temporary branches with real commits.  If there are reasons to cause
-developers fear of commitment (e.g., "my $CORP environment forces me
-to show every commit I make to CI server, which slows me down and
-wastes resources if I make many tentative commits only for
-snapshot"), they should be solved in a way that users do not have to
-fear commitments.
+which makes me suspect a race. Perhaps because the prompt is going to
+stdout, but the "Unknown command" message goes to stderr? Maybe we
+should keep stdout and stderr separate and check them independently.
 
-Thanks.
-
-
-
+-Peff
