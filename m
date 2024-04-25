@@ -1,85 +1,185 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC6C12C7F7
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 21:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9481C152E13
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 21:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714078841; cv=none; b=QKYJGsufopo6ESUymXOitnzTi+AcFCdJVYg6XTsCNKo+LZMtM8EQImFDf1f49RB8njlnU8Oi1TVnSAYsgWTz7rdgNAHqHJwyNHg7lIfmaRPtzD+3vGdshpPO2VuHu3ybPUYZFYMQnYsQWkqhiov9a0/Qk4qxG/zJ2jBWG23mjl8=
+	t=1714079141; cv=none; b=UiByNAP/BNvfYBsFvG5/iWYCSIwW+eQ/rjBlgwgayuBQvZrtdhwtRDQLINFufA7GnNurwJyIoZqciB/eEghmXjfcGgukPRp/1kn5qvvlKlSY1+SPmeQ/FLfNAt64cPUcGPuftuc2oGdcOoRO2mPBa5Cd9rI0LtszyfRvtd5VwF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714078841; c=relaxed/simple;
-	bh=ORqoSPNrxQGl93BTOmckebdx3zkPeB1jCFwdAzFp+kw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OMIRcnhahuz1mOozPmQXpwnoeu/NAm6bQ4gC0t2c6dyLxYz8VEGDVgNfE1rCA/Kz6zSoBKUhPyjnfGa49p9pk+FTqp5CsKzs5wqrdNbobge4C9l6uXurlL5yJnbPanutO+1nHtekYE0AWZGpIBTk+de442dyNFsktUG177dJw5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3c749aa444fso901047b6e.0
-        for <git@vger.kernel.org>; Thu, 25 Apr 2024 14:00:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714078838; x=1714683638;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ORqoSPNrxQGl93BTOmckebdx3zkPeB1jCFwdAzFp+kw=;
-        b=aV52Bajl+IpxL5Y52aPH3okBt/D16OMji/ZLhPCB7HVPysAKlfl+z58lKiP1b9V9pb
-         CcrEalhDSaXZcgq3f45CJfmQ46B1MLnin06RZy5tnVrak4mhbyM736mO5fdo7qLsLb2K
-         s0mZ1ouai2sASGvF/KFkaY34NE31p+mc+djG+ct951JGGiKhdpnZnySkkQ61sJfUqbEN
-         /yLUOVEjyF72azaznV4B98AvKyE1lTtPwqTFPMuwitoMQrfvXN0wuyODeNRYzmlE2e7m
-         GQrC/AKcwKPb6mxLLMZXQ6nl8skKOZhA/dUPvF8ElUErvNF0Oy+rvBO7ELp5ip0Thi01
-         xHlw==
-X-Forwarded-Encrypted: i=1; AJvYcCUoT69pl3hFTsQm0FCtN+tzXAUTQrm4/z9K0eaYKWZI5bMgLxuRdcw/m3AsNjh6kl6AAEddL4eJAVr0jghWO6t0nYzu
-X-Gm-Message-State: AOJu0YyZECsj3pOUXTJzZtNxENUjCbN9KEUf0x8i6iFZi1OwIVIL9mtx
-	kElPanUPYLXhUtmME+81G6NMy6MDPNzrMQosvWLNQuAw06bDlh3tNgN2rdDuKhqLUl063VT/Msw
-	7k55cJ1K37EuekV4UZi5xuwP58II=
-X-Google-Smtp-Source: AGHT+IFLLI8XmUM47Kfj/Y32aaZxYJH1x1DB3Ct0XcbEW1tYifzXF2HXMiG/qggntDe36KWby3E5CWbw0GaM/xzLI5c=
-X-Received: by 2002:a05:6808:2026:b0:3c7:48a3:b28 with SMTP id
- q38-20020a056808202600b003c748a30b28mr1181045oiw.0.1714078838701; Thu, 25 Apr
- 2024 14:00:38 -0700 (PDT)
+	s=arc-20240116; t=1714079141; c=relaxed/simple;
+	bh=q44IAtI3uNwZHl5QvczibTJKEgz2oJVh0BQ3Y2cMFb8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VWCqdOpxG5a0RHJNiIb/+XJKtW5xvwl8k+7qPgwBJAxMh+ZMbwt/VI8/R8E2jyK8jOCjGieygltbF71GCSyzyJRW3Pf2dgyja7N5b4yNFoAEAIVnLs7Yf4YJQPRwmleEw+kvXuGc+k+xt4FdmMDDeBaP5VUwua2dNoxE7RoXEAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=j4a8j6Z4; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="j4a8j6Z4"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0EEA83EDF4;
+	Thu, 25 Apr 2024 17:05:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=q44IAtI3uNwZHl5QvczibTJKEgz2oJVh0BQ3Y2
+	cMFb8=; b=j4a8j6Z4TLqRWOz/FGa7Sy+HbZrRk0F++93tgswRvoi7g30BeXdKJR
+	AKjb08I3S/qjK2mdRAoCtXProsQOr3D67w4opweTNhw8Kj097c9U2AF8ZXxuDLzc
+	Y6KyJVLwousCLAshV+B541ObuY9TO2b0rlTmXRZUyEDMaiwL37lZg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 06D883EDF3;
+	Thu, 25 Apr 2024 17:05:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4F6F83EDF2;
+	Thu, 25 Apr 2024 17:05:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Jeff King <peff@peff.net>,  =?utf-8?Q?Rub=C3=A9n?= Justo
+ <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4] add-patch: response to unknown command
+In-Reply-To: <xmqqedatfay3.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	25 Apr 2024 13:23:48 -0700")
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+	<6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+	<db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+	<b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
+	<20240425014432.GA1768914@coredump.intra.peff.net>
+	<CAPig+cST4_hUwWg+P_drqT-mv8+eLAzBmuMFXm=Dui14kfYZzA@mail.gmail.com>
+	<xmqqedatfay3.fsf@gitster.g>
+Date: Thu, 25 Apr 2024 14:05:33 -0700
+Message-ID: <xmqqv845dug2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com> <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com> <20240425014432.GA1768914@coredump.intra.peff.net>
- <CAPig+cST4_hUwWg+P_drqT-mv8+eLAzBmuMFXm=Dui14kfYZzA@mail.gmail.com> <xmqqedatfay3.fsf@gitster.g>
-In-Reply-To: <xmqqedatfay3.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 25 Apr 2024 17:00:27 -0400
-Message-ID: <CAPig+cRerw2SnkEK4-_wiPopGii+Eq92UiBmqib_oBgArty-Gg@mail.gmail.com>
-Subject: Re: [PATCH v4] add-patch: response to unknown command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
-	Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8F4B9202-0347-11EF-B150-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Thu, Apr 25, 2024 at 4:23=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Eric Sunshine <sunshine@sunshineco.com> writes:
-> > That's very reminiscent of [1]. Although, unlike [1], the output
-> > presented to the user in this case is (I suppose) less likely to be
-> > messed up; only the combined captured output is probably affected. So,
-> > capturing stdout and stderr separately would indeed be a good idea.
+>
+>> That's very reminiscent of [1]. Although, unlike [1], the output
+>> presented to the user in this case is (I suppose) less likely to be
+>> messed up; only the combined captured output is probably affected. So,
+>> capturing stdout and stderr separately would indeed be a good idea.
+>
+> Hmph, something along this line?
+>
+> It loses to capture how the output should be intermixed, which is
+> essential to validate what the end-user should see.  As we can see
+> in the attached patch, we cannot express that "Unknown ..." should
+> come in between two "Stage addition?" questions, which is a downside.
 >
 > Between adding fflush() before err() writes, and updating err() to
 > write to the standard output stream, I am in favor of the latter for
 > its simplicity (of the mental model of the resulting code, not of
 > the patch that is required to do so).
 
-Writing to a common stream (stdout, in this case) for this sort of
-interactive session is indeed probably the way to go, as Phillip
-suggested.
+The latter, which I claimed to prefer, would look like this.
 
-That was also the adopted solution to the cited similar example[1];
-git-worktree was changed to send all its chatty output to stderr[2],
-which was appropriate for that (non-interactive) case.
+The idea is to perform the interactive session over the standard
+output (and the standard input).  For that, we teach err() to use
+the standard output and have a few fprintf() to also call err().
 
-[1]: https://lore.kernel.org/git/CAPig+cTGq-10ZTBts2LXRVdPMf2vNMX8HTuhg_+ZH=
-SiLX-brOQ@mail.gmail.com/
-[2]: https://lore.kernel.org/git/20211203034420.47447-2-sunshine@sunshineco=
-.com/
+A few tests expect certain messages to appear on the standard error
+stream, which needed adjusting.
+
+I know the previous one "fixes" the CI job at Windows, but I haven't
+tried this yet.
+
+diff --git c/add-patch.c w/add-patch.c
+index 7be142d448..c28ad380ed 100644
+--- c/add-patch.c
++++ w/add-patch.c
+@@ -293,10 +293,10 @@ static void err(struct add_p_state *s, const char *fmt, ...)
+ 	va_list args;
+ 
+ 	va_start(args, fmt);
+-	fputs(s->s.error_color, stderr);
+-	vfprintf(stderr, fmt, args);
+-	fputs(s->s.reset_color, stderr);
+-	fputc('\n', stderr);
++	fputs(s->s.error_color, stdout);
++	vfprintf(stdout, fmt, args);
++	fputs(s->s.reset_color, stdout);
++	fputc('\n', stdout);
+ 	va_end(args);
+ }
+ 
+@@ -1326,7 +1326,7 @@ static int apply_for_checkout(struct add_p_state *s, struct strbuf *diff,
+ 		err(s, _("Nothing was applied.\n"));
+ 	} else
+ 		/* As a last resort, show the diff to the user */
+-		fwrite(diff->buf, diff->len, 1, stderr);
++		fwrite(diff->buf, diff->len, 1, stdout);
+ 
+ 	return 0;
+ }
+@@ -1780,9 +1780,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 			break;
+ 
+ 	if (s.file_diff_nr == 0)
+-		fprintf(stderr, _("No changes.\n"));
++		err(&s, _("No changes."));
+ 	else if (binary_count == s.file_diff_nr)
+-		fprintf(stderr, _("Only binary files changed.\n"));
++		err(&s, _("Only binary files changed."));
+ 
+ 	add_p_state_clear(&s);
+ 	return 0;
+diff --git c/t/t3701-add-interactive.sh w/t/t3701-add-interactive.sh
+index 482d5c117e..a315ec99a3 100755
+--- c/t/t3701-add-interactive.sh
++++ w/t/t3701-add-interactive.sh
+@@ -43,17 +43,17 @@ force_color () {
+ }
+ 
+ test_expect_success 'warn about add.interactive.useBuiltin' '
+-	cat >expect <<-\EOF &&
++	cat >expect.error <<-\EOF &&
+ 	warning: the add.interactive.useBuiltin setting has been removed!
+ 	See its entry in '\''git help config'\'' for details.
+-	No changes.
+ 	EOF
+ 
+ 	for v in = =true =false
+ 	do
+-		git -c "add.interactive.useBuiltin$v" add -p >out 2>actual &&
+-		test_must_be_empty out &&
+-		test_cmp expect actual || return 1
++		git -c "add.interactive.useBuiltin$v" add -p >actual 2>error &&
++		echo "No changes." >expect &&
++		test_cmp expect actual &&
++		test_cmp expect.error error || return 1
+ 	done
+ '
+ 
+@@ -348,13 +348,13 @@ test_expect_success 'different prompts for mode change/deleted' '
+ 
+ test_expect_success 'correct message when there is nothing to do' '
+ 	git reset --hard &&
+-	git add -p 2>err &&
+-	test_grep "No changes" err &&
++	git add -p >out &&
++	test_grep "No changes" out &&
+ 	printf "\\0123" >binary &&
+ 	git add binary &&
+ 	printf "\\0abc" >binary &&
+-	git add -p 2>err &&
+-	test_grep "Only binary files changed" err
++	git add -p >out &&
++	test_grep "Only binary files changed" out
+ '
+ 
+ test_expect_success 'setup again' '
