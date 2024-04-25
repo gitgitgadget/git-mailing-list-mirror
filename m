@@ -1,80 +1,83 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8761D27473
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 06:18:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137C15A0F9
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 06:36:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714025896; cv=none; b=qaXbz4qFAzo+p1zHssSh1HOC3BMatuZ1VIsilVJenSFxMFMkY+epinOhPoQWg8sR9TZ2HCy9hdUZOd6xEmOVyuh/DUrKAFeL98yORRmXsYj4FvHEXljuIOjPoQ/dua+oUvKvHZLiDe7l9oFIlhIzbCjwWxGB2gd14Js0NQJO9LI=
+	t=1714027009; cv=none; b=fkeveAMkDrC45dOK+zv/loUc27S2J6brUZoZN3Eg0f/4tytCbWdBWoQnivLj8dRkTI8Dz2++MU3Lu9sbWIpDcBE22+QOta7l0QVTpbl1Qc6FOHNF4Ew6o8/iKZNRDju+USNb9CpLtQMiQrJ/brjSdnln+4OFAix0/g7K8On0HYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714025896; c=relaxed/simple;
-	bh=4qwAt1sXFrwXMLWf4rDDac3D+7BSNQClhAQPjBZZvPQ=;
+	s=arc-20240116; t=1714027009; c=relaxed/simple;
+	bh=+gFcFJywc0MKfRIo2Cvi5XEbBHcuNvX/8E5VMyEQeZ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IoVPb/Fq8woYBUC8tj8psSzDCl66Z3GEKHIOgr9gGTDzrLld+yUyf7nI+rA1vgaoaD2bRHv0HyuoHRKww9fT0YJXIRUzdiqI/khfxWlkqFWhGEZ2jOSwrLaLLZ/Ou+8IrHe1cZK7h1nf/a7ooIt4FexdHJnkarUYTInOZEw9fsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bs6hFDoN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cmxi6Gzv; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fj+sFLpOIkdDScoLf2XIPFXZ4WSKtYSdtrj3aTjlzM7Mtl6rw7s2v9TSTlUPY/wjDiN+0NsFKL4Lmz8UVL6pVtdtFBinbHDSc8hSTRCMBO2iDxCAfxjmXwhYr7QsHg4DRw6DAmneeBwl1BpfJ7nXMtShx7IVmrHLrnpI3U2B1ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=klbXRdJW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fvx8JyZ0; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bs6hFDoN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cmxi6Gzv"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 36F0A11400EF;
-	Thu, 25 Apr 2024 02:18:11 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 25 Apr 2024 02:18:11 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="klbXRdJW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fvx8JyZ0"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id E289F1380071;
+	Thu, 25 Apr 2024 02:36:45 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Thu, 25 Apr 2024 02:36:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714025891; x=1714112291; bh=W6FoFjd3Tn
-	vneYnV7YKs/VkyV5pL1j+uhnmdJSQV5Wk=; b=Bs6hFDoNpB2K6fhnwzq6Ywxwms
-	iChd3uHlR9Om+U9x9kfOy/OtNcSLwuAIHgXyMKLeKffrFpTqWZ+uIxxpLOZlOdMl
-	um1dfW+/hytGgIbHH3jQAEdzF1UDiygIO15BA2Yp4XtefHsfo5gPrGzan/lTOTMA
-	zhX4kiHhH0gn8UC2OiXoNWCYxrJ7mkNtuqtood94oPUSSwEU/AHe+tu/X/sQqKws
-	LFgN2KN/QGFtvZz4jkNQkiRcf74IXusGpKCI5w7RpO3lcPdVoMvElNcj5Fjoe2PC
-	gNREDjxmzemFYO1M1zdiZ9hQG2cU/j53b2R2bNM10rTAdmjDRH47LmA7Lcvw==
+	:subject:to:to; s=fm3; t=1714027005; x=1714113405; bh=lccWbdgPLp
+	SCFC8l2PKo9J0sDHhA4wzq/yikweorv+M=; b=klbXRdJWIJ08HhD7HhYwzZhOrq
+	Ff7SdeSlkgsNqjy7NacIVLoxEjLTlHm79U1CAPiGEVGeZxnCHB5jR86eV9uQnUvS
+	oWqJnpHfImwyB3CbCNZ2lBmucQfip9w0GKx/Dig2tTtvVxIzJxUGzAjzJfPZpyj5
+	+kFl5wfLb1J7Ti824ZGz46j2zdWvkoXCPViEJQwJAdTVW/0hqeY1hBerbBhLD6c6
+	EqONY/D/2FT9HGoADUXvbG8YHk6y31PhTy5iqzL+g9NOTVmLx2sDt0aQ8YL+Yzk4
+	GuKMyw1EeFgsHsQAOp5SCYeNVHlQmk/ExpSbTq/tR0hPnwHXZM3Ma3mUuUPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714025891; x=1714112291; bh=W6FoFjd3TnvneYnV7YKs/VkyV5pL
-	1j+uhnmdJSQV5Wk=; b=Cmxi6GzvNMYYfREf3QtOSBBkDQkbkwL0J3GnrHr6xc9i
-	FOVzzOQR74dC87U6np7LkKl9ZZJzHH3xqvTRJnTJ3IPJn2HRCi7yGzl2DtbHHV87
-	+DcnYKE1mSqvERuQGzfGqduIP0Tf54Fs4k3hEbPI7NsVZMdlfN9shhQTs7oI0H8w
-	Ty9q6qKiILP7VQhOhTYO5cMtpglQ9IRzAOGCZQGmAthycjSGszB+TIYNK3E6MJKN
-	iUSEORvnPGkFC4/BYKDwd40K9mQo30oLFwMy8xznInAx8YWzGf7ptNB/NRYmrtTB
-	jDAS8KPRxrqSAkKOfaKXSPjIMi05kbFNd4TRqYjY3g==
-X-ME-Sender: <xms:ovUpZqhUAbhzugEmgZdLTvG6z3gFT89JafKWUrOp8QtOtNmRzqSTQg>
-    <xme:ovUpZrAXdo2XbOPni00ae7eC2YprynCh4Y-woC6kHghwOVCs2bbWNFDXpcTQBhlrD
-    mwhWTcJrJN_ffzxQA>
-X-ME-Received: <xmr:ovUpZiGOMML86Nu78I18-jloskomnmwuRxzJNVRDxw4cXvu3ZCwhBJjLCtea8Q1990UM4VZT6iPaxWSzRZAiZnrlXO7a6TbuZL6zKUe7LwnFNX0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeliedguddtkecutefuodetggdotefrod
+	fm3; t=1714027005; x=1714113405; bh=lccWbdgPLpSCFC8l2PKo9J0sDHhA
+	4wzq/yikweorv+M=; b=fvx8JyZ0sqamsVqd90TqSM56XH+mDr8of8+81WkZhEjp
+	OvKqrGmnF+ko8QzAq1PoAzvtxJ7IRv/6nMC41gfbE5sXO9KC9Ia+yxW6VrTJX7EY
+	MoeZWtkYUjUmTn5tgzDPKrXTTpTDufT37pZYfUakrkoEbeAWndDmBhiwTYgTkgci
+	0wOKygB59mTsbodU/TfSw9i62nil0Pq+fdR6CkNrvj0NAr5k8mznCWdqYJkTYwhV
+	KRVaWe6NyqBoleS4mrtMJNF9JzfwF22yUlrczIEZ5s3BXWXdPu+2KWyUaEYX3TOa
+	ToT0tM717gAWzTq21jxxqb6+kCDBD60hMORssEg1YQ==
+X-ME-Sender: <xms:_fkpZjcBn2zeytyBoXenixknGYUeG99Yr8Te-DRucAUXF6mG0pg06Q>
+    <xme:_fkpZpMKdTPNGDDDrhHHcZgCUinczU6Iv72CVrODxhUdnSv_6bWmC8kNk40NvblpG
+    rvuh7VnYrEBxQrmxw>
+X-ME-Received: <xmr:_fkpZsjqOUG1FBCjpFgEUeWbNgP5j-ZQ5T0Xw368FF8r0OFv4NYpz3Wv9yz9Uzpm-BkIElIyw_CYvP7lMGIDRpCOX1NGNvKs3yohCgBnwHvXHXM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeliedguddufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeiveektdfggfeluefgvdelvdeftdfhgeeugeefveejleeufeekgeefffehgfel
-    gfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    gvrhhnpeeljeetffevheeggeetkeetieduieeiieegieegtdffheegkefhjeehfeekhfev
+    leenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
     enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ovUpZjSWrTe5xKfzjfiG-gLR7TFntzvWfjk-dUcLfBxcJrkO2E-_iA>
-    <xmx:ovUpZnxwD3bwEBw5Lm46nAIVACO8Dkka6jfwUwaURwvivhbhbqoeSg>
-    <xmx:ovUpZh7p2N5RWs4UhkmiSI1nerwuDbavViYYcq2M2CkSX0HkhJNJjw>
-    <xmx:ovUpZkzHESJG4Ir2Wm1Eug4E8amR1we46bQVTj6B7vSo8U7WSFCeFw>
-    <xmx:o_UpZptzAMbP-Z3SD-PYP0bOnbfS599LBnGBGLBkmXxV0DCyJw0AgnqN>
+X-ME-Proxy: <xmx:_fkpZk8T3POoVBXJdA5hcnUmtIwc34PpmB5d-luYGI2qxKp36J38Gw>
+    <xmx:_fkpZvv2JBn8j_CS5Nr8a7vEvZzfmY34ziJQmCaeRGLTi7y3cSDgBQ>
+    <xmx:_fkpZjFH7cTwshiKsSm9kzRjYc5UkLz7xLRXsJi6JdzoOyvaGEx05w>
+    <xmx:_fkpZmPnxpiG8I-u1yZoPMoBwKTdeYZngKYVDkH6CIrtVRiyuIF4uw>
+    <xmx:_fkpZlVTr_fFsJpJPGlbrI_6acXfYoLfEe1aL6R7fhPT4QQ5MeqpbBui>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Apr 2024 02:18:09 -0400 (EDT)
+ 25 Apr 2024 02:36:44 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id be9bac6b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 25 Apr 2024 06:17:55 +0000 (UTC)
-Date: Thu, 25 Apr 2024 08:18:04 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 11099475 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 25 Apr 2024 06:36:31 +0000 (UTC)
+Date: Thu, 25 Apr 2024 08:36:39 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Roland Hieber <rhi@pengutronix.de>
-Cc: git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] completion: add 'symbolic-ref'
-Message-ID: <Zin1nOSfckSt-H0J@tanuki>
-References: <20240424215019.268208-1-rhi@pengutronix.de>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/2] Use a "best effort" strategy in scheduled
+ maintenance
+Message-ID: <Zin59zAZQyLg0iXR@tanuki>
+References: <pull.1719.v2.git.1713444783.gitgitgadget@gmail.com>
+ <pull.1719.v3.git.1713975299.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,118 +85,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IlobtzfFoocmthRe"
+	protocol="application/pgp-signature"; boundary="rNcEUZoj0pOL5XtL"
 Content-Disposition: inline
-In-Reply-To: <20240424215019.268208-1-rhi@pengutronix.de>
+In-Reply-To: <pull.1719.v3.git.1713975299.gitgitgadget@gmail.com>
 
 
---IlobtzfFoocmthRe
+--rNcEUZoj0pOL5XtL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 24, 2024 at 11:50:17PM +0200, Roland Hieber wrote:
-> Even 'symbolic-ref' is only completed when
-> GIT_COMPLETION_SHOW_ALL_COMMANDS=3D1 is set, it currently defaults to
-> completing file names, which is not very helpful. Add a simple
-> completion function which completes options and refs.
+On Wed, Apr 24, 2024 at 04:14:57PM +0000, Johannes Schindelin via GitGitGad=
+get wrote:
+> Over in https://github.com/microsoft/git/issues/623, it was pointed out t=
+hat
+> scheduled maintenance will error out when it encounters a missing
+> repository. The scheduled maintenance should exit with an error, all righ=
+t,
+> but what about the remaining repositories for which maintenance was
+> scheduled, and that may not be missing?
 >=20
-> Signed-off-by: Roland Hieber <rhi@pengutronix.de>
-> ---
-> PATCH v2:
->  - no changes
+> This patch series addresses this by introducing a new for-each-repo option
+> and then using it in the command that is run via scheduled maintenance.
 >=20
-> PATCH v1: https://lore.kernel.org/git/20240424210549.256256-1-rhi@pengutr=
-onix.de/
-> ---
->  contrib/completion/git-completion.bash | 11 +++++++++++
->  t/t9902-completion.sh                  | 16 ++++++++++++++++
->  2 files changed, 27 insertions(+)
+> Changes since v2 (thanks Patrick, Jeff and Junio):
 >=20
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 75193ded4bde..ffcc55484bcd 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3581,6 +3581,17 @@ _git_svn ()
->  	fi
->  }
-> =20
-> +_git_symbolic_ref () {
-> +	case "$cur" in
-> +	--*)
-> +		__gitcomp "--delete --quiet --short --recurse --no-recurse"
-> +		return
-> +		;;
+>  * When not passing the new --keep-going option, the exit code is the same
+>    as before.
+>  * Clarified in the documentation of the --keep-going option that it is 0
+>    for success, 1 for failure, no matter the exact exit code of the faili=
+ng
+>    command invocation(s).
+>=20
+> Changes since v1 (thanks Eric!):
+>=20
+>  * Changed the option's documentation to reflect the current state (inste=
+ad
+>    of the original design)
+>  * Fixed grammar issues
 
-Instead of hardcoding these we may use the `--git-completion-helper`
-option, which outputs the options for us. We have `__gitcomp_builtin ()`
-to do this.
-
-> +	esac
-> +=09
-> +	__git_complete_refs
-> +}
-> +
->  _git_tag ()
->  {
->  	local i c=3D"$__git_cmd_idx" f=3D0
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 569cf2310434..a34953da6c96 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2518,6 +2518,22 @@ test_expect_success 'complete tree filename with m=
-etacharacters' '
->  	EOF
->  '
-> =20
-> +test_expect_success 'symbolic-ref completes short ref names ' '
-> +	test_completion "git symbolic-ref foo m" <<-\EOF
-> +	main Z
-> +	mybranch Z
-> +	mytag Z
-> +	EOF
-> +'
-
-Nit: let's add a newline between those two test cases.
+Thanks, this version looks good to me!
 
 Patrick
 
-> +test_expect_success 'symbolic-ref completes full ref names' '
-> +	test_completion "git symbolic-ref foo refs/" <<-\EOF
-> +	refs/heads/main Z
-> +	refs/heads/mybranch Z
-> +	refs/tags/mytag Z
-> +	refs/tags/A Z
-> +	EOF
-> +'
-> +
->  test_expect_success PERL 'send-email' '
->  	test_completion "git send-email --cov" <<-\EOF &&
->  	--cover-from-description=3DZ
-> --=20
-> 2.39.2
->=20
->=20
-
---IlobtzfFoocmthRe
+--rNcEUZoj0pOL5XtL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYp9ZcACgkQVbJhu7ck
-PpQ1xxAAgnzvFwqJzTusm7KcbB09hp2tq+DI0mSybLR/AuVmtUcZpcjhCSySzL0K
-u69TfjNuFaBvQ1i479Za4OVw1PL/+xVeeMGU6b4g06sNB9/sgjFE9wS3fQTeINB7
-qSZXoZwWQp2MtixhL2HDMEbenBi9Ys2bSGaStnXc7/akWZF12+X49FS31tNunPyr
-4EJWiz4FLS2Su+T2Xc5Si90F2jItPv4y5WODlxXBb/083zLv04hNhlZ9vqQH2d6I
-MV7MZ12Z2IOaw7sWHqQQaM2+72yDOIE9L/1B7PpxBwbg/+ABQyq1Fg/ym51z0JTn
-cdbsPH+oIW1qYNyC2NtuO93LqmOWB3P4MOhynqWVsOkuazZqzxwerzurI4mwry7H
-wkOeW8bWF+UJ/ypLaIfypQCBi9eW8RFhOM3Gv2up3k6lmewrJtaBiHzj0BhoZgc1
-2BIhXTx9GSCk4aPOKfQArW4SABv5tJ39JfUqCHANQBbUELKITQCae3C25rXr02uc
-avn8opxkQX2i2amrgCJ4ygikZt//FHJanh0UISp3aieCoCoKsfVxp/YYN50+/cNA
-/ddvUwjMDSM4avpOeviqYqJgR4BK7tpPDl/S7Ddbe9+wt/ArHpYd84Y9h+Ywt1JR
-ng3pj5ZLhGHWwF9NrtvaCGdrGVKFgqZzrjKhSykZoGv3OAmZ5Zg=
-=Cdtz
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYp+fYACgkQVbJhu7ck
+PpRA8Q//fp0PvTDzd9DaTUxOjYnYvyNyR++0Q/PeIzdIcNNRQcjjGA5qVtLpJJbv
+2lDcR1YZnV3d0La9730JELK/4kB/59MK8iwmHQuNNHogOO62BkSzolUJm5dlL+IH
+VmmB4WX3ygAwCgxLRNuU67QkL2wnqNxoKvN7siU4jIPWopJ4Qjps07NAH1eEyHzg
+EUP9UKx99o7ItZtz8MR0k/DLlzAXb+pS/5sQDCiEKljxI6YD9fCcOgDNPPAplpyo
+vNegbKPJnvZfOPqyW1EaW89eLZP3dOehh3Angvz3K1tJBPePMAw5FIbVObvsp+nb
+UrlA6McRabQRh+yIPx1YACqlB0lJ9CbR0fJBdHYXYb7N1rrmjR0v8ztuGJ3TvEVl
+X7pyWN2JF55jAI2eRTIolQEpGbEvc1uZjCPdinMwp//6QAz5f0DzmI+vDVAHT7y+
+/RerOlK0Mq4QYRqYO3mI/7LzBsn5I5NOc3GJ6YnOsbqlY+YjywwPVGoZWWKg9gS7
+CJn1M5T8EC4TlRCMZyUTUnLxADU0TAbRHQoCkSzm74M2HQ07/Zoig+zimVFggt+/
+G8ajLTYM7FrIFTdS43bdYpixZyp6jk/mZ+OBKug6cJw9kqzYM3oo2peovrWYhPXa
+vwFhvzqBy4CFGJ43ooKV7i/wuYjm6oRRHCI5PLJvOkwtT3wRMYw=
+=WUdc
 -----END PGP SIGNATURE-----
 
---IlobtzfFoocmthRe--
+--rNcEUZoj0pOL5XtL--
