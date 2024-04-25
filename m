@@ -1,112 +1,85 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEFC14D280
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 16:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CE82E636
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 16:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714061987; cv=none; b=qZJMhq7mNPSi8FhNJ1yLKqIdkg3cgl15vwhWxwiiF50u+w0AsOsKcsRxmG8lcQ+kdRZTg/3Q37a9R+ixpxmapVJ/jnFFbZFF68rPzdAFyT9knzbwwgNV3pwlC0/7v+/5TDccPCOjo3YZnSvHqNg8jH5KTABDdy1jTLFMH5lxtz0=
+	t=1714063328; cv=none; b=PVFoYdCSbAtLZ7k80ivf2uEPfqrvvVcyZWY/DegtZuwwmBY0P6rYJ7AdtvRmWoAPN6tXqZsv+JxYTzLfMUXgGfuHcRfBb0mRhZzEPX5Qq/GBMVcEIgI/retKf/QxApfTm/+w7xUnLoxcA3qHf6hWIpd6wXVE9/SDCLKdvwTyqAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714061987; c=relaxed/simple;
-	bh=+KzOETslTE8cBpLUDWIx8mLu7RGaUZH8JtAqZCvSbQM=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n171VIawSY8ddw8dyqXpy4WxPJS/NogXiS42vCglBBhdhxGN2RiDnRpTrjifDKNIIkOCUr7YWj24kzdS/oCqd5qMKdFjiuA/dMhkObQ6xNt+2Cxg8fEUB+wCQDbFvukdMd8IoyenP0PRPogVbEG0Eq2O29NPZrvde7ni/CD8ZJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gbPlbjqO; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714063328; c=relaxed/simple;
+	bh=l/0kqvREPSjni3xp/q/ztIjtQGDPIc+YcTJ9uYuVUWI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d4pR837U8IvdcdSWFstf2MNLEXrdauXomIoYJTJBar0suj72jShsXxcDEah5FJl+XXPCIMJbziPfpaUsXvcDpo5RHFPOUeNIwQn2VQ0FPrkvddxK+YPftG9eeNE8v6Mo959kc1bKEeYGgOXiIGKPJQLEERvqjB4jtwRS+TIEWl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RD5lR6dA; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gbPlbjqO"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2deecd35088so9154581fa.2
-        for <git@vger.kernel.org>; Thu, 25 Apr 2024 09:19:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714061983; x=1714666783; darn=vger.kernel.org;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CLGXcJKalKIl1ahRdcadM6SPl162JnKYI62pjXXQmd4=;
-        b=gbPlbjqOHRV8ywIDG1fZrOWb2rsM+w8T2b3JFsxHfyPF94I2/L1uPwrz+kS6XRgWMU
-         4HFJ75gCbCNXM+FmFKs6NJ9Fg49cyhdkbW1+ANSi1Fc6ukYmPFj8khX5zsc2/72HEBN/
-         rjsD4d0+dPM7sD5HidreHgTNKFNU0fp+bPWvQ+lfra6iVAQ1UFTmVlnbpWkszdQXloO0
-         wpKzfg7XfNJHxJANXYmU0aZAx+txLXr1B5OPrUsTFEDmk/gckcRyuj7fU+FhUfkzJINZ
-         qE2UKjNNPa4oSnfqjEGHjHeXXjzCqeQ5k8/1OpZeo0Y9xe2SB3mESqRpMYD8nTKPDpvq
-         dHlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714061983; x=1714666783;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CLGXcJKalKIl1ahRdcadM6SPl162JnKYI62pjXXQmd4=;
-        b=XR+N52TWN74EKleGN8i2L2Dhx8MqFmOMP6zGLxzlgDlNsAF7u4kDAEYj7iOsWfRhsY
-         Z6leHMfZTB/8ZJFxhL993v/MPOth79f+J1kbt/XiEv6Dlg4ICvUwBDGPnm/6IwFfnjvo
-         DCxMrNf623Avv7Hv9qmzpUGfoyr6ZAcgsU1oDEq6Lo/6FEqrXdy9teUj6hx1BoB8RUA0
-         0EICaOKBI8GW4OC+LiTLSQnBaMBQ6EKbXHuEQV/tjg0kamwFRtgq4snyl0ytfY2b1p+P
-         3mQOg39HZBtZYcNYsQaCW2Hoou1BhynubHaLKE9PzMs57ufq8qL2FgPL0n85IVuUkX6T
-         bwDw==
-X-Gm-Message-State: AOJu0YyiOWlJuURTGXxJgrWDtNes9kmdo2Y085o9eBm2nmFeGbLg8+wX
-	l+sYSr5WUWirxRp4KBegcVRCtkW7sClNvA/WW2+UfRhmNFBoS24aG5DyaQ==
-X-Google-Smtp-Source: AGHT+IHqa62260Ha5JYFCIZg2ZuMaeycPzeyL5INPoHS1HLe2TDVBmUiDV/DYDIe1KgB4QIe2DbrYA==
-X-Received: by 2002:a05:6512:3609:b0:518:d3f5:e6d2 with SMTP id f9-20020a056512360900b00518d3f5e6d2mr4321961lfs.51.1714061983335;
-        Thu, 25 Apr 2024 09:19:43 -0700 (PDT)
-Received: from FBUtveckling ([31.3.153.65])
-        by smtp.gmail.com with ESMTPSA id s20-20020a056512315400b00516c4234511sm2851977lfi.242.2024.04.25.09.19.43
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Apr 2024 09:19:43 -0700 (PDT)
-From: "Felipe Bustamante" <fisadmaster@gmail.com>
-To: <git@vger.kernel.org>
-Subject: Use of Git with local folders
-Date: Thu, 25 Apr 2024 18:19:43 +0200
-Message-ID: <000901da972c$61efc670$25cf5350$@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RD5lR6dA"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E08DF23CBE;
+	Thu, 25 Apr 2024 12:42:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=l/0kqvREPSjn
+	i3xp/q/ztIjtQGDPIc+YcTJ9uYuVUWI=; b=RD5lR6dAoFJ0RorBVU0bnmmGJFAq
+	6jvgz1u05HS4Oix6PUSI59ocrEKaeNPx7EWtu5uuMPqOd1YGl7+PDAEcCJI9beXA
+	rRocntFF2dExepz+74poKaI5amFP1jlhghYHEep8jNlSYrJYHtq9y/i+lkADAgoP
+	4N6MFkFRtRpVR5w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D66B923CBD;
+	Thu, 25 Apr 2024 12:42:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ECA7A23CBC;
+	Thu, 25 Apr 2024 12:42:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  Roland Hieber
+ <rhi@pengutronix.de>,  Denton Liu <liu.denton@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] completion: add 'symbolic-ref'
+In-Reply-To: <mg33zswrxwxrlbzcvxyssxpqty5qxbezw43rwwnkepskne6fmh@3fypf2gskbyh>
+	(Justin Tobler's message of "Thu, 25 Apr 2024 09:36:34 -0500")
+References: <20240425101845.708554-1-rhi@pengutronix.de>
+	<4ea09a34-bd62-434e-b893-8e3780aa915f@app.fastmail.com>
+	<mg33zswrxwxrlbzcvxyssxpqty5qxbezw43rwwnkepskne6fmh@3fypf2gskbyh>
+Date: Thu, 25 Apr 2024 09:42:01 -0700
+Message-ID: <xmqqh6fpgzs6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ BE651AD8-0322-11EF-838C-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdqXLFPmFZdyy/l9RLSHHYnoh0tGTg==
-Content-Language: sv
-X-Antivirus: AVG (VPS 240425-16, 25/4/2024), Outbound message
-X-Antivirus-Status: Clean
 
-Hi,
+Justin Tobler <jltobler@gmail.com> writes:
 
-I would like to know if it is possible to combine the contents of several d=
-irectories with copies of the same source code but with different changes?
+>> (I was going to link to SubmittingPatches here but I didn=E2=80=99t fi=
+nd a
+>> mention of it there. Apparently I misremembered.)
+>
+> There is a section in the MyFirstContribution docs that mentions it
+> briefly:
+>
+> https://git-scm.com/docs/MyFirstContribution#v2-git-send-email
 
-The stage is:
-1. There is a directory with the original source code, without changes.
-2. There are several directories, ordered by the date of creation, which ar=
-e a copy of the original source code, copies made every day after generatin=
-g changes, that is, the original source code resides in the DIR1 directory,=
- a copy is made with name dir2, and changes are made to the source code of =
-the project. The next day, a copy of the directory of name DIR2 is made and=
- renamed DIR3, we work with this directory making changes to the source cod=
-e. The same process is carried out for two weeks.
+Thanks for noticing. =20
 
-The important question would be, is it possible to combine these directorie=
-s in a repository with a Master branch (the first original directory (DIR1)=
- and transform the other directory into branches of the master?
-
-It would be useful, if copies were made that were made on an original direc=
-tory (dir1) that was already becoming a git repository, with the use of Vis=
-ual Studio 2022?
-
-As an observation, the work is done on an isolated computer, without intern=
-et connection or to backup devices, the computer is fully isolated and it i=
-s necessary to generate the version control, in the case that it is possibl=
-e.
-
-Any orientation in this regard would be very useful.
-
-Thanks,
-
-Felipe Bustamante
-Sverige
+We should improve the situation by probably moving[*] more from the
+latter to SubmittingPatches so that people do not need to refer to
+both just to find out the essentials.
 
 
--- 
-This email has been checked for viruses by AVG antivirus software.
-www.avg.com
+[*] If it is small, just copy; if it is large, move and then replace
+    the original with a reference into SubmittingPatches.
+
