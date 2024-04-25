@@ -1,113 +1,125 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03777152E13
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 21:07:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9418E155336
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 21:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714079251; cv=none; b=onQp316j3OWl+e1H+ekiSu73SvRi6R1pfSr40cE/iKTZBdSWWasoHMXa/TDaZsBE5ULdgCBh9qyJrkhLsArKfSSCyVOt6BvGayWa1uYoxGCoDpRm+RfyCzWrvEW6DsgowmLmrxTrlu/iQQDyCJanOdrsf5uWSICrfId0tAivSN8=
+	t=1714079525; cv=none; b=LXkE33bcOF29xin+xsiqieJah+i8e4tS6sWSD27QX15dcfgWgo0ZhsuR5VGPC7N1pRZWmSbdXkekRJrRZB4aRsEfCClhEwDgl0N6KUgYcjKeLR6BzFed9AJHtQcwQrFCjw4pV2FX8sLrKaaRU/6nR4en6r+Xq5d71mBkrrxw+44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714079251; c=relaxed/simple;
-	bh=8Le+dlZwCSGGkoreBWmTtJOlLbqPk5UGOuT1LYlfQ8Y=;
+	s=arc-20240116; t=1714079525; c=relaxed/simple;
+	bh=Uln7z+lpeqyXe2RX9+c90zv2oYUVBZeFrg27OLpiZuk=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fx26XWrgi3hwsIBkxkNHiWa9vz075KV4boC8VD26JeeRUMMT+v4tw8db8MleorXFOHj8i5Ce8Ac3MtZ0XLoytZDPD7gwc+XZU35swo3yPFGOnjv20cDQ7foBfQA7p9Tj9ckpUOmZqN7FCMOyjJOqOhsLPzHcKzjMeBiNTQAKUPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P3dPqLn3; arc=none smtp.client-ip=209.85.167.180
+	 To:Cc:Content-Type; b=ou+9/Y5tr6hUjwK1NHIzEDjaVR25TfeLG+3tOyFNq4ZQonHzhuzmj1BVoNRj2LuiZwkv5egWf+4S7AZAqyaxjoF4eRBglp8yFrcZehYvL87oZtFbz5wLFHtllKpjzX8gqrbH7sUkpmmMn4+4Gaeij4NoUwk1XrDdOTx6//GgiqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aY+Zrt2P; arc=none smtp.client-ip=209.85.210.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3dPqLn3"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3c844b6edbbso919406b6e.1
-        for <git@vger.kernel.org>; Thu, 25 Apr 2024 14:07:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aY+Zrt2P"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6ea1a55b0c0so795613a34.3
+        for <git@vger.kernel.org>; Thu, 25 Apr 2024 14:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714079249; x=1714684049; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714079522; x=1714684322; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=k+wmisdSo2CcAVT1MtLa1wHQ7l1P6MRfTXcrXALbEUg=;
-        b=P3dPqLn3VtxgzdIg/2SvdDvD6M0gcNPA5NP9ZLZ2XYphtDkLkt2SRnIy6wKUExuOsT
-         GO2O6iFRjY1CpPxJhxEGigBd6DQrNf717jO5vGFSJp3G5ORCiH7pGIRReG2oENR4TQvw
-         yjYpofxga0DPhJ3b+X2Oc9CkS9Wi7205GntXli9DdJcvJmbf41cBJV+0dArX5znrTJLa
-         +IrvkmGgZGUxzIulN3kmDXAzQS+4/QnkcsSndQxgFTv1CiqTRLY6uCshaeVBzguuso7r
-         DTSut9PClsML7yOXwGoIueMXhqfaaje9rp/hz2bmqqfS7Svo2UUazBUHzbmD/+HqbM5D
-         Il+g==
+        bh=SXnoNcl8Y42QNOc8eYqJ8lOJqBKI4HOfrLwoJG6rZsc=;
+        b=aY+Zrt2PMhn6bJJzJqQUp2k0tOyloZaWe7xtkutX/Ixm/h90W26XLkPxO6lXlc9RGU
+         BIS94RGe5huSjMny2heoDMkPp75+G4Hl1LzDdb0zoejHN3mKVPWI7fEgNMCDhIMJz97Z
+         5ipB2PB/rGjCh1SWnqEIhjpvzaBIXfI/6BOoXrisjedcW+GMOkwNocW+pCmnceLd2w6w
+         vpr4m+7dmGRsi+poXtygt4sNmvJ0DvO+8mXrOBE+EUusTQCRploLgmi862aNLFYhQL63
+         Xkr+hXoBQVNYfV9elJr56c/BqZChk13caGnXOyD9ELs5Qi14EQncVb1Caw9/+YR05tYy
+         fQHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714079249; x=1714684049;
+        d=1e100.net; s=20230601; t=1714079522; x=1714684322;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k+wmisdSo2CcAVT1MtLa1wHQ7l1P6MRfTXcrXALbEUg=;
-        b=CvuZ+zd9JdCgS8Lq+FSiDJQN63R/G+j4doxZyFvdVXFV/6BwjTZzg7mrLsBxsZQldy
-         bOUPGY12XhjhwBMyJMfRCEXVRYWzOsr3+f+g0SzniT+W1sxnXmqQxfyWTOuYjKjJgOph
-         jVpGCc/VUlptUfNNpAc4g/6eNRuaZBBMP4ABiNEO9lklF03+Nmvy738hAEg5sJZ0HhFq
-         vfQp2yLwjl6uMx2vM7Kw+Mca4UR9ZySkixQqLGKjneiGTCb/R9NlBvwrPz/+yMgBVT/Z
-         gytDnI3M+dOthKXTJupyu4hOL12Lx2IcbZM6Y0coPutHPRkJCYYufPjRfSmJUwFogh/I
-         MRFA==
-X-Forwarded-Encrypted: i=1; AJvYcCVKP3/oISOJgYCLUrP9juPfedKUFoKgzFImKjY2954pTW456fsYKNBX1s8KW5eIpFVKJW17KENtfeux2GMcGhhQR4M5
-X-Gm-Message-State: AOJu0YzBm51T0DgBk4QwqAZVvvwretowBoPLFrjElpF68e1dVfrHeS1D
-	639mYNtZrFSS7J7uxrjQbjzrSgPey0qbu0NnNcvg9ObjvHqzutEpYONoKyItZrPvLBad/Ab+Iba
-	2oKNSIIgpE8j0ilrAXlc1E+xU590=
-X-Google-Smtp-Source: AGHT+IEZ9OLguZQ7F+Xq5x+cZtJg315YpTv+w60DFwdTHFy34ULacGb9hm2sXA0Kvmts+8N5kFoyCrLHrOtABrcfP+o=
-X-Received: by 2002:a05:6870:2312:b0:22b:a8f3:36b7 with SMTP id
- w18-20020a056870231200b0022ba8f336b7mr652299oao.55.1714079248829; Thu, 25 Apr
- 2024 14:07:28 -0700 (PDT)
+        bh=SXnoNcl8Y42QNOc8eYqJ8lOJqBKI4HOfrLwoJG6rZsc=;
+        b=fPefqg35+iSqJmk93HvxION4fQUzbRjQ6/yhL4waRUMaLTZcQ8TsivdGPwjMXffDPJ
+         A3qJOF6+YgjfyJWJGKefL5jP8QnbfPDTyurWmycTamfuezfiJHsTNtwIdoqltlV7uYix
+         K/NIalx0YJOBur4EJHCf2p806eNA5NEk+M4xjCSm3PTZQ4eJGBZXsztKholTydE6Ol9I
+         2rLEjcYc6YXyx6ZoawEpnkUum4iTjomLTNV5aIKlNW1v4R7mqAvdByBlDx1sPkRjA8TO
+         ley8pKjWLPTZIeeEi9DpeQz652x3NxiVU2Llf7rtHhFIWIuBXzBaANynNCs8hmZ9mLb2
+         gypQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXZJlI2zMUV4l1Y2jHFb2JTEGfRPKj4vry6xZS4fzYFyAvvXd5yjydbAIj13K4wnhLpRumRSMHlot9JAwKTGXEJ5EuE
+X-Gm-Message-State: AOJu0Yw5ABNOCO5uczqt3fxDqzTiIyd2VLAfrns8p4bTUPEer/kQhByX
+	wgilBGgUkEm2JpGUGcOSfCYBP6Q1zS4wYdeRkbLfZTgNM62Zgrp7ZEH3ZYXZeVs87egSEZSVu9W
+	D/woFoGrU+3EZf0MxuDrIjtfzPNo=
+X-Google-Smtp-Source: AGHT+IFscFWlDozPPCHPybnry1reh+x7DCr3Mwqu7vwzaZ7dwu3mBJXYCkJlZfMt20JhTEwmKKK6yQxv2EjGl2eTktI=
+X-Received: by 2002:a05:6870:b296:b0:229:f50b:d5a5 with SMTP id
+ c22-20020a056870b29600b00229f50bd5a5mr756907oao.5.1714079522616; Thu, 25 Apr
+ 2024 14:12:02 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 25 Apr 2024 14:07:27 -0700
+ HTTPREST; Thu, 25 Apr 2024 14:12:01 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq8r11gyhy.fsf@gitster.g>
+In-Reply-To: <Zin67FKk6XXOotQh@tanuki>
 References: <20240412095908.1134387-1-knayak@gitlab.com> <20240423212818.574123-1-knayak@gitlab.com>
- <xmqq8r11gyhy.fsf@gitster.g>
+ <20240423220308.GC1172807@coredump.intra.peff.net> <CAOLa=ZRk8QR4qkbkRm6AirapdrAqz6bG-tXfY3zRQU_9XkJM1Q@mail.gmail.com>
+ <Zin67FKk6XXOotQh@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 25 Apr 2024 14:07:27 -0700
-Message-ID: <CAOLa=ZTw8Y5iohGkha2RUtaj7Xsp5WwBs1C+_XbgwP+Lbc-ALA@mail.gmail.com>
+Date: Thu, 25 Apr 2024 14:12:01 -0700
+Message-ID: <CAOLa=ZStA8tyA=COVM+7Cvr6W5BmPaesgMk6NSHpr5w+Ve08BQ@mail.gmail.com>
 Subject: Re: [PATCH v3 0/8] refs: add symref support to 'git-update-ref'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: chris.torek@gmail.com, git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000be6a6a0616f22c33"
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, chris.torek@gmail.com, git@vger.kernel.org, 
+	gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000001015ca0616f23da8"
 
---000000000000be6a6a0616f22c33
+--0000000000001015ca0616f23da8
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> You'd want something like this squashed into an appropriate step to
-> avoid breaking "make sparse".
+> On Wed, Apr 24, 2024 at 09:25:27AM -0700, Karthik Nayak wrote:
+>> Jeff King <peff@peff.net> writes:
+>> > On Tue, Apr 23, 2024 at 11:28:10PM +0200, Karthik Nayak wrote:
+> [snip]
+>> Also on a sidenote, it's worth considering that with the direction of
+>> [2], we could also extrapolate to introduce {verify, update, create,
+>> delete} v2, which support both symrefs and regular refs. But require
+>> explicit types from the user:
+>>
+>>     update-v2 SP <ref> NUL (oid <new-oid> | ref <new-target>) NUL
+>> [(oid <old-oid> | ref <old-target>)] NUL
+>> 	create-v2 SP <ref> NUL (oid <new-oid> | ref <new-target>) NUL
+>> 	delete-v2 SP <ref> NUL [(oid <old-oid> | ref <old-target>)] NUL
+>> 	verify-v2 SP <ref> NUL [(oid <old-oid> | ref <old-target>)] NUL
+>>
+>> This is similar to the v3 patches I've currently sent out, in that it
+>> would also allow cross operations between regular refs and symrefs.
 >
-> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-> index 175579148f..1cdafc33f3 100644
-> --- a/builtin/update-ref.c
-> +++ b/builtin/update-ref.c
-> @@ -228,7 +228,7 @@ static void parse_cmd_update(struct ref_transaction *transaction,
->  	have_old = !parse_next_arg(&next, end, &old_oid,
->  				   &old_target, "update", refname,
->  				   PARSE_SHA1_OLD | PARSE_REFNAME_TARGETS);
-> -	have_old = have_old & !old_target.len;
-> +	have_old = have_old && !old_target.len;
+> One could put this new syntax behind a feature flag to avoid the "-v2"
+> suffixes, e.g. `git update-ref --with-symrefs`. But I'm not sure whether
+> this would be beneficial.
 >
->  	if (*next != line_termination)
->  		die("update %s: extra input: %s", refname, next);
 
-Thanks, will check and squash this in.
+Yeah, me neither. I mean it doesn't provide any new functionality. The
+only usecase we're missing currently (with old + symref-* commands), is
+that we have no way to convert a symref to a regular ref while checking
+the old_value. This could however simply be solved by introducing a new
+`symref-convert` command.
 
---000000000000be6a6a0616f22c33
+--0000000000001015ca0616f23da8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 43e62184aeb855ff_0.1
+X-Attachment-Id: 465c6b6393d569b3_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZcXhnd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md0FLQy85UHgzcC9HR1c4NXVMSFJBbTA4V1NJZUh0UQpBRVpUM2Z2OTVI
-dzRXV0IyOWlRWXVqTGlFMmRKYXB4UHhnV1ZTWnlzcWQ5dXBpQmdVYitSVnlzT1RhL3FLMlpOCity
-a2k5ZDdnQWlEeGZKSlZ2RWZxcGlOQXh1cVdCeG5vUFpEWDRSSnlZZ0dsT1V0b3BnK205NmtwM1RV
-bG1McHcKTWJUczFrQTJOMDY0ZE9pbFlZaS8xNFozQjc4VFdPKytudG5iSEMveVRNWTlKckFIbnZu
-dW1NeTR2SlI2MHV5aApGQ2ZBQ3NDZWM2MWxsNGpvamlIQTlsZllJZDFvTUtDd3dMaDVmaHhmb2Y1
-ZEE5Ti9vdnUvdGFYdGRQaktwbHJ6Cm5peHZtcVJKNC8xNUlTOTVXazQ3S3ZNb1hPUFlVL2J0anRH
-NkVseHFvZkV4ODQxWjQvY3paQVNoZ1NXRFk2aGwKeHZtZmU1UzQ4VDBVVTNydUJBY3RpOEZNdS91
-a200Z040M2x2cHBsTGMvNnM4ZHR1dFZNdEs2NTU5NngwbVUwZApYc1VEbVBXQTMxKzJzamMwTFl2
-OTVCZHBQeVNpcHZUMktrUk5tVitUbGlhSExpT2tNVjdIU1dGMFlvMTFNd3krCmx6bWd2WmpiNitn
-bGxKS3d0RkMxNzdrQzhBbitjbVVFdjVZNEpNaz0KPXAwdmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZcXh4OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM1FFQy80bzBXZGxYQUVPR29KUVk5QWhlMVBnZ2Z3eQpFWFo5Z2Y1akpT
+QU4zY3ZxdVFZYVFRSlBxUXd1MzNRSWNmN0gvdS9UVHhnNGVPTkR0Z1F2enNiaExDQ3VFWUE2CkdC
+ZWkyYnVsejNjVVpTQTZKUXZtTU0rUE14ZlJqU0lOdGNHLzJmTldTZUJKWnl6T1NjaEhnUVJJUmVk
+RTFjbSsKZ1EyL2EwOWZiV3J0QnF6bXNabmQ2VWRuc3dmNnZSdWl2Y1ArYzNkcGRNZ21ZSVh0T3VG
+MTBUdDFWM3ZZMW5PRwpYUWZVWVFTcytBNHZxSmVoVFFlWXhEQS9IZjJTZ295WmpYT0p0cGpPS1JW
+c0JxNXNJbnFISE03dUhNQVIzcDVIClphODZBV3g4Y1VoZlhha1pWcXR3NllheDZJSEpaWDFxRGVU
+cG92WlVLSm1TTUZrbnQvR3NwSUx2Mk43WkF2K1cKMFIwSHBtYmorWHJzRHJqUFRZNGlzQWZMaCsv
+QmhpRWo2L2lCSndRczV6QTY5MG9SZ0pUV3ZFaUVEa0Z4MzBURApxWjU4NVQrNzk1MjF5Y2daUXF4
+WDQ2RG55YnBaZFo2dzZyc2ZhR2lwWDZOWjVQaDBuR3dMMUwzYjIyMXZsWWFyCnRFdks3aWM0Qllo
+Zm8zWHloU0NSK3ZuY3IrN0NNZyt0NzFWT09OST0KPUg3NWQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000be6a6a0616f22c33--
+--0000000000001015ca0616f23da8--
