@@ -1,112 +1,106 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2A914F9F5
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 18:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA9515250D
+	for <git@vger.kernel.org>; Thu, 25 Apr 2024 20:23:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714071596; cv=none; b=MSMBUkzObUxbolTx4hl4+KJay+0AZrPM6GC7dEh2aPbEnfRwGHpY0BWj7+7OzA0+QiIdVGJ8Wj+MPgU4z8Ms2bZMlWigjleUr861CzFUGzG89YuLOqjJz5y/G4hydT3GqCJ3QenAJOaOBDr33os/G3kZuC2dEjxLyIkreCTewSU=
+	t=1714076636; cv=none; b=IX1HnFbZZnnSVn4IAijtDKemb7QUyw7hAQ9pa/5CUR6ETMrRrGlschXm3k6h/3sTuHaptSOFeXruLngFvru+VUXXawKGm1/jbbuXWMhVugWfcLv1tskrtCtQjjNBQNeUt/kblelp6sU+kXrDL/6xx6NTuPezaYxmH7A4M4wlvlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714071596; c=relaxed/simple;
-	bh=al02jXA8QfJ+bDykVm9k+V6pH5Qw/1QorpvN4BOXmuw=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=p8oO54IE/jLZeaRNMgGTt2IOtjGJmtMsb/dc/Loq3LcwZKF6VsTOEtK2KrlBv5/Hh2AhNUdr00FPTgJ4kO14DN2MBCB6+zqKYj9kQQP+Xr5YLTdrwu5pbJHuIicWCsJhMivIbxK+aYPVvVx0krrcuM4vQOR382Ifqv3nlRX+ACM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Quh8xU68; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714076636; c=relaxed/simple;
+	bh=wq6mpeaPYWR35EVS+BV7kT5RBEC3j43DKbK4fWrTPXs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oueiwYXu7Dm37JNAUlRcxlSk0EA4T5YnHd55Zn40QpRCX42yOmsE2SEtW6YV3lUhj+IVqKZvnLwY7WjgbzCJDPsW8MRJ5jjMEuMjM1v1oX6wSbylp5LtPOQgPro2q0vWRrYTSlYb2loSorwdvn8BMaNSA569lhsNUfvOfAbjox8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sio1jGgE; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Quh8xU68"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2db6f5977e1so15330571fa.2
-        for <git@vger.kernel.org>; Thu, 25 Apr 2024 11:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714071593; x=1714676393; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zi9J5x31EviBdM4O5UkQZXhhYRD0XPX6hiCPI52L254=;
-        b=Quh8xU68REjd6A0qIllfxOjhUZybfzWCtxYZ9PcDWRaRIzcHUa6SuYoDOp5glQlHkN
-         3zk/9ORbUkUlHtbv15reav34UcaqbOMf1tmTEKm6MYkGM1xfoUnjGlG74WHQoFP/+edo
-         hpOWvyYb+xhDzcG0ImHV8I383113P2k8afwlxlYHeqS/fRon+I8+0qPV7mWlusU6BT5g
-         TEq46ThCt88sWR9VQP5HzJpa2yNhZEzy9ZpZxBverPd5wbrpyKSypAh9G6eTe7nbBWDn
-         MB2iWfmTfhzI1NQaiKLioupj2EwFJHd5dBouUcByV2N9XflMRHWnfGWyiOTOBc9Y2zSu
-         u0Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714071593; x=1714676393;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zi9J5x31EviBdM4O5UkQZXhhYRD0XPX6hiCPI52L254=;
-        b=ASXEYFGg+UdU+lEi2nUa3QIt1yN4pE3S2ntAL7qdWWvK5zHBG2dm5I7zK4lDLJ/Lur
-         9BSdbm7AjY/pFB91eZqtojYmkWAJxyeP2nRbPAYxp+vxbz+i2HFJUcfP5HQgy/CAKgeN
-         dbplhxyFSoZ9ZK3YMFlI/3xHjbprbPO/Eu9Dr3M/WFLFXkE/n3nM3QY/lcOZo+XmbfT8
-         4iDsDBWqaxEpCnEVl6BqjRAyyzj0vMSyQUk3aOaGL+Ru1rLicBFVla7uq+vTuHxsmJZD
-         E0We6LzjCezj1zbtwb8TCrQz0Rb3uPApEFk1Bjlbt2rz9pXXTIthUXo885s+C3YaX1SH
-         Yphw==
-X-Gm-Message-State: AOJu0YwpsYiD5SrGGSXg8iSgxdUJa3E9upqbFgZh2NXRSbCA2GGR0krQ
-	1CPmqwUQmtfAbcsldr0cELi5ySo+3kyx8CLX/sDggqaKwmvo6mNmWt4viw==
-X-Google-Smtp-Source: AGHT+IFp4yhXflcJ8QFyzXaPCdsKEder63XG/z5f2eOtUEkMM0zzzNbP0sRUbCpjIBir3LQSFLW8wQ==
-X-Received: by 2002:a2e:b05a:0:b0:2d7:1a30:e881 with SMTP id d26-20020a2eb05a000000b002d71a30e881mr163369ljl.12.1714071593270;
-        Thu, 25 Apr 2024 11:59:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v11-20020a05600c470b00b0041a963bf2cdsm12312849wmo.36.2024.04.25.11.59.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Apr 2024 11:59:52 -0700 (PDT)
-Message-Id: <pull.1710.git.git.1714071592035.gitgitgadget@gmail.com>
-From: "Thomas via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 25 Apr 2024 18:59:51 +0000
-Subject: [PATCH] completion: fix zsh parsing $GIT_PS1_SHOWUPSTREAM
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sio1jGgE"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id AF4333E91A;
+	Thu, 25 Apr 2024 16:23:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=wq6mpeaPYWR35EVS+BV7kT5RBEC3j43DKbK4fW
+	rTPXs=; b=Sio1jGgEVuC9TS4SHGvi7Sy0WdL+Q7oSEOgD8XSJZviRUfd8h7poqN
+	CJuLFzBxwqJgV0X4ABqiWiXTKnAMoX3QVodAtsDd6XFSFF3WH7Za6uspPMCuO2W2
+	1sIxZFo14VFFx7DrIeL2Ub3TTQd8njTnYRGI2OGUY6LkQA9pt+zTc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A667C3E919;
+	Thu, 25 Apr 2024 16:23:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EE8753E918;
+	Thu, 25 Apr 2024 16:23:49 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Jeff King <peff@peff.net>,  =?utf-8?Q?Rub=C3=A9n?= Justo
+ <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4] add-patch: response to unknown command
+In-Reply-To: <CAPig+cST4_hUwWg+P_drqT-mv8+eLAzBmuMFXm=Dui14kfYZzA@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 24 Apr 2024 22:15:25 -0400")
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+	<6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+	<db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+	<b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
+	<20240425014432.GA1768914@coredump.intra.peff.net>
+	<CAPig+cST4_hUwWg+P_drqT-mv8+eLAzBmuMFXm=Dui14kfYZzA@mail.gmail.com>
+Date: Thu, 25 Apr 2024 13:23:48 -0700
+Message-ID: <xmqqedatfay3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Thomas <thomasqueirozb@gmail.com>,
-    Thomas Queiroz <thomasqueirozb@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B9FDC174-0341-11EF-9465-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-From: Thomas Queiroz <thomasqueirozb@gmail.com>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Since GIT_PS1_SHOWUPSTREAM is a variable with space separated values and
-zsh for loops do no split by space by default, parsing of the options
-wasn't actually being done. The `-d' '` is a hacky solution that works
-in both bash and zsh. The correct way to do that in zsh would be do use
-read -rA and loop over the resulting array but -A isn't defined in bash.
+> That's very reminiscent of [1]. Although, unlike [1], the output
+> presented to the user in this case is (I suppose) less likely to be
+> messed up; only the combined captured output is probably affected. So,
+> capturing stdout and stderr separately would indeed be a good idea.
 
-Signed-off-by: Thomas Queiroz <thomasqueirozb@gmail.com>
----
-    completion: Fix zsh parsing $GIT_PS1_SHOWUPSTREAM
+Hmph, something along this line?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1710%2Fthomasqueirozb%2Fzsh-completion-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1710/thomasqueirozb/zsh-completion-fix-v1
-Pull-Request: https://github.com/git/git/pull/1710
+It loses to capture how the output should be intermixed, which is
+essential to validate what the end-user should see.  As we can see
+in the attached patch, we cannot express that "Unknown ..." should
+come in between two "Stage addition?" questions, which is a downside.
 
- contrib/completion/git-prompt.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Between adding fflush() before err() writes, and updating err() to
+write to the standard output stream, I am in favor of the latter for
+its simplicity (of the mental model of the resulting code, not of
+the patch that is required to do so).
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 5330e769a72..9c25ec1e965 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -141,14 +141,14 @@ __git_ps1_show_upstream ()
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index ed7e414649..a8dfebd8d7 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -64,11 +64,12 @@ test_expect_success 'unknown command' '
+ 	git add -N command &&
+ 	git diff command >expect &&
+ 	cat >>expect <<-EOF &&
+-	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
+-	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
++	(1/1) Stage addition [y,n,q,a,d,e,p,?]? (1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
+ 	EOF
+-	git add -p -- command <command >actual 2>&1 &&
+-	test_cmp expect actual
++	echo "Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)" >expect.error &&
++	git add -p -- command <command >actual 2>actual.error &&
++	test_cmp expect actual &&
++	test_cmp expect.error actual.error
+ '
  
- 	# parse configuration values
- 	local option
--	for option in ${GIT_PS1_SHOWUPSTREAM-}; do
-+	while read -r -d' ' option; do
- 		case "$option" in
- 		git|svn) upstream_type="$option" ;;
- 		verbose) verbose=1 ;;
- 		legacy)  legacy=1  ;;
- 		name)    name=1 ;;
- 		esac
--	done
-+	done <<< "${GIT_PS1_SHOWUPSTREAM-} "
- 
- 	# Find our upstream type
- 	case "$upstream_type" in
-
-base-commit: 21306a098c3f174ad4c2a5cddb9069ee27a548b0
--- 
-gitgitgadget
+ test_expect_success 'setup (initial)' '
