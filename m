@@ -1,198 +1,102 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBDF39FC9
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 21:39:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867F3376E6
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 22:12:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714167556; cv=none; b=IfftRWykYuPvPI+xIwV6O5+bsVm0zayV1DDln+CuGkbHGCOXQ/73b5EviAAEpIfdCQ5fhUqhN7Q7OwBOD2yIrofqaSsQQZS6sYJFBmNm+mULivqcHIkeD3Gv2m4WnDpJMdMpt8kS919HdKA3eSZjO83YwARBgpe5PdcH2+xJzcw=
+	t=1714169527; cv=none; b=QHMAVu3lbJ5SoYrWHWwt4e0GVQ+ld3UK4T9bb999CpBhy/w3ExZuPaWz4yRKroZ6yyYj6cNspAFZ2scC0vy9xczUy+LTVaOYA7IjPFhvGcJg9Vz+O1SPnHuPy9ZRm3Y6VGfoOzNu0dXSL5lPrLBI0qFnyUF3bWHNbhr2Rut5KEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714167556; c=relaxed/simple;
-	bh=h3rwADGfxjsHH2QSlpzi1zLW+CAACv0SYCY7aVGi+OY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bgbVac3ZA23IYEmC/oqNmFH605a5/UiUD0pxwqzPgoKMP2zcDWSR0uNTdgdq/3YkTflM86UDQzOtc4DOFg95BNlYPdyGrjV7m2sJ6ZxhfrPPjSVA7VQpzDKwPsIIqlTTITKuQsGyfq0uAwQSPB5lGcnCX9hbaued745xF1gWO7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iMW1j5sD; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714169527; c=relaxed/simple;
+	bh=6BF9oGXtrzCiuoZCSqzfsX8O731x9Qa/l9/Gq14xLaE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RfSd4wcbptp9mlivU3lqUzaILhgwHqsqVQ4PyTKxPRSNtVjJMFxc4zumxGjvXBn/3UTfwyx3g6oRJ1KOhQ3Xz2rH+kgcPNAGZVBq+NXSHaw+B7cUTNMYwpldD4WQ6UQUp7vM0ca9WkSUyP3Gc7i5NcdAyiJ7CZjLFoY358enUAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FzL4nhgM; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iMW1j5sD"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D62D61FF2B;
-	Fri, 26 Apr 2024 17:39:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=h3rwADGfxjsHH2QSlpzi1zLW+CAACv0SYCY7aV
-	Gi+OY=; b=iMW1j5sDsb+pBN/UL05R7ioYw9vEIRxTJT+86gSmI+NG1LiCSDFMsO
-	U79X4pMMiersJLxzpdQw4/j26pgRi0xoGOiXnrlE2nfBae3C/z6mnu6zagchbK8A
-	94maBkgxNZLsx0JmTOOdB1S15OTlFlembWpLTdy1Bvh+xa2YADOCw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CE3711FF2A;
-	Fri, 26 Apr 2024 17:39:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FzL4nhgM"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D19D81FF22;
-	Fri, 26 Apr 2024 17:39:09 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v4 2/7] files-backend: extract out `create_symref_lock`
-In-Reply-To: <20240426152449.228860-3-knayak@gitlab.com> (Karthik Nayak's
-	message of "Fri, 26 Apr 2024 17:24:44 +0200")
-References: <20240423212818.574123-1-knayak@gitlab.com>
-	<20240426152449.228860-1-knayak@gitlab.com>
-	<20240426152449.228860-3-knayak@gitlab.com>
-Date: Fri, 26 Apr 2024 14:39:08 -0700
-Message-ID: <xmqqmspf9537.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6F68C5B2D4;
+	Fri, 26 Apr 2024 22:12:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1714169523;
+	bh=6BF9oGXtrzCiuoZCSqzfsX8O731x9Qa/l9/Gq14xLaE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=FzL4nhgMcVucMcmimJ1pyo8q6SCpRl+fbfMxqQ5vjBuq+79G20osK0Iw65754heFs
+	 KNUHkhyNfsGS7jo/nI/il2CRfni+YvCjC74QgISiRQGWQcn39Ilj+2La6s6GBezPIg
+	 /T2h0p7rCZqEGijIRo8B9oFSAYVZz0VSqRY160WfKzbdDklyZu07uEtdRqfXsGUrbK
+	 MLZRJEkGXkDnp7h9HrCbh11YS126JOC/KYgja61COeN98782u5TyoIH2YdZRCcR84M
+	 kylLU98yPULsAZ2BioPi8sakdEpZV8aWX7+OqwEGN449p+4YaE/e5BVqGl2f+8YtR2
+	 gYXRHTJGv57DCfxJ2op+Qgw21tTZfW3bc6R4aIimCYqZLsouqotECKUssePUSF6jDD
+	 f2zIhPuCvWpfg22/NZsAWHgVwJTq7Ja1QPKdfx0262Km5nO9i/43QD6JupumuXELD9
+	 AIRVMKv8wy/rfLUpT7mlKnYJB6IdoQKtWm7IMyuoDwZiWnGI0SQ
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] vimdiff: make script and tests work with zsh
+Date: Fri, 26 Apr 2024 22:11:54 +0000
+Message-ID: <20240426221154.2194139-3-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
+In-Reply-To: <20240426221154.2194139-1-sandals@crustytoothpaste.net>
+References: <20240426221154.2194139-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6A76A98E-0415-11EF-9BAA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+When we process the $LAYOUT variable through sed, the result will end
+with the character "#".  We then split it at the shell using IFS so that
+we can process it a character at a time.
 
-> From: Karthik Nayak <karthik.188@gmail.com>
->
-> The function `create_symref_locked` creates a symref by creating a
-> '<symref>.lock' file and then committing the symref lock, which creates
-> the final symref.
->
-> Split this into two individual functions `create_and_commit_symref` and
-> `create_symref_locked`. This way we can create the symref lock and
-> commit it at different times. This will be used to provide symref
-> support in `git-update-ref(1)`.
+POSIX specifies that only "IFS white space shall be ignored at the
+beginning and end of the input".  The hash mark is not a white space
+character, so it is not ignored at the beginning and end of the input.
 
-It is a confusing way to describe what this patch did, though.  If
-you truly splitted create_symref_locked() into two, you would have
-functions A and B, and existing callers of create_symref_locked()
-would be changed to call A() and then B().  I do not think such a
-split would make sense in this case, but the above description gives
-an impression that it was what you did.
+POSIX then specifies that "[e]ach occurrence in the input of an IFS
+character that is not IFS white space, along with any adjacent IFS white
+space, shall delimit a field, as described previously."  Thus, the final
+hash mark delimits a field, and the final field is the empty string.
 
-In reality, an early part of create_symref_locked() was made into a
-separate helper function that can be called from callers other than
-create_symref_locked(), and because the helper got a name too
-similar to the original, you had to rename create_symref_locked() to
-create_and_commit_symref().  The existing callers of it are not
-affected, modulo the name change.
+zsh implements this behavior strictly in compliance with POSIX (and
+differently from most other shells), such that we end up with a trailing
+empty field.  We don't want this empty field and processing it in the
+normal way causes us to fail to parse properly and fail the tests with
+"ERROR" entries, so let's just ignore it instead.  This is the behavior
+of bash and dash anyway and what was clearly intended, so this is a
+reasonable thing to do.
 
-Perhaps
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ mergetools/vimdiff | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-    Split the early half of create_symref_locked() into a new helper
-    funciton create_symref_lock().  Because the name of the new
-    function is too similar to the original, rename the original to
-    create_and_commit_symref() to avoid confusion.
-
-    The new helper will be used to ...
-
-or something?
-
-> -static int create_symref_locked(struct files_ref_store *refs,
-> -				struct ref_lock *lock, const char *refname,
-> -				const char *target, const char *logmsg)
-> +static int create_symref_lock(struct files_ref_store *refs,
-> +			      struct ref_lock *lock, const char *refname,
-> +			      const char *target)
->  {
-> +	if (!fdopen_lock_file(&lock->lk, "w"))
-> +		return error("unable to fdopen %s: %s",
-> +			     get_lock_file_path(&lock->lk), strerror(errno));
-> +
-> +	/* no error check; commit_ref will check ferror */
-> +	fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target);
-
-This was a bit puzzling (see below).
-
-> +	return 0;
-> +}
-> +
-> +static int create_and_commit_symref(struct files_ref_store *refs,
-> +				    struct ref_lock *lock, const char *refname,
-> +				    const char *target, const char *logmsg)
-> +{
-> +	int ret;
-> +
->  	if (prefer_symlink_refs && !create_ref_symlink(lock, target)) {
->  		update_symref_reflog(refs, lock, refname, target, logmsg);
->  		return 0;
->  	}
-
-    Offtopic: we might want to start planning to deprecate creation
-    of "symlink refs".  Linus originally used a symlink for
-    .git/HEAD, but 9f0bb90d (core.prefersymlinkrefs: use symlinks
-    for .git/HEAD, 2006-05-02) made it default not to use of
-    symbolic links.  As long as we preserve the ability to work on a
-    repository whose HEAD still uses a symbolic link, I'd hope
-    nothing would break (#leftoverbits).
-
-Let me rearrange this hunk to show the original first:
-
-> -	if (!fdopen_lock_file(&lock->lk, "w"))
-> -		return error("unable to fdopen %s: %s",
-> -			     get_lock_file_path(&lock->lk), strerror(errno));
-> -	update_symref_reflog(refs, lock, refname, target, logmsg);
-> -	/* no error check; commit_ref will check ferror */
-> -	fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target);
-> -	if (commit_ref(lock) < 0)
-> -		return error("unable to write symref for %s: %s", refname,
-> -			     strerror(errno));
-
-The original in create_symref_locked() created a lockfile, called
-update_symref_reflog(), and called commit_ref() to commit the thing.
-
-The "no error check" comment is about detecting an error while
-writing into the lock file.  It came from 370e5ad6 (create_symref:
-use existing ref-lock code, 2015-12-29).  Because the fprintf() call
-was immediately followed by commit_ref(), and the code assumed that
-commit_ref() will check ferror(), we do not bother checking if the
-fprintf() call fails to write the contents correctly.
-
-> +	ret = create_symref_lock(refs, lock, refname, target);
-> +	if (!ret) {
-> +		update_symref_reflog(refs, lock, refname, target, logmsg);
->  
-> +		if (commit_ref(lock) < 0)
-> +			return error("unable to write symref for %s: %s", refname,
-> +				     strerror(errno));
-> +	}
-
-The new code lets create_symref_lock() to create a lockfile, and
-does the rest here.  commit_ref() does call commit_lock_file(),
-which eventually passes the control to close_tempfile() and a
-write error can be detected there.
-
-But the point of this patch is that the creation of the locked
-symref file PLUS writing its new contents (which is done by
-create_symref_lock()) can be done way ahead of the remainder that
-eventually does commit_ref().  So it smells a bit[*] dubious that we
-still leave the error from fprintf() ignored in the "early half" in
-the rearranged code.
-
-	Side note: it is a "bit", as it is unlikely that we will do
-	something to clear the ferror() from the (FILE *) in the
-	meantime.
-
-> @@ -1960,7 +1973,8 @@ static int files_create_symref(struct ref_store *ref_store,
->  		return -1;
->  	}
->  
-> -	ret = create_symref_locked(refs, lock, refname, target, logmsg);
-> +	ret = create_and_commit_symref(refs, lock, refname, target, logmsg);
-> +
->  	unlock_ref(lock);
->  	return ret;
->  }
-
-This hunk shows the "original function was renamed; there is no
-other changes visible to the caller" nature of this rearrangement.
-
-The extra blank line is probably a nice touch.
+diff --git a/mergetools/vimdiff b/mergetools/vimdiff
+index 97e376329b..734d15a03b 100644
+--- a/mergetools/vimdiff
++++ b/mergetools/vimdiff
+@@ -72,7 +72,6 @@ gen_cmd_aux () {
+ 	nested=0
+ 	nested_min=100
+ 
+-
+ 	# Step 1:
+ 	#
+ 	# Increase/decrease "start"/"end" indices respectively to get rid of
+@@ -87,7 +86,7 @@ gen_cmd_aux () {
+ 	IFS=#
+ 	for c in $(echo "$LAYOUT" | sed 's:.:&#:g')
+ 	do
+-		if test "$c" = " "
++		if test -z "$c" || test "$c" = " "
+ 		then
+ 			continue
+ 		fi
