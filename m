@@ -1,127 +1,125 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A403A1B7
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 11:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21892A1B0
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 12:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714131804; cv=none; b=DF0asbOWSesfWF/vUXeWGp719TDT+hDrGYvw5LhdvyLfVQVLkc9hS0WEoRhMcIG3GXfLDfBcIkOsGqgSkgWD7kCyEUBAzuvsywMTl0e/iesJj74tHukrefk/bttrLfEEzUi2bezlEW2MJNCtItJmbqI7EOYohr8rdA99SQ/nS3w=
+	t=1714135704; cv=none; b=o1rwHiBGITl81yduzz3ByrAMS8pbc9KOh0xbMq8x3bCefb/uXlqPdapRrgj9h4YTpudiGSNwqb0VXITPNXN825+GB3eu8OyaXSO8LQe5iJ528Ixln6VPYEBcCrcPlELaPBhJDkSecUCDaRWMOMCtEmx7Se7EGQ8Ccf8p8WHOuiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714131804; c=relaxed/simple;
-	bh=3ylchWyU0AcskBHPPfkXnEy6kVBUPk0a07G+60r9MC4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NnDFW0sP7STSJKqO7DmFCcqx8gx3iK3/wHxd0I/hxxGV7cfFx6Ld1SfsuCIpTiGHI/bWeTHEOPECp1jt0EDBg6ei/w+eHim7lBF8kFB4xCrRrl10DPYTG0DW1xF3VTLOmdDjNmv04kG4IxMcH0t4UH4iSp16qGCaz2ToZ2FMIKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cLkUzU9S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h4Qkj4BN; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714135704; c=relaxed/simple;
+	bh=7XciwA1EksOAi5kArXPv8ewMG8B2R4hHuu4tIk7ejZs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JZIkkF1diYex31JyqU+JyVqGM1veHbtf3wqQi92u4mTBNS6bnZbG3Dlr0j4TMiRboO4elcy3y4ulQC4msx54gxoa4in6Ip44Denc7B7LrISAR39j89lgSo7nUrr5TdFYN3ptGFWx01cVZnuAK1B+YASR+mLgLicavWsUdYFKDfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iGfXqG1w; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cLkUzU9S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h4Qkj4BN"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id C5F391381C29;
-	Fri, 26 Apr 2024 07:43:19 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Fri, 26 Apr 2024 07:43:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714131799; x=1714218199; bh=3ylchWyU0A
-	cskBHPPfkXnEy6kVBUPk0a07G+60r9MC4=; b=cLkUzU9SrUIHP6a7THGsgMgt6W
-	n656iQdVVJ0eUENFx+K0qbFw8DPh/z72C5QGhwJ0qDa5e7oYR88EwedLMkWo8RSJ
-	1xMdSrfiD/VK31md7PP3SLl+Z/g2PzygQvQQHBFBmOHEK3qWT7HTlM2K+tMJmPfD
-	klE7qYsplVs5VUnSrEyq9NLJvpZHQ50/cOc3fySE6Dse+S5lo7LsumYemth/CiUR
-	fjWQgDUOj1wS68hczlKyPO1sy9OK3CAzqqpv7XjXVegYy1uDTrl3a62Yqz93847U
-	RfbeMtBnIYRNdPvpYr0rR83yZPwyfsaI3xuYUpYbjBWBX8BNXnjARWrgKvjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714131799; x=1714218199; bh=3ylchWyU0AcskBHPPfkXnEy6kVBU
-	Pk0a07G+60r9MC4=; b=h4Qkj4BNnGR+RTILNvmA/uh3H9GdCsm1Srs6XQ6ABzWT
-	vqdwMoicg/t+yhuL0LVj1tFyOkRcAIFfKvlyB70c/Z8df6HcbpA1mUYFYtWdii4J
-	pjsJWOqD2ZHzZTkE3SDBfO9XTVXxcV+yYVnr48tEOq9MpojuZamRFZGQml8yi3Ek
-	iDf4UZQGS7haONM5RSigoIYfGsZG35mNktp4aw2cRNtROooRBpmeqi5add8xTiv5
-	4ANAlnuJ4dCquwHI4FjPgy6JK2trtF7uMJGw09m5GBCNWDtmD6SrMCp+lELRlrXS
-	xOCOnLZZvhaMEXRLDKYPNYxblgT9qpVdiFfiAXOtgg==
-X-ME-Sender: <xms:V5MrZmSCvgrBcLDXyWspmZZH07_FeUIorCiFMH6Z-c_5FWm56hgnMQ>
-    <xme:V5MrZrx4afAqYkaY8g_pcwDwlDt9sEoSyExh6jxw7KQ8BfIV1WvjX0ar2IwVgAwvc
-    tGWVVKit4YRrTg9eQ>
-X-ME-Received: <xmr:V5MrZj2oEWw62MCLM0sayZI0rdGSrFAwTKlv-wyYnVtqfG3ndTSgcnFJakPcHdX92VovfVe5JTCP_aNqnXB3_mdOmoUEfsSPfKpUeyHVDIQ6SwM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelledggeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:V5MrZiDcyiMSiMrpzv-kkHCTskV3BaSB0Ud-uYde0A0yglKCUTXmNQ>
-    <xmx:V5MrZvg96GiCw94pXFt9RjDmR-rP2UTerlSMjp7tBWRBDEbtKNog7Q>
-    <xmx:V5MrZurOFQQpYJdG5-qpgR2JNevdVnS82h1O9SjHoaHTHw-fUA5OUg>
-    <xmx:V5MrZijnhHNT0eEQ21XYW3cIlKiJ7UBOJsOJVf5t-a756l7JwvaRMg>
-    <xmx:V5MrZvcybQWd9JtQCOJpDKr4U_vepsG0YrXmw1Ww4wF_TkneEtctm9nd>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Apr 2024 07:43:18 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6db70135 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 26 Apr 2024 11:43:00 +0000 (UTC)
-Date: Fri, 26 Apr 2024 13:43:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Roland Hieber <rhi@pengutronix.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v3 1/3] completion: add 'symbolic-ref'
-Message-ID: <ZiuTUFtZxBBehVVs@tanuki>
-References: <20240425101845.708554-1-rhi@pengutronix.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iGfXqG1w"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3c61486d3fcso1198095b6e.2
+        for <git@vger.kernel.org>; Fri, 26 Apr 2024 05:48:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714135702; x=1714740502; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CAl+vFD3SYl7fCfu+ZPBA0IW7Kf3Q4xrAODBCqF66I0=;
+        b=iGfXqG1woLjHc4JOlK6KM34i0oAaJ1hWrJvZy+g0sCmlUXwlgMIJIKnCqulWJeTxtx
+         xotXvewRiaSeLckYNyClJE9MchLpMfeGNbBuVHR57+T+up8OIKJgu+Oe0g5181ZpQ38G
+         5qRBUx9DemrRdVww/P+RyVBlh/lUouTgbUQP21m26iaZ3jiHqjGBJSCw/urAdxhuWPY8
+         sd3LalSpb/OgJMXRj0HM1+rmw4lYL/Pf2+L3gP1IDkDNIC2A/10MskaZiznhhJcfTM3q
+         iAAETSs90HDWI2TvOxs3u7+lPp1u+g0VyhiAeJ1qjbtPAdgBaqTdDFfk0DvAA76qS59c
+         CKLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714135702; x=1714740502;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CAl+vFD3SYl7fCfu+ZPBA0IW7Kf3Q4xrAODBCqF66I0=;
+        b=UqFxWOYMe+dxIzhU3/3URoe67B0L8LuVEfpCgzLdKDGeT/cgPtusdi5v8H0ocpJNHg
+         Yp4rLYdoiAyq0M1XxNCUGDEVTs/T0ySNef3vEDj+xOHfF1JRbVsBgcACmq3CkO7sDcFl
+         4dCKU4aSU/3yzdAqtVmEXA2TNVvy+EmbzwFs/JI17Wr7XRY2tF6CBuqsfpFm5jkcJdK0
+         IhrSSBBtHhwFNbQGixpplMfBJ/LyLYKYKNbTjQup2C7lArQeHTuYoP37zDiCqTKFg23g
+         c3P1yJo7EAqwqYFo3lhvB9JzxcGNR/lY8QJM7VCILqrXer6Jepfusp2SLkp1jOJLt5r3
+         Q/Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCUfckPpFurGV7n0vUWAz/QaduH0v23Osljkp9dW7j8pzC2E9HzORD/ACHJnO0FH7eaj5aaDewW/0WAifTtcLKkov2P3
+X-Gm-Message-State: AOJu0Yy4Bx3sPX8IftQ9VNjmDn6EJ/PYgo2CoN6xub75aHQKXd2ohY6u
+	f5XducAXpXMk/4eqVTlL1HlPMFc/sG6E4hMNlHDB7nlVZAICLHZKT/RhRyarUGMEtW1lJcQvvSP
+	mLCnH+iKPRvM4IWgR+LuOJbZvgR4nUA==
+X-Google-Smtp-Source: AGHT+IFAA35Ni6QiY1KIisR6xzRZ4FtZDkj44e9aEtq+jkNNNIjkkNXH3AxWZiEYfvV+VWdSdbT3BEDjy+eHWkvsau4=
+X-Received: by 2002:a05:6870:c092:b0:23b:8a84:2e66 with SMTP id
+ c18-20020a056870c09200b0023b8a842e66mr2356311oad.15.1714135702034; Fri, 26
+ Apr 2024 05:48:22 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 26 Apr 2024 05:48:20 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqcyqdds4b.fsf@gitster.g>
+References: <20240412095908.1134387-1-knayak@gitlab.com> <20240423212818.574123-1-knayak@gitlab.com>
+ <20240423220308.GC1172807@coredump.intra.peff.net> <CAOLa=ZRk8QR4qkbkRm6AirapdrAqz6bG-tXfY3zRQU_9XkJM1Q@mail.gmail.com>
+ <xmqq4jbpgw32.fsf@gitster.g> <CAOLa=ZTjwRnqmXRuWpN7o86DZdfOsgZwR7=Gk0A3EG0zSHiCBA@mail.gmail.com>
+ <xmqqcyqdds4b.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0Zzp336ZphnBRq3K"
-Content-Disposition: inline
-In-Reply-To: <20240425101845.708554-1-rhi@pengutronix.de>
+Date: Fri, 26 Apr 2024 05:48:20 -0700
+Message-ID: <CAOLa=ZQ=4n5jPii3rZkKjj7rMmxu=3jhRMx9aEsLvr8atbSCQg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/8] refs: add symref support to 'git-update-ref'
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, chris.torek@gmail.com, git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000009dfa080616ff51c4"
 
+--0000000000009dfa080616ff51c4
+Content-Type: text/plain; charset="UTF-8"
 
---0Zzp336ZphnBRq3K
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, Apr 25, 2024 at 12:18:42PM +0200, Roland Hieber wrote:
-> Even 'symbolic-ref' is only completed when
-> GIT_COMPLETION_SHOW_ALL_COMMANDS=3D1 is set, it currently defaults to
-> completing file names, which is not very helpful. Add a simple
-> completion function which completes options and refs.
->=20
-> Signed-off-by: Roland Hieber <rhi@pengutronix.de>
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>>> IOW, we should add support for operation modes other than "--stdin"
+>>> as well, shouldn't we?
+>>>
+>>> Thanks.
+>>
+>> That's a good point, I was thinking of something like this too, but
+>> didn't want to bloat this series. Would it make sense to add this
+>> functionality in a follow up series with the cleanup that Patrick
+>> mentioned [1] too?
+>
+> Going multi-step is usually a preferred approach but we have to be
+> sure that we do not have to retract the way earlier steps gave our
+> users when we move to later steps.  "Earlier we said that your
+> commands should look like this, but now you have to give your
+> commands differently" is absolutely what we want to avoid.
+>
+> So, "in this iteration, you can use this enhanced feature only via
+> the "--stdin" mode, but we promise we will make the same available
+> on the command line" is perfectly fine.  You may need to retitle the
+> topic to clarify the scope of each iteration, though.
+>
+> Thansk.
 
-Thanks, this version looks good to me.
+Yeah, will do that. Possibly also some of the commits too, where we
+could mention that this is being added to the `--stdin` mode and can be
+extended further on.
 
-Patrick
-
---0Zzp336ZphnBRq3K
+--0000000000009dfa080616ff51c4
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 99bcea2b66093d7e_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYrk0sACgkQVbJhu7ck
-PpT/zQ//fMcvBX9t7dqlfkKCSOn9V0lqyp5/nAp5z22gM8CpeklInCC18eWW+DfK
-me6CmaW/asVsHtvRnR0GUUVc+vhurALuwH3FevxokG4jA76gYw4OD88v/xt6Xasq
-E7xP/TCtxOWWJAuJmJGAAU4rGmehhEksHnD2yrgIK9iiyHowguy7E1yu8DVA3Hvn
-EOdmQxt3nQ7KTvdY+958OQmJ+b+trbgsZq2ISnOJJy9uJ3YszfDDHlnCLRBHE55h
-v666pa54o+zGMfgw0bMG5Vnf5RwBSjx/iKLOiMlNB7nYi88mZrPbRxuwlpSI33SP
-+kY7VBV5jmzetZVUJo5l6cX+IxIXZrSEXIdPmSmq2zGTrle9fHqMi+zmTbRn2Nrm
-x3pKJax4rM9w10R4tKb3ydfqo4HIhOOdTSakGPL4JWlB4Tc51tOz5Mp8mUECTUxJ
-Esx7Z0gT1KK8dkHY8NE/M3+MYQQSx9IiEs/PGWbRvrfRMfpBR6Pz9yYSRB9FrgmX
-SQDAj/PeUYqS2n607A0z9pIG4jmSCMgQXKYWdhJZMmNt0PGRDNOM88D1bS30B24K
-vVpOqW9Uh1VEfbNTNE7cX3BG5T7udwmW+W7a5cSV7pUrqL15Dq8uqcYLp5YX9QBt
-uemWsphIGv2Cc6zfdieTNnpCkKcv5vz19KwF0zXqde/+fhOWkVo=
-=j1wh
------END PGP SIGNATURE-----
-
---0Zzp336ZphnBRq3K--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1Zcm9wTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL2FIREFDRzNzSHRHcmg0RW9MN2s5b2d0Q3ZKbmhmQQpIenlPRUZveEtQ
+NGNRZDYxSGg4QnNLZlZnUTRGVFI0L3R4bWsvMVFES01Xc0ZmQnBObjRFekhHS3d0MmJwblk1CnBR
+VmlNd0NFNG9EV2IvVHNHbXVwLy9Od3NJTUxWancwRjlWNGc3am5xNEtIc1JiK2NlekMra0d6K0RU
+c0tRWHgKeDc5akFxSlBPOTk0bktKQjk0ZnpxNjBWTG1hc0szcTliTW0xMnppbDlBVm1nVU1SWEI3
+NU16VVFwemVMSFBGZwpIcjZ0SkR6bFNtYS9YandoNU5rSWJTVEdQRmlwNWFWQm03QVQ0K2djZjlZ
+c2sydFFJam1sOUYvd3JJY1NxTENpCjVPQTM2bTVYZWpWZXNYY2h4S0w3M2VBL25JVzVkampFT0Fs
+WDB3M0tiNzBIc2lHTDd3SDl3aWJVR2Vkb3Q1eVQKdHE1dHZMaWUyNG9kOGNrZElENXZmSDRaZHJB
+MVFqLzZMYjNjYzFZOGl0eDNpUTZRS28vb3BtMmN4bnJteGYrNApDWUFVcHd4c25IOHRFa0JxejFx
+NXV4Z2RtdEwzWDhRK0NKQXhpUDJnZk1IRVl2Q1JPRlZQamZxajIvRkxaYkxBCjIxOFVwTjNXd3dU
+YTFCeTAwUFByN0RGMERmSzhwbXRZNmExUzMzYz0KPWtoRmMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009dfa080616ff51c4--
