@@ -1,110 +1,121 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024E6EA4
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 01:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB5913A271
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 05:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714093700; cv=none; b=KwGX1NXflaSZClsVk+kSUwH5zsRE8R4+W8sZVPndqDJNGSd6yKjjHrGEEbkK/bkj8f6xexS7ICXPBqFCJdieCBEmhNPMC6bcQWe4V3+It2n4PU+hsp108Gkj/mGsfYoVOuZ0jB6MdXVSj/OSmONpr5g8Khn0n0eB8zRmrZslF5E=
+	t=1714109959; cv=none; b=PIeUQCPCyak7zkiOpL/rGzDeXAgGrpqA4Dg5VBfnnjPknd0dvoPPxbgy1PWvvwJ3YQylgqE1z8J1PoUaKv9H0JIan4Tsa4AyvLOh873Tk9dIlntpMLyhteGC1WB1BRRBM5FL/a1T5xxXOorgRq8cKvrgvx53igjytIEbMK9RjaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714093700; c=relaxed/simple;
-	bh=gL/ot+WhitXFELCc4aqBGcBJhY6UHkVRCEOGyRsULBU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W59YowygcuiNhj3FWdwkU6XbiCBXN8yifPtxM9AnU81QulcG2f0+fXWfgax4iIz4C8BsNCS2U+SuPiJ+J+TW9eWeir5/jB+kvW+w++U5qhq2WgUpjuNAxE+ov1b4hBtPvReLS1/Vrse9gbsmb49XZvGH3hs+FBhhmfIxxg+8nZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=nVufUs61; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1714109959; c=relaxed/simple;
+	bh=nuwJ6UDz/cQDG8qzyGrQeFe96hmxliI+JC/UtaiRFMA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=L7RZTTLaRzetcpHkpeoMlkZtp2qVNVGjYdb5jaVye1MLWc8sLDbeSe5ZPxfWoHL2CNI18/Ne8tnkNg5gpu0n1vNwPwOWzTn9h1vnvmZmj+SS62oXCIQyAPdzz6eQUJMkA9GoeI3dfPbR/pPD78nh3+YyZHhZWVrq6a33ZE+Bn7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PUBuDQlN; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nVufUs61"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PUBuDQlN"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D261C19E6A;
+	Fri, 26 Apr 2024 01:39:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=nuwJ6UDz/cQD
+	G8qzyGrQeFe96hmxliI+JC/UtaiRFMA=; b=PUBuDQlNqSliwFRt9pe4SK4gX08A
+	pDs6ccbtpAhGBJmHFkTSJn429589a3fvulEs13xv978BU2ErABGvgDi1OjlSarXT
+	vzPsGM0sof4QRjzx4iCZDP38sdLiZpFMzWJlRO10aAZ33C0i4a0Pk/6ZE9Ux8NO2
+	flwe42p6mBu6FVs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CA7E119E69;
+	Fri, 26 Apr 2024 01:39:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 572CE5B2C9;
-	Fri, 26 Apr 2024 01:08:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1714093691;
-	bh=gL/ot+WhitXFELCc4aqBGcBJhY6UHkVRCEOGyRsULBU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=nVufUs61Lppb/K/ULkVqdz+Fj0FJoruVNxCY98qUvG1wWWtp07BzCOXi/CcOBT75s
-	 6nu0sDYXuPiHEs8yib2amGOvH9/+3DA6qq1EIOen/830v2jAONDY1M5+1Kr2fx0y+Y
-	 yQXkxRvtRU0pcM3P0eO2wpCMMsRZAQCObONDZOijZg6FMxQasMlY8VV89zwEQSLDDb
-	 9qnn19ggLq6Wk0p1vSpWi5XADPn6ImpiTc+J2sV8Y7D6UZXK1hRBWlA3BI2URgUQVG
-	 R56FubMC1He2zBOBkMmBieRMiBYfqx/OI7hJtVWWD97Anb/yfJMDkGuzh07ut+X10J
-	 oQjw4MbkEAelQH+t8Ua+FG9sJse6+g9VSX4UE1yDsVSWUPT14Fcdu1tFnqS3TWV+IJ
-	 PF6d5DCTr5uTBl3MiYfXPkzRAw1s1F/WBCVAMeUx+GagU/b7Qgp8tzI8Vw4s8eMcno
-	 wwKLfSXM/sWoYXJXEnMDTqMQxPMCJWgVi2YOHZmMg9iB2mmK0az
-Date: Fri, 26 Apr 2024 01:08:09 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Thomas via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Thomas <thomasqueirozb@gmail.com>
-Subject: Re: [PATCH] completion: fix zsh parsing $GIT_PS1_SHOWUPSTREAM
-Message-ID: <Zir-eeK0CZxVLhcR@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Thomas via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Thomas <thomasqueirozb@gmail.com>
-References: <pull.1710.git.git.1714071592035.gitgitgadget@gmail.com>
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 203CD19E68;
+	Fri, 26 Apr 2024 01:39:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>,
+  Git List <git@vger.kernel.org>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4] add-patch: response to unknown command
+In-Reply-To: <305296f1-975b-41b9-968c-3984d8056196@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Fri, 26 Apr 2024 01:46:38 +0200")
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+	<6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+	<db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+	<b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
+	<20240425014432.GA1768914@coredump.intra.peff.net>
+	<CAPig+cST4_hUwWg+P_drqT-mv8+eLAzBmuMFXm=Dui14kfYZzA@mail.gmail.com>
+	<xmqqedatfay3.fsf@gitster.g> <xmqqv845dug2.fsf@gitster.g>
+	<5854e33c-b84e-47a3-94c6-c5fe8c9a4c98@gmail.com>
+	<xmqq8r11dr64.fsf@gitster.g>
+	<305296f1-975b-41b9-968c-3984d8056196@gmail.com>
+Date: Thu, 25 Apr 2024 22:39:06 -0700
+Message-ID: <xmqqwmokbs3p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hDuITTDDSgta1SVH"
-Content-Disposition: inline
-In-Reply-To: <pull.1710.git.git.1714071592035.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---hDuITTDDSgta1SVH
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Pobox-Relay-ID:
+ 4D28A232-038F-11EF-9B91-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-04-25 at 18:59:51, Thomas via GitGitGadget wrote:
-> From: Thomas Queiroz <thomasqueirozb@gmail.com>
->=20
-> Since GIT_PS1_SHOWUPSTREAM is a variable with space separated values and
-> zsh for loops do no split by space by default, parsing of the options
-> wasn't actually being done. The `-d' '` is a hacky solution that works
-> in both bash and zsh. The correct way to do that in zsh would be do use
-> read -rA and loop over the resulting array but -A isn't defined in bash.
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-I wonder if it might actually be better to adjust the shell options when
-we call into __git_ps1.  We could write this like so:
+> The current options are:
+>
+> 	a.- make the test check for stderr and stdout, separatedly
 
-	[ -z "${ZSH_VERSION-}" ] || setopt localoptions shwordsplit
+There is a downside that we do not check what the users would see,
+as I mentioned in an earlier message.
 
-That will turn on shell word splitting for just that function (and the
-functions it calls), so the existing code will work fine and we won't
-tamper with the user's preferred shell options.
+> 	b.- fflush(stdout) in err
+>
+> 	c.- make err print to stdout
 
-My concern is that changing the way we write the code here might result
-in someone unintentionally changing it back because it's less intuitive.
-By specifically asking zsh to use shell word splitting, we get
-consistent behaviour between bash and zsh, which is really what we want
-anyway.
+Yup.  The last one is what I showed in the thread.
 
-I use the above syntax (minus the shell check) in my zsh prompt and can
-confirm it works as expected.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+> I suspect that similar tests for other commands would produce similar
+> errors, so (a) seems like an easy fix but feels like kicking the can
+> forward.
+>
+> I'm not sure of the implications of (c).  Perhaps moving current
+> messages to stdout breaks some workflow out there?  The other thread
+> about disabling all hints has made me think.
 
---hDuITTDDSgta1SVH
-Content-Type: application/pgp-signature; name="signature.asc"
+That depends on "other" commands.  As Phillip said, "git add -p" and
+the like that interacts with the end user via terminal, using a
+single stream, whether it is the standard error stream or the
+standard output stream, should not affect any end-user experience.
+It is very unlikely people capture only one stream and feed it to a
+program, and with i18n, these messages are not even designed for
+machine consumption in the first place.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+> The (b) option seems to me the less disturbing change
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZir+eAAKCRB8DEliiIei
-gYpZAQCktwtdq7kr8I7QfcU1cJxRa8AmrKZ+u09YKZ/PHogG6AEAjBQk7GFv/ytA
-hOQIFXoFl1iwcmFhy9jTd0T4o7QGmAE=
-=Gtfr
------END PGP SIGNATURE-----
+Sticking close to the status quo would certainly _feel_ the safest
+at least in the shorter term.
 
---hDuITTDDSgta1SVH--
+But given that there is not really a reasonable justification why
+some output goes to the standard output stream while others go to
+the standard error stream in this program (note that I am
+specifically talking about the terminal interactive session with
+"add -p"), the approach will force us to worry about similar gotchas
+and we need to decide which stream the message needs to go every
+time we add a new one.
+
+> but it has not attracted attention.
+
+I think the same reasoning from the old thread that made us avoid
+the "flush() and keep writing to two streams" in the worktree code
+would apply here, too.
