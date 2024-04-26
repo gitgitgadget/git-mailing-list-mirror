@@ -1,97 +1,85 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB0FEBE
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 05:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+Received: from ceres.rohieb.name (ceres.rohieb.name [46.38.232.89])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7008913F011
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 09:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.38.232.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714109959; cv=none; b=AkNdUt1bdMwYRRcpRMp3Pmu413HsHa9jBukIezIjO6McX7+zBbzDx3e0xAKGUVSpGgxi7aQYK/M/WKJc3AAq4jnGeXlasipvm3845Ln+avyrc81Oz1VIs/qgUiQrohP51NjUlAqd6ezUfly+WL0iLjnkrpodkwHI1uY3U0VkX3g=
+	t=1714124229; cv=none; b=IhpB/Ituj9VAzNmpT/JdRVLduZofuMvtEY8OEGyli7Yffq9ZzT/GH8PpaDwKfOViyB1RHCh8NXmQ+ed9B/96xfh1LOEuz/B0PrxhLCV8VOgSq/PhjsmOPWrtlowAmkoejLqsh+Qu/T/6gsYHLJShtfCnghU26zdlsLHLWTR5y+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714109959; c=relaxed/simple;
-	bh=6vZSZaiIaj9o/GqifFJWkTxZOjZQ5LXfGMcgUpuBL/g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kXkHkiw1JEIYMazuU7MEULLELOqGp1BGiD6NEA3vYDcYfrs78HJJp4/UDuLOaYQYxj0ASzMrByN4Py9vfr95Fv0KHbPNlQHUNqZH9iXEDMYwZw2K2BthvxEu4NPkuy9lGcFxq7x0fmDsXGUbIZK877vJTDO2r9KrIrWhvELCZUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QDlH5+0H; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QDlH5+0H"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id F302119E6D;
-	Fri, 26 Apr 2024 01:39:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=6vZSZaiIaj9o/GqifFJWkTxZOjZQ5LXfGMcgUp
-	uBL/g=; b=QDlH5+0Hq7VQiQzKjiFvFVdT4gbuG/+yfe4K9P4lxEw6sbwhc4/v7D
-	8hK2burPTuJ5dipiLuX34oXUv+GJIgg8gTcDH8G98vJH5ooAxQ+9scyzlV6vCmmq
-	DHC6OxS0bUflSpzoLwnltYzJjqFI7zzj1cMAcgyOoMcQUKJ/E5c7Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id EB85719E6C;
-	Fri, 26 Apr 2024 01:39:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 83FA519E6B;
-	Fri, 26 Apr 2024 01:39:12 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Thomas via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  Thomas <thomasqueirozb@gmail.com>
-Subject: Re: [PATCH] completion: fix zsh parsing $GIT_PS1_SHOWUPSTREAM
-In-Reply-To: <Zir-eeK0CZxVLhcR@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 26 Apr 2024 01:08:09 +0000")
-References: <pull.1710.git.git.1714071592035.gitgitgadget@gmail.com>
-	<Zir-eeK0CZxVLhcR@tapette.crustytoothpaste.net>
-Date: Thu, 25 Apr 2024 22:39:10 -0700
-Message-ID: <xmqqr0esbs3l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1714124229; c=relaxed/simple;
+	bh=lw6PLpLNlV6MODhLHjCDjI6wk/D+7D0Kk2Lptk0SJCY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EI+qAdOrPa3baMD6vatwC9O9DhxaoJOSD5wi8yrmC1JtlRVMQrEWKpU2oRld0cmPD/qNMqH2P+zyHzrz3dfzt0YDmyQZPLpsCjPXrIAuJsgmrYLJ5TniltaHQDfXIFXKcRLmYkwRpOX9cM0dm3wRS1xpICZHM3Ybx15MCC5TK1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rohieb.name; spf=pass smtp.mailfrom=rohieb.name; arc=none smtp.client-ip=46.38.232.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rohieb.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rohieb.name
+Received: from localhost (guest.nat.stw.pengutronix.de [185.203.202.7])
+	by ceres.rohieb.name (Postfix) with ESMTPSA id BE3A21000F9;
+	Fri, 26 Apr 2024 11:31:10 +0200 (CEST)
+Date: Fri, 26 Apr 2024 11:31:10 +0200
+From: Roland Hieber <rohieb+git@rohieb.name>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] doc: clarify practices for submitting updated patch
+ versions
+Message-ID: <20240426093110.3lxbmhwfl3efwo2s@glados>
+References: <20240425213404.133660-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4FC8A514-038F-11EF-884C-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240425213404.133660-1-jltobler@gmail.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Thu, Apr 25, 2024 at 04:34:04PM -0500, Justin Tobler wrote:
+> The `SubmittingPatches` documentation briefly mentions that related
+> patches should be grouped together in their own e-mail thread. Expand on
+> this to explicitly state that updated versions of a patch series should
+> also follow this. Also provide add a link to existing documentation from
+> `MyFirstContribution` that provides detailed instructions on how to do
+> this via `git-send-email(1)`.
 
-> I wonder if it might actually be better to adjust the shell options when
-> we call into __git_ps1.  We could write this like so:
->
-> 	[ -z "${ZSH_VERSION-}" ] || setopt localoptions shwordsplit
->
-> That will turn on shell word splitting for just that function (and the
-> functions it calls), so the existing code will work fine and we won't
-> tamper with the user's preferred shell options.
+Thankst! I obviously didn't read the old text in the intended way when I
+submitted my patch iterations yesterday, so your patch makes it much more clear!
 
-Nice.  I did
+ - Roland
 
-    $ git grep -e 'for [a-z0-9_]* in ' contrib/completion/
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  Documentation/SubmittingPatches | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index c647c7e1b4..bc212836f9 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -415,10 +415,12 @@ e-mail tools, so that they may comment on specific portions of
+>  your code.  For this reason, each patch should be submitted
+>  "inline" in a separate message.
+>  
+> -Multiple related patches should be grouped into their own e-mail
+> -thread to help readers find all parts of the series.  To that end,
+> -send them as replies to either an additional "cover letter" message
+> -(see below), the first patch, or the respective preceding patch.
+> +All subsequent versions of a patch series and other related patches should be
+> +grouped into their own e-mail thread to help readers find all parts of the
+> +series.  To that end, send them as replies to either an additional "cover
+> +letter" message (see below), the first patch, or the respective preceding patch.
+> +Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
+> +how to submit updated versions of a patch series.
+>  
+>  If your log message (including your name on the
+>  `Signed-off-by` trailer) is not writable in ASCII, make sure that
+> 
+> base-commit: e326e520101dcf43a0499c3adc2df7eca30add2d
+> -- 
+> 2.44.0
+> 
 
-and wondered why other hits were OK.  The completion one seems to
-have "emulate" all over the place to hide zsh-ness from functions it
-borrows from git-completion.bash, but git-prompt side seems to lack
-necessary "compatibility" stuff.
-
-> My concern is that changing the way we write the code here might result
-> in someone unintentionally changing it back because it's less intuitive.
-> By specifically asking zsh to use shell word splitting, we get
-> consistent behaviour between bash and zsh, which is really what we want
-> anyway.
-
-Very well said.
-
-> I use the above syntax (minus the shell check) in my zsh prompt and can
-> confirm it works as expected.
-
-Thanks.
-
-By the way, I notice that the title of the patch talks about
-"completion", but this is about a prompt.  It needs to be updated in
-a future iteration.
-
+-- 
+Roland Hieber
+E-Mail: rohieb@rohieb.name
+Web: https://rohieb.name
+PGP Fingerprint: 3B7A C587 9464 CAB6 5B90  7151 B241 3C66 DD2C 3FEA
