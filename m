@@ -1,128 +1,151 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E03143882
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 10:09:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019D5147C94
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 10:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714126144; cv=none; b=uLkSImrOfxFTwZh0ro5DaLjLp6WLN4Y+F4oTq7qZF3WhayWWsuW0vXX1ipSkBYekHyiCfQiWAe8tVXowzRx7P/I6CJjOSIc6hi05reoMb0iH4nh/buFaRWlinGyGLeSNtLvUvFzwOcSeNKdJTTWdyvAEmq3TqYSg4g3jAzxJ+F4=
+	t=1714126573; cv=none; b=PtStBDx5uJtIRbJy4decEVHCDhLx2BCyr0jKCykFm0tctBPvNNaSx+pivV9/9kD6kckNwjW9AyzNDJhh7rwBNpVcb3Gz//DcT3ExbIJGoSsk3blw/qTMDOsdnvNePu9WcIuEz8QzA2/eI/n2//IU0Rp8EbzjBRR3NczmoQoRf7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714126144; c=relaxed/simple;
-	bh=8Rpooc4zhNXh+YwTvvDmZW2PNJ36rnkE4o/Jeg8Fioc=;
+	s=arc-20240116; t=1714126573; c=relaxed/simple;
+	bh=4CMD4v+c/uhljvQM1V/wfMoiEC1toFRscj86G9OXR8s=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=M7FV8HGtFdNZNhbTTJXxVhvMNyunopgp9uvGXCRDSJiKKswP0mnkX699MLtJC7kG+se8h734w9SBVBU+q4DvSiCoAbr82u3bnxLrmorLlTJFjRODsfsvS+Nf9Ac9GExXjLXCcVf9pn3ZCrQT5hSmpTlUsHpRk2AUzXDbVQE4+V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C8ZfbUnz; arc=none smtp.client-ip=209.85.160.53
+	 To:Content-Type; b=SLPj3kN6Lybjh9x5aE+NgoJ2taijtw6dE51u4WeRp3/s1m4WWMVRKtFeiVTocxS4yxkLg1zH2n+zHvNB0IiCeL22iVuIuFQzBXzD9MJxln30UDy7140yb30XJs3Bl8BTKqPSTyj2m2dMF47ZtIE5sF6hEj/jciyL4w855ox6FhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fxXvREwE; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C8ZfbUnz"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-23a46c472feso1007789fac.2
-        for <git@vger.kernel.org>; Fri, 26 Apr 2024 03:09:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fxXvREwE"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-234db9dde9bso945909fac.1
+        for <git@vger.kernel.org>; Fri, 26 Apr 2024 03:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714126142; x=1714730942; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714126571; x=1714731371; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=M+oNOCdbUeB4NVsK/njSY4bixkw+aM3pkCCr29B8Nc0=;
-        b=C8ZfbUnzZpmup2dYSMHsOKmaR9xthMJFCtU5ZYuOEvm1+dkihjE28SCSC9CmE0GmBd
-         Noh3dvpI5cpPmM6IBgHCt2jUfb4ewfiB7d0PXxvXpcaK7+/FZkHdd6Qwo2FSQVTj0PcM
-         yGAoWGsmDtYttFAvrhNa73YapbPHv+shuTLnsA1enK5LVZZuTB3F4Rtr3i+dY3NhQp9d
-         UKfxnCG8YYnRXTkI1jZoVCtKXU8Rp3k7LUweBH6KAnJVtMmGmr6i7Ow+eLW7n1cEF2yk
-         TFRk/3wFrbUfzXZFraTPN2DzbJwD/UPr/mWzCUUsfDfhdTyP8FRxCdRqw1WhxhwHeYb4
-         kFzg==
+        bh=4CMD4v+c/uhljvQM1V/wfMoiEC1toFRscj86G9OXR8s=;
+        b=fxXvREwECl+tLLgcfce5T/Gk9o2Xh+hGMoawAh4V0AeHg3eYNqLP5kNmLbkgI0yhJh
+         Q+3PYheLZgV9NZi3nL5BH3Z4y3w26aEoWfj5Af5VIAwohNc7D/KfWUm7dICHkjd1lq1R
+         N02D68FVkG6AcVEvl+CSDf54+6urcgjtoEicpzX3JRQuSIxr+9Hdti2k5HYZdxiXcygv
+         mtfHIZR3vNWVIqcFdvc9NzSsiYyMycBNCxUHtHpoaK/KS1WWriF13Po5P02T7ov1soT5
+         /8EOOk8y5eX36azJWiWRwMHQGEo0+9CMZvxLfounCwmGlTJVhiL4xs4MTkWmWYYonDDz
+         8QoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714126142; x=1714730942;
+        d=1e100.net; s=20230601; t=1714126571; x=1714731371;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M+oNOCdbUeB4NVsK/njSY4bixkw+aM3pkCCr29B8Nc0=;
-        b=NmSk1EgKDxBo0icbIm3K/9RoBOutksgL7mRLDnmXbyPFMntbHl/TnN2gRI7DQmGk87
-         f7g70ZGTXUco5mQcZ+9yXuhBA4TzJ95UNdOvfrhBddZAF+TNJalVAzlTbXn3aZ5NIJp3
-         eTRlh6RHZpHtAGY4PpFP+G772XswofRNDH5I1HItbzJTkTeock3kEuRGHdoSxTvyLLrx
-         1fMJvNQ8wpVYxEyxSXXGDN7oslhNuHxnRpgqDBX6IkETXYz7bFVCPuPy+AKc2mq/fAwl
-         H6fJv9EqKHYPBm1t6p/FZ6hCeP/J/KQgLsOEQPvCfkNn2Zc+OlPrShfEK8vZ/+2IKOWr
-         rfuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUaXvqkupxwVw8I5/GhuQqwc09YwxZtrq7Ut3zcONGBd9MbCtXpqESdQ7B7LBTSEdCeUozdEmYW2nN/6LAQ2wtEB1DY
-X-Gm-Message-State: AOJu0Yzad6kDzy8sMED3x+nFteeaSaZ39eAGF/h3cOCV3xiCgI6qVTAE
-	xloJ5pT78I6rlDL0smEGx8td2q15rTZBIGX6CnOIvZ7UEcMdy2hTMw0cjB4ODhCS/Zv8F8qMsc5
-	QsHrsXh/7zz5st6Nv4IvhdHxwPAHiWA==
-X-Google-Smtp-Source: AGHT+IGdPXqMnrcYGjKanNkHM6ghErrKytvDVjU/zxZ3IyWAds30ZAL6yRjewbg3PrgDbtyJWRBL1YidHzqBv1kLq0w=
-X-Received: by 2002:a05:6870:3044:b0:23b:50be:6b21 with SMTP id
- u4-20020a056870304400b0023b50be6b21mr2070695oau.18.1714126141719; Fri, 26 Apr
- 2024 03:09:01 -0700 (PDT)
+        bh=4CMD4v+c/uhljvQM1V/wfMoiEC1toFRscj86G9OXR8s=;
+        b=btEoH0YVEdGeVqgpvXgic163w4rtPwbxjmMjlxXin7t8TDts4l0oDHiA8NRekn3zNx
+         4LLRgOKKESduimlSfXzmGOF2WtFMdDX4pKikpo/RR1DBcHkhQcGN0dmf4UwSxMz10XoJ
+         zQuQ7rhCHo6AjjqSNMqCbxf9VDC2LuhHd7YP8IrhPBwBB8gyLuPeDIYyyAkwDF2qSys6
+         4k1fog6y4wKF5XAlMgtl8BLphZ/JnzC29QP5dMJhOeELV1JGsZUIsKKJmv1Lggi9uYcz
+         ZzBoAOknMsYDIiZd0KtKwsXDG3RYcFYizUEiobzh9u58XVJNkIclfF0gVQuwRY2ybnNg
+         vyZA==
+X-Forwarded-Encrypted: i=1; AJvYcCWtCCp9d9eGuVop65dP1wNPkyyhpWpJV7u04aisHMTY3iielUsKKgbWXQ8JLKshS3Lq2Nw2oUAsYZYh8MSE5mU5y82P
+X-Gm-Message-State: AOJu0Yy1JvNXLEzFLOcMeX22TIJsFI2xc7SuSqwlTbMrXkNTZvL5oEHo
+	EtyqVZkEbzn+EJna97a8r+yS8847KEWC6nu5gOo8y8SS+6mOKaR61YCi12GnMBVUpxBrStnZcIy
+	08a36H8P3BBdkTO6CZuphC48u+YE=
+X-Google-Smtp-Source: AGHT+IEA0sAAdcvsKGr06R153inwUEYfJC3D0qT74KMED0TENwTU/MPI50CvmsQjKLwktsJYSAgTeAik/25FOPaOvFg=
+X-Received: by 2002:a05:6870:f29a:b0:22e:bcfd:debc with SMTP id
+ u26-20020a056870f29a00b0022ebcfddebcmr2786606oap.13.1714126571026; Fri, 26
+ Apr 2024 03:16:11 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 26 Apr 2024 03:09:00 -0700
+ HTTPREST; Fri, 26 Apr 2024 10:16:10 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240425213404.133660-1-jltobler@gmail.com>
-References: <20240425213404.133660-1-jltobler@gmail.com>
+In-Reply-To: <000901da972c$61efc670$25cf5350$@gmail.com>
+References: <000901da972c$61efc670$25cf5350$@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 26 Apr 2024 03:09:00 -0700
-Message-ID: <CAOLa=ZRsbUK0Zvo-VK8h2VfSicQLQ=StC5b4VvAzrFquTBn7bQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: clarify practices for submitting updated patch versions
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c7244f0616fd178f"
+Date: Fri, 26 Apr 2024 10:16:10 +0000
+Message-ID: <CAOLa=ZQyCwJO3QhLF+_ZkFWWoQ77o+0Mdrvz8hL0j-x3fdt-5A@mail.gmail.com>
+Subject: Re: Use of Git with local folders
+To: Felipe Bustamante <fisadmaster@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000005ddf920616fd3104"
 
---000000000000c7244f0616fd178f
+--0000000000005ddf920616fd3104
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
+Hello Felipe,
 
-> The `SubmittingPatches` documentation briefly mentions that related
-> patches should be grouped together in their own e-mail thread. Expand on
-> this to explicitly state that updated versions of a patch series should
-> also follow this. Also provide add a link to existing documentation from
-> `MyFirstContribution` that provides detailed instructions on how to do
-> this via `git-send-email(1)`.
+"Felipe Bustamante" <fisadmaster@gmail.com> writes:
+> Hi,
 >
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  Documentation/SubmittingPatches | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> I would like to know if it is possible to combine the contents of several=
+ directories with copies of the same source code but with different changes=
+?
 >
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index c647c7e1b4..bc212836f9 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -415,10 +415,12 @@ e-mail tools, so that they may comment on specific portions of
->  your code.  For this reason, each patch should be submitted
->  "inline" in a separate message.
+> The stage is:
+> 1. There is a directory with the original source code, without changes.
+> 2. There are several directories, ordered by the date of creation, which =
+are a copy of the original source code, copies made every day after generat=
+ing changes, that is, the original source code resides in the DIR1 director=
+y, a copy is made with name dir2, and changes are made to the source code o=
+f the project. The next day, a copy of the directory of name DIR2 is made a=
+nd renamed DIR3, we work with this directory making changes to the source c=
+ode. The same process is carried out for two weeks.
 >
-> -Multiple related patches should be grouped into their own e-mail
-> -thread to help readers find all parts of the series.  To that end,
-> -send them as replies to either an additional "cover letter" message
-> -(see below), the first patch, or the respective preceding patch.
-> +All subsequent versions of a patch series and other related patches should be
+> The important question would be, is it possible to combine these director=
+ies in a repository with a Master branch (the first original directory (DIR=
+1) and transform the other directory into branches of the master?
+>
+> It would be useful, if copies were made that were made on an original dir=
+ectory (dir1) that was already becoming a git repository, with the use of V=
+isual Studio 2022?
+>
+> As an observation, the work is done on an isolated computer, without inte=
+rnet connection or to backup devices, the computer is fully isolated and it=
+ is necessary to generate the version control, in the case that it is possi=
+ble.
+>
+> Any orientation in this regard would be very useful.
+>
+> Thanks,
+>
+> Felipe Bustamante
+> Sverige
+>
 
-The 'other related patches' is not a strict rule we follow, is it?
+I'm not sure I fully grasp the problem, especially around why these
+copies are made in such a way.
 
-> +grouped into their own e-mail thread to help readers find all parts of the
-> +series.  To that end, send them as replies to either an additional "cover
-> +letter" message (see below), the first patch, or the respective preceding patch.
-> +Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
-> +how to submit updated versions of a patch series.
+But, have you looked at 'git-worktree'? This would allow you to do
+something like
 
-Thanks for this.
+$ cd dir1
+$ git worktree add -b branch2 ../dir2
 
---000000000000c7244f0616fd178f
+Once done with dir2, you can remove the worktree
+
+$ git worktree remove ../dir2
+
+But the branch ('branch2') would still remain and you can merge the
+branch as needed.
+
+I hope that helps
+
+- Karthik
+
+--0000000000005ddf920616fd3104
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: dc1466c787c31a70_0.1
+X-Attachment-Id: 879bf315ce04fc74_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZcmZUZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meThUQy8wVmxlVmhjL3AwNmdxUG12a3dQTGFmNStLTQpadTRLVnBWK0dx
-SUNZbDdHY0NSNm9SV2EvSFRnSHRxeFFyQTBJOVJwMkwvMks4Vy90TEQ3VWFGR2hLL0l0NU9yCmNU
-emxQRTY4RWQzVnI5NHNYc3VkT1RZTkpCUXRuVXJEZ0ZHUi8xMnkwV1UyZzAyV1VCWUNmNFpLT1pr
-ZnZNanAKNE5oSUxWckFWc21VdmRWQ3F3Zit2bVp4LzdQck1najdmUzlWbkdLaEtTU0dGU2N1SW0x
-cTMrQU8yU2IyZTd0YwpDMm8xNTVuMG9IS0lTeWJxWXJuRi9JU2dqdFRya2FvZVYxK3pSVEhzSHZs
-b3VVbmRDaGpYNVZFbW8yVEVCcmh0CkhFSzFXNzdmdmdTbnJLelJVdEZDNE1Qd1NxWHF1VDdtMWlC
-TStBQW1TZncxckM0S3hSYklIOGg3RU53aURsZXQKakVTekNBam9OQmlYTEwzR0dmNFZZcXdwOEZE
-eUZHd3ZnTkE1aCs2ckpuRHkxQXlrTTF3U2RVOFE0RUxMVHhBbwpwNldRQkw4bVBCNmtZQzZzVFBl
-Wk9ySDZvWjd1NlN5ZUUrL1l4YXlqa3N1Vmd0Q3d6RWp0L2h1Nm92U2E2Q2lrCnAyVmx5Q2diSmRL
-QXpYcnJBOWk3bEIzS2FSdlFpTkhwcm5MZEZ3ST0KPURobmcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZcmZ1Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meFN1Qy80MFJWTkZ0NFl5T3VHSFpQR0dzTmFXcUpHcgpqcXh6N0hXbVd4
+dXlRclRzNlVGMEU1NEhtR1BLUkp6cklWL3E4NEpSSnF5ZUNLVkVGQXhTcVRRQXlYcXU1aytaCjNR
+N2Y5VlBUcS9URFVuS3VZc0RYS3lPU1R1NTBzbm1JKzdlRXZaVnJPNk5XUlBJdWdCakRtYjN0YndK
+QnVSbWIKNzluYkluRE1nQy9PcTg5VnRWMGFNR2N2UlNsU3RJb2FKTm1TS01ZOXZhaVdwNGF3NWNG
+ZWxVQXZ4UmRFTjhzMgpEM1A5WlJrUnlXc3hqT0NwTzRTUFJ0cVExY09Sbkp4d2d4ZmtGeFZxQllV
+LzYxbXovOXk2clNQYkhHNmRpWHR4CkRTOGk3a0hza1ZuY3B0VnJRR0g5U3BmSTVQcHhIMkVKdlFw
+alEzUC80aklKZWJWajFLVERhVC91bFVPKytPdlIKekJubDZFL0VxcGl3d2d2c0p4dllwdFYvQmk5
+VUJYOE5ZT1pkQm1wUk9DdHIvNGptNFJCdVNjVStYN1N0YnlCUApnTGNDNnhtaUZRSWlyUFJUcUJz
+elRUdFlJSFFCK3ZGNU5adGlCQ0QzeHJlNERjVGxHTjZneVdJVkszTUVvOEZjClI3UFBzWTZMVHBo
+dCtEZ2pZdEZuYmtaTzRicGhPNlluN1A4YUFvaz0KPUR1QWMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c7244f0616fd178f--
+--0000000000005ddf920616fd3104--
