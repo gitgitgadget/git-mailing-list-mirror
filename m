@@ -1,208 +1,131 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0503148837
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 15:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAE4145358
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 16:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714147010; cv=none; b=afWRVScpIG9hrKGsTmx3XB0Qm7ROvUGag5Y3XE5G8Rz6eea6YspnCHH2ae5fLfZGra6Utctoj/0udpj8LKMdFTpXu/wl5b0SWdIykjWKdpBcT3ZdLd3X28ICe2iCigShQ3krs8cGEq2VcQEwGNUoGXz0f0kxryc0CVlNJv3kLrQ=
+	t=1714148450; cv=none; b=Axwdzt/aIxsSkdIw0Yg/7p7ZH+pQf5jATUa7TAvqeHSKAfdJrGQ77a47dwOPxW5snF5QEskE6XN/DitxurOOHPmZLst1YMLidjQKfgbnLya3CGHU1oPp3Hjr7Q6INnEQ5WSx+KrCzSpoDXOt6Ee/5XS6zpiWagYqQDl+QHADxkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714147010; c=relaxed/simple;
-	bh=S5dAXr+eZNqxEZ/bb9YRS+fPO3F0t9FRbkQ3TLW1YbE=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BWG99wePUPa3G6oWuD5XqEcl+PalxNW0RVCquvftVzekZMEmJZeUMp7eJXiE/WMNLy6LhFvSTHPoZHh4ZLyxc+kmfGHeInLF/iSAcUgdnBP2xEbLiFY75Bx2fGgGCDhUvS/pYAANXZ0sMlkVFyw8s36dT5EvqlWUHxTSZixNM+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBSCD4z0; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714148450; c=relaxed/simple;
+	bh=8JvQvZXrt+1tCt9Ps2ZQ3w4WJ3CiVr7f5ZR1cPt5to4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gGHhguxyfxSh/zjKoj1XL5vr7t0dvew7oMioCqH9tZmO8wof3mj/Uhp2JtYOQXjccbyXf5hsWG6+15j8bbA6D349NiPfPgliQnS0P3IRNpFtO+TH7LzzH7jS2lar14U1Xrts3eAV3k+Y1DLScfzeXAWtZ+pOoENK9v6LLW9Zz0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lj5gRyuZ; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBSCD4z0"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-518a56cdc03so2625745e87.1
-        for <git@vger.kernel.org>; Fri, 26 Apr 2024 08:56:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714147007; x=1714751807; darn=vger.kernel.org;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:in-reply-to:references:to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VnJLDliN9u3wLMUWEV8xnG+vbDKYVn/eINQo2yJlAF8=;
-        b=kBSCD4z00AK1kE6MwKFvMdmmvlMXSH+FuO7nKSDYF+XzcqvIOGJbstbcw4WsWdBoXq
-         IDek3kj2P4m7d0l/5UP7nkr4SUozITTpmJDlndlbyfFSGbikJN9LSeZxlhXjT6bplkN7
-         Jrl/fokAQinpj1unEGH4rr90RGEQR3yTI7ReZ3q1nQPbky9T7rBfgQjtLXFBzT4mhWzo
-         AC+ySBHh3pCDoqEghLq2jNmQct8KXmVRg1NMu/YWFO21x52Kxhga6lAVsddq2yeFmQWJ
-         sNWrOp7DazxBVrZKfe6IEZtH3tYq8maT+4WN0IykC7GcVa05VATrrvob3wcmJ+jEDBSk
-         w3ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714147007; x=1714751807;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:in-reply-to:references:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VnJLDliN9u3wLMUWEV8xnG+vbDKYVn/eINQo2yJlAF8=;
-        b=Kl5B2bEzx8bTjF7Wf64Rcl3J7hgCo+TpmpLJ/CTuHvn5B1LV/B0RzCet+JNq/ctMnI
-         869qkwm9KxNNJwNYZIC1i3g+HlVMnw/SkvwZqknKGo1mEsWoP2aSEJJpsraVSNEt7BCE
-         QtWdwNLkz5PRbd1n1GWHaeMSYMUuv/1/au1jjdZEXQZEYYbr6dD3qeJrcoUF6+B6fFhj
-         jbrHhqjWASQCR8gNoSjQfOkf30fkU9U8U4U0faVh1ou8LEFKkQUpBaKRKxV789PiEWgw
-         uOhww0wS5iAaYdXcM1tfa0Kw6PW5ZWUitqqCYepLL0uy+x6R8huFafsiRhaeCymYbEBx
-         4gRw==
-X-Forwarded-Encrypted: i=1; AJvYcCUqc+SsIqaC9FG6YWgC885xiyMw8QYDEc28eVLVG1aPXm0CztEOT+ZPuMbU1Px3Ot73M3brAzMYE+lrnzKtw3XTTzs7
-X-Gm-Message-State: AOJu0YyN3FvEQ+A847C1J9qVp5cVB6f7Jwwc54//05kACsJk2ZWoo1tM
-	dcB0XlYuadfx2WZV/ZPtjNxW/PM9yDB4ayi+vhqDvRa1jYSSCZo0C9eVmPVS
-X-Google-Smtp-Source: AGHT+IH3kGUfNnVKKtbLvsk5uCknVGnLCIL0bq09L29JnczFOJya+yJTGE0SgIJwiLsPQLCJvLOnDg==
-X-Received: by 2002:a05:6512:2383:b0:51c:fd0a:7e34 with SMTP id c3-20020a056512238300b0051cfd0a7e34mr105637lfv.22.1714147006316;
-        Fri, 26 Apr 2024 08:56:46 -0700 (PDT)
-Received: from FBUtveckling ([31.3.153.139])
-        by smtp.gmail.com with ESMTPSA id o13-20020ac24e8d000000b005178f5ad215sm3202687lfr.122.2024.04.26.08.56.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Apr 2024 08:56:45 -0700 (PDT)
-From: "Felipe Bustamante" <fisadmaster@gmail.com>
-To: "'Karthik Nayak'" <karthik.188@gmail.com>,
-	<git@vger.kernel.org>
-References: <000901da972c$61efc670$25cf5350$@gmail.com> <CAOLa=ZQyCwJO3QhLF+_ZkFWWoQ77o+0Mdrvz8hL0j-x3fdt-5A@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQyCwJO3QhLF+_ZkFWWoQ77o+0Mdrvz8hL0j-x3fdt-5A@mail.gmail.com>
-Subject: RE: Use of Git with local folders
-Date: Fri, 26 Apr 2024 17:56:46 +0200
-Message-ID: <000201da97f2$579fa110$06dee330$@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lj5gRyuZ"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5300F1DBFC;
+	Fri, 26 Apr 2024 12:20:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=8JvQvZXrt+1t
+	Ct9Ps2ZQ3w4WJ3CiVr7f5ZR1cPt5to4=; b=lj5gRyuZUho5KGltPSGNG6fRpdC7
+	1MN3qT9Iy0FWg4tU87NuWbQRROKkZ/oAH7gBBGPWnqYcp8ISIXh6wq/qOjGn24nq
+	8p1pJg5zjUUteYevPTCicc4ButXdQRIRufpm0XqZzhZIOXcx99c2bGozvIcTrgt8
+	qmpt5D0BNGHuhY0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4B8151DBFA;
+	Fri, 26 Apr 2024 12:20:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9C4211DBF9;
+	Fri, 26 Apr 2024 12:20:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  Linus Arver <linus@ucla.edu>,  Linus Arver
+ <linusa@google.com>
+Subject: Re: [PATCH v3 02/10] trailer: add unit tests for trailer iterator
+In-Reply-To: <CAP8UFD0ZHpo7US6dx_WK6F_1JYsBdHunBaW86qM1CzOKaPC-aA@mail.gmail.com>
+	(Christian Couder's message of "Fri, 26 Apr 2024 16:51:54 +0200")
+References: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
+	<pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
+	<4ad0fbbb33cab9d5841689cc5660befe6921d515.1714091170.git.gitgitgadget@gmail.com>
+	<CAP8UFD0ZHpo7US6dx_WK6F_1JYsBdHunBaW86qM1CzOKaPC-aA@mail.gmail.com>
+Date: Fri, 26 Apr 2024 09:20:38 -0700
+Message-ID: <xmqqle50ayeh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ EC7B22CA-03E8-11EF-9042-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQCJ8UaSDHsKvOzOZ9RAt48ByJcRFADyLtmftBRpS6A=
-Content-Language: sv
-X-Antivirus: AVG (VPS 240426-6, 26/4/2024), Outbound message
-X-Antivirus-Status: Clean
 
-Hi Karthik,
+Christian Couder <christian.couder@gmail.com> writes:
 
-Thanks for the reply.
-
-What you indicate allows me to create a relationship between a new branch a=
-nd a new empty local directory, but what I need is to relate a branch with =
-an existing local directory since the latter contains the changes made to t=
-he source code and I need to generate change control.
-
-I am going to clarify the working conditions to explain why we have worked =
-in this way.
-
-The computer for development is in a completely isolated work environment, =
-without connection to any data network, all data ports are disabled (networ=
-k, USB, Bluetooth, etc.) so there is no possibility of copying the code. so=
-urce towards a more open environment.
-
-This computer only has Visual Studio 2022 installed, no other type of softw=
-are has been installed, which is why it is impossible to create branches fr=
-om the master since VS 2022 does not allow branches connected to local dire=
-ctories.
-
-The only way that could be used to isolate daily changes was to create a di=
-rectory each day, by means of a copy from Windows File Explorer, containing=
- the changes made during the last and previous days.
-
-The structure of the project would be as follows:
-
-1. CS_2024-04-10 directory, this is the original directory containing the o=
-riginal source code. This directory was converted to a GIT repository using=
- VS 2022 which allows us to have the master branch. Because of the above, t=
-his directory contains the hidden .git directory.
-2. The next day, a copy of the original directory was made, and this copy w=
-as named CS_2024-04-11. Because of this, this directory contains the hidden=
- .git directory of the original. We worked on this copy by opening the proj=
-ect in VS 2022 and making various changes and then saving the results.
-
-3. The previous process has been carried out for two weeks, so there are 10=
- source code directories which include the changes made during each workday=
- plus the changes from the respective previous day, for example, the direct=
-ory CS_2024-04- 16 contains all the changes made from day 10 to day 15 plus=
- the changes made during day 16.
-
-Now, what we need is to know if it is possible to convert all these sequent=
-ial directories into a GIT structure with change control such as the first =
-directory with the master branch and then branches that can be associated w=
-ith each subsequent directory.
-
-I have installed, to support the idea, the GIT program. For this reason, no=
-w the development computer only contains two software for development, Visu=
-al Studio 2022, and GIT.
-
-How would it be possible to create branches from the master branch, using t=
-he original directory CS_2024-04-10 and associate these branches with the s=
-equential directories created?
-
-Thank you very much for the help.
-
-Felipe Bustamante
-Sverige
-
------Original Message-----
-From: Karthik Nayak <karthik.188@gmail.com> 
-Sent: den 26 april 2024 12:16
-To: Felipe Bustamante <fisadmaster@gmail.com>; git@vger.kernel.org
-Subject: Re: Use of Git with local folders
-
-Hello Felipe,
-
-"Felipe Bustamante" <fisadmaster@gmail.com> writes:
-> Hi,
+> On Fri, Apr 26, 2024 at 2:26=E2=80=AFAM Linus Arver via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Linus Arver <linusa@google.com>
+>>
+>> Test the number of trailers found by the iterator (to be more precise,
+>> the parsing mechanism which the iterator just walks over) when given
+>> some some arbitrary log message.
 >
-> I would like to know if it is possible to combine the contents of several=
- directories with copies of the same source code but with different changes=
-?
+> s/some some/some/
+
+Right.
+
+>> +static void run_t_trailer_iterator(void)
+>> +{
+>> +       static struct test_cases {
+>> +               const char *name;
+>> +               const char *msg;
+>> +               size_t num_expected_trailers;
+>> +       } tc[] =3D {
 >
-> The stage is:
-> 1. There is a directory with the original source code, without changes.
-> 2. There are several directories, ordered by the date of creation, which =
-are a copy of the original source code, copies made every day after generat=
-ing changes, that is, the original source code resides in the DIR1 director=
-y, a copy is made with name dir2, and changes are made to the source code o=
-f the project. The next day, a copy of the directory of name DIR2 is made a=
-nd renamed DIR3, we work with this directory making changes to the source c=
-ode. The same process is carried out for two weeks.
+> ...
 >
-> The important question would be, is it possible to combine these director=
-ies in a repository with a Master branch (the first original directory (DIR=
-1) and transform the other directory into branches of the master?
+>> +       };
+>> +
+>> +       for (int i =3D 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
+>> +               TEST(t_trailer_iterator(tc[i].msg,
+>> +                                       tc[i].num_expected_trailers),
+>> +                    "%s", tc[i].name);
 >
-> It would be useful, if copies were made that were made on an original dir=
-ectory (dir1) that was already becoming a git repository, with the use of V=
-isual Studio 2022?
+> Nit: the members of struct test_cases are used in the (msg,
+> num_expected_trailers, name) order, while they are declared in the
+> (name, msg, num_expected_trailers) order. I think it would make it a
+> bit easier to use in struct test_cases the same order in which they
+> are used in the TEST() macro.
+
+I am not sure if I agree.  In the array of struct, being able to
+identify each array item with its .name component makes quite a lot
+of sense, especially when the .name member is not really part of the
+data used in tests but is used as an identifier for the tuple made
+of other members (i.e., <msg, num_expected_trailers> in this case).
+
+The TEST() macro is unable to take "name" as an early parameter than
+others due to how it wants to create the identifying string (i.e.,
+doing an equivalent of strfmt() on tc[i].name), but reordering the
+struct members to match the peculiar order the members are used
+smells like a tail wagging a dog.
+
 >
-> As an observation, the work is done on an isolated computer, without inte=
-rnet connection or to backup devices, the computer is fully isolated and it=
- is necessary to generate the version control, in the case that it is possi=
-ble.
+>> +       }
+>> +}
+>> +
+>> +int cmd_main(int argc, const char **argv)
+>> +{
+>> +       run_t_trailer_iterator();
+>> +       return test_done();
+>> +}
 >
-> Any orientation in this regard would be very useful.
->
-> Thanks,
->
-> Felipe Bustamante
-> Sverige
->
+> LGTM otherwise.
 
-I'm not sure I fully grasp the problem, especially around why these copies =
-are made in such a way.
-
-But, have you looked at 'git-worktree'? This would allow you to do somethin=
-g like
-
-$ cd dir1
-$ git worktree add -b branch2 ../dir2
-
-Once done with dir2, you can remove the worktree
-
-$ git worktree remove ../dir2
-
-But the branch ('branch2') would still remain and you can merge the branch =
-as needed.
-
-I hope that helps
-
-- Karthik
-
-
--- 
-This email has been checked for viruses by AVG antivirus software.
-www.avg.com
+Thanks.
