@@ -1,114 +1,88 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74708200D5
-	for <git@vger.kernel.org>; Fri, 26 Apr 2024 19:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABC81173F
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 19:31:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714159638; cv=none; b=gdAawy0wqKuIGPgq7vfWglmzw+MMujwzbiScQ8mqkFnAtV5qF9xwKQxxIFsT726y8/Xq+S08Aq88ms+OixnJPeNyt+XsNURkTOe8wY+Yd7egnqeIu6NaS2rGQTviZH99TYZfiMsM4stLxw1M4iVu2UJjBR5aM1fmrvTqMo+n8s8=
+	t=1714159906; cv=none; b=fqR8ono4KRSSRk+lTfJrziEzy3z8QI2cVzNFUtnQhQaIPEOENej4ZoE7sXTTxOsbvl00sqCP7N5KvBwU8503D4GxCvaJNTOWQF68p4wCRobXSrgJRuVXrND2EhJ44S3eNnJCmh1O9tJQan5bCk2nZl0vhE+M302QwTf+gI8D+bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714159638; c=relaxed/simple;
-	bh=qJPErRscc1aTUDqysgXWFLG/+TbYLCBb+PAY/ME2vTI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=srXxKGZhOMBJpzOSeSENSgTSCLGd8GEfui+L7dE/rg1Iij4mNtk0DrY8U1phbspmEGAzsCSvvMFPnon2RHV+EvvdQi+r05tpoKdmMdlYse3ljCjfLZeFdy/ENNdSRrPMMEx8CFUFSkk/J20s32ri5CxRHsaXJsE8gVTwi/M/Scg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vvww4/zB; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714159906; c=relaxed/simple;
+	bh=Lc94BwUr/slWlrgDIHTACEj96GwLSi/0r1HVsAy/iz4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gp79A5a5rWQ1FdnN5/uJ3r/uebCHLV6CKZZLMIx/Nl9nAx1Z2BNbI9ad8+BokXf2qu4Ljen/rN2mwsc4271qPJXD9F2Uk0Ur6dbyDaF9McrGUNQaPuRonSmo1KspVmZKJiSlw5axhPcpcCCdrc0XNoDPrgtOIl0j969ctTxiduw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xgi1R07G; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vvww4/zB"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-34c90082dd7so99563f8f.1
-        for <git@vger.kernel.org>; Fri, 26 Apr 2024 12:27:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714159635; x=1714764435; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=t/PZp5Ju9K6IWSlyOpZOlIZbuNOzSUpGef6BHscvcTc=;
-        b=Vvww4/zBp9iM8RTfcAnLPN1Z5Wy9IdaH/dfvaWMi1S619gbEk/V/vzSee+SE2CAqC4
-         8R5GrkZiVEAPkvTq9J7N/vGPMsSJjVkDQxRmidETrRsBx28m2IMTCez5NF1cm3ODokJm
-         QCvx+WJgHifqy9/8PHcJKbBQyQb7uBh6QnNveuaOKsooQ/rVWyKHdNYf0aqkadjx534L
-         5JZ6UYSEDE8KvAvmGPO7dk1xmziu8m/0NFjYAGFWDIt1x+lU5l2OZDYTdurbFDdIc+O/
-         E84lIY/xMSMjiGJk5uygwJQjeyOfjCBl0lT9rcwTk4KUmQqtKZsI3y6ItayLr2kkg5yy
-         hTbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714159635; x=1714764435;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t/PZp5Ju9K6IWSlyOpZOlIZbuNOzSUpGef6BHscvcTc=;
-        b=GKrkCMb04TZk0t7pwPx21jbqK7QKNB0yt0+b71DsvEseDjPCHwyU3k11SynMVasfQy
-         ATubwpXYKOEafmb5sU1C0Y6BTYiW8uRV1eEj1w0kN0RXAj6efJghUk9ciiQ8jNh+RP9l
-         yYdDeZwV1nPcLENCNHaOAI2JRp3gZJ3zUM8tIcUQmEeQxCJwI5e18HMokcoPsGdzZWpt
-         eu5Lk1g0P3I/JjnfSBdghF5npPgvZbIF/wuwpYNamnsBhqDKPolX0qbJuib8fJHlIL0y
-         CJntBbDQmZIJ0B6pfhRHeHwJVKrfOe/nyjf0/cfK8B6ie5DTHyczFxvvVzh8Ndrlw9y2
-         QXnA==
-X-Gm-Message-State: AOJu0Yy+zap7ks4AxxKK7SjlInMhTtS3W5e5dbJ9p+AL6EplVnfnmyKy
-	Tcqb+S8yeb4KxOh1OeVEIM4gcp+oxkSN5EuC88uchR2uk9hRawcM9mK0/GUP8X7f0s1E3Egw54c
-	hzXnxOnraICD/yKdVuuJbNRLbvZiKxL+o
-X-Google-Smtp-Source: AGHT+IEkUkRoUSRRk3qOGDdnyHO+F0PuKG6EK6mmZjbOkNe1twP/riKeKl9qeV7PPnpV9XODgHQAaRfaz9k3V2Qzkx4=
-X-Received: by 2002:a5d:618d:0:b0:346:85a0:20af with SMTP id
- j13-20020a5d618d000000b0034685a020afmr2325621wru.35.1714159634670; Fri, 26
- Apr 2024 12:27:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xgi1R07G"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 26C1A2CE52;
+	Fri, 26 Apr 2024 15:31:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Lc94BwUr/slWlrgDIHTACEj96GwLSi/0r1HVsA
+	y/iz4=; b=xgi1R07GZiGK1zGUuRGTcCphLqDaXJ0hqsf/+xDI3yP+H1LeFvXjtR
+	0GaAbtC8TGcF/t5RAH6bx+XSSGHoZllqrzyw0przLqXcYx8aCNn9labIqn6gUPFx
+	DzE40crfqylnE03PTNLteyt2nnN73OyS3huV6L9otlq6WiWYzP4TI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D7B32CE51;
+	Fri, 26 Apr 2024 15:31:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 83CA92CE50;
+	Fri, 26 Apr 2024 15:31:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v4 1/7] refs: accept symref values in
+ `ref_transaction[_add]_update`
+In-Reply-To: <20240426152449.228860-2-knayak@gitlab.com> (Karthik Nayak's
+	message of "Fri, 26 Apr 2024 17:24:43 +0200")
+References: <20240423212818.574123-1-knayak@gitlab.com>
+	<20240426152449.228860-1-knayak@gitlab.com>
+	<20240426152449.228860-2-knayak@gitlab.com>
+Date: Fri, 26 Apr 2024 12:31:36 -0700
+Message-ID: <xmqq1q6rc44n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Thomas Desveaux <desveaux.thomas@gmail.com>
-Date: Fri, 26 Apr 2024 21:27:03 +0200
-Message-ID: <CACPMLSqTA6pY3hiawhTAmhfvWME8NRUehauy6g-oUaHjordWqA@mail.gmail.com>
-Subject: Git Bug Report: git credential 'url' parsing clear other fields
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9953A534-0403-11EF-A550-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Hi,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-I encountered what seems to be a small bug in git credential parsing.
-Just want to confirm it's not expected behavior.
-I'm willing to work on a patch.
+> From: Karthik Nayak <karthik.188@gmail.com>
+> Subject: Re: [PATCH v4 1/7] refs: accept symref values in `ref_transaction[_add]_update`
+>
+> The `ref_transaction[_add]_update` functions obtain ref information and
+> flags to create a `ref_update` and add it to the transaction at hand.
 
-First time submitting a bug to git (and a potential patch),
-so let me know if I do anything wrong!
+Just a very minor irritation, but ref_transaction_add_update() is a
+function used internally in the ref subsystem and is exported only
+because its visibility needs to cross file boundaries between refs.c
+and refs/*backend.c files.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+It would be better to only mention ref_transaction_update() in the
+title, and talk about the need to make matching adjustment to
+ref_transaction_add_update(), which is an internal function, in the
+body of the log message.
 
-Run git credential approve with the 'url' field of the form NOT as first entry.
+This is an unrelated #leftoverbits tangent, but while trying to find
+out the reason why "[_add]" in the title looked irritating to me, I
+noticed that builtin/show-ref.c includes <refs/refs-internal.h>.  I
+do not know what it uses from the "internal" implementation detail,
+but the API may have to be cleaned up so that a random "client"
+caller do not have to do so.
 
-example:
-git -c credential.helper= -c "credential.helper=store
---file=.git-credentials" credential approve
+The patch itself looked good.  Thanks.
 
-input:
-```
-username=user
-password=s3cret
-url=https://example.com/repository.git
-```
-
-This next input works as intended.
-input:
-```
-url=https://example.com/repository.git
-username=user
-password=s3cret
-```
-
-This was reproduced on both master and next branches.
-
-
-What did you expect to happen? (Expected behavior)
-
-Credentials should be saved with `username` and `password` provided.
-`url` parsing should not clear the `credential` struct.
-
-
-What happened instead? (Actual behavior)
-
-`username` and `password` are correctly parsed and stored in the struct.
-`url` parsing then clear the fields.
-
-
-Culprit would be this `credential_clear` in `credential_from_url_1`.
-On branch `next`, commit  `2a3ae87e7f8e9585d7565a8b5d6a6c9c28d6d943`.
-
-
-Thanks,
-Thomas Desveaux
