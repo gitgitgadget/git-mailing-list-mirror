@@ -1,121 +1,298 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF54156962
-	for <git@vger.kernel.org>; Thu, 25 Apr 2024 23:46:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AC0364
+	for <git@vger.kernel.org>; Fri, 26 Apr 2024 00:26:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714088811; cv=none; b=DuzAWkjLATk6I5mLajOvuZEeb4jaZHCP+OOMmL5PhXfxh1Y8FP/T/AGFv9J9Lx7DaZ9xSfvwxqFQrBpFlYtd8Pvbg9/TVCDPxhQ6dr7ZPd+a7SllCnFg3EP3WRAWR1e3ayG+R2EeHVBtOxIMeWBiOn7+mZPHq266SiohnU+lXoM=
+	t=1714091176; cv=none; b=LIFmH0lKdIrOyfBqybSd2oc4d8OM3Pf4tzczhI5wQaIXPzXU5ijYyRZNPabhyQdPuMhCqMrB+RK30QcT2XCOz57CJJAUoF0+YKn1RD1U2sGu9cO0xF/QSFY9EIbubr+ChgYMmR3eOp9aTcdrXqmRNDk9tRAvXRlXDf9d24RPcQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714088811; c=relaxed/simple;
-	bh=lBcoFAfEjdsLaWJ84FVUusDeIxEfRIF5YS1fWaMiLiU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YYhIk1g5UXdyYYgHj+qUiONa5i0vgb4ktFgKQ2d1R9V5dzl818JMGpOF95BOdiMxi9rBOtWmm6ES1r6YbQrD6bEiwTIhItsl2rnkk1XVwUnu3n9eSsVvlVGE/6ZYYyjSccHsuSzFbvWQfY4iYCJBv3HIQ9uxXGAl6wb4qiwZTMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QDQGiJjI; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1714091176; c=relaxed/simple;
+	bh=IE36wALklEj+57PfsBOfVzbhkf4k3AzTqvlm3gEP/GM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=WUnQ3d4+ZNpwPN5qflv1axh+F81j/+/Y3plK112vxm2QoZEZPEbwKFwCqEpisaivIJA2u03mhTz8D84ZofzA/maCqry3kSYHTtOuXpe/sKRbgjCU5sTmWqiuDKe2tGKck9y9Au4AzkbTV6KecYjHAd5uR9KBjKp31EjnD7bXp8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QMdST5Ki; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QDQGiJjI"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41b3692b508so11652115e9.1
-        for <git@vger.kernel.org>; Thu, 25 Apr 2024 16:46:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QMdST5Ki"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34665dd7610so716625f8f.3
+        for <git@vger.kernel.org>; Thu, 25 Apr 2024 17:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714088808; x=1714693608; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5tgJGKi50Br4XYblufEIeSvEHwAREDIiwWuQEesK0rY=;
-        b=QDQGiJjIiBycO+vHmci7txDasvWJJiZKS21nxfeKtl7kCIe9ZfYNGAHfrGoC72SKcl
-         ElUhSe9nn9crUbT4SeKXN4QYpgnoVwy5EP6N0tg6DGu+pVzvXdu1AhtAeZfamC5B7TBr
-         uYYH+TXFkcacj1/YuwZhBtBhOjD9nOD2+5FneAgtfHTD/8Qzdu8tnHJODgV5bo8F+MUe
-         h/YceKNGa+1ZZ8neLfxHhot1R0qy2qaC4aYmRg8GY0RrqYExUXYSUrvT7xCs4vzCMEn2
-         Oq6mQsTmYfWn4BABEuyeZPqC4/3It4FSA7fMZA65qGcvuCPqCu1rWmBE5LilW0aEpe8C
-         /J/g==
+        d=gmail.com; s=20230601; t=1714091172; x=1714695972; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NGFdJ2hXi6l38toI72rNERzUd/Ej/tKevnHwSkUqEOw=;
+        b=QMdST5Kipj59i5eRkX8Jk+6lOvuxTutKn3jK0fIFcVwrRcUnNE5Vj46jktlefVMW5c
+         z8ExS4qrQIoBC+Hxjp9oHHU+wRQFTcrQvuFvcyNWeH81mSn1V3C2rCgVSr//KSe7vtB+
+         7bMbrKasYAZuOrqvohzLx4JGVktd3FULm9WXrpjvduHBLXkiGhR77apTjlXK8g469L27
+         joG5XutStWPC8o+/6wSvNo2vOvKVZEizwIrXKMJ1517aq8lziio1MZWAxkd/WJ+nJTb5
+         uPlGEbTLl5kprXqdF52cs87mcT2BKcrY8STc1RToS+kdX1VjOCEd9OpdCakxfyItqK2l
+         Ze1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714088808; x=1714693608;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5tgJGKi50Br4XYblufEIeSvEHwAREDIiwWuQEesK0rY=;
-        b=iLi2J1qxgqiUShu4n0r3HX1H0n1BuRfzLlOi2E6YUkOWHg/PTd+ElzKNflp1WBSByL
-         p4HX3gfN4QUAhjTuwK73NfuNB6Nqpyu/T0eWDsaMA0N16AkbdTkPhExZxZL0ColtQL/I
-         hjBil1psJUhiSqiqusx9i59v5NJZHe5LXkDaH4aQFHs491C4JHA4S+WVaGiWldk7b0mV
-         zE6hZpA8W5m8YVyiU9Zou7k0Vv1DTVmI87UR2W9+IdDSgsquqjBf1M6nw6ikdS+XF4KI
-         ri6Lr13hLsYeWRaGeSmHMw+kx331B/NnLVmwSfzgDHdx3kBsERL7sWZ1sAvA/A9x8HPA
-         t00g==
-X-Forwarded-Encrypted: i=1; AJvYcCVKcQ2GJXgwl+be2OyBE2om9F+tjNW4FMU+qFBXkxRnmYyq2KATBISFHrpW7oGRe/3Rijsvr5ik5ljdvUSLuzWiAA3E
-X-Gm-Message-State: AOJu0YwxvoG0Qwi9/Vsj0081PH3BVHF8zT1GZ/t/FD0UromLPTDA4y6W
-	pB+eeZn6zy//lLUIZR4aLZaP9iaRBJPyPiLnsuPjmcKlCEQFp2V1hbdcGw==
-X-Google-Smtp-Source: AGHT+IHIPpeyDCxhW/1LGILUy/yuQfHTEprq+gucwqGQvNaGqDlUb/7ISoMZCnCHNChaXByUeG6MRw==
-X-Received: by 2002:a05:600c:4686:b0:419:f31e:267c with SMTP id p6-20020a05600c468600b00419f31e267cmr714980wmo.7.1714088808131;
-        Thu, 25 Apr 2024 16:46:48 -0700 (PDT)
-Received: from gmail.com (244.red-88-14-52.dynamicip.rima-tde.net. [88.14.52.244])
-        by smtp.gmail.com with ESMTPSA id t13-20020a05600c450d00b00417f700eaeasm29170363wmo.22.2024.04.25.16.46.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Apr 2024 16:46:47 -0700 (PDT)
-Message-ID: <305296f1-975b-41b9-968c-3984d8056196@gmail.com>
-Date: Fri, 26 Apr 2024 01:46:38 +0200
+        d=1e100.net; s=20230601; t=1714091172; x=1714695972;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NGFdJ2hXi6l38toI72rNERzUd/Ej/tKevnHwSkUqEOw=;
+        b=fRjKQFJIHQwk92VkhFVyiyT127bEp9gMPJmqkExjW9/1Juj8Uo/zRrLb84TqDcOOPW
+         AtJ8yYbvrLdzwRU0aNUCUdpPAiqyseAMQBFEiQTTBR47n93yqOiCS/is98pvij5LD1HT
+         ahIVHe9u/ifECcad8fe8Rwgb1VTzYUMH7gOTNswIVD2aV3eXaXDcYWTrRiQVM9QEuICX
+         axgKifA1U5QH0bWQi7BcDngscsrf7Damj/zeIjUxXjcglanS7cqIOcTREhTfrwsQgb8s
+         idv36Zbh46YB5MkYYoixAjLBmBQtudI5aAsEDqznyjIxlv5Sp6Fto6qR2Uyr2ZEQt3Tq
+         Keiw==
+X-Gm-Message-State: AOJu0YzKsFKDVVLh4UhwzfnmgnZfBGMd54wMs5sWk19GHYtW2+xdmZEk
+	0upi2AGp9sbX5XHXu9bAYKqkgzowe98kFZD4UaR3y6Ntcy2WIrUvQifmkw==
+X-Google-Smtp-Source: AGHT+IGPjgTTNK6UiUfPjf1SVmNSH9x+Aq0aysnUa8tTYTdg2Wk0NBLUfg18/ktpRS1/lCFdaM5E3Q==
+X-Received: by 2002:adf:eb8a:0:b0:343:f2f1:21c1 with SMTP id t10-20020adfeb8a000000b00343f2f121c1mr618761wrn.24.1714091172131;
+        Thu, 25 Apr 2024 17:26:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bf7-20020a0560001cc700b003439d2a5f99sm20967691wrb.55.2024.04.25.17.26.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Apr 2024 17:26:11 -0700 (PDT)
+Message-Id: <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
+References: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
+From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 26 Apr 2024 00:26:00 +0000
+Subject: [PATCH v3 00/10] Make trailer_info struct private (plus sequencer cleanup)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] add-patch: response to unknown command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
- Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>,
- Patrick Steinhardt <ps@pks.im>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
- <20240425014432.GA1768914@coredump.intra.peff.net>
- <CAPig+cST4_hUwWg+P_drqT-mv8+eLAzBmuMFXm=Dui14kfYZzA@mail.gmail.com>
- <xmqqedatfay3.fsf@gitster.g> <xmqqv845dug2.fsf@gitster.g>
- <5854e33c-b84e-47a3-94c6-c5fe8c9a4c98@gmail.com> <xmqq8r11dr64.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqq8r11dr64.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+    Junio C Hamano <gitster@pobox.com>,
+    Emily Shaffer <nasamuffin@google.com>,
+    Josh Steadmon <steadmon@google.com>,
+    "Randall S. Becker" <rsbecker@nexbridge.com>,
+    Christian Couder <christian.couder@gmail.com>,
+    Kristoffer Haugsbakk <code@khaugsbakk.name>,
+    Linus Arver <linus@ucla.edu>,
+    Linus Arver <linusa@google.com>,
+    Linus Arver <linusa@google.com>
 
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > On Thu, Apr 25, 2024 at 02:05:33PM -0700, Junio C Hamano wrote:
-> >
-> > I am assuming that this change will precede my series.
-> 
-> No, this was merely "if we were to update the series I queued to my
-> tree, the squashable fix may look like this", which you can use to
-> update _your_ series if you want to.
-> 
+NOTE: This series is based on the la/format-trailer-info topic branch (see
+its discussion at [1]).
 
-I was not sure what was the expectation.  In fact, I'm still not quite
-sure.
+This series is based on the initial series [2], notably the v4 version of
+patches 17-20 as suggested by Christian [3]. This version addresses the
+review comments for those patches, namely the splitting up of Patch 19 there
+into 3 separate patches [4] (as Patches 05-07 here) .
 
-I am not sure about the change either.
+The central idea is to make the trailer_info struct private (that is, move
+its definition from trailer.h to trailer.c) --- aka the "pimpl" idiom. See
+the detailed commit message for Patch 07 for the motivation behind the
+change.
 
-The current options are:
+Patch 04 makes sequencer.c a well-behaved trailer API consumer, by making
+use of the trailer iterator. Patch 03 prepares us for Patch 04. Patch 08
+slightly reduces the weight of the API by removing (from the API surface) an
+unused function.
 
-	a.- make the test check for stderr and stdout, separatedly
 
-	b.- fflush(stdout) in err
+Notable changes in v3
+=====================
 
-	c.- make err print to stdout
+ * (NEW Patch 10) Expand test coverage to check the contents of each
+   iteration (raw, key, val fields), not just the total number of iterations
+ * (NEW Patch 09) Add documentation in <trailer.h> for using
+   parse_trailers()
+ * (unrelated) I will lose access to my linusa@google.com email address
+   tomorrow (I'm switching jobs!) and so future emails from me will come
+   from linus@ucla.edu [5]. I've added the latter email to the CC list here
+   so things should just work. Cheers
 
-I suspect that similar tests for other commands would produce similar
-errors, so (a) seems like an easy fix but feels like kicking the can
-forward.
 
-I'm not sure of the implications of (c).  Perhaps moving current
-messages to stdout breaks some workflow out there?  The other thread
-about disabling all hints has made me think.
+Notable changes in v2
+=====================
 
-The (b) option seems to me the less disturbing change, but it has not
-attracted attention.
+ * Add unit tests at the beginning of the series (Patches 01 and 02) and use
+   it to verify that the other edge cases remain unchanged when we add the
+   "raw" member (Patch 03)
 
-There is even a (d) that is to go back to test just the new error
-message, not the whole output.
+[1]
+https://lore.kernel.org/git/pull.1694.git.1710485706.gitgitgadget@gmail.com/
+[2]
+https://lore.kernel.org/git/pull.1632.v4.git.1707196348.gitgitgadget@gmail.com/
+[3]
+https://lore.kernel.org/git/CAP8UFD08F0V13X0+CJ1uhMPzPWVMs2okGVMJch0DkQg5M3BWLA@mail.gmail.com/
+[4]
+https://lore.kernel.org/git/CAP8UFD1twELGKvvesxgCrZrypKZpgSt04ira3mvurG1UbpDfxQ@mail.gmail.com/
+[5]
+https://lore.kernel.org/git/pull.1720.git.1713309711217.gitgitgadget@gmail.com/
 
-I will give it some thought.
+Linus Arver (10):
+  Makefile: sort UNIT_TEST_PROGRAMS
+  trailer: add unit tests for trailer iterator
+  trailer: teach iterator about non-trailer lines
+  sequencer: use the trailer iterator
+  interpret-trailers: access trailer_info with new helpers
+  trailer: make parse_trailers() return trailer_info pointer
+  trailer: make trailer_info struct private
+  trailer: retire trailer_info_get() from API
+  trailer: document parse_trailers() usage
+  trailer unit tests: inspect iterator contents
+
+ Makefile                     |   5 +-
+ builtin/interpret-trailers.c |  12 +-
+ sequencer.c                  |  27 ++-
+ t/unit-tests/t-trailer.c     | 315 +++++++++++++++++++++++++++++++++++
+ trailer.c                    | 167 ++++++++++++-------
+ trailer.h                    |  95 +++++++----
+ 6 files changed, 507 insertions(+), 114 deletions(-)
+ create mode 100644 t/unit-tests/t-trailer.c
+
+
+base-commit: 3452d173241c8b87ecdd67f91f594cb14327e394
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1696%2Flistx%2Ftrailer-api-part-3-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1696/listx/trailer-api-part-3-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1696
+
+Range-diff vs v2:
+
+  1:  b6a1304f8ae =  1:  b6a1304f8ae Makefile: sort UNIT_TEST_PROGRAMS
+  2:  e1fa05143ac !  2:  4ad0fbbb33c trailer: add unit tests for trailer iterator
+     @@ t/unit-tests/t-trailer.c (new)
+      +	size_t i = 0;
+      +
+      +	trailer_iterator_init(&iter, msg);
+     -+	while (trailer_iterator_advance(&iter)) {
+     ++	while (trailer_iterator_advance(&iter))
+      +		i++;
+     -+	}
+      +	trailer_iterator_release(&iter);
+      +
+      +	check_uint(i, ==, num_expected_trailers);
+     @@ t/unit-tests/t-trailer.c (new)
+      +			/*
+      +			 * Even though this trailer block has a non-trailer line
+      +			 * in it, it's still a valid trailer block because it's
+     -+			 * at least 25% trailers and is Git-generated.
+     ++			 * at least 25% trailers and is Git-generated (see
+     ++			 * git_generated_prefixes[] in trailer.c).
+      +			 */
+      +			"not a trailer line\n"
+      +			"not a trailer line\n"
+     @@ t/unit-tests/t-trailer.c (new)
+      +			"\n"
+      +			/*
+      +			 * This block has only 1 non-trailer out of 10 (IOW, 90%
+     -+			 * trailers) but is not considered a trailer because the
+     -+			 * 25% threshold only applies to cases where there was a
+     -+			 * Git-generated trailer (see git_generated_prefixes[]
+     -+			 * in trailer.c).
+     ++			 * trailers) but is not considered a trailer block
+     ++			 * because the 25% threshold only applies to cases where
+     ++			 * there was a Git-generated trailer.
+      +			 */
+      +			"Reviewed-by: x\n"
+      +			"Reviewed-by: x\n"
+  3:  5520a98e296 !  3:  9077d5a315d trailer: teach iterator about non-trailer lines
+     @@ Commit message
+          for non-trailer lines, making the comparison still work even with this
+          commit).
+      
+     +    Rename "num_expected_trailers" to "num_expected_objects" in
+     +    t/unit-tests/t-trailer.c because the items we iterate over now include
+     +    non-trailer lines.
+     +
+          Signed-off-by: Linus Arver <linusa@google.com>
+      
+       ## t/unit-tests/t-trailer.c ##
+     +@@
+     + #include "test-lib.h"
+     + #include "trailer.h"
+     + 
+     +-static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
+     ++static void t_trailer_iterator(const char *msg, size_t num_expected_objects)
+     + {
+     + 	struct trailer_iterator iter;
+     + 	size_t i = 0;
+     +@@ t/unit-tests/t-trailer.c: static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
+     + 		i++;
+     + 	trailer_iterator_release(&iter);
+     + 
+     +-	check_uint(i, ==, num_expected_trailers);
+     ++	check_uint(i, ==, num_expected_objects);
+     + }
+     + 
+     + static void run_t_trailer_iterator(void)
+     +@@ t/unit-tests/t-trailer.c: static void run_t_trailer_iterator(void)
+     + 	static struct test_cases {
+     + 		const char *name;
+     + 		const char *msg;
+     +-		size_t num_expected_trailers;
+     ++		size_t num_expected_objects;
+     + 	} tc[] = {
+     + 		{
+     + 			"empty input",
+      @@ t/unit-tests/t-trailer.c: static void run_t_trailer_iterator(void)
+       			"not a trailer line\n"
+       			"not a trailer line\n"
+     @@ t/unit-tests/t-trailer.c: static void run_t_trailer_iterator(void)
+       		},
+       		{
+       			"with non-trailer lines (one too many) in trailer block",
+     +@@ t/unit-tests/t-trailer.c: static void run_t_trailer_iterator(void)
+     + 
+     + 	for (int i = 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
+     + 		TEST(t_trailer_iterator(tc[i].msg,
+     +-					tc[i].num_expected_trailers),
+     ++					tc[i].num_expected_objects),
+     + 		     "%s", tc[i].name);
+     + 	}
+     + }
+      
+       ## trailer.c ##
+      @@ trailer.c: void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
+  4:  84897cf5c83 =  4:  4a1d18da574 sequencer: use the trailer iterator
+  5:  e961d49cd40 =  5:  460979ba964 interpret-trailers: access trailer_info with new helpers
+  6:  093f68f3658 =  6:  d217858c637 trailer: make parse_trailers() return trailer_info pointer
+  7:  0e9ae049b88 !  7:  49c66c48cc1 trailer: make trailer_info struct private
+     @@ Commit message
+            (2) external API users are unable to peer inside this struct (because
+                it is only ever exposed as an opaque pointer).
+      
+     -    There are a couple disadvantages:
+     +    There are a few disadvantages:
+      
+            (A) every time the member of the struct is accessed an extra pointer
+                dereference must be done, and
+     @@ Commit message
+            (B) for users of trailer_info outside trailer.c, this struct can no
+                longer be allocated on the stack and may only be allocated on the
+                heap (because its definition is hidden away in trailer.c) and
+     -          appropriately deallocated by the user.
+     +          appropriately deallocated by the user, and
+     +
+     +      (C) without good documentation on the API, the opaque struct is
+     +          hostile to programmers by going opposite to the "Show me your
+     +          data structures, and I won't usually need your code; it'll
+     +          be obvious." mantra [2].
+      
+          (The disadvantages have already been observed in the two preparatory
+          commits that precede this one.) This commit believes that the benefits
+     @@ Commit message
+          [1] Hanson, David R. "C Interfaces and Implementations: Techniques for
+              Creating Reusable Software". Addison Wesley, 1997. p. 22
+      
+     +    [2] Raymond, Eric S. "The Cathedral and the Bazaar: Musings on Linux and
+     +        Open Source by an Accidental Revolutionary". O'Reilly, 1999.
+     +
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Helped-by: Christian Couder <chriscool@tuxfamily.org>
+          Signed-off-by: Linus Arver <linusa@google.com>
+      
+  8:  eca77a1a462 =  8:  56e1cca4b7b trailer: retire trailer_info_get() from API
+  -:  ----------- >  9:  35304837e08 trailer: document parse_trailers() usage
+  -:  ----------- > 10:  4d53707f836 trailer unit tests: inspect iterator contents
+
+-- 
+gitgitgadget
