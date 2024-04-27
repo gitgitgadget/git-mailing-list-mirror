@@ -1,48 +1,48 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801DC7E8
-	for <git@vger.kernel.org>; Sat, 27 Apr 2024 18:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF21D10E6
+	for <git@vger.kernel.org>; Sat, 27 Apr 2024 18:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714241207; cv=none; b=JzR0ECmFPZ0GrK7D/41VvYqvJUMmcDSUySkL661IWbkvbUfqYr3KodwtaS7wLxKDNy7L1r9zwOfLX+AYRFtIwPaAX4OAeSrhoEeCYZamWBi+/qdgS+6G26MRfuymmjHPJuAqDe8AsKS7Acz5vkZU7TjSzz311EbIgYxCQZTuu8A=
+	t=1714241892; cv=none; b=faet3atkarny6koYDQ5cnEvroG4OgI3nPFrupGAiERnyfgzuP14YiVLRm3+7APTvyg/IBnjsag7IC/+WAuKxRCUxIdmhjBfSMF+YR+iTEVfHU47r7/zH5UTAPic6so8Mm/nLJJcJiogIDp2PaiB60r5Q6b9tbzR9n0yCuc8alwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714241207; c=relaxed/simple;
-	bh=K6186+qDe4yYC3wyVvoCm7qn81RLNzcD0dRdUZyyJ6s=;
+	s=arc-20240116; t=1714241892; c=relaxed/simple;
+	bh=CN9zR6dh147CT8xCHMILqbcWVHIaooy6rGi0x09tXgI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U9KYy7o2UtRyOarBIQPlwPkc8c89VD2Lfb52RfCqeoUNTh+nzsftpb0twCj1bg2sZIZoaMLBQ9sBjepxGwl1UDsWVEb7VrBLBGI1gOwKqaCSpbYDkdO+AamRvJLUiTtmys9gxREPy3vy8fGrdsHEIPO8JxJDEIU8TuHdBezughY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SfxwkBA9; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=YWDffv72gTS32nkqekvc0qNaYxUjBXAZvHo7bwWzRJD8QQqgugmkcV3mEa3qvh3iMuPok4320sqn64Q118b/rZBGrV+OdD5woFX8nSxrG2Fd557umL+XMIhxKtbV6qs9FUg16y26cA00X96u4QyywhJEjUlZdNx5Nw5Mphzm/sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=S2FcUum0; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SfxwkBA9"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 59CC633F37;
-	Sat, 27 Apr 2024 14:06:44 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S2FcUum0"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B9752170B;
+	Sat, 27 Apr 2024 14:18:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=K6186+qDe4yYC3wyVvoCm7qn81RLNzcD0dRdUZ
-	yyJ6s=; b=SfxwkBA99X6J83CAttMy7BLCYOOWyJXB12c0wdNGigD+tFUc9yf0t6
-	rBGBIshkgkOb1EU9RVc0MDnQCAkrYU1Gii/7VIIENbkQrKvMIXN8pJaEFKXzzPey
-	YQMpuoTUIr5lrM89BKGmmLue/wMW4w5EvrASLeX3aWJ1zxTyvB1M0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5180533F36;
-	Sat, 27 Apr 2024 14:06:44 -0400 (EDT)
+	:content-type; s=sasl; bh=CN9zR6dh147CT8xCHMILqbcWVHIaooy6rGi0x0
+	9tXgI=; b=S2FcUum09ByRcDIA/Ecv/6Cx2lNJ4Hjqg3lJcVBy9I07HWnmh8StFY
+	ImC3edkzuCmf8DX1NkbI3tfVP2okmA5Vut+U9c0eeoNxyqdjmrxgM1mBBwd4tdUd
+	dtJN3AoIeN3x2oW9r52uqKThpwy8PxVxuPyMpoublZHcMl++PJ4eU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63B7E2170A;
+	Sat, 27 Apr 2024 14:18:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A5F4533F35;
-	Sat, 27 Apr 2024 14:06:43 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B708321709;
+	Sat, 27 Apr 2024 14:18:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Dragan Simic <dsimic@manjaro.org>
 Cc: git@vger.kernel.org,  code@khaugsbakk.name
 Subject: Re: [PATCH v6 2/2] send-email: make it easy to discern the messages
  for each patch
-In-Reply-To: <d4d63b9f3c7692bb48ac3e7ac34b663b@manjaro.org> (Dragan Simic's
-	message of "Sat, 27 Apr 2024 19:49:03 +0200")
+In-Reply-To: <xmqqsez64r4d.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	27 Apr 2024 11:06:42 -0700")
 References: <cover.1712732383.git.dsimic@manjaro.org>
 	<c78b043b5a6cf0de712d36e6e000804bd6e1316d.1712732383.git.dsimic@manjaro.org>
 	<xmqqh6g9w5bf.fsf@gitster.g>
@@ -50,8 +50,9 @@ References: <cover.1712732383.git.dsimic@manjaro.org>
 	<0216a0e8369b8a3592dda90e5680be31@manjaro.org>
 	<xmqq8r0y66ub.fsf@gitster.g>
 	<d4d63b9f3c7692bb48ac3e7ac34b663b@manjaro.org>
-Date: Sat, 27 Apr 2024 11:06:42 -0700
-Message-ID: <xmqqsez64r4d.fsf@gitster.g>
+	<xmqqsez64r4d.fsf@gitster.g>
+Date: Sat, 27 Apr 2024 11:18:07 -0700
+Message-ID: <xmqqo79u4qlc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,41 +62,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E79009B4-04C0-11EF-AB08-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 7FE54458-04C2-11EF-9912-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 2024-04-27 19:41, Junio C Hamano wrote:
->> Dragan Simic <dsimic@manjaro.org> writes:
->> 
->>> Just checking, is there something I can do to get this patch
->>> series moving forward?
->> Get it into a shape that is more palatable to people?  That's easy
->> to say and hard to define X-<.
->> I didn't see anybody enthused about the change, and I didn't get
->> enthused about it, either.
->
-> Hmm, I was under impression that the amount of discussion that
-> already went into the different versions of this series clearly
-> showed at least some interest in these patches.  We've reached
-> the sixth iteration, which shows something.
+> Well, v1 and v3-v5 saw comments only from me.  There was a comment
+> on v2 by Kristoffer Haugsbakk about phrasing in proposed log
+> message.  v6 had Eric's "Meh, either way".
 
-Well, v1 and v3-v5 saw comments only from me.  There was a comment
-on v2 by Kristoffer Haugsbakk about phrasing in proposed log
-message.  v6 had Eric's "Meh, either way".
+FWIW, somewhere between v2 and v3 may have been a good place to
+stop.
 
-I was not enthused in the topic myself, but was reviewing and
-suggesting improvements merely to help you turn the patch into a
-shape that would interest others, but the thing is, if the current
-output is good enough, it is perfectly normal that there is no more
-room to make material improvements, and it is not your fault.
-
-
-[References]
-
-v1. https://lore.kernel.org/git/62553db377c28458883b66bcdc0c58cc0f32d15b.1712250366.git.dsimic@manjaro.org/
-v2. https://lore.kernel.org/git/0e087ed992def0746f3d437253248904c2126464.1712262791.git.dsimic@manjaro.org/
-v3. https://lore.kernel.org/git/e3212c0a4ad331685c68c13afcdbced20982ab32.1712364420.git.dsimic@manjaro.org/
-v4. https://lore.kernel.org/git/8a9f4927aab96f2f62e2467e59fb6150d7e931fc.1712367983.git.dsimic@manjaro.org/
-v5. https://lore.kernel.org/git/cover.1712486910.git.dsimic@manjaro.org/
-v6. https://lore.kernel.org/git/cover.1712732383.git.dsimic@manjaro.org/
+"After calling send_message(), give an extra blank line before the
+next message" was extremely easy to see why it was a good idea.
+Mixing it with "oh, during the process of a single invocation of
+send_message(), there may be other places that want extra blank
+lines" made the changes less focused.  Personally I lost interest
+in the series at around that point.
