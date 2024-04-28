@@ -1,96 +1,109 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ADD17736
-	for <git@vger.kernel.org>; Sun, 28 Apr 2024 18:09:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B9633C8
+	for <git@vger.kernel.org>; Sun, 28 Apr 2024 19:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714327742; cv=none; b=PTftK9acbghLpiJxEeKTTtkSZpBg3/C0VC+xRgpckWELB+dPV8322XdrZjgb8QvZuYDBKzF9OnGg7iLgaWTJPwDM7aSecoL8rNJ8YXwOmuCAwFhra98qrjqKcx/xWgIYC4IlwiHgdE9ML8SMhNaZj94gGZMnHPMA8EYJRhEZeWA=
+	t=1714332978; cv=none; b=qrQ8MVINweBN5+eazRfwdgSNHnIzXFVdC1DBdMWLlsVBYhscHrT9NdhTsySz5ceYerMAKHplxgcpytHmaLv0EEdk8jQAtUpvL6sIJffJgxHwnfeEVH/4zP6HV+wJK+igAr2dUgB/SdZtECIry1DvTRJfUhQ3V6yO5JaE4mdjP+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714327742; c=relaxed/simple;
-	bh=D52MWSCf9zeDZN1aT55lwD10mJKpPLoysFliFfn6HNI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rz3ssLA/F/BJrXqR/w9LBMv7aiAK8Da3BWwmkGpQgBshd8SwzmdrRdOgq0krxTSJAcPB19mqt0whIrG46hEjds197yV+hKFg3J8lQHNg+GKyiWWjSngZO80VH3f1A2IEdmoNOIOLvC6W+Q0NuG85A7u+p+qB6lQ3k81kRnom3/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1714332978; c=relaxed/simple;
+	bh=T5PWa4b2Z0uQR9ETwz2TkdCMw+iZpKD7qIjeiL12ggc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Pu7X+/rvdIJOQyNsLftm8FsOhde9rdc2nkrPnftgVryK07Zg193BAjXeTYJHuRGzgY3v48vOSUxBw0r1w1kGTP857AfT77mqRwB2xgjJWKGSpQSpSg+mspVnloKkOZvHazElazum7/orQc1L5EmmHlP4ewyMfK1C+iNWji5z2eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bbtjJUM5; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6a0b68733f5so12500936d6.1
-        for <git@vger.kernel.org>; Sun, 28 Apr 2024 11:09:00 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bbtjJUM5"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2dae975d0dcso51798181fa.1
+        for <git@vger.kernel.org>; Sun, 28 Apr 2024 12:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714332975; x=1714937775; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T5PWa4b2Z0uQR9ETwz2TkdCMw+iZpKD7qIjeiL12ggc=;
+        b=bbtjJUM5Ext7v4CXhIAAdZvZ8BSaU7CHaQhR5f3D7drcMYE19jNGM1lMzrwMGXRpCw
+         WfWTlc6IcoBMI/vj8TLpmuuMReuBVjDhszuH69uHiLYLy60bPV7CGvZ2EtlEEl0Os/dW
+         R0KbVeKBMcnRG3LzxVJkbvPhIpNvzIi8qEiNY/udhQ0kolM1xFCUGq2H2LAlrXXgSljH
+         /U4ydHcQPC+HrpU/FcihsEwx8nf3m7lgoD8iAYxfRCqWuu1HdxRY1oe80dIcNW9GfL68
+         BoVWwzDrMaCyFOjkTS1FUkd5xS/dcz8q7JXcrulqYnzSmKUXMQKXuEJWwamNGKr+4Btj
+         j3Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714327739; x=1714932539;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IIUc2tG8wmtL6hksmRjx5M3q0dEF5wLXju8XKKzT2mc=;
-        b=RaSedS9E7ychhJ2fUbFLVtd3XuT/hurxwzuUBVY2MQs2jHh6Ioumlmrq8BOG30JbpB
-         I1H5FavUymSKgc6Za0FPGt0H5999PY2JdjtRkN5lvNYrHGNGbrvUpRp4gqTj0VWs6h+E
-         bbD6xB5mzdSAmvcCi4Th4lg1ypFZGU2NkBGJjusOTiDaPfjfqDbYQy4kXmbqkkHMhVV2
-         speqseS8bwddtV1rM0xy7QT+O2gollGHXY+druxhsMKdtEYgwud0+iWk2bQodAZYZUDC
-         DFNOZ4QM6ta7Br9jZx/otXPCiQ1UElTYQGKyALGeYOsJJHofP0mxlDi7kUioC66bP7QL
-         hoIg==
-X-Gm-Message-State: AOJu0YxNeP27kViN3WNSMBGCHdulJXYNwQqNB2iUj7gbS/oT48XBQrrR
-	iXB2Ur/6ws27YDoSR84T4gKid06YnUn21MX5eL0uOGwKesdHzWqLMaD3Z0FiMuDTp01jI2tyUdM
-	wRge21ItKTPqkjdFtdCFEqOJ0x+oxeEcZ
-X-Google-Smtp-Source: AGHT+IH4d8GG0I2eLJYUOHN+viH+ngHJWKHQ0zus2jR1GlT0EsFjLyIv4RS4Eqrn6LeQFZJqjsQ7NI6VzgxNd6DXRbA=
-X-Received: by 2002:a05:6214:12d1:b0:6a0:ad56:375b with SMTP id
- s17-20020a05621412d100b006a0ad56375bmr6383309qvv.0.1714327739044; Sun, 28 Apr
- 2024 11:08:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714332975; x=1714937775;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T5PWa4b2Z0uQR9ETwz2TkdCMw+iZpKD7qIjeiL12ggc=;
+        b=EQlKZC/Zg7IzGIXVMMddJ7vKI/NYDTU2PaN1j3bMiNQ5G1o93tc60FESmf0x+5Sm/K
+         1QHP4Gaix/2DYwhyetc0vomnmd+Jtm1P/mOrxVBcHqNOwGF1ODFnALGdWRTqUfsfzQ2+
+         pJDA3nTUncH7lINxAukiIGyNi09czsU3Dogvwf8/eOvX9SLNIN/aDF8xWkP0U7nM+xBM
+         FQJt3xpkPbPU69DjPWgQTrUMkwgqcah75jTPfv8/TPHn//rs6ujaTawRc0U6mynUFZaD
+         lzfB+VqFZYvad+dwEXEvkYTwQmNvPBvYz9PmgFIBd9Gg0MiBdjy5JnFUGAxltf5Laj3c
+         4FlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW2YgJ7IXe9mb5XenNdjIOyIZSniSjMAhqB68086/SZoZ8pPHRaJAsTeDsbHlRvoo8d+dVIyphDvDM91FW0rzv9WGyb
+X-Gm-Message-State: AOJu0YwK9yPXwINPgSCaAeDHUZa1mVBH0wWlU/wZup44z34VGWG/HK00
+	GbkHqv6PBVtu/zj0xEq7ywl9d60ktxYOF5mSMKvMl8pClA2hKC+YXxdehRggM5GtOfAEOYfda2w
+	pMiwF1sCeFJ3h8EYL3JalTkp33/mivg==
+X-Google-Smtp-Source: AGHT+IGUtg8FP2ATMJa8RrnAiOwgHHm3Wm2uKCXz6roTe6whiMvGjT3VKgCQ3ZAL3IZIHqETHD+F2MVIZevVTAagDns=
+X-Received: by 2002:a2e:b712:0:b0:2dd:1611:1074 with SMTP id
+ j18-20020a2eb712000000b002dd16111074mr1635626ljo.3.1714332974998; Sun, 28 Apr
+ 2024 12:36:14 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 28 Apr 2024 12:36:12 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq1q6rc44n.fsf@gitster.g>
+References: <20240423212818.574123-1-knayak@gitlab.com> <20240426152449.228860-1-knayak@gitlab.com>
+ <20240426152449.228860-2-knayak@gitlab.com> <xmqq1q6rc44n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANHPH1-6mbWdt_FLsrDEB_XVb4r3yTYMLLPUyDrL6tmS7jZgqQ@mail.gmail.com>
-In-Reply-To: <CANHPH1-6mbWdt_FLsrDEB_XVb4r3yTYMLLPUyDrL6tmS7jZgqQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 28 Apr 2024 14:08:47 -0400
-Message-ID: <CAPig+cQ39Z+WjThqkxCKgOUfkZyB6PG-6RhHBYhinp-ZY4dxKA@mail.gmail.com>
-Subject: Re: Unexpected behavior with the rev-parse operation
-To: Toru Okugawa <castor.4bit@gmail.com>
-Cc: git@vger.kernel.org
+Date: Sun, 28 Apr 2024 12:36:12 -0700
+Message-ID: <CAOLa=ZTRZ37X-u3cPMKRbyEW2pWw0hpdQf=fdiFJMvFz2Oh5kw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/7] refs: accept symref values in `ref_transaction[_add]_update`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000000869306172d406d"
+
+--00000000000000869306172d406d
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 15, 2024 at 9:58=E2=80=AFAM Toru Okugawa <castor.4bit@gmail.com=
-> wrote:
-> I have encountered some unexpected behavior with the rev-parse operation.
-> ---
-> $ ls -a
-> .  ..
-> $ git rev-parse --is-inside-work-tree
-> fatal: not a git repository (or any of the parent directories): .git
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> What did you expect to happen? (Expected behavior)
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>> Subject: Re: [PATCH v4 1/7] refs: accept symref values in `ref_transaction[_add]_update`
+>>
+>> The `ref_transaction[_add]_update` functions obtain ref information and
+>> flags to create a `ref_update` and add it to the transaction at hand.
 >
-> If the current working directory is outside the work tree, the
-> documentation says that `git rev-parse --is-inside-work-tree` will
-> output false.
-> https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---=
-is-inside-work-tree
+> Just a very minor irritation, but ref_transaction_add_update() is a
+> function used internally in the ref subsystem and is exported only
+> because its visibility needs to cross file boundaries between refs.c
+> and refs/*backend.c files.
 
-I think this is working as intended, but the documentation is lacking
-or misleading. With very few exceptions[1], `git rev-parse` expects to
-be run either within a Git working tree or within a Git repository
-(i.e. the .git/ directory or a bare repository). Options such as
---is-inside-work-tree, --is-bare-repository, etc. are meant to report
-upon aspects of the worktree or repository in which the command is
-invoked.
+Yes that is true. I'll amend this for the next version. Thanks
 
-Looking at the source code for `git rev-parse`, it does appear that it
-has explicit support for the case of checking whether or not the
-current directory is a Git worktree or repository. The way to do that
-is to run `git rev-parse` without any arguments. However, even in that
-case, it will print the "fatal: not a git repository" error. This
-means it is your responsibility, as a script writer, to suppress or
-capture the error message (whichever is appropriate for your case).
-For instance:
+--00000000000000869306172d406d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9560abe61ec1f740_0.1
 
-    if test git rev-parse >/dev/null 2>&1
-    then
-        echo "in a Git directory or repository"
-    else
-        echo "not in a Git directory or repository"
-    fi
-
-[1]: --sh-quote, --parse-opt, --local-env-vars, --resolve-git-dir
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZdXBTc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOUp4Qy80c2xxMlJMQVFHVG5ZbS9ranlvVm56Rmtmago0MTdhOGtleDhl
+Z1NHWGFrSmt1YlVubHNlS2wzQW5KSEtJQVBKQ0JIQXEvWTNMd2ZtR3BPSjdCaVNXeDFLMGJPCmxw
+Vk5jR1gvbjNEZEZZc1l5VzVNUldJYzZHU2x3YWJlMjREdVZWTjBsTHROWi9Gc25hZ1g1M29FTVZD
+d2VsL1QKSlVhOGU1U1g3cDJVSHBBUEk3aUluNmM5UnJjVUN4K1NhNzltTjkrNEpiNWpuTXJnS2Fj
+UWxNdHNiUTdOb0xqRwpLcmdrSnpMQk16UTFuRm44Y1d6cUxYbjVaU3pFeHZkQlkvUjU4MU5zaUJq
+L09FUUQ0YkZkdUdLejZRL0RjNDZuCkVoTEZ4MjArNzFMOFNYSE9ndHNDWUI3MmMyT3R4SnMwaXdN
+ZjB0N2N4UEpyZHROb1M4SU94dkw5UkQxVlpsT3AKc0dLaXZDQTErVFVNT3hDWFIwaWtCdDNPSUxK
+dmYzTzdSWk9iTkZRaXdvWXY5REFlb1ZQZ3RhclZRTjBzbWo4egpXMGp0WkREQzdKMW5mZDRzKytq
+NHNjdXE0N2JheU05TE5pT2dDdnlObkxKRnN4Z09uTGJNUjY3UDJ2TmhPYngxCmcyaDNaSi8rVThL
+dk1WN0I2WHBIZlVseFRSemxOdGlaMXlqZVc2QT0KPU5WcmYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000000869306172d406d--
