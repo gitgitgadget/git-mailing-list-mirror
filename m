@@ -1,62 +1,62 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7751B94D
-	for <git@vger.kernel.org>; Sun, 28 Apr 2024 22:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D4BB676
+	for <git@vger.kernel.org>; Sun, 28 Apr 2024 22:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714343470; cv=none; b=vGLGk412KstCRHXjApufmZ/NwTFKxDLqvfMTtBJfL0jilXvW5B1fmEKaZ3GfNeoeBL3KLYEi74EKTmINAy0frliGI5Iuf8Lb963t/TfC/sIxCe+XySfJQ/GEQq2pAfw6JQ7J0APET7cMh1CHWXoO+HiGyZDJnWlz2fD8YqJgEbE=
+	t=1714343471; cv=none; b=q5sXM1yptl7j+csLuUA0Qb5DWI1MsHlj5Wcvej4mk6I7SCa4x3RnKgE8tLkp3uHHONFkEB/kq/EGyCYQmcinXcuyTLMukmnyE/JMoBNNT3brH/8/h6wL4B2Umio8FXoNSHLxbNynNLjYiia1k99TS+ytaOdbYE+0SBuGg7MKPkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714343470; c=relaxed/simple;
-	bh=6P//f8JMEH8kLtXWu/dfRvih0SIvjcrQJAOjp3bWXIQ=;
+	s=arc-20240116; t=1714343471; c=relaxed/simple;
+	bh=VHI805M6NWFA8IDzt3PG+C/jJX8I7ahLOwXoCNyHpdE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=t0vWRsaFIBo2tdFPAY+MCxwOLMt2Idsti3MyssuZTkxLHXjmpi9OpI2pWpITmvmepGP76qdiKX6AS4+0YigHXp9W8sz9C1ZPS5pH0/fP4H1rksYd/E6xu4osDL9kFSzJSwk13pC827CglxyrWsXd8vY+LTf8vNEQwznaOkXoUqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmUMT5+w; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version:To:Cc; b=UOPJIYbd3i3qYQ0ckkAUdVX4ZUMkmmsJOVWz2uXLp2k8T7o/o7Zllk93EmobcGJ0Eq1kvhoefyMX4U+46fCOqxUm8bd7mmr4PCeuvVR/aAc4YXcL7ly+Cnbun/woLvdVUbZdoM8gKS9VdZbHL3bs4g1c4NFXxCb/PJc1yWF5UYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l2j23+dX; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmUMT5+w"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41c011bb920so3945045e9.1
-        for <git@vger.kernel.org>; Sun, 28 Apr 2024 15:31:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l2j23+dX"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-34cd9f50ffaso586283f8f.3
+        for <git@vger.kernel.org>; Sun, 28 Apr 2024 15:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714343466; x=1714948266; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714343467; x=1714948267; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8RX1x/NHM/U5P1n5FRlp0kF2LnyrqYseRMqXH2pCSpk=;
-        b=nmUMT5+wK1orS/3d60q91DVw02ezV5zZ9CF7IegYRFzm9KZQcLGW9RksiXTL6Z1w6Y
-         aSD3quMbczfYj5HIGJKSOWRJbGAnP9iE8IkXFgCw84bhaBasvBq+ZqYKrmQ3E2bK84BE
-         96fRg65HJq43M563xfwExnWj6vTcCIGOc1RjPmG01+27XUuuBgLYIqPJIGDsTBwinQQp
-         V5AwcIZ0BKdOGNxA/JYa+uKzmcN1m+U1cI3Cuv/ly84ALPB7BJXaFhb7FsAVw7yc8S6h
-         F7nAby60ziBHZFbX4v4WHxdyHu1eHJQVR13+NfCrPTytqurYco55Ka0kMNy/87XX9uXg
-         Np0Q==
+        bh=d5tSEDb6eAbJWENaTudCJguvaLlO/g7f92082XapFMI=;
+        b=l2j23+dXIFW6f5G9KK+8WVRluEjHlK6+tRVk6ousytY9er8fmYMRiI4qxMq7pY0Ahr
+         LJcfElQPAR/XtuSQI1SbdZZfupKXpUp+LvcZdYGgdArpQ0StzOlehTp5zh8YMa+eUn2P
+         BI/gEWVbcX5jg+JryBb2hb3HD5uJmmrEsFJALs4Fwyaq9UA0HTY/08UsHTm6w//tD0on
+         LFslmxjdJvukABkX2THKqAeZlCD4THIxCLY17MPIcoEjdOqdC0wqq8WsWAoSbQCp9rvZ
+         IQCV388MAzhKBT8lpCY2ArEhCKytGs1jow1HkRKSvEUS+Js+5ylIiGPclTbtZo4Nw9FI
+         8X2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714343466; x=1714948266;
+        d=1e100.net; s=20230601; t=1714343467; x=1714948267;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8RX1x/NHM/U5P1n5FRlp0kF2LnyrqYseRMqXH2pCSpk=;
-        b=CYaTistU9adUbf75r2IrIU3DIg5V3MasDmMZMS2d1BozPjX/43z0hAHVhnrr3vneBk
-         ebqiYdQBSnWoBABnXII6mp1rkz/gOXKOgj+Xe/r1cfaRgHjiLDzTA+silvM3Sfk25P3l
-         3sYeELxdkmdyjoyzq6Nh9zzFrHcJmnfQumtos4X3T0FiUUFAhiIKlhwN8mI+DEQGZQmw
-         iY4t2mSxAfc8pTo2SSGQaYI9ZEndYphW//czr3vZ5/+fJ1MGM84/HtdfDwRlIbIUtr1V
-         c2eaDNFYD39xqRkCIyjVUwUi37G9fLFWjTzhkhcSyDpXpS62xNWcCaWEMUFxC9sj5U6G
-         OVcw==
-X-Gm-Message-State: AOJu0YzEBXthH+2RBwihnro5J5PSt2YFKtCUiF1XOTAEReGM0OFzyvK5
-	AtUi+K5bqJGYb8WYapbZ5Fphlo79n+paPshcJnynlBZIqOYAlz5bcrQXFA==
-X-Google-Smtp-Source: AGHT+IEDyLnVRFpzLC5sfEyJt3W9ytdLIappAdHPBj+62/9X5woj/iftbRdSsfskxx8E1aIz9uvDDg==
-X-Received: by 2002:a05:600c:1c26:b0:41a:56b7:eb37 with SMTP id j38-20020a05600c1c2600b0041a56b7eb37mr6724368wms.20.1714343466009;
-        Sun, 28 Apr 2024 15:31:06 -0700 (PDT)
+        bh=d5tSEDb6eAbJWENaTudCJguvaLlO/g7f92082XapFMI=;
+        b=ceiIIxkAaTkp7lDhMXcI3E3f+NgB4YezKBfQx2q28n+9cOAwS3ipI8L0a2bBzkV2IS
+         riuDks+tBVqsvxhK6+AsOHm+PuWIYdfa0oac1dKe2InhIF9mjZ897N3qNSX1MBTe90fU
+         tGka6HGPhikiNqpWWotze/OHgDRNhf+vQZOonfeowyo7GZkFAn0rRSgEoA5PwOrDoy4t
+         5g9saQTieZ8xzISfon9ZDEol67Ne9FeCe2FDaInATo+OJWs6tUsbjVWd0eYNFSsBRV/B
+         R+UwRYOZjYNK7qgQga3nLSf7vfGGFlH1J427Nrzw95tcPAw6qzFtoiWh7STR1fjuJVC2
+         U42Q==
+X-Gm-Message-State: AOJu0YznWs9sJYyNakeUuzyVFjQBbBsINgDJnAK1mEYFl5UnU5t9Kf19
+	noZA81IiWxk1Xc1kMMGgF+KfF5J7I9mvxPCQQ/0rNTfpeA2JXgIFoz16iQ==
+X-Google-Smtp-Source: AGHT+IE7TMz0sAGL1pq5EY+TIiC8Y7LRLIwtZnn7nDRhcybJ06NA17JysFGaUWHm4PL9v0VxEm5Bkw==
+X-Received: by 2002:a5d:64c3:0:b0:34c:ca8d:ab94 with SMTP id f3-20020a5d64c3000000b0034cca8dab94mr2359577wri.23.1714343467616;
+        Sun, 28 Apr 2024 15:31:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16-20020a05600c4f1000b0041a1fee2854sm28364198wmq.17.2024.04.28.15.31.05
+        by smtp.gmail.com with ESMTPSA id d1-20020adfef81000000b0034a7a95c8cfsm24210608wro.9.2024.04.28.15.31.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Apr 2024 15:31:05 -0700 (PDT)
-Message-Id: <1e0895651cb77759e983b365eda0e7546bf7453d.1714343461.git.gitgitgadget@gmail.com>
+        Sun, 28 Apr 2024 15:31:06 -0700 (PDT)
+Message-Id: <0bf83ee1228130df6069206190b97f1d0329794e.1714343461.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1715.git.git.1714343461.gitgitgadget@gmail.com>
 References: <pull.1715.git.git.1714343461.gitgitgadget@gmail.com>
 From: "Matheus Afonso Martins Moreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 28 Apr 2024 22:30:52 +0000
-Subject: [PATCH 04/13] url-parse: add URL parsing helper function
+Date: Sun, 28 Apr 2024 22:30:53 +0000
+Subject: [PATCH 05/13] url-parse: enumerate possible URL components
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,9 +72,10 @@ Cc: Matheus Moreira <matheus.a.m.moreira@gmail.com>,
 
 From: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-This function either successfully parses an URL
-or dies with an error message. Since this is a
-plumbing command, the error message is not translated.
+Create an enumeration containing all possible git URL components
+which may be selected by the user. The URL_NONE component is used
+when the user did not request the parsing of any component.
+In this case, the command will return successfully if the URL parses.
 
 Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 ---
@@ -82,26 +83,26 @@ Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/builtin/url-parse.c b/builtin/url-parse.c
-index 994ccec4b2e..933e63aaa0a 100644
+index 933e63aaa0a..d250338422e 100644
 --- a/builtin/url-parse.c
 +++ b/builtin/url-parse.c
-@@ -11,6 +11,16 @@
- 
- #include "builtin.h"
+@@ -13,6 +13,16 @@
  #include "gettext.h"
-+#include "urlmatch.h"
-+
-+static void parse_or_die(const char *url, struct url_info *info)
-+{
-+	if (url_parse(url, info)) {
-+		return;
-+	} else {
-+		die("invalid git URL '%s', %s", url, info->err);
-+	}
-+}
+ #include "urlmatch.h"
  
- int cmd_url_parse(int argc, const char **argv, const char *prefix)
++enum url_component {
++	URL_NONE = 0,
++	URL_PROTOCOL,
++	URL_USER,
++	URL_PASSWORD,
++	URL_HOST,
++	URL_PORT,
++	URL_PATH,
++};
++
+ static void parse_or_die(const char *url, struct url_info *info)
  {
+ 	if (url_parse(url, info)) {
 -- 
 gitgitgadget
 
