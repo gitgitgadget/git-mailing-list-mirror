@@ -1,62 +1,62 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1247D23770
-	for <git@vger.kernel.org>; Sun, 28 Apr 2024 22:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B6124B33
+	for <git@vger.kernel.org>; Sun, 28 Apr 2024 22:31:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714343472; cv=none; b=TfzEuE2hOwIAAH1rnqfVfkjDJRG4FyOfXvpIBVgfPqFj91hkYUFUTmFNIp+w6igNJJL/9OhNeowTvJRoAA3fj58fAiheAODwLaR65FvXtwG5gzYdSIBHCc5r53cGBDuFRxp7H/9UMIDFjol/Cl0Cxvl/MPNejNfNSCHE+wOZ2/M=
+	t=1714343473; cv=none; b=E5ko1t/65Jn1XBbJ/PxEukQM3IoSuCD0uJ4Fb5s7HY5UvRBWGTWmUvy3rpoUWw90CP/ELk5eq0+qB+uYGulVwXhep8s7tDE5qJtWN1TyFfuUJ2QbfheR5K1zLI8uHd2hKid0VdzTdELD+S3D59S8jq5LqfaJjPUTknB6uOEjkvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714343472; c=relaxed/simple;
-	bh=blfrgL1shA6DGJXD5/gNPeLe3M+Xm5SezQWs8vxBCic=;
+	s=arc-20240116; t=1714343473; c=relaxed/simple;
+	bh=nhPC/OVyEJnhdpdQA8wfXn6c1YSIdXh+KJCi1cvtJCQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lzjKlyJrELVVTAv6UtqcEnkCFtdgwlwZwrY/BlN9p7PYyNNJhm/ymTcSmNGUmAJ3i/Yez7zATbq6cXv7rcGnmmzMbannSArY+UFvHDli4Ltz9xCSQKsReTVWv570zNd5fdxNpsptycHWRKd+ZNrxIVMmCvu6Bb8oJ3BgDYO+VhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cQrEsdCS; arc=none smtp.client-ip=209.85.221.45
+	 MIME-Version:To:Cc; b=ZoBe6M9Ft1RpjdViCNBciM0yBFtF4WebmTKrg9GUN3P6RU/sWbM0h3Cl7RntulFUvEW0S5E55ZLtEOp3WaYlD7EQFAkfbdOKLyoZ4nSSl2N5Hxp+s6LXYTDdYG8k/w/pxmnqJecPPMtwfM5RpIwkIMxsWP0dkI1F7SNgKTAkX2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hvK9f2Vp; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cQrEsdCS"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-34d13789e2fso266853f8f.3
-        for <git@vger.kernel.org>; Sun, 28 Apr 2024 15:31:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hvK9f2Vp"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-34c90082dd7so1435950f8f.1
+        for <git@vger.kernel.org>; Sun, 28 Apr 2024 15:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714343469; x=1714948269; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714343470; x=1714948270; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qtb/oxmyiu258YJvwAQ3i8cFUBEs6IaObiXGc9l2sn0=;
-        b=cQrEsdCSR7tFGXMLr32zf/17gCD+277MRQhBFI+swuBcAygrciyUWcPg3k42MXPwJS
-         3xbi/zgdrQDS1jURqfIfFaAdpWDnkw4E8PKdP0uUMP26xUwvA3UoaaxC2t6Pl9/2/Cea
-         yzvSrlao+qCGIeYIpg9oPGFHm65GXoo3RyE5yOnOtKVIm3+ZstYTTp3Gpl13/LwjknwY
-         9HcadRBooOHGpyLpVsqGKU0YeJBTTfBxlTxMyvScqboaWgyyDICiGFp7OfWY+Lm9KYfG
-         OLTsnkHFjInSHG4SBuZx8p6wJyZE7zxRwhgttPSabKicL6YNx+EimoMyde1xJ3eSIQLv
-         cV6g==
+        bh=q/Iybmms7U4YfPv6VSfCySdUklGSldkATf01Kvk/SdQ=;
+        b=hvK9f2VpoF9UFnPvRhNa4Q5e4uXt/iamUM2TBlogG6IkTTimpwM3gvJMiaeuuaFXWU
+         CtIX6+AtQkwMFBSM33aekvAPAoXoQoWMXeiJxrah0uJ/Zb9Ml6WcxKP4AAe/8jD158mb
+         WpSIhcEI4Gi34lKWTejrR9CkheOMONpg+Twig+rHlNS1GZAt3xb+AaTeJB8ovpElZ1sw
+         DMfdy1k+0uxTvfW6PupNov6MmiDJwkwABEgHaWOCIf4nVxK/k7/laHVjW1PmMEH+egp+
+         Dna9Ce+mPnQxwbptW9ISMMJ3qrxB3tsrpeNP1ijfWroqKYrBAOOI1wuad5xlieotdFn8
+         y5WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714343469; x=1714948269;
+        d=1e100.net; s=20230601; t=1714343470; x=1714948270;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qtb/oxmyiu258YJvwAQ3i8cFUBEs6IaObiXGc9l2sn0=;
-        b=pXJuRIdXKNH6qwhpe2CnOlnDJfm83np73FmT4CRpFr5hdeJJUVPPwnICha2S4cWa57
-         xGEVhnYWdY6F5TCs5WCBOcAMrLzF6BufiGhB/px+ZPqfaWQlAwu4fKFLPq3pjcemoUmk
-         szq4zVEKMg28QzMXaxEtTcnK5R9uJ2i3PfchsTEp3j9L5Mtl7H6M97r5G6ZbopDUYnJ1
-         snqyvGBrC1CoW7mhexVeK6zXqemJsgCZBCh5mbMQK7ksTRwpfLdalZ3d6lmd9vNk1SKn
-         ufglzY6s2amvA16mXBlmAJgPbE1uOVhBy9u/Rb5iVXD5V5FcFyvU0ukUwonBR/KTo2Av
-         f7Hw==
-X-Gm-Message-State: AOJu0YxrogAaMYs0fWe5rv9BwYPBKa2Of+rVMOKrWU+hq0JscZba2urP
-	CU4WEU8+Sq/dsZFoHWVtpW7kNvxfZg2m2hcRJgQRg7tko+F2LBMiz/ULwA==
-X-Google-Smtp-Source: AGHT+IHwbAJ/hxQKmk6EsJjVycF34vYk7VCFvk9xQeoiYvvVmuD+Cp0zS/jDHCzwgIIBKj1dZy5aWg==
-X-Received: by 2002:a5d:5549:0:b0:34c:a56b:e980 with SMTP id g9-20020a5d5549000000b0034ca56be980mr3561481wrw.47.1714343468871;
-        Sun, 28 Apr 2024 15:31:08 -0700 (PDT)
+        bh=q/Iybmms7U4YfPv6VSfCySdUklGSldkATf01Kvk/SdQ=;
+        b=e9stz1UuTrGqW8GdHUlT24oMjoMEmB65E04yKmnXa++AlqXnVz5XXMnRQRev3gMowO
+         FG58Phhdgmfv3IjG7XbRp+LbH92yuqQJaWr+Do44o28JSsHzJO56o24mPSj9yqaxeSRe
+         3SPlqlPRxQV17scho5zmUsLFce02aKFd2D/hFYgq8VlyK7XAK2cJFGkr4Pa4ofHpw/qR
+         gOX6X7e0fnh/6CxPd5iGg7hbPPZW+6UVQMQ5NzRdXCGxqxYprzgPNdtSfQqTQGoDtaC9
+         pQvyie8RW7PHntLCQ5c2+6DJY80ZiWNdj+l3zYzR6BKvJXpYENj5dQrMMY2YxRS9NraZ
+         XJ1A==
+X-Gm-Message-State: AOJu0YxiJMFw64BBnlr4oIvkjt+MuQmdrqe5bjDD4tm1lbFN3DakgVem
+	68ifVEvTq0KZP5PnjFaxiEMBTSoW3DVWa6hFGDoeaPyyzb692cGmV3R6Kw==
+X-Google-Smtp-Source: AGHT+IHzn3ojuGUAaCl2494dQiO+bMvox0zMVkOfgiO8Sws/Q+u9d2s6k3Uev2ifEjfXu+dx38AcfQ==
+X-Received: by 2002:a05:6000:11d0:b0:34d:118f:21ee with SMTP id i16-20020a05600011d000b0034d118f21eemr799666wrx.28.1714343469685;
+        Sun, 28 Apr 2024 15:31:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2-20020a5d5602000000b0034d117df264sm1046225wrv.114.2024.04.28.15.31.07
+        by smtp.gmail.com with ESMTPSA id k6-20020a5d6286000000b0034c124b80f7sm9562216wru.61.2024.04.28.15.31.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Apr 2024 15:31:08 -0700 (PDT)
-Message-Id: <149c476b1ed74897ffbdf711754b9804fa679467.1714343461.git.gitgitgadget@gmail.com>
+        Sun, 28 Apr 2024 15:31:09 -0700 (PDT)
+Message-Id: <eb9ef8a17bd123b2611d5df0fab4364fbff4b277.1714343461.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1715.git.git.1714343461.gitgitgadget@gmail.com>
 References: <pull.1715.git.git.1714343461.gitgitgadget@gmail.com>
 From: "Matheus Afonso Martins Moreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 28 Apr 2024 22:30:54 +0000
-Subject: [PATCH 06/13] url-parse: define component extraction helper fn
+Date: Sun, 28 Apr 2024 22:30:55 +0000
+Subject: [PATCH 07/13] url-parse: define string to component converter fn
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,62 +72,43 @@ Cc: Matheus Moreira <matheus.a.m.moreira@gmail.com>,
 
 From: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-The extract function returns a newly allocated string
-whose contents are the specified git URL component.
-The string must be freed later.
+Converts a git URL component name to its corresponding
+enumeration value so that it can be conveniently used
+internally by the url-parse command.
 
 Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 ---
- builtin/url-parse.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ builtin/url-parse.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/builtin/url-parse.c b/builtin/url-parse.c
-index d250338422e..b8ac46dcdeb 100644
+index b8ac46dcdeb..15923460a78 100644
 --- a/builtin/url-parse.c
 +++ b/builtin/url-parse.c
-@@ -32,6 +32,42 @@ static void parse_or_die(const char *url, struct url_info *info)
+@@ -32,6 +32,23 @@ static void parse_or_die(const char *url, struct url_info *info)
  	}
  }
  
-+static char *extract(enum url_component component, struct url_info *info)
++static enum url_component get_component_or_die(const char *arg)
 +{
-+	size_t offset, length;
-+
-+	switch (component) {
-+	case URL_PROTOCOL:
-+		offset = 0;
-+		length = info->scheme_len;
-+		break;
-+	case URL_USER:
-+		offset = info->user_off;
-+		length = info->user_len;
-+		break;
-+	case URL_PASSWORD:
-+		offset = info->passwd_off;
-+		length = info->passwd_len;
-+		break;
-+	case URL_HOST:
-+		offset = info->host_off;
-+		length = info->host_len;
-+		break;
-+	case URL_PORT:
-+		offset = info->port_off;
-+		length = info->port_len;
-+		break;
-+	case URL_PATH:
-+		offset = info->path_off;
-+		length = info->path_len;
-+		break;
-+	case URL_NONE:
-+		return NULL;
-+	}
-+
-+	return xstrndup(info->url + offset, length);
++	if (!strcmp("path", arg))
++		return URL_PATH;
++	if (!strcmp("host", arg))
++		return URL_HOST;
++	if (!strcmp("protocol", arg))
++		return URL_PROTOCOL;
++	if (!strcmp("user", arg))
++		return URL_USER;
++	if (!strcmp("password", arg))
++		return URL_PASSWORD;
++	if (!strcmp("port", arg))
++		return URL_PORT;
++	die("invalid git URL component '%s'", arg);
 +}
 +
- int cmd_url_parse(int argc, const char **argv, const char *prefix)
+ static char *extract(enum url_component component, struct url_info *info)
  {
- 	return 0;
+ 	size_t offset, length;
 -- 
 gitgitgadget
 
