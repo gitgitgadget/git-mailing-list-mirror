@@ -1,98 +1,80 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD908BE2
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 05:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4938BE2
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 05:36:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714368351; cv=none; b=fIMIR4rO3c+kLFU2BUN7vGa1aIVppMkyf9JNOVwN8UKeQbqZdA/6Ypgtr81n1XnSpnq3bjWmx4UHkLRY49Saek92mRayTEGo+yUPHPzfbyNqvIs56q+PnVJ6jsxJQL3AR1/82fCx8F+eqlc+qghR69CTuCxuSKSbrKuVeWB7OOo=
+	t=1714368970; cv=none; b=jpiUyDbOlKOZhBHTbZIQDsulf7cJUrXGWp1znNVntTtLDhWWyiyLEZq5YK9Scdoe3FMNh8teNZvjKFe7CamVBsCcE+LhtQPKMorNajLSaFq6jEu2XqltwgxBRx85Qn2Jc0EsfeQvej/4vKD53rdj6RwH8Z4UGyNgEBwny2XP83M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714368351; c=relaxed/simple;
-	bh=D42LY27vlRSLV+t15ut4qMS8EUgtqrFBsSePEYAP/kg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pbyc3J9wRJNA3Wb6OC0n6Lo0J/8BEuAH/ed3mpgby3jw0u+X9kBb11AllV9AlsmSNQj3QGP8ugO6qebqMsJpKAuHC13OO6WqieCmZdU2lirmBlvgzLnCJ/oYMajy3fEDhe0/qHKepBT/G/fPgSFW7TK6GfALOZdcBkUR2ZKxaMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17104 invoked by uid 109); 29 Apr 2024 05:25:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Apr 2024 05:25:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25533 invoked by uid 111); 29 Apr 2024 05:25:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Apr 2024 01:25:45 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 29 Apr 2024 01:25:40 -0400
-From: Jeff King <peff@peff.net>
-To: Thomas Desveaux <desveaux.thomas@gmail.com>
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: Git Bug Report: git credential 'url' parsing clear other fields
-Message-ID: <20240429052540.GA2892856@coredump.intra.peff.net>
-References: <CACPMLSqTA6pY3hiawhTAmhfvWME8NRUehauy6g-oUaHjordWqA@mail.gmail.com>
+	s=arc-20240116; t=1714368970; c=relaxed/simple;
+	bh=bh6TSlX9SJjIJiSEKsJl1Jn+6lGCmQgC1TIb3+Io2xE=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=nzShmP5obl5EVm6e4Q72ENnmNdnPtOWhpIeJJwl0rAu+eC0QVXkVdO6Xoj/Wdx4e3sO7vlGjMIvj3JcPvlwwSvn+tnDxGjbl3rvCr7oJEwmbx5WOIghJV+Gra53QGRi/GOBptLEiMn4gV5i7ZlI78Nw0BzERv8uXtNlzO+cqfBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=sstPkk9+; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="sstPkk9+"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACPMLSqTA6pY3hiawhTAmhfvWME8NRUehauy6g-oUaHjordWqA@mail.gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1714368964;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=l//bd5XXlR5MTmU6Fh5vcZb7M6KuFyUgWqnAwoTscL4=;
+	b=sstPkk9+XYCCq1s9e/tj7vtaYSQRvm5RgTKurGWHbl82pfNTy33nXw5PyVNKyhZJMWPClr
+	aZ9wSJD+9O5TDvel9QQaEmAI3EU5ikudHJMayGtCPe5rN6iawD8jynfzOuDRYvXJrFqs9z
+	XGgYfP+nr+Ho7l4Wk8uwSHcfXviyL3o/SQVu48/2yf+VcA3S4VDV3jUUSC2BHunClJlYyQ
+	mJFmTBdGl4Ai+2cM+4RWp63l8mTLpIHPrgcEK5NuHcBESx+g3VDNsBO2LK7mfSUqOvHJ5J
+	s6SIVKqex0xK28EaqWNvqICla5ZzbwzVQAxU0hoGk9z8lJw/qidJZM2aN+Hliw==
+Date: Mon, 29 Apr 2024 07:36:04 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: James Liu <james@jamesliu.io>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] advice: add --no-advice global option
+In-Reply-To: <D0WCCOLSMM9K.24BIGLR6EEJI8@jamesliu.io>
+References: <20240424035857.84583-1-james@jamesliu.io>
+ <20240429010925.93205-1-james@jamesliu.io>
+ <20240429010925.93205-2-james@jamesliu.io>
+ <37512328b1f3db4e8075bdb4beeb8929@manjaro.org>
+ <D0WCCOLSMM9K.24BIGLR6EEJI8@jamesliu.io>
+Message-ID: <809a1452fb18a6c03d9e8ed516d5c9c0@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Fri, Apr 26, 2024 at 09:27:03PM +0200, Thomas Desveaux wrote:
+On 2024-04-29 07:01, James Liu wrote:
+> Thanks for the feedback Dragan!
 
-> input:
-> ```
-> username=user
-> password=s3cret
-> url=https://example.com/repository.git
-> ```
+Thank you for working on the patch.
+
+>> After having a more detailed look at the Git documentation,
+>> I think that adding support for "--advice" at the same time
+>> would be the right thing to do.  That option would override
+>> all "advice.<hint>" options that may exist in the configuration
+>> (and would override the GIT_NO_ADVICE environment variable,
+>> if we end up supporting it), similarly to how "--paginate"
+>> overrides all "pager.<cmd>" in the configuration, which would
+>> be both consistent and rather useful in some situations.
 > 
-> This next input works as intended.
-> input:
-> ```
-> url=https://example.com/repository.git
-> username=user
-> password=s3cret
-> ```
-> [...]
-> `username` and `password` are correctly parsed and stored in the struct.
-> `url` parsing then clear the fields.
+> I think this makes sense from a UX consistenty perspective, but I'm not
+> sure if we should increase the scope of this patch. It's also much
+> easier to re-enable previously silenced advice hints, so I'm unsure
+> whether an --advice option makes sense. We can also avoid the decision
+> of what to do if the user supplies --advice and --no-advice
+> simultaneously if we only have one option.
 
-Thanks for a clear report and example.
-
-However, what you're seeing is the intended behavior. When the "url"
-feature was added, it came with these docs in git-credential.txt:
-
-  When this special attribute is read by `git credential`, the value is
-  parsed as a URL and treated as if its constituent parts were read
-  (e.g., `url=https://example.com` would behave as if `protocol=https`
-  and `host=example.com` had been provided). This can help callers avoid
-  parsing URLs themselves.  Note that any components which are missing
-  from the URL (e.g., there is no username in the example above) will be
-  set to empty; if you want to provide a URL and override some
-  attributes, provide the URL attribute first, followed by any
-  overrides.
-
-That last "Note that..." part was lost in 1aed817f99 (credential:
-document protocol updates, 2020-05-06). Between digging around in the
-thread[1] and my recollection, I think the point was that we might drop
-the "override" behavior as a defense-in-depth against injection attacks
-(like "path=evil/\nhost=github.com"). I.e., make it an error to specify
-"host=" more than once. But we didn't actually make that code change
-yet.
-
-However, even if we did so, I think we'd keep the "clear" half of the
-behavior (we parsed a URL with no password in it, so the result is a
-credential with no password in it). In which case your first example
-still wouldn't behave as you expected.
-
-So I think 1aed817f99 may have gone a bit too far and caused the
-documentation to be misleading. It should probably keep the "any
-components which are missing will be set to empty" part.
-
--Peff
-
-[1] https://lore.kernel.org/git/20200505013908.4596-1-carenas@gmail.com/
-
+Regarding what to do if those two options are both supplied,
+it's simple, just error out with an appropriate error message.
+There are already similar situations in the code, e.g. with
+the -k and --rfc options for git-format-patch(1).
