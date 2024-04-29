@@ -1,87 +1,241 @@
-Received: from pb-sasl-trial20.pobox.com (pb-sasl-trial20.pobox.com [173.228.157.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73907F
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 01:56:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36671944D
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 04:15:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714355794; cv=none; b=MxVW+JTdIWCawUfso8d7RAQjryxkckgRc4aKt7cT1Ny/9ZbbCsUoNIh8l6MdPu0BXK6Y+hUm0VI9Fdkf1mZkNgVS22dCFbZWWQTGFqwrJn6Wx/LkxvU7/zNbDbWHdpxWZEgc21QStj5IaO6zCCteQ6WiHa77To3Z0SLyDEDL4Mw=
+	t=1714364142; cv=none; b=oxdb35NIrCKy93dmCR9HIx44AwVfXk5Y9B1U2XofRyNZ+8Z6lvmkyPPjYrHfSXg4Xr22QGzivgf9Ro5YlaK18hN81NvLxgoW1PL1bQB3qGOh0s3dk+NfKFO26J0h9K3rM1Rx6jDmT7QgkP8Qaey4uO4yKANGy4wJOTKwX9A/Qgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714355794; c=relaxed/simple;
-	bh=dCdzv1e/OgSVleDoMiyac0WA/sV6JSncbt3+U74k0Ik=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aTT0E46WNPXXUen4HVnxDk5fpEv0wr4RDabWQQdVfGTjWFQ191V5Oyfew/L85HaJvSbT88NGuPjGGFDRnkUOpM6+raIY7S4uvwDhO+V0m2mXKHVftwY4l+a9q50CXu6jEAcCwZvRkJfCwStaawJFU4mmsOwgEcDWg+I2/UgpebM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KVAkIS0l; arc=none smtp.client-ip=173.228.157.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714364142; c=relaxed/simple;
+	bh=iDD7VGHpiqJb8ilBFhEF1n+ZBZYu2NwPytFz2KMIKlM=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=dH5kQNafoOxn7Ex5m4GPdtGNJWAujWCalM20FEujWog8dAiLCiBcNHTkCOPo7TqYqLGS9dzepsjx158RJiRo9iO97TDY78ISwFpDadpFQnsYeaeoawlH5zUbf+YLjquF7lZOZYe7LcpMYynfaFGaSOjBSmkwWER7UG9FKi1fbIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Fdlp4t4r; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KVAkIS0l"
-Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
-	by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 4A8A13A007;
-	Sun, 28 Apr 2024 21:46:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=S1EEt+SgVwdeONRzjTUFnxFarY8=; b=KVAkIS
-	0lAK/7rR4Iq2BcV/X8uyJiORDxBjTwsqbwsvAZihGotfMQNubCRPpHeCSXWFgppA
-	U3adwQHuN8WiiGcvT4wdU305w+nM71rngEcbR91+DG/f8EM8O+9j5ZHTaExWAKJI
-	EImn4N6yWT2um4reMkMCgAq9g+8B+SF4QMARA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WN0cGyituzDS9ndPi6wPYf62RAzoHAso
-	8egI+SBlVeAgCQ8zXsk9u47Db7qV/s3mxP8badl3ECGMVRkBTpF6yUf1Drn+RqJi
-	VNRKZ8chiYKEYrMGm5NA6nv9Y5hGEVJY6eir5ImkmGr7NkGgyyyFE2Y0K6hfRo62
-	sLK6iv4o3n4=
-Received: from pb-smtp21.sea.icgroup.com (pb-smtp21.pobox.com [10.110.30.21])
-	by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 3BD673A004;
-	Sun, 28 Apr 2024 21:46:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 76BD931AD6;
-	Sun, 28 Apr 2024 21:46:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Alexander Shopov <ash@kambanaria.org>,
-  Jordi Mas <jmas@softcatala.org>,  Ralf Thielow <ralf.thielow@gmail.com>,
-  Jimmy Angelakos <vyruss@hellug.gr>,  Christopher =?utf-8?Q?D=C3=ADaz?=
- <christopher.diaz.riv@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>,
-  Bagas Sanjaya <bagasdotme@gmail.com>,  Alessandro Menti
- <alessandro.menti@alessandromenti.it>,  Gwan-gyeong Mun
- <elongbug@gmail.com>,  Arusekk <arek_koz@o2.pl>,  Dimitriy Ryazantcev
- <DJm00n@mail.ru>,  Peter Krefting <peter@softwolves.pp.se>,  Emir SARI
- <bitigchi@me.com>,  Arkadii Yakovets <ark@cho.red>,  =?utf-8?B?VHLhuqdu?=
- =?utf-8?B?IE5n4buNYyBRdcOibg==?=
- <vnwildman@gmail.com>,  =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?=
- <newcomerminecraft@gmail.com>,  Teng
- Long <dyroneteng@gmail.com>,  Yi-Jyun Pan <pan93412@gmail.com>,  Git l10n
- discussion group <git-l10n@googlegroups.com>
-Subject: Re: [L10N] Kickoff for Git 2.45.0
-In-Reply-To: <20240415072226.15005-1-worldhello.net@gmail.com> (Jiang Xin's
-	message of "Mon, 15 Apr 2024 15:22:26 +0800")
-References: <20240415072226.15005-1-worldhello.net@gmail.com>
-Date: Sun, 28 Apr 2024 18:46:49 -0700
-Message-ID: <xmqqa5ld2b5i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Fdlp4t4r"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 598CC9B2-05CA-11EF-8474-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1714364135;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=iXex2bWPj8LvFvMUB4BFVEvOWSq73J64bLVAOJSo1XU=;
+	b=Fdlp4t4rudw1lLRezfl0qBwgvSDSmFTYLTz66iwlnN8Oc9SMNBV7LyivEU7vtpKD0TobJW
+	WIa9bMhGGfQhLTQFwV+SBllruy1xkqyCpmuYRtLLVOt5KGFUOzLo5Q7vOvobK+WLw/Ny5/
+	2Z+Eq6YARy8vPSfFTAJoAdAYhhFayMRUmrdkxrbzPHTQnTlIrPhwhehIrKoNhsB97yZ/bc
+	JJ6cs2BeGpx3imXxUZpvsXzDo7/QNt+ASesYZU5ge9KRPryMl5RxEQZ+GK40ToAwuowE/6
+	h5hGOAH9D+HE8MHdOaTMI4KNAdKZJJMnzUgx45iLBa5ebgIocR+oY1a4IaH9gg==
+Date: Mon, 29 Apr 2024 06:15:33 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: James Liu <james@jamesliu.io>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] advice: add --no-advice global option
+In-Reply-To: <20240429010925.93205-2-james@jamesliu.io>
+References: <20240424035857.84583-1-james@jamesliu.io>
+ <20240429010925.93205-1-james@jamesliu.io>
+ <20240429010925.93205-2-james@jamesliu.io>
+Message-ID: <37512328b1f3db4e8075bdb4beeb8929@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Hello James,
 
-> Before the upcoming release of v2.45.0-rc0, let's start a new round of
-> l10n for Git 2.45.0.  This time there are 78 updated messages need to be
-> translated since the last release. Please send your pull request to the
-> l10n coordinator's repository below before this update window closes on
-> Sun, 28 Apr 2024.
+Please see my comments below.
 
-In whose timezone and at what time???
+On 2024-04-29 03:09, James Liu wrote:
+> Advice hints must be disabled individually by setting the relevant
+> advice.* variables to false in the Git configuration. For server-side
+> and scripted usages of Git where hints aren't necessary, it can be
+> cumbersome to maintain configuration to ensure all advice hints are
+> disabled in perpetuity. This is a particular concern in tests, where
+> new or changed hints can result in failed assertions.
+> 
+> Add a --no-advice global option to disable all advice hints from being
+> displayed. This is independent of the toggles for individual advice
+> hints.
+> 
+> Signed-off-by: James Liu <james@jamesliu.io>
+> ---
+>  Documentation/git.txt |  5 ++++-
+>  advice.c              |  8 +++++++-
+>  environment.h         |  1 +
+>  git.c                 |  6 +++++-
+>  t/t0018-advice.sh     | 20 ++++++++++++++++++++
+>  5 files changed, 37 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 7a1b112a3e..ef1d9dce5d 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -13,7 +13,7 @@ SYNOPSIS
+>      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+>      [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+>      [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+> -    [--config-env=<name>=<envvar>] <command> [<args>]
+> +    [--config-env=<name>=<envvar>] [--no-advice] <command> [<args>]
+
+After having a more detailed look at the Git documentation,
+I think that adding support for "--advice" at the same time
+would be the right thing to do.  That option would override
+all "advice.<hint>" options that may exist in the configuration
+(and would override the GIT_NO_ADVICE environment variable,
+if we end up supporting it), similarly to how "--paginate"
+overrides all "pager.<cmd>" in the configuration, which would
+be both consistent and rather useful in some situations.
+
+>  DESCRIPTION
+>  -----------
+> @@ -226,6 +226,9 @@ If you just want to run git as if it was started
+> in `<path>` then use
+>  	linkgit:gitattributes[5]. This is equivalent to setting the
+>  	`GIT_ATTR_SOURCE` environment variable.
+> 
+> +--no-advice::
+> +	Disable all advice hints from being printed.
+> +
+>  GIT COMMANDS
+>  ------------
+> 
+> diff --git a/advice.c b/advice.c
+> index 75111191ad..f6282c3bde 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -2,6 +2,7 @@
+>  #include "advice.h"
+>  #include "config.h"
+>  #include "color.h"
+> +#include "environment.h"
+>  #include "gettext.h"
+>  #include "help.h"
+>  #include "string-list.h"
+> @@ -126,7 +127,12 @@ void advise(const char *advice, ...)
+> 
+>  int advice_enabled(enum advice_type type)
+>  {
+> -	int enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+> +	int enabled;
+> +
+> +	if (getenv(GIT_NO_ADVICE))
+> +		return 0;
+
+Huh, I was under impression that having an environment
+variable to control this behavior was frowned upon by
+Junio? [1]  To me, supporting such a variable would be
+a somewhat acceptable risk, [2] but of course it's the
+maintainer's opinion that matters most.
+
+[1] https://lore.kernel.org/git/xmqqfrva3k9j.fsf@gitster.g/
+[2] 
+https://lore.kernel.org/git/462de4ec1fb1896fa7f26b3515deca57@manjaro.org/
+
+> +
+> +	enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+> 
+>  	if (type == ADVICE_PUSH_UPDATE_REJECTED)
+>  		return enabled &&
+> diff --git a/environment.h b/environment.h
+> index 05fd94d7be..30c2684269 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -56,6 +56,7 @@ const char *getenv_safe(struct strvec *argv, const
+> char *name);
+>  #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
+>  #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
+>  #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
+> +#define GIT_NO_ADVICE "GIT_NO_ADVICE"
+
+If we eventually end up supporting new "GIT_NO_ADVICE"
+environment variable, which I actually doubt, the new
+macro above should be named "GIT_NO_ADVICE_ENVIRONMENT"
+instead, for consistency.
+
+> 
+>  /*
+>   * Environment variable used in handshaking the wire protocol.
+> diff --git a/git.c b/git.c
+> index 654d615a18..ffeb832ca9 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -38,7 +38,7 @@ const char git_usage_string[] =
+>  	   "           [--exec-path[=<path>]] [--html-path] [--man-path]
+> [--info-path]\n"
+>  	   "           [-p | --paginate | -P | --no-pager]
+> [--no-replace-objects] [--bare]\n"
+>  	   "           [--git-dir=<path>] [--work-tree=<path>] 
+> [--namespace=<name>]\n"
+> -	   "           [--config-env=<name>=<envvar>] <command> [<args>]");
+> +	   "           [--config-env=<name>=<envvar>] [--no-advice]
+
+Obviously, additional new configuration option "--advice"
+would be also added here, mutually exclusive with "--no-advice",
+and into the source code below.
+
+> <command> [<args>]");
+> 
+>  const char git_more_info_string[] =
+>  	N_("'git help -a' and 'git help -g' list available subcommands and 
+> some\n"
+> @@ -337,6 +337,10 @@ static int handle_options(const char ***argv, int
+> *argc, int *envchanged)
+>  			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, cmd, 1);
+>  			if (envchanged)
+>  				*envchanged = 1;
+> +		} else if (!strcmp(cmd, "--no-advice")) {
+> +			setenv(GIT_NO_ADVICE, "1", 1);
+> +			if (envchanged)
+> +				*envchanged = 1;
+>  		} else {
+>  			fprintf(stderr, _("unknown option: %s\n"), cmd);
+>  			usage(git_usage_string);
+> diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
+> index 0dcfb760a2..2ce2d4668a 100755
+> --- a/t/t0018-advice.sh
+> +++ b/t/t0018-advice.sh
+> @@ -29,4 +29,24 @@ test_expect_success 'advice should not be printed
+> when config variable is set to
+>  	test_must_be_empty actual
+>  '
+> 
+> +test_expect_success 'advice should not be printed when --no-advice is 
+> used' '
+> +	cat << EOF > expect &&
+> +On branch master
+> +
+> +No commits yet
+> +
+> +Untracked files:
+> +	README
+> +
+> +nothing added to commit but untracked files present
+> +EOF
+> +
+> +	git init advice-test &&
+> +  test_when_finished "rm -fr advice-test" &&
+> +  cd advice-test &&
+> +  touch README &&
+> +  git --no-advice status > ../actual &&
+> +  test_cmp ../expect ../actual
+> +'
+> +
+>  test_done
+
+There should also be a new test that checks how the new
+"GIT_NO_ADVICE" environment variable affects the execution,
+but I doubt it will eventually be supported.
+
+Of course, an additional test should be added to check the
+mutual exclusivity between the above-proposed "--advice"
+and "--no-advice" options.
