@@ -1,33 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD374205E13
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 08:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64E917BA5
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 08:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714379736; cv=none; b=pfrap10Q2fJCiM2mgjcXzJN5b+0M1fg4baHTK2kfWWoM8xw8XmLsDPgVDmM2LKnTZid7OxZjbzQBbbjgzobqsqJiw+AQCdguKHgu1e+ro04PLZucdr+EerQWCRDKvQFJKpEmxIdym9RD+0lw7EX8uIjdZTx9db+BmEpozuoKg3Y=
+	t=1714379822; cv=none; b=eySk6O52W3+X+Rmr/xSmxtp5YP2uwPrFjjpRJsWILjN6jIbL8RqvzshUr9UoJTwXPETypwyT86zwaAN9xvBzdXGUtK/cgkpDGMYKVbEAsxHeKQE9hdiR9rNJNqPPD1HIDkoSx6Qr2uNgBq3Pab8Q+Y4c5a6lAE6VI30N6cvwWBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714379736; c=relaxed/simple;
-	bh=Z6WjMcpmUhJ+8ov6ZYmsprz3FFeWkST34NneN8GxQ08=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=jVxk3KRPbJGIY8jjwr/kwq53EsBEKRd3P37QEWboadRIECjlAFljhWIe6T4TlQFa27u83/z04ZvdrHdN9N7zuvbo9Y5ch+8s6C/+MENxnYepDkYi4L9ick+FzTnCQmNBvfABJjoJqLfM6qrw+KKwKFUxfjHBKp4C8RB9dTwSvY8=
+	s=arc-20240116; t=1714379822; c=relaxed/simple;
+	bh=Yqszk6NrHY5SG5b3FXjcYZKlTx9AB3VVNbSz7G05MKY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b+Harikk1Edw43Id/J+Aw+aSr4raIQQgHIXIrRuh7VnlqOCg2o4nZ9Vo5TehqXpqC2jMkE2GoD3z1UuTkpyQui39+k/T+LV1PJAr85kJoUIQcvW6wpU1gw492fM+5h/scZjJH9TUR0GUwsUfIHW4jNYRlt1KACM0fiNq80JzbnU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 20271 invoked by uid 109); 29 Apr 2024 08:35:33 -0000
+Received: (qmail 20289 invoked by uid 109); 29 Apr 2024 08:37:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Apr 2024 08:35:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Apr 2024 08:37:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26987 invoked by uid 111); 29 Apr 2024 08:35:38 -0000
+Received: (qmail 27000 invoked by uid 111); 29 Apr 2024 08:37:04 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Apr 2024 04:35:38 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Apr 2024 04:37:04 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 29 Apr 2024 04:35:33 -0400
+Date: Mon, 29 Apr 2024 04:36:59 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 8/8] refs: check refnames as fully qualified when resolving
-Message-ID: <20240429083533.GG233423@coredump.intra.peff.net>
+Subject: Re: [PATCH 0/8] tightening ref handling outside of refs/
+Message-ID: <20240429083659.GA233736@coredump.intra.peff.net>
+References: <20240429081512.GA4130242@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -36,83 +37,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20240429081512.GA4130242@coredump.intra.peff.net>
 
-Most code paths for resolving refs end up in refs_resolve_ref_unsafe(),
-which checks the names using check_refname_format(). The names we have
-at this stage are always full refnames, but we pass the ALLOW_ONELEVEL
-flag so that the function allows pseudorefs like MERGE_HEAD. We should
-instead pass the FULLY_QUALIFIED flag, which lets check_refname_format()
-do some extra syntactic checks on those pseudorefs.
+On Mon, Apr 29, 2024 at 04:15:13AM -0400, Jeff King wrote:
 
-With this patch we'll refuse to read anything outside of refs/ that does
-not match the usual pseudoref syntax (all caps plus dashes). This should
-not be a loss of functionality (since such refs cannot be written as of
-the previous commit), but may protect us from mischief. For example, you
-can ask for silly things like "info/refs", "rr-cache/<sha1>/postimage",
-or "objects/info/commit-graphs/commit-graph-chain". It's doubtful you
-can really do anything _too_ terrible there, but it seems like peeking
-at random files in .git in response to possibly untrusted input is
-something we should avoid.
+>   [1/8]: t0600: don't create ref outside of refs/
+>   [2/8]: t5619: use fully qualified refname for branch
+>   [3/8]: refs: move is_pseudoref_syntax() definition earlier
+>   [4/8]: refs: disallow dash in pseudoref syntax
+>   [5/8]: refs: use is_pseudoref_syntax() in refname_is_safe()
+>   [6/8]: check_refname_format(): add FULLY_QUALIFIED flag
+>   [7/8]: refs: check refnames as fully qualified when writing
+>   [8/8]: refs: check refnames as fully qualified when resolving
 
-Note that because we can't actually write such refs using Git, our tests
-have to munge the filesystem manually (and hence only run with the files
-backend). They also can only check that resolution fails (and not a
-specific error message), since we don't return the "bad name" detail all
-the way to the caller.
+Ugh, sorry, I managed to break the threading due to some too-clever use
+of mutt. ;)
 
-The second test here, for "main-worktree/bad", actually fails even
-without this patch. The worktree-ref code enforces the pseudoref syntax
-itself via is_current_worktree_ref(), so the extra checks for this in
-check_refname_format() are redundant (though the parsing there is still
-necessary so we know _not_ to reject "main-worktree/HEAD"). But either
-way it's good to have a test which makes sure this remains the case.
+The other messages are on the list, and hopefully shouldn't be too hard
+to find by date.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c                  |  4 ++--
- t/t1430-bad-ref-name.sh | 10 ++++++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 57663cfe9e..96f489861b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1951,7 +1951,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 
- 	*flags = 0;
- 
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-+	if (check_refname_format(refname, REFNAME_FULLY_QUALIFIED)) {
- 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 		    !refname_is_safe(refname))
- 			return NULL;
-@@ -2010,7 +2010,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 			oidclr(oid);
- 			return refname;
- 		}
--		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-+		if (check_refname_format(refname, REFNAME_FULLY_QUALIFIED)) {
- 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 			    !refname_is_safe(refname))
- 				return NULL;
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index 120e1557d7..5fb780cb08 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -400,4 +400,14 @@ test_expect_success 'update-ref refuses non-underscore outside of refs/' '
- 	test_grep "refusing to update ref with bad name" err
- '
- 
-+test_expect_success REFFILES 'rev-parse refuses non-pseudoref outside of refs/' '
-+	git rev-parse HEAD >.git/bad &&
-+	test_must_fail git rev-parse --verify bad
-+'
-+
-+test_expect_success REFFILES 'rev-parse recognizes non-pseudoref via worktree' '
-+	git rev-parse HEAD >.git/bad &&
-+	test_must_fail git rev-parse --verify main-worktree/bad
-+'
-+
- test_done
--- 
-2.45.0.rc1.416.gbe2a76c799
+-Peff
