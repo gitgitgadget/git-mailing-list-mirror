@@ -1,187 +1,80 @@
-Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC4367A14
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3686D2C69C
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:48:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714398101; cv=none; b=l4bqtadmxWtNbBQH3MlDOmyrJqIXAsy0dEef8p6fH+92kuCZc42W+C2yMYUM7ZMEtobmH2GztYk/fqdgnp8fn3ga/q41hRsii6joqY2AObmL+CkcztFFzwcixXIBX+iAdBTDo/J9SqAAA6YgS37a5wemPq12I+vjx2Gfhvmxbb4=
+	t=1714398523; cv=none; b=WSg5tgwkNrA418FoMfK4UN7uknzucpsYeucPe778StDJ0x8VN80+5fDeympjKhbn0WRjqV1kpNn+3/xgCZF5xxgW03Mhq2IbJPqsYuzzmyM+BudG9G5mwlA4AlDe+QWf3PrzgccHNW1bo8VGd4CRqpFDHl0KpvLo2WZUdBNwEk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714398101; c=relaxed/simple;
-	bh=tW8gO2xX/cOdjm1EiDubYZOnPSViyK5JPbXV5r2yPXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IlbBuarJnbLmYhChMmVz0KZwyA98AYO/oM8LTyx/CnNfDthv6gJslHTen3P15u6fanQhjpXZky2IqiWF9Ovt8ViBkEk3bPShewr09mh41k7vcI/d3y2Vk6xJDlh5inA9u69j7q5ihMadM1Y4QhvVrq5qvAxAZbOdOrfdQ0VAZ98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oTv+KG6P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GilmCGit; arc=none smtp.client-ip=64.147.123.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714398523; c=relaxed/simple;
+	bh=YaQe/MXG2KGT5L9y0ygdDoNxgXUHTXTFzCtQDNcUgmc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DCDVnu32ZEBelrd45tCI0v5IaU8kzX9Byz98JgEL+le2VaZJYQIuvih+jMcwiIzpcJ1PI4ot+IUyua3oh/L8qWvJoPrqkaX7pRp9FhLx9ZGqIcVPljit92ma3GHuvKd98ygjjM112Tcvb8FQ2rMEv23xDeLc7Vnhenqv6lIKBH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PN1TOHFY; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oTv+KG6P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GilmCGit"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 17E631C00170;
-	Mon, 29 Apr 2024 09:41:37 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 29 Apr 2024 09:41:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714398096; x=1714484496; bh=49ecpl2HkP
-	XvokZqyVxbjPyBwt7BOfkksyq/g1SNEMo=; b=oTv+KG6PEVmaibsaepeXG4Bu8h
-	ebaZdDiC2P5vmGAz99Vto3WFfcP6fKhoIZC9b2Hd5hJPmvmiLqkNrro4nATG6MVF
-	5MQOHJtGtM+gV+kO298GSdVwU4sZfcYImaRyqD8c3HgEjfYr7QWFXkqzYCNbXtBL
-	uuEkpDK7QQcN8PbSv6Po8be3CgHstw6mM2N/ibEOipKpbY6DV/+E6R7Iub/oLFDo
-	1kjKuPtNAg1RnKkpnHGnhTKort4BRvtDLxdxqXtU5FfbdwEg9oKY/8fRPFv8t9/n
-	tYy5Igk7+FVMCHKSNnYTdsGUAgM2pFbQtdXJU8cUbCXFxlk8ObllTIgVilxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714398096; x=1714484496; bh=49ecpl2HkPXvokZqyVxbjPyBwt7B
-	Ofkksyq/g1SNEMo=; b=GilmCGitbz02Vkezjg8fUo6HGFSD93omtmr+8FZT69MU
-	ZWo7sQMVgnvIk5jbN05Y+yxfoIq84G2H9mU6NgEiKnNX5WY3vPp2LwmoKEGaauYg
-	8zAd3er6oyr896RTHCyHGDHHCAM4kED/1/XTkOdKg4rYXo41W1zpLNa76l9QwDtE
-	pODgDytF3XAgSrjOpnU/nvlVJLRQ3PaadYGlQQmAp+pClXtMZ1s56sMiBK820Ov3
-	FHNi0nQgGPs6kFRU3hz6ZNOOqN0FwMqqToY4lfmPGIrjfSAweaoDpeDu1pRgS9UD
-	niwtuD2yLR6xlSA5f1HZeHEadxj6scPxf7KsF6/j0Q==
-X-ME-Sender: <xms:kKMvZsUGDM93VPHZmkvxxyIHiil4WZ95hckDWMJ0v-EKw7iSEEr_WQ>
-    <xme:kKMvZgn8xVEjtv7KeYbNZQlS0kgAf4tPa4tYPMX4IB-Z2rPNvI5zja59zWgL4rMxr
-    OewzijpbXMXDWMaOg>
-X-ME-Received: <xmr:kKMvZga-aM8wIuEWWLOp3qxXAxx3HUwj0ez-6FajgeQYQnrgaMjy0y-LjYDwaZLCRdNk0oq2m0JYBO_VEOEcwZ5-mCPzfFAW-0AYa6jTQtIoZMZ1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduuddgieeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:kKMvZrW4vRB0Lz8hOu9qpAVSOW0lJugZgJnzwEh6CLNvHc9yUq6zGA>
-    <xmx:kKMvZmkH2g2osY2jsdVICC1AEZUXEWFcCZJgbB9Gz7M5nrhL8a8FWQ>
-    <xmx:kKMvZgcaMCy8G8sZEsRFCODkTZTt9B0iVhlbcNWDe-Qtn7F9AlnW6w>
-    <xmx:kKMvZoHw7orS9ievJKEMdeu5hbh1XoR9QKeW4qKBwgkT7yO6qaJUeA>
-    <xmx:kKMvZogZCZTndLWLG01VDDy_T-bkKvAwuVBxCLJUwMxk1-R8dlQi11e3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Apr 2024 09:41:35 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1ea35f53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Apr 2024 13:41:15 +0000 (UTC)
-Date: Mon, 29 Apr 2024 15:41:33 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 3/3] refs: fix segfault in `is_pseudoref()` when ref cannot
- be resolved
-Message-ID: <88822afe950318c0312de5541a411942a163b139.1714398019.git.ps@pks.im>
-References: <cover.1714398019.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PN1TOHFY"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EBACB21EEC;
+	Mon, 29 Apr 2024 09:48:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=YaQe/MXG2KGT5L9y0ygdDoNxgXUHTXTFzCtQDN
+	cUgmc=; b=PN1TOHFYXSZTvz1b7MHKOhxs7J96tuyJ6kIKP44p5hBghUnh5454Zn
+	VlnDsscc12ImoTPP/4C23LbrYkjR4OAn7anAgGxzpu8JdevBauv+ZWqySNZV6DJo
+	9vh2/8umOVBLfbwiyIObs4HFdvlA85/pUJmiAO/yFsJ8yvC7DQNNM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E1AC621EEB;
+	Mon, 29 Apr 2024 09:48:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 538EA21EEA;
+	Mon, 29 Apr 2024 09:48:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: James Liu <james@jamesliu.io>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] advice: add --no-advice global option
+In-Reply-To: <37512328b1f3db4e8075bdb4beeb8929@manjaro.org> (Dragan Simic's
+	message of "Mon, 29 Apr 2024 06:15:33 +0200")
+References: <20240424035857.84583-1-james@jamesliu.io>
+	<20240429010925.93205-1-james@jamesliu.io>
+	<20240429010925.93205-2-james@jamesliu.io>
+	<37512328b1f3db4e8075bdb4beeb8929@manjaro.org>
+Date: Mon, 29 Apr 2024 06:48:33 -0700
+Message-ID: <xmqqmspc1dqm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DV2Sw1k2uI/XLuMh"
-Content-Disposition: inline
-In-Reply-To: <cover.1714398019.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2C05FE9A-062F-11EF-B1FD-25B3960A682E-77302942!pb-smtp2.pobox.com
 
+Dragan Simic <dsimic@manjaro.org> writes:
 
---DV2Sw1k2uI/XLuMh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Huh, I was under impression that having an environment
+> variable to control this behavior was frowned upon by
+> Junio?
 
-The `is_pseudoref()` function has somewhat weird behaviour in that it
-both checks whether a reference looks like a pseudoref, but also that
-the reference actually resolves to an object ID.
+It is frowned upon.  It is secondary who frowns upon it ;-)
 
-In case a reference does not resolve though we can run into a segfault
-because we never initialize the local `struct object_id` variable. Thus,
-when `refs_resolve_ref_unsafe()` is unable to resolve the reference, the
-variable will stay uninitialize. We then try to look up the hash algo
-via the uninitialized value when calling `is_null_oid()`, which causes
-us to segfault.
+We _might_ be able to pass --no-advice to all internal invocations
+of subprocesses, but that is a chore, and if a code path calls a
+subprocess that is *not* a git program that in turn calls a git
+program, such an approach would not work.  But an environment
+variable would.
 
-It is somewhat questionable in the first place that we declare a ref to
-be a pseudorefe depending on whether it resolves to an object ID or not.
-And to make things even worse, a symbolic ref is currently considered to
-not be a pseudo ref either because of `RRESOLVE_REF_NO_RECURSE`, which
-will cause us to not resolve them to an object ID. Last but not least,
-it also is inconsistent with `is_headref()`, which only checks for the
-reference to exist via `refs_ref_exists()`.
-
-Refactor the code to do the same. While that still feels somewhat fishy,
-it at least fixes the segfault for now. I have not been able to come up
-with a reproducible test case that does not rely on other bugs and very
-intricate state.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs.c | 17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 567c6fc6ff..b35485f150 100644
---- a/refs.c
-+++ b/refs.c
-@@ -900,7 +900,6 @@ int is_pseudoref(struct ref_store *refs, const char *re=
-fname)
- 		"NOTES_MERGE_REF",
- 		"MERGE_AUTOSTASH",
- 	};
--	struct object_id oid;
- 	size_t i;
-=20
- 	if (!is_pseudoref_syntax(refname))
-@@ -908,20 +907,12 @@ int is_pseudoref(struct ref_store *refs, const char *=
-refname)
- 	if (is_special_ref(refname))
- 		return 0;
-=20
--	if (ends_with(refname, "_HEAD")) {
--		refs_resolve_ref_unsafe(refs, refname,
--					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--					&oid, NULL);
--		return !is_null_oid(&oid);
--	}
-+	if (ends_with(refname, "_HEAD"))
-+		return refs_ref_exists(refs, refname);
-=20
- 	for (i =3D 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
--		if (!strcmp(refname, irregular_pseudorefs[i])) {
--			refs_resolve_ref_unsafe(refs, refname,
--						RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--						&oid, NULL);
--			return !is_null_oid(&oid);
--		}
-+		if (!strcmp(refname, irregular_pseudorefs[i]))
-+			return refs_ref_exists(refs, refname);
-=20
- 	return 0;
- }
---=20
-2.45.0-rc1
-
-
---DV2Sw1k2uI/XLuMh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvo4wACgkQVbJhu7ck
-PpRo9A//b1B8KxENG74EpufT1RQDkxuPjtlZZ2KVaNrMrglCYRoZaHwSdCk2Nri1
-fZdl5q74fWuE69ykupXXAWiYMe5UnUdjpwQd3wRlKjFXuFatMWJo0KkHYrMq0zSo
-fiJhUxqrrUTh3jEPi+s7IwnJphElZmmvgxpTVCEdjeHxP8ECbeIiww35cwCmT4cs
-4olb6H7tF7PBUJNCeT5NSxoGPC4wEhy+3D3DZrcas8H/B9J1FTI65yKLZr/QHm01
-i2zW/oxR54OrUSMvUwOVCBVhIWuKpTMW6hrKWocUCrpbw+NdCniG8dqDh4g5dxLn
-lZRi6ExJ10+3z/nMwn71ZD6hvnsG/dVgntJbm4TksQiPPtP2gpaKbDTELw/NzB9d
-6pWvkQ7vXJ0dXsIQI6XecICkn8CVJ3gZ9tFwA0B5VpjUIPgfBX49smbIInq9GV1C
-eM4OciOHa5+JPpPAS2ixcFkVTYZSUZ5uqZDsZwotLNDndAqYSU3CqdhSCybQRl/2
-aADvTyAPkXmxR07Maow+PLolYILSUw4Jr/ouG2ttbTo+1fgCILdbqLukfA+xSRWe
-abumzyF60TQoAFihV6ybRM4y1UPlAvD3bF1Mlb24JWBTc/mfd0ycd3QtlX2G3/r7
-3YRzXjzyEt6IKuRFvUBSKv+NDkwxDNRHk4W4JGQ0BGTqok+/CiA=
-=Bjec
------END PGP SIGNATURE-----
-
---DV2Sw1k2uI/XLuMh--
+So using an environment variable as an internal detail and marking
+it as "internal use only---do not set or unset it yourself" is the
+best we could do, and I do not think I would mind.  At that point,
+those who set the variable themselves are outside those whose
+breakage we care about.
