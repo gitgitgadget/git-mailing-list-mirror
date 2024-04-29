@@ -1,63 +1,64 @@
 Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311C31411EF
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0A41411EF
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714423389; cv=none; b=t/DSuTuG7gyxbPqtKLjYblqTp5ER/s8Dj2P+xLn7Vdqyqg21bU27ugBte4zNn0f1CfyDHrpgN2Tp/vpzAtLn6uoBLYd24ykTBjX9AAAFjA06IKU3ua2cy4sYB1jG3Qje70JPD9KZZy19NV3hEE9IgZa8BW80SPu0S6TqqjpDx6k=
+	t=1714423392; cv=none; b=aCaWg6l5L1TjPFmw4BQ2IYn3ITYvz22Lqb6Au9GlWWoUDZcdxvhVj158Po9X8pDQBiOzrDAdYfp3CfJMwN2UuGKrrjD54TeXRl1InOSTFK7Von1GmupgD/zcWBqGZCqrJ5QR/zoMU/cdlWGi3+cZo8+Jiir4A62suE5BlkH1f40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714423389; c=relaxed/simple;
-	bh=iKnexeLn1VB6/XrI3uiwbpAxYwgIfxhwsCkSb7jo5g4=;
+	s=arc-20240116; t=1714423392; c=relaxed/simple;
+	bh=R2R3PYNmR8O1rtREDVem/efjKmPJyiGIPUVZ9rL5wdY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u/QQggU+3Pd5LaB2hdp0aRcNJZ8KWQ4TGQF218GvftyV7tm/yJn4pk3w1nCiKcd45D3BsFkRImr2RMxvYMfTaY/Hfoeec2Pj9Dg5sNJH9mNLftGOKIrj+z3uLvx0TfD4ftJGxL1R/c6RSPlj4SrGVJndNxkXdHULpiFQOleYq2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NCy803Cx; arc=none smtp.client-ip=209.85.219.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=dEoUacioXkzCBcqsTvfX/mmEQJDxdU9twQrsNppdk3Z9swZ4e3teS9X797kALSXpmCVDiJAMN1vpQLaI44dTOXcBiJDOj2V0FqKbKgbHNJ66Z9zd8LWOU+rOdgAzIEnXqTbp3pVYHfUwNmVr/DZDts92P0GKKGCJ6B3k8aEB3/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=yGlih9Ru; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NCy803Cx"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-69b4e94ecd2so24187786d6.3
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:43:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yGlih9Ru"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-69b4043b7b3so29331026d6.1
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714423387; x=1715028187; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714423390; x=1715028190; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JjtxHcAnI7ucNOXIsqOnaxMAIC5xY892HGXD+sKEcHw=;
-        b=NCy803CxIx6WqnNscLASwVSj4z1lZNqUd1wK2Reo0bZ/TgyVNZO8hgyxCuJzflqr8M
-         wnghyuFhZRt0GIUKkM8l9wiGaSsuiyECuL3JQqUw9TA1Uuwzr1ytelLL6yF1kLP2KNeG
-         eH1X7Gtj7Xe/2HrvkOULX/Tld7S7F3yfBOMKcatrvQZqTQ/ObonHnSYSqHQas08owo61
-         h0rVFnZWEElFjtEziUm/Xr4Lh5/UKgk47M70+S2Jf2z38/2F0aljuBQ/YjoyabidhaRS
-         t4T9ZEEpPImjEZbX4R30iEoMevdQTEvym2nCMBfSGfRBl5u6PyHzYi7Q8MbMTRjsiJUB
-         vxgA==
+        bh=/G0CuWAteRaKdhzIRJGhjRw3j94B2GZN9Bg+THSA5jU=;
+        b=yGlih9Ru9fAURzzyfWnLpw4fQPhd6WjrXpcl+BCJ+3i4uGcjUPxPSu35YP9rnrBdHE
+         u1C/3iV1/BooHNtg47H74FC7XQhiZZZGxzktm7PLn5qcMvMjb8ASklR47YmeWUnULMOX
+         NfV1ejHNfF7/9cFlRHq+lXpJHqlOdFAE7X3bFjA56KnpGmXUVZE/hJ5GqVJNC5pe7T8R
+         KSGx68IoXd5x9v3MYjK4LD+Vv7yXJYSqXD8cOE6q9vHzNCSR/+8WGwEe3ecm8e1+ljDr
+         eqnrSgwiufVWGQxUCCCTCHeH/v+AvpcIqXdXHgwC5RZhoa/Fat2yPBlVecp8/vaTAYJF
+         iXnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714423387; x=1715028187;
+        d=1e100.net; s=20230601; t=1714423390; x=1715028190;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JjtxHcAnI7ucNOXIsqOnaxMAIC5xY892HGXD+sKEcHw=;
-        b=VkYm4Dlir+E1+A0qcGv0wBw3WW/XKUTI6xrHUG11y5yduS5yP6XwtgYrzf0rkrT2AT
-         YkDlsghkzHQQeEHp1FiASRC+qkd8yMZmzV14HTBJTlsrVFTwmpabEj8V7nJCZcI/NX2I
-         qDIN7480wmcfh6RXKKewnznhZJAejmQUlLV4/f7vzH5918Wjolspqh1JOnectWYdVp0w
-         imkKWfGcQMhKMvT+1liVLADnsIgmCO7bg2PEelvgilkEIstkUUWm5P3ODWYW8y/xiZ5X
-         SKsdiJhP78h44KL91uJyyNN43NBQ3HOa7CozCigyDrlGqjlIfuFqZoPSHjxQCD7Bu5lI
-         +C4Q==
-X-Gm-Message-State: AOJu0YzUfJ5BsZf2+o2pkNiQhT+gPTOBqUeLXt8Be1YMliiTOInAqlCY
-	IKb5/MD0C3VDhSC19hkDvPO1zW5Vi1XT867CbPDkMNCW8VZwyhwwKYk4pKDFHEnKDukAlz4BTmP
-	7ylk=
-X-Google-Smtp-Source: AGHT+IEnT8KkgkLEzTdKtBKiUqZKxkTN5O9McW+b0I/fOdSCv4qr6VBiX4sEA68UFCG3NzeTgBxMng==
-X-Received: by 2002:a05:6214:29ed:b0:6a0:aac9:c56f with SMTP id jv13-20020a05621429ed00b006a0aac9c56fmr8996204qvb.33.1714423386750;
-        Mon, 29 Apr 2024 13:43:06 -0700 (PDT)
+        bh=/G0CuWAteRaKdhzIRJGhjRw3j94B2GZN9Bg+THSA5jU=;
+        b=DoHRxfLa6GN7RL7NXb41YSs2uTr/X5WDHL3Wc6MnjD39bh39S7hjDLD95MhVN6gp+J
+         A5I7Wu/oNjHwMY9yUX9NtZ2ngwyL9DBtDxbMUB3zaPAT70r/e9jgAlp/ctiDCwhDgqYS
+         OEmepl4VKxXt97YB3s5MNbBSOoWfBGRpExMJxyJFi3UNjJdVXxhovgKKLHA+J/yJXrsA
+         DdQsNxtqlqwnYkxnQ6k9B8ZPLee4I3dP/KeK2cHjMGL6rVWVYUnxUAfEHAFt7QJaXrU0
+         Pg9rScK4ZztzqqM3Se4uNpFQrrImWwIzV/p60UYDTrUPYYtiywMxX2UOG3grBe6SKQ0O
+         g67A==
+X-Gm-Message-State: AOJu0Yx5OmaAkBPYSkuQEEz9eAq6uO4HTl8iQV+q4onLwNf0lgR50phO
+	4e0PJel+IHIJVAMXAPLnD7LA5SPGZ61koBo1EjFH4i0GNrTyDTmfnEu9x0/Ieuo5/TnzugAiKQO
+	+qjk=
+X-Google-Smtp-Source: AGHT+IGzTxYsC3+bbyL13olmrCn0CIvNoob9x04f3zwMRQEC8kLWnMtlNivk677IzhUepP0MZUJEIw==
+X-Received: by 2002:a05:6214:21cd:b0:6a0:cc66:3c74 with SMTP id d13-20020a05621421cd00b006a0cc663c74mr5538036qvh.18.1714423389947;
+        Mon, 29 Apr 2024 13:43:09 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r1-20020ad44041000000b006a0d4d7ec55sm765496qvp.88.2024.04.29.13.43.06
+        by smtp.gmail.com with ESMTPSA id a8-20020a0ce388000000b0069b2064b988sm10788557qvl.131.2024.04.29.13.43.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 13:43:06 -0700 (PDT)
-Date: Mon, 29 Apr 2024 16:43:05 -0400
+        Mon, 29 Apr 2024 13:43:09 -0700 (PDT)
+Date: Mon, 29 Apr 2024 16:43:08 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 03/23] pack-bitmap: drop unused `max_bitmaps` parameter
-Message-ID: <5160859f7f3cf72de03a4644ee3d3743eaba2bc2.1714422410.git.me@ttaylorr.com>
+Subject: [PATCH v2 04/23] pack-bitmap: move some initialization to
+ `bitmap_writer_init()`
+Message-ID: <3d7d930b1c5c4d122d8731ef0dc3fc90115573a2.1714422410.git.me@ttaylorr.com>
 References: <cover.1710972293.git.me@ttaylorr.com>
  <cover.1714422410.git.me@ttaylorr.com>
 Precedence: bulk
@@ -70,96 +71,143 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1714422410.git.me@ttaylorr.com>
 
-The `max_bitmaps` parameter in `bitmap_writer_select_commits()` was
-introduced back in 7cc8f97108 (pack-objects: implement bitmap writing,
-2013-12-21), making it original to the bitmap implementation in Git
-itself.
+The pack-bitmap-writer machinery uses a oidmap (backed by khash.h) to
+map from commits selected for bitmaps (by OID) to a bitmapped_commit
+structure (containing the bitmap itself, among other things like its XOR
+offset, etc.)
 
-When that patch was merged via 0f9e62e084 (Merge branch
-'jk/pack-bitmap', 2014-02-27), its sole caller in builtin/pack-objects.c
-passed a value of "-1" for `max_bitmaps`, indicating no limit.
+This map was initialized at the end of `bitmap_writer_build()`. New
+entries are added in `pack-bitmap-write.c::store_selected()`, which is
+called by the bitmap_builder machinery (which is responsible for
+traversing history and generating the actual bitmaps).
 
-Since then, the only other caller (in midx.c, added via c528e17966
-(pack-bitmap: write multi-pack bitmaps, 2021-08-31)) also uses a value
-of "-1" for `max_bitmaps`.
+Reorganize when this field is initialized and when entries are added to
+it so that we can quickly determine whether a commit is a candidate for
+pseudo-merge selection, or not (since it was already selected to receive
+a bitmap, and thus is ineligible for pseudo-merge inclusion).
 
-Since no callers have needed a finite limit for the `max_bitmaps`
-parameter in the nearly decade that has passed since 0f9e62e084, let's
-remove the parameter and any dead pieces of code connected to it.
+The changes are as follows:
+
+  - Introduce a new `bitmap_writer_init()` function which initializes
+    the `writer.bitmaps` field (instead of waiting until the end of
+    `bitmap_writer_build()`).
+
+  - Add map entries in `push_bitmapped_commit()` (which is called via
+    `bitmap_writer_select_commits()`) with OID keys and NULL values to
+    track whether or not we *expect* to write a bitmap for some given
+    commit.
+
+  - Validate that a NULL entry is found matching the given key when we
+    store a selected bitmap.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 2 +-
- midx-write.c           | 2 +-
- pack-bitmap-write.c    | 8 +-------
- pack-bitmap.h          | 2 +-
- 4 files changed, 4 insertions(+), 10 deletions(-)
+ builtin/pack-objects.c |  1 +
+ midx-write.c           |  1 +
+ pack-bitmap-write.c    | 23 ++++++++++++++++++-----
+ pack-bitmap.h          |  1 +
+ 4 files changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index baf0090fc8d..5060ce2dfba 100644
+index 5060ce2dfba..2958cdda499 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1359,7 +1359,7 @@ static void write_pack_file(void)
- 				stop_progress(&progress_state);
+@@ -1339,6 +1339,7 @@ static void write_pack_file(void)
+ 				    hash_to_hex(hash));
  
- 				bitmap_writer_show_progress(progress);
--				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
-+				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr);
- 				if (bitmap_writer_build(&to_pack) < 0)
- 					die(_("failed to write bitmap index"));
- 				bitmap_writer_finish(written_list, nr_written,
+ 			if (write_bitmap_index) {
++				bitmap_writer_init(the_repository);
+ 				bitmap_writer_set_checksum(hash);
+ 				bitmap_writer_build_type_index(
+ 					&to_pack, written_list, nr_written);
 diff --git a/midx-write.c b/midx-write.c
-index 65e69d2de78..469cceaa583 100644
+index 469cceaa583..ed5f8b72b9c 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -838,7 +838,7 @@ static int write_midx_bitmap(const char *midx_name,
+@@ -819,6 +819,7 @@ static int write_midx_bitmap(const char *midx_name,
  	for (i = 0; i < pdata->nr_objects; i++)
- 		index[pack_order[i]] = &pdata->objects[i].idx;
+ 		index[i] = &pdata->objects[i].idx;
  
--	bitmap_writer_select_commits(commits, commits_nr, -1);
-+	bitmap_writer_select_commits(commits, commits_nr);
- 	ret = bitmap_writer_build(pdata);
- 	if (ret < 0)
- 		goto cleanup;
++	bitmap_writer_init(the_repository);
+ 	bitmap_writer_show_progress(flags & MIDX_PROGRESS);
+ 	bitmap_writer_build_type_index(pdata, index, pdata->nr_objects);
+ 
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index c6c8f94cc51..c35bc81d00f 100644
+index c35bc81d00f..9bc41a9e145 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -591,8 +591,7 @@ static int date_compare(const void *_a, const void *_b)
+@@ -46,6 +46,11 @@ struct bitmap_writer {
+ 
+ static struct bitmap_writer writer;
+ 
++void bitmap_writer_init(struct repository *r)
++{
++	writer.bitmaps = kh_init_oid_map();
++}
++
+ void bitmap_writer_show_progress(int show)
+ {
+ 	writer.show_progress = show;
+@@ -117,11 +122,20 @@ void bitmap_writer_build_type_index(struct packing_data *to_pack,
+ 
+ static inline void push_bitmapped_commit(struct commit *commit)
+ {
++	int hash_ret;
++	khiter_t hash_pos;
++
+ 	if (writer.selected_nr >= writer.selected_alloc) {
+ 		writer.selected_alloc = (writer.selected_alloc + 32) * 2;
+ 		REALLOC_ARRAY(writer.selected, writer.selected_alloc);
+ 	}
+ 
++	hash_pos = kh_put_oid_map(writer.bitmaps, commit->object.oid, &hash_ret);
++	if (!hash_ret)
++		die(_("duplicate entry when writing bitmap index: %s"),
++		    oid_to_hex(&commit->object.oid));
++	kh_value(writer.bitmaps, hash_pos) = NULL;
++
+ 	writer.selected[writer.selected_nr].commit = commit;
+ 	writer.selected[writer.selected_nr].bitmap = NULL;
+ 	writer.selected[writer.selected_nr].flags = 0;
+@@ -466,14 +480,14 @@ static void store_selected(struct bb_commit *ent, struct commit *commit)
+ {
+ 	struct bitmapped_commit *stored = &writer.selected[ent->idx];
+ 	khiter_t hash_pos;
+-	int hash_ret;
+ 
+ 	stored->bitmap = bitmap_to_ewah(ent->bitmap);
+ 
+-	hash_pos = kh_put_oid_map(writer.bitmaps, commit->object.oid, &hash_ret);
+-	if (hash_ret == 0)
+-		die("Duplicate entry when writing index: %s",
++	hash_pos = kh_get_oid_map(writer.bitmaps, commit->object.oid);
++	if (hash_pos == kh_end(writer.bitmaps))
++		die(_("attempted to store non-selected commit: '%s'"),
+ 		    oid_to_hex(&commit->object.oid));
++
+ 	kh_value(writer.bitmaps, hash_pos) = stored;
  }
  
- void bitmap_writer_select_commits(struct commit **indexed_commits,
--				  unsigned int indexed_commits_nr,
--				  int max_bitmaps)
-+				  unsigned int indexed_commits_nr)
- {
- 	unsigned int i = 0, j, next;
+@@ -488,7 +502,6 @@ int bitmap_writer_build(struct packing_data *to_pack)
+ 	uint32_t *mapping;
+ 	int closed = 1; /* until proven otherwise */
  
-@@ -615,11 +614,6 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
- 		if (i + next >= indexed_commits_nr)
- 			break;
+-	writer.bitmaps = kh_init_oid_map();
+ 	writer.to_pack = to_pack;
  
--		if (max_bitmaps > 0 && writer.selected_nr >= max_bitmaps) {
--			writer.selected_nr = max_bitmaps;
--			break;
--		}
--
- 		if (next == 0) {
- 			chosen = indexed_commits[i];
- 		} else {
+ 	if (writer.show_progress)
 diff --git a/pack-bitmap.h b/pack-bitmap.h
-index c7dea13217a..3f96608d5c1 100644
+index 3f96608d5c1..dae2d68a338 100644
 --- a/pack-bitmap.h
 +++ b/pack-bitmap.h
-@@ -110,7 +110,7 @@ int rebuild_bitmap(const uint32_t *reposition,
- struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
- 				      struct commit *commit);
- void bitmap_writer_select_commits(struct commit **indexed_commits,
--		unsigned int indexed_commits_nr, int max_bitmaps);
-+				  unsigned int indexed_commits_nr);
- int bitmap_writer_build(struct packing_data *to_pack);
- void bitmap_writer_finish(struct pack_idx_entry **index,
- 			  uint32_t index_nr,
+@@ -97,6 +97,7 @@ int bitmap_has_oid_in_uninteresting(struct bitmap_index *, const struct object_i
+ 
+ off_t get_disk_usage_from_bitmap(struct bitmap_index *, struct rev_info *);
+ 
++void bitmap_writer_init(struct repository *r);
+ void bitmap_writer_show_progress(int show);
+ void bitmap_writer_set_checksum(const unsigned char *sha1);
+ void bitmap_writer_build_type_index(struct packing_data *to_pack,
 -- 
 2.45.0.23.gc6f94b99219
 
