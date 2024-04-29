@@ -1,162 +1,180 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416C26F53D
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE38651B6
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714397940; cv=none; b=HmzCny+gz2LZ+eEROp+u6Rte1+Yp1YqwOG2GddCWNQ7YiucxXidZFfaWQO5xzJyMf3C/W5C1wv2qOGyPpGLUrnBGX2ckr2jB4Nel8R/ZiTjcz/4y0svOc+V2DFFZlK/LzUECePzJ+Xlu7ZRIJvOYBN2XlOlx3i4makJ5D6W75oQ=
+	t=1714398090; cv=none; b=Z+KnpIL852wbWvVWXcF6fFvCyqDOv3qBWjmpeEMX3HaQHkdx1WklcoMA04q6pkBuujl4IRxHjnFm24J7u2IwtXrILjBvPNCZHBRPS2R+aJHjlN57qgss380RrE5xP1iIZNNV+B/d/zx2i8dAUK7Z70Jjfij/HOFeToN0zMeAckY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714397940; c=relaxed/simple;
-	bh=cQpcnrVgylBj14NZi/Js/gQoWKKfByrlgYOAglKB66I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ADeAsTWVXgVb0CXKI9mRy9qS3nQkEby4Nr3+6kN3wWYhbTxuKQidWxYNelM4+LYgT/89YSHOyAptjcAKJaAQAknCp790HEdLvFvEgKtcfEp+McOgzix9BMt6RFAv2GOszZFetc5EO4twosdua3ftcqZPqvx7lVQebrO2im0Kck4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFP+sFsz; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714398090; c=relaxed/simple;
+	bh=+z8Y5xhN/yfCX+s7vfGkQAFdr+wsfEgRxptv+IuR9aI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=skjubcFxYUyz9tB4sMsfPf2OkkyasO4KS2+uTw296L01uZ2xF0cq+yWkRVoV9pKwtc3QkOthoK9TV4RfgtSvL3R6STNnJruM92rHMaDUOwmXKFINklnpg8Dw6RTY3GwYnrszvSy3cX/5Buotru76/amtFPJYV+CbdoN7Up90/VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tonC3vk/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jXQ5Fcy0; arc=none smtp.client-ip=64.147.123.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFP+sFsz"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2de2f5ca076so50523141fa.0
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:38:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714397937; x=1715002737; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2kMTI8Lc9qN/1cPKdgQ9B0M6Q+BU9a4mNsTkefrFifc=;
-        b=ZFP+sFszCBanz7q3RFgfIgx3OZ/9Ifkg77QIPooFmA95wJLnA4K7oYZHFZm39oPASC
-         bic/mk0pO2vmcU3l46ZEvcE2Q0c3OiOsXyUOlxdSw/HTp0JXTLvHRh+j6ONzGaPwz9eH
-         iPdv7t5pcCMRhdy0+fRi51kIj73wYBcGA49NDpAQk8DCqzfxBQtjlM2jwscKu7z4RufO
-         Hysxa4bOkmONglp3zOvhuUNRwg1xfnYnbGWkU/dFUj8hF+LStfwIkijUF251kUVJ5UKa
-         fRfS3x7Z5u9QlS55CDcNRHxuwRQjQ4WKFXWg7umL2T7o4GIgJamuHev01aZDMQH6rwyp
-         cg9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714397937; x=1715002737;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2kMTI8Lc9qN/1cPKdgQ9B0M6Q+BU9a4mNsTkefrFifc=;
-        b=qL3Tj/DOkVvhgU57/sfm9O/g9tPOIhvZ6DyzgRmngmzDF8RJQz4H6Vk9CUs1sKWXWF
-         Fq9T6+jWjfxQvrWkAnpGPZlSFrUfS69PdLnFQa93WB/hf8yGhlTEAmOW0zzbl28ZNl4E
-         ZOXXybca6Rm2uf8TKuUa9glW0k2igYs0E6mhXb8A846OosKKgw8YLhTpd4ONAIrA+Fsc
-         KOdrvNJWx6iq5zLgG3wnzZS4A0OeA1SRKy+9ve+PACgBIHGy7vpU6TYfuuHalhktPcob
-         TbK+QzgTv0kHZU2gZcDV7ShytEivyaGeFTNHKAAaV1FKfhtMs6j7vIRtes/W8jrOPiJt
-         nGLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUe8gcS/rNBmL+3vSatl+MrScMhryBNGhGKj9gFJ9GGJG6OLdwZMlvM0n2PsxJq5++lsGt8/XR0XYordH2d0egeuR2T
-X-Gm-Message-State: AOJu0YxI8UxvKCRczMsqfJtynWD7ZD1AXJ00ZREv3RRagsXQWJ3A4p6h
-	FrH8mxhxfv2yB8/EvNAeLW3cV3KMNigTPrtc0wa9bg/pBNMBS5B0
-X-Google-Smtp-Source: AGHT+IGmJiWXGgFROS9wvcjSX4W3UiWMxSNZPyH7d7Q8Oky8yoR4oF1H2STqvjr9yJ05DYGJe+1RUA==
-X-Received: by 2002:a2e:b052:0:b0:2df:b6dd:dc24 with SMTP id d18-20020a2eb052000000b002dfb6dddc24mr4025377ljl.8.1714397937054;
-        Mon, 29 Apr 2024 06:38:57 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:701:9864:4109:be00:6ff6? ([2a0a:ef40:62a:701:9864:4109:be00:6ff6])
-        by smtp.gmail.com with ESMTPSA id n26-20020a05600c3b9a00b0041bf87e702asm7491929wms.10.2024.04.29.06.38.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 06:38:56 -0700 (PDT)
-Message-ID: <73632d75-b82d-4853-93fe-3460fdda3325@gmail.com>
-Date: Mon, 29 Apr 2024 14:38:55 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tonC3vk/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jXQ5Fcy0"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 30B8A1C000E0;
+	Mon, 29 Apr 2024 09:41:26 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 29 Apr 2024 09:41:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1714398085; x=1714484485; bh=BHVQlu252Kg6VvRyiLDokCPlli7ucj/N
+	iahLQGCjBt0=; b=tonC3vk/gO4rDlrPBlWTzniwerbe7DMP237+9Pk8M0V+78Cd
+	M6hVDwwVTS8fi4wstcw5n7cdZQ1DXlp6f33RekbSH75aQCibJm9XiC6NVch4DbsO
+	vSRzBzeKb8o0daAE2W02dGSAcPeTqj1JkrsJNmhrWNUraV+EXmVW6/diHLGhvwmi
+	UBMS54Omk0drz6Vh/08hJGOhsz5CKeC0ZJjpmAjHCYqxaLRxoe/ts3nWUoF6XHOr
+	vxpuMAHcTkLnvmiEu8zvauowgJv8934YudH0pfPWiEtaE/JEEJp3i2bNvd5uD1n+
+	DCdxB/WWJRvccKpWoK0GpWPcHtq3Mq1z3vABcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1714398085; x=1714484485; bh=BHVQlu252Kg6VvRyiLDokCPlli7ucj/Niah
+	LQGCjBt0=; b=jXQ5Fcy0AIzeYVPCJ5gDqNSHBBR8xvopnVNFjtDoMi8ABx6hL60
+	3MijOWeQTB02ZI9QeReza/LoZfMDJh/G44JU0abSgeCqvrUIyBj1f0fZB5I2oXlY
+	LRw9bltHQldNxHOyaVuLMVKgibkKO1fhi6GY8eWT5iKUt9lkZKv6k29If/A+bzOY
+	VrRQ6h143FRDXdMwjR9vuFrSJ63Xn49s8OL5W97wd+0N/EGGuOn23JwbooD0n0ov
+	ImW0k+k1KuK8Wn6MbBMSHbwzrTStPHSDQb/uAl6H6CHE7DGt1XGsJcG+bLy5HrC8
+	+bQkb3Fc/yFxQhxRfdJMbPubYCmzTl+xJnQ==
+X-ME-Sender: <xms:haMvZjWlvs17l-n1lMkYqWC242O7vEERSi1jo_GQ9SqgVQnlhOBjQg>
+    <xme:haMvZrkRbG2SsB0cKK6vrXoAv9pUKj3OoefVDcaaxuTKYlNxAso-d4qbDoVArZYzy
+    xz7YIhFKhRLERKA5Q>
+X-ME-Received: <xmr:haMvZvYZ3GpDBy9prGyaVw2UfFae7U1KFBGuCW1R0qRYgHzxGmyeM7pBkWutV_a4sSvg8afHHNRK5xDZOfXc5CFAvp8SFSIautgr9s7AoXsrDg30>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduuddgieeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epuefguedtueeiheetleevgedujeekjeehleejjefhhffghfevgfekueekjedtieejnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:haMvZuV9tcZvbPkBJfMtiC1IsJQsxL1e0XAsOJRFW3Mcj7G6-U6X2Q>
+    <xmx:haMvZtkcwouhQQZOqPZ1Mlx6KqHqiXIQzmCldMuV4RiOTFux0C6FWQ>
+    <xmx:haMvZrfagy4lfDaNM9urRbDaNYpTFfkPWsQLoBvkfUmuiR7HQusvcQ>
+    <xmx:haMvZnEb9gmyKTTKDL7mrQGcQk1WffzNh-5ocut4YBBxmOD_E7AAYw>
+    <xmx:haMvZjhA8g43ZTxJj25YWhfQfwvWs44MjK3y2GYQ_LU0sQKAbR9vo5Js>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Apr 2024 09:41:24 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 509fe54e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Apr 2024 13:41:02 +0000 (UTC)
+Date: Mon, 29 Apr 2024 15:41:19 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/3] Clarify pseudo-ref terminology
+Message-ID: <cover.1714398019.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 1/7] refs: accept symref values in
- `ref_transaction[_add]_update`
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
- ps@pks.im
-References: <20240423212818.574123-1-knayak@gitlab.com>
- <20240426152449.228860-1-knayak@gitlab.com>
- <20240426152449.228860-2-knayak@gitlab.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20240426152449.228860-2-knayak@gitlab.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jpGhp03X3ig9304g"
+Content-Disposition: inline
 
-Hi Karthik
 
-On 26/04/2024 16:24, Karthik Nayak wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
-> 
-> The `ref_transaction[_add]_update` functions obtain ref information and
-> flags to create a `ref_update` and add it to the transaction at hand.
-> 
-> To extend symref support in transactions, we need to also accept the
-> old and new ref targets and process it.
+--jpGhp03X3ig9304g
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-s/it/them/
+Hi,
 
-> In this commit, let's add the
+there is quite some confusion around what is a pseudo ref and what is a
+special ref, and the documentation in gitglossary(7) overlaps. This
+patch series clarifies that:
 
-This commit adds?
+  - A pseudo ref is anything in the root directory that conforms to the
+    pseudo ref syntax (all uppercase, must end with _HEAD), except for
+    special refs. There are some exceptions that are now listed
+    explicitly, and these only exist due to historic reasons.
 
-> required parameters to the function and modify all call sites.
-> 
-> The two parameters added are `new_target` and `old_target`. The
-> `new_target` is used to denote what the reference should point to when
-> the transaction is applied.
-> 
-> The `old_target` denotes the value the reference must have before the
-> update. Some functions allow this parameter to be NULL, meaning that the
-> old value of the reference is not checked.
-> 
-> The handling logic of these parameters will be added in consequent
-> commits as we add symref commands to the '--stdin' mode of
-> 'git-update-ref'.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+  - Special refs are really only either FETCH_HEAD or MERGE_HEAD, where
+    the reason is that those aren't really refs, but can sometimes be
+    used as such.
 
-Thanks for updating the documentation, I've left a couple of comments below
+I was very much pressed to go a completely different way: drop the
+special ref term again that we have recently introduced and replace the
+pseudo ref term with it. This would return pseudo refs to their original
+meaning, namely something that is not a ref, but behaves like one at
+times.
 
-> diff --git a/refs.h b/refs.h
-> index d278775e08..c792e13a64 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -648,6 +648,15 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->    *         before the update. A copy of this value is made in the
->    *         transaction.
->    *
-> + *     new_target -- the target reference that the reference will be
-> + *         update to point to.
+The current class of pseudo refs I would then drop completely -- in my
+opinion there is just no need for it. Everything should be a ref, and
+what we currently call pseudo refs (things in the root hierarchy) is
+really just a naming policy. Refs must either have pseudoref syntax or
+they must start with "refs/". It doesn't help in my opinion that we give
+refs which conform to that naming policy but happen to live in the root
+directory a separate name. They behave no different than a normal ref
+anyway: they are stored in the refdb and can be read and written as any
+other ref starting with "refs/".
 
-s/update/updated/
+So, if we went down that road, we would:
 
-> This takes precedence over new_oid when set.
+  - Not have special refs anymore.
 
-I thought it was a bug to set both new_oid and new_target.
+  - Have two pseudo refs, FETCH_HEAD and MERGE_HEAD. There is no other
+    pseudo ref.
 
-> If the reference is a regular reference, it will be
-> + *         converted to a symbolic reference.
- > + *
-> + *     old_target -- the reference that the reference must be pointing to.
-> + *         Will only be taken into account when the reference is a symbolic
-> + *         reference.
+  - Clarify that refs must either start with "refs/", or have an
+    all-uppercase name ending with "_HEAD". Exceptions to this rule are
+    "HEAD" and a couple of others that we wrote due to historic reasons.
+    All refs that match these rules behave the same, there is no
+    difference between root refs and refs living in "refs/".
 
-Does this last sentence mean it is not possible to assert that it is 
-currently a symbolic reference? I thought the point of being able to 
-specify the old value of a ref when updating was to ensure it hadn't 
-changed since it was read. This contradicts the documentation in the 
-next hunk and the description in the commit message.
+I think that this would be quite a lot easier to understand than the
+current state of affairs we have, and also return us to the original
+meaning of pseudorefs.
 
->    *     flags -- flags affecting the update, passed to
->    *         update_ref_lock(). Possible flags: REF_NO_DEREF,
->    *         REF_FORCE_CREATE_REFLOG. See those constants for more
-> @@ -713,7 +722,11 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->    * beforehand. The old value is checked after the lock is taken to
->    * prevent races. If the old value doesn't agree with old_oid, the
->    * whole transaction fails. If old_oid is NULL, then the previous
-> - * value is not checked.
-> + * value is not checked. If `old_target` is not NULL, treat the reference
-> + * as a symbolic ref and validate that its target before the update is
-> + * `old_target`. If the `new_target` is not NULL, then the reference
-> + * will be updated to a symbolic ref which targets `new_target`.
+If people agree with that line of thought I'll happily revise this patch
+series. I didn't do that yet because it would be quite a lot more work,
+so I first wanted to get some buy-in.
 
-This looks good and describes the behavior I'd expected to see.
+Patrick
 
-Best Wishes
+Patrick Steinhardt (3):
+  refs: move `is_special_ref()`
+  refs: do not label special refs as pseudo refs
+  refs: fix segfault in `is_pseudoref()` when ref cannot be resolved
 
-Phillip
+ Documentation/glossary-content.txt | 36 +++++++------
+ refs.c                             | 81 ++++++++++++++----------------
+ t/t6302-for-each-ref-filter.sh     | 17 +++++++
+ 3 files changed, 76 insertions(+), 58 deletions(-)
+
+--=20
+2.45.0-rc1
+
+
+--jpGhp03X3ig9304g
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvo34ACgkQVbJhu7ck
+PpT8Hw/9FUvNYvgnl4riO2/6pe8S6e4QxK+KogRY0tkqku9OlTAmzvWA/9VX4GLW
+ugullU5rOZMgM23YHkNEOThMlI3GKsqPXtdm7DzzPEgJVvLIujfVS/EiX8UcLJqa
+iVyfZa5G3I3Ratc31XNptiveyOlF2yzsDJ9CBzFxAcldPeAm/MkmjX20AphOebtZ
+BM8hIa6IwV7MfvSXSXwPdHYYy+W9zO5S7E2xzvL1kcielAnGoF87T0sb15nRoh/b
+49svz660pVCHDmEuSBPE79+6IAEFpQV4/WwjHoIBE5UcnUIMotPSG7CemruaKg6M
+3kwXLZj7TsGM30V3G7Q/2tBy+DFJ+BknoR5h1L6sTquk56TOF8tNQ0MnTJItoZQA
+t2cdYqs2s17PpSwxyfTZ7+UPq3fPsWkMFwNmy6FJPR88fuQyaC4o8VUoZ57N9Bp+
+ZgzeutJeEORL+nzRV6z+hhenM2jJPsJw9mP+u3K8z0RIqYP0WJEdbdFX0OOsvt8e
+wK0k2CvIR/TUDiRPfl+VoXZWCD0jeUFJOyxxbySOASBz3Y4LKACSJidXWaNr4dOm
+6cJRKhSoZ0X7WbW1JezLsP2EaSwqm8r/lBtdC5mNY4K5VnzvYd7KRd8kF962HA/H
+55S9vPl4B8Ex97i7POkRge+WpkmwD5p+8oPGvqntU84eGAyzJfA=
+=CNaP
+-----END PGP SIGNATURE-----
+
+--jpGhp03X3ig9304g--
