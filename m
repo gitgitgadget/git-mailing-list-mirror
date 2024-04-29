@@ -1,163 +1,270 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F01012A14B
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 18:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9D11E529
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 18:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714415836; cv=none; b=iEs5g2xRbrRo6KOXJU5MyEA7LPjnEwWNPuBCH9brVtsC8JECEXArKtikSpfxjW/N/ZpX5TVXC8mcO+5NYigSFK0YArzD4WX88yYfOxX4iv+MyaV9vVAY55SCY0vB6JcHo3+UqKuVzlhnCwOPTvg3pvBGZUbdgNSmXN7gDw1Q4a8=
+	t=1714416875; cv=none; b=bAwkt7w5ZAahiHnxQUce5yhdYj7djwaV4mS19Q32bSJFkanvLiPhAAJv+d59KY0rbB9GvyVhGSYb/HNgeD/IFUk6cpv3m8AfvhS/EbLZjPf2eXi0WIK8TSPVYsfo6fSrfGJ1BQ5ErrcCTm+0c0xppux2qGFR/2scMyjUNVd5XVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714415836; c=relaxed/simple;
-	bh=UKKPpYPTIB8l6rR71ijJperwJQGhIrQ6LtOA+ai1gV4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kNEzI+sSDJfIkRnD9yn0BeFGuEVsbOIoYZLfFxMaKFuKTjtnvAeWHl3vib81M9oCBf3cYNXmjIh+dWX+yZHoUdS9l5YTURVXc5s9xdkRcbfL+C2HKu4YcUDZf5MpZ0UcR3JxB/72Rq4aaYwXsSGqa705rCtAcuETyzPLibL+lWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZRWDflp; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1714416875; c=relaxed/simple;
+	bh=KO8x4UIea1UTixej4TTq7NwbEVFgfFWwlVOzxfXLKGg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SNKG1nOdyxSOZ8dCBj8CBFR78VfbhY2ulhbJc9/EOfDj2MnErMChQGkmWyjbFs5f4Zj5jTNWMzzCO1sBRK+44QtiL46PMM4dyp1O34noe9dXMzRmd47nKjy6LKM/Z9c5Xo8LC0iFV3QHKS6+/iLtONELfaa1H+lNuIc6Ec4xlbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HeRmn1Jv; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZRWDflp"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-346406a5fb9so4134363f8f.1
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 11:37:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeRmn1Jv"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d8a2cbe1baso64797921fa.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 11:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714415833; x=1715020633; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TB1BoVLiOux/HPrW8MyruJIMsPdwJkw5+l58oyD5a3c=;
-        b=gZRWDflpgFUed+jErj0I1C9QR6dG+Gv+hfVDbZqrWjixJ9UymByFn2LGUsSZjwQRVw
-         vk1HOsm61hhiD4MjlUCeBFjknO7mRsoNAi924uFqXGv+gK2X6a/CudmoD9luQn7ORzJl
-         ziptgQ96s373tu2nzBgoA0hNhRRBDKcy+DIMEYvaE+SQkWpTWOCFeSGcILcDK27M3BvQ
-         Ad3Ycqy/t8SRoVJ4Rf6DLKia8PbGlHjB6HbMHbVp+M4HukFufWRQu2jm4FKPE0Y1rUWE
-         bkyNVPOEv9hzZCbPj2sfpxt83A6UVTtle6ifdQ8h7YVj+rdEKCrcijqLgfKspwd042KU
-         UL5w==
+        d=gmail.com; s=20230601; t=1714416872; x=1715021672; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3GO+tOUmuBkiUdvy9qw2u9Jorx2A1eER2qooaBbP59g=;
+        b=HeRmn1JvxqR/R77TVz27WG0OIEWWEk4osQbndDQGV5lSK9drjLEolnXuyjmWz6lgT4
+         nYSaKhpDWo0d33pS38JEFL1hnZ/hK63V+8Lr74YWl3S66T8RqAiBFpU6TA5eHefG8ucK
+         YNwM8NRdo7ZRKTz8YjjBX7caVOHDNKuAcYPLKEOTBlcOEmQrQe64T8NkvVL5dk0DKlGo
+         uIw4p8aarZmsSlZPmyIlMXgRnJIRZg1anIVPWESsIkSFwEcKIfY97wpNdd15GDwvTJgb
+         7JfP5Xfd87BlMu6tbaeDOr9+ZjON6CAqGJw1Dj6vCbhySsT2WZJK/9ceDfQibgVrXn4y
+         XNVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714415833; x=1715020633;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TB1BoVLiOux/HPrW8MyruJIMsPdwJkw5+l58oyD5a3c=;
-        b=qWD7o/hFoFoXbb48g3go/45UyBWOprNddrUfmzu5qRArwnTqiBxqvz2hN9TeuTWOmZ
-         +pVstV6UKBlLYkqFPyemtSziplL4hhDwAba2unrnol6A5yiQLC2ObIKL8cYg/X491L9O
-         LGupat1ZXnYihexLpV99WNd0bAzsnWChJD3SUL1UbqN+lvUUzzC6P7GN4zMDQM4IBTJw
-         9F6DImYwugNOdC1YMaRZ8Zqc/U9RzFL504nYe9Xr90L1q/q2M496I7VADth/FUt5ANcl
-         a13P5O2HSAVtmCGZlkB0OoExYeBd1yu3lX0em6Kv7mNmJPQbPD54El9P5U49oDln/AT3
-         MV+w==
-X-Gm-Message-State: AOJu0Yy2nCyrKlQb+FY0klYs6+j75PViDXQNupTeY1Myr8tdZ5lf4sju
-	UuwmmP7LIj0+bhqUEVOhppA65dwoB3qmWfo6j+Sr/vwArqG7WL//L0WgBQ==
-X-Google-Smtp-Source: AGHT+IGu/rXE/3QjHO3sx2HUj7VIABt4K3Ebp6u3f5c2R1WFftbi5sZmH6fYbC3/BTBX9weEzqUjWw==
-X-Received: by 2002:adf:9791:0:b0:34a:e884:977b with SMTP id s17-20020adf9791000000b0034ae884977bmr6492035wrb.32.1714415833242;
-        Mon, 29 Apr 2024 11:37:13 -0700 (PDT)
-Received: from gmail.com (111.red-88-14-45.dynamicip.rima-tde.net. [88.14.45.111])
-        by smtp.gmail.com with ESMTPSA id cs18-20020a056000089200b003437799a373sm30347591wrb.83.2024.04.29.11.37.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 11:37:12 -0700 (PDT)
-Message-ID: <95c0dfff-3b11-4156-a502-c741fc0b76f7@gmail.com>
-Date: Mon, 29 Apr 2024 20:37:12 +0200
+        d=1e100.net; s=20230601; t=1714416872; x=1715021672;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3GO+tOUmuBkiUdvy9qw2u9Jorx2A1eER2qooaBbP59g=;
+        b=CCwjfWbYlPTNmwwF6nbEqb0fiyrRi1iDv5YZcoah57cbS935X7cWemBcNjzX5nfU20
+         Xn0+4gZHfmbOv2bMakCbq3fOe6UuqmisIcJe61CUsjShjujgnsQMr4TOxtH4qIOlCV93
+         rJbITP2ZDw5toBHVeXhARQI5mp/RTx3Vkm2h/kVR2371V/icwNz8XzYVLLC5z08SSi2S
+         wwSuqJbS7jtEW/CPeN1HC9mWmxMsxFWogymNeoyOlf/A7Iinu+mrha+BHx0qFZYR626L
+         FJQYf16ovWddpIhdJAN+LJ6NFzmf6ygnNluMYQvwTp19ybV4wvuxaWEdlqUEztG+b9I+
+         exLQ==
+X-Gm-Message-State: AOJu0YyVVCECh40xvA80zdmVHZM5rTbkCsIlzU681XCo0SOOZcJGFeQU
+	w9iJbbFN2hMW9JbWpJYjTpjDL5+5TbOBB1RCIk0nxwt1i5beElkbiq8kDw==
+X-Google-Smtp-Source: AGHT+IFNwB5UfB59/zhe8ZB4JDK4LLp/X17WC7VOzxvbjwjAfL4bOoflEv8kG9R0m4ZPvVbH/vyDLw==
+X-Received: by 2002:a2e:7006:0:b0:2df:84af:27cb with SMTP id l6-20020a2e7006000000b002df84af27cbmr7318202ljc.24.1714416871273;
+        Mon, 29 Apr 2024 11:54:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p7-20020a05600c358700b0041bf685921dsm8527182wmq.0.2024.04.29.11.54.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Apr 2024 11:54:30 -0700 (PDT)
+Message-Id: <pull.1723.v3.git.1714416863.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1723.v2.git.1714409638089.gitgitgadget@gmail.com>
+References: <pull.1723.v2.git.1714409638089.gitgitgadget@gmail.com>
+From: "John Passaro via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 29 Apr 2024 18:54:20 +0000
+Subject: [PATCH v3 0/3] builtin/tag.c: add --trailer option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v5 2/2] add-patch: response to unknown command
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
- <952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
-Content-Language: en-US
-In-Reply-To: <952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    John Passaro <john.a.passaro@gmail.com>,
+    John Passaro <john.a.passaro@gmail.com>
 
-When the user gives an unknown command to the "add -p" prompt, the list
-of accepted commands with their explanation is given.  This is the same
-output they get when they say '?'.
+Follow-up patch taking welcome feedback from Patrick and JCH.
 
-However, the unknown command may be due to a user input error rather
-than the user not knowing the valid command.
+Since git-tag --list --format="%(trailers)" can interpret trailers from
+annotated tag messages, it seems natural to support --trailer when writing a
+new tag message.
 
-To reduce the likelihood of user confusion and error repetition, instead
-of displaying the list of accepted commands, display a short error
-message with the unknown command received, as feedback to the user.
+git-commit accomplishes this by taking --trailer arguments and passing them
+to git interpret-trailer. This patch series refactors that logic and uses it
+to implement --trailer on git-tag.
 
-Include a reminder about the current command '?' in the new message, to
-guide the user if they want help.
+Also Included are updates to the i18n files, since the git-tag patch changes
+some strings that are subject to translation. If I am out of my lane here,
+please feel free to separate or leave out the i18n patch.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- add-patch.c                |  5 ++++-
- t/t3701-add-interactive.sh | 16 +++++++++++++++-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+John Passaro (3):
+  builtin/commit.c: refactor --trailer logic
+  builtin/tag.c: add --trailer arg
+  po: update git-tag translations
 
-diff --git a/add-patch.c b/add-patch.c
-index fc0eed4fd4..2252895c28 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1667,7 +1667,7 @@ static int patch_update_file(struct add_p_state *s,
- 			}
- 		} else if (s->answer.buf[0] == 'p') {
- 			rendered_hunk_index = -1;
--		} else {
-+		} else if (s->answer.buf[0] == '?') {
- 			const char *p = _(help_patch_remainder), *eol = p;
- 
- 			color_fprintf(stdout, s->s.help_color, "%s",
-@@ -1691,6 +1691,9 @@ static int patch_update_file(struct add_p_state *s,
- 				color_fprintf_ln(stdout, s->s.help_color,
- 						 "%.*s", (int)(eol - p), p);
- 			}
-+		} else {
-+			err(s, _("Unknown command '%s' (use '?' for help)"),
-+			    s->answer.buf);
- 		}
- 	}
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index c5531520cb..28a95a775d 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -8,6 +8,8 @@ TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
- 
-+SP=" "
-+
- diff_cmp () {
- 	for x
- 	do
-@@ -56,6 +58,19 @@ test_expect_success 'warn about add.interactive.useBuiltin' '
- 	done
- '
- 
-+test_expect_success 'unknown command' '
-+	test_when_finished "git reset --hard; rm -f command" &&
-+	echo W >command &&
-+	git add -N command &&
-+	git diff command >expect &&
-+	cat >>expect <<-EOF &&
-+	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
-+	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
-+	EOF
-+	git add -p -- command <command >actual 2>&1 &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'setup (initial)' '
- 	echo content >file &&
- 	git add file &&
-@@ -232,7 +247,6 @@ test_expect_success 'setup file' '
- '
- 
- test_expect_success 'setup patch' '
--	SP=" " &&
- 	NULL="" &&
- 	cat >patch <<-EOF
- 	@@ -1,4 +1,4 @@
+ Documentation/git-tag.txt |  18 +++++-
+ builtin/commit.c          |  20 +------
+ builtin/tag.c             |  41 +++++++++++---
+ po/bg.po                  |   2 +
+ po/ca.po                  |   4 +-
+ po/de.po                  |   2 +
+ po/el.po                  |   9 ++-
+ po/es.po                  |  14 +++--
+ po/fr.po                  |   2 +
+ po/id.po                  |   2 +
+ po/it.po                  |   6 +-
+ po/ko.po                  |  10 ++--
+ po/pl.po                  |   6 +-
+ po/ru.po                  |   1 +
+ po/sv.po                  |   2 +
+ po/tr.po                  |   2 +
+ po/uk.po                  |   2 +
+ po/vi.po                  |   2 +
+ po/zh_CN.po               |   2 +
+ po/zh_TW.po               |   2 +
+ t/t7004-tag.sh            | 114 ++++++++++++++++++++++++++++++++++++++
+ trailer.c                 |  12 ++++
+ trailer.h                 |   8 +++
+ 23 files changed, 237 insertions(+), 46 deletions(-)
+
+
+base-commit: 786a3e4b8d754d2b14b1208b98eeb0a554ef19a8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1723%2Fjpassaro%2Fjp%2Ftag-trailer-arg-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1723/jpassaro/jp/tag-trailer-arg-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1723
+
+Range-diff vs v2:
+
+ -:  ----------- > 1:  0c9517f434a builtin/commit.c: refactor --trailer logic
+ 1:  d4beb7cd67e ! 2:  5b6239167b8 builtin/tag.c: add --trailer arg
+     @@ Metadata
+       ## Commit message ##
+          builtin/tag.c: add --trailer arg
+      
+     -    Teach git-tag to accept --trailer option to add trailers to annotated
+     -    tag messages, like git-commit. Move the code that git-commit uses for
+     -    trailers to the trailer.h API, so it can be re-used for git-tag.
+     +    git-tag currently supports interpreting trailers from an annotated tag
+     +    message, using --list --format="%(trailers)". There is no ergonomic way
+     +    to add trailers to an annotated tag message.
+     +
+     +    In a previous patch, we refactored git-commit's implementation of its
+     +    --trailer arg to the trailer.h API. Let's use that new function to teach
+     +    git-tag the same --trailer argument, emulating as much of git-commit's
+     +    behavior as much as possible.
+      
+          Signed-off-by: John Passaro <john.a.passaro@gmail.com>
+     +    Helped-by: Patrick Steinhardt <ps@pks.im>
+      
+       ## Documentation/git-tag.txt ##
+      @@ Documentation/git-tag.txt: SYNOPSIS
+     @@ Documentation/git-tag.txt: This option is only applicable when listing tags with
+       --edit::
+       	The message taken from file with `-F` and command line with
+      
+     - ## builtin/commit.c ##
+     -@@
+     - #include "commit-reach.h"
+     - #include "commit-graph.h"
+     - #include "pretty.h"
+     -+#include "trailer.h"
+     - 
+     - static const char * const builtin_commit_usage[] = {
+     - 	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
+     -@@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const char *prefix,
+     - 	fclose(s->fp);
+     - 
+     - 	if (trailer_args.nr) {
+     --		struct child_process run_trailer = CHILD_PROCESS_INIT;
+     --
+     --		strvec_pushl(&run_trailer.args, "interpret-trailers",
+     --			     "--in-place", "--no-divider",
+     --			     git_path_commit_editmsg(), NULL);
+     --		strvec_pushv(&run_trailer.args, trailer_args.v);
+     --		run_trailer.git_cmd = 1;
+     --		if (run_command(&run_trailer))
+     -+		if (amend_file_with_trailers(git_path_commit_editmsg(), &trailer_args))
+     - 			die(_("unable to pass trailers to --trailers"));
+     - 		strvec_clear(&trailer_args);
+     - 	}
+     -
+       ## builtin/tag.c ##
+      @@
+       #include "date.h"
+     @@ builtin/tag.c: static void create_tag(const struct object_id *object, const char
+       		}
+       	}
+       
+     -@@ builtin/tag.c: struct msg_arg {
+     - 	struct strbuf buf;
+     - };
+     - 
+     -+static int opt_pass_trailer(const struct option *opt, const char *arg, int unset)
+     -+{
+     -+	BUG_ON_OPT_NEG(unset);
+     -+
+     -+	strvec_pushl(opt->value, "--trailer", arg, NULL);
+     -+	return 0;
+     -+}
+     -+
+     - static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+     - {
+     - 	struct msg_arg *msg = opt->value;
+      @@ builtin/tag.c: int cmd_tag(int argc, const char **argv, const char *prefix)
+       	struct ref_sorting *sorting;
+       	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+     @@ builtin/tag.c: int cmd_tag(int argc, const char **argv, const char *prefix)
+       		OPT_CALLBACK_F('m', "message", &msg, N_("message"),
+       			       N_("tag message"), PARSE_OPT_NONEG, parse_msg_arg),
+       		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
+     -+		OPT_CALLBACK_F(0, "trailer", &trailer_args, N_("trailer"), N_("add custom trailer(s)"),
+     -+				PARSE_OPT_NONEG, opt_pass_trailer),
+     ++		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"),
+     ++				  N_("add custom trailer(s)"), PARSE_OPT_NONEG),
+       		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
+       		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
+       		OPT_CLEANUP(&cleanup_arg),
+     @@ t/t7004-tag.sh: test_expect_success 'git tag --format with ahead-behind' '
+       	refs/tags/tag-zero-lines 0 1 !
+       	EOF
+       	git tag -l --format="%(refname) %(ahead-behind:HEAD) !" >actual 2>err &&
+     -
+     - ## trailer.c ##
+     -@@
+     - #include "commit.h"
+     - #include "trailer.h"
+     - #include "list.h"
+     -+#include "run-command.h"
+     - /*
+     -  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+     -  */
+     -@@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
+     - 	strbuf_release(&iter->val);
+     - 	strbuf_release(&iter->key);
+     - }
+     -+
+     -+int amend_file_with_trailers(const char *path, struct strvec const* trailer_args) {
+     -+	struct child_process run_trailer = CHILD_PROCESS_INIT;
+     -+
+     -+	run_trailer.git_cmd = 1;
+     -+	strvec_pushl(&run_trailer.args, "interpret-trailers",
+     -+		     "--in-place", "--no-divider",
+     -+		     path, NULL);
+     -+	strvec_pushv(&run_trailer.args, trailer_args->v);
+     -+	return run_command(&run_trailer);
+     -+}
+     -
+     - ## trailer.h ##
+     -@@
+     - 
+     - #include "list.h"
+     - #include "strbuf.h"
+     -+#include "strvec.h"
+     - 
+     - enum trailer_where {
+     - 	WHERE_DEFAULT,
+     -@@ trailer.h: int trailer_iterator_advance(struct trailer_iterator *iter);
+     -  */
+     - void trailer_iterator_release(struct trailer_iterator *iter);
+     - 
+     -+/*
+     -+ * Augment a file to add trailers to it by running git-interpret-trailers.
+     -+ * This calls run_command() and its return value is the same (i.e. 0 for
+     -+ * success, various non-zero for other errors). See run-command.h.
+     -+ */
+     -+int amend_file_with_trailers(const char *path, struct strvec const* trailer_args);
+     -+
+     - #endif /* TRAILER_H */
+ -:  ----------- > 3:  d5335e30b0b po: update git-tag translations
+
 -- 
-2.45.0.2.g84ce137e4a
+gitgitgadget
