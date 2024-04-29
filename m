@@ -1,92 +1,75 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-gateway-shared13.cyon.net (mail-gateway-shared13.cyon.net [194.126.200.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985FC2AE93
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 16:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414C78612C
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 16:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714409160; cv=none; b=UULTQ8vMyV/X71dA37vTgbSdUmKSO36kyOFw+qquO1zH9XcZ7xVOZIZAUNKADfLGZ1BHRjmpMJSDrJ5m0pHoEe8+PiZXWMm4SGqurWgc/R/H7UVvoZ/aqWROhf70zwfMaluHwTV8BQ+WBGT6BGYcou35EeLpU1kIWIxPcrGMRSA=
+	t=1714409559; cv=none; b=AWU/3zqjymWb6+P0f8UN5divQsWuRE23u+Ezp2u5sttPIW+7WDBTncvHZJVkWFySOzR25HqmXe2QoBRr/eQeGUh8CtA4Gwojv1twNwkRURzTu+VTLsNVAnFi+Lf99LW3/zWwL7T/Z86+IrqhUfumsgDUWlJgLzf1hlXz11WzCxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714409160; c=relaxed/simple;
-	bh=cofzQgmthNHhe5SUJ8Z4sU5sEhuNqqAecFVVqWij62E=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=YlJZrPBB8AO5eChSTo56sUCd5FOZoWDJWXl2OLPa9Ba14WkVITqxjkj8CNPYlg0pwhXWyQuJeuWPfpV/Iu64paf+qXurGWfHdfr3k7YOYLf9qiUuynEtGKr1uaYt/dWnL9ugy0+K6JmyEztusHNBUalt8mzp7R8Th6lqttRefiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=JBzVVdEg; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="JBzVVdEg"
+	s=arc-20240116; t=1714409559; c=relaxed/simple;
+	bh=23TlK4kP7M3FIuic0uZW25oufnKeAvIbIjPXeQ0gVtg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lvE4Nzs3qL9aWIpAn9lwXtOLSkF3r3BQeIuU4UiW+vF7yuixOD9tafEJwZWnlb9mCGwVCIn+PzZJksNLfJp3zvjVypGesuFZpCv21jaB1wP38bxZcH6bKWdmNvuAaJxQT23ZYc3N46UK849KiPKQUa8qcDt300La+S2Mg8p802k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared13.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(Exim)
+	(envelope-from <bb@drbeat.li>)
+	id 1s1UEt-000000007sg-0kug
+	for git@vger.kernel.org;
+	Mon, 29 Apr 2024 18:52:27 +0200
+Received: from [10.20.10.232] (port=32438 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.96.2)
+	(envelope-from <bb@drbeat.li>)
+	id 1s1UEs-0069WS-0D;
+	Mon, 29 Apr 2024 18:52:26 +0200
+Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
+	by drbeat.li (Postfix) with SMTP id BCCAE180197;
+	Mon, 29 Apr 2024 18:52:24 +0200 (CEST)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Mon, 29 Apr 2024 18:52:24 +0200
+From: "Beat Bolli" <bb@drbeat.li>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH 0/3] color: add support for 12-bit RGB colors
+Date: Mon, 29 Apr 2024 18:48:46 +0200
+Message-ID: <20240429164849.78509-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1714409154;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=g9Sc3LHvjRlZL/G1Ry94qsmsOyOwDmMYFo//JjkIA7g=;
-	b=JBzVVdEg6Rk5VVOFkjp9jFaa6eP5WT/j2DsXpjuPOHuPeHaFCB1OAjKTlc3Z/iT5dkuXNs
-	0u/HPCwy5JjToQEgtd7Z/qPCJUDWFOQkpab5Px9HkVwB2r34G+Ps3W4O417izjPfTnO6x7
-	cjQo6M2lj39MEtn9B7BDCLO7aqbVK+aXNPJvgblGqWnRcsS7WCsd+pz58cQE+GuKbkn66K
-	r1XJfd22vxwGbFVGCbweZf0mK+rDGHFlCGcNLiAi6koJpZQIGtPppQ11dSuNvsg1QO6E2B
-	V5m9X4cZT+QSnC+CWw5mf+3mhle+gcIWVfhjryvq/W9hBygDFmrt1nlnJFDeeQ==
-Date: Mon, 29 Apr 2024 18:45:53 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, Jakub
- Narebski <jnareb@gmail.com>, Markus Jansen <mja@jansen-preisler.de>, Kaartic
- Sivaraam <kaartic.sivaraam@gmail.com>, =?UTF-8?Q?=C5=A0t=C4=9Bp=C3=A1n?=
- =?UTF-8?Q?_N=C4=9Bmec?= <stepnem@gmail.com>, Taylor Blau <me@ttaylorr.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?=C3=86var_?=
- =?UTF-8?Q?Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, Brian Lyles
- <brianmlyles@gmail.com>, Max Gautier <mg@max.gautier.name>, Adam Johnson
- <me@adamj.eu>
-Subject: Re: Draft of Git Rev News edition 110
-In-Reply-To: <CAP8UFD1Feotp4ra2tpeA7+iRiqDOFzLsQbzw6mUDqt1Uq1oTVA@mail.gmail.com>
-References: <CAP8UFD1Feotp4ra2tpeA7+iRiqDOFzLsQbzw6mUDqt1Uq1oTVA@mail.gmail.com>
-Message-ID: <393d03f2aa814010cfaed0d73cf424b3@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-Hello Christian,
+ * The color parsing code learned to handle 12-bit RGB colors.
 
-On 2024-04-29 18:41, Christian Couder wrote:
-> Hi everyone,
-> 
-> A draft of a new Git Rev News edition is available here:
-> 
-> 
-> https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-110.md
-> 
-> Everyone is welcome to contribute in any section either by editing the
-> above page on GitHub and sending a pull request, or by commenting on
-> this GitHub issue:
-> 
->   https://github.com/git/git.github.io/issues/705
-> 
-> You can also reply to this email.
-> 
-> In general all kinds of contributions, for example proofreading,
-> suggestions for articles or links, help on the issues in GitHub,
-> volunteering for being interviewed and so on, are very much
-> appreciated.
+The first commit fixes a typo, the second one adds some test coverage
+for invalid RGB colors, and the final one extends the RGB color parser
+to recognize 12-bit colors, as in #f0f.
 
-I just read the main part of the current draft and it's looking
-good to me.  Thanks for preparing Git Rev News!
+Beat Bolli (3):
+  t/t4026-color: remove an extra double quote character
+  t/t4026-color: add test coverage for invalid RGB colors
+  color: add support for 12-bit RGB colors
 
-> I tried to Cc everyone who appears in this edition, but maybe I missed
-> some people, sorry about that.
-> 
-> Jakub, Markus, Kaartic and I plan to publish this edition on
-> Wednesday May 1st, 2024.
-> 
-> Thanks,
-> Christian.
+ Documentation/config.txt |  3 ++-
+ color.c                  | 21 ++++++++++++++-------
+ color.h                  |  3 ++-
+ t/t4026-color.sh         | 18 +++++++++++++++---
+ 4 files changed, 33 insertions(+), 12 deletions(-)
+
+-- 
+2.44.0
+
