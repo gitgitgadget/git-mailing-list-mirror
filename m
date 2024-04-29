@@ -1,63 +1,63 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B1C13AA40
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 18:54:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CB983CB9
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 18:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714416878; cv=none; b=fQa0U8QjDPGkuHYiZInl5y1QrgK3oSIaSsAkCUw85ZuLQfZ6FpWMMIWpx42NfIw6EGLCWuRQFczy1Zi2PsSWmMqE9nILZEHdvvt96woIUTZHp0eBqc0S0py9p42cZeyLC67U/DuUbNcb1LlD/hEQmoK2fYca7bsTV4QhK+vhWqc=
+	t=1714416878; cv=none; b=djDL8PlT1mf25oIvXlEkJI+kw3AShqknxuyj6Pc5BwbXNcqwRi7WRIPm+XOfgWaAMDA3yac1YFnNRBPgz/9CD8fzEsqLFuCGAGm1kdJzBCwfhP9UYDE2RRsF1BXcVHZHMGMl0EqUj6wr4qRFF6U9vVgJJ3BccHKipxxbvdRkj6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714416878; c=relaxed/simple;
-	bh=TBtX/Broh3g7T8wMLA8EEWUAxN/+ewl1gfOhAqJG/Ow=;
+	bh=JYl3aWKgQYT7ocx8FPnpoBC0NArvcd32YMFGitEBrTc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=M6+M7npdFl7QgTb1JlwqZ+9HPP2rn7gRJIrOozcxSwYiZ+VkfaeKv7eNIun2J9bNTKIdDl2pRnFEO727qzZr5FfjJeVr3NwUKYUhiLxX+LUNgxVzN/kupRrg2s8C4lIfhznDGAFXoDK8+gmAAcmUQodHkt2lOBCfOJIvazG1wFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G1pYI4g7; arc=none smtp.client-ip=209.85.208.181
+	 MIME-Version:To:Cc; b=pdNkXiX48cdUUeRkvLE2gN+v2rLchptHt7D+431F5s0Dyr9db9K+2DDuL0InnXJRkyt3s6C8qkq2HLFQul1R5Zkc2iYcV6OAd+vAmVlg14u72naPDtcF3mPfZhg3il2DnuKtm7xb3HY0yXnjUluPLnATbcdwsYYuvW58JgopY60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lr7OSLym; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G1pYI4g7"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2dd6c160eaaso59333871fa.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lr7OSLym"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-344047ac7e4so3414644f8f.0
         for <git@vger.kernel.org>; Mon, 29 Apr 2024 11:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714416874; x=1715021674; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714416873; x=1715021673; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QTJNbBkjW/kccpTcOOm9K8ugSTmx5uBgbqj3ngqJ5pM=;
-        b=G1pYI4g70w98zK425Mh0OfDjr46+hgIbqVXxBrrGT4DdwhOHZ7Idg9McFpzSR87Uez
-         VVGghVaXDYHdeXixmUh6M7FrDQB0zTnQAg+tb4FktWdoMAIS9QKIZI+zYWnTkRZ3udm+
-         C/OT1Y+3rq8JBWYEpkzHU810pPVT7C5zmYehtR+zizZZ9UIht5I/I0uOrB+I6ZZilNzT
-         9kPRSaZ7Dc99HmddZK6YWTiM4IJ6uVlzRFgFiqayAys/FZTobAmp3yU6YNQ0fmiLR1nz
-         tT0Pf2xsZW2SgFNPP1OxQ120BSs8TU9z6KfMpYmu487bp33NJ4cEzaWEFfXQiLaegTxf
-         Uj9w==
+        bh=h7mYWVr0vPsFkOd9GId2rgRLVMqNF2A9yWAMLyMXsDk=;
+        b=Lr7OSLym1GzrnZDSEOWFuRsJuy0SlrBsr5p78UNylpq5NTonrbDVmKPBtcYjs3gYVc
+         YLBcht+qysjRIaWxrav38Am3jGS59ATvXB8X0OziTp6/KzNHb4aIGt8t4aMiu9xbQgA4
+         ArA9zhCu/v+CUAQZZIoA4+3r72acHf+V9ip654a/cU+xq/u0K12MdMC2N/LCaZC3xRCJ
+         H8JjIVokN6UKn6rBYS0oNBwXj1FkcuBB3yIXgRMvGHrcoXOY3wsC3uYyIyLW5pu5qO5e
+         E8r6ZgIs+9TyWpYii/4LAmET/4OOM53MFoEI4Lw7kLMVtQfGqHLWQyu7vg6efyAwdbna
+         0Ypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714416874; x=1715021674;
+        d=1e100.net; s=20230601; t=1714416873; x=1715021673;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QTJNbBkjW/kccpTcOOm9K8ugSTmx5uBgbqj3ngqJ5pM=;
-        b=B1Ts8FhYS3ftdAvZAh0rPEWiVLPYLUnqqP6K4OkjazCxBUuuMKVYAQxUnELUQIVp1B
-         dij2mWcBDvUzG3/6Nr7aCqdXTKwZ+iW+yxeavoh834Pp38UH7qMUOSj3gnaaBNo6w42R
-         nHHcuvnp1y4a7bkR2ExmT47FiEE5vLgLuh5mpp94Ey9m0+vGwGCikng6vAeSojDU2bU6
-         WziYLdx3VJlU1487eaD4INgzSifmpa+H18jdbybpoPnET7i04kImOWHqT77OTbGD+mKM
-         G4DplAs4W0tegzCVV961vLE7oeBzdwWozeth4wkPqfZqZ4xcMyqDzzqWVXWdMgz8ppx8
-         EM8w==
-X-Gm-Message-State: AOJu0YxxuXEMITvraX0uci+d/9zeEBaMBYrwIRvqPR8VpJESrefjnEUx
-	gg1K4351E5VKrnPqA3/OsgcUy5NM//G/OtDYm4vlxhOI0cv9cCED6m1xyg==
-X-Google-Smtp-Source: AGHT+IE0fTu6v6cCj4OIj/sx5jIqijYK5QEPVLjE1K8McKogge0kRS+3pcvlHgbVUuv1d1+kks2eZw==
-X-Received: by 2002:a2e:7d09:0:b0:2e0:3ad2:b36f with SMTP id y9-20020a2e7d09000000b002e03ad2b36fmr3898501ljc.13.1714416874012;
-        Mon, 29 Apr 2024 11:54:34 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w5-20020a05600c474500b0041bd85cd3f2sm9963084wmo.19.2024.04.29.11.54.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=h7mYWVr0vPsFkOd9GId2rgRLVMqNF2A9yWAMLyMXsDk=;
+        b=jpbr5QSpSyekJ11boLSN1jTDygjGoFTRZrIZ+7G/fosOzUXH/JHUbXWDAoua13M7Fl
+         MA9UU7IoDDlKECHrtoqzVoMVsRpcKyjEv8mXh3QdaY2/eekkNL9EQZytoQRB+1Qv0yms
+         A99wRyt9I8COMFJ8gsytzTkLczLjUSGh2c3fGkqUU50ONuomC+3dYLwrz/zfIQ59bSnR
+         Gy1+SLfjKcQdeyC2HdMYnXy3lD2OaDBQ5X3bVZqUYqG6da/ijkAW0uYuElmxdPhBAP0e
+         H13s7QABr1ov6VltdIcn7XidyiroOK3hOFfR3imupS6BmrYv4I865BiSKqR1IJTJrjbP
+         xceA==
+X-Gm-Message-State: AOJu0Ywis2OtgCcv3XvNLKnnF56bj1eE1NKpXV9UrcSY+NGfGtkQtX0O
+	KWEL3XwsISdfcHb1yVdBOdKeLfgapFvgosW4i/TeTXal7TaVrnrQpj+gqg==
+X-Google-Smtp-Source: AGHT+IEQEyl8pdcipYsPyrJLSUW7giuqUY+VNSHmbmBgzwSUy7V9vGm3K+8Q4URGAVot32ZlnsmvBw==
+X-Received: by 2002:a5d:6412:0:b0:34c:fd92:3359 with SMTP id z18-20020a5d6412000000b0034cfd923359mr474117wru.21.1714416873089;
         Mon, 29 Apr 2024 11:54:33 -0700 (PDT)
-Message-Id: <d5335e30b0bf8f126f5bd3ac71d8a0afb3fa86f6.1714416865.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e37-20020a5d5965000000b0034ca55b8e61sm6805785wri.20.2024.04.29.11.54.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Apr 2024 11:54:32 -0700 (PDT)
+Message-Id: <5b6239167b8d7c26f96e5c23d0d82b7a3a9b01fe.1714416865.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1723.v3.git.1714416863.gitgitgadget@gmail.com>
 References: <pull.1723.v2.git.1714409638089.gitgitgadget@gmail.com>
 	<pull.1723.v3.git.1714416863.gitgitgadget@gmail.com>
 From: "John Passaro via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 29 Apr 2024 18:54:23 +0000
-Subject: [PATCH v3 3/3] po: update git-tag translations
+Date: Mon, 29 Apr 2024 18:54:22 +0000
+Subject: [PATCH v3 2/3] builtin/tag.c: add --trailer arg
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,351 +76,317 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 
 From: John Passaro <john.a.passaro@gmail.com>
 
-Update translation files to translate the updated git-tag help headline
-with its new --trailer option.
+git-tag currently supports interpreting trailers from an annotated tag
+message, using --list --format="%(trailers)". There is no ergonomic way
+to add trailers to an annotated tag message.
 
-Also perform some related cleanup. Most notably, update git-tag headline
-in files where it references a stale version: i.e. where we are still
-attempting to translate the former one-line description of git-tag that
-described the argument as "[<head>]", instead of current "[<commit> |
-<object>]".
-
-In both cases, reuse translations found elsewhere in the file.
+In a previous patch, we refactored git-commit's implementation of its
+--trailer arg to the trailer.h API. Let's use that new function to teach
+git-tag the same --trailer argument, emulating as much of git-commit's
+behavior as much as possible.
 
 Signed-off-by: John Passaro <john.a.passaro@gmail.com>
+Helped-by: Patrick Steinhardt <ps@pks.im>
 ---
- po/bg.po    |  2 ++
- po/ca.po    |  4 +++-
- po/de.po    |  2 ++
- po/el.po    |  9 ++++++---
- po/es.po    | 14 ++++++++------
- po/fr.po    |  2 ++
- po/id.po    |  2 ++
- po/it.po    |  6 ++++--
- po/ko.po    | 10 ++++++----
- po/pl.po    |  6 ++++--
- po/ru.po    |  1 +
- po/sv.po    |  2 ++
- po/tr.po    |  2 ++
- po/uk.po    |  2 ++
- po/vi.po    |  2 ++
- po/zh_CN.po |  2 ++
- po/zh_TW.po |  2 ++
- 17 files changed, 52 insertions(+), 18 deletions(-)
+ Documentation/git-tag.txt |  18 +++++-
+ builtin/tag.c             |  41 +++++++++++---
+ t/t7004-tag.sh            | 114 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 162 insertions(+), 11 deletions(-)
 
-diff --git a/po/bg.po b/po/bg.po
-index a7cbc617a53..d2fe6c87186 100644
---- a/po/bg.po
-+++ b/po/bg.po
-@@ -13555,9 +13555,11 @@ msgstr "причина за обновяването"
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 5fe519c31ec..79b0a7e9644 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]
++	[(--trailer <token>[(=|:)<value>])...]
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+@@ -31,8 +32,8 @@ creates a 'tag' object, and requires a tag message.  Unless
+ `-m <msg>` or `-F <file>` is given, an editor is started for the user to type
+ in the tag message.
  
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a|-s|-u ИДЕНТИФИКАТОР_НА_КЛЮЧ] [-f] [-m СЪОБЩЕНИЕ|-F ФАЙЛ] [-e]\n"
-+"        [(--trailer ЛЕКСЕМА[(=|:)СТОЙНОСТ])…]\n"
- "        ЕТИКЕТ [ПОДАВАНЕ|ОБЕКТ]"
+-If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <key-id>`
+-are absent, `-a` is implied.
++If `-m <msg>` or `-F <file>` or `--trailer <token>[=<value>]` is given
++and `-a`, `-s`, and `-u <key-id>` are absent, `-a` is implied.
  
- msgid "git tag -d <tagname>..."
-diff --git a/po/ca.po b/po/ca.po
-index bcb4da80fb9..8c8f52985b7 100644
---- a/po/ca.po
-+++ b/po/ca.po
-@@ -13114,10 +13114,12 @@ msgstr "raó de l'actualització"
+ Otherwise, a tag reference that points directly at the given object
+ (i.e., a lightweight tag) is created.
+@@ -178,6 +179,19 @@ This option is only applicable when listing tags without annotation lines.
+ 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
+ 	is given.
  
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <fitxer>] [-e]\n"
--"        <tagname> [<comissió> | <objecte>]"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <nom-d'etiqueta> [<comissió> | <objecte>]"
++--trailer <token>[(=|:)<value>]::
++	Specify a (<token>, <value>) pair that should be applied as a
++	trailer. (e.g. `git tag --trailer "Signed-off-by:T A Ger \
++	<tagger@example.com>" --trailer "Helped-by:C O Mitter \
++	<committer@example.com>"` will add the "Signed-off-by" trailer
++	and the "Helped-by" trailer to the tag message.)
++	The `trailer.*` configuration variables
++	(linkgit:git-interpret-trailers[1]) can be used to define if
++	a duplicated trailer is omitted, where in the run of trailers
++	each trailer would appear, and other details.
++	The trailers can be seen in `git tag --list` using
++	`--format="%(trailers)"` placeholder.
++
+ -e::
+ --edit::
+ 	The message taken from file with `-F` and command line with
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 9a33cb50b45..1ae7ea50b3f 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -28,9 +28,11 @@
+ #include "date.h"
+ #include "write-or-die.h"
+ #include "object-file-convert.h"
++#include "trailer.h"
  
- msgid "git tag -d <tagname>..."
- msgstr "git tag -d <nom-d'etiqueta>..."
-diff --git a/po/de.po b/po/de.po
-index 29465665976..5380f294920 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -13297,9 +13297,11 @@ msgstr "Grund für die Aktualisierung"
+ static const char * const git_tag_usage[] = {
+ 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
++	   "        [(--trailer <token>[(=|:)<value>])...]\n"
+ 	   "        <tagname> [<commit> | <object>]"),
+ 	N_("git tag -d <tagname>..."),
+ 	N_("git tag [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]\n"
+@@ -290,10 +292,12 @@ static const char message_advice_nested_tag[] =
+ static void create_tag(const struct object_id *object, const char *object_ref,
+ 		       const char *tag,
+ 		       struct strbuf *buf, struct create_tag_options *opt,
+-		       struct object_id *prev, struct object_id *result, char *path)
++		       struct object_id *prev, struct object_id *result,
++		       struct strvec *trailer_args, char *path)
+ {
+ 	enum object_type type;
+ 	struct strbuf header = STRBUF_INIT;
++	int should_edit;
  
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <Key-ID>] [-f] [-m <Beschreibung> | -F <Datei>] [-e]\n"
-+"        [(--trailer <Token>[(=|:)<Wert>])...]\n"
- "        <Tagname> [<Commit> | <Objekt>]"
+ 	type = oid_object_info(the_repository, object, NULL);
+ 	if (type <= OBJ_NONE)
+@@ -313,13 +317,15 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+ 		    tag,
+ 		    git_committer_info(IDENT_STRICT));
  
- msgid "git tag -d <tagname>..."
-diff --git a/po/el.po b/po/el.po
-index 703f46d0c7c..210304b75da 100644
---- a/po/el.po
-+++ b/po/el.po
-@@ -18093,11 +18093,14 @@ msgstr ""
+-	if (!opt->message_given || opt->use_editor) {
++	should_edit = opt->use_editor || !opt->message_given;
++	if (should_edit || trailer_args->nr) {
+ 		int fd;
  
- #: builtin/tag.c:25
- msgid ""
--"git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> "
--"[<head>]"
-+"git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <αναγνωριστικό κλειδί>] [-f] [-m <μήνυμα> | -F "
--"<αρχείο>] <όνομα ετικέτας> [<head>]"
-+"<αρχείο>]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <όνομα ετικέτας> [<υποβολή> | <αντικείμενο>]"
+ 		/* write the template message before editing: */
+ 		fd = xopen(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
  
- #: builtin/tag.c:26
- msgid "git tag -d <tagname>..."
-diff --git a/po/es.po b/po/es.po
-index 1ff5ff3911d..b7b15ad6e4b 100644
---- a/po/es.po
-+++ b/po/es.po
-@@ -12682,10 +12682,12 @@ msgstr "razón de la actualización"
+-		if (opt->message_given) {
++		if (opt->message_given && buf->len) {
++			strbuf_complete(buf, '\n');
+ 			write_or_die(fd, buf->buf, buf->len);
+ 			strbuf_reset(buf);
+ 		} else if (!is_null_oid(prev)) {
+@@ -338,10 +344,22 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+ 		}
+ 		close(fd);
  
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
--"        <tagname> [<head>]"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <tagname> [<commit> | <object>]"
- msgstr ""
--"git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
--"        <tagname> [<head>]"
-+"git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <archivo>]\n"
-+"        [(--trailer <token>[(=|:)<valor>])...]\n"
-+"        <nombre-de-tag> [<commit> | <objeto>]"
+-		if (launch_editor(path, buf, NULL)) {
+-			fprintf(stderr,
+-			_("Please supply the message using either -m or -F option.\n"));
+-			exit(1);
++		if (trailer_args->nr && amend_file_with_trailers(path, trailer_args))
++			die(_("unable to pass trailers to --trailers"));
++
++		if (should_edit) {
++			if (launch_editor(path, buf, NULL)) {
++				fprintf(stderr,
++					_("Please supply the message using either -m or -F option.\n"));
++				exit(1);
++			}
++		} else if (trailer_args->nr) {
++			strbuf_reset(buf);
++			if (strbuf_read_file(buf, path, 0) < 0) {
++				fprintf(stderr,
++					_("Please supply the message using either -m or -F option.\n"));
++				exit(1);
++			}
+ 		}
+ 	}
  
- msgid "git tag -d <tagname>..."
- msgstr "git tag -d <nombre-de-tag>..."
-@@ -12697,8 +12699,8 @@ msgid ""
- "[<pattern>...]"
- msgstr ""
- "git tag -l [-n[<num>]] [--contains <commit>] [--no-contains <commit>] [--"
--"points-at <object>]\n"
--"        [--format=<format>] [--merged <commit>] [--no-merged <commit>] "
-+"points-at <objeto>]\n"
-+"        [--format=<formato>] [--merged <commit>] [--no-merged <commit>] "
- "[<pattern>...]"
+@@ -463,6 +481,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct ref_sorting *sorting;
+ 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+ 	struct ref_format format = REF_FORMAT_INIT;
++	struct strvec trailer_args = STRVEC_INIT;
+ 	int icase = 0;
+ 	int edit_flag = 0;
+ 	struct option options[] = {
+@@ -479,6 +498,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F('m', "message", &msg, N_("message"),
+ 			       N_("tag message"), PARSE_OPT_NONEG, parse_msg_arg),
+ 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
++		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"),
++				  N_("add custom trailer(s)"), PARSE_OPT_NONEG),
+ 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
+ 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
+ 		OPT_CLEANUP(&cleanup_arg),
+@@ -548,7 +569,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		opt.sign = 1;
+ 		set_signing_key(keyid);
+ 	}
+-	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
++	create_tag_object = (opt.sign || annotate || msg.given || msgfile ||
++			     edit_flag || trailer_args.nr);
  
- msgid "git tag -v [--format=<format>] <tagname>..."
-@@ -18461,7 +18463,7 @@ msgstr "%%(body) no toma ningún argumento"
+ 	if ((create_tag_object || force) && (cmdmode != 0))
+ 		usage_with_options(git_tag_usage, options);
+@@ -654,7 +676,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			opt.sign = 1;
+ 		path = git_pathdup("TAG_EDITMSG");
+ 		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object,
+-			   path);
++			   &trailer_args, path);
+ 	}
  
- #, c-format
- msgid "expected %%(trailers:key=<value>)"
--msgstr "se esperaba %%(trailers:key=<value>)"
-+msgstr "se esperaba %%(trailers:key=<valor>)"
+ 	transaction = ref_transaction_begin(&err);
+@@ -686,6 +708,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&msg.buf);
+ 	strbuf_release(&err);
++	strvec_clear(&trailer_args);
+ 	free(msgfile);
+ 	return ret;
+ }
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 696866d7794..fa6336edf98 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -668,6 +668,115 @@ test_expect_success \
+ 	test_cmp expect actual
+ '
  
- #, c-format
- msgid "unknown %%(trailers) argument: %s"
-diff --git a/po/fr.po b/po/fr.po
-index 837a695485a..2f7a345c74a 100644
---- a/po/fr.po
-+++ b/po/fr.po
-@@ -13266,9 +13266,11 @@ msgstr "raison de la mise à jour"
++# trailers
++
++test_expect_success 'create tag with -m and --trailer' '
++	get_tag_header tag-with-inline-message-and-trailers $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	create tag with trailers
++
++	my-trailer: here
++	alt-trailer: there
++	EOF
++	git tag -m "create tag with trailers" \
++		--trailer my-trailer=here \
++		--trailer alt-trailer=there \
++		tag-with-inline-message-and-trailers &&
++	get_tag_msg tag-with-inline-message-and-trailers >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'list tag extracting trailers' '
++	cat >expect <<-\EOF &&
++	my-trailer: here
++	alt-trailer: there
++
++	EOF
++	git tag --list --format="%(trailers)" tag-with-inline-message-and-trailers >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'create tag with -F and --trailer' '
++	echo "create tag from message file using --trailer" >messagefilewithnotrailers &&
++	get_tag_header tag-with-file-message-and-trailers $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	create tag from message file using --trailer
++
++	my-trailer: here
++	alt-trailer: there
++	EOF
++	git tag -F messagefilewithnotrailers \
++		--trailer my-trailer=here \
++		--trailer alt-trailer=there \
++		tag-with-file-message-and-trailers &&
++	get_tag_msg tag-with-file-message-and-trailers >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'create tag with -m and --trailer and --edit' '
++	write_script fakeeditor <<-\EOF &&
++	sed -e "1s/^/EDITED: /g" <"$1" >"$1-"
++	mv "$1-" "$1"
++	EOF
++	get_tag_header tag-with-edited-inline-message-and-trailers $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	EDITED: create tag with trailers
++
++	my-trailer: here
++	alt-trailer: there
++	EOF
++	GIT_EDITOR=./fakeeditor git tag --edit \
++		-m "create tag with trailers" \
++		--trailer my-trailer=here \
++		--trailer alt-trailer=there \
++		tag-with-edited-inline-message-and-trailers &&
++	get_tag_msg tag-with-edited-inline-message-and-trailers >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'create tag with -F and --trailer and --edit' '
++	echo "create tag from message file using --trailer" >messagefilewithnotrailers &&
++	get_tag_header tag-with-edited-file-message-and-trailers $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	EDITED: create tag from message file using --trailer
++
++	my-trailer: here
++	alt-trailer: there
++	EOF
++	GIT_EDITOR=./fakeeditor git tag --edit \
++		-F messagefilewithnotrailers \
++		--trailer my-trailer=here \
++		--trailer alt-trailer=there \
++		tag-with-edited-file-message-and-trailers &&
++	get_tag_msg tag-with-edited-file-message-and-trailers >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'create annotated tag and force editor when only --trailer is given' '
++	write_script fakeeditor <<-\EOF &&
++	echo "add a line" >"$1-"
++	cat <"$1" >>"$1-"
++	mv "$1-" "$1"
++	EOF
++	get_tag_header tag-with-trailers-and-no-message $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	add a line
++
++	my-trailer: here
++	alt-trailer: there
++	EOF
++	GIT_EDITOR=./fakeeditor git tag \
++		--trailer my-trailer=here \
++		--trailer alt-trailer=there \
++		tag-with-trailers-and-no-message &&
++	get_tag_msg tag-with-trailers-and-no-message >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'bad editor causes panic when only --trailer is given' '
++	test_must_fail env GIT_EDITOR=false git tag --trailer my-trailer=here tag-will-not-exist
++'
++
+ # listing messages for annotated non-signed tags:
  
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <id-clé>] [-f] [-m <msg> | -F <fichier>] [-e]\n"
-+"        [(--trailer <symbole>[(=|:)<valeur>])...]\n"
- "        <nom-d-étiquette> [<commit> | <objet>]"
- 
- msgid "git tag -d <tagname>..."
-diff --git a/po/id.po b/po/id.po
-index 2dc4b79e8a5..85b5631b3c7 100644
---- a/po/id.po
-+++ b/po/id.po
-@@ -16230,9 +16230,11 @@ msgstr "alasan pembaruan"
- #: builtin/tag.c
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <id kunci>] [-f] [-m <pesan> | -F <berkas>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<nilai>])...]\n"
- "        <nama tag> [<komit> | <objek>]"
- 
- #: builtin/tag.c
-diff --git a/po/it.po b/po/it.po
-index c31560834d8..c4ceb8b2444 100644
---- a/po/it.po
-+++ b/po/it.po
-@@ -22486,10 +22486,12 @@ msgstr "motivo dell'aggiornamento"
- #: builtin/tag.c:25
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
--"\t\t<tagname> [<head>]"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <ID chiave>] [-f] [-m <messaggio> | -F <file>]\n"
--"\t\t<nome tag> [<head>]"
-+"        [(--trailer <token>[(=|:)<valore>])...]\n"
-+"        <nome tag> [<commit> | <oggetto>]"
- 
- #: builtin/tag.c:27
- msgid "git tag -d <tagname>..."
-diff --git a/po/ko.po b/po/ko.po
-index 5d190e52380..7484304eddb 100644
---- a/po/ko.po
-+++ b/po/ko.po
-@@ -14397,11 +14397,13 @@ msgstr "업데이트의 이유"
- 
- #: builtin/tag.c:24
- msgid ""
--"git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> "
--"[<head>]"
-+"git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <tagname> [<commit> | <object>]"
- msgstr ""
--"git tag [-a | -s | -u <키-ID>] [-f] [-m <메시지> | -F <파일>] <태그이름>\n"
--"\t\t[<헤드>]"
-+"git tag [-a | -s | -u <키-ID>] [-f] [-m <메시지> | -F <파일>]\n"
-+"        [(--trailer <토큰>[(=|:)<값>])...]\n"
-+"        <태그이름> [<커밋> | <오브젝트>]"
- 
- #: builtin/tag.c:25
- msgid "git tag -d <tagname>..."
-diff --git a/po/pl.po b/po/pl.po
-index 0ec127e14cc..287354b17b4 100644
---- a/po/pl.po
-+++ b/po/pl.po
-@@ -23549,10 +23549,12 @@ msgstr "powód aktualizacji"
- #: builtin/tag.c:25
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
--"        <tagname> [<head>]"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
-+"        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <id-klucza>] [-f] [-m <komunikat> | -F <plik>]\n"
--"        <tag> [<czoło>]"
-+"        [(--trailer <klucz>[(=|:)<wartość>])...]\n"
-+"        <nazwa-tagu> [<zapis> | <obiekt>]"
- 
- #: builtin/tag.c:27
- msgid "git tag -d <tagname>..."
-diff --git a/po/ru.po b/po/ru.po
-index 3e56eb546ea..d357bc30c2c 100644
---- a/po/ru.po
-+++ b/po/ru.po
-@@ -12490,6 +12490,7 @@ msgstr "причина обновления"
- 
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- 
-diff --git a/po/sv.po b/po/sv.po
-index ad1aad94fff..1f878ee28bc 100644
---- a/po/sv.po
-+++ b/po/sv.po
-@@ -12835,9 +12835,11 @@ msgstr "skäl till uppdateringen"
- 
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <nyckel-id>] [-f] [-m <medd> | -F <fil>] [-e]\n"
-+"        [(--trailer <symbol>[(=|:)<värde>])...]\n"
- "        <taggnamn> [<incheckning> | <objekt>]"
- 
- msgid "git tag -d <tagname>..."
-diff --git a/po/tr.po b/po/tr.po
-index 0e220e1c1cd..8c506c34a9e 100644
---- a/po/tr.po
-+++ b/po/tr.po
-@@ -12975,10 +12975,12 @@ msgstr "güncelleme nedeni"
- 
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <anahtar-kimliği>] [-f] [-m <ileti> | -F <dosya>] [-"
- "e]\n"
-+"        [(--trailer <jeton>[(=|:)<değer>])...]\n"
- "        <etiket-adı> [<işleme> | <nesne>]"
- 
- msgid "git tag -d <tagname>..."
-diff --git a/po/uk.po b/po/uk.po
-index 528a3dc6f76..e3b6441e3c1 100644
---- a/po/uk.po
-+++ b/po/uk.po
-@@ -13086,10 +13086,12 @@ msgstr "причина оновлення"
- 
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <ідентифікатор-ключа>] [-f] [-m <допис> | -F <файл>] [-"
- "e]\n"
-+"        [(--trailer <токен>[(=|:)<значення>])...]\n"
- "        <назва-тегу> [<коміт> | <об’єкт>]"
- 
- msgid "git tag -d <tagname>..."
-diff --git a/po/vi.po b/po/vi.po
-index 965e79e9658..0b206309f9b 100644
---- a/po/vi.po
-+++ b/po/vi.po
-@@ -12915,9 +12915,11 @@ msgstr "lý do cập nhật"
- 
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <tập-tin>] [-e]\n"
-+"        [(--trailer <thẻ>[(=|:)<giá-trị>])...]\n"
- "        <tên-thẻ> [<lần chuyển giao> | <đối tượng> ]"
- 
- msgid "git tag -d <tagname>..."
-diff --git a/po/zh_CN.po b/po/zh_CN.po
-index 4838c19b0be..aaedddcd864 100644
---- a/po/zh_CN.po
-+++ b/po/zh_CN.po
-@@ -16033,9 +16033,11 @@ msgstr "更新的原因"
- #: builtin/tag.c
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <私钥 ID>] [-f] [-m <消息> | -F <文件>] [-e]\n"
-+"        [(--trailer <键>[(=|:)<值>])...]\n"
- "        <标签名> [<提交> | <对象>]"
- 
- #: builtin/tag.c
-diff --git a/po/zh_TW.po b/po/zh_TW.po
-index f554381a7af..168591c141e 100644
---- a/po/zh_TW.po
-+++ b/po/zh_TW.po
-@@ -15911,9 +15911,11 @@ msgstr "更新的原因"
- #: builtin/tag.c
- msgid ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- msgstr ""
- "git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+"        [(--trailer <token>[(=|:)<value>])...]\n"
- "        <tagname> [<commit> | <object>]"
- 
- #: builtin/tag.c
+ test_expect_success \
+@@ -810,6 +919,11 @@ test_expect_success 'git tag --format with ahead-behind' '
+ 	refs/tags/tag-lines 0 1 !
+ 	refs/tags/tag-one-line 0 1 !
+ 	refs/tags/tag-right 0 0 !
++	refs/tags/tag-with-edited-file-message-and-trailers 0 1 !
++	refs/tags/tag-with-edited-inline-message-and-trailers 0 1 !
++	refs/tags/tag-with-file-message-and-trailers 0 1 !
++	refs/tags/tag-with-inline-message-and-trailers 0 1 !
++	refs/tags/tag-with-trailers-and-no-message 0 1 !
+ 	refs/tags/tag-zero-lines 0 1 !
+ 	EOF
+ 	git tag -l --format="%(refname) %(ahead-behind:HEAD) !" >actual 2>err &&
 -- 
 gitgitgadget
+
