@@ -1,147 +1,184 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC65F1779BD
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 22:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8741E888
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 22:53:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714428276; cv=none; b=YbIkTWnuCqQ+ICcMBwKQrf8UzaKv2d/KfPtkSVCqOhY4u5mgiRBdKhRPKElqCZMxyEKIAf4eGKmsfW2gVpmbP7Nv/t44jpwUbNTkfxQb+w8Au2Vy2Ni2bg87H5QaSbpH2NU0VY4AnPqY/ooyy4t0lHD1S4IjJzrGy51AHi0OL40=
+	t=1714431238; cv=none; b=UQ3RqELCs3CN1nKve6a2j8Oz+kxQPmoZlrG2OQU2Q2PyVQJTrMLLNJX05yFlUFp/hQ5zaK9XfHuBosAttgRXiUN7WYISYJ6yCAnLyRzxV9MrRuMaYUG90wX8PCfb8DV79N2Glm9pEIWSDyQf2FuzJnMcyDTrbt+0S2J5VhM8Qic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714428276; c=relaxed/simple;
-	bh=6iVf6PB/f43fxs7jX5UK5l82zxf1a5zlRyKRH0zRvwQ=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To; b=XcXViXulh4brwYaEFIYLbQoO+pc42A2lOLI3yvbYf6Ee7E8+LN9v2X/6TikxlggTcn8ZzChvUh4sSH7mzwkhsmsQjC8YAvhQ/hmjFjNmFSSyrv9v9vpZ+3FBBLs3MV6TDVUw6RqR6txGA2bYwPtHawxNTmHARqiACSeEdW+QpNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cigyuTVz; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1714431238; c=relaxed/simple;
+	bh=/5WcpeQG+8aaebs79Oqq1flGcdr+0anV8NKHabhQKaY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XtJs1UDJjjJnUs/O6oQuwXpTsnYg9tOVf0VeRE5E6Na+RFlKOUC9Y5lyCfb6LrLwTB0FtMBexjiyeRao+Wg/ijVng7CZI8R+qZuZlgjho+Cx5ph/GT2kNqTmBS++ycJJAROmBidyks7CZDMe03P8sifQRl/ijCloWYRGjYHovM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I4EZdn+v; arc=none smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cigyuTVz"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1e65b29f703so44314975ad.3
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 15:04:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I4EZdn+v"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3c7510d1bacso3059014b6e.1
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 15:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714428274; x=1715033074; darn=vger.kernel.org;
-        h=in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=n1WlDEIYNrPrFnC/v4phSFpgGfxcTc/jQjyOPAXKRDw=;
-        b=cigyuTVzhBiZ+IzU+9hRfrZnb50df6/5gMsmMQc6BjhYoKEzzuDM4gqOiMJkDaLkIj
-         UqsYqT9g26qHDl0J2hOzf8QoV52R03wMb1Ffrwl9WKNBCgih78lyRDdt6MILoV+HePDv
-         kJtabj1IKGDQkPV+JrbTTiRev1WnntyANGlaooJ5Nc860tK4ez9HuOGgY62q6WRClrUW
-         9aPr41sHkIn/acDzXUsddziMcmRXuSRBOlqcGG/o+EWMkOnsNM3hA2vA6J/FmiDVHJgL
-         O1g0MQ9ar5wvlVEbr0aZRmTepxsJmrchga83IcliZDIHwLfF4w1zYC0dRbfxhHegv3Eb
-         mUFg==
+        d=gmail.com; s=20230601; t=1714431236; x=1715036036; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YUbuZa9jBgWlTys0CGylak6zaI5CjYiRw4gvHBPC+NA=;
+        b=I4EZdn+vrDjybru+EiiLXNCy7mTqVXX+fQWHHuTJaeO4oG5ktkbA/cgQanMVvSw3WP
+         eaEiTtY+0QnnUqsayO7f9sOy/SUofXw5Km5E3HM8ITPMz/BlvyD4yjd0HC78bRnn79jJ
+         U2O8bsp3UhHDSNmVW6kag+NmQsV4mx8RttyhtKbj/o/n2vTRKx79Nhd+Bfab3pbSxhnR
+         avGsBhqJ28XeVTf34iprfvyZjj+cc2P7YyiN1LtSDMivmKQzTU6ngiXTKXJ1UHFDVg7/
+         emNiFpXIPUxD9Ae8Zw0s69utQAI++xTrb0XccaHJTWoAkxhR/rCFsMwm4bj5t4CydTD6
+         5vGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714428274; x=1715033074;
-        h=in-reply-to:subject:cc:to:from:message-id:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n1WlDEIYNrPrFnC/v4phSFpgGfxcTc/jQjyOPAXKRDw=;
-        b=DKV/n2tH0e5zUz98ONfoE9LRJR5J2diRgDPvrTf+DUpmvqTnprA4HrBLGCsR1nNYld
-         Wwa+L8RVmpFamY2dr/3WhfxMFkNVd75QUnF0lcfRWwrLlBH2z8RxjAFy26oObfXYUIha
-         ySeJsI+PSLZjDkybhIWX0/yPm1MtuQsWbbZTKgC09gb9q+jMNbORJlmyoHhmZ0Rfn+jZ
-         VgAbkPrKgoLVzH+WoVQoKhWSJRlEzGGothsiSniBcxo3tFvrbcTgQLcLJIU6p35bSkkD
-         55iMohrfMqVcIY6x7VKNRk3G1d+2qRN3P7hz9dH4bF77JX72aGHxiGQBUWVykN0e17H2
-         JJ2Q==
-X-Gm-Message-State: AOJu0Yx+dEkm3Kl2mq5i4w5NjSL7v0HyOTnGJpc94nm/PNjucMz7XZlm
-	flHvdX5kP9ZgtNbdNExRJBHFWeEVGnjgxuwnCiBVjA6JJJ3v2mIwNNr4xQ==
-X-Google-Smtp-Source: AGHT+IHSawqCOumUEWEODaqj5JU4OkQIALNgrR9D60j34AbChb91r+XbRRwxiKSOUJtaXR4oTTvWow==
-X-Received: by 2002:a17:902:70c8:b0:1eb:54b7:2724 with SMTP id l8-20020a17090270c800b001eb54b72724mr6681902plt.64.1714428273999;
-        Mon, 29 Apr 2024 15:04:33 -0700 (PDT)
-Received: from localhost ([138.117.155.58])
-        by smtp.gmail.com with ESMTPSA id e13-20020a17090301cd00b001e3cee88212sm7956520plh.230.2024.04.29.15.04.33
+        d=1e100.net; s=20230601; t=1714431236; x=1715036036;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YUbuZa9jBgWlTys0CGylak6zaI5CjYiRw4gvHBPC+NA=;
+        b=ZmNZAvhWhVR8UdJ04QnArrn61/Tl/DBFiC084cPFsQwQ5xH5kbiDfa1KpoBAsVd9hF
+         2VLasm5zd3o7HyGozrtLMXKjnB9EK8O/bCOdVkBkLKtVivaNuH+lXQdZ+DV3cM+z4Azs
+         ZMPxfSoFxG/jpB8slQS/Q49I0AB0bwV60mL3iFgaklD3rufIwt8gJ/M9/YVz7WZ2jWhc
+         Qze/B9ldvMCdhkosYsu982ftoj6gKponNE9SV7gleHitIbuRXLsWCXQO94emMMGK8DUH
+         kUO49FVULBmanNSOc5FiGURdCUfs+uKjcUjAePeWKT0ZiVBSr96fq/HElndIhRBJsAWx
+         kgtQ==
+X-Gm-Message-State: AOJu0YzCCkejh51qWRLSr/BV1rERLnfIBGzlTuVK0DuAJeGIvovCDxKn
+	DrAfayPzrK2/HjLgc1EyVobdl+vyzH8f7mtq2dvb83ds/rgjji5yEwYCzztJ
+X-Google-Smtp-Source: AGHT+IHNOQ6vFfCPzZ+qM/Dx22QfdXlIXawd6eT43CrQ8KJ4hsrkLYkTnQMl6mPqtRXqBBZX04be1Q==
+X-Received: by 2002:a05:6808:2882:b0:3c8:4948:ee2b with SMTP id eu2-20020a056808288200b003c84948ee2bmr14058496oib.5.1714431236585;
+        Mon, 29 Apr 2024 15:53:56 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id m13-20020a05680806cd00b003c74efff6bfsm2867744oih.31.2024.04.29.15.53.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 15:04:33 -0700 (PDT)
-Date: Mon, 29 Apr 2024 19:04:40 -0300
-Message-ID: <e7f49f373b2a3b51785d369e1f504825@gmail.com>
-From: Matheus Afonso Martins Moreira <matheus.a.m.moreira@gmail.com>
-To: tboegi@web.de
-Cc: git@vger.kernel.org
-Subject: Reply to community feedback
-In-Reply-To: <20240429205351.GA27257@tb-raspi4>
+        Mon, 29 Apr 2024 15:53:56 -0700 (PDT)
+Date: Mon, 29 Apr 2024 17:52:41 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 2/3] refs: do not label special refs as pseudo refs
+Message-ID: <5322n7eqkov3fqw2zw2seiqyqcmmrlo35camq76n546dkgycru@njuj32gmbogh>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>
+References: <cover.1714398019.git.ps@pks.im>
+ <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
 
-Thank you for your feedback.
+On 24/04/29 03:41PM, Patrick Steinhardt wrote:
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index d71b199955..4275918fa0 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -497,20 +497,28 @@ exclude;;
+>  	unusual refs.
+>  
+>  [[def_pseudoref]]pseudoref::
+> -	Pseudorefs are a class of files under `$GIT_DIR` which behave
+> -	like refs for the purposes of rev-parse, but which are treated
+> -	specially by git.  Pseudorefs both have names that are all-caps,
+> -	and always start with a line consisting of a
+> -	<<def_SHA1,SHA-1>> followed by whitespace.  So, HEAD is not a
+> -	pseudoref, because it is sometimes a symbolic ref.  They might
 
-> are there any plans to integrate the parser into connect.c and fetch ?
+We remove the example here about HEAD not being a pseudoref. This
+example seems helpful to indicate that a pseudoref cannot be a symbolic
+ref. Is this no longer the case and the change intended?
 
-Yes.
+> -	optionally contain some additional data.  `MERGE_HEAD` and
+> -	`CHERRY_PICK_HEAD` are examples.  Unlike
+> -	<<def_per_worktree_ref,per-worktree refs>>, these files cannot
+> -	be symbolic refs, and never have reflogs.  They also cannot be
+> -	updated through the normal ref update machinery.  Instead,
+> -	they are updated by directly writing to the files.  However,
+> -	they can be read as if they were refs, so `git rev-parse
+> -	MERGE_HEAD` will work.
+> +	Pseudorefs are references that live in the root of the reference
+> +	hierarchy, outside of the usual "refs/" hierarchy. Pseudorefs have an
+> +	all-uppercase name and must end with a "_HEAD" suffix, for example
+> +	"`BISECT_HEAD`". Other than that, pseudorefs behave the exact same as
+> +	any other reference and can be both read and written via regular Git
+> +	tooling.
 
-That was my intention but I was not confident enough to touch connect.c
-before getting feedback from the community, since it's critical code
-and it is my first contribution.
+Pseudorefs behaving the same and using the same tooling seems to
+contridict the previous documentation. I assume the previous information
+was out-of-date, but it might be nice to explain this in the message.
 
-I do want to merge all URL parsing in git into this one function though,
-thereby creating a "single point of truth". This is so that if the algorithm
-is modified the changes are visible to the URL parser builtin as well.
+> ++
+> +<<def_special_ref>,Special refs>> are not pseudorefs.
+> ++
+> +Due to historic reasons, Git has several irregular pseudo refs that do not
+> +follow above rules. The following list of irregular pseudo refs is exhaustive
 
-> Speaking as a person, who manage to break the parsing of URLs once,
-> with the good intention to improve things, I need to learn that
-> test cases are important.
+We seem to be inconsistent between using "pseudoref" and "pseudo ref".
+Not sure it we want to be consistent here. 
 
-Absolutely agree.
+-Justin
 
-When adding test cases, I looked at the possibilities enumerated in urls.txt
-and generated test cases based on those. I also looked at the urlmatch.h
-test cases. However...
+> +and shall not be extended in the future:
+> +
+> + - "`AUTO_MERGE`"
+> +
+> + - "`BISECT_EXPECTED_REV`"
+> +
+> + - "`NOTES_MERGE_PARTIAL`"
+> +
+> + - "`NOTES_MERGE_REF`"
+> +
+> + - "`MERGE_AUTOSTASH`"
+>  
+>  [[def_pull]]pull::
+>  	Pulling a <<def_branch,branch>> means to <<def_fetch,fetch>> it and
+> diff --git a/refs.c b/refs.c
+> index c64f66bff9..567c6fc6ff 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -905,6 +905,8 @@ int is_pseudoref(struct ref_store *refs, const char *refname)
+>  
+>  	if (!is_pseudoref_syntax(refname))
+>  		return 0;
+> +	if (is_special_ref(refname))
+> +		return 0;
+>  
+>  	if (ends_with(refname, "_HEAD")) {
+>  		refs_resolve_ref_unsafe(refs, refname,
+> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+> index 948f1bb5f4..8c92fbde79 100755
+> --- a/t/t6302-for-each-ref-filter.sh
+> +++ b/t/t6302-for-each-ref-filter.sh
+> @@ -52,6 +52,23 @@ test_expect_success '--include-root-refs pattern prints pseudorefs' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success '--include-root-refs pattern does not print special refs' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit initial &&
+> +		git rev-parse HEAD >.git/MERGE_HEAD &&
+> +		git for-each-ref --format="%(refname)" --include-root-refs >actual &&
+> +		cat >expect <<-EOF &&
+> +		HEAD
+> +		$(git symbolic-ref HEAD)
+> +		refs/tags/initial
+> +		EOF
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>  test_expect_success '--include-root-refs with other patterns' '
+>  	cat >expect <<-\EOF &&
+>  	HEAD
+> -- 
+> 2.45.0-rc1
+> 
 
-> Some work can be seen in t5601-clone.sh
 
-... I did not think to check those.
-
-> Especially, when dealing with literal IPv6 addresses,
-> the ones with [] and the simplified ssh syntax 'myhost:src'
-> are interesting to test.
-
-You're right about that. I shall prepare an updated v2 patchset
-with more test cases, and also any other changes/improvements
-requested by maintainers.
-
-> And some features using the [] syntax to embedd a port number
-> inside the simplified ssh syntax had not been documented,
-> but used in practise, and are now part of the test suite.
-> See "[myhost:123]:src" in t5601
-
-Indeed, I did not read anything of the sort when I checked it.
-Would you like me to commit a note to this effect to urls.txt ?
-
-> Or is this new tool just a helper, to verify "good" URL's,
-> and not accepting our legacy parser quirks ?
-
-It is my intention that this builtin be able to accept, parse
-and decompose all types of URLs that git itself can accept.
-
-> Then we still should see some IPv6 tests ?
-
-I will add them!
-
-> Or may be not, as we prefer hostnames these days ?
-
-I would have to defer that choice to someone more experienced
-with the codebase. Please advise on how to proceed.
-
-> The RFC 1738 uses the term "scheme" here, and using the very generic
-> term "protocol" may lead to name clashes later.
-> Would something like "git_scheme" or so be better ?
-
-Scheme does seem like a better word if it's the terminology used by RFCs.
-I can change that in a new version if necessary.
-That code is based on the existing connect.c parsing code though.
-
-> I think that the "///" version is superflous, it should already
-> be covered by the "//" version
-
-I thought it was a good idea because of existing precedent:
-my first approach to creating the test cases was to copy the
-ones from t0110-urlmatch-normalization.sh which did have many
-cases such as those. Then as I developed the code I came to
-believe that it was not necessary: I call url_normalize
-in the url_parse function and url_normalize is already being
-tested. I think I just forgot to delete those lines.
-
-Reading that file over once again, it does have IPv6 address
-test cases. So I should probably go over it again.
-
-Thanks again for the feedback,
-
-  Matheus
