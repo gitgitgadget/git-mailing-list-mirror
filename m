@@ -1,147 +1,126 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20F8839FD
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 19:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702F81B94D
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714420042; cv=none; b=tGonWq3jvyeSqyJY+TlH4xdeiPMdoV/vUlyieuVlHlpL6OO6z58T247eEzQfYh7Gj8nepEUhCV5D70WN+Px4bSu9TCeijMBMJtmCjVN4FE7rvxSEIwyGIMq3T/fitP1appBSB4/kukG42D5JKnXRlHypFZh6cTQMNdbxRwtt1vk=
+	t=1714423001; cv=none; b=jDgTS8PRODnq8B4NRc7f0s18kBmPCFUVMVmpc3EAip9NHES+VpC1sjkG1dHqc7XeZsMAF+1fU4QW2Ntdmd05TxNla3Zhr6jLcGQywbEE1HTXBm3BMDkYy5gG4hmLaSWkSSIkL+d2urVkXxXSzplodcxkCJmIO/y0Dy5B1A41up8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714420042; c=relaxed/simple;
-	bh=w/x+/rpIj+qq6XBa8ilsXi/m0R1tKgkkQrIbmSpezUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=khmSKYPHp9EvNMaNEYMwj141m3fqi4LNA8gbNMsxnohToVqT7DH5evI/rbuOg3XdLh6A4BdCjMUt4SqqUK29PPHgGHp9S8JrOXDAcUH5BogOnQFDRKhcMhVqK08dy5LBy0T4E9OJ7zVEaAPFyz8uWwkkjHUK8nAxC91b4Ik+R8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MxsRRn6j; arc=none smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1714423001; c=relaxed/simple;
+	bh=yjHuMI2mj+7eWvhuTJfXk5oudoCS5/Wgq9mf6xnj1iA=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=tL/YxHmiTNrAqGeNfmqXnbf73TwN8k8QJjhbicOvSg5lGNvQCr0BTdgjTI08waEfcn8XBTC/r9Xu1yeHWg+f7ChnNEF7TaBOfpTPt1ZERiM9PC4qLIs/2Fy46HmE7S2YahHWmgnR9QTlk2+T2H5uAZAvP5xUn6MpuVuoFNs99RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=QVsOGLfe; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MxsRRn6j"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-436ee76c3b8so38905231cf.1
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 12:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714420039; x=1715024839; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fDz4DRmoT72aQLp06EaAXtTcGmxQHO7q3pT4x1S8m4E=;
-        b=MxsRRn6jhUOWEPPQwsyUr/XkKJXi+J33s/eQukS8ILyX1TuUJimJPfc0lkMqyQSMNr
-         clpXfyxyZGhzLgdiAhL6t8iCNFw0EEe/0uyyCgzRop918zstQEbHIJ45+JkH1WMDZSr5
-         cP1UFy78/jYTZbbSk+2S6Ft9vk+soKewSSZGcWS1XSbWblWK0fQeGSLkU5LdE+jZc/Yu
-         vEs0qBHdz9YnaD6zd2y7+2kjpi8dhIF2arf6YJSniWafdzjBlbuVZL8sggJGS/KE/Xa6
-         SxW+7F61ybnyVHsg1yjA/RdqDLSy9FKLvhgD3goH+v+GEoJp9xJGa2FTidRdoc6+JwT3
-         sfHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714420039; x=1715024839;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fDz4DRmoT72aQLp06EaAXtTcGmxQHO7q3pT4x1S8m4E=;
-        b=QjyEfqT0v2t7vlYTaeaD1wrGSLmMDVrlKHhkCELAzqu8pE3CdjThie42ccS9fQUucT
-         /pKdaOmmCfk2RQdSykPUgeDmatTICBXASpePAw4qxCC0jj6rKpDXf4rgKrZP+DVT0tga
-         UccyvuPLyeEgSgNwJafmKnGAWEzwFp7+D1OrOjcrLMW91KNQ6iw9CEmcMPYpUVoqsQBq
-         TqvlLyCfUH7x54AL5X8Su/hx6gLZUBLkhAXnunwBsCX8z4Zdl5UzsnS2fNPRpO1UFw1w
-         FxLGZ7bWghPix2Hsa6FbicqMRo7puj6Ov6Cm1HRy+2syM6tqAFU3U4NuG5zkpOjUeucz
-         DMqA==
-X-Gm-Message-State: AOJu0YwrYLh7seMDGsFOGK9VzbyZj1cZjG+ZbEzNrmElwP4KEVfwA4rN
-	IrBK2cv+J6XqTsTEoiS8EMd5O4CC7JCulxQC3bzzwGDIXCbN5xQi0iUJ10BKfg+Gmt1Lhe7v/t3
-	zOu0=
-X-Google-Smtp-Source: AGHT+IEqQsORbKEPBwc7GxKzLveqdHFhySIPjH9d0pLYerJTJHSQzfbXuDTqB97t68n+ZJ8swYNgyw==
-X-Received: by 2002:ac8:57c4:0:b0:43a:bee9:eb0 with SMTP id w4-20020ac857c4000000b0043abee90eb0mr6156027qta.35.1714420039605;
-        Mon, 29 Apr 2024 12:47:19 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id kd11-20020a05622a268b00b00432bb012607sm10735785qtb.47.2024.04.29.12.47.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 12:47:19 -0700 (PDT)
-Date: Mon, 29 Apr 2024 15:47:17 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/24] ewah: implement `ewah_bitmap_is_subset()`
-Message-ID: <Zi/5RWSFTFadna55@nand.local>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <1347571ef4ca6329de58394bfea71927c8e08151.1710972293.git.me@ttaylorr.com>
- <20240410180505.GB2260545@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="QVsOGLfe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1714422996; x=1715027796;
+	i=johannes.schindelin@gmx.de;
+	bh=ahhAxH2Qsxt9Ek7u+vPaL2plf3Uk5ambclFYm8DEeZI=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
+	 Content-Type:MIME-Version:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=QVsOGLfe7BfHBwMt4HaKjeatng2gIqwXPRR4G/nwVLdRrHx4uztD8CCzKNogXfC9
+	 0P/qqLseDwaaixyuUFthPT9CNWIRf1ohNPYGdNUo48x3IPOpys6DCRu89I+da+7lk
+	 lfHsUJCTZd3cUVg3U16LBkQzDM1/CrRQSDeQySZTVsKb8PkIy1w30NORkUWEbBq3t
+	 nLwgEhyTry0t9l9qb1sN2f1gyoGG/uXhZdlvPjhSfWYlXbAOMy3v/o3LyFV/0n2nM
+	 zcL/2wUiDNiq51vinEO5JH4h9kpX2J5VKDiAA0l9ounQtcWMb8P9e46oOQaq2ewEE
+	 4vTIpYKgOViOoxUBrw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az984-392.r1dl3knd25iuznqlwxibdlge2f.cx.internal.cloudapp.net
+ ([104.46.193.233]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MvK4f-1ssoyr1aoT-00sv1q; Mon, 29 Apr 2024 22:36:36 +0200
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git-for-windows@googlegroups.com,
+	git@vger.kernel.org,
+	git-packagers@googlegroups.com
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.45.0
+Date: Mon, 29 Apr 2024 20:36:34 +0000
+Message-ID: <20240429203634.3627-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.43.2
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240410180505.GB2260545@coredump.intra.peff.net>
+Fcc: Sent
+X-Provags-ID: V03:K1:H0iVHkNl007MfLwlhfI7T3piey/qYxFylwqmAIAKnr4mhS8gHL0
+ 9aG9rd5+Ww+8ObgJ4ZCrAVXqSZO2u82bWAqouTq61EfO5UO0WmhbTSS0VFgFIGjDm/AFvw+
+ 2tgeEqNCK00Mj/tJsgdw81YQbG6rLSCWH/QXR+nc6LJ2b6xbTRYsEzUWe1TAn5rvU3rWJ0/
+ IG9ha2ksIwHDvmy4Sx+HA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:4jaCBvmfcqs=;/Nob62ZkKHMasomnsTHHCS07qJk
+ 4wReVS0NhxLLfM19L2uwuBjdyidYZzLpTuFVbcJDNwTNl8G5RQVScrk4hmjjIAhlqJQeePRls
+ w+4ycZT3lGhLT5pe7JviQVNN+XmqHHM5Lvk75bKCCjvTB5sMdkjbsNY3IBR5Z4PPeXQ/x9Nzb
+ 3Z1v1xtavnJn3p8gPcfWt80ZtNiASGztLd0HlQhVOseipCbFQ6EOB+zLKkefjHF6mOqORliRz
+ +a1AplXBYU6mfu81llL0Z8U8x8fR3ktuzbnFLVZs5Lcw2j/ONOAZGMZ3sSNeWBjuSePQK+od6
+ hB9X1yib75JJEUjxmklRpsUo1z+HsCUo7RGRtG5pIb2QgQVvHz5ZM/fyv6WjIKpkI0y4qCmyJ
+ BMa3nSphhFvq7d8VmNF9747viLC4PpONhDGAjVgMNtQJJ3Qd/86HMylORjXSmyTx16dZy0VOm
+ oSL6JeBKcJf5VDZtKzDxMjzvIyNcytNLbyfhDXPwJCbN4+WA7qjeqrEKe4YK5bu/GpkhDf48H
+ SKCFB8vYsJtvaBSlRrGYf9hTfoXTiJQQbMHaa1++LKEgNSwPwGx8/1Y+YaXcozbZz1lHYdw5O
+ 2iNhrb9xB4fDBktrAIS1cyHwK765/Krtl3hnTUher2lEr/nBFDglrmpXKF26cma7p5D92ZDcy
+ +N/6vmICUcQBC5BebPMO+85vEjrWfnUUpqaC/JDvQ4YSvT15cxNiY5VeAwJDUGMLRaJWbozZM
+ a+mLGPNBYrEToGghj13pPIAc7t0Tlcogudk3oYOatOfLBJhXn8uReKuSVXQ8ALPTvwT5NsgKy
+ 2E6SzfbkqyHMLwTGvCB3GPIfycQNPGBCilp0TFyucn+g8=
 
-On Wed, Apr 10, 2024 at 02:05:05PM -0400, Jeff King wrote:
-> > This function makes use of the EWAH iterator to avoid inflating any part
-> > of the EWAH bitmap after we determine it is not a subset of the non-EWAH
-> > bitmap. This "fail-fast" allows us to avoid a potentially large amount
-> > of wasted effort.
->
-> Makes sense, as we have an expanded bitmap_is_subset() already, and this
-> should be more efficient.
+Dear Git users,
 
-Yep, the idea is that we already have a deflated non-EWAH bitmap in
-memory, but we're comparing it against a potentially large EWAH
-compressed bitmap.
+I hereby announce that Git for Windows 2.45.0 is available from:
 
-If we can determine early that the EWAH bitmap has bits that are *not*
-in the non-EWAH bitmap, then we can avoid inflating a large part of the
-EWAH bitmap.
+    https://gitforwindows.org/
 
-> > diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-> > index ac7e0af622a..5bdae3fb07b 100644
-> > --- a/ewah/bitmap.c
-> > +++ b/ewah/bitmap.c
-> > @@ -138,6 +138,49 @@ void bitmap_or(struct bitmap *self, const struct bitmap *other)
-> >  		self->words[i] |= other->words[i];
-> >  }
-> >
-> > +int ewah_bitmap_is_subset(struct ewah_bitmap *self, struct bitmap *other)
->
-> It wasn't immediately obvious to me if we were checking that "other" is
-> a subset of "self" or vice versa. I wonder if we could use different
-> names here to make it more clear (though really it matters more in the
-> declaration, not the implementation).
+Changes since Git for Windows v2.44.0 (February 23rd 2024)
 
-We check whether 'self' is a subset of 'other', but I'll document it
-here for both functions.
+Git for Windows for Windows v2.45 is the last version to support for
+Windows 7 and for Windows 8, see MSYS2's corresponding deprecation
+announcement (Git for Windows relies on MSYS2 for components such as
+Bash and Perl).
 
-> I think bitmap_is_subset() suffers from the same issue (and is even more
-> confusing because the two have the same type!). Maybe just a header file
-> comment would help?
+Please also note that the 32-bit variant of Git for Windows is
+deprecated; Its last official release is planned for 2025.
 
-Yeah, agreed.
+New Features
 
-> I think your use of the phrase "proper subset" is a little confusing
-> here, as it is not a subset at all, let alone the distinction between a
-> regular and proper one (in the mathematical definitions).
+  * Comes with Git v2.45.0.
+  * Comes with PCRE2 v10.43.
+  * Comes with GNU Privacy Guard v2.4.5.
+  * Comes with Git LFS v3.5.1.
+  * MinGit now supports running git difftool.
+  * Comes with OpenSSH v9.7.P1.
+  * Comes with GNU TLS v3.8.4.
+  * Comes with Tig v2.5.9.
+  * Comes with cURL v8.7.1.
+  * Comes with Git Credential Manager v2.5.0.
 
-Thanks for catching, this should definitely say just "subset"
-(indicating that 'self' and 'other' can have an identical set of bits in
-each and self is still considered a subset of other).
+Bug Fixes
 
-> > +	/*
-> > +	 * If we got to this point, there may be zero or more words
-> > +	 * remaining in `self`, with no remaining words left in `other`.
-> > +	 * If there are any bits set in the remaining word(s) in `self`,
-> > +	 * then `self` is not a proper subset of `other`.
-> > +	 */
-> > +	while (ewah_iterator_next(&word, &it))
-> > +		if (word)
-> > +			return 0;
->
-> OK, so here we keep expanding to see if there are any bits set, meaning
-> we may read past a bunch of 0-words that we don't care about. I suspect
-> this could be optimized to just ask the ewah "are there any bits left?"
-> but I don't think we have an easy function for that. And it's not clear
-> to me that it would produce measurable speedups anyway, so probably not
-> worth worrying about.
+  * Since v2.14.0(2), Git for Windows' installer registers the Open Git
+    Bash here and Open Git GUI here context menu items also in the
+    special Libraries folders, but the uninstaller never removed them
+    from those folders, which was fixed.
+  * A regression where git clone no longer worked in the presence of
+    includeIf.*.onbranch config settings has been fixed.
+  * Apparently some anti-malware programs fiddle with the mode of
+    stdout which can lead to problems because expected output is
+    missing, which was fixed.
 
-Yep.
+Git-2.45.0-64-bit.exe | 7694a2118ac80146636be1ee751ee81d2aea7e9106d29dd8fed06c32cff0c59f
+Git-2.45.0-32-bit.exe | cc880827837e773835a51a32099cc919d37d10ce090734c183dc6713681dc382
+PortableGit-2.45.0-64-bit.7z.exe | e9caf1cab7d2c1dc531a07c48445d84a8b27fae129ca7244e0d4f7b1e4949f60
+PortableGit-2.45.0-32-bit.7z.exe | 652b5d6cb381ee9df6d6d411d8e6c02284d3b84ac6c5b5ced50a1d167d9f825a
+MinGit-2.45.0-64-bit.zip | f607bbd459bae73369e6509fe849c4c48152f4d33b0021d5881e1e9e7ae79e26
+MinGit-2.45.0-32-bit.zip | a9a76b14f3d80be346e93e053d65a0ea6d45cfba310076ac033b7f24a09e700f
+MinGit-2.45.0-busybox-64-bit.zip | fccc3749e5412330c191da686a9d4bd817ca0844725c9ab80a73c5918af9b232
+MinGit-2.45.0-busybox-32-bit.zip | 1c89a0a7d7d9c8d17e6cd861893e8a6b864b436fe8241532c53748c1308890fd
+Git-2.45.0-64-bit.tar.bz2 | 6d1bbeaa92eb351e483c8be98bb0232ba4eedca938172761bc4efd9902e0a40b
+Git-2.45.0-32-bit.tar.bz2 | 1316509c7c6e6b09d1cebe7e1ed9fc463a79455e8f5379cb840ef3e8dcc5634e
 
-> As above, ditto on the use of "proper subset" here.
-
-Thanks, fixed.
-
-Thanks,
-Taylor
+Ciao,
+Johannes
