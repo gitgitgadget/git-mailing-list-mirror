@@ -1,133 +1,103 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B7910A3B
-	for <git@vger.kernel.org>; Sun, 28 Apr 2024 23:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B1C7F
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 01:09:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714345640; cv=none; b=XZSdk2NlOgzSfkiSRyaR8a5PFrK5xn0QgZrntg2V+7TLfrtJDXYvB23bAXw9ObyYGAchOYdXRYYRtGpSgo6dgVGFylHJw+PDfrhvWfV0wzwdfpKMkpX3xugR7ixd6Tbb1ancOSAM0tNjRfEVOvspoKucdoUT6kg2+HRr1rAmF9k=
+	t=1714352977; cv=none; b=khMBAZgp2p51kFdPkDfoGJEtHhQfpE9LHXg/8RGdBEJwznqk1zNgI3dn7T2Fs+HGntiRz0ul+VUed2ua9N3HApu8uzq2u5pN9kD70X12u+bqfSsFJ/QP9e7IE34YFeSjcYvxUeM5N3DeLGWWsN0uu6sv3kDhDd8IHq9xb4/Xa00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714345640; c=relaxed/simple;
-	bh=jleAAB3ICdOYDARna3y+zWnM9ZNtCXRhvsC/ylP1J94=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DTeX+7tuyoI4W+RQefO7UrkBZI4F4nQrUxb6od6oAbi2+rgcioxR0prqXl7OR1c4QL3pU7iKiz2yHRN5Xl49k2CvrQizpW+e8Ib72CdKBCa7rfNqZGZyud/cVKaDWxf9HJn04ACODvRDMfXL7ZVZxr4i3JBrtXZ/u1xpTmMDOqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D7MFTWbi; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714352977; c=relaxed/simple;
+	bh=kQ6egc/re2UKSM7ZtDgbu7f5Z0areQgaZxIC7kx98Po=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Rbzebvj3N/Ns8PDZb6RJl4NUUwxDAqY8KVDP4dIJlGMD+VOAqr3spKAA6PUcQ6qzolX45xcHKVA6X3g5vOVtM0eBjl1m1AQRBqPI0SOSD3ZNyth5gEZuB4/aaTbMNDYiib+APJb6jS80iEyt4fX1S5so9I4vuqdaBzTcyz3gS4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=bkJahB5u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M/8YsYO8; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D7MFTWbi"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 782F630C14;
-	Sun, 28 Apr 2024 19:07:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jleAAB3ICdOY
-	DARna3y+zWnM9ZNtCXRhvsC/ylP1J94=; b=D7MFTWbi5Ma4h6SKPeufQhvN68+w
-	hiudT6Glm7kj/9gQ1vrnMucucdecPxNT3KKqjietr1QV/e/jC6zvHNSPuvGcZrlN
-	5gqJLT1glxkLYRBtJ2l00m5qmkwkSj3z2kPxx+1WmouBR/rgAI1IgesS6QjeCvpN
-	+7G0mxGB6q2Y8y0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7149A30C13;
-	Sun, 28 Apr 2024 19:07:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DAE6430C12;
-	Sun, 28 Apr 2024 19:07:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Toru Okugawa <castor.4bit@gmail.com>,  git@vger.kernel.org
-Subject: Re* Unexpected behavior with the rev-parse operation
-In-Reply-To: <CAPig+cQ39Z+WjThqkxCKgOUfkZyB6PG-6RhHBYhinp-ZY4dxKA@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 28 Apr 2024 14:08:47 -0400")
-References: <CANHPH1-6mbWdt_FLsrDEB_XVb4r3yTYMLLPUyDrL6tmS7jZgqQ@mail.gmail.com>
-	<CAPig+cQ39Z+WjThqkxCKgOUfkZyB6PG-6RhHBYhinp-ZY4dxKA@mail.gmail.com>
-Date: Sun, 28 Apr 2024 16:07:11 -0700
-Message-ID: <xmqqedap2ijk.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="bkJahB5u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M/8YsYO8"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id CC5F1138024D;
+	Sun, 28 Apr 2024 21:09:33 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Sun, 28 Apr 2024 21:09:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1714352973; x=
+	1714439373; bh=1kqwTcICpRDr0yYEBpjWVlsUbAVb4ddwLIBZ7o0GhXQ=; b=b
+	kJahB5uw8FrYwoFCh7SEVN9szayVoU+S8VwblE9ApFYFusdzPWBhs+epeLhVMxT/
+	KcQ20Wl/8GaXBDF7Kop95DwW0Zt2LzoCnMLLVi1qzwcCOMjyZTB7NQl4WmtgmcX+
+	5z2idyxq1bU3W3Rt28y3Fszk4UR5qwAc3HURl3Esc5EE1ffSj+XTKop2kfZ+8KKt
+	hBxTGE3uy6oxez4RXuZvqptL+BRxykx02Bmt++n/4Hgl+fEgqN0c4+W79vKkvFt2
+	gOfxZs2f6X2UVJivMvvugnXupQDrPx2/b5emF4bXPrexdl1wIAKEhtlhfhSCaUf1
+	9sDh/kz6ldIpFEVYVajzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1714352973; x=
+	1714439373; bh=1kqwTcICpRDr0yYEBpjWVlsUbAVb4ddwLIBZ7o0GhXQ=; b=M
+	/8YsYO8xdO8R7/UEpENZwPqErQN3YMn9qMYLnU7mqfph8g7KfB1mVNbsqjv2Y6jG
+	FWKz9dAg+veuP5ipkXa/7HgoyuIbKfyS1xoWvUrtHbjGixrdzs5f6to94bmnS5Q5
+	SwXXDO+tmm9mm5+BXEy4Y/lerX+WrXdH7ONkRPgVFfbKwx1nWB3EFMJjCRMkhKSG
+	CpqUisjwF0Z3fI+f0mH6R2VLGJDt/8R3Z55obZwNZMaIJ8xc/vLCMXVqM33M9iVK
+	VON3wpsotXWT2igLaXqYytolfAlsF9t1m8HD6Y2yJgUhIdsoUz4SPyJqzmGgXpZ+
+	gT6uhjYfn9tB3Y4apZOSg==
+X-ME-Sender: <xms:TfMuZjWob_ZZDQv4ciZBF7d9Ujd1lDEUQlvdKyoJj8kD06FkMCIyxQ>
+    <xme:TfMuZrlYfI27y9__o-LnyjVQVA022fOKD_BB2r73nXgH_7J3Y5f_El6fMrq6MSOUV
+    4pGt4-uxkmVbqbGJQ>
+X-ME-Received: <xmr:TfMuZvZUlCVlclZAzfwKMVOuRHcvETZqdlw8mKdcPUKS9RhHzxiiBjlXBTvrQlUx7yZzvkCTo28CS0oyXjvrE7Bsd7ICl4SVDXStNJ5yNepp3aPd2bfk9CHv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtjedgtdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
+    ertdertddtnecuhfhrohhmpeflrghmvghsucfnihhuuceojhgrmhgvshesjhgrmhgvshhl
+    ihhurdhioheqnecuggftrfgrthhtvghrnhepleejtdeuudfgteegfeeiudehleeutedvhf
+    euueeuheevleejkeelteetfeevhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
+X-ME-Proxy: <xmx:TfMuZuWcKDCfuxpuiSGeQ4deNSBv4UJ2CJoR6VDF40qQFg12QqXFEw>
+    <xmx:TfMuZtlPoHMqU0P_YXrr6752wj-a5AeVT4OXhJ3opAq6U5V2du4vVw>
+    <xmx:TfMuZreR8Y0Xz9LGCL491qRPUQyTQ6gsTXshHmGLPg6FJKHVP5Tslw>
+    <xmx:TfMuZnEGF_IVgp_xLGqBGjQ6lhvlMiZw6n8yfvL8F232qEhsFjMf2g>
+    <xmx:TfMuZiwfaod08zxB6Au2pcnK4BtvEi2Qz03J_Riy9eYQod-msfWRnlrV>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 28 Apr 2024 21:09:32 -0400 (EDT)
+From: James Liu <james@jamesliu.io>
+To: git@vger.kernel.org
+Cc: James Liu <james@jamesliu.io>
+Subject: [PATCH v2 0/1] advice: add --no-advice global option
+Date: Mon, 29 Apr 2024 11:09:24 +1000
+Message-ID: <20240429010925.93205-1-james@jamesliu.io>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240424035857.84583-1-james@jamesliu.io>
+References: <20240424035857.84583-1-james@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 0CD24FA4-05B4-11EF-9D52-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi,
 
-> On Mon, Apr 15, 2024 at 9:58=E2=80=AFAM Toru Okugawa <castor.4bit@gmail=
-.com> wrote:
->> I have encountered some unexpected behavior with the rev-parse operati=
-on.
->> ---
->> $ ls -a
->> .  ..
->> $ git rev-parse --is-inside-work-tree
->> fatal: not a git repository (or any of the parent directories): .git
->> ...
-> ... This
-> means it is your responsibility, as a script writer, to suppress or
-> capture the error message (whichever is appropriate for your case).
-> For instance:
->
->     if test git rev-parse >/dev/null 2>&1
->     then
->         echo "in a Git directory or repository"
->     else
->         echo "not in a Git directory or repository"
->     fi
+This is v2 of the patch series to provide a mechanism for silencing all
+advice hints. Based on feedback, the change now adds a `--no-advice` CLI
+option which works independently of the individual hint toggles.
 
-All true.  It may however need some documentation updates, though,
-something along this line, perhaps?
+James Liu (1):
+  advice: add --no-advice global option
 
- Documentation/git-rev-parse.txt | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ Documentation/git.txt |  5 ++++-
+ advice.c              |  8 +++++++-
+ environment.h         |  1 +
+ git.c                 |  6 +++++-
+ t/t0018-advice.sh     | 20 ++++++++++++++++++++
+ 5 files changed, 37 insertions(+), 3 deletions(-)
 
-diff --git c/Documentation/git-rev-parse.txt w/Documentation/git-rev-pars=
-e.txt
-index f9d5a35fa0..a62d798744 100644
---- c/Documentation/git-rev-parse.txt
-+++ w/Documentation/git-rev-parse.txt
-@@ -18,8 +18,16 @@ Many Git porcelainish commands take a mixture of flags
- (i.e. parameters that begin with a dash '-') and parameters
- meant for the underlying 'git rev-list' command they use internally
- and flags and parameters for the other commands they use
--downstream of 'git rev-list'.  This command is used to
--distinguish between them.
-+downstream of 'git rev-list'.  One purpose of this command is to
-+allow calling programs to distinguish between them.
-+
-+There are a few other operation modes that have noting to do with
-+the above "help parse command line options" added to the command.
-+
-+Unless otherwise specified, most of the options and operation modes
-+require you to run this command inside a git repository or a working
-+tree that is under control of a git repository, and will give you a
-+fatal error otherwise.
-=20
-=20
- OPTIONS
-@@ -32,11 +40,15 @@ Each of these options must appear first on the comman=
-d line.
-=20
- --parseopt::
- 	Use 'git rev-parse' in option parsing mode (see PARSEOPT section below)=
-.
-+	The command in this mode can be used outside a repository or
-+	a working tree controlled by a repository.
-=20
- --sq-quote::
- 	Use 'git rev-parse' in shell quoting mode (see SQ-QUOTE
- 	section below). In contrast to the `--sq` option below, this
- 	mode only does quoting. Nothing else is done to command input.
-+	The command in this mode can be used outside a repository or
-+	a working tree controlled by a repository.
-=20
- Options for --parseopt
- ~~~~~~~~~~~~~~~~~~~~~~
+-- 
+2.44.0
+
