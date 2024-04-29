@@ -1,176 +1,116 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEFA75810
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 14:01:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4063FBAF
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 14:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714399300; cv=none; b=hz2N/mh7O7hRjM72ePh/FAxMlAB52e7pgyxa39FtAWiEvwH/qbDLfg/6KIYZijHvUOK+oFJ2xgsr3ehjw4kP8HIBVQ+1BvB5Op1JP0ABCLnXlPrlYt+2cpAasvYj+YFKDSu/4uxwgys4CrraD4LJz0yJW9EgRAvIW3zSEDpbzI4=
+	t=1714400704; cv=none; b=f08MnhadKzImYeAw17NTsQWYjYmLHNuvCH+TU3n+AmhXXkaLpvi/90Np0+32Ta6B09Na4hOqLB5s6dTHG1aeeE8/5xttrvmGChTGXlcWGSuAxgNHZD9m3p6SzoyP0BQeQFW4UHqpxIwWPQNI+dtNWGP7/LwnzJVFACIIENAOpYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714399300; c=relaxed/simple;
-	bh=6abAiO4enpy7KvI6tSeAIkXLRDL/v4PfD2zasOMrvRE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TY4VhNxDzOmayq2vAk74xqhjOG+YR4IhkdyspJw91TpO4kTCr0uc3TXedLRP+1YLm5nta2qlFsGcRLkI2Act2cD9JPhy1S01SI4VAMVPv63OMDJKY1eWWZuX2gKZ5C3GeRdTw3y+0Il5wYnK2v6VrTyPUM2v630auslb6U9LTTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N0cRJnbe; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714400704; c=relaxed/simple;
+	bh=8IqSXxM0lyLlezo4jtOmriLCQq9+ncFmz7Lg8s6Z2EY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n3iQDER7StRmk8jcGn/SsmX+nkarlCnlyTOm3l745PJMo6NWyAnQQ/mL/csiYpioMT/FsyKsgJm9uTFfNOcaeAnuLc7JvOFwCPxqA9ASGxV8AIFHO/7Vwr3QpaQ7sl8SdEEkW1K3AR0J7If72IRSLIm8Invpvk01imSeOTNT3jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yadavpratyush.com; spf=pass smtp.mailfrom=yadavpratyush.com; dkim=pass (2048-bit key) header.d=yadavpratyush.com header.i=@yadavpratyush.com header.b=qtiFWGOV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HZhcdpkK; arc=none smtp.client-ip=64.147.123.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yadavpratyush.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yadavpratyush.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0cRJnbe"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2dd041acff1so51588791fa.1
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 07:01:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714399297; x=1715004097; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=twcKXdtBpe4RlJOL2mbeeJpvfewxqaj4xqF5T6voxI0=;
-        b=N0cRJnbe+UBxAoWAE2CITodIgdZuqEw01g8SUFGYtmY8LppMXzqOGmLuCRYVoGR7K1
-         xj+wmsVK53L67mQBbUTD5hU6ocQaWwqahIaNxNMrn+sgWHyAm605rvo+0pT+lQ6Wd3bc
-         uMIu5Yd10vZK3gPz9thoqh/DxPjclT206tRznkoN2y+y1mAwCQG+7Al/AE3Ckpn0nPZM
-         lDAGE44TSmO+Im1SoWWFY8M4TeVJgb92fumqFjO4xs5KmkDxBS010ngFE/Rx9rl7NdGz
-         Sk4PbJnaccXQD8lN8PSU/9HledVQwpXkBOv7AFZ00Z9lG0pHngVpfWPhxI2XdovX6GTt
-         Qo3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714399297; x=1715004097;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=twcKXdtBpe4RlJOL2mbeeJpvfewxqaj4xqF5T6voxI0=;
-        b=pZsp+S9BIbu8m9hdhgB/7O8A3ElXDqwwrjrCiv2r2bqzF2LVi6sITVFj48z+iqexDE
-         3guarEfgjfuKyyniV217JpahwFKOHRjMOTLVfN6TIk1Z6nmxEhNr+Yzf+No6W53NokR3
-         vE8Vfm2hngfBYgvm7fbEezFpc6Fm33sDFfJ3zEFre9OoDCsMo8UOzenf0/sV7Vl8r0EN
-         ZUGBUwLSk1/9218TUIbN6QSWrQ1bCGkI1Kj74/l6KKsEOcvMj0aAVkiulh1hDgbz+ZY7
-         tCAO1I8ufMQbVmcfqZdyUG4s/WkmnRLdsTtbs8zTtUt9cGj2fryofUyYBPG5WFwstvdW
-         hYnA==
-X-Forwarded-Encrypted: i=1; AJvYcCV081EwXmE6f4sscYAcyd0unj+2UNDnPMUZJ7ARY6CL1rIpg7n2fUfuC8PeoPdYg+RU5oh1+C1AtTautpQaKkyhi69/
-X-Gm-Message-State: AOJu0Yw6PsIYDD2Cc1bBZiVTLZGTd8xDCBTbDrYwu7vG+3ifDGFQAbZ5
-	d376dJaH8aVAihkhYEzKQs9vu8jCOW/+TQ4Dj0IJwuLjBLR85hjLuqpiCjM7ZG+reWTVQ9mN/xk
-	e/EDU+Wqvi449FSsd+a45WMKhwpg=
-X-Google-Smtp-Source: AGHT+IG1n4W4/BtmsbXCGpw9sHnuVAg3MTxEEehdJZ7iFaG/wdiLGSuPeyJIE9RTLuSpdXctP9lu5BgA96GzwWWjGvg=
-X-Received: by 2002:a2e:98d4:0:b0:2da:6f19:d359 with SMTP id
- s20-20020a2e98d4000000b002da6f19d359mr6052762ljj.2.1714399295975; Mon, 29 Apr
- 2024 07:01:35 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 29 Apr 2024 10:01:33 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <73632d75-b82d-4853-93fe-3460fdda3325@gmail.com>
-References: <20240423212818.574123-1-knayak@gitlab.com> <20240426152449.228860-1-knayak@gitlab.com>
- <20240426152449.228860-2-knayak@gitlab.com> <73632d75-b82d-4853-93fe-3460fdda3325@gmail.com>
+	dkim=pass (2048-bit key) header.d=yadavpratyush.com header.i=@yadavpratyush.com header.b="qtiFWGOV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HZhcdpkK"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id 423981C0017B;
+	Mon, 29 Apr 2024 10:25:01 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Mon, 29 Apr 2024 10:25:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	yadavpratyush.com; h=cc:cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1714400700;
+	 x=1714487100; bh=EnwTU7GdY8HfO3Tilyk5/kkjS9od6dwurXnhx73LT04=; b=
+	qtiFWGOVYgCF955m/mCkzpvZ4A8hfEt6NbgUvqqA2TSWUKdJANFpwVkV8ZEm8zGd
+	T1Gkr/IsEpGAtuDjdKnUfldXjNhyjwZ3PFZo64vZgKcdbvpcAvPXIgA7RUxSUINv
+	HyWZhElj1XqFm8PklUfYlAwkdVEmvSDMCWrzHu/atSOFXaWgM8fu/DH+BvwjE8KU
+	t+IAvOS8T4F23kfS0MzQVH9DIV5KjvDK0eZtvoIqwFN8XsAFAewUohi4iylyrG4O
+	SJ11V8qZ7B5FphdIwe12N+nC8hemEvuPz7cwg4m6BBl6G0VaeV04f+0BVElh7Qsp
+	pN8eO2/PUyTx1uAxyP2tjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714400700; x=1714487100; bh=EnwTU7GdY8HfO3Tilyk5/kkjS9od
+	6dwurXnhx73LT04=; b=HZhcdpkKb9PbAu5UL5F/R+bUedSJ7E/AEQ0oOxLHwUCH
+	Xp3rOLvjCoNEs7JV8DCDOvW8KIvc+apMkEsvjb7q3JByN046jk801uFDKG1cFh3P
+	HLiVsYIASOwY8UlbOZAGrS7HiDC6ZRdyh0mebistRUIIGwNPIZAs17f58UuCVsJq
+	bGuD6wXTPSkoNKeBu8pT0ObbrxsnGbn2RQRHUjEsZs2MsasX0FPnycAlVEULCSXT
+	NW/flByJ3yQWDd1uooZY672w9pSYgEAkoNSufIYD5yzwOXX4wuGsJldQTxq73KMu
+	gLsbQfDI61aUC+Z2PP7arNbyPxqBsY0nd8nFyuL0tg==
+X-ME-Sender: <xms:vK0vZpgjiFte1H17_ONS4kRNsLj5AiZ4QTzVRW1B-9v9QrZwRJgGNA>
+    <xme:vK0vZuDTBzE6WPLjbcAqcUDz4VBsBFBXQF-BknN2FZrdpbVbbQsussYrp2H6p1ocd
+    zZ9Ych8j35UE3VtuzA>
+X-ME-Received: <xmr:vK0vZpHOkHKmreGNiJOJHtqyArEgMFwUuXwHw279qvrWu5HKk5Zh13eaW1xSM36ZSudFCNW6dFOIyUB8F0sa37oZ3P6JVx-3GJYFAB7BqvhaOgNyu8knyUnXDYR7gjTdOVK0Ij7JcKCZwsPuwnrCpPk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduuddgjeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttd
+    ertddtredtnecuhfhrohhmpefrrhgrthihuhhshhcujggruggrvhcuoehmvgeshigruggr
+    vhhprhgrthihuhhshhdrtghomheqnecuggftrfgrthhtvghrnhepvefgffeuffelffeive
+    eghfffffeikeeivefhvdeuueetfeekkeegtdehheeuueeknecuffhomhgrihhnpehkvghr
+    nhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehmvgeshigruggrvhhprhgrthihuhhshhdrtghomh
+X-ME-Proxy: <xmx:vK0vZuSlzVFNPnIvaYEof10baGTfKutJ0w1h15gtNGIAFA_oJQ0q3w>
+    <xmx:vK0vZmw-DnpzN-jvXR1Xzr2zjCI2jkE_GoDpc4VUDSKMy_Fk5BODVg>
+    <xmx:vK0vZk44nHjgyCSGGenwf_S2z2TBKf0DrFHH1GTnO6AN5zEzYYusow>
+    <xmx:vK0vZryen7Nz2nKOqvYEJsWGbv0HsZsC0yOpwLrbxLEsU9-rAsHN-w>
+    <xmx:vK0vZgvJR1WS7_7J6RFiVDth4mYk-Wdle8oM6sHI0ky44x05Kfww2wIx>
+Feedback-ID: i93f149c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Apr 2024 10:24:59 -0400 (EDT)
+From: Pratyush Yadav <me@yadavpratyush.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Git Mailing List <git@vger.kernel.org>,  Pratyush Yadav
+ <me@yadavpratyush.com>,  Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git-GUI change of maintainership
+In-Reply-To: <0241021e-0b17-4031-ad9f-8abe8e0c0097@kdbg.org> (Johannes Sixt's
+	message of "Sat, 27 Apr 2024 16:27:52 +0200")
+References: <0241021e-0b17-4031-ad9f-8abe8e0c0097@kdbg.org>
+Date: Mon, 29 Apr 2024 16:24:59 +0200
+Message-ID: <mafs0r0eob610.fsf@yadavpratyush.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 29 Apr 2024 10:01:33 -0400
-Message-ID: <CAOLa=ZQ1HTRqsCrhw=PRYaAY0-d_w2Ufxf-ucBCz4P2ws9hFcA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/7] refs: accept symref values in `ref_transaction[_add]_update`
-To: phillip.wood@dunelm.org.uk
-Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com, 
-	ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000000a4ee206173cb19f"
+Content-Type: text/plain
 
---0000000000000a4ee206173cb19f
-Content-Type: text/plain; charset="UTF-8"
+On Sat, Apr 27 2024, Johannes Sixt wrote:
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+> Hi all,
+>
+> In [1], Pratyush has expressed the wish to hand over maintainership of
+> Git-GUI. Since Git-GUI is an important tool in my toolbox, I would
+> volunteer to pick up the task.
+>
+> Pratyush, please let us know if this would be OK for you.
 
-> Hi Karthik
->
-> On 26/04/2024 16:24, Karthik Nayak wrote:
->> From: Karthik Nayak <karthik.188@gmail.com>
->>
->> The `ref_transaction[_add]_update` functions obtain ref information and
->> flags to create a `ref_update` and add it to the transaction at hand.
->>
->> To extend symref support in transactions, we need to also accept the
->> old and new ref targets and process it.
->
-> s/it/them/
->
->> In this commit, let's add the
->
-> This commit adds?
->
+Yes, certainly! Thanks for taking this up and thanks for your work on
+git-gui in the past :-)
 
-Thanks, will add both the above.
-
->> required parameters to the function and modify all call sites.
->>
->> The two parameters added are `new_target` and `old_target`. The
->> `new_target` is used to denote what the reference should point to when
->> the transaction is applied.
->>
->> The `old_target` denotes the value the reference must have before the
->> update. Some functions allow this parameter to be NULL, meaning that the
->> old value of the reference is not checked.
->>
->> The handling logic of these parameters will be added in consequent
->> commits as we add symref commands to the '--stdin' mode of
->> 'git-update-ref'.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->
-> Thanks for updating the documentation, I've left a couple of comments below
->
-
-Thanks for the review.
-
->> diff --git a/refs.h b/refs.h
->> index d278775e08..c792e13a64 100644
->> --- a/refs.h
->> +++ b/refs.h
->> @@ -648,6 +648,15 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->>    *         before the update. A copy of this value is made in the
->>    *         transaction.
->>    *
->> + *     new_target -- the target reference that the reference will be
->> + *         update to point to.
->
-> s/update/updated/
->
->> This takes precedence over new_oid when set.
->
-> I thought it was a bug to set both new_oid and new_target.
->
-
-Yup. fixed both of these.
+Acked-by: Pratyush Yadav <me@yadavpratyush.com>
 
 >
->> If the reference is a regular reference, it will be
->> + *         converted to a symbolic reference.
->  > + *
->> + *     old_target -- the reference that the reference must be pointing to.
->> + *         Will only be taken into account when the reference is a symbolic
->> + *         reference.
+> I will let you all know if and when I have set up a repository to pull
+> from or to fork.
+
+Would also be good to send a patch to update Documentation/git-gui.txt
+and Documentation/SubmittingPatches.
+
 >
-> Does this last sentence mean it is not possible to assert that it is
-> currently a symbolic reference? I thought the point of being able to
-> specify the old value of a ref when updating was to ensure it hadn't
-> changed since it was read. This contradicts the documentation in the
-> next hunk and the description in the commit message.
+> [1] https://lore.kernel.org/git/mafs0wmxkcs3o.fsf@yadavpratyush.com/
 >
+> -- Hannes
 
-I see how this is vague, I was trying to imply that the old_target is
-used to check a symref's old_value. But actually, if this is set and the
-ref is a regular ref, we do fail the check. So this is wrong. Let me
-just strip the last time.
-
---0000000000000a4ee206173cb19f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5fac22b5bbee7e57_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZdnFEd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meXkxQy85MUwyZmJ2ajc4QmJ1YlhiUU1aRXIyczNsZApXMWNhWlBPaTNE
-VFNlRDJxVHQ0TWpyUVhvRXFrWG9zTGNxcHlLTVVLZWtDSmtHeDJxaVNkYXBFMXNUS3pIYzJtCjFv
-LzVWRlFncHdZTkY1RkNEeTVsYlhmQTBGNE53Q2hScmMzcWV4d0ttdTJGNXdFU1VkVml4QkpqZ1o4
-dUFkUFUKZGxBNERQL0dMVjhTaWZoNmI5NGYzWHVvS0ZoYXZydWN3MGFqMUpTWVlpaEVqN0pzRWtn
-NVh1TklpWkMvRVUrbgo4RlRGekMzZnNRYUlLM3l3V0FtSjIrNlpWYlNlM2JnYWNMMmswdEVMMG43
-NlJOVFFzYVFUL0NDaXB3cURwRXp1ClRGR2x3bzI5VVJ0V1RwVmltVnNhWWpreDZjNUhMOVliZEha
-OHY1Nno1UC9GWHI4QStORGxKZ0hNOVIyb2RacFcKUWQvbHJKRUFxWFE5dEcvYk5ObW4zV0dxYmc4
-V2FzK2paVWkzUFh2dG1xYXNURlZuOHFKOFdLOEpLSlBqR01wRQpUQ3RsR3Q3eE1Hblp2ZTJqTHdj
-TzZWc0tCTnBBV0ZxNEVweFFjTmZCSldiMENYVXZvckpCdU9wSGZsY08yVlc5CmZjdjljcXZsUFVB
-bnhnRmN1TVdacXBwWDhXaC9weFRZeUdGMUV1UT0KPWFVSHYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000a4ee206173cb19f--
+-- 
+Regards,
+Pratyush Yadav
