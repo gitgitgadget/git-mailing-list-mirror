@@ -1,80 +1,81 @@
 Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E444412E6C
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A21B12E6C
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714372465; cv=none; b=gq1I+DW0HdWzjde1Lv/lH1p2S965xR5HpC8vN+VuHQs6Tiqhq5/4VPsaj2EOsGHkyRqswBO0XyClOSWbjzgFvhcFLeKIR/b0jKJj4qpKCqio9ICWdWY9+pLSF7TH8Kqczh0UlmV7voCE4aQMr6b04e6nyLxcl7thoC3I5mqegaA=
+	t=1714372469; cv=none; b=Jkqr637yVLP5XmVvCLJff3wxUlmR3U/ySXzmb/gSi+qTFSxTlSHSwBpP4SCXIzOiPQPQbR5rjxQc8DIAH0IMyBdQLz1ePAcGiS2wv7Cmjk8LAp1vdaYQfLRK6qOSTw3JXgziQX0Ucx1L7SepsnxH7sxvAlK1dDx21H7y9AjCelA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714372465; c=relaxed/simple;
-	bh=hzAUqwYVuhPIYWWYP8bBt3yVGWUwzLNc6EQ0Ldz8+yc=;
+	s=arc-20240116; t=1714372469; c=relaxed/simple;
+	bh=lq1/Q4NcbAOzb4qnG4cjgoWsOJzEhCV4TB1a9vrV2fA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RUET31IFedmhRZzRWEB3Wl7iKcjL/Wj93FTN/bh+xrr+afpI3zQ+NCcuCSrcVuQCmtdw2VE9c13KfOZ2S0qvu+waujEZ4AsJ87shGED9Z8Ndvi15sODBhO7LhzP/9IA/I8KcLV7kTmdhvuEcvQEv+tyw0eTKsjwEFh5YRD06TNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PAI6k7DX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GrQiltKb; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=qtObgCvPjXRr9psb4k5cBR1KYnd8/gE/Ws2zVYyEZCsrau8NIj4FZ+PtkIBzGrzsV4mtubWT8ZkRqEkTVym/78DO7U2ZqsJD7WZT0LuA+3IwmLDFrgTWI6pHA0mSjveX1xQzm0Cs2ZCyMVU/xk+rtR1D8Z8Ha4GZhu/4CKwCq6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E66zncUk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EXx7dv0m; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PAI6k7DX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GrQiltKb"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E66zncUk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EXx7dv0m"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 02E0D114013A;
-	Mon, 29 Apr 2024 02:34:23 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 37CFB1140136;
+	Mon, 29 Apr 2024 02:34:27 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 29 Apr 2024 02:34:23 -0400
+  by compute6.internal (MEProxy); Mon, 29 Apr 2024 02:34:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714372462; x=1714458862; bh=8g+TjoU8t9
-	ypQnLOQD3udlc1e6VSJOF+bZzXtimWr2s=; b=PAI6k7DXCiYSVzm+g9yOTEcHO6
-	vBR0nmS1CRx2NQzQvlclc6us2fgf2pr434IyWm4I8BiqXZff/z1qArgtooK1DVcR
-	lqnn9MQCyjusbm08VQNFZvGwsBA0poV6gypNDrWpfgsifL7S7r6kkjJDdXKmL6CM
-	Gk5KbNkZgMZpLZX4oEgWOUxQd/az7ueq+2C5h3wv9PaPlvvPFk5TwTGeEFrUyXKL
-	6MN1M/3tvP96b8VdMZuhI3r2A0bYNuCTkFE8x8khCeigWYjkhohAr5wLNC/H5A55
-	9crk9QGxYSxxlSD2lzLwizeo9DwHu3RHEKuS2krS4IfqLfHbSsXfciwRw4fQ==
+	:subject:to:to; s=fm3; t=1714372467; x=1714458867; bh=u2I5oCWjaI
+	0xikJwQ7ebCKKH0awgUhxgKfsdpvUWxWU=; b=E66zncUkC3IzVyzVgolzVRVk3r
+	tP3JPSA0zegD6VH/pyatNm10KBDunsmgcsWOJq25hL+bHlUY09d+pzq7WpYxy/tv
+	1NGmOqYtRz1xU7zm6rSQEbt+bUq2qDkHBPNpoUUbcuxqZffbwhwhoP40LxvMukNl
+	D4ZRxSK+JBpidFv8z/tNfZ8hH1QhLHh5lhIf8L+t0pyGbuI/ma3O351lrk3Po+HN
+	Y3LhjXkNqkNqDnNhVspNnF1C9tRSPkJsfjvb4yYTY3BeCyyeuCoFhPPGFW2Ewpqb
+	HyEPUvJ6G6LRHDtGXaUpSCQ5tiqBQJFW8lZ8xk0eJlfOlRc8ZoFtJRnetuKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714372462; x=1714458862; bh=8g+TjoU8t9ypQnLOQD3udlc1e6VS
-	JOF+bZzXtimWr2s=; b=GrQiltKbtDFFdqFCIk/snsUuTxE4EYzF7+DyuUfZK+7c
-	AtedZ7eqtnrvgLQJLPbsiz0WgSk14Nxx0Km61iPbRC2lJtO7kX1mRJUBN/f2tWej
-	1PrRG26gbOayK+Jq7peVfrFrSQnw7k36e9hwZENSCARKaXHBXX7Xe8W89GJs/AJS
-	4WAFFCZuQMs2XzbqnTar6c11B2a07vY60cc2jYlKw8f1gMYiN4gZpkKBHIlUSDVz
-	9zT1d2drlT/nL3atOTAdLPXF5yDuCXP4na0BxkUzYMjBc1jK5NI02i2yBZ0mcms8
-	z46NXg+8UJ9vANd5LWyZ55t7uKtUQbH5mDNZPn3eTQ==
-X-ME-Sender: <xms:bj8vZsrwAGzSHtnJqONy1uUb5w4-mTytXa3UV1HSgcej7GDju_P_8Q>
-    <xme:bj8vZioe6kKJZfmN2Uk42YcJmdfq_tlZStcyJXf0qJrvoMoXMXbHyaqUSefVUEkQ4
-    sOmq7BFvxBVA_-vig>
-X-ME-Received: <xmr:bj8vZhPs4AYlKa_fObpyD0u5OXXzNcJMmlgfymNyjWW4EvxTNQTTHajDqLU6t3YdPDP2n8NIfizCpbJWeGonnZ4MbcV5U0WOjJ-uJsU-HSXo7z8L>
+	fm3; t=1714372467; x=1714458867; bh=u2I5oCWjaI0xikJwQ7ebCKKH0awg
+	UhxgKfsdpvUWxWU=; b=EXx7dv0m8bUEWKJ2xIx+5RUy+0OwqcNT1fuL/+yAqllp
+	u3fadJ4b3PDa25Nt4O4sFGSdIL2/uWDQAc64K8rS/clwVKQnjCiiiJTLOwcVHrhF
+	OrFj6TVyYOAdAXYouod4XjAq6911GOpYkiqhW4/cEaPrgn7J2O9h7muPrrPM8PmF
+	CVh7KQJhxIRjIK4fbrNqWEIxCLE2Ah+ecTPTvApL3e18mVDG7mHMtmeZSvvW8Ffw
+	e949+kahE223t2teVWMOoAv4+wFy30GKkhqhbKHv30WjSXZ2x3sbYpIMgReaQMRd
+	zb58+UHHDG6QRTZNLixX0AJ5BykDMQkB30msdy8iGQ==
+X-ME-Sender: <xms:cz8vZonu_ZqSpvLfPEUNjFHedfaczeL70_jKf6ucaNt-Fk_xkUivUw>
+    <xme:cz8vZn3Crx6Rwa_R0k7t7-K3OXR3AvRMAYlnVVcg7kiQeTCSmNm2QUi7mF6zmc4re
+    6J-plyRiCBLCUBS1g>
+X-ME-Received: <xmr:cz8vZmp1LqJiYFAfU7mLuAWul_a3M8iTPIYqO2QOt_GM38UDk4QA-Zm4bLy_t3NWMPBKQWReiPO6ODLcSIO-clg1jWKT4VuLKtEVgdTP0zlfIjB_>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddutddgtdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:bj8vZj4CRWJgyP_BdM2ImD4CW1mBxiqr2Y-9tZjdajYHYv_Pohfjig>
-    <xmx:bj8vZr5s0ejUn-Sy4cnLaP886JZHX3kIFvnFBhoFGq6gXb6dpAMf-g>
-    <xmx:bj8vZjid7MzAOKw8QWAaCiJ-SWdGNv3xBm_GG4NIDUqDUqpTcJEUUA>
-    <xmx:bj8vZl7SPMg6BtJyVdY1nCwx1RX92Op1boLhpFkyg4D-Ep8VKSV0Cg>
-    <xmx:bj8vZu0OB7V02LQ9-2h2KVvGjJ4Le9QoO-69Hwpebytx1WhhadDwm-uy>
+X-ME-Proxy: <xmx:cz8vZkmm4DnCjSq07DRL2OowXn6cooLPoq2SsqvOXSh7I6-U21pA_Q>
+    <xmx:cz8vZm0nnE9Yfsb77qBTTvIFADSH8vuifTfWnaIVBwqELM7vyIn3Aw>
+    <xmx:cz8vZrtTS5A5VOP-MCBCLifWDRYbirc1S4eyi9U4j3uQifqx2Wq2fw>
+    <xmx:cz8vZiU6TuqQANXKqW1IjwdW9APoO0qWdg63G8PwsXWKY6YRQuEWhA>
+    <xmx:cz8vZpQIfYEAyKQyfoGHV71t6mKhy3SrC8Ye8_K87ZXvstaljlN8aJVO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Apr 2024 02:34:21 -0400 (EDT)
+ 29 Apr 2024 02:34:26 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0b9b6f41 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Apr 2024 06:34:02 +0000 (UTC)
-Date: Mon, 29 Apr 2024 08:34:19 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 31754d62 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Apr 2024 06:34:06 +0000 (UTC)
+Date: Mon, 29 Apr 2024 08:34:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 02/13] path: move `validate_headref()` to its only user
-Message-ID: <589b6a99efffc9d3f5800cc3dea8ce3367d1e9fe.1714371422.git.ps@pks.im>
+Subject: [PATCH v3 03/13] parse-options-cb: only abbreviate hashes when hash
+ algo is known
+Message-ID: <9a63c445d21fb6d9179c6fb8a96e0c221ddf16a4.1714371422.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
  <cover.1714371422.git.ps@pks.im>
 Precedence: bulk
@@ -84,205 +85,111 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TS/QWh14D8nFzASh"
+	protocol="application/pgp-signature"; boundary="aycyDSS8vZPyLb5j"
 Content-Disposition: inline
 In-Reply-To: <cover.1714371422.git.ps@pks.im>
 
 
---TS/QWh14D8nFzASh
+--aycyDSS8vZPyLb5j
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-While `validate_headref()` is only called from `is_git_directory()` in
-"setup.c", it is currently implemented in "path.c". Move it over such
-that it becomes clear that it is only really used during setup in order
-to discover repositories.
+The `OPT__ABBREV()` option can be used to add an option that abbreviates
+object IDs. When given a length longer than `the_hash_algo->hexsz`, then
+it will instead set the length to that maximum length.
+
+It may not always be guaranteed that we have `the_hash_algo` initialized
+properly as the hash algorithm can only be set up after we have set up
+`the_repository`. In that case, the hash would always be truncated to
+the hex length of SHA1, which may not be what the user desires.
+
+In practice it's not a problem as all commands that use `OPT__ABBREV()`
+also have `RUN_SETUP` set and thus cannot work without a repository.
+Consequently, both `the_repository` and `the_hash_algo` would be
+properly set up.
+
+Regardless of that, harden the code to not truncate the length when we
+didn't set up a repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- path.c  | 53 -----------------------------------------------------
- path.h  |  1 -
- setup.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 54 deletions(-)
+ parse-options-cb.c       |  3 ++-
+ t/t0040-parse-options.sh | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/path.c b/path.c
-index cc02165530..bd6e25245d 100644
---- a/path.c
-+++ b/path.c
-@@ -5,7 +5,6 @@
- #include "abspath.h"
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index bdc7fae497..d99d688d3c 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -7,6 +7,7 @@
  #include "environment.h"
  #include "gettext.h"
--#include "hex.h"
- #include "repository.h"
- #include "strbuf.h"
- #include "string-list.h"
-@@ -647,58 +646,6 @@ void strbuf_git_common_path(struct strbuf *sb,
- 	va_end(args);
- }
-=20
--int validate_headref(const char *path)
--{
--	struct stat st;
--	char buffer[256];
--	const char *refname;
--	struct object_id oid;
--	int fd;
--	ssize_t len;
--
--	if (lstat(path, &st) < 0)
--		return -1;
--
--	/* Make sure it is a "refs/.." symlink */
--	if (S_ISLNK(st.st_mode)) {
--		len =3D readlink(path, buffer, sizeof(buffer)-1);
--		if (len >=3D 5 && !memcmp("refs/", buffer, 5))
--			return 0;
--		return -1;
--	}
--
--	/*
--	 * Anything else, just open it and try to see if it is a symbolic ref.
--	 */
--	fd =3D open(path, O_RDONLY);
--	if (fd < 0)
--		return -1;
--	len =3D read_in_full(fd, buffer, sizeof(buffer)-1);
--	close(fd);
--
--	if (len < 0)
--		return -1;
--	buffer[len] =3D '\0';
--
--	/*
--	 * Is it a symbolic ref?
--	 */
--	if (skip_prefix(buffer, "ref:", &refname)) {
--		while (isspace(*refname))
--			refname++;
--		if (starts_with(refname, "refs/"))
--			return 0;
--	}
--
--	/*
--	 * Is this a detached HEAD?
--	 */
--	if (get_oid_hex_any(buffer, &oid) !=3D GIT_HASH_UNKNOWN)
--		return 0;
--
--	return -1;
--}
--
- static struct passwd *getpw_str(const char *username, size_t len)
- {
- 	struct passwd *pw;
-diff --git a/path.h b/path.h
-index ea96487b29..c3bc8617bd 100644
---- a/path.h
-+++ b/path.h
-@@ -173,7 +173,6 @@ const char *git_path_fetch_head(struct repository *r);
- const char *git_path_shallow(struct repository *r);
-=20
- int ends_with_path_components(const char *path, const char *components);
--int validate_headref(const char *ref);
-=20
- int calc_shared_perm(int mode);
- int adjust_shared_perm(const char *path);
-diff --git a/setup.c b/setup.c
-index f4b32f76e3..7c996659bd 100644
---- a/setup.c
-+++ b/setup.c
-@@ -4,6 +4,7 @@
- #include "environment.h"
- #include "exec-cmd.h"
- #include "gettext.h"
-+#include "hex.h"
  #include "object-name.h"
- #include "refs.h"
- #include "repository.h"
-@@ -341,6 +342,58 @@ int get_common_dir_noenv(struct strbuf *sb, const char=
- *gitdir)
- 	return ret;
- }
++#include "setup.h"
+ #include "string-list.h"
+ #include "strvec.h"
+ #include "oid-array.h"
+@@ -29,7 +30,7 @@ int parse_opt_abbrev_cb(const struct option *opt, const c=
+har *arg, int unset)
+ 				     opt->long_name);
+ 		if (v && v < MINIMUM_ABBREV)
+ 			v =3D MINIMUM_ABBREV;
+-		else if (v > the_hash_algo->hexsz)
++		else if (startup_info->have_repository && v > the_hash_algo->hexsz)
+ 			v =3D the_hash_algo->hexsz;
+ 	}
+ 	*(int *)(opt->value) =3D v;
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 8bb2a8b453..45a773642f 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -176,6 +176,23 @@ test_expect_success 'long options' '
+ 	test_cmp expect output
+ '
 =20
-+static int validate_headref(const char *path)
-+{
-+	struct stat st;
-+	char buffer[256];
-+	const char *refname;
-+	struct object_id oid;
-+	int fd;
-+	ssize_t len;
++test_expect_success 'abbreviate to something longer than SHA1 length' '
++	cat >expect <<-EOF &&
++	boolean: 0
++	integer: 0
++	magnitude: 0
++	timestamp: 0
++	string: (not set)
++	abbrev: 100
++	verbose: -1
++	quiet: 0
++	dry run: no
++	file: (not set)
++	EOF
++	test-tool parse-options --abbrev=3D100 >output &&
++	test_cmp expect output
++'
 +
-+	if (lstat(path, &st) < 0)
-+		return -1;
-+
-+	/* Make sure it is a "refs/.." symlink */
-+	if (S_ISLNK(st.st_mode)) {
-+		len =3D readlink(path, buffer, sizeof(buffer)-1);
-+		if (len >=3D 5 && !memcmp("refs/", buffer, 5))
-+			return 0;
-+		return -1;
-+	}
-+
-+	/*
-+	 * Anything else, just open it and try to see if it is a symbolic ref.
-+	 */
-+	fd =3D open(path, O_RDONLY);
-+	if (fd < 0)
-+		return -1;
-+	len =3D read_in_full(fd, buffer, sizeof(buffer)-1);
-+	close(fd);
-+
-+	if (len < 0)
-+		return -1;
-+	buffer[len] =3D '\0';
-+
-+	/*
-+	 * Is it a symbolic ref?
-+	 */
-+	if (skip_prefix(buffer, "ref:", &refname)) {
-+		while (isspace(*refname))
-+			refname++;
-+		if (starts_with(refname, "refs/"))
-+			return 0;
-+	}
-+
-+	/*
-+	 * Is this a detached HEAD?
-+	 */
-+	if (get_oid_hex_any(buffer, &oid) !=3D GIT_HASH_UNKNOWN)
-+		return 0;
-+
-+	return -1;
-+}
-+
- /*
-  * Test if it looks like we're at a git directory.
-  * We want to see:
+ test_expect_success 'missing required value' '
+ 	cat >expect <<-\EOF &&
+ 	error: switch `s'\'' requires a value
 --=20
 2.45.0-rc1
 
 
---TS/QWh14D8nFzASh
+--aycyDSS8vZPyLb5j
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvP2oACgkQVbJhu7ck
-PpQChxAAkugO7w28Z1cGQdpQb6SXOdvFWRp+jg0otytRv27mz6k87sbU9s6p6mg+
-KAcgAp5CvBLGMpAxik6sn+sNYftBVfLC2rDOs7T79nXanOyz2C8xcVqwF1IbS6MQ
-4RihSCKctvXuW/WJwAT2LfSMaqSaQniRW5ilKtj/FGTaq7uUDYZJmT0NFYoSOHrP
-95ko6J5Q2aBB/s9xjcFPTutx7gb8erqvwiq+4DlbR5orQJw1h0S0+4Jw0liPeZsn
-2S3fwH2eW/1W2lFGF7Qt2Ma6gvwfraPkY4mhGr9R6s0ZcnSnxNYRZhMB2X2CDn1C
-8I/a165a+dhIUvjwjtNNJV8ZofNxUhgpj2yLbz3S/86sFmdhOE8ykDycJiF0g1KA
-MBehGxgESmzUK/lp8y/ZgAItcHo84H7OCtIGo9aXCwi3Bej2LH71vKubSp9/0xYK
-0rI2p494869JeIZBD49zuXsaDxeef8TsnGNUiSLXBsE3Bs9sEXdxbEp3HdpA1+u0
-Ewc/zXU4By0f/gU+GqDlVlnUXZVwh4yzd2xuzbtzwo8kffnWZQGiyUV6h5HqiSdw
-8kJ7PSX0XoFFHEZzk2lJHleHg4mbBXKtnmBI8H9kNSVXvLyWeKe7mlKrXVgV0hJ0
-HLz86zdAcqy2RorjdqQ3c9Jtkc3EE91oFWrTZRgY/Fa3azWTvzY=
-=Vc2J
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvP28ACgkQVbJhu7ck
+PpRbyA/+OdR351Xao6vLJ9A8RWavVR2qSnOUAIV2lj+lb0a8E5/ABXrAAzaaKqMM
+9cjNkFY/KDzmoIOD8EBHyXg5Iy4XBLWDttJ0HlZaSh4F7UdbRJVs90hGnW0MDrQg
+AanuS813/to9HNWppddC2nPY3QzJX1RU3O84A3Om94mxVoHhJdyK0UV8vmHg+Gzw
+mA3nsxf0x59KcZ6csLgG376FeEO9dyD0em2+DhwZ8OrpMUivhoxLBJyzSxOMboC4
+fPZK+TEhaAkE9m4pcHXi6k/CnWptb0XnUCGSYdxYqldrSHsuaBUKZpwe1SNX2BZn
++VgFNRu+DGvrv6CLXGfrsZIKYAqzdTJa7EKrEJ63CKP6+F8c+KVmXhfryS/CKCXf
+Ho9ffN5AjTcko9lcWbcgIs5k7Z2II9hOPH9eft67DwaGKm7uAMyeSfJ/75TsuMEX
++vVoZB/4ptKDE2MuzRk5EjEllVmBlepvufXN4B1I3xFxld0U3XZKyQgIGBHAuTR0
+5pPCOwzJA4Yt4YFZccKaLXNCcbVS39R0pfAY/FSx82I2hVYUEa+whPDe3YjnB5Fk
+gMOf9oFQcLMwO1xIUeOyKGLHMzRKjhvoVJkhm4ydIEO+eT2xBGk7jUgotoPicjZq
+8avSk9lu7tVjRzWQKiiW1XATPjwHcSaos9qR5gy24clOB5+IKg4=
+=UdHD
 -----END PGP SIGNATURE-----
 
---TS/QWh14D8nFzASh--
+--aycyDSS8vZPyLb5j--
