@@ -1,81 +1,80 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A21B12E6C
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:34:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64032134BE
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714372469; cv=none; b=Jkqr637yVLP5XmVvCLJff3wxUlmR3U/ySXzmb/gSi+qTFSxTlSHSwBpP4SCXIzOiPQPQbR5rjxQc8DIAH0IMyBdQLz1ePAcGiS2wv7Cmjk8LAp1vdaYQfLRK6qOSTw3JXgziQX0Ucx1L7SepsnxH7sxvAlK1dDx21H7y9AjCelA=
+	t=1714372474; cv=none; b=s904CvmuN6wwuvUO1YdjNp+vdHPtfMNVVdoAcozaWJrRMgfvj4pGn53QxxLCVPqvco8HG/ZfIEZ0JlmMngQA7mqVoY9ZzLszWZelU1ePa54/F7yRUr8tzQUiJTa0a/nyodD53SQAYjDXnLKCFQbq9/Hzrtio8eNta9LBx9oYHFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714372469; c=relaxed/simple;
-	bh=lq1/Q4NcbAOzb4qnG4cjgoWsOJzEhCV4TB1a9vrV2fA=;
+	s=arc-20240116; t=1714372474; c=relaxed/simple;
+	bh=p/X1yBt1q08IomtAyxeha6FvfE6uMvpiNgZujoQk9Kw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qtObgCvPjXRr9psb4k5cBR1KYnd8/gE/Ws2zVYyEZCsrau8NIj4FZ+PtkIBzGrzsV4mtubWT8ZkRqEkTVym/78DO7U2ZqsJD7WZT0LuA+3IwmLDFrgTWI6pHA0mSjveX1xQzm0Cs2ZCyMVU/xk+rtR1D8Z8Ha4GZhu/4CKwCq6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E66zncUk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EXx7dv0m; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=RfKX3rm5tkVFP50PJVbciL1yNv6iI6HhIF3w+odS8RxnKdeXhQ6LMXnz1SkeSXbl9bx4w6VbdaTZcDCfMuDVd3Y9TKv3tDTmvg7/aGdwgSukIegAtd+OdBhbFuSoP5wuSWciWU/5T5GkCilAwSKZ9KITEFTe8CeVpVaXE3cKUTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C3EdX5ce; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oo1yp3zM; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E66zncUk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EXx7dv0m"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 37CFB1140136;
-	Mon, 29 Apr 2024 02:34:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C3EdX5ce";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oo1yp3zM"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 80A381380388;
+	Mon, 29 Apr 2024 02:34:32 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 29 Apr 2024 02:34:27 -0400
+  by compute4.internal (MEProxy); Mon, 29 Apr 2024 02:34:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714372467; x=1714458867; bh=u2I5oCWjaI
-	0xikJwQ7ebCKKH0awgUhxgKfsdpvUWxWU=; b=E66zncUkC3IzVyzVgolzVRVk3r
-	tP3JPSA0zegD6VH/pyatNm10KBDunsmgcsWOJq25hL+bHlUY09d+pzq7WpYxy/tv
-	1NGmOqYtRz1xU7zm6rSQEbt+bUq2qDkHBPNpoUUbcuxqZffbwhwhoP40LxvMukNl
-	D4ZRxSK+JBpidFv8z/tNfZ8hH1QhLHh5lhIf8L+t0pyGbuI/ma3O351lrk3Po+HN
-	Y3LhjXkNqkNqDnNhVspNnF1C9tRSPkJsfjvb4yYTY3BeCyyeuCoFhPPGFW2Ewpqb
-	HyEPUvJ6G6LRHDtGXaUpSCQ5tiqBQJFW8lZ8xk0eJlfOlRc8ZoFtJRnetuKw==
+	:subject:to:to; s=fm3; t=1714372472; x=1714458872; bh=ywSYOnWNB2
+	iP06q+nHlh2dy9PYmPNclr8uRKOMQvpBM=; b=C3EdX5ceFXm5VBWkdyMSSKa0yW
+	75EsmyoxU029+07R/1gxa7nrRNw9yYsot1o2UHiC70FXsNepr8gidfg50VhyGKVK
+	PwpVGTe64n1/EyKC0mHXApEfkXLXGzucRKTv0UyHqKwZyu8h5JIxdqWIy+FVPegp
+	iLWOZ2eVeHn8w5SPOcE/wjcABIIcrg1EXLaYHFKxFvagxMnsiZOGyDIi23oMODVQ
+	Gae0KV/nVdk5z1YUYiJih3WvODFtJvetvzzGHTMPMi+G0qxv+ezjFyG0UCSz4S/h
+	V5JA5CdZJ1xhlK9ekgUFUqYKiAE3si0XwpuNVeFiPwEpx8fXLfhcUGywrTSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714372467; x=1714458867; bh=u2I5oCWjaI0xikJwQ7ebCKKH0awg
-	UhxgKfsdpvUWxWU=; b=EXx7dv0m8bUEWKJ2xIx+5RUy+0OwqcNT1fuL/+yAqllp
-	u3fadJ4b3PDa25Nt4O4sFGSdIL2/uWDQAc64K8rS/clwVKQnjCiiiJTLOwcVHrhF
-	OrFj6TVyYOAdAXYouod4XjAq6911GOpYkiqhW4/cEaPrgn7J2O9h7muPrrPM8PmF
-	CVh7KQJhxIRjIK4fbrNqWEIxCLE2Ah+ecTPTvApL3e18mVDG7mHMtmeZSvvW8Ffw
-	e949+kahE223t2teVWMOoAv4+wFy30GKkhqhbKHv30WjSXZ2x3sbYpIMgReaQMRd
-	zb58+UHHDG6QRTZNLixX0AJ5BykDMQkB30msdy8iGQ==
-X-ME-Sender: <xms:cz8vZonu_ZqSpvLfPEUNjFHedfaczeL70_jKf6ucaNt-Fk_xkUivUw>
-    <xme:cz8vZn3Crx6Rwa_R0k7t7-K3OXR3AvRMAYlnVVcg7kiQeTCSmNm2QUi7mF6zmc4re
-    6J-plyRiCBLCUBS1g>
-X-ME-Received: <xmr:cz8vZmp1LqJiYFAfU7mLuAWul_a3M8iTPIYqO2QOt_GM38UDk4QA-Zm4bLy_t3NWMPBKQWReiPO6ODLcSIO-clg1jWKT4VuLKtEVgdTP0zlfIjB_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddutddgtdefucetufdoteggodetrfdotf
+	fm3; t=1714372472; x=1714458872; bh=ywSYOnWNB2iP06q+nHlh2dy9PYmP
+	Nclr8uRKOMQvpBM=; b=Oo1yp3zMIMcFjRPwDvhrZ0xcXA5cuWK8b73GZm8Iqp3P
+	5IGy+FfYSK2ZbYKqv6honyJorO8vfiXwZVB6a61uNrwxk0T5gsX4KtIZBV740OJH
+	qT6RE/cqQqE67Ue7sc3134hgy0it2D/N9BkW6a2xMmqeteuKXmvhIjQy9RD90F4r
+	l9hocSjKYMySUHyif6jgYUlScsUDyqREOQrftvn+/qzD+WULUcMZ5uG+RGqof9Ii
+	3FDA/iUOwE5iTS05WGWB+bTfZk3IPtOlldb65befJFQLxYuLn/YvFqosp5hpsEKk
+	vnQdcV0SLVn2WucqyGmH7WJuu1dtB1IsODefJPzbow==
+X-ME-Sender: <xms:eD8vZm6X6Ht4IfsFjZdGu4OkXidIpuTBwKqFBXdA0TK-P5QvnUl4ug>
+    <xme:eD8vZv5pc_8Y2hZuAoIAho4dZMH3dvPfzOLDK4T9XFXChZoWTZC3LaV-lNaSNABLI
+    HzErAt2n8umUIFaYA>
+X-ME-Received: <xmr:eD8vZlet5mZYvDSrr7DLW8AZ9iZG9iJsW8ixtG6zU6EYEzPd6ITwV9tI6X_3SuHTElSVBgMRc12Z2T8CfLxxGJIdezlkxv_XgXYeYEy3CSbzoIhR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddutddgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:cz8vZkmm4DnCjSq07DRL2OowXn6cooLPoq2SsqvOXSh7I6-U21pA_Q>
-    <xmx:cz8vZm0nnE9Yfsb77qBTTvIFADSH8vuifTfWnaIVBwqELM7vyIn3Aw>
-    <xmx:cz8vZrtTS5A5VOP-MCBCLifWDRYbirc1S4eyi9U4j3uQifqx2Wq2fw>
-    <xmx:cz8vZiU6TuqQANXKqW1IjwdW9APoO0qWdg63G8PwsXWKY6YRQuEWhA>
-    <xmx:cz8vZpQIfYEAyKQyfoGHV71t6mKhy3SrC8Ye8_K87ZXvstaljlN8aJVO>
+X-ME-Proxy: <xmx:eD8vZjJkC5PNs1sv2i5_PMCnm2xYshmvdmK-oN1G4jA8lVpxMr_Fsg>
+    <xmx:eD8vZqJZOs6nvVvvt0Rnq97kAXSIoSaQhXZ8r7uZGwhJBml55NRJVQ>
+    <xmx:eD8vZkxSntnKoswTQIzD1ABWGPDPmQlqi5pbfwGQ2kbsOJZVpiaEpQ>
+    <xmx:eD8vZuLjBh_sjdF2sVoxpUYX_Dw3x8UbuGuFjxSKHb9zZF2BtqOg4w>
+    <xmx:eD8vZvFMCOq4swWAW9jwrwwQo2KTGk_zxzuKmJp4kx_HJCwXZws36mqP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Apr 2024 02:34:26 -0400 (EDT)
+ 29 Apr 2024 02:34:31 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 31754d62 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Apr 2024 06:34:06 +0000 (UTC)
-Date: Mon, 29 Apr 2024 08:34:23 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 4da46d85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Apr 2024 06:34:11 +0000 (UTC)
+Date: Mon, 29 Apr 2024 08:34:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 03/13] parse-options-cb: only abbreviate hashes when hash
- algo is known
-Message-ID: <9a63c445d21fb6d9179c6fb8a96e0c221ddf16a4.1714371422.git.ps@pks.im>
+Subject: [PATCH v3 04/13] attr: don't recompute default attribute source
+Message-ID: <929bacbfceeb1627b257f68d9f66155878a11e18.1714371422.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
  <cover.1714371422.git.ps@pks.im>
 Precedence: bulk
@@ -85,111 +84,124 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aycyDSS8vZPyLb5j"
+	protocol="application/pgp-signature"; boundary="l1iMgK8H29VsY8SZ"
 Content-Disposition: inline
 In-Reply-To: <cover.1714371422.git.ps@pks.im>
 
 
---aycyDSS8vZPyLb5j
+--l1iMgK8H29VsY8SZ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `OPT__ABBREV()` option can be used to add an option that abbreviates
-object IDs. When given a length longer than `the_hash_algo->hexsz`, then
-it will instead set the length to that maximum length.
+The `default_attr_source()` function lazily computes the attr source
+supposedly once, only. This is done via a static variable `attr_source`
+that contains the resolved object ID of the attr source's tree. If the
+variable is the null object ID then we try to look up the attr source,
+otherwise we skip over it.
 
-It may not always be guaranteed that we have `the_hash_algo` initialized
-properly as the hash algorithm can only be set up after we have set up
-`the_repository`. In that case, the hash would always be truncated to
-the hex length of SHA1, which may not be what the user desires.
+This approach is flawed though: the variable will never be set to
+anything else but the null object ID in case there is no attr source.
+Consequently, we re-compute the information on every call. And in the
+worst case, when we silently ignore bad trees, this will cause us to try
+and look up the treeish every single time.
 
-In practice it's not a problem as all commands that use `OPT__ABBREV()`
-also have `RUN_SETUP` set and thus cannot work without a repository.
-Consequently, both `the_repository` and `the_hash_algo` would be
-properly set up.
+Improve this by introducing a separate variable `has_attr_source` to
+track whether we already computed the attr source and, if so, whether we
+have an attr source or not.
 
-Regardless of that, harden the code to not truncate the length when we
-didn't set up a repository.
+This also allows us to convert the `ignore_bad_attr_tree` to not be
+static anymore as the code will only be executed once anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- parse-options-cb.c       |  3 ++-
- t/t0040-parse-options.sh | 17 +++++++++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ attr.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index bdc7fae497..d99d688d3c 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -7,6 +7,7 @@
- #include "environment.h"
- #include "gettext.h"
- #include "object-name.h"
-+#include "setup.h"
- #include "string-list.h"
- #include "strvec.h"
- #include "oid-array.h"
-@@ -29,7 +30,7 @@ int parse_opt_abbrev_cb(const struct option *opt, const c=
-har *arg, int unset)
- 				     opt->long_name);
- 		if (v && v < MINIMUM_ABBREV)
- 			v =3D MINIMUM_ABBREV;
--		else if (v > the_hash_algo->hexsz)
-+		else if (startup_info->have_repository && v > the_hash_algo->hexsz)
- 			v =3D the_hash_algo->hexsz;
- 	}
- 	*(int *)(opt->value) =3D v;
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 8bb2a8b453..45a773642f 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -176,6 +176,23 @@ test_expect_success 'long options' '
- 	test_cmp expect output
- '
+diff --git a/attr.c b/attr.c
+index 679e42258c..9d911aeb31 100644
+--- a/attr.c
++++ b/attr.c
+@@ -1206,15 +1206,16 @@ static void collect_some_attrs(struct index_state *=
+istate,
+ }
 =20
-+test_expect_success 'abbreviate to something longer than SHA1 length' '
-+	cat >expect <<-EOF &&
-+	boolean: 0
-+	integer: 0
-+	magnitude: 0
-+	timestamp: 0
-+	string: (not set)
-+	abbrev: 100
-+	verbose: -1
-+	quiet: 0
-+	dry run: no
-+	file: (not set)
-+	EOF
-+	test-tool parse-options --abbrev=3D100 >output &&
-+	test_cmp expect output
-+'
+ static const char *default_attr_source_tree_object_name;
+-static int ignore_bad_attr_tree;
+=20
+ void set_git_attr_source(const char *tree_object_name)
+ {
+ 	default_attr_source_tree_object_name =3D xstrdup(tree_object_name);
+ }
+=20
+-static void compute_default_attr_source(struct object_id *attr_source)
++static int compute_default_attr_source(struct object_id *attr_source)
+ {
++	int ignore_bad_attr_tree =3D 0;
 +
- test_expect_success 'missing required value' '
- 	cat >expect <<-\EOF &&
- 	error: switch `s'\'' requires a value
+ 	if (!default_attr_source_tree_object_name)
+ 		default_attr_source_tree_object_name =3D getenv(GIT_ATTR_SOURCE_ENVIRONM=
+ENT);
+=20
+@@ -1230,22 +1231,28 @@ static void compute_default_attr_source(struct obje=
+ct_id *attr_source)
+ 		ignore_bad_attr_tree =3D 1;
+ 	}
+=20
+-	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
+-		return;
++	if (!default_attr_source_tree_object_name)
++		return 0;
+=20
+ 	if (repo_get_oid_treeish(the_repository,
+ 				 default_attr_source_tree_object_name,
+-				 attr_source) && !ignore_bad_attr_tree)
+-		die(_("bad --attr-source or GIT_ATTR_SOURCE"));
++				 attr_source)) {
++		if (!ignore_bad_attr_tree)
++			die(_("bad --attr-source or GIT_ATTR_SOURCE"));
++		return 0;
++	}
++
++	return 1;
+ }
+=20
+ static struct object_id *default_attr_source(void)
+ {
+ 	static struct object_id attr_source;
++	static int has_attr_source =3D -1;
+=20
+-	if (is_null_oid(&attr_source))
+-		compute_default_attr_source(&attr_source);
+-	if (is_null_oid(&attr_source))
++	if (has_attr_source < 0)
++		has_attr_source =3D compute_default_attr_source(&attr_source);
++	if (!has_attr_source)
+ 		return NULL;
+ 	return &attr_source;
+ }
 --=20
 2.45.0-rc1
 
 
---aycyDSS8vZPyLb5j
+--l1iMgK8H29VsY8SZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvP28ACgkQVbJhu7ck
-PpRbyA/+OdR351Xao6vLJ9A8RWavVR2qSnOUAIV2lj+lb0a8E5/ABXrAAzaaKqMM
-9cjNkFY/KDzmoIOD8EBHyXg5Iy4XBLWDttJ0HlZaSh4F7UdbRJVs90hGnW0MDrQg
-AanuS813/to9HNWppddC2nPY3QzJX1RU3O84A3Om94mxVoHhJdyK0UV8vmHg+Gzw
-mA3nsxf0x59KcZ6csLgG376FeEO9dyD0em2+DhwZ8OrpMUivhoxLBJyzSxOMboC4
-fPZK+TEhaAkE9m4pcHXi6k/CnWptb0XnUCGSYdxYqldrSHsuaBUKZpwe1SNX2BZn
-+VgFNRu+DGvrv6CLXGfrsZIKYAqzdTJa7EKrEJ63CKP6+F8c+KVmXhfryS/CKCXf
-Ho9ffN5AjTcko9lcWbcgIs5k7Z2II9hOPH9eft67DwaGKm7uAMyeSfJ/75TsuMEX
-+vVoZB/4ptKDE2MuzRk5EjEllVmBlepvufXN4B1I3xFxld0U3XZKyQgIGBHAuTR0
-5pPCOwzJA4Yt4YFZccKaLXNCcbVS39R0pfAY/FSx82I2hVYUEa+whPDe3YjnB5Fk
-gMOf9oFQcLMwO1xIUeOyKGLHMzRKjhvoVJkhm4ydIEO+eT2xBGk7jUgotoPicjZq
-8avSk9lu7tVjRzWQKiiW1XATPjwHcSaos9qR5gy24clOB5+IKg4=
-=UdHD
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvP3MACgkQVbJhu7ck
+PpQI6Q//eEZV+EMbCnxf8OZ157HL2ZgE6UUqTgJoBi6Oo6DKGe6GOVeQeYnQq8M0
+deisHBMzPxu3Gn4I7xTcRbYHvIiFTUK5HpDoLOC/oa0eNLHKD5ImOI5ucRnI81Bg
+Seeers4gSJ6TTYF/RM7Pfx7fKUVEhpBRYML41Cn/Z1lof+6HTclQVhxqSiZuJJ7W
+G71dGCcY966HXPC8O6+5WxoObOn5HIjUWbmrGkd6gyQNjwjvfZjPb3IrMYrAipmP
+VL/Jg4E4cuq6+wU/EvTMtO7Y4BBlaNlXZf/Hel9GSoDiUFn11uCP7Vtc31V1I76u
++aclKEjJn8mW4ltfr7m648GTMkAZyT0YYMAPE0xa0gTYlX0Cwc4ZWkw97tSY7gZS
+cq68onFQuMSj6ZydwhOd7Hg92wmfFGTtU2I7LmZcPT+fkBQVQkTEhHGeUqezw19I
+azgTxRCWAOPYN8DzG6BCJ90FrktcyAyzUFdDDp0xIoflMSPmBduAPBDB48dwTy9v
+UL02RPRUAp9K7FoBooJZXojFnOoyN2h5OduRLhqSY1lQ6nSnyFWFMkqqPAk13pGG
+w19Xy0LDdBdtUJCXt2X7S9Sx0x1hTRHEDW+Ynq3quDG9ibfrJFTjNs9AxB5QQ/PX
+G0pciBfTjLqD3buAM+W6rLUqGIvM9YUtXvjTtF/ne/Lk3gswv1g=
+=4BO/
 -----END PGP SIGNATURE-----
 
---aycyDSS8vZPyLb5j--
+--l1iMgK8H29VsY8SZ--
