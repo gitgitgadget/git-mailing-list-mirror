@@ -1,80 +1,80 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64032134BE
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F0D134DE
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714372474; cv=none; b=s904CvmuN6wwuvUO1YdjNp+vdHPtfMNVVdoAcozaWJrRMgfvj4pGn53QxxLCVPqvco8HG/ZfIEZ0JlmMngQA7mqVoY9ZzLszWZelU1ePa54/F7yRUr8tzQUiJTa0a/nyodD53SQAYjDXnLKCFQbq9/Hzrtio8eNta9LBx9oYHFA=
+	t=1714372479; cv=none; b=tbdXEgUR648A0UE6FhpXuPvPWioy+V9Hv/K4OQd4dUq8qJmK1Q8wp0nlXcgCIuU9+x4EEVgYJ8OF0kfV1G+t9mqynu7BbJl9a4Okse+zQposTGGMUi0e0WLhcunHwmCtfgRfTghTT8ZEwbp4fql+e1ZjqqcENoVox4Bn0nvAzaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714372474; c=relaxed/simple;
-	bh=p/X1yBt1q08IomtAyxeha6FvfE6uMvpiNgZujoQk9Kw=;
+	s=arc-20240116; t=1714372479; c=relaxed/simple;
+	bh=LCYBPCEuIcOLsRNAv6zwSCrz3FM5VFSfpjHuU93jskQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RfKX3rm5tkVFP50PJVbciL1yNv6iI6HhIF3w+odS8RxnKdeXhQ6LMXnz1SkeSXbl9bx4w6VbdaTZcDCfMuDVd3Y9TKv3tDTmvg7/aGdwgSukIegAtd+OdBhbFuSoP5wuSWciWU/5T5GkCilAwSKZ9KITEFTe8CeVpVaXE3cKUTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C3EdX5ce; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oo1yp3zM; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=XWdwrN5OwPMfv0jj+J0VINTQ3kFXoeSH/i4K0zo9imZOomvJ6TDYaNV3esni+TOxuyJ2IMb4aPrH2B0nW93TsfPQGKduSSkIXOhAbVplURmH8yCF+PtEhhymE8L/LATyys7KyPlleVu8YZhJEZ+S37BMC2jw+4pDsV2emPRpA7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TCiRIIdj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G8fcxaH4; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C3EdX5ce";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oo1yp3zM"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 80A381380388;
-	Mon, 29 Apr 2024 02:34:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TCiRIIdj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G8fcxaH4"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id BD4CF1380385;
+	Mon, 29 Apr 2024 02:34:36 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 29 Apr 2024 02:34:32 -0400
+  by compute1.internal (MEProxy); Mon, 29 Apr 2024 02:34:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714372472; x=1714458872; bh=ywSYOnWNB2
-	iP06q+nHlh2dy9PYmPNclr8uRKOMQvpBM=; b=C3EdX5ceFXm5VBWkdyMSSKa0yW
-	75EsmyoxU029+07R/1gxa7nrRNw9yYsot1o2UHiC70FXsNepr8gidfg50VhyGKVK
-	PwpVGTe64n1/EyKC0mHXApEfkXLXGzucRKTv0UyHqKwZyu8h5JIxdqWIy+FVPegp
-	iLWOZ2eVeHn8w5SPOcE/wjcABIIcrg1EXLaYHFKxFvagxMnsiZOGyDIi23oMODVQ
-	Gae0KV/nVdk5z1YUYiJih3WvODFtJvetvzzGHTMPMi+G0qxv+ezjFyG0UCSz4S/h
-	V5JA5CdZJ1xhlK9ekgUFUqYKiAE3si0XwpuNVeFiPwEpx8fXLfhcUGywrTSw==
+	:subject:to:to; s=fm3; t=1714372476; x=1714458876; bh=4tP9kvEHKU
+	BWIkdRMPa4vtycJ6BmA1wWOTWn7xK7oRQ=; b=TCiRIIdjNsk4kdFfLIKQBKo16D
+	aUuGGS7QDffyuGJxbhxFewuvcsKlwEMIEvjiYacvlvu7Ta/sy69/icoA88/RGvNO
+	U2id1C+KrtLcRieNpQ3K6qlT27gKau5UW1RxF/einyoUa8G1s67ekS5J805q5E6n
+	rSxXVk3gwk5uEBhQBdXzu5umdGLj8LEBSKx+5viGUC8WCjavk4g3NMSnTlT8tjp8
+	V0JauTEBQFXsVQCnhOVh+yCh72S/Gtka58bwCofbrm7zZgquGg4Up9gCQoDkaUGT
+	wcxhjlaFHUSdvaLpKjdX5Y9k+SyktjzIH1L8wUX23S+wtdBQGj+22JkdTf/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714372472; x=1714458872; bh=ywSYOnWNB2iP06q+nHlh2dy9PYmP
-	Nclr8uRKOMQvpBM=; b=Oo1yp3zMIMcFjRPwDvhrZ0xcXA5cuWK8b73GZm8Iqp3P
-	5IGy+FfYSK2ZbYKqv6honyJorO8vfiXwZVB6a61uNrwxk0T5gsX4KtIZBV740OJH
-	qT6RE/cqQqE67Ue7sc3134hgy0it2D/N9BkW6a2xMmqeteuKXmvhIjQy9RD90F4r
-	l9hocSjKYMySUHyif6jgYUlScsUDyqREOQrftvn+/qzD+WULUcMZ5uG+RGqof9Ii
-	3FDA/iUOwE5iTS05WGWB+bTfZk3IPtOlldb65befJFQLxYuLn/YvFqosp5hpsEKk
-	vnQdcV0SLVn2WucqyGmH7WJuu1dtB1IsODefJPzbow==
-X-ME-Sender: <xms:eD8vZm6X6Ht4IfsFjZdGu4OkXidIpuTBwKqFBXdA0TK-P5QvnUl4ug>
-    <xme:eD8vZv5pc_8Y2hZuAoIAho4dZMH3dvPfzOLDK4T9XFXChZoWTZC3LaV-lNaSNABLI
-    HzErAt2n8umUIFaYA>
-X-ME-Received: <xmr:eD8vZlet5mZYvDSrr7DLW8AZ9iZG9iJsW8ixtG6zU6EYEzPd6ITwV9tI6X_3SuHTElSVBgMRc12Z2T8CfLxxGJIdezlkxv_XgXYeYEy3CSbzoIhR>
+	fm3; t=1714372476; x=1714458876; bh=4tP9kvEHKUBWIkdRMPa4vtycJ6Bm
+	A1wWOTWn7xK7oRQ=; b=G8fcxaH4oFCRFe46A5oglwe/QtZ01/D52ULYK0P+bb+z
+	I++VoJqrdF7nwvz77yzPSI2O7dfxt7NvEYV8EpzdZZZY++UxuEsWYDHszwRdmjWJ
+	bROoKqTCdzf3rYajcevFSorbakYkwXUhUDno+AKr1540umnXN3sbumC/kkw36gpv
+	DdP6fvuMrj3PbAcNxBlvfDMmsFTDnLgStzQ7zpr1pCh8ktNJhQXkCeTixovZfKnn
+	bnkwka4w2PIKakVDKAzpRvg/nRLEO2jMtppSdMmSOExm4GU27MJZ6t64uZt7ZfDv
+	1dL/ZyH4HQ1NEtPDgF4kwae4KqyxBzp3FQjM/VLR9Q==
+X-ME-Sender: <xms:fD8vZgIndPV4ya54BLXzexHjiHAi4cflAxvFOf7LoTPYwEXAU9j2hg>
+    <xme:fD8vZgKETtfd3qpX5u81LXYHnSuRn7PsD3O3niPjZuVUcoM_JEOaff6t1_C5_-FPL
+    bS58FdYBfdePX-ajA>
+X-ME-Received: <xmr:fD8vZgtZQJytMReHpJbFvFJtd3cFfX5TkwS6gqN9L1Xy2e_8bKsqbaZzlEMQJfFZXxusFfUm545bYbXQxwgVvPIuDUHHaeZ4srpdgL0QVNolZ3qF>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddutddgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:eD8vZjJkC5PNs1sv2i5_PMCnm2xYshmvdmK-oN1G4jA8lVpxMr_Fsg>
-    <xmx:eD8vZqJZOs6nvVvvt0Rnq97kAXSIoSaQhXZ8r7uZGwhJBml55NRJVQ>
-    <xmx:eD8vZkxSntnKoswTQIzD1ABWGPDPmQlqi5pbfwGQ2kbsOJZVpiaEpQ>
-    <xmx:eD8vZuLjBh_sjdF2sVoxpUYX_Dw3x8UbuGuFjxSKHb9zZF2BtqOg4w>
-    <xmx:eD8vZvFMCOq4swWAW9jwrwwQo2KTGk_zxzuKmJp4kx_HJCwXZws36mqP>
+X-ME-Proxy: <xmx:fD8vZtY3bTwZv6N7M-moOeyz68pUeiBifr9Bo40saY-kiKBQfSUzaA>
+    <xmx:fD8vZnbONiT8UlqqvCpCzZwT7UbIIHoFg5wZ6bcY1ywcd2K2EFK3GA>
+    <xmx:fD8vZpCIgtKpoxHMjr_LSR8IdGgUnGd-2Og1SNvm9zYMclhsDIuvmQ>
+    <xmx:fD8vZtYWox9ly0Usg576NBrA2cipl8Qi6lMrqrDMxIskZS8701awmQ>
+    <xmx:fD8vZmVqFOvGOowxZMqnlUCBX7x5AUxciUcXrRnpn-PpOrR93i2lZbuW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Apr 2024 02:34:31 -0400 (EDT)
+ 29 Apr 2024 02:34:35 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4da46d85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Apr 2024 06:34:11 +0000 (UTC)
-Date: Mon, 29 Apr 2024 08:34:28 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 0fadaa66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Apr 2024 06:34:16 +0000 (UTC)
+Date: Mon, 29 Apr 2024 08:34:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 04/13] attr: don't recompute default attribute source
-Message-ID: <929bacbfceeb1627b257f68d9f66155878a11e18.1714371422.git.ps@pks.im>
+Subject: [PATCH v3 05/13] attr: fix BUG() when parsing attrs outside of repo
+Message-ID: <8f20aec1ee046ca5d21fe4ce2b19e24869545a42.1714371422.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
  <cover.1714371422.git.ps@pks.im>
 Precedence: bulk
@@ -84,124 +84,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="l1iMgK8H29VsY8SZ"
+	protocol="application/pgp-signature"; boundary="h8A1ej97UDFxTkEN"
 Content-Disposition: inline
 In-Reply-To: <cover.1714371422.git.ps@pks.im>
 
 
---l1iMgK8H29VsY8SZ
+--h8A1ej97UDFxTkEN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `default_attr_source()` function lazily computes the attr source
-supposedly once, only. This is done via a static variable `attr_source`
-that contains the resolved object ID of the attr source's tree. If the
-variable is the null object ID then we try to look up the attr source,
-otherwise we skip over it.
+If either the `--attr-source` option or the `GIT_ATTR_SOURCE` envvar are
+set, then `compute_default_attr_source()` will try to look up the value
+as a treeish. It is possible to hit that function while outside of a Git
+repository though, for example when using `git grep --no-index`. In that
+case, Git will hit a bug because we try to look up the main ref store
+outside of a repository.
 
-This approach is flawed though: the variable will never be set to
-anything else but the null object ID in case there is no attr source.
-Consequently, we re-compute the information on every call. And in the
-worst case, when we silently ignore bad trees, this will cause us to try
-and look up the treeish every single time.
-
-Improve this by introducing a separate variable `has_attr_source` to
-track whether we already computed the attr source and, if so, whether we
-have an attr source or not.
-
-This also allows us to convert the `ignore_bad_attr_tree` to not be
-static anymore as the code will only be executed once anyway.
+Handle the case gracefully and detect when we try to look up an attr
+source without a repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- attr.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ attr.c                |  6 ++++++
+ t/t0003-attributes.sh | 15 +++++++++++++++
+ 2 files changed, 21 insertions(+)
 
 diff --git a/attr.c b/attr.c
-index 679e42258c..9d911aeb31 100644
+index 9d911aeb31..4bd09bcb4b 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -1206,15 +1206,16 @@ static void collect_some_attrs(struct index_state *=
-istate,
- }
-=20
- static const char *default_attr_source_tree_object_name;
--static int ignore_bad_attr_tree;
-=20
- void set_git_attr_source(const char *tree_object_name)
- {
- 	default_attr_source_tree_object_name =3D xstrdup(tree_object_name);
- }
-=20
--static void compute_default_attr_source(struct object_id *attr_source)
-+static int compute_default_attr_source(struct object_id *attr_source)
- {
-+	int ignore_bad_attr_tree =3D 0;
-+
+@@ -1234,6 +1234,12 @@ static int compute_default_attr_source(struct object=
+_id *attr_source)
  	if (!default_attr_source_tree_object_name)
- 		default_attr_source_tree_object_name =3D getenv(GIT_ATTR_SOURCE_ENVIRONM=
-ENT);
+ 		return 0;
 =20
-@@ -1230,22 +1231,28 @@ static void compute_default_attr_source(struct obje=
-ct_id *attr_source)
- 		ignore_bad_attr_tree =3D 1;
- 	}
-=20
--	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
--		return;
-+	if (!default_attr_source_tree_object_name)
-+		return 0;
-=20
- 	if (repo_get_oid_treeish(the_repository,
- 				 default_attr_source_tree_object_name,
--				 attr_source) && !ignore_bad_attr_tree)
--		die(_("bad --attr-source or GIT_ATTR_SOURCE"));
-+				 attr_source)) {
++	if (!startup_info->have_repository) {
 +		if (!ignore_bad_attr_tree)
-+			die(_("bad --attr-source or GIT_ATTR_SOURCE"));
++			die(_("cannot use --attr-source or GIT_ATTR_SOURCE without repo"));
 +		return 0;
 +	}
 +
-+	return 1;
- }
+ 	if (repo_get_oid_treeish(the_repository,
+ 				 default_attr_source_tree_object_name,
+ 				 attr_source)) {
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 774b52c298..3efdec54dd 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -428,6 +428,21 @@ test_expect_success 'precedence of --attr-source, GIT_=
+ATTR_SOURCE, then attr.tre
+ 	)
+ '
 =20
- static struct object_id *default_attr_source(void)
- {
- 	static struct object_id attr_source;
-+	static int has_attr_source =3D -1;
-=20
--	if (is_null_oid(&attr_source))
--		compute_default_attr_source(&attr_source);
--	if (is_null_oid(&attr_source))
-+	if (has_attr_source < 0)
-+		has_attr_source =3D compute_default_attr_source(&attr_source);
-+	if (!has_attr_source)
- 		return NULL;
- 	return &attr_source;
- }
++test_expect_success 'diff without repository with attr source' '
++	mkdir -p "$TRASH_DIRECTORY/outside/nongit" &&
++	(
++		cd "$TRASH_DIRECTORY/outside/nongit" &&
++		GIT_CEILING_DIRECTORIES=3D"$TRASH_DIRECTORY/outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		touch file &&
++		cat >expect <<-EOF &&
++		fatal: cannot use --attr-source or GIT_ATTR_SOURCE without repo
++		EOF
++		test_must_fail env GIT_ATTR_SOURCE=3DHEAD git grep --no-index foo file 2=
+>err &&
++		test_cmp expect err
++	)
++'
++
+ test_expect_success 'bare repository: with --source' '
+ 	(
+ 		cd bare.git &&
 --=20
 2.45.0-rc1
 
 
---l1iMgK8H29VsY8SZ
+--h8A1ej97UDFxTkEN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvP3MACgkQVbJhu7ck
-PpQI6Q//eEZV+EMbCnxf8OZ157HL2ZgE6UUqTgJoBi6Oo6DKGe6GOVeQeYnQq8M0
-deisHBMzPxu3Gn4I7xTcRbYHvIiFTUK5HpDoLOC/oa0eNLHKD5ImOI5ucRnI81Bg
-Seeers4gSJ6TTYF/RM7Pfx7fKUVEhpBRYML41Cn/Z1lof+6HTclQVhxqSiZuJJ7W
-G71dGCcY966HXPC8O6+5WxoObOn5HIjUWbmrGkd6gyQNjwjvfZjPb3IrMYrAipmP
-VL/Jg4E4cuq6+wU/EvTMtO7Y4BBlaNlXZf/Hel9GSoDiUFn11uCP7Vtc31V1I76u
-+aclKEjJn8mW4ltfr7m648GTMkAZyT0YYMAPE0xa0gTYlX0Cwc4ZWkw97tSY7gZS
-cq68onFQuMSj6ZydwhOd7Hg92wmfFGTtU2I7LmZcPT+fkBQVQkTEhHGeUqezw19I
-azgTxRCWAOPYN8DzG6BCJ90FrktcyAyzUFdDDp0xIoflMSPmBduAPBDB48dwTy9v
-UL02RPRUAp9K7FoBooJZXojFnOoyN2h5OduRLhqSY1lQ6nSnyFWFMkqqPAk13pGG
-w19Xy0LDdBdtUJCXt2X7S9Sx0x1hTRHEDW+Ynq3quDG9ibfrJFTjNs9AxB5QQ/PX
-G0pciBfTjLqD3buAM+W6rLUqGIvM9YUtXvjTtF/ne/Lk3gswv1g=
-=4BO/
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYvP3gACgkQVbJhu7ck
+PpTyHQ//WEq+mgyib+rlKCAR2Q9JJg17rlUCjaY1l8VjNTp9USoUwjPt/VfNezbj
++6a3ZKnXqzABUySgaGFOvdFdVkGZw34Gb4kPZtkwYYVhMqnfm1Rht4UGgC9sc+1m
+4ks44to87OtOSKQT0htxVwXR3X/giQbegFRbXgw7w3lGkberiJwuiDULZQQQt7bb
+t+M/UZnBwZ7xwuevxU9+ZZIX+z9PNXyMd1KkPyhJmkuZ8HcEo9Wek0NVDsdxtp1T
+g46/ycCi7Qbl7baLG7Gi2HruVjT4MFp8xhYkg7kGk+FIXb/nIsU2sBz8Pk/JKfZN
+tPScZXshF8kGGYub0OEIEqn5NM8chwSzRG7X/h8T7PtAGvCE9IH2LiidxtsrtALw
+iuKoUYi0bTVOl4c/W4gYpl/5y6J6Pvo+ODCBfjfxuKvlnmmKvt90padxEmn8hnxl
+/8/8QnETQhCecQ0H8ai4J8CxG1IWuaafXgk9E2uQSAh5mTy94M3UqLZIJdQ3GY/1
+WcKglIYp0y+y7GL2ujm8sCom8oZB4EnNi+6crOWorNKhsZSFpgiyTBLMH+6Eq2vh
+1iWbcP2j9LlTeBzYXTRZc9IyDL11EmfKDmZKGj6LhmIj5v4y1U7M7cqBcbrilxOI
+4M7FvoZNRYeqg0dzBspAqhLV11qqhYH8iaFb2s3GJ/k+75X3HpE=
+=wByY
 -----END PGP SIGNATURE-----
 
---l1iMgK8H29VsY8SZ--
+--h8A1ej97UDFxTkEN--
