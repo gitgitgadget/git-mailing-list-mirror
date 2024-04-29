@@ -1,135 +1,125 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF46D17B515
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:44:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D831779A5
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714423476; cv=none; b=WyohTYYSHvaqD35D714xR7mnO4se5E2sqDfr6RWnB5eopp6gSQCLAFqYyw4YUTh7jVl3ity/eaiNIyfud1F4PrY15B+p7K092CekhIXf/dt24eMdpTgFI1+PIiL7GUN0bMW6lW3vlMhhEmpDmkEQQavap56nTF4Onb4k1j7OCow=
+	t=1714423488; cv=none; b=Ojb+asklr+L7jCs6mUMrpMFufgTJdGTAoJHgu9eBWaLw72rQbPyJbhD9tftF9QLK9Fe3ojf+B1kl0oX2oe1cl4EGW4oFrW7uUVWNJ700gonC5FzuZ7L0RIahIV/S5R4ubPFydi8f7D9JoD8FZkkd9kPSsrFKMEYY+tGlD9aNO18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714423476; c=relaxed/simple;
-	bh=CV1DOlc9nztiU3u0j6d7RQWToUVFH1YonGGXHuRhH94=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gMMsj6EICtek5AUrr1Ssb8hO5lyK0tXTZVsvxfK8q/fWBEvYbGgXbPk8HpBlhFJ/+DfexCpaAEb674DVYgYkzDmGzEQhiO/Qrp0JyyujdQpI0kIs6SRmVsLRkLhzpk6E6EvG7m4u4sHJAQOrkg3nrlOvDVponUrdoxJQuIYYkvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=hscL4oGl; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1714423488; c=relaxed/simple;
+	bh=8f0LdXux8lgKgnLkghL+qyav1btNkh5TlZiAFqjw+b4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rNeECfCgkS8NEq7yYeb/ThE9hhgv7WC26aKVyXLibuFtml2EKDuv5EAzHDMc1M1BhW/cbCOG2kGaOTuO6qfKetMRFdeHYo98DY0svuLp0fcHN9zSApFRsgguFgRQdeTsjHCW4bBN8dXCvKGCZLjjK8+Wcg6FLlJyQwZg+S5ezw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iuL92qzA; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="hscL4oGl"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-439656c1b50so30204551cf.1
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:44:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iuL92qzA"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6ea2375d8d0so4067404a34.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714423473; x=1715028273; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JL0Kf4HGUwy/IQMtp/3ZaD2qeBJ0iAlE1x8LJAajc9M=;
-        b=hscL4oGlPjYOlaJYwZcLwmZP24Ei3VR11PIHZyDnndr8b9Oz/7i5tavhM7Q0p8wazu
-         TVwn2ymXRbhqGFXhx9HQ/mc29CqYlzp//z0OKAXDP2Nm7pEr8ITGABmFac7sv2aLtmGN
-         R70uRP/+U7puzpyrwmQx4ZayLL/U0I/z8quNo6twx4UYgBse+FIZ2wRnSBaZVAA1XHD9
-         JxeFkBYBQ2OjiJOQJ5JMhpB9gEg+o9QFtilXSlonFJFKdwLVtHAK9V0kSr4VSD8kfDMj
-         9rcYKmTHqilPsGqxOL1yxJVV+ijJChZYejR5fhmvN/vt899pEfuoFIrsK11A52i/24V6
-         +iVA==
+        d=gmail.com; s=20230601; t=1714423485; x=1715028285; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8f0LdXux8lgKgnLkghL+qyav1btNkh5TlZiAFqjw+b4=;
+        b=iuL92qzA+IYaAdvaRPpmO9w7ONfke9mMZ7/cOT/c7bcHdu13/HlZsJ2YtW81W/Bv/R
+         cn8wgY7h0jdk9EkNYW5yzxZOkeMWmUSm8x6dOjY2uRZL5C34qqLXID59hKWhtFGmqVuz
+         ZmIVQJRjsHv9aqYxEFCGIxt887EtKZYzO6A8P2RbWAuWpLJLuMrbMsRQ5S01RRcQeuDu
+         kPCXNWDk54y+cJDnDE64G7jFoVegOzfrH+YfV7dFSJGgsg8x+zUmZ7BiSVrjClU7WNhM
+         tpjEdCJo2KvvglRP7/Z9+uZ99TTLKA4SHhgqpjhD91gnHB2MT+3O9n5x979Vb0dfXamB
+         yBEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714423473; x=1715028273;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JL0Kf4HGUwy/IQMtp/3ZaD2qeBJ0iAlE1x8LJAajc9M=;
-        b=XJR1gJEmmM9kQkYkLR7m8BhKIlFDP+prB1scbo2JDXYDUKBo6xd5GhsEMF5NuNVouI
-         Prpq4f42MaJDdWiOLGbor5++dekeBkwZjUc9a/y+BzcZzD4rMFMbDo0osJqbnU29BO8g
-         A25rjMWIrYZMFfrGBmn0ZCNgOiUrdd1uUZNeq9Le/dQHW8wqFbxu45txMXGIP80Wl2eL
-         OSEXLKInb8yKLoeuUsRE3jGlgi8KbJdKXvE+cDwk9uaDRmAASUT+LJTjXvPhOWjpJbet
-         TL2IaNh96L3H2VhNjFhfjaT168nzZfC0l+hI5QW2mMUsrlK0TlXJd+q01wGsxZ0HH2FU
-         47Ag==
-X-Gm-Message-State: AOJu0YzFOjUQZOlyi1hq4LaMjREx6y8ByJPZYl/Z6qyxFgczQdxaXDOP
-	e7/HwVkljof9s2/Xc9k7GI2yg46us6MeGjLGz5Bv1uaC+zggfpBRR6lN5Oz+e/NfA5/nQzQqjxn
-	GQic=
-X-Google-Smtp-Source: AGHT+IGxRqdKrAa9mnm381JmU99ql3wrJDp8+iBDCXkvDcnAPCU7zYRWYDxkYoFMsG94/usoUBLD4Q==
-X-Received: by 2002:ac8:7d4f:0:b0:43a:c878:d7c6 with SMTP id h15-20020ac87d4f000000b0043ac878d7c6mr693082qtb.66.1714423472809;
-        Mon, 29 Apr 2024 13:44:32 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x25-20020ac84d59000000b004343f36ab58sm10803823qtv.81.2024.04.29.13.44.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 13:44:32 -0700 (PDT)
-Date: Mon, 29 Apr 2024 16:44:30 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 23/23] t/perf: implement performace tests for pseudo-merge
- bitmaps
-Message-ID: <2bd830d35dd79a7b1201655df70fc0039cc44d7e.1714422410.git.me@ttaylorr.com>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <cover.1714422410.git.me@ttaylorr.com>
+        d=1e100.net; s=20230601; t=1714423485; x=1715028285;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8f0LdXux8lgKgnLkghL+qyav1btNkh5TlZiAFqjw+b4=;
+        b=JT6XtmAfq6hZkylErpvjLQq1psNKri0BbrTolj98VWpag/5epLsiXWV5QV+s0SfOva
+         5H66HWqj1C3jA9VXmE8psez15SuqkK4pX4mOlgPHjGnH6VHSMrcWckTAr58FXSOxZm1q
+         iZKP17PZ+dKUyfgSXS+cD3c1Xn6HNm1v+mNlgj7XGpgIfFpzvT9jSzAOxt+QEL1AeuDz
+         0FMusxhIcUSKDvMJPwKf2xQi4GUtknrd+qspDegq0ocZfF824jfHry+AVRH0AjXgsw+A
+         hvGnkuLCvn9ty3eEQAZ+DOYfRA2S3wzjjUZr7zmUFuMe6JBuZNLFk8+nk6JgeJWQTnMs
+         j4bA==
+X-Forwarded-Encrypted: i=1; AJvYcCVb5gQa3ncr1ijQh3h9CsCYyAlrv1+zl9ZgWGFJOwQS8EohbWPxv+DN5YuWjfRYcglUM22TP5srntzMn0kgUGxrWnoa
+X-Gm-Message-State: AOJu0Yze57V+PMGDgJizK6OHuQNq5+hsvUHR8FhRkkp/1rYub+eAIJ8B
+	bF7TzHVpfQct4n9R5+Ouh1coyiqqPnkBz4TtPddlGpHeYSvN5pj7FQyM+Orek98H1yCVdYTArN3
+	/Q9n8aIXLbDLQACrRoMBhuGvHOqE=
+X-Google-Smtp-Source: AGHT+IE+jN/p7nnGbeANNEYX9opS4HcO30WFs96DLntdffIxf+Dy5QErTgaSzEmJRkRB/yMcBWlMqtHd9h6Uy/GU2WY=
+X-Received: by 2002:a05:6870:d3c3:b0:239:77fc:b762 with SMTP id
+ l3-20020a056870d3c300b0023977fcb762mr13202475oag.45.1714423485270; Mon, 29
+ Apr 2024 13:44:45 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 29 Apr 2024 16:44:44 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <b43e51d0-2814-4800-b8d5-cea5f79ce318@gmail.com>
+References: <cover.1714398019.git.ps@pks.im> <88822afe950318c0312de5541a411942a163b139.1714398019.git.ps@pks.im>
+ <CAOLa=ZTCCgtQiQbm_GU--1+Yq-qYJANzTvRmvVrqNmzchkVevw@mail.gmail.com> <b43e51d0-2814-4800-b8d5-cea5f79ce318@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1714422410.git.me@ttaylorr.com>
+Date: Mon, 29 Apr 2024 16:44:44 -0400
+Message-ID: <CAOLa=ZSqtGRVVHma-=XzErVdZ04sY_bGvk8qiabNdYzojS2ZhA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] refs: fix segfault in `is_pseudoref()` when ref
+ cannot be resolved
+To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="000000000000d5a4690617425267"
 
-Implement a straightforward performance test demonstrating the benefit
-of pseudo-merge bitmaps by measuring how long it takes to count
-reachable objects in a few different scenarios:
+--000000000000d5a4690617425267
+Content-Type: text/plain; charset="UTF-8"
 
-  - without bitmaps, to demonstrate a reasonable baseline
-  - with bitmaps, but without pseudo-merges
-  - with bitmaps and pseudo-merges
+Hey Phillip,
 
-Results from running this test on git.git are as follows:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-    Test                                                                this tree
-    -----------------------------------------------------------------------------------
-    5333.2: git rev-list --count --all --objects (no bitmaps)           3.46(3.37+0.09)
-    5333.3: git rev-list --count --all --objects (no pseudo-merges)     0.13(0.11+0.01)
-    5333.4: git rev-list --count --all --objects (with pseudo-merges)   0.12(0.11+0.01)
+> Hi Karthik
+>
+> On 29/04/2024 19:57, Karthik Nayak wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>> via the uninitialized value when calling `is_null_oid()`, which causes
+>>>> us to segfault.
+>>>>
+>>>> It is somewhat questionable in the first place that we declare a ref to
+>>>> be a pseudorefe depending on whether it resolves to an object ID or not.
+>>>
+>>> If I remember rightly Karthik added that check to avoid the files
+>>> backend calling a file with a name that matched the pseudoref syntax a
+>>> pseudoref when it wasn't actually a pseudoref.
+>>
+>> Not sure I follow. I think it was strictly done to ensure we don't
+>> consider symrefs as pseudorefs [1].
+>
+> Junio suggested using refs_read_ref_unsafe() to ensure we don't consider
+> symrefs as pseudorefs but your patch was already reading the ref to
+> ensure it was not some random file whose name matches the pseudoref syntax.
+>
+> Best Wishes
+>
+> Phillip
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/perf/p5333-pseudo-merge-bitmaps.sh | 32 ++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
- create mode 100755 t/perf/p5333-pseudo-merge-bitmaps.sh
+Oh yes. You're absolutely correct. I just didn't understand what you
+were referring to :)
 
-diff --git a/t/perf/p5333-pseudo-merge-bitmaps.sh b/t/perf/p5333-pseudo-merge-bitmaps.sh
-new file mode 100755
-index 00000000000..4bec409d10e
---- /dev/null
-+++ b/t/perf/p5333-pseudo-merge-bitmaps.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+
-+test_description='pseudo-merge bitmaps'
-+. ./perf-lib.sh
-+
-+test_perf_large_repo
-+
-+test_expect_success 'setup' '
-+	git \
-+		-c bitmapPseudoMerge.all.pattern="refs/" \
-+		-c bitmapPseudoMerge.all.threshold=now \
-+		-c bitmapPseudoMerge.all.stableThreshold=never \
-+		-c bitmapPseudoMerge.all.maxMerges=64 \
-+		-c pack.writeBitmapLookupTable=true \
-+		repack -adb
-+'
-+
-+test_perf 'git rev-list --count --all --objects (no bitmaps)' '
-+	git rev-list --objects --all
-+'
-+
-+test_perf 'git rev-list --count --all --objects (no pseudo-merges)' '
-+	GIT_TEST_USE_PSEDUO_MERGES=0 \
-+		git rev-list --objects --all --use-bitmap-index
-+'
-+
-+test_perf 'git rev-list --count --all --objects (with pseudo-merges)' '
-+	GIT_TEST_USE_PSEDUO_MERGES=1 \
-+		git rev-list --objects --all --use-bitmap-index
-+'
-+
-+test_done
--- 
-2.45.0.23.gc6f94b99219
+--000000000000d5a4690617425267
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4820e6827926cd50_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1Zd0Jyb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM2p2Qy85UFk3WU9SWGNyZ0YwRE1QN3hDQTBBS0s1MwpQa21VeUtsbllx
+M2hhMWN2amN4SGxNSDZaaGJoMTlqNmVWaU5Xb3FuUEdIaXZLYzI4R0pLemJYMEFyNmJWdXllClN0
+M2QvTk9xdDdmeWIvWkZGbUN1SEgvY0JEZUVxL1V3bkUvb2JJbnF4ODZpSXJYdmxUek1RZENhMnpD
+bGpDbUsKdHprcng4cDVJTFprUzAyQ1dUa1M0SFZDbUJHTUdkWjRQTVMxZnltZDA2NE1uRm5rMHhm
+RWZoSHBUdWxpU3krRwpFck8yYkhvaE40UmhQTnd5LzJGbi9KVkozZHhLcEE0eTZVNyt5U0JGa2xT
+b0ZtZ3dOM0NXc1VMQ1ZqNHlVcDZJCkg0L1hoMlo3T2JiZER4MG5Xb1Z0alkzL2pXRitjUjBKbEhj
+VFN6Z1BwdVZ0TURLa1UyeWdwaGYwdlFXOE9JZWMKa25Ua1VSYzBRbkMrbVlxRjB5ZWQ3dXlBSDR1
+YmJYVDBBNzZBalRld0pQV0NUMUZ1a21zd3BNdnlpWjM4ODF5RApwTWxxL3ZlclVCV2VDT1RwMnlL
+MjFnemh2TmFQOXlabnQxYTdHY1hlakdWL0JVc1R0WkdGS0o5TmJBUGo0dzAzCnFBcStJb2ExV28x
+Qmh5VEVjTGRBQkkzVWVWWjhGb3dhZS9PajFMYz0KPWlGcksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000d5a4690617425267--
