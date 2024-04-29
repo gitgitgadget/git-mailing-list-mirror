@@ -1,145 +1,85 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191EB33C0
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF38946C
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 21:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714424037; cv=none; b=UHny7teKBjPURJFLBabm7HnHtzGRhyXokzG+Rl+gAKIVootl0xgs3/ceFOCVgwqu199fodMa0iSsIjkmtfuSPFvlkRsUW+09Dp61sGNw4LO5r4yT78q3XIhmayT4Nr+9FN15SaHATHFkseEoMu96526kPzE8ie76eIgEuGQYqQc=
+	t=1714426642; cv=none; b=cCU866KuDmog943U7awYotcIkkMPR+bouIUeGk6UlJ1ZLLY9RXtza2OTagsFzKneTdf+5SetVRSzVWIF2IVu5LHqOvnwlwUTFFAZpcpwTRzmfkbtmYGThW/S1DesqClkr7as+aLK8oX0RAHdnmox+UP2hg+DNOWyFBQDUdjJb8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714424037; c=relaxed/simple;
-	bh=o8gcEGhB3SDH4DuX/veBGv0kUEU0iXwQjOmraCtdSno=;
+	s=arc-20240116; t=1714426642; c=relaxed/simple;
+	bh=2431tFRq1vuHVMGBEY23kH8z8r58pjsjYpf5dYdKfrI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PBX+B/hTVCjMGgAk2at6Y2eE9k6BX5k2GSSky7t31lyFm/k92tO5JXxXWxu4kllnTiZRh0Tgvbvb8T1pzEpns+cLGtfpZc9YCAwJvfvfOoVwKzhplkEtyhCdwVRweZtSpGX6N+W9cOKtJttYMRZ5j7th9PAGDrRodF6ElBRNzgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=sJOI1ZAW; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=dDGapGfM60vKI5CwQJc8pZ7QNzWlMEF6pwHuQBr5BCgPF3tfu/dlQz0SuYs5U4g6C7ASEr7slKr8/upvewIRqWpsUME12vQSoL4S0oNGKcYDhPo34dr+LT5zmjZBOcGNRwpUvuOw2RNaPWochWtEW2eMdAm7Fryv/gnsB2Wt9K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kb7gt1jN; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="sJOI1ZAW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1714424032; x=1715028832; i=tboegi@web.de;
-	bh=0vZWAiUJQQ4n2Tzl5rSU9WQ7dMHckVc7XLfptnv8GZs=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=sJOI1ZAW6BjqvfXA2ao88C+EkjNfHfq2YdjIfBJXizCvydrPbCBw/djiyBYcx0ms
-	 h2pyViR9gb2aquysJ0r2t3cKBSlwWSN/b6IwADTcg73iLpKBXlJzUNEfJmw6Si0G+
-	 DYEyqFEITavqzTaCknOrcuYSk8pqVqf40Lr+ud6DeO/MNnbmNHLX1XMSHfCGHNISn
-	 pnwNMn3Mu3d15Sh2j7ocGVdISPHdaLwaro3j8PhyvOefXHCIMkR/eTWFrjr3OfO2s
-	 g/vAqohamvFs1PWJwKwIuwIXX+CUDJOit0Vmoh5XpmNT4iJBH2ju0SjvJwUHpnCQh
-	 9UBhWWMszXfqA2bouw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rTG-1s3jrs0IRs-002RB7; Mon, 29
- Apr 2024 22:53:52 +0200
-Date: Mon, 29 Apr 2024 22:53:51 +0200
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Matheus Moreira via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Matheus Moreira <matheus.a.m.moreira@gmail.com>
-Subject: Re: [PATCH 00/13] builtin: implement, document and test url-parse
-Message-ID: <20240429205351.GA27257@tb-raspi4>
-References: <pull.1715.git.git.1714343461.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kb7gt1jN"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6ee4dcc4567so595314a34.3
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 14:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714426640; x=1715031440; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nOX65HtLYYh/p7HfMSsh4pesC/udP6rmlY4NN/xTVpE=;
+        b=kb7gt1jNRmx7MJyCQKapiQnJsJRvd3GWyjRb4soqkpYvcAxvd4Zse2J/sJk/1i3DSn
+         W8wJOt1A3YU61QdlXFZ1Tn1WMcHBNtw/VZ2j7A0ZVhcKSRB0IORnbILt7/B474u60iey
+         eHOg3vUH+3QHbY9dybPy78y+ziCU6AWpos6FdPecLEfW1yS38CQILqJeIAUruH4PZHCr
+         5ZQrI/AW1N0+ZaENchBuuWlfZBmZr1fb4Qh2oNAUG4pzsFVsrH9q4kgAg43Yj4AHj4O+
+         3qn+Q5uxGBDuRzkspIMwXmdfw+vf/b686/HIcCN9kMbuaHfeKOJHs3QHIeJIRaFQ2bz7
+         Fpkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714426640; x=1715031440;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nOX65HtLYYh/p7HfMSsh4pesC/udP6rmlY4NN/xTVpE=;
+        b=nh6qmRwQ87XWgONCfppC1ABatjQpAMnS4qg97UQerBvJu3mLESVrpopFvW7YaYchu8
+         7aLiPeQGbim81HaTgV0I79wbm/LfadRLxsTTQvf/PcR08zzR7/jXobNtkCxfrN19EXCR
+         HpGWhiXjN4xnPlsFNHJO4MB3BKTxyZsOu5aCto5rKwO1ZmuvXKBVqSnRXVjwHSugcJxX
+         +auKG3zqldSk4ENxgOcoBblm2bjkf5z+pRI5MfgC0sKeg/oRylxZ2ZU19+QonWU+ZWyc
+         2hL8AgO3RblHysfbvUgGdYl2a8jqDeGjmbQmViFNOdYBcdr6nDmVshrS/v21nd0YgEj9
+         /9LQ==
+X-Gm-Message-State: AOJu0YwSGFS6BkpBYpfwtD8d8ykgJp9Txdnz5m9JR68SMIvgtN4/yT6F
+	xGRGxhxepfZVwy7GhRRjK886Q1OQR3ux1a0y6cKdT3yp/71HQ566UQvsOK003xooB17ntCs+J+d
+	J/xM=
+X-Google-Smtp-Source: AGHT+IF3omDQfWHBtGcKi5e0iJj+68OI+m+QmOfwNNKPIPJ2SmJRG5YAYHn++KIc+bZN4mi1cHWyXA==
+X-Received: by 2002:a9d:6a11:0:b0:6ee:2798:4b95 with SMTP id g17-20020a9d6a11000000b006ee27984b95mr5361636otn.10.1714426640704;
+        Mon, 29 Apr 2024 14:37:20 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u10-20020ae9c00a000000b007909ec6a8cbsm4212920qkk.74.2024.04.29.14.37.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Apr 2024 14:37:20 -0700 (PDT)
+Date: Mon, 29 Apr 2024 17:37:16 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Beat Bolli <bb@drbeat.li>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH 0/3] color: add support for 12-bit RGB colors
+Message-ID: <ZjATDKqgzYFJVDjj@nand.local>
+References: <20240429164849.78509-1-dev+git@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1715.git.git.1714343461.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:6sc1uw+rBFgtjoZl7pSb7KO3/jqbUqGLJ0xyKGByRSphzUd/GOC
- MoGNn3mGMoRm0s/HWXi3ngP22KoO7g4Wk9X7Qn5zGw97fdqujIhb5uIZ/e2cExOLFdsXyFD
- ZSnVd67yuONGk6ylDmszycg/wTYhk3WBdjz550uNqihIuFoAY5U6cpM6Hs/TnbGhsKS3xqy
- 9l3Mzw7pn1ibJZOb8iaHA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:OIHDsOsg+IM=;91lCOelQbwy7LAefWuFxNZndDqG
- 9dVs/YVDrBS09VOKh7BbjVnuxMddgzbJq4mFMej/4HgR6EwDCvxl7gWfWrKCPN/W+R3x9n5Uz
- zOawpw+XiOU2hI0yJXg3gO3Hmu6GwXPiL8z2LSl0EkphizBEVRnECY30ISueZY0ViUb5fxtfo
- Nb2wAS/rvywgUkvWElV5BCNXCey9HBvCwgKSsF6bhKYra2YPpRrOX5vXXsKR7+3YNp2VVN7An
- mwVakd2oruc08PmMn83b58T9P2tw9mTyEGmio9i4OY4tgaN7UhU14opTg8+aStdmTEQRGXBNl
- LGZHU/WEiF5m3uW8/TTMXlq/oJMi+ximgDcMu+Et49x8j5K4OuWUQ+RSwqEwThl+lQj9zSK6W
- VHa0z6W6z2kyGx5RDqe9QHU+vl2kBlCLAlububscgwtcv1zEhdKygOBPyXAAZNHeLwv4xIpyb
- vPRLCJAXS1k6CEAEkPGiDB/dS6pXISfHPgFAQ1o05txxXo16JvLp3egbUVQhbKu4ezWsv076v
- mJP6VoA0n+id/AnMvkaD0eSVcCK9oPyZ091xrt+RAta8F6Bme2m/DHrONqFDo3ottsG7BeIPP
- RfJ4FqK93bAVY2Ksc4yoSI1sR/gHW96CQvqpTM0z9T1YPvaqCNP1i2WnVElWfIJnCk8WWhqKM
- HBNgwNrBueFhH5/yKDnbU4/NLAFIgnZLdQiJmD26mX5/qIOBzkPoW/XCLJn8FUohXWDXkd0yv
- 2veFZFW1Psc097hxRR+x+iiOCZHLyMV05ss9Y0MISF1ah7gKKekwphFYYnyIA4EmHopufaZUY
- Nt9w53Z0853U9mBNikr0eJX4rRwf9bt/LnbSXfE2xXaPw=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240429164849.78509-1-dev+git@drbeat.li>
 
-On Sun, Apr 28, 2024 at 10:30:48PM +0000, Matheus Moreira via GitGitGadget=
- wrote:
-> Git commands accept a wide variety of URLs syntaxes, not just standard U=
-RLs.
-> This can make parsing git URLs difficult since standard URL parsers cann=
-ot
-> be used. Even if an external parser were implemented, it would have to t=
-rack
-> git's development closely in case support for any new URL schemes are ad=
-ded.
->
-> These patches introduce a new url-parse builtin command that exposes git=
-'s
-> native URL parsing algorithms as a plumbing command, allowing other prog=
-rams
-> to then call upon git itself to parse the git URLs and their components.
->
-> This should be quite useful for scripts. For example, a script might wan=
-t to
-> add remotes to repositories, naming them according to the domain name wh=
-ere
-> the repository is hosted. This new builtin allows it to parse the git UR=
-L
-> and extract its host name which can then be used as input for other
-> operations. This would be difficult to implement otherwise due to git's
-> support for scp style URLs.
->
+On Mon, Apr 29, 2024 at 06:48:46PM +0200, Beat Bolli wrote:
+>  Documentation/config.txt |  3 ++-
+>  color.c                  | 21 ++++++++++++++-------
+>  color.h                  |  3 ++-
+>  t/t4026-color.sh         | 18 +++++++++++++++---
+>  4 files changed, 33 insertions(+), 12 deletions(-)
 
-All in all, having a URL parser as such is a good thing, thanks for workin=
-g
-on that.
+Looks very nice. The first two patches are trivially correct, and I took
+a close look at 3/3 and couldn't find any errors.
 
-There are, however, some notes and questions, up for discussion:
+    Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-- are there any plans to integrate the parser into connect.c and fetch ?
-  Speaking as a person, who manage to break the parsing of URLs once,
-  with the good intention to improve things, I need to learn that
-  test cases are important.
-  Some work can be seen in t5601-clone.sh
-  Especially, when dealing with literal IPv6 addresses, the ones with []
-  and the simplified ssh syntax 'myhost:src' are interesting to test.
-  Git itself strives to be RFC compliant when parsing URLs, but
-  we do not fully guarantee to be "fully certified".
-  And some features using the [] syntax to embedd a port number
-  inside the simplified ssh syntax had not been documented,
-  but used in practise, and are now part of the test suite.
-  See "[myhost:123]:src" in t5601
-
-- Or is this new tool just a helper, to verify "good" URL's,
-  and not accepting our legacy parser quirks ?
-  Then we still should see some IPv6 tests ?
-  Or may be not, as we prefer hostnames these days ?
-
-- One minor comment:
-  in 02/13 we read:
-        +enum protocol {
-        +       PROTO_UNKNOWN =3D 0,
-        +       PROTO_LOCAL,
-        +       PROTO_FILE,
-        +       PROTO_SSH,
-        +       PROTO_GIT,
-  The RFC 1738 uses the term "scheme" here, and using the very generic
-  term "protocol" may lead to name clashes later.
-  Would something like "git_scheme" or so be better ?
-
-- One minor comment:
-   In 13/13 we read:
-        +       git url-parse "file:///" &&
-        +       git url-parse "file://"
-
-  I think that the "///" version is superflous, it should already
-  be covered by the "//" version
-
+Thanks,
+Taylor
