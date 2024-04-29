@@ -1,63 +1,63 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19006177998
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:43:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7659D177998
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 20:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714423426; cv=none; b=PsCJVieZ4dRZP9s45lhycFYE2Tn/2SyD6S1pEe8wv/eF5eKQ2tdnhTBu8V3sYRf/LKNeImzv3ERJvccxdpsCXnMdHWgWEgb4MJPsmkdlPpaV66bwosZAhaWA6XYHwtbp1ymbONK/HdD+vv8v675zEcgGYyfn1faxsasVLgTLjWA=
+	t=1714423431; cv=none; b=a4OOhcsmtMPZhKJXIRJCiFXLQRZAfLPsf1RhdFvA1HO733aDB1v5/BzeOgzkUeeZPSs6+sUwaHTSjCMbzjVODBEYaAjeQKPRn6fmiFMJlp3TBs/AmFTmCbZns7Clg7TCnVtPOhVayYLE4+4rzmDYOs/o81sSfRD+Ydryfvy4sLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714423426; c=relaxed/simple;
-	bh=6iRdneNhefP3orMwpZbbkVN1EzXhDEWeMOX/M69Jxx8=;
+	s=arc-20240116; t=1714423431; c=relaxed/simple;
+	bh=DeamlAErB87ukdXQph/1cvNBoIBzmwpHMhHIinkcAwI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bmr4d4KbYGtDJJQ3ghifJPX2ubxXg0V+UTb87/ibeAGLqtlZKc9F2KE7iJ48LsgTvXgTNb7E5a+Wu+kjLqPsb8hAnHFPFqze9xUdcXLJxJovHIvXyMOm54Oiy8In96PaCgPCiuwtl0NpyMCMjsq3f8hXQzukEpYHybsDB7SHey8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=0akAZysq; arc=none smtp.client-ip=209.85.160.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=nhTo8kIXLi6Y72UJC6wIkPp8nJT4tMTB7WcVlsNJgtExKLhp3w9PFTuDIm1O7HhbuCtRb9sVeXzKn6xtC/Q7BojaukBZluZGWeGXKwS5kYalo3/oNqzOzcDz2rGSso0c+taK+NaN13ynO7I3oYaZQFVd3Spj6UUd1D9vtVwRRoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lqHwF3I0; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0akAZysq"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4375ddb9eaeso31204741cf.3
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:43:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lqHwF3I0"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-78f02298dc6so425448185a.1
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714423423; x=1715028223; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714423427; x=1715028227; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GKbZlD30mfj9APCtKm3B1xV9xc5+CARQFHwiXtZWwfk=;
-        b=0akAZysqKlrsna1lktZuTilWg1cOydveM1t1ZQ+5B333VOfRNVuP10zfAOPUDi7b3f
-         GxH8cr8se13HcWUEAg1XON4H9RuPIi4/MNbjoFkliu/C+nB+IKdP7cZHOK+UqBMVPR8H
-         Rk7ZRkWZFWEX5DgSdhmHVhPTOXnb+WTXoCidp1O92C1TlHgb8ARvQmeiEatat3I0Ovu/
-         RqSu9vey730dsq3j9Thfcm9mPLlBlNBMjAawefhFSTLxCMsbSFz1GxRliwhj2HN6NFqD
-         HI70kedDY0sjcllVZrBggY8Fux/k9OLcitoZTDIBoX87FPeESZpVJh2JpQ6+nTf62TiN
-         pEZg==
+        bh=zGly7GL0o5G5yfB/BICGPXwv2ggsfp9TQD80qtz2Cac=;
+        b=lqHwF3I00KFJ7HXRsZqp/jpGj9yXhlehg4FEFsS8UTGKAPqce1a/MD6XBVG8VWmjjy
+         VkHNY57yHOz8d8nWmAPfM75vXZ0kzQyREXn8EiCsD8xmkIOLOh05cloK/pwNLQGgGkVq
+         HrI6qdu1fGHFQirJaKPKdhHG4d9JevJ2mylcoDfguwrDm8C+hDWsfK6hau/JVMOr5FQq
+         xC77FTw1Qtyul8rgfXk4B89YOq+eAgQHBg78Prxx1TdrOuan+O9D+OAXLzi0Kw4QiFru
+         sk/D33aQMb0BEwKenpD30mF7eGF435Lk68Sr1U4rujINRCqKnC2MEeo++/oxj0V+xvD4
+         y8ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714423423; x=1715028223;
+        d=1e100.net; s=20230601; t=1714423427; x=1715028227;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GKbZlD30mfj9APCtKm3B1xV9xc5+CARQFHwiXtZWwfk=;
-        b=b+nctlJeECEYfjulchkhqmhADv/MUwflC6+OrSJwuV3UZfkdJ/ugnNG9GUt8xCzkFG
-         zH+TozIvRyMqyDxXbj83lAhGJhZLB3ZwiQIV4R3FYuS/JsB9uSrBFfFJa1mTUGP+vuj9
-         0j4IP0uXZzJL8BB5IKmIW/vgpwYKoA7HEGQEVx7MvIMmp+XgXQI33dmGo5fOIKAEC79/
-         /WyNC+oQlLSsKVfqjYOotuea5lE1QYu/guT262O597UGeBeKo8ANbybn5yBa+ulqTebr
-         CuRtjrzyrFr+n32x3qBkwgrkWKh4Vrdn1fkgGJap0IjfS94hVXC3hI6e6xixzXKfG9Na
-         2dWg==
-X-Gm-Message-State: AOJu0YxuJHkMtVirRyfJ+m9AX9MKSQ/JK8XuKMaPXNb9u0WDyrL58TtU
-	ZhocI5UvIIE1LK7VDXqY8X/uuGZJYzYSMwXwLTzwuEOXbcycLpOiwkjGPOQBlpZCu+f+9Ljfr13
-	nCks=
-X-Google-Smtp-Source: AGHT+IGoLpJBTFHzdCIyAnHhwm/4gJ3vByB+u/pmd7QlZs2TypjZWUmCC297SeJoAT8PnIJH0ZDIlQ==
-X-Received: by 2002:a05:622a:578b:b0:439:dfc7:aca4 with SMTP id eh11-20020a05622a578b00b00439dfc7aca4mr12372144qtb.63.1714423423105;
-        Mon, 29 Apr 2024 13:43:43 -0700 (PDT)
+        bh=zGly7GL0o5G5yfB/BICGPXwv2ggsfp9TQD80qtz2Cac=;
+        b=YTgfDhtCcdgfjmS91tBsnZkevryFHoV5z4oePlBDIWEe+SiX7mkVkzaVp06si7lnIf
+         7EYR55zrBKbQPS4LdcmyTNpVC8xdN41NQ3F0geWSkNsD7X3QAKNhCuO5A47HziTyURho
+         POpQ/AjpOB8mNrvVaNS313ERhtthbuhS17NMMza8xu9XdAnLh9d2+my7DLR899SwKgiM
+         EHgqfmlPKg5fWEJbrjrGLAL6C7pw9n1lnFKlqn7yaG8ZppkzEZcWLraKC8qAPOtB/4US
+         cd+3uDBBvLDgQcjxfj9V7e2+1htQyJAkzi10Ji8nRwazmS3x7yFEZ70IwniTP4HTRXZk
+         +wCQ==
+X-Gm-Message-State: AOJu0Yxp1ZylCW5qv1CnrDw+7WHwbfU0iRucA9mycAkqZmfbAyLk2pqV
+	aXDF9SCtoaSCQWDDFqdqRYOcOPKGkCq7r/2vKNd8gqN96qqElUfJO6rH6nHhvSB7klTqiuuYquW
+	f6NI=
+X-Google-Smtp-Source: AGHT+IHjLBNx0eH6gb6h3+JKbpNRriwtw1YP45c5kYFyRG+x20UxCYKsSCFoOMFIVX0LEK9xxN5aGA==
+X-Received: by 2002:a05:620a:254d:b0:790:c1ad:d075 with SMTP id s13-20020a05620a254d00b00790c1add075mr1285829qko.3.1714423427029;
+        Mon, 29 Apr 2024 13:43:47 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d12-20020ac851cc000000b00438527a4eb5sm9488520qtn.10.2024.04.29.13.43.42
+        by smtp.gmail.com with ESMTPSA id t17-20020a05620a451100b0078edf6393edsm10786991qkp.73.2024.04.29.13.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 13:43:42 -0700 (PDT)
-Date: Mon, 29 Apr 2024 16:43:41 -0400
+        Mon, 29 Apr 2024 13:43:46 -0700 (PDT)
+Date: Mon, 29 Apr 2024 16:43:45 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/23] pack-bitmap-write.c: select pseudo-merge commits
-Message-ID: <12b432e3a8adcda6228beae2b41b2363a6ce82a0.1714422410.git.me@ttaylorr.com>
+Subject: [PATCH v2 11/23] pack-bitmap-write.c: write pseudo-merge table
+Message-ID: <6ce805d061e1e51dfd1b2ab3b8cd081292f42f3a.1714422410.git.me@ttaylorr.com>
 References: <cover.1710972293.git.me@ttaylorr.com>
  <cover.1714422410.git.me@ttaylorr.com>
 Precedence: bulk
@@ -70,197 +70,211 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1714422410.git.me@ttaylorr.com>
 
-Now that the pseudo-merge machinery has learned how to select
-non-bitmapped commits and assign them into different pseudo-merge
-group(s), invoke this new API from within the pack-bitmap internals and
-store the results off.
+Now that the pack-bitmap writer machinery understands how to select and
+store pseudo-merge commits, teach it how to write the new optional
+pseudo-merge .bitmap extension.
 
-Note that the selected pseudo-merge commits aren't actually used or
-written anywhere yet. This will be done in the following commit.
+No readers yet exist for this new extension to the .bitmap format. The
+following commits will take any preparatory step(s) necessary before
+then implementing the routines necessary to read this new table.
+
+In the meantime, the new `write_pseudo_merges()` function implements
+writing this new format as described by a previous commit in
+Documentation/technical/bitmap-format.txt.
+
+Writing this table is fairly straightforward and consists of a few
+sub-components:
+
+  - a pair of bitmaps for each pseudo-merge (one for the pseudo-merge
+    "parents", and another for the objects reachable from those parents)
+
+  - for each commit, the offset of either (a) the pseudo-merge it
+    belongs to, or (b) an extended lookup table if it belongs to >1
+    pseudo-merge groups
+
+  - if there are any commits belonging to >1 pseudo-merge group, the
+    extended lookup tables (which each consist of the number of
+    pseudo-merge groups a commit appears in, and then that many 4-byte
+    unsigned )
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config.txt                     |  2 +
- Documentation/config/bitmap-pseudo-merge.txt | 75 ++++++++++++++++++++
- Documentation/technical/bitmap-format.txt    | 26 +++++++
- pack-bitmap-write.c                          | 14 ++++
- 4 files changed, 117 insertions(+)
- create mode 100644 Documentation/config/bitmap-pseudo-merge.txt
+ pack-bitmap-write.c | 128 ++++++++++++++++++++++++++++++++++++++++++++
+ pack-bitmap.h       |   1 +
+ 2 files changed, 129 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 70b448b1326..bbedb7b9a06 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -383,6 +383,8 @@ include::config/apply.txt[]
- 
- include::config/attr.txt[]
- 
-+include::config/bitmap-pseudo-merge.txt[]
-+
- include::config/blame.txt[]
- 
- include::config/branch.txt[]
-diff --git a/Documentation/config/bitmap-pseudo-merge.txt b/Documentation/config/bitmap-pseudo-merge.txt
-new file mode 100644
-index 00000000000..90b72522046
---- /dev/null
-+++ b/Documentation/config/bitmap-pseudo-merge.txt
-@@ -0,0 +1,75 @@
-+bitmapPseudoMerge.<name>.pattern::
-+	Regular expression used to match reference names. Commits
-+	pointed to by references matching this pattern (and meeting
-+	the below criteria, like `bitmapPseudoMerge.<name>.sampleRate`
-+	and `bitmapPseudoMerge.<name>.threshold`) will be considered
-+	for inclusion in a pseudo-merge bitmap.
-++
-+Commits are grouped into pseudo-merge groups based on whether or not
-+any reference(s) that point at a given commit match the pattern, which
-+is an extended regular expression.
-++
-+Within a pseudo-merge group, commits may be further grouped into
-+sub-groups based on the capture groups in the pattern. These
-+sub-groupings are formed from the regular expressions by concatenating
-+any capture groups from the regular expression, with a '-' dash in
-+between.
-++
-+For example, if the pattern is `refs/tags/`, then all tags (provided
-+they meet the below criteria) will be considered candidates for the
-+same pseudo-merge group. However, if the pattern is instead
-+`refs/remotes/([0-9])+/tags/`, then tags from different remotes will
-+be grouped into separate pseudo-merge groups, based on the remote
-+number.
-+
-+bitmapPseudoMerge.<name>.decay::
-+	Determines the rate at which consecutive pseudo-merge bitmap
-+	groups decrease in size. Must be non-negative. This parameter
-+	can be thought of as `k` in the function `f(n) = C *
-+	n^(-k/100)`, where `f(n)` is the size of the `n`th group.
-++
-+Setting the decay rate equal to `0` will cause all groups to be the
-+same size. Setting the decay rate equal to `100` will cause the `n`th
-+group to be `1/n` the size of the initial group.  Higher values of the
-+decay rate cause consecutive groups to shrink at an increasing rate.
-+The default is `100`.
-+
-+bitmapPseudoMerge.<name>.sampleRate::
-+	Determines the proportion of non-bitmapped commits (among
-+	reference tips) which are selected for inclusion in an
-+	unstable pseudo-merge bitmap. Must be between `0` and `100`
-+	(inclusive). The default is `100`.
-+
-+bitmapPseudoMerge.<name>.threshold::
-+	Determines the minimum age of non-bitmapped commits (among
-+	reference tips, as above) which are candidates for inclusion
-+	in an unstable pseudo-merge bitmap. The default is
-+	`1.week.ago`.
-+
-+bitmapPseudoMerge.<name>.maxMerges::
-+	Determines the maximum number of pseudo-merge commits among
-+	which commits may be distributed.
-++
-+For pseudo-merge groups whose pattern does not contain any capture
-+groups, this setting is applied for all commits matching the regular
-+expression. For patterns that have one or more capture groups, this
-+setting is applied for each distinct capture group.
-++
-+For example, if your capture group is `refs/tags/`, then this setting
-+will distribute all tags into a maximum of `maxMerges` pseudo-merge
-+commits. However, if your capture group is, say,
-+`refs/remotes/([0-9]+)/tags/`, then this setting will be applied to
-+each remote's set of tags individually.
-++
-+Must be non-negative. The default value is 64.
-+
-+bitmapPseudoMerge.<name>.stableThreshold::
-+	Determines the minimum age of commits (among reference tips,
-+	as above, however stable commits are still considered
-+	candidates even when they have been covered by a bitmap) which
-+	are candidates for a stable a pseudo-merge bitmap. The default
-+	is `1.month.ago`.
-+
-+bitmapPseudoMerge.<name>.stableSize::
-+	Determines the size (in number of commits) of a stable
-+	psuedo-merge bitmap. The default is `512`.
-diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
-index 63a7177ac08..ed7edf98034 100644
---- a/Documentation/technical/bitmap-format.txt
-+++ b/Documentation/technical/bitmap-format.txt
-@@ -434,3 +434,29 @@ the end of a `.bitmap` file. The format is as follows:
- 
- * An 8-byte unsigned value (in network byte-order) equal to the number
-   of bytes in the pseudo-merge section (including this field).
-+
-+=== Pseudo-merge selection
-+
-+Pseudo-merge commits are selected among non-bitmapped commits at the
-+tip of one or more reference(s). In addition, there are a handful of
-+constraints to further refine this selection:
-+
-+`pack.bitmapPseudoMergeDecay`:: Defines the "decay rate", which
-+corresponds to how quickly (or not) consecutive pseudo-merges decrease
-+in size relative to one another.
-+
-+`pack.bitmapPseudoMergeGroups`:: Defines the maximum number of
-+pseudo-merge groups.
-+
-+`pack.bitmapPseudoMergeSampleRate`:: Defines the percentage of commits
-+(matching the above criteria) which are selected.
-+
-+`pack.bitmapPseudoMergeThreshold`:: Defines the minimum age of a commit
-+in order to be considered for inclusion within one or more pseudo-merge
-+bitmaps.
-+
-+The size of consecutive pseudo-merge groups decays according to a
-+power-law decay function, where the size of the `n`-th group is `f(n) =
-+C*n^-k`. The value of `C` is chosen accordingly to match the number of
-+desired groups, and `k` is 1/100th of the value of
-+`pack.bitmapPseudoMergeDecay`.
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index dab5bdea806..e06930e10b9 100644
+index e06930e10b9..d4894ace9ee 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -17,6 +17,7 @@
- #include "trace2.h"
+@@ -18,6 +18,7 @@
  #include "tree.h"
  #include "tree-walk.h"
-+#include "pseudo-merge.h"
+ #include "pseudo-merge.h"
++#include "oid-array.h"
  
  struct bitmapped_commit {
  	struct commit *commit;
-@@ -39,6 +40,8 @@ struct bitmap_writer {
- 	struct bitmapped_commit *selected;
- 	unsigned int selected_nr, selected_alloc;
- 
-+	struct string_list pseudo_merge_groups;
-+	kh_oid_map_t *pseudo_merge_commits; /* oid -> pseudo merge(s) */
- 	uint32_t pseudo_merges_nr;
- 
- 	struct progress *progress;
-@@ -56,6 +59,11 @@ static inline int bitmap_writer_selected_nr(void)
- void bitmap_writer_init(struct repository *r)
- {
- 	writer.bitmaps = kh_init_oid_map();
-+	writer.pseudo_merge_commits = kh_init_oid_map();
-+
-+	string_list_init_dup(&writer.pseudo_merge_groups);
-+
-+	load_pseudo_merges_from_config(&writer.pseudo_merge_groups);
- }
- 
- void bitmap_writer_show_progress(int show)
-@@ -686,6 +694,12 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
+@@ -748,6 +749,127 @@ static void write_selected_commits_v1(struct hashfile *f,
  	}
- 
- 	stop_progress(&writer.progress);
-+
-+	select_pseudo_merges(&writer.pseudo_merge_groups,
-+			     indexed_commits, indexed_commits_nr,
-+			     writer.pseudo_merge_commits,
-+			     &writer.pseudo_merges_nr,
-+			     writer.show_progress);
  }
  
++static void write_pseudo_merges(struct hashfile *f)
++{
++	struct oid_array commits = OID_ARRAY_INIT;
++	struct bitmap **commits_bitmap = NULL;
++	off_t *pseudo_merge_ofs = NULL;
++	off_t start, table_start, next_ext;
++
++	uint32_t base = bitmap_writer_selected_nr();
++	size_t i, j = 0;
++
++	CALLOC_ARRAY(commits_bitmap, writer.pseudo_merges_nr);
++	CALLOC_ARRAY(pseudo_merge_ofs, writer.pseudo_merges_nr);
++
++	for (i = 0; i < writer.pseudo_merges_nr; i++) {
++		struct bitmapped_commit *merge = &writer.selected[base + i];
++		struct commit_list *p;
++
++		if (!merge->pseudo_merge)
++			BUG("found non-pseudo merge commit at %"PRIuMAX, (uintmax_t)i);
++
++		commits_bitmap[i] = bitmap_new();
++
++		for (p = merge->commit->parents; p; p = p->next)
++			bitmap_set(commits_bitmap[i],
++				   find_object_pos(&p->item->object.oid, NULL));
++	}
++
++	start = hashfile_total(f);
++
++	for (i = 0; i < writer.pseudo_merges_nr; i++) {
++		struct ewah_bitmap *commits_ewah = bitmap_to_ewah(commits_bitmap[i]);
++
++		pseudo_merge_ofs[i] = hashfile_total(f);
++
++		dump_bitmap(f, commits_ewah);
++		dump_bitmap(f, writer.selected[base+i].write_as);
++
++		ewah_free(commits_ewah);
++	}
++
++	next_ext = st_add(hashfile_total(f),
++			  st_mult(kh_size(writer.pseudo_merge_commits),
++				  sizeof(uint64_t)));
++
++	table_start = hashfile_total(f);
++
++	commits.alloc = kh_size(writer.pseudo_merge_commits);
++	CALLOC_ARRAY(commits.oid, commits.alloc);
++
++	for (i = kh_begin(writer.pseudo_merge_commits); i != kh_end(writer.pseudo_merge_commits); i++) {
++		if (!kh_exist(writer.pseudo_merge_commits, i))
++			continue;
++		oid_array_append(&commits, &kh_key(writer.pseudo_merge_commits, i));
++	}
++
++	oid_array_sort(&commits);
++
++	/* write lookup table (non-extended) */
++	for (i = 0; i < commits.nr; i++) {
++		int hash_pos;
++		struct pseudo_merge_commit_idx *c;
++
++		hash_pos = kh_get_oid_map(writer.pseudo_merge_commits,
++					  commits.oid[i]);
++		if (hash_pos == kh_end(writer.pseudo_merge_commits))
++			BUG("could not find pseudo-merge commit %s",
++			    oid_to_hex(&commits.oid[i]));
++
++		c = kh_value(writer.pseudo_merge_commits, hash_pos);
++
++		hashwrite_be32(f, find_object_pos(&commits.oid[i], NULL));
++		if (c->nr == 1)
++			hashwrite_be64(f, pseudo_merge_ofs[c->pseudo_merge[0]]);
++		else if (c->nr > 1) {
++			if (next_ext & ((uint64_t)1<<63))
++				die(_("too many pseudo-merges"));
++			hashwrite_be64(f, next_ext | ((uint64_t)1<<63));
++			next_ext = st_add3(next_ext,
++					   sizeof(uint32_t),
++					   st_mult(c->nr, sizeof(uint64_t)));
++		} else
++			BUG("expected commit '%s' to have at least one "
++			    "pseudo-merge", oid_to_hex(&commits.oid[i]));
++	}
++
++	/* write lookup table (extended) */
++	for (i = 0; i < commits.nr; i++) {
++		int hash_pos;
++		struct pseudo_merge_commit_idx *c;
++
++		hash_pos = kh_get_oid_map(writer.pseudo_merge_commits,
++					  commits.oid[i]);
++		if (hash_pos == kh_end(writer.pseudo_merge_commits))
++			BUG("could not find pseudo-merge commit %s",
++			    oid_to_hex(&commits.oid[i]));
++
++		c = kh_value(writer.pseudo_merge_commits, hash_pos);
++		if (c->nr == 1)
++			continue;
++
++		hashwrite_be32(f, c->nr);
++		for (j = 0; j < c->nr; j++)
++			hashwrite_be64(f, pseudo_merge_ofs[c->pseudo_merge[j]]);
++	}
++
++	/* write positions for all pseudo merges */
++	for (i = 0; i < writer.pseudo_merges_nr; i++)
++		hashwrite_be64(f, pseudo_merge_ofs[i]);
++
++	hashwrite_be32(f, writer.pseudo_merges_nr);
++	hashwrite_be32(f, kh_size(writer.pseudo_merge_commits));
++	hashwrite_be64(f, table_start - start);
++	hashwrite_be64(f, hashfile_total(f) - start + sizeof(uint64_t));
++
++	for (i = 0; i < writer.pseudo_merges_nr; i++)
++		bitmap_free(commits_bitmap[i]);
++
++	free(pseudo_merge_ofs);
++	free(commits_bitmap);
++}
++
+ static int table_cmp(const void *_va, const void *_vb, void *_data)
+ {
+ 	uint32_t *commit_positions = _data;
+@@ -855,6 +977,9 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
  
+ 	int fd = odb_mkstemp(&tmp_file, "pack/tmp_bitmap_XXXXXX");
+ 
++	if (writer.pseudo_merges_nr)
++		options |= BITMAP_OPT_PSEUDO_MERGES;
++
+ 	f = hashfd(fd, tmp_file.buf);
+ 
+ 	memcpy(header.magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE));
+@@ -886,6 +1011,9 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 
+ 	write_selected_commits_v1(f, commit_positions, offsets);
+ 
++	if (options & BITMAP_OPT_PSEUDO_MERGES)
++		write_pseudo_merges(f);
++
+ 	if (options & BITMAP_OPT_LOOKUP_TABLE)
+ 		write_lookup_table(f, commit_positions, offsets);
+ 
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 0f539d79cfd..55527f61cd9 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -37,6 +37,7 @@ enum pack_bitmap_opts {
+ 	BITMAP_OPT_FULL_DAG = 0x1,
+ 	BITMAP_OPT_HASH_CACHE = 0x4,
+ 	BITMAP_OPT_LOOKUP_TABLE = 0x10,
++	BITMAP_OPT_PSEUDO_MERGES = 0x20,
+ };
+ 
+ enum pack_bitmap_flags {
 -- 
 2.45.0.23.gc6f94b99219
 
