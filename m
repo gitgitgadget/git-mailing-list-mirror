@@ -1,59 +1,60 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2829E1D554
-	for <git@vger.kernel.org>; Mon, 29 Apr 2024 09:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416C26F53D
+	for <git@vger.kernel.org>; Mon, 29 Apr 2024 13:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714384097; cv=none; b=KC8Z9ycGQMl0l2kDZWbIJkbtashZXzJToKImNN93wK/sHuQld83oGu/bwa9GAcYWIkDDRjeGWy5pyJm+1m2I6BPpeNiZ8a5vnc0TMgfw/pLppUGU9EgBMY+9CZ8E4ZWjETNTQ5h8yGepaOWPQr47R9boIaJLoT+4jFT2Nzm76To=
+	t=1714397940; cv=none; b=HmzCny+gz2LZ+eEROp+u6Rte1+Yp1YqwOG2GddCWNQ7YiucxXidZFfaWQO5xzJyMf3C/W5C1wv2qOGyPpGLUrnBGX2ckr2jB4Nel8R/ZiTjcz/4y0svOc+V2DFFZlK/LzUECePzJ+Xlu7ZRIJvOYBN2XlOlx3i4makJ5D6W75oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714384097; c=relaxed/simple;
-	bh=jp8UoplSqc2P0iPHS/gTE4E8jyKVBGrNQQ7phpYSkqI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QodfN94aiQ8skjufd4NpHpVHIdkwj6792Z3jNzIMesoQzXhUKRu4CulI/tninfiwxgWLWa7v7xCKT+4YS+NozR3ScKjT7Vpmp93JrEklW9PbKlr94NMJCvzmPG4Hr9KIhefpBc8rjEjlwWVod9SIRar3qJBRrnlyOXDMR7o9nHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVCoqIao; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1714397940; c=relaxed/simple;
+	bh=cQpcnrVgylBj14NZi/Js/gQoWKKfByrlgYOAglKB66I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ADeAsTWVXgVb0CXKI9mRy9qS3nQkEby4Nr3+6kN3wWYhbTxuKQidWxYNelM4+LYgT/89YSHOyAptjcAKJaAQAknCp790HEdLvFvEgKtcfEp+McOgzix9BMt6RFAv2GOszZFetc5EO4twosdua3ftcqZPqvx7lVQebrO2im0Kck4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFP+sFsz; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVCoqIao"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41b2119da94so34643765e9.0
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 02:48:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFP+sFsz"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2de2f5ca076so50523141fa.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 06:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714384094; x=1714988894; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NguTBM8fFk8JdV6OutS5yALYSTu7m2xe1F81pCUq0Lk=;
-        b=QVCoqIao0Sst8sbKYGCtizu4IS/ygwcHCXwb1wm3tDy2gj+ZeTK8mQ5eFEZzMXwvPL
-         2ZLFhlWGtlDVlE60L8CatUEJ3GH3QgVOmfw8omDCOAcB4yLnpjMuOhzyZhnKDh/CrZTR
-         /b+wgoB7r8zfrNgUjDZvpHk/89Rw1h0RA9KKluyuZcBKpft9xOLL9AJ+NQU5icpCL8Wf
-         7j7Q4ovdKHljHDMW66qTqn9ROv5pREz+05IfldUBvBDgthillhQN1SBxMYKM1ToMOln2
-         PhBeoE4fmrAzqka7Mpb4HmkuFUiPKdsSWEZULRXhZDO1oNrxorozcAgaEgHooFOb7bdl
-         QwIw==
+        d=gmail.com; s=20230601; t=1714397937; x=1715002737; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2kMTI8Lc9qN/1cPKdgQ9B0M6Q+BU9a4mNsTkefrFifc=;
+        b=ZFP+sFszCBanz7q3RFgfIgx3OZ/9Ifkg77QIPooFmA95wJLnA4K7oYZHFZm39oPASC
+         bic/mk0pO2vmcU3l46ZEvcE2Q0c3OiOsXyUOlxdSw/HTp0JXTLvHRh+j6ONzGaPwz9eH
+         iPdv7t5pcCMRhdy0+fRi51kIj73wYBcGA49NDpAQk8DCqzfxBQtjlM2jwscKu7z4RufO
+         Hysxa4bOkmONglp3zOvhuUNRwg1xfnYnbGWkU/dFUj8hF+LStfwIkijUF251kUVJ5UKa
+         fRfS3x7Z5u9QlS55CDcNRHxuwRQjQ4WKFXWg7umL2T7o4GIgJamuHev01aZDMQH6rwyp
+         cg9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714384094; x=1714988894;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NguTBM8fFk8JdV6OutS5yALYSTu7m2xe1F81pCUq0Lk=;
-        b=qRZzsi5+XHhUyFPTRPPRWrkEiw5dXcw7Dwa33qtKRgCXDY+SBwR2ygkuhO+OuuBYY/
-         qaw+P9syihzeeudDAwoX4I2bvPzx7KuzxARi38I1ZMpRX/QwYRAQKkK4B0R7ZV6yo3Fs
-         Q0ehFVNN5HLfXJMJa2meRTX7slnSr0ptq6dhkiYy+6Sxjom7jIxux4+2qFt1tqRhg8/P
-         2gIp729arzWq18csTBUJkCGxtgEK+pFlmSDBn7AMekquPgCHvCr3IOZjW+oHHKlzNB18
-         ZwZbh44zzvB8zHeeIG86ac0n0XdVmdvoMZk26aiPM7MRkOTTtGwa+VE4l1+GF+yWJYXA
-         Rt0w==
-X-Forwarded-Encrypted: i=1; AJvYcCVzZ27gcWBoOn5mQQFjXBPkaQI2coertoUxaTH3cYIl1DZM+h95nzgz6CqIjykD2NesukeWXbZoRxNQtwlCkjvhZkve
-X-Gm-Message-State: AOJu0YzrZv0lB83hDyFCvZSjlmMUdRELd42Jve1IyGwxhVOLuQEi85K5
-	XlTFML+pXXQuIIZtCAZvwpTFh/ggcWkJMzT43I73gT1DFgduWFymFz9yNA==
-X-Google-Smtp-Source: AGHT+IF0wE6srQmMK9VNunsyJGKTuotpveF0CuuqJikHLS1yMeEllVF8DQtXMeJxq8qDpPsBzX+vjw==
-X-Received: by 2002:a05:600c:470e:b0:41b:f979:e359 with SMTP id v14-20020a05600c470e00b0041bf979e359mr3579625wmo.38.1714384094251;
-        Mon, 29 Apr 2024 02:48:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714397937; x=1715002737;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2kMTI8Lc9qN/1cPKdgQ9B0M6Q+BU9a4mNsTkefrFifc=;
+        b=qL3Tj/DOkVvhgU57/sfm9O/g9tPOIhvZ6DyzgRmngmzDF8RJQz4H6Vk9CUs1sKWXWF
+         Fq9T6+jWjfxQvrWkAnpGPZlSFrUfS69PdLnFQa93WB/hf8yGhlTEAmOW0zzbl28ZNl4E
+         ZOXXybca6Rm2uf8TKuUa9glW0k2igYs0E6mhXb8A846OosKKgw8YLhTpd4ONAIrA+Fsc
+         KOdrvNJWx6iq5zLgG3wnzZS4A0OeA1SRKy+9ve+PACgBIHGy7vpU6TYfuuHalhktPcob
+         TbK+QzgTv0kHZU2gZcDV7ShytEivyaGeFTNHKAAaV1FKfhtMs6j7vIRtes/W8jrOPiJt
+         nGLA==
+X-Forwarded-Encrypted: i=1; AJvYcCUe8gcS/rNBmL+3vSatl+MrScMhryBNGhGKj9gFJ9GGJG6OLdwZMlvM0n2PsxJq5++lsGt8/XR0XYordH2d0egeuR2T
+X-Gm-Message-State: AOJu0YxI8UxvKCRczMsqfJtynWD7ZD1AXJ00ZREv3RRagsXQWJ3A4p6h
+	FrH8mxhxfv2yB8/EvNAeLW3cV3KMNigTPrtc0wa9bg/pBNMBS5B0
+X-Google-Smtp-Source: AGHT+IGmJiWXGgFROS9wvcjSX4W3UiWMxSNZPyH7d7Q8Oky8yoR4oF1H2STqvjr9yJ05DYGJe+1RUA==
+X-Received: by 2002:a2e:b052:0:b0:2df:b6dd:dc24 with SMTP id d18-20020a2eb052000000b002dfb6dddc24mr4025377ljl.8.1714397937054;
+        Mon, 29 Apr 2024 06:38:57 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:701:9864:4109:be00:6ff6? ([2a0a:ef40:62a:701:9864:4109:be00:6ff6])
-        by smtp.gmail.com with ESMTPSA id n2-20020adfe342000000b00343eac2acc4sm29021482wrj.111.2024.04.29.02.48.13
+        by smtp.gmail.com with ESMTPSA id n26-20020a05600c3b9a00b0041bf87e702asm7491929wms.10.2024.04.29.06.38.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 02:48:14 -0700 (PDT)
-Message-ID: <33bb69ad-ec79-4863-97b7-51605b94c9c5@gmail.com>
-Date: Mon, 29 Apr 2024 10:48:13 +0100
+        Mon, 29 Apr 2024 06:38:56 -0700 (PDT)
+Message-ID: <73632d75-b82d-4853-93fe-3460fdda3325@gmail.com>
+Date: Mon, 29 Apr 2024 14:38:55 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,83 +62,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] add-patch: response to unknown command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>,
- Patrick Steinhardt <ps@pks.im>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com> <xmqqv849xups.fsf@gitster.g>
- <41d23496-0bd3-47c7-a470-39334588f520@gmail.com> <xmqqfrva22py.fsf@gitster.g>
+Subject: Re: [PATCH v4 1/7] refs: accept symref values in
+ `ref_transaction[_add]_update`
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+ ps@pks.im
+References: <20240423212818.574123-1-knayak@gitlab.com>
+ <20240426152449.228860-1-knayak@gitlab.com>
+ <20240426152449.228860-2-knayak@gitlab.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqfrva22py.fsf@gitster.g>
+In-Reply-To: <20240426152449.228860-2-knayak@gitlab.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Junio
+Hi Karthik
 
-On 24/04/2024 16:35, Junio C Hamano wrote:
-> phillip.wood123@gmail.com writes:
+On 26/04/2024 16:24, Karthik Nayak wrote:
+> From: Karthik Nayak <karthik.188@gmail.com>
 > 
->> On 22/04/2024 16:50, Junio C Hamano wrote:
->>> Rubén Justo <rjusto@gmail.com> writes:
->>>
->>>> 1:  0317594bce ! 1:  b418b03f15 add-patch: response to unknown command
->>>>       @@ t/t3701-add-interactive.sh: test_expect_success 'warn about add.interactive.useB
->>>>        +	test_when_finished "git reset --hard; rm -f command" &&
->>>>        +	echo W >command &&
->>>>        +	git add -N command &&
->>>>       -+	cat >expect <<-EOF &&
->>>>       -+	diff --git a/command b/command
->>>>       -+	new file mode 100644
->>>>       -+	index 0000000..a42d8ff
->>>>       -+	--- /dev/null
->>>>       -+	+++ b/command
->>>>       -+	@@ -0,0 +1 @@
->>>>       -+	+W
->>>>       ++	git diff command >expect &&
->>>>       ++	cat >>expect <<-EOF &&
->>>>        +	(1/1) Stage addition [y,n,q,a,d,e,p,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
->>>>        +	(1/1) Stage addition [y,n,q,a,d,e,p,?]?$SP
->>>>        +	EOF
->>> Interesting.
->>> My first reaction was "how is this different from checking just the
->>> last line of the actual output?  The early part of expect and actual
->>> both come from an internal invocation of 'git diff', and they must
->>> match by definition".
->>> But that may really be the point of this test.
->>
->> Yes - we want to make sure that we are not printing the help and the
->> only way to do that is to check the whole output
+> The `ref_transaction[_add]_update` functions obtain ref information and
+> flags to create a `ref_update` and add it to the transaction at hand.
 > 
-> I was not questioning that part of the patch.  "My first reaction"
-> was solely about use of "git diff" to replace the golden copy of
-> expected result in the test itself, only to allow for use of
-> different hash functions.  As you (or somebody else?) mentioned in
-> an earlier review, diff_cmp is there for exactly that purpose.
+> To extend symref support in transactions, we need to also accept the
+> old and new ref targets and process it.
 
-Oh sorry I'd misunderstood
+s/it/them/
 
->>> That is, we may later decide to tweak the way "git diff" hunks are
->>> presented, and we expect that the way "git add -p" presents the
->>> hunks would change together with it automatically.
+> In this commit, let's add the
+
+This commit adds?
+
+> required parameters to the function and modify all call sites.
 > 
-> This argument cuts both ways, by the way.
+> The two parameters added are `new_target` and `old_target`. The
+> `new_target` is used to denote what the reference should point to when
+> the transaction is applied.
 > 
-> Insisting that the output match the explicit expectation (not what
-> "git diff" of the day produces) has a few advantages.  It makes the
-> test more explicit and easy to see what output we are expecting, and
-> more importantly, it forces us to update the test when we decide to
-> tweak the output from the command being tested (i.e. hunk selection
-> UI) and/or the output from "git diff" command.
+> The `old_target` denotes the value the reference must have before the
+> update. Some functions allow this parameter to be NULL, meaning that the
+> old value of the reference is not checked.
+> 
+> The handling logic of these parameters will be added in consequent
+> commits as we add symref commands to the '--stdin' mode of
+> 'git-update-ref'.
+> 
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 
-There is also a practical argument against using "git diff" to generate 
-the expected output as it only works if the diff contains a single hunk. 
-If the diff contains more than one hunk "add -p" displays them separately.
+Thanks for updating the documentation, I've left a couple of comments below
+
+> diff --git a/refs.h b/refs.h
+> index d278775e08..c792e13a64 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -648,6 +648,15 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+>    *         before the update. A copy of this value is made in the
+>    *         transaction.
+>    *
+> + *     new_target -- the target reference that the reference will be
+> + *         update to point to.
+
+s/update/updated/
+
+> This takes precedence over new_oid when set.
+
+I thought it was a bug to set both new_oid and new_target.
+
+> If the reference is a regular reference, it will be
+> + *         converted to a symbolic reference.
+ > + *
+> + *     old_target -- the reference that the reference must be pointing to.
+> + *         Will only be taken into account when the reference is a symbolic
+> + *         reference.
+
+Does this last sentence mean it is not possible to assert that it is 
+currently a symbolic reference? I thought the point of being able to 
+specify the old value of a ref when updating was to ensure it hadn't 
+changed since it was read. This contradicts the documentation in the 
+next hunk and the description in the commit message.
+
+>    *     flags -- flags affecting the update, passed to
+>    *         update_ref_lock(). Possible flags: REF_NO_DEREF,
+>    *         REF_FORCE_CREATE_REFLOG. See those constants for more
+> @@ -713,7 +722,11 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+>    * beforehand. The old value is checked after the lock is taken to
+>    * prevent races. If the old value doesn't agree with old_oid, the
+>    * whole transaction fails. If old_oid is NULL, then the previous
+> - * value is not checked.
+> + * value is not checked. If `old_target` is not NULL, treat the reference
+> + * as a symbolic ref and validate that its target before the update is
+> + * `old_target`. If the `new_target` is not NULL, then the reference
+> + * will be updated to a symbolic ref which targets `new_target`.
+
+This looks good and describes the behavior I'd expected to see.
 
 Best Wishes
 
