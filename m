@@ -1,93 +1,242 @@
-Received: from mta-sndfb-w07.biglobe.ne.jp (mta-sndfb-w07.biglobe.ne.jp [27.86.113.55])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C65E17994D
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 15:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=27.86.113.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4AD176FA3
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714492378; cv=none; b=hUnbmBW9VLNexgu0jE0SCKCrWx6/k3nzQJQ+GZikDi+aLjpjBG+wX9IkERTG79ri3DyStItHVDbYISI/BymblgboMPEPDVft3gTB84WvOyHPoA6nI0Ey8PYP7JCqTU1vYdjPMRXVenb/PXjCS74IQLOYZ1YFRKvyD304EDXKRQQ=
+	t=1714494580; cv=none; b=BJBYR4Arwhh2AfRBoSQmtkvwQOnRVtaJULjRrlPFAwefZQND771K04jn3D3fFgwj2HrxOdgND+7elXyn2C4a4kn2/eT/IRExoh4OsSsEX7Fj0Krr4UmGXH6SSDgES4GjwJHGS/aPl3tqltwoyLQkjC//B/4PgSnXsTtKYasSwbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714492378; c=relaxed/simple;
-	bh=93/3+r3SfMlSdlsu6IYF41gq4MDGtrms7/5D1yFeqBE=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Ks8IGFoLtowbsAhza7DUFmz3X/hCERlVuGiUjWJB0OmUpowpH1G47ecC/4xx3V5rNyFYG1SFbfzydJ0RJ8PdfYwInHKvfFR/L4YKbJyqA1ELkRu7d4bSXMD3WCTzs0kPPKbTOKx7o7IvbDUtkdEQK18DIMIKlpYhCmLBsNcmbNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kba.biglobe.ne.jp; spf=pass smtp.mailfrom=kba.biglobe.ne.jp; dkim=pass (2048-bit key) header.d=kba.biglobe.ne.jp header.i=@kba.biglobe.ne.jp header.b=qg1oiWIn; arc=none smtp.client-ip=27.86.113.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kba.biglobe.ne.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kba.biglobe.ne.jp
+	s=arc-20240116; t=1714494580; c=relaxed/simple;
+	bh=uVgMnFjjTLRg+q5mashjfQ+ydD7NJwn2uMLTrXpoXb8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mjU7IOdsIK/HqQtvqIXJe2/gct2PO+DLsWvnuSvx30G9Uh9STfJVnYEVOxRZ2h4SM06AGrWEmfIvcpp3MZGejleWO3b5/wehRqZ41BIeW6q2wVE6aDf9nvXc7RNzY9qj8kTTykMKAF1kYc/ElR51auzoGSpQKzmy7hWlLf1PaoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=us/KyBy2; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kba.biglobe.ne.jp header.i=@kba.biglobe.ne.jp header.b="qg1oiWIn"
-Received: from mail.biglobe.ne.jp by mta-snd-w04.biglobe.ne.jp with ESMTP
-          id <20240430155240931.PBZB.83843.mail.biglobe.ne.jp@biglobe.ne.jp>;
-          Wed, 1 May 2024 00:52:40 +0900
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="us/KyBy2"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CE3C720476;
+	Tue, 30 Apr 2024 12:29:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=uVgMnFjjTLRg+q5mashjfQ+ydD7NJwn2uMLTrX
+	poXb8=; b=us/KyBy2v0CwsQOc3/iWmA67hCE0xEPrhOYVTiVJxZqNNpmRX3W3kS
+	5nIHTDu+kR77FCNDqrQHzQzBl2WYYzf88GAOTgSEgSbtEQc9lg5smx6mD+2GgUum
+	YdWklHinfMNNPwAWmrO+HY9kC2Qox15wt5XyJUBW/cRCsYazT0UhA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C678A20475;
+	Tue, 30 Apr 2024 12:29:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C4C9F20474;
+	Tue, 30 Apr 2024 12:29:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: James Liu <james@jamesliu.io>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] advice: add --no-advice global option
+In-Reply-To: <20240430014724.83813-2-james@jamesliu.io> (James Liu's message
+	of "Tue, 30 Apr 2024 11:47:24 +1000")
+References: <20240429010925.93205-1-james@jamesliu.io>
+	<20240430014724.83813-1-james@jamesliu.io>
+	<20240430014724.83813-2-james@jamesliu.io>
+Date: Tue, 30 Apr 2024 09:29:26 -0700
+Message-ID: <xmqqbk5qstjt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.4\))
-Subject: Re: [BUG] 'ls-files path' fails if absolute path of workdir contains
- NFD (macOS)
-From: "Jun. T" <takimoto-j@kba.biglobe.ne.jp>
-In-Reply-To: <20240430071247.GB1504@tb-raspi4>
-Date: Wed, 1 May 2024 00:52:38 +0900
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <44EB4C2D-5C86-4448-B8D8-3E90F75DB5CB@kba.biglobe.ne.jp>
-References: <55D75808-70E0-46FA-906D-C00CD612A262@kba.biglobe.ne.jp>
- <20240430071247.GB1504@tb-raspi4>
-To: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3696.120.41.1.4)
-X-Biglobe-Sender: takimoto-j@kba.biglobe.ne.jp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kba.biglobe.ne.jp; s=default-1th84yt82rvi; t=1714492361;
- bh=yZr9ooVyn8Rgq8xQqGT6ajn6GIVdIBEqIdhchlwtXbg=;
- h=Subject:From:In-Reply-To:Date:Cc:References:To;
- b=qg1oiWIntero61KXXGUrqbguKbMmWFlfrGoENi9zhsvoBIYDBxLpuMRPV4+dLehojeoQB4Zs
- 3BkoHMZl3OvFdd2NF15KuQtSsErcstt4bhe/4l1zvvPe7i1qfa2opvydGmly8o17/G8UQ7lxJP
- tXPJUPXbPEJgREbi5Kw4cHc9pMZ8Vx8GX5R7W//I75T/6N3yEztcKL2nnubAhkOHil4hdXmxun
- AAvUNxCCHrZ6QhFtWWOEyoc9zHLbCQw4piQQSk7U6S7ainfncqC5YUEaM4h5lXbhVXLKaOS9jD
- yCFyAjTdQrDFnkywwn40YF7YLZMoS6R0+11zLxvtzZH4L1Xg==
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D0F1D84A-070E-11EF-B026-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
+James Liu <james@jamesliu.io> writes:
 
-> 2024/04/30 16:12, Torsten B=C3=B6gershausen <tboegi@web.de> wrote:
->=20
-> I am familar with the NFC/NFD stuff, but not with get_git_work_tree(),
-> at least not yet.
->=20
-> If you have a suggestion for a patch, would you like to share it ?
+> Advice hints must be disabled individually by setting the relevant
+> advice.* variables to false in the Git configuration. For server-side
+> and scripted usages of Git where hints aren't necessary, it can be
+> cumbersome to maintain configuration to ensure all advice hints are
 
-Well, the only thing I can tell is the patch below _seems_ to fix
-the _current_ problem. There may be other problems, it may introduce
-new problem(s) (such as memory leak), etc.
+It is not that scripted use decline hints because they are not
+"necessary"; it is they find the hints harmful for whatever reason.
 
-But I don't know anything about the git internals and have no time
-now to investigate further. Sorry.
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 7a1b112a3e..ef1d9dce5d 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -13,7 +13,7 @@ SYNOPSIS
+>      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+>      [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+>      [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+> -    [--config-env=<name>=<envvar>] <command> [<args>]
+> +    [--config-env=<name>=<envvar>] [--no-advice] <command> [<args>]
 
-get_git_work_tree() just returns the value of the_repository->worktree
-but I have no idea where this variable is set.
+Move the new one near [--no-replace-objects] to group the --no-*
+options together.
 
-get_git_work_tree() and the_repository->worktree are used in
-many places, and I'm not sure changing the function/variable has
-no bad side effects or not.
+This is not a fault of this patch, but I notice "--no-lazy-fetch"
+and "--no-optional-locks" are not listed here (there may be others,
+I didn't check too deeply).  It might make sense to have a separate
+clean-up step to move the --no-* "ordinarily we would never want to
+disable these wholesale, but for very special needs here are the
+knobs to toggle them off" options together in the DESCRIPTION
+section and add missing ones to the SYNOPSIS section.
 
-And how to convert into NFC? By precompose_string_if_needed()?
-Does this function allocate a new memory for NFC? If so, do we
-need to free it at some point?
+> diff --git a/advice.c b/advice.c
+> index 75111191ad..abad9ccaa2 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -2,6 +2,7 @@
+>  #include "advice.h"
+>  #include "config.h"
+>  #include "color.h"
+> +#include "environment.h"
+>  #include "gettext.h"
+>  #include "help.h"
+>  #include "string-list.h"
+> @@ -126,7 +127,12 @@ void advise(const char *advice, ...)
+>  
+>  int advice_enabled(enum advice_type type)
+>  {
+> -	int enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+> +	int enabled;
+> +
+> +	if (!git_env_bool(GIT_ADVICE, 1))
+> +		return 0;
 
+How expensive is it to check git_env_bool() every time without
+caching the parsing of the value given to the environment variable?
+Everybody pays this price but for most users who do not set the
+environment variable it is not a price we want them to pay.
 
-diff --git a/setup.c b/setup.c
-index f4b32f76e3..3f2f3ed016 100644
---- a/setup.c
-+++ b/setup.c
-@@ -47,7 +47,7 @@ static int abspath_part_inside_repo(char *path)
- 	size_t wtlen;
- 	char *path0;
- 	int off;
--	const char *work_tree =3D get_git_work_tree();
-+	const char *work_tree =3D =
-precompose_string_if_needed(get_git_work_tree());
- 	struct strbuf realpath =3D STRBUF_INIT;
-=20
- 	if (!work_tree)
+One way to solve that might be to just insert these
 
+	static int advice_enabled = -1;
+
+	if (advice_enabled < 0)
+		advice_enabled = git_env_bool(GIT_ADVICE_ENVIRONMENT, 1)
+	if (!advice_enabled)
+		return 0;
+
+and leave everything else intact.  We do not even need to split the
+declalation+initialization into a ...
+
+> +	enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+
+... separate assignment.
+
+> +/*
+> + * Environment variable used to propagate the --no-advice global option to the
+> + * advice_enabled() helper, even when run in a subprocess.
+> + * This is an internal variable that should not be set by the user.
+> + */
+> +#define GIT_ADVICE "GIT_ADVICE"
+
+As Patrick pointed out, this should be GIT_ADVICE_ENVIRONMENT or
+something.
+
+> diff --git a/git.c b/git.c
+> index 654d615a18..6283d126e5 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -38,7 +38,7 @@ const char git_usage_string[] =
+>  	   "           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+>  	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n"
+>  	   "           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
+> -	   "           [--config-env=<name>=<envvar>] <command> [<args>]");
+> +	   "           [--config-env=<name>=<envvar>] [--no-advice] <command> [<args>]");
+
+Ditto.
+
+> diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
+> index 0dcfb760a2..2ce2d4668a 100755
+> --- a/t/t0018-advice.sh
+> +++ b/t/t0018-advice.sh
+> @@ -29,4 +29,24 @@ test_expect_success 'advice should not be printed when config variable is set to
+>  	test_must_be_empty actual
+>  '
+>  
+> +test_expect_success 'advice should not be printed when --no-advice is used' '
+> +	cat << EOF > expect &&
+
+Style.  Between the redirection operator and the file that the
+operator operates on, there should be no SP.
+
+> +On branch master
+> +
+> +No commits yet
+> +
+> +Untracked files:
+> +	README
+
+Something like
+
+	q_to_tab >expect <<\-EOF
+	On branch master
+	...
+	Untracked files:
+	QREADME
+	
+	nothing added to ...
+	EOF
+
+or
+
+	sed -e "s/^|//" >expect <<\-EOF
+	On branch master
+	...
+	Untracked files:
+	|	README
+	
+	nothing added to ...
+	EOF
+
+would work better.
+
+> +	git init advice-test &&
+> +  test_when_finished "rm -fr advice-test" &&
+
+Funny indentation.  Also if "git init" fails in the middle, after
+creating the directory but before completing, your when-finished
+handler fails to register.
+
+> +  cd advice-test &&
+
+Do not chdir around without being inside a subshell.  If we have to
+add new tests later to this script, you do not want them to start in
+the directory that you are going to remove at the end of this test.
+
+> +  touch README &&
+
+When you do not care about the timestamp, avoid using "touch".  Writing
+
+	>README &&
+
+instead would make it clear that you ONLY care about the presense of
+the file, not even its contents.
+
+> +  git --no-advice status > ../actual &&
+> +  test_cmp ../expect ../actual
+
+So, taken together:
+
+	(
+		cd advice-test &&
+		>README &&
+		git --no-advice status
+	) >actual &&
+	test_cmp expect actual
+
+> +'
+> +
+>  test_done
+
+Thanks.
