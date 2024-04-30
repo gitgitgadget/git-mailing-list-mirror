@@ -1,160 +1,221 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9239B205E0D
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 04:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0279DE
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 04:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714451463; cv=none; b=cTqqYw9yISCdJcoctryKQbdMvau9eJjuf/leAgXI7JnqbR33T6ZCSwVP+0dx1KoCmpp+K6FXK4jXg7lgq64UPv7qzmA7sqw32U0fR577KrDPSZjtXMKewzzMfCy65IMCJYRW9INV914z2AM8CYHEyYqMlGjB3iI++jf+QajtGWs=
+	t=1714452141; cv=none; b=CZtzE0SYyQKwGy99vsA0Bit6UmbJqDWmk3Zl1gfwggme3XBvoCErIsGCO29TzkrQPfPiiGAh8WFcFDFy+MYcd3cyojo0WcvD53sTqEW6ZngFw66FQdS3fZd9Ws/SNXEPPWVFJn+PugvGwreZf8dXNoePmmHnkvmvTly/mv9LfqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714451463; c=relaxed/simple;
-	bh=rz2ldf2cn02Q8kwLZ/KBJVuLQjkdrmDyimELYFQ7m0M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c6Z8g0mYdcIMvB2F12eE2aXXp0B28K1yhKDUIzbPziyj9SSToXth6g5liaFXZMQ2argqyoQRgnNPW21myrlOYQGJ2pAVAtyDiYVdNPG8ChZwaG21dRgahm56n11Zslkq5Y4EL3ap/wHGbHZan/HdiDrAGxAof9197y5B5bVkjXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S1bpWmJf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HuCaH3Dd; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714452141; c=relaxed/simple;
+	bh=H5mNJaH5Jn5819dOO+ue5ZwFKrTCOzHYQrN7CAwzltU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fmePRAdKqgWftcE4Druwt8LGXvxurbT8varmXetrlbxsP1zg0eBEEgDhn1DOb/yKhnACHRp7EOgoqLlGBHP+IMLSyFlLyTeAf6hyTCI07BzbgDU9J1URdSQuIa3IQ40ajwCM0gGyFWtm6D9I+Uw4TtkHsug7McHRA38A04FCILI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b=N8e2VM5T; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S1bpWmJf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HuCaH3Dd"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 81355138040F;
-	Tue, 30 Apr 2024 00:30:59 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 30 Apr 2024 00:30:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714451459; x=1714537859; bh=vWErRmtrks
-	H+a7D2iDUDrF2XcDIhihhi1HXmK7gAWSk=; b=S1bpWmJfdFNL6Wlhp2gOgA/Ros
-	VjWxrW1Vj4sfrnCKHr8IcgJbPcvasUGvh93rul8g3tlSeQo5lg50m4wDKSDGy24c
-	3DAMluRDGPmRM+AYG9zLXDg4wym/jG8Z7QKm7WoWWErweUWM7I+cYmOk3Sr1hiHV
-	tYQo04yZ27f0PdGcarGThUs3NxvFbk8Un727qIFhjDqJCAFe77+D2Vq/5P1r8De1
-	iy0TrZ4qZhx8pTON1az8KmQTJtUfxgYKq1Qg7GlKzmG6r8kEfesT61pH/UksdFpW
-	sJvew/BXn6IPhyycBfRZ4L1Zcii1LRKXh62Mae/1Ps/dru5IuFnhoCvAqF9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714451459; x=1714537859; bh=vWErRmtrksH+a7D2iDUDrF2XcDIh
-	ihhi1HXmK7gAWSk=; b=HuCaH3DdAuOJkNUz1p8o0D2n8p5ps6HXO2CwjJJVorUz
-	bx6NVsErY+ZOIWVMpPBDq0x0U7R2XAZPAwNkQ1O8NYZrEdsNrp2CA14/bB1cF/N4
-	HBPJ9k5SA99VA52RH8pZYzl/6ADn+8vmOTYPOxUM5CtxQ+I/qIhWjO2wjOMPSZtp
-	F7OLFWlzjloJRTUoHxWplUa2siAbGWfrKIpZVR7WHbVc5BXBkyCz295Za4fmWJbq
-	E3J1a/QL6J86BcmNZYCUsuHrF4DDXicjFDgIh9PNR661vAwFzY5Z4B1GVXw/x9d+
-	VIA8ki0j9hN+6qNZVXjTLrISsldnVQlLjm5+FnAbpQ==
-X-ME-Sender: <xms:A3QwZpIY0G9IhRb26AxFmuFXalBuQZh6KeILKOMdGpEyyaEJpF8FCA>
-    <xme:A3QwZlK-OxwphGSxYVzyGfcnwv44xF63DpfontGhG-2jiKCIPJPREHbwBCKW6pwPU
-    mlrVKF6WOAPNesLPQ>
-X-ME-Received: <xmr:A3QwZhsNZjmLObKZFDsB5CT5YouCNpn2VD0JOKH2VLBb1EDOPeiHwPbjEbcp2C1s1qJeflUFqIBHrda_w8Vxk3GaDmBmhH72F2UB5k1pk5rrAdXpHbLH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddgkedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeelgfeitdffkedvteffgeduuedvffdtff
-    ehteefleffvedvffehvdffgeelgeegieenucffohhmrghinhepghhithhlrggsrdgtohhm
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:A3QwZqZCAeS1mHqtW_YXUyF5kGwfz3010lHYyYqdxQ1FjgSjfPk0YQ>
-    <xmx:A3QwZgZJtteEk7I9HlcXZ4X90AboJh0DQN6lxnKCWy-7t095tpbskg>
-    <xmx:A3QwZuAXp6QRNLKCAYxwcNgNnDFuYhav0PxDPk5mr7Tmo-zHX3DAhQ>
-    <xmx:A3QwZub7te9KRxaZLTUTAgTxGhYcFwirlmGHXLFt0cExVEACmGPeUw>
-    <xmx:A3QwZvkwgwqAZSdwGE0iWfgSGUF0meEXjlscN2jppkbW0fwJpW6RMK1Y>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Apr 2024 00:30:58 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0ac97cf4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Apr 2024 04:30:35 +0000 (UTC)
-Date: Tue, 30 Apr 2024 06:30:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] gitlab-ci: add smoke test for fuzzers
-Message-ID: <ZjBz_V31u_9CfXDn@tanuki>
-References: <01fb94999f8e2014ba4d09ce7451a4f5d315ee72.1714371146.git.ps@pks.im>
- <Zi86uFE5RlDG2RFN@tanuki>
- <xmqqfrv4yyb6.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b="N8e2VM5T"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e651a9f3ffso25815375ad.1
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 21:42:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail-com.20230601.gappssmtp.com; s=20230601; t=1714452139; x=1715056939; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JexrEgE9d4a3UHLV5wR4asSENRi0JKIuZDj7u48708w=;
+        b=N8e2VM5T9x5IqPWAvVVP0ULQSoEYvZR2jpGE7vNjtxCMMUqlf5bxceBGTbhiy1CPGH
+         XjmZj/QLbOBxEYyqOGExFSrcCjS7x09zV+KEb41kn+Hs50rIaqioal1x6onnnACdjEUB
+         RglcomBtO5eNiT+bQRlK2oHd6c6/SuU9PPKCbfopZ5SoQ9EIE/oH3f86hCBr5/923foo
+         uLJhnH08+cgo7xz3kMDhjhU66MP2r5yII4HlSLxWHvdrarPNqsK2qTA3gzkusct/Os/n
+         onEzTV4KR5G0Tp6GENvPKqfcGbdqQgGJLyoTtf9V1dEay5/VYkkP1/QR8Cp9w7Rcrq5k
+         s0XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714452139; x=1715056939;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JexrEgE9d4a3UHLV5wR4asSENRi0JKIuZDj7u48708w=;
+        b=q5T4mQ80l6IRrlJc8SbEchs3x4StBYkzwlnz0LxLZe2LsbSaYrFm5A+qtS9viav2A3
+         +8WhRyu02uyib8f+KXaMyLmJyH52X9UeYFTdsKfAHUx7QEETOJloqhLpozv+8/fkcENz
+         zzItDCJpUjgehWDrOyqkr2b/PpveTkHDKxpprx5MoclvdhmS08CycPvDs4xt1wqtBOtg
+         pSVVR+O8f9SvW16vt24cuLVzAbxoN8w9/OC6GPnB1StVBZihE9/BdcJFSol4f1PHdnWO
+         Vn3/wlSUxknLse3dKmZC7Ev36ppA5AsxwJ/leceu1gt/mM06vT8OuVyraxLAIgVqfT0W
+         izIA==
+X-Gm-Message-State: AOJu0YwYkmDHXxlrsLEecs0Fxec6WYPKuxL8fZlXft5IxZtly0LXoy1H
+	TcWat4vZB/1i8JscPVqlSwMM6jqrav2jQUVe6Wu8CaVGKEyOmAMUBCw4LKGB2IgIc4UTbDQ3CWF
+	Q+Y5BQQLEcZwxyQPFRgwjHtUeKWY=
+X-Google-Smtp-Source: AGHT+IH6O9wxQwaFgD/7s75nLSS6bANUVRWP3+hvjv8K5YDhbsC4zDm2LoC4INWrcn5p4a0ZyQ1lnDZNdWQ6IBTgg2k=
+X-Received: by 2002:a17:902:eb81:b0:1eb:bc78:1ef5 with SMTP id
+ q1-20020a170902eb8100b001ebbc781ef5mr6252940plg.17.1714452139065; Mon, 29 Apr
+ 2024 21:42:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 30 Apr 2024 00:42:18 -0400
+From: Linus Arver <linus@ucla.edu>
+In-Reply-To: <CAP8UFD0OATdCaEN1SrvYMTZP3b1uWCZw57cXHhUNPW9eTj+x0Q@mail.gmail.com>
+References: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
+ <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com> <9077d5a315d0d7272266856bf75a75b0a24df91d.1714091170.git.gitgitgadget@gmail.com>
+ <CAP8UFD0OATdCaEN1SrvYMTZP3b1uWCZw57cXHhUNPW9eTj+x0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AUTTm6wvtr2G4CbE"
-Content-Disposition: inline
-In-Reply-To: <xmqqfrv4yyb6.fsf@gitster.g>
-
-
---AUTTm6wvtr2G4CbE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Date: Tue, 30 Apr 2024 00:42:18 -0400
+Message-ID: <CAMo6p=EggYjK60fWmNC2XRFf0zRf4PCcUT-vmFM6RH2J0i3hrw@mail.gmail.com>
+Subject: Re: [PATCH v3 03/10] trailer: teach iterator about non-trailer lines
+To: Christian Couder <christian.couder@gmail.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
+	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>, Linus Arver <linusa@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 29, 2024 at 08:37:49AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > On Mon, Apr 29, 2024 at 08:13:23AM +0200, Patrick Steinhardt wrote:
-> >> Our GitLab CI setup has a test gap where the fuzzers aren't exercised =
-at
-> >> all. Add a smoke test, similar to the one we have in GitHub Workflows.
-> >>=20
-> >> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> >> ---
-> >>=20
-> >> As identified by Junio in <xmqqwmoi31aw.fsf@gitster.g>.
-> >>=20
-> >> Patrick
-> >
-> > I forgot to add the link to a successful run of this job:
-> > https://gitlab.com/gitlab-org/git/-/jobs/6735705569
->=20
-> Thanks.  I wonder if we can somehow automate a change like this.
->=20
-> Seeing how simple this fix has become thanks to the use of
-> before_script/script pair that merely point at ci/*.sh scripts,
-> perhaps we have already extracted enough commonalities as a set of
-> shell scripts in ci/ hierarchy.  I wonder if we can have a common
-> "source" that is "compiled" into .gitlab-ci.yml and its counterpart
-> for GitHub Actions?
->=20
-> Or perhaps a linter that can say things like "ah, you are adding
-> this new test to one, but not touching the other, shouldn't you?",
-> and "you are tweaking this existing test in one, but shouldn't you
-> be doing the same to the other?"
+Christian Couder <christian.couder@gmail.com> writes:
 
-We probably could, yeah. The question is whether it would really be
-worth it in the end. GitLab CI is still a relatively new addition, and
-thus it needs to catch up with what GitHub Workflows has. But once that
-is done I don't expect there to be a ton of changes to the CI setup, and
-the few new additions that we gain once in a while should be relatively
-easy to spot during review.
+> (Sorry I just realized that I had sent this email to Linus only.)
+>
+> On Fri, Apr 26, 2024 at 2:26=E2=80=AFAM Linus Arver via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Linus Arver <linusa@google.com>
+>>
+>> Previously the iterator did not iterate over non-trailer lines. This was
+>> somewhat unfortunate, because trailer blocks could have non-trailer
+>> lines in them since 146245063e (trailer: allow non-trailers in trailer
+>> block, 2016-10-21), which was before the iterator was created in
+>> f0939a0eb1 (trailer: add interface for iterating over commit trailers,
+>> 2020-09-27).
+>>
+>> So if trailer API users wanted to iterate over all lines in a trailer
+>> block (including non-trailer lines), they could not use the iterator and
+>> were forced to use the lower-level trailer_info struct directly (which
+>> provides a raw string array that includes all lines in the trailer
+>> block).
+>>
+>> Change the iterator's behavior so that we also iterate over non-trailer
+>> lines, instead of skipping over them. The new "raw" member of the
+>> iterator allows API users to access previously inaccessible non-trailer
+>> lines. Reword the variable "trailer" to just "line" because this
+>> variable can now hold both trailer lines _and_ non-trailer lines.
+>>
+>> The new "raw" member is important because anyone currently not using the
+>> iterator is using trailer_info's raw string array directly to access
+>> lines to check what the combined key + value looks like. If we didn't
+>> provide a "raw" member here, iterator users would have to re-construct
+>> the unparsed line by concatenating the key and value back together again
+>> --- which places an undue burden for iterator users.
+>>
+>> The next commit demonstrates the use of the iterator in sequencer.c as a=
+n
+>> example of where "raw" will be useful, so that it can start using the
+>> iterator.
+>>
+>> For the existing use of the iterator in builtin/shortlog.c, we don't
+>> have to change the code there because that code does
+>>
+>>     trailer_iterator_init(&iter, body);
+>>     while (trailer_iterator_advance(&iter)) {
+>>         const char *value =3D iter.val.buf;
+>>
+>>         if (!string_list_has_string(&log->trailers, iter.key.buf))
+>>             continue;
+>>
+>>         ...
+>>
+>> and the
+>>
+>>         if (!string_list_has_string(&log->trailers, iter.key.buf))
+>>
+>> condition already skips over non-trailer lines (iter.key.buf is empty
+>> for non-trailer lines, making the comparison still work even with this
+>> commit).
+>>
+>> Rename "num_expected_trailers" to "num_expected_objects" in
+>> t/unit-tests/t-trailer.c because the items we iterate over now include
+>> non-trailer lines.
+>
+> I think it would be simpler if the previous patch used just
+> "num_expected" or "expected". It's not like the other fields in the
+> struct ("msg" and "name") are very explicit, so why this one only?
 
-So if anybody is up for it then I'm happy to review that. But I don't
-think there would be enough value to do it myself.
+I didn't give it much thought TBH. "num_expected" SGTM. Will update.
 
-Patrick
+>> Signed-off-by: Linus Arver <linusa@google.com>
+>
+>
+>> diff --git a/trailer.c b/trailer.c
+>> index 3e4dab9c065..4700c441442 100644
+>> --- a/trailer.c
+>> +++ b/trailer.c
+>> @@ -1146,17 +1146,15 @@ void trailer_iterator_init(struct trailer_iterat=
+or *iter, const char *msg)
+>>
+>>  int trailer_iterator_advance(struct trailer_iterator *iter)
+>>  {
+>> -       while (iter->internal.cur < iter->internal.info.trailer_nr) {
+>> -               char *trailer =3D iter->internal.info.trailers[iter->int=
+ernal.cur++];
+>> -               int separator_pos =3D find_separator(trailer, separators=
+);
+>> -
+>> -               if (separator_pos < 1)
+>> -                       continue; /* not a real trailer */
+>> +       if (iter->internal.cur < iter->internal.info.trailer_nr) {
+>> +               char *line =3D iter->internal.info.trailers[iter->intern=
+al.cur++];
+>> +               int separator_pos =3D find_separator(line, separators);
+>>
+>> +               iter->raw =3D line;
+>>                 strbuf_reset(&iter->key);
+>>                 strbuf_reset(&iter->val);
+>>                 parse_trailer(&iter->key, &iter->val, NULL,
+>> -                             trailer, separator_pos);
+>> +                             line, separator_pos);
+>>                 /* Always unfold values during iteration. */
+>>                 unfold_value(&iter->val);
+>>                 return 1;
+>> diff --git a/trailer.h b/trailer.h
+>> index 9f42aa75994..ebafa3657e4 100644
+>> --- a/trailer.h
+>> +++ b/trailer.h
+>> @@ -125,6 +125,14 @@ void format_trailers_from_commit(const struct proce=
+ss_trailer_options *,
+>>   *   trailer_iterator_release(&iter);
+>>   */
+>>  struct trailer_iterator {
+>> +       /*
+>> +        * Raw line (e.g., "foo: bar baz") before being parsed as a trai=
+ler
+>> +        * key/val pair as part of a trailer block. A trailer block can =
+be
+>> +        * either 100% trailer lines, or mixed in with non-trailer lines=
+ (in
+>> +        * which case at least 25% must be trailer lines).
+>
+> I don't think 25% is important here.
 
---AUTTm6wvtr2G4CbE
-Content-Type: application/pgp-signature; name="signature.asc"
+SG, will remove 25% language (FWIW we already have such language in
+trailer.c if devs want to take a more closer look, so it's not like
+we're losing any info overall).
 
------BEGIN PGP SIGNATURE-----
+> What is more important is to just
+> say that this field could not be an actual trailer, and to tell what
+> the 'key' and 'val' fields below will contain then.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYwc/gACgkQVbJhu7ck
-PpTcQQ//fNBWj6Vdtk7UBpTChZB13KqgLOJtZIW0IUL3kH8dXEi/m92Fhf7bhap2
-j9yAYBCum8m90SXuxqS/BBIq9MIVT50AllHNyuY64xFsDbmAbbIGBBg7AMg/+bQM
-uQURdu0PP8HUnLZlRAhaH6qjLSfMp5bloRc3jh+zSflvGdo9Wof4JvRYQbXiGwQa
-m/IpE2Eq1yHmpJEN4bFQ9M5KmZj6tV64cyehBLKOT0EiASbA+uhD/4m+O0T/cksQ
-cRhYD0MNqlN6dX8DDomuJjXjhpXQUCY3gYed3009Wmm2wnpCMgjTWnbXe5Ew64yF
-pdXR68uwdVUZLYIJW6bkA18XjkHQ8GI1Q3qHw7CJis6HBWSFqtC2m7xPJ/VMftWe
-nUK1S5ldeAF+zicUkA5bKqyPs8JDecHWleAzaXfQIZpyK2sr7KNrEEwxdfMtSRwO
-i/p2ZuTA7VpQUcFrMKPH18bTI+f28iFGAPGOSN/bw9LiW/vtycr5pTmIel9JSzZk
-EdpZLM40G1ayBwIpR4f2Fkf8ETk5QC+NRm2+5rqrw2EHECjZ8N4tmk9vp9oOlO5U
-zfmmIIWMpa4WqOz4g+A25Eaiu5zRUL0nO05CH7mNiR7zNrlggJSRmcX6WgGSvYqi
-HT67TD7S9D+VgKA1D2NISvGGRKzmgvyYRcxac9V45tcrufbDlPQ=
-=Eo0L
------END PGP SIGNATURE-----
+Will update.
 
---AUTTm6wvtr2G4CbE--
+>
+>> +        */
+>> +       const char *raw;
+>> +
+>>         struct strbuf key;
+>>         struct strbuf val;
+
+
+BTW I will be on vacation for the next several weeks. However as the
+suggested changes are minor, I think I can still get to them and push up
+a v4 sometime this week. Cheers.
