@@ -1,117 +1,189 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E422317B4EB
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9479A17B4EB
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714496014; cv=none; b=ZSwzSnWAFKL/Ibj/sVqDspEdYhQmhSYbrx76BTSMJJ8TIGUKXYsvEJAo1eY23MhTzP7sfJX0eqL69AFbNDSFn1EUSEE3qWD8k8n2tyY6aRTsrbgkKeifvSczz8HXzGY0/vWKmzAWMALElCbnusdu7IG5VvFrZwIrWkx3rUza1zk=
+	t=1714496038; cv=none; b=nez7xvd5dHX+iQaccEQpW//J6UKFruILBybhL0KZnAnZlFFmIR3yURWhTuCvXa1IP190J2CDae3Z5VfaDtirXSCUMB/s0N3yiVqxuhoaK/aYOMee+eikGgvmv8tF/63RCsnB9lU5W/pFHoNpQmTlQbyhVrn2OHfj2yKtsJ6bmNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714496014; c=relaxed/simple;
-	bh=WZZqvqCTPkisQ9QfXpYPyyTKW0E7JMW8WAXpXbt2GfY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VUo0Ep/0irPX0lUoEbbM1z9WM3pgRTy0trhvpJ83xy3NAFCuF3WTKGSIXnfkR2RbulAmd+I0PeR7YWNbTJcraYmB9GoVNFEmZ+uIdc9mnLDd2PHFUPpCQABxFCW0zKn0rJGlqEcquqvyhw6Wq/LOP4f0026RdHIVrEOSXRuqE+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudbees.com; spf=pass smtp.mailfrom=cloudbees.com; dkim=pass (1024-bit key) header.d=cloudbees.com header.i=@cloudbees.com header.b=kRL62yJ4; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudbees.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudbees.com
+	s=arc-20240116; t=1714496038; c=relaxed/simple;
+	bh=P5jntZfb+2/pz3nbRm1fC2VAceoLbSUl/WUW5FbWyQ8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AsHryunlbG1HjRVgVEGnu1ovSBfzHPp0W7Ak5MiV2yDGZQ+USkeHsJLf+Ht3DMzcSjUSxEj6Pz4JUxPjYZPE0k+sY+XXM5Xq15UmMuSi+/QDFEd0EAbTbjO0Y8zeT7jGIi+bPYBLz7AG6/2iIfQwqZzkjpUt7sdn2MF6SiIRhaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EWi8iERH; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cloudbees.com header.i=@cloudbees.com header.b="kRL62yJ4"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51ac5923ef6so11428e87.0
-        for <git@vger.kernel.org>; Tue, 30 Apr 2024 09:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudbees.com; s=google; t=1714496011; x=1715100811; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0cKcT/l/DoDg7Vhz/50bLRFFm70uCY3tNdcxyi2n5co=;
-        b=kRL62yJ4LBrQARi7sYtAlE5TNVx7xIMd/KL7F5vnlcRmGSNzEEpKDHsj56IuufthNy
-         ZFHvR9jvFPThqkE0j+a52GeR+dU01BracyjvF60QJB4mEpf4LPTD9Bbfly1wWnpnlZ5V
-         UFVE5SGxuph8BC879o+zjl4WJUqQkyDicbA1U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714496011; x=1715100811;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0cKcT/l/DoDg7Vhz/50bLRFFm70uCY3tNdcxyi2n5co=;
-        b=BjCfYazcg2KcSTR031ybUbqCZw0PI442WyfXvo0hgDhghmiGmaLApEKgHq1xbrMtbf
-         nX2q1mdqT2WoyOxC5+zKvxv1u+Vo6P7vI+/3nct274jzUSY4cbxLK3o05Xj+PHWTtj2K
-         +4/m5+cHdAgShPAJwgWS4sEA7B6iKuvHQIoE/0QIN8/P55jnHtrVDsWBv8LYeIXR/Jz7
-         DT9gLO4SeHCoDlLFx9zRYPTz6cEC7cpeJJ9Yh3qHPRHVL6hvhlVTDNS/BcTRwS/lPzGj
-         XYeQgl4i94B1L9+ovgs6vnTqNVrnze2unfNrj2AZnjQb3Fie85YPhBRCrZBWMQB3MU3I
-         fwBQ==
-X-Gm-Message-State: AOJu0Yy5BwsXmxUSaJ1ZzXqr7l5ptnG83wqUCmPgyOzFlYxu7xduBwgR
-	PyVak7+NQK6CF4t39bUgOj4+RIOuKO3Fh6/wlmt199UOG+MvFPzDYpgipVk2NYM2dhC9hhye2hg
-	gxqfDn/1C+tX2HwQ/qzQQsDUmzSxkXJxZ634ll1w/B7wORt5AzOdQ1g==
-X-Google-Smtp-Source: AGHT+IHSkNkotAl+272hAQn5Hhw5idMO+nahCMPEnMJMgHxcb0/OgKMJ4qfztzy9VWAhqj90Gak65vX+cChMHWETcZk=
-X-Received: by 2002:a05:6512:1317:b0:51d:9196:b946 with SMTP id
- x23-20020a056512131700b0051d9196b946mr126272lfu.25.1714496010476; Tue, 30 Apr
- 2024 09:53:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EWi8iERH"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5FECC1F98F;
+	Tue, 30 Apr 2024 12:53:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=P5jntZfb+2/pz3nbRm1fC2VAceoLbSUl/WUW5F
+	bWyQ8=; b=EWi8iERHVDrXVG8Ljq8EjxsgLGX8fthfA6mIc5ArwGX0NF4Ogq1W2v
+	lWxkcmSup1dmjXlILXsdYcSOfYv7oKxQSpe2A/4GfQDMk7VHQI6+10tBltfRLTNs
+	88JMdBzA2VV+Ih8O5Idv6np29+meWbcmza6mE/ZG9U+/qvvwne78s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 570B01F98E;
+	Tue, 30 Apr 2024 12:53:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 64D791F98D;
+	Tue, 30 Apr 2024 12:53:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "John Passaro via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  John Passaro
+ <john.a.passaro@gmail.com>
+Subject: Re: [PATCH v3 2/3] builtin/tag.c: add --trailer arg
+In-Reply-To: <5b6239167b8d7c26f96e5c23d0d82b7a3a9b01fe.1714416865.git.gitgitgadget@gmail.com>
+	(John Passaro via GitGitGadget's message of "Mon, 29 Apr 2024 18:54:22
+	+0000")
+References: <pull.1723.v2.git.1714409638089.gitgitgadget@gmail.com>
+	<pull.1723.v3.git.1714416863.gitgitgadget@gmail.com>
+	<5b6239167b8d7c26f96e5c23d0d82b7a3a9b01fe.1714416865.git.gitgitgadget@gmail.com>
+Date: Tue, 30 Apr 2024 09:53:43 -0700
+Message-ID: <xmqqv83yrduw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: James Nord <jnord@cloudbees.com>
-Date: Tue, 30 Apr 2024 17:53:19 +0100
-Message-ID: <CAPcEHyfXuTOjkBfhhEwyqYiZroXGyJSSY0tgJCuSsp5PC-cKLA@mail.gmail.com>
-Subject: [bug report] commit signature validation
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 352672AA-0712-11EF-8664-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi,
+"John Passaro via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-reporting bug per https://git-scm.com/community  (also this is not
-specific to windows and has been reporoduced on OSX)
+> From: John Passaro <john.a.passaro@gmail.com>
+>
+> git-tag currently supports interpreting trailers from an annotated tag
+> message, using --list --format="%(trailers)". There is no ergonomic way
+> to add trailers to an annotated tag message.
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Well said.  Drop "currently", though.  The usual way to compose a
+log message of this project is to
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+ - Give an observation on how the current system work in the present
+   tense (so no need to say "Currently X is Y", just "X is Y"), and
+   discuss what you perceive as a problem in it.
 
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
 
-Setup git commit signing with SSH (but omit setting gpg.ssh.allowedsignersfile)
-create a signed comment
-run git show --show-signature
+ - Give commands to the codebase to "become like so".
 
-What did you expect to happen? (Expected behavior)
+in this order.
 
-the commit should show an unverified signature
+> In a previous patch, we refactored git-commit's implementation of its
+> --trailer arg to the trailer.h API. Let's use that new function to teach
+> git-tag the same --trailer argument, emulating as much of git-commit's
+> behavior as much as possible.
 
-What happened instead? (Actual behavior)
+Nicely described.
 
-the commit shows no signature what so ever
+> @@ -178,6 +179,19 @@ This option is only applicable when listing tags without annotation lines.
+>  	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
+>  	is given.
+>  
+> +--trailer <token>[(=|:)<value>]::
+> +	Specify a (<token>, <value>) pair that should be applied as a
+> +	trailer. (e.g. `git tag --trailer "Signed-off-by:T A Ger \
+> +	<tagger@example.com>" --trailer "Helped-by:C O Mitter \
+> +	<committer@example.com>"` will add the "Signed-off-by" trailer
+> +	and the "Helped-by" trailer to the tag message.)
+> +	The `trailer.*` configuration variables
+> +	(linkgit:git-interpret-trailers[1]) can be used to define if
+> +	a duplicated trailer is omitted, where in the run of trailers
+> +	each trailer would appear, and other details.
+> +	The trailers can be seen in `git tag --list` using
+> +	`--format="%(trailers)"` placeholder.
 
-What's different between what you expected and what actually happened?
+I can see this was copied-and-pasted from git-commit, but I am not
+sure if the ones used in the example are good fit for tag objects.
+What does Helped-by even mean in the context of an annotated tag?
 
-I would expect show to say there is a signature that it could not
-verify,  instead the output is seemingly telling me there is no
-signature at all.
+> @@ -290,10 +292,12 @@ static const char message_advice_nested_tag[] =
+>  static void create_tag(const struct object_id *object, const char *object_ref,
+>  		       const char *tag,
+>  		       struct strbuf *buf, struct create_tag_options *opt,
+> -		       struct object_id *prev, struct object_id *result, char *path)
+> +		       struct object_id *prev, struct object_id *result,
+> +		       struct strvec *trailer_args, char *path)
+>  {
+>  	enum object_type type;
+>  	struct strbuf header = STRBUF_INIT;
+> +	int should_edit;
+>  
+>  	type = oid_object_info(the_repository, object, NULL);
+>  	if (type <= OBJ_NONE)
+> @@ -313,13 +317,15 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+>  		    tag,
+>  		    git_committer_info(IDENT_STRICT));
+>  
+> -	if (!opt->message_given || opt->use_editor) {
+> +	should_edit = opt->use_editor || !opt->message_given;
+> +	if (should_edit || trailer_args->nr) {
+>  		int fd;
+>  
+>  		/* write the template message before editing: */
+>  		fd = xopen(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+>  
+> -		if (opt->message_given) {
+> +		if (opt->message_given && buf->len) {
+> +			strbuf_complete(buf, '\n');
+>  			write_or_die(fd, buf->buf, buf->len);
+>  			strbuf_reset(buf);
+>  		} else if (!is_null_oid(prev)) {
+> @@ -338,10 +344,22 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+>  		}
+>  		close(fd);
+>  
+> -		if (launch_editor(path, buf, NULL)) {
+> -			fprintf(stderr,
+> -			_("Please supply the message using either -m or -F option.\n"));
+> -			exit(1);
+> +		if (trailer_args->nr && amend_file_with_trailers(path, trailer_args))
+> +			die(_("unable to pass trailers to --trailers"));
+> +
+> +		if (should_edit) {
+> +			if (launch_editor(path, buf, NULL)) {
+> +				fprintf(stderr,
+> +					_("Please supply the message using either -m or -F option.\n"));
+> +				exit(1);
+> +			}
+> +		} else if (trailer_args->nr) {
 
-Anything else you want to add:
+When both should_edit and trailer_args->nr are true, this block will
+not be entered.  We first do the "amend_file" thing, and then run an
+editor on it, and that is the end of the story in that case.
 
-this also occurs if pulling from a repo where someone else has enabled
-signing with ssh, but you have not configured
-`gpg.ssh.allowedsignersfile`
-Regardless of the presence of the signing file git should tell me
-there is an unverified signature.
+When we do not have should_edit (e.g., -m "tag message" is given),
+we would have run "amend_file" thing on it to tweak the message,
+and we come in here.
 
+> +			strbuf_reset(buf);
+> +			if (strbuf_read_file(buf, path, 0) < 0) {
+> +				fprintf(stderr,
+> +					_("Please supply the message using either -m or -F option.\n"));
+> +				exit(1);
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+Does this error message make sense here in this context?  The
+earlier one was introduced by 7198203a (editor.c: Libify
+launch_editor(), 2008-07-25)---after we fail to run the editor, as
+we somehow seem to be unable to run an editor, we suggest the user
+to give us a message in other ways.  But this one is different.  The
+user gave us in one of these other ways already instead of using an
+editor, but mucking with that with the "amend_file" thing somehow
+made it unreadable.  Shouldn't it be more like
 
+	die_errno(_("failed to read '%s'"), path);
 
-[System Info]
-git version:
-git version 2.44.0.windows.1
-cpu: x86_64
-built from commit: ad0bbfffa543db6979717be96df630d3e5741331
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 22631
-compiler info: gnuc: 13.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+or something along that line?
