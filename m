@@ -1,43 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D357612B176
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 10:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C29912C472
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 10:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473220; cv=none; b=Y9OGWZWxPV0QRhzMFYulNh6ZQOetKMx53RnK90WuYOWRmxVKMOmugRITa5+jK9J2xQsW3zZYrFg9qBrNbyYxX0L4pXk8gDEVpeqGJy0SwqgNwQoaCCdV/mSzB1hI3/N8buGqi1XxThwos2UNHqvQQRohaL/jFj8yyvoDPg1Htxk=
+	t=1714473716; cv=none; b=f8rhuWmY2s1Op/9VYipk4EAXde1aFMGZ6KLWppqGtPQ6id/WD40Ht8a6qld+hiB/NFotDNbxG0HLN1/waEx/I+eT6Waybv6NucbKETYRWfvHeKosNlJFfSOgYBCbsxt0q03K5bFL5vpVl5Zv5c/jlZdUwQ5p14PTrqZi71CZANY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473220; c=relaxed/simple;
-	bh=RIDVEc4Eiu8nfuEzRFBeIMcLbfxtxjNTFjqNVnbIdE4=;
+	s=arc-20240116; t=1714473716; c=relaxed/simple;
+	bh=Tm3sWoXLOgLc4jFnHn5zTNpMf/tgBv2tP3riX6xCvRk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AezGBkcjIrPS7j6zpQzzxrW8Q+h+jnPDIHAt1dVelmqiD2FtgfL2vSOTHWeBv6LQISmzqKnNtd6hBkGemNme/HDVQMft+AbK+fqypmpw0YV+5ApKnpHoGpkssrF6SdiQzrjVJfJd9v+gGCcVLSZy5mZd+se9utBJyRmjhAJrYG4=
+	 Content-Type:Content-Disposition:In-Reply-To; b=cI4jJcj3svvhURUNftyoCHB8dKo78IKoqSODkM5rvbIVv7I6lG1TjWN2VyodUwgX7gaIVMRziS0nre1Lh/a2rjIy1mnfxSX6afJwz/iIJeiVQ0/9poqF/AW4YslxrqJxdZgTv+hd3haZln25wWAk3Qy4cmN0SurlS4MEu3euxQo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 3406 invoked by uid 109); 30 Apr 2024 10:33:37 -0000
+Received: (qmail 3574 invoked by uid 109); 30 Apr 2024 10:41:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Apr 2024 10:33:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Apr 2024 10:41:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5568 invoked by uid 111); 30 Apr 2024 10:33:42 -0000
+Received: (qmail 5694 invoked by uid 111); 30 Apr 2024 10:41:58 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Apr 2024 06:33:42 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Apr 2024 06:41:58 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 30 Apr 2024 06:33:37 -0400
+Date: Tue, 30 Apr 2024 06:41:52 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood123@gmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Karthik Nayak <karthik.188@gmail.com>, christian.couder@gmail.com,
-	git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v4 1/7] refs: accept symref values in
- `ref_transaction[_add]_update`
-Message-ID: <20240430103337.GE1279403@coredump.intra.peff.net>
-References: <20240423212818.574123-1-knayak@gitlab.com>
- <20240426152449.228860-1-knayak@gitlab.com>
- <20240426152449.228860-2-knayak@gitlab.com>
- <xmqq1q6rc44n.fsf@gitster.g>
- <20240426211529.GD13703@coredump.intra.peff.net>
- <b2977495-3b4a-4f2a-85dc-d0568f34f2e9@gmail.com>
- <xmqqo79sxhug.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 8/8] refs: check refnames as fully qualified when
+ resolving
+Message-ID: <20240430104152.GF1279403@coredump.intra.peff.net>
+References: <20240429083533.GG233423@coredump.intra.peff.net>
+ <ZjB5dPoEoq8D6qzJ@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,40 +39,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo79sxhug.fsf@gitster.g>
+In-Reply-To: <ZjB5dPoEoq8D6qzJ@tanuki>
 
-On Mon, Apr 29, 2024 at 09:18:47AM -0700, Junio C Hamano wrote:
+On Tue, Apr 30, 2024 at 06:54:12AM +0200, Patrick Steinhardt wrote:
 
-> phillip.wood123@gmail.com writes:
+> > diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+> > index 120e1557d7..5fb780cb08 100755
+> > --- a/t/t1430-bad-ref-name.sh
+> > +++ b/t/t1430-bad-ref-name.sh
+> > @@ -400,4 +400,14 @@ test_expect_success 'update-ref refuses non-underscore outside of refs/' '
+> >  	test_grep "refusing to update ref with bad name" err
+> >  '
+> >  
+> > +test_expect_success REFFILES 'rev-parse refuses non-pseudoref outside of refs/' '
+> > +	git rev-parse HEAD >.git/bad &&
+> > +	test_must_fail git rev-parse --verify bad
+> > +'
+> > +
+> > +test_expect_success REFFILES 'rev-parse recognizes non-pseudoref via worktree' '
+> > +	git rev-parse HEAD >.git/bad &&
+> > +	test_must_fail git rev-parse --verify main-worktree/bad
+> > +'
 > 
-> > ALLOW_ONELEVEL just disables the check that the refname contains a '/'
-> > and I think it is aimed at checking branch and tag names without a
-> > refs/{heads,tags} prefix. If we want to move away from using
-> > refname_is_safe() perhaps we could add an ALLOW_PSEUDOREF flag that
-> > only allows the name to contain '[A-Z_]' if there is no '/'.
-> 
-> Makes sense.
-> 
-> I wonder if we eventually can get rid of ALLOW_ONELEVEL, though.  If
-> all callers that use ALLOW_ONELEVEL know under which prefix they
-> plan to hang the refname they are checking (if the refname passed
-> the check), we can force the check to be performed always on the
-> full refname, and it will become easier to make the check more
-> consistent---as the check will have full context information.
-> 
-> For example, with ALLOW_ONELEVEL the check may say "HEAD" is OK, but
-> if we get rid of ALLOW_ONELEVEL and force the callers to always test
-> the full refname, we may say "refs/heads/HEAD" is not acceptable,
-> neither is "refs/tags/HEAD", but "refs/remotes/origin/HEAD" is good.
+> Are these really specific to the REFFILES backend? I would expect that
+> the reftable backend sohuld fail to parse those, too. The fact that we
+> write into the repository directly during the test setup doesn't change
+> this, because all this patch is about is that we don't want to parse
+> random files in the Git repo. And that is something we should want to
+> enforce for all backends.
 
-One case I ran into while working on my series is refspec parsing, where
-we feed the left and right halves to check_refname_format(), albeit with
-a special flag that allows the "*" wildcard character. And there we are
-OK with one-level names because they will be passed through the
-dwim_ref() lookup.
+So this is where I will show my ignorance of reftables. I assume it
+still has to implement FETCH_HEAD as a file (since it holds extra data).
+But does it do the same for other names outside of "refs/"? I am
+assuming not in the paragraph below.
 
-I don't know if there are other spots that do something similar. Most of
-them would, I imagine, just take any input and leave it to the ref code
-to enforce syntax after the dwim-ref has happened.
+I would expect the test to succeed after my patches on any ref backend,
+since we'd enforce the syntax outside of the backend-specific code. But
+for a backend which does not look for the root name "foo" directly in
+.git/, it is not an interesting test. The looked-for name does not
+exist for it, so even if we did try the lookup, it would fail. We cannot
+distinguish the two cases from the outcome we see.
+
+So I think dropping REFFILES it would still pass, but we are not really
+testing anything that interesting for reftables. That said, I would be
+OK dropping the REFFILES in the name of simplicity and just documenting
+it in the commit message.
 
 -Peff
