@@ -1,136 +1,122 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BC328F0
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 00:35:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33309A48
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 00:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714437310; cv=none; b=ULXQyUEz1YVEY+pyldc46WqJUGdtS7Rs9yFWkmAYobIVPKozrN2ztR/PtqN6hCkmZeYVxL+IOHeFN/IC/wJuaaT/4Uby+t4dzU3+zKLKNnbjNlVbiuMGtCTkbQQhZEc3+wwIdxy4ZJi72w2BKGbZpgTh5axxz2hEPyIlFt7lA7c=
+	t=1714438611; cv=none; b=DzT078d7Q5C1BN6s3meMMCPUdHqamA1/RWztncgiYACtt7lBtCFMP50CMa/x2X4VFsv0kkIEYl7QX+SDD/xlMr7iRQEKL6BqcS4UBKTBasVBXPwKroJwMF0KyC5aTbJOTTQYyQTI6c0rXI4S484hVx3yuF2y+3XpA+zos6Ck5xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714437310; c=relaxed/simple;
-	bh=IC3xG8rggbCOARBpCSeuJmsFTaIp/UHBbUFexka6P3A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQeUss+SIueRKPzw+nXWExxdE5/ZZ40sUJJwLjvEuuqDfNVR7Xh3Ch0qgd0T0eheIpgCD5c7xSmrR84gWIEJJgxgXN+ojenbr/SBSQBF7nUVJVqG4dVeQuIqFY93nqyEPekSJxpTiCTCjufzLahDvUUMvrx/XT475QaYbvTVSvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABLvED5Z; arc=none smtp.client-ip=209.85.210.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714438611; c=relaxed/simple;
+	bh=a9kWy4AMYkGyxbyrJYNZzMStbQtjFDMwHjJMsXLpz9o=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=sT+YTop4CivBrhe0s0KTRp3bjzz3gMYPu2UA3Q4U3yT4p/wI6BkACULgxcldOHuWAXgmPXrvv1aG3cWDlmxFma8UNXopRmNRFJ8R7PR/QrvjbqKBrCyMBlQqwQhuq0/t+jpqGXqhikk3M84p/36lnkdmAt5ZWYD7E+aoxWDvsIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=gBRPf2r1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TDQGdw/P; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABLvED5Z"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6ed3587b93bso3090915a34.1
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 17:35:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714437308; x=1715042108; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KL8kJSAclLO5yPOlqZEE9sIdByXY7rfvTqxrHUoUmW4=;
-        b=ABLvED5ZkogaLm959Ier37hu/x2XCzbSlP5yrrhwMKWT7eq6K+QDs+Glq2kcFkFpae
-         WJSYo0rYhd0IOMqpi9FVh2e4YEAgIb8prs+XuD6Mf3WzhYVfebr3fjZe18Lwzg0u7Vtf
-         /IiS+cfMdh2N/XRxoKLXPiMvnvYf9mhDyyWfzu0l1u9mG99cRz6/vt+sn5GFxC5nnhcD
-         YZ6QIuK62oePO/dHADZkR3DgDVauuYIhUHhv+9DVakYuaG5yC+8JFlUln+i4SEJ+TmVe
-         +tj6sYiXkGzhJoBFsdyMFZ8yn6+13pSpD9Uiv7iKgHlXn0jIZz0xE06NuWxrGelJt99Q
-         oEwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714437308; x=1715042108;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KL8kJSAclLO5yPOlqZEE9sIdByXY7rfvTqxrHUoUmW4=;
-        b=V51UwdL+r2bwg+Qptne6FnDc0mEjxvhEIMQPbkTeXPWhg9tdxY45leEomzwq5yYsQP
-         ahObye24MXfbtCOOYv7zT6NFTF3tKPMkbKwv1h7Q3Sym4xMVhB9qOVJ+ZpPjKNkwgz/i
-         +UQZ+zHNdb+VPjFxfJGJofM2Ry/J7bNkHxqAwHW9aToHseb+Jxl9GZTtbWY5NUowlEaG
-         6i0ekTbpTXaP6TxcbtPvW7IwSqmoMVjRHyFOZeX3E0JmxLlIbugllSlD9A51lyD2+qCy
-         HBRzn69pVE9+yI4eUFh3Jif4NlTwW5+NO+2Q7UETdn41aNW4IU0x16jo4YfTawKwDgrN
-         JpAA==
-X-Gm-Message-State: AOJu0YwS8EM4TIMqMGV2zJQoTbrdCQ2gni1PCq8sc4FHg2Ed/XQgRvGl
-	f3po/8Wc/OxG/4npGgfs1FNkt8gS4zIbRwYcIkRe+kY3qKhLXnfKwVUyk4Qx
-X-Google-Smtp-Source: AGHT+IH7YkoFOkunMWoegRGVt074+jDjh2ASEq/LeleaWi1xz0ZiV2jp+XpiyJoi275IQ1SQv7ImiA==
-X-Received: by 2002:a05:6830:1199:b0:6ee:3a37:b230 with SMTP id u25-20020a056830119900b006ee3a37b230mr4014346otq.38.1714437307891;
-        Mon, 29 Apr 2024 17:35:07 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id bw3-20020a0568300dc300b006ee5b409f23sm188645otb.22.2024.04.29.17.35.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 17:35:07 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 2/2] gitlab-ci: add whitespace error check
-Date: Mon, 29 Apr 2024 19:33:23 -0500
-Message-ID: <20240430003323.6210-3-jltobler@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240430003323.6210-1-jltobler@gmail.com>
-References: <20240430003323.6210-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="gBRPf2r1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TDQGdw/P"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 2B4AE13803C0;
+	Mon, 29 Apr 2024 20:56:48 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Mon, 29 Apr 2024 20:56:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1714438608;
+	 x=1714525008; bh=KmNTwykkn6IZutr+CmOtNCN38fq0V+MEeCyB82bXgIY=; b=
+	gBRPf2r1sXH8zMjEc54wLQ8vMv0IynQUI9Ajq47i6VZPrcrJJ+61ZmU+vhTWezIv
+	abnABlmzW1dmCWFU8LVK6UoQJSKRgGcnp2bI0s2k7CPRTEHZSa36Hs/3jD+bYMQ7
+	FF9zVy9nzyEEG+3j61JjPuvnD1tnJGjRKg9Xk3oQg9hFvbb8/we0daw4PtsK30ND
+	sibiE4idAT5jdoMKXN34QLXCKlBpzgAjZinpyyVjiddwiiiy7kZTJyMIl4LlFam6
+	NgwPYqAkL+mCyluOhULv2KHy2D4nwutVs8w1AoFzGR8cw4/KKcdTG9LyzZpGj/VT
+	42i78scAsUMDTSy0p6zYXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1714438608; x=
+	1714525008; bh=KmNTwykkn6IZutr+CmOtNCN38fq0V+MEeCyB82bXgIY=; b=T
+	DQGdw/PCixksCCc2KZKzu8uQCg+oc2QOWTyoVmD8F11lIoPEHMbiY3UIpjCUtzar
+	7HzMkFz8IKUKbBKuHgq5Ke0b1s84T6msNBTHGrv78VWGL6r/6w9a5Rs3DdOaeJZ9
+	iSsQGLjdcdkNm5wj9PGVx+fMU9bKhkOIaQEHTel8jp6KvQbrz7EaEItQw4SX1sHv
+	Rlyb9zq4BUsRa1Te9+Zy7k5f7y5ycpthOz23SwBYba94qEZPYYP7k1Uknjx4ev1c
+	0cXkMTCHqSatg3csWH1M87FOK2d+RehTiOYPAhooSMlvNSuyEOdPOJ1r2T4FVmUE
+	98spj4n9PQMiduDZAqKwQ==
+X-ME-Sender: <xms:z0EwZqYoJFszghcnjl28IhUoeW2mBB0aABmZmSWxea3pz6jN2TNtGA>
+    <xme:z0EwZtaO6P-3IgQPj7o_4gTtSKWl6D8KAKjvezq0dfoc10bYivvP4SXNU6zzMHqqx
+    3wCOSsqc6y4BTKAew>
+X-ME-Received: <xmr:z0EwZk9tAR_bK3T34FcnwwQijYJBd2IyLnyPrGVxQe5eOyWTyXbNdxDEqE7eto5dPHWIhHHDr87YHxNjIV4eYYlo9HnynJ8NSI3BsJoq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddggeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgr
+    mhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrth
+    htvghrnhepffeukedtiefgjefhhefhgeelieeguddvveeujeejhfegtddviefhjeetudek
+    jeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjh
+    grmhgvshesjhgrmhgvshhlihhurdhioh
+X-ME-Proxy: <xmx:z0EwZsrwhwcus_gLV-KnAEVqtezfEkrpI7S6ukNAAhNcZKs6s1ngpQ>
+    <xmx:z0EwZlrGsrnF3aQtNcKnk9nE2dJdkI_WyE-kPcozlsrVhUi54QBMxw>
+    <xmx:z0EwZqTsMReM0m3UFaimv1MOTILucKcV_ohlbcrKL613hS4BROV1sQ>
+    <xmx:z0EwZlqrqoyWWKWxrmOu8VK2G9duX9Gu7HZReOGJZgQ6KGIm31ScBA>
+    <xmx:0EEwZsXCxfQs-ISgTAihc_qNqg9vqS0f_3-jQ9igy8SemoTq2s9g1fTA>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Apr 2024 20:56:46 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 30 Apr 2024 10:56:42 +1000
+Message-Id: <D0X1RH1PK67K.34KDYBQM6XDDU@jamesliu.io>
+Cc: "Dragan Simic" <dsimic@manjaro.org>, <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/1] advice: add --no-advice global option
+From: "James Liu" <james@jamesliu.io>
+To: "Jeff King" <peff@peff.net>
+X-Mailer: aerc 0.17.0
+References: <20240424035857.84583-1-james@jamesliu.io>
+ <20240429010925.93205-1-james@jamesliu.io>
+ <20240429010925.93205-2-james@jamesliu.io>
+ <37512328b1f3db4e8075bdb4beeb8929@manjaro.org>
+ <D0WCCOLSMM9K.24BIGLR6EEJI8@jamesliu.io>
+ <20240429064025.GA2905826@coredump.intra.peff.net>
+In-Reply-To: <20240429064025.GA2905826@coredump.intra.peff.net>
 
-To check for whitespace errors introduced by a set of changes, there is
-the `.github/workflows/check-whitespace.yml` GitHub action. This script
-executes `git log --check` over a range containing the new commits and
-parses the output to generate a markdown formatted artifact that
-summarizes detected errors with GitHub links to the affected commits and
-blobs.
+On Mon Apr 29, 2024 at 4:40 PM AEST, Jeff King wrote:
+> You need an environment variable if you want the command-line option to
+> work consistently across commands that spawn external processes. E.g.:
+>
+>   git --no-advice fetch --all
+>
+> is going to spawn fetch sub-processes under the hood. You'd want them to
+> respect --no-advice, too, so we either have to propagate the
+> command-line option or use the environment. And when you consider an
+> external script like git-foo that runs a bunch of underlying Git
+> commands, then propagating becomes too cumbersome and error-prone.
 
-Since this script is rather specific to GitHub actions, a more general
-and simple `ci/check-whitespace.sh` is added instead that functions the
-same, but does not generate the markdown file for the action summary.
-From this, a new GitLab CI job is added to support the whitespace error
-check.
+Thanks for the explanation Jeff! Makes sense why the pattern is so
+prevalent.
 
-Note that the `$CI_MERGE_REQUEST_TARGET_BRANCH_SHA` variable is only
-available in GitLab merge request pipelines and therefore the CI job is
-configured to only run as part of those pipelines.
+> You should use git_env_bool() to avoid the confusing behavior that
+> GIT_NO_ADVICE=3Dfalse still turns off advice. ;)
+>
+> You can also drop the "NO", which helps avoid awkward double negation.
+> For example, if you do:
+>
+>   if (git_env_bool("GIT_ADVICE", 1))
+> 	return 0;
+>
+> then leaving that variable unset will act as if it is set to "1", but
+> you can still do GIT_ADVICE=3D0 to suppress it.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- .gitlab-ci.yml         |  9 +++++++++
- ci/check-whitespace.sh | 16 ++++++++++++++++
- 2 files changed, 25 insertions(+)
- create mode 100755 ci/check-whitespace.sh
+Awesome. I'll apply this suggestion in the next version of this patch.
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index c0fa2fe90b..31cf420a11 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -102,3 +102,12 @@ static-analysis:
-   script:
-     - ./ci/run-static-analysis.sh
-     - ./ci/check-directional-formatting.bash
-+
-+check-whitespace:
-+  image: ubuntu:latest
-+  before_script:
-+    - ./ci/install-docker-dependencies.sh
-+  script:
-+    - ./ci/check-whitespace.sh $CI_MERGE_REQUEST_TARGET_BRANCH_SHA
-+  rules:
-+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
-new file mode 100755
-index 0000000000..1cad2d7374
---- /dev/null
-+++ b/ci/check-whitespace.sh
-@@ -0,0 +1,16 @@
-+#! /bin/sh
-+#
-+# Check that commits after a specified point do not contain new or modified
-+# lines with whitespace errors.
-+#
-+
-+baseSha=${1}
-+
-+git log --check --pretty=format:"---% h% s" ${baseSha}..
-+if test $? -ne 0
-+then
-+	echo "A whitespace issue was found in one or more of the commits."
-+	echo "Run the following command to resolve whitespace issues:"
-+	echo "\tgit rebase --whitespace=fix ${baseSha}"
-+	exit 2
-+fi
--- 
-2.44.0
-
+Cheers,
+James
