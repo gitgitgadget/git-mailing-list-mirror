@@ -1,168 +1,159 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A66514AA9
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 04:54:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66912134BE
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 04:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714452857; cv=none; b=k/zZF8BNkYAA9mjTgPgy0/HGopwblQXTpCWAhpMHhlgm94DyA1js0tBV/PhqOsNBTruidcgrl1V+CIEEmLxI2/DpGW1dqNh+JoPf7R70IQrSG3et+MFpOl1K08hPoLl7iRf9LF+YhxX2X1bbeIZoWDmFyB/nBu5saCpIpYi+S/I=
+	t=1714452955; cv=none; b=CfDwkQj7BujYe4eEwhjOp0d8705oz9mBBEFmP7lV0d46oGHKTcngpEkIq84n14NEv7u/2WOzhgZMTarLMDv3pj1RuVfVJB5pfU2IWs3EJkaRjA4SoSrJWczCn0LJ4kknZjXgOZK8I+tge0eejY+J1Ej2dAnyrRBBEwVnyOfjzO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714452857; c=relaxed/simple;
-	bh=tq4WJ74/k3Eswow+smo3Ppl/MUz1mO+yxoyDNYBR6sM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W6Y1s190RYzBW8rLMvHX3Fmy8qt9Vmi7YRc3oeIoiySWvtPytbTficEWRPN5ebZOMQrtkc9AxyJXJ0Db8/yYT8iqxiPVJPyKuV+cHlGZrpt7u9M9HeD9bvO0/97B5hn3X3c9scl4Z1k/VDC6kfM89o6RP7SGXREvxiU/r29nMMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pJaqwMkN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G90Il4Pk; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714452955; c=relaxed/simple;
+	bh=wNqsEVjh2cSMtVxVusxuS9smEXjvE8uNRR2HD9jK0QU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jtaupfF25yKA63uHaS8GM51HH/wpTwJTRWxH+JU12y3sPVyuG1pE0u6otSN7z02TxoXT8OW4TQaXvWHgBr7OJS5edXKFVNRAP1eoa5xaNRgXgF1vRYFRiuTToOPDQwUmmod9d9CVboRk8KxUTRI+avIYTqL/h64lWEVvq1H0khU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b=BFKxddXv; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pJaqwMkN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G90Il4Pk"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 4AFE61380F71;
-	Tue, 30 Apr 2024 00:54:15 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 30 Apr 2024 00:54:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714452855; x=1714539255; bh=45BgYETagi
-	UiIxOsBC6/J+VRd9AWOb2o+f5jrKb94Kc=; b=pJaqwMkNzHaPQEhQeDjFOe3bsZ
-	Ck4MVxctd2eGU7dlP2WwZVBiChbP0Wi4kEyml7uqh5K851yDfXmgF23aOc2EXgec
-	wt1ltCHSVBnlh1c79PzOZa+SbJ4XF7C+up7MxO7xagHliricSWpn7mXfj+ABbWxC
-	HvJQ92xRT2oiW8f89ni6E4A1JMxAa/hd1W/NYwtNjZieKbKjhd0du8tmCW95Tz2O
-	xLisQ9JqfyCR3SdPjtwguxKFCvrh+GTwjnC9HqhCJ+nDX9OgECVS4NAMmYBZ4t8j
-	3XJ26BiWPVUcROuqr5sbOdzmRtL/XmdQhvqKkMr6KY2lbiSzaVHrbK/c51dA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714452855; x=1714539255; bh=45BgYETagiUiIxOsBC6/J+VRd9AW
-	Ob2o+f5jrKb94Kc=; b=G90Il4PkrBjt0OdHyQCFWwA9AQIwMqy4AqQBaM4T0Fk9
-	goNe0YRhwB0TZy9rQAfRJSmKv6OrCTuiWX9JEKYVU/wgYLRVnfatMZ8CpDvfD9tG
-	A6NdcSG+KKLnOuvuMDVZvoB2Uw1eC6dBBQK8Z3WZRKKr2su4LGQSMMJyrdAOx+Vx
-	KLxtte4+al0drL21Ti6YhGN2YHFAiwo7gx3CgeRt6ILhHEE2cuXp2ad9wSRvnz3C
-	9tD9hdS5uXWceojfmOTRpQ2GzJ23K/AH/Wr2a0bbLBvHB7G41AwcVtO6vFcxi0wm
-	S8hWedcAV4W0FWxVVT9HXF75Ed25hy7XiSHNQGCjdw==
-X-ME-Sender: <xms:d3kwZp88tc6_TcxILPhm9qQ3Zmi5NULRwTPQy6MowXnK0bTadOXyUQ>
-    <xme:d3kwZtvFK-RayxDZR2haBV5SjeeIEY4yG_i4cr6OhLpFV0EDEhsKT157bn_a_f0DE
-    TUBIerSJaJ4KsLrPg>
-X-ME-Received: <xmr:d3kwZnBYqsHzKQ0hqTXwi9paBKczwu4WAYGG_MeLu8XaQYs_y25eilccLgEaVSCdfiXIigPgR1049N6GO6G9ypkByZURddcxfzNRVQjycjZYqN66rgvY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddgkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:d3kwZtezH204E4flI4Pqz1Gqp546scSHhUkzpQ5dstRzSttaq-X8rg>
-    <xmx:d3kwZuOAimrlo32QqIJHCkoqrhWlD4XxBRsbatnxWRfNLMouY2er_Q>
-    <xmx:d3kwZvlu7_gAJjWG7RlNZx_mktk1i9ShFpvtkayEd1YYkVUsk0AynA>
-    <xmx:d3kwZouHz8nqefVNLRURNFIXrTmiRm34Ptar_L0k-vcFnOpJX_oa_Q>
-    <xmx:d3kwZnangRw5CqvGsHGRt8lgfajP-DjOQcnVui4azbk9oDonpoyrZcCu>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Apr 2024 00:54:14 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 10f99a0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Apr 2024 04:53:53 +0000 (UTC)
-Date: Tue, 30 Apr 2024 06:54:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 8/8] refs: check refnames as fully qualified when
- resolving
-Message-ID: <ZjB5dPoEoq8D6qzJ@tanuki>
-References: <20240429083533.GG233423@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b="BFKxddXv"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2a2d0ca3c92so3711482a91.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2024 21:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail-com.20230601.gappssmtp.com; s=20230601; t=1714452954; x=1715057754; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fZzp2/nOG7vUA5QgRwEUVgHkEhKryHv2dnaDl/9QPX0=;
+        b=BFKxddXvjbXJG1qIjgj1jqlfRp1DuuucHeEh/E67OYEvrvBI0nd5ICWQRUcMAv3oD+
+         dA3h9SEwdfjc+9kK+mKijQIwFP5yz2ouWlYtsct0zxSZ54LWoHEUYzQ7hHPyzat51JgQ
+         xt2Iy/0rWpUYkzoYhtcNd7nK98appePghbuMYsd+pDFHxZCzD8vS6Rz/53Qd+XwWYPqT
+         o7gz9HN23O5gYQyveXoHsAzj4z+F86vZjyrP0SSxfJ2qgn8LHVaE5wlnzgdxoKYhSfpr
+         OBgttFWDsbAI4Zo66WKXXh1KQnNfAPDGi85Expe67kOkfeZafAInbPsNwd4DXvtb+06S
+         3TnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714452954; x=1715057754;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fZzp2/nOG7vUA5QgRwEUVgHkEhKryHv2dnaDl/9QPX0=;
+        b=ubKMtVhQ7kuxWjkWZBwsn7tubiJVhG/sGU4HQ/2f5q06NyUvgW3VW5F6ccSZhwQeef
+         5qi82lPm802JHJGUq4Rqe39eEEvd17oGq2+b+YjZzS9a5Bf+3kyfIZ4V6w+d1KwBIE/D
+         kuyTsoALKcUXGPCEOpQht0tde7rbrbtqiG5YOPAixADb0462JW1hGphLxqupObUDVek/
+         91oaxyPV/mpOyAcR4RvsSga7HeB4tuC+3JuBkZsKMD1fSUBkwRKRC039XFtIvkp6hYRz
+         fhvOFURdBJShDmJJpukxduLh0KTdabAGEVvoTjmtOmOujBECSLdVPjm0/0W/ehNbkOaT
+         Apkg==
+X-Gm-Message-State: AOJu0YxonYFbBejxxvwYUZuPiLV3foy15tME0RXcynXu7+8VmA5ubCCI
+	daHoQ/+Zh7RMhJ2Vw9VXC/XgiKPVurA8Hs5wWdlvEoeUnlb+rVHLNVaxzWNo49H1jvGqwbrlMMQ
+	YqR/cUm63twMjpQTVRd25gkpafE8=
+X-Google-Smtp-Source: AGHT+IEZv5kMJkstdJp+PqaUgH1b2sFLuTEbE2OdMJyWG89nUeRDYapbdP2g3eSHQcWAg5B95tzNmNT7/qd5182YyrY=
+X-Received: by 2002:a17:90a:4384:b0:2b2:9783:d0ca with SMTP id
+ r4-20020a17090a438400b002b29783d0camr777980pjg.12.1714452953567; Mon, 29 Apr
+ 2024 21:55:53 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 29 Apr 2024 21:55:53 -0700
+From: Linus Arver <linus@ucla.edu>
+In-Reply-To: <CAMo6p=EggYjK60fWmNC2XRFf0zRf4PCcUT-vmFM6RH2J0i3hrw@mail.gmail.com>
+References: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
+ <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com> <9077d5a315d0d7272266856bf75a75b0a24df91d.1714091170.git.gitgitgadget@gmail.com>
+ <CAP8UFD0OATdCaEN1SrvYMTZP3b1uWCZw57cXHhUNPW9eTj+x0Q@mail.gmail.com> <CAMo6p=EggYjK60fWmNC2XRFf0zRf4PCcUT-vmFM6RH2J0i3hrw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0pDE3FGjOVHrbWzs"
-Content-Disposition: inline
-In-Reply-To: <20240429083533.GG233423@coredump.intra.peff.net>
-
-
---0pDE3FGjOVHrbWzs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Date: Mon, 29 Apr 2024 21:55:53 -0700
+Message-ID: <CAMo6p=GRcmy6NDGRskuNrauMYTkAgk_p_0TJJTPC2=axVrWuvQ@mail.gmail.com>
+Subject: Re: [PATCH v3 03/10] trailer: teach iterator about non-trailer lines
+To: Christian Couder <christian.couder@gmail.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
+	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 29, 2024 at 04:35:33AM -0400, Jeff King wrote:
-> Most code paths for resolving refs end up in refs_resolve_ref_unsafe(),
-> which checks the names using check_refname_format(). The names we have
-> at this stage are always full refnames, but we pass the ALLOW_ONELEVEL
-> flag so that the function allows pseudorefs like MERGE_HEAD. We should
-> instead pass the FULLY_QUALIFIED flag, which lets check_refname_format()
-> do some extra syntactic checks on those pseudorefs.
->=20
-> With this patch we'll refuse to read anything outside of refs/ that does
-> not match the usual pseudoref syntax (all caps plus dashes). This should
+Linus Arver <linus@ucla.edu> writes:
 
-s/dashes/underscores
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> (Sorry I just realized that I had sent this email to Linus only.)
+>>
+>> On Fri, Apr 26, 2024 at 2:26=E2=80=AFAM Linus Arver via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>>
+>>> From: Linus Arver <linusa@google.com>
+>>>
+>>> Previously the iterator did not iterate over non-trailer lines. This wa=
+s
+>>> somewhat unfortunate, because trailer blocks could have non-trailer
+>>> lines in them since 146245063e (trailer: allow non-trailers in trailer
+>>> block, 2016-10-21), which was before the iterator was created in
+>>> f0939a0eb1 (trailer: add interface for iterating over commit trailers,
+>>> 2020-09-27).
+>>>
+>>> So if trailer API users wanted to iterate over all lines in a trailer
+>>> block (including non-trailer lines), they could not use the iterator an=
+d
+>>> were forced to use the lower-level trailer_info struct directly (which
+>>> provides a raw string array that includes all lines in the trailer
+>>> block).
+>>>
+>>> Change the iterator's behavior so that we also iterate over non-trailer
+>>> lines, instead of skipping over them. The new "raw" member of the
+>>> iterator allows API users to access previously inaccessible non-trailer
+>>> lines. Reword the variable "trailer" to just "line" because this
+>>> variable can now hold both trailer lines _and_ non-trailer lines.
+>>>
+>>> The new "raw" member is important because anyone currently not using th=
+e
+>>> iterator is using trailer_info's raw string array directly to access
+>>> lines to check what the combined key + value looks like. If we didn't
+>>> provide a "raw" member here, iterator users would have to re-construct
+>>> the unparsed line by concatenating the key and value back together agai=
+n
+>>> --- which places an undue burden for iterator users.
+>>>
+>>> The next commit demonstrates the use of the iterator in sequencer.c as =
+an
+>>> example of where "raw" will be useful, so that it can start using the
+>>> iterator.
+>>>
+>>> For the existing use of the iterator in builtin/shortlog.c, we don't
+>>> have to change the code there because that code does
+>>>
+>>>     trailer_iterator_init(&iter, body);
+>>>     while (trailer_iterator_advance(&iter)) {
+>>>         const char *value =3D iter.val.buf;
+>>>
+>>>         if (!string_list_has_string(&log->trailers, iter.key.buf))
+>>>             continue;
+>>>
+>>>         ...
+>>>
+>>> and the
+>>>
+>>>         if (!string_list_has_string(&log->trailers, iter.key.buf))
+>>>
+>>> condition already skips over non-trailer lines (iter.key.buf is empty
+>>> for non-trailer lines, making the comparison still work even with this
+>>> commit).
+>>>
+>>> Rename "num_expected_trailers" to "num_expected_objects" in
+>>> t/unit-tests/t-trailer.c because the items we iterate over now include
+>>> non-trailer lines.
+>>
+>> I think it would be simpler if the previous patch used just
+>> "num_expected" or "expected". It's not like the other fields in the
+>> struct ("msg" and "name") are very explicit, so why this one only?
+>
+> I didn't give it much thought TBH. "num_expected" SGTM. Will update.
 
-> not be a loss of functionality (since such refs cannot be written as of
-> the previous commit), but may protect us from mischief. For example, you
-> can ask for silly things like "info/refs", "rr-cache/<sha1>/postimage",
-> or "objects/info/commit-graphs/commit-graph-chain". It's doubtful you
-> can really do anything _too_ terrible there, but it seems like peeking
-> at random files in .git in response to possibly untrusted input is
-> something we should avoid.
+Another thing: I will rename "trailer_assertions" in Path 10 to probably
+"trailer_contents" because it sounds simpler. I am replying here instead
+of on Patch 10 because my mail setup still has some rough edges for the
+transition away from @google.com (I no longer work there).
 
-Agreed.
-
-[snip]
-> diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-> index 120e1557d7..5fb780cb08 100755
-> --- a/t/t1430-bad-ref-name.sh
-> +++ b/t/t1430-bad-ref-name.sh
-> @@ -400,4 +400,14 @@ test_expect_success 'update-ref refuses non-undersco=
-re outside of refs/' '
->  	test_grep "refusing to update ref with bad name" err
->  '
-> =20
-> +test_expect_success REFFILES 'rev-parse refuses non-pseudoref outside of=
- refs/' '
-> +	git rev-parse HEAD >.git/bad &&
-> +	test_must_fail git rev-parse --verify bad
-> +'
-> +
-> +test_expect_success REFFILES 'rev-parse recognizes non-pseudoref via wor=
-ktree' '
-> +	git rev-parse HEAD >.git/bad &&
-> +	test_must_fail git rev-parse --verify main-worktree/bad
-> +'
-
-Are these really specific to the REFFILES backend? I would expect that
-the reftable backend sohuld fail to parse those, too. The fact that we
-write into the repository directly during the test setup doesn't change
-this, because all this patch is about is that we don't want to parse
-random files in the Git repo. And that is something we should want to
-enforce for all backends.
-
-Patrick
-
---0pDE3FGjOVHrbWzs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYweXMACgkQVbJhu7ck
-PpSBEw//UjldFYN/HWN0Cp5xkYRJuiVam20DQr+JlbvGwQrJUH2+4zctTFCcHGgA
-Jkc8bvTJ1JjDvwkS8aLalqjxn/N9hFgTmOfoHHuS7a+X6q4HGoYZr+1jfr88/FaK
-BAGCfcsmC4hBhNa/Xb/PehAyBjhRdPyvrvCb0c+kevawdPqZzlVQtX5LgSkAu7V8
-idSycjGqPayuVqGPHagy6Vo8C99T2XWqvTVfxkhAXwIzK9XTfLC0nwBW/Nr8yZzZ
-Y5tSKZgsM8vTAy6F8PtNvDKvYF8IK74H2m/HXd0n4EtFO0k6mkV4WJCl7yreEEn1
-cZv+l8viDTu/3dEMcYMCltwzVkiKj36DClvTO1vfjE7478hnyTQMcMIyUdWqzYwR
-3lOSGEzU9pHGLZrrx0+euygdvyLHS8K4KSONr+xXJu3QgSncLXWBI1wtuMh8MYB3
-BbknnEUbfG/8WIZXnvCsGEyYH2PAXnn9VYmqLVP2iad49QK8Jz/byNA4rXCZMcz/
-hF3VpCtwkudMs8vthelP72BiGi/E1khiR/7q5sSx+boCYOfj30e86i8GuBvDXr5x
-+fwfuX3954zKAPdMUKODegSxwDdBnLRUuXlazbeM/4TVlGJk6w/IYfXtQZaKFkpz
-QK6SjnvIxKXulPzXVf6dndoouxvwIOzsm6rTGd2VytfaFkdhTGE=
-=DMMB
------END PGP SIGNATURE-----
-
---0pDE3FGjOVHrbWzs--
+And on that note, I'll have to update the SOB lines to match my new
+email address.
