@@ -1,130 +1,195 @@
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091AC1527AF
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 14:43:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B1B18AE4
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 14:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714488185; cv=none; b=h4Gmg78nl/SVVvREhIHejx/9zQtQYlgI3TF8rjCwACdDdedeL2WkT/9aujPm6u3PiihJjXn649HeGXt93tnGGUlVIEX7wXx5M8lHvGMfY2ljEroZeDPEnx8c7OEhuZ0ifML5lWC/YO9Dl99opNdJwORsfJBCFisHMwbfHHz0EwI=
+	t=1714488350; cv=none; b=dKEI/9ZoHc2BKgPb3Ty03eatLpztK/rGXORWyjmMZAeQ7rnbzgeZ4fMicx76tb8uKbcoUNMPC652RKwqZsrlG/xN+Lk1Bf12pWCOeyjUl8Uloavli6K5q0K0M7Z0o8w4K+ZnQtIrAXy8K6He0WaxKS4Jnc6jBUa+i3TUv2XygxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714488185; c=relaxed/simple;
-	bh=9J5Khqc3qoNnzy5UNadQo1+EWzYpyDQ7cp3e33edfUU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JQSFkp5LNt8b1mkLP9fHUmj6QXn/xeWuGE7HIdjrmVo1/3CMR1iWtjrarfpuhKTipZIZbjnqthYx7uhiKxHfRT7RWrstX9Sqioo6J2/pq3GQOjFK9AIO2QVHjMYnFNLBYy1rPqbATKAEAz5M54GTf0EO0cfbHDmr/63VHE3KzPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YjISSPu0; arc=none smtp.client-ip=209.85.161.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714488350; c=relaxed/simple;
+	bh=pptEtJI3eKnAU0GPeQhNJuXCJgQi+VXYeD2xDEw+CL8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qei1qNp3EZhCGv0z5AjGjsASisQXwRdMTFC+u8Dxe0W/Jyb/G2utuQWvs0s1KJvO2aZrcitTAUDowLg/solfJioTyYX+7pZtLx9Sh/MdSijdJAZHcK39K6pKDR5AJHFs3K+QbBhyrBOUKi/pZI39TSu5H9qOLpCI/b+hDaGqIUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AS2cZyY/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eDHRGh3R; arc=none smtp.client-ip=64.147.123.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YjISSPu0"
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5afbd1c3ffeso804392eaf.2
-        for <git@vger.kernel.org>; Tue, 30 Apr 2024 07:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714488183; x=1715092983; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p0+SX4By2Hk0TGeBZ/Nj0Jjf+y4N4/zi6qtmt8eTWHM=;
-        b=YjISSPu0b6BdCiTqm2OF+UHcbEsmt74jv4MHiCfyATH1VS9lXtcoDUgb620/ffLM/n
-         Htlban/h3ZC7tul7aKDhUJsmpKTGwK2WIxfqFLH5T2s8bKocU/ShkK58jUPwAIA7zbaf
-         CYjPE/ys2ATQEKNRiSNO74l/7HZigFLZ/eu9UX38IPF8pIzAqAPA6EvuzLS8aq/mFu0T
-         aSg4rlPUs+HturCEhxaB7B3k8zTeRaFf5gjYYVvd9YtygKSTuNEHt1iRdyTtUZhYB4F9
-         u9c2bD6W3QRExu0xVYO8XYf2ll3sQuk6/pMu4vSsNaPs7pXy8LfNrunjV0rqz03r1ISn
-         cnjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714488183; x=1715092983;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0+SX4By2Hk0TGeBZ/Nj0Jjf+y4N4/zi6qtmt8eTWHM=;
-        b=nikCKefWQc/DkfWNLLwM5cL/T8eSobXN1GV6apnHVF7Jume8MMlSoLyG8pJ5bQxXAi
-         m1TsLyaCrdXlXupC7MAsOJ+BHMBWC4dgo0r7+8mSS6FFhFgZQtC5ZIhShBx2gEgpxfO5
-         Wkvm6NGbxNiwsuOAvh1wMIqIJCBPA08Jh41f0S25mCu9GxGH0weDYO121A9UXMlxNYtb
-         07US8d4x/4jcrh8/+l8G0xiOg7fKcJ1GugmC3b1JsNPr3awT8OLJGyzCiZ+GDGnp4tpR
-         Mh2oZDuNlWySGUSI78j53QMNESJi3RkqEKWaQRqVs8GVDqJ1TWUwlOZNXpkyI2rArhZ1
-         JLFg==
-X-Gm-Message-State: AOJu0Yy5OO1wG/J6UDEfQX8mjeo3xHEoaCqZdS0nn06ZGkmogiwdedAe
-	j4h9taJDQrPy/Axi/cgIrh05JFyQPTZnr5ytaWUCF225Ydd/IRJGPmBnz8pu
-X-Google-Smtp-Source: AGHT+IEIk7LcLIWCHslcA79+dXOtRKw//hWMQ8aZ2zgnWofDZODnMFlmblJBr9bpRwq4QYWOJUeBwA==
-X-Received: by 2002:a4a:ac08:0:b0:5ac:9efc:3b02 with SMTP id p8-20020a4aac08000000b005ac9efc3b02mr3316090oon.8.1714488182891;
-        Tue, 30 Apr 2024 07:43:02 -0700 (PDT)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id x15-20020a4aca8f000000b005aa4e48efc3sm3848071ooq.37.2024.04.30.07.43.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Apr 2024 07:43:02 -0700 (PDT)
-Date: Tue, 30 Apr 2024 09:41:47 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AS2cZyY/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eDHRGh3R"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id D37AD180012B
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 10:45:47 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 30 Apr 2024 10:45:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1714488347; x=1714574747; bh=pptEtJI3eK
+	nAU0GPeQhNJuXCJgQi+VXYeD2xDEw+CL8=; b=AS2cZyY/ZOtJhHTMbrrAjEmlgm
+	T7nBqv7IDLnKIOgsPmBDPviLYvQAvsMoD94asqCEZwRFK6vT8ytZ/1Q5hgQT5W8R
+	CWPnOyh04e/ixalxl/OuT7c+am7TnvaplF27TsO3kdDzc0aP+5UYAaoWR2NR6/VB
+	N/NWIV7XkM3tAWPc5CYS7dJx7ppZFxtfSoydrXErDT0m1aUayLpcOl82zyEF+54S
+	v0skhbjElMzaYZd9CvVXrx5yoxBC9gUEb3/QfMmC/TlceKaCfoNmn1wj+y3qeEuO
+	9THrS728NX+Rz80mZxOv3A+fQv13Hpj4wtT7b+zn16i7Dg2A/0HJ/0qNBD3Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714488347; x=1714574747; bh=pptEtJI3eKnAU0GPeQhNJuXCJgQi
+	+VXYeD2xDEw+CL8=; b=eDHRGh3R4ifzShL5oxS771hDc6HkqUXAYGJVeMWCiH/y
+	qGFyaKjG2AqaCwH3Ktk1zKNF+vM1iDU3pRuWlBZvnceJK259tTRHTO8hjB0lpe2t
+	KwKLHfu4WuWf0nylUCkYONac2PIc5Ire5hYYTFXrzxEts9SAFfnmERht52FUxN4Y
+	1BOaZhTf+2jpyU0PCBUpImLE7y4oJlo68UfdmMzrSJpN391xvVbd3egFdTR8Azhp
+	vVSM6Nru7T19U+NTllOK2y/1WboHUJCLdTA6YnhUW4u7bQ1DQJFsc2TYxOMvobfh
+	+TMjG5FXYsdFl5w4FiFAGjw/eJzTmWZSIlcb3XLDwg==
+X-ME-Sender: <xms:GwQxZrSK-w1ntiETNQ_8Cn8pub2npDhYOUXSB6bS_uLiG8Dy4hA2pg>
+    <xme:GwQxZszinTDI4olkUEH8hEOntqCTMXD7WqmGFrSqgx60ghbV8N09Wa-3ses0XfXuy
+    J5JUADwM4ECbSdxrQ>
+X-ME-Received: <xmr:GwQxZg0xbYD2iId4kl7sv_Fmso0WNnA2_BMs0TaCGS6q0sfuGLL4-5SY662XTYIUzxr29Kt0E6kmnRUOvOTM7_I6QkDfpn4Oa_GtXMbOmMUu44gcgZ5Z>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedgjeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepjeejtdeigfegkefgjeehveevjeejveeuvd
+    dtieekffevleeglefhgffgjeejfeefnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:GwQxZrD8bou-9591JTCgzP0V_doGpuvHCt5SJzdh3r_pDxTf7qxGRQ>
+    <xmx:GwQxZkh7y-MzUgoI-8nBWP17m9KQQK5s55vu4-dqtiM83eTISYHmAg>
+    <xmx:GwQxZvrJrGWfsqXWC-C9ygNLuZjLni0S2fdbJBR1n10U750hNnunzw>
+    <xmx:GwQxZvgsHvkHOtEtNckJjXx_sPufqPoKX-xFfVMpej9DkXWC_5WPqA>
+    <xmx:GwQxZgbuBtlxbqzC_TG5SPzZOqcrzg16JulJgMHXIyk0UpWYUNMIV9oJ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 30 Apr 2024 10:45:46 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 566f132d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 30 Apr 2024 14:45:23 +0000 (UTC)
+Date: Tue, 30 Apr 2024 16:45:43 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
 Subject: Re: [PATCH 2/2] gitlab-ci: add whitespace error check
-Message-ID: <l55hxxuv5ohtno3gfjgq6mu7cqakfohon4vd7r535ztzadarin@iz4fbuwjeeug>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Message-ID: <ZjEEF-5xGl6tjOAG@tanuki>
 References: <20240430003323.6210-1-jltobler@gmail.com>
  <20240430003323.6210-3-jltobler@gmail.com>
  <ZjB77nSMou0ssu-V@tanuki>
  <zphrzgroei4civl7q2ls5cvabyzjbexfq6tjhdy476rmaqu6m5@ik3pedton6ww>
  <ZjD6xNuncrq9fSXZ@tanuki>
+ <l55hxxuv5ohtno3gfjgq6mu7cqakfohon4vd7r535ztzadarin@iz4fbuwjeeug>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Q0tUzo2UtaxZm3hp"
+Content-Disposition: inline
+In-Reply-To: <l55hxxuv5ohtno3gfjgq6mu7cqakfohon4vd7r535ztzadarin@iz4fbuwjeeug>
+
+
+--Q0tUzo2UtaxZm3hp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZjD6xNuncrq9fSXZ@tanuki>
+Content-Transfer-Encoding: quoted-printable
 
-On 24/04/30 04:05PM, Patrick Steinhardt wrote:
-> On Tue, Apr 30, 2024 at 09:00:59AM -0500, Justin Tobler wrote:
-> > On 24/04/30 07:04AM, Patrick Steinhardt wrote:
-> > > On Mon, Apr 29, 2024 at 07:33:23PM -0500, Justin Tobler wrote:
-> > > > To check for whitespace errors introduced by a set of changes, there is
-> > > > the `.github/workflows/check-whitespace.yml` GitHub action. This script
-> > > > executes `git log --check` over a range containing the new commits and
-> > > > parses the output to generate a markdown formatted artifact that
-> > > > summarizes detected errors with GitHub links to the affected commits and
-> > > > blobs.
-> > > > 
-> > > > Since this script is rather specific to GitHub actions, a more general
-> > > > and simple `ci/check-whitespace.sh` is added instead that functions the
-> > > > same, but does not generate the markdown file for the action summary.
-> > > > From this, a new GitLab CI job is added to support the whitespace error
-> > > > check.
-> > > 
-> > > I still wonder whether we can unify these. Yes, the GitHub thing is
-> > > quite specific. But ultimately, what it does is to generate a proper
-> > > summary of where exactly the whitespaces issues are, which is something
-> > > that your version doesn't do. It's useful though for consumers of a
-> > > failed CI job to know exactly which commit has the issue.
-> > 
-> > Just to clarify, this new CI job still prints the output of 
-> > `git log --check` which details the exact commit and file with line
-> > number of the whitespace error. The difference is that it does not write
-> > an additional markdown file with links to the commit and blob.
-> > 
-> > Here is a failed execution of the GitLab whitespace check job:
-> > https://gitlab.com/gitlab-org/git/-/jobs/6749580210#L1289
-> 
-> Okay, fair enough. I'm still of the opinion that the infra here should
-> be shared.
-> 
-> > > So can't we pull out the logic into a script, refactor it such that it
-> > > knows to print both GitHub- and GitLab-style URLs, and then also print
-> > > the summary in GitLab CI?
-> > 
-> > We can do this, but for GitLab CI there probably isn't a point to
-> > generating a summary file since there is nothing that would pick it up
-> > and display it. Having links though directly in the job output would be
-> > nice. I'll give it another go.
-> 
-> Well, we could print the output to the console so that a user can see it
-> when they open the failed job. The nice formatting may be kind of moot,
-> but on the other hand it doesn't hurt, either. I guess most people are
-> used to reading plain markdown-style docs anyway.
+On Tue, Apr 30, 2024 at 09:41:47AM -0500, Justin Tobler wrote:
+> On 24/04/30 04:05PM, Patrick Steinhardt wrote:
+> > On Tue, Apr 30, 2024 at 09:00:59AM -0500, Justin Tobler wrote:
+> > > On 24/04/30 07:04AM, Patrick Steinhardt wrote:
+> > > > On Mon, Apr 29, 2024 at 07:33:23PM -0500, Justin Tobler wrote:
+> > > > > To check for whitespace errors introduced by a set of changes, th=
+ere is
+> > > > > the `.github/workflows/check-whitespace.yml` GitHub action. This =
+script
+> > > > > executes `git log --check` over a range containing the new commit=
+s and
+> > > > > parses the output to generate a markdown formatted artifact that
+> > > > > summarizes detected errors with GitHub links to the affected comm=
+its and
+> > > > > blobs.
+> > > > >=20
+> > > > > Since this script is rather specific to GitHub actions, a more ge=
+neral
+> > > > > and simple `ci/check-whitespace.sh` is added instead that functio=
+ns the
+> > > > > same, but does not generate the markdown file for the action summ=
+ary.
+> > > > > From this, a new GitLab CI job is added to support the whitespace=
+ error
+> > > > > check.
+> > > >=20
+> > > > I still wonder whether we can unify these. Yes, the GitHub thing is
+> > > > quite specific. But ultimately, what it does is to generate a proper
+> > > > summary of where exactly the whitespaces issues are, which is somet=
+hing
+> > > > that your version doesn't do. It's useful though for consumers of a
+> > > > failed CI job to know exactly which commit has the issue.
+> > >=20
+> > > Just to clarify, this new CI job still prints the output of=20
+> > > `git log --check` which details the exact commit and file with line
+> > > number of the whitespace error. The difference is that it does not wr=
+ite
+> > > an additional markdown file with links to the commit and blob.
+> > >=20
+> > > Here is a failed execution of the GitLab whitespace check job:
+> > > https://gitlab.com/gitlab-org/git/-/jobs/6749580210#L1289
+> >=20
+> > Okay, fair enough. I'm still of the opinion that the infra here should
+> > be shared.
+> >=20
+> > > > So can't we pull out the logic into a script, refactor it such that=
+ it
+> > > > knows to print both GitHub- and GitLab-style URLs, and then also pr=
+int
+> > > > the summary in GitLab CI?
+> > >=20
+> > > We can do this, but for GitLab CI there probably isn't a point to
+> > > generating a summary file since there is nothing that would pick it up
+> > > and display it. Having links though directly in the job output would =
+be
+> > > nice. I'll give it another go.
+> >=20
+> > Well, we could print the output to the console so that a user can see it
+> > when they open the failed job. The nice formatting may be kind of moot,
+> > but on the other hand it doesn't hurt, either. I guess most people are
+> > used to reading plain markdown-style docs anyway.
+>=20
+> I'm thinking we can generalize the summary writing in some manner. When
+> run as a GitHub action, the summary can be markdown formatted and
+> written to `$GITHUB_STEP_SUMMARY` with no output to the console as done
+> today. When run as GitLab CI, the summary can be written directly to
+> console with links. All other runs just output normally to console.
 
-I'm thinking we can generalize the summary writing in some manner. When
-run as a GitHub action, the summary can be markdown formatted and
-written to `$GITHUB_STEP_SUMMARY` with no output to the console as done
-today. When run as GitLab CI, the summary can be written directly to
-console with links. All other runs just output normally to console.
+The script can probably be generalized to take a file name as argument.
+For GitHub we'd then pass `$GITHUB_STEP_SUMMARY`, whereas for GitLab we
+pass in a temporary filename that we than simply cat(1) to the console.
+That'd allow us to move the CI-specific bits into the respective CIs
+whereas the script itself remains generic.
 
--Justin
+Patrick
+
+--Q0tUzo2UtaxZm3hp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYxBBYACgkQVbJhu7ck
+PpSbqw//ZErBD3M0Hy/gVjqsPrLlIVOu7jOBpLz6JaouIgcWjjlIKUFZwaJfQU8Y
+2PivbgaIMYAeFzVfvBS8kMw9Ar40w/pbymmRWwH6FRxlDlKMZZ0hfm3nJ3mm0eFE
+e8zyp67UjXutnW0m8yzkf4Hf1P3Or1GqLf4uTMARKSEYnFXvqfbfeVl2SmSM/EyP
+eYO+iNNs1HR+4yfmtTkzZKrvOkZBRlGn8JbVIlgqihMwE2EhSkenb3pMKLphMJNH
+v67fRsbOYMm43wUazu2u4/tva9gXiqXhoUvtt44ga8kGRDqI+Bx6iFn2W1UQikMK
+lHBrHq5/qOlu2StQ3LJu42Z8KsCHt4MMYmik/iMvvCZ8Pzv2km5lJB9U0gwKgku3
+yqX+cT4J2n6f0FJYJ1kyK9zduFrucm8bKBqsVaGhTc1wKjNj3TCfF2aTA5KFRAkg
+1/09TrKuyzLa9EjhkRSLZU9WRwUDL0PV0qDYW7sC8BHNVGpAsphWk1qvZfLBG6SL
+lvKHeEjREqd35XghmeFW5vYVJOZhkJ3uPNAxqykLJJRN6rjr8krQul3pVGVSTAPk
+GBiVLdhWrxbCeowxwCBcYtGvb1WkLxXnuIZwqFejPpvA0SHMIY00yjHpSnD4/ibk
+zGG//wCDqSbnSMVQ2rIwGni8jnrlTfR4Rhd4OhO7rq6tyiuLosY=
+=dCAr
+-----END PGP SIGNATURE-----
+
+--Q0tUzo2UtaxZm3hp--
