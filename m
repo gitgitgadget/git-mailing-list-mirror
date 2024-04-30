@@ -1,82 +1,82 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668674594D
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 07:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91936481DB
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 07:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714462212; cv=none; b=JsHGw0zpTUcN2Z3CrsgRINk3H+c6/J20xZ16N1e8sn0/LU3yeKZOfinlUIqHyWtLuC9n4Cq3K9eLOZNJQ7KCBiQ5B+qFPkfuTzf/u+eRzLHyZ2HeFGd3ic0xJQAC/Szx49Xp0OHPEFejcfxgB5mcF0el2avSvD5EvhER6V5IYDo=
+	t=1714462217; cv=none; b=B66WSAx5QWk0FyCRn8Jc9nvCS3VUVVF+obiueEzCUPt0wNmT6p87M4n115TuXpSqbRIVMxwD1mDPlaBkJE2JR8VqLv0y641AMHyYDddF8kIMLFieF+E9PIpQyd4xj96MC34krok7Lb2GSFLkv72H1+a+ZeQXs7ds4yEUhzDkKdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714462212; c=relaxed/simple;
-	bh=8+x6l+6V9qBvDHZgU0Cmkn12HdEaM399BtBvG+3O9kM=;
+	s=arc-20240116; t=1714462217; c=relaxed/simple;
+	bh=1XYH8Lzu2urHjAxdFYhKqt7jSCDd7hzjEjZCx2xGDvU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=loZCBnz1jGcy6idTNJmfsaWsnUQbas9qjoc/+7A4D9esCcgjH2m//Od/b5JxXL/cYOtCKr3oHTAvN7YQywDyHZjLSN5DfDxWF30QuhhF5JfK9Ha/kpqOH+eN60785dIMVcGZ78RhJ3bt1KxGzXEcY1tE+loctrBEfuNmu1sbCkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YOLsMF5o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DCoSFApr; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=AbuMfXyYIBpx26EojoscnStNHE+rNa9yfdrIAGOPzbEHw4K8/eaetDmgE95ehApL1uwL205nOoGWbPEVCr0UVSHa+IMlBHywmRdILaaPteRohIbuw2jdHDMAsCO8iiwoVH/6hgPCZipn5nDelIUauaOYq54q97Jlto5+Y/l5+Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nGx2/QxT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fqsw0+lB; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YOLsMF5o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DCoSFApr"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 709B71140156;
-	Tue, 30 Apr 2024 03:30:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nGx2/QxT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fqsw0+lB"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 9BD1013808F9;
+	Tue, 30 Apr 2024 03:30:14 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 30 Apr 2024 03:30:09 -0400
+  by compute1.internal (MEProxy); Tue, 30 Apr 2024 03:30:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714462209; x=1714548609; bh=nO2YLbJYOp
-	NPPRED4TdcnFvMmj/lMITBpbk2IR4bGV8=; b=YOLsMF5oXvEt+vthN94jovmwwY
-	v23JKz4B2WAMdWBjdC0suDoxweakbuioFgkhJELxYbgI+TffcellqNGhorQcXH2K
-	PgDhdx4W0l0ReIhPGjm88IPxdBT8xihRiwqGbT2So57PAGgceD02IXrfBCEzXmAU
-	+SY6V5jExHyhKXZlhoDJb4qPH8q2s2rhk9NEq1gkcA5ropbS4UHeRSSKM3xYdvfI
-	/KHcoFLjA/qxgx63/KHz/GgzlkX4VSKEFOqtbwGJyBNYPJbinisAvC02CNIJYXC0
-	rV5p3/Y0zNitip2g+ZnWyVSM9IoX2S5Os56UYniwpPvHJZkLwQ9VidT/DA8g==
+	:subject:to:to; s=fm3; t=1714462214; x=1714548614; bh=1XYH8Lzu2u
+	rHjAxdFYhKqt7jSCDd7hzjEjZCx2xGDvU=; b=nGx2/QxTmUhJSwZaMVLLe/HmX6
+	d7LQ2E4bkOHTH3ArOhs2EVTibshYI3NQDLHLZlvbyU1wPPCPrFhqNJ20JkUYDAUc
+	wQ0TFbkqlN7P437u0pbxX6z+TILLmYshpHZuw4yNDskQL3coBWENZ0D2nuVddcbX
+	lT/VKTJS2WWslmc+JRDRYQlq/qjIk6V3+0EuMvAT9VWPjC+xF8RucMpNTV+fJh1x
+	2p881+qdtCJnCTLwLamWvR/CizoPM9xfAx8AThbSTHXJ41LCQUlh0o5AWsTnwPge
+	R68IcJUVMI0i3mkvrDGPhI+qU+omImtGJfUbTt4MpLcftWxnstB0gYTMOM7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714462209; x=1714548609; bh=nO2YLbJYOpNPPRED4TdcnFvMmj/l
-	MITBpbk2IR4bGV8=; b=DCoSFAprRrXzP01vXE2DRd8tMwUnICathl5tlUNNm4bg
-	B+rgL9Oe1g4lW6hsM5Ee1Ytwo/6kQopur7lqTfmviqfsygSPdVEDCpCDkSVXz5Kz
-	xACA7IIptq1Bx+qxc6F3ozR5WPPM0g1Q5kDDDQ2T95V8jDUMuthBc3EaqNpFipMX
-	PYCDIdm45CvaVVOyTizjRXn1mlNQJ94Pzq6BeZbMMIRTqoe6DlrOGr6ad5HHe6zb
-	PdAl8WgGnx9H94WROLpoBdaf5dc0FvOABFgfoPSnPVEtnr/1ee6DWMIgcEH95ulK
-	VdTzxZ+cyTkbBNyaLwX1J4o9p9ScfXDXbY0uy/3OUg==
-X-ME-Sender: <xms:AJ4wZvwSSiKPMsI60buKG_HrjuPWQgDX2EqyI4urhx1sMxkqIPgQrg>
-    <xme:AJ4wZnSZ3nbE1Z2RtYnIF3BbBG2LqCWbrpmeDZyaghG7Ks8_E2Th-0vETns1aJUzh
-    V4dcGuvkYVUIkoB2A>
-X-ME-Received: <xmr:AJ4wZpXm9aCEv9DFsFHzZSCDghgRIt5pdj_hRQmnTEhYF3AkS3Yc4nyiSrXJA7zLfcgciTTVUOtvGG7tPlzsVGIoVLfiDX3eeT_zVLWj0tJm_Q6PyiB_>
+	fm3; t=1714462214; x=1714548614; bh=1XYH8Lzu2urHjAxdFYhKqt7jSCDd
+	7hzjEjZCx2xGDvU=; b=Fqsw0+lBueMrm0PYOppOw1ymDu/PPtcDRbfejJGyV0je
+	EfqpPmcl4jxY5pRwuIOEJcpxlkDTqyPlHRhHi/K/M6hCyVglzqyGykBu3FnpGSaZ
+	QZXh5wAFiDXS9E5suzKJ4lUI19lnLTbBnep+tHSIBOYeeGZBdZ7E/gAbjtcwd59k
+	9aXwy8O1r9tUOQ+JWSrhCxrk8mCJcPATrJWGuJX2x1OxkVPfB/r7OpSLEbvShzHH
+	FSLHvJ4KDz4V3hcewtyvlN+za/Wf5iGvIqfvdJCXbaKXZo3CmtvLrRFayCGVRrlH
+	OG2rYF732XoECmwL6GHPWeFBV7QzuzaMZGdB8g8lDw==
+X-ME-Sender: <xms:Bp4wZiP7-UqnCCcttNll8iTf5m26mi53tCyX7D6US9kvuGyowiEh8w>
+    <xme:Bp4wZg98S6qseBetWRJyRYylGaGbdvqCVl6xzDz8qHN1wjo3Bw6UoxVsHNDFXkoLo
+    qlM9FoEIYV4ud50lA>
+X-ME-Received: <xmr:Bp4wZpSkzaow8SpDmBYE-rubs_p0OiNkmdUhd2omg2g29WjeeVQ4QMaBe0_3U6TLdINKtp_gM0SBp0xJMENLdathhPydXUUpx9u3Pw3QA9rK2c772a7W>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddguddujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:AJ4wZph3HIL-jG51rFeNOD6QZcTly3NcbrvWZ2wjNvj1r1FvvTDz0A>
-    <xmx:AJ4wZhBA9UV6z_lHTNNbknDBSFdiKC-KPLUzK-O0UeDLrnSkcjwWfQ>
-    <xmx:AJ4wZiJDoZByia_QKKnQkQ1D6NNnCdYpG1Oqt2sWSnqTzFaVwU_F0A>
-    <xmx:AJ4wZgCz70inbANi7259xKhx-hj3doZh8Fii6Vh0MXovx9rLQ9gDvQ>
-    <xmx:AZ4wZs-hBHuMf4hNT1_2NGcoZ17QslMfn7ZIf6OEYJfOQYofoC8tVl3D>
+    gvrhhnpeeiveektdfggfeluefgvdelvdeftdfhgeeugeefveejleeufeekgeefffehgfel
+    gfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:Bp4wZit3v9A92tEJtMzis0ue5_pNomhU-QYdQ_W5poMMVdp1IcG19g>
+    <xmx:Bp4wZqcjfkg0Cs12QuNAIWVKTr0lYYSS33t4WsurSPnkyFoCItJzog>
+    <xmx:Bp4wZm3Ul2KTdXfP1vWFEYjfHp1X7cvqIDCqtTqHS0nuWyz6RSrcvw>
+    <xmx:Bp4wZu_xmDCriPO8iJ9b34YmUqpgTX3gnCYKJ3Zid4-dwvcrVnptWA>
+    <xmx:Bp4wZq56605kzCmUYgr0NiF0H7yliIsLsHlLGIyaAIEu7hmoHV-2DiAY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Apr 2024 03:30:07 -0400 (EDT)
+ 30 Apr 2024 03:30:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 64c91b45 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Apr 2024 07:29:46 +0000 (UTC)
-Date: Tue, 30 Apr 2024 09:30:05 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 1a65e6a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Apr 2024 07:29:52 +0000 (UTC)
+Date: Tue, 30 Apr 2024 09:30:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/3] refs: do not label special refs as pseudo refs
-Message-ID: <ZjCd_drNT6kyjNa6@tanuki>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] refs: fix segfault in `is_pseudoref()` when ref
+ cannot be resolved
+Message-ID: <ZjCeAxbL9bufwGEN@tanuki>
 References: <cover.1714398019.git.ps@pks.im>
- <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
- <e57ed591-5006-453e-bc93-6c53fcab2aec@gmail.com>
+ <88822afe950318c0312de5541a411942a163b139.1714398019.git.ps@pks.im>
+ <CAOLa=ZTCCgtQiQbm_GU--1+Yq-qYJANzTvRmvVrqNmzchkVevw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,120 +84,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vuLtGt/ipC92fsXa"
+	protocol="application/pgp-signature"; boundary="zaX3781HnskLgFLi"
 Content-Disposition: inline
-In-Reply-To: <e57ed591-5006-453e-bc93-6c53fcab2aec@gmail.com>
+In-Reply-To: <CAOLa=ZTCCgtQiQbm_GU--1+Yq-qYJANzTvRmvVrqNmzchkVevw@mail.gmail.com>
 
 
---vuLtGt/ipC92fsXa
+--zaX3781HnskLgFLi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 29, 2024 at 04:12:37PM +0100, Phillip Wood wrote:
-> Hi Patrick
+On Mon, Apr 29, 2024 at 11:57:53AM -0700, Karthik Nayak wrote:
+> > It is somewhat questionable in the first place that we declare a ref to
+> > be a pseudorefe depending on whether it resolves to an object ID or not.
 >=20
-> On 29/04/2024 14:41, Patrick Steinhardt wrote:
-> > diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
-y-content.txt
-> > index d71b199955..4275918fa0 100644
-> > --- a/Documentation/glossary-content.txt
-> > +++ b/Documentation/glossary-content.txt
-> > @@ -497,20 +497,28 @@ exclude;;
-> >   	unusual refs.
-> >   [[def_pseudoref]]pseudoref::
-> > -	Pseudorefs are a class of files under `$GIT_DIR` which behave
-> > -	like refs for the purposes of rev-parse, but which are treated
-> > -	specially by git.  Pseudorefs both have names that are all-caps,
-> > -	and always start with a line consisting of a
-> > -	<<def_SHA1,SHA-1>> followed by whitespace.  So, HEAD is not a
-> > -	pseudoref, because it is sometimes a symbolic ref.  They might
-> > -	optionally contain some additional data.  `MERGE_HEAD` and
-> > -	`CHERRY_PICK_HEAD` are examples.  Unlike
-> > -	<<def_per_worktree_ref,per-worktree refs>>, these files cannot
-> > -	be symbolic refs, and never have reflogs.  They also cannot be
-> > -	updated through the normal ref update machinery.  Instead,
-> > -	they are updated by directly writing to the files.  However,
-> > -	they can be read as if they were refs, so `git rev-parse
-> > -	MERGE_HEAD` will work.
-> > +	Pseudorefs are references that live in the root of the reference
-> > +	hierarchy, outside of the usual "refs/" hierarchy. Pseudorefs have an
-> > +	all-uppercase name and must end with a "_HEAD" suffix, for example
-> > +	"`BISECT_HEAD`". Other than that, pseudorefs behave the exact same as
-> > +	any other reference and can be both read and written via regular Git
-> > +	tooling.
+> s/pseudorefe/pseudoref
 >=20
-> This changes the definition to allow pseudorefs to by symbolic refs. When
-> is_pseudoref() was introduced Junio and I had a brief discussion about th=
-is
-> restriction and he was not in favor of allowing pseudorefs to be symbolic
-> refs [1].
+> [snip]
+>=20
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> >> via the uninitialized value when calling `is_null_oid()`, which causes
+> >> us to segfault.
+> >>
+> >> It is somewhat questionable in the first place that we declare a ref to
+> >> be a pseudorefe depending on whether it resolves to an object ID or no=
+t.
+> >
+> > If I remember rightly Karthik added that check to avoid the files
+> > backend calling a file with a name that matched the pseudoref syntax a
+> > pseudoref when it wasn't actually a pseudoref.
+>=20
+> Not sure I follow. I think it was strictly done to ensure we don't
+> consider symrefs as pseudorefs [1].
+>=20
+> [1]: https://lore.kernel.org/git/xmqqfrymeega.fsf@gitster.g/
 
-So the reason why pseudorefs exist is that some refs behave like a ref
-sometimes, but not always. And in my book that really only applies to
-MERGE_HEAD and FETCH_HEAD, because those contain additional metadata
-that makes them not-a-ref. And for those I very much see that they
-should not ever be a symref.
+And that's fair from a terminology perspective. But honestly, I really
+doubt that any user will understand that REBASE_HEAD is a pseudoref when
+it contains an object ID, but is not a pseudoref when it is a symref.
 
-But everyhing else living in the root of the ref hierarchy is not
-special in any way, at least not in my opinion. We have never enforced
-that those cannot be symrefs, and it makes our terminology needlessly
-confusing.
+Anyway, as I've said in parallel mails, I want to change the definition
+of what a pseudoref is. I just think that the current mess is understood
+by nobody and doesn't make any sense.
 
-I think I'm going to reroll this patch series and go down the nuclear
-path that I've hinted at in the cover letter:
-
-  - Pseudo refs can only be either FETCH_HEAD or MERGE_HEAD.
-
-  - Refs starting with "refs/" are just plain normal refs.
-
-  - Refs living in the root of the ref hierarchy need to conform to a
-    set of strict rules, as Peff is starting to enforce in a separate
-    patch series. These are just normal refs, as well, even though we
-    may call them "root ref" in our tooling as they live in the root of
-    the ref hierarchy.
-
-I just don't think that the current state makes sense to anybody. It's
-majorly confusing -- I've spent the last 8 months working in our refs
-code almost exclusively and still forget what's what. How are our users
-expected to understand this?
-
-> Are there any practical implications of the changes in this patch for use=
-rs
-> running commands like "git log FETCH_HEAD" (I can't think of any off the =
-top
-> of my head but it would be good to have some reassurance on that point in
-> the commit message)
-
-Not really, no. We have never been doing a good job at enforcing the
-difference between pseudo refs or normal refs anyway. Pseudo refs can be
-symrefs just fine, and our tooling won't complain. The only exception
-where I want us to become stricter is in how we enforce the syntax rules
-for root refs (which is handled by Peff in a separate patch series), and
-that we start to not treat FETCH_HEAD and MERGE_HEAD as proper refs.
-They should still resolve when you ask git-rev-parse(1), but when you
-iterate through refs they should not be surfaced as they _aren't_ refs.
+I'll thus implicitly address this in my v2.
 
 Patrick
 
---vuLtGt/ipC92fsXa
+--zaX3781HnskLgFLi
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYwnfwACgkQVbJhu7ck
-PpRleg/+KaoBH4hDXY8piIVTC5/5j2/GSkXCEulj5gHUdStpuE41V3x2e0gKC9Q/
-L91nMDH2TSiANhd803uDW1HXZip/ZJFk6+vZYD5uo85462eWE5z9S1ov5pY/mBEp
-pPPnpbTx1HoUTA1g2HekSB/OUQ5nmFrrRZY0tWpc4JevQX+8TxxGIrrSEsBTkFTH
-y1rC1Za4nvT7KyKAp8Jnog7B50BBpT2VF1dCM7bJu71Suicjd628qr+jdiLlWigm
-phGeTVcmLvjuAsVDnZgn+ML0sRL+CI3WbVAtXkZU0Xj0bHr/tYFMdL26tBeDVM/F
-JhLMPZUqGl9viNIUgiixVKXtEBI7oL+POPDEU9St3KTEfuhnknA1y9bfQmBeFZAV
-vM2XEnwtmEAyTNng/t2VFpYAeVqGRAe1rZ//bykUV43fuSCPjirdubrxw1uy2T7D
-kp7qYN1YOIvOPSyXEhJ9j8c5Cbl6bFbesMsHxJvWhpkiCabT0GYsrkh4UeeYIQFR
-H9/MT6GPp78MLNRpiOMhQ7NtbkSTTesca9KWiVh+ZK/uLuh/Y9Q8BmZVu2iFmPuA
-Wa4LQiV0GhuGxwDvuHINZTDLp/3r9cnZUukOLaaOlGC/FV2BZAymUBKmmdO5rGPN
-oGyUIQoL2dsZaLhcUXzZrQdAUGfuktowmkyHDRFPh151sUA7fnE=
-=0wEk
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYwngIACgkQVbJhu7ck
+PpTWSQ//R1Eh1YiXbt7dA7J+rTEVG0do5OxqAkkjI/EKSlxpMeztStVGsfQzWOnY
+lZZr3odpEEdiy5LNxhEfl40/POMKtAjL+tzjYISmn8vgX9D+4JzavXuKKAC6Jpgg
+vZ0P4spjwQoZQXAZM5XHgsfb1PQpDQ0kYtP6oMHOzpcrMRLMOO6uC2okg1/AmFy0
+ic2pOJ8TteeCOHMwP0xwrhfHrRROVZu+18YL+RKMk/+PnkXFWqntJTAlz7h45O50
++23jWu0gMJ7SSx88N6ae1HCqzECQxWQkNdClI3bJhNM5GAHQaCmz7ZDJqWGo4BJO
+AogDv9lAFedRsZZJOT7yJ5CvsimOG0agI6V9B1UyNzg5ID3ujXK0oUdTZTXjpERT
+RR9GqiaYjB/hsURDUFuJofN5vMhY9DFTgTZ4YQlVEG3frSYWc72WVlQ8XLcrkyD9
+/ml5zzyt2vo+8to+jV6trpzBXbloXtnfB+tWjzVnmjC2zB7DuHDfEIjXurbhIkME
+Z2piTZfreCuA5wSamz6Ps4dsIAvgu4ziSby32ee+WRXbpX7IOdP10GfvA6C7vRou
+fuOc+JITq53WHR5kctjlpAu+si/12p4+NR4XL/mqpkZAxYQ5VJL2CyJAyLRWBB+2
+voGBlRsM4UxAPqsJ/EjvbaS9AFQwm6vtUp97SWFE9jdmUNenQyQ=
+=c3ry
 -----END PGP SIGNATURE-----
 
---vuLtGt/ipC92fsXa--
+--zaX3781HnskLgFLi--
