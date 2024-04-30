@@ -1,178 +1,180 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D6812D758
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 11:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8EC140384
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 12:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476342; cv=none; b=ROfMEI+m+hJqXYdOb6yGPwwJDGQwTHBapApRuBC6x7Dk9M+e1xUNDe6FvBns0xb/w8FoSDNCzKx3V/XiffeCY1q1PKuJnDIKXBsn0iZSKH4Ms3zoPFANON6/k/LafcX59F4qwZ0mnXkfG7E9kcA5LbhIBkgWcFvYQCYAA+p+gUs=
+	t=1714478843; cv=none; b=smfUb3rLxEjIFnY61gGi2XUo86MkHtCQ0S3G+l0NVnGEihKVyj/LlOCm9j07vFqpanIDy5tuVf8HEkaOUVs5yOKCwWDI25+NlVAH1hduf1aGQiPAMXIdm/nneA5hNoC4KeuqD+Nqq+x3kWapjOAeEZ2Zom60y1Mb8w4w1wZFd/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476342; c=relaxed/simple;
-	bh=c1wAOTjHeBzp7LhAU4VAP0gFm1HlJ9vVL4bJrj9f/yg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b2fZ0leIJDnvBvhb9fJnVQgiTcChi5iN5fsiupE4uutFYvPzI4jBpkMdan59ymzZWaQMPkdSm7mck9KR29KhDeowrGZze1Ph6PwHHWFz6CGUDECQWCCLSUsKBXBKlm2YbbJ4uDFBURbShfz3p43JDF6v2f2HOeu5JNCtA7YZSlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jrzPsCPz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pa4mSdqL; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714478843; c=relaxed/simple;
+	bh=L4QPNsuZ+Hrj2a8RvlBuxxSpIVu5RfF6Lcr9HSQx5XY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QYnvyIC2P3pdFdn6x+NIyUI/O7/9wjfoek/3JFwzMmpxaUE56bRktzwp/crZ/O8EOhIyAnyvqCfRzoUNVKZUwtMCLZxfVJ3docIU1fvAzVA5I3OC+EMzv6Shj8ahAohRPx/Nmb+z19L31i2I9Ec96TUEOHCIt/6M4DJsxfATTEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EHENy/Rt; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jrzPsCPz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pa4mSdqL"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 2FEA31380EAE;
-	Tue, 30 Apr 2024 07:25:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 30 Apr 2024 07:25:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714476338; x=1714562738; bh=qZpC3oxugQ
-	CIdyGYrJ/YU7l0rvW8xtSCJG2PIrvPkb4=; b=jrzPsCPzAr2BF7+T51zrN4UlZa
-	bV9FlS9STruzxQVoc5HHpqfuFss0gQOo+V8jo+3n9kJf2N3R0G+N3pc32/xe1Syt
-	33Z7sprzHd6HfcntygTA802Ijz0K6y68awDedPYuTSrJOmiIJRRyx8fiOr1Qodnw
-	J8wYJKy/fzXL1HKT3OyQC0GAXB3RI+BwSPcELvbZ8QZLWajtqgFwvN8bRTcJRbpm
-	VuVbPDq3DddcK/2zf3zWyhxsAsYkJ5wR60jzHM9NJV67uFYVlOpN2NTzMaT/XxQS
-	NCmMYrJxLFd+vl1jDoMcRXCB6W707i2ILNuItbKh4Uk4Q7WI699TfV4HYaOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714476338; x=1714562738; bh=qZpC3oxugQCIdyGYrJ/YU7l0rvW8
-	xtSCJG2PIrvPkb4=; b=Pa4mSdqLm0GypX4C5m7EUlUUorPWpXGZz40QDIgb5+B/
-	3/SUDK4eM8dV1Ygh3daBIcrXBq8c1WxtSYBxdUM0o+XH6vWOXYT/6heNoyVRimRI
-	57B/980IXg+PR0DptHQAv7T6nPgqSFgcTgImDEIAuv6ZrOUbPVMQjVSNukGy84Ly
-	6plTEwZfOyOZS3f3uLqLL6TidpK4Ojo9sMRaakfM/UHLyqnp7Wczpbujy2hAmmPQ
-	cTkISBKKJZpYGou7G37Hr8ycbJUJDB4muXdSIjuryL5AuUTqZn56zCPX1AHB1rlO
-	XM7qtAF8E2pPt40nWMUESBD47cBUIFQYruhwOoPD+g==
-X-ME-Sender: <xms:MdUwZiT6ejdWZvf8vcFTtRy6WRMu03P-YShExadh0N6o53WDu5v0CA>
-    <xme:MdUwZnz1PjX0WMpwDmUmmdD9GorxHOoSENHh_I30qAzR9_fLLujrvt_fyh7Py5jav
-    U4KqDGkk00ibHYkrg>
-X-ME-Received: <xmr:MdUwZv1FDAoIn_5J6nGMkrK-dsbVbXVEi7vs-FDSGDmWn9Mt8ynmFIlIlBE7fiveSqoKmxxf-PWC-HzIbj4ta4ARtP3dqLRcSAJHUq4vdU1XG2hxX2zG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedgfeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:MdUwZuCGOn5JtzsCqyurOlyV13nSAGBHORPE9uv0_QkPkvRBLCuXiw>
-    <xmx:MdUwZrhx3CbtvRf1ArlRFnuYUNK9uyoWVINP9xfdIboPxm4FOiyi7A>
-    <xmx:MdUwZqpXjoDgttj5ndAgXXzy62KhWGL4o_vJbXoU3fF5xrP8mE08ig>
-    <xmx:MdUwZuigs05qYZ_7Foc_Ucf001ccRR9TxU38W3rBzGEnUSbIYR8hWw>
-    <xmx:MtUwZuv9bmHcbu3QUH4J4-NHJfYOpRtvdVFacNRhyHEnNcIxFbdweFSX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Apr 2024 07:25:37 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 326d118d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Apr 2024 11:25:12 +0000 (UTC)
-Date: Tue, 30 Apr 2024 13:25:32 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 8/8] refs: check refnames as fully qualified when
- resolving
-Message-ID: <ZjDVLAKA0_4pTAS7@tanuki>
-References: <20240429083533.GG233423@coredump.intra.peff.net>
- <ZjB5dPoEoq8D6qzJ@tanuki>
- <20240430104152.GF1279403@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EHENy/Rt"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-233e41de0caso2853605fac.0
+        for <git@vger.kernel.org>; Tue, 30 Apr 2024 05:07:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714478841; x=1715083641; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LFXS8CbG16b+Gc9g+yX6auxtfloQigKg54kyPJJJ9rk=;
+        b=EHENy/RtMkYX8LQ242OlHwPdnJMNUsAlmv5X16hzZbcuLhnBi0nq+kWIrQjYhvz1s9
+         9TawUrZuMTcq9t4eY0AlbvCZBSCHH4GI6a8vgFEZNAumgsIIqwNqYQSyWgRf/33CJDjZ
+         A1+Pi34OB89z3Zirrb1xlI0irMwFqVQs7P57bkYbgdj/PUBZBh/7qJzxTqvrS9XI0HjT
+         43OTZEK83RGPo7j99NUPYcmxOqDF8yfl0ea+G31eZPQO5p1sZZaaIAjYKzJMWqXS5mwm
+         k9E6rB77ny3ysAmpW0x+9enUkldShMBJFDT2Fhf5KUjhYAW1n0ZGo5Ylt2zIe1kQZ8tj
+         wfvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714478841; x=1715083641;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LFXS8CbG16b+Gc9g+yX6auxtfloQigKg54kyPJJJ9rk=;
+        b=pA+kfpwcHUbRBnak9aO9lupx+CPqRd8UnamZuU1HFpcFbk09IxbDpp4HGs8s/RGGEj
+         Xxf3PuEsnJnKuLjTL0cxRtYyfQaWeGDOyJRpWwXn9cWLJm91JbLNmJnGb7OO+iw2+8Bh
+         6UHkkzATk2JrKEmbNWZEYeYu+KSfR8gRPYmUbxK4Wh0kdaUQsLRjxkP1p6G3tClMESPg
+         GSnJzeoNe9ex5krF6KROUH9sH1VPL9FkdsqFZfsX0eZeMT1rl538qf6YpJiH3PQ6Qn3w
+         5BJq5/twqC/uEMzTx6ugTcJ01GWjy0WPsXeEqtDlZrrSDHqzgV9lcbHuGXOgisxuH/2A
+         StWg==
+X-Forwarded-Encrypted: i=1; AJvYcCWnnwLQLhiLFDxHRr134QN9Z3KZ+S/nAsCUSK2W/lrImmJrQid9uNUJ5ZUKP7Sc6MQI3qhtPSOWxGk2zBVl1531UJGO
+X-Gm-Message-State: AOJu0Yw4BGng00OgHOqu8ezwEUNUG0/l8JlHGOXSSv7/xEjPhg6gSejB
+	gBdEaMnpKK2vGaYfS8q03laf/FocjSyy1IF1jPpSKhONVN+p+D0mdZdCNvsyaocQ9G0HLdX7hvc
+	/FTCtz4gEuqVYbG25qkTmUbOHXsJFwQ==
+X-Google-Smtp-Source: AGHT+IE77Tzkz34I50wuOvSnC3JiTKxZKs1HCmhE4Z/k1/j96lwATIsT5IWezEj4XTe6E2iTA7wes3BcgKo+e0W465I=
+X-Received: by 2002:a05:6870:308:b0:233:f233:c3ee with SMTP id
+ m8-20020a056870030800b00233f233c3eemr14856897oaf.50.1714478841133; Tue, 30
+ Apr 2024 05:07:21 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 30 Apr 2024 05:07:19 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20240430102310.GC1279403@coredump.intra.peff.net>
+References: <cover.1714398019.git.ps@pks.im> <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
+ <e57ed591-5006-453e-bc93-6c53fcab2aec@gmail.com> <ZjCd_drNT6kyjNa6@tanuki> <20240430102310.GC1279403@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EqaY56Vvb7I9483H"
-Content-Disposition: inline
-In-Reply-To: <20240430104152.GF1279403@coredump.intra.peff.net>
+Date: Tue, 30 Apr 2024 05:07:19 -0700
+Message-ID: <CAOLa=ZSLx3BQa8zHyDZp5CDuQc4rgSk1LjSX=uQViWXsiv1LZQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] refs: do not label special refs as pseudo refs
+To: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000004d1a5006174f3676"
 
+--0000000000004d1a5006174f3676
+Content-Type: text/plain; charset="UTF-8"
 
---EqaY56Vvb7I9483H
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jeff King <peff@peff.net> writes:
 
-On Tue, Apr 30, 2024 at 06:41:52AM -0400, Jeff King wrote:
-> On Tue, Apr 30, 2024 at 06:54:12AM +0200, Patrick Steinhardt wrote:
->=20
-> > > diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-> > > index 120e1557d7..5fb780cb08 100755
-> > > --- a/t/t1430-bad-ref-name.sh
-> > > +++ b/t/t1430-bad-ref-name.sh
-> > > @@ -400,4 +400,14 @@ test_expect_success 'update-ref refuses non-unde=
-rscore outside of refs/' '
-> > >  	test_grep "refusing to update ref with bad name" err
-> > >  '
-> > > =20
-> > > +test_expect_success REFFILES 'rev-parse refuses non-pseudoref outsid=
-e of refs/' '
-> > > +	git rev-parse HEAD >.git/bad &&
-> > > +	test_must_fail git rev-parse --verify bad
-> > > +'
-> > > +
-> > > +test_expect_success REFFILES 'rev-parse recognizes non-pseudoref via=
- worktree' '
-> > > +	git rev-parse HEAD >.git/bad &&
-> > > +	test_must_fail git rev-parse --verify main-worktree/bad
-> > > +'
-> >=20
-> > Are these really specific to the REFFILES backend? I would expect that
-> > the reftable backend sohuld fail to parse those, too. The fact that we
-> > write into the repository directly during the test setup doesn't change
-> > this, because all this patch is about is that we don't want to parse
-> > random files in the Git repo. And that is something we should want to
-> > enforce for all backends.
->=20
-> So this is where I will show my ignorance of reftables. I assume it
-> still has to implement FETCH_HEAD as a file (since it holds extra data).
-> But does it do the same for other names outside of "refs/"? I am
-> assuming not in the paragraph below.
+> On Tue, Apr 30, 2024 at 09:30:05AM +0200, Patrick Steinhardt wrote:
+>
+>> So the reason why pseudorefs exist is that some refs behave like a ref
+>> sometimes, but not always. And in my book that really only applies to
+>> MERGE_HEAD and FETCH_HEAD, because those contain additional metadata
+>> that makes them not-a-ref. And for those I very much see that they
+>> should not ever be a symref.
+>>
+>> But everyhing else living in the root of the ref hierarchy is not
+>> special in any way, at least not in my opinion. We have never enforced
+>> that those cannot be symrefs, and it makes our terminology needlessly
+>> confusing.
+>>
+>> I think I'm going to reroll this patch series and go down the nuclear
+>> path that I've hinted at in the cover letter:
+>>
+>>   - Pseudo refs can only be either FETCH_HEAD or MERGE_HEAD.
+>>
+>>   - Refs starting with "refs/" are just plain normal refs.
+>>
+>>   - Refs living in the root of the ref hierarchy need to conform to a
+>>     set of strict rules, as Peff is starting to enforce in a separate
+>>     patch series. These are just normal refs, as well, even though we
+>>     may call them "root ref" in our tooling as they live in the root of
+>>     the ref hierarchy.
+>>
+>> I just don't think that the current state makes sense to anybody. It's
+>> majorly confusing -- I've spent the last 8 months working in our refs
+>> code almost exclusively and still forget what's what. How are our users
+>> expected to understand this?
+>
+> Yes, I very much agree with your final paragraph. I have been working on
+> Git for 18 years, and am learning new things about pseudo and special
+> refs in this thread. ;) (Admittedly, I think that distinction is new in
+> the past few months).
+>
+> I think the "everything is a ref, even at the root" is the simplest
+> thing for users. And the only rules they need to know are the syntactic
+> ones: names start with "refs/" or are all-caps and underscore. But I do
+> not see the value in them caring that HEAD can be a symref or that
+> MERGE_HEAD cannot (nor the value in the code making such a distinction).
+>
+> My series does not enforce the "_HEAD" suffix (plus special cases) as a
+> syntactic rule, but we could do that easily on top. That would help
+> protect case-insensitive filesystems from the same shenanigans that my
+> series aims for (e.g., "CONFIG" on such a system will still look at the
+> "config" file).
+>
+> It is unfortunate to me that we even need to call out FETCH_HEAD and
+> MERGE_HEAD. I know they are special within Git, and probably ref
+> backends need to be aware (because they have to be able to carry extra
+> data). But from a user's perspective they resolve in the normal way
+> (unless you are trying to look at them in their special non-ref way).
+> I guess the user must care that they will always be in the filesystem in
+> order to access them in that special way, though.
+>
+>> > Are there any practical implications of the changes in this patch for users
+>> > running commands like "git log FETCH_HEAD" (I can't think of any off the top
+>> > of my head but it would be good to have some reassurance on that point in
+>> > the commit message)
+>>
+>> Not really, no. We have never been doing a good job at enforcing the
+>> difference between pseudo refs or normal refs anyway. Pseudo refs can be
+>> symrefs just fine, and our tooling won't complain. The only exception
+>> where I want us to become stricter is in how we enforce the syntax rules
+>> for root refs (which is handled by Peff in a separate patch series), and
+>> that we start to not treat FETCH_HEAD and MERGE_HEAD as proper refs.
+>> They should still resolve when you ask git-rev-parse(1), but when you
+>> iterate through refs they should not be surfaced as they _aren't_ refs.
+>
+> I actually would not even mind if they are surfaced when iterating with
+> --include-root-refs. But then I am a little skeptical of the purpose of
+> that feature in the first place. After all, the reason code shoves stuff
+> into .git/FOO_HEAD is precisely because we don't want other stuff
+> iterating over them, using them for reachability, and so on. That is why
+> "--all" does not include them, for example.
+>
+> But I did not follow the development of the feature, so maybe I am
+> missing some cool use case.
+>
 
-No, that's why we originally introduced the "special refs" syntax, as
-defined in gitglossary(7). There are only two files that behave like
-refs, but circumvent the ref backend: FETCH_HEAD and MERGE_HEAD. Both of
-these have special syntax and carry additional metadata, and as such
-they cannot be stored generically in a ref backend.
+The use case was to allow us to look at these refs when working with
+the reftable backend. Currently there is no way to do that, with the
+files backend, well you could just read the files. So mostly a debugging
+usecase.
 
-All other root refs are stored via the ref backend.
-
-> I would expect the test to succeed after my patches on any ref backend,
-> since we'd enforce the syntax outside of the backend-specific code. But
-> for a backend which does not look for the root name "foo" directly in
-> .git/, it is not an interesting test. The looked-for name does not
-> exist for it, so even if we did try the lookup, it would fail. We cannot
-> distinguish the two cases from the outcome we see.
->=20
-> So I think dropping REFFILES it would still pass, but we are not really
-> testing anything that interesting for reftables. That said, I would be
-> OK dropping the REFFILES in the name of simplicity and just documenting
-> it in the commit message.
-
-Yeah, I'd prefer to drop it. We should only specify the REFFILES prereq
-as sparingly as possible to ensure that behaviour is as consistent as
-possible across the implementations.
-
-Patrick
-
---EqaY56Vvb7I9483H
+--0000000000004d1a5006174f3676
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 507a89913064d51_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYw1SsACgkQVbJhu7ck
-PpSi6A//YAllMEWTG0X8SboX3dTUIi3GMx38jLY/kMndo02BKNwcfxS5vm9uINVa
-wZb+P8AIpqEgM15wUBOTYws4A9c9CbrvU40zrQdBoTPFO2RA4BI+aelGYOjhBayy
-4489KzRiMAGlnKyFfE8k5ei2UZ9XWTThq46xpOYtDePhieEHi4nsjhULv/h2Q/Lz
-w55sniDbI72JEv4Gvhe2CEkWGZoP+Wj1cyP0g6DsdHQT/FxALQ9opWvMJDRodV2k
-JsrBE2ptdim2hYNn/F5RBG27yJQ5VqP88tm71IbEh9IlnJzbRR4f31odhP6h3w6S
-Iv7x0Tv/cY5Ebk2zYSW7SEUUssP9mBbf6BtDiZaxXKh4Sy0toLnKHO2u/9xrMV9w
-D60Ml9LToJ4dIUDRKf0vynorpH/N6PiwAagmMjjsBgGKjof/MmTw9Djsy7i7EDCh
-F2TyNcoy8ud4hu4T63syrTyyngnS01PXOWJcidQKVUuPtHOyULu1AoAgnOJbcgfR
-yP0JiHAwaub2liqMKfh6kl0VL7w9XYPabXiO0Y8yPVq+0NCXG1JiW5MOXy3sTIZq
-vO40cOo8lZr34yncaCnKVOz7OentIqqHlURUxeUqo8QSVwgcjxFiPA/7JvpqZ77g
-7WD8Ux20ikJOVg7/4cx7+hmDXSGJao1N5wgTxetc//80Seq4+Vw=
-=rWZ6
------END PGP SIGNATURE-----
-
---EqaY56Vvb7I9483H--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZdzN2WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMVl0Qy85S2VuZjgxWG80OG9ueEVzK2VXcjRYNkVnSQo2cjFPYXNhNXRt
+R1hDU0pNcElialhtbVdWemNqUkt4bEpDYk0zSjNRR1lESHNQakNsUzlqSkVFOFdVNWNmaENWCmJF
+bm1POW9PVmdZWWpibk5XaXd1ditIUis4SUwyUm9zTWJKendSRjRUemI0dlhISlhEdmpCeXRRUzJF
+eWlteEcKa0FRM2dhSDJITyttbmZpNWV0SDVHcHB6R3U4N3dpUG5qUkxXdWFLVlZyOTFqeGVKQW5s
+VFV5UXJZVm83WUU0RQpob3Q5TzZaWi9ZUkwyYzlKRTBMQkdHRlR4NVJSaHBmanZqQzdnaUdjbDVz
+WEoraTJJTXYrYVVId0U0UTQza0N5CnlIdysrWlNNR2F3SnkwdTE5Y2h1bjdMY3ZxZzgzcjJkT05t
+NG5kYVF6TXJha2pOTVp5N21JV3RsUnlwWWhtNTcKbW9wMWNXZDFhTDBMYmlKQUZldmJvVFFTTENz
+MTArRHc0Y2pJRDAyUWplcG9GMUdMZ1FyUGkzMHZ2MnA4Z0hjbApCOE0vU1FZSEQxVzJSSmR2TnJZ
+VmFWZkw1Wk1uRVh4bW1XbjNEK2pFc0hkaW5WZmltVFRuUEZsQ1pqWXo1K2E3CllSWVVqRm51WTR5
+QWsyMTFLaVAxVVgrdGpYMWpBd1drcXA1cnhMcz0KPXNFMTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004d1a5006174f3676--
