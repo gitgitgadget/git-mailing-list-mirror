@@ -1,195 +1,194 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B1B18AE4
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 14:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E562D152797
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 14:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714488350; cv=none; b=dKEI/9ZoHc2BKgPb3Ty03eatLpztK/rGXORWyjmMZAeQ7rnbzgeZ4fMicx76tb8uKbcoUNMPC652RKwqZsrlG/xN+Lk1Bf12pWCOeyjUl8Uloavli6K5q0K0M7Z0o8w4K+ZnQtIrAXy8K6He0WaxKS4Jnc6jBUa+i3TUv2XygxM=
+	t=1714488430; cv=none; b=V3zKb9EPxu6QmRTyDO005N0+/1IgmzUUX36rkxfnNT3li0oG+rXqAGsNCeqzZXSCZuNkuhZO2CHB62GI0FCQ3HZ3rjP7lH+GbG00vcmaZy8XVT8QTSL26TMcVqO9WNEriBTk0uYqBgbY0q94dxona+6d9/CBApU8sunrT/O8Gwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714488350; c=relaxed/simple;
-	bh=pptEtJI3eKnAU0GPeQhNJuXCJgQi+VXYeD2xDEw+CL8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qei1qNp3EZhCGv0z5AjGjsASisQXwRdMTFC+u8Dxe0W/Jyb/G2utuQWvs0s1KJvO2aZrcitTAUDowLg/solfJioTyYX+7pZtLx9Sh/MdSijdJAZHcK39K6pKDR5AJHFs3K+QbBhyrBOUKi/pZI39TSu5H9qOLpCI/b+hDaGqIUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AS2cZyY/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eDHRGh3R; arc=none smtp.client-ip=64.147.123.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714488430; c=relaxed/simple;
+	bh=B9JUTJ7hUNh+3atcWaSFYtTDL2jmW0Mn/U5Su2xGtTE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=XL4Hj2CK+7X8UR/USL8YhcAS6XMVv3fGLHCzQul957XnLj79RQOtPbVTHimGmo7BmDDckRNKd86FKbwbkjNUNDO8Hm5B29jIZI5FrEz1XCM9tp7VKpp0F5ytZjjukGyB75T/V12ReWOAm7k1wMz0Ao7E+XoFxWruuMp8dgK3zdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JJUkRsoB; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AS2cZyY/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eDHRGh3R"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id D37AD180012B
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 10:45:47 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 30 Apr 2024 10:45:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714488347; x=1714574747; bh=pptEtJI3eK
-	nAU0GPeQhNJuXCJgQi+VXYeD2xDEw+CL8=; b=AS2cZyY/ZOtJhHTMbrrAjEmlgm
-	T7nBqv7IDLnKIOgsPmBDPviLYvQAvsMoD94asqCEZwRFK6vT8ytZ/1Q5hgQT5W8R
-	CWPnOyh04e/ixalxl/OuT7c+am7TnvaplF27TsO3kdDzc0aP+5UYAaoWR2NR6/VB
-	N/NWIV7XkM3tAWPc5CYS7dJx7ppZFxtfSoydrXErDT0m1aUayLpcOl82zyEF+54S
-	v0skhbjElMzaYZd9CvVXrx5yoxBC9gUEb3/QfMmC/TlceKaCfoNmn1wj+y3qeEuO
-	9THrS728NX+Rz80mZxOv3A+fQv13Hpj4wtT7b+zn16i7Dg2A/0HJ/0qNBD3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714488347; x=1714574747; bh=pptEtJI3eKnAU0GPeQhNJuXCJgQi
-	+VXYeD2xDEw+CL8=; b=eDHRGh3R4ifzShL5oxS771hDc6HkqUXAYGJVeMWCiH/y
-	qGFyaKjG2AqaCwH3Ktk1zKNF+vM1iDU3pRuWlBZvnceJK259tTRHTO8hjB0lpe2t
-	KwKLHfu4WuWf0nylUCkYONac2PIc5Ire5hYYTFXrzxEts9SAFfnmERht52FUxN4Y
-	1BOaZhTf+2jpyU0PCBUpImLE7y4oJlo68UfdmMzrSJpN391xvVbd3egFdTR8Azhp
-	vVSM6Nru7T19U+NTllOK2y/1WboHUJCLdTA6YnhUW4u7bQ1DQJFsc2TYxOMvobfh
-	+TMjG5FXYsdFl5w4FiFAGjw/eJzTmWZSIlcb3XLDwg==
-X-ME-Sender: <xms:GwQxZrSK-w1ntiETNQ_8Cn8pub2npDhYOUXSB6bS_uLiG8Dy4hA2pg>
-    <xme:GwQxZszinTDI4olkUEH8hEOntqCTMXD7WqmGFrSqgx60ghbV8N09Wa-3ses0XfXuy
-    J5JUADwM4ECbSdxrQ>
-X-ME-Received: <xmr:GwQxZg0xbYD2iId4kl7sv_Fmso0WNnA2_BMs0TaCGS6q0sfuGLL4-5SY662XTYIUzxr29Kt0E6kmnRUOvOTM7_I6QkDfpn4Oa_GtXMbOmMUu44gcgZ5Z>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedgjeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepjeejtdeigfegkefgjeehveevjeejveeuvd
-    dtieekffevleeglefhgffgjeejfeefnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:GwQxZrD8bou-9591JTCgzP0V_doGpuvHCt5SJzdh3r_pDxTf7qxGRQ>
-    <xmx:GwQxZkh7y-MzUgoI-8nBWP17m9KQQK5s55vu4-dqtiM83eTISYHmAg>
-    <xmx:GwQxZvrJrGWfsqXWC-C9ygNLuZjLni0S2fdbJBR1n10U750hNnunzw>
-    <xmx:GwQxZvgsHvkHOtEtNckJjXx_sPufqPoKX-xFfVMpej9DkXWC_5WPqA>
-    <xmx:GwQxZgbuBtlxbqzC_TG5SPzZOqcrzg16JulJgMHXIyk0UpWYUNMIV9oJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 30 Apr 2024 10:45:46 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 566f132d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 30 Apr 2024 14:45:23 +0000 (UTC)
-Date: Tue, 30 Apr 2024 16:45:43 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] gitlab-ci: add whitespace error check
-Message-ID: <ZjEEF-5xGl6tjOAG@tanuki>
-References: <20240430003323.6210-1-jltobler@gmail.com>
- <20240430003323.6210-3-jltobler@gmail.com>
- <ZjB77nSMou0ssu-V@tanuki>
- <zphrzgroei4civl7q2ls5cvabyzjbexfq6tjhdy476rmaqu6m5@ik3pedton6ww>
- <ZjD6xNuncrq9fSXZ@tanuki>
- <l55hxxuv5ohtno3gfjgq6mu7cqakfohon4vd7r535ztzadarin@iz4fbuwjeeug>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JJUkRsoB"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-41b79451128so33604665e9.0
+        for <git@vger.kernel.org>; Tue, 30 Apr 2024 07:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714488427; x=1715093227; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Mu1+zCp+ndOiWIVCTenLyAjAvQVhxw07+5s477LKFp4=;
+        b=JJUkRsoB8DCsKaexiumgqYD4Bn1ed/M5VBOpPCp+90dEg/tPGl9xU4bcWmK2c1k01/
+         ruPfJjEOUCYHa/AiZC4+y678D4MHOXGK2fE7pFusFVw4526at+a8rAFAr5UG8J1FNsx5
+         ebY37DHabofbTxUqLUCGhFZYFwv+a0ltqnwlsnnlmDg7EJtUoiaTQWPEeLDSf1diS5ky
+         DVUCNfh9N+hR2BuQG6HBL2qr1bKKNQcOb8cuht1rnp5lqcTR/OZSp+xFo+JsOx055RMh
+         DeTaInOXlyXsFWTsyUTgmKzWO2W1zvi3RQF6PxDg9ApujjRNcrVlFJVsAicGio3CmuhA
+         RrQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714488427; x=1715093227;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mu1+zCp+ndOiWIVCTenLyAjAvQVhxw07+5s477LKFp4=;
+        b=H4x8Udmck1TKL8XA+U43UpB7a29fq1eAsp2/JwA84qdPpAXBfhiLNjBYtJbwmgfyyY
+         Jx1u4SuhoE3Av+KJPqIMByvVQdH7UVA8qd74GaVO2VhunL97+/zF9CKYis4Jgj2vcHIv
+         7k5Pk3WMV3VaqL+XzliKIqcH8plgZrvZn3Tr6ColWR15aFOga818h8g6DzFZuzch8+wM
+         I+AMJpSJyrRpW8fJvl//jfrM6rMwZXCDRJCIrliOVSUP2pp4IhTMw5poqD23QvOVWQ+q
+         nSeKO/bAUvXuPBU2WqAWZUIvznh3h7z4wbVrufovttDwbUHuEyUjw5dhq3cOpMLIORkB
+         FL9g==
+X-Forwarded-Encrypted: i=1; AJvYcCWgXa5ij308piQoi/5/BjVtZ6B9Y5UTPvRYylcuC8Feq9+6hcVyDXZ+QyWDVplJOTNP0qLSsR2cfMB2r9S+dr4w9TWU
+X-Gm-Message-State: AOJu0Yy0ATc8wfzrVf0GuhvhYEOKqRJjdX9D53dPjUyEy0IOHFDVm4ec
+	duJ+v0EDJ1vKEhIWVYwqktd0UNzP7ODpJEWQ20rz9jvErNQfn6UGuxbi5g==
+X-Google-Smtp-Source: AGHT+IFCQ/mW1MsdK8Fha3Lc5VJ1F8Q5dBcoOGsQbanmLhOlGiANYTvB3x1XWcHrg37U2caUnO/sZg==
+X-Received: by 2002:a05:600c:4f83:b0:41b:f359:2b53 with SMTP id n3-20020a05600c4f8300b0041bf3592b53mr7625204wmq.37.1714488426777;
+        Tue, 30 Apr 2024 07:47:06 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8e01:7cd2:1ad2:b4af:7cb4? ([2a0a:ef40:64f:8e01:7cd2:1ad2:b4af:7cb4])
+        by smtp.gmail.com with ESMTPSA id t11-20020a05600c450b00b0041befc2652csm11887109wmo.31.2024.04.30.07.47.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 07:47:06 -0700 (PDT)
+Message-ID: <27fbb12a-f2d2-459c-a27b-519f69242105@gmail.com>
+Date: Tue, 30 Apr 2024 15:47:04 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q0tUzo2UtaxZm3hp"
-Content-Disposition: inline
-In-Reply-To: <l55hxxuv5ohtno3gfjgq6mu7cqakfohon4vd7r535ztzadarin@iz4fbuwjeeug>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 1/2] add-patch: do not show UI messages on stderr
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
+ <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+ <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+ <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+ <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
+ <952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
+ <10905ab3-bb3c-4669-9177-84c8e6759616@gmail.com>
+Content-Language: en-US
+In-Reply-To: <10905ab3-bb3c-4669-9177-84c8e6759616@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Rubén
 
---Q0tUzo2UtaxZm3hp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 29/04/2024 19:37, Rubén Justo wrote:
+> There is no need to show some UI messages on stderr, and yet doing so
+> may produce some undesirable results, such as messages appearing in an
+> unexpected order.
+> 
+> Let's use stdout for all UI messages, and adjusts the tests accordingly.
 
-On Tue, Apr 30, 2024 at 09:41:47AM -0500, Justin Tobler wrote:
-> On 24/04/30 04:05PM, Patrick Steinhardt wrote:
-> > On Tue, Apr 30, 2024 at 09:00:59AM -0500, Justin Tobler wrote:
-> > > On 24/04/30 07:04AM, Patrick Steinhardt wrote:
-> > > > On Mon, Apr 29, 2024 at 07:33:23PM -0500, Justin Tobler wrote:
-> > > > > To check for whitespace errors introduced by a set of changes, th=
-ere is
-> > > > > the `.github/workflows/check-whitespace.yml` GitHub action. This =
-script
-> > > > > executes `git log --check` over a range containing the new commit=
-s and
-> > > > > parses the output to generate a markdown formatted artifact that
-> > > > > summarizes detected errors with GitHub links to the affected comm=
-its and
-> > > > > blobs.
-> > > > >=20
-> > > > > Since this script is rather specific to GitHub actions, a more ge=
-neral
-> > > > > and simple `ci/check-whitespace.sh` is added instead that functio=
-ns the
-> > > > > same, but does not generate the markdown file for the action summ=
-ary.
-> > > > > From this, a new GitLab CI job is added to support the whitespace=
- error
-> > > > > check.
-> > > >=20
-> > > > I still wonder whether we can unify these. Yes, the GitHub thing is
-> > > > quite specific. But ultimately, what it does is to generate a proper
-> > > > summary of where exactly the whitespaces issues are, which is somet=
-hing
-> > > > that your version doesn't do. It's useful though for consumers of a
-> > > > failed CI job to know exactly which commit has the issue.
-> > >=20
-> > > Just to clarify, this new CI job still prints the output of=20
-> > > `git log --check` which details the exact commit and file with line
-> > > number of the whitespace error. The difference is that it does not wr=
-ite
-> > > an additional markdown file with links to the commit and blob.
-> > >=20
-> > > Here is a failed execution of the GitLab whitespace check job:
-> > > https://gitlab.com/gitlab-org/git/-/jobs/6749580210#L1289
-> >=20
-> > Okay, fair enough. I'm still of the opinion that the infra here should
-> > be shared.
-> >=20
-> > > > So can't we pull out the logic into a script, refactor it such that=
- it
-> > > > knows to print both GitHub- and GitLab-style URLs, and then also pr=
-int
-> > > > the summary in GitLab CI?
-> > >=20
-> > > We can do this, but for GitLab CI there probably isn't a point to
-> > > generating a summary file since there is nothing that would pick it up
-> > > and display it. Having links though directly in the job output would =
-be
-> > > nice. I'll give it another go.
-> >=20
-> > Well, we could print the output to the console so that a user can see it
-> > when they open the failed job. The nice formatting may be kind of moot,
-> > but on the other hand it doesn't hurt, either. I guess most people are
-> > used to reading plain markdown-style docs anyway.
->=20
-> I'm thinking we can generalize the summary writing in some manner. When
-> run as a GitHub action, the summary can be markdown formatted and
-> written to `$GITHUB_STEP_SUMMARY` with no output to the console as done
-> today. When run as GitLab CI, the summary can be written directly to
-> console with links. All other runs just output normally to console.
+The test changes in "warn add.interactive.useBultin" show that we still 
+print a warning to stderr, I don't think that particular case is worth 
+worrying about though.
 
-The script can probably be generalized to take a file name as argument.
-For GitHub we'd then pass `$GITHUB_STEP_SUMMARY`, whereas for GitLab we
-pass in a temporary filename that we than simply cat(1) to the console.
-That'd allow us to move the CI-specific bits into the respective CIs
-whereas the script itself remains generic.
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
+> ---
+>   add-patch.c                | 13 ++++++-------
+>   t/t3701-add-interactive.sh | 12 ++++++------
+>   2 files changed, 12 insertions(+), 13 deletions(-)
+> 
+> diff --git a/add-patch.c b/add-patch.c
+> index 0997d4af73..fc0eed4fd4 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -293,10 +293,9 @@ static void err(struct add_p_state *s, const char *fmt, ...)
+>   	va_list args;
+>   
+>   	va_start(args, fmt);
+> -	fputs(s->s.error_color, stderr);
+> -	vfprintf(stderr, fmt, args);
+> -	fputs(s->s.reset_color, stderr);
+> -	fputc('\n', stderr);
+> +	fputs(s->s.error_color, stdout);
+> +	vprintf(fmt, args);
+> +	puts(s->s.reset_color);
+>   	va_end(args);
+>   }
 
-Patrick
+This looks like a good change
 
---Q0tUzo2UtaxZm3hp
-Content-Type: application/pgp-signature; name="signature.asc"
+> @@ -1326,7 +1325,7 @@ static int apply_for_checkout(struct add_p_state *s, struct strbuf *diff,
+>   		err(s, _("Nothing was applied.\n"));
+>   	} else
+>   		/* As a last resort, show the diff to the user */
+> -		fwrite(diff->buf, diff->len, 1, stderr);
+> +		fwrite(diff->buf, diff->len, 1, stdout);
 
------BEGIN PGP SIGNATURE-----
+This seems reasonable as we'd print the "Nothing was applied" error 
+message above to stdout now. Anything "git apply" writes to stderr 
+should be flushed when it exits before we print these messages.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYxBBYACgkQVbJhu7ck
-PpSbqw//ZErBD3M0Hy/gVjqsPrLlIVOu7jOBpLz6JaouIgcWjjlIKUFZwaJfQU8Y
-2PivbgaIMYAeFzVfvBS8kMw9Ar40w/pbymmRWwH6FRxlDlKMZZ0hfm3nJ3mm0eFE
-e8zyp67UjXutnW0m8yzkf4Hf1P3Or1GqLf4uTMARKSEYnFXvqfbfeVl2SmSM/EyP
-eYO+iNNs1HR+4yfmtTkzZKrvOkZBRlGn8JbVIlgqihMwE2EhSkenb3pMKLphMJNH
-v67fRsbOYMm43wUazu2u4/tva9gXiqXhoUvtt44ga8kGRDqI+Bx6iFn2W1UQikMK
-lHBrHq5/qOlu2StQ3LJu42Z8KsCHt4MMYmik/iMvvCZ8Pzv2km5lJB9U0gwKgku3
-yqX+cT4J2n6f0FJYJ1kyK9zduFrucm8bKBqsVaGhTc1wKjNj3TCfF2aTA5KFRAkg
-1/09TrKuyzLa9EjhkRSLZU9WRwUDL0PV0qDYW7sC8BHNVGpAsphWk1qvZfLBG6SL
-lvKHeEjREqd35XghmeFW5vYVJOZhkJ3uPNAxqykLJJRN6rjr8krQul3pVGVSTAPk
-GBiVLdhWrxbCeowxwCBcYtGvb1WkLxXnuIZwqFejPpvA0SHMIY00yjHpSnD4/ibk
-zGG//wCDqSbnSMVQ2rIwGni8jnrlTfR4Rhd4OhO7rq6tyiuLosY=
-=dCAr
------END PGP SIGNATURE-----
+>   
+>   	return 0;
+>   }
+> @@ -1778,9 +1777,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+>   			break;
+>   
+>   	if (s.file_diff_nr == 0)
+> -		fprintf(stderr, _("No changes.\n"));
+> +		err(&s, _("No changes."));
+>   	else if (binary_count == s.file_diff_nr)
+> -		fprintf(stderr, _("Only binary files changed.\n"));
+> +		err(&s, _("Only binary files changed."));
 
---Q0tUzo2UtaxZm3hp--
+These two mean we'll now color these messages which we didn't do before. 
+I think if we hit this code we don't print anything else (apart from the 
+warning about add.interactive.useBuiltin being removed) so it probably 
+does not matter whether we use stdout or stderr here and I don't have a 
+strong opinion either way.
+
+Best Wishes
+
+Phillip
+
+>   	add_p_state_clear(&s);
+>   	return 0;
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 04d8333373..c5531520cb 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -45,13 +45,13 @@ test_expect_success 'warn about add.interactive.useBuiltin' '
+>   	cat >expect <<-\EOF &&
+>   	warning: the add.interactive.useBuiltin setting has been removed!
+>   	See its entry in '\''git help config'\'' for details.
+> -	No changes.
+>   	EOF
+> +	echo "No changes." >expect.out &&
+>   
+>   	for v in = =true =false
+>   	do
+>   		git -c "add.interactive.useBuiltin$v" add -p >out 2>actual &&
+> -		test_must_be_empty out &&
+> +		test_cmp expect.out out &&
+>   		test_cmp expect actual || return 1
+>   	done
+>   '
+> @@ -335,13 +335,13 @@ test_expect_success 'different prompts for mode change/deleted' '
+>   
+>   test_expect_success 'correct message when there is nothing to do' '
+>   	git reset --hard &&
+> -	git add -p 2>err &&
+> -	test_grep "No changes" err &&
+> +	git add -p >out &&
+> +	test_grep "No changes" out &&
+>   	printf "\\0123" >binary &&
+>   	git add binary &&
+>   	printf "\\0abc" >binary &&
+> -	git add -p 2>err &&
+> -	test_grep "Only binary files changed" err
+> +	git add -p >out &&
+> +	test_grep "Only binary files changed" out
+>   '
+>   
+>   test_expect_success 'setup again' '
