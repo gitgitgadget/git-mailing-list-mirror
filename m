@@ -1,81 +1,81 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C180140384
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 12:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A0B14037E
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 12:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714480013; cv=none; b=AL/ofjxDmMuy7zakyjLQMiVhIvfrMD3e0kBCEuH7Mewa+qPN8U7xZFTBX5sPW21SovdSWEjqmM9L4Pl5iDlzV5th7ZnlJzcivd7vqwVcChiVWpnc1Sr62Y+6svNPZea/3EOK4mrSYprPQukV1vZt1emtYNnNTGLCKThqH/CnbwQ=
+	t=1714480018; cv=none; b=qik9gVqeQoh1Oken4ENUGqnU1GrH+/aeiKBisZa01GI2H9zEAJfmCnh0sU3RHXLg8d2EIHiemUv1q4yk/kCE2p+sAiWk5eSj3eRRMpI0g88LME6s6j4IVwx4l83qm/v15IBo7bmd9T2rJjOrUO54fRPhxaKCUuyiGZ9VtjkFosU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714480013; c=relaxed/simple;
-	bh=DRCpjFx+ZmjyfIL4M+xhmyTgsk7mRa5LIKQ/xtkFBBU=;
+	s=arc-20240116; t=1714480018; c=relaxed/simple;
+	bh=RTUdWAgX8wMZunTj7yaB0xjF2ZQrt/EBTNY0ZdpGEAU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U6OqZ/MrhQo+bvzfZA3jxX7dJ76bJpiFqiBIfDKV/dqKSgpbVf5g4KWkWTJun2TafYS8FFfNP+oWYCvVHk062lNs91S8V8TJLqFu24gSrhpi72Nyrlj6+bycUZk9fW6KdDtwJlcCNfAwpEjIgufEC4gXZV5gpQEWeX++2e9l+NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YdAWfup6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zs9Sf+2Z; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=rPmqUuL/BdWhQDYJaC2hVVE3dtEttDW3CntjwyqgzHoNALWZDBDM1w4SGB5YeX9TUR9EcVjzH01GztOElKQRhBhV8q7GXj7iq9OLx6PmahFss0sMI2DjZXLobVOshAENv/tfm3Faz1OaCkn02kRCkjc8n6odVu+6Cl/+KCaclgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=No8rxVku; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNl1XR+c; arc=none smtp.client-ip=64.147.123.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YdAWfup6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zs9Sf+2Z"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 4B75C1800155;
-	Tue, 30 Apr 2024 08:26:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="No8rxVku";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNl1XR+c"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id 22F2F1C000EF;
+	Tue, 30 Apr 2024 08:26:56 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 30 Apr 2024 08:26:52 -0400
+  by compute1.internal (MEProxy); Tue, 30 Apr 2024 08:26:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714480010; x=1714566410; bh=u8QLNqzxeH
-	Ce465zBp4kSPUEIZ7TXWAC/d5eoExA0lI=; b=YdAWfup6pMA/6YLl9rdKdFjZy2
-	2JgFYCL+FMpP+m+QBETTy3dZRecjdNM9/yjN63O674VeniecjNYgxpnRv027WWc6
-	iDbm/bBj150ivneq0BD2eQ4AiBT2UpzndtEB0XgmUt5tCukQ5nm0QAnC43fbw62/
-	ERUdqQeCcyU4mMM8H2zG7o/W0a3CEvmtHyOHgDhcx/mhaPLrnRa7muqNK3c3UnwK
-	UCjzhBGyCKIG6ReP2pmeXoSno7GVK2tCAbBpnTdFl53/TpMGcpXVtxKR0LDiifqM
-	NjYxwpaLPTRVpk5nXAiGKe8P6c/+K0Suhb0rqeBLMcQQaYu477He7U1sG+nw==
+	:subject:to:to; s=fm3; t=1714480015; x=1714566415; bh=QY47j0rS+3
+	a2TzzSkTXgGW/a4ow0u6ZQKvc0kQibxpQ=; b=No8rxVkuhB2atj2abX5jgfrSSh
+	zgepRC5J5gnmqCQYgFMhjAEL8JECy/YwXEDjVpyA9l7b+ZeXJn1dngc0X0draDD5
+	jXHX0nYoPaq3t+vcMXBQLhmb2WIxuvfviUCxoPc3B0raoHca35IxOKr8Cc91dgM4
+	HFRed2VcXdsMksgpfnLBFKZp+Gk3ozCr2FZU/1y5axF7Df/LYzm8t9LK91XxXKzE
+	NAcx6+H/ps9F257f19WtWM8QGFOpe4Bq0QyztccOUvBLG8cwJbwSxaxe7kKyp6i9
+	Wf3iG3zQx2KxaHz5koAeH5nL4KiKBEKbiJcSiSKdyBJmrawZkDsXlGk9A7gw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714480010; x=1714566410; bh=u8QLNqzxeHCe465zBp4kSPUEIZ7T
-	XWAC/d5eoExA0lI=; b=Zs9Sf+2ZObcAm2SJkkq3rvbOrInkSHDW2a2RJRDvKH+O
-	pM5yTX/UpcgYYsc31nqCpqxTrfU4NSKGK1Y+6LtxGfhs8b9I+X3OTVTrZ6NeccNj
-	GD5TQBzLQyHbvDhMBWPBRiUdkOPN6m5Ks60QWVLqUN/T6QqvYKVNXwdoYqQNZvlS
-	5Qp9A8e1pzcqZ/TNNDTScRg+L0GQfLW1e/tPpDGilGQdATbjlH8t2eYMFIjP1x9U
-	wf4jc8a5gxfdlIkyOfvP3+7cIJu4kULZQ7vlfsXYdA+9k6hrs+2JTg2G+6hGoWj9
-	K/NcktexXfALL6oBYW3TunCWnPRi+dQnCqtWEhDPVg==
-X-ME-Sender: <xms:iuMwZu6tfq0_GFYyq0rW2T45_EQGm7iagmc_ZughwMYZF9-yButYTA>
-    <xme:iuMwZn7-kbLsm6wuF9WyXUP3TZi9EFfKt-itXBMd17FvfTykAEcHI7tv-G83jS5IJ
-    GXfUPsZezLRMxzGMg>
-X-ME-Received: <xmr:iuMwZtfnVgoCQKYsT0GiuDtLUXX_9KHVmdR4gS3EWYKfeo1qtqjhodvqzbeqyFNOqVq2FaQtw6DwmXcuz2zlDbk_PDG5vV3_NiDRrlZnPqGpZ85p3Urz>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedgheduucetufdoteggodetrfdotf
+	fm3; t=1714480015; x=1714566415; bh=QY47j0rS+3a2TzzSkTXgGW/a4ow0
+	u6ZQKvc0kQibxpQ=; b=TNl1XR+cBJMxyh20G7iRhnYuWR2y5jf/8j/iMUkBVWu8
+	Qr/WxFM9HTtYv7dQSwkvUuDRxBhgoxNHKFqvRGt+mORo0wBX6kcsyJd3PtqmGuxz
+	Jf12utF9trxStKGP8nk9YED7mWp0s951i4C3jSj5XkpvOm2P/fEXfNtTEJVCp99/
+	GTMssguQgF1mAnSyf+Uepxow0GKoX15D3JVgPK1Ldl9a27bHmI+iYBD+aOLgI+ds
+	I1BL5hIP8ZUhPut2HbSjlo6LMBc0a3sr+Xz33+nIadIlPdupXuGVw2BnnpdMeo+X
+	bghUTKVxqbTIeQP8icx4wxNCAuYrvymorqZLOiHz9A==
+X-ME-Sender: <xms:j-MwZo2w3MkxGoWf6IoEF_CXMCVIQPVDccKWBTeHJlr63CFGY908Nw>
+    <xme:j-MwZjH2h4nTMCNgdYVG8QXsX5wTvk486fhd0OU6HUwY14vvV7HJ3bWtMSpzIyoJo
+    YtpvWnqFi-RG5xwkw>
+X-ME-Received: <xmr:j-MwZg4xoCCIr5z0M5QP_MzgSUz9XyFc3Mf1njANajs_QV_4jGVTz5HuYTUGC-9b3o-yY9RaEpQhcjnlJU4EzcwrH7LR23VO8bctf8GG0TS9Ew5vH7_D>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:iuMwZrJMY-zWLjhwhPXmSd9CFbBkZLoJj8oAFmDazkigYGmwo_WQIA>
-    <xmx:iuMwZiJYiymiPbBgFb3iwnrDsO5DBRxm5Uujc0Zm5OcezDb4Up8TvA>
-    <xmx:iuMwZsyuwR2Cg5jFDFV8L19a-ZP16orrAbVIKtEzk6h8iy44Y3Wi2Q>
-    <xmx:iuMwZmJGMC1j-gkEbKBKqgfdK4KA54FCUeypZ_FoN6yCH9jhHtWqeA>
-    <xmx:iuMwZq9qy8WXU5KMhevJxI0j-KwX1sdQQLHxSQE5Up8jDd-i8V6sBykE>
+X-ME-Proxy: <xmx:j-MwZh3jEnIJ1GaFDhrjf5wyfjpS4GSffZe0vsNcVViym_IiuanOmw>
+    <xmx:j-MwZrGFFkv5BfNw7LvplhEA8yyw-1gS9U2fanL3T7e8o3G_NBvxvA>
+    <xmx:j-MwZq-OxnJ-XWcS68i-IPCbXf85cQ4WkyPD2PY8VMPKH3lv3k6sRw>
+    <xmx:j-MwZgmMrQC1lDeO_RWf720GsyBx7lUJVslM_xTvepcvWfDkA-izxQ>
+    <xmx:j-MwZg5Tu4WDrC159cHUJTbEUCPT7sh4Wr9eyGrPfdCtJarCrbL726BF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Apr 2024 08:26:49 -0400 (EDT)
+ 30 Apr 2024 08:26:54 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 15839947 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Apr 2024 12:26:27 +0000 (UTC)
-Date: Tue, 30 Apr 2024 14:26:47 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 09210981 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Apr 2024 12:26:32 +0000 (UTC)
+Date: Tue, 30 Apr 2024 14:26:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 06/10] refs: classify HEAD as a root ref
-Message-ID: <44f72a7baf22c833549bdfbbf3c960b4104dcb1b.1714479928.git.ps@pks.im>
+Subject: [PATCH v2 07/10] refs: root refs can be symbolic refs
+Message-ID: <e90b2f8aa98493e9cd3f2c04cb58318780f9f6e5.1714479928.git.ps@pks.im>
 References: <cover.1714398019.git.ps@pks.im>
  <cover.1714479928.git.ps@pks.im>
 Precedence: bulk
@@ -85,132 +85,185 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TLgCiVeWq32c8V8P"
+	protocol="application/pgp-signature"; boundary="cYe2J1MwjSvcfgwD"
 Content-Disposition: inline
 In-Reply-To: <cover.1714479928.git.ps@pks.im>
 
 
---TLgCiVeWq32c8V8P
+--cYe2J1MwjSvcfgwD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Root refs are those refs that live in the root of the ref hierarchy.
-Our old and venerable "HEAD" reference falls into this category, but we
-don't yet classify it as such in `is_root_ref()`.
+Before this patch series, root refs except for "HEAD" and our special
+refs were classified as pseudorefs. Furthermore, our terminology
+clarified that pseudorefs must not be symbolic refs. This restriction
+is enforced in `is_root_ref()`, which explicitly checks that a supposed
+root ref resolves to an object ID without recursing.
 
-Adapt the function to also treat "HEAD" as a root ref. This change is
-safe to do for all current callers:
+This has been extremely confusing right from the start because (in old
+terminology) a ref name may sometimes be a pseudoref and sometimes not
+depending on whether it is a symbolic or regular ref. This behaviour
+does not seem reasonable at all and I very much doubt that it results in
+anything sane.
 
-- `ref_kind_from_refname()` already handles "HEAD" explicitly before
-  calling `is_root_ref()`.
+Furthermore, the behaviour is different to `is_headref()`, which only
+checks for the ref to exist. While that is in line with our glossary,
+this inconsistency only adds to the confusion.
 
-- The "files" and "reftable" backends explicitly called both
-  `is_root_ref()` and `is_headref()`.
+Last but not least, the current behaviour can actually lead to a
+segfault when calling `is_root_ref()` with a reference that either does
+not exist or that is a symbolic ref because we never intialized `oid`.
 
-This change should thus essentially be a no-op.
+Let's loosen the restrictions in accordance to the new definition of
+root refs, which are simply plain refs that may as well be a symbolic
+ref. Consequently, we can just check for the ref to exist instead of
+requiring it to be a regular ref.
+
+Add a test that verifies that this does not change user-visible
+behaviour. Namely, we still don't want to show broken refs to the user
+by default in git-for-each-ref(1). What this does allow though is for
+internal callers to surface dangling root refs when they pass in the
+`DO_FOR_EACH_INCLUDE_BROKEN` flag.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                  | 2 ++
- refs.h                  | 6 +++++-
- refs/files-backend.c    | 3 +--
- refs/reftable-backend.c | 3 +--
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ refs.c                         | 50 ++++++++++++++++++++++++----------
+ t/t6302-for-each-ref-filter.sh | 17 ++++++++++++
+ 2 files changed, 53 insertions(+), 14 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 6266f77474..5b89e83ad7 100644
+index 5b89e83ad7..ca9844bc3e 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -874,6 +874,8 @@ int is_root_ref(struct ref_store *refs, const char *ref=
-name)
+@@ -869,7 +869,10 @@ int is_root_ref(struct ref_store *refs, const char *re=
+fname)
+ 		"NOTES_MERGE_REF",
+ 		"MERGE_AUTOSTASH",
+ 	};
+-	struct object_id oid;
++	struct strbuf referent =3D STRBUF_INIT;
++	struct object_id oid =3D { 0 };
++	int failure_errno, ret =3D 0;
++	unsigned int flags;
+ 	size_t i;
 =20
  	if (!is_root_ref_syntax(refname))
- 		return 0;
-+	if (is_headref(refs, refname))
-+		return 1;
+@@ -877,30 +880,49 @@ int is_root_ref(struct ref_store *refs, const char *r=
+efname)
+ 	if (is_headref(refs, refname))
+ 		return 1;
 =20
++	/*
++	 * Note that we cannot use `refs_ref_exists()` here because that also
++	 * checks whether its target ref exists in case refname is a symbolic
++	 * ref.
++	 */
  	if (ends_with(refname, "_HEAD")) {
- 		refs_resolve_ref_unsafe(refs, refname,
-diff --git a/refs.h b/refs.h
-index d0374c3275..4ac454b0c3 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1059,7 +1059,8 @@ void update_ref_namespace(enum ref_namespace namespac=
-e, char *ref);
-  *
-  *   - Their name must be all-uppercase or underscores ("_").
-  *
-- *   - Their name must end with "_HEAD".
-+ *   - Their name must end with "_HEAD". As a special rule, "HEAD" is a ro=
-ot
-+ *     ref, as well.
-  *
-  *   - Their name may not contain a slash.
-  *
-@@ -1078,6 +1079,9 @@ void update_ref_namespace(enum ref_namespace namespac=
-e, char *ref);
-  */
- int is_root_ref(struct ref_store *refs, const char *refname);
+-		refs_resolve_ref_unsafe(refs, refname,
+-					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+-					&oid, NULL);
+-		return !is_null_oid(&oid);
++		ret =3D !refs_read_raw_ref(refs, refname, &oid, &referent,
++					 &flags, &failure_errno);
++		goto done;
+ 	}
 =20
-+/*
-+ * Check whether the reference is "HEAD" and whether it exists.
-+ */
- int is_headref(struct ref_store *refs, const char *refname);
-=20
- #endif /* REFS_H */
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0fcb601444..ea927c516d 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -351,8 +351,7 @@ static void add_pseudoref_and_head_entries(struct ref_s=
-tore *ref_store,
- 		strbuf_addstr(&refname, de->d_name);
-=20
- 		dtype =3D get_dtype(de, &path, 1);
--		if (dtype =3D=3D DT_REG && (is_root_ref(ref_store, de->d_name) ||
--								is_headref(ref_store, de->d_name)))
-+		if (dtype =3D=3D DT_REG && is_root_ref(ref_store, de->d_name))
- 			loose_fill_ref_dir_regular_file(refs, refname.buf, dir);
-=20
- 		strbuf_setlen(&refname, dirnamelen);
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 5a5e64fe69..41555fcf64 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -356,8 +356,7 @@ static int reftable_ref_iterator_advance(struct ref_ite=
-rator *ref_iterator)
- 		 */
- 		if (!starts_with(iter->ref.refname, "refs/") &&
- 		    !(iter->flags & DO_FOR_EACH_INCLUDE_ROOT_REFS &&
--		     (is_root_ref(&iter->refs->base, iter->ref.refname) ||
--		      is_headref(&iter->refs->base, iter->ref.refname)))) {
-+		      is_root_ref(&iter->refs->base, iter->ref.refname))) {
- 			continue;
+-	for (i =3D 0; i < ARRAY_SIZE(irregular_root_refs); i++)
++	for (i =3D 0; i < ARRAY_SIZE(irregular_root_refs); i++) {
+ 		if (!strcmp(refname, irregular_root_refs[i])) {
+-			refs_resolve_ref_unsafe(refs, refname,
+-						RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+-						&oid, NULL);
+-			return !is_null_oid(&oid);
++			ret =3D !refs_read_raw_ref(refs, refname, &oid, &referent,
++						 &flags, &failure_errno);
++			goto done;
  		}
++	}
 =20
+-	return 0;
++done:
++	strbuf_release(&referent);
++	return ret;
+ }
+=20
+ int is_headref(struct ref_store *refs, const char *refname)
+ {
+-	if (!strcmp(refname, "HEAD"))
+-		return refs_ref_exists(refs, refname);
++	struct strbuf referent =3D STRBUF_INIT;
++	struct object_id oid =3D { 0 };
++	int failure_errno, ret =3D 0;
++	unsigned int flags;
+=20
+-	return 0;
++	/*
++	 * Note that we cannot use `refs_ref_exists()` here because that also
++	 * checks whether its target ref exists in case refname is a symbolic
++	 * ref.
++	 */
++	if (!strcmp(refname, "HEAD")) {
++		ret =3D !refs_read_raw_ref(refs, refname, &oid, &referent,
++					 &flags, &failure_errno);
++	}
++
++	strbuf_release(&referent);
++	return ret;
+ }
+=20
+ static int is_current_worktree_ref(const char *ref) {
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 948f1bb5f4..92ed8957c8 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -62,6 +62,23 @@ test_expect_success '--include-root-refs with other patt=
+erns' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '--include-root-refs omits dangling symrefs' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		git symbolic-ref DANGLING_HEAD refs/heads/missing &&
++		cat >expect <<-EOF &&
++		HEAD
++		$(git symbolic-ref HEAD)
++		refs/tags/initial
++		EOF
++		git for-each-ref --format=3D"%(refname)" --include-root-refs >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'filtering with --points-at' '
+ 	cat >expect <<-\EOF &&
+ 	refs/heads/main
 --=20
 2.45.0
 
 
---TLgCiVeWq32c8V8P
+--cYe2J1MwjSvcfgwD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYw44YACgkQVbJhu7ck
-PpRJYA//e0zJB9Devd4QI9rna/kDkYZKyGgiyVO1tWAMXSVHNdsaPmQ3Au5f/kIT
-LbOxoEUKbfCro7SEemSLzIsKXI0aZ6PXu3FOr13MU+PdUu5thdMOPdnb8ScvLGZi
-wyHgqJ7j4f4fEalUGCpCvtApksZJ/2JExQasAZmN6C7HME4Wrtfm4Bos7xubQfcN
-/Z2civatcQTvj2A4iSwXzg2R5PKHAoPa743e2/P86FW6zQjCyfVCAIB4bDwXt3nP
-XYrMhX7jPsZTUB7j9vf8EFGSEs3Te02QFmSh7qr/60zQ1KYwvQELaMgGjMjZ5LHX
-mvEpReqP+0Vj/KeFJ8vTwiT3gn9X+0mcjAgH+tZki3PFOej4ycV+HjgdKbxuckoB
-9R5/3q4KSbirlfpclTPWXSnKfxRM2jzLyP4dV0BXB/SiswOg2K+oCjiTWANMGzUU
-1tj1F4eC880XirteM0G5XuAoRfGiTOc8PhV65rCHL+kWdvzEmCo3ooZDV3KdfUND
-NxvY/r553c3tztGzIEuCuyTk9L9oF+MuuFCE1FQSFOp1QctFsPGTprZ1NZg9rsnd
-T1L0PXpN+/PZcDAIXCxdkdEJbE9NnV5wbfxehxKf13o4sHUxdQIWBAg1AVXUkx0u
-N3GdYoQFJQ2/wntbogfvsemydH0subnzTx+d4kzr6r5xN/mP8PY=
-=zr7v
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYw44sACgkQVbJhu7ck
+PpRnbw/8DTsDZOfqpiydD59Cp/pB2GWtIdwhJJe6bWAzTDAeTVRot0CSFNtSi90Y
+R5kT8AYkjNk8jKLApHlkpNCk4dXzE/Z3/IaShWL7FpqqCaZx0tndXOZtyRpP5lsO
+CmGKe/HvJ7pb3nABQq/ScTsmZs5ity3XgV0/R3UNXi62Q33EAbu6fuPCGLU/9ZPy
+8f2VWokpDPXr9Qdsw49rDmJwN6zinrT03Ij8KK2FxzS2WqtH6XnwvDZaYbwOVqa8
+oNb9oU4AEQDqm37tnv5xbuLjvQ0JqUe4rHeXt0EodUx+oKtc+Xhxn51Sum2IKniK
+CuoG6i5ObfEQ0B5jqwR8Q42AUvFVJ2qfYp4KNoBicQ3b6oOtrS7nEGtqgoW1oHFi
+1LB7Rh1ICr2a/tIMPPUpovKqnFiJ3zsXYgO+n36n456s5P8bt54DWj7LDkdlu61p
+0stWtibARalGb9+EvK1qSerfC3sZcw3OWTT17+2xQUp4M18Y4HjLKwJ6XVcC6R3K
+bbVqTQCD1cegZ0bDOxDqQkTuMC8UFWrvKDdPyimpOPE3Ma5y/9lheXpuTPNslQFX
+CGrfqfCp0sAVjIPD6KAXojDAZy7SqTUbmwps91vmD2ECVKz0vWXMa6Qawg13YaGA
+vM5h16Ode39o7p0b2FO7bgx60kwUEuycNsPyRXyxVtAalARL6pw=
+=NdNJ
 -----END PGP SIGNATURE-----
 
---TLgCiVeWq32c8V8P--
+--cYe2J1MwjSvcfgwD--
