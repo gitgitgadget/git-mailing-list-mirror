@@ -1,391 +1,130 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7C677110
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 14:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091AC1527AF
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 14:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714488122; cv=none; b=krHbRvdWsIflJAmmpDXMeGYMpNMdrmCM/VLa38CGgMvDwtmzrCTyeYgJxJjELDeSMtq7WWfiHLAsnWD4FCKvwgSwoangegyNODmzDitMD7htA7aA0stNdatY5abVO9tmJUsscYFVHv47GIn/PgWb6qX0w8V8dKOsm+f3SOTdW8I=
+	t=1714488185; cv=none; b=h4Gmg78nl/SVVvREhIHejx/9zQtQYlgI3TF8rjCwACdDdedeL2WkT/9aujPm6u3PiihJjXn649HeGXt93tnGGUlVIEX7wXx5M8lHvGMfY2ljEroZeDPEnx8c7OEhuZ0ifML5lWC/YO9Dl99opNdJwORsfJBCFisHMwbfHHz0EwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714488122; c=relaxed/simple;
-	bh=KUlZov0sUgk2GU+foULO5ZatwHn1pWb4z/rFcL7NVCg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lX8huK/xnXLolg4iQFsJ7fVyiz4pbl9wVUmXTofD5cild+7iZlWAvyqG9X+NbwhIwFOyOBJxgzVaV+1f9m8yc5E9jJGkwTb6WXdaPoPm8H/4hRth+6da2Fy9+JZDTuHrWriSExhqQlJHHrbfCyZI3+gr/HmOj2omf00hGB7149M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nO3QOUTL; arc=none smtp.client-ip=209.85.221.52
+	s=arc-20240116; t=1714488185; c=relaxed/simple;
+	bh=9J5Khqc3qoNnzy5UNadQo1+EWzYpyDQ7cp3e33edfUU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JQSFkp5LNt8b1mkLP9fHUmj6QXn/xeWuGE7HIdjrmVo1/3CMR1iWtjrarfpuhKTipZIZbjnqthYx7uhiKxHfRT7RWrstX9Sqioo6J2/pq3GQOjFK9AIO2QVHjMYnFNLBYy1rPqbATKAEAz5M54GTf0EO0cfbHDmr/63VHE3KzPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YjISSPu0; arc=none smtp.client-ip=209.85.161.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nO3QOUTL"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-349545c3eb8so3859610f8f.2
-        for <git@vger.kernel.org>; Tue, 30 Apr 2024 07:42:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YjISSPu0"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5afbd1c3ffeso804392eaf.2
+        for <git@vger.kernel.org>; Tue, 30 Apr 2024 07:43:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714488118; x=1715092918; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CNZHBsFjgQxmtlpNyejAQjBqZgZt257D9bsTLVY8mGY=;
-        b=nO3QOUTL205unck94is4iMNco9Cry+hPSe8MC83OhOqoAcfLWZPqDAx0bjS6ueNxlA
-         SltRClLO1UbSsWqe+LVnK3xKHrPtDNbS9thZhX9BWyCELLVRuJ4MAo0vldwjm8jf/yQ+
-         MdMUuM5dMRKcSvIG8sVo6v9rXhliMjXZsN5anjMUFTkkyNapqIi2+AZCsFQMgMI++R+2
-         pldTXrbh0L2dXvI5XN6yvCxfIvIeCgViLMCJ4rx8sArkt+c6Z+go64dmwqOzUDIe0NdH
-         LnF6nvtu0txGy7/Pg/YBZd4JWqcXxdg1hQT7JFk5uJ3KjSCPpQI4oIL/eegw6IyGcloz
-         BPdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714488118; x=1715092918;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20230601; t=1714488183; x=1715092983; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CNZHBsFjgQxmtlpNyejAQjBqZgZt257D9bsTLVY8mGY=;
-        b=AykYNLb9ue5JaOheb9xj8qojZLqO9MI3uT0oblFqweqcxOWPVlanIGHYfry0GXUt4Z
-         ssSJHL9LUc+1m4F778BPaBDRDFHFRyOMxyQtVlWtHrKboGOyF3ueqGiZkrsYRUdq3e4P
-         p5gSCJqb6sQGs+tFGEWjGSGMtaMsduJBFkIpvaZur4veF54Z8l2cZWh0Aii1+k37wruR
-         6oqGFGD6s4lGIKyjYGLgHvVqdody7JdZaeLNPWeX7IpSv25dZBTjh0DIRmmBxuD61iL6
-         m8C/n5G1Q0q5LmCnA6vH1ncdVI1fT0GZMlFU17ffM+/IJopN3+0+wvaHmFVA3ZduEiPO
-         CNsQ==
-X-Gm-Message-State: AOJu0Yw+79oK2Ifw6oSQm5eaeeZeW0CfRu5ec9LGDmUwvHsnV1+0O1Kr
-	jcNZOCeawIYVn+SsqnJhXDcETTsjZsPQufq6cMoIG8u5yous+uJw9bgieA==
-X-Google-Smtp-Source: AGHT+IG6YKo6b68BneUCKhR1KmTizSYDNmPE4d5HcKt/pVou2zVWawRQfNJkWIHnZ9HMOLPXrLN4yw==
-X-Received: by 2002:a5d:6144:0:b0:34d:939c:d029 with SMTP id y4-20020a5d6144000000b0034d939cd029mr1331470wrt.47.1714488118563;
-        Tue, 30 Apr 2024 07:41:58 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e37-20020a5d5965000000b0034ca55b8e61sm8821155wri.20.2024.04.30.07.41.57
+        bh=p0+SX4By2Hk0TGeBZ/Nj0Jjf+y4N4/zi6qtmt8eTWHM=;
+        b=YjISSPu0b6BdCiTqm2OF+UHcbEsmt74jv4MHiCfyATH1VS9lXtcoDUgb620/ffLM/n
+         Htlban/h3ZC7tul7aKDhUJsmpKTGwK2WIxfqFLH5T2s8bKocU/ShkK58jUPwAIA7zbaf
+         CYjPE/ys2ATQEKNRiSNO74l/7HZigFLZ/eu9UX38IPF8pIzAqAPA6EvuzLS8aq/mFu0T
+         aSg4rlPUs+HturCEhxaB7B3k8zTeRaFf5gjYYVvd9YtygKSTuNEHt1iRdyTtUZhYB4F9
+         u9c2bD6W3QRExu0xVYO8XYf2ll3sQuk6/pMu4vSsNaPs7pXy8LfNrunjV0rqz03r1ISn
+         cnjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714488183; x=1715092983;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p0+SX4By2Hk0TGeBZ/Nj0Jjf+y4N4/zi6qtmt8eTWHM=;
+        b=nikCKefWQc/DkfWNLLwM5cL/T8eSobXN1GV6apnHVF7Jume8MMlSoLyG8pJ5bQxXAi
+         m1TsLyaCrdXlXupC7MAsOJ+BHMBWC4dgo0r7+8mSS6FFhFgZQtC5ZIhShBx2gEgpxfO5
+         Wkvm6NGbxNiwsuOAvh1wMIqIJCBPA08Jh41f0S25mCu9GxGH0weDYO121A9UXMlxNYtb
+         07US8d4x/4jcrh8/+l8G0xiOg7fKcJ1GugmC3b1JsNPr3awT8OLJGyzCiZ+GDGnp4tpR
+         Mh2oZDuNlWySGUSI78j53QMNESJi3RkqEKWaQRqVs8GVDqJ1TWUwlOZNXpkyI2rArhZ1
+         JLFg==
+X-Gm-Message-State: AOJu0Yy5OO1wG/J6UDEfQX8mjeo3xHEoaCqZdS0nn06ZGkmogiwdedAe
+	j4h9taJDQrPy/Axi/cgIrh05JFyQPTZnr5ytaWUCF225Ydd/IRJGPmBnz8pu
+X-Google-Smtp-Source: AGHT+IEIk7LcLIWCHslcA79+dXOtRKw//hWMQ8aZ2zgnWofDZODnMFlmblJBr9bpRwq4QYWOJUeBwA==
+X-Received: by 2002:a4a:ac08:0:b0:5ac:9efc:3b02 with SMTP id p8-20020a4aac08000000b005ac9efc3b02mr3316090oon.8.1714488182891;
+        Tue, 30 Apr 2024 07:43:02 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id x15-20020a4aca8f000000b005aa4e48efc3sm3848071ooq.37.2024.04.30.07.43.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Apr 2024 07:41:58 -0700 (PDT)
-Message-Id: <f1d68337edafd069ea9fbd0e0b834444dab655fd.1714488112.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1723.v4.git.1714488111.gitgitgadget@gmail.com>
-References: <pull.1723.v3.git.1714416863.gitgitgadget@gmail.com>
-	<pull.1723.v4.git.1714488111.gitgitgadget@gmail.com>
-From: "John Passaro via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 30 Apr 2024 14:41:51 +0000
-Subject: [PATCH v4 3/3] builtin/tag.c: add --trailer option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 30 Apr 2024 07:43:02 -0700 (PDT)
+Date: Tue, 30 Apr 2024 09:41:47 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] gitlab-ci: add whitespace error check
+Message-ID: <l55hxxuv5ohtno3gfjgq6mu7cqakfohon4vd7r535ztzadarin@iz4fbuwjeeug>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20240430003323.6210-1-jltobler@gmail.com>
+ <20240430003323.6210-3-jltobler@gmail.com>
+ <ZjB77nSMou0ssu-V@tanuki>
+ <zphrzgroei4civl7q2ls5cvabyzjbexfq6tjhdy476rmaqu6m5@ik3pedton6ww>
+ <ZjD6xNuncrq9fSXZ@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    John Passaro <john.a.passaro@gmail.com>,
-    John Passaro <john.a.passaro@gmail.com>,
-    John Passaro <john.a.passaro@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZjD6xNuncrq9fSXZ@tanuki>
 
-From: John Passaro <john.a.passaro@gmail.com>
+On 24/04/30 04:05PM, Patrick Steinhardt wrote:
+> On Tue, Apr 30, 2024 at 09:00:59AM -0500, Justin Tobler wrote:
+> > On 24/04/30 07:04AM, Patrick Steinhardt wrote:
+> > > On Mon, Apr 29, 2024 at 07:33:23PM -0500, Justin Tobler wrote:
+> > > > To check for whitespace errors introduced by a set of changes, there is
+> > > > the `.github/workflows/check-whitespace.yml` GitHub action. This script
+> > > > executes `git log --check` over a range containing the new commits and
+> > > > parses the output to generate a markdown formatted artifact that
+> > > > summarizes detected errors with GitHub links to the affected commits and
+> > > > blobs.
+> > > > 
+> > > > Since this script is rather specific to GitHub actions, a more general
+> > > > and simple `ci/check-whitespace.sh` is added instead that functions the
+> > > > same, but does not generate the markdown file for the action summary.
+> > > > From this, a new GitLab CI job is added to support the whitespace error
+> > > > check.
+> > > 
+> > > I still wonder whether we can unify these. Yes, the GitHub thing is
+> > > quite specific. But ultimately, what it does is to generate a proper
+> > > summary of where exactly the whitespaces issues are, which is something
+> > > that your version doesn't do. It's useful though for consumers of a
+> > > failed CI job to know exactly which commit has the issue.
+> > 
+> > Just to clarify, this new CI job still prints the output of 
+> > `git log --check` which details the exact commit and file with line
+> > number of the whitespace error. The difference is that it does not write
+> > an additional markdown file with links to the commit and blob.
+> > 
+> > Here is a failed execution of the GitLab whitespace check job:
+> > https://gitlab.com/gitlab-org/git/-/jobs/6749580210#L1289
+> 
+> Okay, fair enough. I'm still of the opinion that the infra here should
+> be shared.
+> 
+> > > So can't we pull out the logic into a script, refactor it such that it
+> > > knows to print both GitHub- and GitLab-style URLs, and then also print
+> > > the summary in GitLab CI?
+> > 
+> > We can do this, but for GitLab CI there probably isn't a point to
+> > generating a summary file since there is nothing that would pick it up
+> > and display it. Having links though directly in the job output would be
+> > nice. I'll give it another go.
+> 
+> Well, we could print the output to the console so that a user can see it
+> when they open the failed job. The nice formatting may be kind of moot,
+> but on the other hand it doesn't hurt, either. I guess most people are
+> used to reading plain markdown-style docs anyway.
 
-git-tag currently supports interpreting trailers from an annotated tag
-message, using --list --format="%(trailers)". However, to add a trailer
-to a tag message, you must do so using `-F` or by editing the message.
+I'm thinking we can generalize the summary writing in some manner. When
+run as a GitHub action, the summary can be markdown formatted and
+written to `$GITHUB_STEP_SUMMARY` with no output to the console as done
+today. When run as GitLab CI, the summary can be written directly to
+console with links. All other runs just output normally to console.
 
-In a previous patch, we moved git-commit's implementation of its
---trailer option to the trailer.h API. Let's use that new function to
-teach git-tag the same --trailer option, emulating as much of
-git-commit's behavior as much as possible.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: John Passaro <john.a.passaro@gmail.com>
----
- Documentation/git-tag.txt |  18 +++++-
- builtin/tag.c             |  41 +++++++++++---
- t/t7004-tag.sh            | 114 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 162 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 5fe519c31ec..79b0a7e9644 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]
-+	[(--trailer <token>[(=|:)<value>])...]
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
-@@ -31,8 +32,8 @@ creates a 'tag' object, and requires a tag message.  Unless
- `-m <msg>` or `-F <file>` is given, an editor is started for the user to type
- in the tag message.
- 
--If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <key-id>`
--are absent, `-a` is implied.
-+If `-m <msg>` or `-F <file>` or `--trailer <token>[=<value>]` is given
-+and `-a`, `-s`, and `-u <key-id>` are absent, `-a` is implied.
- 
- Otherwise, a tag reference that points directly at the given object
- (i.e., a lightweight tag) is created.
-@@ -178,6 +179,19 @@ This option is only applicable when listing tags without annotation lines.
- 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
- 	is given.
- 
-+--trailer <token>[(=|:)<value>]::
-+	Specify a (<token>, <value>) pair that should be applied as a
-+	trailer. (e.g. `git tag --trailer "Signed-off-by:T A Ger \
-+	<tagger@example.com>" --trailer "Helped-by:C O Mitter \
-+	<committer@example.com>"` will add the "Signed-off-by" trailer
-+	and the "Helped-by" trailer to the tag message.)
-+	The `trailer.*` configuration variables
-+	(linkgit:git-interpret-trailers[1]) can be used to define if
-+	a duplicated trailer is omitted, where in the run of trailers
-+	each trailer would appear, and other details.
-+	The trailers can be seen in `git tag --list` using
-+	`--format="%(trailers)"` placeholder.
-+
- -e::
- --edit::
- 	The message taken from file with `-F` and command line with
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 9a33cb50b45..1ae7ea50b3f 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -28,9 +28,11 @@
- #include "date.h"
- #include "write-or-die.h"
- #include "object-file-convert.h"
-+#include "trailer.h"
- 
- static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-+	   "        [(--trailer <token>[(=|:)<value>])...]\n"
- 	   "        <tagname> [<commit> | <object>]"),
- 	N_("git tag -d <tagname>..."),
- 	N_("git tag [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]\n"
-@@ -290,10 +292,12 @@ static const char message_advice_nested_tag[] =
- static void create_tag(const struct object_id *object, const char *object_ref,
- 		       const char *tag,
- 		       struct strbuf *buf, struct create_tag_options *opt,
--		       struct object_id *prev, struct object_id *result, char *path)
-+		       struct object_id *prev, struct object_id *result,
-+		       struct strvec *trailer_args, char *path)
- {
- 	enum object_type type;
- 	struct strbuf header = STRBUF_INIT;
-+	int should_edit;
- 
- 	type = oid_object_info(the_repository, object, NULL);
- 	if (type <= OBJ_NONE)
-@@ -313,13 +317,15 @@ static void create_tag(const struct object_id *object, const char *object_ref,
- 		    tag,
- 		    git_committer_info(IDENT_STRICT));
- 
--	if (!opt->message_given || opt->use_editor) {
-+	should_edit = opt->use_editor || !opt->message_given;
-+	if (should_edit || trailer_args->nr) {
- 		int fd;
- 
- 		/* write the template message before editing: */
- 		fd = xopen(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
- 
--		if (opt->message_given) {
-+		if (opt->message_given && buf->len) {
-+			strbuf_complete(buf, '\n');
- 			write_or_die(fd, buf->buf, buf->len);
- 			strbuf_reset(buf);
- 		} else if (!is_null_oid(prev)) {
-@@ -338,10 +344,22 @@ static void create_tag(const struct object_id *object, const char *object_ref,
- 		}
- 		close(fd);
- 
--		if (launch_editor(path, buf, NULL)) {
--			fprintf(stderr,
--			_("Please supply the message using either -m or -F option.\n"));
--			exit(1);
-+		if (trailer_args->nr && amend_file_with_trailers(path, trailer_args))
-+			die(_("unable to pass trailers to --trailers"));
-+
-+		if (should_edit) {
-+			if (launch_editor(path, buf, NULL)) {
-+				fprintf(stderr,
-+					_("Please supply the message using either -m or -F option.\n"));
-+				exit(1);
-+			}
-+		} else if (trailer_args->nr) {
-+			strbuf_reset(buf);
-+			if (strbuf_read_file(buf, path, 0) < 0) {
-+				fprintf(stderr,
-+					_("Please supply the message using either -m or -F option.\n"));
-+				exit(1);
-+			}
- 		}
- 	}
- 
-@@ -463,6 +481,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	struct ref_format format = REF_FORMAT_INIT;
-+	struct strvec trailer_args = STRVEC_INIT;
- 	int icase = 0;
- 	int edit_flag = 0;
- 	struct option options[] = {
-@@ -479,6 +498,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F('m', "message", &msg, N_("message"),
- 			       N_("tag message"), PARSE_OPT_NONEG, parse_msg_arg),
- 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
-+		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"),
-+				  N_("add custom trailer(s)"), PARSE_OPT_NONEG),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
- 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
- 		OPT_CLEANUP(&cleanup_arg),
-@@ -548,7 +569,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		opt.sign = 1;
- 		set_signing_key(keyid);
- 	}
--	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
-+	create_tag_object = (opt.sign || annotate || msg.given || msgfile ||
-+			     edit_flag || trailer_args.nr);
- 
- 	if ((create_tag_object || force) && (cmdmode != 0))
- 		usage_with_options(git_tag_usage, options);
-@@ -654,7 +676,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			opt.sign = 1;
- 		path = git_pathdup("TAG_EDITMSG");
- 		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object,
--			   path);
-+			   &trailer_args, path);
- 	}
- 
- 	transaction = ref_transaction_begin(&err);
-@@ -686,6 +708,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&reflog_msg);
- 	strbuf_release(&msg.buf);
- 	strbuf_release(&err);
-+	strvec_clear(&trailer_args);
- 	free(msgfile);
- 	return ret;
- }
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 696866d7794..fa6336edf98 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -668,6 +668,115 @@ test_expect_success \
- 	test_cmp expect actual
- '
- 
-+# trailers
-+
-+test_expect_success 'create tag with -m and --trailer' '
-+	get_tag_header tag-with-inline-message-and-trailers $commit commit $time >expect &&
-+	cat >>expect <<-\EOF &&
-+	create tag with trailers
-+
-+	my-trailer: here
-+	alt-trailer: there
-+	EOF
-+	git tag -m "create tag with trailers" \
-+		--trailer my-trailer=here \
-+		--trailer alt-trailer=there \
-+		tag-with-inline-message-and-trailers &&
-+	get_tag_msg tag-with-inline-message-and-trailers >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'list tag extracting trailers' '
-+	cat >expect <<-\EOF &&
-+	my-trailer: here
-+	alt-trailer: there
-+
-+	EOF
-+	git tag --list --format="%(trailers)" tag-with-inline-message-and-trailers >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'create tag with -F and --trailer' '
-+	echo "create tag from message file using --trailer" >messagefilewithnotrailers &&
-+	get_tag_header tag-with-file-message-and-trailers $commit commit $time >expect &&
-+	cat >>expect <<-\EOF &&
-+	create tag from message file using --trailer
-+
-+	my-trailer: here
-+	alt-trailer: there
-+	EOF
-+	git tag -F messagefilewithnotrailers \
-+		--trailer my-trailer=here \
-+		--trailer alt-trailer=there \
-+		tag-with-file-message-and-trailers &&
-+	get_tag_msg tag-with-file-message-and-trailers >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'create tag with -m and --trailer and --edit' '
-+	write_script fakeeditor <<-\EOF &&
-+	sed -e "1s/^/EDITED: /g" <"$1" >"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+	get_tag_header tag-with-edited-inline-message-and-trailers $commit commit $time >expect &&
-+	cat >>expect <<-\EOF &&
-+	EDITED: create tag with trailers
-+
-+	my-trailer: here
-+	alt-trailer: there
-+	EOF
-+	GIT_EDITOR=./fakeeditor git tag --edit \
-+		-m "create tag with trailers" \
-+		--trailer my-trailer=here \
-+		--trailer alt-trailer=there \
-+		tag-with-edited-inline-message-and-trailers &&
-+	get_tag_msg tag-with-edited-inline-message-and-trailers >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'create tag with -F and --trailer and --edit' '
-+	echo "create tag from message file using --trailer" >messagefilewithnotrailers &&
-+	get_tag_header tag-with-edited-file-message-and-trailers $commit commit $time >expect &&
-+	cat >>expect <<-\EOF &&
-+	EDITED: create tag from message file using --trailer
-+
-+	my-trailer: here
-+	alt-trailer: there
-+	EOF
-+	GIT_EDITOR=./fakeeditor git tag --edit \
-+		-F messagefilewithnotrailers \
-+		--trailer my-trailer=here \
-+		--trailer alt-trailer=there \
-+		tag-with-edited-file-message-and-trailers &&
-+	get_tag_msg tag-with-edited-file-message-and-trailers >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'create annotated tag and force editor when only --trailer is given' '
-+	write_script fakeeditor <<-\EOF &&
-+	echo "add a line" >"$1-"
-+	cat <"$1" >>"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+	get_tag_header tag-with-trailers-and-no-message $commit commit $time >expect &&
-+	cat >>expect <<-\EOF &&
-+	add a line
-+
-+	my-trailer: here
-+	alt-trailer: there
-+	EOF
-+	GIT_EDITOR=./fakeeditor git tag \
-+		--trailer my-trailer=here \
-+		--trailer alt-trailer=there \
-+		tag-with-trailers-and-no-message &&
-+	get_tag_msg tag-with-trailers-and-no-message >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'bad editor causes panic when only --trailer is given' '
-+	test_must_fail env GIT_EDITOR=false git tag --trailer my-trailer=here tag-will-not-exist
-+'
-+
- # listing messages for annotated non-signed tags:
- 
- test_expect_success \
-@@ -810,6 +919,11 @@ test_expect_success 'git tag --format with ahead-behind' '
- 	refs/tags/tag-lines 0 1 !
- 	refs/tags/tag-one-line 0 1 !
- 	refs/tags/tag-right 0 0 !
-+	refs/tags/tag-with-edited-file-message-and-trailers 0 1 !
-+	refs/tags/tag-with-edited-inline-message-and-trailers 0 1 !
-+	refs/tags/tag-with-file-message-and-trailers 0 1 !
-+	refs/tags/tag-with-inline-message-and-trailers 0 1 !
-+	refs/tags/tag-with-trailers-and-no-message 0 1 !
- 	refs/tags/tag-zero-lines 0 1 !
- 	EOF
- 	git tag -l --format="%(refname) %(ahead-behind:HEAD) !" >actual 2>err &&
--- 
-gitgitgadget
+-Justin
