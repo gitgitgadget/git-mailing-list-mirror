@@ -1,83 +1,125 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C53C1EB35
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51EB180A74
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714495098; cv=none; b=C030y96urtKbWN+gWOfWjG+1EJwVU2v4OgSzj7eFVyMYAijn5UpYUyRQ/ktfS/HELq5j4RFCVhyY+QURf4SIKwkt00MgAhFhlZwTbZdoPSCfbxSy5uzYPaJPYemy2/Fiqn6+l0TejImkVUofncls3ghfYQTNCuohtg7/tnBfSsM=
+	t=1714495118; cv=none; b=r7/IxZhovuR1DOugi9vkaB4dWq/L38NP+WbERzbiPysKLPGI0TJoNnNG1l811Zfo8yoXpFlKnL60GqxydEDahrCnRe6ZAQ+BYlwg8GLO7PWX8Zqs7WWGg8HvEHMYrjPpANk0ssTtItTMDyYIy2y3uRv1Eq/m9Y1topVZV7bNsts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714495098; c=relaxed/simple;
-	bh=TqFQCrqR5Q7EJSPk2b8QrinZmrHGt5bGBHatdeNzMd0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MNWUhRwzFkoat6pGFLCIqcF6zbk7rwBy5Vde1uCPS6hPnt7SObmgcpA8hr7jonFjshmrQYnobgoUzkef96M5yPY8FyVkqnOhGif10CmjKGi0ZgZdRK+oAN3pI6fkl7E5jFupFxbu/rqnNtFMHSilaNZM9SHtMljCnG531w/f3wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ce/vnLPs; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714495118; c=relaxed/simple;
+	bh=lhikxmxFOyNPyJdBP9holhMPUfG3WOuduf+H1rtJh5c=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=g831KXxqCqfByI9NdN8FOdPa6DIGBEwVRBkdtxNhTlWcoLMCUxnZtFtNOA48drceL1UPzztlSJeaVo3dbUgO6CkA8Ie6CmuAA4HZ2gCH41VAm4L3WFCP7/Q1X8itLnS7D0RwJZjdB0kXrWLl/qhrjTziJ2vfpjevZK9e3PsKPJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bE2KxuNe; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ce/vnLPs"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A7322052F;
-	Tue, 30 Apr 2024 12:38:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=TqFQCrqR5Q7EJSPk2b8QrinZmrHGt5bGBHatde
-	NzMd0=; b=ce/vnLPsNTAv6nLOUVJo1Y1BEaD7E+t4apE21t3gzJ4I8+Ann90xqu
-	0S/XhwskAPCC2t4aMPAZeM6Y5PAqp3UphWNouptqqYJIqdYf9a+jGxv2hvbN0cGx
-	rHhjcX8C/OoR+1bgK9cNYMSYBIpiCjCarwKR5eODGXAXf/rHsTSfc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 828252052E;
-	Tue, 30 Apr 2024 12:38:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DECF2052D;
-	Tue, 30 Apr 2024 12:38:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: John Passaro via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  John Passaro <john.a.passaro@gmail.com>
-Subject: Re: [PATCH v3 1/3] builtin/commit.c: refactor --trailer logic
-In-Reply-To: <ZjCHiPS8N-eSBrQV@tanuki> (Patrick Steinhardt's message of "Tue,
-	30 Apr 2024 07:54:16 +0200")
-References: <pull.1723.v2.git.1714409638089.gitgitgadget@gmail.com>
-	<pull.1723.v3.git.1714416863.gitgitgadget@gmail.com>
-	<0c9517f434aa5456dbde129f0514e3e3f50a095d.1714416865.git.gitgitgadget@gmail.com>
-	<ZjCHiPS8N-eSBrQV@tanuki>
-Date: Tue, 30 Apr 2024 09:38:09 -0700
-Message-ID: <xmqq7cgest5a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bE2KxuNe"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2dcc8d10d39so68871751fa.3
+        for <git@vger.kernel.org>; Tue, 30 Apr 2024 09:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714495115; x=1715099915; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=YoSYizTreEu3W9RLcd8ppo1VewEfhJsWSIBHVUaD2Ls=;
+        b=bE2KxuNeLb0a2fp5wLCCw14dk+XWPx8EOe+0iHcwewTsZfmyTaCC4N0rfEOH7l9cwY
+         Aoo4fJJyoxpNIN+48WZEQ488n9x2daRCinQhWWnKLoL9/Bo+wKLyYrhAisdd+GinpakB
+         DLxIhp7uIT+JEohprY0Bf2GYZ5RjD3ypKmvhbxXy8HD/CpLKCXWBshwwSHXuVxEpV1Ne
+         rwc1z3i9Ax8Ts/oOPgAw/wEPISbaUXSJJUuczRUS6pmiMAWMjkW+5+aF9fPn9mP361sp
+         Q3eel5DhJCZcorQTvKxrTn3fRCL3OR3zgSxsmi5x9pF6Y1rI4jGRmdKeUFFuq9NFiyDz
+         zA6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714495115; x=1715099915;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YoSYizTreEu3W9RLcd8ppo1VewEfhJsWSIBHVUaD2Ls=;
+        b=ZfhbX/J0P4d8v+wYxdxnONpCkAYg5i4I+JQiMetLfNgFvkJXK47w24dObl3Pu8esdO
+         VAOe5IH2mWLEOdsUf07cxant2x0QIeFEYTIyzXHSZXW4vfIrb5n0viBBInCqNURykIw/
+         rsIz9lcVIkt2iondT8RcELEr8dX1Pus9nsQWTvY2hK6qjXACzPno1AXGSiqbuF2FnPqD
+         viruJ2k9PFM24bxQr+C9g8QHqqzWYm6PnRDcarvarxymgMQesQDmBh2XsBLRUfE/Mt/t
+         OYqbz/OGel8atgkdkJ+E8J1x8NPjYfpFiB8n/o2P2aYvIfyFoijwMfltswFmVLd5Svsx
+         TRTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW1fh/UxFeyXzxDgJkFoYWYcnz69ujOLVTS90ZIJ8PHmwos3av8arGvSPXu3BJ/UTF6c/BDwLD/S+9X55vMN652AzVf
+X-Gm-Message-State: AOJu0YydYNmlL860FerBvluhXKlo/u5EdjSmCAiQhXIGuCLKXVPX5j6M
+	6+hPFdoUpQkFA/EO8kpjLEL/pm3h+ypDkxCRiU3Ktdt7FZpZB+v4PGEjTw==
+X-Google-Smtp-Source: AGHT+IG36LCKXKwuJsTojgkuctfgMttkwM+wmEmJOvLD42ueX32Go+ffdGnUeZdW+siInZ5xeWEyRw==
+X-Received: by 2002:a2e:b53b:0:b0:2d4:5321:9daf with SMTP id z27-20020a2eb53b000000b002d453219dafmr96468ljm.44.1714495114696;
+        Tue, 30 Apr 2024 09:38:34 -0700 (PDT)
+Received: from gmail.com (51.red-88-14-204.dynamicip.rima-tde.net. [88.14.204.51])
+        by smtp.gmail.com with ESMTPSA id v10-20020a05600c470a00b0041bfa349cadsm11499656wmo.16.2024.04.30.09.38.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 09:38:33 -0700 (PDT)
+Message-ID: <ce11355e-25f3-4d76-91ae-bd561143dd49@gmail.com>
+Date: Tue, 30 Apr 2024 18:38:32 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 088B3B9C-0710-11EF-9CBC-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Subject: Re: [PATCH v5 1/2] add-patch: do not show UI messages on stderr
+To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+ <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+ <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+ <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
+ <952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
+ <10905ab3-bb3c-4669-9177-84c8e6759616@gmail.com>
+ <27fbb12a-f2d2-459c-a27b-519f69242105@gmail.com>
+Content-Language: en-US
+In-Reply-To: <27fbb12a-f2d2-459c-a27b-519f69242105@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Apr 30, 2024 at 03:47:04PM +0100, phillip.wood123@gmail.com wrote:
 
->> +int amend_file_with_trailers(const char *path, struct strvec const* trailer_args) {
->
-> I would have called this `amend_trailers_to_file()`, which feels a bit
-> easier to understand. But I don't mind this much, your version should be
-> okay, too.
+> > @@ -1778,9 +1777,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+> >   			break;
+> >   	if (s.file_diff_nr == 0)
+> > -		fprintf(stderr, _("No changes.\n"));
+> > +		err(&s, _("No changes."));
+> >   	else if (binary_count == s.file_diff_nr)
+> > -		fprintf(stderr, _("Only binary files changed.\n"));
+> > +		err(&s, _("Only binary files changed."));
+> 
+> These two mean we'll now color these messages which we didn't do before. I
+> think if we hit this code we don't print anything else (apart from the
+> warning about add.interactive.useBuiltin being removed) so it probably does
+> not matter whether we use stdout or stderr here and I don't have a strong
+> opinion either way.
 
-I had the same reaction, but we are editing trailers in the file
-(without touching other things in the same file), so I would have
-suggested "in" instead of "to" here.
+Can we consider those messages not part of the UI?  IIUC, if we hit that
+code we haven't entered in the interactive UI.  Maybe we should:
 
-I agree with everything else you said you your review, and I do not
-think I have anything to add to this step.
+diff --git a/add-patch.c b/add-patch.c
+index c28ad380ed..b11a435738 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1780,9 +1780,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 			break;
+ 
+ 	if (s.file_diff_nr == 0)
+-		err(&s, _("No changes."));
++		error(_("no changes"));
+ 	else if (binary_count == s.file_diff_nr)
+-		err(&s, _("Only binary files changed."));
++		error(_("only binary files changed"));
+ 
+ 	add_p_state_clear(&s);
+ 	return 0;
 
-> Arguably you don't have to include "strvec.h" here, but can instead add
-> a simple forward declaration `struct strvec`.
+Or, simply leave them untouched in this series.
 
-Sensible.
+> 
+> Best Wishes
+> 
+> Phillip
 
 Thanks.
