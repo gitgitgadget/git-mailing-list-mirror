@@ -1,122 +1,167 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33309A48
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 00:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE531843
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 01:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714438611; cv=none; b=DzT078d7Q5C1BN6s3meMMCPUdHqamA1/RWztncgiYACtt7lBtCFMP50CMa/x2X4VFsv0kkIEYl7QX+SDD/xlMr7iRQEKL6BqcS4UBKTBasVBXPwKroJwMF0KyC5aTbJOTTQYyQTI6c0rXI4S484hVx3yuF2y+3XpA+zos6Ck5xA=
+	t=1714441653; cv=none; b=gPnKxNri5Qz1I+yOOaCXCeG3+M7NNT+DTzPdTUqQEDntpDD/6nLGx+J2WrM2bW1CJfDTLtB70U2G5y0I+g/ONtjaih4vw4J9VTZfzrcnipMTcynbPkYseVJepg3Q8RbAfcyv3EnlDVkVRvlmYzB0rXr6b1TlAVuYdMtEqxVlcQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714438611; c=relaxed/simple;
-	bh=a9kWy4AMYkGyxbyrJYNZzMStbQtjFDMwHjJMsXLpz9o=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=sT+YTop4CivBrhe0s0KTRp3bjzz3gMYPu2UA3Q4U3yT4p/wI6BkACULgxcldOHuWAXgmPXrvv1aG3cWDlmxFma8UNXopRmNRFJ8R7PR/QrvjbqKBrCyMBlQqwQhuq0/t+jpqGXqhikk3M84p/36lnkdmAt5ZWYD7E+aoxWDvsIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=gBRPf2r1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TDQGdw/P; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1714441653; c=relaxed/simple;
+	bh=GDMjkR9qrnDrHJpEhFLzG8xD7vKjd+bfYO+OGhE09AU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JPuT5V48uijODKhsqJFmLBQsWG7Govs2LkDnts9uyT9iY3F5xf8qgw/vukq+9HvQpR6cojYWE1iRbmBh+u6aPdH7j3Ksf06U5nTX/oV+eQ+FjLNcmn0fO+pPLPfCKai/aWRi1VlC0ZwrrkbxktWOZtxyLVBJfMPc8WLWfBf1r1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=e3C/n2f2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MwcjiG/P; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="gBRPf2r1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TDQGdw/P"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 2B4AE13803C0;
-	Mon, 29 Apr 2024 20:56:48 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="e3C/n2f2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MwcjiG/P"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C5D56138014F;
+	Mon, 29 Apr 2024 21:47:30 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 29 Apr 2024 20:56:48 -0400
+  by compute4.internal (MEProxy); Mon, 29 Apr 2024 21:47:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1714438608;
-	 x=1714525008; bh=KmNTwykkn6IZutr+CmOtNCN38fq0V+MEeCyB82bXgIY=; b=
-	gBRPf2r1sXH8zMjEc54wLQ8vMv0IynQUI9Ajq47i6VZPrcrJJ+61ZmU+vhTWezIv
-	abnABlmzW1dmCWFU8LVK6UoQJSKRgGcnp2bI0s2k7CPRTEHZSa36Hs/3jD+bYMQ7
-	FF9zVy9nzyEEG+3j61JjPuvnD1tnJGjRKg9Xk3oQg9hFvbb8/we0daw4PtsK30ND
-	sibiE4idAT5jdoMKXN34QLXCKlBpzgAjZinpyyVjiddwiiiy7kZTJyMIl4LlFam6
-	NgwPYqAkL+mCyluOhULv2KHy2D4nwutVs8w1AoFzGR8cw4/KKcdTG9LyzZpGj/VT
-	42i78scAsUMDTSy0p6zYXw==
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1714441650; x=
+	1714528050; bh=x+trdz2FvbXPfqtQoCzsxozYLYVQsejbOm8EJDYEsw8=; b=e
+	3C/n2f2dOR0TLf9rdiZHkCfVWzOAPDs3SIRiEgUAYzN5da4USgMS9qAzOmCDQEcs
+	EMyYfb0nmKnakV1eHFFCnhGWPvOmUlRf0E5FlAgOkihU2++d+RPkAUVu0d42iLqR
+	1/Rz4gmv0RIryh2QnTRxHPbHmc+VRwQJBCMvw1qcK6aGeMycQ6nPfjjW7ZqO+e6h
+	jnaoQ/u3ulst2SS5xVgyBSzvIAp1gUXDjZ31CUJhh1O+QIHrjSGJd8A4vpgZIxxg
+	JjLy6GEzDD7US1YaoENj/AS0r/lYaPA82uc4XqXOYMkhZ1w8RME63VrPxcMvsfok
+	hPcZoi4SCAHiH4KcwKf4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1714438608; x=
-	1714525008; bh=KmNTwykkn6IZutr+CmOtNCN38fq0V+MEeCyB82bXgIY=; b=T
-	DQGdw/PCixksCCc2KZKzu8uQCg+oc2QOWTyoVmD8F11lIoPEHMbiY3UIpjCUtzar
-	7HzMkFz8IKUKbBKuHgq5Ke0b1s84T6msNBTHGrv78VWGL6r/6w9a5Rs3DdOaeJZ9
-	iSsQGLjdcdkNm5wj9PGVx+fMU9bKhkOIaQEHTel8jp6KvQbrz7EaEItQw4SX1sHv
-	Rlyb9zq4BUsRa1Te9+Zy7k5f7y5ycpthOz23SwBYba94qEZPYYP7k1Uknjx4ev1c
-	0cXkMTCHqSatg3csWH1M87FOK2d+RehTiOYPAhooSMlvNSuyEOdPOJ1r2T4FVmUE
-	98spj4n9PQMiduDZAqKwQ==
-X-ME-Sender: <xms:z0EwZqYoJFszghcnjl28IhUoeW2mBB0aABmZmSWxea3pz6jN2TNtGA>
-    <xme:z0EwZtaO6P-3IgQPj7o_4gTtSKWl6D8KAKjvezq0dfoc10bYivvP4SXNU6zzMHqqx
-    3wCOSsqc6y4BTKAew>
-X-ME-Received: <xmr:z0EwZk9tAR_bK3T34FcnwwQijYJBd2IyLnyPrGVxQe5eOyWTyXbNdxDEqE7eto5dPHWIhHHDr87YHxNjIV4eYYlo9HnynJ8NSI3BsJoq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddggeduucetufdoteggodetrfdotf
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1714441650; x=
+	1714528050; bh=x+trdz2FvbXPfqtQoCzsxozYLYVQsejbOm8EJDYEsw8=; b=M
+	wcjiG/PdIiJ1hfMz9uSjRoesNf4RxjdudYR0E1b6kmveBMYyu+PhY01fY3zsJMvD
+	GtJYOIn2lSJp1WmjiLHipalFPQzs7OYRwTaskTxYZ9BoISLYndKXtdd9/5wS+HLR
+	4TqsymgbakO7/wklHIhL5Cb2mxgUNhjJbSNpvDApw2uP/xBLZupq/nhRc3nDjlVL
+	uqhsTKexBX3QCdR+COIWA3t5NFvzqXlu3tqxkrNZmvFZfcxNNe7Jfszgcg4TUdWD
+	jjr77PUnoUNN8lzyVJyABqlZeOgOc2xfim08NMQWO0B9ywQdzC16EMfYPJ+NHXQy
+	GYdvhj9jiWAS9VDyusYMw==
+X-ME-Sender: <xms:sk0wZoQA5idF_FXlh6mBNGn9VF6x-jyfO81C3KHAWO3O5N0CSAkgfA>
+    <xme:sk0wZlzsCtuf3blv1xcPXW5mb362722LHCqRMnBMV6yjBmkzRvZWu9-rrkaSMI2xJ
+    Ex0v6ocXCLq_d3CfQ>
+X-ME-Received: <xmr:sk0wZl2jMbiI8khkm1KA63DV-OMpeqSBbYVeokGQAukESE0CCHUnJLB94q3kicQ6E-WQ6pswjyMxtQoPIjIXsDRmsvc8wExMiuAL0JiRbyfhAAFHbpWrwdMN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgr
-    mhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrth
-    htvghrnhepffeukedtiefgjefhhefhgeelieeguddvveeujeejhfegtddviefhjeetudek
-    jeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjh
-    grmhgvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:z0EwZsrwhwcus_gLV-KnAEVqtezfEkrpI7S6ukNAAhNcZKs6s1ngpQ>
-    <xmx:z0EwZlrGsrnF3aQtNcKnk9nE2dJdkI_WyE-kPcozlsrVhUi54QBMxw>
-    <xmx:z0EwZqTsMReM0m3UFaimv1MOTILucKcV_ohlbcrKL613hS4BROV1sQ>
-    <xmx:z0EwZlqrqoyWWKWxrmOu8VK2G9duX9Gu7HZReOGJZgQ6KGIm31ScBA>
-    <xmx:0EEwZsXCxfQs-ISgTAihc_qNqg9vqS0f_3-jQ9igy8SemoTq2s9g1fTA>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
+    ertdertddtnecuhfhrohhmpeflrghmvghsucfnihhuuceojhgrmhgvshesjhgrmhgvshhl
+    ihhurdhioheqnecuggftrfgrthhtvghrnhepleejtdeuudfgteegfeeiudehleeutedvhf
+    euueeuheevleejkeelteetfeevhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
+X-ME-Proxy: <xmx:sk0wZsCIh4og7Q14-FL7xPzrL_W9YxPamaGL0SO2nEw234SvIDRDqg>
+    <xmx:sk0wZhh-1Y1W68XDx8WRMLJeurduLTKgz3azbWwoJP_Bmt9xSCjz-Q>
+    <xmx:sk0wZorcNsJ_NohpLdqLu5XW9qolN4-_PoEpDU2L8ynsqfK8xuKDGg>
+    <xmx:sk0wZkh0VWlsQX2ZPIEVaZfvwZxwSVum8HsSn7aEdDIHBPPjiu2Q3Q>
+    <xmx:sk0wZks2GcCQek7-bC5ebf9mvoCvEs2tpqhnRcAzrehBbDWfZON6pW6P>
 Feedback-ID: i93f149ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Apr 2024 20:56:46 -0400 (EDT)
+ 29 Apr 2024 21:47:29 -0400 (EDT)
+From: James Liu <james@jamesliu.io>
+To: git@vger.kernel.org
+Cc: James Liu <james@jamesliu.io>
+Subject: [PATCH v3 0/1] advice: add --no-advice global option
+Date: Tue, 30 Apr 2024 11:47:23 +1000
+Message-ID: <20240430014724.83813-1-james@jamesliu.io>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240429010925.93205-1-james@jamesliu.io>
+References: <20240429010925.93205-1-james@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 30 Apr 2024 10:56:42 +1000
-Message-Id: <D0X1RH1PK67K.34KDYBQM6XDDU@jamesliu.io>
-Cc: "Dragan Simic" <dsimic@manjaro.org>, <git@vger.kernel.org>
-Subject: Re: [PATCH v2 1/1] advice: add --no-advice global option
-From: "James Liu" <james@jamesliu.io>
-To: "Jeff King" <peff@peff.net>
-X-Mailer: aerc 0.17.0
-References: <20240424035857.84583-1-james@jamesliu.io>
- <20240429010925.93205-1-james@jamesliu.io>
- <20240429010925.93205-2-james@jamesliu.io>
- <37512328b1f3db4e8075bdb4beeb8929@manjaro.org>
- <D0WCCOLSMM9K.24BIGLR6EEJI8@jamesliu.io>
- <20240429064025.GA2905826@coredump.intra.peff.net>
-In-Reply-To: <20240429064025.GA2905826@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon Apr 29, 2024 at 4:40 PM AEST, Jeff King wrote:
-> You need an environment variable if you want the command-line option to
-> work consistently across commands that spawn external processes. E.g.:
->
->   git --no-advice fetch --all
->
-> is going to spawn fetch sub-processes under the hood. You'd want them to
-> respect --no-advice, too, so we either have to propagate the
-> command-line option or use the environment. And when you consider an
-> external script like git-foo that runs a bunch of underlying Git
-> commands, then propagating becomes too cumbersome and error-prone.
+Hi,
 
-Thanks for the explanation Jeff! Makes sense why the pattern is so
-prevalent.
+This is v3 of the patch to add a global --no-advice option for silencing
+all advice hints. The environment variable has been renamed to
+GIT_ADVICE and marked for internal use only, and the conditional in the
+advice_enabled() helper has been adjusted to use git_env_bool().
 
-> You should use git_env_bool() to avoid the confusing behavior that
-> GIT_NO_ADVICE=3Dfalse still turns off advice. ;)
->
-> You can also drop the "NO", which helps avoid awkward double negation.
-> For example, if you do:
->
->   if (git_env_bool("GIT_ADVICE", 1))
-> 	return 0;
->
-> then leaving that variable unset will act as if it is set to "1", but
-> you can still do GIT_ADVICE=3D0 to suppress it.
-
-Awesome. I'll apply this suggestion in the next version of this patch.
+I explored the idea of adding another test to ensure the configuration
+is propagated to subprocesses correctly. This would use `git fetch --all`
+as the trigger, however it appears that advice is only printed when
+`fetch_one()` is invoked, which I don't think spawns any child
+processes. With that said, since this is a common pattern, I believe
+the existing additional test case is sufficient.
 
 Cheers,
 James
+
+James Liu (1):
+  advice: add --no-advice global option
+
+ Documentation/git.txt |  5 ++++-
+ advice.c              |  8 +++++++-
+ environment.h         |  7 +++++++
+ git.c                 |  6 +++++-
+ t/t0018-advice.sh     | 20 ++++++++++++++++++++
+ 5 files changed, 43 insertions(+), 3 deletions(-)
+
+Range-diff against v2:
+1:  0f2ecb7862 ! 1:  55d5559586 advice: add --no-advice global option
+    @@ Commit message
+     
+         Add a --no-advice global option to disable all advice hints from being
+         displayed. This is independent of the toggles for individual advice
+    -    hints.
+    +    hints. Use an internal environment variable (GIT_ADVICE) to ensure this
+    +    configuration is propagated to the usage site, even if it executes in a
+    +    subprocess.
+     
+         Signed-off-by: James Liu <james@jamesliu.io>
+     
+    @@ advice.c: void advise(const char *advice, ...)
+     -	int enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+     +	int enabled;
+     +
+    -+	if (getenv(GIT_NO_ADVICE))
+    ++	if (!git_env_bool(GIT_ADVICE, 1))
+     +		return 0;
+     +
+     +	enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+    @@ advice.c: void advise(const char *advice, ...)
+     
+      ## environment.h ##
+     @@ environment.h: const char *getenv_safe(struct strvec *argv, const char *name);
+    - #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
+      #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
+      #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
+    -+#define GIT_NO_ADVICE "GIT_NO_ADVICE"
+      
+    ++/*
+    ++ * Environment variable used to propagate the --no-advice global option to the
+    ++ * advice_enabled() helper, even when run in a subprocess.
+    ++ * This is an internal variable that should not be set by the user.
+    ++ */
+    ++#define GIT_ADVICE "GIT_ADVICE"
+    ++
+      /*
+       * Environment variable used in handshaking the wire protocol.
+    +  * Contains a colon ':' separated list of keys with optional values
+     
+      ## git.c ##
+     @@ git.c: const char git_usage_string[] =
+    @@ git.c: static int handle_options(const char ***argv, int *argc, int *envchanged)
+      			if (envchanged)
+      				*envchanged = 1;
+     +		} else if (!strcmp(cmd, "--no-advice")) {
+    -+			setenv(GIT_NO_ADVICE, "1", 1);
+    ++			setenv(GIT_ADVICE, "0", 1);
+     +			if (envchanged)
+     +				*envchanged = 1;
+      		} else {
+-- 
+2.44.0
+
