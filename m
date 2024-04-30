@@ -1,242 +1,143 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4AD176FA3
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2384717BB0C
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714494580; cv=none; b=BJBYR4Arwhh2AfRBoSQmtkvwQOnRVtaJULjRrlPFAwefZQND771K04jn3D3fFgwj2HrxOdgND+7elXyn2C4a4kn2/eT/IRExoh4OsSsEX7Fj0Krr4UmGXH6SSDgES4GjwJHGS/aPl3tqltwoyLQkjC//B/4PgSnXsTtKYasSwbc=
+	t=1714494917; cv=none; b=kKNpa6cBc7k5vRaV4L/lfk5FMqHCHk428rnUWFsXm+mp/NNzy0Qd+ZvdaUFAzS3FdWalYJUkgNZdYnnIBusfUCl+s37oaT+JKAm/nJ04IIlk8GpzYPivUTYKd/gUF78Di9vSr2KlDrcdhDngFxVZteAgVEVc5g4T7lXMWUGRKGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714494580; c=relaxed/simple;
-	bh=uVgMnFjjTLRg+q5mashjfQ+ydD7NJwn2uMLTrXpoXb8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mjU7IOdsIK/HqQtvqIXJe2/gct2PO+DLsWvnuSvx30G9Uh9STfJVnYEVOxRZ2h4SM06AGrWEmfIvcpp3MZGejleWO3b5/wehRqZ41BIeW6q2wVE6aDf9nvXc7RNzY9qj8kTTykMKAF1kYc/ElR51auzoGSpQKzmy7hWlLf1PaoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=us/KyBy2; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714494917; c=relaxed/simple;
+	bh=fS5wlN1FoSWlStu34hfwn7MyUEMA6rM6vxfzmLUKEEc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=j0iGUl79PEY7aqemWHjzcZ21pu70LBAlECoHWhrKjEzD2mapzlyrLi2cQ8jVek0Uvtk7AU0uY6cL8hBaxBASt6fJ022Md3GI1KWldrO8pSBHsA26F3hyveH+gNQezuvgyhvuT/9RhFZrGoZS8QZe8sW+btWokC0dm63HuKk+idQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P6xKEbAc; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="us/KyBy2"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CE3C720476;
-	Tue, 30 Apr 2024 12:29:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=uVgMnFjjTLRg+q5mashjfQ+ydD7NJwn2uMLTrX
-	poXb8=; b=us/KyBy2v0CwsQOc3/iWmA67hCE0xEPrhOYVTiVJxZqNNpmRX3W3kS
-	5nIHTDu+kR77FCNDqrQHzQzBl2WYYzf88GAOTgSEgSbtEQc9lg5smx6mD+2GgUum
-	YdWklHinfMNNPwAWmrO+HY9kC2Qox15wt5XyJUBW/cRCsYazT0UhA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C678A20475;
-	Tue, 30 Apr 2024 12:29:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C4C9F20474;
-	Tue, 30 Apr 2024 12:29:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: James Liu <james@jamesliu.io>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] advice: add --no-advice global option
-In-Reply-To: <20240430014724.83813-2-james@jamesliu.io> (James Liu's message
-	of "Tue, 30 Apr 2024 11:47:24 +1000")
-References: <20240429010925.93205-1-james@jamesliu.io>
-	<20240430014724.83813-1-james@jamesliu.io>
-	<20240430014724.83813-2-james@jamesliu.io>
-Date: Tue, 30 Apr 2024 09:29:26 -0700
-Message-ID: <xmqqbk5qstjt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P6xKEbAc"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-34d99ec52e1so452806f8f.3
+        for <git@vger.kernel.org>; Tue, 30 Apr 2024 09:35:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714494914; x=1715099714; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6DXHVRwz9bd0ISMwmI+LXGBogC7UewAeP6+vmx9KUf8=;
+        b=P6xKEbAcGiAS3/6spOxlv/hSJhe+6/aNmWIMvHNsqoP5OLcO5E2ISz0u5u1dUQtyl3
+         Vqg+mVztXaFkUWP6azq/AfCNNXL8iloWIJkNmdgJVcxq9RmKj04SCQ5LF5zVmntxN40U
+         chX0rzga7pIxeaA/fvh1I/UtWRLE3S+tuhq31nP5hJSnpoS+lSRH1nHVY+piJPnAko8E
+         evRLWSYHnMz9y4UH56rtm6P9JVQPoURGU912ISWDcunKqfVMFSgjE7HmaFWmUkJQBB+7
+         IjCGWq53mURebTdTTJ1tzO0kpFd3X1T9Szok2mmUNG2yieqnJCcfFL4QC9vfCHbBbaQj
+         SANw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714494914; x=1715099714;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6DXHVRwz9bd0ISMwmI+LXGBogC7UewAeP6+vmx9KUf8=;
+        b=CGo5y6tCalQAkKGZP9nogvu5GiPKIznxHrJ98CRMFk/qCnB3vusoZ3Y7e+a8VRNE7g
+         E5G5D7zTuyRwaQIHJbcdkc7N6Y8An6M+InPdOnf3DUU/Q9z7CQKKS3wBuz36N93SgRdY
+         kuHcY4EdcuMeVGq6DTKEa+SOZcFuAiHiDAw8ixGYufILUGd8TqFWqTKTqebDbpYk3UAz
+         DWXIOd7/HqACW+Ef+42+IOAo6QFF1F5S6+0uxir3sr2BsGec1uPa8+lUaAZCC2XVnfeO
+         45KC33DART4Fj4HJCI3gN8D5swnghgvtdvo7W9rTMEeIjsjvkG3AdPYDhzFUTtSM0mwF
+         +Uyg==
+X-Gm-Message-State: AOJu0Yy1vaz7LgkxJWmVMmuxh5vcPKQBtCTPya5tPwJWJHDzhRCETOxD
+	RWuFd07FK+MMY6D5Ve0c+KgOuvWgsX67mJ/G5/2mlqryL/irMus6
+X-Google-Smtp-Source: AGHT+IGcWVr3YpJUC9uUXuRSedoGXdTpJSJSj19KyyTe2gRwkdr2m/kQKmS28nnTYrAnMjxwaMEQ5w==
+X-Received: by 2002:a5d:6706:0:b0:33e:c410:a1cd with SMTP id o6-20020a5d6706000000b0033ec410a1cdmr111000wru.69.1714494914126;
+        Tue, 30 Apr 2024 09:35:14 -0700 (PDT)
+Received: from gmail.com (51.red-88-14-204.dynamicip.rima-tde.net. [88.14.204.51])
+        by smtp.gmail.com with ESMTPSA id d15-20020adffbcf000000b0034b1bd76d30sm22670404wrs.28.2024.04.30.09.35.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 09:35:13 -0700 (PDT)
+Message-ID: <90464326-0d0a-4cc6-84cd-eb1e5489a91a@gmail.com>
+Date: Tue, 30 Apr 2024 18:35:12 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D0F1D84A-070E-11EF-B026-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Subject: Re: [PATCH v5 1/2] add-patch: do not show UI messages on stderr
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Phillip Wood
+ <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
+References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
+ <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
+ <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
+ <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
+ <952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
+ <10905ab3-bb3c-4669-9177-84c8e6759616@gmail.com> <xmqqfrv4ug3l.fsf@gitster.g>
+ <20240430105256.GH1279403@coredump.intra.peff.net>
+Content-Language: en-US
+In-Reply-To: <20240430105256.GH1279403@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-James Liu <james@jamesliu.io> writes:
+On Tue, Apr 30, 2024 at 06:52:56AM -0400, Jeff King wrote:
+> On Mon, Apr 29, 2024 at 12:24:46PM -0700, Junio C Hamano wrote:
+> 
+> > Rubén Justo <rjusto@gmail.com> writes:
+> > 
+> > > diff --git a/add-patch.c b/add-patch.c
+> > > index 0997d4af73..fc0eed4fd4 100644
+> > > --- a/add-patch.c
+> > > +++ b/add-patch.c
+> > > @@ -293,10 +293,9 @@ static void err(struct add_p_state *s, const char *fmt, ...)
+> > >  	va_list args;
+> > >  
+> > >  	va_start(args, fmt);
+> > > -	fputs(s->s.error_color, stderr);
+> > > -	vfprintf(stderr, fmt, args);
+> > > -	fputs(s->s.reset_color, stderr);
+> > > -	fputc('\n', stderr);
+> > > +	fputs(s->s.error_color, stdout);
+> > > +	vprintf(fmt, args);
+> > > +	puts(s->s.reset_color);
+> > 
+> > I like the attention of the detail here ;-).
+> 
+> Indeed. I had to read this several times to wonder why it was not a
+> mistake to leave the first fputs() but use vprintf() and puts() for the
+> other two (for those just reading, the answer is that puts() prints an
+> extra newline, so we can only use it at the end).
 
-> Advice hints must be disabled individually by setting the relevant
-> advice.* variables to false in the Git configuration. For server-side
-> and scripted usages of Git where hints aren't necessary, it can be
-> cumbersome to maintain configuration to ensure all advice hints are
+I did not know the details (or had happily forgotten them) but Junio
+ignoring my comments in [1] intrigued me :-).  A simple test would have
+been quick, but "man puts" was quicker;  my comments were not correct.
 
-It is not that scripted use decline hints because they are not
-"necessary"; it is they find the hints harmful for whatever reason.
+Just to be clear, and to extend your comment, in case any reader is
+interested, this:
 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 7a1b112a3e..ef1d9dce5d 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
->      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
->      [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
->      [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-> -    [--config-env=<name>=<envvar>] <command> [<args>]
-> +    [--config-env=<name>=<envvar>] [--no-advice] <command> [<args>]
+	vfprintf(stdout, fmt, args);
 
-Move the new one near [--no-replace-objects] to group the --no-*
-options together.
+can be written as follows:
 
-This is not a fault of this patch, but I notice "--no-lazy-fetch"
-and "--no-optional-locks" are not listed here (there may be others,
-I didn't check too deeply).  It might make sense to have a separate
-clean-up step to move the --no-* "ordinarily we would never want to
-disable these wholesale, but for very special needs here are the
-knobs to toggle them off" options together in the DESCRIPTION
-section and add missing ones to the SYNOPSIS section.
+	vprintf(fmt, args);
 
-> diff --git a/advice.c b/advice.c
-> index 75111191ad..abad9ccaa2 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -2,6 +2,7 @@
->  #include "advice.h"
->  #include "config.h"
->  #include "color.h"
-> +#include "environment.h"
->  #include "gettext.h"
->  #include "help.h"
->  #include "string-list.h"
-> @@ -126,7 +127,12 @@ void advise(const char *advice, ...)
->  
->  int advice_enabled(enum advice_type type)
->  {
-> -	int enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
-> +	int enabled;
-> +
-> +	if (!git_env_bool(GIT_ADVICE, 1))
-> +		return 0;
+And this:
 
-How expensive is it to check git_env_bool() every time without
-caching the parsing of the value given to the environment variable?
-Everybody pays this price but for most users who do not set the
-environment variable it is not a price we want them to pay.
+	fputs(s->s.reset_color, stdout);
+	fputc('\n', stdout);
 
-One way to solve that might be to just insert these
+can be shortened to:
 
-	static int advice_enabled = -1;
+	puts(s->s.reset_color);
 
-	if (advice_enabled < 0)
-		advice_enabled = git_env_bool(GIT_ADVICE_ENVIRONMENT, 1)
-	if (!advice_enabled)
-		return 0;
+The difference in vfprintf and vprintf is quite obvious IMHO, but not so
+obvious with puts.  The documentation says:
 
-and leave everything else intact.  We do not even need to split the
-declalation+initialization into a ...
+  SYNOPSIS
 
-> +	enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
+       int puts(const char *s);
 
-... separate assignment.
+  DESCRIPTION
 
-> +/*
-> + * Environment variable used to propagate the --no-advice global option to the
-> + * advice_enabled() helper, even when run in a subprocess.
-> + * This is an internal variable that should not be set by the user.
-> + */
-> +#define GIT_ADVICE "GIT_ADVICE"
+       puts() writes the string s and a trailing newline to stdout.
 
-As Patrick pointed out, this should be GIT_ADVICE_ENVIRONMENT or
-something.
 
-> diff --git a/git.c b/git.c
-> index 654d615a18..6283d126e5 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -38,7 +38,7 @@ const char git_usage_string[] =
->  	   "           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
->  	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n"
->  	   "           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
-> -	   "           [--config-env=<name>=<envvar>] <command> [<args>]");
-> +	   "           [--config-env=<name>=<envvar>] [--no-advice] <command> [<args>]");
 
-Ditto.
-
-> diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-> index 0dcfb760a2..2ce2d4668a 100755
-> --- a/t/t0018-advice.sh
-> +++ b/t/t0018-advice.sh
-> @@ -29,4 +29,24 @@ test_expect_success 'advice should not be printed when config variable is set to
->  	test_must_be_empty actual
->  '
->  
-> +test_expect_success 'advice should not be printed when --no-advice is used' '
-> +	cat << EOF > expect &&
-
-Style.  Between the redirection operator and the file that the
-operator operates on, there should be no SP.
-
-> +On branch master
-> +
-> +No commits yet
-> +
-> +Untracked files:
-> +	README
-
-Something like
-
-	q_to_tab >expect <<\-EOF
-	On branch master
-	...
-	Untracked files:
-	QREADME
-	
-	nothing added to ...
-	EOF
-
-or
-
-	sed -e "s/^|//" >expect <<\-EOF
-	On branch master
-	...
-	Untracked files:
-	|	README
-	
-	nothing added to ...
-	EOF
-
-would work better.
-
-> +	git init advice-test &&
-> +  test_when_finished "rm -fr advice-test" &&
-
-Funny indentation.  Also if "git init" fails in the middle, after
-creating the directory but before completing, your when-finished
-handler fails to register.
-
-> +  cd advice-test &&
-
-Do not chdir around without being inside a subshell.  If we have to
-add new tests later to this script, you do not want them to start in
-the directory that you are going to remove at the end of this test.
-
-> +  touch README &&
-
-When you do not care about the timestamp, avoid using "touch".  Writing
-
-	>README &&
-
-instead would make it clear that you ONLY care about the presense of
-the file, not even its contents.
-
-> +  git --no-advice status > ../actual &&
-> +  test_cmp ../expect ../actual
-
-So, taken together:
-
-	(
-		cd advice-test &&
-		>README &&
-		git --no-advice status
-	) >actual &&
-	test_cmp expect actual
-
-> +'
-> +
->  test_done
-
-Thanks.
+  [1] - https://lore.kernel.org/git/4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com/T/#m644a682364212729a2b21c052ef744039c26f972
