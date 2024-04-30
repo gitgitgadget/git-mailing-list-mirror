@@ -1,125 +1,117 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51EB180A74
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E422317B4EB
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 16:53:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714495118; cv=none; b=r7/IxZhovuR1DOugi9vkaB4dWq/L38NP+WbERzbiPysKLPGI0TJoNnNG1l811Zfo8yoXpFlKnL60GqxydEDahrCnRe6ZAQ+BYlwg8GLO7PWX8Zqs7WWGg8HvEHMYrjPpANk0ssTtItTMDyYIy2y3uRv1Eq/m9Y1topVZV7bNsts=
+	t=1714496014; cv=none; b=ZSwzSnWAFKL/Ibj/sVqDspEdYhQmhSYbrx76BTSMJJ8TIGUKXYsvEJAo1eY23MhTzP7sfJX0eqL69AFbNDSFn1EUSEE3qWD8k8n2tyY6aRTsrbgkKeifvSczz8HXzGY0/vWKmzAWMALElCbnusdu7IG5VvFrZwIrWkx3rUza1zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714495118; c=relaxed/simple;
-	bh=lhikxmxFOyNPyJdBP9holhMPUfG3WOuduf+H1rtJh5c=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=g831KXxqCqfByI9NdN8FOdPa6DIGBEwVRBkdtxNhTlWcoLMCUxnZtFtNOA48drceL1UPzztlSJeaVo3dbUgO6CkA8Ie6CmuAA4HZ2gCH41VAm4L3WFCP7/Q1X8itLnS7D0RwJZjdB0kXrWLl/qhrjTziJ2vfpjevZK9e3PsKPJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bE2KxuNe; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714496014; c=relaxed/simple;
+	bh=WZZqvqCTPkisQ9QfXpYPyyTKW0E7JMW8WAXpXbt2GfY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VUo0Ep/0irPX0lUoEbbM1z9WM3pgRTy0trhvpJ83xy3NAFCuF3WTKGSIXnfkR2RbulAmd+I0PeR7YWNbTJcraYmB9GoVNFEmZ+uIdc9mnLDd2PHFUPpCQABxFCW0zKn0rJGlqEcquqvyhw6Wq/LOP4f0026RdHIVrEOSXRuqE+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudbees.com; spf=pass smtp.mailfrom=cloudbees.com; dkim=pass (1024-bit key) header.d=cloudbees.com header.i=@cloudbees.com header.b=kRL62yJ4; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudbees.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudbees.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bE2KxuNe"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2dcc8d10d39so68871751fa.3
-        for <git@vger.kernel.org>; Tue, 30 Apr 2024 09:38:36 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=cloudbees.com header.i=@cloudbees.com header.b="kRL62yJ4"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51ac5923ef6so11428e87.0
+        for <git@vger.kernel.org>; Tue, 30 Apr 2024 09:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714495115; x=1715099915; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YoSYizTreEu3W9RLcd8ppo1VewEfhJsWSIBHVUaD2Ls=;
-        b=bE2KxuNeLb0a2fp5wLCCw14dk+XWPx8EOe+0iHcwewTsZfmyTaCC4N0rfEOH7l9cwY
-         Aoo4fJJyoxpNIN+48WZEQ488n9x2daRCinQhWWnKLoL9/Bo+wKLyYrhAisdd+GinpakB
-         DLxIhp7uIT+JEohprY0Bf2GYZ5RjD3ypKmvhbxXy8HD/CpLKCXWBshwwSHXuVxEpV1Ne
-         rwc1z3i9Ax8Ts/oOPgAw/wEPISbaUXSJJUuczRUS6pmiMAWMjkW+5+aF9fPn9mP361sp
-         Q3eel5DhJCZcorQTvKxrTn3fRCL3OR3zgSxsmi5x9pF6Y1rI4jGRmdKeUFFuq9NFiyDz
-         zA6w==
+        d=cloudbees.com; s=google; t=1714496011; x=1715100811; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0cKcT/l/DoDg7Vhz/50bLRFFm70uCY3tNdcxyi2n5co=;
+        b=kRL62yJ4LBrQARi7sYtAlE5TNVx7xIMd/KL7F5vnlcRmGSNzEEpKDHsj56IuufthNy
+         ZFHvR9jvFPThqkE0j+a52GeR+dU01BracyjvF60QJB4mEpf4LPTD9Bbfly1wWnpnlZ5V
+         UFVE5SGxuph8BC879o+zjl4WJUqQkyDicbA1U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714495115; x=1715099915;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YoSYizTreEu3W9RLcd8ppo1VewEfhJsWSIBHVUaD2Ls=;
-        b=ZfhbX/J0P4d8v+wYxdxnONpCkAYg5i4I+JQiMetLfNgFvkJXK47w24dObl3Pu8esdO
-         VAOe5IH2mWLEOdsUf07cxant2x0QIeFEYTIyzXHSZXW4vfIrb5n0viBBInCqNURykIw/
-         rsIz9lcVIkt2iondT8RcELEr8dX1Pus9nsQWTvY2hK6qjXACzPno1AXGSiqbuF2FnPqD
-         viruJ2k9PFM24bxQr+C9g8QHqqzWYm6PnRDcarvarxymgMQesQDmBh2XsBLRUfE/Mt/t
-         OYqbz/OGel8atgkdkJ+E8J1x8NPjYfpFiB8n/o2P2aYvIfyFoijwMfltswFmVLd5Svsx
-         TRTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW1fh/UxFeyXzxDgJkFoYWYcnz69ujOLVTS90ZIJ8PHmwos3av8arGvSPXu3BJ/UTF6c/BDwLD/S+9X55vMN652AzVf
-X-Gm-Message-State: AOJu0YydYNmlL860FerBvluhXKlo/u5EdjSmCAiQhXIGuCLKXVPX5j6M
-	6+hPFdoUpQkFA/EO8kpjLEL/pm3h+ypDkxCRiU3Ktdt7FZpZB+v4PGEjTw==
-X-Google-Smtp-Source: AGHT+IG36LCKXKwuJsTojgkuctfgMttkwM+wmEmJOvLD42ueX32Go+ffdGnUeZdW+siInZ5xeWEyRw==
-X-Received: by 2002:a2e:b53b:0:b0:2d4:5321:9daf with SMTP id z27-20020a2eb53b000000b002d453219dafmr96468ljm.44.1714495114696;
-        Tue, 30 Apr 2024 09:38:34 -0700 (PDT)
-Received: from gmail.com (51.red-88-14-204.dynamicip.rima-tde.net. [88.14.204.51])
-        by smtp.gmail.com with ESMTPSA id v10-20020a05600c470a00b0041bfa349cadsm11499656wmo.16.2024.04.30.09.38.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 09:38:33 -0700 (PDT)
-Message-ID: <ce11355e-25f3-4d76-91ae-bd561143dd49@gmail.com>
-Date: Tue, 30 Apr 2024 18:38:32 +0200
+        d=1e100.net; s=20230601; t=1714496011; x=1715100811;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0cKcT/l/DoDg7Vhz/50bLRFFm70uCY3tNdcxyi2n5co=;
+        b=BjCfYazcg2KcSTR031ybUbqCZw0PI442WyfXvo0hgDhghmiGmaLApEKgHq1xbrMtbf
+         nX2q1mdqT2WoyOxC5+zKvxv1u+Vo6P7vI+/3nct274jzUSY4cbxLK3o05Xj+PHWTtj2K
+         +4/m5+cHdAgShPAJwgWS4sEA7B6iKuvHQIoE/0QIN8/P55jnHtrVDsWBv8LYeIXR/Jz7
+         DT9gLO4SeHCoDlLFx9zRYPTz6cEC7cpeJJ9Yh3qHPRHVL6hvhlVTDNS/BcTRwS/lPzGj
+         XYeQgl4i94B1L9+ovgs6vnTqNVrnze2unfNrj2AZnjQb3Fie85YPhBRCrZBWMQB3MU3I
+         fwBQ==
+X-Gm-Message-State: AOJu0Yy5BwsXmxUSaJ1ZzXqr7l5ptnG83wqUCmPgyOzFlYxu7xduBwgR
+	PyVak7+NQK6CF4t39bUgOj4+RIOuKO3Fh6/wlmt199UOG+MvFPzDYpgipVk2NYM2dhC9hhye2hg
+	gxqfDn/1C+tX2HwQ/qzQQsDUmzSxkXJxZ634ll1w/B7wORt5AzOdQ1g==
+X-Google-Smtp-Source: AGHT+IHSkNkotAl+272hAQn5Hhw5idMO+nahCMPEnMJMgHxcb0/OgKMJ4qfztzy9VWAhqj90Gak65vX+cChMHWETcZk=
+X-Received: by 2002:a05:6512:1317:b0:51d:9196:b946 with SMTP id
+ x23-20020a056512131700b0051d9196b946mr126272lfu.25.1714496010476; Tue, 30 Apr
+ 2024 09:53:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Subject: Re: [PATCH v5 1/2] add-patch: do not show UI messages on stderr
-To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
- <6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
- <db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
- <b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
- <952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
- <10905ab3-bb3c-4669-9177-84c8e6759616@gmail.com>
- <27fbb12a-f2d2-459c-a27b-519f69242105@gmail.com>
-Content-Language: en-US
-In-Reply-To: <27fbb12a-f2d2-459c-a27b-519f69242105@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: James Nord <jnord@cloudbees.com>
+Date: Tue, 30 Apr 2024 17:53:19 +0100
+Message-ID: <CAPcEHyfXuTOjkBfhhEwyqYiZroXGyJSSY0tgJCuSsp5PC-cKLA@mail.gmail.com>
+Subject: [bug report] commit signature validation
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Apr 30, 2024 at 03:47:04PM +0100, phillip.wood123@gmail.com wrote:
+Hi,
 
-> > @@ -1778,9 +1777,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
-> >   			break;
-> >   	if (s.file_diff_nr == 0)
-> > -		fprintf(stderr, _("No changes.\n"));
-> > +		err(&s, _("No changes."));
-> >   	else if (binary_count == s.file_diff_nr)
-> > -		fprintf(stderr, _("Only binary files changed.\n"));
-> > +		err(&s, _("Only binary files changed."));
-> 
-> These two mean we'll now color these messages which we didn't do before. I
-> think if we hit this code we don't print anything else (apart from the
-> warning about add.interactive.useBuiltin being removed) so it probably does
-> not matter whether we use stdout or stderr here and I don't have a strong
-> opinion either way.
+reporting bug per https://git-scm.com/community  (also this is not
+specific to windows and has been reporoduced on OSX)
 
-Can we consider those messages not part of the UI?  IIUC, if we hit that
-code we haven't entered in the interactive UI.  Maybe we should:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-diff --git a/add-patch.c b/add-patch.c
-index c28ad380ed..b11a435738 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1780,9 +1780,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 			break;
- 
- 	if (s.file_diff_nr == 0)
--		err(&s, _("No changes."));
-+		error(_("no changes"));
- 	else if (binary_count == s.file_diff_nr)
--		err(&s, _("Only binary files changed."));
-+		error(_("only binary files changed"));
- 
- 	add_p_state_clear(&s);
- 	return 0;
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Or, simply leave them untouched in this series.
 
-> 
-> Best Wishes
-> 
-> Phillip
+Setup git commit signing with SSH (but omit setting gpg.ssh.allowedsignersfile)
+create a signed comment
+run git show --show-signature
 
-Thanks.
+What did you expect to happen? (Expected behavior)
+
+the commit should show an unverified signature
+
+What happened instead? (Actual behavior)
+
+the commit shows no signature what so ever
+
+What's different between what you expected and what actually happened?
+
+I would expect show to say there is a signature that it could not
+verify,  instead the output is seemingly telling me there is no
+signature at all.
+
+Anything else you want to add:
+
+this also occurs if pulling from a repo where someone else has enabled
+signing with ssh, but you have not configured
+`gpg.ssh.allowedsignersfile`
+Regardless of the presence of the signing file git should tell me
+there is an unverified signature.
+
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.44.0.windows.1
+cpu: x86_64
+built from commit: ad0bbfffa543db6979717be96df630d3e5741331
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 22631
+compiler info: gnuc: 13.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
