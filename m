@@ -1,159 +1,211 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66912134BE
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 04:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C793B16426
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 05:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714452955; cv=none; b=CfDwkQj7BujYe4eEwhjOp0d8705oz9mBBEFmP7lV0d46oGHKTcngpEkIq84n14NEv7u/2WOzhgZMTarLMDv3pj1RuVfVJB5pfU2IWs3EJkaRjA4SoSrJWczCn0LJ4kknZjXgOZK8I+tge0eejY+J1Ej2dAnyrRBBEwVnyOfjzO8=
+	t=1714453494; cv=none; b=hu6cn9NGnN1Qu9pDiigqTVyZddGC23+3SMGmAwTx1c+qQk+I39L19VAojxk/laP6WZXcDLk4KmRMNj6Z1c0HAAGK/SwPE2RP2YoxPdl1nsoicarBpgsEIUWigKzj0CryKNgU10s56941n5Pv5FzqT+cHN4E43B6Q+WpOsUDP5sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714452955; c=relaxed/simple;
-	bh=wNqsEVjh2cSMtVxVusxuS9smEXjvE8uNRR2HD9jK0QU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jtaupfF25yKA63uHaS8GM51HH/wpTwJTRWxH+JU12y3sPVyuG1pE0u6otSN7z02TxoXT8OW4TQaXvWHgBr7OJS5edXKFVNRAP1eoa5xaNRgXgF1vRYFRiuTToOPDQwUmmod9d9CVboRk8KxUTRI+avIYTqL/h64lWEVvq1H0khU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b=BFKxddXv; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714453494; c=relaxed/simple;
+	bh=ZbEh0Es8I6pexCHDNPEVi9NSfGLSkfOBmF5tudl50oo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KwIEC9bzP9coN6KNQao/c2HswQdNN9LvbKwx7SEAsFiR7SqDAFivfwVtwlZ+Fr8G20++dvrXlTivCgepZ8nW/Kb6rtpzu33s4pt86kQD9d1Ms6nIuHD9f2WvlWaGsGWLAQTzJnYgYooaFng41MihbBgcntErMQMuzXRTc16jWeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HBma38v0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VT6ogDy2; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b="BFKxddXv"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2a2d0ca3c92so3711482a91.0
-        for <git@vger.kernel.org>; Mon, 29 Apr 2024 21:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail-com.20230601.gappssmtp.com; s=20230601; t=1714452954; x=1715057754; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fZzp2/nOG7vUA5QgRwEUVgHkEhKryHv2dnaDl/9QPX0=;
-        b=BFKxddXvjbXJG1qIjgj1jqlfRp1DuuucHeEh/E67OYEvrvBI0nd5ICWQRUcMAv3oD+
-         dA3h9SEwdfjc+9kK+mKijQIwFP5yz2ouWlYtsct0zxSZ54LWoHEUYzQ7hHPyzat51JgQ
-         xt2Iy/0rWpUYkzoYhtcNd7nK98appePghbuMYsd+pDFHxZCzD8vS6Rz/53Qd+XwWYPqT
-         o7gz9HN23O5gYQyveXoHsAzj4z+F86vZjyrP0SSxfJ2qgn8LHVaE5wlnzgdxoKYhSfpr
-         OBgttFWDsbAI4Zo66WKXXh1KQnNfAPDGi85Expe67kOkfeZafAInbPsNwd4DXvtb+06S
-         3TnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714452954; x=1715057754;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fZzp2/nOG7vUA5QgRwEUVgHkEhKryHv2dnaDl/9QPX0=;
-        b=ubKMtVhQ7kuxWjkWZBwsn7tubiJVhG/sGU4HQ/2f5q06NyUvgW3VW5F6ccSZhwQeef
-         5qi82lPm802JHJGUq4Rqe39eEEvd17oGq2+b+YjZzS9a5Bf+3kyfIZ4V6w+d1KwBIE/D
-         kuyTsoALKcUXGPCEOpQht0tde7rbrbtqiG5YOPAixADb0462JW1hGphLxqupObUDVek/
-         91oaxyPV/mpOyAcR4RvsSga7HeB4tuC+3JuBkZsKMD1fSUBkwRKRC039XFtIvkp6hYRz
-         fhvOFURdBJShDmJJpukxduLh0KTdabAGEVvoTjmtOmOujBECSLdVPjm0/0W/ehNbkOaT
-         Apkg==
-X-Gm-Message-State: AOJu0YxonYFbBejxxvwYUZuPiLV3foy15tME0RXcynXu7+8VmA5ubCCI
-	daHoQ/+Zh7RMhJ2Vw9VXC/XgiKPVurA8Hs5wWdlvEoeUnlb+rVHLNVaxzWNo49H1jvGqwbrlMMQ
-	YqR/cUm63twMjpQTVRd25gkpafE8=
-X-Google-Smtp-Source: AGHT+IEZv5kMJkstdJp+PqaUgH1b2sFLuTEbE2OdMJyWG89nUeRDYapbdP2g3eSHQcWAg5B95tzNmNT7/qd5182YyrY=
-X-Received: by 2002:a17:90a:4384:b0:2b2:9783:d0ca with SMTP id
- r4-20020a17090a438400b002b29783d0camr777980pjg.12.1714452953567; Mon, 29 Apr
- 2024 21:55:53 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 29 Apr 2024 21:55:53 -0700
-From: Linus Arver <linus@ucla.edu>
-In-Reply-To: <CAMo6p=EggYjK60fWmNC2XRFf0zRf4PCcUT-vmFM6RH2J0i3hrw@mail.gmail.com>
-References: <pull.1696.v2.git.1713504153.gitgitgadget@gmail.com>
- <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com> <9077d5a315d0d7272266856bf75a75b0a24df91d.1714091170.git.gitgitgadget@gmail.com>
- <CAP8UFD0OATdCaEN1SrvYMTZP3b1uWCZw57cXHhUNPW9eTj+x0Q@mail.gmail.com> <CAMo6p=EggYjK60fWmNC2XRFf0zRf4PCcUT-vmFM6RH2J0i3hrw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HBma38v0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VT6ogDy2"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A9B871380263;
+	Tue, 30 Apr 2024 01:04:51 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Tue, 30 Apr 2024 01:04:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1714453491; x=1714539891; bh=KyaWg+bFDL
+	QoepT2YFon+cl6aK4bttom4Cw8IENsWRs=; b=HBma38v0sxKspoBRZpGgprmD4s
+	P8KM10mWgEUQvJlaF1cvTP+CffKakqO7bqCKwk8BL2Wn0yJHZPPL6foMn+/Pl0fN
+	SGus+GpwB98MTZucamqyjH/8Oxon9npiUNVCQW6sfzZwNQ8P0beyupOKKTekl4ZK
+	QtDJ/dPH/rhBYWoOIX+JFo5dMGPMf961Q3/MyJU5USJ75zv13J4jJfGGwoqomtBs
+	lSarqjP41ZefDg+EF7dmQO3uxPWbVPzkGqLlU27vHPhcmlFw9m15Qyf47N8JpFmP
+	gETEf3XvhG2wscP43QtnD/TmR/OA25BhmtfZ4hyXhssv7qm49SXWI1XQveqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714453491; x=1714539891; bh=KyaWg+bFDLQoepT2YFon+cl6aK4b
+	ttom4Cw8IENsWRs=; b=VT6ogDy2ecgixc6CR0iZzYl/y/Oz3SQ3BgIHVzujo3hJ
+	/OGeN5PSnq3Ku74IgDDJY1FPbELRF6+RkdeymrvGpsMUXWozvt7kpxkDCM6CbyF/
+	b4Bs5JwPV9e07aS8+QMNNFmtgbYivp10u6PL4WdA2lm6wsgeWeqxNhYsZ+gfbav4
+	Dx9lMlRWmnhRHZuvV6EMqfsgyPsQP3gjC4CJUDL2P5GroadEM8CcuAgiqQT2YXJ8
+	X8LTTDmzoV2dojJhndaP5ySVxq9JN2vGTIgR6h01l8fJgNqvcnzKYD5lwErvLctg
+	yX8d83dm1TfMTeAHM8o9XR5MrtoZeuLCVzqqAhszAg==
+X-ME-Sender: <xms:83swZotJhlNxXPBHxntTr4I_Ri3pGQ_UBLVl7SL_V2LE_x5DNr4kRw>
+    <xme:83swZldOWtSVsHJ_jUQyGw4foHCOOWpc-1prZ1z0j-wGm2Zq-3AR2N9CdP3bnZqxs
+    2K-o3D35Z6JwiGTAg>
+X-ME-Received: <xmr:83swZjzdaS4d2iWmIczaqHOAy4wCKSAqegpv3KVJ2KdiWMQYkawRxDPrYUllg4x8aRq-m7UQxU6usJWBC1lZsOTmr3T7pe8o3Zk6hbrNrC0SSm4sZYAP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduvddgkeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepvdeigefhfedtjeduledtieelleefhfehfffhudfggedtteeflefhgfdvhfevvdfg
+    necuffhomhgrihhnpehshhdqrdgtihenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:83swZrOGCiCYQVMDk2my3RCQCjshdQLP7HiMaJCzO4Yue1pHFU1XiA>
+    <xmx:83swZo_wx7zc-spYqvUCtxNpTubzb5eYnqcITv8-7SPnd9G7RdO1rw>
+    <xmx:83swZjWD_EnFJfC0tu090GVxZnEgTGvWxYY7larhwicWEYQtZTuruw>
+    <xmx:83swZhcN37tRFT5Wqkp57DTsqH2Nl68ky3euUwRw-iuHRFoPKOfyHA>
+    <xmx:83swZqLgpNZKYFmuv3R_xGY_FeeMjZwnYmZG6dbtE21ucXawXv0XgbaO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Apr 2024 01:04:50 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 208bb678 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Apr 2024 05:04:28 +0000 (UTC)
+Date: Tue, 30 Apr 2024 07:04:46 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] gitlab-ci: add whitespace error check
+Message-ID: <ZjB77nSMou0ssu-V@tanuki>
+References: <20240430003323.6210-1-jltobler@gmail.com>
+ <20240430003323.6210-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 29 Apr 2024 21:55:53 -0700
-Message-ID: <CAMo6p=GRcmy6NDGRskuNrauMYTkAgk_p_0TJJTPC2=axVrWuvQ@mail.gmail.com>
-Subject: Re: [PATCH v3 03/10] trailer: teach iterator about non-trailer lines
-To: Christian Couder <christian.couder@gmail.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sJx4T1wqUNnPXDrS"
+Content-Disposition: inline
+In-Reply-To: <20240430003323.6210-3-jltobler@gmail.com>
+
+
+--sJx4T1wqUNnPXDrS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Linus Arver <linus@ucla.edu> writes:
+On Mon, Apr 29, 2024 at 07:33:23PM -0500, Justin Tobler wrote:
+> To check for whitespace errors introduced by a set of changes, there is
+> the `.github/workflows/check-whitespace.yml` GitHub action. This script
+> executes `git log --check` over a range containing the new commits and
+> parses the output to generate a markdown formatted artifact that
+> summarizes detected errors with GitHub links to the affected commits and
+> blobs.
+>=20
+> Since this script is rather specific to GitHub actions, a more general
+> and simple `ci/check-whitespace.sh` is added instead that functions the
+> same, but does not generate the markdown file for the action summary.
+> From this, a new GitLab CI job is added to support the whitespace error
+> check.
 
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> (Sorry I just realized that I had sent this email to Linus only.)
->>
->> On Fri, Apr 26, 2024 at 2:26=E2=80=AFAM Linus Arver via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
->>>
->>> From: Linus Arver <linusa@google.com>
->>>
->>> Previously the iterator did not iterate over non-trailer lines. This wa=
-s
->>> somewhat unfortunate, because trailer blocks could have non-trailer
->>> lines in them since 146245063e (trailer: allow non-trailers in trailer
->>> block, 2016-10-21), which was before the iterator was created in
->>> f0939a0eb1 (trailer: add interface for iterating over commit trailers,
->>> 2020-09-27).
->>>
->>> So if trailer API users wanted to iterate over all lines in a trailer
->>> block (including non-trailer lines), they could not use the iterator an=
-d
->>> were forced to use the lower-level trailer_info struct directly (which
->>> provides a raw string array that includes all lines in the trailer
->>> block).
->>>
->>> Change the iterator's behavior so that we also iterate over non-trailer
->>> lines, instead of skipping over them. The new "raw" member of the
->>> iterator allows API users to access previously inaccessible non-trailer
->>> lines. Reword the variable "trailer" to just "line" because this
->>> variable can now hold both trailer lines _and_ non-trailer lines.
->>>
->>> The new "raw" member is important because anyone currently not using th=
-e
->>> iterator is using trailer_info's raw string array directly to access
->>> lines to check what the combined key + value looks like. If we didn't
->>> provide a "raw" member here, iterator users would have to re-construct
->>> the unparsed line by concatenating the key and value back together agai=
-n
->>> --- which places an undue burden for iterator users.
->>>
->>> The next commit demonstrates the use of the iterator in sequencer.c as =
-an
->>> example of where "raw" will be useful, so that it can start using the
->>> iterator.
->>>
->>> For the existing use of the iterator in builtin/shortlog.c, we don't
->>> have to change the code there because that code does
->>>
->>>     trailer_iterator_init(&iter, body);
->>>     while (trailer_iterator_advance(&iter)) {
->>>         const char *value =3D iter.val.buf;
->>>
->>>         if (!string_list_has_string(&log->trailers, iter.key.buf))
->>>             continue;
->>>
->>>         ...
->>>
->>> and the
->>>
->>>         if (!string_list_has_string(&log->trailers, iter.key.buf))
->>>
->>> condition already skips over non-trailer lines (iter.key.buf is empty
->>> for non-trailer lines, making the comparison still work even with this
->>> commit).
->>>
->>> Rename "num_expected_trailers" to "num_expected_objects" in
->>> t/unit-tests/t-trailer.c because the items we iterate over now include
->>> non-trailer lines.
->>
->> I think it would be simpler if the previous patch used just
->> "num_expected" or "expected". It's not like the other fields in the
->> struct ("msg" and "name") are very explicit, so why this one only?
->
-> I didn't give it much thought TBH. "num_expected" SGTM. Will update.
+I still wonder whether we can unify these. Yes, the GitHub thing is
+quite specific. But ultimately, what it does is to generate a proper
+summary of where exactly the whitespaces issues are, which is something
+that your version doesn't do. It's useful though for consumers of a
+failed CI job to know exactly which commit has the issue.
 
-Another thing: I will rename "trailer_assertions" in Path 10 to probably
-"trailer_contents" because it sounds simpler. I am replying here instead
-of on Patch 10 because my mail setup still has some rough edges for the
-transition away from @google.com (I no longer work there).
+So can't we pull out the logic into a script, refactor it such that it
+knows to print both GitHub- and GitLab-style URLs, and then also print
+the summary in GitLab CI?
 
-And on that note, I'll have to update the SOB lines to match my new
-email address.
+> Note that the `$CI_MERGE_REQUEST_TARGET_BRANCH_SHA` variable is only
+> available in GitLab merge request pipelines and therefore the CI job is
+> configured to only run as part of those pipelines.
+>=20
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  .gitlab-ci.yml         |  9 +++++++++
+>  ci/check-whitespace.sh | 16 ++++++++++++++++
+>  2 files changed, 25 insertions(+)
+>  create mode 100755 ci/check-whitespace.sh
+>=20
+> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> index c0fa2fe90b..31cf420a11 100644
+> --- a/.gitlab-ci.yml
+> +++ b/.gitlab-ci.yml
+> @@ -102,3 +102,12 @@ static-analysis:
+>    script:
+>      - ./ci/run-static-analysis.sh
+>      - ./ci/check-directional-formatting.bash
+> +
+> +check-whitespace:
+> +  image: ubuntu:latest
+> +  before_script:
+> +    - ./ci/install-docker-dependencies.sh
+> +  script:
+> +    - ./ci/check-whitespace.sh $CI_MERGE_REQUEST_TARGET_BRANCH_SHA
+
+Let's quote this variable.
+
+> +  rules:
+> +    - if: $CI_PIPELINE_SOURCE =3D=3D 'merge_request_event'
+> diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
+> new file mode 100755
+> index 0000000000..1cad2d7374
+> --- /dev/null
+> +++ b/ci/check-whitespace.sh
+> @@ -0,0 +1,16 @@
+> +#! /bin/sh
+> +#
+> +# Check that commits after a specified point do not contain new or modif=
+ied
+> +# lines with whitespace errors.
+> +#
+> +
+> +baseSha=3D${1}
+
+Two nits: first, I wouldn't call it "sha" because it really is a commit
+ID that may or may not be SHA if we were ever to grow a hash function
+that is not SHA. So "baseCommit" would be more descriptive.
+
+Second, our shell variables are typically written in all-uppercase. So
+that'd make it "BASE_COMMIT".
+
+> +git log --check --pretty=3Dformat:"---% h% s" ${baseSha}..
+
+Nit: there's no need for the curly braces here. Also, let's quote the
+value.
+
+Patrick
+
+> +if test $? -ne 0
+> +then
+> +	echo "A whitespace issue was found in one or more of the commits."
+> +	echo "Run the following command to resolve whitespace issues:"
+> +	echo "\tgit rebase --whitespace=3Dfix ${baseSha}"
+> +	exit 2
+> +fi
+> --=20
+> 2.44.0
+>=20
+>=20
+
+--sJx4T1wqUNnPXDrS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYwe+0ACgkQVbJhu7ck
+PpRDHg/8D0vdW2wP32MDg/hq8QpFxQKqHyPkBRWwXk1uv+4fjCcBqyHj8DIzun1E
+9J7WdvE68VTqAbgxBIV7bv6XR3goTQpAHU+YIgvr3vvEHVA9Pc5s/5Od0qilwADm
+LKKNeGu1G82kfSjaINQlNKfWXi3wC693TfJZylmNHuq5/RBijsehIjvPE5Z2C0On
+gtNCNOQpJ7wY8RoeWGELfklKIuCwBAYh3RV3gWxRYXx4PZ1QgtK2p8CZldqi7xdr
+iOeaZK8stl6V07tlrWBXitrhCb6h6XLnLqBn989GyUDkD74Xmqw1dk/UvGyC7/I2
+QjpY84U2Q1Tl4LDkw+sppHmvlwr3yuZN+uO+FI+uvGnY9b4uxD46i13oiLsgmM0Q
+zcn7XiNJCseumaVBTIMZzeo1PWFQn6gpLU8SaPW8aYAXzekHHIrZZug0RhYuiblW
+E7AJwlqmBoVC00+JS7AS1pKjEcIwu/fbpA7dzVSMrDGxfC0oJBWQ3g3zHBRUVOHs
+oLqHHFODpl4EjRoRmo4qEcei+UNlc4XKiUcLqf+t21PBNRsxwtAyuy6hw/stfIas
+6Vv2308aijNEjd4eg7yyXsSy6mrHDsq8gF/FM1l9dZRTNMioPtdwTmTEx5byWLyF
+XmFy6QVUTTdtmfWH2bMQLb3nY55yOCwuVmmXMKvAuK9Rsr5835I=
+=k2Mq
+-----END PGP SIGNATURE-----
+
+--sJx4T1wqUNnPXDrS--
