@@ -1,154 +1,150 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA87127B70
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 09:59:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1013A8CB
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 10:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714471181; cv=none; b=tgVYQ13vAHuqJVVQuplEe4//nxs6QIA1ygS3rG/OWgMZzkw6KdqBSgCk1ezL7TUKRsYAH8nqSi5h77Apb6vguwAGAzpFdfP7RnnmqTMujWHZblZNS6ynQw52fjPDfa1oSFcKdUwXtz+D7/RBEDuzKr9jbvTS0bAbS6nYlwFav7c=
+	t=1714471309; cv=none; b=j2ztWhBgvoNKunhZFS9u0FYB3ef8l2Fyz9XKuJYZTvle8AqyxQ0ggWt0MfUEQMhMvBoQMzsSfcoWeuO8L0LzXASCG8h5d2wVxTqGUMG3QeLVYlqtVvDB40JMgmANbvqanvkTadAEGaaoEjNfPPmCFpX+SAjWlBCSs2wV5G0BAI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714471181; c=relaxed/simple;
-	bh=cVxnTXPlZAfVy8iLfrpT2LCWoGxWi+nZMzergbm/OrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MDFK1NdNdI+7am7takqyTsn/Fh6AGbERzNpefCoMopAuPWNzmpC1uXuUW24mykTj8QA7hyOPm170vUG9UlQcB0aLipAfIp20QrW1d3DYSt+bfirswiVDS08SV9HV8uGA29cu6Hoet6raUWr6FVW8IwPxAwENNz4zlcOfKU4lblE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KkWOCgij; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KkWOCgij"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-51ae2e37a87so6704152e87.2
-        for <git@vger.kernel.org>; Tue, 30 Apr 2024 02:59:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714471178; x=1715075978; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mr7Iz8vs3kqHaj0/uSoKbRHgPqh8wgnckch5nVmePls=;
-        b=KkWOCgijLOtPkv1DOYyjFU5yZ+hgjdjqZysKlQTJYSBn9LrCUn0ZbMpobMoSSnvdT2
-         pgfLz4zFdQqNuK2bUHzPYcGFxf/5eDIYY8YMXlc2dUjSeIFgsu5luyosbEEZPnZ/jA+/
-         fF5r/viUUoj666kqao+zyQXZ0sLpPqWgSEtwn59/LYwyTrXeXZGbr5JtFxfyI5mstvtZ
-         RFH64Qr2xgnisVMH/mmdcvhOnqywHZs7Ga7v3+GqfXuLDuhFRGASRHSnPKjaE2hwyeFV
-         bXABfpoVPA7mMYyx86Y9xMuRZjJ22UMgGDExze/ghOeWB4kFtkcIUF6wP1sToL6SXFbB
-         6iLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714471178; x=1715075978;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mr7Iz8vs3kqHaj0/uSoKbRHgPqh8wgnckch5nVmePls=;
-        b=q9+/5WB9uBNyibQMD3tE7P7Gf3OQfuyr01RWz8Nkh96uhjwo9gcjgBm8b0vPDjG7ku
-         HCIQRS4900dqcJuLcrTgTowbOQip8yQTrY7vvtgiAgpJypfCYBIHJTNZjiMlvKdgrF1C
-         HVznVNAHUG2PbO7rlA051odINu8XFsF2cdUOz+UObKLBPdVPPHz6J9wtPc9dxFSlMfx8
-         qp4UObSTHIGSEkE4bLKeUi0CI5s+OQe59TC9U5ElgvMgBF320XSSO6Q/VD7EzXAKBPkv
-         0m3hPiSjkig4Aq+xZzSn7swW+c/NmLTtRezzOqmpJg+NiRa/O/oR+tK4xy5BWIEl+Q+9
-         NUtA==
-X-Gm-Message-State: AOJu0YwMpnkIOIu8AQ4YaOymIUFRntYZr+lFaAzoDc0BqbszlTzig7om
-	384bj/iUGwGMPs9krRD77oHU72khsagVgtfVAGyPmaIgCTB/4CqO
-X-Google-Smtp-Source: AGHT+IHG9VCP6ptJbfw7FRzqYqTUvpYIkYNYoTTtErwdJSlt+3cUmx3AlaQI4U1XE2xS2lFt4wRG/A==
-X-Received: by 2002:a05:6512:36cf:b0:519:2a88:add6 with SMTP id e15-20020a05651236cf00b005192a88add6mr7437310lfs.55.1714471177779;
-        Tue, 30 Apr 2024 02:59:37 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8e01:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8e01:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id v17-20020a05600c445100b0041c130520f3sm9133917wmn.6.2024.04.30.02.59.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 02:59:37 -0700 (PDT)
-Message-ID: <e9c70778-3414-48ae-8a7d-6b6f0dfaad63@gmail.com>
-Date: Tue, 30 Apr 2024 10:59:36 +0100
+	s=arc-20240116; t=1714471309; c=relaxed/simple;
+	bh=zmXiXxR8VrSVL4uXDYf7XiEN1UlMoOjD0Ot9uJ/QCz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zz0PgFQoGnjc4MzIr1aJ6Reixm//NGwD0bcaIbNBkmCOq3jxAYkhhheAagbOBuvYSb5dE7Ox9f3akapYlHXCrYOaslnZsQWEvF55aB4TxMQ14PBYkuYj2EywH+hXik+DmtfP2L3mTAWveN87+KTp/XN6JewJwjsMtUemRM/w4RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 2850 invoked by uid 109); 30 Apr 2024 10:01:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Apr 2024 10:01:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5348 invoked by uid 111); 30 Apr 2024 10:01:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Apr 2024 06:01:51 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 30 Apr 2024 06:01:45 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/8] check_refname_format(): add FULLY_QUALIFIED flag
+Message-ID: <20240430100145.GB1279403@coredump.intra.peff.net>
+References: <20240429083325.GE233423@coredump.intra.peff.net>
+ <ZjB5bHiF5kAcRMpP@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/3] refs: do not label special refs as pseudo refs
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
- Karthik Nayak <karthik.188@gmail.com>
-References: <cover.1714398019.git.ps@pks.im>
- <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
- <e57ed591-5006-453e-bc93-6c53fcab2aec@gmail.com> <ZjCd_drNT6kyjNa6@tanuki>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ZjCd_drNT6kyjNa6@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZjB5bHiF5kAcRMpP@tanuki>
 
-Hi Patrick
+On Tue, Apr 30, 2024 at 06:54:04AM +0200, Patrick Steinhardt wrote:
 
-On 30/04/2024 08:30, Patrick Steinhardt wrote:
-> On Mon, Apr 29, 2024 at 04:12:37PM +0100, Phillip Wood wrote:
->
->> This changes the definition to allow pseudorefs to by symbolic refs. When
->> is_pseudoref() was introduced Junio and I had a brief discussion about this
->> restriction and he was not in favor of allowing pseudorefs to be symbolic
->> refs [1].
+> On Mon, Apr 29, 2024 at 04:33:25AM -0400, Jeff King wrote:
+> > Before operating on a refname we get from a user, we usually check that
+> > it's syntactically valid. As a general rule, refs should be in the
+> > "refs/" namespace, the exception being HEAD and pseudorefs like
+> > FETCH_HEAD, etc. Those pseudorefs should consist only of all-caps and
+> > dash. But the syntactic rules are not enforced by check_refname_format().
 > 
-> So the reason why pseudorefs exist is that some refs behave like a ref
-> sometimes, but not always. And in my book that really only applies to
-> MERGE_HEAD and FETCH_HEAD, because those contain additional metadata
-> that makes them not-a-ref. And for those I very much see that they
-> should not ever be a symref.
+> s/dash/underscore, right?
+
+Yep, thanks.
+
+> > Making things even more complicated, refname_is_safe() does enforce
+> > these syntax restrictions! When that function was added in 2014, we
+> > would have refused to work with such refs entirely. But we stopped being
+> > so picky in 03afcbee9b (read_packed_refs: avoid double-checking sane
+> > refs, 2015-04-16). That rationale there is that check_refname_format()
+> > is supposed to contain a superset of the checks of refname_is_safe().
+> > The idea being that we usually would rely on the more-strict
+> > check_refname_format(), but for certain operations (e.g., deleting a
+> > ref) we want to allow invalid names as long as they are not unsafe
+> > (e.g., not escaping the on-disk "refs/" hierarchy).
 > 
-> But everyhing else living in the root of the ref hierarchy is not
-> special in any way, at least not in my opinion. We have never enforced
-> that those cannot be symrefs, and it makes our terminology needlessly
-> confusing.
-
-I agree HEAD not being a pseudoref and having special refs as well as 
-pseudorefs refs is confusing. I do have some sympathy for the argument 
-that pseudorefs should not be symbolic refs though as AUTO_MERGE, 
-CHERRY_PICK_HEAD, ORIG_HEAD etc. are all pointers to a commit and it 
-would be a bug for them to be a symbolic ref. It is unfortunate that in 
-the move away from assessing those refs as files we lost the check that 
-they are not symbolic refs.
-
-> I think I'm going to reroll this patch series and go down the nuclear
-> path that I've hinted at in the cover letter:
+> I still think we should eventually merge these functions. It's not
+> exactly obvious why one would use one or the other. So if we had a
+> function with strict default behaviour, where the caller can ask for
+> some loosening of the behaviour via flags, then I think it would become
+> a ton easier to do the right thing.
 > 
->    - Pseudo refs can only be either FETCH_HEAD or MERGE_HEAD.
+> In any case, that doesn't need to be part of this patch series.
+
+Yeah, I think it would be fine to merge them with a flag. With the one
+exception that started this topic (and which I think could go away after
+this series), every caller of refname_is_safe() only does so in
+conjunction with check_refname_format() to check "well, is it at least
+safe?".
+
+You will have to tweak the return value somehow to indicate "ok" versus
+"bad but safe" versus "unsafe" (e.g., resolving sets REF_BAD_NAME but
+continues for the middle one). I think I'd prefer to leave that out of
+this series (and after this, I think it becomes easier as a pure
+refactoring since the behavior remains the same).
+
+> > The whole ALLOW_ONELEVEL thing is a long-standing confusion, and
+> > unfortunately has made it into the hands of users via "git
+> > check-ref-format --allow-onelevel". So I think it is there to stay.
+> > Possibly we should expose this new feature as --fully-qualified or
+> > similar.
 > 
->    - Refs starting with "refs/" are just plain normal refs.
+> Hm, that's really too bad. I wonder whether we should eventually start
+> to deprecate `--allow-onelevel` in favor of `--fully-qualified`. We
+> would continue to accept the flag, but remove it from our documentation
+> such that scripts start to move over. Then some day, we may replace
+> `ALLOW_ONELEVEL` with something like `ALLOW_ROOT_REF` that allows refs
+> in the root directory while honoring `is_pseudoref_syntax()`.
+
+I don't know if we could ever get rid of --allow-onelevel. If you want
+to check a branch name, say, the replacement for it is to ask about
+"refs/heads/$name". But sometimes you don't actually know how the short
+name is going to be used, but you want to make sure it's syntactically
+valid. E.g., validating a refspec may involve a name like "main" on its
+own. I suspect it would be OK in practice to just give it an arbitrary
+"refs/foo/$main", but that feels kind of hacky.
+
+-Peff
+
+> > @@ -288,6 +288,15 @@ static int check_or_sanitize_refname(const char *refname, int flags,
+> >  {
+> >  	int component_len, component_count = 0;
+> >  
+> > +	if ((flags & REFNAME_FULLY_QUALIFIED)) {
+> > +		const char *bare_ref;
+> > +
+> > +		parse_worktree_ref(refname, NULL, NULL, &bare_ref);
+> > +		if (!starts_with(bare_ref, "refs/") &&
+> > +		    !is_pseudoref_syntax(bare_ref))
+> > +			return -1;
+> > +	}
+> > +
+> >  	if (!strcmp(refname, "@")) {
+> >  		/* Refname is a single character '@'. */
+> >  		if (sanitized)
+> > @@ -322,8 +331,11 @@ static int check_or_sanitize_refname(const char *refname, int flags,
+> >  		else
+> >  			return -1;
+> >  	}
+> > -	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
+> > +
+> > +	if (!(flags & (REFNAME_ALLOW_ONELEVEL | REFNAME_FULLY_QUALIFIED)) &&
+> > +	    component_count < 2)
+> >  		return -1; /* Refname has only one component. */
+> > +
 > 
->    - Refs living in the root of the ref hierarchy need to conform to a
->      set of strict rules, as Peff is starting to enforce in a separate
->      patch series. These are just normal refs, as well, even though we
->      may call them "root ref" in our tooling as they live in the root of
->      the ref hierarchy.
+> I first thought that we don't have to handle REFNAME_FULLY_QUALIFIED
+> here because the above should already handle it. But we can of course
+> have a single component, only, when the ref is "refs/".
 
-That would certainly be simpler.
+I hadn't really considered that case. The reason we have to handle
+FULLY_QUALIFIED here is that without it, "FETCH_HEAD" (or for that
+matter "HEAD") is forbidden as having only a single component. The
+earlier hunk only rejects bad things, so we still end up in this code.
 
-> I just don't think that the current state makes sense to anybody. It's
-> majorly confusing -- I've spent the last 8 months working in our refs
-> code almost exclusively and still forget what's what. How are our users
-> expected to understand this?
+I think that "refs/" is forbidden both before and after my patch because
+it's invalid to have a zero-length component (so "foo//bar" is
+forbidden, but so is "foo/" because of the empty component on the end).a
 
-The current state is confusing but arguably there is a logic to the 
-various distinctions - whether those distinctions are useful in practice 
-is open to debate though. I wonder how much users really care about 
-these distinctions and whether it affects their use of git. I was 
-unaware of the distinction between HEAD and pseudorefs until I reviewed 
-Karthik's for-each-ref series a couple of months ago and I don't think 
-that lack of knowledge had caused me any trouble when using git.
-
->> Are there any practical implications of the changes in this patch for users
->> running commands like "git log FETCH_HEAD" (I can't think of any off the top
->> of my head but it would be good to have some reassurance on that point in
->> the commit message)
-> 
-> Not really, no. We have never been doing a good job at enforcing the
-> difference between pseudo refs or normal refs anyway. Pseudo refs can be
-> symrefs just fine, and our tooling won't complain. The only exception
-> where I want us to become stricter is in how we enforce the syntax rules
-> for root refs (which is handled by Peff in a separate patch series), and
-> that we start to not treat FETCH_HEAD and MERGE_HEAD as proper refs.
-> They should still resolve when you ask git-rev-parse(1), but when you
-> iterate through refs they should not be surfaced as they _aren't_ refs.
-
-That's good
-
-Thanks
-
-Phillip
-
+-Peff
