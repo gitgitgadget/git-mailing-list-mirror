@@ -1,128 +1,99 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F122617164C
-	for <git@vger.kernel.org>; Tue, 30 Apr 2024 13:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F160B12CD90
+	for <git@vger.kernel.org>; Tue, 30 Apr 2024 13:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714482668; cv=none; b=pvFtM30Hxgi3CdZI7pL+fJYcPoFBZInMGTBlNps03TBxFF+tQmT49NKwfWBDg0jD9VHCiQiOVNOqr6iBHFnKNAxbx03tRvStAINUBEpdOlWWFdKHr57u3jQQG5h4vep4QC/+jasBTOHsxaCZNkNj2qNEuEi3Koc5U86MRPUe3yU=
+	t=1714484168; cv=none; b=duQ3CUPFPeUPqawSTBMniFRCoMrB7FM4TbvVDFeZcypjBxExmRZvGvnpPxBUOLA5SXahAhjlWPATP2S4Z5gMfxFpfTzxS26HSOOf1ZdJZ1sK1SpHeD+cKRCvIhMUPBkIYogCljI/wR7WleHI3JIf2DweUgiL/IdaZZDS7Db1eFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714482668; c=relaxed/simple;
-	bh=GpXUIvQwKyz7gabtZmwjDr9rsqXjx+jLJ+z10LQ4ey8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m6BIJYt1vd1RJuwVS2HJbQ9KwDeLfnymeNW2vzXMHzvhPBh0dWqjwx7jKMqTnmXbtJQtvIWrv9+76VUwttcHzO32EH9+j+wiPWE8luBRAo9yCtgCaebLe8S8wBy3aGc6JooMN55kWcrHE691H47CATaXAutkLbUUUUSRzYhfHJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aAc/ToYY; arc=none smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714484168; c=relaxed/simple;
+	bh=CPmQDpm0HCMeoiBlJtmRhFpzxYcdg47t4nGcDY46/hs=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=dQSbyjJcvx3ZCT0V6shpwOq864W+iIwjeHjJFn8IT6mAl4/U2sZTyNMqMAuG0EncRNURHlgJYIEHSgHsgoFFHl1m3ErAD2MMILrfuqpNMQJFOc8n7KxR7PkJMsJxBMWzDHXr2jjOZuExclZkFsA9YiXN4nJ8UfKeofWgS2XOEUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=VEN7d1eM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XplA+25k; arc=none smtp.client-ip=64.147.123.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aAc/ToYY"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-23319017c4cso3621353fac.2
-        for <git@vger.kernel.org>; Tue, 30 Apr 2024 06:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714482666; x=1715087466; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BYuoIyWQ/60e6s43QxoiFnCEDR0kC7mdKlwcLOllIq0=;
-        b=aAc/ToYYyXb+TSiqjzR4xb0PORj8vC7LBh22Kjl24+VWS0laRThYQsicNIdvl0h98n
-         /DkNTnLsLuuknNpoMb1RVc8/J/EY1iVvrro0Py3akQSvrT8m10ZTjpwWlAXasPt8obcy
-         jbKQ7x92CJAK1Wr2s0WZunXZrxBEFs08msy1nqVGXX2Z5q4SNscPR9LqfP4PVyll92tt
-         61LlAJuqz9f3+26wFTJh/+JsuOU8urwPB73yeVHf2+xaHirvyC2UH2amR9h8NBlGZJqA
-         hJtu0pSX7LpNU4pomZNUaU+m8e0A1ews3qkd/aTfynNDME0hQ9GDMyA053uVHaQrd+99
-         oswA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714482666; x=1715087466;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BYuoIyWQ/60e6s43QxoiFnCEDR0kC7mdKlwcLOllIq0=;
-        b=JVBMexU93BQQ2wM5OxowdvkjDcZ6A+xpX/5Tj/WIs7GhuF8B4/QIdmUiV+BQPjTrBO
-         CnXMP6Ss3EbVjq6UMGTwLwjBwYtqG7sfwIBXfUmGPYu26ntHN2A9HYDXWp6bAdLdEUgE
-         xdeRtjclLFMDZonUuSMXdFv2MOX1mZUfBNtl8ZLCM+ezurwcMVDucI5ierDqMYQW+9xh
-         voA5sH5N0GVmoH0hNBO1mcqMmN9kfaXCuq9SP/L0xH4Z0OqtK1IfjrLTvZqyLk6DmW1c
-         e2d+Z0C9/8ey0wuDj0TQsx2j+0zatYp1LBq77ZqPWWKXILyafIFvourQH7OWiiYDvxhZ
-         e3sQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW1roamQ1DZqzcAZUjLzE+nJoGQfF4yhE64cNsNhxv9QuQcvJxR3heP6JiqhvZoLDsYtP/k2UM5pnzWzrHeAvzJOO67
-X-Gm-Message-State: AOJu0Yxcr53gPIgyTzl1xHuhYU3LjGrMYIZPC+ptyvsMpvF4tfkq1qIV
-	DBFKuRtcrlZxxfe6mLy0iBdQDrth/fTik9EO+TiAXeDhJxRXAkgzYOcLbJcXbyJPdgFytXgWTwQ
-	6ABpIlwKY+Ku6Ka04PhiuozZaBlc=
-X-Google-Smtp-Source: AGHT+IFSIoopMZfVseLtXCUIp7qXID+A9s0vvZ6HuiN6G4JiqBvlOFNRyDlzcMC5PKa+KZELtLM/Nn0RCj3cvv55kUY=
-X-Received: by 2002:a05:6870:960e:b0:23a:fb36:ffb3 with SMTP id
- d14-20020a056870960e00b0023afb36ffb3mr14597303oaq.19.1714482665911; Tue, 30
- Apr 2024 06:11:05 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Apr 2024 06:11:05 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <95d7547b2e8c5305e76888f7dc0a41d2b9e2f558.1714479928.git.ps@pks.im>
-References: <cover.1714398019.git.ps@pks.im> <cover.1714479928.git.ps@pks.im> <95d7547b2e8c5305e76888f7dc0a41d2b9e2f558.1714479928.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="VEN7d1eM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XplA+25k"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id 8B6B41C00150;
+	Tue, 30 Apr 2024 09:36:02 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 30 Apr 2024 09:36:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1714484162; x=
+	1714570562; bh=bb1MumYyW9AmmDu/qLfy5ShXpGyHvKt5BkPNONRRs+8=; b=V
+	EN7d1eM/YHLUVvVvOpV3+wwbJ8J66RFE2JsBlxqZR64a3l2c4VYRL+XG4HaA3S6n
+	WeGzU+Nlu3/6ceqNN5B2z5qQTYbgfv8zKZBqlNlD4DZq9Gk50TP2Wj/LGnf4COR1
+	sj9e7GnM0qEwDN7oeKUCz3St0CFgM9VxezNOKCxnCMPpYkGZiZGX8M9oZm8cHTTp
+	mzVQxM2LPPOiCxu0ynnkYgaLUskSVJfKARfIXi6kd5xMbDSXXwR5DEDcBesMHXFm
+	cUrr9fTCNsY/OreIrHdIdUPd1/CZoL9F57SAv0ALHsXj8Wcnf0pXhWTVATdRgr9O
+	0+X1rTQoM6SQ810++KxMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714484162; x=1714570562; bh=bb1MumYyW9AmmDu/qLfy5ShXpGyH
+	vKt5BkPNONRRs+8=; b=XplA+25knuVt93X4ZcScd5CydSqApw3rN9vgRrLuJL+r
+	CFHGJ9aITcvp0LGeMRNb3Gfp1aICtplrGYW0IRRWT2O7FbSwAcXqL4fA8n5AwNhU
+	9QCHyAJ0EkzpAmR+yczdj3oiSv38GtMCxmRHi2mcD3jDDuVHp4U5e6gufJKyNAGl
+	azJ27vi4ToxwMKVtGNolHxaa3C+9f9SMyoUW3/eo/OZ8u0nkS0k2Pbr8ybywV+k8
+	/vQ2fwkiC9kyu4J+Z5PM92V8Cx3Z/hSEAD4PnOtylHZYYxXUxAflQxUMFPGxT/q5
+	8LGnCoI3H7Co7yIi9ilGEtU40tewv/rBTyTiZ3tC3Q==
+X-ME-Sender: <xms:wvMwZnJ4fvxwoLcKABr8APeSTqoP3rHw8_aXkXZbESTdbwflZH73V1o>
+    <xme:wvMwZrLQHU8BcXt9TpmDPufEfXzj5QJJpAfwHK88GveH8uMPi3wRNez5Sffuc01Gc
+    RJ5NgM2aKiFbteb3w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedgieegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfeh
+    leeufedtjeekueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:wvMwZvsfqjCe_mkiIFk2F58dJRt-kq2kMV2Si4yG6BKQrIyixCwBMg>
+    <xmx:wvMwZgaMcvv48hH4ps4bYeu0TprSYZpjd7Fl0J-cvE1-PWGpptVZag>
+    <xmx:wvMwZubGXn9NyW76P4ICiexmyrYOcFM2AmSilp-5ZNAyS-MakxoMFQ>
+    <xmx:wvMwZkDw-7ImnRkHUCChGv_R76QlXy_SJYTn_bdlkRpsrMpmPmjq-g>
+    <xmx:wvMwZjPeIhg9gaXglY5EPvZgaHlrPKlaSik1X0IHNim8Fuj95fk737Aa>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id E0AE715A0092; Tue, 30 Apr 2024 09:36:01 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-386-g4cb8e397f9-fm-20240415.001-g4cb8e397
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 30 Apr 2024 06:11:05 -0700
-Message-ID: <CAOLa=ZQY5rdUqcy0yTB0haduf9EK7KVLeoAYLyaST4fMn6UyFw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/10] ref-filter: properly distinuish pseudo and root refs
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000468b780617501afd"
+Message-Id: <777fa7d3-17f8-4883-9f9a-c4077866d394@app.fastmail.com>
+In-Reply-To: 
+ <1f2f8cf3f2cfba65787551ce6571376275ef3a8d.1714479928.git.ps@pks.im>
+References: <cover.1714398019.git.ps@pks.im> <cover.1714479928.git.ps@pks.im>
+ <1f2f8cf3f2cfba65787551ce6571376275ef3a8d.1714479928.git.ps@pks.im>
+Date: Tue, 30 Apr 2024 15:35:13 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: "Jeff King" <peff@peff.net>, "Karthik Nayak" <karthik.188@gmail.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>, "Justin Tobler" <jltobler@gmail.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH v2 02/10] Documentation/glossary: clarify limitations of pseudorefs
+Content-Type: text/plain
 
---000000000000468b780617501afd
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Apr 30, 2024, at 14:26, Patrick Steinhardt wrote:
+>   - They are not surfaced when iterating through refs, like when using
+>     git-for-each-ref(1). They are no ref, so iterating through refs
+>     should not surface them.
 
-In the subject: s/distinuish/distinguish
+s/They are no ref/They are not refs
 
-Patrick Steinhardt <ps@pks.im> writes:
+-- 
+Kristoffer Haugsbakk
 
-> The ref-filter interfaces currently define root refs as either a
-> detached HEAD or a pseudo ref. Pseudo refs aren't root refs though, so
-> let's properly distinguish those ref types.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/for-each-ref.c |  2 +-
->  ref-filter.c           | 16 +++++++++-------
->  ref-filter.h           |  4 ++--
->  refs.c                 | 18 +-----------------
->  refs.h                 | 18 ++++++++++++++++++
->  5 files changed, 31 insertions(+), 27 deletions(-)
->
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index 919282e12a..5517a4a1c0 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -98,7 +98,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
->  	}
->
->  	if (include_root_refs)
-> -		flags |= FILTER_REFS_ROOT_REFS;
-> +		flags |= FILTER_REFS_ROOT_REFS | FILTER_REFS_DETACHED_HEAD;
-
-The only issue I see with this patch is that it makes me think that HEAD
-is not a root ref anymore. I get that this is the best way to define the
-directives because otherwise you'd need a new flag something like
-`FILTER_REFS_ROOT_REFS_WITHOUT_HEAD` and `FILTER_REFS_ROOT_REFS` would
-be the summation of that and the HEAD flag.
-
-Apart from this, the patch looks good.
-
---000000000000468b780617501afd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: fc009c7927af63cb_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZdzdlY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMzlSREFDRUtzNytEWUxPMVoweDZMZUdkK3hVMWExbgoyeDc0RllmVEI4
-c2R3Y0xkRWF4cEU1RFNpQ0p6aVcyZXdtcFR0a1VNK3gySHNpU2wweG1HOVB3QVZRd2tPakZaCjBv
-emhxZS9kenA2OU1DME1DaGZiZ1hJZnhFSG5ZZm5wcjVEZU5GKytoS3BhY0ZNSzNVWG9hZHB2REpx
-U0ZMZkkKRFRMYnhiMjFKQTd5bitrYjJ4RHJUUUU2eVNqYlNmMUF0NDRJVTVhbmNsNmh5QmRvYlVn
-dkhFYnN3QWJyWkhpMApnN1ZJc0hsSStZMThNSHc3RWorN3Z2NDFBUmVwNU5iUnUrN2t3Q3FmTnQr
-bEtEN2NSYlRicWNHdnY3amFVUVRBCmhXeVplZjlHUUNsNE8vRDBRUmdvMi9OZ2tHTlVOb05BZVpt
-VHFQa054S3RiRGc1OUhrV0tHeWhPcFdmeW1aa0sKdDdmRzlLQmd6dUtuOHJBd1BEZ1lnLzhiQnd0
-d0hKZCtlZklqNlA2U3FScFhlNTRhZWRBeFRFTkRmc0k3TGhqcQpVb1IxY0FjSm5tb0VLdTlWdWFl
-Y1BhNDRtY2hySldTS2FUaktta0IxY0VkSjh4bnJzUmVWMjltQ0hrNkhrdERMCkVJL0tXSm05WUpi
-WGc5empSU3JRVmdxR0xVSWV3clFveEVhNWY2ND0KPXlIV2MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000468b780617501afd--
