@@ -1,98 +1,87 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3CF12FB3C
-	for <git@vger.kernel.org>; Wed,  1 May 2024 16:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E253368
+	for <git@vger.kernel.org>; Wed,  1 May 2024 16:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714580082; cv=none; b=rp2fOZXd0cdssZFCspJ0uZH6UOSwV9RYo4L4fBpbVQV9LmxC4hbZ0qWHKOu4yXweYa+ya9Bj49BP4FrpPpUsuqR7JN7pwkKwOsy/Q8QgJPmfKuYxFSELef1k2RvyXiJdHOsFTubCOH31at19IduUPlEFugTFNhvrf+ys+Jw5A+0=
+	t=1714580381; cv=none; b=AgtAR8UU/XF9oTHr8cg5WgNtknMdtl9k6D90gy+cskNcZ7WuiuWMfssvufDss1oISeCZoBEOLwh4m/v7GlMmDFJoxnRtLtKWYsllhM5SbQnslszw9J+0zTAN0l75eF0zEkyH51cykxWxx02zuaqD0GC+shfs4/p2lEUPmXc3G4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714580082; c=relaxed/simple;
-	bh=Plz5u6BxgWqP/4yLChEk98qeqT/eNxF1h804R6lwFH0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sBHnFg/FC5qjaeZ7/61dml/TJ561n600HLYabEwpPUzXPMvX7fn9++RaW+DD94ja20vKL7tj3xpLMVY9pvojXUuaHOIaij+jmP5YqBL/z3EWx00MH7yPQo/697XhLjRhYWx3yydWVJPiQVCcv9jaByyrdp1e/YPXKTiyeqK1qac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FCctmaj7; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714580381; c=relaxed/simple;
+	bh=9bdC9XeFofWnbmiBQw2BosqjMA/ikUPHYCz4Gm+BJL0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ntJNYRd1IFl0dHkD6IzVaTqyv5I9ypzd634Hb4GNWIQwJUPdhH3fNK16YdWahpIB6KC2NZLWQEmvbt7/ONoBEImzP0szYdOW0Fc8VEDvfkYTV/5aydRuebdxZp/oLvnaVIHAY1PTG7KrDmTOeM1KgNJg5OK8tixcgrpVY+ICjRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U7VoKbcp; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FCctmaj7"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 92D4A18FB6;
-	Wed,  1 May 2024 12:14:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Plz5u6BxgWqP/4yLChEk98qeqT/eNxF1h804R6
-	lwFH0=; b=FCctmaj7T4JshSV6d3TQyyxz9AU27Ijr/VJb4FMePEecgnlPyrjTHn
-	4sgHuwIXUkAxhpXaK8GIhZMlPE7arMUupt5itENRBtZ+ZZW3Ih2M3zNDmTPeGu34
-	xnG4yJrTSNkRzeDom6r38IZNgOfjOq5dK+r01fqOY2ihBk7gATB0g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AA8218FB5;
-	Wed,  1 May 2024 12:14:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF8CE18FB4;
-	Wed,  1 May 2024 12:14:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: phillip.wood123@gmail.com
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-  phillip.wood@dunelm.org.uk,  Git List
- <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v5 1/2] add-patch: do not show UI messages on stderr
-In-Reply-To: <7a3fcf9c-a70f-47e8-9624-40b407f90242@gmail.com> (phillip's
-	message of "Wed, 1 May 2024 16:39:53 +0100")
-References: <4e2bc660-ee33-4641-aca5-783d0cefcd23@gmail.com>
-	<6d421c67-9e10-4a7b-9782-38ba8e9da915@gmail.com>
-	<db1d540f-30ae-4d4c-883b-088bcfe68140@gmail.com>
-	<b209a2b8-f98f-4f14-a687-9022d30968dd@gmail.com>
-	<952a9514-3cf1-4601-8f0d-db57adc750c3@gmail.com>
-	<10905ab3-bb3c-4669-9177-84c8e6759616@gmail.com>
-	<27fbb12a-f2d2-459c-a27b-519f69242105@gmail.com>
-	<ce11355e-25f3-4d76-91ae-bd561143dd49@gmail.com>
-	<7a3fcf9c-a70f-47e8-9624-40b407f90242@gmail.com>
-Date: Wed, 01 May 2024 09:14:37 -0700
-Message-ID: <xmqq5xvx5x1u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7VoKbcp"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2dd6a7ae2dcso112839311fa.1
+        for <git@vger.kernel.org>; Wed, 01 May 2024 09:19:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714580377; x=1715185177; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y1gs0YrDoGOkgLrhvz8I1ks7lovBc1JzZSzvY0C8ox0=;
+        b=U7VoKbcpPXvFcduOwFJcNIQwrvWa04q4O8DkWYj3kcpOFMYn/f49ylvHkL2mVl+mCk
+         midPmBFo9+gJUK/M4ViGiP1RNsgnVUsJJXdJdznZiF92nNREapn0oYuEfkkHNkVetzay
+         SE7OuRSRVSdmXNMQmMCCLXDrLEhKRMuAQAvkFNXeZzRrig+9NtX04yePNDOHKiV4oe5H
+         f6qa+OY9n+mipYFMZiKFUVhvZoHmxb9NSDj5OOwc7xoZsPcpZsXgqe/GoL/eIy1jmDH9
+         sUjWtmEwSsynY6+tTcmuXhbnDQVAStpOxKH8BxxgIxwi9CcPtFmGEtTi70/4zJUTNUDi
+         UmXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714580377; x=1715185177;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y1gs0YrDoGOkgLrhvz8I1ks7lovBc1JzZSzvY0C8ox0=;
+        b=QrxI9z2TUKdHfW/kjeXTHvFLAiEBuvhVoxkdsGyzVVaY8JD+/g/fwPTomcdZfnoAom
+         ihvQBSgjK4PDFmcVF0ZkkTUB/+aaS2+wwof2LN9DfVMSXwUqMFjQVOWP+d0pbhPTBuiH
+         d9Y1zesCD4kT2YZ9LHY7VvgNoberPfIYA6Al6WbceC4T3uFFfvMPDxRWMEKys6WBG1I0
+         7BRT1/Gs4f3PA7jgx3yN9qZrVkmROusYJr3uoavP9GPE6bpDbbIftN5KCRcxVfGX6bEM
+         oPi43ObTwOJ5XeTiqHlCYdB3/ckfnpyFZIEjD4GBZ6pm26PZ8knBROM+KRdpBo5oP1tU
+         aeSw==
+X-Gm-Message-State: AOJu0Yyml5UkHG+7fAwwLAPuBtAQ4N7iHgjQa+czbqNCj1DJQXCGoaU5
+	tbg+Zpy1JbccJHCFbisjgIchOMEmM/MKQvt4kxC5fquaWvUEif74ztQyQrcMw6JA3Hik/P3PR+s
+	wudK183hCUj4bKPjljSVQMsY5M4yeH+Wj
+X-Google-Smtp-Source: AGHT+IEXuHnb6PfsaGJro2WQj2WOYGb60pgFeJnAMz94v81WMQHZ3KP7TInRne4rGPP9C4ej67gsXlWRZE3G+9kpYlU=
+X-Received: by 2002:a05:651c:b20:b0:2db:c2e0:c541 with SMTP id
+ b32-20020a05651c0b2000b002dbc2e0c541mr2426050ljr.53.1714580376991; Wed, 01
+ May 2024 09:19:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E8FC0A7E-07D5-11EF-B7D4-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 1 May 2024 18:19:25 +0200
+Message-ID: <CAP8UFD1XaF=VAX4fexPh0hJd__vC6fSoiPQErGopm4CMvFcRTQ@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 110
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>, Adam Johnson <me@adamj.eu>, Dragan Simic <dsimic@manjaro.org>, 
+	Brian Lyles <brianmlyles@gmail.com>, Max Gautier <mg@max.gautier.name>, lwn@lwn.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-phillip.wood123@gmail.com writes:
+Hi everyone,
 
->>>> -		fprintf(stderr, _("No changes.\n"));
->>>> +		err(&s, _("No changes."));
->>>>    	else if (binary_count == s.file_diff_nr)
->>>> -		fprintf(stderr, _("Only binary files changed.\n"));
->>>> +		err(&s, _("Only binary files changed."));
->>>
->>> These two mean we'll now color these messages which we didn't do before. I
-> ...
-> I think so
-> ...
->> -		err(&s, _("Only binary files changed."));
->> +		error(_("only binary files changed"));
->>     	add_p_state_clear(&s);
->>   	return 0;
->> Or, simply leave them untouched in this series.
->
-> Either option sounds good to me
+The 110th edition of Git Rev News is now published:
 
-We are returning "success" to the caller, so using error() here is a
-bit strong.  Judging from how other messages emitted with err() in
-this program is meant to help the end user, they are all to tell the
-user why their input caused no actual change, and showing these two
-messages the same way as these other messages would be the best for
-consistency.
+  https://git.github.io/rev_news/2024/04/30/edition-110/
 
-So I'm inclined to say that what was posted is good.  If it paints
-these two messages in the same color as others, that is even getter.
+Thanks a lot to Junio Hamano, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec, Kristoffer =
+Haugsbakk,
+Dragan Simic and Adam Johnson who helped this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/709
