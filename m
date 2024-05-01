@@ -1,98 +1,102 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26493A1A2
-	for <git@vger.kernel.org>; Wed,  1 May 2024 10:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3811812E6A
+	for <git@vger.kernel.org>; Wed,  1 May 2024 14:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714559186; cv=none; b=aLPCCdKN3GV+X+zD4TBfIyh7fSkAL682dHufTww26H01oo91f6ODwEbGSHT5zDVlyl0LHntCMvkyNx5h1QJnth2ZEhJ6VelqhQ7TSJZzqgO9tGrL4lJFklgVa8QZDlLstTOVSAxd2kRr5OGHUg07EGpzcSOsIey8NwWmCT2xxV0=
+	t=1714574423; cv=none; b=n7z7BBnXKOZ6TqZPMutMkhaPyUxuEZwKi4+9VGmqnpWz2e7OyB47kjR6xlHjC7Tg+Hve1KJ/h868ttya/3ggOzjzjt69BqMnh0c0JhjyZ7FrdoB5B0nIZtsY5LRQYJZImiobMXck30PozbfroRR0Za2Lvtut9ILfTA7m4sM6KRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714559186; c=relaxed/simple;
-	bh=zaYlepaRtcICiGUKmfsARITTg/4tw3QDJ80GO3/aS9M=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=EM/j3bjygZ3P0IqG2SWZ1neMhXR1PgpLsKKk2oshnden8FetLLYXTJ9qke+j2u0irHb3R192HIaschwwy6eEg1ZKeLzkGLRWSMtgOAGUb769LzOgCTtoqKiUp9hzqo/Z+3QphYJFl/L72bp0XGOS/UyidPoBzkemFRszYy9hMrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=YQQYQ8G/; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1714574423; c=relaxed/simple;
+	bh=Bb8FztRAl+1w6ImWnjazwI/LyL5qcqHsjpOdzVNESBU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j18LA4qBrITkm60nW1/I20aXc/r/ty5N1YAwWckkAGgf3reKQvKCTutXkzgptJqqCMkckFWSdKEW+KkVyMkKdTfO20FNm457rXNJ/Z+HpcgaU8N9VMEbI6DtAKUumjbRrV4q+LuhlFRn9PPOwLZqNPU1hm33Onky9N3/4Uoz7z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ar5pOT3r; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="YQQYQ8G/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1714559176; x=1715163976; i=l.s.r@web.de;
-	bh=iMGG7fkMWbHHTWUfOQtLRrCGVXjHf1ml3fXLX5S7170=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=YQQYQ8G/uckqBohWtkWJ3+V5CN1Sm8Izt5arQqfPC7uv0Qd0zGF0VUX6XvmvuMqD
-	 rZ+C2Y/9az/IWlpET3hgPuFXy9dMslvtysngCKHIMcSWx3iMb4uHlE6u+9hoIJNKt
-	 PXWv8Vp4M6Ik0mwsc5pkv9lCI9AvmziRSgMTCaqlYTjGwy119VnRq42OX3LyEXoQk
-	 jMCpVSHMniOTzaowXEXZKdS/Hm1GUn2nHl3guHRSCwMOlQLppBB9JHNx7GHLuYLfo
-	 Rkg75/UJYvQHxZAm9OXehhixNZbWvnEtevFkuPCaKZ9IomVS5AzXPaUqjxAvweP/X
-	 w2Ys2/whVsXw8xEPsw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MPKFD-1sIw8D1vhN-00P9wS for
- <git@vger.kernel.org>; Wed, 01 May 2024 12:26:16 +0200
-Message-ID: <0e96c5a3-7b4d-4c6b-875e-d80e3eb07a00@web.de>
-Date: Wed, 1 May 2024 12:26:16 +0200
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ar5pOT3r"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-69b7d2de292so27095006d6.2
+        for <git@vger.kernel.org>; Wed, 01 May 2024 07:40:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714574421; x=1715179221; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJgYH7QJq+4GEIqrJGTt9JaHBy8AlzsDQnv0NMJwxZM=;
+        b=ar5pOT3rU6Pq9tAsBx0zPh1qvHcXZo+e2LXBHIhrHKWYMnr6Eb1jb/aD2t5+v7lrZx
+         RIa//VT6jU/2ltXLv1mjN0mlg0G+y6SC4/gvqqKqctQ3tFe9w/a30JXJs+ja1UYdilie
+         kfj2aYw62ZPhpSaFgZ1iJxR9uKj2JM93gZ0iYX0FyyP8+hVVcbmA4eMSIrT6Y9u9lvEU
+         6izTffZmrd1IgWie6BtaoGDPZCnUzzz0i4AJO+Mf9fKkevYRitOz4oWCvQ2PXReDY+Fa
+         vsNfJIh/RDkh6htEg0kJHbTqNj0w81wIRL36aXAnRq21uQsLtKkwfwYsOc6n8lVt4TDk
+         WX5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714574421; x=1715179221;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OJgYH7QJq+4GEIqrJGTt9JaHBy8AlzsDQnv0NMJwxZM=;
+        b=XGtFo3HAeh7rG7V7YTiI2r/sUm71y3/JtqEwAg8sKPmkVNkggMGS+ec/pKwA4Ypsvo
+         mR+lCHiywicm2gK0ZWxb+QIED/4ontBjUH/5jviS0DaiRp8y4J03skTIKuLNprnzD+0+
+         zJKkYPbSpVrGT0Pintco8nH0j7Rxl8XvsTSmZb0b4vvHP7BJT3FaEglvw4VOTXbYvij5
+         KiApoNGCoIJAaMYoi4qoSfgMnpN00wY73A6hZJiT6GG3ElUMH/j/hFykqR3vFKxRi+bm
+         vJVZONurNEelIxDEQ5uaZEmaz0yrzR5+OSLrtP4WXIy/Kbv7cxNG7ieJuOteQwpvjkFv
+         mQlA==
+X-Gm-Message-State: AOJu0Yz5wfGL15sLhpxnuGnw/tmbbjSRWgGAgAQEEn9Ece29BvHe8g7T
+	Klw+Ymw5aQjd3p0IQEqoYOi0e694ER9r1ifn0noJBq5E04m3TjEN+PVDnL+G5bw=
+X-Google-Smtp-Source: AGHT+IFPhqfSyfqUyNGnCl35U2fqphFyTveMel57p1FIXCh/cpSicy3n2VmvEcLos3waKbSMRFQ0iQ==
+X-Received: by 2002:ad4:5f45:0:b0:6a0:b3de:e3b5 with SMTP id p5-20020ad45f45000000b006a0b3dee3b5mr3164980qvg.47.1714574421150;
+        Wed, 01 May 2024 07:40:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d19-20020a0ce453000000b0068f35e9e9a2sm7080382qvm.8.2024.05.01.07.40.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 May 2024 07:40:20 -0700 (PDT)
+Date: Wed, 1 May 2024 10:40:14 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 00/23] pack-bitmap: pseudo-merge reachability bitmaps
+Message-ID: <ZjJUTlzOijT6E8pr@nand.local>
+References: <cover.1710972293.git.me@ttaylorr.com>
+ <cover.1714422410.git.me@ttaylorr.com>
+ <xmqq34r2zkgp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] diff-lib: stop calling diff_setup_done() in do_diff_cache()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Ed3qlKGKKltkT7p/rtxisYwihG5VFBCrlKzqURkzvG6ImFiQUv5
- IzhHibi/JpLQZ2rWQFl7IvuimW/nkhZIBO3bpzx7SIPuYRDB1zGO2KgVy22m4l7jMnXpDeD
- 49hePMsu4319gmjMlCbGXg0F4k+VQpZrU6i2mvpM2ylAe7XsrUk+3+tAI8v7/F2sP+HL/t3
- D+SDhW1rymc5tr+sVwoGQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Xez9UcZwXok=;JjUJAxNHd8ARn907get7qk3wJXh
- GzriKO4pzr3prLHSgaM3PYCjLWkVDj1xRqpzSIao+B5VvjEI45LGIE7IlCTMQqfwrIvvKswx2
- 2L3FmLFwXwfZNKlaWhp98pB+eO4iVeUkVLSoy06FODyCE9WbpCu0v3FhxWeFY+pKRa/pqzsUs
- +4zobIw6lFQxqk4EIRQn0K2KOi1Bi9TcBePZ7cspoQG5Vbt722GqGg8PACN+X8ET+86hakueg
- 3tV7hQepzuIVQnrvTCuQhj4+v2b9AQ3TNsUqHORCqThxtB8ZgV5asDbJHh0NO3Xlw5Q13YW/1
- jz/AqlZ1WlfbpOYYf93CrC8gZQagv4SDiA57Jh95ANA+rxRZE+rPTN+wBZiqzbf8iCv3x9Kkt
- FyX6KGFm4G/VPj0LLakUOQe3hD+FSTMtLmeGXvjeXQvgfDRCkooYeDskkh5mkEqMr8kYT+OLY
- fN8di8hmnKFAnnNL/wrGw1EviMLPw9CJyiexkynorWUjpSnYkChC3ps4Lc5mMtf7k+I0mCy3N
- 1shrSp151EJhcCB8v7Mzp4fa3MfLIjp1+ELq+f2AXrRKkUWgx2pd6gP3Q1D/2B0B4uuyIZcDl
- Z+MO43KZ7PYYrFh/0Kxf8RiNxvKxCSVAAy9V2o+AN6ucXralJkjPK/3dTMbOsvuDGDpPTZhR6
- 16uHtLPlTRSlngt4BoOo7frltvpAKS9179yqb6i3hfBtC6sFR/W5q4MIzqWBiE333Wjcqwllf
- 7aP51cOfrKXoz0MhFEbm0mDZn+djHqPOizUjMuUq17W0DJGlxih8uko6zCJBcxVAOgDiAjX2U
- vH7iiNRMEssNzJt9QFRrvya6s0pkv0rMzynEyquVrJ3tI=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq34r2zkgp.fsf@gitster.g>
 
-d44e5267ea (diff-lib: plug minor memory leaks in do_diff_cache(),
-2020-11-14) added the call to diff_setup_done() to release the memory
-of the parseopt member of struct diff_options that repo_init_revisions()
-had allocated via repo_diff_setup() and prep_parse_options().
+On Tue, Apr 30, 2024 at 01:03:50PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> >   - Rebased onto 2.45, so this is now based on 'master', which is at
+> >     786a3e4b8d (Git 2.45, 2024-04-29) at the time of writing.
+>
+> Is there any notable reason for the rebase (other than "2.45 is out
+> now") that needs to be called out?  Something along the lines of
+> "topic X and Y has graduated and the helper function used by this
+> topic has changed its external interface"?
 
-189e97bc4b (diff: remove parseopts member from struct diff_options,
-2022-12-01) did away with that allocation; diff_setup_done() doesn't
-release any memory anymore.  So stop calling this function on the blank
-diffopt member before it is overwritten, as this is no longer necessary.
+It's mostly that 2.45 is out, but there were a couple of topics that
+merged that produced minor conflicts that I wanted to resolve for you:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- diff-lib.c | 1 -
- 1 file changed, 1 deletion(-)
+- 625ef1c6f1 (Merge branch 'tb/t7700-fixup', 2024-04-16) introduced a
+  minor conflict (both sides add GIT_TEST_MULTI_PACK_INDEX=0 to the
+  relevant test invocations).
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 683f11e509..12b1541478 100644
-=2D-- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -660,7 +660,6 @@ int do_diff_cache(const struct object_id *tree_oid, st=
-ruct diff_options *opt)
+- d8360a86ed (Merge branch 'tb/midx-write', 2024-04-12) introduced a
+  conflict where this branch adds a call to the new
+  `bitmap_writer_init()` function in midx.c, but tb/midx-write moved all
+  of that code over to midx-write.c
 
- 	repo_init_revisions(opt->repo, &revs, NULL);
- 	copy_pathspec(&revs.prune_data, &opt->pathspec);
--	diff_setup_done(&revs.diffopt);
- 	revs.diffopt =3D *opt;
+Those are the two main ones, but I mostly just wanted to take care of it
+since we're on the other side of 2.45.
 
- 	if (diff_cache(&revs, tree_oid, NULL, 1))
-=2D-
-2.44.0
+> Thanks, queued.
+
+Thanks,
+Taylor
