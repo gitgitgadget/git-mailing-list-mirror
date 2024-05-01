@@ -1,55 +1,53 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F341635C7
-	for <git@vger.kernel.org>; Wed,  1 May 2024 22:40:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282AF1C68D
+	for <git@vger.kernel.org>; Wed,  1 May 2024 23:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714603254; cv=none; b=HNAn/cGUSwRbZ2uZN8Q3zmg15olAqkuZcmDWcemxn3IOsa7dY9eKlvAQA0KxpIQuVU5h4oFNiU/6ZCdNasGsyxGr3n2y3z3RTdZlr9xZyhWUH7vUoDaTzmeyFPQQadK7PdqF4X+bB3h2c53zShmYpoxClrL0TVfaxK6trt888CI=
+	t=1714604735; cv=none; b=O94JEQZgJnVsPu4p5qyjCcqy85dHL2jDYhnuFb0teuvptW7DQEyzKQZiF1JoBtvT7IO8yWP3YMET7hgk9jD/C0ux0QeonwWeVXBkhwDPgtyUuHg3T1sMREYlQ65qbtKvtMTFwRGfWRMlbEz12fb4Ij74CLVtkS5jJwqo1alcqAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714603254; c=relaxed/simple;
-	bh=VPXzg0XDov0WgLxqHBlGu1LIDVL9kL2gvyU48u72fLs=;
+	s=arc-20240116; t=1714604735; c=relaxed/simple;
+	bh=AkKu5WbQVge+Cw+HJKkSGkEsJGj7WXAvQ5yZe3aCzq8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=plb0b1j1l1AI1QlmmaquyxLWMI2eTEwQiTGD4pwthOnDmuPjUeS3bOmK6otGqX3D6NIgTJGqYndfsd7aRCeliBPVhlxkdDc6EgaaqpZXgqUwtY7ndm7A4bYDSF+m9U9gbO/YCqpWmLUbSP/B/jr3I7BCvW2BnNM5FZtNTwge9wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jaqhp2V4; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=GWchf0LLOR9I8zc6aY3MHEUHOBASr6N7be1zzJ40F0H/Fp5w5xj74so5mtctXfrelPRzLXtYzHnvgcvyhvQqjs23ssPIgEi3RwXJs1nV/0v0BZfcgrTB9EHJLJPBhdIqZRkQx1WcMywd4+4zI/0KY/fRCSXsyFuJjA11+JxTPSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CVS3haJH; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jaqhp2V4"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 462262B7E0;
-	Wed,  1 May 2024 18:40:52 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CVS3haJH"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE6191B918;
+	Wed,  1 May 2024 19:05:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=VPXzg0XDov0WgLxqHBlGu1LIDVL9kL2gvyU48u
-	72fLs=; b=Jaqhp2V4VHIS27zKWY+q/O4m/wi0ooZtTEh8JQsg1jNU77DGKtpXq+
-	aRn3x7W3RbRcOBYh66kDLT09Vqsu6fRZc+K0Y4dBC3yTGXwmxYpIczbsxoXJkz8L
-	TJ3Vlkwkq4vB8YJCQF30JEZ5pvGH0MN40oAZxImeA9l0j66AeeZ6s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E12D2B7DF;
-	Wed,  1 May 2024 18:40:52 -0400 (EDT)
+	:content-type; s=sasl; bh=AkKu5WbQVge+Cw+HJKkSGkEsJGj7WXAvQ5yZe3
+	aCzq8=; b=CVS3haJHzeOU9/Kq5EzEYl05GYm1aStAw6WJCQkoLG4Vfn+aTTMfmQ
+	TlhoYaYZLbEfSo2OvIAAwEdw4X4KqoqBWaprtuspFQZlKxsqAOV/otnmfmLbgRKB
+	gpWvvC9zZqH6LI+06H1fzB3lUMHK4ex1SWY+TEK9V/JZZMJZt8gyA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D58A21B917;
+	Wed,  1 May 2024 19:05:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A54722B7DC;
-	Wed,  1 May 2024 18:40:47 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3ECE21B916;
+	Wed,  1 May 2024 19:05:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Dhruva Krishnamurthy <dhruvakm@gmail.com>,  John Cai
- <johncai86@gmail.com>,  Karthik Nayak <karthik.188@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: using tree as attribute source is slow, was Re: Help
- troubleshoot performance regression cloning with depth: git 2.44 vs git
- 2.42
-In-Reply-To: <20240501220030.GA1442509@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 1 May 2024 18:00:30 -0400")
-References: <CAKOHPAn1btewYTdLYWpW+fOaXMY+JQZsLCQxUSwoUqnnFN_ohA@mail.gmail.com>
-	<20240501220030.GA1442509@coredump.intra.peff.net>
-Date: Wed, 01 May 2024 15:40:45 -0700
-Message-ID: <xmqqikzxi2aa.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v5 3/7] refs: support symrefs in 'reference-transaction'
+ hook
+In-Reply-To: <20240501202229.2695774-4-knayak@gitlab.com> (Karthik Nayak's
+	message of "Wed, 1 May 2024 22:22:25 +0200")
+References: <20240426152449.228860-1-knayak@gitlab.com>
+	<20240501202229.2695774-1-knayak@gitlab.com>
+	<20240501202229.2695774-4-knayak@gitlab.com>
+Date: Wed, 01 May 2024 16:05:30 -0700
+Message-ID: <xmqqy18tgmkl.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,45 +57,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- DA9956E0-080B-11EF-B46A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 4EE1D632-080F-11EF-BD56-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
->   - the cache here is static-local in the function. It should probably
->     at least be predicated on the tree_oid, and maybe attached to the
->     repository object? I think having one per repository at a time would
->     be fine (generally the tree_oid is set once per process, so it's not
->     like you're switching between multiple options).
+> +		if (update->flags & REF_HAVE_OLD && update->old_target)
 
-It should be per tree_oid or you will get a stale and incorrect
-result when you read paths from a different tree.  But thanks for
-that "something simple and stupid" code to clearly demonstrate
-that repeated reading of the attributes data is the problem.
+Although the precedence rule does not require it,
 
-Given a tree with a name, the result of reading a path from that
-tree does not depend on the repository the tree appears in, so the
-cache does not have a reason to be tied to a particular repository.
-Generally we work only inside a single repository, so attaching the
-cache to that single repository would be a good way to make it
-available globally without adding another global variable, as
-the_repository can serve as the starting point for the global state,
-but other than that there is no reason.
+		if ((update->flags & REF_HAVE_OLD) && update_old_target)
 
-I agree that the attribute layer may be a better place to cache this
-data.  As you pointed out, it already has a caching behaviour in its
-attr_stack data structure that is optimized for local walk that
-visits every path in a tree in depth first order, but it is likely
-that a different caching scheme that is more suitable for random
-access may need to be introduced.  The cache eviction strategy may
-need some thought (the attr_stack based caching has an obviously
-optimal eviction strategy---to evict the attribute data read from a
-directory when the traversal leaves that directory) in order to
-avoid unbounded bloat of the cached data.
+is probably easier to read.
 
-> I've cc'd John as the author of 2386535511. But really, that was just
-> enabling by default the attr-tree code added by 47cfc9bd7d (attr: add
-> flag `--source` to work with tree-ish, 2023-01-14). Although in that
-> original context (git check-attr) the lack of caching would be much less
-> important.
->
-> -Peff
+> +			strbuf_addf(&buf, "ref:%s ", update->old_target);
+> +		else
+> +			strbuf_addf(&buf, "%s ", oid_to_hex(&update->old_oid));
+
+So the promise this code assumes is that .old_target member is
+non-NULL if and only if the ref originally is a symbolic ref?
+
+And if the "we do not care what the original value is, whether it is
+a normal ref or a symbolic one" case, .old_oid would be all '\0' and
+REF_HAVE_OLD bit is not set?
+
+If we can write it like so:
+
+	if (!(update->flags & REF_HAVE_OLD))
+		strbuf_addf(&buf, "%s ", oid_to_hex(null_oid()));
+	else if (update->old_target)
+		strbuf_addf(&buf, "ref:%s ", update->old_target);
+	else
+		strbuf_addf(&buf, "ref:%s ", oid_to_hex(update->old_oid));
+
+it may make the intent of the code a lot more clear.  If we are
+operating in "!HAVE_OLD" mode, we show 0{40}.  Otherwise, old_target
+is non-NULL when the thing is symbolic, and if old_target is NULL,
+it is not symbolic and has its own value.
+
+The same comment applies to the other side.
+
+> +		if (update->flags & REF_HAVE_NEW && update->new_target)
+> +			strbuf_addf(&buf, "ref:%s ", update->new_target);
+> +		else
+> +			strbuf_addf(&buf, "%s ", oid_to_hex(&update->new_oid));
+
+
+> +		strbuf_addf(&buf, "%s\n", update->refname);
+>  
+>  		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+>  			if (errno != EPIPE) {
