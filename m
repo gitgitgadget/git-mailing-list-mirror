@@ -1,63 +1,63 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F124208A5
-	for <git@vger.kernel.org>; Thu,  2 May 2024 04:54:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52815374C2
+	for <git@vger.kernel.org>; Thu,  2 May 2024 04:54:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714625685; cv=none; b=lhAulL3wvVYda1lzhn8uVU6BZ64lepa51fiDywsnqoXEp2WhxK0EG+I/Kja80xX0rgdf6IP4t08jQBdsdXaJD112o1Awk/ln4InZWSZD12Dktv+rtzKjLyUL2bKpBQLmm6YYjImAOjSEgsbk3CvELXh5uqaClK29FFiYD2FXONw=
+	t=1714625686; cv=none; b=k6KRdgN8RDCIkGL+FeIfb9DvLXRTxuYKW9EzEmQvyIee4644iT5LaGxzuKVjKbqP7nKJcxsecUq03yHzRp2DgJ1pBcFA7KII2Rx22ufalmDSHMb+/RnMgRT5u4jpP/wYuspnAiNsIOLMlUqMFdqCF2b4M/zRWQWjGgbj8yKxGUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714625685; c=relaxed/simple;
-	bh=yYeQ7AAR3Yfte32t8sr7Txt2T8nA3wjmDCJC29ojBw8=;
+	s=arc-20240116; t=1714625686; c=relaxed/simple;
+	bh=8T+J6GkH4hjFOh0kdgWkfVP8Kv50fcLvA1QOL8zQ3xA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aYWV1NsKZ0LrnU4j+0D24sqNJsvvgAnXw9aZ1PzyKPba1pkQGVavROEWyPzcpvHy3K1HHNUfadBpuYLD+xd6QYddsOpH1gnvsPXGz3pj63R5cFMNosBwLFw8FdXZuIfNMyfl26LpLzmWUHt/kffXOO6Cv56WX2zNPEyYIPOjlAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mEuU8nsM; arc=none smtp.client-ip=209.85.208.182
+	 MIME-Version:To:Cc; b=Sn/fGSpKZheTjNRaD5EUC4HxGaGbvBx264nOe1l0lns+NvMRpaQY24gw0GVTw6yzDHmD0gI70O5VMtXaG7WDdk2Xfh/NEhsXNYlLefOSD3oVo38MLIBdKWOEchyxctjVw05Agvi4CtBjsRe6oIcoqurDN8Yf1aoOxNOYJQV76y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ihjgDsMP; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mEuU8nsM"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2df9af57b5eso72669641fa.2
-        for <git@vger.kernel.org>; Wed, 01 May 2024 21:54:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ihjgDsMP"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41bca450fa3so37388835e9.2
+        for <git@vger.kernel.org>; Wed, 01 May 2024 21:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714625681; x=1715230481; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714625682; x=1715230482; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CHy3w/jmb5rVyFsJuV+a2Zva6f4ZiFgRqNbnWmxj/vg=;
-        b=mEuU8nsMXtlTeHIwxY3PzFvwzdNkxrKISHNunuFfZ19SRhjnBDFjT/i82U5j7pasRK
-         Cnq5x7zr+p16Amoh8L66jGvA3qAfDI5xpwbswF/5tgbKO6tJLLt1tRVAwW5N/dhRYKRA
-         gR6TWp4Lm7W9MH8quMyVTUKNqUOKJm1g4mKPDyq/gSaj9/G6ILmOTCW8smSaLTkhKcyl
-         ffPw9knLitolOjGKIovoKU1ODJNFe3HIYX/lPCbVSYOdUV+ea00zj4u7s1qWhUOaKefX
-         ntnJPGoZNA7Y+NgWLXqYGF7z0GxsL/7NWkljzLafx8wFm3YV2MJkpFOKDzVUSLYHfn3i
-         U6Sw==
+        bh=dyL7WRUnzbYgLmQBOx3pRS9AZoBS024alSRNjZT/554=;
+        b=ihjgDsMPr2zHKI/bVuSlOUKjlkw5pIClN2eFliW68FZLc/FXd3N3kQ5JCrsmnVH1Nr
+         UCAvVOga9+Li1dC1TVKtb/9MyIxXlRdGunFwkppWmbu/suD+HGUvwtT+AsYLfW1oSOTz
+         03pdM5oFyseLURRkLaAoCfDF9cQgJfNvnvKwG8XJajef+FLzTWVa9Q0njVwR7h0qQ5sH
+         ylZ7uIH0pA273ARDut0hPjZ6KSXBjynxxWues6KwxkG39c3+w1IJn5I9jZRArJJqZbr+
+         shwRn0vUgSAcieHzlNP1mkSqE4/pzMien8yGVU3YPlCy+9Li3n+X0bv3XE+rs2hn7Wi+
+         nJfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714625681; x=1715230481;
+        d=1e100.net; s=20230601; t=1714625682; x=1715230482;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CHy3w/jmb5rVyFsJuV+a2Zva6f4ZiFgRqNbnWmxj/vg=;
-        b=m3ASpe4UwF8WzmlTTjtqneiCC2IrIPscrsrSryXSn4OPhrTVXnok09uBamao6Y6KQo
-         HyGDNrYUp+Z/5Qn4SWMnAi5XAtSkZNUngkYDzE1p7y6w0L6Fync20wjMBERFGPsU72ND
-         S7Gr06CWCqnyJGlwCzaPCB346iDiNB6nSjuaXRpRBXTNf2lNRC1JNu21jSoalgFlml5+
-         WtEHLEGLwOa9OlwhA6QkaDgA8s3K/3PRObQDeSUESLf8RGimhS6TK9SHcNajkwgeDGCo
-         Y5ixJStmyGqjECp1P28IItIeFVpK1qqjKi8cZcA7e/u6WV6bDNvJg9pnZWk+xx3qBOtV
-         yVSw==
-X-Gm-Message-State: AOJu0YyGXC0cOB4v1x3s8IcshlZqHyKFTLy6CQnt6fEgx2pyps5ApAn2
-	qu5nk6vQOQqchG/MJ8mYalF42SvLbVGaNlKdoVXjqw5oqKnX9VuEYL+iNw==
-X-Google-Smtp-Source: AGHT+IEOypnWKRFznf5MUEJGExBEy8xl2jNGs7KIndCO50bpBRRjJt6+tMxJ/WVSz+25ssoG/vNQWQ==
-X-Received: by 2002:a05:651c:515:b0:2e0:2891:c75e with SMTP id o21-20020a05651c051500b002e02891c75emr834829ljp.51.1714625680975;
-        Wed, 01 May 2024 21:54:40 -0700 (PDT)
+        bh=dyL7WRUnzbYgLmQBOx3pRS9AZoBS024alSRNjZT/554=;
+        b=AumPV7KGdJAQHOZ7iVq2LgKQ+vcHoV4Y+ycs2LVNfIuP4N5Pi3Gcbo7tSTXB/BofZt
+         5lljKOEof489gFhihekfotBOP3iv+/0wRDm18pOsWJozTIYMWiYOuw40T4tTIbwX79cM
+         BM4I9t1xAXFxddGMQDDVXT0z7HrbDItUuUVbmXgyLSIqqz1svXG/IZQthnI9EiDQ55UD
+         Hg1ip+QSMQuR+hKj3OoE5V1tJxijrW4WczJcMRgv+eySQKsYPF3Hl4BaMoWMOqYLYTaO
+         A9KkkU/3oSVaARzcME6Z4Wgr34hAJqX7Yaym4IH09xsZCEvadl5JxuH9e2shc3JB4lVc
+         BVVg==
+X-Gm-Message-State: AOJu0YxocKK4ZSWpiIj9oz4eM5rV+9xk7MoIZeRM9JHVUYdbGkRc9tAV
+	ESHg4vqbFLk7i6BXkp/gd499/+v+wzhYci8FsmnQl05kWyAtNlfCfJZPqA==
+X-Google-Smtp-Source: AGHT+IFbPYcakF4+2o5mNGZuFz8YEzIo4JH0Z2j7bgb0MNyyMiPSzH3FykFwW7r1zcfZoSJhl0v/dg==
+X-Received: by 2002:a05:600c:510b:b0:416:2471:e102 with SMTP id o11-20020a05600c510b00b004162471e102mr3146389wms.37.1714625682310;
+        Wed, 01 May 2024 21:54:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b0041563096e15sm4275084wms.5.2024.05.01.21.54.39
+        by smtp.gmail.com with ESMTPSA id j14-20020a5d452e000000b0034dae1488ccsm248164wra.53.2024.05.01.21.54.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 May 2024 21:54:39 -0700 (PDT)
-Message-Id: <c1a0f1bed043ee00b6aaf0a65aa3f8aa3b396497.1714625668.git.gitgitgadget@gmail.com>
+        Wed, 01 May 2024 21:54:41 -0700 (PDT)
+Message-Id: <310b632ddfdeae3251c18690b1fe0b0113a602b6.1714625668.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
 References: <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
 	<pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 May 2024 04:54:26 +0000
-Subject: [PATCH v4 09/10] trailer: document parse_trailers() usage
+Date: Thu, 02 May 2024 04:54:27 +0000
+Subject: [PATCH v4 10/10] trailer unit tests: inspect iterator contents
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,125 +82,277 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linus@ucla.edu>
 
-Explain how to use parse_trailers(), because earlier we made the
-trailer_info struct opaque. That is, because clients can no longer peek
-inside it, we should give them guidance about how the (pointer to the)
-opaque struct can still be useful to them.
+Previously we only checked whether we would iterate a certain (expected)
+number of times.
 
-Rename "head" struct to "trailer_objects" to make the wording of the new
-comments a bit easier to read (because "head" itself doesn't really have
-any domain-specific meaning here).
+Also check the parsed "raw", "key" and "val" fields during each
+iteration.
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Linus Arver <linus@ucla.edu>
 ---
- trailer.c |  8 ++++----
- trailer.h | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 54 insertions(+), 5 deletions(-)
+ t/unit-tests/t-trailer.c | 161 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 148 insertions(+), 13 deletions(-)
 
-diff --git a/trailer.c b/trailer.c
-index 33b6aa7e8bd..406745264aa 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1026,12 +1026,12 @@ static struct trailer_info *trailer_info_get(const struct process_trailer_option
- }
+diff --git a/t/unit-tests/t-trailer.c b/t/unit-tests/t-trailer.c
+index 4f640d2a4b8..2ecca359d96 100644
+--- a/t/unit-tests/t-trailer.c
++++ b/t/unit-tests/t-trailer.c
+@@ -1,14 +1,27 @@
+ #include "test-lib.h"
+ #include "trailer.h"
  
- /*
-- * Parse trailers in "str", populating the trailer info and "head"
-+ * Parse trailers in "str", populating the trailer info and "trailer_objects"
-  * linked list structure.
-  */
- struct trailer_info *parse_trailers(const struct process_trailer_options *opts,
- 				    const char *str,
--				    struct list_head *head)
-+				    struct list_head *trailer_objects)
+-static void t_trailer_iterator(const char *msg, size_t num_expected)
++struct contents {
++	const char *raw;
++	const char *key;
++	const char *val;
++};
++
++static void t_trailer_iterator(const char *msg, size_t num_expected,
++			       struct contents *contents)
  {
- 	struct trailer_info *info;
- 	struct strbuf tok = STRBUF_INIT;
-@@ -1051,13 +1051,13 @@ struct trailer_info *parse_trailers(const struct process_trailer_options *opts,
- 				      separator_pos);
- 			if (opts->unfold)
- 				unfold_value(&val);
--			add_trailer_item(head,
-+			add_trailer_item(trailer_objects,
- 					 strbuf_detach(&tok, NULL),
- 					 strbuf_detach(&val, NULL));
- 		} else if (!opts->only_trailers) {
- 			strbuf_addstr(&val, trailer);
- 			strbuf_strip_suffix(&val, "\n");
--			add_trailer_item(head,
-+			add_trailer_item(trailer_objects,
- 					 NULL,
- 					 strbuf_detach(&val, NULL));
- 		}
-diff --git a/trailer.h b/trailer.h
-index b0ec7658c67..82104912d70 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -70,14 +70,63 @@ void parse_trailers_from_command_line_args(struct list_head *arg_head,
- void process_trailers_lists(struct list_head *head,
- 			    struct list_head *arg_head);
+ 	struct trailer_iterator iter;
+ 	size_t i = 0;
  
-+/*
-+ * Given some input string "str", return a pointer to an opaque trailer_info
-+ * structure. Also populate the trailer_objects list with parsed trailer
-+ * objects. Internally this calls trailer_info_get() to get the opaque pointer,
-+ * but does some extra work to populate the trailer_objects linked list.
-+ *
-+ * The opaque trailer_info pointer can be used to check the position of the
-+ * trailer block as offsets relative to the beginning of "str" in
-+ * trailer_block_start() and trailer_block_end().
-+ * blank_line_before_trailer_block() returns 1 if there is a blank line just
-+ * before the trailer block. All of these functions are useful for preserving
-+ * the input before and after the trailer block, if we were to write out the
-+ * original input (but with the trailer block itself modified); see
-+ * builtin/interpret-trailers.c for an example.
-+ *
-+ * For iterating through the parsed trailer block (if you don't care about the
-+ * position of the trailer block itself in the context of the larger string text
-+ * from which it was parsed), please see trailer_iterator_init() which uses the
-+ * trailer_info struct internally.
-+ *
-+ * Lastly, callers should call trailer_info_release() when they are done using
-+ * the opaque pointer.
-+ *
-+ * NOTE: Callers should treat both trailer_info and trailer_objects as
-+ * read-only items, because there is some overlap between the two (trailer_info
-+ * has "char **trailers" string array, and trailer_objects will have the same
-+ * data but as a linked list of trailer_item objects). This API does not perform
-+ * any synchronization between the two. In the future we should be able to
-+ * reduce the duplication and use just the linked list.
-+ */
- struct trailer_info *parse_trailers(const struct process_trailer_options *,
- 				    const char *str,
--				    struct list_head *head);
-+				    struct list_head *trailer_objects);
+ 	trailer_iterator_init(&iter, msg);
+-	while (trailer_iterator_advance(&iter))
++	while (trailer_iterator_advance(&iter)) {
++		if (num_expected) {
++			check_str(iter.raw, contents[i].raw);
++			check_str(iter.key.buf, contents[i].key);
++			check_str(iter.val.buf, contents[i].val);
++		}
+ 		i++;
++	}
+ 	trailer_iterator_release(&iter);
  
-+/*
-+ * Return the offset of the start of the trailer block. That is, 0 is the start
-+ * of the input ("str" in parse_trailers()) and some other positive number
-+ * indicates how many bytes we have to skip over before we get to the beginning
-+ * of the trailer block.
-+ */
- size_t trailer_block_start(struct trailer_info *);
+ 	check_uint(i, ==, num_expected);
+@@ -16,22 +29,26 @@ static void t_trailer_iterator(const char *msg, size_t num_expected)
+ 
+ static void run_t_trailer_iterator(void)
+ {
 +
-+/*
-+ * Return the end of the trailer block, again relative to the start of the
-+ * input.
-+ */
- size_t trailer_block_end(struct trailer_info *);
-+
-+/*
-+ * Return 1 if the trailer block had an extra newline (blank line) just before
-+ * it.
-+ */
- int blank_line_before_trailer_block(struct trailer_info *);
+ 	static struct test_cases {
+ 		const char *name;
+ 		const char *msg;
+ 		size_t num_expected;
++		struct contents contents[10];
+ 	} tc[] = {
+ 		{
+ 			"empty input",
+ 			"",
+-			0
++			0,
++			{{0}},
+ 		},
+ 		{
+ 			"no newline at beginning",
+ 			"Fixes: x\n"
+ 			"Acked-by: x\n"
+ 			"Reviewed-by: x\n",
+-			0
++			0,
++			{{0}},
+ 		},
+ 		{
+ 			"newline at beginning",
+@@ -39,7 +56,27 @@ static void run_t_trailer_iterator(void)
+ 			"Fixes: x\n"
+ 			"Acked-by: x\n"
+ 			"Reviewed-by: x\n",
+-			3
++			3,
++			{
++				{
++					.raw = "Fixes: x\n",
++					.key = "Fixes",
++					.val = "x",
++				},
++				{
++					.raw = "Acked-by: x\n",
++					.key = "Acked-by",
++					.val = "x",
++				},
++				{
++					.raw = "Reviewed-by: x\n",
++					.key = "Reviewed-by",
++					.val = "x",
++				},
++				{
++					0
++				},
++			},
+ 		},
+ 		{
+ 			"without body text",
+@@ -48,7 +85,27 @@ static void run_t_trailer_iterator(void)
+ 			"Fixes: x\n"
+ 			"Acked-by: x\n"
+ 			"Reviewed-by: x\n",
+-			3
++			3,
++			{
++				{
++					.raw = "Fixes: x\n",
++					.key = "Fixes",
++					.val = "x",
++				},
++				{
++					.raw = "Acked-by: x\n",
++					.key = "Acked-by",
++					.val = "x",
++				},
++				{
++					.raw = "Reviewed-by: x\n",
++					.key = "Reviewed-by",
++					.val = "x",
++				},
++				{
++					0
++				},
++			},
+ 		},
+ 		{
+ 			"with body text, without divider",
+@@ -63,7 +120,32 @@ static void run_t_trailer_iterator(void)
+ 			"Acked-by: x\n"
+ 			"Reviewed-by: x\n"
+ 			"Signed-off-by: x\n",
+-			4
++			4,
++			{
++				{
++					.raw = "Fixes: x\n",
++					.key = "Fixes",
++					.val = "x",
++				},
++				{
++					.raw = "Acked-by: x\n",
++					.key = "Acked-by",
++					.val = "x",
++				},
++				{
++					.raw = "Reviewed-by: x\n",
++					.key = "Reviewed-by",
++					.val = "x",
++				},
++				{
++					.raw = "Signed-off-by: x\n",
++					.key = "Signed-off-by",
++					.val = "x",
++				},
++				{
++					0
++				},
++			},
+ 		},
+ 		{
+ 			"with body text, without divider (second trailer block)",
+@@ -85,7 +167,22 @@ static void run_t_trailer_iterator(void)
+ 			 */
+ 			"Helped-by: x\n"
+ 			"Signed-off-by: x\n",
+-			2
++			2,
++			{
++				{
++					.raw = "Helped-by: x\n",
++					.key = "Helped-by",
++					.val = "x",
++				},
++				{
++					.raw = "Signed-off-by: x\n",
++					.key = "Signed-off-by",
++					.val = "x",
++				},
++				{
++					0
++				},
++			},
+ 		},
+ 		{
+ 			"with body text, with divider",
+@@ -103,7 +200,17 @@ static void run_t_trailer_iterator(void)
+ 			 * always ignores the divider.
+ 			 */
+ 			"Signed-off-by: x\n",
+-			1
++			1,
++			{
++				{
++					.raw = "Signed-off-by: x\n",
++					.key = "Signed-off-by",
++					.val = "x",
++				},
++				{
++					0
++				},
++			},
+ 		},
+ 		{
+ 			"with non-trailer lines in trailer block",
+@@ -125,7 +232,32 @@ static void run_t_trailer_iterator(void)
+ 			 * because we still want to iterate through the entire
+ 			 * block.
+ 			 */
+-			4
++			4,
++			{
++				{
++					.raw = "not a trailer line\n",
++					.key = "not a trailer line",
++					.val = "",
++				},
++				{
++					.raw = "not a trailer line\n",
++					.key = "not a trailer line",
++					.val = "",
++				},
++				{
++					.raw = "not a trailer line\n",
++					.key = "not a trailer line",
++					.val = "",
++				},
++				{
++					.raw = "Signed-off-by: x\n",
++					.key = "Signed-off-by",
++					.val = "x",
++				},
++				{
++					0
++				},
++			},
+ 		},
+ 		{
+ 			"with non-trailer lines (one too many) in trailer block",
+@@ -140,7 +272,8 @@ static void run_t_trailer_iterator(void)
+ 			"not a trailer line\n"
+ 			"not a trailer line\n"
+ 			"Signed-off-by: x\n",
+-			0
++			0,
++			{{0}},
+ 		},
+ 		{
+ 			"with non-trailer lines (only 1) in trailer block, but no Git-generated trailers",
+@@ -162,13 +295,15 @@ static void run_t_trailer_iterator(void)
+ 			"Acked-by: x\n"
+ 			"Acked-by: x\n"
+ 			"not a trailer line\n",
+-			0
++			0,
++			{{0}},
+ 		},
+ 	};
  
-+/*
-+ * Free trailer_info struct.
-+ */
- void trailer_info_release(struct trailer_info *info);
- 
- void trailer_config_init(void);
+ 	for (int i = 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
+ 		TEST(t_trailer_iterator(tc[i].msg,
+-					tc[i].num_expected),
++					tc[i].num_expected,
++					tc[i].contents),
+ 		     "%s", tc[i].name);
+ 	}
+ }
 -- 
 gitgitgadget
-
