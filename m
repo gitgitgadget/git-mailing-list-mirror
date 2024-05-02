@@ -1,63 +1,63 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D72912E75
-	for <git@vger.kernel.org>; Thu,  2 May 2024 04:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C5A24A0E
+	for <git@vger.kernel.org>; Thu,  2 May 2024 04:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714625675; cv=none; b=QB+31m/Fw0bdzcgrBE8ShR0CZ+81QwwM5BB2RJjq0yf+9nTU3ZbBHiZCHCr/XixdJ7116WzQ8ui0ui6bQHJRcrH/UtDS+TynCzAMCc2QDG0C7NH2uXUk9abfjBC2TBCtUep9I8J7H1EhG0wp/nBCfTerT4kT74pG7eGslKzV980=
+	t=1714625677; cv=none; b=TD+vFZJ+Np4XVbWuXLE0IgVmCIGDPlyzUvFQnK5/gkXz7jpBq/cX+ODrnjamNTVx+FQlDv73msEc02Nxeyp1TWa8EDvaETCDUV8ScRIgnYK/6YNQRo3cwUQB1QK//H/JvQGjL5gQHRyIuOgNk7cxXO+4yk6eYuQXcZbajXZXWQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714625675; c=relaxed/simple;
-	bh=g6JeJcLryUUQ1Z+s9u08hvV+Ey/BjT/kf7oFT8phA2k=;
+	s=arc-20240116; t=1714625677; c=relaxed/simple;
+	bh=0dq7EZz69LBcz5cHGHAl5MdUisMDkm7R8Z3I/8TkhYc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=szebRBy4weohEs1uNJWifTK5AUDNZzn6WxRA1MLG3RQpAo7AMwrGd6VIHw1xMzInPyYoID4iDOJ+FGcSGy+rnNgPvKpaDL70fimaK++ed8WHyrBWDWqO6OC6Vl/2KyoI+2AGSgagKzuKxYWmtk+y6Mo/YXaje7JiXZK0+gv1sbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hmDIxHpR; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version:To:Cc; b=O12aMyiXVm2OfaeUXdDDNwBjrTrF0lqVsF4EHWNngXBQ0FIBtoMNNYUJKvcYzj6/g/DlvqVaxfThfyF23nMHnqSvDt/4K1PFr+ER01uKVu7Nwv6tk79plMVjP3rOczM313kqI+L0O0mUSghMvriGScHXuuuAecIYKlJP7+HHp94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WqclUX4V; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmDIxHpR"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34e040ed031so450057f8f.0
-        for <git@vger.kernel.org>; Wed, 01 May 2024 21:54:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WqclUX4V"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2dd6c14d000so91688511fa.0
+        for <git@vger.kernel.org>; Wed, 01 May 2024 21:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714625672; x=1715230472; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714625673; x=1715230473; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tFyr8DwpcDs6uJW2CB97JjAvFQRz2zEA8znyg8RYS+U=;
-        b=hmDIxHpRjtUqGLmAe5sLGQRissTfRg4JQ9gw6q5z/r4Ebm4QSb4AbhXSPJoT8IhOCo
-         v7lWr/kQ8HS9lAGQ5P4I/hbHPHfu8C2FbnYr+ky2VHqOYMKUFQ69GKHln7TwRspnYK/A
-         g4Oe3j+oT4bqEjZzzuzWklairncRiCAJcoWJCkP1R/SdJ2YY74Hmvu700p0IFQeYgack
-         8k6Q7paExDAoBp7O+f5VkkyuKCD61cqd/KeycBp4CcqSE2s6xE79pFPk8/QlANExBiy7
-         40/CpEUaMxe23Pz24PZ5R47ZkDXvDFBJXvSwwGhRBjvRrdZlFoX4/3A18ws9OURlUsfJ
-         Iifw==
+        bh=NVtPJ0vp+RWJgaMX0JHtnOVHtN9uHmXYYn1fiQs8ZC4=;
+        b=WqclUX4VLcDarLljfOGpqOKrXuCStx82Z/f+bcxfr4aaRAaCbeeGziyMNQmW2gWIcB
+         m5hSAhos5Vnt5mHfDImQipWJCiwpUPSeJV9/QUqWgt0/VMvpvR4Au1hzf7kq3ROygYq1
+         57EBs9G0Gs0zQ6CQAH/ugnwvfLYiOA9PMGRoz5Mm0NalM5QIHjYTNQAZYkAJOEYF+1CM
+         zfr+EMDASWO+4cqHnO47ohg5HGx+l7sUJ8vowLDxycjDyWUs7VyUnQFGGJ62Fd+NpGQz
+         o1FhAtSZ4ahdi48ICFH+lse3i6jZ7Qqo9izAJ5QsQ0ta3kwJ2rzJ9Z5ja8IzHmOJoFWu
+         1EfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714625672; x=1715230472;
+        d=1e100.net; s=20230601; t=1714625673; x=1715230473;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tFyr8DwpcDs6uJW2CB97JjAvFQRz2zEA8znyg8RYS+U=;
-        b=N12Jxqg5gLV3KFhaR+QTOLs9sljpTHjksTm+xNzM8cJanH6ShyU4lqIRw+IIoLNpc3
-         92BvyrBGn01AISVUHgS94mkWFZ+Fiqe5oVGavnMdzjBqUEX4NPww1TYCJAkRbSnElPfi
-         vy0KTfPALvxe5CCJsMLWthu4xutmQco8vsRp75q9yw5VbJKlApaLkEsC5vOKAB82iQYp
-         3o139TGX0kmGrJpAhbghbqW9HIaI4iunkVYBuUEdYFyi8H3e7q4xQlUu61EI+c/A/Om3
-         dO98EKTe3m+0Q8PT0bFJ48czsulWv0NXTZr1zjkhSTsdqqjCI2hfhId82STkHLxqrhMC
-         G1mA==
-X-Gm-Message-State: AOJu0Yy42CrPJtSBSMY3L7PV40Tx+qMCg7oV0HzFysjtWiv0HuYNZqAU
-	wGQs57D6kQn1CTl+hhTBpWvPac/FoFi0QuJUErQO51SWUcPYTyIrIWHe5Q==
-X-Google-Smtp-Source: AGHT+IG5E7MzIEkYxowJMzpd+aj6jHqhauUSXHx6D2CzWs+yWVrjJ81GXUCNXS21hCSXl0m1F7s+GA==
-X-Received: by 2002:a5d:6047:0:b0:34c:f8ad:f782 with SMTP id j7-20020a5d6047000000b0034cf8adf782mr2556485wrt.40.1714625671766;
-        Wed, 01 May 2024 21:54:31 -0700 (PDT)
+        bh=NVtPJ0vp+RWJgaMX0JHtnOVHtN9uHmXYYn1fiQs8ZC4=;
+        b=UcDPIiGw+LVrs/fhAKcMB5kKP6HeBNMut/S3skP8oP6a5bSO5vcRsr8S1CWz2Qq9/h
+         nvZPRZyJfk5l2yHs66uKHx5qZYCfRtugFWePoG6TRlIDtvPowqcOLSOgk55miEcPXU8q
+         eH05K9wbc2qIEksgGM8lRvAgJWDn3eQ8bvJ2PnU8tmWkVZbmp81vLW4yE08xJzz2tY0D
+         DPj+YbAYUxShDweB+Yr6WH7u/2i/2jWTxWXrEq+5Df+3JrQn1MZYP4KDAI/hMSXPoSMR
+         shD0j8ErWM8IFIyFdDoU8JlZkLQWOXNQcNPQBpT7aoD2YUVPLT3wHrM7F7PmTxigzHxA
+         RzaQ==
+X-Gm-Message-State: AOJu0Yy6DL9Co85lYt6+/zWvolsroHF+MB7skmMoAjtP1rhysmgJA+0A
+	SjTCsKrj1IKWQJ3tSBi+HbiVyfYiiA6uY5cq8HMK2XW5wuwSTX9Lc4B8zg==
+X-Google-Smtp-Source: AGHT+IH178GrwQ5lKIc2vODGHui0ZGTlQ9Xtp4fESA4mJcoeYP6z5/zl//jqzD5Jd2Ihx2A2b1atJQ==
+X-Received: by 2002:a2e:ba14:0:b0:2dc:b467:cb32 with SMTP id p20-20020a2eba14000000b002dcb467cb32mr497211lja.14.1714625673203;
+        Wed, 01 May 2024 21:54:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o10-20020a5d47ca000000b0034d9e5411ebsm248618wrc.45.2024.05.01.21.54.31
+        by smtp.gmail.com with ESMTPSA id r9-20020a05600c35c900b0041bf5b9fb93sm511167wmq.5.2024.05.01.21.54.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 May 2024 21:54:31 -0700 (PDT)
-Message-Id: <b503b539c6fff7a3894c613dfc603a8241c790a1.1714625667.git.gitgitgadget@gmail.com>
+        Wed, 01 May 2024 21:54:32 -0700 (PDT)
+Message-Id: <4aeb48050b14e44ec65cfa651a4d98587a6cd860.1714625668.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
 References: <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
 	<pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 May 2024 04:54:19 +0000
-Subject: [PATCH v4 02/10] trailer: add unit tests for trailer iterator
+Date: Thu, 02 May 2024 04:54:20 +0000
+Subject: [PATCH v4 03/10] trailer: teach iterator about non-trailer lines
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,214 +82,167 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linus@ucla.edu>
 
-Test the number of trailers found by the iterator (to be more precise,
-the parsing mechanism which the iterator just walks over) when given
-some some arbitrary log message.
+Previously the iterator did not iterate over non-trailer lines. This was
+somewhat unfortunate, because trailer blocks could have non-trailer
+lines in them since 146245063e (trailer: allow non-trailers in trailer
+block, 2016-10-21), which was before the iterator was created in
+f0939a0eb1 (trailer: add interface for iterating over commit trailers,
+2020-09-27).
 
-We test the iterator because it is a public interface function exposed
-by the trailer API (we generally don't want to test internal
-implementation details which are, unlike the API, subject to drastic
-changes).
+So if trailer API users wanted to iterate over all lines in a trailer
+block (including non-trailer lines), they could not use the iterator and
+were forced to use the lower-level trailer_info struct directly (which
+provides a raw string array that includes all lines in the trailer
+block).
+
+Change the iterator's behavior so that we also iterate over non-trailer
+lines, instead of skipping over them. The new "raw" member of the
+iterator allows API users to access previously inaccessible non-trailer
+lines. Reword the variable "trailer" to just "line" because this
+variable can now hold both trailer lines _and_ non-trailer lines.
+
+The new "raw" member is important because anyone currently not using the
+iterator is using trailer_info's raw string array directly to access
+lines to check what the combined key + value looks like. If we didn't
+provide a "raw" member here, iterator users would have to re-construct
+the unparsed line by concatenating the key and value back together again
+--- which places an undue burden for iterator users.
+
+The next commit demonstrates the use of the iterator in sequencer.c as an
+example of where "raw" will be useful, so that it can start using the
+iterator.
+
+For the existing use of the iterator in builtin/shortlog.c, we don't
+have to change the code there because that code does
+
+    trailer_iterator_init(&iter, body);
+    while (trailer_iterator_advance(&iter)) {
+        const char *value = iter.val.buf;
+
+        if (!string_list_has_string(&log->trailers, iter.key.buf))
+            continue;
+
+        ...
+
+and the
+
+        if (!string_list_has_string(&log->trailers, iter.key.buf))
+
+condition already skips over non-trailer lines (iter.key.buf is empty
+for non-trailer lines, making the comparison still work even with this
+commit).
+
+Rename "num_expected_trailers" to "num_expected" in
+t/unit-tests/t-trailer.c because the items we iterate over now include
+non-trailer lines.
 
 Signed-off-by: Linus Arver <linus@ucla.edu>
 ---
- Makefile                 |   1 +
- t/unit-tests/t-trailer.c | 174 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 175 insertions(+)
- create mode 100644 t/unit-tests/t-trailer.c
+ t/unit-tests/t-trailer.c | 16 +++++++++++-----
+ trailer.c                | 12 +++++-------
+ trailer.h                |  7 +++++++
+ 3 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d3a3f16f076..5418ddd03be 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1347,6 +1347,7 @@ UNIT_TEST_PROGRAMS += t-ctype
- UNIT_TEST_PROGRAMS += t-mem-pool
- UNIT_TEST_PROGRAMS += t-prio-queue
- UNIT_TEST_PROGRAMS += t-strbuf
-+UNIT_TEST_PROGRAMS += t-trailer
- UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
- UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
 diff --git a/t/unit-tests/t-trailer.c b/t/unit-tests/t-trailer.c
-new file mode 100644
-index 00000000000..c1f897235c7
---- /dev/null
+index c1f897235c7..4f640d2a4b8 100644
+--- a/t/unit-tests/t-trailer.c
 +++ b/t/unit-tests/t-trailer.c
-@@ -0,0 +1,174 @@
-+#include "test-lib.h"
-+#include "trailer.h"
-+
-+static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
-+{
-+	struct trailer_iterator iter;
-+	size_t i = 0;
-+
-+	trailer_iterator_init(&iter, msg);
-+	while (trailer_iterator_advance(&iter))
-+		i++;
-+	trailer_iterator_release(&iter);
-+
-+	check_uint(i, ==, num_expected_trailers);
-+}
-+
-+static void run_t_trailer_iterator(void)
-+{
-+	static struct test_cases {
-+		const char *name;
-+		const char *msg;
-+		size_t num_expected_trailers;
-+	} tc[] = {
-+		{
-+			"empty input",
-+			"",
-+			0
-+		},
-+		{
-+			"no newline at beginning",
-+			"Fixes: x\n"
-+			"Acked-by: x\n"
-+			"Reviewed-by: x\n",
-+			0
-+		},
-+		{
-+			"newline at beginning",
-+			"\n"
-+			"Fixes: x\n"
-+			"Acked-by: x\n"
-+			"Reviewed-by: x\n",
-+			3
-+		},
-+		{
-+			"without body text",
-+			"subject: foo bar\n"
-+			"\n"
-+			"Fixes: x\n"
-+			"Acked-by: x\n"
-+			"Reviewed-by: x\n",
-+			3
-+		},
-+		{
-+			"with body text, without divider",
-+			"my subject\n"
-+			"\n"
-+			"my body which is long\n"
-+			"and contains some special\n"
-+			"chars like : = ? !\n"
-+			"hello\n"
-+			"\n"
-+			"Fixes: x\n"
-+			"Acked-by: x\n"
-+			"Reviewed-by: x\n"
-+			"Signed-off-by: x\n",
+@@ -1,7 +1,7 @@
+ #include "test-lib.h"
+ #include "trailer.h"
+ 
+-static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
++static void t_trailer_iterator(const char *msg, size_t num_expected)
+ {
+ 	struct trailer_iterator iter;
+ 	size_t i = 0;
+@@ -11,7 +11,7 @@ static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
+ 		i++;
+ 	trailer_iterator_release(&iter);
+ 
+-	check_uint(i, ==, num_expected_trailers);
++	check_uint(i, ==, num_expected);
+ }
+ 
+ static void run_t_trailer_iterator(void)
+@@ -19,7 +19,7 @@ static void run_t_trailer_iterator(void)
+ 	static struct test_cases {
+ 		const char *name;
+ 		const char *msg;
+-		size_t num_expected_trailers;
++		size_t num_expected;
+ 	} tc[] = {
+ 		{
+ 			"empty input",
+@@ -119,7 +119,13 @@ static void run_t_trailer_iterator(void)
+ 			"not a trailer line\n"
+ 			"not a trailer line\n"
+ 			"Signed-off-by: x\n",
+-			1
++			/*
++			 * Even though there is only really 1 real "trailer"
++			 * (Signed-off-by), we still have 4 trailer objects
++			 * because we still want to iterate through the entire
++			 * block.
++			 */
 +			4
-+		},
-+		{
-+			"with body text, without divider (second trailer block)",
-+			"my subject\n"
-+			"\n"
-+			"my body which is long\n"
-+			"and contains some special\n"
-+			"chars like : = ? !\n"
-+			"hello\n"
-+			"\n"
-+			"Fixes: x\n"
-+			"Acked-by: x\n"
-+			"Reviewed-by: x\n"
-+			"Signed-off-by: x\n"
-+			"\n"
-+			/*
-+			 * Because this is the last trailer block, it takes
-+			 * precedence over the first one encountered above.
-+			 */
-+			"Helped-by: x\n"
-+			"Signed-off-by: x\n",
-+			2
-+		},
-+		{
-+			"with body text, with divider",
-+			"my subject\n"
-+			"\n"
-+			"my body which is long\n"
-+			"and contains some special\n"
-+			"chars like : = ? !\n"
-+			"hello\n"
-+			"\n"
-+			"---\n"
-+			"\n"
-+			/*
-+			 * This trailer still counts because the iterator
-+			 * always ignores the divider.
-+			 */
-+			"Signed-off-by: x\n",
-+			1
-+		},
-+		{
-+			"with non-trailer lines in trailer block",
-+			"subject: foo bar\n"
-+			"\n"
-+			/*
-+			 * Even though this trailer block has a non-trailer line
-+			 * in it, it's still a valid trailer block because it's
-+			 * at least 25% trailers and is Git-generated (see
-+			 * git_generated_prefixes[] in trailer.c).
-+			 */
-+			"not a trailer line\n"
-+			"not a trailer line\n"
-+			"not a trailer line\n"
-+			"Signed-off-by: x\n",
-+			1
-+		},
-+		{
-+			"with non-trailer lines (one too many) in trailer block",
-+			"subject: foo bar\n"
-+			"\n"
-+			/*
-+			 * This block has only 20% trailers, so it's below the
-+			 * 25% threshold.
-+			 */
-+			"not a trailer line\n"
-+			"not a trailer line\n"
-+			"not a trailer line\n"
-+			"not a trailer line\n"
-+			"Signed-off-by: x\n",
-+			0
-+		},
-+		{
-+			"with non-trailer lines (only 1) in trailer block, but no Git-generated trailers",
-+			"subject: foo bar\n"
-+			"\n"
-+			/*
-+			 * This block has only 1 non-trailer out of 10 (IOW, 90%
-+			 * trailers) but is not considered a trailer block
-+			 * because the 25% threshold only applies to cases where
-+			 * there was a Git-generated trailer.
-+			 */
-+			"Reviewed-by: x\n"
-+			"Reviewed-by: x\n"
-+			"Reviewed-by: x\n"
-+			"Helped-by: x\n"
-+			"Helped-by: x\n"
-+			"Helped-by: x\n"
-+			"Acked-by: x\n"
-+			"Acked-by: x\n"
-+			"Acked-by: x\n"
-+			"not a trailer line\n",
-+			0
-+		},
-+	};
-+
-+	for (int i = 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
-+		TEST(t_trailer_iterator(tc[i].msg,
-+					tc[i].num_expected_trailers),
-+		     "%s", tc[i].name);
-+	}
-+}
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	run_t_trailer_iterator();
-+	return test_done();
-+}
+ 		},
+ 		{
+ 			"with non-trailer lines (one too many) in trailer block",
+@@ -162,7 +168,7 @@ static void run_t_trailer_iterator(void)
+ 
+ 	for (int i = 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
+ 		TEST(t_trailer_iterator(tc[i].msg,
+-					tc[i].num_expected_trailers),
++					tc[i].num_expected),
+ 		     "%s", tc[i].name);
+ 	}
+ }
+diff --git a/trailer.c b/trailer.c
+index 3e4dab9c065..4700c441442 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1146,17 +1146,15 @@ void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
+ 
+ int trailer_iterator_advance(struct trailer_iterator *iter)
+ {
+-	while (iter->internal.cur < iter->internal.info.trailer_nr) {
+-		char *trailer = iter->internal.info.trailers[iter->internal.cur++];
+-		int separator_pos = find_separator(trailer, separators);
+-
+-		if (separator_pos < 1)
+-			continue; /* not a real trailer */
++	if (iter->internal.cur < iter->internal.info.trailer_nr) {
++		char *line = iter->internal.info.trailers[iter->internal.cur++];
++		int separator_pos = find_separator(line, separators);
+ 
++		iter->raw = line;
+ 		strbuf_reset(&iter->key);
+ 		strbuf_reset(&iter->val);
+ 		parse_trailer(&iter->key, &iter->val, NULL,
+-			      trailer, separator_pos);
++			      line, separator_pos);
+ 		/* Always unfold values during iteration. */
+ 		unfold_value(&iter->val);
+ 		return 1;
+diff --git a/trailer.h b/trailer.h
+index 9f42aa75994..7e36da7d13c 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -125,6 +125,13 @@ void format_trailers_from_commit(const struct process_trailer_options *,
+  *   trailer_iterator_release(&iter);
+  */
+ struct trailer_iterator {
++	/*
++	 * Raw line (e.g., "foo: bar baz") before being parsed as a trailer
++	 * key/val pair as part of a trailer block (as the "key" and "val"
++	 * fields below). If a line fails to parse as a trailer, then the "key"
++	 * will be the entire line and "val" will be the empty string.
++	 */
++	const char *raw;
+ 	struct strbuf key;
+ 	struct strbuf val;
+ 
 -- 
 gitgitgadget
 
