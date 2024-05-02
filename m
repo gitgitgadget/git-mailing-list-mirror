@@ -1,77 +1,78 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFA524A0E
-	for <git@vger.kernel.org>; Thu,  2 May 2024 06:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE3224B4A
+	for <git@vger.kernel.org>; Thu,  2 May 2024 06:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714632732; cv=none; b=FBPUsZktldN1H9xsP501s9YkCByTJWiXX/KKUGY2jvtPOYODs5uerZ5qT1/IMU/xBzqAyAXw3IMdcCB+ZYJ32SvoPxNKKHSIoXBLiOBqxKUSBDXjt7srpqYIr5JWXsRT1Y/kVqB1+A8ml9XlLlTXQTC7X0IjfKG7O0huQjTKdew=
+	t=1714632737; cv=none; b=EkTUYttnw58yTCPX91TJV6O3cG4R59+ObphluF0dPAnwS7I6xwNPbdrCXQtdEPLWv7hHTp2OA+MCs1LlcszbtstT6m52Z6M8bMuUQqGwOWPCk1abd/54HvC7PqRR/p7KhX3m7aO/ttoybNWLEo6KWBUYRB1ICrMeqhmzP5Y/3po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714632732; c=relaxed/simple;
-	bh=DMa7YorWs6qN2HC4D/sOzWM8AZexY4TFGppjp3KhHUM=;
+	s=arc-20240116; t=1714632737; c=relaxed/simple;
+	bh=fAu8sGz/ZCUJVNwjWebgHdh3OPwETVUBVl6Vx4yRqLc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tm0LhFVWCQJ60TFg2Wu8jSK7fmcVl2aQUeCdMFBSIZTi9ejP+jsKPUbOuUso+TqEpraED4i6C6SmvMQqoubCYgQsajYwYCVC6FoBwUkG4q6uNL7c13/xw1x5wfSrRD50EaysqGUb5u8D7/nEvW455zkx1RGSL/Jo7oPmsDmdhMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=roc7V4lK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Grd9aj6V; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=VG3/WI0bUGsvM/3T4YZ/07aRQDLdidRFdBrhZsgCffIzKSuWOwCdU1nohtfhTUYRxHtzD2rPY1miYo75q4pEsDTPCRvPhkAVUztZ2BTYyVT6Tcf5mo3i101qlNkNkJYTTfvnBGi9zkcROEMM9pji20zrWNYgHlmUdjMVSJHCgnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ruh+AE2b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XbHUFS6i; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="roc7V4lK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Grd9aj6V"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 6AEFD11400CA
-	for <git@vger.kernel.org>; Thu,  2 May 2024 02:52:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ruh+AE2b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XbHUFS6i"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 51C721380395
+	for <git@vger.kernel.org>; Thu,  2 May 2024 02:52:15 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 02 May 2024 02:52:09 -0400
+  by compute2.internal (MEProxy); Thu, 02 May 2024 02:52:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714632729; x=1714719129; bh=jOZ/nVo3ci
-	uX/XcMkTwPXvB6JqMdUK802enhZbN2XHs=; b=roc7V4lK8HrY60yqf5rXndOfX2
-	pTyjjktQYdgl0InsI3JbCWbL38RvgMTG1QzxCgWNjD/+KABTPZeJVjP1+yZI6esa
-	nV3EpMGMt74fZ1EjbA4ELSlGgtTOZJccStqVVr85XQH4Pg9bMsDoyB0Ygao/Antu
-	018NitrKytvqr6Cc7M3I23gUEuA3nazhHUpm8XxK9jXkudasua19uFYQ7rVIkq6t
-	+eelCF2G43XJ7B8xCrYOaAD7t7rIaLfS+xjV24G5wk00r8/6zfHkdcF9hvBIV3ou
-	758oKOD1Hx6nIZlWZJ92FDUwTzYTIqxjS3Z7IE1u8SuzvjhWDYf1eUJOwgTg==
+	:subject:to:to; s=fm3; t=1714632735; x=1714719135; bh=ZLgk95HqTM
+	v7VUrDl5/sSfpraZJMJHGJZsnLD/9A75E=; b=ruh+AE2bY9LRGJSkr3GGnJb9+X
+	LKYcjuXgzkum0205CKhizKL00oAE3sqmt+4f7G6LSf0OriP44UyjFz7Sdmb3l2Cd
+	tEYy8bfTkneLiD2uWN0ZAtddUCZDgLDN65TcIMOUo11pvipOkYU626cWybKbxdIz
+	iRMHyinY8bhcaUnZL2hCBIV3JN0LWi1xoUcC576ViKgHZonicQdxB0hA8zhO4umm
+	souIDOuiPDYXdlUlDzJ0IAG+62A7IXYLOrHK6ELxhGqC15PaIg7iT+yb4ab3cdPT
+	IVjykcuKiT/TOaDnwv4jcL2rI6v9BA8gbL956mEB0pbTBHSJl1YWGE0RfBaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714632729; x=1714719129; bh=jOZ/nVo3ciuX/XcMkTwPXvB6JqMd
-	UK802enhZbN2XHs=; b=Grd9aj6Ved1TdyFRwoqJrjEggEpOmBIRnCq2WJtGRHGp
-	z3fMvV1YRfJdNlbEBa1+OflSn6VjfJXADM9hTPPrjO2ZlQKcZ7MswdwOYwZJyIn6
-	oRO2vyEM2Zz5JcocZWeKZXojwnMa3pP1Qs5CNLkuedqhctkC8oF8ngGhye5VSKBi
-	bl9QcvuHLUz0KCztS5Mog197iRn9vdnBVAQ5g8r6nFmBt3yrjd5drg5G+00JPxHY
-	ASS3FlyZ7TxQ0YEEsDKOKjWjfk0cn6wSlW7V6RgJFrd0u43kCwT/UF3zmh+IEIIa
-	2vev3KFaqfMBkt3Yv7RQWGbbjisyvQGZmlVZ/HeRCA==
-X-ME-Sender: <xms:GTgzZr3QQAa3TXkd8ZRiXZXwR3GD_f3iQ6drE1VMh3pMz82ZtF18OA>
-    <xme:GTgzZqHKVIGLP0J_bu6lkwlb-C7XxpilL9RFoOw9w0R89ku74rw_lOtes-bcZCRC1
-    YRtc5Za78ujhldK7A>
-X-ME-Received: <xmr:GTgzZr5E86C8If1VpXOZyflYQare4906hXfCZuCVE7hV9uQ4OdF3m6yz9yxJf3H6mlZgqbKLoJ-00fQrPv9i9-xehKtbH7fD5L0tylQJDIjsgPI>
+	fm3; t=1714632735; x=1714719135; bh=ZLgk95HqTMv7VUrDl5/sSfpraZJM
+	JHGJZsnLD/9A75E=; b=XbHUFS6il8T8GR36MqP5GPVoBXji7uLdYi+PwcsBdf8x
+	LY5Pb9Vnul9vniV0k4np9qlEVFK72lkoIXDtgMf6nHi7yI5MbffRum/YCQII3ZbC
+	PqATe1HoEzwf3U3VM8/WU0dCvI08bmrqsgfDoXuceCs6H1o1LyL4hTIt7irsvu+w
+	4ZBRETBgdEiPCjhLS5HXToI7GH4tdk7kN8Pm/W36ECrSJRXV9kvFg0hWXNuRj3an
+	nfLgiHDpvv2kgtfpwtYGqqZz1VMMck7h3xUlvyr+gZ9Pjk/kr31+4VsNWCEnx/sC
+	pD2FKzDKktuhyBwO3vsWvNALfMf8Sez86vUmsWOWHw==
+X-ME-Sender: <xms:HzgzZjTKA3CeauFTA1Xcz9l39nnTVbTRPbq4N9m0BL9YwLOBCobekQ>
+    <xme:HzgzZkzsLeG5LmzlhUqa-H8KfhFDl5Dqn5CETXrGvwI4A0cSRKeE7rM30PIKLskK7
+    GsLnYFPQkEmqbItJQ>
+X-ME-Received: <xmr:HzgzZo08Sti_6DVjBmtjANlv5bMxo0UJy8WmUh1BreCQswh9N7BE5kq0lUDKro976Zy6hQZazhs20dkpFzsdrFJsBEmwYvOfD3xEmFzd7_lqUeU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddujedgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:GTgzZg1lYn9Bi43j5_nirUwuw9bYt2Whff5onv1X1OQByXEf5igvZA>
-    <xmx:GTgzZuF47k1tFbOHU7aggIjGYDm3wuuUu1Ul1YZs2PAjJaIcrr0A6w>
-    <xmx:GTgzZh86dn2aWBoFMP9FUsby16gDrmmuaGxReNvPPNe9QGg_fc4URg>
-    <xmx:GTgzZrkqwIzjMLaiq6OJ3Vm4GgiNpwcoCC8bv3_OkjM0TWY-gxyb-w>
-    <xmx:GTgzZgMlqlHEipD7tQeJzBEmE8q0msRjhb95Oewf2sjjMGeedrqXr7-6>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeelleegheeuueehveehkefhffegteevie
+    dtkedtleekvddugeeukeelveejtefftdenucffohhmrghinheprghllhhofigrnhihshhh
+    rgduihhnfigrnhhtrdhithenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:HzgzZjDi4SYBHUtsVu4MxASEIqkSODhqlvLvkWFC0zAuCCsD_rgz0A>
+    <xmx:HzgzZsgy6N-4BsjUkXlwcUG1tXwmSz_3JivjIAa-bRMQcPZl4pU_cA>
+    <xmx:HzgzZnrrw7QHywcmJ0Fo12nWkPVbqvIE4Oq8zxaEOAFMjguV5IAMQQ>
+    <xmx:HzgzZnhwEFDnwQ8oGu4qCVDa-izeBM0K6VfwNpFo9FZzd7Yxj_k5qw>
+    <xmx:HzgzZoYD4erejVD1bX6UsOC-w7rRBYeb8xeJZvhC_i5gne7WDAN7BjWZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 2 May 2024 02:52:08 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 2 May 2024 02:52:14 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d92da9b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 4e9c3f53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 2 May 2024 06:51:43 +0000 (UTC)
-Date: Thu, 2 May 2024 08:52:06 +0200
+	Thu, 2 May 2024 06:51:48 +0000 (UTC)
+Date: Thu, 2 May 2024 08:52:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 08/11] refs/reftable: allow configuring restart interval
-Message-ID: <653ec4dfa59b20e0ca9ef76bb5f2c1725c2bc078.1714630191.git.ps@pks.im>
+Subject: [PATCH 09/11] refs/reftable: allow disabling writing the object index
+Message-ID: <6f2c481acce1ba7728a9a559fbf01fff331153a0.1714630191.git.ps@pks.im>
 References: <cover.1714630191.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,127 +81,148 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7LbzzjJlo7WKxTvo"
+	protocol="application/pgp-signature"; boundary="5+1xUE4xJB352hzx"
 Content-Disposition: inline
 In-Reply-To: <cover.1714630191.git.ps@pks.im>
 
 
---7LbzzjJlo7WKxTvo
+--5+1xUE4xJB352hzx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Add a new option `reftable.restartInterval` that allows the user to
-control the restart interval when writing reftable records used by the
-reftable library.
+Besides the expected "ref" and "log" records, the reftable library also
+writes "obj" records. These are basically a reverse mapping of object
+IDs to their respective ref records so that it becomes efficient to
+figure out which references point to a specific object. The motivation
+for this data structure is the "uploadpack.allowTipSHA1InWant" config,
+which allows a client to fetch any object by its hash that has a ref
+pointing to it.
+
+This reverse index is not used by Git at all though, and the expectation
+is that most hosters nowadays use "uploadpack.allowAnySHA1InWant". It
+may thus be preferable for many users to disable writing these optional
+object indices altogether to safe some precious disk space.
+
+Add a new config "reftable.indexObjects" that allows the user to disable
+the object index altogether.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/config/reftable.txt | 19 ++++++++++++++
- refs/reftable-backend.c           |  6 +++++
- t/t0613-reftable-write-options.sh | 43 +++++++++++++++++++++++++++++++
- 3 files changed, 68 insertions(+)
+ Documentation/config/reftable.txt |  6 +++
+ refs/reftable-backend.c           |  3 ++
+ t/t0613-reftable-write-options.sh | 69 +++++++++++++++++++++++++++++++
+ 3 files changed, 78 insertions(+)
 
 diff --git a/Documentation/config/reftable.txt b/Documentation/config/refta=
 ble.txt
-index fa7c4be014..16b915c75e 100644
+index 16b915c75e..6e4466f3c5 100644
 --- a/Documentation/config/reftable.txt
 +++ b/Documentation/config/reftable.txt
-@@ -12,3 +12,22 @@ readers during access.
+@@ -31,3 +31,9 @@ A maximum of `65535` restart points per block is supporte=
+d.
  +
- The largest block size is `16777215` bytes (15.99 MiB). The default value =
-is
- `4096` bytes (4kB). A value of `0` will use the default value.
-+
-+reftable.restartInterval::
-+	The interval at which to create restart points. The reftable backend
-+	determines the restart points at file creation. The process is
-+	arbitrary, but every 16 or 64 records is recommended. Every 16 may be
-+	more suitable for smaller block sizes (4k or 8k), every 64 for larger
-+	block sizes (64k).
-++
-+More frequent restart points reduces prefix compression and increases
-+space consumed by the restart table, both of which increase file size.
-++
-+Less frequent restart points makes prefix compression more effective,
-+decreasing overall file size, with increased penalties for readers
-+walking through more records after the binary search step.
-++
-+A maximum of `65535` restart points per block is supported.
-++
-+The default value is to create restart points every 16 records. A value of=
+ The default value is to create restart points every 16 records. A value of=
  `0`
-+will use the default value.
+ will use the default value.
++
++reftable.indexObjects::
++	Whether the reftable backend shall write object blocks. Object blocks
++	are a reverse mapping of object ID to the references pointing to them.
+++
++The default value is `true`.
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index c2c47a3bc1..a786143de2 100644
+index a786143de2..5298fcef6e 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -243,6 +243,12 @@ static int reftable_be_config(const char *var, const c=
-har *value,
- 			die("reftable block size cannot exceed 16MB");
- 		opts->block_size =3D block_size;
+@@ -249,6 +249,9 @@ static int reftable_be_config(const char *var, const ch=
+ar *value,
+ 			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
+ 		opts->restart_interval =3D restart_interval;
  		return 0;
-+	} else if (!strcmp(var, "reftable.restartinterval")) {
-+		unsigned long restart_interval =3D git_config_ulong(var, value, ctx->kvi=
-);
-+		if (restart_interval > UINT16_MAX)
-+			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
-+		opts->restart_interval =3D restart_interval;
++	} else if (!strcmp(var, "reftable.indexobjects")) {
++		opts->skip_index_objects =3D !git_config_bool(var, value);
 +		return 0;
  	}
 =20
  	return 0;
 diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-opt=
 ions.sh
-index 8bdbc6ec70..e0a5b26f58 100755
+index e0a5b26f58..e2708e11d5 100755
 --- a/t/t0613-reftable-write-options.sh
 +++ b/t/t0613-reftable-write-options.sh
-@@ -171,4 +171,47 @@ test_expect_success 'block size exceeding maximum supp=
-orted size' '
+@@ -214,4 +214,73 @@ test_expect_success 'restart interval exceeding maximu=
+m supported interval' '
  	)
  '
 =20
-+test_expect_success 'restart interval at every single record' '
++test_expect_success 'object index gets written by default with ref index' '
++	test_config_global core.logAllRefUpdates false &&
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +		test_commit initial &&
-+		for i in $(test_seq 10)
++		for i in $(test_seq 5)
 +		do
 +			printf "update refs/heads/branch-%d HEAD\n" "$i" ||
 +			return 1
 +		done >input &&
 +		git update-ref --stdin <input &&
-+		git -c reftable.restartInterval=3D1 pack-refs &&
++		git -c reftable.blockSize=3D100 pack-refs &&
 +
 +		cat >expect <<-EOF &&
 +		header:
-+		  block_size: 4096
++		  block_size: 100
 +		ref:
-+		  - length: 566
-+		    restarts: 13
-+		log:
-+		  - length: 1393
-+		    restarts: 12
++		  - length: 53
++		    restarts: 1
++		  - length: 95
++		    restarts: 1
++		  - length: 71
++		    restarts: 1
++		  - length: 80
++		    restarts: 1
++		obj:
++		  - length: 11
++		    restarts: 1
 +		EOF
 +		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success 'restart interval exceeding maximum supported interval=
-' '
++test_expect_success 'object index can be disabled' '
++	test_config_global core.logAllRefUpdates false &&
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +		test_commit initial &&
++		for i in $(test_seq 5)
++		do
++			printf "update refs/heads/branch-%d HEAD\n" "$i" ||
++			return 1
++		done >input &&
++		git update-ref --stdin <input &&
++		git -c reftable.blockSize=3D100 -c reftable.indexObjects=3Dfalse pack-re=
+fs &&
++
 +		cat >expect <<-EOF &&
-+		fatal: reftable block size cannot exceed 65535
++		header:
++		  block_size: 100
++		ref:
++		  - length: 53
++		    restarts: 1
++		  - length: 95
++		    restarts: 1
++		  - length: 71
++		    restarts: 1
++		  - length: 80
++		    restarts: 1
 +		EOF
-+		test_must_fail git -c reftable.restartInterval=3D65536 pack-refs 2>err &&
-+		test_cmp expect err
++		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
++		test_cmp expect actual
 +	)
 +'
 +
@@ -209,24 +231,24 @@ orted size' '
 2.45.0
 
 
---7LbzzjJlo7WKxTvo
+--5+1xUE4xJB352hzx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzOBUACgkQVbJhu7ck
-PpSjMg//ZQ1NES1QqUA3eWvo2F1hS2cWsB7MGTQ8ig2uLJZTyM40RsrScERexQjD
-p4z0mEOPruUuWmEjASoJ5raoQ9WSum/KBl7lvuL02Ug4J2b1fMUfukWC3+/VRdlF
-UPd5Q8Kbi9FtI5aPtv/oF5cA+z8t2HBdUTjrcY3G/TNCnu1JLsN/5Xv4qF8VN5fP
-bRp+lUywLKj6QRIQMWD8DurfZ9fIA4ZfEv0Kg++kJIq6sRcdheckwFw2jaYxjLoX
-ZQ8y6ku6VsLOz0TxskH3jzLXocqECQlXRBHD1pGTut69ljdteyFS/N0DmGrMiAdW
-4vj72gBRUpdqscJxtmvAjyR2KUDTaYQvsvjMrazD+Wc5mVb/6mUPL3JAXPgijQNb
-pbxb5BvFyR4IiaZZJ4pCXBmohc3aR9IMq86v1Z9TqfEfmsfbyor3iDyTZg4fiVTr
-5T0/ufnkxxNnY9QWhJegKfLuQnmjBowAeZjl7s3YMrVdpjmudQuz8rLB7QqRjfy7
-ICExI0YRwAogBmiqFaqehCmczpAMZfv6McjnMV2vBYW3AaQp6XOolkD8hRDksiu8
-nAaPKzDjME+vxbQlZSd776QFre+4hADqLV7jYemjQ3yzb3L2YNd/+a7UA2nC1AtG
-SChYicM80cHnMTvOM8kxKzYfS5KaG2qQHGd77eDN5revpCNKc7g=
-=wq6R
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzOBsACgkQVbJhu7ck
+PpTEFBAAotWJOtczkPdxsEZU+x/eG5G4p79M9sMDQFnoFJrf1fRTPg1oeNo8N1EM
+6MSkCN/M2XoHaXj5K3sT82G+y957oSctsOJpBohDcZz7d2ww5CIVlAdVC0jP4Esi
+YsckeMEwe3O0ZT8iZcb3zAF4xEvziCyoEtAghYzp7agxVA0XdPnNyVV9XbpZzmfe
+aeN2oByvifTrGHebyYgX1M9NhxInd0DKs+42VUyYid67HyraqsyqTm8i9QSOvaWC
+DxpsJxqD2/2WdawblmCtxjfNGLDfDXQM72SkdQg9bZ3tqREnoLTEmsjVMx//gzod
+B8eLG/9a5i6vbOxs4Pe3mbAqPzUZ1UJdROEhJCfX9qWfuv9//p0t5ywRSsw1obde
+N0rAKBapNSThIw0yu5i/8HhMIVDqtzmonb4Ceb06omqZieAfI+cBhWdZKue7wKjv
+Dkg3mp2W3KVmjSt74CiQs34b+EMJdraW7H+FObtDbnBNHMXG1SFKV/yWTguN4Umn
+/iA8JVuOitiwJPYVyeaDtNABHf1rwv9ngK3HylhQMW5zkcgvzBfw7N1WOsW37q/l
+sQVCMLCwnE2zqvG6hhGpl7+LDZpDIfbznNmR5Cf1GKGmACB0HYUQv1FRaSN6HQ3a
+snL7z52ChWmVvVrO903yCky4WXEjlz33ytie5l/LxLvuz0FnQus=
+=S/gn
 -----END PGP SIGNATURE-----
 
---7LbzzjJlo7WKxTvo--
+--5+1xUE4xJB352hzx--
