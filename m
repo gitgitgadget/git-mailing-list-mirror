@@ -1,54 +1,50 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE68180A96
-	for <git@vger.kernel.org>; Thu,  2 May 2024 20:16:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925211DDC5
+	for <git@vger.kernel.org>; Thu,  2 May 2024 20:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714680964; cv=none; b=JafNPkC0VkNIhICImqFXESFrGYuN2zNhEygsNDDrwZ0ndiyZIWqA9D4tPD2ljTaXHDhhQ6KlGo3d3sTwt0OL3DjDsu9eFv1MhMlHQK6DN49SUOTxdxH7gVHqq4jIQAfP17nXTzd1RXubD3cjdLJbf5R6is4JWaZLbNccMk5GOFY=
+	t=1714682591; cv=none; b=jeWIk5FsEbN6IPKj9w0hBSC4VJTzVghdkfx15c74LMF2xTFVptR5iBX5gaJj2qDtqpGUcftmBpaD3YaWQqJV4aMXg1LFoearhHad2tElIZefKDCxLCOUHJdbJshjGmRDDmXSviRqlE1rhxDYtcvqnwYkXftcgChsclIeljFJnkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714680964; c=relaxed/simple;
-	bh=6GE28WgXrFCnBVJf6//Nw+oU12/96cboqJkBmFj9198=;
+	s=arc-20240116; t=1714682591; c=relaxed/simple;
+	bh=NTXjgre4G9PdXFD3JF6ZU13DZgC+m99p38Yt4a2ExiI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K6fuT8+78O1L/EVl1CGERJOX1cW01gyYHNmUzeqBOeBzWoTSszpi0hwEAamgnGfkSe58zlieeJ48NOFptacd4O7lRHnYEuzd00gBQ9+wrbDf4P7mPUEad9m6yaBB2uhPoae1qbkI3SehaDYbxm8YTrgwK4GVYGWYEZnnBlbbyXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=m6ZnBIXi; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=Ccd3BpiUt8Q40Q/S8X5wNCp7xYZSjYHXb+KB3c1ebZX085T/T8PZhxscr12DQImUQTOdGPLdC6oYL64FrH4jawx2cbzSj+VHQyM4Gbrl6BjBHvXz9WAWdndpRJi9T1xXpK0oWNmlgdBfbU0l7OyfjGcotnPmF0L9PuaDd4vBdck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=p6T2plD9; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m6ZnBIXi"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6A7D230F0;
-	Thu,  2 May 2024 16:15:59 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p6T2plD9"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1E57C3214A;
+	Thu,  2 May 2024 16:43:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6GE28WgXrFCn
-	BVJf6//Nw+oU12/96cboqJkBmFj9198=; b=m6ZnBIXiDTMjjJ6lVvI8vNfS02Tw
-	B6br7O1GKHnnfVbh8ObsyajQE11aeHWFESXWSQoP4GPcRCySITOTMx4vY7w2k9V/
-	kI+Rhmo66+GIi3HhFLPbjKyfuC8HgXR6cyA+BB4emST6wnpnKIBo6aXFcAJca6fU
-	MkNRP5egRiC6lac=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AE99C230EF;
-	Thu,  2 May 2024 16:15:59 -0400 (EDT)
+	:content-type; s=sasl; bh=NTXjgre4G9PdXFD3JF6ZU13DZgC+m99p38Yt4a
+	2ExiI=; b=p6T2plD9T5yuHnQTyjG7k8BODvup0Kk2mtlekJho2Jpxxs9S537o7d
+	auqzs8pn3vYAVQ12kFMwORPLkrXgBsN4r1a2fHl2wZ5dH7+WA05wMabj0Q/cnTP2
+	IBJiasctyy4CK6YH5CBd2h9pGl/PUtcZD4ZGLnK2ZTijg4FpEzznM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1798D32149;
+	Thu,  2 May 2024 16:43:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F260230EE;
-	Thu,  2 May 2024 16:15:58 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 841FD32148;
+	Thu,  2 May 2024 16:43:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-  git@vger.kernel.org
-Subject: Re: t4216-log-bloom.sh broken ?
-In-Reply-To: <xmqq7cgcdm4f.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	02 May 2024 12:55:44 -0700")
-References: <xmqq8r0ww0sj.fsf@gitster.g> <20240502055621.GA29945@tb-raspi4>
-	<xmqqsez0fbam.fsf@gitster.g> <20240502185903.GA11895@tb-raspi4>
-	<20240502192622.GA1841@szeder.dev> <xmqq7cgcdm4f.fsf@gitster.g>
-Date: Thu, 02 May 2024 13:15:57 -0700
-Message-ID: <xmqqsez0c6ma.fsf@gitster.g>
+To: Johan Walles <johan.walles@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Chunk header @@@ counts wrong?
+In-Reply-To: <CAKtyTbevS7W-X4qoO=uPnHmXCEtKhqycD8DZZY-oK-z0p4CEAQ@mail.gmail.com>
+	(Johan Walles's message of "Thu, 2 May 2024 18:51:47 +0200")
+References: <CAKtyTbevS7W-X4qoO=uPnHmXCEtKhqycD8DZZY-oK-z0p4CEAQ@mail.gmail.com>
+Date: Thu, 02 May 2024 13:43:04 -0700
+Message-ID: <xmqqmsp8c5d3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,50 +52,103 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- CA32277C-08C0-11EF-96BB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 943ED864-08C4-11EF-9C26-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johan Walles <johan.walles@gmail.com> writes:
 
-> I am curious what other differences Torsten will find out between
-> good macs and bad ones.  Perhaps we can narrow down the bad apples?
+> Are these counts produced by git 2.44.0 correct, and in that case how?
+>
+> The header says "@@@ -6,6 -6,60 +6,60 @@@", meaning "six rows in v1,
+> sixty in v2 and sixty in the merge result".
+>
+> I think v2 contains 57 lines, but git says 60. What am I missing?
 
-So, "no, your 'mv' is broken" seems to be the answer to the question
-on the Subject line, and it is rather well-known, it seems.
+> I'm counting:
+> * 6 space-space (context) lines
+> * 51 plus-space (new to v1 but already in v2) lines
 
------ >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] t/lib-chunk: work around broken "mv" on some vintage of =
-macOS
+I think you failed to count three lines in v2 and merge result, they
+look like "<<< HEAD" "======" ">>> 8eec118"; new to v1 but already
+in v2 lines are 54, not 51, no?
 
-When the destination is read-only, "mv" on some version of macOS
-asks whether to replace the destination even though in the test its
-stdin is not a terminal (and thus doesn't conform to POSIX[1]).
-
-The helper to corrupt a chunk-file is designed to work on the
-files like commit-graph and multi-pack-index files that are
-generally read-only, so use "mv -f" to work around this issue.
-
-Helped-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/lib-chunk.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/t/lib-chunk.sh b/t/lib-chunk.sh
-index a7cd9c3c6d..9f01df190b 100644
---- a/t/lib-chunk.sh
-+++ b/t/lib-chunk.sh
-@@ -13,5 +13,6 @@ corrupt_chunk_file () {
- 	fn=3D$1; shift
- 	perl "$TEST_DIRECTORY"/lib-chunk/corrupt-chunk-file.pl \
- 		"$@" <"$fn" >"$fn.tmp" &&
--	mv "$fn.tmp" "$fn"
-+	# some vintages of macOS 'mv' fails to overwrite a read-only file.
-+	mv -f "$fn.tmp" "$fn"
- }
---=20
-2.45.0-31-gd4cc1ec35f
-
-
+> * 3 plus-plus (new to both v1 and v2) lines
+>
+> Doesn't this mean that v2 contains 57 (51 plus-space + 6 context) lines?
+>
+> Why does git say that v2 contains 60 lines?
+>
+> Originally reported here: https://github.com/walles/riff/issues/63
+>
+>   Regards /Johan
+>
+> "
+> diff --cc ansible/roles/zfsbootmenu/tasks/main.yaml
+> index 73fa864,08648fa..0000000
+> --- a/ansible/roles/zfsbootmenu/tasks/main.yaml
+> +++ b/ansible/roles/zfsbootmenu/tasks/main.yaml
+> @@@ -6,6 -6,60 +6,60 @@@
+>         - zfsbootmenu
+>       state: present
+>
+> ++<<<<<<< HEAD
+> ++=======
+> + - name: Create ESP mdadm config
+> +   template:
+> +     src: mdadm.conf.j2
+> +     dest: /etc/mdadm.conf
+> +     owner: root
+> +     group: root
+> +     mode: 0644
+> +   when: esp_mdadm_array is defined
+> +
+> + - name: Install dropbear
+> +   xbps:
+> +     pkg:
+> +       - dropbear
+> +       - mkinitcpio-dropbear
+> +     state: present
+> +
+> + - name: Create dropbear directory
+> +   file:
+> +     path: /etc/dropbear
+> +     owner: root
+> +     group: root
+> +     mode: 0755
+> +     state: directory
+> +
+> + - name: Create dropbear keys
+> +   command:
+> +     cmd: /usr/bin/dropbearkey -t {{ item }} -f
+> /etc/dropbear/dropbear_{{ item }}_host_key
+> +     creates: /etc/dropbear/dropbear_{{ item }}_host_key
+> +   loop:
+> +     - rsa
+> +     - ecdsa
+> +     - ed25519
+> +
+> + - name: Create dropbear authorised keys
+> +   template:
+> +     src: authorized_keys.j2
+> +     dest: /etc/dropbear/root_key
+> +     owner: root
+> +     group: root
+> +     mode: 0644
+> +     lstrip_blocks: true
+> +
+> + - name: Create dropbear config
+> +   template:
+> +     src: dropbear.conf.j2
+> +     dest: /etc/dropbear/dropbear.conf
+> +     owner: root
+> +     group: root
+> +     mode: 0644
+> +     lstrip_blocks: true
+> +
+> ++>>>>>>> 8eec118 (fixup! ansible/roles/zfsbootmenu: add role)
+>   - name: Create zfsbootmenu config
+>     template:
+>       src: config.yaml.j2
+> * Unmerged path ansible/host_vars/foo.yaml
+> "
