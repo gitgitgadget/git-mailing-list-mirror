@@ -1,78 +1,77 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE3224B4A
-	for <git@vger.kernel.org>; Thu,  2 May 2024 06:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF37219E0
+	for <git@vger.kernel.org>; Thu,  2 May 2024 06:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714632737; cv=none; b=EkTUYttnw58yTCPX91TJV6O3cG4R59+ObphluF0dPAnwS7I6xwNPbdrCXQtdEPLWv7hHTp2OA+MCs1LlcszbtstT6m52Z6M8bMuUQqGwOWPCk1abd/54HvC7PqRR/p7KhX3m7aO/ttoybNWLEo6KWBUYRB1ICrMeqhmzP5Y/3po=
+	t=1714632742; cv=none; b=rhzCcNOmxwQNRtQ2GkXvalwVcK7HjjGh5iHGNkwrWQKljwS0tXqB4ZF7CdYQ0FricXEvMbipOQPXDvV0cRFJUGcxE9V4wMT0DMXFxhrR9WxEKSblGiopP792T1kvCpmgd+dbnF7SvOwM7QR1lHR2ERLSwTDSkJZW4XTS8vWvvlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714632737; c=relaxed/simple;
-	bh=fAu8sGz/ZCUJVNwjWebgHdh3OPwETVUBVl6Vx4yRqLc=;
+	s=arc-20240116; t=1714632742; c=relaxed/simple;
+	bh=VDQoA3a+5Za7OGZ4jRKYfu+LjUY1nTIrDnyI7CELch4=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VG3/WI0bUGsvM/3T4YZ/07aRQDLdidRFdBrhZsgCffIzKSuWOwCdU1nohtfhTUYRxHtzD2rPY1miYo75q4pEsDTPCRvPhkAVUztZ2BTYyVT6Tcf5mo3i101qlNkNkJYTTfvnBGi9zkcROEMM9pji20zrWNYgHlmUdjMVSJHCgnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ruh+AE2b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XbHUFS6i; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=Boyu44TKvW6xWbieDL/UacxGaSBj83JvsAlWxAFtgBGanvSFKKcH/TPlIuAbNg+FDEp6NTbVcdUvupAhoc1CWi3va+y+RnGZUKH49tGioT644hGHpl4AQqs53oRjw6ABc1T5eVtjZmgYLYB76oQfRtoPDBo7RfeTHAurcNWKwqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iS9jBE2r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hddm0+2W; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ruh+AE2b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XbHUFS6i"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 51C721380395
-	for <git@vger.kernel.org>; Thu,  2 May 2024 02:52:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iS9jBE2r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hddm0+2W"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4B3681380395
+	for <git@vger.kernel.org>; Thu,  2 May 2024 02:52:20 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 02 May 2024 02:52:15 -0400
+  by compute1.internal (MEProxy); Thu, 02 May 2024 02:52:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714632735; x=1714719135; bh=ZLgk95HqTM
-	v7VUrDl5/sSfpraZJMJHGJZsnLD/9A75E=; b=ruh+AE2bY9LRGJSkr3GGnJb9+X
-	LKYcjuXgzkum0205CKhizKL00oAE3sqmt+4f7G6LSf0OriP44UyjFz7Sdmb3l2Cd
-	tEYy8bfTkneLiD2uWN0ZAtddUCZDgLDN65TcIMOUo11pvipOkYU626cWybKbxdIz
-	iRMHyinY8bhcaUnZL2hCBIV3JN0LWi1xoUcC576ViKgHZonicQdxB0hA8zhO4umm
-	souIDOuiPDYXdlUlDzJ0IAG+62A7IXYLOrHK6ELxhGqC15PaIg7iT+yb4ab3cdPT
-	IVjykcuKiT/TOaDnwv4jcL2rI6v9BA8gbL956mEB0pbTBHSJl1YWGE0RfBaA==
+	:subject:to:to; s=fm3; t=1714632740; x=1714719140; bh=8R8GoFO2SD
+	tOs8Uv59r7cJHXfmw8BMKfAsRgeWiuRvA=; b=iS9jBE2rL0mpRUvCmzLfukWsDe
+	bX1OwSOzMU6WuUkqkmYseIKRDAD0nSzXmzWuWO93VGsqUt6ocbsPecJ3HQmWAOjp
+	bU72qIJ6nT96mb1yuVuqoXf2UgsX1++cfsYmBE2IMRwlSeyFBgi4DHbx0QkiallG
+	zfmAaT8CwOmFoRwvb6GL4e64qgjrS9OG9klomhtE5kqNaCplCoKtUe+MQoa+AU++
+	MfgXqD5ByKPeA8kqu0NCZmQ8Vrh6Mq+kjh5NxCArEPuC7kT7y9gJWX7auTUCRcDL
+	I+xrajLEryNJa4C6RaKXtRARP1WwrFLzxbDeBIYHjbRtDTHyxnfoGLjQtKhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714632735; x=1714719135; bh=ZLgk95HqTMv7VUrDl5/sSfpraZJM
-	JHGJZsnLD/9A75E=; b=XbHUFS6il8T8GR36MqP5GPVoBXji7uLdYi+PwcsBdf8x
-	LY5Pb9Vnul9vniV0k4np9qlEVFK72lkoIXDtgMf6nHi7yI5MbffRum/YCQII3ZbC
-	PqATe1HoEzwf3U3VM8/WU0dCvI08bmrqsgfDoXuceCs6H1o1LyL4hTIt7irsvu+w
-	4ZBRETBgdEiPCjhLS5HXToI7GH4tdk7kN8Pm/W36ECrSJRXV9kvFg0hWXNuRj3an
-	nfLgiHDpvv2kgtfpwtYGqqZz1VMMck7h3xUlvyr+gZ9Pjk/kr31+4VsNWCEnx/sC
-	pD2FKzDKktuhyBwO3vsWvNALfMf8Sez86vUmsWOWHw==
-X-ME-Sender: <xms:HzgzZjTKA3CeauFTA1Xcz9l39nnTVbTRPbq4N9m0BL9YwLOBCobekQ>
-    <xme:HzgzZkzsLeG5LmzlhUqa-H8KfhFDl5Dqn5CETXrGvwI4A0cSRKeE7rM30PIKLskK7
-    GsLnYFPQkEmqbItJQ>
-X-ME-Received: <xmr:HzgzZo08Sti_6DVjBmtjANlv5bMxo0UJy8WmUh1BreCQswh9N7BE5kq0lUDKro976Zy6hQZazhs20dkpFzsdrFJsBEmwYvOfD3xEmFzd7_lqUeU>
+	fm3; t=1714632740; x=1714719140; bh=8R8GoFO2SDtOs8Uv59r7cJHXfmw8
+	BMKfAsRgeWiuRvA=; b=Hddm0+2W0BXCvmmYc5ckBz/k0hLR8tkg0LxTj0VwCXes
+	xKgTshcH73M4iBQXk0e1q1rJtV6nSyEL28bG7WGDrAr0JDlHChF/qkInvEEEN9zv
+	7Z91X89X9PLZ4E/Y+FP0PdxVM7aT+WMmdHOU0n+5NAt9LlJADtvJJDKxnSMuRq26
+	w/bf3jhGzTNaceY5xLg7mrESnJvdXq1e/urvsndJF4u+xU3XoORq2nhVtSZdJ5j3
+	mFMhVy+EdWmP2p6RpeF2wXDtK0QdlMn7G+TqNWeVM4x0ajhaQGPmpOAiBnu+o4ob
+	QgDhLVimgZ5NqzH9x5Ai4ln0B1ED1lHSgfSdMjFH4Q==
+X-ME-Sender: <xms:JDgzZl0Cg43_V7BO-o3r-zLZSn9zblZqfuQGVyCpqqbR5o6nf4KkuQ>
+    <xme:JDgzZsGrmRBvzmA2p1mLdhJurBNZoI1l6ag5ikFlw9CQYAHy5TaIOahLVAGbcWOPN
+    XUwlwNsPHsl02ziNQ>
+X-ME-Received: <xmr:JDgzZl7fCc1jn1ajhPXudK0Au1VkjAXGbx1giLOn-YxwclYstOA3OxNTV35VGkQ_SL0QSLS3jrgxCRYoRcnkCOrtiNsUlOct5NJiHclsGA8VoeI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddujedgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeelleegheeuueehveehkefhffegteevie
-    dtkedtleekvddugeeukeelveejtefftdenucffohhmrghinheprghllhhofigrnhihshhh
-    rgduihhnfigrnhhtrdhithenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:HzgzZjDi4SYBHUtsVu4MxASEIqkSODhqlvLvkWFC0zAuCCsD_rgz0A>
-    <xmx:HzgzZsgy6N-4BsjUkXlwcUG1tXwmSz_3JivjIAa-bRMQcPZl4pU_cA>
-    <xmx:HzgzZnrrw7QHywcmJ0Fo12nWkPVbqvIE4Oq8zxaEOAFMjguV5IAMQQ>
-    <xmx:HzgzZnhwEFDnwQ8oGu4qCVDa-izeBM0K6VfwNpFo9FZzd7Yxj_k5qw>
-    <xmx:HzgzZoYD4erejVD1bX6UsOC-w7rRBYeb8xeJZvhC_i5gne7WDAN7BjWZ>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:JDgzZi37bd_gmrBvsPg7PuEsgI5-PpBnWjszNhrpjTtkQtFC5P0VZA>
+    <xmx:JDgzZoEkPsHkTHkEkWH2QhMHJZcnPQoE4hVBZPAEhmayC6IqXyyHXQ>
+    <xmx:JDgzZj8NFCKOlQUAtlnunhSj8g_m1OVg0p3ZCio3Z_AQEb7HQj6iEg>
+    <xmx:JDgzZlnPIdF68xtdStXcPyrl-uBh79OniVCnVJ1pWeXWb2c0XvDIAA>
+    <xmx:JDgzZiNfBngQEpHgStKNLdtAqg2sKSmI-Oqyk5TDp8AZjDMJuADGx28Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 2 May 2024 02:52:14 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 2 May 2024 02:52:19 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4e9c3f53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id fa366084 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 2 May 2024 06:51:48 +0000 (UTC)
-Date: Thu, 2 May 2024 08:52:11 +0200
+	Thu, 2 May 2024 06:51:54 +0000 (UTC)
+Date: Thu, 2 May 2024 08:52:17 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 09/11] refs/reftable: allow disabling writing the object index
-Message-ID: <6f2c481acce1ba7728a9a559fbf01fff331153a0.1714630191.git.ps@pks.im>
+Subject: [PATCH 10/11] reftable: make the compaction factor configurable
+Message-ID: <30e2e33479a6b6b07a4652e84eebd78f71fb363a.1714630191.git.ps@pks.im>
 References: <cover.1714630191.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,174 +80,158 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5+1xUE4xJB352hzx"
+	protocol="application/pgp-signature"; boundary="e5xiBPfCrwOf3KBP"
 Content-Disposition: inline
 In-Reply-To: <cover.1714630191.git.ps@pks.im>
 
 
---5+1xUE4xJB352hzx
+--e5xiBPfCrwOf3KBP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Besides the expected "ref" and "log" records, the reftable library also
-writes "obj" records. These are basically a reverse mapping of object
-IDs to their respective ref records so that it becomes efficient to
-figure out which references point to a specific object. The motivation
-for this data structure is the "uploadpack.allowTipSHA1InWant" config,
-which allows a client to fetch any object by its hash that has a ref
-pointing to it.
-
-This reverse index is not used by Git at all though, and the expectation
-is that most hosters nowadays use "uploadpack.allowAnySHA1InWant". It
-may thus be preferable for many users to disable writing these optional
-object indices altogether to safe some precious disk space.
-
-Add a new config "reftable.indexObjects" that allows the user to disable
-the object index altogether.
+When auto-compacting, the reftable library packs references such that
+the sizes of the tables form a geometric sequence. The factor for this
+geometric sequence is hardcoded to 2 right now. We're about to expose
+this as a config option though, so let's expose the factor via write
+options.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/config/reftable.txt |  6 +++
- refs/reftable-backend.c           |  3 ++
- t/t0613-reftable-write-options.sh | 69 +++++++++++++++++++++++++++++++
- 3 files changed, 78 insertions(+)
+ reftable/reftable-writer.h |  6 ++++++
+ reftable/stack.c           | 13 +++++++++----
+ reftable/stack.h           |  3 ++-
+ reftable/stack_test.c      |  4 ++--
+ 4 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config/reftable.txt b/Documentation/config/refta=
-ble.txt
-index 16b915c75e..6e4466f3c5 100644
---- a/Documentation/config/reftable.txt
-+++ b/Documentation/config/reftable.txt
-@@ -31,3 +31,9 @@ A maximum of `65535` restart points per block is supporte=
-d.
- +
- The default value is to create restart points every 16 records. A value of=
- `0`
- will use the default value.
-+
-+reftable.indexObjects::
-+	Whether the reftable backend shall write object blocks. Object blocks
-+	are a reverse mapping of object ID to the references pointing to them.
-++
-+The default value is `true`.
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index a786143de2..5298fcef6e 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -249,6 +249,9 @@ static int reftable_be_config(const char *var, const ch=
-ar *value,
- 			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
- 		opts->restart_interval =3D restart_interval;
- 		return 0;
-+	} else if (!strcmp(var, "reftable.indexobjects")) {
-+		opts->skip_index_objects =3D !git_config_bool(var, value);
-+		return 0;
- 	}
+diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
+index 4cd8ebe6c7..155457b042 100644
+--- a/reftable/reftable-writer.h
++++ b/reftable/reftable-writer.h
+@@ -49,6 +49,12 @@ struct reftable_write_options {
 =20
- 	return 0;
-diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-opt=
-ions.sh
-index e0a5b26f58..e2708e11d5 100755
---- a/t/t0613-reftable-write-options.sh
-+++ b/t/t0613-reftable-write-options.sh
-@@ -214,4 +214,73 @@ test_expect_success 'restart interval exceeding maximu=
-m supported interval' '
- 	)
- '
+ 	/* boolean: Prevent auto-compaction of tables. */
+ 	unsigned disable_auto_compact : 1;
++
++	/*
++	 * Geometric sequence factor used by auto-compaction to decide which
++	 * tables to compact. Defaults to 2 if unset.
++	 */
++	uint8_t auto_compaction_factor;
+ };
 =20
-+test_expect_success 'object index gets written by default with ref index' '
-+	test_config_global core.logAllRefUpdates false &&
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		for i in $(test_seq 5)
-+		do
-+			printf "update refs/heads/branch-%d HEAD\n" "$i" ||
-+			return 1
-+		done >input &&
-+		git update-ref --stdin <input &&
-+		git -c reftable.blockSize=3D100 pack-refs &&
+ /* reftable_block_stats holds statistics for a single block type */
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 7b4fff7c9e..6b0f8e13e7 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -1215,12 +1215,16 @@ static int segment_size(struct segment *s)
+ 	return s->end - s->start;
+ }
+=20
+-struct segment suggest_compaction_segment(uint64_t *sizes, size_t n)
++struct segment suggest_compaction_segment(uint64_t *sizes, size_t n,
++					  uint8_t factor)
+ {
+ 	struct segment seg =3D { 0 };
+ 	uint64_t bytes;
+ 	size_t i;
+=20
++	if (!factor)
++		factor =3D 2;
 +
-+		cat >expect <<-EOF &&
-+		header:
-+		  block_size: 100
-+		ref:
-+		  - length: 53
-+		    restarts: 1
-+		  - length: 95
-+		    restarts: 1
-+		  - length: 71
-+		    restarts: 1
-+		  - length: 80
-+		    restarts: 1
-+		obj:
-+		  - length: 11
-+		    restarts: 1
-+		EOF
-+		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'object index can be disabled' '
-+	test_config_global core.logAllRefUpdates false &&
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		for i in $(test_seq 5)
-+		do
-+			printf "update refs/heads/branch-%d HEAD\n" "$i" ||
-+			return 1
-+		done >input &&
-+		git update-ref --stdin <input &&
-+		git -c reftable.blockSize=3D100 -c reftable.indexObjects=3Dfalse pack-re=
-fs &&
-+
-+		cat >expect <<-EOF &&
-+		header:
-+		  block_size: 100
-+		ref:
-+		  - length: 53
-+		    restarts: 1
-+		  - length: 95
-+		    restarts: 1
-+		  - length: 71
-+		    restarts: 1
-+		  - length: 80
-+		    restarts: 1
-+		EOF
-+		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+ 	/*
+ 	 * If there are no tables or only a single one then we don't have to
+ 	 * compact anything. The sequence is geometric by definition already.
+@@ -1252,7 +1256,7 @@ struct segment suggest_compaction_segment(uint64_t *s=
+izes, size_t n)
+ 	 * 	64, 32, 16, 8, 4, 3, 1
+ 	 */
+ 	for (i =3D n - 1; i > 0; i--) {
+-		if (sizes[i - 1] < sizes[i] * 2) {
++		if (sizes[i - 1] < sizes[i] * factor) {
+ 			seg.end =3D i + 1;
+ 			bytes =3D sizes[i];
+ 			break;
+@@ -1278,7 +1282,7 @@ struct segment suggest_compaction_segment(uint64_t *s=
+izes, size_t n)
+ 		uint64_t curr =3D bytes;
+ 		bytes +=3D sizes[i - 1];
+=20
+-		if (sizes[i - 1] < curr * 2) {
++		if (sizes[i - 1] < curr * factor) {
+ 			seg.start =3D i - 1;
+ 			seg.bytes =3D bytes;
+ 		}
+@@ -1304,7 +1308,8 @@ int reftable_stack_auto_compact(struct reftable_stack=
+ *st)
+ {
+ 	uint64_t *sizes =3D stack_table_sizes_for_compaction(st);
+ 	struct segment seg =3D
+-		suggest_compaction_segment(sizes, st->merged->stack_len);
++		suggest_compaction_segment(sizes, st->merged->stack_len,
++					   st->opts.auto_compaction_factor);
+ 	reftable_free(sizes);
+ 	if (segment_size(&seg) > 0)
+ 		return stack_compact_range_stats(st, seg.start, seg.end - 1,
+diff --git a/reftable/stack.h b/reftable/stack.h
+index 97d7ebc043..5b45cff4f7 100644
+--- a/reftable/stack.h
++++ b/reftable/stack.h
+@@ -35,6 +35,7 @@ struct segment {
+ 	uint64_t bytes;
+ };
+=20
+-struct segment suggest_compaction_segment(uint64_t *sizes, size_t n);
++struct segment suggest_compaction_segment(uint64_t *sizes, size_t n,
++					  uint8_t factor);
+=20
+ #endif
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 3316d55f19..f6c11ef18d 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -767,7 +767,7 @@ static void test_suggest_compaction_segment(void)
+ {
+ 	uint64_t sizes[] =3D { 512, 64, 17, 16, 9, 9, 9, 16, 2, 16 };
+ 	struct segment min =3D
+-		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes));
++		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes), 2);
+ 	EXPECT(min.start =3D=3D 1);
+ 	EXPECT(min.end =3D=3D 10);
+ }
+@@ -776,7 +776,7 @@ static void test_suggest_compaction_segment_nothing(voi=
+d)
+ {
+ 	uint64_t sizes[] =3D { 64, 32, 16, 8, 4, 2 };
+ 	struct segment result =3D
+-		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes));
++		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes), 2);
+ 	EXPECT(result.start =3D=3D result.end);
+ }
+=20
 --=20
 2.45.0
 
 
---5+1xUE4xJB352hzx
+--e5xiBPfCrwOf3KBP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzOBsACgkQVbJhu7ck
-PpTEFBAAotWJOtczkPdxsEZU+x/eG5G4p79M9sMDQFnoFJrf1fRTPg1oeNo8N1EM
-6MSkCN/M2XoHaXj5K3sT82G+y957oSctsOJpBohDcZz7d2ww5CIVlAdVC0jP4Esi
-YsckeMEwe3O0ZT8iZcb3zAF4xEvziCyoEtAghYzp7agxVA0XdPnNyVV9XbpZzmfe
-aeN2oByvifTrGHebyYgX1M9NhxInd0DKs+42VUyYid67HyraqsyqTm8i9QSOvaWC
-DxpsJxqD2/2WdawblmCtxjfNGLDfDXQM72SkdQg9bZ3tqREnoLTEmsjVMx//gzod
-B8eLG/9a5i6vbOxs4Pe3mbAqPzUZ1UJdROEhJCfX9qWfuv9//p0t5ywRSsw1obde
-N0rAKBapNSThIw0yu5i/8HhMIVDqtzmonb4Ceb06omqZieAfI+cBhWdZKue7wKjv
-Dkg3mp2W3KVmjSt74CiQs34b+EMJdraW7H+FObtDbnBNHMXG1SFKV/yWTguN4Umn
-/iA8JVuOitiwJPYVyeaDtNABHf1rwv9ngK3HylhQMW5zkcgvzBfw7N1WOsW37q/l
-sQVCMLCwnE2zqvG6hhGpl7+LDZpDIfbznNmR5Cf1GKGmACB0HYUQv1FRaSN6HQ3a
-snL7z52ChWmVvVrO903yCky4WXEjlz33ytie5l/LxLvuz0FnQus=
-=S/gn
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzOCAACgkQVbJhu7ck
+PpTCZg//T5lfpt29+O6bfVTp1yhKjj3N+zK/bj89wdeUPxL6MnFdTAWgfK2punw8
+uyJWfPle2gSspTbbej8lYdr0xllnsYo20DQUPt5BWwjC0Fp4QvF3/RwwWi69vPwN
+iftYDU29vGGCg6dJdtcQaJ7Rdfr8kyZ40qsnlF+IFLX8qkXxTQgeayQQ717+R9+u
+fa5GLsYfob5hh2WhukzBLaZB/OCem3RJcOTU2W8ulJTMj/nW0CN5O1CtI5+FCXTM
+dPijWhxFfZTm9a/Sc0lXg1urvrbWNrgfYXMpeW35ndxEj5bLLOlOpzMIUdGOBvzy
+Tg4AUPFJE5ze11IkU/U6oLYDJIEkgWMovZZc9ue2pQWGDfOfLfBflomyA9yuQ1jP
+S1G0ZWfvmv4D5SdA9GhxLdsADG5CRFMZTGaLW48Le85JhMwLdsShPyUPR/kX+7Ne
+vCYEdqKdfEUV+ZrHLXO+3HZOjvSNFOLmZo1CbtQxkK/O9FmxmANcjdvizyeB4PWU
+5ftX/IesS+4A6ouRRr+wOCIr62PcWLuPQzPnv+9mMsqoqoaqd0GKJoMoIilkKjwS
+pn3KXeQLmRNk5f4q1mHvg2Y/NY7uk4317aIGuUgga4cBPKv2MNrVZ8OdIibELDQ0
+uoKdTqneWtwo2ABPmKtsxq5TLJgxD6hMh4eXLABcKngnl3T8CH8=
+=JwpW
 -----END PGP SIGNATURE-----
 
---5+1xUE4xJB352hzx--
+--e5xiBPfCrwOf3KBP--
