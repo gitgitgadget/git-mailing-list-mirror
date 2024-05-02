@@ -1,119 +1,138 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54B81CD39
-	for <git@vger.kernel.org>; Thu,  2 May 2024 11:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4AD41C60
+	for <git@vger.kernel.org>; Thu,  2 May 2024 12:38:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714649666; cv=none; b=l1VgFT1EdpSIUcuxlofYnzuiCqSaRFfm3qe3IC+InQeVgDDb6Q7ZpYN/LCPRpx4wvq2kj9CGDQVRpA/j9eBPE/+FN5MQVA2woTAvSngt69DMsbUDJjbHZhJvPPAyBuM534L/f5DfQsSnJ7rRhuqqaN1vz9yBP9Y/bRjBvPxKGWA=
+	t=1714653506; cv=none; b=rQbx25X1rObtXz0xn2Rp2ieZ5JHMrPzZaB4Z6z9ToPjp3Cf6FRUFA/bdCpGo3jZalKBPBGW2wtdgcISgbLQLBVofiMC2e42bzGfxqeu7iEnPfpMgMfOpybycNJhhsDg+Ls86utWPBjFSLSJxn4H4wQxycpTuXjwOqMGs6TfmNCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714649666; c=relaxed/simple;
-	bh=GU+5lFz/qs1W61HYblajq0o+KY5wZ9cdRN8etv6If5s=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NEDcrO8SiCqHfs5H55ExcoN9oRx65uTiQhZHbMQHGxSw3f0yFqZ9H4w358cKch4SnwdNkB0HyKWbi4R8ABht1KX5sRb0V7cJRmnVWr2yqB8L1u9YNSM76wrk1VsvI2Bo9c/mtIQ1l14LUfWAz1685rspNs8BM4Dhc0fvjPvmCwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kZf5gYhP; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714653506; c=relaxed/simple;
+	bh=w+bTcXqPgs4UbpiCDF6JIMj9TfYQeUtLXokjlb7wgus=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eIX6yhfAgMRWQyrObJ5MzvfZRM748Ii1pVNDxCsRXgQr+NFCC+KY4uHy9PyJ8dcNT7tcoII7pHjLtIVeen+PoJZVmgUvZxUUqjJg7Nvj9+YNhkEInB01WkxUeL9rX41tWh/7QBepRVcuQUUjRhHvoSyvyVDSARWTOy93ywm/seM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aAACBHRj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G0AilDdV; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kZf5gYhP"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-23cd15209fdso1987805fac.3
-        for <git@vger.kernel.org>; Thu, 02 May 2024 04:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714649664; x=1715254464; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GU+5lFz/qs1W61HYblajq0o+KY5wZ9cdRN8etv6If5s=;
-        b=kZf5gYhPqjs6V/lbr/sQAaAfIIC7chdv1BCLi8j6GZBCoQbu40/5Bilxn1DCNZaNr+
-         Ubk7WRBDw5kjaddCVTCpsLOLe6OtVPOVsX8/1CaUi9wMQb+9cLIBHNjSDV6m3CDGIWCB
-         WRc3k2Z5MPplvNNX7r0W/ziAKIsMBNwqCkH4Nlk6/+iVWT2HIaOd6zn3M+G0ISYJNo4j
-         bKpwVbikd0bAukceQgPCSwcO0zjYH6J3KUgaR0i5bg6zOtZutel+N7gnNQyJpcrvNzWi
-         12geWUP8HzSOb/+sfX441gh+px0L/mmVC5RBeuGjfuwixLMU8ETPhUgHYzEcmp4g5Z7a
-         UzZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714649664; x=1715254464;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GU+5lFz/qs1W61HYblajq0o+KY5wZ9cdRN8etv6If5s=;
-        b=ihY/hv54CgoO5e1n7ROjro9oYMMpPmMsi7ucx2HqVBdLJSMXHQ2W8Z8cEeqRZ0n+tD
-         rfKxCVps2Dr3bXsjBN/6v9CIwBmCh8vb4A0hGhnVjx5pnDO2mmRgYVb7FqKDQoqFJNHT
-         GNPPa7jRtsAPy69JWXsQTwAt5K7rsIWwe/ty2Lk9dDGQswSs2YmdlW/TETS7+nUeQZap
-         bFZ15eJVJ++igkG9gWoudeBRH0Q3nW/7YoahjrLabqGPNTTHI5E1GFeufpBO+LsAs7iT
-         7l7WlSNFcAHpi2iDUeNnpoFXVbNDPP5aEVxpZomwl6GLLammByDNFGjwxrIv1qDvrzb7
-         g0aw==
-X-Forwarded-Encrypted: i=1; AJvYcCU41eWhxAJnWW/x/07daiKSTow2PS3JW5BSf4LxnP/AoaUNs85Cp/xUK3jsd9U+Zow78yDX/iCLkdh9itJeLIxqpDvq
-X-Gm-Message-State: AOJu0Yx+cY10XEVAXd55y8ZcDRqB2/boFkjsz9zmy4eS4ysHLiun8kQ0
-	L/JMfRnbIizHjOT1k1KUH4ZKKIjnJ3VvOgB4Dlt5oqQ+asbdHupa59ML767TcX/iSFq+sXP7P0h
-	AHLVw8lota9BfZwsON6vOYCikrGs=
-X-Google-Smtp-Source: AGHT+IEsQhEJJ4+MIdPoIqd2ER3taRg7BcfCDfHqEA7UHEzs5J4OzeYB2nCH4he+Sd1VMsbDIQl2SIAkpM0dH6f/Ikc=
-X-Received: by 2002:a05:6870:b28a:b0:232:ff53:44fe with SMTP id
- c10-20020a056870b28a00b00232ff5344femr5833322oao.38.1714649663646; Thu, 02
- May 2024 04:34:23 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 May 2024 04:34:22 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZjNFFreAkolYMCd_@tanuki>
-References: <20240426152449.228860-1-knayak@gitlab.com> <20240501202229.2695774-1-knayak@gitlab.com>
- <20240501202229.2695774-7-knayak@gitlab.com> <ZjNFFreAkolYMCd_@tanuki>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aAACBHRj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G0AilDdV"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 11F4D114010E;
+	Thu,  2 May 2024 08:38:22 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 02 May 2024 08:38:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1714653502; x=1714739902; bh=w+bTcXqPgs
+	4UbpiCDF6JIMj9TfYQeUtLXokjlb7wgus=; b=aAACBHRjM4Wlozs4LnkaOG4EQn
+	6uZDKr9PGeHXcrZ9zR49gQ3NpxmPWcestAc+wJ8wrfo1WHoMQtKIlgqaG1ya/2/v
+	6lncYPWTcWDriYdsHp3hge87N1nSc19hocd81T/QPYVJSXN60SFW0ibC9vNc8EJh
+	lzeetNtI804NQjusbKWGqpmUz6cvYbFMEWQKJadd2k4yh79Piyn3JHtJYWPNp5m5
+	5SJG+2j2e3b/mFD1cmoiyxvUMwip5VOOBv+u6aNQTVS/JxXV04eXDGmMB4wmM45q
+	zyKYUh9l30WIqvKg4HxKBYBXNZu20uELXdXKDmxWGD7AIuldyQ1URP0tKmGQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714653502; x=1714739902; bh=w+bTcXqPgs4UbpiCDF6JIMj9TfYQ
+	eUtLXokjlb7wgus=; b=G0AilDdVyZ8YSs+bRx4PlO+EDsWIzC88zEtIZoY0WuUz
+	knp60SwQ0g+pXeQHcvbP2/dXqKzfuTKIo3DjD2PlHBjo2QoC1RTFD1pia5QD4Q4V
+	CKijKnO6ub5QVPoPkHUcpYTeTHR+X6uB3cLSiZJ5Kvf88OvkNG4FgGOQ8IMImWs5
+	lewB/gdJSNSdUGkUX/V2uVUsdKnfkJrsqJO1JV/2/LapG0nQiUQQtBTeyLmyxVyy
+	XrSQxweIKfm9SZlByKJcsF9l+q9rospQ1BqJmdIGMnExro5eBimJ/U+vuQfd+P0a
+	c/0dOht+K61QWUgbdbtdH9PGgqGyzkK9EfsA3QM9cA==
+X-ME-Sender: <xms:PYkzZkUOqytQIm5ZBIUpUfWwnTT2es6fKTxoAtfdbM3QHxcBIlNfpA>
+    <xme:PYkzZoktOYz7bzBdKk5f7LOaMktAScS0AirtHI2u0qnjNw8PCqktZiGwD5wxUyUZ4
+    jIHOvNW_xf_EjhoMw>
+X-ME-Received: <xmr:PYkzZobR7dL39x4c6-0Gem3piSrFzIP7GVlkefGJjVP7nqYxg6kS0c6aAz-HdG3AAbq2vqOGC7q_0yRmrrL-QULTKMy81W8vs_k3jauhKaPzrDI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddukedgheehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:PYkzZjUG7BmDCc7ig7mymsN8EkkUZEkebuJWh3dPKjTWf89QKmHrdA>
+    <xmx:PYkzZukGMgJ4-b1v7JyiugriuHLhrekW0OBJIB-SY9hv14CIot9j5g>
+    <xmx:PYkzZofjNM8MvY10olga1eI76kn-fWua1yqHeI8qJuSjooscgHvp6w>
+    <xmx:PYkzZgG8AQOuZAttLdDKl7Tnlp5MM2XR7UUOnqWO6GVPMqYlwuN_-g>
+    <xmx:PokzZgiTTTC1j8B7dmwr_kurVPmgxcLE3FMqdf3JNtP4gj14qBtZYrLF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 May 2024 08:38:20 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 5c14d448 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 2 May 2024 12:37:53 +0000 (UTC)
+Date: Thu, 2 May 2024 14:38:16 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ivan Tse via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ivan Tse <ivan.tse1@gmail.com>
+Subject: Re: [PATCH] refs: return conflict error when checking packed refs
+Message-ID: <ZjOJONdlaINfN_i_@tanuki>
+References: <pull.1716.git.git.1714488648294.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 2 May 2024 04:34:22 -0700
-Message-ID: <CAOLa=ZSJABxcW643hmpsot5M-_-h-_XHpNAgoof9HCXwj1zhKQ@mail.gmail.com>
-Subject: Re: [PATCH v5 6/7] refs: rename `refs_create_symref()` to `refs_update_symref()`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000001de26a061776fc73"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1oHhrL+GCHd4ZVJt"
+Content-Disposition: inline
+In-Reply-To: <pull.1716.git.git.1714488648294.gitgitgadget@gmail.com>
 
---0000000000001de26a061776fc73
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--1oHhrL+GCHd4ZVJt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, May 01, 2024 at 10:22:28PM +0200, Karthik Nayak wrote:
->> From: Karthik Nayak <karthik.188@gmail.com>
->>
->> The `refs_create_symref()` function is used to update/create a symref.
->> But it doesn't check the old target of the symref, if existing. It force
->> updates the symref. In this regard, the name `refs_create_symref()` is a
->> bit misleading. So let's rename it to `refs_update_symref()`. This is
->> akin to how 'git-update-ref(1)' also allows us to create apart from
->> update.
->
-> Arguably, as we are already updating all callsites anyway, I don't see a
-> reason why we shouldn't also update the function to accept the old OID
-> or old target so that callers can make raceless updates.
->
-> The only problem is that we don't have any users yet, and consequently
-> we have no way to verify that it works as intended. So maybe this is
-> better left for a future patch series, unless we have places where we
-> can reasonably update the callers to pass in the old value, as well.
->
-> Patrick
+On Tue, Apr 30, 2024 at 02:50:47PM +0000, Ivan Tse via GitGitGadget wrote:
+> From: Ivan Tse <ivan.tse1@gmail.com>
+>=20
+> The TRANSACTION_NAME_CONFLICT error code refers to a failure to create a
+> ref due to a name conflict with another ref. An example of this is a
+> directory/file conflict such as ref names A/B and A.
+>=20
+> "git fetch" uses this error code to more accurately describe the error
+> by recommending to the user that they try running "git remote prune" to
+> remove any old refs that are deleted by the remote which would clear up
+> any directory/file conflicts.
+>=20
+> This helpful error message is not displayed when the conflicted ref is
+> stored in packed refs. This change fixes this by ensuring error return
+> code consistency in `lock_raw_ref`.
 
-Yeah that did run through my mind too, but without a usecase, its hard
-to justify a change and also like you mentioned harder to write tests
-for.
+The change itself makes sense to me. But I'd like to see a test that
+demonstrates the new behaviour so that we don't regress this in the
+future.
 
---0000000000001de26a061776fc73
+Thanks!
+
+Patrick
+
+--1oHhrL+GCHd4ZVJt
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d193f6ba72118f96_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZemVqMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMWd4Qy85RDl6WEpMWTFKakpZMWdsL05BU1kyKytzWQovd2FyQm1EM2FI
-OG1BNTBlcmRCVThhOTdJRHVGM3ZOdXhxOUxoMjBNU3VqYWNyeVBwMnM2YzhDSlhabWlPNzdGCmZY
-WUNiQ3BwOU14WHB6R1k1dUl2SGxCbHZGK29uRWxJbkdFZi9pMDZPSUh3ek1NOEZvRGxSOGgrblMr
-Zm1keGUKc2xlZ1ZmdGM0UjVVdkVVRlBsdndSSUE3Sk5ZU3BvUDJROFhMODIyV1RNR3BmclE4VVU0
-cG40d0ltWitPVTZNeQpEak5jb0tlV2lpVmFwYUlqKzllVGthQ1pPTzJUcDlRSjY0M3FrYVlnTHlo
-TXc2UzdBYUdXOGREdis0NVp6OFpyCjdGK1A4WGk2ZndIcEx5N0V3ODUwdCsyTk5lV2QxSXRKRFJh
-YnBSNWRNbWVQSHVuSGRPN2IrNXFKUy9BUEJCZ3QKZlA4Ulp5VWlHSmw2RWtSNUxJSSs1cmhvL3pJ
-NW5PWjNZSnlFOWRWZDZHdjVrNTNPeEZ4ZEVMK2pSUVQ3SmkxUApKL3NnZVJXVWpReEdlbkdOL3BO
-MCtZbWxpNjVQSDhyWmhNZEU2cElLamc3Z0Z4K2xUYSt2VUdoWnRWejJqQVdyCnVRWDhGQ1pkR0sv
-YVFRU01RZU5PbXowWFgzTHY2ZXpIRUNwZklGST0KPXRZcjIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001de26a061776fc73--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYziTgACgkQVbJhu7ck
+PpT9YRAAoRLwsSrV3JQXlmvB1lVxkybmO6XPSTZfInmGcXFJ/zZmt7lYxrVUBY+v
+h88amusfLdR0nf1LWHWayMe+iJd6CKfdxPmiFL3LWPNJSDFhY8s8SfeTF32K3k+i
+teMceZeYVxpSBLdBc0Fmi16IWXSPdyMDjn+p9QpiTPZzp+1ydwqO3pI9p6OnZ3mT
+XEYryxGPfND9SQDJVf+BTqEEGUNqLAqyHVNyoRGeJllPwPV9goQLB7AhQSlZT8VO
+oOMpjj+L5mhRyCT87NqjJR2DdYVfVMymNBtLs2crBnZwXkhcjqVPr21EsPbzzZDJ
+Aa6UY1WlTeMy2cm5BOyygMkbYRwKb+JSrNWhEWf0m7oDUIRrF11MzRvWLbz9UcIn
+fRL725s7PCWnaR562ncXYC/aaSASAsaLyXVQo9IqPHY1g5si8X55jJoErAQwieoE
+RTd+kiY+c0C+kzOxaWbUcXhwGBRGQsFgt9ZbNFFjXftr4usvoHxdCyCv8E81PUbk
+R36eLurJF4Sw7dTW2XmXyB2y2Dfj5PivQvtp2PuNe3Bx8i8Wl3udkHcDLkq26aAU
+/HbHEjwnYutb8pzq+AywMhFzUtNzJiTy+C+TCMnvapfZzMDUAjbxIRgqmYQ1N+n3
+lUrk0+DCfd1B0LRibN0flkWseQwE9QLyPQmuJO4rd3tJC/0tAOw=
+=QCTy
+-----END PGP SIGNATURE-----
+
+--1oHhrL+GCHd4ZVJt--
