@@ -1,78 +1,77 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8505021A04
-	for <git@vger.kernel.org>; Thu,  2 May 2024 06:51:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D25A225D6
+	for <git@vger.kernel.org>; Thu,  2 May 2024 06:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714632718; cv=none; b=rk1NJMvIY57iynpsMHj2X31+896YWmCccBYt2C1RvX811xY0/5K69SP40OqSNbqAyi8JJxkFQNNM9vH6nxS9SZouH1LTgyRk0tNH0SZeAX4kSD5ndEz/ye0rqhDxiYDLGBD8EzN/d9X9XwrriylG/YARJSbwusGkv1J25RtI2Cs=
+	t=1714632722; cv=none; b=hQCqIIDArSSCfLvEenEdCZU9orzlK9MFJ004FiuMRRJwp0uPu5XgicKvpy3dTPmuDCTYTr00A2drQuFxkglHekYy37DjTbV4FYVdbjehpg6UpvwKD8S5qNbBOj/SSJEPoGYzaiAcDzQ4MCTHBxdiWhK3Zd9P7uyUHxkxJo021sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714632718; c=relaxed/simple;
-	bh=8ZZLRJkV0OWEktJ8YDMyMo3vhx7JEDyQHXzIGHE27kw=;
+	s=arc-20240116; t=1714632722; c=relaxed/simple;
+	bh=XLoPOw/8E5VFsaZPOZv/blGplVCS3/mNkcnhwGbWY9o=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j7xasEGgtlnIpkFmnMbxfN5gUejFQeeBAKQZX9UCd3hNfi6gcqADRnGlNkYAFTr8OWvsKHZVUYp8m2RO57UpUE+dYDhis75MRIesUrb/pdOoCH+ToYUo2vJUZY9jDy1lHELyHEv+IkurfhQEeagMT+DcAabvjmDY3VC2NYylOhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NNJ8cqwr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P26dXn/3; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=SnBpOQo8yxdn10rXwo+PIT3PP+C2u1VJDiZd3yiLwzSBNY5UAm2HJY77ySAuPA96A65EGi0RSD42nd8RKbim/yopYIQxID6NDpf+9tKUjiBBnov/1wDkkAVnS15bIgaD7RZLD2qcHpGBoCxqhY6AEnHoOFo/kfbfbo/sqjg1ZHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ARfQSHQv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UN2uD4rf; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NNJ8cqwr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P26dXn/3"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9D9E411400F9
-	for <git@vger.kernel.org>; Thu,  2 May 2024 02:51:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ARfQSHQv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UN2uD4rf"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8E4261380394
+	for <git@vger.kernel.org>; Thu,  2 May 2024 02:51:59 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 02 May 2024 02:51:55 -0400
+  by compute6.internal (MEProxy); Thu, 02 May 2024 02:51:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714632715; x=1714719115; bh=BGAazfA8S/
-	I1+2DAsPXiosk/lreELDQhmG+U5dUBPTk=; b=NNJ8cqwr/sIPWXsKNgXS2SHjbL
-	3OgkHJq/ZRpQX8IIFB5vVu96pO79L7py2nljsRBo2TCotHE/X7x8GfIu6myAp3QP
-	F/l5htgrgAuzzeFrrGiKh6dQJx/fOF1+24YK2kBqcurFPSnvWuWdoDPihhWKCJbF
-	OccOFxUV3yuW51ZHMx6EMk/CYu1UPgMEAoHxEfn9bH/HA8J9CsH6dgiUdtmq4OK3
-	/mh9dQbYodjcyBoR44bHeVwPepPfbBmdZQy8xIhCjXyLwVhX48bcBO2VqhSYcU5Y
-	+taBjR6p16EDduxoqz0oES/wA3IiktfsZ4Tgjv2SEH/YpnNF+2fi6FjzDOww==
+	:subject:to:to; s=fm3; t=1714632719; x=1714719119; bh=QjDF2hIjlH
+	PeCZW8wPvM7UFTJ8TyyVUGAGGAghgCHqc=; b=ARfQSHQvl5sykd9F+wSUfBIHBu
+	B/TNQd/3TdOLdnBhm0LT/EF13sP4vWsdNmxWbwGQbQPRZP1d+mdmOjzOFw0GGSj6
+	LwKaWtWxc8QyY5069eQBnkjZ8qN3GchUU4u9j2OAdEvIf6dOHRbpmo+EMAT3N1zv
+	06hIaEePiCDbCqywY7vk1k9FctwT+6n4N5Q7vvBrQNcVx63zFGPzS8TQAhxepmRV
+	nIVa7YtpjK6jjJCPszu9A1VcnrhXFFgTSGfvsLF41q5nWyBctRBGsPLi8D4siY/x
+	foUjug5b8/+LRlQcMofNYJ0eEsfOhBbq+8NZHj/VmeXfB2Xhr/P2PJAGxvKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714632715; x=1714719115; bh=BGAazfA8S/I1+2DAsPXiosk/lreE
-	LDQhmG+U5dUBPTk=; b=P26dXn/3nfvlegbgMdGyXtr+joEkxoD1ra0YILSePSEw
-	XKAnM8buqxiFhWCSwyHVTheNvkz9DqSzHoXHeAgSSWJyBpuBO6w9OU3tw1oRw+Tv
-	wz8Y1V4bUKwFIsup0ql++s5sS2q8AluSrV+eZF+V4brIixh08ekkn0BRJZ7UAKhZ
-	Iu9VsTxh8hvPuOveBNGoeiWfl9hCpk52/izKnI1fAJnrWUTcawUIPmWmsh70Dt24
-	e2khe6etbTurFCD5murvWTDuwmAdZtIWXiRvr+ftH8n5f8IHlizk/o3AJ39S1Q3Z
-	eBYJTiibghR5TqJIoobvhguEGsa3j2upfGgjfuxZoQ==
-X-ME-Sender: <xms:CzgzZnvsVxbyrByu1dDSExRcZxNXxgF1fbpebR19jd0wRniQS2WcZw>
-    <xme:CzgzZodOQHWLe8QzL6CJWHUKKSE9luem5ukvLhGvLbJ8PqDn0NmaBnPei8S1c6nOS
-    gP3yUMzVUTCnvSDyA>
-X-ME-Received: <xmr:CzgzZqwRwyBjo0G7MU9Vw3AL2LGNg4y1x2-s0sbh19yZ9SJ6C2EjdG0NtCflE-S4n7TiMe9rFpDKF6PYmnA5Lw3PZXvR-to63f2EODoOC_RfPGY>
+	fm3; t=1714632719; x=1714719119; bh=QjDF2hIjlHPeCZW8wPvM7UFTJ8Ty
+	yVUGAGGAghgCHqc=; b=UN2uD4rfWhb244SltUKEhs7pjGfQRxygeGaTXm3sme3A
+	mmAURdthIv1u027JumdmV3wtoxxiyQy94vkTN+iKVv6XbcvJGkqfpkgrTmQetmvk
+	SbOU8oHsGKtenqU655k/dk5UoLswc4t/w3kKKX9zTghxDX4WPHIkLCPnJugSgH6/
+	hyGkmYUb+OuXGPioPyfxhMLf6+5NAW/sWILTZ5rFTt1iMKPUPWa/eukuLv2mEkBt
+	4M8+b+w6UQlscBuPhYILQ8RX7XigOw3uH8MAnJ+bkIChYY2H9dIiUsPU1beu3N8U
+	D5u5UgpWoq/iKOOsaERpJgEvBnyG7H4Dc9bB5ffdAQ==
+X-ME-Sender: <xms:DzgzZh5ibyTZ5wRoKp-8llT8ofx4Tm2nBIqbq43bxyp8velrlY2ccg>
+    <xme:DzgzZu7WMVVCgzIXIppitO9giJ0wezAzIidOtIKwtJk-vyLwiek-NNVmYU7nratUV
+    ocRfJh3mpkkHMBfRA>
+X-ME-Received: <xmr:DzgzZoevGoz5jlUTYoyPsyn5srYDI_NVLPW-yqQ2_6Hm8uIU_RGB74SeKl3ULC3fyV9czPcNltuLGIneV21B7Fr547bQZwebslHVFcahSNA6tIQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddujedgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgr
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:CzgzZmN6YuyH9fP5SEXJl8H11WRx43ZChz7vSHN0dnJi3IUOHsHvLg>
-    <xmx:CzgzZn_Sagnvclq8eYtFU7rzeiqyRUHuSvCij8aEdFcrbQQB5qYMFQ>
-    <xmx:CzgzZmVWlKuyinkDheldLnYQX2a_z3bjrHGKdqAVs9BZbVb1b_bf2A>
-    <xmx:CzgzZocYgQEeb9-A30f2ajfeBg01dWXXlukAWDYX4xAW5Qd-EwDLog>
-    <xmx:CzgzZhlPW-sn9zTtbtMzMWo4qUvBSyqbQ_byz4eNCIKUeO0paMQxFkRm>
+X-ME-Proxy: <xmx:DzgzZqJyZ8jLz94tdpUfWlbg3vVveWNbX5PHg2HHcqhSNVz83ODhQw>
+    <xmx:DzgzZlIfpapKA0CY8LJdERyl7pGcdfsMemTIhb92hqWCJIbUmySqig>
+    <xmx:DzgzZjye8H75_yg88TT1f4nksJWscfj0kOrNbsnm78_UsQzxBQ_-Gw>
+    <xmx:DzgzZhLZipRKmPxWMKbwlzKwoCb7KTjm8KhB3B6-2jUa0-IoqiMF3w>
+    <xmx:DzgzZjhwSWBLg3IhBJW-9Aop3lhIekQyARpG47lhgAVCnr4G1JfZrXJp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 2 May 2024 02:51:54 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 2 May 2024 02:51:58 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a3513db5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id fc33b6c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 2 May 2024 06:51:28 +0000 (UTC)
-Date: Thu, 2 May 2024 08:51:52 +0200
+	Thu, 2 May 2024 06:51:33 +0000 (UTC)
+Date: Thu, 2 May 2024 08:51:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 05/11] reftable/dump: support dumping a table's block
- structure
-Message-ID: <4d4407d4a468a81f7775595c1ea4c611c1ca2482.1714630191.git.ps@pks.im>
+Subject: [PATCH 06/11] refs/reftable: allow configuring block size
+Message-ID: <b4e4db5735beb106511980adca48dc416c4b0d95.1714630191.git.ps@pks.im>
 References: <cover.1714630191.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,290 +80,234 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1jD0foOURo14JYi/"
+	protocol="application/pgp-signature"; boundary="4ah/na9Ljoe5tuEf"
 Content-Disposition: inline
 In-Reply-To: <cover.1714630191.git.ps@pks.im>
 
 
---1jD0foOURo14JYi/
+--4ah/na9Ljoe5tuEf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to introduce new configs that will allow users to have more
-control over how exactly reftables are written. To verify that these
-configs are effective we will need to take a peak into the actual blocks
-written by the reftable backend.
-
-Introduce a new mode to the dumping logic that prints out the block
-structure. This logic can be invoked via `test-tool dump-reftables -b`.
+Add a new option `reftable.blockSize` that allows the user to control
+the block size used by the reftable library.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/dump.c                   |   8 ++-
- reftable/reader.c                 |  63 ++++++++++++++++++
- reftable/reftable-reader.h        |   2 +
- t/t0613-reftable-write-options.sh | 102 ++++++++++++++++++++++++++++++
- 4 files changed, 174 insertions(+), 1 deletion(-)
- create mode 100755 t/t0613-reftable-write-options.sh
+ Documentation/config.txt          |  2 +
+ Documentation/config/reftable.txt | 14 ++++++
+ refs/reftable-backend.c           | 32 +++++++++++++-
+ t/t0613-reftable-write-options.sh | 72 +++++++++++++++++++++++++++++++
+ 4 files changed, 119 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/config/reftable.txt
 
-diff --git a/reftable/dump.c b/reftable/dump.c
-index 9c770a10cc..24476cc2a9 100644
---- a/reftable/dump.c
-+++ b/reftable/dump.c
-@@ -48,6 +48,7 @@ static void print_help(void)
- 	printf("usage: dump [-cst] arg\n\n"
- 	       "options: \n"
- 	       "  -c compact\n"
-+	       "  -b dump blocks\n"
- 	       "  -t dump table\n"
- 	       "  -s dump stack\n"
- 	       "  -6 sha256 hash format\n"
-@@ -58,6 +59,7 @@ static void print_help(void)
- int reftable_dump_main(int argc, char *const *argv)
- {
- 	int err =3D 0;
-+	int opt_dump_blocks =3D 0;
- 	int opt_dump_table =3D 0;
- 	int opt_dump_stack =3D 0;
- 	int opt_compact =3D 0;
-@@ -67,6 +69,8 @@ int reftable_dump_main(int argc, char *const *argv)
- 	for (; argc > 1; argv++, argc--)
- 		if (*argv[1] !=3D '-')
- 			break;
-+		else if (!strcmp("-b", argv[1]))
-+			opt_dump_blocks =3D 1;
- 		else if (!strcmp("-t", argv[1]))
- 			opt_dump_table =3D 1;
- 		else if (!strcmp("-6", argv[1]))
-@@ -88,7 +92,9 @@ int reftable_dump_main(int argc, char *const *argv)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 70b448b132..fa1469e5e7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -497,6 +497,8 @@ include::config/rebase.txt[]
 =20
- 	arg =3D argv[1];
+ include::config/receive.txt[]
 =20
--	if (opt_dump_table) {
-+	if (opt_dump_blocks) {
-+		err =3D reftable_reader_print_blocks(arg);
-+	} else if (opt_dump_table) {
- 		err =3D reftable_reader_print_file(arg);
- 	} else if (opt_dump_stack) {
- 		err =3D reftable_stack_print_directory(arg, opt_hash_id);
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 481dff10d4..f23c8523db 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -856,3 +856,66 @@ int reftable_reader_print_file(const char *tablename)
- 	reftable_reader_free(r);
- 	return err;
++include::config/reftable.txt[]
++
+ include::config/remote.txt[]
+=20
+ include::config/remotes.txt[]
+diff --git a/Documentation/config/reftable.txt b/Documentation/config/refta=
+ble.txt
+new file mode 100644
+index 0000000000..fa7c4be014
+--- /dev/null
++++ b/Documentation/config/reftable.txt
+@@ -0,0 +1,14 @@
++reftable.blockSize::
++	The size in bytes used by the reftable backend when writing blocks.
++	The block size is determined by the writer, and does not have to be a
++	power of 2. The block size must be larger than the longest reference
++	name or log entry used in the repository, as references cannot span
++	blocks.
+++
++Powers of two that are friendly to the virtual memory system or
++filesystem (such as 4kB or 8kB) are recommended. Larger sizes (64kB) can
++yield better compression, with a possible increased cost incurred by
++readers during access.
+++
++The largest block size is `16777215` bytes (15.99 MiB). The default value =
+is
++`4096` bytes (4kB). A value of `0` will use the default value.
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 1cda48c504..c2c47a3bc1 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1,6 +1,7 @@
+ #include "../git-compat-util.h"
+ #include "../abspath.h"
+ #include "../chdir-notify.h"
++#include "../config.h"
+ #include "../environment.h"
+ #include "../gettext.h"
+ #include "../hash.h"
+@@ -230,6 +231,23 @@ static int read_ref_without_reload(struct reftable_sta=
+ck *stack,
+ 	return ret;
  }
-+
-+int reftable_reader_print_blocks(const char *tablename)
+=20
++static int reftable_be_config(const char *var, const char *value,
++			      const struct config_context *ctx,
++			      void *_opts)
 +{
-+	struct {
-+		const char *name;
-+		int type;
-+	} sections[] =3D {
-+		{
-+			.name =3D "ref",
-+			.type =3D BLOCK_TYPE_REF,
-+		},
-+		{
-+			.name =3D "obj",
-+			.type =3D BLOCK_TYPE_OBJ,
-+		},
-+		{
-+			.name =3D "log",
-+			.type =3D BLOCK_TYPE_LOG,
-+		},
-+	};
-+	struct reftable_block_source src =3D { 0 };
-+	struct table_iter ti =3D TABLE_ITER_INIT;
-+	struct reftable_reader *r =3D NULL;
-+	size_t i;
-+	int err;
++	struct reftable_write_options *opts =3D _opts;
 +
-+	err =3D reftable_block_source_from_file(&src, tablename);
-+	if (err < 0)
-+		goto done;
-+
-+	err =3D reftable_new_reader(&r, &src, tablename);
-+	if (err < 0)
-+		goto done;
-+
-+	printf("header:\n");
-+	printf("  block_size: %d\n", r->block_size);
-+
-+	for (i =3D 0; i < ARRAY_SIZE(sections); i++) {
-+		err =3D reader_start(r, &ti, sections[i].type, 0);
-+		if (err < 0)
-+			goto done;
-+		if (err > 0)
-+			continue;
-+
-+		printf("%s:\n", sections[i].name);
-+
-+		while (1) {
-+			printf("  - length: %u\n", ti.br.block_len);
-+			printf("    restarts: %u\n", ti.br.restart_count);
-+
-+			err =3D table_iter_next_block(&ti);
-+			if (err < 0)
-+				goto done;
-+			if (err > 0)
-+				break;
-+		}
++	if (!strcmp(var, "reftable.blocksize")) {
++		unsigned long block_size =3D git_config_ulong(var, value, ctx->kvi);
++		if (block_size > 16777215)
++			die("reftable block size cannot exceed 16MB");
++		opts->block_size =3D block_size;
++		return 0;
 +	}
 +
-+done:
-+	reftable_reader_free(r);
-+	table_iter_close(&ti);
-+	return err;
++	return 0;
 +}
-diff --git a/reftable/reftable-reader.h b/reftable/reftable-reader.h
-index 4a4bc2fdf8..4a04857773 100644
---- a/reftable/reftable-reader.h
-+++ b/reftable/reftable-reader.h
-@@ -97,5 +97,7 @@ void reftable_table_from_reader(struct reftable_table *ta=
-b,
++
+ static struct ref_store *reftable_be_init(struct repository *repo,
+ 					  const char *gitdir,
+ 					  unsigned int store_flags)
+@@ -245,12 +263,24 @@ static struct ref_store *reftable_be_init(struct repo=
+sitory *repo,
+ 	base_ref_store_init(&refs->base, repo, gitdir, &refs_be_reftable);
+ 	strmap_init(&refs->worktree_stacks);
+ 	refs->store_flags =3D store_flags;
+-	refs->write_options.block_size =3D 4096;
++
+ 	refs->write_options.hash_id =3D repo->hash_algo->format_id;
+ 	refs->write_options.default_permissions =3D calc_shared_perm(0666 & ~mask=
+);
+ 	refs->write_options.disable_auto_compact =3D
+ 		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
 =20
- /* print table onto stdout for debugging. */
- int reftable_reader_print_file(const char *tablename);
-+/* print blocks onto stdout for debugging. */
-+int reftable_reader_print_blocks(const char *tablename);
-=20
- #endif
++	git_config(reftable_be_config, &refs->write_options);
++
++	/*
++	 * It is somewhat unfortunate that we have to mirror the default block
++	 * size of the reftable library here. But given that the write options
++	 * wouldn't be updated by the library here, and given that we require
++	 * the proper block size to trim reflog message so that they fit, we
++	 * must set up a proper value here.
++	 */
++	if (!refs->write_options.block_size)
++		refs->write_options.block_size =3D 4096;
++
+ 	/*
+ 	 * Set up the main reftable stack that is hosted in GIT_COMMON_DIR.
+ 	 * This stack contains both the shared and the main worktree refs.
 diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-opt=
 ions.sh
-new file mode 100755
-index 0000000000..462980c37c
---- /dev/null
+index 462980c37c..8bdbc6ec70 100755
+--- a/t/t0613-reftable-write-options.sh
 +++ b/t/t0613-reftable-write-options.sh
-@@ -0,0 +1,102 @@
-+#!/bin/sh
-+
-+test_description=3D'reftable write options'
-+
-+GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable
-+export GIT_TEST_DEFAULT_REF_FORMAT
-+# Disable auto-compaction for all tests as we explicitly control repacking=
- of
-+# refs.
-+GIT_TEST_REFTABLE_AUTOCOMPACTION=3Dfalse
-+export GIT_TEST_REFTABLE_AUTOCOMPACTION
-+# Block sizes depend on the hash function, so we force SHA1 here.
-+GIT_TEST_DEFAULT_HASH=3Dsha1
-+export GIT_TEST_DEFAULT_HASH
-+# Block sizes also depend on the actual refs we write, so we force "master=
-" to
-+# be the default initial branch name.
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmaster
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'default write options' '
+@@ -99,4 +99,76 @@ test_expect_success 'many refs results in multiple block=
+s' '
+ 	)
+ '
+=20
++test_expect_success 'tiny block size leads to error' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +		test_commit initial &&
-+		git pack-refs &&
 +		cat >expect <<-EOF &&
-+		header:
-+		  block_size: 4096
-+		ref:
-+		  - length: 129
-+		    restarts: 2
-+		log:
-+		  - length: 262
-+		    restarts: 2
++		error: unable to compact stack: entry too large
 +		EOF
-+		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
-+		test_cmp expect actual
++		test_must_fail git -c reftable.blockSize=3D50 pack-refs 2>err &&
++		test_cmp expect err
 +	)
 +'
 +
-+test_expect_success 'disabled reflog writes no log blocks' '
++test_expect_success 'small block size leads to multiple ref blocks' '
 +	test_config_global core.logAllRefUpdates false &&
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
-+		test_commit initial &&
-+		git pack-refs &&
++		test_commit A &&
++		test_commit B &&
++		git -c reftable.blockSize=3D100 pack-refs &&
++
 +		cat >expect <<-EOF &&
 +		header:
-+		  block_size: 4096
++		  block_size: 100
 +		ref:
-+		  - length: 129
-+		    restarts: 2
++		  - length: 53
++		    restarts: 1
++		  - length: 74
++		    restarts: 1
++		  - length: 38
++		    restarts: 1
 +		EOF
 +		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success 'many refs results in multiple blocks' '
++test_expect_success 'small block size fails with large reflog message' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
-+		test_commit initial &&
-+		for i in $(test_seq 200)
-+		do
-+			printf "update refs/heads/branch-%d HEAD\n" "$i" ||
-+			return 1
-+		done >input &&
-+		git update-ref --stdin <input &&
-+		git pack-refs &&
-+
++		test_commit A &&
++		perl -e "print \"a\" x 500" >logmsg &&
 +		cat >expect <<-EOF &&
-+		header:
-+		  block_size: 4096
-+		ref:
-+		  - length: 4049
-+		    restarts: 11
-+		  - length: 1136
-+		    restarts: 3
-+		log:
-+		  - length: 4041
-+		    restarts: 4
-+		  - length: 4015
-+		    restarts: 3
-+		  - length: 4014
-+		    restarts: 3
-+		  - length: 4012
-+		    restarts: 3
-+		  - length: 3289
-+		    restarts: 3
++		fatal: update_ref failed for ref ${SQ}refs/heads/logme${SQ}: reftable: t=
+ransaction failure: entry too large
 +		EOF
-+		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
-+		test_cmp expect actual
++		test_must_fail git -c reftable.blockSize=3D100 \
++			update-ref -m "$(cat logmsg)" refs/heads/logme HEAD 2>err &&
++		test_cmp expect err
 +	)
 +'
 +
-+test_done
++test_expect_success 'block size exceeding maximum supported size' '
++	test_config_global core.logAllRefUpdates false &&
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_commit B &&
++		cat >expect <<-EOF &&
++		fatal: reftable block size cannot exceed 16MB
++		EOF
++		test_must_fail git -c reftable.blockSize=3D16777216 pack-refs 2>err &&
++		test_cmp expect err
++	)
++'
++
+ test_done
 --=20
 2.45.0
 
 
---1jD0foOURo14JYi/
+--4ah/na9Ljoe5tuEf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzOAcACgkQVbJhu7ck
-PpRAZg//Rr0bT5/lJcVmd4NH4crOOKPfzwaHYmd5FEbW2dHzc0IM2nLdBGEf2k5P
-2xpAGejZYRBz9a7bb4+2kDoOPYCaavSFJKX9ohJxvNcmLIvSv8Z3ND3491KLE55x
-VaDPuMTBde5wG4S4n5D9LqWW86g6iYuVvffv1jLpcsYaqPfKBrDTfGeFJsTLDnjO
-uv5oBdcpM9A5SUJbgRTGibj4+sAte4Sldd7NOvWxFpiYFsX0Jehy8WG7NGPj0xXF
-Ca3cGmEAjrZNAuYFQxPMqo5AmoO1QTFgx3deD3mPeawmZIPVoLrBrUACePahXJq9
-FYGqGrgu4ZtK7IjFW3JELVM5HcSHwZ1ABIUS5M4mSMfAwpLp5kKqtrC1pSyROKPy
-/XcW2DNYg0cw27mAfh5DEn95fdAhQ0P1kY+2XyCgAKSb83EW4sqGUXfx/uaL80Ca
-4w7mS7c9c1B0v334S9pTCFLdiW4WR9/SS4EI7U0Mo0MUitllQgrqHRaEwlKAnT1i
-qdUKc9fJvwTmbsm2pumEQJn8LWJYqW4VTZrJi72EOdKub2v5BXf9PEAeyY3wc2O6
-wRsY8ZWTk/tgnPCBGd6sAyNJxxB2Lsd9iPFaYsD6BQi21H5QjoJoUiPsFVAw6JKl
-C7eT9yqcLlr/5hShOqYDhj4TI/Y32n5Yxj8rPHmW8o7Vt1r/yg0=
-=bRN1
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzOAsACgkQVbJhu7ck
+PpSUGg/+OvYRh+NNYkzGDh9c/jEn0PiiyMeCZYudd25xGXVXFDwQWEJM2LwNi2wa
+G6T5vccEnyAwNOR1jqBvpJSfyJQiaaxYsiPl8+6e8DZJPsG5CYIv3H2PP3CpNO8/
+K/+orjAJ2cQZqAhBmhVjX2DM8Tz206TFhgJAusqIJdBcoZr+2cQW8sigmx+ZlCcx
+QvZ8czI4l4+wIfJPU+Lll3k+w7sXbWosI4P8I8n1Wtlt3sCI/BeVe0FUytQvXeHI
+lRgQnvRpGyotVTfenL2MfgfL2eNRHpGcLdA5zbEcn6mkpLLdb2MCAzivglEWt4xf
+5+CaXzhyyAHE8NUtX/jvy1zemcmD/KFbEVKsRjMphFDtJIMg50PLBcwxJQbkfhEn
+RX/oIQPad9HyAbUYxD8D/RUMl5RJPEHfDW1Nt/vKsqPXzKbnexSWyhzPKWrh1saB
+4LoW6HEOAzOhemg7VP/lfG3mPJnuTqpt1WAU3d43JAnlN83li2s9MZzXaC+XUnjI
+GmqBPYqjtF5PhGBQivKGvrSEvQ1wTjvH8VybJf2idkuDUiY0WZCIN0pJ2P8V4dhb
+oZ138/73BWzUKnbrXnzKAmzAkzr9hu7KSvuRiL86r4KzpugcJzZYZ9pL2q+VKLNb
+JfryXbkjMYODpmQEGnVmj0s6umfW0cL8Q/3pzNq4AaY7oh8dBbI=
+=NKZK
 -----END PGP SIGNATURE-----
 
---1jD0foOURo14JYi/--
+--4ah/na9Ljoe5tuEf--
