@@ -1,40 +1,41 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F413E16D4FD
-	for <git@vger.kernel.org>; Thu,  2 May 2024 20:05:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE68180A96
+	for <git@vger.kernel.org>; Thu,  2 May 2024 20:16:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714680347; cv=none; b=eiI0RVIJtd5HyKpJXoyVLRe1Lo+QQuGKG3qIPDBkHUd32SS9jgUctqmlZ5CDRVrcMb9qgPDUB+sqgpRT4mJtE5UWjVIPiXBxBdsTeZVXlVpDSHi0h6vHB8LbMnmTeTSq+IyjdjPBrCgQ0mcWyGSaUFF3IlKrlQu7s67ehYbdkh4=
+	t=1714680964; cv=none; b=JafNPkC0VkNIhICImqFXESFrGYuN2zNhEygsNDDrwZ0ndiyZIWqA9D4tPD2ljTaXHDhhQ6KlGo3d3sTwt0OL3DjDsu9eFv1MhMlHQK6DN49SUOTxdxH7gVHqq4jIQAfP17nXTzd1RXubD3cjdLJbf5R6is4JWaZLbNccMk5GOFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714680347; c=relaxed/simple;
-	bh=7qB79ovHtBVH0cF1PacY4DEaisByfwBtbQItCX1//Pc=;
+	s=arc-20240116; t=1714680964; c=relaxed/simple;
+	bh=6GE28WgXrFCnBVJf6//Nw+oU12/96cboqJkBmFj9198=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dvM77UeATdjpYNKcNr122JlPZ4LZiUiaoYJ4geELxlfilIhMB27DILJlCUwjTmvvz6IzfsdinJ+pjcITi/afvrd6ZFdqSV2VF63yJyeo0v766zfuUh1y3/ofEBTrQDXwdE+SKBe84IH5ZM4ySIyDyz8erSSYjTjzbfo/+CEY3a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=R9Nsj6g6; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=K6fuT8+78O1L/EVl1CGERJOX1cW01gyYHNmUzeqBOeBzWoTSszpi0hwEAamgnGfkSe58zlieeJ48NOFptacd4O7lRHnYEuzd00gBQ9+wrbDf4P7mPUEad9m6yaBB2uhPoae1qbkI3SehaDYbxm8YTrgwK4GVYGWYEZnnBlbbyXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=m6ZnBIXi; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R9Nsj6g6"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9000231D8A;
-	Thu,  2 May 2024 16:05:45 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m6ZnBIXi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6A7D230F0;
+	Thu,  2 May 2024 16:15:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7qB79ovHtBVH0cF1PacY4DEaisByfwBtbQItCX
-	1//Pc=; b=R9Nsj6g6PToyE9hC+q5RtbRBDqSruNlqPVNfZ7w4/b56QJGwwmSKkQ
-	lBeMimoZBrHqE0iiryaFcq64RnlRdKvfs19yAuvPBO+kntxCRr3FhNOSMfI9Fodr
-	qLdMC8e6ftmPwxzZskwDET94CdE8haKcolgEXog5XztP61yZF7Ang=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 88AD031D89;
-	Thu,  2 May 2024 16:05:45 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=6GE28WgXrFCn
+	BVJf6//Nw+oU12/96cboqJkBmFj9198=; b=m6ZnBIXiDTMjjJ6lVvI8vNfS02Tw
+	B6br7O1GKHnnfVbh8ObsyajQE11aeHWFESXWSQoP4GPcRCySITOTMx4vY7w2k9V/
+	kI+Rhmo66+GIi3HhFLPbjKyfuC8HgXR6cyA+BB4emST6wnpnKIBo6aXFcAJca6fU
+	MkNRP5egRiC6lac=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AE99C230EF;
+	Thu,  2 May 2024 16:15:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0934D31D88;
-	Thu,  2 May 2024 16:05:41 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F260230EE;
+	Thu,  2 May 2024 16:15:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
@@ -46,8 +47,8 @@ In-Reply-To: <xmqq7cgcdm4f.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
 References: <xmqq8r0ww0sj.fsf@gitster.g> <20240502055621.GA29945@tb-raspi4>
 	<xmqqsez0fbam.fsf@gitster.g> <20240502185903.GA11895@tb-raspi4>
 	<20240502192622.GA1841@szeder.dev> <xmqq7cgcdm4f.fsf@gitster.g>
-Date: Thu, 02 May 2024 13:05:40 -0700
-Message-ID: <xmqqwmocc73f.fsf@gitster.g>
+Date: Thu, 02 May 2024 13:15:57 -0700
+Message-ID: <xmqqsez0c6ma.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,62 +56,50 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 5A6B505E-08BF-11EF-8416-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ CA32277C-08C0-11EF-96BB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> ... it is a very unsatisfactory workaround, compared to a world where we
-> do not have to worry about such a broken mv (perhaps by noticing a
-> broken macOS /bin/mv and automatically doing mv () { mv -f "$@" }
-> for them).
->
 > I am curious what other differences Torsten will find out between
 > good macs and bad ones.  Perhaps we can narrow down the bad apples?
 
-In any case, while we are waiting, I did a few "grep":
+So, "no, your 'mv' is broken" seems to be the answer to the question
+on the Subject line, and it is rather well-known, it seems.
 
-    $ git grep 'mv \(.*\)\.tmp \1' t
-    t/lib-t6000.sh:	mv sed.script.tmp sed.script
-    t/t7508-status.sh:	rm "$1" && mv "$1".tmp "$1"
-    t/t8011-blame-split-file.sh:	mv one.tmp one &&
-    t/t8011-blame-split-file.sh:	mv two.tmp two &&
-    t/t9400-git-cvsserver-server.sh:	mv merge.tmp merge &&
-    t/t9400-git-cvsserver-server.sh:	mv merge.tmp merge &&
-    t/t9802-git-p4-filetype.sh:		mv empty-symlink,v.tmp empty-symlink,v
+----- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: [PATCH] t/lib-chunk: work around broken "mv" on some vintage of =
+macOS
 
-    $ git grep 'mv "\(.*\)\.tmp" "\1"' t
-    t/lib-chunk.sh:	mv "$fn.tmp" "$fn"
-    t/t3404-rebase-interactive.sh:	mv "$1.tmp" "$1"
-    t/t5515-fetch-merge-logic.sh:	mv "$file.tmp" "$file"
-    t/t7600-merge.sh:) >"$1.tmp" && mv "$1.tmp" "$1"
-    t/t9001-send-email.sh:	mv "$1.tmp" "$1"
-    t/t9001-send-email.sh:	mv "$1.tmp" "$1"
+When the destination is read-only, "mv" on some version of macOS
+asks whether to replace the destination even though in the test its
+stdin is not a terminal (and thus doesn't conform to POSIX[1]).
 
-    $ git grep 'mv \(.*\)+ \1' t
-    t/t4025-hunk-header.sh:	mv file+ file
-    t/t6402-merge-rename.sh:	mv A+ A &&
-    t/t6402-merge-rename.sh:	mv A+ A &&
-    t/t6432-merge-recursive-space-options.sh:	mv text.txt+ text.txt &&
-    t/t6432-merge-recursive-space-options.sh:	mv text.txt+ text.txt &&
+The helper to corrupt a chunk-file is designed to work on the
+files like commit-graph and multi-pack-index files that are
+generally read-only, so use "mv -f" to work around this issue.
 
-There is nothing other than the one we found in lib-chunk.sh that
-work on files under .git/objects/ that are made read-only, so we
-should be OK with a workaround like the attached.
-
+Helped-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
  t/lib-chunk.sh | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git c/t/lib-chunk.sh w/t/lib-chunk.sh
+diff --git a/t/lib-chunk.sh b/t/lib-chunk.sh
 index a7cd9c3c6d..9f01df190b 100644
---- c/t/lib-chunk.sh
-+++ w/t/lib-chunk.sh
+--- a/t/lib-chunk.sh
++++ b/t/lib-chunk.sh
 @@ -13,5 +13,6 @@ corrupt_chunk_file () {
- 	fn=$1; shift
+ 	fn=3D$1; shift
  	perl "$TEST_DIRECTORY"/lib-chunk/corrupt-chunk-file.pl \
  		"$@" <"$fn" >"$fn.tmp" &&
 -	mv "$fn.tmp" "$fn"
 +	# some vintages of macOS 'mv' fails to overwrite a read-only file.
 +	mv -f "$fn.tmp" "$fn"
  }
+--=20
+2.45.0-31-gd4cc1ec35f
+
+
