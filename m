@@ -1,62 +1,63 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7CB17F37D
-	for <git@vger.kernel.org>; Thu,  2 May 2024 19:41:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF121802D7
+	for <git@vger.kernel.org>; Thu,  2 May 2024 19:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714678882; cv=none; b=buyO3yf5hyD0G/e5gVrOG9WDqW4Vjj2jGDXjBQeXzmWYy61DJVRgZMQ15k1AxMyJ8mhgthtj+SEYw1QWjooZuzA98JWTDD0gABgT3E0qinRZ6nnzmN2StMO+GChq+8uzcIgieYuN7H9IEqJTReFlHE6oYFQrCjgFTGtLz0OPwwI=
+	t=1714678883; cv=none; b=nJb7NMuK1AlkUIYglgJb/z5x7sK+1JTaqrj06WtMChEGhusBdgil5gn7xFoyx3qb4AQucwIKAb7JbUZg0j+cXeLAbJagw7TdL4wTlR1MKClTvsqU0bIbzi3slNkj9GUdhI5BXgwvJwC69Pt/69PPvm/No5CbNaJOG2xW/5FNQbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714678882; c=relaxed/simple;
-	bh=UahwUq9KQ+L25qWoYlDOZhfHrQ02v1DAE6Qi/vaHVgE=;
+	s=arc-20240116; t=1714678883; c=relaxed/simple;
+	bh=u/ob5vAmGBDDAIau2u+gbxsA79iK8gerioBTjSPyivM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MX9dC1AfB4sN1Dzskw8ACCIkCZy5e4XxsI8nAOilAXfkzA48m2PcznM5jG3TQPhaWK3FcBgVeOhV6w+0xe4rkT1jt15iD2syO73arqWv9lKyqKiOoyxiVzX2hJWAp66nf23x4Ttc8GZdZzfvryXV5uK8iJZ71Rt3ODWOesz7orM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K2e877HD; arc=none smtp.client-ip=209.85.210.42
+	 MIME-Version:Content-Type; b=J9mR9FCUZNLb84ceKlFrXb18lhYNUevmA1/vxWgV9vJaYcFSNvM/hXjMD5Fra0lmhj6qAoR0DlCCYbhF05hMgKmxxbxNHWBY9F0/XHoD/70eVrR0t2OFkBG89wTPN4J9E7+85ShMbRqTp2Cl53RbnHgUNk29WfEAPRZmhomSjcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Aj5/CHOg; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K2e877HD"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6ef9e381989so699398a34.0
-        for <git@vger.kernel.org>; Thu, 02 May 2024 12:41:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Aj5/CHOg"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-23d38cd0df6so1645390fac.2
+        for <git@vger.kernel.org>; Thu, 02 May 2024 12:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714678879; x=1715283679; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714678881; x=1715283681; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7oeVL87ubFP4WWknZ8iX/rlxxUxGiJ6CGRc32QJEWXs=;
-        b=K2e877HDw+s2JBCRc9Pn2s4JL5K9DijwhosKggJvgT4+m0FgTurJtFO9HOsaVsSxgU
-         R2a+hyHTeLcw8E7WZXwsCIf5A7/RBh5agefK9r18eA5DUppJ0bcqv8stUnuLOOKLunpL
-         IY5KeG8JPGcM1LVMzU1d8bFb3jg71hnGSFp0m9NOOc2pOoSMyTNPLvCl4BFQa+8H5ryz
-         sT100V7LigQdtri+WLz74A5yRUIgvTt1E+fqRgaFS9d8wWKcpUruI/sLehED3qx5JmVn
-         HKPGLAzlSjdDcm2Xn+O7tyNMy5iu0vhr3LxYlQcl9BXSVnb48f73CWpwuRQd7x6nh9PV
-         +hBA==
+        bh=kKYoPQITMQuAedN0mdur/i0P7Uf2CERjQNG1Fx0WYJg=;
+        b=Aj5/CHOgpA5LqO03kTLZIbnAi6Lhi+xHyGauonNoNG7gxIvR/mD5A9/SG1dgv91uLC
+         6ker67296J+DB1+vWPQBuE/25+BtXvbwocLmR90jmUK47g3pCnzKdh7LSaXKdr/0eFyN
+         ShqxlTBIXkWTCMYDd6TFIi5C/x+sEzWgiBKrfvYljmSnCn2M48AqFi3txVtXp+EtRPoj
+         6ZNCLOeSR/n6oklNFf6T2z/S5UZCkwCSWv8UBdojHcl5zJU1/yc1xbr+uC7oEmyMk8S5
+         2CZYm1B7b2l0fY1Zom+tj2pmo/RIO0cHHW48SWDgDtkCZ4kXWqcLEoq6Fwfj6qanizCM
+         1WwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714678879; x=1715283679;
+        d=1e100.net; s=20230601; t=1714678881; x=1715283681;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7oeVL87ubFP4WWknZ8iX/rlxxUxGiJ6CGRc32QJEWXs=;
-        b=mFDke0NZhIc1U1WpJL+mnP5qq7PQQK8m7RWnAPtawBuhP8K7qH7MoQG8Zkz/9gsVGm
-         XiBNw/aRArvf567t/74WSJZ/HHWPMDQgowos8N3yHfrMz4GTtbeYlgfM8iylxudBHZy5
-         jJ8aEQJE9OIZNQja5Y6xrhgYH9Idj0wQ2/sYzbcqtj1NWMywS3VOF6ex+NBsmXm0Dclx
-         Z/nizBmlDTDlGIAblVi1sU7zrKF5T3lrv9t5lBBB73UN+Os8V4K8zcmsrY5bFsCVdBbI
-         GYQvkFl4Bhbe2kvCVGNxEPjgSKx0ZquhNszaszGhtHyiDtfCzQ38TEV5gpDSE7c8+k1G
-         hiJA==
-X-Gm-Message-State: AOJu0YxVCbpeToZNG90gffLZ5009wgg0U7F6Pc0dnkfvaHy5LzGJJfoo
-	eW5M/tU8y3iPmS2qug2PEA6soGe0ix3HwqMkLAyEkEzl8vJ6qqVed3Ldmw==
-X-Google-Smtp-Source: AGHT+IGonf8yMqLbHShNivqoKnFrm+dvquwsWNAP4zYrxbnIDwylpKxiqFpTfIZM/zG8jmYxBLCPjA==
-X-Received: by 2002:a05:6871:58b:b0:22e:c6da:6196 with SMTP id u11-20020a056871058b00b0022ec6da6196mr1023692oan.27.1714678879378;
-        Thu, 02 May 2024 12:41:19 -0700 (PDT)
+        bh=kKYoPQITMQuAedN0mdur/i0P7Uf2CERjQNG1Fx0WYJg=;
+        b=aJXYVBE1Gh5EiRTqed/4HmNqMmVlzcbT20LoPpCLqosS1DZ3ixRx1pZJl9q5xMRjGV
+         454gOTbJDRyzH/iz582+pYFEz8m/eH3PZSbTFrMYcbig+t2WVtbHG8O/RWk5NV5KDv5W
+         5r/guBbiuLhJh/XY+kXHaw0ZRHczb8d2KLBPKYHTLkoqD/fggHne+o0gAEYnpRkDYzZd
+         bZJPOL7wlbtE54fqBHyS1aZnmDLAWo8F/CmhqLgXQjD8c8vN7GFLRA6bABt+81W1BDpe
+         DL6paQMiDkrrTpXYkF471P3POKiM8Wl/jVgMARonQeFlnRpvUHUJkHhAAE2UFMztQmwf
+         k4EA==
+X-Gm-Message-State: AOJu0YyW/8vQYYvw2aRtJfS3T6stQ7Nq4fEMyblSq7XUsPcJS1Z3T5PS
+	848enEQWDb3vUq9W4up1e7tORO02qZfVcl1g4xtrjnnbWP/KbMmFjJgY7w==
+X-Google-Smtp-Source: AGHT+IHW7PGtEewr4GOhuxeeHRMlGQIEE/ccsN5j+UqcMUgoMQu1X1ocY+QWbNrhymmj+I+hF5gZsw==
+X-Received: by 2002:a05:6871:b1a1:b0:22e:bc50:3492 with SMTP id an33-20020a056871b1a100b0022ebc503492mr760771oac.47.1714678880899;
+        Thu, 02 May 2024 12:41:20 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id uj12-20020a0568714e4c00b002390714e903sm297443oab.3.2024.05.02.12.41.18
+        by smtp.gmail.com with ESMTPSA id uj12-20020a0568714e4c00b002390714e903sm297443oab.3.2024.05.02.12.41.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 May 2024 12:41:19 -0700 (PDT)
+        Thu, 02 May 2024 12:41:20 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 2/5] github-ci: fix link to whitespace error
-Date: Thu,  2 May 2024 14:38:36 -0500
-Message-ID: <20240502193840.105355-3-jltobler@gmail.com>
+Cc: Justin Tobler <jltobler@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 3/5] ci: separate whitespace check script
+Date: Thu,  2 May 2024 14:38:37 -0500
+Message-ID: <20240502193840.105355-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240502193840.105355-1-jltobler@gmail.com>
 References: <20240430003323.6210-1-jltobler@gmail.com>
@@ -70,87 +71,175 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-When the `check-whitespace` CI job detects whitespace errors, a
-formatted summary of the issue is generated. This summary contains links
-to the commits and blobs responsible for the whitespace errors. The
-generated links for blobs do not work and result in a 404.
+The `check-whitespace` CI job is only available as a GitHub action. To
+help enable this job with other CI providers, first separate the logic
+performing the whitespace check into its own script. In subsequent
+commits, this script is further generalized allowing its reuse.
 
-Instead of using the reference name in the link, use the commit ID
-directly. This fixes the broken link and also helps enable future
-generalization of the script for other CI providers by removing one of
-the GitHub specific CI variables used.
-
+Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- .github/workflows/check-whitespace.yml | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ .github/workflows/check-whitespace.yml | 68 ++---------------------
+ ci/check-whitespace.sh                 | 74 ++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+), 64 deletions(-)
+ create mode 100755 ci/check-whitespace.sh
 
 diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
-index a241a63428..a3a6913ecc 100644
+index a3a6913ecc..d0a78fc426 100644
 --- a/.github/workflows/check-whitespace.yml
 +++ b/.github/workflows/check-whitespace.yml
-@@ -31,14 +31,15 @@ jobs:
-         commit=
-         commitText=
-         commitTextmd=
--        goodparent=
-+        goodParent=
-         while read dash sha etc
-         do
-           case "${dash}" in
--          "---")
--            if test -z "${commit}"
-+          "---") # Line contains commit information.
-+            if test -z "${goodParent}"
-             then
--              goodparent=${sha}
-+              # Assume the commit has no whitespace errors until detected otherwise.
-+              goodParent=${sha}
-             fi
-             commit="${sha}"
-             commitText="${sha} ${etc}"
-@@ -46,18 +47,18 @@ jobs:
-             ;;
-           "")
-             ;;
--          *)
--            if test -n "${commit}"
-+          *) # Line contains whitespace error information for current commit.
-+            if test -n "${goodParent}"
-             then
-               problems+=("1) --- ${commitTextmd}")
-               echo ""
-               echo "--- ${commitText}"
--              commit=
-+              goodParent=
-             fi
-             case "${dash}" in
-             *:[1-9]*:) # contains file and line number information
-               dashend=${dash#*:}
--              problems+=("[${dash}](https://github.com/${{ github.repository }}/blob/${{github.event.pull_request.head.ref}}/${dash%%:*}#L${dashend%:}) ${sha} ${etc}")
-+              problems+=("[${dash}](https://github.com/${{ github.repository }}/blob/${commit}/${dash%%:*}#L${dashend%:}) ${sha} ${etc}")
-               ;;
-             *)
-               problems+=("\`${dash} ${sha} ${etc}\`")
-@@ -70,15 +71,15 @@ jobs:
- 
-         if test ${#problems[*]} -gt 0
-         then
--          if test -z "${commit}"
-+          if test -z "${goodParent}"
-           then
--            goodparent=${baseSha: 0:7}
-+            goodParent=${baseSha: 0:7}
-           fi
-           echo "🛑 Please review the Summary output for further information."
-           echo "### :x: A whitespace issue was found in one or more of the commits." >$GITHUB_STEP_SUMMARY
-           echo "" >>$GITHUB_STEP_SUMMARY
-           echo "Run these commands to correct the problem:" >>$GITHUB_STEP_SUMMARY
--          echo "1. \`git rebase --whitespace=fix ${goodparent}\`" >>$GITHUB_STEP_SUMMARY
-+          echo "1. \`git rebase --whitespace=fix ${goodParent}\`" >>$GITHUB_STEP_SUMMARY
-           echo "1. \`git push --force\`" >>$GITHUB_STEP_SUMMARY
-           echo " " >>$GITHUB_STEP_SUMMARY
-           echo "Errors:" >>$GITHUB_STEP_SUMMARY
+@@ -26,67 +26,7 @@ jobs:
+     - name: git log --check
+       id: check_out
+       run: |
+-        baseSha=${{github.event.pull_request.base.sha}}
+-        problems=()
+-        commit=
+-        commitText=
+-        commitTextmd=
+-        goodParent=
+-        while read dash sha etc
+-        do
+-          case "${dash}" in
+-          "---") # Line contains commit information.
+-            if test -z "${goodParent}"
+-            then
+-              # Assume the commit has no whitespace errors until detected otherwise.
+-              goodParent=${sha}
+-            fi
+-            commit="${sha}"
+-            commitText="${sha} ${etc}"
+-            commitTextmd="[${sha}](https://github.com/${{ github.repository }}/commit/${sha}) ${etc}"
+-            ;;
+-          "")
+-            ;;
+-          *) # Line contains whitespace error information for current commit.
+-            if test -n "${goodParent}"
+-            then
+-              problems+=("1) --- ${commitTextmd}")
+-              echo ""
+-              echo "--- ${commitText}"
+-              goodParent=
+-            fi
+-            case "${dash}" in
+-            *:[1-9]*:) # contains file and line number information
+-              dashend=${dash#*:}
+-              problems+=("[${dash}](https://github.com/${{ github.repository }}/blob/${commit}/${dash%%:*}#L${dashend%:}) ${sha} ${etc}")
+-              ;;
+-            *)
+-              problems+=("\`${dash} ${sha} ${etc}\`")
+-              ;;
+-            esac
+-            echo "${dash} ${sha} ${etc}"
+-            ;;
+-          esac
+-        done <<< $(git log --check --pretty=format:"---% h% s" ${baseSha}..)
+-
+-        if test ${#problems[*]} -gt 0
+-        then
+-          if test -z "${goodParent}"
+-          then
+-            goodParent=${baseSha: 0:7}
+-          fi
+-          echo "🛑 Please review the Summary output for further information."
+-          echo "### :x: A whitespace issue was found in one or more of the commits." >$GITHUB_STEP_SUMMARY
+-          echo "" >>$GITHUB_STEP_SUMMARY
+-          echo "Run these commands to correct the problem:" >>$GITHUB_STEP_SUMMARY
+-          echo "1. \`git rebase --whitespace=fix ${goodParent}\`" >>$GITHUB_STEP_SUMMARY
+-          echo "1. \`git push --force\`" >>$GITHUB_STEP_SUMMARY
+-          echo " " >>$GITHUB_STEP_SUMMARY
+-          echo "Errors:" >>$GITHUB_STEP_SUMMARY
+-          for i in "${problems[@]}"
+-          do
+-            echo "${i}" >>$GITHUB_STEP_SUMMARY
+-          done
+-
+-          exit 2
+-        fi
++        ./ci/check-whitespace.sh \
++          "${{github.event.pull_request.base.sha}}" \
++          "$GITHUB_STEP_SUMMARY" \
++          "https://github.com/${{github.repository}}"
+diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
+new file mode 100755
+index 0000000000..f57d1ff5f0
+--- /dev/null
++++ b/ci/check-whitespace.sh
+@@ -0,0 +1,74 @@
++#!/bin/bash
++
++baseCommit=$1
++outputFile=$2
++url=$3
++
++problems=()
++commit=
++commitText=
++commitTextmd=
++goodParent=
++
++while read dash sha etc
++do
++	case "${dash}" in
++	"---") # Line contains commit information.
++		if test -z "${goodParent}"
++		then
++			# Assume the commit has no whitespace errors until detected otherwise.
++			goodParent=${sha}
++		fi
++
++		commit="${sha}"
++		commitText="${sha} ${etc}"
++		commitTextmd="[${sha}](${url}/commit/${sha}) ${etc}"
++		;;
++	"")
++		;;
++	*) # Line contains whitespace error information for current commit.
++		if test -n "${goodParent}"
++		then
++			problems+=("1) --- ${commitTextmd}")
++			echo ""
++			echo "--- ${commitText}"
++			goodParent=
++		fi
++
++		case "${dash}" in
++		*:[1-9]*:) # contains file and line number information
++			dashend=${dash#*:}
++			problems+=("[${dash}](${url}/blob/${commit}/${dash%%:*}#L${dashend%:}) ${sha} ${etc}")
++			;;
++		*)
++			problems+=("\`${dash} ${sha} ${etc}\`")
++			;;
++		esac
++		echo "${dash} ${sha} ${etc}"
++		;;
++	esac
++done <<< "$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)"
++
++if test ${#problems[*]} -gt 0
++then
++	if test -z "${goodParent}"
++	then
++		goodParent=${baseCommit: 0:7}
++	fi
++
++	echo "🛑 Please review the Summary output for further information."
++	echo "### :x: A whitespace issue was found in one or more of the commits." >"$outputFile"
++	echo "" >>"$outputFile"
++	echo "Run these commands to correct the problem:" >>"$outputFile"
++	echo "1. \`git rebase --whitespace=fix ${goodParent}\`" >>"$outputFile"
++	echo "1. \`git push --force\`" >>"$outputFile"
++	echo " " >>"$outputFile"
++	echo "Errors:" >>"$outputFile"
++
++	for i in "${problems[@]}"
++	do
++		echo "${i}" >>"$outputFile"
++	done
++
++	exit 2
++fi
 -- 
 2.45.0
 
