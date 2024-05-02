@@ -1,73 +1,73 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808DE1E494
-	for <git@vger.kernel.org>; Thu,  2 May 2024 05:50:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB419BBA
+	for <git@vger.kernel.org>; Thu,  2 May 2024 05:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714629051; cv=none; b=eSGG8Ot64lBii90/Wk+98Wm3FlkM3twgz4boSEDJ1NxRIkQX1jPMf8jHDJx6B1vE4IKcZ7OIMenX8ha8vom+YV9d2MCimwPthwssKxOAb79QDPzmPvaIivdtOx/m72Th/xWTN/nhExH1AJftuyeKG0NuW3WSsCjublH/yJ/Vkjc=
+	t=1714629214; cv=none; b=GmdjX6FMdVoKUeqb2JjVWOWz/EhnFaiWiOmIVtaOgGTDm9kK8vdyzWlUcejsUdUlDCXziSnhEPLKlsmAhZXBMVlNZC4o+ckhHxiWt+yOmiUZM2JPEMmAjoHmho+xR1fBbAvFMIkP7Wf2kPv3VasEaRs2Qz17srwqby/N0kP8G6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714629051; c=relaxed/simple;
-	bh=D6W7fZdt6sz7vlSZuMO5xNfkL6BpF7cyLu1fz6rQvGk=;
+	s=arc-20240116; t=1714629214; c=relaxed/simple;
+	bh=/oSkuHBjxxEOzMTcIS359dkyCKWNaNbmc/jgf2/lWig=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uQy5wWG08WYIbajEwusy7O+9hVFD8qi/OEFT1S1Rb8wezxSHM2aNY7UbUTJhtV6lxSKivEktAjh16PeXELDalPguVbUwRTE8KKU5RUytsstz9Su4W9/hwJya/mKjYScLeKKz9YDLWtk9WyiXf3s61eGpBBNpFX9bRJLS4V06h34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i8txYIdb; arc=none smtp.client-ip=209.85.210.46
+	 To:Cc:Content-Type; b=oudlII2jGftDQtJ8NUQxzlYzdyk7w5oumgASwwdByGEjhmMyTAd7eUllPD58rdmRt2qQqkMkJ2CbQ6ykVnKlx9TlWSmSqwdtc67tA/r/e5DKwbKKONaWPUjdzh32eLUKh9rLpeYaRRbqPYCmuBoXx0zwSV4ae6fHTNph8VOjMYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MUcZJ7Ss; arc=none smtp.client-ip=209.85.210.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i8txYIdb"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6eb86b69e65so4418665a34.3
-        for <git@vger.kernel.org>; Wed, 01 May 2024 22:50:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MUcZJ7Ss"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6ef88ce8701so1199772a34.2
+        for <git@vger.kernel.org>; Wed, 01 May 2024 22:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714629048; x=1715233848; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714629212; x=1715234012; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Oi1YoIO20lZfI3P03MeGlqmMPgbcDb8GllYor4Tbssg=;
-        b=i8txYIdbsDO+o1z5GInNHl4fLMoLhVmvG+w3SjSWBGdgruJc2E3eSz5K9jwHYtuUtZ
-         jdVUC2nrle9AmQIxMOo8xQhN2t3sXc7bXcARPzuwc1pEdd30C/ca0mEmWXz0Fmcn53HS
-         WJorxsv7sRvmyDfvmZDzF3t7An+V8okTA7SWJB5fCr3KcXLKG0495JiktzKYzt2/RQBg
-         ZfkYgHXJ75oZAShfhqUcKU3cWO0qyeaAcxoErqBq1xTa3ILtG+WMcnHCFDWIg/SSDzpG
-         WnLwTelkVYKqqNT5M52z0DcI123oDNa7hiL/fMTThF5tZ7OPntU6YV8KPmpNQzeUmGCl
-         svWw==
+        bh=LjOWzcBZjsxQSw/LAcQMPIRl4PdTCXSqZM70Ov+NYSk=;
+        b=MUcZJ7SsSiPADlGPtU2mredCncsjmRkYXmqn4QVyedb1+X3KXE53VRKVdlkEz6zBce
+         n2csrDkcaJ7QYv4gWNjzZmXAX+uUXUq2CWZSCTg+p+tuKYZtr3VnHK1Kggqo/hSaouTK
+         4YZhXeTNKX2Qwjk1M1vDGT23KS61L5SWgfOAy7BEJsdHzSu40+OWg2BGpwLPDs7piVBd
+         pKf0BQll9M5EFBwdC3RUKqcwB2yuhSKd8eCPZW+8InP2DHXNB9ZsTC0yUstttS2UGvRu
+         QsgAHOSSQg2hMgnRW8uUuRGqfygSRn7RuZ7mK1zMAWY87S+rh312MEhV3OFyRhrHzqUm
+         NRoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714629048; x=1715233848;
+        d=1e100.net; s=20230601; t=1714629212; x=1715234012;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Oi1YoIO20lZfI3P03MeGlqmMPgbcDb8GllYor4Tbssg=;
-        b=k8/Uv6M0nqDhadu7na5c+BTjfsJBP88fuu5N23VQOrSQRr43rDg2KUq8QBGoDHVFfo
-         fRlrBbEGHgAQmWan3qJqWHSkktswrd7+94QSVY6ZY+j6jJCPnFlcX4WBUMcHf35ZTN/E
-         Q7RuMj6yOjZIU3B4JwVBcpLKB9yYuPA2IQN2oxU0KQb9O+KWEIx6gL0uunL+cR5yGuJT
-         vFT0GC7CzvWQRK8WXNBmjNRdrE+SuNrI8HyxvDBg0oeZs2YrfPRFCNB1vtTBvb0lxvuW
-         nH42I4Vsj8kCCvhg2KP3omwLeVbfTfxxNLAgWRQgytcv312r82KAA7+4JiNIVyOaH4xK
-         FOGg==
-X-Forwarded-Encrypted: i=1; AJvYcCUJA8f4ZIXpHSTr4YlNLauzSaRghPbspXRGVtPuv0CKqLSno4g/cndm86wk2QfGh6QNoA3mvSOoL3BwNt4anOCeL8N9
-X-Gm-Message-State: AOJu0YxnvxAM36YPw0hxx6pa1Wn/ZDxKUpr1Aq6dwvHoBy/6xLuu9z4J
-	nikWXPTgObAIcsM/lfXHGXDeiYdQD8NX27YgEALutDPBsQyjYMtLoYbQSWI/60qOaD56EMtXxuh
-	8q7+vqWNvB+8AbypUB0QBLfA5aBM=
-X-Google-Smtp-Source: AGHT+IGl7U0scKejbWSc2Rln9fxwhLCusVNli8qxOC2KaRCONj1TgGtdzjRBP6crtY7/aTzfLF0dnkrf/Eeshpd0DJs=
-X-Received: by 2002:a05:6871:5226:b0:23d:ebc3:f18e with SMTP id
- ht38-20020a056871522600b0023debc3f18emr1179738oac.0.1714629048377; Wed, 01
- May 2024 22:50:48 -0700 (PDT)
+        bh=LjOWzcBZjsxQSw/LAcQMPIRl4PdTCXSqZM70Ov+NYSk=;
+        b=e7G5+s1hXE0vbFqN+XPkb398Y2kVX+1sJEeBaoqfTEez9aUAZcdaiOPiTj7Dzv9Sys
+         ijmJq26bstQTXXWZZnAbhFVi7iXyW75Xtg9ofmHPDCI4Fb1QkADuxrSolH+57yDL8I8b
+         iITXhx0XctBQV/zkYT3SDelsh2hs57yAf9QZb+q3CXFjCKysSUfVd1Qnm0IbS05YCYqe
+         N/DpAYAbK308zp1tc4fBBXCjUKF6Oc+HpckKJDC0szlU54kScSeKVXqZV0Be3+wIUuhB
+         SMq4+1/raHnNOIw1TF3BwOOIEwNb1TCKEMTqCJ8dET3+jiFHGLg2lyDzUDXwW5Nc2QXP
+         HiRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVuUje3tfXmgS/9oEZWBlj5SWzqVCCWOYRdJwANuKKqMVmshUocf4vlaVAsHhqdJ3ouip3cJWiMzlgBgbbfFLC3Iyvg
+X-Gm-Message-State: AOJu0Yw+I39tkStQ5Wz+qQ8jDv0HBTtzF2AQ2dbPrjkDhIzDujsx171H
+	nMcpFl4NrY50Mph6Q+Myv4wWuEUrxeMgy9XA+ID+txZcZP6Gw1JjBdL1GNcZDzyrx/uizH8FhuZ
+	MnNSHMbh2VIY+/IdC5F8ss0hr5zM=
+X-Google-Smtp-Source: AGHT+IFvCfacFQS9Rp18jbkrd7fSXKkNyxDWGt28861qNPPFeXdFI7/suUtypSRy5UoSiIIAUP8sJNP3JfHY5HjtcY4=
+X-Received: by 2002:a05:6870:9d8c:b0:23b:360d:4549 with SMTP id
+ pv12-20020a0568709d8c00b0023b360d4549mr1288610oab.38.1714629212455; Wed, 01
+ May 2024 22:53:32 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 May 2024 05:50:47 +0000
+ HTTPREST; Wed, 1 May 2024 22:53:31 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqbk5pgke0.fsf@gitster.g>
+In-Reply-To: <xmqq34r1gj47.fsf@gitster.g>
 References: <20240426152449.228860-1-knayak@gitlab.com> <20240501202229.2695774-1-knayak@gitlab.com>
- <20240501202229.2695774-5-knayak@gitlab.com> <xmqqbk5pgke0.fsf@gitster.g>
+ <xmqq34r1gj47.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 2 May 2024 05:50:47 +0000
-Message-ID: <CAOLa=ZQkTM26wmGgj3=Pz9p7-nFAWQdxCA=RjaJVSm2m8zn7jQ@mail.gmail.com>
-Subject: Re: [PATCH v5 4/7] refs: add support for transactional symref updates
+Date: Wed, 1 May 2024 22:53:31 -0700
+Message-ID: <CAOLa=ZT+JyJQzfuQmseZSc1mzFghHriX5fRaua3V7XWJues-_g@mail.gmail.com>
+Subject: Re: [PATCH v5 0/7] refs: add support for transactional symref updates
 To: Junio C Hamano <gitster@pobox.com>
 Cc: christian.couder@gmail.com, git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000059c79a0617722fc0"
+Content-Type: multipart/mixed; boundary="00000000000021620906177239c9"
 
---00000000000059c79a0617722fc0
+--00000000000021620906177239c9
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
@@ -76,150 +76,53 @@ Junio C Hamano <gitster@pobox.com> writes:
 >
 >> From: Karthik Nayak <karthik.188@gmail.com>
 >>
->> The reference backends currently support transactional reference
->> updates. While this is exposed to users via 'git-update-ref' and its
->> '--stdin' mode, it is also used internally within various commands.
+>> The patch series takes over from the existing patch series, wherein we
+>> introduced symref-* commands to git-update-ref. Since there was a ton of
+>> discussions on the UX of the patch series and its application, I thought it
+>> would be best to shorten the series and split it into multiple smaller series.
 >>
->> However, we never supported transactional updates of symrefs. Let's add
->> support for symrefs in both the 'files' and the 'reftable' backend.
+>> This series adds transactional support for symrefs in the reference db. Then
+>> we switch refs_create_symref() to start using transactions for symref updates.
+>> This allows us to deprecate the create_symref code in the ref_storage_be
+>> interface and remove all associated code which is no longer used.
 >>
->> Here, we add and use `ref_update_is_null_new_value()`, a helper function
->> which is used to check if there is a new_value in a reference update.
+>> The split was primarily done so we can merge the non-user facing parts of the
+>> previous series. While pertaining the user facing components into another set
+>> of patches wherein deeper discussion on the UX can be held without worrying
+>> about the internal implementation.
 >
-> I know you want to express a condition where you answer yes to "Is
-> the new value specified in this ref update NULL?", but "is" at that
-> position in the name somehow sounds awkward.  Any of
+> This split probably makes sense in the context of the evolution of
+> this series.  If this were without any prior discussion, a change to
+> the internal mechanism, without showing how the end-user facing half
+> would use it fully, would have been hard to evaluate, but now that
+> we know where the new mechanism wants to take us, we can fairly
+> evaluate it alone without the end-user facing part.
 >
-> 	ref_update_has_null_new_value
->         ref_update_with_no_new_value
->         ref_update_without_new_value
->
-> might be nicer to ears.
->
+> I've read only the earlier half of the series but so far the pieces
+> make sense to me.
 
-Yes, thanks with this, I do agree that `ref_update_has_null_new_value`
-sounds better.
+Yes I agree, I think it's also nice to see how a bunch of code can be
+removed to use this generic functionality.
 
->> We do not add reflog for dangling symref updates, because currently
->> 'git-symbolic-ref' doesn't add reflog for dangling symref updates and it
->> would be best to keep this behavior consistent as we would move it to
->> start using transaction based updates in the following commit.
->
-> If we are not changing the behaviour, does it deserve a four-line
-> paragraph?  It is not like we describe every no changes (i.e. "we
-> could break the behaviour by introducing this and that bugs, but we
-> did not" is not something we usually say in proposed log messages).
->
-> At most, if you want to highlight that behaviour, I would expect a
-> brief mention like:
->
->     Note that a dangling symref update does not record a new reflog
->     entry, which is unchanged before and after this commit.
->
-> As a reflog entry records name of the object that is pointed by the
-> ref (either directly or indirectly) before and after an operation,
-> an operation that involve a dangling reflog that does not point at
-> any object cannot be expressed in a reflog, no?  It is way too late
-> to change this, but it would have been interesting if the design of
-> reflog had a room to log the change of symbolic ref target as well
-> as object names.  It would have allowed us to say "HEAD at time T
-> pointed at refs/heads/main (which did not exist)", "HEAD at time T+1
-> directly pointed at commit X (detached)", "HEAD at time T+2 pointed
-> at refs/heads/next", etc. and allowed us to much more cleanly
-> support "previous branch".
->
+I'll wait for a day/two for other reviews. Thanks for your review.
 
-While I agree that four lines may seem excessive, I think it is indeed
-an important point to note. Mostly because this shows that when doing
-dangling symref updates, there is no record of this update. The best
-situation would be like you mentioned, to record the symref target
-changes. But even with the current design, it would have been nice to at
-least acknowledge that there was some update done to the symref. By
-having zero-oid for the new and old value in the reflog. But seems like
-we can't do that either.
-
->> @@ -1247,10 +1249,15 @@ struct ref_update *ref_transaction_add_update(
->>
->>  	update->flags = flags;
->>
->> -	if (flags & REF_HAVE_NEW)
->> +	if (new_target)
->> +		update->new_target = xstrdup(new_target);
->> +	if (old_target)
->> +		update->old_target = xstrdup(old_target);
->
-> "Is the assumption that *update is 0-initialized?" was the first
-> question that came to my mind.
->
-> Doing an unconditional
->
-> 	update->new_target = xstrdup_or_null(new_target);
-> 	update->old_target = xstrdup_or_null(old_target);
->
-> would convey the intention much more clearly without having readers
-> guess the answer to the above question.
->
-
-Right, I didn't catch the nuance last time, thanks for the explanation.
-
->> +	if (new_oid && flags & REF_HAVE_NEW)
->
-> Even though syntactically not required,
->
-> 	if (new_oid && (flags & REF_HAVE_NEW))
->
-> or better yet
->
-> 	if ((flags & REF_HAVE_NEW) && new_oid)
->
-> would be easier to see.
->
->>  		oidcpy(&update->new_oid, new_oid);
->
-> Again is the expectation that update->new_oid is initialized to
-> all-0?  I am wondering if we want an else clause, i.e.
->
-> 	if (!(flags & REF_HAVE_NEW))
-> 		oidcpy(&update->new_oid, null_oid());
-> 	else
-> 		oidcpy(&update->new_oid, new_oid ? new_oid : null_oid());
->
-> to clarify the intention of the code, since the way you wrote the
-> consumer of thes two members and REF_HAVE_NEW bit in the previous
-> step implied that the new_oid member gets used even when REF_HAVE_*
-> bit is off, only for its null_oid() value.
->
-
-Yes I understand what you're saying, but since we're doing a
-`FLEX_ALLOC_MEM` right above this code, I thought the fact that the
-'update' struct is 0 initialized is known. With this, and the fact that
-here `update->new_oid` is a static variable, while `new_oid` is a
-pointer. I think being too verbose is not required.
-
-> I'll stop here for now.
->
-> Thanks.
->
-
-Thanks Junio for taking the time to review.
-
---00000000000059c79a0617722fc0
+--00000000000021620906177239c9
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: bb538a104a6a93d_0.1
+X-Attachment-Id: b5777044726b0636_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZektiWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMndEREFDQnJ6eDlrUkZsS3E1UDBEUkp1OUlhUUlabApXS2RZR29BakZQ
-NGpxYmhtUzlQcTBuRFY5aEYrMEdiTktQMk05OEJtTldPK0ViWVV1VzFZY3gxRU5qOWZuV1FjCjhG
-MnVxM2ZZS245cXYxQ1VLcXJERFBtNXFRQ0ZnZGo1d2poTTBjTWpDUzJNL2dZZzVEM0I4cU13ZHp2
-NW9YbkIKemhKaUtpcGFlS3YwZWNBc014d1BpeVllM3UvU0NGZlEvZmxiZEl5UGl6WXc1VUtCUm5l
-VEtwajhVYVlUMXV3OApOT1g3UnFGV3dsTlhKUDN4cTRySCtsNkhRcGJwQXFxaDFWNVBtaUdHSktw
-SWloWmZjVkpvY0t2d0ZsbENsQ2x1CjFpRHJVR01OVkNQVnRPTExYdlI5OTFaQk10YlBIcEpRdmJW
-VHNyc3krekpGYjJ1Y1BqWVlEMkJibkQ2Y1gzUDEKYzF5YWIvTTdBVlU2bjEvVnN3M1NCWW1ndzVj
-VkVFY1RJWUNSTWd4eWFseEkxK25WdlMvTlRrMlBMTmwxc0pKOApKR0Zxc2diaUpmVmFNQUN1ZFZ1
-M05rS2p6N3N5cU5sdkZtZWJxSnZEN0VqU1NFMU5QSzdGMjg4L3RtZVRGSVdzCmo5aXl1bFRES1RW
-NTQ4Yis5ZW1iUW5nSGxUMDM4WmQ3dEh3UVRhMD0KPXVtSVgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1Zektsa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL1hEQy80MStYWmJGRmFnNXZ1MmdpUXp4SDVlU1pnNworSkUxYjQyclFC
+dURyVXlhUDMvZ09CZ0h4VXNTMkJad3duQ0JKQUhleXZLTmo3bWJLTjlGVDFvN1F5bGREU0I5CmlO
+T0dWNUNWUnRwZ0dkYzVYUjJGR1VUUkxkUWxTbXlpaFZPak03RkU4R1E0eWtUbld6bmJDVVc1dkZV
+V05pcVUKaFJnelpzZEJFdFkzUUhqbGNCbnhsQzhDMW9BL1hnbDVaMjJnWjNMVXg4OTczbDQyb0dl
+aE9NdUc5UVlvVHNBcgoxSXRlMDJHaXFuUk8vd2ZNajVZZ2dkcFhVUkl0TE5KTUNOZHNiaU80RU1l
+U2J6NngvSnFNZ1drVUlRZUVrUnU4ClBKcXFMdS9CNkdJZHN4NndSU1dSV3dLTjZ2YzhiaCtwS09i
+OTJpd09rblZjd0ZESlJRNnBZRDJJOGVTMGlxN1cKVFpBUUhjSXV6NzQ2VEsvamJuQlVpdUZUeEF5
+TDNpMUZyRVlSUUsrc0tmSjNJanlaVll0R3JmTXVwZ1hOSHlRNwpYbm8rZFNtcyt4Z3ZrNkZwVVMz
+UFR1M2wyLy85dlREbkR6S2RwYzNpejlTcW1BMC9SdlJUNTJ5azJpMCsxT29yCmc1Z0EvdXkvYlVy
+UGFuNzdFWldRaVI4TFlTdGdwU3UwZ2t4ZDlQVT0KPTlFUlYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000059c79a0617722fc0--
+--00000000000021620906177239c9--
