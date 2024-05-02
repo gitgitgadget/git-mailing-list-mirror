@@ -1,150 +1,81 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4504315E21E
-	for <git@vger.kernel.org>; Thu,  2 May 2024 16:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F9715CD67
+	for <git@vger.kernel.org>; Thu,  2 May 2024 16:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714668720; cv=none; b=ig2Lh2ymo/slSMaTi5lq8nVBQJbXLE2zhCfsK54VoWj2EwKwJj88FA2RTzUGP8fJZtgWjV6uLR8K34cxBlztICUCu6eHfuNarERIHeml8gsAIvmUfPkwea7T5HtE5RX4FDBIkjHgC2FiRb6wVdMZPS97lwvRAZ7lSyzcLwBw2LA=
+	t=1714668796; cv=none; b=pFp4d5nbv4TI9PVJMmXg9GbP26J0Fh2iR9G/Eodo6imahCHYVvUwxXjQ59C6nPPimMbTPRquv5rBrEMPg+F9VSZQbIT/DILT8mCtDshsB8S9HLOnool99JgsoxP0jNqkvGfDxCb9+poe4patttjH+3F7HpRrMd19+nsmy7PZ/wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714668720; c=relaxed/simple;
-	bh=KkAh4PqXTFZ415d00jpCliatzifuZ+fExxZHAVeq6DM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=WyWSjHLL0sk9qrHmfP+YmUNZJCYL73vpAhxnEQnXlSTrQGE5PwysqF8nm7e5c7T3zqWbeNwNfffziZ6v0w1SEcCX9wTbI3CC15P3q/q2pQ2bOhwxai2AmuV+Fz8v7XVuNi9CfxA65JGGJ+u8904rM9ODSXUoaGa6S5UajJJVRrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BT4w4w9x; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714668796; c=relaxed/simple;
+	bh=4S+FFzRA63/4NnPcWNXWOAv7Vvq3/Jszi+3Yig1lAeA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GVoXgCB4gEUX24seqK2CaandFCY7c/29TuCcWM/rwWmo/vSdeBfEB6/kOheGeJFRccdFe4eaDk2Cz5kN8y30FFgCdS6nzQuiOaZGuXcR/4D35aHIXcfSOEtsKxXP10ja52bWGVVWx9rZWHuSJei5jMYDBUoydsvmtFwtiX3FCcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xtEkE4Jb; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BT4w4w9x"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-de596c078c2so8224784276.0
-        for <git@vger.kernel.org>; Thu, 02 May 2024 09:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714668718; x=1715273518; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=tkKcYolzu3ha2v+zUgj1KZ4B8ztSxYBD9SvXnmmFYrw=;
-        b=BT4w4w9x+go7AYS6WeKtLLBKb8RhcBlyy3KYLJBWEqAhJtL0BKxDJ6ktlCMD5IhJmB
-         XEEmg3v0B1CRnJMAlvgLs5xjWIck0Nv253RlhW2MDPHi3ZYvqgLU6jaRlsBJI9l7Fjbn
-         zXtH1paFRufN7WHWy1/RKDHDgU1T7Sw0aO8T8EGm/hlnLNU/u7UqptAsI4mUuz3/1DXB
-         ZJ4/YtHa694/mX9Eo7sUc9tX3KB2Hl3OjSd1R5Wh6l41huVzUjVyNeA+1qLtHvSI8Y5S
-         Da/g94YPsLsbKbypk6vDE8ZiFSS8Obn3gHmMPQot2/OdocyUEvioTR3/oUEe3obXflmH
-         Go2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714668718; x=1715273518;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tkKcYolzu3ha2v+zUgj1KZ4B8ztSxYBD9SvXnmmFYrw=;
-        b=lNgm6pGiBWhPz8LTcSShLR/6sz6UUeGJvk125JHvATS0Yop0eQ5ivQHrfPB1Qd5pfv
-         ouDgPN5DJWWALj40DzjX83ZvNK0cQWLRyeIsYDTX8qp7es13ockuKK/2OOnulgQ3GQ/z
-         oJdC6PtmouUxXeQ7KEO2XuVG+gM6JbDTxgl29FF9zGaBQTrHxdysvrT2Arh3j8HgkSez
-         HW0Gr78ZxqnsSpSLJsQVCEOFQfgbyfBplCntpZPxN3ZXU0CKJR2vyEY4ZPQ60DqjlRHR
-         Pb6NSeVumaB8xRAmq76VQVmEZSNvn7NCeMY8dkvZII9imvYV/NjomMLCOQ6mhGQ9X+27
-         U5uQ==
-X-Gm-Message-State: AOJu0YwXBhRZ4hsa/DxVX7HBM2kNgUQLUCOKtVA8qq9DwrT658yYb/wp
-	sfa2018WO3Vlc8dVellRM+5531eixf1wtiAEDBHLpePfrbb3x3DP49htF8GbQVLeO21wZOiwk2f
-	7dyAFlARl+coTut6Gov8sDrmyzGblO17QSgM=
-X-Google-Smtp-Source: AGHT+IH29PHHdLHknmT8Ai5CSg/6oFkbCAzFAakNTFDbBd5Rmuj04m3AuxClTU04ZpEP7tgV4eBBab3m0ydARj9SwAo=
-X-Received: by 2002:a25:8145:0:b0:dc7:43aa:5c0b with SMTP id
- j5-20020a258145000000b00dc743aa5c0bmr457546ybm.21.1714668718203; Thu, 02 May
- 2024 09:51:58 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xtEkE4Jb"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A7FAA30890;
+	Thu,  2 May 2024 12:53:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4S+FFzRA63/4NnPcWNXWOAv7Vvq3/Jszi+3Yig
+	1lAeA=; b=xtEkE4JbyaDyZh5PnWpZu7RR7TLdpuH/r0g7gZdGcI+6Gx3EuGDRTC
+	1xt9+eJL1WYj0fc7zpnIuvtQFea2cXX1Kszsz2ROOdxVltmvXHwlewjHkcnBm5y3
+	3T1j/DS4E0SdOzugKp3THAVyMLu44uDe908Ds0TasutavyTq6ITcg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A07BB3088F;
+	Thu,  2 May 2024 12:53:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2D9F83088E;
+	Thu,  2 May 2024 12:53:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  christian.couder@gmail.com,
+  git@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] refs: remove `create_symref` and associated dead
+ code
+In-Reply-To: <ZjNFG5Ztnoj9DMzB@tanuki> (Patrick Steinhardt's message of "Thu,
+	2 May 2024 09:47:39 +0200")
+References: <20240426152449.228860-1-knayak@gitlab.com>
+	<20240501202229.2695774-1-knayak@gitlab.com>
+	<20240501202229.2695774-8-knayak@gitlab.com> <ZjNFG5Ztnoj9DMzB@tanuki>
+Date: Thu, 02 May 2024 09:53:09 -0700
+Message-ID: <xmqqzft8dukq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Johan Walles <johan.walles@gmail.com>
-Date: Thu, 2 May 2024 18:51:47 +0200
-Message-ID: <CAKtyTbevS7W-X4qoO=uPnHmXCEtKhqycD8DZZY-oK-z0p4CEAQ@mail.gmail.com>
-Subject: Chunk header @@@ counts wrong?
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 759309BE-08A4-11EF-9AD8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Are these counts produced by git 2.44.0 correct, and in that case how?
+Patrick Steinhardt <ps@pks.im> writes:
 
-The header says "@@@ -6,6 -6,60 +6,60 @@@", meaning "six rows in v1,
-sixty in v2 and sixty in the merge result".
+> On Wed, May 01, 2024 at 10:22:29PM +0200, Karthik Nayak wrote:
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>> 
+>> In the previous commits, we converted `refs_create_symref()` to utilize
+>> transactions to perform symref updates. Earlier `refs_create_symref()`
+>> used `create_symref()` to do the same.
+>> 
+>> This means, we can now remove `create_symref()` and any code associated
+>> with it which is no longer used. We remove `create_symref()` code from
+>> all the reference backends and also remove it entirely from the
+>> `ref_storage_be` struct.
+>
+> Very nice.
 
-I think v2 contains 57 lines, but git says 60. What am I missing?
+Indeed.
 
-I'm counting:
-* 6 space-space (context) lines
-* 51 plus-space (new to v1 but already in v2) lines
-* 3 plus-plus (new to both v1 and v2) lines
-
-Doesn't this mean that v2 contains 57 (51 plus-space + 6 context) lines?
-
-Why does git say that v2 contains 60 lines?
-
-Originally reported here: https://github.com/walles/riff/issues/63
-
-  Regards /Johan
-
-"
-diff --cc ansible/roles/zfsbootmenu/tasks/main.yaml
-index 73fa864,08648fa..0000000
---- a/ansible/roles/zfsbootmenu/tasks/main.yaml
-+++ b/ansible/roles/zfsbootmenu/tasks/main.yaml
-@@@ -6,6 -6,60 +6,60 @@@
-        - zfsbootmenu
-      state: present
-
-++<<<<<<< HEAD
-++=======
-+ - name: Create ESP mdadm config
-+   template:
-+     src: mdadm.conf.j2
-+     dest: /etc/mdadm.conf
-+     owner: root
-+     group: root
-+     mode: 0644
-+   when: esp_mdadm_array is defined
-+
-+ - name: Install dropbear
-+   xbps:
-+     pkg:
-+       - dropbear
-+       - mkinitcpio-dropbear
-+     state: present
-+
-+ - name: Create dropbear directory
-+   file:
-+     path: /etc/dropbear
-+     owner: root
-+     group: root
-+     mode: 0755
-+     state: directory
-+
-+ - name: Create dropbear keys
-+   command:
-+     cmd: /usr/bin/dropbearkey -t {{ item }} -f
-/etc/dropbear/dropbear_{{ item }}_host_key
-+     creates: /etc/dropbear/dropbear_{{ item }}_host_key
-+   loop:
-+     - rsa
-+     - ecdsa
-+     - ed25519
-+
-+ - name: Create dropbear authorised keys
-+   template:
-+     src: authorized_keys.j2
-+     dest: /etc/dropbear/root_key
-+     owner: root
-+     group: root
-+     mode: 0644
-+     lstrip_blocks: true
-+
-+ - name: Create dropbear config
-+   template:
-+     src: dropbear.conf.j2
-+     dest: /etc/dropbear/dropbear.conf
-+     owner: root
-+     group: root
-+     mode: 0644
-+     lstrip_blocks: true
-+
-++>>>>>>> 8eec118 (fixup! ansible/roles/zfsbootmenu: add role)
-  - name: Create zfsbootmenu config
-    template:
-      src: config.yaml.j2
-* Unmerged path ansible/host_vars/foo.yaml
-"
+The last paragraph reads well without "This means, ", by the way.
