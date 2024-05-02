@@ -1,90 +1,172 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A7D173335
-	for <git@vger.kernel.org>; Thu,  2 May 2024 18:34:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11E415FD17
+	for <git@vger.kernel.org>; Thu,  2 May 2024 18:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714674889; cv=none; b=Ro7sAHR5Sf7jSGOUwResR3exd7LknqyibU8OMvOTMUOG8ysRacT5Y2+QKvzdJWKExVW2bDJzFGYTGiu7jCsIlM4XRBgSK3AXFC/l1TLyTIoL4pyxTvwpZMHBpbiFWIAA7qBfXIn6A7uZhTEtv3xj2nfAy8IYTV9+wW9lYSXs7KI=
+	t=1714676358; cv=none; b=pUJfXMPQuWbcUpsO6ZVyGs2GKSswwEwEBdEXYxhDAPAP+7/y9SwDQ+raEg1KT4yx7egmEQW4WVyiTSaswEyCvdplmHnvW6gIFNNjiJUgQhtk7opZOgpJhYnm/47EIBfbo8cKm5UsDMMpvw14uoKw1Czl5nni5fg9bIeeJ60KNaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714674889; c=relaxed/simple;
-	bh=Hf3DZVkpRV3wvBuKpt42a0U6BJNB5SeapuP0BgLVJJI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LB7O0wF/kUMNyWI+QhEtTmw0aRKWCxKvr2ZjnZh23uQE7In+SUnUW/cf587Z3hTe/ToSY97IbHxo2p00047HidogXPXJeiZIVfZpMgONjym/o6pgV10SyWdQd2vmhM5pIkFz5D2OfmO6Bo0gdLWqZnLD7S0L3gBw92Cfi5CSZT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EASi9OAz; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714676358; c=relaxed/simple;
+	bh=65r8bZi64A9bmUZVsVpyBTBo2vabfOEUQuS+g09fVFU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cZvwFFk5jgOG+Jl6+bYpiTr3Duc1BX4Ksz5Veap5cJS7WXZ4KVNQj6MECExV0+KY6r0yZt0PqGQp2EjIGtExqhZcQZh+cZuIrJ5DKI62BtKxrDqL6rU9rLLib51HZiFYpCo3DZI8Q2B8m5QzChHWzv6hvRBVax+oI7abCS51ugQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=UGpY/lny; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EASi9OAz"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51f12ccff5eso1536804e87.1
-        for <git@vger.kernel.org>; Thu, 02 May 2024 11:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714674885; x=1715279685; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iFBXqb5vdGRuiz8xN5trgMrj1ik0xh5o0tarDxHuKx0=;
-        b=EASi9OAzOtsPuodwzCBxxnWPpoQQXD96DSvHjiF26ovUd9w/BOOkMeheNG9muHoSnL
-         eDKDCzY6701O0ViYbWkr0unlRkdXrRA4GLsQyBCOo7yHlK1xYCkDPhtIB2kxIinXnOpv
-         7VDj5uD1jBhmfPJaJGFUsMMVukHk75f6720EkdulhTATS9Yx7PfI7WmL5Tz9crIvRfHg
-         HqVDl8RkN/yrN/ifHc/3b3MhnACutAc9Hd3QRk7DphiDucYLNSnn3MPT5P85unhFQH4K
-         utnaH7qEj0O6B7WG13GijrOiAYoZF+dBTJbil0k23vifZQlOR31psxqIKtbUBq0jN1Lp
-         2tyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714674885; x=1715279685;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iFBXqb5vdGRuiz8xN5trgMrj1ik0xh5o0tarDxHuKx0=;
-        b=QpRFveZwQEPjMxZQ3zB4c90MqGjINUd7b8aNNMrJoOfmaLZWeb5pmWlsrECTnjHdLm
-         1Pml5sQykr0FaGkstBPXtdYCxt05ebvjZgwEAn7cGKXJeQN4yGLynZ6Ls+SnI8DHBpkN
-         82ouwPJ5ck3w0mXk20kSIR8uAepB2rqmJoT5j191eB+m7R0eZ4I2PfdMQkEjWHN8orL5
-         CjVFeXdZFlU1z6FSKrgKSbdlIfl2rQuV/EOexWxGLpWPhQFpyUEXLTcda8KFJ+wUgvGE
-         AcZVfCvQzIKjdywbgbmLJ6OFfdc2MtsrbqNxd+m9qVFLiiFkR5HAJlREliQuS6iv1mO1
-         90OA==
-X-Forwarded-Encrypted: i=1; AJvYcCVlZZ6P3NdfF1dwR/rLuptt7PjajuVk/E8+gi/gkgNXVeKVZibnSoE0mfnZBlCz0Mt9h69tkc/jfteJwBbKCwPfU6PJ
-X-Gm-Message-State: AOJu0YxXrKmh8Y1COGDY0fYqBKS+WJTuPFlWCE+03F2BY6TrPLMcBbIR
-	DEEmPb63anlM1nws5OmF4Ka3bakNlqx2gGOesP8ud90p9zWlgBSkWQpGAejkHoyxuv/mHflSuZq
-	Q2IqFGRAdqKdr3QCcO3YJq6cjPWg=
-X-Google-Smtp-Source: AGHT+IH7HXmgqvdHKe8ULz48sDKHbaMOYhcgcHhTwGMNVjIRIAs/u26oGgyLKpPWvp9FQJUdt3emfSic1Zs2RqpS950=
-X-Received: by 2002:a05:6512:786:b0:51b:de3a:33ac with SMTP id
- x6-20020a056512078600b0051bde3a33acmr410059lfr.59.1714674885178; Thu, 02 May
- 2024 11:34:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="UGpY/lny"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1714676344; x=1715281144; i=tboegi@web.de;
+	bh=X5lpNGYzZgQS2ARS4OSzXlKa/HRMqw8vwypjtiTtbQQ=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=UGpY/lnydoX+OeO0iSsGpoWY08HYC3lRpjtw9AkCPyfLCfwu6H3y86uAhaXOPyZ4
+	 huPqgkyeOxRBU46xV5tWvG76oJU5DWrH1WRhAJ0lPpqbxpd6TV/r2X1z3wzra1w2k
+	 FczCXKuhXMUOZxUmQDxVyEInreGh/BJrcd9hp1QfdL8+lGUmeM/cWSLzfO1XLz5b/
+	 awv7FtRYRTJV5iYU7k4Nk+7w6Fha8mu50qfx7tPzePBccpZQgcR6Vm+nLeMdbyTXZ
+	 kg5EnNQnj1y4FjWMpP24oO1CSnJ7kNp2wPpdjh7WY+eryOt3m76tHpT5D/PkhZ7Y2
+	 v5qxWoaYcH8RSl6m8w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mc1VL-1se9aR1rJf-00dLzo; Thu, 02
+ May 2024 20:59:04 +0200
+Date: Thu, 2 May 2024 20:59:03 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: t4216-log-bloom.sh broken ?
+Message-ID: <20240502185903.GA11895@tb-raspi4>
+References: <xmqq8r0ww0sj.fsf@gitster.g>
+ <20240502055621.GA29945@tb-raspi4>
+ <xmqqsez0fbam.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKOHPAn1btewYTdLYWpW+fOaXMY+JQZsLCQxUSwoUqnnFN_ohA@mail.gmail.com>
- <20240501220030.GA1442509@coredump.intra.peff.net> <ZjLfcCxjLq4o7hpw@nand.local>
- <ZjPOd83r+tkmsv3o@nand.local> <xmqqfrv0ds7f.fsf@gitster.g>
-In-Reply-To: <xmqqfrv0ds7f.fsf@gitster.g>
-From: Dhruva Krishnamurthy <dhruvakm@gmail.com>
-Date: Thu, 2 May 2024 11:34:08 -0700
-Message-ID: <CAKOHPAnoER5nNrTK=7O6UP11ri3Cx_fxFP5PjMeYgOsYOQNXBg@mail.gmail.com>
-Subject: Re: using tree as attribute source is slow, was Re: Help troubleshoot
- performance regression cloning with depth: git 2.44 vs git 2.42
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>, John Cai <johncai86@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqsez0fbam.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:JsNyUWbWR2LpYM9L2dlxsWQFeKAUNwvWqf3OvKgkPLlZfVvL3jz
+ IHhCosDv2OmElDaM/6dVs2/VUZqwh/x37oVhKPBwoxuyaYjHMfq7t9lnI9Y3M950wVuP3On
+ dAukeoADaK0ldWzlbARfLKM6oodD3i5Xsv9hO727o+4/NAYrjTKh41eUNgQHOaHjxuCaHZG
+ M02QtZkeOnk6+fDR4iCjg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:8w8J8F9+cUI=;gRlbs04B5odq0BDuJToNA/ZoW/H
+ R0k1TiJY9e6R78oiuXYHVzrTfeqX1S6lu39CYOjGJezpGzwFGQNz9rug5OkBjoJRDuF/rAss7
+ boA0+0b+Rznwt3W4qC4JTykPwWh6wiktiSYZvgapP5A+yd18+YI7y31RtjmZ9gCg/2zgoA0+5
+ MoRISR8ICMFSUZr6PiBA1ux7GF5o7IJYy11K3wNQBnGjQneDvn1jXPBqQRXAMp7RJ9S8p5KRn
+ bdN9hGSH58tW/yUaOo3AXndrKtmQ1DnAZTPPMEn0N7eHIsCEEkHldyd5ioaExdwb8YEtZlx1q
+ UmMzKJuPKpsx1Gyipze7M4h4538uyQKJCoz3XjCz4CWhV2XQlGerVEemX7RQNrfPpKCkVDmxi
+ RYVy+yWqbii5yso+XcBAzz9qojqtdjVEPSuOKn8g3ZpFPhW8ZUKPg8huIQ4ZRYQTtwIt+BAH9
+ E7UaRa5R9LEQfQo1imiqqi3NwSyxzlReCVnpTzcddNP+2iffRo7GmjcAfXJIvdTVTYmzPOXmb
+ H5MHBc8eTkK1YBP6JJjytYlQcoOnuF3icrDJVXX+qZKv/weGYftcdnd7arHybmE7Lf2xF9QBw
+ IQKjR//C2LyD9ha8tw5/LCYSxAuReWF2G3AaZLW6cCg5l29rqyO7G23Vug7yGsVQY0XEBCJqd
+ VMSAiBANgqQjq5ebZyKivFZKNwLQZ8ilxPZ7gD9YL149IbXKIK0zxTBY417kzYsPf0HPrnKzD
+ GoQt1RvwJ92f5Ue6+zVIl5EqyiaP6wmCW6wBPuOPu9HQhfL+8KP58Qofxp42xp7Rqw6GTmcMd
+ Re2jxxzmIpLF8EvWm3lVsugAO0BxiU4sXsA2m3JkflQno=
 
-On Thu, May 2, 2024 at 10:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Thu, May 02, 2024 at 09:06:41AM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
 >
-> Taylor Blau <me@ttaylorr.com> writes:
+> > There are 4 test cases in t4216-log-bloom.sh, that do not pass on one
+> > Mac here (they pass on another machine)
 >
-> > Instead, this patch changes the behavior to only fallback to "HEAD" in
-> > bare repositories from check-attr, but leaves pack-objects, archive, an=
-d
-> > all other builtins alone.
->
-> I thought the whole point of the exercise was to allow server-side
-> (which typically is bare and cannot use anything from the working
-> tree) to pay attention to the attributes.  This patch rips that out
-> and piles even more new and unproven code on top?  I am not sure.
+> Another machine being another mac?
 
-Yes, I am particularly interested in bare repositories (server/hosting side=
-).
+Yes, different mac, different MacOs, different $PATH probably.
+
+>
+> > expecting success of 4216.141 'Bloom reader notices too-small data chu=
+nk':
+> > 	check_corrupt_graph BDAT clear 00000000 &&
+> > 	echo "warning: ignoring too-small changed-path chunk" \
+> > 		"(4 < 12) in commit-graph file" >expect.err &&
+> > 	test_cmp expect.err err
+> >
+> > ++ check_corrupt_graph BDAT clear 00000000
+> > ++ corrupt_graph BDAT clear 00000000
+> > ++ graph=3D.git/objects/info/commit-graph
+> > ++ test_when_finished 'rm -rf .git/objects/info/commit-graph'
+> > ++ test 0 =3D 0
+> > ++ test_cleanup=3D'{ rm -rf .git/objects/info/commit-graph
+> > 		} && (exit "$eval_ret"); eval_ret=3D$?; :'
+> > ++ git commit-graph write --reachable --changed-paths
+> > ++ corrupt_chunk_file .git/objects/info/commit-graph BDAT clear 000000=
+00
+> > ++ fn=3D.git/objects/info/commit-graph
+> > ++ shift
+> > ++ perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrupt-chu=
+nk-file.pl BDAT clear 00000000
+> > ++ command /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-=
+chunk/corrupt-chunk-file.pl BDAT clear 00000000
+> > ++ /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/co=
+rrupt-chunk-file.pl BDAT clear 00000000
+> > ++ mv .git/objects/info/commit-graph.tmp .git/objects/info/commit-grap=
+h
+> > override r--r--r--  tb/staff for .git/objects/info/commit-graph? (y/n =
+[n]) not overwritten
+>
+> Is this failure preventing the later steps of the test work as
+> expected, I wonder.  Is there something curious with the permission
+> bits of /Users/tb/NoBackup/projects/git/git.pu/ directory or its t/
+> subdirectory?  Is there something curious with the "umask" of the
+> user running the test?  Are they different from what you see on your
+> other mac that does not exhibit the problems?
+>
+> Thanks.
+>
+>
+
+mv is /bin/mv, that seems to be good:
+
+$ type mv
+mv is /bin/mv
+
+$ alias | grep mv
+
+$ which mv
+/bin/mv
+
+$ umask
+0022
+
+I don't know, why we see
+r--r--r--  tb/staff for .git/objects/info/commit-graph
+
+But, the "-r--r--r--" may be part of the problem, here is another one:
+$ find . -name commit-graph -print0 | xargs -0 ls -l
+-r--r--r--  1 tb  staff  1792 May  2 12:12 ./trash directory.t5318-commit-=
+graph/bare/objects/info/commit-graph
+(And some more 6 in total. All with -r--r--r--)
+
+Which means, yes, t5318 does not pass either:
+t5318-commit-graph.sh not ok 101 - reader notices too-small oid fanout chu=
+nk
+t5318-commit-graph.sh not ok 102 - reader notices fanout/lookup table mism=
+atch
+t5318-commit-graph.sh not ok 103 - reader notices out-of-bounds fanout
+t5318-commit-graph.sh not ok 104 - reader notices too-small commit data ch=
+unk
+t5318-commit-graph.sh not ok 105 - reader notices out-of-bounds extra edge
+t5318-commit-graph.sh not ok 106 - reader notices too-small generations ch=
+unk
+
+Same problem here:
+++ mv full/.git/objects/info/commit-graph.tmp full/.git/objects/info/commi=
+t-graph
+override r--r--r--  tb/staff for full/.git/objects/info/commit-graph? (y/n=
+ [n]) not overwritten
+
+The rest of the test suite passes, I see the same failures even under a
+fresh cloned repo.
+
+Any hints are appreciated.
+
+
