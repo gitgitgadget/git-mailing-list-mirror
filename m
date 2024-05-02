@@ -1,54 +1,56 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264811EA6F
-	for <git@vger.kernel.org>; Thu,  2 May 2024 16:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8626F16FF23
+	for <git@vger.kernel.org>; Thu,  2 May 2024 16:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714668606; cv=none; b=Yf4iyogY6cXAYxFWLTsdo/vLvEZODR40l484BA+MeeQg8+k+qnXTZ19ndfPlWsoHE3cUUUNgTbrT7JyZoGZ0L0ohGCpGJBEwfjQ7DDJcgY2iUoUV0DyBQK7rC3tEohs2GSD4WNa2pkjf9eol9RIwdo3KhDUZsRFG9MLGX5MCErs=
+	t=1714668694; cv=none; b=gYNJk8gopY656udqL6Aiks0MgcToyB3pOUD/REBSne+TQElBbIqCu7240egEWMK8yTMj7zxQd326M3OT8IexoVPDgF5GZbqu6eE6DmhxRlTMhDesh0ge2VpCY3amdJ7avkAGfBIMmI+Ty0R1UGYgTemQ9JYJ06gcfC1CR07QgIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714668606; c=relaxed/simple;
-	bh=1Jj0Hoqu5CnFHwK93dKv/CU0xpQz0ov8O4alKTD3VVM=;
+	s=arc-20240116; t=1714668694; c=relaxed/simple;
+	bh=NVwevJ8rZzRcMWD5J4YWdrxlHL1+LaaJ7ZWFgC7zBhc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L3S/CczcvkIe4cqPlvLkjgYPxYcVLMXBuemk9Lr4Mde0mJC2iE06/nmBAdecwXRXDXAVQgMlRtj6R2dX1/+8bEdFLeDMKh+yOa9d1piE405CRFc5NsftJqdx7U4STYBYp+nBYkfbGn2e+SfW0/3xbzVCpNRYzuD4186M5GOB1j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kzSs6Dmf; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=PGLL4id81MQhpYvY54TDDlDK9dDrNrG+56WUbdoZ5yNYlh0X8gNLHLHGlj211WkP3NabZ06l6A5H1sHtk2XBd0DXSdO/GqN8/xumYU4wineYohgjGfOgjGWe70Ubn6AZIDvrgiVRChGmS146MIkxnkZHdiPRjsxqOpAd3DDqt5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LfNg9hbF; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kzSs6Dmf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LfNg9hbF"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D5F631FA1;
-	Thu,  2 May 2024 12:50:04 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EEE1F31FEB;
+	Thu,  2 May 2024 12:51:32 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1Jj0Hoqu5CnFHwK93dKv/CU0xpQz0ov8O4alKT
-	D3VVM=; b=kzSs6Dmf7tltSnYTwC1QhHfRx0vtjN1zkSAIdSavPCDJrl6CoHn1DP
-	pookH6qdU69JGfbfm5iscozxlVli2hk0HLvDkk27l5ZVuQPnxZuOivYD4Bb4n1lz
-	i8/PrbS96OgLPFrk6ha7KqN1tzmj+HiWaSrCUJ2Vp+eGz4V38BhbU=
+	:content-type; s=sasl; bh=NVwevJ8rZzRcMWD5J4YWdrxlHL1+LaaJ7ZWFgC
+	7zBhc=; b=LfNg9hbF8aWkZeEhG5spBjcxlimDK74Fu9PAiWeQgW3kSzwY27cAHu
+	VdxzZf2VwxqkGlU23pNwmMvXx1524dR1tH+17P8o0a8Rn0S6GN9+I3tc3jYIm5Pu
+	KlL11Ox9JoVR4+bS2Xv/XhhJYgVsTJmLqxhNvA/cK+2sSYtm+LbNM=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 54CB431FA0;
-	Thu,  2 May 2024 12:50:04 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E832431FEA;
+	Thu,  2 May 2024 12:51:32 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 460B531F9C;
-	Thu,  2 May 2024 12:50:00 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 73C5431FE9;
+	Thu,  2 May 2024 12:51:29 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: Karthik Nayak <karthik.188@gmail.com>,  christian.couder@gmail.com,
   git@vger.kernel.org
-Subject: Re: [PATCH v5 2/7] files-backend: extract out `create_symref_lock()`
-In-Reply-To: <ZjNFBZOlcQNVYm8O@tanuki> (Patrick Steinhardt's message of "Thu,
-	2 May 2024 09:47:17 +0200")
+Subject: Re: [PATCH v5 4/7] refs: add support for transactional symref updates
+In-Reply-To: <ZjNFC6A5j5hMQ5VA@tanuki> (Patrick Steinhardt's message of "Thu,
+	2 May 2024 09:47:23 +0200")
 References: <20240426152449.228860-1-knayak@gitlab.com>
 	<20240501202229.2695774-1-knayak@gitlab.com>
-	<20240501202229.2695774-3-knayak@gitlab.com>
-	<xmqq7cgdjig4.fsf@gitster.g> <ZjNFBZOlcQNVYm8O@tanuki>
-Date: Thu, 02 May 2024 09:49:58 -0700
-Message-ID: <xmqq8r0sf9ah.fsf@gitster.g>
+	<20240501202229.2695774-5-knayak@gitlab.com>
+	<xmqqbk5pgke0.fsf@gitster.g>
+	<CAOLa=ZQkTM26wmGgj3=Pz9p7-nFAWQdxCA=RjaJVSm2m8zn7jQ@mail.gmail.com>
+	<ZjNFC6A5j5hMQ5VA@tanuki>
+Date: Thu, 02 May 2024 09:51:27 -0700
+Message-ID: <xmqq4jbgf980.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,30 +60,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 03CA4E64-08A4-11EF-A4B7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 38F3833A-08A4-11EF-BB0C-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, May 01, 2024 at 03:06:19PM -0700, Junio C Hamano wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->> 
->> > +	if (!fdopen_lock_file(&lock->lk, "w"))
->> > +		return error("unable to fdopen %s: %s",
->> > +			     get_lock_file_path(&lock->lk), strerror(errno));
->> > +
->> > +	if (fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target) < 0)
->> > +		return error("unable to fprintf %s: %s",
->> > +			     get_lock_file_path(&lock->lk), strerror(errno));
->> 
->> error() is end-user facing, so "fprintf" is probably a bit too
->> precise?  "fprintf" -> "write to"
->> 
->> Also we may want to make them (not just this new message but other
->> error() messages in related code paths) localizable but that is
->> probably beyond the scope of this topic.
+> I wouldn't say we can't do that. We already do log when symrefs become
+> dangling when updating references via HEAD by logging a zero OID as new
+> OID. That is, if we have "HEAD -> refs/heads/foo" and you delete the
+> latter, then we create a new reflog message for "HEAD" with zero OID as
+> new OID.
 >
-> It only occurred to me now, but shouldn't we also support passing in a
-> `struct strbuf *err` here? The transactional code doesn't want us to
-> print error messages to `stderr`, but always supplies a buffer.
+> I would claim that the current behaviour where we don't create a reflog
+> entry when updating a ref to become dangling is a mere bug. I think it's
+> fair to declare this a #leftoverbit and handle it in a follow-up patch
+> series. But it would be nice to say so in an in-code comment.
 
-Sounds sensible.  Thanks.
+I like that.  Thanks.
