@@ -1,128 +1,331 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB419BBA
-	for <git@vger.kernel.org>; Thu,  2 May 2024 05:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56EC18E28;
+	Thu,  2 May 2024 05:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714629214; cv=none; b=GmdjX6FMdVoKUeqb2JjVWOWz/EhnFaiWiOmIVtaOgGTDm9kK8vdyzWlUcejsUdUlDCXziSnhEPLKlsmAhZXBMVlNZC4o+ckhHxiWt+yOmiUZM2JPEMmAjoHmho+xR1fBbAvFMIkP7Wf2kPv3VasEaRs2Qz17srwqby/N0kP8G6c=
+	t=1714629391; cv=none; b=daBxZFqs5PeJv6wr1ZL1vn+gu2IGJhcjqBIw5lIpF+G18yxo6EKZ+26YgLEKcaXguP6en74BS6GisR1Oo+zKOiWd7GKw3nq/+GgLb7a6xhN3QyRhZrIVqwA69r7BoKjY0oyjuAZrh9zUPfb1cxmZQFEkbwABEafKzDNsAG9xiIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714629214; c=relaxed/simple;
-	bh=/oSkuHBjxxEOzMTcIS359dkyCKWNaNbmc/jgf2/lWig=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oudlII2jGftDQtJ8NUQxzlYzdyk7w5oumgASwwdByGEjhmMyTAd7eUllPD58rdmRt2qQqkMkJ2CbQ6ykVnKlx9TlWSmSqwdtc67tA/r/e5DKwbKKONaWPUjdzh32eLUKh9rLpeYaRRbqPYCmuBoXx0zwSV4ae6fHTNph8VOjMYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MUcZJ7Ss; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714629391; c=relaxed/simple;
+	bh=VJVSo+jtSJIClVhIz9JnraE80p7yhL/MTpcdHzpOF9o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gl33D81IzmrnHTIFfEdUkgGvgXW+RFIj3R++KfvwIrcgIx6HdeeEOe2nV6X4B4x16ZLBQcQfZAxjwTGrqq3MqsM7ajlqCf+K8GA2+sPuqwUt/5X3Ek4BDld1IolQFQ57UxM/7RMtnhG5R6aTVBHC7cJES4II4RtWlcgWWwPFRpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=VUfekoRK; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MUcZJ7Ss"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6ef88ce8701so1199772a34.2
-        for <git@vger.kernel.org>; Wed, 01 May 2024 22:53:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714629212; x=1715234012; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LjOWzcBZjsxQSw/LAcQMPIRl4PdTCXSqZM70Ov+NYSk=;
-        b=MUcZJ7SsSiPADlGPtU2mredCncsjmRkYXmqn4QVyedb1+X3KXE53VRKVdlkEz6zBce
-         n2csrDkcaJ7QYv4gWNjzZmXAX+uUXUq2CWZSCTg+p+tuKYZtr3VnHK1Kggqo/hSaouTK
-         4YZhXeTNKX2Qwjk1M1vDGT23KS61L5SWgfOAy7BEJsdHzSu40+OWg2BGpwLPDs7piVBd
-         pKf0BQll9M5EFBwdC3RUKqcwB2yuhSKd8eCPZW+8InP2DHXNB9ZsTC0yUstttS2UGvRu
-         QsgAHOSSQg2hMgnRW8uUuRGqfygSRn7RuZ7mK1zMAWY87S+rh312MEhV3OFyRhrHzqUm
-         NRoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714629212; x=1715234012;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LjOWzcBZjsxQSw/LAcQMPIRl4PdTCXSqZM70Ov+NYSk=;
-        b=e7G5+s1hXE0vbFqN+XPkb398Y2kVX+1sJEeBaoqfTEez9aUAZcdaiOPiTj7Dzv9Sys
-         ijmJq26bstQTXXWZZnAbhFVi7iXyW75Xtg9ofmHPDCI4Fb1QkADuxrSolH+57yDL8I8b
-         iITXhx0XctBQV/zkYT3SDelsh2hs57yAf9QZb+q3CXFjCKysSUfVd1Qnm0IbS05YCYqe
-         N/DpAYAbK308zp1tc4fBBXCjUKF6Oc+HpckKJDC0szlU54kScSeKVXqZV0Be3+wIUuhB
-         SMq4+1/raHnNOIw1TF3BwOOIEwNb1TCKEMTqCJ8dET3+jiFHGLg2lyDzUDXwW5Nc2QXP
-         HiRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVuUje3tfXmgS/9oEZWBlj5SWzqVCCWOYRdJwANuKKqMVmshUocf4vlaVAsHhqdJ3ouip3cJWiMzlgBgbbfFLC3Iyvg
-X-Gm-Message-State: AOJu0Yw+I39tkStQ5Wz+qQ8jDv0HBTtzF2AQ2dbPrjkDhIzDujsx171H
-	nMcpFl4NrY50Mph6Q+Myv4wWuEUrxeMgy9XA+ID+txZcZP6Gw1JjBdL1GNcZDzyrx/uizH8FhuZ
-	MnNSHMbh2VIY+/IdC5F8ss0hr5zM=
-X-Google-Smtp-Source: AGHT+IFvCfacFQS9Rp18jbkrd7fSXKkNyxDWGt28861qNPPFeXdFI7/suUtypSRy5UoSiIIAUP8sJNP3JfHY5HjtcY4=
-X-Received: by 2002:a05:6870:9d8c:b0:23b:360d:4549 with SMTP id
- pv12-20020a0568709d8c00b0023b360d4549mr1288610oab.38.1714629212455; Wed, 01
- May 2024 22:53:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 1 May 2024 22:53:31 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq34r1gj47.fsf@gitster.g>
-References: <20240426152449.228860-1-knayak@gitlab.com> <20240501202229.2695774-1-knayak@gitlab.com>
- <xmqq34r1gj47.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="VUfekoRK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1714629383; x=1715234183; i=tboegi@web.de;
+	bh=TmnQwYlbB4VpG5QqMTOzXTEYlXiCdiDLf8h18p3l++w=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=VUfekoRKsQIRHVtX8+vZ3F1xn2+TTynVylAqVK8k+r8Bi0PxbnuCW9ADwhT2YzIC
+	 SuRyIbqyoCqi2MqZ85cVLxKmLwb6M/+gze0nA4nIEJwsPPGl9EqHgxFWJBvOIHqUr
+	 7L4VxwLCPZ1ZOUuTn6w7s4DewaUAbYo2Kzhonbvd5ckLL4eaSrRrkDmbQ1VZsbL0m
+	 NFjAb/qL2z9azHxSp2OvUesRevpkV/L3ZhpEFxayI2yJdkIS3twzuQ69jK1LbgciA
+	 AXqrv/75oM2P0oF+kYsMpOnhVB8EPZvr3rQZDzPLmSxzYc6085BI9RmfH9h+3ONLK
+	 tKny8x4njDlxwVkeog==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MI3t5-1rpT8q0fu3-0009gz; Thu, 02
+ May 2024 07:56:23 +0200
+Date: Thu, 2 May 2024 07:56:22 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
+	git-packagers@googlegroups.com
+Subject: t4216-log-bloom.sh broken ?
+Message-ID: <20240502055621.GA29945@tb-raspi4>
+References: <xmqq8r0ww0sj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 1 May 2024 22:53:31 -0700
-Message-ID: <CAOLa=ZT+JyJQzfuQmseZSc1mzFghHriX5fRaua3V7XWJues-_g@mail.gmail.com>
-Subject: Re: [PATCH v5 0/7] refs: add support for transactional symref updates
-To: Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000021620906177239c9"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8r0ww0sj.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:ocBvdA6JETQ/O4yLTbjHW04RP0OQczDubSP/Cp0RaUp0uVhGs36
+ JcOrGEBKCyvYGoaXcypvaUgjhk90UYBE35KBbNIDbXpDmDZIBExkcMZP2NLYtVsIRAzFI/L
+ 3mmtLzUEgMWX7P03DPsqxzPiIjoHOTiDmSo+dFX3+eStNUN2b9btIfzv2U0Ip+l8dzgYUI+
+ lMcy2puMWcz+/dM/p85qw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:/SwwNXtAT1g=;ZfpclZOUFxdk4bTSXz0Kl7fsh0Q
+ rX6rGRCaqgl/fZvzqtL8rzJfk+qnlphj+RfZukDla3Puqzzsdy2GxqMMdgrnDsvEivb9hsfTH
+ QvxQM31+2O5d3n8jOE2VCYw5DvWEci0stSXtsIesuCPxPfrS4jX57J/KRpMhqCD11fV+zz2KA
+ UB/nbaaWjhsmkrvFD/Tl9kpOBrmdniv8q3JIpvuJHMwB+1U1tok0Lz8iYBdR7G5MXw60VQUh6
+ fFj6xsnTWMNEDTPykBSPBS29qUpTsMmFn/2TiF9bf8aaOnViMlZwkqzROj/X76/4kulss+rd/
+ /Sg47VpmJNAT3AaxSItJm1EDrJSxqjs2DnBIiTjBHmf8gsXOZkRePSnw95TuReSIcmlqsXFKf
+ RiRN7oi5yZVNLmqEuixNVQdymQLIqw4OkohIG0uNvzdag1kUG/xVndG/3Cvp6Y2nivUpM66h7
+ pqJTRbEwQJ6G0OKNPIu2rhSE2r93veV4/PT/UzxbU90rXWRPnA+dzBKKwQpStNv27s5zOBUHE
+ zX0R8NdsRmUAuEkKjKsQCmqFNzx94p8BUvX3HDhjefZ8wivdGtSeccVnSjHGNDBpWQuXSPblw
+ fRVshDoGh+YudAIWA8mwobE3fOL0YmVdeGCSiHR3P5nKdbgngWPfnYrUqYNevHvJOySZvSvHu
+ gmW+vgABK3+ulYD4LL58ImO1OzkRmDuJ0W3HEzgKMZ4xCOi9JaNwhyKEz0GmwTNeHpkrM5ZBU
+ T4ZuFrrnVgqRksVGheKsr9JtgzwedoYCGCIbF3qZciI6SVSHIXle6UHAyp2oJwM5MKJIdxd5F
+ abi1ZOF++892x71ounDfICEpxAHdYU1VTU6a4DC5UJBF8=
+Content-Transfer-Encoding: quoted-printable
 
---00000000000021620906177239c9
-Content-Type: text/plain; charset="UTF-8"
+[]
 
-Junio C Hamano <gitster@pobox.com> writes:
+Highjacking the Git v2.45.0 announcement:
+There are 4 test cases in t4216-log-bloom.sh, that do not pass on one
+Mac here (they pass on another machine)
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> From: Karthik Nayak <karthik.188@gmail.com>
->>
->> The patch series takes over from the existing patch series, wherein we
->> introduced symref-* commands to git-update-ref. Since there was a ton of
->> discussions on the UX of the patch series and its application, I thought it
->> would be best to shorten the series and split it into multiple smaller series.
->>
->> This series adds transactional support for symrefs in the reference db. Then
->> we switch refs_create_symref() to start using transactions for symref updates.
->> This allows us to deprecate the create_symref code in the ref_storage_be
->> interface and remove all associated code which is no longer used.
->>
->> The split was primarily done so we can merge the non-user facing parts of the
->> previous series. While pertaining the user facing components into another set
->> of patches wherein deeper discussion on the UX can be held without worrying
->> about the internal implementation.
->
-> This split probably makes sense in the context of the evolution of
-> this series.  If this were without any prior discussion, a change to
-> the internal mechanism, without showing how the end-user facing half
-> would use it fully, would have been hard to evaluate, but now that
-> we know where the new mechanism wants to take us, we can fairly
-> evaluate it alone without the end-user facing part.
->
-> I've read only the earlier half of the series but so far the pieces
-> make sense to me.
+I haven't digged further, but here are some log files,
+hopefully helpful to somebody.
 
-Yes I agree, I think it's also nice to see how a bunch of code can be
-removed to use this generic functionality.
 
-I'll wait for a day/two for other reviews. Thanks for your review.
+not ok 141 - Bloom reader notices too-small data chunk
+#
+#               check_corrupt_graph BDAT clear 00000000 &&
+#               echo "warning: ignoring too-small changed-path chunk" \
+#                       "(4 < 12) in commit-graph file" >expect.err &&
+#               test_cmp expect.err err
+#
+not ok 142 - Bloom reader notices out-of-bounds filter offsets
+#
+#               check_corrupt_graph BIDX 12 FFFFFFFF &&
+#               # use grep to avoid depending on exact chunk size
+#               grep "warning: ignoring out-of-range offset (4294967295) f=
+or changed-path filter at pos 3 of .git/objects/info/commit-graph" err
 
---00000000000021620906177239c9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b5777044726b0636_0.1
+#
+not ok 143 - Bloom reader notices too-small index chunk
+#
+#               # replace the index with a single entry, making most
+#               # lookups out-of-bounds
+#               check_corrupt_graph BIDX clear 00000000 &&
+#               echo "warning: commit-graph changed-path index chunk" \
+#                       "is too small" >expect.err &&
+#               test_cmp expect.err err
+#
+not ok 144 - Bloom reader notices out-of-order index offsets
+#
+#               # we do not know any real offsets, but we can pick
+#               # something plausible; we should not get to the point of
+#               # actually reading from the bogus offsets anyway.
+#               corrupt_graph BIDX 4 0000000c00000005 &&
+#               echo "warning: ignoring decreasing changed-path index offs=
+ets" \
+#                       "(12 > 5) for positions 1 and 2 of .git/objects/in=
+fo/commit-graph" >expect.err &&
+#               git -c core.commitGraph=3Dfalse log -- A/B/file2 >expect.o=
+ut &&
+#               git -c core.commitGraph=3Dtrue log -- A/B/file2 >out 2>err=
+ &&
+#               test_cmp expect.out out &&
+#               test_cmp expect.err err
+#
+# failed 4 among 144 test(s)
+1..144
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1Zektsa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL1hEQy80MStYWmJGRmFnNXZ1MmdpUXp4SDVlU1pnNworSkUxYjQyclFC
-dURyVXlhUDMvZ09CZ0h4VXNTMkJad3duQ0JKQUhleXZLTmo3bWJLTjlGVDFvN1F5bGREU0I5CmlO
-T0dWNUNWUnRwZ0dkYzVYUjJGR1VUUkxkUWxTbXlpaFZPak03RkU4R1E0eWtUbld6bmJDVVc1dkZV
-V05pcVUKaFJnelpzZEJFdFkzUUhqbGNCbnhsQzhDMW9BL1hnbDVaMjJnWjNMVXg4OTczbDQyb0dl
-aE9NdUc5UVlvVHNBcgoxSXRlMDJHaXFuUk8vd2ZNajVZZ2dkcFhVUkl0TE5KTUNOZHNiaU80RU1l
-U2J6NngvSnFNZ1drVUlRZUVrUnU4ClBKcXFMdS9CNkdJZHN4NndSU1dSV3dLTjZ2YzhiaCtwS09i
-OTJpd09rblZjd0ZESlJRNnBZRDJJOGVTMGlxN1cKVFpBUUhjSXV6NzQ2VEsvamJuQlVpdUZUeEF5
-TDNpMUZyRVlSUUsrc0tmSjNJanlaVll0R3JmTXVwZ1hOSHlRNwpYbm8rZFNtcyt4Z3ZrNkZwVVMz
-UFR1M2wyLy85dlREbkR6S2RwYzNpejlTcW1BMC9SdlJUNTJ5azJpMCsxT29yCmc1Z0EvdXkvYlVy
-UGFuNzdFWldRaVI4TFlTdGdwU3UwZ2t4ZDlQVT0KPTlFUlYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000021620906177239c9--
+
+ok 140 - Bloom generation backfills empty commits
+
+expecting success of 4216.141 'Bloom reader notices too-small data chunk':
+	check_corrupt_graph BDAT clear 00000000 &&
+	echo "warning: ignoring too-small changed-path chunk" \
+		"(4 < 12) in commit-graph file" >expect.err &&
+	test_cmp expect.err err
+
+++ check_corrupt_graph BDAT clear 00000000
+++ corrupt_graph BDAT clear 00000000
+++ graph=3D.git/objects/info/commit-graph
+++ test_when_finished 'rm -rf .git/objects/info/commit-graph'
+++ test 0 =3D 0
+++ test_cleanup=3D'{ rm -rf .git/objects/info/commit-graph
+		} && (exit "$eval_ret"); eval_ret=3D$?; :'
+++ git commit-graph write --reachable --changed-paths
+++ corrupt_chunk_file .git/objects/info/commit-graph BDAT clear 00000000
+++ fn=3D.git/objects/info/commit-graph
+++ shift
+++ perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrupt-chunk-f=
+ile.pl BDAT clear 00000000
+++ command /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chun=
+k/corrupt-chunk-file.pl BDAT clear 00000000
+++ /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrup=
+t-chunk-file.pl BDAT clear 00000000
+++ mv .git/objects/info/commit-graph.tmp .git/objects/info/commit-graph
+override r--r--r--  tb/staff for .git/objects/info/commit-graph? (y/n [n])=
+ not overwritten
+++ git -c core.commitGraph=3Dfalse log -- A/B/file2
+++ git -c core.commitGraph=3Dtrue log -- A/B/file2
+++ test_cmp expect.out out
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.out out
+++ echo 'warning: ignoring too-small changed-path chunk' '(4 < 12) in comm=
+it-graph file'
+++ test_cmp expect.err err
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.err err
+=2D-- expect.err	2024-05-02 05:51:10.000000000 +0000
++++ err	2024-05-02 05:51:10.000000000 +0000
+@@ -1 +0,0 @@
+-warning: ignoring too-small changed-path chunk (4 < 12) in commit-graph f=
+ile
+error: last command exited with $?=3D1
+++ rm -rf .git/objects/info/commit-graph
+++ exit 1
+++ eval_ret=3D1
+++ :
+not ok 141 - Bloom reader notices too-small data chunk
+
+
+expecting success of 4216.142 'Bloom reader notices out-of-bounds filter o=
+ffsets':
+	check_corrupt_graph BIDX 12 FFFFFFFF &&
+	# use grep to avoid depending on exact chunk size
+	grep "warning: ignoring out-of-range offset (4294967295) for changed-path=
+ filter at pos 3 of .git/objects/info/commit-graph" err
+
+++ check_corrupt_graph BIDX 12 FFFFFFFF
+++ corrupt_graph BIDX 12 FFFFFFFF
+++ graph=3D.git/objects/info/commit-graph
+++ test_when_finished 'rm -rf .git/objects/info/commit-graph'
+++ test 0 =3D 0
+++ test_cleanup=3D'{ rm -rf .git/objects/info/commit-graph
+		} && (exit "$eval_ret"); eval_ret=3D$?; :'
+++ git commit-graph write --reachable --changed-paths
+++ corrupt_chunk_file .git/objects/info/commit-graph BIDX 12 FFFFFFFF
+++ fn=3D.git/objects/info/commit-graph
+++ shift
+++ perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrupt-chunk-f=
+ile.pl BIDX 12 FFFFFFFF
+++ command /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chun=
+k/corrupt-chunk-file.pl BIDX 12 FFFFFFFF
+++ /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrup=
+t-chunk-file.pl BIDX 12 FFFFFFFF
+++ mv .git/objects/info/commit-graph.tmp .git/objects/info/commit-graph
+override r--r--r--  tb/staff for .git/objects/info/commit-graph? (y/n [n])=
+ not overwritten
+++ git -c core.commitGraph=3Dfalse log -- A/B/file2
+++ git -c core.commitGraph=3Dtrue log -- A/B/file2
+++ test_cmp expect.out out
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.out out
+++ grep 'warning: ignoring out-of-range offset (4294967295) for changed-pa=
+th filter at pos 3 of .git/objects/info/commit-graph' err
+error: last command exited with $?=3D1
+++ rm -rf .git/objects/info/commit-graph
+++ exit 1
+++ eval_ret=3D1
+++ :
+not ok 142 - Bloom reader notices out-of-bounds filter offsets
+
+expecting success of 4216.143 'Bloom reader notices too-small index chunk'=
+:
+	# replace the index with a single entry, making most
+	# lookups out-of-bounds
+	check_corrupt_graph BIDX clear 00000000 &&
+	echo "warning: commit-graph changed-path index chunk" \
+		"is too small" >expect.err &&
+	test_cmp expect.err err
+
+++ check_corrupt_graph BIDX clear 00000000
+++ corrupt_graph BIDX clear 00000000
+++ graph=3D.git/objects/info/commit-graph
+++ test_when_finished 'rm -rf .git/objects/info/commit-graph'
+++ test 0 =3D 0
+++ test_cleanup=3D'{ rm -rf .git/objects/info/commit-graph
+		} && (exit "$eval_ret"); eval_ret=3D$?; :'
+++ git commit-graph write --reachable --changed-paths
+++ corrupt_chunk_file .git/objects/info/commit-graph BIDX clear 00000000
+++ fn=3D.git/objects/info/commit-graph
+++ shift
+++ perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrupt-chunk-f=
+ile.pl BIDX clear 00000000
+++ command /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chun=
+k/corrupt-chunk-file.pl BIDX clear 00000000
+++ /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrup=
+t-chunk-file.pl BIDX clear 00000000
+++ mv .git/objects/info/commit-graph.tmp .git/objects/info/commit-graph
+override r--r--r--  tb/staff for .git/objects/info/commit-graph? (y/n [n])=
+ not overwritten
+++ git -c core.commitGraph=3Dfalse log -- A/B/file2
+++ git -c core.commitGraph=3Dtrue log -- A/B/file2
+++ test_cmp expect.out out
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.out out
+++ echo 'warning: commit-graph changed-path index chunk' 'is too small'
+++ test_cmp expect.err err
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.err err
+=2D-- expect.err	2024-05-02 05:51:11.000000000 +0000
++++ err	2024-05-02 05:51:11.000000000 +0000
+@@ -1 +0,0 @@
+-warning: commit-graph changed-path index chunk is too small
+error: last command exited with $?=3D1
+++ rm -rf .git/objects/info/commit-graph
+++ exit 1
+++ eval_ret=3D1
+++ :
+not ok 143 - Bloom reader notices too-small index chunk
+
+expecting success of 4216.144 'Bloom reader notices out-of-order index off=
+sets':
+	# we do not know any real offsets, but we can pick
+	# something plausible; we should not get to the point of
+	# actually reading from the bogus offsets anyway.
+	corrupt_graph BIDX 4 0000000c00000005 &&
+	echo "warning: ignoring decreasing changed-path index offsets" \
+		"(12 > 5) for positions 1 and 2 of .git/objects/info/commit-graph" >expe=
+ct.err &&
+	git -c core.commitGraph=3Dfalse log -- A/B/file2 >expect.out &&
+	git -c core.commitGraph=3Dtrue log -- A/B/file2 >out 2>err &&
+	test_cmp expect.out out &&
+	test_cmp expect.err err
+
+++ corrupt_graph BIDX 4 0000000c00000005
+++ graph=3D.git/objects/info/commit-graph
+++ test_when_finished 'rm -rf .git/objects/info/commit-graph'
+++ test 0 =3D 0
+++ test_cleanup=3D'{ rm -rf .git/objects/info/commit-graph
+		} && (exit "$eval_ret"); eval_ret=3D$?; :'
+++ git commit-graph write --reachable --changed-paths
+++ corrupt_chunk_file .git/objects/info/commit-graph BIDX 4 0000000c000000=
+05
+++ fn=3D.git/objects/info/commit-graph
+++ shift
+++ perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrupt-chunk-f=
+ile.pl BIDX 4 0000000c00000005
+++ command /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chun=
+k/corrupt-chunk-file.pl BIDX 4 0000000c00000005
+++ /usr/bin/perl /Users/tb/NoBackup/projects/git/git.pu/t/lib-chunk/corrup=
+t-chunk-file.pl BIDX 4 0000000c00000005
+++ mv .git/objects/info/commit-graph.tmp .git/objects/info/commit-graph
+override r--r--r--  tb/staff for .git/objects/info/commit-graph? (y/n [n])=
+ not overwritten
+++ echo 'warning: ignoring decreasing changed-path index offsets' '(12 > 5=
+) for positions 1 and 2 of .git/objects/info/commit-graph'
+++ git -c core.commitGraph=3Dfalse log -- A/B/file2
+++ git -c core.commitGraph=3Dtrue log -- A/B/file2
+++ test_cmp expect.out out
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.out out
+++ test_cmp expect.err err
+++ test 2 -ne 2
+++ eval 'diff -u' '"$@"'
++++ diff -u expect.err err
+=2D-- expect.err	2024-05-02 05:51:11.000000000 +0000
++++ err	2024-05-02 05:51:11.000000000 +0000
+@@ -1 +0,0 @@
+-warning: ignoring decreasing changed-path index offsets (12 > 5) for posi=
+tions 1 and 2 of .git/objects/info/commit-graph
+error: last command exited with $?=3D1
+++ rm -rf .git/objects/info/commit-graph
+++ exit 1
+++ eval_ret=3D1
+++ :
+not ok 144 - Bloom reader notices out-of-order index offsets
