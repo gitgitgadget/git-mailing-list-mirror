@@ -1,103 +1,102 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD28316FF27
-	for <git@vger.kernel.org>; Thu,  2 May 2024 17:53:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CD716FF54
+	for <git@vger.kernel.org>; Thu,  2 May 2024 17:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714672429; cv=none; b=V5vnd33BIf1qUG4hhCIwwE/ivfgBCcoTYhC8vJz7fX0WSkCsvPQE2eE5QE4ia24Yv+acjwMN5P5pzQO7XG+WJIyF/KpydUijBbBzQOJ2pmWsLNw4d7L7lC0vxfIe5ShJkqR4lo1ifkZD3cfq+CKfurrooJXNuuZD7APd6louhaA=
+	t=1714672538; cv=none; b=rY/9bfiSb6sCwxW5B70+krrDgW7gxdNm9Kdy1GtjunuO4denwGDgxZcr+mr+EuCEKjhxGvqNuOV2F23MC8S0Bn5YEBQlIZRsB1WHEv6KVpM89b99iz6txu7TFFV0gB4BZESzb2apikV1dWsVrH6uB22MoeF6//lAPqXNMzC9qoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714672429; c=relaxed/simple;
-	bh=zlMR8a036DTWrtpbrn8C8YJkltYK3LAZBh54lplQ7wQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sEWdNXGGAhc5koVwDTLG+crsty3w/jxGrhraZ8j3iYZO4UNO96t1oYwmoyqa1KexUK8CZfzsfEPotjG45mmKdhhGyYDEhE5SPKfaAuBZvbz339VmX2tfFgg94u2UqxhJIx8FT2EQr+qjYS8veYug4eArbtCzfAa9Gf0G+F2mdbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cydbjzwW; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714672538; c=relaxed/simple;
+	bh=N6z1yTsyeNSSUx3Cn2JkykjQ1LCeAPJC2UYwnpGEUdA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s++CmWyJ4cOmMhQ00jysBnWNJpOOb/Dyl8oqJbXx3KQ0Kw82ezN/hPV5Ygtn/YDl6HzKbOfC9uml+sgPQBA800EG4HuBxSp/9AQdU8QHQ+Sef+Heq48RNgd1DZh92J/mcbqv/ow9oJPDQhRv9dqrjEgia6L6x/FcpWlHDkdttRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=EDqfoJom; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cydbjzwW"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CCCA22202;
-	Thu,  2 May 2024 13:53:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=zlMR8a036DTWrtpbrn8C8YJkltYK3LAZBh54lp
-	lQ7wQ=; b=cydbjzwWb2EJ5f4V0vE79gNoYFbXuwjGyx7GKxugDTHYJdBF6MYSbS
-	x1yk+zorZR4W9uJP3GO8Xjcn4SD43mnaRQhRaUZZUgSCnb52Ixo+zQNunFT34te3
-	8mkoGcEPAAxRBZUeJBdJHj2dvvjetHl5O6/jTRqPDcgaUDWXwbsdA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 92C5E22201;
-	Thu,  2 May 2024 13:53:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06F7F22200;
-	Thu,  2 May 2024 13:53:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v5 4/7] refs: add support for transactional symref updates
-In-Reply-To: <20240501202229.2695774-5-knayak@gitlab.com> (Karthik Nayak's
-	message of "Wed, 1 May 2024 22:22:26 +0200")
-References: <20240426152449.228860-1-knayak@gitlab.com>
-	<20240501202229.2695774-1-knayak@gitlab.com>
-	<20240501202229.2695774-5-knayak@gitlab.com>
-Date: Thu, 02 May 2024 10:53:44 -0700
-Message-ID: <xmqqbk5odrrr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EDqfoJom"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-437610adf96so55370431cf.3
+        for <git@vger.kernel.org>; Thu, 02 May 2024 10:55:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714672536; x=1715277336; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wubsJ8ixoTXxzQ781codhG3ug2RC8PHh2TrbRx5sHMo=;
+        b=EDqfoJomS2gmTOUfjpfFOC89/j15HQKwid4wK7jc6tLT260u3zyFTxNwrs0hhg1YQc
+         ELglrm8nWf6o+0aPVMi7Znd5+37cYGeXEIu1U8E/4jZfAMe0CgFg+nnHH3IOD3ZNGQbk
+         L1xmslu9zOIHICo+7ntA86+VWV/I6aA8oiwFVc4i3G9kS7wJmGwoOm+XDwrORF8bDJ3B
+         d7kAIOHTxLscYRwuHi+KLU0h4fxbehhasEuBMtLe1jhchWe3wTJzQG1XuiM9Xp2PCNRn
+         t1w5FesRw8z2OmyPemMBnMfCYqlbTemJG7nehJCvL1Sj+mj6tZdd+eWsZXeVb2s36QAz
+         QdkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714672536; x=1715277336;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wubsJ8ixoTXxzQ781codhG3ug2RC8PHh2TrbRx5sHMo=;
+        b=QLYMigktAdvKcwbGonNlLgMdlp9xjRY1kVKSQ0Vsj+GStJjCMWZivLLNRA+MT80hsK
+         n9TLD/tTA5QI8w6ETCFk93YyBtBmczSsKZtybiwzGxT3bL8yKY3zQmhPZkcllKYO6qKe
+         ja6ieokGLtaY84snuHSS9WrMljqlhqqj/COuAlidFrdKBwGmmDX4a0BcsPDdaWRmYSww
+         AAygKPMv1d/UJ4i79OsjED4rRPgo1gEbc2hrXDQZo5vw1xAQ+ttJq5QtWBCQeLOw6I5j
+         sK6dUJCPKCtbwp3Gx3WQI/N1dn4b2Z9zcrdJUyfDmN2nsIizyM1q2xXLBX2KUOJ87QGZ
+         Wt4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUbP8W7nZV3fIKZpDJz0cUWuXP4EPb6VsxdqdUVkvioUWVCE0TQ7yVaQR7n5ixohVPt0SlKGDhwFRY3eZBhxuJD9cf2
+X-Gm-Message-State: AOJu0Yxu8cXHM8qBppr6T666WB+syQFY/tHtGwj2oM8gIdn9eEOg8HqD
+	xVGSUXEVrmTWIv+1KIVXrzP+flzuKa5ghC2cY17VH/PemH+7eSxXr2oSZNrqp/M=
+X-Google-Smtp-Source: AGHT+IFYNrJBDM6YvA+GOwIa/4lRqa5HJMUBjZpTezLdC9jy1ogkfSDwrm7w3H7V7KvFVCa8dI7mBg==
+X-Received: by 2002:a05:622a:1652:b0:43a:f949:85b9 with SMTP id y18-20020a05622a165200b0043af94985b9mr314420qtj.32.1714672536136;
+        Thu, 02 May 2024 10:55:36 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ju1-20020a05622aa04100b004399f2d06d1sm668384qtb.74.2024.05.02.10.55.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 May 2024 10:55:35 -0700 (PDT)
+Date: Thu, 2 May 2024 13:55:34 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Dhruva Krishnamurthy <dhruvakm@gmail.com>,
+	John Cai <johncai86@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: using tree as attribute source is slow, was Re: Help
+ troubleshoot performance regression cloning with depth: git 2.44 vs git 2.42
+Message-ID: <ZjPTlrMdpI+jXxyW@nand.local>
+References: <CAKOHPAn1btewYTdLYWpW+fOaXMY+JQZsLCQxUSwoUqnnFN_ohA@mail.gmail.com>
+ <20240501220030.GA1442509@coredump.intra.peff.net>
+ <ZjLfcCxjLq4o7hpw@nand.local>
+ <ZjPOd83r+tkmsv3o@nand.local>
+ <xmqqfrv0ds7f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EC1C6636-08AC-11EF-B4C1-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfrv0ds7f.fsf@gitster.g>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Thu, May 02, 2024 at 10:44:20AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > Instead, this patch changes the behavior to only fallback to "HEAD" in
+> > bare repositories from check-attr, but leaves pack-objects, archive, and
+> > all other builtins alone.
+>
+> I thought the whole point of the exercise was to allow server-side
+> (which typically is bare and cannot use anything from the working
+> tree) to pay attention to the attributes.  This patch rips that out
+> and piles even more new and unproven code on top?  I am not sure.
 
-> @@ -2863,12 +2928,26 @@ static int files_transaction_finish(struct ref_store *ref_store,
->  
->  		if (update->flags & REF_NEEDS_COMMIT ||
->  		    update->flags & REF_LOG_ONLY) {
-> -			if (files_log_ref_write(refs,
-> -						lock->ref_name,
-> -						&lock->old_oid,
-> -						&update->new_oid,
-> -						update->msg, update->flags,
-> -						err)) {
-> +			int create_reflog = 1;
-> +
-> +			if (update->new_target) {
-> +				/*
-> +				 * We want to get the resolved OID for the target, to ensure
-> +				 * that the correct value is added to the reflog.
-> +				 */
-> +				if (!refs_resolve_ref_unsafe(&refs->base, update->new_target,
-> +							     RESOLVE_REF_READING, &update->new_oid, NULL)) {
-> +					/* for dangling symrefs we skip creating a reflog entry. */
-> +					create_reflog = 0;
-> +				}
-> +			}
-> +
-> +			if (create_reflog && files_log_ref_write(refs,
-> +								 lock->ref_name,
-> +								 &lock->old_oid,
-> +								 &update->new_oid,
-> +								 update->msg, update->flags,
-> +								 err)) {
->  				char *old_msg = strbuf_detach(err, NULL);
->  
->  				strbuf_addf(err, "cannot update the ref '%s': %s",
+I thought the point of John's patch was to allow just check-attr to read
+from HEAD^{tree} in bare repositories, and not to touch other commands.
 
-This hunk is overly wide.
+I could be misunderstanding the original intent of John's patch (the
+commit message there isn't clear whether the change was intended to
+target just check-attr or all of Git). But my hope is that it was the
+former, which this patch preserves.
 
-You could of course fix it mechanically (e.g., by rewrapping overly
-wide comment block, wrapping an expression after &&-), but a code
-path that is too deeply indented may be a sign that the function may
-want to be split into calls to a smaller helper function for
-readability.
+I do not know whether servers should in general be trusting
+user-provided attributes for things like "delta".
+
+Thanks,
+Taylor
