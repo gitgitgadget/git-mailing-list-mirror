@@ -1,54 +1,58 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F9715CD67
-	for <git@vger.kernel.org>; Thu,  2 May 2024 16:53:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932B31E894
+	for <git@vger.kernel.org>; Thu,  2 May 2024 16:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714668796; cv=none; b=pFp4d5nbv4TI9PVJMmXg9GbP26J0Fh2iR9G/Eodo6imahCHYVvUwxXjQ59C6nPPimMbTPRquv5rBrEMPg+F9VSZQbIT/DILT8mCtDshsB8S9HLOnool99JgsoxP0jNqkvGfDxCb9+poe4patttjH+3F7HpRrMd19+nsmy7PZ/wU=
+	t=1714668895; cv=none; b=ICbZI28piAROa1mPWPEU2V10sI0EFNMrkl7WddxcHcH5oeCNunjX/h68MwFwA4w0XfjGaoRfjGWGMTfhru6tqDoFVKH4USsb5YucH/78KejF8F374jVFCIvd5XkuUUJbM6p2WmtIRNzEeWBQK8bx9FCWA7xlmUMaGkdpXUjbW6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714668796; c=relaxed/simple;
-	bh=4S+FFzRA63/4NnPcWNXWOAv7Vvq3/Jszi+3Yig1lAeA=;
+	s=arc-20240116; t=1714668895; c=relaxed/simple;
+	bh=esQCX0Zmw/khLQefFwEF5lEZPsVA6F4BZPn8OerzQVc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GVoXgCB4gEUX24seqK2CaandFCY7c/29TuCcWM/rwWmo/vSdeBfEB6/kOheGeJFRccdFe4eaDk2Cz5kN8y30FFgCdS6nzQuiOaZGuXcR/4D35aHIXcfSOEtsKxXP10ja52bWGVVWx9rZWHuSJei5jMYDBUoydsvmtFwtiX3FCcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xtEkE4Jb; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=hY/CyaI3bcKBbMXMz5MdyXunNYKOsRqjyVpARNIQKf7aHVB0XoOMDaLRNf/hCGnoQCMhglXc7I5eOw+Rz557EkQDR6HDsN/EwABS01azRFxhq8LLIKLPs54MdHfC2lDGzQLZP0jGSwl7zuqaZLNcvWDuFijQJcSAgiKVPCuPKMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uVJIvdJW; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xtEkE4Jb"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A7FAA30890;
-	Thu,  2 May 2024 12:53:14 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uVJIvdJW"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8225B21C02;
+	Thu,  2 May 2024 12:54:53 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=4S+FFzRA63/4NnPcWNXWOAv7Vvq3/Jszi+3Yig
-	1lAeA=; b=xtEkE4JbyaDyZh5PnWpZu7RR7TLdpuH/r0g7gZdGcI+6Gx3EuGDRTC
-	1xt9+eJL1WYj0fc7zpnIuvtQFea2cXX1Kszsz2ROOdxVltmvXHwlewjHkcnBm5y3
-	3T1j/DS4E0SdOzugKp3THAVyMLu44uDe908Ds0TasutavyTq6ITcg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A07BB3088F;
-	Thu,  2 May 2024 12:53:14 -0400 (EDT)
+	:content-type; s=sasl; bh=esQCX0Zmw/khLQefFwEF5lEZPsVA6F4BZPn8Oe
+	rzQVc=; b=uVJIvdJWGtiAS8CMNSiG+FfQnclr6iyazi7ji0qdHEfBL/Fm26bkr5
+	mALTqQRubbvudIPYGAxPx2ekdNxZ4K3Jk7hVv7bgvamcoRzvlSXulotXNpOO2/dt
+	WyiYx8sIvhS3eLSO/+rAMI7IUxKshKQ7Qts5scn0Gxb8/vm0249wE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 789AC21C01;
+	Thu,  2 May 2024 12:54:53 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.120.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2D9F83088E;
-	Thu,  2 May 2024 12:53:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD15E21C00;
+	Thu,  2 May 2024 12:54:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  christian.couder@gmail.com,
-  git@vger.kernel.org
-Subject: Re: [PATCH v5 7/7] refs: remove `create_symref` and associated dead
- code
-In-Reply-To: <ZjNFG5Ztnoj9DMzB@tanuki> (Patrick Steinhardt's message of "Thu,
-	2 May 2024 09:47:39 +0200")
-References: <20240426152449.228860-1-knayak@gitlab.com>
-	<20240501202229.2695774-1-knayak@gitlab.com>
-	<20240501202229.2695774-8-knayak@gitlab.com> <ZjNFG5Ztnoj9DMzB@tanuki>
-Date: Thu, 02 May 2024 09:53:09 -0700
-Message-ID: <xmqqzft8dukq.fsf@gitster.g>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
+ <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  Linus Arver <linus@ucla.edu>,  Linus Arver
+ <linusa@google.com>
+Subject: Re: [PATCH v4 02/10] trailer: add unit tests for trailer iterator
+In-Reply-To: <b503b539c6fff7a3894c613dfc603a8241c790a1.1714625667.git.gitgitgadget@gmail.com>
+	(Linus Arver via GitGitGadget's message of "Thu, 02 May 2024 04:54:19
+	+0000")
+References: <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
+	<pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
+	<b503b539c6fff7a3894c613dfc603a8241c790a1.1714625667.git.gitgitgadget@gmail.com>
+Date: Thu, 02 May 2024 09:54:51 -0700
+Message-ID: <xmqqttjgduhw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,24 +62,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 759309BE-08A4-11EF-9AD8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ B234A06C-08A4-11EF-9E5C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, May 01, 2024 at 10:22:29PM +0200, Karthik Nayak wrote:
->> From: Karthik Nayak <karthik.188@gmail.com>
->> 
->> In the previous commits, we converted `refs_create_symref()` to utilize
->> transactions to perform symref updates. Earlier `refs_create_symref()`
->> used `create_symref()` to do the same.
->> 
->> This means, we can now remove `create_symref()` and any code associated
->> with it which is no longer used. We remove `create_symref()` code from
->> all the reference backends and also remove it entirely from the
->> `ref_storage_be` struct.
+> From: Linus Arver <linus@ucla.edu>
 >
-> Very nice.
+> Test the number of trailers found by the iterator (to be more precise,
+> the parsing mechanism which the iterator just walks over) when given
+> some some arbitrary log message.
 
-Indeed.
-
-The last paragraph reads well without "This means, ", by the way.
+"some some", which I think you (or perhaps I while queuing) fixed in
+the previous round.
