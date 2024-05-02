@@ -1,86 +1,84 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813881527BD
-	for <git@vger.kernel.org>; Thu,  2 May 2024 08:07:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED9A2E65B
+	for <git@vger.kernel.org>; Thu,  2 May 2024 08:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714637279; cv=none; b=Oj/49/lTKyd34FDi5Tpco8666oV1AydYjvwnXbsdxoNzRakHVqQR4kvHFOrruhJOcBOf33d6/92L7ZMvxmIAkKCajM/89AR5ymg7STS8Iapaf/Et1rP6broRvy60zlGMklnjYldNjq5dYOrpza33/qkPxEN92pJBzJSiVL1Ex3c=
+	t=1714637285; cv=none; b=LoKDilg6EoQxF5GlOekezcbUV6JiFleC+9phA6T3yP3BA5M4JGQ1sa9M4czs2YHt7Ax+LbuT1lyl7FDBvgYBZ+ANTY9EAr4inzKCd6j+GNrpJ9gsMYVGQ9MzzDef7RBZkTRrOThLY582FaS0Vz3sU9/sUJHCopQ/OvnxVB7FEd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714637279; c=relaxed/simple;
-	bh=yriuqfVq7Fmsbn0gYK+YwQ5q86UsH9k+zedn2GvGFDE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A2cxN1MQ6WDi9Z3DsXpQdqbZsy/o0k0a1TOOJc6FG5LRTeprDNpX0/waOn0ZB6olYg3WOCA0uYhjL/RZpdcPzZqsNv9KeEsCp06/ifCcl92kKAAnA0KokBcEQjhiZxQjK4Tq/Lhj/kFjJClAX6nPyOROSHZJ7ebKBUWrc6EQcsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G7bWeWnr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iej2HAS+; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1714637285; c=relaxed/simple;
+	bh=MHiyf47d9D8CLI7k2lK+oxpGCMxZLFCLQDzgSzHJD4E=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PwFx+CZlWATFQpzaUdrgtjx6AV7y+5/GiiLdp1awu9KYewAegR2c0rWJ66qfeBiLy2/ZNy6tIeeUEryvXVqwAc7YQ3EWfy3Q5sk551s8mDlahEyupiT5ylZfH44DKCUldPQqMdiRI/nf40IbXE++Cpb9oSzjm5LvfsmhFC51BgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZioT7vHT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NbhSoexY; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G7bWeWnr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iej2HAS+"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZioT7vHT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NbhSoexY"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 56E4E13805A3;
-	Thu,  2 May 2024 04:07:56 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D61EC114010E;
+	Thu,  2 May 2024 04:08:02 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 02 May 2024 04:07:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+  by compute2.internal (MEProxy); Thu, 02 May 2024 04:08:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714637276; x=1714723676; bh=Qep6Gf43+o
-	2R7+pBsSIzXLYdx35hBemNnbcTCiJojhc=; b=G7bWeWnrwfN3YQHf+S8U6GyjX5
-	dvJEcUJfMRjfRv4TXMJRU26McfZLYGx2VX6QgQ8TgqliFCRZQUQlinf3iUK02Zuc
-	uvC5M74Cuo7gFQAhhiduVCSPrCAn7i/74i4qtHW+YCSOjyGrTq/u1vYQTaBdyX+v
-	A4b3+GqjW4OaAP2kTDmOuWxhkLxNsXZBEoodrFwcUlpTdynoi6egVgdYrzSTWmiu
-	eMqGM2k0aLMK1ACo3iVKvYnwpGnBpfyFbBv5xGr2kAMc9ojwGPlWrzw/FKErXYyW
-	1nYuEd0r2XODzNOUm3gLLwgkdLDN3CCJdykwsdvP+kwWI8vmWl/Kkj0HimLA==
+	:subject:to:to; s=fm3; t=1714637282; x=1714723682; bh=Iq4MB7+4bt
+	XUrmo5VVGmtxB6USVEhOkybZjrhHqXEkw=; b=ZioT7vHTgh/WwzfYJ7sj7eNwfc
+	GU/CVWMlI6WvmCuBtVSF8Qto65XwOm8bsWL/IY1WqShQOs1TRtU4N//6/lhDWMAO
+	Bcgx3kLBolK8D3Gjc08usL9rKOjjl2FtJYKZP906WKaIjKKtnm4QvcCoQ3ngz6MY
+	YCiCO5sTvd0umxlf5hoBdaFSv2d4Jt9jaEaWo4DczDg5wM1BYlIAKai6UzTIx3Wp
+	QFlCDcQ2uHiegZE7Tjri3fQTUJ0Yq8YRy4VmpOoswRHygzhDl8G9mHP3yXy11xGN
+	kfkNzTM9dztU7YQFXMnvb6hUtFIcLljsPv5Ul58gF2bhC8g/5HZqf5nNDqHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714637276; x=1714723676; bh=Qep6Gf43+o2R7+pBsSIzXLYdx35h
-	BemNnbcTCiJojhc=; b=iej2HAS+tfpZyqPHpayl4Ufe/CpBhHTTyvpsXxRfEcCx
-	WmlLDMEdma+Ik8JlTs2sXdaM4On88oZF2J/XrIkaye8CXwk4f3/WWop/a0GBNOb4
-	PXCKces63ynkP8IrdyCRkHwcDZ6b3JD/5ybN6RCORw28vmjkXv4p9mHP796oxfgk
-	u9eFOyhKDTgPpY0PGEQWCcB9diZ+pM0HtYShmuXzCG3pCDkY9PivB90VtSgbkt3F
-	eM3UQLX2HhTSOAaMyrGL+OBK30WwDg94BLFkOR0rh+EZ+D8etQYMmQgxRc22KJtY
-	K1h2eW70UTnECIwco9NOReAe0pzyXz7gEXFrrELI6Q==
-X-ME-Sender: <xms:3EkzZkaHdlgN3oHHAwm4T261Xk6_MDE4X8D3HDOAsJ8cAPZuGWi7eg>
-    <xme:3EkzZvaYftiUhNTb0c0dtHwa2MIKA9pJ94ik4UjmKcASHAQ8YTgYGDixOM1E9pHLZ
-    HHoWTPiDAUKSmomZg>
-X-ME-Received: <xmr:3EkzZu98fDlo3o4fnI9q7B9ZbjK6mSBSoSIswp8MYKfUNs0YGO66rdswIfqY1atRIf_BanPVsRiY8lxZvnMsd4iixcsrq9_uqRj3xWR7RlV1NT0>
+	fm3; t=1714637282; x=1714723682; bh=Iq4MB7+4btXUrmo5VVGmtxB6USVE
+	hOkybZjrhHqXEkw=; b=NbhSoexY/iGYZhihEg+5FW8QSHre00hwEnp45QUpX8Kf
+	O5wVOoNGkzJ+6LCee0scXDPDB21HsjrDTjMuGpKKrSLp618MFnWr8aN5LtOBrw7P
+	A3YjwPJfw3gPc2vn+wsxfWNWx6/fBU8ZnKTfXUp+0FlUHxGTpEvlDYOaSrYsQ3ik
+	N6oSBNNhFYywa+vjJ4ijTo6O0ZRc2MWunbD0AUesMNNv4DxXX1zhhWnjV3GgK4R5
+	8s1xaku/LjwFp8Mzn+CyhsfYhuF+uRyPjObnOJgZ5wm/u4N28hPzQ44ESraybQJL
+	k7QTMPSVAqTTZg+s2cowUZuc4OYmHUHlhP8aSnAo8Q==
+X-ME-Sender: <xms:4kkzZl0FqGvpRZZFbUukhgkWstor2oVEc8C4a04OP9lzDPcrWwtvNA>
+    <xme:4kkzZsHyDasgBUcsQ8nBUSsq5BUDxqBX7aY36NfBkwy64iWTVW-pIuoPgVUc-hGgF
+    U5CiGoM38AR3Yi_nQ>
+X-ME-Received: <xmr:4kkzZl4aVnwKxDBq83_pTInazXk46fLPOVpAR094x6BIZ32_d5cdBzLooqCBTk4jC3ks3UTX6gjRyXhMarK5czO_D2rsNKmWWR5ywwmHTQQ2vS0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddukecutefuodetggdotefrodftvfcurf
     hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:3EkzZupXdwV1P9PJJVOp87P4S8TAgJEdwUaJFQZ-B9VuylCCFsSYAQ>
-    <xmx:3EkzZvpuyMA5dv1CNJbrvdoisBt6CYcQ1bJseXHrikXrQfK-ha1zuA>
-    <xmx:3EkzZsR4asQYy5Ztl959nnQPFozK-pQAWfDlzFHYFHWcyrkBAt6ZfA>
-    <xmx:3EkzZvoUIwmdQ9lyyASY_ZKyR8YaFOMuBfwXrpdJJif8GqUYr4ZJ2A>
-    <xmx:3EkzZgdKTJrdfrkwrRsCzXVjgVBon1838HRTxu3brU9anPY-elvBUmxG>
+    hrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhephe
+    eghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himh
+X-ME-Proxy: <xmx:4kkzZi0a5WNeXJr8_ZxH4V0vY-kCEeiJYPLPNd-07st5qTOo7OCytA>
+    <xmx:4kkzZoFX0MGQmIKWWnyDnuGweyDLE8aBosPgDTh3OhKcZ74SkUX6rQ>
+    <xmx:4kkzZj_EJb5wMGww_zoD9r-IfmZ8YZDRcfzcb6IR8te63LTrytVdRA>
+    <xmx:4kkzZlm6FuP6tlxjo0dg-ACZS57xRmIKhb7dOzI8YiJ-tM254W3NYQ>
+    <xmx:4kkzZtMDjs9rvVt1fRqedQ_ITMpi4P0I9GAa2eY4auPADqDMID9hBsAh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 May 2024 04:07:54 -0400 (EDT)
+ 2 May 2024 04:08:01 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a5c4fe79 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 2 May 2024 08:07:28 +0000 (UTC)
-Date: Thu, 2 May 2024 10:07:51 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id f7941cc8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 2 May 2024 08:07:35 +0000 (UTC)
+Date: Thu, 2 May 2024 10:07:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+To: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 01/10] Documentation/glossary: redefine pseudorefs as
- special refs
-Message-ID: <ZjNJ1w-hPyAxh2i9@tanuki>
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 07/10] refs: root refs can be symbolic refs
+Message-ID: <ZjNJ3j2wSgui_cG8@tanuki>
 References: <cover.1714398019.git.ps@pks.im>
  <cover.1714479928.git.ps@pks.im>
- <2489bb558543d66592fb0f3eb4d4696ba8e31fea.1714479928.git.ps@pks.im>
- <xmqqttjiy5hq.fsf@gitster.g>
+ <e90b2f8aa98493e9cd3f2c04cb58318780f9f6e5.1714479928.git.ps@pks.im>
+ <zmnute2cow2rbrv3cj5cq4roieyzssaxcnorxhorzyp3wfgllt@ubhsw6dpi5js>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,71 +86,85 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wfk1+pkiylKVWqHE"
+	protocol="application/pgp-signature"; boundary="NiVn+HzznunV34PV"
 Content-Disposition: inline
-In-Reply-To: <xmqqttjiy5hq.fsf@gitster.g>
+In-Reply-To: <zmnute2cow2rbrv3cj5cq4roieyzssaxcnorxhorzyp3wfgllt@ubhsw6dpi5js>
 
 
---wfk1+pkiylKVWqHE
+--NiVn+HzznunV34PV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 30, 2024 at 01:12:33PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Apr 30, 2024 at 12:09:57PM -0500, Justin Tobler wrote:
+> On 24/04/30 02:26PM, Patrick Steinhardt wrote:
+[snip]
+> > diff --git a/refs.c b/refs.c
+> > index 5b89e83ad7..ca9844bc3e 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> ... =20
+> >  int is_headref(struct ref_store *refs, const char *refname)
+> >  {
+> > -	if (!strcmp(refname, "HEAD"))
+> > -		return refs_ref_exists(refs, refname);
+> > +	struct strbuf referent =3D STRBUF_INIT;
+> > +	struct object_id oid =3D { 0 };
+> > +	int failure_errno, ret =3D 0;
+> > +	unsigned int flags;
+> > =20
+> > -	return 0;
+> > +	/*
+> > +	 * Note that we cannot use `refs_ref_exists()` here because that also
+> > +	 * checks whether its target ref exists in case refname is a symbolic
+> > +	 * ref.
+> > +	 */
+> > +	if (!strcmp(refname, "HEAD")) {
+> > +		ret =3D !refs_read_raw_ref(refs, refname, &oid, &referent,
+> > +					 &flags, &failure_errno);
+> > +	}
+> > +
+> > +	strbuf_release(&referent);
+> > +	return ret;
+> >  }
 >=20
-> > Let's address this mess and return the pseudoref terminology back to its
-> > original intent: a ref that sometimes behave like a ref, but which isn't
-> > really a ref because it gets written to the filesystem directly. Or in
-> > other words, let's redefine pseudorefs to match the current definition
-> > of special refs. As special refs and pseudorefs are now the same per
-> > definition, we can drop the "special refs" term again. It's not exposed
-> > to our users and thus they wouldn't ever encounter that term anyway.
->=20
-> Good intentions.
->=20
-> I do not agree with "the ones at the root should not be special" at
-> all, though.  We need to reject names like 'config' somehow, as long
-> as there are users who use files backend.
+> I'm not quite sure I understand why we are changing the behavior of
+> `is_headref()` here. Do we no longer want to validate the ref exists if
+> it is symbolic?
 
-Oh, yes, I totally agree and thought I'd mentioned this in the message.
-But it seems like I only mention this in a subsequent message. Let me
-add a hint to the commit message that mentions that a subsequent commit
-will clearly define "root refs".
+The implementation does not conform to the definition of a "HEAD" ref.
+Even before this patch series, a "HEAD" ref could either be a symbolic
+or a regular ref. So to answer the question of "Is this a HEAD ref?" you
+only need to check whether the ref exists, not whether its target
+exists.
 
-In any case, root refs should not be special regarding their behaviour,
-but should have a strict naming schema:
+> In a prior commit, `is_headref()` is commented to mention that we check
+> whether the reference exists. Maybe that could use some additional
+> clarification?
 
-    - Only uppercase letters or underscores.
-
-    - Must end with "_HEAD" or be called "HEAD".
-
-    - There is an exhaustive list of legacy root refs that don't conform
-      to this naming schema, like "AUTO_MERGE". This list shall not be
-      extended in the future.
-
-This explanation is added in patch 3.
+Which particular commit do you refer to? It's not part of this series,
+is it?
 
 Patrick
 
---wfk1+pkiylKVWqHE
+--NiVn+HzznunV34PV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzSdYACgkQVbJhu7ck
-PpThMQ//eFdF5hGPHzmFcntSrXpHjH1ufDgAQe74vm7R37mEVB3PYdm88H4t4H91
-duA8O2a7OBtmGhbYx2kkdnTVeApuemQoiSDkkl2HOZTsRKNq0hcJ7FGu42JR0kaL
-mcx53AY41nrsTiml6hG0y1HjxgSOPigzq+PHuk+YJjb9kEEEJQiMvcV0EBWRaZjc
-LJQNPhTrZRVmCeWMVjPOI5t4YTflkwoQWz2cp2sGIak5dcAGtCM4yfGyJw9T79dt
-kFyuT4WZD/4EMjLEDJVAS2EUVcIxOHO4JD6ZnLHGTprypxXTAXP7Npoh8X1MmB/S
-zqZGmFSdcdgUo7rYmK6iPeTxB4Yd7EHSi7oNKb6RB/sBgcbPRhisceGE8xVKckog
-qQbdDz0qTu/ml3ZCKuCUA0LLaYxGXRo+C90qd0rT2pIdEwt8MJ4GmZAQleyFkJKH
-G5WForq7czJbj5/8WgqJuPR0d4IYPM86fgDnJmWtb9iG01o+zBID4po3JCD6jb49
-wYHj1BW6277O0mpvtoLaH2+39WmBwD9/dHdDxupkv0tMdSicQGZQrEPXUBgrrGcB
-a/JKLcZlIqE3Ml99OANpxXPpN/x/6y8bH8XBpxy6hRfChgDnGEhetCYXYLtPgpbo
-c2SOO+8nezjKRpCe5YP42izVfmhAPyPUsPjaiU4T7SJC9a5BxJ4=
-=ciub
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmYzSd0ACgkQVbJhu7ck
+PpSmrw//RfLI04FZJ1bBwNAhe0fV8tXI22naiNrYgonqX/2ZmT2Q7AVWJC4VGEEi
+3h4VAzjrJLmt1DLTraz77udlgr/3v37//+Q0TwdQbmj0de2yIgY6EoLLmwcj3sMt
+zkYoKSPNtyd0rHcXRCJKShG79qEisKnB+oR9V3ASxj3cInA/h7sJepzV4u7YTQvL
+C5kzKrfwHjJi6HCWDOSNyJSTCCkG0kYGQ/+TvjBvMfUnt6tjdkVjm7XVrO9JZU8x
+IbM4j2EY2YDiJwhFQJ88FBhJJxTNMe/YD5yiI/Tvp4maKnjPAfrejUZe7dycnI25
+A2wCfnIurnLMc05vAPu9yWWOTBC6+yTwOsdBf3LkjzRiL3otm/uIzHD2ia1i4V77
+YjTE6a7gVpCHyijyp01esJbCsuuMOFy9VQn5rW4HMw6IstTlqxhU90L5Pn7ZDtb3
+AammMPB5bjjEcYfXkJytu4+12nfV+6lqlFZyOxbZaYSJgXTfPIFM1br4ZhmYgfmk
+fSF/isVEEojiZX1cSGBlyQQLk+46imeJCZEBdoDZ9p/UApSMEquDKRMAdUD3KqUW
+VVPBg5RfaofkPsjbSg6NFYEqAeQ/acYpimYApm7qq+9Nk18Ld8zC7VWOgqQ0QsJu
+RFGsbLev4rDIyG5yN88+zlcewO6YN4O5ZRLYr4SV/DSBiCS8K+4=
+=wztu
 -----END PGP SIGNATURE-----
 
---wfk1+pkiylKVWqHE--
+--NiVn+HzznunV34PV--
