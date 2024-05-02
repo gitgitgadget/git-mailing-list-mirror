@@ -1,120 +1,156 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C041D5FBB7
-	for <git@vger.kernel.org>; Thu,  2 May 2024 11:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861165C8EF
+	for <git@vger.kernel.org>; Thu,  2 May 2024 11:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714647941; cv=none; b=oog9qxqnuVYfpwAEo7H1O58GIJlEummcNFDRY0eMM8jVu3/dAPm4lTQX//G15fOuKffp0UB+8OFb2hqDhQaiRh0DsIPv/Mc18r2jUgyKyVlbcLY4BBamXC/e/kwXUonvVhYzDHEio8KCF/NPIrNHdROBzDrWg4hUeGPHYq1afY0=
+	t=1714648207; cv=none; b=Q2XVRrJJWRJx/fvImJ5Z7Tz3FnShxI1OLlH2gTcvh1kr0ONwxC7AmW9Bsme1DOqXyGmc8Gw4xZL7bzVNVGIGPIqw6Krv01NXAdT0JY0injGO4j8fg5GWETItgRzmQM/5Nr8TPd1F7fUlUDK8uT+j8uqIFw7Ow/K8KqwK/QNigzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714647941; c=relaxed/simple;
-	bh=H9ZdBwLFkGBqFjUABbwb8R+w5SadIcVW3s7rbwnggGY=;
+	s=arc-20240116; t=1714648207; c=relaxed/simple;
+	bh=dlnZNfv7Wtz4TBrw7JDjqz8hy0/wOi2diSuklzzvgdE=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bl4a5uBkEHaFj9XLNRjZYaBDLhJ76ALR1c3Vq423B5t+nP457JOvnzLXbeImSnmEZC9P0DHRFWxsEQhIxuVFi4bZpKM/S+/sE9YoJDpd1dLNuNJyiRI245d6VZlNoGlIPldpUx9XSnsCxcQQ2y1J88n7LM3UIYbe3URmYnfok/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y/T4Ene0; arc=none smtp.client-ip=209.85.160.47
+	 To:Cc:Content-Type; b=f6V7wD+ogtnsEa9e84LyiLhWp8l1vzLKkxn9aypHd+IyTDtybMlH+uJolPciNS1Z7K4YG95y9YS891Pf4UzpEo2XxkBWw+G3Gk2Gh62RwU1Sg+u6W2/d1i78WYAWEapZrYb08T6WBioSnbjif6zUhgoS6/fAFudAshrq4q1NOHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SWqGEoO8; arc=none smtp.client-ip=209.85.160.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y/T4Ene0"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-23d175cea45so1359961fac.1
-        for <git@vger.kernel.org>; Thu, 02 May 2024 04:05:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SWqGEoO8"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-23cd15209fdso1975811fac.3
+        for <git@vger.kernel.org>; Thu, 02 May 2024 04:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714647939; x=1715252739; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714648204; x=1715253004; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XNbveJKNHKkujIYG8XXYq2N72H9xYMC/IRmPHfYuR1Q=;
-        b=Y/T4Ene0YCyL0IOB7TMGZ6gYX3g1H09L7wJQBVY8Sf57s1JHVdRyUV1yoDt5KSi+KA
-         r9VDRtvAguUKdOBY/SLfnIAwwPoELj9RMKmBfP/UlTXzmibv5a7Xoo7YzS9qucJpgPMj
-         tfhZRIFZCa1AgWzyanR/mbwgVIHkfbQEw4f/4m6Zah1BnckwgEMyKTjVwead0EI+E53o
-         BImbgGcBEwSr56Ln3jN4cfrDKGvCmKUEExnWFoX/rJSH3hZejE3aTnux8+V68ilvR0TI
-         D/6Zv33ZVgMK6upduASS3RlSEWkSsnYbhqI35qWXPcA3zkFWhowG9r+lmSw+aj39SSYq
-         m40A==
+        bh=yZ8oI6It1Qey1tJVfBLcOdC9ez9VezudaEOM37D0Oug=;
+        b=SWqGEoO81wwjRm5wy8II8lqzoLi5fhRREP98QQcKF+L1edkPChVznUOGSaE/ag73nM
+         bxxxdB+IG5LbT9Gtoin4Kch+JOShkkdRJV7SxHdcCUVs2e+Ly+1grmp6NvtygEasF6Xf
+         e7AnQRDhYZy1LPudbvcXDGLNdhqoJkEC32vITbjPZ1ZAhSoIuBXAx11Mmp6ZXG3ulYOW
+         XIm0y59qtHCpIHcJOCCCs4oXYR3jd3OsAQuKfi2QllkwvH1aTOEwkwWuFuS+fycVVklw
+         YjwkmtHli02C7HdRF6xI0HeC8b3VWK58c2o0KbsrlXe9F6BHWWmHPA8g5ZT33xPFJyjb
+         wkZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714647939; x=1715252739;
+        d=1e100.net; s=20230601; t=1714648204; x=1715253004;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XNbveJKNHKkujIYG8XXYq2N72H9xYMC/IRmPHfYuR1Q=;
-        b=OvlbsygFAKZGEgbpBNUtG3TRMIjv/5AU3THIQljQmjNaGb+6Bc9b4nyOxXBolrtVqe
-         jc/y2NsYU5zTTtcTCsBYzcnCVUFIEBTRVY6OriB+Fa65miFmstOTru7ficVEl5ec+5xm
-         nooRx8uSGx5gC2ItmKvNPedjNghAsmVHUPISJarXLVaY8bf2z59F2NBXqVOF8+oZuizU
-         zU0dUJ4AHowkff1Ga5DgZ9NZLDlnAVsDXUTN72wsoRndKgdQVa4VsebjDgIaV3uGI01T
-         GB90XrxXvPzlLBVPqR7Mwq8JgXtzOkzh1LIzBcS8Jev4LFPRmjshGbQKGkmqw9rXRYZQ
-         MiSw==
-X-Forwarded-Encrypted: i=1; AJvYcCXXhlOniohdySBj1Y2gIC1HSuRc2VEUu3aSWvXI2oxyx0/SJWHsO2xNA8EY9KouzFsMTHI/ef06FvdaHRCbwN0Ei2A+
-X-Gm-Message-State: AOJu0YzuWzDYxhZpmBcmO/sYT6+XtzhGJ99TwgWnUN1xQZg+no4WaSXM
-	eKuOIJEZEnYMKadgKEIMUzbVxB1Gs/Z5RJyaj0v0YcyY/4O+hV4UR66TqSlJDHaG9iyjKZwjFOl
-	EU+hW2sOdkS+1pWgYdY7mdwC5B18=
-X-Google-Smtp-Source: AGHT+IHIywigX6ItUWTRqKFv0CEQWm5dIb3sA9ivau9qRnJVzYOAsOT5dy4WPNeg0ZGvVoi1yypteMO6l2C+fEnFt/o=
-X-Received: by 2002:a05:6870:5694:b0:23d:49de:970e with SMTP id
- p20-20020a056870569400b0023d49de970emr5775060oao.53.1714647938688; Thu, 02
- May 2024 04:05:38 -0700 (PDT)
+        bh=yZ8oI6It1Qey1tJVfBLcOdC9ez9VezudaEOM37D0Oug=;
+        b=GvnsLgeGd562AbCvsstM1gE69CcMqlQ1j7hELX6d6UYfmhzR89Fk1c8OUYKKXK6ITB
+         E3wck74LXelYIncYOaya2B4QitZO1uEhQSl/G/HjR6U8vPnmqPr52Ttoy4YNhA+/Zlq5
+         zp46wtmlbbUpRxPXByCVp1K4gD/PiJXvY5NunWx4r8qMc5GUfFrp8pT0Ui67R0DxMu3W
+         BYNRv7QnNLbXM6z5ReqfEhkP5RH02Ckorbz6YZNcLVMub+71cKO9eCYwzE7E64306gFn
+         Igkrnu7syIsxxRWyMnvIdP/voOgx8nub56l6d7K+AO/XukQURV6kktp9KoFSW02QceGx
+         bMgw==
+X-Forwarded-Encrypted: i=1; AJvYcCWk/VsTMz9SrWmuUtaQjpSSl2Y3AT0sukG6+GN1+Q9U7S2xltH9SpreeMh0PZv7YXlhxyCdJkpXp9P2ZYliwTm5xKjn
+X-Gm-Message-State: AOJu0Yx0rNtG17ggjFQuzLjyuwptOIe2ub6OdailIxiJZuRFtxxH5Nnb
+	QRfy2leTgO9nH1IXQXCZ6PJ6fvbD/2x4FW1yRQjuoaMDoncJ0mN/kGX0CKfMeGtGLHNZzWzvI8b
+	lAYw7eXhkoN8kEe6cy9NTZAngIjc=
+X-Google-Smtp-Source: AGHT+IFUZ8TnHjCvpznpAnNSJn+Mp0JTy8KBf3uja4FJyhIUkPPCKCF0HHQXn5snlAdap7CewkBrN24YboiS8m9jHYM=
+X-Received: by 2002:a05:6871:5228:b0:23c:89e9:5bf2 with SMTP id
+ ht40-20020a056871522800b0023c89e95bf2mr5962707oac.45.1714648204556; Thu, 02
+ May 2024 04:10:04 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 May 2024 04:05:37 -0700
+ HTTPREST; Thu, 2 May 2024 04:10:03 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZjNFBZOlcQNVYm8O@tanuki>
+In-Reply-To: <ZjNFC6A5j5hMQ5VA@tanuki>
 References: <20240426152449.228860-1-knayak@gitlab.com> <20240501202229.2695774-1-knayak@gitlab.com>
- <20240501202229.2695774-3-knayak@gitlab.com> <xmqq7cgdjig4.fsf@gitster.g> <ZjNFBZOlcQNVYm8O@tanuki>
+ <20240501202229.2695774-5-knayak@gitlab.com> <xmqqbk5pgke0.fsf@gitster.g>
+ <CAOLa=ZQkTM26wmGgj3=Pz9p7-nFAWQdxCA=RjaJVSm2m8zn7jQ@mail.gmail.com> <ZjNFC6A5j5hMQ5VA@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 2 May 2024 04:05:37 -0700
-Message-ID: <CAOLa=ZS7Co01QegZcJ6uqRoTfQ6d7dXNMy6ZyajsonC2TOV1EQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/7] files-backend: extract out `create_symref_lock()`
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000004d065a0617769596"
+Date: Thu, 2 May 2024 04:10:03 -0700
+Message-ID: <CAOLa=ZQfm0xgOBuOi8__SKqcj4DnTBoPLgvBtArv4asuZ7UUcw@mail.gmail.com>
+Subject: Re: [PATCH v5 4/7] refs: add support for transactional symref updates
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000025df17061776a5e6"
 
---0000000000004d065a0617769596
+--00000000000025df17061776a5e6
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, May 01, 2024 at 03:06:19PM -0700, Junio C Hamano wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
+> On Thu, May 02, 2024 at 05:50:47AM +0000, Karthik Nayak wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> > Karthik Nayak <karthik.188@gmail.com> writes:
+>> >> From: Karthik Nayak <karthik.188@gmail.com>
+>> >> We do not add reflog for dangling symref updates, because currently
+>> >> 'git-symbolic-ref' doesn't add reflog for dangling symref updates and it
+>> >> would be best to keep this behavior consistent as we would move it to
+>> >> start using transaction based updates in the following commit.
+>> >
+>> > If we are not changing the behaviour, does it deserve a four-line
+>> > paragraph?  It is not like we describe every no changes (i.e. "we
+>> > could break the behaviour by introducing this and that bugs, but we
+>> > did not" is not something we usually say in proposed log messages).
+>> >
+>> > At most, if you want to highlight that behaviour, I would expect a
+>> > brief mention like:
+>> >
+>> >     Note that a dangling symref update does not record a new reflog
+>> >     entry, which is unchanged before and after this commit.
+>> >
+>> > As a reflog entry records name of the object that is pointed by the
+>> > ref (either directly or indirectly) before and after an operation,
+>> > an operation that involve a dangling reflog that does not point at
+>> > any object cannot be expressed in a reflog, no?  It is way too late
+>> > to change this, but it would have been interesting if the design of
+>> > reflog had a room to log the change of symbolic ref target as well
+>> > as object names.  It would have allowed us to say "HEAD at time T
+>> > pointed at refs/heads/main (which did not exist)", "HEAD at time T+1
+>> > directly pointed at commit X (detached)", "HEAD at time T+2 pointed
+>> > at refs/heads/next", etc. and allowed us to much more cleanly
+>> > support "previous branch".
+>> >
 >>
->> > +	if (!fdopen_lock_file(&lock->lk, "w"))
->> > +		return error("unable to fdopen %s: %s",
->> > +			     get_lock_file_path(&lock->lk), strerror(errno));
->> > +
->> > +	if (fprintf(get_lock_file_fp(&lock->lk), "ref: %s\n", target) < 0)
->> > +		return error("unable to fprintf %s: %s",
->> > +			     get_lock_file_path(&lock->lk), strerror(errno));
->>
->> error() is end-user facing, so "fprintf" is probably a bit too
->> precise?  "fprintf" -> "write to"
->>
->> Also we may want to make them (not just this new message but other
->> error() messages in related code paths) localizable but that is
->> probably beyond the scope of this topic.
+>> While I agree that four lines may seem excessive, I think it is indeed
+>> an important point to note. Mostly because this shows that when doing
+>> dangling symref updates, there is no record of this update. The best
+>> situation would be like you mentioned, to record the symref target
+>> changes. But even with the current design, it would have been nice to at
+>> least acknowledge that there was some update done to the symref. By
+>> having zero-oid for the new and old value in the reflog. But seems like
+>> we can't do that either.
 >
-> It only occurred to me now, but shouldn't we also support passing in a
-> `struct strbuf *err` here? The transactional code doesn't want us to
-> print error messages to `stderr`, but always supplies a buffer.
+> I wouldn't say we can't do that. We already do log when symrefs become
+> dangling when updating references via HEAD by logging a zero OID as new
+> OID. That is, if we have "HEAD -> refs/heads/foo" and you delete the
+> latter, then we create a new reflog message for "HEAD" with zero OID as
+> new OID.
 >
-> Patrick
+> I would claim that the current behaviour where we don't create a reflog
+> entry when updating a ref to become dangling is a mere bug. I think it's
+> fair to declare this a #leftoverbit and handle it in a follow-up patch
+> series. But it would be nice to say so in an in-code comment.
+>
 
-Yes I think that would fit better with the existing transaction code.
+I think _can't_ wasn't the best terminology. My previous series actually
+added a reflog, but I noticed a bunch of tests were failing and I think
+it made sense to keep the existing behaviour.
 
---0000000000004d065a0617769596
+But addressing it as a bug would definitely be a good way to go and fix
+this, I'll add a comment in the code for now.
+
+--00000000000025df17061776a5e6
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 481a647a3217c27d_0.1
+X-Attachment-Id: b94a91539d7a7015_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZemM0QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL3pSQy80eE9jTG52c0VUK3daT2ZLTTg2MnVmMURKSwpXWmZNM2M1RlZY
-bnZUbklHSncxZmZVVGttUkhGdU54enBOYlZCMmNoYWZubWloazhRLzZkU0YvdVJObXdRK3pMCnZm
-NnNhdlRPWXFtNGVTT29CTTZ4MkJXeXJKNGk2KzgyclFlKzFMSUpRcVUrYjFHY29WYlFqNWtRTWxv
-TDBsL20KR2I2WG54b0x5MHg4dTd1ekYzRCsvNDZXTUxkKzIydHpza3RvdDI1TWFBM3F1K25qZURh
-QVN2ZWpweXNVYUk1Zgp6VXBwSDJUalVxQW5vZnAwQWI5V2NTMUoyWUV4YlRWcFFxUnQyaHFROEFU
-US9jNzJFYzVCR3cvYjU0bjA5K0hmCkRyVFphdlVnYnJsNjBFTVZlaWVyUDdmRUN5YWJUMnZPUlds
-Si9JeTZDOWJrcHhMSVFBU0kxdHlhWWkxN2FJSmMKeDJTZ3lxQnl5N2Z0cEpMTTlNSHl3SmZoOFI5
-OW5hVTBPcDNpN1FJbnk5Slp1TnE5bmgyekthbm5kTXRhaFlCYgpPK1FSdWtRWHRIL21OTHpTZk5O
-Y3RNQlgrZWx4Y011TmZMQWRhRHo1bzJrOVgrdytnaWhyTXpwc0ZsVFRNTDc1Cm0rMWhjSTdaZG9l
-NzF2R21WN3lYSnQwQkxaUTdZOVRpNUxFc3RyTT0KPWprbEcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZemRJb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnh6Qy85SDc2aWVOUlRHTGpoaFE1bFByZXp3QndCWgpReFdRQXZSYWpr
+U0x1aEZBQTJONVNVQXpBa2N4Q3dZRHFodDJlb0lEeDFrN1RjWlhYalNLWnRxVlh2N0E2WmtqCjc0
+RWt2elc0aDYyUFd0THRBSnNQUjZRUVY0dU4xeS9KMjFnVFZSeXVNd3RpY0ZvUkdCZExUc21ESXEw
+Q1lsYVIKNW5uYkE5ZU15OFRpQ0VLTHdzbUd6blNmcUFFVUhlcjJqNDZaTnJwamFvcG5ocXBEd3NX
+eHp1dVV2ZTcyUkJqOQp3ekQrWmt2aVhQaXNBWWxpa2lXK1paWUs4N1VGL0RScTMyWUp0UzN1RW83
+ZmJ1VnBNWEt0WXdkOUJJSWxFV1JpCklNQkpBckhxRWNhdndzUElDejl5UHY5ZmUrOHlWWFpDWG50
+aU9TWEhvOVFkdTlkcitEaEdTM0NHRmFGNlp2U0IKbzJLeDF5SlBpblBmZHg0MGFTVXVRZ2F0UjJq
+alhBalpoc3FKYTFieU9IMEt6dmtnZjRoRytBRS9RS2FZNzA1YQoyRlhVTTlzb05QejN2ZVVlYXp2
+enUySDhOMzFpRTVYdTRJL1pGWHhEdEtxZktURjRDRXpMSGgzMExUa3NFdWtZCm8zRVJzMjVIVVJS
+S09XcGFwcndlK0lMdzlLS2hyUHpjQlNndS9pVT0KPVd1N0cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004d065a0617769596--
+--00000000000025df17061776a5e6--
