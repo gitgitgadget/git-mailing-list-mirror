@@ -1,151 +1,99 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A631EA87
-	for <git@vger.kernel.org>; Fri,  3 May 2024 23:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574302D05E
+	for <git@vger.kernel.org>; Fri,  3 May 2024 23:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714777581; cv=none; b=WxM1Ys9knNf6Bwuga+X3aY/xtP2mOMTGIFVbpxGDwKEe6hHnsEvT0KonZZIDJEWeJfJ+ix+CCrph6xGvTUWM1B3pn60KmI1mqWu1BchnkBohcbXgGW+0Qh1WBEVSxRNVAxuj7Kg+BpWhawd+KPZZN4aDhsyzyX0kyppjPtxHpPU=
+	t=1714777770; cv=none; b=fBuC71VMROLrQbHVOwLtTNXqfvXjajyMXSIGEzQY0Leyfy7eDRhBzSTu0hQCB3oG8U7DAYXkxOxtGjEM9uDd3NN1FwdMpFd4+TXVp4zXlO0qsFMUWMezuifXxhn15sjdmajnNoTvUcghkeVowTDRl7SY/8Itab7xf2endXUyTaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714777581; c=relaxed/simple;
-	bh=Ym/yDuhaxtq21au+3pNmlTVrNhPYT3cmE9IcwYF03yY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YzmFOq8RuFAna+hbwt5zTU12DWvnsfLUXyZP+rHMucMKKqdOWIvPtrCCtpmkZDBmOx3a3uwDM+FbqEE7/FlFgDJlQwkJ3ECsdVO4nhDIKk7ibNCmV7flmHTqQFsIZy6Q2N0WiV2FjkdEI7mB2eBVLWIrz35L+zyjEG9irYkudY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=O7Dn/kWU; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1714777770; c=relaxed/simple;
+	bh=hc+2SAkiVWrtttoWwrVKGN+bdb4Ln7b6Q7AG352J/rQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hMiRdBAvS67BO5a2T+wH0H+wB8CoQzvq8d3e1SeTchvM4ffjMBFH5laVqc4DSwXsUbdvIRgi79qvnhWjpCK+1uD1TJMCKj+t+FoEexR4FMBj4T/S37FpTInzMKpxgdqKWPv63gwBjiDi2zN5CMYeyJWwEkliH184yEj0GWLTyds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=E51/MYIJ; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="O7Dn/kWU"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="E51/MYIJ"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 03CC02CA62;
+	Fri,  3 May 2024 19:09:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=hc+2SAkiVWrtttoWwrVKGN+bdb4Ln7b6Q7AG35
+	2J/rQ=; b=E51/MYIJcv7TDu0arnNrV7njCnAqXd5t3IhXOjmtRHaYi1QzBT+1g1
+	ETaDM0Hck475J9If07474zB63u3Kzgs12ZqR89FWxW8HuvGMne0chgNeyYnEI+r+
+	n8PKsYhH+tpv3z57joVkQooimJ+7+/03zTw+7i5cZNIuyg9ESsw0A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EFC162CA61;
+	Fri,  3 May 2024 19:09:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F400E5B2EB;
-	Fri,  3 May 2024 23:06:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1714777576;
-	bh=Ym/yDuhaxtq21au+3pNmlTVrNhPYT3cmE9IcwYF03yY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=O7Dn/kWUr57IJfGLbbLo8lPvMwGCRqSXyHitLxRYnPEescW7B+udEwiF1eOdZq1nU
-	 2TgIsXZKsSXCePOr+RyN0lKltRiSFFSj9OM/0j2iBi7ErKQjhLhMnX5llxLiEqJUq9
-	 x7r9faCDSK7dUvEWVGk+farZsZsrsrUwgOm2Uzuy5xhsMBqHIGUwtxBYqn2YVUPmHT
-	 +m/gfqEluxK7uCHz9bBRpqhfrdRAtyjWUTSjhVJvVYNQ/+7VIUGlGs9Uzpwjdc+75o
-	 RbodHCndvrCGoFuIJcJfXuA9FeiUJhG+wnEauVMm6EH0pX6sIICivRVTb4TRMgVEG4
-	 jyxSvefCptRwnLVhe07UgCIT+zH48/e54r3Cl49zaMJdZWPQWUovvSDaVytBxWn2lK
-	 7l0DCIzoZuIzMa2EyuJ7gqRJQ2+eBmI4XAUBRSFdj3CDEmYOHhps0cRCzh3ugv5ajC
-	 W5socUei/dq/zdVy4p9mVfZj3QKsAC42sn0A6tE/goEQ863OidA
-Date: Fri, 3 May 2024 23:06:14 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Simon Thurston <simongethurston@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [Bug Report] git config includeIf not traversing symlink
- subdirectories
-Message-ID: <ZjVt5jtC8cKgWpqQ@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Simon Thurston <simongethurston@gmail.com>, git@vger.kernel.org
-References: <CAKx51amU_c9EU+573RWDc0+w3V2u5TSk+mQhts1gYyKRhxGCzQ@mail.gmail.com>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 612F42CA60;
+	Fri,  3 May 2024 19:09:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v6 7/7] refs: remove `create_symref` and associated dead
+ code
+In-Reply-To: <20240503124115.252413-8-knayak@gitlab.com> (Karthik Nayak's
+	message of "Fri, 3 May 2024 14:41:15 +0200")
+References: <20240501202229.2695774-1-knayak@gitlab.com>
+	<20240503124115.252413-1-knayak@gitlab.com>
+	<20240503124115.252413-8-knayak@gitlab.com>
+Date: Fri, 03 May 2024 16:09:25 -0700
+Message-ID: <xmqqplu24hne.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="11arV8MNgvAGXHzE"
-Content-Disposition: inline
-In-Reply-To: <CAKx51amU_c9EU+573RWDc0+w3V2u5TSk+mQhts1gYyKRhxGCzQ@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2FDCF2E6-09A2-11EF-92D4-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> From: Karthik Nayak <karthik.188@gmail.com>
+>
+> In the previous commits, we converted `refs_create_symref()` to utilize
+> transactions to perform symref updates. Earlier `refs_create_symref()`
+> used `create_symref()` to do the same.
+>
+> We can now remove `create_symref()` and any code associated with it
+> which is no longer used. We remove `create_symref()` code from all the
+> reference backends and also remove it entirely from the `ref_storage_be`
+> struct.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+
+This has serious semantic conflicts with in-flight topics.  I think
+I resolved them all correctly while merging it in 'seen', but please
+double check the result after I push it out.
+
+This comment equally applies to the "force all callers to use
+get_main_ref_store() on the_repository and remove functions that
+implicitly used the main ref store of the_repository" topic by
+Patrick, but we really should devise a bit more smoother way to cope
+with out of tree and in-flight topics.  For example, as the new
+refs_update_symref() function works exactly like the existing
+refs_create_symref() function, after renaming all the in-base (i.e.,
+in-tree at the point this topic forks from) users to call the new
+function, instead of just removing the original one, it would have
+been nice to guide authors of other in-flight topics by (1) causing
+build failure and at the same time (2) telling them what they need
+to do to adjust to the new world order.  This patch does only (1)
+but does a poor job for (2).  We may want to establish a better
+convention than just outright removing and breaking others' topics.
+
+Thanks.
 
 
---11arV8MNgvAGXHzE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2024-05-03 at 21:31:59, Simon Thurston wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> On Windows. Create a directory. Configre a gitconfig file to includeIf
-> gitdir that directory. Add any configuration you wish to the gitconfig
-> file pointed to by the includeif path. Inside the created directory,
-> create a symlink to a UNC Path/Network location. Change directory into
-> the symlinked directory. Run git config --show-origin on a configured
-> value.
-
-I've included a shell script below that tries to provide a testcase for
-your reproduction steps.  Since I'm on Linux, I don't have a UNC drive,
-but I created a different location outside of the repository called
-other-dir that simulates the same behaviour:
-
-----
-#!/bin/sh
-
-tempdir=3D$(mktemp -d)
-cd "$tempdir"
-cat >config <<EOM
-[includeIf "gitdir:$tempdir/dir/"]
-    path =3D "$tempdir/other-config"
-EOM
-cat >other-config <<EOM
-[user]
-    name =3D "Foo Bar"
-EOM
-
-export GIT_CONFIG_GLOBAL=3D"$tempdir/config"
-mkdir "$tempdir/dir"
-mkdir "$tempdir/other-dir"
-cd "$tempdir/dir"
-git init -b dev
-echo "In dir ($PWD):"
-git config -l --show-origin
-ln -s ../other-dir other-dir
-cd other-dir
-echo "In symlink ($PWD):"
-git config -l --show-origin
-----
-
-> What did you expect to happen? (Expected behavior)
-> The value configured in the includeIf path to be found.
->=20
-> What happened instead? (Actual behavior)
-> No configuration data found.
->=20
-> What's different between what you expected and what actually happened?
-> Git seems to be unable to traverse subdirectories that are symlinks to
-> include any git repositories stored inside them.
-
-Assuming my reproduction steps are correct, this is expected.  Git
-always determines the Git directory by resolving it to an absolute path
-containing no symlinks with the equivalent of `realpath` on Linux or
-`GetFinalPathNameByHandle` on Windows.  The fact that your working
-directory contains a symlink doesn't mean that the destination of the
-symlink is part of your repository.  In fact, if the destination of your
-symlink is on another drive, it cannot be in your repository at all,
-since Git cannot handle cross-drive repositories at all.  Since it's not
-in the repository, the gitdir pattern won't match.
-
-If I've misunderstood, could you help me understand better by providing
-a small shell script that can reproduce the problem you're seeing, so
-I can provide a better answer?
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---11arV8MNgvAGXHzE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZjVt5QAKCRB8DEliiIei
-gU/GAQDD1rfbUKlCIQpxRgEp5NDGdLFmCMq6rl0OYdMoll0hkwD8Ci1QfsA1ZU0P
-jqWar8DmlHqNeQ6W+NaljDemOI9/mQo=
-=Ohnd
------END PGP SIGNATURE-----
-
---11arV8MNgvAGXHzE--
