@@ -1,110 +1,109 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF2315667A
-	for <git@vger.kernel.org>; Fri,  3 May 2024 15:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E926154BF9
+	for <git@vger.kernel.org>; Fri,  3 May 2024 15:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714751019; cv=none; b=NGsqMyY66sAp9/Yw2TXVIo2iczLUcEB+0ybgx8juPIyaqsRu2TxvnQi1C+UvlTI3JqwuuVZ9kP14goq1UuHvXNiXQV+Ko8wTprakUpqv/s54VyT2HqCXV9Fwv6dZ9ifxcArM34p8ui4dEHWBf7IMszDToGY5IuLnIe2jna1u7X0=
+	t=1714751315; cv=none; b=r3Ndo5ubFRtQNWcPyEK2FgHWsaL4BVMzKTqZ2wSPpM8GcWU3LntU8Uhn7OLQKAgEDCXWTkOvWbALN6XPdGM7ONGB6XexkLihyFl1qCzBLyydT9QD5k/YLbAIUYpzUbxkqKS3i/NiEhEUeockAOgIqfOfNjrGJCERIk7oO2GlBsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714751019; c=relaxed/simple;
-	bh=UexbSVLDbEBiMnebJCXfhTrcaV+cvo/SyUVcKyUnSvU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ep0sPYDEKBmvyWMzsoRhBTWjtwEYFLL5ckZ8FkhvTD6I4wdQkAmYrgYRn+zAnOn55p08TydZmg2widkEPx0ZftfYJUVSIREMsgOEK6jMoBVHZbCHgnl5Zw26LT+AojGPESkALk42FEnMGMaFnFVCKPWNwtfm5jbrxA2E10SzM0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RnS/3HLV; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714751315; c=relaxed/simple;
+	bh=ClQC8VSlvKJBh2I6Ccj/0WRIQBZ2rOynUTgahFNzYpA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gNvXslWbzGWG49zw2SgCDdCa612PHZx3hZpRMvNrWx9o+oCz17rQiyasjc9aHmehNh6EEK5I2bnUxXiXcQH7BPGCrektipABmbj3V4ow6G8UVQtr+lOOjdCP/iaRznO+EcPqJnbI688u+Jdlsnt9iclZQK5hEj8149Y5fjwjSpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zeN7QxLw; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RnS/3HLV"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A25125E3C;
-	Fri,  3 May 2024 11:43:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=UexbSVLDbEBiMnebJCXfhTrcaV+cvo/SyUVcKy
-	UnSvU=; b=RnS/3HLVAqYRkvw6+qStQbqFLi6PtiuJ2dwWCK5y2eULlJIVGLBLi1
-	Vz2X9mnrQhMRYh+3sXNACT/QOUfPMA4jtgYRR3xKqKp7ooER2kMkDUgKIumoP4Lo
-	1NM7LqRoYcWirYlRUNrLXaM+9CXeQU7pexRnRC57rlfIU+2E+r7Q8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 72CDE25E3B;
-	Fri,  3 May 2024 11:43:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9EBC125E3A;
-	Fri,  3 May 2024 11:43:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Mike Hommey <mh@glandium.org>,  git@vger.kernel.org
-Subject: Re: [PATCH] Win32: Fix building with NO_UNIX_SOCKETS
-In-Reply-To: <47580fe5-6934-9a76-f927-d66c6c338143@gmx.de> (Johannes
-	Schindelin's message of "Fri, 3 May 2024 11:26:04 +0200 (CEST)")
-References: <20240503091427.2808390-1-mh@glandium.org>
-	<47580fe5-6934-9a76-f927-d66c6c338143@gmx.de>
-Date: Fri, 03 May 2024 08:43:34 -0700
-Message-ID: <xmqqv83uaok9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zeN7QxLw"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-349545c3eb8so5940311f8f.2
+        for <git@vger.kernel.org>; Fri, 03 May 2024 08:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1714751312; x=1715356112; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ClQC8VSlvKJBh2I6Ccj/0WRIQBZ2rOynUTgahFNzYpA=;
+        b=zeN7QxLwL/ZkYlzdBisse5QMzg5ENpXCiq0eusUXNBa08ok9ssMHuv+Ou4Vgp1W7EX
+         96yBQy1zBj91dfde05I6+VNqzrvwGyH1UC+0N+SCrY8m5ohajP1rLUkrXtqJHGwD4jxQ
+         czNopdhLcV/GesyfJ++T5kP8WCdpNaVWukBgrjsdiwlAmg3pc7/AnmEbbQbxXBPu8tDT
+         nekYplViUMy2pOr6SgVyPntfn3vq5TlpiTpl68liyuhqyvRvyoDepwtnBf5edtXt5AiI
+         1oMUW9FuY6przXqVJH/CIqKDALVCJP9s+EA4BkalYMuHn8CF0DUmKrxNt7qIGc8yU1HP
+         O7rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714751312; x=1715356112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ClQC8VSlvKJBh2I6Ccj/0WRIQBZ2rOynUTgahFNzYpA=;
+        b=ERzySsWvAekp3fAmIaCUxSDWZ1/c6DBjhlK+P8hVwNWkJJ9ydVyJdtfGux2l55/FcZ
+         GSOMR+39cB8gUyAXes4v/tG93l2993cjxwY8vTJ5m7I4kNWIwNksIW0gfVQ+uEETbFWN
+         PzUc1n5yDHGcct3xaETC7ZE6zwLmSABYfAPyt1QWymVBWiBCJLGjqjVkIVrSyjZSF8Ij
+         hfc467urciPoxQhh2RdJTvEdT9TI3DSvS4ikzTdx97CPzywgcow5fL5qlPASMgPH7yi0
+         pQYDgtfEpHxc4j916n12H1XqyjXHiNMnQCP+tsbaVkv0Wbo1PtphZoiL6kXTZE2w2dkg
+         5XsQ==
+X-Gm-Message-State: AOJu0YxAs27ZVKiGg8ado+Ln/iVDItU60B4AfHXrb6qNvii+rWN9+5vM
+	rGKL+o1l3rnhyFZJqQX0gmWFn+r4IiIplxNMb0FkkWiVs966WRBgQHFGSFWLsQxt5ERf0zX7iw7
+	1ymMJy9sAJQiXce0nNmKgMI8FqvKel9GW6fo8
+X-Google-Smtp-Source: AGHT+IFD8Ttl+zgntGJFjj4Qnf2HjfADyQpQ8y8lBxftXz0P0ZIo4+WjRpcWEkYgLEo9C53McJEpE5G1zJq8w0uJXPM=
+X-Received: by 2002:adf:ef49:0:b0:34b:fc9a:6ece with SMTP id
+ c9-20020adfef49000000b0034bfc9a6ecemr2211413wrp.33.1714751312429; Fri, 03 May
+ 2024 08:48:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E72D138E-0963-11EF-83BD-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+ <20240417163244.651791-1-emrass@google.com> <xmqqr0f47wp9.fsf@gitster.g> <xmqqseyzar96.fsf@gitster.g>
+In-Reply-To: <xmqqseyzar96.fsf@gitster.g>
+From: Josh Steadmon <steadmon@google.com>
+Date: Fri, 3 May 2024 08:48:19 -0700
+Message-ID: <CANq=j3u5ZHYbJQjhwtnq05GocOE_AVrHodjPOqVCNN7OZHwVsQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, avarab@gmail.com, christian.couder@gmail.com, 
+	me@ttaylorr.com, Enrico Mrass <emrass@google.com>, Emily Shaffer <nasamuffin@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Yes, sorry for silence on this thread. I am working on a V2 but
+probably won't have it ready today.
 
-> Hi Mike,
+On Fri, May 3, 2024 at 7:45=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> On Fri, 3 May 2024, Mike Hommey wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> After 2406bf5fc5 it fails with:
->>
->> compat/mingw.c:4160:5: error: no previous prototype for function 'mingw_have_unix_sockets' [-Werror,-Wmissing-prototypes]
->>    4160 | int mingw_have_unix_sockets(void)
->>         |     ^
->>
->> because the prototype is behind `ifndef NO_UNIX_SOCKETS`
+> > Enrico Mrass <emrass@google.com> writes:
+> >
+> >> I'd be curious to learn about norms or practices applied when no conse=
+nsus
+> >> could be reached. It seems worth elaborating on that as part of docume=
+nting the
+> >> decision-making process.
+> >
+> > I may be forgetting things, but I do not know if there is a concrete
+> > "here is a norm that we have been using to reach a consensus, not
+> > just written down but it has been there" in the first place, let
+> > alone "here is what we do to resolve an irreconcilable differences".
+> >
+> > "We discuss and try to reach a consensus in an amicable way,
+> > sticking to CoC, etc." has mostly been good enough for our happy
+> > family, perhaps?
+> >
+> >> ... However, nothing
+> >> in the current description strikes me as specific to these larger-scal=
+e
+> >> decisions.
+> >
+> > I agree with that.
 >
-> Good catch!
+> We didn't hear any more comments on this topic, but writing down how
+> the world works around here, with the goal to eventually have a set
+> of project governance rules, is valuable. Otherwise loud people may
+> act according to their own (unwritten) rules that annoy others and
+> harm the community.
 >
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Thank you,
-> Johannes
-
-Thanks, both.  Will queue.
-
->
->>
->> Signed-off-by: Mike Hommey <mh@glandium.org>
->> ---
->>  compat/mingw.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/compat/mingw.c b/compat/mingw.c
->> index 4876344b5b..6b06ea540f 100644
->> --- a/compat/mingw.c
->> +++ b/compat/mingw.c
->> @@ -3159,6 +3159,7 @@ int uname(struct utsname *buf)
->>  	return 0;
->>  }
->>
->> +#ifndef NO_UNIX_SOCKETS
->>  int mingw_have_unix_sockets(void)
->>  {
->>  	SC_HANDLE scm, srvc;
->> @@ -3177,3 +3178,4 @@ int mingw_have_unix_sockets(void)
->>  	}
->>  	return ret;
->>  }
->> +#endif
->> --
->> 2.45.0.1.ge6f3e402ce
->>
->>
+> Thanks.
