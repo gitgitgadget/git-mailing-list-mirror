@@ -1,96 +1,73 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7844917C64
-	for <git@vger.kernel.org>; Fri,  3 May 2024 18:13:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A2C158877
+	for <git@vger.kernel.org>; Fri,  3 May 2024 18:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714760024; cv=none; b=BEu2HrnjtOSf7klJDEWb64ylyFIcCXPAdojkTajS9Kva0a85OEfmTSPIJNnV4T8hYV8MHHavZchZQ/vuVUgCeSIxcFIqmlX5Xv7RvVEEMudE6hNOWRFdff6A1SWZhkapgpwJnuH1p8OwbZD/gk3wTAvtJyIscA5LcODPMJ7+ZLo=
+	t=1714760662; cv=none; b=EsV5i3FIdDK5AgORHZmvH8YHm7GrdyOQLktkZj11v1VWLunZowJF7ctx/C7+l99ngYNHh4aMpB8buGPKRCWv/FhbVYoZY8vth6npsvrFY6JbW7LEvwD22fUt7Us16bf9rFy8tIJDE0Ig0SJYi77qaW14NYJ71vfH6HVMSawYPUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714760024; c=relaxed/simple;
-	bh=sCw5Vg0J9QwgAKYyGRHmHIByWJeKJOKglSp8i+DBr4Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fx3x0vLFnVLhCf9KxxWMltQ/gURdaOBpZxxk+XK9trOOx1MgJl7KYX+7hOvUu8DsLK6z+tRktBnaARWDTK8L5b1PhgQ71pAKvoneGnYvAcMGGoNs5IKCFltVCuSrCcS63hU+lyTwiHX9vPKTBNXOrQym1qjK6a/P2XpToWjOqDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11912 invoked by uid 109); 3 May 2024 18:13:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 May 2024 18:13:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17871 invoked by uid 111); 3 May 2024 18:13:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 May 2024 14:13:41 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 3 May 2024 14:13:39 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v3 07/10] refs: root refs can be symbolic refs
-Message-ID: <20240503181339.GH3631237@coredump.intra.peff.net>
-References: <cover.1714398019.git.ps@pks.im>
- <cover.1714637671.git.ps@pks.im>
- <92a71222e1067ca4ce9ecaaa555d78d0cce0d9d0.1714637671.git.ps@pks.im>
+	s=arc-20240116; t=1714760662; c=relaxed/simple;
+	bh=qq+dTWAAP5I4E1YmWhyNIAWunHyp8SBe6k1X2YcCIHI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pNZjulRowA+tzkvh7t7BXP+HGPCVC/8uxy0LM6qHgRCscDzjR61MNM36fizVbjdVZP9dtuEHW/xNVbOeMRgSfXTcd91UxCVfg2EDbRQgk+sDSmgwT+X7cr588g1DaOLG1hXuWJ/zFl20v4o9dguLtH2Tg4URH2p7ntd7EUed6DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ABESwdCq; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ABESwdCq"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id BA6631A06B;
+	Fri,  3 May 2024 14:24:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=qq+dTWAAP5I4E1YmWhyNIAWunHyp8SBe6k1X2Y
+	cCIHI=; b=ABESwdCq4qIusi21IXjOVWUFkmF2avmoTmcPZ0vJMk5vSf1wWuWrq0
+	C+974EBS1Ru7s5XyE/ZBo+RhkUHZYldAH187ZBMwOnqQQQxG3a3maBUlznjok6Cx
+	0NiLOOSthIhQ4A0Vr6Zyuij+6R7pxCkPya2AspWlGezddNyz3BKjY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B40751A06A;
+	Fri,  3 May 2024 14:24:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3BB771A064;
+	Fri,  3 May 2024 14:24:13 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/5] refs: remove functions without ref store
+In-Reply-To: <20240503173553.GC3631237@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 3 May 2024 13:35:53 -0400")
+References: <cover.1714717057.git.ps@pks.im> <xmqqikzu95cf.fsf@gitster.g>
+	<20240503173553.GC3631237@coredump.intra.peff.net>
+Date: Fri, 03 May 2024 11:24:11 -0700
+Message-ID: <xmqq7cga7nzo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <92a71222e1067ca4ce9ecaaa555d78d0cce0d9d0.1714637671.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 57A04292-097A-11EF-BF26-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Thu, May 02, 2024 at 10:17:42AM +0200, Patrick Steinhardt wrote:
+Jeff King <peff@peff.net> writes:
 
-> Before this patch series, root refs except for "HEAD" and our special
-> refs were classified as pseudorefs. Furthermore, our terminology
-> clarified that pseudorefs must not be symbolic refs. This restriction
-> is enforced in `is_root_ref()`, which explicitly checks that a supposed
-> root ref resolves to an object ID without recursing.
-> 
-> This has been extremely confusing right from the start because (in old
-> terminology) a ref name may sometimes be a pseudoref and sometimes not
-> depending on whether it is a symbolic or regular ref. This behaviour
-> does not seem reasonable at all and I very much doubt that it results in
-> anything sane.
-> 
-> Furthermore, the behaviour is different to `is_headref()`, which only
-> checks for the ref to exist. While that is in line with our glossary,
-> this inconsistency only adds to the confusion.
-> 
-> Last but not least, the current behaviour can actually lead to a
-> segfault when calling `is_root_ref()` with a reference that either does
-> not exist or that is a symbolic ref because we never initialized `oid`.
-> 
-> Let's loosen the restrictions in accordance to the new definition of
-> root refs, which are simply plain refs that may as well be a symbolic
-> ref. Consequently, we can just check for the ref to exist instead of
-> requiring it to be a regular ref.
+> Though maybe an even more radical proposal: now that read_ref_full(),
+> etc, are gone, and we have only refs_read_ref_full(), could/should we
+> shorten the latter to drop the "refs_" prefix?
 
-It's not clear to me that this existence check is particularly useful.
-Something that fails read_raw_ref() will fail if:
+I view it as a good longer-term goal.  But I also view it as an
+orthogonal issue to the transition.
 
-  - the file does not exist at all. But then how did somebody find out
-    about it at all to ask is_pseudoref()?
+We need a smooth migration path for remaining callers of these older
+functions.  We could do the USE_THE_INDEX_MACROS like compatibility
+layer during transition period.
 
-  - it does exist, but does not look like a ref. Is this important? If I
-    do "echo foo >.git/CHERRY_PICK_HEAD", does it become not a root ref
-    anymore? Or is it a root ref that is broken? I'd have thought the
-    latter, and the syntax is what distinguishes it.
-
-Making the classification purely syntactic based on the name feels
-simpler to me to reason about. You'll never run into confusing cases
-where repo state changes how commands may behave.
-
-And arguably is_pseudoref_syntax() should be taking into account the
-"_HEAD" restriction and special names anyway. It is a bit weird that
-even if we tighten up the refname checking to use is_pseudoref_syntax(),
-you'd still be able to "git update-ref FOO" but then not see it as a
-root ref!
-
--Peff
+Thanks.
