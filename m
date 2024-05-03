@@ -1,62 +1,62 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0011581F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7021581F4
 	for <git@vger.kernel.org>; Fri,  3 May 2024 17:23:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714756998; cv=none; b=TI22uiGMaIgAAtWY8nfgjF1+kSBqn+ToeKtjNdXkipzOI7ot8RU7Cs8wFCrWSxBgZxoQ7gLpIzcoZbERoBIkVOj9hKM8JgB5Oi6pW6UJnQfKJEB0JF/PvkRdGNIswc4Jt9NkJE9arzD6Tpk4ihsvcFlKxNLTegTkvujh7oX+BRs=
+	t=1714756999; cv=none; b=dbckcVP9ILkpdB45IKvfSRaW7OEbpQZHMD8yLstPEtPgj+LJ1ILNyjoeLvd/aM5YH01AMaYMSCSW6dV3UHRyxoYehlYUSIL/DTvZ7LiA/iOjkxc0yAJKboHpZsUWddTy4Kz6ajeeJLNPei5pYJUs84DATJeStNICk3rkYxGQ74c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714756998; c=relaxed/simple;
-	bh=kPWZWHrWJeIfy/w4RFmod9jplc/tZ+Emui/avpXenSo=;
+	s=arc-20240116; t=1714756999; c=relaxed/simple;
+	bh=UahwUq9KQ+L25qWoYlDOZhfHrQ02v1DAE6Qi/vaHVgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4JxnJ7bdAoTM3hTOc7N1ayA79HbTyhRm1RGpF9cFll2xp2lBaulVTbgjt1S+LINrxJahSd6qU6HgrOox3GdHB7T7wLUb1Y8ZOaFIIFYnOlCahQ1FUBfD62QDaj0pM6pwDsLoBvpM8Sz5dfXgOPOmgd+7MDb2WSexeHeXz9VXLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lvzwqnkZ; arc=none smtp.client-ip=209.85.210.42
+	 MIME-Version:Content-Type; b=cTZfbCsV6Qtgi32D6Yp5SLQk85k342LAQBYE7sDmSN5PrDFoIvDLWBoRZ9+z6ukzTZaH/KB12NetDCuxc23apyBQ4PdOGKM+Bp/6a8Py2AmYgPyETlXFfgjt7ByDGsRyDtuXugRiVsA+JBnsTcKBXAbnFExNtYgHzb0ewqQNs2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jqLP9AMe; arc=none smtp.client-ip=209.85.160.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lvzwqnkZ"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6ee4dcc4567so3136402a34.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jqLP9AMe"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-23dd52c6176so1373786fac.1
         for <git@vger.kernel.org>; Fri, 03 May 2024 10:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714756995; x=1715361795; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714756996; x=1715361796; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gDQ9+UkM02IRkgzYyXz6zpT1AsYfEg3PAFp5x/fCFqQ=;
-        b=lvzwqnkZ83MSC4XQzUtq0Rxcj3kUlB2yMgrJ0wt01BK1gEtgg179Q5OKuNYB3D+iEX
-         7wPJtAWefUcnmPW8vmXqEd/C/c/QFJviI9oXtvUL+VPkG5HyoDBXZ0aDYodQ6Nzb0K69
-         PULILwoy/OHh5LBvpfwbEzB/OCOUpCNdzrhmjz24/58YJErAHjm9fC/TImxNwPzmGjAG
-         2KiENDYkm1LXyqoQ00c6u/BAu7k7NRXXomg21JtauZMwzlTp7hHoQgiGxDoz80yH3PUM
-         RDLdr8MNmwzYCdtF7+tqOQlVBVKuf17YOkgbdItS+shGh+SZnn2OlZt8S2kQ5P240Cg2
-         drVw==
+        bh=7oeVL87ubFP4WWknZ8iX/rlxxUxGiJ6CGRc32QJEWXs=;
+        b=jqLP9AMeO7hlF9Wa4B/yMwREa8+0pi3Rj/Lvj2l+iiOxe3brTMHcVwwxV0JeXJLg1p
+         ZOqfS7PNZVKKYIunz5KUqPhG/ds0/bpuNe89lRCyZiLuknte6WWLFNSYw5X/hQjF2T2I
+         3CdcDRHY1SVMwI7+b+FGGhZ3QMbvo3G6ORzKW4Rttt3aV7Rn3fPMcT1RpXXBClEZ7/AU
+         BxEgT6VygK5HQCMVmRnCpt7CxsYSyVaKzYS0OZnYa4Y3JSzldMj6/QJob7RB+NjhjyeH
+         IMpUw5AudrWc7nrZKg19c1H9DGLfdky+TYjd8EcUQtZ6jUsHBjJjiVbVGmaTMxCR4SPF
+         4Yig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714756995; x=1715361795;
+        d=1e100.net; s=20230601; t=1714756996; x=1715361796;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gDQ9+UkM02IRkgzYyXz6zpT1AsYfEg3PAFp5x/fCFqQ=;
-        b=aTMhSKpOL9DLicKVj9cKT/BxyiNJXSuUE6HlZ/wk5zwrLopnUssKuZykttYjdsjxdt
-         povIABf4sO/E5QePi+46E8QShoBy4tSxDrSKDfzDx0z09sL7FGs6l7JKRvYn24BxJ+y6
-         K/6RQQYaX/tj/9M0uqJB9wZOt0LHG9QRDJBpRxn58B34m/HjpKbQLSh0XU13LEKH9jht
-         Vq0uTLCglvYvODJR2Zoww5D2tzJTzpu2gd9RjkQJiLruHzevbPgRGJqDHUE18UiI97E7
-         wNQ99xweqw+ELsedA9JGSmN0ih34jvVPRet4k9wr9FkhthqFRvzUgi6exz0S46pBz6wX
-         f31g==
-X-Gm-Message-State: AOJu0YyrgmLIzSUcPh2jY3rYBHAYkty5AOso98DbTBiQuYkhJoh25j0f
-	che+WHRVaLhs1eWY8XCl7rpdjrocfpfCTQvAocH+fZ+GTgpw3TZyUn/f2w==
-X-Google-Smtp-Source: AGHT+IFh9um2/JAeslDVzacatGHyf4TLgUsVC/2aLB46YIqhRi8ichsVizKjzAlnahqcMP1ujHFxLg==
-X-Received: by 2002:a05:6830:16c3:b0:6ee:3e22:83cb with SMTP id l3-20020a05683016c300b006ee3e2283cbmr3868132otr.16.1714756995179;
-        Fri, 03 May 2024 10:23:15 -0700 (PDT)
+        bh=7oeVL87ubFP4WWknZ8iX/rlxxUxGiJ6CGRc32QJEWXs=;
+        b=W4YkSbsoM4v73biy6IoS7/gpcbGd3dkzZRqhF1eUW0rlj9z/bdlnWCoc3tb4XHyQHv
+         5K98vWYLVq9BpRXQkaMPeyST9d1xoO4vPA59PBahYRSe8WudlAsNHPKyceyW1NOcClJN
+         7HfVrzrkEDGHdSGyiWEtkp6WbSUFEwU5VvcUSNhzRAWQ9eparFGcHNBsnNGpa5X3vu5g
+         iY/AdCzUJKNchryyOToOPh9qYKnbzAdpuUz1XammVsqJhW6oh+hVCJaFSaCd+U/xnJ2Q
+         m4xeTAXYPqXrKKKfZoliCxvEoAXptHH4NKEQL00eDZVzy47Eees/Q5SLYfMJqKy8ANjL
+         LRCg==
+X-Gm-Message-State: AOJu0YwPwEUNUqmMCqqRLIORitIuqalMoOPzdiWtER4+B5Hovxi4iHaI
+	V8YBlhwqyZzpoF9k1Xnvsyehe0/z65DNvwHJNZv4A+J8YTVnNGO6+b+kEg==
+X-Google-Smtp-Source: AGHT+IHt+tpaVqer8srloLk5CfWP6G22mGQOvrsn/oi7cFByRLCQ0cUcqOuh5HSBvP7NbOaY1Nd/Ng==
+X-Received: by 2002:a05:6870:2328:b0:23d:35a:24d with SMTP id w40-20020a056870232800b0023d035a024dmr2499542oao.9.1714756996392;
+        Fri, 03 May 2024 10:23:16 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id cy14-20020a056830698e00b006eb7b0ee326sm705212otb.65.2024.05.03.10.23.14
+        by smtp.gmail.com with ESMTPSA id cy14-20020a056830698e00b006eb7b0ee326sm705212otb.65.2024.05.03.10.23.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 May 2024 10:23:14 -0700 (PDT)
+        Fri, 03 May 2024 10:23:16 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 1/5] ci: pre-collapse GitLab CI sections
-Date: Fri,  3 May 2024 12:21:03 -0500
-Message-ID: <20240503172110.181326-2-jltobler@gmail.com>
+Subject: [PATCH v3 2/5] github-ci: fix link to whitespace error
+Date: Fri,  3 May 2024 12:21:04 -0500
+Message-ID: <20240503172110.181326-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240503172110.181326-1-jltobler@gmail.com>
 References: <20240502193840.105355-1-jltobler@gmail.com>
@@ -67,31 +67,90 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Sections of CI output defined by `begin_group()` and `end_group()` are
-expanded in GitLab pipelines by default. This can make CI job output
-rather noisy and harder to navigate. Update the behavior for GitLab
-pipelines to now collapse sections by default.
+When the `check-whitespace` CI job detects whitespace errors, a
+formatted summary of the issue is generated. This summary contains links
+to the commits and blobs responsible for the whitespace errors. The
+generated links for blobs do not work and result in a 404.
+
+Instead of using the reference name in the link, use the commit ID
+directly. This fixes the broken link and also helps enable future
+generalization of the script for other CI providers by removing one of
+the GitHub specific CI variables used.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- ci/lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/check-whitespace.yml | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 0a73fc7bd1..02e5e058dd 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -18,7 +18,7 @@ elif test true = "$GITLAB_CI"
- then
- 	begin_group () {
- 		need_to_end_group=t
--		printf "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K$1\n"
-+		printf "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)[collapsed=true]\r\e[0K$1\n"
- 		trap "end_group '$1'" EXIT
- 		set -x
- 	}
+diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
+index a241a63428..a3a6913ecc 100644
+--- a/.github/workflows/check-whitespace.yml
++++ b/.github/workflows/check-whitespace.yml
+@@ -31,14 +31,15 @@ jobs:
+         commit=
+         commitText=
+         commitTextmd=
+-        goodparent=
++        goodParent=
+         while read dash sha etc
+         do
+           case "${dash}" in
+-          "---")
+-            if test -z "${commit}"
++          "---") # Line contains commit information.
++            if test -z "${goodParent}"
+             then
+-              goodparent=${sha}
++              # Assume the commit has no whitespace errors until detected otherwise.
++              goodParent=${sha}
+             fi
+             commit="${sha}"
+             commitText="${sha} ${etc}"
+@@ -46,18 +47,18 @@ jobs:
+             ;;
+           "")
+             ;;
+-          *)
+-            if test -n "${commit}"
++          *) # Line contains whitespace error information for current commit.
++            if test -n "${goodParent}"
+             then
+               problems+=("1) --- ${commitTextmd}")
+               echo ""
+               echo "--- ${commitText}"
+-              commit=
++              goodParent=
+             fi
+             case "${dash}" in
+             *:[1-9]*:) # contains file and line number information
+               dashend=${dash#*:}
+-              problems+=("[${dash}](https://github.com/${{ github.repository }}/blob/${{github.event.pull_request.head.ref}}/${dash%%:*}#L${dashend%:}) ${sha} ${etc}")
++              problems+=("[${dash}](https://github.com/${{ github.repository }}/blob/${commit}/${dash%%:*}#L${dashend%:}) ${sha} ${etc}")
+               ;;
+             *)
+               problems+=("\`${dash} ${sha} ${etc}\`")
+@@ -70,15 +71,15 @@ jobs:
+ 
+         if test ${#problems[*]} -gt 0
+         then
+-          if test -z "${commit}"
++          if test -z "${goodParent}"
+           then
+-            goodparent=${baseSha: 0:7}
++            goodParent=${baseSha: 0:7}
+           fi
+           echo "🛑 Please review the Summary output for further information."
+           echo "### :x: A whitespace issue was found in one or more of the commits." >$GITHUB_STEP_SUMMARY
+           echo "" >>$GITHUB_STEP_SUMMARY
+           echo "Run these commands to correct the problem:" >>$GITHUB_STEP_SUMMARY
+-          echo "1. \`git rebase --whitespace=fix ${goodparent}\`" >>$GITHUB_STEP_SUMMARY
++          echo "1. \`git rebase --whitespace=fix ${goodParent}\`" >>$GITHUB_STEP_SUMMARY
+           echo "1. \`git push --force\`" >>$GITHUB_STEP_SUMMARY
+           echo " " >>$GITHUB_STEP_SUMMARY
+           echo "Errors:" >>$GITHUB_STEP_SUMMARY
 -- 
 2.45.0
 
