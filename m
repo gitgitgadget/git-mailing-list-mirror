@@ -1,77 +1,79 @@
 Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E174282E5
-	for <git@vger.kernel.org>; Fri,  3 May 2024 06:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94303139586
+	for <git@vger.kernel.org>; Fri,  3 May 2024 06:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714717685; cv=none; b=T8UoBM1Y8nIr+rGkp54H9TaKEyzr77dJRazJQnUsd5mFgmQJ2SQHNpqsWVGNTGhzsxaCTJUhGSVEmjQUiax57JpsS6Xe9IGMhA5R5mD4TBkDCky8si9X2wyD9fUMGIs/JBhoOU3jIhkqAt9RfYL3bwvxZLMmscA6CFSXKO6vrAI=
+	t=1714717686; cv=none; b=tCTzvkO7VRvk6VghME5l7CU9+tScuJ3G9tkbiwfeTq56E02dRV3vuU/fc5vPU+QK12j2bUq/Vov5oYlEJt4QLlWtfuhXwLRD3shuCkZq/3ZdsF5q7Rn2OkbWhZE0T/okexiH6w7EvrRg7Xign/XtXKyUp4b3f8YLttg3K7eK/LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714717685; c=relaxed/simple;
-	bh=1l93kzTgta25Atz4lSm9rGG5o5+AwYOoHoPyJfWBlKk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=WOFFG5tVTAEh5JECvqqqNRXIhXvSkVyYtG0gOIBXbEBuJVSYDiIKOEaO0jruYDXI1Sw/8RQWdC0g74e52HzRiemmXz1M7bLgqFuBrSC8CauFWrBfH+lSyAjxzftlTKmhzUzhLOHHm9b5Pr+aw4lrQ76qiXBYA0La3teME2wKeXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Iz06tMP1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=keQYv9Ab; arc=none smtp.client-ip=64.147.123.147
+	s=arc-20240116; t=1714717686; c=relaxed/simple;
+	bh=DHsgqpNgSycuw6qfRyQO6XXa10aZ004dntJkLGWKBwg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YMYZXJkIETFZi8j2ZFEZ2ll3c+Ii1/vT9NSoPZr8xsv0n/omHCJoLDbgE0RbDC+lQ34zYjzOfmRG2ai+T8Rea0JUbxlkfswJKqSPALa6yLrk4L4Tr/bGh3GDhihZOoy+5WOCVRMyw0s7+rLxXfxIGKwYQEs44iXE3slX3y0pEn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JxKhh7mJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d6Z+eEnC; arc=none smtp.client-ip=64.147.123.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Iz06tMP1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="keQYv9Ab"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 5B5C41C000F1
-	for <git@vger.kernel.org>; Fri,  3 May 2024 02:28:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JxKhh7mJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d6Z+eEnC"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.west.internal (Postfix) with ESMTP id C24611C0012E
+	for <git@vger.kernel.org>; Fri,  3 May 2024 02:28:03 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Fri, 03 May 2024 02:28:01 -0400
+  by compute7.internal (MEProxy); Fri, 03 May 2024 02:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1714717681; x=1714804081; bh=5pxX1vXmTixhyBgPQO0ItaHQFLATBula
-	Q5nxdgjL0pI=; b=Iz06tMP10sBfKvFnlodCQAJtRBKkQcat78HD05Rj3bm2Vd8h
-	OVw5w/yekHoIBU4Bmk6xTwtCxGQIyMHcs/rfkDczbVnsGh1wME5rT8EkCU9WxBi6
-	d+22XxsUK/yBSS5hDpYXxZ5xs4nPywBAmjlg4WhI5oFFNGwUdmN7ix81bXja4lc1
-	lydWGiHJZX8BBs35zyQQ3GOe6axBpg5ZuXP7857eRPGYBe9q3Q6OnSWe81bXW53Z
-	OOW1YBChU637/DRyfniGpTyr4u/RwtHZRXOvNETW5+X8bWtwLSRW/vApG9myD+I2
-	7rxhByO43umH0OXlW34O85BRzLGCBbcr5JYDxw==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1714717683; x=1714804083; bh=E9HPH89/OY
+	eGx2/35t4/MF1FLQvD/IMaNwtpeT/48QA=; b=JxKhh7mJBCDehmUmc7YUbsxZDX
+	vEQNrW3Jz/1vn0FJwF5PQCsvyRbFWVOVifgKk0yOvvWIXvduC4slsjrZxA5vt4w4
+	g5xkdKff0AhW5XkiZCJfzXxXcG7lnfj5XH4HkLmEJlKda6+QgZvnHN4zLAkqSBXu
+	bTwZH/sCwN5oTexCUT4+By09U/8fEWg2jyBExHAiban8vFn6f8zxjhJx6VcNc3vk
+	npQ0lc841UEb8NmIVCLacexy+PjpLuoEKiXB+K/PKlGdggPboN8aRylSoHlUUVki
+	G8AwZuxzdg8KK9xWaQUdBOH6P5vJUp2aPh8gHCVOIlQogQJf+BglD6RxxpEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1714717681; x=1714804081; bh=5pxX1vXmTixhyBgPQO0ItaHQFLATBulaQ5n
-	xdgjL0pI=; b=keQYv9AblZZqRabbHzR+zEbS/ik5dxVg9GYF+Pb7qWi1FUlKVfn
-	tV+lG27kPaOlQywe507hvKZF2e+BvkRNV5tINaYBCLvA2GmqIy8J1ktlOHo4zP2p
-	qKmA04mwqnV1vphOpfSaexZbkTGOinlKJSkGXw1ww8Rzw1BMOWXiFXEOYSJ4QV0z
-	3g8MuNOaoiAsmY2+EVvlYeh07Af4Yg2K3Fb8RuPR+KfVPHSwmZUTySsnLyoKKNKm
-	LZuac3UP2nrZNMI9g5i0UFRME/q9H6XYvdnn0HBDKOBfXK6M/z4GsTwxIQGszgL+
-	nPxQ8i7Mwqn+ka5jp9qKsi7Jtf9VaGuKmqw==
-X-ME-Sender: <xms:8IM0Zhpbo8igyQ_aw7VelEoFRP6M6hQwEKEbodcfjMj7BuzW1efGOA>
-    <xme:8IM0ZjpCVQFfOiXInr-RCyT5Fz60JaTiq_yS6vmP8_g39l4ZHI_HyYJLgIIKlUDq-
-    G_laYJ6lticGgkANg>
-X-ME-Received: <xmr:8IM0ZuOmpXvQB0C2_i-AowlRJwmh3nE5jX3A1ZdwV1BLnOyC04lzs7cLtvmpOLdEmssAPOQgqsgv7dYVNWv857GhflBC5tNmADQH6NtwvJseNJ53>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714717683; x=1714804083; bh=E9HPH89/OYeGx2/35t4/MF1FLQvD
+	/IMaNwtpeT/48QA=; b=d6Z+eEnCOa6ySGaYo9R70B1683rCtS/QgT1JsliDEUQB
+	rttifBF5eMTjHRnH+DmpKwZx6NGWMFCoAvBJ1iY+HE+8m+fNfrVz1XFSPhH54AQn
+	WQTzIqxLFroefYXbMHkMD/rAU4hqUJg41EtO6g3bhFxVw78M4rZTYhOsV1CVMunx
+	jLfm2wDdqAkJYKI78fCLqexS2MIyojWT+rAhQDiGml2wXxFv6+IAfMt83GXz/X/b
+	najl7EcKTH5Y49W7d6obde0g/WE1ZA1fk/k+2c1rIym0u80qRGHQWAwGE0/eXdbR
+	zFauaKGntlKAY6DaBIC/KOSvP46RN8IeO/TIePfDIA==
+X-ME-Sender: <xms:84M0ZhvEX_tHJqeKaR4Qra-XIiv2JNTn9XWsNXEp5y0qWra4AZaOHw>
+    <xme:84M0Zqfd0IySaXMP24kAKIdf-VbwEQ8bFwiatnZn1_c8gphgWVjkGRrJHMfa6Csia
+    9gYLLNkBTI2MJroxQ>
+X-ME-Received: <xmr:84M0ZkzCZrs3AEaQ-teHsm9f9xN1SwK4sfvUkcpP6CrprsBTzdOSyvP7YOYfTNjSO1fv5ZFZ2coNK4qGcKBMSSVMlGlagH3bl8jPej8HM0hctxt7>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduledgleegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:8IM0Zs5sn3G6o_rpqWMmO6KyxM3VmXCT_8N4ZWOB4SrU_3jLJwxG6Q>
-    <xmx:8IM0Zg4szsoz21eoSeCE87Qn96q4DGGVyQY9sH6PwMuWAYRPd_oypw>
-    <xmx:8IM0ZkjyK9ePMo4ad5uSJm3bQy8LPusMpglJWDrlCFxSqkddmwOtjg>
-    <xmx:8IM0Zi5qYFZ0j_dDMYpZBxQXkdmccunsPyn38et7anuP9-wWMoJzZQ>
-    <xmx:8IM0ZuQDPnGWf28Zr67ph-2kIkH4mVCcbytSAMKLYWP4c18nNpq-ZH9j>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:84M0ZoNuRGjX9K0fgP_1SSw17Q2_UCkNXKOhPgvVjRHJxGXGO3ypJA>
+    <xmx:84M0Zh-EdJcndZ93N9Y1rkfYc4LX7GQ4GxDzlySMiDhXPlyGV3Y-FA>
+    <xmx:84M0ZoW3yloa8blWiFRKhD1vqBxJ8pEweWXZVapUUHLJ72JSOA0cxQ>
+    <xmx:84M0Zicza8B2SuYmtcNvtzWXM08StjEgbOw6XOOwEKMkAggFwPlcsg>
+    <xmx:84M0Zjmnu2LWmVa-f5Ehlm1w1Z9UYWtmw3iUzCHSGWpb_qyrOkXAaQ_b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 3 May 2024 02:28:00 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 3 May 2024 02:28:02 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2ad6a2bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 7fab56a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 3 May 2024 06:27:30 +0000 (UTC)
-Date: Fri, 3 May 2024 08:27:55 +0200
+	Fri, 3 May 2024 06:27:34 +0000 (UTC)
+Date: Fri, 3 May 2024 08:27:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 0/5] refs: remove functions without ref store
-Message-ID: <cover.1714717057.git.ps@pks.im>
+Subject: [PATCH 1/5] refs: introduce missing functions that accept a `struct
+ ref_store`
+Message-ID: <dba5df086d9dbbc2801f946abef47714b41d3750.1714717057.git.ps@pks.im>
+References: <cover.1714717057.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,145 +81,251 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="M8SJt4Xi8JOM25qP"
+	protocol="application/pgp-signature"; boundary="i/95rgXT0pzB1ac7"
 Content-Disposition: inline
+In-Reply-To: <cover.1714717057.git.ps@pks.im>
 
 
---M8SJt4Xi8JOM25qP
+--i/95rgXT0pzB1ac7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+While most of the functions in "refs.h" have a variant that accepts a
+`struct ref_store`, some don't. Callers of these functions are thus
+forced to implicitly rely on `the_repository` to figure out the ref
+store that is to be used.
 
-this patch series aims to convert the ref subsystem to rely less on
-`the_repository`. The focus of it is to remove those cases where we have
-two variants of the same function: one with a `struct ref_store`, and
-one without. There are still other cases in "refs.c" where we implicitly
-assume `the_repository`, but those require a bit more thought and will
-thus be handled in a subsequent patch series.
+Introduce those missing functions to address this shortcoming.
 
-The biggest part of this patch is a set of new Coccinelle rules added by
-patch 3. Those rules are applied in patch 4 and the now-unused functions
-that do not take a `struct ref_store` are then removed in patch 5. This
-of course results in quite a lot of churn, but given that it is fully
-automated via Coccinelle I don't think it is particularly bad.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ refs.c | 65 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ refs.h | 13 ++++++++++++
+ 2 files changed, 64 insertions(+), 14 deletions(-)
 
-It is quite likely that this patch series will impact in-flight patch
-series. I'd be quite happy to drop the last patch that removes the old
-interfaces to make this a bit less painful.
-
-Patrick
-
-Patrick Steinhardt (5):
-  refs: introduce missing functions that accept a `struct ref_store`
-  refs: add `exclude_patterns` parameter to `for_each_fullref_in()`
-  cocci: introduce rules to transform "refs" to pass ref store
-  cocci: apply rules to rewrite callers of "refs" interfaces
-  refs: remove functions without ref store
-
- add-interactive.c             |  17 ++-
- bisect.c                      |  25 +++--
- blame.c                       |   4 +-
- branch.c                      |   5 +-
- builtin/am.c                  |  38 ++++---
- builtin/bisect.c              |  44 +++++---
- builtin/blame.c               |   4 +-
- builtin/branch.c              |  49 +++++----
- builtin/checkout.c            |  35 +++---
- builtin/clone.c               |  36 +++---
- builtin/describe.c            |   3 +-
- builtin/fast-import.c         |  11 +-
- builtin/fetch.c               |  20 +++-
- builtin/fsck.c                |  11 +-
- builtin/gc.c                  |   3 +-
- builtin/log.c                 |   6 +-
- builtin/merge.c               |  34 ++++--
- builtin/name-rev.c            |   5 +-
- builtin/notes.c               |  26 +++--
- builtin/pack-objects.c        |  10 +-
- builtin/pull.c                |   2 +-
- builtin/rebase.c              |  18 +--
- builtin/receive-pack.c        |  15 ++-
- builtin/reflog.c              |  25 +++--
- builtin/remote.c              |  37 ++++---
- builtin/repack.c              |   7 +-
- builtin/replace.c             |   9 +-
- builtin/reset.c               |  13 ++-
- builtin/rev-parse.c           |  25 +++--
- builtin/show-branch.c         |  22 ++--
- builtin/show-ref.c            |  19 +++-
- builtin/stash.c               |  23 ++--
- builtin/submodule--helper.c   |   7 +-
- builtin/symbolic-ref.c        |  13 ++-
- builtin/tag.c                 |  11 +-
- builtin/update-index.c        |   2 +-
- builtin/update-ref.c          |  21 ++--
- builtin/worktree.c            |  19 ++--
- bundle-uri.c                  |  12 +-
- bundle.c                      |   2 +-
- commit-graph.c                |   3 +-
- commit.c                      |   3 +-
- config.c                      |   3 +-
- contrib/coccinelle/refs.cocci | 103 +++++++++++++++++
- delta-islands.c               |   3 +-
- fetch-pack.c                  |   6 +-
- fmt-merge-msg.c               |   4 +-
- help.c                        |   5 +-
- http-backend.c                |  13 ++-
- log-tree.c                    |   9 +-
- ls-refs.c                     |  10 +-
- midx-write.c                  |   3 +-
- negotiator/default.c          |   3 +-
- negotiator/skipping.c         |   3 +-
- notes-cache.c                 |   6 +-
- notes-merge.c                 |   2 +-
- notes-utils.c                 |   7 +-
- notes.c                       |   5 +-
- reachable.c                   |   5 +-
- ref-filter.c                  |  35 ++++--
- reflog-walk.c                 |  27 +++--
- reflog.c                      |  20 ++--
- refs.c                        | 200 ++++------------------------------
- refs.h                        |  84 +++-----------
- remote.c                      |  38 ++++---
- reset.c                       |  29 +++--
- revision.c                    |  27 +++--
- sequencer.c                   |  61 ++++++-----
- server-info.c                 |   3 +-
- setup.c                       |   2 +-
- shallow.c                     |  16 ++-
- submodule.c                   |   6 +-
- transport-helper.c            |  29 +++--
- transport.c                   |  16 ++-
- upload-pack.c                 |  20 ++--
- walker.c                      |   6 +-
- wt-status.c                   |  22 ++--
- 77 files changed, 845 insertions(+), 680 deletions(-)
- create mode 100644 contrib/coccinelle/refs.cocci
-
+diff --git a/refs.c b/refs.c
+index 55d2e0b2cb..7cafda1c25 100644
+--- a/refs.c
++++ b/refs.c
+@@ -400,19 +400,29 @@ struct for_each_ref_filter {
+ 	void *cb_data;
+ };
+=20
+-int read_ref_full(const char *refname, int resolve_flags, struct object_id=
+ *oid, int *flags)
++int refs_read_ref_full(struct ref_store *refs, const char *refname,
++		       int resolve_flags, struct object_id *oid, int *flags)
+ {
+-	struct ref_store *refs =3D get_main_ref_store(the_repository);
+-
+ 	if (refs_resolve_ref_unsafe(refs, refname, resolve_flags,
+ 				    oid, flags))
+ 		return 0;
+ 	return -1;
+ }
+=20
++int read_ref_full(const char *refname, int resolve_flags, struct object_id=
+ *oid, int *flags)
++{
++	return refs_read_ref_full(get_main_ref_store(the_repository), refname,
++				  resolve_flags, oid, flags);
++}
++
++int refs_read_ref(struct ref_store *refs, const char *refname, struct obje=
+ct_id *oid)
++{
++	return refs_read_ref_full(refs, refname, RESOLVE_REF_READING, oid, NULL);
++}
++
+ int read_ref(const char *refname, struct object_id *oid)
+ {
+-	return read_ref_full(refname, RESOLVE_REF_READING, oid, NULL);
++	return refs_read_ref(get_main_ref_store(the_repository), refname, oid);
+ }
+=20
+ int refs_ref_exists(struct ref_store *refs, const char *refname)
+@@ -542,7 +552,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
+ 	return refs_for_each_remote_ref(get_main_ref_store(the_repository), fn, c=
+b_data);
+ }
+=20
+-int head_ref_namespaced(each_ref_fn fn, void *cb_data)
++int refs_head_ref_namespaced(struct ref_store *refs, each_ref_fn fn, void =
+*cb_data)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	int ret =3D 0;
+@@ -550,13 +560,19 @@ int head_ref_namespaced(each_ref_fn fn, void *cb_data)
+ 	int flag;
+=20
+ 	strbuf_addf(&buf, "%sHEAD", get_git_namespace());
+-	if (!read_ref_full(buf.buf, RESOLVE_REF_READING, &oid, &flag))
++	if (!refs_read_ref_full(refs, buf.buf, RESOLVE_REF_READING, &oid, &flag))
+ 		ret =3D fn(buf.buf, &oid, flag, cb_data);
+ 	strbuf_release(&buf);
+=20
+ 	return ret;
+ }
+=20
++int head_ref_namespaced(each_ref_fn fn, void *cb_data)
++{
++	return refs_head_ref_namespaced(get_main_ref_store(the_repository),
++					fn, cb_data);
++}
++
+ void normalize_glob_ref(struct string_list_item *item, const char *prefix,
+ 			const char *pattern)
+ {
+@@ -583,8 +599,8 @@ void normalize_glob_ref(struct string_list_item *item, =
+const char *prefix,
+ 	strbuf_release(&normalized_pattern);
+ }
+=20
+-int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+-	const char *prefix, void *cb_data)
++int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
++			      const char *pattern, const char *prefix, void *cb_data)
+ {
+ 	struct strbuf real_pattern =3D STRBUF_INIT;
+ 	struct for_each_ref_filter filter;
+@@ -607,15 +623,29 @@ int for_each_glob_ref_in(each_ref_fn fn, const char *=
+pattern,
+ 	filter.prefix =3D prefix;
+ 	filter.fn =3D fn;
+ 	filter.cb_data =3D cb_data;
+-	ret =3D for_each_ref(for_each_filter_refs, &filter);
++	ret =3D refs_for_each_ref(refs, for_each_filter_refs, &filter);
+=20
+ 	strbuf_release(&real_pattern);
+ 	return ret;
+ }
+=20
++int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
++	const char *prefix, void *cb_data)
++{
++	return refs_for_each_glob_ref_in(get_main_ref_store(the_repository),
++					 fn, pattern, prefix, cb_data);
++}
++
++int refs_for_each_glob_ref(struct ref_store *refs, each_ref_fn fn,
++			   const char *pattern, void *cb_data)
++{
++	return refs_for_each_glob_ref_in(refs, fn, pattern, NULL, cb_data);
++}
++
+ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+ {
+-	return for_each_glob_ref_in(fn, pattern, NULL, cb_data);
++	return refs_for_each_glob_ref(get_main_ref_store(the_repository),
++				      fn, pattern, cb_data);
+ }
+=20
+ const char *prettify_refname(const char *name)
+@@ -1733,18 +1763,25 @@ int for_each_replace_ref(struct repository *r, each=
+_repo_ref_fn fn, void *cb_dat
+ 				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
+=20
+-int for_each_namespaced_ref(const char **exclude_patterns,
+-			    each_ref_fn fn, void *cb_data)
++int refs_for_each_namespaced_ref(struct ref_store *refs,
++				 const char **exclude_patterns,
++				 each_ref_fn fn, void *cb_data)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	int ret;
+ 	strbuf_addf(&buf, "%srefs/", get_git_namespace());
+-	ret =3D do_for_each_ref(get_main_ref_store(the_repository),
+-			      buf.buf, exclude_patterns, fn, 0, 0, cb_data);
++	ret =3D do_for_each_ref(refs, buf.buf, exclude_patterns, fn, 0, 0, cb_dat=
+a);
+ 	strbuf_release(&buf);
+ 	return ret;
+ }
+=20
++int for_each_namespaced_ref(const char **exclude_patterns,
++			    each_ref_fn fn, void *cb_data)
++{
++	return refs_for_each_namespaced_ref(get_main_ref_store(the_repository),
++					    exclude_patterns, fn, cb_data);
++}
++
+ int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_=
+data)
+ {
+ 	return do_for_each_ref(refs, "", NULL, fn, 0,
+diff --git a/refs.h b/refs.h
+index d278775e08..10982dcf03 100644
+--- a/refs.h
++++ b/refs.h
+@@ -81,8 +81,12 @@ char *refs_resolve_refdup(struct ref_store *refs,
+ char *resolve_refdup(const char *refname, int resolve_flags,
+ 		     struct object_id *oid, int *flags);
+=20
++int refs_read_ref_full(struct ref_store *refs, const char *refname,
++		       int resolve_flags, struct object_id *oid, int *flags);
+ int read_ref_full(const char *refname, int resolve_flags,
+ 		  struct object_id *oid, int *flags);
++
++int refs_read_ref(struct ref_store *refs, const char *refname, struct obje=
+ct_id *oid);
+ int read_ref(const char *refname, struct object_id *oid);
+=20
+ int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refnam=
+e,
+@@ -375,16 +379,25 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data=
+);
+ int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *=
+cb_data);
+=20
+ /* iterates all refs that match the specified glob pattern. */
++int refs_for_each_glob_ref(struct ref_store *refs, each_ref_fn fn,
++			   const char *pattern, void *cb_data);
+ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
+=20
++int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
++			      const char *pattern, const char *prefix, void *cb_data);
+ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 			 const char *prefix, void *cb_data);
+=20
++int refs_head_ref_namespaced(struct ref_store *refs, each_ref_fn fn, void =
+*cb_data);
+ int head_ref_namespaced(each_ref_fn fn, void *cb_data);
++
+ /*
+  * references matching any pattern in "exclude_patterns" are omitted from =
+the
+  * result set on a best-effort basis.
+  */
++int refs_for_each_namespaced_ref(struct ref_store *refs,
++				 const char **exclude_patterns,
++				 each_ref_fn fn, void *cb_data);
+ int for_each_namespaced_ref(const char **exclude_patterns,
+ 			    each_ref_fn fn, void *cb_data);
+=20
 --=20
 2.45.0
 
 
---M8SJt4Xi8JOM25qP
+--i/95rgXT0pzB1ac7
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY0g+YACgkQVbJhu7ck
-PpSZkg//RSs/m1z/nG3sj0igyjnnKmIu82/mRF1RFSVWm9hqVvFAl8ExFhd1Kgh9
-N//Fc8ZVPXSUzCyMsBKY3FzZEXL2uXyUq3GZ4E+r/O8PFvxjS9m3gLXaz2aPKpXC
-dSfzNSr/i4/8pnf1AGo/SKwuF8XmQUNXbFlnSwIbPSPpdm/2Ew3sKsYiZ8LubZJO
-ExqV80N9lvJmB1BMDlVRThXPqIL/H+HBjvn74jjoA42Zt8KoDZ0P84+34p5gigh1
-kgKHp/0wDRO6Pl7n1lWtPmp6tOs3nVWzj7V1WheFijzzJdqjPuz7NQf8hMlfhsLW
-q+E1bziCew0CirZtjAjc5/9R0kX6QXNCmXEbWGT7m2Bhcfl7+Zllzbiqm8wtPTJd
-g2FTErqjFXRD6IJGxh0OmNTg0rTBeKEYzdzGBpqQr9qpzDogbhUCx2uUJ4y9yxFs
-4vkWZALLnveOzCSB/hti1e2pT5mdu2nPBkcbQ0mTCOWOE9hdn3jlh0Jc6fRw/O+X
-sEuHxDtvxoYHlcQvpAsYaCojQZOi/aj+lfSRdXfUPZ4GCjphTk/9oICmfqViOeAj
-jaipuhpCy3E6uzbMJj86osNmrv9Rj/kpYRVX8wHkWLT7DXf2AXCpEMWXOGQvOCzr
-rFtbP+RoKUbiTYj8XjNSJsB8rxhDbRS9A5oreRj4Dqhny60GxhQ=
-=YG7J
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY0g+4ACgkQVbJhu7ck
+PpSrOw/8D6rc9IDRQUthkXlg+/SbTJjHZewd2Bsd6eCPdo6NFS4KDsJyGES3nt0D
+D2aclrBwWlndeqMsFFxgKsgR5pWZPFc+57D61Twhf/0r3Q4r9R75DO1qrW+JVF2f
+cmoW5gCgOSpyulOXPxvd7GBIbzsMH+Dxc4HWfqDtU/H/YZKilWdtW2QlHU0Dukpc
+6MqDO9GiMgTZyYZME5RORosXN29vjABJVZ0PYLte+1X2UD9BSK/gxtle+o8cLNsI
+tGlM6ZypVBjuwao1Mmle/YCRR848RnakzTN1ffwlFWWIPUxu785zXzRoCFVFdkdb
+XckfLQ1g3zHLV1hgmtEPVuF0HKqoIuqQQnrw9aIdCh/AgWCRDy3dMoaqtfrtSK/o
+LSZ9/DoR9N5HhuxfFvFrGSbOyhNQ66RQXG3/dbwT7BvL6N+PNZmopZ77OttfnBbz
+w9/3pYIdaXxXUdz0ACFOBJEFoss0xY9yfg03QNHXjNq1F2N61xKiGvowoLm3swml
+P9yaNaxXq3ZNbqLI0KVIBj0YxWdQXi7AqV545jFWWtHhiMm71cUL6fjm7PgDVUZg
+24aq3kxkztpj5qa8y/P4GYRkpYuqG57YWzPB2sXXns96RP0PzPp9ERfDMyg67Azc
+SJ6SMZRlLFabY3RPkrSVcaPoBxEMWrZUCREfWBYyQX7+JcIOXdQ=
+=fXyS
 -----END PGP SIGNATURE-----
 
---M8SJt4Xi8JOM25qP--
+--i/95rgXT0pzB1ac7--
