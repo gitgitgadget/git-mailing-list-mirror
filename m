@@ -1,56 +1,81 @@
-Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B391C68C
-	for <git@vger.kernel.org>; Fri,  3 May 2024 20:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCC1134B1
+	for <git@vger.kernel.org>; Fri,  3 May 2024 20:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714768667; cv=none; b=Zrpoqldpy17d0bKpdkNDKGdYZIXbxDU1EE2HoRGRtX11w484qR8e+1mCqzPz9DS1ajP4WEYmy5YrxeaxHQdTZFc+YdqV4WYNZGNWmb7AoM0GkTGhBQbFyo2MaO5WDvwJ7ln7ZTp+1YcYfPWVH377qfwBKzswdgQ12rNLpb6qWbs=
+	t=1714768736; cv=none; b=RYhmva5R2FWC/sCPrJoMq1wnneO7iFOMlH9HVeVXjiaejlGSlJRJ6wEocilndjcmrvCzeDr+dwbXaVODtiwbjFqbShbzVzniq5q5TwE8KFOptgt6KkBQECJHUQ3+5yjI/x4n1bezdnr8eyfipS0129hpRZLqU0RJJi2FHWN428s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714768667; c=relaxed/simple;
-	bh=hoKhK+2y85GHFKWr9wYAQpEIHmucGmHzUUX0n1SX4+c=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=TI/QaZ605Rx4TZcFAggHaKnlLaOy0Xru0n8B34Qrrn6fyS3X0s5/87gFuagme1g3wJ8BiT+rNfLNwNShMQ+fPFa1A0tACNhp/jYRpADg/7c42yn4aADq3jAViPfElS8UbRFLHDMPzKsG7laTRqzFg5pA24SDvYQ8y2EfkrBh5KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=orange.fr; spf=pass smtp.mailfrom=orange.fr; dkim=pass (2048-bit key) header.d=orange.fr header.i=@orange.fr header.b=IOSGOa/a; arc=none smtp.client-ip=80.12.242.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=orange.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orange.fr
+	s=arc-20240116; t=1714768736; c=relaxed/simple;
+	bh=mxtRxkCq7kNqk6YNPpzN8boy6CXWbT5k8Bs46oWqGww=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eTx4CEQHedV7V8rsHxHX1CAKTzxM9gM5IvIZNmr8Rw7lS9houTDQUi+M+RfjSERIsZ+TzNknDhRHabe2kZKN5KkSpvNAQS5Sx5ZwK2wauwi9JSG5l2XPllyrcix/X4MQXflcQfSdFo401uSjVnNQRWDmb/mGnsCq35tpQwF/eCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ydR4+vWe; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=orange.fr header.i=@orange.fr header.b="IOSGOa/a"
-Received: from opme11oxa19nd1.rouen.francetelecom.fr ([10.110.57.110])
-	by smtp.orange.fr with ESMTP
-	id 2zeysbPBTC4gF2zeysAx2k; Fri, 03 May 2024 22:37:36 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=orange.fr;
-	s=t20230301; t=1714768656;
-	bh=hoKhK+2y85GHFKWr9wYAQpEIHmucGmHzUUX0n1SX4+c=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version;
-	b=IOSGOa/a5K/MzYN6MT/xpXkesP8rodSmoRtZjtm1TMQxhhrrUOYeb0eVX0R9rDZJT
-	 kKUuNDxpUoXbzENDRglO1cvinPl5wDKrtk4twvloLSq90HSF0/IF2VD5ZxhCq4MJjW
-	 MwUWgUckEnIebHvicqi3NXNW8vYZopSD1qqsJRSzLxtVT6kKO1qSjzFbMOBkOaVq35
-	 89rQ/B+rZFjXHkpFO9qSQLAXgnhGgjBmnyXYQ6QkMm6Eupe+Z5Y+1qy6Eu3ulTqlG9
-	 Z+fGRqATob1PYwXmOzB2a8W2Yb5auGsfmGiA7PIZrbTUPOfGwSRuz7hrUisrChBHdC
-	 dvF3QP40lFKfQ==
-X-ME-Helo: opme11oxa19nd1.rouen.francetelecom.fr
-X-ME-Auth: bW9uaXF1ZS5yb3NzaTBAb3JhbmdlLmZy
-X-ME-Date: Fri, 03 May 2024 22:37:36 +0200
-X-ME-IP: 79.95.87.55
-Date: Fri, 3 May 2024 22:37:36 +0200 (CEST)
-From: monique rossi <monique.rossi0@orange.fr>
-Reply-To: monique rossi <monique.rossi0@orange.fr>
-To: git@vger.kernel.org
-Message-ID: <2015405147.975890.1714768656756.JavaMail.open-xchange@opme11oxa19nd1.rouen.francetelecom.fr>
-Subject: Rossi.monique
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ydR4+vWe"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5162A2BB2B;
+	Fri,  3 May 2024 16:38:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=mxtRxkCq7kNqk6YNPpzN8boy6CXWbT5k8Bs46o
+	WqGww=; b=ydR4+vWehr7uc/Tqqj2PeXnj78bwm6FK5Qk88TmDWZk25N6UF5I6xy
+	Q6CMAzCzDbtvBnSAVF+EBBXnBIJ+3jJvitcmFTznz3XImtpUnXtOdCMy2GAz0nQG
+	s5w3XXYEElBDqwbSYX54mdawAP54A7PntFD96giQoQVC36qeqzgwk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 452FE2BB2A;
+	Fri,  3 May 2024 16:38:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6EB12BB29;
+	Fri,  3 May 2024 16:38:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/11] reftable: expose write options as config
+In-Reply-To: <ZjNA2zNH5twH5qj0@tanuki> (Patrick Steinhardt's message of "Thu,
+	2 May 2024 09:29:31 +0200")
+References: <cover.1714630191.git.ps@pks.im> <ZjNA2zNH5twH5qj0@tanuki>
+Date: Fri, 03 May 2024 13:38:51 -0700
+Message-ID: <xmqqv83u4omc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-Importance: Medium
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 27594AEE-098D-11EF-86A0-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Confirmation.mail
+Patrick Steinhardt <ps@pks.im> writes:
 
+> Ugh. I actually intended to pull in ps/reftable-write-optim as a
+> dependency because I know it causes conflicts. But I screwed this up as
+> I thought that the topic was merged into "master" already, even though
+> it has only hit "next".
+>
+> I'll refrain from sending a new version immediately though and will wait
+> for reviews first. Once those are in I will pull in the above topic.
 
-=20
-Envoy=C3=A9 depuis l'application Mail Orange
+I saw [01/11] has changes to stack_check_addition() that disappeared
+by the other topic, and the resolution is to remove the function (as
+nobody calls it anyway).  Also [02/11] has changes to refname_test.c
+that can be resolved by just removing the file.
+
+If there are other semantic conflict resolution needed, such a
+rebasing is appreciated, but otherwise, there is no strong need to
+rebase.
+
+The mention of the name of the other topic that has interactions was
+very much helpful.
+
+Thanks.
