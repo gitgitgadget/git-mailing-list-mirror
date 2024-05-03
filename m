@@ -1,112 +1,118 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B99951037
-	for <git@vger.kernel.org>; Fri,  3 May 2024 21:32:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726954BD8
+	for <git@vger.kernel.org>; Fri,  3 May 2024 22:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714771932; cv=none; b=QJlgzLnMoQXso4fdEPg70JcMoYg43n8JoVJ2fpQgol21eC0MFPMsh5BxRdeIpFx1GnM8ztp3qx9YKGoviWIeY3B0Oj9PC3jJosMBqLxzDd1xBkPfyYKTBg9CpTZgDlkOsGHHD7YYA7noPDEDL2x33fY85psBFRsHomIKBgoJcrA=
+	t=1714775150; cv=none; b=GhXcqcyj9Eg36gZXk3/XLN6eplNcIYt9111+eMFC3+t0GInVXTn6zIaRGZzdehmS91c1Ym79ZGzEFx8qE7teVYJxbjFhjzCOB0UYKgszATFVxXEv7X+GdJW64Ax1FHPJgHsItPY7V4HFONyNeuXrKfQC9kyG8SOPg4HQFLcshzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714771932; c=relaxed/simple;
-	bh=i3Mgzi40VlfOrMvMdqI0Lwe5byjOqlMoIYR6rVvg4ig=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=BgTnQeXiu0c6RJAZuZ3XTOaPKI5rbK1zMw7PVzlZ5gSuNVJLHL39s0i3C/rBJqo7+Yzf4UTND2ibUwpIdjX8EPWAZPB5OLwZCsiE9JAvMLuAYf/I3UQZI44M5jSBwn7kV+j8yjItA30xah+k/3330E7iIfL5Wmnzc8ELz+LI5B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RqLwLkhS; arc=none smtp.client-ip=209.85.219.49
+	s=arc-20240116; t=1714775150; c=relaxed/simple;
+	bh=digegB4Gf9212lFjSPCI2LzKb3lyCdcPFNGMTDZckOc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hJU4JeYal6b1ZWG7fuzOccjwaPDXXRRA4gPTUErFfQDfpD9f8y9sIPasPy3ZJFbtTCvdQm0K51e9oK1q1yd9b4gvl5WLXlvjgSTHCdvjJ45itieNevMuL1ykjXuSUCwrpJvRfvZgPXQ6UxCvj56nIPpb1IA0CmXtNV4aBpzVj6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YiokRg+6; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RqLwLkhS"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-69b10ead8f5so848026d6.0
-        for <git@vger.kernel.org>; Fri, 03 May 2024 14:32:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YiokRg+6"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a599a298990so21628966b.2
+        for <git@vger.kernel.org>; Fri, 03 May 2024 15:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714771930; x=1715376730; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=i3Mgzi40VlfOrMvMdqI0Lwe5byjOqlMoIYR6rVvg4ig=;
-        b=RqLwLkhSNuZ5ThIvucfx1JegFWoDkWjjdQ5N/mj26Hj6PJvkTWFSmi1H2iQuDHsNN0
-         kxzAG667AUbQ8DFmyl+8lYmmRGz9OYRNbL2ebWRTCjQd6YH93GMYTEmakmKAs+NZ1xQX
-         6uPLfnUQVzWL85dzelhp2bCUJBNuyqG+JQnOlimWq03fdKG+krH/ZXmN0BXLGaINd6gF
-         0flJzGL445R9Jk+kQJFEGyQ1S6EwFuQZajm7wV5Nl2yZps4de8njX3Lbjy1KF9TbJe+k
-         DySAPXXmzO4zLljHBilY+UhfxVoXiSnyyY1w9Jf/K90yfTl2jnkke9PXWjpN4RyFJ4Tq
-         ZWwA==
+        d=gmail.com; s=20230601; t=1714775147; x=1715379947; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZivCmZ1FcpNdW6R7FfoopkEBOCqxwYjofk3LHlUmIC8=;
+        b=YiokRg+6o7X+P/wUgtJ3z10XmX6NCzq1htrcWBFBmuGG/4KWu1yhe8nov8ObLI01zA
+         /gdN/46jgaVaQcfW6HItAG5sSSzM2tRwWIUTJq+ED6/Xu3ueLkdvXVenv+99GrtqClc8
+         ZPIFGtohjqdUZ/fKUezeUdg/nBtP2Ar6OSYFHIfc2r4rbMaHeQoTCzJVhv0BFz99eDiI
+         rv+5LUhq/Vr4ICoZ9/Dlqqy2zTv3xaMZuEpR2oef1oLRRvTRbVBHw61Am8jXFoRfZ2jl
+         3yXkesF/ggg5oc4YLxJ8Ys76auMXRFNoFei9kfSV6rgtDgdpc6QiBtGt9AexL2W4mc4f
+         jBzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714771930; x=1715376730;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i3Mgzi40VlfOrMvMdqI0Lwe5byjOqlMoIYR6rVvg4ig=;
-        b=gABfDaWBYUgTr/kwc+40Hz6NBmwbc4lq4s8EXHsDw2lMwA6YdFPG4QotjcYqYXBiL7
-         NMVu0m7YAN7LutnO2L16hv+0zZrtf3SGu2aEFUG9VKwlhlzb1eVxbQ3dwFKXdQe7k3q6
-         l4AyNPp9tELwckQ5DRqcZVj2XlM4g0TRKAP9BjrdbQexNoidP63Yrl0MoAa8esm4G1ET
-         T+eZBfSYYuqD5U+BNBpLwXk2uYWoIgD3Ft4FuzwWfAxOyK62KAv+1GBi9UTK1SlbJReo
-         gi3XX4OMOjEX5FHcJvbveOYAI6vGkVbk2eNHQdrMtqBvLNDcpok2kb9mBSa17o9rIP1l
-         8Uhg==
-X-Gm-Message-State: AOJu0YxrIlC2l46xjxd9EMn8opM5r3M2VcuuXJqFLT4wL6M3TTr6X25Y
-	I4bHg4lIZtxAAo9EDxHAnfn2AIC1bXE2JtSkNkMHVx+5ThNg+rRAm2e3lGY6zroc/eVlnadsWLH
-	qzMns34R8W6Z+9qiA4bPH32U7y3NUtz/7
-X-Google-Smtp-Source: AGHT+IE3I8gGdoUw75h+KMguiUon42BQWY06law/VqTnvRhReZPCLuUPkvmFB1HXIWwUHNgkcdLCM0+7pb5e7+bw2ts=
-X-Received: by 2002:a05:6214:212f:b0:6a0:c8c3:7e2e with SMTP id
- r15-20020a056214212f00b006a0c8c37e2emr4577866qvc.1.1714771930224; Fri, 03 May
- 2024 14:32:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714775147; x=1715379947;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZivCmZ1FcpNdW6R7FfoopkEBOCqxwYjofk3LHlUmIC8=;
+        b=pkasj6ONQocp4IOrYcrho+aqvr81pCJkhGzBlwc607tMrAl2hFLixlIE9jq0H+WS9K
+         SV047Qo2OPPCeRQMe9BRGvh4+5FjF63SZGUUMBgnVenX2IGKe1dehzjJFNlrM38KVRag
+         KdtesYVOx3rkCQAN83I3cIwGGkZjEv11+o5K/KcfotFLt7Y+pkjECQ7Ri0mU4LDidhaQ
+         1+O35KOTQXPOdfSZCvJ8mNADvvd8DmcFUoWE5sbXiQEjmRHMkSmCXaIvLLGKDmXQuLHb
+         hrnbU1Vm/rmagiGZ72RYFRzdM1t4dThajxYajpA32OQAEkRGyxC0BBd/o1HiAg7GNC1T
+         vZwA==
+X-Gm-Message-State: AOJu0YyMvEmnvNqx8kRicddNWaHddGjOzglD3pVvSv4l86M+SbziltHC
+	FS2T1dVavJW+VggQm2dC70nLzzgFNyopP0a/rTqu+i43WnHBW0fM7fSdNhflEnowb/6NysTNzCZ
+	yYFqdyMpyQOUENaccKuagZDiDqWlnog==
+X-Google-Smtp-Source: AGHT+IEBJHbZdgsADJwLSL/A1BNkzBDcB8JfXPFloBYxzPcO/L1z8S2MQvee2LlUvjgU7aY7R7mhHjAC8dSEAoBszmc=
+X-Received: by 2002:a50:9998:0:b0:565:dfac:a686 with SMTP id
+ m24-20020a509998000000b00565dfaca686mr2391644edb.38.1714775146997; Fri, 03
+ May 2024 15:25:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Simon Thurston <simongethurston@gmail.com>
-Date: Fri, 3 May 2024 17:31:59 -0400
-Message-ID: <CAKx51amU_c9EU+573RWDc0+w3V2u5TSk+mQhts1gYyKRhxGCzQ@mail.gmail.com>
-Subject: [Bug Report] git config includeIf not traversing symlink subdirectories
-To: git@vger.kernel.org
+References: <CADDzAfNz3R5yj1SdJYbBe0f8m3Sp-R+X6dRpYoJ8Foj6zijcDA@mail.gmail.com>
+ <xmqqmsp7aqoa.fsf@gitster.g> <CADDzAfPbSv00AfzdJ5DZbXM8YjAr=po6Y_1Y0weyw5dvVA6qFg@mail.gmail.com>
+ <xmqqjzka65ry.fsf@gitster.g>
+In-Reply-To: <xmqqjzka65ry.fsf@gitster.g>
+From: Kang-Che Sung <explorer09@gmail.com>
+Date: Sat, 4 May 2024 06:25:35 +0800
+Message-ID: <CADDzAfN4gXVcqUVdoA12Z+o63JbsTk8zUpNdiVFSFmTFZtrVzg@mail.gmail.com>
+Subject: Re: Combined diff format: Show all filenames by default?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Sat, May 4, 2024 at 3:42=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> >> As the format HAS ALREADY lasted for a long time since its
+> >> introduction in d8f4790e (diff-tree --cc: denser combined diff
+> >> output for a merge commit., 2006-01-24), it is too late to change
+> >> the default.
+> >
+> > I wonder what things would break if we change the default behavior of t=
+his?
+>
+> Human users who rarely if ever rename files will start complaining
+> for wasted vertical screen real estates taken by the extra lines.
+>
+> Nothing is broken, and you are proposing to break things.  Be more
+> gentle to existing users; "what would break if we change?" is an
+> absolutely wrong attitude to approach this.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-On Windows. Create a directory. Configre a gitconfig file to includeIf
-gitdir that directory. Add any configuration you wish to the gitconfig
-file pointed to by the includeif path. Inside the created directory,
-create a symlink to a UNC Path/Network location. Change directory into
-the symlinked directory. Run git config --show-origin on a configured
-value.
+I would disagree with this.
 
-What did you expect to happen? (Expected behavior)
-The value configured in the includeIf path to be found.
+1. Most uses of diff command are on a scrollable terminal screen (with
+"less", "vi", or another text editor). It's just one line of vertical
+screen taken - very subtle unless you have 4-way or more diffs. And
+it's not just about renames. It's a much easier indicator that the
+diff is a multi-way comparison.
+2. It's a usability problem - like an Ok/Cancel dialog that took years
+to realize they are badly designed. I consider the two filename only
+header lines a "paper cut" usability bug. Git is able to output more
+than two filenames; it just doesn't have a way to make it the default
+(even as a per-user default option).
 
-What happened instead? (Actual behavior)
-No configuration data found.
+>
+> > Well, I won't expect the default to be changed for uses in scripts or
+> > GUI frontends. I wish to change the default for interactive, terminal
+> > uses, so that usability comes in "out of the box".
+>
+> How would a script that is running by interactive users whose
+> standard input and output streams are connected to a terminal adjust
+> to sudden change of the default?  The "git" invocation in such an
+> environment would not be able to tell if you typed it or if you
+> typed the name of the script.
+>
 
-What's different between what you expected and what actually happened?
-Git seems to be unable to traverse subdirectories that are symlinks to
-include any git repositories stored inside them.
-
-Anything else you want to add:
-I am well aware that while running Windows 11 in a corporate
-environment there is likely something silly that is stopping me from
-doing something correctly within our Group Policy. However, I just
-wanted to open a report in case that something is not working. The
-workaround I had to do for this is to regular include the config file
-I had written, which is not ideal, even though I am pretty sure that
-the includeIfs I have after it should override it. I am interacting
-with git through pwsh 7.4.2.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.45.0.windows.1
-cpu: x86_64
-built from commit: b5d0511969ccd9ab86395c37e5a7619d8b4e7c32
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 22635
-compiler info: gnuc: 13.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
+How is it _not_ possible to tell? If user runs "git diff" from the
+script, then it would just print to standard output without running a
+"less" pager. If I want to execute a set of commands with
+interactivity, I would write a script and then "source my-script-name"
+rather than "./my-script-name", so it's still possible to tell.
