@@ -1,109 +1,112 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F7E4F88C
-	for <git@vger.kernel.org>; Fri,  3 May 2024 21:24:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B99951037
+	for <git@vger.kernel.org>; Fri,  3 May 2024 21:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714771459; cv=none; b=DkPpHO+sqNQedhVD5CAtTcdFypbGQltiiKT1EM8ub+He+kZndLKba7QWLhMLMY+p6aG5LGi3sP9Dz+7keZvxp2DcAqZmO2ealMHNRLsXmrHTUrhCjzdyq0DwBiJJ1wL6yD7qCDjJgZH4tZmrf+vBT1wIIlIyLOC+cfsB7Q0BfWk=
+	t=1714771932; cv=none; b=QJlgzLnMoQXso4fdEPg70JcMoYg43n8JoVJ2fpQgol21eC0MFPMsh5BxRdeIpFx1GnM8ztp3qx9YKGoviWIeY3B0Oj9PC3jJosMBqLxzDd1xBkPfyYKTBg9CpTZgDlkOsGHHD7YYA7noPDEDL2x33fY85psBFRsHomIKBgoJcrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714771459; c=relaxed/simple;
-	bh=pBiUTNLX4JK1kGnkP6KNOsk16fvxG/S/yWT5cGBJpKQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gvZOihZvjyg3rPKnICm9AL1BzzrMhFtRI/FNXCDXkdQ8xKGK9JLBQOU4OWB62g1lx16ObjQH9xPaBnnyv5hDIUxZ8E24zlhkPbOyD4vwPJmrlSf3Abg2RvWeRCEKTihB6W7RbAJlURqyMrQarOREcwYPYuHRHt5mcFRofRwl8Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1714771932; c=relaxed/simple;
+	bh=i3Mgzi40VlfOrMvMdqI0Lwe5byjOqlMoIYR6rVvg4ig=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=BgTnQeXiu0c6RJAZuZ3XTOaPKI5rbK1zMw7PVzlZ5gSuNVJLHL39s0i3C/rBJqo7+Yzf4UTND2ibUwpIdjX8EPWAZPB5OLwZCsiE9JAvMLuAYf/I3UQZI44M5jSBwn7kV+j8yjItA30xah+k/3330E7iIfL5Wmnzc8ELz+LI5B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RqLwLkhS; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6a071595d22so761616d6.3
-        for <git@vger.kernel.org>; Fri, 03 May 2024 14:24:17 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RqLwLkhS"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-69b10ead8f5so848026d6.0
+        for <git@vger.kernel.org>; Fri, 03 May 2024 14:32:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714771930; x=1715376730; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i3Mgzi40VlfOrMvMdqI0Lwe5byjOqlMoIYR6rVvg4ig=;
+        b=RqLwLkhSNuZ5ThIvucfx1JegFWoDkWjjdQ5N/mj26Hj6PJvkTWFSmi1H2iQuDHsNN0
+         kxzAG667AUbQ8DFmyl+8lYmmRGz9OYRNbL2ebWRTCjQd6YH93GMYTEmakmKAs+NZ1xQX
+         6uPLfnUQVzWL85dzelhp2bCUJBNuyqG+JQnOlimWq03fdKG+krH/ZXmN0BXLGaINd6gF
+         0flJzGL445R9Jk+kQJFEGyQ1S6EwFuQZajm7wV5Nl2yZps4de8njX3Lbjy1KF9TbJe+k
+         DySAPXXmzO4zLljHBilY+UhfxVoXiSnyyY1w9Jf/K90yfTl2jnkke9PXWjpN4RyFJ4Tq
+         ZWwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714771456; x=1715376256;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X0eGKe0LgcjAdn/vn7WVTa6sZYZ4ONbihmKf5mWDYEk=;
-        b=n10SCIq6aUb8S5w/ZYvRQ1xBu8Ync0RNkr8FWuzfAT4Gcr3jFwzcpFmkxat7twS29m
-         6qln0pDoDbuRdBJdsFtlfQsgxugoPAR5YD4Uxmnx9O416f5WjHhkfTVb8iXmwfayb0sJ
-         ZbgxLXKJt52fnJje+vM8VE0qyNJL3wN/v/WLDFBgzDINCS5l5/iGXV4iJyAgTciLxTsn
-         1rB/InmPYha2+xlrsMgX+jvfsJTYEH2sy0YF4riylOOY5T6smvtbhE34MUWdu7/dSLOY
-         1bvvpSuRKnIcvm8L5gjWCnuKv8FNTIsYXvxi8tEnUir5GZiNQbMv2WrmyPEXOYWhhrjS
-         LzJA==
-X-Forwarded-Encrypted: i=1; AJvYcCUhcOQg0eTMXd3VqF9Kyk39aG6uWgIFR32Jyo+YPhI25hOSDYqvne1zf5w6oyzFRwkW9iKtyMs8C8XcluXzvVf5TF8y
-X-Gm-Message-State: AOJu0YyLuRTme4ERrQnOHDl+ysI/FD6YaE/RH30xxc6pa/Rx1+mgwXz5
-	PEr3Q3W/fjy5FguROlQCiH4geRhKs23xpKf30GNxTXzDPJBQGHiOR4mTCEmUqifK+LL1eiz+0up
-	mbnW5H7zEDEOzvbdr8/MvxW34OYc=
-X-Google-Smtp-Source: AGHT+IGzkxVanEsz3a5TTVJBUD6OWllOuCblHr4G7dDEeubUXDF6qU4NYSmT7XvK6l2yp3jWBOjHHipXGQ543hgLQEs=
-X-Received: by 2002:a05:6214:20a8:b0:6a0:d298:e04e with SMTP id
- 8-20020a05621420a800b006a0d298e04emr4378637qvd.43.1714771456284; Fri, 03 May
- 2024 14:24:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714771930; x=1715376730;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i3Mgzi40VlfOrMvMdqI0Lwe5byjOqlMoIYR6rVvg4ig=;
+        b=gABfDaWBYUgTr/kwc+40Hz6NBmwbc4lq4s8EXHsDw2lMwA6YdFPG4QotjcYqYXBiL7
+         NMVu0m7YAN7LutnO2L16hv+0zZrtf3SGu2aEFUG9VKwlhlzb1eVxbQ3dwFKXdQe7k3q6
+         l4AyNPp9tELwckQ5DRqcZVj2XlM4g0TRKAP9BjrdbQexNoidP63Yrl0MoAa8esm4G1ET
+         T+eZBfSYYuqD5U+BNBpLwXk2uYWoIgD3Ft4FuzwWfAxOyK62KAv+1GBi9UTK1SlbJReo
+         gi3XX4OMOjEX5FHcJvbveOYAI6vGkVbk2eNHQdrMtqBvLNDcpok2kb9mBSa17o9rIP1l
+         8Uhg==
+X-Gm-Message-State: AOJu0YxrIlC2l46xjxd9EMn8opM5r3M2VcuuXJqFLT4wL6M3TTr6X25Y
+	I4bHg4lIZtxAAo9EDxHAnfn2AIC1bXE2JtSkNkMHVx+5ThNg+rRAm2e3lGY6zroc/eVlnadsWLH
+	qzMns34R8W6Z+9qiA4bPH32U7y3NUtz/7
+X-Google-Smtp-Source: AGHT+IE3I8gGdoUw75h+KMguiUon42BQWY06law/VqTnvRhReZPCLuUPkvmFB1HXIWwUHNgkcdLCM0+7pb5e7+bw2ts=
+X-Received: by 2002:a05:6214:212f:b0:6a0:c8c3:7e2e with SMTP id
+ r15-20020a056214212f00b006a0c8c37e2emr4577866qvc.1.1714771930224; Fri, 03 May
+ 2024 14:32:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240430014724.83813-1-james@jamesliu.io> <20240503071706.78109-1-james@jamesliu.io>
- <ab604f4b73eab1d9aae4e2a20ba0630e@manjaro.org> <xmqqjzka7p2t.fsf_-_@gitster.g>
- <CAPig+cRZEQjwhnMYvQ_0BjvXaR=3x=LQeJHzFOxC+ZPyOy9yJQ@mail.gmail.com>
- <xmqqbk5m65i8.fsf@gitster.g> <xmqq4jbe64l9.fsf@gitster.g>
-In-Reply-To: <xmqq4jbe64l9.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 3 May 2024 17:24:05 -0400
-Message-ID: <CAPig+cT-xk13jGEUmpT5QmwVYTxKNUZsu9xJ=Ph3h4AzKHg6pA@mail.gmail.com>
-Subject: Re: Re* [PATCH v4 0/3] advice: add "all" option to disable all hints
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Dragan Simic <dsimic@manjaro.org>, James Liu <james@jamesliu.io>, git@vger.kernel.org
+From: Simon Thurston <simongethurston@gmail.com>
+Date: Fri, 3 May 2024 17:31:59 -0400
+Message-ID: <CAKx51amU_c9EU+573RWDc0+w3V2u5TSk+mQhts1gYyKRhxGCzQ@mail.gmail.com>
+Subject: [Bug Report] git config includeIf not traversing symlink subdirectories
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 3, 2024 at 4:08=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> It seems that Dscho was in agreement that format-patch's use case
-> should try to be more aggressive at least back then.  In the message
-> in the thread you pointed
->
->  https://lore.kernel.org/git/nycvar.QRO.7.76.6.1903211209280.41@tvgsbejva=
-qbjf.bet/
->
-> he does not give us the exact reason why he does not think the "more
-> aggressive" mode is not suitable for other use cases, though.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Having an answer to that question could be helpful.
+What did you do before the bug happened? (Steps to reproduce your issue)
+On Windows. Create a directory. Configre a gitconfig file to includeIf
+gitdir that directory. Add any configuration you wish to the gitconfig
+file pointed to by the includeif path. Inside the created directory,
+create a symlink to a UNC Path/Network location. Change directory into
+the symlinked directory. Run git config --show-origin on a configured
+value.
 
-> A similar thread was raised more recently:
->
->  https://lore.kernel.org/git/rq6919s9-qspp-rn6o-n704-r0400q10747r@tzk.qr/
+What did you expect to happen? (Expected behavior)
+The value configured in the includeIf path to be found.
 
-I think I missed this thread.
+What happened instead? (Actual behavior)
+No configuration data found.
 
-> Also, there was an attempt to clarify what the "factor" really
-> meant, but we did not get a real conclusion other than the UNIT to
-> measure the "factor" is called "percent" (without specifying what
-> 100% is relative to, "percent" does not mean much to guide users
-> to guess what the right value would be).
->
->  https://lore.kernel.org/git/85snn12q-po05-osqs-n1o0-n6040392q01q@tzk.qr/
+What's different between what you expected and what actually happened?
+Git seems to be unable to traverse subdirectories that are symlinks to
+include any git repositories stored inside them.
 
-I recall this discussion, as well as its followup (in which I
-proclaimed my continuing lack of understanding of what creation-factor
-really represents):
+Anything else you want to add:
+I am well aware that while running Windows 11 in a corporate
+environment there is likely something silly that is stopping me from
+doing something correctly within our Group Policy. However, I just
+wanted to open a report in case that something is not working. The
+workaround I had to do for this is to regular include the config file
+I had written, which is not ideal, even though I am pretty sure that
+the includeIfs I have after it should override it. I am interacting
+with git through pwsh 7.4.2.
 
-https://lore.kernel.org/git/CAPig+cRp4N=3D6EktoisKAH09aVAPkPgZfHJYcB5pJFJ-C=
-UpBHFA@mail.gmail.com/
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
-> So, yes, --creation-factor=3D<value> is messy, I think a very high
-> value, much higher than the hardcoded default of 60, is more
-> appropriate for use in format-patch, but we do not know what bad
-> effect it would have if we used much higher default everywhere.
 
-At this point in time, I'm not particularly against giving `git
-format-patch` its own default creation-factor.
+[System Info]
+git version:
+git version 2.45.0.windows.1
+cpu: x86_64
+built from commit: b5d0511969ccd9ab86395c37e5a7619d8b4e7c32
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 22635
+compiler info: gnuc: 13.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
 
-My only worry (and perhaps it's very minor) is that separate default
-creation-factors for `git range-diff` and `git format-patch
---range-diff` could catch the unwary off-guard when invoking `git
-range-diff` to manually check the difference between an old an new
-version of a series before finally invoking `git format-patch
---range-diff` to actually create the patches for sending. (I've done
-this myself on a very few occasions, but perhaps not often enough to
-warrant the concern(?).)
+
+[Enabled Hooks]
