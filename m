@@ -1,152 +1,119 @@
-Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74A11F951
-	for <git@vger.kernel.org>; Fri,  3 May 2024 06:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07D5146A81
+	for <git@vger.kernel.org>; Fri,  3 May 2024 07:17:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714719422; cv=none; b=cjiglahmJB/VsBd9LFL6daBfKXx2l9kL0QfbgKPDRWdvTKUuNpMThNNeFQb7qKswNngFeqWAeJ4uS9rh99TFfkcdylL1XRAUh3TJrVahFL/xc+ZvXZxni0ipV8OwMFOQ4MZuP436i2xQreiyhgI/JOa7ZOcGudiBZB2WT7sXGxA=
+	t=1714720642; cv=none; b=L9CAZT33vkEZC3TZNu/VD4wm7tkCRAFTwwpwcHzZIyGBY5sjUIFCMQTyCBzdv13sWe4vCoN5k/bKLWEffS1PZxXb3DgYcivdsSlbfOK2ZqNVaUI6MPVLWGiYYTJyRwRW9QW05ztREPqVJcxnh0L9WQ1wLOVysqsBNyxTCW3gjIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714719422; c=relaxed/simple;
-	bh=WKBtHjo/g9SM7K6/qrujDfVKleu4ZL52g0pOfvirZA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gq2fWM7NK1SQh3jDRJwGqduEOBwMT6nZdhoKa8788GeDJ7GG2QUIQK5H4+HLrGSLbbqV00RD8EZqQlIzj03m1Xu7GpEZAlh+kSMvnZtUD4eo1C6FSHcT4MivMU5Q1Z/DqzIGTd+7d0/imN1q5OUSOJ4lFVgu3W1Py4VVamDAd0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G+cQ+rdG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YBLQYqGO; arc=none smtp.client-ip=64.147.123.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714720642; c=relaxed/simple;
+	bh=AddtxvKED/+64CRI64rsAOc1JrJXAgWvcR2QE1TjjWk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=eeUanXdiVzdctHLs0sicMLRTPEmfNgN7hj5NJi3fAzrfxsctB4F7kboTGgEo/qxV/0J6kHxHPJRplgY5gbWqfmsdCWYW5BOprwEHOLeEMl8Fek8ReVx9BtywN4sF196UYO4rmqaj9q5zQRhxGBecP7u5dn2VWslPNndthR3gx5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=ZZ3hGTYo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HP9JYvHO; arc=none smtp.client-ip=64.147.123.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G+cQ+rdG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YBLQYqGO"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 0CE1B1C00150;
-	Fri,  3 May 2024 02:56:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="ZZ3hGTYo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HP9JYvHO"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.west.internal (Postfix) with ESMTP id 027CB1C00144;
+	Fri,  3 May 2024 03:17:18 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 03 May 2024 02:57:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714719419; x=1714805819; bh=41r4OfbVH6
-	rJoTw2zPWCk8qsC5epl00X7zwRDT7m8RI=; b=G+cQ+rdGH9W2hkk1E1oSSEbEHE
-	n0jNmRT2gKJ9FBqfFRA9N2Ayml731q4RduORsJ3HR0pnQ0Km30UKhG5/UFo9lrkE
-	P5P27X8kqXIsxzWf6IlI1TOouEcwjZxaGgB9a29xw7F90n62SjjKdV1mliNl4DU7
-	xvf3omKUAW9uc+Tz/mBeUmdi1xwEmqWUQ7jZ4pMtkbvorc4n6GX537FCQZfychPx
-	hL3oxi8GREb4w9wdH0kXEiES+Dw8f9tziM9Sd2Ke0kw/Is/qX43NLtyeuDGJ2fXA
-	wNOG4o6+NdQR+pdTyv1CYgboH00aqB4ErgkhDPyCR79Bvow5YMIqRQZNb16A==
+  by compute3.internal (MEProxy); Fri, 03 May 2024 03:17:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1714720638; x=
+	1714807038; bh=C9jQgoLgaYphRIP8hUF2w1mw6y3Y57LXsi10GVFOn5g=; b=Z
+	Z3hGTYo3I+sqTFyMRVyFD4g6Xu7z1SX5Ri+gVXMsIRbx8Mu3fXl6rdW5PXBQMT+w
+	jns0cHutuG9wzVP+KIOd0QXHRs+0NAlv9qhSmKsIJUFUh1d/LGJn+1sg6p9lMyZx
+	Vxn1AG0WTuFcgT/NejS64EogJT26FygJMf8WofXPs+jAG61H4Hisvyyc9g7xb6a1
+	8huInvSyPAZmaly009Q8GZs4/vtZmoLUQmInTUr9XGNWh29ClRXghEsxAXr+icuk
+	NYTezMB/DfSyFJn0CRnB9x907f3JG2mXAb9Cs+yBRJAXkGVGHAVOzy4bwoLuoTxW
+	KNIDcDs8anNRHVVX4iCpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714719419; x=1714805819; bh=41r4OfbVH6rJoTw2zPWCk8qsC5ep
-	l00X7zwRDT7m8RI=; b=YBLQYqGOyaLx0F/xFdZnwQDrtZwajjbZvp+Ulukp41oz
-	qEoim60Zusm1Fn8O2asRPZD0RwnbpHNEHTeV56yiRCxWkl5jBZDfPR99O6JHvSL8
-	PETWE8l/a1AJZnQhs6KwIy9Iq4L6wAUzPjwzo5vg8282HvJQonk5SeceqIFXe5Cn
-	nFWau+mFZMpgwxmbXXlYFKF8/CpsNkqu2BE5PwB6Xez6Pr/OMqwKABFt/mjPpcMe
-	QIqmf2kH9ofZ38k2AEzCB6Njtl6zg2aR0oDCjWIU6jiU+Is3ZjVNiQeEFIxjLy1K
-	wywzHGq2O1hF5SsL4uxpp8mbYQZmoGDTPPiMvYONgw==
-X-ME-Sender: <xms:u4o0Zoh-0mMld7ProAz6LxJJ_Qw05FOPJY1_PTnNtmpLzqTjxujAbQ>
-    <xme:u4o0ZhAspHs-LdI-UOltYOWLgeUsJqZQDklwTAea99yxMQjXxkTOO236chc345zV6
-    8WiLINOk4h5AENKAw>
-X-ME-Received: <xmr:u4o0ZgF7nZpfaMASCZltorhm4br1LG8XRaQQObLFooOTXsLmPWH0FQRQiaxhh2yOWwaMrLH-RspM7yBbSv0KQCBEqhXQUQkCVy7gkGTJsFEZZvlJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduledguddttdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1714720638; x=
+	1714807038; bh=C9jQgoLgaYphRIP8hUF2w1mw6y3Y57LXsi10GVFOn5g=; b=H
+	P9JYvHOifxRfuV53OXwyoFodujqgy4kkA0ZUrmNJ5lAHRhvR5uxJzF15bpqGXHXg
+	bPuvFWgU8iN0RBNvIRIIddl/97TWE7TaZs3qxLV+zFotv8K0v0ye1VkAhzF6G2yX
+	b26c67sfamUtUaLmVAXAOl1Wz2zJnFV3K5uoSx8gVany20SDXg2rB6gjVOvpQJi+
+	qqZUz92hb+Chhd4V8VioU8Mo4W+jqqxW5lavZJREJ/gLv0zpPqy05ZOhujcoBRqg
+	qCdN/inAAwXnEAcghR4iAuZHCOMhiDu/alpOIRJ4KQAGbZ+uIBqKmQZbSZ5vWNyE
+	JsRcQQ2bpwWTOu1c71OQQ==
+X-ME-Sender: <xms:fo80ZkmLNGlABmdRHW8mtymCquMfJo6fS0BhrHv0S4S8iGHwOGNtbg>
+    <xme:fo80Zj0Axf1Xj5-zPPXuj7XBDzDTVjH2XJc2bZtei_jYePZ-6fBMsUv2tGCmRguKe
+    q6inbtrmLVNMRlt9A>
+X-ME-Received: <xmr:fo80ZipAtCCRDiHK4CsknVjSIVIBVeUpjyUUv4dTPUBXgTtmHLSNrKm02GXNPotGlLvilAso62r-hK1Mi_ARLo35zIVFZta86eXA5ys55gkryeQW3ZJBS5tJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdduledguddtgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpedvieeghfeftdejudeltdeileelfefhheffhfdugfegtdetfeelhffgvdfhvedv
-    gfenucffohhmrghinhepshhhqddrtghinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:u4o0ZpSxX9nRcwJoZF3izmrkClJCHjPL7Ggd-DaRD_kyAVGACTNPhA>
-    <xmx:u4o0ZlxY_c_FcKsnOLmEpbv4oaUPDIiAqslvmcAoBNuc__5w-jo2bg>
-    <xmx:u4o0Zn7j9-nBkn1L9oIc1RX-dqHF5azqPp4FbfSXumRdHm3-bRBWXA>
-    <xmx:u4o0ZiyitMOzcZxk_2YVw4hir6cDYfYiUXx6U9gym5gFyJz73W5XJw>
-    <xmx:u4o0Zg-VoM_c6JKBwuGWNlBGkCLz9yI1V3H1XAAieRZ7Z4cUBdBtXgmg>
-Feedback-ID: i197146af:Fastmail
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhgggfestd
+    ekredtredttdenucfhrhhomheplfgrmhgvshcunfhiuhcuoehjrghmvghssehjrghmvghs
+    lhhiuhdrihhoqeenucggtffrrghtthgvrhhnpeeljedtuedugfetgeefieduheelueetvd
+    fhueeuueehveeljeekleetteefvefhjeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehjrghmvghssehjrghmvghslhhiuhdrihho
+X-ME-Proxy: <xmx:fo80Zgl6ALYzHKQvI4sxKnBGeese2YbCqrTPNfulldBMp2LY-A-SKw>
+    <xmx:fo80Zi3QZ3bqLw1kpLC3rdc5UMhV54WLIwYfJ6dpV_O2GDceKT7t1g>
+    <xmx:fo80Znutnh9iy9bd3gVnDt8BuPZd4eBepeRzwDE8_zH4cw2NYKlGAQ>
+    <xmx:fo80ZuXwbRCUpr6-XvdD0yg-LIS-ISsrG4uTOz2mvM-14-unlwxRIg>
+    <xmx:fo80ZgDW-YP2-nfw3V-aIhaIxxHUH58AINmEsi7aHD5BlYHpcJCNePlQ>
+Feedback-ID: i93f149ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 May 2024 02:56:58 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 9cf84206 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 May 2024 06:56:30 +0000 (UTC)
-Date: Fri, 3 May 2024 08:56:55 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] gitlab-ci: add whitespace error check
-Message-ID: <ZjSKt73ohMkJcpH5@tanuki>
-References: <20240430003323.6210-1-jltobler@gmail.com>
- <20240502193840.105355-1-jltobler@gmail.com>
- <20240502193840.105355-6-jltobler@gmail.com>
+ 3 May 2024 03:17:17 -0400 (EDT)
+From: James Liu <james@jamesliu.io>
+To: git@vger.kernel.org
+Cc: James Liu <james@jamesliu.io>
+Subject: [PATCH v4 0/3] advice: add "all" option to disable all hints
+Date: Fri,  3 May 2024 17:17:03 +1000
+Message-ID: <20240503071706.78109-1-james@jamesliu.io>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240430014724.83813-1-james@jamesliu.io>
+References: <20240430014724.83813-1-james@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pC+VkSpRLo20Kqiu"
-Content-Disposition: inline
-In-Reply-To: <20240502193840.105355-6-jltobler@gmail.com>
+Content-Transfer-Encoding: 8bit
 
+Hi,
 
---pC+VkSpRLo20Kqiu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you all for the comprehensive feedback. This is v4 of the patch
+series to introduce a --no-advice option for silencing advice hints.
 
-On Thu, May 02, 2024 at 02:38:39PM -0500, Justin Tobler wrote:
-> GitLab CI does not have a job to check for whitespace errors introduced
-> by a set of changes. Reuse the existing generic `whitespace-check.sh` to
-> create the job for GitLab pipelines.
->=20
-> Note that the `$CI_MERGE_REQUEST_TARGET_BRANCH_SHA` variable is only
-> available in GitLab merge request pipelines and therefore the CI job is
-> configured to only run as part of those pipelines.
->=20
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  .gitlab-ci.yml | 9 +++++++++
->  1 file changed, 9 insertions(+)
->=20
-> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-> index c0fa2fe90b..6d046ce409 100644
-> --- a/.gitlab-ci.yml
-> +++ b/.gitlab-ci.yml
-> @@ -102,3 +102,12 @@ static-analysis:
->    script:
->      - ./ci/run-static-analysis.sh
->      - ./ci/check-directional-formatting.bash
-> +
-> +check-whitespace:
-> +  image: ubuntu:latest
-> +  before_script:
-> +    - ./ci/install-docker-dependencies.sh
-> +  script:
-> +    - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
-> +  rules:
-> +    - if: $CI_PIPELINE_SOURCE =3D=3D 'merge_request_event'
+The main changes are:
 
-Nice :)
+- Two preliminary commits to reorder/clean up the options documentation
+  and usage string.
+- Caching the value of GIT_ADVICE.
+- Adding tests which explicitly set GIT_ADVICE to false and true.
 
-Patrick
+Cheers,
+James
 
---pC+VkSpRLo20Kqiu
-Content-Type: application/pgp-signature; name="signature.asc"
+James Liu (3):
+  doc: clean up usage documentation for --no-* opts
+  doc: add spacing around paginate options
+  advice: add --no-advice global option
 
------BEGIN PGP SIGNATURE-----
+ Documentation/git.txt | 18 +++++++-----
+ advice.c              |  7 +++++
+ environment.h         |  7 +++++
+ git.c                 | 11 +++++--
+ t/t0018-advice.sh     | 68 +++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 101 insertions(+), 10 deletions(-)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY0irYACgkQVbJhu7ck
-PpQJKg//bcUagXbRBOqc5GGcAakzkJ0d5GRU0ARFJxTM3rVnT4HkjkBkQKKnOj8e
-1J0PL1v6VAo6r4qvLwjqJGIBLACT5FLZ6m1z0MADZzO5ASL4XfgRw6BpY/aQKpoI
-MTVw2xbXblSwGUoLUoCq01VBFB2v7g8UOWI8VT7+TPKpBzJrgBVqVg3MPRLrDuGN
-/VIkofkMOfFqZUn9+pWwh+3bJKYoQ//jS9S9a/ldCP+FcKNYmdVqF2Z5PhDQBZE1
-dY8W5Duyy7i+xVQ2dk2YE+TJ+Jm3rAiq5NxvX1NAzylTs3OyItezG0l5sfML5spx
-98fBSQ/M/g8ihH19Tc5CYwjn+Fh2HTIpc6Fi7+ni+po6w1BKNkHPHKf//JyHIXRM
-BY0Tv0ko2xxvwMCbqeVVa3yfHghHAuP8Wpb385ktzZRxH9bFb2MPz2UDXcdKtZox
-vhikI1VLAY3LWT97b+XAHGVfHWzoCe5D63RE0dHymnTFYa7mhPy46Ae/ySeGlwU/
-Drjd0WFQdUqbdqFumlS/obGeKANhyKJj5KKygzw1kksqLrh4KbTP87yFkRR+MuII
-X45DdIjoI6se1spsqfUrdLgCHL+RS5ASYPLY3LBDiVdoTM0mOsh0C0pDhEfLBK+l
-lmjUhoRVNJ9MrCAto/6ngGbRLwyb/C0TuSW7zUwMcGVQs4wFtDo=
-=bAY5
------END PGP SIGNATURE-----
+Range-diff against v3:
+1:  55d5559586 < -:  ---------- advice: add --no-advice global option
+-:  ---------- > 1:  ae3f45dadc doc: clean up usage documentation for --no-* opts
+-:  ---------- > 2:  1b0019026a doc: add spacing around paginate options
+-:  ---------- > 3:  31e73e6c0e advice: add --no-advice global option
+-- 
+2.44.0
 
---pC+VkSpRLo20Kqiu--
