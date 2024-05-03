@@ -1,117 +1,142 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C5857C9F
-	for <git@vger.kernel.org>; Fri,  3 May 2024 18:44:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0F25103C
+	for <git@vger.kernel.org>; Fri,  3 May 2024 18:48:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714761885; cv=none; b=Wd6xdA2xDvdauwWrtzNIwEsrYXKrXNLh1QzXOsLsiboEQP1N8w1moFKw5I0ZuSUXKO3XtxHKn4RaHiKU3UsGNAfZrL4Z1O/U6aTUtUpnwLaDagGV6iqJMXZ1tyycSvnc75TUeKDYQ7nI2eyvzGtC6SsssO3r1jBGkx5I8oC1TKI=
+	t=1714762092; cv=none; b=ZLzHVx9igpNFJNlqRF+AebcEbH9mvV6L3NzX94fKFkcBjZcqv42uu5t+Q/sA3eVWfjzYrBoXdMnXtyRpov+1M2BvzwvfwBAekEXpWgxz5BRx2OgeO/3XjwKkrNkTeeGwb8HmFlX1qEg1ct/vgIJEPrc+IluILXwAgvf5v8CdVRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714761885; c=relaxed/simple;
-	bh=+jFLWl3fqwbkB/CRSuXdyc/X7sRe3cGaVQL08wU/ZG8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LMwZJ5LQCXxGUtguZXonyGgK6JZ/iNgsqog3BAGIH5vVE6lAC+GsVYhWt2Gwu+mC7FLHELEY2e+H5N60ItNCr8L0vDENbO921OkEgWLOw0+RhLBfL/kyIkrNf1fqtz3MEr0qdpuun6e1JgSW4vAl+v2gtW3OBsx0e5nJsU1tP38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=jgzdp+oH; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1714762092; c=relaxed/simple;
+	bh=CDlr9CVTrdnJVxKuJ59f88T2VAd+Pk831IYdtHK5s1M=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jxNbIie2f2b0NnVolVGUW/fmClU1nd7pUud5fv9PKlx4/pXkmXIz4EjhKhLTZL6UT2k5xE/EqCOWucwhS/2dhpgWerDXG5LxICgaxwLOhgGRPNkKywuH5kj8qLG249pZ7t83eCxpRW6/iVy3eO0SrDDj+YjIFq4azVrQ1vMIm4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KjhJmhcc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oui8UQf6; arc=none smtp.client-ip=64.147.123.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="jgzdp+oH"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78f03917484so643052385a.3
-        for <git@vger.kernel.org>; Fri, 03 May 2024 11:44:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714761883; x=1715366683; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QI+Y3Pzjl4dszsZ55xlyZ+cLpVxUU8/JtkbUcvyvqv8=;
-        b=jgzdp+oHPobYEAV0vSzJq2dD7Zza+UkOn/CsDuAWj4cTOHk7uCOKC4KyikGCDHpgjc
-         yr/7n/2OKjaEJLP+0017Yvm5sG6WQ/sNFh2I1zWfIAVZEpBoLWAkxKOp1F+mV57dRqFs
-         qRP7DSQF7D8Z3IHKSDQFqCvVoS1wP2dYhR98srwwaDTGFuefyBMHtiPh0FP683pywVQ5
-         2XwsOdh9YFbeI0CDMaZrHIq6sEhuKL/4DRwRRQZllcYLNkRKQoJ4vi7CoZhuEYV86IRp
-         T3RlTJyigxDVjfubGVMYoE1hQK0X9LkapPdpO+tAHRStmzTwHfoOpuIDPjzusmLqIhoX
-         ufgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714761883; x=1715366683;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QI+Y3Pzjl4dszsZ55xlyZ+cLpVxUU8/JtkbUcvyvqv8=;
-        b=uGCVV0q4vn2C64ZcO7MTyz+OJlAP8eIWm4oQztVfrNauZE+JMNGJ/YZ7NB53fGLpTo
-         VHySizn5tzF+GnMpR8FCW3dNqUffbcfQBgLfAZNo104xLw5foRzvQGo1Rck7GfO7EzWw
-         sgGn09nn0jx7GFSWGuFgob/hwoa/mH9m7XmWBHJCPONokFjKZTIxWbSHRFAkaziZk1yY
-         0OWgabLYYb4rcD3ogHZ9gTybKkMbLjfOU5ApDOOqHYOC/9VT2vRW84+zC0Xzf01TUrTV
-         Ouj5TkR8Q6bYOwkZqe0wYiS6duUrmBganvG5Syy5TpsDDRplUMsNQ93K4d0K/jwQScjR
-         Mpkg==
-X-Gm-Message-State: AOJu0YydfoQJmG9gezO0R3uLRUVQd+cYgwNke5vicz2abzlBsimNJfhb
-	ioIrSXd9Zs+tgLuBUk4BHmgKHXgW6IR/S67TKOP60YAxy3D0+Qlu3oAOB1vmOELKSW2c7Do+8eD
-	E+iM=
-X-Google-Smtp-Source: AGHT+IGzUEYZNR00r1Q8k17DKfdPkd/s4vnxEw/5rRxhPR4H+P+mU4D/p3mzBmu+ZDO00IlXbGrwEA==
-X-Received: by 2002:ac8:5d0b:0:b0:439:e95e:5bc0 with SMTP id f11-20020ac85d0b000000b00439e95e5bc0mr4042373qtx.40.1714761883148;
-        Fri, 03 May 2024 11:44:43 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bz6-20020a05622a1e8600b00439c1419553sm1842793qtb.44.2024.05.03.11.44.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 May 2024 11:44:42 -0700 (PDT)
-Date: Fri, 3 May 2024 14:44:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/5] refs: add `exclude_patterns` parameter to
- `for_each_fullref_in()`
-Message-ID: <ZjUwmeghHMH254w0@nand.local>
-References: <cover.1714717057.git.ps@pks.im>
- <4f34bb2e03479b4987ef30330f096650de354b06.1714717057.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KjhJmhcc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oui8UQf6"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 6CF691800106;
+	Fri,  3 May 2024 14:48:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Fri, 03 May 2024 14:48:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1714762089; x=1714848489; bh=CDlr9CVTrd
+	nJVxKuJ59f88T2VAd+Pk831IYdtHK5s1M=; b=KjhJmhccRGwgumiqiN6fIt8gng
+	6vQ+CtJqmJmXbdvgxfsKJqiDssroXFKNCApYiBKJId5+f9CvdWemU74V2edvgkhl
+	EfLA9V9D0ZgmvrWkwZxs86r1VxUEzjns6rcAzsQFqhAa3kK+ZIVkewQ86hYnEOcD
+	N86jYVputps+ePw0yS03oZWFCXvatVyNhXe5rBFf3ocZY1LvH8mWllvoLIxBqYTW
+	5z9Djygd/e/T5THzsXv04pPz53zdk5Suz0+Img6fvw6Tm3x2Y47fs0q+L+rvcyVY
+	SmzXjWhiIyWQ2m9DP2uHQDb5XyeTF5iwq4pVc97e5MpeP9KFfrLqIXT+4PPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1714762089; x=1714848489; bh=CDlr9CVTrdnJVxKuJ59f88T2VAd+
+	Pk831IYdtHK5s1M=; b=Oui8UQf6VEOOFlG5Xp8MdCzujhGFl0M0uiqWCpoc6bMO
+	gaFpVDxWRdhDlBCoWvT3XBDwe0Suym+/vMzHjYwLb1rBr//H+pPd0kJnHwpW2/Rs
+	kyMonMAUMVmhjiAfNI9q5nEM9iWE7yBdbC6Y3DOj6BJ3MuuGsOx55knUedWuKvjl
+	DedjYqbAUif45VsRiEndaKD63gDaH0SfZyEAjh4fBDD8RfGpqNuV6M2TDtdwCBps
+	PSVobQr1uC3VRx4uRy17DnZSUxhWQaX+DWtVGISqE1yfZ7X2R+Uc+/GhhzfWEJvA
+	AF7xcmazM4I301dNSx1pjCUd7fhpTzuCmk99cImtlg==
+X-ME-Sender: <xms:aDE1Zp2QQ9yHn555ArVxWBfP4Th8MbJN2brIbt_ZETuBT2TSnAVDVQ>
+    <xme:aDE1ZgG9YzsAjXeWw7Qo9yyAnew2Ry43wtLOHxMaTDjPeUJoYHno0AchC5qkYMS8y
+    N0wZJSOtLoGxjI3JQ>
+X-ME-Received: <xmr:aDE1Zp63kvfKdhABXBuGf7G2ubOGGGiMSRScHNLdKDXOZm6ALnP7ThfwWgPz9kdXPQnwnqIYqVEY1IVZW9nYvliyomXgrV88ml7stXuJccNp2kkE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvtddguddvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepjeejtdeigfegkefgjeehveevjeejveeuvddtieekffevleeglefhgffgjeejfeef
+    necuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:aDE1Zm2O-8gnDKSAiRenCyYjddvBtPdv71Q282P1F0cU_XN_7epPog>
+    <xmx:aDE1ZsFW0aNrsPqSQvI9bkofYTnC740NhvasnW8B7K0tMBD24Rppaw>
+    <xmx:aDE1Zn_y5az4tOOOdHzNXn0af21pUQG8leR72zg12exbGy6OWu0Z2Q>
+    <xmx:aDE1Zpnrd1cLxpBUwOYR8SH9IszrouuLADJlLsFhrvq7GDqnmBQ0MA>
+    <xmx:aTE1Zh5X2oZHFCck3JAVRECsl44hneuQxcoA2CUgkf_fmAsYJFoJQX_G>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 May 2024 14:48:07 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 51596c41 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 May 2024 18:47:37 +0000 (UTC)
+Date: Fri, 3 May 2024 20:48:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v4 00/13] t: exercise Git/JGit reftable compatibility
+Message-ID: <ZjUxY7kqgy-iLIzG@ncase>
+References: <cover.1712235356.git.ps@pks.im>
+ <cover.1712896868.git.ps@pks.im>
+ <x7v4d4siixs3wllzycibxtgsqipnwohhyxg72zvcxboucshd2t@won3yobvixbu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vEXnl14MGDIi3zd4"
 Content-Disposition: inline
-In-Reply-To: <4f34bb2e03479b4987ef30330f096650de354b06.1714717057.git.ps@pks.im>
+In-Reply-To: <x7v4d4siixs3wllzycibxtgsqipnwohhyxg72zvcxboucshd2t@won3yobvixbu>
 
-On Fri, May 03, 2024 at 08:28:04AM +0200, Patrick Steinhardt wrote:
-> The `for_each_fullref_in()` function is supposedly the ref-store-less
-> equivalent of `refs_for_each_fullref_in()`, but the latter has gained a
-> new parameter `exclude_patterns` over time. Bring these two functions
-> back in sync again by adding the parameter to the former function, as
-> well.
 
-Much appreciated. I think that this one is my doing from b269ac53c07
-(refs: plumb `exclude_patterns` argument throughout, 2023-07-10), which
-only touched refs_for_each_fullref_in(), not for_each_fullref_in().
+--vEXnl14MGDIi3zd4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for bringing the two into line with one another.
+On Fri, May 03, 2024 at 01:42:32PM -0500, Justin Tobler wrote:
+> On 24/04/12 06:43AM, Patrick Steinhardt wrote:
+> > Hi,
+> >=20
+> > here's the (hopefully last) version of my patch series that introduces
+> > Git/JGit compatibility tests for the reftable format. Only a single
+> > commit changed, where I fixed two typos and added a missing signoff.
+>=20
+> With 35e293e6 (Merge branch 'ps/ci-test-with-jgit' into next,
+> 2024-05-01), I've noticed that a subset of the `test:linux` GitLab CI
+> jobs have started failing on next.
+>=20
+> https://gitlab.com/gitlab-org/git/-/pipelines/1277877090
+>=20
+> I'll take a look.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/rev-parse.c |  4 ++--
->  builtin/show-ref.c  |  4 ++--
->  ref-filter.c        | 10 +++++-----
->  refs.c              |  8 +++++---
->  refs.h              |  3 ++-
->  5 files changed, 16 insertions(+), 13 deletions(-)
->
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 624182e507..2b28d43939 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -908,8 +908,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  				continue;
->  			}
->  			if (!strcmp(arg, "--bisect")) {
-> -				for_each_fullref_in("refs/bisect/bad", show_reference, NULL);
-> -				for_each_fullref_in("refs/bisect/good", anti_reference, NULL);
-> +				for_each_fullref_in("refs/bisect/bad", NULL, show_reference, NULL);
-> +				for_each_fullref_in("refs/bisect/good", NULL, anti_reference, NULL);
->  				continue;
->  			}
->  			if (opt_with_value(arg, "--branches", &arg)) {
+Are you sure it's related to this merge? All failures are on
+"ubuntu:latest", and the complaints are about the "python2" package
+being missing. Given the recent release of Ubuntu 24.04, maybe the root
+cause is that "python2" does not exist there anymore?
 
-Here and below, passing NULL for 'exclude_patterns' is expected, since
-we have no such patterns in the first place.
+Patrick
 
-Looking good.
+--vEXnl14MGDIi3zd4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Taylor
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY1MWMACgkQVbJhu7ck
+PpRwRw//ZmPgSfUNb5qe8OeOHc98p+eRg91rUHtgpYBwgA8byigbXB1XF48Y5pUk
+o/jM6KtQTRVRNOhM/sfhYlGd2NEE7h1IO2gsnOYOWiNu0Lm3khkQ8sdDl8uH7XHQ
+Na8chpA9Q5UQlfxT29IpFi7bNRkG3omBpMwO6zceJUvSiAM/Ivu2kpL14/Z+hr0w
+il7sa22bbdSOsNFk0C8N4IN88fjIfqOqRAHWwjJwwFunJOL2f+c8jIdRFjmnm7Ia
+S+4DP1klc/+/N9q9s3zk5+gGSJwyayXLoWx6i6p6biogj9Gmx1LIAz3Su4pPJv2c
+MC/zBS0LLsMQrqYbFMEHMHNlvMVbwVXuSh0mD7A+6RoW5QEXkWQ8uAs06JSj5tuC
+fnlKQ4kNitoy808k3tICioe0ZSFWs0qoC0pq0+SY5Y8vzfNU858FNPzXRZvkswEB
+LCY5DCeh3fKJDOsNNqCqAUgvCBSZ5x5Oo2v1bttVZ82n/axic/XGuFXrS6VWHA+h
+smTWj0hyjRxrvgDQrQrv9asILr4lRt9Tr1DgWVJxoOsI/JHnjV9WK/AD0urBm7ac
++Uvw3HSrSaGQ/bbrKY9qeYOqhaaCu7mW7dvDR9Q/q+RRRQ5uSp6S3y71kWJK+rnb
+INQta2NVZlPBdvxDPlYkUSXoCuuudBY85fLinao7aa36OHMZ5iY=
+=DT6C
+-----END PGP SIGNATURE-----
+
+--vEXnl14MGDIi3zd4--
