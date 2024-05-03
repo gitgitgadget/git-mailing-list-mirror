@@ -1,104 +1,121 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B264857C9F
-	for <git@vger.kernel.org>; Fri,  3 May 2024 18:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1811EEFC
+	for <git@vger.kernel.org>; Fri,  3 May 2024 19:11:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714762701; cv=none; b=Oc/VMY44cNTjH28D88EoUIPg06o+tqPseBKT8J+1IHpDB/XcsThpg0GYaTbqLHjts4lzKZv8hko7JqpbTphnytFnCMYMdUBO4L06cfPMt46QsXeFUbk7/qLvxEdqPyvdvlejNM/fzWJcyvR/nwLFe7tb0u4qTveMznxSqdmGgf8=
+	t=1714763482; cv=none; b=EfNfdlwuKypk7faTYfpKpwIgXKWmI/zKTpnIOzqaCG9ZpLBrXPeL772rb0xEckkxasYOoZ83fbe+y565dGjnBCNR38UqhIlYXw/ftjNn1Ntgoax2tt/SqRfSDZOOjVU8TRHkI+JIUVQsGTSYD20rSalNRLG+Tiz3c9nsUakCQrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714762701; c=relaxed/simple;
-	bh=iFAaEESSlZLJk48hal/efjZ4bRAVK+NTwxs11uphl80=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ho29Ruqy+2pu23cB1mGTlqNOUMAewppjuvHSxi0cXkz3STX3dwPpsARruBHMkfzC0wSxWgXXAkl7J3jRIluZx+/7jLZfG2tn1yoO0kk9TrQYCnIxWI2pXpiue2/sRPRnZgkwaoXZW0FIhqZiBYEeTmepXHGTU/X4F/iW/7BkIvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=hF31Tpx5; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1714763482; c=relaxed/simple;
+	bh=BH5NFu6dteooNZI8C4mUYR0rRnDVLb50glXWllvKHTU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jtsKOYUb8qsOD05YpZTe0jBm9n4/SIrj0CcAZeH4JVE20ETWhkP8NpTOjquud0GBwe8bDWH/F0ugncvql4OavtpQbNNF6FIOd9I2krM77j4ln+rHnSuA6CAUeET61FLwQPccSfHfbITI7QdBAZdCYrkr49EfD0nMfz/2p/B/LwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z6d8HtaK; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="hF31Tpx5"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-78f04581a66so646390685a.2
-        for <git@vger.kernel.org>; Fri, 03 May 2024 11:58:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z6d8HtaK"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a59a17fcc6bso38722166b.1
+        for <git@vger.kernel.org>; Fri, 03 May 2024 12:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714762698; x=1715367498; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k6mNXRuGeAPUmn34yJP3W85oOHP0uRmaZecAtoB6Z2c=;
-        b=hF31Tpx5YWwh18Dj4Qbwg3djx4Jin4miCmnImyxDb1d9m2fAHMBK0gCZ9Z+aljvXxx
-         /1s081E8RFCrHAWxjxW4zkwOUwJAIRSYOVLR2GMYrv5om4fVrBoL5dqRkFPmYmi/HyHR
-         JpfTilg3HJIVBbNp8NUc9vSqkH23bjmvL/4Bcn8S3KDM0kLyQg1VxTqeShh8z+b9Qi8C
-         K88++RURK3lvwXtjC4YJosjkqSzWBTP7InZGbDf3mX8RI7yzytS2RKgx3Rd6F3BB8ZTV
-         C72U2+IY97o/xjDgMl17k9PSYKVqQakiZsS8QLBnQwWizipnfKWgtPtMAagLctcWQwaF
-         /9QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714762698; x=1715367498;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1714763479; x=1715368279; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=k6mNXRuGeAPUmn34yJP3W85oOHP0uRmaZecAtoB6Z2c=;
-        b=v1Zq2ijw21ZJDdtJTNAMkg1VgXS3SxlS0IVswukqayyWSJszUp3M5awwHGoEI7zu7z
-         t2gupxmJffxRc/d3f5vYJ+ov6ovT2B9KT97SRffC1FMlpRsbNWhP0PzCmnzzFgqQ69Ve
-         7RYyeSxTkkaDajPnURaFZGupDS4orvhyrfMQBxmVDi8HEnnTR00eRUkY66bobp7wM7gc
-         cBkkRgLFXle9Mg7kxCHVmJxd74w2mgwuQOSPjOCrC/xKbF95EZBuWf22VIkTozfPryW3
-         AglZDk5kjto6g69cyV0B2D6tucjSDjZwS6mKuAf83nQEPYlUjxWLHiiam1pHv3vzgdfD
-         AsSA==
-X-Forwarded-Encrypted: i=1; AJvYcCVvAyf59Q5sfr9iwgqJyqmqDVAwkDpS7q5TAGT7pk9ft5iKBu7iruhrSRPqccDwthsVeOdizojiWELaWAeOIe8lJWFU
-X-Gm-Message-State: AOJu0YyGN23EPpXNEo7QyyqV/Ac0Zs6X9CM288wpC/1EZPpDqUyX/NK/
-	N7rquN44q/dtl5QxDl+gHcejcXN4lC5MV2iHC3tlFTrwlKU5IPOIM0xVN54r+aM=
-X-Google-Smtp-Source: AGHT+IH1NUY8pmln30XWJiRhD8rRbzV2JcrA7oudyX83zZATqiUDbgb+eXAdVGlMhxZLzhzdqs4oMw==
-X-Received: by 2002:a05:620a:bc3:b0:790:f25f:62df with SMTP id s3-20020a05620a0bc300b00790f25f62dfmr4176870qki.23.1714762698599;
-        Fri, 03 May 2024 11:58:18 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b9-20020a05620a04e900b0078d5a756e61sm1457813qkh.60.2024.05.03.11.58.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 May 2024 11:58:18 -0700 (PDT)
-Date: Fri, 3 May 2024 14:58:16 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/5] refs: remove functions without ref store
-Message-ID: <ZjUzyNnBW1BAtEc/@nand.local>
-References: <cover.1714717057.git.ps@pks.im>
- <xmqqikzu95cf.fsf@gitster.g>
- <20240503173553.GC3631237@coredump.intra.peff.net>
+        bh=BH5NFu6dteooNZI8C4mUYR0rRnDVLb50glXWllvKHTU=;
+        b=Z6d8HtaKzVo/yqzOApugUPvGO1LULhqVCXc9yTPOo/UmM6gqAIPeDTG/ShDrKFIh94
+         7A27DTrqhAO5k4IWQnEm5aPIz3rt5sg6hb16iGAOCM40DEs6t8ORUjn6ma/LFxvjnDu9
+         e76pKosqkApcUQ/B9YmN482Tln9A2FcAf5A3yxaKRV60O/OLCX7MN1+w8e71MqJ7os9Q
+         c0LB1s4sCXUpO1tOHKBiOgX2CvuVs2HHGi6BJ6lamKyQO/EMB6/iiH5tuDjXf09+XdoH
+         w9KqEpBa3wZ2HJU7jlo7JXPyad3IvyI70tBJHmApG2gPLJgaWj+6JPkj4wiLOjomxKUm
+         g65w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714763479; x=1715368279;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BH5NFu6dteooNZI8C4mUYR0rRnDVLb50glXWllvKHTU=;
+        b=DTlE2VHSg4IfVEr10H7jraOzxHR4xTCK61rrTuw/3TjBCmETmC072Uv3+wPVKM1bV0
+         gdLYz/30vl6H7CkoTDmkmI+MzjIwP9DPwcQnC/QApAHksyN1994UYG8uxI3WwEznVJ0m
+         2sRY/krbl8KVHfKsrAW0w/xU34L/hmatWdDc4cVfGg2Xlw21RKqcJr9J5ZbKA+C9ZDBa
+         R9sNx/Bv9AkRAeHRN1gbOtvD0MaB5iG9lueFznaby+f0EVYNK98EIZkkvvFkMeAEupJS
+         39bIVevFF3l49Et1f1u5ZdxyrtC1/CLx+6Gfpu0zdTZjL4ptRABhD0VzDlPQ5ng57LBk
+         b2Xw==
+X-Gm-Message-State: AOJu0Yw4mgrWsJAPM/TfRNPiz7D98vHt01YjB941cDsul5OPmHU4tAGf
+	gcaPB1Dmj6hFIzKfTCA361PI8C3EWFmb/Vgx8LmvzVW96S0MUfY3fjGwgdczr+CbLZ7luYQhVsD
+	zvium3HtUAy5OITOvDdBRyvExs08=
+X-Google-Smtp-Source: AGHT+IFLapsgW2bNBxPELXYp7DTGy/qkYIaf6gsSkWJeLsFKQOzP38SKTbQxO1PE9VVFuu6RxdsOFuBrzwCmLinIYIY=
+X-Received: by 2002:a50:8d16:0:b0:572:6ab0:6afc with SMTP id
+ s22-20020a508d16000000b005726ab06afcmr2431802eds.33.1714763478727; Fri, 03
+ May 2024 12:11:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240503173553.GC3631237@coredump.intra.peff.net>
+References: <CADDzAfNz3R5yj1SdJYbBe0f8m3Sp-R+X6dRpYoJ8Foj6zijcDA@mail.gmail.com>
+ <xmqqmsp7aqoa.fsf@gitster.g>
+In-Reply-To: <xmqqmsp7aqoa.fsf@gitster.g>
+From: Kang-Che Sung <explorer09@gmail.com>
+Date: Sat, 4 May 2024 03:11:06 +0800
+Message-ID: <CADDzAfPbSv00AfzdJ5DZbXM8YjAr=po6Y_1Y0weyw5dvVA6qFg@mail.gmail.com>
+Subject: Re: Combined diff format: Show all filenames by default?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 03, 2024 at 01:35:53PM -0400, Jeff King wrote:
-> Though maybe an even more radical proposal: now that read_ref_full(),
-> etc, are gone, and we have only refs_read_ref_full(), could/should we
-> shorten the latter to drop the "refs_" prefix? Its original purpose of
-> distinguishing the "takes a ref store vs using the_repository" variants
-> is now done, and shorter names are less annoying. But:
+Hello.
+
+On Fri, May 3, 2024 at 10:57=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->   - maybe there is value in having ref-related functions namespaced? We
->     certainly don't cover all ref functions here, though, and aside from
->     tight OO-ish APIs (e.g. strbuf) we don't usually do so at all.
+> Kang-Che Sung <explorer09@gmail.com> writes:
 >
->   - the error message for in-flight callers of the "old" names will be
->     even more confusing (it will not be "foo() does not exist" but
->     rather "you did not pass enough arguments to foo()").
+> > My reason for making it default:
+> > ...
+> > As the "combined diff" format is likely to last for a long time, it
+> > would be good for Git to set a right default for presenting this
+> > format.
+>
+> As the format HAS ALREADY lasted for a long time since its
+> introduction in d8f4790e (diff-tree --cc: denser combined diff
+> output for a merge commit., 2006-01-24), it is too late to change
+> the default.
 
-I actually thought something like the approach we take in banned.h might
-be helpful, e.g.:
+I wonder what things would break if we change the default behavior of this?
 
-    #define REFS_DEPRECATE(func) use_refs_##func##_instead
+> If a scripted use wants to parse out all the pathnames, it can write
+> the option on the command line just once in the script file and
+> forget about it.
+>
+> For interactive use, the standard answer is "you can alias only for
+> yourself in ~/.git/config", but unfortunately, because the alias
+> works at the command level (e.g., an alias that allows "git lc" to
+> work as "git log --cc --combined-all-paths" can be written), an
+> optional behaviour like --combined-all-paths that is shared across a
+> family of commands (e.g., "log" and "show" both would benefit) is a
+> bit awkward to handle.
 
-    #define read_ref(refname, oid) REFS_DEPRECATE(read_ref)
+Well, I won't expect the default to be changed for uses in scripts or
+GUI frontends. I wish to change the default for interactive, terminal
+uses, so that usability comes in "out of the box".
 
-Then, we could add a bunch of these to the top of refs.h, which would
-give semi-helpful compiler messages to those whose series are affected
-by this change.
+And I don't want the "alias command" workaround for a few reasons:
 
-But TBH I think this is probably overkill and anybody who encounters an
-issue like this likely does not need the extra hand.
+1. It seems like the `--combined-all-paths` would also affect the
+"file-by-file" diff output ("git diff-index", "git diff-tree" and
+like), and I am not requesting to change the default of this one.
+2. The combined diff format is used in many places - including "git
+diff" when there is a conflict, and a "git show" of a merge commit
+when the merge was not trivial and human merging was involved.
+3. And this diff output style should ideally be a "git config" option
+that users can tweak it for personal preference (including reverting
+to the old, "`--no-combined-all-paths`" behavior when needed).
 
-Thanks,
-Taylor
+I know there would be compatibility problems with GUIs and scripts if
+we change the default like this, but the GUIs and scripts should fix
+them, as git is already able to output three filename header lines for
+the merge/combined diff. I just request to make it the default.
