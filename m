@@ -1,120 +1,135 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED2E20322
-	for <git@vger.kernel.org>; Fri,  3 May 2024 14:32:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D2F101F2
+	for <git@vger.kernel.org>; Fri,  3 May 2024 14:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714746763; cv=none; b=uljdlzgrg+i0oXG3to0z8P8duPPlBjEQbR/OzsAdzSYJa/1jVPsjBo6Yl/5AeocgvsXPXwTyeJEXdw5QefJs0weYL97yxTcmsgKx9i5EAMXvE4dA5Ydzsrf+L53xX0jppaULHE4d+gitzvmF6lqGWyBqptoteM9WjJgMA53xjqg=
+	t=1714746958; cv=none; b=mCOFUcBdjBqqH+X7Hrn8H0CCakaripkBwqcQULc0zuOKQrKu1RiH375LoF+UWM41ZgpZXhbSEL1XETZzzZifmYECJL1x6u+T2EoAQR2kc86Y0Xq+qONnzHwqTmBMPkbD/9DXyw+YGdE+KYigek6HkUth0i5EXS8+N8CcHd+Tt6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714746763; c=relaxed/simple;
-	bh=EHcR30S6PMCtU/evTCwUjexuddcLOvE4I6O/5SWXah0=;
+	s=arc-20240116; t=1714746958; c=relaxed/simple;
+	bh=fxD4C38Epz6evvrTjlsNNMDBYwfzoNd/xwV4ffmvwsM=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=fJik/GYbeoA96/zphLwtIfiW7HbT4+rFjrKVnHu8HWruudD73Ejx/97NKB47XIv1aTWK/9JUCyUqpMybOPBH0kE/aFWsrhVrB6+XILgoXhB2gbdFJvt4i7zXRtg0NTw1Ni+Vxasc/cDGfomTb0ZjWdvnoWIpZEMjakjBqivfqYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UD9W26mA; arc=none smtp.client-ip=209.85.160.48
+	 To:Content-Type; b=og10Ze9hYwtV+bPhdEJatuBGHE3R39PeTAUN9noMICCSXRfVQj9nP+/gY0V8LCMx1BS2xKRfafg5uzRiUwV1UovupkRkxa7f474b9GLGB26UrtFfKlvfcVL+JeVE/cghglp6EJADPCJavVUoV/XJc38Za1IpzYJglD0GCI4OSLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKTINtni; arc=none smtp.client-ip=209.85.160.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UD9W26mA"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-22fa7e4b0beso3877077fac.1
-        for <git@vger.kernel.org>; Fri, 03 May 2024 07:32:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKTINtni"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-23dd52c6176so1279622fac.1
+        for <git@vger.kernel.org>; Fri, 03 May 2024 07:35:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714746761; x=1715351561; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714746956; x=1715351756; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bppDeoa9VUToiMZx611KBfF5xp++4EOYDxuw/dw+H10=;
-        b=UD9W26mA7qFOFbZw2tGyQo1kx0ffcNu7IYETrpzxi+eYApewZF6wwKWqyJy/sPJWR6
-         PEfvojB8enAUYBHBEtbpuScw+CkQmFw0kf26/VQgBfV+QbAabPLcW10HbmHgqOiIKwTk
-         auFlHT2Tqwl7BAoIcw7mEXn/4T+wyIRuh/lAd7HH98fvJHTG5+u2Zj14xhwQTHxbSZm5
-         wrOUkt2484qRCPTwxMP0Qq1RtD+2uY+pYcZAfNrA6kliQuiYiVAaL9MIqERC1tgawWgN
-         nLXYZ+bNrmoT4QeeL30vEMaMu8kdLv58QqoL7P8h2Gwub7qmpYu1RxCxl5GkP4b84lmQ
-         7nZw==
+        bh=dQShPyJeMovNxyMtQuPFfOG2yZLET4QV3Le6qp5s6TM=;
+        b=XKTINtnitG1HzqgUNAw4q7WRPoFNr5aIATfsF6DWCMgO3GcZSkoV0mML868HWhDVFn
+         Dg96Ic3EAXC66rNgocqznzGFK1k8eBZCRQximBBgH9bkdIOIuIoYSVihvSWidXoj4tvr
+         OMcGhl7Smjw6NEoRz4fG5NKaXm9CfFviMX4xry90lqhDQoiFJIFkSijls/ZEnW4GXA3X
+         rUOK34Ucipno2tig9RAoKMMJEctLSlzTZAVYtXmqn6TCUk4/DLkLqyyChZTHfQG+z6ly
+         OAbYBhLQ8fdx4LGAvouE4gWyuhIied0OuRgvnQ16uXBTuwXHB+V6J64a6nL613/fksD6
+         xs8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714746761; x=1715351561;
+        d=1e100.net; s=20230601; t=1714746956; x=1715351756;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bppDeoa9VUToiMZx611KBfF5xp++4EOYDxuw/dw+H10=;
-        b=iAyrJ91ySrZVcPnwk3Fb9gvQcLXRm32QXYbD0G80N8n5Wy9/B9XBgerQz87N0v+4hE
-         ihhrWBTBBqIi8T11GV2VCMYJuPnKUZBraZV7PUshBfA+pyBEe3r4cASzMPIFWeFToRQg
-         4DJpQWagPQcT0fr1JEsDwkyGdYH3pKWQKK1Bb27bd8yWvgYgYnlO8kPb2+smkSqw/GCP
-         PvcA4u8NhG5xX4HtlvUumBnWcI6xOxNB1sTal6AGFCDGr+VLfkHZ9BTvbbEamZ/e28fC
-         imDRTm3sv7ZmCdCOlOgUGSagM/KBILqx0nN5/YubRQmhEnRXFsXMPo3Cup9sR+6gDpYF
-         dJyA==
-X-Forwarded-Encrypted: i=1; AJvYcCWXtgzvXbjRHFqx69MZo0txahqGod8xdVqg+8GQtgWTyUbQkR3zz1s+XTQVz9RIdP7HEwZU3b1UiKyy9rBkmE+z49wI
-X-Gm-Message-State: AOJu0YwlXG39u+z6IxBO/SzrgmWPL6A7Kq3yxws/9LsxnkRhehqMK0yw
-	Wq5VlOwOFfZOTD0bTxdcXQ6af8puwZ7sR7PNc0fJ52gq1JPpylMTQx11PLmGe+uN6uISP2n9A4U
-	b1HCzS8w8LshPfqSm6RKGMQD3/ZblNw==
-X-Google-Smtp-Source: AGHT+IEI6ev4YKWvjjcFHEprg1ykj047EFtsx/tmH6RRA6ewYzb+z664l2vS41chGJZT534lbOUF8Qa6jTnKkjkjbYs=
-X-Received: by 2002:a05:6870:84c5:b0:233:378c:a06a with SMTP id
- l5-20020a05687084c500b00233378ca06amr3221382oak.22.1714746761530; Fri, 03 May
- 2024 07:32:41 -0700 (PDT)
+        bh=dQShPyJeMovNxyMtQuPFfOG2yZLET4QV3Le6qp5s6TM=;
+        b=a8XsIY1eD8tcnMgK1ugqgSdqLUfGGiZ/0VS3UclJiCqPp3fUSmHv1wPS9C/rFEvZZT
+         twFYdwRWqRFfyj3uClFXz0Nc8ryQ7e+DqdYbW4Spd85PfJ8XFdiIJpAGXbekyYlX4DAl
+         CmsuQEukl+1I1JNYksI4yg1j2JAE0bevJJQXyTMvk6U7vSkSZnqFKJuMZsrz0AsXh2gh
+         he43DCb1k50f7//In0jIuRKNnHjmqMwvWXxYL37ct5Yv6yRbHrl1u4wLpKmNNe2KoGSL
+         9SAiCKxILTSewj04IlMcXgfojDYW26LyLz0o2Zib4KtqdI8Rw0Fln0qi33j1MG2WQ2d/
+         XHDA==
+X-Forwarded-Encrypted: i=1; AJvYcCUn+h7wFDX15HxDq8FksErTexrBYI93vyp4HZUVtIOqoVgLuE+0m+ksww0SyYHY9Z16R/7wEgwAM4NoqfzEvk0LDx2I
+X-Gm-Message-State: AOJu0YxlPr9jXoI38jRLWJuu9y86rxCbm8YtQZ3b/aRv3lu0sZQKIYgS
+	xB+ovAMZE2sBTfhfia1pF17JjnHdoMDCkYEOniJrXHPeowMRjQY/276fdPt98NZbsX0wPKBYxyE
+	SKVF+dVROt/CmqVhikNSWSt1oIQs=
+X-Google-Smtp-Source: AGHT+IH7NDR7KZvl9IFjAIlcPmWQFvR8/2mQGKQzeKJV4jSQXaMFVNDXl0tR61ggx8NkNnqRbfz1NOoCA+nVXCi6drQ=
+X-Received: by 2002:a05:6870:a349:b0:232:f9e0:e4da with SMTP id
+ y9-20020a056870a34900b00232f9e0e4damr1153532oak.1.1714746956479; Fri, 03 May
+ 2024 07:35:56 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 3 May 2024 07:32:40 -0700
+ HTTPREST; Fri, 3 May 2024 07:35:55 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240503071706.78109-3-james@jamesliu.io>
+In-Reply-To: <20240503071706.78109-1-james@jamesliu.io>
 References: <20240430014724.83813-1-james@jamesliu.io> <20240503071706.78109-1-james@jamesliu.io>
- <20240503071706.78109-3-james@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 3 May 2024 07:32:40 -0700
-Message-ID: <CAOLa=ZTTHhh0xVzhU7WPCOm7oE8s=hQRRLztVR3_=71euRcSLA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] doc: add spacing around paginate options
+Date: Fri, 3 May 2024 07:35:55 -0700
+Message-ID: <CAOLa=ZSHPVbd2pweNz+MtkdWgsZepsExODyd7UNx1774TzWV0A@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] advice: add "all" option to disable all hints
 To: James Liu <james@jamesliu.io>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000099ee9b06178d97f7"
+Content-Type: multipart/mixed; boundary="00000000000038a21206178da3eb"
 
---00000000000099ee9b06178d97f7
+--00000000000038a21206178da3eb
 Content-Type: text/plain; charset="UTF-8"
+
+Hello James,
 
 James Liu <james@jamesliu.io> writes:
 
-> Make the documentation page consistent with the usage string printed by
-> git.c
+> Hi,
+>
+> Thank you all for the comprehensive feedback. This is v4 of the patch
+> series to introduce a --no-advice option for silencing advice hints.
+>
+> The main changes are:
+>
+> - Two preliminary commits to reorder/clean up the options documentation
+>   and usage string.
+> - Caching the value of GIT_ADVICE.
+> - Adding tests which explicitly set GIT_ADVICE to false and true.
+>
+> Cheers,
+> James
 >
 
-Nit: missing full-stop here.
+This version looks good to me.
 
-> Signed-off-by: James Liu <james@jamesliu.io>
-> ---
->  Documentation/git.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks
+Karthik
+
+> James Liu (3):
+>   doc: clean up usage documentation for --no-* opts
+>   doc: add spacing around paginate options
+>   advice: add --no-advice global option
 >
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 7fa75350b2..d11d3d0c86 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -11,7 +11,7 @@ SYNOPSIS
->  [verse]
->  'git' [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
->      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-> -    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--no-lazy-fetch]
-> +    [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]
->      [--no-optional-locks] [--bare] [--git-dir=<path>] [--work-tree=<path>]
->      [--namespace=<name>] [--config-env=<name>=<envvar>] <command> [<args>]
+>  Documentation/git.txt | 18 +++++++-----
+>  advice.c              |  7 +++++
+>  environment.h         |  7 +++++
+>  git.c                 | 11 +++++--
+>  t/t0018-advice.sh     | 68 +++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 101 insertions(+), 10 deletions(-)
 >
+> Range-diff against v3:
+> 1:  55d5559586 < -:  ---------- advice: add --no-advice global option
+> -:  ---------- > 1:  ae3f45dadc doc: clean up usage documentation for --no-* opts
+> -:  ---------- > 2:  1b0019026a doc: add spacing around paginate options
+> -:  ---------- > 3:  31e73e6c0e advice: add --no-advice global option
 > --
 > 2.44.0
 
---00000000000099ee9b06178d97f7
+--00000000000038a21206178da3eb
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 594435a4c75ef75a_0.1
+X-Attachment-Id: 9d44271273777c45_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZMDlZY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meGxWQy85VTVSSU5kdDUwTEFsK2xZTFlkOUJveUNnRApGdmVSVFR4YXdI
-Y2NKR2h1bGsxZUgybXNnSldvK21QMkl2UDlrZ2dOb2NLbFpkT0ZVMXZLSTJNSVp4TW16bmVaCjBG
-NHRIQ3VnUkt6TjBCUzZtbHB3MHIrSmNBWTY4Nk13VUp0UmhxazZXZEpsRHQrSCtQYWpWSFd2WERZ
-V2k5NVQKcHJHaFJ2Mlo0MXk0bFRMWkxqcGdEZGd3MTBkay9IcUhQdWd5aVBiVjROT0VtODR5NFFB
-QjRTd2tNaUErdlhVLwpnYm5rRTFhUmcwdkdkbTNxUHNuanJ5YzdUenR3V3pwYjdXTm9YUlVBem80
-K1A1eUF5Q1RKQTkvV3RtcC9GWm5UCndPN0tHNWpCUFh4Z1BnOEMrVklpK3I0dHF4aG8yYTE1cHZr
-bytLenZNUklUSW13cVFPbWZTeUNOMU44cDRsU0EKZ3lsZmFlQkV5QmIyUzVBazByNXNYK1hMSVZH
-VG80RHI4M29BaTB6aE9ETjFzcTJPcUIzYzJqREwvektZclZlOQpnUFQyMWJ4Uy9xZUFQQThReFlv
-UFh1Zkg1N0dCY1cyTzhXakt4OTk1dFlQck0rRGtGdGY1Z09GRndNL0VkS08rCnhieHIvVFYzYVJK
-WXZoTlFnVCt3ajB2TWdjd1ZHWGhiVXVBMkY4cz0KPW0zaGsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZMDlrb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL21sQy9vQ1VKN0J4cHFYNFZaZlRlb29aNUQ5ME8ybApjbEtQbUl3ZVVa
+VGVwRGk0dHNnVGFQOGtIMDBFbzV0UDBJUm5DNVMvRmFwR1FiOUZqNy9VM1RZRUpvQUxiK3hhCkJX
+c2tFMHBVQVMrT0JjejQ2akthYlFhTXhESkFPYmZpMXFMRW43UldaajRvMDhhWDZFSEhrVjd5M25U
+SU8rUm0Kamx5U000eSs3OWVkSmVGcGpIVGZQUDJZeUhWV0NCUUJSczEweWxXLzFOZllkeWpDWDU0
+TmlLeGhGYnNHYlRHTQpqSWcvQytrejczTHN3dm9QbkF5cEt4UnA0aDA2TndlYS9tVXlDWGNyeHRQ
+Z2E1bi9zRDJoeHZUcXF0aDI5S3FVCmF2NCt2KzFlcnFRSkxxQVJRQVJoRVRNNFFWRUJqZzNWazRR
+dTBZRlQwRmRqRmplMVhhQUE4OE5Xd2ZXcURWRGkKZHRHUmMxa0Z1NmcyVS85MHFnNGxoRFZrekVt
+ajg0WmhTMnlKV2d0aHVaczE2b3ZiMFZTT2Y5VDJ3SEtVYmhFdApEeTNzdER1dHZ3Qmp2d1FMK3Fm
+MURqTk5UOVFaOVNWODhCcFhSYXY1RFpzVGpoL3VMNEJwR2UzRzFIRzAxTlBlCjVUdVB6eldYbmN3
+cFJQa21ETkpEei9hT0hXOEkrT0xLNmhPSzU0ST0KPVp1ZUMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000099ee9b06178d97f7--
+--00000000000038a21206178da3eb--
