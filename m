@@ -1,176 +1,84 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE43257C9F
-	for <git@vger.kernel.org>; Fri,  3 May 2024 19:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014B112F391
+	for <git@vger.kernel.org>; Fri,  3 May 2024 19:17:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714763561; cv=none; b=DIrQN/Q4R5YNlOTYfiDt2OJxd1+6RzKN4eenu+T/uIm0c8BPg+b046HG/fpakNXacpKgshLyjUYAVDAO0xhuX04hm8r3hlBpm7XzBv0v1vOlkeyPw9cupZRXp55o4qhjTveUxKHNU/i+ItxGO03KfiyBbTk4NIfjlewld654WP4=
+	t=1714763875; cv=none; b=FZU9IUKvnDlNlicdhWhJWE/lQbwOcad6VKN5wyoahKhfGE375oddlR8XO/17KDo1MdM0M+fmXVLiuVhfBVf3J5+FCos6w7kyc8hY85nwVZkLjNQqiGyprOmngVOb0VoehVhKxbB5V5OJBdti6YvpCdJZyZJBhKPuotimTDfHQuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714763561; c=relaxed/simple;
-	bh=3zdd4Gm5q8kGExolckujRxrJZxH0YabyIRWIIHz8G2k=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ElwKK2fUxJ+mqT5joOKDqXi4/shCYvfSGBzlGWJzmzxzP1Zen7QIdTJMpIl3pDaYVEVbJKtN3FsWQA/FAd0N4vJVLN2dsech3USAY0XunN5MRRoOGBiVbkDC/rm6UCeFuKnm0OwB8Ag17leaHGQfmZWxIF7oOtSC0RJQLBj2DBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=x8T4ozET; arc=none smtp.client-ip=209.85.210.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1714763875; c=relaxed/simple;
+	bh=RmtlTmb2Ar/kO0v906AKFQ+ybNHzy0TSDgsj/Rx4oK8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UpFp8ziAinXyzKjAHeBlYMeGHQ+HXQCQyYS3k5K2024Hsx2WK/Tb/6th+1xfeWk/ixP057KC/njco8D3Ul7hBlbtNgZ79ApJVa0M0iUZDgwa7SlFVLyV97jE3d0iRVAxIfY9D5wLk6F3Adln7fCf4jr6c1+PZzU/SfXGBYG1eVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=q4AM4goY; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="x8T4ozET"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6ee2d64423cso3895597a34.2
-        for <git@vger.kernel.org>; Fri, 03 May 2024 12:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714763558; x=1715368358; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jmdLXDXrALpWEAnhHvrpg1WFdtNsH1oXxEDd4bKjWgQ=;
-        b=x8T4ozETwyHi8/Ov5yrPf9ANYOxc7kMd52F3eMbYT1zTBlMJP3nYw937xPRMWnzd2H
-         jZWsN42SLLC4HTlB0Ep917x8STFB8dY75KyszMS5HN8NWx545mQW60JUVdBG2RbgvVxF
-         sNOBDkcpJMECBwTFHgq3DX+EE5fPfj3JtF4evX0559wD0HkmgWXv2kohuJgF/Dwwaukx
-         IZJDzdLJdNR2PE9fxwU6MUQa64EY2gm8MZTy/X0SrzYf7gaVR44KNFWZOy9lOMJwZ1jO
-         YklrMS5ObCLT1DKuDsxQhPyEtUGNYIsuO3vi6t7CFWMbPEg0utK6P6wZuRElBC1TmWT/
-         gxnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714763558; x=1715368358;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jmdLXDXrALpWEAnhHvrpg1WFdtNsH1oXxEDd4bKjWgQ=;
-        b=Keupxo5yxWvPr3UbJLQJ1jJ8fs4NBJdg/F3vUix3WUCbsUF9M4EZ9CD1KxtQlYW6K0
-         5qMUFKBf3BfHfOwJG4ThoiBDhkDncF3oKW/rc6dmyaUncFtHcW3/OXkClv4z3tLBA20b
-         mIBc+CI8XfJ7lklaWQPKGOBTFEfj9zvfL/wRe4cPxMEvbWbMOW7n9iQdLvwF5aplnNuX
-         GAVJT7RCNyTnRHY8xXAWl9aUn7RCFF3KcIAHn4YDZhhQoGGqOyF6nETtojhxMJsJGqAQ
-         q7kJ+1BMGTbO5ci0TD4Ta3d71R1qQJjZGeYnhVzpNVnqhk+Rp5WuZDfVCwvKULxtGXwc
-         MXEg==
-X-Gm-Message-State: AOJu0YzkMnt64+q2Nfvf7PhdTC7uKS4w+YRWPWh44Uk2OZ9sVCI0JpX3
-	9grYvn4cDNrMdHaRGGDHtWeyg6YeVveQU7to50VvwOJ3xq/YNZvQrNO2Hciab2wSCqaHkvRvOSm
-	GS+4=
-X-Google-Smtp-Source: AGHT+IGnk0FsYQTU9wrJoG+9O9RzjxrrpQdug4AGY6j9EPcEV76MQ3nZXIufS1UiUrpp1+1TpiDZ9Q==
-X-Received: by 2002:a05:6830:1e8c:b0:6ee:5af6:aec8 with SMTP id n12-20020a0568301e8c00b006ee5af6aec8mr4001018otr.13.1714763558402;
-        Fri, 03 May 2024 12:12:38 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o9-20020a05620a2a0900b0078eca9de099sm1449300qkp.134.2024.05.03.12.12.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 May 2024 12:12:38 -0700 (PDT)
-Date: Fri, 3 May 2024 15:12:36 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] attr.c: move ATTR_MAX_FILE_SIZE check into
- read_attr_from_buf()
-Message-ID: <28f6267709db78ba526d7ed9fc4a734674697c70.1714763555.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q4AM4goY"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF20C2B41D;
+	Fri,  3 May 2024 15:17:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=RmtlTmb2Ar/kO0v906AKFQ+ybNHzy0TSDgsj/R
+	x4oK8=; b=q4AM4goYi7fcu8bUUjG2wB0jmKKD8CAX+xMhovz+soGDkWPK/6Kr78
+	keOkhCzRGw8jsk6zFwpxobyvuzLzhRvoOaao5UFVJFPktDvHHxktHD8vme64aepu
+	1SkneoUiJTHRTmFqWP6QlL+taXuRnzyIgkWpeSZy79TO4vqiD0GYw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D6A1D2B41A;
+	Fri,  3 May 2024 15:17:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 48C7A2B419;
+	Fri,  3 May 2024 15:17:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v4 6/7] t/Makefile: run unit tests alongside shell tests
+In-Reply-To: <20240503180239.GA3634479@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 3 May 2024 14:02:39 -0400")
+References: <cover.1705443632.git.steadmon@google.com>
+	<cover.1713985716.git.steadmon@google.com>
+	<0e32de1afe9cbab02c5d3476a0fc2a1ba0151dcf.1713985716.git.steadmon@google.com>
+	<xmqqo79yxxk7.fsf@gitster.g>
+	<20240503180239.GA3634479@coredump.intra.peff.net>
+Date: Fri, 03 May 2024 12:17:45 -0700
+Message-ID: <xmqq34qy7lie.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D2C1F202-0981-11EF-BAC2-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Commit 3c50032ff52 (attr: ignore overly large gitattributes files,
-2022-12-01) added a defense-in-depth check to ensure that .gitattributes
-blobs read from the index do not exceed ATTR_MAX_FILE_SIZE (100 MB).
+Jeff King <peff@peff.net> writes:
 
-But there were two cases added shortly after 3c50032ff52 was written
-which do not apply similar protections:
+>> 	if test -z "${TEST_SHELL_PATH:+set}"
+>> 	then
+>> 		echo >&2 "ERROR: TEST_SHELL_PATH is not set or empty"
+>> 
+>> may be what we want here.
+>
+> If we are using ":+" to handle the empty string, I think just:
+>
+>   if test -z "$TEST_SHELL_PATH"
+>
+> is sufficient, no?
 
-  - 47cfc9bd7d0 (attr: add flag `--source` to work with tree-ish,
-    2023-01-14)
+Yes. And the other part of this hunk still needs fixing, namely,
 
-  - 4723ae1007f (attr.c: read attributes in a sparse directory,
-    2023-08-11) added a similar
+> +		exit 1
+> +	fi
+> +	exec ${TEST_SHELL_PATH} "$@"
+> +	;;
 
-Ensure that we refuse to process a .gitattributes blob exceeding
-ATTR_MAX_FILE_SIZE when reading from either an arbitrary tree object or
-a sparse directory. This is done by pushing the ATTR_MAX_FILE_SIZE check
-down into the low-level `read_attr_from_buf()`.
-
-In doing so, plug a leak in `read_attr_from_index()` where we would
-accidentally leak the large buffer upon detecting it is too large to
-process.
-
-(Since `read_attr_from_buf()` handles a NULL buffer input, we can remove
-a NULL check before calling it in `read_attr_from_index()` as well).
-
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- attr.c                | 19 +++++++++----------
- t/t0003-attributes.sh | 10 ++++++++++
- 2 files changed, 19 insertions(+), 10 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 679e42258c..7c380c1731 100644
---- a/attr.c
-+++ b/attr.c
-@@ -765,8 +765,8 @@ static struct attr_stack *read_attr_from_file(const char *path, unsigned flags)
- 	return res;
- }
- 
--static struct attr_stack *read_attr_from_buf(char *buf, const char *path,
--					     unsigned flags)
-+static struct attr_stack *read_attr_from_buf(char *buf, size_t length,
-+					     const char *path, unsigned flags)
- {
- 	struct attr_stack *res;
- 	char *sp;
-@@ -774,6 +774,11 @@ static struct attr_stack *read_attr_from_buf(char *buf, const char *path,
- 
- 	if (!buf)
- 		return NULL;
-+	if (length >= ATTR_MAX_FILE_SIZE) {
-+		warning(_("ignoring overly large gitattributes blob '%s'"), path);
-+		free(buf);
-+		return NULL;
-+	}
- 
- 	CALLOC_ARRAY(res, 1);
- 	for (sp = buf; *sp;) {
-@@ -813,7 +818,7 @@ static struct attr_stack *read_attr_from_blob(struct index_state *istate,
- 		return NULL;
- 	}
- 
--	return read_attr_from_buf(buf, path, flags);
-+	return read_attr_from_buf(buf, sz, path, flags);
- }
- 
- static struct attr_stack *read_attr_from_index(struct index_state *istate,
-@@ -860,13 +865,7 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
- 		stack = read_attr_from_blob(istate, &istate->cache[sparse_dir_pos]->oid, relative_path, flags);
- 	} else {
- 		buf = read_blob_data_from_index(istate, path, &size);
--		if (!buf)
--			return NULL;
--		if (size >= ATTR_MAX_FILE_SIZE) {
--			warning(_("ignoring overly large gitattributes blob '%s'"), path);
--			return NULL;
--		}
--		stack = read_attr_from_buf(buf, path, flags);
-+		stack = read_attr_from_buf(buf, size, path, flags);
- 	}
- 	return stack;
- }
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 774b52c298..b007f76fd6 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -572,6 +572,16 @@ test_expect_success EXPENSIVE 'large attributes file ignored in index' '
- 	test_cmp expect err
- '
- 
-+test_expect_success EXPENSIVE 'large attributes blob ignored' '
-+	test_when_finished "git update-index --remove .gitattributes" &&
-+	blob=$(dd if=/dev/zero bs=1048576 count=101 2>/dev/null | git hash-object -w --stdin) &&
-+	git update-index --add --cacheinfo 100644,$blob,.gitattributes &&
-+	tree="$(git write-tree)" &&
-+	git check-attr --cached --all --source="$tree" path >/dev/null 2>err &&
-+	echo "warning: ignoring overly large gitattributes blob ${SQ}.gitattributes${SQ}" >expect &&
-+	test_cmp expect err
-+'
-+
- test_expect_success 'builtin object mode attributes work (dir and regular paths)' '
- 	>normal &&
- 	attr_check_object_mode normal 100644 &&
--- 
-2.45.0.36.g67f89f42283.dirty
+the above reference needs to be quoted protect $IFS in the path.
