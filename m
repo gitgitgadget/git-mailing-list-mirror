@@ -1,121 +1,176 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1811EEFC
-	for <git@vger.kernel.org>; Fri,  3 May 2024 19:11:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE43257C9F
+	for <git@vger.kernel.org>; Fri,  3 May 2024 19:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714763482; cv=none; b=EfNfdlwuKypk7faTYfpKpwIgXKWmI/zKTpnIOzqaCG9ZpLBrXPeL772rb0xEckkxasYOoZ83fbe+y565dGjnBCNR38UqhIlYXw/ftjNn1Ntgoax2tt/SqRfSDZOOjVU8TRHkI+JIUVQsGTSYD20rSalNRLG+Tiz3c9nsUakCQrk=
+	t=1714763561; cv=none; b=DIrQN/Q4R5YNlOTYfiDt2OJxd1+6RzKN4eenu+T/uIm0c8BPg+b046HG/fpakNXacpKgshLyjUYAVDAO0xhuX04hm8r3hlBpm7XzBv0v1vOlkeyPw9cupZRXp55o4qhjTveUxKHNU/i+ItxGO03KfiyBbTk4NIfjlewld654WP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714763482; c=relaxed/simple;
-	bh=BH5NFu6dteooNZI8C4mUYR0rRnDVLb50glXWllvKHTU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jtsKOYUb8qsOD05YpZTe0jBm9n4/SIrj0CcAZeH4JVE20ETWhkP8NpTOjquud0GBwe8bDWH/F0ugncvql4OavtpQbNNF6FIOd9I2krM77j4ln+rHnSuA6CAUeET61FLwQPccSfHfbITI7QdBAZdCYrkr49EfD0nMfz/2p/B/LwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z6d8HtaK; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714763561; c=relaxed/simple;
+	bh=3zdd4Gm5q8kGExolckujRxrJZxH0YabyIRWIIHz8G2k=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ElwKK2fUxJ+mqT5joOKDqXi4/shCYvfSGBzlGWJzmzxzP1Zen7QIdTJMpIl3pDaYVEVbJKtN3FsWQA/FAd0N4vJVLN2dsech3USAY0XunN5MRRoOGBiVbkDC/rm6UCeFuKnm0OwB8Ag17leaHGQfmZWxIF7oOtSC0RJQLBj2DBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=x8T4ozET; arc=none smtp.client-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z6d8HtaK"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a59a17fcc6bso38722166b.1
-        for <git@vger.kernel.org>; Fri, 03 May 2024 12:11:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="x8T4ozET"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6ee2d64423cso3895597a34.2
+        for <git@vger.kernel.org>; Fri, 03 May 2024 12:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714763479; x=1715368279; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BH5NFu6dteooNZI8C4mUYR0rRnDVLb50glXWllvKHTU=;
-        b=Z6d8HtaKzVo/yqzOApugUPvGO1LULhqVCXc9yTPOo/UmM6gqAIPeDTG/ShDrKFIh94
-         7A27DTrqhAO5k4IWQnEm5aPIz3rt5sg6hb16iGAOCM40DEs6t8ORUjn6ma/LFxvjnDu9
-         e76pKosqkApcUQ/B9YmN482Tln9A2FcAf5A3yxaKRV60O/OLCX7MN1+w8e71MqJ7os9Q
-         c0LB1s4sCXUpO1tOHKBiOgX2CvuVs2HHGi6BJ6lamKyQO/EMB6/iiH5tuDjXf09+XdoH
-         w9KqEpBa3wZ2HJU7jlo7JXPyad3IvyI70tBJHmApG2gPLJgaWj+6JPkj4wiLOjomxKUm
-         g65w==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714763558; x=1715368358; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jmdLXDXrALpWEAnhHvrpg1WFdtNsH1oXxEDd4bKjWgQ=;
+        b=x8T4ozETwyHi8/Ov5yrPf9ANYOxc7kMd52F3eMbYT1zTBlMJP3nYw937xPRMWnzd2H
+         jZWsN42SLLC4HTlB0Ep917x8STFB8dY75KyszMS5HN8NWx545mQW60JUVdBG2RbgvVxF
+         sNOBDkcpJMECBwTFHgq3DX+EE5fPfj3JtF4evX0559wD0HkmgWXv2kohuJgF/Dwwaukx
+         IZJDzdLJdNR2PE9fxwU6MUQa64EY2gm8MZTy/X0SrzYf7gaVR44KNFWZOy9lOMJwZ1jO
+         YklrMS5ObCLT1DKuDsxQhPyEtUGNYIsuO3vi6t7CFWMbPEg0utK6P6wZuRElBC1TmWT/
+         gxnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714763479; x=1715368279;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BH5NFu6dteooNZI8C4mUYR0rRnDVLb50glXWllvKHTU=;
-        b=DTlE2VHSg4IfVEr10H7jraOzxHR4xTCK61rrTuw/3TjBCmETmC072Uv3+wPVKM1bV0
-         gdLYz/30vl6H7CkoTDmkmI+MzjIwP9DPwcQnC/QApAHksyN1994UYG8uxI3WwEznVJ0m
-         2sRY/krbl8KVHfKsrAW0w/xU34L/hmatWdDc4cVfGg2Xlw21RKqcJr9J5ZbKA+C9ZDBa
-         R9sNx/Bv9AkRAeHRN1gbOtvD0MaB5iG9lueFznaby+f0EVYNK98EIZkkvvFkMeAEupJS
-         39bIVevFF3l49Et1f1u5ZdxyrtC1/CLx+6Gfpu0zdTZjL4ptRABhD0VzDlPQ5ng57LBk
-         b2Xw==
-X-Gm-Message-State: AOJu0Yw4mgrWsJAPM/TfRNPiz7D98vHt01YjB941cDsul5OPmHU4tAGf
-	gcaPB1Dmj6hFIzKfTCA361PI8C3EWFmb/Vgx8LmvzVW96S0MUfY3fjGwgdczr+CbLZ7luYQhVsD
-	zvium3HtUAy5OITOvDdBRyvExs08=
-X-Google-Smtp-Source: AGHT+IFLapsgW2bNBxPELXYp7DTGy/qkYIaf6gsSkWJeLsFKQOzP38SKTbQxO1PE9VVFuu6RxdsOFuBrzwCmLinIYIY=
-X-Received: by 2002:a50:8d16:0:b0:572:6ab0:6afc with SMTP id
- s22-20020a508d16000000b005726ab06afcmr2431802eds.33.1714763478727; Fri, 03
- May 2024 12:11:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714763558; x=1715368358;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jmdLXDXrALpWEAnhHvrpg1WFdtNsH1oXxEDd4bKjWgQ=;
+        b=Keupxo5yxWvPr3UbJLQJ1jJ8fs4NBJdg/F3vUix3WUCbsUF9M4EZ9CD1KxtQlYW6K0
+         5qMUFKBf3BfHfOwJG4ThoiBDhkDncF3oKW/rc6dmyaUncFtHcW3/OXkClv4z3tLBA20b
+         mIBc+CI8XfJ7lklaWQPKGOBTFEfj9zvfL/wRe4cPxMEvbWbMOW7n9iQdLvwF5aplnNuX
+         GAVJT7RCNyTnRHY8xXAWl9aUn7RCFF3KcIAHn4YDZhhQoGGqOyF6nETtojhxMJsJGqAQ
+         q7kJ+1BMGTbO5ci0TD4Ta3d71R1qQJjZGeYnhVzpNVnqhk+Rp5WuZDfVCwvKULxtGXwc
+         MXEg==
+X-Gm-Message-State: AOJu0YzkMnt64+q2Nfvf7PhdTC7uKS4w+YRWPWh44Uk2OZ9sVCI0JpX3
+	9grYvn4cDNrMdHaRGGDHtWeyg6YeVveQU7to50VvwOJ3xq/YNZvQrNO2Hciab2wSCqaHkvRvOSm
+	GS+4=
+X-Google-Smtp-Source: AGHT+IGnk0FsYQTU9wrJoG+9O9RzjxrrpQdug4AGY6j9EPcEV76MQ3nZXIufS1UiUrpp1+1TpiDZ9Q==
+X-Received: by 2002:a05:6830:1e8c:b0:6ee:5af6:aec8 with SMTP id n12-20020a0568301e8c00b006ee5af6aec8mr4001018otr.13.1714763558402;
+        Fri, 03 May 2024 12:12:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id o9-20020a05620a2a0900b0078eca9de099sm1449300qkp.134.2024.05.03.12.12.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 May 2024 12:12:38 -0700 (PDT)
+Date: Fri, 3 May 2024 15:12:36 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] attr.c: move ATTR_MAX_FILE_SIZE check into
+ read_attr_from_buf()
+Message-ID: <28f6267709db78ba526d7ed9fc4a734674697c70.1714763555.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADDzAfNz3R5yj1SdJYbBe0f8m3Sp-R+X6dRpYoJ8Foj6zijcDA@mail.gmail.com>
- <xmqqmsp7aqoa.fsf@gitster.g>
-In-Reply-To: <xmqqmsp7aqoa.fsf@gitster.g>
-From: Kang-Che Sung <explorer09@gmail.com>
-Date: Sat, 4 May 2024 03:11:06 +0800
-Message-ID: <CADDzAfPbSv00AfzdJ5DZbXM8YjAr=po6Y_1Y0weyw5dvVA6qFg@mail.gmail.com>
-Subject: Re: Combined diff format: Show all filenames by default?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hello.
+Commit 3c50032ff52 (attr: ignore overly large gitattributes files,
+2022-12-01) added a defense-in-depth check to ensure that .gitattributes
+blobs read from the index do not exceed ATTR_MAX_FILE_SIZE (100 MB).
 
-On Fri, May 3, 2024 at 10:57=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Kang-Che Sung <explorer09@gmail.com> writes:
->
-> > My reason for making it default:
-> > ...
-> > As the "combined diff" format is likely to last for a long time, it
-> > would be good for Git to set a right default for presenting this
-> > format.
->
-> As the format HAS ALREADY lasted for a long time since its
-> introduction in d8f4790e (diff-tree --cc: denser combined diff
-> output for a merge commit., 2006-01-24), it is too late to change
-> the default.
+But there were two cases added shortly after 3c50032ff52 was written
+which do not apply similar protections:
 
-I wonder what things would break if we change the default behavior of this?
+  - 47cfc9bd7d0 (attr: add flag `--source` to work with tree-ish,
+    2023-01-14)
 
-> If a scripted use wants to parse out all the pathnames, it can write
-> the option on the command line just once in the script file and
-> forget about it.
->
-> For interactive use, the standard answer is "you can alias only for
-> yourself in ~/.git/config", but unfortunately, because the alias
-> works at the command level (e.g., an alias that allows "git lc" to
-> work as "git log --cc --combined-all-paths" can be written), an
-> optional behaviour like --combined-all-paths that is shared across a
-> family of commands (e.g., "log" and "show" both would benefit) is a
-> bit awkward to handle.
+  - 4723ae1007f (attr.c: read attributes in a sparse directory,
+    2023-08-11) added a similar
 
-Well, I won't expect the default to be changed for uses in scripts or
-GUI frontends. I wish to change the default for interactive, terminal
-uses, so that usability comes in "out of the box".
+Ensure that we refuse to process a .gitattributes blob exceeding
+ATTR_MAX_FILE_SIZE when reading from either an arbitrary tree object or
+a sparse directory. This is done by pushing the ATTR_MAX_FILE_SIZE check
+down into the low-level `read_attr_from_buf()`.
 
-And I don't want the "alias command" workaround for a few reasons:
+In doing so, plug a leak in `read_attr_from_index()` where we would
+accidentally leak the large buffer upon detecting it is too large to
+process.
 
-1. It seems like the `--combined-all-paths` would also affect the
-"file-by-file" diff output ("git diff-index", "git diff-tree" and
-like), and I am not requesting to change the default of this one.
-2. The combined diff format is used in many places - including "git
-diff" when there is a conflict, and a "git show" of a merge commit
-when the merge was not trivial and human merging was involved.
-3. And this diff output style should ideally be a "git config" option
-that users can tweak it for personal preference (including reverting
-to the old, "`--no-combined-all-paths`" behavior when needed).
+(Since `read_attr_from_buf()` handles a NULL buffer input, we can remove
+a NULL check before calling it in `read_attr_from_index()` as well).
 
-I know there would be compatibility problems with GUIs and scripts if
-we change the default like this, but the GUIs and scripts should fix
-them, as git is already able to output three filename header lines for
-the merge/combined diff. I just request to make it the default.
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ attr.c                | 19 +++++++++----------
+ t/t0003-attributes.sh | 10 ++++++++++
+ 2 files changed, 19 insertions(+), 10 deletions(-)
+
+diff --git a/attr.c b/attr.c
+index 679e42258c..7c380c1731 100644
+--- a/attr.c
++++ b/attr.c
+@@ -765,8 +765,8 @@ static struct attr_stack *read_attr_from_file(const char *path, unsigned flags)
+ 	return res;
+ }
+ 
+-static struct attr_stack *read_attr_from_buf(char *buf, const char *path,
+-					     unsigned flags)
++static struct attr_stack *read_attr_from_buf(char *buf, size_t length,
++					     const char *path, unsigned flags)
+ {
+ 	struct attr_stack *res;
+ 	char *sp;
+@@ -774,6 +774,11 @@ static struct attr_stack *read_attr_from_buf(char *buf, const char *path,
+ 
+ 	if (!buf)
+ 		return NULL;
++	if (length >= ATTR_MAX_FILE_SIZE) {
++		warning(_("ignoring overly large gitattributes blob '%s'"), path);
++		free(buf);
++		return NULL;
++	}
+ 
+ 	CALLOC_ARRAY(res, 1);
+ 	for (sp = buf; *sp;) {
+@@ -813,7 +818,7 @@ static struct attr_stack *read_attr_from_blob(struct index_state *istate,
+ 		return NULL;
+ 	}
+ 
+-	return read_attr_from_buf(buf, path, flags);
++	return read_attr_from_buf(buf, sz, path, flags);
+ }
+ 
+ static struct attr_stack *read_attr_from_index(struct index_state *istate,
+@@ -860,13 +865,7 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
+ 		stack = read_attr_from_blob(istate, &istate->cache[sparse_dir_pos]->oid, relative_path, flags);
+ 	} else {
+ 		buf = read_blob_data_from_index(istate, path, &size);
+-		if (!buf)
+-			return NULL;
+-		if (size >= ATTR_MAX_FILE_SIZE) {
+-			warning(_("ignoring overly large gitattributes blob '%s'"), path);
+-			return NULL;
+-		}
+-		stack = read_attr_from_buf(buf, path, flags);
++		stack = read_attr_from_buf(buf, size, path, flags);
+ 	}
+ 	return stack;
+ }
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 774b52c298..b007f76fd6 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -572,6 +572,16 @@ test_expect_success EXPENSIVE 'large attributes file ignored in index' '
+ 	test_cmp expect err
+ '
+ 
++test_expect_success EXPENSIVE 'large attributes blob ignored' '
++	test_when_finished "git update-index --remove .gitattributes" &&
++	blob=$(dd if=/dev/zero bs=1048576 count=101 2>/dev/null | git hash-object -w --stdin) &&
++	git update-index --add --cacheinfo 100644,$blob,.gitattributes &&
++	tree="$(git write-tree)" &&
++	git check-attr --cached --all --source="$tree" path >/dev/null 2>err &&
++	echo "warning: ignoring overly large gitattributes blob ${SQ}.gitattributes${SQ}" >expect &&
++	test_cmp expect err
++'
++
+ test_expect_success 'builtin object mode attributes work (dir and regular paths)' '
+ 	>normal &&
+ 	attr_check_object_mode normal 100644 &&
+-- 
+2.45.0.36.g67f89f42283.dirty
