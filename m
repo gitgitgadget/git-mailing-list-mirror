@@ -1,67 +1,67 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1BE14F9DA
-	for <git@vger.kernel.org>; Fri,  3 May 2024 15:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DC117997
+	for <git@vger.kernel.org>; Fri,  3 May 2024 15:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714750637; cv=none; b=D8d2oaRHwrcB8XHh0gWHv45z1sKWgdrOIwmula7wXI6gLQSpqSjh5Pwvf+zlvahrqjh9wN07UHhFOUDt9fNub4tGQ9hMCPm69K60V0bcHlXC502xpjkgk5mh/iUEN5lo//lNzbsM9PD5AbSMxTZGsm6H9ruWP5i5WT+y9yFNUps=
+	t=1714750838; cv=none; b=HiESdgJvh9HgN3Y+ZkXiX+cpsODGgpROPFPVlbBMetp/3FaWmmu5tHaSzx8Q5W8F6O/MdPVaa1kcZWuYRc3NIzc11dNF19H66GyC+16NF+b9s2JZDKvfXOXMRVX5ODrpE6dJu4HR7Ov2OkFBNaKQLedcrH+NVLpa0gQbTiqE1/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714750637; c=relaxed/simple;
-	bh=mW+nvElmNC2HOk8X/7+xZLV9vsgd0gvDbt/cuMcnlyU=;
+	s=arc-20240116; t=1714750838; c=relaxed/simple;
+	bh=JsF9ZmnWA0A+d+NuvaFEAFvGSZQYMciirfTi7Nub3HQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KEk1GeN5z3TzpJF3WSrYN58RQqYFbuk2d+e48ip3zTwql2GiHABX+uxwjdzCZr8GZoVqV3KPdAEKwBPLljokGkKPr54fSNF3lb6+beFTO1gqSHTDpBWW9OFpSHXZi33HnTmluQ0oB8Ni3n6U/L8aNHDzXX2233N/9S3yJsYrynA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jIT0EF6A; arc=none smtp.client-ip=209.85.161.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=kVVi5AmgUu/jKKqdUS0kbdP0jEAxj6T7LLft9Nj6Dwki3MmlYcliQZpRByYuwEytTJqKCd7c5c7N/r8h1Dh50Ikf1Kyc8PzTYxkr82hdFJwWSF70I5hvd6rHnGJNz5ShUwq5x2WZW7xGO7mSqGpyYwQ8k4XRaWVkDUuf40lKnzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODPOvN2u; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jIT0EF6A"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5ac90ad396dso5001573eaf.3
-        for <git@vger.kernel.org>; Fri, 03 May 2024 08:37:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODPOvN2u"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-22f746c56a2so3869341fac.0
+        for <git@vger.kernel.org>; Fri, 03 May 2024 08:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714750635; x=1715355435; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714750836; x=1715355636; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xssaXy3fWEsXP9ms4v1st13N+H/zzmMdU1Y9h2IjcOE=;
-        b=jIT0EF6AjrBDMy8kV9Dyg8brcEOSACDeez/FTFx63RUhScZlOHmqgDTHDlHAFsHqe1
-         UIyoYkcsTC77wra3IR8otAy6JUAAuysU/cLp95rEWT/DDIoAfZzDu91U1xqXakqV8SZ8
-         kqlehtAdbJ9r97brsWUVG2H8EQPeYAavXcVI5VT55+KpPJSv5dLQ80rI5wsfPeO9dh45
-         5l9KtrXklEqrJgtCC5kSrIbAiRe/Io6BcWs3G6NcE0dcLUQiwm0WJtwF8nIaE655SyFw
-         Pp6zCGHRGa+XEh4KzaZ/2IjyJqbNzPGDGA8YgG0jZbT7Al8btDAL+t3TiBP3hYJMU5Pe
-         Yuyg==
+        bh=GNcb2zSaF59WGKWbqiAza5+oQrmCDfRcuq7e4p+3hJ8=;
+        b=ODPOvN2uyTfZjMj3lsUpX0rkj2J+p0GFvF1TC/U+EBlPVGaQ4c+UK/oZppY7sB0G3G
+         MGo5tDmiQ9uoISeHlzEvRjIKoddCn7eeeB/8n2zh+FQQ775pvaAWSDZg/mYLEKVe6DVa
+         7x9EHZn93O6PErZWu6e4hblWl41G1DPmFqv957Mf+I8UxglFL8zmYDOPF2z9d8Rscmq/
+         uE3mKCTEghFGhY6npTBWHRYRzVimM64ZeP+NtpNdarVixm69CcsVHkWBNkTLloS3GXR2
+         TbUh8ryeYcNvFFgHFQaJEMZe/p++lE0gGpNDLpP0a1fpDwZhd1HIeg2UsEr3bbgv1ZO8
+         jXDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714750635; x=1715355435;
+        d=1e100.net; s=20230601; t=1714750836; x=1715355636;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xssaXy3fWEsXP9ms4v1st13N+H/zzmMdU1Y9h2IjcOE=;
-        b=lRgPzrBwsEU4qR6qmhRLFIjrVDl3/1FA3dvVoQAj0j5flx0AwLXo61d9jTXx7dkqeB
-         5t5Vn+8pPThobeqA5Up/sjj/hKc4YrHOyXHluP959qg2rzhaVvd2nUYs9e7GtV5d3JY4
-         mS3aXsOojNONboZZUfERFGTFrOj1xCgdgMaCmo7DpJVyf8C01qgaU3fZ2PLqeH04IklW
-         AVkE9lmAAw02t8XJUl9Qz+MbUI61f9JygtEpJd9JQNHgaBwqP08FhaHUy+XW0dNSVOre
-         5aburaiHB8GzimHcX9X5tPoxjjWUJWF5Ijl7cE+dhrtJqcv58E5xR7sX3PFVjKZhxpE0
-         ciFg==
-X-Gm-Message-State: AOJu0YxvONc3TStcnxfN3MgYA16TDv9+bKe5Nxy9nwudGnocdX0p9Wys
-	Vr8szq4qemRVo8OFKhV1qRIkXYcJZRAuMMYK9tcTKZhW1AdcP9zZ
-X-Google-Smtp-Source: AGHT+IHLmwSFKqfUr9ye+RGRZYe16CU04vLWvxbRyVNxp8ncmvaurPu/9ziLH8ZewLBy7rVADNja/A==
-X-Received: by 2002:a4a:d07:0:b0:5af:739f:1b83 with SMTP id 7-20020a4a0d07000000b005af739f1b83mr3007401oob.0.1714750634901;
-        Fri, 03 May 2024 08:37:14 -0700 (PDT)
+        bh=GNcb2zSaF59WGKWbqiAza5+oQrmCDfRcuq7e4p+3hJ8=;
+        b=ZZrpH28kQCfWEdz2jcgw1n3aaoCS/fwF3qxM17NxLvayAxun53YgBEJ0gSroGrdK9Q
+         d5Yoj4cocmJSnirO4U9GsHK7adbblsh5UTXi5oCfE10cV2AgVbh+ZOK1Mp41Tvm2Rk+E
+         PU5e0xGLirp+E96rN+mOhUcDGCEEoX1e5K/wb4OvMSgUikWEpo4SZHDHyYc2GuAKbqHQ
+         BiSuAArAPA/TQyd6RAH84AZuoo8yVB9OF50zzLaigvkKcp1lUdErmSPiWLAiKjI0Pp7B
+         3y+YB5D8QigjPubKMumEfEMRri661DCCcH+Qt+3LpKYdDR9xOctli8mMdpU6RI94eRFM
+         pWwQ==
+X-Gm-Message-State: AOJu0Yz20GshJoK7TdydYr9Yy4xnIGtBcAxGcbhyr1lQu0juaZH1S0+C
+	rrleRCK7WMtSjiMCfIyEI6zK4GX5tE0Kp4GgJDdiZX/mkzM/jTcnyj6Hgban
+X-Google-Smtp-Source: AGHT+IGFi9zW7rwuaNJn9m8LldQbpYrkcHrG2zLe3LYrymdoCmFIqeWzO/xDYr8MD5PWUNdqv+915g==
+X-Received: by 2002:a05:6870:cd81:b0:23d:3097:a5b1 with SMTP id xb1-20020a056870cd8100b0023d3097a5b1mr3569292oab.16.1714750836708;
+        Fri, 03 May 2024 08:40:36 -0700 (PDT)
 Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id i6-20020a056820138600b005afc4b394bbsm692906oow.6.2024.05.03.08.37.14
+        by smtp.gmail.com with ESMTPSA id wn16-20020a056871a91000b0023b82735487sm654845oab.52.2024.05.03.08.40.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 May 2024 08:37:14 -0700 (PDT)
-Date: Fri, 3 May 2024 10:35:57 -0500
+        Fri, 03 May 2024 08:40:35 -0700 (PDT)
+Date: Fri, 3 May 2024 10:39:19 -0500
 From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 4/5] ci: make the whitespace report optional
-Message-ID: <3xwa3bvda4ccctnaqerq45qsmrzq6hf3fqltzns2rcblyvnifb@ycoui7hsbkxr>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v2 0/5] Add GitLab CI to check for whitespace errors
+Message-ID: <otau2qghdji5cdzon57devetu4doqtzxsqhnttpdzde2lg2l5s@bfvjgeipdbhu>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	ps@pks.im
 References: <20240430003323.6210-1-jltobler@gmail.com>
  <20240502193840.105355-1-jltobler@gmail.com>
- <20240502193840.105355-5-jltobler@gmail.com>
- <ZjSKsGooraoQDU2I@tanuki>
+ <xmqqzft7c2gb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,59 +70,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZjSKsGooraoQDU2I@tanuki>
+In-Reply-To: <xmqqzft7c2gb.fsf@gitster.g>
 
-On 24/05/03 08:56AM, Patrick Steinhardt wrote:
-> On Thu, May 02, 2024 at 02:38:38PM -0500, Justin Tobler wrote:
-> > The `check-whitespace` CI job generates a formatted output file
-> > containing whitespace error information. As not all CI providers support
-> > rendering a formatted summary, make its generation optional.
-> > 
-> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> > ---
-> >  ci/check-whitespace.sh | 45 +++++++++++++++++++++++++++++++-----------
-> >  1 file changed, 33 insertions(+), 12 deletions(-)
-> > 
-> > diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
-> > index f57d1ff5f0..fabd6ecde5 100755
-> > --- a/ci/check-whitespace.sh
-> > +++ b/ci/check-whitespace.sh
-> > @@ -1,9 +1,20 @@
-> >  #!/bin/bash
-> > +#
-> > +# Check that commits after a specified point do not contain new or modified
-> > +# lines with whitespace errors. An optional formatted summary can be generated
-> > +# by providing an output file path and url as additional arguments.
-> > +#
-> >  
-> >  baseCommit=$1
-> >  outputFile=$2
-> >  url=$3
-> >  
-> > +if test "$#" -eq 0 || test "$#" -gt 3
+On 24/05/02 02:45PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> That check is wrong, isn't it? Based on the usage below you either
-> accept exactly 1 or exactly 3 arguments. But the condition here also
-> accepts 2 arguments just fine. The following may be a bit easier to
-> follow as it is more explicit:
+> > This is the second version of my patch series to add a GitLab CI job to
+> > check for whitespace errors. The main differnece with this version is
+> > that it first generalizes the existing GitHub whitespace check CI job
+> > allowing the GitLab one to reuse it.
 > 
->     if test "$#" -ne 2 && test "$#" -ne 3
->     then
->         ...
->     fi
+> Will queue.  Thanks.  The extraction and reuse of a common script is
+> excellent.
 
-Ya, good point. We should only accept 1 or 3 arguments as valid options.
-I'll update this. Thanks!
+Thanks! I will send a V3 here shortly which makes some small suggested
+edits.
 
 -Justin
-
-> > +then
-> > +	echo "USAGE: $0 <BASE_COMMIT> [<OUTPUT_FILE> <URL>]"
-> > +	exit 1
-> > +fi
-> 
-> Ah, you make the output file optional here. Fair enough, then you can
-> scratch that comment from my preceding mail as it did serve a purpose.
-
-
-
