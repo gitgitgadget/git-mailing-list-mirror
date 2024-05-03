@@ -1,132 +1,124 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9689C158207
-	for <git@vger.kernel.org>; Fri,  3 May 2024 19:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D2763CF
+	for <git@vger.kernel.org>; Fri,  3 May 2024 19:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714764422; cv=none; b=AlUpfIYadeZQgefL6ysnmkCnLp49D8u2IQ6mgXDwwhWIk+XAASpP0/WS1QEY73vzDtuph5tYzrTDK0WprW498lpamrBrQ0fJ05SsUrLggB9KYlwrDBIc3oPxaCZg5GNx6ePL/kyGQgDpDbsOzsbtzxHQNSj84NSFCyA0ZFydZio=
+	t=1714764557; cv=none; b=XoBJev/VaPcNeVW042FkJOqIqZB6NGSiud3hrf5UUv46S2345ChTz0b0/ArKhzYvpL+j78wrRrIG/9+CxZOFKNhOEFDuO8f9CI5phhYlCFio2Znioyf4u0T92ZQlpoDIEKAWX4KURcQou6erVlyfIT89NuwCTiKJ8yOn/n56PjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714764422; c=relaxed/simple;
-	bh=Ip4bwgsLp25p9IOZiL3HJZdBCGgXP0GjqAOvT3LwcLk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sRZArC5vI+/dvHfan91v+Z2a/NllSofJTupgWcCjbNryEUAY3a1Wd7GNP6TAsTzixlALsLLmHRQ8gvCpMxJq6bN8IvbiwIon2eMPBtkQtE+LDnggQ0PRIj/4BNV6SthB7t3a+Qj2xx4cgTkB3+PWyyho0TDgFfSloHyR27NvU7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3c862c613fcso3826610b6e.3
-        for <git@vger.kernel.org>; Fri, 03 May 2024 12:27:00 -0700 (PDT)
+	s=arc-20240116; t=1714764557; c=relaxed/simple;
+	bh=mnLhYQdyMlaPvGyiEwcPuO1VU0POXFZPblnKkmleDaM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C0VZQ5GWWka+12xKcYIZSObTlwGFPx3gO5DfuqANWB71glgxPMYWWJJKnp5O/KcwMq4rFtpmNjbhbnH4P0Ny6qMpWyFdJWsj3GQV/X2EYdriKdKN7rwVrxOUIRG7NIrmiHTIUh4+dwX/lN8zgRpviix/31KDmmi804IX5Gs7SF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=VdF96lrz; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="VdF96lrz"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-78ecd752a7cso643358885a.0
+        for <git@vger.kernel.org>; Fri, 03 May 2024 12:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1714764555; x=1715369355; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mnLhYQdyMlaPvGyiEwcPuO1VU0POXFZPblnKkmleDaM=;
+        b=VdF96lrzmjiqjdb8LaiVMPGsYh2CRADDbFkEdP8u8J01iHLz4cXkbTKvIE2iuwJ/3s
+         OXU0hntlzEZDL+ihPgnoNRhnEJNoCvAt+Jz68Ipr1b5VdrbOlSFlKONE5ACGkKp8JKBZ
+         856GCF/t4YScFaLPaiUS/iIY8sWiOmVJzHHz2eopcwYgNrU9TGcpTUHXIJtJq9Me4Jtx
+         Z2qXXW0MZqisisnHcBpc2A4fRHa7MOBCZBai2A474HUs5c9x/KqOy93qsbFB0deU5Sgg
+         AxsT2dsIYgdTFVYPwNMDw7X/yscIwtytYcp7qUjo3fQ/6eABdwL5mE7X7KgWvTEAWkIe
+         QZLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714764420; x=1715369220;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9nPWNv2SQYx3bcFDZx1ikKDfmm90b6UqEhQ10gnVX2E=;
-        b=sBT6W6RDcBDSOfOLMGrRlMnRHDsVQKzAJvnhHU9GP1Z1whF898+rOtqgH4osBKvDYl
-         eL6VHE+tk3Sju0v2aIK+KKzeC0NuFABkS1FRv18QRYW8xfvimhNFKsg3H8vtrFS/0NuA
-         rn/CTflvKIQDou/Twioy0kG28xruyJ6UQ3wax7Sk7E1MFsJZQ2Q/CuYcESBuI1up89Pd
-         WQ13mXdUMXhX+cADl2RB2rhmwPkCVhPv+WDFAZDLkjaVq8STGAi5mHmzkVuzfMHLund/
-         XgZJyoc7P4A+DaQGMK2x+iXyhFR4RPXNkN9g1KP6D2Wh46YRapzHth1enj0djbg6zgmN
-         Ksow==
-X-Forwarded-Encrypted: i=1; AJvYcCXHdP8RGtIdlJBGS1UuniBdvuqJ9V62/LXs0+T0jPeIwZy9iUqeJo3GduZ7oY6tIlP9Umw8/wlG2WbEmNCC6yrB4037
-X-Gm-Message-State: AOJu0YzpZFpSO4g2P6qxER2vTq7tFml8TZn7gbBskNGPMhL7EH6c42Zd
-	T5sEukeoStqDT4FiO+XL3oDic8SamWIbCn96S3UM6sbJD25jXaQ/nDvOJ4mKJdeSZBF6oWov2+d
-	JNedr4i6moiz8KB1MvawLwStQu0hAlwSj
-X-Google-Smtp-Source: AGHT+IEZFVQ+zReCt8pdID8b20hEhX3FZIwqsvM+gbn4OjI6OmMX3vCiHWU1t3k98Mns0j8WYzBu89TVsnFk09a0zPo=
-X-Received: by 2002:a05:6808:a9c:b0:3c7:534c:895d with SMTP id
- q28-20020a0568080a9c00b003c7534c895dmr3800555oij.35.1714764419810; Fri, 03
- May 2024 12:26:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714764555; x=1715369355;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mnLhYQdyMlaPvGyiEwcPuO1VU0POXFZPblnKkmleDaM=;
+        b=NIrVpzkAcjZPp1HZ/cUHI65+A5CeXfGaVdnBU8+QRcSg8OGn0LUHhXsIE/zkMZc/y9
+         INcvZDfxo4NJjuKapQxoeF71gkXcGDEEymSkNAWkS5H200iTe7C/y1SuyT/JO+QFlD3Z
+         2tRZjU8WbZuIaOKSdD2EtF2QCD43D5+Vco1Ej/X6US8jkWoE6iLYNm3HCmZVWoIVIzs+
+         2xTW1xTdt3/RQ27l7DDGlMJNJhuBKuMdCpM1pGTLImMR0OiNQCmbOHAr8n86vdO6P8tS
+         ukm2dgChQux9d8wsLVJQSlxQj5NInDNHYtZBvFgtzHc9Hkq2G8o8Vsi2+y2JTw01LCuu
+         yzJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXiqaBG8yPLxd0XcYBgB20iYqzyfiR8TVaXIcnK7n7/Vfv6SbfvQzaI85Xf+5uwg8h50zaMOnQ+9qIxUQzNw3bCVQYb
+X-Gm-Message-State: AOJu0YwQVTm4adJdKLmq5OM5O2yk6uVmtxTQ708ZIVcX0HgFECEN3z0C
+	PDPuCKj3KovmNp2iaMZW6Gg6st5fJ1R0Ecvrn6yHCET87aXIyTnBYOb61U7En+g=
+X-Google-Smtp-Source: AGHT+IEVDfmBIkQwlmXSOFmsk1UFe9Q7DWr+vEAMroN6dCDgRrcouVEN0fnHNbQS7blagdTFwEdjOg==
+X-Received: by 2002:a05:620a:8520:b0:790:6d09:a443 with SMTP id pe32-20020a05620a852000b007906d09a443mr3272948qkn.72.1714764555050;
+        Fri, 03 May 2024 12:29:15 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g4-20020a05620a108400b00790676d0fe2sm1477548qkk.121.2024.05.03.12.29.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 May 2024 12:29:14 -0700 (PDT)
+Date: Fri, 3 May 2024 15:29:13 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	avarab@gmail.com, christian.couder@gmail.com,
+	Enrico Mrass <emrass@google.com>,
+	Emily Shaffer <nasamuffin@google.com>
+Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
+Message-ID: <ZjU7CWdwb+xKubul@nand.local>
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+ <20240417163244.651791-1-emrass@google.com>
+ <xmqqr0f47wp9.fsf@gitster.g>
+ <xmqqseyzar96.fsf@gitster.g>
+ <CANq=j3u5ZHYbJQjhwtnq05GocOE_AVrHodjPOqVCNN7OZHwVsQ@mail.gmail.com>
+ <xmqqfruy7oq8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240430014724.83813-1-james@jamesliu.io> <20240503071706.78109-1-james@jamesliu.io>
- <ab604f4b73eab1d9aae4e2a20ba0630e@manjaro.org> <xmqqjzka7p2t.fsf_-_@gitster.g>
-In-Reply-To: <xmqqjzka7p2t.fsf_-_@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 3 May 2024 15:26:48 -0400
-Message-ID: <CAPig+cRZEQjwhnMYvQ_0BjvXaR=3x=LQeJHzFOxC+ZPyOy9yJQ@mail.gmail.com>
-Subject: Re: Re* [PATCH v4 0/3] advice: add "all" option to disable all hints
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Dragan Simic <dsimic@manjaro.org>, James Liu <james@jamesliu.io>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfruy7oq8.fsf@gitster.g>
 
-On Fri, May 3, 2024 at 2:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> > Just a small suggestion...  Perhaps the creation factor needs adjusting
-> > for the range diff to actually be produced. [...]
+On Fri, May 03, 2024 at 11:08:15AM -0700, Junio C Hamano wrote:
+> > Yes, sorry for silence on this thread. I am working on a V2 but
+> > probably won't have it ready today.
 >
-> I see this happen to too many series I see on the list.  There are
-> cases when the user knows that they are comparing an old and a new
-> iterations of the same series, e.g. running it from format-patch.
-> We probably should use a much higher creation factor than default to
-> run range-diff in such a context.
->
-> IOW, this shouldn't have to be done by individual users, but by the
-> tool.
->
-> Perhaps something along this line may not be a bad idea.
->
-> ----- >8 --------- >8 --------- >8 --------- >8 -----
-> Subject: [PATCH] format-patch: run range-diff with larger creation-factor
->
-> We see too often that a range-diff added to format-patch output
-> shows too many "unmatched" patches.  This is because the default
-> value for creation-factor is set to a relatively low value.
->
-> It may be justified for other uses (like you have a yet-to-be-sent
-> new iteration of your series, and compare it against the 'seen'
-> branch that has an older iteration, probably with the '--left-only'
-> option, to pick out only your patches while ignoring the others) of
-> "range-diff" command, but when the command is run as part of the
-> format-patch, the user _knows_ and expects that the patches in the
-> old and the new iterations roughly correspond to each other, so we
-> can and should use a much higher default.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Don't be sorry; the message was not addressed to you, but for wider
+> community participants---especially the ones with more "clout" (or
+> "long timers" or whatever word we would use to describe those whose
+> opinions are trusted by others and count more) need to buy in if we
+> were to first agree on that it is good to have a set of written
+> rules, and to then agree on what rules to adopt.
 
-=C3=86var had posted[1] pretty much the exact same patch a few years ago.
-At the time, I had trouble understanding why `git range-diff` and `git
-format-patch --range-dif` would need separate default creation
-factors[2], and I still have trouble understanding why they should be
-different. Aren't both commands addressing the same use-case of
-comparing one version of a series against a subsequent version? In
-your response[3], you seemed to agree with that observation and
-suggested instead simply increasing the default creation factor for
-both commands (which sounds reasonable to me).
+I have been meaning to respond to this thread since I was mentioned in
+it by Emily, but have been unsure of what to say.
 
-[1]: https://lore.kernel.org/git/87y35g9l18.fsf@evledraar.gmail.com/
-[2]: https://lore.kernel.org/git/CAPig+cRMiEcXVRYrgp+B3tcDreh41-a5_k0zABe+H=
-Nce0G=3DCyw@mail.gmail.com/
-[3]: https://lore.kernel.org/git/xmqqzhps4uyq.fsf@gitster-ct.c.googlers.com=
-/
+On one hand, I think the document basically outlines the status-quo of
+decision making for issues that are larger than the scope of a single
+patch series (think "should we use Rust?", "what is our platform
+support policy?", or "how should we approach libification?" not "is this
+particular patch (series) correct?").
 
-> ---
-> diff --git c/builtin/log.c w/builtin/log.c
-> index 4da7399905..7a019476c3 100644
-> --- c/builtin/log.c
-> +++ w/builtin/log.c
-> @@ -2294,7 +2294,7 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
->         if (creation_factor < 0)
-> -               creation_factor =3D RANGE_DIFF_CREATION_FACTOR_DEFAULT;
-> +               creation_factor =3D CREATION_FACTOR_FOR_THE_SAME_SERIES;
->         else if (!rdiff_prev)
->                 die(_("the option '%s' requires '%s'"), "--creation-facto=
-r", "--range-diff");
-> diff --git c/range-diff.h w/range-diff.h
-> index 04ffe217be..2f69f6a434 100644
-> --- c/range-diff.h
-> +++ w/range-diff.h
-> @@ -6,6 +6,12 @@
->  #define RANGE_DIFF_CREATION_FACTOR_DEFAULT 60
->
-> +/*
-> + * A much higher value than the default, when we KNOW we are comparing
-> + * the same series (e.g., used when format-patch calls range-diff).
-> + */
-> +#define CREATION_FACTOR_FOR_THE_SAME_SERIES 999
+So in that sense, I think that the document is a good starting point,
+and I think that it reasonably captures the status quo.
+
+But I wish that we didn't have to have such a document in the first
+place. In my opinion, I would much rather see decisions like "what is
+our platform policy?" made according to discussions on a patch that
+defines what that policy is. That way such decisions can be treated in
+the same way as ordinary review is today, and we can avoid the need for
+a separate process.
+
+(For what it's worth, I thought that the SHA-256 transition was a good
+example of this. The RFC was posted, and the discussion was had on the
+patch series itself).
+
+Another way of thinking about this is that I would be extremely
+reluctant to see a similar document proposed for reviewing at the patch
+series level. In my opinion, the system of reviewers and participants
+discussing the series and the maintainer solely determining whether or
+not consensus has been reached is a good one, and I would be extremely
+hesitant to recommend changing it.
+
+And I would advocate for a similar approach to decisions that have
+implications beyond a single patch series.
+
+Thanks,
+Taylor
