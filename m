@@ -1,268 +1,189 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EC611CA9
-	for <git@vger.kernel.org>; Fri,  3 May 2024 02:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B64139573
+	for <git@vger.kernel.org>; Fri,  3 May 2024 04:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714703005; cv=none; b=XoIl+4J0M6+aNgjOj4Z3Qmgq2pLyPKf6kqH2zIKjgSufYutclF0e0pf48rDlNdvFWtgpGXlCmHfe0SfQf+CEwMpKqe/GKz81Lx4+lMzSSUnE8Vgd1Y7uIk36IQMlEvPpm1VawgS3/f3PSd3YrifM8UfA+bP2On0JIp+q1jPzRQk=
+	t=1714711836; cv=none; b=dI5W4faa9pTUaKw1+SDchF8pkoemO6h92mH/8SIA7nCqe2CPLaHrBjh7EKPhzcg9X3kdGmvKEOnKknkS50G1n8MYjgZjIM+nHmBe9OSaEDN6pHXd4YP+9lK7YI/OiU93eepAJ5XGFKKs+12qtOM6rZ2XU9Uahu1bUkA24X8SYlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714703005; c=relaxed/simple;
-	bh=/7WU2nvEZICCobdYyzQfJ5NLXMKXAMcepfCuxHUv2KE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nfiE2oZ2rZ6mOQHQTvBl4Ik8OBpoTUI7vrv04vmkIbVSFOPVITUEaG7FrKxK2PClJaRhAnJXJ/pDrLuW8zlfZ0pnLwCIpdckhDhFKdxA1rcHBXyhjcJv2qGy0XYFcS1maqRWnJx71etM5fn9f5KRlvqn8rTA3MJr19hPyOjSI5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3418120-ipxg00d01tokaisakaetozai.aichi.ocn.ne.jp ([114.171.163.120] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1s2iHx-006tPO-2k;
-	Fri, 03 May 2024 02:04:46 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1s2iHo-00B8D6-2s;
-	Fri, 03 May 2024 11:04:32 +0900
-Date: Fri, 3 May 2024 11:04:32 +0900
-From: Mike Hommey <mh@glandium.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] builtin/clone: allow remote helpers to detect repo
-Message-ID: <20240503020432.2fxwuhjsvumy7i7z@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <cover.1709041721.git.ps@pks.im>
- <9d888adf92e9a8af7c18847219f97d3e595e3e36.1709041721.git.ps@pks.im>
+	s=arc-20240116; t=1714711836; c=relaxed/simple;
+	bh=vX2G5B2HXQ1TM31kzWXSRf/z95A7mxMVhnXIQ+ZrcYA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=tCalF9gAoNBi7bRQ9A0/pKUMql7lmmbYtslIjXQGxIYS+Fpwg/yMwVQTSBkjVUM1Px3RqKTH3irwFm5FFlwg4TvNHtQvGbck+QMWysvr79Pn2Fe7JPbjwqvacogo7Z1EJaF1mj6E+xy1GOUDsc5T/UAqW9bslR0EhsFFy217D7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XZA/1ZFl; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZA/1ZFl"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41ba1ba5591so50897445e9.1
+        for <git@vger.kernel.org>; Thu, 02 May 2024 21:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714711832; x=1715316632; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DtuBm2iu5RvXdeUY5tUOIpWkhlem4CWLCX7bg62pgYA=;
+        b=XZA/1ZFlOetj+D5kxfRWhS5PwSLP8Y9754GoRcPmJ+RaGAUazfelIkxMdbe4+a38hG
+         OP4ZRMBNzsnrMceDOiyPwkCGomCCxkvgTbybpT3oi4b8Wffer2im7d1YWrYTwItuhx1F
+         aPNFvbdBIIvFFcANkKvpRnZsIoF5qkqe4bajaKkmFg2qaqWuoBaz+U/OF9BEdBLxwZyK
+         u8ejHYvcJRmmk/D5GeoK9cBc3/xVKxVk9BNQWB17yTO0W4ylcfkOGZO5XX0jigPDN51n
+         J2QsP9NU/meiz65faaVNiOtwQLIJS8xE38MMrVZLvrl+E9jhli1VgsaExwOjeGuGmJGx
+         FW1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714711832; x=1715316632;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DtuBm2iu5RvXdeUY5tUOIpWkhlem4CWLCX7bg62pgYA=;
+        b=gh//btdo0HyhQZIm7kM6+1mnn9qBoqhQoy2yV6Sd/qokuz32ySto1C49kggk8cfAFl
+         T9DTgbvyt5nB+A7XlnkKokZ+7K1b05gyfwhlnj6/I8FpmuV60vipk2gBlZG9Nn6Ri/gN
+         LLR86BYG6fc5xX8AnkczSVvcBA5YcflvXn74qszgNGa8bFu4rql2zRY8Fp1tLprXGti+
+         2ylChq48GXrVsJW1M0AicjE90rGkCja7lgBACsgpkoM93RbCZfXtE0Tgpa4OfYStBb9W
+         EBNruxi4ZciZRoyYXKbPq/4gdHiJPfOvxWxn9MG98M6CucwT3CnnIhdScYEUH7il+m9j
+         fwjA==
+X-Gm-Message-State: AOJu0YxVBwIDaoWOB+wl8Yfz0+5dvUWVCk2lGAEmKaUFe4bVZaaY5T+R
+	cOF8qryUsmTnkcyE1o8BUIjwfDsu/ydQvgseePHgJz+HNQDL7ogHjPwtgw==
+X-Google-Smtp-Source: AGHT+IGy29Np+Iz+SUlvaqt8vRGPiKdelmlTx4KcNBe5I3NLek1Ow3kkVxDPuac/YOcOQDnPpWRm5Q==
+X-Received: by 2002:a05:600c:458d:b0:41a:b8be:a0b5 with SMTP id r13-20020a05600c458d00b0041ab8bea0b5mr1106016wmo.10.1714711831845;
+        Thu, 02 May 2024 21:50:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k7-20020a7bc407000000b0041674bf7d4csm7833986wmi.48.2024.05.02.21.50.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 May 2024 21:50:31 -0700 (PDT)
+Message-Id: <pull.1716.v2.git.git.1714711829698.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1716.git.git.1714488648294.gitgitgadget@gmail.com>
+References: <pull.1716.git.git.1714488648294.gitgitgadget@gmail.com>
+From: "Ivan Tse via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 03 May 2024 04:50:29 +0000
+Subject: [PATCH v2] refs: return conflict error when checking packed refs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9d888adf92e9a8af7c18847219f97d3e595e3e36.1709041721.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: Ivan Tse <ivan.tse1@gmail.com>,
+    Ivan Tse <ivan.tse1@gmail.com>
 
-Hey, it's me again, coming back way too late to figure out that this fix
-had an adverse side effect in a corner case.
+From: Ivan Tse <ivan.tse1@gmail.com>
 
-Here's a simplified reproducer:
-```
-$ cat > git-remote-foo <<EOF
-#!/bin/sh
-# capabilities
-echo option
-echo import
-echo push
-echo
-# option progress true
-echo ok
-# option verbosity 1
-echo ok
-# list
-echo
-EOF
-$ chmod +x git-remote-foo
-$ PATH=$PWD:$PATH git clone foo::bar
-Cloning into 'bar'...
-created HEAD
-warning: this remote helper should implement refspec capability
-created reference db
-warning: You appear to have cloned an empty repository.
-hint: Using 'master' as the name for the initial branch. This default branch name
-hint: is subject to change. To configure the initial branch name to use in all
-hint: of your new repositories, which will suppress this warning, call:
-hint:
-hint: 	git config --global init.defaultBranch <name>
-hint:
-hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-hint: 'development'. The just-created branch can be renamed via this command:
-hint:
-hint: 	git branch -m <name>
-```
+The TRANSACTION_NAME_CONFLICT error code refers to a failure to create a
+ref due to a name conflict with another ref. An example of this is a
+directory/file conflict such as ref names A/B and A.
 
-That hint is the adverse side effect. It shouldn't be shown.
+"git fetch" uses this error code to more accurately describe the error
+by recommending to the user that they try running "git remote prune" to
+remove any old refs that are deleted by the remote which would clear up
+any directory/file conflicts.
 
-It's happening because `builtin/clone.c` does this:
-	`create_reference_database(the_repository->ref_storage_format, NULL, 1);`
+This helpful error message is not displayed when the conflicted ref is
+stored in packed refs. This change fixes this by ensuring error return
+code consistency in `lock_raw_ref`.
 
-`create_reference` calls `is_reinit`, which returns true because there is
-HEAD, and proceeds to skip the block behind `if (!reinit)`.
+Signed-off-by: Ivan Tse <ivan.tse1@gmail.com>
+---
+    refs: return conflict error when checking packed refs
+    
+    Changes against v1:
+    
+     * added test for the error message during git fetch
+    
+    Thanks for reviewing! I've gone ahead and attempted to add tests for
+    this behavior. It tests that the error message is shown for both cases
+    when the ref is stored as loose vs packed-refs. How does this test look?
+    Also, should this test have a REFFILES prerequisite?
 
-Before the change, that code block that is now skipped would have called
-`git_default_branch_name(quiet)` (where `quiet` is 1, per the above call
-to `create_reference_database`). In turn
-`git_default_branch_name(quiet)` would have a) skipped the initial
-branch hint (because quiet), and b) cached the branch name for subsequent
-`git_default_branch_name` calls.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1716%2Fivantsepp%2Freturn_name_conflict_error_for_packed_refs-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1716/ivantsepp/return_name_conflict_error_for_packed_refs-v2
+Pull-Request: https://github.com/git/git/pull/1716
 
-Then later in `builtin/clone.c`, we end up in this code:
-	`branch = git_default_branch_name(0);`
+Range-diff vs v1:
 
-Before the change, this would get the cache value from the previous
-call, but now it has to compute it, and because 0 is passed, it's not
-quiet about the initial branch hint.
-
-The non-remote-helper case goes through with this without a problem
-because it ends up in the transport_ls_refs_options.unborn_head_target
-case and never calls `git_default_branch_name(0)`.
-
-Mike
-
-On Tue, Feb 27, 2024 at 03:27:44PM +0100, Patrick Steinhardt wrote:
-> In 18c9cb7524 (builtin/clone: create the refdb with the correct object
-> format, 2023-12-12), we have changed git-clone(1) so that it delays
-> creation of the refdb until after it has learned about the remote's
-> object format. This change was required for the reftable backend, which
-> encodes the object format into the tables. So if we pre-initialized the
-> refdb with the default object format, but the remote uses a different
-> object format than that, then the resulting tables would have encoded
-> the wrong object format.
-> 
-> This change unfortunately breaks remote helpers which try to access the
-> repository that is about to be created. Because the refdb has not yet
-> been initialized at the point where we spawn the remote helper, we also
-> don't yet have "HEAD" or "refs/". Consequently, any Git commands ran by
-> the remote helper which try to access the repository would fail because
-> it cannot be discovered.
-> 
-> This is essentially a chicken-and-egg problem: we cannot initialize the
-> refdb because we don't know about the object format. But we cannot learn
-> about the object format because the remote helper may be unable to
-> access the partially-initialized repository.
-> 
-> Ideally, we would address this issue via capabilities. But the remote
-> helper protocol is not structured in a way that guarantees that the
-> capability announcement happens before the remote helper tries to access
-> the repository.
-> 
-> Instead, fix this issue by partially initializing the refdb up to the
-> point where it becomes discoverable by Git commands.
-> 
-> Reported-by: Mike Hommey <mh@glandium.org>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/clone.c            | 46 ++++++++++++++++++++++++++++++++++++++
->  setup.c                    |  9 +++++++-
->  t/t5801/git-remote-testgit |  5 +++++
->  3 files changed, 59 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index bad1b70ce8..5d7f112125 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -926,6 +926,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	struct ref *mapped_refs = NULL;
->  	const struct ref *ref;
->  	struct strbuf key = STRBUF_INIT;
-> +	struct strbuf buf = STRBUF_INIT;
->  	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
->  	struct transport *transport = NULL;
->  	const char *src_ref_prefix = "refs/heads/";
-> @@ -1125,6 +1126,50 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  		git_dir = real_git_dir;
->  	}
->  
-> +	/*
-> +	 * We have a chicken-and-egg situation between initializing the refdb
-> +	 * and spawning transport helpers:
-> +	 *
-> +	 *   - Initializing the refdb requires us to know about the object
-> +	 *     format. We thus have to spawn the transport helper to learn
-> +	 *     about it.
-> +	 *
-> +	 *   - The transport helper may want to access the Git repository. But
-> +	 *     because the refdb has not been initialized, we don't have "HEAD"
-> +	 *     or "refs/". Thus, the helper cannot find the Git repository.
-> +	 *
-> +	 * Ideally, we would have structured the helper protocol such that it's
-> +	 * mandatory for the helper to first announce its capabilities without
-> +	 * yet assuming a fully initialized repository. Like that, we could
-> +	 * have added a "lazy-refdb-init" capability that announces whether the
-> +	 * helper is ready to handle not-yet-initialized refdbs. If any helper
-> +	 * didn't support them, we would have fully initialized the refdb with
-> +	 * the SHA1 object format, but later on bailed out if we found out that
-> +	 * the remote repository used a different object format.
-> +	 *
-> +	 * But we didn't, and thus we use the following workaround to partially
-> +	 * initialize the repository's refdb such that it can be discovered by
-> +	 * Git commands. To do so, we:
-> +	 *
-> +	 *   - Create an invalid HEAD ref pointing at "refs/heads/.invalid".
-> +	 *
-> +	 *   - Create the "refs/" directory.
-> +	 *
-> +	 *   - Set up the ref storage format and repository version as
-> +	 *     required.
-> +	 *
-> +	 * This is sufficient for Git commands to discover the Git directory.
-> +	 */
-> +	initialize_repository_version(GIT_HASH_UNKNOWN,
-> +				      the_repository->ref_storage_format, 1);
-> +
-> +	strbuf_addf(&buf, "%s/HEAD", git_dir);
-> +	write_file(buf.buf, "ref: refs/heads/.invalid");
-> +
-> +	strbuf_reset(&buf);
-> +	strbuf_addf(&buf, "%s/refs", git_dir);
-> +	safe_create_dir(buf.buf, 1);
-> +
->  	/*
->  	 * additional config can be injected with -c, make sure it's included
->  	 * after init_db, which clears the entire config environment.
-> @@ -1453,6 +1498,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	free(remote_name);
->  	strbuf_release(&reflog_msg);
->  	strbuf_release(&branch_top);
-> +	strbuf_release(&buf);
->  	strbuf_release(&key);
->  	free_refs(mapped_refs);
->  	free_refs(remote_head_points_at);
-> diff --git a/setup.c b/setup.c
-> index b69b1cbc2a..e3b76e84b5 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1889,6 +1889,13 @@ void initialize_repository_version(int hash_algo,
->  	char repo_version_string[10];
->  	int repo_version = GIT_REPO_VERSION;
->  
-> +	/*
-> +	 * Note that we initialize the repository version to 1 when the ref
-> +	 * storage format is unknown. This is on purpose so that we can add the
-> +	 * correct object format to the config during git-clone(1). The format
-> +	 * version will get adjusted by git-clone(1) once it has learned about
-> +	 * the remote repository's format.
-> +	 */
->  	if (hash_algo != GIT_HASH_SHA1 ||
->  	    ref_storage_format != REF_STORAGE_FORMAT_FILES)
->  		repo_version = GIT_REPO_VERSION_READ;
-> @@ -1898,7 +1905,7 @@ void initialize_repository_version(int hash_algo,
->  		  "%d", repo_version);
->  	git_config_set("core.repositoryformatversion", repo_version_string);
->  
-> -	if (hash_algo != GIT_HASH_SHA1)
-> +	if (hash_algo != GIT_HASH_SHA1 && hash_algo != GIT_HASH_UNKNOWN)
->  		git_config_set("extensions.objectformat",
->  			       hash_algos[hash_algo].name);
->  	else if (reinit)
-> diff --git a/t/t5801/git-remote-testgit b/t/t5801/git-remote-testgit
-> index 1544d6dc6b..bcfb358c51 100755
-> --- a/t/t5801/git-remote-testgit
-> +++ b/t/t5801/git-remote-testgit
-> @@ -12,6 +12,11 @@ url=$2
->  
->  dir="$GIT_DIR/testgit/$alias"
->  
-> +if ! git rev-parse --is-inside-git-dir
-> +then
-> +	exit 1
-> +fi
-> +
->  h_refspec="refs/heads/*:refs/testgit/$alias/heads/*"
->  t_refspec="refs/tags/*:refs/testgit/$alias/tags/*"
->  
-> -- 
-> 2.44.0
-> 
+ 1:  a87ba267e44 ! 1:  58b2cda5c18 refs: return conflict error when checking packed refs
+     @@ refs/files-backend.c: static int lock_raw_ref(struct files_ref_store *refs,
+       	}
+       
+       	ret = 0;
+     +
+     + ## t/t5510-fetch.sh ##
+     +@@ t/t5510-fetch.sh: test_expect_success 'branchname D/F conflict resolved by --prune' '
+     + 	test_cmp expect actual
+     + '
+     + 
+     ++test_expect_success 'branchname D/F conflict rejected with targeted error message' '
+     ++	git clone . df-conflict-error &&
+     ++	git branch dir_conflict &&
+     ++	(
+     ++		cd df-conflict-error &&
+     ++		git update-ref refs/remotes/origin/dir_conflict/file HEAD &&
+     ++		test_must_fail git fetch 2>../err &&
+     ++		git pack-refs --all &&
+     ++		test_must_fail git fetch 2>../err-packed
+     ++	) &&
+     ++	test_grep "error: some local refs could not be updated; try running" err &&
+     ++	test_grep " '\''git remote prune origin'\'' to remove any old, conflicting branches" err &&
+     ++	test_grep "error: some local refs could not be updated; try running" err-packed &&
+     ++	test_grep " '\''git remote prune origin'\'' to remove any old, conflicting branches" err-packed
+     ++'
+     ++
+     + test_expect_success 'fetching a one-level ref works' '
+     + 	test_commit extra &&
+     + 	git reset --hard HEAD^ &&
 
 
+ refs/files-backend.c |  4 +++-
+ t/t5510-fetch.sh     | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index a098d14ea00..97473f377d1 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -794,8 +794,10 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 		 */
+ 		if (refs_verify_refname_available(
+ 				    refs->packed_ref_store, refname,
+-				    extras, NULL, err))
++				    extras, NULL, err)) {
++			ret = TRANSACTION_NAME_CONFLICT;
+ 			goto error_return;
++		}
+ 	}
+ 
+ 	ret = 0;
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 33d34d5ae9e..ae0828e26a1 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -1091,6 +1091,22 @@ test_expect_success 'branchname D/F conflict resolved by --prune' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'branchname D/F conflict rejected with targeted error message' '
++	git clone . df-conflict-error &&
++	git branch dir_conflict &&
++	(
++		cd df-conflict-error &&
++		git update-ref refs/remotes/origin/dir_conflict/file HEAD &&
++		test_must_fail git fetch 2>../err &&
++		git pack-refs --all &&
++		test_must_fail git fetch 2>../err-packed
++	) &&
++	test_grep "error: some local refs could not be updated; try running" err &&
++	test_grep " '\''git remote prune origin'\'' to remove any old, conflicting branches" err &&
++	test_grep "error: some local refs could not be updated; try running" err-packed &&
++	test_grep " '\''git remote prune origin'\'' to remove any old, conflicting branches" err-packed
++'
++
+ test_expect_success 'fetching a one-level ref works' '
+ 	test_commit extra &&
+ 	git reset --hard HEAD^ &&
+
+base-commit: d4cc1ec35f3bcce816b69986ca41943f6ce21377
+-- 
+gitgitgadget
