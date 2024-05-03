@@ -1,103 +1,88 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08CE1EA87
-	for <git@vger.kernel.org>; Fri,  3 May 2024 17:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E0B481D1
+	for <git@vger.kernel.org>; Fri,  3 May 2024 17:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714757790; cv=none; b=mWbIgoia+cdoBYoOP5qUn/zg4Z7wJBiKsTcIgJBEGo3xBVSuyejEwlAEtXiOkin5TaeMmMOF2nNBH2idH0QAdWGtNEAI7JHgbRJDpPzDhnyzcnzqWkF/eExup3b+D3Cd2FnXACgvu1dq5Zj+e1gJQ25ID0QTnNZK7NjGHs3Jcwo=
+	t=1714758417; cv=none; b=qtV9d71yEdaigQxSiuUd5yQw4cBQJspZxJPeGAtlC/zERos8xxhDRpQaJMLm6yqlcFIi/8RriwMlb8Ni32AWM+Y9fgQrT2pd7HJIKLslrUcDDFoHhk54TobUsyj5eFquXCKmIMDBKlWQ2SJQ8s6Vi7JwHU0UbLQ17iRyn4X4UGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714757790; c=relaxed/simple;
-	bh=97JQqPXbqy9Kl0rA7Xe2cxarJQ5V1UUSTrFqO+suBM0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RxZU7aSCyd6bwwwE5m0h0ptzMs/20WzESZNHEFu44dfDqdNt3y5Hy9dRgQmpw1zS2mYp2q1ItttlWOxlPBUuH4bHOoUnKaJStQBNDMD/ClqH33N8DZkjYMS6HUlL8s4HvHPsSSQk+PU+u1+xd53ownaLzRxpsbKNqrwgNNSBBnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fMfxvxBG; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fMfxvxBG"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8656026982;
-	Fri,  3 May 2024 13:36:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=97JQqPXbqy9Kl0rA7Xe2cxarJQ5V1UUSTrFqO+
-	suBM0=; b=fMfxvxBGDchwPQp0WhTw1WHvd09snFTvXSvIZ1F/6qpwpQfSfYJS9P
-	1tJtLittgzI+rd3yT41nyE6xugc5ulESmhJT7s/39EmIfrrcDbXVxQf1hyOLMn0P
-	or9xMoJ5rleG8veg9NamjI1DqMPF2M0opkGT4E8DvgvW3kFf70ue0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E46026981;
-	Fri,  3 May 2024 13:36:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6F8026980;
-	Fri,  3 May 2024 13:36:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: James Liu <james@jamesliu.io>,  git@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] doc: add spacing around paginate options
-In-Reply-To: <CAOLa=ZTTHhh0xVzhU7WPCOm7oE8s=hQRRLztVR3_=71euRcSLA@mail.gmail.com>
-	(Karthik Nayak's message of "Fri, 3 May 2024 07:32:40 -0700")
-References: <20240430014724.83813-1-james@jamesliu.io>
-	<20240503071706.78109-1-james@jamesliu.io>
-	<20240503071706.78109-3-james@jamesliu.io>
-	<CAOLa=ZTTHhh0xVzhU7WPCOm7oE8s=hQRRLztVR3_=71euRcSLA@mail.gmail.com>
-Date: Fri, 03 May 2024 10:36:25 -0700
-Message-ID: <xmqq5xvu94rq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1714758417; c=relaxed/simple;
+	bh=PuvPfubKTpx0sBB7QNYBv0RmnPdWZG8xyCwKAV3T/b8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HZsJqaqikcUQcddzo9zIliqDlHzBAaUGtmUjGqsdx5dvW4g8ZxJ2OsD75aJyx4SjqG2nR9fAVzIspwLQ/7LpFh/qtImIu3NwJvFbMXTI5Kx57ekwiFqkhXXfjSIIteI2bZ7pS9YdwADWR2Ymz4R2ypON5ueMAb0EoEFSibKAysk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 11822 invoked by uid 109); 3 May 2024 17:46:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 May 2024 17:46:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17491 invoked by uid 111); 3 May 2024 17:46:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 May 2024 13:46:55 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 3 May 2024 13:46:53 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, John Cai <johncai86@gmail.com>,
+	Dhruva Krishnamurthy <dhruvakm@gmail.com>
+Subject: Re: Re* using tree as attribute source is slow, was Re: Help
+ troubleshoot performance regression cloning with depth: git 2.44 vs git 2.42
+Message-ID: <20240503174653.GD3631237@coredump.intra.peff.net>
+References: <CAKOHPAn1btewYTdLYWpW+fOaXMY+JQZsLCQxUSwoUqnnFN_ohA@mail.gmail.com>
+ <20240501220030.GA1442509@coredump.intra.peff.net>
+ <ZjLfcCxjLq4o7hpw@nand.local>
+ <ZjPOd83r+tkmsv3o@nand.local>
+ <xmqqfrv0ds7f.fsf@gitster.g>
+ <ZjPTlrMdpI+jXxyW@nand.local>
+ <CAOLa=ZRe6eWJ_ZyH+HRq=6Lh0-xZ=1X2Z2f3HW4+EVXNquaDTQ@mail.gmail.com>
+ <xmqqbk5ndiqk.fsf@gitster.g>
+ <CAKOHPA==xgRBLXmyURkdZ9X4LqQoBHYy=XD0Q_KTQHbK54DOFg@mail.gmail.com>
+ <xmqqzft6aozg.fsf_-_@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AB2F1AB6-0973-11EF-B8A6-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzft6aozg.fsf_-_@gitster.g>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, May 03, 2024 at 08:34:27AM -0700, Junio C Hamano wrote:
 
-> James Liu <james@jamesliu.io> writes:
->
->> Make the documentation page consistent with the usage string printed by
->> git.c
->>
->
-> Nit: missing full-stop here.
+> And for folks who had been happy with the pre 2.42 behaviour,
+> we could do something like the attached as the first step to a real fix.
 
-Yes, but "printed by git.c" is an unsatisfying way to say this.  We
-can easily illustrate what the end user does to get it, for example:
+It looks like lots of discussion happened with out me, and everybody
+already posted all of the responses I was going to. Good. :)
 
-    ... usage string given by "git help git".
+In particular...
 
-It also makes it internally consistent with "[-v | --version]" that
-exists in the same document, which is even better reason to do this
-change.
+> ----- >8 --------- >8 --------- >8 --------- >8 -----
+> Subject: [PATCH] stop using HEAD for attributes in bare repository by default
+> [...]
+> The right fix for this is to optimize the code paths that allow
+> accesses to attributes in tree objects, but that is a much more
+> involved change and is left as a longer-term project, outside the
+> scope of this "first step" fix.
 
-Thanks, both.
+...this was the exact first step I was going to suggest. And your patch
+looks correct to me. I assume you'd target this for 'maint'. The
+regression goes back to v2.43.0, so it's not exactly new, but given the
+severity in some cases it seems like it's worth getting it into a
+release sooner rather than later.
 
->
->> Signed-off-by: James Liu <james@jamesliu.io>
->> ---
->>  Documentation/git.txt | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git.txt b/Documentation/git.txt
->> index 7fa75350b2..d11d3d0c86 100644
->> --- a/Documentation/git.txt
->> +++ b/Documentation/git.txt
->> @@ -11,7 +11,7 @@ SYNOPSIS
->>  [verse]
->>  'git' [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
->>      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
->> -    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--no-lazy-fetch]
->> +    [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]
->>      [--no-optional-locks] [--bare] [--git-dir=<path>] [--work-tree=<path>]
->>      [--namespace=<name>] [--config-env=<name>=<envvar>] <command> [<args>]
->>
->> --
->> 2.44.0
+I am mildly surprised nobody noticed the issue until now. I wonder if
+t/perf would notice it and nobody is running it, or if this is a gap in
+our coverage there. If the latter, it might be worth adding such a
+script, which should be able to show off that your change here takes us
+back to the v2.42 state.
+
+Running the perf suite against linux.git between 2.42 and 2.43 would
+answer the "is this a gap" question, but I haven't had a chance to do
+so, and it takes a while.
+
+-Peff
