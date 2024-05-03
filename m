@@ -1,88 +1,125 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE012B9C0
-	for <git@vger.kernel.org>; Fri,  3 May 2024 14:58:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5992B1514E5
+	for <git@vger.kernel.org>; Fri,  3 May 2024 15:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714748287; cv=none; b=MAFOrUGgfj+vTiWs5yKwRyC5w5R/fRv9erjr3L93wagBw6bbAQPvK74661ZvJqRaCCQN1rUlWzlrBFf9PmpqcJx+7TGXB7N1/aWlDh42uDF2rVHszwPnZRjNZepTpOBt5cS+Dkz4dNml18jSIwe4uFeNem/BgSF2EAj5W3gx5Bw=
+	t=1714750119; cv=none; b=c4YL2MmqxdE8Tq/HdeHbiyuPO5ExNmD+WEJZEtj/P1FgCelDDWBjHcaHmoa+omrwRKUKexvA+UeqikGKnzHh5lw1ePP6lBvHtH0cfFIO0+w1/MqiB9sZaNTQDugzkPSGAX97xzWSdRAYT0SdGlO2PFcw+IqMPk0S5AN9W8ds3KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714748287; c=relaxed/simple;
-	bh=ls9ECDnxlSFInhHzcAqesBBK+3ww+d2FZNywxowOtJI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g8pglZZJOKDDVEdMTLtpKwHUfvan3cMydKoHrWStoRs4LgDySyKHFYGvAfBQ01ubSKiYL0znCD+3i6oCQQj+2LTDjmqDW/hl293xMIF9kMjOLWXF8miM8HgazmfwImIHKHyac0mBjnw67BYFdQsiT/9Ym1hFnffFDGwWgi1een8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=voDj/bWr; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1714750119; c=relaxed/simple;
+	bh=4UM0SxZq4uCVyLfPq1CAbYD28CwNjP2R3FBPgMJf4WU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uwgGyfkzIltZoxAya2bW0jjKIzXiPSwS11gWt2YW46a3xz9uVSzuKthWta0dKE2eoVTa2M4orSqo42X9O4xHL40q6BL0NPA0d8r0ZKINwZDOy/gn4vo+MAuIEsNRa9+xCKxPXpTMRvxZu7h0bGI/QqCtq10kiwty38uOQHymZVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VXPQS5xL; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="voDj/bWr"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D0A792993A;
-	Fri,  3 May 2024 10:57:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ls9ECDnxlSFInhHzcAqesBBK+3ww+d2FZNywxo
-	wOtJI=; b=voDj/bWrYw5LO/hAhwu0HcywHB153hWivxW8wZwevxJnG+Vx5Cz6Rd
-	T/T5kSS8+SAUBRtzgefIWOrpVHjd2ZBV8htnc6mQHFbcSuP6dUhe9PnsQr3ZFO3N
-	4boq722BYtLFLRknXoBYVBx72ZyxBiEJUeXqIiqeWfEdA1MNXmPYE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8F3F29939;
-	Fri,  3 May 2024 10:57:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3A6A429938;
-	Fri,  3 May 2024 10:57:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kang-Che Sung <explorer09@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: Combined diff format: Show all filenames by default?
-In-Reply-To: <CADDzAfNz3R5yj1SdJYbBe0f8m3Sp-R+X6dRpYoJ8Foj6zijcDA@mail.gmail.com>
-	(Kang-Che Sung's message of "Fri, 3 May 2024 10:06:37 +0800")
-References: <CADDzAfNz3R5yj1SdJYbBe0f8m3Sp-R+X6dRpYoJ8Foj6zijcDA@mail.gmail.com>
-Date: Fri, 03 May 2024 07:57:57 -0700
-Message-ID: <xmqqmsp7aqoa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VXPQS5xL"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5aa27dba8a1so5421796eaf.0
+        for <git@vger.kernel.org>; Fri, 03 May 2024 08:28:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714750117; x=1715354917; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1wZM1oCx2IyO8rz14jADmL4Y0h4uL0FbeJofUT6cBjE=;
+        b=VXPQS5xLS4r8ev/jRsQW8J2TRuP4RRqQDXoY9RoDDGWO3oxatinWSO2q7FI6Oij0LX
+         AMvppABpby5YbJ1JIcSJsmNh27TfOOnW2I5ry/M+Dlepvmrjj6ijGsleJNm+E0GDvsQy
+         4APd+9GSPMqQnVnSG4sm4P33DEZ8R+1ohIBihJUkMQrFskGz61JDRMSlM9mv2/rG2HRk
+         /qSIsxxwtTr2teUfogM0HH7pxy2KKgEedPpczyYQLCcvWb5V09bAakiyF0Zxx4Pel/Lv
+         PjhW8ZGNohPcj9zC/3mWI+7XY7a/g6aSfdjZUHsuODcaNsGGi4+ec9+e78+LpiUEONp4
+         40sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714750117; x=1715354917;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1wZM1oCx2IyO8rz14jADmL4Y0h4uL0FbeJofUT6cBjE=;
+        b=M3W3M96XMxK+XwMuxxodGFpbWRalQZyp7oUmc+DMlPMz2eWswtNSunOuutq2ptsN7i
+         BL6wS8qiFgJUHUAHFLqciYx0p/Mfp890/krtpiQOnKDBsT3O1TRNJN0GBcdAd6mm03mo
+         QRKM9jAiIcrGvHREOubiz2om4n37LW9QVm5HIbSkn+cqYPeZ49pUYGV1phUGKJrFb0H7
+         fjQkgWfbM1wXK5KayfgRG/mCZBqU8xZG/t+UXllJD/xWvhHcSk3gcJ6tsetwl+J/9R2M
+         yFeDZ6Ons+OuEKaqChrhr47eaqc2N0+qoKOYSHArN6+74MtMJHEJMnGSimKd+/vZMmnx
+         0kDg==
+X-Gm-Message-State: AOJu0YzA/iOe/sAtkOgxb/DXpLytDzeyZQp6zIAP3gGK5Oba1TWZ8zVG
+	Mbk2esRkX79ReB0LENO4eKCI904qb8rWq1x+KAJKd62CzLMlCZ5+YrtcCA==
+X-Google-Smtp-Source: AGHT+IGnCVfc153FyblIJi4jTKQiUT2ocrf4FPC7puYjZU+gfU6uJtzL4CcZa/7H3cb8TLbOGPSdfA==
+X-Received: by 2002:a4a:ad41:0:b0:5aa:3e8e:e1f with SMTP id s1-20020a4aad41000000b005aa3e8e0e1fmr3305446oon.5.1714750117341;
+        Fri, 03 May 2024 08:28:37 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id dp18-20020a056820291200b005af4ecbcc5csm681707oob.29.2024.05.03.08.28.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 May 2024 08:28:36 -0700 (PDT)
+Date: Fri, 3 May 2024 10:27:20 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] ci: separate whitespace check script
+Message-ID: <awbex2f6p4sqdneevwrsba4gayidhvxrdyqjqffcn7ub5imcmm@t3wfqe5xmytv>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20240430003323.6210-1-jltobler@gmail.com>
+ <20240502193840.105355-1-jltobler@gmail.com>
+ <20240502193840.105355-4-jltobler@gmail.com>
+ <ZjSKqaJxd55328Fn@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 878D9CBA-095D-11EF-A5AE-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZjSKqaJxd55328Fn@tanuki>
 
-Kang-Che Sung <explorer09@gmail.com> writes:
+On 24/05/03 08:56AM, Patrick Steinhardt wrote:
+> On Thu, May 02, 2024 at 02:38:37PM -0500, Justin Tobler wrote:
+> > The `check-whitespace` CI job is only available as a GitHub action. To
+> > help enable this job with other CI providers, first separate the logic
+> > performing the whitespace check into its own script. In subsequent
+> > commits, this script is further generalized allowing its reuse.
+> > 
+> > Helped-by: Patrick Steinhardt <ps@pks.im>
+> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> > ---
+> [snip]
+> > diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
+> > new file mode 100755
+> > index 0000000000..f57d1ff5f0
+> > --- /dev/null
+> > +++ b/ci/check-whitespace.sh
+> > @@ -0,0 +1,74 @@
+> > +#!/bin/bash
+> 
+> This needs to be either "/bin/sh" or "/usr/bin/env bash".
 
-> My reason for making it default:
-> ...
-> As the "combined diff" format is likely to last for a long time, it
-> would be good for Git to set a right default for presenting this
-> format.
+Since the script is using some shell specific features, I'll update this
+to "/usr/bin/env bash" in the next version.
 
-As the format HAS ALREADY lasted for a long time since its
-introduction in d8f4790e (diff-tree --cc: denser combined diff
-output for a merge commit., 2006-01-24), it is too late to change
-the default.
+> 
+> > +baseCommit=$1
+> > +outputFile=$2
+> 
+> I think the script would be more flexible if we just didn't have an
+> output file in the first place and handle redirection of the output at
+> the caller's side. That for example also allows you to easily append to
+> a potential output file.
+> 
+> Edit: I see you change this in the next patch, so this is okay.
+> 
+> > +url=$3
+> 
+> We should check that we got 3 arguments in the first place.
+> 
+> Edit: I see that you add those checks in the next commit, but it does
+> leave the reader wondering at this point. Maybe we should have a strict
+> check here and then loosen it in the next commit where you make it
+> optional.
 
-If a scripted use wants to parse out all the pathnames, it can write
-the option on the command line just once in the script file and
-forget about it.
+For this patch specifically, I was trying to really only factor out the
+whitespace check into its own script and keep changes outside of that to
+a minimum. The next patch focuses on all the actual script changes and I
+was hoping it might be easier to review that way. :)
 
-For interactive use, the standard answer is "you can alias only for
-yourself in ~/.git/config", but unfortunately, because the alias
-works at the command level (e.g., an alias that allows "git lc" to
-work as "git log --cc --combined-all-paths" can be written), an
-optional behaviour like --combined-all-paths that is shared across a
-family of commands (e.g., "log" and "show" both would benefit) is a
-bit awkward to handle.  
-
-I wonder if introducing an "aliases for options" mechanism would
-improve the situation.  Take an otherwise unused character sequence,
-say, cccc, and when you say "git <cmd> --cccc", pretend as if you
-said "git <cmd> --cc --combined-all-paths" from the command line.
+-Justin
 
