@@ -1,89 +1,137 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F96A639
-	for <git@vger.kernel.org>; Sat,  4 May 2024 08:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F14AEAE9
+	for <git@vger.kernel.org>; Sat,  4 May 2024 09:30:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714813125; cv=none; b=l/J7Hw0JOYBLR903978kRNfU/6Vim9KcCEMsjSlnCXxWl0Lc6+AkxgiCckHf+rz/4dnge1VK4Jvmj8MupMAVK2aex0YtgeviXDayLBN65+3v0PlgYWzm2Ga0lkicLGtQXqjYaQB/aEwBkOmUKWY4Iq7FtgKazqqBAhlkG/SAM2g=
+	t=1714815012; cv=none; b=XtLwql0LGdYuV3bfMmdpG3jYePDSeFK8+P0CF3Tz7Zveye/CV9VpXhmKp8xQPCVGLyaXO/DaSeZzmh0tXcjb99yVXXd1UBef4RWq7Bc7doteCg3noWuIOy+7faJO6grTnzYaxQJSFFNfq99n5lb3Lz4M5qAKW1RTWCFa7b8RPFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714813125; c=relaxed/simple;
-	bh=t0XxxWaCw68wFeTQbZi/YW6OCYJLukh5ATxJF0cbdqU=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=F9LFNhDpIL+tJLxKM8xVfUdG+q0p2ozJ/gqRKCfyi7atGwTStOMvIZotbknZMSFP+t8vF4QhmGJ7VDODfH4+hKt9Xfs/MFS7AoRxhbhVbYaYuFYgzKAh/+0k3Z8arotWiu01wHqcO5w5DaTOsdMZ3khu6GfXK91VN2ad8hexhaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=sNwA0DZI; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1714815012; c=relaxed/simple;
+	bh=NjtN9S5fTYn1qec+0fJdM3xmHVTqiqh9tdPK8XGTxgc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=t8M/9+nuoIvO3LwB3ltezKHVihuwsUBiHvYcQt/A81Ze2tTRJ4LW0iRLziHRUWG8Gxzb1PmBETrhM16K5stbegscg+V0NF1vTbr+5fmDskttcsX7lCY82olk0UOI2MaFTu+MEaUvIte2WRF9qk4e0Ce/bkyJptxlwZZHWLsuoqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FyrEeGhL; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="sNwA0DZI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1714813118; x=1715417918;
-	i=johannes.schindelin@gmx.de;
-	bh=BCwRy4vSiZaA3v5jwGk/31TQbdBioUFW4IWVo9iTFcg=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=sNwA0DZItMSpyt2Qymdf4RdyipVdzSy7dv4IZ3jtSB4dVkwPgEjOMqGiX02eJptU
-	 mc8Rh/oYOIgVmlXOcEbzZPbxNbSw+RBlR01OhPC2ig+Q8dZi4Of++im6Y+0+t0sqz
-	 VVUxbg7o73D8ElNSbnsF2CY5gXbSqc44wQwaxqJdHy9vdUaiMcU+4ZJPSJ7gr9Gyn
-	 M/aRCEOPFBUcrcnzFAzUV1Bt8YOKGraGI/ux0oXFKW4wq5PeTEkrSGxrI9lel3GXx
-	 AGOWhHoHNupLDGmNz3KCzg1LZ/mXsmBV08eIbNoSk4Zre0ZK0tQOYJmhCZEpC2lpQ
-	 mfL92ArD4sfVM/8sYg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mBQ-1sm22E18aS-012VXV; Sat, 04
- May 2024 10:58:38 +0200
-Date: Sat, 4 May 2024 10:58:36 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: git@vger.kernel.org
-Subject: ds/scalar-reconfigure-all-fix, was Re: What's cooking in git.git
- (May 2024, #02; Fri, 3)
-In-Reply-To: <xmqqa5l64e0i.fsf@gitster.g>
-Message-ID: <b5226d6c-8038-4ab3-6e95-1a262282dd74@gmx.de>
-References: <xmqqa5l64e0i.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FyrEeGhL"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-23cd15209fdso231298fac.3
+        for <git@vger.kernel.org>; Sat, 04 May 2024 02:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714815010; x=1715419810; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O6brqSrL6d62ENFXB04ohTOTcMxWPNLln0c/Z5MJWvo=;
+        b=FyrEeGhL80y4hdKEnu/TKJ3MHxphUZg2gMsKlTJ472AZijcM7wxJw5lnPNanG6D2nZ
+         lPmx+CbRY21Bz79bvBKDffzll44BIfgi4LZs9jrmfgOFAWZP6tWC2UoHBDkoOubPRM6B
+         i2ur81lfGgv8Q6QU6ini23IVG4TVQqeOUrN15gvLdE9Av9nluMoo1yeIQnYsduuay+Mz
+         kXV/NDkud8/ZsdDHgtXEWluXwj4e3q+/Xle0wv1wAUebAhvGAdyr8AHtm7ei8g4eaFVO
+         zr7n3IXfgAHjnXPE3A7eeMeHl7C6drP0GNC+Ik2AH32yjW/5zlYMlQcTOgQhRA7CpbCI
+         C5rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714815010; x=1715419810;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O6brqSrL6d62ENFXB04ohTOTcMxWPNLln0c/Z5MJWvo=;
+        b=iAQ0yQFMem/AgzyHz7fxmNI42repSjT/HS6Lawaf6ldalFlDSc6Vps2DHVMZZ3wWEM
+         9aO5QOUFl0qehlmJovmhr+isDBcN1TZpgwSqiv0VAVT4inQu6lVmwtYwHFo5TjGSPR/q
+         x8h+PSKMiQd3/4iQr4z9nYRCswnNtN32FE8yaI+91+bR27Et7J3UdIN6qQk98SAywFGX
+         J4HV5Hf1g5R4En6Zt8h5KM+LHtXqLBawqlDquf0XTfpkXeUt3BQibjjIvawFezarZR+1
+         +WwcjP2psO8Ss6zapwWHoQ2pExy4TiluhRd/IOxAOy4ll7UbHCxvDMNsvD3bx9cWCghq
+         aagA==
+X-Forwarded-Encrypted: i=1; AJvYcCU/tgbHeaNdtR+k/q+SU0b8k2UAJvQBoVIc30oWPKhi02vPQZ8DYeVJBDL2h0WPZTklcKaX0IS1um5lgylM4yH2jJvu
+X-Gm-Message-State: AOJu0YxV9blfREy8CRQBbKMj5F0g6wm8UTV4fb9sZPwiOjhuVaxysuYQ
+	lsGYDXBte1q7WJfScRV/Sy4bAmUz+6LcBPpk/rtuyZVY2LzhmKI0OLdF6H9NCzpwquDane/UpzN
+	JdeNgymw9zuI+XotjQcfFrEQOWvU=
+X-Google-Smtp-Source: AGHT+IErGruy3pqvA/ZvUfZagOKl80uJTxm017ojIOXeCZkttojg1WMzqs1BhOx5nSjeZu/hJz6vXTULtLPCoPG0nN0=
+X-Received: by 2002:a05:6871:64c7:b0:23f:309:3676 with SMTP id
+ rk7-20020a05687164c700b0023f03093676mr323321oab.5.1714815010082; Sat, 04 May
+ 2024 02:30:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 4 May 2024 02:30:09 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqplu24hne.fsf@gitster.g>
+References: <20240501202229.2695774-1-knayak@gitlab.com> <20240503124115.252413-1-knayak@gitlab.com>
+ <20240503124115.252413-8-knayak@gitlab.com> <xmqqplu24hne.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Wi37t6wTmE3XJcHCc9C3g88dNj3sOJ71NK+ltrIDWw13Q/AQjeJ
- W9erzCVQsQeRdm0N13B4d+BNidmQ/kOCmx21rQaIZjUjpdKjwO+o3IiZzghxa6y+u+6BJMi
- GaJuXvlwPjv8xUVTi3PWoc0nos8BFYOsVkDGUzj0/G0Fp+CgdYczDuBhc3y0WegOcty3hNt
- Pu/XT+J+Ozp9jchDr1RmQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:2AMPMa/Qhyc=;NGule1foZB13Ly+YbnHGvXmLBYg
- fnBCDv90Hho29ZQkr/ui6BsO8pHfX0hRvCY9Iz2HFo+HkWMf8E0O/IdTIdJ53msdvzNVGphXM
- JqCXi19bKZK3y/hr0y5LZgX2bDza6BjKVhSiWBU/Z7UPNSws6eXMFFrQDJyPZy1RKHYkGxNBf
- SoLFcYEcYjzWAhGLrqSIoIRciTaHUkpHeMSbrZaN268tbxb/X0slR/snyxXpzjE1plbgCOrU2
- tHvG6sx/C5Pjgr9pDKu3qJoRZGWRivW4H+GpFBT3yU3Ruc9vAvtbh+0jpUCfBsDEN/3Enmm3t
- /8o/vfsXht7j0qjiZISl6ABW6AnEKOfPti8DfVWdUQlg2JfMd5Pl9coV/8TKYKh9O8HoEckdz
- 9+qvjwfxG9cgR+xvYwHt6K4Ga3cBSw0Dq+P2t7ksZmpNqgsa8rMwyIsQICLoHOJJSC4LAnQlp
- CwBI1ZxGK/8SBxRlOYO9JNXjZw5JOwNkBoNFr64dKeLR2lD0D4d1WbUnVpYLL5lt2KvXZOQxU
- qFAtXlpA9S4BYuG1a/u/iiu14NZNJ6P1LvhPY3bzg3/icCojvLWrrG0PHIFw+BPu2Ep74tT12
- +jGeKCRL12HtHJXiZfNFGPPQ+h59tpcUFiBIvHvS/Ec3hp3BPlfOh/Bxe54aFmAGItrXL08/e
- OeOl3exy+/f5AGLlEdsgk8P9uGNXWlFdXsCTgA3MkDfne3WGHP9zrzjU4ZcpfSfYInvdusuq8
- S3p/rPJf7p1NsxM14CQmwL9kDTCPAoTpJixocc8V2nR/5LSEJPAkU8txV/SbF40KnOsf2l1d5
- uTFZCkcxlUHq2krvihDINTtORk4OOvplQas80zksuApxg=
-Content-Transfer-Encoding: quoted-printable
+Date: Sat, 4 May 2024 02:30:09 -0700
+Message-ID: <CAOLa=ZRUe23MnkBYergXr0YTSwV43f1nJj53diGF6wYHFkJy6w@mail.gmail.com>
+Subject: Re: [PATCH v6 7/7] refs: remove `create_symref` and associated dead code
+To: Junio C Hamano <gitster@pobox.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000882e0c06179d7b6b"
 
-Hi Junio,
+--000000000000882e0c06179d7b6b
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 3 May 2024, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> * ds/scalar-reconfigure-all-fix (2024-04-30) 1 commit
->  - scalar: avoid segfault in reconfigure --all
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->  Scalar fix.
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> In the previous commits, we converted `refs_create_symref()` to utilize
+>> transactions to perform symref updates. Earlier `refs_create_symref()`
+>> used `create_symref()` to do the same.
+>>
+>> We can now remove `create_symref()` and any code associated with it
+>> which is no longer used. We remove `create_symref()` code from all the
+>> reference backends and also remove it entirely from the `ref_storage_be`
+>> struct.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
 >
->  Comments?
->  source: <pull.1724.git.1714496333004.gitgitgadget@gmail.com>
+> This has serious semantic conflicts with in-flight topics.  I think
+> I resolved them all correctly while merging it in 'seen', but please
+> double check the result after I push it out.
+>
 
-Patrick commented on it in the affirmative. I do not have anything in
-addition to Patrick's comments, except that I agree.
+I had a look at the commit pushed to 'seen', looked good to me. Thanks.
 
-Ciao,
-Johannes
+> This comment equally applies to the "force all callers to use
+> get_main_ref_store() on the_repository and remove functions that
+> implicitly used the main ref store of the_repository" topic by
+> Patrick, but we really should devise a bit more smoother way to cope
+> with out of tree and in-flight topics.  For example, as the new
+> refs_update_symref() function works exactly like the existing
+> refs_create_symref() function, after renaming all the in-base (i.e.,
+> in-tree at the point this topic forks from) users to call the new
+> function, instead of just removing the original one, it would have
+> been nice to guide authors of other in-flight topics by (1) causing
+> build failure and at the same time (2) telling them what they need
+> to do to adjust to the new world order.  This patch does only (1)
+> but does a poor job for (2).  We may want to establish a better
+> convention than just outright removing and breaking others' topics.
+>
+> Thanks.
+
+Just so I can do better next time, what is your suggestion for doing (2)
+better?
+
+--000000000000882e0c06179d7b6b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c33d2bcbd2955f68_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZMkFCNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNi93Qy85elpseHNIajhmQVJSRTNxNHZEMHB4NExtMgo2TEZ5dnQrK0Rt
+OU1kN3pJVk9TZi9OdGVCbzRpcDh3MHpZcFhXaUQyREJndFh4NEtzd3F3MWw4V3pxRFVzTlpzCk03
+bjl6c3BXcmhPbnlGbWE1Mi91aHZzRWtGZzhnSXZ6aldVYktlR0ZMa1ExMGhCTklHUjllOGNPblMy
+VTlPK1EKS2x0djM2Y3FUV2E0alcxN0xLY1ZCb0pvT0hianFJamlkSUFaZElmZjVMZjVxUC8rV1Vx
+RGo4VFhxUjBxb1d6TwpNbVZxZUhRMEpBLzc5WVkxTFRzYzlMQlJJWTh5M3hDQUIwWVJjTVYxc1FY
+RXhHSFBxYUlvN1JkcEtYVVBVT0J6CkprWHRXUUIyOGxoanlPTmNPVkY0UXFhWmpZYkdDdnQrY1B4
+TWI0WmZJQmdMMmQ1NUN5YUM3LytHVEhyK3BlQTUKdURyTE5xVzUrTnpicSt5aHUzSTdVTGE3QmlJ
+Z3UreVdCRkZJMXU2WmFoT25mdDdSeTVXbS85ZXEzSTRnb2cxTgpIWGZvb01OM1NYMmtpeWpNdmxH
+NVgvMjFCbExhMFBKZWJJcDJCeWdFcVpDVk1SRzVseFZIdUlNMnNHRHVzbUFiCjQxRXdjcXg1MXJI
+SVhhS1pYMWJWekJnd3RFZjVkMmRuV1ByUkRqVT0KPTZnVU4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000882e0c06179d7b6b--
