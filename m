@@ -1,60 +1,60 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BD23D57E
-	for <git@vger.kernel.org>; Sat,  4 May 2024 15:18:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFA33EA76
+	for <git@vger.kernel.org>; Sat,  4 May 2024 15:33:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714835939; cv=none; b=mR8rMFIeQhkPD71GyU+Nkjfj3pCPxfzBBdKlbCOrXOBbfBiRr1wxPBqjuSc2sZdRJB0I/IDyp0RxzBa1sCFsXpQ2b/T0AIkUxua8Jzx4pH5ZNtiY55J+9mD6CkBgm9sQvtvZyi3DEnPytpswy+VlduWMu6mFsbDklfYo+oSSGys=
+	t=1714836838; cv=none; b=XGKerMR/EUgbe0UC31PGxXwctEEvsWg4Dd/quj7fiYCRmxN4HLutF/ovvjSCJNX13sjUIm6E/BeZJvg0GcANTTqAkGzZWfI4350X+rccjyGl7g4vaMMBFbPHEVgzanFDkeEcnFO7l2wa20MZKCzQMxNZp26rADlchOkqLtlIrzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714835939; c=relaxed/simple;
-	bh=0vgdPIdmktoRBZPnR1TAUBBgQ95BKrZNiFlqICQaKcM=;
+	s=arc-20240116; t=1714836838; c=relaxed/simple;
+	bh=/BUE9HEJ//d40653jPXj7wzpE5fT4jwbZ6E+05gf6wE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IAJ8HP6l6q+/3bglwoffxeQ681LRiTHOSoNIX0hDUUujNjflcXL3yS0OfbFGRcTDsTqGBjTB0zZReejfwuqsBRPyP5G9Tj5pAR4rwO+af6S2WzV3MUNruXz59xMfC2dEqL/FtpUNL0kAaOsP1+wt/T1x8i/5pkr938p0rB9baQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiHGfJ4F; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:Content-Type; b=Te+r6uZkItN5GPb1PuIQAMvsp8WtajloIyNXzqxiiNSSIsqSNJqihJLl8OKb3YeCbnumv8Fx5Q3pP/LRPxBK/vG2/sSESybesxp45ao4Yiq7yOWNJwFMBtH5wKJuZPqv+ps52RF39zC5zvn5WnIVBUIl/hNTHK8kI5OxcA4WDs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UIic+Prk; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiHGfJ4F"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-41ba0bb5837so4514145e9.3
-        for <git@vger.kernel.org>; Sat, 04 May 2024 08:18:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UIic+Prk"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-41b79451128so4578005e9.0
+        for <git@vger.kernel.org>; Sat, 04 May 2024 08:33:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714835935; x=1715440735; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714836835; x=1715441635; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5GG2xy8jgElI+ydiUoWvHJhgXToHb78JbiqF0hiFi78=;
-        b=SiHGfJ4FytySOkwVWExR0nXR6p5igG91xWIuSYbuLUzekD4EKCLkCONguPkAtqTQG5
-         ChqITjBWS6a/44Di0MTDV+yA7b9FJcj9txRzojP0H0n4rf0bhrQp3DEgmXXfqrDQZ8uJ
-         nDGXbVQxErfz8GoleH5MlaWSIIcSv3ggZkvxGG/Zq4z7Dv5SA/7ofV3WwgIF0L7E305D
-         TJMJPar8rq4JBWynE0ARmxLduZ1hywyN6lrhMwjb33HjtKIXYvmn6GBQ03Kt+j+p3vFd
-         qFz2B3rPOqikj6i9P6sQMrf4YBKIXSpW8uJMxLA1ro4gMRZZy9f/0lZ2Xj2gRJRXAiet
-         Jygg==
+        bh=f2lsOmKJK2oLYlTXx9B0aaXHCl0s9lZbfMX1bOjVOyw=;
+        b=UIic+PrkNSqY34IknOOTMrw8Bgcp5166HboR6UWEQ+mCeNv5vHR8oe2zVcX6nIwR37
+         JNEEzKhCoYi4EAWiJr5/o8v0US8Ke3YsnktRCuECxA7EHI2AwPW66HpOE67DmGRjtvXp
+         eIDJGPM1D10FtUalWAEvVKX4uBAuROLVOrfsBGJT3eSEivrGEjKYIiA99yQWUtV/5ZxW
+         vK70sWMVqIXIzsdUOCYbcWmSOi0YGjpqI15MS4VGq0KABfuhO+Mf83YDPZCX63lFz2cD
+         Hb6m5X3kH5kLEFDsiWvHl2VbqF/E9XBIt8AtLsVWzIUJYL1WIepSos9+KTYCzQBaDY01
+         uMJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714835935; x=1715440735;
+        d=1e100.net; s=20230601; t=1714836835; x=1715441635;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5GG2xy8jgElI+ydiUoWvHJhgXToHb78JbiqF0hiFi78=;
-        b=hQzDQGhWKD9fWTDvdfDlpd6Zv8hbKTtGGyuN3irkrXAg3VzHUbTqBLivoGpjMk37Mq
-         z6UmN7U9qPhFSfTqQlosm4e89DydeXJTQbypKFjwG9Nd/6X03AArtBMBe4PRWUez09oK
-         X+TlJ1XodBkHChQKmnr7zptBIHzc/Ilmoej1HAUamGZ1TMt4ZGjSHnGbdt7Vk5lci9S3
-         EjR49EF4r9cRBWDrcUpgulcyJDNG01MlHUg49TU1vqx5uUWeZq6cDiIqsBBspbhqXtDA
-         ag+QhjT2U6w5i9Sbfk3mBLHcbuWtvi1NKplYhEyE3gepOIFW5S9B2El0aXbHzq0RpI16
-         q43g==
-X-Forwarded-Encrypted: i=1; AJvYcCV+kr6rDvOd2BhGlRlv1LMPVMC5Gtp6yzATtj+DvD4JNLu9E68a/eCHFidL35OB6+ggMo/BTxQNaLcNRAeodQogxCqk
-X-Gm-Message-State: AOJu0Yz4aEW1SEz0S8ZMUkWSFgiN3p3H2dokAVUjThRqGthl+EStSXf9
-	sPBilxJF1NyIj+nLBZ9hQu2A7NC0fKqW2B1GfNL/tBOXEMS8gWzZRJk3Vzi+
-X-Google-Smtp-Source: AGHT+IH27aozpsFMKx1g1E9cN3dZFDljRp77Gm28ccLx7LduNCCJd2y8rxXSiQCmkJTmsUm9AMy6ew==
-X-Received: by 2002:a05:600c:1d01:b0:41b:f577:604 with SMTP id l1-20020a05600c1d0100b0041bf5770604mr4039434wms.30.1714835935376;
-        Sat, 04 May 2024 08:18:55 -0700 (PDT)
+        bh=f2lsOmKJK2oLYlTXx9B0aaXHCl0s9lZbfMX1bOjVOyw=;
+        b=AFaEKofB8b/HpEuKy2bo8ZHps2QtjERri/yHFU4cGpk23vsRuDoKmTT/uHItL7rw0z
+         j2ml7wXP2uW8XNDDm560VIW2f66xQnX1UNjj4ZHyCICANPdg5BNbuBkXeAo0THn25PQa
+         yx6RuKKWHTKO/36QpwWGLUuwmb/Z94FEgrG27oeQt2eEIy1TClAs4srih6LuCj/d6Zjr
+         aVlV569Zf5gNdZxUc+QN1pND7n0pWXJ1n/MUeF+j9gnEuT5bcdc/H+qzOQ32b8kvd1LC
+         5X3krqOhtP6MFvji35a1dikVtZcvBoElNOMK55qKcasO+cwFPPUzQm53H44LxoBR82rw
+         y/OQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX4ltQmWzuFULne4+JlO6CwknELM6Qd0qKBA5jQeS4rYl6nhcxdIpTxjF7eRN4nW3A6cs+5U9/zm4iAylVY2v3xZVOD
+X-Gm-Message-State: AOJu0Yxr/Kfdur1as4uc/GgBUhvqxMpx8VLuVql/sXqrA9b+lVNbTkyb
+	aapO/9QbOBERwZuHpDIJwrNXFALlRZ1KvP9jRit4LRz08eWOUCTG
+X-Google-Smtp-Source: AGHT+IEF0JT/t66NizgL1BNpL3EyL13uxVFZ+bQ8KMth6wACp3M2k9NtLpXKD+wtpcAZBkKcIuyzUQ==
+X-Received: by 2002:a05:600c:45cd:b0:418:f826:58c3 with SMTP id s13-20020a05600c45cd00b00418f82658c3mr4690091wmo.15.1714836834473;
+        Sat, 04 May 2024 08:33:54 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
-        by smtp.gmail.com with ESMTPSA id l30-20020a05600c1d1e00b0041b086d664fsm9609409wms.6.2024.05.04.08.18.54
+        by smtp.gmail.com with ESMTPSA id n15-20020adff08f000000b00343eac2acc4sm6449681wro.111.2024.05.04.08.33.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 May 2024 08:18:54 -0700 (PDT)
-Message-ID: <37875fc1-19d5-40bf-9d92-bf6356e2049d@gmail.com>
-Date: Sat, 4 May 2024 16:18:48 +0100
+        Sat, 04 May 2024 08:33:54 -0700 (PDT)
+Message-ID: <18343148-80d1-4558-b834-caaf8322467a@gmail.com>
+Date: Sat, 4 May 2024 16:33:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,452 +63,216 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 1/7] refs: accept symref values in
- `ref_transaction_update()`
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
- ps@pks.im
-References: <20240501202229.2695774-1-knayak@gitlab.com>
- <20240503124115.252413-1-knayak@gitlab.com>
- <20240503124115.252413-2-knayak@gitlab.com>
+Subject: Re: [PATCH v4 03/10] trailer: teach iterator about non-trailer lines
+To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+ Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>,
+ Josh Steadmon <steadmon@google.com>,
+ "Randall S. Becker" <rsbecker@nexbridge.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>, Linus Arver <linus@ucla.edu>,
+ Linus Arver <linusa@google.com>
+References: <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
+ <pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
+ <4aeb48050b14e44ec65cfa651a4d98587a6cd860.1714625668.git.gitgitgadget@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20240503124115.252413-2-knayak@gitlab.com>
+In-Reply-To: <4aeb48050b14e44ec65cfa651a4d98587a6cd860.1714625668.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Karthik
+Hi Linus
 
-On 03/05/2024 13:41, Karthik Nayak wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
-> 
-> The function `ref_transaction_update()` obtains ref information and
-> flags to create a `ref_update` and add them to the transaction at hand.
-> 
-> To extend symref support in transactions, we need to also accept the
-> old and new ref targets and process it. This commit adds the required
-> parameters to the function and modifies all call sites.
-> 
-> The two parameters added are `new_target` and `old_target`. The
-> `new_target` is used to denote what the reference should point to when
-> the transaction is applied. Some functions allow this parameter to be
-> NULL, meaning that the reference is not changed.
-> 
-> The `old_target` denotes the value the reference must have before the
-> update. Some functions allow this parameter to be NULL, meaning that the
-> old value of the reference is not checked.
-> 
-> We also update the internal function `ref_transaction_add_update()`
-> similarly to take the two new parameters.
+Sorry I'm late to the party here I've left a couple of thoughts below 
+but I don't want to derail this series if everyone else is happy.
 
-The documentation for the new parameters looks good to me now - thanks 
-for updating it. I'm confused about the assertions though as I mentioned 
-in my other message [1].
+On 02/05/2024 05:54, Linus Arver via GitGitGadget wrote:
+> From: Linus Arver <linus@ucla.edu>
+> 
+> Previously the iterator did not iterate over non-trailer lines. This was
+> somewhat unfortunate, because trailer blocks could have non-trailer
+> lines in them since 146245063e (trailer: allow non-trailers in trailer
+> block, 2016-10-21), which was before the iterator was created in
+> f0939a0eb1 (trailer: add interface for iterating over commit trailers,
+> 2020-09-27).
+> 
+> So if trailer API users wanted to iterate over all lines in a trailer
+> block (including non-trailer lines), they could not use the iterator and
+> were forced to use the lower-level trailer_info struct directly (which
+> provides a raw string array that includes all lines in the trailer
+> block).
+> 
+> Change the iterator's behavior so that we also iterate over non-trailer
+> lines, instead of skipping over them. The new "raw" member of the
+> iterator allows API users to access previously inaccessible non-trailer
+> lines. Reword the variable "trailer" to just "line" because this
+> variable can now hold both trailer lines _and_ non-trailer lines.
+> 
+> The new "raw" member is important because anyone currently not using the
+> iterator is using trailer_info's raw string array directly to access
+> lines to check what the combined key + value looks like. If we didn't
+> provide a "raw" member here, iterator users would have to re-construct
+> the unparsed line by concatenating the key and value back together again
+> --- which places an undue burden for iterator users.
+
+Comparing the raw line is error prone as it ignores custom separators 
+and variations in the amount of space between the key and the value. 
+Therefore I'd argue that the sequencer should in fact be comparing the 
+trailer key and value separately rather than comparing the whole line. 
+There is an issue that we want to add a new Signed-off-by: trailer for 
+"C.O. Mitter" when the trailers look like
+
+	Signed-off-by: C.O. Mitter <c.o.mitter@example.com>
+	non-trailer-line
+
+but not when they look like
+
+	Signed-off-by: C.O. Mitter <c.o.mitter@example.com>
+
+so we still need some way of indicating that there was a non-trailer 
+line after the last trailer though.
+
+> The next commit demonstrates the use of the iterator in sequencer.c as an
+> example of where "raw" will be useful, so that it can start using the
+> iterator.
+> 
+> For the existing use of the iterator in builtin/shortlog.c, we don't
+> have to change the code there because that code does
+
+An interface that lets the caller pass a flag if they want to know about 
+non-trailer lines might be easier to use for the callers that don't want 
+to worry about such lines and wouldn't need a justification as to why it 
+was safe for existing callers.
 
 Best Wishes
 
 Phillip
 
-[1] 
-https://www.lore.kernel.org/git/7ca8c2c4-a9cc-4bec-b13c-95d7854b664b@gmail.com
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->   branch.c                |  2 +-
->   builtin/fast-import.c   |  5 +++--
->   builtin/fetch.c         |  2 +-
->   builtin/receive-pack.c  |  1 +
->   builtin/replace.c       |  2 +-
->   builtin/tag.c           |  1 +
->   builtin/update-ref.c    |  1 +
->   refs.c                  | 22 +++++++++++++++++-----
->   refs.h                  | 18 +++++++++++++++++-
->   refs/files-backend.c    | 12 ++++++------
->   refs/refs-internal.h    | 14 ++++++++++++++
->   refs/reftable-backend.c |  4 ++--
->   sequencer.c             |  9 +++++----
->   walker.c                |  2 +-
->   14 files changed, 71 insertions(+), 24 deletions(-)
+>      trailer_iterator_init(&iter, body);
+>      while (trailer_iterator_advance(&iter)) {
+>          const char *value = iter.val.buf;
 > 
-> diff --git a/branch.c b/branch.c
-> index e4a738fc7b..48af4c3ceb 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -627,7 +627,7 @@ void create_branch(struct repository *r,
->   	if (!transaction ||
->   		ref_transaction_update(transaction, ref.buf,
->   					&oid, forcing ? NULL : null_oid(),
-> -					0, msg, &err) ||
-> +					NULL, NULL, 0, msg, &err) ||
->   		ref_transaction_commit(transaction, &err))
->   		die("%s", err.buf);
->   	ref_transaction_free(transaction);
-> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-> index dc5a9d32dd..297dfb91a1 100644
-> --- a/builtin/fast-import.c
-> +++ b/builtin/fast-import.c
-> @@ -1634,7 +1634,7 @@ static int update_branch(struct branch *b)
->   	transaction = ref_transaction_begin(&err);
->   	if (!transaction ||
->   	    ref_transaction_update(transaction, b->name, &b->oid, &old_oid,
-> -				   0, msg, &err) ||
-> +				   NULL, NULL, 0, msg, &err) ||
->   	    ref_transaction_commit(transaction, &err)) {
->   		ref_transaction_free(transaction);
->   		error("%s", err.buf);
-> @@ -1675,7 +1675,8 @@ static void dump_tags(void)
->   		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
+>          if (!string_list_has_string(&log->trailers, iter.key.buf))
+>              continue;
+> 
+>          ...
+> 
+> and the
+> 
+>          if (!string_list_has_string(&log->trailers, iter.key.buf))
+> 
+> condition already skips over non-trailer lines (iter.key.buf is empty
+> for non-trailer lines, making the comparison still work even with this
+> commit).
+> 
+> Rename "num_expected_trailers" to "num_expected" in
+> t/unit-tests/t-trailer.c because the items we iterate over now include
+> non-trailer lines.
+> 
+> Signed-off-by: Linus Arver <linus@ucla.edu>
+> ---
+>   t/unit-tests/t-trailer.c | 16 +++++++++++-----
+>   trailer.c                | 12 +++++-------
+>   trailer.h                |  7 +++++++
+>   3 files changed, 23 insertions(+), 12 deletions(-)
+> 
+> diff --git a/t/unit-tests/t-trailer.c b/t/unit-tests/t-trailer.c
+> index c1f897235c7..4f640d2a4b8 100644
+> --- a/t/unit-tests/t-trailer.c
+> +++ b/t/unit-tests/t-trailer.c
+> @@ -1,7 +1,7 @@
+>   #include "test-lib.h"
+>   #include "trailer.h"
 >   
->   		if (ref_transaction_update(transaction, ref_name.buf,
-> -					   &t->oid, NULL, 0, msg, &err)) {
-> +					   &t->oid, NULL, NULL, NULL,
-> +					   0, msg, &err)) {
->   			failure |= error("%s", err.buf);
->   			goto cleanup;
->   		}
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 5857d860db..66840b7c5b 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -668,7 +668,7 @@ static int s_update_ref(const char *action,
->   
->   	ret = ref_transaction_update(transaction, ref->name, &ref->new_oid,
->   				     check_old ? &ref->old_oid : NULL,
-> -				     0, msg, &err);
-> +				     NULL, NULL, 0, msg, &err);
->   	if (ret) {
->   		ret = STORE_REF_ERROR_OTHER;
->   		goto out;
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index e8d7df14b6..b150ef39a8 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1595,6 +1595,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
->   		if (ref_transaction_update(transaction,
->   					   namespaced_name,
->   					   new_oid, old_oid,
-> +					   NULL, NULL,
->   					   0, "push",
->   					   &err)) {
->   			rp_error("%s", err.buf);
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index da59600ad2..7690687b0e 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -201,7 +201,7 @@ static int replace_object_oid(const char *object_ref,
->   	transaction = ref_transaction_begin(&err);
->   	if (!transaction ||
->   	    ref_transaction_update(transaction, ref.buf, repl, &prev,
-> -				   0, NULL, &err) ||
-> +				   NULL, NULL, 0, NULL, &err) ||
->   	    ref_transaction_commit(transaction, &err))
->   		res = error("%s", err.buf);
->   
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 9a33cb50b4..40a65fdebc 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -660,6 +660,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->   	transaction = ref_transaction_begin(&err);
->   	if (!transaction ||
->   	    ref_transaction_update(transaction, ref.buf, &object, &prev,
-> +				   NULL, NULL,
->   				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
->   				   reflog_msg.buf, &err) ||
->   	    ref_transaction_commit(transaction, &err)) {
-> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-> index e46afbc46d..21fdbf6ac8 100644
-> --- a/builtin/update-ref.c
-> +++ b/builtin/update-ref.c
-> @@ -204,6 +204,7 @@ static void parse_cmd_update(struct ref_transaction *transaction,
->   
->   	if (ref_transaction_update(transaction, refname,
->   				   &new_oid, have_old ? &old_oid : NULL,
-> +				   NULL, NULL,
->   				   update_flags | create_reflog_flag,
->   				   msg, &err))
->   		die("%s", err.buf);
-> diff --git a/refs.c b/refs.c
-> index 55d2e0b2cb..47bc9dd103 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1228,6 +1228,7 @@ struct ref_update *ref_transaction_add_update(
->   		const char *refname, unsigned int flags,
->   		const struct object_id *new_oid,
->   		const struct object_id *old_oid,
-> +		const char *new_target, const char *old_target,
->   		const char *msg)
+> -static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
+> +static void t_trailer_iterator(const char *msg, size_t num_expected)
 >   {
->   	struct ref_update *update;
-> @@ -1235,6 +1236,11 @@ struct ref_update *ref_transaction_add_update(
->   	if (transaction->state != REF_TRANSACTION_OPEN)
->   		BUG("update called for transaction that is not open");
+>   	struct trailer_iterator iter;
+>   	size_t i = 0;
+> @@ -11,7 +11,7 @@ static void t_trailer_iterator(const char *msg, size_t num_expected_trailers)
+>   		i++;
+>   	trailer_iterator_release(&iter);
 >   
-> +	if (old_oid && !is_null_oid(old_oid) && old_target)
-> +		BUG("only one of old_oid and old_target should be non NULL");
-> +	if (new_oid && !is_null_oid(new_oid) && new_target)
-> +		BUG("only one of new_oid and new_target should be non NULL");
-> +
->   	FLEX_ALLOC_STR(update, refname, refname);
->   	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
->   	transaction->updates[transaction->nr++] = update;
-> @@ -1253,6 +1259,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
->   			   const char *refname,
->   			   const struct object_id *new_oid,
->   			   const struct object_id *old_oid,
-> +			   const char *new_target,
-> +			   const char *old_target,
->   			   unsigned int flags, const char *msg,
->   			   struct strbuf *err)
->   {
-> @@ -1280,7 +1288,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
->   	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
->   
->   	ref_transaction_add_update(transaction, refname, flags,
-> -				   new_oid, old_oid, msg);
-> +				   new_oid, old_oid, new_target,
-> +				   old_target, msg);
->   	return 0;
+> -	check_uint(i, ==, num_expected_trailers);
+> +	check_uint(i, ==, num_expected);
 >   }
 >   
-> @@ -1295,7 +1304,8 @@ int ref_transaction_create(struct ref_transaction *transaction,
+>   static void run_t_trailer_iterator(void)
+> @@ -19,7 +19,7 @@ static void run_t_trailer_iterator(void)
+>   	static struct test_cases {
+>   		const char *name;
+>   		const char *msg;
+> -		size_t num_expected_trailers;
+> +		size_t num_expected;
+>   	} tc[] = {
+>   		{
+>   			"empty input",
+> @@ -119,7 +119,13 @@ static void run_t_trailer_iterator(void)
+>   			"not a trailer line\n"
+>   			"not a trailer line\n"
+>   			"Signed-off-by: x\n",
+> -			1
+> +			/*
+> +			 * Even though there is only really 1 real "trailer"
+> +			 * (Signed-off-by), we still have 4 trailer objects
+> +			 * because we still want to iterate through the entire
+> +			 * block.
+> +			 */
+> +			4
+>   		},
+>   		{
+>   			"with non-trailer lines (one too many) in trailer block",
+> @@ -162,7 +168,7 @@ static void run_t_trailer_iterator(void)
+>   
+>   	for (int i = 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
+>   		TEST(t_trailer_iterator(tc[i].msg,
+> -					tc[i].num_expected_trailers),
+> +					tc[i].num_expected),
+>   		     "%s", tc[i].name);
+>   	}
+>   }
+> diff --git a/trailer.c b/trailer.c
+> index 3e4dab9c065..4700c441442 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -1146,17 +1146,15 @@ void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
+>   
+>   int trailer_iterator_advance(struct trailer_iterator *iter)
+>   {
+> -	while (iter->internal.cur < iter->internal.info.trailer_nr) {
+> -		char *trailer = iter->internal.info.trailers[iter->internal.cur++];
+> -		int separator_pos = find_separator(trailer, separators);
+> -
+> -		if (separator_pos < 1)
+> -			continue; /* not a real trailer */
+> +	if (iter->internal.cur < iter->internal.info.trailer_nr) {
+> +		char *line = iter->internal.info.trailers[iter->internal.cur++];
+> +		int separator_pos = find_separator(line, separators);
+>   
+> +		iter->raw = line;
+>   		strbuf_reset(&iter->key);
+>   		strbuf_reset(&iter->val);
+>   		parse_trailer(&iter->key, &iter->val, NULL,
+> -			      trailer, separator_pos);
+> +			      line, separator_pos);
+>   		/* Always unfold values during iteration. */
+>   		unfold_value(&iter->val);
 >   		return 1;
->   	}
->   	return ref_transaction_update(transaction, refname, new_oid,
-> -				      null_oid(), flags, msg, err);
-> +				      null_oid(), NULL, NULL, flags,
-> +				      msg, err);
->   }
->   
->   int ref_transaction_delete(struct ref_transaction *transaction,
-> @@ -1308,7 +1318,8 @@ int ref_transaction_delete(struct ref_transaction *transaction,
->   		BUG("delete called with old_oid set to zeros");
->   	return ref_transaction_update(transaction, refname,
->   				      null_oid(), old_oid,
-> -				      flags, msg, err);
-> +				      NULL, NULL, flags,
-> +				      msg, err);
->   }
->   
->   int ref_transaction_verify(struct ref_transaction *transaction,
-> @@ -1321,6 +1332,7 @@ int ref_transaction_verify(struct ref_transaction *transaction,
->   		BUG("verify called with old_oid set to NULL");
->   	return ref_transaction_update(transaction, refname,
->   				      NULL, old_oid,
-> +				      NULL, NULL,
->   				      flags, NULL, err);
->   }
->   
-> @@ -1335,8 +1347,8 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
->   
->   	t = ref_store_transaction_begin(refs, &err);
->   	if (!t ||
-> -	    ref_transaction_update(t, refname, new_oid, old_oid, flags, msg,
-> -				   &err) ||
-> +	    ref_transaction_update(t, refname, new_oid, old_oid, NULL, NULL,
-> +				   flags, msg, &err) ||
->   	    ref_transaction_commit(t, &err)) {
->   		ret = 1;
->   		ref_transaction_free(t);
-> diff --git a/refs.h b/refs.h
-> index d278775e08..c7851bf587 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -648,6 +648,16 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->    *         before the update. A copy of this value is made in the
->    *         transaction.
->    *
-> + *     new_target -- the target reference that the reference will be
-> + *         updated to point to. If the reference is a regular reference,
-> + *         it will be converted to a symbolic reference. Cannot be set
-> + *         together with `new_oid`. A copy of this value is made in the
-> + *         transaction.
-> + *
-> + *     old_target -- the reference that the reference must be pointing to.
-> + *         Canont be set together with `old_oid`. A copy of this value is
-> + *         made in the transaction.
-> + *
->    *     flags -- flags affecting the update, passed to
->    *         update_ref_lock(). Possible flags: REF_NO_DEREF,
->    *         REF_FORCE_CREATE_REFLOG. See those constants for more
-> @@ -713,7 +723,11 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->    * beforehand. The old value is checked after the lock is taken to
->    * prevent races. If the old value doesn't agree with old_oid, the
->    * whole transaction fails. If old_oid is NULL, then the previous
-> - * value is not checked.
-> + * value is not checked. If `old_target` is not NULL, treat the reference
-> + * as a symbolic ref and validate that its target before the update is
-> + * `old_target`. If the `new_target` is not NULL, then the reference
-> + * will be updated to a symbolic ref which targets `new_target`.
-> + * Together, these allow us to update between regular refs and symrefs.
->    *
->    * See the above comment "Reference transaction updates" for more
->    * information.
-> @@ -722,6 +736,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
->   			   const char *refname,
->   			   const struct object_id *new_oid,
->   			   const struct object_id *old_oid,
-> +			   const char *new_target,
-> +			   const char *old_target,
->   			   unsigned int flags, const char *msg,
->   			   struct strbuf *err);
->   
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index a098d14ea0..e4d0aa3d41 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -1198,7 +1198,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
->   	ref_transaction_add_update(
->   			transaction, r->name,
->   			REF_NO_DEREF | REF_HAVE_NEW | REF_HAVE_OLD | REF_IS_PRUNING,
-> -			null_oid(), &r->oid, NULL);
-> +			null_oid(), &r->oid, NULL, NULL, NULL);
->   	if (ref_transaction_commit(transaction, &err))
->   		goto cleanup;
->   
-> @@ -1292,7 +1292,7 @@ static int files_pack_refs(struct ref_store *ref_store,
->   		 * packed-refs transaction:
->   		 */
->   		if (ref_transaction_update(transaction, iter->refname,
-> -					   iter->oid, NULL,
-> +					   iter->oid, NULL, NULL, NULL,
->   					   REF_NO_DEREF, NULL, &err))
->   			die("failure preparing to create packed reference %s: %s",
->   			    iter->refname, err.buf);
-> @@ -2309,7 +2309,7 @@ static int split_head_update(struct ref_update *update,
->   			transaction, "HEAD",
->   			update->flags | REF_LOG_ONLY | REF_NO_DEREF,
->   			&update->new_oid, &update->old_oid,
-> -			update->msg);
-> +			NULL, NULL, update->msg);
->   
->   	/*
->   	 * Add "HEAD". This insertion is O(N) in the transaction
-> @@ -2372,7 +2372,7 @@ static int split_symref_update(struct ref_update *update,
->   	new_update = ref_transaction_add_update(
->   			transaction, referent, new_flags,
->   			&update->new_oid, &update->old_oid,
-> -			update->msg);
-> +			NULL, NULL, update->msg);
->   
->   	new_update->parent_update = update;
->   
-> @@ -2763,7 +2763,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->   					packed_transaction, update->refname,
->   					REF_HAVE_NEW | REF_NO_DEREF,
->   					&update->new_oid, NULL,
-> -					NULL);
-> +					NULL, NULL, NULL);
->   		}
->   	}
->   
-> @@ -3048,7 +3048,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
->   		ref_transaction_add_update(packed_transaction, update->refname,
->   					   update->flags & ~REF_HAVE_OLD,
->   					   &update->new_oid, &update->old_oid,
-> -					   NULL);
-> +					   NULL, NULL, NULL);
->   	}
->   
->   	if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index 56641aa57a..108f4ec419 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -124,6 +124,19 @@ struct ref_update {
->   	 */
->   	struct object_id old_oid;
->   
+> diff --git a/trailer.h b/trailer.h
+> index 9f42aa75994..7e36da7d13c 100644
+> --- a/trailer.h
+> +++ b/trailer.h
+> @@ -125,6 +125,13 @@ void format_trailers_from_commit(const struct process_trailer_options *,
+>    *   trailer_iterator_release(&iter);
+>    */
+>   struct trailer_iterator {
 > +	/*
-> +	 * If set, point the reference to this value. This can also be
-> +	 * used to convert regular references to become symbolic refs.
-> +	 * Cannot be set together with `new_oid`.
+> +	 * Raw line (e.g., "foo: bar baz") before being parsed as a trailer
+> +	 * key/val pair as part of a trailer block (as the "key" and "val"
+> +	 * fields below). If a line fails to parse as a trailer, then the "key"
+> +	 * will be the entire line and "val" will be the empty string.
 > +	 */
-> +	const char *new_target;
-> +
-> +	/*
-> +	 * If set, check that the reference previously pointed to this
-> +	 * value. Cannot be set together with `old_oid`.
-> +	 */
-> +	const char *old_target;
-> +
->   	/*
->   	 * One or more of REF_NO_DEREF, REF_FORCE_CREATE_REFLOG,
->   	 * REF_HAVE_NEW, REF_HAVE_OLD, or backend-specific flags.
-> @@ -173,6 +186,7 @@ struct ref_update *ref_transaction_add_update(
->   		const char *refname, unsigned int flags,
->   		const struct object_id *new_oid,
->   		const struct object_id *old_oid,
-> +		const char *new_target, const char *old_target,
->   		const char *msg);
+> +	const char *raw;
+>   	struct strbuf key;
+>   	struct strbuf val;
 >   
->   /*
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 1cda48c504..6104471199 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -829,7 +829,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->   			new_update = ref_transaction_add_update(
->   					transaction, "HEAD",
->   					u->flags | REF_LOG_ONLY | REF_NO_DEREF,
-> -					&u->new_oid, &u->old_oid, u->msg);
-> +					&u->new_oid, &u->old_oid, NULL, NULL, u->msg);
->   			string_list_insert(&affected_refnames, new_update->refname);
->   		}
->   
-> @@ -908,7 +908,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->   				 */
->   				new_update = ref_transaction_add_update(
->   						transaction, referent.buf, new_flags,
-> -						&u->new_oid, &u->old_oid, u->msg);
-> +						&u->new_oid, &u->old_oid, NULL, NULL, u->msg);
->   				new_update->parent_update = u;
->   
->   				/*
-> diff --git a/sequencer.c b/sequencer.c
-> index 88de4dc20f..61e007d85f 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -665,7 +665,7 @@ static int fast_forward_to(struct repository *r,
->   	if (!transaction ||
->   	    ref_transaction_update(transaction, "HEAD",
->   				   to, unborn && !is_rebase_i(opts) ?
-> -				   null_oid() : from,
-> +				   null_oid() : from, NULL, NULL,
->   				   0, sb.buf, &err) ||
->   	    ref_transaction_commit(transaction, &err)) {
->   		ref_transaction_free(transaction);
-> @@ -1298,7 +1298,7 @@ int update_head_with_reflog(const struct commit *old_head,
->   	if (!transaction ||
->   	    ref_transaction_update(transaction, "HEAD", new_head,
->   				   old_head ? &old_head->object.oid : null_oid(),
-> -				   0, sb.buf, err) ||
-> +				   NULL, NULL, 0, sb.buf, err) ||
->   	    ref_transaction_commit(transaction, err)) {
->   		ret = -1;
->   	}
-> @@ -3832,8 +3832,9 @@ static int do_label(struct repository *r, const char *name, int len)
->   	} else if (repo_get_oid(r, "HEAD", &head_oid)) {
->   		error(_("could not read HEAD"));
->   		ret = -1;
-> -	} else if (ref_transaction_update(transaction, ref_name.buf, &head_oid,
-> -					  NULL, 0, msg.buf, &err) < 0 ||
-> +	} else if (ref_transaction_update(transaction, ref_name.buf,
-> +					  &head_oid, NULL, NULL, NULL,
-> +					  0, msg.buf, &err) < 0 ||
->   		   ref_transaction_commit(transaction, &err)) {
->   		error("%s", err.buf);
->   		ret = -1;
-> diff --git a/walker.c b/walker.c
-> index c0fd632d92..1b3df43906 100644
-> --- a/walker.c
-> +++ b/walker.c
-> @@ -324,7 +324,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
->   		strbuf_reset(&refname);
->   		strbuf_addf(&refname, "refs/%s", write_ref[i]);
->   		if (ref_transaction_update(transaction, refname.buf,
-> -					   oids + i, NULL, 0,
-> +					   oids + i, NULL, NULL, NULL, 0,
->   					   msg ? msg : "fetch (unknown)",
->   					   &err)) {
->   			error("%s", err.buf);
