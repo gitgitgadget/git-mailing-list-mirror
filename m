@@ -1,101 +1,89 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B45457CB9
-	for <git@vger.kernel.org>; Sat,  4 May 2024 06:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F96A639
+	for <git@vger.kernel.org>; Sat,  4 May 2024 08:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714805510; cv=none; b=IxjkoZNBB3UYDueYRhQGLkVyDUoD8y+2NJGCGtJLxyamq5pQLYk2DmMnQFjXtqD+7ohSSbkMIljlFbwd23Asey/UjiZt2UteJyzLjTsJwKdFMMBmQyL+1dKkR7nd/B9WUxlrhfGo+w5UORFJgNA6SQAGExfjv7K7G7zuNlw7kMo=
+	t=1714813125; cv=none; b=l/J7Hw0JOYBLR903978kRNfU/6Vim9KcCEMsjSlnCXxWl0Lc6+AkxgiCckHf+rz/4dnge1VK4Jvmj8MupMAVK2aex0YtgeviXDayLBN65+3v0PlgYWzm2Ga0lkicLGtQXqjYaQB/aEwBkOmUKWY4Iq7FtgKazqqBAhlkG/SAM2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714805510; c=relaxed/simple;
-	bh=UjOsfcYJCkKQq2c0//2yfDqdDpX1adsj+Sxjg+g2Fno=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lDTODsCtZ0e7IGiT3f5DOWKwRY+RXWaTUOcCV6EthZzMnbSrBjsRqJbBcv5BiVMeNP0x4bwl/1qGozm25ELUWyZsWZdQknSLCWLy8pRBBlSHgZRL9nnJcdOIYe9cAD3RC4yvhud0LiMYwf54Npnh7tt5opOVhZgkSkwzUaRzAdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+ETeAI4; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714813125; c=relaxed/simple;
+	bh=t0XxxWaCw68wFeTQbZi/YW6OCYJLukh5ATxJF0cbdqU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=F9LFNhDpIL+tJLxKM8xVfUdG+q0p2ozJ/gqRKCfyi7atGwTStOMvIZotbknZMSFP+t8vF4QhmGJ7VDODfH4+hKt9Xfs/MFS7AoRxhbhVbYaYuFYgzKAh/+0k3Z8arotWiu01wHqcO5w5DaTOsdMZ3khu6GfXK91VN2ad8hexhaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=sNwA0DZI; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+ETeAI4"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a59a64db066so61221266b.3
-        for <git@vger.kernel.org>; Fri, 03 May 2024 23:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714805508; x=1715410308; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UjOsfcYJCkKQq2c0//2yfDqdDpX1adsj+Sxjg+g2Fno=;
-        b=k+ETeAI4eoPh7+NZC0EiSlGdsXJElfpprQutU3r+DhDown7+SgyPUe3j55bRL3K7Uv
-         8Yd4fSrFCzwJJrhmWM2X7BlhSPT1dBve6eXZ26ezgfD2ixudC0DwftPzvEEcQpwR/CBh
-         Jl8BeS88eeh2lpJ3GH8nJq9oG2+88IWNYWzESpLkLtR71ptvsjvU2d/HYmMtHgsm6Qpe
-         KmEPmsicjrlgLvbG/LHiNrnb/DrlL9ycS1iiQS7ceXzm60bPncQ3yjqeAELAAgPGjSRl
-         E7+6SA0IvPaXOxXwLn2jPnSk6yHXnGTPVIK8vtT0Zesv+yIidPxLE0tNvXvW8PZ6NYzn
-         Z5iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714805508; x=1715410308;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UjOsfcYJCkKQq2c0//2yfDqdDpX1adsj+Sxjg+g2Fno=;
-        b=Ulwbm4gAI7Mws8o6RGsOdYDEMxZh8uzBOBMpJFe63fexnPuluEbAU4CHoQVtQ6U5M0
-         oFVjtZFEd8G0OmugZpfLdRcHZdMvo0YCRhKfzbOSxTxRVZe3jdw6inOq1Rp0JoE7FF/N
-         VfpE3D2CJiTqN3b1oW4o+PdQslXVFSPA2Et0pAmRV+S0EaKmo/qcnAfT6WXe4GYUIGK1
-         UGxqko/wt/uP9OV6Rl2F71ZrkDZF0W6szOgr/0cwJHh6Rq/Q68S7LoGHQFOIZuXOjySC
-         axtv/GDekYshk2EfgcUHhE9fcnWIa0wLeaVTe2XmuGOSVPfh6kJnRdJnQzFm7R+3zvU5
-         GJUg==
-X-Forwarded-Encrypted: i=1; AJvYcCWd1+yOMSjkH31xkKAglyx2dr92j9YYxLQmKr1bgX/IcFMWImMOTgQkvbmYq+PQ13qFFjaGriprCpN16Iao+Ag65Fag
-X-Gm-Message-State: AOJu0YxiY7X4KQVpKkzFw8BTrLSpXzCytJQh6n9cvVCdjNAo8Yx4tIGl
-	1Bz2soEi/pa1po8luRiF7eIbHfvi1H48bXcjnb/qfe4C2YC9Y9g0ihrHCmvzunIAq3s863Znzgw
-	HyPu2+Sl4TLFv/R3heYsPpz3DlSk=
-X-Google-Smtp-Source: AGHT+IFCOWUdau0ImviX3x2Ht1XfYPoBNF1o+Ov7qmINCIRaG4jGRbuwUI2IK+HWZWkUtFMZks4hoobP2JYh1U6gW8Y=
-X-Received: by 2002:a17:907:9952:b0:a52:13ff:5317 with SMTP id
- kl18-20020a170907995200b00a5213ff5317mr3269037ejc.38.1714805507498; Fri, 03
- May 2024 23:51:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="sNwA0DZI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1714813118; x=1715417918;
+	i=johannes.schindelin@gmx.de;
+	bh=BCwRy4vSiZaA3v5jwGk/31TQbdBioUFW4IWVo9iTFcg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=sNwA0DZItMSpyt2Qymdf4RdyipVdzSy7dv4IZ3jtSB4dVkwPgEjOMqGiX02eJptU
+	 mc8Rh/oYOIgVmlXOcEbzZPbxNbSw+RBlR01OhPC2ig+Q8dZi4Of++im6Y+0+t0sqz
+	 VVUxbg7o73D8ElNSbnsF2CY5gXbSqc44wQwaxqJdHy9vdUaiMcU+4ZJPSJ7gr9Gyn
+	 M/aRCEOPFBUcrcnzFAzUV1Bt8YOKGraGI/ux0oXFKW4wq5PeTEkrSGxrI9lel3GXx
+	 AGOWhHoHNupLDGmNz3KCzg1LZ/mXsmBV08eIbNoSk4Zre0ZK0tQOYJmhCZEpC2lpQ
+	 mfL92ArD4sfVM/8sYg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mBQ-1sm22E18aS-012VXV; Sat, 04
+ May 2024 10:58:38 +0200
+Date: Sat, 4 May 2024 10:58:36 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: ds/scalar-reconfigure-all-fix, was Re: What's cooking in git.git
+ (May 2024, #02; Fri, 3)
+In-Reply-To: <xmqqa5l64e0i.fsf@gitster.g>
+Message-ID: <b5226d6c-8038-4ab3-6e95-1a262282dd74@gmx.de>
+References: <xmqqa5l64e0i.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240430003323.6210-1-jltobler@gmail.com> <20240502193840.105355-1-jltobler@gmail.com>
- <20240502193840.105355-4-jltobler@gmail.com> <ZjSKqaJxd55328Fn@tanuki>
- <awbex2f6p4sqdneevwrsba4gayidhvxrdyqjqffcn7ub5imcmm@t3wfqe5xmytv>
- <xmqq1q6ialiu.fsf@gitster.g> <ZjUmEuKZB1xwAPo7@ncase>
-In-Reply-To: <ZjUmEuKZB1xwAPo7@ncase>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Fri, 3 May 2024 23:51:35 -0700
-Message-ID: <CAPx1GveuQMeKt0_ZuY4DN0_tKrLBjXpWLngxYTtbzV=iHYT-QQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] ci: separate whitespace check script
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Wi37t6wTmE3XJcHCc9C3g88dNj3sOJ71NK+ltrIDWw13Q/AQjeJ
+ W9erzCVQsQeRdm0N13B4d+BNidmQ/kOCmx21rQaIZjUjpdKjwO+o3IiZzghxa6y+u+6BJMi
+ GaJuXvlwPjv8xUVTi3PWoc0nos8BFYOsVkDGUzj0/G0Fp+CgdYczDuBhc3y0WegOcty3hNt
+ Pu/XT+J+Ozp9jchDr1RmQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:2AMPMa/Qhyc=;NGule1foZB13Ly+YbnHGvXmLBYg
+ fnBCDv90Hho29ZQkr/ui6BsO8pHfX0hRvCY9Iz2HFo+HkWMf8E0O/IdTIdJ53msdvzNVGphXM
+ JqCXi19bKZK3y/hr0y5LZgX2bDza6BjKVhSiWBU/Z7UPNSws6eXMFFrQDJyPZy1RKHYkGxNBf
+ SoLFcYEcYjzWAhGLrqSIoIRciTaHUkpHeMSbrZaN268tbxb/X0slR/snyxXpzjE1plbgCOrU2
+ tHvG6sx/C5Pjgr9pDKu3qJoRZGWRivW4H+GpFBT3yU3Ruc9vAvtbh+0jpUCfBsDEN/3Enmm3t
+ /8o/vfsXht7j0qjiZISl6ABW6AnEKOfPti8DfVWdUQlg2JfMd5Pl9coV/8TKYKh9O8HoEckdz
+ 9+qvjwfxG9cgR+xvYwHt6K4Ga3cBSw0Dq+P2t7ksZmpNqgsa8rMwyIsQICLoHOJJSC4LAnQlp
+ CwBI1ZxGK/8SBxRlOYO9JNXjZw5JOwNkBoNFr64dKeLR2lD0D4d1WbUnVpYLL5lt2KvXZOQxU
+ qFAtXlpA9S4BYuG1a/u/iiu14NZNJ6P1LvhPY3bzg3/icCojvLWrrG0PHIFw+BPu2Ep74tT12
+ +jGeKCRL12HtHJXiZfNFGPPQ+h59tpcUFiBIvHvS/Ec3hp3BPlfOh/Bxe54aFmAGItrXL08/e
+ OeOl3exy+/f5AGLlEdsgk8P9uGNXWlFdXsCTgA3MkDfne3WGHP9zrzjU4ZcpfSfYInvdusuq8
+ S3p/rPJf7p1NsxM14CQmwL9kDTCPAoTpJixocc8V2nR/5LSEJPAkU8txV/SbF40KnOsf2l1d5
+ uTFZCkcxlUHq2krvihDINTtORk4OOvplQas80zksuApxg=
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 3, 2024 at 11:27=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+Hi Junio,
+
+On Fri, 3 May 2024, Junio C Hamano wrote:
+
+> * ds/scalar-reconfigure-all-fix (2024-04-30) 1 commit
+>  - scalar: avoid segfault in reconfigure --all
 >
-> On Fri, May 03, 2024 at 09:49:13AM -0700, Junio C Hamano wrote:
-> > This is a question to Patrick, but what makes it bad to assume
-> > "bash" is in "/bin" when it is OK to assume that "env" is always in
-> > "/usr/bin"?
+>  Scalar fix.
 >
-> My own bias. I know of systems without "/bin/bash" (NixOS), but I don't
-> know of any without "/usr/bin/env". But you're right, "/usr/bin/env" is
-> not part of POSIX and thus not really portable, either.
->
-> Ultimately I don't think there is any way to write the shebang so that
-> it is fully POSIX compliant. So I'd rather go with the option which is
-> supported on more systems, which is to the best of my knowlede env(1).
+>  Comments?
+>  source: <pull.1724.git.1714496333004.gitgitgadget@gmail.com>
 
-The various BSDs mostly stick bash in /usr/local/bin; some versions
-of macOS did not have a /bin/bash either, as I recall, though my current
-mac-laptop does.
+Patrick commented on it in the affirmative. I do not have anything in
+addition to Patrick's comments, except that I agree.
 
-In any case, #! /usr/bin/env <program> is pretty darn common; it's found
-in a lot of Python scripts, for instance. It works well on old SunOS, on
-the various BSDs, on macOS, and on Linux, provided of course that
-the given <program> is installed at all.
-
-The *most* portable method is generally to use only POSIX /bin/sh
-constructs, of course. :-)
-
-Chris
+Ciao,
+Johannes
