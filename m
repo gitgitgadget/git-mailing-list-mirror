@@ -1,60 +1,60 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF739B662
-	for <git@vger.kernel.org>; Sun,  5 May 2024 14:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F97BB662
+	for <git@vger.kernel.org>; Sun,  5 May 2024 14:09:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714918166; cv=none; b=DrJP06c2GPSXF+J/wJZIvwf+Chcfwi3b+bNwyT5ZgC2ZANyEW9MyhJRtGf9hSZp9KfRZfO+UhJC1pJv4tihxSSirr0N2o8nyD3OJiEb43N4k72+IHZE123x//MvlkhqkJZM6N+oOl9tdreFo3c7lDxnSbLnlg3WVExcjueuPbC8=
+	t=1714918184; cv=none; b=Qosk5yPILHuF9Kstd1ClH2GQor+CnzcCnVzNt2WpqQdkXmv7y6p+VIyIa/9xQstF8HRK2Fb4++o+C9urY7w58t3d/zPdFIH2f/0CpvRZKj35TLlAmv0d3RbD83GvwStS2joe+T17MDBCNxHrKatIeW4JKqK+8XxaTRfzr7IbcM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714918166; c=relaxed/simple;
-	bh=TbubuGrhHVwAYgdeY1vp40NCfcPmG997C8aqElLdcAA=;
+	s=arc-20240116; t=1714918184; c=relaxed/simple;
+	bh=9yAyyyhNDpqANOHiD/R3XCa/7JjsmVPGPqFrB8oozAM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YqoZpjMbKH1ZQDIdjuBQPAiUy0sAbDWAAiHrkM+3Ws/3VX0j1opijkIG4JoI30TRmDG/hGAaQyWljNOygm1hV0EAIlajWioYiamllyetZv2+hFZ8SkV0zqzN2jfL5fe/YFuvVut2Rt2/xBWOzXcQOJ9+1gd9E7J63VnTUzMPMWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mJhWr0e9; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:Content-Type; b=hU8wFYcEKCoDJVyzxP68/vexqGgIHPzZYRo8ZqMB5DQthygDhZjpZr6xWX+UVI7I0Dz8OmbeHcx4ESlrLPm1DspxMQOfWJPQNyH+2ppJLmcEgJTaN4tdK0Wqux7JooEAa2m4bHcQAI1P8TCSBAJiFzGUHBcgNwJixoHwnCu8PFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k++QqaaI; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mJhWr0e9"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41b79450f8cso6982365e9.3
-        for <git@vger.kernel.org>; Sun, 05 May 2024 07:09:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k++QqaaI"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41bab13ca81so11811595e9.1
+        for <git@vger.kernel.org>; Sun, 05 May 2024 07:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714918163; x=1715522963; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714918180; x=1715522980; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HwQXc6owFpcb2XJEi7eFNSNmbl5Q66a4YDJ5h8OI1/w=;
-        b=mJhWr0e9HAlACjCaBUm55wwMPeMKWgGbTuN8wI28ryYVPViX4GnfyP284Mv2rX6TCU
-         /EbXPHRTV4Wn1yBsOx1/iT0/uspX4bC9ttAVeq2lnpGl93S3EXI7yNSCG/6idof4so6p
-         qSqDldFMCck53j1vtPjgK4oSoGu3KlCacD1wnZHy15KeFwKRCl+uy4zXx2MT1nrbPj8p
-         Bjcj+V+A4ra1SO5Dn/RkrXy20XTI5qgv2E7dW/jOG602reaHUENGzVmMWYZqpfTmXTK0
-         qsUJ2GIgMkACcJi/keGsF3+e5dwQlZcR/DITiXgGqeLy//zCvKgMCR/MXMZQ3golat5x
-         x7tw==
+        bh=2RU0P7Q5nbujdUn+9kF4gh6+s93N4xM8gRYPxjHZMM8=;
+        b=k++QqaaIB6JQ68ddNDc3rMQl4OdG4VOnPUK5xHdr1vYkpj2BgU/tqcfJpoJBw3bN/x
+         O74M3xOkRP5rQZ9roY+baYeHICx5LS2pwqEOuZPCBGC26qT3keBCv1DsHm5EU7EVWRQt
+         1el6+1zj06xoqg6LQyX4NDT357cJamF6OgOEE0WHY7bi0/19psPRwOi+V4JETBO9tlUw
+         Ew+NMMLuF+yLscYiffx6g1nsUwij3l72Bf7FAJlRGydjTYHIvigoHm6yyMnRehQMl6kb
+         Ha+tfuwZt8hwgZDgWnZUyWHRiFu111LeMn07syzLF00dthFfULvTWjU5QRnBIPkSTMIs
+         MGVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714918163; x=1715522963;
+        d=1e100.net; s=20230601; t=1714918180; x=1715522980;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HwQXc6owFpcb2XJEi7eFNSNmbl5Q66a4YDJ5h8OI1/w=;
-        b=WJWFHFN326sAjmAHmdnP30sz5T95voiQypTNnasu05WZ+DoCjk93MxjGkh8I9BcDeI
-         NWU6fyBfgCcEhXaSP2IYUFD8rIqYbC4oWAXMxSRQMwL/j3tPjtimQNB45xgmzBDX/kYZ
-         8VcBX59gft8YUHrvH8hHPuejVSxYEMtauE3ED5ocFmxTyzLNqRmdG34O0B4mYmBa4+8q
-         94yJNgby958Klv+scp00KI2L6yPB0PqUrPB8fCxyjA3Nh0yf4STGinu3JSckbliUm/m+
-         5ZQaXlTETbQH8/wwjS2wwmLo9V8eoUaens8YSW4RmGPjpTpaKuF/lWvcqMNLr7MHvF0l
-         DxVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWYIzxRixlAy6H7Uap2XcG3DEO/JlFqf33KQ9sLygEJIzP1EWe0vdOlUOUHGuvpr6W0MFNf1QXVQz0Yn0/pRkwhfuRo
-X-Gm-Message-State: AOJu0Yxy09DfJrfIUB8NvbWaCQQ+gfnJWzUUxr9KuC89FOu/b3hP4Idf
-	mbe/Arh0PJ3Es0XkXEdzR8K2PkGS2BsntH1CLBd0jmfgvIk7CnPE
-X-Google-Smtp-Source: AGHT+IHoIg1+eJgEgSiBQ9QIZ0FyuYCXQ9PfxBfd8iFUOKLALSXbcvvQWEi3DAAvjFDr5HaQ60eZ+g==
-X-Received: by 2002:a05:600c:4709:b0:416:2471:e102 with SMTP id v9-20020a05600c470900b004162471e102mr5663625wmo.37.1714918162748;
-        Sun, 05 May 2024 07:09:22 -0700 (PDT)
+        bh=2RU0P7Q5nbujdUn+9kF4gh6+s93N4xM8gRYPxjHZMM8=;
+        b=Kd6TjuqbUcSGlPogyiY0uSGZ7D+UYJL5VDhuwJUPnfGskTRwzO0hLttTZ34X6zswyx
+         z2RwZEJih53DhT301DwG4xL6p0zgv3QdyBaY4nCEUvfMamCswjo49Xl0Y/mbS+bOs5Pj
+         UzzXamBvxYK9AP127ENCurAKzljhl+Vqd1k2mI+VvAiFHVtklXs/AYioLA/TLdL4sTWT
+         im5l0ji7rliYkz9YgD4n8sQo9WKpoXMLBzdEJ3n26u+HOEe9ABRINhCaMr6iKUSeACYk
+         EGSdDnxcEuaZfvXxqf8yfJIJHvoD4/epGWkTTU7kpVZ0uNKUfRmzIZMKkd96W2sPpwVW
+         qj+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXxbceXzCqusU1sWdOr363jHfJxdoM+Ju8zmG6rldR7MS+KF+HVDPEig8/YqdHe+m2aWIDCuIQfLSGhcg82UPFXVI4R
+X-Gm-Message-State: AOJu0YzzD38P7W9GqulrogNfEN3FztohZlQ81/4tzKOGLQx4cF/vZoW5
+	z5RcGA4OEIJyjxTNzakLXR9h+d5YewOrawBkLE9HuVnxRp76YtjE
+X-Google-Smtp-Source: AGHT+IGu9loGUThft9n4BLie+KVktkcxkSuXaBVMcHSibCCK0+0FcgZ6NbYwPH8hCxT5WPF0JWR5hA==
+X-Received: by 2002:adf:f2c5:0:b0:34c:4d98:d6f7 with SMTP id d5-20020adff2c5000000b0034c4d98d6f7mr8102271wrp.26.1714918180510;
+        Sun, 05 May 2024 07:09:40 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
-        by smtp.gmail.com with ESMTPSA id bg4-20020a05600c3c8400b0041bf29ab003sm16455005wmb.30.2024.05.05.07.09.21
+        by smtp.gmail.com with ESMTPSA id z18-20020adff752000000b0034e19861891sm8327397wrp.33.2024.05.05.07.09.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 May 2024 07:09:22 -0700 (PDT)
-Message-ID: <a75133dc-a0bb-4f61-a616-988f2b4d5688@gmail.com>
-Date: Sun, 5 May 2024 15:09:21 +0100
+        Sun, 05 May 2024 07:09:40 -0700 (PDT)
+Message-ID: <17c71b18-20b4-4bbd-b52c-c29ef8d3860e@gmail.com>
+Date: Sun, 5 May 2024 15:09:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,108 +63,166 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 03/10] trailer: teach iterator about non-trailer lines
-To: Linus Arver <linus@ucla.edu>, phillip.wood@dunelm.org.uk,
- Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>,
- Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>,
- Josh Steadmon <steadmon@google.com>,
- "Randall S. Becker" <rsbecker@nexbridge.com>,
- Christian Couder <christian.couder@gmail.com>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <pull.1696.v3.git.1714091170.gitgitgadget@gmail.com>
- <pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
- <4aeb48050b14e44ec65cfa651a4d98587a6cd860.1714625668.git.gitgitgadget@gmail.com>
- <18343148-80d1-4558-b834-caaf8322467a@gmail.com>
- <CAMo6p=GJwmStLrW6cDDKrch2cXn_8fe0GsBHi3hpe5Uya72y=w@mail.gmail.com>
+Subject: Re: [PATCH v6 4/7] refs: add support for transactional symref updates
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+ ps@pks.im
+References: <20240501202229.2695774-1-knayak@gitlab.com>
+ <20240503124115.252413-1-knayak@gitlab.com>
+ <20240503124115.252413-5-knayak@gitlab.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <CAMo6p=GJwmStLrW6cDDKrch2cXn_8fe0GsBHi3hpe5Uya72y=w@mail.gmail.com>
+In-Reply-To: <20240503124115.252413-5-knayak@gitlab.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Linus
+Hi Karthik
 
-On 05/05/2024 02:37, Linus Arver wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->> On 02/05/2024 05:54, Linus Arver via GitGitGadget wrote:
->>> From: Linus Arver <linus@ucla.edu>
->>>
->>> The new "raw" member is important because anyone currently not using the
->>> iterator is using trailer_info's raw string array directly to access
->>> lines to check what the combined key + value looks like. If we didn't
->>> provide a "raw" member here, iterator users would have to re-construct
->>> the unparsed line by concatenating the key and value back together again
->>> --- which places an undue burden for iterator users.
->>
->> Comparing the raw line is error prone as it ignores custom separators
->> and variations in the amount of space between the key and the value.
->> Therefore I'd argue that the sequencer should in fact be comparing the
->> trailer key and value separately rather than comparing the whole line.
+I've left a few comments below - the most important one is about the 
+error messages in the reftable backend, non of the others are worth 
+re-rolling for on their own.
+
+On 03/05/2024 13:41, Karthik Nayak wrote:
+> From: Karthik Nayak <karthik.188@gmail.com>
 > 
-> I agree, but that is likely beyond the scope of this series as the
-> behavior of comparing the whole line was preserved (not introduced) by
-> this series.
-
-Right but this series is changing the trailer iterator api to 
-accommodate the sub-optimal sequencer code. My thought was that if the 
-sequencer did the right thing we wouldn't need to expose the raw line in 
-the iterator in the first place.
-
-> For reference, the "Signed-off-by: " is hardcoded in "sign_off_header"
-> in sequencer.c, and it is again hardcoded in "git_generated_prefixes" in
-> trailer.c. We always use the hardcoded key and colon ":" separator in a
-> few areas, so changing the code to be more precise to check for only the
-> key (to account for variability in the separator and space around it as
-> you pointed out) would be a more involved change (I think many tests
-> would need to be updated).
-
-So the worry is that we'd create a "Signed-off-by: " trailer that we 
-then couldn't parse because the user didn't have ':' in trailer.separators?
-
->> There is an issue that we want to add a new Signed-off-by: trailer for
->> "C.O. Mitter" when the trailers look like
->>
->> 	Signed-off-by: C.O. Mitter <c.o.mitter@example.com>
->> 	non-trailer-line
->>
->> but not when they look like
->>
->> 	Signed-off-by: C.O. Mitter <c.o.mitter@example.com>
->>
->> so we still need some way of indicating that there was a non-trailer
->> line after the last trailer though.
+> The reference backends currently support transactional reference
+> updates. While this is exposed to users via 'git-update-ref' and its
+> '--stdin' mode, it is also used internally within various commands.
 > 
-> What is the issue, exactly? Also can you clarify if the issue is
-> introduced by this series (did you spot a regression)?
+> However, we never supported transactional updates of symrefs. Let's adds
 
-There is no regression - the issue is with my suggestion. We only want 
-to add an SOB trailer if the last trailer does not match the SOB we're 
-adding. If we were to use the existing trailer iterator api in the 
-sequencer we would not know that we should add an SOB in the first 
-example above as we'd only see the last trailer which matches the SOB 
-we're trying to add. We'd still need some way to tell the caller that 
-there was a non-trailer line following the last trailer.
+s/we never supported/we do not support/
 
->>> The next commit demonstrates the use of the iterator in sequencer.c as an
->>> example of where "raw" will be useful, so that it can start using the
->>> iterator.
->>>
->>> For the existing use of the iterator in builtin/shortlog.c, we don't
->>> have to change the code there because that code does
->>
->> An interface that lets the caller pass a flag if they want to know about
->> non-trailer lines might be easier to use for the callers that don't want
->> to worry about such lines and wouldn't need a justification as to why it
->> was safe for existing callers.
+s/Let's/This commit/
+
+> support for symrefs in both the 'files' and the 'reftable' backend.
+
+s/backend/backends/
+
+> Here, we add and use `ref_update_has_null_new_value()`, a helper
+> function which is used to check if there is a new_value in a reference
+> update. The new value could either be a symref target `new_target` or a
+> OID `new_oid`.
 > 
-> Makes sense. But perhaps such API enhancements belong in a future
-> series, when other callers that need such flexibility could benefit from
-> it?
+> With this, now transactional updates (verify, create, delete, update)
 
-For me the main benefit would be that you don't have to spend time 
-explaining why the changes are safe for existing callers because they 
-would keep the existing iterator behavor.
+s/With this, //
+
+> can be used for:
+> - regular refs
+> - symbolic refs
+> - conversion of regular to symbolic refs and vice versa
+
+Excellent
+
+> This also allows us to expose this to users via new commands in
+> 'git-update-ref' in the future.
+
+I'm slightly concerned that splitting out the update-ref changes means 
+we don't have any test coverage of the new code beyond the part that is 
+used by refs_create_symref()
+
+> Note that a dangling symref update does not record a new reflog entry,
+> which is unchanged before and after this commit.
+> 
+> +/*
+> + * Check whether the old_target values stored in update are consistent
+> + * with current_target, which is the symbolic reference's current value.
+> + * If everything is OK, return 0; otherwise, write an error message to
+> + * err and return -1.
+> + */
+> +static int check_old_target(struct ref_update *update,
+> +			    const char *current_target,
+> +			    struct strbuf *err)
+> +{
+> +	if (!update->old_target)
+> +		BUG("called without old_target set");
+> +
+> +	if (!strcmp(update->old_target, current_target))
+> +		return 0;
+> +
+> +	if (!strcmp(current_target, ""))
+> +		strbuf_addf(err, "cannot lock ref '%s': "
+> +			    "reference is missing but expected %s",
+> +			    original_update_refname(update),
+> +			    update->old_target);
+> +	else
+> +		strbuf_addf(err, "cannot lock ref '%s': "
+> +			    "is at %s but expected %s",
+> +			    original_update_refname(update),
+> +			    current_target, update->old_target);
+> +
+> +	return -1;
+> +}
+> @@ -2576,9 +2623,27 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+>   		}
+>   	}
+>   
+> -	if ((update->flags & REF_HAVE_NEW) &&
+> -	    !(update->flags & REF_DELETING) &&
+> -	    !(update->flags & REF_LOG_ONLY)) {
+> +	if (update->new_target && !(update->flags & REF_LOG_ONLY)) {
+> +		if (create_symref_lock(refs, lock, update->refname, update->new_target, err)) {
+
+This line looks quite long
+
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -938,7 +940,22 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>   		 * individual refs. But the error messages match what the files
+>   		 * backend returns, which keeps our tests happy.
+>   		 */
+> -		if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
+> +		if (u->old_target) {
+> +			if (strcmp(referent.buf, u->old_target)) {
+> +				if (!strcmp(referent.buf, ""))
+> +					strbuf_addf(err, "verifying symref target: '%s': "
+> +						    "reference is missing but expected %s",
+> +						    original_update_refname(u),
+> +						    u->old_target);
+> +				else
+> +					strbuf_addf(err, "verifying symref target: '%s': "
+> +						    "is at %s but expected %s",
+> +						    original_update_refname(u),
+> +						    referent.buf, u->old_target);
+
+The messages in this function differ from the equivalent messages in 
+check_old_target() from the files backend above. This is potentially 
+confusing to users, creates more work for translators and makes it hard 
+to write tests that are independent of the backend. Can we export 
+check_old_target() so it can be reused here. If not we should reword 
+these messages to match the other messages all of which talk about not 
+being able to lock the ref.
+
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +		} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
+>   			if (is_null_oid(&u->old_oid))
+>   				strbuf_addf(err, _("cannot lock ref '%s': "
+>   					    "reference already exists"),
+> @@ -1043,7 +1060,7 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+>   		 * - `core.logAllRefUpdates` tells us to create the reflog for
+>   		 *   the given ref.
+>   		 */
+> -		if (u->flags & REF_HAVE_NEW && !(u->type & REF_ISSYMREF) && is_null_oid(&u->new_oid)) {
+> +		if ((u->flags & REF_HAVE_NEW) && !(u->type & REF_ISSYMREF) && ref_update_has_null_new_value(u)) {
+
+The old line was already quite long and the new one is even longer - 
+perhaps we could break it after the second "&&"
+
+> +			if (create_reflog) {
+> +				ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+> +				log = &logs[logs_nr++];
+> +				memset(log, 0, sizeof(*log));
+> +
+> +				fill_reftable_log_record(log);
+> +				log->update_index = ts;
+> +				log->refname = xstrdup(u->refname);
+> +				memcpy(log->value.update.new_hash, u->new_oid.hash, GIT_MAX_RAWSZ);
+> +				memcpy(log->value.update.old_hash, tx_update->current_oid.hash, GIT_MAX_RAWSZ);
+
+Both these lines would benefit from being folded
 
 Best Wishes
 
