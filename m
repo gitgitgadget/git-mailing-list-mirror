@@ -1,194 +1,132 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBFB79FE
-	for <git@vger.kernel.org>; Sun,  5 May 2024 10:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8628D11182
+	for <git@vger.kernel.org>; Sun,  5 May 2024 11:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714904412; cv=none; b=JXUZvVLVcHGBd+rkbkFa4Yf9SqWgOw/guevB5NbTchYrry20T8vT335KtX1Rwl1QNSNtOH9E5z+VAzSkg5GennDMzSidGSRWlG9yVfmb+ScgpJuDPpZHD1e3CQzXQMlxCL6WmqV90csrRRq2Vq+reRgnyTVx+o3k1kKBuDn+nzc=
+	t=1714907028; cv=none; b=AhL5/7kzmMIY/gjrNrTbEfogL94Gd+ePtsV2d1KNdUw65849+IUJ/gYLvZ6WxvJFJbNXtvJNoeLm9xnJ7n5VTiRp/GjWRGlWoaPTdV6vm4PoErA228W0xrN0N6cEcSX5QjeQ7bxXqV6XRwuslhY4cgbHGC2UwuDkYK2rdQ8XSl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714904412; c=relaxed/simple;
-	bh=KXnhGCTuZRywWGms28GUaOLyMSZgvFGwTEUx7BwZXw4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=ShsQnYCfj6qcgCVxJkjLcUS7j6GgyC9Bfd2CLV2vVoHI1qRBPEA1spk0YeAzwqMKlXWwg5hAQSYoZR4wVzPDvmTMtb/1jzGxMWWKyL+9WAzJagQ0/fKulI7Cb+V3mvYGHJIq7uyMcx2Q9zF3tsKxKOtHvTGgvCZYEsayTvzcNfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=BZBEfWg1; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1714907028; c=relaxed/simple;
+	bh=7Tfgh1GE67CnMG0UnwKit58FaOv9BCALitbqDTx7yQo=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Ju+nZ1DNuzBk5CT57urSm0RXsA6NjZA/G9g9PYxELvEbDBZf1RjjcmnV2ZdxLBCJCqqArUBV8XNN6AdALRzNmP9I9iv5TBq8cgchPOlBrtO7zMtek+ZMtUYXvX3sIj32vbjqpnWZqWa1meH8n1z5vepvfdfSzFgef4au9dOh0y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ORhizMzZ; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="BZBEfWg1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1714904404; x=1715509204; i=l.s.r@web.de;
-	bh=E9iD3qnHno0Pajvq0t4EX+K97QFhtTpFVaF0X2euRQo=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 References:Cc:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=BZBEfWg1a37c3UsKjfW48NqFOA239LLmMBhFjyDFvg8f8Lu7HUo5OK3fYmm+6xiS
-	 0lxjIHqBuELntH8YTBC3jdlwTGyiYizdkBuFrRiNF8XWesJo/Ps0p9ltDzf40Y6M3
-	 vEIgQXphMiNM5ulX041g5Z7vwedpIQ/zE5288cOajTOwHKB7LUjlR+gXFZ6VTN7uk
-	 TkHeZWyZiY9HU/PcpZTZc7ScSxDlkDAz3AgWZXMHEf5SltxWdxK/Ib3s/vKHIPa/l
-	 FtaQ3OF6V40du2WmwU5EOdwtmojM7g6Sxu1rD2cT8M7rujTDli6MkU+rOG8C3NjaE
-	 zgz1ykkNgWryDGFwug==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MKMA1-1sLM8x0EwB-00KBnw; Sun, 05
- May 2024 12:20:04 +0200
-Message-ID: <e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
-Date: Sun, 5 May 2024 12:20:03 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ORhizMzZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1714907018; x=1715511818;
+	i=johannes.schindelin@gmx.de;
+	bh=c79EGMoqlEbsWm7ApyHRm/SvPzfgomRf/E12RuZaj+Y=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=ORhizMzZ6hFlDm/8uDVI4UWcNAYz46rBN2uU1PhCOhU/DEQ+2HT06hMRenJWE9yX
+	 +ocQyfEhuT73IZzGk8G/xX4g1knklg9AqEkdcpyyD8yYcSXfU9bHG7HbABM9zsCUg
+	 ZbAYdxGJq611KuxvLU07w6eUS/f9r8J8TaauIUbnonIc8bOVeOnuqxaLoYBALXSyX
+	 VhnhOl7UnH/tgi9SkuuE7RYpASmN8eIQZA2cSYPmnM/UYGCbqMCpqMBsFvzXTGxFe
+	 aiN69g0gFzUp20KpU6RtG40WPoHxaFaltqJUgyqp0qZCfeZQIRs1PVZKR0ACv7dq1
+	 uPzWKuFrdtZvvx6Gig==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MybGX-1sqsvE3YpJ-00yyoX; Sun, 05
+ May 2024 13:03:37 +0200
+Date: Sun, 5 May 2024 13:03:35 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>, 
+    James Liu <james@jamesliu.io>, git@vger.kernel.org
+Subject: Re: Re* [PATCH v4 0/3] advice: add "all" option to disable all
+ hints
+In-Reply-To: <CAPig+cT-xk13jGEUmpT5QmwVYTxKNUZsu9xJ=Ph3h4AzKHg6pA@mail.gmail.com>
+Message-ID: <34d77e4d-6edb-99d0-7fc5-fea5224654c7@gmx.de>
+References: <20240430014724.83813-1-james@jamesliu.io> <20240503071706.78109-1-james@jamesliu.io> <ab604f4b73eab1d9aae4e2a20ba0630e@manjaro.org> <xmqqjzka7p2t.fsf_-_@gitster.g> <CAPig+cRZEQjwhnMYvQ_0BjvXaR=3x=LQeJHzFOxC+ZPyOy9yJQ@mail.gmail.com>
+ <xmqqbk5m65i8.fsf@gitster.g> <xmqq4jbe64l9.fsf@gitster.g> <CAPig+cT-xk13jGEUmpT5QmwVYTxKNUZsu9xJ=Ph3h4AzKHg6pA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH 2/2] diff: fix --exit-code with external diff
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: German Lashevich <german.lashevich@gmail.com>, git@vger.kernel.org
-References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
- <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
-Content-Language: en-US
-Cc: Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
+Content-Type: multipart/mixed; boundary="8323328-1300807736-1714907017=:516"
+X-Provags-ID: V03:K1:5sDzXn+EG/ROjwlhNmvcQueoF2rp1mVBPAy1NJrPgmGY47zbn9c
+ 4xbZqBzEbsMEIMGS3ws3iQMjC8esGJx+y41pVWinHrOfWE4ONhkx6sc8+ruxqVZGzWuYakq
+ Bj5x5gvRAKqb5eRUFHE/amzn19GM7mjEwANKEV3eHIEwcEC/u2PYTCzbRs4/PxWQcVsLe/K
+ CYbCQSQodUyj8evLRCDaQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:zWGmJhUxkvw=;kBTuJzJ1XppV13CeWrwprUPEJ4h
+ RBVU5vcnM9DwZ75ez7jrnKAe5rk+6ZSQ5B+z7Vm8gFLOWyVDzG5h/DQH0NevfTnBNxXYgLntD
+ mLehzcZBd+4D2ZO9Ds9q3vPXZRSDgvbGlIQUya5i/4HR3Tg6w//sS5InRjnT46BHh6tBOv/zT
+ bOSnWzHbCYS91d1JhLmlvu28CDP6JYO0OfiNkkU8kHNWhAxeh6ZyfzxMdPlqQsiXZdakJMkey
+ zBk9dGli/esyU5vwmpmbNchugi/2w0K2jJPDU7gkA3rygPKlXwi/Be5ssMyGmNzaQt2eByiTX
+ fINPYKfCFlOsJng1Iiyy077famSQY03QYi2C/xFx4fOjSFhu8y/TpSmlwdG/n1yPtqkRSBtqr
+ CSWUTpnxrF7+k5LASbA7l0X5uCL/59KLvOwXD5E3WzlsBluOp+2XGvK/DtreSyC4XToDhbOQU
+ 3Ru5tjELjoqGQmDzZDzKlBL2QRCmjlJnVK5RW0twYUjNiPD9V3uORJgInwzzefDba+3aIyEF+
+ ar1oTuFGRDqcLKNLKy0jDdpVsz7gHr1ANGIq7mvxQqPX/KKJtRXrLXtEUg6YwyBUuTkjAlbvB
+ +VaYW+JsJtHJL99PvlzmOr9fZ9nAXYLRW69e+0DCA6B/C48ww4ytWSBZ8l/775uSqKTVua6D1
+ RFr38YcNDZHvPhXnF4Q+tUMHfYB33Ynbz2hSvnZufnm6vwtu231vKYJsOvwjrUWJlPAHnSds0
+ odiBo9S+nn43z+70bsTzsE31l+N3UTVBAhrucDDzq5i17LmJcXIxWR52vs+rBN4JG65XteBIc
+ cIPs5hX3YpI8Pr04yTlpNoFEOFknCNRRIZCtpE8Q78SK4=
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1300807736-1714907017=:516
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kVcGjChM3+388TEegDsebmzCiMaKZCQGGVcICo/mfIWa6U2QAyi
- KmDEeL2OEtXD3f0geJ4zoTdyqFl/Fzu2cQzBg7o5F8Px7I0aBLRwR2M8+c9I2gW8lLZnQLG
- MwwqO1F32WE4zGdr6Sa5YqRdUwJMiASdAlFlpC64vtLDKd/fPpluSr4W7wQ+0QoiUhmaRWf
- Cv9ztdvH9O2hembEIt3Jw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ws2yJqjiZ1c=;knThAzhcjpSukBhhcpwwPxGBEVf
- MsOIBQaDmXRoq6IlmznAuF1vCRjq+1sLX8AcVMCBXZzEWW9ac71paCXTzHSM2y6nk+7ZQtSs9
- kYaPbUL4VtkIBr3CuHZPLcffTws2jusjXj4K/nu0NMWzWA5NZUQ8OLuPSU7IAxR2N+2inmnbk
- HhVArlqTKQIH/2d7bqlxM5sy/y4Edm+QBdc1kgrSlnY6W1cuj3FI/wUNQ+GUc5T648d9S14Kx
- y3exeYUnHN3dNXnPpJlX+euu6XT+Iymp73wWuxg/zkm2dPf4cjC02q6KQ80gRWdV14riddGdb
- Oiz1+BFggmiJ2q92l297Svcnf12hv9u1BOQNRr+qrSykJ8XtDY4e/8jpRg1r+trmrZEzHCAE2
- TyxF+j/GewQnwher0/qmByh3rBeiYQA9r79OxWZq4W/q6TUW2bKU0T+zneofinABn/MAXs/qw
- k8+LCqAB67RnSlSUdzflVxLxktmnZ6+eNJmL/Vf4hfWmBMFHc/6SCiXWj8PD5Qp0HeDq5JMiB
- 0+bg2IUZnEldy52wWe/Hgu3clMxFzMESSdO5fbwKIX6vpBPklBRSPU4HDicqsEXJFkkDIRG4O
- oCOMHRRfcmBe2q2WSnGId41bVe6vYopQ9plAY7rYXslrSedyPTcI2oiy9PtKjII51JdMZ65xB
- vMsVdlz/0Rh9og3N9bUB6fRpCakXJSVO7TQQc48PL/W98+yWPe/71cXeoYZTOaaA4SJluJSOA
- LG+jtNM8xhnKg6AW8Y4RXBUKMis+8ulBq5tlodyNT9Nl2qV1zfdG7RxBG2xl1IKCAG1spDP5k
- jfuc8AO3gvLOgWN2FMK7cj4ZFpeIybg3qp3/ixcPkDgSM=
 
-You can ask the diff machinery to let the exit code indicate whether
-there are changes, e.g. with --exit-code.  It as two ways to calculate
-that bit: The quick one assumes blobs with different hashes have
-different content, and the more elaborate way actually compares the
-contents, possibly applying transformations like ignoring whitespace.
+Hi,
 
-Always use the slower path by setting the flag diff_from_contents,
-because any of the files could have an external diff driver set via an
-attribute, which might consider binary differences irrelevant, like e.g.
-diff -b.
+On Fri, 3 May 2024, Eric Sunshine wrote:
 
-And don't stop walking that path in diff_flush() just because
-output_format is unset.  Instead run diff_flush_patch() with output
-redirected to /dev/null to get the exit status, like we already do for
-DIFF_FORMAT_NO_OUTPUT.  That's consistent with the comments in diff.h:
+> On Fri, May 3, 2024 at 4:08=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> > It seems that Dscho was in agreement that format-patch's use case
+> > should try to be more aggressive at least back then.  In the message
+> > in the thread you pointed
+> >
+> >  https://lore.kernel.org/git/nycvar.QRO.7.76.6.1903211209280.41@tvgsbe=
+jvaqbjf.bet/
+> >
+> > he does not give us the exact reason why he does not think the "more
+> > aggressive" mode is not suitable for other use cases, though.
+>
+> Having an answer to that question could be helpful.
 
-   /* Same as output_format =3D 0 but we know that -s flag was given
-    * and we should not give default value to output_format.
-    */
-   #define DIFF_FORMAT_NO_OUTPUT	0x0800
+Sure.
 
-An unset output_format is given e.g. by repo_index_has_changes().  We
-could set it right there, but there may be other places, so simply let
-diff_flush() handle it for all of them consistently.
+The `creation factor` essentially tells Git how confident the caller is th=
+at the
+two provided commit ranges contain only matching pairs of patches, no
+matter how different they look.
 
-Finally, capture the output of the external diff and only register a
-change by setting found_changes if the program wrote anything.
+When calling `git format-patch --range-diff`, we can be _quite_ certain.
+Not necessarily 100% (in which case the creation factor would need to be a
+lot higher than 100), as it does happen that contributors have to drop a
+patch or two, and add a patch or two, sometimes in the same iteration.
 
-Reported-by: German Lashevich <german.lashevich@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- diff.c                   | 33 ++++++++++++++++++++++++++++++---
- t/t4020-diff-external.sh |  8 ++++++++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+When calling `git range-diff` in general, we can be less certain about
+that. In fact, users like me often call `git range-diff` to _determine_
+whether there are obvious matches (for example, to see whether commits in
+GitGitGadget PRs have corresponding commits in `seen`).
 
-diff --git a/diff.c b/diff.c
-index ded9ac70df..cd3c8a3978 100644
-=2D-- a/diff.c
-+++ b/diff.c
-@@ -40,6 +40,7 @@
- #include "setup.h"
- #include "strmap.h"
- #include "ws.h"
-+#include "write-or-die.h"
+That difference in certainty is the entire reason why I contend that
+`range-diff` and `format-patch --range-diff` need different defaults for
+the creation factor.
 
- #ifdef NO_FAST_WORKING_DIRECTORY
- #define FAST_WORKING_DIRECTORY 0
-@@ -4404,8 +4405,33 @@ static void run_external_diff(const char *pgm,
- 	diff_free_filespec_data(one);
- 	diff_free_filespec_data(two);
- 	cmd.use_shell =3D 1;
--	if (run_command(&cmd))
--		die(_("external diff died, stopping at %s"), name);
-+	if (o->flags.diff_from_contents) {
-+		int got_output =3D 0;
-+		cmd.out =3D -1;
-+		if (start_command(&cmd))
-+			die(_("external diff died, stopping at %s"), name);
-+		for (;;) {
-+			char buffer[8192];
-+			ssize_t len =3D xread(cmd.out, buffer, sizeof(buffer));
-+			if (!len)
-+				break;
-+			if (len < 0)
-+				die(_("unable to read from external diff,"
-+				      " stopping at %s"), name);
-+			got_output =3D 1;
-+			if (write_in_full(1, buffer, len) < 0)
-+				die(_("unable to write output of external diff,"
-+				      " stopping at %s"), name);
-+		}
-+		close(cmd.out);
-+		if (finish_command(&cmd))
-+			die(_("external diff died, stopping at %s"), name);
-+		if (got_output)
-+			o->found_changes =3D 1;
-+	} else {
-+		if (run_command(&cmd))
-+			die(_("external diff died, stopping at %s"), name);
-+	}
+> > A similar thread was raised more recently:
+> >
+> >  https://lore.kernel.org/git/rq6919s9-qspp-rn6o-n704-r0400q10747r@tzk.=
+qr/
+>
+> I think I missed this thread.
 
- 	remove_tempfile();
- }
-@@ -4852,6 +4878,7 @@ void diff_setup_done(struct diff_options *options)
- 	 */
+Heh. I had forgotten about it.
 
- 	if ((options->xdl_opts & XDF_WHITESPACE_FLAGS) ||
-+	    options->flags.exit_with_status ||
- 	    options->ignore_regex_nr)
- 		options->flags.diff_from_contents =3D 1;
- 	else
-@@ -6742,7 +6769,7 @@ void diff_flush(struct diff_options *options)
- 	if (output_format & DIFF_FORMAT_CALLBACK)
- 		options->format_callback(q, options, options->format_callback_data);
+Ciao,
+Johannes
 
--	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
-+	if ((!output_format || output_format & DIFF_FORMAT_NO_OUTPUT) &&
- 	    options->flags.exit_with_status &&
- 	    options->flags.diff_from_contents) {
- 		/*
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index fdd865f7c3..26430ca66b 100755
-=2D-- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -172,6 +172,14 @@ test_expect_success 'no diff with -diff' '
- 	grep Binary out
- '
-
-+test_expect_success 'diff.external and --exit-code with output' '
-+	test_expect_code 1 git -c diff.external=3Decho diff --exit-code
-+'
-+
-+test_expect_success 'diff.external and --exit-code without output' '
-+	git -c diff.external=3Dtrue diff --exit-code
-+'
-+
- echo NULZbetweenZwords | perl -pe 'y/Z/\000/' > file
-
- test_expect_success 'force diff with "diff"' '
-=2D-
-2.45.0
+--8323328-1300807736-1714907017=:516--
