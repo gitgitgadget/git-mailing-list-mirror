@@ -1,72 +1,68 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15E4156258
-	for <git@vger.kernel.org>; Mon,  6 May 2024 20:17:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220E856B76
+	for <git@vger.kernel.org>; Mon,  6 May 2024 20:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715026627; cv=none; b=igtuMqaR0+pBjbemKf/IGO8w17we4Keg5NKwJQ4IKrsszfYsaQxG0F3mG7I8ov3Kcj0eeCfkwnEP+12xJfXhiVSJj9uDADdb9/oya8TR2FKOCpurPyahTKx1K6fVNoAfIMXIkQg9jJZbvgCYFLZhFTtnxxvj0Y+mUiqYHQ6uhXM=
+	t=1715026914; cv=none; b=A0LiTWY0eV/WaHfoYAUBs5yidljnIjr/hm4HVuf7arjccMvVp/m85kpIGXVPop5dPBdT57nuQcpqF15iAofEuV5WzuoOKEaVRB4vDkIT/cDrXMAkNIFZ37wYSXO1C7Qs0+D25SASTGBWUKsAofY4fBy+hFp91nN4qQvI1ag2a04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715026627; c=relaxed/simple;
-	bh=s7bGQUnNZrAtl6EiUlEOaelDpDrQOx6aEEmXOLMDHGc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XfnxN+MKogT5k6u3wcyOYhOvBHzfr+nlO+hJ3M+VOAmYbp6jm7a5sMacSsyVVmj0gmeIIhar1jUFIZYm85mZHj0Bxzptk64BjswTIyCWvRLwqRSf+pjfYVRrs1QPDYoCbY/0aWd0RV8sHw21d0R37bK5c9Jv571KVgbP5TKezig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=joVe+kxv; arc=none smtp.client-ip=209.85.210.43
+	s=arc-20240116; t=1715026914; c=relaxed/simple;
+	bh=J137pKj0j0TaJk96Qk/RBZDosuy/G+619oaYKIi5Oxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AFrm32a9pR9kJqMbP9maEkBfWsuKxyXVYJZvQ7dVUNkT0Xv9Ab/ghQzrghIJv4hiOIpioUONUFropG4kxGxBbgYYKZTQhi6VpST/zm+U1E4L4FQDc1DAxffQ6jbdSoN2jxCLH5iU5HMDMLuRXdpptFD9SvpRhCw+h48PJ1zzI00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZEn7KXWr; arc=none smtp.client-ip=209.85.167.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="joVe+kxv"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-6f04ec1b501so869923a34.2
-        for <git@vger.kernel.org>; Mon, 06 May 2024 13:17:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZEn7KXWr"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3c96fef64b3so630968b6e.3
+        for <git@vger.kernel.org>; Mon, 06 May 2024 13:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715026626; x=1715631426; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715026912; x=1715631712; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=s7bGQUnNZrAtl6EiUlEOaelDpDrQOx6aEEmXOLMDHGc=;
-        b=joVe+kxvR6dJJOtSIfqVHcAwFM9Y8fU+eGBY22pELqo0croOPh6S20gkVT3BOs4r+P
-         YcCOyNdKPAoX3RqlSNpUW1bgyt7vv1ljv3LmTM23OT+AtHWN0R0ve1L5XT2FCOPqQkc5
-         JlBxtyJ2gLcIIATZ1sIwz2vNVCh3sBBCqfD6W30pj2F0N+/ixfQnJgcp/FKz1ZZrmGD9
-         tBhDY9U9KzQS4fk9n71WTPSod8z6EoOFbg11JfrtI7Gs1VfgDi58lXRxPh3rFrkVPFGz
-         AMcpaxtnRWMtst3LNFJfdaUsM44iegUn3ksUAyHdo9f5mPkDu2uEWMXNu+PAiGEzKqkO
-         M0QQ==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=J137pKj0j0TaJk96Qk/RBZDosuy/G+619oaYKIi5Oxw=;
+        b=ZEn7KXWrYif8nh41U8taeYhwaGALfoWM1k8XhwdJzzcVEeaH+F6WrRo+9IrByg9WZ0
+         8ytX1bWTuWaVxOOpDqZ7sPnl/blT24gBh4aZAOM4/kNRaNN25h+QWTHK0sGveTqHQEbN
+         5SR9BmLFyLAsSNLAvZY6h0GWJimZuou57sCzwEi4+YkL1KyzwrykcLQuK2+yUmMeoSjp
+         uCCXbzh7K8GGBSJ2ToHm1plEFhp+POXnTC/IMudzu8aSCcwQfyQwo0R6XFvudNkzzESa
+         XzCVmfrByjpvAYNu1YgDsW11vkqRlqc6CFOx1fzHNmLRuUz1nObQK7Wq50Ulm1JdAX3q
+         4pfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715026626; x=1715631426;
+        d=1e100.net; s=20230601; t=1715026912; x=1715631712;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s7bGQUnNZrAtl6EiUlEOaelDpDrQOx6aEEmXOLMDHGc=;
-        b=PVSlxwTCoFgE2k5aki8CHmxFHCjJfN8bDeiWKflnwE752nQpOuakbLnxBf2+aGsh6P
-         rEZaWP7JyHu0i/VajRpcBJkb8Sdl2TGlecnKDOverwIebaLe7QLUhTWVbj6Cn+zXyr7D
-         ZiF3BhvwCYeDGgcDYBxe5KNPzcXROv5niZUoqsu25kAozDIsj/H0cx/z2n0hTCIPxqOm
-         4ujlSl4zi+BuoWO4JJ9EYhBtD4leuqQgCFrjb2ezakF2lvDdEv8XHaJrOU+iXSiPWJgR
-         nGnqBi7qHHWyA1Q9J0APuVktsmN++GM/lxaNo/06pwEedZ7HpJ4mPG3oSfiq/kiJYhoX
-         4s0A==
-X-Forwarded-Encrypted: i=1; AJvYcCX7fOdF/13cjdu5WZ+txp22gxHX/0xZ+bU0l84t0odXp+X+MPgarUwzbVfrfsHIQF2r9nS561D47Mr0swVoG7FzE5vd
-X-Gm-Message-State: AOJu0YzItU3f1UFu7oqMQ8nv8jufnRnvet/bkqh7xMTQ4blquAihr8HZ
-	SBpmAT2LTgQACu2Kl9HFpYc7B8xJvca0+lDJIJenzH6nMVzWIahii0syDetkxaE=
-X-Google-Smtp-Source: AGHT+IGtSZnXJvODw1wUF6k1uaSw0bVeZNr96EASltESupuIae7HnB6LtkQzL7lQFNTAAkYJgXE1fQ==
-X-Received: by 2002:a05:6870:818b:b0:23f:eea9:ae35 with SMTP id k11-20020a056870818b00b0023feea9ae35mr2145076oae.41.1715026625683;
-        Mon, 06 May 2024 13:17:05 -0700 (PDT)
+        bh=J137pKj0j0TaJk96Qk/RBZDosuy/G+619oaYKIi5Oxw=;
+        b=XlfmjvubMcT1KDWCR9ai1GpyryzKYqfa83u2/pMyC5GPd/Uf8SfJJlmyrt1q8eotD4
+         Ji8S55uMAbsv6RJtabJ2bwe3LR1686YjGXVFwZ5/uHkTqNbzFx1KEAAqhnAhbgqQ6QOE
+         QdrDG1HbCbClUobrwUGkA91sD4MI4SKSvEpl2myXGYOwxJDY4D0yLGXT+YCRnuadosiI
+         tM1schkhxLx2ubT6Ssju1XP/cd8HJsMiPLXKlXl9LvSpyvmYcNGs+8SZNkg8Qb/CGNbI
+         8Typ20wBEXM1nHkHQnn870RZuwyebRuSzpEOfIFhU7XLASPS3ik1D0T3xfCo0wznxdOK
+         Z6yg==
+X-Gm-Message-State: AOJu0YzkvHDkTa1sItZIYloqyRMm5/aDsAPhDYmk3/VHKsyqKeN3GbaL
+	xmTtn9CLp1G/jnA80HmAAEA1anNJQzvWOJeZuw3LcQbf58/vB46qW4XGJYxU9w0vFwQHgTDAoBw
+	O5k0=
+X-Google-Smtp-Source: AGHT+IERAcBlYEdqz5vUvIOPYZb+QppdBqjN1JYVOffXCfqcla5U9WHFRaJ7fp++IJQeOnEFcRhJ2Q==
+X-Received: by 2002:a05:6808:6145:b0:3c8:2b77:789 with SMTP id dl5-20020a056808614500b003c82b770789mr11611040oib.5.1715026912066;
+        Mon, 06 May 2024 13:21:52 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v25-20020a05620a091900b00790fbf629b5sm4162128qkv.115.2024.05.06.13.17.05
+        by smtp.gmail.com with ESMTPSA id s13-20020ad4438d000000b006a0e04887edsm4004998qvr.73.2024.05.06.13.21.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 May 2024 13:17:05 -0700 (PDT)
-Date: Mon, 6 May 2024 16:17:03 -0400
+        Mon, 06 May 2024 13:21:51 -0700 (PDT)
+Date: Mon, 6 May 2024 16:21:50 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Josh Steadmon <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, avarab@gmail.com, christian.couder@gmail.com,
-	Enrico Mrass <emrass@google.com>,
-	Emily Shaffer <nasamuffin@google.com>
-Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
-Message-ID: <Zjk6v3Y7zJqtPVVq@nand.local>
-References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
- <20240417163244.651791-1-emrass@google.com>
- <xmqqr0f47wp9.fsf@gitster.g>
- <xmqqseyzar96.fsf@gitster.g>
- <CANq=j3u5ZHYbJQjhwtnq05GocOE_AVrHodjPOqVCNN7OZHwVsQ@mail.gmail.com>
- <xmqqfruy7oq8.fsf@gitster.g>
- <ZjU7CWdwb+xKubul@nand.local>
- <mdgbdajenbv23r63hreieemielgdtdkwjzb65pdv3b4rylyyxi@4d3eeymtjvva>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dragan Simic <dsimic@manjaro.org>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v5 00/14] builtin/config: introduce subcommands
+Message-ID: <Zjk73l5l6AqQOz6N@nand.local>
+References: <cover.1709724089.git.ps@pks.im>
+ <cover.1714982328.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,34 +71,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <mdgbdajenbv23r63hreieemielgdtdkwjzb65pdv3b4rylyyxi@4d3eeymtjvva>
+In-Reply-To: <cover.1714982328.git.ps@pks.im>
 
-On Mon, May 06, 2024 at 12:36:06PM -0700, Josh Steadmon wrote:
-> How would you feel about a doc outlining how the process changes as you
-> go from: A) small/medium patch series, to B) larger discussions with
-> (parts of) the proposal recorded in patches, to C) large discussions
-> with no patches? This is the structure I'm leaning towards for my V2
-> draft.
-
-That sounds like a reasonable direction to take.
-
-> > Another way of thinking about this is that I would be extremely
-> > reluctant to see a similar document proposed for reviewing at the patch
-> > series level. In my opinion, the system of reviewers and participants
-> > discussing the series and the maintainer solely determining whether or
-> > not consensus has been reached is a good one, and I would be extremely
-> > hesitant to recommend changing it.
+On Mon, May 06, 2024 at 10:55:51AM +0200, Patrick Steinhardt wrote:
+> Hi,
 >
-> Sorry, I'm not sure I understand why you wouldn't want the patch series
-> process documented? I'm just trying to capture the status quo, not to
-> propose or recommend any changes.
+> this is the fifth and hopefully last version of my patch sthat
+> introduces subcommands into git-config(1).
+>
+> The only changes compared to v4 are some fixes to commit messages.
+> Otherwise I'm not aware of any other feedback that would need to be
+> addressed.
 
-Apologies, I misspoke here. I don't mean to say that such a document
-shouldn't exist, but rather that I'd be hesitant to see a prescriptive
-document outlining how patches are reviewed at too granular a level.
-
-Having a document like Documentation/ReviewingGuidelines.txt makes sense
-to me and seems like a good thing to keep.
+Thanks for the new round. I took a close look through the series, and
+couldn't see any remaining issues. I appreciate the translation guide
+you included in the documentation to indicate "git config --add" is
+replaced by things like "git config set --append".
 
 Thanks,
 Taylor
