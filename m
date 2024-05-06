@@ -1,149 +1,153 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E4015884B
-	for <git@vger.kernel.org>; Mon,  6 May 2024 18:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4561DFF3
+	for <git@vger.kernel.org>; Mon,  6 May 2024 18:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715019892; cv=none; b=td+6a1+ld/e1YnXhguCK9JSKHxQXvOSE9KYucpYAcRUE4euYmwitqi3bcykNQLV7vRHUMeOppOsP2BAZsWK9FX9OH6AcbAcZwABXD8/nCSSXgvGFCjPeN3AR/xxYp0FVDW/E/trGbUK3DXrlEIXXdto7nd4ZBV1uqFxLTA2iU9w=
+	t=1715020436; cv=none; b=dKvA48dwD4+fTvdZiPzKDjD0eZVnsbhNl22US+wQDK53slEWV1jaeSJXWt2gOWd4BAj6R2Efx88R9iWSsZ5rLCLyjbhwOGAH+U4/rDHRRZ2QiziCkeVszutbUln/nC8EvtLKZOgVFNz7hJ2v/LMvMjUKgMyurlBMqm826Ug9664=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715019892; c=relaxed/simple;
-	bh=Y23qGup9d3OFWnnbvdIMXiHejefv88ZHhno0r2w7kxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aPW1SocnzCbFT7uvHuDMr5bgQp2KRLTH1hNAfUlmrYxAuSjDkGb2aQfHcVoBI0Q8hYt4Ied3UoStKsvZgVOhsxN+DnkPohCh6egPImbHdiZcG6RZNHXcMu0sGAv+HyOVS9OM8QTcrJgIiC5ppgr85/a/PlkP9gIdXfG4gEIoQnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=EH6Jah3J; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EH6Jah3J"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3c8644aa3feso1614997b6e.1
-        for <git@vger.kernel.org>; Mon, 06 May 2024 11:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715019890; x=1715624690; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oM+taJZ93LcF1wO4Sx8cGV8xL+Nu2q4mDXm0EXyXF5s=;
-        b=EH6Jah3JZBD9fjjMAiS4sRHDu/OlOS0trP8PIT27Y/lyDzDSBIVm/0f3+ZYs0QR9s2
-         uj2ufA+pkpJyD80z8y+aOsjt1d9Al27dVqTuXgvvTHrstMUavFZrsQpU7A2ejiCsHzqx
-         eIqoaRtPQ86XLi5r3xccO2wXIwot/VM12dlDVyaA153l5GUWJxvC6ZK5iL9ihv1R0uhW
-         VAIpJ0o4WKRLGKRXJroY8wgpPMUTKvXgGmd4HXUNsOtzOTOpIK7ckvBFKydBbXhv52nm
-         n4nFJrZt5xFrBJxU08wk+W0Rtxc5jD5coBVx5fLhP37psQqlYPvYAmGdra/Pxw8xjDSW
-         biQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715019890; x=1715624690;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oM+taJZ93LcF1wO4Sx8cGV8xL+Nu2q4mDXm0EXyXF5s=;
-        b=scOoiKqgaC0vIrwIL3lQFuXFKl9/qDYaXGAmI9mVPaZKZh5tUUz4EpFFFnfD+ATf5s
-         6TghqKQWWTnMGSiceT5cgeQ1LlyB5jaLjpxpE6NHKioZLpeOeZrdPI56c0KngXVHd/aU
-         G8/p6oQBToPaYDhAcjboIgbap/I1tBc3knx6ZuS2nNS9vYfJWUNNzza9DYu/CDplQ6KS
-         +b8E1uUDtnDIvJ9rLy+JckUPzrGvdwOVLSunRDjw07oVEovGAd04fisGcRF0HJsLLqTC
-         mRcjKH88TGEX4T2Ot7SKKcjwKPaPZKiQ2bBPT8Mozrmy9TBRCAX/lNbglCXXZ1eRA4pU
-         VxyQ==
-X-Gm-Message-State: AOJu0Yw9NVBRpMQoOGmL+p309ehfrNjLiz8vi6vwqFQuVgj/IoswrbRr
-	qZDEby/tXacTU39eOicS6wZfgmcO3vXz3fuM/JUBVzoa7PXJGw5kxl92BPQx+eA=
-X-Google-Smtp-Source: AGHT+IED/pYYQqLGB2lKii25HVi/Ow1MyI86s17B1x4OW3WhIra+ZVowC2QjR+jnBNi2zcxMhQ5Gxw==
-X-Received: by 2002:a05:6808:ec6:b0:3c8:2bb4:2288 with SMTP id q6-20020a0568080ec600b003c82bb42288mr13582400oiv.2.1715019890163;
-        Mon, 06 May 2024 11:24:50 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cx8-20020a056214188800b006a0fb776a77sm3943409qvb.137.2024.05.06.11.24.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 May 2024 11:24:49 -0700 (PDT)
-Date: Mon, 6 May 2024 14:24:48 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/23] pack-bitmap: move some initialization to
- `bitmap_writer_init()`
-Message-ID: <ZjkgcKzruDu7Qbmt@nand.local>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <cover.1714422410.git.me@ttaylorr.com>
- <3d7d930b1c5c4d122d8731ef0dc3fc90115573a2.1714422410.git.me@ttaylorr.com>
- <ZjjEkivTeqC0xn_q@tanuki>
+	s=arc-20240116; t=1715020436; c=relaxed/simple;
+	bh=KRPB14SKzfo3MTT7EebBtGWh2qgEZFf4ga80j+wVXm0=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=maMDf6reBsROyTgZt9EVb6Hz5sZHRrQcjVhHFW3oWx4krG1/LB8dPpgDw12AfZK4ovDZVBVA/VvJi9jfh0wO692Dbcb8og2Gi9YSUywwJ1HD9+g0VaHljf5aZW4+hryvDsPw9kRpFOiE2MeCL0tpfx4lCgxsFPw1QnA22ERBQyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 446IXaf02610596
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 6 May 2024 18:33:37 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>, "'Patrick Steinhardt'" <ps@pks.im>
+Cc: "'Karthik Nayak'" <karthik.188@gmail.com>, <git@vger.kernel.org>,
+        "'Kristoffer Haugsbakk'" <code@khaugsbakk.name>,
+        "'Taylor Blau'" <me@ttaylorr.com>,
+        "=?utf-8?Q?'Jean-No=C3=ABl_AVILA'?=" <jn.avila@free.fr>,
+        "'Eric Sunshine'" <sunshine@sunshineco.com>
+References: <cover.1709724089.git.ps@pks.im> <cover.1714730169.git.ps@pks.im>	<b3f3c3ba6ab33d269f7a707eae1456c87cdfeddb.1714730170.git.ps@pks.im>	<CAOLa=ZSNbZPByO9QyeAGaR1pWXMB7ge_GF7M5fydxP-cse-X3g@mail.gmail.com>	<015b01da9d5b$bbe59120$33b0b360$@nexbridge.com>	<xmqqjzkaanr1.fsf@gitster.g> <ZjiL7vu5kCVwpsLd@tanuki> <xmqqttjazwwa.fsf@gitster.g>
+In-Reply-To: <xmqqttjazwwa.fsf@gitster.g>
+Subject: RE: [PATCH v4 07/14] builtin/config: introduce "list" subcommand
+Date: Mon, 6 May 2024 14:33:32 -0400
+Organization: Nexbridge Inc.
+Message-ID: <04d001da9fe3$e9c2eef0$bd48ccd0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZjjEkivTeqC0xn_q@tanuki>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKBQTBe5e4gLvpUZ43kt8vf+F35UwHSzjW9AiAHsugCVIXXIwJRWA+4AjPZodgBrXl4CAEsQikBr9AEY1A=
+Content-Language: en-ca
 
-On Mon, May 06, 2024 at 01:52:50PM +0200, Patrick Steinhardt wrote:
-> On Mon, Apr 29, 2024 at 04:43:08PM -0400, Taylor Blau wrote:
-> > The pack-bitmap-writer machinery uses a oidmap (backed by khash.h) to
-> > map from commits selected for bitmaps (by OID) to a bitmapped_commit
-> > structure (containing the bitmap itself, among other things like its XOR
-> > offset, etc.)
-> >
-> > This map was initialized at the end of `bitmap_writer_build()`. New
-> > entries are added in `pack-bitmap-write.c::store_selected()`, which is
-> > called by the bitmap_builder machinery (which is responsible for
-> > traversing history and generating the actual bitmaps).
-> >
-> > Reorganize when this field is initialized and when entries are added to
-> > it so that we can quickly determine whether a commit is a candidate for
-> > pseudo-merge selection, or not (since it was already selected to receive
-> > a bitmap, and thus is ineligible for pseudo-merge inclusion).
+On Monday, May 6, 2024 1:13 PM, Junio C Hamano wrote:
+>Patrick Steinhardt <ps@pks.im> writes:
 >
-> I feel like this last sentence here could use some more explanation as
-> the restriction has never been explained before. Is this a strict
-> requirement, or is this rather "It would be wasted anyway"?
-
-Thanks, that's a great call out. I reworded this sentence to clarify
-that it's redundant, but not a strict requirement. I think that's a
-sufficient amount of detail to motivate the change, but not so much that
-it distracts from the change at hand.
-
-> > The changes are as follows:
-> >
-> >   - Introduce a new `bitmap_writer_init()` function which initializes
-> >     the `writer.bitmaps` field (instead of waiting until the end of
-> >     `bitmap_writer_build()`).
-> >
-> >   - Add map entries in `push_bitmapped_commit()` (which is called via
-> >     `bitmap_writer_select_commits()`) with OID keys and NULL values to
-> >     track whether or not we *expect* to write a bitmap for some given
-> >     commit.
-> >
-> >   - Validate that a NULL entry is found matching the given key when we
-> >     store a selected bitmap.
+>> ... I was pondering
+>> whether we want to introduce a document as part of that patch series
+>> that starts to keep track of upcoming removals for a potential Git =
+3.0
+>> release.
 >
-> It would be great if this refactoring went way further. Right now it's
-> quite hard to verify whether the writer has really been initialized in
-> all the right places because it is a global variable. Ideally, the whole
-> interface should be refactored to take the writer as input instead,
-> where `bitmap_writer_init()` would then initialize the local variables.
+>Finally somebody has bit it ;-)  In the 2.44 cycle, I wrote
 >
-> That'd of course be a bigger refactoring and may or may not be a good
-> fit for this patch series. But I'd very much love to see such a refactor
-> as a follow-up series.
-
-Yeah, I definitely agree here ;-). I will plan on doing this as a
-follow-up to this series.
-
-> [snip]
-> > diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-> > index c35bc81d00f..9bc41a9e145 100644
-> > --- a/pack-bitmap-write.c
-> > +++ b/pack-bitmap-write.c
-> > @@ -46,6 +46,11 @@ struct bitmap_writer {
-> >
-> >  static struct bitmap_writer writer;
-> >
-> > +void bitmap_writer_init(struct repository *r)
-> > +{
-> > +	writer.bitmaps = kh_init_oid_map();
-> > +}
+>    The RelNotes symbolic link says we are now working towards Git =
+2.44.
+>    It may not be a bad idea to reflect on what technical debt and UI
+>    warts we have accumulated so far to see if we have enough of them =
+to
+>    start planning for a breaking Git 3.0 release (or, of course, keep
+>    incrementally improve the system, which is much more preferrable---
+>    continuity and stability is good).  End of year being a relatively
+>    quiet period, it may be a good time to think about your favorite =
+pet
+>    peeve, to be discussed early next year.
 >
-> Given the other safety belts, do we also want to BUG here in case the
-> bitmap has already been initialized?
+>in a few of the "What's cooking" reports.
+>
+>> There are multiple items that could be added:
+>>
+>>   - Removal of the old syntax of git-config(1).
+>>
+>>   - Removal of the dumb HTTP transport.
+>>
+>>   - Removal of `info/grafts`.
+>>
+>> There are probably other items.
+>
+>A list of things I can think of that I won't be the primary advocate =
+for but I do not
+>mind too terribly if we had champions for the topics are attached at =
+the end.
+>
+>> In any case, the old actions are here to stay for the foreseeable
+>> future until we commit to a breaking major release.
+>
+>True.
+>
+>> Thanks for the thorough explanation, I have nothing to add!
+>
+>You could have avoided it if you copied some from the initial cover =
+letter to each
+>round (i.e. preparing the series to be read by some folks who did not =
+read an earlier
+>round).
+>
+>
+>Possible additional Git 3.0 items:
+>
+> - Removing "git http-push" to push over HTTP/DAV.
+>
+> - Removing support of `$GIT_DIR/branches/` from remote.c API.
+>
+> - Removing "git update-server-info".
+>
+> - Removing "git annotate".
 
-Great suggestion, thanks.
+I must have missed this... I thought annotate was replacing blame.
 
-Thanks,
-Taylor
+> - Removing "gitweb" and "git instaweb".
+>
+> - Removing "git filter-branch", now we have a better alternative
+>   "git filter-repo".
+>
+> - Removing discovery of hook script in "$GIT_DIR/hooks/", in favor
+>   of the configuration variables that point at them.
+>
+> - Switching to SHA-256 as the default hash algorithm.
+>
+> - Switching to reftable as the default ref backend.
+>
+> - Switching the hardcoded default branch name away from "master" to
+>   "main".
+>
+> - Declaring that "git restore" and "git switch" were failed
+>   experiments and deprecating them.
+
+This restore and switch have broad use in my community. I do not =
+consider them failed experiments at all, but essential in scripts and =
+usage. Removing these would block migration to git 3, in my view. I have =
+actually been thinking about doing a YouTube video on these commands.
+
+> - Declaring that "git submodule" was a failed experiment and
+>   deprecating it.
+
+This would be a very high-impact decision. Aside from my community's use =
+(and my own company's dependence on submodules), this will break large =
+numbers of GNU-based projects that use submodules for distribution, =
+including build-aux. I would suggest staying away from this decision. =
+Submodules have definite value. Please keep them.
+
+If you really want to get rid of stuff that has limited use instead of =
+submodules, it is worktrees, the benefit of which is reduced given =
+sparce checkouts and fetch depth.
+
+--Randall
+
