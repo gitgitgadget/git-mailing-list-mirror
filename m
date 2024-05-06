@@ -1,128 +1,151 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5888C39FF4
-	for <git@vger.kernel.org>; Mon,  6 May 2024 11:22:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFF94EB2B
+	for <git@vger.kernel.org>; Mon,  6 May 2024 11:26:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714994557; cv=none; b=W0+rbP7E3N91gB/2iGk5rKD4Is0rEfktePfdGXe0OBG8YgS4nLCfbp9G7CHlvTkvady12RwaTSX9qd6JKVdB6Y8tOew60VHdfHwMDSOSwjeAh2mn4fDj49XVugXMCDJglTy79FDJmGK+QDEVVhPrdZF8yEqthP/8K9BtQbDfcLw=
+	t=1714994819; cv=none; b=qCxB2TWyCsMn5m+Fm3RynEXju3ekUIJzzZFd+Y+Gey3h8w17R+QZIbNMt4otznFuHv+zOPKnnkUbuRqtYTTSEGb9I6vZ5cu/pgM+06aEG3stu25h+FH0O+14pnwj9wcE6TrACrhRdAq0Vs9KmYjBp/fEoCeYq5/4z3vF47lPuGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714994557; c=relaxed/simple;
-	bh=+7bKE1Si/noQi+f+tEGJazUT/sgHhzGCX9+vgDjrnDo=;
+	s=arc-20240116; t=1714994819; c=relaxed/simple;
+	bh=uEGHc2A/bu6QFR62qqiJ5V1RzBgW+oSmyGU5ARDXdVw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lVHCciY0s0psaGa6xw1EsntNfe/Jf52hNVzUmxfyKSml3jshWlVZN/JZI0i8BedyD797yBdn2Xoq2n277ANCyy8Y3nhmv1wuCInMW+lo6psjjxZ8VPFSnA1eCbksPIzLDTeng35bfifgdYIjhq5XR3geji+AK4cu6MclnXYw5tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U7cCZU4X; arc=none smtp.client-ip=209.85.160.47
+	 To:Cc:Content-Type; b=S+uci4VrRLa2Xrw0gIQPc8l4Wb8DzOfw+A/ss3/Ag8bLtNUEpGX9XA31WKInc2M7x01twCqHuk2owHTwiubsygMqUVsxz4OdVfZNOqJon/wtYwVjxRPjRIl+ZgvuaY+QUrDGk62E1NFtfv7h1i2mSes8elCPOdnyqcilfXhcOkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RFS+NhAQ; arc=none smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7cCZU4X"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-23d477a1a4fso1387250fac.3
-        for <git@vger.kernel.org>; Mon, 06 May 2024 04:22:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RFS+NhAQ"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-23d16b9bca7so825905fac.2
+        for <git@vger.kernel.org>; Mon, 06 May 2024 04:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714994555; x=1715599355; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714994817; x=1715599617; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+7bKE1Si/noQi+f+tEGJazUT/sgHhzGCX9+vgDjrnDo=;
-        b=U7cCZU4XaGecSbQx65vHJPn1GFhRAz3vsuZAPKdRkdIAJ8yKGwH5z9nNByCHAu3fst
-         cuhgdqpEXqxMzx0LA5ZgpzNufQptCHtCo8YlHDZfsRL1E+kOcKNHVVzf9hvfrCPVyMmN
-         r2+IOnrJDFiUOfYmzPjCPOdvoKt/NDodKboj1VD11vC0SIn7mqphAvRMTsR4PB/VrvSX
-         ftsoSgWiC7aOvzJZmaNDeu09avd8is8IaIyQcDUTpPSa34RDXQno8C+CZzJqqMaw7pqr
-         UK6HQsD1NqTkuLFWerA17wMk5mXvjMPCuuds0s1iXFR4U9RHcUvMVU9qXHbIGpOGxAMI
-         SoaQ==
+        bh=k85DLqaqSR1BhhWQlstR6hNiyY/KwuhjbHfTjrMJFT0=;
+        b=RFS+NhAQYaGVC70UVRy0gPWAXW8q7Edm/IcJeSWXHrQZRodIWneoF4lIhBByFz3ogB
+         WT1yNvou7v9xHTAbpUdsJ3RJWJAZJJKUzU9vqsXuCkJE+GzFQed3982Buw/OxG8tJI8e
+         ykVPWTh4URbNX7ftVWJQDSwf+DudN60O//wYowtU+6nWYCNf6kGwGyojU5x+foN7IP3P
+         rBl8bHmUFKICwOBlBdT2pBVL3zs67p02hwVXtuXqIzadMYsEB6j1o12hpget02ES64lG
+         VV9vKzGDpLapEkxoyT3hRTYqo5vFWm0nWVTvUA0ZMNtYyrF4KTwRlK+gacGYccMhH4yJ
+         qijQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714994555; x=1715599355;
+        d=1e100.net; s=20230601; t=1714994817; x=1715599617;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+7bKE1Si/noQi+f+tEGJazUT/sgHhzGCX9+vgDjrnDo=;
-        b=Bd4sQEy2ZT3Ky/bJjAkRRHpOSoNwu5Q+MbGnNGpqdTLcElduCY0hsUDwObmRURTP6v
-         rjpT8HpCs1E3i3EPUY/jzaBCNTx3DcHWRa0WGDUzDvKR/odRugkSX+1XTQdEngCDylwR
-         RYXc5bOVDP+1nWbq7ZAyadXMOyUjfmI8BhRzNP0iAjXeDRnvZ+EayPLsCeJnD2+cdLUZ
-         e8OgiKbcIMGzvBjuSMooDSllTy+NjYFSvrbpNAZ9wtr0FiQk5FICIG/RK7jfzI5XjSEn
-         UgM9/0823Okcjh1nTxl64sIdF3hn8jnqlMpo+RulMGicDIZVCoZmmwYtKA8CjOCpuW3Z
-         XOgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU/KHk8fiDG2THzaTLWhlu9tpS0nxZ82ZG0zZQIeoRdGddOX1bVBfvJqWYb8uV5QEnVO+RvQnKSwmffd+WaMbcwE1/i
-X-Gm-Message-State: AOJu0YzcvttDkt6/QfAYRs+3o3Ml4UWkkTNam+WmdSHXXeqzdLZM00XY
-	NfQFWMuUjOBuQXK64g9oLEhpr9dYqKiika1gPD+4lYhSIsDkDf7G1qx1JzlZinifConHMqijoay
-	gy3XG4Ng529NlmCuK+qj94ncqf28=
-X-Google-Smtp-Source: AGHT+IGxzXG0Rki8GXtJRG6IQKvF4V9A7MD447sDqGMRYssQ7y/ixQYQdPv8EQgB8x4esKiZ/gO6f6/J2qFyfJqnnIc=
-X-Received: by 2002:a05:6870:d1ca:b0:23d:79c3:5627 with SMTP id
- b10-20020a056870d1ca00b0023d79c35627mr12780938oac.36.1714994554845; Mon, 06
- May 2024 04:22:34 -0700 (PDT)
+        bh=k85DLqaqSR1BhhWQlstR6hNiyY/KwuhjbHfTjrMJFT0=;
+        b=bcCueSUTOtT3g/556S9aG6Yj0jczv9G+/KG6GeMRkAnbMevNSeovkXRfYAeoruChSC
+         ZjDtv4wHdWHPO2mgKa78x0QS4RL2hfubtc54SCUI5/YNRBY8huzKSoRza94liyxxnY6l
+         OfMegZeIsbeLQyxs1NCuCc2+dvfNhas5QwfifAtedq9nm3AW484Va1/ip26m8JjVXuWB
+         RCkBkX6nz42J0riJZcrN6NH37hR2ey+bMa9JZd38xB5BA529akHrqIUxqZwySSzNU7HC
+         u9j3EYvdcdq78cdcpNFGZTWCrs3hZ4FBk+a80AbqT/NE1lVuWKzOGNVYOwg08BKyE+ka
+         8qLA==
+X-Gm-Message-State: AOJu0YxuBRS9tya1kpqT5sFGdO+PYSocWymSrzmyte2inwXsTtg6oec7
+	ibxhyCmPCA4LJNhm+PQAQRannddErZa35ClvDaMRe9oLKrS/indIVOdMtW5ICWBJia5L9Xe4+Ue
+	dNgoOFhXXcST6EEjBBx6K4LaUUCQ=
+X-Google-Smtp-Source: AGHT+IFn+YPvU3OkChg8DmYoJ5+5pLXwYElMhAozQ1s2TZMfVRZIA0yqkmp4HijfghNDnPGiMjGmPryeGWp4h4r0RXw=
+X-Received: by 2002:a05:6870:b418:b0:233:ac4c:43a5 with SMTP id
+ x24-20020a056870b41800b00233ac4c43a5mr11447741oap.22.1714994816722; Mon, 06
+ May 2024 04:26:56 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 6 May 2024 04:22:34 -0700
+ HTTPREST; Mon, 6 May 2024 04:26:55 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <dff080ee-946c-4a44-a448-294ae8ee241f@gmail.com>
-References: <20240501202229.2695774-1-knayak@gitlab.com> <20240503124115.252413-1-knayak@gitlab.com>
- <20240503124115.252413-5-knayak@gitlab.com> <17c71b18-20b4-4bbd-b52c-c29ef8d3860e@gmail.com>
- <CAOLa=ZR5a0Tj1abM4z4SAVm5cw5+EA0qyoOMs8QH8MoS6eJGiQ@mail.gmail.com> <dff080ee-946c-4a44-a448-294ae8ee241f@gmail.com>
+In-Reply-To: <ZjiNr-PUue2_mJGr@tanuki>
+References: <cover.1709724089.git.ps@pks.im> <cover.1714730169.git.ps@pks.im>
+ <b3f3c3ba6ab33d269f7a707eae1456c87cdfeddb.1714730170.git.ps@pks.im>
+ <CAOLa=ZSNbZPByO9QyeAGaR1pWXMB7ge_GF7M5fydxP-cse-X3g@mail.gmail.com> <ZjiNr-PUue2_mJGr@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 6 May 2024 04:22:34 -0700
-Message-ID: <CAOLa=ZSMFVDy31W+5=iu2AWjyaR+Jy_BR5txd-bGnHu1iRsL9w@mail.gmail.com>
-Subject: Re: [PATCH v6 4/7] refs: add support for transactional symref updates
-To: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com, 
-	ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000003bcd8f0617c749da"
+Date: Mon, 6 May 2024 04:26:55 -0700
+Message-ID: <CAOLa=ZRSM6=qFgzMMh=yEK+jPPGknaPHG7u5ah5OZ24ZdSG1cA@mail.gmail.com>
+Subject: Re: [PATCH v4 07/14] builtin/config: introduce "list" subcommand
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
+	Taylor Blau <me@ttaylorr.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000d7dbbb0617c7580c"
 
---0000000000003bcd8f0617c749da
+--000000000000d7dbbb0617c7580c
 Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+Patrick Steinhardt <ps@pks.im> writes:
 
-
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> Hi Karthik
->
-> On 05/05/2024 17:09, Karthik Nayak wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>> I'm slightly concerned that splitting out the update-ref changes means
->>> we don't have any test coverage of the new code beyond the part that is
->>> used by refs_create_symref()
->>>
+> On Fri, May 03, 2024 at 06:08:57AM -0700, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
 >>
->> This is definitely true. But I also caught a bunch of edge cases this
->> way because the tests which indirectly use 'refs_create_symref()' are
->> quite intensive.
+>> > While git-config(1) has several modes, those modes are not exposed with
+>> > subcommands but instead by specifying e.g. `--unset` or `--list`. This
+>>
+>> s/specifying/specifying flags/ perhaps?
+>>
+>> > user interface is not really in line with how our more modern commands
+>> > work, where it is a lot more customary to say e.g. `git remote list`.
+>>
+>> Tangent: I totally agree with the patch, but it would be nice to have a
+>> 'DesigningCommands' document which would highlight UX do's and don'ts.
+>> It would be nice to add that as reference in discussions.
 >
-> I forgot to say in my last mail that this is good to know. So it sounds
-> like the only new code that isn't being exercised by the tests is the
-> check for the old value?
+> I agree that we should have that discussion, but feel like it should be
+> part of a separate patch series. If I were to adopt that into this
+> series I very much think that the resulting discussions would take quite
+> a while to settle.
 >
-> Best Wishes
+> I'll start the discussion soonish in a separate thread.
 >
-> Phillip
 
-That's correct. I think testing that _currently_ would require us to
-probably expose and test via the unit testing library. I plan to follow
-this patch series soon with the symref-* ones. While that's not the best
-argument for not having full test coverage, I hope it is an OK state to
-be since that path has no users as of this point.
+Ofcourse, not part of this series. I was merely using this patch to
+bring up that topic. Thanks, will stay tuned.
+
+> [snip]
+>> > @@ -2590,7 +2608,7 @@ test_expect_success '--fixed-value uses exact string matching' '
+>> >  	test_cmp expect actual &&
+>> >
+>> >  	git config --file=config --fixed-value --replace-all fixed.test bogus "$META" &&
+>> > -	git config --file=config --list >actual &&
+>> > +	git config ${mode_prefix}list --file=config >actual &&
+>> >  	cat >expect <<-EOF &&
+>> >  	fixed.test=bogus
+>> >  	fixed.test=bogus
+>> > @@ -2751,4 +2769,6 @@ test_expect_success 'specifying multiple modes causes failure' '
+>> >  	test_cmp expect err
+>> >  '
+>> >
+>> > +done
+>> > +
+>> >
+>> Nit: Wouldn't it be better if the tests are indented here? That way you
+>> know it's part of a loop.
+>
+> We would basically have to reindent 2500 lines of code. I don't think
+> that'd be a helpful to reviewers :)
+>
+> Patrick
+
+Fair enough.
 
 Karthik
 
---0000000000003bcd8f0617c749da
+--000000000000d7dbbb0617c7580c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 64787dea2542f6a4_0.1
+X-Attachment-Id: f5a997dc513b8a8d_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZNHZYZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNVRQQy85azRGR2UydTVPVEtVTXNmc0p2L2Q1bW41NQpNTDRJcStMN09U
-MXIrUWFMOFc4c09QTTNySFhVbGFkYWp2QzhFMXdXYVZFU3hhSVlmdzgwTFU5cm1WWTdIRjd2CnFV
-WTZvaFZmTFJocUNmaTNnM2pCVnlmdjZmY0pwOWhLMzF0cHpncTFOdWxlU0VSQlAzallUSXc0aExR
-eWgxMGcKZVI3VkFnQnJ4T0ZRVTg2MTNDdElmNC9FVENtTFpaUHA5dVh6aFA3Rk8xZWNuMjlIOTll
-UkEvQzMwYVhuOUhPYwo4aS9US2lNZG96MS9EWmwyTUNNWHhaL3FHSVFCbEhlM3pUTW9kYXZScFR1
-Vno5dkV1dndqWXhKM0NXRUxtUHJlClhCaXZMVDVTeDNMRFhSOUQ0UVdzVjBDbGpuYnVjV3VUZWFU
-ZHJCZzRSSk9HK0xCSGNBSlA2RmdXM3hNbjRkK2wKelIwYTZWZWJqdHNuK0MzUXZmbW1PcUoxRjZm
-UVVCVytZMWd1bzRyN2wwdlU5TlFTRHRtcXRJZHpSSCtWaE5ERAo4TWMzajc0bHIyMlBMc0cvVTJt
-TkJnRDVUTXJqQWtWUjM5WFRRQUc4WGFoTnNTdGVLVDN5azlmaEFRb1Z1WGhmCnRjRDdFYXQyWkJL
-b3c1S3ZhNldiVHpSb2hTZ1Z6aWpQdjh4V1RjWT0KPXROcDkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZNHZuNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMjIyREFDUjhZaGQ4YnFaUGdZSnpidzYrQTZvS2NTLwpQeFJ0Y2kwVFJL
+dGc0L0lXeUw2bTdxc1AyZVJYcDZOMHFEYjJWbUY3R25pVExqeU83dytoejg0Tlo4KzY5eS9iCnRC
+VEJQNHJNNXlGMjNsSlUycEljRHBXcy8yRWcwbnhmSXkwZ3J5SXhzYWFZellLTmlmVGxuSVA3MFRl
+QitQSm0KeU5iTCtqdVhSRWRPYlBSWjE0TnVhajJaQmM1TkhoSnRQbitpY0ZPMzdlTjJTTkZTOWxS
+d3p5NGtIMGFXd2JnYwpqMTlBOHNCRUFuc0VaNXlkRDRDV3RVV0xteld1cWl2MjFNM1JSS0YrOXpu
+cXZFKzc1WVlEcmlScXpneE9aWHdYCldBdzJrdENXYU1iRmJCMG8zclptbVpXWjZDUStGL3FYWkZm
+QnB0KzdpMHdRNFZnU212MkhXS0Y4OVdCeVd0cTcKOWNjcmgwbVJEV3pDQ3RrYlRXQTY2WlJ5dUow
+YlZ3dHZPb3E0VzVMOFRKVTlNVTNHZUl4S21qbk9PTVFHZjdXbgo4TW5EdEw2VzJTTXdYdWxQRWdj
+USsrSDBsWnVxQnFzd2phMklsNVZkOTFYQnRweUxpZ0x0ZnQ0OHpEVDZiRUxBCmxHM2tWcGFYbm1K
+bEpTRUxWKzNaZStzVm1UdHlST291Q1k2R3JGZz0KPUY1VjYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000003bcd8f0617c749da--
+--000000000000d7dbbb0617c7580c--
