@@ -1,75 +1,73 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A671422AA
-	for <git@vger.kernel.org>; Mon,  6 May 2024 08:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188AF1422A4
+	for <git@vger.kernel.org>; Mon,  6 May 2024 08:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714985797; cv=none; b=cxPAaXcsRyRy8lTwAPfCjPQGqhmygAhv6O0ALrgQQ+8rytMWvy2M9Bp/6PNOnpJA4m8trrhoBsPk8uexUPr5ZPWsNT2cwgUpHuKmjSDj6F6/QXnYGRaKTaEuSE+n9fOyWkBLfQZ+riSf3Tu5CFCneiAufeU0g1Dbn5QMcrsle1I=
+	t=1714985802; cv=none; b=lUMJm1lUxPq7Cif7txV4BbhfFwzZRgfpUj59rInVdoe4YMfSd9ENHZimjfIOvcTH2Hd3cErTBtjKWxTK3ky3MhfRgM4jdD/OMxnx4KiKdg5+QMscVNllLuThqokqVEMRUy5s4MkbzLwzsT3mW/XbEUNtLBxApgy425c0E8Lfh0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714985797; c=relaxed/simple;
-	bh=8SRpCej9kfBOp5tqGMidiX0eBLhHuttc0W2Z9/D8hPc=;
+	s=arc-20240116; t=1714985802; c=relaxed/simple;
+	bh=twR4AJIDHdfBrYcQQGnMQBJ/Uk/wjrKDMkNxNs6abWc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gmy98KZBt/99jv++xG7BPkZif47e0oK8oh2lDyoT7mAIOZr0qj3SLxVUzEDVtKW8jFzryebDvDpy4VvQ1kOBfj9qVi6kBGssb/FoWjvwRRozA2ozExzKboKcTapFXaVapwUnY2m1CpBExjCEvlsqfeZx9ZaTOIHMeTYxUBXTh6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kGbhylaj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bAyVqmEj; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=DbFZYx1Q5e/9jMwMnStjgE4HAoU212JDMxNzP66UnvxEz8Se0XkUJfqMSgzlchERP2ExySxAfC7rWFWFwnzC4TYpOhbL8pEwK2CWyFk7ceY31soZZ25w1dkA3rxPUxFW0suy0R0vtEGEK6TjqiT+xCpXXjIzY1y0/oMg6usZ1NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rhy1TIj6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IoxSTp6T; arc=none smtp.client-ip=64.147.123.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kGbhylaj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bAyVqmEj"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id CE23B1800087;
-	Mon,  6 May 2024 04:56:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rhy1TIj6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IoxSTp6T"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id CC92A1C0013E;
+	Mon,  6 May 2024 04:56:38 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 06 May 2024 04:56:34 -0400
+  by compute5.internal (MEProxy); Mon, 06 May 2024 04:56:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714985793; x=1715072193; bh=xXP5iY8UIY
-	nJ/O0BLs/CdhLjSPJHn1JEmsJqzxl6qmE=; b=kGbhylaj0A6yOkC+SK6A+J13wi
-	oSuSn0gF/4T32WE3UOATVxZ8KErTOibfhy8PY1/n6t7VbM1YX5D2ALlMCF/zxv4O
-	Yi5dGIa/ok2XverOuAx5pIfC8meJA4lZ1w46xoXqfZLBWDMld51KSaI6qMM1nQyL
-	tEtSXGWkUD+arWXk1aGXXtVCOsYzBeHGWOqAyjQk+qbZ0xWrlzaelG02xTZPcMKv
-	zO9CMS8pYSJj5aQ1JASKwaALdUYkUESDL/KZ5JlmFZVpCfQJdRxJcpF771ZNeTm/
-	yAwWO85ZOz9safGhEUkFL0HfDseEsQtmKDupsD9yD5FiwSLWBrXG5VWVpgeQ==
+	:subject:to:to; s=fm3; t=1714985798; x=1715072198; bh=U6hJ++rt1i
+	XgWDbqIIVrjdhF2qOFddvoSq53PRVR+cs=; b=rhy1TIj6n/+5RNBmL8cELHGlAI
+	1v5fEmPS2aIh6nR/Ya4hoP9SzwfmvMGxEni5SNAidOWQL2peY9c4rhSFGe3/Jt6A
+	V4rG7XvW2EQePLXEsktjhxsy0ZQmHt//lfzmFDcEVv2nfUruU6whYd6ETkUF90ZG
+	Mr55vGMiTH9L+czi8c3Fp5tdgTRvFfg/y3hwVDNa+k9SwR/6bpl+sVCttU9t3s8j
+	I/+Ryqv9HhTXiUHEKnUtxLOx5l50qZT/yHRxN0wNGrv/6tqo6j0q0aOB6H0v7B70
+	G1UawYzHN3SFYXwGkQXC/at06lkeSJXFgnEdCd0MXxZbcYmwYyQHY43P1vJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714985793; x=1715072193; bh=xXP5iY8UIYnJ/O0BLs/CdhLjSPJH
-	n1JEmsJqzxl6qmE=; b=bAyVqmEjpVwg8ZVXgb6nswPQnK0j1Da2GKKeG0bwQZ4b
-	J9h7w0Qjx9/f52127uBjCfGB6TqP3/Awp36SQBTyyKIGcj+G9zUNtSHAJ5LxUNQ7
-	5LKeHCTCQiYWzrBijpNv3edtZGEs93SltP6gvXh2RCZJAxZ4ZYKqxN9yP18UVSbR
-	3BjmNIo+aPbfv7znxRpQhq7AwWhtfYrqNr67bA29cfWpXpK3X/vR4W7gQ2CVfWEz
-	1RxQ/YHSS1/uAEQKJHdqNhQQtxFYK1m3Br6rjhE7EsUDpojplXxgtUG1f/MkGqmK
-	cCJS0bGZP5hQ8LSUi9jz4qQ36rGCKtirLzs9h0MdTw==
-X-ME-Sender: <xms:QZs4ZvwKzwdH-4cXn02JnTd6_8OWNv-36dC0nU0ig5suQgwc9rXItw>
-    <xme:QZs4ZnQxTEfXdKU5Avr8tUIzMRy5EZuIZpMg_J-k4dXxt8dKJjsD12tHaWC65Py0R
-    XXbJjvXxjNWD2L8LQ>
-X-ME-Received: <xmr:QZs4ZpWeL_a2eimtlIkJ0qem1fIrqdqn1SBrh_j4rFhJias1v4FCukeH06VKrjGOSln1hQJTZJX0bRHaspZiqSPlFlKKKfHCU-tvPRNP2uvaXyy2>
+	fm3; t=1714985798; x=1715072198; bh=U6hJ++rt1iXgWDbqIIVrjdhF2qOF
+	ddvoSq53PRVR+cs=; b=IoxSTp6TXBExzUHLgm2ox3QL//OOsUpHcQEeK4RmYNju
+	XM0ShzwI7NgETdA8/SLjwMQEEEMV551Wgm01MMvRTWanuy2RKaZvgP4vvqLrStxF
+	co1SbO5XQvKU1uKR4MGIc5uCGWIUyWK9HRa8iS3dU5uipHc4XR+ckjr0M5jY74lH
+	+Kfl6aSIBrrbQis/0kMcDCk0jYElnMUsxe8ZxFN814CnswjIPxBwkvG9M0T09Xzq
+	wC2IQx9t9Tt2m0mZnlLymXA8/SjyW22IbeCRgGs1mGaqJYA9x6Opo+naY9PKwPla
+	lU8KhUVBGndqfN10Xx7lPSjCswoikxmvfSPxENpMJg==
+X-ME-Sender: <xms:Rps4Zk55ZIxSqFv2k-9zGw7GEoJ26xAlcqJ_QLqH4fL13ts74MqIdw>
+    <xme:Rps4Zl7Wocup2J7uzHt-cU_mBQaznvtdk5fMxcposzQD2QGFfexuUPOyNquv_FKNh
+    d3qMe3qnN8NZZlZ8A>
+X-ME-Received: <xmr:Rps4ZjcSiTTwBX0jAJLAjOF4tQpm8vEVDz34W6gn1eRkECVbTxM5W_X63rckwXKGuKzls06RwKIz5gWqs8-cLPz6Y4Vw74xCir7zqG6jui3YXecW>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    hushgvrhcuihhnuchlihhnkhculdeitddmnecujfgurhepfffhvfevuffkfhggtggujges
-    ghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceoph
-    hssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepudfgledtuedtvdfhlefhfeefjefg
-    gfejvdehhfekgeevleelhfehieeiffdtgfdunecuffhomhgrihhnpeguihhffhdrnhgvfi
-    dpkhgvrhhnvghlrdhorhhgpdgvgigrmhhplhgvrdgtohhmpdgvgigrmhhplhgvrdhorhhg
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:QZs4ZpjP_0YSE2-I1vXVTf73fU2xs5S83dZdqNyqDptpjuQMzsm3RA>
-    <xmx:QZs4ZhC40XuO7L8ZgTCBZv7Xi9QGHKSoLu6oFNHxU4oWZQXkPQ9Eig>
-    <xmx:QZs4ZiJbUDMwOWgz1gGfL4tJVx6Y0BotN5kcLGPJ3EDroqRyO9Yucw>
-    <xmx:QZs4ZgDrDP35pHtwbEKxNKKR-0jgGlwBfYX7WcsZFL_kAK5gab-SPw>
-    <xmx:QZs4Zl1Wh9TWaaNxPImDtSGPTJvrgyh9AHsLprcpfhjG8_SGQeEwO3rf>
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueejieetgfegleehjeelteejvedtteelteektdfguedvhedtvdefledvteejuedv
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpuhhnihhtrdhinhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:Rps4ZpKXUUasVsCMB9oj8y0ugIW1uYMYgdsJstVZ9MaSi4CDeHuRwg>
+    <xmx:Rps4ZoJ5xtFTdeVFb9E6a34hhYnnCTQuxTdJR6JeBgyIvlLo7-sSXQ>
+    <xmx:Rps4Zqwka-PHv0pfsm3QRAwV-qk2yjWRg3bpg8FsdKLwmgtTLhDVjA>
+    <xmx:Rps4ZsK2voCPtX_PEKSr0FI-3DXt5EiRFI3D_Q5EsnwWdbYdEgFmhw>
+    <xmx:Rps4Zn_2jIHxClQ67lOQcl2RcA8L7iM8iLWdFocSYSQ9RmHCjA7-BpXS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 04:56:31 -0400 (EDT)
+ 6 May 2024 04:56:36 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 40bb0794 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 May 2024 08:56:26 +0000 (UTC)
-Date: Mon, 6 May 2024 10:56:29 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ed4c2c31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 May 2024 08:56:30 +0000 (UTC)
+Date: Mon, 6 May 2024 10:56:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -78,8 +76,8 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>, rsbecker@nexbridge.com
-Subject: [PATCH v5 08/14] builtin/config: introduce "get" subcommand
-Message-ID: <29676b81e0151e2982326663f8b64e2a70bec0f8.1714982328.git.ps@pks.im>
+Subject: [PATCH v5 09/14] builtin/config: introduce "set" subcommand
+Message-ID: <94afb5a5b7295de7ce7b22a0a4c612b431377eda.1714982328.git.ps@pks.im>
 References: <cover.1709724089.git.ps@pks.im>
  <cover.1714982328.git.ps@pks.im>
 Precedence: bulk
@@ -89,957 +87,621 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eID8jmYxeyZZ7OgD"
+	protocol="application/pgp-signature"; boundary="0qlL+S3uN7TBrqV1"
 Content-Disposition: inline
 In-Reply-To: <cover.1714982328.git.ps@pks.im>
 
 
---eID8jmYxeyZZ7OgD
+--0qlL+S3uN7TBrqV1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Introduce a new "get" subcommand to git-config(1). Please refer to
+Introduce a new "set" subcommand to git-config(1). Please refer to
 preceding commits regarding the motivation behind this change.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-config.txt |  93 ++++++++++++-------------
- builtin/config.c             |  69 +++++++++++++++---
- t/t1300-config.sh            | 131 ++++++++++++++++++++++++-----------
- 3 files changed, 194 insertions(+), 99 deletions(-)
+ Documentation/git-config.txt |  38 ++++++++-----
+ builtin/config.c             |  63 ++++++++++++++++++++++
+ t/t1300-config.sh            | 102 ++++++++++++++++++-----------------
+ 3 files changed, 140 insertions(+), 63 deletions(-)
 
 diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index c83c97cb7e..d0878663db 100644
+index d0878663db..f57fa01085 100644
 --- a/Documentation/git-config.txt
 +++ b/Documentation/git-config.txt
-@@ -10,18 +10,14 @@ SYNOPSIS
- --------
+@@ -11,9 +11,7 @@ SYNOPSIS
  [verse]
  'git config list' [<file-option>] [<display-option>] [--includes]
-+'git config get' [<file-option>] [<display-option>] [--includes] [--all] [=
+ 'git config get' [<file-option>] [<display-option>] [--includes] [--all] [=
 --regexp=3D<regexp>] [--value=3D<value>] [--fixed-value] [--default=3D<defa=
 ult>] <name>
- 'git config' [<file-option>] [--type=3D<type>] [--comment=3D<message>] [--=
+-'git config' [<file-option>] [--type=3D<type>] [--comment=3D<message>] [--=
 fixed-value] [--show-origin] [--show-scope] [-z|--null] <name> [<value> [<v=
 alue-pattern>]]
- 'git config' [<file-option>] [--type=3D<type>] [--comment=3D<message>] --a=
+-'git config' [<file-option>] [--type=3D<type>] [--comment=3D<message>] --a=
 dd <name> <value>
- 'git config' [<file-option>] [--type=3D<type>] [--comment=3D<message>] [--=
+-'git config' [<file-option>] [--type=3D<type>] [--comment=3D<message>] [--=
 fixed-value] --replace-all <name> <value> [<value-pattern>]
--'git config' [<file-option>] [--type=3D<type>] [--show-origin] [--show-sco=
-pe] [-z|--null] [--fixed-value] --get <name> [<value-pattern>]
--'git config' [<file-option>] [--type=3D<type>] [--show-origin] [--show-sco=
-pe] [-z|--null] [--fixed-value] --get-all <name> [<value-pattern>]
--'git config' [<file-option>] [--type=3D<type>] [--show-origin] [--show-sco=
-pe] [-z|--null] [--fixed-value] [--name-only] --get-regexp <name-regex> [<v=
-alue-pattern>]
--'git config' [<file-option>] [--type=3D<type>] [-z|--null] --get-urlmatch =
-<name> <URL>
++'git config set' [<file-option>] [--type=3D<type>] [--comment=3D<message>]=
+ [--all] [--value=3D<value>] [--fixed-value] <name> <value>
  'git config' [<file-option>] [--fixed-value] --unset <name> [<value-patter=
 n>]
  'git config' [<file-option>] [--fixed-value] --unset-all <name> [<value-pa=
 ttern>]
  'git config' [<file-option>] --rename-section <old-name> <new-name>
- 'git config' [<file-option>] --remove-section <name>
--'git config' [<file-option>] --get-color <name> [<default>]
- 'git config' [<file-option>] --get-colorbool <name> [<stdout-is-tty>]
- 'git config' [<file-option>] -e | --edit
+@@ -27,7 +25,7 @@ You can query/set/replace/unset options with this command=
+=2E The name is
+ actually the section and the key separated by a dot, and the value will be
+ escaped.
 =20
-@@ -80,6 +76,12 @@ COMMANDS
- list::
- 	List all variables set in config file, along with their values.
+-Multiple lines can be added to an option by using the `--add` option.
++Multiple lines can be added to an option by using the `--append` option.
+ If you want to update or unset an option which can occur on multiple
+ lines, a `value-pattern` (which is an extended regular expression,
+ unless the `--fixed-value` option is given) needs to be given.  Only the
+@@ -82,6 +80,13 @@ get::
+ 	emits all values associated with key. Returns error code 1 if key is
+ 	not present.
 =20
-+get::
-+	Emits the value of the specified key. If key is present multiple times
-+	in the configuration, emits the last value. If `--all` is specified,
-+	emits all values associated with key. Returns error code 1 if key is
-+	not present.
++set::
++	Set value for one or more config options. By default, this command
++	refuses to write multi-valued config options. Passing `--all` will
++	replace all multi-valued config options with the new value, whereas
++	`--value=3D` will replace all config options whose values match the given
++	pattern.
 +
  [[OPTIONS]]
  OPTIONS
  -------
-@@ -105,22 +107,16 @@ OPTIONS
- 	not contain linefeed characters (no multi-line comments are
- 	permitted).
+@@ -90,10 +95,9 @@ OPTIONS
+ 	Default behavior is to replace at most one line. This replaces
+ 	all lines matching the key (and optionally the `value-pattern`).
 =20
----get::
--	Get the value for a given key (optionally filtered by a regex
--	matching the value). Returns error code 1 if the key was not
--	found and the last value if multiple key values were found.
--
----get-all::
--	Like get, but returns all values for a multi-valued key.
-+--all::
-+	With `get`, return all values for a multi-valued key.
+---add::
++--append::
+ 	Adds a new line to the option without altering any existing
+-	values.  This is the same as providing '^$' as the `value-pattern`
+-	in `--replace-all`.
++	values. This is the same as providing '--value=3D^$' in `set`.
 =20
----get-regexp::
--	Like --get-all, but interprets the name as a regular expression and
--	writes out the key names.  Regular expression matching is currently
--	case-sensitive and done against a canonicalized version of the key
--	in which section and variable names are lowercased, but subsection
--	names are not.
-+---regexp::
-+	With `get`, interpret the name as a regular expression. Regular
-+	expression matching is currently case-sensitive and done against a
-+	canonicalized version of the key in which section and variable names
-+	are lowercased, but subsection names are not.
+ --comment <message>::
+ 	Append a comment at the end of new or modified lines.
+@@ -296,6 +300,9 @@ recommended to migrate to the new syntax.
+ 'git config <name>'::
+ 	Replaced by `git config get <name>`.
 =20
----get-urlmatch <name> <URL>::
-+--url=3D<URL>::
- 	When given a two-part <name> as <section>.<key>, the value for
- 	<section>.<URL>.<key> whose <URL> part matches the best to the
- 	given URL is returned (if no such key exists, the value for
-@@ -251,7 +247,7 @@ Valid `<type>`'s include:
-=20
- --name-only::
- 	Output only the names of config variables for `list` or
--	`--get-regexp`.
-+	`get`.
-=20
- --show-origin::
- 	Augment the output of all queried config options with the
-@@ -275,17 +271,6 @@ Valid `<type>`'s include:
- 	When the color setting for `name` is undefined, the command uses
- 	`color.ui` as fallback.
-=20
----get-color <name> [<default>]::
--
--	Find the color configured for `name` (e.g. `color.diff.new`) and
--	output it as the ANSI color escape sequence to the standard
--	output.  The optional `default` parameter is used instead, if
--	there is no color configured for `name`.
--+
--`--type=3Dcolor [--default=3D<default>]` is preferred over `--get-color`
--(but note that `--get-color` will omit the trailing newline printed by
--`--type=3Dcolor`).
--
- -e::
- --edit::
- 	Opens an editor to modify the specified config file; either
-@@ -299,7 +284,7 @@ Valid `<type>`'s include:
- 	config files.
-=20
- --default <value>::
--  When using `--get`, and the requested variable is not found, behave as if
-+  When using `get`, and the requested variable is not found, behave as if
-   <value> were the value assigned to that variable.
-=20
- DEPRECATED MODES
-@@ -308,15 +293,33 @@ DEPRECATED MODES
- The following modes have been deprecated in favor of subcommands. It is
- recommended to migrate to the new syntax.
-=20
-+'git config <name>'::
-+	Replaced by `git config get <name>`.
++'git config <name> <value> [<value-pattern>]'::
++	Replaced by `git config set [--value=3D<pattern>] <name> <value>`.
 +
  -l::
  --list::
  	Replaced by `git config list`.
-=20
-+--get <name> [<value-pattern>]::
-+	Replaced by `git config get [--value=3D<pattern>] <name>`.
-+
-+--get-all <name> [<value-pattern>]::
-+	Replaced by `git config get [--value=3D<pattern>] --all --show-names <nam=
-e>`.
-+
-+--get-regexp <name-regexp>::
-+	Replaced by `git config get --all --show-names --regexp <name-regexp>`.
-+
-+--get-urlmatch <name> <URL>::
-+	Replaced by `git config get --all --show-names --url=3D<URL> <name>`.
-+
-+--get-color <name> [<default>]::
-+	Replaced by `git config get --type=3Dcolor [--default=3D<default>] <name>=
+@@ -315,6 +322,9 @@ recommended to migrate to the new syntax.
+ --get-color <name> [<default>]::
+ 	Replaced by `git config get --type=3Dcolor [--default=3D<default>] <name>=
 `.
+=20
++--add <name> <value>::
++	Replaced by `git config set --append <name> <value>`.
 +
  CONFIGURATION
  -------------
  `pager.config` is only respected when listing configuration, i.e., when
--using `list` or any of the `--get-*` which may return multiple results.
--The default is to use a pager.
-+using `list` or `get` which may return multiple results. The default is to=
- use
-+a pager.
+@@ -361,7 +371,7 @@ precedence over values read earlier.  When multiple val=
+ues are taken then all
+ values of a key from all files will be used.
 =20
- [[FILES]]
- FILES
-@@ -519,25 +522,19 @@ you have to provide a regex matching the value of exa=
-ctly one line.
- To query the value for a given key, do
+ By default, options are only written to the repository specific
+-configuration file. Note that this also affects options like `--replace-al=
+l`
++configuration file. Note that this also affects options like `set`
+ and `--unset`. *'git config' will only ever change one file at a time*.
 =20
- ------------
--% git config --get core.filemode
--------------
--
--or
--
--------------
--% git config core.filemode
-+% git config get core.filemode
- ------------
-=20
- or, to query a multivar:
+ You can limit which configuration sources are read from or written to by
+@@ -497,7 +507,7 @@ Given a .git/config like this:
+ you can set the filemode to true with
 =20
  ------------
--% git config --get core.gitproxy "for kernel.org$"
-+% git config get --value=3D"for kernel.org$" core.gitproxy
+-% git config core.filemode true
++% git config set core.filemode true
  ------------
 =20
- If you want to know all the values for a multivar, do:
+ The hypothetical proxy command entries actually have a postfix to discern
+@@ -505,7 +515,7 @@ what URL they apply to. Here is how to change the entry=
+ for kernel.org
+ to "ssh".
 =20
  ------------
--% git config --get-all core.gitproxy
-+% git config get --all --show-names core.gitproxy
+-% git config core.gitproxy '"ssh" for kernel.org' 'for kernel.org$'
++% git config set --value=3D'for kernel.org$' core.gitproxy '"ssh" for kern=
+el.org'
  ------------
 =20
- If you like to live dangerously, you can replace *all* core.gitproxy by a
-@@ -571,8 +568,8 @@ script:
+ This makes sure that only the key/value pair for kernel.org is replaced.
+@@ -541,26 +551,26 @@ If you like to live dangerously, you can replace *all=
+* core.gitproxy by a
+ new one with
 =20
  ------------
- #!/bin/sh
--WS=3D$(git config --get-color color.diff.whitespace "blue reverse")
--RESET=3D$(git config --get-color "" "reset")
-+WS=3D$(git config get --type=3Dcolor --default=3D"blue reverse" color.diff=
-=2Ewhitespace)
-+RESET=3D$(git config get --type=3Dcolor --default=3D"reset" "")
- echo "${WS}your whitespace color or blue reverse${RESET}"
+-% git config --replace-all core.gitproxy ssh
++% git config set --all core.gitproxy ssh
  ------------
 =20
-@@ -580,11 +577,11 @@ For URLs in `https://weak.example.com`, `http.sslVeri=
-fy` is set to
- false, while it is set to `true` for all others:
+ However, if you really only want to replace the line for the default proxy,
+ i.e. the one without a "for ..." postfix, do something like this:
 =20
  ------------
--% git config --type=3Dbool --get-urlmatch http.sslverify https://good.exam=
-ple.com
-+% git config get --type=3Dbool --url=3Dhttps://good.example.com http.sslve=
-rify
- true
--% git config --type=3Dbool --get-urlmatch http.sslverify https://weak.exam=
-ple.com
-+% git config get --type=3Dbool --url=3Dhttps://weak.example.com http.sslve=
-rify
- false
--% git config --get-urlmatch http https://weak.example.com
-+% git config get --url=3Dhttps://weak.example.com http
- http.cookieFile /tmp/cookie.txt
- http.sslverify false
+-% git config core.gitproxy ssh '! for '
++% git config set --value=3D'! for ' core.gitproxy ssh
  ------------
+=20
+ To actually match only values with an exclamation mark, you have to
+=20
+ ------------
+-% git config section.key value '[!]'
++% git config set --value=3D'[!]' section.key value
+ ------------
+=20
+ To add a new proxy, without altering any of the existing ones, use
+=20
+ ------------
+-% git config --add core.gitproxy '"proxy-command" for example.com'
++% git config set --append core.gitproxy '"proxy-command" for example.com'
+ ------------
+=20
+ An example to use customized color from the configuration in your
 diff --git a/builtin/config.c b/builtin/config.c
-index f89ddce8da..9e7ae49c02 100644
+index 9e7ae49c02..87fd12fda2 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -17,7 +17,7 @@
-=20
+@@ -18,6 +18,7 @@
  static const char *const builtin_config_usage[] =3D {
  	N_("git config list [<file-option>] [<display-option>] [--includes]"),
--	N_("git config [<options>]"),
-+	N_("git config get [<file-option>] [<display-option>] [--includes] [--all=
+ 	N_("git config get [<file-option>] [<display-option>] [--includes] [--all=
 ] [--regexp=3D<regexp>] [--value=3D<value>] [--fixed-value] [--default=3D<d=
 efault>] <name>"),
++	N_("git config set [<file-option>] [--type=3D<type>] [--all] [--value=3D<=
+value>] [--fixed-value] <name> <value>"),
  	NULL
  };
 =20
-@@ -26,6 +26,11 @@ static const char *const builtin_config_list_usage[] =3D=
- {
+@@ -31,6 +32,11 @@ static const char *const builtin_config_get_usage[] =3D {
  	NULL
  };
 =20
-+static const char *const builtin_config_get_usage[] =3D {
-+	N_("git config get [<file-option>] [<display-option>] [--includes] [--all=
-] [--regexp=3D<regexp>] [--value=3D<value>] [--fixed-value] [--default=3D<d=
-efault>] <name>"),
++static const char *const builtin_config_set_usage[] =3D {
++	N_("git config set [<file-option>] [--type=3D<type>] [--comment=3D<messag=
+e>] [--all] [--value=3D<value>] [--fixed-value] <name> <value>"),
 +	NULL
 +};
 +
  static char *key;
  static regex_t *key_regexp;
  static const char *value_pattern;
-@@ -722,6 +727,16 @@ static void handle_nul(void) {
- 	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
-ven config file")), \
- 	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
-config from given blob object"))
-=20
-+#define CONFIG_TYPE_OPTIONS \
-+	OPT_GROUP(N_("Type")), \
-+	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
-"), option_parse_type), \
-+	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
-, TYPE_BOOL), \
-+	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_I=
-NT), \
-+	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"=
-), TYPE_BOOL_OR_INT), \
-+	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
-"), TYPE_BOOL_OR_STR), \
-+	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
-ry name)"), TYPE_PATH), \
-+	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
-, TYPE_EXPIRY_DATE)
-+
- #define CONFIG_DISPLAY_OPTIONS \
- 	OPT_GROUP(N_("Display options")), \
- 	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")), \
-@@ -746,14 +761,7 @@ static struct option builtin_config_options[] =3D {
- 	OPT_CMDMODE('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
- 	OPT_CMDMODE(0, "get-color", &actions, N_("find the color configured: slot=
- [<default>]"), ACTION_GET_COLOR),
- 	OPT_CMDMODE(0, "get-colorbool", &actions, N_("find the color setting: slo=
-t [<stdout-is-tty>]"), ACTION_GET_COLORBOOL),
--	OPT_GROUP(N_("Type")),
--	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
-"), option_parse_type),
--	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
-, TYPE_BOOL),
--	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_I=
-NT),
--	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"=
-), TYPE_BOOL_OR_INT),
--	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
-"), TYPE_BOOL_OR_STR),
--	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
-ry name)"), TYPE_PATH),
--	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
-, TYPE_EXPIRY_DATE),
-+	CONFIG_TYPE_OPTIONS,
- 	CONFIG_DISPLAY_OPTIONS,
- 	OPT_GROUP(N_("Other")),
- 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
- default value when missing entry")),
-@@ -799,8 +807,51 @@ static int cmd_config_list(int argc, const char **argv=
-, const char *prefix)
- 	return 0;
+@@ -849,9 +855,66 @@ static int cmd_config_get(int argc, const char **argv,=
+ const char *prefix)
+ 	return get_value(argv[0], value_pattern, flags);
  }
 =20
-+static int cmd_config_get(int argc, const char **argv, const char *prefix)
++static int cmd_config_set(int argc, const char **argv, const char *prefix)
 +{
-+	const char *value_pattern =3D NULL, *url =3D NULL;
-+	int flags =3D 0;
++	const char *value_pattern =3D NULL, *comment_arg =3D NULL;
++	char *comment =3D NULL;
++	int flags =3D 0, append =3D 0;
 +	struct option opts[] =3D {
 +		CONFIG_LOCATION_OPTIONS,
 +		CONFIG_TYPE_OPTIONS,
-+		OPT_GROUP(N_("Filter options")),
-+		OPT_BOOL(0, "all", &do_all, N_("return all values for multi-valued confi=
-g options")),
-+		OPT_BOOL(0, "regexp", &use_key_regexp, N_("interpret the name as a regul=
-ar expression")),
++		OPT_GROUP(N_("Filter")),
++		OPT_BIT(0, "all", &flags, N_("replace multi-valued config option with ne=
+w value"), CONFIG_FLAGS_MULTI_REPLACE),
 +		OPT_STRING(0, "value", &value_pattern, N_("pattern"), N_("show config wi=
 th values matching the pattern")),
 +		OPT_BIT(0, "fixed-value", &flags, N_("use string equality when comparing=
  values to value pattern"), CONFIG_FLAGS_FIXED_VALUE),
-+		OPT_STRING(0, "url", &url, N_("URL"), N_("show config matching the given=
- URL")),
-+		CONFIG_DISPLAY_OPTIONS,
-+		OPT_BOOL(0, "show-names", &show_keys, N_("show config keys in addition t=
-o their values")),
 +		OPT_GROUP(N_("Other")),
-+		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
-tives on lookup")),
-+		OPT_STRING(0, "default", &default_value, N_("value"), N_("use default va=
-lue when missing entry")),
++		OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable c=
+omment string (# will be prepended as needed)")),
++		OPT_BOOL(0, "append", &append, N_("add a new line without altering any e=
+xisting values")),
 +		OPT_END(),
 +	};
++	struct key_value_info default_kvi =3D KVI_INIT;
++	char *value;
++	int ret;
 +
-+	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_get_usage,
++	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_set_usage,
 +			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	check_argc(argc, 1, 1);
++	check_write();
++	check_argc(argc, 2, 2);
 +
 +	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
-+		die(_("--fixed-value only applies with 'value-pattern'"));
-+	if (default_value && (do_all || url))
-+		die(_("--default=3D cannot be used with --all or --url=3D"));
-+	if (url && (do_all || use_key_regexp || value_pattern))
-+		die(_("--url=3D cannot be used with --all, --regexp or --value"));
++		die(_("--fixed-value only applies with --value=3D<pattern>"));
++	if (append && value_pattern)
++		die(_("--append cannot be used with --value=3D<pattern>"));
++	if (append)
++		value_pattern =3D CONFIG_REGEX_NONE;
++
++	comment =3D git_config_prepare_comment_string(comment_arg);
 +
 +	handle_config_location(prefix);
-+	handle_nul();
 +
-+	setup_auto_pager("config", 1);
++	value =3D normalize_value(argv[0], argv[1], &default_kvi);
 +
-+	if (url)
-+		return get_urlmatch(argv[0], url);
-+	return get_value(argv[0], value_pattern, flags);
++	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern) {
++		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
++							     argv[0], value, value_pattern,
++							     comment, flags);
++	} else {
++		ret =3D git_config_set_in_file_gently(given_config_source.file,
++						    argv[0], comment, value);
++		if (ret =3D=3D CONFIG_NOTHING_SET)
++			error(_("cannot overwrite multiple values with a single value\n"
++			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
++	}
++
++	free(comment);
++	free(value);
++	return ret;
 +}
 +
  static struct option builtin_subcommand_options[] =3D {
  	OPT_SUBCOMMAND("list", &subcommand, cmd_config_list),
-+	OPT_SUBCOMMAND("get", &subcommand, cmd_config_get),
+ 	OPT_SUBCOMMAND("get", &subcommand, cmd_config_get),
++	OPT_SUBCOMMAND("set", &subcommand, cmd_config_set),
  	OPT_END(),
  };
 =20
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index f77d2f7847..7ce13ed6cd 100755
+index 7ce13ed6cd..aa3f179be5 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -17,9 +17,15 @@ do
- case "$mode" in
- legacy)
- 	mode_prefix=3D"--"
-+	mode_get=3D""
-+	mode_get_all=3D"--get-all"
-+	mode_get_regexp=3D"--get-regexp"
+@@ -20,12 +20,16 @@ legacy)
+ 	mode_get=3D""
+ 	mode_get_all=3D"--get-all"
+ 	mode_get_regexp=3D"--get-regexp"
++	mode_set=3D""
++	mode_replace_all=3D"--replace-all"
  	;;
  subcommands)
  	mode_prefix=3D""
-+	mode_get=3D"get"
-+	mode_get_all=3D"get --all"
-+	mode_get_regexp=3D"get --regexp --all --show-names"
+ 	mode_get=3D"get"
+ 	mode_get_all=3D"get --all"
+ 	mode_get_regexp=3D"get --regexp --all --show-names"
++	mode_set=3D"set"
++	mode_replace_all=3D"set --all"
  	;;
  *)
  	BUG "unknown mode $mode";;
-@@ -398,7 +404,7 @@ test_expect_success 'multi-valued get-all returns all' '
- 	wow
- 	wow2 for me
- 	EOF
--	git config --get-all nextsection.nonewline >actual &&
-+	git config ${mode_get_all} nextsection.nonewline >actual &&
- 	test_cmp expect actual
- '
-=20
-@@ -500,7 +506,7 @@ nextsection.nonewline wow2 for me
+@@ -132,7 +136,7 @@ cat > expect << EOF
+ 	penguin =3D little blue
  EOF
-=20
- test_expect_success '--get-regexp' '
--	git config --get-regexp in >output &&
-+	git config ${mode_get_regexp} in >output &&
- 	test_cmp expect output
+ test_expect_success 'initial' '
+-	git config section.penguin "little blue" &&
++	git config ${mode_set} section.penguin "little blue" &&
+ 	test_cmp expect .git/config
  '
 =20
-@@ -510,7 +516,7 @@ nextsection.nonewline
+@@ -142,7 +146,7 @@ cat > expect << EOF
+ 	Movie =3D BadPhysics
  EOF
-=20
- test_expect_success '--name-only --get-regexp' '
--	git config --name-only --get-regexp in >output &&
-+	git config ${mode_get_regexp} --name-only in >output &&
- 	test_cmp expect output
+ test_expect_success 'mixed case' '
+-	git config Section.Movie BadPhysics &&
++	git config ${mode_set} Section.Movie BadPhysics &&
+ 	test_cmp expect .git/config
  '
 =20
-@@ -521,7 +527,7 @@ EOF
-=20
- test_expect_success '--add' '
- 	git config --add nextsection.nonewline "wow4 for you" &&
--	git config --get-all nextsection.nonewline > output &&
-+	git config ${mode_get_all} nextsection.nonewline > output &&
- 	test_cmp expect output
+@@ -154,7 +158,7 @@ cat > expect << EOF
+ 	WhatEver =3D Second
+ EOF
+ test_expect_success 'similar section' '
+-	git config Sections.WhatEver Second &&
++	git config ${mode_set} Sections.WhatEver Second &&
+ 	test_cmp expect .git/config
  '
 =20
-@@ -543,21 +549,21 @@ test_expect_success 'get variable with empty value' '
- echo novalue.variable > expect
-=20
- test_expect_success 'get-regexp variable with no value' '
--	git config --get-regexp novalue > output &&
-+	git config ${mode_get_regexp} novalue > output &&
- 	test_cmp expect output
+@@ -167,7 +171,7 @@ cat > expect << EOF
+ 	WhatEver =3D Second
+ EOF
+ test_expect_success 'uppercase section' '
+-	git config SECTION.UPPERCASE true &&
++	git config ${mode_set} SECTION.UPPERCASE true &&
+ 	test_cmp expect .git/config
  '
 =20
- echo 'novalue.variable true' > expect
+@@ -194,8 +198,8 @@ EOF
 =20
- test_expect_success 'get-regexp --bool variable with no value' '
--	git config --bool --get-regexp novalue > output &&
-+	git config ${mode_get_regexp} --bool novalue > output &&
- 	test_cmp expect output
+ test_expect_success 'append comments' '
+ 	git config --replace-all --comment=3D"Pygoscelis papua" section.penguin g=
+entoo &&
+-	git config --comment=3D"find fish" section.disposition peckish &&
+-	git config --comment=3D"#abc" section.foo bar &&
++	git config ${mode_set} --comment=3D"find fish" section.disposition peckis=
+h &&
++	git config ${mode_set} --comment=3D"#abc" section.foo bar &&
+=20
+ 	git config --comment=3D"and comment" section.spsp value &&
+ 	git config --comment=3D"	# and comment" section.htsp value &&
+@@ -204,7 +208,7 @@ test_expect_success 'append comments' '
  '
 =20
- echo 'emptyvalue.variable ' > expect
-=20
- test_expect_success 'get-regexp variable with empty value' '
--	git config --get-regexp emptyvalue > output &&
-+	git config ${mode_get_regexp} emptyvalue > output &&
- 	test_cmp expect output
+ test_expect_success 'Prohibited LF in comment' '
+-	test_must_fail git config --comment=3D"a${LF}b" section.k v
++	test_must_fail git config ${mode_set} --comment=3D"a${LF}b" section.k v
  '
 =20
-@@ -1131,7 +1137,7 @@ test_expect_success 'quoting' '
+ test_expect_success 'non-match result' 'test_cmp expect .git/config'
+@@ -301,14 +305,14 @@ test_expect_success 'multiple unset is correct' '
+ cp .git/config2 .git/config
+=20
+ test_expect_success '--replace-all missing value' '
+-	test_must_fail git config --replace-all beta.haha &&
++	test_must_fail git config ${mode_replace_all} beta.haha &&
+ 	test_cmp .git/config2 .git/config
  '
 =20
- test_expect_success 'key with newline' '
--	test_must_fail git config "key.with
-+	test_must_fail git config ${mode_get} "key.with
+ rm .git/config2
+=20
+ test_expect_success '--replace-all' '
+-	git config --replace-all beta.haha gamma
++	git config ${mode_replace_all} beta.haha gamma
+ '
+=20
+ cat > expect << EOF
+@@ -335,7 +339,7 @@ noIndent=3D sillyValue ; 'nother silly comment
+ [nextSection] noNewline =3D ouch
+ EOF
+ test_expect_success 'really mean test' '
+-	git config beta.haha alpha &&
++	git config ${mode_set} beta.haha alpha &&
+ 	test_cmp expect .git/config
+ '
+=20
+@@ -350,7 +354,7 @@ noIndent=3D sillyValue ; 'nother silly comment
+ 	nonewline =3D wow
+ EOF
+ test_expect_success 'really really mean test' '
+-	git config nextsection.nonewline wow &&
++	git config ${mode_set} nextsection.nonewline wow &&
+ 	test_cmp expect .git/config
+ '
+=20
+@@ -824,16 +828,16 @@ EOF
+=20
+ test_expect_success 'section ending' '
+ 	rm -f .git/config &&
+-	git config gitcvs.enabled true &&
+-	git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
+-	git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
++	git config ${mode_set} gitcvs.enabled true &&
++	git config ${mode_set} gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
++	git config ${mode_set} gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
+ 	test_cmp expect .git/config
+=20
+ '
+=20
+ test_expect_success numbers '
+-	git config kilo.gram 1k &&
+-	git config mega.ton 1m &&
++	git config ${mode_set} kilo.gram 1k &&
++	git config ${mode_set} mega.ton 1m &&
+ 	echo 1024 >expect &&
+ 	echo 1048576 >>expect &&
+ 	git config --int --get kilo.gram >actual &&
+@@ -842,20 +846,20 @@ test_expect_success numbers '
+ '
+=20
+ test_expect_success '--int is at least 64 bits' '
+-	git config giga.watts 121g &&
++	git config ${mode_set} giga.watts 121g &&
+ 	echo  >expect &&
+ 	test_cmp_config 129922760704 --int --get giga.watts
+ '
+=20
+ test_expect_success 'invalid unit' '
+-	git config aninvalid.unit "1auto" &&
++	git config ${mode_set} aninvalid.unit "1auto" &&
+ 	test_cmp_config 1auto aninvalid.unit &&
+ 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
+ 	test_grep "bad numeric config value .1auto. for .aninvalid.unit. in file =
+=2Egit/config: invalid unit" actual
+ '
+=20
+ test_expect_success 'invalid unit boolean' '
+-	git config commit.gpgsign "1true" &&
++	git config ${mode_set} commit.gpgsign "1true" &&
+ 	test_cmp_config 1true commit.gpgsign &&
+ 	test_must_fail git config --bool --get commit.gpgsign 2>actual &&
+ 	test_grep "bad boolean config value .1true. for .commit.gpgsign." actual
+@@ -885,14 +889,14 @@ EOF
+=20
+ test_expect_success bool '
+=20
+-	git config bool.true1 01 &&
+-	git config bool.true2 -1 &&
+-	git config bool.true3 YeS &&
+-	git config bool.true4 true &&
+-	git config bool.false1 000 &&
+-	git config bool.false2 "" &&
+-	git config bool.false3 nO &&
+-	git config bool.false4 FALSE &&
++	git config ${mode_set} bool.true1 01 &&
++	git config ${mode_set} bool.true2 -1 &&
++	git config ${mode_set} bool.true3 YeS &&
++	git config ${mode_set} bool.true4 true &&
++	git config ${mode_set} bool.false1 000 &&
++	git config ${mode_set} bool.false2 "" &&
++	git config ${mode_set} bool.false3 nO &&
++	git config ${mode_set} bool.false4 FALSE &&
+ 	rm -f result &&
+ 	for i in 1 2 3 4
+ 	do
+@@ -903,7 +907,7 @@ test_expect_success bool '
+=20
+ test_expect_success 'invalid bool (--get)' '
+=20
+-	git config bool.nobool foobar &&
++	git config ${mode_set} bool.nobool foobar &&
+ 	test_must_fail git config --bool --get bool.nobool'
+=20
+ test_expect_success 'invalid bool (set)' '
+@@ -1092,7 +1096,7 @@ test_expect_success 'get --expiry-date' '
+=20
+ test_expect_success 'get --type=3Dcolor' '
+ 	rm .git/config &&
+-	git config foo.color "red" &&
++	git config ${mode_set} foo.color "red" &&
+ 	git config --get --type=3Dcolor foo.color >actual.raw &&
+ 	test_decode_color <actual.raw >actual &&
+ 	echo "<RED>" >expect &&
+@@ -1129,10 +1133,10 @@ cat > expect << EOF
+ EOF
+ test_expect_success 'quoting' '
+ 	rm -f .git/config &&
+-	git config quote.leading " test" &&
+-	git config quote.ending "test " &&
+-	git config quote.semicolon "test;test" &&
+-	git config quote.hash "test#test" &&
++	git config ${mode_set} quote.leading " test" &&
++	git config ${mode_set} quote.ending "test " &&
++	git config ${mode_set} quote.semicolon "test;test" &&
++	git config ${mode_set} quote.hash "test#test" &&
+ 	test_cmp expect .git/config
+ '
+=20
+@@ -1140,7 +1144,7 @@ test_expect_success 'key with newline' '
+ 	test_must_fail git config ${mode_get} "key.with
  newline" 123'
 =20
- test_expect_success 'value with newline' 'git config key.sub value.with\\\
-@@ -1185,7 +1191,7 @@ test_expect_success '--null --list' '
- '
+-test_expect_success 'value with newline' 'git config key.sub value.with\\\
++test_expect_success 'value with newline' 'git config ${mode_set} key.sub v=
+alue.with\\\
+ newline'
 =20
- test_expect_success '--null --get-regexp' '
--	git config --null --get-regexp "val[0-9]" >result.raw &&
-+	git config ${mode_get_regexp} --null "val[0-9]" >result.raw &&
- 	nul_to_q <result.raw >result &&
- 	echo >>result &&
- 	test_cmp expect result
-@@ -1194,21 +1200,21 @@ test_expect_success '--null --get-regexp' '
+ cat > .git/config <<\EOF
+@@ -1199,21 +1203,21 @@ test_expect_success '--null --get-regexp' '
+=20
  test_expect_success 'inner whitespace kept verbatim, spaces only' '
  	echo "foo   bar" >expect &&
- 	git config section.val "foo   bar" &&
--	git config --get section.val >actual &&
-+	git config ${mode_get} section.val >actual &&
+-	git config section.val "foo   bar" &&
++	git config ${mode_set} section.val "foo   bar" &&
+ 	git config ${mode_get} section.val >actual &&
  	test_cmp expect actual
  '
 =20
  test_expect_success 'inner whitespace kept verbatim, horizontal tabs only'=
  '
  	echo "fooQQbar" | q_to_tab >expect &&
- 	git config section.val "$(cat expect)" &&
--	git config --get section.val >actual &&
-+	git config ${mode_get} section.val >actual &&
+-	git config section.val "$(cat expect)" &&
++	git config ${mode_set} section.val "$(cat expect)" &&
+ 	git config ${mode_get} section.val >actual &&
  	test_cmp expect actual
  '
 =20
  test_expect_success 'inner whitespace kept verbatim, horizontal tabs and s=
 paces' '
  	echo "foo Q  bar" | q_to_tab >expect &&
- 	git config section.val "$(cat expect)" &&
--	git config --get section.val >actual &&
-+	git config ${mode_get} section.val >actual &&
+-	git config section.val "$(cat expect)" &&
++	git config ${mode_set} section.val "$(cat expect)" &&
+ 	git config ${mode_get} section.val >actual &&
  	test_cmp expect actual
  '
-=20
-@@ -1283,11 +1289,11 @@ test_expect_success 'git -c can represent empty str=
-ing' '
+@@ -1252,12 +1256,12 @@ test_expect_success 'check split_cmdline return' '
+ 	git init repo &&
+ 	(
+ 		cd repo &&
+-		git config alias.split-cmdline-fix "echo \"" &&
++		git config ${mode_set} alias.split-cmdline-fix "echo \"" &&
+ 		test_must_fail git split-cmdline-fix &&
+ 		echo foo >foo &&
+ 		git add foo &&
+ 		git commit -m "initial commit" &&
+-		git config branch.main.mergeoptions "echo \"" &&
++		git config ${mode_set} branch.main.mergeoptions "echo \"" &&
+ 		test_must_fail git merge main
+ 	)
  '
-=20
- test_expect_success 'key sanity-checking' '
--	test_must_fail git config foo=3Dbar &&
--	test_must_fail git config foo=3D.bar &&
--	test_must_fail git config foo.ba=3Dr &&
--	test_must_fail git config foo.1bar &&
--	test_must_fail git config foo."ba
-+	test_must_fail git config ${mode_get} foo=3Dbar &&
-+	test_must_fail git config ${mode_get} foo=3D.bar &&
-+	test_must_fail git config ${mode_get} foo.ba=3Dr &&
-+	test_must_fail git config ${mode_get} foo.1bar &&
-+	test_must_fail git config ${mode_get} foo."ba
+@@ -1295,12 +1299,12 @@ test_expect_success 'key sanity-checking' '
+ 	test_must_fail git config ${mode_get} foo.1bar &&
+ 	test_must_fail git config ${mode_get} foo."ba
  				z".bar &&
- 	test_must_fail git config . false &&
- 	test_must_fail git config .foo false &&
-@@ -1336,7 +1342,7 @@ test_expect_success 'git -c complains about empty key=
- and value' '
+-	test_must_fail git config . false &&
+-	test_must_fail git config .foo false &&
+-	test_must_fail git config foo. false &&
+-	test_must_fail git config .foo. false &&
+-	git config foo.bar true &&
+-	git config foo."ba =3Dz".bar false
++	test_must_fail git config ${mode_set} . false &&
++	test_must_fail git config ${mode_set} .foo false &&
++	test_must_fail git config ${mode_set} foo. false &&
++	test_must_fail git config ${mode_set} .foo. false &&
++	git config ${mode_set} foo.bar true &&
++	git config ${mode_set} foo."ba =3Dz".bar false
  '
 =20
- test_expect_success 'multiple git -c appends config' '
--	test_config alias.x "!git -c x.two=3D2 config --get-regexp ^x\.*" &&
-+	test_config alias.x "!git -c x.two=3D2 config ${mode_get_regexp} ^x\.*" &&
- 	cat >expect <<-\EOF &&
- 	x.one 1
- 	x.two 2
-@@ -1502,7 +1508,7 @@ test_expect_success 'GIT_CONFIG_PARAMETERS handles ol=
-d-style entries' '
- 	v=3D"${SQ}key.one=3Dfoo${SQ}" &&
- 	v=3D"$v  ${SQ}key.two=3Dbar${SQ}" &&
- 	v=3D"$v ${SQ}key.ambiguous=3Dsection.whatever=3Dvalue${SQ}" &&
--	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
-+	GIT_CONFIG_PARAMETERS=3D$v git config ${mode_get_regexp} "key.*" >actual =
-&&
- 	cat >expect <<-EOF &&
- 	key.one foo
- 	key.two bar
-@@ -1515,7 +1521,7 @@ test_expect_success 'GIT_CONFIG_PARAMETERS handles ne=
-w-style entries' '
- 	v=3D"${SQ}key.one${SQ}=3D${SQ}foo${SQ}" &&
- 	v=3D"$v  ${SQ}key.two${SQ}=3D${SQ}bar${SQ}" &&
- 	v=3D"$v ${SQ}key.ambiguous=3Dsection.whatever${SQ}=3D${SQ}value${SQ}" &&
--	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
-+	GIT_CONFIG_PARAMETERS=3D$v git config ${mode_get_regexp} "key.*" >actual =
-&&
- 	cat >expect <<-EOF &&
- 	key.one foo
- 	key.two bar
-@@ -1529,7 +1535,7 @@ test_expect_success 'old and new-style entries can mi=
-x' '
- 	v=3D"$v ${SQ}key.newone${SQ}=3D${SQ}newfoo${SQ}" &&
- 	v=3D"$v ${SQ}key.oldtwo=3Doldbar${SQ}" &&
- 	v=3D"$v ${SQ}key.newtwo${SQ}=3D${SQ}newbar${SQ}" &&
--	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
-+	GIT_CONFIG_PARAMETERS=3D$v git config ${mode_get_regexp} "key.*" >actual =
-&&
- 	cat >expect <<-EOF &&
- 	key.oldone oldfoo
- 	key.newone newfoo
-@@ -1542,7 +1548,7 @@ test_expect_success 'old and new-style entries can mi=
-x' '
- test_expect_success 'old and new bools with ambiguous subsection' '
- 	v=3D"${SQ}key.with=3Dequals.oldbool${SQ}" &&
- 	v=3D"$v ${SQ}key.with=3Dequals.newbool${SQ}=3D" &&
--	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
-+	GIT_CONFIG_PARAMETERS=3D$v git config ${mode_get_regexp} "key.*" >actual =
-&&
- 	cat >expect <<-EOF &&
- 	key.with equals.oldbool
- 	key.with=3Dequals.newbool
-@@ -1556,7 +1562,7 @@ test_expect_success 'detect bogus GIT_CONFIG_PARAMETE=
-RS' '
- 	env.two two
+ test_expect_success 'git -c works with aliases of builtins' '
+@@ -2523,7 +2527,7 @@ test_expect_success '--replace-all does not invent ne=
+wlines' '
+ 	[abc]
+ 	Qkey =3D b
  	EOF
- 	GIT_CONFIG_PARAMETERS=3D"${SQ}env.one=3Done${SQ} ${SQ}env.two=3Dtwo${SQ}"=
- \
--		git config --get-regexp "env.*" >actual &&
-+		git config ${mode_get_regexp} "env.*" >actual &&
- 	test_cmp expect actual &&
-=20
- 	cat >expect <<-EOF &&
-@@ -1564,12 +1570,12 @@ test_expect_success 'detect bogus GIT_CONFIG_PARAME=
-TERS' '
- 	env.two two
- 	EOF
- 	GIT_CONFIG_PARAMETERS=3D"${SQ}env.one=3Done${SQ}\\$SQ$SQ$SQ ${SQ}env.two=
-=3Dtwo${SQ}" \
--		git config --get-regexp "env.*" >actual &&
-+		git config ${mode_get_regexp} "env.*" >actual &&
- 	test_cmp expect actual &&
-=20
- 	test_must_fail env \
- 		GIT_CONFIG_PARAMETERS=3D"${SQ}env.one=3Done${SQ}\\$SQ ${SQ}env.two=3Dtwo=
-${SQ}" \
--		git config --get-regexp "env.*"
-+		git config ${mode_get_regexp} "env.*"
+-	git config --replace-all abc.key b &&
++	git config ${mode_replace_all} abc.key b &&
+ 	test_cmp expect .git/config
  '
 =20
- test_expect_success 'git --config-env=3Dkey=3Denvvar support' '
-@@ -1617,7 +1623,7 @@ test_expect_success 'git -c and --config-env work tog=
-ether' '
- 	ENVVAR=3Denv-value git \
- 		-c bar.cmd=3Dcmd-value \
- 		--config-env=3Dbar.env=3DENVVAR \
--		config --get-regexp "^bar.*" >actual &&
-+		config ${mode_get_regexp} "^bar.*" >actual &&
- 	test_cmp expect actual
- '
-=20
-@@ -1645,7 +1651,7 @@ test_expect_success 'git config handles environment c=
-onfig pairs' '
- 	GIT_CONFIG_COUNT=3D2 \
- 		GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D"foo" \
- 		GIT_CONFIG_KEY_1=3D"pair.two" GIT_CONFIG_VALUE_1=3D"bar" \
--		git config --get-regexp "pair.*" >actual &&
-+		git config ${mode_get_regexp} "pair.*" >actual &&
- 	cat >expect <<-EOF &&
- 	pair.one foo
- 	pair.two bar
-@@ -1655,7 +1661,7 @@ test_expect_success 'git config handles environment c=
-onfig pairs' '
-=20
- test_expect_success 'git config ignores pairs without count' '
- 	test_must_fail env GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D"va=
-lue" \
--		git config pair.one 2>error &&
-+		git config ${mode_get} pair.one 2>error &&
- 	test_must_be_empty error
- '
-=20
-@@ -1663,7 +1669,7 @@ test_expect_success 'git config ignores pairs exceedi=
-ng count' '
- 	GIT_CONFIG_COUNT=3D1 \
- 		GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D"value" \
- 		GIT_CONFIG_KEY_1=3D"pair.two" GIT_CONFIG_VALUE_1=3D"value" \
--		git config --get-regexp "pair.*" >actual 2>error &&
-+		git config ${mode_get_regexp} "pair.*" >actual 2>error &&
- 	cat >expect <<-EOF &&
- 	pair.one value
- 	EOF
-@@ -1674,14 +1680,14 @@ test_expect_success 'git config ignores pairs excee=
-ding count' '
- test_expect_success 'git config ignores pairs with zero count' '
- 	test_must_fail env \
- 		GIT_CONFIG_COUNT=3D0 GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D=
-"value" \
--		git config pair.one 2>error &&
-+		git config ${mode_get} pair.one 2>error &&
- 	test_must_be_empty error
- '
-=20
- test_expect_success 'git config ignores pairs with empty count' '
- 	test_must_fail env \
- 		GIT_CONFIG_COUNT=3D GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D"=
-value" \
--		git config pair.one 2>error &&
-+		git config ${mode_get} pair.one 2>error &&
- 	test_must_be_empty error
- '
-=20
-@@ -1720,7 +1726,7 @@ test_expect_success 'environment overrides config fil=
-e' '
- 	one =3D value
- 	EOF
- 	GIT_CONFIG_COUNT=3D1 GIT_CONFIG_KEY_0=3Dpair.one GIT_CONFIG_VALUE_0=3Dove=
-rride \
--		git config pair.one >actual &&
-+		git config ${mode_get} pair.one >actual &&
- 	cat >expect <<-EOF &&
- 	override
- 	EOF
-@@ -1730,7 +1736,7 @@ test_expect_success 'environment overrides config fil=
-e' '
- test_expect_success 'GIT_CONFIG_PARAMETERS overrides environment config' '
- 	GIT_CONFIG_COUNT=3D1 GIT_CONFIG_KEY_0=3Dpair.one GIT_CONFIG_VALUE_0=3Dval=
-ue \
- 		GIT_CONFIG_PARAMETERS=3D"${SQ}pair.one=3Doverride${SQ}" \
--		git config pair.one >actual &&
-+		git config ${mode_get} pair.one >actual &&
- 	cat >expect <<-EOF &&
- 	override
- 	EOF
-@@ -1805,20 +1811,28 @@ test_expect_success 'urlmatch' '
-=20
- 	test_expect_code 1 git config --bool --get-urlmatch doesnt.exist https://=
-good.example.com >actual &&
- 	test_must_be_empty actual &&
-+	test_expect_code 1 git config get --url=3Dhttps://good.example.com --bool=
- doesnt.exist >actual &&
-+	test_must_be_empty actual &&
-=20
- 	echo true >expect &&
- 	git config --bool --get-urlmatch http.SSLverify https://good.example.com =
->actual &&
- 	test_cmp expect actual &&
-+	git config get --bool --url=3Dhttps://good.example.com http.SSLverify >ac=
-tual &&
-+	test_cmp expect actual &&
-=20
- 	echo false >expect &&
- 	git config --bool --get-urlmatch http.sslverify https://weak.example.com =
->actual &&
- 	test_cmp expect actual &&
-+	git config get --bool --url=3Dhttps://weak.example.com http.sslverify >ac=
-tual &&
-+	test_cmp expect actual &&
-=20
- 	{
- 		echo http.cookiefile /tmp/cookie.txt &&
- 		echo http.sslverify false
- 	} >expect &&
- 	git config --get-urlmatch HTTP https://weak.example.com >actual &&
-+	test_cmp expect actual &&
-+	git config get --url=3Dhttps://weak.example.com HTTP >actual &&
- 	test_cmp expect actual
- '
-=20
-@@ -1834,6 +1848,8 @@ test_expect_success 'urlmatch with --show-scope' '
- 	local	http.sslverify false
- 	EOF
- 	git config --get-urlmatch --show-scope HTTP https://weak.example.com >act=
-ual &&
-+	test_cmp expect actual &&
-+	git config get --url=3Dhttps://weak.example.com --show-scope HTTP >actual=
- &&
- 	test_cmp expect actual
- '
-=20
-@@ -1866,45 +1882,67 @@ test_expect_success 'urlmatch favors more specific =
-URLs' '
- 	echo http.cookiefile /tmp/root.txt >expect &&
- 	git config --get-urlmatch HTTP https://example.com >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://example.com HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/subdirectory.txt >expect &&
- 	git config --get-urlmatch HTTP https://example.com/subdirectory >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://example.com/subdirectory HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/subdirectory.txt >expect &&
- 	git config --get-urlmatch HTTP https://example.com/subdirectory/nested >a=
-ctual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://example.com/subdirectory/nested HTTP >actu=
-al &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/user.txt >expect &&
- 	git config --get-urlmatch HTTP https://user@example.com/ >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://user@example.com/ HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/subdirectory.txt >expect &&
- 	git config --get-urlmatch HTTP https://averylonguser@example.com/subdirec=
-tory >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://averylonguser@example.com/subdirectory HTT=
-P >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/preceding.txt >expect &&
- 	git config --get-urlmatch HTTP https://preceding.example.com >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://preceding.example.com HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/wildcard.txt >expect &&
- 	git config --get-urlmatch HTTP https://wildcard.example.com >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://wildcard.example.com HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/sub.txt >expect &&
- 	git config --get-urlmatch HTTP https://sub.example.com/wildcardwithsubdom=
-ain >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://sub.example.com/wildcardwithsubdomain HTTP=
- >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/trailing.txt >expect &&
- 	git config --get-urlmatch HTTP https://trailing.example.com >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://trailing.example.com HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/sub.txt >expect &&
- 	git config --get-urlmatch HTTP https://user@sub.example.com >actual &&
- 	test_cmp expect actual &&
-+	git config get --url=3Dhttps://user@sub.example.com HTTP >actual &&
-+	test_cmp expect actual &&
-=20
- 	echo http.cookiefile /tmp/multiwildcard.txt >expect &&
- 	git config --get-urlmatch HTTP https://wildcard.example.org >actual &&
-+	test_cmp expect actual &&
-+	git config get --url=3Dhttps://wildcard.example.org HTTP >actual &&
- 	test_cmp expect actual
- '
-=20
-@@ -2027,7 +2065,7 @@ test_expect_success '--unset last key removes section=
- (except if commented)' '
- 	[one]
- 	EOF
- 	git config --unset two.subsection.key &&
--	test "not [two subsection]" =3D "$(git config one.key)" &&
-+	test "not [two subsection]" =3D "$(git config ${mode_get} one.key)" &&
- 	test_line_count =3D 3 .git/config
- '
-=20
-@@ -2150,7 +2188,7 @@ test_expect_success '--show-origin with --get-regexp'=
- '
- 	file:$HOME/.gitconfig	user.global true
- 	file:.git/config	user.local true
- 	EOF
--	git config --show-origin --get-regexp "user\.[g|l].*" >output &&
-+	git config ${mode_get_regexp} --show-origin "user\.[g|l].*" >output &&
- 	test_cmp expect output
- '
-=20
-@@ -2158,7 +2196,7 @@ test_expect_success '--show-origin getting a single k=
-ey' '
- 	cat >expect <<-\EOF &&
- 	file:.git/config	local
- 	EOF
--	git config --show-origin user.override >output &&
-+	git config ${mode_get} --show-origin user.override >output &&
- 	test_cmp expect output
- '
-=20
-@@ -2290,7 +2328,7 @@ test_expect_success '--show-scope getting a single va=
-lue' '
- 	cat >expect <<-\EOF &&
- 	local	true
- 	EOF
--	git config --show-scope --get user.local >output &&
-+	git config ${mode_get} --show-scope user.local >output &&
- 	test_cmp expect output
- '
-=20
-@@ -2559,9 +2597,9 @@ test_expect_success 'refuse --fixed-value for incompa=
+@@ -2595,8 +2599,8 @@ test_expect_success 'refuse --fixed-value for incompa=
 tible actions' '
- 	# These modes complain when --fixed-value has no value-pattern
- 	test_must_fail git config --file=3Dconfig --fixed-value dev.null bogus &&
- 	test_must_fail git config --file=3Dconfig --fixed-value --replace-all dev=
-=2Enull bogus &&
--	test_must_fail git config --file=3Dconfig --fixed-value --get dev.null &&
--	test_must_fail git config --file=3Dconfig --fixed-value --get-all dev.nul=
-l &&
--	test_must_fail git config --file=3Dconfig --fixed-value --get-regexp "dev=
-=2E*" &&
-+	test_must_fail git config ${mode_prefix}get --file=3Dconfig --fixed-value=
- dev.null &&
-+	test_must_fail git config ${mode_get_all} --file=3Dconfig --fixed-value d=
+ 	test_must_fail git config --file=3Dconfig --fixed-value --get-colorbool d=
 ev.null &&
-+	test_must_fail git config ${mode_get_regexp} --file=3Dconfig --fixed-valu=
+=20
+ 	# These modes complain when --fixed-value has no value-pattern
+-	test_must_fail git config --file=3Dconfig --fixed-value dev.null bogus &&
+-	test_must_fail git config --file=3Dconfig --fixed-value --replace-all dev=
+=2Enull bogus &&
++	test_must_fail git config ${mode_set} --file=3Dconfig --fixed-value dev.n=
+ull bogus &&
++	test_must_fail git config ${mode_replace_all} --file=3Dconfig --fixed-val=
+ue dev.null bogus &&
+ 	test_must_fail git config ${mode_prefix}get --file=3Dconfig --fixed-value=
+ dev.null &&
+ 	test_must_fail git config ${mode_get_all} --file=3Dconfig --fixed-value d=
+ev.null &&
+ 	test_must_fail git config ${mode_get_regexp} --file=3Dconfig --fixed-valu=
 e "dev.*" &&
- 	test_must_fail git config --file=3Dconfig --fixed-value --unset dev.null =
-&&
- 	test_must_fail git config --file=3Dconfig --fixed-value --unset-all dev.n=
-ull
- '
-@@ -2591,12 +2629,12 @@ test_expect_success '--fixed-value uses exact strin=
-g matching' '
- 	cp initial config &&
- 	test_must_fail git config --file=3Dconfig --unset fixed.test "$META" &&
- 	git config --file=3Dconfig --fixed-value --unset fixed.test "$META" &&
--	test_must_fail git config --file=3Dconfig fixed.test &&
-+	test_must_fail git config ${mode_get} --file=3Dconfig fixed.test &&
+@@ -2637,7 +2641,7 @@ test_expect_success '--fixed-value uses exact string =
+matching' '
+ 	test_must_fail git config ${mode_get} --file=3Dconfig fixed.test &&
 =20
  	cp initial config &&
- 	test_must_fail git config --file=3Dconfig --unset-all fixed.test "$META" =
-&&
- 	git config --file=3Dconfig --fixed-value --unset-all fixed.test "$META" &&
--	test_must_fail git config --file=3Dconfig fixed.test &&
-+	test_must_fail git config ${mode_get} --file=3Dconfig fixed.test &&
-=20
- 	cp initial config &&
- 	git config --file=3Dconfig --replace-all fixed.test bogus "$META" &&
-@@ -2623,18 +2661,27 @@ test_expect_success '--get and --get-all with --fix=
-ed-value' '
- 	git config --file=3Dconfig --add fixed.test "$META" &&
-=20
- 	git config --file=3Dconfig --get fixed.test bogus &&
-+	git config get --file=3Dconfig --value=3Dbogus fixed.test &&
- 	test_must_fail git config --file=3Dconfig --get fixed.test "$META" &&
-+	test_must_fail git config get --file=3Dconfig --value=3D"$META" fixed.tes=
-t &&
- 	git config --file=3Dconfig --get --fixed-value fixed.test "$META" &&
-+	git config get --file=3Dconfig --fixed-value --value=3D"$META" fixed.test=
- &&
- 	test_must_fail git config --file=3Dconfig --get --fixed-value fixed.test =
-non-existent &&
-=20
- 	git config --file=3Dconfig --get-all fixed.test bogus &&
-+	git config get --all --file=3Dconfig --value=3Dbogus fixed.test &&
- 	test_must_fail git config --file=3Dconfig --get-all fixed.test "$META" &&
-+	test_must_fail git config get --all --file=3Dconfig --value=3D"$META" fix=
-ed.test &&
- 	git config --file=3Dconfig --get-all --fixed-value fixed.test "$META" &&
-+	git config get --all --file=3Dconfig --value=3D"$META" --fixed-value fixe=
-d.test &&
- 	test_must_fail git config --file=3Dconfig --get-all --fixed-value fixed.t=
-est non-existent &&
-=20
- 	git config --file=3Dconfig --get-regexp fixed+ bogus &&
-+	git config get --regexp --file=3Dconfig --value=3Dbogus fixed+ &&
- 	test_must_fail git config --file=3Dconfig --get-regexp fixed+ "$META" &&
-+	test_must_fail git config get --regexp --file=3Dconfig --value=3D"$META" =
-fixed+ &&
- 	git config --file=3Dconfig --get-regexp --fixed-value fixed+ "$META" &&
-+	git config get --regexp --file=3Dconfig --fixed-value --value=3D"$META" f=
-ixed+ &&
- 	test_must_fail git config --file=3Dconfig --get-regexp --fixed-value fixe=
-d+ non-existent
- '
-=20
+-	git config --file=3Dconfig --replace-all fixed.test bogus "$META" &&
++	git config --file=3Dconfig fixed.test bogus "$META" &&
+ 	git config ${mode_prefix}list --file=3Dconfig >actual &&
+ 	cat >expect <<-EOF &&
+ 	fixed.test=3D$META
 --=20
 2.45.0
 
 
---eID8jmYxeyZZ7OgD
+--0qlL+S3uN7TBrqV1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4mzwACgkQVbJhu7ck
-PpSeqBAAiHD7LjNoYQveCJqHilscJUcQLrE/saNko2+nrA1nTRe5re6VMCkyCpFc
-w2BDllVbN2TMoI+Vs/6vrdbnO/RQHz/XVpAejYvqj+9gOtLJ5KgKd/CIyzYaZf4P
-mbKcCgI5Mhl/88uxN4x4Q4qXvOcwoZNLWr5TvBcxkplmwRYJ55TEZmSRrGNDFMd/
-a9OXv+VIOTlK9iZ53eiWwFIATwY4iMMmdQrvyw8hjres6jWwhcG26VdTT3oymd8/
-psN//B/6RnGsWeoa/GRNYqhMsVm7IoEGO4elPgyY1baweuP3mZTwhGAF183yZyfk
-RQypjMLjYTeHinejBZ+CCJNIcw3vwyB+xnZJOeMGigdC8S9u2P8/G1N3Stfl3Z1P
-8PjNV+tiRiaL67xpCs3XNuRC2ShM/W8850OTSudOkVJ/vi240mMfB2QfrSS29yqk
-PlB/lWZBlT/RjLTtOrdPs+L0IB71A7myzMJCUB54CTM2wgr6LIP3MtX/ksFyRx2X
-qSJ0RKgbX9yGKE1QVUlErbBQas+OFduXtStYKKrEVha/XHur0R5uqqoV4LDbmuMQ
-kqi1rGEWKVvqXrEqBfOJuun1INQpqSYadh1bmWwLGKJcoqtC2tGAH61HcUEiMhQn
-8aya33S+AKn81lrq0pWT09y7sZIt2h7CmaYFeZZBseAbchRoEWE=
-=Vs5+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4m0AACgkQVbJhu7ck
+PpTpdw/9E+FNG9DeFLhSKN8BNlXzzRCniVJUvogxOe7CuA3X9Cju2S26/vEenFQe
+aK+yKBoUQp2M5d2um4+8wFe8GjWrnKkVz/5XlC+viTyppShnM8J6uMBkQ/i8B0fS
+mNwusI3RFkj8ImOO8oPoW7g2H9PXCB0K0O2N1HFe8N2KP6VRrVdv99U4y7z1e79y
+qj3C0ULF5/cFz166d3Wzcf7IvY+C/oOlRaS3buuFwp6nsBd60AA7siab+tn/a1bT
+TMnCMVeYt2CbhYkI5WZvTzfGWjgUCfcvi/By1Q6YN1rGRLcw4NyJ+TjjZ3v1PVOq
+jAAYomzpt8zVUXw8YM1FACC3mD+ULSWUY71zJ8BtmBNdoZ3oRyV1J7b981wiO2JC
+jUgKmpU3fGmYy9s7H61GvsY0bPs/YW4RUkwhoV7h5xt5XsFqIWSEAmk4ZWVjJBnR
+Noyr/fZBucRfrz4hzbdatnSQAZyXYLh7aEiVhZCmJF7n1FRKECUZ1R7arUACCRHY
+/dUlzDv1xsj25U7bSLFDL4c89LO8dZMKdtULfk0WBsVeo7/sVr4wXPWm9AGElw95
+uSGRmfKOeool94K22lOn7VMmD1qDUoRdqp9uCjUzaXjuQ7beghYGxmYfg7ztXHLh
+y7gaBKhUmh4OT+KaOgKvhCjrAglSvZLpP1uYOQD10qIY/rl4lMk=
+=3XY1
 -----END PGP SIGNATURE-----
 
---eID8jmYxeyZZ7OgD--
+--0qlL+S3uN7TBrqV1--
