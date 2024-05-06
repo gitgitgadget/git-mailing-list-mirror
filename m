@@ -1,187 +1,145 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB63B142E85
-	for <git@vger.kernel.org>; Mon,  6 May 2024 12:01:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429171C6B9
+	for <git@vger.kernel.org>; Mon,  6 May 2024 12:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714996909; cv=none; b=GP1QO4T82o9xWpU5uBKZJrGMLcn6iO819xU437M+1hIrRilwyeZpEwXZe5RlB8aaqiSKfX/VQEVYplv/4GXlrtF/YMzE4Z3/Hzamh+1SjlUfQrmOOVtPm3PkLjNR701n52EbcegqPRnMrZSqFm0lcVgbXAscRmI1qV7BhTQPyDU=
+	t=1715000207; cv=none; b=V5y+0Vx11+vgNm/70C+CFN8G2ddPKQ7j9AWHqXaS01JZjp/c6EHbLrZJS+P3lNdVZMHPbH75J1fTIHGnjc/aMOT4tid49rHZvuwbkHt1y+Y2ptXG5h+59bwM1YhIbW6PL4j/80xma7cTpkvsHwhHHACrmYe26X1FY9RKlaBE+E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714996909; c=relaxed/simple;
-	bh=K95ATOYXWIxd9JTMARND1pe4nmL7E/xLjcyqTig82Jo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b5+WM8/oa9w7uCPSOW7tMTY0ix1lBVAk+f8/YrwYcaKPOgVWB2QZQU4FPJkrCvM7NkzXPf62rbBzzIDUPPDPMuiepE2VWBCEVlhwWTlBjlik3Ci2AV3buOybRtpKlFznRT52LHRjMr8W4Ue0/JHpiXrX7NGLVkPysGTLc7XN7Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EZubNVwH; arc=none smtp.client-ip=209.85.167.178
+	s=arc-20240116; t=1715000207; c=relaxed/simple;
+	bh=ZCUmzfypst2SqeL/TGuvqLcQsN3d5QRM/D5wedeisiA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IgyGc/HxTZAst1IiDjKkMFUAM9wI2/JeufyQF4psn/JQVa7/JImf3V3qyGVFr9T6AJl/ywzDncllP+kXk8byf16Ek1cfvoJ8n58pZ5XcDPq8cCis8Pnw3Mg2TdR/E3IfznqkaVv1vROPYDAkf7FD9YC4pV1Rc9ljONIhAxiDHRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kfYtRS6X; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EZubNVwH"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3c96be1ef20so527262b6e.1
-        for <git@vger.kernel.org>; Mon, 06 May 2024 05:01:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kfYtRS6X"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6f04f01f29aso764204a34.0
+        for <git@vger.kernel.org>; Mon, 06 May 2024 05:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714996907; x=1715601707; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zOqRHzaqFxevVRljKUY5Za5+fpGzx18eisz7is7g4os=;
-        b=EZubNVwHINWDSUNoMAZkQXDZjGFJ3K6uY0voXY4SXasEswirkA965Xnw82AQ4thwaV
-         9j7uQuc7EnCPkjZ4kS19HKNEWvDYY3Wg4gQXQse0d193bbh2Qc3oHw+rbsCUPeDdIfMV
-         oHeLgoakx++hTr2WY0AK8DJPtk8ksWn+pDeXW9LvfPVjqcGB+qwByjk2eXVqOwjT5Fr5
-         feKXfa6minAFLtGKped6LghQCyhTyZNZFgDabrX5KFNCLR62G+tVN1PIWKSyoQfXOzTz
-         Om4XeBdlvCRuezyWtLqAl/tOxQa6XUct1BTev3N2U9YY6k37Gq1YX9q3dUX5H1+VI8/F
-         wdpQ==
+        d=gmail.com; s=20230601; t=1715000205; x=1715605005; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QMQUBJwDPk7rZ7+aBzqDG8FAN7Rjwp0acvpthnZcjGQ=;
+        b=kfYtRS6XAhE77ZDyYf+r7ITc3RZxXFTEAINwauQ6tGeO4eUzdR3LZHTFYznhLCJS2s
+         quDbIhd4tgPhlBcd5M3CS4AQ4Tv/NcWes1ODX+pZAn9FviVE0+KDeK3GxKclC5KmlN4K
+         Ph/ah9drLWLLPb6mF+SytFgP6pYVpgLyHx8PEhWPYMxkxuMa3zRQRlkBR64bzHnzEqBX
+         JT8ZyV9DIIHJ5VonLpDUPyGqS194J7GZ0X9TxBX/aGgM5aL0bsNMuM909igvnD4mbfeO
+         pKmCSsDql9swO9E583HXhFUz1iHOM1kcmOe8JkvDQrhEu4sV1RTxxuRuHLzJCsdcwEur
+         aOMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714996907; x=1715601707;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zOqRHzaqFxevVRljKUY5Za5+fpGzx18eisz7is7g4os=;
-        b=ouay7D5+OCylb7F3ThIsNEwVvmu8ZlaoJdIqICJnD4Ro0Z1rVNtO6Bq+o1dVF8ZwD/
-         MOT6h+tMJRlskzKP8HUAEgGcCUlB3K5ik2+jJk/ngE7cHXmX9CMa24w2HhHfaa4U9QWG
-         EeZCxVnuBbKqBsEeOwEgTDQ50CQ1eAncMpNoyAvJCQ/HsYrt4dpNqXM7p9fsyIsu9hU5
-         uFN/QdGarJU3WPRGMSiPgwxHh4vRn/3LgyX7swcYNVpKW/4uLBG5EG2QVfPrjvrtL6mm
-         aYVH1T7YS0QssNrcYMGYiMLdHRBiHPT+OUncHe/vB2pQupy/Qztdu0lmsywSDemHj13E
-         FpjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV8+7w25+sFVeJLtiSRxrCGng0pJZGeSZCR1ngs7bwLk8qx1dLUC51kIkF6vQ0WBtlZygcicNeQoScNghfO8ckv4/5u
-X-Gm-Message-State: AOJu0YwN1z8gCdfdSevw2Dvz1uL80dne//bHmrOVyTcpdWQnaAVqRpvi
-	R8cl0vdKicDaMBAtXKjX9QRFZY0tGTkLd8gjqRR+Wj1o8/qSY63kXb9EiTPGa/3j9MvXs607JBS
-	g3FNM7Go05bIH8cQTd6R5jI3zL4/ljA==
-X-Google-Smtp-Source: AGHT+IFBSjYys0bD+TP0YKBsXPPN5kfKBoMYwRW191p0MqBwV8oTngAZ9m4l/sPhnDWmdtpf/2MVM/UCe4zbVYC1FdQ=
-X-Received: by 2002:a05:6870:7249:b0:23e:619f:9c29 with SMTP id
- y9-20020a056870724900b0023e619f9c29mr11134374oaf.49.1714996906325; Mon, 06
- May 2024 05:01:46 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 6 May 2024 05:01:45 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <pull.1668.git.git.1714802221671.gitgitgadget@gmail.com>
-References: <pull.1668.git.git.1714802221671.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1715000205; x=1715605005;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QMQUBJwDPk7rZ7+aBzqDG8FAN7Rjwp0acvpthnZcjGQ=;
+        b=iBAWRx/5BEcKdHmkx8zcEi9XLKSFTozEwvI2qf5rUsJz21Cv5mcCw0U+8lTwSSiZ2Z
+         q7M9kEwEulouokS7OZX4uSPVSfqNCL2gRBrnjWVyTVdi7WgMhEhmEBs6YLUeHq2pQSzs
+         EhwpMI12L0EYTTfhiicKt5NNTERtAWT6fTK78gvmIw7IMjNlUWP9JWd2ODbVDSnKLPca
+         TgIdUnfskEfyOQfsaACuqzMLfXnCb/S6G2O816WPmhtnqmqCukV2tAZT3sotjp+85I7n
+         /vDF42OrGzHAf6EIjcQkL2K3cRvuT70XrUl1wVSXkMf0J8Dj/aKPPSdeWcn98HRYgdcV
+         4Biw==
+X-Gm-Message-State: AOJu0Ywy2o/+qTPFoy5vrA5Dy2Nn4caV7k/SNjlmZ+fkIQLo/Clpe50c
+	/MmhXkNMXCnM3Gybc0llONIi3gjCgkEIWFttwdZOAyy0f54K/mu4
+X-Google-Smtp-Source: AGHT+IGrGCf/YGb8VLFCuRr7iYqua6L9M7gL9O94ExmdT7+leeGS/UXa48wGii6/TGuxs8V9EpJOew==
+X-Received: by 2002:a9d:5c04:0:b0:6f0:55fd:2df3 with SMTP id o4-20020a9d5c04000000b006f055fd2df3mr3066518otk.6.1715000205014;
+        Mon, 06 May 2024 05:56:45 -0700 (PDT)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id cy14-20020a056830698e00b006eb7b0ee326sm1866313otb.65.2024.05.06.05.56.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 May 2024 05:56:44 -0700 (PDT)
+Date: Mon, 6 May 2024 07:55:25 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Justin Tobler <jtobler@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] ci: fix Python dependency on Ubuntu 24.04
+Message-ID: <c2dyqdqge3ypc7syissjm3mh6fqftojvincu4qizkuravc5ll6@bjgjlcas7n4k>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Justin Tobler <jtobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <cb8cefc20f373a3516695e7cbee975132553ea95.1714973381.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 6 May 2024 05:01:45 -0700
-Message-ID: <CAOLa=ZQUEHO0oCcccgHQqzvgXkK-gMOqhpCQ2fGTLLMBPB+Pag@mail.gmail.com>
-Subject: Re: [PATCH] Bug fix: ensure P4 "err" is displayed when exception is raised.
-To: Fahad Alrashed via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Fahad Alrashed <fahad@keylock.net>
-Content-Type: multipart/mixed; boundary="000000000000649c4d0617c7d5c7"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cb8cefc20f373a3516695e7cbee975132553ea95.1714973381.git.ps@pks.im>
 
---000000000000649c4d0617c7d5c7
-Content-Type: text/plain; charset="UTF-8"
+On 24/05/06 07:35AM, Patrick Steinhardt wrote:
+> Newer versions of Ubuntu have dropped Python 2 starting with Ubuntu
+> 23.04. By default though, our CI setups will try to use that Python
+> version on all Ubuntu-based jobs except for the "linux-gcc" one.
 
-Hello Fahad,
+Naive question, why were the "linux-gcc" jobs the only ones using
+Python 3?
 
-"Fahad Alrashed via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Fahad Alrashed <fahad@keylock.net>
->
-> Bug fix: During "git p4 clone" if p4 process returns
-
-Nit: I haven't seen us use a prefix for the commit message. Also we use
-a max line length of 72 characters (see .editorconfig). The commit
-message seems to be wrapped at a much lower threshold.
-
-> an error from the server, it will store it in variable
-
-perhaps `in the 'err' variable` or `in a variable 'err'`.
-
-> "err". The it will send a text command "die-now" to
-
-s/The/Then
-
-> git-fast-import. However, git-fast-import raises an
-> exception: "fatal: Unsupported command: die-now"
-> and err is never displayed. This patch ensures that
-> err is dispayed using "finally:"
->
-> Signed-off-by: Fahad Alrashed <fahad@keylock.net>
+> 
+> We didn't notice this issue due to two reasons:
+> 
+>   - The "ubuntu:latest" tag always points to the latest LTS release.
+>     Until a few weeks ago this was Ubuntu 22.04, which still had Python
+>     2.
+> 
+>   - Our Docker-based CI jobs had their own script to install
+>     dependencies until 9cdeb34b96 (ci: merge scripts which install
+>     dependencies, 2024-04-12), where we didn't even try to install
+>     Python at all for many of them.
+> 
+> Since the CI refactorings have originally been implemented, Ubuntu
+> 24.04 was released, and it being an LTS versions means that the "latest"
+> tag now points to that Python-2-less version. Consequently, those jobs
+> that use "ubuntu:latest" broke.
+> 
+> Address this by using Python 2 on Ubuntu 20.04, only, whereas we use
+> Python 3 on all other Ubuntu jobs. Eventually, we should think about
+> dropping support for Python 2 completely.
+> 
+> Reported-by: Justin Tobler <jtobler@gmail.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->     In git p4, git fast-import fails from die-now command and err (from
->     Perforce) is not shown
->
->     When importing from Perforce using git p4 clone <depot location>,
->     cloning works fine until Perforce command p4 raises an error. This error
->     message is stored in err variable then git-fast-import is sent a die-now
->     command to kill it. An exception is raised fatal: Unsupported command:
->     die-now.
->
->     This patch forces python to call die() with the err message returned
->     from Perforce.
->
->     This commit fixes the root cause of a bug that took me hours to find.
->     I'm sure many faced the cryptic error and declared that git-p4 is not
->     working for them.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1668%2Falrashedf%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1668/alrashedf/master-v1
-> Pull-Request: https://github.com/git/git/pull/1668
->
->  git-p4.py | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index 28ab12c72b6..f1ab31d5403 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -3253,17 +3253,19 @@ def streamP4FilesCb(self, marshalled):
->              if self.stream_have_file_info:
->                  if "depotFile" in self.stream_file:
->                      f = self.stream_file["depotFile"]
-> -            # force a failure in fast-import, else an empty
-> -            # commit will be made
-> -            self.gitStream.write("\n")
-> -            self.gitStream.write("die-now\n")
-> -            self.gitStream.close()
-> -            # ignore errors, but make sure it exits first
-> -            self.importProcess.wait()
-> -            if f:
-> -                die("Error from p4 print for %s: %s" % (f, err))
-> -            else:
-> -                die("Error from p4 print: %s" % err)
-> +            try:
-> +                # force a failure in fast-import, else an empty
-> +                # commit will be made
-> +                self.gitStream.write("\n")
-> +                self.gitStream.write("die-now\n")
-> +                self.gitStream.close()
-> +                # ignore errors, but make sure it exits first
-> +                self.importProcess.wait()
-> +            finally:
-> +                if f:
-> +                    die("Error from p4 print for %s: %s" % (f, err))
-> +                else:
-> +                    die("Error from p4 print: %s" % err)
->
+> 
+> Note: this topic depends on ps/ci-test-with-jgit at 70b81fbf3c (t0612:
+> add tests to exercise Git/JGit reftable compatibility, 2024-04-12).
+> 
+>  ci/lib.sh | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index 473a2d0348..273f3540a6 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -325,9 +325,13 @@ ubuntu-*)
+>  		break
+>  	fi
+>  
+> -	PYTHON_PACKAGE=python2
+> -	if test "$jobname" = linux-gcc
 
-This part looks good.
+With this change, "linux-gcc" jobs using ubuntu 20.04 will now use
+Python 2. Is that what we want?
 
->          if 'depotFile' in marshalled and self.stream_have_file_info:
->              # start of a new file - output the old one first
->
-> base-commit: 235986be822c9f8689be2e9a0b7804d0b1b6d821
-> --
-> gitgitgadget
+-Justin
 
-Thanks,
-Karthik
+> +	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+> +	# have it anymore. We thus only test with Python 2 on older LTS
+> +	# releases.
+> +	if "$distro" = "ubuntu-20.04"
+>  	then
+> +		PYTHON_PACKAGE=python2
+> +	else
+>  		PYTHON_PACKAGE=python3
+>  	fi
+>  	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/$PYTHON_PACKAGE"
+> 
+> base-commit: b6db6b1598946fbf777e55ff0d187b11ff3bd21f
+> -- 
+> 2.45.0
+> 
 
---000000000000649c4d0617c7d5c7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: eba9c104463ee1c1_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZNHhxY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMjNNREFDUEVITHBZSUJLSnFNUFpMV3phL0FqNDJwUQpqVThKRzZKY2s5
-VFJhTlRYV3ptdlY4MHZvb21xQXIxWDFpUDVXOER5TSsxQ3pwSGNzRXhEZVlRSVNNK0VkZUIvCndq
-S2xvODRDU0Vzd0lCNG5YTXNPYUJ0Tjk0TlBER0ZIVmhYMGRid1prZ09WM2pZekorcjQ4ejYxYjFp
-RnM2VHkKTERqejdNMGw3akxuTVpkTUVtUUZsUVZLSXNHaXh1emVlcWN4UDluQ29vdm1IVUhnSnhY
-ZVY2SExNRUI0MFpHRwowMnpaMTYyVTRkaU9sdytBMmE4NVZkeFQ0Z3UxaGYrUklBcnZKVzlSM1ds
-VUdQTkZrQi95dGpvaWZJMXJnZmZaClhBSDFRamMvZ284ZUlOZ29DSG52NXhNdnkraVdkaHhDTHdN
-OGlvNFIwUjhMTktOTVc2dUU0dFpNcFNMMDlPMFcKTlpsZVRnOExMUS9SbzlEa0l6cEVkZjd3c09r
-L2RIV0lXcEljNjZZcCtUQ2kwSy9hb2FZUW9LcTJtT2FOeTJKYQp0KzNPRE9pMXhyV3RVR0tHU1cy
-dWVldjdGZmpxU3NiRjBhcVhSMlJzRUZlOTNZRG5xT3Z3dG5HVDJkQ1g0TytXCnkvbFhLRElrdVZU
-Vzk5RzA1R1lhcjR1Y3h6Q05rbHRSSnFyREVCST0KPXBuRzkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000649c4d0617c7d5c7--
