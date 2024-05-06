@@ -1,185 +1,146 @@
-Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA6A6CDCE
-	for <git@vger.kernel.org>; Mon,  6 May 2024 09:34:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E35142621
+	for <git@vger.kernel.org>; Mon,  6 May 2024 09:35:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714988090; cv=none; b=eYcCFVNfL+Kww43Zk9YJ3gt8svpK4Q0+BukrMGaP5eT0C3yubc1tAgj0gHXo9wAWCc0A/R1gm8Z7+MllLoGpIljWAMMqk52mXo1VBoRy8I2nsFYMgBGSo8Pm/djtD2Hs7JLNyT9jdz252v6ZnBetOiQNCF1y30OUMvKcxUWLLvs=
+	t=1714988145; cv=none; b=jvKtn4CegKkRJCXfBIiV3wZ8UEkw6udP5/1wWbOAOOrr4b33KSlCj1vOM+2hyeoXQLGEgQ/gSNi3DoNt9Z8oDSQ9Bv8uh4TqHC1kob0Dbeh7RVJrSPtUqzBNig7SLDPUDVZoIV1vPWl8M1hCfOudQQxViVx4BnIHWS85Fy5zbxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714988090; c=relaxed/simple;
-	bh=NR3iS+Qeb9ZURs8d71edPzfy9N3qBj81He0NfZQG4ZY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jkISlI+ACkJbjbF9NIAbp37zjVdBsVzjYaHEXGYwusvQp9nhKseleQhYDMjOSLUiEFGLWbYGKVmUtBIFVMBuQd4gYJsTeqsXLlYhbzz9EkKBpHyvLqWMjOB0oBiJoY2wbJjShzMdsPiOafDKbEUYMSKaexNAQj6NX2jxp1Yb1EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N9sMvFns; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bpL3v4YC; arc=none smtp.client-ip=64.147.123.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1714988145; c=relaxed/simple;
+	bh=u3uDkVHz7BLUrQtM0uSHmIOLvTTkWdBppgh8TX3YNFI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=A73FGjrGQ5vMroVgfxxiVtiOFALDGJ3i6mprdkN3LEMWEN8Bsweb8yP5iYNofPHbLKG/NoSjJ7kUmkDdAFb+7L8K2sOXOBvDQTPgwBc2DvT3D8yLK5wPZ6N1Tm9IvM1EEJq1rZX4yzoi4Iu/9t3Q49lnQgcQbWRSlQkXyVEMWKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k/I8XVrr; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N9sMvFns";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bpL3v4YC"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id D4B881C000F9;
-	Mon,  6 May 2024 05:34:47 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 06 May 2024 05:34:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714988087; x=1715074487; bh=TPsmdhndrS
-	REzCtwFQwxME8ypUdKzht56yijUtNCf/E=; b=N9sMvFnsJxH1gtvZpjbCZC+CQi
-	6oY1XMlwHdWXIeEDhx1Xh/vFN98nrTvT6SgCJzoFCXvtntLkrUoDhL912P65Az3r
-	vrOb21iRJxpYLdlQh/nGFTgbjk/AbJMNHsuMHlqX5jfRFDPzt5hj8KA8aNUUzeCR
-	0oalhBQtkAQsRcqLouh8i/+ACBobP6HYUzREitXxQ+RcEBalZ6tW1i92ZS1ZFHl1
-	1IaI/FIELNx4kQNw48eRKBubWrUSaKPiWUObC1YJ+vGi+6bEckXXZFdD3Dr0Bnng
-	gJPS7QQxUOu3Y7KZqwH0njRNzxGu3x5RDaN2IddxfHNifkVL3Ll1+4UNFgbg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714988087; x=1715074487; bh=TPsmdhndrSREzCtwFQwxME8ypUdK
-	zht56yijUtNCf/E=; b=bpL3v4YCc0lG740C6lcHRiWNalFBw4wj5yETW0yMGrDV
-	pZUTW2y7G8UX0dFzFpyS1OfQDhRF+VEWXTOYKwpWYfSmkgG7IdJb7LCtRhVmZpZn
-	JjA2nDVvCz483BPNZt+OrUPA6Sb2THerDK9uTV8Qz34sYIbfJzppqs83mVjd8/LY
-	+PfKcKjUW85eGhhKiF+6RF+lJT54YPYlQLlnfL6iuXCg+Pz/chFud8Yp2E6lp5az
-	URIxew9hpn18stNfJnbvX7IGz3E9WLznyrgW/m4PpNJGXPGz7HptjhXjGyR13Zr6
-	9P7kkK97XiF8XcfJipKAQ2ljSMqJK81SyUniH7i4xQ==
-X-ME-Sender: <xms:N6Q4Zi5lEsLktl_21nLHMldIp5-k_ItlHGOckc6lc9tmW6EImn3ZEQ>
-    <xme:N6Q4Zr6EGpvgkeZrXFi08LXCwZO6ndFVy-db5ENeIMyTZTA-303Vlcnt9byZfYM7A
-    mN62eEjhOiYrXaQXw>
-X-ME-Received: <xmr:N6Q4ZheRFfhYwEsVfqJ-1RSPU_kik7mDftHV2K44ccK4shUJvQfRbky0fneuuF-w981dHXfjCaI1So-HeFH-T3ggF2bwmgWxvHpe0kAcI82hJiyE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedgudejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:N6Q4ZvLcoPkkYR115T3MPx8PClzEUQBIQgCMBEKT7va5LtRF-T64KA>
-    <xmx:N6Q4ZmJDW5flmNpDYKX4886ODC65fLMZmOWkjVRnIALBf4ay8hIGig>
-    <xmx:N6Q4ZgxZpAs-Ktipgav3R0AtExXPqtNCu_Z-knH1qlAx5Qi769u-ug>
-    <xmx:N6Q4ZqJDqI7NPkkCC1WNVTtN1-C6QibEYhlQk_fuQfHD1KL6P0lg3w>
-    <xmx:N6Q4Znq6Ru-wDkO9s56jOlWq36Rkhj3OtMFIae_ZwzbXaPFjLrbdv3LM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 05:34:46 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 5bbb1084 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 May 2024 09:34:39 +0000 (UTC)
-Date: Mon, 6 May 2024 11:34:42 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Taylor Blau <me@ttaylorr.com>,
-	=?iso-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/14] builtin/config: move "fixed-value" option to
- correct group
-Message-ID: <ZjikMpvHnTK01YM6@tanuki>
-References: <cover.1709724089.git.ps@pks.im>
- <cover.1714730169.git.ps@pks.im>
- <ddcd8031d7e399b126344d82d3373a2b2ed7fb8f.1714730169.git.ps@pks.im>
- <CAOLa=ZR02Jf3-4zT9gMzVmzS1JNR1MCLDHCV+utR3B-N_acK=w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/I8XVrr"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41c7ac73fddso18104725e9.3
+        for <git@vger.kernel.org>; Mon, 06 May 2024 02:35:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714988142; x=1715592942; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=iSOMtjCIn6UZsjF6g7InF6g1YX/f/w2WRfwphbchG0Q=;
+        b=k/I8XVrrvMf8GQAASePR8x/3MwD/aMWDmf/5M5PfR3Xaz1tsMUvjAZzlVIZu96gFxA
+         tLBAVXNviYcHs+tm8g3zf2F1EEJuDjHoPhfLTJ05GdR8ntZnwIG31jp0pWKyWKUBuxQ7
+         QYfa9oYNlH2ErSrQ8b+N4hYIEMpDH4gdEyHM4pBvb9NFqy4GlrkOZKImLwiI7EF2sAuu
+         8TmRRVbZv/d6Za6QxlUbTASJ7zT8+gz3w1s2o3GPesyPawFBJIGbhc3V5UJlEHm1lV32
+         lGRehVVcozGlwH4HeomD64kTBGY9tfbJlyYhS6wUEn0KH9+g00mHWQAy5LbUE2Itu94G
+         M9Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714988142; x=1715592942;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iSOMtjCIn6UZsjF6g7InF6g1YX/f/w2WRfwphbchG0Q=;
+        b=VCMbiyRF5TggZVoAIEP12XaFpJLNMR1IMzTSSqCcur1YXgT79pdFZumoo0/rAxNEmm
+         8FjP/fPxGZjvAfsbtQi0WpoHvjIv7GCdZLGLcN7a4sJ0k5yknvvEPekrifOR41lxOUMf
+         dSp25++7dhBWReN63b1W38O619VQNyRUcu6beK6L+k/ro2Gr2gEmFk+dyvCPUfxMCxSO
+         lcBia0LMei0qRFbPih1zLHWuAGe1KDEBEtKD+pjtttv9FE+00kB6NYeM+BWwJku6fZkx
+         DbTEl+7ajYLa5oiZE1GTDTMepZ5sQq5o2LgNJ42u3SJHkVxCH5DJa0c3gF89cnsO2Pz5
+         YxSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU4q8WROIz8/xr544V4MWd9TdwF1PoWSOKb7IDLpnqLUvkS5q1QiTrS/+/wBW/04oOggBplfZCg9GpNWO4g/QrILOPR
+X-Gm-Message-State: AOJu0YxKFXfdDrq0kHCqqDdKhg88HdMdqcsjQac4weOPXPa+0INu2LPI
+	UyMcGUd169NSluDRlJFN44rNf6SkuQjX21/6LZtJbo4WnYZVkFf0
+X-Google-Smtp-Source: AGHT+IF4VJmVRhdR1kCHoWvgPBg5uL/EMzORpUQeIt8G3GC4EDlXFlvE2Q6d9hZzdOErPvWdbyzDqg==
+X-Received: by 2002:a05:600c:1553:b0:41b:e94f:1e88 with SMTP id f19-20020a05600c155300b0041be94f1e88mr9974707wmg.24.1714988141426;
+        Mon, 06 May 2024 02:35:41 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
+        by smtp.gmail.com with ESMTPSA id u17-20020a05600c19d100b0041bb11ff5a7sm19229687wmq.8.2024.05.06.02.35.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 May 2024 02:35:41 -0700 (PDT)
+Message-ID: <6e1f09fc-747c-4704-87b5-a7b2ba18d78e@gmail.com>
+Date: Mon, 6 May 2024 10:35:40 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Klxe3EFHyCsIBLXx"
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZR02Jf3-4zT9gMzVmzS1JNR1MCLDHCV+utR3B-N_acK=w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 4/7] refs: add support for transactional symref updates
+To: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+ ps@pks.im
+References: <20240501202229.2695774-1-knayak@gitlab.com>
+ <20240503124115.252413-1-knayak@gitlab.com>
+ <20240503124115.252413-5-knayak@gitlab.com>
+ <17c71b18-20b4-4bbd-b52c-c29ef8d3860e@gmail.com>
+ <CAOLa=ZR5a0Tj1abM4z4SAVm5cw5+EA0qyoOMs8QH8MoS6eJGiQ@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAOLa=ZR5a0Tj1abM4z4SAVm5cw5+EA0qyoOMs8QH8MoS6eJGiQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Karthik
 
---Klxe3EFHyCsIBLXx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 05/05/2024 17:09, Karthik Nayak wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>> On 03/05/2024 13:41, Karthik Nayak wrote:
+>>> --- a/refs/reftable-backend.c
+>>> +++ b/refs/reftable-backend.c
+>>> @@ -938,7 +940,22 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>>>    		 * individual refs. But the error messages match what the files
+>>>    		 * backend returns, which keeps our tests happy.
+>>>    		 */
+>>> -		if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
+>>> +		if (u->old_target) {
+>>> +			if (strcmp(referent.buf, u->old_target)) {
+>>> +				if (!strcmp(referent.buf, ""))
+>>> +					strbuf_addf(err, "verifying symref target: '%s': "
+>>> +						    "reference is missing but expected %s",
+>>> +						    original_update_refname(u),
+>>> +						    u->old_target);
+>>> +				else
+>>> +					strbuf_addf(err, "verifying symref target: '%s': "
+>>> +						    "is at %s but expected %s",
+>>> +						    original_update_refname(u),
+>>> +						    referent.buf, u->old_target);
+>>
+>> The messages in this function differ from the equivalent messages in
+>> check_old_target() from the files backend above. This is potentially
+>> confusing to users, creates more work for translators and makes it hard
+>> to write tests that are independent of the backend. Can we export
+>> check_old_target() so it can be reused here. If not we should reword
+>> these messages to match the other messages all of which talk about not
+>> being able to lock the ref.
+>>
+> 
+> This is very intentional, the way the backends work at this point are
+> quite different and while in the files backend, we talk about locking a
+> particular ref.
 
-On Fri, May 03, 2024 at 05:28:38AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > The `--fixed-value` option can be used to alter how the value-pattern
-> > parameter is interpreted for the various submodes of git-config(1). But
-> > while it is an option, it is currently listed as part of the submodes
-> > group the command, which is wrong.
-> >
->=20
-> Isn't it currently listed as part of the 'Action' group? Also I'm not
-> sure if the last sentence needs to be corrected here.
+I agree that the existing messages could be improved - these messages 
+are returned when checking the old value of the ref so talking about 
+being unable to lock the ref is not helpful as the important information 
+is that the old value does not match the expected value. However that is 
+not dependent on the backend or on whether the expected value is a 
+symref or an oid so it feels a bit random to make these two messages 
+different.
 
-It's what I actually intended to say, yes. But I agree with you that
-"action" feels like the more reasonable way to put it given that we also
-call them "actions" in code.
+> In the reftable backend we do not lock single refs. We
+> lock tables. So keeping it consistent doesn't make sense here.
 
-And yes, the last sentence needs to be corrected :)
+Where an update is prevented by another process holding a lock I think 
+that the granularity of the lock that prevents the ref from being 
+updated is not particularly relevant as far as the user is concerned. As 
+far as I can see the existing error messages in the reftable backend try 
+to be consistent with the messages in the files backend.
 
-Patrick
+> However, we could make the files backend similar to this one, I would be
+> okay doing that.
 
-> >
-> > Move the option to the "Other" group, which hosts the various options
-> > known to git-config(1).
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  builtin/config.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/config.c b/builtin/config.c
-> > index 59ae5996eb..054019b70c 100644
-> > --- a/builtin/config.c
-> > +++ b/builtin/config.c
-> > @@ -643,7 +643,6 @@ static struct option builtin_config_options[] =3D {
-> >  	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name n=
-ew-name"), ACTION_RENAME_SECTION),
-> >  	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), =
-ACTION_REMOVE_SECTION),
-> >  	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
-> > -	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when=
- comparing values to 'value-pattern'")),
-> >  	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
-> >  	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot=
- [default]"), ACTION_GET_COLOR),
-> >  	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slo=
-t [stdout-is-tty]"), ACTION_GET_COLORBOOL),
-> > @@ -663,6 +662,7 @@ static struct option builtin_config_options[] =3D {
-> >  	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (work=
-tree, local, global, system, command)")),
-> >  	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get,=
- use default value when missing entry")),
-> >  	OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readabl=
-e comment string (# will be prepended as needed)")),
-> > +	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when=
- comparing values to 'value-pattern'")),
-> >  	OPT_END(),
-> >  };
-> >
-> > --
-> > 2.45.0
+I would be very happy to see the messages improved for both backends 
+when the old value does not match the expected (oid or symref) value. I 
+do think we should have consistent error messages in this case that are 
+essentially independent of the backend and type of the expected value.
 
+Best Wishes
 
-
---Klxe3EFHyCsIBLXx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4pDEACgkQVbJhu7ck
-PpRy3w/+NJgUwJAW5MwHmVxOIeJa/rO2SulhqQyV2q+SvhoPNKCWccOMiEPWvF+S
-faE8jSHZYoubDNir49Nr/v0vq2t/6z64Dx7/K+mIttFCFxF5wkAYeD6nSe3V8bg1
-QWuli27yuh6hcC3MnFycN+uZO2YKh6WpJh/2LOSMa1/qApKy6OprjGexdt85eCAB
-kDq+/Nix8wnoB7EsR9aCdhch0OKtiClsj40NHO1AuGLL0JQMY2PoGSrhC6t8y0GE
-gHXQUIGqJ/2Zm5Kcne1tx/7+kooOozwA+BibTuQwRL3tEOsvdn9akx5LU9/YYFpj
-Nd4/4exVumDVZlN40ee0cvNubzbqVB3+hvkxDdMAn1XBW47067+AVBKubjsHteDJ
-hD9HZ42HH359WytnG+2A1gkZZMABiHbcfzC+Pw/Lh5ho5FMxMOSTH+VP5epPeN6b
-zRJWcj0kv+SEI71bCf+qjGqt43ysNr0Wu2r4vRZYe1wFB/+p9OT+KbCtzBXPa+s2
-DXQTLWWYpihYMxeTmKRWoRNV6bwiZ2jfr/tZl/ouqRjp0oE9uJIMWdra+2woXQ8l
-0uMRaU5gUo2SCUaPNMWt2eiymoCzksYPwWw0abLXDsooQVX1ETnYuQiAGqFQCd5l
-ZQ/T3oiDoivuyADtxKgEKCYox1jl1PD67e36CJpnYoP9kLi538M=
-=Ib+C
------END PGP SIGNATURE-----
-
---Klxe3EFHyCsIBLXx--
+Phillip
