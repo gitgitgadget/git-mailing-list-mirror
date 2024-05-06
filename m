@@ -1,73 +1,73 @@
 Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4F91420CC
-	for <git@vger.kernel.org>; Mon,  6 May 2024 08:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA461422D0
+	for <git@vger.kernel.org>; Mon,  6 May 2024 08:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714985765; cv=none; b=ddo78ndp9F3MsuRvbL6GkgLOmTR0GhlRiVjPY30DLS64sbUTtQBmjerMlBQoTZVv75jpW+C7CJa3E9x1BMfVPwfJ2maZcf6WX17gTjzHKDzAETVAMad2clNfLfimtO6zIQ1yzZpUCwxGC7pkG+qJAmn4q5kWYCwcUcSPjLfuC+I=
+	t=1714985768; cv=none; b=qd4c32wDURYgy9+KWHe45I0irzyvCT2INFFrcOeEuiUBvgFNSCcbpVs3KgYJUJcxqhnOKuk+V4GTS1qRaomWa/Z5uQC8BisDyY6vg4I1Ku1jSyokBc/7YEeYKgWQGKLBR3YA3kjh7Pb0XBVfkQYSSCH65qzaTmn0YWPDOmU267Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714985765; c=relaxed/simple;
-	bh=BiNrHvwoTLRRTF6OHbcyN3rxPF0JayGxnQ8pBO9UKAA=;
+	s=arc-20240116; t=1714985768; c=relaxed/simple;
+	bh=6etdAgSWj4meRdjK+uVxCbS5oItwKye7W7wmWYmb8Bk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kk/O/KZOO66WDNX3Km+daPJFESpOaudIRnc42O1HXYRaETOmR8KRGsJlFXAifAszjFjla0n/TRk5PPAebH16oH7owWsrUmA8vAIpGquFHajXokhijya4lQ4KP+LxGte8bX8TpsSZ1SILz6aFtdz/6zhYPcJhY+IbrmdfT81Yccs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eeJzwWvb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CwUFcx5j; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=nMW2Cgtdsn2Nyp8wswdV+oDCTsDXWBrtXYpJ/5LmDoA3LMn1tb58XX/lKFla7oQvTCOR61g3uYKA00vhu66J+xkZh01nP+Wsr/LeFeDo/uc1fqcHgFN9oOtW+2bGhupMPn34klya2Hdy8Mo8CCcSwoC3gYQesF8+tG2Hjp2CX4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kItNCuFF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vb1VM/oE; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eeJzwWvb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CwUFcx5j"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kItNCuFF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vb1VM/oE"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id B5EF71800087;
-	Mon,  6 May 2024 04:56:01 -0400 (EDT)
+	by mailfhigh.west.internal (Postfix) with ESMTP id AD2EB18000CA;
+	Mon,  6 May 2024 04:56:05 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 06 May 2024 04:56:02 -0400
+  by compute1.internal (MEProxy); Mon, 06 May 2024 04:56:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714985761; x=1715072161; bh=YHhsVFupoN
-	/dJT89AUFNXki2jckbC2sSFswvSzD1MGc=; b=eeJzwWvbwFzzW4WxYm92atvdhi
-	An0d8FteoIi8+VP6HGwYe1DDs7JMeS5012mM5KiFMQiw9Ay9F8sSYCSNJfzDec+l
-	gTbvQaItPU8zrZIsXoaXJrSCqyZRqQKolD9slKp7I539O+7MrvbFX03FAtqMvX6s
-	vjvDQHrP0evSQ2S9PPcjocPGrFcsmK5hp8ielODdGADBE1Hwve9mEkNwoAS3gu94
-	HhHBy18IISj0gWcGnOTEu6V6dmZDuv3Tpxtwk/u6rvyuB7UuxzLDdm8PKWd7P5tH
-	dWg59iiym7eggkmOHFQUFY/hIjsAkwKPFcxDSxfW3woAp+GPOOzRKaDDDVEw==
+	:subject:to:to; s=fm3; t=1714985765; x=1715072165; bh=Pqpduzf8+t
+	fwg9m/QAtvDiTyGtH7lLI/oHaS37Sw7k8=; b=kItNCuFFDLd4NIukLZD0Zv45t8
+	7V07UYZdWVobDSX4mu8ErLclZ09kD455+913leP7CICYZ/6S2MIZkn0+dkBDBMD+
+	fMuR5b8uJOem8liqsQWRe2+xsqsq0kMFX9mA580WNDT8k+alTbYiXWNekF8XJpDw
+	z9jl1DXHmqIahC7eq72jfxqC4hA3i4hcBigl9P7s/S2g0Khr0VSBFd3NGxRWKME5
+	Y/CQIH0P5fr88NZHW8BLz3TE3jcRwm7elYkC/UK1rzzzLCDxaz9uUgY0azshyogs
+	sm/iqZiw/w27HA0UB/mAx1j9Joe3I4l9IX9w3b9Ndh3+hSHbfgbe2mr4pMVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714985761; x=1715072161; bh=YHhsVFupoN/dJT89AUFNXki2jckb
-	C2sSFswvSzD1MGc=; b=CwUFcx5jEg4yBWW/1SHjBu8N08ohTn25JGSiUhc1HUJ3
-	2a8gtf15g4MRnACiyNI8Ld+NOTcov3fnjim1T3CO1w2HquvlTueuVntY5JuDl/yL
-	Bk2F30aVuYYq41MgqLpzZoDSKUCV2RgLmH1t8xxJAWKlA7HDUHMA46VJV99kaqLW
-	LtkiSptyuSDQ8vNj/1ne6PxL88eWKYvBdyeeD5lPm1QYOZC+NOMy8OJSnzWz80Mf
-	EDwXKLAw4q+lLqkkzPHobTEA9wqmneuJwupHmSw5ZA5s2PQinxC1vM5XdBlein2t
-	eBsGo97YkszWw47kl4M/HX1NVvsVxovHqX2QPMhYpg==
-X-ME-Sender: <xms:IZs4Zl4BMFRkVMyJ2MgEFUrOkJltm8nT9V49kesA_sdV4f3rgOFCtQ>
-    <xme:IZs4Zi4lSQiP37jDpddQVNqLicY1EQpf9H7J85T5GGsh6XYobgeXazaBQ9qu8ddSJ
-    tgOa6UAE5GZM7XZKQ>
-X-ME-Received: <xmr:IZs4ZseAVGBCw4dRShbyfQPHqN4wf15miFTOmNEF7vNSIZ4eq4feU-i60mWNiv41GLUaiBdR5Jik2_KB-wcyWGpTO5B7BEorgJg6TRLKkemkYobY>
+	fm3; t=1714985765; x=1715072165; bh=Pqpduzf8+tfwg9m/QAtvDiTyGtH7
+	lLI/oHaS37Sw7k8=; b=Vb1VM/oEEZT2AAufHKXz2ga1emRqh979xjMyo1hkkkEj
+	hn8GgeZ/cjYt1meossE8w46mzuVQvZUGbDK4LHXDE2zsF/bsjR0AQbzTp5otL1Sf
+	vq+qxKCnajdKxNh4r627uKycF+GATY5Urqw9FZXk3lAbRj69lo2MBFex9la12Kru
+	8w33VOjTDnGTNHwwH/vT0TiGyDAQlXq+IjIFAhDc9X44lq814YU42CO4Ek+6KiWo
+	Wc1rbnKtMfgyoV/iIo/jrZIHQNq7kqa9maXaJoss5nz3WA+D2Su318i+f917+8sl
+	3HptGfPWOuVJbUsADJo3vCP9YozPJocJXxuTVHEO4g==
+X-ME-Sender: <xms:JZs4Zj3Ym2Gd0O62r5TAYYFP4Afuy9U72Da60ulVnsRID4sV-6-ifg>
+    <xme:JZs4ZiH80xmDiZNrTVjtz4NsSO_MZyZ7k4feUVNrrRbR4gHzoOpi4Z9k1sEGve-jE
+    b_fZCmPnE0SlHrn3w>
+X-ME-Received: <xmr:JZs4Zj5YlHc6-ciq8st8HRzCGrVdF66q1ziMomwufVpcQKcMPi0g1EtgP3HKio65lOdrsqqZV0HGmxoySXDCGtPv6HXmfo_Y20B3UUWlhT-5X78a>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:IZs4ZuIKBX7YgFWhxQtJLFyMTLLrIwYSjtH4BMziZlvLqM4x0fFm-A>
-    <xmx:IZs4ZpJyiHCg4egKWO9frL7jfHMdc_YqbEOQXwMM110ys6f61T4bKA>
-    <xmx:IZs4ZnyQhjyEaBztDaH89bYh_Tx69ikrAcIFT0xQbZ6BQLmHYXqe3g>
-    <xmx:IZs4ZlJ-CNguAmlNHQvuJwks2zOX6FaJMW2G2d-OYUHLyGO0YzmZOQ>
-    <xmx:IZs4Zg8pUVCBJUjemfk9vZut2niW8YiJFZOQXqfh_0thvon1ErZTWUGX>
+X-ME-Proxy: <xmx:JZs4Zo2yfJMszbhW6BSJfgdEanO4a-LvPt3k44qdEZX3_H4c1qnjAw>
+    <xmx:JZs4ZmF4wvBbsWG-_2uaDs82-j7Zs4DzyEl43SJ3IwgdyhVo9bV5EQ>
+    <xmx:JZs4Zp8DR9PjHewzXsG7WI-0xtiR9Zq6YXfxoEkueq0fUC3WVs6WLQ>
+    <xmx:JZs4Zjn2rm0Vir5ZZO3wrGWCqm-wRBeDRX3iOicAyZy087DZMcsEqw>
+    <xmx:JZs4ZkbMIfli2MeNqxeZftWWVna_oKW6OdJJGlIFLhfX_7MJsRPeWxuy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 04:55:59 -0400 (EDT)
+ 6 May 2024 04:56:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 38d6c36f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 May 2024 08:55:53 +0000 (UTC)
-Date: Mon, 6 May 2024 10:55:56 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id be89370b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 May 2024 08:55:57 +0000 (UTC)
+Date: Mon, 6 May 2024 10:56:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -76,9 +76,8 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>, rsbecker@nexbridge.com
-Subject: [PATCH v5 01/14] config: clarify memory ownership when preparing
- comment strings
-Message-ID: <881d2b5426e2ee690e5ef37cd795b7141064d05f.1714982328.git.ps@pks.im>
+Subject: [PATCH v5 02/14] builtin/config: move option array around
+Message-ID: <66dffaa8f2e4c717ca08123bad70093b25360a2a.1714982328.git.ps@pks.im>
 References: <cover.1709724089.git.ps@pks.im>
  <cover.1714982328.git.ps@pks.im>
 Precedence: bulk
@@ -88,179 +87,217 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RUsaYjNebAIXO7uR"
+	protocol="application/pgp-signature"; boundary="YC52ghlzI0DHGsfM"
 Content-Disposition: inline
 In-Reply-To: <cover.1714982328.git.ps@pks.im>
 
 
---RUsaYjNebAIXO7uR
+--YC52ghlzI0DHGsfM
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The ownership of memory returned when preparing a comment string is
-quite intricate: when the returned value is different than the passed
-value, then the caller is responsible to free the memory. This is quite
-subtle, and it's even easier to miss because the returned value is in
-fact a `const char *`.
-
-Adapt the function to always return either `NULL` or a newly allocated
-string. The function is called at most once per git-config(1), so it's
-not like this micro-optimization really matters. Thus, callers are now
-always responsible for freeing the value.
+Move around the option array. This will help us with a follow-up commit
+that introduces subcommands to git-config(1).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 11 ++++++-----
- config.c         | 16 ++++++----------
- config.h         |  2 +-
- 3 files changed, 13 insertions(+), 16 deletions(-)
+ builtin/config.c | 96 ++++++++++++++++++++++++------------------------
+ 1 file changed, 48 insertions(+), 48 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 0015620dde..40456c0770 100644
+index 40456c0770..59ae5996eb 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -44,7 +44,7 @@ static struct config_options config_options;
- static int show_origin;
- static int show_scope;
- static int fixed_value;
--static const char *comment;
-+static const char *comment_arg;
+@@ -135,54 +135,6 @@ static int option_parse_type(const struct option *opt,=
+ const char *arg,
+ 	return 0;
+ }
 =20
- #define ACTION_GET (1<<0)
- #define ACTION_GET_ALL (1<<1)
-@@ -174,7 +174,7 @@ static struct option builtin_config_options[] =3D {
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
+-static struct option builtin_config_options[] =3D {
+-	OPT_GROUP(N_("Config file location")),
+-	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
+-	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
+-	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
+-	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config=
+ file")),
+-	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
+ven config file")),
+-	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
+config from given blob object")),
+-	OPT_GROUP(N_("Action")),
+-	OPT_BIT(0, "get", &actions, N_("get value: name [value-pattern]"), ACTION=
+_GET),
+-	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-pattern]")=
+, ACTION_GET_ALL),
+-	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-regex =
+[value-pattern]"), ACTION_GET_REGEXP),
+-	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the URL: =
+section[.var] URL"), ACTION_GET_URLMATCH),
+-	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variables: n=
+ame value [value-pattern]"), ACTION_REPLACE_ALL),
+-	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACTION_=
+ADD),
+-	OPT_BIT(0, "unset", &actions, N_("remove a variable: name [value-pattern]=
+"), ACTION_UNSET),
+-	OPT_BIT(0, "unset-all", &actions, N_("remove all matches: name [value-pat=
+tern]"), ACTION_UNSET_ALL),
+-	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-n=
+ame"), ACTION_RENAME_SECTION),
+-	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTI=
+ON_REMOVE_SECTION),
+-	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
+-	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when com=
+paring values to 'value-pattern'")),
+-	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
+-	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [de=
+fault]"), ACTION_GET_COLOR),
+-	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [s=
+tdout-is-tty]"), ACTION_GET_COLORBOOL),
+-	OPT_GROUP(N_("Type")),
+-	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
+"), option_parse_type),
+-	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
+, TYPE_BOOL),
+-	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_I=
+NT),
+-	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"=
+), TYPE_BOOL_OR_INT),
+-	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
+"), TYPE_BOOL_OR_STR),
+-	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
+ry name)"), TYPE_PATH),
+-	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
+, TYPE_EXPIRY_DATE),
+-	OPT_GROUP(N_("Other")),
+-	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")),
+-	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+-	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direct=
+ives on lookup")),
+-	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
  standard input, blob, command line)")),
- 	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
+-	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
 , local, global, system, command)")),
- 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
+-	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
  default value when missing entry")),
--	OPT_STRING(0, "comment", &comment, N_("value"), N_("human-readable commen=
-t string (# will be prepended as needed)")),
+-	OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable co=
+mment string (# will be prepended as needed)")),
+-	OPT_END(),
+-};
+-
+-static NORETURN void usage_builtin_config(void)
+-{
+-	usage_with_options(builtin_config_usage, builtin_config_options);
+-}
+-
+ static void check_argc(int argc, int min, int max)
+ {
+ 	if (argc >=3D min && argc <=3D max)
+@@ -671,6 +623,54 @@ static char *default_user_config(void)
+ 	return strbuf_detach(&buf, NULL);
+ }
+=20
++static struct option builtin_config_options[] =3D {
++	OPT_GROUP(N_("Config file location")),
++	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
++	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
++	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
++	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config=
+ file")),
++	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
+ven config file")),
++	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
+config from given blob object")),
++	OPT_GROUP(N_("Action")),
++	OPT_BIT(0, "get", &actions, N_("get value: name [value-pattern]"), ACTION=
+_GET),
++	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-pattern]")=
+, ACTION_GET_ALL),
++	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-regex =
+[value-pattern]"), ACTION_GET_REGEXP),
++	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the URL: =
+section[.var] URL"), ACTION_GET_URLMATCH),
++	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variables: n=
+ame value [value-pattern]"), ACTION_REPLACE_ALL),
++	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACTION_=
+ADD),
++	OPT_BIT(0, "unset", &actions, N_("remove a variable: name [value-pattern]=
+"), ACTION_UNSET),
++	OPT_BIT(0, "unset-all", &actions, N_("remove all matches: name [value-pat=
+tern]"), ACTION_UNSET_ALL),
++	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-n=
+ame"), ACTION_RENAME_SECTION),
++	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTI=
+ON_REMOVE_SECTION),
++	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
++	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when com=
+paring values to 'value-pattern'")),
++	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
++	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [de=
+fault]"), ACTION_GET_COLOR),
++	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [s=
+tdout-is-tty]"), ACTION_GET_COLORBOOL),
++	OPT_GROUP(N_("Type")),
++	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
+"), option_parse_type),
++	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
+, TYPE_BOOL),
++	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_I=
+NT),
++	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"=
+), TYPE_BOOL_OR_INT),
++	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
+"), TYPE_BOOL_OR_STR),
++	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
+ry name)"), TYPE_PATH),
++	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
+, TYPE_EXPIRY_DATE),
++	OPT_GROUP(N_("Other")),
++	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")),
++	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
++	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direct=
+ives on lookup")),
++	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
+ standard input, blob, command line)")),
++	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
+, local, global, system, command)")),
++	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
+ default value when missing entry")),
 +	OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable co=
 mment string (# will be prepended as needed)")),
- 	OPT_END(),
- };
-=20
-@@ -674,7 +674,7 @@ static char *default_user_config(void)
++	OPT_END(),
++};
++
++static NORETURN void usage_builtin_config(void)
++{
++	usage_with_options(builtin_config_usage, builtin_config_options);
++}
++
  int cmd_config(int argc, const char **argv, const char *prefix)
  {
  	int nongit =3D !startup_info->have_repository;
--	char *value =3D NULL;
-+	char *value =3D NULL, *comment =3D NULL;
- 	int flags =3D 0;
- 	int ret =3D 0;
- 	struct key_value_info default_kvi =3D KVI_INIT;
-@@ -799,7 +799,7 @@ int cmd_config(int argc, const char **argv, const char =
-*prefix)
- 		usage_builtin_config();
- 	}
-=20
--	if (comment &&
-+	if (comment_arg &&
- 	    !(actions & (ACTION_ADD|ACTION_SET|ACTION_SET_ALL|ACTION_REPLACE_ALL)=
-)) {
- 		error(_("--comment is only applicable to add/set/replace operations"));
- 		usage_builtin_config();
-@@ -841,7 +841,7 @@ int cmd_config(int argc, const char **argv, const char =
-*prefix)
- 		flags |=3D CONFIG_FLAGS_FIXED_VALUE;
- 	}
-=20
--	comment =3D git_config_prepare_comment_string(comment);
-+	comment =3D git_config_prepare_comment_string(comment_arg);
-=20
- 	if (actions & PAGING_ACTIONS)
- 		setup_auto_pager("config", 1);
-@@ -993,6 +993,7 @@ int cmd_config(int argc, const char **argv, const char =
-*prefix)
- 		return get_colorbool(argv[0], argc =3D=3D 2);
- 	}
-=20
-+	free(comment);
- 	free(value);
- 	return ret;
- }
-diff --git a/config.c b/config.c
-index ae3652b08f..13cf9eeb16 100644
---- a/config.c
-+++ b/config.c
-@@ -3182,14 +3182,10 @@ void git_config_set(const char *key, const char *va=
-lue)
- 	trace2_cmd_set_config(key, value);
- }
-=20
--/*
-- * The ownership rule is that the caller will own the string
-- * if it receives a piece of memory different from what it passed
-- * as the parameter.
-- */
--const char *git_config_prepare_comment_string(const char *comment)
-+char *git_config_prepare_comment_string(const char *comment)
- {
- 	size_t leading_blanks;
-+	char *prepared;
-=20
- 	if (!comment)
- 		return NULL;
-@@ -3210,13 +3206,13 @@ const char *git_config_prepare_comment_string(const=
- char *comment)
-=20
- 	leading_blanks =3D strspn(comment, " \t");
- 	if (leading_blanks && comment[leading_blanks] =3D=3D '#')
--		; /* use it as-is */
-+		prepared =3D xstrdup(comment); /* use it as-is */
- 	else if (comment[0] =3D=3D '#')
--		comment =3D xstrfmt(" %s", comment);
-+		prepared =3D xstrfmt(" %s", comment);
- 	else
--		comment =3D xstrfmt(" # %s", comment);
-+		prepared =3D xstrfmt(" # %s", comment);
-=20
--	return comment;
-+	return prepared;
- }
-=20
- static void validate_comment_string(const char *comment)
-diff --git a/config.h b/config.h
-index f4966e3749..db8b608064 100644
---- a/config.h
-+++ b/config.h
-@@ -338,7 +338,7 @@ void git_config_set_multivar(const char *, const char *=
-, const char *, unsigned)
- int repo_config_set_multivar_gently(struct repository *, const char *, con=
-st char *, const char *, unsigned);
- int git_config_set_multivar_in_file_gently(const char *, const char *, con=
-st char *, const char *, const char *, unsigned);
-=20
--const char *git_config_prepare_comment_string(const char *);
-+char *git_config_prepare_comment_string(const char *);
-=20
- /**
-  * takes four parameters:
 --=20
 2.45.0
 
 
---RUsaYjNebAIXO7uR
+--YC52ghlzI0DHGsfM
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4mxsACgkQVbJhu7ck
-PpQSmg/6ApF1ZdqxAi/Bh8BXx5x+vcXpg050pp1/hODuK6cVyCVQwVXfn0XHWDjC
-26DI3iP+CzRQvSTGUqt7Ky+VRooFu1nahXEZTfIC3o/w+G2aNn10eD/YWwBvgV32
-/t4Df512WQQk01/lgfCi34MGBhGcbrY7Lc8mjwWHSTQxb55uh3CLbZTjO7seWxOT
-KJoDFFEWNr1SSxankL6sOEdIm+6DEB2gtHshwuDHzhfrzPjBqCtTmCH8XJ5ykULU
-uonWn4uQ0ccozOht7g4VrEJZ3V78V/jMGt8fOcKP9abNOZOCRM8HxG4TNOdJocwX
-77qW0hA1FT4kkBmEb/v2NGCV5e2Hs+UQFRqY7qN/U8jRlRNMCLCEWK9VuddmfD8x
-o/ZuzNz5Z6zM491sqj72LDeXnqpzhST6K6BXgw4NULMCHBx1tJQhpC1TlnkN7V5/
-bNChuSySUkVLo1TDOc7Kp5jifWw2WfPVlpXRiCnajTkgZ3ihPRokwKFrNVhsenl9
-20eJ8eCJW0ISL8q2ENts14Fib7BOWWgyafvcqF0fO91YlHUjEPUJ2FUBWWzr8gXX
-QWoO0whWNQT+zWzMQlInZCCvzyxNaFwDN0i4IHX6zsc3Gn6SX9HjUkvFNoIq3WU0
-xuCTR17/1FsC8/PBZlz6/gtEbWxymfwPGACkOxUuaBKSO6GyTCE=
-=pnnO
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4myAACgkQVbJhu7ck
+PpSdjQ//bgQrox3qT5UZ+iVXqAGc8gF0kqTjUIYpc70zJqZuXLNhKXSl674LBuVZ
+QUp9+M/X4Bq3ozva6GrjukLkEM+WmM1ja1hp7YBqboebwGQFRvXj7eEnZVKD3RH2
+pLLVCPXkYbZm4zPSfx+MGEO9cJ+1isySWL7BfjFp76y4QcVs28I/ZitTDl6uyJk8
+bAS5kIxrCZ0/gPyWaDNRqEFt/aTJd6owUQtu9IL5lgAUenHqmc5/Kjt9N8dqDyd3
+vIgzi0YUSc2OwzZU4OvRyMHCQK4k5kw/XwpBPdmI/Aoy7g1nVnitY5eMIoZFPdvv
+6dRAmil6oIX/SfNWDyAfCsPtIDnW/M2vG0doxr1ohH0H1R/aP30nXVOs3v0edskH
+DLsuPF0LB4dQa/85mAUbnYxR7AlxlusPbDpDG/WfGrTdnvBZ28jvoqUd7fjLCbT/
+C8mjPfgueIOlgnod9qxZJiuHv6j4Sx9oMIQLAx0NXaFSLN5GrNTSrorXLEY7Hkk8
+OydUDFxvfka2/W+QvNhF72MAOoRmSNCnXNoqODO3SX1vEVJTTtWSEkRtw17n1Wpq
+oBjNgP5EpHhxN/y9DTrJ6N7yr0AQ7eItrM3ZTDWa96rYTzQd0TjhkHIUJgwWTOkI
+d3yvWJ+SXThmEvF+UuR74GgAnyCNaHNvMSSKxlN5SPtG9vgkFQI=
+=Yr4z
 -----END PGP SIGNATURE-----
 
---RUsaYjNebAIXO7uR--
+--YC52ghlzI0DHGsfM--
