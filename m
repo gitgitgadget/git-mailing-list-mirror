@@ -1,95 +1,172 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451EE6FB2
-	for <git@vger.kernel.org>; Mon,  6 May 2024 02:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA0F41C62
+	for <git@vger.kernel.org>; Mon,  6 May 2024 05:35:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714961570; cv=none; b=TYNndMUYRajIR40ck8RcGItxfSNrSY1SZ1pZU5k6X2evnG4IEWN4UsKb2Cis6RcLG3oqU+945yWJydcTcCLrlgrTKNYchSlIGsheUKws3zCsxELGp5ldjZamNQlBzCYTHM5cXsUCrcV8rhEBKCKzDzcB5/oP9Q6jkamnCumlI1A=
+	t=1714973728; cv=none; b=KO/erO/jbJgju4pxfwvwaY/ZcXtXNGQTuoXHB00i6jRJEGl1NPTgYbRXXlZVj1y0vx9mrScUHxYjP9tOyPii3KPYeIX1VuyNdvtZ1PewZdR0Jf35NnWI9EprKLdoRX6lCd+6LZ2xNnVo4OSUmz7DgO7buf3KuN1t9EvmZZgsgWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714961570; c=relaxed/simple;
-	bh=PZ3VEth5W6l/IMpyHWVAgfIUUIfWUQtRDR8/WF/I/zk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=SsyojhWtQTXLyhLK0ss/oNRlI610I80MiorHchEjhGlg+RCL/rMKyadoal8Lc6xgIIz/sjYT6Ntq827AwLp+FW07NTWV2CBRDCWbiPJ1+a9vTEaezxv7SyYEQdSWex+LK/YkqQqxBRKktPANF16zoYnXBa1DER28SVGTtCvw+Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMMJghSY; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714973728; c=relaxed/simple;
+	bh=MwFh0NgRu08U1r9UZFWNLAIcKJltbZ+pvhJtNlvsE5E=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=lqYCFEuKKkQ7oqtB3EPeh6dKFH5nUgWLLcBCTWokaNRgKdcoNmGJAtH4Zuyt0gow3ZoT4NcsuULLPUKHVenMpjTvKvjWx7ARR10cIfDBcsrRadF6tc80rGUYw03SftvDdySgGlA/ui4kbBEubjjGeW2wipe8zCyfqzyzL0Xzhxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lqGSstW2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XOX4sddc; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMMJghSY"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so1151514a12.1
-        for <git@vger.kernel.org>; Sun, 05 May 2024 19:12:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714961568; x=1715566368; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=u/bWMVYCLXuus5qJaos0FfiIU2YxUlTm8Gt5figljXE=;
-        b=KMMJghSY4YVGhXscJR0VIjYWtUeuQL1Ox/pFwPHHyyEdfs025fI9JBvPuso7LIpGJ+
-         /Me4sYD/kPx2l1iwd45n/t8ix42iftg99KmwUFHChoXN8KcgCguc3j6mKvzm05rwppAE
-         ll8bl3U4+xfRNR88bGAk8ZfIqq0Gw2ywyZlhZSJkcctK6zeVxLVOxXCE1MdQYoTQ9y0U
-         MXksfOXOhpWX7PMWxFcr3/+AMqA1AJrVqTRb/eUDS945daPWf8MoIu2MmULnBv2eJ2ar
-         j2OiFBFEDOZhSrohXlTJw/IfZBPNpVwT6hxk5E5dYCrkCK8+N7tmYQ6ZZlIN1utcawFX
-         /PrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714961568; x=1715566368;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u/bWMVYCLXuus5qJaos0FfiIU2YxUlTm8Gt5figljXE=;
-        b=CelMC3ALlVFYrwzaXY7UyWfwy0qaq+EqISznplzWH8Yn4tHB9k9g+NdzJCUeZTmcyl
-         FaI904qQvR3cl87UF54ETELiK4tfRAiX2lBh5eG6KKzGRjTEdbQJci6KafMnuFkB+t5c
-         /REB3A5rj6Jq4B+WR6XWEDJMZp+YrV9WAt4245sm9lp5NWL7KkGQnMlh5FsJmXcVKIra
-         Jm+kiFgBKrdIOndx/06UxHsZs2doySlYhvncGMlSzI9EDX4saIrE0nGPEL575hs9DSa9
-         tjb9zpoyYs/86A7nBRX4YUI5PYKLXgK0eizY9gUekpBzLgjw8A1ggpjkQoov/sDR0Pfb
-         5iTw==
-X-Gm-Message-State: AOJu0YwnzHhNCwUg35T5EhNkcId1YaEwWdt5QucaVT9T2tPnWgP5BcJH
-	94RC75OUhUvAIA2f0PcH8WsERJyBpyDcjYg7YbdVDajxAQYPwaW1V7G/Xg==
-X-Google-Smtp-Source: AGHT+IE0ECx4YH1Wg3xDznFe2a2jtw3fsrRD9m/ghUCeFvMzdlwiDAYYquV0nzEM6Wz1lel9N92U0A==
-X-Received: by 2002:a05:6a20:2589:b0:1af:a4d0:1615 with SMTP id k9-20020a056a20258900b001afa4d01615mr5312755pzd.22.1714961568071;
-        Sun, 05 May 2024 19:12:48 -0700 (PDT)
-Received: from gmail.com ([172.56.121.16])
-        by smtp.gmail.com with ESMTPSA id lf4-20020a170902fb4400b001e8d180766dsm7064975plb.278.2024.05.05.19.12.46
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 May 2024 19:12:47 -0700 (PDT)
-Date: Sun, 5 May 2024 19:12:44 -0700
-From: David Aguilar <davvid@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lqGSstW2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XOX4sddc"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3491C114013D;
+	Mon,  6 May 2024 01:35:24 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 06 May 2024 01:35:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1714973724; x=1715060124; bh=SnAD4F+tKRjNFIxG9jW6e4UFbTibqRus
+	7YY8cj0yx6A=; b=lqGSstW2AaUg2AgrEdeO28KvHjbK6iLl6DyKmkcAwmQvQ2rB
+	1foFH5SjFRGmidXJThUJBSIamTzLB1HUoGpaZYNdA6oAIMgODBiXJGGMwFXXpJ9f
+	05hdNZ5wbJhTYJCbE4c9FmHShVp2mSDEKbaK3NH6/EGTZJ7mtYLsOKtbu0Mq4gU5
+	RfBGlLLVhNdPpmqRqHW3pIE+LFitHNrjSRMXSDvxtHOfP+VtS1CBhWZ/GECgknzl
+	Aa0mMx2Vf050+Xy+U9pGidr6BaKCb1bImxJ5tTuOF3abo5ILK7U3LQo1YguZlfGR
+	GrRyNv9sroOInbz1lbQRO1GXEYy+ZPbE5SbRfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1714973724; x=1715060124; bh=SnAD4F+tKRjNFIxG9jW6e4UFbTibqRus7YY
+	8cj0yx6A=; b=XOX4sddc6nnDkFrPb6oqJZSkqURQk5ofJ4ANeWKEB71gJ9ZeL89
+	g/pBG0Y9T4q7T9zck61cmweuGPd/F/mKxCFGqYVnaPmfuabjDG24WgtSO0jwP3Ri
+	/WxIh9tznpDyUUi9EgUoVU8nUMltk/i70gRqVqhhMNbU3CEpo/8hkrvXEKSAqM6k
+	Ufbl4LsVPyPvUPkwo3uAYwqikUKHS0Z+RPKFgWVPhXugN7hYsc+gtzN2boHOywD4
+	2yzi5A6uiVH+1fm/ypSE/x/Nqad6CV81KOdF76Ms6QbmYdi8KJRaKSiGL/9S81pM
+	0jMIE5S2cWl67SgsTNY+neBR8SpAskXN/xQ==
+X-ME-Sender: <xms:HGw4Zhv642ugVp9BJXiplZUNM4v6d3VIcBWBbthmZs0SzTadFJXyRw>
+    <xme:HGw4ZqfbnwUOH3EzuI2tKDw4shDXK0d2YdLVpiRGsyWnvsVmfataviCdoWjLoizEo
+    jVy69Frhy1KQT7YGg>
+X-ME-Received: <xmr:HGw4ZkzovEuv_asSaW4iQvjcl4xDwvc_WY5apvT4N4xLiiGfoJz3QcspAeFfvMgcZB9vwJFhgc6L5cFwth66ffC5Jk0dtXT9XHaKiDH7OyVaWilp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedgleejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epuedtgfelgfevieevhfejueejvddtfefgjedugfeftdeguefhtefhfeekfeehfeelnecu
+    ffhomhgrihhnpedvtddvgedqtdegqdduvddrtghipdhlihgsrdhshhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:HGw4ZoOcFktTul-P9AUZ6ST4WldyYoB4iTugHw2prBWT8bG8s6IztQ>
+    <xmx:HGw4Zh8aRmhQlsGMWY1iSlm5_7_5gjEN3cAwl2SwgZQs6KW3tZxI8w>
+    <xmx:HGw4ZoWVy9jTGzdo6cCq3lgJuXy8NMlRycVhYZbAMu8uMufAHr78Tw>
+    <xmx:HGw4Zie5PdaNEljkbKMGyjdNldwz4QHHn2img50YAV3jcub6AfclLw>
+    <xmx:HGw4ZsZG_YDXBDDHJeKhLBrIQ1wi1cO5ushmb3KYQ27su49kuI_3t1ni>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 May 2024 01:35:23 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id a776ae3b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 May 2024 05:35:14 +0000 (UTC)
+Date: Mon, 6 May 2024 07:35:17 +0200
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [ANNOUNCE] Git Cola v4.7
-Message-ID: <Zjg8nBh9ksW1h9pj@gmail.com>
+Cc: Justin Tobler <jtobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] ci: fix Python dependency on Ubuntu 24.04
+Message-ID: <cb8cefc20f373a3516695e7cbee975132553ea95.1714973381.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TPNXRtSk2iOWZ13U"
 Content-Disposition: inline
 
-The latest feature release of Git Cola is now available.
 
-Git Cola is the highly caffeinated Git GUI, a sleek and powerful
-cross-platform graphical Git client that is well-suited for casual users
-and Git experts alike.
+--TPNXRtSk2iOWZ13U
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Git Cola features a specialized editor for Git's staging area,
-a built-in Image Diff viewer, a GIT_SEQUENCE_EDITOR-based Rebase tool,
-a keyboard-focused user interface, and many other features and
-tools for Git users.
+Newer versions of Ubuntu have dropped Python 2 starting with Ubuntu
+23.04. By default though, our CI setups will try to use that Python
+version on all Ubuntu-based jobs except for the "linux-gcc" one.
 
-Follow the release notes link below for a full list of recent
-features and enhancements.
+We didn't notice this issue due to two reasons:
 
-- Release Notes: https://git-cola.readthedocs.io/en/latest/relnotes.html
+  - The "ubuntu:latest" tag always points to the latest LTS release.
+    Until a few weeks ago this was Ubuntu 22.04, which still had Python
+    2.
 
-- Source Repository: https://github.com/git-cola/git-cola/
+  - Our Docker-based CI jobs had their own script to install
+    dependencies until 9cdeb34b96 (ci: merge scripts which install
+    dependencies, 2024-04-12), where we didn't even try to install
+    Python at all for many of them.
 
-- Downloads: https://git-cola.github.io/downloads.html
+Since the CI refactorings have originally been implemented, Ubuntu
+24.04 was released, and it being an LTS versions means that the "latest"
+tag now points to that Python-2-less version. Consequently, those jobs
+that use "ubuntu:latest" broke.
 
-- PyPI Releases: https://pypi.org/project/git-cola/
+Address this by using Python 2 on Ubuntu 20.04, only, whereas we use
+Python 3 on all other Ubuntu jobs. Eventually, we should think about
+dropping support for Python 2 completely.
 
-- Pre-built Windows installers: https://github.com/git-cola/git-cola/releases
+Reported-by: Justin Tobler <jtobler@gmail.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
 
-- Homepage: https://git-cola.github.io/
+Note: this topic depends on ps/ci-test-with-jgit at 70b81fbf3c (t0612:
+add tests to exercise Git/JGit reftable compatibility, 2024-04-12).
 
-Have fun!
--- 
-David
+ ci/lib.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 473a2d0348..273f3540a6 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -325,9 +325,13 @@ ubuntu-*)
+ 		break
+ 	fi
+=20
+-	PYTHON_PACKAGE=3Dpython2
+-	if test "$jobname" =3D linux-gcc
++	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
++	# have it anymore. We thus only test with Python 2 on older LTS
++	# releases.
++	if "$distro" =3D "ubuntu-20.04"
+ 	then
++		PYTHON_PACKAGE=3Dpython2
++	else
+ 		PYTHON_PACKAGE=3Dpython3
+ 	fi
+ 	MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D/usr/bin/$PYTHON_PACKAGE"
+
+base-commit: b6db6b1598946fbf777e55ff0d187b11ff3bd21f
+--=20
+2.45.0
+
+
+--TPNXRtSk2iOWZ13U
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4bBAACgkQVbJhu7ck
+PpShcxAAhT/dYbfxaoRKRjAaUwBH2bPGKU1BCSdoWwtpJJ/6u92w5ilx5fDZTvAP
+WzYQrVZ/NGFTdOmJySniOKwKsS7VhWpcHkkWD2SUpu/0fEe1nvtdmuGAGQkM8xYu
+sZ/uzozPgb1HVmedAmiDQ+fnyoQKHA5DEnMfpBM1Ua34QI0Gl5/Q+8TMJB7By41S
+xIZ3DGdnClcSaPyoYu3pwj+QZ6yYDzrky4Qc43n0RvYASJPiQOk7TsE48KPYrBfr
+ujWxs5D8/GCDWLjrhNg0nKEXj8CexoA2s4gxTccdmkOu9p+03tyrolHLz84amftN
+coBsVFWoDA2zqqRdYeRT4/+q39EwT+7CXsd6U7KIo4YSdKs2j8e0hkMKG5vM6VOQ
+Tes42LfRqJYuBHy1dA0YxaPS07ztkLs7MhJUCxCPpeoeyss/pvJiMGUl+pdYgzYc
+BzVzeyVZXHIUB53BtE3vMVeweDbMaaj9reH8C/RdfynIFDOecLMYNDA1cwXUJiIJ
+qtej2vBchpbPkCDtSt47FMgjPMTBp+li/FeVJMrC1ITxki96jN0Tq+7fGqVBZFMG
+WqPqX7bhP+liQyQq2nxtQ17EnN8/nCWPDxFsmAy/pr8iLDz5g5l4+7ri/2Sgg0dP
+AKYx5bB8FvblDKibLcqMYC5rVv8fH83yT/IG8gGQgKgkJQGp5hk=
+=SKUR
+-----END PGP SIGNATURE-----
+
+--TPNXRtSk2iOWZ13U--
