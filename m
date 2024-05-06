@@ -1,93 +1,149 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7200615749B
-	for <git@vger.kernel.org>; Mon,  6 May 2024 18:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E4015884B
+	for <git@vger.kernel.org>; Mon,  6 May 2024 18:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715019807; cv=none; b=aPDurCkI2W5x2zAgUYHI6Xbp/h5f0ch1h+qp0bCBFvWpD8IurgAQ8M9vD1YPvxSt+nKCwBR1InOagrGvMtNBqRALw8LWgl3OXJ3mfmm5VaJ7Uh/MSqQjInvdlIq3vbKLuXO+YR9HYKBdbQvfc0F8E9kU97xWdMIPvDyjG5OBDIk=
+	t=1715019892; cv=none; b=td+6a1+ld/e1YnXhguCK9JSKHxQXvOSE9KYucpYAcRUE4euYmwitqi3bcykNQLV7vRHUMeOppOsP2BAZsWK9FX9OH6AcbAcZwABXD8/nCSSXgvGFCjPeN3AR/xxYp0FVDW/E/trGbUK3DXrlEIXXdto7nd4ZBV1uqFxLTA2iU9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715019807; c=relaxed/simple;
-	bh=I5mbgi5Lcxr0w1gNV52n7T+kuVLhQDfjubQcQNmfEog=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=Giy18TnFjlX/7toL1Ss5sPz5HWaK/md0d0lhtU3fTaY8AfcnF45MJg+N9JY/aC/t4yKdiMUXDduX+Db5lVGsqlA+jFo2zRgzHyyXsnsi0YhaO4/arXR3ZVan2b06lDbu3YdwPNXxDGBNmQ0n4Ov83cTwGNl6IljrPvaK60+Rpxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZMCKSJC; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715019892; c=relaxed/simple;
+	bh=Y23qGup9d3OFWnnbvdIMXiHejefv88ZHhno0r2w7kxM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aPW1SocnzCbFT7uvHuDMr5bgQp2KRLTH1hNAfUlmrYxAuSjDkGb2aQfHcVoBI0Q8hYt4Ied3UoStKsvZgVOhsxN+DnkPohCh6egPImbHdiZcG6RZNHXcMu0sGAv+HyOVS9OM8QTcrJgIiC5ppgr85/a/PlkP9gIdXfG4gEIoQnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=EH6Jah3J; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZMCKSJC"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2dfb4ea2bbfso25614021fa.2
-        for <git@vger.kernel.org>; Mon, 06 May 2024 11:23:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EH6Jah3J"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3c8644aa3feso1614997b6e.1
+        for <git@vger.kernel.org>; Mon, 06 May 2024 11:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715019804; x=1715624604; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gD7d85Hwyu/UaV0w9+HZCsT4MxBfY/qXkRESp4VI/Nw=;
-        b=GZMCKSJCV0tytDWECNjN4v+hKL6yTADMPxQ1lCXJM7NHE8USjRsqDBPaz6ZCF4H8Eq
-         ZW5thPVd0ODEQcD+s8R3eTId1o5g1uvSe2rXaBVsc3hv8HkrAoQSzUobkj1jibiL1Mm8
-         8mNn75mxntBC0B9H0o8VNBYV+AR/4uLR3FU+wsiKsEaqXS2TUZqgDEHY7jfdZ3Vb6bO7
-         jrCPlfeaT2n+Trxd7hWcEAu8kKQlvdtEUmlEXYvwQ46mSlyrnnVi1ghQicDwYRWb0V16
-         mNg3h/PyfuMprBvGcvdTsExCtSt7mKVdAlPFvSXFnlU1cEkZbRveCveCflP/yFWIav1c
-         t4vQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715019890; x=1715624690; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oM+taJZ93LcF1wO4Sx8cGV8xL+Nu2q4mDXm0EXyXF5s=;
+        b=EH6Jah3JZBD9fjjMAiS4sRHDu/OlOS0trP8PIT27Y/lyDzDSBIVm/0f3+ZYs0QR9s2
+         uj2ufA+pkpJyD80z8y+aOsjt1d9Al27dVqTuXgvvTHrstMUavFZrsQpU7A2ejiCsHzqx
+         eIqoaRtPQ86XLi5r3xccO2wXIwot/VM12dlDVyaA153l5GUWJxvC6ZK5iL9ihv1R0uhW
+         VAIpJ0o4WKRLGKRXJroY8wgpPMUTKvXgGmd4HXUNsOtzOTOpIK7ckvBFKydBbXhv52nm
+         n4nFJrZt5xFrBJxU08wk+W0Rtxc5jD5coBVx5fLhP37psQqlYPvYAmGdra/Pxw8xjDSW
+         biQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715019804; x=1715624604;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gD7d85Hwyu/UaV0w9+HZCsT4MxBfY/qXkRESp4VI/Nw=;
-        b=aMoKGIYNTH+n5l0UvLHoXiteAlZ2smLplBToFzMkWUi8FJF1Vd3Cd1r5aoU3ug9dTo
-         G+8T2UtMep/gahmuvG4M9+ICEUlOSAUqfS+R9Xk7blhQ+TZ1mBwwhEBu45M8cQeMTHZM
-         f7PjPoKb0m2H34zHS5ovvRJ/SZ1wpmb6FntZX3Za2dGffHrHXOOgt1KUgZVEBgCyNQzd
-         8RpPn0KgpmkQlcwfvjcHL2LkNGDWVcbUUYZVUQ8h5g+YCKAkLH0+hXUpkH4+JXF4xpeK
-         RXgrEnlih8wrR7LibfXHjSVAG/sj8pIqtIbrZC3wqNRKiqjyC4G18LGd5kdgt7MY8Yqi
-         Ea1g==
-X-Gm-Message-State: AOJu0Yycf1qYH/6THFuI0q7T8vXidqi2Qr1QxOg6MfYKONNK0ayO9sx4
-	POF45JxN6Si5aebKKhIAx2kKv2yNQIK+ax863i0UXQNL9aB/0PUTufLzQRkS
-X-Google-Smtp-Source: AGHT+IHHa0O/wZPo3QwdOzW2j0PEHXBWwmGUbrC8SkDHjye/6ntHjOtima7glhWTt/DGZQw1hPx18A==
-X-Received: by 2002:a05:651c:686:b0:2e1:aafb:696 with SMTP id x6-20020a05651c068600b002e1aafb0696mr5327854ljb.48.1715019803983;
-        Mon, 06 May 2024 11:23:23 -0700 (PDT)
-Received: from paasan.. ([2001:4641:9d1:0:d178:8e40:df7e:8f22])
-        by smtp.gmail.com with ESMTPSA id b25-20020a2ebc19000000b002e308fa6439sm776909ljf.26.2024.05.06.11.23.22
+        d=1e100.net; s=20230601; t=1715019890; x=1715624690;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oM+taJZ93LcF1wO4Sx8cGV8xL+Nu2q4mDXm0EXyXF5s=;
+        b=scOoiKqgaC0vIrwIL3lQFuXFKl9/qDYaXGAmI9mVPaZKZh5tUUz4EpFFFnfD+ATf5s
+         6TghqKQWWTnMGSiceT5cgeQ1LlyB5jaLjpxpE6NHKioZLpeOeZrdPI56c0KngXVHd/aU
+         G8/p6oQBToPaYDhAcjboIgbap/I1tBc3knx6ZuS2nNS9vYfJWUNNzza9DYu/CDplQ6KS
+         +b8E1uUDtnDIvJ9rLy+JckUPzrGvdwOVLSunRDjw07oVEovGAd04fisGcRF0HJsLLqTC
+         mRcjKH88TGEX4T2Ot7SKKcjwKPaPZKiQ2bBPT8Mozrmy9TBRCAX/lNbglCXXZ1eRA4pU
+         VxyQ==
+X-Gm-Message-State: AOJu0Yw9NVBRpMQoOGmL+p309ehfrNjLiz8vi6vwqFQuVgj/IoswrbRr
+	qZDEby/tXacTU39eOicS6wZfgmcO3vXz3fuM/JUBVzoa7PXJGw5kxl92BPQx+eA=
+X-Google-Smtp-Source: AGHT+IED/pYYQqLGB2lKii25HVi/Ow1MyI86s17B1x4OW3WhIra+ZVowC2QjR+jnBNi2zcxMhQ5Gxw==
+X-Received: by 2002:a05:6808:ec6:b0:3c8:2bb4:2288 with SMTP id q6-20020a0568080ec600b003c82bb42288mr13582400oiv.2.1715019890163;
+        Mon, 06 May 2024 11:24:50 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id cx8-20020a056214188800b006a0fb776a77sm3943409qvb.137.2024.05.06.11.24.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 May 2024 11:23:22 -0700 (PDT)
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH] Documentation: Mention that refspecs are explained elsewhere
-Date: Mon,  6 May 2024 20:23:17 +0200
-Message-Id: <20240506182317.13477-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.40.1
+        Mon, 06 May 2024 11:24:49 -0700 (PDT)
+Date: Mon, 6 May 2024 14:24:48 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/23] pack-bitmap: move some initialization to
+ `bitmap_writer_init()`
+Message-ID: <ZjkgcKzruDu7Qbmt@nand.local>
+References: <cover.1710972293.git.me@ttaylorr.com>
+ <cover.1714422410.git.me@ttaylorr.com>
+ <3d7d930b1c5c4d122d8731ef0dc3fc90115573a2.1714422410.git.me@ttaylorr.com>
+ <ZjjEkivTeqC0xn_q@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZjjEkivTeqC0xn_q@tanuki>
 
-The syntax for refspecs are explained in more detail in documention for
-git-fetch and git-push. Give a hint to the user too look there more fore
-information
+On Mon, May 06, 2024 at 01:52:50PM +0200, Patrick Steinhardt wrote:
+> On Mon, Apr 29, 2024 at 04:43:08PM -0400, Taylor Blau wrote:
+> > The pack-bitmap-writer machinery uses a oidmap (backed by khash.h) to
+> > map from commits selected for bitmaps (by OID) to a bitmapped_commit
+> > structure (containing the bitmap itself, among other things like its XOR
+> > offset, etc.)
+> >
+> > This map was initialized at the end of `bitmap_writer_build()`. New
+> > entries are added in `pack-bitmap-write.c::store_selected()`, which is
+> > called by the bitmap_builder machinery (which is responsible for
+> > traversing history and generating the actual bitmaps).
+> >
+> > Reorganize when this field is initialized and when entries are added to
+> > it so that we can quickly determine whether a commit is a candidate for
+> > pseudo-merge selection, or not (since it was already selected to receive
+> > a bitmap, and thus is ineligible for pseudo-merge inclusion).
+>
+> I feel like this last sentence here could use some more explanation as
+> the restriction has never been explained before. Is this a strict
+> requirement, or is this rather "It would be wasted anyway"?
 
-Signed-off-by: Øystein Walle <oystwa@gmail.com>
----
- Documentation/glossary-content.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Thanks, that's a great call out. I reworded this sentence to clarify
+that it's redundant, but not a strict requirement. I think that's a
+sufficient amount of detail to motivate the change, but not so much that
+it distracts from the change at hand.
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index d71b199955..1272809e13 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -576,7 +576,8 @@ The most notable example is `HEAD`.
- [[def_refspec]]refspec::
- 	A "refspec" is used by <<def_fetch,fetch>> and
- 	<<def_push,push>> to describe the mapping between remote
--	<<def_ref,ref>> and local ref.
-+	<<def_ref,ref>> and local ref. See linkgit:git-fetch[1] or
-+	linkgit:git-push[1] for details.
- 
- [[def_remote]]remote repository::
- 	A <<def_repository,repository>> which is used to track the same
--- 
-2.40.1
+> > The changes are as follows:
+> >
+> >   - Introduce a new `bitmap_writer_init()` function which initializes
+> >     the `writer.bitmaps` field (instead of waiting until the end of
+> >     `bitmap_writer_build()`).
+> >
+> >   - Add map entries in `push_bitmapped_commit()` (which is called via
+> >     `bitmap_writer_select_commits()`) with OID keys and NULL values to
+> >     track whether or not we *expect* to write a bitmap for some given
+> >     commit.
+> >
+> >   - Validate that a NULL entry is found matching the given key when we
+> >     store a selected bitmap.
+>
+> It would be great if this refactoring went way further. Right now it's
+> quite hard to verify whether the writer has really been initialized in
+> all the right places because it is a global variable. Ideally, the whole
+> interface should be refactored to take the writer as input instead,
+> where `bitmap_writer_init()` would then initialize the local variables.
+>
+> That'd of course be a bigger refactoring and may or may not be a good
+> fit for this patch series. But I'd very much love to see such a refactor
+> as a follow-up series.
 
+Yeah, I definitely agree here ;-). I will plan on doing this as a
+follow-up to this series.
+
+> [snip]
+> > diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> > index c35bc81d00f..9bc41a9e145 100644
+> > --- a/pack-bitmap-write.c
+> > +++ b/pack-bitmap-write.c
+> > @@ -46,6 +46,11 @@ struct bitmap_writer {
+> >
+> >  static struct bitmap_writer writer;
+> >
+> > +void bitmap_writer_init(struct repository *r)
+> > +{
+> > +	writer.bitmaps = kh_init_oid_map();
+> > +}
+>
+> Given the other safety belts, do we also want to BUG here in case the
+> bitmap has already been initialized?
+
+Great suggestion, thanks.
+
+Thanks,
+Taylor
