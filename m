@@ -1,89 +1,80 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3473347F4A
-	for <git@vger.kernel.org>; Mon,  6 May 2024 05:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C6E47F4A
+	for <git@vger.kernel.org>; Mon,  6 May 2024 05:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714974824; cv=none; b=NKDFUbtvv1jhMrMlyPqdhuV45n4dI10oVW+gciqSvcUgXtrK/w6EWTGOoiskP4SFbZ1kYZfl/o6ihr4xLYSFSM6xZ+rHwegkqMS0saXgUgLTRKZqEz2eC8d/UWHsPNWsk29YIFXxvphK9ioYFmj8hzAFnZfDOr3ROWY1egqpZFs=
+	t=1714975047; cv=none; b=g6SPiVuehwwWAR7MRUBObrICB41JUOGWuPmXrd2ZK95eVn10hF2vUM+9t/p9mMOPRe7U+3XLYU4qH0qg69iyHyEMhriqJvrQcgm7jf8ei+DnOtCH9LH5kOFcxpXrzvnGxGeqTIlCJbsHms6xMn34hni1a4SMOE4B81mFGGDh3yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714974824; c=relaxed/simple;
-	bh=oREyoGblxSKNqL1L2oVaZe4RgKYKTjbS4pJ3FXr27WM=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AD6rnA7y5Wj3+140DG9s6cW/k5PnySyRM0b41uqpMTyViydJrbjjLXgbE8YJN10vFNC9SPF36TXIdFdoXiWzxpKQHvBYeRe6FwPrGtKHREDND/fqD/j+GD7PpdzBFEH9cVQjR3TR2lyQNIIw3z8Gsdk9weklk2ltHKk36odPAng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Fd1lRdkv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QRlNMPYk; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1714975047; c=relaxed/simple;
+	bh=cbONI03ewZzl+CI3+VVn8KeZiNlODGBGMm9pKSf5O8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SGpKI/Gx7rWurriSw9mPWqqJqwsGkPu9mg1RMhopT2L7DdoUFX04ip8A7wbpoSThPgeA78hN29B/EmC5dUjJetk5Y3Nc6K4AO5g4mvZ89q3cmcxx7uElw3ltv8t2rGUnQQdIGwRNdr9ZoqTZ/+LaLx/c9Limq7vaQjUyrRn/W3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uepWCo0K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MtDFTnm6; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Fd1lRdkv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QRlNMPYk"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 3861A138025C;
-	Mon,  6 May 2024 01:53:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uepWCo0K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MtDFTnm6"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 2809C13800CE;
+	Mon,  6 May 2024 01:57:25 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 06 May 2024 01:53:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+  by compute6.internal (MEProxy); Mon, 06 May 2024 01:57:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714974822; x=1715061222; bh=T4B3Cw3PTA
-	wje/o8aaFiOgzAaV+B6qhon2nm/Mjv2+Y=; b=Fd1lRdkvnxz8SbeBbdNkAAYzpC
-	eCdBhYgBl70R6BXpNOhP2dkX9FX/VTfNnXyVgaU95TBEFtCJIOgh41V9+jONb3Ex
-	c2sm1vzSmpBdgpUkUgDLx/ZsRSBCfAVPkZrvGc/vOP8wfKzcwrwx+p2qys+hLYVR
-	/y5XOBQ4rYMXTxRK4UNDK7m+cUSCzDR2Y0ewYx8OMM8EZynx5YeqEM1OFATNFxyN
-	X4clEXl7bL8tgClSKgcg7NQHp74Y6t08uMrqyQfcmClFkeAfLsDM4cbKvSBPGXfg
-	3JeZVYd1728pEP7kMCsYJrLQHeoQWHxNwvOPE3c5vQ//nii47Rfnc+UKGBsQ==
+	:subject:to:to; s=fm3; t=1714975045; x=1715061445; bh=ktkELc0eTJ
+	rpCJ20euLtqzTKMmVtltdoqQF6ZS4ha2Q=; b=uepWCo0KO6IcLLOcWHel4Vc111
+	N7LzJwmhwbYcwfb0XSQy92xW1BNU2WZpvlIiO3FHkhGuZ6Oi+M7L32Dvtgo3+Yn9
+	CNkxKsXZEaSPQTnxvEFI5v7Lj9ZxpDd9ywuHTxW3ahZ3xWDRQHstgC3tXSEu+nnL
+	97EhjmcuDBcLM7V/5DQ4CU+k0VkkNveWKTCghDp35feTJzvUmcRCOYVmPLIo3cc6
+	dApzx5u3YhOKo59fOOQHLGkTC/dW+AItyDPfeQng983Fh3OyoBQ+qK1NDTq+7SCt
+	YoBjvXLTeIqU8hUol9OCPUEu+9nLe4dEvMWGsjVFzFwg6L/PgguAUOc7g30g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714974822; x=1715061222; bh=T4B3Cw3PTAwje/o8aaFiOgzAaV+B
-	6qhon2nm/Mjv2+Y=; b=QRlNMPYk+7QEuCSacUEksk+6hp16kOl/xN4ccFY7C6la
-	FOov8hiGWYWwTPIA06yebAbpjttENuymyFECIhDwu6AAa+6xGm16iWQxwcHM2l0h
-	pVnBmRwHABzf6+DnLMn2Lgz6dNvI4HxCOPP1o2IWP92PjhpK+JMGZf+ek6Sa3Ack
-	KztF7fRJnAY2rkg4aJ1DPQiu3+nawGs36S7F/jHbhRV488Ln60ivm0j3Tqgz7N0f
-	LDP6fC5fUASYjf7rxKdli4uxz68Dy2RSJcH2G7H9IN1msM4CKcsGEaGJq1UUCPYZ
-	VBL1DeybEy4OXzm1zbG1D5l3YoFdtFBRFR7tymbAfg==
-X-ME-Sender: <xms:ZXA4ZpbcLD7YXjMXA0uh_PAqWpBuIluE6HC7epLhvazSeqK2rnBqGw>
-    <xme:ZXA4ZgbMhn25yyxBf9Pgc1EJW-10c8C2fhlWfwjEar9ac0zqivXf7A9gYgbi5rOSr
-    2noNIdBbVnlb_OCyg>
-X-ME-Received: <xmr:ZXA4Zr-ams7R2qkXgDft-Iv1xj06DhVQFj3TXf6cOMqnwW28wuU9Yij9WE6SkhhJ7Q-hFq6b66Z3TPiHaju5gEuZVDYfYrmETjvVAHvSzvbfXb5R>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedguddttdcutefuodetggdotefrod
+	fm3; t=1714975045; x=1715061445; bh=ktkELc0eTJrpCJ20euLtqzTKMmVt
+	ltdoqQF6ZS4ha2Q=; b=MtDFTnm6UvvLTMRFIrUxkxDOJjB76fTs9swIvfLoz7qE
+	Fnkjp2VvK2QeRxgr83fmSQoiQJwVqr5huHR230aii5u0Ok0CNpQb+/XzUpEoM80s
+	Zyl42PWSmk5RsR8Alh4rctH1/dOcRjM2N1tN2BESU5k0hUmZTjuuQZchX6Jm0N3W
+	jj06+ZPQDAL3tzSk8riZkFlWoLyaRNJarMwzLSwUtpq7vEmvDPAtO8rmKpHgLem6
+	aTRo6UDIFKPIdSI7bB4XtGxmSuHTRfXVopij3PdR7N47P2HNcXzSTHnLMQGn6hrn
+	ZDoUvcf/PYZUroMbDEwFxE+Mt1ef/9blUHEToCf+FQ==
+X-ME-Sender: <xms:RHE4Zj7HD01EM3-jmsEHTYomElXXa5tYhpQ5RfvfoHn8b6NVrZvp2g>
+    <xme:RHE4Zo6l17UQS9acK4Rf-hWZHXgvpVTdnMFTfLtd7laKjCW2wEz-sJJIcmxOONfG0
+    jKr2_AVJHkXgCuK0Q>
+X-ME-Received: <xmr:RHE4Zqdp1-WGOYApu347y8oebUCbE7DCg2PNmEPa8PjczHd9a2n_1R7WuwFjHP6bpV6idlOxua6S2y1DyBqBfi6Ybsya9-cIHO2fztIAlFgSjGM0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedguddtudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepiedvjeefheeiteekgeejveefffdtvedvudfgvdeuheeffeejfeetudeutdefgfeg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:ZXA4Znrp0m1ECEhJG7UWdVJwNdr_Qpfp3ELwIZ28V5QOXdoSVpTGRA>
-    <xmx:ZXA4ZkrJTIV2fP3jCkl_MeOEV_CUwPg_XpdPYgV71147qZK63hcfKw>
-    <xmx:ZXA4ZtTMqPu6ISCdcvdEcB_2b3mliLY-X_yaZbApyHBt2lIpvRa77Q>
-    <xmx:ZXA4Zso_8-w62i5cQwN2CgskQ-5YSVFQ2mbKl4IzLHEZSbni8pC7ZQ>
-    <xmx:ZnA4ZleTggKmDpKhVQbL4evY3_Hu1WsUSiG-Mlpa_imKi-Rru9DeVwz9>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:RHE4ZkJye-LHWysMuo2gceIuOedrDhWV8tquIECq8ZnU0rUekwcUtA>
+    <xmx:RHE4ZnK2UiTse9iJIIEuUuSn4nIlacjBHrZHqaz-u0vbf31zmCEw7A>
+    <xmx:RHE4Zty2IFXp9FPdkbZgG2PzOmrg_ho5qsGcaepfVZ2j52Wq_sy1LA>
+    <xmx:RHE4ZjIVpXA2LyNvcpqqmkPAlJaF8NxnoxfoqnbqeYMCysxTLR8RBw>
+    <xmx:RXE4ZkFYnYAu2JdBmwWtofDiEOarBdQwNm7rDLp2bAIy4clfruzQ1M5e>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 01:53:40 -0400 (EDT)
+ 6 May 2024 01:57:23 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f12f7cb9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 May 2024 05:53:33 +0000 (UTC)
-Date: Mon, 6 May 2024 07:53:36 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 520de844 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 May 2024 05:57:18 +0000 (UTC)
+Date: Mon, 6 May 2024 07:57:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v4 00/13] t: exercise Git/JGit reftable compatibility
-Message-ID: <ZjhwYNWO-tdqcUyt@tanuki>
-References: <cover.1712235356.git.ps@pks.im>
- <cover.1712896868.git.ps@pks.im>
- <x7v4d4siixs3wllzycibxtgsqipnwohhyxg72zvcxboucshd2t@won3yobvixbu>
- <ZjUxY7kqgy-iLIzG@ncase>
- <ZjUzjhN78lqYtXqT@ncase>
- <2hhwttin6gvs2munwpl2zhnm2573bm5vklbk6mcwxbgc7z5sog@3dygnrnnnpna>
- <ZjU_1PJnvmGhtckO@ncase>
- <enfz4bzeg5m3odkbhrzwjfgah3cd5fl333rgos3sz3aju33y4y@do3yczu7a6hc>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] attr.c: move ATTR_MAX_FILE_SIZE check into
+ read_attr_from_buf()
+Message-ID: <ZjhxQOgRgvv7_gGY@tanuki>
+References: <28f6267709db78ba526d7ed9fc4a734674697c70.1714763555.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,94 +82,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cqCJaqUEkFx9KvsG"
+	protocol="application/pgp-signature"; boundary="FbzgKkisuTD9OAml"
 Content-Disposition: inline
-In-Reply-To: <enfz4bzeg5m3odkbhrzwjfgah3cd5fl333rgos3sz3aju33y4y@do3yczu7a6hc>
+In-Reply-To: <28f6267709db78ba526d7ed9fc4a734674697c70.1714763555.git.me@ttaylorr.com>
 
 
---cqCJaqUEkFx9KvsG
+--FbzgKkisuTD9OAml
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 04, 2024 at 12:32:31PM -0500, Justin Tobler wrote:
-> On 24/05/03 09:49PM, Patrick Steinhardt wrote:
-> > On Fri, May 03, 2024 at 02:35:46PM -0500, Justin Tobler wrote:
-> > > On 24/05/03 08:57PM, Patrick Steinhardt wrote:
-> > > > On Fri, May 03, 2024 at 08:48:03PM +0200, Patrick Steinhardt wrote:
-> > > > > On Fri, May 03, 2024 at 01:42:32PM -0500, Justin Tobler wrote:
-> > > > > > On 24/04/12 06:43AM, Patrick Steinhardt wrote:
-> > [snip]
-> > > > Maybe we should do something like below patch. Basically, we start =
-to
-> > > > acknowledge the fact that Python 2 is end of life and always use Py=
-thon
-> > > > 3 on ubuntu:latest. We might go even further than that and only use
-> > > > Python 2 on ubuntu:20.04 and slowly phase out support for it.
-> > > >=20
-> > > > diff --git a/ci/lib.sh b/ci/lib.sh
-> > > > index 473a2d0348..3967a5af85 100755
-> > > > --- a/ci/lib.sh
-> > > > +++ b/ci/lib.sh
-> > > > @@ -325,11 +325,18 @@ ubuntu-*)
-> > > >  		break
-> > > >  	fi
-> > > > =20
-> > > > -	PYTHON_PACKAGE=3Dpython2
-> > > > -	if test "$jobname" =3D linux-gcc
-> > > > -	then
-> > > > +	case "$distro" in
-> > > > +	ubuntu-latest)
-> > > >  		PYTHON_PACKAGE=3Dpython3
-> > > > -	fi
-> > > > +		;;
-> > > > +	*)
-> > > > +		PYTHON_PACKAGE=3Dpython2
-> > > > +		if test "$jobname" =3D linux-gcc
-> > > > +		then
-> > > > +			PYTHON_PACKAGE=3Dpython3
-> > > > +		fi
-> > > > +		;;
-> > > > +	esac
-> > > >  	MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D/usr/bin/$PYTHON_PACKAGE"
-> > > > =20
-> > > >  	export GIT_TEST_HTTPD=3Dtrue
-> > >=20
-> > > This seems reasonable to me :)
-> >=20
-> > Please feel free to adopt and adapt this fix. I probably shouldn't be
-> > reading mails at this time of the day in the first place :)
+On Fri, May 03, 2024 at 03:12:36PM -0400, Taylor Blau wrote:
+> Commit 3c50032ff52 (attr: ignore overly large gitattributes files,
+> 2022-12-01) added a defense-in-depth check to ensure that .gitattributes
+> blobs read from the index do not exceed ATTR_MAX_FILE_SIZE (100 MB).
 >=20
-> Thanks, I'll give it a go!
+> But there were two cases added shortly after 3c50032ff52 was written
+> which do not apply similar protections:
 >=20
-> -Justin
+>   - 47cfc9bd7d0 (attr: add flag `--source` to work with tree-ish,
+>     2023-01-14)
+>=20
+>   - 4723ae1007f (attr.c: read attributes in a sparse directory,
+>     2023-08-11) added a similar
+>=20
+> Ensure that we refuse to process a .gitattributes blob exceeding
+> ATTR_MAX_FILE_SIZE when reading from either an arbitrary tree object or
+> a sparse directory. This is done by pushing the ATTR_MAX_FILE_SIZE check
+> down into the low-level `read_attr_from_buf()`.
+>=20
+> In doing so, plug a leak in `read_attr_from_index()` where we would
+> accidentally leak the large buffer upon detecting it is too large to
+> process.
+>=20
+> (Since `read_attr_from_buf()` handles a NULL buffer input, we can remove
+> a NULL check before calling it in `read_attr_from_index()` as well).
+>=20
+> Co-authored-by: Jeff King <peff@peff.net>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
 
-I've sent out a fix for this via [1] now so that we can hopefully
-fast-track this.
+This patch looks good to me, thanks!
 
 Patrick
 
-[1]: https://lore.kernel.org/git/cb8cefc20f373a3516695e7cbee975132553ea95.1=
-714973381.git.ps@pks.im/T/#u
-
---cqCJaqUEkFx9KvsG
+--FbzgKkisuTD9OAml
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4cF8ACgkQVbJhu7ck
-PpRd4hAApMblzdKlQLcSAwFnQbp80gE4SCWkiqvDpH3t7Up++/jSVX67b1S2+QfM
-ruk8PBd0eEIWpkXKiEnTekQ3tVdSxSNRHaV0GcdYaxjxwEoh4rsqSoJ1j0MWtjTL
-5JOseGhxxLZnuoyxOggwWmkZFUKeQiwd7ik5t+t1AJGR2Kx78l1QT0iLXQFAETPr
-fjVuTGoCpn0fy/zbbn8dR9bOw+cKnBDkVDhXVNFLz23C0s5B0ire7Vo9sQytZ5Be
-KC8oQlCNlaZfOSxq/P0gRiJrHrAl+pqkh33nqb8Oa62BQMFap7aI0026zY3KAHVF
-pv9P8fs/LEnaNnKtc2kFtA1PGjnhAeDraAlMU2wDTTUuPrj5Y6wYjWSYGs/aLpJn
-ALTg6flDkTZw/pOAU8k1+oq/drd8cg8N/2AS7eLQmo6V4oCoHVNZsCM147+T3erq
-no2wZs5YXkcn1hbHarloeOqdQmDdZ+204hNDjoMdBbr+V/CCQmguwjhXQ675rz8M
-fvYrnW/F5vSNFaLFeoFTN7V1wradldZ3qLHPe3whI3XOTXJ4t1fJ6x5vboaXvAd/
-lNKO+FWF/1WzrX7xdVW/m0BC2poyU8HMFwl4PIsb1eAA3aF3eRZqwODweJrc8Wow
-zEPvoCRIR9Kpt8UDEEYMAMXHTdj93Ae6R0etPBh4AckorwHjXoQ=
-=Oeno
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4cUAACgkQVbJhu7ck
+PpQ+4RAApHahwgmYS8lWEgP9pSN/g52quVwbX+wrRV/ykJgxPjV/FwhrTHt2NEBG
+2Pg6krKD6nBh9B6zI2cyGCugq80WBjbIlhUtZC9v87VB70vvkKrLi2LkMBALPw6r
+pi3qdNCK9hWqlVEU0V3ZL4n1iss0f0LFxAEinoZTt6F584rixqaT/+JQRajdCdwY
+beFgJcoGwCZCjX7r+JhkbNS3BdSFzNfAtDKjgOWeICZgVbo2CrKzQ4+nXT7lKslM
+vXGiA7spkc4YD2H2YkcwF9QuWviTSQJcVTCNR5sGAZl7NNidg8Q76Rv3YjnEqXHL
+REl3NqK7GRxDIyMqPD8AbFqiRsTn3s1Z/8TCKlXYYH6V0FteOrsoYjGZbCSGgDXq
+FXhcTplhQmTXJkyviXOpSiznAPiKXpdcwofbQPiIfSYszRuPbZ8Kh9AICwYJPbQ1
+WOatkZVBtWvwOM1mAb0rpvkM7X1Wo+Ngg+twvndnKoo1K0XO8MqfAtwsrFuH7sGc
+VtTodYLOTQfhOKX/TQXFIA1K695H7fe2Gr6kFrQ4FfNWSqzQfgS0QVNMJoOfN6uP
+Le68g01sqdr+Ddw0o1zvZYEzJlgR6QOt7OglOwIQ/rKK5BWR9yXHY3xBJhHqUQIG
+S6e+NOouq0vyITXbTnIiPiPOkBiQELjtSQ6hU8uY0FzG5zV0eNg=
+=Tzx+
 -----END PGP SIGNATURE-----
 
---cqCJaqUEkFx9KvsG--
+--FbzgKkisuTD9OAml--
