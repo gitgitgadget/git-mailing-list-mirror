@@ -1,109 +1,95 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D584AECA
-	for <git@vger.kernel.org>; Mon,  6 May 2024 19:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6054415572C
+	for <git@vger.kernel.org>; Mon,  6 May 2024 19:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715022446; cv=none; b=cGRGZF22/VJhQARqVn46qRVcitfTcAXXZqnMgUT3ikwdT4QaY5UHsEjpOISYar+aPkeOV93WySKlXhC59JR8kSkWhVk5Fp8fOQxbxYAkzFTujX7ZbSMu3pJ/reUspiFf5wCv54N2j1IcqW8EvQYXKIEUn5ZgaaU4O1s0bK4ZvFU=
+	t=1715022734; cv=none; b=mF9eDZ+mdcn+wsC4A/nhzrqKuRzRFhUQbr7EB05Q2anrvuyMFhVqCmwLfLqcRflh7HNnlwl/suj0jwotZEWEk0p3wlJ4KKvSfW+jhrrKLdpCJjKoerI9B7yTUEIL/DixM65k0At2W9P26a0FuYmB5pnlkZFiJq0zIQmucpasj3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715022446; c=relaxed/simple;
-	bh=8jYKxDEowcYu74ePUkHcY9p+T9+YrMHgY4G+TvPmTeE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AnpdyhXY7Ia3u2Rhy6uJyazyi/J+eAJmH+hlzZxxHhkpNgTSNUVuRYeXbigIXg9XWPBDeoq3R/56+o0qx9CuVTBjPJ6zk1CqNT9PJLZ5oVIkjex0WWhqWUuLQduAqGgg9ReZvjlgEz96Eu5DB1WB5THQtvN36vd/qURPKIIFuD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cLm+YvSM; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715022734; c=relaxed/simple;
+	bh=2aXh+lrJ89cIfJpZrIXUsLlfZ32kR9VWN/KWCIg4CDU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gpL/FYZ7y4DBIdr75rthRu0mpXUlPGlBCK8l+//18V8WrUtCTZk6pTsYQppTvxMZKbZ8kKW7orWlSDsEsZEDTuCAEwyXAqnHTHc8th3lhowq0I7oaL010y5SRqlXgKcxkutE7XWsixDe5ntj7dioTFNE9eDKDnHSf9WsRRir5vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=K9zJ6gtf; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cLm+YvSM"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6f05c253669so639589a34.2
-        for <git@vger.kernel.org>; Mon, 06 May 2024 12:07:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715022445; x=1715627245; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=t1huC7Nznci9TNxSTgtHwOj6+ZSft3q13/8rQNpedWA=;
-        b=cLm+YvSMujbqU/9fhI5rqCxLALgjZZZagE2KK2/fyZJ08+CztPwn4qU53UuZEvaHCE
-         UX14hYQLOKi2wC5Sb0cJmtO0aJ+mTXVpizZodIeYK03XnNwAwRLvrGQVQ0AopF9qNyIs
-         sKuuPBuzA23h1EKMMhZTvyYIyTWDX7zaMDvGYakOzvyDjEb+NnR8P2x6hG1lrng+W3xF
-         3lF01TrjnJMZ9bq0G3jIJqJMaHOgavbjLrChsbHo3Jm/dDC/A90wBwyhCZXGeMHtRh1w
-         JLeoANLhdBSox5Z6TB2Olwk4FjWeNRmmpR6S1ycE452tC3t2N1krap4SjTw21GuBtUbQ
-         hNhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715022445; x=1715627245;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t1huC7Nznci9TNxSTgtHwOj6+ZSft3q13/8rQNpedWA=;
-        b=NjsAKFLhsom+fsvpWh05lDQM+iZAF7XY7Ak0SrNV3gJzR1KJR6Y542Qvdr8oDbJpSV
-         nNl/YTKHDnrOSP6P3hmodtIp7pu8a2kevJHaG0MwKixDe9wwk8WCFgqIrCJf2+tKObOt
-         af5ltxa/8yBo4Rp++EYpgQvcJJjQiHmtnKlk/16+USNbxpCTQKDwvQGnl1m39m2CWcNd
-         6ys2QBPXf7MkLIyxzI2OrVzYbl8WFyBCAlTKuJvFQU5/IZZoeisWgLk7QUeGorSEHSEu
-         UVLUjFG4THdub05EnalppFftyJ3CDUM39D+GmiCrEY5+cawOqWALNfNyQd1SO3+I/S/5
-         PT3A==
-X-Gm-Message-State: AOJu0YxXitOOee/0pE8EwQHERB13Fyfibb1tNfNiTfChQY7r2OCG4YOG
-	dftneUknjinW2SflJhpqA90oWSc45NoLrf0zhQjjRKvO1tmOzeXc
-X-Google-Smtp-Source: AGHT+IFAlav8sODxTrGTKgmti3HcvlW8GfAHzbDQjf9HUheS+fJ0rxd9aOTKZ+ewvT62njXPo73NUQ==
-X-Received: by 2002:a05:6830:4b6:b0:6f0:7f8a:af06 with SMTP id l22-20020a05683004b600b006f07f8aaf06mr1708538otd.17.1715022444587;
-        Mon, 06 May 2024 12:07:24 -0700 (PDT)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id by5-20020a056830608500b006eee2ad5199sm2087092otb.16.2024.05.06.12.07.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 May 2024 12:07:24 -0700 (PDT)
-Date: Mon, 6 May 2024 14:06:04 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Justin Tobler <jtobler@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ci: fix Python dependency on Ubuntu 24.04
-Message-ID: <7t2cqi643tvzjdeq4fddci2dqclgffkavps652cnf2swehx4uo@kng4bm5kvs6y>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Justin Tobler <jtobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cb8cefc20f373a3516695e7cbee975132553ea95.1714973381.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K9zJ6gtf"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AC1D32DE8F;
+	Mon,  6 May 2024 15:12:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2aXh+lrJ89cI
+	fJpZrIXUsLlfZ32kR9VWN/KWCIg4CDU=; b=K9zJ6gtffCe1KX9Ew16TulBeRH0F
+	ohE9FF02mvPCBTt1najYDCGwq+J0BcaAzr/+fCkqFpnuNWnsv1je1oX1Kbj81a1+
+	CBfYnqwUJ6AOTRqViTumfbN5hK71mzkU/FJIGtX8UvYZQ/ZHj7kIgA2lVM7nc4hf
+	pVI01PCIKSZ6Wuw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A4E3B2DE8E;
+	Mon,  6 May 2024 15:12:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.120.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 270EF2DE8D;
+	Mon,  6 May 2024 15:12:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Documentation: Mention that refspecs are explained
+ elsewhere
+In-Reply-To: <20240506182317.13477-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+	message of "Mon, 6 May 2024 20:23:17 +0200")
+References: <20240506182317.13477-1-oystwa@gmail.com>
+Date: Mon, 06 May 2024 12:12:07 -0700
+Message-ID: <xmqqo79iycu0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cb8cefc20f373a3516695e7cbee975132553ea95.1714973381.git.ps@pks.im>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 890C17B6-0BDC-11EF-9276-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On 24/05/06 07:35AM, Patrick Steinhardt wrote:
-> Newer versions of Ubuntu have dropped Python 2 starting with Ubuntu
-> 23.04. By default though, our CI setups will try to use that Python
-> version on all Ubuntu-based jobs except for the "linux-gcc" one.
-> 
-> We didn't notice this issue due to two reasons:
-> 
->   - The "ubuntu:latest" tag always points to the latest LTS release.
->     Until a few weeks ago this was Ubuntu 22.04, which still had Python
->     2.
-> 
->   - Our Docker-based CI jobs had their own script to install
->     dependencies until 9cdeb34b96 (ci: merge scripts which install
->     dependencies, 2024-04-12), where we didn't even try to install
->     Python at all for many of them.
-> 
-> Since the CI refactorings have originally been implemented, Ubuntu
-> 24.04 was released, and it being an LTS versions means that the "latest"
-> tag now points to that Python-2-less version. Consequently, those jobs
-> that use "ubuntu:latest" broke.
-> 
-> Address this by using Python 2 on Ubuntu 20.04, only, whereas we use
-> Python 3 on all other Ubuntu jobs. Eventually, we should think about
-> dropping support for Python 2 completely.
-> 
-> Reported-by: Justin Tobler <jtobler@gmail.com>
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-Not a big deal, but the email is slightly off. Should be:
-<jltobler@gmail.com>
+> The syntax for refspecs are explained in more detail in documention for
+> git-fetch and git-push. Give a hint to the user too look there more for=
+e
+> information
 
-Otherwise this patch looks good to me. :)
+Sounds sensible.  It is a bit unsatisfying that we cannot make the
+glossary entry the single source of the authoritative truth, but the
+refspec syntax needs to be slightly different between fetches and
+pushes (hence Documention/git-push.txt does not include the same
+Documentation/pull-fetch-param.txt like Documentation/git-fetch.txt
+does), so this is probably the best we could do.
 
--Justin 
+> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+> ---
+>  Documentation/glossary-content.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
+y-content.txt
+> index d71b199955..1272809e13 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -576,7 +576,8 @@ The most notable example is `HEAD`.
+>  [[def_refspec]]refspec::
+>  	A "refspec" is used by <<def_fetch,fetch>> and
+>  	<<def_push,push>> to describe the mapping between remote
+> -	<<def_ref,ref>> and local ref.
+> +	<<def_ref,ref>> and local ref. See linkgit:git-fetch[1] or
+> +	linkgit:git-push[1] for details.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-...
+Will queue.  Thanks.
