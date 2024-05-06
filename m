@@ -1,81 +1,80 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D1718E3F
-	for <git@vger.kernel.org>; Mon,  6 May 2024 05:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AFC45944
+	for <git@vger.kernel.org>; Mon,  6 May 2024 05:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714974061; cv=none; b=A3hv1dSzMvURKZs1bucbHFwUqlgGdbQIgenAutyZ2YGxxqlxDFeDD/WUATILb+k1DS6cwhBPDnxkqiVw7/haslAQq5QzNYljzmSVqa5RkMQihFNucYNpUJKFED8p5QRUTpT62iyG5kc2bdxnlIx9TUsB5kkV8tZGROHO3Dj6Jiw=
+	t=1714974341; cv=none; b=EpER212VbMJGZS7Nap+fMEbMWc3IInxBPS3NMrbCyg9Bw8kx9yZ4IwIB2waL/iJhPm48hrmaMvIYIN/gIrzBlnkImw9/ITIjECQhhGLu38PslmPnsJ4x7J+z+12c/1hJwEDfVmsK0hvH2Y+hukaQW6fxFQAH3mQyQoytu5ON+xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714974061; c=relaxed/simple;
-	bh=nJtJ4FRpiksfvrZMgFMIeRFCIQvzHaa+LYwb+fiEDwg=;
+	s=arc-20240116; t=1714974341; c=relaxed/simple;
+	bh=Y7huqqCrZXk2XTQU+SIfUFv52DVhUwkQAVVBQ/Z9CFY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EZGpNE6IRfyCfLJ/rYlGKXas5A5HqJmGO3cofsW2nirH5BxEnzZ2niBuscly5R0RtTs4F2yQn9jiJNSgFXDv/TqPx0o80pmDw0wU2DDApsRGVsQnV7vKk5XyaCJNAQOxPVk6USzlwaFpAaai7QPnG4HQFrVzR3MupDmiBMdwSOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JhmJ6zSf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H8pyJ63L; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=SxGuXJ50VvtpyoI+P2d/fOI35HKjkDSRMyFTGBHKXvKcPKjXJi8zoVhd3rat3Mxp1A8FyJjmAdVgXTtDpWtjMAciV8y9p9aZ0aIWNWOUJTJbWI/JLGRmpvVJ0efb/IKrOtuHaIAE2OIZPIRdSxJRHl0MOVdfobzZCgIeTKo1zws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RduSlyS1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cOtVcXEp; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JhmJ6zSf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H8pyJ63L"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RduSlyS1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cOtVcXEp"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 3C4C1138027E;
-	Mon,  6 May 2024 01:40:58 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 06 May 2024 01:40:58 -0400
+	by mailfout.nyi.internal (Postfix) with ESMTP id 04B2A138027E;
+	Mon,  6 May 2024 01:45:39 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Mon, 06 May 2024 01:45:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714974058; x=1715060458; bh=nJtJ4FRpik
-	sfvrZMgFMIeRFCIQvzHaa+LYwb+fiEDwg=; b=JhmJ6zSfVQ/c6eree4UKY/1zWw
-	O3OwjTHnpOckMNj5drg0feHXTaW1PfzODs1HGa07Ax0nlVkfB4rBcyXpiHbdqJv5
-	HsWT+eeRp9XxdBBAXo3LcUlJaad9yyJDhu4IDrck1AKN7d/+CbGz1uWpxcJKYg85
-	p1xV45zzQJ926PUrOoVnEdycB7rZc9WrOV+DJ/lSCudbJMT4ktGGGkYXGfNKei24
-	JLlBzG8HNbkJ21xqsgeF2xhVbiindnKyOMD1meW8dFVvPuRksxHpblXUZbnGlh/+
-	ykNJuyl5kCBhBDhLq39iX3NgCywV92negt8uBEr0K+yApRF7vdyrs2w4Nuew==
+	:subject:to:to; s=fm3; t=1714974338; x=1715060738; bh=L6Xns062a0
+	TGIrfIT4FN4NTeCKT+H+XgSWm7boAex8E=; b=RduSlyS1dQhIsz/5/v3GD6u1PE
+	Y3EWvlHaXKUA0H9nFQr0en9QuhcreCXcuVBhIwv8qphmeC0JkAl1Ainu6HGfaXz0
+	mNgW2Gqka247E3OiJYkFRI+4GFM9qPO4VJ1ZR/XUeHxWemt1p0ilE5jwl0X8+Zkp
+	XAHfNppXfnFWC+gfuImsJtbkQUAP5dP5g3T+XbGqmssiDdSHkNGBmIYbJHAYonbt
+	Aaz6LdMkgLapxXNR8DiC/tgGRtu0PMid8M7lFrWZTw46lJNCa3hY9ih7AsztNIkd
+	glY5uKKjnbHRrPbZYzb/HmMb49m3Ky3y17cBXxAgUIJdYdrCqdMpWNvIsJ5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714974058; x=1715060458; bh=nJtJ4FRpiksfvrZMgFMIeRFCIQvz
-	Haa+LYwb+fiEDwg=; b=H8pyJ63L4Tqa/BK+Hoi87oCLPh3LeBK0YgDbTXbJpiRi
-	YH+ch6DeW2+tKyPQhQNR5xaDYCOawKOv+yPUoUw8tiNiiHpk4V3dzV3UYYij6i7I
-	5xLCwVrCBs6A1uRpWyz+3Ojdzt707TN5Ym3xUXZmzKzIRY0e2GwG+KEuG5qAdBZC
-	YdquyuJ5WpSaZTvPjPDD3guWJX1RpTCeBCJtTre8gdd3gkbAVgCC4wly7ON/alba
-	ytKV91l5B5MqDFouWmcR5NmqusNS68AiyqhjqeNv+APxxxtPJfw2c4sMg1HTH+1P
-	bQTEFVv48X80bccGv7YtElsRAw/QD4TTNYj9F2WKtw==
-X-ME-Sender: <xms:aW04ZtlfBashHXEFEhMAv5NzDSvNlqpfiw-_Lshe5TI7BRup-WaNGA>
-    <xme:aW04Zo3haHdY7c71_ixw5kHfLoOFOYnGCUbqyt9H0c3qmDYAY-nTcRauJB9Db0f1L
-    h9b4yXJkcgRL9tb4A>
-X-ME-Received: <xmr:aW04ZjoPqT3j8zkx47lT3t7wYE8VokND8D2ReC1NobImJv4E3CM_VMzs77VhZK-8VakGEdFRxUYmYXcrrsTYPUUr4PujFrJ5hQfZwGuBVLXNu6rd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedgleekucetufdoteggodetrfdotf
+	fm3; t=1714974338; x=1715060738; bh=L6Xns062a0TGIrfIT4FN4NTeCKT+
+	H+XgSWm7boAex8E=; b=cOtVcXEpTEOo6zkBtfpDDtiy4T4tl8yeXjPnMciNOUXD
+	R4OaJlf9O3PvX2fOGMQdYjohNYrvJTc5PA9+49/Osc7HA+5lr82ikYrezTqC1PLG
+	bi807TgzIRuTNcoNTQ//K7fHmPYid8pYxSLrFRC4H2H5Gi1sVNMjyIAQtQdUhnYx
+	7A41Gm4Lx2Ru2hyf732ewo7i1j+o5mLMu0SANDt1EnZkNa87HRMo5PpsPtVSR7wU
+	ZWhQ+ZMWiBtf0cHH+MqDVLyES4Y6/arBGt2vpmvnYGhzNf45cTrP/RtgevVph+dB
+	xFqCRU19S9AU1ZLd4A2jqdSTw6LZMh9gS3iBo8tvCw==
+X-ME-Sender: <xms:gm44ZoBYjsfxNTstqgNcK3uicwi3obkIBFDUVZ0HqrCzY4TiyN2MKg>
+    <xme:gm44ZqjKFLnBq52cBQuKlbf6MZ6AH3l_Vl-02hlvCVc-ADcpzx1breKO77f6NWXkN
+    mhzPH45S0mhoroxCw>
+X-ME-Received: <xmr:gm44ZrmRLfbTVIdwNEVJE55suA_ZrX5JQSJhCtAH2Fl7OvOpEMa8_hbesVg3yqORzndOO5U020hKAPy0pRrZH7Mf6mkw-J2WibpdOzOmliNIqDSu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepleegteehfefhgfeuleduffffjeelteeggfffvdefgedvtdffgfefjeduveevfeel
-    necuffhomhgrihhnpehjtghhrdhnvghtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:am04ZtkDBb_yEzCf3QlNAOsYDKKqLzYPa2veAVy86CXgtmEJsqBLrA>
-    <xmx:am04Zr1d58zyaJ0bsPg7VCIbbEdUnNU0X2ibh8tc4PdpYVXWtzK6Fg>
-    <xmx:am04ZstT3e18iXaW9GGd6bLDpVWKQhYJeY-nhpb0AC0MM_XO4Wtw-Q>
-    <xmx:am04ZvWgRtysEX0R0XyttWIf7Msj_W_KDP3A8jPFNnE2kcwsQJD3Yw>
-    <xmx:am04ZmR5bQbcna6FlN4V6Teb9X12xsZN5S-My6mAwVdjWP3AbIWTG_su>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:gm44ZuytwsvVumuuV5hPcEctJMJ-KQDKrFm2-EePP6eaS1hdD7BrvA>
+    <xmx:gm44ZtTZ-eNdWXswW1dkzw2m_n5EX0y6iljkfCpwW-Dp3ifUPundDA>
+    <xmx:gm44ZpbTbLN4R475gvAQXrbbPY7BSQu51DapC7Vak5QpG0dd4NfOBg>
+    <xmx:gm44ZmRsVMCEZ0wBFw0p0J_em_rClH1oT4xAGc7n8Z6qGAKBJxyJzw>
+    <xmx:gm44ZvfVx1wqQUgsZhv3aNQflUNeNkfHlEo_WWstMZaI0pzGRKD5D8_a>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 01:40:56 -0400 (EDT)
+ 6 May 2024 01:45:37 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f405b357 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 May 2024 05:40:50 +0000 (UTC)
-Date: Mon, 6 May 2024 07:40:53 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id a254ade5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 May 2024 05:45:31 +0000 (UTC)
+Date: Mon, 6 May 2024 07:45:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: John Passaro via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	John Passaro <john.a.passaro@gmail.com>
-Subject: Re: [PATCH v5 0/3] builtin/tag.c: add --trailer option
-Message-ID: <ZjhtZb5nJZ8vlvLw@tanuki>
-References: <pull.1723.v4.git.1714488111.gitgitgadget@gmail.com>
- <pull.1723.v5.git.1714934950.gitgitgadget@gmail.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] scalar: avoid segfault in reconfigure --all
+Message-ID: <Zjhufiq2DmBlVpIx@tanuki>
+References: <pull.1724.git.1714496333004.gitgitgadget@gmail.com>
+ <pull.1724.v2.git.1714874298859.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,55 +82,103 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jXx5c0UqPjC6oni3"
+	protocol="application/pgp-signature"; boundary="C04xUQgmk6qNHa3g"
 Content-Disposition: inline
-In-Reply-To: <pull.1723.v5.git.1714934950.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1724.v2.git.1714874298859.gitgitgadget@gmail.com>
 
 
---jXx5c0UqPjC6oni3
+--C04xUQgmk6qNHa3g
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 05, 2024 at 06:49:07PM +0000, John Passaro via GitGitGadget wro=
-te:
-> 5th follow-up patch taking welcome feedback from Patrick and JCH. Net new
-> changes include suggested tweaks in documentation, error messaging, code
-> formatting, and patch description.
+On Sun, May 05, 2024 at 01:58:18AM +0000, Derrick Stolee via GitGitGadget w=
+rote:
+> From: Derrick Stolee <stolee@gmail.com>
 >=20
-> Since git-tag --list --format=3D"%(trailers)" can interpret trailers from
-> annotated tag messages, it seems natural to support --trailer when writin=
-g a
-> new tag message.
+> During the latest v2.45.0 update, 'scalar reconfigure --all' started to
+> segfault on my machine. Breaking it down via the debugger, it was
+> faulting on a NULL reference to the_hash_algo, which is a macro pointing
+> to the_repository->hash_algo.
 >=20
-> git-commit accomplishes this by taking --trailer arguments and passing th=
-em
-> to git-interpret-trailer. This patch series refactors that logic and uses=
- it
-> to implement --trailer on git-tag.
+> This NULL reference appears to be due to the way the loop is abusing the
+> the_repository pointer, pointing it to a local repository struct after
+> discovering that the current directory is a valid Git repository. This
+> repo-swapping bit was in the original implementation from 4582676075
+> (scalar: teach 'reconfigure' to optionally handle all registered
+> enlistments, 2021-12-03), but only recently started segfaulting while
+> trying to parse the HEAD reference. This also only happens on the
+> _second_ repository in the list, so does not reproduce if there is only
+> one registered repo.
 
-This version looks good to me, thanks!
+I think this explanation could use an update now that we have figured
+out the root cause likely being a detached HEAD, where `get_oid_hex()`
+will then access a NULL pointer.
+
+> My first inclination was to try to refactor cmd_reconfigure() to execute
+> 'git for-each-repo' instead of this loop. In addition to the difficulty
+> of executing 'scalar reconfigure' within 'git for-each-repo', it would
+> be difficult to perform the clean-up logic for non-existent repos if we
+> relied on that child process.
+>=20
+> Instead, I chose to move the temporary repo to be within the loop and
+> reinstate the_repository to its old value after we are done performing
+> logic on the current array item.
+>=20
+> Add tests to t9210-scalar.sh to test 'scalar reconfigure --all' with
+> multiple registered repos. There are two different ways that the old
+> use of the_repository could trigger bugs. These issues are being solved
+> independently to be more careful about the_repository being
+> uninitialized, but the change in this patch around the use of
+> the_repository is still a good safety precaution.
+>=20
+> Co-authored-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>     scalar: avoid segfault in reconfigure --all
+>    =20
+>     Update 'scalar reconfigure --all' to be more careful with the_reposit=
+ory
+>     pointer, avoiding sudden halts in some scenarios.
+>    =20
+>     ---------------------------------------------------------------------=
+---
+>    =20
+>     I noticed this while validating the v2.45.0 release (specifically the
+>     microsoft/git fork, but this applies to the core project).
+>    =20
+>     Thanks, Patrick, for digging in and finding the critical reasons why
+>     this issue can happen. I've included Patrick's test cases and given h=
+im
+>     co-authorship. I forged his sign-off, so could you please ACK that
+>     sign-off, Patrick?
+>    =20
+>     -Stolee
+
+Other than the above nit regarding the root cause analysis this patch
+looks good to me, and I'm fine with the forged SOB. Thanks!
 
 Patrick
 
---jXx5c0UqPjC6oni3
+--C04xUQgmk6qNHa3g
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4bWQACgkQVbJhu7ck
-PpQYDw/+KrZt86l+XVBcLwecwPwy9YXE2fQhNpbHS9G684fFV2aK9twZpOOsYQsE
-DSlMSbVBvtS2hUGDXT5JCY6AHKCbTcuij8pXHF0BxugNYF8iWbiZM+YWTJbenkd2
-l+yNxUTeI4Fxw81fVzXX00+8sFwOxxITq1LgHKTzEnESwkCaqcMB2lcCPW5RDJjK
-jQOFGsqCk9nqNnl599LRguETJl134pGEFNBt35+YxySzNPLuIxlo38ODPKiowy9i
-bUQ1sbkdRyT6xSEBPG3X71jlR6cL0UG4KgUzx5R79hhyBb9HI4WHmbWoTXpQJ7MD
-diMwpVzWO/EUDR8ahaSi1fM2TVhGsHjqkFDXrJ70tfSf13XeT1vlIHwJVgarenAE
-Vjp21PsOSorlPeh31HmyNM/Kf0Jd2g81SUfJwpOdBRgr5Kf8hsD/4smMyA2+4AI/
-lZArQyuIJrjWD803FP/uN+5NXmN/m36gst6/ljTSAh9aAOSUNimkwpgXetFiIsHq
-mBG4nNy2zO7y+PkpTcoxcR75fHI+Tn4WIi/GWvbFyjSvjhnfq752JPR+66BAWC4/
-1ER8AvLvpsVEht/UDc+S1PbT8YSrBMKVAgI4AKqu60zHE4dVfpSCqxFoMnU/EijR
-Wolb7L1Z9Snmma7Hxl79ZKZ2Ya6bA5Bx0gNzjDCrH+DE8dCtw+I=
-=3yFV
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4bn0ACgkQVbJhu7ck
+PpTvyQ//cu0lxBUZT0tAW55yxwCLtNCyqnK59qm3rJq4AkwSys5K+nbLI5oHMDJp
+J2iXtqRVscFj+26qHLJJ+GP22cNzInFhuLpYgfVJFri73ICBOgcytWop9srhqtfR
+47IBJur/UlhkVYvzJhJqwcmxO/3q4u8fFXERIKgAPvq6Gd45BVjLExkt2uNjezcP
+akOllnmLfiY4dI1gx5S71NyQuWfBmVlEOY0MgeReAuTqH5mKiBTmBgiY07+Rgy2H
+hbpJfOXrVDhud2KGMaOHr3kaioIq9rUBdBv7R/1qNX7QZGeZLb2vKRH5nGSY8yiL
+E/JfKgEkIhLcBm0Yi2jAuwcMf+dZNeVYUCEISIIWqUVOrCq/lF/cBAac4RrOY4F4
+49mkwzXttV1TRPU1YoH3qSPWRKi0KwyCfifgWF84j3z6NbvypPFTNnMqLFkHKwFY
+LC3a7KLDECt7u0mSkhciyq8C5ckuj5xtFYNxfCQZ/LDADlgb7kIQrTtEypPB0P3l
+XUytgzb46EPI+tETpKZBdHCqm6x2pynAcvn52wtBG0919l3S8HP4UScp0j8ETMSS
+Ul8drHvk3/Hkv4qw1Ou5cOq1Ta/KQIBd8bt1e9OmvuO5Axnnfa3ZsW+Wc8xWI50R
+c6hqsCUfjmM1b27PtY2UYmO5y9fk3Ao8uAlgXwJoM25KQ1qALZg=
+=nnXl
 -----END PGP SIGNATURE-----
 
---jXx5c0UqPjC6oni3--
+--C04xUQgmk6qNHa3g--
