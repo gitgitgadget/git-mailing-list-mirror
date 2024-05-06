@@ -1,98 +1,118 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1E584DFF
-	for <git@vger.kernel.org>; Mon,  6 May 2024 22:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C621E492
+	for <git@vger.kernel.org>; Mon,  6 May 2024 23:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715033859; cv=none; b=H2Tmz0d7j6oceThQJn6du7BovUiY59ScL/d3VkM74ins1FEkyQEECugGjIaztmJJXXOIl2lm2UunuMGPomJiTYsbEZOrGGSItphFfBfPU5PWaT7iemsJVsApWAJKaX1eYms+7S06b09+95546+32JHaZPOW7wp9LU9BQPTq+iPc=
+	t=1715036916; cv=none; b=U4ZfFOyZ8PFUxwbBwjFN2zh/AU8D3j86elgrYuLMrbCtvrEhNtsQAtpEwstMtutTs4Gn42b11dBEFDFPMYNGaw8STXwaqc41mMs5BfbBt6sFRJLisQ4jPkJu41T5ptFtoI59J7ZgrJyD01Mxbf7JjScj+qQP/y4WRpHoRh1nu/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715033859; c=relaxed/simple;
-	bh=eRuissJSXfv9s45jX38ivjyzvksIMnaw1TVheOV2Epg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=stngQ4okM9ufy6WGz/Ogua4KuxgoTscx/hMu5bbfUPDJi88IW21hk6Gz+1BGZ7MQovok7vpW1petcs4bsAcp/n3CdNX3WPRg2NRkPLw+ynPSVork/7ECYpfwMwTpnJQTuExApjM4ovSb1XhrxPQYv2p1ZKgAZPsVAwCG+BKvEjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k8shJZ8v; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715036916; c=relaxed/simple;
+	bh=69y1t0kbXGGuP3Nx3Hh+wBpO5UeYjRWyRS5a/bWbUUk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=oPWAxnjAF5vEymk349Cxvrk3XWFeVmz34apMwP/j5fT5cPQIHBha0C7EGRFbxMcjtSFy6F+I/4tywPjg3PzX0LvcFQuuYe9+m1stAVHQ0k6heJAOFd2fct4uRga2RtUUWMj4oUq+RhWEmN7sHeYuSrJFIXdSlkeORkF1B5bh4X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=QnbH+s1F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MiHKKcHY; arc=none smtp.client-ip=64.147.123.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k8shJZ8v"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3DE018A48;
-	Mon,  6 May 2024 18:17:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=eRuissJSXfv9s45jX38ivjyzvksIMnaw1TVheO
-	V2Epg=; b=k8shJZ8vj13I+rSQrNdqvY+sDpEK3td9cY7oxVOyxivmlvxDbV/SWB
-	3hzaEGxlo0c96gvJB+xKrmvFaKCRXKzg4qZhIiV2taim8qSouL+FvjHb/s8r6iZ/
-	+VWlOlSdPDn34qmEfEsr5G0R3583A5uFtR+2UukpV2IiyR5UhxpEU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CB72818A47;
-	Mon,  6 May 2024 18:17:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.120.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 38DAC18A46;
-	Mon,  6 May 2024 18:17:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2024, #02; Fri, 3)
-In-Reply-To: <ZjihN01c8gWX0s9H@tanuki> (Patrick Steinhardt's message of "Mon,
-	6 May 2024 11:21:59 +0200")
-References: <xmqqa5l64e0i.fsf@gitster.g> <ZjihN01c8gWX0s9H@tanuki>
-Date: Mon, 06 May 2024 15:17:35 -0700
-Message-ID: <xmqqy18mwpog.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="QnbH+s1F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MiHKKcHY"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 20237180013A;
+	Mon,  6 May 2024 19:08:33 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 06 May 2024 19:08:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1715036912;
+	 x=1715123312; bh=x7hv4IgCU1J5AIeVv1AqEj641j2LrrpBEE5uPSMp6sM=; b=
+	QnbH+s1Ff/F/4g21H16huNXB7ssOtqwtLDVM0C72663GQRnpwgjz7xqP5b5z4La5
+	gP1YYgFpYkjA5+NjGzIx/1zjSCqOwzb7Ym/lK99cE1CbEzI199EhGuQldfED17m4
+	gW9xVitZD/Y1C3EElezy1HovWYJYH1LYA2QJtsvqO1S+EfwfJtityeXx6pO2Uzim
+	tXOvE7rmpn2ppTG+SjgsuZlODpAuh+MsQuzs+7UGQSgQbidQrSCFhuG0NSOJRg9Z
+	ko1jpiDo/lc0YUQg+/6x0Myo/4N0lqsYkWGvq/rmhyi7SiTxATdpCFoHzp1Bs0Wg
+	P0txpw8CyQzrqPSQVJ4XHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1715036912; x=
+	1715123312; bh=x7hv4IgCU1J5AIeVv1AqEj641j2LrrpBEE5uPSMp6sM=; b=M
+	iHKKcHYcQ41vuFZe1fCq7QwehPjY1t2INUMgUem3vqAT2HaJpW4Y6PfGZObWUzx9
+	whgnhTrU6d5sptsmco7wWMRTi5nMQpeVVi83YXHB+olEPH2bJAwPGSiWzVadlY4R
+	pwtemuPRCp/APMFblh5OhBulbXivIlssa0eKWjWqWFAoQw0/bm2eJtinwJbJfoPF
+	yU0zccj5HFGGedAwaJnrHDDVYuN5vBd1ha2w5Z3nMZ12yeT6Y0ABFaYoYZ1yTWMz
+	VECFh27T63hTJ49XFzOVW0rTcaeOQmcQRtSlAQ4f3L+yhubNbyx5MZXn3+ufFkoR
+	BUDD7Tp0YI2o8hea4ITRg==
+X-ME-Sender: <xms:8GI5ZsT0FyzmjD2WKRufmHHsrY1GPF_39OE9GpbKRrG8_DQo3nn4gQ>
+    <xme:8GI5ZpxrwTDnd6E16zs99s1eoMKcLHUtNqTgUVkH1LT9UwTTHHPnTr_HB21W_2_y5
+    rPgOpbjcWS9qto_hg>
+X-ME-Received: <xmr:8GI5Zp1ROfy17Qz6zulU7BWtB_ltSz7xwR7VrP_FmM5XgRWnZnZCdZEFf7rRoxmrqSJwwipCKF5wjj33rOP694lc3Jsw0OzMM-924Oai>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgudelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepggfgtgffkffvvefuhffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgr
+    mhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrth
+    htvghrnhephfetteetheetkeduiedtudehtdeijeehfeefheejhedufeffhfffjeffvdeg
+    ledunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjh
+    grmhgvshesjhgrmhgvshhlihhurdhioh
+X-ME-Proxy: <xmx:8GI5ZgA6WosrOVZC4iUj2uZN0edq3jq-fFDRao8LMf_KtAGzBUnAyA>
+    <xmx:8GI5Zlh2yhlGokggljA42hkjIcJWYgeRIX0SKUwabx2mRHYFiG0rew>
+    <xmx:8GI5ZsoPjsuRBq__-IntrJx4g3sIpJmGJaWdsvtl_gte_y3eESzIYw>
+    <xmx:8GI5ZojGgXoW00KgUC-Iwf7_hoYt5Y5ZWoKHUr4y6V3P2ZAmu7Im4Q>
+    <xmx:8GI5Zqvk-BwSg0WyCY2F5IDFJ_LN6u7Wm5KffPZd4czLxe5y7Ptm2f8g>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 May 2024 19:08:30 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 714D14EE-0BF6-11EF-AF40-25B3960A682E-77302942!pb-smtp2.pobox.com
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 May 2024 09:08:27 +1000
+Message-Id: <D12XUEC6DL6O.POVU09JJFHO9@jamesliu.io>
+To: "Junio C Hamano" <gitster@pobox.com>, "Karthik Nayak"
+ <karthik.188@gmail.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH v4 0/3] advice: add "all" option to disable all hints
+From: "James Liu" <james@jamesliu.io>
+X-Mailer: aerc 0.17.0
+References: <20240430014724.83813-1-james@jamesliu.io>
+ <20240503071706.78109-1-james@jamesliu.io> <xmqqedai959z.fsf@gitster.g>
+ <D123HB68ZKO0.3C5RSYGQNO9L3@jamesliu.io>
+ <D125SZ21UPI0.166ZOVLTOBCRH@jamesliu.io> <xmqq1q6e3n0i.fsf@gitster.g>
+In-Reply-To: <xmqq1q6e3n0i.fsf@gitster.g>
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> I have just sent out a new version [1] that fixes a few commit messages.
-> Other than that I think this version should be ready to go.
+On Tue May 7, 2024 at 2:47 AM AEST, Junio C Hamano wrote:
+> I count two messages from Karthik for v4, one of them being "this
+> round looks good", to which you said "thanks".
 >
-> [1]: https://lore.kernel.org/git/cover.1714982328.git.ps@pks.im/T/#u
-
-Thanks.
-
->> * ps/undecided-is-not-necessarily-sha1 (2024-04-30) 13 commits
->>  . repository: stop setting SHA1 as the default object hash
->>  . oss-fuzz/commit-graph: set up hash algorithm
->>  . builtin/shortlog: don't set up revisions without repo
->>  . builtin/diff: explicitly set hash algo when there is no repo
->>  . builtin/bundle: abort "verify" early when there is no repository
->>  . builtin/blame: don't access potentially unitialized `the_hash_algo`
->>  . builtin/rev-parse: allow shortening to more than 40 hex characters
->>  . remote-curl: fix parsing of detached SHA256 heads
->>  . attr: fix BUG() when parsing attrs outside of repo
->>  . attr: don't recompute default attribute source
->>  . parse-options-cb: only abbreviate hashes when hash algo is known
->>  . path: move `validate_headref()` to its only user
->>  . path: harden validation of HEAD with non-standard hashes
->> 
->>  Before discovering the repository details, We used to assume SHA-1
->>  as the "default" hash function, which has been corrected. Hopefully
->>  this will smoke out codepaths that rely on such an unwarranted
->>  assumptions.
->> 
->>  Seems to break t0003 with a NULL the_repository.
->> 
->>  Ejected out of 'seen' for now.
->>  source: <cover.1714371422.git.ps@pks.im>
+> If you mean the other comment about a non-sentence in the proposed
+> log message of [2/3], the copy I have in 'seen' says this:
 >
-> Interesting, I couldn't reproduce this issue when rebasing the patches
-> onto "seen". There were merge conflicts though, both with
-> jc/no-default-attr-tree-in-bare and ps/the-index-is-no-more. So maybe
-> there was a mismerge involved somewhere?
+>     doc: add spacing around paginate options
+>
+>     Make the documentation page consistent with the usage string printed =
+by
+>     "git help git" and consistent with the description of "[-v | --versio=
+n]"
+>     option.
+>
+>     Signed-off-by: James Liu <james@jamesliu.io>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> If that looks good enough to both of you, then we can probably
+> declare victory and mark the topic for 'next'.
+>
+> Thanks.
 
-That is very possible.
+Yes I'm happy with that. Thanks Junio!
+
+Cheers,
+James
+
