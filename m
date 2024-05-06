@@ -1,54 +1,54 @@
 Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134891D547
-	for <git@vger.kernel.org>; Mon,  6 May 2024 08:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4F91420CC
+	for <git@vger.kernel.org>; Mon,  6 May 2024 08:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714985762; cv=none; b=PIoqFFnVdc8upFkaKd/V8NDW34Y7G2mIr4iJZ07JDUbzr7U2UjAoPGn5++WS1cz+MVjJYoXY0nsYIKLV3YhQVch92vrMxSUGPPQGK6N1lyqUUqLNbAFg5oGegt6+B/LvuqU3ofqoKtWG21di2M1soRaV5pKiuisK5nLq6royOLs=
+	t=1714985765; cv=none; b=ddo78ndp9F3MsuRvbL6GkgLOmTR0GhlRiVjPY30DLS64sbUTtQBmjerMlBQoTZVv75jpW+C7CJa3E9x1BMfVPwfJ2maZcf6WX17gTjzHKDzAETVAMad2clNfLfimtO6zIQ1yzZpUCwxGC7pkG+qJAmn4q5kWYCwcUcSPjLfuC+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714985762; c=relaxed/simple;
-	bh=/7rmMpnxxJVZKn4aw+x65FWkAcqsJwNR/DQKUdxx5RI=;
+	s=arc-20240116; t=1714985765; c=relaxed/simple;
+	bh=BiNrHvwoTLRRTF6OHbcyN3rxPF0JayGxnQ8pBO9UKAA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ERFMLDB1dFga8Gns6gWZ6fjLxi/t6jkOyaT1Z6Z6k0M0jdeUrdHaKtvZrWAPEhZ68gVCpE+D0jK5n6PgoNEx7shSdMza5tMegI8Y1RVAH8vYZ1YTDdGGiCh0BBZrj0c8bnYmIt7T2U5uZHcUjHN68m3wot7rTSPrX6tAqY1/H18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dlQoLb9V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M+2rj/wR; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kk/O/KZOO66WDNX3Km+daPJFESpOaudIRnc42O1HXYRaETOmR8KRGsJlFXAifAszjFjla0n/TRk5PPAebH16oH7owWsrUmA8vAIpGquFHajXokhijya4lQ4KP+LxGte8bX8TpsSZ1SILz6aFtdz/6zhYPcJhY+IbrmdfT81Yccs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eeJzwWvb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CwUFcx5j; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dlQoLb9V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M+2rj/wR"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id A6D7618000B6;
-	Mon,  6 May 2024 04:55:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eeJzwWvb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CwUFcx5j"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id B5EF71800087;
+	Mon,  6 May 2024 04:56:01 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 06 May 2024 04:55:59 -0400
+  by compute1.internal (MEProxy); Mon, 06 May 2024 04:56:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1714985758; x=1715072158; bh=L/bQzLQWq8
-	+2yBosFtwCQf5nJCw8B0pTBXnA8okuj+8=; b=dlQoLb9VfbDS5XcqZm8apko6Yh
-	iibfxZrHTos5SoilIQGa8EPXt8QwRyWIbRd8xz4RN4wXxSxTD4rdzKXAkGt3UK96
-	I2cz2uj6XtGq+l+FPUZfSFeMWCkkkrUgJsF3mNGzvMnc/LH0BccYz2+0+7BgBhtR
-	Ky84CxGZOV40r9dtEtWVf0kHo+dIOf2sBgQA8hdeYEiN9tslt5gXlGptna55pCHo
-	xIfhmM3TZpJlHckBMveGqPhpLsuLhlBXl9EsvaFTuLtoGrUp5NYQx4uKBLIs3Dkt
-	PdKvIfvkTEuv8eUcdNm1X1cbNOEqX3kv0WX1rpqv7ncCLNBJn5HhF9sQXQmQ==
+	:subject:to:to; s=fm3; t=1714985761; x=1715072161; bh=YHhsVFupoN
+	/dJT89AUFNXki2jckbC2sSFswvSzD1MGc=; b=eeJzwWvbwFzzW4WxYm92atvdhi
+	An0d8FteoIi8+VP6HGwYe1DDs7JMeS5012mM5KiFMQiw9Ay9F8sSYCSNJfzDec+l
+	gTbvQaItPU8zrZIsXoaXJrSCqyZRqQKolD9slKp7I539O+7MrvbFX03FAtqMvX6s
+	vjvDQHrP0evSQ2S9PPcjocPGrFcsmK5hp8ielODdGADBE1Hwve9mEkNwoAS3gu94
+	HhHBy18IISj0gWcGnOTEu6V6dmZDuv3Tpxtwk/u6rvyuB7UuxzLDdm8PKWd7P5tH
+	dWg59iiym7eggkmOHFQUFY/hIjsAkwKPFcxDSxfW3woAp+GPOOzRKaDDDVEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1714985758; x=1715072158; bh=L/bQzLQWq8+2yBosFtwCQf5nJCw8
-	B0pTBXnA8okuj+8=; b=M+2rj/wRFdQryd2kJLwyt5c4/+YoThUA9lNGHYFQc8lu
-	JxqPD3yhAm+UK+lzkCVPmIcedz68DONlKgM5UWvTAAQoEKrwpTFU/GzHzvv7w1VG
-	yiZyN9NoCj1Gimdq+VrH9y7MzcD1SjWx7cXJHXesYGvJKQm39zvjY3hnH0CdxiDW
-	jgdhsmMuYcNRPDaLIDEiZ1TWZLNZeL0fDP7s8wlyz3OggmbaSGFKD4CkR10Ynr8E
-	xdJCOMkA2jenI1wjSJapGYtEKgT3IrFkz3aeQGC1VmHEAIC1mh+8rX458h/W7FBb
-	pKABo+1gUBuL/7llgNdqPBKirLPrmDtY6fJ5xVFT+Q==
-X-ME-Sender: <xms:HZs4ZirVBs8AlGREgreyyw1PZF3OoBpJ_-0Hs2wktBZUFJyatH_1hg>
-    <xme:HZs4ZgqbGoBMp3kExkNMCm2ctx8ndlN-VFy1vBzzHZ15ECvNVXRMOhpP4ZqovKFMk
-    NGUO7RTd23awXrJ_g>
-X-ME-Received: <xmr:HZs4ZnNXNwNbpb6W15b8nReC6FhsblI9fHc3ItnPvAI0rR_Z1U7Nj6DQ2JMuQo9cbVfqPGNqSd9ohMOJwVYAE_hdYz489F2GI-Wr9016soHc1s-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedguddtucetufdoteggodetrfdotf
+	fm3; t=1714985761; x=1715072161; bh=YHhsVFupoN/dJT89AUFNXki2jckb
+	C2sSFswvSzD1MGc=; b=CwUFcx5jEg4yBWW/1SHjBu8N08ohTn25JGSiUhc1HUJ3
+	2a8gtf15g4MRnACiyNI8Ld+NOTcov3fnjim1T3CO1w2HquvlTueuVntY5JuDl/yL
+	Bk2F30aVuYYq41MgqLpzZoDSKUCV2RgLmH1t8xxJAWKlA7HDUHMA46VJV99kaqLW
+	LtkiSptyuSDQ8vNj/1ne6PxL88eWKYvBdyeeD5lPm1QYOZC+NOMy8OJSnzWz80Mf
+	EDwXKLAw4q+lLqkkzPHobTEA9wqmneuJwupHmSw5ZA5s2PQinxC1vM5XdBlein2t
+	eBsGo97YkszWw47kl4M/HX1NVvsVxovHqX2QPMhYpg==
+X-ME-Sender: <xms:IZs4Zl4BMFRkVMyJ2MgEFUrOkJltm8nT9V49kesA_sdV4f3rgOFCtQ>
+    <xme:IZs4Zi4lSQiP37jDpddQVNqLicY1EQpf9H7J85T5GGsh6XYobgeXazaBQ9qu8ddSJ
+    tgOa6UAE5GZM7XZKQ>
+X-ME-Received: <xmr:IZs4ZseAVGBCw4dRShbyfQPHqN4wf15miFTOmNEF7vNSIZ4eq4feU-i60mWNiv41GLUaiBdR5Jik2_KB-wcyWGpTO5B7BEorgJg6TRLKkemkYobY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,18 +56,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedguddtucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:HZs4Zh76CLRSP4FBFEUFO_-qyzHaKigaSdLv6Vp8JQosExt4UdXQMw>
-    <xmx:HZs4Zh43dYxbttIeOslXoq962JTqAqEX3MqSuhlizEC7ybuMZapCJw>
-    <xmx:HZs4ZhgI_HEK-Wz5sXaPqI6UZvVlX-QvZ9c_FQ0saaf1Kza9KRf6fQ>
-    <xmx:HZs4Zr6TUrDixCcFkN5FEtRHKEWKfyKiT4e1DXXelQd4ODwxLDPA_A>
-    <xmx:Hps4ZrsChzfmoUbfNgKNzsfBSanAzsv-xcFSZEsMue9mRHpcJA5ugzQk>
+X-ME-Proxy: <xmx:IZs4ZuIKBX7YgFWhxQtJLFyMTLLrIwYSjtH4BMziZlvLqM4x0fFm-A>
+    <xmx:IZs4ZpJyiHCg4egKWO9frL7jfHMdc_YqbEOQXwMM110ys6f61T4bKA>
+    <xmx:IZs4ZnyQhjyEaBztDaH89bYh_Tx69ikrAcIFT0xQbZ6BQLmHYXqe3g>
+    <xmx:IZs4ZlJ-CNguAmlNHQvuJwks2zOX6FaJMW2G2d-OYUHLyGO0YzmZOQ>
+    <xmx:IZs4Zg8pUVCBJUjemfk9vZut2niW8YiJFZOQXqfh_0thvon1ErZTWUGX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 04:55:56 -0400 (EDT)
+ 6 May 2024 04:55:59 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 8fcceb0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 May 2024 08:55:48 +0000 (UTC)
-Date: Mon, 6 May 2024 10:55:51 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 38d6c36f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 May 2024 08:55:53 +0000 (UTC)
+Date: Mon, 6 May 2024 10:55:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -76,9 +76,11 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>, rsbecker@nexbridge.com
-Subject: [PATCH v5 00/14] builtin/config: introduce subcommands
-Message-ID: <cover.1714982328.git.ps@pks.im>
+Subject: [PATCH v5 01/14] config: clarify memory ownership when preparing
+ comment strings
+Message-ID: <881d2b5426e2ee690e5ef37cd795b7141064d05f.1714982328.git.ps@pks.im>
 References: <cover.1709724089.git.ps@pks.im>
+ <cover.1714982328.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,167 +88,179 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lhAmxoB6Kpxcbodk"
+	protocol="application/pgp-signature"; boundary="RUsaYjNebAIXO7uR"
 Content-Disposition: inline
-In-Reply-To: <cover.1709724089.git.ps@pks.im>
+In-Reply-To: <cover.1714982328.git.ps@pks.im>
 
 
---lhAmxoB6Kpxcbodk
+--RUsaYjNebAIXO7uR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The ownership of memory returned when preparing a comment string is
+quite intricate: when the returned value is different than the passed
+value, then the caller is responsible to free the memory. This is quite
+subtle, and it's even easier to miss because the returned value is in
+fact a `const char *`.
 
-this is the fifth and hopefully last version of my patch sthat
-introduces subcommands into git-config(1).
+Adapt the function to always return either `NULL` or a newly allocated
+string. The function is called at most once per git-config(1), so it's
+not like this micro-optimization really matters. Thus, callers are now
+always responsible for freeing the value.
 
-The only changes compared to v4 are some fixes to commit messages.
-Otherwise I'm not aware of any other feedback that would need to be
-addressed.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/config.c | 11 ++++++-----
+ config.c         | 16 ++++++----------
+ config.h         |  2 +-
+ 3 files changed, 13 insertions(+), 16 deletions(-)
 
-Patrick
-
-Patrick Steinhardt (14):
-  config: clarify memory ownership when preparing comment strings
-  builtin/config: move option array around
-  builtin/config: move "fixed-value" option to correct group
-  builtin/config: use `OPT_CMDMODE()` to specify modes
-  builtin/config: pull out function to handle config location
-  builtin/config: pull out function to handle `--null`
-  builtin/config: introduce "list" subcommand
-  builtin/config: introduce "get" subcommand
-  builtin/config: introduce "set" subcommand
-  builtin/config: introduce "unset" subcommand
-  builtin/config: introduce "rename-section" subcommand
-  builtin/config: introduce "remove-section" subcommand
-  builtin/config: introduce "edit" subcommand
-  builtin/config: display subcommand help
-
- Documentation/git-config.txt | 219 ++++++++-------
- builtin/config.c             | 512 ++++++++++++++++++++++++++++-------
- config.c                     |  16 +-
- config.h                     |   2 +-
- t/t0450/txt-help-mismatches  |   1 -
- t/t1300-config.sh            | 432 +++++++++++++++++------------
- 6 files changed, 812 insertions(+), 370 deletions(-)
-
-Range-diff against v4:
- 1:  3aa26d5bff !  1:  881d2b5426 config: clarify memory ownership when pre=
-paring comment strings
-    @@ Commit message
-         not like this micro-optimization really matters. Thus, callers are=
- now
-         always responsible for freeing the value.
-    =20
-    +    Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    +
-      ## builtin/config.c ##
-     @@ builtin/config.c: static struct config_options config_options;
-      static int show_origin;
- 2:  8f0804ab48 =3D  2:  66dffaa8f2 builtin/config: move option array around
- 3:  ddcd8031d7 !  3:  36abda0e02 builtin/config: move "fixed-value" option=
- to correct group
-    @@ Commit message
-         builtin/config: move "fixed-value" option to correct group
-    =20
-         The `--fixed-value` option can be used to alter how the value-patt=
-ern
-    -    parameter is interpreted for the various submodes of git-config(1)=
-=2E But
-    -    while it is an option, it is currently listed as part of the submo=
-des
-    -    group the command, which is wrong.
-    +    parameter is interpreted for the various actions of git-config(1).=
- But
-    +    while it is an option, it is currently listed as part of the actio=
-ns
-    +    group, which is wrong.
-    =20
-         Move the option to the "Other" group, which hosts the various opti=
-ons
-         known to git-config(1).
- 4:  1bc3918840 =3D  4:  34b66f9c87 builtin/config: use `OPT_CMDMODE()` to =
-specify modes
- 5:  3754812309 =3D  5:  4f90f206e7 builtin/config: pull out function to ha=
-ndle config location
- 6:  cb1714c493 =3D  6:  df1a6f14e6 builtin/config: pull out function to ha=
-ndle `--null`
- 7:  b3f3c3ba6a !  7:  1df76a9970 builtin/config: introduce "list" subcomma=
-nd
-    @@ Commit message
-         builtin/config: introduce "list" subcommand
-    =20
-         While git-config(1) has several modes, those modes are not exposed=
- with
-    -    subcommands but instead by specifying e.g. `--unset` or `--list`. =
-This
-    -    user interface is not really in line with how our more modern comm=
-ands
-    -    work, where it is a lot more customary to say e.g. `git remote lis=
-t`.
-    -    Furthermore, to add to the confusion, git-config(1) also allows th=
-e user
-    -    to request modes implicitly by just specifying the correct number =
-of
-    -    arguments. Thus, `git config foo.bar` will retrieve the value of
-    -    "foo.bar" while `git config foo.bar baz` will set it to "baz".
-    +    subcommands but instead by specifying action flags like `--unset` =
-or
-    +    `--list`. This user interface is not really in line with how our m=
-ore
-    +    modern commands work, where it is a lot more customary to say e.g.=
- `git
-    +    remote list`. Furthermore, to add to the confusion, git-config(1) =
-also
-    +    allows the user to request modes implicitly by just specifying the
-    +    correct number of arguments. Thus, `git config foo.bar` will retri=
-eve
-    +    the value of "foo.bar" while `git config foo.bar baz` will set it =
-to
-    +    "baz".
-    =20
-         Overall, this makes for a confusing interface that could really us=
-e a
-         makeover. It hurts discoverability of what you can do with git-con=
-fig(1)
- 8:  0e6da909ac =3D  8:  29676b81e0 builtin/config: introduce "get" subcomm=
-and
- 9:  8a623a31b9 =3D  9:  94afb5a5b7 builtin/config: introduce "set" subcomm=
-and
-10:  e25e5b69cd =3D 10:  e525c2326a builtin/config: introduce "unset" subco=
-mmand
-11:  f24008d356 =3D 11:  a797889890 builtin/config: introduce "rename-secti=
-on" subcommand
-12:  fc2ddd3201 =3D 12:  8ec214755e builtin/config: introduce "remove-secti=
-on" subcommand
-13:  4c2d817eff =3D 13:  1893c23afc builtin/config: introduce "edit" subcom=
-mand
-14:  4c351b12b8 =3D 14:  97a48ab81d builtin/config: display subcommand help
-
-base-commit: d4cc1ec35f3bcce816b69986ca41943f6ce21377
+diff --git a/builtin/config.c b/builtin/config.c
+index 0015620dde..40456c0770 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -44,7 +44,7 @@ static struct config_options config_options;
+ static int show_origin;
+ static int show_scope;
+ static int fixed_value;
+-static const char *comment;
++static const char *comment_arg;
+=20
+ #define ACTION_GET (1<<0)
+ #define ACTION_GET_ALL (1<<1)
+@@ -174,7 +174,7 @@ static struct option builtin_config_options[] =3D {
+ 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
+ standard input, blob, command line)")),
+ 	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
+, local, global, system, command)")),
+ 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use=
+ default value when missing entry")),
+-	OPT_STRING(0, "comment", &comment, N_("value"), N_("human-readable commen=
+t string (# will be prepended as needed)")),
++	OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable co=
+mment string (# will be prepended as needed)")),
+ 	OPT_END(),
+ };
+=20
+@@ -674,7 +674,7 @@ static char *default_user_config(void)
+ int cmd_config(int argc, const char **argv, const char *prefix)
+ {
+ 	int nongit =3D !startup_info->have_repository;
+-	char *value =3D NULL;
++	char *value =3D NULL, *comment =3D NULL;
+ 	int flags =3D 0;
+ 	int ret =3D 0;
+ 	struct key_value_info default_kvi =3D KVI_INIT;
+@@ -799,7 +799,7 @@ int cmd_config(int argc, const char **argv, const char =
+*prefix)
+ 		usage_builtin_config();
+ 	}
+=20
+-	if (comment &&
++	if (comment_arg &&
+ 	    !(actions & (ACTION_ADD|ACTION_SET|ACTION_SET_ALL|ACTION_REPLACE_ALL)=
+)) {
+ 		error(_("--comment is only applicable to add/set/replace operations"));
+ 		usage_builtin_config();
+@@ -841,7 +841,7 @@ int cmd_config(int argc, const char **argv, const char =
+*prefix)
+ 		flags |=3D CONFIG_FLAGS_FIXED_VALUE;
+ 	}
+=20
+-	comment =3D git_config_prepare_comment_string(comment);
++	comment =3D git_config_prepare_comment_string(comment_arg);
+=20
+ 	if (actions & PAGING_ACTIONS)
+ 		setup_auto_pager("config", 1);
+@@ -993,6 +993,7 @@ int cmd_config(int argc, const char **argv, const char =
+*prefix)
+ 		return get_colorbool(argv[0], argc =3D=3D 2);
+ 	}
+=20
++	free(comment);
+ 	free(value);
+ 	return ret;
+ }
+diff --git a/config.c b/config.c
+index ae3652b08f..13cf9eeb16 100644
+--- a/config.c
++++ b/config.c
+@@ -3182,14 +3182,10 @@ void git_config_set(const char *key, const char *va=
+lue)
+ 	trace2_cmd_set_config(key, value);
+ }
+=20
+-/*
+- * The ownership rule is that the caller will own the string
+- * if it receives a piece of memory different from what it passed
+- * as the parameter.
+- */
+-const char *git_config_prepare_comment_string(const char *comment)
++char *git_config_prepare_comment_string(const char *comment)
+ {
+ 	size_t leading_blanks;
++	char *prepared;
+=20
+ 	if (!comment)
+ 		return NULL;
+@@ -3210,13 +3206,13 @@ const char *git_config_prepare_comment_string(const=
+ char *comment)
+=20
+ 	leading_blanks =3D strspn(comment, " \t");
+ 	if (leading_blanks && comment[leading_blanks] =3D=3D '#')
+-		; /* use it as-is */
++		prepared =3D xstrdup(comment); /* use it as-is */
+ 	else if (comment[0] =3D=3D '#')
+-		comment =3D xstrfmt(" %s", comment);
++		prepared =3D xstrfmt(" %s", comment);
+ 	else
+-		comment =3D xstrfmt(" # %s", comment);
++		prepared =3D xstrfmt(" # %s", comment);
+=20
+-	return comment;
++	return prepared;
+ }
+=20
+ static void validate_comment_string(const char *comment)
+diff --git a/config.h b/config.h
+index f4966e3749..db8b608064 100644
+--- a/config.h
++++ b/config.h
+@@ -338,7 +338,7 @@ void git_config_set_multivar(const char *, const char *=
+, const char *, unsigned)
+ int repo_config_set_multivar_gently(struct repository *, const char *, con=
+st char *, const char *, unsigned);
+ int git_config_set_multivar_in_file_gently(const char *, const char *, con=
+st char *, const char *, const char *, unsigned);
+=20
+-const char *git_config_prepare_comment_string(const char *);
++char *git_config_prepare_comment_string(const char *);
+=20
+ /**
+  * takes four parameters:
 --=20
 2.45.0
 
 
---lhAmxoB6Kpxcbodk
+--RUsaYjNebAIXO7uR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4mxYACgkQVbJhu7ck
-PpSwJA//a3jfqvOyKfSL6W4q+IMv7O9VzPq3Xb7roqfMn/WQ7qfjtXt368dPbRsG
-BPgsP2HI/T6LsI8VIEL1JR6otVhr/2Tnwizv6I4x810oz+dY/vCOawFw3OY9RlRa
-nPWB2/g2qI8r1JSoFUurnLb5iOD0MJjhqJdKZ8aK4Ezq7d3SvLjvjmkR9lvAOEEf
-sIWZqwMcBNsfOkLR3o38uoMJZBQ0IVzUb3rO6/eP4c3OrnT2goXwK4vKuyv1o+Fy
-Egty7HDlePxEX6fi07PgYLX6q1zSiVrY8rqYgZwlG3e0luldz4Al8pP91yr5Vryn
-uONYUTK99O26pDqTAvVjcr4GwwyLWkxeyRzRIps6S6m51yrQfOIXgczW41KkKQEz
-qCa49jP4eA3tNDoVKZsy8BEMXksmwIxnh1dbw4smyzmTbLuw57/2v3dZFOW4U1IE
-B5eEtE/if9M1vV0UiiGV8PBKaATIJA1NrLHET+PExIMEwPM2W5O38KGmy9UFBg+R
-KOfbQc0ydDCzRgORlfujlbrZ2FhauK6KXW0+G7b+vE8zmgGPePlkDlHJEFJkFCaL
-VEaDkj1judyQjqUlL3rhjr7RcjkK7/aQvYTjTgNpc3l3QFEQsdz5iesxJJEI3clX
-VvhEnOf9mgKOzydh+yMWHQxTBJGbPFRKhaaWY8sAhbsf7Abcz5g=
-=yW+T
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY4mxsACgkQVbJhu7ck
+PpQSmg/6ApF1ZdqxAi/Bh8BXx5x+vcXpg050pp1/hODuK6cVyCVQwVXfn0XHWDjC
+26DI3iP+CzRQvSTGUqt7Ky+VRooFu1nahXEZTfIC3o/w+G2aNn10eD/YWwBvgV32
+/t4Df512WQQk01/lgfCi34MGBhGcbrY7Lc8mjwWHSTQxb55uh3CLbZTjO7seWxOT
+KJoDFFEWNr1SSxankL6sOEdIm+6DEB2gtHshwuDHzhfrzPjBqCtTmCH8XJ5ykULU
+uonWn4uQ0ccozOht7g4VrEJZ3V78V/jMGt8fOcKP9abNOZOCRM8HxG4TNOdJocwX
+77qW0hA1FT4kkBmEb/v2NGCV5e2Hs+UQFRqY7qN/U8jRlRNMCLCEWK9VuddmfD8x
+o/ZuzNz5Z6zM491sqj72LDeXnqpzhST6K6BXgw4NULMCHBx1tJQhpC1TlnkN7V5/
+bNChuSySUkVLo1TDOc7Kp5jifWw2WfPVlpXRiCnajTkgZ3ihPRokwKFrNVhsenl9
+20eJ8eCJW0ISL8q2ENts14Fib7BOWWgyafvcqF0fO91YlHUjEPUJ2FUBWWzr8gXX
+QWoO0whWNQT+zWzMQlInZCCvzyxNaFwDN0i4IHX6zsc3Gn6SX9HjUkvFNoIq3WU0
+xuCTR17/1FsC8/PBZlz6/gtEbWxymfwPGACkOxUuaBKSO6GyTCE=
+=pnnO
 -----END PGP SIGNATURE-----
 
---lhAmxoB6Kpxcbodk--
+--RUsaYjNebAIXO7uR--
