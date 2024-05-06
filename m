@@ -1,55 +1,55 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0121F15B10A
-	for <git@vger.kernel.org>; Mon,  6 May 2024 19:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B69515B135
+	for <git@vger.kernel.org>; Mon,  6 May 2024 19:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715025470; cv=none; b=P0nbngdaz9dLh7HCJkYYjIxgfQ0dCwMAAN8lFvVTfd6QGJO4w3ISDXPYEzQjZhGJFR0ISrRZAv/Ox8hSuxJPwKkzMzp4WJxGAb3JrieYI+ECbapLaJZL+ZQNUM/21UMbN4FyJrTQIOOaYDMHc1kC0DfWOwZQzCVoB/l114o7bOM=
+	t=1715025472; cv=none; b=U4rIlfWq+11JymAnWO19Re6Ge5mEX6MLXewF06q71fP8l8dPP2teFOkyKdBxe/e0U3+rM1VY8/wJFWl0B7VcXhIsL0p0fkt6BFYkLLGDr8DUO0U0v6P1ueWazFhmPCDAMIspOO1xQiHh2tGOpl39p3l4t/sx/omujdpJM1Ogd/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715025470; c=relaxed/simple;
-	bh=vvkdPxgBTLNm9rYCJNcB2ylQeVVO/xBvfqaKfqvx1c0=;
+	s=arc-20240116; t=1715025472; c=relaxed/simple;
+	bh=7Hc2WJPOTOOO+0w9uaXRa8/G/OpOTTxAnZbRwBxQmEA=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=DTc9OCUcj1YuTxlBcVZIItj9jYPGUaYTRpFrtq5OqOXCd8KxHPvVN6AVJlXiNzq73inyDMCcbkJKEXuLzG3zbTFxnahWQknvVnWYC0IHpVzZP0EXo+7WgSWiKNCO/Dm5BjobR/Hn1PXhwWxbu3PVgZLPK1tnfVZ332tpZasEB+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hDNQXBMm; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=f/U5CFdLcGbK4W7Ro2kNTgnVM28NNfD/JLSZPmygTsvt/iJzRIZGliRtdPYsjzvR5jXcbsWVYxGpV2J9LnAxY4xXDpPtc/h14odrIvbk06u8rnE69OpauCpuxkbaSx0jVRaAuPFQshwB1Zt02y+dDQTih0b+tQ664yRChk1INtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xY+Pft/k; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hDNQXBMm"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-61e0c296333so58574497b3.1
-        for <git@vger.kernel.org>; Mon, 06 May 2024 12:57:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xY+Pft/k"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-61bef0accddso59658617b3.0
+        for <git@vger.kernel.org>; Mon, 06 May 2024 12:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715025468; x=1715630268; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1715025470; x=1715630270; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Te4JAQhYWNwMg09FSYQHk0fhr/4qReTBh2xzBw5qAyU=;
-        b=hDNQXBMmYGXjL6CVDiCh+HeJSCr7f8qM2+Eis6uhO1M816DYoG6XZEyi/CtL4x3ycP
-         MO/51qvlbGxbR5gcAvcEJHmEcKjR98mCm5IzKzD9kPRSarImOBOnuCMd/GqMVUHhU4SU
-         9ajU9hx6UkJ0P+K3BlWhfk/7gK0BPUddVoN7vTDGVXUqoSK6tWExhKcpEvkaRAplQ8XE
-         RPNFxwyvAHCWuyAdW3vdvimxzT4uJo3noizFpPzv7iBZL1pmIgKAdR5DUbtxiyXylb5t
-         vs7WJrY3DEMyE4JyCRU22OOl067cSn6r2of0wJXvvl201YgakmM4KZP0DCKHWD3H1J1T
-         tYZg==
+        bh=RU+AFoAaCv+5oI4Ce2i9HE/Kl2wGSJ9eLdx5U2U+nR0=;
+        b=xY+Pft/kkpNyIPUeRzYFb5siJnE31fStDCtCUbZTw17dd8lnyb3ghUHilb67wmi5+o
+         NyFIZ+/6WdFCmKqOMErej0WjwHzK2hQ6HmA734RbNmFY5JoHBEAipaGelUNkphFdo7fH
+         u3AzHPVSBu9oYyB2HdROizXVMxfaDiEHy7AduW2hG/hdJ3MHbnoVl6p1W7tjd0HEtuMD
+         t54+WOQxZmbKrhHRbu6+wFG2VQ4TkYWTcbqKInLMHQ/apkmW1hXBC82huohb1Ri8oqKn
+         dFmZ66U0RqnjZ5SGUWycq2PPjSHLddDTKnvfkCibEzoLyip1tG45MZLkTqhyMrIoAlq2
+         7eqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715025468; x=1715630268;
+        d=1e100.net; s=20230601; t=1715025470; x=1715630270;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Te4JAQhYWNwMg09FSYQHk0fhr/4qReTBh2xzBw5qAyU=;
-        b=QGE3YVklWuJfWQGnE2bvjfZhMtg12i3K5/sazkUharOw435KFn0oaISZRu1GJpL5w4
-         OQFpxoRulWf8vlcGUzj3kloOVsQqaSXr/N0S3UbRtdZhcnkQJW/GaeNiMX+GD5wlvn/6
-         08B0yqIjasNskWluQFoc98y9bePQtG3ceE/6C8bHF3zTZkUUkeNxBFWjArSUuD2LuyS9
-         uV0cVvZ8iV7l1oTvNcBB2w5WF4Gzod/r/sEPbTeoyy7u7gLTH8Y7ySU45Bt6X1GwSKcm
-         vLXFFQvRCIgPGZL9TrPKva4eoON+ROgvh0nuGGs+bM+Z9ouq6ROxN+6n9wx6V2s79nYE
-         fflA==
-X-Gm-Message-State: AOJu0YydT6pwaQcst6xR+dPij/XkkJoJ9Ntp9POAVfJu/UHgeyNJTEsD
-	LS+MCRhbRRp+Djji3hWY03Y1/BW/i/kIMDrvNlaMDFioTrLDJqABbUjx5Wh4WN8/4VJWY/28db2
-	fOWMJ8+tLNRj+59rMlsO+/9ECZGbh/swchSrRP0Y541qDYXOFPC/VzWT2V5rhwKYO4XYxLKVEG0
-	RI3k+wVtA/VdSR/qKaNKphi61YUtzYKMeJSC5ETX8=
-X-Google-Smtp-Source: AGHT+IGeq9GLwbZmTWtGoxVnz/gjplzMlg0dHuLiEalodAOwaQGXpwcJCaUHhRSirA6B3P7K917Gm3HCmrCgfA==
+        bh=RU+AFoAaCv+5oI4Ce2i9HE/Kl2wGSJ9eLdx5U2U+nR0=;
+        b=MNnkM5j6Qey5gdJNdqMXLC241EiKQALjTnWF7RkTpLfdjqwajSPdG9KQAdZdmRWbx6
+         taB+eEzaeZ/OZOR4oUDtTVX5xnkaxl0D2lVxGDqMsEpt3ajunIXSeixfYz6v2PPCxMGy
+         I3EEn3uLmQxWycm1y4fAP6o/12U8wgYXcDf82ZpMPNlY8KrVv04uEw/bjZXfiX7z1IjW
+         Mm7Q9vn4BXoID5JloKgIGdCCu4XFq9x7+ou2v+AYERagG1oa6h0rgYJS9JDQTl0ooTPV
+         pwMgFrJUtd6VGxrlX9GC2AKfDjGAIHuUiE0LfnjB2DbvXDlK9/cokwrFSqIGIG6YOyAj
+         1y6Q==
+X-Gm-Message-State: AOJu0YxmxWL/ZpJOtObd/oqLdLPEq5VKFfFFEUnda9noQxD/8VhNrzy/
+	Lhtfs/W/r2KSLIQeQBhBzlZwtrQAsP+Pa4P7b5zL/5Tz6mB36dWLoB/BylscoohLLybIS+2Udzh
+	cfiTUlmUn0rqE1AoHWUbCvqgVSXIPYwzAk1THdV+nwppILL74zCDj8oZG2SgC6rTITaC66Y8qe2
+	flomA3Z0LLKlDW7zDdVxxlwZLDNSrd2l1/brbKrTQ=
+X-Google-Smtp-Source: AGHT+IFNgSO1qeSnG3C6OUc3N3rISh6jZ+CREBw58pQDShr4sPVP3DirLEJERGDyBBTgpzS1X6+EZM516y/QLQ==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:cf3e:6b4e:994:dc81])
- (user=steadmon job=sendgmr) by 2002:a0d:ea04:0:b0:618:5009:cb71 with SMTP id
- t4-20020a0dea04000000b006185009cb71mr156143ywe.5.1715025467997; Mon, 06 May
- 2024 12:57:47 -0700 (PDT)
-Date: Mon,  6 May 2024 12:57:35 -0700
+ (user=steadmon job=sendgmr) by 2002:a0d:eb04:0:b0:61b:ebab:ce9b with SMTP id
+ u4-20020a0deb04000000b0061bebabce9bmr2969493ywe.3.1715025469663; Mon, 06 May
+ 2024 12:57:49 -0700 (PDT)
+Date: Mon,  6 May 2024 12:57:36 -0700
 In-Reply-To: <cover.1715024899.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,73 +59,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1705443632.git.steadmon@google.com> <cover.1715024899.git.steadmon@google.com>
 X-Mailer: git-send-email 2.45.0.rc1.225.g2a3ae87e7f-goog
-Message-ID: <a8bbff2c6bcea6a8874d2a145cffe370d6cbddfb.1715024899.git.steadmon@google.com>
-Subject: [PATCH v6 5/7] unit tests: add rule for running with test-tool
+Message-ID: <dae670fcb115e6ee9a490b1965b09aeaaa5e8a4e.1715024899.git.steadmon@google.com>
+Subject: [PATCH v6 6/7] t/Makefile: run unit tests alongside shell tests
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com, peff@peff.net
 Content-Type: text/plain; charset="UTF-8"
 
-In the previous commit, we added support in test-tool for running
-collections of unit tests. Now, add rules in t/Makefile for running in
-this way.
+From: Jeff King <peff@peff.net>
 
-This new rule can be executed from the top-level Makefile via
-`make DEFAULT_UNIT_TEST_TARGET=unit-tests-test-tool unit-tests`, or by
-setting DEFAULT_UNIT_TEST_TARGET in config.mak.
+Add a wrapper script to allow `prove` to run both shell tests and unit
+tests from a single invocation. This avoids issues around running prove
+twice in CI, as discussed in [1].
 
+Additionally, this moves the unit tests into the main dev workflow, so
+that errors can be spotted more quickly. Accordingly, we remove the
+separate unit tests step for Linux CI. (We leave the Windows CI
+unit-test step as-is, because the sharding scheme there involves
+selecting specific test files rather than running `make test`.)
+
+[1] https://lore.kernel.org/git/pull.1613.git.1699894837844.gitgitgadget@gmail.com/
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- Makefile   |  2 +-
- t/Makefile | 10 +++++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ ci/run-build-and-tests.sh |  2 --
+ t/Makefile                |  2 +-
+ t/run-test.sh             | 18 ++++++++++++++++++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
+ create mode 100755 t/run-test.sh
 
-diff --git a/Makefile b/Makefile
-index ba55d817ee..b0d1f04b4d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3870,5 +3870,5 @@ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 7a1466b868..2528f25e31 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -50,8 +50,6 @@ if test -n "$run_tests"
+ then
+ 	group "Run tests" make test ||
+ 	handle_failed_tests
+-	group "Run unit tests" \
+-		make DEFAULT_UNIT_TEST_TARGET=unit-tests-prove unit-tests
+ fi
+ check_unignored_build_artifacts
  
- .PHONY: build-unit-tests unit-tests
- build-unit-tests: $(UNIT_TEST_PROGS)
--unit-tests: $(UNIT_TEST_PROGS)
-+unit-tests: $(UNIT_TEST_PROGS) t/helper/test-tool$X
- 	$(MAKE) -C t/ unit-tests
 diff --git a/t/Makefile b/t/Makefile
-index 4861edafe6..0ae04f1e42 100644
+index 0ae04f1e42..b2eb9f770b 100644
 --- a/t/Makefile
 +++ b/t/Makefile
-@@ -49,6 +49,7 @@ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
- UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
- UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
- UNIT_TESTS = $(sort $(UNIT_TEST_PROGRAMS))
-+UNIT_TESTS_NO_DIR = $(notdir $(UNIT_TESTS))
+@@ -68,7 +68,7 @@ failed:
+ 	test -z "$$failed" || $(MAKE) $$failed
  
- # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
- # checks all tests in all scripts via a single invocation, so tell individual
-@@ -76,7 +77,7 @@ $(T):
- $(UNIT_TESTS):
- 	@echo "*** $@ ***"; $@
+ prove: pre-clean check-chainlint $(TEST_LINT)
+-	@echo "*** prove ***"; $(CHAINLINTSUPPRESS) $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
++	@echo "*** prove (shell & unit tests) ***"; $(CHAINLINTSUPPRESS) TEST_SHELL_PATH='$(TEST_SHELL_PATH_SQ)' $(PROVE) --exec ./run-test.sh $(GIT_PROVE_OPTS) $(T) $(UNIT_TESTS) :: $(GIT_TEST_OPTS)
+ 	$(MAKE) clean-except-prove-cache
  
--.PHONY: unit-tests unit-tests-raw unit-tests-prove
-+.PHONY: unit-tests unit-tests-raw unit-tests-prove unit-tests-test-tool
- unit-tests: $(DEFAULT_UNIT_TEST_TARGET)
- 
- unit-tests-raw: $(UNIT_TESTS)
-@@ -84,6 +85,13 @@ unit-tests-raw: $(UNIT_TESTS)
- unit-tests-prove:
- 	@echo "*** prove - unit tests ***"; $(PROVE) $(GIT_PROVE_OPTS) $(UNIT_TESTS)
- 
-+unit-tests-test-tool:
-+	@echo "*** test-tool - unit tests **"
-+	( \
-+		cd unit-tests/bin && \
-+		../../helper/test-tool$X run-command testsuite $(UNIT_TESTS_NO_DIR)\
-+	)
+ $(T):
+diff --git a/t/run-test.sh b/t/run-test.sh
+new file mode 100755
+index 0000000000..13c353b91b
+--- /dev/null
++++ b/t/run-test.sh
+@@ -0,0 +1,18 @@
++#!/bin/sh
 +
- pre-clean:
- 	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
- 
++# A simple wrapper to run shell tests via TEST_SHELL_PATH,
++# or exec unit tests directly.
++
++case "$1" in
++*.sh)
++	if test -z "${TEST_SHELL_PATH}"
++	then
++		echo >&2 "ERROR: TEST_SHELL_PATH is empty or not set"
++		exit 1
++	fi
++	exec "${TEST_SHELL_PATH}" "$@"
++	;;
++*)
++	exec "$@"
++	;;
++esac
 -- 
 2.45.0.rc1.225.g2a3ae87e7f-goog
 
