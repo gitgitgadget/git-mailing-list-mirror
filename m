@@ -1,142 +1,169 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4426B15921A
-	for <git@vger.kernel.org>; Mon,  6 May 2024 19:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2580B15ADB9
+	for <git@vger.kernel.org>; Mon,  6 May 2024 19:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715024175; cv=none; b=X1nFwonFGjOLXB66nqe/BGc8OS2VMEgO4rA5C0NVzXNGZWjClUNeAL2weR5gTQVicxar2WsFFS1N/YypL0N5yRRuXc4HGC5OHoqd3zFUPYkVKnlMJYkzka2bHWody4vxqowIjGudLS3O0OvrIFJtg1mXVs3eG2Ghi7WcvOgMj8A=
+	t=1715025461; cv=none; b=VTNSol+sf71RCdIGh4EaP1uUsGg6UiIKyotRqZOFmzVJn89LmBnG0UcQC+SYsD41Xuo6sXs60ckxLYLCcIFxnHRh8vBI1Ca14lDYkqj8WJhhyjTS8zE1h4ttbLO942X/O7KWwp2TRsY+DGFQqGGnCUeenNCEYUSwtZ8Q7T1xsiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715024175; c=relaxed/simple;
-	bh=DUZcCR73FF11z+aQQvmbIk8O/ZaVVVWIkZDVXRdeNpM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=glby+i+WDFqwXSfB8x1BWN2HCo6B5Q6C0bj3IqMcZIFfC3Cqp7e62DGpY1PVpsp0jByuHYIb1nj7CeJDqN3gx3fOzMunkaNndyQj0uX2g4uzYV+ybFvfPVya5U7+v3yARlDcBInI0nFTIEzam/MkAmX6SFdnCCQkN48oH+GI/k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KWHGDbo2; arc=none smtp.client-ip=209.85.161.51
+	s=arc-20240116; t=1715025461; c=relaxed/simple;
+	bh=auQsekh0n4Gt6xgH+dlokr66zj2sEqIzPgWNWBWTjP8=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=jPetaV3CuMe6pcZEh8EnFe/AYtk44zKgqnUWQ12V1e5bxQPfy356wkq5Ir4fXjsV0kF+U42RGILCJlZR6gf3YMkDxvrErFG+bRsQsUkLAAYkb75qJVUFpPvT/6nvT/NPvsw+RlHn1Y2XeOt6I0qSJXnqZ0W+EBgh35BTFqnmBCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=24aw5KxD; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KWHGDbo2"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5b22f818a24so164614eaf.1
-        for <git@vger.kernel.org>; Mon, 06 May 2024 12:36:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="24aw5KxD"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-61e0949fc17so45582747b3.0
+        for <git@vger.kernel.org>; Mon, 06 May 2024 12:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715024173; x=1715628973; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RNT5nbyVvY/SD79nt35U0I0RZgxm5NkjQ1hRvjCLRkQ=;
-        b=KWHGDbo2+ZuaBc6lZ6AuNXw6ICp/tbXhtYlatTkwFlQAK/ZcObOEoEbefpEaB/OmfX
-         9ZLHdexIMA9rZvfULs1YhYVv7U/vXBferwOlEbHqwH2DeMjPpnQ+dVv0Xyj6Hwz6935d
-         T2JFawKrhQQlPnu0bH4P9T4ycNfX8BM4XVyDeIvhkGpPgG5i7OzJYw4HVuDyhj4cLT81
-         K0NPqlr1NZYvHfy1uA8uXSqDKibcX7oWgPtZgn2YrZRyvJuuffBp/+Rbb03pNk4x90JB
-         /GjnKXC85n5hYt1Z6ur8YU9o5IAi6U57RJLg3vuoQfNCcLePvoRjaHV7NE3qcepJGBCT
-         EeAQ==
+        d=google.com; s=20230601; t=1715025459; x=1715630259; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Ju6be7mwtSO/iOPHJBiPZdjRbWNu1UBwi6M3ZKrR5Q=;
+        b=24aw5KxDHIofyjDD9Im9CRQJBncJ3eUFS7/cbfy4cqkRAeFDMaw+7q8+eW/zl5xOXT
+         IRhbZ94ZEV7t1KxeW+rcD/mF5h0mrQmvPXMs2Euuuvt1DA7iM/5binTd/mCg4qcDInul
+         6EFVo7N+Ovvx/DHlWwZd3glv+H3zg40BgUyO4GcU8keYxA2g9BxQFQFUd1mAcemRZcx/
+         LIUWOVgVr/Cdvo3+7JxaQZOYN3+yWJKFXEpTrfHuX7BAuePXkIR1v0p3KKPFNCqlKw6N
+         JAvsLZkGhaGdoq69l/N2wGSf96zDrWPfnuhKNIL+cbnQJAW11BpdoBMCAMW3sU6NNHra
+         Lkzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715024173; x=1715628973;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RNT5nbyVvY/SD79nt35U0I0RZgxm5NkjQ1hRvjCLRkQ=;
-        b=UPf4I6DZUnCt7vkjdVpYOj0SdhpB5zPGjEQRfioPFi+qh0f9CIUAaNl2ManBrA7LUC
-         qlrmkJJzW2iWPHQP8JM2f+MTAKzn1STBuyVaLTcv/htWiVn7t6SxAGb6MScw5kt99uQe
-         c33SqDshLeA61e2AXxA8O+O3k736PTw6Br4EUizWTMK5gREdMiQxcX/QfyhPruJ5ELPw
-         hMF2h75oKSpjfWrRNr8Q9YyZmtW6c35pI/j2o4DQXysDgtFFd8N/ZRJJP43PBaBxDDhF
-         I4KRYix+M0iJDPLrST0Zg73LvnNEOiIr+FURlq3Su+WmtRZTU6hRVG3FvBhUgeoKZCr3
-         2VIA==
-X-Forwarded-Encrypted: i=1; AJvYcCU5c5PWU+yJyu8sHOTPKNwN7J+p0aR7XlU6v76bcK+LkUDwcPTB+TAz8VNWcfU2UbozgytOXdyMID1JBypmtCMUuzE2
-X-Gm-Message-State: AOJu0YxyHnguorp21IguJE9YyuUmfuClNUGgbKKhp5yqu9WUlJFpKAEh
-	tNOI+IOhP8olFKxgl6ojlukRPUE5yFJ+Y53DXI89cBJF7WCjsyLP6Woalz0r7A==
-X-Google-Smtp-Source: AGHT+IH8JIqwouIdeS9Qn54eABFVOAFvjlsA52RfmqZYgOX4rj64BKAZL9z3Tg1cTIbXHkY5UBb0TA==
-X-Received: by 2002:a05:6358:9046:b0:183:d2fa:ff5c with SMTP id f6-20020a056358904600b00183d2faff5cmr12261525rwf.12.1715024172867;
-        Mon, 06 May 2024 12:36:12 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:cf3e:6b4e:994:dc81])
-        by smtp.gmail.com with ESMTPSA id e7-20020a63e007000000b005dc8702f0a9sm8439753pgh.1.2024.05.06.12.36.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 May 2024 12:36:12 -0700 (PDT)
-Date: Mon, 6 May 2024 12:36:06 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	avarab@gmail.com, christian.couder@gmail.com, Enrico Mrass <emrass@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>
-Subject: Re: [RFC PATCH] doc: describe the project's decision-making process
-Message-ID: <mdgbdajenbv23r63hreieemielgdtdkwjzb65pdv3b4rylyyxi@4d3eeymtjvva>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	avarab@gmail.com, christian.couder@gmail.com, Enrico Mrass <emrass@google.com>, 
-	Emily Shaffer <nasamuffin@google.com>
-References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
- <20240417163244.651791-1-emrass@google.com>
- <xmqqr0f47wp9.fsf@gitster.g>
- <xmqqseyzar96.fsf@gitster.g>
- <CANq=j3u5ZHYbJQjhwtnq05GocOE_AVrHodjPOqVCNN7OZHwVsQ@mail.gmail.com>
- <xmqqfruy7oq8.fsf@gitster.g>
- <ZjU7CWdwb+xKubul@nand.local>
+        d=1e100.net; s=20230601; t=1715025459; x=1715630259;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Ju6be7mwtSO/iOPHJBiPZdjRbWNu1UBwi6M3ZKrR5Q=;
+        b=w2d2UQp7Zl1HkDixD8rKzpTPClVtG/q7X6ZeuLk1VVth9GNpfC4Wjyb7coCyX+93nc
+         XL9byA8E1MXRZ0P9/vGNFO0JHjsEhr2zTyqsfptyDl6lt6yfhZ7mCK4PM2w+GPo+KCMb
+         +y3WqmYBAiS6pl+PH5gnC3jpwlrMtUq1XTKmN1Tqpkp1epb97apPjk0d5hTohPxON1gc
+         j2s3TtcIoq2xJrVvmBA94CbAHN1JcKM1iWESfpFQ/RDWS1yRJAmtW8XlZELpbfy8Sb8t
+         9M8ehR1q0wWMny44M66376YAeLuua8h1psMDZXqaECYMCwy1DHX+TjFo/5HOBs4HC60i
+         9zeg==
+X-Gm-Message-State: AOJu0YySBwsFZCCkp/9FeZtxgXRL6fZxF6/sy+9BbEEhTpCacvOZgxrR
+	wv3ydjoRpiZqMJmr+TKv0Yvm/AIOenoGJHr5CJG7yrKMPoL0wYk2mgSNaXec+52X8GXiIoGBmAK
+	pPun51jTbthi74SUZFTopDBdll5qY9UCzKzY6VYpJywogqyoBS94WVpwLxlPode0t4cB5novCQH
+	WzFix3SUMjxlg0HzXv/4U7vLwBCs8ZdsDpTimWLW8=
+X-Google-Smtp-Source: AGHT+IEugBxs+i7hNkUhmlhZ9+HKv8C6ve3pAl1iR3p7xWJa+IHP68LaF0auKd+9DS/NAm9d2BO5rsl+BnuYwA==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:cf3e:6b4e:994:dc81])
+ (user=steadmon job=sendgmr) by 2002:a0d:df87:0:b0:61a:dcd0:5a61 with SMTP id
+ i129-20020a0ddf87000000b0061adcd05a61mr2634685ywe.7.1715025459042; Mon, 06
+ May 2024 12:57:39 -0700 (PDT)
+Date: Mon,  6 May 2024 12:57:30 -0700
+In-Reply-To: <cover.1705443632.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZjU7CWdwb+xKubul@nand.local>
+Mime-Version: 1.0
+References: <cover.1705443632.git.steadmon@google.com>
+X-Mailer: git-send-email 2.45.0.rc1.225.g2a3ae87e7f-goog
+Message-ID: <cover.1715024899.git.steadmon@google.com>
+Subject: [PATCH v6 0/7] test-tool: add unit test suite runner
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024.05.03 15:29, Taylor Blau wrote:
-> On Fri, May 03, 2024 at 11:08:15AM -0700, Junio C Hamano wrote:
-> > > Yes, sorry for silence on this thread. I am working on a V2 but
-> > > probably won't have it ready today.
-> >
-> > Don't be sorry; the message was not addressed to you, but for wider
-> > community participants---especially the ones with more "clout" (or
-> > "long timers" or whatever word we would use to describe those whose
-> > opinions are trusted by others and count more) need to buy in if we
-> > were to first agree on that it is good to have a set of written
-> > rules, and to then agree on what rules to adopt.
-> 
-> I have been meaning to respond to this thread since I was mentioned in
-> it by Emily, but have been unsure of what to say.
-> 
-> On one hand, I think the document basically outlines the status-quo of
-> decision making for issues that are larger than the scope of a single
-> patch series (think "should we use Rust?", "what is our platform
-> support policy?", or "how should we approach libification?" not "is this
-> particular patch (series) correct?").
-> 
-> So in that sense, I think that the document is a good starting point,
-> and I think that it reasonably captures the status quo.
-> 
-> But I wish that we didn't have to have such a document in the first
-> place. In my opinion, I would much rather see decisions like "what is
-> our platform policy?" made according to discussions on a patch that
-> defines what that policy is. That way such decisions can be treated in
-> the same way as ordinary review is today, and we can avoid the need for
-> a separate process.
+For various reasons (see discussion at [1]) we would like an alternative
+to `prove` for running test suites (including the unit tests) on
+Windows.
 
-How would you feel about a doc outlining how the process changes as you
-go from: A) small/medium patch series, to B) larger discussions with
-(parts of) the proposal recorded in patches, to C) large discussions
-with no patches? This is the structure I'm leaning towards for my V2
-draft.
+[1] https://lore.kernel.org/git/pull.1613.git.1699894837844.gitgitgadget@gmail.com/
 
+This series extends the existing `test-tool run-command testsuite` to
+support running unit tests. In addition, it includes some small
+cleanups:
+* move t-basic out of the unit-tests directory
+* don't hardcode the shell for running tests in `test-tool ... testsuite`
+* don't hardcode a test name filter in `test-tool ... testsuite`
+* add a test wrapper script to allow unit tests and the shell test suite
+  to run in a single `prove` process
 
-> (For what it's worth, I thought that the SHA-256 transition was a good
-> example of this. The RFC was posted, and the discussion was had on the
-> patch series itself).
-> 
-> Another way of thinking about this is that I would be extremely
-> reluctant to see a similar document proposed for reviewing at the patch
-> series level. In my opinion, the system of reviewers and participants
-> discussing the series and the maintainer solely determining whether or
-> not consensus has been reached is a good one, and I would be extremely
-> hesitant to recommend changing it.
+Changes in V4:
+* Set TEST_SHELL_PATH when running the `prove` test target, and error
+  out of run-test.sh if TEST_SHELL_PATH is not set.
 
-Sorry, I'm not sure I understand why you wouldn't want the patch series
-process documented? I'm just trying to capture the status quo, not to
-propose or recommend any changes.
+Changes in V3:
+* Added new patch (#7) to use the new test-tool runner for unit tests in
+  Windows CI.
+* Restored the explicit sort call in t/Makefile, for backwards
+  compatibility with older GNU Make versions.
+* Rebased the series on the latest jk/unit-tests-buildfix branch.
+* Fixed header include order in patch #1.
+* Removed a paragraph in patch #1's commit message that is obsolete now
+  that we're building the list of test files from the sources rather
+  than by globbing.
+* Added a note in patch #2 that setting a NULL suite.shell_path will be
+  used in a later commit.
+* Clarified up some sloppy wording in commit messages and comments in
+  t/helper/test-run-command.c.
+
+Changes in V2:
+* Rebased the series on the latest jk/unit-tests-buildfix branch.
+* Patch 1: move t-basic to a test-tool subcommand rather than a new
+  executable under t/t0080/
+* New patch 2: get the shell path from TEST_SHELL_PATH in
+  `test-tool run-command testsuite`
+* New patch 3: remove the hardcoded filename filter in
+  `test-tool run-command testsuite`
+* Patch 4 (previously 2): simplified now that we no longer need to add
+  any command-line flags to support unit tests
+* Patch 5 (previously 3): avoid trying to run cmake *.pdb files by using
+  the unit test list built in the makefile in jk/unit-tests-buildfix.
 
 
-> And I would advocate for a similar approach to decisions that have
-> implications beyond a single patch series.
-> 
-> Thanks,
-> Taylor
+Jeff King (1):
+  t/Makefile: run unit tests alongside shell tests
+
+Josh Steadmon (6):
+  t0080: turn t-basic unit test into a helper
+  test-tool run-command testsuite: get shell from env
+  test-tool run-command testsuite: remove hardcoded filter
+  test-tool run-command testsuite: support unit tests
+  unit tests: add rule for running with test-tool
+  ci: use test-tool as unit test runner on Windows
+
+ Makefile                                      |  6 ++--
+ ci/run-build-and-tests.sh                     |  2 --
+ ci/run-test-slice.sh                          |  2 +-
+ t/Makefile                                    | 14 ++++++++--
+ .../t-basic.c => helper/test-example-tap.c}   |  5 ++--
+ t/helper/test-run-command.c                   | 28 +++++++++++++++----
+ t/helper/test-tool.c                          |  1 +
+ t/helper/test-tool.h                          |  1 +
+ t/run-test.sh                                 | 18 ++++++++++++
+ t/t0080-unit-test-output.sh                   | 24 ++++++++--------
+ 10 files changed, 72 insertions(+), 29 deletions(-)
+ rename t/{unit-tests/t-basic.c => helper/test-example-tap.c} (95%)
+ create mode 100755 t/run-test.sh
+
+Range-diff against v5:
+1:  6777451100 = 1:  6777451100 t0080: turn t-basic unit test into a helper
+2:  24f47f8fc7 = 2:  24f47f8fc7 test-tool run-command testsuite: get shell from env
+3:  4a16a3ec24 = 3:  4a16a3ec24 test-tool run-command testsuite: remove hardcoded filter
+4:  abc9a7afe8 = 4:  abc9a7afe8 test-tool run-command testsuite: support unit tests
+5:  a8bbff2c6b = 5:  a8bbff2c6b unit tests: add rule for running with test-tool
+6:  c6606446c4 ! 6:  dae670fcb1 t/Makefile: run unit tests alongside shell tests
+    @@ t/run-test.sh (new)
+     +
+     +case "$1" in
+     +*.sh)
+    -+  if test -z "${TEST_SHELL_PATH+set}"
+    ++  if test -z "${TEST_SHELL_PATH}"
+     +  then
+     +          echo >&2 "ERROR: TEST_SHELL_PATH is empty or not set"
+     +          exit 1
+     +  fi
+    -+  exec ${TEST_SHELL_PATH} "$@"
+    ++  exec "${TEST_SHELL_PATH}" "$@"
+     +  ;;
+     +*)
+     +  exec "$@"
+7:  4a92131ab9 = 7:  2f5853a7fa ci: use test-tool as unit test runner on Windows
+
+base-commit: 4904a4d08cc085716df12ce713ae7ee3d5ecb75a
+-- 
+2.45.0.rc1.225.g2a3ae87e7f-goog
+
