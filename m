@@ -1,118 +1,100 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C621E492
-	for <git@vger.kernel.org>; Mon,  6 May 2024 23:08:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D6915B11F
+	for <git@vger.kernel.org>; Mon,  6 May 2024 23:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715036916; cv=none; b=U4ZfFOyZ8PFUxwbBwjFN2zh/AU8D3j86elgrYuLMrbCtvrEhNtsQAtpEwstMtutTs4Gn42b11dBEFDFPMYNGaw8STXwaqc41mMs5BfbBt6sFRJLisQ4jPkJu41T5ptFtoI59J7ZgrJyD01Mxbf7JjScj+qQP/y4WRpHoRh1nu/Y=
+	t=1715037099; cv=none; b=VddDNvcsBAFylEPw7mepAlf3oIfL4fKdC6V5Cgn3xLx8Job4qjtn7PNY2GoDF86480hVaYkRiH6epj0X9UOayotBkOyLhAntASXtuHU0iJvYGLVCykrwDRELHTTJc2GE9xRUWToZIvmOahjrT86mCjUAQ50CWnLOWBwMAdstS4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715036916; c=relaxed/simple;
-	bh=69y1t0kbXGGuP3Nx3Hh+wBpO5UeYjRWyRS5a/bWbUUk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=oPWAxnjAF5vEymk349Cxvrk3XWFeVmz34apMwP/j5fT5cPQIHBha0C7EGRFbxMcjtSFy6F+I/4tywPjg3PzX0LvcFQuuYe9+m1stAVHQ0k6heJAOFd2fct4uRga2RtUUWMj4oUq+RhWEmN7sHeYuSrJFIXdSlkeORkF1B5bh4X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=QnbH+s1F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MiHKKcHY; arc=none smtp.client-ip=64.147.123.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="QnbH+s1F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MiHKKcHY"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 20237180013A;
-	Mon,  6 May 2024 19:08:33 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 06 May 2024 19:08:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1715036912;
-	 x=1715123312; bh=x7hv4IgCU1J5AIeVv1AqEj641j2LrrpBEE5uPSMp6sM=; b=
-	QnbH+s1Ff/F/4g21H16huNXB7ssOtqwtLDVM0C72663GQRnpwgjz7xqP5b5z4La5
-	gP1YYgFpYkjA5+NjGzIx/1zjSCqOwzb7Ym/lK99cE1CbEzI199EhGuQldfED17m4
-	gW9xVitZD/Y1C3EElezy1HovWYJYH1LYA2QJtsvqO1S+EfwfJtityeXx6pO2Uzim
-	tXOvE7rmpn2ppTG+SjgsuZlODpAuh+MsQuzs+7UGQSgQbidQrSCFhuG0NSOJRg9Z
-	ko1jpiDo/lc0YUQg+/6x0Myo/4N0lqsYkWGvq/rmhyi7SiTxATdpCFoHzp1Bs0Wg
-	P0txpw8CyQzrqPSQVJ4XHg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1715036912; x=
-	1715123312; bh=x7hv4IgCU1J5AIeVv1AqEj641j2LrrpBEE5uPSMp6sM=; b=M
-	iHKKcHYcQ41vuFZe1fCq7QwehPjY1t2INUMgUem3vqAT2HaJpW4Y6PfGZObWUzx9
-	whgnhTrU6d5sptsmco7wWMRTi5nMQpeVVi83YXHB+olEPH2bJAwPGSiWzVadlY4R
-	pwtemuPRCp/APMFblh5OhBulbXivIlssa0eKWjWqWFAoQw0/bm2eJtinwJbJfoPF
-	yU0zccj5HFGGedAwaJnrHDDVYuN5vBd1ha2w5Z3nMZ12yeT6Y0ABFaYoYZ1yTWMz
-	VECFh27T63hTJ49XFzOVW0rTcaeOQmcQRtSlAQ4f3L+yhubNbyx5MZXn3+ufFkoR
-	BUDD7Tp0YI2o8hea4ITRg==
-X-ME-Sender: <xms:8GI5ZsT0FyzmjD2WKRufmHHsrY1GPF_39OE9GpbKRrG8_DQo3nn4gQ>
-    <xme:8GI5ZpxrwTDnd6E16zs99s1eoMKcLHUtNqTgUVkH1LT9UwTTHHPnTr_HB21W_2_y5
-    rPgOpbjcWS9qto_hg>
-X-ME-Received: <xmr:8GI5Zp1ROfy17Qz6zulU7BWtB_ltSz7xwR7VrP_FmM5XgRWnZnZCdZEFf7rRoxmrqSJwwipCKF5wjj33rOP694lc3Jsw0OzMM-924Oai>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepggfgtgffkffvvefuhffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgr
-    mhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrth
-    htvghrnhephfetteetheetkeduiedtudehtdeijeehfeefheejhedufeffhfffjeffvdeg
-    ledunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjh
-    grmhgvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:8GI5ZgA6WosrOVZC4iUj2uZN0edq3jq-fFDRao8LMf_KtAGzBUnAyA>
-    <xmx:8GI5Zlh2yhlGokggljA42hkjIcJWYgeRIX0SKUwabx2mRHYFiG0rew>
-    <xmx:8GI5ZsoPjsuRBq__-IntrJx4g3sIpJmGJaWdsvtl_gte_y3eESzIYw>
-    <xmx:8GI5ZojGgXoW00KgUC-Iwf7_hoYt5Y5ZWoKHUr4y6V3P2ZAmu7Im4Q>
-    <xmx:8GI5Zqvk-BwSg0WyCY2F5IDFJ_LN6u7Wm5KffPZd4czLxe5y7Ptm2f8g>
-Feedback-ID: i93f149ec:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 19:08:30 -0400 (EDT)
+	s=arc-20240116; t=1715037099; c=relaxed/simple;
+	bh=P8yiBCtNQxiHV9Pe6ALMI9QPyAva87Pwlkg72sC2KFE=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=tdCNqzKgMolopoXO46uFFAUyxTrke+lsXpHoeuTY28IwQ/4ZDDD2atm2FKgcDpQbhesslDfx3wG6D/3euxwh2koqgLdEswBTeF7fs3EBzNyHz944yA66iqJxDLvJwRSb8Z41nC6rCOsenHgAvx3zFX9SNoYQ8V1m6gqqKJhSN2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTPS id 0046C343170
+	for <git@vger.kernel.org>; Mon,  6 May 2024 23:11:38 +0000 (UTC)
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	by grubbs.orbis-terrarum.net (Postfix) with ESMTP id 7339F260320
+	for <git@vger.kernel.org>; Mon,  6 May 2024 23:11:37 +0000 (UTC)
+Received: (qmail 1030725 invoked by uid 10000); 6 May 2024 23:11:37 -0000
+Date: Mon, 6 May 2024 23:11:37 +0000
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+To: Git Mailing List <git@vger.kernel.org>
+Subject: Feature request: secondary index by path fragment
+Message-ID: <robbat2-20240506T225759-090424131Z@orbis-terrarum.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vIMyLQIe6KCQmex7"
+Content-Disposition: inline
+
+
+--vIMyLQIe6KCQmex7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 09:08:27 +1000
-Message-Id: <D12XUEC6DL6O.POVU09JJFHO9@jamesliu.io>
-To: "Junio C Hamano" <gitster@pobox.com>, "Karthik Nayak"
- <karthik.188@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH v4 0/3] advice: add "all" option to disable all hints
-From: "James Liu" <james@jamesliu.io>
-X-Mailer: aerc 0.17.0
-References: <20240430014724.83813-1-james@jamesliu.io>
- <20240503071706.78109-1-james@jamesliu.io> <xmqqedai959z.fsf@gitster.g>
- <D123HB68ZKO0.3C5RSYGQNO9L3@jamesliu.io>
- <D125SZ21UPI0.166ZOVLTOBCRH@jamesliu.io> <xmqq1q6e3n0i.fsf@gitster.g>
-In-Reply-To: <xmqq1q6e3n0i.fsf@gitster.g>
 
-On Tue May 7, 2024 at 2:47 AM AEST, Junio C Hamano wrote:
-> I count two messages from Karthik for v4, one of them being "this
-> round looks good", to which you said "thanks".
->
-> If you mean the other comment about a non-sentence in the proposed
-> log message of [2/3], the copy I have in 'seen' says this:
->
->     doc: add spacing around paginate options
->
->     Make the documentation page consistent with the usage string printed =
-by
->     "git help git" and consistent with the description of "[-v | --versio=
-n]"
->     option.
->
->     Signed-off-by: James Liu <james@jamesliu.io>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> If that looks good enough to both of you, then we can probably
-> declare victory and mark the topic for 'next'.
->
-> Thanks.
+Maybe this already happens in the code, but if not, please consider it
+as a feature request.
 
-Yes I'm happy with that. Thanks Junio!
+Gentoo has some tooling that boils down to repeated runs of 'git log -- som=
+epath/'
+via cgit as well as other shell tooling.
 
-Cheers,
-James
+If the path is relatively deep for the tree (e.g. to a specific file or
+sub-directory), the size of history [1] makes that a very slow operation
+to go all the way back to the initial repo commit: ~12 seconds per
+operation on fast hardware, ~45 seconds on slower harder - even with the
+packs cached.
 
+I was wondering if Git could gain a secondary index of commits, based on
+path prefixes, that would speed up the 'git log' run.
+
+It would need to be fast to append to the secondary index, because
+Gentoo gets a steady flow of commits 24/7.
+
+[1] 825k+ commits based on GitHub stats.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Dev, Infra Lead, Foundation President & Treasurer
+E-Mail   : robbat2@gentoo.org
+GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+
+--vIMyLQIe6KCQmex7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAmY5Y6dfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
+RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
+JsQLxg//cviWD4aSQQ2F7BLGPQaKYuCOCyA6d7kdscithb7VG7R3+jxnwgpBiVwv
+mNa+E/UHPX8cpJkALesLIehlqTgT1WJRgyyFpKOlSeZbg8s3nkM2ADzvlh0ztlLZ
+TypThc95mcYMiBS2lA4UPEu8bssJmR4aP2aPg59VnGYubHOWKELJL47+7nDEQZus
++ONLcsYi9CROyM8VKWjv8wZfnmY3+Z0vzn9zNQ7yZpIRJojrx/rUo+bG6dfRhsIG
++jw1yG90uQHBSYVZB5xS/8lsPwQ79AMonHt5VAWB0LJ6GFWc2Or3mBvfyzg132S/
+NajkmB+mivF45uY8J5mhbfp/Rw5+u/B1XWs0hDYEIeS+dIhRjUlqIxe0nhEIEXWW
+Ti3X4XcC4loXYdm1b3boz241kSGqCx+0ZwR9oXPR9FofT79Uz7oRxGUh1pM4rOFQ
+UvVoQVOGEdIsfr153h9pK+Q5dbjz3LxL14+7vSwOIz3UfMPb4atjzfK5+HtY8snj
+krIT/6DlzGcSimoxDZUnhXj2nM6ARbQVVOY/bFf0fA5Nrd7tLqBjS3No+wg29sQ/
+/mhwG+03q0LIBPCkspunVQnj/6ox23SS2IQW15+xzepnCrw0x5Hy1amkRBziZsm4
+yyi4ARpdUWKa0h1vIDB+YCtxybMMuZj5HLO6t2gIASHY5qtprtI=
+=ZhyL
+-----END PGP SIGNATURE-----
+
+--vIMyLQIe6KCQmex7--
