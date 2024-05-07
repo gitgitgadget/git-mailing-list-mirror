@@ -1,109 +1,98 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B788F72
-	for <git@vger.kernel.org>; Tue,  7 May 2024 17:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1364716C694
+	for <git@vger.kernel.org>; Tue,  7 May 2024 17:27:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715102535; cv=none; b=T6CDXD7AdunCT4qCOZXHhfEe6plbxiL7z76OeuSSBF+0UwU3JcLvKkM9EVGXYwQ9UhJfw4J5ltx7EBp0mRUMirDlpm2dUpZLGrRVQPBG4/bkhd0EkyooW7i+pKeOoTUSegkSdMI4wbFQlK9wb/vjxEOK5ZBFrc5Y9mi6GYKHHYQ=
+	t=1715102863; cv=none; b=GFPxVNXyiSrwUIgld6rST+X3YIFuz1xUkXRB7uPUXFb0dIDHu2S7PVvuaAf7t7pQdWq9lG6ZFHEykzZmcECuA0+AYvWRGRQWMPKIG+f4ZlYb0PgtAaIXxtmd8zKh9Z0I65AOsYYcooK/vxqzmRE/q+vMtFHhJ0Bzk8r/N7Gazhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715102535; c=relaxed/simple;
-	bh=t/l6A62SF4KujgzVAS8F9NB6pTEbdA/zw//ZAUPp0r0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o14wnR2Coe8WPSHG49zwKjcLAaCjDn8DGQlPvQt8qXPLgGi1NkMRYP2spuyWaHXYZ6toNE1gPHo5oKgMlRuXDxo40fRGasUjk20GzWqDND8Jh6n2BmihRtMunzARrmCe1TKKcInja4r/gF/fJ8fJjFoj1z8c5muec8Bu1HFaH6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ASuOkaid; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715102863; c=relaxed/simple;
+	bh=YgVXucst8jBVZPYWTGNw6h+RNaVExXkZKOsqN7caOSA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KZMqgWMbx1mc85olgv8hnHh1eAgsxwwdAuNPeRREa4PQWUfZEyfiGx2DGjaqJS25sKWZjgeuhiD3EiU0UULp4Je6lmBmqD0yFplEFdC26qPM7ch9KuSkBRkm/OVStvW3mWubeIzBGO8OrQvYd+PgFfaMbr78I4WzQq4HGl3/QTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AgEtVULG; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ASuOkaid"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7AE8935C16;
-	Tue,  7 May 2024 13:22:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=t/l6A62SF4KujgzVAS8F9NB6pTEbdA/zw//ZAU
-	Pp0r0=; b=ASuOkaiduF/9DyjCoEKhsM52jXuz33Y+srtfkGUolySf1fiaq9a3xY
-	tWAokf0JVzcpQPRmtaefcmilmbY1Cv68nKFpnVOAYRb3ZHY9F1ml1QN8M+JpCcjK
-	suOMgeP7seVXi0jgCpoSSiZUPFaRkl7ByCC4UeMzUcokZFiZfTQ9U=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 727DF35C15;
-	Tue,  7 May 2024 13:22:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 07A6835C14;
-	Tue,  7 May 2024 13:22:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: tboegi@web.de
-Cc: git@vger.kernel.org,  takimoto-j@kba.biglobe.ne.jp
-Subject: Re: [PATCH v1 2/2] strbuf_getcwd() needs precompse_strbuf_if_needed()
-In-Reply-To: <20240507084431.19797-1-tboegi@web.de> (tboegi@web.de's message
-	of "Tue, 7 May 2024 10:44:31 +0200")
-References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
-	<20240507084431.19797-1-tboegi@web.de>
-Date: Tue, 07 May 2024 10:22:02 -0700
-Message-ID: <xmqqa5l1pmf9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AgEtVULG"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-61b62005f38so35937567b3.2
+        for <git@vger.kernel.org>; Tue, 07 May 2024 10:27:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715102861; x=1715707661; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=keFQaIPXbfAQe3qp7G9b40Glv3fgOAsXbXiz/57aDCA=;
+        b=AgEtVULGqSuV2aNum/SZws8opJH8g21IFBn7IjgVwybtkTKGTAaLC8MTtxLaAgzIw8
+         DUQwRZvRc1w/Uc9/GFWI6Qa/b+mOCuvg0EXy1vzRLgDdyFTNCVVrB7Su2W1TzNZ3InYC
+         R7vuQt+KBVk9Swz13dPCzBGQO2oZPKM30cQJP7HJpWmuxSlWLsCtoJZQRfRutDDul6AY
+         vuLBwdvmS3+mj6fIshc5fvdqDrQlfqZtEdkbl8ANyGy84NX5luhLvg3/db2ek7Y/r1oZ
+         rJWWHXrvywV0zNihERBTKSBtbsa9k9zmUyPbdNr4zZS+kLN/Hj2Q86LgepoqooNhYafC
+         D3tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715102861; x=1715707661;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=keFQaIPXbfAQe3qp7G9b40Glv3fgOAsXbXiz/57aDCA=;
+        b=njRoweFxUtTztcKVUygd0JGoY0sFc0Ql8KwDV6TeuMp1+1EWUIuW0xIGViCJMuEOjD
+         2TR+G8tdnK340E3daSNB0UT2HK6zrFIOgpLcnL9z+3clTZjan+oSoj0QY43Jt8W2f/l8
+         8KyroJvAoqQ0gOhsLHFGnb8F96+rBxrvnO8685ZepAzOFEoW5CyBoMwAY7NbL+D3FXzQ
+         h7Fp3sHjaL+gIAHBohliGnliUHpZKXKWrjoqs+ozYC+yK/R7O/q8X27GKFQVjtcxQgg+
+         LoqAS5h9NJl0DDb7yV3uuQXoyeRha3LhHXbkp/kWeLJsISGn6ubwJXC2j8p0+bQD7CYC
+         BxeA==
+X-Gm-Message-State: AOJu0Yw/i/ejSv65Q/hWvPkGTA1KTf5EYVG3tBoY/3jCNF4Usn1psfpT
+	Y6W/G6qIQs4NFK5DPk17jvm9Okz4k9pIvMZuos2eEbrJXpy5cJIpaEoMYRdjYTU=
+X-Google-Smtp-Source: AGHT+IFug+yNfU4Y4RRsynl+7cU/X8W5AnVAQs8WjGJgi3wkdhm07zUnK0AriU+x3VY6oRQq8+IOsw==
+X-Received: by 2002:a81:6c50:0:b0:61e:ce2:c9f3 with SMTP id 00721157ae682-62085c5c064mr5723097b3.15.1715102859590;
+        Tue, 07 May 2024 10:27:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z20-20020a81a254000000b0061bedb1e7d7sm2743304ywg.100.2024.05.07.10.27.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 May 2024 10:27:39 -0700 (PDT)
+Date: Tue, 7 May 2024 13:27:34 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, James Liu <james@jamesliu.io>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/5] refs: remove functions without ref store
+Message-ID: <ZjpkhkYYE45QyFO+@nand.local>
+References: <cover.1714717057.git.ps@pks.im>
+ <cover.1715065736.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 527ED476-0C96-11EF-8745-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1715065736.git.ps@pks.im>
 
-tboegi@web.de writes:
+On Tue, May 07, 2024 at 09:11:34AM +0200, Patrick Steinhardt wrote:
+> Hi,
+>
+> this is the second version of my patch series that aims to remove
+> functions from "refs.h" that implicitly rely on `the_repository` to
+> obtain the ref store.
+>
+> There's only a single change compared to v1. As discussed, we want to
+> give in-flight patch series a bit more guidance when they add new calls
+> to the now-removed functions. This is done in the form of a new section
+> with ifdef'd function declarations for every removed function. These are
+> easily greppable and trivially show the author of the series how they
+> are supposed to adapt to the new world.
+>
+> Thanks for all the feedback!
 
-> +void precompse_strbuf_if_needed(struct strbuf *sb)
-> +{
-> +	char *buf_prec = (char *)precompose_string_if_needed(sb->buf);
-> +	if (buf_prec != sb->buf) {
+Thanks for the range-diff, which is definitely helpful for reviewing
+this round ;-).
 
-Cute.  This matches with the !PRECOMPSE_UNICODE case in git-compat-util.h
-where we do
+Having followed the discussions in the previous round, particularly
+Junio's comments about #ifdefing the declarations of the removed
+funcitons, I think that this round is in good shape.
 
-    static inline const char *precompose_string_if_needed(const char *in)
-    {
-            return in;
-    }
+    Acked-by: Taylor Blau <me@ttaylorr.com>
 
-to make it a no-op.  I was wondering how you are avoiding an
-inevitable crash from trying to free an unfreeable piece of memory,
-but this should do just fine.
-
-You'd want to fix the typo in the name of the new function, I
-presume?  "precompse" -> "precompose"
-
-> +		size_t buf_prec_len = strlen(buf_prec);
-> +		free(strbuf_detach(sb, NULL));
-> +		strbuf_attach(sb, buf_prec, buf_prec_len, buf_prec_len + 1);
-> +	}
-> +
-> +}
-
-> diff --git a/strbuf.c b/strbuf.c
-> index 0d929e4e19..cefea6b75f 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -591,6 +591,7 @@ int strbuf_getcwd(struct strbuf *sb)
->  	for (;; guessed_len *= 2) {
->  		strbuf_grow(sb, guessed_len);
->  		if (getcwd(sb->buf, sb->alloc)) {
-> +			precompse_strbuf_if_needed(sb);
->  			strbuf_setlen(sb, strlen(sb->buf));
-
-The need for strbuf_setlen() stems from the use of getcwd() that may
-and will place a string that is much shorter than sb->alloc, so they
-logically belong together.  It will make more sense to call the
-precompose _after_ arranging the members of strbuf in a consistent
-state with the call to strbuf_setlen().
-
->  			return 0;
->  		}
-> --
-> 2.41.0.394.ge43f4fd0bd
+Thanks,
+Taylor
