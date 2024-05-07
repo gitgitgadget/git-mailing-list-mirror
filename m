@@ -1,56 +1,56 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673A115ECCE
-	for <git@vger.kernel.org>; Tue,  7 May 2024 12:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1099615ECCF
+	for <git@vger.kernel.org>; Tue,  7 May 2024 12:59:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715086754; cv=none; b=k13vaiKoCK+mLINp276zSmiDi8XksIuOyuJ7KQOTL+su4YN6xc28tNKlFCNEuLivA2RGK8Aq7HHDeymSUTaUvDRG8ymQZ8CQTFyaTpgEAHXucSyIrwVPTQAXUp9DXaTt3TTPkDH+Ua5ACTZ6uRs5xHyocNiT1zNE351zvEb13lA=
+	t=1715086755; cv=none; b=NWRXdxVGYSp00e+9VQigPquvM49JMdWBM/s9cHsi2tKy0MB2bl6gifQxCy4f/7Kv8DUJsvGX1GXtPazd6uDMKk6Sfo25dFGAnoAs57RZbq4ti+uNgGgw+ddbY+q9ZFIONbmwnvNYWlmBjVq1pq8ljUJOq03z1E8mkdtBTvfCdDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715086754; c=relaxed/simple;
-	bh=5w3h2rbS6Fo1abqhSfLQHJEFOMlsvrQDrpr+5SPdFII=;
+	s=arc-20240116; t=1715086755; c=relaxed/simple;
+	bh=cJ9TwxCzQnr0OEebLihro9yJXI4X+kmqw3mrR+XUWTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ucq/sU3582Y/1SOZC2zQC6JkQjU8ehQCEihNFbm5wu4pgcn4OMy45EBCYG+sskN72y4GZSz6mx+r0Jzjj9OILsxz4OyneFoq29DZaqy/fmHMl3C+6pUo1pG8QRTc4iSxjZpc5D6yzrFNg7h3VLY8wZHRY4RIj/nLvn9eAKMgnOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TciB1C1E; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version; b=PBOfS6yKxCy1bOi9Rjy623e3hg6VN2cwM1JIIFOBghkPoheW9njTkcb8PeZlS0cXp3UcaROg49JmgoFUjaAGhQ9f2jhwJ6+RPu2vnrD80JkgKmJ608jTJoASb/4vy6zYMdFPiKRtfVt4yvYh+2d9vLCzytazb0BK4coD/X21d9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wl+klOrs; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TciB1C1E"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34ef66c0178so1788711f8f.1
-        for <git@vger.kernel.org>; Tue, 07 May 2024 05:59:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wl+klOrs"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-34db6a29998so1801757f8f.0
+        for <git@vger.kernel.org>; Tue, 07 May 2024 05:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715086751; x=1715691551; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1715086752; x=1715691552; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yT1B7rYzwhAzoD/9cHWGyPtnchR/T78MSC/yWv1nfZ8=;
-        b=TciB1C1EoqmhS1kzBOJyx8/27nkeGVMQzkidEaVYXpH8ZOPGiZEEdB1K916YST5H4F
-         WkxDljBbuRba5maNa+2UgaMECOcjqu5yJ23ppZU0zamnQpspaueOYtdmX7S7jmynAlX9
-         t+UrJV087J5wP7U76MVyilvy74zJ9m0XD3bzUoxAqvO4fJX0D03L8T8twiZczR8qDh7K
-         iqydyWn+kE1pzKwvNUMwaiq36WBUk5SNTNrULeH+xnhzRbFQ/w+UNXQdhfEXufAxHfyQ
-         YZaXxlE/CLOz5YHP6HxANnC0c+sMWnNr/41JGbFlflM7KHXWxCBDVRYcu2Ju885o5cQe
-         uIVQ==
+        bh=HvNmEzsByHto8KVp+Yo82fhdy5ahfz+mIeolAD6GmUo=;
+        b=Wl+klOrsEGWs3x/NZvfp8qjll8jPwoUNg7cEzz4rbY6hPWdI9CtTnW8K8BTN8v37oA
+         Kc6qRNjDuRvSlpznHcegrG2gzcjgE89xFVrPYENUaFRvmUsXLshBMR6NNCSXVtGurWO9
+         iWl4956FDvrg8+Y4MQ67sOKwj8cbE2KfjlNa9Hfux1AOPwALhdkHAjAfnAROYwo/7pOp
+         mwPApVID6/VsnQI4O8E0r8S2C2oaEoPFZW4Qa7G7XP1x9ycLBh3Si6rHh71DqwkO4gRA
+         mdiBTP6u/64U+Ypih5iXCArORDhfLyjTukgrvr0ko3x1znuFWQ9mh4xXFBplbwzOmY4h
+         Agag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715086751; x=1715691551;
+        d=1e100.net; s=20230601; t=1715086752; x=1715691552;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yT1B7rYzwhAzoD/9cHWGyPtnchR/T78MSC/yWv1nfZ8=;
-        b=kEWK5ABA5FrppHxPgwlCJW/XhLzfA5qciEK33eisn8BcJjrzXQMPFWY7R1q557zYQr
-         5J+3x2L7fxNJ87bawS7gktVKTsqUisf2dE6soGjJ7m6qUQbv7hrw7U3RJ14DD7+URI5+
-         BDwUohJt/JiZHRF9NgbBFP+70BwdDfhtAgT02vZr9rqG/fevc9dE5PPZYA4EBDn7dBeu
-         AOIcn7v6GCsEEY+vAqbwKWFIDVRQd/COIuz7kxvh4A2wyVm/yE4X/iAvYt7oqi51MsEO
-         81Ys0sY4s5Qgya6X8jAtB5hR13YBFTqM6gUGPYVdhEww6BfjYo7eOC0y6mbDXTSa6BkP
-         RyuQ==
-X-Gm-Message-State: AOJu0YyIouXQJzkoMM7YIdnmUjaa7Kwa/A02q6AWSc5GPYUMJrDD/eXf
-	vRZzl3I0fmF4SLeZ7/zuuH4zETUgKLH21rvLiqqz9EcAEQ6twS+I
-X-Google-Smtp-Source: AGHT+IGGD5Oo5GFLPzBEeVUZKMKQCO4DlAmndp71bVjTEEsh2VzPnRSwl2cDg17umVHVFicp+K5ZTg==
-X-Received: by 2002:a5d:6987:0:b0:346:59e9:65b6 with SMTP id g7-20020a5d6987000000b0034659e965b6mr10889071wru.6.1715086750705;
-        Tue, 07 May 2024 05:59:10 -0700 (PDT)
+        bh=HvNmEzsByHto8KVp+Yo82fhdy5ahfz+mIeolAD6GmUo=;
+        b=LkWc0/4OitQkQ18cDgdz1GdW0VBTCd1ueaOD93CJrQ9mBPZHGA0y5sjkrxxFmjbHbE
+         OZJWqPZ5lMW4BzEIeMOyc9ASPyuukFCYkbzG8RPNRGQMEqsH29dj6rxafPnj3iQQm6ZR
+         iwHGmZAFerAEgaN5KQTNB+nnqMCpsEXn7x1YG1UX5btdrWwhyhFVPr/Q9uwN8R6GO2V9
+         hvYoULJOwWbLlx4YqeqaGNB4hB/nJ+8RMWuB4kJtRpmsJIQ8a7EeD2DxEnyh8aWGu3t2
+         +/CNr2pb2NdnK28ufSL6FBSnPpuZBrKvJ+HQejpRrBCv6CBWi+4lww2ABVcTZCtpCuJg
+         d8HQ==
+X-Gm-Message-State: AOJu0YzYMEVRvNK4XC7OJcEdoYunBcAeVfglAHANh4AmUkn/zKYttHo7
+	muJ9y07NltvKgluuaWDbtwLHRAudUL3f/U119GwC/GYujFTXbSBd
+X-Google-Smtp-Source: AGHT+IGXvIcfok1qdLuJ565B5u2gqU7lcV9Jiu3MHkunoIgp3P/ttZCItr+T78Y0KjMTmBE3YFw/5A==
+X-Received: by 2002:adf:ef0f:0:b0:34e:89ef:d02a with SMTP id e15-20020adfef0f000000b0034e89efd02amr7771178wro.22.1715086752065;
+        Tue, 07 May 2024 05:59:12 -0700 (PDT)
 Received: from laptop.fritz.box ([2a02:2455:826e:4900:e6d6:a83d:4d4b:8baa])
-        by smtp.gmail.com with ESMTPSA id q5-20020adff945000000b0034f5925edacsm3507566wrr.30.2024.05.07.05.59.09
+        by smtp.gmail.com with ESMTPSA id q5-20020adff945000000b0034f5925edacsm3507566wrr.30.2024.05.07.05.59.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 May 2024 05:59:10 -0700 (PDT)
+        Tue, 07 May 2024 05:59:11 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
@@ -58,9 +58,9 @@ Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im,
 	phillip.wood123@gmail.com
-Subject: [PATCH v8 3/8] refs: support symrefs in 'reference-transaction' hook
-Date: Tue,  7 May 2024 14:58:54 +0200
-Message-ID: <20240507125859.132116-4-knayak@gitlab.com>
+Subject: [PATCH v8 4/8] refs: move `original_update_refname` to 'refs.c'
+Date: Tue,  7 May 2024 14:58:55 +0200
+Message-ID: <20240507125859.132116-5-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240507125859.132116-1-knayak@gitlab.com>
 References: <20240507060035.28602-1-knayak@gitlab.com>
@@ -75,105 +75,169 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-The 'reference-transaction' hook runs whenever a reference update is
-made to the system. In a previous commit, we added the `old_target` and
-`new_target` fields to the `reference_transaction_update()`. In
-following commits we'll also add the code to handle symref's in the
-reference backends.
+The files backend and the reftable backend implement
+`original_update_refname` to obtain the original refname of the update.
+Move it out to 'refs.c' and only expose it internally to the refs
+library. This will be used in an upcoming commit to also introduce
+another common functionality for the two backends.
 
-Support symrefs also in the 'reference-transaction' hook, by modifying
-the current format:
-    <old-oid> SP <new-oid> SP <ref-name> LF
-to be be:
-    <old-value> SP <new-value> SP <ref-name> LF
-where for regular refs the output would not change and remain the same.
-But when either 'old-value' or 'new-value' is a symref, we print the ref
-as 'ref:<ref-target>'.
-
-This does break backward compatibility, but the 'reference-transaction'
-hook's documentation always stated that support for symbolic references
-may be added in the future.
-
-We do not add any tests in this commit since there is no git command
-which activates this flow, in an upcoming commit, we'll start using
-transaction based symref updates as the default, we'll add tests there
-for the hook too.
+We also rename the function to `ref_update_original_update_refname` to
+keep it consistent with the upcoming other 'ref_update_*' functions
+that'll be introduced.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/githooks.txt | 14 +++++++++-----
- refs.c                     | 20 ++++++++++++++++----
- 2 files changed, 25 insertions(+), 9 deletions(-)
+ refs.c                  |  9 +++++++++
+ refs/files-backend.c    | 21 +++++----------------
+ refs/refs-internal.h    |  5 +++++
+ refs/reftable-backend.c | 24 +++++++-----------------
+ 4 files changed, 26 insertions(+), 33 deletions(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index ee9b92c90d..06e997131b 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -486,7 +486,7 @@ reference-transaction
- This hook is invoked by any Git command that performs reference
- updates. It executes whenever a reference transaction is prepared,
- committed or aborted and may thus get called multiple times. The hook
--does not cover symbolic references (but that may change in the future).
-+also supports symbolic reference updates.
- 
- The hook takes exactly one argument, which is the current state the
- given reference transaction is in:
-@@ -503,16 +503,20 @@ given reference transaction is in:
- For each reference update that was added to the transaction, the hook
- receives on standard input a line of the format:
- 
--  <old-oid> SP <new-oid> SP <ref-name> LF
-+  <old-value> SP <new-value> SP <ref-name> LF
- 
--where `<old-oid>` is the old object name passed into the reference
--transaction, `<new-oid>` is the new object name to be stored in the
-+where `<old-value>` is the old object name passed into the reference
-+transaction, `<new-value>` is the new object name to be stored in the
- ref and `<ref-name>` is the full name of the ref. When force updating
- the reference regardless of its current value or when the reference is
--to be created anew, `<old-oid>` is the all-zeroes object name. To
-+to be created anew, `<old-value>` is the all-zeroes object name. To
- distinguish these cases, you can inspect the current value of
- `<ref-name>` via `git rev-parse`.
- 
-+For symbolic reference updates the `<old_value>` and `<new-value>`
-+fields could denote references instead of objects. A reference will be
-+denoted with a 'ref:' prefix, like `ref:<ref-target>`.
-+
- The exit status of the hook is ignored for any state except for the
- "prepared" state. In the "prepared" state, a non-zero exit status will
- cause the transaction to be aborted. The hook will not be called with
 diff --git a/refs.c b/refs.c
-index e7b7c48d92..9d722d798a 100644
+index 9d722d798a..8de43dc0fc 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2350,10 +2350,22 @@ static int run_transaction_hook(struct ref_transaction *transaction,
- 		struct ref_update *update = transaction->updates[i];
+@@ -2814,3 +2814,12 @@ int copy_existing_ref(const char *oldref, const char *newref, const char *logmsg
+ {
+ 	return refs_copy_existing_ref(get_main_ref_store(the_repository), oldref, newref, logmsg);
+ }
++
++const char *ref_update_original_update_refname(struct ref_update *update)
++{
++	while (update->parent_update)
++		update = update->parent_update;
++
++	return update->refname;
++}
++
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 74a713090c..25e5d03496 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2423,17 +2423,6 @@ static int split_symref_update(struct ref_update *update,
+ 	return 0;
+ }
  
- 		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s %s %s\n",
--			    oid_to_hex(&update->old_oid),
--			    oid_to_hex(&update->new_oid),
--			    update->refname);
-+
-+		if (!(update->flags & REF_HAVE_OLD))
-+			strbuf_addf(&buf, "%s ", oid_to_hex(null_oid()));
-+		else if (update->old_target)
-+			strbuf_addf(&buf, "ref:%s ", update->old_target);
-+		else
-+			strbuf_addf(&buf, "%s ", oid_to_hex(&update->old_oid));
-+
-+		if (!(update->flags & REF_HAVE_NEW))
-+			strbuf_addf(&buf, "%s ", oid_to_hex(null_oid()));
-+		else if (update->new_target)
-+			strbuf_addf(&buf, "ref:%s ", update->new_target);
-+		else
-+			strbuf_addf(&buf, "%s ", oid_to_hex(&update->new_oid));
-+
-+		strbuf_addf(&buf, "%s\n", update->refname);
+-/*
+- * Return the refname under which update was originally requested.
+- */
+-static const char *original_update_refname(struct ref_update *update)
+-{
+-	while (update->parent_update)
+-		update = update->parent_update;
+-
+-	return update->refname;
+-}
+-
+ /*
+  * Check whether the REF_HAVE_OLD and old_oid values stored in update
+  * are consistent with oid, which is the reference's current value. If
+@@ -2450,16 +2439,16 @@ static int check_old_oid(struct ref_update *update, struct object_id *oid,
+ 	if (is_null_oid(&update->old_oid))
+ 		strbuf_addf(err, "cannot lock ref '%s': "
+ 			    "reference already exists",
+-			    original_update_refname(update));
++			    ref_update_original_update_refname(update));
+ 	else if (is_null_oid(oid))
+ 		strbuf_addf(err, "cannot lock ref '%s': "
+ 			    "reference is missing but expected %s",
+-			    original_update_refname(update),
++			    ref_update_original_update_refname(update),
+ 			    oid_to_hex(&update->old_oid));
+ 	else
+ 		strbuf_addf(err, "cannot lock ref '%s': "
+ 			    "is at %s but expected %s",
+-			    original_update_refname(update),
++			    ref_update_original_update_refname(update),
+ 			    oid_to_hex(oid),
+ 			    oid_to_hex(&update->old_oid));
  
- 		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
- 			if (errno != EPIPE) {
+@@ -2513,7 +2502,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 
+ 		reason = strbuf_detach(err, NULL);
+ 		strbuf_addf(err, "cannot lock ref '%s': %s",
+-			    original_update_refname(update), reason);
++			    ref_update_original_update_refname(update), reason);
+ 		free(reason);
+ 		goto out;
+ 	}
+@@ -2533,7 +2522,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 				if (update->flags & REF_HAVE_OLD) {
+ 					strbuf_addf(err, "cannot lock ref '%s': "
+ 						    "error reading reference",
+-						    original_update_refname(update));
++						    ref_update_original_update_refname(update));
+ 					ret = TRANSACTION_GENERIC_ERROR;
+ 					goto out;
+ 				}
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 108f4ec419..617b93a6c8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -749,4 +749,9 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
+  */
+ struct ref_store *maybe_debug_wrap_ref_store(const char *gitdir, struct ref_store *store);
+ 
++/*
++ * Return the refname under which update was originally requested.
++ */
++const char *ref_update_original_update_refname(struct ref_update *update);
++
+ #endif /* REFS_REFS_INTERNAL_H */
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 6104471199..8bba5d5096 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -581,16 +581,6 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
+ 	return ret;
+ }
+ 
+-/*
+- * Return the refname under which update was originally requested.
+- */
+-static const char *original_update_refname(struct ref_update *update)
+-{
+-	while (update->parent_update)
+-		update = update->parent_update;
+-	return update->refname;
+-}
+-
+ struct reftable_transaction_update {
+ 	struct ref_update *update;
+ 	struct object_id current_oid;
+@@ -869,7 +859,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 			/* The reference does not exist, but we expected it to. */
+ 			strbuf_addf(err, _("cannot lock ref '%s': "
+ 				    "unable to resolve reference '%s'"),
+-				    original_update_refname(u), u->refname);
++				    ref_update_original_update_refname(u), u->refname);
+ 			ret = -1;
+ 			goto done;
+ 		}
+@@ -941,17 +931,17 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 		if (u->flags & REF_HAVE_OLD && !oideq(&current_oid, &u->old_oid)) {
+ 			if (is_null_oid(&u->old_oid))
+ 				strbuf_addf(err, _("cannot lock ref '%s': "
+-					    "reference already exists"),
+-					    original_update_refname(u));
++						   "reference already exists"),
++					    ref_update_original_update_refname(u));
+ 			else if (is_null_oid(&current_oid))
+ 				strbuf_addf(err, _("cannot lock ref '%s': "
+-					    "reference is missing but expected %s"),
+-					    original_update_refname(u),
++						   "reference is missing but expected %s"),
++					    ref_update_original_update_refname(u),
+ 					    oid_to_hex(&u->old_oid));
+ 			else
+ 				strbuf_addf(err, _("cannot lock ref '%s': "
+-					    "is at %s but expected %s"),
+-					    original_update_refname(u),
++						   "is at %s but expected %s"),
++					    ref_update_original_update_refname(u),
+ 					    oid_to_hex(&current_oid),
+ 					    oid_to_hex(&u->old_oid));
+ 			ret = -1;
 -- 
 2.43.GIT
 
