@@ -1,54 +1,54 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B434EB56
-	for <git@vger.kernel.org>; Tue,  7 May 2024 04:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105664EB56
+	for <git@vger.kernel.org>; Tue,  7 May 2024 04:07:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715054587; cv=none; b=fVgfXZDUHwDV0o/nPqPLe6Mzt3nfjlMPZaH0wF7JbRN1TKVqrgTjRpRjwCMpwCpGa8PGma7xeWaZ3dNvOfvOmCX36YQBgXKBCWwTBy5GGJLJZSE0fI2LeSTOadey+LroK6TmyCQZgRUwstdA6EDtQn5MO60hFR6eLOYI4WrmF84=
+	t=1715054842; cv=none; b=qKlV9D3zjEfbH7Ehr61E7ut7u9fSGl9hoYkw52jCFpNDatTvuhFp7xI7zcH8PhCFU/nQqMQNhbwH2Db9Zou4o8DasfddYKdw8E7sjXLBhKL1q4Uj2ZCtHbImiM9aTnnR+VePMQnCY3PLSSnnkCBk2HNPnUo1VpX1ziHlFxOIV/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715054587; c=relaxed/simple;
-	bh=Wnl6nPusmQNezDRwrIDr3+9O5lnn1gie3fqygI8cULs=;
+	s=arc-20240116; t=1715054842; c=relaxed/simple;
+	bh=60BjmTo8rveijFSviwv7XF9xubydX0HtuSWL0p+Wkl4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ap8J4Rsvv62okMaDcJYr2Ub5B3HjPMAWUqHK+hLEtTr2Gqt9LFQHib4COnqhYLBlXzLG1fY9lQd0bT+o65FEblKUNZReoeoO2oEqbEhAjZx/kIINE72Pnao2rq0Ox1zdpuNincga5ZwYFQrsAZIepR65x3xWjI+c6nchEjfy+Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fp4AW58g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eWtp6Mf7; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=S/wWeEhLCSXSxWqfA7MHE3ydWg2oSqJG7a0NP9lRggEUf/mv9vGRRNGvPjMfJjonoSyWVDdsNY+cUqc+ULWBP92C5pl5wQiyBb9EoEO++Py4nBnAhVOmCXsz+gcA+U+qIvBI0IRQUYRQfrxu98aCVc8INzeFS3W7EuhtRhEbXjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ITFrCLjT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AikM5YeO; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fp4AW58g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eWtp6Mf7"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id C780A13803C4;
-	Tue,  7 May 2024 00:03:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ITFrCLjT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AikM5YeO"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D6D6911400F7;
+	Tue,  7 May 2024 00:07:19 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 07 May 2024 00:03:02 -0400
+  by compute3.internal (MEProxy); Tue, 07 May 2024 00:07:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715054582; x=1715140982; bh=BSGeA5Ea2y
-	2zFXE9c9adAyi3pZiwkPxjFkPsVA1pc/Q=; b=fp4AW58g1bPctsmV+LcBZeN4oD
-	nf68pOzsW6/tLVlfNTMyB8oH9QdZhdRV9DH7LTeLLNZAr66xg93fPOQ1w/Ama603
-	XPqxNFvHUT7JGh4AFWgqDQPs/17wLutLdoac/fhq7tEsLEnQgLoXB2vnkpVrbmCx
-	iw44oGHQTwKC9+l6dofD2eIDMF3u9IprvRTfsfu34wvtxbhUarSc+mof9Tf9Solj
-	NrhWxfhtC3uVTwMfqB4bgm/lFJDYFa6yZSIz2+pO3bkLMEhSgpxG9MdtdJmCKZf6
-	eN5KNoOKKReBUzrILkoG9/bQA4e64edJQjJVgnLyYSNfpfGCTz82Wsu3oSBg==
+	:subject:to:to; s=fm3; t=1715054839; x=1715141239; bh=60BjmTo8rv
+	eijFSviwv7XF9xubydX0HtuSWL0p+Wkl4=; b=ITFrCLjTx9TLJ0XjeR2EK7KTmj
+	r4QPYGJ98K3Vm1/4EdWIzAbAvST7rntZbPGY6kq1AYqrUeREmCwrGW8sJZwps3Mw
+	VN7NsRWq68ZuT3TMjwvBVDz1TtnneDh1dqoMz+YJk+gAg/evTc6fZAlMhnAueSsB
+	xrE0KVwA6Ab4Ikmdn1bg+y1Rlb6xwipUUkbX7JYUX+xDDtsVFhhhrbBUcDUS+E3h
+	26U8H35UEknq2Rj49ZUV0BwV3/KfjwEjVGvm6aB2REJtQN+igIqgL807SZS9seNx
+	9+xsqo3nfpekyAn4R6qnFgfAZrWam8fzHy9WqSI5+2DDUimfPy3XGgLKOD2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715054582; x=1715140982; bh=BSGeA5Ea2y2zFXE9c9adAyi3pZiw
-	kPxjFkPsVA1pc/Q=; b=eWtp6Mf7B8KQW1BoutmtoKCnqfqZwb0YqHygoxGT9saV
-	dRtPH8tBNoSS5ZCJk64kPC7eQP6gdX6sQXnD7R4OaapZ21dbGVNuJ9noTbqhzmFX
-	9dJ0egUNYX97bEaSWISCehENJ2IQ2HYefJNq87NImJ/SNC8O8qWVyl2YAd+Z/hcE
-	Me7JsFbCKPrWkk3HEvG7kNn6BLiVnSK9nEp+CXttDikIc4gQypNqIinmsJKf9K/6
-	OutuWgw00jKY3wJdCtZNUGp+i4W7knn+8DS6VPzNKJjyD2NPto99SxSl90rmw1ju
-	LRKsJ6dl44PGAgIlyCzbVWYOJG3/87xHjsoD0oWenQ==
-X-ME-Sender: <xms:9qc5ZvVaNZ8SQUJ2ywaEhkqWi3WyXSP-RzU3QLs0Aa408zw47YRNhA>
-    <xme:9qc5Znn0QVHLtjfbvdFiCRq16SUFaU1Qp_Ucf5z3fFqgOcNzStE7bdSBfDvU7DFaT
-    B4C5S6OqwJJXjR3hw>
-X-ME-Received: <xmr:9qc5ZrYlph8p2zbf988rjfuL0Dix0uAHjWP61vfb8sMzob-YfWOEZGk_firCViHcPDGmPR1O6INq-Ra62JUpIgFdgpnf7CdyLhFG2bF2zrEn37EL2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgjedvucetufdoteggodetrfdotf
+	fm3; t=1715054839; x=1715141239; bh=60BjmTo8rveijFSviwv7XF9xubyd
+	X0HtuSWL0p+Wkl4=; b=AikM5YeOdt9fM72iXQ2S52CDqJtDymBJOabgxus9EeEI
+	oVi047kfvxcSvbCwKwhZXiXx3Tl1VKQHSm5MwQI+vqIZD4jSTO9bM2rBaViHV0wD
+	qFvr5feXl2itYUvg0mqMnR/QlfBk/hNhXbVKkWrwiYhd6qKv60fpgcVoC0p3eivd
+	5Zx/TIhnFvu2wbxwEdpzS5W08blY+yQvPmMn4cQEowsp705dmdI/CwGRzeAiV9JF
+	/dxeMWuAy71rDfK56NNz9l/wdfMbHI7VeYdQuFKQOSVwqnbNy7u1IVtol5f3OKp5
+	gqR7lJ+fXLv9jANNOJLSw9NAJTCqAIeQ7Ab0ARjvjQ==
+X-ME-Sender: <xms:96g5Zsurb6uoWB2AxBK9-sSeyegxBmO4cxgA6N5VxWoCgvYQZ9nL8w>
+    <xme:96g5Zpej_gMO_1TU2QKQOxz3lFeLsJ27eJf-Xq67XdsfjBdqPX5xJ6i1FTOdE3O9t
+    CENXwSCEj1uOmG5vQ>
+X-ME-Received: <xmr:96g5Znyp-TJ_aHo2vPbqa0kIk9k8uERcIEQnOdG1Rhd2omGseqJ-J_Xfaowim34ZG6Q4ABBLkNi3F4R-ygvx0cW8ajNXe961ptpKl78o9CzGo0H7vA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgjeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,35 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgjedvucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:9qc5ZqX-SpyGpg-CPNYPfTtTQyharQlWDB4wOu_om8hZjMb6gL-aJQ>
-    <xmx:9qc5ZpluFv_czipUT3sUL73nlaeWchjl2QAmoyMD1OKb-iXiRF1mew>
-    <xmx:9qc5Zncp3ec_3f3dveH05UEtqBQnhdDYr5lC_R0wC42dIyX2vw4A4A>
-    <xmx:9qc5ZjEjvUrIIZDiLJLhVC3Jwbe8FJ1xGecyf7Nn0FcTKx-2x7GnXw>
-    <xmx:9qc5Zr7noeNmi9ZimJu9EjHoIzFzs8esqMRLBoSL9DaHV4bKKfWO1vtr>
+X-ME-Proxy: <xmx:96g5ZvP9xQ1wW-hWp8WD5YtPFKClcsWUg-tES6nmJsRDKglbpUHKYQ>
+    <xmx:96g5Zs82vdEtoDAif_DCSl4LSiu1qXKGbSn4-uk9C6SJHT1rN8Pwbg>
+    <xmx:96g5ZnXsiNaJ6E5dU_Ht9IwnfwFYHaRz7efKhXE4rWeUq1prxJEcpw>
+    <xmx:96g5ZlddN0EI9XMiOo6KuqzfOOAQJ--RYE7ZR_nB3kkYciPr1nGVPQ>
+    <xmx:96g5ZgTplWjPNhzvrJMYKbZbd_TVldi9F8MqDrpYW2kd8eIj5NFb7_EY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 May 2024 00:03:00 -0400 (EDT)
+ 7 May 2024 00:07:18 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id e5eded80 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 May 2024 04:02:50 +0000 (UTC)
-Date: Tue, 7 May 2024 06:02:55 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 97706b71 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 May 2024 04:07:10 +0000 (UTC)
+Date: Tue, 7 May 2024 06:07:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: rsbecker@nexbridge.com, 'Karthik Nayak' <karthik.188@gmail.com>,
-	git@vger.kernel.org, 'Kristoffer Haugsbakk' <code@khaugsbakk.name>,
-	'Taylor Blau' <me@ttaylorr.com>,
+To: rsbecker@nexbridge.com
+Cc: 'Taylor Blau' <me@ttaylorr.com>, git@vger.kernel.org,
+	'Kristoffer Haugsbakk' <code@khaugsbakk.name>,
 	=?iso-8859-1?Q?'Jean-No=EBl?= AVILA' <jn.avila@free.fr>,
-	'Eric Sunshine' <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 07/14] builtin/config: introduce "list" subcommand
-Message-ID: <Zjmn7_C_eiSo0rBL@tanuki>
+	'Eric Sunshine' <sunshine@sunshineco.com>,
+	'Junio C Hamano' <gitster@pobox.com>,
+	'Dragan Simic' <dsimic@manjaro.org>
+Subject: Re: [PATCH v5 00/14] builtin/config: introduce subcommands
+Message-ID: <Zjmo8xMkN-hypRHz@tanuki>
 References: <cover.1709724089.git.ps@pks.im>
- <cover.1714730169.git.ps@pks.im>
- <b3f3c3ba6ab33d269f7a707eae1456c87cdfeddb.1714730170.git.ps@pks.im>
- <CAOLa=ZSNbZPByO9QyeAGaR1pWXMB7ge_GF7M5fydxP-cse-X3g@mail.gmail.com>
- <015b01da9d5b$bbe59120$33b0b360$@nexbridge.com>
- <xmqqjzkaanr1.fsf@gitster.g>
- <ZjiL7vu5kCVwpsLd@tanuki>
- <xmqqttjazwwa.fsf@gitster.g>
+ <cover.1714982328.git.ps@pks.im>
+ <Zjk73l5l6AqQOz6N@nand.local>
+ <04ef01da9ff5$700fab90$502f02b0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,161 +89,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NW6qI/Jg2r6ZYtpa"
+	protocol="application/pgp-signature"; boundary="kv86HGaKHvrCoLEd"
 Content-Disposition: inline
-In-Reply-To: <xmqqttjazwwa.fsf@gitster.g>
+In-Reply-To: <04ef01da9ff5$700fab90$502f02b0$@nexbridge.com>
 
 
---NW6qI/Jg2r6ZYtpa
+--kv86HGaKHvrCoLEd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 06, 2024 at 10:13:25AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > ... I was pondering
-> > whether we want to introduce a document as part of that patch series
-> > that starts to keep track of upcoming removals for a potential Git 3.0
-> > release.
->=20
-> Finally somebody has bit it ;-)  In the 2.44 cycle, I wrote
->=20
->     The RelNotes symbolic link says we are now working towards Git 2.44.
->     It may not be a bad idea to reflect on what technical debt and UI
->     warts we have accumulated so far to see if we have enough of them to
->     start planning for a breaking Git 3.0 release (or, of course, keep
->     incrementally improve the system, which is much more preferrable---
->     continuity and stability is good).  End of year being a relatively
->     quiet period, it may be a good time to think about your favorite pet
->     peeve, to be discussed early next year.
->=20
-> in a few of the "What's cooking" reports.
-
-I know :) I have been thinking about this on and off, but never felt
-like pushing for it yet.
-
-> > There are multiple items that could be added:
+On Mon, May 06, 2024 at 04:38:59PM -0400, rsbecker@nexbridge.com wrote:
+> On Monday, May 6, 2024 4:22 PM, Taylor Blau wrote:
+> >On Mon, May 06, 2024 at 10:55:51AM +0200, Patrick Steinhardt wrote:
+> >> Hi,
+> >>
+> >> this is the fifth and hopefully last version of my patch sthat
+> >> introduces subcommands into git-config(1).
+> >>
+> >> The only changes compared to v4 are some fixes to commit messages.
+> >> Otherwise I'm not aware of any other feedback that would need to be
+> >> addressed.
 > >
-> >   - Removal of the old syntax of git-config(1).
-> >
-> >   - Removal of the dumb HTTP transport.
-> >
-> >   - Removal of `info/grafts`.
-> >
-> > There are probably other items.
+> >Thanks for the new round. I took a close look through the series, and co=
+uldn't see
+> >any remaining issues. I appreciate the translation guide you included in=
+ the
+> >documentation to indicate "git config --add" is replaced by things like =
+"git config set
+> >--append".
 >=20
-> A list of things I can think of that I won't be the primary advocate
-> for but I do not mind too terribly if we had champions for the
-> topics are attached at the end.
+> Please make sure that there is a compatibility mode available for some
+> large period. There are huge numbers of scripts in the customer base I
+> deal with that use config extensively. Changing the CLI for this will
+> be dire consequences.
 
-I'd be happy to champion for each of those.
-
-> > In any case, the old actions are here to stay for the foreseeable future
-> > until we commit to a breaking major release.
->=20
-> True.
->=20
-> > Thanks for the thorough explanation, I have nothing to add!
->=20
-> You could have avoided it if you copied some from the initial cover
-> letter to each round (i.e. preparing the series to be read by some
-> folks who did not read an earlier round).
-
-Fair enough. I should have known that this part is indeed quite
-important to the whole series and included it in the newer cover
-letters.
-
->=20
-> Possible additional Git 3.0 items:
-
-Some pretty controversial takes in here ;) I guess that's by design.
-
->  - Removing "git http-push" to push over HTTP/DAV.
->=20
->  - Removing support of `$GIT_DIR/branches/` from remote.c API.
->=20
->  - Removing "git update-server-info".
-
-Yes, all of these are quite sensible.
-
->  - Removing "git annotate".
-
-I don't care much about this one, but it's nice indeed to get rid of
-duplicate functionality.
-
->  - Removing "gitweb" and "git instaweb".
-
-I don't care about this one, to be honest. It's basically unmaintained
-though as far as I know, so we might just be accepting the status quo.
-
->  - Removing "git filter-branch", now we have a better alternative
->    "git filter-repo".
-
-This one I'm sceptical about. The one upside of git-filter-branch(1) is
-that it's part of Git itself, whereas git-filter-repo(1) is not. I thus
-think that a prerequisite here should be that we first land the new
-script in Git before actually deprecating the old tool such that things
-remain discoverable. And upstreaming git-filter-repo(1) would be a
-worthy goal by itself already.
-
->  - Removing discovery of hook script in "$GIT_DIR/hooks/", in favor
->    of the configuration variables that point at them.
-
-Those have been an attack vector in the past, and I think that using
-config to set up hooks is quite a bit saner. But of course, we first
-need to land this topic :)
-
->  - Switching to SHA-256 as the default hash algorithm.
->=20
->  - Switching to reftable as the default ref backend.
->=20
->  - Switching the hardcoded default branch name away from "master" to
->    "main".
-
-All three of those may be nice. The first one is going to be hardest as
-it requires support in forges. GitLab started to support SHA256 a month
-ago, but it's still experimental. But to the best of my knowledge GitHub
-does not yet support SHA256 at all.
-
->  - Declaring that "git restore" and "git switch" were failed
->    experiments and deprecating them.
-
-I use those quite a lot, so it'd be a shame if those went away.
-
->  - Declaring that "git submodule" was a failed experiment and
->    deprecating it.
-
-Well. I know that most people think that submodules don't work and
-should just go away, and I count myself as part of that group. But
-realistically I don't see that as a feasible goal, even more so because
-we don't actually have a proper replacement. They may be somewhat
-broken, but there is no better substitute.
-
-You know, let me take this list and propose it as something like
-"Documents/UpcomingDeprecations". This will make the whole discussion
-here a lot more discoverable.
+Yes, that's a very sensible thing to ask for. I think the bare minimum
+we should aim for is a year (4 releases), where two years (8 releases)
+feels a bit more sensible. Do you feel like that is reasonable, or do
+you think it would be too short?
 
 Patrick
 
---NW6qI/Jg2r6ZYtpa
+--kv86HGaKHvrCoLEd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5p+gACgkQVbJhu7ck
-PpSGUg/+PNvwqsCm8Snz9gfOorcVtYrDtrRBar8rXSF1n6QQ4voCsLZr+e7cD+3N
-Sr2865Fs+QFwQMQvky56+X4Vne9aDu34ccHtxliainigaMG+ak3oGZ5r2lCWufEE
-7Fi4WAjxR6ebvrCCdP8O0TRnRIeauDS3+3m/XovBcxJsUodt8QKjQXiI1XlwMycq
-CMTp/y0Vx2y3Si+Eipgh5+Mm63NJ6NR8Eq6fgqvhEXIV4f9wagt6sg60SlWC9ULG
-rtDiY0fiUdns+F0gknP4HWWB8lRYz5vryX3BS0t1JNvMKCZE88vmNTduYaSbMQH8
-hGP6gImbBrS7Cixp1jHdNjzhss3E87s9hx650YEdVpJAreADAoejKjDqYgjd9qi9
-sfaMsfg9lb/lJRQ1x3NVECZp8Q6R25PXpN5L4Z98LxNhJN0+khc2treZWKYgI7QU
-JjjySzhfKqnCcQO93lHU2lZuShjz6OhMcYApP5j+NMjNkg8unFRhMPdD7C9AXWTf
-fru3NW1/83aZsOeIfBmuTCkFbfVYJkUOsbHKJpDK39JPHvX94TqV+OlLQk8g+X2x
-a6ay2p/qxLDfEQx5aTj6vsY+Bb/+4ih0YR4448lTLu2RDee1xQLaRDMmQ9L9Uadr
-UIzTUUz2vq2XavJ1cB4x0p62ic2063yt7ECP1L7djCTH75UpAEQ=
-=sfrI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5qPIACgkQVbJhu7ck
+PpTWYg//WayvVHhGS7XuDwTHo2BojQxw5b1lgxNrJJGUPfisaME/8FMrWx33T8Hk
+LX0v+kXbFoWfgL421AEyBtVrj0LaRBFCxR/2MsSQmt+QpD4PlDBYpLROicu7zlF8
+HnzMCyt04FTlsT6ixKgRDl7Ks4x09VA0BFNi/uRx6FGCII4QWW6HS+ta4LG4nvRl
+6xzxy+DIcl9IXHdIXQt4g0JnQ8EJd38urKB5dJB36pcy5jpM5n102V9YTGni9DxM
+j6vQXR5vQgE7ZAVgAE2bomqTC8yneE9GDdum+wAdkIHbe6jmQhvIoQuE86wc9jto
+QIVGBuAexaUQ1ZPXbH2U6QeG+iHc4F6k9c6JUr9NSVbqfahWO9Jrr55Mln55/QfB
+NEYwIi0iDE2rFlGBrOwUfOvdQ/+yLXsfhf6x6y+2CrA7HUZYOlDD/dYn+gQN7z2R
+kGppOSQwEJtShzbeXKvmSLHHRBNk23JWTzb2HNys6cjdoQax54vwBCFeg8gk23mo
+vatLQumpxVJrmJ5GW0myq3/qWN6kYLrDtGbF7pERFL8Enng+NXTDXDeoBbt5EYGO
+PdG0AS6VggH3phjxytANfS0N7kaP5jk5L0+N3w9dJRILpxHfzpvLEW1KmoZ/AkKh
+lKQklF771zhmOwp6s3l0qUfun8Qn9DQ74V0Tx78msQPSz0BiwmU=
+=wE/7
 -----END PGP SIGNATURE-----
 
---NW6qI/Jg2r6ZYtpa--
+--kv86HGaKHvrCoLEd--
