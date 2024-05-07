@@ -1,82 +1,86 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4D4A93C
-	for <git@vger.kernel.org>; Tue,  7 May 2024 04:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA6B42A97
+	for <git@vger.kernel.org>; Tue,  7 May 2024 04:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715055127; cv=none; b=fxiLjxyRf5huZ2yULr9pugkMiCQzrCBxJaAUEeXbQZypqqC+CSdYMzOgX6qdmjF9Kt9eZEFLehabJV+gsJGOVQPRMCbhGgHRwoD1izxj6LOiQkMSja7KCFEGm4+kmBWiB8ZP4s5jUkISxaXjve7OoWmf9Od10eb/RVdbT+boKOY=
+	t=1715055509; cv=none; b=FiHCUcgPPlitThXwRxyR/qe6ctBfAAsVphHqDMSjOD53o/RMV2UYFXM2WihR4wIT1CkY56CXtJM7LAokBRJglnj1/VNLi4JM5zLT4pBsn4ubGNE5UoJ02QCLU9ktyC23vMfAG4C40v9vis4/CT8B09w7wUqKJ5qCV6GDF1rx/Oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715055127; c=relaxed/simple;
-	bh=OJuLikrjeA9ymjvUyIZygpymH7BI//avVo2g2bX1S3U=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hNjgSUeHDLS6i6AMkKSBGoDpNw9EjmmZgIZyRlf86oh8eqNhzvKa4DDoEkucZruFs3cxzP1tCxK2eSP5OjFzNfX6JziSse7B94RM4yGJnAbelgLBaemS5xcydY4awtdJ/uclnddqjP6FMPl2vJx5ZXgTpgy0UTBiulN03FcBfs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cuezvTBg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a59+XZD6; arc=none smtp.client-ip=103.168.172.152
+	s=arc-20240116; t=1715055509; c=relaxed/simple;
+	bh=4yvBfRy26Pq6kS3COzDAkXVVClIH9wqNbATmwGWhudE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I11fun79j+VAYdnUy8Pn0KKTMN3IMhzmn/OfZ7f86fBVgec0wxYO0xtfxlJsqYJhynmfc3SHdQqay3apmn4/tgBWxoYpbNEKUanrSyeFt1HruQ+YBTmTiD0CRsmEgqiHqeOjzxRKGAGrG5kP9S+u0WWgVDG+BK3FIHJywZZw8jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V/btbe/g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PBscRIpB; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cuezvTBg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a59+XZD6"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7F19711400E9;
-	Tue,  7 May 2024 00:12:04 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 07 May 2024 00:12:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V/btbe/g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PBscRIpB"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 330961140170;
+	Tue,  7 May 2024 00:18:26 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Tue, 07 May 2024 00:18:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715055124; x=1715141524; bh=ieQvhXai50
-	IiWQ/BqPN/KS7L7xs3N21RN6j/dlfj540=; b=cuezvTBg37jzV0py6Ue/KwjCqq
-	I4m95aaBTwpVfT3xrO6wRPCvWuyMk8ZFRlVg6S2OTVycmc+YJqC73GVEq+e+wX5W
-	bGBRLM1bmeeFxY9MXGmN7KW7MvuHEI6ZojzLwxJ2Tofv0s4EIjajzLopiVnvriv/
-	jzxXOZ3xFOm8tef9H4S9WbOYVAqtTS2GYBmwKbpy9DmHzuQBxyHAYYlvNFy3oyTx
-	7IuhYRskiGdRO/tuWSCgT4PcbESU6G+956MYgx2XG+WOL6MZbueJpEfw//8Y2Jbq
-	EfkZGoXzSYgsYwItcX7IFPztygogNJ3CV72qia7Eg1wfa7S3vrQlOc3As3jg==
+	:subject:to:to; s=fm3; t=1715055506; x=1715141906; bh=zb2qa/NQfx
+	6vGZkNIYKUmplkoK6YS0O2MhChoPbGPJk=; b=V/btbe/gSht95KOGaEa79EjldL
+	sezYpOLoz+aKkRFTbD/YLwc3CIVlQ9+4Z740kzgsq4TzdNfuPPzS0Qt4zyTOPliH
+	Fji/dzThSXcheD38peu4KmKtLLA0yIRogFWabkdZCt5iBURAD1b78TNEYUKfJdVr
+	mPt6kQ1BzCOxO2c2SMol2JCFGwUWsL9aW7Y4LoVLbPstEw8GPYGGvC/vuiz85GLY
+	4QiyCkhYtsY6Te3l62DH7Fv/Z+6EMY+YO7Hh/w4fJLsftlIrpHsGfBXE4J41XUEp
+	wDhBonfwbi3yNh12tj4ybIeKU/pcdzyvSN23wCMXV6Uc6gO7PkJ6nDpSE0qg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715055124; x=1715141524; bh=ieQvhXai50IiWQ/BqPN/KS7L7xs3
-	N21RN6j/dlfj540=; b=a59+XZD6/8yXC+MSHfV24zVYRAnU2nS9IhlolwBRJETo
-	jwC4U+W0Qi5XezIiIMnhbPcMacpQsOqfg1QYbDIt/JGXmKCjTeBxOZmlXkxMG09S
-	TKVUCkjHQIM3WrLziHZFJU/rRp8GUR3zfQ5EgcCNFEvnQtidACcNyWVIxfZnaSu7
-	oJcpyxNrJPfL/ytlb/ptq5O2JrR22ty926sIw4VuEaVl7bOqUDb0l7NYMYN+SxBF
-	7wOmBfkkEjuVh8e0M76p3se3kssCLRdXUQzbB+zXAGB79H8A0mDfymNDnGice5T/
-	iBV13t1/Gb1TSdABXRLekMKcy0EX29assL9cXlCOyA==
-X-ME-Sender: <xms:FKo5ZnKLNElNTYnpGYvIGHQJAdhqRlYSOmSqL5SpB7tW3TBZ37Rvtw>
-    <xme:FKo5ZrLntRET632L6g1AX8GB2MdHC2z3T4uvj20g94xcSEYUXu4i7qjnNQMfRt27w
-    UMSVI31T-S_VdiU1A>
-X-ME-Received: <xmr:FKo5ZvvqFeRAzwflVSdgB--th3U4g8rrc11a5I-5gXZYY0z5dVU1eE5JwQx5RfdzG1aUC8Uz6jU-0TAwXn7cDDUJtxx6D4pbiB7UfUhv9QMxhACs0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgjeehucetufdoteggodetrfdotf
+	fm3; t=1715055506; x=1715141906; bh=zb2qa/NQfx6vGZkNIYKUmplkoK6Y
+	S0O2MhChoPbGPJk=; b=PBscRIpBOKlDpF97NPObJdgZTx8n62HzkDg9+B44VRZY
+	e3CmMyV7uR5CqMKtjt68442CF71oYuyugRi8AhhRwSCJDxd+qq3VXakqwuyRR/Ol
+	u3EQymczmv+h8kmDjjnhmOWBUha2lBpVTF45AcpWNoOySfvIbfWAcPAphyWdb8ZQ
+	eesngnAmRWSCVHkvk3W5n/yRWmkPm5+/dXynuDuJp017m7Cam9lsptei+qx2zbGj
+	XE8KwA/Xqj7psJURTDzMxMe3w+2TVePTCCgfNEIPHE1YuZ0HRE5IUUmz6bwPYwfo
+	XzXwn0Pqjm1hby+LMTFtUZ7yCgan95g/zTntDVHOQA==
+X-ME-Sender: <xms:kas5ZtfBElyLE9VeJzPnDFFxhVfb0mqRHi7nB2aHDpnSQfTvQ6PMUw>
+    <xme:kas5ZrPOTXoQ81Ulb0xpzKv0HHrDST1kdMAHbE2KktmS5eDWI0eI0TCzyHcd_8zCn
+    2PzP8WvGPb-D6sk6Q>
+X-ME-Received: <xmr:kas5ZmgsOrl8fdmrA7GE_Hfte8WzYGdYoXY9XA-yoUj0r7-icdpQPiT4jpPrhJno-t0MsZCvWWyMKNAfn70Sp5J6Go68ahtsI0g1gwS3Q_42BQrnRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgjeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:FKo5Zgb7uVwpchl6s2vqIlPCj2TrtD-nu9GF1DCly4vO-0cKpZN8AA>
-    <xmx:FKo5ZuYJg2zV-fxMGs2wOVlaSHkfKYK3GLyQNeQ1BdaYc9Gessuqbg>
-    <xmx:FKo5ZkB3ngMnUzITE_PZKOaIODmGoAOi9RvvbwjEqftIyfbILSDmSg>
-    <xmx:FKo5ZsbXOctploSIgNu_Ranq3XA7boSw5rzAwVnriAYHC65Yw17YAA>
-    <xmx:FKo5ZtktE2Vmlv0CWwtMXT4Z7jnyo-7fWKoefnuoa_yFCacLB7kJP8Qm>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:kqs5Zm_EbYaRtQThiBE6M_bgFDZlwed5QU-jji2tS661HylHgI_bzw>
+    <xmx:kqs5Zpsh0G-g18lqplMussd1srJlLr4RuBq4H-PbMz70zlctIVaDhQ>
+    <xmx:kqs5ZlEtmn9UhB_oF4OFjY7CYQ0AHbM2k4WZ2Pbb1meZp6IgJ-a3Xg>
+    <xmx:kqs5ZgOjpVBkzuGQxHBn1gpevPGd_FNzJwuhSQGPVGG58OQkcj_How>
+    <xmx:kqs5Zi6n5YsRuoa8k_vTcH5S_O2CHgiPd_9I14B788RcJDf6JOUbllGN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 May 2024 00:12:03 -0400 (EDT)
+ 7 May 2024 00:18:25 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 33172bf6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 May 2024 04:11:55 +0000 (UTC)
-Date: Tue, 7 May 2024 06:12:00 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id eba5fcc7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 May 2024 04:18:15 +0000 (UTC)
+Date: Tue, 7 May 2024 06:18:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] gitlab-ci: add whitespace error check
-Message-ID: <ZjmqEEB2gXU_nKHz@tanuki>
-References: <20240502193840.105355-1-jltobler@gmail.com>
- <20240503172110.181326-1-jltobler@gmail.com>
- <20240503172110.181326-6-jltobler@gmail.com>
- <Zjh-3dCL2-MnV-PE@tanuki>
- <xmqqle4mzwp8.fsf@gitster.g>
- <xjp247ji6zjyacniodws6jbdms7tr7726h6spsn7jvx3axqd4a@k6xhzf4v5akc>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: Git 3.0?
+Message-ID: <ZjmrjMN-AxW9rCC-@tanuki>
+References: <cover.1709724089.git.ps@pks.im>
+ <cover.1714730169.git.ps@pks.im>
+ <b3f3c3ba6ab33d269f7a707eae1456c87cdfeddb.1714730170.git.ps@pks.im>
+ <CAOLa=ZSNbZPByO9QyeAGaR1pWXMB7ge_GF7M5fydxP-cse-X3g@mail.gmail.com>
+ <015b01da9d5b$bbe59120$33b0b360$@nexbridge.com>
+ <xmqqjzkaanr1.fsf@gitster.g>
+ <ZjiL7vu5kCVwpsLd@tanuki>
+ <xmqqttjazwwa.fsf@gitster.g>
+ <xmqqa5l2y6aa.fsf_-_@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,74 +88,87 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DPGtQmHwGd4tlKtp"
+	protocol="application/pgp-signature"; boundary="5pOinR7WAVLgfcUP"
 Content-Disposition: inline
-In-Reply-To: <xjp247ji6zjyacniodws6jbdms7tr7726h6spsn7jvx3axqd4a@k6xhzf4v5akc>
+In-Reply-To: <xmqqa5l2y6aa.fsf_-_@gitster.g>
 
 
---DPGtQmHwGd4tlKtp
+--5pOinR7WAVLgfcUP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 06, 2024 at 02:21:52PM -0500, Justin Tobler wrote:
-> On 24/05/06 10:17AM, Junio C Hamano wrote:
+On Mon, May 06, 2024 at 02:33:33PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
 > > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> >> ... I was pondering
+> >> whether we want to introduce a document as part of that patch series
+> >> that starts to keep track of upcoming removals for a potential Git 3.0
+> >> release.
+> >
+> > Finally somebody has bit it ;-)  In the 2.44 cycle, I wrote
+> >
+> >     The RelNotes symbolic link says we are now working towards Git 2.44.
+> >     It may not be a bad idea to reflect on what technical debt and UI
+> >     warts we have accumulated so far to see if we have enough of them to
+> >     start planning for a breaking Git 3.0 release (or, of course, keep
+> >     incrementally improve the system, which is much more preferrable---
+> >     continuity and stability is good).  End of year being a relatively
+> >     quiet period, it may be a good time to think about your favorite pet
+> >     peeve, to be discussed early next year.
+> >
+> > in a few of the "What's cooking" reports.
+> >
+> >> There are multiple items that could be added:
+> >>
+> >>   - Removal of the old syntax of git-config(1).
+> >>
+> >>   - Removal of the dumb HTTP transport.
+> >>
+> >>   - Removal of `info/grafts`.
+> >>
+> >> There are probably other items.
 > >=20
-> > >> +check-whitespace:
-> > >> +  image: ubuntu:latest
-> > >> +  before_script:
-> > >> +    - ./ci/install-dependencies.sh
-> > >
-> > > Do we actually need to install dependencies? I imagine all that's nee=
-ded
-> > > would be Git.
-> > >
-> > > Other than this question the patch series looks good to me, thanks!
-> >=20
-> > I am a bit puzzled.  Is the proposal to check our sources with a
-> > pre-built Git (which by definition would be a bit older than what is
-> > being tested)?
+> > A list of things I can think of that I won't be the primary advocate
+> > for but I do not mind too terribly if we had champions for the
+> > topics are attached at the end.
 >=20
-> The GitLab `check-whitespace` CI job only needs Git to run and uses
-> `ci/install-dependencies.sh` to download a pre-built Git package via
-> `apt-get` since `ubuntu:latest` is the container image used. The=20
-> `ci/install-dependencies.sh` script also fetches a bunch of other=20
-> dependencies which are not needed.=20
->=20
-> I think Patrick is proposing, to further simplify, we avoid using
-> `ci/install-dependencies.sh` and only fetch Git. Patrick please correct
-> me if I misunderstand :)
+> Just to avoid unnecessary misunderstanding, as I said, what I listed
+> are not my proposals.  Rather, take them together with Patrick's list
+> that they are invitations for others to let their imagination go wild,
+> trying to come up as many ideas regardless of how good they are, sort
+> of the initial "brain-storming" phase of a discussion.  We will need
+> to cull bad ideas, pick good ones, and refine what we are going to
+> implement in later stages, but this is not a time to shoot down what
+> you do not like, yet.  It is instead for you to add your pet peeve.
 
-I just wondered how GitHub Workflows manages without installing any
-dependencies at all. Is Git already part of the default images? If so,
-there is no need to install anything and we can just execute the script
-directly, which saves some time.
-
-If there is a need to install Git we could either just manually install
-it in the `before_script` or leave it as-is. I don't mind it much either
-way.
+Just to avoid starting this discussion deep down in this thread, I plan
+to send an RFC-style patch later today that proposes several potential
+deprecations for Git 3.0. The intent of that patch will be to trigger
+discussion and it is thus by design going to be controversial :)
 
 Patrick
 
---DPGtQmHwGd4tlKtp
+--5pOinR7WAVLgfcUP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5qg8ACgkQVbJhu7ck
-PpQnHw/+J9zNnEROC7YUUSkvAmaqWjxnmvV3X3mcwG+JtIgclU5Jj5ryPZ6Mysed
-Y1+kVR+goOe/c8TOrJOCL75bKRIvJdq42/3fRvDl6P/pbcx7eP8tN2pItPQG/oRu
-G9kuSBq89u4g6VLDtE5gEOyirByFoBOUrRQqvB9OqUGkbx3H6kfUCs6DhwNTJU3e
-D7JP8vMxtjCqlpKYvofQ+EfipZPhUTps+9ODrtmO7X8HqKNABIuJluXtOqASVBAR
-TqsoF3YGCjw5K8q+7klezEENETtuCcpVSxH4gApnpBKa/qu5kCX0oupn9CuleA7D
-49/mfova4SRZl8JHWIJ296LzBq3vSGUsW+I0umWjeKRMtVYcx48vPVO3nNXv1XuX
-4x5yey8rH5fypSN9s2Ue2bfijAYXcmz5DT0OdwVmgc2+/trgMcyre2HhPVuo5Lko
-yJpDQut+4jVVKiHUwPDLdaUknLcgdatVsbUSK2fxqMPXCEv7bg/TEaXGqaxXkpue
-qNpkG8a2a2vTdQq7wjvHO/uHCC7x1mz7+h3Ir8IJxRQPgKemzsP1iRbXsnWKa60L
-cE0/f0rU8R/4ko6kKwocDWdXDpnBSMZSY8kcNW02o01pUO999bVVPMHz1dKOxIMN
-bycT5JXre80Tt+7REY5QspXhRVU45TA2AWyqLeLJ5fh2vUViLBA=
-=NTAb
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5q4sACgkQVbJhu7ck
+PpQwOg/+ILTz69DK7CXTH48CmOe8Aw0L+xl4bUFxMcHGTzUsEWIGM8GZ4SHGqQ13
+DjiUkRy5EAcsplHHlVDNgGirzbPL5TvLCpd0S/GO9pVbZYtp3DhB7JY8gvMOSM5o
+9xQEJDv9FDjrgyVAQcz+OQcneQIgULVGjL8XRetJ5tHzoV8nKe+ni8dZR6FghoXo
+J2AmWzWYUNjLlDCBlc6sU+Myq1EdPddkyU+6oan8cSjZPLNHsBKcgPfmixh1xbBa
+kl0jUc8auzDN+svdYKkca/4fmVxve9jJVECmcsqbtwOprg3RAXfi9L5uktn3Ec7h
+OBCWk9/ZEVvlta29L4akNIzDlH1Lo0pzpPDnV95EXUFf5Ps/zF4RZeH0lfyj0Z1M
+M/zXnokhY/QsJAi9hfHIlNo87ChHBoA8IHc75eekjvSnxYHbokgKDWMW27vspERr
+ZGt/ds8ddA8P4clxsaCExYAwlQ6doExEfMq4XWa7c4S3UBIphhtzazOJoz/ABKnr
+ZPRHSCmrKGhqBC+iB2Ea7WtFIILI9MJ+C4w1clHCU6Z2DJxBOFzIfA+66MPec0td
+3QuSnwM0O6K1h/xxGGDcyLWqn+uLV6jGxUBHsMsLtbyH7jtxJIB+EnV+EI4kHhYQ
++MTInnl9sT874XQ5Zx22857CdpfZd888lj0SO36cTzNzt+4I9aY=
+=fd7N
 -----END PGP SIGNATURE-----
 
---DPGtQmHwGd4tlKtp--
+--5pOinR7WAVLgfcUP--
