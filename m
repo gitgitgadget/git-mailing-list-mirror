@@ -1,115 +1,117 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FFA6D1C8
-	for <git@vger.kernel.org>; Tue,  7 May 2024 06:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591AD6F06B
+	for <git@vger.kernel.org>; Tue,  7 May 2024 06:21:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715062812; cv=none; b=ewdrV6eZ5vCue5G5FGS0k9T3tw0X/8Fv8CgjBAjmxY0jJQOquqTX0unKopOzGAobkXgYRghZJSNqS/KmoogYO4fapJRkhtOIXo8nfZG1r428uWYQbdz17UQRufgvyG+6Kw/20Z61izUkh/4i93zZyf3QlH2N2WW3kR2/AC15uWo=
+	t=1715062881; cv=none; b=g657Q3AVtcq4oYnP5IMua6XsZB1JLO0b7lHAN1yPubbQM+uKcfqm6V2WdNaBfryW6alWSJraS9LUNrYk9nPyExofA7ptTKENE91t9a2PEkwwcNBYQ3ybXMs/wAFVxTTtTPXWl+39bxlPc4H+6MlK0DYQ0SeVLCL3iYHFwhzG5x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715062812; c=relaxed/simple;
-	bh=zUcQThhRRIHYWkcSevtkmihMQnlvxFnrFD1Oe5BTHB8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=obaEKeSKnZFXYUQLlbPGB0Qje99VsChG+V4Cs5Q6bNTrBL1gZzJ2pC46mTwRMXQx0FFD1S4zGFClp+2mkQ1An9jqC4Ox6BYiGV0phdd2VFrW11nwJfpfx60c8JpHA/PTs6dv7lm+mlpuFozzgH78ImYOqKhD2ZytrVkq5HpIM2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KUee2gfl; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715062881; c=relaxed/simple;
+	bh=/b4e1gWWAfFd/0Q21FXBy6wHVmvu7vJBDg6g7IJVVSM=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=J82Mu3jxziY1dbUjiqroh2Z9BsAGCBXW9RJxzNtDsuGMbn+1XBugDGXk7FMbNpj/5VwJYVfW5pzh0uxORYVarqRNw/dh5NcCrO06IpOLV2qWHHOuS35yq60Q8CUTuXIK42JloHcg+67bmduj49FLwfAGUv11bSztm7TuQ3l1S6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=oOMPQghk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bfylZ0Ed; arc=none smtp.client-ip=64.147.123.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KUee2gfl"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C49812F0DB;
-	Tue,  7 May 2024 02:20:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=zUcQThhRRIHYWkcSevtkmihMQnlvxFnrFD1Oe5
-	BTHB8=; b=KUee2gfl/DCCodPUBQo42Ypb4QDE5AtrqsM7cleqINxa2i9ZflHQAk
-	lCJyq0KcJ9kbSPsPVsUTruF/mEbe8DK8/qbep/c7mW5Ls1KFdP3NU/QdIXvV3HmY
-	+xBo6ThZRGF078Vc5oZ5dViRV2e+aQSBlleW2Zm+8ky4CLgiwrgBM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BD4072F0DA;
-	Tue,  7 May 2024 02:20:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 371D12F0D9;
-	Tue,  7 May 2024 02:20:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/5] refs: remove functions without ref store
-In-Reply-To: <ZjnCoaVP9_wuYiHh@tanuki> (Patrick Steinhardt's message of "Tue,
-	7 May 2024 07:56:49 +0200")
-References: <cover.1714717057.git.ps@pks.im> <xmqqikzu95cf.fsf@gitster.g>
-	<20240503173553.GC3631237@coredump.intra.peff.net>
-	<xmqq7cga7nzo.fsf@gitster.g> <Zjh8XWwJKp_I1dwE@tanuki>
-	<xmqqseyu3ojk.fsf@gitster.g> <ZjnCoaVP9_wuYiHh@tanuki>
-Date: Mon, 06 May 2024 23:20:05 -0700
-Message-ID: <xmqqa5l2ta7e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="oOMPQghk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bfylZ0Ed"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id A2658180018E;
+	Tue,  7 May 2024 02:21:17 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 07 May 2024 02:21:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1715062877; x=1715149277; bh=/b4e1gWWAfFd/0Q21FXBy6wHVmvu7vJB
+	Dg6g7IJVVSM=; b=oOMPQghkvykCUtR72qoqELztm4jZH61yXR4l+RSMhTMC3JMl
+	Sy0yCCDrEt/aBMdeKE/O5nnyeKEaEaxrPpZEEaNOm3ySyaug+S19lky1H9xLOahH
+	BUKV2Ea+mRKtTx30OWlYGhad2PXdjaTl9LfplZESjbZZW846bIFzSfeW0IVEKMjh
+	7K0IVY8bX+TRpwhSvTpXM6ajka/QQFI0iDhyExcxJGgVbf+ETUBxM+VNnxBDpESE
+	YW1BuTV3UWmNPd1jh4fseorIf4I2wV5HhPciN2Y2rZzrrUy8TeFNpQ94xwCUHbdk
+	xMEaUAFY4AYeDZ6SFiKbJxkI8Udbo7Qp1oo/pg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1715062877; x=
+	1715149277; bh=/b4e1gWWAfFd/0Q21FXBy6wHVmvu7vJBDg6g7IJVVSM=; b=b
+	fylZ0EdoutAwhff9M3KAm7orRbJJTcuxs+Xp8nrJ+TjjCKvrES5Go46/0jKC8Aud
+	bObw1+dUNuK8KYQE1wOMkAkatj9sADOYpoZsG4oguCBBIrIJ6BzD33eG53EybZ6H
+	VFYuVsy9UXFS2RAG2kUd+v5lKbzAACXIQdtq1uUQ6jx90YRNZZLcAnnFzGp2kH6e
+	Yh5LzrsEqoTbW2VnUexLZMfvMnqFiN+udEAsH5xXHFgzvsB6uzRIICuCOjZPKpfA
+	ChzGdaMI1j5V5a1ZW76dfH2B1mZPc/gVoTjeKzEagpoliHHlgsGJulEg/tfgN96S
+	P+q+pVlYoR4PkI/pel8xQ==
+X-ME-Sender: <xms:XMg5Ztoc15T6O3_oMl8Af1GL3fXhHGYXDOMvFlOQzb_h05fqIffH3KA>
+    <xme:XMg5ZvpAcZAMT6WUoeFSGQpYY4AjxlPc8WlWetqoqrMfmzYZ0T9xW8jJvbjim9Mga
+    xSvgDb3HjG3pLJM3g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
+    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:Xcg5ZqOeceqoibzaNIx6hzwl_xMDZ_BfwLRdxOce01rOsWyFO-xfYg>
+    <xmx:Xcg5Zo5pDsSsmtVYQ51_QsIkBciAU2qwh6fn1tDwAW18BCwaEp-62g>
+    <xmx:Xcg5Zs5JJBzHPKOconU0_m324CB8MRB6sHi-jkrjlCwaE0WwRsch_w>
+    <xmx:Xcg5ZggdkcQJctAYq-pCYMs_auAr42RaSkhUMwuSEYplSdyCOR6CiQ>
+    <xmx:Xcg5Zrb99LLV4LffrNEmvxPesRHC-S7McGtwikaXd5x5u5AlqqJZLzor>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id D25C915A0092; Tue,  7 May 2024 02:21:16 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-443-g0dc955c2a-fm-20240507.001-g0dc955c2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D96F981A-0C39-11EF-A7B5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Message-Id: <e364b795-7920-438c-a2e0-ed5940065623@app.fastmail.com>
+In-Reply-To: <04d001da9fe3$e9c2eef0$bd48ccd0$@nexbridge.com>
+References: <cover.1709724089.git.ps@pks.im> <cover.1714730169.git.ps@pks.im>
+ <b3f3c3ba6ab33d269f7a707eae1456c87cdfeddb.1714730170.git.ps@pks.im>
+ <CAOLa=ZSNbZPByO9QyeAGaR1pWXMB7ge_GF7M5fydxP-cse-X3g@mail.gmail.com>
+ <015b01da9d5b$bbe59120$33b0b360$@nexbridge.com> <xmqqjzkaanr1.fsf@gitster.g>
+ <ZjiL7vu5kCVwpsLd@tanuki> <xmqqttjazwwa.fsf@gitster.g>
+ <04d001da9fe3$e9c2eef0$bd48ccd0$@nexbridge.com>
+Date: Tue, 07 May 2024 08:20:56 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: rsbecker <rsbecker@nexbridge.com>
+Cc: "Karthik Nayak" <karthik.188@gmail.com>, git@vger.kernel.org,
+ "Taylor Blau" <me@ttaylorr.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
+ "Eric Sunshine" <sunshine@sunshineco.com>,
+ "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v4 07/14] builtin/config: introduce "list" subcommand
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, May 6, 2024, at 20:33, rsbecker@nexbridge.com wrote:
+> If you really want to get rid of stuff that has limited use instead of
+> submodules, it is worktrees, the benefit of which is reduced given
+> sparce checkouts and fetch depth.
 
-> message. The best I could come up with is the following:
->
->     #define REPLACED_REFS_FUNC(func) func ## was_replaced_by_refs_### func
->
-> Which results in compiler errors like this:
->
->     bisect.c:712:6: error: use of undeclared identifier 'read_ref_was_replaced_by_refs_read_ref'
->       712 |         if (read_ref("BISECT_EXPECTED_REV", &expected_oid))
->
-> What is still missing is the bit of informatino that you need to pass in
-> `get_main_ref_store()`. But maybe this is good enough?
+Git-worktrees is very useful. One use-case is having a dedicated
+worktree for an old version of the program/app that you need to work on
+for whatever reason (using the same worktree for very different versions
+can confuse build systems and IDEs). These things aren=E2=80=99t covered=
+ by
+those other supposed alternatives (which I never use because I don=E2=80=
+=99t
+work on big repositories).
 
-What I had in mind was a lot more stupid like the attached.  For
-illustration purposes, I just did only one, but you got the idea.
-Thanks to "#if 0", the compilation will fail, the compiler telling
-the developer "resolve_ref_unsafe()? what are you talking about?",
-and the developer will grep for that name to find the hint at the
-end.
+Maybe the idea is to use a fetch depth of 1 on N clones instead of N
+worktrees. But then you still have clones laying around in an ad hoc
+manner compared to having on overview of all the worktrees that you are
+using from one repository.
 
- refs.h | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+--=20
+Kristoffer Haugsbakk
 
-diff --git c/refs.h w/refs.h
-index d278775e08..a7e1c261ac 100644
---- c/refs.h
-+++ w/refs.h
-@@ -72,9 +72,6 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 				    struct object_id *oid,
- 				    int *flags);
- 
--const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
--			       struct object_id *oid, int *flags);
--
- char *refs_resolve_refdup(struct ref_store *refs,
- 			  const char *refname, int resolve_flags,
- 			  struct object_id *oid, int *flags);
-@@ -1054,4 +1051,15 @@ void update_ref_namespace(enum ref_namespace namespace, char *ref);
- int is_pseudoref(struct ref_store *refs, const char *refname);
- int is_headref(struct ref_store *refs, const char *refname);
- 
-+/* The following are removed - rewrite your callers */
-+#if 0
-+static inline const char *resolve_ref_unsafe(
-+	const char *refname, int resolve_flags,
-+	struct object_id *oid, int *flags)
-+{
-+	return refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-+				       refname, resolve_flags, oid, flags);
-+}
-+
-+#endif
- #endif /* REFS_H */
