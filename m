@@ -1,45 +1,45 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D428013D25E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FDD13C9A2
 	for <git@vger.kernel.org>; Tue,  7 May 2024 08:44:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715071488; cv=none; b=cxPEOm2KmVLY8MbeCyIuN/ErivWNOFA9cNhAvdFeCE1jqb59J1O33PoHl5dChE+a2P/8mJR/At6WScI8xdxR5aqZrNwm1PJyiziyM0YkBbueY4kEMLixW+kf1uqsZZAOnlE894H1W5gg3XaReJLZ1X9j9njnriXgULu/Baz5pvA=
+	t=1715071488; cv=none; b=iKmlojDwjbAhKVqoTx15TgkoknQbkMSvEUJipCJlBFGA5A4/HR4Q/2dj8E+4Yt9vRshacyUZuHB2g1fAPQaTnhYi76g9B2NcnnVUHXydxKrzphPgWuJJMpUbNoM/E8Qe5iNV1wXQY5Msk6ozsBPaTJydcqG3idXmvajd47VTgto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715071488; c=relaxed/simple;
-	bh=nCzMD1/QtyXZBJPnhhNJ5l+BssEMN45uIZ5QWDay2tg=;
+	bh=itfteu97l2W9n7adGdZi3t/clHwO4IsL+6wECPQR7yM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OluHwH8b8t8OE1vqHB/xx7CZE82DcT4j0Fwjgu2373QQEfEjm57xUJaUlAujLWXqc6OubdgLIAj12ioUdNiifWPVL1Y6dCfE4CRx1cgs4MRdYpp7R8cW8D3gmevdMdqpoJKUw/0MaoNdTzWArNvCP23EMH7ORM0CLUKDfCEXY3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=uJ6dD5xB; arc=none smtp.client-ip=212.227.17.11
+	 MIME-Version:Content-Type; b=nHABu8XweE7wWbf1fP62EVmXErhMRUSu5gLl3xgd9WDoyn21Hpc02pqyjO/B32qTIO8UQn3ZfTgJE3eZKNDjtYPFO76yI9Eo9PR0VsBwBSybOJ8+3Ya/52wvjf/xgH6i0gCtRhe/Ex0RPK7lAapTvua9vkiixnP2rUDxSkJsYao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=c4ZD/XnR; arc=none smtp.client-ip=212.227.15.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="uJ6dD5xB"
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="c4ZD/XnR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1715071473; x=1715676273; i=tboegi@web.de;
-	bh=/x4SaoShVhUkops8Iy0EOj+rrg6FX5SWz+/FI18qFjw=;
+	s=s29768273; t=1715071471; x=1715676271; i=tboegi@web.de;
+	bh=djAfIiMfIg6st+3j9m2+iiTkcmUFm9ki8K/6xTv8eGY=;
 	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=uJ6dD5xBqeX+fFPhe2QT/wx1ZwzW/y7Aj7e1LhAk0HaNngpBxsLWM0S9r8rxg+YK
-	 /bE5ZoQJ4Tuq5KEGCSlFzPjj238JbD2aPKhG9vNYosVun4SGqWKkEcBB0jr7DiMzN
-	 RbXbE+CZ6tMsml0K1290Ptd8dgyMZ8IDQQRU83XPIoO9Qed19I6Nx8G/wBZAJGVeM
-	 PPChTNyjZKnhxIoele8kC2EKH58nYxdkI44RA1AagE3244/FLDRWfvFzveZCVLwG4
-	 IElQE+5nWgS5TfYX5nKRxtkD8bxL5YTML6LTezT4fh6lkNkeQKyrZB+V7pYWlXBE0
-	 N3jZR8kzfSYPOrte5g==
+	b=c4ZD/XnR1ZrY71a3eVPCHnbZIEwVTkqiVYxb3+8Z3BeGod9XHkKDJqtzJ8h0hPRs
+	 /1/0mfeHoZG9+cOxunU5DpD6yxXPWrssG/tba5h48lNAhcQ2z8kdpv4R2URvO1LYN
+	 60ETc2LF0r7BXe40/dKzMcsRVkNJrPfOCBDa5x+9NVz1pykny87to8qqF2qVUkCxK
+	 IuvyC8+PzGLuixlSxxTEYzyTze1McPcjmh60KG8ME2+RcyvanfkXXlVysk+Cl7quk
+	 QSCnMcG7j3vgPLuZxdiKKFDlSSMsUACCaY7htkRXrb+mKcomwDeZg4+F+nWQiHAjm
+	 /0hA8l6kcIDq0gAp0A==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from localhost.localdomain ([213.65.201.17]) by smtp.web.de
- (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1M2ggX-1s3R5q12T9-0049cE; Tue, 07 May 2024 10:44:33 +0200
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MYclj-1s8qz62GHb-00Vraf; Tue, 07 May 2024 10:44:31 +0200
 From: tboegi@web.de
 To: tboegi@web.de,
 	git@vger.kernel.org,
 	takimoto-j@kba.biglobe.ne.jp
-Subject: [PATCH v1 2/2] strbuf_getcwd() needs precompse_strbuf_if_needed()
-Date: Tue,  7 May 2024 10:44:31 +0200
-Message-ID: <20240507084431.19797-1-tboegi@web.de>
+Subject: [PATCH v1 1/2] t0050: ls-files path fails if path of workdir is NFD
+Date: Tue,  7 May 2024 10:44:29 +0200
+Message-ID: <20240507084429.19781-1-tboegi@web.de>
 X-Mailer: git-send-email 2.41.0.394.ge43f4fd0bd
 In-Reply-To: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
 References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
@@ -51,110 +51,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0ork5MKKgth8etOHq5QDlAT33nuDhqXOy8L2gtNQxNbJOfTeAGM
- /qepePDlZpepxddcN2/RCg8MKTGBUHfNtL6ZhYetUyNQSs6CyQDttBWUSANkXvLogL+eh6v
- 9eoQn4uNUF48HdgIa15x2BDphzc1r6wrjk5O+vfAqi3T/lv2UM5Z1wCUmDF8JpLUvUQnQBX
- koxQgcg+gMwzFCQ33wLlw==
+X-Provags-ID: V03:K1:EDn3uBPap0W8bE+KOZ3mtP/MR9GJlfEfywC50VpWqHXRYEjjkhM
+ 0LUSMUXrT7MKLEMy9v0TJNWWQv1XW2uF/zUx10+OvEOlg7G1Pw4fkLTpqwgvJ7m2FtojW3L
+ /p5EbpdzDwsoBACtw1jxP9AExxczcOfzTIFe+jlnIO/642mRj5GY1gilMopRvQQYpTVfuMJ
+ /0Tay7GfPkZcyzovWiTfQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:JLy2UctUzXI=;/nWkt7T4N8buZ9D+0JA+OQRTbjI
- X7Gb4hWoRuAusvNw2Cr0k4J0JvLfOxSVKFJK3G68PUMrq6If8HdYWlbOo2qw7khpbojc4dgxf
- QdHri/LjDGOFR/ci8mlu7EcokMAG/Ye+AYBKO4TTMwR8qoN2iVG+PH8NdP6deLLJt1iCVPP6L
- 5Dh9pSIQgybch+N1Q7UASPzJm4ULjBA8+X08u/h4hVMeulRec2ksk7UqSX09g4vuojqc5juBf
- qj8ncU6D+u1FEuxc5prhSSEqDXx/yAtk4WV3Q189nIbr1zKfApGTeWT3B/FbmsXGDYXII1gq1
- J1Cl+osqzLQ9aSSkd2oUhGQvG/KesTGWoiNUCpbVSkfRK5YDO1wlcBJJPOwLGP7E8ogsADRg/
- /21K0WyS2uA/+Wx8387qpG6FEdOqLYdxwQrw4Ke+AVJs7TrbHb/CjC2CpbseGgonvAMHyOji+
- ZBzeokqBGUxEh63zyZER8BAqYYGQQDPD1bmExA9L069AcwEIRji/Caaop4oUodkbbbPZRx9Xz
- eqEWIYjUL5inUs8BYC/zjvnme1Czn/0dEf11klfefxF/CnRzW8qcHJVrtLgaPBwk1EubOtbuy
- tDeIQzBdW8QKKKnNZyCR8po9WFDToeY/cpBFtsVMu1zhPiPUgh0dLDOtTPbB43BAS47WpiqiR
- OLJnt52YZBLQhB40fCghFmA77ou5hVtwEYBsa9/vEWZeZAHuG4RrJ6ijJR9Z0Cj3IsFPN1y+P
- jnrOBXBv1lsDH5xIhJb5Jl04RgHCiZAKjM2FT/AwG0BQoihE/uP2k/icS+UfqtWmfQkLtAeFh
- hafVMjvGHneojs4O3Ydm/MEH2OSu+l33wISQ2LJRqoDqE=
+UI-OutboundReport: notjunk:1;M01:P0:Qc7/DTtcYI0=;718VuhF7KkxXquhUFon9jW4AsyV
+ xzNTcXzoj19bUHd1NCLEk4iEanFaFvwQXRxjMetWwI90ATjtHpXIlLSOjMgDERzyKa86me9wm
+ J4mlfNRlDUJAgWlXZorzUW020s4Wio/Y3UcqRH74DcQD/sdurWtBWd3o1Au4oPcNJ6Xq5085U
+ UouVNaF5Y8xdomWTP5NIiUcGyy1lp+NYGw96KL19oUKJhb5afW+V+Dnxh3EUHZ3qspaIAREmL
+ WVXSG7RsylihgiajuLcyhMtuRnhhnnydPrN3Ks0fSJfItNv9jbQu1kRS/d8FFfv+X5lxMm4BH
+ YNKOWuGt9gJxKZj79A4IOiUd0vOuqnuNCZua34Ofl+DM4fvtLLzMJQt/jFg05JyV6zlyGK/jm
+ zLd9RwbPe+NN1YuAhp73PiTz8Th96Oj6ANyENrHOIWngd6PMdUfDG6u0Wl/MdSmHH7Pha+dn5
+ O2FM3Rn4PuWMZSk83EZI+cjMVFTNghp9ijQ37/tV3zq7uK352MVHS7hfkbt2wqP9b7QLeChhQ
+ awOONBO6O2JwwPpJ518ONvxwSBj5gAupNBEUiYEZlxAKIEyz0sYWfMPg+GR8KYryJGE/Mqiof
+ GRbLzcbkS6wcOpRiAEmIl+2n3bw+ziEKAEjIfb2pvXRJ7hR1dajkY3jnbpmSHzRHDdpbMP4XQ
+ V6onddDe5NdrYhXwdD55bus56dc29WVqiDZWlAQgjO/n/raQR4xqCfI4/LhPovcHQXKbCs6iU
+ BSZ1pGlAOmoSaZp0Y6/Wk07Xa+9Ik0YCJ2y3F2o22oGdBfin9azpFn3heVEKGNYTK2ju1VlmH
+ XjGPlOGY0pjDqagRu14tzseZnwHvBA+Huwm7Wgf4xz+Eg=
 
 From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-When running under macOs a call to strbuf_getcwd() may return
-decomposed unicode.
-This could make `git ls-files` fail, see previous commit of t0050
+Add a test case for this bug report, slightly edited and shortened:
 
-The solution is to precompose the result of getcwd() if needed.
-One possible implementation would be to re-define getcwd() similar
-to opendir(), readdir() and closedir().
-Since there is already a strbuf wrapper around getcwd(), and only this
-wrapper is used inside the whole codebase, equip strbuf_getcwd() with
-a call to the newly created function precompse_strbuf_if_needed().
-Note that precompse_strbuf_if_needed() is a function under macOs,
-and is a "nop" on all other systems.
+ls-files path' fails if absolute path of workdir contains NFD (macOS)
+On macOS, 'git ls-files path' does not work (gives an error)
+if the absolute 'path' contains characters in NFD (decomposed).
+I guess this is a (minor) bug of git.
 
+$ cd /somewhere         # some safe place, /tmp or ~/tmp etc.
+$ mkdir $'u\xcc\x88'    # =C3=BC in NFD
+$ cd =C3=BC                  # or cd $'u\xcc\x88' or cd $'\xc3\xbc'
+$ git init
+$ git ls-files $'/somewhere/u\xcc\x88'   # NFD
+  fatal: /somewhere/=C3=BC: '/somewhere/=C3=BC' is outside repository at '=
+/somewhere/=C3=BC'
+$ git ls-files $'/somewhere/\xc3\xbc'    # NFC
+(the same error as above)
+
+In the 'fatal:' error message, there are three =C3=BC;
+the 1st and 2nd are in NFC, the 3rd is in NFD.
+
+The added test case here follows the error description,
+with the exception that the '=C3=BC' is replaced by an '=C3=A4',
+which we already have as NFD and NFC in t0050.
+A fix will be done in the next commit.
+
+Reported-by: Jun T <takimoto-j@kba.biglobe.ne.jp>
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 =2D--
- compat/precompose_utf8.c | 11 +++++++++++
- compat/precompose_utf8.h |  1 +
- git-compat-util.h        |  2 ++
- strbuf.c                 |  1 +
- 4 files changed, 15 insertions(+)
+ t/t0050-filesystem.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index 0bd5c24250..82ec2a1c5b 100644
-=2D-- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -94,6 +94,17 @@ const char *precompose_string_if_needed(const char *in)
- 	return in;
- }
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index 325eb1c3cd..bb85ec38cb 100755
+=2D-- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -156,4 +156,16 @@ test_expect_success CASE_INSENSITIVE_FS 'checkout wit=
+h no pathspec and a case in
+ 	)
+ '
 
-+void precompse_strbuf_if_needed(struct strbuf *sb)
-+{
-+	char *buf_prec =3D (char *)precompose_string_if_needed(sb->buf);
-+	if (buf_prec !=3D sb->buf) {
-+		size_t buf_prec_len =3D strlen(buf_prec);
-+		free(strbuf_detach(sb, NULL));
-+		strbuf_attach(sb, buf_prec, buf_prec_len, buf_prec_len + 1);
-+	}
-+
-+}
-+
- const char *precompose_argv_prefix(int argc, const char **argv, const cha=
-r *prefix)
- {
- 	int i =3D 0;
-diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
-index fea06cf28a..fb17b1bd4a 100644
-=2D-- a/compat/precompose_utf8.h
-+++ b/compat/precompose_utf8.h
-@@ -30,6 +30,7 @@ typedef struct {
-
- const char *precompose_argv_prefix(int argc, const char **argv, const cha=
-r *prefix);
- const char *precompose_string_if_needed(const char *in);
-+void precompse_strbuf_if_needed(struct strbuf *sb);
- void probe_utf8_pathname_composition(void);
-
- PREC_DIR *precompose_utf8_opendir(const char *dirname);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index ca7678a379..80ae463410 100644
-=2D-- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -344,6 +344,8 @@ static inline const char *precompose_string_if_needed(=
-const char *in)
- 	return in;
- }
-
-+#define precompse_strbuf_if_needed(a)
-+
- #define probe_utf8_pathname_composition()
- #endif
-
-diff --git a/strbuf.c b/strbuf.c
-index 0d929e4e19..cefea6b75f 100644
-=2D-- a/strbuf.c
-+++ b/strbuf.c
-@@ -591,6 +591,7 @@ int strbuf_getcwd(struct strbuf *sb)
- 	for (;; guessed_len *=3D 2) {
- 		strbuf_grow(sb, guessed_len);
- 		if (getcwd(sb->buf, sb->alloc)) {
-+			precompse_strbuf_if_needed(sb);
- 			strbuf_setlen(sb, strlen(sb->buf));
- 			return 0;
- 		}
++test_expect_success 'git ls-files under NFD' '
++	(
++		mkdir somewhere &&
++		mkdir somewhere/$aumlcdiar &&
++		mypwd=3D$PWD &&
++		cd somewhere/$aumlcdiar &&
++		git init &&
++		git ls-files "$mypwd/somewhere/$aumlcdiar"  2>err &&
++		>expected &&
++		test_cmp expected err
++	)
++'
+ test_done
 =2D-
 2.41.0.394.ge43f4fd0bd
 
