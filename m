@@ -1,124 +1,107 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D0D5026A
-	for <git@vger.kernel.org>; Tue,  7 May 2024 05:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB1A6BB20
+	for <git@vger.kernel.org>; Tue,  7 May 2024 05:51:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715060317; cv=none; b=tf9NR+3AC5eMCIqfaQRk3IOXMNmbBv/qLXLT+QS1CVJm1n0119kpfkinTHCIKEZ+BgQjkkoMFoSwni7iRiwzif9OgCevkzO8DgW/pTV22XkMUFSzFMBpFFTP6/D/+5GziULtE3IloO/XOGE7he++NEfY9CAxgQ2PCnS8xBVHVIs=
+	t=1715061114; cv=none; b=H6vf3LycYVzXSMU9+gJk2zwlVtxa7nod4XSzbjAc0iObYc+V98z/J4OTeOLaCJ9QPITqd/BK665R9Ed/lS8ZijS+w3Bh3PuWqXmfDstfT/tupyluOsZQVEwAsVUuYC1A4EgYLxRZIE85jP2eaCoMlCO+Eryp6JCoSFOtBWbO0EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715060317; c=relaxed/simple;
-	bh=DArMcW/oFMmE8HsmeNpxxeOqvJyujNeXT1j4YsGNplY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZdjWcKQ8JNWVlu5qP+nItAoNUkDxKLJAaCM6pDCLXr/Mxs1NYGxpNJzsTlZX06nzncOyfvr14bow0lUMFaWWemjPPo2sCShqhjismcfJNpGXM0oMdlGG8r7oIT9WLYZxaY6QZbeBFBZDl0uK1PrJ3Dfjhxfz93orqMioGhp/OUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTPS id BFFD934311A
-	for <git@vger.kernel.org>; Tue,  7 May 2024 05:38:35 +0000 (UTC)
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-	by grubbs.orbis-terrarum.net (Postfix) with ESMTP id EBCCA260320
-	for <git@vger.kernel.org>; Tue,  7 May 2024 05:38:34 +0000 (UTC)
-Received: (qmail 16677 invoked by uid 10000); 7 May 2024 05:38:34 -0000
-Date: Tue, 7 May 2024 05:38:34 +0000
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>, Git Mailing List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-  "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Feature request: secondary index by path fragment
-Message-ID: <robbat2-20240507T053331-859497691Z@orbis-terrarum.net>
-References: <robbat2-20240506T225759-090424131Z@orbis-terrarum.net>
- <xmqqttjawmos.fsf@gitster.g>
- <ZjmtJFF7rv7B8Nhj@tanuki>
+	s=arc-20240116; t=1715061114; c=relaxed/simple;
+	bh=LNnrYFQNa9wvCsgUghCsSZIxm5H42BPTFnq32jBgoBI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZLDMdyvl6Hh6touZ/P040GiB+5akYTZGQOTgEh3Ai4n2MRN4TaXWjMCf4A5oIqfYGhS0P7H30bZArBIM2ivm371uqr6NI1GhoSWFSAwOd6A3UgiBC0aYWeDZSMKuuRP+E32QmsxkTAyUYHGEcbB4fUm0xkKTHNg0Uprwlyqp2lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D1KlhEcg; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D1KlhEcg"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-7da37436e36so157443839f.0
+        for <git@vger.kernel.org>; Mon, 06 May 2024 22:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715061112; x=1715665912; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XjnBBsnv3DpOYTI5DZjo2oPVZ6AaU1WxnNaDxv/lhbE=;
+        b=D1KlhEcghULGcU8yTH10g90P04Pfr5O99fme3o5d7JMe/fd9QORu+pRy0Lv/UeN0ap
+         C6u79ocLWa8XgYbeHjAtOdsfy5+H9pqIwGt34qP69agzVQrs4OfqTMwCkrT8KT0XFtPn
+         xVjRj6l2lhPvJu2j5UCArtARSMsvXKhlXlLJYNTDXUyorwQBdpIM1OL8J74SgQ0Eo2xm
+         yABazOjhG/lRbNbJRvRv6Okn5O0MW1MIAeAq5yBC9BPw+xNw6hj8ZGe2D+dXBS+NKCYj
+         4kyJzc/n+TT0+DC84gPLNJc2HOQHBwX4hlyRwEI8UDi4Now0pU1ppS49R9tWwSUeMwSP
+         juWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715061112; x=1715665912;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XjnBBsnv3DpOYTI5DZjo2oPVZ6AaU1WxnNaDxv/lhbE=;
+        b=qU/Tz2fju51nmzNWhnBhaF2ROkvaOzPd+5YeW2quPP0fjtYMn85o43nOCkanF6cPRe
+         UCOr6xKu9DGZFB+qfTzwu7B/j5GxbbD5ME4OuMn0NZo5pv9p0C18aktAR07GKLW+6JzC
+         for43hctDR+fnTF1oI4YCsjtqdoy0WkXi31droZ4KXwjwm7ozU5mMXTKRWfnCw5SsivS
+         yJ7Nd9e+ld33cz1+YbFuade0ZQIPPWeJ6wBfQowg5BL4uKu5lN0I4Ii6Xwl8gHkxD5MA
+         4j2QswSwEd/5hJAIXa4jHAVFi9jtn1rYx1Uh1j98nXwtgXmCAkn3EJ4vGMYp+idUBW7f
+         HTjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVvm6sUnEbY0qTusRDgNzNfFTFqIa+yyigEITt6yjpAyJKxYPCnSr7hulDXLP+lYpyXk54leWRhkZ0Kr9vRfTg89a+L
+X-Gm-Message-State: AOJu0Yz3669QzMJ7Esq88THvAk5zwrjXB2X8nZCrVvWGlwfOfJiGHRw5
+	q7nqg5rKn92uk2hVeMJPbzMqrDvXY97UWqZnAhs7h06YyUj2Rwe/2RlvyRQ6UjA+kG7rGuoSG12
+	J8reuGAZUPCOl1V4WfuwdYkj8ZikxNA==
+X-Google-Smtp-Source: AGHT+IFJ4r3H2WJX02bu6+Ml026plwHPutToeYPLV4ZikPax9CK7IDPPwelIWWHTe1q+qXCm6BUcq5As6BAt3y8UziU=
+X-Received: by 2002:a6b:f115:0:b0:7e1:7ae7:9cda with SMTP id
+ e21-20020a6bf115000000b007e17ae79cdamr2581403iog.12.1715061111722; Mon, 06
+ May 2024 22:51:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TwPkolQPsYw8vzno"
-Content-Disposition: inline
-In-Reply-To: <ZjmtJFF7rv7B8Nhj@tanuki>
-
-
---TwPkolQPsYw8vzno
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <pull.1716.v2.git.git.1714711829698.gitgitgadget@gmail.com>
+ <pull.1716.v3.git.git.1714791848557.gitgitgadget@gmail.com>
+ <CAOLa=ZSre3f+0SR-_migfkPONqhinobKjU=NnGOJ_sTNM_L5ug@mail.gmail.com> <xmqqttjaydbw.fsf@gitster.g>
+In-Reply-To: <xmqqttjaydbw.fsf@gitster.g>
+From: Ivan Tse <ivan.tse1@gmail.com>
+Date: Tue, 7 May 2024 01:51:40 -0400
+Message-ID: <CA+WCWMyxBA90QRsxn-i0H1TRi7WrhRcD=Tgj07f_Y_=UVNkhbw@mail.gmail.com>
+Subject: Re: [PATCH v3] refs: return conflict error when checking packed refs
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, 
+	Ivan Tse via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 07, 2024 at 06:25:08AM +0200, Patrick Steinhardt wrote:
-> On Mon, May 06, 2024 at 04:22:11PM -0700, Junio C Hamano wrote:
-> > "Robin H. Johnson" <robbat2@gentoo.org> writes:
-> >=20
-> > > Gentoo has some tooling that boils down to repeated runs of 'git log =
--- somepath/'
-> > > via cgit as well as other shell tooling.
-> > > ...
-> > > I was wondering if Git could gain a secondary index of commits, based=
- on
-> > > path prefixes, that would speed up the 'git log' run.
-> >=20
-> > Perhaps the bloom filters are good fit for the use case?
->=20
-> Yes, Bloom filters are the first thing that pop into my mind here as
-> they are exactly designed to solve this problem. So if you rewrite your
-> commit graphs with `git commit-graph write --changed-paths --reachable`
-> you should hopefully see a significant speedup.
+On Mon, May 6, 2024 at 3:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> >> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> >> index a098d14ea00..97473f377d1 100644
+> >> --- a/refs/files-backend.c
+> >> +++ b/refs/files-backend.c
+> >> @@ -794,8 +794,10 @@ static int lock_raw_ref(struct files_ref_store *r=
+efs,
+> >>               */
+> >>              if (refs_verify_refname_available(
+> >>                                  refs->packed_ref_store, refname,
+> >> -                                extras, NULL, err))
+> >> +                                extras, NULL, err)) {
+> >> +                    ret =3D TRANSACTION_NAME_CONFLICT;
+> >>                      goto error_return;
+> >> +            }
+> >>      }
+> >>
+> >>      ret =3D 0;
+> >>
+> >
+> > Shouldn't we also do this change in `lock_ref_oid_basic` where we gathe=
+r
+> > the same lock again for creating the reflog entry?
+>
+> An interesting question.
 
-Good news & bad news.
-"git log -- sys-apps/pv >/dev/null" as my testcase from before:
-The fast system (2.45.0) went from 11 seconds to ~1 second!
-The slow system (2.44.0) went from 45 seconds to 49 seconds :-(.
+Hi!
 
-I'll try to trace down why one system slowed down.
-
-commit-graph command:
-fast: 1m10s
-slow: 3m43s
-
-> It makes me wonder whether we can maybe enable generation of Bloom
-> filters by default. The biggest downside is of course that writing
-> commit graphs becomes slower. But that should happen in the background
-> for normal users anyway, and most forges probably hand-roll maintenance
-> and thus wouldn't care.
-Most repos are also MUCH smaller than this, so it should be safe to
-enable.
-
-
---=20
-Robin Hugh Johnson
-Gentoo Linux: Dev, Infra Lead, Foundation President & Treasurer
-E-Mail   : robbat2@gentoo.org
-GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
-GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
-
---TwPkolQPsYw8vzno
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAmY5vllfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
-RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
-JsTIZQ/5AQWafd9puA6LnD0lc6kjawNmqSSg9Zj8mNFMiJswBGhUg+JkQOToqPDG
-smxlJAOiP1XsJexmdXxAx2ZqIX2im/EWhxPqdd7cLP6j+PLhzsnoyue0NkfOzhlS
-rbMumGnllhCQzie2IiULm82A0J7XAN+ZigSf3fOkT2H+Zj5MYmwaDbZxk4ODxMr/
-yP/0dOyXr8REAAMdjDQGK20mvALqItJXJOo4Zpn850q34ow6BHoWqjj7/35nxCFO
-oM9X1DrsktbbXwYhmY55OdwBnnSUD+WYp9D2vQIlfgsdYTlAeP2ARh7KP6+KqSvZ
-RHWTTnwTBCGm4uSI1NI2e4tGTz3pPhfU0MTRUDpEQXg7OJxKR2RGbOX5cmHvfR32
-Tzd5H/azegPOg2NFA3qrADjHC93Ce0YSRYwdrPazfVhlQMhcqbuHdR3CDCuidWlS
-M3ZQ0SiyZjTws39+sSRXUBtIAU5AXiBXDTTTXWzKnx1LqowEPeQ+4Awsp1E5mrdC
-mBRhgvhiVNrIdo889JV+8nyP3pIvuOIaHZKn/IPsWuk9IaeFukbgjtkanXrxWdtS
-ESPpqhACh8L5aZQhre1UGCAtCD7xCdWShvcR9TDoyk7h13A4swLf9yrorY/6hyva
-pGkeBoVTMWTrjXth/C6DkPy7jTWUvAd7dMrXHVVSIyJvLVPZQEg=
-=uiXw
------END PGP SIGNATURE-----
-
---TwPkolQPsYw8vzno--
+Apologies but I'm not sure I follow - could you elaborate? I am not
+too familiar with the Git source code (or C language) but from looking
+at `lock_ref_oid_basic`, it looks like that function returns a lock
+struct and not an integer success/error code. I'm not sure how we
+would apply this change in that function as well?
