@@ -1,134 +1,140 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747FE6BFD5
-	for <git@vger.kernel.org>; Tue,  7 May 2024 06:05:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE3C6EB7A
+	for <git@vger.kernel.org>; Tue,  7 May 2024 06:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715061907; cv=none; b=Tz8dTlBqTur9DUKxpUDeluSFxLfNa8u9DqVduhFWqZAp/wP+4g07Cammk8IQyalYhy14gTm/I5daAzn54b+WCS1Ysi6YC82JOvJ2wch7k9Wd4mfByhkACohm6BBzsMK6Z+LaSYNTED8kasUqmIq8pSjYDF89TWE7R4TCke7qSNM=
+	t=1715062518; cv=none; b=qCNwf2nkGWFATmfn96t8rfa/4IXgbCXYL36qse327dMsKS6U/6R1n84Gbuq/RmOzDqBYS/ljFTC/nyoVhMVQALO+G3lxTEviYckJQEM0k00AYp9KDZgiUQaRHSnFgIqj2mQaZCldjg2wnqzAZVEtCCJJRdyYRQ4SUsTvQAGvIlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715061907; c=relaxed/simple;
-	bh=fZe9GG2JNGJBT9ErN5B5lBEs6mIKF57l0h5+G1voha0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RkKUfwdIcPVTA2Po2whrjWJOkG4iLl+U2uONuN21tYaacIX3n6kdj+oLVSlEpksTMWUSFKfXUz5IVUp2fLCLbVTz+JOIl0nRJtfHzZ5wf+to3wvf+CWFBF9amM9iJF6rS0W17SMi6ehJIezcoIDt/dj3Fl4f1EBbXxTb8uuX9A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uwG6QjZk; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715062518; c=relaxed/simple;
+	bh=UGs8jJ7qD62TCqi6GotbTR/HxTYkGx6vmqFj8ALpjwo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mgz9eICsWL7/J2cT85AVpyxm1weknJXhkR0VxL3LXsaDfn4c+yeTxtrdWYM/Ngtv/RJQ1o0IUWkflxYvAkmuNnOl+wqK/zXP41F370lLazIHJKSaQlS73yxbyumYSwZXhO8m9FurQDznHeakWsSZNjzkoz+gpmSan/vjl+v/BR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fSl9xPN2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f9N9ozOM; arc=none smtp.client-ip=64.147.123.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uwG6QjZk"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C0D6E31CA5;
-	Tue,  7 May 2024 02:05:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fZe9GG2JNGJBT9ErN5B5lBEs6mIKF57l0h5+G1
-	voha0=; b=uwG6QjZktNMmLItZGwXkczyzsYADTSOtK1ESK7q0sJQuD5hwa1rUA/
-	6rMXbf6ruPnBy2d4vI+Z+pK3xkNTX1qdnt17dctu5n2HvbfWCFfSAV6XodqmbhB2
-	OKBuGc5hoUu6VN7N1/Hm0ukjSEH58mrLEE8O1hnawEOvzVRYFglvo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AA6C031CA4;
-	Tue,  7 May 2024 02:05:05 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E649531CA2;
-	Tue,  7 May 2024 02:05:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fSl9xPN2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f9N9ozOM"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 53E6818000D3;
+	Tue,  7 May 2024 02:15:15 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 07 May 2024 02:15:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715062514; x=1715148914; bh=S5XZiBJ1mk
+	Q6x8or3fS70LGfKEFjX9Xjb0Ta8Vcehko=; b=fSl9xPN2S4keYyI5ySDy5CvWYn
+	EP2fF7EERcDnGHGLYP1L2EEpp216qydHDyH2nkjGueWw/WAeh5mNO01fy7XOZxcz
+	uPYjj/vCP2wR1LcZ7JVUz27dLOcoxP2KM4yvyBn1oNTDG+eSJ2hw1kwo+R+pSer/
+	MhZ+j5sIbDbiSQEpBODJWhubllYvouDVR0cEzvSrtVsuWE65UQT2yKkKJPI7eq1W
+	+8ukoZAE4gpmhg8IhTFZbwqwqorfAQ1fhJKlfCOUvmWOXbo5Wo41ADbujsxGiKMa
+	zOgaT9jYZ2WHpMcILzC/m2a2QwVz5Ve815WP2a2QGS9amHKN3hbGSjwq+inA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715062514; x=1715148914; bh=S5XZiBJ1mkQ6x8or3fS70LGfKEFj
+	X9Xjb0Ta8Vcehko=; b=f9N9ozOMrpInMFj6gYwKIl7yoTxQB0N8JaYm5prxUfHO
+	2fcaYXKyElLGQfzPpI5u9ac+WCOIAkAyQGap2fvVi8NUfWxA4NytdzLawfWtWKBt
+	rKd98OSil4WbVLYFAn/RkrrH9rgSwQgNb20P19eRJjBg2g7MAgVVLxiLMZy+YOEA
+	wQW/lMLqeNpmQiWuPiWMRg4ARuNMUJemZm6RwfLakxaYnj8MjFFpoW+v8C49G8Eo
+	oVz5XEnoW4ax98HFtXuceTi/lqNvND32kACXyyMPmzUsYnhUXsSg7YQ7WTtsyrTA
+	gz/WnTqKW6AOnw3z8OihpmFoSu4EVs7Nwheh2K8+vg==
+X-ME-Sender: <xms:8sY5ZtSitbghfyxidm2FKhb0vhdpPuczTJ0RyZ7hL6PiIHNV9ammng>
+    <xme:8sY5ZmzoBhHIMybGVUS4j0WWsoSzh6gFqfIM-ZcziMz8mFzMaNmng_xSeYbEeILnK
+    9TqG5qrXmfsUV50iw>
+X-ME-Received: <xmr:8sY5Zi1WslcjWJPt9jQYMDyi7Xv3I1L1K-0hkhxycc8YntMc-6F1XhsjcWXJa18AfHIWHb3uEwn38vQAUxEjuTmr9PoOzI8cFhnqsJptQfFvnSxm2w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:8sY5ZlCLukyEU1jeR5GnNdyAy95fnsWrtSr6Z5ukY6YzE1322AswMw>
+    <xmx:8sY5Zmj1mk4BU463k0YCeBTS4cYvodJhRf1LZDmsgrQhTJP4_uoqdg>
+    <xmx:8sY5ZpqJPJ37MpShmNmNmie3MydzJ9HXh8GfdeTKiXryEaVwCT42sA>
+    <xmx:8sY5ZhiE_C5Vij9LNbWVOWnDadGsjyiXGUos5_qrH_UVU7XZIqrKSw>
+    <xmx:8sY5ZptHOC362MbFjwKLJBrjYBZf1rBM-xdFQykb8lC_YQeI-rumnY26>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 May 2024 02:15:14 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 2d2fb67d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 May 2024 06:15:04 +0000 (UTC)
+Date: Tue, 7 May 2024 08:15:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: What's cooking in git.git (May 2024, #02; Fri, 3)
-In-Reply-To: <xmqqy18mwpog.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	06 May 2024 15:17:35 -0700")
-References: <xmqqa5l64e0i.fsf@gitster.g> <ZjihN01c8gWX0s9H@tanuki>
-	<xmqqy18mwpog.fsf@gitster.g>
-Date: Mon, 06 May 2024 23:05:00 -0700
-Message-ID: <xmqqh6fatawj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Message-ID: <ZjnG7XIKJMRr2K1j@tanuki>
+References: <xmqqa5l64e0i.fsf@gitster.g>
+ <ZjihN01c8gWX0s9H@tanuki>
+ <xmqqy18mwpog.fsf@gitster.g>
+ <xmqqh6fatawj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BDD86C3C-0C37-11EF-9210-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7532azEI63AROr/D"
+Content-Disposition: inline
+In-Reply-To: <xmqqh6fatawj.fsf@gitster.g>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
->>> * ps/undecided-is-not-necessarily-sha1 (2024-04-30) 13 commits
->>> ...
->> Interesting, I couldn't reproduce this issue when rebasing the patches
->> onto "seen". There were merge conflicts though, both with
->> jc/no-default-attr-tree-in-bare and ps/the-index-is-no-more. So maybe
->> there was a mismerge involved somewhere?
->
-> That is very possible.
+--7532azEI63AROr/D
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I think I botched the merge.  Somehow my resolution had an
-unneeded "|| !is_null_oid()" in the result, but the right resolution
-of course should look like below.
+On Mon, May 06, 2024 at 11:05:00PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> >>> * ps/undecided-is-not-necessarily-sha1 (2024-04-30) 13 commits
+> >>> ...
+> >> Interesting, I couldn't reproduce this issue when rebasing the patches
+> >> onto "seen". There were merge conflicts though, both with
+> >> jc/no-default-attr-tree-in-bare and ps/the-index-is-no-more. So maybe
+> >> there was a mismerge involved somewhere?
+> >
+> > That is very possible.
+>=20
+> Yeah, I think I botched the merge.  Somehow my resolution had an
+> unneeded "|| !is_null_oid()" in the result, but the right resolution
+> of course should look like below.
+>=20
+> Thanks.
 
-Thanks.
+Yeah, that resolution looks correct to me. I've also sent a v4 with
+increased context and with the two conflicting topics pulles in as
+dependency. Other than that it is the same to v3.
 
-diff --git c/attr.c w/attr.c
-index 3afd477380..f3dd2de12d 100644
---- c/attr.c
-+++ w/attr.c
-@@ -1214,53 +1214,31 @@ void set_git_attr_source(const char *tree_object_name)
- static int compute_default_attr_source(struct object_id *attr_source)
- {
- 	int ignore_bad_attr_tree = 0;
- 
- 	if (!default_attr_source_tree_object_name)
- 		default_attr_source_tree_object_name = getenv(GIT_ATTR_SOURCE_ENVIRONMENT);
- 
- 	if (!default_attr_source_tree_object_name && git_attr_tree) {
- 		default_attr_source_tree_object_name = git_attr_tree;
- 		ignore_bad_attr_tree = 1;
- 	}
- 
--<<<<<<< HEAD
--	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
--		return;
--||||||| 00e10ef10e
--	if (!default_attr_source_tree_object_name &&
--	    startup_info->have_repository &&
--	    is_bare_repository()) {
--		default_attr_source_tree_object_name = "HEAD";
--		ignore_bad_attr_tree = 1;
--	}
--
--	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
--		return;
--=======
--	if (!default_attr_source_tree_object_name &&
--	    startup_info->have_repository &&
--	    is_bare_repository()) {
--		default_attr_source_tree_object_name = "HEAD";
--		ignore_bad_attr_tree = 1;
--	}
--
- 	if (!default_attr_source_tree_object_name)
- 		return 0;
- 
- 	if (!startup_info->have_repository) {
- 		if (!ignore_bad_attr_tree)
- 			die(_("cannot use --attr-source or GIT_ATTR_SOURCE without repo"));
- 		return 0;
- 	}
-->>>>>>> ps/undecided-is-not-necessarily-sha1@{1}
- 
- 	if (repo_get_oid_treeish(the_repository,
- 				 default_attr_source_tree_object_name,
- 				 attr_source)) {
- 		if (!ignore_bad_attr_tree)
- 			die(_("bad --attr-source or GIT_ATTR_SOURCE"));
- 		return 0;
- 	}
- 
- 	return 1;
- }
+Patrick
+
+--7532azEI63AROr/D
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5xuwACgkQVbJhu7ck
+PpSCjQ//ZwujVAJOF+EXY1hSVKRiVFKWplCxKc2kLtF7pbF2eHWg/vTI0i0ysn2D
+wa7jhpPdxwa21n1U961oh6PDYE6LdRvRKSBvN9Qexs2ZOgBrUvYKV51ZlSuLg+ou
+XAB7cZA/gqKM0sNw/GtCilkccItaJDJxZLsXB3BB+D2Bq34vz617aQ3ycb8Xbmx6
+L8nXG/3vBZu0vk6QgLGE3fcN7cCjwyS5GtJzA9cm4ajUBtk2xySC7fPZmUIkLN2r
+FGqnE4nxOIzfy5JfvbH4smC/I4Gb479mThJW/AF3f/VFRZAFEe3/K4RtfWMW6D8s
+ZYgrZ1vGvsXV7ws/mWslWJpqnXgoWr+qGbQDTfjkiPJVN5PiRxDJoG8K8t23TPMg
+1JvTRbn87beenyA/NIc6WmthzvcMonsLtRBt4hx3wSkpgN79yt/yo3dv8BR2HIlw
+uPva7k/2esTs98VbcSOxc6advOvHZCPYB+HqYjWclCUT4yKePG1kPkEp02FkIfvl
+L5Bo/FR3enGwje/4puZka+6Ma1GTNTqCMvQ5dcsNcRFxcXZiE5nDvv2bvKGq+Pxl
+g2wsRTnDfz7MhgBj01UKkCncopfCXXKOCJipMyWFcxeeV1vxipXXXKx3lfh0z8HP
+z25QyhA4e1KVDmKK4xVEOfzsmjeGbEI+34lTfYWNfuQ5Wm49LOU=
+=NXLR
+-----END PGP SIGNATURE-----
+
+--7532azEI63AROr/D--
