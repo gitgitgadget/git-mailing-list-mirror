@@ -1,81 +1,81 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E7D6A8C1
-	for <git@vger.kernel.org>; Tue,  7 May 2024 04:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC9D6A8C1
+	for <git@vger.kernel.org>; Tue,  7 May 2024 04:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715057599; cv=none; b=Z263GOPBubB1IOXF2n5BmkS0R2qhv5e4JWx38R8eKgX80VMD435W7wO6TRzLUYmZ6vlgn4Gs/1bhsHpA4f0YJKDN0x0cJ2IfxL+ygQ+HUMe+4cXmrxormUPvWHrkhglWYaK9XYARi06CWnTYZUMBsXAkXRT3na8bCvIFUZ9luxY=
+	t=1715057603; cv=none; b=IJZExB1Z2StoQDL3yr1T4Lr+twFFQnTaVCXYHMeA0/iVVJEkFJdMZP/45stq/OSuSzOnajtv8LWVAodog9uftq0qCchpsZWBlF3uMN+ySEMltvolBAhG8HVWmgYvyfcLQH8WNOmA6+MEqxJ0kzjemCkfMt+x21YsqecMpW4wzho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715057599; c=relaxed/simple;
-	bh=GFI2JGbExCAMSOpN0wtY8xvHAByNkoq+sYaPRxtSIHI=;
+	s=arc-20240116; t=1715057603; c=relaxed/simple;
+	bh=956tmkVUNeefWKEKcwlJ+A7TfxGB/XAsKrOR4yPki/I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JmP1znWyp2RB0+Z1/YXp0SpjBssE/R8QWXABBkN9MWTgYaoVf8jhdBdcS7HQ0ym9xAYKkBpUEscRFsPlAgUdv3FJEQo8qQmUmx5n24oYIKaujXkAkyeaBHHK1rZ9w/YDn91EmhYL2I8SiYVQUozWO3D5qq15+feozx1bqFq26gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bEpLH8iz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TSvgWG1l; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=RbXTm6jZYnKy3796PHXHAcH1jtm7+B5S7sisYnPCGshz0N/0xi3u4UdJDmmKawBxcTm8ZDWDUzOxWcq9Qt/C65O5nm2KonrCG5ZigdiN4buakJZofjnsIh0+TUZwXl7yBWZJaH6eecPGxLuSxCypDhXtIIzdLSBtRcgaXyukP0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y1N6y6Cv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ePREl3iv; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bEpLH8iz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TSvgWG1l"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E2895114012B;
-	Tue,  7 May 2024 00:53:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y1N6y6Cv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ePREl3iv"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 438DC1140156;
+	Tue,  7 May 2024 00:53:19 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 07 May 2024 00:53:13 -0400
+  by compute7.internal (MEProxy); Tue, 07 May 2024 00:53:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715057593; x=1715143993; bh=3Sxt1xLk90
-	E0Xa30iUrw3cey+3Vp1+vDyrXofV66Jd0=; b=bEpLH8izK1R0j3QLcPDkRaNdRU
-	DKgPnFbo+tK3Wk6xW4nr1spVNxzepyx0RSnOWbgHlp6dXsT6rMCEHi6J/e+NDjVP
-	dRKQfvB2I0xo3nSg6ppkt5Bi41hS3xfQFl4QjUinHdsaD8vuhbQfyGV4hSa/oatl
-	9lJxTt77IKvcOY6RbO6DjVdgi9WNJKPYNm3zsE1CibxK4KkbbZ8dQPx595iSaU0c
-	VHnmLps1DMy5qXL3+gc2Gwouj36jGzqszKnRrXwuMWiFwzhGXvjje/kcx+vcWorp
-	USFw1ZExxR6+zLMx8lCNK2GXh6tMgu6zt89/X5T5izvS8ZuK4bXBNXLGZtFg==
+	:subject:to:to; s=fm3; t=1715057599; x=1715143999; bh=PT0SB9neb1
+	VZnjfqJKi683mf08Bhxkth5m2j6tonsgw=; b=Y1N6y6CvFJPAvXYzbqnehkJsJv
+	Ox25PXqmqcWRvsZ1+uiM7Fc8S06b6/G+erlFcMbnYxb/3edY3K4IE63hdHzjDsAX
+	9AeGfctHo3fuqnBpOYzZLRn/0LAdpdFs25AU5nuJd9vUp42CI3oYxgg2kxZq6Rt7
+	b/cK+ITYbxxlDuTzSm9kwuCQNcYfkqKW0NDe/mLkShhLoBF3ALbTiNKXFk5c73M9
+	RcO2pHcPHGPxvoSAXKj5pgjUhF/vcXjHB8HGtFWX/4Suyy+e70HULmTyAwEcOXPE
+	s0MiIhGoucOBhF4k3A0MvdDgTrQTwSQzYDno+jiKsWYaR0l8rVIF9tIqxhrQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715057593; x=1715143993; bh=3Sxt1xLk90E0Xa30iUrw3cey+3Vp
-	1+vDyrXofV66Jd0=; b=TSvgWG1lq+LvA2f2V/zZHlEgh4GyWa85J6Q2e+vOS4dF
-	84EZCnDNBLhZWWAPdH5sn2AhfzJHzSSTV4AG1y3zHsKfGrnnMcASNfKc1OCRXNPG
-	JyNOzahe8FcG0Y85cfIDdv+p5k83023ywyx4+wG2sLd7tQq6WKhqiDPL72/m6Jyl
-	yWeh+JblCmXuuThVC0MirtKyNPxdA+0gWo0SgtT96PDUggutrBXmC0CFApc1e7sa
-	cYZifERVYWvDBYVjISPO0hcL/ImXkXAq6y4O+PD8zo4wEgDJm0ZYJlI8cJDRMuGR
-	RbT4iPDfMMuHN946nfnTRg/xQ3+8+LsRiuSYwGVubg==
-X-ME-Sender: <xms:ubM5Zvdut3q2lbRlX631WhXexlReTqRSWh0sQ30l8qloyNC6umun4w>
-    <xme:ubM5ZlNFdtOdARzf2psQN2HNqawn76IdmyFo8Q8MVoYTrv2ZWt5I6Ob0kCMFzsQJ1
-    Z-Yc3iTchzEywcswg>
-X-ME-Received: <xmr:ubM5ZohuiCVr_AX5LXQrtB-Z_JA5cgJJc3u_p4etTftZMtxAKGkdeCK4A-a4vpog10T6Bz9752VIUhGsRLi5FPSmCvE72kENQ0IxcbXkQYwOTdpaPA>
+	fm3; t=1715057599; x=1715143999; bh=PT0SB9neb1VZnjfqJKi683mf08Bh
+	xkth5m2j6tonsgw=; b=ePREl3iv+czeV2lJQLIwXl3Y3JhbCxnI6kaYmtvuMXv3
+	MckPzdMo8LZiCkfrtwS4klrJf9C0GKwcJS6HGr+MwPxArRCNsgtI7DHNjnhM14Bi
+	sKFeJvQqFsts1dP78HWh6aojAsUm8MRY5mmTBN5+SMucwBtzwAtJwReVBqJtgwC5
+	kXYIp38SvZfn0ATo6VBha1pCYRQfD319a4+VgNukFEoLXK67VNHxIF82+ykPM8rS
+	A9ZQQqh7nyqulAmLAViQDejhNsYdbWXUq38rHQGLlfSfdV6hD0WoB+lxlWXyK5ia
+	O/yB1cEWScIaQacNorXn7EdGVa4MRwHzDwkmSplHew==
+X-ME-Sender: <xms:v7M5Zlx9MxxG5ynlKN2IaXycRGyiDBPhhhRQ-OD9IwD0SY0GT8o6Yg>
+    <xme:v7M5ZlQkU-Xs2QOgEdFxpioXVLG3wopRfOfWLSEspoJCGOD6R5x414XJ-NFtpL_IH
+    Vf6iz2N_S3bWyqcxA>
+X-ME-Received: <xmr:v7M5ZvVH2qOsVHwqUb5kjKOORSlPiDbh1EYtc8yE25ZBEHAHuMNuCo5i6p6xF6L1QNj2I1Zo_CycqcKhCv-nOv7KgOWZIK6VrXja8FXkSo-kIKbt9A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepjedvjedukedtvddvleejjeefudefgeettdegffdtleekgeehvdfffeeitedviedv
-    necuffhomhgrihhnpehhthhtphdqfhgvthgthhdqughumhgsrdhshhdphhhtthhpthhrrg
-    hnshhpohhrthdrrghsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ubM5Zg-sqKjRMvtsujKvptVFaHjq4iAdFHoAJ9wDKmtRzfUEjpRBRg>
-    <xmx:ubM5ZruAfjYu2kWkACnkw0HbU79ML3KaYMi76XbDAf14M6znSGI6sg>
-    <xmx:ubM5ZvFtzzKCCs5ekSXTzqf44zTtqeVcViIE0NLImyeXzg-WXDJhLg>
-    <xmx:ubM5ZiPn4cnosE-cf_mhhU-ogowmuR0ucQYvO0c_9rdv7HEbpkhSgA>
-    <xmx:ubM5ZlIXrs6M2BGNGdKTbZuumudMD8jzjtG19jNepAOMTBOsHFn4DKDs>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:v7M5ZngtVvEp0nJHTgO0Q2QBNthIKUYl3J5UNRZ6v9GPKjXmgaq7aA>
+    <xmx:v7M5ZnDwbmXsMJ9YUi3aElpo2aBg-dgL43h8R_qKx0wB35bPunrNaw>
+    <xmx:v7M5ZgKcZyRWA-YxJLhZZ9GFyq3g25-aDaXuNh2lAFYUc43_AzUFSg>
+    <xmx:v7M5ZmDKvJYrLtafBv1CdHBA4BokZV_mt4SbH80_zx-wJBEGHbql-A>
+    <xmx:v7M5Zi9F2eSA6zogaexPnEV-grtRsLpKt0v3EwY8kGcA2Rul-MF7AIdW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 May 2024 00:53:12 -0400 (EDT)
+ 7 May 2024 00:53:18 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 5df331ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 May 2024 04:53:05 +0000 (UTC)
-Date: Tue, 7 May 2024 06:53:10 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 4d3a81e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 May 2024 04:53:10 +0000 (UTC)
+Date: Tue, 7 May 2024 06:53:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 06/13] remote-curl: fix parsing of detached SHA256 heads
-Message-ID: <e8876052ada5845e9a5ea4e910ff9da2c0837c07.1715057362.git.ps@pks.im>
+Subject: [PATCH v4 07/13] builtin/rev-parse: allow shortening to more than 40
+ hex characters
+Message-ID: <61160303108133f0225aae0f0776fa15c7ee07ec.1715057362.git.ps@pks.im>
 References: <cover.1713519789.git.ps@pks.im>
  <cover.1715057362.git.ps@pks.im>
 Precedence: bulk
@@ -85,141 +85,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="V5RGFHjihPaGKd8C"
+	protocol="application/pgp-signature"; boundary="/aEHmYQuXNrwBxa5"
 Content-Disposition: inline
 In-Reply-To: <cover.1715057362.git.ps@pks.im>
 
 
---V5RGFHjihPaGKd8C
+--/aEHmYQuXNrwBxa5
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The dumb HTTP transport tries to read the remote HEAD reference by
-downloading the "HEAD" file and then parsing it via `http_fetch_ref()`.
-This function will either parse the file as an object ID in case it is
-exactly `the_hash_algo->hexsz` long, or otherwise it will check whether
-the reference starts with "ref :" and parse it as a symbolic ref.
+The `--short=3D` option for git-rev-parse(1) allows the user to specify
+to how many characters object IDs should be shortened to. The option is
+broken though for SHA256 repositories because we set the maximum allowed
+hash size to `the_hash_algo->hexsz` before we have even set up the repo.
+Consequently, `the_hash_algo` will always be SHA1 and thus we truncate
+every hash after at most 40 characters.
 
-This is broken when parsing detached HEADs of a remote SHA256 repository
-because we never update `the_hash_algo` to the discovered remote object
-hash. Consequently, `the_hash_algo` will always be the fallback SHA1
-hash algorithm, which will cause us to fail parsing HEAD altogteher when
-it contains a SHA256 object ID.
-
-Fix this issue by setting up `the_hash_algo` via `repo_set_hash_algo()`.
-While at it, let's make the expected SHA1 fallback explicit in our code,
-which also addresses an upcoming issue where we are going to remove the
-SHA1 fallback for `the_hash_algo`.
+Fix this by accessing `the_hash_algo` only after we have set up the
+repo.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- remote-curl.c              | 19 ++++++++++++++++++-
- t/t5550-http-fetch-dumb.sh | 15 +++++++++++++++
- 2 files changed, 33 insertions(+), 1 deletion(-)
+ builtin/rev-parse.c  | 5 ++---
+ t/t1500-rev-parse.sh | 6 ++++++
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 0b6d7815fd..004b707fdf 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -265,14 +265,25 @@ static struct ref *parse_git_refs(struct discovery *h=
-eads, int for_push)
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index af79538632..7d10ee33c4 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -686,9 +686,8 @@ int cmd_rev_parse(int argc, const char **argv, const ch=
+ar *prefix)
+ 	unsigned int flags =3D 0;
+ 	const char *name =3D NULL;
+ 	struct object_context unused;
+ 	struct strbuf buf =3D STRBUF_INIT;
+-	const int hexsz =3D the_hash_algo->hexsz;
+ 	int seen_end_of_options =3D 0;
+ 	enum format_type format =3D FORMAT_DEFAULT;
 =20
- 	return list;
- }
-=20
-+/*
-+ * Try to detect the hash algorithm used by the remote repository when usi=
-ng
-+ * the dumb HTTP transport. As dumb transports cannot tell us the object h=
-ash
-+ * directly have to derive it from the advertised ref lengths.
-+ */
- static const struct git_hash_algo *detect_hash_algo(struct discovery *head=
-s)
- {
- 	const char *p =3D memchr(heads->buf, '\t', heads->len);
- 	int algo;
-+
-+	/*
-+	 * In case the remote has no refs we have no way to reliably determine
-+	 * the object hash used by that repository. In that case we simply fall
-+	 * back to SHA1, which may or may not be correct.
-+	 */
- 	if (!p)
--		return the_hash_algo;
-+		return &hash_algos[GIT_HASH_SHA1];
-=20
- 	algo =3D hash_algo_by_length((p - heads->buf) / 2);
- 	if (algo =3D=3D GIT_HASH_UNKNOWN)
- 		return NULL;
-@@ -294,8 +305,14 @@ static struct ref *parse_info_refs(struct discovery *h=
-eads)
- 		die("%sinfo/refs not valid: could not determine hash algorithm; "
- 		    "is this a git repository?",
- 		    transport_anonymize_url(url.buf));
-=20
-+	/*
-+	 * Set the repository's hash algo to whatever we have just detected.
-+	 * This ensures that we can correctly parse the remote references.
-+	 */
-+	repo_set_hash_algo(the_repository, hash_algo_by_ptr(options.hash_algo));
-+
- 	data =3D heads->buf;
- 	start =3D NULL;
- 	mid =3D data;
- 	while (i < heads->len) {
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 4c3b32785d..5f16cbc58d 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -54,8 +54,23 @@ test_expect_success 'list refs from outside any reposito=
-ry' '
- 	nongit git ls-remote "$HTTPD_URL/dumb/repo.git" >actual &&
+ 	if (argc > 1 && !strcmp("--parseopt", argv[1]))
+@@ -862,10 +861,10 @@ int cmd_rev_parse(int argc, const char **argv, const =
+char *prefix)
+ 					continue;
+ 				abbrev =3D strtoul(arg, NULL, 10);
+ 				if (abbrev < MINIMUM_ABBREV)
+ 					abbrev =3D MINIMUM_ABBREV;
+-				else if (hexsz <=3D abbrev)
+-					abbrev =3D hexsz;
++				else if ((int)the_hash_algo->hexsz <=3D abbrev)
++					abbrev =3D the_hash_algo->hexsz;
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--sq")) {
+ 				output_sq =3D 1;
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index a669e592f1..30c31918fd 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -303,5 +303,11 @@ test_expect_success 'rev-parse --bisect includes bad, =
+excludes good' '
+ 	git rev-parse --symbolic-full-name --bisect >actual &&
  	test_cmp expect actual
  '
 =20
-+
-+test_expect_success 'list detached HEAD from outside any repository' '
-+	git clone --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
-+		"$HTTPD_DOCUMENT_ROOT_PATH/repo-detached.git" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo-detached.git" \
-+		update-ref --no-deref HEAD refs/heads/main &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo-detached.git" update-server-info &&
-+	cat >expect <<-EOF &&
-+	$(git rev-parse main)	HEAD
-+	$(git rev-parse main)	refs/heads/main
-+	EOF
-+	nongit git ls-remote "$HTTPD_URL/dumb/repo-detached.git" >actual &&
++test_expect_success '--short=3D truncates to the actual hash length' '
++	git rev-parse HEAD >expect &&
++	git rev-parse --short=3D100 HEAD >actual &&
 +	test_cmp expect actual
 +'
 +
- test_expect_success 'create password-protected repository' '
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/" &&
- 	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
- 	       "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/repo.git"
+ test_done
 --=20
 2.45.0
 
 
---V5RGFHjihPaGKd8C
+--/aEHmYQuXNrwBxa5
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5s7UACgkQVbJhu7ck
-PpT0eQ/8DZ1/f14Jbo4THFqveO5ettniIzRWyFc3QTeeTwmDYXRVN6+Nf3w4+UUo
-S7IzSogq3oozHN9drFFkolDRCTZP5dFJZABfQc7lptKJkDdBbegFtlKhBVgab99Y
-YtQ1IhxWMEkrTvc2vJs+LpajWLoiyTouqdc1B9emyO8aE4CdHDD/rRzHWardNbLR
-ExJugOffpzEUi2i0GTR8ISHgPhSltrULjylAErSVAiIQ1PrOQNlnPmPHfP0R1hf9
-+TqH2Q/56nmJOHR5cL1AzC2o2T4/our2wyeVIAnzSwymVJEPabEn5/dsT8nLiIW9
-OyrnpPFExHwLOCse1lBTIEIo8eS2dYRHQA+ZlZJzS8V2T3jc+JqdOLVtfy9ZMEXZ
-W0yO6U04ikCEEKBotZ48PP0G2RB/XIS2Ajz+ymhIvOskA7RUENafhi5NqN06oUS8
-WK++aJmpB9BYLRXSBls8/pDOAI4wS6MXOrV/D4sSz7VKBYE/u21FvR2pk0/StNoY
-37Tm2A7UtzIjUwD5pLhQXYqG+138pz61DYnqJeahnQNY775Nb0jdx9APx/FwUxs7
-qyNfGC9Xy7wkOhtiW+1iyJP+auXOu+V2YW0Dd+f6rYS6ppAqqrsG8FHY89IebBN3
-GXLOKBEoKrar2ZpRLQZOVQWX3ZeARhSx2FxKOezrXXMpdt72bHM=
-=s9pB
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5s7oACgkQVbJhu7ck
+PpRtYg//Rku1/l8BsPUU7lhPCSgqnG3kERJcFlqPyhkcKRPrhmIgHkpx5wfPgnPi
+3ED4LjQ5VcB8CqX9aJIRxr5C7fqI11SOg/z+Hcnscg1EfNpaSvWXBqSNmnUd6ywM
+ynI1O1CywC5wF6vm3/xZFchRMWzPSlKtfFFn37dCgImlPYldz2ydlNnvhApuBLWX
+X9KIbvW/SYzmtN9e1BMMvNl9fxtUtbMkzxsMg6M7kT7q/PSPrzheyvoKL14+MNHh
+6EstDFXQ+gIHR7L2Z1GW7ueHPpaWvpOgDRoer+rocSkQbznf6v5CLTpc7XIx90Pz
+SFYPnPCbbCft0Jx/Bpi2TwHb+Wd8eeBv++Wqt6RLJKsmt3ILddep5ZDuAvoeSOP0
+kExk/UlFAKBSMDeeI3B55z7JHJhZS71ABch3aZTr25JNxyd3azlNjqYGUhOJWNwH
+X/l/uAegnbMgB9gONTSUrY+5gR1UbRDqaXwSz78GlK0onPm4t6o01om8mrOiKNH5
+dpk9ix3S1nI0SboMkxhYq/4lK/RGX19saSjV5lrVqDNJMqcvvG9pSgjBSxTgPpyB
+Nz43nTTHdfoCBn29G3DTEUgRrm4/mJGx/06sGLq9jsnIQ2eI12gpPhNpRRn2e3ll
+jyOfnmWcUJhEevLXHP2mB6NHUkwrF7/VVt2Ku84d9Es+YynUv8w=
+=kAaN
 -----END PGP SIGNATURE-----
 
---V5RGFHjihPaGKd8C--
+--/aEHmYQuXNrwBxa5--
