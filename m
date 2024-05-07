@@ -1,107 +1,158 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB1A6BB20
-	for <git@vger.kernel.org>; Tue,  7 May 2024 05:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03A8381C4
+	for <git@vger.kernel.org>; Tue,  7 May 2024 05:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715061114; cv=none; b=H6vf3LycYVzXSMU9+gJk2zwlVtxa7nod4XSzbjAc0iObYc+V98z/J4OTeOLaCJ9QPITqd/BK665R9Ed/lS8ZijS+w3Bh3PuWqXmfDstfT/tupyluOsZQVEwAsVUuYC1A4EgYLxRZIE85jP2eaCoMlCO+Eryp6JCoSFOtBWbO0EQ=
+	t=1715061417; cv=none; b=R5wm1G2zcWNy1TPWhGxa26CwHJFPd0Q+Oaptdb+/tHy4XQ+HfABXyxoz0R++JuUxVPy/7x7VrE1lJp2mTP1ms881UQ6Ptc/5WydYuVgIoECrLcEoiIp4T6jnq/kj9SeOY9/2j0wUm6cJXBxAoyibZrH+BnJxKDfKTdN9PO15qvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715061114; c=relaxed/simple;
-	bh=LNnrYFQNa9wvCsgUghCsSZIxm5H42BPTFnq32jBgoBI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZLDMdyvl6Hh6touZ/P040GiB+5akYTZGQOTgEh3Ai4n2MRN4TaXWjMCf4A5oIqfYGhS0P7H30bZArBIM2ivm371uqr6NI1GhoSWFSAwOd6A3UgiBC0aYWeDZSMKuuRP+E32QmsxkTAyUYHGEcbB4fUm0xkKTHNg0Uprwlyqp2lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D1KlhEcg; arc=none smtp.client-ip=209.85.166.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715061417; c=relaxed/simple;
+	bh=bLkfC/Ln9InxV+I5IHgdxwKG+irLCNTSFgQhjCrDH6M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=geGMPDwNYgQHW4M6WHVTMOoGQsTedXyH/kLqJeZcT6ROcQdcWuLqHngdxupajVAKbMgnlylQVU5LLmSYIHlcvdd7dyAJpIn+neRQNL8jHg4u9D7WxYrFQ946G41SdBtPc6KehRXR4f6CrFMdINj+/VyP5OXVc2rOEiqzkPPS3OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BPmacOaI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OKl+lkxc; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D1KlhEcg"
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-7da37436e36so157443839f.0
-        for <git@vger.kernel.org>; Mon, 06 May 2024 22:51:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715061112; x=1715665912; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XjnBBsnv3DpOYTI5DZjo2oPVZ6AaU1WxnNaDxv/lhbE=;
-        b=D1KlhEcghULGcU8yTH10g90P04Pfr5O99fme3o5d7JMe/fd9QORu+pRy0Lv/UeN0ap
-         C6u79ocLWa8XgYbeHjAtOdsfy5+H9pqIwGt34qP69agzVQrs4OfqTMwCkrT8KT0XFtPn
-         xVjRj6l2lhPvJu2j5UCArtARSMsvXKhlXlLJYNTDXUyorwQBdpIM1OL8J74SgQ0Eo2xm
-         yABazOjhG/lRbNbJRvRv6Okn5O0MW1MIAeAq5yBC9BPw+xNw6hj8ZGe2D+dXBS+NKCYj
-         4kyJzc/n+TT0+DC84gPLNJc2HOQHBwX4hlyRwEI8UDi4Now0pU1ppS49R9tWwSUeMwSP
-         juWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715061112; x=1715665912;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XjnBBsnv3DpOYTI5DZjo2oPVZ6AaU1WxnNaDxv/lhbE=;
-        b=qU/Tz2fju51nmzNWhnBhaF2ROkvaOzPd+5YeW2quPP0fjtYMn85o43nOCkanF6cPRe
-         UCOr6xKu9DGZFB+qfTzwu7B/j5GxbbD5ME4OuMn0NZo5pv9p0C18aktAR07GKLW+6JzC
-         for43hctDR+fnTF1oI4YCsjtqdoy0WkXi31droZ4KXwjwm7ozU5mMXTKRWfnCw5SsivS
-         yJ7Nd9e+ld33cz1+YbFuade0ZQIPPWeJ6wBfQowg5BL4uKu5lN0I4Ii6Xwl8gHkxD5MA
-         4j2QswSwEd/5hJAIXa4jHAVFi9jtn1rYx1Uh1j98nXwtgXmCAkn3EJ4vGMYp+idUBW7f
-         HTjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVvm6sUnEbY0qTusRDgNzNfFTFqIa+yyigEITt6yjpAyJKxYPCnSr7hulDXLP+lYpyXk54leWRhkZ0Kr9vRfTg89a+L
-X-Gm-Message-State: AOJu0Yz3669QzMJ7Esq88THvAk5zwrjXB2X8nZCrVvWGlwfOfJiGHRw5
-	q7nqg5rKn92uk2hVeMJPbzMqrDvXY97UWqZnAhs7h06YyUj2Rwe/2RlvyRQ6UjA+kG7rGuoSG12
-	J8reuGAZUPCOl1V4WfuwdYkj8ZikxNA==
-X-Google-Smtp-Source: AGHT+IFJ4r3H2WJX02bu6+Ml026plwHPutToeYPLV4ZikPax9CK7IDPPwelIWWHTe1q+qXCm6BUcq5As6BAt3y8UziU=
-X-Received: by 2002:a6b:f115:0:b0:7e1:7ae7:9cda with SMTP id
- e21-20020a6bf115000000b007e17ae79cdamr2581403iog.12.1715061111722; Mon, 06
- May 2024 22:51:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BPmacOaI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OKl+lkxc"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C3BA9138018E;
+	Tue,  7 May 2024 01:56:54 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 07 May 2024 01:56:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715061414; x=1715147814; bh=+JXtDaDSr/
+	grXo6WbR2abmgtFDxoQrfxWAeL808cd2A=; b=BPmacOaI6m7khfB9JvzA7jwha9
+	9J4CfRCfj2gdni8M1bo44oM2Lp2TxyidCbFboxEQ2DUjuKhHM7LpyJ4srX8AO1KO
+	Ii5Orp7r4MEpITR7zOWON/bRFFn3+W/hn/KJ2brpnCL4waSt4KgcIllTWRWO+GR3
+	Wslk/UO3TUs8gzrzWO1V7NKngoVpCHwmC0HEOMO7HbAjYZl8GEZtr4yFX2bLT+hr
+	Bw8tj1mrXbz2p92R5qEX9+ab6WoqrcRxrk7razlw7RE+DwvNZCvmEPeiXjDw6g7b
+	QJVILEiA9Wsuoucu+zb9clvLL00+GrWgaLZ8n3klSv5TdK+ceI+0+mVdwZNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715061414; x=1715147814; bh=+JXtDaDSr/grXo6WbR2abmgtFDxo
+	QrfxWAeL808cd2A=; b=OKl+lkxc2kuLmp7XhMAA4+HslhbGlXU+abWfhy/H2FY1
+	5NAY66tuVy/LqxKLC/T3FXSNqZjwDwHea/7l5QfZCCBk+J9jMdo3G0yCCTd8Nxw2
+	9qcALkN0ic2jTl6/tNmB+k6CaF60XGBUuv/Bl47+g3S1btZKKVRw/25/qq3NaW5E
+	h7CBiVJwT3qhEGC9UXR3dDVDWBtn8d4wHUnsKZxpsZbaAmYSSTRuAl/XaWYYM99q
+	+wpo5Q4EwaX+4mFLxGLimFFql7seskVw6Y+jWcDsilGjhQDf592nwYWuShNBKVfM
+	TiOVxtJ9BgTxr3MI13to2byky0wV04Oj6iE9MFE2kQ==
+X-ME-Sender: <xms:psI5Zv0BwqmL6QBuk2x-eLvejnYYPNowUpCteelSKrR2NnA5CEHIrQ>
+    <xme:psI5ZuFClhhXjhsr6ZSuxo6OyxcHqlYewc_df_3sarBuFPlxWVXGBPdYYzuM2tKEL
+    noo9iCLPXcLQnoSAw>
+X-ME-Received: <xmr:psI5Zv733DSCgD0OXnuyLEDpiCk_jrq_9tynSTTgyyx5R02RmoiFzB0huTTsze64GEozcNXt6sc_TVa7GDIeRPl_RHZM7YlOR-xcjHRIHeMmCQPx0A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedgleeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:psI5Zk037y9EJw8r9_Hds6IU7WFIbt1QMzt42mddSnBn8yxKTlFbDw>
+    <xmx:psI5ZiF-yVH3HYKmtW3v91Y6GNVdlNFsFywtLitgCwqek_GN9mTGgw>
+    <xmx:psI5Zl_2bj9n2nsDC9fKGYsvRE3Rmx7H3-5GA9_xcpT3vTcoIVdFLw>
+    <xmx:psI5ZvnRyacxcdG2lhvjyH226-awqhrli0WOORoJ5L47S7xLHJ6kjw>
+    <xmx:psI5ZuAotprstt4T8TxIomIqJ1WIppM4CsbjNg5OFXkFrJpOvjTaq-Qe>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 May 2024 01:56:53 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 96d7f15d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 May 2024 05:56:44 +0000 (UTC)
+Date: Tue, 7 May 2024 07:56:49 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 0/5] refs: remove functions without ref store
+Message-ID: <ZjnCoaVP9_wuYiHh@tanuki>
+References: <cover.1714717057.git.ps@pks.im>
+ <xmqqikzu95cf.fsf@gitster.g>
+ <20240503173553.GC3631237@coredump.intra.peff.net>
+ <xmqq7cga7nzo.fsf@gitster.g>
+ <Zjh8XWwJKp_I1dwE@tanuki>
+ <xmqqseyu3ojk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1716.v2.git.git.1714711829698.gitgitgadget@gmail.com>
- <pull.1716.v3.git.git.1714791848557.gitgitgadget@gmail.com>
- <CAOLa=ZSre3f+0SR-_migfkPONqhinobKjU=NnGOJ_sTNM_L5ug@mail.gmail.com> <xmqqttjaydbw.fsf@gitster.g>
-In-Reply-To: <xmqqttjaydbw.fsf@gitster.g>
-From: Ivan Tse <ivan.tse1@gmail.com>
-Date: Tue, 7 May 2024 01:51:40 -0400
-Message-ID: <CA+WCWMyxBA90QRsxn-i0H1TRi7WrhRcD=Tgj07f_Y_=UVNkhbw@mail.gmail.com>
-Subject: Re: [PATCH v3] refs: return conflict error when checking packed refs
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, 
-	Ivan Tse via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="69eHQ6s8ngK9EsSw"
+Content-Disposition: inline
+In-Reply-To: <xmqqseyu3ojk.fsf@gitster.g>
+
+
+--69eHQ6s8ngK9EsSw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 6, 2024 at 3:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> >> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> >> index a098d14ea00..97473f377d1 100644
-> >> --- a/refs/files-backend.c
-> >> +++ b/refs/files-backend.c
-> >> @@ -794,8 +794,10 @@ static int lock_raw_ref(struct files_ref_store *r=
-efs,
-> >>               */
-> >>              if (refs_verify_refname_available(
-> >>                                  refs->packed_ref_store, refname,
-> >> -                                extras, NULL, err))
-> >> +                                extras, NULL, err)) {
-> >> +                    ret =3D TRANSACTION_NAME_CONFLICT;
-> >>                      goto error_return;
-> >> +            }
-> >>      }
-> >>
-> >>      ret =3D 0;
-> >>
-> >
-> > Shouldn't we also do this change in `lock_ref_oid_basic` where we gathe=
-r
-> > the same lock again for creating the reflog entry?
->
-> An interesting question.
+On Mon, May 06, 2024 at 09:14:55AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > ... But honestly, I doubt
+> > that it would be faster for any author of a patch series to figure out
+> > that they now need to a define something compared to just adding the
+> > `refs_` prefix to their functions.
+>=20
+> The authors would not bother figuring that out while your series is
+> not yet in 'master'.  The alternative they have is to base their
+> series on top of yours.  You may have "what changes are needed on
+> the callers side" in your head, but they don't.
 
-Hi!
+Yeah, that is fair indeed. Theoretically one could re-run Coccinelle
+whenever merging a new topic. But that would of course put the burden on
+you, which is something we definitely want to avoid.
 
-Apologies but I'm not sure I follow - could you elaborate? I am not
-too familiar with the Git source code (or C language) but from looking
-at `lock_ref_oid_basic`, it looks like that function returns a lock
-struct and not an integer success/error code. I'm not sure how we
-would apply this change in that function as well?
+> Somebody brought up the approach used in <banned.h> to move the
+> problem to link time, but in the context the only message we are
+> giving is "it is banned - do not use it", which is sufficient over
+> there, but probably not in this context.  "it was removed - use this
+> instead by adding this suffix and add that as the first parameter"
+> is the message I want whoever needs to deal with the fallout to see.
+
+Unfortunately we cannot quite get there at compile time because it is
+not possible to expand a macro into an error macro with an arbitrary
+message. The best I could come up with is the following:
+
+    #define REPLACED_REFS_FUNC(func) func ## was_replaced_by_refs_### func
+
+Which results in compiler errors like this:
+
+    bisect.c:712:6: error: use of undeclared identifier 'read_ref_was_repla=
+ced_by_refs_read_ref'
+      712 |         if (read_ref("BISECT_EXPECTED_REV", &expected_oid))
+
+What is still missing is the bit of informatino that you need to pass in
+`get_main_ref_store()`. But maybe this is good enough?
+
+Patrick
+
+--69eHQ6s8ngK9EsSw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY5wqAACgkQVbJhu7ck
+PpT0HxAAhqtA1KHFaCXNd8ArXvtRyBGMcJ+MUC/ZdISdc0Vc8tHTdJr6s4aC/YH1
+9tEbvThIXnDTbAdFxJtCZF5FFYAkEdozN5ahRzAOiYnzR16k6kvIp3ntZspR1YFw
+/hRMRTj6o6LEoF17c9N8juhX8sEDE//i3hKMoJL6eiHHJhdxyEHlyye/PH9Tg9Ml
+oPoGNpPZLtuhhzqxgYY9msrwOmM8ITfwSn7yQL474rnyM9p4QYIt1YWKNHyQjyzj
+OoxDzq6tJbFrOKo4lxdpyaNpJLelRnDjKISj6HIzF2bBTuzaR/5VYFNZgxrFvjRU
+pGmJDdb8YxFZqxTiBJztjA33j0o0mVvi+Kkri8nsXlmr5HcX9q8ojqHmyBJKYuYH
+ltyyulW3DvJk9HACze4b1ZlexnUfqkMIMoIBctdH4OZlKNQRPhA35JGrIyqc7esN
+ZEERVrC9mPOVnl6ZfL8UWApr4oAbZR/39kFpJTEOZGCS991mHTOWORBHEGASvxgr
+8yCIoy6kogMURRt6ERf/TK3ZfHMybaJhuvwiaEqiWCcAtH0/dS1YkwV5rAInCRAl
+9s6/v86gK77HgOS1DQQ4UZi8G76vDx2wItDcOf8LmqIDuMCjVOOvKYBaeqRpE6l3
+bwJzwy6Y7m3dNOEy+la3dUv2xpl42atTMEV+NuK5KTWyPgdm/zE=
+=juqS
+-----END PGP SIGNATURE-----
+
+--69eHQ6s8ngK9EsSw--
