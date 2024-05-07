@@ -1,64 +1,54 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1364716C694
-	for <git@vger.kernel.org>; Tue,  7 May 2024 17:27:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68390E570
+	for <git@vger.kernel.org>; Tue,  7 May 2024 17:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715102863; cv=none; b=GFPxVNXyiSrwUIgld6rST+X3YIFuz1xUkXRB7uPUXFb0dIDHu2S7PVvuaAf7t7pQdWq9lG6ZFHEykzZmcECuA0+AYvWRGRQWMPKIG+f4ZlYb0PgtAaIXxtmd8zKh9Z0I65AOsYYcooK/vxqzmRE/q+vMtFHhJ0Bzk8r/N7Gazhg=
+	t=1715103022; cv=none; b=kiWiooqFY2y8pZK2zjBYlCEljEn5+Nu1b/0HMd606q3QoZBOQd2sr4FEVGrxzlD32MQcYkMTf+s6QWLtWWWPZReRboz2O8+f8eGJBLrcZ+A9ZUupgiogVKQUcgCZgV7VxP9H7/QkEs7Z+zakstU7Sf0ox4/u2z5zyFXzK4QeiUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715102863; c=relaxed/simple;
-	bh=YgVXucst8jBVZPYWTGNw6h+RNaVExXkZKOsqN7caOSA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KZMqgWMbx1mc85olgv8hnHh1eAgsxwwdAuNPeRREa4PQWUfZEyfiGx2DGjaqJS25sKWZjgeuhiD3EiU0UULp4Je6lmBmqD0yFplEFdC26qPM7ch9KuSkBRkm/OVStvW3mWubeIzBGO8OrQvYd+PgFfaMbr78I4WzQq4HGl3/QTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AgEtVULG; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1715103022; c=relaxed/simple;
+	bh=Nfmtd92yo0IVejkF+HVr4utHlGrnFe7LWsWDYi2jETg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k5fVDWGKS3GNKv/EpxaEHvRwb9DbcYI7xtJcfo3Iljlepwc+afALQa+J8z0dRJ2Gs1JIVLcfk8fH1MTlgTIxexViUuvdMBcrIsE6rQPL6VHzH0PsKqIy2UAy7vojuy/1XFEGr9hesio6tGl54MElPD9VgHyaRte50n60bHqg8Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pIoed8Uq; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AgEtVULG"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-61b62005f38so35937567b3.2
-        for <git@vger.kernel.org>; Tue, 07 May 2024 10:27:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715102861; x=1715707661; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=keFQaIPXbfAQe3qp7G9b40Glv3fgOAsXbXiz/57aDCA=;
-        b=AgEtVULGqSuV2aNum/SZws8opJH8g21IFBn7IjgVwybtkTKGTAaLC8MTtxLaAgzIw8
-         DUQwRZvRc1w/Uc9/GFWI6Qa/b+mOCuvg0EXy1vzRLgDdyFTNCVVrB7Su2W1TzNZ3InYC
-         R7vuQt+KBVk9Swz13dPCzBGQO2oZPKM30cQJP7HJpWmuxSlWLsCtoJZQRfRutDDul6AY
-         vuLBwdvmS3+mj6fIshc5fvdqDrQlfqZtEdkbl8ANyGy84NX5luhLvg3/db2ek7Y/r1oZ
-         rJWWHXrvywV0zNihERBTKSBtbsa9k9zmUyPbdNr4zZS+kLN/Hj2Q86LgepoqooNhYafC
-         D3tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715102861; x=1715707661;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=keFQaIPXbfAQe3qp7G9b40Glv3fgOAsXbXiz/57aDCA=;
-        b=njRoweFxUtTztcKVUygd0JGoY0sFc0Ql8KwDV6TeuMp1+1EWUIuW0xIGViCJMuEOjD
-         2TR+G8tdnK340E3daSNB0UT2HK6zrFIOgpLcnL9z+3clTZjan+oSoj0QY43Jt8W2f/l8
-         8KyroJvAoqQ0gOhsLHFGnb8F96+rBxrvnO8685ZepAzOFEoW5CyBoMwAY7NbL+D3FXzQ
-         h7Fp3sHjaL+gIAHBohliGnliUHpZKXKWrjoqs+ozYC+yK/R7O/q8X27GKFQVjtcxQgg+
-         LoqAS5h9NJl0DDb7yV3uuQXoyeRha3LhHXbkp/kWeLJsISGn6ubwJXC2j8p0+bQD7CYC
-         BxeA==
-X-Gm-Message-State: AOJu0Yw/i/ejSv65Q/hWvPkGTA1KTf5EYVG3tBoY/3jCNF4Usn1psfpT
-	Y6W/G6qIQs4NFK5DPk17jvm9Okz4k9pIvMZuos2eEbrJXpy5cJIpaEoMYRdjYTU=
-X-Google-Smtp-Source: AGHT+IFug+yNfU4Y4RRsynl+7cU/X8W5AnVAQs8WjGJgi3wkdhm07zUnK0AriU+x3VY6oRQq8+IOsw==
-X-Received: by 2002:a81:6c50:0:b0:61e:ce2:c9f3 with SMTP id 00721157ae682-62085c5c064mr5723097b3.15.1715102859590;
-        Tue, 07 May 2024 10:27:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z20-20020a81a254000000b0061bedb1e7d7sm2743304ywg.100.2024.05.07.10.27.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 May 2024 10:27:39 -0700 (PDT)
-Date: Tue, 7 May 2024 13:27:34 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, James Liu <james@jamesliu.io>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] refs: remove functions without ref store
-Message-ID: <ZjpkhkYYE45QyFO+@nand.local>
-References: <cover.1714717057.git.ps@pks.im>
- <cover.1715065736.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pIoed8Uq"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 06D7D35CAE;
+	Tue,  7 May 2024 13:30:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Nfmtd92yo0IV
+	ejkF+HVr4utHlGrnFe7LWsWDYi2jETg=; b=pIoed8UqG4dH7KWW4XAg5SV4WUg2
+	eG4Qc0qf+FozpcV3b5eq7k9UDGqyG/gfd/iLwMnFfDIHIMSQwMGIvhI++qzrH6L9
+	vxfarHxPi5TDHSeFnEwRLe3bEf2QMslrb25QdxvFwQp4U9wd7+1esLe/ap5ig0FQ
+	asA7+l0YNxlukJ4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F3C1335CAD;
+	Tue,  7 May 2024 13:30:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 85C0C35CAA;
+	Tue,  7 May 2024 13:30:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: tboegi@web.de
+Cc: git@vger.kernel.org,  takimoto-j@kba.biglobe.ne.jp
+Subject: Re: [PATCH v1 1/2] t0050: ls-files path fails if path of workdir is
+ NFD
+In-Reply-To: <20240507084429.19781-1-tboegi@web.de> (tboegi@web.de's message
+	of "Tue, 7 May 2024 10:44:29 +0200")
+References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
+	<20240507084429.19781-1-tboegi@web.de>
+Date: Tue, 07 May 2024 10:30:16 -0700
+Message-ID: <xmqq1q6dpm1j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,33 +56,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1715065736.git.ps@pks.im>
+X-Pobox-Relay-ID:
+ 78A7B11C-0C97-11EF-9C0D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 07, 2024 at 09:11:34AM +0200, Patrick Steinhardt wrote:
-> Hi,
+tboegi@web.de writes:
+
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
-> this is the second version of my patch series that aims to remove
-> functions from "refs.h" that implicitly rely on `the_repository` to
-> obtain the ref store.
+> Add a test case for this bug report, slightly edited and shortened:
 >
-> There's only a single change compared to v1. As discussed, we want to
-> give in-flight patch series a bit more guidance when they add new calls
-> to the now-removed functions. This is done in the form of a new section
-> with ifdef'd function declarations for every removed function. These are
-> easily greppable and trivially show the author of the series how they
-> are supposed to adapt to the new world.
+> ls-files path' fails if absolute path of workdir contains NFD (macOS)
+> On macOS, 'git ls-files path' does not work (gives an error)
+> if the absolute 'path' contains characters in NFD (decomposed).
+> I guess this is a (minor) bug of git.
 >
-> Thanks for all the feedback!
+> $ cd /somewhere         # some safe place, /tmp or ~/tmp etc.
+> $ mkdir $'u\xcc\x88'    # =C3=BC in NFD
+> $ cd =C3=BC                  # or cd $'u\xcc\x88' or cd $'\xc3\xbc'
+> $ git init
+> $ git ls-files $'/somewhere/u\xcc\x88'   # NFD
+>   fatal: /somewhere/=C3=BC: '/somewhere/=C3=BC' is outside repository a=
+t '/somewhere/=C3=BC'
+> $ git ls-files $'/somewhere/\xc3\xbc'    # NFC
+> (the same error as above)
+>
+> In the 'fatal:' error message, there are three =C3=BC;
+> the 1st and 2nd are in NFC, the 3rd is in NFD.
+>
+> The added test case here follows the error description,
+> with the exception that the '=C3=BC' is replaced by an '=C3=A4',
+> which we already have as NFD and NFC in t0050.
+> A fix will be done in the next commit.
 
-Thanks for the range-diff, which is definitely helpful for reviewing
-this round ;-).
+That will break bisection.  I think combining the two commits into
+one would make sense for a small change like this, consisting a
+focused and straight-forward fix plus a clean and concise test.
 
-Having followed the discussions in the previous round, particularly
-Junio's comments about #ifdefing the declarations of the removed
-funcitons, I think that this round is in good shape.
+> Reported-by: Jun T <takimoto-j@kba.biglobe.ne.jp>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>  t/t0050-filesystem.sh | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+> index 325eb1c3cd..bb85ec38cb 100755
+> --- a/t/t0050-filesystem.sh
+> +++ b/t/t0050-filesystem.sh
+> @@ -156,4 +156,16 @@ test_expect_success CASE_INSENSITIVE_FS 'checkout =
+with no pathspec and a case in
+>  	)
+>  '
+>
+> +test_expect_success 'git ls-files under NFD' '
+> +	(
+> +		mkdir somewhere &&
+> +		mkdir somewhere/$aumlcdiar &&
 
-    Acked-by: Taylor Blau <me@ttaylorr.com>
+Would a single "mkdir -p" suffice?
 
-Thanks,
-Taylor
+		mkdir -p "somewhere/$aumlcdiar" &&
+
+> +		mypwd=3D$PWD &&
+> +		cd somewhere/$aumlcdiar &&
+> +		git init &&
+> +		git ls-files "$mypwd/somewhere/$aumlcdiar"  2>err &&
+
+We do not control what is in "$mypwd".  Can it have funny characters
+that can confuse Git?  Quoting the path with a pair of double quotes
+protects the shell from getting confused with $IFS whitespaces, but
+we may want to protect the pathspec handing in Git with something
+like
+
+	git --literal-pathspecs ls-files "..."=20
+
+here.
+
+> +		>expected &&
+> +		test_cmp expected err
+> +	)
+> +'
+>  test_done
+> --
+> 2.41.0.394.ge43f4fd0bd
