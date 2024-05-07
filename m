@@ -1,130 +1,164 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FDD13C9A2
-	for <git@vger.kernel.org>; Tue,  7 May 2024 08:44:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617871509B4
+	for <git@vger.kernel.org>; Tue,  7 May 2024 10:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715071488; cv=none; b=iKmlojDwjbAhKVqoTx15TgkoknQbkMSvEUJipCJlBFGA5A4/HR4Q/2dj8E+4Yt9vRshacyUZuHB2g1fAPQaTnhYi76g9B2NcnnVUHXydxKrzphPgWuJJMpUbNoM/E8Qe5iNV1wXQY5Msk6ozsBPaTJydcqG3idXmvajd47VTgto=
+	t=1715077967; cv=none; b=P/AoI0UZHtw+a03f6DAXeu7RovDyT24JvLw/tt5NotIWVXTfVuFP+cxcaRscRMoS8wVUDaVwtuW4VjxYFS4HUsdE/0asibCwwOhu8Mg/9wabsL4qfSzGTnjKo9ctdwfu2VYviIwtM/H0TPK3o3KcIDEyloZqNalH5x6qalTYH6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715071488; c=relaxed/simple;
-	bh=itfteu97l2W9n7adGdZi3t/clHwO4IsL+6wECPQR7yM=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nHABu8XweE7wWbf1fP62EVmXErhMRUSu5gLl3xgd9WDoyn21Hpc02pqyjO/B32qTIO8UQn3ZfTgJE3eZKNDjtYPFO76yI9Eo9PR0VsBwBSybOJ8+3Ya/52wvjf/xgH6i0gCtRhe/Ex0RPK7lAapTvua9vkiixnP2rUDxSkJsYao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=c4ZD/XnR; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1715077967; c=relaxed/simple;
+	bh=PTy60HnMWHidJ6E6ZBxJZ7wRT2DkZDYpAFoVD6jWczg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a5T1r/3QwuiK7JY4fMsJpHI+MH+fczEUOJFATXo++itV2IFyh9L6FrRDySZiandQR0PNd7rmqb/JBQElsxmqz67vzJ/j3OdkPIv6havOqlkXNW/k2eh6sX8MkdP+2vHrb2hKtqiTCudTIXnFqv9uChG+y1EbmDKXD14imQfF4cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lLD2uZkI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hxi/HcDC; arc=none smtp.client-ip=64.147.123.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="c4ZD/XnR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1715071471; x=1715676271; i=tboegi@web.de;
-	bh=djAfIiMfIg6st+3j9m2+iiTkcmUFm9ki8K/6xTv8eGY=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=c4ZD/XnR1ZrY71a3eVPCHnbZIEwVTkqiVYxb3+8Z3BeGod9XHkKDJqtzJ8h0hPRs
-	 /1/0mfeHoZG9+cOxunU5DpD6yxXPWrssG/tba5h48lNAhcQ2z8kdpv4R2URvO1LYN
-	 60ETc2LF0r7BXe40/dKzMcsRVkNJrPfOCBDa5x+9NVz1pykny87to8qqF2qVUkCxK
-	 IuvyC8+PzGLuixlSxxTEYzyTze1McPcjmh60KG8ME2+RcyvanfkXXlVysk+Cl7quk
-	 QSCnMcG7j3vgPLuZxdiKKFDlSSMsUACCaY7htkRXrb+mKcomwDeZg4+F+nWQiHAjm
-	 /0hA8l6kcIDq0gAp0A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost.localdomain ([213.65.201.17]) by smtp.web.de
- (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MYclj-1s8qz62GHb-00Vraf; Tue, 07 May 2024 10:44:31 +0200
-From: tboegi@web.de
-To: tboegi@web.de,
-	git@vger.kernel.org,
-	takimoto-j@kba.biglobe.ne.jp
-Subject: [PATCH v1 1/2] t0050: ls-files path fails if path of workdir is NFD
-Date: Tue,  7 May 2024 10:44:29 +0200
-Message-ID: <20240507084429.19781-1-tboegi@web.de>
-X-Mailer: git-send-email 2.41.0.394.ge43f4fd0bd
-In-Reply-To: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
-References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lLD2uZkI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hxi/HcDC"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 15D0A1C000A3;
+	Tue,  7 May 2024 06:32:40 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 07 May 2024 06:32:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715077959; x=1715164359; bh=PTy60HnMWH
+	idJ6E6ZBxJZ7wRT2DkZDYpAFoVD6jWczg=; b=lLD2uZkIDSSupjCQgMMpKnTDnk
+	uoBTUnKPAVxi6sN5+MQckE0yLP3u+j+ID5d7Qdu9OkPFfab1smD+cx5jBlB7MIb2
+	6q1wPQW0dtXfcdrDQuvGoulUDmw6gYE5FrKF0iexWr3b6YJtuRKO7XCqluMMUBDv
+	am5RoMxcaf9yYgiUZh1kc7h8Ze1hJDUd/uignrqG/0G7B4zGjDOJSXs+4NwFhElQ
+	6d51HHLHcTnszaCAnxER1USoSo6TSstSFyN1ZUX6xgwhVlsv7uYcazQCfWnalOse
+	3rcBBPi5OieBIMdt4txrwx63XYyhQSJ8ps29LCnHSX0mf/9NF2599cB5GOFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715077959; x=1715164359; bh=PTy60HnMWHidJ6E6ZBxJZ7wRT2Dk
+	ZDYpAFoVD6jWczg=; b=hxi/HcDCvbJz+vNWSNUNLRDwIyjspNiEszL0VC6aa0xs
+	2CMjiwQZu07pobCgnEdrDIHpAYlQv+zn/CFVxOiT2zuSjpKpmaEG3AdWOBJWnLhE
+	IUnN8MM/mn01ut1Tz/5L+fZCa2AucRJVdceDC9xh4mvVFKUSW6Uiq4U2JSggvqlF
+	lVUvp6pNJdwbvwp6NEYkpN1lbROYQqMflNx/RlQ7beNIdljDQ8//7geLk9cvf2/d
+	+pA3+QCu0piCgstVWSEM5j5H6O/EbiC2ywQTvDFrt9MSl7/UFBpWbi3EW+//qm75
+	PIKZaloqu/A3kUTLJu78ZRQpvmoNGgf0GuMp2545UQ==
+X-ME-Sender: <xms:RwM6ZhRbmxx45OE6OB_DPpV2RDblolN5kqZJLPl9nIvfJS_ofjQzxg>
+    <xme:RwM6ZqzbX1gIcyN4eDq9MAgMvY3k7T6ixxOjH0itiTkzYY-MLmMwndxvY_jCTBlz0
+    4tIMkoSCVEQc0HKJA>
+X-ME-Received: <xmr:RwM6Zm1oHWIMef12wJy15RoDPMkvDdmmNog8wL-O9wv0NXN-Nfo6FIBJDU_aekINMyuqs_91QH1Rq2UmkqDaM-LFEhgGeLqkXI87o28m075z51ODDA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvkedgvdejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:RwM6ZpDQtkHF2a2hedWqT7nvsYo0WIZ-36Itoj5cpxKvAInkbjpuJw>
+    <xmx:RwM6ZqjxO5vLSwofmtBeALPG7PdDmJ8S2-wvphHnMLwgKmjDzHmw3w>
+    <xmx:RwM6ZtpwaeuMWpW_2Gvc0opF4Cq6IBfISC7kw79A8cCGYue2nim2RA>
+    <xmx:RwM6Zlh63n7zUnFUrw2kz1OBVizgIjZfgoxnTBxRFrj3XsoRJS6x3A>
+    <xmx:RwM6ZsZcijaHF7VKyjjMZzIirHI0xRK8seqbq_DwvQmvbHhqCMswNzoR>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 May 2024 06:32:38 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 380f2755 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 May 2024 10:32:28 +0000 (UTC)
+Date: Tue, 7 May 2024 12:32:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 07/10] refs: root refs can be symbolic refs
+Message-ID: <ZjoDQTe8APWgyzll@tanuki>
+References: <cover.1714398019.git.ps@pks.im>
+ <cover.1714479928.git.ps@pks.im>
+ <e90b2f8aa98493e9cd3f2c04cb58318780f9f6e5.1714479928.git.ps@pks.im>
+ <zmnute2cow2rbrv3cj5cq4roieyzssaxcnorxhorzyp3wfgllt@ubhsw6dpi5js>
+ <ZjNJ3j2wSgui_cG8@tanuki>
+ <maqra7gbokanvptimdk57gaaitdxdpaxse725odzcvqieqfhbc@sgdmfeuhi5hj>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Gqq7LaEef+1KkamQ"
+Content-Disposition: inline
+In-Reply-To: <maqra7gbokanvptimdk57gaaitdxdpaxse725odzcvqieqfhbc@sgdmfeuhi5hj>
+
+
+--Gqq7LaEef+1KkamQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:EDn3uBPap0W8bE+KOZ3mtP/MR9GJlfEfywC50VpWqHXRYEjjkhM
- 0LUSMUXrT7MKLEMy9v0TJNWWQv1XW2uF/zUx10+OvEOlg7G1Pw4fkLTpqwgvJ7m2FtojW3L
- /p5EbpdzDwsoBACtw1jxP9AExxczcOfzTIFe+jlnIO/642mRj5GY1gilMopRvQQYpTVfuMJ
- /0Tay7GfPkZcyzovWiTfQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Qc7/DTtcYI0=;718VuhF7KkxXquhUFon9jW4AsyV
- xzNTcXzoj19bUHd1NCLEk4iEanFaFvwQXRxjMetWwI90ATjtHpXIlLSOjMgDERzyKa86me9wm
- J4mlfNRlDUJAgWlXZorzUW020s4Wio/Y3UcqRH74DcQD/sdurWtBWd3o1Au4oPcNJ6Xq5085U
- UouVNaF5Y8xdomWTP5NIiUcGyy1lp+NYGw96KL19oUKJhb5afW+V+Dnxh3EUHZ3qspaIAREmL
- WVXSG7RsylihgiajuLcyhMtuRnhhnnydPrN3Ks0fSJfItNv9jbQu1kRS/d8FFfv+X5lxMm4BH
- YNKOWuGt9gJxKZj79A4IOiUd0vOuqnuNCZua34Ofl+DM4fvtLLzMJQt/jFg05JyV6zlyGK/jm
- zLd9RwbPe+NN1YuAhp73PiTz8Th96Oj6ANyENrHOIWngd6PMdUfDG6u0Wl/MdSmHH7Pha+dn5
- O2FM3Rn4PuWMZSk83EZI+cjMVFTNghp9ijQ37/tV3zq7uK352MVHS7hfkbt2wqP9b7QLeChhQ
- awOONBO6O2JwwPpJ518ONvxwSBj5gAupNBEUiYEZlxAKIEyz0sYWfMPg+GR8KYryJGE/Mqiof
- GRbLzcbkS6wcOpRiAEmIl+2n3bw+ziEKAEjIfb2pvXRJ7hR1dajkY3jnbpmSHzRHDdpbMP4XQ
- V6onddDe5NdrYhXwdD55bus56dc29WVqiDZWlAQgjO/n/raQR4xqCfI4/LhPovcHQXKbCs6iU
- BSZ1pGlAOmoSaZp0Y6/Wk07Xa+9Ik0YCJ2y3F2o22oGdBfin9azpFn3heVEKGNYTK2ju1VlmH
- XjGPlOGY0pjDqagRu14tzseZnwHvBA+Huwm7Wgf4xz+Eg=
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Fri, May 03, 2024 at 03:49:25PM -0500, Justin Tobler wrote:
+> On 24/05/02 10:07AM, Patrick Steinhardt wrote:
+> > On Tue, Apr 30, 2024 at 12:09:57PM -0500, Justin Tobler wrote:
+>=20
+> > > I'm not quite sure I understand why we are changing the behavior of
+> > > `is_headref()` here. Do we no longer want to validate the ref exists =
+if
+> > > it is symbolic?
+> >=20
+> > The implementation does not conform to the definition of a "HEAD" ref.
+> > Even before this patch series, a "HEAD" ref could either be a symbolic
+> > or a regular ref. So to answer the question of "Is this a HEAD ref?" you
+> > only need to check whether the ref exists, not whether its target
+> > exists.
+>=20
+> Thanks Patrick! I think this explantion might be good to add to the
+> commit message.
 
-Add a test case for this bug report, slightly edited and shortened:
+I'll restructure this a bit. In fact, we can even get rid of
+`is_headref()` completely as it is now covered by `is_root_ref()`, and
+there are no callers of `is_headref()`.
 
-ls-files path' fails if absolute path of workdir contains NFD (macOS)
-On macOS, 'git ls-files path' does not work (gives an error)
-if the absolute 'path' contains characters in NFD (decomposed).
-I guess this is a (minor) bug of git.
+> > > In a prior commit, `is_headref()` is commented to mention that we che=
+ck
+> > > whether the reference exists. Maybe that could use some additional
+> > > clarification?
+> >=20
+> > Which particular commit do you refer to? It's not part of this series,
+> > is it?
+>=20
+> I'm refering to the comment added above `is_headref()` in
+> (refs: classify HEAD as a root ref, 2024-04-30):
+>=20
+> "Check whether the reference is "HEAD" and whether it exists."
+>=20
+> Maybe I misunderstand its intent though.
 
-$ cd /somewhere         # some safe place, /tmp or ~/tmp etc.
-$ mkdir $'u\xcc\x88'    # =C3=BC in NFD
-$ cd =C3=BC                  # or cd $'u\xcc\x88' or cd $'\xc3\xbc'
-$ git init
-$ git ls-files $'/somewhere/u\xcc\x88'   # NFD
-  fatal: /somewhere/=C3=BC: '/somewhere/=C3=BC' is outside repository at '=
-/somewhere/=C3=BC'
-$ git ls-files $'/somewhere/\xc3\xbc'    # NFC
-(the same error as above)
+Ah, now I get what you're saying. Yeah, this could indeed use a
+clarification. I'll add it to `is_root_ref()` though given that
+`is_headref()` will go away.
 
-In the 'fatal:' error message, there are three =C3=BC;
-the 1st and 2nd are in NFC, the 3rd is in NFD.
+Patrick
 
-The added test case here follows the error description,
-with the exception that the '=C3=BC' is replaced by an '=C3=A4',
-which we already have as NFD and NFC in t0050.
-A fix will be done in the next commit.
+--Gqq7LaEef+1KkamQ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Reported-by: Jun T <takimoto-j@kba.biglobe.ne.jp>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- t/t0050-filesystem.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 325eb1c3cd..bb85ec38cb 100755
-=2D-- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -156,4 +156,16 @@ test_expect_success CASE_INSENSITIVE_FS 'checkout wit=
-h no pathspec and a case in
- 	)
- '
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY6A0AACgkQVbJhu7ck
+PpTRXA/9HyafcltPy7XT6C3Ynq3EGmTUvMqL564FTtB7n1P4zUNcrn+/qEgUIuyp
++e3ILBFh3psBRn1okZKzSUoo28cHDnUbWKDl/FV33TjgPlF7WNQXJ8xVZRBsMVRy
+kUEIIjJsZ7s1Z2fnwEwlQ0IU1k6SJbqKIqzTXNUKNl8WvW8WApyenkih5lv3LOAf
+ZkDASuGS7YLjTk6YpPva+IqfkArgKz5eizeNa0Qwy52BJW4LKnz9j61JRSJciHGp
+MjJ1r6gRmgogiAVPXGRVqWwrsoE46Gx1iaZz15Fnl2j1ZiSjj50YndcOBvKwsdy1
+86W3qfpNKXt3aUSSCw0y+JjktvnpiQiMewilsuAJddp3x8em+Qxsxw1FKM8LNN3+
+3eMYaTX1qZzro1CRk0ntJNGHlP7YQ3eaoJ3i1Izbvckjfw0mFv8o48+BGPj2F812
++8nChEGhDlqstiKmD1Y3XiZo/5b3cNiK2j+HJnhK3HmZa1pSX7/ZYYFI4TCIgTJi
+l+rVCJW+zDoxz+mqb3zilFuxgxemsUH/hFGjoC6sI+ndyloD+yukxy6NmnTk3YC8
+hmHy9vxWB9TLYs9gwY2AG4t/5Dy5S+/+8Em4FX056cae6fM+y7gYCCXHlPpA5kyz
+hjA/fjEfq3JNaQjaAVDR6O2XhIQpbExypCdyxO64AInj2nJpX+w=
+=tDiX
+-----END PGP SIGNATURE-----
 
-+test_expect_success 'git ls-files under NFD' '
-+	(
-+		mkdir somewhere &&
-+		mkdir somewhere/$aumlcdiar &&
-+		mypwd=3D$PWD &&
-+		cd somewhere/$aumlcdiar &&
-+		git init &&
-+		git ls-files "$mypwd/somewhere/$aumlcdiar"  2>err &&
-+		>expected &&
-+		test_cmp expected err
-+	)
-+'
- test_done
-=2D-
-2.41.0.394.ge43f4fd0bd
-
+--Gqq7LaEef+1KkamQ--
