@@ -1,78 +1,77 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E807D3E4
-	for <git@vger.kernel.org>; Wed,  8 May 2024 11:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5910F81AA2
+	for <git@vger.kernel.org>; Wed,  8 May 2024 11:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715166252; cv=none; b=qa+AE1604CLFtJkC/e+EPfch1PPItqJGI4eZmQIF4qEC8xgiPW/ww8PTDASCXKkPFu4NuUaXOjdl4SknXVR7sqxnRIwK8Kde2TQNGm/V+GPRrffdBPrt4KauhCm6bs/jVRlsM1CE9Kpq8WbSbP48slSU5/+fjES/kQ45XzYYomA=
+	t=1715166256; cv=none; b=GEG3VTWQJKyCacESEJhzps/xLoyg8aw8NRoD6Vnj6ZzUmxcZSfGMER/7yswrOL0TF86QtN519FUUouYQFWTnett6g2yeJSHI6s7G7R/03WfEndmC6WfGgPsYjpqwAGGvGEEMbXZ0fmzdYsXL4LyBPbp8Btr6akdlZQd9b7Lksbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715166252; c=relaxed/simple;
-	bh=ymd+W+XhHeze7Y302xsI20R6tW37iTs97UpHiK5ZFPk=;
+	s=arc-20240116; t=1715166256; c=relaxed/simple;
+	bh=Hj/FvAQEjG22vrfkhkPL7UWVT0GmZl/Y7aWOVXdUVpg=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GyrU3mqGkyPCsplHydckJPlBPfpNZ/RE1sg/b36t3uKg9MjGCwxcYMoBmxR/HbOWteS6v6Zs1Jplm92Du+RSEdKGK689G0l7MQ4jsDhGpEHMw+BXZyYGuPp+aD47fCEtXOwU8Ix4Fn9gJIsuG4gNAX224t9GgLI0bbkz+d/l9pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rVb4k8HK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IuigPLfP; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=b+vusPyXuOb/BtiS6s4FhCn/mqA4MHOzvcQt3GdFG843NAVKAzkrir8SzzRm2sdvsosMTip9lvmIpzF5DFCpEf+st7mgtLgEpisrBGusxSQt5dw2zbnSp4mgn6VW64E5M+K14iBlY3oUFz+9qsVaCdQTRL70ObDpWR/0eopXInk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VCQ4FDjt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SD0C9c5+; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rVb4k8HK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IuigPLfP"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A10DF1380FDE
-	for <git@vger.kernel.org>; Wed,  8 May 2024 07:04:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VCQ4FDjt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SD0C9c5+"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 8DE8C1140224
+	for <git@vger.kernel.org>; Wed,  8 May 2024 07:04:14 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 08 May 2024 07:04:09 -0400
+  by compute1.internal (MEProxy); Wed, 08 May 2024 07:04:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715166249; x=1715252649; bh=zVBGUGV/eg
-	XtFwbV2pCtgbleW9ndFrATnQwSlh6ghyU=; b=rVb4k8HKLYZXlNKo9S6r/dHbbg
-	UTm4R4EAOXlDR91TY04DtC5ctOpDqgJrhinf4aLmVKmMu5oXjl/OvVfpudKNhQCM
-	wIxkUaMmlUzs3ZI73iRQs6SHICpZk0r1A2ZbXpfInyeirJ2RQSTkT27O806tD0YD
-	ODsCCeSE8di7U2lpb/F09B9PZwzDXtoPerumuzUB+TrrX1EyzXr5JzhSZh5WbbV7
-	oR3Km4wIBTJ+FsAmHhWkDQz/qa42HHOFK1pqDAKAoxXJSKLdxlQtJOJsFVlrYX6E
-	SqtbqovTWWefffz8ZwG9/SGlch3YSsS38/Wmn5TmwNSBp7U5VV1nMEiS67qg==
+	:subject:to:to; s=fm3; t=1715166254; x=1715252654; bh=4zn2XNPS2x
+	uTM/GvMgF+g18tLHkUJuVGA1XZwAFvQ0o=; b=VCQ4FDjt3YyE4HoKsZG8W6Bwd2
+	8+8t1fO9WNpOWXpvEfdAnC0PIgQOkoKisogbme3Cm2Q0VhKncxPrpTbsCRIF+/qy
+	wY8oonTXMf8F14mMUk6Z6hG5gdb4WxZOpr6HUPUfbKPqjEpyzzn3nOdhMHboNcMD
+	J2OtfHTIQJWKY1ZvZGoJtVclHbLnTsd3XSacdtGUFT3pQvNkw1Z9GBJPh5NT0t8q
+	Srno7qA6pvVz95siIlkn0NnbVECtShSmK761KBIRbqScJyxey4J87ShhZjT6hqE6
+	c39Vld4SaN+3nMB2oae1yP7HIruI6Hft/Fj3FKkGfx1LRuCwt7gWrS5nlsOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715166249; x=1715252649; bh=zVBGUGV/egXtFwbV2pCtgbleW9nd
-	FrATnQwSlh6ghyU=; b=IuigPLfP3DjGnvUMZae3YDKnbS0oi7egxr5teP1Svkon
-	4wk6qCvojFcMpX1mcNC0ao63Aee7FKbp+UdSL5T614frRHj1s4nIF3/gBgdW1Fy1
-	FNDU947OcgivkHhfSj/FyikYkAWgszouCiDWccdVsFz+AD7J7p5UnJAV04037EwU
-	FYvesVULaTUfYFLoEHT/1aA4AhcT5MiU/fJSLzOnm8PYyV+xb7j31Q/E8ZnJQYrj
-	BXb3DLMWQ7V/79uwHdFHO5apaiBrPVXZ192CAnOMUacF2lAeONMhi+ZIgJUJ6Eo1
-	PXMnk0Mze7i/cED2W1YrIFiydAIR1gTJpKkEB+1iRg==
-X-ME-Sender: <xms:KVw7ZiNHm4fPOToFBjFpM8L9IoRmFGvcOi-NbmbNxNiyLAn0A0fiFQ>
-    <xme:KVw7Zg_YQHU27APR-FgCmVNfBLapDMEj6KBVbsaECwQVGFG1GcBFzq1bBROK5nwuo
-    XBEEPvHAHvRklXH5w>
-X-ME-Received: <xmr:KVw7ZpTQ7VU-XGgE6CV2PJfHbVHkEeDiuslFTchoI-DeYxDBnTsv1Q3GHboTZMCR8siGNRHERkTAiau7PqYUvCSC_S9_4J_u-7MEkDAUATf5eMIYag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgfeehucetufdoteggodetrfdotf
+	fm3; t=1715166254; x=1715252654; bh=4zn2XNPS2xuTM/GvMgF+g18tLHkU
+	JuVGA1XZwAFvQ0o=; b=SD0C9c5+v2OtHdunZ127r106CLM7xL75ovZs1CBE7OzA
+	0pnCQc1JA2G8MZcaS2yWLPkFcEqtw+aH/a+Mn4Y1aBGZlS4h6xv0/F+xIX7CxYK2
+	dzmslT4FXdPzn3NfxR6hHQO8kapeniBWfTqJfpNABQgFacVvf+wlVMhIlwViABt4
+	Dt8MFcLyDF3RhM+x9O6kSDkcEYgsv3CFk3sp8FbVMmteWsaNXnm00nYZwL/4xeqx
+	VQsgoZyK1e1MdU83j0qJW8RZUFQ/hj98IDTNl0O2FsKK90umEipzFs1zcYs4/DXV
+	yNqwk5N2EFwLcu6ZsSObu2EPc4FAHrq7Yc9I8km4GA==
+X-ME-Sender: <xms:Llw7Zl95Yg5uLN0-0gPbnnrrXcl19Q70KjMuJgt4LjO7dQRZ7rYJWA>
+    <xme:Llw7ZpsjgyZIzx2CF3rtvAOh2PzlwNOklZMLrgwbkr_tk6-vuhph-r5IRU5AnJoL9
+    WfVpVkRR7E1uRnKqg>
+X-ME-Received: <xmr:Llw7ZjDDF2yCRr8o8exIFKry2eq7aqJIadAvDyD4yk3S20JFtIhTYwvioSHEH_yKXybg6QNGtyo_ePO1PvUOkparj9xckaCbBw5HUCLgMJu2xn6KNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgfeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepvdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:KVw7Zisz-iREEgphyHA1r7Z72yuGwJrO4NcbHB3wFhtiQEpxhC1rxQ>
-    <xmx:KVw7ZqcvaDqRM8-xa1UOS6gUmkMH9-GjE3nap4Advz2LGXdioXdI-g>
-    <xmx:KVw7Zm3wBrohHIcIMFyBVJ-GF2QW1Auraix0_7KG2L6azRULVqSLEA>
-    <xmx:KVw7Zu_dDw6VBshlXMpIvUisu6uTWtRbFCfjdZCkcazN4WrMFmnvvg>
-    <xmx:KVw7ZuFYll9W4vN2NfxaWRlkhZqRB5R06u6s2o725g5i9ZrgsoRoA2mK>
+X-ME-Proxy: <xmx:Llw7ZpennjSsfWLiz9O7XKTNR3lnPPDla-CBzidQDgS8YDsWjcrLtw>
+    <xmx:Llw7ZqPJlp8L4uElG5gNXs8P_u0Wtarv_ZcWmm0okblji0ufANTaLQ>
+    <xmx:Llw7ZrnohilLqQngvjvaNDhdM1sao5NJfkvNQ3UohBlcFvvEnTNAWQ>
+    <xmx:Llw7ZkvesE62gKxyEU_2vigxoxbg8FeKc43QjUamrKDgWZvexyYbFQ>
+    <xmx:Llw7Zs1utG-kq3aAGJYxi9FsoXZsRo7pOZ03PiqhxZnYChp_YUPO053L>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 8 May 2024 07:04:08 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 8 May 2024 07:04:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 84345899 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id eda0b46c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 8 May 2024 11:03:58 +0000 (UTC)
-Date: Wed, 8 May 2024 13:04:06 +0200
+	Wed, 8 May 2024 11:04:03 +0000 (UTC)
+Date: Wed, 8 May 2024 13:04:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 07/13] reftable/merged: split up initialization and seeking
- of records
-Message-ID: <21b3e3ab5f04e66fdd352187b1da699d1ab67cee.1715166175.git.ps@pks.im>
+Subject: [PATCH 08/13] reftable/merged: simplify indices for subiterators
+Message-ID: <f0f42cd56b9e54e9c7d58be41fcc4e226d5c76ff.1715166175.git.ps@pks.im>
 References: <cover.1715166175.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,153 +80,94 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LnWxsNDADK8+mq5k"
+	protocol="application/pgp-signature"; boundary="u0AAM2/R0gVS/pwk"
 Content-Disposition: inline
 In-Reply-To: <cover.1715166175.git.ps@pks.im>
 
 
---LnWxsNDADK8+mq5k
+--u0AAM2/R0gVS/pwk
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-To initialize a `struct merged_iter`, we need to seek all subiterators
-to the wanted record and then add their results to the priority queue
-used to sort the records. This logic is split up across two functions,
-`merged_table_seek_record()` and `merged_table_iter()`. The scope of
-these functions is somewhat weird though, where `merged_table_iter()` is
-only responsible for adding the records of the subiterators to the
-priority queue.
+When seeking on a merged table, we perform the seek for each of the
+subiterators. If the subiterator hasa the desired record we add it to
+the priority queue, otherwise we skip it and don't add it to the stack
+of subiterators hosted by the merged table.
 
-Clarify the scope of those functions such that `merged_table_iter()` is
-only responsible for initializing the iterator's structure. Performing
-the subiterator seeks are now part of `merged_table_seek_record()`.
+The consequence of this is that the index of the subiterator in the
+merged table does not necessarily correspond to the index of it in the
+merged iterator. Next to being potentially confusing, it also means that
+we won't easily be able to re-seek the merged iterator because we have
+no clear connection between both of the data structures.
 
-This step is required to move seeking of records into the generic
-`struct reftable_iterator` infrastructure.
+Refactor the code so that the index stays the same in both structures.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c | 59 ++++++++++++++++++-----------------------------
- 1 file changed, 22 insertions(+), 37 deletions(-)
+ reftable/merged.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/reftable/merged.c b/reftable/merged.c
-index f85a24c678..4e1b78e93f 100644
+index 4e1b78e93f..18a2a6f09b 100644
 --- a/reftable/merged.c
 +++ b/reftable/merged.c
-@@ -25,34 +25,18 @@ struct merged_subiter {
- struct merged_iter {
- 	struct merged_subiter *subiters;
- 	struct merged_iter_pqueue pq;
--	uint32_t hash_id;
- 	size_t stack_len;
--	uint8_t typ;
- 	int suppress_deletions;
- 	ssize_t advance_index;
- };
-=20
--static int merged_iter_init(struct merged_iter *mi)
-+static void merged_iter_init(struct merged_iter *mi,
-+			     struct reftable_merged_table *mt)
- {
--	for (size_t i =3D 0; i < mi->stack_len; i++) {
--		struct pq_entry e =3D {
--			.index =3D i,
--			.rec =3D &mi->subiters[i].rec,
--		};
--		int err;
--
--		reftable_record_init(&mi->subiters[i].rec, mi->typ);
--		err =3D iterator_next(&mi->subiters[i].iter,
--				    &mi->subiters[i].rec);
--		if (err < 0)
--			return err;
--		if (err > 0)
--			continue;
--
--		merged_iter_pqueue_add(&mi->pq, &e);
--	}
--
--	return 0;
-+	memset(mi, 0, sizeof(*mi));
-+	mi->advance_index =3D -1;
-+	mi->suppress_deletions =3D mt->suppress_deletions;
-+	REFTABLE_CALLOC_ARRAY(mi->subiters, mt->stack_len);
+@@ -37,6 +37,7 @@ static void merged_iter_init(struct merged_iter *mi,
+ 	mi->advance_index =3D -1;
+ 	mi->suppress_deletions =3D mt->suppress_deletions;
+ 	REFTABLE_CALLOC_ARRAY(mi->subiters, mt->stack_len);
++	mi->stack_len =3D mt->stack_len;
  }
 =20
  static void merged_iter_close(void *p)
-@@ -246,32 +230,33 @@ static int merged_table_seek_record(struct reftable_m=
+@@ -236,21 +237,19 @@ static int merged_table_seek_record(struct reftable_m=
 erged_table *mt,
- 				    struct reftable_iterator *it,
- 				    struct reftable_record *rec)
- {
--	struct merged_iter merged =3D {
--		.typ =3D reftable_record_type(rec),
--		.hash_id =3D mt->hash_id,
--		.suppress_deletions =3D mt->suppress_deletions,
--		.advance_index =3D -1,
--	};
--	struct merged_iter *p;
-+	struct merged_iter merged, *p;
- 	int err;
+ 	merged_iter_init(&merged, mt);
 =20
--	REFTABLE_CALLOC_ARRAY(merged.subiters, mt->stack_len);
-+	merged_iter_init(&merged, mt);
-+
  	for (size_t i =3D 0; i < mt->stack_len; i++) {
-+		reftable_record_init(&merged.subiters[merged.stack_len].rec,
-+				     reftable_record_type(rec));
-+
+-		reftable_record_init(&merged.subiters[merged.stack_len].rec,
++		reftable_record_init(&merged.subiters[i].rec,
+ 				     reftable_record_type(rec));
+=20
  		err =3D reftable_table_seek_record(&mt->stack[i],
- 						 &merged.subiters[merged.stack_len].iter, rec);
+-						 &merged.subiters[merged.stack_len].iter, rec);
++						 &merged.subiters[i].iter, rec);
  		if (err < 0)
  			goto out;
--		if (!err)
--			merged.stack_len++;
--	}
-+		if (err > 0)
-+			continue;
+ 		if (err > 0)
+ 			continue;
 =20
--	err =3D merged_iter_init(&merged);
--	if (err < 0)
--		goto out;
-+		err =3D merged_iter_advance_subiter(&merged, merged.stack_len);
-+		if (err < 0)
-+			goto out;
-+
-+		merged.stack_len++;
-+	}
+-		err =3D merged_iter_advance_subiter(&merged, merged.stack_len);
++		err =3D merged_iter_advance_subiter(&merged, i);
+ 		if (err < 0)
+ 			goto out;
+-
+-		merged.stack_len++;
+ 	}
 =20
--	p =3D reftable_malloc(sizeof(struct merged_iter));
-+	p =3D reftable_malloc(sizeof(*p));
- 	*p =3D merged;
- 	iterator_from_merged_iter(it, p);
-+	err =3D 0;
-=20
- out:
- 	if (err < 0)
+ 	p =3D reftable_malloc(sizeof(*p));
 --=20
 2.45.0
 
 
---LnWxsNDADK8+mq5k
+--u0AAM2/R0gVS/pwk
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7XCUACgkQVbJhu7ck
-PpQTTg/9Hcls48cq5BuCVt8jnXqPWTqeEkvRZbOS0PGB0zvADI9WnT+HptnyhXs0
-s2TQKyoeT0uApCNXjbCUAqAj2mtihEZ5bTfmp7mFsrZOETj8Lqr/7qZV6RiWaulg
-Ic7iGS2Ipft3RKwfw8RFVhL/KJRQoIiKFMy9f2LVz8J0MCA6dDH//a9e4AukK5CY
-gklPiGgyAOYGlzXUV/MfygauKwdXlsVZ/ux/189WypL9RJeWF+9WpoUFqAn10dlG
-O00UakJLD3h0TpgdIu9FTQfxSTpH+O3ueHwx4Gb9KA63tfNy2ci3UWtxKeXPxE+9
-ovjhJNuhXYGIOclVxsL2LFDMPUoeB1BN3vDNR9z/Bp0SvX2tbP8n7WT2f7udIog4
-RVPxJhwm33QrhYJmE5Clv4Ss1NfRA33HaZQyqN/9eCmLNea2GIi2DcwBaL+nx1br
-mpd8CXzfgyaQ7IeCQkLlEYelmIe2z0d74Vwu7cbW9neWLggdmBlN4TC2mCVa0zEt
-CFwJHlX/UYuuSvYO42/CYeT4xyjnUK3qzCLNGtzx4U/8gKhx42MC3jMtKxiHgDZ+
-LiRBczYt3whsCDyr0yrtpSHF+S1nAcJiO3jsw5n3u2ngQbl6XnOCGOYixIa3SNOs
-Y0mg5pfhqO07zngAWl56zTcFa3P8zqCMYRQReibpgansP6YZ0I0=
-=F4Cx
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7XCoACgkQVbJhu7ck
+PpQvbg/9HEU8A24t9GwEp5lVJQAs17LPow8UXGLmqdTc1B+PLoG5Oj0Cykr/CMJi
+Ji0Rl5BsCDR0qFIg39M1GDMd7IOlENNoF5e7wNY6mzeLHl/6Ye8lm4dh1w4a/HQA
+c5Tx4b95Aq9RVXUNFhJJS0DiOTGpCxF0+gyekSB/A+cNYLguSjUCXKNEkir0iZiw
+Cqxyc3hjwhZkyG/yGOsEIHldOGlUIJNU8YNZWT6LH8EYsyQ+l7Fdnb73DCrW7efx
+uPvE+LeWbl8XiwXa0IpOXQLo4MEbmr5WqC32RaZCOt3jp9OH20OZmrlnDvgDqC66
+JBa7VNchYSdktk6ueZnLBZER3Ikno2fliHaGdI6TW9PKN2cTpkLx1lfmMf0Cst9G
+t8qi6KRURWlUUGXpjtulHjk2afy29aqoK44LVQfTleFp0Zk8LrZAHQDsgMKFO0tb
+Do8/qSMjruRVaYWmpeD0U2UHxNZ58WysVjfrPCThrHZoge4NQ3A86l7ihfio4Bze
+Lr07UWTrg6LPX5w/D2jRLbN8g+JLmoTzFvmZUIj8q7k9rGdnuBX6ihjUe8+POWdR
+CisA+xMFZjLQYMwlEWoC7IpgGGRSoNKanZvwnCHWo7J/j9aMhmzXz2YtyNRdfv42
+R4bZDvuDbJKn0KoRvTKBu/DFY7TMLxMKo+8ImJ7HHr7Nu1Y0k/o=
+=cBsQ
 -----END PGP SIGNATURE-----
 
---LnWxsNDADK8+mq5k--
+--u0AAM2/R0gVS/pwk--
