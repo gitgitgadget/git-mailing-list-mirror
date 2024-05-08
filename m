@@ -1,38 +1,38 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A7B73164
-	for <git@vger.kernel.org>; Wed,  8 May 2024 12:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C5F54F89
+	for <git@vger.kernel.org>; Wed,  8 May 2024 12:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715172316; cv=none; b=jK7qaBirtJ0sGocxIGkI2XMQObeN2HNdk9PvjPDhgbFV1M2LjxOhP85k6F23cbGhy8R+Aw9Bmd4VQMZUs7LneCEGYRW2zHgcoYXJN9XCeTmjOwDOQrgUv8mGGH5R0H+DloyBlrudBdOugd95G3bRUMkMfIZzbTRo2i+rTcM3tGI=
+	t=1715172318; cv=none; b=IdzcWlT+lvLRUCJnAPrtRC5MqvzXjuSayzbkOKos2fVjf0C5INlRKAdX1pRNUWxaFANKzanWMqGtLcfSfLj81xvEKAYT9KrWuKtn3XygKX7dBakH5/21yQ1ZIHkoZhWV/v/afhr2az49YRGZUp5jDMZ+B4KEA8RbAB+xlAxwUlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715172316; c=relaxed/simple;
-	bh=Sy6esTHw9LBvkqV8yx0KMoJJfnDWFiEG0dvA2VfCBlM=;
+	s=arc-20240116; t=1715172318; c=relaxed/simple;
+	bh=LWJi03w94FMfI8yGXIPo0lPCIui3ifpgFThJUh9tW5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0zlPANBr+LozzfZrrrGlVP60y2PDZZP+ldjywaI+65EXjFedaByJyBAyNW+h8pTZtwQzv1a6BHe8M0dnBp2CQqju/vZRpsTqefm1B5jOLhAYzuStSxG3sgY0fAKl2IAwQUd03sAnyWb7KiJfuTksYoczeDgIL2jLAIwKhmq3CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=VvHB40Et; arc=none smtp.client-ip=91.218.175.182
+	 MIME-Version; b=RAr5eO2bBWfGT8lZjUs6X8fDl1sNrl6/Ug0sVIPDdAT8EtzpXMziF0FhO/jVgpE7g1IAT/7nMhzMju/zaTU5Mc8i98YFc9QIMGY+oWj9hTR/NMHjcS8MUTSjcPIxE3HXgzphKonVXev6d86/DLAPWujRKbH3mDv5XxkYWe4Zn8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=MpsQtC62; arc=none smtp.client-ip=95.215.58.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="VvHB40Et"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="MpsQtC62"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1715172312;
+	t=1715172315;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=sjlH5tYlBOzcsbkUJKs8pzOyJ10b6kTp0m3bZRQPkfg=;
-	b=VvHB40EtpBajsRistXMw31t3aNKXtRA9kcLqSYNCP6e4yD6JxhWl43iroq+aU43hvrRr2d
-	+4fARcRT2ejxNpxGj+DkMqZheQ6DKYUiBw0saFcG0zhQdRoZCZtmPUwhJHFQIGlOdPZWij
-	GqOz6lGhpZODYHs52+KCeisPy9Gjx/4=
+	bh=7P9W7AEA4C8xAQeBDGGzZxOH9zzaVkQccMdG51jZydU=;
+	b=MpsQtC62ghLYKUOojnJj+vqswbOZXaytqwFSsVbTSfvTbPm/FYUw9/xBTj0WXmJO+ddQxB
+	N9H3Y7D4QCrSowb8kUtO9aw4EfFqUCKuaLq7V2NlX4w97gMoIwgpPs0McjC5+sPxJNqyRn
+	r9NFZuoZakyxMO7yB56z9+UpsIVoWkc=
 From: Toon Claes <toon@iotcl.com>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
-Subject: [PATCH 3/4] remote-curl: optionally show progress for HTTP get
-Date: Wed,  8 May 2024 14:44:52 +0200
-Message-ID: <20240508124453.600871-4-toon@iotcl.com>
+Subject: [PATCH 4/4] bundle-uri: enable git-remote-https progress
+Date: Wed,  8 May 2024 14:44:53 +0200
+Message-ID: <20240508124453.600871-5-toon@iotcl.com>
 In-Reply-To: <20240508124453.600871-1-toon@iotcl.com>
 References: <20240508124453.600871-1-toon@iotcl.com>
 Precedence: bulk
@@ -44,67 +44,38 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-git-remote-curl supports the `option progress` basically since it's
-inception. But this option had no effect for regular HTTP(S) downloads.
+When using bundle URIs large files might get downloaded during clone.
+During that time, there's no feedback to the user what is happening.
 
-Add progress indicator when downloading files through curl HTTP GET.
+Enable HTTP download progress for bundle URIs to inform the user.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- remote-curl.c       |  8 +++++++-
- t/t5557-http-get.sh | 15 +++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ bundle-uri.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 0b6d7815fd..9fc7c3580c 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1293,6 +1293,7 @@ static void parse_get(const char *arg)
- {
- 	struct strbuf url = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
-+	struct http_get_options http_options = {0};
- 	const char *space;
+diff --git a/bundle-uri.c b/bundle-uri.c
+index ca32050a78..462f00f668 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -293,7 +293,6 @@ static int download_https_uri_to_file(const char *file, const char *uri)
+ 	int found_get = 0;
  
- 	space = strchr(arg, ' ');
-@@ -1303,7 +1304,12 @@ static void parse_get(const char *arg)
- 	strbuf_add(&url, arg, space - arg);
- 	strbuf_addstr(&path, space + 1);
+ 	strvec_pushl(&cp.args, "git-remote-https", uri, NULL);
+-	cp.err = -1;
+ 	cp.in = -1;
+ 	cp.out = -1;
  
--	if (http_get_file(url.buf, path.buf, NULL))
-+	http_options.initial_request = 1;
-+
-+	if (options.progress)
-+		http_options.progress = 1;
-+
-+	if (http_get_file(url.buf, path.buf, &http_options))
- 		die(_("failed to download file at URL '%s'"), url.buf);
+@@ -328,6 +327,9 @@ static int download_https_uri_to_file(const char *file, const char *uri)
+ 		goto cleanup;
+ 	}
  
- 	strbuf_release(&url);
-diff --git a/t/t5557-http-get.sh b/t/t5557-http-get.sh
-index 76a4bbd16a..92a138caaf 100755
---- a/t/t5557-http-get.sh
-+++ b/t/t5557-http-get.sh
-@@ -36,4 +36,19 @@ test_expect_success 'get by URL: 200' '
- 	test_cmp "$HTTPD_DOCUMENT_ROOT_PATH/exists.txt" file2
- '
++	fprintf(child_in, "option progress true\n");
++	fflush(child_in);
++
+ 	fprintf(child_in, "get %s %s\n\n", uri, file);
  
-+test_expect_success 'get by URL with progress' '
-+	echo hello >"$HTTPD_DOCUMENT_ROOT_PATH/hello.txt" &&
-+
-+	url="$HTTPD_URL/hello.txt" &&
-+	cat >input <<-EOF &&
-+	capabilities
-+	option progress true
-+	get $url file3
-+
-+	EOF
-+
-+	git remote-http $url <input 2>err &&
-+        test_grep "^Downloading via HTTP: 100%" err
-+'
-+
- test_done
+ cleanup:
 -- 
 2.44.0.651.g21306a098c
 
