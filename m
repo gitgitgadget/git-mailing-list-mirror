@@ -1,77 +1,78 @@
 Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874F681729
-	for <git@vger.kernel.org>; Wed,  8 May 2024 11:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1E681729
+	for <git@vger.kernel.org>; Wed,  8 May 2024 11:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715166241; cv=none; b=TuHBKTthioU2mUdcpaVWYOTfNBPpYXLpj2XSpMeOreJijQpfv4QV7Dg8CP+uO7bYf+CJCD85yIDY4Sl8YC63hEv6tc5yQJR/z9/Eo57rKcPWy0PhqE30Zkr+QS0r5EnY1FIBOJis6fsgWQsuFejGmrzKa/vadD6VMMrGW3M/rU4=
+	t=1715166247; cv=none; b=S13OC0Os9rv5VO8WY+455+0g9egGZVRoT2VvvaJfSoJFw/r0LF5QhFDKggrluvUONkH4H9ZbZJHpGPTvn1OISwyaT5OVEl1G9hSCWIGv55kEmnnyh1h6mAA7nA9dhgCAMI+wwRU0fsZqDagFyoI+BrxeBD+SE5XRXgnFHIT5Ekg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715166241; c=relaxed/simple;
-	bh=WxsyxLJT4GjlPUF7cWZDFSWZovva1g1AiRXvQf7PUKU=;
+	s=arc-20240116; t=1715166247; c=relaxed/simple;
+	bh=SjQmixg0I5BolOZDDQZTKLfLIYeGvgGglmWn8wHuBPs=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QpGGCXUGICeAGT0/uE2eVsMIW5+d7DfkNmtvao/Gs17SeV1H7370HQ5TsTOVfIJJZ1ZB2ppwGGJjl7OHBWD+sg/J6zHRQpWLTLJfLiS7eUB6+RiYJd6Xn+dNdg3I+prn84dQ9yC1Fp3uD2YJQce3CP7a6XFb4A9B+e4fri2+LFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rxQWkLr1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MGifNl1o; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=TK4YCud53Hw/DtLZBCcBCiBhBcvfWx/TaGLpkm+XpgdRN1cCNXI2OuyVYdrIO+/0II58Nk0AV0kfBql9PUcI+/71oKWD+riRmF5AI8p1TMDWVoEJpi5D/g/6eKoPvxzPIVwcjEmKxHSSXom+ZFQ4KjA28pxYU3n8lq66gQOL2Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VGeM0OyE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Trc0EOVv; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rxQWkLr1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MGifNl1o"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9C56F1140256
-	for <git@vger.kernel.org>; Wed,  8 May 2024 07:03:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VGeM0OyE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Trc0EOVv"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 917CD1140226
+	for <git@vger.kernel.org>; Wed,  8 May 2024 07:04:04 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 08 May 2024 07:03:59 -0400
+  by compute1.internal (MEProxy); Wed, 08 May 2024 07:04:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715166239; x=1715252639; bh=ruFr1iLrS4
-	icLvadiQnjCqpNgC2DZ/vN8VpjAapcKAE=; b=rxQWkLr1YWIr1kJfSSaJVBJLk9
-	YSHv1D+ZD5OrylItfyozhASHbQs6atH9YjqvKsafDI84Zixea9yNEg3CHWEs/LT1
-	4ojECLxoawB0Gbla4v3hKDi2g0RRlzYP49y44m/o53ZmRnimE5QHraVGvazMv2AK
-	CyklkudYPDhpkyKz4xPXfar8Ef86L3Ir8ORcQ8gb6N0U6fUwlBMeFtyW3zb/cEJ/
-	V0+HC543GDXyYIniEOFpDDOsebzJPZmrSG9VMQzQVRcxDAeupWoSV0AS2Gpd1pAb
-	TdcT6Ol2u0jN0bINUfFfLz4Z3LQMah/jyGvTw12RWuzuA+yccHXB74+HdCaQ==
+	:subject:to:to; s=fm3; t=1715166244; x=1715252644; bh=O1dnZy4VQ5
+	p78DneuAJe9CzVH9xMYTUrJOwkbGgNcx8=; b=VGeM0OyEsfO2dXH/TSmLb+tu9z
+	LHQGeECcnx5t21475BXQa/lXz3j5Usd96ux/GEuBpH0o/PsXTmLXniNCYvcV+/y1
+	nf+D7mncvG/AW7URheiiUpMBpPmCYG0wpVJ85M1wAnKsQtenWcnIEHiHoPs71wnU
+	mjDFcRGA+vS0D8qbnfA8mrfbk/u2XoClfZkeUY+3Lw9IVaU5KCnQxj7s9pcfh2/c
+	xVhjmtwp484tkdDndCqWAA8JSysiIsbFTVdrxHbNUD8RCGfbSp9oXWtOW9n4qrpz
+	bMJMh54feRi/hwaTCEFgFo36iLRA+XUTkQt4/Rupf7w3ZoC7xLKuzjqamjBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715166239; x=1715252639; bh=ruFr1iLrS4icLvadiQnjCqpNgC2D
-	Z/vN8VpjAapcKAE=; b=MGifNl1ouuA/JuwMfxajDkRDa6s442qkqJczIER8y48F
-	ZucycGjRVWjpO7qRrtT0PzIshTg3/COUTAQR5ygTPYRGZ50NCQOaUIdV3x0hAvdp
-	wjL3jR1g2n9pWMjhJ2wSLxVOrFM2jV3W9lzV8/cdNzOUO6SOoTsklUVrzeCRJU+z
-	+HGM//1AzX4AMYlMOYWfblydFPQTfzXjXp3qnehh0jnumBBLSgmnE+2M1sOJGqAg
-	J+Z3pEmm9X4M9ecPXXyywInFdp0UfWpdQpSswe6kYEbMw//jozLl3wWOjkrM/98Y
-	k13mcVCkfyo47yw7+Na0GB0gssMGpQfMIgZTBcB1Wg==
-X-ME-Sender: <xms:H1w7ZidhOR1HwhP28JdX_GfGjPnzP_KRKJxX9VBYu0Fw267w8CR8Xg>
-    <xme:H1w7ZsODoajgTBo7s3ipIwqZEVaMY3wvV_oYDSDkuPIkpFPfkvo_1gCojvaEehk2c
-    XY5-0C_rGcXgL9Zbg>
-X-ME-Received: <xmr:H1w7ZjikSnL824HU9dKpWuU1TaijzEfUZug4or-f5SMnCTPNjNYeLG4Z13z0xbY_4ppk6cHG0GCY3yd4OrbiBcAjUQHNaI7lboOh3TMs71NX62mLUQ>
+	fm3; t=1715166244; x=1715252644; bh=O1dnZy4VQ5p78DneuAJe9CzVH9xM
+	YTUrJOwkbGgNcx8=; b=Trc0EOVvGDy4LTqXXeMXWDgFqTLP+dKKYkyzWOaUfBzY
+	YbhjXorrXQ4C05zrdTLLWdekBqNgwKU0A3vjGKOjocpNaIUkub/aKwaB/Tjoal7d
+	t6Gmmru30fZu++xH3u+bYY5j7Xq/yylRnyniRa3LRUgDge1quvAXt88skbtYOdcZ
+	ZsoKoEIN1Q2nzfv8wq63wLIOsWA2rBKXrZAPuHD8H39a48lmWIeeQfBlbU24MIi2
+	jI3D20w5iTDYBK77359ayl5usZIuJXWh3s6kMudQE+MJqqLxaU2eBfag6KOLY4nP
+	mO1cwnAqu3UFECTzWTRagJtF1KlKrRlkyIEpQWyfLA==
+X-ME-Sender: <xms:JFw7ZqFH9GBozDw0uOXds6_RoC3uyR-EWBzOsIfugcFIRBjW632dNA>
+    <xme:JFw7ZrVBv649nQQ2fJWPzLXAK4JHXDsBGJWub8IG5iz2yY7n_PzrGAZr8UPOPCGfc
+    swDxODWMtricN6Fiw>
+X-ME-Received: <xmr:JFw7ZkLws7zyk9Ly5EFN8hCxSlR06N4WWm_mQw1a5uUIkE03EDgnl8vCdQq-tAJJa4R8z15esjJtCIIB79PIHIQAMNG33Dj776r9Qt61eVnlh88kZw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgfeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:H1w7Zv-n1fGXXZB4FFNL1tmjBDoAREt6XnIDJ4qnWpjsK3UJCccrzQ>
-    <xmx:H1w7ZutlPyq_UY02Cs5O4F9QHWdsEXUivroVHu6LEJnBwXjrtRVZdQ>
-    <xmx:H1w7ZmEjGjJSKlN2OfIW-OsFYohFMc__ubXlCrTF0niJdEarqlaFMQ>
-    <xmx:H1w7ZtPH8_5JyeOuZrkSni8YWNGzKonDC_l5hRK_E890sCdG55E74A>
-    <xmx:H1w7ZjUUFKRdqZQ2_AnHsU3TYwa2K7uTc0jLxgrXhZKPq6yhm-T7qvRj>
+X-ME-Proxy: <xmx:JFw7ZkEENAAqQGHSPKdcRmJdABYXSMlr1rLA4w7mJtZJNfqZkTgewQ>
+    <xmx:JFw7ZgX6J1hdescZ7mYrArXS9SXw1yujXekLfNDTMdJ-xlPYkoXLdA>
+    <xmx:JFw7ZnOOKMdotvQil7aufS6UOyYjZ4SxHFYjDuxc7FRHVZg5jfcHnA>
+    <xmx:JFw7Zn2K4bogCxZ0F8vo6WrDS4cSi4idXOeJr8RXGU7hq71lwjIvAA>
+    <xmx:JFw7Zrf2FG3D1yeGEo5j3TX5yJFiffaeCEqu8zXqVnJX6ObbYQXgYEw2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 8 May 2024 07:03:58 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 8 May 2024 07:04:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 18ef1880 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id c7777124 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 8 May 2024 11:03:49 +0000 (UTC)
-Date: Wed, 8 May 2024 13:03:56 +0200
+	Wed, 8 May 2024 11:03:54 +0000 (UTC)
+Date: Wed, 8 May 2024 13:04:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 05/13] reftable/reader: inline `reader_seek_internal()`
-Message-ID: <4d498ef3426877c703bababaa743dd5613ba5839.1715166175.git.ps@pks.im>
+Subject: [PATCH 06/13] reftable/reader: set up the reader when initializing
+ table iterator
+Message-ID: <5a10a115841512a46e4d3a3d3713e5532facdb39.1715166175.git.ps@pks.im>
 References: <cover.1715166175.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,112 +81,173 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EGkKnCb+BOYTOQ4Q"
+	protocol="application/pgp-signature"; boundary="0P6OCYDtf0wsLqp6"
 Content-Disposition: inline
 In-Reply-To: <cover.1715166175.git.ps@pks.im>
 
 
---EGkKnCb+BOYTOQ4Q
+--0P6OCYDtf0wsLqp6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have both `reader_seek()` and `reader_seek_internal()`, where the
-former function only exists so that we can exit early in case the given
-table has no records of the sought-after type.
+All the seeking functions accept a `struct reftable_reader` as input
+such that they can use the reader to look up the respective blocks.
+Refactor the code to instead set up the reader as a member of `struct
+table_iter` during initialization such that we don't have to pass the
+reader on every single call.
 
-Merge these two functions into one.
+This step is required to move seeking of records into the generic
+`struct reftable_iterator` infrastructure.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reader.c | 34 ++++++++++++----------------------
- 1 file changed, 12 insertions(+), 22 deletions(-)
+ reftable/reader.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
 diff --git a/reftable/reader.c b/reftable/reader.c
-index b210753441..c3541e2c43 100644
+index c3541e2c43..021608f638 100644
 --- a/reftable/reader.c
 +++ b/reftable/reader.c
-@@ -573,21 +573,25 @@ static int table_iter_seek_indexed(struct table_iter =
-*ti,
- 	return err;
+@@ -224,8 +224,14 @@ struct table_iter {
+ 	struct block_iter bi;
+ 	int is_finished;
+ };
+-#define TABLE_ITER_INIT { \
+-	.bi =3D BLOCK_ITER_INIT \
++
++static int table_iter_init(struct table_iter *ti, struct reftable_reader *=
+r)
++{
++	struct block_iter bi =3D BLOCK_ITER_INIT;
++	memset(ti, 0, sizeof(*ti));
++	ti->r =3D r;
++	ti->bi =3D bi;
++	return 0;
  }
 =20
--static int reader_seek_internal(struct reftable_reader *r,
--				struct reftable_iterator *it,
--				struct reftable_record *rec)
-+static int reader_seek(struct reftable_reader *r, struct reftable_iterator=
- *it,
-+		       struct reftable_record *rec)
+ static int table_iter_next_in_block(struct table_iter *ti,
+@@ -386,26 +392,23 @@ static void iterator_from_table_iter(struct reftable_=
+iterator *it,
+ 	it->ops =3D &table_iter_vtable;
+ }
+=20
+-static int table_iter_seek_to(struct table_iter *ti, struct reftable_reade=
+r *r,
+-			      uint64_t off, uint8_t typ)
++static int table_iter_seek_to(struct table_iter *ti, uint64_t off, uint8_t=
+ typ)
  {
--	struct reftable_reader_offsets *offs =3D
--		reader_offsets_for(r, reftable_record_type(rec));
--	uint64_t idx =3D offs->index_offset;
-+	uint8_t typ =3D reftable_record_type(rec);
-+	struct reftable_reader_offsets *offs =3D reader_offsets_for(r, typ);
- 	struct table_iter ti =3D TABLE_ITER_INIT, *p;
  	int err;
 =20
--	err =3D table_iter_seek_start(&ti, r, reftable_record_type(rec), !!idx);
-+	if (!offs->is_present) {
-+		iterator_set_empty(it);
-+		return 0;
-+	}
-+
-+	err =3D table_iter_seek_start(&ti, r, reftable_record_type(rec),
-+				    !!offs->index_offset);
- 	if (err < 0)
- 		goto out;
+-	err =3D reader_init_block_reader(r, &ti->br, off, typ);
++	err =3D reader_init_block_reader(ti->r, &ti->br, off, typ);
+ 	if (err !=3D 0)
+ 		return err;
 =20
--	if (idx)
-+	if (offs->index_offset)
- 		err =3D table_iter_seek_indexed(&ti, rec);
- 	else
- 		err =3D table_iter_seek_linear(&ti, rec);
-@@ -604,20 +608,6 @@ static int reader_seek_internal(struct reftable_reader=
- *r,
- 	return err;
+-	ti->r =3D r;
+ 	ti->typ =3D block_reader_type(&ti->br);
+ 	ti->block_off =3D off;
+ 	block_iter_seek_start(&ti->bi, &ti->br);
+ 	return 0;
  }
 =20
--static int reader_seek(struct reftable_reader *r, struct reftable_iterator=
- *it,
--		       struct reftable_record *rec)
--{
--	uint8_t typ =3D reftable_record_type(rec);
--
--	struct reftable_reader_offsets *offs =3D reader_offsets_for(r, typ);
--	if (!offs->is_present) {
--		iterator_set_empty(it);
--		return 0;
--	}
--
--	return reader_seek_internal(r, it, rec);
--}
--
- int reftable_reader_seek_ref(struct reftable_reader *r,
- 			     struct reftable_iterator *it, const char *name)
+-static int table_iter_seek_start(struct table_iter *ti, struct reftable_re=
+ader *r,
+-				 uint8_t typ, int index)
++static int table_iter_seek_start(struct table_iter *ti, uint8_t typ, int i=
+ndex)
  {
+-	struct reftable_reader_offsets *offs =3D reader_offsets_for(r, typ);
++	struct reftable_reader_offsets *offs =3D reader_offsets_for(ti->r, typ);
+ 	uint64_t off =3D offs->offset;
+ 	if (index) {
+ 		off =3D offs->index_offset;
+@@ -415,7 +418,7 @@ static int table_iter_seek_start(struct table_iter *ti,=
+ struct reftable_reader *
+ 		typ =3D BLOCK_TYPE_INDEX;
+ 	}
+=20
+-	return table_iter_seek_to(ti, r, off, typ);
++	return table_iter_seek_to(ti, off, typ);
+ }
+=20
+ static int table_iter_seek_linear(struct table_iter *ti,
+@@ -548,7 +551,7 @@ static int table_iter_seek_indexed(struct table_iter *t=
+i,
+ 		if (err !=3D 0)
+ 			goto done;
+=20
+-		err =3D table_iter_seek_to(ti, ti->r, index_result.u.idx.offset, 0);
++		err =3D table_iter_seek_to(ti, index_result.u.idx.offset, 0);
+ 		if (err !=3D 0)
+ 			goto done;
+=20
+@@ -578,7 +581,7 @@ static int reader_seek(struct reftable_reader *r, struc=
+t reftable_iterator *it,
+ {
+ 	uint8_t typ =3D reftable_record_type(rec);
+ 	struct reftable_reader_offsets *offs =3D reader_offsets_for(r, typ);
+-	struct table_iter ti =3D TABLE_ITER_INIT, *p;
++	struct table_iter ti, *p;
+ 	int err;
+=20
+ 	if (!offs->is_present) {
+@@ -586,7 +589,9 @@ static int reader_seek(struct reftable_reader *r, struc=
+t reftable_iterator *it,
+ 		return 0;
+ 	}
+=20
+-	err =3D table_iter_seek_start(&ti, r, reftable_record_type(rec),
++	table_iter_init(&ti, r);
++
++	err =3D table_iter_seek_start(&ti, reftable_record_type(rec),
+ 				    !!offs->index_offset);
+ 	if (err < 0)
+ 		goto out;
+@@ -722,15 +727,15 @@ static int reftable_reader_refs_for_unindexed(struct =
+reftable_reader *r,
+ 					      struct reftable_iterator *it,
+ 					      uint8_t *oid)
+ {
+-	struct table_iter ti_empty =3D TABLE_ITER_INIT;
+-	struct table_iter *ti =3D reftable_calloc(1, sizeof(*ti));
++	struct table_iter *ti;
+ 	struct filtering_ref_iterator *filter =3D NULL;
+ 	struct filtering_ref_iterator empty =3D FILTERING_REF_ITERATOR_INIT;
+ 	int oid_len =3D hash_size(r->hash_id);
+ 	int err;
+=20
+-	*ti =3D ti_empty;
+-	err =3D table_iter_seek_start(ti, r, BLOCK_TYPE_REF, 0);
++	REFTABLE_ALLOC_ARRAY(ti, 1);
++	table_iter_init(ti, r);
++	err =3D table_iter_seek_start(ti, BLOCK_TYPE_REF, 0);
+ 	if (err < 0) {
+ 		reftable_free(ti);
+ 		return err;
 --=20
 2.45.0
 
 
---EGkKnCb+BOYTOQ4Q
+--0P6OCYDtf0wsLqp6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7XBsACgkQVbJhu7ck
-PpQXGRAAjj9CZG6qboTh5pHCuPcfq8ZSJXa21jH25EEdep7YtslAbMnFGQNKxQqG
-faiYn1N3UzKeB3EFyUsmEZx0m5oadk3qHoajNbKywiSzCOO0jPw176dziQkWTnQr
-pidb6vtERyVcPgXdGIkLdrNTaLhcRLcpTT53GorvpxgrUfCsa1jwA47YhDPdvvnX
-eE9/F6yUifLUXN/4bd6BGn6Y3Q1IH5mGkED+cEy3oyThURY/VErOIT01NIaeEDMh
-t4JG71ZZfuZK1ZUzcu8NfE16iHP79CydgIBLwPTiY5TnTIET+Zt6iEJ/bDBjo8nW
-EwFT140fpt9zi7klnJxd09Ws+d83szLp0B8b7K5K61itTKcGf3+tGKw/k9M1uFzF
-g8rzZNvU+YNbCmUa/6bPKBXWJBv2oQZRcHBRou3lRZB7LXirgyUCZCgLliY7JRBN
-7es9Ps3RwZJ5KFm4UVie/BZls3MejDmPjKXpfb0+6MmLa0XGDf/2kN/QnoZM66Jq
-c/LxnXvnpMvBYNcogP4qeNjb0xeLE6vQfC4JPEFG4r9gtNBcuX7yi3kf0hcRYZyz
-+MhYS03Ts0lzf+0snPiAUSLzHe7t50LGV5BEDLh1d0hOyqU6q61ORlypmk4q5+GD
-tHjFduYXCxyQcYN1meSZxOEXayYsJRs9apwADWwKzf4RclK/g3Y=
-=JVpX
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7XCAACgkQVbJhu7ck
+PpS9VhAAotdReq4SJAW8sN1Xh5nNDsyhT17qWvIBGqpnpX9q5iUcVHbWcqiLe7j3
+J9zXuWHq5tz+l3w0yU1T1oKpH0O+zZDtFqNS2THzctqa0XG2U83C6ljkHK4pcgQL
+7qjSIhkAfaHojFJOLIX+JJjTzRpnZVT4DCClUKtc0W0aJooVo23ZH/sX7/rbew+c
+mOf5ztLuQaPnyIosxbqu7HHgy6EnomV+sx3h7ZgEHirhHv6PfO4M+QafoD76S8/5
+erArWJ2Pyfn8ZcY2kc6uZ+nfK2BDse+Y7F3vRGjHmW267VoUR/tLoRTBz9LDHOw9
+h00IELZ7VKMcVq2JThhfVGECxL6PaPhc9HscfTrcuD2Pzd25Txqb/i2l7IIzXcJ9
+kVo+Yp3FD5I4VI4YpFgP/i/w0wYWzxIWFIuKkpyNOhK1n8YYXhLEI5he5n1ISxsG
+8V5FCOItSz0AXENsILNsawE9Y1Jzi6D9mjkWG3pmSsRLdgJ8srsOZklVYPfwzp3O
+8ROXZq6e+TrtzcFyYx+bO6wPd0EH7bJYbOhxH0TDMe8Smqg1Yq5SRSN5fE4m4yIY
+sJ2u9Od2VYHi91KYpx3XH+vfl+uG+/U98RXMSTbICImmc4FDCyO5xcvNnDTIbue9
+vXyc9453iZ6SvYcB3cClUmrl9OXTzfQ3c+cgkwkzwnr8FAWuhU0=
+=i7eu
 -----END PGP SIGNATURE-----
 
---EGkKnCb+BOYTOQ4Q--
+--0P6OCYDtf0wsLqp6--
