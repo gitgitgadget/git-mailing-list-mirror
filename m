@@ -1,616 +1,156 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from relay01.gameloft.com (relay01.gameloft.com [208.71.184.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6704651C5B
-	for <git@vger.kernel.org>; Wed,  8 May 2024 23:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBEEA23
+	for <git@vger.kernel.org>; Wed,  8 May 2024 23:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=208.71.184.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715212194; cv=none; b=Q5X4+DmlIEM5Jb7XuQO2eIKCR6nkEJyrD20izH03TtYFAbNj4X5LI6+xH189oRGHf5QMohlfU2Ljyy5j8BeMWU3MU2mKJ9twmzwrJL+BZ6xrPwZcJdF1AiWUjS7+t+d21cn3bxpBd3+dh6jdDeYyNyCf4xGl6bwlMevGypkOosc=
+	t=1715212397; cv=none; b=ZGOmkkL+fGAxHlcjDWJh89OOphuxIpFDX8CkFkAk4N5a32aMw6hmBOTWG9nEDeEJpvcIiMaUn2oDuVzSWDn42szOTf0L3jC+owELM1j9x2qc8hijT/X47xWRT+FlsWSGYhsnRVg6ytbVS7boOVwBnWI2Mf+YF6BEleiF2fP7RWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715212194; c=relaxed/simple;
-	bh=A/7m4f2ElrUh6cGYQ5G/YPDry5T5uWrD3fzTUTnCWTA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wec2sOzd03X7IQI16ihjipLsEaoKq529jQQpXLbF2Aob68hG3sqDUtT0piyuhAn0YfO4ZYqPcTEUPjXF7To2iLWBLWGrA7pN6i7aF3prhaOZ+Jki9xpKwNhG0BugHXMLT+CjozwY6sLccUVh3uxNm/cLAwSeN8HHt8YSsMuYps8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bLOxILII; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715212397; c=relaxed/simple;
+	bh=/M0eT6C2kUdaeaPB6zCqXdsnmWX92p/fjRtRHygIt8k=;
+	h=Content-Type:Message-ID:Date:MIME-Version:From:Subject:To; b=mLc0O/1N0YZGvuU9lJEAklSrXGpl0oV8WvLTVAcW5DrK0Hu54M47+TfQ5eGxwTUfFe+MQv0999nGkxz2D1bYpzSf0xKJUPipOUDIg4orz5epT2fBLt/HYYj9e0h0D0UCXiD6WVR5Vc0HrPjWUMIZUJTxT1fWZJd1J5EAfHY9O6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gameloft.com; spf=pass smtp.mailfrom=gameloft.com; dkim=pass (1024-bit key) header.d=gameloft.com header.i=@gameloft.com header.b=Qhrgp8q9; arc=none smtp.client-ip=208.71.184.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gameloft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gameloft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bLOxILII"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B89451E65A;
-	Wed,  8 May 2024 19:49:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=A/7m4f2ElrUh6cGYQ5G/YPDry5T5uWrD3fzTUT
-	nCWTA=; b=bLOxILIIha0DGxXNj6dsv3P7Oyfc331UiLLI3YY+zgv6D+6EuxY3vM
-	cq16aPZ4LJ0blBL2dQD1sOuNmocklpsOdeIU+BSzYpDszA/06d8kqUMgJxM98emE
-	acad0RSrzf4HQSAtYxALNOb5PSMW6jTKqCON8nu4DKJec6bx4gaOM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B1B6A1E659;
-	Wed,  8 May 2024 19:49:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
+	dkim=pass (1024-bit key) header.d=gameloft.com header.i=@gameloft.com header.b="Qhrgp8q9"
+X-Gameloft-MailScanner-From: martin.veilleux@gameloft.com
+X-Gameloft-MailScanner: Found to be clean
+X-Gameloft-MailScanner-ID: 3F1F12265C.A9198
+Received: from mdc-ex04.gameloft.org (mdc-ex04.gameloft.org [10.136.3.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 35C201E658;
-	Wed,  8 May 2024 19:49:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/4] bundle-uri: show progress when downloading from
- bundle URIs
-In-Reply-To: <20240508124453.600871-1-toon@iotcl.com> (Toon Claes's message of
-	"Wed, 8 May 2024 14:44:49 +0200")
-References: <20240508124453.600871-1-toon@iotcl.com>
-Date: Wed, 08 May 2024 16:49:46 -0700
-Message-ID: <xmqqr0ebx3s5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by relay01.gameloft.com (Postfix) with ESMTPS id 3F1F12265C
+	for <git@vger.kernel.org>; Wed,  8 May 2024 23:45:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=gameloft.com;
+	s=gameloft; t=1715211904;
+	bh=/M0eT6C2kUdaeaPB6zCqXdsnmWX92p/fjRtRHygIt8k=;
+	h=Date:From:Subject:To;
+	b=Qhrgp8q91LAHFyRN4q0yz0TrW91m2Ota3HngqsU+Ex3tZVXCs9ZxSx4s+DaP1y5Kb
+	 N5HQ/cMjkbbol+LlMwmT9lKVx9/UHj1Jq/pIA+nl6iyzPwu0ijqua3BAjBs8vZjxQt
+	 qNJzOa5Ghl5KILZ4GjfQcoFomelGGqolirQTk3nw=
+Received: from mdc-ex04.gameloft.org (10.136.3.57) by mdc-ex04.gameloft.org
+ (10.136.3.57) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 8 May 2024
+ 19:45:04 -0400
+Received: from inf-p-oms001.sds.gameloft.org (10.136.1.152) by
+ mdc-ex04.gameloft.org (10.136.3.57) with Microsoft SMTP Server id 15.2.1544.4
+ via Frontend Transport; Wed, 8 May 2024 19:45:04 -0400
+Received: by inf-p-oms001.sds.gameloft.org (Postfix, from userid 65534)
+	id F26138028B; Wed,  8 May 2024 23:45:03 +0000 (UTC)
+Received: from [10.137.10.87] (MTLWKS0186.sds.gameloft.org [10.137.10.87])
+	(Authenticated sender: martin.veilleux@gameloft.com)
+	by inf-p-oms001.sds.gameloft.org (Postfix) with ESMTPSA id D944780194
+	for <git@vger.kernel.org>; Wed,  8 May 2024 23:45:03 +0000 (UTC)
+Content-Type: multipart/mixed;
+	boundary="------------wCKnUKM8c93ji28pDR53hIO7"
+Message-ID: <8c53a956-13e9-4c7e-9359-2c86c9dd9908@gameloft.com>
+Date: Wed, 8 May 2024 19:45:03 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A77238A6-0D95-11EF-9183-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-
-Toon Claes <toon@iotcl.com> writes:
-
-> Toon Claes (4):
->   progress: add function to set total
->   http: add the ability to log progress
->   remote-curl: optionally show progress for HTTP get
->   bundle-uri: enable git-remote-https progress
->
->  bundle-uri.c                |  4 +++-
->  http.c                      | 32 ++++++++++++++++++++++++++++++++
->  http.h                      |  5 +++++
->  progress.c                  |  6 ++++++
->  progress.h                  |  1 +
->  remote-curl.c               |  8 +++++++-
->  t/helper/test-progress.c    |  5 +++++
->  t/t0500-progress-display.sh | 24 ++++++++++++++++++++++++
->  t/t5557-http-get.sh         | 15 +++++++++++++++
->  9 files changed, 98 insertions(+), 2 deletions(-)
-
-This topic, when built on tip of recent tip of 'master'
-(d4cc1ec35f), or merged to 'seen', seems to break t5558.
-
-
-$ sh t5558-clone-bundle-uri.sh -i -v
-Initialized empty Git repository in /home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/.git/
-expecting success of 5558.1 'fail to clone from non-existent file': 
-	test_when_finished rm -rf test &&
-	git clone --bundle-uri="$(pwd)/does-not-exist" . test 2>err &&
-	grep "failed to download bundle from URI" err
-
-warning: failed to download bundle from URI '/home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/does-not-exist'
-ok 1 - fail to clone from non-existent file
-
-expecting success of 5558.2 'fail to clone from non-bundle file': 
-	test_when_finished rm -rf test &&
-	echo bogus >bogus &&
-	git clone --bundle-uri="$(pwd)/bogus" . test 2>err &&
-	grep "is not a bundle" err
-
-warning: file at URI '/home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/bogus' is not a bundle or bundle list
-ok 2 - fail to clone from non-bundle file
-
-expecting success of 5558.3 'create bundle': 
-	git init clone-from &&
-	git -C clone-from checkout -b topic &&
-	test_commit -C clone-from A &&
-	test_commit -C clone-from B &&
-	git -C clone-from bundle create B.bundle topic
-
-Initialized empty Git repository in /home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/clone-from/.git/
-Switched to a new branch 'topic'
-[topic (root-commit) 0ddfaf1] A
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 A.t
-[topic d9df450] B
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 B.t
-ok 3 - create bundle
-
-expecting success of 5558.4 'clone with path bundle': 
-	git clone --bundle-uri="clone-from/B.bundle" \
-		clone-from clone-path &&
-	git -C clone-path rev-parse refs/bundles/topic >actual &&
-	git -C clone-from rev-parse topic >expect &&
-	test_cmp expect actual
-
-Cloning into 'clone-path'...
-done.
-ok 4 - clone with path bundle
-
-expecting success of 5558.5 'clone with path bundle and non-default hash': 
-	test_when_finished "rm -rf clone-path-non-default-hash" &&
-	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="clone-from/B.bundle" \
-		clone-from clone-path-non-default-hash &&
-	git -C clone-path-non-default-hash rev-parse refs/bundles/topic >actual &&
-	git -C clone-from rev-parse topic >expect &&
-	test_cmp expect actual
-
-Cloning into 'clone-path-non-default-hash'...
-done.
-ok 5 - clone with path bundle and non-default hash
-
-expecting success of 5558.6 'clone with file:// bundle': 
-	git clone --bundle-uri="file://$(pwd)/clone-from/B.bundle" \
-		clone-from clone-file &&
-	git -C clone-file rev-parse refs/bundles/topic >actual &&
-	git -C clone-from rev-parse topic >expect &&
-	test_cmp expect actual
-
-Cloning into 'clone-file'...
-done.
-ok 6 - clone with file:// bundle
-
-expecting success of 5558.7 'construct incremental bundle list': 
-	(
-		cd clone-from &&
-		git checkout -b base &&
-		test_commit 1 &&
-		git checkout -b left &&
-		test_commit 2 &&
-		git checkout -b right base &&
-		test_commit 3 &&
-		git checkout -b merge left &&
-		git merge right -m "4" &&
-
-		git bundle create bundle-1.bundle base &&
-		git bundle create bundle-2.bundle base..left &&
-		git bundle create bundle-3.bundle base..right &&
-		git bundle create bundle-4.bundle merge --not left right
-	)
-
-Switched to a new branch 'base'
-[base 65d47d5] 1
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 1.t
-Switched to a new branch 'left'
-[left 918de9f] 2
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 2.t
-Switched to a new branch 'right'
-[right d1bc9f9] 3
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 3.t
-Switched to a new branch 'merge'
-Merge made by the 'ort' strategy.
- 3.t | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 3.t
-ok 7 - construct incremental bundle list
-
-expecting success of 5558.8 'clone bundle list (file, no heuristic)': 
-	cat >bundle-list <<-EOF &&
-	[bundle]
-		version = 1
-		mode = all
-
-	[bundle "bundle-1"]
-		uri = file://$(pwd)/clone-from/bundle-1.bundle
-
-	[bundle "bundle-2"]
-		uri = file://$(pwd)/clone-from/bundle-2.bundle
-
-	[bundle "bundle-3"]
-		uri = file://$(pwd)/clone-from/bundle-3.bundle
-
-	[bundle "bundle-4"]
-		uri = file://$(pwd)/clone-from/bundle-4.bundle
-	EOF
-
-	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-		clone-from clone-list-file 2>err &&
-	! grep "Repository lacks these prerequisite commits" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-list-file cat-file --batch-check <oids &&
-
-	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
-	grep "refs/bundles/" refs >actual &&
-	cat >expect <<-\EOF &&
-	refs/bundles/base
-	refs/bundles/left
-	refs/bundles/merge
-	refs/bundles/right
-	EOF
-	test_cmp expect actual
-
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-475812ed564e3085586d0b0acc392cec0a90c18e commit 261
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 commit 165
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-ok 8 - clone bundle list (file, no heuristic)
-
-expecting success of 5558.9 'clone bundle list (file, all mode, some failures)': 
-	cat >bundle-list <<-EOF &&
-	[bundle]
-		version = 1
-		mode = all
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-0"]
-		uri = file://$(pwd)/clone-from/bundle-0.bundle
-
-	[bundle "bundle-1"]
-		uri = file://$(pwd)/clone-from/bundle-1.bundle
-
-	[bundle "bundle-2"]
-		uri = file://$(pwd)/clone-from/bundle-2.bundle
-
-	# No bundle-3 means bundle-4 will not apply.
-
-	[bundle "bundle-4"]
-		uri = file://$(pwd)/clone-from/bundle-4.bundle
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-5"]
-		uri = file://$(pwd)/clone-from/bundle-5.bundle
-	EOF
-
-	GIT_TRACE2_PERF=1 \
-	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-		clone-from clone-all-some 2>err &&
-	! grep "Repository lacks these prerequisite commits" err &&
-	! grep "fatal" err &&
-	grep "warning: failed to download bundle from URI" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-all-some cat-file --batch-check <oids &&
-
-	git -C clone-all-some for-each-ref --format="%(refname)" >refs &&
-	grep "refs/bundles/" refs >actual &&
-	cat >expect <<-\EOF &&
-	refs/bundles/base
-	refs/bundles/left
-	EOF
-	test_cmp expect actual
-
-warning: failed to download bundle from URI 'file:///home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/clone-from/bundle-5.bundle'
-warning: failed to download bundle from URI 'file:///home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/clone-from/bundle-0.bundle'
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-475812ed564e3085586d0b0acc392cec0a90c18e commit 261
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 commit 165
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-ok 9 - clone bundle list (file, all mode, some failures)
-
-expecting success of 5558.10 'clone bundle list (file, all mode, all failures)': 
-	cat >bundle-list <<-EOF &&
-	[bundle]
-		version = 1
-		mode = all
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-0"]
-		uri = file://$(pwd)/clone-from/bundle-0.bundle
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-5"]
-		uri = file://$(pwd)/clone-from/bundle-5.bundle
-	EOF
-
-	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-		clone-from clone-all-fail 2>err &&
-	! grep "Repository lacks these prerequisite commits" err &&
-	! grep "fatal" err &&
-	grep "warning: failed to download bundle from URI" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-all-fail cat-file --batch-check <oids &&
-
-	git -C clone-all-fail for-each-ref --format="%(refname)" >refs &&
-	! grep "refs/bundles/" refs
-
-warning: failed to download bundle from URI 'file:///home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/clone-from/bundle-5.bundle'
-warning: failed to download bundle from URI 'file:///home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/clone-from/bundle-0.bundle'
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-475812ed564e3085586d0b0acc392cec0a90c18e commit 261
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 commit 165
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-ok 10 - clone bundle list (file, all mode, all failures)
-
-expecting success of 5558.11 'clone bundle list (file, any mode)': 
-	cat >bundle-list <<-EOF &&
-	[bundle]
-		version = 1
-		mode = any
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-0"]
-		uri = file://$(pwd)/clone-from/bundle-0.bundle
-
-	[bundle "bundle-1"]
-		uri = file://$(pwd)/clone-from/bundle-1.bundle
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-5"]
-		uri = file://$(pwd)/clone-from/bundle-5.bundle
-	EOF
-
-	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-		clone-from clone-any-file 2>err &&
-	! grep "Repository lacks these prerequisite commits" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-any-file cat-file --batch-check <oids &&
-
-	git -C clone-any-file for-each-ref --format="%(refname)" >refs &&
-	grep "refs/bundles/" refs >actual &&
-	cat >expect <<-\EOF &&
-	refs/bundles/base
-	EOF
-	test_cmp expect actual
-
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-475812ed564e3085586d0b0acc392cec0a90c18e commit 261
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 commit 165
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-ok 11 - clone bundle list (file, any mode)
-
-expecting success of 5558.12 'clone bundle list (file, any mode, all failures)': 
-	cat >bundle-list <<-EOF &&
-	[bundle]
-		version = 1
-		mode = any
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-0"]
-		uri = $HTTPD_URL/bundle-0.bundle
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-5"]
-		uri = $HTTPD_URL/bundle-5.bundle
-	EOF
-
-	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-		clone-from clone-any-fail 2>err &&
-	! grep "fatal" err &&
-	grep "warning: failed to download bundle from URI" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-any-fail cat-file --batch-check <oids &&
-
-	git -C clone-any-fail for-each-ref --format="%(refname)" >refs &&
-	! grep "refs/bundles/" refs
-
-warning: failed to download bundle from URI '/bundle-5.bundle'
-warning: failed to download bundle from URI '/bundle-0.bundle'
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-475812ed564e3085586d0b0acc392cec0a90c18e commit 261
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 commit 165
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-ok 12 - clone bundle list (file, any mode, all failures)
-
-checking prerequisite: NOT_ROOT
-
-mkdir -p "$TRASH_DIRECTORY/prereq-test-dir-NOT_ROOT" &&
-(
-	cd "$TRASH_DIRECTORY/prereq-test-dir-NOT_ROOT" &&
-	uid=$(id -u) &&
-	test "$uid" != 0
-
-)
-prerequisite NOT_ROOT ok
-expecting success of 5558.13 'fail to fetch from non-existent HTTP URL': 
-	test_when_finished rm -rf test &&
-	git clone --bundle-uri="$HTTPD_URL/does-not-exist" . test 2>err &&
-	grep "failed to download bundle from URI" err
-
-warning: failed to download bundle from URI 'http://127.0.0.1:5558/does-not-exist'
-ok 13 - fail to fetch from non-existent HTTP URL
-
-expecting success of 5558.14 'fail to fetch from non-bundle HTTP URL': 
-	test_when_finished rm -rf test &&
-	echo bogus >"$HTTPD_DOCUMENT_ROOT_PATH/bogus" &&
-	git clone --bundle-uri="$HTTPD_URL/bogus" . test 2>err &&
-	grep "is not a bundle" err
-
-warning: file at URI 'http://127.0.0.1:5558/bogus' is not a bundle or bundle list
-ok 14 - fail to fetch from non-bundle HTTP URL
-
-expecting success of 5558.15 'clone HTTP bundle': 
-	cp clone-from/B.bundle "$HTTPD_DOCUMENT_ROOT_PATH/B.bundle" &&
-
-	git clone --no-local --mirror clone-from \
-		"$HTTPD_DOCUMENT_ROOT_PATH/fetch.git" &&
-
-	git clone --bundle-uri="$HTTPD_URL/B.bundle" \
-		"$HTTPD_URL/smart/fetch.git" clone-http &&
-	git -C clone-http rev-parse refs/bundles/topic >actual &&
-	git -C clone-from rev-parse topic >expect &&
-	test_cmp expect actual &&
-
-	test_config -C clone-http log.excludedecoration refs/bundle/
-
-Cloning into bare repository '/home/gitster/w/git.git/t/trash directory.t5558-clone-bundle-uri/httpd/www/fetch.git'...
-Cloning into 'clone-http'...
-Downloading via HTTP: 100% (520/520)^MDownloading via HTTP: 100% (520/520), 520 bytes | 520.00 KiB/s, done.
-ok 15 - clone HTTP bundle
-
-expecting success of 5558.16 'clone HTTP bundle with non-default hash': 
-	test_when_finished "rm -rf clone-http-non-default-hash" &&
-	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="$HTTPD_URL/B.bundle" \
-		"$HTTPD_URL/smart/fetch.git" clone-http-non-default-hash &&
-	git -C clone-http-non-default-hash rev-parse refs/bundles/topic >actual &&
-	git -C clone-from rev-parse topic >expect &&
-	test_cmp expect actual
-
-Cloning into 'clone-http-non-default-hash'...
-Downloading via HTTP: 100% (520/520)^MDownloading via HTTP: 100% (520/520), 520 bytes | 520.00 KiB/s, done.
-ok 16 - clone HTTP bundle with non-default hash
-
-expecting success of 5558.17 'clone bundle list (HTTP, no heuristic)': 
-	test_when_finished rm -f trace*.txt &&
-
-	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
-	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-	[bundle]
-		version = 1
-		mode = all
-
-	[bundle "bundle-1"]
-		uri = $HTTPD_URL/bundle-1.bundle
-
-	[bundle "bundle-2"]
-		uri = $HTTPD_URL/bundle-2.bundle
-
-	[bundle "bundle-3"]
-		uri = $HTTPD_URL/bundle-3.bundle
-
-	[bundle "bundle-4"]
-		uri = $HTTPD_URL/bundle-4.bundle
-	EOF
-
-	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" \
-		git clone --bundle-uri="$HTTPD_URL/bundle-list" \
-		clone-from clone-list-http  2>err &&
-	! grep "Repository lacks these prerequisite commits" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-list-http cat-file --batch-check <oids &&
-
-	cat >expect <<-EOF &&
-	$HTTPD_URL/bundle-1.bundle
-	$HTTPD_URL/bundle-2.bundle
-	$HTTPD_URL/bundle-3.bundle
-	$HTTPD_URL/bundle-4.bundle
-	$HTTPD_URL/bundle-list
-	EOF
-
-	# Sort the list, since the order is not well-defined
-	# without a heuristic.
-	test_remote_https_urls <trace-clone.txt | sort >actual &&
-	test_cmp expect actual
-
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-475812ed564e3085586d0b0acc392cec0a90c18e commit 261
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-65d47d507bde981075d2f2532bb104e4b58b9170 commit 213
-918de9f3988f29866b94f657626edb7247c7ddbd commit 213
-d1bc9f9c222df7b7de791db57cdf7e8ba0627c3e commit 213
-0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 commit 165
-d9df4505cb3522088b9e29d6051ac16f1564154a commit 213
-ok 17 - clone bundle list (HTTP, no heuristic)
-
-expecting success of 5558.18 'clone bundle list (HTTP, any mode)': 
-	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
-	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-	[bundle]
-		version = 1
-		mode = any
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-0"]
-		uri = $HTTPD_URL/bundle-0.bundle
-
-	[bundle "bundle-1"]
-		uri = $HTTPD_URL/bundle-1.bundle
-
-	# Does not exist. Should be skipped.
-	[bundle "bundle-5"]
-		uri = $HTTPD_URL/bundle-5.bundle
-	EOF
-
-	git clone --bundle-uri="$HTTPD_URL/bundle-list" \
-		clone-from clone-any-http 2>err &&
-	! grep "fatal" err &&
-	grep "warning: failed to download bundle from URI" err &&
-
-	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-	git -C clone-any-http cat-file --batch-check <oids &&
-
-	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
-	grep "refs/bundles/" refs >actual &&
-	cat >expect <<-\EOF &&
-	refs/bundles/base
-	refs/bundles/left
-	refs/bundles/merge
-	refs/bundles/right
-	EOF
-	test_cmp expect actual
-
-fatal: failed to download file at URL 'http://127.0.0.1:5558/bundle-5.bundle'
-fatal: failed to download file at URL 'http://127.0.0.1:5558/bundle-0.bundle'
-not ok 18 - clone bundle list (HTTP, any mode)
-#	
-#		cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
-#		cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-#		[bundle]
-#			version = 1
-#			mode = any
-#	
-#		# Does not exist. Should be skipped.
-#		[bundle "bundle-0"]
-#			uri = $HTTPD_URL/bundle-0.bundle
-#	
-#		[bundle "bundle-1"]
-#			uri = $HTTPD_URL/bundle-1.bundle
-#	
-#		# Does not exist. Should be skipped.
-#		[bundle "bundle-5"]
-#			uri = $HTTPD_URL/bundle-5.bundle
-#		EOF
-#	
-#		git clone --bundle-uri="$HTTPD_URL/bundle-list" \
-#			clone-from clone-any-http 2>err &&
-#		! grep "fatal" err &&
-#		grep "warning: failed to download bundle from URI" err &&
-#	
-#		git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-#		git -C clone-any-http cat-file --batch-check <oids &&
-#	
-#		git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
-#		grep "refs/bundles/" refs >actual &&
-#		cat >expect <<-\EOF &&
-#		refs/bundles/base
-#		refs/bundles/left
-#		refs/bundles/merge
-#		refs/bundles/right
-#		EOF
-#		test_cmp expect actual
-#	
-1..18
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+From: Martin Veilleux <martin.veilleux@gameloft.com>
+Subject: [BUG] fetch error when arbitrary branch changes a submodule url
+Organization: Gameloft
+To: <git@vger.kernel.org>
+X-Virus-Scanned: clamav-milter 0.101.5 at inf-p-oms001
+X-Virus-Status: Clean
+
+--------------wCKnUKM8c93ji28pDR53hIO7
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+
+issue: fetch will give a fatal error once when a new arbitrary branch on 
+the remote contains a submodule url change with updated sha
+
+This was an issue I originally opened on git-for-windows a while back. 
+(https://github.com/git-for-windows/git/issues/3404)
+
+But it's actually reproducible on Linux
+
+Seems to be a regression since I could not repro on version 1.9
+
+Issue still present on version 2.45.0.31.gd4cc1ec35f
+
+Local repro steps (complete test script attached)
+- create repo A with a commit on master
+- create repo B with a commit on master
+- create repo X and add a submodule S1 pointing to A, commit to master.
+- clone repo X with submodules to repo Z
+- in repo X, create branch X1 from master. Change submodule S1 url to 
+repo B and commit on X1.
+- in repo Z, fetch and notice the fatal error "upload-pack: not our ref SHA"
+
+ From there, you can then quickly repro the error like so:
+- in repo Z , delete branch origin/X1 and then fetch again.
+
+Current workaround is to set submodule.recurse to false
+
+-- 
+
+Martin
+
+--------------wCKnUKM8c93ji28pDR53hIO7
+Content-Type: text/plain; charset="UTF-8"; name="repro_git_bug.sh"
+Content-Disposition: attachment; filename="repro_git_bug.sh"
+Content-Transfer-Encoding: base64
+
+IyEvYmluL2Jhc2gKCmRpZSgpCnsKICAgIGVjaG8gIkZBVEFMIHByb2dyYW0gZXJyb3IiCiAg
+ICBleGl0IDEKfQoKZ2l0VHJ5KCkKewogICAgZWNobyAiZ2l0ICQqIgogICAgZ2l0ICQqCn0K
+CmdpdE5vRmFpbCgpCnsKICAgIGVjaG8gImdpdCAkKiIKICAgIGdpdCAkKiB8fCBkaWUKfQoK
+Y3JlYXRlUmVwbygpCnsKICAgIGxvY2FsIG5hbWU9JDEKICAgIFtbIC1uICIkbmFtZSIgXV0g
+fHwgZGllCiAgICBta2RpciAkbmFtZSB8fCBkaWUKICAgIHB1c2hkICRuYW1lID4vZGV2L251
+bGwKICAgIHB3ZAogICAgZ2l0Tm9GYWlsIGluaXQKICAgIGVjaG8gbGluZTE+cmVhZG1lLnR4
+dAogICAgZ2l0Tm9GYWlsIGFkZCByZWFkbWUudHh0CiAgICBnaXROb0ZhaWwgY29tbWl0IC1t
+IGZpcnN0CiAgICBwb3BkID4vZGV2L251bGwKICAgIGVjaG8gImNyZWF0ZWQgZ2l0IHJlcG8g
+JyRuYW1lJyIKfQoKcHJpbnRIZWFkZXIoKQp7CiAgICBlY2hvICI9PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSIKICAgIGlm
+IFtbIC1uICIkMSIgXV07IHRoZW4KICAgICAgICBlY2hvICIkMSIKICAgICAgICBlY2hvICI9
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PSIKICAgIGZpCn0KCnNldHVwRW52KCkKewogICAgaWYgW1sgLW4gIiRHSVRfUEFU
+SCIgXV07IHRoZW4KICAgICAgICBbWyAtZSAiJEdJVF9QQVRIL2dpdCIgXV0gfHwgZGllCiAg
+ICAgICAgZWNobyAidXNlciBwcm92aWRlZCBjdXN0b20gZ2l0IGluICR7R0lUX1BBVEh9Igog
+ICAgICAgIGV4cG9ydCBQQVRIPSIke0dJVF9QQVRIfToke1BBVEh9IgogICAgICAgIGdpdE5v
+RmFpbCAtLXZlcnNpb24KICAgIGZpCn0KCm1haW4oKQp7CiAgICBzZXR1cEVudgogICAgbG9j
+YWwgcm9vdD0kKHB3ZCkKICAgIHJtIC1yZiBjaGlsZHsxLDJ9IHVzZXIxIHNlcnZlcjEKICAg
+IGxvY2FsIGdpdEFyZ3M9Ii1jIHByb3RvY29sLmZpbGUuYWxsb3c9YWx3YXlzIgogICAgI2Ny
+ZWF0ZSBzdWJtb2R1bGUgcmVwb3MKICAgIHByaW50SGVhZGVyICJjcmVhdGUgc3VibW9kdWxl
+IHJlcG8gMSIKICAgIGNyZWF0ZVJlcG8gY2hpbGQxCiAgICBwcmludEhlYWRlciAiY3JlYXRl
+IHN1Ym1vZHVsZSByZXBvIDIiCiAgICBjcmVhdGVSZXBvIGNoaWxkMgogICAgI3dvcmthcm91
+bmQgZm9yIGlkZW50aWNhbCBpbml0aWFsIFNIQSAoaXMgdGhpcyBhIGJ1Zz8pCiAgICBwdXNo
+ZCBjaGlsZDIgPi9kZXYvbnVsbAogICAgdG91Y2ggZm9vYmFyCiAgICBnaXROb0ZhaWwgYWRk
+IGZvb2JhcgogICAgZ2l0Tm9GYWlsIGNvbW1pdCAtbSBzZWNvbmQKICAgIHBvcGQgPi9kZXYv
+bnVsbAoKICAgICNjcmVhdGUgYSByZXBvIGludGVuZGVkIGFzIHRoZSBzZXJ2ZXIgcmVwbyB0
+aGF0IGFsbCB1c2VycyBjbG9uZSBmcm9tCiAgICBwcmludEhlYWRlciAic2V0dXAgc2VydmVy
+IHJlcG8iCiAgICBjcmVhdGVSZXBvIHNlcnZlcjEKICAgICNhZGQgc3VibW9kdWxlCiAgICBw
+dXNoZCBzZXJ2ZXIxID4vZGV2L251bGwKICAgIGdpdE5vRmFpbCAke2dpdEFyZ3N9IHN1Ym1v
+ZHVsZSBhZGQgLWIgbWFzdGVyICIke3Jvb3R9L2NoaWxkMSIgc3ViMQogICAgZ2l0Tm9GYWls
+IGNvbW1pdCAtbSBhZGRlZF9zdWJtb2R1bGUKICAgIHBvcGQgPi9kZXYvbnVsbAogICAgCiAg
+ICAjYSB1c2VyIGNsb25lcyBmcm9tIHNlcnZlcgogICAgcHJpbnRIZWFkZXIgInNldHVwIHVz
+ZXIgcmVwbyIKICAgIGdpdE5vRmFpbCAke2dpdEFyZ3N9IGNsb25lIC0tcmVjdXJzZS1zdWJt
+b2R1bGVzIHNlcnZlcjEgdXNlcjEKCiAgICAjY2hhbmdlIGEgc3VibW9kdWxlIHVybCBpbiBh
+biBhcmJpdHJhcnkgYnJhbmNoLiBUaGlzIGJyYW5jaCB3b3VsZCBoYXZlIGJlZW4gcHVzaGVk
+IHRvIHRoZSBzZXJ2ZXIgYnkgYW5vdGhlciB1c2VyLgogICAgcHJpbnRIZWFkZXIgInN3aXRj
+aCBzdWJtb2R1bGUgdXJsIgogICAgcHVzaGQgc2VydmVyMSA+L2Rldi9udWxsCiAgICBwd2QK
+ICAgIGdpdE5vRmFpbCBjaGVja291dCAtYiBleHBlcgogICAgZ2l0Tm9GYWlsIGNvbmZpZyAt
+LWZpbGU9LmdpdG1vZHVsZXMgc3VibW9kdWxlLnN1YjEudXJsICIke3Jvb3R9L2NoaWxkMiIK
+ICAgIGdpdE5vRmFpbCAke2dpdEFyZ3N9IHN1Ym1vZHVsZSBzeW5jIC0tIHN1YjEKICAgIGdp
+dE5vRmFpbCAke2dpdEFyZ3N9IHN1Ym1vZHVsZSB1cGRhdGUgLS1yZW1vdGUgLS0gc3ViMQog
+ICAgZ2l0Tm9GYWlsIGFkZCAtLWFsbAogICAgZ2l0Tm9GYWlsIGNvbW1pdCAtbSBzd2l0Y2hf
+c3VibW9kdWxlX3VybAogICAgcG9wZCA+L2Rldi9udWxsCgogICAgI25vdyB1c2VyIHdpbGwg
+dXBkYXRlCiAgICBwdXNoZCB1c2VyMSA+L2Rldi9udWxsCiAgICBwcmludEhlYWRlciAidXNl
+ciB1cGRhdGVzIgogICAgcHdkCiAgICAjdGhpcyB3aWxsIGdpdmUgYW4gZXJyb3IsIGJ1dCBz
+aG91bGRuJ3QKICAgIGdpdFRyeSBmZXRjaAoKICAgICN0ZXN0IGFnYWluCiAgICBwcmludEhl
+YWRlciAidHJ5IGFnYWluIgogICAgZ2l0Tm9GYWlsIGJyYW5jaCAtciAtRCBvcmlnaW4vZXhw
+ZXIKICAgIGdpdFRyeSBmZXRjaAoKICAgICN0ZXN0IHdvcmthcm91bmQKICAgIHByaW50SGVh
+ZGVyICJ3b3JrYXJvdW5kIgogICAgZ2l0Tm9GYWlsIGJyYW5jaCAtciAtRCBvcmlnaW4vZXhw
+ZXIKICAgIGdpdE5vRmFpbCBjb25maWcgc3VibW9kdWxlLnJlY3Vyc2UgZmFsc2UKICAgIGdp
+dE5vRmFpbCBmZXRjaAoKICAgIHBvcGQgPi9kZXYvbnVsbAp9CgptYWluICRACgo=
+
+--------------wCKnUKM8c93ji28pDR53hIO7--
