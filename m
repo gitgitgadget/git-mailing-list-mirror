@@ -1,111 +1,172 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D9F1C27
-	for <git@vger.kernel.org>; Wed,  8 May 2024 00:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD103387
+	for <git@vger.kernel.org>; Wed,  8 May 2024 00:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715128331; cv=none; b=BH655HKHaoYA0xMg5vcGHwLbISybjBvfogCFAcvIQETiGYbSbT8bCEH5LAD2XmkglHecxjWPrf2BGzQK610D2B2JKHGP3lRWUWuxZ+9MpNsB3WhiG2LchaD5hxEfBmweIQ7OrRDd4CgQRDZXPXgoBXbTe9HNLHC+eGbRB4qdkjY=
+	t=1715128861; cv=none; b=M+k7cvpdk8EoMHDOoF+vStbe/7neEVVzDJu6HmM18zvzPGmSDG1RDpFOZOs9zh1CzMsn+8jkloV7+SqBbA0UTbnZ9f0trAwmIhhSoAfBfwoD7OZKimIX0N+VryMX+Y2Ps3Py6gv/pXWLXKy02XCy2doFmo+DO1SpiNmH8qKnYsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715128331; c=relaxed/simple;
-	bh=wzRKpkUd6waeG5dV0ScrwPMscpUk4UBMW2joMrmEED0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iNxJ8MK9IMgMAPdN1QrGKpm3IoxwecQOeMF/e9YzKhLsOTIT1pU0agvXkVktN0m4qMBtX6EFD/foTsCftm9Btr8oJyBjsmZwhZnF2YnV0lC8u9MsbnCmYPVc+Lh3yFU9O+tjluq4jfYj4XDF3x0JjEaZiJoKoVeuTeF66Sao3Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pz46hmhs; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1715128861; c=relaxed/simple;
+	bh=7JX+u3SwqeVVeLvKu+oQM068BL20hEMz1QlRvFZAbDQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZV5yz8e5Bg73I2vaEeLjBKqhgNwH6fHZ+aNSYQsHkhoWjl87eE52ILH0pivGz6pE+71DIBlZK5FOQggmNiw/dVpsclaDhC6lpwW1PC9UyGxmJrQUX+djogg49G6tQ4VT4Phe0JEdo6Q/fLO7nQDGr6FuFOeLnUcWJ/hNEnl5uE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xw9YDO2r; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pz46hmhs"
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xw9YDO2r"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F67322649;
+	Tue,  7 May 2024 20:40:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7JX+u3SwqeVVeLvKu+oQM068BL20hEMz1QlRvF
+	ZAbDQ=; b=xw9YDO2rlU2WDltbdbQuFGXLlYo5+Ds6BqkDDKpZomZsR2LXQxph8a
+	upTMuzhiyD2FEBXZNw32pZ/8lPYi50HQfFsfw1LCwmNZAYz4ln29e+jHALpSZRMz
+	J/BWt3GHKFY5fetZ1K8NcE3rJiQdsjlDytTU3udguDkNqsKYuYS74=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 581D322648;
+	Tue,  7 May 2024 20:40:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id EFAF85DA74;
-	Wed,  8 May 2024 00:32:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1715128322;
-	bh=wzRKpkUd6waeG5dV0ScrwPMscpUk4UBMW2joMrmEED0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=pz46hmhs3zsEQLhteBfPeeL2fnzUApeZe0V2/bGUAQzPk+ec1mx47zHFILEoX7CeF
-	 gDKznjuRJIS2Kv5g/Xnd/bLsGhoMdhQJPVNZzYPLyF4wx7ylaZoxsRwe2iqP2g37RP
-	 z2QWZ0fzvdKo8uHw/1kYT26UMfMeQfv6D1HZHfed3kuyQk/lHXguiZqWi4toRD3xO1
-	 AvmNMmcUoFuCVP/WPwpfTulUMZnzhMwY2no4wTDwvGZA3qEnjX06n14sE4NA3YW6s8
-	 /6oX/a5+LMFKT5RKxujeSQx3f3DrPJjxM1q7PJtNsEcL8kBIexPgQNsIiELPH1qNHL
-	 fzgeXKPT1A2+N8cQe9gRfUFHKR4J5UBNUz37A5MrMvdMctZJ9+TBCJzGbu49oJcfxK
-	 m4RrfGjFA6kfNvPpRxgxvK3U+dY4LOc6beQt+9FsJxO3HeRzGNfYwSp7KnqUvK3lhz
-	 rylsh68UppnzyqWPZyCjhiJHNLvAPPQy2addLi5NsBmH13sjr8k
-Date: Wed, 8 May 2024 00:32:00 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: tboegi@web.de, git@vger.kernel.org, takimoto-j@kba.biglobe.ne.jp
-Subject: Re: [PATCH v1 2/2] strbuf_getcwd() needs precompse_strbuf_if_needed()
-Message-ID: <ZjrIAEq54EVS6yXR@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, tboegi@web.de,
-	git@vger.kernel.org, takimoto-j@kba.biglobe.ne.jp
-References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
- <20240507084431.19797-1-tboegi@web.de>
- <xmqqv83po6o2.fsf@gitster.g>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BDD4922647;
+	Tue,  7 May 2024 20:40:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: James Liu <james@jamesliu.io>
+Subject: [PATCH v4 4/3] t0018: two small fixes
+In-Reply-To: <20240503071706.78109-4-james@jamesliu.io> (James Liu's message
+	of "Fri, 3 May 2024 17:17:06 +1000")
+References: <20240430014724.83813-1-james@jamesliu.io>
+	<20240503071706.78109-1-james@jamesliu.io>
+	<20240503071706.78109-4-james@jamesliu.io>
+Date: Tue, 07 May 2024 17:40:51 -0700
+Message-ID: <xmqqbk5hyw30.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IQU1j1Eaw0jkeCJa"
-Content-Disposition: inline
-In-Reply-To: <xmqqv83po6o2.fsf@gitster.g>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9FA6F142-0CD3-11EF-A276-25B3960A682E-77302942!pb-smtp2.pobox.com
+
+Even though the three tests that were recently added started their
+here-doc with "<<-\EOF", it did not take advantage of that and
+instead wrote the here-doc payload abut to the left edge.  Use a tabs
+to indent these lines.
+
+More importantly, because these all hardcode the expected output,
+which contains the current branch name, they break the CI job that
+uses 'main' as the default branch name.
+
+Use
+
+    GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=trunk
+    export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+
+between the test_description line and ". ./test-lib.sh" line to
+force the initial branch name to 'trunk' and expect it to show in
+the output.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * I should have noticed these before merging the series to 'next',
+   so here is a fix-up patch on top of the three patches.
+
+ t/t0018-advice.sh | 41 ++++++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
+
+diff --git c/t/t0018-advice.sh w/t/t0018-advice.sh
+index b02448ea16..29306b367c 100755
+--- c/t/t0018-advice.sh
++++ w/t/t0018-advice.sh
+@@ -2,6 +2,9 @@
+ 
+ test_description='Test advise_if_enabled functionality'
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=trunk
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+@@ -31,15 +34,15 @@ test_expect_success 'advice should not be printed when config variable is set to
+ 
+ test_expect_success 'advice should not be printed when --no-advice is used' '
+ 	q_to_tab >expect <<-\EOF &&
+-On branch master
++	On branch trunk
+ 
+-No commits yet
++	No commits yet
+ 
+-Untracked files:
+-QREADME
++	Untracked files:
++	QREADME
+ 
+-nothing added to commit but untracked files present
+-EOF
++	nothing added to commit but untracked files present
++	EOF
+ 
+ 	test_when_finished "rm -fr advice-test" &&
+ 	git init advice-test &&
+@@ -53,15 +56,15 @@ EOF
+ 
+ test_expect_success 'advice should not be printed when GIT_ADVICE is set to false' '
+ 	q_to_tab >expect <<-\EOF &&
+-On branch master
++	On branch trunk
+ 
+-No commits yet
++	No commits yet
+ 
+-Untracked files:
+-QREADME
++	Untracked files:
++	QREADME
+ 
+-nothing added to commit but untracked files present
+-EOF
++	nothing added to commit but untracked files present
++	EOF
+ 
+ 	test_when_finished "rm -fr advice-test" &&
+ 	git init advice-test &&
+@@ -75,16 +78,16 @@ EOF
+ 
+ test_expect_success 'advice should be printed when GIT_ADVICE is set to true' '
+ 	q_to_tab >expect <<-\EOF &&
+-On branch master
++	On branch trunk
+ 
+-No commits yet
++	No commits yet
+ 
+-Untracked files:
+-  (use "git add <file>..." to include in what will be committed)
+-QREADME
++	Untracked files:
++	  (use "git add <file>..." to include in what will be committed)
++	QREADME
+ 
+-nothing added to commit but untracked files present (use "git add" to track)
+-EOF
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
+ 
+ 	test_when_finished "rm -fr advice-test" &&
+ 	git init advice-test &&
 
 
---IQU1j1Eaw0jkeCJa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 2024-05-07 at 17:47:41, Junio C Hamano wrote:
-> tboegi@web.de writes:
->=20
-> > From: Torsten B=C3=B6gershausen <tboegi@web.de>
-> >
-> > When running under macOs a call to strbuf_getcwd() may return
->=20
-> You spelled it as "macOS" in [1/2].  The hits from
->=20
->     $ git grep -i 'mac *os' \*.[ch]
->=20
-> tell me that we seem to say "macOS", "MacOS X", "Mac OSX" and "Mac
-> OS X" pretty much interchangeably.  We may want to eventually
-> consolidate them to whatever the official name Apple uses, but in
-> the meantime let's make sure we do not add even more.
-
-I believe the current preferred form is "macOS".  That's what I see on
-Apple's website, and that's consistent with my understanding as well.
-
-It was previously "Mac OS X", which is why we probably have that in our
-code base, but it's my understanding Apple has moved away from that.
-
-Wikipedia's opening sentence states, "macOS, originally Mac OS X,
-previously shortened as OS X, is an operating system developed and
-marketed by Apple since 2001," so I think Wikipedia agrees, too.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---IQU1j1Eaw0jkeCJa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZjrH/wAKCRB8DEliiIei
-gUWeAPwJT300hqAMK8RaP55xGcozgaYe3mqeGhb0tl4qY06QEQEAuQkML8TiLLkJ
-Nh5zT9ucsyjqenxWnHj1I7rN1e41EAo=
-=bgd5
------END PGP SIGNATURE-----
-
---IQU1j1Eaw0jkeCJa--
