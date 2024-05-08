@@ -1,316 +1,172 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296AB81AC6
-	for <git@vger.kernel.org>; Wed,  8 May 2024 11:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EFC823C3
+	for <git@vger.kernel.org>; Wed,  8 May 2024 11:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715166280; cv=none; b=IXV6KaSdLGxzFUZ3w7wWKadAZLUxWMAd+T9qLoDP0ufPRsjYPKIX/OvAl6uEBpIAI0F5mIdIL3wZtX4fiv6VIS1+FqXSAZ3dBtPvv0B+pu5zEUAkc71xZ1uwlMlrP+RfRFLCJ2RObNjoWprsQ8aOh2zPbC1eZz6dI3MfVfI7Jg8=
+	t=1715168803; cv=none; b=LVKBketgwkrpiCY2SPNmVkn5B3C4JpJ7FrmlaMhYvJ0pU+areWOMVuglMEf6skBcFd3lEStkZN3+aM4405/baPn1C+a6VaLp9/q1ebXTSggj6xSg8QRJDUHKxgjDSd8eVwH7psNAe8RBOPM7M879RFTpT7rEIxi3YByRcYSHn1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715166280; c=relaxed/simple;
-	bh=eBoySqkf27Q0KWpaAlTybHhiojZ8sWDJLk4dR73cTQo=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DyPxeuKEeLkTZ1nQ0hB7+WAqwXj7bmxAYzhbQ924KkKL7wgtnNYnF+2mAdcaB+20qcr/iNADp4ZlwP2d+ywMIZnhtv45rz/TIMboa5IjT/gGcBu558GE7hQaGoxyz0wKRAz8/8BdJ2VppNGr3B6wUdz6iBy2wwn7THi6DYLqogk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fn6cda0u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UnLDqm1p; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715168803; c=relaxed/simple;
+	bh=SQ7m8gZzSs3Ac/hnfvLDKs4kbbCbJaR4EJmsjUYBsYo=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SyEgGKia3P5NoJE1f7jeO0AJhbYJG/Kw7NLmhknaxJw1lZZ17xHDVyBhrdX+dEt9wMK6nFJVKMTFu87jSEQNid48KLaHT3IcQunIUzLUYF5R3P8oSQf35i7RVTIhZEfY2g/7+NZHYsO+NFEcR3gAC7eS1/B8ADBRYUcvYc7RCAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q69E/sUj; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fn6cda0u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UnLDqm1p"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4E3551140244
-	for <git@vger.kernel.org>; Wed,  8 May 2024 07:04:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Wed, 08 May 2024 07:04:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715166278; x=1715252678; bh=8KRbM0X1TB
-	akb6vLHYqsNjMIfYVGHEpO08cuEXrclYw=; b=fn6cda0u036WO+iKYEK6UiQVSE
-	DG0/hemyyxuKd+6TO9bnmRY8mP/QVFD4/LwAdz/O7hyD/NRF4++0Lj6Btn7jFYun
-	rlhuuH46bwb7h5lcvGyAxhB9PZm/lIbm4wPXalt23aUhqstE1j2RmtIme7erwNCK
-	QUDIDRoKFDQddhFhmoEx6yhHjh+/GMD9XsM+2OaWPxd3vLxT70s0mfBrnmxIVO8V
-	wHPpGc2VjNlwPeIAHwz8/19MudCaOjYTGMapeBQ5COkj55YwzpO/zqCOdD9l3pjo
-	RZ/z3hTp7U2+8Qrln9LoT0ES3ODZILY9YGDsiTJc94GdOiHn6uIfn+vfEsXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715166278; x=1715252678; bh=8KRbM0X1TBakb6vLHYqsNjMIfYVG
-	HEpO08cuEXrclYw=; b=UnLDqm1p27+T7/Hw+5Ky8VlgRJyCiDnv6TRmDMh/ToJt
-	uR+yhomFI6e19PnG1/OzFiLAA1yzC2PhwMk41E4OpfFDUlPSRGhBvgMO4nFPeFZk
-	ddilnVQN4nv38vYWhgSL6ZgXF96eaZjLkcvY9TtTdOsuOGx6/pSELxGXbXpPqQ4p
-	EBf3DsrdFCtK2jWQMbsgGnecLC1i+flR+Bv2G8zpSaD2x/FNANbfMvCJa/ZIum7y
-	0V0/E7+ILkkOYxJOhliJGgq/fSM91XbNNqAiy/ZKI4PN1DHRFFr3+3Z7fsMpDZ3A
-	l0yLPC4tZk/x1vlsXIwrKZkY+gvIlxVt4I00detsXg==
-X-ME-Sender: <xms:Rlw7Zn3Sl7q1pekoaoEJr30S_tRn6hwsii-HCQZUaFgfTO0PvnnJCg>
-    <xme:Rlw7ZmEJ85JV9r-IAXdwnkPzEvO2KEHo4NeHwwtMywbpQFVpAh61Be1A9i4GRDKC0
-    JM2ftrKX74QY90mCA>
-X-ME-Received: <xmr:Rlw7Zn58tKYS4DgqYmmGItwgKjA9R6Tq8Sezj4rae13tT9HAMuEOygDx6LnZ5wn5mBrZNUeMaAE-8NVm-bLIhkqN9ma0TrJGxVW6V3Sl_lNWrQnCyQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgfeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:Rlw7Zs2hvW8TEcthuA4lKR7lhApK6VygncuAXIjQW-FkRvty0zgfPw>
-    <xmx:Rlw7ZqHWWx4mr8WcIvSBYlBIbGVDKxIkqkrbyTiWmQlEuviizlEbFw>
-    <xmx:Rlw7Zt-kQWuD18jzdhlo2aLHQepawBJ6aEIjCopPXzRt9l3DYKztag>
-    <xmx:Rlw7ZnkeRXdO7EaU0ZP9dwQ4sJa9ceMa2dwu9-fIizr-YpDOU34TGA>
-    <xmx:Rlw7ZsM56P-ns_-IqILwBCBnPEJplCoGraS0KJqFxhugs-lnW4gkpqHv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 8 May 2024 07:04:37 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 50e1c715 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 8 May 2024 11:04:27 +0000 (UTC)
-Date: Wed, 8 May 2024 13:04:35 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 13/13] reftable/merged: adapt interface to allow reuse of
- iterators
-Message-ID: <be4da295c6a716dd56604101828a3d38b6fcf067.1715166175.git.ps@pks.im>
-References: <cover.1715166175.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q69E/sUj"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2db17e8767cso53261441fa.3
+        for <git@vger.kernel.org>; Wed, 08 May 2024 04:46:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715168800; x=1715773600; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7tyXyK/MhQ6YHOMlG5XBHQwmieOMr5jorFUEnEG06HQ=;
+        b=Q69E/sUj6+biXkyaPSNSjBYpok+ikn8ZzLDmosM7FPgOXIBDXpZN1k+dgfwEoTTsLs
+         1yVQYv8TowzwbmUCkTjDT3AHKKVKKkhiFPTeXo/sg/dbVmtOPOTKqNJzxDwbXmDtoo/a
+         ws3rrUMCbYxRlwGbKvi3CW5ZDa7CuSEU5CIZAbzQGvzVs/ZdDbcdQBra+NvdBWagY4Er
+         5isFRm4EnYfwTRuBtg/lJ6wQYy8He0PK12ZeyHqoh2Ce3hNzvqWr8cU+gFur02tcuKRp
+         FzxJn7doaYpBCQv1a7vqyn3nAYJu/OvMUc0mSLvb25yBRrgl62vZzWT6qzZk9RgdEQEv
+         u+Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715168800; x=1715773600;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7tyXyK/MhQ6YHOMlG5XBHQwmieOMr5jorFUEnEG06HQ=;
+        b=UeHJAtLrAdlQiw9pJPZLDn99NlWwzZ8AAAAuA0a0dOte2ZRgTu9HQeNoVvBPehBuNP
+         s/Yhg6TIp9zHUVzCSiLgesttOZJo8E9HNbeKTeExE4DAaXrMT9LGY/AiGklYj2lNcwsV
+         H3UmIUyNu6V/vEeMk7S+Xf5f1xAVBEmYbcplFReeD1Ibf253nA6b/44RKZWXtaKqr++E
+         JguDQ5mjqSEt9UUMg/9zO6GoHnDvs5HdtYbqs98WvH1W1F06q4G/WQNu1Z9o3ipJOBt3
+         zKblkmfL/zEagTWfuLZNBe99vUwfk5TektNutrFncosef0uLpxdbmYVys2i1P+rE0a6B
+         TJYg==
+X-Gm-Message-State: AOJu0YwPEcMxw+0tq5MxNEogEaEZInG/k62trdGaENKJzUuX6MIzkgJp
+	ZWn2nmbc4QTlaU4V2q+Q2M4Lwebitbt3nFPNIJLa8n6NRx2HUi6fwk1JvQ==
+X-Google-Smtp-Source: AGHT+IFCgUlf0gEW6tSN+IcisN/MVkSi/YHo/mEMS1ZapWENhmtEQO+o4b63meEdBS3mU8Wp7dQuNQ==
+X-Received: by 2002:a2e:9e43:0:b0:2db:348f:5c33 with SMTP id 38308e7fff4ca-2e446f7fbb0mr13861121fa.16.1715168799337;
+        Wed, 08 May 2024 04:46:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r17-20020a05600c35d100b0041bf5b9fb93sm2045471wmq.5.2024.05.08.04.46.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 May 2024 04:46:38 -0700 (PDT)
+Message-Id: <pull.1668.v2.git.git.1715168796873.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1668.git.git.1714802221671.gitgitgadget@gmail.com>
+References: <pull.1668.git.git.1714802221671.gitgitgadget@gmail.com>
+From: "Fahad Alrashed via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 08 May 2024 11:46:36 +0000
+Subject: [PATCH v2] Bug fix: ensure P4 "err" is displayed when exception is
+ raised.
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3Wj/k0XwDEYjEVhd"
-Content-Disposition: inline
-In-Reply-To: <cover.1715166175.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+    Fahad Alrashed <fahad@keylock.net>,
+    Fahad Alrashed <fahad@keylock.net>
 
+From: Fahad Alrashed <fahad@keylock.net>
 
---3Wj/k0XwDEYjEVhd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+During "git p4 clone" if p4 process returns an error from the server,
+it will store the message in the 'err' variable. Then it will send a
+text command "die-now" to git-fast-import. However, git-fast-import
+raises an exception: "fatal: Unsupported command: die-now" and err is
+never displayed. This patch ensures that err is dispayed using
+"finally:".
 
-Refactor the interfaces exposed by `struct reftable_merged_table` and
-`struct merged_iter` such that they support iterator reuse. This is done
-by separating initialization of the iterator and seeking on it.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Fahad Alrashed <fahad@keylock.net>
 ---
- reftable/merged.c          | 35 -----------------------------------
- reftable/merged_test.c     | 19 +++++++++++++------
- reftable/reftable-merged.h | 15 ---------------
- reftable/stack.c           | 14 +++++++++-----
- 4 files changed, 22 insertions(+), 61 deletions(-)
+    In git p4, git fast-import fails from die-now command and err (from
+    Perforce) is not shown
+    
+    When importing from Perforce using git p4 clone <depot location>,
+    cloning works fine until Perforce command p4 raises an error. This error
+    message is stored in err variable then git-fast-import is sent a die-now
+    command to kill it. An exception is raised fatal: Unsupported command:
+    die-now.
+    
+    This patch forces python to call die() with the err message returned
+    from Perforce.
+    
+    This commit fixes the root cause of a bug that took me hours to find.
+    I'm sure many faced the cryptic error and declared that git-p4 is not
+    working for them.
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index d127f99360..0da9dba265 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -262,41 +262,6 @@ void merged_table_init_iter(struct reftable_merged_tab=
-le *mt,
- 	iterator_from_merged_iter(it, mi);
- }
-=20
--int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name)
--{
--	struct reftable_record rec =3D {
--		.type =3D BLOCK_TYPE_REF,
--		.u.ref =3D {
--			.refname =3D (char *)name,
--		},
--	};
--	merged_table_init_iter(mt, it, BLOCK_TYPE_REF);
--	return iterator_seek(it, &rec);
--}
--
--int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
--				      struct reftable_iterator *it,
--				      const char *name, uint64_t update_index)
--{
--	struct reftable_record rec =3D { .type =3D BLOCK_TYPE_LOG,
--				       .u.log =3D {
--					       .refname =3D (char *)name,
--					       .update_index =3D update_index,
--				       } };
--	merged_table_init_iter(mt, it, BLOCK_TYPE_LOG);
--	return iterator_seek(it, &rec);
--}
--
--int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name)
--{
--	uint64_t max =3D ~((uint64_t)0);
--	return reftable_merged_table_seek_log_at(mt, it, name, max);
--}
--
- uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *mt)
- {
- 	return mt->hash_id;
-diff --git a/reftable/merged_test.c b/reftable/merged_test.c
-index 530fc82d1c..33a17efcde 100644
---- a/reftable/merged_test.c
-+++ b/reftable/merged_test.c
-@@ -12,6 +12,7 @@ license that can be found in the LICENSE file or at
-=20
- #include "basics.h"
- #include "blocksource.h"
-+#include "constants.h"
- #include "reader.h"
- #include "record.h"
- #include "test_framework.h"
-@@ -145,7 +146,10 @@ static void test_merged_between(void)
- 	int i;
- 	struct reftable_ref_record ref =3D { NULL };
- 	struct reftable_iterator it =3D { NULL };
--	int err =3D reftable_merged_table_seek_ref(mt, &it, "a");
-+	int err;
-+
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err =3D reftable_iterator_seek_ref(&it, "a");
- 	EXPECT_ERR(err);
-=20
- 	err =3D reftable_iterator_next_ref(&it, &ref);
-@@ -217,14 +221,15 @@ static void test_merged(void)
- 	struct reftable_reader **readers =3D NULL;
- 	struct reftable_merged_table *mt =3D
- 		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
--
- 	struct reftable_iterator it =3D { NULL };
--	int err =3D reftable_merged_table_seek_ref(mt, &it, "a");
-+	int err;
- 	struct reftable_ref_record *out =3D NULL;
- 	size_t len =3D 0;
- 	size_t cap =3D 0;
- 	int i =3D 0;
-=20
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err =3D reftable_iterator_seek_ref(&it, "a");
- 	EXPECT_ERR(err);
- 	EXPECT(reftable_merged_table_hash_id(mt) =3D=3D GIT_SHA1_FORMAT_ID);
- 	EXPECT(reftable_merged_table_min_update_index(mt) =3D=3D 1);
-@@ -348,14 +353,15 @@ static void test_merged_logs(void)
- 	struct reftable_reader **readers =3D NULL;
- 	struct reftable_merged_table *mt =3D merged_table_from_log_records(
- 		logs, &bs, &readers, sizes, bufs, 3);
--
- 	struct reftable_iterator it =3D { NULL };
--	int err =3D reftable_merged_table_seek_log(mt, &it, "a");
-+	int err;
- 	struct reftable_log_record *out =3D NULL;
- 	size_t len =3D 0;
- 	size_t cap =3D 0;
- 	int i =3D 0;
-=20
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err =3D reftable_iterator_seek_log(&it, "a");
- 	EXPECT_ERR(err);
- 	EXPECT(reftable_merged_table_hash_id(mt) =3D=3D GIT_SHA1_FORMAT_ID);
- 	EXPECT(reftable_merged_table_min_update_index(mt) =3D=3D 1);
-@@ -377,7 +383,8 @@ static void test_merged_logs(void)
- 						 GIT_SHA1_RAWSZ));
- 	}
-=20
--	err =3D reftable_merged_table_seek_log_at(mt, &it, "a", 2);
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err =3D reftable_iterator_seek_log_at(&it, "a", 2);
- 	EXPECT_ERR(err);
- 	reftable_log_record_release(&out[0]);
- 	err =3D reftable_iterator_next_log(&it, &out[0]);
-diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
-index c91a2d83a2..14d5fc9f05 100644
---- a/reftable/reftable-merged.h
-+++ b/reftable/reftable-merged.h
-@@ -36,21 +36,6 @@ int reftable_new_merged_table(struct reftable_merged_tab=
-le **dest,
- 			      struct reftable_table *stack, size_t n,
- 			      uint32_t hash_id);
-=20
--/* returns an iterator positioned just before 'name' */
--int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name);
--
--/* returns an iterator for log entry, at given update_index */
--int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
--				      struct reftable_iterator *it,
--				      const char *name, uint64_t update_index);
--
--/* like reftable_merged_table_seek_log_at but look for the newest entry. */
--int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name);
--
- /* returns the max update_index covered by this merged table. */
- uint64_t
- reftable_merged_table_max_update_index(struct reftable_merged_table *mt);
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 03f95935e1..7af4c3fd66 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -925,7 +925,8 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 		goto done;
- 	}
-=20
--	err =3D reftable_merged_table_seek_ref(mt, &it, "");
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err =3D reftable_iterator_seek_ref(&it, "");
- 	if (err < 0)
- 		goto done;
-=20
-@@ -949,7 +950,8 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 	}
- 	reftable_iterator_destroy(&it);
-=20
--	err =3D reftable_merged_table_seek_log(mt, &it, "");
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err =3D reftable_iterator_seek_log(&it, "");
- 	if (err < 0)
- 		goto done;
-=20
-@@ -1340,9 +1342,11 @@ int reftable_stack_read_ref(struct reftable_stack *s=
-t, const char *refname,
- int reftable_stack_read_log(struct reftable_stack *st, const char *refname,
- 			    struct reftable_log_record *log)
- {
--	struct reftable_iterator it =3D { NULL };
--	struct reftable_merged_table *mt =3D reftable_stack_merged_table(st);
--	int err =3D reftable_merged_table_seek_log(mt, &it, refname);
-+	struct reftable_iterator it =3D {0};
-+	int err;
-+
-+	reftable_stack_init_log_iterator(st, &it);
-+	err =3D reftable_iterator_seek_log(&it, refname);
- 	if (err)
- 		goto done;
-=20
---=20
-2.45.0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1668%2Falrashedf%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1668/alrashedf/master-v2
+Pull-Request: https://github.com/git/git/pull/1668
+
+Range-diff vs v1:
+
+ 1:  8dd2c730128 ! 1:  8d5b982bd08 Bug fix: ensure P4 "err" is displayed when exception is raised.
+     @@ Metadata
+       ## Commit message ##
+          Bug fix: ensure P4 "err" is displayed when exception is raised.
+      
+     -    Bug fix: During "git p4 clone" if p4 process returns
+     -    an error from the server, it will store it in variable
+     -    "err". The it will send a text command "die-now" to
+     -    git-fast-import. However, git-fast-import raises an
+     -    exception: "fatal: Unsupported command: die-now"
+     -    and err is never displayed. This patch ensures that
+     -    err is dispayed using "finally:"
+     +    During "git p4 clone" if p4 process returns an error from the server,
+     +    it will store the message in the 'err' variable. Then it will send a
+     +    text command "die-now" to git-fast-import. However, git-fast-import
+     +    raises an exception: "fatal: Unsupported command: die-now" and err is
+     +    never displayed. This patch ensures that err is dispayed using
+     +    "finally:".
+      
+          Signed-off-by: Fahad Alrashed <fahad@keylock.net>
+      
 
 
---3Wj/k0XwDEYjEVhd
-Content-Type: application/pgp-signature; name="signature.asc"
+ git-p4.py | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/git-p4.py b/git-p4.py
+index 28ab12c72b6..f1ab31d5403 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -3253,17 +3253,19 @@ def streamP4FilesCb(self, marshalled):
+             if self.stream_have_file_info:
+                 if "depotFile" in self.stream_file:
+                     f = self.stream_file["depotFile"]
+-            # force a failure in fast-import, else an empty
+-            # commit will be made
+-            self.gitStream.write("\n")
+-            self.gitStream.write("die-now\n")
+-            self.gitStream.close()
+-            # ignore errors, but make sure it exits first
+-            self.importProcess.wait()
+-            if f:
+-                die("Error from p4 print for %s: %s" % (f, err))
+-            else:
+-                die("Error from p4 print: %s" % err)
++            try:
++                # force a failure in fast-import, else an empty
++                # commit will be made
++                self.gitStream.write("\n")
++                self.gitStream.write("die-now\n")
++                self.gitStream.close()
++                # ignore errors, but make sure it exits first
++                self.importProcess.wait()
++            finally:
++                if f:
++                    die("Error from p4 print for %s: %s" % (f, err))
++                else:
++                    die("Error from p4 print: %s" % err)
+ 
+         if 'depotFile' in marshalled and self.stream_have_file_info:
+             # start of a new file - output the old one first
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7XEIACgkQVbJhu7ck
-PpRl/xAAikhUBXfo/u+qlP2szdm5BXdnuIyTCueTEQWby6AMeuRz5eR4Z+39c8kX
-y2uCUse1HQG05BxLm+sHdrhu8Z4Z6fVg8To8pmdIQ+s6O6rqiUphoDIIlLYPKwsB
-NoDFxv4AgqkseLvk4vnO0jANai+E8lZ/QNBeSQcdiaYHY9+Pvj2hrIgwhGf9xXuK
-/1Q+2Am5IUncfwSHG+7GpqNEKsa7Inu/DOfrkeO4szrEplZgKNBZ/oEC8me+Kx1v
-mkQqDaGmqoVGT8/to12hAalrBafi5owHjf0ED+Wh4D31XRvqJrmJo4a6M9UOzgGb
-0F9SC74E8EFnyY8ZG4mvfPvky5Cz0jdRlKuuyuNFDacl1NOLe+CaSxaVnFPZE3Ka
-a0hCWFIRamqS2F1NfKEkl9NoI9LaSHVyosc6cl/vZcuglsbwYEx6HhBlYfOdPih6
-sTj+CcVvy0HzqERjwUcf1OGme4AAV5vLSzSSmUJOAFH2K1lJMjS1GJtQ6dcVxoP3
-Bp2ZrOZJRpzF6l5cwQrZglDwh2Hd6xY1nQnz/KPNYXuaMcoB0Txc2EIDAjohj6DJ
-+bCLw17uKNuNA3lf2Voe0+gHtb69x/Y9iY73LeV+0HbZlwFtH1J73/AXwQ62uyEp
-h9hrvM1miYIObzANztNmQ6nu/wbUFbNK8kx4REcYPtqAEGjvsgE=
-=RBWs
------END PGP SIGNATURE-----
-
---3Wj/k0XwDEYjEVhd--
+base-commit: 235986be822c9f8689be2e9a0b7804d0b1b6d821
+-- 
+gitgitgadget
