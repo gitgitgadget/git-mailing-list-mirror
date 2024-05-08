@@ -1,154 +1,117 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D4613FF2
-	for <git@vger.kernel.org>; Wed,  8 May 2024 03:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA54372
+	for <git@vger.kernel.org>; Wed,  8 May 2024 04:01:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715139752; cv=none; b=fEvC6XL9i1t2sR/G70PyY/JS9NyVFPgCw0NChY3fKLErC4ZoXXaHFul7WiS2OWiBcHDBaeHDDthbbINARXjhVOODBSquQive3UcW7t9obEamcalsyS3wA2iDlOZnwlO0FmBYlMd/wjqgtoU0+JI3AbM1ER9yaxeg2jDuyPMgD9M=
+	t=1715140900; cv=none; b=Fh/t+5PlObegE0VBGhkhjibEU5HO0I6QXBJm/Twxjjn4r2UBhZZhm+Hin7aQFZp7sM6Qld9dXy2zFS6BF19ecJ5GVYbMC5uMMFtGSl/kfRZ3fSqdWI9CJ77cQmMpg+BtQBVfWfLIMty/1D/Fywx0i8mAaPJUtkzdjuOuZn80vZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715139752; c=relaxed/simple;
-	bh=jT/ri/wmCT/dEhbiL+YQkRFhjtWzwvv+UjqrskuZ2Oc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n+xxvRu/gxO8UjmGS4PQKSK7hjOoKr9OLunLkjvXWbpNTc+Bif7CzZbuIy5eSvc2YUViikRMJ2IEGhDnCY6tVvY7XV5j5nqgG4GAaUskTVW024edQitdpxTFeDwGn2UTz4OggGb1uGJZUCb6oEvDofssBm9SYVQl7Np+JsFBE5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PTSkQr8B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A0CYb8vz; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715140900; c=relaxed/simple;
+	bh=hWAbppQCb4qVj14ZLKmERKYIsP2GDO6WAMKgSBJCVPQ=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=LD4wrl4UJzp4v8LknxVLVfdv+oKRmiolMTIZ8TooYi2CEfLbc3AJaF96f4fEdg2sRaFZFoR8xxy1f9YXsMb4HKHfi+jhmrMgreewjQYg4z8Ky5mymDzrhPTGl6rwuvBmTzV0+rJPhmcDrDOBaaN5CTJZAvIgXOZ1eRPwY/8SWYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEA0Vg19; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PTSkQr8B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A0CYb8vz"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 9433F1381586;
-	Tue,  7 May 2024 23:42:28 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 07 May 2024 23:42:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715139748; x=1715226148; bh=jT/ri/wmCT
-	/dEhbiL+YQkRFhjtWzwvv+UjqrskuZ2Oc=; b=PTSkQr8Bn9R+ygTUlWw5P5qAuQ
-	thwxdlnE0lAo8pPqCfqowhfB/8aRRR+M2R+qEUsqRT01Wtkxfy1/XpT8Xm7WnTyw
-	CpJLXNfEXxlXPUwPtBvyjUGpJeBPLGoMnT5aNbjfgGmGC0MrASS0LpVtjIVkZE69
-	btM0gfzNWn3L2zeohDpgwymvhj6nDgwCMYHpiikJbHCTldnoa3HTw7RQesrdIAUO
-	DqUOjHBnhNJbidlnCEMKuH5T++xv0NP/7u8LxhqBZcI++cCPC5Jn82MqS4MrX5/+
-	MCr8JCl2/KyHvQg8VM1biuz2CnuGTJSY4BZyhvYn/ihyy5SAdGx5hJzZtJWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715139748; x=1715226148; bh=jT/ri/wmCT/dEhbiL+YQkRFhjtWz
-	wvv+UjqrskuZ2Oc=; b=A0CYb8vz+yWQSRzEpqz+BGj5NMOVIMzYiwUsIVUorZzO
-	QJNcAFVojjwhmo4T4NH4QBWtfR2Cfc1+7H3vgK/Ra0xo1SegmmCQyySyj09V44Br
-	RcV6vWQ2S55ING8VUu0pZ6sYWNyNwziNzDiTx6dI5hHy4cfd1rd1AHVJ0i/ZCDe7
-	g4CNz48PEzRQ0n6/yQe85a4Pq4An37DNPsYm7tni4YITfzsOF064gI0oshNtGT+5
-	6a84/ACjKCBIhIXN1onoYmalPbNVr+Z0QunpcMUl9tCIY+xlGO//YwrTKTAxqmpe
-	sB6aHNpZJY+2Bq7J72g+JLoniPFLvtfQE7TCU3b40g==
-X-ME-Sender: <xms:pPQ6ZniL-VR4Ocav8JCPgEgkuVMeoqlmC1oZYzuPsT5q57kKpKiRuA>
-    <xme:pPQ6ZkBOJEzRqv3JTOonTQ54aQUAmz0fH2y7aRiyy9ao0e4xHkumQQcmbnOiIGSa6
-    KMk-u9pA0LvVcBLIw>
-X-ME-Received: <xmr:pPQ6ZnEpI6SdDX1jD8Z-SJyhshqJGnVnDgLHnk1_mn_Y43hOaWbdbmtJPlKh0Fa9ex696D8MOSSgaxdZc4UKQ3_5lIOAuKM6lJV1VTV349vmqU4lmA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvledgjeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:pPQ6ZkSXQ_FoV16--8OhkQJ-vDf9nOzY7wD67wJSFoULyJxylPxREg>
-    <xmx:pPQ6ZkxEohpcsl-9JEFoJDzTtlb5ZCIKFKIxjmPvjEjKiG3oJnMAqw>
-    <xmx:pPQ6Zq74aX-a7FYNdMQZCexTh9hBSDZe_4xQV2gALISLQf7rPDhXkA>
-    <xmx:pPQ6ZpzHkAyw0akJ7NH6kLbfAKcxBeVRxDlgoKBqaBGgTRv0bHRFPw>
-    <xmx:pPQ6Zg-G6yagadD8bzyzdqn6ASaDJZhyINM8xvmuV0ntj2dsb7ty95uu>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 May 2024 23:42:27 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 85d3a008 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 May 2024 03:42:16 +0000 (UTC)
-Date: Wed, 8 May 2024 05:42:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3] scalar: avoid segfault in reconfigure --all
-Message-ID: <Zjr0nmJib_1EtdJU@tanuki>
-References: <pull.1724.v2.git.1714874298859.gitgitgadget@gmail.com>
- <pull.1724.v3.git.1715126749391.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEA0Vg19"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-23f59d71d10so1988731fac.2
+        for <git@vger.kernel.org>; Tue, 07 May 2024 21:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715140898; x=1715745698; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fvc8B0Zh5sMtCiNrWhYpt+vBhrsWanPS2GYCz5gz1DU=;
+        b=OEA0Vg19ONg/h0vLTEhU1hatOV6hxPUqylKT2HWF4+DCr5IbTTn9jRma8Dmnx9UE7P
+         jdYoP/zwUozsLADXcTvYLXxB3Q4TQmkmtPQfmTR8nrrsYVRoqjJtyGT+qLE5f4m+GvaO
+         CS5+8EBu7vib/h1SVmW9Hsg2rgTZrG8Dh+6f8zUVBfuf9CbF62lEdk04lUb/fnWKH/5z
+         S5j0oY2kCgQIkjGl5HE0lFL6VrbhP8YWekXlDqXt3Oz3+mN6+UPtuORJRZU0t1aRPiKj
+         tpqqvSE5mD68hWXYPIehYAlqsuOhnDur32B8bFiwMdN96QTz0RjfYcjR3AYYtzIx35fZ
+         WR3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715140898; x=1715745698;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fvc8B0Zh5sMtCiNrWhYpt+vBhrsWanPS2GYCz5gz1DU=;
+        b=ZaGOiy6fUZHzuqxoUStNHQGqiTar1KMCCfjXIwjJ4Q2R00lROlwkiP8ki1KKH6DDfv
+         3mAaoxzTasif1DcQXGF8+u9DvyilEgmbhg70UlhSsGA7ngonXugkIZLJsKH9P6bhD7Fa
+         AWUurgWRZ6P+CYIXKgcC4pQYooxhhtZ0WyDHmyKCiB/GfoJUlfp62Xru505/2JY7U0TH
+         XkW7RbxnDPWE0e3eikLGVgz1HxFUXQpQOS78Iq1K4BM/CZkXIuP2vLbjDXzYqJlTF/QC
+         bKQ/XiG6PaMcfGxHZkLA0dOICj/YdYz0QHNi3B6NBTm+23x0Hmnxftkt6Z9D6LatC61N
+         f/mg==
+X-Gm-Message-State: AOJu0Yy7txtPM4xcnTnzgu55yDAzOotgMn3WLqJO0soAy3FAsEFWyvBr
+	WPSilstN2ovGObZsljrK5+n7nlyKXhRN8ScEpsFFRHt8GDSeshmMgLFnGA==
+X-Google-Smtp-Source: AGHT+IEGOXpNNrEBe6U5cx2+JDt8FAcKwL7KrBIB12sEBkTNhSf1HoK3vUDo4UoUk+KKKT1BV2/4aQ==
+X-Received: by 2002:a05:6870:548c:b0:21f:1705:d5b0 with SMTP id 586e51a60fabf-24098cdd3bfmr1787116fac.52.1715140897937;
+        Tue, 07 May 2024 21:01:37 -0700 (PDT)
+Received: from [192.168.208.48] ([106.51.24.133])
+        by smtp.gmail.com with ESMTPSA id w11-20020aa7858b000000b006eceb4cb828sm10190974pfn.180.2024.05.07.21.01.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 May 2024 21:01:37 -0700 (PDT)
+Message-ID: <406aa31f-4ea0-496c-aeb6-443be86385c0@gmail.com>
+Date: Wed, 8 May 2024 09:31:32 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="S8LGCFQcXIWSSRMB"
-Content-Disposition: inline
-In-Reply-To: <pull.1724.v3.git.1715126749391.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+ Chandra Pratap <chandrapratap3519@gmail.com>,
+ Jialuo She <shejialuo@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt
+ <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [GSoC] Welcoming our 2024 contributors and thanking our applicants
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hello all,
+
+As you may be aware, the results for GSoC 2024 have been officially 
+announced[1]. We have 3 contributors contributing to Git this year[2]. 
+They are as follows:
 
 
---S8LGCFQcXIWSSRMB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+   - Chandra Pratap
 
-On Wed, May 08, 2024 at 12:05:49AM +0000, Derrick Stolee via GitGitGadget w=
-rote:
-> From: Derrick Stolee <stolee@gmail.com>
->=20
-> During the latest v2.45.0 update, 'scalar reconfigure --all' started to
-> segfault on my machine. Breaking it down via the debugger, it was
-> faulting on a NULL reference to the_hash_algo, which is a macro pointing
-> to the_repository->hash_algo.
->=20
-> In my case, this is due to one of my repositories having a detached HEAD,
-> which requires get_oid_hex() to parse that the HEAD reference is valid.
-> Another way to cause a failure is to use the "includeIf.onbranch" config
-> key, which will lead to a BUG() statement.
->=20
-> My first inclination was to try to refactor cmd_reconfigure() to execute
-> 'git for-each-repo' instead of this loop. In addition to the difficulty
-> of executing 'scalar reconfigure' within 'git for-each-repo', it would
-> be difficult to perform the clean-up logic for non-existent repos if we
-> relied on that child process.
->=20
-> Instead, I chose to move the temporary repo to be within the loop and
-> reinstate the_repository to its old value after we are done performing
-> logic on the current array item.
->=20
-> Add tests to t9210-scalar.sh to test 'scalar reconfigure --all' with
-> multiple registered repos. There are two different ways that the old
-> use of the_repository could trigger bugs. These issues are being solved
-> independently to be more careful about the_repository being
-> uninitialized, but the change in this patch around the use of
-> the_repository is still a good safety precaution.
->=20
-> Co-authored-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+     Project: Move and improve reftable tests in the unit
+              testing framework
+     Mentors: Christian Couder and Patrick Steinhardt
 
-Thanks, this version looks good to me!
 
-Patrick
+   - Ghanshyam Thakkar
 
---S8LGCFQcXIWSSRMB
-Content-Type: application/pgp-signature; name="signature.asc"
+     Project: Move existing tests to a unit testing framework
+     Mentors: Christian Couder and Kaartic Sivaraam
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY69JkACgkQVbJhu7ck
-PpQNYg//Ul20pgHzkPLBAi9EZWe9unTaE7e+0uhJvTDf93ucWfEmSwxPAA8ELlLX
-tI2Aj8yWyRCr802yISMH03IRmXlW6CtmkwRmuyf70DE8hCoAkA/AaQFzlJXTE6Ik
-XsvJeOAFlvpaCBjagfi25HaQKkKbPoS4ZDlH/MKHR/StFaiVd5L6V5BueMJfd1F3
-16oyGhX2OJOwf6oT27Sj/t/VaZ/XtDTGvhA+FlsH9PjmonRKzGaqOiR+07/oLdxg
-U/L0JOqV+FA40q0kXsW9Kp2/XKRmMQxqfyDHcK2O2uYaHICP/prpZgHJ93WGvhkl
-kQuvCSxcjTvSYhh6e1mES4ANreCvBf/JlmdSETrSiUkp63IyKVInyLNtEBKT2dnk
-S1yqG7THQVyvJjqW9HzL6A08wtvSFpcdTTxJxaYgNdkxKJrRvn4YDLoj5W1rleju
-TRBAY4y1Fv/sow3gNqSxQD+3NXln+vbSCy96od1Wn+3j0rX4A1OD23TeUJ+knx6k
-DrIszn3Xm1d+pamJ2I6CMlopixJs29+x2fV1QDezp3uplLMsgHPkdyV6gicxCDAv
-qo5sFgX/176I7vJm2wsFIFGriyQFFJ4c8n5tAfotmMECF8IPQut/G1I02Ge0VM/k
-vI5+1tibPbFDDt76//J7j91IDthWOQeAS7I+P2PqBZYPYOJ+K1U=
-=Q4Xc
------END PGP SIGNATURE-----
+   - Jialuo She
 
---S8LGCFQcXIWSSRMB--
+     Project: Implement consistency check for refs
+     Mentors: Patrick Steinhardt and Karthik Nayak
+
+
+Let us welcome them and wish them a good summer of contributing to Git 
+via GSoC!
+
+Thank you to all the contibutors who applied to Git this year! It was 
+tough to choose from multiple potential contributors who all were good 
+in their own respect. Hoping to see you around continuing your 
+contributions to the Git community in some way :-)
+
+
+[[ References ]]
+
+[1]: 
+https://opensource.googleblog.com/2024/05/google-summer-of-code-2024-accepted-contributors-announced.html
+[2]: https://summerofcode.withgoogle.com/programs/2024/organizations/git
+
+
+--
+Sivaraam
