@@ -1,80 +1,81 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BD9182CC
-	for <git@vger.kernel.org>; Wed,  8 May 2024 13:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA037D401
+	for <git@vger.kernel.org>; Wed,  8 May 2024 13:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715176510; cv=none; b=YVCtCFSJtsYi4u1VAUnzAaP01VNekFFxK8TZpppIZxRtN/UxAG67gBzVZ+C/pPbQ7kmTSnqA38N0ktEnqA5nbSe0GMMnj85KdPl5ElqUBgiGcnXZgXgxm31xwezvdq/RCgLefiW1VTcI0yysp2iBKkeVImG77CuVA2EdTiNV3bQ=
+	t=1715176516; cv=none; b=PDv6DoGxPlW5WE358mUSivNPbdFVhNciW57AfqXgqrnSBZL4XZwos3iFnUWHKYL8X1MYN2aNhO7iQI2W7c2a8Z0xO+9qvigJ1814EXEQ0rPfLvXwo+PG8LPpSZ0L5Pd/w7hdUnRaH6Qzn/1SoZHs/YveCmBm0HEm3Vbm57NMgJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715176510; c=relaxed/simple;
-	bh=14l5P4RLFzup7qXxSuuVCHxt1kTDjnHVVpMa2GNaLIs=;
+	s=arc-20240116; t=1715176516; c=relaxed/simple;
+	bh=Pm/WwwJCJzc4FFK2qmoVQLuChenEoJmpBBVQeq6ePhw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MBA6xNvI93QSEF8c8QnRkLxwMcgahoInYc2YwFb7KDARXhgwYYcu+NByLWyeJbVPmCGGPF62cYXJvt3C71Nkox3znnoYTFLA5vHynxVqnu/1ipaBOfmqyFETfC6a4cJ1VHaTCDHkZDUwPMYmjJft1xUh34qE9U8k3Ln5EC/4ZyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gWKWnBte; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IbNgMVGm; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=Iurs3l7OeWQqXPPV+Dl+TrkiecaJlhqws6R8JsLuqcca7+2v5JJGWcFK7Ueeu/IoA0PnMSAeAUz6lx0n5esR4CKV5K6DXB3PyYaCcgpv7Xx83MhTELxqginW3rz3pzwbKJ2dFSDSXljF6hlkkQUFy3m7x20WdtBLUgRf3T2zvvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HSjh1wJN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BkF+nyvb; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gWKWnBte";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IbNgMVGm"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id C2DE5114016C;
-	Wed,  8 May 2024 09:55:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HSjh1wJN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BkF+nyvb"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4704D13803A2;
+	Wed,  8 May 2024 09:55:14 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 08 May 2024 09:55:05 -0400
+  by compute4.internal (MEProxy); Wed, 08 May 2024 09:55:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715176505; x=1715262905; bh=62UcU/gWdd
-	d76INt4vckHVPgf4OC9JIbs3Mz9VyFA+E=; b=gWKWnBteSQAoV4zTxv6g1FcUY/
-	5q/kWlQ7f/s3h6dpvkpFJHAbqpq3TjMccbu42NhaOP2t0FGF1PAtYaQKyWjhh9Mb
-	78Je79GBaPg/blcNg+qhsc+xv6Lr9ssQHbfeOQ0YWmU8o7GfTPCPc4ZABu7u2/Tx
-	nRRTGBDIsKIEgjrL+8/OMNSqIRNkdu2sHSOEcsZEdrCJXr4hYkqDGUQXbESlBEFp
-	Uj0sY0X31Erc7rcAKBvIe17hAlrtamYmL+HKpAw0B7JF/w4iSDOf5txuKs/hI6q1
-	gA2t13730KC4oJUP9as9+uoQMpmp7ypMhPu7gPPrrKHqYN2x3wAOkLal9y1Q==
+	:subject:to:to; s=fm3; t=1715176514; x=1715262914; bh=RUEkKmEnNw
+	B+LiZxTlnXYMYqbYmkB+U14DMqFmlwqmI=; b=HSjh1wJNtk+WUyYJq8kPkqt3sN
+	w+IPdb4Nh8kE4+H7q4V7YRPwZaqvNlR5y5I7MdFAH2pLuIt2Jujc9dZQzCevMcL6
+	G+GV4faFKYlqzaLQf6yp07+zqW9YVEp8nTsy5KC/I9hvJVk9X0hRxQAvKwQUXKWG
+	W5CGrXrxiIEcQXPZAkI8P6AIZxa0GmeNBW3xg67pta5Dal+9U3W6hAEtmXXd2OVw
+	ta7j49N8LfLJfW50/JdSYh+tb+Bx/mlRCc24wO24k/igfh4Dl9eUqQYajjCZf4Uo
+	ui1RxA151AwLD8Jh5m//dRXA7oynV24u0BS52PkTnbkAPzPRlRnm7ezTYiFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715176505; x=1715262905; bh=62UcU/gWddd76INt4vckHVPgf4OC
-	9JIbs3Mz9VyFA+E=; b=IbNgMVGmhVYWfKarVzjBpBM70NHdySTRTZABhGMR+vX2
-	3Q3ujGsOXKRM/Nb7D+yPfsa4HpyExxeuA6tiZYjwDAjkvXEMXADDTc6j3GpGgax0
-	i1vJgtChpWbZcnEnLQLJLAHrMXA5B5LH0hBUZZyKIDhfXjFg02WljqVP51CqkWHP
-	b4ZTkoDf6cAF37+tC7pXkAGeINCKdEmqIprwf6yQzk6nxPNcEUFbuq192ydirKEK
-	9A3HGPYKVY7Cpe3PQ4QPI74zftKWFGaM//20hOIj+SSjSoiKe99wRSwyONN2A7d7
-	PyyzFBim24PZkXOQdDxQkT2m+6mbWJgr+iY5dNkvFw==
-X-ME-Sender: <xms:OYQ7ZhKf68jFJsxgEuEwSpR2M-xKIcNEgUrW9Xvc7U6KgiPo48t40g>
-    <xme:OYQ7ZtICy8X1dsMx-Ed1XTjQq9kt4CMiW-mZHMg7VKr6_LzrbFwcnAz_NvhmHpPyF
-    tGz2sUYIm0So11fiw>
-X-ME-Received: <xmr:OYQ7Zps38Uh8LVtYSsBYCRY38-z9vnWE5knmOgaGkGIcrZWze4V8ICwCmxWxV0GjE09EMU7oUlSuVpKSSzLFG2alqJxHtqAx16sdHpaj3PZQmOjvjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgieelucetufdoteggodetrfdotf
+	fm3; t=1715176514; x=1715262914; bh=RUEkKmEnNwB+LiZxTlnXYMYqbYmk
+	B+U14DMqFmlwqmI=; b=BkF+nyvbLP3nEpDG1Ih6T4Wl6ZiEQB2hJrIDacjieDdK
+	UauW5MvACAVLtbcs+g+Rhoco0ZVgtKSpJ7T1RMxPbSrwnxg8O6FnrwJ3mMuDmRe7
+	tKFNt/sj1JuMDu8VoJvUekgB7hdKx1OQgLfgR0ylDVNj0UpQztwb+N2J2hnd4EfG
+	TzD8OnVwziX1tr+GLMmmcx1ENJCs7+0wOVyZoyLDE0Ml5juhjYAZNjjnOX1Opgus
+	V9wLcYN1VT/ZxfqNDhOuHNxvya6dzz3quqDNHoyZ5db/QBm0qzbx3fNZ1yql5pbk
+	m9Ahq5GT4PJG5Q/GvV5jUjKHAEwigWKMyBPNBXuY6A==
+X-ME-Sender: <xms:QYQ7ZrOHj7oGgqYHiK1EdpidGC4yGYd-x2fk61ZSaDNhK17f_E4TxQ>
+    <xme:QYQ7Zl-1Af41pccjTMTvepQOGtImze-Mp4jy6gasVQGJ2nnGO6n9HO1FMQQEM8u6m
+    3EB02bVgDnkyKQ9hg>
+X-ME-Received: <xmr:QYQ7ZqTroTyk0QmBHKId-hohZCniW_KKkLOowPl9-qsBsF9XyuUk8S408vk3g8MYZrHvjUAo4-4CSuIGDvVKDDEmzdG9eSQ1ETp4kNreuAWjUUgAvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgieekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepleejteffveehgeegteekteeiudeiieeigeeigedtffehgeekhfejheefkefhveel
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:OYQ7ZiZbcbgCijCtf6SsBI5zF6tJ33QnLN03JSA2EvSJkkt47BCqLQ>
-    <xmx:OYQ7Zoa3c5f89MgJZOm_Drzv89rfAbRz2a9lTRWNmNaet9OJv6CLpg>
-    <xmx:OYQ7ZmAklleiX6JNL9OsO8pD6N8qmwI4OgGtM2f6Z4872wVH0Uzriw>
-    <xmx:OYQ7ZmZOuWq8NXIXR1ceTJux6E4Lc-qYujhH3lOg8g76cK2j-Erq6w>
-    <xmx:OYQ7ZgG2elKjNTQk9pO08pudkv174skMaE6CLpMkTwasCDFILgK-aedm>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:QYQ7ZvsYugLycOOa8E7mEvs_RoiR9cG9i8ZXXVFQJvwQkGzuTMJhWQ>
+    <xmx:QYQ7ZjfpVUllhVypN8mQg-F0LE82aGnjxU-9hzQChZl7iT_8A-JNBQ>
+    <xmx:QYQ7Zr1StppHWcelVmjXZLXEQjfScE1EKGK3h6K6x_CoSoOD6QJ7LA>
+    <xmx:QYQ7Zv-Z0Ex7gnHH9qndOYTjVXy3cCFmponuj92brLG_jY8PspKk4A>
+    <xmx:QoQ7Zq7JVW5jOIGYPQa-tUpFDe0CkT9Cj91wW30j7QmBHjT-5piz4mnq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 May 2024 09:55:04 -0400 (EDT)
+ 8 May 2024 09:55:12 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0a579b9a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 May 2024 13:54:55 +0000 (UTC)
-Date: Wed, 8 May 2024 15:55:02 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 0e0d3570 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 8 May 2024 13:55:02 +0000 (UTC)
+Date: Wed, 8 May 2024 15:55:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [RFC PATCH] docs: document upcoming breaking changes
-Message-ID: <ZjuENtXjDZaX-0B0@tanuki>
+Message-ID: <ZjuEPmSq3E28U6tJ@tanuki>
 References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
- <e1350757-80d6-3ca6-3ef1-4b6ba496ba9e@gmx.de>
+ <077b69f1-cffa-44d5-8614-7f83b63442f8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,131 +83,110 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="x25p+7owlnqFM/5P"
+	protocol="application/pgp-signature"; boundary="gypwgVC7OTqLVGsS"
 Content-Disposition: inline
-In-Reply-To: <e1350757-80d6-3ca6-3ef1-4b6ba496ba9e@gmx.de>
+In-Reply-To: <077b69f1-cffa-44d5-8614-7f83b63442f8@gmail.com>
 
 
---x25p+7owlnqFM/5P
+--gypwgVC7OTqLVGsS
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 07, 2024 at 12:38:31PM +0200, Johannes Schindelin wrote:
-> Hi Patrick,
+On Wed, May 08, 2024 at 02:15:11PM +0100, Phillip Wood wrote:
+> Hi Patrick
 >=20
-> On Tue, 7 May 2024, Patrick Steinhardt wrote:
+> Thanks putting this together, I think it will be a useful way discussing
+> deprecations and removals.
 >=20
+> On 07/05/2024 09:27, Patrick Steinhardt wrote:
 > > Over time, Git has grown quite a lot. With this evolution, many ideas
 > > that were sensible at the time they were introduced are not anymore and
 > > are thus considered to be deprecated. And while some deprecations may be
 > > noted in manpages, most of them are actually deprecated in the "hive
 > > mind" of the Git community, only.
-> >
+> >=20
 > > Introduce a new document that lists upcoming breaking changes to address
 > > this issue. This document serves multiple purposes:
+> >=20
+> >    - It is a way to facilitate discussion around proposed deprecations.
+> >=20
+> >    - It allows users to learn about deprecations and speak up in case
+> >      they have good reasons why a certain feature should not be
+> >      deprecated.
 > >
-> >   - It is a way to facilitate discussion around proposed deprecations.
-> >
-> >   - It allows users to learn about deprecations and speak up in case
-> >     they have good reasons why a certain feature should not be
-> >     deprecated.
-> >
-> >   - It states intent and documents where the Git project wants to go.
+> >    - It states intent and documents where the Git project wants to go.
 >=20
-> I love it.
->=20
-> FWIW my first reaction was: These deprecations should be mentioned in the
-> release notes of the current versions, as a heads-up. But then I saw the
-> impressive list you accumulated and agree that it needs to have its own
-> document.
+> Is the plan to use this document to track the progress/status of proposed
+> deprecations? For example the config based hooks implementation is stalled
+> at the moment and would need some work before we can remove $GIT_DIR/hooks
 
-Some of them are my own, some of them are Junio's.
+I also have it in my backlog to propose a file that may keep a record of
+long-running projects. The intent would be similar to this patch here,
+but it should also help newcomers to find projects to work on.
 
-[snip]
-> > + - git-annotate(1) is an alias for git-blame(1) with the `-c` flag. It=
- will
-> > +   be removed in favor of git-blame(1).
->=20
-> This is the only item I am not quite sure about. Its maintenance cost is
-> negligible, I would think, and the cost of using a judging command name is
-> less negligible.
+This would track:
 
-There is of course still the problem of having multiple ways of doing
-the same thing, which does create mental overhead for users. But overall
-it's likely going to be negligible, both on our and on the user's side.
+  - Large-scale efforts like the past SHA256 migration or removal of
+    `the_repository`.
 
-So overall I don't mind this item much, and neither do I mind which of
-both commands we use. I do see the argument that git-annotate(1) is less
-judgemental though.
+  - Small projects or microprojects like we have in GSoC to help out
+    newcomers when they want to work on stuff.
 
-> > + - "gitweb" and git-instaweb(1) can be used to browse Git repositories=
- via an
-> > +   HTTP server. These scripts have been unmaintained for a significant=
- amount of
-> > +   time and will be removed.
+  - Things we have already discussed, but simply didn't get landed yet
+    like the hooks refactoring.
+
+So agreed, the hook refactorings should not be part of the deprecations
+document when it hasn't even landed yet.
+
+> > +### Removals
 > > +
-> > + - git-filter-branch(1) can be used to rewrite history of a repository=
-=2E It is
-> > +   very slow, hard to use and has many gotchas. It will thus be remove=
-d in favor
-> > +   of [git-filter-repo](https://github.com/newren/git-filter-repo).
-> > +
+> > + - git-config(1) has learned to use subcommands that replace implicit =
+actions
+> > +   (e.g. `git config foo.bar baz`) as well as the action flags (e.g. `=
+git config
+> > +   --unset-all`). The actions will be removed in favor of subcommands.
+> > +   Prerequisite for this change is that the new subcommands have been =
+out for at
+> > +   least for two years to give script authors time to migrate.
+>=20
+> I agree we want to allow plenty of time for script authors to migrate the=
+ir
+> scripts here.
+>=20
 > > + - githooks(5) can be installed by placing them into `$GIT_DIR/hooks/`=
 =2E This has
-> > +   been a source of multiple remote code execution vulnerabilities. Th=
-e feature
-> > +   will be removed in favor of `core.hooksDirectory` and the new confi=
-g-based
-> > +   hooks.
+> > +   been a source of multiple remote code execution vulnerabilities.
 >=20
-> Since I already expressed interest in having this document, especially in
-> the proposed form of being a _living_ document, i.e. subject to change, I
-> would like to add:
->=20
-> - The "dashed form", i.e. support for calling `git-<command>` instead of
->   `git <command>` in scripts, has been deprecated for a long time and the
->   intention is still to remove it.
+> I'm not sure about the reasoning here as a hook has to be enabled by the
+> user before it is run. There are good reasons to prefer config based hooks
+> such as the ability to run multiple scripts per hook event but I don't th=
+ink
+> they are inherently more secure.
 
-Agreed!
-
-> - The command to import patches from Quilt seems to be used rarely, if
->   ever, and will be removed.
->=20
-> - Support for importing repositories from GNU Arch will be removed because
->   it would not appear to have any users.
-
-What even is GNU Arch...? Never heard of it before.
-
-> - Support for interacting with CVS repositories (via `cvsimport`,
->   `cvsexportcommit` and `cvsserver`) is of dubious use by now, judging by
->   the number of times these commands have been mentioned recently. The
->   code has been essentially unmaintained, too, and will be removed.
-
-Fair.
-
-I'd be happy to add these in v2 unless folks disagree.
+I'll remove this item for now. We can discuss it again when (if) the
+config based mechanisms land.
 
 Patrick
 
---x25p+7owlnqFM/5P
+--gypwgVC7OTqLVGsS
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7hDUACgkQVbJhu7ck
-PpQinQ//XYKbOS1cAkFaOKbfZts/Ic+gKt3PuR9Wg5DGA7R2Vr5Pd7v1yClhLLcq
-rf5YnffQHbvz3n/ESIAfSnx+PBiMbW38ZHw4oZELGcOsySdDf9Ku9lP3QfgIeqp3
-J/qDzMQgTcXXpbrWzzhm8kZj9an7zFlfQZfoaASf4R+K7m1xgMd5ZmWHv+DpG2MJ
-J6xj1D+1oCKzFKIvzWj7iE6irhMfNir+sr4preTvNuSoy4sL5mWXxO7cG+ybF5Uj
-TyHc02czzR77ZBrkzumHktCJ2A5JYVSwcC+Mus5GFV0eOFTsZLF89nvqVZ1uUuFV
-H5ptWr7GgiRdPLw46gIDtVIMo9Ku7nb86mncPg0Ga9HmqJDcyZrIiZZftHIb1lJD
-/5nsw/neKbWJOLiG8TQ7cO8u4kaf+aTAqBKbLhjt/5+rtmNwl7m+Q5nNXHFsqcGF
-QokegWQHc8jdm/HlRrTDJRX3vpilMNf8mxeFxL3JkCNwAPWqfFGxEnrOpdkYGOo2
-OMb2MwbRAW800wXsJx+u8U8fLiWuD661SkHarGMUn6w1u7Iwau/m4TQRdZ2jnVsS
-qwymOy6oOkdG1zTIblsBisnKaO42EHfgpBwSlqEu3NnM4gNw3pZMrnUii0zgv9gb
-jpCLFoQ9mrVBtyl2wqMrh2YFCPwpCQVmP2yxoz4KsE/dFMKUQuo=
-=v3kJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY7hD0ACgkQVbJhu7ck
+PpS8PxAAriiMN6nQDJBq9bZNpxFpt8EQBGltdsxoxHyeUOxgmV4/YizqsH1OFz56
+rz0rbRo1KRySZJndRh4AINzG0iuAmie5nhbfdiMaf+LJwzocP8pFCHkEINwNwn1V
+1KqwQE3YR8iWAoaumv/Q/BG9O9mBdyAEBgu7f5MHYzFoOvOsp57wyGiIcuqnIvrL
+yCc5hePfH4RAKppRm+yMV8s49Rz/5ab2Cp3BO7JskP1G3MEurkGOzDe6vAcqakmU
+v5MA3Lcg7JPEasFDEYke8aRYfYjhvzUTVmz4Zl1+lDNwV4XP1K9mgdv6IUEP1uOe
+GnHlDHk9EBa0t2wEYWHv07lP7GlXpy+1/4Sxwi+Xy37Y3Q/a5WmM1GXzVWL80XnN
+X7w0qmFWzOcxkQL4TnOuzMd1FwlIOvc2bL58+hSbOpV5JU4G48Lebt1wZBTfG8fD
+2eB2erz59QVC7MUu+Nlv6U/Ajpza6QpukW1j/KjXainHgrT7Uh1EyPLhWeaxfSjs
+9RVBTknPhFjt8La8vxskpPBNwCJLtwAR53uqZyG3ZqWhTcOFyAAdLftDrFglJJSC
+7ehqcNrM4WNaNVIAoc0QcBPjGkotw7dgQXHbWM3UNs9VNQmZ/0I1wPrbgmLoyhM2
+F2kARgMVE1e1cJ/GeJpPWZ5qWdwFJCAge9UgnzshftbeyaEdDfQ=
+=1B72
 -----END PGP SIGNATURE-----
 
---x25p+7owlnqFM/5P--
+--gypwgVC7OTqLVGsS--
