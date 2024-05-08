@@ -1,129 +1,85 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F4181AD0
-	for <git@vger.kernel.org>; Wed,  8 May 2024 11:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75485F861
+	for <git@vger.kernel.org>; Wed,  8 May 2024 12:45:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715168937; cv=none; b=WiBCi9FoVeNmYhejqWpdGzCi70DqMyI2D7YYZecTSkuiz37VoqZ5zp5pRSl4TmjD05U1F8O8cbaQruJJqx8VTfLAOleNqzzk4VuaVrqlHwuk/OA+C+mK9bBPK3mMJi5xJev5xk+m9eHA09JfXpS66IP506+GwbGau02h6KsUBT0=
+	t=1715172311; cv=none; b=g6PCgfTQ8QJpcJOZHSdocdzycSRwIOCfOr+hPsFpyluUlo1/eEltZcPIxtexS02bCjwV69Y/q672FGPRSIAL/AB9yTnNEC/DTwYrV2+MMNx4xCAtQewQBdDGVhj9olVLznUtOhwrvSI2NGof9UZHvF2NpDYt9y16lggyJRd3I+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715168937; c=relaxed/simple;
-	bh=fZYI23e1lGaCiDRYqaI250SnC4MoF2mr4cMnlMPcoHc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jLjW1/3EK42CrVUb/csJ7peujN6HCKPDpN+QXKmwV0Lv2MDWARCobIW7z8Z//NCqmxM+PoYSWmhRKK5qAjS/jpmgxK2RY9mdlEN7JW2INGTHpR53H+YjyVSm37u1V5cKMdQJuLMDSN6L83T12Hy4VOQVvTwE3d8Ff35jZ7MTfM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLKlZo02; arc=none smtp.client-ip=209.85.166.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715172311; c=relaxed/simple;
+	bh=IYTnD0G9jQWqnFqDvsQ4PiJUdJAD+aieaSbJWpOM23c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T1XzYh3L4qJdAhPfr+eFGIK6x2+NVwQSAeKhobvd3prbYg3MKOmeA3KtHMgrvPOQc33k2r/HVUttFdnPMYU16YQVuH8rtMVSzgwb79Blfr6F7U7pzfW6S5hRE1e2fZiYUTdmM9KdmgN6XJDYVyCPxl1qscpKd0PVJfxoVudlDGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=XHDB4LL0; arc=none smtp.client-ip=95.215.58.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLKlZo02"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-36aff02f998so10678385ab.3
-        for <git@vger.kernel.org>; Wed, 08 May 2024 04:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715168935; x=1715773735; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LYmtmKl05bCl2n+9NxgP0y9da9p2OjOtB2mdMJrQqC8=;
-        b=DLKlZo02BTdcXGr3UIgt9lVXLZasHytGvHFJDgBHnan5s889e7+xGReFjD7NQkq3o6
-         NQna6mmunEXBsWijkgRuy4fFMp0n92yZDZMkLnN80HYBAijE8ihd76VKRibYp4fAKBkv
-         FBzbJL67XqcRS1Nh75gVcOqxZxyO4KIvZlUWFe/3Zh7IN2dCX87ywOWqn7vCKOW7uit5
-         ojazM5WQhlFC3lEH+7SM1f9nk5KI2R2HNxOn24H9m8pVDiOfPPQ1AFwb+So9cvLVk7H9
-         xvg37D7uObTfoaSy4fnseZc4DFbLN88OGED49sqyeWfKL0K9hm9o3lvo45hZ7sB2HevC
-         3XAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715168935; x=1715773735;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LYmtmKl05bCl2n+9NxgP0y9da9p2OjOtB2mdMJrQqC8=;
-        b=xCLWzL19US39lSLkaP4tUwNNFpjxDZ0V0wyl9NtKOyOjTFcq3HTAAdviJszn5m+ecr
-         Y6YbP8JvVGsO6heecYvk1Ez0tBwePsKWl5C0nyyv/NI0lv8m901D4Y8N0BrGGS1Q63x0
-         SoBfARTSM8BY8el4FHxuPdp9t3eh1J5PutB/wxy36+v3IyQgtTgWB3kXkU9b8JaPQpKY
-         gf+fhFNC536eGQ5fMat7Y7iMekyh4q+CXiRfSzYE6egxmfkNpFZGpKnhXbjnoUBb7v9C
-         e/X+gJ7vfx1imIQq3OtrQ3njc2Q8VwTxMMUYQ6MD4KE+E3c+AF1A/eez8oOZnq+QdOi1
-         mxfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWHCLeoRRwyM7yG1L9sKKXsE1IJ8f0fU6skukA89tQK6e5A7Mjde0d4W5nQ5qBdVY6jLPjCEJdHRwUzd83O5/xg75lz
-X-Gm-Message-State: AOJu0YzGwhilAF/1BbQv90psJbwTreeWdV6PDl3YLoGr4rhUFlv3gc3M
-	WqDCJ48koNhYpdJJbOGDZ6ZMa8USUkVQo3xLeXr7sqlJH+pYxspi
-X-Google-Smtp-Source: AGHT+IGwUquDnSem5wSEFuQaoGHUs/IYwQFeifs7KWGySPtDYucAlOVH2EVdQh2fC2L3Bsyp1Okhiw==
-X-Received: by 2002:a05:6e02:18c9:b0:36b:80d:b930 with SMTP id e9e14a558f8ab-36caed5a227mr25122365ab.26.1715168934711;
-        Wed, 08 May 2024 04:48:54 -0700 (PDT)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with ESMTPSA id e14-20020a63744e000000b005f77433b4f9sm11404219pgn.81.2024.05.08.04.48.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 May 2024 04:48:54 -0700 (PDT)
-Date: Wed, 8 May 2024 19:48:51 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [GSoC] Welcoming our 2024 contributors and thanking our
- applicants
-Message-ID: <Zjtmo20z6APPcKyb@ArchLinux>
-References: <406aa31f-4ea0-496c-aeb6-443be86385c0@gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="XHDB4LL0"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1715172305;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=eg/vmbO1yj0HUUJEai0tPtfCzbxwidHWDwKHejoBkyM=;
+	b=XHDB4LL0188/sf7Nzy+cTsfRWpDDSUSvfBtJl6bOWAfScPgNK8RdZxdth1Re3NX4EBxxLo
+	Z5lvIdFAIzNuUVXgAWWA6JX5+DNmwvsv8BJYwAbjJ5F6LIzUKwEd3vqrZngNXgA38xANzi
+	h9+wUypuGAm6RfJlBrpGSSGOuLnOaIE=
+From: Toon Claes <toon@iotcl.com>
+To: git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>
+Subject: [PATCH 0/4] bundle-uri: show progress when downloading from bundle URIs
+Date: Wed,  8 May 2024 14:44:49 +0200
+Message-ID: <20240508124453.600871-1-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <406aa31f-4ea0-496c-aeb6-443be86385c0@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, May 08, 2024 at 09:31:32AM +0530, Kaartic Sivaraam wrote:
-> Hello all,
-> 
-> As you may be aware, the results for GSoC 2024 have been officially
-> announced[1]. We have 3 contributors contributing to Git this year[2]. They
-> are as follows:
-> 
-> 
->   - Chandra Pratap
-> 
->     Project: Move and improve reftable tests in the unit
->              testing framework
->     Mentors: Christian Couder and Patrick Steinhardt
-> 
-> 
->   - Ghanshyam Thakkar
-> 
->     Project: Move existing tests to a unit testing framework
->     Mentors: Christian Couder and Kaartic Sivaraam
-> 
-> 
->   - Jialuo She
-> 
->     Project: Implement consistency check for refs
->     Mentors: Patrick Steinhardt and Karthik Nayak
-> 
-> 
-> Let us welcome them and wish them a good summer of contributing to Git via
-> GSoC!
-> 
+When a user clones a repository, they see what's happening in the
+messages like "Enumerating objects" and "Receiving objects". But when
+a user clones a repository that uses bundle URIs they see:
 
-Thanks, I have already created the blog post which would record the
-journey of the project. For everyone who is interested, you can follow
-the blogpost for updates about "Implement consistency check for refs"
+    Cloning into 'repo.git'
 
-  https://luolibrary.com/categories/GSoC-2024/
+And then they have to wait until all bundles are downloaded before they
+see any other message. When the bundles are large, this can take a lot
+of time and the user might consider the process hangs and they kill it.
 
-Thanks for my mentors and community for choosing me. I will try my best
-to finish the project.
+This patch series introduces progress displayed to the user while
+bundles are downloaded. The full output of a clone using bundle URIs
+will look something like:
 
-> Thank you to all the contibutors who applied to Git this year! It was tough
-> to choose from multiple potential contributors who all were good in their
-> own respect. Hoping to see you around continuing your contributions to the
-> Git community in some way :-)
-> 
-> 
-> [[ References ]]
-> 
-> [1]: https://opensource.googleblog.com/2024/05/google-summer-of-code-2024-accepted-contributors-announced.html
-> [2]: https://summerofcode.withgoogle.com/programs/2024/organizations/git
-> 
-> 
-> --
-> Sivaraam
+    Cloning into 'repo.git'...
+    Downloading via HTTP:  21% (351812809/1620086598), 315.34 MiB | 49.84 MiB/s
+    Downloading via HTTP:  77% (1247493865/1620086598), 1.15 GiB | 34.31 MiB/s
+    Downloading via HTTP: 100% (1620086598/1620086598), 1.50 GiB | 37.97 MiB/s, done.
+    remote: Enumerating objects: 1322255, done.
+    remote: Counting objects: 100% (611708/611708), done.
+    remote: Total 1322255 (delta 611708), reused 611708 (delta 611708), pack-reused 710547
+    Receiving objects: 100% (1322255/1322255), 539.66 MiB | 31.57 MiB/s, done.
+    etc...
+
+Toon Claes (4):
+  progress: add function to set total
+  http: add the ability to log progress
+  remote-curl: optionally show progress for HTTP get
+  bundle-uri: enable git-remote-https progress
+
+ bundle-uri.c                |  4 +++-
+ http.c                      | 32 ++++++++++++++++++++++++++++++++
+ http.h                      |  5 +++++
+ progress.c                  |  6 ++++++
+ progress.h                  |  1 +
+ remote-curl.c               |  8 +++++++-
+ t/helper/test-progress.c    |  5 +++++
+ t/t0500-progress-display.sh | 24 ++++++++++++++++++++++++
+ t/t5557-http-get.sh         | 15 +++++++++++++++
+ 9 files changed, 98 insertions(+), 2 deletions(-)
+
+--
+2.44.0
