@@ -1,81 +1,73 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C226AA7
-	for <git@vger.kernel.org>; Thu,  9 May 2024 16:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719484C8B
+	for <git@vger.kernel.org>; Thu,  9 May 2024 16:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715273554; cv=none; b=KDmZP8tiGE2jlrvvqwyNCdZaiHgOiKqwb9NZGq0UQG14UnY6J444WFroaKkUiyUO6QlbZs0bqwz1RE74CjxuFqrUnX9ythgBU9C8Pht2r2yWnLjCeYfUHSgL+z/DXu17wNLs4j5E4Xob5+P2AlvGe4wRTdyEEqS4c/B217ssgbA=
+	t=1715273761; cv=none; b=ijnAF/Mlgz5Z/WaCBr0HZG0Xp+BOVbalagfKjMPZ4CcxFdmavx0h0jZ2tVSOf2LMABJXQnlRPkc/0RMWP3CMrmG3nQfSjP0T0bcrJ2WCt+ncKkk5PAAtuuhDFOLIlA+7HE6Mk4ydC2ZcUfEx5qv5eQqAXqYUrSadFwbczVKCdnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715273554; c=relaxed/simple;
-	bh=jHWEGi19WHS7Sti3ZWMc9l5A8td9bo7ZPjeWMzUCw8A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XEvzINaSrg0e+6OdwnDdszgNRQqh4ceGZcYRoQxQhzTh6Iu7TrA+63RMbhPbHgYFhjXAJtu0QDCS8JYIFkXC2aKc7RIDfelOAdqtWwiNevEFbYcZttqbFi77MXNwc2SE/aI/v7ZG6yVoDLz6uRu5L8VHP/yepQ8Pa0s2q69uAMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uOCGkb7N; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uOCGkb7N"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 402D23793D;
-	Thu,  9 May 2024 12:52:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=jHWEGi19WHS7Sti3ZWMc9l5A8td9bo7ZPjeWMz
-	UCw8A=; b=uOCGkb7NSMwIHjyFX/KrM9WxFizgPXYBYX7LgioPemE9T/KSZxltGJ
-	N9L7JwngWoZxnkgJ+oFWctJdAZRf3ngedOiTNZJ4L/rPOlbKI3Cpw2hUVJrUhAvr
-	DGcVyVzEhke+OqEd/gh2oZFmaF6SaSeDPwX9ywL305tppD9NSUGbs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 38F213793C;
-	Thu,  9 May 2024 12:52:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 98DCA3793B;
-	Thu,  9 May 2024 12:52:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/3] un-breaking osx-gcc ci job
-In-Reply-To: <20240509162219.GA1707955@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 9 May 2024 12:22:19 -0400")
-References: <20240509162219.GA1707955@coredump.intra.peff.net>
-Date: Thu, 09 May 2024 09:52:30 -0700
-Message-ID: <xmqq7cg3udv5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1715273761; c=relaxed/simple;
+	bh=HAdnWshZXHSElU4D+XkHOvRAgF/qT/Tr2P46pjb5hqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cuN4xEY/gURQsnKETAr2AlaMKpyXq4bEKwDqfTVo2uOVN/Q39PPWSvik62KwSns3YktYDbaaQRs3fXu9JjmNkqO9PBTy/sHXg3Ab74LGGA4JW7JsZh1tFpN5d1sVLra6ilW3k+UDyzPoKluBnaEBq5RNUrilmEhgG7jCdsCJf60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 7045 invoked by uid 109); 9 May 2024 16:55:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 May 2024 16:55:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31466 invoked by uid 111); 9 May 2024 16:55:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 May 2024 12:55:59 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 9 May 2024 12:55:57 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/5] refs: remove functions without ref store
+Message-ID: <20240509165557.GD1708095@coredump.intra.peff.net>
+References: <cover.1714717057.git.ps@pks.im>
+ <xmqqikzu95cf.fsf@gitster.g>
+ <20240503173553.GC3631237@coredump.intra.peff.net>
+ <xmqq7cga7nzo.fsf@gitster.g>
+ <Zjh8XWwJKp_I1dwE@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 86E2F05A-0E24-11EF-A02B-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zjh8XWwJKp_I1dwE@tanuki>
 
-Jeff King <peff@peff.net> writes:
+On Mon, May 06, 2024 at 08:44:45AM +0200, Patrick Steinhardt wrote:
 
-> The osx-gcc job seems to break reliably for me, which started in the
-> last week or so (since the last time I actually triggered CI). The third
-> patch fixes it, but I noticed while investigating that the job is not
-> even running gcc at all! That's fixed in the second patch. And the first
-> one is just a cleanup I found along the way.
->
-> I'm not sure that this job carries a huge amount of value over the
-> osx-clang one, so we might consider just ditching it. But in the
-> meantime, this should get things passing again.
+> On Fri, May 03, 2024 at 11:24:11AM -0700, Junio C Hamano wrote:
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > Though maybe an even more radical proposal: now that read_ref_full(),
+> > > etc, are gone, and we have only refs_read_ref_full(), could/should we
+> > > shorten the latter to drop the "refs_" prefix?
+> > 
+> > I view it as a good longer-term goal.  But I also view it as an
+> > orthogonal issue to the transition.
+> 
+> Personally, I'd prefer to keep the `refs_` prefix. This may be personal
+> preference, but I find it way easier to reason about code when there are
+> prefixes for our functions that clearly indicate the subsystem they
+> belong to.
+> 
+> It's also in line with how other subsystems behave. Everything relating
+> to strbufs has a `strbuf_` prefix, attr-related code has `attr_` or
+> `git_attr_`, mem-pool has `mem_pool_`. So ref-related code having a
+> `ref_` prefix just feels natural to me.
 
-Thanks.
+I'd find that more compelling if all of the ref-related code had such a
+prefix. But try reading refs.h sometime. ;)
 
->   [1/3]: ci: drop mention of BREW_INSTALL_PACKAGES variable
->   [2/3]: ci: avoid bare "gcc" for osx-gcc job
->   [3/3]: ci: stop installing "gcc-13" for osx-gcc
->
->  .github/workflows/main.yml | 3 +--
->  ci/install-dependencies.sh | 2 --
->  2 files changed, 1 insertion(+), 4 deletions(-)
->
-> -Peff
+That said, if we want to move in that direction I am OK with it.
+
+-Peff
