@@ -1,32 +1,32 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1790616F0C3
-	for <git@vger.kernel.org>; Thu,  9 May 2024 16:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A620417083A
+	for <git@vger.kernel.org>; Thu,  9 May 2024 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715271859; cv=none; b=iastB4V6VGSXeaTwsrKpGOOM/0mSWupgYjabspGCBemMyMsMAITkNFE664giOkCEeT7+OVJ4A95oE1ek1bC+DQ8ajV+l/Oo/zQeqRog7h7XqFMrd55NVkDAD5VTvuNPWz8NVdvmpwak/RYMFovoFwHeFHeoQfK4JS69gjwGxd44=
+	t=1715271958; cv=none; b=Y77edX7Vby5d7a4GosaI1MGjsTBS9X7L/WATaEQEbTISolz91N3fxqRVzgxT7xORAlMJ8TWIqlwiQu0D3gaTYEJGUzEcxUGz9aAs+yu7RUi7NeC+SZxkPz4HaFtA/j6W8TkdkcSJJbeq5FXIr9Wc01z1CvgZckNlthkj7zEdzXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715271859; c=relaxed/simple;
-	bh=6gIWruZBexKKYbonNs0c+wjOUCIMBgorioEiTAxRdr0=;
+	s=arc-20240116; t=1715271958; c=relaxed/simple;
+	bh=PMXp6dY7SMA6H7AdhNmyKzqVP81QanI4iruiYBdba3I=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qw7EJt2QLP8Q+Au6Oo5q8tWPD8YxoTqxAm9WI4WTZ4gV3nyeW3Qc4fNWjEnLlhOqSwuiXQjunwSHCTbFqNgVrPeaS/YLQz4z8j1Z5yFVoxVmQUZYn2FK6zqWH5w5yiBOInzsQ/+24zayILefDZ+6OBkFRvTorFnYxcyPW46h0MU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=gD8lTj1u0ZLmiHbBo1cSmc1e24/1b7LCt2gGJ0CcX6HNe4V/njKfWC8q1F1/m6MLSQqVaz/RpFAuB9oRogD+Mt46V+1ZCY5QtJ6Tzp0g4OIjEHbx3sPqkSyTRRIInZri2UDh44C3LqCj96msUoedinCh9UqAT2q3MQ36/barGcQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 6915 invoked by uid 109); 9 May 2024 16:24:16 -0000
+Received: (qmail 6920 invoked by uid 109); 9 May 2024 16:25:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 May 2024 16:24:16 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 May 2024 16:25:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31123 invoked by uid 111); 9 May 2024 16:24:17 -0000
+Received: (qmail 31164 invoked by uid 111); 9 May 2024 16:25:46 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 May 2024 12:24:17 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 May 2024 12:25:46 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 9 May 2024 12:24:15 -0400
+Date: Thu, 9 May 2024 12:25:44 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 2/3] ci: avoid bare "gcc" for osx-gcc job
-Message-ID: <20240509162415.GB1708042@coredump.intra.peff.net>
+Subject: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
+Message-ID: <20240509162544.GC1708042@coredump.intra.peff.net>
 References: <20240509162219.GA1707955@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -38,46 +38,53 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240509162219.GA1707955@coredump.intra.peff.net>
 
-On macOS, a bare "gcc" (without a version) will invoke a wrapper for
-clang, not actual gcc. Even when gcc is installed via homebrew, that
-only provides version-specific links in /usr/local/bin (like "gcc-13"),
-and never a version-agnostic "gcc" wrapper.
+Our osx-gcc job explicitly asks to install gcc-13. But since the GitHub
+runner image already comes with gcc-13 installed, this is mostly doing
+nothing (or in some cases it may install an incremental update over the
+runner image). But worse, it recently started causing errors like:
 
-As far as I can tell, this has been the case for a long time, and this
-osx-gcc job has largely been doing nothing. We can point it at "gcc-13",
-which will pick up the homebrew-installed version.
+    ==> Fetching gcc@13
+    ==> Downloading https://ghcr.io/v2/homebrew/core/gcc/13/blobs/sha256:fb2403d97e2ce67eb441b54557cfb61980830f3ba26d4c5a1fe5ecd0c9730d1a
+    ==> Pouring gcc@13--13.2.0.ventura.bottle.tar.gz
+    Error: The `brew link` step did not complete successfully
+    The formula built, but is not symlinked into /usr/local
+    Could not symlink bin/c++-13
+    Target /usr/local/bin/c++-13
+    is a symlink belonging to gcc. You can unlink it:
+      brew unlink gcc
 
-The fix here is specific to the github workflow file, as the gitlab one
-does not have a matching job.
+which cause the whole CI job to bail.
 
-It's a little unfortunate that we cannot just ask for the latest version
-of gcc which homebrew provides, but as far as I can tell there is no
-easy alias (you'd have to find the highest number gcc-* in
-/usr/local/bin yourself).
+I didn't track down the root cause, but I suspect it may be related to
+homebrew recently switching the "gcc" default to gcc-14. And it may even
+be fixed when a new runner image is released. But if we don't need to
+run brew at all, it's one less thing for us to worry about.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-We'll eventually have to bump "gcc-13" to "gcc-14" here, and so on. I
-don't think we ever cared about gcc-13 in particular; it's just that
-older versions of the runner image had some ancient version which we
-wanted to avoid.
+I don't think this was due to anything on our side. I tried to re-run
+versions of git.git which had previously passed and ran into the same
+issue.
 
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'd like to report that this let me get a successful CI run, but I'm
+running into the thing where osx jobs seem to randomly hang sometimes
+and hit the 6-hour timeout. But I did confirm that this lets us get to
+the actual build/test, and not barf while installing dependencies.
+
+ .github/workflows/main.yml | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 5838986895..5f92a50271 100644
+index 5f92a50271..13cc0fe807 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -284,7 +284,7 @@ jobs:
-             cc: clang
+@@ -285,7 +285,6 @@ jobs:
              pool: macos-13
            - jobname: osx-gcc
--            cc: gcc
-+            cc: gcc-13
-             cc_package: gcc-13
+             cc: gcc-13
+-            cc_package: gcc-13
              pool: macos-13
            - jobname: linux-gcc-default
+             cc: gcc
 -- 
 2.45.0.414.g4009e73179
-
