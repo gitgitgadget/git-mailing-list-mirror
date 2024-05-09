@@ -1,79 +1,90 @@
-Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B5815E7E4
-	for <git@vger.kernel.org>; Thu,  9 May 2024 15:12:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8561012FF9B
+	for <git@vger.kernel.org>; Thu,  9 May 2024 15:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715267526; cv=none; b=V7i+cBevccCZFiliPmSE9cYqxgLRXDOyf4FjfH9QUa1yp7B80EMNpp1yrxwpMz2lLKkPxotD4TccA6BQBtkg/CPWZ4moEplpXnb2hdrwH4Ob3RXXcCyCxHL3g4z2M8fSZwn+fO5Kuxy+VYQm7qf5jNbONhhHaThnN7dewA6eOYs=
+	t=1715268255; cv=none; b=QFJ+NbeRkIZYJP7w52VeofSPoPn2CMD6Xh9UMI4gCf5nZ0dKXpHtjZMWuJbAcNtUiDxxNPmPl6QTtXp+4ooAnkftQ037cr/VQsevfMfAH4ZkVBg1EdBwg1WHsWHMj9hch94yhqpVwvYaFRWKeK59uIwvp4tezk4TLiN14Jb13dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715267526; c=relaxed/simple;
-	bh=3TwWK0UgbIRbgcGD+ee3KVVa+PjP5SEPooRuVnWxppo=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Ws28sw6frSIfa7ThoCd95SvXT7+MajAHu4bcBrpirv5ultwwbCGOAAG286W5f0mgadwti4ItKlPLfxAr8I0ub/eBMM/zUmIjBIci/nIz5j929LWE1IIf4QJxCNoux4371wrw7UYnc9CarxrD2bSYGpn+cG+PZPrcGXY3OBttbyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=JJFfc8Fg; arc=none smtp.client-ip=185.114.57.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
+	s=arc-20240116; t=1715268255; c=relaxed/simple;
+	bh=yTqrPqnLoHzSciaP0V8J6BP0k1ftcojZB2LebXEO0sk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H9snILXo33Pi3igA/Tl5fEnHRBm4SAs6rzFxrAhT9RNywigy7+j5LkOf7qftPsBMrKSU76dZBkeZhjwybk7eaAxRvADt4dNv3Jsz4sa+vQ8ARBjg0DWWSf2WHFgtcsIiyP8AlZ1WdBr94FtSgD6vo5yQcmIKothmZlMlp09VnOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eC3qT/Ud; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="JJFfc8Fg"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:References:Message-ID:
-	In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
-	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=f1G+Gdd+ZfZpHpK8xaJEjK2OA/dMZejRGF3cDUwhXTo=; b=JJFfc8FgCq5ShM3Hvb3cczVy9A
-	UoxcH/D/+xsXhTbGf+43xPeeo5oZPoiMXsAbmu211JrjdtOjzFB88m1VVrBADH82JqHBiuBRdLftP
-	UEyZ/HW5mn7xLTIPDY7KUR1t2bqxCI3WRipcOszTMJ/Be0b2egFS1TE9Cz5dCi5sBdFlQ1FHKwXZD
-	G3RkAFuZLc8QE4q1M1w+xkrAdXZDr/tPCCVzmzc9gmw3IjDYflKgF2pvgpOUirF8Kj3xn+HUK7rHF
-	S6UPm8pQYWZ3P3RG/zanKOSSdjpQQMMrYR1oO67oXHL8Fi9N+r9kkq+VlBm8LH6dTeAEHqSTBRE5a
-	IgFinIRw==;
-Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:60524 helo=mail.nordhost.no)
-	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <peter@softwolves.pp.se>)
-	id 1s54vt-0000000Fhkb-40MR;
-	Thu, 09 May 2024 16:39:42 +0200
-Date: Thu, 9 May 2024 15:39:41 +0100 (CET)
-From: Peter Krefting <peter@softwolves.pp.se>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Helge Kreutzmann <debian@helgefjell.de>, 
-    =?ISO-8859-15?Q?Jean-No=EBl_AVILA?= <avila.jn@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: i18n of git man pages
-In-Reply-To: <xmqqedacxdv1.fsf@gitster.g>
-Message-ID: <d130d861-0071-33ef-5d40-9fd703ff97f6@softwolves.pp.se>
-References: <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de> <xmqqjzk4xlis.fsf@gitster.g> <ZjvHoykzIo34YJaT@meinfjell.helgefjelltest.de> <xmqqedacxdv1.fsf@gitster.g>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eC3qT/Ud"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8571036F77;
+	Thu,  9 May 2024 11:24:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=yTqrPqnLoHzSciaP0V8J6BP0k1ftcojZB2LebX
+	EO0sk=; b=eC3qT/Uds+zgpXUwqkKLjdGClmbuD3E7UNZ44PwPzDtmTVcpaCW0Vn
+	L3+F+8Rgxy2sBCMLQ2ujchcQOUxVMvz9XjtW2daFXMEw9giTcMbOB8XfpQ3fQ3Wh
+	vzgQoc5m+efaGmX3F8u2iZ9BeL4cpQwM4AimD5gQ3YI9r3vOu8qo4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E0C036F76;
+	Thu,  9 May 2024 11:24:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E33C936F74;
+	Thu,  9 May 2024 11:24:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: tboegi@web.de
+Cc: git@vger.kernel.org,  takimoto-j@kba.biglobe.ne.jp
+Subject: Re: [PATCH v1 2/2] strbuf_getcwd() needs precompse_strbuf_if_needed()
+In-Reply-To: <xmqqa5l1pmf9.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	07 May 2024 10:22:02 -0700")
+References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
+	<20240507084431.19797-1-tboegi@web.de> <xmqqa5l1pmf9.fsf@gitster.g>
+Date: Thu, 09 May 2024 08:24:05 -0700
+Message-ID: <xmqqh6f7vwiy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Relay-Host: 185.114.57.50
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2D0AFB56-0E18-11EF-B1F9-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> This mentions https://github.com/jnavila/git-manpages-l10n, so I can
->> point our translator to this source.
-> That is a good move.
+>> diff --git a/strbuf.c b/strbuf.c
+>> index 0d929e4e19..cefea6b75f 100644
+>> --- a/strbuf.c
+>> +++ b/strbuf.c
+>> @@ -591,6 +591,7 @@ int strbuf_getcwd(struct strbuf *sb)
+>>  	for (;; guessed_len *= 2) {
+>>  		strbuf_grow(sb, guessed_len);
+>>  		if (getcwd(sb->buf, sb->alloc)) {
+>> +			precompse_strbuf_if_needed(sb);
+>>  			strbuf_setlen(sb, strlen(sb->buf));
 >
-> Perhaps we should make the manpage l10n project easier to discover
-> on our end to help volunteers.
+> The need for strbuf_setlen() stems from the use of getcwd() that may
+> and will place a string that is much shorter than sb->alloc, so they
+> logically belong together.  It will make more sense to call the
+> precompose _after_ arranging the members of strbuf in a consistent
+> state with the call to strbuf_setlen().
 
-Should it also be merged into the git.git repository as well, so that 
-translation can be synced with the upstream version? The problem with 
-an external project is that it is easy to forget about.
+Of course, we need to make sure precompose_string_if_needed() will
+leave the strbuf in an consistent state.  I think the implementation
+of that helper function in this patch already does so, so
 
+		strbuf_grow(sb, guessed_len);
+		if (getcwd(sb->buf, sb->alloc)) {
+			strbuf_setlen(sb, strlen(sb->buf));
+			precompse_strbuf_if_needed(sb);
 
-Looks like I had cloned the repo and intended to do a Swedish 
-translation back in 2019, but never got around to. I guess the lack of 
-visibility made me forget all about it.
+would be what we would want.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Thanks.
