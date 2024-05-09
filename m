@@ -1,38 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719484C8B
-	for <git@vger.kernel.org>; Thu,  9 May 2024 16:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707028F7A
+	for <git@vger.kernel.org>; Thu,  9 May 2024 17:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715273761; cv=none; b=ijnAF/Mlgz5Z/WaCBr0HZG0Xp+BOVbalagfKjMPZ4CcxFdmavx0h0jZ2tVSOf2LMABJXQnlRPkc/0RMWP3CMrmG3nQfSjP0T0bcrJ2WCt+ncKkk5PAAtuuhDFOLIlA+7HE6Mk4ydC2ZcUfEx5qv5eQqAXqYUrSadFwbczVKCdnE=
+	t=1715274296; cv=none; b=a7tAoZrq0p98iKlIlV0RxSijewFKzxbm3ZThSuye0gutmhLLryR5HVMZWVXlZwsjqUxqwtNtt+Z5d6960J/oCfOYtu2AH3eepFRWsom1KAM5rpWyVeAlMUHFLLEkNi1Itpzck8E74ta7MfSZjcgHFC50UPc5QPZdgPNTr7GDME0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715273761; c=relaxed/simple;
-	bh=HAdnWshZXHSElU4D+XkHOvRAgF/qT/Tr2P46pjb5hqU=;
+	s=arc-20240116; t=1715274296; c=relaxed/simple;
+	bh=Q6BDaL0p5512ijtMvRgdd1yHFIOZaQ+5kqrcIQyy9tc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cuN4xEY/gURQsnKETAr2AlaMKpyXq4bEKwDqfTVo2uOVN/Q39PPWSvik62KwSns3YktYDbaaQRs3fXu9JjmNkqO9PBTy/sHXg3Ab74LGGA4JW7JsZh1tFpN5d1sVLra6ilW3k+UDyzPoKluBnaEBq5RNUrilmEhgG7jCdsCJf60=
+	 Content-Type:Content-Disposition:In-Reply-To; b=rgofvgHtaHig4FvWaPREssIG5x2cAcbFJLtkqIUWmVGCh6zVCyQ7NShlYdHpG4exRfdC6e7P9IK4mWk0+nVtGjeg5vpGV/TE2tr4dGMGKyIl5HFCiypuE2cy+9j0K1I7zyItNBS1+3MauMVBTGl0MU4125tm+g3N+mHDQx+I8fQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7045 invoked by uid 109); 9 May 2024 16:55:58 -0000
+Received: (qmail 7067 invoked by uid 109); 9 May 2024 17:04:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 May 2024 16:55:58 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 May 2024 17:04:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31466 invoked by uid 111); 9 May 2024 16:55:59 -0000
+Received: (qmail 31521 invoked by uid 111); 9 May 2024 17:04:54 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 May 2024 12:55:59 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 May 2024 13:04:54 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 9 May 2024 12:55:57 -0400
+Date: Thu, 9 May 2024 13:04:53 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/5] refs: remove functions without ref store
-Message-ID: <20240509165557.GD1708095@coredump.intra.peff.net>
-References: <cover.1714717057.git.ps@pks.im>
- <xmqqikzu95cf.fsf@gitster.g>
- <20240503173553.GC3631237@coredump.intra.peff.net>
- <xmqq7cga7nzo.fsf@gitster.g>
- <Zjh8XWwJKp_I1dwE@tanuki>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/4] http: add the ability to log progress
+Message-ID: <20240509170453.GE1708095@coredump.intra.peff.net>
+References: <20240508124453.600871-1-toon@iotcl.com>
+ <20240508124453.600871-3-toon@iotcl.com>
+ <20240509163414.GA1708095@coredump.intra.peff.net>
+ <xmqqbk5fudw8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,33 +40,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zjh8XWwJKp_I1dwE@tanuki>
+In-Reply-To: <xmqqbk5fudw8.fsf@gitster.g>
 
-On Mon, May 06, 2024 at 08:44:45AM +0200, Patrick Steinhardt wrote:
+On Thu, May 09, 2024 at 09:51:51AM -0700, Junio C Hamano wrote:
 
-> On Fri, May 03, 2024 at 11:24:11AM -0700, Junio C Hamano wrote:
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > Though maybe an even more radical proposal: now that read_ref_full(),
-> > > etc, are gone, and we have only refs_read_ref_full(), could/should we
-> > > shorten the latter to drop the "refs_" prefix?
-> > 
-> > I view it as a good longer-term goal.  But I also view it as an
-> > orthogonal issue to the transition.
+> > It might also be reasonable to just bump to 7.32.0 as our minimum. The
+> > last bump was recent via c28ee09503 (INSTALL: bump libcurl version to
+> > 7.21.3, 2024-04-02), and the version picked there was arbitrary-ish (it
+> > was something we had happened to depend on accidentally). 7.32.0 is
+> > itself almost 11 years old now.
 > 
-> Personally, I'd prefer to keep the `refs_` prefix. This may be personal
-> preference, but I find it way easier to reason about code when there are
-> prefixes for our functions that clearly indicate the subsystem they
-> belong to.
+> The last bump was 7.19.5 (May 2009, 14.9 years) to 7.21.3 (Dec 2010,
+> 13.3 years).  As 10 is a nice round number, we may even be able to
+> pick randomly a slightly newer one, say, 7.35.0 (Mar 2014, 10.0
+> years).
 > 
-> It's also in line with how other subsystems behave. Everything relating
-> to strbufs has a `strbuf_` prefix, attr-related code has `attr_` or
-> `git_attr_`, mem-pool has `mem_pool_`. So ref-related code having a
-> `ref_` prefix just feels natural to me.
+> It is in a sense an inferiour way to pick the minimum dependency
+> than the choice of 7.32.0, which is backed by "we use this and that,
+> which appeared in that version", of course.
 
-I'd find that more compelling if all of the ref-related code had such a
-prefix. But try reading refs.h sometime. ;)
+I am OK with just using round numbers, too.
 
-That said, if we want to move in that direction I am OK with it.
+The biggest thing for a time-oriented scheme is really what made the
+cutoff for long-term distro releases.  With a 10-year support term, we
+are often looking at 11 or so years to have made it into a release.
+OTOH, if somebody using a 10-year-old distro is forced to use a slightly
+older version of Git to match, IMHO that is not the end of the world.
+
+Bumping to 7.35.0 would also let us simplify some curl-compat code,
+which is always my real goal. ;)
 
 -Peff
