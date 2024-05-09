@@ -1,105 +1,79 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA5571A291
-	for <git@vger.kernel.org>; Thu,  9 May 2024 15:04:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B5815E7E4
+	for <git@vger.kernel.org>; Thu,  9 May 2024 15:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715267102; cv=none; b=aVmKV6osStVHwzKmD5fKthJiWzHwnnTLa9oJLfV/QqB0/WQtw9yvRsnf9XpDf5zVfbKRUdS8Dtn2f8tokcxMzn3uk78/mS3l6tz+3/ir3lcu6oHlVnIAWisFyKKYgnw7jAps1emSg7xIzH6eJvNjBsWFry/Ax9+84F+lNlfmC5s=
+	t=1715267526; cv=none; b=V7i+cBevccCZFiliPmSE9cYqxgLRXDOyf4FjfH9QUa1yp7B80EMNpp1yrxwpMz2lLKkPxotD4TccA6BQBtkg/CPWZ4moEplpXnb2hdrwH4Ob3RXXcCyCxHL3g4z2M8fSZwn+fO5Kuxy+VYQm7qf5jNbONhhHaThnN7dewA6eOYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715267102; c=relaxed/simple;
-	bh=Ds4VMf3K6dy/k+c9HaKODDcWQzJIl8R+6Glyy0eGyeU=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QXNrhgaAkJZbVqWZ/UBQfDL4GpVdhxrnqjcY2967KHQkLzWCHbALdnh3iKn00eLdkWdNaIWqmWD6uCPaLj78WEJW1jboIQircUKk7HZbCqc4qooRuawELn7VKG1btuA71mqOGxah98OH4phWGSV71YtOjEOTx8CcmH0Tkw6UoQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 46598DF9033
-	for <git@vger.kernel.org>; Thu,  9 May 2024 16:56:28 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:941e:d1e1:dccf:27d2])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 7FEE613F8AE;
-	Thu,  9 May 2024 16:56:18 +0200 (CEST)
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <avila.jn@gmail.com>
-To: Helge Kreutzmann <debian@helgefjell.de>, git@vger.kernel.org
+	s=arc-20240116; t=1715267526; c=relaxed/simple;
+	bh=3TwWK0UgbIRbgcGD+ee3KVVa+PjP5SEPooRuVnWxppo=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Ws28sw6frSIfa7ThoCd95SvXT7+MajAHu4bcBrpirv5ultwwbCGOAAG286W5f0mgadwti4ItKlPLfxAr8I0ub/eBMM/zUmIjBIci/nIz5j929LWE1IIf4QJxCNoux4371wrw7UYnc9CarxrD2bSYGpn+cG+PZPrcGXY3OBttbyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=JJFfc8Fg; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="JJFfc8Fg"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:References:Message-ID:
+	In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=f1G+Gdd+ZfZpHpK8xaJEjK2OA/dMZejRGF3cDUwhXTo=; b=JJFfc8FgCq5ShM3Hvb3cczVy9A
+	UoxcH/D/+xsXhTbGf+43xPeeo5oZPoiMXsAbmu211JrjdtOjzFB88m1VVrBADH82JqHBiuBRdLftP
+	UEyZ/HW5mn7xLTIPDY7KUR1t2bqxCI3WRipcOszTMJ/Be0b2egFS1TE9Cz5dCi5sBdFlQ1FHKwXZD
+	G3RkAFuZLc8QE4q1M1w+xkrAdXZDr/tPCCVzmzc9gmw3IjDYflKgF2pvgpOUirF8Kj3xn+HUK7rHF
+	S6UPm8pQYWZ3P3RG/zanKOSSdjpQQMMrYR1oO67oXHL8Fi9N+r9kkq+VlBm8LH6dTeAEHqSTBRE5a
+	IgFinIRw==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50]:60524 helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1s54vt-0000000Fhkb-40MR;
+	Thu, 09 May 2024 16:39:42 +0200
+Date: Thu, 9 May 2024 15:39:41 +0100 (CET)
+From: Peter Krefting <peter@softwolves.pp.se>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Helge Kreutzmann <debian@helgefjell.de>, 
+    =?ISO-8859-15?Q?Jean-No=EBl_AVILA?= <avila.jn@gmail.com>, 
+    git@vger.kernel.org
 Subject: Re: i18n of git man pages
-Date: Thu, 09 May 2024 16:56:18 +0200
-Message-ID: <8450777.T7Z3S40VBb@cayenne>
-In-Reply-To: <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de>
-References: <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de>
+In-Reply-To: <xmqqedacxdv1.fsf@gitster.g>
+Message-ID: <d130d861-0071-33ef-5d40-9fd703ff97f6@softwolves.pp.se>
+References: <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de> <xmqqjzk4xlis.fsf@gitster.g> <ZjvHoykzIo34YJaT@meinfjell.helgefjelltest.de> <xmqqedacxdv1.fsf@gitster.g>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Relay-Host: 185.114.57.50
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 
-On Wednesday, 8 May 2024 18:30:09 CEST Helge Kreutzmann wrote:
-> Hello,
-> I'm maintainer of manpages-l10n[1], a collection of translations of man
-> pages for over 100 projects into many languages.=20
->=20
-> Our policy is to move translations into the upstream project where
-> possible. Only where projects are not interested in maintaining the
-> translations for their man pages themselves we host them[2].
->=20
-> Recently one of our translators approached me to translate the man
-> pages for git. Before adding them, I want to check with you if you are
-> interested in adding translations of the man pages directly in the git
-> project.=20
->=20
-> (Technically, po4a has been proven to be a good tool to maintain
-> man page translations).
->=20
-> Thanks for considering i18n your man page part.
->=20
-> Greetings
->=20
->          Helge
->=20
->=20
-> [1]
-> https://manpages-l10n-team.pages.debian.net/manpages-l10n/index.html
->=20
-> [2] We collected many translated man pages from the web in the past
->     and transferring them upstream is a (very) slow process.
->=20
+Junio C Hamano:
 
-Hello,
+>> This mentions https://github.com/jnavila/git-manpages-l10n, so I can
+>> point our translator to this source.
+> That is a good move.
+>
+> Perhaps we should make the manpage l10n project easier to discover
+> on our end to help volunteers.
 
-I took in charge to provide translation of the man pages of git. The projec=
-ts=20
-lives on https://github.com/jnavila/git-manpages-l10n=20
-
-As explained in the README file, the strategy has been to translate the sou=
-rces=20
-asciidoc files, instead of managing the resulting man pages. Translating th=
-e=20
-source files of the man pages  is needed in order to publish them on git-
-scm.com (single source principle), as well as because the sources files use=
-=20
-asciidoc features such as dedicated macros, conditionals and includes. In=20
-order to lower the difficulty for translators, the repo is coupled with the=
-=20
-online translation tool weblate[1] .=20
-
-Right now, I'm using a slightly modified version of po4a  for asciidoc (mer=
-ge=20
-request pending). This translation gave also way to some improvements of=20
-asciidoc support for po4a. That's a two way development.
-
-The project was submitted for inclusion in Debian, but lacking more support=
-,=20
-the process was never achieved. I would be delighted to have the git-manpag=
-es=20
-included in the main distros. For Windows, the inclusion in the main packag=
-e=20
-was rejected as it would make it even fatter.
+Should it also be merged into the git.git repository as well, so that 
+translation can be synced with the upstream version? The problem with 
+an external project is that it is easy to forget about.
 
 
-Jean-No=EBl
+Looks like I had cloned the repo and intended to do a Swedish 
+translation back in 2019, but never got around to. I guess the lack of 
+visibility made me forget all about it.
 
-[1] https://hosted.weblate.org/projects/git-manpages/
-
-
+-- 
+\\// Peter - http://www.softwolves.pp.se/
