@@ -1,85 +1,87 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B7A77108
-	for <git@vger.kernel.org>; Thu,  9 May 2024 19:05:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B5D1A2C35
+	for <git@vger.kernel.org>; Thu,  9 May 2024 19:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715281532; cv=none; b=pA1Et6fM7GVkHAGBfy5m8y3T6DoPGevDni0es/1DB5BwAq3YCiNY7fIIdOwdxb/sz3lOaHuO4IIjiyCgfN4rTDWhMe5/m/S/HxFUSnX3b6VdTNTnGr4NVACx1ThYUthQoMwG464HpHWBzc1KCf/LFaTtYD8joN2WvEgGFwvf0zI=
+	t=1715282443; cv=none; b=E+POX6K++AaVEssW7rMtwx+5ir76UG9F+7p0g7uP/GEsDm+nW1GEoCr5CZ0CN2UpOC4tAF7Zieo+lSJW6izWgC0qq7uaNH5DZl+d66sjy7pMKOSHmizSojIIItZdUndAE1VXNoajwmU9Jn94eW4nLVOG5hMqUcbWwgnvgHi6Kcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715281532; c=relaxed/simple;
-	bh=h7/VQTH+p7SR/nvlxLVbGRuf3S7pMwwPII5CQB7PBEA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BzWdklZ9EubQ75QML1cyuzTAyK6zyCjtuT/sQC26P29LvJWCow6Rj8QMu6xs2XZuBGmMTj+w/7Y99k5SyiGwzGqzmGeCkralvZhzgUFnSVqwnAWjkw/6E4PZh9qanSwqOd1v/R8UnJT3ab/7lYci+EVU6h4aVicM2JmNSv8DY/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-792c34f891eso51739985a.1
-        for <git@vger.kernel.org>; Thu, 09 May 2024 12:05:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715281529; x=1715886329;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a3Eox7uihykCIy5l9nMnrarvyIzDfludbS7dZKgdPe8=;
-        b=WNyR5/pyR8S7tdOJUjrb78eY2E6undhYpGa0cqL3K7yTNfLQBwVNlRY3umgg3ylRe4
-         IR0tCn5C7O70nBAQCI3U1/RL+wr6h2gi/F1TCW/SZimBOsBki34E+QjvhL9UDa+qd18F
-         Vflw/Ap6spV9gkNjB95kk0RnMmnr+jeQhv9/MhFzAISZLmWyGT/7nloGFSObbGmd/5on
-         Txj/JBx0Yc8tA90inCH9goSvDki4uKWoebMP7x9KMOPruR+uWydjDFRZKbji9mwTkrrG
-         14osmA0IrWbT0pwpIVVB05wzak5x0GyNdxPcpeuKwuxpLe6kR2RN8EmaAPEgnh1HxpKU
-         DFmA==
-X-Gm-Message-State: AOJu0YyemC900q5miAZgA6Wc26CE+TM1YyGCHH9L4Dkikev+UDDIgyVg
-	QMaIGXPwXttjlSTPm25ecg3SZ96Cjjn/cy+aulCfqkfobi9WHvtse42DAvRnY6Jq4Z23+miv/UB
-	ZSoEhqoqSuPvQuL3bJEo8zh/R7p0=
-X-Google-Smtp-Source: AGHT+IGu7UX29ENiM7a7ldfJmqc0dialXf6tsSm58F8tggaOBZ5TeD85o+Xd7TvwuiB+jIb1KCqWVW2RYLC3kIneXfQ=
-X-Received: by 2002:a05:6214:4908:b0:6a0:b905:97b1 with SMTP id
- 6a1803df08f44-6a16823f9b2mr3408716d6.51.1715281529700; Thu, 09 May 2024
- 12:05:29 -0700 (PDT)
+	s=arc-20240116; t=1715282443; c=relaxed/simple;
+	bh=GeSs9FPfay2ewBp/C5skfyQr0aBjGkr/zQAylNdYrF8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZWa68h5gHoC9G3vUlJqQebZqA73FL+7aRZD+ZMXPM667Nb1R8RtYl1nBsz2u6AeZ6H+fOuOv1N6d5TmejLaoXb2du+X7sl6AFI6MrtrQxijgthobMMcOXE8EXMq0DCurlh14IlfilxXzNAEIbsDyrSxvVlHBv0pqyqCIxTvqu7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ByQ0aH6Q; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ByQ0aH6Q"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 909662ABF6;
+	Thu,  9 May 2024 15:20:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=GeSs9FPfay2ewBp/C5skfyQr0aBjGkr/zQAylN
+	dYrF8=; b=ByQ0aH6QMcdC5x2ZOXU/c0xehTyUlcrtPYB+t9PVpC7T9OTuh4X6YC
+	/fIHIGzT3tkXyJE1nQP6vtZ6gGG+tVkycK/kYKhCT0kdIez7EJRDVrFyBvh5uwVU
+	At3YHm73iv4HULy1H8zm5RpkMwcJg2zMO0Y+XMZRnTj0pZSHxm7a8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8889A2ABF5;
+	Thu,  9 May 2024 15:20:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 247F32ABF4;
+	Thu,  9 May 2024 15:20:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  me@ttaylorr.com,  ps@pks.im,  emrass@google.com,
+  nasamuffin@google.com
+Subject: Re: [PATCH v2] doc: describe the project's decision-making process
+In-Reply-To: <xmqq34qqua9d.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	09 May 2024 11:10:22 -0700")
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+	<4a829792bf16973799bf3b3db0dd8b49a1ef3815.1715212665.git.steadmon@google.com>
+	<xmqq34qqua9d.fsf@gitster.g>
+Date: Thu, 09 May 2024 12:20:36 -0700
+Message-ID: <xmqqy18issfv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <38A18180-3CC9-411B-B5D3-36C5C32B6EE9@gmail.com>
-In-Reply-To: <38A18180-3CC9-411B-B5D3-36C5C32B6EE9@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 9 May 2024 15:05:14 -0400
-Message-ID: <CAPig+cS1o5bqK2Ph1fFt2wi6QaOO2=83xwoqoTLifA6z3NssXA@mail.gmail.com>
-Subject: Re: git-gui: Visualize * History does nothing on macOS
-To: Ilya Kulakov <kulakov.ilya@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 37AAD146-0E39-11EF-B263-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Thu, May 9, 2024 at 2:17=E2=80=AFPM Ilya Kulakov <kulakov.ilya@gmail.com=
-> wrote:
-> Both "Visualize <branch>'s History" and "Visualize All Branch History" do=
- nothing on macOS. In the terminal it logs:
->
-> Error in startup script: 58:103: execution error: Not authorized to send =
-Apple events to System Events. (-1743)
-> "if {[tk windowingsystem] eq "aqua"} {
->     exec osascript -e [format {
->         tell application "System Events"
->             set frontmost of processes ..."
->     (file "/opt/homebrew/bin/gitk" line 12321)
+Junio C Hamano <gitster@pobox.com> writes:
 
-The above is reporting that the problem is in the `gitk` script...
+> There probably are small things that are missing over there that can
+> be found here, but given the large overlap, I have a feeling that
+> these additions are better done over there, not here, and limit the
+> scope of this document to decisions beyond the "General" patch
+> series.  There already is SubmittingPatches::[[patch-flow]] section
+> that may be a better place for the material we see here.
 
-> The relevant code at https://github.com/git/git/blob/0f3415f1f8478b05e64d=
-b11eb8aaa2915e48fef6/git-gui/git-gui.sh#L271-L279 should not be fatal, beca=
-use the permission to access "System Events" and arbitrarily manipulate win=
-dows is optional.
+To see how well this approach can go, I plan to spend some time
+today reorganizing SubmittingPatches and enhancing some descriptions
+in it.  The plan is roughly
 
-... but the code you cited here is the git-gui script, which does not
-experience the same problem because a `catch` block is wrapped around
-the `exec osascript` invocation.
+ * Add a preamble to explain "why" you would want to send, and we
+   would want to receive, patches in a larger picture.
 
-A patch to fix this problem in `gitk` was posted[1] in 2018 but never
-got picked up since the `gitk` maintainer seems to have disappeared.
-Considering that the patch is still relevant, perhaps it might make
-sense for Junio to pick it up himself and apply it to the Git tree(?).
+ * Move [[patch-flow]] section to the very beginning, with a bit of
+   enhanced description on the review cycle, i.e. what patches,
+   their review comments, and review responses are expected to
+   contain and for what goal.
 
-[1]: https://lore.kernel.org/git/20180724065120.7664-1-sunshine@sunshineco.=
-com/
+ * Possibly remove things from other sections that would become
+   redundant by the enhancement above.
+
+
+   
