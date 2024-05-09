@@ -1,73 +1,78 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707028F7A
-	for <git@vger.kernel.org>; Thu,  9 May 2024 17:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F87175A4
+	for <git@vger.kernel.org>; Thu,  9 May 2024 17:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715274296; cv=none; b=a7tAoZrq0p98iKlIlV0RxSijewFKzxbm3ZThSuye0gutmhLLryR5HVMZWVXlZwsjqUxqwtNtt+Z5d6960J/oCfOYtu2AH3eepFRWsom1KAM5rpWyVeAlMUHFLLEkNi1Itpzck8E74ta7MfSZjcgHFC50UPc5QPZdgPNTr7GDME0=
+	t=1715275765; cv=none; b=C+2K/CFroqcPV08n5SP65AkAMbzEPdUGz/rrr+wdn0G9DfuCdF3He8wYch8lYrU020MuCUL6ZjkVMZqUyMlr4FK5y5Dx8pL7nVnVFxzdmw6rrS7WM6Gg1cZZ/hD8zbsw55jDXlHa+UZT9pOBsYkLr60ByLO+n5sKXsDyzJglUR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715274296; c=relaxed/simple;
-	bh=Q6BDaL0p5512ijtMvRgdd1yHFIOZaQ+5kqrcIQyy9tc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rgofvgHtaHig4FvWaPREssIG5x2cAcbFJLtkqIUWmVGCh6zVCyQ7NShlYdHpG4exRfdC6e7P9IK4mWk0+nVtGjeg5vpGV/TE2tr4dGMGKyIl5HFCiypuE2cy+9j0K1I7zyItNBS1+3MauMVBTGl0MU4125tm+g3N+mHDQx+I8fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7067 invoked by uid 109); 9 May 2024 17:04:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 May 2024 17:04:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31521 invoked by uid 111); 9 May 2024 17:04:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 May 2024 13:04:54 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 9 May 2024 13:04:53 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/4] http: add the ability to log progress
-Message-ID: <20240509170453.GE1708095@coredump.intra.peff.net>
-References: <20240508124453.600871-1-toon@iotcl.com>
- <20240508124453.600871-3-toon@iotcl.com>
- <20240509163414.GA1708095@coredump.intra.peff.net>
- <xmqqbk5fudw8.fsf@gitster.g>
+	s=arc-20240116; t=1715275765; c=relaxed/simple;
+	bh=6zC2F9o47dBQIJ5VWjnqMIEkvpbhT9jeYwX5J8UZ7Ek=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=r3qVTpprkLVTwnBEYnNq37uj1vc8xZKZM6G6fu/yjJYCjpXPHpWXRJJxSW97t3RGsjGLbL68i6V6szDdePNlenfP85WmpPHY1JBvFitEgW+ZYJwF33T+aI5Kc6V9MpQQHmLPymMUpvd44W8XAUlZeff/YiKtAnvJuTegJawVkqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=212.27.42.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:941e:d1e1:dccf:27d2])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 8DEC013F880;
+	Thu,  9 May 2024 19:29:18 +0200 (CEST)
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <avila.jn@gmail.com>
+To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 2/3] refs: do not label special refs as pseudo refs
+Date: Thu, 09 May 2024 19:29:18 +0200
+Message-ID: <3886895.kQq0lBPeGt@cayenne>
+In-Reply-To:
+ <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
+References:
+ <cover.1714398019.git.ps@pks.im>
+ <b5e7ddb1e30acb7e3871a189beb2c828b18f9e73.1714398019.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbk5fudw8.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-On Thu, May 09, 2024 at 09:51:51AM -0700, Junio C Hamano wrote:
+Hello,
 
-> > It might also be reasonable to just bump to 7.32.0 as our minimum. The
-> > last bump was recent via c28ee09503 (INSTALL: bump libcurl version to
-> > 7.21.3, 2024-04-02), and the version picked there was arbitrary-ish (it
-> > was something we had happened to depend on accidentally). 7.32.0 is
-> > itself almost 11 years old now.
-> 
-> The last bump was 7.19.5 (May 2009, 14.9 years) to 7.21.3 (Dec 2010,
-> 13.3 years).  As 10 is a nice round number, we may even be able to
-> pick randomly a slightly newer one, say, 7.35.0 (Mar 2014, 10.0
-> years).
-> 
-> It is in a sense an inferiour way to pick the minimum dependency
-> than the choice of 7.32.0, which is backed by "we use this and that,
-> which appeared in that version", of course.
+On Monday, 29 April 2024 15:41:28 CEST Patrick Steinhardt wrote:
+> ---
+>  Documentation/glossary-content.txt | 36 ++++++++++++++++++------------
+>  refs.c                             |  2 ++
+>  t/t6302-for-each-ref-filter.sh     | 17 ++++++++++++++
+>  3 files changed, 41 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-
+content.txt
+> index d71b199955..4275918fa0 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -497,20 +497,28 @@ exclude;;
+=2E..
+> +
+> + - "`AUTO_MERGE`"
+> +
+> + - "`BISECT_EXPECTED_REV`"
+> +
+> + - "`NOTES_MERGE_PARTIAL`"
+> +
+> + - "`NOTES_MERGE_REF`"
+> +
+> + - "`MERGE_AUTOSTASH`"
 
-I am OK with just using round numbers, too.
+Quoting the names seems overkill here, as they are already formatted with t=
+he=20
+back-quotes. The rendering as bold or monospace is enough.
 
-The biggest thing for a time-oriented scheme is really what made the
-cutoff for long-term distro releases.  With a 10-year support term, we
-are often looking at 11 or so years to have made it into a release.
-OTOH, if somebody using a 10-year-old distro is forced to use a slightly
-older version of Git to match, IMHO that is not the end of the world.
+Regards,
 
-Bumping to 7.35.0 would also let us simplify some curl-compat code,
-which is always my real goal. ;)
+Jean-No=EBl
 
--Peff
+
+
+
