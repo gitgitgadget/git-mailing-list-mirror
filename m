@@ -1,187 +1,209 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D941215EFD6
-	for <git@vger.kernel.org>; Fri, 10 May 2024 07:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5EE152791
+	for <git@vger.kernel.org>; Fri, 10 May 2024 07:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715326747; cv=none; b=cXIMOqaU2vaKpx1DT/w9hlBTxJ9KjIKnm7YNkjXVALIPTHvpsH6Sck92CjnGtcoH/4BCgz/iWi5hCW7OJeenkiveVEdUXpoXvC8tJciumpkNoeXw5p8KxBWAOTi3O6qBUdSC/uLbrucR4cbC8QEd6i68Fv2052u5ORKF8Z0ZlI8=
+	t=1715327311; cv=none; b=YinuoH1gNEh/6ysSwBRMxHV83hOVNJup0iN8HIQzVODcn6XSYZEUQdhqe0dvURowj7aF0PZM2fK/Ki352mOTx9j9w+FJbpwP/zz8CSVUQvqNLy9uLy+WS9ti3lN+Uv06noWJe7eQourCjzhYCv7n6kJFdev1a6jr9NeOFsYQNe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715326747; c=relaxed/simple;
-	bh=i0u066TVnJJiQoajadxNLvLzRDZIRazozG6Qb33AUzM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oXg7SsCWQyirBwdoFDkCscJozvq+DE13ygD5JQJpT5kJKO9aZaAqMtmJr811k7yoIDoykdheJ0uNi7XwsivVR+qUxzvasZmyWVQ0JRLHYWKQwarn5Qkygq2XxX4jgPr1Mace0GgpFYnnvdDFMpQvbjBnd7VEMpg4Vfl/lF9c90Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0EZhDbP; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715327311; c=relaxed/simple;
+	bh=DLkjStK97WoB075sJeWlrz1ih7ti9oBQfk8v2Dj4TTE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GdJB1zJZGIIATAXTLWoEOPBe+NuRL5tmw8ULvhF8CSJ0VYeZZB3UF1fGD36tpl16l7WDAaJymEhVIFBdL9XEEtru+4g5++WsYfdnvqUl3eilUynw5u00LxDu4E6f9366kCo4RAu0LeLuz1UBn6qY/CNWGygbf07PR9lHWEkewC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=peu5tIJc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=asq70YIy; arc=none smtp.client-ip=64.147.123.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0EZhDbP"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41ff5e3dc3bso2151485e9.1
-        for <git@vger.kernel.org>; Fri, 10 May 2024 00:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715326744; x=1715931544; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EYBF+SWmc5dHUTRdLw4/wJvzX7A8LBxCd3d0y/LEUdo=;
-        b=B0EZhDbPjIoxQ4pnGACNqcItTTXVKdQ7LkoBIK4/zvKaNpcTyPlAy+2lRJerh9IOG0
-         R8PY8v4sqNZ0H8KcCNdc5Yvzwiwanw12lhIm/db483DxTE77Ysq/JyPkRmjqVKeW8KRj
-         Yz5it9ZLLCQc4wOw+sKrf9SeIq9ClM0toXjrfZmqnavaiTV1CBsvLWoySsvBg5u4a99x
-         5k+37hgCUiDwRhVwpxqp8HS2Ta4WkotHiTfyjcxozFHp4v3VHsk7LZlNRaqoe6DWU5/1
-         yxhfPdDp62u4dzkkQhHaSiv1yalqj+ztb2EQeeFwZH0G3tnl2pR3i/DZ2g7WtnFFWsly
-         yTNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715326744; x=1715931544;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EYBF+SWmc5dHUTRdLw4/wJvzX7A8LBxCd3d0y/LEUdo=;
-        b=DnqJuMPy0MUuzYjbzlx3KO8+or7IpOJRaDNe6/NkaJ55uGiUm3/vYjExVoI311zkd2
-         8WFsxoCuMMRCgWVYHhLGD672PpJExiBFNg6wIneb5qGAFEe60q6sM55e4T1EduAhIM0f
-         dUle410tz2N7t3zSIcDsQGSCtm02gFyvFzmn0jrPgUYdUUaVJ3/2HgosHdSAWMWlWJ5u
-         U1GPhwrJxCvbogE/k0gvHuhn+lgv8N7fVGB+WJRsClxJF2th0y/AmDCve/rnUW8PvW4n
-         QbbU6FdUdvMdbQjSHdaxfM+jId5BYZt1Tso9P/iBaio1HAPsulNUv7E6iajNRM02sok8
-         J4WA==
-X-Forwarded-Encrypted: i=1; AJvYcCUDoWiU6N7QvNWFUgX8O4llndumTap/ehH3xFNfy7GbkDUNNxScyJQ7S662GIioyDrSgfMIKpS2Fu4DLmFf7t4qzTHo
-X-Gm-Message-State: AOJu0YzJinKai18HLZuHPctM8iN1do6kFO2KEPTu+R9QnumoIz7onRsS
-	S0gmckegs9L8ICOuirdfnpMHUL6WwSif+dp54U+8wwM79PtM8KH6
-X-Google-Smtp-Source: AGHT+IFwjtDr7klfUpoBKLDbBEmc8eyE91zE5uW4Tr2el81p1qX/dz7M8UqRtlyaSsNoBhrS2K5qqA==
-X-Received: by 2002:a05:600c:4ed4:b0:41c:f64:2f5 with SMTP id 5b1f17b1804b1-41fead65a50mr14753045e9.36.1715326743736;
-        Fri, 10 May 2024 00:39:03 -0700 (PDT)
-Received: from cayenne.localnet ([2a01:e0a:d1:f360:a123:39fa:72d0:c0c5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41ff6cbe992sm13141375e9.6.2024.05.10.00.39.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 May 2024 00:39:03 -0700 (PDT)
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <avila.jn@gmail.com>
-To: Peter Krefting <peter@softwolves.pp.se>,
- Junio C Hamano <gitster@pobox.com>
-Cc: Helge Kreutzmann <debian@helgefjell.de>, git@vger.kernel.org
-Subject: Re: i18n of git man pages
-Date: Fri, 10 May 2024 09:39:02 +0200
-Message-ID: <3298196.44csPzL39Z@cayenne>
-In-Reply-To: <xmqqr0ebuft5.fsf@gitster.g>
-References:
- <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de>
- <d130d861-0071-33ef-5d40-9fd703ff97f6@softwolves.pp.se>
- <xmqqr0ebuft5.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="peu5tIJc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="asq70YIy"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id E4CBC18000E4;
+	Fri, 10 May 2024 03:48:28 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Fri, 10 May 2024 03:48:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715327308; x=1715413708; bh=gDYfXa1rtA
+	cUM/8mQqs0oIVvqmFAzTU33GBXplYwFVA=; b=peu5tIJci91hVFrUsimYezYXLr
+	FBcCfdiZbTUdoZrqy3wG9Jkzoi0LJoZ2FymQAmchzlbvzo08RkELF49Q/uDjIeEs
+	8J9lhoyOEji3xd3UWw81i5IHAyFSGFU+SfAIXQv5XB/bXk146CmMMznUm8k/blpW
+	1LNjMVfZ9yIuchTGLhXvv0+b5V/VGGviNLcKAOiXWyX4dOE31I2HavX3tnuCvK7L
+	ov3cMRFUDjoGP7K8hkM+T3HLhZXch9M1i1A862XjcwyQan9/eYdloaWzj/vkPtx9
+	lY0Ml1/uBYbJ7ozZvcQV/ikAsJFg7BvdNtyHmOf4100xqFsKHObRTsb4zO7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715327308; x=1715413708; bh=gDYfXa1rtAcUM/8mQqs0oIVvqmFA
+	zTU33GBXplYwFVA=; b=asq70YIyW87lN0NBpA/jPHMIsUIeFgSR01d3ikeFcrUe
+	Vc3SQc+dpyz80BHWvbWkNXiD0+fwltcCvmKj758JZ1RpgttqovbFHjZhSnX3qOjs
+	hSRTGckDjvSVHMQr91R0Iit3aejCdUbOBuqCc5Sds0lYSaxd5Wuy4OhYpy1P8rp6
+	Dv790X0li4siHWIt+UwKlxu2+JloMAJxbcOhwpMyvaWRV01HeozRK70MNqaGbT8G
+	FDn014X9Tpl7Jr3+hCVrT8ql3G7f5cYFWyw3fpfi3CwUuuDFoIgIOzl5TXAR4T8a
+	J3jVNO8tE6sUYxS9x2Zro2C89w+xwyFy8bAcMVnZ9Q==
+X-ME-Sender: <xms:TNE9ZhYUBWTrYi1leehho4A7P2Tv768-4Rt5w8ijmz_kfIw3DEdD2A>
+    <xme:TNE9ZoZtcwa2rRTIQy0wMm9Yz1LgAx0CKR8dKWZQ5iPSDsTiKq5LdzQC-WvuG_EB7
+    7BYNSrRSQmzpFmmkQ>
+X-ME-Received: <xmr:TNE9Zj9edJZUnQqa1ukV4hpDLX3RkAk4msY4Y7bCyyjhYDzO_KH_4xtpLHfIpLkn8chnAp5j0SKW6NzBsCDqyNsT03GHh5OGvEomAb4GdTG7ENsoIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefjedgvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:TNE9ZvomMGUcyk84sVpq4AQV8TAur0NK7mIY5aByWIiWkcQzR--3NQ>
+    <xmx:TNE9Zsr4QE_vCqTWRvDn4jsQdwGx17Blq6dCe5CsqeV0ElhM4Rkv5w>
+    <xmx:TNE9ZlQGTiVteXnnsBLridR1us1SrQVtjtEwM_LMX3XXZMZg_HYLZA>
+    <xmx:TNE9Zkq79Rt2PG8K--RyivPDzz2nblZYWhACo7almzaOULkcVcq7qA>
+    <xmx:TNE9Zj2V4rkZgpn2jxBl34_dM5ucygxw8dE9X6gnKEq7Ng8yqwGt5uWy>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 May 2024 03:48:27 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 0d198a2d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 May 2024 07:48:13 +0000 (UTC)
+Date: Fri, 10 May 2024 09:48:23 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/13] reftable: prepare for re-seekable iterators
+Message-ID: <Zj3RR-I1v1XwSuJ-@tanuki>
+References: <cover.1715166175.git.ps@pks.im>
+ <xmqqwmo3x44s.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0Ud/wqMcshD7GEAq"
+Content-Disposition: inline
+In-Reply-To: <xmqqwmo3x44s.fsf@gitster.g>
+
+
+--0Ud/wqMcshD7GEAq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
 
-On Thursday, 9 May 2024 18:10:30 CEST Junio C Hamano wrote:
-> Peter Krefting <peter@softwolves.pp.se> writes:
+On Wed, May 08, 2024 at 04:42:11PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > Should it also be merged into the git.git repository as well, so that
-> > translation can be synced with the upstream version? The problem with
-> > an external project is that it is easy to forget about.
+> > To address this inefficiency, the patch series at hand refactors the
+> > reftable library such that creation of iterators and seeking on an
+> > iterator are separate steps. This refactoring prepares us for reusing
+> > iterators to perform multiple seeks, which in turn will allow us to
+> > reuse internal data structures for subsequent seeks.
 >=20
-> Carrying an extra tree that has been (and I suspect will continue to
-> be) managed in a separate workflow and by a separate group does
-> incur coordination cost.
-
-I totally agree with Junio. The workflow is different and it is already qui=
-te=20
-difficult to mix the long-running process of translation with the fast-pace=
-d=20
-life of patches in the documentation. Moreover, the translation needs to be=
-=20
-opened to contributor who are not techno-friends and will not be able to=20
-
+> ;-)
 >=20
-> > Looks like I had cloned the repo and intended to do a Swedish
-> > translation back in 2019, but never got around to. I guess the lack of
-> > visibility made me forget all about it.
+> > Note: this series does not yet go all the way to re-seekable iterators,
+> > and there are no users yet. The patch series is complex enough as-is
+> > already, so I decided to defer that to the next iteration. Thus, the
+> > whole refactoring here should essentially be a large no-op that prepares
+> > the infrastructure for re-seekable iterators.
+> >
+> > The series depends on pks/reftable-write-optim at fa74f32291
+> > (reftable/block: reuse compressed array, 2024-04-08).
 >=20
-> It is exactly why you are seeing a proposed solution to raise the
-> visibility that is much lightweight and has less chance of doing
-> unnecessary harm than merging of the project into ours.  The help
-> the would-be translators need will be there.   To end-users, I do
-> not think it matters in today's world where the manpages come from.
-> The distro folks are there to absorb different ways translated
-> manual pages are done by different projects, and I can hardly
-> believe that our project is in any way unique.
+> There is another topic on reftable to make write options tweakable,
+> whose addition of reftable/dump and reader_print_blocks interface
+> needs to be adjusted to this change, I think.
 
-It is not unique in using asciidoc as a single source for documentation. In=
+True, I forgot to double check that one. Your proposed resolution isn't
+quite correct as we now leak the `ti` pointer -- `table_iter_close()`
+only closes the iterator and releases its underlying resources, but does
+not free the iterator itself.
+
+The below diff would be needed on top of what you currently have in
+`seen`. In any case though, I can also resend this topic with
+ps/reftable-write-options pulled in as a dependency. Please let me know
+your preference.
+
+Patrick
+
+-- >8 --
+
+diff --git a/reftable/reader.c b/reftable/reader.c
+index 2d9630b7c2..83f6772e5d 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -841,8 +841,8 @@ int reftable_reader_print_blocks(const char *tablename)
+ 		},
+ 	};
+ 	struct reftable_block_source src =3D { 0 };
+-	struct table_iter *ti =3D NULL;
+ 	struct reftable_reader *r =3D NULL;
++	struct table_iter ti =3D {0};
+ 	size_t i;
+ 	int err;
 =20
-other projects that I know of, the documentation is a sister project in a=20
-dedicated repository.=20
-
-I try to present the translation of the man pages as coupled with the=20
-translation of git itself, for consistency purpose. The translation of git =
-is=20
-already a large bite in itself (15481 segments at the moment), but the=20
-translation of the documentation (which only concerns a subset of the whole=
+@@ -854,14 +854,13 @@ int reftable_reader_print_blocks(const char *tablenam=
+e)
+ 	if (err < 0)
+ 		goto done;
 =20
-documentation) is really a beast:  73976 segment!=20
-
-The absence of visibility is mainly an issue from my side, due to a lack of=
+-	REFTABLE_ALLOC_ARRAY(ti, 1);
+-	table_iter_init(ti, r);
++	table_iter_init(&ti, r);
 =20
-communication. I could propose as a reminder to publish the translation sta=
-ts=20
-for each new Git release, if it helps remind developers of the presence of=
+ 	printf("header:\n");
+ 	printf("  block_size: %d\n", r->block_size);
 =20
-this project. Honestly, this is not really the targeted audience for this k=
-ind=20
-of work. Currently the main source of translators has been through the litt=
-le=20
-ad on https://git-scm.com, with most of the contributions coming from Webla=
-te.=20
-Giving more visibility to the presence of translated content and to the=20
-project on git-scm.com or in the community of translators may have more imp=
-act=20
-than on  the git mailing list.
+ 	for (i =3D 0; i < ARRAY_SIZE(sections); i++) {
+-		err =3D table_iter_seek_start(ti, sections[i].type, 0);
++		err =3D table_iter_seek_start(&ti, sections[i].type, 0);
+ 		if (err < 0)
+ 			goto done;
+ 		if (err > 0)
+@@ -870,10 +869,10 @@ int reftable_reader_print_blocks(const char *tablenam=
+e)
+ 		printf("%s:\n", sections[i].name);
 =20
->=20
-> I would like to hear from Jean-No=EBl how the manpage translation
-> project wants to proceed.  I do not fundamentally object to taking
-> an approach similar to the one we use to manage the po/ part of our
-> project, where I can normally be unaware of what happens in that
-> directory and leave it to i18n coordinator, but I have a feeling
-> that even such a light-weight integration might affect their
-> workflows at the manpage translation project side, which may or may
-> not be acceptable on their end.  Also to go from the work product
-> they have to what our "make -C Documentation all" produces, it may
-> require more build dependencies (like a version of po4a with a patch
-> or two that are yet to be accepted by the upstream), plus updates to
-> Documentation/Makefile, on our side, which might turn out to be an
-> overly high cost relative to the benefits both projects gain.  These
-> unknowns need to be resolved before we consider heavier proposals.
->=20
+ 		while (1) {
+-			printf("  - length: %u\n", ti->br.block_len);
+-			printf("    restarts: %u\n", ti->br.restart_count);
++			printf("  - length: %u\n", ti.br.block_len);
++			printf("    restarts: %u\n", ti.br.restart_count);
+=20
+-			err =3D table_iter_next_block(ti);
++			err =3D table_iter_next_block(&ti);
+ 			if (err < 0)
+ 				goto done;
+ 			if (err > 0)
+@@ -883,7 +882,6 @@ int reftable_reader_print_blocks(const char *tablename)
+=20
+ done:
+ 	reftable_reader_free(r);
+-	if (ti)
+-		table_iter_close(ti);
++	table_iter_close(&ti);
+ 	return err;
+ }
 
-Normally, I would synchronize to the releases of git, by updating the po fi=
-les=20
-and  opening an update window when a rc is tagged. At the end of the releas=
-e=20
-window, I would push a new version of translated asciidoc sources.
+--0Ud/wqMcshD7GEAq
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The translation process is not fully synchronous with the releases of Git. =
-If=20
-a large chunk of translation changes has been proposed on weblate, I can pu=
-sh=20
-updated versions to the project and publish them on git-scm.com. Note that =
-I'm=20
-not polyglot enough to be able to review the submissions, so except for che=
-cks=20
-on the asciidoc formatting itself (which is mostly scripted now), the=20
-submissions are accepted as-is, like in most translation projects.
+-----BEGIN PGP SIGNATURE-----
 
-The size of the translation files already gives some weight to the project.=
- The=20
-current repo size is 50MB.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY90UYACgkQVbJhu7ck
+PpRqLBAAhPz+J7lRgT8w84pWuimUqYP7f6vuGRoFQx6kf9OSZGHcAT/c8gwGtCgF
+YfuV/9Uq7ABRyCrBh6ogLKP7j/ehhUH0tsgPR50pSBeVUMwcI2h0cn9OCy7LpVra
+OIG7QhMGYJ232YBJIragF8PRX1e1oAnUFVflf/XXpqCRhQ+Sc/H0gE1dkuZx7OY0
+Hnouv91Jq2GGPziWt0500guPqgVlLMBDA4CA4dMqewEgxYTPFiQDkFd6ioZsM9Lq
+2I8EdvQJTRs9bAe0++1xKeEiqFyqIK0Yhd5V0SmI4n/3A8FS04SMlc8/z7EylzX5
+bH8vBEtrnZS29jngzN/utrLF3kzsybnSSZTTxzuqsOcboiDtNEuPDfxGc9T3dtEP
+n76834z9DTUPETpfBkEH35iwlB1m/Gshw5QbRZGPT2s2QxK6CfpfjjcRNcQZVeHF
+7oueCavJorbvkvyUxe7ofXi/NuEiPQnAoQYzmMCGikbq6ZRtmb0kSbPYbb/WnDhF
+cM2Zoi0Rkno60bjmeoACR2ILpc3GIYVpKKVS86KwFLgcJSBto94GDAf0R1EbJfXR
+oZ0nFxsLSayE27nStTm9R12zc33FkOW7xOIa43NtBclfYbvMeWPiNcE5PZfpWHRu
+4c+4K7hvx9v5zKnwyg20i1J2mbAIxKmTCgCo0IWbl+9ZYXdaqnA=
+=rWLD
+-----END PGP SIGNATURE-----
 
-All this tells me that, except for the missing visibility, the current way =
-of=20
-working is good, and trying to merge the doc translation of Git into the ma=
-in=20
-repo would make more trouble than needed.
-
-Regards,
-
-JN
-
-
+--0Ud/wqMcshD7GEAq--
