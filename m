@@ -1,262 +1,165 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D285165FBA
-	for <git@vger.kernel.org>; Fri, 10 May 2024 10:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FB0168AE2
+	for <git@vger.kernel.org>; Fri, 10 May 2024 10:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715335742; cv=none; b=FCWehc8iTVgdb8r4SwokBwgTU6r75GPBO28KsxQifi0jsFyNfxbKERIsMEqukKyl69o3y/+7u3sNpBtkqul1ZWUaHmHwOf+w00z4/DOhFGEtDfdZR6a7Ztg6RrkFFPgNWp1jqVfJ6zYsV9RnKG91nXMoq7r6mFj4c+CXiY6mqa4=
+	t=1715336031; cv=none; b=FsST0NjmrGENjU7NXrAJZSyuXNV/dSYEKTHXVxoXnUagix3vIXObejXSKfSTKkjluYL/cKaOICTzBzVMHsV9108CO9BBFNui+ZIzAq2TX0ZiQNy82XztqWTJ9KhPWBZ64Bfd5neo+PjIRshlX+aDte8m41n9l5rmgbxt2k9kezc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715335742; c=relaxed/simple;
-	bh=5wO8ORt/6+fw7cUv74EkbVbfmQc5m3dUOkiQmhJg2Jo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=BOwuZ4UPmFOFyGZUJiwO7g9x4yA21EOcXUZBH5y0k0hWFAIz2c9al8BMPHPkyKTEdOXAMu6YqFk8sB5jUYAFtyUgBgO+0ET3xY9bsPiQ8Z6T6QgEJY/5nmvpYVUFUNPzcF1DrGpgjC1BT65LOy/KgFgnEVD6kEHfCGQeXNbzY7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aEJQS4xJ; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715336031; c=relaxed/simple;
+	bh=0YBrJkzbuZnzkFIZd1UfDhi+SzdZNywesMdt0FmuDtk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gOevPcDp7YO6o5w8+AnZlwZxiPEQzi3r8U2bYtSz9FTt0Y9iHbPFitTD81AcTGQozuk3M72tNlWlR2aX36rI4+VxZXfzXrZOKEjNLfSV1cEoc/FepjQxpPsKuubjFICLvbgUicpqcN56To7GcIUiooUmeWRYZouHdcEqli1C1vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eGYNwHyR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yvpkeqx+; arc=none smtp.client-ip=64.147.123.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEJQS4xJ"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-23e94f0788aso894831fac.2
-        for <git@vger.kernel.org>; Fri, 10 May 2024 03:09:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715335740; x=1715940540; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RqrmpyfXFeE1jFC07uDt3li9oBX25qTeMKpyP/Dpdo4=;
-        b=aEJQS4xJcBR/e+dH7y7wimuxP6mfTULnIrnNGfZXmjoVz9kc7VJquWa5QGcNi8oE7S
-         rOOxIIeFiNR6TrrOBfUMYxzZxRmvbnrhnQuCBbY7T9be+zL0giwgKOl2X3MHcpcfozWI
-         MMubtska403944knP/w2RZi+QQgiOWC7QeLOCIkggeab6BVawvUj1la1FG0QTM0zT8kg
-         jxMvDvzNbv8n7AeeMH42osMbnDkvZOOu7nmfD0M1cM7ys8/r6BU586KCgGOOKVNWMWF2
-         wEBKUl8g6Ls+VoD5Kd3FC/Hu5+Fbh2r51UpQVWSmqgnl1PMR65+/xd/VF3VllBNz9ML/
-         KuKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715335740; x=1715940540;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RqrmpyfXFeE1jFC07uDt3li9oBX25qTeMKpyP/Dpdo4=;
-        b=Jc8gcNoFbRsZ0I6llesWXEFIwk1dtZmbQJ0QbxxgKMPaiWiMNpGQq1hggvfWbD3tu9
-         tZ/oMCWkdyGYCtEKhN7wWUGraEsEkrvSl5NljbvLP0/iGQItHrZrVfjSVPaF/hiv46y1
-         3HDfvFpvtB0hEG2x9pGA7FolaY5cxfdMTvmyaFzj+RACZuD/D/enf8CA8SzrUdC2aEe3
-         QUM01wzcSLjo4q2k2q74i1a3hFCK1NqavFpbll/TNa7tcM36cP/XXSPzyW3CUd+lURR0
-         /HqTtltjG78D1YErtsYTl0bhuV4zzBSKHxSXezrySnUByRGQrrZfzJqH2X1wRNt9uQ2J
-         5BJg==
-X-Forwarded-Encrypted: i=1; AJvYcCWJ3SojtLUNI2lcRzhwS6o7QM8om9TN01N7/3oh+zMgVRu483aBogw/+mZ7inOgUnbtXf3PgeRRWoSpNPmvG2ld8ncL
-X-Gm-Message-State: AOJu0YzMUd2OqavsPwR0TwXmnGd5KL1/bGaHbgzARLi0fVLjefgHy+29
-	3282GOqfgzmMB6ga62rcb++65oCu3iZzyAet3jO6fgO8l8dhvbq83ihpt5FiJ/llrC5+ZNMJuV/
-	Q1p7j4T6x9y1QqSxeDNZ/LG2OBvk=
-X-Google-Smtp-Source: AGHT+IH08F7Mtk+oE8N04QEMy9pyuMzkq/xDUpfIf2uA59dVUpxZeAl96cdzj1lgZzKY/Ufva+bmM5px3rOgrnf5Pl8=
-X-Received: by 2002:a05:6870:b313:b0:22a:828b:57ea with SMTP id
- 586e51a60fabf-24172f95dddmr2319305fac.53.1715335740190; Fri, 10 May 2024
- 03:09:00 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 May 2024 03:08:59 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240509211318.641896-3-gitster@pobox.com>
-References: <xmqqy18issfv.fsf@gitster.g> <20240509211318.641896-1-gitster@pobox.com>
- <20240509211318.641896-3-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eGYNwHyR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yvpkeqx+"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id 282D01C000B5;
+	Fri, 10 May 2024 06:13:41 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 10 May 2024 06:13:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715336020; x=1715422420; bh=Dr5A/nZLMX
+	oA1ftifSB5+1Nm4seYTeyGv9+VgusLsoE=; b=eGYNwHyRqu3riijGI4ILIc9ROE
+	BnYCu2yr3KsKBrkzB4guMrk968p4oMa+urCgRsjta/V0ClU7OYBRE8CV6f7UuCMd
+	+KVjfJEykZGzabA4pv4zXs61hTKzxsOWb3TTL8d+4ruLQ/ZVAYxORLa2FP+0CHU4
+	rxHIKA+TrOnagSJNnD1X0e4ibguNu3cYkMWL3rZ+bWlWWEXMhnlit0JbQqTV4PN8
+	8yRAeRtNidjIPmI9/VRoECXowKPvRsvHh/wG7uSi0RYl/5UEUnsKaRsDr6amfhMv
+	TAs8g25ASWsnA14AJx7cc+9yQLp4gUTdj+X9hLlnA8F792wVrrJEu8KTcXLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715336020; x=1715422420; bh=Dr5A/nZLMXoA1ftifSB5+1Nm4seY
+	TeyGv9+VgusLsoE=; b=Yvpkeqx+r315k+aJlX7eIZ94fCrYLpGhHI32vRBlOGtZ
+	fKaY/uu0VdA5kFI1KTnLYJ+y4kMck3RPbxUuw6kfqOKpdvR62h0/zHryfiIP+viD
+	Ry4dMSj4+w34w/p59b4cB1ZKCOIeimqtD2pQQf/2KujzXpVjXIIiozOIdoayt503
+	pJCyjuNRHRDBo6aZTTyJUmjkHyTEl6J/NdzTFOK7HgkOmporoS3Yu75Ah90gnHvX
+	2I/8lem5IETd/sjrBlcvwC7LHAwIAjOja+2rIydXTrRW1SQHBRf5Syre9/cWfv9O
+	mWQMtqjJzvRrnlLDj6HVNvH4e3oA88tzXXrCSPARGw==
+X-ME-Sender: <xms:VPM9Zge-mLBTlwthnmO8v_uN__XrId-K58hg8TT8Id2Ab2SVJj5OoA>
+    <xme:VPM9ZiNPLfSg9CiDx0WimfFFVoM5rzeSV7S2VF3hmyCwrX-hKl75r0ygQGaoCTZXE
+    -xKa4x_hqCbrge_zQ>
+X-ME-Received: <xmr:VPM9Zhh8CPJTu6PVslyoPw1PQbZ2lk5wCKeI6oYyp5Y-MxqwBaE3K8I09d8LDVE7niWOnyZteHX4PxltIs90bjrOcRKpnW5nKXIhWQCqlD7mAifuYA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgvdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:VPM9Zl_SHSjT4U6yI7vOOKo_CWh_RW4Bwhg4hTSBLM_5q4-Gw_P8lg>
+    <xmx:VPM9Zsuwi23aME-KnhOaONbYHsx94DBBzpPi78xCtqTpGXDA0kDc1A>
+    <xmx:VPM9ZsFEW6usdoB9dUsgq7r-Xtxt1vrVGyy-oV7vTurB0ra2U6FG0A>
+    <xmx:VPM9ZrM9Kyhj-9fyxXGLQyZws7amLHEHvCON4J3AaLuZiXLGGKUq1g>
+    <xmx:VPM9Zl7s8UDLYDlWNNKl9R4J5dkICgjq4TSVYalzaC0_eng8_SQZLmFk>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 May 2024 06:13:39 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id be247290 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 May 2024 10:13:25 +0000 (UTC)
+Date: Fri, 10 May 2024 12:13:35 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/11] reftable: consistently refer to
+ `reftable_write_options` as `opts`
+Message-ID: <Zj3zT0AQMIVh-Y4P@tanuki>
+References: <cover.1714630191.git.ps@pks.im>
+ <47cee6e25ebaac5af9fd0c9eaad7fc50b2547cad.1714630191.git.ps@pks.im>
+ <CAOLa=ZQ3m3HOxpAUVK8_KASfQwmhXNraYrm-M-T2BTHUm5c5ZQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 10 May 2024 03:08:59 -0700
-Message-ID: <CAOLa=ZS_5+x7_xxppD8BE7RA0X+BFHPm=ffWg4JDgORqR5=sqQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] SubmittingPatches: extend the "flow" section
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000770965061816b924"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0ajc2AwPDcKhV5A9"
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQ3m3HOxpAUVK8_KASfQwmhXNraYrm-M-T2BTHUm5c5ZQ@mail.gmail.com>
 
---000000000000770965061816b924
-Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+--0ajc2AwPDcKhV5A9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Explain a full lifecycle of a patch series upfront, so that it is
-> clear when key decisions to "accept" a series is made and how a new
-> patch series becomes a part of a new release.
->
-> Earlier, we described an idealized patch flow that nobody followed
-> in practice.  Instead, describe what flow was used in practice for
-> the past decade that worked well for us.
->
-> Fold the "you need to monitor the progress of your topic" section
-> into the primary "patch lifecycle" section, as that is one of the
-> things the patch submitter is responsible for.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/SubmittingPatches | 112 +++++++++++++++++++-------------
->  1 file changed, 68 insertions(+), 44 deletions(-)
->
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 142b82a71b..8922aae4a5 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -8,53 +8,76 @@ project. There is also a link:MyFirstContribution.html[step-by-step tutorial]
->  available which covers many of these same guidelines.
->
->  [[patch-flow]]
-> -=== An ideal patch flow
-> -
-> -Here is an ideal patch flow for this project the current maintainer
-> -suggests to the contributors:
-> -
-> -. You come up with an itch.  You code it up.
-> -
-> -. Send it to the list and cc people who may need to know about
-> -  the change.
-> +=== A not-so ideal patch flow
-> +
-> +To help us understand the reason behind various guidelines given later
-> +in the document, first lets understand how the lifecycle of a typical
-> +patch series for this project goes.
-> +
-> +. You come up with an itch.  You code it up.  You do not need any
-> +  pre-authorization from the project to do so.  Your patches will be
+On Fri, May 10, 2024 at 02:00:31AM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > Throughout the reftable library the `reftable_write_options` are
+> > sometimes referred to as `cfg` and sometimes as `opts`. Unify these to
+> > consistently use `opts` to avoid confusion.
+> >
+>=20
+> I think one location was missed:
+>=20
+> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> index 3316d55f19..40eb793b3c 100644
+> --- a/reftable/stack_test.c
+> +++ b/reftable/stack_test.c
+> @@ -396,7 +396,7 @@ static void
+> test_reftable_stack_auto_compaction_fails_gracefully(void)
+>=20
+>  static void test_reftable_stack_validate_refname(void)
+>  {
+> -	struct reftable_write_options cfg =3D { 0 };
+> +	struct reftable_write_options opts =3D { 0 };
+>  	struct reftable_stack *st =3D NULL;
+>  	int err;
+>  	char *dir =3D get_tmp_dir(__LINE__);
+> @@ -410,7 +410,7 @@ static void test_reftable_stack_validate_refname(void)
+>  	};
+>  	char *additions[] =3D { "a", "a/b/c" };
+>=20
+> -	err =3D reftable_new_stack(&st, dir, cfg);
+> +	err =3D reftable_new_stack(&st, dir, opts);
+>  	EXPECT_ERR(err);
+>=20
+>  	err =3D reftable_stack_add(st, &write_test_ref, &ref);
+>=20
+> Rest of the patch looks good. Thanks
 
-Wouldn't it be better to have the following sentences after the next
-para?
+This section has been removed in 485c63cf5c (reftable: remove name
+checks, 2024-04-08), so it doesn't exist in `master` anymore. Which is
+cheating a bit because the topic does not build on top of anything where
+that commit would be reachable. But both rebasing the topic and
+willfully creating a conflict would probably make Junio's life harder
+now, so I'll just leave it at that and lie by ommission.
 
-So the flow would be
-- Have an itch. Code it up.
-- Send patches to list.
-- Get reviews.
+But thanks anyway for reading this carefully and double checking the
+results!
 
-> +  reviewed by other contributors on the mailing list, and the reviews
-> +  will be done to assess the merit of various things, like the general
-> +  idea behind your patch (including "is it solving a problem worth
-> +  solving in the first place?"), the reason behind the design of the
-> +  solution, and the actual implementation.
-> +
-> +. You send the patches to the list and cc people who may need to know
-> +  about the change.  Your goal is *not* necessarily to convince others
-> +  that what you are building is a good idea.  Your goal is to get help
-> +  in coming up with a solution for the "itch" that is better than what
-> +  you can build alone.
->  +
-> -The people who may need to know are the ones whose code you
-> -are butchering.  These people happen to be the ones who are
-> +The people who may need to know are the ones who worked on the code
-> +you are touching.  These people happen to be the ones who are
+Patrick
 
-This reads much _nicer_.
-
->  most likely to be knowledgeable enough to help you, but
-> -they have no obligation to help you (i.e. you ask for help,
-> -don't demand).  +git log -p {litdd} _$area_you_are_modifying_+ would
-> +they have no obligation to help you (i.e. you ask them for help,
-> +you don't demand).  +git log -p {litdd} _$area_you_are_modifying_+ would
->  help you find out who they are.
->
-> -. You get comments and suggestions for improvements.  You may
-> -  even get them in an "on top of your change" patch form.
-> -
-> -. Polish, refine, and re-send to the list and the people who
-> -  spend their time to improve your patch.  Go back to step (2).
-> -
-> -. The list forms consensus that the last round of your patch is
-> -  good.  Send it to the maintainer and cc the list.
-> -
-> -. A topic branch is created with the patch and is merged to `next`,
-> -  and cooked further and eventually graduates to `master`.
-> -
-> -In any time between the (2)-(3) cycle, the maintainer may pick it up
-> -from the list and queue it to `seen`, in order to make it easier for
-> -people to play with it without having to pick up and apply the patch to
-> -their trees themselves.
-> -
-> -[[patch-status]]
-> -=== Know the status of your patch after submission
-> -
-> -* You can use Git itself to find out when your patch is merged in
-> -  master. `git pull --rebase` will automatically skip already-applied
-> -  patches, and will let you know. This works only if you rebase on top
-> -  of the branch in which your patch has been merged (i.e. it will not
-> -  tell you if your patch is merged in `seen` if you rebase on top of
-> -  master).
-> +. You get comments and suggestions for improvements.  You may even get
-> +  them in an "on top of your change" patch form.  You are expected to
-> +  respond to them with "Reply-All" on the mailing list, while taking
-> +  them into account while preparing an updated set of patches.
-> +
-> +. Polish, refine, and re-send your patches to the list and the people who
-> +  spent their time to improve your patch.  Go back to step (2).
-> +
-> +. While the above iterations improve your patches, the maintainer may
-> +  pick the patches up from the list and queue them to the `seen`
-> +  branch, in order to make it easier for people to play with it
-> +  without having to pick up and apply the patches to their trees
-> +  themselves.  Being in `seen` has no other meaning.  Specifically, it
-> +  does not mean the patch was "accepted" in any way.
-> +
-> +. When the discussion reaches a consensus that the latest iteration of
-> +  the patches are in good enough shape, the maintainer includes the
-> +  topic in the "What's cooking" report that are sent out a few times a
-> +  week to the mailing list, marked as "Will merge to 'next'."  This
-> +  decision is primarily made by the maintainer with the help from
-> +  reviewers.
-> +
-> +. Once the patches hit 'next', the discussion can still continue to
-> +  further improve them by adding more patches on top, but by the time
-> +  a topic gets merged to 'next', it is expected that everybody agreed
-> +  that the scope and the basic direction of the topic are appropriate,
-> +  so such an incremental updates are expected to be limited to small
-> +  corrections and polishing.  After a topic cooks for some time (like
-> +  7 calendar days) in 'next' without further tweaks on top, it gets
-> +  merged to the 'master' branch and wait to become part of the next
-> +  major release.
-> +
-> +Earlier versions of this document outlined a slightly different patch
-> +flow in an idealized world, where the original submitter gathered
-> +agreements from the participants of the discussion and sent the final
-> +"we all agreed that this is the good version--please apply" patches
-> +to the maintainer.  In practice, this almost never happened.  The flow
-> +described above reflects the reality much better and can be considered
-> +the "canonical" procedure to get the patch accepted to the project.
-> +
-> +In the following sections, many techniques and conventions are listed
-> +to help your patches get reviewed effectively.
->
-> -* Read the Git mailing list, the maintainer regularly posts messages
-> -  entitled "What's cooking in git.git" giving
-> -  the status of various proposed changes.
->
->  [[choose-starting-point]]
->  === Choose a starting point.
-> @@ -241,8 +264,9 @@ reasons:
->    which case, they can explain why they extend your code to cover
->    files, too).
->
-> -The goal of your log message is to convey the _why_ behind your
-> -change to help future developers.
-> +The goal of your log message is to convey the _why_ behind your change
-> +to help future developers.  The reviewers will also make sure that
-> +your proposed log message will serve this purpose well.
->
->  The first line of the commit message should be a short description (50
->  characters is the soft limit, see DISCUSSION in linkgit:git-commit[1]),
-> --
-> 2.45.0-119-g0f3415f1f8
-
-Thanks, this is great improvement.
-
---000000000000770965061816b924
+--0ajc2AwPDcKhV5A9
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: aee2f2407cacef97_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZOThqa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMS9sQy8wVFo0cWxDV2k1UmRBOXdhS2hRekRQQ2YxaAo3REJyajR3MzUy
-UzFtS2tyVU53d1BLM05jTEtKTSt4OEdrS2FXYXJuVUh4a1h5aFovM0kraUhtUERYbmU5Y0pBClVH
-MWpZa0tlMEp2SWwzMkRzbHVucFNoRXBEWWl2SDRvUk9aQm50UUJwYndmTU9yUFZGT0lGaHdyWlZn
-dmNDbmQKTnY4b1dTUDBLZFZqemVTTnh1OU5aU2xoSkw4VzBYM0F0RmVyR3BzVElUbDlVZXBuQjlI
-N09lTUkreVE1SXF1MQplemJxL1RtQ0FrWk5DNUhrWTl3elc5Y3oweGlIZEx4cnh3aUkyWWFWUXc1
-cTdwdEFUSXVGcURYZXdLU251TFc2Cm42TjUwelEvUUVWTUp3WUh0QjgwR0orL1ZramRWOStMa0Ni
-MjFxN1MwSkdYY0VkL3V4N0lOY1lQTVNlWlZkQW8KM0tkOEpjVlNZdjZrZ0lWZVpoeUZ2bllyZGd0
-dlo2aFVRbWZQY2NGYVU5OTRUQ2xBU3R5VnEvUDVERFo5M1gwUQovaXlGUGdKem1kTDlyTmIwWm1O
-MEhMczBnQzV0bGViaXQvV2ZybURIVHVpbkNiSUxpN2hJSGY0YUhIelNXZ0NqCnpYOWhjTVRFYk8w
-UXBRMVI1RWM0RWVyQ2lFWEtlS2J5eHQzd09lND0KPThsUnMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000770965061816b924--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY9804ACgkQVbJhu7ck
+PpRDkw/9F3LHRFph+7HMlanW9m4xEnuaR21U4szl+EJcx3tiEFPN+ZBv7GTdOjFu
+gxFbVDEjFPihuhdbUZRoEmKNHnyGawfGVFUDI/H31iFOi1GoXnSdHrK1BBD1Kacc
+pm5SVYo4iHcctxV3bwosh+b5FYyTmHLvjjs4lrpTSVXMasSN1nx4st8uxVnyCrj5
+9lQY2pvufD3a/LlZ4N1b1UMa9Qkg/8sAD3FgsGRkWc5Cuvk8PPdBRO5SvzYjAd45
+mIEyrzqFVRP+LJJiLGNto5hbHgX/6RKCCy+FdV0aIwkOZI+bFvSuvwM/ckGcFQXI
+dEdQppkDSNqwcVazOYygADHB4k6Nqv3uGY5vKbnuaMPPQT/ILq994UagvqAgjDUU
+Pr1pW7LSNUqquhaNkNRKLqfP3TsdvS8oOuSH5hVKYCAxSBFw7KzREmxr3rOw9pGT
+Fjv28nT1O/RR0dbUFQ6o7IBy9JCDEYPAUb+HRuG3J3R7FNv+MX5XvPkHpz/ajbzV
+nDPu0eFAP4Wpdt8ZssOEmPi9dRoYHI2qeWnlzv07pTRYyOpAQlwrKY5JqwFfnCDg
+rdHYpT1se4mORfnCyxqmgRq3wQaqSank/9c4c6qAGISq31wkD8TED2zMXRZN66kV
++j44+ix2fkz1UH3q3tWgIgwdwD2EcbnTuTOW1glCkNyvGWYDGf4=
+=sU3n
+-----END PGP SIGNATURE-----
+
+--0ajc2AwPDcKhV5A9--
