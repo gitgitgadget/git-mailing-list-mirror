@@ -1,263 +1,253 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86BB16F8FA
-	for <git@vger.kernel.org>; Fri, 10 May 2024 11:43:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250EF161B6A
+	for <git@vger.kernel.org>; Fri, 10 May 2024 11:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715341421; cv=none; b=MYZg1gRzgN4TVnwtVTHf+Saljxiv6JOFO3rvWH0jjv5re4wRCkJbUcKU9JU0YinUigWw3pA/5jdWC+xwy3m2oJctXDx0cMxEp+0Jcnh+9sS26temtpDW/bXGIMzl0QwfsWLTFKQP+7IEcWgP9JouOCYIB/mHGtZ0ryl4MsraVug=
+	t=1715341627; cv=none; b=uThFrTNC1pI1uSuYGa2iqPnGkqYrmDRiWC59U9JiztO5xdVVqvVutoCAjzcxkdHf8SWhMKBOzddQnKd/A/yZL3eSgYx7idpfjSt2TquoGrNdSoS7MCt/UtOMLcooMzQ4UYUKSNF8zslBEEwBwPnhUVigYMgk0vYl0qwIFKlmx+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715341421; c=relaxed/simple;
-	bh=pijAX7Aw9F+KmBu0A8T5QzI1VbNEToI4ZgQb0r70RIM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u0pUrvy91QoZVKg/wzwXMyVy6GkZNlq8LRlkYk6acrXJiouoaVyPJ8CdyUY4O53nakrYSl2L1keEufxKfo4Gtw7oMCVTnozC3VUlQoDGTUDtBKToaOqbX+FcQJ8Vpu3piJHH78TFJnfBlwGIh7q7ogSA4UQWhOfsryvvlUQHlwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xfuhz7qt; arc=none smtp.client-ip=209.85.210.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715341627; c=relaxed/simple;
+	bh=FPQpm4EAhhugGdqKMw7wJUcgV6Tj5zPYMLMkWN7xU4A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eg40U1zmwiCCw1P22pUHJhIK6OweYqiRodoMIjlCcGKNZef5hS0Mho597wFNu3Enk7kUAicSEZ5UoeI6wgeHZwc2SyDOkZ2KR29KiBySMCpttCJINPzaPHT7A9pza3bQtVOHVhO7irzKQI5u6NE3T7j2vQCPDyME/K63fzjkcnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DQntUqVo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aIFsDx7f; arc=none smtp.client-ip=64.147.123.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xfuhz7qt"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6f0e975f67fso538477a34.0
-        for <git@vger.kernel.org>; Fri, 10 May 2024 04:43:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715341419; x=1715946219; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eL8QyU9I730OBbAxTHaWfF6cRuc4hkd8wJnKvlE6dKk=;
-        b=Xfuhz7qtGeSg+L7G80c1OxLWCsuM5jcnObwuU9k803+OYHcZCEBEmbY4/CT5kV8ROA
-         sM3kyvOiZby1wxc9+n0y3E4Qd8kzQMIM9QbhkfjLH+oS2Ojvz9mzeUZNAt7EosVAcA9p
-         O9ifPAD015jQzqV1zBt0vC9JbPSW1ONVVCHPs+q7uxvp0cnVlGfac2+NrHSwQ8p7xZ9M
-         dsYe4nTebFbiK4SicL0w0oYjXgoUbUE/2WJPFoAyIhwPGUyiN6/1MhOADE2Un1Cchal9
-         Itg1k6NNNde2ks6Y67s8KWjQFkc8aV9oeP4ZubAv0mLLoySXV6V0rehHQvyIgZz6PbH4
-         PZxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715341419; x=1715946219;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eL8QyU9I730OBbAxTHaWfF6cRuc4hkd8wJnKvlE6dKk=;
-        b=XgkVTLvAnPs7JXERocwv61fG0Jr3SZZXup1cKwjAdL3OYom/BZnPMxcViBtMSnETYl
-         HvGHNeEFo7XHEvPtNg7VWgTccJnb420TjBjMa8rnOZ5DCJkY/xLCEE2kpZbiyJq0mTpD
-         hptwWQWIvSwpGT2egZYBarpBv9nT2VCLRAbpAQn0uHqyOYPdFs8aXHMxVLxjtB7nloQz
-         GTLkD5+RYlTyXVt4cf9UaTHg/wfG28QYq2z1/TUib5eNGu+lM9oDbk8D0kl4dJrfpxCq
-         Q8hm6M10cYkfeP/tG88o3KNGzLiB61w0OmetK7B30EjE77AuUW8nSJnTrB6PgPLCKGzc
-         73Kw==
-X-Forwarded-Encrypted: i=1; AJvYcCWje4ZO6ZDJbtvMogxDvDQWS68tpRfgGZHYGn4puWW3xG71p8HPVfuQQbhzQA2qXCU56dfnjZ6qr1Z4F8R+frXYjVqw
-X-Gm-Message-State: AOJu0Yzo27pRByNYRHRY0ne74y87H3DGJPmAze4asyyFt3eau5KwBMYz
-	p2Ga+W77tLxGSoicRY3ku+0jRZ2lTlXXTV4SYqNqn3p+YNcnn3OFmc8sFWhhkStCrMXr95tYYc/
-	nSyxpYHwBvdosGYn4VMniIpn2xK4yog==
-X-Google-Smtp-Source: AGHT+IEKNRSAxBmE/t4D4UiMaS6Jp+g1zCbIZLqH2g5mJ1/Zh3O6V86nq+3DhfsGKz/VG2io9ig30QS8QNT3f6hvP1w=
-X-Received: by 2002:a05:6871:6212:b0:232:fba4:4594 with SMTP id
- 586e51a60fabf-24172fc5169mr2610141fac.49.1715341418629; Fri, 10 May 2024
- 04:43:38 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 May 2024 04:43:36 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1715336797.git.ps@pks.im>
-References: <cover.1714630191.git.ps@pks.im> <cover.1715336797.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DQntUqVo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aIFsDx7f"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 36168180008D;
+	Fri, 10 May 2024 07:47:05 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Fri, 10 May 2024 07:47:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715341624; x=1715428024; bh=UqWJwufRmr
+	2CC+WENvZFV9zDkvCuwHpCU6lDej8Ag4Y=; b=DQntUqVo9Ebq4iIPrUMKuHndtJ
+	XVa2ffND2IHU8J2FJTrBtpCpWXCkkQA9zndlIxgI7LERgRfZaCuk8Md15gPPWhV/
+	kl/SNo1amlk6+7VuZK+t+q2gI01FNKIiFdeb4rD2vQawxlGYVYK0y8fqIsaMdHE7
+	H6DtdCxUc32oV2lef1GzhYUPGsvHu5zaDvTh23b4bz5kr66asGH5lXKdJwB0ON5n
+	I+bzI1eDU+cAjWCsx9ClJVHS+mAeAbwp5wNlrpDyPOmhnmq5Zf5ERNHqr9zjTvKr
+	g1iCL6wRhqF2qb6I8vwB/tdhRPCzSm0SsrTueJ1KyuyDsaHgfRl8OPVqEBeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715341624; x=1715428024; bh=UqWJwufRmr2CC+WENvZFV9zDkvCu
+	wHpCU6lDej8Ag4Y=; b=aIFsDx7fyJOSvSlN7Rd1k4oxhKMf9f3G5I2oz66r1t/P
+	PqXKoIvpwDTcqjb0zMU+ynd7l4wMvp/cL1r8dfloqO+3XGxvVT9QZyJJ3AaWufKw
+	jG49BG4Dq3w/7548oUx2WnYhrLOXdVQ9DPIA2HC8s7j3Dgsa4Q4HaZduI1BJuuN/
+	GYDpRav0fLTRsRQQ4vUzGugMcvcNNEyT33Aa0Sargm7Zx/SMtTFPg6UKf2pM8+Ne
+	w6RRBTgkUdNv11GzLyaE/Aud3pKvCRA0P8MGFcqRENZGb9e4igc7As/y5T+tWsYT
+	6gTA1IL7Qx3X/w7zES3WxGEu/yTlitKuYbZiQrQ6DA==
+X-ME-Sender: <xms:OAk-Zke4mYtvDg7QKyoIFU5IKAjjRZZ_YEng3oGAqlM-ojW_csJOnw>
+    <xme:OAk-ZmNcbUcYJ7jhhrVTmPVi9X_STz9dTMadir6OxF9KF8OHIszQMKFpK-C2dqgJv
+    EflzvZkV-ju4e8PmQ>
+X-ME-Received: <xmr:OAk-ZligNadGW94kVvvPqUPGQCUwoL-oNjSpNrzJlLs8y1DFKj3cKmIOpmZvV_xgLYzY6UB58AI8XPBfDablHbt-h6D1B1DdwRIl-_1RCJOe4ez4mw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedggeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:OAk-Zp_B58X2JWTeUACGW4KmBY3p249jwwTuRmz6OMIB3q8fOUAsNQ>
+    <xmx:OAk-ZgsPehi4lsdCfAwLbnAqjBUlK7cSc1RMGmeF5z-xXBlV765hqg>
+    <xmx:OAk-ZgHmhv4bDE9dMTfeVTRekQyqJH3lGEHweuXGhcFdhuxcbCKubg>
+    <xmx:OAk-ZvNlnutCRakzY6lmrWd7XVFrZXl618ahnwvYv75nLtXvwAMiuA>
+    <xmx:OAk-ZqWwDEu0aVh7_xWD5vx2XFb1jrYKpo-7qTNQ-Nt-zuCAmhYef73R>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 May 2024 07:47:03 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 19e0fa3a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 May 2024 11:46:49 +0000 (UTC)
+Date: Fri, 10 May 2024 13:46:59 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/23] Documentation/technical: describe pseudo-merge
+ bitmaps format
+Message-ID: <Zj4JM3ATSMice5do@tanuki>
+References: <cover.1710972293.git.me@ttaylorr.com>
+ <cover.1714422410.git.me@ttaylorr.com>
+ <43fd5e3597151a86254e18e08ffd8cadbcb6e4f0.1714422410.git.me@ttaylorr.com>
+ <ZjjEjNRp2BAMWJ47@tanuki>
+ <ZjkHT9XVl7ua8E14@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 10 May 2024 04:43:36 -0700
-Message-ID: <CAOLa=ZTJq40qhXLR=W0DSKKd+rehU-CzBafrkxP_nZH7xGJyWQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/11] reftable: expose write options as config
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000ed2a6d0618180b1b"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5TpDqcP6hXN44sft"
+Content-Disposition: inline
+In-Reply-To: <ZjkHT9XVl7ua8E14@nand.local>
 
---000000000000ed2a6d0618180b1b
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--5TpDqcP6hXN44sft
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Hi,
->
-> this is the second version of my patch series that exposes various
-> options of the reftable writer via Git configuration.
->
-> Changes compared to v1:
->
->   - Drop unneeded return statements.
->
->   - Move default geometric factor into "constants.h".
->
->   - Fix a typo in a commit message.
->
-> Thanks!
->
-> Patrick
->
-> Patrick Steinhardt (11):
->   reftable: consistently refer to `reftable_write_options` as `opts`
->   reftable: consistently pass write opts as value
->   reftable/writer: drop static variable used to initialize strbuf
->   reftable/writer: improve error when passed an invalid block size
->   reftable/dump: support dumping a table's block structure
->   refs/reftable: allow configuring block size
->   reftable: use `uint16_t` to track restart interval
->   refs/reftable: allow configuring restart interval
->   refs/reftable: allow disabling writing the object index
->   reftable: make the compaction factor configurable
->   refs/reftable: allow configuring geometric factor
->
->  Documentation/config.txt          |   2 +
->  Documentation/config/reftable.txt |  49 +++++
->  refs/reftable-backend.c           |  43 ++++-
->  reftable/block.h                  |   2 +-
->  reftable/constants.h              |   1 +
->  reftable/dump.c                   |  12 +-
->  reftable/merged_test.c            |   6 +-
->  reftable/reader.c                 |  63 +++++++
->  reftable/readwrite_test.c         |  26 +--
->  reftable/refname_test.c           |   2 +-
->  reftable/reftable-reader.h        |   2 +
->  reftable/reftable-stack.h         |   2 +-
->  reftable/reftable-writer.h        |  10 +-
->  reftable/stack.c                  |  57 +++---
->  reftable/stack.h                  |   5 +-
->  reftable/stack_test.c             | 118 ++++++------
->  reftable/writer.c                 |  20 +--
->  t/t0613-reftable-write-options.sh | 286 ++++++++++++++++++++++++++++++
->  18 files changed, 576 insertions(+), 130 deletions(-)
->  create mode 100644 Documentation/config/reftable.txt
->  create mode 100755 t/t0613-reftable-write-options.sh
->
-> Range-diff against v1:
->  1:  47cee6e25e =  1:  7efa566306 reftable: consistently refer to `reftable_write_options` as `opts`
->  2:  d8a0764e87 =  2:  e6f8fc09c2 reftable: consistently pass write opts as value
->  3:  c040f81fba =  3:  aa2903e3e5 reftable/writer: drop static variable used to initialize strbuf
->  4:  ef79bb1b7b =  4:  5e7cbb7b19 reftable/writer: improve error when passed an invalid block size
->  5:  4d4407d4a4 =  5:  ed1c150d90 reftable/dump: support dumping a table's block structure
->  6:  b4e4db5735 !  6:  be5bdc6dc1 refs/reftable: allow configuring block size
->     @@ refs/reftable-backend.c: static int read_ref_without_reload(struct reftable_stac
->      +		if (block_size > 16777215)
->      +			die("reftable block size cannot exceed 16MB");
->      +		opts->block_size = block_size;
->     -+		return 0;
->      +	}
->      +
->      +	return 0;
->  7:  79d9e07ca9 =  7:  05e8d1df2d reftable: use `uint16_t` to track restart interval
->  8:  653ec4dfa5 !  8:  bc0bf65553 refs/reftable: allow configuring restart interval
->     @@ Documentation/config/reftable.txt: readers during access.
->
->       ## refs/reftable-backend.c ##
->      @@ refs/reftable-backend.c: static int reftable_be_config(const char *var, const char *value,
->     + 		if (block_size > 16777215)
->       			die("reftable block size cannot exceed 16MB");
->       		opts->block_size = block_size;
->     - 		return 0;
->      +	} else if (!strcmp(var, "reftable.restartinterval")) {
->      +		unsigned long restart_interval = git_config_ulong(var, value, ctx->kvi);
->      +		if (restart_interval > UINT16_MAX)
->      +			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
->      +		opts->restart_interval = restart_interval;
->     -+		return 0;
->       	}
->
->       	return 0;
->  9:  6f2c481acc !  9:  6bc240fd0c refs/reftable: allow disabling writing the object index
->     @@ Documentation/config/reftable.txt: A maximum of `65535` restart points per block
->
->       ## refs/reftable-backend.c ##
->      @@ refs/reftable-backend.c: static int reftable_be_config(const char *var, const char *value,
->     + 		if (restart_interval > UINT16_MAX)
->       			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
->       		opts->restart_interval = restart_interval;
->     - 		return 0;
->      +	} else if (!strcmp(var, "reftable.indexobjects")) {
->      +		opts->skip_index_objects = !git_config_bool(var, value);
->     -+		return 0;
->       	}
->
->       	return 0;
-> 10:  30e2e33479 ! 10:  9d4c1f0340 reftable: make the compaction factor configurable
->     @@ Commit message
->
->          Signed-off-by: Patrick Steinhardt <ps@pks.im>
->
->     + ## reftable/constants.h ##
->     +@@ reftable/constants.h: license that can be found in the LICENSE file or at
->     +
->     + #define MAX_RESTARTS ((1 << 16) - 1)
->     + #define DEFAULT_BLOCK_SIZE 4096
->     ++#define DEFAULT_GEOMETRIC_FACTOR 2
->     +
->     + #endif
->     +
->       ## reftable/reftable-writer.h ##
->      @@ reftable/reftable-writer.h: struct reftable_write_options {
->
->     @@ reftable/reftable-writer.h: struct reftable_write_options {
->       /* reftable_block_stats holds statistics for a single block type */
->
->       ## reftable/stack.c ##
->     +@@ reftable/stack.c: license that can be found in the LICENSE file or at
->     +
->     + #include "../write-or-die.h"
->     + #include "system.h"
->     ++#include "constants.h"
->     + #include "merged.h"
->     + #include "reader.h"
->     + #include "refname.h"
->      @@ reftable/stack.c: static int segment_size(struct segment *s)
->       	return s->end - s->start;
->       }
->     @@ reftable/stack.c: static int segment_size(struct segment *s)
->       	size_t i;
->
->      +	if (!factor)
->     -+		factor = 2;
->     ++		factor = DEFAULT_GEOMETRIC_FACTOR;
->      +
->       	/*
->       	 * If there are no tables or only a single one then we don't have to
-> 11:  861f2e72d9 ! 11:  e1282e53fb refs/reftable: allow configuring geometric factor
->     @@ Documentation/config/reftable.txt: reftable.indexObjects::
->       The default value is `true`.
->      +
->      +reftable.geometricFactor::
->     -+	Whenever the reftable backend appends a new table to the table it
->     ++	Whenever the reftable backend appends a new table to the stack, it
->      +	performs auto compaction to ensure that there is only a handful of
->      +	tables. The backend does this by ensuring that tables form a geometric
->      +	sequence regarding the respective sizes of each table.
->     @@ Documentation/config/reftable.txt: reftable.indexObjects::
->
->       ## refs/reftable-backend.c ##
->      @@ refs/reftable-backend.c: static int reftable_be_config(const char *var, const char *value,
->     + 		opts->restart_interval = restart_interval;
->       	} else if (!strcmp(var, "reftable.indexobjects")) {
->       		opts->skip_index_objects = !git_config_bool(var, value);
->     - 		return 0;
->      +	} else if (!strcmp(var, "reftable.geometricfactor")) {
->      +		unsigned long factor = git_config_ulong(var, value, ctx->kvi);
->      +		if (factor > UINT8_MAX)
->
-> base-commit: d4cc1ec35f3bcce816b69986ca41943f6ce21377
-> --
-> 2.45.0
+On Mon, May 06, 2024 at 12:37:35PM -0400, Taylor Blau wrote:
+> On Mon, May 06, 2024 at 01:52:44PM +0200, Patrick Steinhardt wrote:
+> > > diff --git a/Documentation/technical/bitmap-format.txt b/Documentatio=
+n/technical/bitmap-format.txt
+> > > index f5d200939b0..63a7177ac08 100644
+> > > --- a/Documentation/technical/bitmap-format.txt
+> > > +++ b/Documentation/technical/bitmap-format.txt
+> > > @@ -255,3 +255,182 @@ triplet is -
+> > >  	xor_row (4 byte integer, network byte order): ::
+> > >  	The position of the triplet whose bitmap is used to compress
+> > >  	this one, or `0xffffffff` if no such bitmap exists.
+> > > +
+> > > +Pseudo-merge bitmaps
+> > > +--------------------
+> > > +
+> > > +If the `BITMAP_OPT_PSEUDO_MERGES` flag is set, a variable number of
+> > > +bytes (preceding the name-hash cache, commit lookup table, and trail=
+ing
+> > > +checksum) of the `.bitmap` file is used to store pseudo-merge bitmap=
+s.
+> >
+> > Here you say that the section is supposed to come before some other
+> > sections, whereas the first sentence in the "File format" section says
+> > that it is the last section in a bitmap file.
+>=20
+> This is a quirk of the on-disk .bitmap format. New sections are added
+> before existing sections, so if you were reading the file from beginning
+> to end, you'd see the pseudo-merges extension, then the lookup table,
+> then the name-hash cache (assuming all were written).
+>=20
+> I think that describing them in the order they were introduced here
+> makes more sense, leaving their layout within the .bitmap file as an
+> implementation detail.
+>=20
+> If you feel strongly otherwise, let's clean it up outside of this series
+> since this whole portion of the documentation would need to be
+> reordered.
 
-The range diff looks good to me, thanks for the quick iteration :)
+I don't, thanks for the explanation.
 
---000000000000ed2a6d0618180b1b
+[snip]
+> +=3D=3D=3D Overview
+> +
+>  A "pseudo-merge bitmap" is used to refer to a pair of bitmaps, as
+>  follows:
+> --- >8 ---
+>=20
+> > > +For example, suppose there exists a pseudo-merge bitmap with a large
+> > > +number of commits, all of which are listed in the `WANTS` section of
+> > > +some bitmap traversal query. When pseudo-merge bitmaps are enabled, =
+the
+> > > +bitmap machinery can quickly determine there is a pseudo-merge which
+> > > +satisfies some subset of the wanted objects on either side of the qu=
+ery.
+> > > +Then, we can inflate the EWAH-compressed bitmap, and `OR` it in to t=
+he
+> > > +resulting bitmap. By contrast, without pseudo-merge bitmaps, we would
+> > > +have to repeat the decompression and `OR`-ing step over a potentially
+> > > +large number of individual bitmaps, which can take proportionally mo=
+re
+> > > +time.
+> > > +
+> > > +Another benefit of pseudo-merges arises when there is some combinati=
+on
+> > > +of (a) a large number of references, with (b) poor bitmap coverage, =
+and
+> > > +(c) deep, nested trees, making fill-in traversal relatively expensiv=
+e.
+> > > +For example, suppose that there are a large enough number of tags wh=
+ere
+> > > +bitmapping each of the tags individually is infeasible. Without
+> > > +pseudo-merge bitmaps, computing the result of, say, `git rev-list
+> > > +--use-bitmap-index --count --objects --tags` would likely require a
+> > > +large amount of fill-in traversal. But when a large quantity of those
+> > > +tags are stored together in a pseudo-merge bitmap, the bitmap machin=
+ery
+> > > +can take advantage of the fact that we only care about the union of
+> > > +objects reachable from all of those tags, and answer the query much
+> > > +faster.
+> >
+> > I would start the explanation with a discussion of the problem before
+> > presenting the solution to those problems. In the current version it's
+> > the other way round, you present a solution to a problem that isn't yet
+> > explained
+> >
+> > It might also be helpful to discuss a bit who is supposed to create
+> > those pseudo-merge bitmaps. Does Git do so automatically for all tags?
+> > Does the admin have to configure this? If the latter, when do you want
+> > to create those and what strategies are there to create them?
+>=20
+> The pseudo-merge bitmaps are created by Git itself, configured via the
+> options described later on in this series. I'm happy to add a specific
+> call-out, but I would rather do it elsewhere outside of
+> Documentation/technical/bitmap-format.txt, which I think should be
+> mostly focused on the on-disk format.
+
+I think what throws me off here is that you already go into the
+non-technical somewhat by explaining their usecases. This causes us to
+end up halfwhere between "We motivate the changes" and "We document the
+technical parts, only".
+
+[snip]
+> > In case you have multiple pseudo-merge bitmaps, is the whole of the
+> > above repeated for each bitmap or is it just parts of it?
+>=20
+> The "pseudo-merge bitmaps" section contains a variable number of pairs
+> of EWAH bitmaps, one pair for each pseudo-merge bitmap. I think this is
+> covered below where it says "one or more pseudo-merge bitmaps, each
+> containing: [...]", but let me know if I should be more explicit.
+>=20
+> > > +* An (optional) extended lookup table (written if and only if there =
+is
+> > > +  at least one commit which appears in more than one pseudo-merge).
+> > > +  There are as many entries as commits which appear in multiple
+> > > +  pseudo-merges. Each entry contains the following:
+> > > +
+> > > +  ** `N`, a 4-byte unsigned value equal to the number of pseudo-merg=
+es
+> > > +     which contain a given commit.
+> >
+> > How exactly is the given commit identified? Or in other words, given an
+> > entry in the lookup table here, how do I figure out what commit it
+> > belongs to?
+>=20
+> They aren't identified within this section. The extended lookup table is
+> indexed into via the lookup table with an offset that is stored in the
+> `offset` field when the MSB is set.
+
+Okay. Would this explanation be a good addition to the document?
+
+Patrick
+
+--5TpDqcP6hXN44sft
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 72e5a9c69dcf4b58_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZK0NHWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMUpzQy85TlQ3Qm5nMnJGSG8yT0NhYlcxTElHQWFaMQpyWU9VOTVTQXlV
-SmFsc1B5M1dWSnFCSkdiQWIvNERpaDZSYy83eU9Hd3YxTGNIYkYrSlI2OExMUWMrTWRoR2E2ClpG
-MWEyazdsYVNTVFJXQjBId0hMRmF3a1ZqeTVMbm5uK25CcUs5MmZCYSs1aXpRVXNaM2ZpK2VFYzd6
-NUdyN00KMEZtbHplazJGd0xDV0N0dmlTelpUTVR3LzE4QWxhT1l4N0Z4ZXQxUE9aSG1TeDJSUGk4
-ODhKTFVIWEptd0QrcApLRW9LaGZYbUVpek56RXlNUTVPLzVhckNXeWsrMlJaTnBDaUtLQWhVeCs3
-cVViV0hPWG9lZld5aUg2Zjl5Q2JkCk11T1Rxdi9YUXZnSXZUdDVVMU9FZUhSTnM5ekVpZjFKSjg4
-K3l3K2t2cWVZTkdTSmZZTDZpUzB0YVZmTXFPWjkKWEliejZZLy9XTnM1aC92anZRTEV4VUw2bFN2
-Y3Y5ZTNab3MyQThYWEFObUUvbForNXBUaURCeTdoZzA4WlAwUQpGL0d4SGhYYkxiR0I2bUdYanlt
-azBVdjYraGNjd1NqZ0dmbnl2a3JLaTRNR3R6anVVZlVJUWtOeDRzNnRPSVErCjAvVVNDTUpzeHEy
-T1N0Mk54RWJxWUpRd0FVL282bFg2K1FNdXNpbz0KPXF3Y2gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ed2a6d0618180b1b--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY+CTIACgkQVbJhu7ck
+PpRt/BAAqh1t1e+iaSVcc2EWiVWV269X/pdoeqeqNWW7yEr3xRTPKl5jXy1mRinP
+E5ao2NvSGlnR9nucb9Jzq1XgyBVbXfaunPlmxkC4+OkGcGNLID/1M42Kqat51LBk
+eO65RwISbXHMoztRn2ze/C8edc51M+u4NZ7SVHkRbABR9GOdVuCTsg/BXH6n6XK4
+nGv4WEoLVHf7EMC7tkdHqci+IZOnnqWy5SESMPJRELPRpoEqtqqQnb5wYwTQyETk
+Bdr38ZWRKlktdyQdWmUUTsCZj29RVIBFY8i9UDSEu4s33IjRrAevEsz8sy3a5gop
+w+NCZbR+1VXe+ZlC/2pVGEMKdvIoCvCkRdUyJ7i8NPjCqAkX21qhdWsgUkx0T6y3
+mpm1ZRxE9LGZUewGwf3mXRws2iM6+gtSSRQhRDJdU6GJ3xe/CqaZcvFVH0KrIL7M
+3/dO119ilS2c4Hjk3Iogq9/bqt6371r8H1MjRHXhxV+6EI0qXgqrVY9euziOoIPJ
+eK1SrJj6nw4sovfi3onNwJoiRK37/4B2RJOxSJW5Vdyl0CCrhis+OtrlPGI6pNDD
+pSLCzqH0EResGMDLriA4X06F1/806RTc7m4hUDc5HJpldmofY9J/BUh9sTdCtPDx
+64uRpNX9l4vXtZEkqJSuQrpmBodM1EOPbDPvEuqe0dK238/TWM8=
+=ORMt
+-----END PGP SIGNATURE-----
+
+--5TpDqcP6hXN44sft--
