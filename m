@@ -1,139 +1,263 @@
-Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF2D15F3EA
-	for <git@vger.kernel.org>; Fri, 10 May 2024 11:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86BB16F8FA
+	for <git@vger.kernel.org>; Fri, 10 May 2024 11:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715341006; cv=none; b=TfSBDq9CGoj2yihz1jjOIGSHYQ3xOTRMeYMLXUEwPE9qs6eF4TUPku6viP5KeN1e4QiHrQOXnkrv4NnLgg+LoMdWA9LPht8qArBdlw7eh15GRhS3ip2aKyir6J6SnwMTwWLuus2uHbyzMrMnbUVHFvu94yDSvYofRD7IW2rGaAY=
+	t=1715341421; cv=none; b=MYZg1gRzgN4TVnwtVTHf+Saljxiv6JOFO3rvWH0jjv5re4wRCkJbUcKU9JU0YinUigWw3pA/5jdWC+xwy3m2oJctXDx0cMxEp+0Jcnh+9sS26temtpDW/bXGIMzl0QwfsWLTFKQP+7IEcWgP9JouOCYIB/mHGtZ0ryl4MsraVug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715341006; c=relaxed/simple;
-	bh=yuqBSDcFzXyZD4RqJGgYOPSdk4ldKp8IFJ0lLw6adF0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pPF8fT8dQQVljEO/hcCB4GBqwTm8kNu2JYTCUSMXV4QqdGQp0nEJjl36iRyVd5ZOWTS1MJkhtNzKxexENQkP38dMeUTz1kRJBkN2QizL61u6U30dZ++jjCb7go93Et6Q/AaCUiBYI0V+dS1jIN+VlSRT0GV4QFlYjKh80H38AJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pvWsT5tw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bZN4ULYw; arc=none smtp.client-ip=64.147.123.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715341421; c=relaxed/simple;
+	bh=pijAX7Aw9F+KmBu0A8T5QzI1VbNEToI4ZgQb0r70RIM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u0pUrvy91QoZVKg/wzwXMyVy6GkZNlq8LRlkYk6acrXJiouoaVyPJ8CdyUY4O53nakrYSl2L1keEufxKfo4Gtw7oMCVTnozC3VUlQoDGTUDtBKToaOqbX+FcQJ8Vpu3piJHH78TFJnfBlwGIh7q7ogSA4UQWhOfsryvvlUQHlwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xfuhz7qt; arc=none smtp.client-ip=209.85.210.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pvWsT5tw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bZN4ULYw"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id E4A5918000DF;
-	Fri, 10 May 2024 07:36:43 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 10 May 2024 07:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715341003; x=1715427403; bh=6BsKkSWVzb
-	gLRPfz7S0kdVSZ3Hduv8eo1kIy/ebcYt0=; b=pvWsT5tw9XV2lhb7z7o7nDo3uq
-	5TyRzzj9qbfQKbkzdPTkA/gZuBcylgnpllKboUh0l1GJW7uuuCA7hKJRzlVycL9j
-	7WqWF0lDyhCFX6h12RPFcqzNgptd/ndU0VIZkXxpTYggYw8Qm0MTFOOAnsRx7wy2
-	G1EBKrUDfuZ8KfFtI09s6Flm3JYhBAd7EaqQv7jqZz4m2+L+c2qiEaBytFmAEhOD
-	/DBDZApOYwIeaAe2oAlD/gP1WForziZSGn2lZOAHrGOFicCItun/c0HtboyxNqzq
-	xu89GKBEUrvpYQNL00FLcJeqco2LrgIL1TIxDDFizCMCDb+HSRZFiJpaPKnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715341003; x=1715427403; bh=6BsKkSWVzbgLRPfz7S0kdVSZ3Hdu
-	v8eo1kIy/ebcYt0=; b=bZN4ULYwRGgjCYQRIOl/T/DKPR7pRt0twl3/xxpBSOLR
-	hpu91QODDKLRtdr9t4zlgF6I4dt5oBQqDypjhDDoXexyrKph285PuTb2mpaEWrg4
-	7/ZwLy3dKmYyYdWdvkpFGJdtfWML2UwkqF/UNnUh621ccyntV1+PobjDls3wTLAE
-	9Oc0wqufyLYngDFaqPVPdbMNHFOk5ry71kfW8rq2vLQsH8B/LIhaiL3XmL/TJSDQ
-	bBRpEmBdWZt0eTaX0h5oeKiALCdsysTr4Dy/787+h3oUXz7r9ljzgbWlenv5wMgi
-	LfQHb1TyAcaZL8XkCSmbVxXLEdWFtESh+Wsq4jjcAA==
-X-ME-Sender: <xms:ywY-ZuRwaNCvD47rvmb9kE-EMH7PUCFfaiomtcdmJbK1czimu_Uodw>
-    <xme:ywY-ZjwFC6ROtrPU0F8rY8prxXGNKoJoGGRyU3suZ0YIPqhhOxt7hyHL0G_AP76-0
-    3-eM_n4k8M7bd91bg>
-X-ME-Received: <xmr:ywY-Zr16FZIvxjjLe1nTli-Gh5TgVjcNtTsyHobslE0mRLlqv8-DnyG5SsFzeUv3n6Hmyo1oy7Rk0uFgHcrhi0JSfl35IEqxQ4MIcVIX6pcDd5sj-Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedggedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:ywY-ZqB8itDzg0hd8vQCcG7xLQWc9p5hj3Uz8k48hG1NTl40rg26LQ>
-    <xmx:ywY-ZniUshbPHMzuJ_SBaDP6xuVx8DfAUK4HbXbEQLpRImuvNYhSyQ>
-    <xmx:ywY-Zmqj84rH_nP-E--hiUv2yWBi5JTctXEsj2eZJywrw8v0ALNgXw>
-    <xmx:ywY-Zqhh4xKDtAcUUBMlaQQqQgLvujVf0kkor41lCQSKleca72w9Bw>
-    <xmx:ywY-ZktM4ZWdZASUkTLjLG0DyK0hWwnmi96kNhuiPNzeUU0YH5yKjVov>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 May 2024 07:36:42 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6d2222e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 May 2024 11:36:29 +0000 (UTC)
-Date: Fri, 10 May 2024 13:36:39 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] docs: document upcoming breaking changes
-Message-ID: <Zj4Gx6LGSoTGc3eW@tanuki>
-References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
- <xmqqle4lnuvy.fsf@gitster.g>
- <ZjuEMNsw-KARJjwx@tanuki>
- <112b6568912a6de6672bf5592c3a718e@manjaro.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xfuhz7qt"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6f0e975f67fso538477a34.0
+        for <git@vger.kernel.org>; Fri, 10 May 2024 04:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715341419; x=1715946219; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eL8QyU9I730OBbAxTHaWfF6cRuc4hkd8wJnKvlE6dKk=;
+        b=Xfuhz7qtGeSg+L7G80c1OxLWCsuM5jcnObwuU9k803+OYHcZCEBEmbY4/CT5kV8ROA
+         sM3kyvOiZby1wxc9+n0y3E4Qd8kzQMIM9QbhkfjLH+oS2Ojvz9mzeUZNAt7EosVAcA9p
+         O9ifPAD015jQzqV1zBt0vC9JbPSW1ONVVCHPs+q7uxvp0cnVlGfac2+NrHSwQ8p7xZ9M
+         dsYe4nTebFbiK4SicL0w0oYjXgoUbUE/2WJPFoAyIhwPGUyiN6/1MhOADE2Un1Cchal9
+         Itg1k6NNNde2ks6Y67s8KWjQFkc8aV9oeP4ZubAv0mLLoySXV6V0rehHQvyIgZz6PbH4
+         PZxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715341419; x=1715946219;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eL8QyU9I730OBbAxTHaWfF6cRuc4hkd8wJnKvlE6dKk=;
+        b=XgkVTLvAnPs7JXERocwv61fG0Jr3SZZXup1cKwjAdL3OYom/BZnPMxcViBtMSnETYl
+         HvGHNeEFo7XHEvPtNg7VWgTccJnb420TjBjMa8rnOZ5DCJkY/xLCEE2kpZbiyJq0mTpD
+         hptwWQWIvSwpGT2egZYBarpBv9nT2VCLRAbpAQn0uHqyOYPdFs8aXHMxVLxjtB7nloQz
+         GTLkD5+RYlTyXVt4cf9UaTHg/wfG28QYq2z1/TUib5eNGu+lM9oDbk8D0kl4dJrfpxCq
+         Q8hm6M10cYkfeP/tG88o3KNGzLiB61w0OmetK7B30EjE77AuUW8nSJnTrB6PgPLCKGzc
+         73Kw==
+X-Forwarded-Encrypted: i=1; AJvYcCWje4ZO6ZDJbtvMogxDvDQWS68tpRfgGZHYGn4puWW3xG71p8HPVfuQQbhzQA2qXCU56dfnjZ6qr1Z4F8R+frXYjVqw
+X-Gm-Message-State: AOJu0Yzo27pRByNYRHRY0ne74y87H3DGJPmAze4asyyFt3eau5KwBMYz
+	p2Ga+W77tLxGSoicRY3ku+0jRZ2lTlXXTV4SYqNqn3p+YNcnn3OFmc8sFWhhkStCrMXr95tYYc/
+	nSyxpYHwBvdosGYn4VMniIpn2xK4yog==
+X-Google-Smtp-Source: AGHT+IEKNRSAxBmE/t4D4UiMaS6Jp+g1zCbIZLqH2g5mJ1/Zh3O6V86nq+3DhfsGKz/VG2io9ig30QS8QNT3f6hvP1w=
+X-Received: by 2002:a05:6871:6212:b0:232:fba4:4594 with SMTP id
+ 586e51a60fabf-24172fc5169mr2610141fac.49.1715341418629; Fri, 10 May 2024
+ 04:43:38 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 10 May 2024 04:43:36 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <cover.1715336797.git.ps@pks.im>
+References: <cover.1714630191.git.ps@pks.im> <cover.1715336797.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9oGUT5TtTVQkXWdk"
-Content-Disposition: inline
-In-Reply-To: <112b6568912a6de6672bf5592c3a718e@manjaro.org>
+Date: Fri, 10 May 2024 04:43:36 -0700
+Message-ID: <CAOLa=ZTJq40qhXLR=W0DSKKd+rehU-CzBafrkxP_nZH7xGJyWQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] reftable: expose write options as config
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000ed2a6d0618180b1b"
 
+--000000000000ed2a6d0618180b1b
+Content-Type: text/plain; charset="UTF-8"
 
---9oGUT5TtTVQkXWdk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Wed, May 08, 2024 at 05:59:01PM +0200, Dragan Simic wrote:
-> Hello Patrick,
->=20
-> On 2024-05-08 15:54, Patrick Steinhardt wrote:
-> > Okay, I see how that may make sense for some parts. I guess one of the
-> > motivations here is things like git-checkout(1) and git-switch(1) /
-> > git-restore(1)?
->=20
-> As I wrote already, [1] I really see no reasons why git-switch(1) or
-> git-restore(1) should be deprecated.  That would make zero sense to me.
->=20
-> [1]
-> https://lore.kernel.org/git/3d84f2eac9b03eda814332d73b5d5ba6@manjaro.org/
+> Hi,
+>
+> this is the second version of my patch series that exposes various
+> options of the reftable writer via Git configuration.
+>
+> Changes compared to v1:
+>
+>   - Drop unneeded return statements.
+>
+>   - Move default geometric factor into "constants.h".
+>
+>   - Fix a typo in a commit message.
+>
+> Thanks!
+>
+> Patrick
+>
+> Patrick Steinhardt (11):
+>   reftable: consistently refer to `reftable_write_options` as `opts`
+>   reftable: consistently pass write opts as value
+>   reftable/writer: drop static variable used to initialize strbuf
+>   reftable/writer: improve error when passed an invalid block size
+>   reftable/dump: support dumping a table's block structure
+>   refs/reftable: allow configuring block size
+>   reftable: use `uint16_t` to track restart interval
+>   refs/reftable: allow configuring restart interval
+>   refs/reftable: allow disabling writing the object index
+>   reftable: make the compaction factor configurable
+>   refs/reftable: allow configuring geometric factor
+>
+>  Documentation/config.txt          |   2 +
+>  Documentation/config/reftable.txt |  49 +++++
+>  refs/reftable-backend.c           |  43 ++++-
+>  reftable/block.h                  |   2 +-
+>  reftable/constants.h              |   1 +
+>  reftable/dump.c                   |  12 +-
+>  reftable/merged_test.c            |   6 +-
+>  reftable/reader.c                 |  63 +++++++
+>  reftable/readwrite_test.c         |  26 +--
+>  reftable/refname_test.c           |   2 +-
+>  reftable/reftable-reader.h        |   2 +
+>  reftable/reftable-stack.h         |   2 +-
+>  reftable/reftable-writer.h        |  10 +-
+>  reftable/stack.c                  |  57 +++---
+>  reftable/stack.h                  |   5 +-
+>  reftable/stack_test.c             | 118 ++++++------
+>  reftable/writer.c                 |  20 +--
+>  t/t0613-reftable-write-options.sh | 286 ++++++++++++++++++++++++++++++
+>  18 files changed, 576 insertions(+), 130 deletions(-)
+>  create mode 100644 Documentation/config/reftable.txt
+>  create mode 100755 t/t0613-reftable-write-options.sh
+>
+> Range-diff against v1:
+>  1:  47cee6e25e =  1:  7efa566306 reftable: consistently refer to `reftable_write_options` as `opts`
+>  2:  d8a0764e87 =  2:  e6f8fc09c2 reftable: consistently pass write opts as value
+>  3:  c040f81fba =  3:  aa2903e3e5 reftable/writer: drop static variable used to initialize strbuf
+>  4:  ef79bb1b7b =  4:  5e7cbb7b19 reftable/writer: improve error when passed an invalid block size
+>  5:  4d4407d4a4 =  5:  ed1c150d90 reftable/dump: support dumping a table's block structure
+>  6:  b4e4db5735 !  6:  be5bdc6dc1 refs/reftable: allow configuring block size
+>     @@ refs/reftable-backend.c: static int read_ref_without_reload(struct reftable_stac
+>      +		if (block_size > 16777215)
+>      +			die("reftable block size cannot exceed 16MB");
+>      +		opts->block_size = block_size;
+>     -+		return 0;
+>      +	}
+>      +
+>      +	return 0;
+>  7:  79d9e07ca9 =  7:  05e8d1df2d reftable: use `uint16_t` to track restart interval
+>  8:  653ec4dfa5 !  8:  bc0bf65553 refs/reftable: allow configuring restart interval
+>     @@ Documentation/config/reftable.txt: readers during access.
+>
+>       ## refs/reftable-backend.c ##
+>      @@ refs/reftable-backend.c: static int reftable_be_config(const char *var, const char *value,
+>     + 		if (block_size > 16777215)
+>       			die("reftable block size cannot exceed 16MB");
+>       		opts->block_size = block_size;
+>     - 		return 0;
+>      +	} else if (!strcmp(var, "reftable.restartinterval")) {
+>      +		unsigned long restart_interval = git_config_ulong(var, value, ctx->kvi);
+>      +		if (restart_interval > UINT16_MAX)
+>      +			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
+>      +		opts->restart_interval = restart_interval;
+>     -+		return 0;
+>       	}
+>
+>       	return 0;
+>  9:  6f2c481acc !  9:  6bc240fd0c refs/reftable: allow disabling writing the object index
+>     @@ Documentation/config/reftable.txt: A maximum of `65535` restart points per block
+>
+>       ## refs/reftable-backend.c ##
+>      @@ refs/reftable-backend.c: static int reftable_be_config(const char *var, const char *value,
+>     + 		if (restart_interval > UINT16_MAX)
+>       			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
+>       		opts->restart_interval = restart_interval;
+>     - 		return 0;
+>      +	} else if (!strcmp(var, "reftable.indexobjects")) {
+>      +		opts->skip_index_objects = !git_config_bool(var, value);
+>     -+		return 0;
+>       	}
+>
+>       	return 0;
+> 10:  30e2e33479 ! 10:  9d4c1f0340 reftable: make the compaction factor configurable
+>     @@ Commit message
+>
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+>     + ## reftable/constants.h ##
+>     +@@ reftable/constants.h: license that can be found in the LICENSE file or at
+>     +
+>     + #define MAX_RESTARTS ((1 << 16) - 1)
+>     + #define DEFAULT_BLOCK_SIZE 4096
+>     ++#define DEFAULT_GEOMETRIC_FACTOR 2
+>     +
+>     + #endif
+>     +
+>       ## reftable/reftable-writer.h ##
+>      @@ reftable/reftable-writer.h: struct reftable_write_options {
+>
+>     @@ reftable/reftable-writer.h: struct reftable_write_options {
+>       /* reftable_block_stats holds statistics for a single block type */
+>
+>       ## reftable/stack.c ##
+>     +@@ reftable/stack.c: license that can be found in the LICENSE file or at
+>     +
+>     + #include "../write-or-die.h"
+>     + #include "system.h"
+>     ++#include "constants.h"
+>     + #include "merged.h"
+>     + #include "reader.h"
+>     + #include "refname.h"
+>      @@ reftable/stack.c: static int segment_size(struct segment *s)
+>       	return s->end - s->start;
+>       }
+>     @@ reftable/stack.c: static int segment_size(struct segment *s)
+>       	size_t i;
+>
+>      +	if (!factor)
+>     -+		factor = 2;
+>     ++		factor = DEFAULT_GEOMETRIC_FACTOR;
+>      +
+>       	/*
+>       	 * If there are no tables or only a single one then we don't have to
+> 11:  861f2e72d9 ! 11:  e1282e53fb refs/reftable: allow configuring geometric factor
+>     @@ Documentation/config/reftable.txt: reftable.indexObjects::
+>       The default value is `true`.
+>      +
+>      +reftable.geometricFactor::
+>     -+	Whenever the reftable backend appends a new table to the table it
+>     ++	Whenever the reftable backend appends a new table to the stack, it
+>      +	performs auto compaction to ensure that there is only a handful of
+>      +	tables. The backend does this by ensuring that tables form a geometric
+>      +	sequence regarding the respective sizes of each table.
+>     @@ Documentation/config/reftable.txt: reftable.indexObjects::
+>
+>       ## refs/reftable-backend.c ##
+>      @@ refs/reftable-backend.c: static int reftable_be_config(const char *var, const char *value,
+>     + 		opts->restart_interval = restart_interval;
+>       	} else if (!strcmp(var, "reftable.indexobjects")) {
+>       		opts->skip_index_objects = !git_config_bool(var, value);
+>     - 		return 0;
+>      +	} else if (!strcmp(var, "reftable.geometricfactor")) {
+>      +		unsigned long factor = git_config_ulong(var, value, ctx->kvi);
+>      +		if (factor > UINT8_MAX)
+>
+> base-commit: d4cc1ec35f3bcce816b69986ca41943f6ce21377
+> --
+> 2.45.0
 
-Note that the discussion here is the other way round: whether we want to
-eventually deprecate tools like git-checkout(1) that have newer
-replacements. Junio argues that there being a replacement is not by
-itself a good enough reason to eventually remove the old one, which I'm
-fine with.
+The range diff looks good to me, thanks for the quick iteration :)
 
-Patrick
-
---9oGUT5TtTVQkXWdk
+--000000000000ed2a6d0618180b1b
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 72e5a9c69dcf4b58_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY+BsYACgkQVbJhu7ck
-PpQGmRAAqj+zXkXapvyh5m6cgYyDb6KCn9ySvixAMkv2giOYjif6PAK8XQ0CFwx/
-XqgbHyC1JQSklRu3q2mxQlndrno4mXWByAoknrIDRjVX9Xnq//4Ij62NM0rQ+KC5
-YSA9eSegoF0GEXdfTmAxIvTxy/0pjiUAdqnoNKRxulCvIhHn4tzK5G25h9Olwt/x
-bBJeCDTOIr1Vk5y9H/7ML+GhqwmYwLftiX5NHyX0Zzq2BY2R05ModsqjtIkf92w1
-M167F+DEWm5jLwj3KXlMbVM32cVZjkQ2NEheHBk10RDY5OOuJw6zJhcKmJLtzoLo
-Myou1Xx5y8epgfbCG0QhLk9hCITizMfxPjZQXUL50Ey53MfQTPvbFbVI8fmNV8xj
-jykE8hAs8dXn4TjmhW/HwScjk8SUIoFVivxOKacAsMNk+cU5BC1juGnG4YgraI+b
-vYBRPbZkP/qj12RUjPx8j+GWmXL497eFoUgOiYJes0pENM2xd0tFwKx9jz/6Ywyw
-chw1XuSUAK2Mfrg5R6Xnl67u3YhC1Eh6xa+izgRZqbErf+ayA6tQNa6Fwc0R5hLt
-8ZXngZrtCf7wEmxwLiLG0TW2+hJifSlDj0YXkm+o8bJQXdp094FVgBdTOrJDwyWB
-LPPDPpb0RitHkP31DgbgnGJeKx4ZAcN8AouXhYlTIek/ib/Ml5g=
-=Dioq
------END PGP SIGNATURE-----
-
---9oGUT5TtTVQkXWdk--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZK0NHWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMUpzQy85TlQ3Qm5nMnJGSG8yT0NhYlcxTElHQWFaMQpyWU9VOTVTQXlV
+SmFsc1B5M1dWSnFCSkdiQWIvNERpaDZSYy83eU9Hd3YxTGNIYkYrSlI2OExMUWMrTWRoR2E2ClpG
+MWEyazdsYVNTVFJXQjBId0hMRmF3a1ZqeTVMbm5uK25CcUs5MmZCYSs1aXpRVXNaM2ZpK2VFYzd6
+NUdyN00KMEZtbHplazJGd0xDV0N0dmlTelpUTVR3LzE4QWxhT1l4N0Z4ZXQxUE9aSG1TeDJSUGk4
+ODhKTFVIWEptd0QrcApLRW9LaGZYbUVpek56RXlNUTVPLzVhckNXeWsrMlJaTnBDaUtLQWhVeCs3
+cVViV0hPWG9lZld5aUg2Zjl5Q2JkCk11T1Rxdi9YUXZnSXZUdDVVMU9FZUhSTnM5ekVpZjFKSjg4
+K3l3K2t2cWVZTkdTSmZZTDZpUzB0YVZmTXFPWjkKWEliejZZLy9XTnM1aC92anZRTEV4VUw2bFN2
+Y3Y5ZTNab3MyQThYWEFObUUvbForNXBUaURCeTdoZzA4WlAwUQpGL0d4SGhYYkxiR0I2bUdYanlt
+azBVdjYraGNjd1NqZ0dmbnl2a3JLaTRNR3R6anVVZlVJUWtOeDRzNnRPSVErCjAvVVNDTUpzeHEy
+T1N0Mk54RWJxWUpRd0FVL282bFg2K1FNdXNpbz0KPXF3Y2gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ed2a6d0618180b1b--
