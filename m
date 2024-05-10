@@ -1,117 +1,117 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0057F165FA1
-	for <git@vger.kernel.org>; Fri, 10 May 2024 09:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3490815FA73
+	for <git@vger.kernel.org>; Fri, 10 May 2024 10:00:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715335141; cv=none; b=FQF3KPkiNV/PYGJKv0USHPdpMz4iqRAPUYEInZsx6ZVnI6Q4Kv1xw9ZZz6Bq4UrJdAybL5ai7SbCBb9s9tD+SVSBVHhOuLpiXTQ/z2MA9BPdqD0Qc8S7gOZwMZL+ngwplAvVQFZpuBfN88uoVe7J0W1+1vieftB2+xxl690dPdU=
+	t=1715335235; cv=none; b=XOiluMmZxGYamzUFpSdfd1l0Ft8XDV9oT3sU3AncShVfSmW0qD8PUtcHO2nRsiwb7BXILENkmOXfxcSwzzVOFbD6b6DtfoKMCYZA4cZQEcseGDCdRf8sqHQxBSo6sbFncVi5wrVwtvfQi0DzdM5JmcIxoTn/HhO+v2tBqHN48PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715335141; c=relaxed/simple;
-	bh=nclLJg1bsx+jt1yb3K288YpCGfcJEe0XK4BsotYbhRs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=Ka2F43E4YA4oQqrUJZLMne3oJVzr2Bt9zFxcJgpbIi7qd2BdJpstNBHjfQW3PA/RVFu/y5PqpaiIwLAV9XPLQYQgQlFwHVdEKxUj/kS2meXe/ah7dN2P9Q1Tcl+OIgHBN1/+TVQbHcB9bHqJP0UMyUQiXY8YGi7TqorLgtqLFi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f6cwf32x; arc=none smtp.client-ip=209.85.160.50
+	s=arc-20240116; t=1715335235; c=relaxed/simple;
+	bh=kX6B2nf6Mqz6mtMI7D+rz4U1wizoZiO56YGr4WIr/fs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SayTsO5eZA/Ur53I6aN1Mp4mWvpB9D+FJU6wtYKiKp4NAXtyJuGt2Polim7sdBmcCCWxwFQum1xxRf04UZWPhu1n08HADQMj5+smz6UMo2AvUbVHMnO6f9EbQ/Yi2n5MAr9sWu/y5TH2lHmhChJFK4mYGm07XmJzXakoKyC304c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ERFff9sR; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f6cwf32x"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-23e78ef3de7so953432fac.1
-        for <git@vger.kernel.org>; Fri, 10 May 2024 02:58:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ERFff9sR"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-41e82b78387so12578265e9.0
+        for <git@vger.kernel.org>; Fri, 10 May 2024 03:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715335139; x=1715939939; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qJ6cI4CwgoUmfYKzcWX9FDfjATVRTm3xEWregmuEjkE=;
-        b=f6cwf32xW+3WNTxaADacvAcVgjK7Qg9Qu7QEslM7avMePEk5bkvS7UVxhgoiDWMzD2
-         E/ZbMH27CrfIXQSk5aeN8XnCHdfVdPTDfmzO+7yO7Qv4lXeRKfPiYWfr/ReiKItmGTez
-         zP4U4/AZrbNXOaAbFwNdvVxj7jHF8Omr/ZliZR1LVEsgLSpLVdXeJIfZNhexa8Cs91b8
-         qs44sVa6kaq8X5vXRg9sYQxjY1eBvJlby5LuDtaFCCb214em69q98TRfe40wCNGbpqqB
-         53UnHQiTOC6Myaf/70RWy+OrCKdksDoZy4V0GJYrhpVF+wpyj6qB4Z501+9q3Pwl+fDB
-         bOpg==
+        d=gmail.com; s=20230601; t=1715335232; x=1715940032; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=93KzrOcIi0HYEi9X8cB/+4KjzRDWptYuDOgtC8BZyaI=;
+        b=ERFff9sRjTGORvG7W9g3jHAwgYIAHRPocBHLso9HmtHTZAq1of2FaGmacUabqLHZQs
+         1tLRFgENHi121fDRbFDGU11KH/25lRtPcrPII7o1puPjhmNbYwd6Of0Qxr0KUV+FmuUi
+         0vEpOox1HvinZoxVu9m1GWbiOf3/7LwRb9OcskfAdSPuc7qbsZztBVy9kMGhwXNhX326
+         95CwskcSziLNt63KEEPb/uL/ev3jsHfbGa/vgxjvjGbcvMTpWnd70hb4p2buKsfOu6uY
+         pmyb8V7uyQwoNuv4D3OVsTB2B55rTTu/1vX1jomLn6PynVE9ppTez4WpkMqd/uTBPAih
+         41aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715335139; x=1715939939;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qJ6cI4CwgoUmfYKzcWX9FDfjATVRTm3xEWregmuEjkE=;
-        b=jp/h+lfxLf+JLFYItel1urL4/8OFfviX8CjYjuXXAi1ZSRZa/BXPpZu4ezA4LbsBwf
-         N+ZIdC93GSypRhY1JWEG+0qCX8z8J3V/LgIygCqMNdPhKaTZlE4xij4pLH4TedlNCaoy
-         KquUQxdS3GFdOp3qHElwpuoFPlNC5d3ykWr1qGJefWPDg8Dir/3dnLNjODE34haO3vx3
-         6ik3E83vECwKJsDerZlXP5Zcdsaw2leRY+inX/JDbQ+BykFAIb1yd/VGi7lOgMdDoWQV
-         yBXaNjSYbVS6jwjnKFOiRMW/5OlOAubxZHp5B/EViKott7n2XHfG/FYtl+NoO//HvEcK
-         fPfg==
-X-Forwarded-Encrypted: i=1; AJvYcCWEODvPkkGCm33quNVGlspeynFPUH0U4OGUffMbfRwsGnpbeF4ITHppsu68f9iBk5oP9XghJjoTDZS0r0ckL3/P8QzL
-X-Gm-Message-State: AOJu0YxUKjJ1MESybjf4MQopR3kZ7OQyt9SRX3YJ5BQcFGZhw1WQPx8u
-	Mybyb88c7nOJqtOBcDwf2V3vDrZWJC6cCC8rgotlxbR8ulUPE/KU8xYMJuaKmz9KxzMru5ahqtq
-	/GpdleXUZW7WqoJTfrPC89LHKu/o=
-X-Google-Smtp-Source: AGHT+IHkbehq6I8EFg34JrKKQZ+Cfgn9CzNFQkdO9OTzH0xdvogehhWO2QEXzr6vw/DqXBlDh/NgrDYFbkI6uRBjsfg=
-X-Received: by 2002:a05:6870:4209:b0:22e:bcfd:debc with SMTP id
- 586e51a60fabf-24172a90478mr3116025fac.13.1715335138946; Fri, 10 May 2024
- 02:58:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 May 2024 02:58:58 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <861f2e72d987d17b00d68cdaf400d743e2f8c118.1714630191.git.ps@pks.im>
-References: <cover.1714630191.git.ps@pks.im> <861f2e72d987d17b00d68cdaf400d743e2f8c118.1714630191.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1715335232; x=1715940032;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=93KzrOcIi0HYEi9X8cB/+4KjzRDWptYuDOgtC8BZyaI=;
+        b=BQ+xzvAR/fnNtqdZR4YXy3grFrgLWFik+a9WJESbyzm2TDdDUyO5kXI0saWWOsIF+Y
+         hSdQPH863ae6N1SaygtPWiK5lYvKz5tRcjzCb+May55eod+5Tcy3L2ZGAWfpvyaWgtfu
+         SF3y9VRzQGGFfgtgXYPkaWtTpmx6Zro8Qh+rFWHB6JmnK9LKUE/ujPWthikIirxDDuJ6
+         argHu/9P0KQRiXaVcw81hItUtKu4gxW6g+ICSZyZt5/4ZA42xtGpnQ+mSRkSfyxuHl/u
+         dluwvRdxEosjiE4nbmWv7hk+LiUnr2kI+L95ndkGeDLT6jgUebISF8Lj7/eytyV2kh/v
+         Y+mA==
+X-Gm-Message-State: AOJu0YxIHMpSxMx79XsrLYrpSrpLyq1hq1psd98y41wDHoia1dslOuLD
+	41YKyN2lF2WvScz0U9vDSR3PRHq8c5kx3b/TQS3HhCIBVFvbud26F4fhtk7D
+X-Google-Smtp-Source: AGHT+IF1V448CktjZJQ6txoOC1euWoGRRs/85aRRw/76kKDOuMkmq0bKHFgP40hIV//C+l0YRyfa/g==
+X-Received: by 2002:a05:600c:1383:b0:41c:2992:a3bd with SMTP id 5b1f17b1804b1-41feac5a45fmr16670295e9.27.1715335232401;
+        Fri, 10 May 2024 03:00:32 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccee92bcsm57094105e9.36.2024.05.10.03.00.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 May 2024 03:00:32 -0700 (PDT)
+Message-ID: <9b42e684-32e0-4372-8da6-40f9b708b6ca@gmail.com>
+Date: Fri, 10 May 2024 11:00:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 10 May 2024 02:58:58 -0700
-Message-ID: <CAOLa=ZSLx7fAo0kT5OR6wyjyTczDLOpcS82xGd195uWVs7JRFQ@mail.gmail.com>
-Subject: Re: [PATCH 11/11] refs/reftable: allow configuring geometric factor
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000a0d59e061816951a"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git-cherry-pick(1) -- path
+To: Alejandro Colomar <alx@kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
+ <xmqqv83mqxg3.fsf@gitster.g>
+ <kk244kap6lhuvtfot55u4yb5k5eddwlzl4izlzqhe4pdj52cx7@slghmpvdswkt>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <kk244kap6lhuvtfot55u4yb5k5eddwlzl4izlzqhe4pdj52cx7@slghmpvdswkt>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000a0d59e061816951a
-Content-Type: text/plain; charset="UTF-8"
+Hi Alex and Junio
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 10/05/2024 10:05, Alejandro Colomar wrote:
+> Hi Junio,
+> 
+> On Thu, May 09, 2024 at 06:15:24PM GMT, Junio C Hamano wrote:
+>> Alejandro Colomar <alx@kernel.org> writes:
+>>
+>>> I'd be interested in being able to partially cherry-pick commits, based
+>>> on a path filter (similar to how many other git(1) commands behave with
+>>> -- path).
+>>>
+>>> Do you have any opinions on that?
+I'd be happy to see a patch that adds that (I sometimes find myself 
+wishing "git cherry-pick" had a "--patch" option to do something similar 
+but that's a bit of a tangent here)
 
-> Allow configuring the geometric factor used by the auto-compaction
-> algorithm whenever a new table is appended to the stack of tables.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/config/reftable.txt | 10 ++++++++++
->  refs/reftable-backend.c           |  5 +++++
->  2 files changed, 15 insertions(+)
->
-> diff --git a/Documentation/config/reftable.txt b/Documentation/config/reftable.txt
-> index 6e4466f3c5..1c381dda04 100644
-> --- a/Documentation/config/reftable.txt
-> +++ b/Documentation/config/reftable.txt
-> @@ -37,3 +37,13 @@ reftable.indexObjects::
->  	are a reverse mapping of object ID to the references pointing to them.
->  +
->  The default value is `true`.
-> +
-> +reftable.geometricFactor::
-> +	Whenever the reftable backend appends a new table to the table it
+>>      $ git format-patch --stdout -1 $ThatCommit -- $ThisPath |
+>>        git am -3
+> 
+> Hmmm, I hadn't thought of that; very interesting!
+> 
+> Although I have some concerns with git-am(1); basically that it's almost
+> clueless when there's a conflict.
 
-This doesn't read right, did you mean 's/to the table/,' perhaps?
+"git am -3" should be fine here as you're guaranteed to have the 
+necessary blobs available to create conflicts - this is what "git rebase 
+--apply" does.
 
-[snip]
+> If I find some time, I'll check if I can program that (although it would
+> be the first time I do some contribution like that to git(1), so I may
+> need some help).  :-)
 
---000000000000a0d59e061816951a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 90dfa4cd2f5fac8e_0.1
+As far as the implementation goes I haven't thought too deeply but I 
+suspect we'd want to create a couple of trees based on the commit we 
+want to cherry-pick and its parent filtered by the pathspec and use 
+those in the tree-way merge with HEAD.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZOTcrQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOGdXREFDY2hmVXZjN01yMTZDdmd0Z0VCVnJsT0YyMQppWXNLZ09OUlBv
-NzdYdzdKTThoVXhTYWM2UDFGRVFzdkJJRjVtMkVwZHJlZ2VRNzhDRWU0S01SWk1vWDgweTcxCi9R
-cDhBWWxCVy92M2JKMTRTWk95VW1SOWxDNnRpNTRsbHlQV1Q4TVdWNVFCdmJYdi9jeTBLQ3VXSTNT
-Qnh0V3AKZlloUVRpTFhSQTNxWXVIa0NmUEhYUXhHaFAybEkwQTVtT1JtSi9DWW9DYTNoa29CdU82
-S2JPZ0tTanA1Nzl1TgoxY0d5eWpTQWkzYWZOdUlKSElvcUs3dExZZ2JTckkwKzBCWVQ5aStaeERy
-Qm1PR1liL21BRWp4Mm9EaEdRcm1yCnE0aktXSDVNQTFHVndOR1ppK2Z2QkVoSm9iMVpCRXRTaFpS
-eTVRM2NVclE0U0RxZzdyK1g4cThBUDI5Kzl1OWMKQjlXalRSYVo2T1U2OXQxZ1czN0RiWXZhUTBR
-OGFuQ0NSVzFvd1FTM1ZuUXIxbTdQTVFFZ3RlSjlHTlVNcGg1dwpWdVI0cWNsWW1KeVVZdkxmTVZ6
-K3JRYTdrc0Z2UDhCMWxaQnJBS2EramQrWHE4M2VWR0hYTEpUM2RaZytNS1BKClZ2bGFSUitBd2I4
-c3k5cHVTL0c1a0RsTWhGL3ZuV1daQU14S1puUT0KPSsyMzAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000a0d59e061816951a--
+Best Wishes
+
+Phillip
